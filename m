@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F06E15B964;
-	Mon, 29 Jan 2024 17:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0682B15A499;
+	Mon, 29 Jan 2024 17:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548278; cv=none; b=chc6tgqjUmALNbRQTOlUbe7ZYTX8mY/DmQJwKJZJPWKZLv629ioAK7ayCtrzmxmnu1vQ59Dl8uAr/Y6OW9DJgMqXEe1ge+E/Mipdi1hkqXl8S822ktDhNb6IPSpPajDNA+cYWyvXEHriVBCOLAemjrhVBDwy3lPZ3bO7LMQTsSQ=
+	t=1706548279; cv=none; b=Ma3cuBEw0py8nrJ5BjsGi6UQIPcTaY0Ov0Do4humCrDIHJE3ACcJM26xXkA5TH0w3zZLl/JZiFo3Xs9c95RBHI6WVhDhQyRAiHou+HZDfLpFD4rvztRXBabCcdlddyk1cvWuLK46L42rNpVvXW7OFEKYLshlBGaIY1924LYnK7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548278; c=relaxed/simple;
-	bh=ERVERd5MZylJ1Ne6qFrR4JhFhV64ZoABhujrxegD8ng=;
+	s=arc-20240116; t=1706548279; c=relaxed/simple;
+	bh=TR0RFflYqDyk5YUSv/8aBa5ztuTLBK3QVoGEcdDxaZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dW5rlHTmVUCsJKy7+Q1t/x5KEjc61qHVfhqrKPVL72NEctxW+O1Xeb9aZQdcBCNTsTy0soNR/V61gUXPPrZKKkxmcIZ6DU2khQGAxHpV21KaiPQ1Oc6c/g0Rj8QQGGoVQrZSJDTWkGgRyoJl9P9sGHWNKxMjj5cYI34Sd+kNg0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1W9op/w9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sJqSONQET3XNuLDlHp61qa+N87oiyMJyF3yibrAP3TbXEgdxzoqxFah3GxHg9lZW3owCdkPTVTRFZyAXshTYTr/XZ0vr2yuMpxHQYJkGkNTycQRZfxyIlNevOOk47+Yn11SNd8713jyfEJd3/nF9wV0kz2sZALg1frzw2xOBko0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEgtFn7g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1W9op/w9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E64C43390;
-	Mon, 29 Jan 2024 17:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEgtFn7g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B5AC43390;
+	Mon, 29 Jan 2024 17:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548277;
-	bh=ERVERd5MZylJ1Ne6qFrR4JhFhV64ZoABhujrxegD8ng=;
+	s=korg; t=1706548278;
+	bh=TR0RFflYqDyk5YUSv/8aBa5ztuTLBK3QVoGEcdDxaZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1W9op/w9R5FGmfZjzjMhIetBLTMYPUeoz1KtROAt8qSAzBrx5yr8elgPtrFJOcFZp
-	 6rP3dzkOehYYpr1eu/8b8Wbrq8w9Y2X02lg2zFpcyRSAAmIwRFCrWK2uvlPG8JDdeW
-	 AejZZJVLuSKD3Jywa4nQO3ps2FP/kRofcVSawg/0=
+	b=CEgtFn7gw88rIHN4FJt6ds6MXGSup5dj/X14NXCU7mP+Mx000Q+QsqKysM0/S4cOu
+	 63ve9VvrpdC0RTGcpH/J0ErQ7Y/TOhBT1X0Plz9wzBiEZC9rwOq8zF+HnCXYldMUP2
+	 SqmJW77buUO9tQjeyijf/8RTBZ64SNw5xQpzBq5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.1 065/185] serial: sc16is7xx: remove obsolete loop in sc16is7xx_port_irq()
-Date: Mon, 29 Jan 2024 09:04:25 -0800
-Message-ID: <20240129170000.693671980@linuxfoundation.org>
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Taimur Hassan <syed.hassan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 293/346] drm/amd/display: Fix conversions between bytes and KB
+Date: Mon, 29 Jan 2024 09:05:24 -0800
+Message-ID: <20240129170025.021951005@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,134 +49,109 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Taimur Hassan <syed.hassan@amd.com>
 
-commit ed647256e8f226241ecff7baaecdb8632ffc7ec1 upstream.
+[ Upstream commit 22136ff27c4e01fae81f6588033363a46c72ed8c ]
 
-Commit 834449872105 ("sc16is7xx: Fix for multi-channel stall") changed
-sc16is7xx_port_irq() from looping multiple times when there was still
-interrupts to serve. It simply changed the do {} while(1) loop to a
-do {} while(0) loop, which makes the loop itself now obsolete.
+[Why]
+There are a number of instances where we convert HostVMMinPageSize or
+GPUVMMinPageSize from bytes to KB by dividing (rather than multiplying) and
+vice versa.
+Additionally, in some cases, a parameter is passed through DML in KB but
+later checked as if it were in bytes.
 
-Clean the code by removing this obsolete do {} while(0) loop.
-
-Fixes: 834449872105 ("sc16is7xx: Fix for multi-channel stall")
-Cc:  <stable@vger.kernel.org>
-Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231221231823.2327894-5-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Taimur Hassan <syed.hassan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   89 +++++++++++++++++++----------------------
- 1 file changed, 43 insertions(+), 46 deletions(-)
+ .../drm/amd/display/dc/dml2/display_mode_core.c  | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -726,58 +726,55 @@ static void sc16is7xx_update_mlines(stru
- static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
- {
- 	bool rc = true;
-+	unsigned int iir, rxlen;
- 	struct uart_port *port = &s->p[portno].port;
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
+index 4899e9e8c163..62ce95bac8f2 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
+@@ -6329,7 +6329,7 @@ static void dml_prefetch_check(struct display_mode_lib_st *mode_lib)
+ 				mode_lib->ms.NoOfDPPThisState,
+ 				mode_lib->ms.dpte_group_bytes,
+ 				s->HostVMInefficiencyFactor,
+-				mode_lib->ms.soc.hostvm_min_page_size_kbytes,
++				mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
+ 				mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels);
  
- 	mutex_lock(&one->efr_lock);
+ 		s->NextMaxVStartup = s->MaxVStartupAllPlanes[j];
+@@ -6542,7 +6542,7 @@ static void dml_prefetch_check(struct display_mode_lib_st *mode_lib)
+ 						mode_lib->ms.cache_display_cfg.plane.HostVMEnable,
+ 						mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels,
+ 						mode_lib->ms.cache_display_cfg.plane.GPUVMEnable,
+-						mode_lib->ms.soc.hostvm_min_page_size_kbytes,
++						mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
+ 						mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k],
+ 						mode_lib->ms.MetaRowBytes[j][k],
+ 						mode_lib->ms.DPTEBytesPerRow[j][k],
+@@ -7687,7 +7687,7 @@ dml_bool_t dml_core_mode_support(struct display_mode_lib_st *mode_lib)
+ 		CalculateVMRowAndSwath_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
+ 		CalculateVMRowAndSwath_params->GPUVMMaxPageTableLevels = mode_lib->ms.cache_display_cfg.plane.GPUVMMaxPageTableLevels;
+ 		CalculateVMRowAndSwath_params->GPUVMMinPageSizeKBytes = mode_lib->ms.cache_display_cfg.plane.GPUVMMinPageSizeKBytes;
+-		CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
++		CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
+ 		CalculateVMRowAndSwath_params->PTEBufferModeOverrideEn = mode_lib->ms.cache_display_cfg.plane.PTEBufferModeOverrideEn;
+ 		CalculateVMRowAndSwath_params->PTEBufferModeOverrideVal = mode_lib->ms.cache_display_cfg.plane.PTEBufferMode;
+ 		CalculateVMRowAndSwath_params->PTEBufferSizeNotExceeded = mode_lib->ms.PTEBufferSizeNotExceededPerState;
+@@ -7957,7 +7957,7 @@ dml_bool_t dml_core_mode_support(struct display_mode_lib_st *mode_lib)
+ 		UseMinimumDCFCLK_params->GPUVMMaxPageTableLevels = mode_lib->ms.cache_display_cfg.plane.GPUVMMaxPageTableLevels;
+ 		UseMinimumDCFCLK_params->HostVMEnable = mode_lib->ms.cache_display_cfg.plane.HostVMEnable;
+ 		UseMinimumDCFCLK_params->NumberOfActiveSurfaces = mode_lib->ms.num_active_planes;
+-		UseMinimumDCFCLK_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
++		UseMinimumDCFCLK_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
+ 		UseMinimumDCFCLK_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
+ 		UseMinimumDCFCLK_params->DynamicMetadataVMEnabled = mode_lib->ms.ip.dynamic_metadata_vm_enabled;
+ 		UseMinimumDCFCLK_params->ImmediateFlipRequirement = s->ImmediateFlipRequiredFinal;
+@@ -8699,7 +8699,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
+ 	CalculateVMRowAndSwath_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
+ 	CalculateVMRowAndSwath_params->GPUVMMaxPageTableLevels = mode_lib->ms.cache_display_cfg.plane.GPUVMMaxPageTableLevels;
+ 	CalculateVMRowAndSwath_params->GPUVMMinPageSizeKBytes = mode_lib->ms.cache_display_cfg.plane.GPUVMMinPageSizeKBytes;
+-	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
++	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
+ 	CalculateVMRowAndSwath_params->PTEBufferModeOverrideEn = mode_lib->ms.cache_display_cfg.plane.PTEBufferModeOverrideEn;
+ 	CalculateVMRowAndSwath_params->PTEBufferModeOverrideVal = mode_lib->ms.cache_display_cfg.plane.PTEBufferMode;
+ 	CalculateVMRowAndSwath_params->PTEBufferSizeNotExceeded = s->dummy_boolean_array[0];
+@@ -8805,7 +8805,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
+ 			mode_lib->ms.cache_display_cfg.hw.DPPPerSurface,
+ 			locals->dpte_group_bytes,
+ 			s->HostVMInefficiencyFactor,
+-			mode_lib->ms.soc.hostvm_min_page_size_kbytes,
++			mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
+ 			mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels);
  
--	do {
--		unsigned int iir, rxlen;
--
--		iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
--		if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
--			rc = false;
--			goto out_port_irq;
--		}
--
--		iir &= SC16IS7XX_IIR_ID_MASK;
--
--		switch (iir) {
--		case SC16IS7XX_IIR_RDI_SRC:
--		case SC16IS7XX_IIR_RLSE_SRC:
--		case SC16IS7XX_IIR_RTOI_SRC:
--		case SC16IS7XX_IIR_XOFFI_SRC:
--			rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
--
--			/*
--			 * There is a silicon bug that makes the chip report a
--			 * time-out interrupt but no data in the FIFO. This is
--			 * described in errata section 18.1.4.
--			 *
--			 * When this happens, read one byte from the FIFO to
--			 * clear the interrupt.
--			 */
--			if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
--				rxlen = 1;
--
--			if (rxlen)
--				sc16is7xx_handle_rx(port, rxlen, iir);
--			break;
-+	iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
-+	if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
-+		rc = false;
-+		goto out_port_irq;
-+	}
-+
-+	iir &= SC16IS7XX_IIR_ID_MASK;
-+
-+	switch (iir) {
-+	case SC16IS7XX_IIR_RDI_SRC:
-+	case SC16IS7XX_IIR_RLSE_SRC:
-+	case SC16IS7XX_IIR_RTOI_SRC:
-+	case SC16IS7XX_IIR_XOFFI_SRC:
-+		rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
-+
-+		/*
-+		 * There is a silicon bug that makes the chip report a
-+		 * time-out interrupt but no data in the FIFO. This is
-+		 * described in errata section 18.1.4.
-+		 *
-+		 * When this happens, read one byte from the FIFO to
-+		 * clear the interrupt.
-+		 */
-+		if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
-+			rxlen = 1;
-+
-+		if (rxlen)
-+			sc16is7xx_handle_rx(port, rxlen, iir);
-+		break;
- 		/* CTSRTS interrupt comes only when CTS goes inactive */
--		case SC16IS7XX_IIR_CTSRTS_SRC:
--		case SC16IS7XX_IIR_MSI_SRC:
--			sc16is7xx_update_mlines(one);
--			break;
--		case SC16IS7XX_IIR_THRI_SRC:
--			sc16is7xx_handle_tx(port);
--			break;
--		default:
--			dev_err_ratelimited(port->dev,
--					    "ttySC%i: Unexpected interrupt: %x",
--					    port->line, iir);
--			break;
--		}
--	} while (0);
-+	case SC16IS7XX_IIR_CTSRTS_SRC:
-+	case SC16IS7XX_IIR_MSI_SRC:
-+		sc16is7xx_update_mlines(one);
-+		break;
-+	case SC16IS7XX_IIR_THRI_SRC:
-+		sc16is7xx_handle_tx(port);
-+		break;
-+	default:
-+		dev_err_ratelimited(port->dev,
-+				    "ttySC%i: Unexpected interrupt: %x",
-+				    port->line, iir);
-+		break;
-+	}
- 
- out_port_irq:
- 	mutex_unlock(&one->efr_lock);
+ 	locals->TCalc = 24.0 / locals->DCFCLKDeepSleep;
+@@ -8995,7 +8995,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
+ 			CalculatePrefetchSchedule_params->GPUVMEnable = mode_lib->ms.cache_display_cfg.plane.GPUVMEnable;
+ 			CalculatePrefetchSchedule_params->HostVMEnable = mode_lib->ms.cache_display_cfg.plane.HostVMEnable;
+ 			CalculatePrefetchSchedule_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
+-			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
++			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataEnable = mode_lib->ms.cache_display_cfg.plane.DynamicMetadataEnable[k];
+ 			CalculatePrefetchSchedule_params->DynamicMetadataVMEnabled = mode_lib->ms.ip.dynamic_metadata_vm_enabled;
+ 			CalculatePrefetchSchedule_params->DynamicMetadataLinesBeforeActiveRequired = mode_lib->ms.cache_display_cfg.plane.DynamicMetadataLinesBeforeActiveRequired[k];
+@@ -9240,7 +9240,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
+ 						mode_lib->ms.cache_display_cfg.plane.HostVMEnable,
+ 						mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels,
+ 						mode_lib->ms.cache_display_cfg.plane.GPUVMEnable,
+-						mode_lib->ms.soc.hostvm_min_page_size_kbytes,
++						mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
+ 						locals->PDEAndMetaPTEBytesFrame[k],
+ 						locals->MetaRowByte[k],
+ 						locals->PixelPTEBytesPerRow[k],
+-- 
+2.43.0
+
 
 
