@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD28615705F;
-	Mon, 29 Jan 2024 17:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8223C1586D6;
+	Mon, 29 Jan 2024 17:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548115; cv=none; b=IjTcXXnmK0ah6ASqbsVzvFcoRMG1UZY8TbcdWEtrX03GBrvL3FIIgfajOeWzS6NsR8ISTyXfrF1cmtkGwaEXaBra+XMBg3TszCh4jC9WwsBAexYjTNq3BAOs/NsW4H3wOOCqc7Bx4+hYlTAZs62DHuCvNylDbgKscW4If116RAk=
+	t=1706548116; cv=none; b=cif4eHFVeHsLaC0evBzY80CJRg6ghcUzhRKmLNThIyUjSkhNeG5i/q/qCHInD/oRR2WJKu5TyySOC8TW00v5d+jAMeacXYKEtEPk04B0bdi919Z/Nb9RcUNFsI2//3V8zVZeM0pYrywm6jXglWKF4OwVHq19WE90FYCPJBgQw8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548115; c=relaxed/simple;
-	bh=gP2RTNUMNQfqtnptNOen7KX8URKhB9Q0tRDguy0VZ9c=;
+	s=arc-20240116; t=1706548116; c=relaxed/simple;
+	bh=YWPH44guJVNUtyT8XkxbC3KjneDARdh91KetVQ67CBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpT9R7eeY9JQ0Juu0nBKWT3YmJrwjbW9fw0q8/FUvlQgz7EksJSr9fm3HdjU/e0JQyPUi8UsxtL+X2KVRMhLqk8gxr44xYp+h31tMKLnaCOMlKHzSLUcorAkdT2OhrCBc7nHyQsCfLSvFXXkXlMN3FsBDm50u75E8Kz8yex9n5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DB1TWtaC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9SCr5/Gtcl0XqbDZ0/8Dvdur3z6xLa0m8Sm5WQ1sq5qiEGBsJNcbP1cDjBVNlC2r79ytjo3Qu8Je0SkkJ1lCM23UTA9FYYShi/ECa8PnqAw9fx2NQbJzk3+NJeKt4iL4zVi5CYl0/eVBzzX6ESbZfKo7PakSgpMoyS8H5NKB9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG19gV8q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DB1TWtaC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9229DC43390;
-	Mon, 29 Jan 2024 17:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG19gV8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF24C43390;
+	Mon, 29 Jan 2024 17:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548115;
-	bh=gP2RTNUMNQfqtnptNOen7KX8URKhB9Q0tRDguy0VZ9c=;
+	s=korg; t=1706548116;
+	bh=YWPH44guJVNUtyT8XkxbC3KjneDARdh91KetVQ67CBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DB1TWtaCHQhdRwIUQRcdNmWWw6uaWAJhxGUtCdaCZZR1G1x3GPATKZhVr4VyenB8P
-	 yLuuYrSlV5OjtDdMK9b3cuBzmkGRKtDXefGLwQimpaUTGN+cy8UHTTajc/cZb3xzTf
-	 E9bHm+S+cY+1i6NN/kTGkeZKts4DsFkmDeaah03w=
+	b=gG19gV8q2yijR1/AYNHxJKU6iO664kZzJdcIHxmm8nQH1eXUX2MNxw12rCIuIdpCP
+	 QlPQRc27+fsYXmk1mG3Jmr1PctNx7/UB11dk1JnDWdmMrVOvtGgYZDICm92FzM6KW6
+	 M/uNrjp/LOCZa1FzIvoezaDoXVLCbfBPm7oLRuGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.7 115/346] nouveau/gsp: handle engines in runl without nonstall interrupts.
-Date: Mon, 29 Jan 2024 09:02:26 -0800
-Message-ID: <20240129170019.774382896@linuxfoundation.org>
+	Ma Wupeng <mawupeng1@huawei.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 116/346] efi: disable mirror feature during crashkernel
+Date: Mon, 29 Jan 2024 09:02:27 -0800
+Message-ID: <20240129170019.804079935@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -49,66 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Ma Wupeng <mawupeng1@huawei.com>
 
-commit 205e18c13545ab43cc4fe4930732b4feef551198 upstream.
+commit 7ea6ec4c25294e8bc8788148ef854df92ee8dc5e upstream.
 
-It appears on TU106 GPUs (2070), that some of the nvdec engines
-are in the runlist but have no valid nonstall interrupt, nouveau
-didn't handle that too well.
+If the system has no mirrored memory or uses crashkernel.high while
+kernelcore=mirror is enabled on the command line then during crashkernel,
+there will be limited mirrored memory and this usually leads to OOM.
 
-This should let nouveau/gsp work on those.
+To solve this problem, disable the mirror feature during crashkernel.
 
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://lore.kernel.org/all/20240110011826.3996289-1-airlied@gmail.com/
+Link: https://lkml.kernel.org/r/20240109041536.3903042-1-mawupeng1@huawei.com
+Signed-off-by: Ma Wupeng <mawupeng1@huawei.com>
+Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c |    4 ++++
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/r535.c  |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/base.c   |    8 ++------
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ mm/mm_init.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/ga100.c
-@@ -550,6 +550,10 @@ ga100_fifo_nonstall_ctor(struct nvkm_fif
- 		struct nvkm_engn *engn = list_first_entry(&runl->engns, typeof(*engn), head);
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -26,6 +26,7 @@
+ #include <linux/pgtable.h>
+ #include <linux/swap.h>
+ #include <linux/cma.h>
++#include <linux/crash_dump.h>
+ #include "internal.h"
+ #include "slab.h"
+ #include "shuffle.h"
+@@ -381,6 +382,11 @@ static void __init find_zone_movable_pfn
+ 			goto out;
+ 		}
  
- 		runl->nonstall.vector = engn->func->nonstall(engn);
++		if (is_kdump_kernel()) {
++			pr_warn("The system is under kdump, ignore kernelcore=mirror.\n");
++			goto out;
++		}
 +
-+		/* if no nonstall vector just keep going */
-+		if (runl->nonstall.vector == -1)
-+			continue;
- 		if (runl->nonstall.vector < 0) {
- 			RUNL_ERROR(runl, "nonstall %d", runl->nonstall.vector);
- 			return runl->nonstall.vector;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/r535.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/r535.c
-@@ -351,7 +351,7 @@ r535_engn_nonstall(struct nvkm_engn *eng
- 	int ret;
- 
- 	ret = nvkm_gsp_intr_nonstall(subdev->device->gsp, subdev->type, subdev->inst);
--	WARN_ON(ret < 0);
-+	WARN_ON(ret == -ENOENT);
- 	return ret;
- }
- 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/base.c
-@@ -25,12 +25,8 @@ int
- nvkm_gsp_intr_nonstall(struct nvkm_gsp *gsp, enum nvkm_subdev_type type, int inst)
- {
- 	for (int i = 0; i < gsp->intr_nr; i++) {
--		if (gsp->intr[i].type == type && gsp->intr[i].inst == inst) {
--			if (gsp->intr[i].nonstall != ~0)
--				return gsp->intr[i].nonstall;
--
--			return -EINVAL;
--		}
-+		if (gsp->intr[i].type == type && gsp->intr[i].inst == inst)
-+			return gsp->intr[i].nonstall;
- 	}
- 
- 	return -ENOENT;
+ 		for_each_mem_region(r) {
+ 			if (memblock_is_mirror(r))
+ 				continue;
 
 
