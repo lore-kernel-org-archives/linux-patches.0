@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C74315A49F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E611015A49F;
 	Mon, 29 Jan 2024 17:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548295; cv=none; b=o6fPMccYm6f8l1Mwphm1OEfRVWfLjkyw/Fse0p1X4l6uuI2yGgT+EAS75mBNuXIwnmXDgyf9zkKSzULciU2TULnPPR3AWHLW6Zo+P5Pxel+UICIipiEFpp/Zc4Yrp40XNXU4bzNZt/YXGtNXQ90fULrAjVzhxzatPmhNrY9AYO4=
+	t=1706548296; cv=none; b=lZ8aOUbDJmKXRPH5loDlPEu1gnz+u8bxUU5pqHvo3a2gvfCFvDCDv2X7dW3XlPrjlr7HRrrbaz+DH4MpWKARkenn4XtAMx+7kJAJMxQ81nJ13B/fNYpwSBYqPlBBEpCYDirobp9RVFziHC3zBtTLWqfSLratViPqa+GGCW7lS48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548295; c=relaxed/simple;
-	bh=0d3yFoz3cfaGc1bO9TWezusZthC7aY9TbXwx+1EmFLQ=;
+	s=arc-20240116; t=1706548296; c=relaxed/simple;
+	bh=bqIGbPhxxDUSr5PTTuWQkBaQ+NhTvSTksyAJncI+40E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bidKDDZXDoO/E89Y6q7djuhH1rSWo1Kw8hQTV25fFWJMU5Ad55br2swzNPY7t0l2hiqs4qkX0XFnXSF1P/3+cjt05AzHtu9LXZxP0QTFEjaqSCJlo+Xbpaqv/6kzWVCRb8oFg5pLxYK/6vVvkQ4bIlO/IphqSUMUlKXPq2QPBUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPwWA+rC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OlVAf0QJtoaPHRamWVRkFt07hCABSHCY1poMUBLKAh466bLUj3mZYfZB0JxcRCQUNugSkkyZyVIwD9OuC6yXj0yZSN9E4jksU6DzbwLp9NgVOJhljxeFUSlCk6iTbguSSoWszVVAs+1n71/BaH53vGbeDSrs9fKNrZZz4GhIDYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jltpgB9E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPwWA+rC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C9AC433F1;
-	Mon, 29 Jan 2024 17:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jltpgB9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBE4C43394;
+	Mon, 29 Jan 2024 17:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548295;
-	bh=0d3yFoz3cfaGc1bO9TWezusZthC7aY9TbXwx+1EmFLQ=;
+	bh=bqIGbPhxxDUSr5PTTuWQkBaQ+NhTvSTksyAJncI+40E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPwWA+rCoypbYS/t87S28Fj1ZasVnMu54YNQ3NeSd8w2AndGKDch4jen1adFED/VS
-	 SXB/giMcgwZAJU6MFxixJ6TJkrCUQ2Q+ogXdweGWhlbF4NMEkVQniG6+N84ebT2ydo
-	 SmjUq/P3LZ6brD63i69vu3gCED7OiKgA/5c0SL08=
+	b=jltpgB9Ezs8R5EAjnuizV5/GzqCGI3lB/BxQPPpGvyikNvGoYmfoHwRwDqfjmmA6i
+	 yxy1W27RFQw6t28W8sLDzkW/LNq0nqfxyFxDWgr4SsK4p2xEMtayGz098ytqy4qQDX
+	 IXj6vb8VO82phQ8QqP4YIj5wYMNL+haDFKAIe6fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.1 058/185] serial: sc16is7xx: improve regmap debugfs by using one regmap per port
-Date: Mon, 29 Jan 2024 09:04:18 -0800
-Message-ID: <20240129170000.466209246@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 076/185] wifi: mac80211: fix potential sta-link leak
+Date: Mon, 29 Jan 2024 09:04:36 -0800
+Message-ID: <20240129170001.046549148@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -49,437 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 3837a0379533aabb9e4483677077479f7c6aa910 upstream.
+[ Upstream commit b01a74b3ca6fd51b62c67733ba7c3280fa6c5d26 ]
 
-With this current driver regmap implementation, it is hard to make sense
-of the register addresses displayed using the regmap debugfs interface,
-because they do not correspond to the actual register addresses documented
-in the datasheet. For example, register 1 is displayed as registers 04 thru
-07:
+When a station is allocated, links are added but not
+set to valid yet (e.g. during connection to an AP MLD),
+we might remove the station without ever marking links
+valid, and leak them. Fix that.
 
-$ cat /sys/kernel/debug/regmap/spi0.0/registers
-  04: 10 -> Port 0, register offset 1
-  05: 10 -> Port 1, register offset 1
-  06: 00 -> Port 2, register offset 1 -> invalid
-  07: 00 -> port 3, register offset 1 -> invalid
-  ...
-
-The reason is that bits 0 and 1 of the register address correspond to the
-channel (port) bits, so the register address itself starts at bit 2, and we
-must 'mentally' shift each register address by 2 bits to get its real
-address/offset.
-
-Also, only channels 0 and 1 are supported by the chip, so channel mask
-combinations of 10b and 11b are invalid, and the display of these
-registers is useless.
-
-This patch adds a separate regmap configuration for each port, similar to
-what is done in the max310x driver, so that register addresses displayed
-match the register addresses in the chip datasheet. Also, each port now has
-its own debugfs entry.
-
-Example with new regmap implementation:
-
-$ cat /sys/kernel/debug/regmap/spi0.0-port0/registers
-1: 10
-2: 01
-3: 00
-...
-
-$ cat /sys/kernel/debug/regmap/spi0.0-port1/registers
-1: 10
-2: 01
-3: 00
-
-As an added bonus, this also simplifies some operations (read/write/modify)
-because it is no longer necessary to manually shift register addresses.
-
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231030211447.974779-1-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cb71f1d136a6 ("wifi: mac80211: add sta link addition/removal")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240111181514.6573998beaf8.I09ac2e1d41c80f82a5a616b8bd1d9d8dd709a6a6@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c |  143 +++++++++++++++++++++++------------------
- 1 file changed, 81 insertions(+), 62 deletions(-)
+ net/mac80211/sta_info.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -301,8 +301,8 @@
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 49b71453dec3..f3d6c3e4c970 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -396,7 +396,10 @@ void sta_info_free(struct ieee80211_local *local, struct sta_info *sta)
+ 	int i;
  
- 
- /* Misc definitions */
-+#define SC16IS7XX_SPI_READ_BIT		BIT(7)
- #define SC16IS7XX_FIFO_SIZE		(64)
--#define SC16IS7XX_REG_SHIFT		2
- #define SC16IS7XX_GPIOS_PER_BANK	4
- 
- struct sc16is7xx_devtype {
-@@ -324,6 +324,7 @@ struct sc16is7xx_one_config {
- struct sc16is7xx_one {
- 	struct uart_port		port;
- 	u8				line;
-+	struct regmap			*regmap;
- 	struct kthread_work		tx_work;
- 	struct kthread_work		reg_work;
- 	struct kthread_delayed_work	ms_work;
-@@ -362,48 +363,37 @@ static void sc16is7xx_stop_tx(struct uar
- #define to_sc16is7xx_port(p,e)	((container_of((p), struct sc16is7xx_port, e)))
- #define to_sc16is7xx_one(p,e)	((container_of((p), struct sc16is7xx_one, e)))
- 
--static int sc16is7xx_line(struct uart_port *port)
--{
--	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
--
--	return one->line;
--}
--
- static u8 sc16is7xx_port_read(struct uart_port *port, u8 reg)
- {
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 	unsigned int val = 0;
--	const u8 line = sc16is7xx_line(port);
- 
--	regmap_read(s->regmap, (reg << SC16IS7XX_REG_SHIFT) | line, &val);
-+	regmap_read(one->regmap, reg, &val);
- 
- 	return val;
- }
- 
- static void sc16is7xx_port_write(struct uart_port *port, u8 reg, u8 val)
- {
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
--	const u8 line = sc16is7xx_line(port);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
--	regmap_write(s->regmap, (reg << SC16IS7XX_REG_SHIFT) | line, val);
-+	regmap_write(one->regmap, reg, val);
- }
- 
- static void sc16is7xx_fifo_read(struct uart_port *port, unsigned int rxlen)
- {
- 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
--	const u8 line = sc16is7xx_line(port);
--	u8 addr = (SC16IS7XX_RHR_REG << SC16IS7XX_REG_SHIFT) | line;
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
--	regcache_cache_bypass(s->regmap, true);
--	regmap_raw_read(s->regmap, addr, s->buf, rxlen);
--	regcache_cache_bypass(s->regmap, false);
-+	regcache_cache_bypass(one->regmap, true);
-+	regmap_raw_read(one->regmap, SC16IS7XX_RHR_REG, s->buf, rxlen);
-+	regcache_cache_bypass(one->regmap, false);
- }
- 
- static void sc16is7xx_fifo_write(struct uart_port *port, u8 to_send)
- {
- 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
--	const u8 line = sc16is7xx_line(port);
--	u8 addr = (SC16IS7XX_THR_REG << SC16IS7XX_REG_SHIFT) | line;
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
- 	/*
- 	 * Don't send zero-length data, at least on SPI it confuses the chip
-@@ -412,19 +402,17 @@ static void sc16is7xx_fifo_write(struct
- 	if (unlikely(!to_send))
- 		return;
- 
--	regcache_cache_bypass(s->regmap, true);
--	regmap_raw_write(s->regmap, addr, s->buf, to_send);
--	regcache_cache_bypass(s->regmap, false);
-+	regcache_cache_bypass(one->regmap, true);
-+	regmap_raw_write(one->regmap, SC16IS7XX_THR_REG, s->buf, to_send);
-+	regcache_cache_bypass(one->regmap, false);
- }
- 
- static void sc16is7xx_port_update(struct uart_port *port, u8 reg,
- 				  u8 mask, u8 val)
- {
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
--	const u8 line = sc16is7xx_line(port);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 
--	regmap_update_bits(s->regmap, (reg << SC16IS7XX_REG_SHIFT) | line,
--			   mask, val);
-+	regmap_update_bits(one->regmap, reg, mask, val);
- }
- 
- static int sc16is7xx_alloc_line(void)
-@@ -479,7 +467,7 @@ static const struct sc16is7xx_devtype sc
- 
- static bool sc16is7xx_regmap_volatile(struct device *dev, unsigned int reg)
- {
--	switch (reg >> SC16IS7XX_REG_SHIFT) {
-+	switch (reg) {
- 	case SC16IS7XX_RHR_REG:
- 	case SC16IS7XX_IIR_REG:
- 	case SC16IS7XX_LSR_REG:
-@@ -498,7 +486,7 @@ static bool sc16is7xx_regmap_volatile(st
- 
- static bool sc16is7xx_regmap_precious(struct device *dev, unsigned int reg)
- {
--	switch (reg >> SC16IS7XX_REG_SHIFT) {
-+	switch (reg) {
- 	case SC16IS7XX_RHR_REG:
- 		return true;
- 	default:
-@@ -511,6 +499,7 @@ static bool sc16is7xx_regmap_precious(st
- static int sc16is7xx_set_baud(struct uart_port *port, int baud)
- {
- 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
-+	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
- 	u8 lcr;
- 	u8 prescaler = 0;
- 	unsigned long clk = port->uartclk, div = clk / 16 / baud;
-@@ -542,12 +531,12 @@ static int sc16is7xx_set_baud(struct uar
- 			     SC16IS7XX_LCR_CONF_MODE_B);
- 
- 	/* Enable enhanced features */
--	regcache_cache_bypass(s->regmap, true);
-+	regcache_cache_bypass(one->regmap, true);
- 	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
- 			      SC16IS7XX_EFR_ENABLE_BIT,
- 			      SC16IS7XX_EFR_ENABLE_BIT);
- 
--	regcache_cache_bypass(s->regmap, false);
-+	regcache_cache_bypass(one->regmap, false);
- 
- 	/* Put LCR back to the normal mode */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
-@@ -563,10 +552,10 @@ static int sc16is7xx_set_baud(struct uar
- 			     SC16IS7XX_LCR_CONF_MODE_A);
- 
- 	/* Write the new divisor */
--	regcache_cache_bypass(s->regmap, true);
-+	regcache_cache_bypass(one->regmap, true);
- 	sc16is7xx_port_write(port, SC16IS7XX_DLH_REG, div / 256);
- 	sc16is7xx_port_write(port, SC16IS7XX_DLL_REG, div % 256);
--	regcache_cache_bypass(s->regmap, false);
-+	regcache_cache_bypass(one->regmap, false);
- 
- 	/* Put LCR back to the normal mode */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
-@@ -1094,7 +1083,7 @@ static void sc16is7xx_set_termios(struct
- 			     SC16IS7XX_LCR_CONF_MODE_B);
- 
- 	/* Configure flow control */
--	regcache_cache_bypass(s->regmap, true);
-+	regcache_cache_bypass(one->regmap, true);
- 	sc16is7xx_port_write(port, SC16IS7XX_XON1_REG, termios->c_cc[VSTART]);
- 	sc16is7xx_port_write(port, SC16IS7XX_XOFF1_REG, termios->c_cc[VSTOP]);
- 
-@@ -1113,7 +1102,7 @@ static void sc16is7xx_set_termios(struct
- 			      SC16IS7XX_EFR_REG,
- 			      SC16IS7XX_EFR_FLOWCTRL_BITS,
- 			      flow);
--	regcache_cache_bypass(s->regmap, false);
-+	regcache_cache_bypass(one->regmap, false);
- 
- 	/* Update LCR register */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
-@@ -1164,7 +1153,6 @@ static int sc16is7xx_config_rs485(struct
- static int sc16is7xx_startup(struct uart_port *port)
- {
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
--	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
- 	unsigned int val;
- 	unsigned long flags;
- 
-@@ -1181,7 +1169,7 @@ static int sc16is7xx_startup(struct uart
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
- 			     SC16IS7XX_LCR_CONF_MODE_B);
- 
--	regcache_cache_bypass(s->regmap, true);
-+	regcache_cache_bypass(one->regmap, true);
- 
- 	/* Enable write access to enhanced features and internal clock div */
- 	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
-@@ -1199,7 +1187,7 @@ static int sc16is7xx_startup(struct uart
- 			     SC16IS7XX_TCR_RX_RESUME(24) |
- 			     SC16IS7XX_TCR_RX_HALT(48));
- 
--	regcache_cache_bypass(s->regmap, false);
-+	regcache_cache_bypass(one->regmap, false);
- 
- 	/* Now, initialize the UART */
- 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, SC16IS7XX_LCR_WORD_LEN_8);
-@@ -1457,7 +1445,7 @@ static int sc16is7xx_setup_mctrl_ports(s
- 	if (s->mctrl_mask)
- 		regmap_update_bits(
- 			s->regmap,
--			SC16IS7XX_IOCONTROL_REG << SC16IS7XX_REG_SHIFT,
-+			SC16IS7XX_IOCONTROL_REG,
- 			SC16IS7XX_IOCONTROL_MODEM_A_BIT |
- 			SC16IS7XX_IOCONTROL_MODEM_B_BIT, s->mctrl_mask);
- 
-@@ -1472,7 +1460,7 @@ static const struct serial_rs485 sc16is7
- 
- static int sc16is7xx_probe(struct device *dev,
- 			   const struct sc16is7xx_devtype *devtype,
--			   struct regmap *regmap, int irq)
-+			   struct regmap *regmaps[], int irq)
- {
- 	unsigned long freq = 0, *pfreq = dev_get_platdata(dev);
- 	unsigned int val;
-@@ -1480,16 +1468,16 @@ static int sc16is7xx_probe(struct device
- 	int i, ret;
- 	struct sc16is7xx_port *s;
- 
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
-+	for (i = 0; i < devtype->nr_uart; i++)
-+		if (IS_ERR(regmaps[i]))
-+			return PTR_ERR(regmaps[i]);
- 
- 	/*
- 	 * This device does not have an identification register that would
- 	 * tell us if we are really connected to the correct device.
- 	 * The best we can do is to check if communication is at all possible.
- 	 */
--	ret = regmap_read(regmap,
--			  SC16IS7XX_LSR_REG << SC16IS7XX_REG_SHIFT, &val);
-+	ret = regmap_read(regmaps[0], SC16IS7XX_LSR_REG, &val);
- 	if (ret < 0)
- 		return -EPROBE_DEFER;
- 
-@@ -1523,7 +1511,7 @@ static int sc16is7xx_probe(struct device
- 			return -EINVAL;
- 	}
- 
--	s->regmap = regmap;
-+	s->regmap = regmaps[0];
- 	s->devtype = devtype;
- 	dev_set_drvdata(dev, s);
- 	mutex_init(&s->efr_lock);
-@@ -1538,8 +1526,8 @@ static int sc16is7xx_probe(struct device
- 	sched_set_fifo(s->kworker_task);
- 
- 	/* reset device, purging any pending irq / data */
--	regmap_write(s->regmap, SC16IS7XX_IOCONTROL_REG << SC16IS7XX_REG_SHIFT,
--			SC16IS7XX_IOCONTROL_SRESET_BIT);
-+	regmap_write(s->regmap, SC16IS7XX_IOCONTROL_REG,
-+		     SC16IS7XX_IOCONTROL_SRESET_BIT);
- 
- 	for (i = 0; i < devtype->nr_uart; ++i) {
- 		s->p[i].line		= i;
-@@ -1563,6 +1551,7 @@ static int sc16is7xx_probe(struct device
- 		s->p[i].port.ops	= &sc16is7xx_ops;
- 		s->p[i].old_mctrl	= 0;
- 		s->p[i].port.line	= sc16is7xx_alloc_line();
-+		s->p[i].regmap		= regmaps[i];
- 
- 		if (s->p[i].port.line >= SC16IS7XX_MAX_DEVS) {
- 			ret = -ENOMEM;
-@@ -1591,13 +1580,13 @@ static int sc16is7xx_probe(struct device
- 		sc16is7xx_port_write(&s->p[i].port, SC16IS7XX_LCR_REG,
- 				     SC16IS7XX_LCR_CONF_MODE_B);
- 
--		regcache_cache_bypass(s->regmap, true);
-+		regcache_cache_bypass(regmaps[i], true);
- 
- 		/* Enable write access to enhanced features */
- 		sc16is7xx_port_write(&s->p[i].port, SC16IS7XX_EFR_REG,
- 				     SC16IS7XX_EFR_ENABLE_BIT);
- 
--		regcache_cache_bypass(s->regmap, false);
-+		regcache_cache_bypass(regmaps[i], false);
- 
- 		/* Restore access to general registers */
- 		sc16is7xx_port_write(&s->p[i].port, SC16IS7XX_LCR_REG, 0x00);
-@@ -1700,19 +1689,36 @@ static const struct of_device_id __maybe
- MODULE_DEVICE_TABLE(of, sc16is7xx_dt_ids);
- 
- static struct regmap_config regcfg = {
--	.reg_bits = 7,
--	.pad_bits = 1,
-+	.reg_bits = 5,
-+	.pad_bits = 3,
- 	.val_bits = 8,
- 	.cache_type = REGCACHE_RBTREE,
- 	.volatile_reg = sc16is7xx_regmap_volatile,
- 	.precious_reg = sc16is7xx_regmap_precious,
-+	.max_register = SC16IS7XX_EFCR_REG,
- };
- 
-+static const char *sc16is7xx_regmap_name(unsigned int port_id)
-+{
-+	static char buf[6];
+ 	for (i = 0; i < ARRAY_SIZE(sta->link); i++) {
+-		if (!(sta->sta.valid_links & BIT(i)))
++		struct link_sta_info *link_sta;
 +
-+	snprintf(buf, sizeof(buf), "port%d", port_id);
-+
-+	return buf;
-+}
-+
-+static unsigned int sc16is7xx_regmap_port_mask(unsigned int port_id)
-+{
-+	/* CH1,CH0 are at bits 2:1. */
-+	return port_id << 1;
-+}
-+
- #ifdef CONFIG_SERIAL_SC16IS7XX_SPI
- static int sc16is7xx_spi_probe(struct spi_device *spi)
- {
- 	const struct sc16is7xx_devtype *devtype;
--	struct regmap *regmap;
-+	struct regmap *regmaps[2];
-+	unsigned int i;
- 	int ret;
++		link_sta = rcu_access_pointer(sta->link[i]);
++		if (!link_sta)
+ 			continue;
  
- 	/* Setup SPI bus */
-@@ -1737,11 +1743,20 @@ static int sc16is7xx_spi_probe(struct sp
- 		devtype = (struct sc16is7xx_devtype *)id_entry->driver_data;
- 	}
- 
--	regcfg.max_register = (0xf << SC16IS7XX_REG_SHIFT) |
--			      (devtype->nr_uart - 1);
--	regmap = devm_regmap_init_spi(spi, &regcfg);
-+	for (i = 0; i < devtype->nr_uart; i++) {
-+		regcfg.name = sc16is7xx_regmap_name(i);
-+		/*
-+		 * If read_flag_mask is 0, the regmap code sets it to a default
-+		 * of 0x80. Since we specify our own mask, we must add the READ
-+		 * bit ourselves:
-+		 */
-+		regcfg.read_flag_mask = sc16is7xx_regmap_port_mask(i) |
-+			SC16IS7XX_SPI_READ_BIT;
-+		regcfg.write_flag_mask = sc16is7xx_regmap_port_mask(i);
-+		regmaps[i] = devm_regmap_init_spi(spi, &regcfg);
-+	}
- 
--	return sc16is7xx_probe(&spi->dev, devtype, regmap, spi->irq);
-+	return sc16is7xx_probe(&spi->dev, devtype, regmaps, spi->irq);
- }
- 
- static void sc16is7xx_spi_remove(struct spi_device *spi)
-@@ -1780,7 +1795,8 @@ static int sc16is7xx_i2c_probe(struct i2
- 			       const struct i2c_device_id *id)
- {
- 	const struct sc16is7xx_devtype *devtype;
--	struct regmap *regmap;
-+	struct regmap *regmaps[2];
-+	unsigned int i;
- 
- 	if (i2c->dev.of_node) {
- 		devtype = device_get_match_data(&i2c->dev);
-@@ -1790,11 +1806,14 @@ static int sc16is7xx_i2c_probe(struct i2
- 		devtype = (struct sc16is7xx_devtype *)id->driver_data;
- 	}
- 
--	regcfg.max_register = (0xf << SC16IS7XX_REG_SHIFT) |
--			      (devtype->nr_uart - 1);
--	regmap = devm_regmap_init_i2c(i2c, &regcfg);
-+	for (i = 0; i < devtype->nr_uart; i++) {
-+		regcfg.name = sc16is7xx_regmap_name(i);
-+		regcfg.read_flag_mask = sc16is7xx_regmap_port_mask(i);
-+		regcfg.write_flag_mask = sc16is7xx_regmap_port_mask(i);
-+		regmaps[i] = devm_regmap_init_i2c(i2c, &regcfg);
-+	}
- 
--	return sc16is7xx_probe(&i2c->dev, devtype, regmap, i2c->irq);
-+	return sc16is7xx_probe(&i2c->dev, devtype, regmaps, i2c->irq);
- }
- 
- static void sc16is7xx_i2c_remove(struct i2c_client *client)
+ 		sta_remove_link(sta, i, false);
+-- 
+2.43.0
+
 
 
