@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA2A15B991;
-	Mon, 29 Jan 2024 17:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A0815B972;
+	Mon, 29 Jan 2024 17:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548299; cv=none; b=i16gnx4CCVTE/+qQejeocJwurncOuXiV2lScLhtSpCdAH0lJfgkhdiwIoLrh9Le48bbiFK+C/9ujsJif+riJLv1RqEMHl0vCFybr+jezRyofB6I7SN8CbwvJbw5uTW8y0swrWAoioPORaee/d9fSa4KJGeNeCil1RnRQThsN5vQ=
+	t=1706548300; cv=none; b=gDnPwdBJLbcNRlNj2M/x8lv89fjpatZcJSV62hHroxOHbpMkokjfNKf8jStfySZV9KadyzOxrgL7jcJaCFdbnmG2Wvqd5c1COugE320qZ0b8GDu71sMOzIra162fBRUhl/aixlufyyLAgxnxOiu/7DQ6r0OijNRdnsAaXomdB5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548299; c=relaxed/simple;
-	bh=5s1G7c9aal6nIhpfjpB0HbkDztHnauKgfwxLAzvjlJM=;
+	s=arc-20240116; t=1706548300; c=relaxed/simple;
+	bh=6AFnBTd4+ZE0EiydpQHYiEq1QzwTinJhforlaBahY6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AE2T3F710crestK9LOj2mLKrI4ZiscWpENNpmmXINoJfdmRQ+PC6Djx7nuGkbNKmDWksY2gj2j8aROVGTA2LoZjwxSkVP3D7OFv3VLceRWZ/JPQZgZq0+kP4epGAamURJxEGo7wmViRbpM6FBKoM42f9Gf59k3043xJ6zPewVNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kchwDC4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gc0dclgoYk0zBHCCRNoVhMGf++YUu92vOlNuG+w8kShu+3VYzWlM2Oigcu0qUFCEguboQzrTgsvUzVEU60+gCZzNe5OMdQiRy6an5IAg2GmKpfqpkI2PZR5Uo9CzKLDbqEGY5AAUaCHmTakahm6PAEHdgZg4/gmJRSVlJZD05EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPv06/GA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kchwDC4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DFCC43390;
-	Mon, 29 Jan 2024 17:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPv06/GA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB3AC433F1;
+	Mon, 29 Jan 2024 17:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548299;
-	bh=5s1G7c9aal6nIhpfjpB0HbkDztHnauKgfwxLAzvjlJM=;
+	s=korg; t=1706548300;
+	bh=6AFnBTd4+ZE0EiydpQHYiEq1QzwTinJhforlaBahY6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kchwDC4IwX1bFHEfyu7qZgKncVqeR9cFLHf12dsj1hzO6rtTNTDEOEAYUFUxZVENB
-	 qFEoIxvY7UjnkwTG8k2CCkQVIYa6jcnlojSUyzCg64ew99w55I2TDIzOmx+aBAPgd7
-	 WAkTEXp3cn0+nejPJ1qguPSC4c3UXEK1mtvsx5Po=
+	b=NPv06/GAxCx/epfuMYQkocIDsZAIWlYCg+82pzbzyf5E0a03o1U6/B9d5WlxK1vtg
+	 iAuC2BnAvwq3VHjwW6eTAts7gzELZFf+ds95GPb8H/AseeoJyIOz+r9+Cot1kfoD0h
+	 31Z9djZE0EJcN/ZM3oXGPnojV7/h7jMmrjxhL9Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 306/346] drm/bridge: parade-ps8640: Wait for HPD when doing an AUX transfer
-Date: Mon, 29 Jan 2024 09:05:37 -0800
-Message-ID: <20240129170025.461008714@linuxfoundation.org>
+Subject: [PATCH 6.1 079/185] bnxt_en: Wait for FLR to complete during probe
+Date: Mon, 29 Jan 2024 09:04:39 -0800
+Message-ID: <20240129170001.140299094@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 024b32db43a359e0ded3fcc6cd86247cbbed4224 ]
+[ Upstream commit 3c1069fa42872f95cf3c6fedf80723d391e12d57 ]
 
-Unlike what is claimed in commit f5aa7d46b0ee ("drm/bridge:
-parade-ps8640: Provide wait_hpd_asserted() in struct drm_dp_aux"), if
-someone manually tries to do an AUX transfer (like via `i2cdump ${bus}
-0x50 i`) while the panel is off we don't just get a simple transfer
-error. Instead, the whole ps8640 gets thrown for a loop and goes into
-a bad state.
+The first message to firmware may fail if the device is undergoing FLR.
+The driver has some recovery logic for this failure scenario but we must
+wait 100 msec for FLR to complete before proceeding.  Otherwise the
+recovery will always fail.
 
-Let's put the function to wait for the HPD (and the magical 50 ms
-after first reset) back in when we're doing an AUX transfer. This
-shouldn't actually make things much slower (assuming the panel is on)
-because we should immediately poll and see the HPD high. Mostly this
-is just an extra i2c transfer to the bridge.
-
-Fixes: f5aa7d46b0ee ("drm/bridge: parade-ps8640: Provide wait_hpd_asserted() in struct drm_dp_aux")
-Tested-by: Pin-yen Lin <treapking@chromium.org>
-Reviewed-by: Pin-yen Lin <treapking@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231221135548.1.I10f326a9305d57ad32cee7f8d9c60518c8be20fb@changeid
+Fixes: ba02629ff6cb ("bnxt_en: log firmware status on firmware init failure")
+Reviewed-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://lore.kernel.org/r/20240117234515.226944-2-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/parade-ps8640.c | 5 +++++
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
-index 541e4f5afc4c..fb5e9ae9ad81 100644
---- a/drivers/gpu/drm/bridge/parade-ps8640.c
-+++ b/drivers/gpu/drm/bridge/parade-ps8640.c
-@@ -346,6 +346,11 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
- 	int ret;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index df4d88d35701..f810b5dc25f0 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -12269,6 +12269,11 @@ static int bnxt_fw_init_one_p1(struct bnxt *bp)
  
- 	pm_runtime_get_sync(dev);
-+	ret = _ps8640_wait_hpd_asserted(ps_bridge, 200 * 1000);
-+	if (ret) {
-+		pm_runtime_put_sync_suspend(dev);
-+		return ret;
-+	}
- 	ret = ps8640_aux_transfer_msg(aux, msg);
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
+ 	bp->fw_cap = 0;
+ 	rc = bnxt_hwrm_ver_get(bp);
++	/* FW may be unresponsive after FLR. FLR must complete within 100 msec
++	 * so wait before continuing with recovery.
++	 */
++	if (rc)
++		msleep(100);
+ 	bnxt_try_map_fw_health_reg(bp);
+ 	if (rc) {
+ 		rc = bnxt_try_recover_fw(bp);
 -- 
 2.43.0
 
