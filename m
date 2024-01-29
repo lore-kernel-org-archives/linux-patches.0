@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152F4157E8F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CD5157E8F;
 	Mon, 29 Jan 2024 17:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548165; cv=none; b=VrCvPWjJfIifiUP+Qn8I9CPjyRHxdzVN3Iq292iNl3B2pbV1IlVkeHBepoI65ysH9jIwbopULi3ffdpRfbmeb6+GQdAgqdlib/wtZv6zdB2wufJtytpejQpmVVqt2+ETA4RsZMxmxmN8RqH6pD/rPbPwVaQ+JyRCdOmZsL7H6zo=
+	t=1706548165; cv=none; b=ZetMFOWV40FZP/5eJV7MQruU/CQk0X5ZfhWLqEGAXAwlXmtcFj3pz1S223y5s54t0dFyltqxt2wBYQCcTJXFsNUyfIau4gEaO7++Glp+vj9UPPCMWyN6lV43M9c8+u9RUWZ9ZJfWY0Tw6+P4UqB0+eku+vczrvO5VSX/BPgKCWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548165; c=relaxed/simple;
-	bh=2032Vw62K/UAZLiuzO/Y34o7hZNcJZkNq3uNlI2G7WQ=;
+	bh=KuM/MpGDWAKhShvbTxaNFPiGd4OlfTncISfsKRrNBtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f+7Oel5eMCU1+KwZtqj9vCJOh6LxaeoPmTIK8B+6Kr7Gitd34LLhek6ylYSI9pmuVBpXyG8i2pcCeNbamvl3Au8qpk0WTEX5I5QLbHw0mMB3f64/HlDzsvIcg19ZprOxd+aitAI7/gfyCwYTcvdM2jBBECk3KQjWfgmV8KSzXLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofmQ+eLg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRHr1ul9wbstlRa0b3Z5tmAWCGzONlebs8ScShEKqO+anBDEM4eko7QXcy5Ie4a6XJPPpdHRBVNMx9tYzLfYFn1YhkVs/J81UFgUoef5/WljyRcK73KyezfhgcpB+NVLmJbmAVrrHMJrbokouplyQ+2KRbrchVspmjqTmyCAFZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvHjeqdt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofmQ+eLg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22E4C433A6;
-	Mon, 29 Jan 2024 17:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvHjeqdt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8892CC43399;
+	Mon, 29 Jan 2024 17:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548164;
-	bh=2032Vw62K/UAZLiuzO/Y34o7hZNcJZkNq3uNlI2G7WQ=;
+	s=korg; t=1706548165;
+	bh=KuM/MpGDWAKhShvbTxaNFPiGd4OlfTncISfsKRrNBtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofmQ+eLgWvihuhhTxWzYCjb+nJ9T2lw8M8D0B1+iq2RAn395lRA7vtYHXWfuD3KBt
-	 273mTgLLEfgN3h/o5z4/uKvjtrcS5nfOj6jWWXpSUab7meZlFsMWUMgdute/nQhbZl
-	 t/MGALFeTZ4mysMdzmbYAgoEzbJVBRnFzSpHKRPE=
+	b=YvHjeqdt74bxcAgoxpvoLUKGWRGJYmviKsQ6cIbdik9L0hOgYbD7hdz7aF/OzcpWW
+	 5IQiooVp+aH2JwnJSxaoFqJEuBLtpRHuyltESMEmTisnzcaLxU0uKqcXXz6YuQcIkr
+	 h8dlzVDr/bgQc/BkICcCyolkEolwWAME7XS45k+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey E Altman <jaltman@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 171/346] afs: Add comments on abort handling
-Date: Mon, 29 Jan 2024 09:03:22 -0800
-Message-ID: <20240129170021.428540835@linuxfoundation.org>
+Subject: [PATCH 6.7 200/346] netfilter: nf_tables: restrict anonymous set and map names to 16 bytes
+Date: Mon, 29 Jan 2024 09:03:51 -0800
+Message-ID: <20240129170022.284081430@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,187 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit fe245c8fcdac339e6b42076c828a6bede3a5e948 ]
+[ Upstream commit b462579b2b86a8f5230543cadd3a4836be27baf7 ]
 
-Add some comments on AFS abort code handling in the rotation algorithm and
-adjust the errors produced to match.
+nftables has two types of sets/maps, one where userspace defines the
+name, and anonymous sets/maps, where userspace defines a template name.
 
-Reported-by: Jeffrey E Altman <jaltman@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Stable-dep-of: 17ba6f0bd14f ("afs: Fix error handling with lookup via FS.InlineBulkStatus")
+For the latter, kernel requires presence of exactly one "%d".
+nftables uses "__set%d" and "__map%d" for this.  The kernel will
+expand the format specifier and replaces it with the smallest unused
+number.
+
+As-is, userspace could define a template name that allows to move
+the set name past the 256 bytes upperlimit (post-expansion).
+
+I don't see how this could be a problem, but I would prefer if userspace
+cannot do this, so add a limit of 16 bytes for the '%d' template name.
+
+16 bytes is the old total upper limit for set names that existed when
+nf_tables was merged initially.
+
+Fixes: 387454901bd6 ("netfilter: nf_tables: Allow set names of up to 255 chars")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/rotate.c | 101 ++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 90 insertions(+), 11 deletions(-)
+ net/netfilter/nf_tables_api.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/afs/rotate.c b/fs/afs/rotate.c
-index a840c3588ebb..a3d127953ac6 100644
---- a/fs/afs/rotate.c
-+++ b/fs/afs/rotate.c
-@@ -13,6 +13,7 @@
- #include <linux/sched/signal.h>
- #include "internal.h"
- #include "afs_fs.h"
-+#include "protocol_uae.h"
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index f032c29f1da6..5282e8377782 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -24,6 +24,7 @@
+ #include <net/sock.h>
  
- /*
-  * Begin iteration through a server list, starting with the vnode's last used
-@@ -143,6 +144,11 @@ bool afs_select_fileserver(struct afs_operation *op)
- 	case -ECONNABORTED:
- 		/* The far side rejected the operation on some grounds.  This
- 		 * might involve the server being busy or the volume having been moved.
-+		 *
-+		 * Note that various V* errors should not be sent to a cache manager
-+		 * by a fileserver as they should be translated to more modern UAE*
-+		 * errors instead.  IBM AFS and OpenAFS fileservers, however, do leak
-+		 * these abort codes.
- 		 */
- 		switch (op->ac.abort_code) {
- 		case VNOVOL:
-@@ -150,6 +156,11 @@ bool afs_select_fileserver(struct afs_operation *op)
- 			 * - May indicate that the VL is wrong - retry once and compare
- 			 *   the results.
- 			 * - May indicate that the fileserver couldn't attach to the vol.
-+			 * - The volume might have been temporarily removed so that it can
-+			 *   be replaced by a volume restore.  "vos" might have ended one
-+			 *   transaction and has yet to create the next.
-+			 * - The volume might not be blessed or might not be in-service
-+			 *   (administrative action).
- 			 */
- 			if (op->flags & AFS_OPERATION_VNOVOL) {
- 				op->error = -EREMOTEIO;
-@@ -183,16 +194,56 @@ bool afs_select_fileserver(struct afs_operation *op)
- 			_leave(" = t [vnovol]");
- 			return true;
+ #define NFT_MODULE_AUTOLOAD_LIMIT (MODULE_NAME_LEN - sizeof("nft-expr-255-"))
++#define NFT_SET_MAX_ANONLEN 16
  
--		case VSALVAGE: /* TODO: Should this return an error or iterate? */
- 		case VVOLEXISTS:
--		case VNOSERVICE:
- 		case VONLINE:
--		case VDISKFULL:
--		case VOVERQUOTA:
--			op->error = afs_abort_to_error(op->ac.abort_code);
-+			/* These should not be returned from the fileserver. */
-+			pr_warn("Fileserver returned unexpected abort %d\n",
-+				op->ac.abort_code);
-+			op->error = -EREMOTEIO;
-+			goto next_server;
+ unsigned int nf_tables_net_id __read_mostly;
+ 
+@@ -4411,6 +4412,9 @@ static int nf_tables_set_alloc_name(struct nft_ctx *ctx, struct nft_set *set,
+ 		if (p[1] != 'd' || strchr(p + 2, '%'))
+ 			return -EINVAL;
+ 
++		if (strnlen(name, NFT_SET_MAX_ANONLEN) >= NFT_SET_MAX_ANONLEN)
++			return -EINVAL;
 +
-+		case VNOSERVICE:
-+			/* Prior to AFS 3.2 VNOSERVICE was returned from the fileserver
-+			 * if the volume was neither in-service nor administratively
-+			 * blessed.  All usage was replaced by VNOVOL because AFS 3.1 and
-+			 * earlier cache managers did not handle VNOSERVICE and assumed
-+			 * it was the client OSes errno 105.
-+			 *
-+			 * Starting with OpenAFS 1.4.8 VNOSERVICE was repurposed as the
-+			 * fileserver idle dead time error which was sent in place of
-+			 * RX_CALL_TIMEOUT (-3).  The error was intended to be sent if the
-+			 * fileserver took too long to send a reply to the client.
-+			 * RX_CALL_TIMEOUT would have caused the cache manager to mark the
-+			 * server down whereas VNOSERVICE since AFS 3.2 would cause cache
-+			 * manager to temporarily (up to 15 minutes) mark the volume
-+			 * instance as unusable.
-+			 *
-+			 * The idle dead logic resulted in cache inconsistency since a
-+			 * state changing call that the cache manager assumed was dead
-+			 * could still be processed to completion by the fileserver.  This
-+			 * logic was removed in OpenAFS 1.8.0 and VNOSERVICE is no longer
-+			 * returned.  However, many 1.4.8 through 1.6.24 fileservers are
-+			 * still in existence.
-+			 *
-+			 * AuriStorFS fileservers have never returned VNOSERVICE.
-+			 *
-+			 * VNOSERVICE should be treated as an alias for RX_CALL_TIMEOUT.
-+			 */
-+		case RX_CALL_TIMEOUT:
-+			op->error = -ETIMEDOUT;
- 			goto next_server;
- 
-+		case VSALVAGING: /* This error should not be leaked to cache managers
-+				  * but is from OpenAFS demand attach fileservers.
-+				  * It should be treated as an alias for VOFFLINE.
-+				  */
-+		case VSALVAGE: /* VSALVAGE should be treated as a synonym of VOFFLINE */
- 		case VOFFLINE:
-+			/* The volume is in use by the volserver or another volume utility
-+			 * for an operation that might alter the contents.  The volume is
-+			 * expected to come back but it might take a long time (could be
-+			 * days).
-+			 */
- 			if (!test_and_set_bit(AFS_VOLUME_OFFLINE, &op->volume->flags)) {
- 				afs_busy(op->volume, op->ac.abort_code);
- 				clear_bit(AFS_VOLUME_BUSY, &op->volume->flags);
-@@ -207,11 +258,20 @@ bool afs_select_fileserver(struct afs_operation *op)
- 			}
- 			goto busy;
- 
--		case VSALVAGING:
--		case VRESTARTING:
-+		case VRESTARTING: /* The fileserver is either shutting down or starting up. */
- 		case VBUSY:
--			/* Retry after going round all the servers unless we
--			 * have a file lock we need to maintain.
-+			/* The volume is in use by the volserver or another volume
-+			 * utility for an operation that is not expected to alter the
-+			 * contents of the volume.  VBUSY does not need to be returned
-+			 * for a ROVOL or BACKVOL bound to an ITBusy volserver
-+			 * transaction.  The fileserver is permitted to continue serving
-+			 * content from ROVOLs and BACKVOLs during an ITBusy transaction
-+			 * because the content will not change.  However, many fileserver
-+			 * releases do return VBUSY for ROVOL and BACKVOL instances under
-+			 * many circumstances.
-+			 *
-+			 * Retry after going round all the servers unless we have a file
-+			 * lock we need to maintain.
- 			 */
- 			if (op->flags & AFS_OPERATION_NO_VSLEEP) {
- 				op->error = -EBUSY;
-@@ -226,7 +286,7 @@ bool afs_select_fileserver(struct afs_operation *op)
- 				if (!afs_sleep_and_retry(op))
- 					goto failed;
- 
--				 /* Retry with same server & address */
-+				/* Retry with same server & address */
- 				_leave(" = t [vbusy]");
- 				return true;
- 			}
-@@ -270,10 +330,29 @@ bool afs_select_fileserver(struct afs_operation *op)
- 
- 			goto restart_from_beginning;
- 
-+		case VDISKFULL:
-+		case UAENOSPC:
-+			/* The partition is full.  Only applies to RWVOLs.
-+			 * Translate locally and return ENOSPC.
-+			 * No replicas to failover to.
-+			 */
-+			op->error = -ENOSPC;
-+			goto failed_but_online;
-+
-+		case VOVERQUOTA:
-+		case UAEDQUOT:
-+			/* Volume is full.  Only applies to RWVOLs.
-+			 * Translate locally and return EDQUOT.
-+			 * No replicas to failover to.
-+			 */
-+			op->error = -EDQUOT;
-+			goto failed_but_online;
-+
- 		default:
-+			op->error = afs_abort_to_error(op->ac.abort_code);
-+		failed_but_online:
- 			clear_bit(AFS_VOLUME_OFFLINE, &op->volume->flags);
- 			clear_bit(AFS_VOLUME_BUSY, &op->volume->flags);
--			op->error = afs_abort_to_error(op->ac.abort_code);
- 			goto failed;
- 		}
- 
+ 		inuse = (unsigned long *)get_zeroed_page(GFP_KERNEL);
+ 		if (inuse == NULL)
+ 			return -ENOMEM;
 -- 
 2.43.0
 
