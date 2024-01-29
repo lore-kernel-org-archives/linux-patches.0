@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663181586D6;
-	Mon, 29 Jan 2024 17:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D5215703E;
+	Mon, 29 Jan 2024 17:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548052; cv=none; b=nVC2TnjyfeDwakz1H+puAqludr49B5QPi113dPRgCzRfybEFqOBA/lrdbOpF3Henkp2sT/GMWCdKyM4OPWd5opT/xwzFhKtb2AThrNc5qq1qdtRn6N95druAifbiEBZNO8P+juMOWg7XcuxzrdabSf+TAS226UPImgHfjHSdvZ0=
+	t=1706548053; cv=none; b=fuFAUqR1Z7gXZx7xxGNB7VFA+NrVcLhT4czjeTe9j8OjGNun9lleTCMiSgycp74U0rYbP1FYARCRturSX5rjJFt/JMu0TKLJw5XwlI4QhzIoCxsg/xV5V6VMIsHvApIvywoiYquXG6iWKfH0GeqWC820DFPdNjtQpjQ2SH3A0D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548052; c=relaxed/simple;
-	bh=t0kzZ04TPBMKbJkS6WuDKcFXEbhmg12taJ21Z+PnKhs=;
+	s=arc-20240116; t=1706548053; c=relaxed/simple;
+	bh=1z8v97DKmKS1opn7kkQadrBXw5+80/nLwQlAneo2ob4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fp6OnBf+oBAdRLobda1MjhNW7Y7piZMBH/RwwhWiVGCoYkLqFZbSNAgLC+UY2mEGj34cQCUXCWtqW5UP/HWhdXLic9hkzaUwYGU484caec4MMUuP18GUvNXlTSQRVQ8nGuXVh42BR6/CJ1/sGx1kAO8uHIye8Vi3Ei2yIx/cHbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOjgscdA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jAA/tsVNJ+UWqumlC1fBp7Lh496V1lCPpQT1nmrrz1tYBw2BWUCM9MUYtmJoL28P8HuJ1ygBtxJoZkiHWa+YJY1QsvlmMbP+GZKyWYRK5MmDm1/CoM9h0c8AjsE5DNVuAmHIgYY01bxos0J16eH2Na96oJjRoA+9nA0SiZfvmAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAyciiB0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOjgscdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59351C433C7;
-	Mon, 29 Jan 2024 17:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAyciiB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B23C433C7;
+	Mon, 29 Jan 2024 17:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548051;
-	bh=t0kzZ04TPBMKbJkS6WuDKcFXEbhmg12taJ21Z+PnKhs=;
+	s=korg; t=1706548053;
+	bh=1z8v97DKmKS1opn7kkQadrBXw5+80/nLwQlAneo2ob4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOjgscdAWZ6Fy91U0XU7NAhG+72JeHpSYWzx2D49cwNcDsmgiU7etkEYr8e6mS5Mp
-	 OP5qE7j6u11WB5oh8dHIYIj8N9A9sXWlDN3hJlE795jQs9tIjCfil8opc8582psqiV
-	 Xkyki7YE7AuVZELVpoq7ibBTNKrgjv3sXUBNiDf0=
+	b=MAyciiB0ZXvPHG9SQYKmgIcKd68sya8griKJEa6ZaMyfEpTnovso/YEGh/10qf+vo
+	 x/wyPi+IoHEtNHqu85xBvPHuF2ZTsPVFTqMoS3m5kel5CuiRYu5ZiR/cB/aobPhzeR
+	 6QX5SD9EylHB6vyQxV0fGsfJ78iswpvaOxyDAnJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Zhang <rex.zhang@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 053/346] dmaengine: idxd: Move dma_free_coherent() out of spinlocked context
-Date: Mon, 29 Jan 2024 09:01:24 -0800
-Message-ID: <20240129170017.951638141@linuxfoundation.org>
+	Bingbu Cao <bingbu.cao@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.7 031/346] media: ov13b10: Enable runtime PM before registering async sub-device
+Date: Mon, 29 Jan 2024 09:01:02 -0800
+Message-ID: <20240129170017.296378459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,72 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Zhang <rex.zhang@intel.com>
+From: Bingbu Cao <bingbu.cao@intel.com>
 
-[ Upstream commit e271c0ba3f919c48e90c64b703538fbb7865cb63 ]
+commit 7b0454cfd8edb3509619407c3b9f78a6d0dee1a5 upstream.
 
-Task may be rescheduled within dma_free_coherent(). So dma_free_coherent()
-can't be called between spin_lock() and spin_unlock() to avoid Call Trace:
-    Call Trace:
-    <TASK>
-    dump_stack_lvl+0x37/0x50
-    __might_resched+0x16a/0x1c0
-    vunmap+0x2c/0x70
-    __iommu_dma_free+0x96/0x100
-    idxd_device_evl_free+0xd5/0x100 [idxd]
-    device_release_driver_internal+0x197/0x200
-    unbind_store+0xa1/0xb0
-    kernfs_fop_write_iter+0x120/0x1c0
-    vfs_write+0x2d3/0x400
-    ksys_write+0x63/0xe0
-    do_syscall_64+0x44/0xa0
-    entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-Move it out of the context.
+As the sensor device maybe accessible right after its async sub-device is
+registered, such as ipu-bridge will try to power up sensor by sensor's
+client device's runtime PM from the async notifier callback, if runtime PM
+is not enabled, it will fail.
 
-Fixes: 244da66cda35 ("dmaengine: idxd: setup event log configuration")
-Signed-off-by: Rex Zhang <rex.zhang@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Link: https://lore.kernel.org/r/20231212022158.358619-2-rex.zhang@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So runtime PM should be ready before its async sub-device is registered
+and accessible by others.
+
+Fixes: 7ee850546822 ("media: Add sensor driver support for the ov13b10 camera.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/device.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov13b10.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/idxd/device.c b/drivers/dma/idxd/device.c
-index 8f754f922217..fa0f880beae6 100644
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -802,6 +802,9 @@ static int idxd_device_evl_setup(struct idxd_device *idxd)
+--- a/drivers/media/i2c/ov13b10.c
++++ b/drivers/media/i2c/ov13b10.c
+@@ -1556,24 +1556,27 @@ static int ov13b10_probe(struct i2c_clie
+ 		goto error_handler_free;
+ 	}
  
- static void idxd_device_evl_free(struct idxd_device *idxd)
- {
-+	void *evl_log;
-+	unsigned int evl_log_size;
-+	dma_addr_t evl_dma;
- 	union gencfg_reg gencfg;
- 	union genctrl_reg genctrl;
- 	struct device *dev = &idxd->pdev->dev;
-@@ -822,11 +825,15 @@ static void idxd_device_evl_free(struct idxd_device *idxd)
- 	iowrite64(0, idxd->reg_base + IDXD_EVLCFG_OFFSET);
- 	iowrite64(0, idxd->reg_base + IDXD_EVLCFG_OFFSET + 8);
+-	ret = v4l2_async_register_subdev_sensor(&ov13b->sd);
+-	if (ret < 0)
+-		goto error_media_entity;
  
--	dma_free_coherent(dev, evl->log_size, evl->log, evl->dma);
- 	bitmap_free(evl->bmap);
-+	evl_log = evl->log;
-+	evl_log_size = evl->log_size;
-+	evl_dma = evl->dma;
- 	evl->log = NULL;
- 	evl->size = IDXD_EVL_SIZE_MIN;
- 	spin_unlock(&evl->lock);
+ 	/*
+ 	 * Device is already turned on by i2c-core with ACPI domain PM.
+ 	 * Enable runtime PM and turn off the device.
+ 	 */
+-
+ 	/* Set the device's state to active if it's in D0 state. */
+ 	if (full_power)
+ 		pm_runtime_set_active(&client->dev);
+ 	pm_runtime_enable(&client->dev);
+ 	pm_runtime_idle(&client->dev);
+ 
++	ret = v4l2_async_register_subdev_sensor(&ov13b->sd);
++	if (ret < 0)
++		goto error_media_entity_runtime_pm;
 +
-+	dma_free_coherent(dev, evl_log_size, evl_log, evl_dma);
+ 	return 0;
+ 
+-error_media_entity:
++error_media_entity_runtime_pm:
++	pm_runtime_disable(&client->dev);
++	if (full_power)
++		pm_runtime_set_suspended(&client->dev);
+ 	media_entity_cleanup(&ov13b->sd.entity);
+ 
+ error_handler_free:
+@@ -1596,6 +1599,7 @@ static void ov13b10_remove(struct i2c_cl
+ 	ov13b10_free_controls(ov13b);
+ 
+ 	pm_runtime_disable(&client->dev);
++	pm_runtime_set_suspended(&client->dev);
  }
  
- static void idxd_group_config_write(struct idxd_group *group)
--- 
-2.43.0
-
+ static DEFINE_RUNTIME_DEV_PM_OPS(ov13b10_pm_ops, ov13b10_suspend,
 
 
