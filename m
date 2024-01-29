@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078F173722;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F0D73722;
 	Mon, 29 Jan 2024 17:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548542; cv=none; b=Ddq+KEDuc+WxQ+SOnWf4/+Y6qyLKrmNP41XFWNCvVhdjRw5ygT0zlGUPP4cp9+DmggmfpBWF2oxysb3WMpEqmOBqp37zU8lFOtbreFIMe8UAwCBMCPt2tzkZsSi8qYLM0veqYHxWRaSSD5Qso5JDgwwSVGSmB2utWusGFfnGvXg=
+	t=1706548542; cv=none; b=t6J2ekUd7r6a0EZQlLPqesvX4YuGOWNqio0LR1SWPDeN6k5vt0dCj1CiwKeJ1WVY0ywXU0vQR344lVXBHSX0vTzI5iP6IMYQdw+FuwJ4ZMPbqrs1l5qBF0KxUBjSWrxplYG4WwjoOMuHkswE6S7MbyVxtb7eKmERyDiUqn180x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548542; c=relaxed/simple;
-	bh=Ro3ezqEO/v4qh6u1z0ccaa14AwRwwAUoHB4VGrAiCkM=;
+	bh=FshGyPnN7aErYl27bI5K9dYuHZFSRpTDvLMp3IR9vGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bu3ULXpF+4gaXYWeZSJQRUmIXoQ77ELvXe0/4bRBvyTIDlxWFxaATo3Ve5JFfCi7TCsGoAC7A6Iz55HwVP7+c6cPiPv95YeamX/Gd7auR7YrLWOcswFeeA5oipizmM7TB4TxlBYP98PAtohzWvXwGcR4zVwm61uwQAczuyUKFec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Drsm4PE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SFj4FZiwIpX5FD7rDa9xf+ZIvf+KU4jy97SXNxukcX9ZSLocjxtTfsw3FM5xvGhT0nD0AFL8TuczLBsIE7EjabQofEmOY0l3m7d9SVVvP/g0we99tUeknKKdyM6oJ2IKA1/knZG+jWl2Chgpc7NI2GctILVEuDUiZuLEArOjJ0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SQF8oAp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Drsm4PE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FFBC433F1;
-	Mon, 29 Jan 2024 17:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SQF8oAp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB35C433C7;
+	Mon, 29 Jan 2024 17:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548541;
-	bh=Ro3ezqEO/v4qh6u1z0ccaa14AwRwwAUoHB4VGrAiCkM=;
+	s=korg; t=1706548542;
+	bh=FshGyPnN7aErYl27bI5K9dYuHZFSRpTDvLMp3IR9vGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Drsm4PE7HnJQVrfB9m4Ww+QAFmpN0SgymOgyxIFzhMDa8rsmXM5sEn/xHfgmOgbNw
-	 ojQVAg0O3Va7ptgUUK4MiKP3du0YJVNikFZumbyMEp7maGUGZwLuwb5Pt+c06iOJeC
-	 CqszRURyO5FcE+sTwnZ9iPfcdhbN9vYUp0JBgWTo=
+	b=2SQF8oAp6Zjtuls/T67OBjCCRPEVUM0vSVIA7ZNcka9QCu79VOjoXWsFbrIjjtval
+	 DvWI/a8DEjU367TIz9y7TWmcFbpnX8ZpeG1MdbeYT/jtWt5y/pHzZwTQhClE2kbR36
+	 6Qg3dktOw9AvTlQkL6UDg6fzi1SMnHVAUJrySnd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	David Howells <dhowells@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/331] net/rds: Fix UBSAN: array-index-out-of-bounds in rds_cmsg_recv
-Date: Mon, 29 Jan 2024 09:04:06 -0800
-Message-ID: <20240129170020.228683626@linuxfoundation.org>
+Subject: [PATCH 6.6 183/331] netfs, fscache: Prevent Oops in fscache_put_cache()
+Date: Mon, 29 Jan 2024 09:04:07 -0800
+Message-ID: <20240129170020.252484948@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,69 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 13e788deb7348cc88df34bed736c3b3b9927ea52 ]
+[ Upstream commit 3be0b3ed1d76c6703b9ee482b55f7e01c369cc68 ]
 
-Syzcaller UBSAN crash occurs in rds_cmsg_recv(),
-which reads inc->i_rx_lat_trace[j + 1] with index 4 (3 + 1),
-but with array size of 4 (RDS_RX_MAX_TRACES).
-Here 'j' is assigned from rs->rs_rx_trace[i] and in-turn from
-trace.rx_trace_pos[i] in rds_recv_track_latency(),
-with both arrays sized 3 (RDS_MSG_RX_DGRAM_TRACE_MAX). So fix the
-off-by-one bounds check in rds_recv_track_latency() to prevent
-a potential crash in rds_cmsg_recv().
+This function dereferences "cache" and then checks if it's
+IS_ERR_OR_NULL().  Check first, then dereference.
 
-Found by syzcaller:
-=================================================================
-UBSAN: array-index-out-of-bounds in net/rds/recv.c:585:39
-index 4 is out of range for type 'u64 [4]'
-CPU: 1 PID: 8058 Comm: syz-executor228 Not tainted 6.6.0-gd2f51b3516da #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS 1.15.0-1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x136/0x150 lib/dump_stack.c:106
- ubsan_epilogue lib/ubsan.c:217 [inline]
- __ubsan_handle_out_of_bounds+0xd5/0x130 lib/ubsan.c:348
- rds_cmsg_recv+0x60d/0x700 net/rds/recv.c:585
- rds_recvmsg+0x3fb/0x1610 net/rds/recv.c:716
- sock_recvmsg_nosec net/socket.c:1044 [inline]
- sock_recvmsg+0xe2/0x160 net/socket.c:1066
- __sys_recvfrom+0x1b6/0x2f0 net/socket.c:2246
- __do_sys_recvfrom net/socket.c:2264 [inline]
- __se_sys_recvfrom net/socket.c:2260 [inline]
- __x64_sys_recvfrom+0xe0/0x1b0 net/socket.c:2260
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x40/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-==================================================================
-
-Fixes: 3289025aedc0 ("RDS: add receive message trace used by application")
-Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Closes: https://lore.kernel.org/linux-rdma/CALGdzuoVdq-wtQ4Az9iottBqC5cv9ZhcE5q8N7LfYFvkRsOVcw@mail.gmail.com/
-Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9549332df4ed ("fscache: Implement cache registration")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/e84bc740-3502-4f16-982a-a40d5676615c@moroto.mountain/ # v2
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/af_rds.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fscache/cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
-index 01c4cdfef45d..8435a20968ef 100644
---- a/net/rds/af_rds.c
-+++ b/net/rds/af_rds.c
-@@ -419,7 +419,7 @@ static int rds_recv_track_latency(struct rds_sock *rs, sockptr_t optval,
+diff --git a/fs/fscache/cache.c b/fs/fscache/cache.c
+index d645f8b302a2..9397ed39b0b4 100644
+--- a/fs/fscache/cache.c
++++ b/fs/fscache/cache.c
+@@ -179,13 +179,14 @@ EXPORT_SYMBOL(fscache_acquire_cache);
+ void fscache_put_cache(struct fscache_cache *cache,
+ 		       enum fscache_cache_trace where)
+ {
+-	unsigned int debug_id = cache->debug_id;
++	unsigned int debug_id;
+ 	bool zero;
+ 	int ref;
  
- 	rs->rs_rx_traces = trace.rx_traces;
- 	for (i = 0; i < rs->rs_rx_traces; i++) {
--		if (trace.rx_trace_pos[i] > RDS_MSG_RX_DGRAM_TRACE_MAX) {
-+		if (trace.rx_trace_pos[i] >= RDS_MSG_RX_DGRAM_TRACE_MAX) {
- 			rs->rs_rx_traces = 0;
- 			return -EFAULT;
- 		}
+ 	if (IS_ERR_OR_NULL(cache))
+ 		return;
+ 
++	debug_id = cache->debug_id;
+ 	zero = __refcount_dec_and_test(&cache->ref, &ref);
+ 	trace_fscache_cache(debug_id, ref - 1, where);
+ 
 -- 
 2.43.0
 
