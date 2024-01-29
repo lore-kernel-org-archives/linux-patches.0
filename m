@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9D315FB30;
-	Mon, 29 Jan 2024 17:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AD415A49D;
+	Mon, 29 Jan 2024 17:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548320; cv=none; b=TkmK2tUTDPQPmDOuRlHaKMA95OfH1/DGrdkKPH/1A5IseGpx6juZVN5onsNXfIPyft/17CCk4Kl0DWIAksVtc1nQZH0QZl+HAABV1X4JwuX+pjNvS/Nvu/NxPJ+Y3P9bWTBkSF+PpTdSkhE+d3oCtuYWCZeqEsnNPFPF/D9J0TY=
+	t=1706548321; cv=none; b=qdqzGCghUWkA9GYdL3B3lCTOWJdEJCSQT2WotQyZ4orF2fB5G0p9pZZYr5hESTgUtATFf4lD/wta8YXIPlCyB107BE5qVoGQTIBPuVX815XRV8LRGQIqiSrXOy+QUBqZHWRLD2cjm8KaFsn76i9xEVU23fDr22xui1UMIvdjCGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548320; c=relaxed/simple;
-	bh=Y8wPl9RxiTKOOGg+0dDUKTrHLMhiWSQzEHJjnDAp+qc=;
+	s=arc-20240116; t=1706548321; c=relaxed/simple;
+	bh=q1qCLBm8DeZg7Nqrk7KLFX4CTAfyYDrD+7gn2P3ks+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cnfDYuDllBKauJ6yI7bZIn21WQ31rz9h6ERIEJDN4t96KvJS7KcpKf11pVGHQ822k8IThgwStXf66gE0aleG4QrJ9HUcB8q5d3xLEzEs7mb0H9FQGOOxhKXUe1Sh80thvxxIs0rwlSkvbH88qy96gC00UXHxB5PI/sG0WfTClDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZwcVj7m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+DqIBojtMv86xWKvuPQWjUuUMBPrhQMRzZo3tsm7WdJTnyRm2d/oivL7BdDOHx0G2VYMFE0IE2FMSKGKpy98pYJXvfgd+Vn/FJEmZlUbIO3LUmKyBEwZ1+gpbvrXPfZgMPPOKsUuEjAPRhzToosY7GxuzzimAYbacfpD3wnFS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzgSn2y/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZwcVj7m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDFEC43390;
-	Mon, 29 Jan 2024 17:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzgSn2y/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201F3C433F1;
+	Mon, 29 Jan 2024 17:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548320;
-	bh=Y8wPl9RxiTKOOGg+0dDUKTrHLMhiWSQzEHJjnDAp+qc=;
+	s=korg; t=1706548321;
+	bh=q1qCLBm8DeZg7Nqrk7KLFX4CTAfyYDrD+7gn2P3ks+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZwcVj7mdhrhFSE8CzHCjSo2eXxoeChtyi7h7gBD0HOj52NvMOHeYN9pSjE0BSQsy
-	 v60x2IikK1cGuPIfEmeNxZ1ZjaUPnDLiL3iLxRNhZRAQ6roph9oGV4hEzLK+ztRNV3
-	 55UTGbZ7iUwK8Xnue5CN6GpnocE+U0DmKKypnTCU=
+	b=qzgSn2y/PO4mmqwacyr7+zMYzOgIr+VR0V1oe7e8GSHE7MxpZlqsqymEfQT1PIPG4
+	 wlv52ATJJZ461WqhXBKaDR0eIDWbHP09HfJaxgKs1E/LTsGzuP1VDYep1GaeqjFFro
+	 sZLuf/FSnLT3Mwg5EWz7pzMc4n0TuDINbGQykkjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 093/185] netlink: fix potential sleeping issue in mqueue_flush_file
-Date: Mon, 29 Jan 2024 09:04:53 -0800
-Message-ID: <20240129170001.582195527@linuxfoundation.org>
+Subject: [PATCH 6.7 314/346] memblock: fix crash when reserved memory is not added to memory
+Date: Mon, 29 Jan 2024 09:05:45 -0800
+Message-ID: <20240129170025.709965392@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yajun Deng <yajun.deng@linux.dev>
 
-[ Upstream commit 234ec0b6034b16869d45128b8cd2dc6ffe596f04 ]
+[ Upstream commit 6a9531c3a88096a26cf3ac582f7ec44f94a7dcb2 ]
 
-I analyze the potential sleeping issue of the following processes:
-Thread A                                Thread B
-...                                     netlink_create  //ref = 1
-do_mq_notify                            ...
-  sock = netlink_getsockbyfilp          ...     //ref = 2
-  info->notify_sock = sock;             ...
-...                                     netlink_sendmsg
-...                                       skb = netlink_alloc_large_skb  //skb->head is vmalloced
-...                                       netlink_unicast
-...                                         sk = netlink_getsockbyportid //ref = 3
-...                                         netlink_sendskb
-...                                           __netlink_sendskb
-...                                             skb_queue_tail //put skb to sk_receive_queue
-...                                         sock_put //ref = 2
-...                                     ...
-...                                     netlink_release
-...                                       deferred_put_nlk_sk //ref = 1
-mqueue_flush_file
-  spin_lock
-  remove_notification
-    netlink_sendskb
-      sock_put  //ref = 0
-        sk_free
-          ...
-          __sk_destruct
-            netlink_sock_destruct
-              skb_queue_purge  //get skb from sk_receive_queue
-                ...
-                __skb_queue_purge_reason
-                  kfree_skb_reason
-                    __kfree_skb
-                    ...
-                    skb_release_all
-                      skb_release_head_state
-                        netlink_skb_destructor
-                          vfree(skb->head)  //sleeping while holding spinlock
+After commit 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
+nid of a reserved region is used by init_reserved_page() (with
+CONFIG_DEFERRED_STRUCT_PAGE_INIT=y) to access node strucure.
+In many cases the nid of the reserved memory is not set and this causes
+a crash.
 
-In netlink_sendmsg, if the memory pointed to by skb->head is allocated by
-vmalloc, and is put to sk_receive_queue queue, also the skb is not freed.
-When the mqueue executes flush, the sleeping bug will occur. Use
-vfree_atomic instead of vfree in netlink_skb_destructor to solve the issue.
+When the nid of a reserved region is not set, fall back to
+early_pfn_to_nid(), so that nid of the first_online_node will be passed
+to init_reserved_page().
 
-Fixes: c05cdb1b864f ("netlink: allow large data transfers from user-space")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20240122011807.2110357-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Link: https://lore.kernel.org/r/20240118061853.2652295-1-yajun.deng@linux.dev
+[rppt: massaged the commit message]
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memblock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index cb833302270a..6857a4965fe8 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -374,7 +374,7 @@ static void netlink_skb_destructor(struct sk_buff *skb)
- 	if (is_vmalloc_addr(skb->head)) {
- 		if (!skb->cloned ||
- 		    !atomic_dec_return(&(skb_shinfo(skb)->dataref)))
--			vfree(skb->head);
-+			vfree_atomic(skb->head);
+diff --git a/mm/memblock.c b/mm/memblock.c
+index 5a88d6d24d79..4823ad979b72 100644
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -2141,6 +2141,9 @@ static void __init memmap_init_reserved_pages(void)
+ 			start = region->base;
+ 			end = start + region->size;
  
- 		skb->head = NULL;
++			if (nid == NUMA_NO_NODE || nid >= MAX_NUMNODES)
++				nid = early_pfn_to_nid(PFN_DOWN(start));
++
+ 			reserve_bootmem_region(start, end, nid);
+ 		}
  	}
 -- 
 2.43.0
