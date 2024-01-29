@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6AF161B54;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBC8161B63;
 	Mon, 29 Jan 2024 17:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548354; cv=none; b=TByEVdZlZ6BB9RZSlKo7pIRRo5qpPt4kQXG2+h18nRyfY15v19TtagUDk6ypgX10nUBj6dUFH884nPYmSgrOA0MzYzn42Pi3VkeE7eVmNY2g71+xFPvh5Bw1OCgezfvQ5BpKaHDkkEmf7oSgXdZElP5DsNcDS7HjKileFfQFgFo=
+	t=1706548355; cv=none; b=KhZrPdpCBtQn+SK2wj1AMn9SQt3nwiroLa7ssjQ/s2mlXjYwvO+h2H4D5YLHOT6sMYwrJ3RqGgPe2N3QPg6PV3Hu8MAn2vf6RqR8kGFScYsl74S95Kazt6UPx/TRdRwTZvzCWT/F2wvXt3ncylWZ6exE/2lRPEYQLMIGEfjQStM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548354; c=relaxed/simple;
-	bh=jItDdHDuYmcp6LcWaQXCyDiQl6Rsg0y0LzPLlUUI/xE=;
+	s=arc-20240116; t=1706548355; c=relaxed/simple;
+	bh=8adTff1bp46qknfGYkDavytLZvJUhpVH7Fl21OW6jh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmGDwwDylZ7aYt04u05dW3rmnJ7ZpYATctYiTEeTYYIqx5tvYyZ7z7x8pv4KwsfUXKiGNkzfW31KWFeNKHGahI0JxAOw4IV8dmCi3U0PpKUuRWNK8qKU4BQJUWyhXsXvXsrhIJzmLBIjwv4yVVNeyjFIIU+XlmaagG9UMsDOKLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guR+4ylE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AQQ5SLrsGa/e63jubkUlr/GBigtliw8GvBLIJlfA9ay17wrGUYA6NPXQCFR9Olb5GaCX351SW1Ulng9oEpvW/35mGUX0UDu9zxcFqL2koXR6uV6ziO7fUtzksLTg/Z2JEaxpb2EG1o85LSJLv2NSWOwq2DNREHlX5OhB3XqMJw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjqUu4yu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guR+4ylE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E948FC433F1;
-	Mon, 29 Jan 2024 17:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjqUu4yu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2208C433F1;
+	Mon, 29 Jan 2024 17:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548354;
-	bh=jItDdHDuYmcp6LcWaQXCyDiQl6Rsg0y0LzPLlUUI/xE=;
+	bh=8adTff1bp46qknfGYkDavytLZvJUhpVH7Fl21OW6jh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guR+4ylEfG0Ls/asTAIrfCs5ccRPknOAqkH3TlGCyru39lxgTUDVOnlT3xXBvX9op
-	 TIBnW0l48n2CxbVrEjNyrPgS/+YvN+3ZvFm72VZSoJHUTa/zECt1afasD5XxQdCTsa
-	 9GuaPZJw2MUk+wXDgYr3uzlZ2cTZrTQ0R509UQE0=
+	b=DjqUu4yuy7are70TyI+z2KR96PTgqRE2DfBd/n4CkHNHaP6acdk7zw61bzYEchF3Y
+	 8Cc+mfmRPNHIlG8duRxSoEThWk6jQgDWIyaL3OB33DKBCpl5y7H2wwjOI2LQLUyR5+
+	 7q6mb9nXw728HyymxSAmo0Hljjd9z+9DWR7BvcfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.7 342/346] mips: Call lose_fpu(0) before initializing fcr31 in mips_set_personality_nan
-Date: Mon, 29 Jan 2024 09:06:13 -0800
-Message-ID: <20240129170026.566969298@linuxfoundation.org>
+	syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com,
+	syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com,
+	Anand Jain <anand.jain@oracle.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 116/185] btrfs: ref-verify: free ref cache before clearing mount opt
+Date: Mon, 29 Jan 2024 09:05:16 -0800
+Message-ID: <20240129170002.324860441@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 59be5c35850171e307ca5d3d703ee9ff4096b948 upstream.
+commit f03e274a8b29d1d1c1bbd7f764766cb5ca537ab7 upstream.
 
-If we still own the FPU after initializing fcr31, when we are preempted
-the dirty value in the FPU will be read out and stored into fcr31,
-clobbering our setting.  This can cause an improper floating-point
-environment after execve().  For example:
+As clearing REF_VERIFY mount option indicates there were some errors in a
+ref-verify process, a ref cache is not relevant anymore and should be
+freed.
 
-    zsh% cat measure.c
-    #include <fenv.h>
-    int main() { return fetestexcept(FE_INEXACT); }
-    zsh% cc measure.c -o measure -lm
-    zsh% echo $((1.0/3)) # raising FE_INEXACT
-    0.33333333333333331
-    zsh% while ./measure; do ; done
-    (stopped in seconds)
+btrfs_free_ref_cache() requires REF_VERIFY option being set so call
+it just before clearing the mount option.
 
-Call lose_fpu(0) before setting fcr31 to prevent this.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Closes: https://lore.kernel.org/linux-mips/7a6aa1bbdbbe2e63ae96ff163fab0349f58f1b9e.camel@xry111.site/
-Fixes: 9b26616c8d9d ("MIPS: Respect the ISA level in FCSR handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reported-by: syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com
+Fixes: fd708b81d972 ("Btrfs: add a extent ref verify tool")
+CC: stable@vger.kernel.org # 5.4+
+Closes: https://lore.kernel.org/lkml/000000000000e5a65c05ee832054@google.com/
+Reported-by: syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/0000000000007fe09705fdc6086c@google.com/
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/elf.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/btrfs/ref-verify.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/mips/kernel/elf.c
-+++ b/arch/mips/kernel/elf.c
-@@ -11,6 +11,7 @@
+--- a/fs/btrfs/ref-verify.c
++++ b/fs/btrfs/ref-verify.c
+@@ -883,8 +883,10 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ out_unlock:
+ 	spin_unlock(&fs_info->ref_verify_lock);
+ out:
+-	if (ret)
++	if (ret) {
++		btrfs_free_ref_cache(fs_info);
+ 		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
++	}
+ 	return ret;
+ }
  
- #include <asm/cpu-features.h>
- #include <asm/cpu-info.h>
-+#include <asm/fpu.h>
- 
- #ifdef CONFIG_MIPS_FP_SUPPORT
- 
-@@ -309,6 +310,11 @@ void mips_set_personality_nan(struct arc
- 	struct cpuinfo_mips *c = &boot_cpu_data;
- 	struct task_struct *t = current;
- 
-+	/* Do this early so t->thread.fpu.fcr31 won't be clobbered in case
-+	 * we are preempted before the lose_fpu(0) in start_thread.
-+	 */
-+	lose_fpu(0);
-+
- 	t->thread.fpu.fcr31 = c->fpu_csr31;
- 	switch (state->nan_2008) {
- 	case 0:
+@@ -1015,8 +1017,8 @@ int btrfs_build_ref_tree(struct btrfs_fs
+ 		}
+ 	}
+ 	if (ret) {
+-		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 		btrfs_free_ref_cache(fs_info);
++		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 	}
+ 	btrfs_free_path(path);
+ 	return ret;
 
 
