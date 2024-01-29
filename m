@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8551157E62;
-	Mon, 29 Jan 2024 17:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C8815EAA8;
+	Mon, 29 Jan 2024 17:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548250; cv=none; b=OolVFB2A2SMgFXnfsIvefiipqcX8uinr2R7ThN/jcIn3UEQqyxfw2aoHSZ3ayHtbl19UdpbEfDtZ7NM/1InQo4nHu5qLitL5iNXIpQk8uRnLINuCXGoCCl34KCuv2HP62kYfkXroMGXgh1LimVpQJOX7RpaXApqQuG9rM4eBR+E=
+	t=1706548250; cv=none; b=i/0giDPnQcVhetrV5OvANQG/cKoXsH86b+AEccpaQvV8Nt4Uo/+XIHtFguDMd1B9ZO4kR0R0s+RajZ6geBGYacIalQW/IkHvp7f/AnKfS/MlXakgraByUWVJb3iGjw6MpfFDiN+7+rYKu/sv23ZUjsguf6JRSO5Gq+a0LQiBQ3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548250; c=relaxed/simple;
-	bh=MFp0ZCzRFRONJ3DHJwaO4gcb9049vS3UprduSHUxY3I=;
+	bh=xiXIT7IOwOGH5YIZ+5QB4OyvPFDYi2HGrrqZU3aVs/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9ZvaMSBVts0J+9s67KU7W3+vgPv3oVgc5cPBvphwn8iGbVLKZtEljcUaF+TC9WtutGisPTNMDH5IUw+pbZzifMDkVIlpCUToCObm2Z+0WsdwTVlEKOY3d6kNgUouRs/WSX+k2tdbxSh0tbhAa7sMDE2qMu5eyNWetL2t8LORlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKd0t8xT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NS9RxThIN2rKFr8haOhO87svM5XPVbbgffdPtu2tMVFt3evEFko1BwB8qnbAGH8GidGqClt2R1/Sb4LtPxidZS5o/n/E2NQvavH98vAPGovp50pM+3Ameyvm/3/dLV7bLVj8cthd43XgTjGrn4NdbsvWH2NnhQqyDi8Ya9gBiOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQha1ACe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKd0t8xT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F83DC433C7;
-	Mon, 29 Jan 2024 17:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQha1ACe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FD75C43390;
+	Mon, 29 Jan 2024 17:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548249;
-	bh=MFp0ZCzRFRONJ3DHJwaO4gcb9049vS3UprduSHUxY3I=;
+	s=korg; t=1706548250;
+	bh=xiXIT7IOwOGH5YIZ+5QB4OyvPFDYi2HGrrqZU3aVs/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKd0t8xTc4RjW9d5fAlud9uu3kM/so//bHPTTbsFIlzJI3ioQVHqRorNtlznSOrgM
-	 aJYp7mkXyCZpGB7BP/K8ehRYCyy2kDOE+CxEji+Tsj5v9TGxRkRkiM3VchdwTF2+Fq
-	 qKTVyfPtFeBBqWDQd5xOfnZOMX9fxokenFIx9qJw=
+	b=kQha1ACeVW1sbrV5i38yW6U+3j8sM1IRXrYj0GVSuV9ndThszUWuhj2MkVusShmhT
+	 oqgW6Gu40V8Ax43daIojUs0zsOL6EB5TvAixTIYD/MLXlQbGnuJOD3G7WbfrHdfERy
+	 iRWMMCDs3Y6Si97qjK32nnGtZMg/q6vPiaL2cYmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 272/346] drm/amd/display: Fix a switch statement in populate_dml_output_cfg_from_stream_state()
-Date: Mon, 29 Jan 2024 09:05:03 -0800
-Message-ID: <20240129170024.381718768@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Robert Foss <rfoss@kernel.org>
+Subject: [PATCH 6.7 259/346] drm/bridge: nxp-ptn3460: simplify some error checking
+Date: Mon, 29 Jan 2024 09:04:50 -0800
+Message-ID: <20240129170024.010040313@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,34 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 05638ff6dd6f0f38734b6b3ee2c7cf15520f5c00 upstream.
+commit 28d3d0696688154cc04983f343011d07bf0508e4 upstream.
 
-It is likely that the statement related to 'dml_edp' is misplaced. So move
-it in the correct "case SIGNAL_TYPE_EDP".
+The i2c_master_send/recv() functions return negative error codes or
+they return "len" on success.  So the error handling here can be written
+as just normal checks for "if (ret < 0) return ret;".  No need to
+complicate things.
 
-Fixes: 7966f319c66d ("drm/amd/display: Introduce DML2")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Btw, in this code the "len" parameter can never be zero, but even if
+it were, then I feel like this would still be the best way to write it.
+
+Fixes: 914437992876 ("drm/bridge: nxp-ptn3460: fix i2c_master_send() error checking")
+Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/04242630-42d8-4920-8c67-24ac9db6b3c9@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/nxp-ptn3460.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
-@@ -624,8 +624,8 @@ static void populate_dml_output_cfg_from
- 		if (is_dp2p0_output_encoder(pipe))
- 			out->OutputEncoder[location] = dml_dp2p0;
- 		break;
--		out->OutputEncoder[location] = dml_edp;
- 	case SIGNAL_TYPE_EDP:
-+		out->OutputEncoder[location] = dml_edp;
- 		break;
- 	case SIGNAL_TYPE_HDMI_TYPE_A:
- 	case SIGNAL_TYPE_DVI_SINGLE_LINK:
+--- a/drivers/gpu/drm/bridge/nxp-ptn3460.c
++++ b/drivers/gpu/drm/bridge/nxp-ptn3460.c
+@@ -54,15 +54,15 @@ static int ptn3460_read_bytes(struct ptn
+ 	int ret;
+ 
+ 	ret = i2c_master_send(ptn_bridge->client, &addr, 1);
+-	if (ret <= 0) {
++	if (ret < 0) {
+ 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
+-		return ret ?: -EIO;
++		return ret;
+ 	}
+ 
+ 	ret = i2c_master_recv(ptn_bridge->client, buf, len);
+-	if (ret != len) {
++	if (ret < 0) {
+ 		DRM_ERROR("Failed to recv i2c data, ret=%d\n", ret);
+-		return ret < 0 ? ret : -EIO;
++		return ret;
+ 	}
+ 
+ 	return 0;
+@@ -78,9 +78,9 @@ static int ptn3460_write_byte(struct ptn
+ 	buf[1] = val;
+ 
+ 	ret = i2c_master_send(ptn_bridge->client, buf, ARRAY_SIZE(buf));
+-	if (ret != ARRAY_SIZE(buf)) {
++	if (ret < 0) {
+ 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
+-		return ret < 0 ? ret : -EIO;
++		return ret;
+ 	}
+ 
+ 	return 0;
 
 
