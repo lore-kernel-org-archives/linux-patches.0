@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE5B15A497;
-	Mon, 29 Jan 2024 17:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D79C15F315;
+	Mon, 29 Jan 2024 17:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548588; cv=none; b=QGdTX04QxUV+XkRKsmq4IQaUGsNhFQCBg1thRtU4w+jucIM/tD6v8N4VmKCxH8VXAWB9Hs7Bn+yWjwl1I3yks70HWsdq3b1d4dht73xyU/XuHJP3UMA/sNWx8LfNbLEx4xuYWw4UNMc2toOYl6PV/Ebrtp06b+f56aPWXlvPx88=
+	t=1706548588; cv=none; b=Z7duOBH6RwXcOXeI+89GZoru7kjVELYve2yOjdl8oELmLu7MlUs5PPkddklMlEqMKYzO3973pEGQ0akBiziWt4yNWR6FwMP3sB4nikEsk8CsiaIytNkrLJYuEx646cmlaTFB8WPST0Ob8xJHfInqIGyxE99dyeiCsN+48f4vCoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548588; c=relaxed/simple;
-	bh=61AHG5QX3M6m0gTkz8ObLF8U1VhmBHWZvvwh0DaurCw=;
+	bh=6cSPyDmQw+7QFNqTy2Q55NwGt3yIR/bfT0YW5tXuLJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SeetlenH9nYwhxT6C0lW+GPZFydDvGHV9FEqbgWKunt06u8D97A657E1f6nzNzrQ9KOnIlVTKw0LkLACzX2KUX/TGCzvVOi71CQqzTryBOXj7+6CyL7e4ApGxil93VOlCwaEgcgq2e/J41qmAgnJNyrqjQwGAoYTZofiak7glWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpXz226J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pW4MXO5akxmdWpa9xwKMUa0eWdan6jQRkhzBWfRc4nVhs3CbLyGdbf8uvLurw8bbAAoKgmmdVXwM3Yf0TAMMTepXeN7BRVyzUoH+29fXbKn2w8esbRJPKa1dZaielI260lNqclJjeDsli8/WONt/637VXgMiXLWN74Nlvzy9ZiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dit9WEIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpXz226J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B370FC433F1;
-	Mon, 29 Jan 2024 17:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dit9WEIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6660CC43390;
+	Mon, 29 Jan 2024 17:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548587;
-	bh=61AHG5QX3M6m0gTkz8ObLF8U1VhmBHWZvvwh0DaurCw=;
+	s=korg; t=1706548588;
+	bh=6cSPyDmQw+7QFNqTy2Q55NwGt3yIR/bfT0YW5tXuLJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kpXz226JHV1zcsYX390kfQlsvy4yEl2lF+yHRU14d3qw9ff1BOmWNqZNs68IGxBGX
-	 DMqx9UGOgxDEnYtt82RHFHpXCZVfPmAj/MO2KtbvzZFknOWoy+kXNlquGSFbEKdRzN
-	 j15omKyc8DNxgV8uPptl4+sJSUzXmh/x8/FQr5NA=
+	b=dit9WEIkta4cfYQunlI5CkQMKsKLixXKgw4gRpdL34SwyHQMx+nJgO9cgx5+O1nMC
+	 USVeKp+u/gOpK4FhAPyvIQb+0X/+ea0Ykbb8O2f3ZeE3KGTFJD6YmkOlRrcWn2ImAa
+	 RDkEfdMyySCsadxi5TgdtbPlMFUlhb9gEBLcqfLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Notselwyn <notselwyn@pwning.tech>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 244/331] netfilter: nf_tables: reject QUEUE/DROP verdict parameters
-Date: Mon, 29 Jan 2024 09:05:08 -0800
-Message-ID: <20240129170022.021468137@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.6 245/331] platform/x86: intel-uncore-freq: Fix types in sysfs callbacks
+Date: Mon, 29 Jan 2024 09:05:09 -0800
+Message-ID: <20240129170022.049367558@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -45,75 +46,270 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit f342de4e2f33e0e39165d8639387aa6c19dff660 upstream.
+commit 416de0246f35f43d871a57939671fe814f4455ee upstream.
 
-This reverts commit e0abdadcc6e1.
+When booting a kernel with CONFIG_CFI_CLANG, there is a CFI failure when
+accessing any of the values under
+/sys/devices/system/cpu/intel_uncore_frequency/package_00_die_00:
 
-core.c:nf_hook_slow assumes that the upper 16 bits of NF_DROP
-verdicts contain a valid errno, i.e. -EPERM, -EHOSTUNREACH or similar,
-or 0.
+  $ cat /sys/devices/system/cpu/intel_uncore_frequency/package_00_die_00/max_freq_khz
+  fish: Job 1, 'cat /sys/devices/system/cpu/int…' terminated by signal SIGSEGV (Address boundary error)
 
-Due to the reverted commit, its possible to provide a positive
-value, e.g. NF_ACCEPT (1), which results in use-after-free.
+  $ sudo dmesg &| grep 'CFI failure'
+  [  170.953925] CFI failure at kobj_attr_show+0x19/0x30 (target: show_max_freq_khz+0x0/0xc0 [intel_uncore_frequency_common]; expected type: 0xd34078c5
 
-Its not clear to me why this commit was made.
+The sysfs callback functions such as show_domain_id() are written as if
+they are going to be called by dev_attr_show() but as the above message
+shows, they are instead called by kobj_attr_show(). kCFI checks that the
+destination of an indirect jump has the exact same type as the prototype
+of the function pointer it is called through and fails when they do not.
 
-NF_QUEUE is not used by nftables; "queue" rules in nftables
-will result in use of "nft_queue" expression.
+These callbacks are called through kobj_attr_show() because
+uncore_root_kobj was initialized with kobject_create_and_add(), which
+means uncore_root_kobj has a ->sysfs_ops of kobj_sysfs_ops from
+kobject_create(), which uses kobj_attr_show() as its ->show() value.
 
-If we later need to allow specifiying errno values from userspace
-(do not know why), this has to call NF_DROP_GETERR and check that
-"err <= 0" holds true.
+The only reason there has not been a more noticeable problem until this
+point is that 'struct kobj_attribute' and 'struct device_attribute' have
+the same layout, so getting the callback from container_of() works the
+same with either value.
 
-Fixes: e0abdadcc6e1 ("netfilter: nf_tables: accept QUEUE/DROP verdict parameters")
+Change all the callbacks and their uses to be compatible with
+kobj_attr_show() and kobj_attr_store(), which resolves the kCFI failure
+and allows the sysfs files to work properly.
+
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1974
+Fixes: ae7b2ce57851 ("platform/x86/intel/uncore-freq: Use sysfs API to create attributes")
 Cc: stable@vger.kernel.org
-Reported-by: Notselwyn <notselwyn@pwning.tech>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://lore.kernel.org/r/20240104-intel-uncore-freq-kcfi-fix-v1-1-bf1e8939af40@kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c |   82 +++++-----
+ drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h |   32 +--
+ 2 files changed, 57 insertions(+), 57 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10871,16 +10871,10 @@ static int nft_verdict_init(const struct
- 	data->verdict.code = ntohl(nla_get_be32(tb[NFTA_VERDICT_CODE]));
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
+@@ -23,23 +23,23 @@ static int (*uncore_read)(struct uncore_
+ static int (*uncore_write)(struct uncore_data *data, unsigned int input, unsigned int min_max);
+ static int (*uncore_read_freq)(struct uncore_data *data, unsigned int *freq);
  
- 	switch (data->verdict.code) {
--	default:
--		switch (data->verdict.code & NF_VERDICT_MASK) {
--		case NF_ACCEPT:
--		case NF_DROP:
--		case NF_QUEUE:
--			break;
--		default:
--			return -EINVAL;
--		}
--		fallthrough;
-+	case NF_ACCEPT:
-+	case NF_DROP:
-+	case NF_QUEUE:
-+		break;
- 	case NFT_CONTINUE:
- 	case NFT_BREAK:
- 	case NFT_RETURN:
-@@ -10915,6 +10909,8 @@ static int nft_verdict_init(const struct
+-static ssize_t show_domain_id(struct device *dev, struct device_attribute *attr, char *buf)
++static ssize_t show_domain_id(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+ {
+-	struct uncore_data *data = container_of(attr, struct uncore_data, domain_id_dev_attr);
++	struct uncore_data *data = container_of(attr, struct uncore_data, domain_id_kobj_attr);
  
- 		data->verdict.chain = chain;
- 		break;
-+	default:
-+		return -EINVAL;
+ 	return sprintf(buf, "%u\n", data->domain_id);
+ }
+ 
+-static ssize_t show_fabric_cluster_id(struct device *dev, struct device_attribute *attr, char *buf)
++static ssize_t show_fabric_cluster_id(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+ {
+-	struct uncore_data *data = container_of(attr, struct uncore_data, fabric_cluster_id_dev_attr);
++	struct uncore_data *data = container_of(attr, struct uncore_data, fabric_cluster_id_kobj_attr);
+ 
+ 	return sprintf(buf, "%u\n", data->cluster_id);
+ }
+ 
+-static ssize_t show_package_id(struct device *dev, struct device_attribute *attr, char *buf)
++static ssize_t show_package_id(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
+ {
+-	struct uncore_data *data = container_of(attr, struct uncore_data, package_id_dev_attr);
++	struct uncore_data *data = container_of(attr, struct uncore_data, package_id_kobj_attr);
+ 
+ 	return sprintf(buf, "%u\n", data->package_id);
+ }
+@@ -97,30 +97,30 @@ static ssize_t show_perf_status_freq_khz
+ }
+ 
+ #define store_uncore_min_max(name, min_max)				\
+-	static ssize_t store_##name(struct device *dev,		\
+-				     struct device_attribute *attr,	\
++	static ssize_t store_##name(struct kobject *kobj,		\
++				     struct kobj_attribute *attr,	\
+ 				     const char *buf, size_t count)	\
+ 	{								\
+-		struct uncore_data *data = container_of(attr, struct uncore_data, name##_dev_attr);\
++		struct uncore_data *data = container_of(attr, struct uncore_data, name##_kobj_attr);\
+ 									\
+ 		return store_min_max_freq_khz(data, buf, count,	\
+ 					      min_max);		\
  	}
  
- 	desc->len = sizeof(data->verdict);
+ #define show_uncore_min_max(name, min_max)				\
+-	static ssize_t show_##name(struct device *dev,		\
+-				    struct device_attribute *attr, char *buf)\
++	static ssize_t show_##name(struct kobject *kobj,		\
++				    struct kobj_attribute *attr, char *buf)\
+ 	{                                                               \
+-		struct uncore_data *data = container_of(attr, struct uncore_data, name##_dev_attr);\
++		struct uncore_data *data = container_of(attr, struct uncore_data, name##_kobj_attr);\
+ 									\
+ 		return show_min_max_freq_khz(data, buf, min_max);	\
+ 	}
+ 
+ #define show_uncore_perf_status(name)					\
+-	static ssize_t show_##name(struct device *dev,		\
+-				   struct device_attribute *attr, char *buf)\
++	static ssize_t show_##name(struct kobject *kobj,		\
++				   struct kobj_attribute *attr, char *buf)\
+ 	{                                                               \
+-		struct uncore_data *data = container_of(attr, struct uncore_data, name##_dev_attr);\
++		struct uncore_data *data = container_of(attr, struct uncore_data, name##_kobj_attr);\
+ 									\
+ 		return show_perf_status_freq_khz(data, buf); \
+ 	}
+@@ -134,11 +134,11 @@ show_uncore_min_max(max_freq_khz, 1);
+ show_uncore_perf_status(current_freq_khz);
+ 
+ #define show_uncore_data(member_name)					\
+-	static ssize_t show_##member_name(struct device *dev,	\
+-					   struct device_attribute *attr, char *buf)\
++	static ssize_t show_##member_name(struct kobject *kobj,	\
++					   struct kobj_attribute *attr, char *buf)\
+ 	{                                                               \
+ 		struct uncore_data *data = container_of(attr, struct uncore_data,\
+-							  member_name##_dev_attr);\
++							  member_name##_kobj_attr);\
+ 									\
+ 		return sysfs_emit(buf, "%u\n",				\
+ 				 data->member_name);			\
+@@ -149,29 +149,29 @@ show_uncore_data(initial_max_freq_khz);
+ 
+ #define init_attribute_rw(_name)					\
+ 	do {								\
+-		sysfs_attr_init(&data->_name##_dev_attr.attr);	\
+-		data->_name##_dev_attr.show = show_##_name;		\
+-		data->_name##_dev_attr.store = store_##_name;		\
+-		data->_name##_dev_attr.attr.name = #_name;		\
+-		data->_name##_dev_attr.attr.mode = 0644;		\
++		sysfs_attr_init(&data->_name##_kobj_attr.attr);	\
++		data->_name##_kobj_attr.show = show_##_name;		\
++		data->_name##_kobj_attr.store = store_##_name;		\
++		data->_name##_kobj_attr.attr.name = #_name;		\
++		data->_name##_kobj_attr.attr.mode = 0644;		\
+ 	} while (0)
+ 
+ #define init_attribute_ro(_name)					\
+ 	do {								\
+-		sysfs_attr_init(&data->_name##_dev_attr.attr);	\
+-		data->_name##_dev_attr.show = show_##_name;		\
+-		data->_name##_dev_attr.store = NULL;			\
+-		data->_name##_dev_attr.attr.name = #_name;		\
+-		data->_name##_dev_attr.attr.mode = 0444;		\
++		sysfs_attr_init(&data->_name##_kobj_attr.attr);	\
++		data->_name##_kobj_attr.show = show_##_name;		\
++		data->_name##_kobj_attr.store = NULL;			\
++		data->_name##_kobj_attr.attr.name = #_name;		\
++		data->_name##_kobj_attr.attr.mode = 0444;		\
+ 	} while (0)
+ 
+ #define init_attribute_root_ro(_name)					\
+ 	do {								\
+-		sysfs_attr_init(&data->_name##_dev_attr.attr);	\
+-		data->_name##_dev_attr.show = show_##_name;		\
+-		data->_name##_dev_attr.store = NULL;			\
+-		data->_name##_dev_attr.attr.name = #_name;		\
+-		data->_name##_dev_attr.attr.mode = 0400;		\
++		sysfs_attr_init(&data->_name##_kobj_attr.attr);	\
++		data->_name##_kobj_attr.show = show_##_name;		\
++		data->_name##_kobj_attr.store = NULL;			\
++		data->_name##_kobj_attr.attr.name = #_name;		\
++		data->_name##_kobj_attr.attr.mode = 0400;		\
+ 	} while (0)
+ 
+ static int create_attr_group(struct uncore_data *data, char *name)
+@@ -186,21 +186,21 @@ static int create_attr_group(struct unco
+ 
+ 	if (data->domain_id != UNCORE_DOMAIN_ID_INVALID) {
+ 		init_attribute_root_ro(domain_id);
+-		data->uncore_attrs[index++] = &data->domain_id_dev_attr.attr;
++		data->uncore_attrs[index++] = &data->domain_id_kobj_attr.attr;
+ 		init_attribute_root_ro(fabric_cluster_id);
+-		data->uncore_attrs[index++] = &data->fabric_cluster_id_dev_attr.attr;
++		data->uncore_attrs[index++] = &data->fabric_cluster_id_kobj_attr.attr;
+ 		init_attribute_root_ro(package_id);
+-		data->uncore_attrs[index++] = &data->package_id_dev_attr.attr;
++		data->uncore_attrs[index++] = &data->package_id_kobj_attr.attr;
+ 	}
+ 
+-	data->uncore_attrs[index++] = &data->max_freq_khz_dev_attr.attr;
+-	data->uncore_attrs[index++] = &data->min_freq_khz_dev_attr.attr;
+-	data->uncore_attrs[index++] = &data->initial_min_freq_khz_dev_attr.attr;
+-	data->uncore_attrs[index++] = &data->initial_max_freq_khz_dev_attr.attr;
++	data->uncore_attrs[index++] = &data->max_freq_khz_kobj_attr.attr;
++	data->uncore_attrs[index++] = &data->min_freq_khz_kobj_attr.attr;
++	data->uncore_attrs[index++] = &data->initial_min_freq_khz_kobj_attr.attr;
++	data->uncore_attrs[index++] = &data->initial_max_freq_khz_kobj_attr.attr;
+ 
+ 	ret = uncore_read_freq(data, &freq);
+ 	if (!ret)
+-		data->uncore_attrs[index++] = &data->current_freq_khz_dev_attr.attr;
++		data->uncore_attrs[index++] = &data->current_freq_khz_kobj_attr.attr;
+ 
+ 	data->uncore_attrs[index] = NULL;
+ 
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h
+@@ -26,14 +26,14 @@
+  * @instance_id:	Unique instance id to append to directory name
+  * @name:		Sysfs entry name for this instance
+  * @uncore_attr_group:	Attribute group storage
+- * @max_freq_khz_dev_attr: Storage for device attribute max_freq_khz
+- * @mix_freq_khz_dev_attr: Storage for device attribute min_freq_khz
+- * @initial_max_freq_khz_dev_attr: Storage for device attribute initial_max_freq_khz
+- * @initial_min_freq_khz_dev_attr: Storage for device attribute initial_min_freq_khz
+- * @current_freq_khz_dev_attr: Storage for device attribute current_freq_khz
+- * @domain_id_dev_attr: Storage for device attribute domain_id
+- * @fabric_cluster_id_dev_attr: Storage for device attribute fabric_cluster_id
+- * @package_id_dev_attr: Storage for device attribute package_id
++ * @max_freq_khz_kobj_attr: Storage for kobject attribute max_freq_khz
++ * @mix_freq_khz_kobj_attr: Storage for kobject attribute min_freq_khz
++ * @initial_max_freq_khz_kobj_attr: Storage for kobject attribute initial_max_freq_khz
++ * @initial_min_freq_khz_kobj_attr: Storage for kobject attribute initial_min_freq_khz
++ * @current_freq_khz_kobj_attr: Storage for kobject attribute current_freq_khz
++ * @domain_id_kobj_attr: Storage for kobject attribute domain_id
++ * @fabric_cluster_id_kobj_attr: Storage for kobject attribute fabric_cluster_id
++ * @package_id_kobj_attr: Storage for kobject attribute package_id
+  * @uncore_attrs:	Attribute storage for group creation
+  *
+  * This structure is used to encapsulate all data related to uncore sysfs
+@@ -53,14 +53,14 @@ struct uncore_data {
+ 	char name[32];
+ 
+ 	struct attribute_group uncore_attr_group;
+-	struct device_attribute max_freq_khz_dev_attr;
+-	struct device_attribute min_freq_khz_dev_attr;
+-	struct device_attribute initial_max_freq_khz_dev_attr;
+-	struct device_attribute initial_min_freq_khz_dev_attr;
+-	struct device_attribute current_freq_khz_dev_attr;
+-	struct device_attribute domain_id_dev_attr;
+-	struct device_attribute fabric_cluster_id_dev_attr;
+-	struct device_attribute package_id_dev_attr;
++	struct kobj_attribute max_freq_khz_kobj_attr;
++	struct kobj_attribute min_freq_khz_kobj_attr;
++	struct kobj_attribute initial_max_freq_khz_kobj_attr;
++	struct kobj_attribute initial_min_freq_khz_kobj_attr;
++	struct kobj_attribute current_freq_khz_kobj_attr;
++	struct kobj_attribute domain_id_kobj_attr;
++	struct kobj_attribute fabric_cluster_id_kobj_attr;
++	struct kobj_attribute package_id_kobj_attr;
+ 	struct attribute *uncore_attrs[9];
+ };
+ 
 
 
