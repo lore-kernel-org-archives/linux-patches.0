@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179D215B116;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F5115B116;
 	Mon, 29 Jan 2024 17:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548220; cv=none; b=CiwM2md4G8sd2BN2a+M3AYYhurFNDWhNcAfGDNU7XCy4VpcjW1303h22FIg3RjO7VdKAb1verK6C1k93hutbDKp09Xcfwc2FE0haVz1EqdcOsuZgb0QvaY0LuhzBducBGeURkWE3/qvqo5uhvCJf+cAugrdoc0K39PjB6IeDiXM=
+	t=1706548220; cv=none; b=UCQ41deShBnfA/TA1RAeM7C9LAjvRk5l+kfxKrJfB+PhQ5SAmxqo8JbX1CTP0xdK32F75qOraqLpVNwJFnBBMEsxm6AyKAaHspcMrrnLWqVt02pbWq2lwat249hz/btiMGcPa2833Ojh3PfNt2MyT4Kdi+rTqOxAw5aFpCuGdIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548220; c=relaxed/simple;
-	bh=r9ABIb59X/K4tHmMlkzkpFYrvI5YtNHK32G/m5lz67w=;
+	bh=knSS9unA7hc6KA9qC5LWhdCH3De86xvGTTMz/2ncIkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+L+yeJEuMS5yTXAdrZiDxyOtraf9pYQrbP+RsoJxSJU4G/mtGQ2AFiTo/c6MAuTzxdrvVCmid854KTRzgI40u9ZxU6aIZEgcNs/T4sWkr60IhqPbnnIbdq78FztJ0Ipvnwc0HnFJgD7fsF3OmT0qwPZSlSYKZvDSk9rH25JomA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSNbjsbx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MvC7iyvZOXrG8lSSHPLS95edBzvo/JbE8tXEy17Co+RkAvjurr+8re45wSGOZANG2SnjhdHRKkEa4aN5oKdsisyWfVfy/D3NBTTgEogzDpqtPlWIkU0EJaZZQOEY/rb+Iz/3vEW7w93M0yB3G20LcidzzlzE3ppfHpOMsKM8v0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Es44K9Xq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSNbjsbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C1BC43394;
-	Mon, 29 Jan 2024 17:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Es44K9Xq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9816AC433F1;
+	Mon, 29 Jan 2024 17:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548219;
-	bh=r9ABIb59X/K4tHmMlkzkpFYrvI5YtNHK32G/m5lz67w=;
+	s=korg; t=1706548220;
+	bh=knSS9unA7hc6KA9qC5LWhdCH3De86xvGTTMz/2ncIkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSNbjsbxD6aQDj1qSXpNKTRY4MIYOiusdJeK3rFPLNljgdL3WvdUjKR8RWSHlBQ+w
-	 2YVakN0LnvP/2YzC1GwuCBRVkJA4YhsfbWUc2SUNup9dmPp+4LVJ7srlM5OkvyiUH6
-	 p1Mddohw9grsJ6WyHfyp25Hk+Vt1ynkfUelpjG10=
+	b=Es44K9XqfWHx735eNI5R/YVZtjnOF7wEw6hX0RDXNWv3Ov4jUcJOjdvshKfZDkH5b
+	 +ym4CLpEzMIK4Li7UYisfZ3mwj9DB94W7U3hfAjpw+4+utf/+GId+t/c/RClH3SHzL
+	 3aCrG/rncD+a39DHu7/enqjdal0Bfjrw/RaTZvoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.1 025/185] bus: mhi: host: Drop chan lock before queuing buffers
-Date: Mon, 29 Jan 2024 09:03:45 -0800
-Message-ID: <20240129165959.408002275@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Cai Huoqing <cai.huoqing@linux.dev>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Dave Airlie <airlied@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Jonathan Corbet <corbet@lwn.net>,
+	dri-devel@lists.freedesktop.org,
+	linux-doc@vger.kernel.org,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 251/346] drm: Fix TODO list mentioning non-KMS drivers
+Date: Mon, 29 Jan 2024 09:04:42 -0800
+Message-ID: <20240129170023.799446801@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +56,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 01bd694ac2f682fb8017e16148b928482bc8fa4b upstream.
+commit 9cf5ca1f485cae406968947a92bf304603999fa1 upstream.
 
-Ensure read and write locks for the channel are not taken in succession by
-dropping the read lock from parse_xfer_event() such that a callback given
-to client can potentially queue buffers and acquire the write lock in that
-process. Any queueing of buffers should be done without channel read lock
-acquired as it can result in multiple locks and a soft lockup.
+Non-KMS drivers have been removed from DRM. Update the TODO list
+accordingly.
 
-Cc: <stable@vger.kernel.org> # 5.7
-Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com
-[mani: added fixes tag and cc'ed stable]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: a276afc19eec ("drm: Remove some obsolete drm pciids(tdfx, mga, i810, savage, r128, sis, via)")
+Cc: Cai Huoqing <cai.huoqing@linux.dev>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.3+
+Cc: linux-doc@vger.kernel.org
+Reviewed-by: David Airlie <airlied@gmail.com>
+Reviewed-by: Daniel Vetter <daniel@ffwll.ch>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231122122449.11588-3-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/gpu/todo.rst |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -643,6 +643,8 @@ static int parse_xfer_event(struct mhi_c
- 			mhi_del_ring_element(mhi_cntrl, tre_ring);
- 			local_rp = tre_ring->rp;
+--- a/Documentation/gpu/todo.rst
++++ b/Documentation/gpu/todo.rst
+@@ -337,8 +337,8 @@ connector register/unregister fixes
  
-+			read_unlock_bh(&mhi_chan->lock);
-+
- 			/* notify client */
- 			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+ Level: Intermediate
  
-@@ -668,6 +670,8 @@ static int parse_xfer_event(struct mhi_c
- 					kfree(buf_info->cb_buf);
- 				}
- 			}
-+
-+			read_lock_bh(&mhi_chan->lock);
- 		}
- 		break;
- 	} /* CC_EOT */
+-Remove load/unload callbacks from all non-DRIVER_LEGACY drivers
+----------------------------------------------------------------
++Remove load/unload callbacks
++----------------------------
+ 
+ The load/unload callbacks in struct &drm_driver are very much midlayers, plus
+ for historical reasons they get the ordering wrong (and we can't fix that)
+@@ -347,8 +347,7 @@ between setting up the &drm_driver struc
+ - Rework drivers to no longer use the load/unload callbacks, directly coding the
+   load/unload sequence into the driver's probe function.
+ 
+-- Once all non-DRIVER_LEGACY drivers are converted, disallow the load/unload
+-  callbacks for all modern drivers.
++- Once all drivers are converted, remove the load/unload callbacks.
+ 
+ Contact: Daniel Vetter
+ 
 
 
