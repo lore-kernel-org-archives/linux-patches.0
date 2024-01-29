@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F0515A48F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A2215A48F;
 	Mon, 29 Jan 2024 17:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548266; cv=none; b=XR1rw14Sn50XlMP76dliJ0n9Ubc15hZwBHpX1F0YzixvXFLjfgTXODmIMp7jKpICa6q3y+ljBiQyWQNVr91DNVaCiqxgCy5D3hCTRKoJx1OriYKJEhpdEurTfQS9Li4SMffoXNdMU2vAHHhA/vi2EvTG953Omc/dfMRMI2djRfc=
+	t=1706548266; cv=none; b=oJkqOCLPN9pUsbUKglq2hVGPqW0ZY65RaLifRj6FeVr2YcsYQEmN/SPTxURhkBx8HweKAETCLbz+/IpVRaaICMiG5/GxeJLm86+pXQfvmWExyORXaIElKFRKoHv2UPF5lUKJkJwti8eJhCqKB9JUAPXHjy+DGH6pX+A62kapbng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548266; c=relaxed/simple;
-	bh=9mUctPfTMI7KNnDCHXWdzLFR8DlJP0W6Gs44Xqp9cH4=;
+	bh=0mLDoVpNJYVsu5UoiCKaPhYTD01ewCLgu5rb4LMK45w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9V0QFRlgJJOFxqxYaeCWRI2h53txLsLSBxrqtJVJSKF9QeTtkfTsRf6rLDA1huCd3KHhlC03N/yV87QSYbjmCajdsCmP9cCMlPZ/eL/y+39wDgLqcRn/sgHoz1HQL2ByHEPjmOrG4GCllzsosYE2Uz30cqnPfqVx8uWRBybPc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSBOWmhO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdaLfhZsq1Cdz/KIp+0vYlrOgmCd166cBiBiiLEJQyPl2POdRmt4qktuk9Y6gk7VPN7puX2dSUp2Xrg3QY3PadApcyFKY9a5tYaAl/03lwthve8C5CM6OpObNhjpz75DOOCjHZdOvpcWtQHoKMmZvSMg8Rh4GLeLL9lwMG+Xuk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aM2Fa4XM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSBOWmhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DE0C433C7;
-	Mon, 29 Jan 2024 17:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aM2Fa4XM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99571C433F1;
+	Mon, 29 Jan 2024 17:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548266;
-	bh=9mUctPfTMI7KNnDCHXWdzLFR8DlJP0W6Gs44Xqp9cH4=;
+	bh=0mLDoVpNJYVsu5UoiCKaPhYTD01ewCLgu5rb4LMK45w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSBOWmhORh1hFexCHR8LD4+ToOA5LGPEhWG5hzBRm228LH0XPBP0VHQHeo3PYZ0eQ
-	 fBPlgecypLdaAVxOw4YPouycGV7PgWhlM3UgQo8AV4yBEMkwYa7nVJKWsgd7sHw3CU
-	 70UHduO1GyFUiWbnmZhVVkPdWwjsSll+GEkjwkYA=
+	b=aM2Fa4XM0Z9mNofrxBoIPWBEgldc9zF88TlFSCP688nQxDHuh1uI64Rraaolppe25
+	 toCdCHE9bRrDtqRQJ6cLnaMSJlRtjYaljGggxt2HVGyJAbqIt6A4PbpMIyqArXbpmi
+	 oC9w5LZVl+VYlVGXcDXkRkPQmMd3+bqsJx91+OpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.7 260/346] drm/amd/display: Fix a debugfs null pointer error
-Date: Mon, 29 Jan 2024 09:04:51 -0800
-Message-ID: <20240129170024.044151445@linuxfoundation.org>
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Oscar Salvador <osalvador@suse.de>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 056/185] mm/sparsemem: fix race in accessing memory_section->usage
+Date: Mon, 29 Jan 2024 09:04:16 -0800
+Message-ID: <20240129170000.399757745@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +52,210 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Charan Teja Kalla <quic_charante@quicinc.com>
 
-commit efb91fea652a42fcc037d2a9ef4ecd1ffc5ff4b7 upstream.
+commit 5ec8e8ea8b7783fab150cf86404fc38cb4db8800 upstream.
 
-[WHY & HOW]
-Check whether get_subvp_en() callback exists before calling it.
+The below race is observed on a PFN which falls into the device memory
+region with the system memory configuration where PFN's are such that
+[ZONE_NORMAL ZONE_DEVICE ZONE_NORMAL].  Since normal zone start and end
+pfn contains the device memory PFN's as well, the compaction triggered
+will try on the device memory PFN's too though they end up in NOP(because
+pfn_to_online_page() returns NULL for ZONE_DEVICE memory sections).  When
+from other core, the section mappings are being removed for the
+ZONE_DEVICE region, that the PFN in question belongs to, on which
+compaction is currently being operated is resulting into the kernel crash
+with CONFIG_SPASEMEM_VMEMAP enabled.  The crash logs can be seen at [1].
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+compact_zone()			memunmap_pages
+-------------			---------------
+__pageblock_pfn_to_page
+   ......
+ (a)pfn_valid():
+     valid_section()//return true
+			      (b)__remove_pages()->
+				  sparse_remove_section()->
+				    section_deactivate():
+				    [Free the array ms->usage and set
+				     ms->usage = NULL]
+     pfn_section_valid()
+     [Access ms->usage which
+     is NULL]
+
+NOTE: From the above it can be said that the race is reduced to between
+the pfn_valid()/pfn_section_valid() and the section deactivate with
+SPASEMEM_VMEMAP enabled.
+
+The commit b943f045a9af("mm/sparse: fix kernel crash with
+pfn_section_valid check") tried to address the same problem by clearing
+the SECTION_HAS_MEM_MAP with the expectation of valid_section() returns
+false thus ms->usage is not accessed.
+
+Fix this issue by the below steps:
+
+a) Clear SECTION_HAS_MEM_MAP before freeing the ->usage.
+
+b) RCU protected read side critical section will either return NULL
+   when SECTION_HAS_MEM_MAP is cleared or can successfully access ->usage.
+
+c) Free the ->usage with kfree_rcu() and set ms->usage = NULL.  No
+   attempt will be made to access ->usage after this as the
+   SECTION_HAS_MEM_MAP is cleared thus valid_section() return false.
+
+Thanks to David/Pavan for their inputs on this patch.
+
+[1] https://lore.kernel.org/linux-mm/994410bb-89aa-d987-1f50-f514903c55aa@quicinc.com/
+
+On Snapdragon SoC, with the mentioned memory configuration of PFN's as
+[ZONE_NORMAL ZONE_DEVICE ZONE_NORMAL], we are able to see bunch of
+issues daily while testing on a device farm.
+
+For this particular issue below is the log.  Though the below log is
+not directly pointing to the pfn_section_valid(){ ms->usage;}, when we
+loaded this dump on T32 lauterbach tool, it is pointing.
+
+[  540.578056] Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000000
+[  540.578068] Mem abort info:
+[  540.578070]   ESR = 0x0000000096000005
+[  540.578073]   EC = 0x25: DABT (current EL), IL = 32 bits
+[  540.578077]   SET = 0, FnV = 0
+[  540.578080]   EA = 0, S1PTW = 0
+[  540.578082]   FSC = 0x05: level 1 translation fault
+[  540.578085] Data abort info:
+[  540.578086]   ISV = 0, ISS = 0x00000005
+[  540.578088]   CM = 0, WnR = 0
+[  540.579431] pstate: 82400005 (Nzcv daif +PAN -UAO +TCO -DIT -SSBSBTYPE=--)
+[  540.579436] pc : __pageblock_pfn_to_page+0x6c/0x14c
+[  540.579454] lr : compact_zone+0x994/0x1058
+[  540.579460] sp : ffffffc03579b510
+[  540.579463] x29: ffffffc03579b510 x28: 0000000000235800 x27:000000000000000c
+[  540.579470] x26: 0000000000235c00 x25: 0000000000000068 x24:ffffffc03579b640
+[  540.579477] x23: 0000000000000001 x22: ffffffc03579b660 x21:0000000000000000
+[  540.579483] x20: 0000000000235bff x19: ffffffdebf7e3940 x18:ffffffdebf66d140
+[  540.579489] x17: 00000000739ba063 x16: 00000000739ba063 x15:00000000009f4bff
+[  540.579495] x14: 0000008000000000 x13: 0000000000000000 x12:0000000000000001
+[  540.579501] x11: 0000000000000000 x10: 0000000000000000 x9 :ffffff897d2cd440
+[  540.579507] x8 : 0000000000000000 x7 : 0000000000000000 x6 :ffffffc03579b5b4
+[  540.579512] x5 : 0000000000027f25 x4 : ffffffc03579b5b8 x3 :0000000000000001
+[  540.579518] x2 : ffffffdebf7e3940 x1 : 0000000000235c00 x0 :0000000000235800
+[  540.579524] Call trace:
+[  540.579527]  __pageblock_pfn_to_page+0x6c/0x14c
+[  540.579533]  compact_zone+0x994/0x1058
+[  540.579536]  try_to_compact_pages+0x128/0x378
+[  540.579540]  __alloc_pages_direct_compact+0x80/0x2b0
+[  540.579544]  __alloc_pages_slowpath+0x5c0/0xe10
+[  540.579547]  __alloc_pages+0x250/0x2d0
+[  540.579550]  __iommu_dma_alloc_noncontiguous+0x13c/0x3fc
+[  540.579561]  iommu_dma_alloc+0xa0/0x320
+[  540.579565]  dma_alloc_attrs+0xd4/0x108
+
+[quic_charante@quicinc.com: use kfree_rcu() in place of synchronize_rcu(), per David]
+  Link: https://lkml.kernel.org/r/1698403778-20938-1-git-send-email-quic_charante@quicinc.com
+Link: https://lkml.kernel.org/r/1697202267-23600-1-git-send-email-quic_charante@quicinc.com
+Fixes: f46edbd1b151 ("mm/sparsemem: add helpers track active portions of a section at boot")
+Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
+Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/linux/mmzone.h |   14 +++++++++++---
+ mm/sparse.c            |   17 +++++++++--------
+ 2 files changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-@@ -3647,12 +3647,16 @@ static int capabilities_show(struct seq_
- 	bool mall_supported = dc->caps.mall_size_total;
- 	bool subvp_supported = dc->caps.subvp_fw_processing_delay_us;
- 	unsigned int mall_in_use = false;
--	unsigned int subvp_in_use = dc->cap_funcs.get_subvp_en(dc, dc->current_state);
-+	unsigned int subvp_in_use = false;
-+
- 	struct hubbub *hubbub = dc->res_pool->hubbub;
+--- a/include/linux/mmzone.h
++++ b/include/linux/mmzone.h
+@@ -1622,6 +1622,7 @@ static inline unsigned long section_nr_t
+ #define SUBSECTION_ALIGN_DOWN(pfn) ((pfn) & PAGE_SUBSECTION_MASK)
  
- 	if (hubbub->funcs->get_mall_en)
- 		hubbub->funcs->get_mall_en(hubbub, &mall_in_use);
+ struct mem_section_usage {
++	struct rcu_head rcu;
+ #ifdef CONFIG_SPARSEMEM_VMEMMAP
+ 	DECLARE_BITMAP(subsection_map, SUBSECTIONS_PER_SECTION);
+ #endif
+@@ -1815,7 +1816,7 @@ static inline int pfn_section_valid(stru
+ {
+ 	int idx = subsection_map_index(pfn);
  
-+	if (dc->cap_funcs.get_subvp_en)
-+		subvp_in_use = dc->cap_funcs.get_subvp_en(dc, dc->current_state);
+-	return test_bit(idx, ms->usage->subsection_map);
++	return test_bit(idx, READ_ONCE(ms->usage)->subsection_map);
+ }
+ #else
+ static inline int pfn_section_valid(struct mem_section *ms, unsigned long pfn)
+@@ -1839,6 +1840,7 @@ static inline int pfn_section_valid(stru
+ static inline int pfn_valid(unsigned long pfn)
+ {
+ 	struct mem_section *ms;
++	int ret;
+ 
+ 	/*
+ 	 * Ensure the upper PAGE_SHIFT bits are clear in the
+@@ -1852,13 +1854,19 @@ static inline int pfn_valid(unsigned lon
+ 	if (pfn_to_section_nr(pfn) >= NR_MEM_SECTIONS)
+ 		return 0;
+ 	ms = __pfn_to_section(pfn);
+-	if (!valid_section(ms))
++	rcu_read_lock();
++	if (!valid_section(ms)) {
++		rcu_read_unlock();
+ 		return 0;
++	}
+ 	/*
+ 	 * Traditionally early sections always returned pfn_valid() for
+ 	 * the entire section-sized span.
+ 	 */
+-	return early_section(ms) || pfn_section_valid(ms, pfn);
++	ret = early_section(ms) || pfn_section_valid(ms, pfn);
++	rcu_read_unlock();
 +
- 	seq_printf(m, "mall supported: %s, enabled: %s\n",
- 			   mall_supported ? "yes" : "no", mall_in_use ? "yes" : "no");
- 	seq_printf(m, "sub-viewport supported: %s, enabled: %s\n",
++	return ret;
+ }
+ #endif
+ 
+--- a/mm/sparse.c
++++ b/mm/sparse.c
+@@ -793,6 +793,13 @@ static void section_deactivate(unsigned
+ 		unsigned long section_nr = pfn_to_section_nr(pfn);
+ 
+ 		/*
++		 * Mark the section invalid so that valid_section()
++		 * return false. This prevents code from dereferencing
++		 * ms->usage array.
++		 */
++		ms->section_mem_map &= ~SECTION_HAS_MEM_MAP;
++
++		/*
+ 		 * When removing an early section, the usage map is kept (as the
+ 		 * usage maps of other sections fall into the same page). It
+ 		 * will be re-used when re-adding the section - which is then no
+@@ -800,16 +807,10 @@ static void section_deactivate(unsigned
+ 		 * was allocated during boot.
+ 		 */
+ 		if (!PageReserved(virt_to_page(ms->usage))) {
+-			kfree(ms->usage);
+-			ms->usage = NULL;
++			kfree_rcu(ms->usage, rcu);
++			WRITE_ONCE(ms->usage, NULL);
+ 		}
+ 		memmap = sparse_decode_mem_map(ms->section_mem_map, section_nr);
+-		/*
+-		 * Mark the section invalid so that valid_section()
+-		 * return false. This prevents code from dereferencing
+-		 * ms->usage array.
+-		 */
+-		ms->section_mem_map &= ~SECTION_HAS_MEM_MAP;
+ 	}
+ 
+ 	/*
 
 
