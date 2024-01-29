@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6368015DBA5;
-	Mon, 29 Jan 2024 17:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A82F15DBA5;
+	Mon, 29 Jan 2024 17:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548433; cv=none; b=FDglrXuRLqSP+qhEoy+AeJwplFLHTFdk/hHnCvDYANsfRYz6mc067NisOgEPIy1M+RpB2vDLYMDc046aFb0GxYNtka2Ti1P77l/ePGwd7KQXKhUL6A9PyRQ0cMJBf0vKIM+MN7la2Ab6jCPkgJRz7mX8YuUUwij9zoeFmKYp8Zk=
+	t=1706548434; cv=none; b=JQDGqNrqz+Wac2vIy0hIcLrSa8Uhkry30CHCtvsJgfoJcq/3BZW0cor5n/X34DWV6Jeifo+y0rTieEm7bsU3OhImrNhdeBJIVsU1zONv2vjCJzrDuOX/QsvABPBt2hXqzXc2w4SRkVBfeU6PSKsvsr0XI+D8ZIC5uo/MUpjFOSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548433; c=relaxed/simple;
-	bh=rVNU7d49QV9+RqxP7Jo2ANEqSaan+Rbfan1fP0nOk9c=;
+	s=arc-20240116; t=1706548434; c=relaxed/simple;
+	bh=1/eSwRFe90CpA8IO2LFN+w93HB8LjUqNg7zmfeLlG/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKIBkK4CbLSRQ3C9ZKfRu9r76l4ErDmfMR+OHVGg2eBICKJbyN7xmLsf0KV/Vziqyw3fHlykiToWVXa6yCK/dB5UwYGWMi2RstWsL/YP4sFL1hsVHE+r2n8oeLXXlxKJe0w4HsnWONYruKkVLPHTlE7a/ZXPQAsWJhTmKB0g4Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EwTfdxo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbapo5/nETIcz64XiiB+sNpBIn31XtSLXT8jfeFRptId6Jj2tErx/SKvtK1GzVmQ3bykV4IF5fQMlrYKYnWJflBsY1oWVhDb81nYGzbmi8IdwDqu4KkMO9CvH0ycPILzL2KumJcb0uj0/cxSJftIvuTl3aThNq0pGSPrqhQhJu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJB6A+N8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EwTfdxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE86C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJB6A+N8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D843BC433F1;
 	Mon, 29 Jan 2024 17:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548433;
-	bh=rVNU7d49QV9+RqxP7Jo2ANEqSaan+Rbfan1fP0nOk9c=;
+	bh=1/eSwRFe90CpA8IO2LFN+w93HB8LjUqNg7zmfeLlG/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0EwTfdxoditFYDSm6nTgZ0nNkHcn3EnRqSV7iewRiPHVQa8a9puxSGyglgnZipM5w
-	 QOwkGH/cKiuv9bNi6iPxVXgcbD0+TepTL4sNd2QAZbTrt3kWn+GrmfQ6WqNnN59gG3
-	 ZIAI3JcuXUyhwsHDr6oNBNuSd9RJo8UUZ7gJo0Zc=
+	b=JJB6A+N8n4uyYK+qTX34sOFl+KkUUhT1JpxeCjlqC5mWvf/pIpdalSZsvPLPiucf2
+	 nvfHlbAeA7TFoBjd+1/fjJve8yNf6n8zUCcyYXVku9P1WeRiZXzuc5ltvrDzUVRCln
+	 xrQ2NLYMmcuM8SRsusKscp9mmvwTWNJyBNkxqOP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Disseldorp <ddiss@suse.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 036/331] btrfs: sysfs: validate scrub_speed_max value
-Date: Mon, 29 Jan 2024 09:01:40 -0800
-Message-ID: <20240129170015.996717259@linuxfoundation.org>
+	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.6 037/331] crypto: lib/mpi - Fix unexpected pointer access in mpi_ec_init
+Date: Mon, 29 Jan 2024 09:01:41 -0800
+Message-ID: <20240129170016.024465853@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -50,35 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Disseldorp <ddiss@suse.de>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
-commit 2b0122aaa800b021e36027d7f29e206f87c761d6 upstream.
+commit ba3c5574203034781ac4231acf117da917efcd2a upstream.
 
-The value set as scrub_speed_max accepts size with suffixes
-(k/m/g/t/p/e) but we should still validate it for trailing characters,
-similar to what we do with chunk_size_store.
+When the mpi_ec_ctx structure is initialized, some fields are not
+cleared, causing a crash when referencing the field when the
+structure was released. Initially, this issue was ignored because
+memory for mpi_ec_ctx is allocated with the __GFP_ZERO flag.
+For example, this error will be triggered when calculating the
+Za value for SM2 separately.
 
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: David Disseldorp <ddiss@suse.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: d58bb7e55a8a ("lib/mpi: Introduce ec implementation to MPI library")
+Cc: stable@vger.kernel.org # v6.5
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/sysfs.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ lib/crypto/mpi/ec.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/sysfs.c
-+++ b/fs/btrfs/sysfs.c
-@@ -1760,6 +1760,10 @@ static ssize_t btrfs_devinfo_scrub_speed
- 	unsigned long long limit;
+diff --git a/lib/crypto/mpi/ec.c b/lib/crypto/mpi/ec.c
+index 40f5908e57a4..e16dca1e23d5 100644
+--- a/lib/crypto/mpi/ec.c
++++ b/lib/crypto/mpi/ec.c
+@@ -584,6 +584,9 @@ void mpi_ec_init(struct mpi_ec_ctx *ctx, enum gcry_mpi_ec_models model,
+ 	ctx->a = mpi_copy(a);
+ 	ctx->b = mpi_copy(b);
  
- 	limit = memparse(buf, &endptr);
-+	/* There could be trailing '\n', also catch any typos after the value. */
-+	endptr = skip_spaces(endptr);
-+	if (*endptr != 0)
-+		return -EINVAL;
- 	WRITE_ONCE(device->scrub_speed_max, limit);
- 	return len;
- }
++	ctx->d = NULL;
++	ctx->t.two_inv_p = NULL;
++
+ 	ctx->t.p_barrett = use_barrett > 0 ? mpi_barrett_init(ctx->p, 0) : NULL;
+ 
+ 	mpi_ec_get_reset(ctx);
+-- 
+2.43.0
+
 
 
