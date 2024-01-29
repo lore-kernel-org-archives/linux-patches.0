@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E01416419C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5773D15D5D4;
 	Mon, 29 Jan 2024 17:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548410; cv=none; b=T21pJKa4sARni9htqU4OYRau7rdn+g4dQRCiQGS4eKNeJsGuxU4o4CVIx88FYo1xgYWsxy8ZxP11c9O/6nhmk79256vPKVaxe3tLNLlOZPTdZmkvVhfWdNxKoc/rKX9gJEiGs1Jb3Cg8Jj46TX81/3z1g/DxGhBruChY7yZsKpc=
+	t=1706548411; cv=none; b=XqKrgwKlNkIB2sbrjG7SPk4Su7jT4cOZrL3kJ+NVgKFwS3rTMwmbCuIH22CHTNNGrV6FhrKMRVYWA38fAoibnlLVQMrsFw6n4ew23PNk7Wbk2N81hTweghZetQBsiWYle3z+T4gXRuRn18I38TEgyicttb09fr8xKwlvfKWvT/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548410; c=relaxed/simple;
-	bh=US6ZvIfaLF//ipuNlR/G5t+xcH0dR9f0ireINE3pZkc=;
+	s=arc-20240116; t=1706548411; c=relaxed/simple;
+	bh=Z8y4nVte10pppE1r4qylNmoneCdgoglB9ECtGi7rPuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghSxfAmP7GDNTpzRMXgkSSgK0tj86UFYLjCBj/Hkh02FAZ1Vu20FSM267zsJK+PoDij/wSm4S7CPAN31jamjkFaX+onyk3C0AAjEXo+gBVvEuptsE5+hJLmonXSnAQSjBz4/62w2tCIIdSKkGayUmUsCe7/FQgmycvVq7vhOMIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtPGzDwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pt1TJAxu4cvLCKYFHoWkONwYpEk1zuv8mI/VB/KqoZVBHTvhlKmIr9PM2uTacfhg/U3AEG+HdNa8PJ8M7iC1VEGc5e8BXPFAppTTLtnwGuI2pSSD0wNL9x4IOILEzbZksvp4LLXHtZqx5EuB5qZtFfk2vXUbxZDy86Q8c15T7xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZIMjWXd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtPGzDwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACDCC43394;
-	Mon, 29 Jan 2024 17:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZIMjWXd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D26C43394;
+	Mon, 29 Jan 2024 17:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548409;
-	bh=US6ZvIfaLF//ipuNlR/G5t+xcH0dR9f0ireINE3pZkc=;
+	s=korg; t=1706548410;
+	bh=Z8y4nVte10pppE1r4qylNmoneCdgoglB9ECtGi7rPuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HtPGzDwY3ztQGh+KBLHFoEg1AXfrRgkpbD5cUvptF0EKEegjP42xwsMgZ507V0C+V
-	 9KbXXNsD2Qfx0qpXIt8l7kQxdjAJjRaAUVUygMIwoPYDemcxoGOB6LwEgGvTVq9DZj
-	 XCaXMOzxPqkyPlSOWJLQfz0UZwfu72XBAtr3GOKY=
+	b=NZIMjWXdfi8iF3mHGzS09OQ9iimiNWADVtJdZux1a4iFUppPcDn/92hXHe4qb9z1v
+	 6+cDeViUNwLd+j3lhv4A0pBZHVBcZSSNzVLxt7AKd8l/kh4PhInWJLZbKspIW1ynLP
+	 MGyfWtZoQ9KnPZNwkAl85kIftWYU7QlIYT+gPw8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Jyri Sarha <jsarha@ti.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 170/185] drm/bridge: sii902x: Fix audio codec unregistration
-Date: Mon, 29 Jan 2024 09:06:10 -0800
-Message-ID: <20240129170004.050980795@linuxfoundation.org>
+Subject: [PATCH 6.1 171/185] drm/bridge: parade-ps8640: Ensure bridge is suspended in .post_disable()
+Date: Mon, 29 Jan 2024 09:06:11 -0800
+Message-ID: <20240129170004.082020155@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -53,83 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 3fc6c76a8d208d3955c9e64b382d0ff370bc61fc ]
+[ Upstream commit 26db46bc9c675e43230cc6accd110110a7654299 ]
 
-The driver never unregisters the audio codec platform device, which can
-lead to a crash on module reloading, nor does it handle the return value
-from sii902x_audio_codec_init().
+The ps8640 bridge seems to expect everything to be power cycled at the
+disable process, but sometimes ps8640_aux_transfer() holds the runtime
+PM reference and prevents the bridge from suspend.
 
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Fixes: ff5781634c41 ("drm/bridge: sii902x: Implement HDMI audio support")
-Cc: Jyri Sarha <jsarha@ti.com>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240103-si902x-fixes-v1-2-b9fd3e448411@ideasonboard.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240103-si902x-fixes-v1-2-b9fd3e448411@ideasonboard.com
+Prevent that by introducing a mutex lock between ps8640_aux_transfer()
+and .post_disable() to make sure the bridge is really powered off.
+
+Fixes: 826cff3f7ebb ("drm/bridge: parade-ps8640: Enable runtime power management")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240109120528.1292601-1-treapking@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/sii902x.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/parade-ps8640.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/sii902x.c b/drivers/gpu/drm/bridge/sii902x.c
-index f648d686eb37..6359d6f53a1b 100644
---- a/drivers/gpu/drm/bridge/sii902x.c
-+++ b/drivers/gpu/drm/bridge/sii902x.c
-@@ -1040,7 +1040,9 @@ static int sii902x_init(struct sii902x *sii902x)
- 			return ret;
- 	}
+diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
+index 146e1ad76223..3982568bd093 100644
+--- a/drivers/gpu/drm/bridge/parade-ps8640.c
++++ b/drivers/gpu/drm/bridge/parade-ps8640.c
+@@ -106,6 +106,7 @@ struct ps8640 {
+ 	struct device_link *link;
+ 	bool pre_enabled;
+ 	bool need_post_hpd_delay;
++	struct mutex aux_lock;
+ };
  
--	sii902x_audio_codec_init(sii902x, dev);
-+	ret = sii902x_audio_codec_init(sii902x, dev);
-+	if (ret)
-+		return ret;
+ static const struct regmap_config ps8640_regmap_config[] = {
+@@ -353,6 +354,7 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
+ 	struct device *dev = &ps_bridge->page[PAGE0_DP_CNTL]->dev;
+ 	int ret;
  
- 	i2c_set_clientdata(sii902x->i2c, sii902x);
++	mutex_lock(&ps_bridge->aux_lock);
+ 	pm_runtime_get_sync(dev);
+ 	ret = _ps8640_wait_hpd_asserted(ps_bridge, 200 * 1000);
+ 	if (ret) {
+@@ -362,6 +364,7 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
+ 	ret = ps8640_aux_transfer_msg(aux, msg);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
++	mutex_unlock(&ps_bridge->aux_lock);
  
-@@ -1048,13 +1050,15 @@ static int sii902x_init(struct sii902x *sii902x)
- 					1, 0, I2C_MUX_GATE,
- 					sii902x_i2c_bypass_select,
- 					sii902x_i2c_bypass_deselect);
--	if (!sii902x->i2cmux)
--		return -ENOMEM;
-+	if (!sii902x->i2cmux) {
-+		ret = -ENOMEM;
-+		goto err_unreg_audio;
-+	}
+ 	return ret;
+ }
+@@ -481,7 +484,18 @@ static void ps8640_post_disable(struct drm_bridge *bridge)
+ 	ps_bridge->pre_enabled = false;
  
- 	sii902x->i2cmux->priv = sii902x;
- 	ret = i2c_mux_add_adapter(sii902x->i2cmux, 0, 0, 0);
- 	if (ret)
--		return ret;
-+		goto err_unreg_audio;
- 
- 	sii902x->bridge.funcs = &sii902x_bridge_funcs;
- 	sii902x->bridge.of_node = dev->of_node;
-@@ -1067,6 +1071,12 @@ static int sii902x_init(struct sii902x *sii902x)
- 	drm_bridge_add(&sii902x->bridge);
- 
- 	return 0;
+ 	ps8640_bridge_vdo_control(ps_bridge, DISABLE);
 +
-+err_unreg_audio:
-+	if (!PTR_ERR_OR_ZERO(sii902x->audio.pdev))
-+		platform_device_unregister(sii902x->audio.pdev);
++	/*
++	 * The bridge seems to expect everything to be power cycled at the
++	 * disable process, so grab a lock here to make sure
++	 * ps8640_aux_transfer() is not holding a runtime PM reference and
++	 * preventing the bridge from suspend.
++	 */
++	mutex_lock(&ps_bridge->aux_lock);
 +
-+	return ret;
+ 	pm_runtime_put_sync_suspend(&ps_bridge->page[PAGE0_DP_CNTL]->dev);
++
++	mutex_unlock(&ps_bridge->aux_lock);
  }
  
- static int sii902x_probe(struct i2c_client *client,
-@@ -1139,6 +1149,9 @@ static void sii902x_remove(struct i2c_client *client)
+ static int ps8640_bridge_attach(struct drm_bridge *bridge,
+@@ -662,6 +676,8 @@ static int ps8640_probe(struct i2c_client *client)
+ 	if (!ps_bridge)
+ 		return -ENOMEM;
  
- 	drm_bridge_remove(&sii902x->bridge);
- 	i2c_mux_del_adapters(sii902x->i2cmux);
++	mutex_init(&ps_bridge->aux_lock);
 +
-+	if (!PTR_ERR_OR_ZERO(sii902x->audio.pdev))
-+		platform_device_unregister(sii902x->audio.pdev);
- }
- 
- static const struct of_device_id sii902x_dt_ids[] = {
+ 	ps_bridge->supplies[0].supply = "vdd12";
+ 	ps_bridge->supplies[1].supply = "vdd33";
+ 	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(ps_bridge->supplies),
 -- 
 2.43.0
 
