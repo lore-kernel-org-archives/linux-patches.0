@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C07215B316;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F142215A497;
 	Mon, 29 Jan 2024 17:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548584; cv=none; b=ZTXMOxdEgjMQQEF62s7mjNSqYss3Na8N/BN360IJsFiztkuTiGtIWXcx5MJXvZcZIvJPKThXOOaNpccBv684O39CoJXYaze5HFDFJx2k87rD64+XFP0foZKaOa00rvdhhg4A0NDVbI6Ort6SqtJcTbFEVOUmY8dbGer0wWADKMI=
+	t=1706548585; cv=none; b=I4wUMmSvhFnmAF18v2R8an3eB80i5bhnrmg8ij+0S1uEWWpjFF8Oni0e4LGppeKuRt50BZw1+EMTMr3Z7ffjvmkxo1VsMyvsbQxnyNszzByd3etHEdZ6aE1vPOMp+qC1pbCRDYWgetknnEokNqLsS+lN+5O+UGeKflpqh+LqFcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548584; c=relaxed/simple;
-	bh=/Q3Py4g9SXG2tF8aGcyUguKZEzaGUCdlRc9QbOptSdg=;
+	s=arc-20240116; t=1706548585; c=relaxed/simple;
+	bh=5/1Ak+baGmXZ0uTQbs/utNs8x4PlkLsuS1Sn9U6uCzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNCVFBlGFJn8p371ty4AfxXu9Wk4JLizk+zR2GABqnkXt6+RgNsoFCyhCS5oyhWKDAJpb1SzLvc8tgjm+uVJg3SAw2z5cpseZCAE/3Cv7VpWAOlUyUbMxRt83CTFf+lDl2WbBUn33knxkzAO4Pmuexh3J94zhL6id+Q0vq18+gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJfXuJ14; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MTHAuWDc4TBw54zQDx4WeyQ4R4CvnWU7DHbg3Yju0ZnDhuZzXj7b6iz2I2BoYTfZw/NKrKAu6RilubqLbMOCKMIns+MXroImZbMZuJiyMZ5oFe2e0d02/MOn0vQc0N71ImTo9xS5SQoPf2tnqvTeMeUELCZQl+qOdoREJQH0a4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ItZ+sky; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJfXuJ14"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A52C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ItZ+sky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E71C433C7;
 	Mon, 29 Jan 2024 17:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548584;
-	bh=/Q3Py4g9SXG2tF8aGcyUguKZEzaGUCdlRc9QbOptSdg=;
+	bh=5/1Ak+baGmXZ0uTQbs/utNs8x4PlkLsuS1Sn9U6uCzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJfXuJ14C6Wk5anKN7EroyOcmQabrUSINE1Lf6Cno4/Vnb76hoBAMY+ok0VELExCK
-	 M91f7SMedTjhnY48Dc6FEStbiiiC57Llr/XG3ZCHGX1HpdDdmXmt/CwLcIR2GWdwrx
-	 rsFpwCc4vkYl/ZrfUDK0wckkjEVCgF8pXI27fJuw=
+	b=1ItZ+skyi/iZZrUsiM4KBZqnjJeuQirj936/vQIjnR0oFNyQEdAjgU3d3Tf+pumUA
+	 73m/t1p693K3FkBFO5g/24qadS2jYrbpuft4u1ULH4I1gRxmn2d0e9Z+wkc/0zRnAI
+	 1KOPJ7sjzjfwfZYt6ODVRvmQ0jP9d0JC6z+VaEJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Edlinger <bernd.edlinger@hotmail.de>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.6 239/331] exec: Fix error handling in begin_new_exec()
-Date: Mon, 29 Jan 2024 09:05:03 -0800
-Message-ID: <20240129170021.870177361@linuxfoundation.org>
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 240/331] wifi: iwlwifi: fix a memory corruption
+Date: Mon, 29 Jan 2024 09:05:04 -0800
+Message-ID: <20240129170021.898995068@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,37 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernd Edlinger <bernd.edlinger@hotmail.de>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-commit 84c39ec57d409e803a9bb6e4e85daf1243e0e80b upstream.
+commit cf4a0d840ecc72fcf16198d5e9c505ab7d5a5e4d upstream.
 
-If get_unused_fd_flags() fails, the error handling is incomplete because
-bprm->cred is already set to NULL, and therefore free_bprm will not
-unlock the cred_guard_mutex. Note there are two error conditions which
-end up here, one before and one after bprm->cred is cleared.
+iwl_fw_ini_trigger_tlv::data is a pointer to a __le32, which means that
+if we copy to iwl_fw_ini_trigger_tlv::data + offset while offset is in
+bytes, we'll write past the buffer.
 
-Fixes: b8a61c9e7b4a ("exec: Generic execfd support")
-Signed-off-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
-Acked-by: Eric W. Biederman <ebiederm@xmission.com>
-Link: https://lore.kernel.org/r/AS8P193MB128517ADB5EFF29E04389EDAE4752@AS8P193MB1285.EURP193.PROD.OUTLOOK.COM
 Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218233
+Fixes: cf29c5b66b9f ("iwlwifi: dbg_ini: implement time point handling")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240111150610.2d2b8b870194.I14ed76505a5cf87304e0c9cc05cc0ae85ed3bf91@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -1410,6 +1410,9 @@ int begin_new_exec(struct linux_binprm *
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2018-2023 Intel Corporation
++ * Copyright (C) 2018-2024 Intel Corporation
+  */
+ #include <linux/firmware.h>
+ #include "iwl-drv.h"
+@@ -1094,7 +1094,7 @@ static int iwl_dbg_tlv_override_trig_nod
+ 		node_trig = (void *)node_tlv->data;
+ 	}
  
- out_unlock:
- 	up_write(&me->signal->exec_update_lock);
-+	if (!bprm->cred)
-+		mutex_unlock(&me->signal->cred_guard_mutex);
-+
- out:
- 	return retval;
- }
+-	memcpy(node_trig->data + offset, trig->data, trig_data_len);
++	memcpy((u8 *)node_trig->data + offset, trig->data, trig_data_len);
+ 	node_tlv->length = cpu_to_le32(size);
+ 
+ 	if (policy & IWL_FW_INI_APPLY_POLICY_OVERRIDE_CFG) {
 
 
