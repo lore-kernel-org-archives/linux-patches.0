@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E08315B316;
-	Mon, 29 Jan 2024 17:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20B115A48F;
+	Mon, 29 Jan 2024 17:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548265; cv=none; b=VYObktVxSIpWat8sm2iWdPYiYc01FP0471grBTxp/FpF5+tLTN8wiVBW8QweIGBQ5lhWyyvQZ9W3z1qWdZPGim0GpH2A2ppuxbJJ6MD0mac9jqqD4BqTLHorR0h2MbgsTld9v6N9VUgOlXNgdR53ze1K2WaYVc7PhGtvCJI65Yo=
+	t=1706548265; cv=none; b=G/xw2sQfOHorKU2Yzbxa+TU8A/4P/XrivOuO9X6OrYtAY8e7A//pc9hOHl8dZJyTMa1gC5H8Wg5mBzuVdXoQ61EgYQ5xb+yK+tpBDjrKoNt+0wEtAsWV8rrErjrQZHrcKQIVymdlajNAJQut2WKfb+N4m7jBcFA5osiT/bt9JzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548265; c=relaxed/simple;
-	bh=GsGo1I9QbVwsOZms9QFgyefKstJdGFT1JVU3ZBJAaxE=;
+	bh=JbwWTJ4Ss2g+cCd7W1cFy9+KvSl5U5gGDwWFK7loOKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gk4R34Auqbwz+X6MzdBOySmz29Iefb9eX+z7oel4Rzy7ucIetRGWwV7V18OvLCwFTVPo7wM56eqMxUvbfgSCmLOpkwlhZq3Z8AzD6hj05LOG8SYDiF5l1YhOWh5GvZQxKvhe7fo2nuVRWsDrgtuLr40uKCjZK8jE8SyZ90Z9Vqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzNdeo96; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cSOMEAypTWzsjhzk6eO/dK1mOr2S94VIRdOFL+7ZONTOUqFWyLfVfiXuvFy7aUDacGLhby15iXclSj26vSQtWvmOP+ROxd/93ijSYqNrQfT6zwGwgdgaJfT7//tjzje/NMFsCjxb4eyYNXA3XQ7NicvNxdJdey8mcvjXjvfGwRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TeSxthGj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzNdeo96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC65C43394;
-	Mon, 29 Jan 2024 17:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TeSxthGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F98C43399;
+	Mon, 29 Jan 2024 17:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548264;
-	bh=GsGo1I9QbVwsOZms9QFgyefKstJdGFT1JVU3ZBJAaxE=;
+	s=korg; t=1706548265;
+	bh=JbwWTJ4Ss2g+cCd7W1cFy9+KvSl5U5gGDwWFK7loOKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzNdeo968ZwuduoSR4WwbkHEk71yVhnRrsyRD4MTO0hBCG91qbphRRabZk/zVI+oB
-	 eHGc4CXrljNRzzuzhZ6hkSki8AoiyZ2Eqlybxn+myOFwO2U1AYHvgn1Uqn0QM/bW7C
-	 XaLiXdjNVtqT+94R1oWlT9RC1t4S0Zm+EW5A985w=
+	b=TeSxthGjZH/d3Ve3I0fW2TTHW/B++z9lO9olNcgiJta78GCyD1FLn0TIG90J1ityy
+	 9H0fFnoVG11mU34clVhtseElheoNCySAbsgPZ1jLMfVsqeFRtKC+yAHMnFVdX0N03W
+	 jSVnpINWTHwoD2mIj0N863gxbfTgLjxjLkDZekb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	David Hildenbrand <david@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 055/185] mm/rmap: fix misplaced parenthesis of a likely()
-Date: Mon, 29 Jan 2024 09:04:15 -0800
-Message-ID: <20240129170000.364828537@linuxfoundation.org>
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 282/346] thermal: intel: hfi: Add syscore callbacks for system-wide PM
+Date: Mon, 29 Jan 2024 09:05:13 -0800
+Message-ID: <20240129170024.672167742@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +47,105 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-commit f67f8d4a8c1e1ebc85a6cbdb9a7266f14863461c upstream.
+[ Upstream commit 97566d09fd02d2ab329774bb89a2cdf2267e86d9 ]
 
-Running my yearly branch profiler to see where likely/unlikely annotation
-may be added or removed, I discovered this:
+The kernel allocates a memory buffer and provides its location to the
+hardware, which uses it to update the HFI table. This allocation occurs
+during boot and remains constant throughout runtime.
 
-correct incorrect  %        Function                  File              Line
- ------- ---------  -        --------                  ----              ----
-       0   457918 100 page_try_dup_anon_rmap         rmap.h               264
-[..]
-  458021        0   0 page_try_dup_anon_rmap         rmap.h               265
+When resuming from hibernation, the restore kernel allocates a second
+memory buffer and reprograms the HFI hardware with the new location as
+part of a normal boot. The location of the second memory buffer may
+differ from the one allocated by the image kernel.
 
-I thought it was interesting that line 264 of rmap.h had a 100% incorrect
-annotation, but the line directly below it was 100% correct. Looking at the
-code:
+When the restore kernel transfers control to the image kernel, its HFI
+buffer becomes invalid, potentially leading to memory corruption if the
+hardware writes to it (the hardware continues to use the buffer from the
+restore kernel).
 
-	if (likely(!is_device_private_page(page) &&
-	    unlikely(page_needs_cow_for_dma(vma, page))))
+It is also possible that the hardware "forgets" the address of the memory
+buffer when resuming from "deep" suspend. Memory corruption may also occur
+in such a scenario.
 
-It didn't make sense. The "likely()" was around the entire if statement
-(not just the "!is_device_private_page(page)"), which also included the
-"unlikely()" portion of that if condition.
+To prevent the described memory corruption, disable HFI when preparing to
+suspend or hibernate. Enable it when resuming.
 
-If the unlikely portion is unlikely to be true, that would make the entire
-if condition unlikely to be true, so it made no sense at all to say the
-entire if condition is true.
+Add syscore callbacks to handle the package of the boot CPU (packages of
+non-boot CPUs are handled via CPU offline). Syscore ops always run on the
+boot CPU. Additionally, HFI only needs to be disabled during "deep" suspend
+and hibernation. Syscore ops only run in these cases.
 
-What is more likely to be likely is just the first part of the if statement
-before the && operation. It's likely to be a misplaced parenthesis. And
-after making the if condition broken into a likely() && unlikely(), both
-now appear to be correct!
-
-Link: https://lkml.kernel.org/r/20231201145936.5ddfdb50@gandalf.local.home
-Fixes:fb3d824d1a46c ("mm/rmap: split page_dup_rmap() into page_dup_file_rmap() and page_try_dup_anon_rmap()")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+[ rjw: Comment adjustment, subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rmap.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thermal/intel/intel_hfi.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/include/linux/rmap.h
-+++ b/include/linux/rmap.h
-@@ -250,8 +250,8 @@ static inline int page_try_dup_anon_rmap
- 	 * guarantee the pinned page won't be randomly replaced in the
- 	 * future on write faults.
- 	 */
--	if (likely(!is_device_private_page(page) &&
--	    unlikely(page_needs_cow_for_dma(vma, page))))
-+	if (likely(!is_device_private_page(page)) &&
-+	    unlikely(page_needs_cow_for_dma(vma, page)))
- 		return -EBUSY;
+diff --git a/drivers/thermal/intel/intel_hfi.c b/drivers/thermal/intel/intel_hfi.c
+index bb25c75acd45..1c5a429b2e3e 100644
+--- a/drivers/thermal/intel/intel_hfi.c
++++ b/drivers/thermal/intel/intel_hfi.c
+@@ -35,7 +35,9 @@
+ #include <linux/processor.h>
+ #include <linux/slab.h>
+ #include <linux/spinlock.h>
++#include <linux/suspend.h>
+ #include <linux/string.h>
++#include <linux/syscore_ops.h>
+ #include <linux/topology.h>
+ #include <linux/workqueue.h>
  
- 	ClearPageAnonExclusive(page);
+@@ -568,6 +570,30 @@ static __init int hfi_parse_features(void)
+ 	return 0;
+ }
+ 
++static void hfi_do_enable(void)
++{
++	/* This code runs only on the boot CPU. */
++	struct hfi_cpu_info *info = &per_cpu(hfi_cpu_info, 0);
++	struct hfi_instance *hfi_instance = info->hfi_instance;
++
++	/* No locking needed. There is no concurrency with CPU online. */
++	hfi_set_hw_table(hfi_instance);
++	hfi_enable();
++}
++
++static int hfi_do_disable(void)
++{
++	/* No locking needed. There is no concurrency with CPU offline. */
++	hfi_disable();
++
++	return 0;
++}
++
++static struct syscore_ops hfi_pm_ops = {
++	.resume = hfi_do_enable,
++	.suspend = hfi_do_disable,
++};
++
+ void __init intel_hfi_init(void)
+ {
+ 	struct hfi_instance *hfi_instance;
+@@ -599,6 +625,8 @@ void __init intel_hfi_init(void)
+ 	if (!hfi_updates_wq)
+ 		goto err_nomem;
+ 
++	register_syscore_ops(&hfi_pm_ops);
++
+ 	return;
+ 
+ err_nomem:
+-- 
+2.43.0
+
 
 
