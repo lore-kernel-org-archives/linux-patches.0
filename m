@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6342215B965;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F06E15B964;
 	Mon, 29 Jan 2024 17:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548277; cv=none; b=mL8ZSnpRvZeRtzxDB1tYM+Tzi08WN9x8lvEr9JMLdyuvuduYP6S0x54AYoh770PVVOJRzVG7puSndpB6NSU5NQovdS2CWjd6heq4++4GF05wPd3RENESGPmCPz5XNwHiLBXJbW5vuGh+Vy2y+hlBJqLDWGwfMJwMZec9nfc2de0=
+	t=1706548278; cv=none; b=chc6tgqjUmALNbRQTOlUbe7ZYTX8mY/DmQJwKJZJPWKZLv629ioAK7ayCtrzmxmnu1vQ59Dl8uAr/Y6OW9DJgMqXEe1ge+E/Mipdi1hkqXl8S822ktDhNb6IPSpPajDNA+cYWyvXEHriVBCOLAemjrhVBDwy3lPZ3bO7LMQTsSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548277; c=relaxed/simple;
-	bh=hPw+HxSrx+S8E1imjRhRsxg757fV6it2Vi0Dkq/bZvI=;
+	s=arc-20240116; t=1706548278; c=relaxed/simple;
+	bh=ERVERd5MZylJ1Ne6qFrR4JhFhV64ZoABhujrxegD8ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVSj600AhGAYsdugVpa771seyP4tpR1AQB0oQAZEISFe6AzDzNqXf+U1gc0KxWqPKSffCqKhxIriapmBiEAZU+K/MT93aXAgdpvVopb6u2Y207s5POGra4wx4LDcB0JqWLg6M41TmSfntSBOgVJLnvko6vB0ZIlRisjIw0hAh34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQ9HTtSV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dW5rlHTmVUCsJKy7+Q1t/x5KEjc61qHVfhqrKPVL72NEctxW+O1Xeb9aZQdcBCNTsTy0soNR/V61gUXPPrZKKkxmcIZ6DU2khQGAxHpV21KaiPQ1Oc6c/g0Rj8QQGGoVQrZSJDTWkGgRyoJl9P9sGHWNKxMjj5cYI34Sd+kNg0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1W9op/w9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQ9HTtSV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC211C433C7;
-	Mon, 29 Jan 2024 17:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1W9op/w9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E64C43390;
+	Mon, 29 Jan 2024 17:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548277;
-	bh=hPw+HxSrx+S8E1imjRhRsxg757fV6it2Vi0Dkq/bZvI=;
+	bh=ERVERd5MZylJ1Ne6qFrR4JhFhV64ZoABhujrxegD8ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQ9HTtSVV69mUSTfNR8gxSZQDWvgM1r9A6gPrf9aMwUXDkjUN2xyVO9RHT+1/Fvp6
-	 d657IlDe5Q/CaWc7PgoTrxXVAM0ccF0ZdCAwyxMd/WEkCI2+tfGp2jqigHhcayP8h5
-	 f5k/bMu3LkwdaFe+LnUkqcWQAhYb9CdqCVX01E6s=
+	b=1W9op/w9R5FGmfZjzjMhIetBLTMYPUeoz1KtROAt8qSAzBrx5yr8elgPtrFJOcFZp
+	 6rP3dzkOehYYpr1eu/8b8Wbrq8w9Y2X02lg2zFpcyRSAAmIwRFCrWK2uvlPG8JDdeW
+	 AejZZJVLuSKD3Jywa4nQO3ps2FP/kRofcVSawg/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Hansen Dsouza <hansen.dsouza@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 292/346] drm/amd/display: Wake DMCUB before executing GPINT commands
-Date: Mon, 29 Jan 2024 09:05:23 -0800
-Message-ID: <20240129170024.991178668@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.1 065/185] serial: sc16is7xx: remove obsolete loop in sc16is7xx_port_irq()
+Date: Mon, 29 Jan 2024 09:04:25 -0800
+Message-ID: <20240129170000.693671980@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,220 +46,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit e5ffd1263dd5b44929c676171802e7b6af483f21 ]
+commit ed647256e8f226241ecff7baaecdb8632ffc7ec1 upstream.
 
-[Why]
-DMCUB can be in idle when we attempt to interface with the HW through
-the GPINT mailbox resulting in a system hang.
+Commit 834449872105 ("sc16is7xx: Fix for multi-channel stall") changed
+sc16is7xx_port_irq() from looping multiple times when there was still
+interrupts to serve. It simply changed the do {} while(1) loop to a
+do {} while(0) loop, which makes the loop itself now obsolete.
 
-[How]
-Add dc_wake_and_execute_gpint() to wrap the wake, execute, sleep
-sequence.
+Clean the code by removing this obsolete do {} while(0) loop.
 
-If the GPINT executes successfully then DMCUB will be put back into
-sleep after the optional response is returned.
-
-It functions similar to the inbox command interface.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hansen Dsouza <hansen.dsouza@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 834449872105 ("sc16is7xx: Fix for multi-channel stall")
+Cc:  <stable@vger.kernel.org>
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231221231823.2327894-5-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c  | 72 ++++++++++++++-----
- drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h  | 11 +++
- drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c | 19 ++---
- 3 files changed, 72 insertions(+), 30 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   89 +++++++++++++++++++----------------------
+ 1 file changed, 43 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-index 50f1e6d5321e..61d1b4eadbee 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-@@ -282,17 +282,11 @@ bool dc_dmub_srv_optimized_init_done(struct dc_dmub_srv *dc_dmub_srv)
- bool dc_dmub_srv_notify_stream_mask(struct dc_dmub_srv *dc_dmub_srv,
- 				    unsigned int stream_mask)
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -726,58 +726,55 @@ static void sc16is7xx_update_mlines(stru
+ static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
  {
--	struct dmub_srv *dmub;
--	const uint32_t timeout = 30;
+ 	bool rc = true;
++	unsigned int iir, rxlen;
+ 	struct uart_port *port = &s->p[portno].port;
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
+ 	mutex_lock(&one->efr_lock);
+ 
+-	do {
+-		unsigned int iir, rxlen;
 -
- 	if (!dc_dmub_srv || !dc_dmub_srv->dmub)
- 		return false;
- 
--	dmub = dc_dmub_srv->dmub;
+-		iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
+-		if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
+-			rc = false;
+-			goto out_port_irq;
+-		}
 -
--	return dmub_srv_send_gpint_command(
--		       dmub, DMUB_GPINT__IDLE_OPT_NOTIFY_STREAM_MASK,
--		       stream_mask, timeout) == DMUB_STATUS_OK;
-+	return dc_wake_and_execute_gpint(dc_dmub_srv->ctx, DMUB_GPINT__IDLE_OPT_NOTIFY_STREAM_MASK,
-+					 stream_mask, NULL, DM_DMUB_WAIT_TYPE_WAIT);
- }
- 
- bool dc_dmub_srv_is_restore_required(struct dc_dmub_srv *dc_dmub_srv)
-@@ -1107,25 +1101,20 @@ bool dc_dmub_check_min_version(struct dmub_srv *srv)
- void dc_dmub_srv_enable_dpia_trace(const struct dc *dc)
- {
- 	struct dc_dmub_srv *dc_dmub_srv = dc->ctx->dmub_srv;
--	struct dmub_srv *dmub;
--	enum dmub_status status;
--	static const uint32_t timeout_us = 30;
- 
- 	if (!dc_dmub_srv || !dc_dmub_srv->dmub) {
- 		DC_LOG_ERROR("%s: invalid parameters.", __func__);
- 		return;
- 	}
- 
--	dmub = dc_dmub_srv->dmub;
+-		iir &= SC16IS7XX_IIR_ID_MASK;
 -
--	status = dmub_srv_send_gpint_command(dmub, DMUB_GPINT__SET_TRACE_BUFFER_MASK_WORD1, 0x0010, timeout_us);
--	if (status != DMUB_STATUS_OK) {
-+	if (!dc_wake_and_execute_gpint(dc->ctx, DMUB_GPINT__SET_TRACE_BUFFER_MASK_WORD1,
-+				       0x0010, NULL, DM_DMUB_WAIT_TYPE_WAIT)) {
- 		DC_LOG_ERROR("timeout updating trace buffer mask word\n");
- 		return;
- 	}
- 
--	status = dmub_srv_send_gpint_command(dmub, DMUB_GPINT__UPDATE_TRACE_BUFFER_MASK, 0x0000, timeout_us);
--	if (status != DMUB_STATUS_OK) {
-+	if (!dc_wake_and_execute_gpint(dc->ctx, DMUB_GPINT__UPDATE_TRACE_BUFFER_MASK,
-+				       0x0000, NULL, DM_DMUB_WAIT_TYPE_WAIT)) {
- 		DC_LOG_ERROR("timeout updating trace buffer mask word\n");
- 		return;
- 	}
-@@ -1337,3 +1326,52 @@ bool dc_wake_and_execute_dmub_cmd_list(const struct dc_context *ctx, unsigned in
- 
- 	return result;
- }
-+
-+static bool dc_dmub_execute_gpint(const struct dc_context *ctx, enum dmub_gpint_command command_code,
-+				  uint16_t param, uint32_t *response, enum dm_dmub_wait_type wait_type)
-+{
-+	struct dc_dmub_srv *dc_dmub_srv = ctx->dmub_srv;
-+	const uint32_t wait_us = wait_type == DM_DMUB_WAIT_TYPE_NO_WAIT ? 0 : 30;
-+	enum dmub_status status;
-+
-+	if (response)
-+		*response = 0;
-+
-+	if (!dc_dmub_srv || !dc_dmub_srv->dmub)
-+		return false;
-+
-+	status = dmub_srv_send_gpint_command(dc_dmub_srv->dmub, command_code, param, wait_us);
-+	if (status != DMUB_STATUS_OK) {
-+		if (status == DMUB_STATUS_TIMEOUT && wait_type == DM_DMUB_WAIT_TYPE_NO_WAIT)
-+			return true;
-+
-+		return false;
+-		switch (iir) {
+-		case SC16IS7XX_IIR_RDI_SRC:
+-		case SC16IS7XX_IIR_RLSE_SRC:
+-		case SC16IS7XX_IIR_RTOI_SRC:
+-		case SC16IS7XX_IIR_XOFFI_SRC:
+-			rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
+-
+-			/*
+-			 * There is a silicon bug that makes the chip report a
+-			 * time-out interrupt but no data in the FIFO. This is
+-			 * described in errata section 18.1.4.
+-			 *
+-			 * When this happens, read one byte from the FIFO to
+-			 * clear the interrupt.
+-			 */
+-			if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
+-				rxlen = 1;
+-
+-			if (rxlen)
+-				sc16is7xx_handle_rx(port, rxlen, iir);
+-			break;
++	iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
++	if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
++		rc = false;
++		goto out_port_irq;
 +	}
 +
-+	if (response && wait_type == DM_DMUB_WAIT_TYPE_WAIT_WITH_REPLY)
-+		dmub_srv_get_gpint_response(dc_dmub_srv->dmub, response);
++	iir &= SC16IS7XX_IIR_ID_MASK;
 +
-+	return true;
-+}
++	switch (iir) {
++	case SC16IS7XX_IIR_RDI_SRC:
++	case SC16IS7XX_IIR_RLSE_SRC:
++	case SC16IS7XX_IIR_RTOI_SRC:
++	case SC16IS7XX_IIR_XOFFI_SRC:
++		rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
 +
-+bool dc_wake_and_execute_gpint(const struct dc_context *ctx, enum dmub_gpint_command command_code,
-+			       uint16_t param, uint32_t *response, enum dm_dmub_wait_type wait_type)
-+{
-+	struct dc_dmub_srv *dc_dmub_srv = ctx->dmub_srv;
-+	bool result = false, reallow_idle = false;
++		/*
++		 * There is a silicon bug that makes the chip report a
++		 * time-out interrupt but no data in the FIFO. This is
++		 * described in errata section 18.1.4.
++		 *
++		 * When this happens, read one byte from the FIFO to
++		 * clear the interrupt.
++		 */
++		if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
++			rxlen = 1;
 +
-+	if (!dc_dmub_srv || !dc_dmub_srv->dmub)
-+		return false;
-+
-+	if (dc_dmub_srv->idle_allowed) {
-+		dc_dmub_srv_apply_idle_power_optimizations(ctx->dc, false);
-+		reallow_idle = true;
++		if (rxlen)
++			sc16is7xx_handle_rx(port, rxlen, iir);
++		break;
+ 		/* CTSRTS interrupt comes only when CTS goes inactive */
+-		case SC16IS7XX_IIR_CTSRTS_SRC:
+-		case SC16IS7XX_IIR_MSI_SRC:
+-			sc16is7xx_update_mlines(one);
+-			break;
+-		case SC16IS7XX_IIR_THRI_SRC:
+-			sc16is7xx_handle_tx(port);
+-			break;
+-		default:
+-			dev_err_ratelimited(port->dev,
+-					    "ttySC%i: Unexpected interrupt: %x",
+-					    port->line, iir);
+-			break;
+-		}
+-	} while (0);
++	case SC16IS7XX_IIR_CTSRTS_SRC:
++	case SC16IS7XX_IIR_MSI_SRC:
++		sc16is7xx_update_mlines(one);
++		break;
++	case SC16IS7XX_IIR_THRI_SRC:
++		sc16is7xx_handle_tx(port);
++		break;
++	default:
++		dev_err_ratelimited(port->dev,
++				    "ttySC%i: Unexpected interrupt: %x",
++				    port->line, iir);
++		break;
 +	}
-+
-+	result = dc_dmub_execute_gpint(ctx, command_code, param, response, wait_type);
-+
-+	if (result && reallow_idle)
-+		dc_dmub_srv_apply_idle_power_optimizations(ctx->dc, true);
-+
-+	return result;
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-index 784ca3e44414..952bfb368886 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dmub_srv.h
-@@ -145,5 +145,16 @@ bool dc_wake_and_execute_dmub_cmd(const struct dc_context *ctx, union dmub_rb_cm
- bool dc_wake_and_execute_dmub_cmd_list(const struct dc_context *ctx, unsigned int count,
- 				       union dmub_rb_cmd *cmd, enum dm_dmub_wait_type wait_type);
  
-+/**
-+ * dc_wake_and_execute_gpint()
-+ *
-+ * @ctx: DC context
-+ * @command_code: The command ID to send to DMCUB
-+ * @param: The parameter to message DMCUB
-+ * @response: Optional response out value - may be NULL.
-+ * @wait_type: The wait behavior for the execution
-+ */
-+bool dc_wake_and_execute_gpint(const struct dc_context *ctx, enum dmub_gpint_command command_code,
-+			       uint16_t param, uint32_t *response, enum dm_dmub_wait_type wait_type);
- 
- #endif /* _DMUB_DC_SRV_H_ */
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
-index 3d7cef17f881..3e243e407bb8 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_psr.c
-@@ -105,23 +105,18 @@ static enum dc_psr_state convert_psr_state(uint32_t raw_state)
-  */
- static void dmub_psr_get_state(struct dmub_psr *dmub, enum dc_psr_state *state, uint8_t panel_inst)
- {
--	struct dmub_srv *srv = dmub->ctx->dmub_srv->dmub;
- 	uint32_t raw_state = 0;
- 	uint32_t retry_count = 0;
--	enum dmub_status status;
- 
- 	do {
- 		// Send gpint command and wait for ack
--		status = dmub_srv_send_gpint_command(srv, DMUB_GPINT__GET_PSR_STATE, panel_inst, 30);
--
--		if (status == DMUB_STATUS_OK) {
--			// GPINT was executed, get response
--			dmub_srv_get_gpint_response(srv, &raw_state);
-+		if (dc_wake_and_execute_gpint(dmub->ctx, DMUB_GPINT__GET_PSR_STATE, panel_inst, &raw_state,
-+					      DM_DMUB_WAIT_TYPE_WAIT_WITH_REPLY)) {
- 			*state = convert_psr_state(raw_state);
--		} else
-+		} else {
- 			// Return invalid state when GPINT times out
- 			*state = PSR_STATE_INVALID;
--
-+		}
- 	} while (++retry_count <= 1000 && *state == PSR_STATE_INVALID);
- 
- 	// Assert if max retry hit
-@@ -452,13 +447,11 @@ static void dmub_psr_force_static(struct dmub_psr *dmub, uint8_t panel_inst)
-  */
- static void dmub_psr_get_residency(struct dmub_psr *dmub, uint32_t *residency, uint8_t panel_inst)
- {
--	struct dmub_srv *srv = dmub->ctx->dmub_srv->dmub;
- 	uint16_t param = (uint16_t)(panel_inst << 8);
- 
- 	/* Send gpint command and wait for ack */
--	dmub_srv_send_gpint_command(srv, DMUB_GPINT__PSR_RESIDENCY, param, 30);
--
--	dmub_srv_get_gpint_response(srv, residency);
-+	dc_wake_and_execute_gpint(dmub->ctx, DMUB_GPINT__PSR_RESIDENCY, param, residency,
-+				  DM_DMUB_WAIT_TYPE_WAIT_WITH_REPLY);
- }
- 
- static const struct dmub_psr_funcs psr_funcs = {
--- 
-2.43.0
-
+ out_port_irq:
+ 	mutex_unlock(&one->efr_lock);
 
 
