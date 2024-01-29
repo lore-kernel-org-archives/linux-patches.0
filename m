@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9262876029;
-	Mon, 29 Jan 2024 17:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4837D76034;
+	Mon, 29 Jan 2024 17:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548618; cv=none; b=r1V/bqf2mCZ3Dg1J6JxzNQ7jbwBLI0WwgWlysRmqFru/I5I8b0ZAGHRwC+yn43CDg1jCWTg/RHSmx5rjPamsYBmbf/6IyYKsaXhrT0BC+XcgyP0yHJE5mZidFIpw6mG/RHedSHKSNTq67XVfwKE2f9fBaOsglGyz+NL4jlYVp9Y=
+	t=1706548619; cv=none; b=AWtTEv/e01CE5sfzKsrP1HzLj57IPOH8No1GXuD+6+qzhx+7zCrGqYLJ2a/Z335bcwbbXqE7PCtY2H8ekeC66YLxRLbn1gxkz/Godpqj4fl3vN2v9ei1NF3dRp4XwzMpcSQayaxQinCyca0zNDv410x7wCXkCSuObqq34SZde9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548618; c=relaxed/simple;
-	bh=Yh+ouFxk4S9dRFs/2X0YlnoY+nWofTRe6rzRJgNmE6c=;
+	s=arc-20240116; t=1706548619; c=relaxed/simple;
+	bh=y9DqWviUdJ7zj5C6mN7jxNZ64bmBfgNCNeVXWRyIc48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GhnITQIFaXvVgb8cd2zXvedk218h9BK0EwIAhieg9KRm0IGRlBCXhOvL32aNRijlhxwqj+aPT4ba/prP1ZPRgmhNRv7SW8jKlfhqEf6iDhUb624T9cr61eRPz6UOoiAECZ+ZUsO5/3cn5l+DKpz+enCdijis/h76oSsZpN+qMMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEBhrU7b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p0beJoXeXnFCOvcbAJxBNv2+swTbe9h9qprUEY6AGUuTfrZa+h24sMsnHmME7o83nFGfjYmATO7bwwhYnL2yxF8ku4nG7W37Yznx7g04FGVj3NVzmnb9IwV8uQH+XPUyzZWKB5TVpUFycHAMNYilZdObLUCF/DAZAe8My5Pt1nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSPkyYvs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEBhrU7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CA4C433F1;
-	Mon, 29 Jan 2024 17:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSPkyYvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F794C433F1;
+	Mon, 29 Jan 2024 17:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548618;
-	bh=Yh+ouFxk4S9dRFs/2X0YlnoY+nWofTRe6rzRJgNmE6c=;
+	s=korg; t=1706548619;
+	bh=y9DqWviUdJ7zj5C6mN7jxNZ64bmBfgNCNeVXWRyIc48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEBhrU7bftY6VFtinhaldIgB2CIH/XL3RFtLU6FHyGWKn8bet0jCPxaBzK0PAfAGJ
-	 smwZDHC1+pUDXkif5ZdbktvRlFQSBXzJ8gxuEv4C0dFSq8gC9N55Jzyd2WvTf5iDHM
-	 YfJmDZzO/xXiJ0cPvls+WHEzM/Rzj3uIXi/D8QCs=
+	b=zSPkyYvsqrHwvf5CUeFUBOY6txVnOwxIE18Sg1Q1SCcFceeVMWRt1WO00mPwVjmw9
+	 gyqbhZnx+ZdFDyMN5GYkEYv3vzumRKyN1hgvBN3rv2sSqxJ6/YxSlKeW+n9zqOsEPo
+	 y6+28UEzpBAAsjKabChlbFbrMJDBxXJFGuYjjiQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
-	Xu Yu <xuyu@linux.alibaba.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 287/331] mm: migrate: fix getting incorrect page mapping during page migration
-Date: Mon, 29 Jan 2024 09:05:51 -0800
-Message-ID: <20240129170023.256597812@linuxfoundation.org>
+Subject: [PATCH 6.6 288/331] serial: core: Provide port lock wrappers
+Date: Mon, 29 Jan 2024 09:05:52 -0800
+Message-ID: <20240129170023.284792694@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -50,138 +46,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit d1adb25df7111de83b64655a80b5a135adbded61 ]
+[ Upstream commit b0af4bcb49464c221ad5f95d40f2b1b252ceedcc ]
 
-When running stress-ng testing, we found below kernel crash after a few hours:
+When a serial port is used for kernel console output, then all
+modifications to the UART registers which are done from other contexts,
+e.g. getty, termios, are interference points for the kernel console.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-pc : dentry_name+0xd8/0x224
-lr : pointer+0x22c/0x370
-sp : ffff800025f134c0
-......
-Call trace:
-  dentry_name+0xd8/0x224
-  pointer+0x22c/0x370
-  vsnprintf+0x1ec/0x730
-  vscnprintf+0x2c/0x60
-  vprintk_store+0x70/0x234
-  vprintk_emit+0xe0/0x24c
-  vprintk_default+0x3c/0x44
-  vprintk_func+0x84/0x2d0
-  printk+0x64/0x88
-  __dump_page+0x52c/0x530
-  dump_page+0x14/0x20
-  set_migratetype_isolate+0x110/0x224
-  start_isolate_page_range+0xc4/0x20c
-  offline_pages+0x124/0x474
-  memory_block_offline+0x44/0xf4
-  memory_subsys_offline+0x3c/0x70
-  device_offline+0xf0/0x120
-  ......
+So far this has been ignored and the printk output is based on the
+principle of hope. The rework of the console infrastructure which aims to
+support threaded and atomic consoles, requires to mark sections which
+modify the UART registers as unsafe. This allows the atomic write function
+to make informed decisions and eventually to restore operational state. It
+also allows to prevent the regular UART code from modifying UART registers
+while printk output is in progress.
 
-After analyzing the vmcore, I found this issue is caused by page migration.
-The scenario is that, one thread is doing page migration, and we will use the
-target page's ->mapping field to save 'anon_vma' pointer between page unmap and
-page move, and now the target page is locked and refcount is 1.
+All modifications of UART registers are guarded by the UART port lock,
+which provides an obvious synchronization point with the console
+infrastructure.
 
-Currently, there is another stress-ng thread performing memory hotplug,
-attempting to offline the target page that is being migrated. It discovers that
-the refcount of this target page is 1, preventing the offline operation, thus
-proceeding to dump the page. However, page_mapping() of the target page may
-return an incorrect file mapping to crash the system in dump_mapping(), since
-the target page->mapping only saves 'anon_vma' pointer without setting
-PAGE_MAPPING_ANON flag.
+Provide wrapper functions for spin_[un]lock*(port->lock) invocations so
+that the console mechanics can be applied later on at a single place and
+does not require to copy the same logic all over the drivers.
 
-There are seveval ways to fix this issue:
-(1) Setting the PAGE_MAPPING_ANON flag for target page's ->mapping when saving
-'anon_vma', but this can confuse PageAnon() for PFN walkers, since the target
-page has not built mappings yet.
-(2) Getting the page lock to call page_mapping() in __dump_page() to avoid crashing
-the system, however, there are still some PFN walkers that call page_mapping()
-without holding the page lock, such as compaction.
-(3) Using target page->private field to save the 'anon_vma' pointer and 2 bits
-page state, just as page->mapping records an anonymous page, which can remove
-the page_mapping() impact for PFN walkers and also seems a simple way.
-
-So I choose option 3 to fix this issue, and this can also fix other potential
-issues for PFN walkers, such as compaction.
-
-Link: https://lkml.kernel.org/r/e60b17a88afc38cb32f84c3e30837ec70b343d2b.1702641709.git.baolin.wang@linux.alibaba.com
-Fixes: 64c8902ed441 ("migrate_pages: split unmap_and_move() to _unmap() and _move()")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Xu Yu <xuyu@linux.alibaba.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Link: https://lore.kernel.org/r/20230914183831.587273-2-john.ogness@linutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9915753037eb ("serial: sc16is7xx: fix unconditional activation of THRI interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/migrate.c | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
+ include/linux/serial_core.h | 79 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 3373fc1c2d0f..b4d972d80b10 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1026,38 +1026,31 @@ static int move_to_new_folio(struct folio *dst, struct folio *src,
- }
- 
- /*
-- * To record some information during migration, we use some unused
-- * fields (mapping and private) of struct folio of the newly allocated
-- * destination folio.  This is safe because nobody is using them
-- * except us.
-+ * To record some information during migration, we use unused private
-+ * field of struct folio of the newly allocated destination folio.
-+ * This is safe because nobody is using it except us.
-  */
--union migration_ptr {
--	struct anon_vma *anon_vma;
--	struct address_space *mapping;
--};
--
- enum {
- 	PAGE_WAS_MAPPED = BIT(0),
- 	PAGE_WAS_MLOCKED = BIT(1),
-+	PAGE_OLD_STATES = PAGE_WAS_MAPPED | PAGE_WAS_MLOCKED,
+diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
+index bb6f073bc159..f1d5c0d1568c 100644
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -588,6 +588,85 @@ struct uart_port {
+ 	void			*private_data;		/* generic platform data pointer */
  };
  
- static void __migrate_folio_record(struct folio *dst,
--				   unsigned long old_page_state,
-+				   int old_page_state,
- 				   struct anon_vma *anon_vma)
- {
--	union migration_ptr ptr = { .anon_vma = anon_vma };
--	dst->mapping = ptr.mapping;
--	dst->private = (void *)old_page_state;
-+	dst->private = (void *)anon_vma + old_page_state;
- }
- 
- static void __migrate_folio_extract(struct folio *dst,
- 				   int *old_page_state,
- 				   struct anon_vma **anon_vmap)
- {
--	union migration_ptr ptr = { .mapping = dst->mapping };
--	*anon_vmap = ptr.anon_vma;
--	*old_page_state = (unsigned long)dst->private;
--	dst->mapping = NULL;
-+	unsigned long private = (unsigned long)dst->private;
++/**
++ * uart_port_lock - Lock the UART port
++ * @up:		Pointer to UART port structure
++ */
++static inline void uart_port_lock(struct uart_port *up)
++{
++	spin_lock(&up->lock);
++}
 +
-+	*anon_vmap = (struct anon_vma *)(private & ~PAGE_OLD_STATES);
-+	*old_page_state = private & PAGE_OLD_STATES;
- 	dst->private = NULL;
- }
- 
++/**
++ * uart_port_lock_irq - Lock the UART port and disable interrupts
++ * @up:		Pointer to UART port structure
++ */
++static inline void uart_port_lock_irq(struct uart_port *up)
++{
++	spin_lock_irq(&up->lock);
++}
++
++/**
++ * uart_port_lock_irqsave - Lock the UART port, save and disable interrupts
++ * @up:		Pointer to UART port structure
++ * @flags:	Pointer to interrupt flags storage
++ */
++static inline void uart_port_lock_irqsave(struct uart_port *up, unsigned long *flags)
++{
++	spin_lock_irqsave(&up->lock, *flags);
++}
++
++/**
++ * uart_port_trylock - Try to lock the UART port
++ * @up:		Pointer to UART port structure
++ *
++ * Returns: True if lock was acquired, false otherwise
++ */
++static inline bool uart_port_trylock(struct uart_port *up)
++{
++	return spin_trylock(&up->lock);
++}
++
++/**
++ * uart_port_trylock_irqsave - Try to lock the UART port, save and disable interrupts
++ * @up:		Pointer to UART port structure
++ * @flags:	Pointer to interrupt flags storage
++ *
++ * Returns: True if lock was acquired, false otherwise
++ */
++static inline bool uart_port_trylock_irqsave(struct uart_port *up, unsigned long *flags)
++{
++	return spin_trylock_irqsave(&up->lock, *flags);
++}
++
++/**
++ * uart_port_unlock - Unlock the UART port
++ * @up:		Pointer to UART port structure
++ */
++static inline void uart_port_unlock(struct uart_port *up)
++{
++	spin_unlock(&up->lock);
++}
++
++/**
++ * uart_port_unlock_irq - Unlock the UART port and re-enable interrupts
++ * @up:		Pointer to UART port structure
++ */
++static inline void uart_port_unlock_irq(struct uart_port *up)
++{
++	spin_unlock_irq(&up->lock);
++}
++
++/**
++ * uart_port_lock_irqrestore - Unlock the UART port, restore interrupts
++ * @up:		Pointer to UART port structure
++ * @flags:	The saved interrupt flags for restore
++ */
++static inline void uart_port_unlock_irqrestore(struct uart_port *up, unsigned long flags)
++{
++	spin_unlock_irqrestore(&up->lock, flags);
++}
++
+ static inline int serial_port_in(struct uart_port *up, int offset)
+ {
+ 	return up->serial_in(up, offset);
 -- 
 2.43.0
 
