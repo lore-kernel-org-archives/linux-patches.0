@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8597755FB;
-	Mon, 29 Jan 2024 17:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863BB755FB;
+	Mon, 29 Jan 2024 17:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548594; cv=none; b=BL1PO4j6Lx3fAHcErGgpQcAnBpPCcDMox/pP91b5Wh5cc4PgFqLkpdx/SbAPccUkipVdXUu2y9gcAfjMho/XXhbSz0EMFpJg1qF657VdAdr+B3/sui+efylhr3vhZu9dUGXMnqGTd9Bry5heSo+6IVKHPHmMgv9g3hGD2UsPT5s=
+	t=1706548595; cv=none; b=Peyu1blXfxuJAP7XXoWNLDuKeVXKXkPtvvnc7ccfofafyO7vf9Up6+vdQ/6RkJov1ZxOUCC5dzx8MLvSCYuQlEdaKEMP2d3x0EMRLkHgbpg66WTjTpKzNDmbdo5XdWnFETlj0NhO0Dhlxgio1dZKjAqIPY8PnuurU8MUqXAibcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548594; c=relaxed/simple;
-	bh=+oAcdqpL8bOOPY9l9NdQZZDApHsH1S+AvFBco6Ecc84=;
+	s=arc-20240116; t=1706548595; c=relaxed/simple;
+	bh=Y3+B9BvVvzehcbjEdxkem0J6K2/gelV5+Jl7m44F8p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcAqo5oqa6U6hgMHfwIWkOBYE8fsWDON1WdwQyQKK6B9GNJlr4EXIWR8FVH1331J3IDcpqQ8jY2IRYDElHIWPc3oLS2gl99ahlQJBgggHs68C9gf4ZsLqh783gMvthgOeSk/u+4pdJNyTpJb8cRYSVaE3gpYcpcmPtMn3DcD2TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTsLikxL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLvuJvtqjZA92ByhtoojAocj/LK7LwsJtWxed4k0n3rkB+5JwTAWza8c8acutS+2lztCwudh7P30D6loSWNI9YrixxjvtAav7YcPP6LLzWf7yzdolV/Ihz5FGh/UGSY42s5ZW0O1KAQtKmtC28Z4t+USAYwopzzw0B40gmi8kho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzCwwpXt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTsLikxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCBDC433C7;
-	Mon, 29 Jan 2024 17:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzCwwpXt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE93C433F1;
+	Mon, 29 Jan 2024 17:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548594;
-	bh=+oAcdqpL8bOOPY9l9NdQZZDApHsH1S+AvFBco6Ecc84=;
+	s=korg; t=1706548595;
+	bh=Y3+B9BvVvzehcbjEdxkem0J6K2/gelV5+Jl7m44F8p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTsLikxLn8YSS4gFg6Wf36FbJjl4mKma+y2KTZDjsjRIijNWyPAe6pjsXct9jsSIP
-	 yOinUyQOUNvj3BzLQDM/1oVbr077cLyw/hmDsFCg66JM4fFa2CfQVUE77Ha5JypkGV
-	 m2tidSlAB7g0ZfDROuXu4v7eIbJ0HmNOzWibcDto=
+	b=YzCwwpXtuQvLZiI4yFOUz6Mc6kKKWf7bLWjgGGCePLVDwyeJqjgjyDTIxIr1tkePp
+	 dvP1mMySJYJYTbH60NRd1PU7H14NIfKiad2Lkkvoz0jatv36VLOPiAglBSeUSWr3oy
+	 BekRn4xCbrABJpcSKEHP+owGvPw3fk7P3lnFWL4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 219/331] ice: remove redundant xdp_rxq_info registration
-Date: Mon, 29 Jan 2024 09:04:43 -0800
-Message-ID: <20240129170021.285330047@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 247/331] ksmbd: fix global oob in ksmbd_nl_policy
+Date: Mon, 29 Jan 2024 09:05:11 -0800
+Message-ID: <20240129170022.108534222@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,58 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 2ee788c06493d02ee85855414cca39825e768aaf ]
+commit ebeae8adf89d9a82359f6659b1663d09beec2faa upstream.
 
-xdp_rxq_info struct can be registered by drivers via two functions -
-xdp_rxq_info_reg() and __xdp_rxq_info_reg(). The latter one allows
-drivers that support XDP multi-buffer to set up xdp_rxq_info::frag_size
-which in turn will make it possible to grow the packet via
-bpf_xdp_adjust_tail() BPF helper.
+Similar to a reported issue (check the commit b33fb5b801c6 ("net:
+qualcomm: rmnet: fix global oob in rmnet_policy"), my local fuzzer finds
+another global out-of-bounds read for policy ksmbd_nl_policy. See bug
+trace below:
 
-Currently, ice registers xdp_rxq_info in two spots:
-1) ice_setup_rx_ring() // via xdp_rxq_info_reg(), BUG
-2) ice_vsi_cfg_rxq()   // via __xdp_rxq_info_reg(), OK
+==================================================================
+BUG: KASAN: global-out-of-bounds in validate_nla lib/nlattr.c:386 [inline]
+BUG: KASAN: global-out-of-bounds in __nla_validate_parse+0x24af/0x2750 lib/nlattr.c:600
+Read of size 1 at addr ffffffff8f24b100 by task syz-executor.1/62810
 
-Cited commit under fixes tag took care of setting up frag_size and
-updated registration scheme in 2) but it did not help as
-1) is called before 2) and as shown above it uses old registration
-function. This means that 2) sees that xdp_rxq_info is already
-registered and never calls __xdp_rxq_info_reg() which leaves us with
-xdp_rxq_info::frag_size being set to 0.
+CPU: 0 PID: 62810 Comm: syz-executor.1 Tainted: G                 N 6.1.0 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x8b/0xb3 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:284 [inline]
+ print_report+0x172/0x475 mm/kasan/report.c:395
+ kasan_report+0xbb/0x1c0 mm/kasan/report.c:495
+ validate_nla lib/nlattr.c:386 [inline]
+ __nla_validate_parse+0x24af/0x2750 lib/nlattr.c:600
+ __nla_parse+0x3e/0x50 lib/nlattr.c:697
+ __nlmsg_parse include/net/netlink.h:748 [inline]
+ genl_family_rcv_msg_attrs_parse.constprop.0+0x1b0/0x290 net/netlink/genetlink.c:565
+ genl_family_rcv_msg_doit+0xda/0x330 net/netlink/genetlink.c:734
+ genl_family_rcv_msg net/netlink/genetlink.c:833 [inline]
+ genl_rcv_msg+0x441/0x780 net/netlink/genetlink.c:850
+ netlink_rcv_skb+0x14f/0x410 net/netlink/af_netlink.c:2540
+ genl_rcv+0x24/0x40 net/netlink/genetlink.c:861
+ netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+ netlink_unicast+0x54e/0x800 net/netlink/af_netlink.c:1345
+ netlink_sendmsg+0x930/0xe50 net/netlink/af_netlink.c:1921
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg+0x154/0x190 net/socket.c:734
+ ____sys_sendmsg+0x6df/0x840 net/socket.c:2482
+ ___sys_sendmsg+0x110/0x1b0 net/socket.c:2536
+ __sys_sendmsg+0xf3/0x1c0 net/socket.c:2565
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fdd66a8f359
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fdd65e00168 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007fdd66bbcf80 RCX: 00007fdd66a8f359
+RDX: 0000000000000000 RSI: 0000000020000500 RDI: 0000000000000003
+RBP: 00007fdd66ada493 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffc84b81aff R14: 00007fdd65e00300 R15: 0000000000022000
+ </TASK>
 
-To fix this misbehavior, simply remove xdp_rxq_info_reg() call from
-ice_setup_rx_ring().
+The buggy address belongs to the variable:
+ ksmbd_nl_policy+0x100/0xa80
 
-Fixes: 2fba7dc5157b ("ice: Add support for XDP multi-buffer on Rx side")
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20240124191602.566724-7-maciej.fijalkowski@intel.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The buggy address belongs to the physical page:
+page:0000000034f47940 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1ccc4b
+flags: 0x200000000001000(reserved|node=0|zone=2)
+raw: 0200000000001000 ffffea00073312c8 ffffea00073312c8 0000000000000000
+raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffffffff8f24b000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffffffff8f24b080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffffffff8f24b100: f9 f9 f9 f9 00 00 f9 f9 f9 f9 f9 f9 00 00 07 f9
+                   ^
+ ffffffff8f24b180: f9 f9 f9 f9 00 05 f9 f9 f9 f9 f9 f9 00 00 00 05
+ ffffffff8f24b200: f9 f9 f9 f9 00 00 03 f9 f9 f9 f9 f9 00 00 04 f9
+==================================================================
+
+To fix it, add a placeholder named __KSMBD_EVENT_MAX and let
+KSMBD_EVENT_MAX to be its original value - 1 according to what other
+netlink families do. Also change two sites that refer the
+KSMBD_EVENT_MAX to correct value.
+
+Cc: stable@vger.kernel.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_txrx.c | 5 -----
- 1 file changed, 5 deletions(-)
+ fs/smb/server/ksmbd_netlink.h |    3 ++-
+ fs/smb/server/transport_ipc.c |    4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_txrx.c b/drivers/net/ethernet/intel/ice/ice_txrx.c
-index 5b0f9e53f6b4..24c914015973 100644
---- a/drivers/net/ethernet/intel/ice/ice_txrx.c
-+++ b/drivers/net/ethernet/intel/ice/ice_txrx.c
-@@ -513,11 +513,6 @@ int ice_setup_rx_ring(struct ice_rx_ring *rx_ring)
- 	if (ice_is_xdp_ena_vsi(rx_ring->vsi))
- 		WRITE_ONCE(rx_ring->xdp_prog, rx_ring->vsi->xdp_prog);
+--- a/fs/smb/server/ksmbd_netlink.h
++++ b/fs/smb/server/ksmbd_netlink.h
+@@ -304,7 +304,8 @@ enum ksmbd_event {
+ 	KSMBD_EVENT_SPNEGO_AUTHEN_REQUEST,
+ 	KSMBD_EVENT_SPNEGO_AUTHEN_RESPONSE	= 15,
  
--	if (rx_ring->vsi->type == ICE_VSI_PF &&
--	    !xdp_rxq_info_is_reg(&rx_ring->xdp_rxq))
--		if (xdp_rxq_info_reg(&rx_ring->xdp_rxq, rx_ring->netdev,
--				     rx_ring->q_index, rx_ring->q_vector->napi.napi_id))
--			goto err;
- 	return 0;
+-	KSMBD_EVENT_MAX
++	__KSMBD_EVENT_MAX,
++	KSMBD_EVENT_MAX = __KSMBD_EVENT_MAX - 1
+ };
  
- err:
--- 
-2.43.0
-
+ /*
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -74,7 +74,7 @@ static int handle_unsupported_event(stru
+ static int handle_generic_event(struct sk_buff *skb, struct genl_info *info);
+ static int ksmbd_ipc_heartbeat_request(void);
+ 
+-static const struct nla_policy ksmbd_nl_policy[KSMBD_EVENT_MAX] = {
++static const struct nla_policy ksmbd_nl_policy[KSMBD_EVENT_MAX + 1] = {
+ 	[KSMBD_EVENT_UNSPEC] = {
+ 		.len = 0,
+ 	},
+@@ -403,7 +403,7 @@ static int handle_generic_event(struct s
+ 		return -EPERM;
+ #endif
+ 
+-	if (type >= KSMBD_EVENT_MAX) {
++	if (type > KSMBD_EVENT_MAX) {
+ 		WARN_ON(1);
+ 		return -EINVAL;
+ 	}
 
 
