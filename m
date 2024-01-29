@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D2115B96E;
-	Mon, 29 Jan 2024 17:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2864715F32E;
+	Mon, 29 Jan 2024 17:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548281; cv=none; b=LjrqTWgtTjoq3nCnDLKBAD+SGhKjSMmIjUXbsSRdMHbVHKwlauZg+Cshcgce2v4ZyFn1GdHwRYjhsIC0Acl5kEN7vzUQcocqb+waWZ4pO03PEKiKrmNYiYGL0xv2777xwgPzmkGHbM7BW7csnqDFyi8qduYVNIj9MRqNGTY0fRA=
+	t=1706548282; cv=none; b=PO+UbK2tdQsjq//jRzB6skhGEQwFdC0cP+rnbVgHIbPL052rVcvkNXmzKda18BGUilB+s6cJoNCxkxw7IbhBrRSqGRdA/mP40eSR3c0o6Dn3sXfA/iGDUfoWObrn34plKoLy80rQ7H/TKe3vDsh5CaQY5hY21PAMYk9yJfMAeko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548281; c=relaxed/simple;
-	bh=l0vLHgnpcru7PbWhpbW2umS43udgEu4D5BVm20rDw30=;
+	s=arc-20240116; t=1706548282; c=relaxed/simple;
+	bh=7PnBk/l71+91caOLhgbZBxhCcSv7dyuJIzeWKOqIOtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hs1dfIi+kz0uXj6+3hhI9rsV2WWfp9oxP3H8AAYwx3ngfqLSJ43CUi8Qd/4DyeInIKcb7qaCTfAmgiVx/RFsgpUJHuoQ50EybWFTFJa46ZNFo6y/c1bwpgM698FuG1gXZAiV2z5ZrJd2Q0/Fz8RneesZJouNFSlpaNeFEplUw3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGEYjNG1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t/oi1LVwdvP53c+O4sYV/tL6jJUcJWcf5AasumOyBR8BJ9KugQdYDai7/dD7AEMf93I59BHYkj/QGl5wjrGlP05t7DKxLk6xgWyF340Z1RkAx8EMK7wV5Ol/733jLzSnnGg5rjaNUMoaq1gVxHomGuI+g9oHZHcAhQtT+qGX2wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSWPOJKR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGEYjNG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F32C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSWPOJKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5600C433C7;
 	Mon, 29 Jan 2024 17:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548281;
-	bh=l0vLHgnpcru7PbWhpbW2umS43udgEu4D5BVm20rDw30=;
+	s=korg; t=1706548282;
+	bh=7PnBk/l71+91caOLhgbZBxhCcSv7dyuJIzeWKOqIOtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uGEYjNG1KuM8U5h6XdeIes+mhy3JP4P7tcmiQ8sTM7lwm3ljvHoyXTwY0MjpmybiR
-	 EqIXO8N70UxTo3CWDBOwTRdXl/EaTBsAr9wbPXrF3jgMTd5QY1CO5kS8IpYBdc3gLs
-	 wHvc68f3AJkprDGw6MqYdXfl5PZqrofBe7auYIGg=
+	b=jSWPOJKRMB8YiJiGvidhJUz66lpWlDQBi9RxJ2UsCGqKN1JNI8NO2CU623q80hf55
+	 c/ajmqpvmN48WJ/N4+Pjl55g8AOCe/teER/AJvd0hh/CTSDShfoYeOP1kxD4mpkOps
+	 hMNyUAqtYj3AjBbWo/LBPR2DtlluNghlyRduHU8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 067/185] LoongArch/smp: Call rcutree_report_cpu_starting() earlier
-Date: Mon, 29 Jan 2024 09:04:27 -0800
-Message-ID: <20240129170000.758428350@linuxfoundation.org>
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 295/346] drm/panel-edp: drm/panel-edp: Fix AUO B116XAK01 name and timing
+Date: Mon, 29 Jan 2024 09:05:26 -0800
+Message-ID: <20240129170025.087209039@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,81 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-commit a2ccf46333d7b2cf9658f0d82ac74097c1542fae upstream.
+[ Upstream commit fc6e7679296530106ee0954e8ddef1aa58b2e0b5 ]
 
-rcutree_report_cpu_starting() must be called before cpu_probe() to avoid
-the following lockdep splat that triggered by calling __alloc_pages() when
-CONFIG_PROVE_RCU_LIST=y:
+Rename AUO 0x405c B116XAK01 to B116XAK01.0 and adjust the timing of
+auo_b116xak01: T3=200, T12=500, T7_max = 50 according to decoding edid
+and datasheet.
 
- =============================
- WARNING: suspicious RCU usage
- 6.6.0+ #980 Not tainted
- -----------------------------
- kernel/locking/lockdep.c:3761 RCU-list traversed in non-reader section!!
- other info that might help us debug this:
- RCU used illegally from offline CPU!
- rcu_scheduler_active = 1, debug_locks = 1
- 1 lock held by swapper/1/0:
-  #0: 900000000c82ef98 (&pcp->lock){+.+.}-{2:2}, at: get_page_from_freelist+0x894/0x1790
- CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.6.0+ #980
- Stack : 0000000000000001 9000000004f79508 9000000004893670 9000000100310000
-         90000001003137d0 0000000000000000 90000001003137d8 9000000004f79508
-         0000000000000000 0000000000000001 0000000000000000 90000000048a3384
-         203a656d616e2065 ca43677b3687e616 90000001002c3480 0000000000000008
-         000000000000009d 0000000000000000 0000000000000001 80000000ffffe0b8
-         000000000000000d 0000000000000033 0000000007ec0000 13bbf50562dad831
-         9000000005140748 0000000000000000 9000000004f79508 0000000000000004
-         0000000000000000 9000000005140748 90000001002bad40 0000000000000000
-         90000001002ba400 0000000000000000 9000000003573ec8 0000000000000000
-         00000000000000b0 0000000000000004 0000000000000000 0000000000070000
-         ...
- Call Trace:
- [<9000000003573ec8>] show_stack+0x38/0x150
- [<9000000004893670>] dump_stack_lvl+0x74/0xa8
- [<900000000360d2bc>] lockdep_rcu_suspicious+0x14c/0x190
- [<900000000361235c>] __lock_acquire+0xd0c/0x2740
- [<90000000036146f4>] lock_acquire+0x104/0x2c0
- [<90000000048a955c>] _raw_spin_lock_irqsave+0x5c/0x90
- [<900000000381cd5c>] rmqueue_bulk+0x6c/0x950
- [<900000000381fc0c>] get_page_from_freelist+0xd4c/0x1790
- [<9000000003821c6c>] __alloc_pages+0x1bc/0x3e0
- [<9000000003583b40>] tlb_init+0x150/0x2a0
- [<90000000035742a0>] per_cpu_trap_init+0xf0/0x110
- [<90000000035712fc>] cpu_probe+0x3dc/0x7a0
- [<900000000357ed20>] start_secondary+0x40/0xb0
- [<9000000004897138>] smpboot_entry+0x54/0x58
-
-raw_smp_processor_id() is required in order to avoid calling into lockdep
-before RCU has declared the CPU to be watched for readers.
-
-See also commit 29368e093921 ("x86/smpboot: Move rcu_cpu_starting() earlier"),
-commit de5d9dae150c ("s390/smp: move rcu_cpu_starting() earlier") and commit
-99f070b62322 ("powerpc/smp: Call rcu_cpu_starting() earlier").
-
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: da458286a5e2 ("drm/panel: Add support for AUO B116XAK01 panel")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231107204611.3082200-2-hsinyi@chromium.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/smp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-edp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/smp.c
-+++ b/arch/loongarch/kernel/smp.c
-@@ -471,8 +471,9 @@ asmlinkage void start_secondary(void)
- 	unsigned int cpu;
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 5bf28c8443ef..e93e54a98260 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -973,6 +973,8 @@ static const struct panel_desc auo_b116xak01 = {
+ 	},
+ 	.delay = {
+ 		.hpd_absent = 200,
++		.unprepare = 500,
++		.enable = 50,
+ 	},
+ };
  
- 	sync_counter();
--	cpu = smp_processor_id();
-+	cpu = raw_smp_processor_id();
- 	set_my_cpu_offset(per_cpu_offset(cpu));
-+	rcu_cpu_starting(cpu);
- 
- 	cpu_probe();
- 	constant_clockevent_init();
+@@ -1841,7 +1843,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1e9b, &delay_200_500_e50, "B133UAN02.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e50, "B116XAK01.6"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x235c, &delay_200_500_e50, "B116XTN02"),
+-	EDP_PANEL_ENTRY('A', 'U', 'O', 0x405c, &auo_b116xak01.delay, "B116XAK01"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x405c, &auo_b116xak01.delay, "B116XAK01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x582d, &delay_200_500_e50, "B133UAN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x615c, &delay_200_500_e50, "B116XAN06.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
+-- 
+2.43.0
+
 
 
