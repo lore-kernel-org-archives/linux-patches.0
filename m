@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4CD73722;
-	Mon, 29 Jan 2024 17:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C16473722;
+	Mon, 29 Jan 2024 17:15:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548545; cv=none; b=LOERqzV9AvBXXgVsAn7qBRxKTendoi9xEyEhEqnBIkDqoLSsEzNQFTdKRnapM+ehCJL6M7nmaX19+0lOFe+5CF3VIprVRo+d0L6LFbN45E7sjSF4idXyhy3jJHSFlUkmpMPyrFC/7xuV9XE7rR7jggZqHo+gPKNE5fY+43S3A+I=
+	t=1706548546; cv=none; b=iduqxYJMWJtseFYLSFLpgx0oWz3pA2T5Lg3nZFesuAyfTCmkzhRtYV3PdzyRMcFCM5bR15+5lJNhoMFY7FIHE4i1l6k6RFvI9VyAyH+Zrv2yMV6vBff6s3c3pEViyByzqPWnke8qIz8RZNkZN7JM6iLy2o97hvXKGBPfKwF5NtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548545; c=relaxed/simple;
-	bh=vkvosLEfMqqJu6FXmkbRvLp0kBANhob8UiQS6l0fyv4=;
+	s=arc-20240116; t=1706548546; c=relaxed/simple;
+	bh=2W2orXROQgKlapPxSF0JA7LgsMmFt+2nkfqkTmKfjPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R3lI/Pjbty8L/1ylIl8n9hVjXvP/ESkJp3akB1C13ix+6mO6n/biuoO+vDOUqBDu0jcRjL+AfkBPLO5POUl2/W9q1qVamDoqsn6uhb1A6HfuzG2OQqx8kF977tUcF57krt7da/FRKeac2Dq+68xVt3fMyqYNzGUCJi0Hme27O4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sc681aKL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pWR9xhXCtC/iDMvneiqyWLAWZXv8qRwljbJA5boCGAbhOSMKyTtvXHP5LXR06NzoGdUbV0CqxVROiRWLYFJb01hr5qK6FsIEv7nHrVGh/smE9ODZ+wyikdMDocewDDMjZptvtq3iugeWIWBSk9HyyZSMa5njkutm12wVGKWPqnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBc/Q8tu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sc681aKL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63452C433C7;
-	Mon, 29 Jan 2024 17:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBc/Q8tu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15152C433F1;
+	Mon, 29 Jan 2024 17:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548545;
-	bh=vkvosLEfMqqJu6FXmkbRvLp0kBANhob8UiQS6l0fyv4=;
+	s=korg; t=1706548546;
+	bh=2W2orXROQgKlapPxSF0JA7LgsMmFt+2nkfqkTmKfjPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sc681aKLJ6TPfTyi6p5DkBFlB2VQe+UYt/NFcZBlZEuF4D70Vb2aKvLlNImjWcvhK
-	 heNF7u+UFY8I6rhOf7f9i3TO+vuq15UUe7q2KAe0i9eJWgIN1UArDYpP27Zngc1t3F
-	 bldO7Q4VJ+vjrEsV+PEoAcNey5XP4pwffGzaElDM=
+	b=SBc/Q8tuHW/sZPFNvU/8I/vQNPBAPFkpxdZ/6EyCyTkP2lACIf8hMedY2HpzguE3O
+	 xev8ldwIgRvHs2FpKgr/l/fPaaFvqc9JVjz0oDhjGWaUjVVYLsiBrG7OLlV9mJVMEE
+	 K0mlVNUqvT5UFPty1kVF9uK90YdEaL5oKeNCxcCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Dipietro <dipiets@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 186/331] tcp: Add memory barrier to tcp_push()
-Date: Mon, 29 Jan 2024 09:04:10 -0800
-Message-ID: <20240129170020.338578602@linuxfoundation.org>
+Subject: [PATCH 6.6 187/331] selftest: Dont reuse port for SO_INCOMING_CPU test.
+Date: Mon, 29 Jan 2024 09:04:11 -0800
+Message-ID: <20240129170020.362202292@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,99 +52,229 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salvatore Dipietro <dipiets@amazon.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 7267e8dcad6b2f9fce05a6a06335d7040acbc2b6 ]
+[ Upstream commit 97de5a15edf2d22184f5ff588656030bbb7fa358 ]
 
-On CPUs with weak memory models, reads and updates performed by tcp_push
-to the sk variables can get reordered leaving the socket throttled when
-it should not. The tasklet running tcp_wfree() may also not observe the
-memory updates in time and will skip flushing any packets throttled by
-tcp_push(), delaying the sending. This can pathologically cause 40ms
-extra latency due to bad interactions with delayed acks.
+Jakub reported that ASSERT_EQ(cpu, i) in so_incoming_cpu.c seems to
+fire somewhat randomly.
 
-Adding a memory barrier in tcp_push removes the bug, similarly to the
-previous commit bf06200e732d ("tcp: tsq: fix nonagle handling").
-smp_mb__after_atomic() is used to not incur in unnecessary overhead
-on x86 since not affected.
+  # #  RUN           so_incoming_cpu.before_reuseport.test3 ...
+  # # so_incoming_cpu.c:191:test3:Expected cpu (32) == i (0)
+  # # test3: Test terminated by assertion
+  # #          FAIL  so_incoming_cpu.before_reuseport.test3
+  # not ok 3 so_incoming_cpu.before_reuseport.test3
 
-Patch has been tested using an AWS c7g.2xlarge instance with Ubuntu
-22.04 and Apache Tomcat 9.0.83 running the basic servlet below:
+When the test failed, not-yet-accepted CLOSE_WAIT sockets received
+SYN with a "challenging" SEQ number, which was sent from an unexpected
+CPU that did not create the receiver.
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+The test basically does:
 
-public class HelloWorldServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-        response.setContentType("text/html;charset=utf-8");
-        OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream(),"UTF-8");
-        String s = "a".repeat(3096);
-        osw.write(s,0,s.length());
-        osw.flush();
-    }
-}
+  1. for each cpu:
+    1-1. create a server
+    1-2. set SO_INCOMING_CPU
 
-Load was applied using wrk2 (https://github.com/kinvolk/wrk2) from an AWS
-c6i.8xlarge instance. Before the patch an additional 40ms latency from P99.99+
-values is observed while, with the patch, the extra latency disappears.
+  2. for each cpu:
+    2-1. set cpu affinity
+    2-2. create some clients
+    2-3. let clients connect() to the server on the same cpu
+    2-4. close() clients
 
-No patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.91ms
- 75.000%    1.13ms
- 90.000%    1.46ms
- 99.000%    1.74ms
- 99.900%    1.89ms
- 99.990%   41.95ms  <<< 40+ ms extra latency
- 99.999%   48.32ms
-100.000%   48.96ms
+  3. for each server:
+    3-1. accept() all child sockets
+    3-2. check if all children have the same SO_INCOMING_CPU with the server
 
-With patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.90ms
- 75.000%    1.13ms
- 90.000%    1.45ms
- 99.000%    1.72ms
- 99.900%    1.83ms
- 99.990%    2.11ms  <<< no 40+ ms extra latency
- 99.999%    2.53ms
-100.000%    2.62ms
+The root cause was the close() in 2-4. and net.ipv4.tcp_tw_reuse.
 
-Patch has been also tested on x86 (m7i.2xlarge instance) which it is not
-affected by this issue and the patch doesn't introduce any additional
-delay.
+In a loop of 2., close() changed the client state to FIN_WAIT_2, and
+the peer transitioned to CLOSE_WAIT.
 
-Fixes: 7aa5470c2c09 ("tcp: tsq: move tsq_flags close to sk_wmem_alloc")
-Signed-off-by: Salvatore Dipietro <dipiets@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240119190133.43698-1-dipiets@amazon.com
+In another loop of 2., connect() happened to select the same port of
+the FIN_WAIT_2 socket, and it was reused as the default value of
+net.ipv4.tcp_tw_reuse is 2.
+
+As a result, the new client sent SYN to the CLOSE_WAIT socket from
+a different CPU, and the receiver's sk_incoming_cpu was overwritten
+with unexpected CPU ID.
+
+Also, the SYN had a different SEQ number, so the CLOSE_WAIT socket
+responded with Challenge ACK.  The new client properly returned RST
+and effectively killed the CLOSE_WAIT socket.
+
+This way, all clients were created successfully, but the error was
+detected later by 3-2., ASSERT_EQ(cpu, i).
+
+To avoid the failure, let's make sure that (i) the number of clients
+is less than the number of available ports and (ii) such reuse never
+happens.
+
+Fixes: 6df96146b202 ("selftest: Add test for SO_INCOMING_CPU.")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Tested-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240120031642.67014-1-kuniyu@amazon.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/net/so_incoming_cpu.c | 68 ++++++++++++++-----
+ 1 file changed, 50 insertions(+), 18 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index f124f6c63915..fb417aee86e6 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -722,6 +722,7 @@ void tcp_push(struct sock *sk, int flags, int mss_now,
- 		if (!test_bit(TSQ_THROTTLED, &sk->sk_tsq_flags)) {
- 			NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAUTOCORKING);
- 			set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
-+			smp_mb__after_atomic();
+diff --git a/tools/testing/selftests/net/so_incoming_cpu.c b/tools/testing/selftests/net/so_incoming_cpu.c
+index a14818164102..e9fa14e10732 100644
+--- a/tools/testing/selftests/net/so_incoming_cpu.c
++++ b/tools/testing/selftests/net/so_incoming_cpu.c
+@@ -3,19 +3,16 @@
+ #define _GNU_SOURCE
+ #include <sched.h>
+ 
++#include <fcntl.h>
++
+ #include <netinet/in.h>
+ #include <sys/socket.h>
+ #include <sys/sysinfo.h>
+ 
+ #include "../kselftest_harness.h"
+ 
+-#define CLIENT_PER_SERVER	32 /* More sockets, more reliable */
+-#define NR_SERVER		self->nproc
+-#define NR_CLIENT		(CLIENT_PER_SERVER * NR_SERVER)
+-
+ FIXTURE(so_incoming_cpu)
+ {
+-	int nproc;
+ 	int *servers;
+ 	union {
+ 		struct sockaddr addr;
+@@ -56,12 +53,47 @@ FIXTURE_VARIANT_ADD(so_incoming_cpu, after_all_listen)
+ 	.when_to_set = AFTER_ALL_LISTEN,
+ };
+ 
++static void write_sysctl(struct __test_metadata *_metadata,
++			 char *filename, char *string)
++{
++	int fd, len, ret;
++
++	fd = open(filename, O_WRONLY);
++	ASSERT_NE(fd, -1);
++
++	len = strlen(string);
++	ret = write(fd, string, len);
++	ASSERT_EQ(ret, len);
++}
++
++static void setup_netns(struct __test_metadata *_metadata)
++{
++	ASSERT_EQ(unshare(CLONE_NEWNET), 0);
++	ASSERT_EQ(system("ip link set lo up"), 0);
++
++	write_sysctl(_metadata, "/proc/sys/net/ipv4/ip_local_port_range", "10000 60001");
++	write_sysctl(_metadata, "/proc/sys/net/ipv4/tcp_tw_reuse", "0");
++}
++
++#define NR_PORT				(60001 - 10000 - 1)
++#define NR_CLIENT_PER_SERVER_DEFAULT	32
++static int nr_client_per_server, nr_server, nr_client;
++
+ FIXTURE_SETUP(so_incoming_cpu)
+ {
+-	self->nproc = get_nprocs();
+-	ASSERT_LE(2, self->nproc);
++	setup_netns(_metadata);
++
++	nr_server = get_nprocs();
++	ASSERT_LE(2, nr_server);
++
++	if (NR_CLIENT_PER_SERVER_DEFAULT * nr_server < NR_PORT)
++		nr_client_per_server = NR_CLIENT_PER_SERVER_DEFAULT;
++	else
++		nr_client_per_server = NR_PORT / nr_server;
++
++	nr_client = nr_client_per_server * nr_server;
+ 
+-	self->servers = malloc(sizeof(int) * NR_SERVER);
++	self->servers = malloc(sizeof(int) * nr_server);
+ 	ASSERT_NE(self->servers, NULL);
+ 
+ 	self->in_addr.sin_family = AF_INET;
+@@ -74,7 +106,7 @@ FIXTURE_TEARDOWN(so_incoming_cpu)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < NR_SERVER; i++)
++	for (i = 0; i < nr_server; i++)
+ 		close(self->servers[i]);
+ 
+ 	free(self->servers);
+@@ -110,10 +142,10 @@ int create_server(struct __test_metadata *_metadata,
+ 	if (variant->when_to_set == BEFORE_LISTEN)
+ 		set_so_incoming_cpu(_metadata, fd, cpu);
+ 
+-	/* We don't use CLIENT_PER_SERVER here not to block
++	/* We don't use nr_client_per_server here not to block
+ 	 * this test at connect() if SO_INCOMING_CPU is broken.
+ 	 */
+-	ret = listen(fd, NR_CLIENT);
++	ret = listen(fd, nr_client);
+ 	ASSERT_EQ(ret, 0);
+ 
+ 	if (variant->when_to_set == AFTER_LISTEN)
+@@ -128,7 +160,7 @@ void create_servers(struct __test_metadata *_metadata,
+ {
+ 	int i, ret;
+ 
+-	for (i = 0; i < NR_SERVER; i++) {
++	for (i = 0; i < nr_server; i++) {
+ 		self->servers[i] = create_server(_metadata, self, variant, i);
+ 
+ 		if (i == 0) {
+@@ -138,7 +170,7 @@ void create_servers(struct __test_metadata *_metadata,
+ 	}
+ 
+ 	if (variant->when_to_set == AFTER_ALL_LISTEN) {
+-		for (i = 0; i < NR_SERVER; i++)
++		for (i = 0; i < nr_server; i++)
+ 			set_so_incoming_cpu(_metadata, self->servers[i], i);
+ 	}
+ }
+@@ -149,7 +181,7 @@ void create_clients(struct __test_metadata *_metadata,
+ 	cpu_set_t cpu_set;
+ 	int i, j, fd, ret;
+ 
+-	for (i = 0; i < NR_SERVER; i++) {
++	for (i = 0; i < nr_server; i++) {
+ 		CPU_ZERO(&cpu_set);
+ 
+ 		CPU_SET(i, &cpu_set);
+@@ -162,7 +194,7 @@ void create_clients(struct __test_metadata *_metadata,
+ 		ret = sched_setaffinity(0, sizeof(cpu_set), &cpu_set);
+ 		ASSERT_EQ(ret, 0);
+ 
+-		for (j = 0; j < CLIENT_PER_SERVER; j++) {
++		for (j = 0; j < nr_client_per_server; j++) {
+ 			fd  = socket(AF_INET, SOCK_STREAM, 0);
+ 			ASSERT_NE(fd, -1);
+ 
+@@ -180,8 +212,8 @@ void verify_incoming_cpu(struct __test_metadata *_metadata,
+ 	int i, j, fd, cpu, ret, total = 0;
+ 	socklen_t len = sizeof(int);
+ 
+-	for (i = 0; i < NR_SERVER; i++) {
+-		for (j = 0; j < CLIENT_PER_SERVER; j++) {
++	for (i = 0; i < nr_server; i++) {
++		for (j = 0; j < nr_client_per_server; j++) {
+ 			/* If we see -EAGAIN here, SO_INCOMING_CPU is broken */
+ 			fd = accept(self->servers[i], &self->addr, &self->addrlen);
+ 			ASSERT_NE(fd, -1);
+@@ -195,7 +227,7 @@ void verify_incoming_cpu(struct __test_metadata *_metadata,
  		}
- 		/* It is possible TX completion already happened
- 		 * before we set TSQ_THROTTLED.
+ 	}
+ 
+-	ASSERT_EQ(total, NR_CLIENT);
++	ASSERT_EQ(total, nr_client);
+ 	TH_LOG("SO_INCOMING_CPU is very likely to be "
+ 	       "working correctly with %d sockets.", total);
+ }
 -- 
 2.43.0
 
