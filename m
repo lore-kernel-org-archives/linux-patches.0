@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0682B15A499;
-	Mon, 29 Jan 2024 17:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5400915B971;
+	Mon, 29 Jan 2024 17:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548279; cv=none; b=Ma3cuBEw0py8nrJ5BjsGi6UQIPcTaY0Ov0Do4humCrDIHJE3ACcJM26xXkA5TH0w3zZLl/JZiFo3Xs9c95RBHI6WVhDhQyRAiHou+HZDfLpFD4rvztRXBabCcdlddyk1cvWuLK46L42rNpVvXW7OFEKYLshlBGaIY1924LYnK7M=
+	t=1706548279; cv=none; b=iV95pG2dQRqKI+HL5tdJHTyQzKuIMAqmfwQcZnNeRe6m/MA+YyAcoFfP+0trPbt7dCPrrKxGNdg01oI4LpsJbK/tMvmsXFG4NA5BfbrYnMevB3wEUdbwRTDbkExo0Bp9k7c9DSV3uk8XUyqfRp401XYMVaZU02xjrRGkpJjV2g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548279; c=relaxed/simple;
-	bh=TR0RFflYqDyk5YUSv/8aBa5ztuTLBK3QVoGEcdDxaZw=;
+	bh=v5jrCbJ6DZdDbCSkntxDowrXr+yT1XyXee4f2eaL+7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJqSONQET3XNuLDlHp61qa+N87oiyMJyF3yibrAP3TbXEgdxzoqxFah3GxHg9lZW3owCdkPTVTRFZyAXshTYTr/XZ0vr2yuMpxHQYJkGkNTycQRZfxyIlNevOOk47+Yn11SNd8713jyfEJd3/nF9wV0kz2sZALg1frzw2xOBko0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEgtFn7g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kiUnYfLwURTOz/A8/G7uqF0t98F25R289N330nU1wf3bKcl3cI1m/wX/DKL04lBX7QXe+NnPvM3qaDusyGCT6vjSCxl/7WErlpuI+aWhCEJD+ArhNtb/CrKxyuezsRLtuwOAJHOK9ceY/yt4p5Smu16Ki9viBtb4R435aX3WVsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ulm5myfy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEgtFn7g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B5AC43390;
-	Mon, 29 Jan 2024 17:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ulm5myfy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD3CC43399;
+	Mon, 29 Jan 2024 17:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548278;
-	bh=TR0RFflYqDyk5YUSv/8aBa5ztuTLBK3QVoGEcdDxaZw=;
+	s=korg; t=1706548279;
+	bh=v5jrCbJ6DZdDbCSkntxDowrXr+yT1XyXee4f2eaL+7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEgtFn7gw88rIHN4FJt6ds6MXGSup5dj/X14NXCU7mP+Mx000Q+QsqKysM0/S4cOu
-	 63ve9VvrpdC0RTGcpH/J0ErQ7Y/TOhBT1X0Plz9wzBiEZC9rwOq8zF+HnCXYldMUP2
-	 SqmJW77buUO9tQjeyijf/8RTBZ64SNw5xQpzBq5c=
+	b=Ulm5myfyw95pFPdmy2J/Hn3wlapprry7zWz8qKLO9Ey3NI0Ygu6NxCUUCdAaT2A8h
+	 cdQ5w0pfl6igdMGuExzOWBZS3XXpy8XhxeDuKdDxy0EdS8pKOdFuk04tx6v6Bh75uc
+	 H06EzkLseLhhx1RUZevC/lXuBobvV+Z4WpiO+hOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Taimur Hassan <syed.hassan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 293/346] drm/amd/display: Fix conversions between bytes and KB
-Date: Mon, 29 Jan 2024 09:05:24 -0800
-Message-ID: <20240129170025.021951005@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.1 057/185] rename(): fix the locking of subdirectories
+Date: Mon, 29 Jan 2024 09:04:17 -0800
+Message-ID: <20240129170000.430957435@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,109 +46,280 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taimur Hassan <syed.hassan@amd.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 22136ff27c4e01fae81f6588033363a46c72ed8c ]
+commit 22e111ed6c83dcde3037fc81176012721bc34c0b upstream.
 
-[Why]
-There are a number of instances where we convert HostVMMinPageSize or
-GPUVMMinPageSize from bytes to KB by dividing (rather than multiplying) and
-vice versa.
-Additionally, in some cases, a parameter is passed through DML in KB but
-later checked as if it were in bytes.
+	We should never lock two subdirectories without having taken
+->s_vfs_rename_mutex; inode pointer order or not, the "order" proposed
+in 28eceeda130f "fs: Lock moved directories" is not transitive, with
+the usual consequences.
+
+	The rationale for locking renamed subdirectory in all cases was
+the possibility of race between rename modifying .. in a subdirectory to
+reflect the new parent and another thread modifying the same subdirectory.
+For a lot of filesystems that's not a problem, but for some it can lead
+to trouble (e.g. the case when short directory contents is kept in the
+inode, but creating a file in it might push it across the size limit
+and copy its contents into separate data block(s)).
+
+	However, we need that only in case when the parent does change -
+otherwise ->rename() doesn't need to do anything with .. entry in the
+first place.  Some instances are lazy and do a tautological update anyway,
+but it's really not hard to avoid.
+
+Amended locking rules for rename():
+	find the parent(s) of source and target
+	if source and target have the same parent
+		lock the common parent
+	else
+		lock ->s_vfs_rename_mutex
+		lock both parents, in ancestor-first order; if neither
+		is an ancestor of another, lock the parent of source
+		first.
+	find the source and target.
+	if source and target have the same parent
+		if operation is an overwriting rename of a subdirectory
+			lock the target subdirectory
+	else
+		if source is a subdirectory
+			lock the source
+		if target is a subdirectory
+			lock the target
+	lock non-directories involved, in inode pointer order if both
+	source and target are such.
+
+That way we are guaranteed that parents are locked (for obvious reasons),
+that any renamed non-directory is locked (nfsd relies upon that),
+that any victim is locked (emptiness check needs that, among other things)
+and subdirectory that changes parent is locked (needed to protect the update
+of .. entries).  We are also guaranteed that any operation locking more
+than one directory either takes ->s_vfs_rename_mutex or locks a parent
+followed by its child.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Taimur Hassan <syed.hassan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 28eceeda130f "fs: Lock moved directories"
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../drm/amd/display/dc/dml2/display_mode_core.c  | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ Documentation/filesystems/directory-locking.rst |   29 ++++++-----
+ Documentation/filesystems/locking.rst           |    5 +-
+ Documentation/filesystems/porting.rst           |   18 +++++++
+ fs/namei.c                                      |   60 ++++++++++++++----------
+ 4 files changed, 74 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-index 4899e9e8c163..62ce95bac8f2 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-@@ -6329,7 +6329,7 @@ static void dml_prefetch_check(struct display_mode_lib_st *mode_lib)
- 				mode_lib->ms.NoOfDPPThisState,
- 				mode_lib->ms.dpte_group_bytes,
- 				s->HostVMInefficiencyFactor,
--				mode_lib->ms.soc.hostvm_min_page_size_kbytes,
-+				mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
- 				mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels);
+--- a/Documentation/filesystems/directory-locking.rst
++++ b/Documentation/filesystems/directory-locking.rst
+@@ -22,13 +22,16 @@ exclusive.
+ 3) object removal.  Locking rules: caller locks parent, finds victim,
+ locks victim and calls the method.  Locks are exclusive.
  
- 		s->NextMaxVStartup = s->MaxVStartupAllPlanes[j];
-@@ -6542,7 +6542,7 @@ static void dml_prefetch_check(struct display_mode_lib_st *mode_lib)
- 						mode_lib->ms.cache_display_cfg.plane.HostVMEnable,
- 						mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels,
- 						mode_lib->ms.cache_display_cfg.plane.GPUVMEnable,
--						mode_lib->ms.soc.hostvm_min_page_size_kbytes,
-+						mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
- 						mode_lib->ms.PDEAndMetaPTEBytesPerFrame[j][k],
- 						mode_lib->ms.MetaRowBytes[j][k],
- 						mode_lib->ms.DPTEBytesPerRow[j][k],
-@@ -7687,7 +7687,7 @@ dml_bool_t dml_core_mode_support(struct display_mode_lib_st *mode_lib)
- 		CalculateVMRowAndSwath_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
- 		CalculateVMRowAndSwath_params->GPUVMMaxPageTableLevels = mode_lib->ms.cache_display_cfg.plane.GPUVMMaxPageTableLevels;
- 		CalculateVMRowAndSwath_params->GPUVMMinPageSizeKBytes = mode_lib->ms.cache_display_cfg.plane.GPUVMMinPageSizeKBytes;
--		CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
-+		CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
- 		CalculateVMRowAndSwath_params->PTEBufferModeOverrideEn = mode_lib->ms.cache_display_cfg.plane.PTEBufferModeOverrideEn;
- 		CalculateVMRowAndSwath_params->PTEBufferModeOverrideVal = mode_lib->ms.cache_display_cfg.plane.PTEBufferMode;
- 		CalculateVMRowAndSwath_params->PTEBufferSizeNotExceeded = mode_lib->ms.PTEBufferSizeNotExceededPerState;
-@@ -7957,7 +7957,7 @@ dml_bool_t dml_core_mode_support(struct display_mode_lib_st *mode_lib)
- 		UseMinimumDCFCLK_params->GPUVMMaxPageTableLevels = mode_lib->ms.cache_display_cfg.plane.GPUVMMaxPageTableLevels;
- 		UseMinimumDCFCLK_params->HostVMEnable = mode_lib->ms.cache_display_cfg.plane.HostVMEnable;
- 		UseMinimumDCFCLK_params->NumberOfActiveSurfaces = mode_lib->ms.num_active_planes;
--		UseMinimumDCFCLK_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
-+		UseMinimumDCFCLK_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
- 		UseMinimumDCFCLK_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
- 		UseMinimumDCFCLK_params->DynamicMetadataVMEnabled = mode_lib->ms.ip.dynamic_metadata_vm_enabled;
- 		UseMinimumDCFCLK_params->ImmediateFlipRequirement = s->ImmediateFlipRequiredFinal;
-@@ -8699,7 +8699,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
- 	CalculateVMRowAndSwath_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
- 	CalculateVMRowAndSwath_params->GPUVMMaxPageTableLevels = mode_lib->ms.cache_display_cfg.plane.GPUVMMaxPageTableLevels;
- 	CalculateVMRowAndSwath_params->GPUVMMinPageSizeKBytes = mode_lib->ms.cache_display_cfg.plane.GPUVMMinPageSizeKBytes;
--	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
-+	CalculateVMRowAndSwath_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
- 	CalculateVMRowAndSwath_params->PTEBufferModeOverrideEn = mode_lib->ms.cache_display_cfg.plane.PTEBufferModeOverrideEn;
- 	CalculateVMRowAndSwath_params->PTEBufferModeOverrideVal = mode_lib->ms.cache_display_cfg.plane.PTEBufferMode;
- 	CalculateVMRowAndSwath_params->PTEBufferSizeNotExceeded = s->dummy_boolean_array[0];
-@@ -8805,7 +8805,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
- 			mode_lib->ms.cache_display_cfg.hw.DPPPerSurface,
- 			locals->dpte_group_bytes,
- 			s->HostVMInefficiencyFactor,
--			mode_lib->ms.soc.hostvm_min_page_size_kbytes,
-+			mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
- 			mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels);
+-4) rename() that is _not_ cross-directory.  Locking rules: caller locks the
+-parent and finds source and target.  We lock both (provided they exist).  If we
+-need to lock two inodes of different type (dir vs non-dir), we lock directory
+-first.  If we need to lock two inodes of the same type, lock them in inode
+-pointer order.  Then call the method.  All locks are exclusive.
+-NB: we might get away with locking the source (and target in exchange
+-case) shared.
++4) rename() that is _not_ cross-directory.  Locking rules: caller locks
++the parent and finds source and target.  Then we decide which of the
++source and target need to be locked.  Source needs to be locked if it's a
++non-directory; target - if it's a non-directory or about to be removed.
++Take the locks that need to be taken, in inode pointer order if need
++to take both (that can happen only when both source and target are
++non-directories - the source because it wouldn't be locked otherwise
++and the target because mixing directory and non-directory is allowed
++only with RENAME_EXCHANGE, and that won't be removing the target).
++After the locks had been taken, call the method.  All locks are exclusive.
  
- 	locals->TCalc = 24.0 / locals->DCFCLKDeepSleep;
-@@ -8995,7 +8995,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
- 			CalculatePrefetchSchedule_params->GPUVMEnable = mode_lib->ms.cache_display_cfg.plane.GPUVMEnable;
- 			CalculatePrefetchSchedule_params->HostVMEnable = mode_lib->ms.cache_display_cfg.plane.HostVMEnable;
- 			CalculatePrefetchSchedule_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
--			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
-+			CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
- 			CalculatePrefetchSchedule_params->DynamicMetadataEnable = mode_lib->ms.cache_display_cfg.plane.DynamicMetadataEnable[k];
- 			CalculatePrefetchSchedule_params->DynamicMetadataVMEnabled = mode_lib->ms.ip.dynamic_metadata_vm_enabled;
- 			CalculatePrefetchSchedule_params->DynamicMetadataLinesBeforeActiveRequired = mode_lib->ms.cache_display_cfg.plane.DynamicMetadataLinesBeforeActiveRequired[k];
-@@ -9240,7 +9240,7 @@ void dml_core_mode_programming(struct display_mode_lib_st *mode_lib, const struc
- 						mode_lib->ms.cache_display_cfg.plane.HostVMEnable,
- 						mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels,
- 						mode_lib->ms.cache_display_cfg.plane.GPUVMEnable,
--						mode_lib->ms.soc.hostvm_min_page_size_kbytes,
-+						mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024,
- 						locals->PDEAndMetaPTEBytesFrame[k],
- 						locals->MetaRowByte[k],
- 						locals->PixelPTEBytesPerRow[k],
--- 
-2.43.0
-
+ 5) link creation.  Locking rules:
+ 
+@@ -44,20 +47,17 @@ rules:
+ 
+ 	* lock the filesystem
+ 	* lock parents in "ancestors first" order. If one is not ancestor of
+-	  the other, lock them in inode pointer order.
++	  the other, lock the parent of source first.
+ 	* find source and target.
+ 	* if old parent is equal to or is a descendent of target
+ 	  fail with -ENOTEMPTY
+ 	* if new parent is equal to or is a descendent of source
+ 	  fail with -ELOOP
+-	* Lock both the source and the target provided they exist. If we
+-	  need to lock two inodes of different type (dir vs non-dir), we lock
+-	  the directory first. If we need to lock two inodes of the same type,
+-	  lock them in inode pointer order.
++	* Lock subdirectories involved (source before target).
++	* Lock non-directories involved, in inode pointer order.
+ 	* call the method.
+ 
+-All ->i_rwsem are taken exclusive.  Again, we might get away with locking
+-the source (and target in exchange case) shared.
++All ->i_rwsem are taken exclusive.
+ 
+ The rules above obviously guarantee that all directories that are going to be
+ read, modified or removed by method will be locked by caller.
+@@ -67,6 +67,7 @@ If no directory is its own ancestor, the
+ 
+ Proof:
+ 
++[XXX: will be updated once we are done massaging the lock_rename()]
+ 	First of all, at any moment we have a linear ordering of the
+ 	objects - A < B iff (A is an ancestor of B) or (B is not an ancestor
+         of A and ptr(A) < ptr(B)).
+--- a/Documentation/filesystems/locking.rst
++++ b/Documentation/filesystems/locking.rst
+@@ -99,7 +99,7 @@ symlink:	exclusive
+ mkdir:		exclusive
+ unlink:		exclusive (both)
+ rmdir:		exclusive (both)(see below)
+-rename:		exclusive (all)	(see below)
++rename:		exclusive (both parents, some children)	(see below)
+ readlink:	no
+ get_link:	no
+ setattr:	exclusive
+@@ -119,6 +119,9 @@ fileattr_set:	exclusive
+ 	Additionally, ->rmdir(), ->unlink() and ->rename() have ->i_rwsem
+ 	exclusive on victim.
+ 	cross-directory ->rename() has (per-superblock) ->s_vfs_rename_sem.
++	->unlink() and ->rename() have ->i_rwsem exclusive on all non-directories
++	involved.
++	->rename() has ->i_rwsem exclusive on any subdirectory that changes parent.
+ 
+ See Documentation/filesystems/directory-locking.rst for more detailed discussion
+ of the locking scheme for directory operations.
+--- a/Documentation/filesystems/porting.rst
++++ b/Documentation/filesystems/porting.rst
+@@ -943,3 +943,21 @@ file pointer instead of struct dentry po
+ changed to simplify callers.  The passed file is in a non-open state and on
+ success must be opened before returning (e.g. by calling
+ finish_open_simple()).
++
++---
++
++**mandatory**
++
++If ->rename() update of .. on cross-directory move needs an exclusion with
++directory modifications, do *not* lock the subdirectory in question in your
++->rename() - it's done by the caller now [that item should've been added in
++28eceeda130f "fs: Lock moved directories"].
++
++---
++
++**mandatory**
++
++On same-directory ->rename() the (tautological) update of .. is not protected
++by any locks; just don't do it if the old parent is the same as the new one.
++We really can't lock two subdirectories in same-directory rename - not without
++deadlocks.
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -3017,20 +3017,14 @@ static struct dentry *lock_two_directori
+ 	p = d_ancestor(p2, p1);
+ 	if (p) {
+ 		inode_lock_nested(p2->d_inode, I_MUTEX_PARENT);
+-		inode_lock_nested(p1->d_inode, I_MUTEX_CHILD);
++		inode_lock_nested(p1->d_inode, I_MUTEX_PARENT2);
+ 		return p;
+ 	}
+ 
+ 	p = d_ancestor(p1, p2);
+-	if (p) {
+-		inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
+-		inode_lock_nested(p2->d_inode, I_MUTEX_CHILD);
+-		return p;
+-	}
+-
+-	lock_two_inodes(p1->d_inode, p2->d_inode,
+-			I_MUTEX_PARENT, I_MUTEX_PARENT2);
+-	return NULL;
++	inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
++	inode_lock_nested(p2->d_inode, I_MUTEX_PARENT2);
++	return p;
+ }
+ 
+ /*
+@@ -4735,11 +4729,12 @@ SYSCALL_DEFINE2(link, const char __user
+  *
+  *	a) we can get into loop creation.
+  *	b) race potential - two innocent renames can create a loop together.
+- *	   That's where 4.4 screws up. Current fix: serialization on
++ *	   That's where 4.4BSD screws up. Current fix: serialization on
+  *	   sb->s_vfs_rename_mutex. We might be more accurate, but that's another
+  *	   story.
+- *	c) we have to lock _four_ objects - parents and victim (if it exists),
+- *	   and source.
++ *	c) we may have to lock up to _four_ objects - parents and victim (if it exists),
++ *	   and source (if it's a non-directory or a subdirectory that moves to
++ *	   different parent).
+  *	   And that - after we got ->i_mutex on parents (until then we don't know
+  *	   whether the target exists).  Solution: try to be smart with locking
+  *	   order for inodes.  We rely on the fact that tree topology may change
+@@ -4771,6 +4766,7 @@ int vfs_rename(struct renamedata *rd)
+ 	bool new_is_dir = false;
+ 	unsigned max_links = new_dir->i_sb->s_max_links;
+ 	struct name_snapshot old_name;
++	bool lock_old_subdir, lock_new_subdir;
+ 
+ 	if (source == target)
+ 		return 0;
+@@ -4824,15 +4820,32 @@ int vfs_rename(struct renamedata *rd)
+ 	take_dentry_name_snapshot(&old_name, old_dentry);
+ 	dget(new_dentry);
+ 	/*
+-	 * Lock all moved children. Moved directories may need to change parent
+-	 * pointer so they need the lock to prevent against concurrent
+-	 * directory changes moving parent pointer. For regular files we've
+-	 * historically always done this. The lockdep locking subclasses are
+-	 * somewhat arbitrary but RENAME_EXCHANGE in particular can swap
+-	 * regular files and directories so it's difficult to tell which
+-	 * subclasses to use.
++	 * Lock children.
++	 * The source subdirectory needs to be locked on cross-directory
++	 * rename or cross-directory exchange since its parent changes.
++	 * The target subdirectory needs to be locked on cross-directory
++	 * exchange due to parent change and on any rename due to becoming
++	 * a victim.
++	 * Non-directories need locking in all cases (for NFS reasons);
++	 * they get locked after any subdirectories (in inode address order).
++	 *
++	 * NOTE: WE ONLY LOCK UNRELATED DIRECTORIES IN CROSS-DIRECTORY CASE.
++	 * NEVER, EVER DO THAT WITHOUT ->s_vfs_rename_mutex.
+ 	 */
+-	lock_two_inodes(source, target, I_MUTEX_NORMAL, I_MUTEX_NONDIR2);
++	lock_old_subdir = new_dir != old_dir;
++	lock_new_subdir = new_dir != old_dir || !(flags & RENAME_EXCHANGE);
++	if (is_dir) {
++		if (lock_old_subdir)
++			inode_lock_nested(source, I_MUTEX_CHILD);
++		if (target && (!new_is_dir || lock_new_subdir))
++			inode_lock(target);
++	} else if (new_is_dir) {
++		if (lock_new_subdir)
++			inode_lock_nested(target, I_MUTEX_CHILD);
++		inode_lock(source);
++	} else {
++		lock_two_nondirectories(source, target);
++	}
+ 
+ 	error = -EPERM;
+ 	if (IS_SWAPFILE(source) || (target && IS_SWAPFILE(target)))
+@@ -4880,8 +4893,9 @@ int vfs_rename(struct renamedata *rd)
+ 			d_exchange(old_dentry, new_dentry);
+ 	}
+ out:
+-	inode_unlock(source);
+-	if (target)
++	if (!is_dir || lock_old_subdir)
++		inode_unlock(source);
++	if (target && (!new_is_dir || lock_new_subdir))
+ 		inode_unlock(target);
+ 	dput(new_dentry);
+ 	if (!error) {
 
 
