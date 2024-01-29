@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FBA76051;
-	Mon, 29 Jan 2024 17:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE2A76051;
+	Mon, 29 Jan 2024 17:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548631; cv=none; b=p527Kk1kJGhidvq788Tqc/r7TReymPNZ87/inGS779itvdlg7k/uiq+d6re3FOMXhJ3aftRPpuxtiHlZOkuXkEQRitgkC2wPxyoSdpqZxaOTkHrc/bs/3RpGvMebW8D3HYFTMhTrh9lCjFXNhuUmQi5RmNzcMV7NR3uJMzCTp5Y=
+	t=1706548631; cv=none; b=r/ddzw5mMBVPgkwbnmbhrM3IdW9KDlXMpLSsM5bgUutcKmVyoKlqhDWRDRy293GZbVRxp8HG9dXF108TMs2DGRVvJuSe1bogq/SfJgZuX+O275qkTqevJQN5nDOgktErwi5VYXLinP8tLF5lIWUdjpO+yWXB3fGmsgKm/jd83ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548631; c=relaxed/simple;
-	bh=XgQIvs8XtoZD3PzsV6hb4pUzZapiKARTl+ft/Vzv95w=;
+	bh=kxVlRXH695/kWNjoA6YV4SmZLVpC6IELHiVp8GF2WMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPXj1D5pTQn7wDs3gMF/Sxm2SC9Y4f5yER6gZyWBnkERy5MygzQ0jMzM4I/vQNNjVGO2/HKKRDpnYzNMe8iwm2WjuvASqiiAZJ8N7qvBg42QkjxPoOR4EUaa5YGm2wGTcmwGBDam44H9Z2VoXjoG9GrKNK2n1Pe65YGXWzyd/6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/AZd2il; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fC40j/5frPbPfhzgKHAEZVSwukroANdbYzcOzWcRLyrSRmmna7k7Qjyvxw1cZO+LX6FfFxU/j1H4GpqzVMTy69P/Xb4S8NL2bljPWLXSPB70JmSxRtt05GSpmkN1JItLFQQ4yu9NSQYm74+xm6OUUppAx1cKR5cstRNtF3yOAa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXCTYOXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/AZd2il"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A73C43399;
-	Mon, 29 Jan 2024 17:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXCTYOXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE89C43390;
+	Mon, 29 Jan 2024 17:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548630;
-	bh=XgQIvs8XtoZD3PzsV6hb4pUzZapiKARTl+ft/Vzv95w=;
+	s=korg; t=1706548631;
+	bh=kxVlRXH695/kWNjoA6YV4SmZLVpC6IELHiVp8GF2WMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/AZd2ilQRa1rZoZn9fMggvIqtd6cobH4LFVV+R6sj2DzTCZ2/wGfKnT01ElpelQL
-	 uVugCQjr2wJFQrNfcTD9uJvq/XgZy8Z2gnLbA3kMQKsNSeSqlM9DL7G+wv8KMNQ0gA
-	 WYfKuXaGZBpNefzqirx2KnpkDBPvP3qoGfXuv8E8=
+	b=CXCTYOXhbBt0qjf0249YX+jU6KT17E+MnpJiNbJurC5jG8kCjg443J+73k+hiD2eH
+	 EC1JoPAIfs0sXwHrSWe2OoC965mm4PQEGS/815yYOvPi5sN4U5F/SDYkM8TygTHRSL
+	 MgZtw6HofkCnMeA8H/mqrPFaQkGLBD8MNZpH/wds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 280/331] media: v4l: cci: Add macros to obtain register width and address
-Date: Mon, 29 Jan 2024 09:05:44 -0800
-Message-ID: <20240129170023.056975525@linuxfoundation.org>
+Subject: [PATCH 6.6 281/331] media: v4l2-cci: Add support for little-endian encoded registers
+Date: Mon, 29 Jan 2024 09:05:45 -0800
+Message-ID: <20240129170023.084693224@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,77 +54,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit cd93cc245dfe334c38da98c14b34f9597e1b4ea6 ]
+[ Upstream commit d92e7a013ff33f4e0b31bbf768d0c85a8acefebf ]
 
-Add CCI_REG_WIDTH() macro to obtain register width in bits and similarly,
-CCI_REG_WIDTH_BYTES() to obtain it in bytes.
+Some sensors, e.g. Sony IMX290, are using little-endian registers. Add
+support for those by encoding the endianness into Bit 20 of the register
+address.
 
-Also add CCI_REG_ADDR() macro to obtain the address of a register.
-
-Use both macros in v4l2-cci.c, too.
-
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: af73323b9770 ("media: imx290: Convert to new CCI register access helpers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+[Sakari Ailus: Fixed commit message.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: d92e7a013ff3 ("media: v4l2-cci: Add support for little-endian encoded registers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-cci.c | 8 ++++----
- include/media/v4l2-cci.h           | 5 +++++
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/media/v4l2-core/v4l2-cci.c | 44 ++++++++++++++++++++++++------
+ include/media/v4l2-cci.h           |  5 ++++
+ 2 files changed, 41 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/media/v4l2-core/v4l2-cci.c b/drivers/media/v4l2-core/v4l2-cci.c
-index bc2dbec019b0..3179160abde3 100644
+index 3179160abde3..10005c80f43b 100644
 --- a/drivers/media/v4l2-core/v4l2-cci.c
 +++ b/drivers/media/v4l2-core/v4l2-cci.c
-@@ -25,8 +25,8 @@ int cci_read(struct regmap *map, u32 reg, u64 *val, int *err)
+@@ -18,6 +18,7 @@
+ 
+ int cci_read(struct regmap *map, u32 reg, u64 *val, int *err)
+ {
++	bool little_endian;
+ 	unsigned int len;
+ 	u8 buf[8];
+ 	int ret;
+@@ -25,6 +26,7 @@ int cci_read(struct regmap *map, u32 reg, u64 *val, int *err)
  	if (err && *err)
  		return *err;
  
--	len = FIELD_GET(CCI_REG_WIDTH_MASK, reg);
--	reg = FIELD_GET(CCI_REG_ADDR_MASK, reg);
-+	len = CCI_REG_WIDTH_BYTES(reg);
-+	reg = CCI_REG_ADDR(reg);
++	little_endian = reg & CCI_REG_LE;
+ 	len = CCI_REG_WIDTH_BYTES(reg);
+ 	reg = CCI_REG_ADDR(reg);
  
- 	ret = regmap_bulk_read(map, reg, buf, len);
- 	if (ret) {
-@@ -75,8 +75,8 @@ int cci_write(struct regmap *map, u32 reg, u64 val, int *err)
+@@ -40,16 +42,28 @@ int cci_read(struct regmap *map, u32 reg, u64 *val, int *err)
+ 		*val = buf[0];
+ 		break;
+ 	case 2:
+-		*val = get_unaligned_be16(buf);
++		if (little_endian)
++			*val = get_unaligned_le16(buf);
++		else
++			*val = get_unaligned_be16(buf);
+ 		break;
+ 	case 3:
+-		*val = get_unaligned_be24(buf);
++		if (little_endian)
++			*val = get_unaligned_le24(buf);
++		else
++			*val = get_unaligned_be24(buf);
+ 		break;
+ 	case 4:
+-		*val = get_unaligned_be32(buf);
++		if (little_endian)
++			*val = get_unaligned_le32(buf);
++		else
++			*val = get_unaligned_be32(buf);
+ 		break;
+ 	case 8:
+-		*val = get_unaligned_be64(buf);
++		if (little_endian)
++			*val = get_unaligned_le64(buf);
++		else
++			*val = get_unaligned_be64(buf);
+ 		break;
+ 	default:
+ 		dev_err(regmap_get_device(map), "Error invalid reg-width %u for reg 0x%04x\n",
+@@ -68,6 +82,7 @@ EXPORT_SYMBOL_GPL(cci_read);
+ 
+ int cci_write(struct regmap *map, u32 reg, u64 val, int *err)
+ {
++	bool little_endian;
+ 	unsigned int len;
+ 	u8 buf[8];
+ 	int ret;
+@@ -75,6 +90,7 @@ int cci_write(struct regmap *map, u32 reg, u64 val, int *err)
  	if (err && *err)
  		return *err;
  
--	len = FIELD_GET(CCI_REG_WIDTH_MASK, reg);
--	reg = FIELD_GET(CCI_REG_ADDR_MASK, reg);
-+	len = CCI_REG_WIDTH_BYTES(reg);
-+	reg = CCI_REG_ADDR(reg);
++	little_endian = reg & CCI_REG_LE;
+ 	len = CCI_REG_WIDTH_BYTES(reg);
+ 	reg = CCI_REG_ADDR(reg);
  
- 	switch (len) {
- 	case 1:
+@@ -83,16 +99,28 @@ int cci_write(struct regmap *map, u32 reg, u64 val, int *err)
+ 		buf[0] = val;
+ 		break;
+ 	case 2:
+-		put_unaligned_be16(val, buf);
++		if (little_endian)
++			put_unaligned_le16(val, buf);
++		else
++			put_unaligned_be16(val, buf);
+ 		break;
+ 	case 3:
+-		put_unaligned_be24(val, buf);
++		if (little_endian)
++			put_unaligned_le24(val, buf);
++		else
++			put_unaligned_be24(val, buf);
+ 		break;
+ 	case 4:
+-		put_unaligned_be32(val, buf);
++		if (little_endian)
++			put_unaligned_le32(val, buf);
++		else
++			put_unaligned_be32(val, buf);
+ 		break;
+ 	case 8:
+-		put_unaligned_be64(val, buf);
++		if (little_endian)
++			put_unaligned_le64(val, buf);
++		else
++			put_unaligned_be64(val, buf);
+ 		break;
+ 	default:
+ 		dev_err(regmap_get_device(map), "Error invalid reg-width %u for reg 0x%04x\n",
 diff --git a/include/media/v4l2-cci.h b/include/media/v4l2-cci.h
-index f2c2962e936b..a2835a663df5 100644
+index a2835a663df5..8b0b361b464c 100644
 --- a/include/media/v4l2-cci.h
 +++ b/include/media/v4l2-cci.h
-@@ -7,6 +7,7 @@
- #ifndef _V4L2_CCI_H
- #define _V4L2_CCI_H
+@@ -38,12 +38,17 @@ struct cci_reg_sequence {
+ #define CCI_REG_WIDTH_BYTES(x)		FIELD_GET(CCI_REG_WIDTH_MASK, x)
+ #define CCI_REG_WIDTH(x)		(CCI_REG_WIDTH_BYTES(x) << 3)
+ #define CCI_REG_ADDR(x)			FIELD_GET(CCI_REG_ADDR_MASK, x)
++#define CCI_REG_LE			BIT(20)
  
-+#include <linux/bitfield.h>
- #include <linux/bits.h>
- #include <linux/types.h>
- 
-@@ -34,6 +35,10 @@ struct cci_reg_sequence {
- #define CCI_REG_WIDTH_SHIFT		16
- #define CCI_REG_WIDTH_MASK		GENMASK(19, 16)
- 
-+#define CCI_REG_WIDTH_BYTES(x)		FIELD_GET(CCI_REG_WIDTH_MASK, x)
-+#define CCI_REG_WIDTH(x)		(CCI_REG_WIDTH_BYTES(x) << 3)
-+#define CCI_REG_ADDR(x)			FIELD_GET(CCI_REG_ADDR_MASK, x)
-+
  #define CCI_REG8(x)			((1 << CCI_REG_WIDTH_SHIFT) | (x))
  #define CCI_REG16(x)			((2 << CCI_REG_WIDTH_SHIFT) | (x))
  #define CCI_REG24(x)			((3 << CCI_REG_WIDTH_SHIFT) | (x))
+ #define CCI_REG32(x)			((4 << CCI_REG_WIDTH_SHIFT) | (x))
+ #define CCI_REG64(x)			((8 << CCI_REG_WIDTH_SHIFT) | (x))
++#define CCI_REG16_LE(x)			(CCI_REG_LE | (2U << CCI_REG_WIDTH_SHIFT) | (x))
++#define CCI_REG24_LE(x)			(CCI_REG_LE | (3U << CCI_REG_WIDTH_SHIFT) | (x))
++#define CCI_REG32_LE(x)			(CCI_REG_LE | (4U << CCI_REG_WIDTH_SHIFT) | (x))
++#define CCI_REG64_LE(x)			(CCI_REG_LE | (8U << CCI_REG_WIDTH_SHIFT) | (x))
+ 
+ /**
+  * cci_read() - Read a value from a single CCI register
 -- 
 2.43.0
 
