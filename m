@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0A5157041;
-	Mon, 29 Jan 2024 17:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C889157041;
+	Mon, 29 Jan 2024 17:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548081; cv=none; b=A+f2PTn2IUZptTm5ES8oViv3lWRu+OEiXGnfU13IZ595CH/KJb67td+5DbR2esfKkVoY38vjFzFqzIRW0wTERRIfhD8QVC9EHja+/8WGcdlVc3ne4RoVwcVcXaGjCsv4XpgKLOJXXR0AXd8JncfSd7fsRLr1Bh6Wb8pPruZkkbo=
+	t=1706548082; cv=none; b=QV/9LkfgHGTH6+FWd2CMUcBbxmegi5Jn4yf3HAxaHUsQ+BEBpN1qKrRqET+x6wNSXdISyenZLLqUurxaGS3NwgC2FAiDnJeMmAWGyrkrVaD/gVf/Ma62llmt1BCv34PYwrlE+iekt/Sran6cWcrFVXBKF3UZdLhDaV49exvlBBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548081; c=relaxed/simple;
-	bh=iUC5WTv9iKKn+NviX5xFovBwYVZBXOFLPeoLzeDqU+s=;
+	s=arc-20240116; t=1706548082; c=relaxed/simple;
+	bh=Q1tFeJ/fbEc1ub2Ti+C5j4DzM7RU7st/1M4I8mulXJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eL7QpuRtkJ4b4SIX+NMXcZOY8EIN1O1Zn+ndpfM2T//9NoUn+hctu0XzLZY7VuoPC4fgqaVFTLQjeBpezgvCqbuRhSMr9dGqGBKJOU/Rr7D9/OGfocLIPBr32vHgVZ+jFc8m8XOMRgYfCuardU8MOvAsD36pV1Pt+ENsFhEesu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6/EZ9Ra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDMPodhaKDHbAsiHoxqVCDbF8d7qu4GS4Rh/uRmljfuyT0u1/4uZNw2xpRF27fdbWJg7+i8Z1hqqIWtE3MIzfXp4fhXrLDN+ULnEUDyaZaYKGqsSLFxcAOxfGvcXlqMdsmRyb+pxyiDJX2890Wg24WEJGWYKdg3eqdrQiR8Va8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mF58rF/e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6/EZ9Ra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4A1C433C7;
-	Mon, 29 Jan 2024 17:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mF58rF/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249A8C43390;
+	Mon, 29 Jan 2024 17:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548081;
-	bh=iUC5WTv9iKKn+NviX5xFovBwYVZBXOFLPeoLzeDqU+s=;
+	s=korg; t=1706548082;
+	bh=Q1tFeJ/fbEc1ub2Ti+C5j4DzM7RU7st/1M4I8mulXJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n6/EZ9RaP8hK6mQ+GW05cwMtwQwevVtAzSiDQPa6VBk5BV58Jd1NsT5CIl99LS5+T
-	 hBZoV/F7Sv+rOhcCTWYVCtkCa6E+MjtijUGFWa7/OSKH0isMsY0pwyoPbIAfWv1/Zs
-	 x9TMCDfpFlkqy60sWcr8pFfW+zIapQftt376UaXc=
+	b=mF58rF/e0xe/DmxI07WcRiMEnlH7zFLBA55dD+NqpjPC8zBnIu5E+9LYyb07qEBhI
+	 m6M4BSv7sRj83vji1pzytR4dY1kP1H+j/52tL1m9UYgWcbrEYBttoip19k9WVO23X5
+	 aw+9Vxl53MRJKG69Tmgog2i7tDDRDRQmbGWxOXvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Vegard Nossum <vegard.nossum@oracle.com>,
 	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 6.7 094/346] docs: kernel_abi.py: fix command injection
-Date: Mon, 29 Jan 2024 09:02:05 -0800
-Message-ID: <20240129170019.169767059@linuxfoundation.org>
+Subject: [PATCH 6.7 095/346] scripts/get_abi: fix source path leak
+Date: Mon, 29 Jan 2024 09:02:06 -0800
+Message-ID: <20240129170019.201489959@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,148 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Vegard Nossum <vegard.nossum@oracle.com>
 
-commit 3231dd5862779c2e15633c96133a53205ad660ce upstream.
+commit 5889d6ede53bc17252f79c142387e007224aa554 upstream.
 
-The kernel-abi directive passes its argument straight to the shell.
-This is unfortunate and unnecessary.
+The code currently leaks the absolute path of the ABI files into the
+rendered documentation.
 
-Let's always use paths relative to $srctree/Documentation/ and use
-subprocess.check_call() instead of subprocess.Popen(shell=True).
+There exists code to prevent this, but it is not effective when an
+absolute path is passed, which it is when $srctree is used.
 
-This also makes the code shorter.
+I consider this to be a minimal, stop-gap fix; a better fix would strip
+off the actual prefix instead of hacking it off with a regex.
 
-Link: https://fosstodon.org/@jani/111676532203641247
-Reported-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://mastodon.social/@vegard/111677490643495163
+Cc: Jani Nikula <jani.nikula@intel.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
 Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/20231231235959.3342928-2-vegard.nossum@oracle.com
+Link: https://lore.kernel.org/r/20231231235959.3342928-1-vegard.nossum@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/abi-obsolete.rst |    2 -
- Documentation/admin-guide/abi-removed.rst  |    2 -
- Documentation/admin-guide/abi-stable.rst   |    2 -
- Documentation/admin-guide/abi-testing.rst  |    2 -
- Documentation/sphinx/kernel_abi.py         |   56 +++++------------------------
- 5 files changed, 14 insertions(+), 50 deletions(-)
+ scripts/get_abi.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/abi-obsolete.rst
-+++ b/Documentation/admin-guide/abi-obsolete.rst
-@@ -7,5 +7,5 @@ marked to be removed at some later point
- The description of the interface will document the reason why it is
- obsolete and when it can be expected to be removed.
+--- a/scripts/get_abi.pl
++++ b/scripts/get_abi.pl
+@@ -98,7 +98,7 @@ sub parse_abi {
+ 	$name =~ s,.*/,,;
  
--.. kernel-abi:: $srctree/Documentation/ABI/obsolete
-+.. kernel-abi:: ABI/obsolete
-    :rst:
---- a/Documentation/admin-guide/abi-removed.rst
-+++ b/Documentation/admin-guide/abi-removed.rst
-@@ -1,5 +1,5 @@
- ABI removed symbols
- ===================
+ 	my $fn = $file;
+-	$fn =~ s,Documentation/ABI/,,;
++	$fn =~ s,.*Documentation/ABI/,,;
  
--.. kernel-abi:: $srctree/Documentation/ABI/removed
-+.. kernel-abi:: ABI/removed
-    :rst:
---- a/Documentation/admin-guide/abi-stable.rst
-+++ b/Documentation/admin-guide/abi-stable.rst
-@@ -10,5 +10,5 @@ for at least 2 years.
- Most interfaces (like syscalls) are expected to never change and always
- be available.
- 
--.. kernel-abi:: $srctree/Documentation/ABI/stable
-+.. kernel-abi:: ABI/stable
-    :rst:
---- a/Documentation/admin-guide/abi-testing.rst
-+++ b/Documentation/admin-guide/abi-testing.rst
-@@ -16,5 +16,5 @@ Programs that use these interfaces are s
- name to the description of these interfaces, so that the kernel
- developers can easily notify them if any changes occur.
- 
--.. kernel-abi:: $srctree/Documentation/ABI/testing
-+.. kernel-abi:: ABI/testing
-    :rst:
---- a/Documentation/sphinx/kernel_abi.py
-+++ b/Documentation/sphinx/kernel_abi.py
-@@ -39,8 +39,6 @@ import sys
- import re
- import kernellog
- 
--from os import path
--
- from docutils import nodes, statemachine
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
-@@ -73,60 +71,26 @@ class KernelCmd(Directive):
-     }
- 
-     def run(self):
--
-         doc = self.state.document
-         if not doc.settings.file_insertion_enabled:
-             raise self.warning("docutils: file insertion disabled")
- 
--        env = doc.settings.env
--        cwd = path.dirname(doc.current_source)
--        cmd = "get_abi.pl rest --enable-lineno --dir "
--        cmd += self.arguments[0]
--
--        if 'rst' in self.options:
--            cmd += " --rst-source"
--
--        srctree = path.abspath(os.environ["srctree"])
-+        srctree = os.path.abspath(os.environ["srctree"])
- 
--        fname = cmd
-+        args = [
-+            os.path.join(srctree, 'scripts/get_abi.pl'),
-+            'rest',
-+            '--enable-lineno',
-+            '--dir', os.path.join(srctree, 'Documentation', self.arguments[0]),
-+        ]
- 
--        # extend PATH with $(srctree)/scripts
--        path_env = os.pathsep.join([
--            srctree + os.sep + "scripts",
--            os.environ["PATH"]
--        ])
--        shell_env = os.environ.copy()
--        shell_env["PATH"]    = path_env
--        shell_env["srctree"] = srctree
-+        if 'rst' in self.options:
-+            args.append('--rst-source')
- 
--        lines = self.runCmd(cmd, shell=True, cwd=cwd, env=shell_env)
-+        lines = subprocess.check_output(args, cwd=os.path.dirname(doc.current_source)).decode('utf-8')
-         nodeList = self.nestedParse(lines, self.arguments[0])
-         return nodeList
- 
--    def runCmd(self, cmd, **kwargs):
--        u"""Run command ``cmd`` and return its stdout as unicode."""
--
--        try:
--            proc = subprocess.Popen(
--                cmd
--                , stdout = subprocess.PIPE
--                , stderr = subprocess.PIPE
--                , **kwargs
--            )
--            out, err = proc.communicate()
--
--            out, err = codecs.decode(out, 'utf-8'), codecs.decode(err, 'utf-8')
--
--            if proc.returncode != 0:
--                raise self.severe(
--                    u"command '%s' failed with return code %d"
--                    % (cmd, proc.returncode)
--                )
--        except OSError as exc:
--            raise self.severe(u"problems with '%s' directive: %s."
--                              % (self.name, ErrorString(exc)))
--        return out
--
-     def nestedParse(self, lines, fname):
-         env = self.state.document.settings.env
-         content = ViewList()
+ 	my $nametag = "File $fn";
+ 	$data{$nametag}->{what} = "File $name";
 
 
