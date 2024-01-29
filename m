@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D24E15A4A8;
-	Mon, 29 Jan 2024 17:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D09158D71;
+	Mon, 29 Jan 2024 17:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548061; cv=none; b=YId4nqQPbfjBmSsAYDR5fcO5LokEwZHdC+vXrQfHf6iZU+5IxAuraaZy+OFqr3/o7vo4i09S2QVj7EntACnMhXf+kuMkghmqfcm35IDi50yZ07daJolp9d3AxHcphLFoNB8Ndkzcj+VHENHVWMsv2GJAQnYDvxNVOp0vvFkhIZg=
+	t=1706548062; cv=none; b=BuE5FbX24ugu7BsasTOi/xSDzaYj4RMR/TqHuO2oIdwwxRuYoOWX+ydhzC8FRH4mzsOBW2MzLES+W8krddymywvg6PYEhp1uUCJOEa8yUKryowk4iehaP48fqcrjg9xfZkwtM0utmfp68KIs8t/NfLc8xVWxzZD0l48SwS2tVyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548061; c=relaxed/simple;
-	bh=TNxJMELA01FJSdwl9QiFbuvezfvjR50nW31gWCmEwkM=;
+	s=arc-20240116; t=1706548062; c=relaxed/simple;
+	bh=IOch1ZMga5vIYHf6JjgXJ3xBiT3YzUypIS0y+4/J9aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oA30uaWIeR9rLrhy2usNHePVHPTQRNhB/Yv0XWYgfuF8DpQPMUGBTF7LS1HUbIf5mewOgjdajcqTGvh45j2es2oavIOvqGs/bErwQ0wYH1puT4+cVW2Cfp63n4XHS9hPMuc285GI3l2LDjDB9PA3TabeuUjREBRlzbAHBsTOU5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Va8psU7K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eYw++rq3M+CXYeDpiP1mKtAq3AoAch/scLXd7DnydIdnf6E0g46xaBZiFa52yxjrzqH3ZKCMDMm5HwfG/BLQVCkku4vfCH3fVOrCzZDrDDcrwftjKDk/PcusXggkcA1UyjbQI76070xT57uVOrsf+YBDEwgywNKCzdmXU3Xnszk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xObuVcLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Va8psU7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF44C433F1;
-	Mon, 29 Jan 2024 17:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xObuVcLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B353C433F1;
+	Mon, 29 Jan 2024 17:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548061;
-	bh=TNxJMELA01FJSdwl9QiFbuvezfvjR50nW31gWCmEwkM=;
+	s=korg; t=1706548062;
+	bh=IOch1ZMga5vIYHf6JjgXJ3xBiT3YzUypIS0y+4/J9aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Va8psU7K6WPnbnwEcLZMKAlnSXwzIrUkng1gJ/TiHXcS8ta6iknWnaAauw0JR5eTm
-	 36hsoHD3VcJ5r56Yss7LcnW9BEPUsoFZ77/RLhXV/0PPs8Wa9PRpS6f63qu8LhHXmS
-	 3WPLWijQSWGX/uqxOAJQBOSuTDcgHI+yETSl8Hq4=
+	b=xObuVcLEeHakognLsIz1RiaGSg+m0jsdNEKv+p5M3rR5nR/N5e3HeMBWeoFyedES+
+	 eFCuE3ipIXXumIbjJpFqAiXRsTWr2rUkKhCmkof7plPJZgee321FfHl9CV6+B48AGa
+	 c4z9/vToTVtCe8792BnF87h/532z21otgUOQ0Avo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.7 067/346] ARM: dts: qcom: sdx55: fix USB wakeup interrupt types
-Date: Mon, 29 Jan 2024 09:01:38 -0800
-Message-ID: <20240129170018.357126585@linuxfoundation.org>
+	Paul Cercueil <paul@crapouillou.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.7 068/346] ARM: dts: samsung: exynos4210-i9100: Unconditionally enable LDO12
+Date: Mon, 29 Jan 2024 09:01:39 -0800
+Message-ID: <20240129170018.385517434@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,37 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Paul Cercueil <paul@crapouillou.net>
 
-commit d0ec3c4c11c3b30e1f2d344973b2a7bf0f986734 upstream.
+commit 84228d5e29dbc7a6be51e221000e1d122125826c upstream.
 
-The DP/DM wakeup interrupts are edge triggered and which edge to trigger
-on depends on use-case and whether a Low speed or Full/High speed device
-is connected.
+The kernel hangs for a good 12 seconds without any info being printed to
+dmesg, very early in the boot process, if this regulator is not enabled.
 
-Fixes: fea4b41022f3 ("ARM: dts: qcom: sdx55: Add USB3 and PHY support")
-Cc: stable@vger.kernel.org      # 5.12
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231120164331.8116-2-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Force-enable it to work around this issue, until we know more about the
+underlying problem.
+
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Fixes: 8620cc2f99b7 ("ARM: dts: exynos: Add devicetree file for the Galaxy S2")
+Cc: stable@vger.kernel.org # v5.8+
+Link: https://lore.kernel.org/r/20231206221556.15348-2-paul@crapouillou.net
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/qcom/qcom-sdx55.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/samsung/exynos4210-i9100.dts |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-@@ -587,8 +587,8 @@
+--- a/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
++++ b/arch/arm/boot/dts/samsung/exynos4210-i9100.dts
+@@ -527,6 +527,14 @@
+ 				regulator-name = "VT_CAM_1.8V";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <1800000>;
++
++				/*
++				 * Force-enable this regulator; otherwise the
++				 * kernel hangs very early in the boot process
++				 * for about 12 seconds, without apparent
++				 * reason.
++				 */
++				regulator-always-on;
+ 			};
  
- 			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
-+				     <GIC_SPI 158 IRQ_TYPE_EDGE_BOTH>,
-+				     <GIC_SPI 157 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
- 
+ 			vcclcd_reg: LDO13 {
 
 
