@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074AD159573;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7C315956D;
 	Mon, 29 Jan 2024 17:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548395; cv=none; b=UmeOfwhDD+iY0BFDiAHqFU+WqwYLY2FTUQtxBobsNVcjiMgh295buWE13vOkL/1N4zI5wnogSiijARgyRtfkQUCTsW+bE2H5RGD0Pv2htAif7P0a7V9jtrRdHlf1S0Uxj9gjlfZv5VieKZcq31HUYtBSmJgZ2zjYSgNGsinK6ik=
+	t=1706548395; cv=none; b=FqwoTQ9MicS7r9LSYJsKkcPiETUHGuBp5INjTTe5XLVuxUZsOfDiepDZpLTXTChQemJGExqUSKgnUdKf4zybFWvNbirdZPUtWR9aj+RAlzm4i0siMHbIwTFnjxRJBEceuw9w5ST/PUIN9wy5VP9KTNS+qypksA+WGoF0Uo2c+tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548395; c=relaxed/simple;
-	bh=Z2HA32txU6nnKE0/+vhq8rG4T0eIZeHRL0LBkMhOdC4=;
+	bh=WCZwO2FzMUzou7r8ExXYMkdQpdKAutY9sJ5HCK+qgZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CzGa2hCPQBc5eTa4KHM6a6+X88qHkri1xy473fMWMRCo9971otyJNGIrj46L+za6+SlYa9Y3rXI2b3/hapobZQzt2J3DFhP8kFuttU7b6URmfcD7GRYMS/pOjpGX4h8qRq81erbSHX8P/dDnIO46hIuGRuQUl+ZOtvDTIn8VtjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDs8I4yH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tT65VBI6Hk33ps1Ik1pZjXlgBKNssNX7mSRwph05rBSOZ+lK1yuB6C+jHMNDlB3CrBkiaagf/dk2PzjP7wgRr5V4sMN1GsRiiOnb2qfZBlyA507hCO9mrr0Ndr5I4wKVF7pbB12aAhp7oDFa+I21ejKjUcv6y+n566cC1Z0vOyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOWGP3rD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDs8I4yH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE5EC43390;
-	Mon, 29 Jan 2024 17:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOWGP3rD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F00C433F1;
+	Mon, 29 Jan 2024 17:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548394;
-	bh=Z2HA32txU6nnKE0/+vhq8rG4T0eIZeHRL0LBkMhOdC4=;
+	s=korg; t=1706548395;
+	bh=WCZwO2FzMUzou7r8ExXYMkdQpdKAutY9sJ5HCK+qgZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDs8I4yHWclS5fWm2/sx/+ceuiqHLCNgjrNBioQbAsj//QeFHC8Srco+MVZEgnIhB
-	 lXog8CWGiJspbPRSGiXuMWC5VuB7uijpspCmkIdg+H0O7unZSLtQx/+EGI5CK7Yh9C
-	 8whSWtfhKsFZn8wEsvc7A126mrWoCJRcfHADl000=
+	b=QOWGP3rDTY9QOnWyLjMwmDPtttc4l3xVy24HWvi7JNpf1kxxK+tHZpdW1RRK5R6VC
+	 iBN08UYsm0rY5S1BxPK0RtUQembMSLyeHlNuXnECG/dAfq0dEai7cvgtWVpdQagC5m
+	 UeCr+U1gIzMXcfnB4SBXTsFvz1rCfiiCpAhWay2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	aaron.ma@canonical.com,
-	binli@gnome.org,
-	Marc Rossi <Marc.Rossi@amd.com>,
-	Hamza Mahfooz <Hamza.Mahfooz@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>
-Subject: [PATCH 6.1 136/185] drm/amd/display: Disable PSR-SU on Parade 0803 TCON again
-Date: Mon, 29 Jan 2024 09:05:36 -0800
-Message-ID: <20240129170002.966341403@linuxfoundation.org>
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 164/185] drm/panel-edp: drm/panel-edp: Fix AUO B116XAK01 name and timing
+Date: Mon, 29 Jan 2024 09:06:04 -0800
+Message-ID: <20240129170003.863702634@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -55,48 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-commit 571c2fa26aa654946447c282a09d40a56c7ff128 upstream.
+[ Upstream commit fc6e7679296530106ee0954e8ddef1aa58b2e0b5 ]
 
-When screen brightness is rapidly changed and PSR-SU is enabled the
-display hangs on panels with this TCON even on the latest DCN 3.1.4
-microcode (0x8002a81 at this time).
+Rename AUO 0x405c B116XAK01 to B116XAK01.0 and adjust the timing of
+auo_b116xak01: T3=200, T12=500, T7_max = 50 according to decoding edid
+and datasheet.
 
-This was disabled previously as commit 072030b17830 ("drm/amd: Disable
-PSR-SU on Parade 0803 TCON") but reverted as commit 1e66a17ce546 ("Revert
-"drm/amd: Disable PSR-SU on Parade 0803 TCON"") in favor of testing for
-a new enough microcode (commit cd2e31a9ab93 ("drm/amd/display: Set minimum
-requirement for using PSR-SU on Phoenix")).
-
-As hangs are still happening specifically with this TCON, disable PSR-SU
-again for it until it can be root caused.
-
+Fixes: da458286a5e2 ("drm/panel: Add support for AUO B116XAK01 panel")
 Cc: stable@vger.kernel.org
-Cc: aaron.ma@canonical.com
-Cc: binli@gnome.org
-Cc: Marc Rossi <Marc.Rossi@amd.com>
-Cc: Hamza Mahfooz <Hamza.Mahfooz@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2046131
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231107204611.3082200-2-hsinyi@chromium.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/modules/power/power_helpers.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/panel/panel-edp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-+++ b/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
-@@ -818,6 +818,8 @@ bool is_psr_su_specific_panel(struct dc_
- 				isPSRSUSupported = false;
- 			else if (dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x03)
- 				isPSRSUSupported = false;
-+			else if (dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x03)
-+				isPSRSUSupported = false;
- 			else if (dpcd_caps->psr_info.force_psrsu_cap == 0x1)
- 				isPSRSUSupported = true;
- 		}
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index a163585a2a52..ecd6238749f7 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -975,6 +975,8 @@ static const struct panel_desc auo_b116xak01 = {
+ 	},
+ 	.delay = {
+ 		.hpd_absent = 200,
++		.unprepare = 500,
++		.enable = 50,
+ 	},
+ };
+ 
+@@ -1870,7 +1872,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1062, &delay_200_500_e50, "B120XAN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1e9b, &delay_200_500_e50, "B133UAN02.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e50, "B116XAK01.6"),
+-	EDP_PANEL_ENTRY('A', 'U', 'O', 0x405c, &auo_b116xak01.delay, "B116XAK01"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x405c, &auo_b116xak01.delay, "B116XAK01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x615c, &delay_200_500_e50, "B116XAN06.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
+ 
+-- 
+2.43.0
+
 
 
