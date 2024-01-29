@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37326F075;
-	Mon, 29 Jan 2024 17:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D726F075;
+	Mon, 29 Jan 2024 17:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548460; cv=none; b=o5KRp3YpGo4Uxs+84WjeqojAtTX7d//H0L8vqyKNJwIEk0AF4XT0CnQv+49Hnj/4TBm7tja8bAK2uRkjh9sFjCM1Q+BqXUfwGtp5/pSURtFPXhYOhFPuHEzr5jlDFsdGHcuYRCPnjma5qP8DuG3z0YCF9WRXM9vvo9CLKnvHbcU=
+	t=1706548461; cv=none; b=GKfdgXJFUiA9ODkEsLOVRh/uz9satAVnU6IFtL8QtsMMMGfkrafOvBhiJ35qxpLr6jxRcdyU58bMwu8QjrU10ouzE7HCWHKJJCi4jl8Zxad8HmZRLukLsHU6jj4GEDcI9Q4ucF4h3eLeie0h9caa0aszmn5I0IfzqSz878EoZWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548460; c=relaxed/simple;
-	bh=O4v3Dk9DQZcAdLiTOYFJJcd0nUJM/cKVtYKjF0onODk=;
+	s=arc-20240116; t=1706548461; c=relaxed/simple;
+	bh=qqy2mDaM1hTEl6wxKH3TFRQqW/8Pnepj5A+5du81PoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CmDW46EksIXu9isCcP4tjFpuxdul9CmoxPIZkeOPpeNY2C6kpV68V04KIaDmndPiRblZbn+6SAoR7ZiKbDA0nUBvrNrCKYShFtQLtYPGM4EZSKVu8MkNGISRjjI495fmhZtmstQpOEJsXfDv9fB0lg3/b2Os0zR5DkS8rhzrN8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftUyeUEt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JZsON8l/5EzTTzBe8Jt4IPLX22AkX3scRRT7G9xiK2woS5zo3zPpi6N2+IveOli/VMLCsAV2MlPkI54CLTofLIEQxKTATrDrkUgxzBYlYGzY8j7IHn90ChQUKPBbuvID4LWKnocHYiIxgcnrDYY2TfVoDtkDG+vIUjkXCM7bvig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cP85vYHc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftUyeUEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90134C433C7;
-	Mon, 29 Jan 2024 17:14:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cP85vYHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F312C433F1;
+	Mon, 29 Jan 2024 17:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548460;
-	bh=O4v3Dk9DQZcAdLiTOYFJJcd0nUJM/cKVtYKjF0onODk=;
+	s=korg; t=1706548461;
+	bh=qqy2mDaM1hTEl6wxKH3TFRQqW/8Pnepj5A+5du81PoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftUyeUEt4y+DSan6KiFVxpze8jebe/ddQQ5ac1rniKQ/Q3O0kMmowXlcDkJHeRMtC
-	 XrHWnDQtybDdXt1UnzjfPyQSAi0Qet7ujWB88aEE2IG7+3QnGm6J2zXpEyXe+xGAkM
-	 4iNPUpuO9P0MU7uafjm8axotPc/z1lGZt/wIcgSM=
+	b=cP85vYHc+DR7OJq4wddL3rv1ZxBJ4+XJWpt8t1u1wRsG/apD4mBqOrHxFojY6tUOn
+	 R/FgKTKNE+tvmeu50TqOtMP2M1vongIpWnczRFAyqWtb2RivbsfOXnKZnOqvsb5mX2
+	 FlPiGM75nTh/HQcHtHLF8U8qWhnL5aiIveuYQPrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 073/331] arm64: dts: qcom: sc8280xp-crd: fix eDP phy compatible
-Date: Mon, 29 Jan 2024 09:02:17 -0800
-Message-ID: <20240129170017.058736968@linuxfoundation.org>
+Subject: [PATCH 6.6 074/331] ARM: dts: qcom: sdx55: fix USB wakeup interrupt types
+Date: Mon, 29 Jan 2024 09:02:18 -0800
+Message-ID: <20240129170017.089229587@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,40 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 663affdb12b3e26c77d103327cf27de720c8117e upstream.
+commit d0ec3c4c11c3b30e1f2d344973b2a7bf0f986734 upstream.
 
-The sc8280xp Display Port PHYs can be used in either DP or eDP mode and
-this is configured using the devicetree compatible string which defaults
-to DP mode in the SoC dtsi.
+The DP/DM wakeup interrupts are edge triggered and which edge to trigger
+on depends on use-case and whether a Low speed or Full/High speed device
+is connected.
 
-Override the default compatible string for the CRD eDP PHY node so that
-the eDP settings are used.
-
-Fixes: 4a883a8d80b5 ("arm64: dts: qcom: sc8280xp-crd: Enable EDP")
-Cc: stable@vger.kernel.org      # 6.3
+Fixes: fea4b41022f3 ("ARM: dts: qcom: sdx55: Add USB3 and PHY support")
+Cc: stable@vger.kernel.org      # 5.12
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231016080658.6667-1-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20231120164331.8116-2-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index e4861c61a65b..ffc4406422ae 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -458,6 +458,8 @@ mdss0_dp3_out: endpoint {
- };
+--- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+@@ -594,8 +594,8 @@
  
- &mdss0_dp3_phy {
-+	compatible = "qcom,sc8280xp-edp-phy";
-+
- 	vdda-phy-supply = <&vreg_l6b>;
- 	vdda-pll-supply = <&vreg_l3b>;
+ 			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 157 IRQ_TYPE_LEVEL_HIGH>;
++				     <GIC_SPI 158 IRQ_TYPE_EDGE_BOTH>,
++				     <GIC_SPI 157 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+ 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
  
--- 
-2.43.0
-
 
 
