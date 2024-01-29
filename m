@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A6715A493;
-	Mon, 29 Jan 2024 17:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A10E15B317;
+	Mon, 29 Jan 2024 17:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548635; cv=none; b=V5ejCxV2RnUyMdZwxhPTqNvnrl9NFH8mmsVreE4SfzHUch1ZR8rIGO3Ly5CHIV+TBhREVg7WZOdBZE21g7SxlNPD3trq3pJgz51vnUe9S2CYiipYjab6gs4QG4ncWEbBOSJG3XL9HMk8sM/aETzKfsUGO9zemaXEiOwtO5QZxAY=
+	t=1706548636; cv=none; b=or3VCzidnJ4h/OBAZbJ6DOfItKV9AoNfLXqOaer/+/pPMyC5dm9ruJckO5QBeQwhqr3BI5gQdglUCHImJ508Nm7gj/FworuphB0ZbfEeJ3Nq4scQDQCDu1sU8R8TSv4eoP5p0emM0hBisZFJzK+i1HE3cUlTQrjKygBFbIiY8aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548635; c=relaxed/simple;
-	bh=Xf6ns8vRCpjhGi24XbVeybunRxrVYseBySXW2rNEhFU=;
+	s=arc-20240116; t=1706548636; c=relaxed/simple;
+	bh=fTOEKKPxUnd2aYPyEm53SBhcdj7KpbxDeDX8CYjq88I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A/waLcyqT1ohFZUQaq/9QcJ7VlmIqJYyGZAYH+09jUovV2BiSNhnxhgYH2YYvffKntIOx4Wn5du7+qVEqP5h12wj0pG2TjA7YtNjvUgCuyQT1VQh3yMKr4F0+7A5+hi2CPg6bREuMo+9HNcCNjkZplJ+a6ASFtFo+HeYodUE0b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KosvWFI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PUYW2owphXa/x8an1cIj2A55cWxYQD5FLAS7vqz435DL0s5lTEtKfUK79i/0MeByLseM42k6yAKq9atqDIhQ8q5f8WkT22rwHVZa0I88xs8mwX1m7sAantqXWVpveidi36Rh1nKwFs71PLZto3i9LwKdzJsIZoFHjU+rOig3iAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2o0/ReF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KosvWFI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A843C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2o0/ReF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C11C433F1;
 	Mon, 29 Jan 2024 17:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548635;
-	bh=Xf6ns8vRCpjhGi24XbVeybunRxrVYseBySXW2rNEhFU=;
+	bh=fTOEKKPxUnd2aYPyEm53SBhcdj7KpbxDeDX8CYjq88I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0KosvWFI4iWMQVCyIzaGXMx0EkdP8FvB4qSdam0fpG7UfgdXyIjY11z/xbIXGS51v
-	 QdF2aB6xqyytvjCjyBSAGJM5etIKgmDIxSC44E7qcIEBcHNka3YIm5Z3l1ov+7Zg3m
-	 Bkheag8R+raEoCSgebC0HMFiuSibEqqPUy9RLuJU=
+	b=P2o0/ReFi0wtOp1M9cCfI0AZVKSs/ng/k5ZjtXt/H+2ltbQZJxloTg2Z6wAnNsoLk
+	 ptEWFN0n7+FmRsG3r+pZRc0VWdK/GKTQyWaJ4b5OGGSEvwWs4YgACqtV+17KFPChLb
+	 ooS0x72eSSJ3KYPDPAb0FjDAYNWp9X8E7VKM7hyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cristian Marussi <cristian.marussi@arm.com>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 310/331] firmware: arm_scmi: Use xa_insert() to store opps
-Date: Mon, 29 Jan 2024 09:06:14 -0800
-Message-ID: <20240129170023.950516817@linuxfoundation.org>
+Subject: [PATCH 6.6 311/331] firmware: arm_scmi: Use xa_insert() when saving raw queues
+Date: Mon, 29 Jan 2024 09:06:15 -0800
+Message-ID: <20240129170023.983613572@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,71 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit e8ef4bbe39b9576a73f104f6af743fb9c7b624ba ]
+[ Upstream commit b5dc0ffd36560dbadaed9a3d9fd7838055d62d74 ]
 
-When storing opps by level or index use xa_insert() instead of xa_store()
-and add error-checking to spot bad duplicates indexes possibly wrongly
-provided by the platform firmware.
+Use xa_insert() when saving per-channel raw queues to better check for
+duplicates.
 
-Fixes: 31c7c1397a33 ("firmware: arm_scmi: Add v3.2 perf level indexing mode support")
+Fixes: 7860701d1e6e ("firmware: arm_scmi: Add per-channel raw injection support")
 Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20240108185050.1628687-1-cristian.marussi@arm.com
+Link: https://lore.kernel.org/r/20240108185050.1628687-2-cristian.marussi@arm.com
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/perf.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/firmware/arm_scmi/raw_mode.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index e887fd169043..dd344506b0a3 100644
---- a/drivers/firmware/arm_scmi/perf.c
-+++ b/drivers/firmware/arm_scmi/perf.c
-@@ -347,8 +347,8 @@ process_response_opp(struct scmi_opp *opp, unsigned int loop_idx,
- }
+diff --git a/drivers/firmware/arm_scmi/raw_mode.c b/drivers/firmware/arm_scmi/raw_mode.c
+index 0493aa3c12bf..350573518503 100644
+--- a/drivers/firmware/arm_scmi/raw_mode.c
++++ b/drivers/firmware/arm_scmi/raw_mode.c
+@@ -1111,7 +1111,6 @@ static int scmi_raw_mode_setup(struct scmi_raw_mode_info *raw,
+ 		int i;
  
- static inline void
--process_response_opp_v4(struct perf_dom_info *dom, struct scmi_opp *opp,
--			unsigned int loop_idx,
-+process_response_opp_v4(struct device *dev, struct perf_dom_info *dom,
-+			struct scmi_opp *opp, unsigned int loop_idx,
- 			const struct scmi_msg_resp_perf_describe_levels_v4 *r)
- {
- 	opp->perf = le32_to_cpu(r->opp[loop_idx].perf_val);
-@@ -359,10 +359,23 @@ process_response_opp_v4(struct perf_dom_info *dom, struct scmi_opp *opp,
- 	/* Note that PERF v4 reports always five 32-bit words */
- 	opp->indicative_freq = le32_to_cpu(r->opp[loop_idx].indicative_freq);
- 	if (dom->level_indexing_mode) {
-+		int ret;
-+
- 		opp->level_index = le32_to_cpu(r->opp[loop_idx].level_index);
+ 		for (i = 0; i < num_chans; i++) {
+-			void *xret;
+ 			struct scmi_raw_queue *q;
  
--		xa_store(&dom->opps_by_idx, opp->level_index, opp, GFP_KERNEL);
--		xa_store(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
-+		ret = xa_insert(&dom->opps_by_idx, opp->level_index, opp,
-+				GFP_KERNEL);
-+		if (ret)
-+			dev_warn(dev,
-+				 "Failed to add opps_by_idx at %d - ret:%d\n",
-+				 opp->level_index, ret);
-+
-+		ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
-+		if (ret)
-+			dev_warn(dev,
-+				 "Failed to add opps_by_lvl at %d - ret:%d\n",
-+				 opp->perf, ret);
-+
- 		hash_add(dom->opps_by_freq, &opp->hash, opp->indicative_freq);
- 	}
- }
-@@ -379,7 +392,7 @@ iter_perf_levels_process_response(const struct scmi_protocol_handle *ph,
- 	if (PROTOCOL_REV_MAJOR(p->version) <= 0x3)
- 		process_response_opp(opp, st->loop_idx, response);
- 	else
--		process_response_opp_v4(p->perf_dom, opp, st->loop_idx,
-+		process_response_opp_v4(ph->dev, p->perf_dom, opp, st->loop_idx,
- 					response);
- 	p->perf_dom->opp_count++;
+ 			q = scmi_raw_queue_init(raw);
+@@ -1120,13 +1119,12 @@ static int scmi_raw_mode_setup(struct scmi_raw_mode_info *raw,
+ 				goto err_xa;
+ 			}
  
+-			xret = xa_store(&raw->chans_q, channels[i], q,
++			ret = xa_insert(&raw->chans_q, channels[i], q,
+ 					GFP_KERNEL);
+-			if (xa_err(xret)) {
++			if (ret) {
+ 				dev_err(dev,
+ 					"Fail to allocate Raw queue 0x%02X\n",
+ 					channels[i]);
+-				ret = xa_err(xret);
+ 				goto err_xa;
+ 			}
+ 		}
+@@ -1322,6 +1320,12 @@ void scmi_raw_message_report(void *r, struct scmi_xfer *xfer,
+ 	dev = raw->handle->dev;
+ 	q = scmi_raw_queue_select(raw, idx,
+ 				  SCMI_XFER_IS_CHAN_SET(xfer) ? chan_id : 0);
++	if (!q) {
++		dev_warn(dev,
++			 "RAW[%d] - NO queue for chan 0x%X. Dropping report.\n",
++			 idx, chan_id);
++		return;
++	}
+ 
+ 	/*
+ 	 * Grab the msg_q_lock upfront to avoid a possible race between
 -- 
 2.43.0
 
