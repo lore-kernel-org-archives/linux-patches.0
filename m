@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B201586E9;
-	Mon, 29 Jan 2024 17:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67098157052;
+	Mon, 29 Jan 2024 17:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548049; cv=none; b=qZCzXbcW0G69ezl+6+jK3vGeINa8L4cBxHf+lNyVKRxjxPPHcJr5EuvKwun+gIDsyBzTMgshVNVpCsipyeYl5G9YF7JU2U6TaxClvRCqMRmnb08ueTkNozcfQEbPkOp8LqYmo6HQXJ6vVVWFlxJjpUkRWc6Y1FS80mcolT4S8nc=
+	t=1706548050; cv=none; b=XCuFGrhGet4TjiFvjoyglWeCGMeQxRoIkCjHEKkEjIqpgzoQT66X8VJdNioxGUWaYfU+YlQhb5id08t9aOAslSYjJQxWqnnFFkLU2PKue76patJJWSMTnPZbmRtW9HeNHssgtitVoX1NIW/Mje6p7iTtdtPXlzCRqFyu91qRBzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548049; c=relaxed/simple;
-	bh=s0oiVPHsF+cQcF1PyTib/LNbHH3w7ZyIvkCGoc48DJg=;
+	s=arc-20240116; t=1706548050; c=relaxed/simple;
+	bh=RDdTbajtQ7EgfgvGuYq4mrrd2mOmbERjn+8MRNIJ/7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=THoBwnOI1tsOmQ+aHYcmzsaLqfz65Fwpq05D20C6G0E8tgLC7WBbS3BBQf7EOSSxrNDoCUY5s0f0NcGvDmtl8brdSECALykqv7EOoHykoFVjC9hgwmXDvGCKhkdcw2R0qcjLSgQzK8Bn8dNv0f/jczDwcnSXYetmat0GL34PCjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jo91UIDN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NdrJtKqwywwe8Ft5bM2j2ypukXXhQEfC+GSf16jq9ZD7tHt4noKAR8kumg7p7lexE33X96jl6l7EITcHUjAjq9AFPWR2f9L6p4U09XCoMqjf14VGHTqr+dRL5n3jNoqPy0qZRf9A+X9zBcbMo8JTc0qnMmpDaCbcXIEX/UXrr+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srAPt7Jd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jo91UIDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2217AC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srAPt7Jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1C6C43390;
 	Mon, 29 Jan 2024 17:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548049;
-	bh=s0oiVPHsF+cQcF1PyTib/LNbHH3w7ZyIvkCGoc48DJg=;
+	bh=RDdTbajtQ7EgfgvGuYq4mrrd2mOmbERjn+8MRNIJ/7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jo91UIDN/jdNk2UkzrT4dNDZWa+8dMUO6Od4jphE6YlkRdISb4cqNmREESzVLQaEj
-	 3R4yTuqEU3eryjp79IOgksvRdzSwflH04OfD4ywb4JdvBjfKtX1UY96OuHPqpnqqe+
-	 AZt8krm/SaFWwy4pS2bJUf5VLPf6r7e4t29afXyM=
+	b=srAPt7Jdxr4txxEXau+PokuHuVD2MHsZp9I44FJWNj9y1LYQLO/S1tivIOIHvKumF
+	 odaYal0moTdtP8F/UupznugoAeycPRIOmEkuCgxn8M99kBcrvhTaxmYARWT+YPfHYF
+	 WKGtCFqt3/mVxMCRAlPDp3QbG4MfItOVu+Xokv8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 050/346] iio: adc: ad7091r: Enable internal vref if external vref is not supplied
-Date: Mon, 29 Jan 2024 09:01:21 -0800
-Message-ID: <20240129170017.857890899@linuxfoundation.org>
+Subject: [PATCH 6.7 051/346] dmaengine: fsl-edma: fix eDMAv4 channel allocation issue
+Date: Mon, 29 Jan 2024 09:01:22 -0800
+Message-ID: <20240129170017.891119801@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -52,64 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcelo Schmitt <marcelo.schmitt@analog.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit e71c5c89bcb165a02df35325aa13d1ee40112401 ]
+[ Upstream commit dc51b4442dd94ab12c146c1897bbdb40e16d5636 ]
 
-The ADC needs a voltage reference to work correctly.
-Users can provide an external voltage reference or use the chip internal
-reference to operate the ADC.
-The availability of an in chip reference for the ADC saves the user from
-having to supply an external voltage reference, which makes the external
-reference an optional property as described in the device tree
-documentation.
-Though, to use the internal reference, it must be enabled by writing to
-the configuration register.
-Enable AD7091R internal voltage reference if no external vref is supplied.
+The eDMAv4 channel mux has a limitation where certain requests must use
+even channels, while others must use odd numbers.
 
-Fixes: 260442cc5be4 ("iio: adc: ad7091r5: Add scale and external VREF support")
-Signed-off-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Link: https://lore.kernel.org/r/b865033fa6a4fc4bf2b4a98ec51a6144e0f64f77.1703013352.git.marcelo.schmitt1@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Add two flags (ARGS_EVEN_CH and ARGS_ODD_CH) to reflect this limitation.
+The device tree source (dts) files need to be updated accordingly.
+
+This issue was identified by the following commit:
+commit a725990557e7 ("arm64: dts: imx93: Fix the dmas entries order")
+
+Reverting channel orders triggered this problem.
+
+Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231114154824.3617255-2-Frank.Li@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7091r-base.c | 7 +++++++
- drivers/iio/adc/ad7091r-base.h | 2 ++
- 2 files changed, 9 insertions(+)
+ drivers/dma/fsl-edma-main.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7091r-base.c b/drivers/iio/adc/ad7091r-base.c
-index 3d36bcd26b0c..76002b91c86a 100644
---- a/drivers/iio/adc/ad7091r-base.c
-+++ b/drivers/iio/adc/ad7091r-base.c
-@@ -405,7 +405,14 @@ int ad7091r_probe(struct device *dev, const char *name,
- 	if (IS_ERR(st->vref)) {
- 		if (PTR_ERR(st->vref) == -EPROBE_DEFER)
- 			return -EPROBE_DEFER;
-+
- 		st->vref = NULL;
-+		/* Enable internal vref */
-+		ret = regmap_set_bits(st->map, AD7091R_REG_CONF,
-+				      AD7091R_REG_CONF_INT_VREF);
-+		if (ret)
-+			return dev_err_probe(st->dev, ret,
-+					     "Error on enable internal reference\n");
- 	} else {
- 		ret = regulator_enable(st->vref);
- 		if (ret)
-diff --git a/drivers/iio/adc/ad7091r-base.h b/drivers/iio/adc/ad7091r-base.h
-index 7a78976a2f80..b9e1c8bf3440 100644
---- a/drivers/iio/adc/ad7091r-base.h
-+++ b/drivers/iio/adc/ad7091r-base.h
-@@ -8,6 +8,8 @@
- #ifndef __DRIVERS_IIO_ADC_AD7091R_BASE_H__
- #define __DRIVERS_IIO_ADC_AD7091R_BASE_H__
+diff --git a/drivers/dma/fsl-edma-main.c b/drivers/dma/fsl-edma-main.c
+index 238a69bd0d6f..75cae7ccae27 100644
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -24,6 +24,8 @@
+ #define ARGS_RX                         BIT(0)
+ #define ARGS_REMOTE                     BIT(1)
+ #define ARGS_MULTI_FIFO                 BIT(2)
++#define ARGS_EVEN_CH                    BIT(3)
++#define ARGS_ODD_CH                     BIT(4)
  
-+#define AD7091R_REG_CONF_INT_VREF	BIT(0)
+ static void fsl_edma_synchronize(struct dma_chan *chan)
+ {
+@@ -157,6 +159,12 @@ static struct dma_chan *fsl_edma3_xlate(struct of_phandle_args *dma_spec,
+ 		fsl_chan->is_remote = dma_spec->args[2] & ARGS_REMOTE;
+ 		fsl_chan->is_multi_fifo = dma_spec->args[2] & ARGS_MULTI_FIFO;
+ 
++		if ((dma_spec->args[2] & ARGS_EVEN_CH) && (i & 0x1))
++			continue;
 +
- /* AD7091R_REG_CH_LIMIT */
- #define AD7091R_HIGH_LIMIT		0xFFF
- #define AD7091R_LOW_LIMIT		0x0
++		if ((dma_spec->args[2] & ARGS_ODD_CH) && !(i & 0x1))
++			continue;
++
+ 		if (!b_chmux && i == dma_spec->args[0]) {
+ 			chan = dma_get_slave_channel(chan);
+ 			chan->device->privatecnt++;
 -- 
 2.43.0
 
