@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E747560A;
-	Mon, 29 Jan 2024 17:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91879755FB;
+	Mon, 29 Jan 2024 17:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548600; cv=none; b=iZ62dyuf8HDUhtYmOIOZaFI2Pe6LFXAKIBArJIj3gCMDAg1tZ6sNMyMDoC6Eq1U69ic9awolfDQogDmQxDj81GeBUgpr9ulVJqtLM2Zt6OVTOYqPm0P/QmSpcx9F3OJyvBh6hK4KrtVKdoSsx7LIxTA2orEt3Er+pS6GM3jZ1R0=
+	t=1706548600; cv=none; b=UfWhpjJdm0B0+BZ7GAPlqkF6JmmZ8tyfeB9jxcovcmrzsL1TU/9TMyS2Wqpd2UV/TyDnrCvzRXUkHQuGG8Hlwlrq6VoTXyaIJ/KNkS+x1MroYuacJh+zS5MIPNK0urvODj9uM0jxx60+fRr73HJXHa1rHRqnlo6S+N/QpwtmhEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548600; c=relaxed/simple;
-	bh=HRstAD3rWayu2A92uT5HOoEZoscppgrEWJB4DJn0gjE=;
+	bh=PeSbk1mwBtahwZ5rXertr6lIVsJ4nteRGuONcQlQK0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnWKyj4oyAR1KSNMavB4qRSsbyP/0sWjDhARdPtaNYw/ZBDERCUq8Qjpqdxf/mhtyD72nW2PMDUieV8qijLIbCth6X1NzvCpw51B8KcVvpcRyRi/hEH5/oYnIffpdoOHiDLpRQAwR0BadigG92RxtbTwk9HONvkHZV9kVZanmE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwH1oTUr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kWs4/pQFQSM+wUUe3NnljH8kE1kGrQEkL3IGI6blYp9ohjLTHqtrMVrBss2ALgMXobB6/H6GhlPuGXMjEg8lzcq2Tbj6PnCJQR5DwjEoQUE1rBtwu7VRhlYTgWF6utawFjF8RXB6PswhVWpEVYiP/w3lIBeyO+2OXWZu8+WGFIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffIU9BxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwH1oTUr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96CBC433F1;
-	Mon, 29 Jan 2024 17:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffIU9BxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D84C433C7;
+	Mon, 29 Jan 2024 17:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548599;
-	bh=HRstAD3rWayu2A92uT5HOoEZoscppgrEWJB4DJn0gjE=;
+	s=korg; t=1706548600;
+	bh=PeSbk1mwBtahwZ5rXertr6lIVsJ4nteRGuONcQlQK0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KwH1oTUrDoug9zCIBwn/GO/lrjK3H4s1drroZ8vifBdC+hsTwBU9Nm8tAyQQix6Ah
-	 A9/+Jtp7kwJboTFGX5lCoHc2ikj89ijy204qH+AhVzCCXvSKfeF/m64YN+BBO+zTQI
-	 0dc/uBppZbU77lZaivbYzolZEKaFPN/fWmd5lqjU=
+	b=ffIU9BxEXQyXr9eAfObdWLIOJf8qu2+qA4vt3BrDuERdcpfrW0jK/5meZjyF9yKkU
+	 NO6L9j9PaHvw/c3jUggX3ntFq2v5C0eO1ie0eb/IwI+um5N+wnY2icDnCwZNSfhiVV
+	 FFxP3CRLsJicn1cBGgJLazirn+ZCK/EXuApafxsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nerdopolis <bluescreen_avenger@verizon.net>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Zack Rusin <zackr@vmware.com>,
-	Sima Vetter <daniel.vetter@ffwll.ch>
-Subject: [PATCH 6.6 261/331] drm: Allow drivers to indicate the damage helpers to ignore damage clips
-Date: Mon, 29 Jan 2024 09:05:25 -0800
-Message-ID: <20240129170022.513609134@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 262/331] drm/amd/display: fix bandwidth validation failure on DCN 2.1
+Date: Mon, 29 Jan 2024 09:05:26 -0800
+Message-ID: <20240129170022.538612945@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,80 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Melissa Wen <mwen@igalia.com>
 
-commit 35ed38d58257336c1df26b14fd5110b026e2adde upstream.
+commit 3a0fa3bc245ef92838a8296e0055569b8dff94c4 upstream.
 
-It allows drivers to set a struct drm_plane_state .ignore_damage_clips in
-their plane's .atomic_check callback, as an indication to damage helpers
-such as drm_atomic_helper_damage_iter_init() that the damage clips should
-be ignored.
+IGT `amdgpu/amd_color/crtc-lut-accuracy` fails right at the beginning of
+the test execution, during atomic check, because DC rejects the
+bandwidth state for a fb sizing 64x64. The test was previously working
+with the deprecated dc_commit_state(). Now using
+dc_validate_with_context() approach, the atomic check needs to perform a
+full state validation. Therefore, set fast_validation to false in the
+dc_validate_global_state call for atomic check.
 
-To be used by drivers that do per-buffer (e.g: virtio-gpu) uploads (rather
-than per-plane uploads), since these type of drivers need to handle buffer
-damages instead of frame damages.
-
-That way, these drivers could force a full plane update if the framebuffer
-attached to a plane's state has changed since the last update (page-flip).
-
-Fixes: 01f05940a9a7 ("drm/virtio: Enable fb damage clips property for the primary plane")
-Cc: <stable@vger.kernel.org> # v6.4+
-Reported-by: nerdopolis <bluescreen_avenger@verizon.net>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218115
-Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Acked-by: Sima Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231123221315.3579454-2-javierm@redhat.com
+Cc: stable@vger.kernel.org
+Fixes: b8272241ff9d ("drm/amd/display: Drop dc_commit_state in favor of dc_commit_streams")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/gpu/drm-kms.rst       |    2 ++
- drivers/gpu/drm/drm_damage_helper.c |    3 ++-
- include/drm/drm_plane.h             |   10 ++++++++++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/gpu/drm-kms.rst
-+++ b/Documentation/gpu/drm-kms.rst
-@@ -546,6 +546,8 @@ Plane Composition Properties
- .. kernel-doc:: drivers/gpu/drm/drm_blend.c
-    :doc: overview
- 
-+.. _damage_tracking_properties:
-+
- Damage Tracking Properties
- --------------------------
- 
---- a/drivers/gpu/drm/drm_damage_helper.c
-+++ b/drivers/gpu/drm/drm_damage_helper.c
-@@ -241,7 +241,8 @@ drm_atomic_helper_damage_iter_init(struc
- 	iter->plane_src.x2 = (src.x2 >> 16) + !!(src.x2 & 0xFFFF);
- 	iter->plane_src.y2 = (src.y2 >> 16) + !!(src.y2 & 0xFFFF);
- 
--	if (!iter->clips || !drm_rect_equals(&state->src, &old_state->src)) {
-+	if (!iter->clips || state->ignore_damage_clips ||
-+	    !drm_rect_equals(&state->src, &old_state->src)) {
- 		iter->clips = NULL;
- 		iter->num_clips = 0;
- 		iter->full_update = true;
---- a/include/drm/drm_plane.h
-+++ b/include/drm/drm_plane.h
-@@ -191,6 +191,16 @@ struct drm_plane_state {
- 	struct drm_property_blob *fb_damage_clips;
- 
- 	/**
-+	 * @ignore_damage_clips:
-+	 *
-+	 * Set by drivers to indicate the drm_atomic_helper_damage_iter_init()
-+	 * helper that the @fb_damage_clips blob property should be ignored.
-+	 *
-+	 * See :ref:`damage_tracking_properties` for more information.
-+	 */
-+	bool ignore_damage_clips;
-+
-+	/**
- 	 * @src:
- 	 *
- 	 * source coordinates of the plane (in 16.16).
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10400,7 +10400,7 @@ static int amdgpu_dm_atomic_check(struct
+ 			DRM_DEBUG_DRIVER("drm_dp_mst_atomic_check() failed\n");
+ 			goto fail;
+ 		}
+-		status = dc_validate_global_state(dc, dm_state->context, true);
++		status = dc_validate_global_state(dc, dm_state->context, false);
+ 		if (status != DC_OK) {
+ 			DRM_DEBUG_DRIVER("DC global validation failure: %s (%d)",
+ 				       dc_status_to_str(status), status);
 
 
