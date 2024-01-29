@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC6B15B30B;
-	Mon, 29 Jan 2024 17:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3D215B30A;
+	Mon, 29 Jan 2024 17:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548577; cv=none; b=nx7JYiZnrennR3YlU+9U0IqG48caEenb/zc+B5GUvyqbQTOM18oW78C333QkKz8tReoOkvNcibsW6QYuEQG+xtEDnChibSaQDnIq37UXmUWhC05ApVYd/W8oi9oS1YerO2TgcDPQNCkP9STp3er+xqy41Nmus7tHd4XDMvYAIPg=
+	t=1706548578; cv=none; b=qhzIWmWBnyOirXumgn/+/ibWLzetHNiREhBZk3RnOn/Ovx8N1XadW0bY/OyddLDaMa8AewJwgI+LTMdzpyhbXGEYAXHbW0/zIDPKIZODBMHUevlr4JRuG240+raHLpeSbKC1tVVrCNhP1aMEwcrWlly77fgVPGGNjMa+/imTaIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548577; c=relaxed/simple;
-	bh=QFx7fYET+7bKWz5GvU/ECdiWTP1YxjU4IqApbtIjHyQ=;
+	s=arc-20240116; t=1706548578; c=relaxed/simple;
+	bh=OJAq4vx5+gZuCinwLTbTJHAKkzxpFeghTk33iBbXKvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ca55AiCYEdvnz1YNwfczFyFfcDt4mOHKsluZIB2L4IyxndeI35EWy926V8vH6DBg0mSd2ILPpGIYb8gpp5rJoNckRNBLnULsMIBfetUmIZFZrc7BKDBPFs7z2tvL6qK2Khu7Hwb06fMKsG9VHNaqz9QcTW7s+UcPZdvKe4dCFkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMNPm/G7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T9LF0JqN9hE/8Fit7UsJ1psL2o+14XFwSEQMIOC3p0KAkvyFVNFJMjs+i33UC6VdCnlWHFwiV15qV79tzvthSy6MOWoWwWObfG42yIAMNi9vi3/am6cxUuPm+WCVHbp4qDRaqQ4JEqSEuvY82Ak7/hPudsHN1g8tUlqPcQJNxhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsLI3qML; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMNPm/G7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73641C43390;
-	Mon, 29 Jan 2024 17:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsLI3qML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C63C433F1;
+	Mon, 29 Jan 2024 17:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548577;
-	bh=QFx7fYET+7bKWz5GvU/ECdiWTP1YxjU4IqApbtIjHyQ=;
+	s=korg; t=1706548578;
+	bh=OJAq4vx5+gZuCinwLTbTJHAKkzxpFeghTk33iBbXKvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMNPm/G7+ewwlyo/8468DdKhea7mSVWF6v/VQh9UKfj/ixQ14i5GOZr5wCmVQIETl
-	 MS1tte7ZgjaJu/ORC2Tx/6zcSkANA6DwmflLg47E1qk78Dwxvcpgvcfq/Z2bVWokLL
-	 PhqD4bW1mAg3hdBR/sUfRN/uGusURtJjFdR3U+t4=
+	b=CsLI3qMLZrsF41r7JAQo9SAmbV7G6mjW1zgVLvcoUt/uuF4o8bPOFuNYQubUvateO
+	 TvtAtncqjMCZ39h2xKijyoUxwrBNnooRTMunwIqL1MNoYaidOED/Z3xOBDotNbQism
+	 T3tVUa+oBpGf/cY7LGXYOJwp+x6+MkePGh4UhoF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Anand Jain <anand.jain@oracle.com>,
+	Omar Sandoval <osandov@fb.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 231/331] btrfs: zoned: fix lock ordering in btrfs_zone_activate()
-Date: Mon, 29 Jan 2024 09:04:55 -0800
-Message-ID: <20240129170021.636912706@linuxfoundation.org>
+Subject: [PATCH 6.6 232/331] btrfs: avoid copying BTRFS_ROOT_SUBVOL_DEAD flag to snapshot of subvolume being deleted
+Date: Mon, 29 Jan 2024 09:04:56 -0800
+Message-ID: <20240129170021.664812894@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -50,99 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Omar Sandoval <osandov@fb.com>
 
-commit b18f3b60b35a8c01c9a2a0f0d6424c6d73971dc3 upstream.
+commit 3324d0547861b16cf436d54abba7052e0c8aa9de upstream.
 
-The btrfs CI reported a lockdep warning as follows by running generic
-generic/129.
+Sweet Tea spotted a race between subvolume deletion and snapshotting
+that can result in the root item for the snapshot having the
+BTRFS_ROOT_SUBVOL_DEAD flag set. The race is:
 
-   WARNING: possible circular locking dependency detected
-   6.7.0-rc5+ #1 Not tainted
-   ------------------------------------------------------
-   kworker/u5:5/793427 is trying to acquire lock:
-   ffff88813256d028 (&cache->lock){+.+.}-{2:2}, at: btrfs_zone_finish_one_bg+0x5e/0x130
-   but task is already holding lock:
-   ffff88810a23a318 (&fs_info->zone_active_bgs_lock){+.+.}-{2:2}, at: btrfs_zone_finish_one_bg+0x34/0x130
-   which lock already depends on the new lock.
+Thread 1                                      | Thread 2
+----------------------------------------------|----------
+btrfs_delete_subvolume                        |
+  btrfs_set_root_flags(BTRFS_ROOT_SUBVOL_DEAD)|
+                                              |btrfs_mksubvol
+                                              |  down_read(subvol_sem)
+                                              |  create_snapshot
+                                              |    ...
+                                              |    create_pending_snapshot
+                                              |      copy root item from source
+  down_write(subvol_sem)                      |
 
-   the existing dependency chain (in reverse order) is:
-   -> #1 (&fs_info->zone_active_bgs_lock){+.+.}-{2:2}:
-   ...
-   -> #0 (&cache->lock){+.+.}-{2:2}:
-   ...
+This flag is only checked in send and swap activate, which this would
+cause to fail mysteriously.
 
-This is because we take fs_info->zone_active_bgs_lock after a block_group's
-lock in btrfs_zone_activate() while doing the opposite in other places.
+create_snapshot() now checks the root refs to reject a deleted
+subvolume, so we can fix this by locking subvol_sem earlier so that the
+BTRFS_ROOT_SUBVOL_DEAD flag and the root refs are updated atomically.
 
-Fix the issue by expanding the fs_info->zone_active_bgs_lock's critical
-section and taking it before a block_group's lock.
-
-Fixes: a7e1ac7bdc5a ("btrfs: zoned: reserve zones for an active metadata/system block group")
-CC: stable@vger.kernel.org # 6.6
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+CC: stable@vger.kernel.org # 4.14+
+Reported-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Omar Sandoval <osandov@fb.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ fs/btrfs/inode.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1975,6 +1975,7 @@ bool btrfs_zone_activate(struct btrfs_bl
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4447,6 +4447,8 @@ int btrfs_delete_subvolume(struct btrfs_
+ 	u64 root_flags;
+ 	int ret;
  
- 	map = block_group->physical_map;
- 
-+	spin_lock(&fs_info->zone_active_bgs_lock);
- 	spin_lock(&block_group->lock);
- 	if (test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags)) {
- 		ret = true;
-@@ -1987,7 +1988,6 @@ bool btrfs_zone_activate(struct btrfs_bl
- 		goto out_unlock;
++	down_write(&fs_info->subvol_sem);
++
+ 	/*
+ 	 * Don't allow to delete a subvolume with send in progress. This is
+ 	 * inside the inode lock so the error handling that has to drop the bit
+@@ -4458,25 +4460,25 @@ int btrfs_delete_subvolume(struct btrfs_
+ 		btrfs_warn(fs_info,
+ 			   "attempt to delete subvolume %llu during send",
+ 			   dest->root_key.objectid);
+-		return -EPERM;
++		ret = -EPERM;
++		goto out_up_write;
  	}
- 
--	spin_lock(&fs_info->zone_active_bgs_lock);
- 	for (i = 0; i < map->num_stripes; i++) {
- 		struct btrfs_zoned_device_info *zinfo;
- 		int reserved = 0;
-@@ -2007,20 +2007,17 @@ bool btrfs_zone_activate(struct btrfs_bl
- 		 */
- 		if (atomic_read(&zinfo->active_zones_left) <= reserved) {
- 			ret = false;
--			spin_unlock(&fs_info->zone_active_bgs_lock);
- 			goto out_unlock;
- 		}
- 
- 		if (!btrfs_dev_set_active_zone(device, physical)) {
- 			/* Cannot activate the zone */
- 			ret = false;
--			spin_unlock(&fs_info->zone_active_bgs_lock);
- 			goto out_unlock;
- 		}
- 		if (!is_data)
- 			zinfo->reserved_active_zones--;
+ 	if (atomic_read(&dest->nr_swapfiles)) {
+ 		spin_unlock(&dest->root_item_lock);
+ 		btrfs_warn(fs_info,
+ 			   "attempt to delete subvolume %llu with active swapfile",
+ 			   root->root_key.objectid);
+-		return -EPERM;
++		ret = -EPERM;
++		goto out_up_write;
  	}
--	spin_unlock(&fs_info->zone_active_bgs_lock);
+ 	root_flags = btrfs_root_flags(&dest->root_item);
+ 	btrfs_set_root_flags(&dest->root_item,
+ 			     root_flags | BTRFS_ROOT_SUBVOL_DEAD);
+ 	spin_unlock(&dest->root_item_lock);
  
- 	/* Successfully activated all the zones */
- 	set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags);
-@@ -2028,8 +2025,6 @@ bool btrfs_zone_activate(struct btrfs_bl
- 
- 	/* For the active block group list */
- 	btrfs_get_block_group(block_group);
+-	down_write(&fs_info->subvol_sem);
 -
--	spin_lock(&fs_info->zone_active_bgs_lock);
- 	list_add_tail(&block_group->active_bg_list, &fs_info->zone_active_bgs);
- 	spin_unlock(&fs_info->zone_active_bgs_lock);
+ 	ret = may_destroy_subvol(dest);
+ 	if (ret)
+-		goto out_up_write;
++		goto out_undead;
  
-@@ -2037,6 +2032,7 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 	btrfs_init_block_rsv(&block_rsv, BTRFS_BLOCK_RSV_TEMP);
+ 	/*
+@@ -4486,7 +4488,7 @@ int btrfs_delete_subvolume(struct btrfs_
+ 	 */
+ 	ret = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
+ 	if (ret)
+-		goto out_up_write;
++		goto out_undead;
  
- out_unlock:
- 	spin_unlock(&block_group->lock);
-+	spin_unlock(&fs_info->zone_active_bgs_lock);
- 	return ret;
- }
- 
+ 	trans = btrfs_start_transaction(root, 0);
+ 	if (IS_ERR(trans)) {
+@@ -4552,15 +4554,17 @@ out_end_trans:
+ 	inode->i_flags |= S_DEAD;
+ out_release:
+ 	btrfs_subvolume_release_metadata(root, &block_rsv);
+-out_up_write:
+-	up_write(&fs_info->subvol_sem);
++out_undead:
+ 	if (ret) {
+ 		spin_lock(&dest->root_item_lock);
+ 		root_flags = btrfs_root_flags(&dest->root_item);
+ 		btrfs_set_root_flags(&dest->root_item,
+ 				root_flags & ~BTRFS_ROOT_SUBVOL_DEAD);
+ 		spin_unlock(&dest->root_item_lock);
+-	} else {
++	}
++out_up_write:
++	up_write(&fs_info->subvol_sem);
++	if (!ret) {
+ 		d_invalidate(dentry);
+ 		btrfs_prune_dentries(dest);
+ 		ASSERT(dest->send_in_progress == 0);
 
 
