@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F0D73722;
-	Mon, 29 Jan 2024 17:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6331273748;
+	Mon, 29 Jan 2024 17:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548542; cv=none; b=t6J2ekUd7r6a0EZQlLPqesvX4YuGOWNqio0LR1SWPDeN6k5vt0dCj1CiwKeJ1WVY0ywXU0vQR344lVXBHSX0vTzI5iP6IMYQdw+FuwJ4ZMPbqrs1l5qBF0KxUBjSWrxplYG4WwjoOMuHkswE6S7MbyVxtb7eKmERyDiUqn180x8=
+	t=1706548543; cv=none; b=IuuOpBas/0aiM709WiCNEmNZXXBZDf+BgYjBhfEizErnaA6QmI9t0ikTHFwtgQE7GWpZYnb0FTbekKB4WI+viQmOsgtI6IiosJLNxicC+Db14ZX0Q0BGiiIddLgfL+SmOa0iswHSKC1FAVHMSwGuSYjcmUSYNcbXSWX9R1S2rHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548542; c=relaxed/simple;
-	bh=FshGyPnN7aErYl27bI5K9dYuHZFSRpTDvLMp3IR9vGk=;
+	s=arc-20240116; t=1706548543; c=relaxed/simple;
+	bh=GfVrHMERLr/v5madS4hNMGRgMUYeU3eBSlwpnon1Wnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFj4FZiwIpX5FD7rDa9xf+ZIvf+KU4jy97SXNxukcX9ZSLocjxtTfsw3FM5xvGhT0nD0AFL8TuczLBsIE7EjabQofEmOY0l3m7d9SVVvP/g0we99tUeknKKdyM6oJ2IKA1/knZG+jWl2Chgpc7NI2GctILVEuDUiZuLEArOjJ0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SQF8oAp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqDfP83r/2ZI27/Z2olTCJ9dWg3xOmk3PO7DdbUE3h2aSf2yOV1lFA20xN1boRtxgzUFiXHCsM4y9GMnJ/i/VbSJa3xEjbSoHxb++CktGFwmJk4tNDhaI73zdbMuLTM4bcTXnq+FWK8MvBTtWinnI48CQjeRnKcbgZ1e5mDOtxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddJLhmia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SQF8oAp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB35C433C7;
-	Mon, 29 Jan 2024 17:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddJLhmia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D634C433C7;
+	Mon, 29 Jan 2024 17:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548542;
-	bh=FshGyPnN7aErYl27bI5K9dYuHZFSRpTDvLMp3IR9vGk=;
+	s=korg; t=1706548543;
+	bh=GfVrHMERLr/v5madS4hNMGRgMUYeU3eBSlwpnon1Wnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SQF8oAp6Zjtuls/T67OBjCCRPEVUM0vSVIA7ZNcka9QCu79VOjoXWsFbrIjjtval
-	 DvWI/a8DEjU367TIz9y7TWmcFbpnX8ZpeG1MdbeYT/jtWt5y/pHzZwTQhClE2kbR36
-	 6Qg3dktOw9AvTlQkL6UDg6fzi1SMnHVAUJrySnd4=
+	b=ddJLhmiaoUQ/wmkIsRdDf8zOjc8ZO5qbX/fUE2BK9O5yitOJBMXX02EptVJCgLWN0
+	 W5h5JHXNkNzv/+QcLZHy1HLrAtX3W1vR2idFtM2ILD4BzQblFzSOVWDdAQGHv/ImgV
+	 P9rJOmqf8l62n1C2hxDwJ4q3H/I22ScR3nRpmvOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	David Howells <dhowells@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 183/331] netfs, fscache: Prevent Oops in fscache_put_cache()
-Date: Mon, 29 Jan 2024 09:04:07 -0800
-Message-ID: <20240129170020.252484948@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 166/331] cifs: after disabling multichannel, mark tcon for reconnect
+Date: Mon, 29 Jan 2024 09:03:50 -0800
+Message-ID: <20240129170019.780116532@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,44 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 3be0b3ed1d76c6703b9ee482b55f7e01c369cc68 ]
+commit 27e1fd343f80168ff456785c2443136b6b7ca3cc upstream.
 
-This function dereferences "cache" and then checks if it's
-IS_ERR_OR_NULL().  Check first, then dereference.
+Once the server disables multichannel for an active multichannel
+session, on the following reconnect, the client would reduce
+the number of channels to 1. However, it could be the case that
+the tree connect was active on one of these disabled channels.
+This results in an unrecoverable state.
 
-Fixes: 9549332df4ed ("fscache: Implement cache registration")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/e84bc740-3502-4f16-982a-a40d5676615c@moroto.mountain/ # v2
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This change fixes that by making sure that whenever a channel
+is being terminated, the session and tcon are marked for
+reconnect too. This could mean a few redundant tree connect
+calls to the server, but considering that this is not a frequent
+event, we should be okay.
+
+Fixes: ee1d21794e55 ("cifs: handle when server stops supporting multichannel")
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fscache/cache.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/connect.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/fs/fscache/cache.c b/fs/fscache/cache.c
-index d645f8b302a2..9397ed39b0b4 100644
---- a/fs/fscache/cache.c
-+++ b/fs/fscache/cache.c
-@@ -179,13 +179,14 @@ EXPORT_SYMBOL(fscache_acquire_cache);
- void fscache_put_cache(struct fscache_cache *cache,
- 		       enum fscache_cache_trace where)
- {
--	unsigned int debug_id = cache->debug_id;
-+	unsigned int debug_id;
- 	bool zero;
- 	int ref;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -212,17 +212,21 @@ cifs_mark_tcp_ses_conns_for_reconnect(st
+ 	/* If server is a channel, select the primary channel */
+ 	pserver = SERVER_IS_CHAN(server) ? server->primary_server : server;
  
- 	if (IS_ERR_OR_NULL(cache))
- 		return;
++	/*
++	 * if the server has been marked for termination, there is a
++	 * chance that the remaining channels all need reconnect. To be
++	 * on the safer side, mark the session and trees for reconnect
++	 * for this scenario. This might cause a few redundant session
++	 * setup and tree connect requests, but it is better than not doing
++	 * a tree connect when needed, and all following requests failing
++	 */
++	if (server->terminate) {
++		mark_smb_session = true;
++		server = pserver;
++	}
  
-+	debug_id = cache->debug_id;
- 	zero = __refcount_dec_and_test(&cache->ref, &ref);
- 	trace_fscache_cache(debug_id, ref - 1, where);
- 
--- 
-2.43.0
-
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry_safe(ses, nses, &pserver->smb_ses_list, smb_ses_list) {
+-		/*
+-		 * if channel has been marked for termination, nothing to do
+-		 * for the channel. in fact, we cannot find the channel for the
+-		 * server. So safe to exit here
+-		 */
+-		if (server->terminate)
+-			break;
+-
+ 		/* check if iface is still active */
+ 		spin_lock(&ses->chan_lock);
+ 		if (!cifs_chan_is_iface_active(ses, server)) {
 
 
