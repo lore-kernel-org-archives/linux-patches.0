@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED92F157E8F;
-	Mon, 29 Jan 2024 17:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77641586C5;
+	Mon, 29 Jan 2024 17:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548369; cv=none; b=fb3QPJei3Fc0VkSXLIWqBYjkfAVDUS23nTF6gbqDq9GVg2xi7c/kT0u7SwIN/5FS6lhcneGdDc4DXnEDK2If25/bTPYuBrPymc+aZYhHcgexMA7w58Tiif/Dzz7weVkxGLs2ct5W4pw+Cm3dVOZQoy8ZyLgoRMXKc7QbuJLL7ZI=
+	t=1706548369; cv=none; b=aHAdYSfVEomZHy3kvni3dERqiC3h8T25FoZknFCWTocSRE8bkTh/Gk3JACsppu8V/znbnoHZtTi5gSDUKP7ThkJpqhog7njfWa0bCGirFUWUWI3DgzteVfcsW2QpJ4Q1mMQ2oHEoh+THcvQaN4yYGDpugvgF7DDFpqQ4L0Wb3Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548369; c=relaxed/simple;
-	bh=6Z04K6aHUKd3bZVwHEnwzXd3hJiCzgcXazFzucZPU/w=;
+	bh=15fiWpRmpKzFokUdTX76aQ2x+VsnsfxwmHRNqhrzC2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZx0oMD9XghpQL7H9BmygPKyDWddo6Q3TWMmTYwcSXCxZlPNZZEOIpV7k8E4B/CLZZMa4lhz0VqDAUfFx4LM3u3b1HtAPl1KNmsQ9eG77QSI6dAVb3JyEHPpMTmcbXcrEjsyx+2wyNccoX+5ZjfsKPL+UcNIqBYdXVRZ4sdkUBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibldvs+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aiPf+jpKzT612xJjfOkCDyZWai57UrVyVKLHe5TiavxmhrgxXeSUXxeNNEZZCJHrr1khhRM5LvgtDSAxM9tajdlrI57wCFNiioPxijiBos90A01LbinhcB2TavZ8k4QgyiK7nydCzSdSm6QTbwMsZteT/uTaMdkxFOme41DPauE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4W9BXll; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibldvs+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5410C43390;
-	Mon, 29 Jan 2024 17:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4W9BXll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F721C433C7;
+	Mon, 29 Jan 2024 17:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548368;
-	bh=6Z04K6aHUKd3bZVwHEnwzXd3hJiCzgcXazFzucZPU/w=;
+	s=korg; t=1706548369;
+	bh=15fiWpRmpKzFokUdTX76aQ2x+VsnsfxwmHRNqhrzC2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ibldvs+0ZixRVPuaFxXryubRiJf2hKOsSgRiV4ZJkj8X/9CiZ2xZhCrhcM80+dNq0
-	 3PJzsrghBICFZNDYj5ZZhbiHtpp+EEDOs+fzdaeKrRGyEZpi1Yj/xeXbqhNNjQ0e4a
-	 TLMwDRFQaqX2+YzzvTEAnYOeuXJRzour3B77wQaY=
+	b=L4W9BXllNikgUJNpcxf67HQ2anzRp/9lVoCWx/ORG2WLrv7Ao1YUeMXzIEM3o4BDU
+	 yiSBUQtaWkYxFbxEfmNdwFNr9GtnZZ4bEvlXFZF2Z429RI1NKE4HRcJekZC/n58R/S
+	 tNL9nEl906MwRCc5N0oOMSacSG4aY2rLlKWhmua8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 6.1 134/185] drm/bridge: nxp-ptn3460: fix i2c_master_send() error checking
-Date: Mon, 29 Jan 2024 09:05:34 -0800
-Message-ID: <20240129170002.896582027@linuxfoundation.org>
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 6.1 135/185] drm/tidss: Fix atomic_flush check
+Date: Mon, 29 Jan 2024 09:05:35 -0800
+Message-ID: <20240129170002.928928337@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -50,58 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 914437992876838662c968cb416f832110fb1093 upstream.
+commit 95d4b471953411854f9c80b568da7fcf753f3801 upstream.
 
-The i2c_master_send/recv() functions return negative error codes or the
-number of bytes that were able to be sent/received.  This code has
-two problems.  1)  Instead of checking if all the bytes were sent or
-received, it checks that at least one byte was sent or received.
-2) If there was a partial send/receive then we should return a negative
-error code but this code returns success.
+tidss_crtc_atomic_flush() checks if the crtc is enabled, and if not,
+returns immediately as there's no reason to do any register changes.
 
-Fixes: a9fe713d7d45 ("drm/bridge: Add PTN3460 bridge driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/0cdc2dce-ca89-451a-9774-1482ab2f4762@moroto.mountain
+However, the code checks for 'crtc->state->enable', which does not
+reflect the actual HW state. We should instead look at the
+'crtc->state->active' flag.
+
+This causes the tidss_crtc_atomic_flush() to proceed with the flush even
+if the active state is false, which then causes us to hit the
+WARN_ON(!crtc->state->event) check.
+
+Fix this by checking the active flag, and while at it, fix the related
+debug print which had "active" and "needs modeset" wrong way.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-10-ac91b5ea35c0@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/nxp-ptn3460.c |   10 +++++-----
+ drivers/gpu/drm/tidss/tidss_crtc.c |   10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/bridge/nxp-ptn3460.c
-+++ b/drivers/gpu/drm/bridge/nxp-ptn3460.c
-@@ -56,13 +56,13 @@ static int ptn3460_read_bytes(struct ptn
- 	ret = i2c_master_send(ptn_bridge->client, &addr, 1);
- 	if (ret <= 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret;
-+		return ret ?: -EIO;
- 	}
+--- a/drivers/gpu/drm/tidss/tidss_crtc.c
++++ b/drivers/gpu/drm/tidss/tidss_crtc.c
+@@ -170,13 +170,13 @@ static void tidss_crtc_atomic_flush(stru
+ 	struct tidss_device *tidss = to_tidss(ddev);
+ 	unsigned long flags;
  
- 	ret = i2c_master_recv(ptn_bridge->client, buf, len);
--	if (ret <= 0) {
-+	if (ret != len) {
- 		DRM_ERROR("Failed to recv i2c data, ret=%d\n", ret);
--		return ret;
-+		return ret < 0 ? ret : -EIO;
- 	}
+-	dev_dbg(ddev->dev,
+-		"%s: %s enabled %d, needs modeset %d, event %p\n", __func__,
+-		crtc->name, drm_atomic_crtc_needs_modeset(crtc->state),
+-		crtc->state->enable, crtc->state->event);
++	dev_dbg(ddev->dev, "%s: %s is %sactive, %s modeset, event %p\n",
++		__func__, crtc->name, crtc->state->active ? "" : "not ",
++		drm_atomic_crtc_needs_modeset(crtc->state) ? "needs" : "doesn't need",
++		crtc->state->event);
  
- 	return 0;
-@@ -78,9 +78,9 @@ static int ptn3460_write_byte(struct ptn
- 	buf[1] = val;
+ 	/* There is nothing to do if CRTC is not going to be enabled. */
+-	if (!crtc->state->enable)
++	if (!crtc->state->active)
+ 		return;
  
- 	ret = i2c_master_send(ptn_bridge->client, buf, ARRAY_SIZE(buf));
--	if (ret <= 0) {
-+	if (ret != ARRAY_SIZE(buf)) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret;
-+		return ret < 0 ? ret : -EIO;
- 	}
- 
- 	return 0;
+ 	/*
 
 
