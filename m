@@ -1,223 +1,219 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8E910A14
-	for <patches@lists.linux.dev>; Mon, 29 Jan 2024 04:01:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706500885; cv=fail; b=OVTdA9LN/o2wEjjX7nviMRbEONKBzhGDBkyVIcA0E5ZU0lpRlqCY06UMHyItVWxakmnKGLhhPGe2cFEOC0V21TB8a07bj2/brRWnN9sen+dZiQL8nANYcA+i0ZSVhGApPS66MNfLvAebWzYKSkh9cvuVc07utEdtmAJpzngrTD0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706500885; c=relaxed/simple;
-	bh=ynGo1Cm27aMnyC8VjM34K10vTlbR0R5t/D8/mD1gF8E=;
-	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=qO2snnsWXmOmzDcvvwffS4XS9Q2Wp8Sj8JjXE41SYkQ+PdFh/04UFZrI5D+GXd1T++Cx7rgYWnWQfnR++VojOj7iHUCc2uuKlhDmLALvizEDrzPTmd7h6dRtx9tEjdevqFqwE2yiVv3Pk6qO9PbrtVpI+hLEnWjwLnf/MxIBL60=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JKw8erxu; arc=fail smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JKw8erxu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706500884; x=1738036884;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=ynGo1Cm27aMnyC8VjM34K10vTlbR0R5t/D8/mD1gF8E=;
-  b=JKw8erxuxwOEpN0hpdeZSDrittjjOkf26908a2JRAVP7foUEB699Vpsm
-   SjJB7x/PkJBILLjDvuan5DY6uDvM5bAzjKebxowrfbtBH2RsLjDO20azv
-   /u4sm858tS8hnO8xI/GRP1THmQmskvK9etlGyZ+nqKJA8l2HR2ywW+Jdi
-   lZbTrkZeKgsDGaB27ukQDHOShtGBCKMgyasMyP4kqVdwHHiXkFer4DdIb
-   PkQ0fIGXBxto8V8Ew9OiAktorbCTWBiZgmX6Xnoo6q4riXRWur2lJYZwF
-   1KGlFFqmGedMwHnypZf2UCM8go0s/Ka67+H9iBKPqSmqOxnMkfdbMH8VZ
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10967"; a="2731823"
-X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; 
-   d="scan'208";a="2731823"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jan 2024 20:01:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; 
-   d="scan'208";a="3328501"
-Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
-  by orviesa004.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 28 Jan 2024 20:01:22 -0800
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Sun, 28 Jan 2024 20:01:21 -0800
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Sun, 28 Jan 2024 20:01:21 -0800
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Sun, 28 Jan 2024 20:01:21 -0800
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
- by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Sun, 28 Jan 2024 20:01:21 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b3DMebeduyK2Wi5OumJishoP8VGgp0QomFHF0d8QduMvTeTLuYL4tDRIfzUs7nS3kQSrKHWqxWsalijouqBcJWPjY0FK8+u4gbJr+61FdmoErbyx2aaCzGw5vnrSjlP08OMjfD64jaTpPkNU3317NkxQj4s9nt802TQfrUTK+BrDeDsixanYgDNb42kl7e94gzbp4abegmcnuqiVlLkVK8kxNVlAhY0WrodStCopfo6fHdaZNqeTdKQQ6fOguaN3JpwrtZNNQGdL58bfLOam6RXijp4bpR87OWhPKyoLkN+gMuYQaQKn2zYUbLESqA5uEaXU+n/2z2lMjwqqe7keAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mWbIlmvQl34G2GvkC6C0G0fihG8yeS3iPSAcjC1rYQE=;
- b=cAHoQr45DMZSIDHajnTQXA20HcQ2AZte9/+aE1nH2vEZF0e9pMTBvPOf+hiQHwzpV4hQ+u+oJpO3adPNrH9JWLZb0sjqpZgyrRSa9yQFH47YW1j+BH+ylwu8lelpohS0Vcg0H27hL98tOZknVXbHVKOMXkpzEe/FW9HJw0qlAxVD4aE8Eah6/q/ZajcmEdGpkptb29hxGtJCQuc3N0qL0PbuhLOAfpPOVuVyxWuyW9aJtroCEi8tRfjnmRrWT5ibKcwNi5BFfgQ8YsUVa2J8kaGpP+FwvR3GC3YdxQvEySzxo74cgwEZiUmpx9kCNT9nYHc360gKFZ6IDYTaMzDbOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH0PR11MB4839.namprd11.prod.outlook.com (2603:10b6:510:42::18)
- by MN6PR11MB8219.namprd11.prod.outlook.com (2603:10b6:208:471::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.32; Mon, 29 Jan
- 2024 04:01:18 +0000
-Received: from PH0PR11MB4839.namprd11.prod.outlook.com
- ([fe80::8cc7:6be8:dd32:a9e5]) by PH0PR11MB4839.namprd11.prod.outlook.com
- ([fe80::8cc7:6be8:dd32:a9e5%4]) with mapi id 15.20.7228.029; Mon, 29 Jan 2024
- 04:01:18 +0000
-Date: Mon, 29 Jan 2024 11:55:58 +0800
-From: Pengfei Xu <pengfei.xu@intel.com>
-To: Hans de Goede <hdegoede@redhat.com>
-CC: Ashok Raj <ashok.raj@intel.com>, Ilpo Jarvinen
-	<ilpo.jarvinen@linux.intel.com>, <markgross@kernel.org>, Jithu Joseph
-	<jithu.joseph@intel.com>, <rostedt@goodmis.org>, <tony.luck@intel.com>, LKML
-	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
-	<patches@lists.linux.dev>, <stable@vger.kernel.org>,
-	<gregkh@linuxfoundation.org>, <heng.su@intel.com>
-Subject: Re: [PATCH 1/5] platform/x86/intel/ifs: Call release_firmware() when
- handling errors.
-Message-ID: <ZbchziXFXPvIWP4s@xpf.sh.intel.com>
-References: <20240125082254.424859-1-ashok.raj@intel.com>
- <20240125082254.424859-2-ashok.raj@intel.com>
- <4e360838-36a9-41c0-a1d5-f369ed78cf04@redhat.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <4e360838-36a9-41c0-a1d5-f369ed78cf04@redhat.com>
-X-ClientProxiedBy: SI2PR06CA0017.apcprd06.prod.outlook.com
- (2603:1096:4:186::15) To PH0PR11MB4839.namprd11.prod.outlook.com
- (2603:10b6:510:42::18)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CDB4EB3B
+	for <patches@lists.linux.dev>; Mon, 29 Jan 2024 06:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706510695; cv=none; b=UcYzilQm4MzJ9u5cLpQXt9JbBC1YS6QvftbP5ixQ3Z8pFQd9/XZs46I21EXbl2D38RsejIT2KFl3U/14GijDvJwCCqmy1WtMTMOxd9nxQQqhcUMRy6gXhaSqZplOa0Gaesn/RiX3GCwcmjUgxDbmfO7YE+kXcN8qohLZmJL/lxk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706510695; c=relaxed/simple;
+	bh=wJJf+KFUMKaPushYnI0iEsDLec20GKo1a88Dd4q4xtY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HvUmcR+vtwFJgYAwHRkuhDS26RxhaGFz7/wu+7+L6RH9iiKHW7GS/M2bsm2+DWLQT8oFJSzyqoqHd5WtOKMctcIrAsSOQsLEzwLb59KPV80ra28bBWoUUs5CU/+501tK245aYufEdrbOkIN1xS0bR2oE5WhP7F7q1YLX+XoqfFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-33ae7ae1c32so781506f8f.3
+        for <patches@lists.linux.dev>; Sun, 28 Jan 2024 22:44:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706510692; x=1707115492;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eZRDgAq7BSDnYtXGdfWlVtUHvwFxKjEHyOIslyUr4/g=;
+        b=pCUrR33kDCbNUdNwGPt1IZtv8N79zRaHi1QV6/eiRteaYrClfzWx1FceGUPP7bQ5mw
+         vRrYy9vSlnkllTYAiL2s35asf8kb/UqyR8LDU+lslBDh8KWzrNk8JEf1CL/fGcBpqu1W
+         6l8ATjSQM3FAZF3vmNYEZX2OyzLcTd/8yf5Y0dSR6AHoxp61KuqLCb8YBes70ROyTVXA
+         ZTCcm3Q9lY8nOVwPOfMgDOfCXkSNgzxFCB0PoQlO/iuCm47Iuh5RDo4+ZkrxagHG+1LA
+         qLGkIHj3JUYzDR+RvaR484aT8cPHA+SchlAToUszcHk0GcI0HVBtm8WeeLa+bv8Hrg5p
+         aiiA==
+X-Gm-Message-State: AOJu0YwQKgC0AfUEOQhFkxhclSwnOCy7iQ2BpytFzSD8VXKHslJP3sDv
+	DdSrZy3BLK5L2a+SNKwO5hREYbKZQhi+ekvO+M3FASDw0B2oOHWU
+X-Google-Smtp-Source: AGHT+IE/n56O95sMjzT0zoeRu6FWBuxYMAw65pFymDFH4iXVYbIEDvM+/qZ+jXKU119w3vM1hMs4dA==
+X-Received: by 2002:adf:f8c5:0:b0:33a:f4b4:8013 with SMTP id f5-20020adff8c5000000b0033af4b48013mr59277wrq.36.1706510691695;
+        Sun, 28 Jan 2024 22:44:51 -0800 (PST)
+Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:59? ([2a0b:e7c0:0:107::aaaa:59])
+        by smtp.gmail.com with ESMTPSA id ba1-20020a0560001c0100b0033ae593e830sm4567733wrb.23.2024.01.28.22.44.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 28 Jan 2024 22:44:51 -0800 (PST)
+Message-ID: <9fc00f54-24d5-44a6-a690-d4f73c37caa1@kernel.org>
+Date: Mon, 29 Jan 2024 07:44:50 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR11MB4839:EE_|MN6PR11MB8219:EE_
-X-MS-Office365-Filtering-Correlation-Id: ce7cfc6d-a2a1-49e0-727f-08dc207ef27a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 9lhkHKH66xKUZ1xUgRPh5WMcDrZEKDWtD7v4X1z62EnqgVjKtL4OxyBg0nP0sXMck4qBaHHhilvkNJ5QMjw94E1UGNn0hMT+qxPAdrOzfcPwgUPkHnQf9tWVwROu8txTalU3f5CKYqv1dNWJnLwrVaAf5ZrcwvT/dvzRByBtXt4C/7vh990aH/XrmXQ6ouh+c1Ighjigo+i6ieQcSRjdr1Brrpga4mFO4zopTH7NXGuWMi0PgRfpmCidNzJTysucyLJpc54gvn45OHPx+zwZp7xpG+9rgolmXdk+HzwiABCwT7k5Rul2fsCLiDOUxP+4RlFYfg05DuMtfodOk0zRQ8/mbhvRJ0aaCkSAbavi0dZO5qJPTDBN+n7Y8bN+K4TvxpCcaf5IhHvP+xWMt2FTVdTW+5+2qZT+HsJcnaZvLUtCra7UbnLOMU2kTG4GXUi3WIauCmfARFjfb8f0hz8QPLSolFqxmffg3NCpvdgkKNH3xXd1ASBdx5RjPRwF8LQ46AlFJdT9xZPe8lzFMEW1qlceo7CydIrBCM+P0KXbPkQ=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB4839.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(376002)(366004)(136003)(346002)(396003)(230922051799003)(186009)(451199024)(1800799012)(64100799003)(41300700001)(6512007)(478600001)(53546011)(6506007)(6666004)(83380400001)(26005)(44832011)(4326008)(8676002)(8936002)(5660300002)(2906002)(966005)(6486002)(6916009)(54906003)(66476007)(66556008)(66946007)(316002)(86362001)(82960400001)(38100700002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RjnjEXHsheFkVGZM/t/hAFTLWFdpSiMh4FVhOuHi3RJmHsK06XnQuKHP1Os7?=
- =?us-ascii?Q?ayGhbb4pymVjQkKIu6YJ0kkE7X0l2v9c4n4Dlm/gmOsQvjZhdx1mY679TsQZ?=
- =?us-ascii?Q?My8aCbfAfkU0Qkn8oqjr0fLnKh2Rlx5swnYkvr5XdyRc02HyToBM70QhzFqo?=
- =?us-ascii?Q?qBBghMklFsKI5WqiNG+TAM/bwFA/jMqAGmuqkHSEPoZUrnsiKiqjmCk3LB/U?=
- =?us-ascii?Q?QEhA8Aku9nAefQBKJXGFJqPZpg+eLedDuE5uBGIKZOG2Haxm7cfy+UrDaLhg?=
- =?us-ascii?Q?ItKwZJKon9W2/ymC4ZfhaCP5ZzhXQHFg1+gbiryx4pUw8E3jnAZxqt9VSAzq?=
- =?us-ascii?Q?kaDvPdECoyfEcVzGzOobKEsGItK/a+tmyVgnHWfniDADc+DynEodgYM887rV?=
- =?us-ascii?Q?ffNNmmc/amvJPq2fGAH1sdJTW4gpzZ0nGbi3uEJnfLiTPsF5ezDxKMP2+qTj?=
- =?us-ascii?Q?5eAAquc0X41ATEHBlG+lioIPYwTwpveh/rVqVsQlruhzW38riv+w3cSxamHG?=
- =?us-ascii?Q?AGJpOpKdmXTXPvS43HELgiLvLECNujWM9ubiWZwnDNaBZg9w3USwfgtnW6uw?=
- =?us-ascii?Q?gVlerEb/AKicH60kJx9NtAmlsM5VPC520jzIk+cd02MYh0lKe9uuz1fJbrG1?=
- =?us-ascii?Q?i5nuXVlQV2LaWBknqEOWurSfVzBkrbQjnI5PBTJIG3KMvFqan7U3KGh1+LUJ?=
- =?us-ascii?Q?kNm4lKXrA19iCd/0ttS9+TZtWnUexs9D4HKYY/DstvsSIVmGomOUVkUX/wEH?=
- =?us-ascii?Q?NdeLq/g/1I0UnCQrkG/vgLXizhX4spvBGwyPOdYYNaE+f0JcpvXCL7XURaQE?=
- =?us-ascii?Q?nhlP/eOdcBFXxrkMXkk7GG/CW6yWYcrxhvhmDfrKun51pvdaA1k8bSe3nfTB?=
- =?us-ascii?Q?jiApgGkl4lTPzdW2AI9rjQi0jPvQ4auG3855a7hTVKRM9f+1RxELPip/JLfD?=
- =?us-ascii?Q?OIMaHwP78O5QmxHUuOdukAYW2fdy3OAWIfHHbb5tCaKx+Njuxbc/Ftxm21gC?=
- =?us-ascii?Q?XznW+98/gPRVttqabO5NxrkOIibkFW1KhPk0CUdwxYHMKp3rH2abthQc6lqX?=
- =?us-ascii?Q?/ufoTP8xo03aPwRYsneemcd/vBSvDpZNSiPtTuce7YyKlyLLtahUjo2LzDSF?=
- =?us-ascii?Q?5ls74AsMFwf5xiz5chtC37rLHW8TvfBIN77bnjwi7OFvnBLfCHoknruvRTaP?=
- =?us-ascii?Q?pjKQftzQI72ZRVVZyma1yBH9YAn60azlMBpLgHQ/Kbm+P4UaIkXImVtJhqFK?=
- =?us-ascii?Q?9uR4EDLJzCLrQ0ltx2kDAjjfxM/XsOhxHhWuQSSK+yzIUddow4AiQoPtYmKA?=
- =?us-ascii?Q?mSFNaj+6qeEArJIMxabNBRjCMj1oh94f8SGJThyTju4zAz06Owz9fwKgcQxf?=
- =?us-ascii?Q?C17MPxbXgyxTx51P5+tCvmPVPTm3nduZr665AMWEtab2gpAHk6buTorIvknp?=
- =?us-ascii?Q?D0z369q+/d4v8wxIvGgQuw5SdGeAc+8xY2ALDZ0NGJWR0fhrY+KqBjy8i4yP?=
- =?us-ascii?Q?U2u4G7Q/xijxHyBIcfqE5FytVI2ezxJBAQLvuqaPm39DeVWHpWL2D1xAhuQg?=
- =?us-ascii?Q?qD++8w42ks8xlyZmlZskEp4Zc51lKYR7pp06XY2j?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce7cfc6d-a2a1-49e0-727f-08dc207ef27a
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB4839.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jan 2024 04:01:18.7039
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: orIHmSqExT1z0E3dMU3cFG5Z/qHzjGIn8JVDGtUEi8WqywAHv1QzDXdfZMxb5OjC1dilOr0UeFxjCgVGCr2/Og==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR11MB8219
-X-OriginatorOrg: intel.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.7 427/641] io_uring: dont check iopoll if request
+ completes
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Pavel Begunkov <asml.silence@gmail.com>,
+ Jens Axboe <axboe@kernel.dk>
+References: <20240122235818.091081209@linuxfoundation.org>
+ <20240122235831.353232285@linuxfoundation.org>
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20240122235831.353232285@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2024-01-26 at 20:15:46 +0100, Hans de Goede wrote:
-> Hi,
-> 
-> On 1/25/24 09:22, Ashok Raj wrote:
-> > From: Jithu Joseph <jithu.joseph@intel.com>
-> > 
-> > Missing release_firmware() due to error handling blocked any future image
-> > loading.
-> > 
-> > Fix the return code and release_fiwmare() to release the bad image.
-> > 
-> > Fixes: 25a76dbb36dd ("platform/x86/intel/ifs: Validate image size")
-> > Reported-by: Pengfei Xu <pengfei.xu@intel.com>
-> > Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-> > Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-> > Tested-by: Pengfei Xu <pengfei.xu@intel.com>
-> > Reviewed-by: Tony Luck <tony.luck@intel.com>
-> 
-> Thank you for your patch/series, I've applied this patch
-> (series) to my review-hans branch:
-> https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/log/?h=review-hans
-> 
-> Note it will show up in the pdx86 review-hans branch once I've
-> pushed my local branch there, which might take a while.
-> 
-> I will include this patch in my next fixes pull-req to Linus
-> for the current kernel development cycle.
-> 
+On 23. 01. 24, 0:55, Greg Kroah-Hartman wrote:
+> 6.7-stable review patch.  If anyone has any objections, please let me know.
 
-FYR.
+Hi,
 
-[ CC stable@vger.kernel.org ]
-Missed CC: Stable Tag.
+6.7.2 fails in liburing tests (both x64 and x86-32 lib on x64 kernel):
+[  115s] Tests failed (5): <fd-pass.t> <msg-ring-overflow.t> 
+<pipe-bug.t> <poll-race-mshot.t> <reg-hint.t>
 
-This (follow-up) patch is now upstream into v6.7-rc1:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=25a76dbb36dd
+I cannot reproduce locally, that happens only in openSUSE build 
+machinery (the errors are transient, the links might not be valid in the 
+future):
+https://build.opensuse.org/package/live_build_log/openSUSE:Factory:Staging:H/liburing/standard/i586
+https://build.opensuse.org/package/live_build_log/openSUSE:Factory:Staging:H/liburing/standard/x86_64
 
-Looks like linux-6.7.y needs the above fixed patch too.
+So I cannot tell if 6.8-rc is affected.
 
+I suspect one of the 6.7.2 uring changes:
+e24bf5b47a57 io_uring: adjust defer tw counting
+22eed9134509 io_uring: ensure local task_work is run on wait timeout
+ba8d8a8a36b2 io_uring/rw: ensure io->bytes_done is always initialized
+d413a342275d io_uring: don't check iopoll if request completes
 
-Best Regards,
-Thanks!
+It looks like EINVAL is received unexpectedly (see below). Any ideas?
+
+The tests' failures:
+
+[   53s] Running test fd-pass.t 
+     msg_ring failed -22
+[   53s] test failed 0 2
+[   53s] msg_ring failed -22
+[   53s] test failed 1 1
+[   53s] msg_ring failed -22
+[   53s] test failed 1 0
+[   53s] io_uring_register_file_alloc_range -22
+[   53s] test failed 1 ALLOC
+[   53s] Test fd-pass.t failed with ret 1
 
 
-> Regards,
+
+[   65s] Running test msg-ring-overflow.t 
+     Destination ring create failed -22
+[   65s] test defer failed
+[   65s] Test msg-ring-overflow.t failed with ret 1
+
+
+
+[   75s] Running test pipe-bug.t 
+     pipe-bug.c:73 io_uring_wait_cqe_timeout(&ring, &cqe, &to) == 0 failed
+[   75s] Test pipe-bug.t failed with ret 1
+
+
+
+[   76s] Running test poll-race-mshot.t 
+     Bad cqe res 0
+[   76s] Bad cqe res 0
+[   76s] Bad cqe res 0
+[   76s] Bad cqe res 0
+[   76s] Bad cqe res 0
+... a lot of these
+[   76s] Bad cqe res 0
+[   76s] Bad cqe res 0
+[   76s] Bad cqe res 0
+[   76s] Bad cqe res 0
+[   76s] Only got 1 requests
+[   76s] Test mshot failed loop 0
+[   76s] Test poll-race-mshot.t failed with ret 1
+
+
+
+[   84s] Running test reg-hint.t 
+     Bad CQE res: -22
+[   84s] Test reg-hint.t failed with ret 1
+
+> From: Pavel Begunkov <asml.silence@gmail.com>
 > 
-> Hans
+> commit 9b43ef3d52532a0175ed6654618f7db61d390d2e upstream.
+> 
+> IOPOLL request should never return IOU_OK, so the following iopoll
+> queueing check in io_issue_sqe() after getting IOU_OK doesn't make any
+> sense as would never turn true. Let's optimise on that and return a bit
+> earlier. It's also much more resilient to potential bugs from
+> mischieving iopoll implementations.
+> 
+> Cc:  <stable@vger.kernel.org>
+> Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+> Link: https://lore.kernel.org/r/2f8690e2fa5213a2ff292fac29a7143c036cdd60.1701390926.git.asml.silence@gmail.com
+> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   io_uring/io_uring.c |    6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> --- a/io_uring/io_uring.c
+> +++ b/io_uring/io_uring.c
+> @@ -1898,7 +1898,11 @@ static int io_issue_sqe(struct io_kiocb
+>   			io_req_complete_defer(req);
+>   		else
+>   			io_req_complete_post(req, issue_flags);
+> -	} else if (ret != IOU_ISSUE_SKIP_COMPLETE)
+> +
+> +		return 0;
+> +	}
+> +
+> +	if (ret != IOU_ISSUE_SKIP_COMPLETE)
+>   		return ret;
+>   
+>   	/* If the op doesn't have a file, we're not polling for it */
 > 
 > 
 > 
-> 
-> > ---
-> >  drivers/platform/x86/intel/ifs/load.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
-> > index a1ee1a74fc3c..2cf3b4a8813f 100644
-> > --- a/drivers/platform/x86/intel/ifs/load.c
-> > +++ b/drivers/platform/x86/intel/ifs/load.c
-> > @@ -399,7 +399,8 @@ int ifs_load_firmware(struct device *dev)
-> >  	if (fw->size != expected_size) {
-> >  		dev_err(dev, "File size mismatch (expected %u, actual %zu). Corrupted IFS image.\n",
-> >  			expected_size, fw->size);
-> > -		return -EINVAL;
-> > +		ret = -EINVAL;
-> > +		goto release;
-> >  	}
-> >  
-> >  	ret = image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
-> 
+
+-- 
+js
+suse labs
+
