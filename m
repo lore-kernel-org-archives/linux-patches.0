@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2F56166D;
-	Mon, 29 Jan 2024 17:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A49A15A4BA;
+	Mon, 29 Jan 2024 17:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548068; cv=none; b=ZELuwXy+4kepJdxVgaeSSAmRt8Tmd2YkRCgOBBzrfJRwOPKoHgcJo4FVuTvNsWnZLtu9mwCPmQmT5XuZAIj1qvmsWafuTmKlDbB3rJ12dTMMqI+YxgL22O6FuMDxpjx5nM5nFZ9wR2qGvQC6TItEdXspNIyItMt2HuuzPW3Cyk0=
+	t=1706548068; cv=none; b=pOKD4j9DhK4ovHbbsVhCch+G/coguDmVPYO/9af5L8/zkPdKyBCOWZCQgE50hK/jjO9vVJZ/gmKOkCh1y/CIbUad+9UvBDYXH3vORX8LPY8XWoStGIYCHRk135/0zPCiYILoQVn/elw/NdmsX6ThkPDX0XiDPmwAjs2yfSGXRT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548068; c=relaxed/simple;
-	bh=nEsdTO+fvEaW0AKAjHLZHsn178KAY5QEIhKTZLVo7L8=;
+	bh=GFg130xJ+I3aRG94ZiuPIikc7fht608nHelwttJmRPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGsSKZKrG5+kkS89i7ybUfIod7e9DpSZ6XN0mOswW9Lx29maKCa4oH7IJM4XV2I2X06cZJ4Om4dpD02vzwXAP8EqgFe/git8HLi73m7ao9asLuTSOYMiQYoNDqgeqkH6YWv/rTjDUib9q2wYUub+ibgLoXOUwrMQa4ktBxS+ooE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qiqj4ipx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nWnqoEsxJ+ZuxVYgZFwqEcSfsE6NMZ6/TbAQoFwzIUuBazASefYyJUxQLNMLOpL3EjfHrpMti1ZhLbHam1l6qBV6Lz3iT9XSzGc6wYqAtiz5Q4MBcT4bQK8hrt+gUGph7B5htSoA+hrq7UzDjngtoJYiRh5t0alOZ7i4Y5fIjOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPNDcVBZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qiqj4ipx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515E4C433F1;
-	Mon, 29 Jan 2024 17:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPNDcVBZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11046C43390;
+	Mon, 29 Jan 2024 17:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548067;
-	bh=nEsdTO+fvEaW0AKAjHLZHsn178KAY5QEIhKTZLVo7L8=;
+	s=korg; t=1706548068;
+	bh=GFg130xJ+I3aRG94ZiuPIikc7fht608nHelwttJmRPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qiqj4ipxNEYGP1zl8FWh5J/kIbiX2rAQ9XBXMLOf1bmPB3JFo755bZvz0SS1YTk2J
-	 AQCZ/oLe+jr+JAtYec66EKueMIUCk58r6HDePL6Gwa0Q1zC7RK+icMJN/WQD4fghiT
-	 PMnjhIl+2scXKKEUK2g2HLcwdcqegl/9kP3U+eAU=
+	b=SPNDcVBZJk8k2Th9Lfz/YjIpOn/+hEbzeWi3LSTzNA9X1bZbVrFy6+sG8E/oOaZH1
+	 Qs6UDik6TA8ptZPxlNBcREf2UFUivdKMHSf44N8MMTXi5Q/E/ERKfYksTWosF+5sKy
+	 erFh97EVSFyFsro6nnkf3M38n5qVShWA5Tcb2fp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 057/346] riscv: Correctly free relocation hashtable on error
-Date: Mon, 29 Jan 2024 09:01:28 -0800
-Message-ID: <20240129170018.077725448@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.7 075/346] arm64: dts: qcom: sc7180: fix USB wakeup interrupt types
+Date: Mon, 29 Jan 2024 09:01:46 -0800
+Message-ID: <20240129170018.595091443@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -54,70 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlie Jenkins <charlie@rivosinc.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 4b38b36bfbd83b23e20c172d08dd85773791e3bd ]
+commit 9b956999bf725fd62613f719c3178fdbee6e5f47 upstream.
 
-When there is not enough allocatable memory for the relocation
-hashtable, module loading should exit gracefully. Previously, this was
-attempted to be accomplished by checking if an unsigned number is less
-than zero which does not work. Instead have the caller check if the
-hashtable was correctly allocated and add a comment explaining that
-hashtable_bits that is 0 is valid.
+The DP/DM wakeup interrupts are edge triggered and which edge to trigger
+on depends on use-case and whether a Low speed or Full/High speed device
+is connected.
 
-Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
-Fixes: d8792a5734b0 ("riscv: Safely remove entries from relocation list")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202312132019.iYGTwW0L-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
-Closes: https://lore.kernel.org/r/202312120044.wTI1Uyaa-lkp@intel.com/
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240104-module_loading_fix-v3-2-a71f8de6ce0f@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0b766e7fe5a2 ("arm64: dts: qcom: sc7180: Add USB related nodes")
+Cc: stable@vger.kernel.org      # 5.10
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231120164331.8116-4-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/module.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
-index 5cf3a693482d..91f7cd221afc 100644
---- a/arch/riscv/kernel/module.c
-+++ b/arch/riscv/kernel/module.c
-@@ -747,6 +747,10 @@ initialize_relocation_hashtable(unsigned int num_relocations,
- {
- 	/* Can safely assume that bits is not greater than sizeof(long) */
- 	unsigned long hashtable_size = roundup_pow_of_two(num_relocations);
-+	/*
-+	 * When hashtable_size == 1, hashtable_bits == 0.
-+	 * This is valid because the hashing algorithm returns 0 in this case.
-+	 */
- 	unsigned int hashtable_bits = ilog2(hashtable_size);
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -2966,8 +2966,8 @@
  
- 	/*
-@@ -763,7 +767,7 @@ initialize_relocation_hashtable(unsigned int num_relocations,
- 					      sizeof(*relocation_hashtable),
- 					      GFP_KERNEL);
- 	if (!*relocation_hashtable)
--		return -ENOMEM;
-+		return 0;
+ 			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
+-					      <&pdc 8 IRQ_TYPE_LEVEL_HIGH>,
+-					      <&pdc 9 IRQ_TYPE_LEVEL_HIGH>;
++					      <&pdc 8 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 9 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+ 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
  
- 	__hash_init(*relocation_hashtable, hashtable_size);
- 
-@@ -789,8 +793,8 @@ int apply_relocate_add(Elf_Shdr *sechdrs, const char *strtab,
- 	hashtable_bits = initialize_relocation_hashtable(num_relocations,
- 							 &relocation_hashtable);
- 
--	if (hashtable_bits < 0)
--		return hashtable_bits;
-+	if (!relocation_hashtable)
-+		return -ENOMEM;
- 
- 	INIT_LIST_HEAD(&used_buckets_list);
- 
--- 
-2.43.0
-
 
 
