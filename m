@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D3B15705F;
-	Mon, 29 Jan 2024 17:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5BD15705F;
+	Mon, 29 Jan 2024 17:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548605; cv=none; b=kWztWppyoL8co4Uj3r//lCCFgK4ik8skbtyPmphPp4I9TmMyP37JID6bKnPXloETw4xfgPoK6eNjFusziYMocwe/so/aBH75yPkDRVrP4kSOMvn84ZxzdurKesrU0Vqq7e9/v/1ABePskJaQORUh1XLuYSKxrkpVBSlsTjuGuk0=
+	t=1706548606; cv=none; b=bOMroCCpKxQvgZiu99733ChwNrdAyqRNr1ms75JJZXDFM0nMehi/QtDccqpX2FzuLaqqOLrz3R3sDtEngiDJFsn0ISrNej3Zpje4mh/Y8gQux7XAEAwzpVwU1OiTfVPRPKEC3ghYo/O4eZ8hy7PoMov6H5tAe6MkKokb4TZke8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548605; c=relaxed/simple;
-	bh=8qpbo3Mr2hL2ucD7EaNuzAEziLGcLWKIJbKZNmgOy0k=;
+	s=arc-20240116; t=1706548606; c=relaxed/simple;
+	bh=jzIT87BCIs9xoDeqihXtHO08XK998n+wyYkRWVsgcwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3KXW0uyuAtlR07OUJS7UtIiJWLTdJC47XHjE7hJFx3f+AN046hMtH4a/4kHvH9krGvO04hX4v8Hw9VO/uLt8VmuXzgZJEijj9HosNRovbU1+f95hchvIfqw2i4OBgsn4knCJjAupLXgypKGRVUoW0ckQJ7fIPwkKFkhaELe6Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJKf8G76; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RD+Jj+9aZyrYEz3l+lQan28/jTfvQ1mx1dLX0i3dORZveR5w64a/PzYa23f61deQni4YjgA11rKan4qAPS4GQH+Yce5UG5ArHOhFEggcru+DDFP3IUrm+xvzBGrBYNkbOX6HlhfK31Am0Y1+5b7P45fnnkWIgCGsgbP126plZXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xm3ho1VH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJKf8G76"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6276DC43399;
-	Mon, 29 Jan 2024 17:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xm3ho1VH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F62C433F1;
+	Mon, 29 Jan 2024 17:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548605;
-	bh=8qpbo3Mr2hL2ucD7EaNuzAEziLGcLWKIJbKZNmgOy0k=;
+	s=korg; t=1706548606;
+	bh=jzIT87BCIs9xoDeqihXtHO08XK998n+wyYkRWVsgcwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJKf8G76alVX7JIjm+rxZ++k1ICgLOxZCFZH3sEzEl44MTOBcWi3K+92+RCVmk2On
-	 30EQ0GdMR6/iMdeg/TXbdrvq46zU0edULW8+ucG0h826pfNAX7A8Rq6BDWE8VJwhAj
-	 qkW0/5+Ie9hCI3nmQtpuxByKmLBgM26PWJXwzepE=
+	b=Xm3ho1VHuaivxoYvDvaYNHRItwvLUktHB6crDPUWssH05LyC7z+14zoWrJKSm04hV
+	 DiG6v8FZP+livJGG5vPTprwJ3LDf1hlGKmBp9tmmZIxbQoDhVueF0oLqkzgWLeDHek
+	 4HluQquSF5yXVQkqFwiRMV9Om9el7TkMjisAorrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.6 268/331] drm/amd/display: Port DENTIST hang and TDR fixes to OTG disable W/A
-Date: Mon, 29 Jan 2024 09:05:32 -0800
-Message-ID: <20240129170022.708181941@linuxfoundation.org>
+Subject: [PATCH 6.6 269/331] drm/amd/display: Align the returned error code with legacy DP
+Date: Mon, 29 Jan 2024 09:05:33 -0800
+Message-ID: <20240129170022.738993286@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -54,83 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 4b56f7d47be87cde5f368b67bc7fac53a2c3e8d2 upstream.
+commit bfe79f5fff1300d96203383582b078c7b0aec80a upstream.
 
 [Why]
-We can experience DENTIST hangs during optimize_bandwidth or TDRs if
-FIFO is toggled and hangs.
+For usb4 connector, AUX transaction is handled by dmub utilizing a differnt
+code path comparing to legacy DP connector. If the usb4 DP connector is
+disconnected, AUX access will report EBUSY and cause igt@kms_dp_aux_dev
+fail.
 
 [How]
-Port the DCN35 fixes to DCN314.
+Align the error code with the one reported by legacy DP as EIO.
 
 Cc: Mario Limonciello <mario.limonciello@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
 Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c |   21 ++++------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn314/dcn314_clk_mgr.c
-@@ -131,30 +131,27 @@ static int dcn314_get_active_display_cnt
- 	return display_count;
- }
- 
--static void dcn314_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *context, bool disable)
-+static void dcn314_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *context,
-+				  bool safe_to_lower, bool disable)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -956,6 +956,11 @@ int dm_helper_dmub_aux_transfer_sync(
+ 		struct aux_payload *payload,
+ 		enum aux_return_code_type *operation_result)
  {
- 	struct dc *dc = clk_mgr_base->ctx->dc;
- 	int i;
- 
- 	for (i = 0; i < dc->res_pool->pipe_count; ++i) {
--		struct pipe_ctx *pipe = &dc->current_state->res_ctx.pipe_ctx[i];
-+		struct pipe_ctx *pipe = safe_to_lower
-+			? &context->res_ctx.pipe_ctx[i]
-+			: &dc->current_state->res_ctx.pipe_ctx[i];
- 
- 		if (pipe->top_pipe || pipe->prev_odm_pipe)
- 			continue;
- 		if (pipe->stream && (pipe->stream->dpms_off || dc_is_virtual_signal(pipe->stream->signal))) {
--			struct stream_encoder *stream_enc = pipe->stream_res.stream_enc;
--
- 			if (disable) {
--				if (stream_enc && stream_enc->funcs->disable_fifo)
--					pipe->stream_res.stream_enc->funcs->disable_fifo(stream_enc);
-+				if (pipe->stream_res.tg && pipe->stream_res.tg->funcs->immediate_disable_crtc)
-+					pipe->stream_res.tg->funcs->immediate_disable_crtc(pipe->stream_res.tg);
- 
--				pipe->stream_res.tg->funcs->immediate_disable_crtc(pipe->stream_res.tg);
- 				reset_sync_context_for_pipe(dc, context, i);
- 			} else {
- 				pipe->stream_res.tg->funcs->enable_crtc(pipe->stream_res.tg);
--
--				if (stream_enc && stream_enc->funcs->enable_fifo)
--					pipe->stream_res.stream_enc->funcs->enable_fifo(stream_enc);
- 			}
- 		}
- 	}
-@@ -252,11 +249,11 @@ void dcn314_update_clocks(struct clk_mgr
- 	}
- 
- 	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz)) {
--		dcn314_disable_otg_wa(clk_mgr_base, context, true);
-+		dcn314_disable_otg_wa(clk_mgr_base, context, safe_to_lower, true);
- 
- 		clk_mgr_base->clks.dispclk_khz = new_clocks->dispclk_khz;
- 		dcn314_smu_set_dispclk(clk_mgr, clk_mgr_base->clks.dispclk_khz);
--		dcn314_disable_otg_wa(clk_mgr_base, context, false);
-+		dcn314_disable_otg_wa(clk_mgr_base, context, safe_to_lower, false);
- 
- 		update_dispclk = true;
- 	}
++	if (!link->hpd_status) {
++		*operation_result = AUX_RET_ERROR_HPD_DISCON;
++		return -1;
++	}
++
+ 	return amdgpu_dm_process_dmub_aux_transfer_sync(ctx, link->link_index, payload,
+ 			operation_result);
+ }
 
 
