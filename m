@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A3F15DBBC;
-	Mon, 29 Jan 2024 17:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4291649DD;
+	Mon, 29 Jan 2024 17:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548441; cv=none; b=mu0wTEH8s+mmDE8Tg6Hrkji/xyvU1l6iMdMMeTcDTG9h3EPdWSsNlTwrWFeVZKmsXCZ1BWD+lyeIHlU8w4x/NeTRSUT51ueEmcDBNf3o3XnjdSOp9coNT14dAsrEVCsjQQXNjxm25cQwAjO1O8nW3f5xhekBtIdb5502mHlNWOQ=
+	t=1706548442; cv=none; b=a6wg3/CvI+HKZdZUxmIVHESR389ioUXE6mSHXOMRCsdSvC2CT4+IPACzMSLpR33UB5yMSQagUbLFKu2rsydBkkuxzYoPathDSET97xcxOWtaD+N2FDV+VcziNAC2IUcwZpfM4VrmAY9PP2/vC9a2X0lemfo7QcnTqH/VJH7GTjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548441; c=relaxed/simple;
-	bh=rBXweQMo8xHxZAGBRbiNU9+QMAb400XjENrjom3R1Hc=;
+	s=arc-20240116; t=1706548442; c=relaxed/simple;
+	bh=YjTPITiYpeYjASyYXydZmv1O4gNkfsCkI7VMAskgrok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZEVOD/sHgKx+sWgls1hNfv87Cl1HTsvmliIUYyqFmKlOSuvzvUkOUZ0BER6pZRtb3EoWlYpuumtfDZrcKf0pv+r93L37av/KwrvN6cXzE1FGNRs3pVfcxqhinfapc4i04vTWyG4PRDPcs0qXkkgaTfgefQB66bgIaDSIJDQXItk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6WGAye4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s7670weaefpN5uYYA0EvRvtNgv7HSDBBjSgo9pCmFZOzRt64d4MMC7/pz7uwGQP52A0J5RbzcjvVx6/EBttJlHotxz8cyEfwUjij2IVua5uxvLnob/nwRdBKLYpmL9IHJ+6xuadWWvmO6z2XBFDXkKv6ywreY08pSZmlHxV5VYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+JauT6F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6WGAye4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38501C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+JauT6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE8EC433F1;
 	Mon, 29 Jan 2024 17:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548441;
-	bh=rBXweQMo8xHxZAGBRbiNU9+QMAb400XjENrjom3R1Hc=;
+	s=korg; t=1706548442;
+	bh=YjTPITiYpeYjASyYXydZmv1O4gNkfsCkI7VMAskgrok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6WGAye4dDVHkadEZmNFIHp2J5YRCOdphrfNa1oDduQo+hcZ01J6o2qaPix4L8uQY
-	 gKJMfyOfvRfLBls7sa++2AFNdWlps32RngE3qqyyCtYR/m5LP+BeOtFlK14efYoTQM
-	 ERTg2OKOr8glAnGOZUWDUBhKC8TjXF+HV6iJm5as=
+	b=S+JauT6FzwKEYnOz+lfA0FiLTHgrxsdGDq6vGUTKiNWGQ6UG4RlYL9ch7uceVSLHL
+	 V3qZP9eM0IuN4juzOIJGmS2hdqoiA8nNbt1fK3dn21Ns8nBWuUnwT4FilZM7ksPjCh
+	 J2AfZcCR1mjQrvl0LZwpFB5h5xjWBJLerzJtIuNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>
-Subject: [PATCH 6.6 046/331] mtd: rawnand: Prevent crossing LUN boundaries during sequential reads
-Date: Mon, 29 Jan 2024 09:01:50 -0800
-Message-ID: <20240129170016.286290503@linuxfoundation.org>
+	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	=?UTF-8?q?M=C3=A5ns=20Rullg=C3=A5rd?= <mans@mansr.com>,
+	=?UTF-8?q?Martin=20Hundeb=C3=B8ll?= <martin@geanix.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.6 047/331] mtd: rawnand: Fix core interference with sequential reads
+Date: Mon, 29 Jan 2024 09:01:51 -0800
+Message-ID: <20240129170016.312225094@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,121 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit bbcd80f53a5e8c27c2511f539fec8c373f500cf4 upstream.
+commit 7c9414c870c027737d0f2ed7b0ed10f26edb1c61 upstream.
 
-The ONFI specification states that devices do not need to support
-sequential reads across LUN boundaries. In order to prevent such event
-from happening and possibly failing, let's introduce the concept of
-"pause" in the sequential read to handle these cases. The first/last
-pages remain the same but any time we cross a LUN boundary we will end
-and restart (if relevant) the sequential read operation.
+A couple of reports pointed at some strange failures happening a bit
+randomly since the introduction of sequential page reads support. After
+investigation it turned out the most likely reason for these issues was
+the fact that sometimes a (longer) read might happen, starting at the
+same page that was read previously. This is optimized by the raw NAND
+core, by not sending the READ_PAGE command to the NAND device and just
+reading out the data in a local cache. When this page is also flagged as
+being the starting point for a sequential read, it means the page right
+next will be accessed without the right instructions. The NAND chip will
+be confused and will not output correct data. In order to avoid such
+situation from happening anymore, we can however handle this case with a
+bit of additional logic, to postpone the initialization of the read
+sequence by one page.
 
-Cc: stable@vger.kernel.org
+Reported-by: Alexander Shiyan <eagle.alexander923@gmail.com>
+Closes: https://lore.kernel.org/linux-mtd/CAP1tNvS=NVAm-vfvYWbc3k9Cx9YxMc2uZZkmXk8h1NhGX877Zg@mail.gmail.com/
+Reported-by: Måns Rullgård <mans@mansr.com>
+Closes: https://lore.kernel.org/linux-mtd/yw1xfs6j4k6q.fsf@mansr.com/
+Reported-by: Martin Hundebøll <martin@geanix.com>
+Closes: https://lore.kernel.org/linux-mtd/9d0c42fcde79bfedfe5b05d6a4e9fdef71d3dd52.camel@geanix.com/
 Fixes: 003fe4b9545b ("mtd: rawnand: Support for sequential cache reads")
+Cc: stable@vger.kernel.org
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Tested-by: Martin Hundebøll <martin@geanix.com>
-Link: https://lore.kernel.org/linux-mtd/20231215123208.516590-2-miquel.raynal@bootlin.com
+Link: https://lore.kernel.org/linux-mtd/20231215123208.516590-3-miquel.raynal@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/nand_base.c |   43 +++++++++++++++++++++++++++++++++------
- include/linux/mtd/rawnand.h      |    2 +
- 2 files changed, 39 insertions(+), 6 deletions(-)
+ drivers/mtd/nand/raw/nand_base.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/drivers/mtd/nand/raw/nand_base.c
 +++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -1208,6 +1208,23 @@ static int nand_lp_exec_read_page_op(str
- 	return nand_exec_op(chip, &op);
+@@ -3479,6 +3479,18 @@ static void rawnand_enable_cont_reads(st
+ 	rawnand_cap_cont_reads(chip);
  }
  
-+static void rawnand_cap_cont_reads(struct nand_chip *chip)
++static void rawnand_cont_read_skip_first_page(struct nand_chip *chip, unsigned int page)
 +{
-+	struct nand_memory_organization *memorg;
-+	unsigned int pages_per_lun, first_lun, last_lun;
++	if (!chip->cont_read.ongoing || page != chip->cont_read.first_page)
++		return;
 +
-+	memorg = nanddev_get_memorg(&chip->base);
-+	pages_per_lun = memorg->pages_per_eraseblock * memorg->eraseblocks_per_lun;
-+	first_lun = chip->cont_read.first_page / pages_per_lun;
-+	last_lun = chip->cont_read.last_page / pages_per_lun;
-+
-+	/* Prevent sequential cache reads across LUN boundaries */
-+	if (first_lun != last_lun)
-+		chip->cont_read.pause_page = first_lun * pages_per_lun + pages_per_lun - 1;
-+	else
-+		chip->cont_read.pause_page = chip->cont_read.last_page;
++	chip->cont_read.first_page++;
++	if (chip->cont_read.first_page == chip->cont_read.pause_page)
++		chip->cont_read.first_page++;
++	if (chip->cont_read.first_page >= chip->cont_read.last_page)
++		chip->cont_read.ongoing = false;
 +}
 +
- static int nand_lp_exec_cont_read_page_op(struct nand_chip *chip, unsigned int page,
- 					  unsigned int offset_in_page, void *buf,
- 					  unsigned int len, bool check_only)
-@@ -1226,7 +1243,7 @@ static int nand_lp_exec_cont_read_page_o
- 		NAND_OP_DATA_IN(len, buf, 0),
- 	};
- 	struct nand_op_instr cont_instrs[] = {
--		NAND_OP_CMD(page == chip->cont_read.last_page ?
-+		NAND_OP_CMD(page == chip->cont_read.pause_page ?
- 			    NAND_CMD_READCACHEEND : NAND_CMD_READCACHESEQ,
- 			    NAND_COMMON_TIMING_NS(conf, tWB_max)),
- 		NAND_OP_WAIT_RDY(NAND_COMMON_TIMING_MS(conf, tR_max),
-@@ -1263,16 +1280,29 @@ static int nand_lp_exec_cont_read_page_o
- 	}
- 
- 	if (page == chip->cont_read.first_page)
--		return nand_exec_op(chip, &start_op);
-+		ret = nand_exec_op(chip, &start_op);
- 	else
--		return nand_exec_op(chip, &cont_op);
-+		ret = nand_exec_op(chip, &cont_op);
-+	if (ret)
-+		return ret;
-+
-+	if (!chip->cont_read.ongoing)
-+		return 0;
-+
-+	if (page == chip->cont_read.pause_page &&
-+	    page != chip->cont_read.last_page) {
-+		chip->cont_read.first_page = chip->cont_read.pause_page + 1;
-+		rawnand_cap_cont_reads(chip);
-+	} else if (page == chip->cont_read.last_page) {
-+		chip->cont_read.ongoing = false;
-+	}
-+
-+	return 0;
- }
- 
- static bool rawnand_cont_read_ongoing(struct nand_chip *chip, unsigned int page)
- {
--	return chip->cont_read.ongoing &&
--		page >= chip->cont_read.first_page &&
--		page <= chip->cont_read.last_page;
-+	return chip->cont_read.ongoing && page >= chip->cont_read.first_page;
- }
- 
  /**
-@@ -3446,6 +3476,7 @@ static void rawnand_enable_cont_reads(st
- 	if (col)
- 		chip->cont_read.first_page++;
- 	chip->cont_read.last_page = page + ((readlen >> chip->page_shift) & chip->pagemask);
-+	rawnand_cap_cont_reads(chip);
- }
+  * nand_setup_read_retry - [INTERN] Set the READ RETRY mode
+  * @chip: NAND chip object
+@@ -3653,6 +3665,8 @@ read_retry:
+ 			buf += bytes;
+ 			max_bitflips = max_t(unsigned int, max_bitflips,
+ 					     chip->pagecache.bitflips);
++
++			rawnand_cont_read_skip_first_page(chip, page);
+ 		}
  
- /**
---- a/include/linux/mtd/rawnand.h
-+++ b/include/linux/mtd/rawnand.h
-@@ -1265,6 +1265,7 @@ struct nand_secure_region {
-  * @cont_read: Sequential page read internals
-  * @cont_read.ongoing: Whether a continuous read is ongoing or not
-  * @cont_read.first_page: Start of the continuous read operation
-+ * @cont_read.pause_page: End of the current sequential cache read operation
-  * @cont_read.last_page: End of the continuous read operation
-  * @controller: The hardware controller	structure which is shared among multiple
-  *              independent devices
-@@ -1321,6 +1322,7 @@ struct nand_chip {
- 	struct {
- 		bool ongoing;
- 		unsigned int first_page;
-+		unsigned int pause_page;
- 		unsigned int last_page;
- 	} cont_read;
- 
+ 		readlen -= bytes;
 
 
