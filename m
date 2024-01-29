@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F90115B0E4;
-	Mon, 29 Jan 2024 17:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879E315956B;
+	Mon, 29 Jan 2024 17:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548188; cv=none; b=uykV6GdrpfDZCUBsw/KyamgpVrMKN5crfMfvUrh1HZj9hcjuiCk3rmjP4EURp76+Z03dT0Emy2fpLLbO+Sdgy9tJh43yJpv92H6E9JbRNdj3G/oKOyWE9pm7ygO+7QQBMrY2oAFdpviJ7rzfVbrLk46hP9lt0dNcDe06gb/WfSA=
+	t=1706548189; cv=none; b=dn4jueBN3TCSh04vlr1odcJdFzfhG4ot0tZZlCObM7krdcOEL17CidvZsRBvhzXcuoLbmbv1JbZL105QwtlLf2nHBZq1zRW/9DRsVArTQp7p+4PQiPa/LGfodeE1H+u+66QhH/zO1qe7KEBgICPQPA3EJPqZPR4VfKYqfZmGMgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548188; c=relaxed/simple;
-	bh=5ptod3yk5QVtkIx1RiJLRU4aGgXXTPBt93lvmrN05vk=;
+	s=arc-20240116; t=1706548189; c=relaxed/simple;
+	bh=9c4Z9h1NwJL2lMJvdwLriDXhh68tAxWWnzmG0fO/aJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tr2PJ3aBVomy/Gyx1D1ewcenKTEst7Qxfy1YgF0O6TgUWFhFZGTbWhHKebN7GbR6ffc/KeUor0hKP9BWdCL2oXaVHMuhvD68whssL7eCvuhDrecdXeV6IYhLuwZbJn/yl3EG8QUPW6dq+ASDsFbb98puMcfk0F2lfiTjHhjL59g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dk52yIoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brSW3FBWoLICWFB4x9urVmaMvU0dQsJH/ZEmCRkIRaYq6zJsNR2QutRCB0grYw/8FnMMAOpBo3hxeE5IC2EPFxEKxRcst0peFR7ZTiQUbYYYXr2sB7T50Tb2Z0v/jeAnOj4yE6rozrH+Xv/I9nUkryhsCC7/oXhueRV4mQjgcRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoJxQRMh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dk52yIoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588CFC433C7;
-	Mon, 29 Jan 2024 17:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoJxQRMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1215FC43390;
+	Mon, 29 Jan 2024 17:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548188;
-	bh=5ptod3yk5QVtkIx1RiJLRU4aGgXXTPBt93lvmrN05vk=;
+	s=korg; t=1706548189;
+	bh=9c4Z9h1NwJL2lMJvdwLriDXhh68tAxWWnzmG0fO/aJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dk52yIoM4uLKk8YC9VSZIej6m9mr3ogGY8s36YAGB4UTRdDPrYJi8CE1SvPvsesmJ
-	 EOf5IFHi4xDROaTbJeoTZwatJmcxlEq/Gj7EgtvKDIWkYwxizyRkcCo+6o1VxrKySJ
-	 7pIDVlhXpoWW1CuV1kS6yhmLj35BEWYZrgXs1unw=
+	b=aoJxQRMhUw1TqMxeoWmigjiA6Cg11/Q9ndAebuAPoHGbalgsMgwVOnw6nV3Z2nqbo
+	 Y/d6SHifdxFxFqV5L5YGlE2HxqWI6VlYCam+9TaKTxkiullEW6UsO7FQjujGaPwjJx
+	 GDElq1Y4+aB0azFkq5qijX2fCvdMf1por072qqpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paolo Abeni <pabeni@redhat.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 204/346] selftests: net: fix rps_default_mask with >32 CPUs
-Date: Mon, 29 Jan 2024 09:03:55 -0800
-Message-ID: <20240129170022.396419133@linuxfoundation.org>
+Subject: [PATCH 6.7 205/346] selftests: netdevsim: fix the udp_tunnel_nic test
+Date: Mon, 29 Jan 2024 09:03:56 -0800
+Message-ID: <20240129170022.425453422@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,47 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0719b5338a0cbe80d1637a5fb03d8141b5bfc7a1 ]
+[ Upstream commit 0879020a7817e7ce636372c016b4528f541c9f4d ]
 
-If there is more than 32 cpus the bitmask will start to contain
-commas, leading to:
+This test is missing a whole bunch of checks for interface
+renaming and one ifup. Presumably it was only used on a system
+with renaming disabled and NetworkManager running.
 
-./rps_default_mask.sh: line 36: [: 00000000,00000000: integer expression expected
-
-Remove the commas, bash doesn't interpret leading zeroes as oct
-so that should be good enough. Switch to bash, Simon reports that
-not all shells support this type of substitution.
-
-Fixes: c12e0d5f267d ("self-tests: introduce self-tests for RPS default mask")
+Fixes: 91f430b2c49d ("selftests: net: add a test for UDP tunnel info infra")
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240122195815.638997-1-kuba@kernel.org
+Link: https://lore.kernel.org/r/20240123060529.1033912-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/rps_default_mask.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ .../selftests/drivers/net/netdevsim/udp_tunnel_nic.sh    | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/testing/selftests/net/rps_default_mask.sh b/tools/testing/selftests/net/rps_default_mask.sh
-index a26c5624429f..4287a8529890 100755
---- a/tools/testing/selftests/net/rps_default_mask.sh
-+++ b/tools/testing/selftests/net/rps_default_mask.sh
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
+diff --git a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
+index 1b08e042cf94..185b02d2d4cd 100755
+--- a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
++++ b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
+@@ -269,6 +269,7 @@ for port in 0 1; do
+ 	echo 1 > $NSIM_DEV_SYS/new_port
+     fi
+     NSIM_NETDEV=`get_netdev_name old_netdevs`
++    ifconfig $NSIM_NETDEV up
  
- readonly ksft_skip=4
-@@ -33,6 +33,10 @@ chk_rps() {
+     msg="new NIC device created"
+     exp0=( 0 0 0 0 )
+@@ -430,6 +431,7 @@ for port in 0 1; do
+     fi
  
- 	rps_mask=$($cmd /sys/class/net/$dev_name/queues/rx-0/rps_cpus)
- 	printf "%-60s" "$msg"
-+
-+	# In case there is more than 32 CPUs we need to remove commas from masks
-+	rps_mask=${rps_mask//,}
-+	expected_rps_mask=${expected_rps_mask//,}
- 	if [ $rps_mask -eq $expected_rps_mask ]; then
- 		echo "[ ok ]"
- 	else
+     echo $port > $NSIM_DEV_SYS/new_port
++    NSIM_NETDEV=`get_netdev_name old_netdevs`
+     ifconfig $NSIM_NETDEV up
+ 
+     overflow_table0 "overflow NIC table"
+@@ -487,6 +489,7 @@ for port in 0 1; do
+     fi
+ 
+     echo $port > $NSIM_DEV_SYS/new_port
++    NSIM_NETDEV=`get_netdev_name old_netdevs`
+     ifconfig $NSIM_NETDEV up
+ 
+     overflow_table0 "overflow NIC table"
+@@ -543,6 +546,7 @@ for port in 0 1; do
+     fi
+ 
+     echo $port > $NSIM_DEV_SYS/new_port
++    NSIM_NETDEV=`get_netdev_name old_netdevs`
+     ifconfig $NSIM_NETDEV up
+ 
+     overflow_table0 "destroy NIC"
+@@ -572,6 +576,7 @@ for port in 0 1; do
+     fi
+ 
+     echo $port > $NSIM_DEV_SYS/new_port
++    NSIM_NETDEV=`get_netdev_name old_netdevs`
+     ifconfig $NSIM_NETDEV up
+ 
+     msg="create VxLANs v6"
+@@ -632,6 +637,7 @@ for port in 0 1; do
+     fi
+ 
+     echo $port > $NSIM_DEV_SYS/new_port
++    NSIM_NETDEV=`get_netdev_name old_netdevs`
+     ifconfig $NSIM_NETDEV up
+ 
+     echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
+@@ -687,6 +693,7 @@ for port in 0 1; do
+     fi
+ 
+     echo $port > $NSIM_DEV_SYS/new_port
++    NSIM_NETDEV=`get_netdev_name old_netdevs`
+     ifconfig $NSIM_NETDEV up
+ 
+     msg="create VxLANs v6"
+@@ -746,6 +753,7 @@ for port in 0 1; do
+     fi
+ 
+     echo $port > $NSIM_DEV_SYS/new_port
++    NSIM_NETDEV=`get_netdev_name old_netdevs`
+     ifconfig $NSIM_NETDEV up
+ 
+     msg="create VxLANs v6"
+@@ -876,6 +884,7 @@ msg="re-add a port"
+ 
+ echo 2 > $NSIM_DEV_SYS/del_port
+ echo 2 > $NSIM_DEV_SYS/new_port
++NSIM_NETDEV=`get_netdev_name old_netdevs`
+ check_tables
+ 
+ msg="replace VxLAN in overflow table"
 -- 
 2.43.0
 
