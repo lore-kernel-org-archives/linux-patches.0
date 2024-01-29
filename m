@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31AD159583;
-	Mon, 29 Jan 2024 17:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6698B159583;
+	Mon, 29 Jan 2024 17:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548221; cv=none; b=IlzWMWtujipvyS6W1rFYbPKKHl4c40/6AOOIyJ2T8XXttnblQNM4OV8I71PG3ajrK91sSZRPFN6//qM+mrKl6CS8H7N4UhB0cP7HtIZFIr6iPFue9AVeWD50ItPhznvBUXSZHZEFq7uTZ8VzAwJFlxuf5+6DbqcRu8tNop67uSk=
+	t=1706548222; cv=none; b=hrl7RU5iBiy7CYLG2oqwEQtYj6nfVhiqFsTZ/7EhKk7YTPub8oMlY2tmAjn3WcmEMfxTX62jUbEdXuxjcSitxRrDSsJ/za3TI9WKHBoMSuOPD3UWRqqBaL/cdtc6OFQ8zaN4RIxm1wvD/T1KsNCvkm8gUryNAVPdKricK1zVkgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548221; c=relaxed/simple;
-	bh=v0KrcLPEFfxaiEkK9DE5a9bE3d/LIWrpUMuaQWYCGbQ=;
+	s=arc-20240116; t=1706548222; c=relaxed/simple;
+	bh=rc+/dLogrqkgvE4P8o91424Q94yRO/eXvazckPtqU3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SnV63Ie/HGb6j4hRpe6G2E3G5ZSY4nM2cUYBR0uXKd5W1jervSDx9vZ9+kbvRSUF2pOFJVrMoxQ1sAJc7GWzTjS4bFy2WXOuwdc3GkyLEEb4cy2j1nmq/D61bg8I2ktxXgTGE3By0UrqWI/PnJx/7gRX8UNUkQJgTjvXE0dXRm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gl3f1sJD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NJOXczDsT7+VKTJderAZsVRy2SfKxzcJ0PYwqmSFnRu9MT5FGceAgOpOebFZQ0Q4ugPcsyz0+vIKmo8whwhVy1CAWh8UYGHErwIdiduJd9QtZjCOdPB8SQn6obcNZ0HfQgApTCZ4Twgy/alNuGRNgdwjSDWksgOBbu6F2heQF58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhGNs5Nw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gl3f1sJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7836FC433C7;
-	Mon, 29 Jan 2024 17:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhGNs5Nw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC71C433C7;
+	Mon, 29 Jan 2024 17:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548221;
-	bh=v0KrcLPEFfxaiEkK9DE5a9bE3d/LIWrpUMuaQWYCGbQ=;
+	s=korg; t=1706548222;
+	bh=rc+/dLogrqkgvE4P8o91424Q94yRO/eXvazckPtqU3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gl3f1sJD5T73ImLVdo2cuBLl8BeIV4e7plDaNnwdlGVwz9h6+lawPT96C9Cyjp4X9
-	 USi+2voYEy70Eq1Uw0572YqSzJb5ayCKr55aL4IvPDPk6UBTb0qOQs0WUH1qw9RGjB
-	 XxuwsL4552cXfXSg0jEaRYrE1VDNBoOWQvyzmdIc=
+	b=ZhGNs5NwF9S7rEHAiL2D+s6oWZBQQsmiWlWRxZEM0StsOGoVJbskcMJzO4Qs9lRdz
+	 GfxNUzsM/sBcy/1F6oUmwE+RJOZxBu6tPZdq8roODx31kNfgQZTO3bxqKsAw6Vtt6Q
+	 yIQs2bzqGNA7M/07Il6uDW7CVyUW1RkZRZprwIqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhaumik Bhatt <bbhatt@codeaurora.org>,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.1 026/185] bus: mhi: host: Add spinlock to protect WP access when queueing TREs
-Date: Mon, 29 Jan 2024 09:03:46 -0800
-Message-ID: <20240129165959.443249554@linuxfoundation.org>
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 6.7 252/346] drm/tidss: Fix atomic_flush check
+Date: Mon, 29 Jan 2024 09:04:43 -0800
+Message-ID: <20240129170023.826500825@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,99 +46,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit b89b6a863dd53bc70d8e52d50f9cfaef8ef5e9c9 upstream.
+commit 95d4b471953411854f9c80b568da7fcf753f3801 upstream.
 
-Protect WP accesses such that multiple threads queueing buffers for
-incoming data do not race.
+tidss_crtc_atomic_flush() checks if the crtc is enabled, and if not,
+returns immediately as there's no reason to do any register changes.
 
-Meanwhile, if CONFIG_TRACE_IRQFLAGS is enabled, irq will be enabled once
-__local_bh_enable_ip is called as part of write_unlock_bh. Hence, let's
-take irqsave lock after TRE is generated to avoid running write_unlock_bh
-when irqsave lock is held.
+However, the code checks for 'crtc->state->enable', which does not
+reflect the actual HW state. We should instead look at the
+'crtc->state->active' flag.
 
-Cc: stable@vger.kernel.org
-Fixes: 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/1702276972-41296-2-git-send-email-quic_qianyu@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+This causes the tidss_crtc_atomic_flush() to proceed with the flush even
+if the active state is false, which then causes us to hit the
+WARN_ON(!crtc->state->event) check.
+
+Fix this by checking the active flag, and while at it, fix the related
+debug print which had "active" and "needs modeset" wrong way.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-10-ac91b5ea35c0@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |   22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/tidss/tidss_crtc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -1124,17 +1124,15 @@ static int mhi_queue(struct mhi_device *
- 	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
- 		return -EIO;
+--- a/drivers/gpu/drm/tidss/tidss_crtc.c
++++ b/drivers/gpu/drm/tidss/tidss_crtc.c
+@@ -169,13 +169,13 @@ static void tidss_crtc_atomic_flush(stru
+ 	struct tidss_device *tidss = to_tidss(ddev);
+ 	unsigned long flags;
  
--	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
--
- 	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
--	if (unlikely(ret)) {
--		ret = -EAGAIN;
--		goto exit_unlock;
--	}
-+	if (unlikely(ret))
-+		return -EAGAIN;
+-	dev_dbg(ddev->dev,
+-		"%s: %s enabled %d, needs modeset %d, event %p\n", __func__,
+-		crtc->name, drm_atomic_crtc_needs_modeset(crtc->state),
+-		crtc->state->enable, crtc->state->event);
++	dev_dbg(ddev->dev, "%s: %s is %sactive, %s modeset, event %p\n",
++		__func__, crtc->name, crtc->state->active ? "" : "not ",
++		drm_atomic_crtc_needs_modeset(crtc->state) ? "needs" : "doesn't need",
++		crtc->state->event);
  
- 	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
- 	if (unlikely(ret))
--		goto exit_unlock;
-+		return ret;
-+
-+	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+ 	/* There is nothing to do if CRTC is not going to be enabled. */
+-	if (!crtc->state->enable)
++	if (!crtc->state->active)
+ 		return;
  
- 	/* Packet is queued, take a usage ref to exit M3 if necessary
- 	 * for host->device buffer, balanced put is done on buffer completion
-@@ -1154,7 +1152,6 @@ static int mhi_queue(struct mhi_device *
- 	if (dir == DMA_FROM_DEVICE)
- 		mhi_cntrl->runtime_put(mhi_cntrl);
- 
--exit_unlock:
- 	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
- 
- 	return ret;
-@@ -1206,6 +1203,9 @@ int mhi_gen_tre(struct mhi_controller *m
- 	int eot, eob, chain, bei;
- 	int ret;
- 
-+	/* Protect accesses for reading and incrementing WP */
-+	write_lock_bh(&mhi_chan->lock);
-+
- 	buf_ring = &mhi_chan->buf_ring;
- 	tre_ring = &mhi_chan->tre_ring;
- 
-@@ -1223,8 +1223,10 @@ int mhi_gen_tre(struct mhi_controller *m
- 
- 	if (!info->pre_mapped) {
- 		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
--		if (ret)
-+		if (ret) {
-+			write_unlock_bh(&mhi_chan->lock);
- 			return ret;
-+		}
- 	}
- 
- 	eob = !!(flags & MHI_EOB);
-@@ -1241,6 +1243,8 @@ int mhi_gen_tre(struct mhi_controller *m
- 	mhi_add_ring_element(mhi_cntrl, tre_ring);
- 	mhi_add_ring_element(mhi_cntrl, buf_ring);
- 
-+	write_unlock_bh(&mhi_chan->lock);
-+
- 	return 0;
- }
- 
+ 	/*
 
 
