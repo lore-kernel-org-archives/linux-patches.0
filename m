@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96ED7159572;
-	Mon, 29 Jan 2024 17:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72758159572;
+	Mon, 29 Jan 2024 17:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548205; cv=none; b=joo9RIRXK4518pTxhhjw/a+YMpFy9M4wvKMy2Tm87EkRPsAYJscYnqKuGD5tO1fKb0Ez2Ac+eMLb445bF5D7BKzxUqbbXK7syDxaN6zOUseGkgp8B2Y+5cYPsrUG8Qn0yHOLejtJSk8w9ToRJKm4n2tSANDfrIcjM8NbxxfC6ZM=
+	t=1706548206; cv=none; b=ZCtKrkV/wLnQPNGDQV5775HYGnhC/mft0gjqkwuzbNt43QU/4URo2JcJLK4DizSH8bcR0HogklZzYHimgL5r5Y/aG1zUHI8TuQLutqDMPDHuiS7wGuKlSJBu1/P1qSyfdnhqFBAMrzZfSeO78Zy26V8rB7E3IGQYLcI2EzTtnXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548205; c=relaxed/simple;
-	bh=u0QRLBwnGRc3TbduJOiJM7iQNEmnq+3QXgYHNGR/vKk=;
+	s=arc-20240116; t=1706548206; c=relaxed/simple;
+	bh=R0vmQLolbxHn+ixSduwCATETpjRv9eXgXEpEPwFSvfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4QTmtUq9GEf8yLHpU6tcLWmDOKajq9RpAmGdCUnSsTpKysB7ObZvaUjnvMfg9oi4CZQWoy3Laq3PFk+fRwvIjWsVNN2ycUlKXtiPWjzyX+EBYpsHS1mT2QwrwpYJK/70MDJ6YQTLaUyJNuiYfSKbrhmU4vyWZS2axYECQvdKY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+s++hIc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lw5BLyUghA0NfTnciA+WoXAlKl6vxVqyodiLG4Ud8XC9SCh+P5nqqJk7+wOyw2OySc5PVXqzYh87M0ejxtMz/+2/a5tnp+LujCdQoHYScAXpCZyw5fXI8ANc9N9iPb+ctEMpw/LbGfROFFRuNzxL+s2keXKgVR9uXY532/ATi3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pl45z4PP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+s++hIc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D38C43394;
-	Mon, 29 Jan 2024 17:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pl45z4PP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D41C43390;
+	Mon, 29 Jan 2024 17:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548205;
-	bh=u0QRLBwnGRc3TbduJOiJM7iQNEmnq+3QXgYHNGR/vKk=;
+	s=korg; t=1706548206;
+	bh=R0vmQLolbxHn+ixSduwCATETpjRv9eXgXEpEPwFSvfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+s++hIc8jDLXXbwen9pkN8ieQmZjzwWoq+cPG7382sx4dfktRojnsQfmm7OAZr7t
-	 UsMAlUWYe29hTZf7ZipwANbQYchYHHKwkw8JMDWC9ivPAgVlGRHQQrydKUeyOo0XAW
-	 vFBJKfCJb9CjLLNVxtCX+bTklLp9rD8tWgSqJI64=
+	b=pl45z4PPSifU7sn9oUqBaurBflPhylYQQguMquCfk+OC2x54UFWK8Amsi5ac1uiZy
+	 Gh6QTbMEskxQk3RTQcq6OnvALxuxME8B8e/rW2NA68e86N/T6M1kW1jJZQhKbn9ZX/
+	 v5OzjQ/1UpWemiONInfZ0Nsydl07Y7aTKYSy4x48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chandan Babu R <chandanbabu@kernel.org>
-Subject: [PATCH 6.7 243/346] xfs: read only mounts with fsopen mount API are busted
-Date: Mon, 29 Jan 2024 09:04:34 -0800
-Message-ID: <20240129170023.554401187@linuxfoundation.org>
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.1 018/185] rpmsg: virtio: Free driver_override when rpmsg_remove()
+Date: Mon, 29 Jan 2024 09:03:38 -0800
+Message-ID: <20240129165959.187381733@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,131 +46,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit d8d222e09dab84a17bb65dda4b94d01c565f5327 upstream.
+commit d5362c37e1f8a40096452fc201c30e705750e687 upstream.
 
-Recently xfs/513 started failing on my test machines testing "-o
-ro,norecovery" mount options. This was being emitted in dmesg:
+Free driver_override when rpmsg_remove(), otherwise
+the following memory leak will occur:
 
-[ 9906.932724] XFS (pmem0): no-recovery mounts must be read-only.
+unreferenced object 0xffff0000d55d7080 (size 128):
+  comm "kworker/u8:2", pid 56, jiffies 4294893188 (age 214.272s)
+  hex dump (first 32 bytes):
+    72 70 6d 73 67 5f 6e 73 00 00 00 00 00 00 00 00  rpmsg_ns........
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000009c94c9c1>] __kmem_cache_alloc_node+0x1f8/0x320
+    [<000000002300d89b>] __kmalloc_node_track_caller+0x44/0x70
+    [<00000000228a60c3>] kstrndup+0x4c/0x90
+    [<0000000077158695>] driver_set_override+0xd0/0x164
+    [<000000003e9c4ea5>] rpmsg_register_device_override+0x98/0x170
+    [<000000001c0c89a8>] rpmsg_ns_register_device+0x24/0x30
+    [<000000008bbf8fa2>] rpmsg_probe+0x2e0/0x3ec
+    [<00000000e65a68df>] virtio_dev_probe+0x1c0/0x280
+    [<00000000443331cc>] really_probe+0xbc/0x2dc
+    [<00000000391064b1>] __driver_probe_device+0x78/0xe0
+    [<00000000a41c9a5b>] driver_probe_device+0xd8/0x160
+    [<000000009c3bd5df>] __device_attach_driver+0xb8/0x140
+    [<0000000043cd7614>] bus_for_each_drv+0x7c/0xd4
+    [<000000003b929a36>] __device_attach+0x9c/0x19c
+    [<00000000a94e0ba8>] device_initial_probe+0x14/0x20
+    [<000000003c999637>] bus_probe_device+0xa0/0xac
 
-Turns out, readonly mounts with the fsopen()/fsconfig() mount API
-have been busted since day zero. It's only taken 5 years for debian
-unstable to start using this "new" mount API, and shortly after this
-I noticed xfs/513 had started to fail as per above.
-
-The syscall trace is:
-
-fsopen("xfs", FSOPEN_CLOEXEC)           = 3
-mount_setattr(-1, NULL, 0, NULL, 0)     = -1 EINVAL (Invalid argument)
-.....
-fsconfig(3, FSCONFIG_SET_STRING, "source", "/dev/pmem0", 0) = 0
-fsconfig(3, FSCONFIG_SET_FLAG, "ro", NULL, 0) = 0
-fsconfig(3, FSCONFIG_SET_FLAG, "norecovery", NULL, 0) = 0
-fsconfig(3, FSCONFIG_CMD_CREATE, NULL, NULL, 0) = -1 EINVAL (Invalid argument)
-close(3)                                = 0
-
-Showing that the actual mount instantiation (FSCONFIG_CMD_CREATE) is
-what threw out the error.
-
-During mount instantiation, we call xfs_fs_validate_params() which
-does:
-
-        /* No recovery flag requires a read-only mount */
-        if (xfs_has_norecovery(mp) && !xfs_is_readonly(mp)) {
-                xfs_warn(mp, "no-recovery mounts must be read-only.");
-                return -EINVAL;
-        }
-
-and xfs_is_readonly() checks internal mount flags for read only
-state. This state is set in xfs_init_fs_context() from the
-context superblock flag state:
-
-        /*
-         * Copy binary VFS mount flags we are interested in.
-         */
-        if (fc->sb_flags & SB_RDONLY)
-                set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
-
-With the old mount API, all of the VFS specific superblock flags
-had already been parsed and set before xfs_init_fs_context() is
-called, so this all works fine.
-
-However, in the brave new fsopen/fsconfig world,
-xfs_init_fs_context() is called from fsopen() context, before any
-VFS superblock have been set or parsed. Hence if we use fsopen(),
-the internal XFS readonly state is *never set*. Hence anything that
-depends on xfs_is_readonly() actually returning true for read only
-mounts is broken if fsopen() has been used to mount the filesystem.
-
-Fix this by moving this internal state initialisation to
-xfs_fs_fill_super() before we attempt to validate the parameters
-that have been set prior to the FSCONFIG_CMD_CREATE call being made.
-
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Fixes: 73e5fff98b64 ("xfs: switch to use the new mount-api")
-cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Fixes: b0b03b811963 ("rpmsg: Release rpmsg devices in backends")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231215020049.78750-1-xiaolei.wang@windriver.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_super.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/rpmsg/virtio_rpmsg_bus.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/xfs_super.c
-+++ b/fs/xfs/xfs_super.c
-@@ -1510,6 +1510,18 @@ xfs_fs_fill_super(
+--- a/drivers/rpmsg/virtio_rpmsg_bus.c
++++ b/drivers/rpmsg/virtio_rpmsg_bus.c
+@@ -378,6 +378,7 @@ static void virtio_rpmsg_release_device(
+ 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
+ 	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
  
- 	mp->m_super = sb;
- 
-+	/*
-+	 * Copy VFS mount flags from the context now that all parameter parsing
-+	 * is guaranteed to have been completed by either the old mount API or
-+	 * the newer fsopen/fsconfig API.
-+	 */
-+	if (fc->sb_flags & SB_RDONLY)
-+		set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
-+	if (fc->sb_flags & SB_DIRSYNC)
-+		mp->m_features |= XFS_FEAT_DIRSYNC;
-+	if (fc->sb_flags & SB_SYNCHRONOUS)
-+		mp->m_features |= XFS_FEAT_WSYNC;
-+
- 	error = xfs_fs_validate_params(mp);
- 	if (error)
- 		return error;
-@@ -1979,6 +1991,11 @@ static const struct fs_context_operation
- 	.free        = xfs_fs_free,
- };
- 
-+/*
-+ * WARNING: do not initialise any parameters in this function that depend on
-+ * mount option parsing having already been performed as this can be called from
-+ * fsopen() before any parameters have been set.
-+ */
- static int xfs_init_fs_context(
- 	struct fs_context	*fc)
- {
-@@ -2010,16 +2027,6 @@ static int xfs_init_fs_context(
- 	mp->m_logbsize = -1;
- 	mp->m_allocsize_log = 16; /* 64k */
- 
--	/*
--	 * Copy binary VFS mount flags we are interested in.
--	 */
--	if (fc->sb_flags & SB_RDONLY)
--		set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
--	if (fc->sb_flags & SB_DIRSYNC)
--		mp->m_features |= XFS_FEAT_DIRSYNC;
--	if (fc->sb_flags & SB_SYNCHRONOUS)
--		mp->m_features |= XFS_FEAT_WSYNC;
--
- 	fc->s_fs_info = mp;
- 	fc->ops = &xfs_context_ops;
++	kfree(rpdev->driver_override);
+ 	kfree(vch);
+ }
  
 
 
