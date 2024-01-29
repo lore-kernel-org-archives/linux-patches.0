@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3681E15957B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08F915957B;
 	Mon, 29 Jan 2024 17:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548492; cv=none; b=Rc9wO8KyIryDMchNWHN8uknfY89SqqIBZg/k/C06bLcbf5BuRzOg6fN1KnBBT22XT8sgzcdMlQo0Ss35bs8Wi55/RdXeqHXHsO0tnHK3JPBcWm7fM6mfnI7FXo2QBD1Q8C0ggCDU2F4KEpVH++32bWnTlWzxxeEM3NxNMzgzTeE=
+	t=1706548493; cv=none; b=VAGJjcrY3h6hDOX0eX53DbTu3/nxCh5tAYus1YIAX5HQkH1XzqI2vaJZWkSaNdvtKWrXD56H6Mt/9Oxq3dApTCyfPDNZvRaOIKBX5NIgGBy8shEjc0iWFyV5x4VT1WRqBI7HVftlR6hm9StWrWNRyIY5m0svoOiXsve/y7UzUVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548492; c=relaxed/simple;
-	bh=XViz8YZ+PRZ5prrtgcnx6Clu72LzoTYlsErAnAX/0y4=;
+	s=arc-20240116; t=1706548493; c=relaxed/simple;
+	bh=ukDf80FMInNqene05p/PxEWgIByHyjJzTjnuHGIVVM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzLD5Sk+bZLeGqRa7OqpFCq4Px6iF1oQ8gqkjQtL3OZsGeIk9Ys939isg3PIVp+AbKwkmOyf4PyhHKQ40UFsZ2b50wVilS+X/m1gy6lDCGFshX2HCkaSL0NC3iVvF78dnaJp7negebdzSU+vzdBDUJUu9ORQysEid7h3BOwvkQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIPeFwLv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5zWwCdDTcQGpU67hD1Pfq76Erl18zZ2wTGHJ3LRIAvwMDLDXoRQ92lV5iswA1Ph6p3RhnSZ3a8XObdyN/vv2crV+e2yGfhQPKXv3/ooalju/uqPBRnlaynlFHAoPBf/Hn14WYx+KR7hbcrvAsB7WfT0IZCTraSSQx4+xYvyUKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7S3Tctl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIPeFwLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F008EC43394;
-	Mon, 29 Jan 2024 17:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7S3Tctl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9544C43390;
+	Mon, 29 Jan 2024 17:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548492;
-	bh=XViz8YZ+PRZ5prrtgcnx6Clu72LzoTYlsErAnAX/0y4=;
+	bh=ukDf80FMInNqene05p/PxEWgIByHyjJzTjnuHGIVVM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qIPeFwLv6F4jEQrfGSE9m3lxh7xUtNc2NajnRVU6WnT1vRmCggesZ6tAPsDBjqJOX
-	 glGkS51BQFrcV3DE7TDTtptRAOr+cRS5knIAltDWPUBssaIfMk1PJpV1TlyNZGFQQn
-	 BnZx30KYxLfDwaq6ZOGYMIbG5mc4TgzZmydai2EQ=
+	b=K7S3TctlYcAj2IxMTd43cVU2fSuHdKzX6g4MyE3AQErVJqdNmpR8hVenSgtBxTmDF
+	 7ppHYGgGPniBMYiyAyMf5dUQft0OeT9OK0EzhDN3ddqt3hWDL2mMCdfCdI5d+C5Rjg
+	 rEkkuKz2rdcSkZJwi5NsE2Rk3EIs+/uXFOe5RvPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 089/331] ARM: dts: qcom: sdx55: fix USB DP/DM HS PHY interrupts
-Date: Mon, 29 Jan 2024 09:02:33 -0800
-Message-ID: <20240129170017.533956563@linuxfoundation.org>
+Subject: [PATCH 6.6 080/331] arm64: dts: qcom: msm8916: Make blsp_dma controlled-remotely
+Date: Mon, 29 Jan 2024 09:02:24 -0800
+Message-ID: <20240129170017.264929466@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-commit de95f139394a5ed82270f005bc441d2e7c1e51b7 upstream.
+commit 7c45b6ddbcff01f9934d11802010cfeb0879e693 upstream.
 
-The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
-controller in order to be able to wake the system up from low-power
-states and to be able to detect disconnect events, which requires
-triggering on falling edges.
+The blsp_dma controller is shared between the different subsystems,
+which is why it is already initialized by the firmware. We should not
+reinitialize it from Linux to avoid potential other users of the DMA
+engine to misbehave.
 
-A recent commit updated the trigger type but failed to change the
-interrupt provider as required. This leads to the current Linux driver
-failing to probe instead of printing an error during suspend and USB
-wakeup not working as intended.
+In mainline this can be described using the "qcom,controlled-remotely"
+property. In the downstream/vendor kernel from Qualcomm there is an
+opposite "qcom,managed-locally" property. This property is *not* set
+for the qcom,sps-dma@7884000 [1] so adding "qcom,controlled-remotely"
+upstream matches the behavior of the downstream/vendor kernel.
 
-Fixes: d0ec3c4c11c3 ("ARM: dts: qcom: sdx55: fix USB wakeup interrupt types")
-Fixes: fea4b41022f3 ("ARM: dts: qcom: sdx55: Add USB3 and PHY support")
-Cc: stable@vger.kernel.org	# 5.12
-Cc: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231213173131.29436-3-johan+linaro@kernel.org
+Adding this seems to fix some weird issues with UART where both
+input/output becomes garbled with certain obscure firmware versions on
+some devices.
+
+[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.2.9.1-02310-8x16.0/arch/arm/boot/dts/qcom/msm8916.dtsi#L1466-1472
+
+Cc: stable@vger.kernel.org # 6.5
+Fixes: a0e5fb103150 ("arm64: dts: qcom: Add msm8916 BLSP device nodes")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20231204-msm8916-blsp-dma-remote-v1-1-3e49c8838c8d@gerhold.net
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/qcom/qcom-sdx55.dtsi |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-@@ -592,10 +592,10 @@
- 					  <&gcc GCC_USB30_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -2085,6 +2085,7 @@
+ 			clock-names = "bam_clk";
+ 			#dma-cells = <1>;
+ 			qcom,ee = <0>;
++			qcom,controlled-remotely;
+ 		};
  
--			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 158 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 157 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>,
-+					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
- 
+ 		blsp_uart1: serial@78af000 {
 
 
