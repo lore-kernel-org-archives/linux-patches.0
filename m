@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DEB157E6A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF730157E6A;
 	Mon, 29 Jan 2024 17:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548293; cv=none; b=YiMsxBUX6XEJ3nggDt5eXf7O1RH/IFx4S1iUu3QVHc8bSdZxPFZcvRfkaNqvvxwEnx4WowxUQVaKy/aIN60qCBQ+Di9S+l4GRnt9IBcitC3X9DFlHNCyek8lOkWmPm7dNSsPxuPz/WxfOhbUNvfc0qYmdGQVaGsG4XlQr2VsgJU=
+	t=1706548293; cv=none; b=ns4m8yn7FkrEBjHawVKRfQOaZFMQz091LlfIglGEGIaqSa8vNsvr9MVpi/Y1MqPjN+q2/MlGaI6nwzO2xFQms/AjOi/dRsF+U+i3OcNwy5OTlioqfUOFaRzKQJpkz1FtHETxM4rgauGvMgJA+HLWeq0w+g0UrAL6nOlKeGCtn4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548293; c=relaxed/simple;
-	bh=cbpVvNjll1xR8gD/GM9XSQvECkCSUzXLfzP1sB5vZ44=;
+	bh=zcf5lCtaWQz/HFDhvJJ97VH2N25ohuJzxjLjYCdxJas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8CqcoUVYJd5Si6hGEkqt0rr2Bx+QT3QTOUoaPq0a9lcEVIMbBudoyNg9nG5Lb46JjWmwreJKjtSxdjHtAGTDhAept63nTopxyhAAkpOLema0eApLhfG6hICT0YviAFR5dnA8K8BK9+REdPXB6HdYM+TJKl1l6ISrPbbTKvxPEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJpKS3M+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxd3nYsswhUxM5neFLq6LcJQXVAjHelh69UGlbyE+kJUakAzd6ap9itwccSpLEyngaLByp/4NK5djbVeSCgbucfpCTRGFJxIEQKvM0n9iK2FtmOOlb73hlglFiS8L8S9m2PINGryTyXuQWCVOlBtEIpmtyN71GsRw1ohxzAf7yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xA8XlH4O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJpKS3M+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DD3C43399;
-	Mon, 29 Jan 2024 17:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xA8XlH4O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A86C433A6;
+	Mon, 29 Jan 2024 17:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548292;
-	bh=cbpVvNjll1xR8gD/GM9XSQvECkCSUzXLfzP1sB5vZ44=;
+	s=korg; t=1706548293;
+	bh=zcf5lCtaWQz/HFDhvJJ97VH2N25ohuJzxjLjYCdxJas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJpKS3M+iZ0OIgVwaeKBkwI/b4A4OyjdPsPejZtiBFCqSaCZhdYcj2m2iYQoCbntO
-	 t57tAHM71LD+Cy+BNrME2dAQJURZXbUUy39ZisgfcJSAShjUGAwB2JOBiGWjTTsH9f
-	 DQc8ouLXAJORbOL6appIvsdbadUzboWCujTgOpJY=
+	b=xA8XlH4O9SlfwmOOHri4V781sVJRhoAMsL3zuLiyZmwaMl4SgAmGEkpFQuuYpkahf
+	 cBiOBlUhL8zG4cUKpl295uzRJmNxqVuxpAzMEkpKwR+C0eIEudWnDOWVh1bSfL04Ca
+	 WOQZLKhPB0nxyvlXaYWX2l5OZicHQEmu24MnUwxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Martin Leung <martin.leung@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Dillon Varone <dillon.varone@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 302/346] drm/amd/display: Init link enc resources in dc_state only if res_pool presents
-Date: Mon, 29 Jan 2024 09:05:33 -0800
-Message-ID: <20240129170025.316787670@linuxfoundation.org>
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Wade Wang <wade.wang@hp.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 075/185] drm/amd/display: pbn_div need be updated for hotplug event
+Date: Mon, 29 Jan 2024 09:04:35 -0800
+Message-ID: <20240129170001.013123430@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,48 +50,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dillon Varone <dillon.varone@amd.com>
+From: Wayne Lin <wayne.lin@amd.com>
 
-[ Upstream commit aa36d8971fccb55ef3241cbfff9d1799e31d8628 ]
+commit 9cdef4f720376ef0fb0febce1ed2377c19e531f9 upstream.
 
-[Why & How]
-res_pool is not initialized in all situations such as virtual
-environments, and therefore link encoder resources should not be
-initialized if res_pool is NULL.
+link_rate sometime will be changed when DP MST connector hotplug, so
+pbn_div also need be updated; otherwise, it will mismatch with
+link_rate, causes no output in external monitor.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+This is a backport to 6.7 and older.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Martin Leung <martin.leung@amd.com>
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Dillon Varone <dillon.varone@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Jerry Zuo <jerry.zuo@amd.com>
+Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Wade Wang <wade.wang@hp.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index c16190a10883..990d775e4cea 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -3774,7 +3774,8 @@ void dc_resource_state_construct(
- 	dst_ctx->clk_mgr = dc->clk_mgr;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6677,8 +6677,7 @@ static int dm_encoder_helper_atomic_chec
+ 	if (IS_ERR(mst_state))
+ 		return PTR_ERR(mst_state);
  
- 	/* Initialise DIG link encoder resource tracking variables. */
--	link_enc_cfg_init(dc, dst_ctx);
-+	if (dc->res_pool)
-+		link_enc_cfg_init(dc, dst_ctx);
- }
+-	if (!mst_state->pbn_div)
+-		mst_state->pbn_div = dm_mst_get_pbn_divider(aconnector->mst_port->dc_link);
++	mst_state->pbn_div = dm_mst_get_pbn_divider(aconnector->mst_port->dc_link);
  
- 
--- 
-2.43.0
-
+ 	if (!state->duplicated) {
+ 		int max_bpc = conn_state->max_requested_bpc;
 
 
