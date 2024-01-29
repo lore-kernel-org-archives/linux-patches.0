@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0203C15705A;
-	Mon, 29 Jan 2024 17:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B142E15705A;
+	Mon, 29 Jan 2024 17:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548202; cv=none; b=plFRp89i62W2IupZTEwfPzmH85/P0bfqLcDfhYF0w8otcW7zzm6e7Sm8CkKhpAvvJwLbe1OtobbP6izl1fBNR3UzvVC4QgxnFRb8u9eM634iXYXuF75rubrQHu4ixemPxCOHgJQJfyvo7DJwErMVE4+Nkmu/GS84z1XHrYKScek=
+	t=1706548202; cv=none; b=KZhqPKwTUf4TKtCuWhLppHoT+f7zmb/9s39DhODnIZoYoMycfWpkkE/XuU+rNiGotSGkyhCFU0RvOEeqDJrqcm/osU8YMYKE/AUFfsTiy/Iud0TJ4JD6vCStZPT9AOFBN74YA1vqdEVV6PxHDXLW1c8NCPQBSaxPinxbobNa4Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548202; c=relaxed/simple;
-	bh=mQkoEKOrCphnGt/oixw9H6jWjBP9JoH8tSVh1GALTuo=;
+	bh=mOrrg5+nIBo9LwECpOxAFYC/wjYbyUPSMt45soM5Uzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mi2cp8R7Rl3nPACuq+up3Sw3YZ1uKRxS3eeRGghoP5AyxbC/i4m6bFNo3yfcYixN9VSBIatv3Y+4ygTq6ikkGMscXufHqIbKM227aefxW42hs4Y5H/d3cno5sBxhSh63xl/KP2iugcrclCyA54nKIR6MERMsyst3cahpj9kKuc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdFs071f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlUEWqme/vU63hW2zINz9Yak2A94ldHklAaiTr8+u4AQ0YYaaFzXv3vDVz2jkFTtvV7xE0M9kpiNgIwpNHabBbaxGUailS2bimPeszfHp9oTHw/r+gMD3K//fll72T/MDmGF19/4pp/3zauYTs3PzfWWCv4U8Llw0go2OEcUr8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymE8POeW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdFs071f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA91C433F1;
-	Mon, 29 Jan 2024 17:10:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymE8POeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76648C433F1;
+	Mon, 29 Jan 2024 17:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548201;
-	bh=mQkoEKOrCphnGt/oixw9H6jWjBP9JoH8tSVh1GALTuo=;
+	s=korg; t=1706548202;
+	bh=mOrrg5+nIBo9LwECpOxAFYC/wjYbyUPSMt45soM5Uzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QdFs071fq4cUgTNttQeXOvOnzDnNkdJ+a4j9Dz72tIuMVRVxMvXIVsFIP/ZV1gh6V
-	 RsT7yercgI81XUNHIEDhN/II2EH7MhgAcpFgQKlI+LCaKg7QRwfwfVtXqDaY8NMRyn
-	 EF7aiG6zYEH8M6swSxB54xqg5hW8GTaUPvcptUl4=
+	b=ymE8POeWVrqUTjQmLJ0T4rsZEiHDjVl34MdJoKcLWCCLyPW7jO+Mw3dTuh5YCJGav
+	 a0Sd6wO3Qdy4RuhYqMxbM6iojIwkHd8duDB7WtMfmWen363pWSXZwRjjdtxlPQwqkH
+	 oDHvNXWFzpEIDPX899bZ9nq01nYhK1tZsZfwH9NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Anthony Krowiak <akrowiak@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.1 015/185] s390/vfio-ap: unpin pages on gisc registration failure
-Date: Mon, 29 Jan 2024 09:03:35 -0800
-Message-ID: <20240129165959.087608271@linuxfoundation.org>
+	Jaak Ristioja <jaak@ristioja.ee>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Thorsten Leemhuis <regressions@leemhuis.info>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.7 241/346] Revert "drivers/firmware: Move sysfb_init() from device_initcall to subsys_initcall_sync"
+Date: Mon, 29 Jan 2024 09:04:32 -0800
+Message-ID: <20240129170023.494105695@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +51,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 7b2d039da622daa9ba259ac6f38701d542b237c3 upstream.
+commit d1b163aa0749706379055e40a52cf7a851abf9dc upstream.
 
-In the vfio_ap_irq_enable function, after the page containing the
-notification indicator byte (NIB) is pinned, the function attempts
-to register the guest ISC. If registration fails, the function sets the
-status response code and returns without unpinning the page containing
-the NIB. In order to avoid a memory leak, the NIB should be unpinned before
-returning from the vfio_ap_irq_enable function.
+This reverts commit 60aebc9559492cea6a9625f514a8041717e3a2e4.
 
-Co-developed-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Fixes: 783f0a3ccd79 ("s390/vfio-ap: add s390dbf logging to the vfio_ap_irq_enable function")
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20231109164427.460493-2-akrowiak@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Commit 60aebc9559492cea ("drivers/firmware: Move sysfb_init() from
+device_initcall to subsys_initcall_sync") messes up initialization order
+of the graphics drivers and leads to blank displays on some systems. So
+revert the commit.
+
+To make the display drivers fully independent from initialization
+order requires to track framebuffer memory by device and independently
+from the loaded drivers. The kernel currently lacks the infrastructure
+to do so.
+
+Reported-by: Jaak Ristioja <jaak@ristioja.ee>
+Closes: https://lore.kernel.org/dri-devel/ZUnNi3q3yB3zZfTl@P70.localdomain/T/#t
+Reported-by: Huacai Chen <chenhuacai@loongson.cn>
+Closes: https://lore.kernel.org/dri-devel/20231108024613.2898921-1-chenhuacai@loongson.cn/
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10133
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thorsten Leemhuis <regressions@leemhuis.info>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: stable@vger.kernel.org # v6.5+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240123120937.27736-1-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/sysfb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -425,6 +425,7 @@ static struct ap_queue_status vfio_ap_ir
- 		VFIO_AP_DBF_WARN("%s: gisc registration failed: nisc=%d, isc=%d, apqn=%#04x\n",
- 				 __func__, nisc, isc, q->apqn);
+--- a/drivers/firmware/sysfb.c
++++ b/drivers/firmware/sysfb.c
+@@ -128,4 +128,4 @@ unlock_mutex:
+ }
  
-+		vfio_unpin_pages(&q->matrix_mdev->vdev, nib, 1);
- 		status.response_code = AP_RESPONSE_INVALID_GISA;
- 		return status;
- 	}
+ /* must execute after PCI subsystem for EFI quirks */
+-subsys_initcall_sync(sysfb_init);
++device_initcall(sysfb_init);
 
 
