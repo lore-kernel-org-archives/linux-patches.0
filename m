@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3D215B30A;
-	Mon, 29 Jan 2024 17:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDCD15705C;
+	Mon, 29 Jan 2024 17:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548578; cv=none; b=qhzIWmWBnyOirXumgn/+/ibWLzetHNiREhBZk3RnOn/Ovx8N1XadW0bY/OyddLDaMa8AewJwgI+LTMdzpyhbXGEYAXHbW0/zIDPKIZODBMHUevlr4JRuG240+raHLpeSbKC1tVVrCNhP1aMEwcrWlly77fgVPGGNjMa+/imTaIg=
+	t=1706548579; cv=none; b=JjrqQx3V8703GYJ9qkq0zbIpDI1On2SbV/P5fPUu1aukmDKdWj+E6nB2OB7L9KoHt4l+uPumi4zq2OlUHCeS7I+eNPF6ym13kmSrD3bZPoTfGHTib4C5AVY55hwDosPTeXGo0CEbPJl+9MxfYxQFUyVfLahdNAiX4SP7eP+VeC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548578; c=relaxed/simple;
-	bh=OJAq4vx5+gZuCinwLTbTJHAKkzxpFeghTk33iBbXKvE=;
+	s=arc-20240116; t=1706548579; c=relaxed/simple;
+	bh=Yj79Bw1Sn1N8EkgSIzY7NnKQ8dv9PPxSM/8yAefEd8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9LF0JqN9hE/8Fit7UsJ1psL2o+14XFwSEQMIOC3p0KAkvyFVNFJMjs+i33UC6VdCnlWHFwiV15qV79tzvthSy6MOWoWwWObfG42yIAMNi9vi3/am6cxUuPm+WCVHbp4qDRaqQ4JEqSEuvY82Ak7/hPudsHN1g8tUlqPcQJNxhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsLI3qML; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F/eCrjsBhf9gc1x1FBtpC/FYQ7GgbN5ummj4YNheID6U7Y7NcO8gnqTIeLT54OuvIztpYkZgtOyaywKQxVmKEKq06ZRDCezZy4su2zGWv4OJJ7FNE+C4j2f7YCjl8oi16fWg+I678N1OScpX/knjqmmXWbjWvfI/prxQQ0uIois=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LgRSyCc9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsLI3qML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C63C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LgRSyCc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5FDC433C7;
 	Mon, 29 Jan 2024 17:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548578;
-	bh=OJAq4vx5+gZuCinwLTbTJHAKkzxpFeghTk33iBbXKvE=;
+	s=korg; t=1706548579;
+	bh=Yj79Bw1Sn1N8EkgSIzY7NnKQ8dv9PPxSM/8yAefEd8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsLI3qMLZrsF41r7JAQo9SAmbV7G6mjW1zgVLvcoUt/uuF4o8bPOFuNYQubUvateO
-	 TvtAtncqjMCZ39h2xKijyoUxwrBNnooRTMunwIqL1MNoYaidOED/Z3xOBDotNbQism
-	 T3tVUa+oBpGf/cY7LGXYOJwp+x6+MkePGh4UhoF0=
+	b=LgRSyCc9qQ24FRJlvnrHoaEYZK+jWgK0m9W/ERyxXM12oWGsSS7/u+WZ2F1eObhZs
+	 FySc/O9A5cUZp1j54qC8h5VePUrx9GAHUS676mp31SGXDmwaJmq6zxtsZ7C0cjlvWR
+	 HXM07DtQxz2bF2YGeIPIRo1H89HWGkduv9XA4Jt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com,
+	syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com,
 	Anand Jain <anand.jain@oracle.com>,
-	Omar Sandoval <osandov@fb.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 232/331] btrfs: avoid copying BTRFS_ROOT_SUBVOL_DEAD flag to snapshot of subvolume being deleted
-Date: Mon, 29 Jan 2024 09:04:56 -0800
-Message-ID: <20240129170021.664812894@linuxfoundation.org>
+Subject: [PATCH 6.6 233/331] btrfs: ref-verify: free ref cache before clearing mount opt
+Date: Mon, 29 Jan 2024 09:04:57 -0800
+Message-ID: <20240129170021.690891405@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,116 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Omar Sandoval <osandov@fb.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 3324d0547861b16cf436d54abba7052e0c8aa9de upstream.
+commit f03e274a8b29d1d1c1bbd7f764766cb5ca537ab7 upstream.
 
-Sweet Tea spotted a race between subvolume deletion and snapshotting
-that can result in the root item for the snapshot having the
-BTRFS_ROOT_SUBVOL_DEAD flag set. The race is:
+As clearing REF_VERIFY mount option indicates there were some errors in a
+ref-verify process, a ref cache is not relevant anymore and should be
+freed.
 
-Thread 1                                      | Thread 2
-----------------------------------------------|----------
-btrfs_delete_subvolume                        |
-  btrfs_set_root_flags(BTRFS_ROOT_SUBVOL_DEAD)|
-                                              |btrfs_mksubvol
-                                              |  down_read(subvol_sem)
-                                              |  create_snapshot
-                                              |    ...
-                                              |    create_pending_snapshot
-                                              |      copy root item from source
-  down_write(subvol_sem)                      |
+btrfs_free_ref_cache() requires REF_VERIFY option being set so call
+it just before clearing the mount option.
 
-This flag is only checked in send and swap activate, which this would
-cause to fail mysteriously.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-create_snapshot() now checks the root refs to reject a deleted
-subvolume, so we can fix this by locking subvol_sem earlier so that the
-BTRFS_ROOT_SUBVOL_DEAD flag and the root refs are updated atomically.
-
-CC: stable@vger.kernel.org # 4.14+
-Reported-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reported-by: syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com
+Fixes: fd708b81d972 ("Btrfs: add a extent ref verify tool")
+CC: stable@vger.kernel.org # 5.4+
+Closes: https://lore.kernel.org/lkml/000000000000e5a65c05ee832054@google.com/
+Reported-by: syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/0000000000007fe09705fdc6086c@google.com/
 Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Omar Sandoval <osandov@fb.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ fs/btrfs/ref-verify.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4447,6 +4447,8 @@ int btrfs_delete_subvolume(struct btrfs_
- 	u64 root_flags;
- 	int ret;
- 
-+	down_write(&fs_info->subvol_sem);
-+
- 	/*
- 	 * Don't allow to delete a subvolume with send in progress. This is
- 	 * inside the inode lock so the error handling that has to drop the bit
-@@ -4458,25 +4460,25 @@ int btrfs_delete_subvolume(struct btrfs_
- 		btrfs_warn(fs_info,
- 			   "attempt to delete subvolume %llu during send",
- 			   dest->root_key.objectid);
--		return -EPERM;
-+		ret = -EPERM;
-+		goto out_up_write;
- 	}
- 	if (atomic_read(&dest->nr_swapfiles)) {
- 		spin_unlock(&dest->root_item_lock);
- 		btrfs_warn(fs_info,
- 			   "attempt to delete subvolume %llu with active swapfile",
- 			   root->root_key.objectid);
--		return -EPERM;
-+		ret = -EPERM;
-+		goto out_up_write;
- 	}
- 	root_flags = btrfs_root_flags(&dest->root_item);
- 	btrfs_set_root_flags(&dest->root_item,
- 			     root_flags | BTRFS_ROOT_SUBVOL_DEAD);
- 	spin_unlock(&dest->root_item_lock);
- 
--	down_write(&fs_info->subvol_sem);
--
- 	ret = may_destroy_subvol(dest);
- 	if (ret)
--		goto out_up_write;
-+		goto out_undead;
- 
- 	btrfs_init_block_rsv(&block_rsv, BTRFS_BLOCK_RSV_TEMP);
- 	/*
-@@ -4486,7 +4488,7 @@ int btrfs_delete_subvolume(struct btrfs_
- 	 */
- 	ret = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
- 	if (ret)
--		goto out_up_write;
-+		goto out_undead;
- 
- 	trans = btrfs_start_transaction(root, 0);
- 	if (IS_ERR(trans)) {
-@@ -4552,15 +4554,17 @@ out_end_trans:
- 	inode->i_flags |= S_DEAD;
- out_release:
- 	btrfs_subvolume_release_metadata(root, &block_rsv);
--out_up_write:
--	up_write(&fs_info->subvol_sem);
-+out_undead:
- 	if (ret) {
- 		spin_lock(&dest->root_item_lock);
- 		root_flags = btrfs_root_flags(&dest->root_item);
- 		btrfs_set_root_flags(&dest->root_item,
- 				root_flags & ~BTRFS_ROOT_SUBVOL_DEAD);
- 		spin_unlock(&dest->root_item_lock);
--	} else {
+--- a/fs/btrfs/ref-verify.c
++++ b/fs/btrfs/ref-verify.c
+@@ -886,8 +886,10 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ out_unlock:
+ 	spin_unlock(&fs_info->ref_verify_lock);
+ out:
+-	if (ret)
++	if (ret) {
++		btrfs_free_ref_cache(fs_info);
+ 		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
 +	}
-+out_up_write:
-+	up_write(&fs_info->subvol_sem);
-+	if (!ret) {
- 		d_invalidate(dentry);
- 		btrfs_prune_dentries(dest);
- 		ASSERT(dest->send_in_progress == 0);
+ 	return ret;
+ }
+ 
+@@ -1018,8 +1020,8 @@ int btrfs_build_ref_tree(struct btrfs_fs
+ 		}
+ 	}
+ 	if (ret) {
+-		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 		btrfs_free_ref_cache(fs_info);
++		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 	}
+ 	btrfs_free_path(path);
+ 	return ret;
 
 
