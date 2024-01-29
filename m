@@ -1,162 +1,289 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E37537EC
-	for <patches@lists.linux.dev>; Mon, 29 Jan 2024 08:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAFB54BCC
+	for <patches@lists.linux.dev>; Mon, 29 Jan 2024 08:47:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706517585; cv=none; b=ALPW5glmE2xzF029LmlhCpgHHuSdWjLFgMyAoQlfxU1ct3ZlTMza43acJOFP3HXk7jVTRv4bI4yzaD+YNMV/lkC/fOv3UhO/t/G3mmjx7VP7BaFw3jGt0Wr+hLjuaTvOEeBCc3UyEPXf03pZyiaXAB+tfdcn+NYoeg/c16isIJg=
+	t=1706518025; cv=none; b=Gt7XpStDBftEpH99wyZ80dJLdZNn82UDRd3YfreVLsLjeHcQ0gFbKe9xVsIY4Xv5cTwdM+FFxd9pdAjg8H8O0VbAZlxxjp3W4u/qC/GLr/fLcuvj+jSf8adYD5oJovt1TPzt85hcraYTTPvbasfz08NQWVHUORmY1s4JUvrv3Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706517585; c=relaxed/simple;
-	bh=4yZ89r1Hsazz2TJ5Dgl6xuBfA2vUUCpLWcqAGNhN1M0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JbK7795Z+2RMcR8SX3NfI6d2f9wPSveeS8g9q/zQSKF7WEXIGrOSJ9toZ/TEBdu3pTqMzm0X47GpoqB8K7DGcFfWs6yk4yhH+YEA0p8fNgWXlL92kH/AH9syzb9NV+JDiMYxgVdi+N155aXqnCAdNM/GIzrW3IyQ5G2DvjZv2RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=cN1NeFKr; arc=none smtp.client-ip=170.10.133.124
+	s=arc-20240116; t=1706518025; c=relaxed/simple;
+	bh=wan+/40Gb1SyAcbTJJKFngUv3lxpedgrk4APeSN8y8k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=ORD2Ah7i9CmfglBSrfm+0Vn4nJKCWDr54QmzHW0fPAsbqUeFn5hxyggtHKC8T/LrWLhJHrE39mnf/REihS+QR9G7xg6ZdUcCaLhbj2w/jGlo8U+8DPfqinqps0+vwFzT4FD73TUXHCf28oubJh+u5E2ALfEbY+nSikCHA4rvQzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=A7vLW0EM; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="cN1NeFKr"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="A7vLW0EM"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1706517583;
+	s=mimecast20190719; t=1706518022;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SO879PgboMkQ1Vjya3+F+gDiRM6F/d/6qw5VF+2GLTI=;
-	b=cN1NeFKrnorQ3BDDZNteTISgdb3SikYnIOA1AcIvoh1UjGuaEO0t4WLQRtqGFzT/cgDr5H
-	6S84g7Zd1eTYSwb1BRxA+Bu/lcxdJevbWSTwaOzm9mdL9wYzRR9ZAwWRXMMNoFDKrYU/7u
-	fFfQ19gI8JkMHY+O7JWc8L6trWI/j6w=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=mHx98I53Z/x+UcJL2CQPXiS0oxn65PZb6tI9zRyZW1E=;
+	b=A7vLW0EMiW7253LKygrZZ6Ja3qcH5oYF03v3i/QrwNXuIukm2d/SWZnJ9m7gksByAhkics
+	QNa6REbMS0c2jNsrn9XwM8v1lUBiJCa4so49/JnopShFXcG8H6z5zeFoG5Avu3DPXWDmU9
+	v1x8KZykaXUZJ6Vm5GLrNJI9szt3iic=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-402-GuJndm9xMjaXeB8iJD19SA-1; Mon, 29 Jan 2024 03:39:41 -0500
-X-MC-Unique: GuJndm9xMjaXeB8iJD19SA-1
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-a2b6c2a5fddso131628266b.1
-        for <patches@lists.linux.dev>; Mon, 29 Jan 2024 00:39:41 -0800 (PST)
+ us-mta-613-xHJwI4TuOP67x437jT6hoA-1; Mon, 29 Jan 2024 03:47:01 -0500
+X-MC-Unique: xHJwI4TuOP67x437jT6hoA-1
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-337cc89a049so1285453f8f.3
+        for <patches@lists.linux.dev>; Mon, 29 Jan 2024 00:47:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706517580; x=1707122380;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SO879PgboMkQ1Vjya3+F+gDiRM6F/d/6qw5VF+2GLTI=;
-        b=B0b2I+h3YEfszbAz2ZzSKqHN1uwDfv+CEFjPtr8fjKi2MxJZK3y71yO3IkpV1Mv5r3
-         jf5EJovPJ004epvBJ4/Su4IN1n9+cePczb4uaxcb6Jdi4mzUjEravs6jRIGREIXioGMZ
-         oBal+GJwNIAICVRvfB2E+rz8VTuwbhNWboKX41DPf0Oyrd6I0S+TCMPjq64hQLVO7XML
-         EvBzwDVP+WsKGUfifUF0kMFNrlHRWQ3SQ6LRYi+RLO6y85f0/kB8wIHTPwvZH/X/8uHt
-         0A3IZ5O8HN5nXCudPQ8s4S/cn/tsKov7K8PAVGuGTehNBj0T2+PYcCV7P5gXUluynvxW
-         eSxA==
-X-Gm-Message-State: AOJu0YxTok80VCY0HVJjQzVJBvKEngegbybZREpD9ExErn2HxWFq1Htn
-	qngSMTQqdWBvfrfesNZu39ibKeiJ7mXGGZ0vN4fPLFuGrilVQPgR6nMD7aVYTKnDOx9J2l32BDD
-	zn6omdKVUBwURhFDLqTUY1c53MjBjybb+7PuBwzbtPejuR1DrDPUYeGU=
-X-Received: by 2002:a17:906:398c:b0:a31:805b:4172 with SMTP id h12-20020a170906398c00b00a31805b4172mr3644572eje.9.1706517580469;
-        Mon, 29 Jan 2024 00:39:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGr/OOLnIBJUikDcSEfxL6gQVOu//FnOkvwdqEx58htCO3kPCq7MVbE3yW/Y7UO2B5jcyOQAw==
-X-Received: by 2002:a17:906:398c:b0:a31:805b:4172 with SMTP id h12-20020a170906398c00b00a31805b4172mr3644554eje.9.1706517580175;
-        Mon, 29 Jan 2024 00:39:40 -0800 (PST)
-Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id l26-20020a170906415a00b00a3590fb191csm1447881ejk.150.2024.01.29.00.39.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jan 2024 00:39:38 -0800 (PST)
-Message-ID: <846463ed-e43e-406d-ac5a-c2fbe79b348a@redhat.com>
-Date: Mon, 29 Jan 2024 09:39:37 +0100
+        d=1e100.net; s=20230601; t=1706518020; x=1707122820;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mHx98I53Z/x+UcJL2CQPXiS0oxn65PZb6tI9zRyZW1E=;
+        b=F0CvnmEPHF834FoyWr4XyTcKZDzNMi8ThtuJW+eKvwsYMrwCMaiMfMIidXAfa0wk18
+         zpQT3H6fpt/jYBJI7M43YiPA3dwJyu2m1rwpFd7tF5na9gQg1p0aWZxe4/G6M6lKJwa5
+         Uslu/Kf4LmLxKYEMElLqTe0O6Kz3w1lokaeNV9xTWk8I3OCamazbOF/I3ofDG7ADIBvy
+         3+2BN+R6nAmw5NL4nrjcOKO7qv2+0uevaNFgTxtK+KUUBuu9LlqxWQ/fwuBuGXYMgQhe
+         OtX8nrR5yeAker12QyGObihuGiGGk0z3cV5WdEshnGe2hGpBpL61XlvqLN5zfVqU0j0l
+         69eQ==
+X-Gm-Message-State: AOJu0YzN8hM6RksB/j3oRjo29OHN5arcwqVSjXeGxVa0hVecdKcwgpwi
+	fFHmvYftwP30GzlfEj9CQYhAxzbkbL2q/kJS7/96nGFBn9LDg3M6bAiZKIIodPhzV/BVgRNM805
+	eiR7avk2N1zE/sGKrL9mb6G2dj/jlCPMkKjkfdXsyGAqHxGMU7EDqI++7EN+k59I=
+X-Received: by 2002:a05:6000:710:b0:33a:f399:5de3 with SMTP id bs16-20020a056000071000b0033af3995de3mr576164wrb.39.1706518020231;
+        Mon, 29 Jan 2024 00:47:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEwh3LLMODSTkeFeUAQPUxU73Kw1Df+2FZWQ7IIt52Rgmjhp3f7mup1S9zJyIE8dHYQ33LIqQ==
+X-Received: by 2002:a05:6000:710:b0:33a:f399:5de3 with SMTP id bs16-20020a056000071000b0033af3995de3mr576145wrb.39.1706518019789;
+        Mon, 29 Jan 2024 00:46:59 -0800 (PST)
+Received: from redhat.com ([2.52.129.159])
+        by smtp.gmail.com with ESMTPSA id bp19-20020a5d5a93000000b003394495566dsm7571525wrb.22.2024.01.29.00.46.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jan 2024 00:46:59 -0800 (PST)
+Date: Mon, 29 Jan 2024 03:46:55 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	llvm@lists.linux.dev, keescook@chromium.org,
+	arei.gonglei@huawei.com, jasowang@redhat.com,
+	virtualization@lists.linux.dev, linux-crypto@vger.kernel.org,
+	zhenwei pi <pizhenwei@bytedance.com>
+Subject: Re: [PATCH 5.10 000/286] 5.10.209-rc1 review
+Message-ID: <20240129034304-mutt-send-email-mst@kernel.org>
+References: <20240122235732.009174833@linuxfoundation.org>
+ <6b563537-b62f-428e-96d1-2a228da99077@roeck-us.net>
+ <2024012636-clubbed-radial-1997@gregkh>
+ <2f342268-8517-4c06-8785-96a588d20c63@roeck-us.net>
+ <20240126203436.GA913905@dev-arch.thelio-3990X>
+ <0a194a79-e3a3-45e7-be98-83abd3e1cb7e@roeck-us.net>
+ <20240126223554.GA1320833@dev-arch.thelio-3990X>
+ <bef7737e-4b8e-4a89-b538-cd8e75874fd2@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] platform/x86/intel/ifs: Call release_firmware() when
- handling errors.
-To: Pengfei Xu <pengfei.xu@intel.com>
-Cc: Ashok Raj <ashok.raj@intel.com>,
- Ilpo Jarvinen <ilpo.jarvinen@linux.intel.com>, markgross@kernel.org,
- Jithu Joseph <jithu.joseph@intel.com>, rostedt@goodmis.org,
- tony.luck@intel.com, LKML <linux-kernel@vger.kernel.org>,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- stable@vger.kernel.org, gregkh@linuxfoundation.org, heng.su@intel.com
-References: <20240125082254.424859-1-ashok.raj@intel.com>
- <20240125082254.424859-2-ashok.raj@intel.com>
- <4e360838-36a9-41c0-a1d5-f369ed78cf04@redhat.com>
- <ZbchziXFXPvIWP4s@xpf.sh.intel.com>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <ZbchziXFXPvIWP4s@xpf.sh.intel.com>
+In-Reply-To: <bef7737e-4b8e-4a89-b538-cd8e75874fd2@roeck-us.net>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
-Content-Language: en-US, nl
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi,
-
-On 1/29/24 04:55, Pengfei Xu wrote:
-> On 2024-01-26 at 20:15:46 +0100, Hans de Goede wrote:
->> Hi,
->>
->> On 1/25/24 09:22, Ashok Raj wrote:
->>> From: Jithu Joseph <jithu.joseph@intel.com>
->>>
->>> Missing release_firmware() due to error handling blocked any future image
->>> loading.
->>>
->>> Fix the return code and release_fiwmare() to release the bad image.
->>>
->>> Fixes: 25a76dbb36dd ("platform/x86/intel/ifs: Validate image size")
->>> Reported-by: Pengfei Xu <pengfei.xu@intel.com>
->>> Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
->>> Signed-off-by: Ashok Raj <ashok.raj@intel.com>
->>> Tested-by: Pengfei Xu <pengfei.xu@intel.com>
->>> Reviewed-by: Tony Luck <tony.luck@intel.com>
->>
->> Thank you for your patch/series, I've applied this patch
->> (series) to my review-hans branch:
->> https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/log/?h=review-hans
->>
->> Note it will show up in the pdx86 review-hans branch once I've
->> pushed my local branch there, which might take a while.
->>
->> I will include this patch in my next fixes pull-req to Linus
->> for the current kernel development cycle.
->>
+On Fri, Jan 26, 2024 at 03:55:02PM -0800, Guenter Roeck wrote:
+> On 1/26/24 14:35, Nathan Chancellor wrote:
+> > (slimming up the CC list, I don't think this is too relevant to the
+> > wider stable community)
+> > 
+> > On Fri, Jan 26, 2024 at 01:01:15PM -0800, Guenter Roeck wrote:
+> > > On 1/26/24 12:34, Nathan Chancellor wrote:
+> > > > On Fri, Jan 26, 2024 at 10:17:23AM -0800, Guenter Roeck wrote:
+> > > > > On 1/26/24 09:51, Greg Kroah-Hartman wrote:
+> > > > > > On Fri, Jan 26, 2024 at 08:46:42AM -0800, Guenter Roeck wrote:
+> > > > > > > On 1/22/24 15:55, Greg Kroah-Hartman wrote:
+> > > > > > > > This is the start of the stable review cycle for the 5.10.209 release.
+> > > > > > > > There are 286 patches in this series, all will be posted as a response
+> > > > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > > > let me know.
+> > > > > > > > 
+> > > > > > > > Responses should be made by Wed, 24 Jan 2024 23:56:49 +0000.
+> > > > > > > > Anything received after that time might be too late.
+> > > > > > > > 
+> > > > > > > [ ... ]
+> > > > > > > 
+> > > > > > > > zhenwei pi <pizhenwei@bytedance.com>
+> > > > > > > >         virtio-crypto: implement RSA algorithm
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > Curious: Why was this (and its subsequent fixes) backported to v5.10.y ?
+> > > > > > > It is quite beyond a bug fix. Also, unless I am really missing something,
+> > > > > > > the series (or at least this patch) was not applied to v5.15.y, so we now
+> > > > > > > have functionality in v5.10.y which is not in v5.15.y.
+> > > > > > 
+> > > > > > See the commit text, it was a dependency of a later fix and documented
+> > > > > > as such.
+> > > > > > 
+> > > > > > Having it in 5.10 and not 5.15 is a bit odd, I agree, so patches are
+> > > > > > gladly accepted :)
+> > > > > > 
+> > > > > 
+> > > > > We reverted the entire series from the merge because it results in a build
+> > > > > failure for us.
+> > > > > 
+> > > > > In file included from /home/groeck/src/linux-chromeos/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c:10:
+> > > > > In file included from /home/groeck/src/linux-chromeos/include/linux/mpi.h:21:
+> > > > > In file included from /home/groeck/src/linux-chromeos/include/linux/scatterlist.h:5:
+> > > > > In file included from /home/groeck/src/linux-chromeos/include/linux/string.h:293:
+> > > > > /home/groeck/src/linux-chromeos/include/linux/fortify-string.h:512:4: error: call to __read_overflow2_field declared with 'warning' attribute: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
+> > > > >                           __read_overflow2_field(q_size_field, size);
+> > > > 
+> > > > For what it's worth, this is likely self inflicted for chromeos-5.10,
+> > > > which carries a revert of commit eaafc590053b ("fortify: Explicitly
+> > > > disable Clang support") as commit c19861d34c003 ("CHROMIUM: Revert
+> > > > "fortify: Explicitly disable Clang support""). I don't see the series
+> > > > that added proper support for clang to fortify in 5.18 that ended with
+> > > > commit 281d0c962752 ("fortify: Add Clang support") in that ChromeOS
+> > > > branch, so this seems somewhat expected.
+> > > > 
+> > > 
+> > > That explains that ;-). I don't mind if the patches stay in v5.10.y,
+> > > we have them reverted anyway.
+> > > 
+> > > The revert was a pure process issue, as you may see when looking into
+> > > commit c19861d34c003, so, yes, I agree that it is self-inflicted damage.
+> > > Still, that doesn't explain why the problem exists in 5.18+.
+> > > 
+> > > > > I also see that upstream (starting with 6.1) when trying to build it with clang,
+> > > > > so I guess it is one of those bug-for-bug compatibility things. I really have
+> > > > > no idea what causes it, or why we don't see the problem when building
+> > > > > chromeos-6.1 or chromeos-6.6, but (so far) only with chromeos-5.10 after
+> > > > > merging 5.10.209 into it. Making things worse, the problem isn't _always_
+> > > > > seen. Sometimes I can compile the file in 6.1.y without error, sometimes not.
+> > > > > I have no idea what triggers the problem.
+> > > > 
+> > > > Have a .config that reproduces it on upstream? I have not personally
+> > > > seen this warning in my build matrix nor has our continuous-integration
+> > > > matrix (I don't see it in the warning output at the bottom but that
+> > > > could have missed something for some reason) in 6.1:
+> > > > 
+> > > 
+> > > The following command sequence reproduces the problem for me with all stable
+> > > branches starting with 5.18.y (plus mainline).
+> > > 
+> > > rm -rf /tmp/crypto-build
+> > > mkdir /tmp/crypto-build
+> > > make -j CC=clang-15 mrproper >/dev/null 2>&1
+> > > make -j O=/tmp/crypto-build CC=clang-15 allmodconfig >/dev/null 2>&1
+> > > make -j O=/tmp/crypto-build W=1 CC=clang-15 drivers/crypto/virtio/virtio_crypto_akcipher_algs.o
+> > > 
+> > > I tried clang versions 14, 15, and 16. This is with my home system running
+> > > Ubuntu 22.04, no ChromeOS or Google specifics/internals involved. For clang-15,
+> > > the version is
+> > > 
+> > > Ubuntu clang version 15.0.7
+> > > Target: x86_64-pc-linux-gnu
+> > > Thread model: posix
+> > > InstalledDir: /usr/bin
+> > 
+> > Okay interesting, this warning is hidden behind W=1, which our CI does
+> > not test with. Looks like it has been that way since the introduction of
+> > these checks in f68f2ff91512 ("fortify: Detect struct member overflows
+> > in memcpy() at compile-time").
+> > 
 > 
-> FYR.
+> Interestingly the warning is seen in chromeos-5.10, without this patch,
+> and without W=1. I guess that must have to do with the revert which is
+> finally biting us.
 > 
-> [ CC stable@vger.kernel.org ]
-> Missed CC: Stable Tag.
+> > I think this is a legitimate warning though. It is complaining about the
+> > second memcpy() in virtio_crypto_alg_akcipher_init_session():
+> > 
+> >    memcpy(&ctrl->u, para, sizeof(ctrl->u));
+> > 
+> > where ctrl is:
+> > 
+> >    struct virtio_crypto_op_ctrl_req {
+> >            struct virtio_crypto_ctrl_header header;         /*     0    16 */
+> >            union {
+> >                    struct virtio_crypto_sym_create_session_req sym_create_session; /*    16    56 */
+> >                    struct virtio_crypto_hash_create_session_req hash_create_session; /*    16    56 */
+> >                    struct virtio_crypto_mac_create_session_req mac_create_session; /*    16    56 */
+> >                    struct virtio_crypto_aead_create_session_req aead_create_session; /*    16    56 */
+> >                    struct virtio_crypto_akcipher_create_session_req akcipher_create_session; /*    16    56 */
+> >                    struct virtio_crypto_destroy_session_req destroy_session; /*    16    56 */
+> >                    __u8               padding[56];          /*    16    56 */
+> >            } u;                                             /*    16    56 */
+> >            union {
+> >                    struct virtio_crypto_sym_create_session_req sym_create_session; /*     0    56 */
+> >                    struct virtio_crypto_hash_create_session_req hash_create_session; /*     0    56 */
+> >                    struct virtio_crypto_mac_create_session_req mac_create_session; /*     0    56 */
+> >                    struct virtio_crypto_aead_create_session_req aead_create_session; /*     0    56 */
+> >                    struct virtio_crypto_akcipher_create_session_req akcipher_create_session; /*     0    56 */
+> >                    struct virtio_crypto_destroy_session_req destroy_session; /*     0    56 */
+> >                    __u8                       padding[56];          /*     0    56 */
+> >            };
+> > 
+> > 
+> >            /* size: 72, cachelines: 2, members: 2 */
+> >            /* last cacheline: 8 bytes */
+> >    };
+> > 
+> > (so size and p_size_field should be 56) and the type of the para
+> > parameter in virtio_crypto_alg_akcipher_init_session() is 'void *' but
+> > the para passed by reference to
+> > virtio_crypto_alg_akcipher_init_session() in virtio_crypto_rsa_set_key()
+> > has a type of 'struct virtio_crypto_akcipher_session_para':
+> > 
+> >    struct virtio_crypto_akcipher_session_para {
+> >            __le32                     algo;                 /*     0     4 */
+> >            __le32                     keytype;              /*     4     4 */
+> >            __le32                     keylen;               /*     8     4 */
+> >            union {
+> >                    struct virtio_crypto_rsa_session_para rsa; /*    12     8 */
+> >                    struct virtio_crypto_ecdsa_session_para ecdsa; /*    12     8 */
+> >            } u;                                             /*    12     8 */
+> >            union {
+> >                    struct virtio_crypto_rsa_session_para rsa;       /*     0     8 */
+> >                    struct virtio_crypto_ecdsa_session_para ecdsa;   /*     0     8 */
+> >            };
+> > 
+> > 
+> >            /* size: 20, cachelines: 1, members: 4 */
+> >            /* last cacheline: 20 bytes */
+> >    };
+> > 
+> > (so q_size_field would be 20 if clang were able to do inlining to see
+> > through the 'void *'...?), which would result in the
+> > 
+> >    __compiletime_lessthan(q_size_field, size)
+> > 
+> > check succeeding and triggering the warning because 20 < 56, so it does
+> > seem like there is an overread of the source buffer here? Adding the
 > 
-> This (follow-up) patch is now upstream into v6.7-rc1:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=25a76dbb36dd
+> Looks like it; I think either the passed 'para' should be of type
+> virtio_crypto_akcipher_create_session_req() or it should only copy
+> sizeof(struct virtio_crypto_akcipher_session_para) bytes.
 > 
-> Looks like linux-6.7.y needs the above fixed patch too.
-
-If you want to see this patch in the stable series please
-submit it, with a reference to the upstream commit, to
-stable@vger.kernel.org yourself.
-
-Regards,
-
-Hans
-
-
-
->>> ---
->>>  drivers/platform/x86/intel/ifs/load.c | 3 ++-
->>>  1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
->>> index a1ee1a74fc3c..2cf3b4a8813f 100644
->>> --- a/drivers/platform/x86/intel/ifs/load.c
->>> +++ b/drivers/platform/x86/intel/ifs/load.c
->>> @@ -399,7 +399,8 @@ int ifs_load_firmware(struct device *dev)
->>>  	if (fw->size != expected_size) {
->>>  		dev_err(dev, "File size mismatch (expected %u, actual %zu). Corrupted IFS image.\n",
->>>  			expected_size, fw->size);
->>> -		return -EINVAL;
->>> +		ret = -EINVAL;
->>> +		goto release;
->>>  	}
->>>  
->>>  	ret = image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
->>
+> Anyway, how did you find that ? Is there a magic trick to find the
+> actual code causing the warning ? I am asking because we had seen
+> similar warnings before, and it would help to know how to find the
+> problematic code.
 > 
+> Thanks,
+> Guenter
+
+
+
+Cc: zhenwei pi <pizhenwei@bytedance.com>
+
+Zhenwei I think you wrote most of the code here.
+Can you take a look please?
+Stack overflows are plus plus ungood.
+
+
+
+
+> > maintainers of the driver and subsystem in question.
+> > 
+> > Cheers,
+> > Nathan
 
