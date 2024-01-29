@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35B715956D;
-	Mon, 29 Jan 2024 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF152159570;
+	Mon, 29 Jan 2024 17:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548176; cv=none; b=jtGYhsUiYZcqwA/kEGMM9jZouP9hRR1eRFJrBvGX4dJ5IgvR9zsErsEnLGDGlCg357DlcKGYTJh3+LjMss/1nITZdv2jHOKVoJ7YOaCsvYhtDWz8hYOiPeZRF+a3jlF9+jhNNefCmlr1JazXyMFyWq90ps2c8aNm8W9wzm14mww=
+	t=1706548176; cv=none; b=QnNR/1rZBhkL3qrM1RqexDI1NR3RFf19JU7Vc/Ke/UosXtL2RmL9Ke8GTNQ+yTrEVWhGnkSca/o+pFeG9KIMUBqPjTDwtxSAoBqmz4omJGsy6C8GZ6VM4jBVpZBCE8+E0RmkJ3glxaUtvF3bOlpbVIm0GwvOmDPOpd7WMfUfKa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548176; c=relaxed/simple;
-	bh=T/Lk9hTqE7UwUkuvYcBOOEf9ZEtvyDwGbkUG3HmoovY=;
+	bh=+YicPiqY0Dm1JnjLD/huLSyYbyu2z6KVTYYsuVPNAqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krxKyxjUlaIqymDabR3ZQ8bTX6g0etuD/IiL80R+DzqNi9mSY6MvTtA+W/DhI+YT3n+d+hBZUdvAsX/j2ASl/dj5UG7w89Rw4R7XwC/499cYmCzqlA+5+BvF4YF6nZtosGBKy2Jv32vSQMOSdumqAIqQgF8Oyuc8PJymYkmajYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gbmj/WE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rjnpx9pT7okmCHIx3ZtcGl/EPagZy5vlPE2aKzoMUDFGwLyN1Ln+NSLwUdrCc7tqlu+07XS30ZsWM0ht1v3VyzyZwE7m9ID7wSyTYhrvmLJmwqeqbWtN5btrdUn13cyYrjPm/w80inayWopJoulDOyiZ6LrTJ6vRAyQeReujBOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7ltQvYw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gbmj/WE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE352C433F1;
-	Mon, 29 Jan 2024 17:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7ltQvYw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D6AC433C7;
+	Mon, 29 Jan 2024 17:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548175;
-	bh=T/Lk9hTqE7UwUkuvYcBOOEf9ZEtvyDwGbkUG3HmoovY=;
+	s=korg; t=1706548176;
+	bh=+YicPiqY0Dm1JnjLD/huLSyYbyu2z6KVTYYsuVPNAqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Gbmj/WERZz4zy65wf9C9ANngEFVt/4SmJKCwVPHxcawdI7XJc11+yOYmmzJF+X+V
-	 7XZqwkeFtIWtOIkj8tSygqA7rSBi87d3dN5DLV42HkrGAqOREiXv/qtvvxD0HWBKeg
-	 Ji+W6N6Tcp1Qf3IpmqOlvU6G2qvcDUWPRAh1+1uI=
+	b=V7ltQvYwQAhgD77x7BdEUaFajizp8h8qCHcrGcTwo0fRqLxOW+kAzvbIsT13ryS2t
+	 jXBIEMLO8qdT1X0zCMl4Gfj48+wPaigfl6A76CgMsC9JUPp2eBbNTxO/LtUA2NHteG
+	 SRC864nstbAELLA+4z6pRtk5upncOs06+SQ0pn3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 221/346] tsnep: Fix XDP_RING_NEED_WAKEUP for empty fill ring
-Date: Mon, 29 Jan 2024 09:04:12 -0800
-Message-ID: <20240129170022.883506995@linuxfoundation.org>
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.7 222/346] btrfs: zoned: fix lock ordering in btrfs_zone_activate()
+Date: Mon, 29 Jan 2024 09:04:13 -0800
+Message-ID: <20240129170022.913230594@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,52 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 9a91c05f4bd6f6bdd6b8f90445e0da92e3ac956c ]
+commit b18f3b60b35a8c01c9a2a0f0d6424c6d73971dc3 upstream.
 
-The fill ring of the XDP socket may contain not enough buffers to
-completey fill the RX queue during socket creation. In this case the
-flag XDP_RING_NEED_WAKEUP is not set as this flag is only set if the RX
-queue is not completely filled during polling.
+The btrfs CI reported a lockdep warning as follows by running generic
+generic/129.
 
-Set XDP_RING_NEED_WAKEUP flag also if RX queue is not completely filled
-during XDP socket creation.
+   WARNING: possible circular locking dependency detected
+   6.7.0-rc5+ #1 Not tainted
+   ------------------------------------------------------
+   kworker/u5:5/793427 is trying to acquire lock:
+   ffff88813256d028 (&cache->lock){+.+.}-{2:2}, at: btrfs_zone_finish_one_bg+0x5e/0x130
+   but task is already holding lock:
+   ffff88810a23a318 (&fs_info->zone_active_bgs_lock){+.+.}-{2:2}, at: btrfs_zone_finish_one_bg+0x34/0x130
+   which lock already depends on the new lock.
 
-Fixes: 3fc2333933fd ("tsnep: Add XDP socket zero-copy RX support")
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+   the existing dependency chain (in reverse order) is:
+   -> #1 (&fs_info->zone_active_bgs_lock){+.+.}-{2:2}:
+   ...
+   -> #0 (&cache->lock){+.+.}-{2:2}:
+   ...
+
+This is because we take fs_info->zone_active_bgs_lock after a block_group's
+lock in btrfs_zone_activate() while doing the opposite in other places.
+
+Fix the issue by expanding the fs_info->zone_active_bgs_lock's critical
+section and taking it before a block_group's lock.
+
+Fixes: a7e1ac7bdc5a ("btrfs: zoned: reserve zones for an active metadata/system block group")
+CC: stable@vger.kernel.org # 6.6
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/engleder/tsnep_main.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/btrfs/zoned.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
-index 456e0336f3f6..9aeff2b37a61 100644
---- a/drivers/net/ethernet/engleder/tsnep_main.c
-+++ b/drivers/net/ethernet/engleder/tsnep_main.c
-@@ -1762,6 +1762,19 @@ static void tsnep_rx_reopen_xsk(struct tsnep_rx *rx)
- 			allocated--;
- 		}
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2094,6 +2094,7 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 
+ 	map = block_group->physical_map;
+ 
++	spin_lock(&fs_info->zone_active_bgs_lock);
+ 	spin_lock(&block_group->lock);
+ 	if (test_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags)) {
+ 		ret = true;
+@@ -2106,7 +2107,6 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 		goto out_unlock;
  	}
-+
-+	/* set need wakeup flag immediately if ring is not filled completely,
-+	 * first polling would be too late as need wakeup signalisation would
-+	 * be delayed for an indefinite time
-+	 */
-+	if (xsk_uses_need_wakeup(rx->xsk_pool)) {
-+		int desc_available = tsnep_rx_desc_available(rx);
-+
-+		if (desc_available)
-+			xsk_set_rx_need_wakeup(rx->xsk_pool);
-+		else
-+			xsk_clear_rx_need_wakeup(rx->xsk_pool);
-+	}
+ 
+-	spin_lock(&fs_info->zone_active_bgs_lock);
+ 	for (i = 0; i < map->num_stripes; i++) {
+ 		struct btrfs_zoned_device_info *zinfo;
+ 		int reserved = 0;
+@@ -2126,20 +2126,17 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 		 */
+ 		if (atomic_read(&zinfo->active_zones_left) <= reserved) {
+ 			ret = false;
+-			spin_unlock(&fs_info->zone_active_bgs_lock);
+ 			goto out_unlock;
+ 		}
+ 
+ 		if (!btrfs_dev_set_active_zone(device, physical)) {
+ 			/* Cannot activate the zone */
+ 			ret = false;
+-			spin_unlock(&fs_info->zone_active_bgs_lock);
+ 			goto out_unlock;
+ 		}
+ 		if (!is_data)
+ 			zinfo->reserved_active_zones--;
+ 	}
+-	spin_unlock(&fs_info->zone_active_bgs_lock);
+ 
+ 	/* Successfully activated all the zones */
+ 	set_bit(BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE, &block_group->runtime_flags);
+@@ -2147,8 +2144,6 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 
+ 	/* For the active block group list */
+ 	btrfs_get_block_group(block_group);
+-
+-	spin_lock(&fs_info->zone_active_bgs_lock);
+ 	list_add_tail(&block_group->active_bg_list, &fs_info->zone_active_bgs);
+ 	spin_unlock(&fs_info->zone_active_bgs_lock);
+ 
+@@ -2156,6 +2151,7 @@ bool btrfs_zone_activate(struct btrfs_bl
+ 
+ out_unlock:
+ 	spin_unlock(&block_group->lock);
++	spin_unlock(&fs_info->zone_active_bgs_lock);
+ 	return ret;
  }
  
- static bool tsnep_pending(struct tsnep_queue *queue)
--- 
-2.43.0
-
 
 
