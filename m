@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851AE158D9B;
-	Mon, 29 Jan 2024 17:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B48E158D9B;
+	Mon, 29 Jan 2024 17:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548174; cv=none; b=llZ+AGFypCbpf9OhRSjImWdJCO89bG5OMHEF9nY/qfNcNveppy6LeHVshp3zWVLK5IcagsttghdOyWQo1CZOxsh3gNGh2M7ta3g5k3pCoDxvVd81CBGsihPS3t5kzSRX45DgqAGGG4PvsCMqxhxEN5wplBlBwwIDFZVxowtzq1M=
+	t=1706548175; cv=none; b=sx7Iwv71+vOCS9pFOjPbrSXJPFoc396vdME+rlaUaBIP4jZvpuPrwt1cf8HU4b2ImmgQUmJomJiibF7w11IBth6V1ObGNDardGBkk9uzrnLftHBq7NtcVfgZQB/nX+wbScjHTD/mHVxUQyqGFwlFRiVdObpZAZOg62sFH0aePl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548174; c=relaxed/simple;
-	bh=xlUMmI05x9S6U9lU6n8VLbUHqGvponByr7eQ40IPHWo=;
+	s=arc-20240116; t=1706548175; c=relaxed/simple;
+	bh=Y8uaWd5KDFgCNryUAKg6gftn6GbnCVA8xkjN2BV3xbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5yb50NAeySnKG+wcx052Ei0Ms4bIcvuGms6yiV6wZNQwRxbfJ5tUx5dBN6ELbhFH3br183gTPWXQ5amaaz5Ntk7UBpm0vlhg9susKa0ebplwp9kBo4kCieS8OPzOkJCjbSgaLCw1QjBrHjt2L5c1CrbaVb/LPYLcgqdvXc/bz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9GGcFko; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VaItT0cK6NUdngIXq2kPfwfYTC2yO2I75LSST9ohHg4YWpgLsPs+0F9JnfRe1ehmBk1wTwJWhUWm/TL9X56+n5r4v5wJAzI5S7/Sp3U32kQH6vcVtIns7XIiUImclnJrh4x1vzMkQ4c09ZcFsFiZK4dVA6z70VgkSJTmjg0SPIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqsHLwrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9GGcFko"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8C3C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqsHLwrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04228C43390;
 	Mon, 29 Jan 2024 17:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548174;
-	bh=xlUMmI05x9S6U9lU6n8VLbUHqGvponByr7eQ40IPHWo=;
+	s=korg; t=1706548175;
+	bh=Y8uaWd5KDFgCNryUAKg6gftn6GbnCVA8xkjN2BV3xbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9GGcFkoWbgjztvDRUbwJEH+FN/92l96RTghpQQVCbHl3yIinr6p/jvBz7by2D2Ri
-	 N29NcCQLFigWKZ74J/jZfehNLqju9hOqJf3Ej5gONLOZkgMDelSTYPQS8NsmPKxfGi
-	 ctACUBxP9K29IWXvYdPjZweNalsoCk+KrDMnT22s=
+	b=BqsHLwrWgOGm9Z1Ty5b66lzCBJlUDcAYqLa5dm17UBymw0Os7KkNeBfqRatrFlHFF
+	 2NU0/Ejnkl/BTGVMD2eKQWZn8Oud1qqyuNRG2k5SE2V0t34lC+WxEcE6yREI1g6VXX
+	 sPcj88tbtiVwSgkON1lA4w6uHOQ7oBbFTTe5utP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 219/346] net: fec: fix the unhandled context fault from smmu
-Date: Mon, 29 Jan 2024 09:04:10 -0800
-Message-ID: <20240129170022.832792941@linuxfoundation.org>
+Subject: [PATCH 6.7 220/346] tsnep: Remove FCS for XDP data path
+Date: Mon, 29 Jan 2024 09:04:11 -0800
+Message-ID: <20240129170022.857200159@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,56 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit 5e344807735023cd3a67c37a1852b849caa42620 ]
+[ Upstream commit 50bad6f797d4d501c5ef416a6f92e1912ab5aa8b ]
 
-When repeatedly changing the interface link speed using the command below:
+The RX data buffer includes the FCS. The FCS is already stripped for the
+normal data path. But for the XDP data path the FCS is included and
+acts like additional/useless data.
 
-ethtool -s eth0 speed 100 duplex full
-ethtool -s eth0 speed 1000 duplex full
+Remove the FCS from the RX data buffer also for XDP.
 
-The following errors may sometimes be reported by the ARM SMMU driver:
-
-[ 5395.035364] fec 5b040000.ethernet eth0: Link is Down
-[ 5395.039255] arm-smmu 51400000.iommu: Unhandled context fault:
-fsr=0x402, iova=0x00000000, fsynr=0x100001, cbfrsynra=0x852, cb=2
-[ 5398.108460] fec 5b040000.ethernet eth0: Link is Up - 100Mbps/Full -
-flow control off
-
-It is identified that the FEC driver does not properly stop the TX queue
-during the link speed transitions, and this results in the invalid virtual
-I/O address translations from the SMMU and causes the context faults.
-
-Fixes: dbc64a8ea231 ("net: fec: move calls to quiesce/resume packet processing out of fec_restart()")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Link: https://lore.kernel.org/r/20240123165141.2008104-1-shenwei.wang@nxp.com
+Fixes: 65b28c810035 ("tsnep: Add XDP RX support")
+Fixes: 3fc2333933fd ("tsnep: Add XDP socket zero-copy RX support")
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/engleder/tsnep_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index e08c7b572497..c107680985e4 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -2036,6 +2036,7 @@ static void fec_enet_adjust_link(struct net_device *ndev)
+diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
+index df40c720e7b2..456e0336f3f6 100644
+--- a/drivers/net/ethernet/engleder/tsnep_main.c
++++ b/drivers/net/ethernet/engleder/tsnep_main.c
+@@ -1485,7 +1485,7 @@ static int tsnep_rx_poll(struct tsnep_rx *rx, struct napi_struct *napi,
  
- 		/* if any of the above changed restart the FEC */
- 		if (status_change) {
-+			netif_stop_queue(ndev);
- 			napi_disable(&fep->napi);
- 			netif_tx_lock_bh(ndev);
- 			fec_restart(ndev);
-@@ -2045,6 +2046,7 @@ static void fec_enet_adjust_link(struct net_device *ndev)
- 		}
- 	} else {
- 		if (fep->link) {
-+			netif_stop_queue(ndev);
- 			napi_disable(&fep->napi);
- 			netif_tx_lock_bh(ndev);
- 			fec_stop(ndev);
+ 			xdp_prepare_buff(&xdp, page_address(entry->page),
+ 					 XDP_PACKET_HEADROOM + TSNEP_RX_INLINE_METADATA_SIZE,
+-					 length, false);
++					 length - ETH_FCS_LEN, false);
+ 
+ 			consume = tsnep_xdp_run_prog(rx, prog, &xdp,
+ 						     &xdp_status, tx_nq, tx);
+@@ -1568,7 +1568,7 @@ static int tsnep_rx_poll_zc(struct tsnep_rx *rx, struct napi_struct *napi,
+ 		prefetch(entry->xdp->data);
+ 		length = __le32_to_cpu(entry->desc_wb->properties) &
+ 			 TSNEP_DESC_LENGTH_MASK;
+-		xsk_buff_set_size(entry->xdp, length);
++		xsk_buff_set_size(entry->xdp, length - ETH_FCS_LEN);
+ 		xsk_buff_dma_sync_for_cpu(entry->xdp, rx->xsk_pool);
+ 
+ 		/* RX metadata with timestamps is in front of actual data,
 -- 
 2.43.0
 
