@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B677B15D5DF;
-	Mon, 29 Jan 2024 17:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861FF15D5DF;
+	Mon, 29 Jan 2024 17:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548419; cv=none; b=BJlHurMgL5zeqAWI8rDgfGyZa1ebw6KJg6edaltSM53zan87oFhhLyprrtUzLPbR4uu+hC2zJDUpO5By1jt5Utq5fVDZpAsTmZF3ej/zUy3Cw+oHmrJEZwDlRPSsLNSqiQyq2mKONNLt+rRXpZXII2AKrCWzatqOCS/oZAytzaA=
+	t=1706548420; cv=none; b=RA8H+NXAWqWTLVQisArp37Vp5McIfAK2snwkyKsJdxrnz5YfjynTC6NE1CpTCXWwnB85c06PvUTR0VzDNFj6tyHnOXTllUtIN8Eu5xREBXHaIi/ycbuZUvNuxVqlQq3rdZZr5lpOu5Gukda0VdO7Jmend5u8w24u8/SiJdNjlVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548419; c=relaxed/simple;
-	bh=hkzKeQ1tjW2PZS8Ky8VB6e4TKwuwtDKl3LT/8Ru9Opc=;
+	s=arc-20240116; t=1706548420; c=relaxed/simple;
+	bh=nzQpkC5CmssvHEQ/6IbIQ/gJFtPyBOJEohBloBRB7F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dH+LVVrO+xrMSlVlhlDolRBp34tMAkas4OzVjcf7g2TVQuwk7bCekxyOpsz8pZB7c29B6sniu4+SN/iJHJpNRdtC3QqyBmk2w//C1Df6uMxyvA8ohb68j0HI85E/Dphw3DaemuVdskJ0nT3uQX262o8PiIAM5wI0ym2gplx/R9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGmGzNAT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HC+9fItsBBHgjkHtGT7ZvP+ew9zDss7K2a9YnWJ3lG6zN9mxhgjen5SbM04C1wmts9JSwq4QbT/tq+MUCRPIvjCAnCEY4tR4fyJPr9+ZjDSxv6gc55HuXvRL175o/E8RDKO1gCRbf5vh8GvwdpQmiqECILaUKeBfzUFjPFAwINQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neuiwtw+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGmGzNAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CAFEC43394;
-	Mon, 29 Jan 2024 17:13:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neuiwtw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B253C43390;
+	Mon, 29 Jan 2024 17:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548419;
-	bh=hkzKeQ1tjW2PZS8Ky8VB6e4TKwuwtDKl3LT/8Ru9Opc=;
+	s=korg; t=1706548420;
+	bh=nzQpkC5CmssvHEQ/6IbIQ/gJFtPyBOJEohBloBRB7F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGmGzNATii1oZ2it+po1njx1Opdo3OjkGdxkds25FYMf9EeXAjNMY7stZRV25sXbz
-	 wrtUe1EZDf/vFGFz83h4u3HAqzOLYzy19yIosdi/VO9MKyboMz78dByPtrftXAY4Kn
-	 LsNaq2L/VBC8dylmBz7ui7St8QoYzwkz21Kj1fTw=
+	b=neuiwtw+1iwndMXhgCvBZb4hkrTTflf6U7Fisvt58HjbKkahC+f5FqKLSLFXXbAE2
+	 KxAvb8H26kc3mQa1l07tMqMkPID/Fv7ryZy8klRdcu+noUx1poReEWdpC5icq/9Pil
+	 iQbnIj1t4Xw4Bw9+C5J88q6Y+j2OuEz/7t8E/SNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Locke <kevin@kevinlocke.name>,
-	Niklas Cassel <cassel@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	kernel test robot <lkp@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 018/331] scsi: core: Kick the requeue list after inserting when flushing
-Date: Mon, 29 Jan 2024 09:01:22 -0800
-Message-ID: <20240129170015.495240571@linuxfoundation.org>
+Subject: [PATCH 6.6 019/331] sh: ecovec24: Rename missed backlight field from fbdev to dev
+Date: Mon, 29 Jan 2024 09:01:23 -0800
+Message-ID: <20240129170015.526132429@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -48,101 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 6df0e077d76bd144c533b61d6182676aae6b0a85 ]
+[ Upstream commit d87123aa9a7920e88633ffc5c5a0a22ab08bdc06 ]
 
-When libata calls ata_link_abort() to abort all ata queued commands, it
-calls blk_abort_request() on the SCSI command representing each QC.
+One instance of gpio_backlight_platform_data.fbdev was renamed, but the
+second instance was forgotten, causing a build failure:
 
-This causes scsi_timeout() to be called, which calls scsi_eh_scmd_add() for
-each SCSI command.
+    arch/sh/boards/mach-ecovec24/setup.c: In function ‘arch_setup’:
+    arch/sh/boards/mach-ecovec24/setup.c:1223:37: error: ‘struct gpio_backlight_platform_data’ has no member named ‘fbdev’; did you mean ‘dev’?
+     1223 |                 gpio_backlight_data.fbdev = NULL;
+	  |                                     ^~~~~
+	  |                                     dev
 
-scsi_eh_scmd_add() sets the SCSI host to state recovery, and then adds the
-command to shost->eh_cmd_q.
+Fix this by updating the second instance.
 
-This will wake up the SCSI EH, and eventually the libata EH strategy
-handler will be called, which calls scsi_eh_flush_done_q() to either flush
-retry or flush finish each failed command.
-
-The commands that are flush retried by scsi_eh_flush_done_q() are done so
-using scsi_queue_insert().
-
-Before commit 8b566edbdbfb ("scsi: core: Only kick the requeue list if
-necessary"), __scsi_queue_insert() called blk_mq_requeue_request() with the
-second argument set to true, indicating that it should always kick/run the
-requeue list after inserting.
-
-After commit 8b566edbdbfb ("scsi: core: Only kick the requeue list if
-necessary"), __scsi_queue_insert() does not kick/run the requeue list after
-inserting, if the current SCSI host state is recovery (which is the case in
-the libata example above).
-
-This optimization is probably fine in most cases, as I can only assume that
-most often someone will eventually kick/run the queues.
-
-However, that is not the case for scsi_eh_flush_done_q(), where we can see
-that the request gets inserted to the requeue list, but the queue is never
-started after the request has been inserted, leading to the block layer
-waiting for the completion of command that never gets to run.
-
-Since scsi_eh_flush_done_q() is called by SCSI EH context, the SCSI host
-state is most likely always in recovery when this function is called.
-
-Thus, let scsi_eh_flush_done_q() explicitly kick the requeue list after
-inserting a flush retry command, so that scsi_eh_flush_done_q() keeps the
-same behavior as before commit 8b566edbdbfb ("scsi: core: Only kick the
-requeue list if necessary").
-
-Simple reproducer for the libata example above:
-$ hdparm -Y /dev/sda
-$ echo 1 > /sys/class/scsi_device/0\:0\:0\:0/device/delete
-
-Fixes: 8b566edbdbfb ("scsi: core: Only kick the requeue list if necessary")
-Reported-by: Kevin Locke <kevin@kevinlocke.name>
-Closes: https://lore.kernel.org/linux-scsi/ZZw3Th70wUUvCiCY@kevinlocke.name/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://lore.kernel.org/r/20240111120533.3612509-1-cassel@kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: ed369def91c1579a ("backlight/gpio_backlight: Rename field 'fbdev' to 'dev'")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202309231601.Uu6qcRnU-lkp@intel.com/
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230925111022.3626362-1-geert+renesas@glider.be
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/sh/boards/mach-ecovec24/setup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 1223d34c04da..d983f4a0e9f1 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -2196,15 +2196,18 @@ void scsi_eh_flush_done_q(struct list_head *done_q)
- 	struct scsi_cmnd *scmd, *next;
+diff --git a/arch/sh/boards/mach-ecovec24/setup.c b/arch/sh/boards/mach-ecovec24/setup.c
+index 3be293335de5..7a788d44cc73 100644
+--- a/arch/sh/boards/mach-ecovec24/setup.c
++++ b/arch/sh/boards/mach-ecovec24/setup.c
+@@ -1220,7 +1220,7 @@ static int __init arch_setup(void)
+ 		lcdc_info.ch[0].num_modes		= ARRAY_SIZE(ecovec_dvi_modes);
  
- 	list_for_each_entry_safe(scmd, next, done_q, eh_entry) {
-+		struct scsi_device *sdev = scmd->device;
-+
- 		list_del_init(&scmd->eh_entry);
--		if (scsi_device_online(scmd->device) &&
--		    !scsi_noretry_cmd(scmd) && scsi_cmd_retry_allowed(scmd) &&
--			scsi_eh_should_retry_cmd(scmd)) {
-+		if (scsi_device_online(sdev) && !scsi_noretry_cmd(scmd) &&
-+		    scsi_cmd_retry_allowed(scmd) &&
-+		    scsi_eh_should_retry_cmd(scmd)) {
- 			SCSI_LOG_ERROR_RECOVERY(3,
- 				scmd_printk(KERN_INFO, scmd,
- 					     "%s: flush retry cmd\n",
- 					     current->comm));
- 				scsi_queue_insert(scmd, SCSI_MLQUEUE_EH_RETRY);
-+				blk_mq_kick_requeue_list(sdev->request_queue);
- 		} else {
- 			/*
- 			 * If just we got sense for the device (called
+ 		/* No backlight */
+-		gpio_backlight_data.fbdev = NULL;
++		gpio_backlight_data.dev = NULL;
+ 
+ 		gpio_set_value(GPIO_PTA2, 1);
+ 		gpio_set_value(GPIO_PTU1, 1);
 -- 
 2.43.0
 
