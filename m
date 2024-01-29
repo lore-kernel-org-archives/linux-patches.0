@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6961515B0F0;
-	Mon, 29 Jan 2024 17:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328C7159580;
+	Mon, 29 Jan 2024 17:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548085; cv=none; b=Uu+fiDvJNTtllqZc0MVQXSu0UU4g/LOi8y77SaGt118an+tKOvAiNu+xoyl+bIr69fyrLbPopFItX+BkYDSL0fgmbJpOPas2zxoIfZGPpfKvk5/x9FCTaaLflHgx4gy8+lnk45ZcairMSBswZiqe5d6ujlflMK+6wm5Zjn7aGzY=
+	t=1706548086; cv=none; b=j7joW3Px7XSgNTecn1gNjDpRjdwH69ZwR4VD8w8RePwmh+Q2D1R3BoUkbw2IfdHE5mfA7pCTX15KqNR03TF1yuF8SwF6wCIsQaQUUvlNNDyXkLw/BaGV5ZUIcBTEX7dDebal6PVusDRhXniKVHTgD1Q9j/tVeFWgP4DN6QSeFKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548085; c=relaxed/simple;
-	bh=VIf2A1pAPoqtg/jycnIEaclb+Kd60KNQXRFJe1yEsbo=;
+	s=arc-20240116; t=1706548086; c=relaxed/simple;
+	bh=Y3GDXyHc+4mF04UrLcWbKawKL0bneocYnVAnRpr1Eso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSCUfuzS4tBpEJedQzhRqV8ycOgnUKyfIbaF0as1TCETTUf/zsyw69cUYCy6CjihsMTQf6n2y5aOY+ZggY8llT7L9rGJfvGvQpfzB22Qt5RBFgw5mQUg/9QYQKN7SzUYoRXwXvp7OvwQ9c0QxiLpQmqukmyPVuYw07vxoFFPuY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2Ode3LG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JTEy0W/zzDVbVibiki73CU0Xjyt9+ogHejrTp1Bc/LE6qfKOyLDqdG0GgvCqxDKoE7lGVYHlRwnrEkrNHJyd5Bh7nMxMEm+52+KWNH/uX2g5PbcjilctYXX6ClugxvgZTOMerRXh1KGLstu3wCY5zYSp8kELiWQo9KEQegsvRtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ss96PoN6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2Ode3LG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D30C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ss96PoN6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE393C43601;
 	Mon, 29 Jan 2024 17:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548085;
-	bh=VIf2A1pAPoqtg/jycnIEaclb+Kd60KNQXRFJe1yEsbo=;
+	s=korg; t=1706548086;
+	bh=Y3GDXyHc+4mF04UrLcWbKawKL0bneocYnVAnRpr1Eso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E2Ode3LGc57Okg4qRGkns4A2dL2qfYDJe9pj7swD/cnyp6RvIh6Wp6bKwazRgCxoq
-	 RdUeu/0dJXFBE9PF9FnXiXKdc3MACQO4Lpfs0zlZ8C70Toh+ZJcnBQyEv7WEUm6F/z
-	 uIzyyMBfGx12Jfm27NlS6N9su+Maqh2MG6uOzLyI=
+	b=ss96PoN6NB/wNWLccwBufgvqH4rDmo3GvwUd8B4SKwwDLOgFy1HT1je0G5SzsRpyZ
+	 i785mGjeGzSKmNjvJROgaTT35BNtHXhllVt5xCt2Fx6+2Sv/BkamgSLhLp/psnlEBr
+	 yTX6gRsqxIqJVfIP0PLzvQ5GhvdgnL5rAprNEJjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Benjamin Mugnier <benjamin.mugnier@foss.st.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.7 099/346] media: i2c: st-mipid02: correct format propagation
-Date: Mon, 29 Jan 2024 09:02:10 -0800
-Message-ID: <20240129170019.309310951@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.7 100/346] media: mtk-jpeg: Fix timeout schedule error in mtk_jpegdec_worker.
+Date: Mon, 29 Jan 2024 09:02:11 -0800
+Message-ID: <20240129170019.342163042@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -54,53 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-commit b33cb0cbe2893b96ecbfa16254407153f4b55d16 upstream.
+commit 38e1857933def4b3fafc28cc34ff3bbc84cad2c3 upstream.
 
-Use a copy of the struct v4l2_subdev_format when propagating
-format from the sink to source pad in order to avoid impacting the
-sink format returned to the application.
+In mtk_jpegdec_worker, if error occurs in mtk_jpeg_set_dec_dst, it
+will start the timeout worker and invoke v4l2_m2m_job_finish at
+the same time. This will break the logic of design for there should
+be only one function to call v4l2_m2m_job_finish. But now the timeout
+handler and mtk_jpegdec_worker will both invoke it.
 
-Thanks to Jacopo Mondi for pointing the issue.
+Fix it by start the worker only if mtk_jpeg_set_dec_dst successfully
+finished.
 
-Fixes: 6c01e6f3f27b ("media: st-mipid02: Propagate format from sink to source pad")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Fixes: da4ede4b7fd6 ("media: mtk-jpeg: move data/code inside CONFIG_OF blocks")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-Reviewed-by: Benjamin Mugnier <benjamin.mugnier@foss.st.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/st-mipid02.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/media/i2c/st-mipid02.c
-+++ b/drivers/media/i2c/st-mipid02.c
-@@ -770,6 +770,7 @@ static void mipid02_set_fmt_sink(struct
- 				 struct v4l2_subdev_format *format)
- {
- 	struct mipid02_dev *bridge = to_mipid02_dev(sd);
-+	struct v4l2_subdev_format source_fmt;
- 	struct v4l2_mbus_framefmt *fmt;
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
+@@ -1749,9 +1749,6 @@ retry_select:
+ 	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
+ 	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
  
- 	format->format.code = get_fmt_code(format->format.code);
-@@ -781,8 +782,12 @@ static void mipid02_set_fmt_sink(struct
+-	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
+-			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
+-
+ 	mtk_jpeg_set_dec_src(ctx, &src_buf->vb2_buf, &bs);
+ 	if (mtk_jpeg_set_dec_dst(ctx,
+ 				 &jpeg_src_buf->dec_param,
+@@ -1761,6 +1758,9 @@ retry_select:
+ 		goto setdst_end;
+ 	}
  
- 	*fmt = format->format;
- 
--	/* Propagate the format change to the source pad */
--	mipid02_set_fmt_source(sd, sd_state, format);
-+	/*
-+	 * Propagate the format change to the source pad, taking
-+	 * care not to update the format pointer given back to user
-+	 */
-+	source_fmt = *format;
-+	mipid02_set_fmt_source(sd, sd_state, &source_fmt);
- }
- 
- static int mipid02_set_fmt(struct v4l2_subdev *sd,
++	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
++			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
++
+ 	spin_lock_irqsave(&comp_jpeg[hw_id]->hw_lock, flags);
+ 	ctx->total_frame_num++;
+ 	mtk_jpeg_dec_reset(comp_jpeg[hw_id]->reg_base);
 
 
