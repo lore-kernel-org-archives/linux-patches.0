@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA9E76C81;
-	Mon, 29 Jan 2024 17:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFEA76C7E;
+	Mon, 29 Jan 2024 17:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548656; cv=none; b=MrbvaoNh2bY6QtD27O/HMkweOU6VFPfDOY0IenvUEnIxqlRNYOyEDMAV6oNlEoDGlG2hWp/Cy3W0Gk+NWmC8SJwGSlD3ewIe8FgxRjbZCyAvI3RzCkAVE1n8OeC/XlGJei5M+WdX26RnbbLKU+kSb2NM2l5hCgr901MGyUP7Gm8=
+	t=1706548657; cv=none; b=tD7vBtatcGVu6aapcPL9JNgCbovPf8e/u+t2cpfv6vFxvINHMJ1eqI/x6q7av4SLWWwF3pzD/XpaZL6ct6ua8TMiSItVAoqEm3ZQ/Gabp9Ay2koXpsDsKte9MbD3qwTdPru9qW5ZR3SBYlILPcS09h+IIUsQRtg3w5ufebvTGDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548656; c=relaxed/simple;
-	bh=Us/p2Kb8UWMp7cf7OHmF17HempDkaA0GdhoElvOp8PY=;
+	s=arc-20240116; t=1706548657; c=relaxed/simple;
+	bh=Y5Gw7A+A7yMP3jUbujPrb+su5n14tILN0IGhF32ci0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HR+7Tvn6NTfnJE6Tp1j1bw0lPUQ55uRmOqzksFcOiovo4g1uR4DhDxw5RZfeeIn6gCVV0YdF9acS3PrFPhfeZ++IVdR1claDD7CsMCjTGSqqbqqTmw2/bSdl9APq0t6FtYUYWZ3pWPk/KUXfqweiYizp0Bf3xYXqmmPpdqxcWgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjsjKwuS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwcpsgBZK3+yUfvdZQyGApfHuNoYNmU8Nvp6XJGWbrmePynaAc1wK18wSdNUom5ZrJZjrmAWBGQFewv55YaZ8fk8tagbPf+hY7/pVbHG47tS9rpU3hu1rq7mPwcXX23fcNK8y5BTLZKZuaPua98Rmqe57jAndx4VhSwZBKWzU+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4W/zDWp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjsjKwuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24376C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4W/zDWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70A1C433C7;
 	Mon, 29 Jan 2024 17:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548656;
-	bh=Us/p2Kb8UWMp7cf7OHmF17HempDkaA0GdhoElvOp8PY=;
+	s=korg; t=1706548657;
+	bh=Y5Gw7A+A7yMP3jUbujPrb+su5n14tILN0IGhF32ci0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjsjKwuS6zY5CQtTJ9rCsfw3tMjVwr7yfx89hszvHFmYH2XOCqhSKDvoL3bw46BmY
-	 jymjp/RziQuSWssbMLRfv2Cuw9qsHhIA/+xdAnPq7bb0lVuzAftYp76aZv72TWbgSa
-	 F8sE9Dtjq3KUX3cKstlhLEp1EPNFu3QzuStBMm5I=
+	b=Y4W/zDWpx90CMuAlETCnEh0SA/KuQvN329YQODs+UJZ6e3P05QerAK+Q9JWs1Ta00
+	 6f3+Vd/ypB8uk/p2aSg3v7zzEpEvqeAyIHsaUua9WI8BhNsgpFfoqkHm+nsGjBhWJy
+	 aEWpVuwW1RrdJIvghY85Co5RKZhXxmoWso3U2dZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Ogness <john.ogness@linutronix.de>,
-	linux-serial@vger.kernel.org,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.6 330/331] serial: core: fix kernel-doc for uart_port_unlock_irqrestore()
-Date: Mon, 29 Jan 2024 09:06:34 -0800
-Message-ID: <20240129170024.539674891@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 331/331] thermal: trip: Drop lockdep assertion from thermal_zone_trip_id()
+Date: Mon, 29 Jan 2024 09:06:35 -0800
+Message-ID: <20240129170024.574003377@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,38 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 29bff582b74ed0bdb7e6986482ad9e6799ea4d2f upstream.
+commit 108ffd12be24ba1d74b3314df8db32a0a6d55ba5 upstream.
 
-Fix the function name to avoid a kernel-doc warning:
+The lockdep assertion in thermal_zone_trip_id() triggers when the
+trip point sysfs attribute of a thermal instance is read, because
+there is no thermal zone locking in that code path.
 
-include/linux/serial_core.h:666: warning: expecting prototype for uart_port_lock_irqrestore(). Prototype was for uart_port_unlock_irqrestore() instead
+This is not verly useful, though, because there is no mechanism by which
+the location of the trips[] table in a thermal zone or its size can
+change after binding cooling devices to the trips in that thermal
+zone and before those cooling devices are unbound from them.  Thus
+it is not in fact necessary to hold the thermal zone lock when
+thermal_zone_trip_id() is called from trip_point_show() and so the
+lockdep asserion in the former is invalid.
 
-Fixes: b0af4bcb4946 ("serial: core: Provide port lock wrappers")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: linux-serial@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20230927044128.4748-1-rdunlap@infradead.org
+Accordingly, drop that lockdep assertion.
+
+Fixes: 2c7b4bfadef0 ("thermal: core: Store trip pointer in struct thermal_instance")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/serial_core.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/thermal_trip.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/include/linux/serial_core.h
-+++ b/include/linux/serial_core.h
-@@ -658,7 +658,7 @@ static inline void uart_port_unlock_irq(
- }
+--- a/drivers/thermal/thermal_trip.c
++++ b/drivers/thermal/thermal_trip.c
+@@ -178,8 +178,6 @@ int thermal_zone_trip_id(struct thermal_
+ {
+ 	int i;
  
- /**
-- * uart_port_lock_irqrestore - Unlock the UART port, restore interrupts
-+ * uart_port_unlock_irqrestore - Unlock the UART port, restore interrupts
-  * @up:		Pointer to UART port structure
-  * @flags:	The saved interrupt flags for restore
-  */
+-	lockdep_assert_held(&tz->lock);
+-
+ 	for (i = 0; i < tz->num_trips; i++) {
+ 		if (&tz->trips[i] == trip)
+ 			return i;
 
 
