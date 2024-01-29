@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F1372249;
-	Mon, 29 Jan 2024 17:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA4972243;
+	Mon, 29 Jan 2024 17:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548512; cv=none; b=JY9KV4aqKpwxNI0zPGqY5E5RQi0PxNWcnsVx2vDw+RVm0U27Xlp6RixlBGGLXXcmJ2T8JirikovF+3Kv2g/cz+nySFrxvHI2ObdUs6S0MsX3wfYdSU2bffYAcKWBp7fv8KZDB97ww+w0Dc9Gx4gEdMD8WY4Ev3amlkabDUftmCw=
+	t=1706548513; cv=none; b=gOK1iYpCVPyyQ+7pq24jMmkfYO8ZXUoCo38FaQzpCRzBFHxXZrOW0A6KLO0b1ZBgec8+M4kE1sdxs/dTDGV2ZSgqSf4MBSQ0/U0Sre0o8baA/FvPyvJjwIyW/lkXCbb3ru82h+rlrEaIt4FgsCNNlAIGrsX3t/9wzlkv8rdHEa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548512; c=relaxed/simple;
-	bh=LMpKGrGIYdUeBfHPqR+gYQOqXvkqN2SHX/DhY9fJBrM=;
+	s=arc-20240116; t=1706548513; c=relaxed/simple;
+	bh=y0SGJFk0EGVHfX3UKdqJEuv4gPMl6h0y/MMwF2oRvZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJh9IHhyoNNN/kw5saPLrhlsHzHJ+LBSn8muc1nFthEbcgs4MpsgknZBurQkdaMj8LD5W5tldOVqNoO/FsObT4f+ZylsqIiLQ7xAXq7sIpP3ZsfSARuBJNn3EglhgL/7SY0XDp6pOnRcBr6Oelp+x+G6dKmRa+/HXtlYV/Xmeqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6U3aii9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P7SToECjtH8ptOWz5/vhEvhhVGDp16hM+TVDayWmbZrNGrD1BZivdlWPhK35bimVTS7WmCiKm+BJlxqYW6WRt5SsPCsF+YjMa/eLb1rmQ2ay9/eL9wHgwRqIoE1+y0YXECNLiW+WL6GMl0Xz/tPCQ99Z1ElCY+IcagUtUP0V4/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4l6k16D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6U3aii9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A177C433B2;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4l6k16D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78BCC433F1;
 	Mon, 29 Jan 2024 17:15:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548512;
-	bh=LMpKGrGIYdUeBfHPqR+gYQOqXvkqN2SHX/DhY9fJBrM=;
+	s=korg; t=1706548513;
+	bh=y0SGJFk0EGVHfX3UKdqJEuv4gPMl6h0y/MMwF2oRvZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c6U3aii9IbNlY9LT2gArXVOC7t2KQk0RZ9McDdz0jdjF9cTKMJ4OjsN1TuSGxu7m+
-	 Hzl+Kz9OU7cW0jvV0/s0lD3PczOkVefAXXI0yrq93Ee579aITaJvkB2mpOdzypnwqN
-	 /1+9lEN1MZETCHcgLgmmRFDjY4yn4Va14O3c0fjM=
+	b=I4l6k16D7YVM5qXv2B5rz1+o/egtYR/lwo9SCb6HAhgb798HijwSp3FKnQIVfNLyU
+	 d9fMskQSA4QBIaRYYufgEvDBunrS1yqBwY5iF3OWilgrNpqpiKmdJqGBHV1wPyh7g/
+	 rMIYZYlr9pwAJgmzmzPZBkGFzhPKsi2jm+kj+7PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	Leonardo Bras <leobras@redhat.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.6 109/331] riscv: mm: Fixup compat arch_get_mmap_end
-Date: Mon, 29 Jan 2024 09:02:53 -0800
-Message-ID: <20240129170018.112564616@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 137/331] LoongArch/smp: Call rcutree_report_cpu_starting() earlier
+Date: Mon, 29 Jan 2024 09:03:21 -0800
+Message-ID: <20240129170018.955982269@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,38 +49,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 97b7ac69be2e5a683e898f5267f659fde52efdd5 upstream.
+commit a2ccf46333d7b2cf9658f0d82ac74097c1542fae upstream.
 
-When the task is in COMPAT mode, the arch_get_mmap_end should be 2GB,
-not TASK_SIZE_64. The TASK_SIZE has contained is_compat_mode()
-detection, so change the definition of STACK_TOP_MAX to TASK_SIZE
-directly.
+rcutree_report_cpu_starting() must be called before cpu_probe() to avoid
+the following lockdep splat that triggered by calling __alloc_pages() when
+CONFIG_PROVE_RCU_LIST=y:
 
-Cc: stable@vger.kernel.org
-Fixes: add2cc6b6515 ("RISC-V: mm: Restrict address space for sv39,sv48,sv57")
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Reviewed-by: Leonardo Bras <leobras@redhat.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20231222115703.2404036-3-guoren@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+ =============================
+ WARNING: suspicious RCU usage
+ 6.6.0+ #980 Not tainted
+ -----------------------------
+ kernel/locking/lockdep.c:3761 RCU-list traversed in non-reader section!!
+ other info that might help us debug this:
+ RCU used illegally from offline CPU!
+ rcu_scheduler_active = 1, debug_locks = 1
+ 1 lock held by swapper/1/0:
+  #0: 900000000c82ef98 (&pcp->lock){+.+.}-{2:2}, at: get_page_from_freelist+0x894/0x1790
+ CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.6.0+ #980
+ Stack : 0000000000000001 9000000004f79508 9000000004893670 9000000100310000
+         90000001003137d0 0000000000000000 90000001003137d8 9000000004f79508
+         0000000000000000 0000000000000001 0000000000000000 90000000048a3384
+         203a656d616e2065 ca43677b3687e616 90000001002c3480 0000000000000008
+         000000000000009d 0000000000000000 0000000000000001 80000000ffffe0b8
+         000000000000000d 0000000000000033 0000000007ec0000 13bbf50562dad831
+         9000000005140748 0000000000000000 9000000004f79508 0000000000000004
+         0000000000000000 9000000005140748 90000001002bad40 0000000000000000
+         90000001002ba400 0000000000000000 9000000003573ec8 0000000000000000
+         00000000000000b0 0000000000000004 0000000000000000 0000000000070000
+         ...
+ Call Trace:
+ [<9000000003573ec8>] show_stack+0x38/0x150
+ [<9000000004893670>] dump_stack_lvl+0x74/0xa8
+ [<900000000360d2bc>] lockdep_rcu_suspicious+0x14c/0x190
+ [<900000000361235c>] __lock_acquire+0xd0c/0x2740
+ [<90000000036146f4>] lock_acquire+0x104/0x2c0
+ [<90000000048a955c>] _raw_spin_lock_irqsave+0x5c/0x90
+ [<900000000381cd5c>] rmqueue_bulk+0x6c/0x950
+ [<900000000381fc0c>] get_page_from_freelist+0xd4c/0x1790
+ [<9000000003821c6c>] __alloc_pages+0x1bc/0x3e0
+ [<9000000003583b40>] tlb_init+0x150/0x2a0
+ [<90000000035742a0>] per_cpu_trap_init+0xf0/0x110
+ [<90000000035712fc>] cpu_probe+0x3dc/0x7a0
+ [<900000000357ed20>] start_secondary+0x40/0xb0
+ [<9000000004897138>] smpboot_entry+0x54/0x58
+
+raw_smp_processor_id() is required in order to avoid calling into lockdep
+before RCU has declared the CPU to be watched for readers.
+
+See also commit 29368e093921 ("x86/smpboot: Move rcu_cpu_starting() earlier"),
+commit de5d9dae150c ("s390/smp: move rcu_cpu_starting() earlier") and commit
+99f070b62322 ("powerpc/smp: Call rcu_cpu_starting() earlier").
+
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/processor.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/smp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/processor.h
-+++ b/arch/riscv/include/asm/processor.h
-@@ -15,7 +15,7 @@
+--- a/arch/loongarch/kernel/smp.c
++++ b/arch/loongarch/kernel/smp.c
+@@ -504,8 +504,9 @@ asmlinkage void start_secondary(void)
+ 	unsigned int cpu;
  
- #ifdef CONFIG_64BIT
- #define DEFAULT_MAP_WINDOW	(UL(1) << (MMAP_VA_BITS - 1))
--#define STACK_TOP_MAX		TASK_SIZE_64
-+#define STACK_TOP_MAX		TASK_SIZE
+ 	sync_counter();
+-	cpu = smp_processor_id();
++	cpu = raw_smp_processor_id();
+ 	set_my_cpu_offset(per_cpu_offset(cpu));
++	rcu_cpu_starting(cpu);
  
- #define arch_get_mmap_end(addr, len, flags)			\
- ({								\
+ 	cpu_probe();
+ 	constant_clockevent_init();
 
 
