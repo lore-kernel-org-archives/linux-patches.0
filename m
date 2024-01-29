@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E74B1586D0;
-	Mon, 29 Jan 2024 17:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6FF15A486;
+	Mon, 29 Jan 2024 17:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548111; cv=none; b=dRxIyaGbjBZld0yWyVwY+3HzkeJfRipN6B4mSfBhzOnV7YVl2mfFTCmKiOJjqicUkRzjrochh/BtLadyN9iBAy+31Gx0iDIpCg7Phe67EPTLf+cWvm9hWUV8akKHESJLj3FSQANjbmmnaxlMB4U4RTC4wcg+nmKlhxEXiNwWppw=
+	t=1706548112; cv=none; b=N117ceCduqwhtqQW7+f4s3dHW4f8Ucf4EWTlyuCb3S2+FJDBCb+q+llL1bbk0FoE61BCLX+iL3tFOEkUu9BbAyh2p3/k1BbFvZfX40OamlJv9zVPOrAqIs8iIxon3Gw8g+4LkBqZwXGkb3tEh5nZnEGPccH5Ua2SXYCGm9aIyD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548111; c=relaxed/simple;
-	bh=j3ylthreD+8oBIMO0r8E17nyLbHGLxLihNjw64+PeB4=;
+	s=arc-20240116; t=1706548112; c=relaxed/simple;
+	bh=v7QbMVmwAntzizzXso422Yj5ZOxTG8SRFEXL8gdO6nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Am637QMcVajuJwRkL7rwgETgR84szHMB2VKu9ryefyk5UYxQexnkB85nHcH7bIGxPexotpKg7xIfuzY9ZZB3UiCnByPpuyAJ6hyotmQ/MCczabQSmHY/UfruotvZwk0DCY+ZWe0sKi+wAigLTu5Q2f7LBFJGy7otwg/lKXvS0SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ui9SdVzQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VvPZhZKd86SGBc85VwckiAk1oXN+GMWB5WDvezo4yyQhYDB+IoLwObEO0x/9OKUBJepvZ0LFSfq4YtUDVIR5rLgrBkWwse9afzEU/vnyugAWecr69yXcGhu13hBgSYvlPIehbNU4HGmFe/v/RKhixE4Jmj32p0BGXoKaKc19gUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPwCKIbI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ui9SdVzQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0794CC43394;
-	Mon, 29 Jan 2024 17:08:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPwCKIbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DF4C43399;
+	Mon, 29 Jan 2024 17:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548111;
-	bh=j3ylthreD+8oBIMO0r8E17nyLbHGLxLihNjw64+PeB4=;
+	s=korg; t=1706548112;
+	bh=v7QbMVmwAntzizzXso422Yj5ZOxTG8SRFEXL8gdO6nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ui9SdVzQbj4TQ6bDXs3y5DOmbgAswqlaU5lwHh+DA0OvvmlDBfQCCDmrQY8mGKoYu
-	 7lnB3S7s/xHEFIGGx5KfJT007QZ2kQQT330n9VJq1ceYgdxBxOESRmLmjiZSKUL+l/
-	 B1T4DxLvplv7+PTFPz/xFodegx5Q7iG5/Y08DAt8=
+	b=MPwCKIbIBw6YUtPKvxKUoLH0canJwXhUK5kgN5VC/Vxd9bf5dCUhc0VMFyYbLjwsX
+	 nUDcn33IYbWS89K5DQy1j03F+69X+IQ3661m3f6t9+FTO1Alu4esScC/kmst3NCVLH
+	 8GI1snP/0PvxDkwx2WEXFyd5kuhCL56BUR5BssCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.7 133/346] serial: sc16is7xx: fix unconditional activation of THRI interrupt
-Date: Mon, 29 Jan 2024 09:02:44 -0800
-Message-ID: <20240129170020.296337779@linuxfoundation.org>
+Subject: [PATCH 6.7 135/346] serial: sc16is7xx: remove obsolete loop in sc16is7xx_port_irq()
+Date: Mon, 29 Jan 2024 09:02:46 -0800
+Message-ID: <20240129170020.356564493@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,68 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 9915753037eba7135b209fef4f2afeca841af816 upstream.
+commit ed647256e8f226241ecff7baaecdb8632ffc7ec1 upstream.
 
-Commit cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop") changed
-behavior to unconditionnaly set the THRI interrupt in sc16is7xx_tx_proc().
+Commit 834449872105 ("sc16is7xx: Fix for multi-channel stall") changed
+sc16is7xx_port_irq() from looping multiple times when there was still
+interrupts to serve. It simply changed the do {} while(1) loop to a
+do {} while(0) loop, which makes the loop itself now obsolete.
 
-For example when sending a 65 bytes message, and assuming the Tx FIFO is
-initially empty, sc16is7xx_handle_tx() will write the first 64 bytes of the
-message to the FIFO and sc16is7xx_tx_proc() will then activate THRI. When
-the THRI IRQ is fired, the driver will write the remaining byte of the
-message to the FIFO, and disable THRI by calling sc16is7xx_stop_tx().
+Clean the code by removing this obsolete do {} while(0) loop.
 
-When sending a 2 bytes message, sc16is7xx_handle_tx() will write the 2
-bytes of the message to the FIFO and call sc16is7xx_stop_tx(), disabling
-THRI. After sc16is7xx_handle_tx() exits, control returns to
-sc16is7xx_tx_proc() which will unconditionally set THRI. When the THRI IRQ
-is fired, the driver simply acknowledges the interrupt and does nothing
-more, since all the data has already been written to the FIFO. This results
-in 2 register writes and 4 register reads all for nothing and taking
-precious cycles from the I2C/SPI bus.
-
-Fix this by enabling the THRI interrupt only when we fill the Tx FIFO to
-its maximum capacity and there are remaining bytes to send in the message.
-
-Fixes: cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop")
+Fixes: 834449872105 ("sc16is7xx: Fix for multi-channel stall")
 Cc:  <stable@vger.kernel.org>
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231211171353.2901416-7-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20231221231823.2327894-5-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   89 +++++++++++++++++++----------------------
+ 1 file changed, 43 insertions(+), 46 deletions(-)
 
 --- a/drivers/tty/serial/sc16is7xx.c
 +++ b/drivers/tty/serial/sc16is7xx.c
-@@ -688,6 +688,8 @@ static void sc16is7xx_handle_tx(struct u
- 
- 	if (uart_circ_empty(xmit))
- 		sc16is7xx_stop_tx(port);
-+	else
-+		sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
- 	uart_port_unlock_irqrestore(port, flags);
- }
- 
-@@ -816,7 +818,6 @@ static void sc16is7xx_tx_proc(struct kth
+@@ -725,58 +725,55 @@ static void sc16is7xx_update_mlines(stru
+ static bool sc16is7xx_port_irq(struct sc16is7xx_port *s, int portno)
  {
- 	struct uart_port *port = &(to_sc16is7xx_one(ws, tx_work)->port);
+ 	bool rc = true;
++	unsigned int iir, rxlen;
+ 	struct uart_port *port = &s->p[portno].port;
  	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
--	unsigned long flags;
  
- 	if ((port->rs485.flags & SER_RS485_ENABLED) &&
- 	    (port->rs485.delay_rts_before_send > 0))
-@@ -825,10 +826,6 @@ static void sc16is7xx_tx_proc(struct kth
  	mutex_lock(&one->efr_lock);
- 	sc16is7xx_handle_tx(port);
- 	mutex_unlock(&one->efr_lock);
--
--	uart_port_lock_irqsave(port, &flags);
--	sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
--	uart_port_unlock_irqrestore(port, flags);
- }
  
- static void sc16is7xx_reconf_rs485(struct uart_port *port)
+-	do {
+-		unsigned int iir, rxlen;
+-
+-		iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
+-		if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
+-			rc = false;
+-			goto out_port_irq;
+-		}
+-
+-		iir &= SC16IS7XX_IIR_ID_MASK;
+-
+-		switch (iir) {
+-		case SC16IS7XX_IIR_RDI_SRC:
+-		case SC16IS7XX_IIR_RLSE_SRC:
+-		case SC16IS7XX_IIR_RTOI_SRC:
+-		case SC16IS7XX_IIR_XOFFI_SRC:
+-			rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
+-
+-			/*
+-			 * There is a silicon bug that makes the chip report a
+-			 * time-out interrupt but no data in the FIFO. This is
+-			 * described in errata section 18.1.4.
+-			 *
+-			 * When this happens, read one byte from the FIFO to
+-			 * clear the interrupt.
+-			 */
+-			if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
+-				rxlen = 1;
+-
+-			if (rxlen)
+-				sc16is7xx_handle_rx(port, rxlen, iir);
+-			break;
++	iir = sc16is7xx_port_read(port, SC16IS7XX_IIR_REG);
++	if (iir & SC16IS7XX_IIR_NO_INT_BIT) {
++		rc = false;
++		goto out_port_irq;
++	}
++
++	iir &= SC16IS7XX_IIR_ID_MASK;
++
++	switch (iir) {
++	case SC16IS7XX_IIR_RDI_SRC:
++	case SC16IS7XX_IIR_RLSE_SRC:
++	case SC16IS7XX_IIR_RTOI_SRC:
++	case SC16IS7XX_IIR_XOFFI_SRC:
++		rxlen = sc16is7xx_port_read(port, SC16IS7XX_RXLVL_REG);
++
++		/*
++		 * There is a silicon bug that makes the chip report a
++		 * time-out interrupt but no data in the FIFO. This is
++		 * described in errata section 18.1.4.
++		 *
++		 * When this happens, read one byte from the FIFO to
++		 * clear the interrupt.
++		 */
++		if (iir == SC16IS7XX_IIR_RTOI_SRC && !rxlen)
++			rxlen = 1;
++
++		if (rxlen)
++			sc16is7xx_handle_rx(port, rxlen, iir);
++		break;
+ 		/* CTSRTS interrupt comes only when CTS goes inactive */
+-		case SC16IS7XX_IIR_CTSRTS_SRC:
+-		case SC16IS7XX_IIR_MSI_SRC:
+-			sc16is7xx_update_mlines(one);
+-			break;
+-		case SC16IS7XX_IIR_THRI_SRC:
+-			sc16is7xx_handle_tx(port);
+-			break;
+-		default:
+-			dev_err_ratelimited(port->dev,
+-					    "ttySC%i: Unexpected interrupt: %x",
+-					    port->line, iir);
+-			break;
+-		}
+-	} while (0);
++	case SC16IS7XX_IIR_CTSRTS_SRC:
++	case SC16IS7XX_IIR_MSI_SRC:
++		sc16is7xx_update_mlines(one);
++		break;
++	case SC16IS7XX_IIR_THRI_SRC:
++		sc16is7xx_handle_tx(port);
++		break;
++	default:
++		dev_err_ratelimited(port->dev,
++				    "ttySC%i: Unexpected interrupt: %x",
++				    port->line, iir);
++		break;
++	}
+ 
+ out_port_irq:
+ 	mutex_unlock(&one->efr_lock);
 
 
