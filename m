@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E5F15D5D1;
-	Mon, 29 Jan 2024 17:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBB4157054;
+	Mon, 29 Jan 2024 17:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548185; cv=none; b=H9TJW0kF231UrJXeXPIwzliOzCgdCbfdeV4LmNufVw70loKT8seV0XnbI541/108HHULnkJLg7J03Lrhevo79mBGbBw1hCCOtm33SXQ4iGaEEIor4a3NCqFaXI9HIDaKoQ5xzEJXQo8NKdoVoxeC7y4ItR8NhjTkjPQ7QqbTzXU=
+	t=1706548186; cv=none; b=lmTLQsJUcihe2SbAoc1a06eN9GXdjSfbBKDudV5D8Zt+XJr42zcpOkUrpJCPLQjsHwIy9MAA6mxJBrUyoiv24rhJPjQv+YeQJylO5ckilYdGTuZYOisumJSEAjSdwtJL2dGUAToYib7H9kI+/Ky/WjG59xRDTrKdtrUTP3bozvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548185; c=relaxed/simple;
-	bh=ZfgWbFPGdEXn4EsetL2LFxL/PK1BTv1z8XPv4wsQbfs=;
+	s=arc-20240116; t=1706548186; c=relaxed/simple;
+	bh=+4sy0+1+Sd6OkJJ1LTjwxAFbbHHykwc5yzw3KUNoFDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIxBXrkD92+Gr6lCt0+JoNh5L3hkCwVGSKxdRii/oHix0YadPsyJfS5FOgB5Abb6/MBYiVbrRNwxrlFUs0JHdAKrjzNAvFjRQWYfoFpgEqUaO1nEoACCXxFeUG1WFjsN9MZOdMDtwuru4EHeLAC7BcfRctW9ijzxzIixWOeKw1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0KwJMjW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9oXUhS7Xj/XjkD2OAGsqvtQj2ArLKu9nc5ZEzJzlqHyiCUHcWf4OLyDdbAIJe1iE4EuOR5LVbij/ao9njLIuuUvxgk5n8efx4vcXNQbWBW6YIkyndaJxPnxwVWFuyQ3BQ8+BNkDRSHrwDCQj2WQK2EONIMjz8ZB0WbdaI4ML8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lW+QbCFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0KwJMjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E715C433C7;
-	Mon, 29 Jan 2024 17:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lW+QbCFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE85C43390;
+	Mon, 29 Jan 2024 17:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548185;
-	bh=ZfgWbFPGdEXn4EsetL2LFxL/PK1BTv1z8XPv4wsQbfs=;
+	s=korg; t=1706548186;
+	bh=+4sy0+1+Sd6OkJJ1LTjwxAFbbHHykwc5yzw3KUNoFDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L0KwJMjW2CDWNW8zp86CBZBAfzxGmw0pkLpsaKF9TBA/jtJ7zqCi7KKoVEjbFCcAb
-	 gUxsr8RhHvhn270ayJMkszmK+fES945AzD1KG58GMbBFKia8pEjBmuUoqVEO5+tAF4
-	 AK45pFAX1jHJJB32dkLH+Ar/gPgr8Aj2LopJ9CSU=
+	b=lW+QbCFxZ7jb8OY02f/ecH/H56ZjIv62T+z9evcoggMbp8rHisocQBfAu47L//UaJ
+	 batF8iuL8Cm/LeT+pvEM55/LHvZQlcpzYvQ4nodRQGsu82kb6KIpuFMcFxDPfdIsLV
+	 Q1PwHAV1MZ6zegtNbug79u+hk1mfE8zDY+9g4WpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 6.7 229/346] rbd: dont move requests to the running list on errors
-Date: Mon, 29 Jan 2024 09:04:20 -0800
-Message-ID: <20240129170023.133622539@linuxfoundation.org>
+	Stefan Sterz <s.sterz@proxmox.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 004/185] Revert "nSVM: Check for reserved encodings of TLB_CONTROL in nested VMCB"
+Date: Mon, 29 Jan 2024 09:03:24 -0800
+Message-ID: <20240129165958.738514951@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,81 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit ded080c86b3f99683774af0441a58fc2e3d60cae upstream.
+[ Upstream commit a484755ab2526ebdbe042397cdd6e427eb4b1a68 ]
 
-The running list is supposed to contain requests that are pinning the
-exclusive lock, i.e. those that must be flushed before exclusive lock
-is released.  When wake_lock_waiters() is called to handle an error,
-requests on the acquiring list are failed with that error and no
-flushing takes place.  Briefly moving them to the running list is not
-only pointless but also harmful: if exclusive lock gets acquired
-before all of their state machines are scheduled and go through
-rbd_lock_del_request(), we trigger
+Revert KVM's made-up consistency check on SVM's TLB control.  The APM says
+that unsupported encodings are reserved, but the APM doesn't state that
+VMRUN checks for a supported encoding.  Unless something is called out
+in "Canonicalization and Consistency Checks" or listed as MBZ (Must Be
+Zero), AMD behavior is typically to let software shoot itself in the foot.
 
-    rbd_assert(list_empty(&rbd_dev->running_list));
+This reverts commit 174a921b6975ef959dd82ee9e8844067a62e3ec1.
 
-in rbd_try_acquire_lock().
-
+Fixes: 174a921b6975 ("nSVM: Check for reserved encodings of TLB_CONTROL in nested VMCB")
+Reported-by: Stefan Sterz <s.sterz@proxmox.com>
+Closes: https://lkml.kernel.org/r/b9915c9c-4cf6-051a-2d91-44cc6380f455%40proxmox.com
 Cc: stable@vger.kernel.org
-Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
+Link: https://lore.kernel.org/r/20231018194104.1896415-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rbd.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ arch/x86/kvm/svm/nested.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3452,14 +3452,15 @@ static bool rbd_lock_add_request(struct
- static void rbd_lock_del_request(struct rbd_img_request *img_req)
- {
- 	struct rbd_device *rbd_dev = img_req->rbd_dev;
--	bool need_wakeup;
-+	bool need_wakeup = false;
- 
- 	lockdep_assert_held(&rbd_dev->lock_rwsem);
- 	spin_lock(&rbd_dev->lock_lists_lock);
--	rbd_assert(!list_empty(&img_req->lock_item));
--	list_del_init(&img_req->lock_item);
--	need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING &&
--		       list_empty(&rbd_dev->running_list));
-+	if (!list_empty(&img_req->lock_item)) {
-+		list_del_init(&img_req->lock_item);
-+		need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING &&
-+			       list_empty(&rbd_dev->running_list));
-+	}
- 	spin_unlock(&rbd_dev->lock_lists_lock);
- 	if (need_wakeup)
- 		complete(&rbd_dev->releasing_wait);
-@@ -3842,14 +3843,19 @@ static void wake_lock_waiters(struct rbd
- 		return;
- 	}
- 
--	list_for_each_entry(img_req, &rbd_dev->acquiring_list, lock_item) {
-+	while (!list_empty(&rbd_dev->acquiring_list)) {
-+		img_req = list_first_entry(&rbd_dev->acquiring_list,
-+					   struct rbd_img_request, lock_item);
- 		mutex_lock(&img_req->state_mutex);
- 		rbd_assert(img_req->state == RBD_IMG_EXCLUSIVE_LOCK);
-+		if (!result)
-+			list_move_tail(&img_req->lock_item,
-+				       &rbd_dev->running_list);
-+		else
-+			list_del_init(&img_req->lock_item);
- 		rbd_img_schedule(img_req, result);
- 		mutex_unlock(&img_req->state_mutex);
- 	}
--
--	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
+diff --git a/arch/x86/kvm/svm/nested.c b/arch/x86/kvm/svm/nested.c
+index bc288e6bde64..5d4d78c9a787 100644
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -239,18 +239,6 @@ static bool nested_svm_check_bitmap_pa(struct kvm_vcpu *vcpu, u64 pa, u32 size)
+ 	    kvm_vcpu_is_legal_gpa(vcpu, addr + size - 1);
  }
  
- static bool locker_equal(const struct ceph_locker *lhs,
+-static bool nested_svm_check_tlb_ctl(struct kvm_vcpu *vcpu, u8 tlb_ctl)
+-{
+-	/* Nested FLUSHBYASID is not supported yet.  */
+-	switch(tlb_ctl) {
+-		case TLB_CONTROL_DO_NOTHING:
+-		case TLB_CONTROL_FLUSH_ALL_ASID:
+-			return true;
+-		default:
+-			return false;
+-	}
+-}
+-
+ static bool __nested_vmcb_check_controls(struct kvm_vcpu *vcpu,
+ 					 struct vmcb_ctrl_area_cached *control)
+ {
+@@ -270,8 +258,6 @@ static bool __nested_vmcb_check_controls(struct kvm_vcpu *vcpu,
+ 					   IOPM_SIZE)))
+ 		return false;
+ 
+-	if (CC(!nested_svm_check_tlb_ctl(vcpu, control->tlb_ctl)))
+-		return false;
+ 
+ 	return true;
+ }
+-- 
+2.43.0
+
 
 
