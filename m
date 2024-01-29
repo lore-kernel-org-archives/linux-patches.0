@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E3415B96E;
-	Mon, 29 Jan 2024 17:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74C715B96E;
+	Mon, 29 Jan 2024 17:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548280; cv=none; b=hy6R6jhw0/tjKISi9ZF9Gx5Xy/1sYItBFwqGl6PlefCCtCPHAc75qNhdghTcz4Txv2ehQxNTY5TqIKSi7C1Nu1RBmOJF0TtFL/5K73Vm6BwOeSY4xqLiD+xypYx+wg9+62pXQH651C0FSmEdZvPc+rSRE81P4W3xJQxI6MtffR0=
+	t=1706548280; cv=none; b=h9D+Dlj8l5BJW9L3Ajw1iB7e7OmA6o01wah05djpxO02Lp4To41LsdCdCpRKh/P/o0laUtBfxImbSYWC8B3OlAas/C6iXcsftLIbHNDYbfyQnszGyxzKTJrsbnTddvwR+uXWCs08TX0ViTUF4l3Td2cQry95LE4iiPoGrqcm8SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548280; c=relaxed/simple;
-	bh=YBYldfPdDPwiYRZOjKikI8iQN+XQcrCf993wYqkB190=;
+	bh=CV7vFUfagWlpFJSJAgSyWNFaTD+XRWDsIbkWQYNUUbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jOcVGFXQ0Xh2ZZ8C2xkt2ll9MJcHJoBnMl3Vc+HuufvIQ6j+1E5R5HaSInNXIrsJos8/144BtZ9bvPXDekIpZ4amUqHZ/RjfQSTW89nXYIp5zPSe4FXF1bY6Ke62sERODcaCVVGvLWgf+1KTBJ53CMgvgMd3hwuitGD8w7b4MTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2KIddLu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fRSD3p5faYFgkAgEF2JOdqY/R5PQganz0nIoJATcZxQox35WXbifb/qdXVAyni2TT7XOSChvp4/LECMPoos4dA1kzT528XZnNW8UV7s+1DFljdmGmMi9hwrSQuXkwPalLy44ID4pNTWbxqyDj6N+iSH2B7C+RlmrHQdF3ntJdLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQ/LZe1t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2KIddLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD93FC433F1;
-	Mon, 29 Jan 2024 17:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQ/LZe1t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2C2C43390;
+	Mon, 29 Jan 2024 17:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548279;
-	bh=YBYldfPdDPwiYRZOjKikI8iQN+XQcrCf993wYqkB190=;
+	s=korg; t=1706548280;
+	bh=CV7vFUfagWlpFJSJAgSyWNFaTD+XRWDsIbkWQYNUUbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2KIddLuRv86UaAUHeLfKnZz5s5MjLfRu6cWoijIA4qFV4+YHzLDsi8UwSaUnZQ1K
-	 HU/nl3p8G0as21oiUrYHzLKdztpFqTaivZGWm0NXuokijocIEnhzL8TKmgPHEChkwF
-	 BH3/8lgpH3mqQngYP2kI6UI1LbHcJuO7J7Vy9ROg=
+	b=DQ/LZe1tYvFiZDdg+e5zU1XhJQdjRAZha54W9CT0+B90BToyDKY2978G9zuKlJmaz
+	 2qJaKALzSGdvajgJNOHem92bCSAjIuDSGLqu5TAHgklh2NaMHqF75kMrn2O/ucaurx
+	 Sppo0acZuXi9rz53esHNcQUw6AjxEl2RSSdpGlKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.1 066/185] serial: sc16is7xx: improve do/while loop in sc16is7xx_irq()
-Date: Mon, 29 Jan 2024 09:04:26 -0800
-Message-ID: <20240129170000.727001003@linuxfoundation.org>
+	Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 294/346] drm/panel-edp: Add AUO B116XTN02, BOE NT116WHM-N21,836X2, NV116WHM-N49 V8.0
+Date: Mon, 29 Jan 2024 09:05:25 -0800
+Message-ID: <20240129170025.056825668@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
 
-commit d5078509c8b06c5c472a60232815e41af81c6446 upstream.
+[ Upstream commit 3db2420422a5912d97966e0176050bb0fc9aa63e ]
 
-Simplify and improve readability by replacing while(1) loop with
-do {} while, and by using the keep_polling variable as the exit
-condition, making it more explicit.
+Add panel identification entry for
+- AUO B116XTN02 family (product ID:0x235c)
+- BOE NT116WHM-N21,836X2 (product ID:0x09c3)
+- BOE NV116WHM-N49 V8.0 (product ID:0x0979)
 
-Fixes: 834449872105 ("sc16is7xx: Fix for multi-channel stall")
-Cc:  <stable@vger.kernel.org>
-Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231221231823.2327894-6-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sheng-Liang Pan <sheng-liang.pan@quanta.corp-partner.google.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231027110435.1.Ia01fe9ec1c0953e0050a232eaa782fef2c037516@changeid
+Stable-dep-of: fc6e76792965 ("drm/panel-edp: drm/panel-edp: Fix AUO B116XAK01 name and timing")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/panel/panel-edp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -784,17 +784,18 @@ out_port_irq:
- 
- static irqreturn_t sc16is7xx_irq(int irq, void *dev_id)
- {
-+	bool keep_polling;
-+
- 	struct sc16is7xx_port *s = (struct sc16is7xx_port *)dev_id;
- 
--	while (1) {
--		bool keep_polling = false;
-+	do {
- 		int i;
- 
-+		keep_polling = false;
-+
- 		for (i = 0; i < s->devtype->nr_uart; ++i)
- 			keep_polling |= sc16is7xx_port_irq(s, i);
--		if (!keep_polling)
--			break;
--	}
-+	} while (keep_polling);
- 
- 	return IRQ_HANDLED;
- }
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 95c8472d878a..5bf28c8443ef 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1840,6 +1840,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x145c, &delay_200_500_e50, "B116XAB01.4"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1e9b, &delay_200_500_e50, "B133UAN02.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1ea5, &delay_200_500_e50, "B116XAK01.6"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x235c, &delay_200_500_e50, "B116XTN02"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x405c, &auo_b116xak01.delay, "B116XAK01"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x582d, &delay_200_500_e50, "B133UAN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x615c, &delay_200_500_e50, "B116XAN06.1"),
+@@ -1848,8 +1849,10 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0786, &delay_200_500_p2e80, "NV116WHM-T01"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x07d1, &boe_nv133fhm_n61.delay, "NV133FHM-N61"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x082d, &boe_nv133fhm_n61.delay, "NV133FHM-N62"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x09c3, &delay_200_500_e50, "NT116WHM-N21,836X2"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x094b, &delay_200_500_e50, "NT116WHM-N21"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x095f, &delay_200_500_e50, "NE135FBM-N41 v8.1"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0979, &delay_200_500_e50, "NV116WHM-N49 V8.0"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x098d, &boe_nv110wtm_n61.delay, "NV110WTM-N61"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x09dd, &delay_200_500_e50, "NT116WHM-N21"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a5d, &delay_200_500_e50, "NV116WHM-N45"),
+-- 
+2.43.0
+
 
 
