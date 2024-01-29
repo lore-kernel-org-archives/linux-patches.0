@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6634B15703F;
-	Mon, 29 Jan 2024 17:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE515703F;
+	Mon, 29 Jan 2024 17:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548328; cv=none; b=r9tv7/yBiW8nt8CyWprtc85meHlwjUC4JT9gBlUXeWCluTJt4AlJPlj96YS43l6IBxrOB+DtAivrKAtepC3sCuvPgSW3ChD9i1WSHkiTrJuTbLt+Vw/zlKLJHV95Vep5QXes93wFb6suPS++mCSWmeq5zFSiiox6xl9E3S9X72k=
+	t=1706548329; cv=none; b=VLaElDJNlzn8gCaMawU2Zg+yNDyKzSVggvOEBy+vZFO38qnHy19xM0RwNEv+WJDNnGMJdIY1BW0gZ51EBGNz+3ibe4IXAdY0I8Fbe/sXUte4hlGiuVWcPCdGD4yHJHaYXCg1PzpTIKSNHO9CKZ40goaH0N4bniv961UEme4R40c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548328; c=relaxed/simple;
-	bh=PBPkinmIZNgRpdJ6Nz9HaxiREPrQd/SKrZEMB/6Eeww=;
+	s=arc-20240116; t=1706548329; c=relaxed/simple;
+	bh=7Mu6ImZrmVQ1OQ/mym6pF57aXYmwuXq54W1WVyf2zaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ry6BM8RCd/s3GuaM7Wt6g1FzYmkZoEPaKTFd5yFZZDtBcOjGWjOCtn4mvQTSIJ0DG2n0uNgoXhNM/Vp6CB5yS/s0aZaY8mSgyqnjyUn0R4mMKHSQ+bWSlzeAmGh3T9qxF8dr7OmBrGmzw9EAqYCbWMFghyIDfjbTzI0dcJ3Jwzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ha54yZ3e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bfwz/UjX5oVPDVYeNMSV+K5Bv9ifRo9yoiwVESDYJ5W2UrDuAR4/7hFfrQ6OXg+25jEWwT6Ak9h0w4hB8lSFMFI6WsVpeGTji3BApGIcpeMptYqKygl2RWVaeDncKHHwt1GBuFQYNtACXZ/QlAqgAA4f0G6mmRQingfek1DxSn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j77KH7bQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ha54yZ3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9FAC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j77KH7bQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5561C43394;
 	Mon, 29 Jan 2024 17:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548328;
-	bh=PBPkinmIZNgRpdJ6Nz9HaxiREPrQd/SKrZEMB/6Eeww=;
+	s=korg; t=1706548329;
+	bh=7Mu6ImZrmVQ1OQ/mym6pF57aXYmwuXq54W1WVyf2zaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ha54yZ3edkh8yOeriHrhUf4UiKCM0yryXBz73NRAijFq8ADegv/FAV9qLu1GUkvfo
-	 YCbWWe2aR0q1OmdPOZitlpJZErT5H9TTpk5vp11bB6bhgaJYTiu5Oz5NEyT6ehNAgy
-	 SwmBJHuRlOSrWbpWoTub7G4HtPYzjQWutbSkUWgo=
+	b=j77KH7bQgYpSV5KzvrAZJBTA8UBnhmhliU3JAWw3okYK+dl9Bq3Xcttj6S6SSs7k8
+	 IMlkAioDvdxQDK+rDn7JFqDCl9SHUuE1HR9Ei1J6+XuE3Zy3MBCAV1GImncDmObRmk
+	 nDjg7ZnZ0FH9WaplaT5lQZ7bHwKkiCrtOWDS6DKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Yunjian Wang <wangyunjian@huawei.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/185] net/mlx5e: Allow software parsing when IPsec crypto is enabled
-Date: Mon, 29 Jan 2024 09:04:58 -0800
-Message-ID: <20240129170001.745906693@linuxfoundation.org>
+Subject: [PATCH 6.1 085/185] tun: fix missing dropped counter in tun_xdp_act
+Date: Mon, 29 Jan 2024 09:04:45 -0800
+Message-ID: <20240129170001.334550947@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -51,37 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Yunjian Wang <wangyunjian@huawei.com>
 
-[ Upstream commit 20f5468a7988dedd94a57ba8acd65ebda6a59723 ]
+[ Upstream commit 5744ba05e7c4bff8fec133dd0f9e51ddffba92f5 ]
 
-All ConnectX devices have software parsing capability enabled, but it is
-more correct to set allow_swp only if capability exists, which for IPsec
-means that crypto offload is supported.
+The commit 8ae1aff0b331 ("tuntap: split out XDP logic") includes
+dropped counter for XDP_DROP, XDP_ABORTED, and invalid XDP actions.
+Unfortunately, that commit missed the dropped counter when error
+occurs during XDP_TX and XDP_REDIRECT actions. This patch fixes
+this issue.
 
-Fixes: 2451da081a34 ("net/mlx5: Unify device IPsec capabilities check")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 8ae1aff0b331 ("tuntap: split out XDP logic")
+Signed-off-by: Yunjian Wang <wangyunjian@huawei.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/params.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/tun.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-index 29dd3a04c154..d3de1b7a80bf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
-@@ -990,8 +990,8 @@ void mlx5e_build_sq_param(struct mlx5_core_dev *mdev,
- 	void *wq = MLX5_ADDR_OF(sqc, sqc, wq);
- 	bool allow_swp;
- 
--	allow_swp =
--		mlx5_geneve_tx_allowed(mdev) || !!mlx5_ipsec_device_caps(mdev);
-+	allow_swp = mlx5_geneve_tx_allowed(mdev) ||
-+		    (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_CRYPTO);
- 	mlx5e_build_sq_param_common(mdev, param);
- 	MLX5_SET(wq, wq, log_wq_sz, params->log_sq_size);
- 	MLX5_SET(sqc, sqc, allow_swp, allow_swp);
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index d373953ddc30..af32aa599278 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1622,13 +1622,17 @@ static int tun_xdp_act(struct tun_struct *tun, struct bpf_prog *xdp_prog,
+ 	switch (act) {
+ 	case XDP_REDIRECT:
+ 		err = xdp_do_redirect(tun->dev, xdp, xdp_prog);
+-		if (err)
++		if (err) {
++			dev_core_stats_rx_dropped_inc(tun->dev);
+ 			return err;
++		}
+ 		break;
+ 	case XDP_TX:
+ 		err = tun_xdp_tx(tun->dev, xdp);
+-		if (err < 0)
++		if (err < 0) {
++			dev_core_stats_rx_dropped_inc(tun->dev);
+ 			return err;
++		}
+ 		break;
+ 	case XDP_PASS:
+ 		break;
 -- 
 2.43.0
 
