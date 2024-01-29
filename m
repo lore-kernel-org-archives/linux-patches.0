@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A80515F339;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD2C157E6A;
 	Mon, 29 Jan 2024 17:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548285; cv=none; b=GUXkiTizLwg5jGgv/9vyppw7TimkLhgRVDky6tTGkNmJvMYQE/LgalwIh1cxvYKZ4FgeTAwaWXPpQJLBKfnX7NfnCpnex9anI9xBaWHKZkX6OlZ6Hf+j3j1usesBrf+2NBVsGGq6NxUmjIDU+wEFmNXHAl7uzcKSztNFQps/ba8=
+	t=1706548285; cv=none; b=MfIA/+2HdtpnfpkhYTAweEM9+hZOczGPrQ6UxPgNRnZBkJCpL5tehlwt5j54QXMS5xHT1WxqzQaJW7/HlH3X4G8AS/kf1j4sn6RKE8aqfiLyZpW8Ch83+Vm6UFMjqsiSZM4O2z/S7fEZB55yxJc4JoSq8fuYRD2r0G58w3lwFAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548285; c=relaxed/simple;
-	bh=kIQjJzqDnHyHIZn5u1Oo3TrFW7j/SlZBJAa29IeuPNc=;
+	bh=qcdoZVbTm3sV/SZ8xa6hnBHRZSx0X1/tV3HeBBNoiJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulT/sUGswSibLLnWmgH9zXWPwkWbxC3g3exc9dC8wjm9uytOtoSYD7FFazuYPY9GHqJPtQPIW3eDvaWKjlykx0ZJXHVN3JJ386NnclnzGARr2yijD6nVX/kvVNx8bumQqvi9QWJCs5VBxJK4jCURp/C97XTvNFMgFw2Vvh8ew/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgxZs7HB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvfBQYoNWDAg9KMb9C7CLbbvcHMKJ17EexDcQhoYn8AXSv8WavA8aWefVwUqn8VjVWs8KNrHWutVuUuH7hL8c5XZseoCjmJLLjldLcC2+qu34ApmyTZsVALPyZMD+xcvqfRSxZCQDecACX5FZuZbmKl++lInyKeGL+7t+42D/0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYfWXHX8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgxZs7HB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8423C43390;
-	Mon, 29 Jan 2024 17:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYfWXHX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77618C433F1;
+	Mon, 29 Jan 2024 17:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548284;
-	bh=kIQjJzqDnHyHIZn5u1Oo3TrFW7j/SlZBJAa29IeuPNc=;
+	s=korg; t=1706548285;
+	bh=qcdoZVbTm3sV/SZ8xa6hnBHRZSx0X1/tV3HeBBNoiJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CgxZs7HBPAkiRb8rOeTkCKglvokUdWjIH7ibLiFX6StG+Pu6+lHS7m9ONd/MxoBQA
-	 ke7UGM+G0eM2mNdr9jslgOYG668QrnwTLDl902suHtpVYKYhMVcxH7uXHd3GwVqfcr
-	 PlayGu6XAnd+MvoYFwxjeBUgOKt9kAsenAmTRy44=
+	b=wYfWXHX8P5awf1uy66azZGR4UMs/pBzlW9S9jjRVDVdsp4mZSJnj4TVVsUNdCIVCY
+	 cg95Y6w6bQ9Z7bJyPsgkl1Hx3uTJf9F8MZ3MBDm9epJKjrjjAXbWIFcpxVOUwg01Wa
+	 NuQFy/QhuChUcOSQacxAi0sNvASPSs1xVCQqDYoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Ilya Bakoulin <ilya.bakoulin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 297/346] drm/amd/display: Fix hang/underflow when transitioning to ODM4:1
-Date: Mon, 29 Jan 2024 09:05:28 -0800
-Message-ID: <20240129170025.152389120@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 070/185] ksmbd: fix potential circular locking issue in smb2_set_ea()
+Date: Mon, 29 Jan 2024 09:04:30 -0800
+Message-ID: <20240129170000.848263803@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,72 +46,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Bakoulin <ilya.bakoulin@amd.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit e7b2b108cdeab76a7e7324459e50b0c1214c0386 ]
+[ Upstream commit 6fc0a265e1b932e5e97a038f99e29400a93baad0 ]
 
-[Why]
-Under some circumstances, disabling an OPTC and attempting to reclaim
-its OPP(s) for a different OPTC could cause a hang/underflow due to OPPs
-not being properly disconnected from the disabled OPTC.
+smb2_set_ea() can be called in parent inode lock range.
+So add get_write argument to smb2_set_ea() not to call nested
+mnt_want_write().
 
-[How]
-Ensure that all OPPs are unassigned from an OPTC when it gets disabled.
-
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Ilya Bakoulin <ilya.bakoulin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 3ba2a0bfd8cf ("drm/amd/display: Clear OPTC mem select on disable")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c | 7 +++++++
- drivers/gpu/drm/amd/display/dc/dcn35/dcn35_optc.c | 7 +++++++
- 2 files changed, 14 insertions(+)
+ fs/smb/server/smb2pdu.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-index a2c4db2cebdd..91ea0d4da06a 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_optc.c
-@@ -172,6 +172,13 @@ static bool optc32_disable_crtc(struct timing_generator *optc)
- 	REG_UPDATE(OTG_CONTROL,
- 			OTG_MASTER_EN, 0);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2321,11 +2321,12 @@ out:
+  * @eabuf:	set info command buffer
+  * @buf_len:	set info command buffer length
+  * @path:	dentry path for get ea
++ * @get_write:	get write access to a mount
+  *
+  * Return:	0 on success, otherwise error
+  */
+ static int smb2_set_ea(struct smb2_ea_info *eabuf, unsigned int buf_len,
+-		       const struct path *path)
++		       const struct path *path, bool get_write)
+ {
+ 	struct user_namespace *user_ns = mnt_user_ns(path->mnt);
+ 	char *attr_name = NULL, *value;
+@@ -3013,7 +3014,7 @@ int smb2_open(struct ksmbd_work *work)
  
-+	REG_UPDATE_5(OPTC_DATA_SOURCE_SELECT,
-+			OPTC_SEG0_SRC_SEL, 0xf,
-+			OPTC_SEG1_SRC_SEL, 0xf,
-+			OPTC_SEG2_SRC_SEL, 0xf,
-+			OPTC_SEG3_SRC_SEL, 0xf,
-+			OPTC_NUM_OF_INPUT_SEGMENT, 0);
-+
- 	REG_UPDATE(CONTROL,
- 			VTG0_ENABLE, 0);
+ 			rc = smb2_set_ea(&ea_buf->ea,
+ 					 le32_to_cpu(ea_buf->ccontext.DataLength),
+-					 &path);
++					 &path, false);
+ 			if (rc == -EOPNOTSUPP)
+ 				rc = 0;
+ 			else if (rc)
+@@ -5990,7 +5991,7 @@ static int smb2_set_info_file(struct ksm
+ 			return -EINVAL;
  
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_optc.c b/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_optc.c
-index a4a39f1638cf..08a59cf449ca 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn35/dcn35_optc.c
-@@ -144,6 +144,13 @@ static bool optc35_disable_crtc(struct timing_generator *optc)
- 	REG_UPDATE(OTG_CONTROL,
- 			OTG_MASTER_EN, 0);
- 
-+	REG_UPDATE_5(OPTC_DATA_SOURCE_SELECT,
-+			OPTC_SEG0_SRC_SEL, 0xf,
-+			OPTC_SEG1_SRC_SEL, 0xf,
-+			OPTC_SEG2_SRC_SEL, 0xf,
-+			OPTC_SEG3_SRC_SEL, 0xf,
-+			OPTC_NUM_OF_INPUT_SEGMENT, 0);
-+
- 	REG_UPDATE(CONTROL,
- 			VTG0_ENABLE, 0);
- 
--- 
-2.43.0
-
+ 		return smb2_set_ea((struct smb2_ea_info *)req->Buffer,
+-				   buf_len, &fp->filp->f_path);
++				   buf_len, &fp->filp->f_path, true);
+ 	}
+ 	case FILE_POSITION_INFORMATION:
+ 	{
 
 
