@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0D915DBAB;
-	Mon, 29 Jan 2024 17:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A49615DBA7;
+	Mon, 29 Jan 2024 17:13:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548429; cv=none; b=nAfLGEEmB/fgQ1BcPzaz3z0HnT0bv3swByduUBQohdLJszo3ad3VAmh8GtXFivg6ugyhQv1kqH22wbz/mjJ1nOypgkpgCcUsvwHAiA6Cs5pP/9hE1Z1DbEDkucLr3JQmsSusgW2FhKc4WSC7D4fNKXZPkINd1xZQ7tXKGSRSBbc=
+	t=1706548430; cv=none; b=cqsp9eQww22GdGv49sihKsF2BbdJ0OH+s11j9V7Rw33n9E5M94TObfnamOrhbEk9aSpDnk0r/iJJYgWjQSgYKDAk2R0iBAAno5RJhXPTjKRyEhUMOQp+338cJbZHyn93wS4OZJaElj4+8/ukceC416WGZWBsywpGB4iPMlnJgXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548429; c=relaxed/simple;
-	bh=3vCyG0Ve4XrLTojZ7BiYvA3BZKBxGaRriT2gJ2vLaGI=;
+	s=arc-20240116; t=1706548430; c=relaxed/simple;
+	bh=IiTTX3OmTFXF+C5o9OjIpJGUPDZJU7zM5YKrC3z3E/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/dvK0Dr1ehjUZxVhAKzSjUNVbETUHE9HpPAaT2fRqetBNZqlsAdbP8ayZZhlLNLvjrrWES8VeWxoOTO0sbNxMPKDf61wH4YhyawbVVGigUt/Rp3pGcvnwHwnqCWAPzBLQlW52NF/Ulhw9vDb98wuCJQp7buwkmUTeZ//RewUok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pm1u23FU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtTQ6qcnQgOtrAwQxC1seCgUOEWWUGcqYwmQ4e4k0HvhS9VciYFVOxgGf+HUKTEbc770397wlEWolqHqEM2PZTjvNKgbpiFd78JY2Xk+KvqwqorKH/3OVYBSrFPcnItJKYLlk/psjG8ph5LoT/FcYCM6q9FzEJLYNwFHVfb7sOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8Ydp+VH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pm1u23FU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42741C43390;
-	Mon, 29 Jan 2024 17:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8Ydp+VH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E791C433F1;
+	Mon, 29 Jan 2024 17:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548429;
-	bh=3vCyG0Ve4XrLTojZ7BiYvA3BZKBxGaRriT2gJ2vLaGI=;
+	s=korg; t=1706548430;
+	bh=IiTTX3OmTFXF+C5o9OjIpJGUPDZJU7zM5YKrC3z3E/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pm1u23FU0HFQZA4F8MbfKPa67magzMFxHsFCogzXGcIfIXbHhros3zdDRlwBY4UkF
-	 E+YL9D3zCB1JdLieiqyvDyfDaCihjoiD864BQWx4Sar5WrE/L0psQ9CM87IhkKBGPC
-	 b8CHfHwcP/w/g6AohvSKavE8bOi0Kmioykdqa1AU=
+	b=r8Ydp+VHzItF5RxgRZRQgIWzVTjVwowct/2P89YtWbadYfTlEF/+ij9bi7ypqdsJc
+	 GJnxfSKhnDP32vG/bY7Wi9xO7Yr/Fp6CSMx0gD7E44/E9as2BsIwslkotECQjNZbse
+	 A1tPw1SvrmSrzNbCYHB+ecHnx/IXGsFsFFeiBk78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Rohan G Thomas <rohan.g.thomas@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/331] soundwire: fix initializing sysfs for same devices on different buses
-Date: Mon, 29 Jan 2024 09:01:11 -0800
-Message-ID: <20240129170015.172772323@linuxfoundation.org>
+Subject: [PATCH 6.6 008/331] net: stmmac: Tx coe sw fallback
+Date: Mon, 29 Jan 2024 09:01:12 -0800
+Message-ID: <20240129170015.205472340@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -56,87 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Rohan G Thomas <rohan.g.thomas@intel.com>
 
-[ Upstream commit 8a8a9ac8a4972ee69d3dd3d1ae43963ae39cee18 ]
+[ Upstream commit 8452a05b2c633b708dbe3e742f71b24bf21fe42d ]
 
-If same devices with same device IDs are present on different soundwire
-buses, the probe fails due to conflicting device names and sysfs
-entries:
+Add sw fallback of tx checksum calculation for those tx queues that
+don't support tx checksum offloading. DW xGMAC IP can be synthesized
+such that it can support tx checksum offloading only for a few
+initial tx queues. Also as Serge pointed out, for the DW QoS IP, tx
+coe can be individually configured for each tx queue.
 
-  sysfs: cannot create duplicate filename '/bus/soundwire/devices/sdw:0:0217:0204:00:0'
+So when tx coe is enabled, for any tx queue that doesn't support
+tx coe with 'coe-unsupported' flag set will have a sw fallback
+happen in the driver for tx checksum calculation when any packets to
+be transmitted on these tx queues.
 
-The link ID is 0 for both devices, so they should be differentiated by
-the controller ID. Add the controller ID so, the device names and sysfs entries look
-like:
-
-  sdw:1:0:0217:0204:00:0 -> ../../../devices/platform/soc@0/6ab0000.soundwire-controller/sdw-master-1-0/sdw:1:0:0217:0204:00:0
-  sdw:3:0:0217:0204:00:0 -> ../../../devices/platform/soc@0/6b10000.soundwire-controller/sdw-master-3-0/sdw:3:0:0217:0204:00:0
-
-[PLB changes: use bus->controller_id instead of bus->id]
-
-Fixes: 7c3cd189b86d ("soundwire: Add Master registration")
-Cc: stable@vger.kernel.org
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Co-developed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Mark Brown <broonie@kernel.org>
-Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20231017160933.12624-3-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: c2945c435c99 ("net: stmmac: Prevent DSA tags from breaking COE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/slave.c        | 12 ++++++------
- sound/soc/intel/boards/sof_sdw.c |  4 ++--
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c     | 10 ++++++++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c |  3 +++
+ include/linux/stmmac.h                                |  1 +
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/slave.c
-index c1c1a2ac293a..060c2982e26b 100644
---- a/drivers/soundwire/slave.c
-+++ b/drivers/soundwire/slave.c
-@@ -39,14 +39,14 @@ int sdw_slave_add(struct sdw_bus *bus,
- 	slave->dev.fwnode = fwnode;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 1bfcf673b3ce..59e07efe08c9 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4417,6 +4417,16 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	WARN_ON(tx_q->tx_skbuff[first_entry]);
  
- 	if (id->unique_id == SDW_IGNORED_UNIQUE_ID) {
--		/* name shall be sdw:link:mfg:part:class */
--		dev_set_name(&slave->dev, "sdw:%01x:%04x:%04x:%02x",
--			     bus->link_id, id->mfg_id, id->part_id,
-+		/* name shall be sdw:ctrl:link:mfg:part:class */
-+		dev_set_name(&slave->dev, "sdw:%01x:%01x:%04x:%04x:%02x",
-+			     bus->controller_id, bus->link_id, id->mfg_id, id->part_id,
- 			     id->class_id);
- 	} else {
--		/* name shall be sdw:link:mfg:part:class:unique */
--		dev_set_name(&slave->dev, "sdw:%01x:%04x:%04x:%02x:%01x",
--			     bus->link_id, id->mfg_id, id->part_id,
-+		/* name shall be sdw:ctrl:link:mfg:part:class:unique */
-+		dev_set_name(&slave->dev, "sdw:%01x:%01x:%04x:%04x:%02x:%01x",
-+			     bus->controller_id, bus->link_id, id->mfg_id, id->part_id,
- 			     id->class_id, id->unique_id);
+ 	csum_insertion = (skb->ip_summed == CHECKSUM_PARTIAL);
++	/* DWMAC IPs can be synthesized to support tx coe only for a few tx
++	 * queues. In that case, checksum offloading for those queues that don't
++	 * support tx coe needs to fallback to software checksum calculation.
++	 */
++	if (csum_insertion &&
++	    priv->plat->tx_queues_cfg[queue].coe_unsupported) {
++		if (unlikely(skb_checksum_help(skb)))
++			goto dma_map_err;
++		csum_insertion = !csum_insertion;
++	}
+ 
+ 	if (likely(priv->extend_desc))
+ 		desc = (struct dma_desc *)(tx_q->dma_etx + entry);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+index 2f0678f15fb7..30d5e635190e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -276,6 +276,9 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
+ 			plat->tx_queues_cfg[queue].use_prio = true;
+ 		}
+ 
++		plat->tx_queues_cfg[queue].coe_unsupported =
++			of_property_read_bool(q_node, "snps,coe-unsupported");
++
+ 		queue++;
  	}
+ 	if (queue != plat->tx_queues_to_use) {
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index e3f7ee169c08..5acb77968902 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -139,6 +139,7 @@ struct stmmac_rxq_cfg {
  
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index 24e966a2ac2b..9ed572141fe5 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -1197,11 +1197,11 @@ static int fill_sdw_codec_dlc(struct device *dev,
- 	else if (is_unique_device(adr_link, sdw_version, mfg_id, part_id,
- 				  class_id, adr_index))
- 		codec->name = devm_kasprintf(dev, GFP_KERNEL,
--					     "sdw:%01x:%04x:%04x:%02x", link_id,
-+					     "sdw:0:%01x:%04x:%04x:%02x", link_id,
- 					     mfg_id, part_id, class_id);
- 	else
- 		codec->name = devm_kasprintf(dev, GFP_KERNEL,
--					     "sdw:%01x:%04x:%04x:%02x:%01x", link_id,
-+					     "sdw:0:%01x:%04x:%04x:%02x:%01x", link_id,
- 					     mfg_id, part_id, class_id, unique_id);
- 
- 	if (!codec->name)
+ struct stmmac_txq_cfg {
+ 	u32 weight;
++	bool coe_unsupported;
+ 	u8 mode_to_use;
+ 	/* Credit Base Shaper parameters */
+ 	u32 send_slope;
 -- 
 2.43.0
 
