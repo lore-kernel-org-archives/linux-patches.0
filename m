@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039AC6F06C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37326F075;
 	Mon, 29 Jan 2024 17:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548460; cv=none; b=EXz6d3DAO4KjwxRvlnHk/TisucX8Uzioy1/+UeuA5KVl8ZmztKswWgEARe91zkXy97Yp73D5DO9FPJbrnVwdYGHc6vc//akDQVUTZ8Wsq7twr/U7nsWPr155VNehD+2QrZenRAtN//SvkC81mt3nB9NMWZo55dlAVSRnle6Fye0=
+	t=1706548460; cv=none; b=o5KRp3YpGo4Uxs+84WjeqojAtTX7d//H0L8vqyKNJwIEk0AF4XT0CnQv+49Hnj/4TBm7tja8bAK2uRkjh9sFjCM1Q+BqXUfwGtp5/pSURtFPXhYOhFPuHEzr5jlDFsdGHcuYRCPnjma5qP8DuG3z0YCF9WRXM9vvo9CLKnvHbcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548460; c=relaxed/simple;
-	bh=9qsQz/ooNfCzjyNzwG4MeaIuQ2uw1k1l6bzqTg3Ncus=;
+	bh=O4v3Dk9DQZcAdLiTOYFJJcd0nUJM/cKVtYKjF0onODk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8o/M6PK+aCU2NtCqyACGQXWG2Wu2VnrnVL87VDskNafMTT7fq1VyBYNbaOsc6cNNtbjxDlTGoKy6Q0he4wwO/vMs8weME5gLN+DBOjGb2wOAoh5OgOyCiuakyifTLqyLPb5LYG771rTPXT7jJ7C59HPi2chaDQbp3Q8eWoDjHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTJEIevW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CmDW46EksIXu9isCcP4tjFpuxdul9CmoxPIZkeOPpeNY2C6kpV68V04KIaDmndPiRblZbn+6SAoR7ZiKbDA0nUBvrNrCKYShFtQLtYPGM4EZSKVu8MkNGISRjjI495fmhZtmstQpOEJsXfDv9fB0lg3/b2Os0zR5DkS8rhzrN8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftUyeUEt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTJEIevW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E0BC433C7;
-	Mon, 29 Jan 2024 17:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftUyeUEt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90134C433C7;
+	Mon, 29 Jan 2024 17:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548459;
-	bh=9qsQz/ooNfCzjyNzwG4MeaIuQ2uw1k1l6bzqTg3Ncus=;
+	s=korg; t=1706548460;
+	bh=O4v3Dk9DQZcAdLiTOYFJJcd0nUJM/cKVtYKjF0onODk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTJEIevWxCj7fmXGmjQe1So6N3zUCdBPgQrL9vf/A77GdRmFU4mxcsyg25/mzGWO7
-	 JvVDcAld6KGsl5JGCJVM1eLUWp5+Wnnu8Y4Lrs+ykCvwfxyhZkyRZ/uPI8V3uzU9qV
-	 1rzOhh4eAkNk4m+mE5Bs0WOpWBvleE/hhxKUZgBk=
+	b=ftUyeUEt4y+DSan6KiFVxpze8jebe/ddQQ5ac1rniKQ/Q3O0kMmowXlcDkJHeRMtC
+	 XrHWnDQtybDdXt1UnzjfPyQSAi0Qet7ujWB88aEE2IG7+3QnGm6J2zXpEyXe+xGAkM
+	 4iNPUpuO9P0MU7uafjm8axotPc/z1lGZt/wIcgSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 055/331] media: ov01a10: Enable runtime PM before registering async sub-device
-Date: Mon, 29 Jan 2024 09:01:59 -0800
-Message-ID: <20240129170016.535847376@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 073/331] arm64: dts: qcom: sc8280xp-crd: fix eDP phy compatible
+Date: Mon, 29 Jan 2024 09:02:17 -0800
+Message-ID: <20240129170017.058736968@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,71 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingbu Cao <bingbu.cao@intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 47a78052db51b16e8045524fbf33373b58f1323b upstream.
+commit 663affdb12b3e26c77d103327cf27de720c8117e upstream.
 
-As the sensor device maybe accessible right after its async sub-device is
-registered, such as ipu-bridge will try to power up sensor by sensor's
-client device's runtime PM from the async notifier callback, if runtime PM
-is not enabled, it will fail.
+The sc8280xp Display Port PHYs can be used in either DP or eDP mode and
+this is configured using the devicetree compatible string which defaults
+to DP mode in the SoC dtsi.
 
-So runtime PM should be ready before its async sub-device is registered
-and accessible by others.
+Override the default compatible string for the CRD eDP PHY node so that
+the eDP settings are used.
 
-It also sets the runtime PM status to active as the sensor was turned
-on by i2c-core.
-
-Fixes: 0827b58dabff ("media: i2c: add ov01a10 image sensor driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4a883a8d80b5 ("arm64: dts: qcom: sc8280xp-crd: Enable EDP")
+Cc: stable@vger.kernel.org      # 6.3
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20231016080658.6667-1-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov01a10.c |   18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/i2c/ov01a10.c
-+++ b/drivers/media/i2c/ov01a10.c
-@@ -907,6 +907,7 @@ static void ov01a10_remove(struct i2c_cl
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index e4861c61a65b..ffc4406422ae 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -458,6 +458,8 @@ mdss0_dp3_out: endpoint {
+ };
  
- 	pm_runtime_disable(&client->dev);
-+	pm_runtime_set_suspended(&client->dev);
- }
- 
- static int ov01a10_probe(struct i2c_client *client)
-@@ -953,17 +954,26 @@ static int ov01a10_probe(struct i2c_clie
- 		goto err_media_entity_cleanup;
- 	}
- 
-+	/*
-+	 * Device is already turned on by i2c-core with ACPI domain PM.
-+	 * Enable runtime PM and turn off the device.
-+	 */
-+	pm_runtime_set_active(&client->dev);
-+	pm_runtime_enable(dev);
-+	pm_runtime_idle(dev);
+ &mdss0_dp3_phy {
++	compatible = "qcom,sc8280xp-edp-phy";
 +
- 	ret = v4l2_async_register_subdev_sensor(&ov01a10->sd);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to register subdev: %d\n", ret);
--		goto err_media_entity_cleanup;
-+		goto err_pm_disable;
- 	}
+ 	vdda-phy-supply = <&vreg_l6b>;
+ 	vdda-pll-supply = <&vreg_l3b>;
  
--	pm_runtime_enable(dev);
--	pm_runtime_idle(dev);
--
- 	return 0;
- 
-+err_pm_disable:
-+	pm_runtime_disable(dev);
-+	pm_runtime_set_suspended(&client->dev);
-+
- err_media_entity_cleanup:
- 	media_entity_cleanup(&ov01a10->sd.entity);
- 
+-- 
+2.43.0
+
 
 
