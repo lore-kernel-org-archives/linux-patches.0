@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F040515957C;
-	Mon, 29 Jan 2024 17:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A689915957C;
+	Mon, 29 Jan 2024 17:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548193; cv=none; b=K+vk1eYnr75j9m5ueEDmFXb9wZRn53ffuo5+Jz1EfVDuQbfOkr+gP2am+fXp4NA3KGMDIXoI8aSA8qQz7CZDYW0TS3hra3KfWnMLuDz3JUEeHWLOtYz+7/q3+7ESNJ2jmzrx5DG/OUCTZifPgcbqJt9tNT8AyIrMnlq5lVPirwc=
+	t=1706548193; cv=none; b=Ybf7WMHi9mjcSuqD6Q8LXaQ6jNkd6VM+iCL47/mu4ip/PXLGlLu+JUAKUEiOj8dyJtmyRajNuABXH50tfLi6QAkqsaLpaSUyFP3mV9vVrWdGKyIEktuhmbbbKQk1fbamdryjCzaNbhr1rNcZKwhlUsIKY9AlL+5MUAixIq0f37w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548193; c=relaxed/simple;
-	bh=UqSHOyHyrUSX5WJ2x37aMfX+Cg2OioofkXaPtKb1wz8=;
+	bh=eDau1d3lcbAgMs4ZoqC3KDrv7TPZ7KcANnke49llMks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rABmafYtM4OG6Kab95KGUDfTvU0MOqGd/+xR4JRozGeLifg+CB2KpdgB1rzlUjNWW+4LtnUN9zbhCeHQcpgxFqjFvZ59akLZu8bhx9ZKSrBy2jyHYtS2kegx8TynrRFFmS5CRastS1lYnxHwWM8QUQ02Nc25TUoqKbQZbaEaXBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QreZF35q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GH5lTm/YteT/qQY9UWyzk1JVeKCp0SWWKjYspdT7AR9q6+0QwzAOutbsudWPEceXV08N82195aK+sjiWPGftIbHypj9/a/ei/7C+wKF9O4OQnETtLdy3MQ99/gO0kg4ptPToCveuqTHidAesxfU/3wo9zO4VZurN3hlB2Yt3GZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1SPzwN63; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QreZF35q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92E2C433C7;
-	Mon, 29 Jan 2024 17:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1SPzwN63"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F056C43390;
+	Mon, 29 Jan 2024 17:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548192;
-	bh=UqSHOyHyrUSX5WJ2x37aMfX+Cg2OioofkXaPtKb1wz8=;
+	s=korg; t=1706548193;
+	bh=eDau1d3lcbAgMs4ZoqC3KDrv7TPZ7KcANnke49llMks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QreZF35qqmKVJOovrMFjAe3rU8xxyUZ2W1MnU68YTFw2UZik4SyidBhJOyxU+bRTB
-	 dArnaAVcPS+ie7FSCLX+c1vSZwJa5dLJKmbwIljXvlJXNHD2aRo16QaD7CFDVPWsTn
-	 TYmjJSVZTS85/3McCvD9AzbF+lkXRj6gyXXZB6uo=
+	b=1SPzwN63pYVq8e+AyjPctjlem2yugJQime4bqb6QnUjK5/ku+FpVA/cr8XA5JKB8T
+	 yJ4u8TLomwEPhauDAHZOh5rpokliXermil0PuOvrr2Wo1CpWi07HOnn/61T2UxuF2r
+	 Rto2JYXP5GmwDJlGpXxMdlnYUWvgGZYi2Hmra8Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.7 231/346] wifi: iwlwifi: fix a memory corruption
-Date: Mon, 29 Jan 2024 09:04:22 -0800
-Message-ID: <20240129170023.192079405@linuxfoundation.org>
+	David Disseldorp <ddiss@suse.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 010/185] btrfs: sysfs: validate scrub_speed_max value
+Date: Mon, 29 Jan 2024 09:03:30 -0800
+Message-ID: <20240129165958.919828634@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: David Disseldorp <ddiss@suse.de>
 
-commit cf4a0d840ecc72fcf16198d5e9c505ab7d5a5e4d upstream.
+commit 2b0122aaa800b021e36027d7f29e206f87c761d6 upstream.
 
-iwl_fw_ini_trigger_tlv::data is a pointer to a __le32, which means that
-if we copy to iwl_fw_ini_trigger_tlv::data + offset while offset is in
-bytes, we'll write past the buffer.
+The value set as scrub_speed_max accepts size with suffixes
+(k/m/g/t/p/e) but we should still validate it for trailing characters,
+similar to what we do with chunk_size_store.
 
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218233
-Fixes: cf29c5b66b9f ("iwlwifi: dbg_ini: implement time point handling")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240111150610.2d2b8b870194.I14ed76505a5cf87304e0c9cc05cc0ae85ed3bf91@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: David Disseldorp <ddiss@suse.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/sysfs.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2018-2023 Intel Corporation
-+ * Copyright (C) 2018-2024 Intel Corporation
-  */
- #include <linux/firmware.h>
- #include "iwl-drv.h"
-@@ -1096,7 +1096,7 @@ static int iwl_dbg_tlv_override_trig_nod
- 		node_trig = (void *)node_tlv->data;
- 	}
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -1704,6 +1704,10 @@ static ssize_t btrfs_devinfo_scrub_speed
+ 	unsigned long long limit;
  
--	memcpy(node_trig->data + offset, trig->data, trig_data_len);
-+	memcpy((u8 *)node_trig->data + offset, trig->data, trig_data_len);
- 	node_tlv->length = cpu_to_le32(size);
- 
- 	if (policy & IWL_FW_INI_APPLY_POLICY_OVERRIDE_CFG) {
+ 	limit = memparse(buf, &endptr);
++	/* There could be trailing '\n', also catch any typos after the value. */
++	endptr = skip_spaces(endptr);
++	if (*endptr != 0)
++		return -EINVAL;
+ 	WRITE_ONCE(device->scrub_speed_max, limit);
+ 	return len;
+ }
 
 
