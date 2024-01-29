@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142591649B3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA71A1649B3;
 	Mon, 29 Jan 2024 17:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548440; cv=none; b=l7OXLErQvRjj/iHXKZ69eJu7Zr62bvHNi8Qd5a0oEoe2WsOqrCmVB3sCuTzfIcvDTaqUmmmW1Ty/hbDx2lC9N4vlrPfIJZ1p8kOymntIzwEx5wtlzJgL0IaGcfMv4SQKXFYDmb2AdtGUnpfNQkIt1BuW8sHSTAA+PgTr8p3dhpI=
+	t=1706548440; cv=none; b=QWN3FaO554YodM9ZqXWpucgwjUGYmvIVDPY6If3svLm/pfh42hSCKWPjbw7/f311p5DFqgKUv5Oprpp0c5yE2z0SNNC2yIcnHlBRwOlpG/ItrpMvHnHdAhG3FUmOzbT2uxdmGrxYxCKc6GIWGnpDoA4rnMKenmIlsjukJiUpyHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548440; c=relaxed/simple;
-	bh=uwdmQyn0LzrzE+i/QiFoas7FOnXQzk8MaZqYJA+RsQo=;
+	bh=IKjLbheaarrlHGfrt0lDISnEYiWJba7tFGD93eVqQUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0K2NyrHEBy8CblajYAIqO5sCq/xEZ6gwRrd51XZV1JEFlLFoEGOlpju2AfN9S/UVo4Oxxna5Npfz0p+y4YHQmTZHm4fuZBhgeWVUU0+IvxLOnRB1nZzgXL+RQM0kGCw6fkBdQQ+g7nEeeJW/OP9Q91RLw7H4f72pnXK1YjbINs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uO6ozwb7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PikxyJdOmwhc9kr6q2OtCxyvUaLjmHteNNBcu7S2726zV6YAL0R5J25DJ0EQ5r9gm7QTmSnGMLFUCFXvi/xqukZ9cxIr5XDldnl4sLNeRRM8kbzZScUe8CWxW7xq1ZlfvngfZ0gXdwtgUGPbc/Jb+pZDoj/3531e5aqWgQCBe+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr3wvD1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uO6ozwb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7E8C43399;
-	Mon, 29 Jan 2024 17:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr3wvD1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829D1C43394;
+	Mon, 29 Jan 2024 17:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548439;
-	bh=uwdmQyn0LzrzE+i/QiFoas7FOnXQzk8MaZqYJA+RsQo=;
+	s=korg; t=1706548440;
+	bh=IKjLbheaarrlHGfrt0lDISnEYiWJba7tFGD93eVqQUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uO6ozwb7uof4yRxfwzG557Jry+m+/alti4+pe3oqSwEacs5gcOOH04jAp9cnaNoCm
-	 XSxDUHWVCVYNRYjrhmscWySMbuS675uYWI/25zfGp68V1OdVqn6mlzn2MuUoLNaJGc
-	 gc5eP06G6bJkkorKpcEQXv00PhiH+z/fdpI7hVKQ=
+	b=kr3wvD1nCA2CLmWJPtjI8iMpqUt6Tuyo1ie4OEivGfQzBYKPL8tMn0nThKvHBeO/x
+	 bU/JBTVplC6B3IbAH8oX+JkD1cN8lNe4InCm7MrPBHuYIy97fDD4+26bVn7RNmjAl0
+	 QqAOMil7CvgDFdA6o6reN/52rYntmk3ea7UFa8fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 045/331] mtd: maps: vmu-flash: Fix the (mtd core) switch to ref counters
-Date: Mon, 29 Jan 2024 09:01:49 -0800
-Message-ID: <20240129170016.255189593@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 028/331] cifs: update iface_last_update on each query-and-update
+Date: Mon, 29 Jan 2024 09:01:32 -0800
+Message-ID: <20240129170015.777093968@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -50,38 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit a7d84a2e7663bbe12394cc771107e04668ea313a upstream.
+[ Upstream commit 78e727e58e54efca4c23863fbd9e16e9d2d83f81 ]
 
-While switching to ref counters for track mtd devices use, the vmu-flash
-driver was forgotten. The reason for reading the ref counter seems
-debatable, but let's just fix the build for now.
+iface_last_update was an unused field when it was introduced.
+Later, when we had periodic update of server interface list,
+this field was used regularly to decide when to update next.
 
-Fixes: 19bfa9ebebb5 ("mtd: use refcount to prevent corruption")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312022315.79twVRZw-lkp@intel.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20231205075936.13831-1-miquel.raynal@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, with the new logic of updating the interfaces, it
+becomes crucial that this field be updated whenever
+parse_server_interfaces runs successfully.
+
+This change updates this field when either the server does
+not support query of interfaces; so that we do not query
+the interfaces repeatedly. It also updates the field when
+the function reaches the end.
+
+Fixes: aa45dadd34e4 ("cifs: change iface_list from array to sorted linked list")
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/vmu-flash.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/maps/vmu-flash.c b/drivers/mtd/maps/vmu-flash.c
-index a7ec947a3ebb..53019d313db7 100644
---- a/drivers/mtd/maps/vmu-flash.c
-+++ b/drivers/mtd/maps/vmu-flash.c
-@@ -719,7 +719,7 @@ static int vmu_can_unload(struct maple_device *mdev)
- 	card = maple_get_drvdata(mdev);
- 	for (x = 0; x < card->partitions; x++) {
- 		mtd = &((card->mtd)[x]);
--		if (mtd->usecount > 0)
-+		if (kref_read(&mtd->refcnt))
- 			return 0;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 8caf2cefc8a7..e33ed0fbc318 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -615,6 +615,7 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 				 "Empty network interface list returned by server %s\n",
+ 				 ses->server->hostname);
+ 		rc = -EOPNOTSUPP;
++		ses->iface_last_update = jiffies;
+ 		goto out;
  	}
- 	return 1;
+ 
+@@ -712,7 +713,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 
+ 		ses->iface_count++;
+ 		spin_unlock(&ses->iface_lock);
+-		ses->iface_last_update = jiffies;
+ next_iface:
+ 		nb_iface++;
+ 		next = le32_to_cpu(p->Next);
+@@ -734,6 +734,8 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 	if ((bytes_left > 8) || p->Next)
+ 		cifs_dbg(VFS, "%s: incomplete interface info\n", __func__);
+ 
++	ses->iface_last_update = jiffies;
++
+ out:
+ 	/*
+ 	 * Go through the list again and put the inactive entries
 -- 
 2.43.0
 
