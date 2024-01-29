@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49517157059;
-	Mon, 29 Jan 2024 17:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B29F1586C9;
+	Mon, 29 Jan 2024 17:10:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548216; cv=none; b=TU2UOD65ziOaWM/F1EbW9Lg0GtUYWwyIkizMy5QQwjvB0H5N8pLazENdArY85id56+8LuGD3ueUW3mvpdqbrxiLL9GgRy0nj99GeBSTOou2ckuNnPskGsnbi20VjqOvl2ZPlvzeOHbi+e43fSFjokLhjb48fLs1Yxa9seeVOgH0=
+	t=1706548217; cv=none; b=aKH+jR3IptNdBeza9d4kWekuGGnb+eyE6LggvX7aDhxWZgnuBTg38yyF5yP7jSd/9KlkIDKvvtr3sWozhoahfhT5YiiHgAKTHsdJBB6ut8c8n7iH4tMAXRcj1tfBYWWP1E9DtY8HqgXGSoaVxKHd/dPvBxD+kb7RjVcMpZHbrlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548216; c=relaxed/simple;
-	bh=fkPpcqPNnlL6E67tP1ealJ2P0fWiRTzDN3E8Mn6YndY=;
+	s=arc-20240116; t=1706548217; c=relaxed/simple;
+	bh=RhosSEDf3+foqyIIVL+yRx3uTZ0KPC9X5ZT9zrAXX5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDnGpp6jXiYbB29iMjMg4smiusupUpRmF3sltkTP2ZezUN1ZaIYQDtaJc/PZrbQ9dy6zb16hZqe8fr7Hqzxty3+09GZl9+F4nUHHZaRQVUBFqeugNQoPgMnYMxBIQ/S0B1zL9yVYFq6HyJFHXtURTj77ZpP1AxmwTXHqOTbXoMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImZNon0Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t4YKd4XyjJRWFZMDuFSm5rM5Djw3joA6Q17XPpDCG1KPNL7K4VtehT/N0VT9KIqzrU9PG5aZB5eulUVDgFkN7cb0bB5/wmvdQ7NYegA4/E859VcCk5LQ2xPXGDnax2gKQ3YIOv8nXEgW3pkdQq9J3mxidN3CooUs891IR6sqHZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoZsMCQH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImZNon0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD03C43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoZsMCQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8ABC43394;
 	Mon, 29 Jan 2024 17:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548216;
-	bh=fkPpcqPNnlL6E67tP1ealJ2P0fWiRTzDN3E8Mn6YndY=;
+	bh=RhosSEDf3+foqyIIVL+yRx3uTZ0KPC9X5ZT9zrAXX5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImZNon0Z8QE0N97Oq4jbQwSkUn1eAvQXdJ/c4BrCk0iAaKv5f3ikicZRSYNfHaj8k
-	 8pAs7UwtpZjhwCrpafxKKVjr9bOuX2jau5dbKvVauAIm7eELXbknQdSTWfWAZizs3v
-	 BUqVv9e6FlNRfwFdNhliDj8ms24HfXgSLh45ya70=
+	b=BoZsMCQH8f07bAdwPZPQ1Gcl1opnwD1wkPM+acIpH6aBho4tCAA3Sw9tlaSbrRC9O
+	 klHz8p4HhXReIn4bELlH6dh75gSz3fSHjJdnbZ4oS4JMVDtRGI1kgGBaJWou6osfcX
+	 9pmfhKy2oNuIz7TqKIJf7gRNX0FSsFkRbAvF9pSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 023/185] mips: Fix max_mapnr being uninitialized on early stages
-Date: Mon, 29 Jan 2024 09:03:43 -0800
-Message-ID: <20240129165959.345084220@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.7 249/346] drm/i915/psr: Only allow PSR in LPSP mode on HSW non-ULT
+Date: Mon, 29 Jan 2024 09:04:40 -0800
+Message-ID: <20240129170023.742795996@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,92 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Serge Semin <fancer.lancer@gmail.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit e1a9ae45736989c972a8d1c151bc390678ae6205 upstream.
+commit f9f031dd21a7ce13a13862fa5281d32e1029c70f upstream.
 
-max_mapnr variable is utilized in the pfn_valid() method in order to
-determine the upper PFN space boundary. Having it uninitialized
-effectively makes any PFN passed to that method invalid. That in its turn
-causes the kernel mm-subsystem occasion malfunctions even after the
-max_mapnr variable is actually properly updated. For instance,
-pfn_valid() is called in the init_unavailable_range() method in the
-framework of the calls-chain on MIPS:
-setup_arch()
-+-> paging_init()
-    +-> free_area_init()
-        +-> memmap_init()
-            +-> memmap_init_zone_range()
-                +-> init_unavailable_range()
+On HSW non-ULT (or at least on Dell Latitude E6540) external displays
+start to flicker when we enable PSR on the eDP. We observe a much higher
+SR and PC6 residency than should be possible with an external display,
+and indeen much higher than what we observe with eDP disabled and
+only the external display enabled. Looks like the hardware is somehow
+ignoring the fact that the external display is active during PSR.
 
-Since pfn_valid() always returns "false" value before max_mapnr is
-initialized in the mem_init() method, any flatmem page-holes will be left
-in the poisoned/uninitialized state including the IO-memory pages. Thus
-any further attempts to map/remap the IO-memory by using MMU may fail.
-In particular it happened in my case on attempt to map the SRAM region.
-The kernel bootup procedure just crashed on the unhandled unaligned access
-bug raised in the __update_cache() method:
+I wasn't able to redproduce this on my HSW ULT machine, or BDW.
+So either there's something specific about this particular laptop
+(eg. some unknown firmware thing) or the issue is limited to just
+non-ULT HSW systems. All known registers that could affect this
+look perfectly reasonable on the affected machine.
 
-> Unhandled kernel unaligned access[#1]:
-> CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc1-XXX-dirty #2056
-> ...
-> Call Trace:
-> [<8011ef9c>] __update_cache+0x88/0x1bc
-> [<80385944>] ioremap_page_range+0x110/0x2a4
-> [<80126948>] ioremap_prot+0x17c/0x1f4
-> [<80711b80>] __devm_ioremap+0x8c/0x120
-> [<80711e0c>] __devm_ioremap_resource+0xf4/0x218
-> [<808bf244>] sram_probe+0x4f4/0x930
-> [<80889d20>] platform_probe+0x68/0xec
-> ...
-
-Let's fix the problem by initializing the max_mapnr variable as soon as
-the required data is available. In particular it can be done right in the
-paging_init() method before free_area_init() is called since all the PFN
-zone boundaries have already been calculated by that time.
+As a workaround let's unmask the LPSP event to prevent PSR entry
+except while in LPSP mode (only pipe A + eDP active). This
+will prevent PSR entry entirely when multiple pipes are active.
+The one slight downside is that we now also prevent PSR entry
+when driving eDP with pipe B or C, but I think that's a reasonable
+tradeoff to avoid having to implement a more complex workaround.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 783d8b80871f ("drm/i915/psr: Re-enable PSR1 on hsw/bdw")
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10092
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240118212131.31868-1-ville.syrjala@linux.intel.com
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+(cherry picked from commit 94501c3ca6400e463ff6cc0c9cf4a2feb6a9205d)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/init.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/arch/mips/mm/init.c
-+++ b/arch/mips/mm/init.c
-@@ -417,7 +417,12 @@ void __init paging_init(void)
- 		       (highend_pfn - max_low_pfn) << (PAGE_SHIFT - 10));
- 		max_zone_pfns[ZONE_HIGHMEM] = max_low_pfn;
- 	}
-+
-+	max_mapnr = highend_pfn ? highend_pfn : max_low_pfn;
-+#else
-+	max_mapnr = max_low_pfn;
- #endif
-+	high_memory = (void *) __va(max_low_pfn << PAGE_SHIFT);
- 
- 	free_area_init(max_zone_pfns);
- }
-@@ -453,13 +458,6 @@ void __init mem_init(void)
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -1401,8 +1401,18 @@ static void intel_psr_enable_source(stru
+ 	 * can rely on frontbuffer tracking.
  	 */
- 	BUILD_BUG_ON(IS_ENABLED(CONFIG_32BIT) && (_PFN_SHIFT > PAGE_SHIFT));
+ 	mask = EDP_PSR_DEBUG_MASK_MEMUP |
+-	       EDP_PSR_DEBUG_MASK_HPD |
+-	       EDP_PSR_DEBUG_MASK_LPSP;
++	       EDP_PSR_DEBUG_MASK_HPD;
++
++	/*
++	 * For some unknown reason on HSW non-ULT (or at least on
++	 * Dell Latitude E6540) external displays start to flicker
++	 * when PSR is enabled on the eDP. SR/PC6 residency is much
++	 * higher than should be possible with an external display.
++	 * As a workaround leave LPSP unmasked to prevent PSR entry
++	 * when external displays are active.
++	 */
++	if (DISPLAY_VER(dev_priv) >= 8 || IS_HASWELL_ULT(dev_priv))
++		mask |= EDP_PSR_DEBUG_MASK_LPSP;
  
--#ifdef CONFIG_HIGHMEM
--	max_mapnr = highend_pfn ? highend_pfn : max_low_pfn;
--#else
--	max_mapnr = max_low_pfn;
--#endif
--	high_memory = (void *) __va(max_low_pfn << PAGE_SHIFT);
--
- 	maar_init();
- 	memblock_free_all();
- 	setup_zero_pages();	/* Setup zeroed pages.  */
+ 	if (DISPLAY_VER(dev_priv) < 20)
+ 		mask |= EDP_PSR_DEBUG_MASK_MAX_SLEEP;
 
 
