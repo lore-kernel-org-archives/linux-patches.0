@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B885715704F;
-	Mon, 29 Jan 2024 17:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5010A15704F;
+	Mon, 29 Jan 2024 17:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548035; cv=none; b=ms9ujsGVeSwL83Y3rB3yjL4rhTzkkcYbTGrdVHEsPslnEb1CTkW7qIFAM53l9PbXNuBpj2QTvIIV8EHbmQg43TDusmd23ArZrW5+5u1X+CGAztmuZZ2JroJI7IQkqztjCvyP+bxemzxhRmjQRNH9FnwwJKn1mFlYJZtmEazNQFs=
+	t=1706548036; cv=none; b=AR+e/60ruYjppbgFSFB45av4dtJau5lnyQRttau597LcxXhqEZ0V7uN8JsWPsNLcD8o6nbl/p4jOGvSzipAzdk4uOSru+LUUsXWzljVlsaulfEfIdDUKcSa/c3+g1jEXjIRMe69ZDtBbGZIZzv6qQQ0O8sxmgftwb4DaIew94G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548035; c=relaxed/simple;
-	bh=EucsL8DCWoaTJCFDvF7p+e4pZTIsLRcHZzBq6QdXxzU=;
+	s=arc-20240116; t=1706548036; c=relaxed/simple;
+	bh=4jgtOBgSQeQIYNCLhelMfVQiP0leJc2ccceQ2zf1ISM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXWTcNiF8YRIpCESN56mqWAEnrRFB4Y7GGXk3KNjKxikrziFZUztxVF1bDHjJ2UoXhWc8Iok9vyEkvlX+1eYxRlK1WlceCELU2n7mmjP22SVJnGMwFolQR9TR4rmdRVKkjlSd4yxHtRKmd15kFF/xqbc5dAH+IqqVzOf1itqyBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikm1zg2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZzcYrthSFtUHCAdwsXcpHN4MpnO5SR40e66wc4rjv/R+dvmrzAA58SO3sd/DdjwpYxJyQnXxRa0WfxKxqbWxCX+9ctnoxZ3DmIhJ7V3+4wA+CmF9tUZr/lnB7g6dfgWdtUUqEtRLd2O2DTOi1cZwJ5rqTGjY83G5Z09bmiJFDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGVBPovm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikm1zg2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430E7C433F1;
-	Mon, 29 Jan 2024 17:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGVBPovm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1411CC433F1;
+	Mon, 29 Jan 2024 17:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548035;
-	bh=EucsL8DCWoaTJCFDvF7p+e4pZTIsLRcHZzBq6QdXxzU=;
+	s=korg; t=1706548036;
+	bh=4jgtOBgSQeQIYNCLhelMfVQiP0leJc2ccceQ2zf1ISM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ikm1zg2NBZMI0vQKSpqhMX8crKAE9nseNBhpRuJXjqmbILp7uhJLjcc+r/c7nEZ7b
-	 j3aLopfqgTH2ALIWrcUTDUmnsF3UW1a9EWgTVbMwIxxogDhdaf7RljOamhv+ghK/SC
-	 4I0rQkaXlJNzNZ4w8WM2d2WeObPkXp6xzx8oLvyA=
+	b=IGVBPovm7PeyLBsM/VEnOxeqLTcAmnEIRTaz+T0Zz/OuYS5NSty31tTXJSA6TQIWO
+	 2wp2xcVeyqa0yOsQEcUWRmKDrX07ZrocdjNSdfzUKJknaDaN449FhHZVak6Rk1vsjA
+	 +tX1gdXNQ4TUlIn1zDBMcdWnVN7/6RlUfXz9H5OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Jitindar Singh <surajjs@amazon.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.7 007/346] ext4: allow for the last group to be marked as trimmed
-Date: Mon, 29 Jan 2024 09:00:38 -0800
-Message-ID: <20240129170016.573171941@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Youngmin Nam <youngmin.nam@samsung.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.7 008/346] async: Split async_schedule_node_domain()
+Date: Mon, 29 Jan 2024 09:00:39 -0800
+Message-ID: <20240129170016.599187162@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,86 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Jitindar Singh <surajjs@amazon.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 7c784d624819acbeefb0018bac89e632467cca5a upstream.
+commit 6aa09a5bccd8e224d917afdb4c278fc66aacde4d upstream.
 
-The ext4 filesystem tracks the trim status of blocks at the group
-level.  When an entire group has been trimmed then it is marked as
-such and subsequent trim invocations with the same minimum trim size
-will not be attempted on that group unless it is marked as able to be
-trimmed again such as when a block is freed.
+In preparation for subsequent changes, split async_schedule_node_domain()
+in two pieces so as to allow the bottom part of it to be called from a
+somewhat different code path.
 
-Currently the last group can't be marked as trimmed due to incorrect
-logic in ext4_last_grp_cluster(). ext4_last_grp_cluster() is supposed
-to return the zero based index of the last cluster in a group. This is
-then used by ext4_try_to_trim_range() to determine if the trim
-operation spans the entire group and as such if the trim status of the
-group should be recorded.
+No functional impact.
 
-ext4_last_grp_cluster() takes a 0 based group index, thus the valid
-values for grp are 0..(ext4_get_groups_count - 1). Any group index
-less than (ext4_get_groups_count - 1) is not the last group and must
-have EXT4_CLUSTERS_PER_GROUP(sb) clusters. For the last group we need
-to calculate the number of clusters based on the number of blocks in
-the group. Finally subtract 1 from the number of clusters as zero
-based indexing is expected.  Rearrange the function slightly to make
-it clear what we are calculating and returning.
-
-Reproducer:
-// Create file system where the last group has fewer blocks than
-// blocks per group
-$ mkfs.ext4 -b 4096 -g 8192 /dev/nvme0n1 8191
-$ mount /dev/nvme0n1 /mnt
-
-Before Patch:
-$ fstrim -v /mnt
-/mnt: 25.9 MiB (27156480 bytes) trimmed
-// Group not marked as trimmed so second invocation still discards blocks
-$ fstrim -v /mnt
-/mnt: 25.9 MiB (27156480 bytes) trimmed
-
-After Patch:
-fstrim -v /mnt
-/mnt: 25.9 MiB (27156480 bytes) trimmed
-// Group marked as trimmed so second invocation DOESN'T discard any blocks
-fstrim -v /mnt
-/mnt: 0 B (0 bytes) trimmed
-
-Fixes: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
-Cc:  <stable@vger.kernel.org> # 4.19+
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231213051635.37731-1-surajjs@amazon.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ kernel/async.c |   56 ++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 34 insertions(+), 22 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6735,11 +6735,16 @@ __acquires(bitlock)
- static ext4_grpblk_t ext4_last_grp_cluster(struct super_block *sb,
- 					   ext4_group_t grp)
- {
--	if (grp < ext4_get_groups_count(sb))
--		return EXT4_CLUSTERS_PER_GROUP(sb) - 1;
--	return (ext4_blocks_count(EXT4_SB(sb)->s_es) -
--		ext4_group_first_block_no(sb, grp) - 1) >>
--					EXT4_CLUSTER_BITS(sb);
-+	unsigned long nr_clusters_in_group;
-+
-+	if (grp < (ext4_get_groups_count(sb) - 1))
-+		nr_clusters_in_group = EXT4_CLUSTERS_PER_GROUP(sb);
-+	else
-+		nr_clusters_in_group = (ext4_blocks_count(EXT4_SB(sb)->s_es) -
-+					ext4_group_first_block_no(sb, grp))
-+				       >> EXT4_CLUSTER_BITS(sb);
-+
-+	return nr_clusters_in_group - 1;
+--- a/kernel/async.c
++++ b/kernel/async.c
+@@ -145,6 +145,39 @@ static void async_run_entry_fn(struct wo
+ 	wake_up(&async_done);
  }
  
- static bool ext4_trim_interrupted(void)
++static async_cookie_t __async_schedule_node_domain(async_func_t func,
++						   void *data, int node,
++						   struct async_domain *domain,
++						   struct async_entry *entry)
++{
++	async_cookie_t newcookie;
++	unsigned long flags;
++
++	INIT_LIST_HEAD(&entry->domain_list);
++	INIT_LIST_HEAD(&entry->global_list);
++	INIT_WORK(&entry->work, async_run_entry_fn);
++	entry->func = func;
++	entry->data = data;
++	entry->domain = domain;
++
++	spin_lock_irqsave(&async_lock, flags);
++
++	/* allocate cookie and queue */
++	newcookie = entry->cookie = next_cookie++;
++
++	list_add_tail(&entry->domain_list, &domain->pending);
++	if (domain->registered)
++		list_add_tail(&entry->global_list, &async_global_pending);
++
++	atomic_inc(&entry_count);
++	spin_unlock_irqrestore(&async_lock, flags);
++
++	/* schedule for execution */
++	queue_work_node(node, system_unbound_wq, &entry->work);
++
++	return newcookie;
++}
++
+ /**
+  * async_schedule_node_domain - NUMA specific version of async_schedule_domain
+  * @func: function to execute asynchronously
+@@ -186,29 +219,8 @@ async_cookie_t async_schedule_node_domai
+ 		func(data, newcookie);
+ 		return newcookie;
+ 	}
+-	INIT_LIST_HEAD(&entry->domain_list);
+-	INIT_LIST_HEAD(&entry->global_list);
+-	INIT_WORK(&entry->work, async_run_entry_fn);
+-	entry->func = func;
+-	entry->data = data;
+-	entry->domain = domain;
+-
+-	spin_lock_irqsave(&async_lock, flags);
+ 
+-	/* allocate cookie and queue */
+-	newcookie = entry->cookie = next_cookie++;
+-
+-	list_add_tail(&entry->domain_list, &domain->pending);
+-	if (domain->registered)
+-		list_add_tail(&entry->global_list, &async_global_pending);
+-
+-	atomic_inc(&entry_count);
+-	spin_unlock_irqrestore(&async_lock, flags);
+-
+-	/* schedule for execution */
+-	queue_work_node(node, system_unbound_wq, &entry->work);
+-
+-	return newcookie;
++	return __async_schedule_node_domain(func, data, node, domain, entry);
+ }
+ EXPORT_SYMBOL_GPL(async_schedule_node_domain);
+ 
 
 
