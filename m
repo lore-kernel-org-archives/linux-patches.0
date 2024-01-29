@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA9C73732;
-	Mon, 29 Jan 2024 17:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B49273722;
+	Mon, 29 Jan 2024 17:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548534; cv=none; b=B4SlAOEEnXJmu/gMzj8Zf330Vwmer8P9c+5YTDTyQKdOd+cPb37JDdtJa6BvLn/+b+ptWHQOCbYMI9qI+i/k0fQ4Mn5V0RRouvn29/CHxB+XpfOP5p3LTNAFVze4+IsDheF4YU994bvfLUZIbr0+/kw2JDOAgD3htE2+81VpoDE=
+	t=1706548534; cv=none; b=Yu3akYgpcr+nCoZB6wSfqRl4avhpkidbuDwUt7qFtE3dE+PbhQudUIa4GK11nuQSAm7CYAUDqe3i5KbNH1ASsEpPg3boSABy4VHG60g+ARV86VCixAWzWnhBL6vh0i1OBt35gi7iOZdq9J14BiH46TCIngilMHnsCxQIqAyApG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548534; c=relaxed/simple;
-	bh=J1G2JV9vEDvDuL+EHiWLaoFL8ZFF3VCvcK3kS69H3a8=;
+	bh=LNx7qKJmfE+jxcdsR1Bc4XtbSpZgrJzDn8JVAUFFJeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UF2ctgyIlD8RrBV8lh2zKXRTqhi/7stei8s0O4IEVfffdk8mQ3usYj9ZjDUtRf+omCdptL/jLCGn/33XE14d8Knybwl+T6dFyKZPCHPE49enlAShJZ5LS5KGaFmw35ZDPxJwBQsgzvjfK4B/LaeLQm8zfSXMoIQjqtwdqflZiB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qL2R3dc9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NjgZU5XD/k5ayfV1yI1db4MXyhfOQZ7frgonzL0Tf1/HPtPe8GaKl223ZYrNOuxcIVZZfMFtZW0apOHN+ASXf7xlQKsAlRSDqzfA1nLVFsA2HxT9LQk8E+aLFnpUgfl3q1vYOPridcZjZIkh7TbXQHCjMPZcX/alCah+dXKX24Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPo5VOgK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qL2R3dc9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F012C433C7;
-	Mon, 29 Jan 2024 17:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPo5VOgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5327EC433F1;
+	Mon, 29 Jan 2024 17:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548533;
-	bh=J1G2JV9vEDvDuL+EHiWLaoFL8ZFF3VCvcK3kS69H3a8=;
+	s=korg; t=1706548534;
+	bh=LNx7qKJmfE+jxcdsR1Bc4XtbSpZgrJzDn8JVAUFFJeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qL2R3dc9cTKnwxK4KSYiHciTgyJ7w9nerKctTDAdD9AqVPVp96Y/biS7DuiqCFafP
-	 Q25noCUsWbaWmrZ3xNWwVgm01fjLrwOq10dGdXB7MbQ9CZgOcuNF4s/JyNQC7qRFI5
-	 fxo8E0I/gUFgeGXJ1xlxlRwZkKIUfLd7a7rZEbHk=
+	b=kPo5VOgKsHdYGOtuK0vn6KkbhUJ4xovynjnbbvkrV1Aq5vJpWr1xEuiA/e31/R2Tq
+	 E5Fpg5GWdGcLq7QMQGW/DR37k1LV9tPnFcWNJPpYkmmpIJzywDVngq07LBI4sYnww+
+	 GaDio9za7TsFYGTUzJGF6HtgNNiRnSTrz60ymUoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@intel.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 145/331] dt-bindings: net: snps,dwmac: Tx coe unsupported
-Date: Mon, 29 Jan 2024 09:03:29 -0800
-Message-ID: <20240129170019.174526925@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.6 136/331] serial: sc16is7xx: improve do/while loop in sc16is7xx_irq()
+Date: Mon, 29 Jan 2024 09:03:20 -0800
+Message-ID: <20240129170018.925046627@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,40 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@intel.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 6fb8c20a04be234cf1cfd4bdd8cfb8860c9d2d3b upstream.
+commit d5078509c8b06c5c472a60232815e41af81c6446 upstream.
 
-Add dt-bindings for coe-unsupported property per tx queue. Some DWMAC
-IPs support tx checksum offloading(coe) only for a few tx queues.
+Simplify and improve readability by replacing while(1) loop with
+do {} while, and by using the keep_polling variable as the exit
+condition, making it more explicit.
 
-DW xGMAC IP can be synthesized such that it can support tx coe only
-for a few initial tx queues. Also as Serge pointed out, for the DW
-QoS IP tx coe can be individually configured for each tx queue. This
-property is added to have sw fallback for checksum calculation if a
-tx queue doesn't support tx coe.
-
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@intel.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 834449872105 ("sc16is7xx: Fix for multi-channel stall")
+Cc:  <stable@vger.kernel.org>
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231221231823.2327894-6-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/net/snps,dwmac.yaml |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/serial/sc16is7xx.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-+++ b/Documentation/devicetree/bindings/net/snps,dwmac.yaml
-@@ -394,6 +394,11 @@ properties:
-               When a PFC frame is received with priorities matching the bitmask,
-               the queue is blocked from transmitting for the pause time specified
-               in the PFC frame.
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -782,17 +782,18 @@ out_port_irq:
+ 
+ static irqreturn_t sc16is7xx_irq(int irq, void *dev_id)
+ {
++	bool keep_polling;
 +
-+          snps,coe-unsupported:
-+            type: boolean
-+            description: TX checksum offload is unsupported by the TX queue.
+ 	struct sc16is7xx_port *s = (struct sc16is7xx_port *)dev_id;
+ 
+-	while (1) {
+-		bool keep_polling = false;
++	do {
+ 		int i;
+ 
++		keep_polling = false;
 +
-         allOf:
-           - if:
-               required:
+ 		for (i = 0; i < s->devtype->nr_uart; ++i)
+ 			keep_polling |= sc16is7xx_port_irq(s, i);
+-		if (!keep_polling)
+-			break;
+-	}
++	} while (keep_polling);
+ 
+ 	return IRQ_HANDLED;
+ }
 
 
