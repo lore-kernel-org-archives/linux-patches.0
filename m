@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA107159591;
-	Mon, 29 Jan 2024 17:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85090159591;
+	Mon, 29 Jan 2024 17:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548255; cv=none; b=uk1XD1xQSPk971Dhgrk9Q64Sz6C5R2lAhjqPBE7ATnv4DeZW8WWGQMBaPz+PnVTra1W1nTDdjflOGKdgfrZUE0Yx+LFF0rYjCsAd6EWkIsLDu34FDD2QR+P752y99hL5DMroPXGc2VXdERR7JOuwBVoVt56pwF9+X5VZY6UuVrk=
+	t=1706548256; cv=none; b=HOO6VJq+OIa/9aSEKoUX0+bV0F4RYW4A3wo9IzB+9l+CC9G9dgpHWvMKb5uICeRS82S7LzVsWhgkKd6Xw7PlOxeYa2pIHc/GXj+qiChI1/j6FFbi2fvCBg/hIw/8p7eTKFKoTljdu2/Blvsb5fSpTU4kQfvBrisiR7u/QL2t2jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548255; c=relaxed/simple;
-	bh=gpbMNiQRhelBtM9j+XLO7h4w75nQOFQZsm7fq2ilgvc=;
+	s=arc-20240116; t=1706548256; c=relaxed/simple;
+	bh=XNgvlxoqmVzkSXUjRF4cof8bG1XWvHYDhcfnjmhgInc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uK3/OESfys/J8tPm24m2+VyRc/J8KTMBiizd2mqlUNcl+pigWn+dQxumLa9oUe709FwA8oLXCfquTVkOMYXb2V8aaqkM84AE5FCBnnt4jg8gVU44D5jRmrA1RyBGxCq2tjHJwMfGanVVB6jPDBR0wgSxLJsaA0ILupZ5OeFpQX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2RoDbD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JzkEQgT4c7VizI79cnDOdLvb7KkAxLScRp5DbJhVKJqRjoaeeagb4CarcI67r4LzsVHqgnJtyAI85btHJusQS+Wr0qde3lzvHQYasIesIbmLzryz/CYjfXOwvejtUiUXCCWhiFF4N8xeyymJtyJ7XMbh69l05BckrqQSOfkVcQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x12Gie37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2RoDbD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25B0C433C7;
-	Mon, 29 Jan 2024 17:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x12Gie37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4EEC433F1;
+	Mon, 29 Jan 2024 17:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548255;
-	bh=gpbMNiQRhelBtM9j+XLO7h4w75nQOFQZsm7fq2ilgvc=;
+	s=korg; t=1706548256;
+	bh=XNgvlxoqmVzkSXUjRF4cof8bG1XWvHYDhcfnjmhgInc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x2RoDbD3i0VCpF80Eb9iDa8k8igngMstA08RU8vP80ISFBatLNjTZycGjenkTwdb1
-	 lqZh0KDo86HCcAakn8z+8qxW80dDUZcNKMjElBTuH8z2dZhisQRBzeG/m0GRmoqTvS
-	 4VslCQhMSeX3SBsnnDMjvsq9AiGb1zZf1rkQ1JYs=
+	b=x12Gie37CA9hRsWq9WN2g7eiCCvREQclVAIXoegVHwpTZZmmiscq3KVWuyBxn9DUk
+	 +xnQIPZr4bWnNjA/SCLwgJIWW4mLibVvmtoKEVB1KIBEFx4e+xQQujwARch6dFUAT5
+	 mg6Fxahoj3hOFZed8BbXm1tZv/C3Lt2kNxgQ18/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.7 276/346] drm/amdgpu: Show vram vendor only if available
-Date: Mon, 29 Jan 2024 09:05:07 -0800
-Message-ID: <20240129170024.498791838@linuxfoundation.org>
+	=?UTF-8?q?Mateusz=20Jo=C5=84czyk?= <mat.jonczyk@o2.pl>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 050/185] rtc: mc146818-lib: Adjust failure return code for mc146818_get_time()
+Date: Mon, 29 Jan 2024 09:04:10 -0800
+Message-ID: <20240129170000.204120398@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 89a7c0bd74918f723c94c10452265e25063cba9b upstream.
+commit af838635a3eb9b1bc0d98599c101ebca98f31311 upstream.
 
-Ony if vram vendor info is available, show in sysfs.
+mc146818_get_time() calls mc146818_avoid_UIP() to avoid fetching the
+time while RTC update is in progress (UIP). When this fails, the return
+code is -EIO, but actually there was no IO failure.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.7.x
+The reason for the return from mc146818_avoid_UIP() is that the UIP
+wasn't cleared in the time period. Adjust the return code to -ETIMEDOUT
+to match the behavior.
+
+Tested-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Reviewed-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Acked-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+Cc:  <stable@vger.kernel.org>
+Fixes: 2a61b0ac5493 ("rtc: mc146818-lib: refactor mc146818_get_time")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20231128053653.101798-2-mario.limonciello@amd.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-mc146818-lib.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-index 08916538a615..8db880244324 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vram_mgr.c
-@@ -221,8 +221,23 @@ static struct attribute *amdgpu_vram_mgr_attributes[] = {
- 	NULL
- };
+--- a/drivers/rtc/rtc-mc146818-lib.c
++++ b/drivers/rtc/rtc-mc146818-lib.c
+@@ -138,7 +138,7 @@ int mc146818_get_time(struct rtc_time *t
  
-+static umode_t amdgpu_vram_attrs_is_visible(struct kobject *kobj,
-+					    struct attribute *attr, int i)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct drm_device *ddev = dev_get_drvdata(dev);
-+	struct amdgpu_device *adev = drm_to_adev(ddev);
-+
-+	if (attr == &dev_attr_mem_info_vram_vendor.attr &&
-+	    !adev->gmc.vram_vendor)
-+		return 0;
-+
-+	return attr->mode;
-+}
-+
- const struct attribute_group amdgpu_vram_mgr_attr_group = {
--	.attrs = amdgpu_vram_mgr_attributes
-+	.attrs = amdgpu_vram_mgr_attributes,
-+	.is_visible = amdgpu_vram_attrs_is_visible
- };
+ 	if (!mc146818_avoid_UIP(mc146818_get_time_callback, &p)) {
+ 		memset(time, 0, sizeof(*time));
+-		return -EIO;
++		return -ETIMEDOUT;
+ 	}
  
- /**
--- 
-2.43.0
-
+ 	if (!(p.ctrl & RTC_DM_BINARY) || RTC_ALWAYS_BCD)
 
 
