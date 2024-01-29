@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4CE15A497;
-	Mon, 29 Jan 2024 17:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC4215F30A;
+	Mon, 29 Jan 2024 17:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548267; cv=none; b=GLrtHrq53v5a1nbIo2gU2KWsnCphIcZfP1q5a9L17pyYjCTj4e/yBX8QvTJ1l8FTWbvKborDtMTyC5qHFyKmh2z6vOCkpOnfudGKSkjGDvrrQYzzUbYX9a/viZGkvOOghuw6xcg5UJdn2XEnrwNYLydlxcstHc93Vkk+ttWGDsY=
+	t=1706548268; cv=none; b=A/uHjdBFZVGJU1trNHBD994myjpfAm9NgMG+JEkw3IoVWMo9Sb4n7xVcRu2a5TRWzEATtKubLvIKUmuKxK9wA2Ewsd4iqJ3zYcLLYtywEo6dvk1QKIwoWm+ckzCAfsrprwukpfVYpC9zPmAwZDHhDwWFoq/B4yJ3Gt+ysvMjy5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548267; c=relaxed/simple;
-	bh=9LKy4wShUo3Qykac4DJxUfuckb7Kdy5g7SFGiACevwE=;
+	s=arc-20240116; t=1706548268; c=relaxed/simple;
+	bh=RSK6uK/kxQkvrwwabzl4ZkS4NjD58Ampi+zsVwGFGug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoOwYJUplC/1FLqUSH1X5kuX95ipS+27MruYnZf0b55j8bbJL3kPEnAvGWdZqKi+su1q5qqLVpvJytxAuBWFmLefMyXiRIJbV+iFGOS3BEWz1VftIhXV30pgZR500Gjsm93Fp0eCK/2SEW7zer7T49GqaWIpWO2ZWek8Ch+vyTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuNiExuh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lxBVzH5ALwV036EJm4x0TihVt41bR0rLxEhn2WLnNwD/a77l+iLGFarRlu+7GIqfeKKzoXtmfUkd9+ozPpzxMlcV+X+VFVdCcrAE/B79VZM9U7jCE710ybpzk2dk36v0r/LZQNjH7ccCnrPKYfQe+uzPW5+QwG4CuULLDlvZsGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1fVmHIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuNiExuh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCB3C43390;
-	Mon, 29 Jan 2024 17:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1fVmHIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250A5C43390;
+	Mon, 29 Jan 2024 17:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548267;
-	bh=9LKy4wShUo3Qykac4DJxUfuckb7Kdy5g7SFGiACevwE=;
+	s=korg; t=1706548268;
+	bh=RSK6uK/kxQkvrwwabzl4ZkS4NjD58Ampi+zsVwGFGug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuNiExuh3ZwL/jg+w+/HiyCDgb77jOVAMN7NLGy66PYjU46ZmoecVnMc3BPj77y2o
-	 nehjeBu8clMw/kG3BQCUUkWBfE//Jts8iW+iD51QDnR5AZG1ppnB6gCkTblt0+jnJe
-	 TUIx2y5DrBslw5HaRj7aI9Wcw8UHxwyviKUdj+UM=
+	b=B1fVmHIt6OuEyQY1JkMKws9zGLz9b0sH8dGO6Ra6VLXlcrbF4nOddpQhtBKryCp/N
+	 e7M6MurQzU8U2Jcez3T0KqnK4t0gmwxLMo/4lc0YfFbUiOejnzXZl404eTFixWOJgk
+	 +fyMISAQQzRgNtoCVx8ruMhaBWvD+JQ8UBp51gM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 034/185] arm64: dts: qcom: sc7180: fix USB wakeup interrupt types
-Date: Mon, 29 Jan 2024 09:03:54 -0800
-Message-ID: <20240129165959.691872567@linuxfoundation.org>
+	Ori Messinger <Ori.Messinger@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Subject: [PATCH 6.7 261/346] drm/amdgpu: Enable GFXOFF for Compute on GFX11
+Date: Mon, 29 Jan 2024 09:04:52 -0800
+Message-ID: <20240129170024.069572435@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,42 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Ori Messinger <Ori.Messinger@amd.com>
 
-commit 9b956999bf725fd62613f719c3178fdbee6e5f47 upstream.
+commit aa0901a9008eeb2710292aff94e615adf7884d5f upstream.
 
-The DP/DM wakeup interrupts are edge triggered and which edge to trigger
-on depends on use-case and whether a Low speed or Full/High speed device
-is connected.
+On GFX version 11, GFXOFF was disabled due to a MES KIQ firmware
+issue, which has since been fixed after version 64.
+This patch only re-enables GFXOFF for GFX version 11 if the GPU's
+MES KIQ firmware version is newer than version 64.
 
-Fixes: 0b766e7fe5a2 ("arm64: dts: qcom: sc7180: Add USB related nodes")
-Cc: stable@vger.kernel.org      # 5.10
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20231120164331.8116-4-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+V2: Keep GFXOFF disabled on GFX11 if MES KIQ is below version 64.
+V3: Add parentheses to avoid GCC warning for parentheses:
+"suggest parentheses around comparison in operand of ‘&’"
+V4: Remove "V3" from commit title
+V5: Change commit description and insert 'Acked-by'
+
+Signed-off-by: Ori Messinger <Ori.Messinger@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -2769,8 +2769,8 @@
- 
- 			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
- 					      <&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
--					      <&pdc 8 IRQ_TYPE_LEVEL_HIGH>,
--					      <&pdc 9 IRQ_TYPE_LEVEL_HIGH>;
-+					      <&pdc 8 IRQ_TYPE_EDGE_BOTH>,
-+					      <&pdc 9 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
- 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
+@@ -684,10 +684,8 @@ err:
+ void amdgpu_amdkfd_set_compute_idle(struct amdgpu_device *adev, bool idle)
+ {
+ 	enum amd_powergating_state state = idle ? AMD_PG_STATE_GATE : AMD_PG_STATE_UNGATE;
+-	/* Temporary workaround to fix issues observed in some
+-	 * compute applications when GFXOFF is enabled on GFX11.
+-	 */
+-	if (IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 11) {
++	if (IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 11 &&
++	    ((adev->mes.kiq_version & AMDGPU_MES_VERSION_MASK) <= 64)) {
+ 		pr_debug("GFXOFF is %s\n", idle ? "enabled" : "disabled");
+ 		amdgpu_gfx_off_ctrl(adev, idle);
+ 	} else if ((IP_VERSION_MAJ(amdgpu_ip_version(adev, GC_HWIP, 0)) == 9) &&
 
 
