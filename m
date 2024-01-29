@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9768D157050;
-	Mon, 29 Jan 2024 17:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF80157050;
+	Mon, 29 Jan 2024 17:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548025; cv=none; b=nNRWb2U2qoyzXtSby3IEJr0l7BfP9+F4ofUeovGhMKvV8Y+nzEB99E+LdReM6d+jVq6e3UWVxv6vla51pbUV1LyCmAJaXRii2/yUIvyHiBz6DaDth8gh401lVljJ59WpF7bxNVrVF+jReQplHBY0Xei2Jxa8mZ4xXosYBUx5Lm0=
+	t=1706548026; cv=none; b=GZNl8CtVcyQYmRW7+Qk94ceeiiJhlRSmDUsD5pQ6ii1ogmYnToQlfFGNvEW+3T6kt/JRn/xZ5GoTLtbj8HW+5XUvRal8/nNRztmMbGcu7kFtuDpZXZCu6LfZqm7Dv5HLnrCwctlZEJuEsd+yMxs7lSDMg9B2jVEfpLNlJ95hM9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548025; c=relaxed/simple;
-	bh=rpWXpcbCfyzNy6S0xVLb4pox1ahm5L0ywZckjd9SBhI=;
+	s=arc-20240116; t=1706548026; c=relaxed/simple;
+	bh=FhHLgLumZjPvNC7o/VANQJQT5eOqOfZE4zLKB9xiTJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXBojeBCbiTQWW2rfOf1dKNg5D0nmvyk6rNZozgC6XUEMMbo92OjMTh/zgOQBM3ERIewqNlhb83pySPUO2U7oPxlSBn1Vc+WuvH1YmgMKmV/co0gD453yFiyEeVjAkFiqH/C/eu/9UOhEmUGlBgG/5yGy88lQ2fzwlNjfmOq0kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WXgue7b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YdS0sK5/SN9sm+wHeePDkXyfjL9QDO2G5bIk5Aju5g3RjRPFbviJPioF2eEWckdpaG7K73aFB7IZZqWUMW2NH0EMfD8huT9whz0GcEyEUuMWOtjfnbIJkIeAe81KeIRZ4kE1NunQghBK7ABME0xwctNepOESK/+3BIsVonHATPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwfrviYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WXgue7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09331C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwfrviYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57D2C433C7;
 	Mon, 29 Jan 2024 17:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548025;
-	bh=rpWXpcbCfyzNy6S0xVLb4pox1ahm5L0ywZckjd9SBhI=;
+	bh=FhHLgLumZjPvNC7o/VANQJQT5eOqOfZE4zLKB9xiTJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2WXgue7bYaaLE25s4P5k3T731GuS0b7ieGLx/0fvVHwFyyKsZ2iEP948HEHZHm5Sl
-	 oZqF3zxTzL20VyTlHzt5fg58SZNVFTRbAeDh1S4Gy0fHZjskomCYeBES1DUF5I/Emw
-	 WodNRugb5/rSZP1AnhdqAUBZ1u0UF8HAM2Czmhdk=
+	b=MwfrviYkZKs2OjXMCOlv7RSqQm8AGIk7AFj03depHccCzZaPa5TxCkvnctVNxdxRe
+	 klGRnacpzFpUhmzs7a3+tym1YsBGJSLx0c7EwLJLa+bL9WTK8Yf9xTQE/bf4pFbBgl
+	 Umpbs1VioH2EmCFH5c7w/EPv1FpK7QSIu9yIaN+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Harald Freudenberger <freude@de.ibm.com>
-Subject: [PATCH 6.7 019/346] crypto: s390/aes - Fix buffer overread in CTR mode
-Date: Mon, 29 Jan 2024 09:00:50 -0800
-Message-ID: <20240129170016.935800433@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 002/346] soundwire: fix initializing sysfs for same devices on different buses
+Date: Mon, 29 Jan 2024 09:00:33 -0800
+Message-ID: <20240129170016.423197694@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,54 +56,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit d07f951903fa9922c375b8ab1ce81b18a0034e3b upstream.
+[ Upstream commit 8a8a9ac8a4972ee69d3dd3d1ae43963ae39cee18 ]
 
-When processing the last block, the s390 ctr code will always read
-a whole block, even if there isn't a whole block of data left.  Fix
-this by using the actual length left and copy it into a buffer first
-for processing.
+If same devices with same device IDs are present on different soundwire
+buses, the probe fails due to conflicting device names and sysfs
+entries:
 
-Fixes: 0200f3ecc196 ("crypto: s390 - add System z hardware support for CTR mode")
-Cc: <stable@vger.kernel.org>
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewd-by: Harald Freudenberger <freude@de.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  sysfs: cannot create duplicate filename '/bus/soundwire/devices/sdw:0:0217:0204:00:0'
+
+The link ID is 0 for both devices, so they should be differentiated by
+the controller ID. Add the controller ID so, the device names and sysfs entries look
+like:
+
+  sdw:1:0:0217:0204:00:0 -> ../../../devices/platform/soc@0/6ab0000.soundwire-controller/sdw-master-1-0/sdw:1:0:0217:0204:00:0
+  sdw:3:0:0217:0204:00:0 -> ../../../devices/platform/soc@0/6b10000.soundwire-controller/sdw-master-3-0/sdw:3:0:0217:0204:00:0
+
+[PLB changes: use bus->controller_id instead of bus->id]
+
+Fixes: 7c3cd189b86d ("soundwire: Add Master registration")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Co-developed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Mark Brown <broonie@kernel.org>
+Tested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20231017160933.12624-3-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/crypto/aes_s390.c  |    4 +++-
- arch/s390/crypto/paes_s390.c |    4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/soundwire/slave.c        | 12 ++++++------
+ sound/soc/intel/boards/sof_sdw.c |  4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/arch/s390/crypto/aes_s390.c
-+++ b/arch/s390/crypto/aes_s390.c
-@@ -597,7 +597,9 @@ static int ctr_aes_crypt(struct skcipher
- 	 * final block may be < AES_BLOCK_SIZE, copy only nbytes
- 	 */
- 	if (nbytes) {
--		cpacf_kmctr(sctx->fc, sctx->key, buf, walk.src.virt.addr,
-+		memset(buf, 0, AES_BLOCK_SIZE);
-+		memcpy(buf, walk.src.virt.addr, nbytes);
-+		cpacf_kmctr(sctx->fc, sctx->key, buf, buf,
- 			    AES_BLOCK_SIZE, walk.iv);
- 		memcpy(walk.dst.virt.addr, buf, nbytes);
- 		crypto_inc(walk.iv, AES_BLOCK_SIZE);
---- a/arch/s390/crypto/paes_s390.c
-+++ b/arch/s390/crypto/paes_s390.c
-@@ -693,9 +693,11 @@ static int ctr_paes_crypt(struct skciphe
- 	 * final block may be < AES_BLOCK_SIZE, copy only nbytes
- 	 */
- 	if (nbytes) {
-+		memset(buf, 0, AES_BLOCK_SIZE);
-+		memcpy(buf, walk.src.virt.addr, nbytes);
- 		while (1) {
- 			if (cpacf_kmctr(ctx->fc, &param, buf,
--					walk.src.virt.addr, AES_BLOCK_SIZE,
-+					buf, AES_BLOCK_SIZE,
- 					walk.iv) == AES_BLOCK_SIZE)
- 				break;
- 			if (__paes_convert_key(ctx))
+diff --git a/drivers/soundwire/slave.c b/drivers/soundwire/slave.c
+index c1c1a2ac293a..060c2982e26b 100644
+--- a/drivers/soundwire/slave.c
++++ b/drivers/soundwire/slave.c
+@@ -39,14 +39,14 @@ int sdw_slave_add(struct sdw_bus *bus,
+ 	slave->dev.fwnode = fwnode;
+ 
+ 	if (id->unique_id == SDW_IGNORED_UNIQUE_ID) {
+-		/* name shall be sdw:link:mfg:part:class */
+-		dev_set_name(&slave->dev, "sdw:%01x:%04x:%04x:%02x",
+-			     bus->link_id, id->mfg_id, id->part_id,
++		/* name shall be sdw:ctrl:link:mfg:part:class */
++		dev_set_name(&slave->dev, "sdw:%01x:%01x:%04x:%04x:%02x",
++			     bus->controller_id, bus->link_id, id->mfg_id, id->part_id,
+ 			     id->class_id);
+ 	} else {
+-		/* name shall be sdw:link:mfg:part:class:unique */
+-		dev_set_name(&slave->dev, "sdw:%01x:%04x:%04x:%02x:%01x",
+-			     bus->link_id, id->mfg_id, id->part_id,
++		/* name shall be sdw:ctrl:link:mfg:part:class:unique */
++		dev_set_name(&slave->dev, "sdw:%01x:%01x:%04x:%04x:%02x:%01x",
++			     bus->controller_id, bus->link_id, id->mfg_id, id->part_id,
+ 			     id->class_id, id->unique_id);
+ 	}
+ 
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 4e4284729773..1e788859c863 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -1232,11 +1232,11 @@ static int fill_sdw_codec_dlc(struct device *dev,
+ 	else if (is_unique_device(adr_link, sdw_version, mfg_id, part_id,
+ 				  class_id, adr_index))
+ 		codec->name = devm_kasprintf(dev, GFP_KERNEL,
+-					     "sdw:%01x:%04x:%04x:%02x", link_id,
++					     "sdw:0:%01x:%04x:%04x:%02x", link_id,
+ 					     mfg_id, part_id, class_id);
+ 	else
+ 		codec->name = devm_kasprintf(dev, GFP_KERNEL,
+-					     "sdw:%01x:%04x:%04x:%02x:%01x", link_id,
++					     "sdw:0:%01x:%04x:%04x:%02x:%01x", link_id,
+ 					     mfg_id, part_id, class_id, unique_id);
+ 
+ 	if (!codec->name)
+-- 
+2.43.0
+
 
 
