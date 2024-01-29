@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B1C15959E;
-	Mon, 29 Jan 2024 17:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8896D15959E;
+	Mon, 29 Jan 2024 17:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548253; cv=none; b=kpvBEVEKN57Kpxn7gLeuLHFXQ/kZcCcohptIlrgM6lVDrQ5sKE8cZSuY4j7nGSsnRCqt9kR5QuugfZnAUXHEnPbLQMZFU3yMy2ryG02qS0ozfpcR0i8QhmJwI258nJrXTp64uqez0e4DvKozXPAIEaLg95q3A0u36StSyBrl1uA=
+	t=1706548254; cv=none; b=S+MKhnqkG9U1FeukpI++o6CI1AF2or5ugfEt3KcTEs7OkrOOY4rI8kalpzn26l6dUAa9CSjUqfYNnR+5kG+XMOy0yNQFUpA5Qug+14ANYcJsZ86ErFGVuvVycg5ve+8pLl51ojbIZJCk5ZxHiIaFDgLZUIT31GJKK4tlJEuT9cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548253; c=relaxed/simple;
-	bh=FzHtAgobPaKKjnOTX+v7bS7F/tAsufJwsSOaDYbKN2E=;
+	s=arc-20240116; t=1706548254; c=relaxed/simple;
+	bh=ArOMi9pI4jw31vdVNK4IkilqKB5Au/PsWMFAazJPfq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBqBtIb6nn2skz/sqDdArggwROtBhh4nLhbYcd7+uEteYHxWoT2KZFnWQASHJePvLkZOhTiugt78Qd/oWi1SqoHi4WthmRoNGy7ghvU2NbxtVWOZiHJsu5UXGrmGuvxt1KoTNSg8jLfrb7gIdy01nu5ZuO+o6ZHGDZH1VeLdBY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7S5ADTn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h6cg+d49zPSWwCc+YKxESS9o9iz3w8BfBfuGVY37huS8ECtYNefVtisbO5sG6FVjgMkiyGuUgIJWP91TzEqxyiDaAlgRFuXTjGhTSGeGG7P7FXByf9osbKh2B1FUBkmOju6cLZheOcKTQJAS2v/pCLuAuSEf/PWfUd0jYLQyX1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3lmZg7i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7S5ADTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE8AC43390;
-	Mon, 29 Jan 2024 17:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3lmZg7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D043C433B1;
+	Mon, 29 Jan 2024 17:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548253;
-	bh=FzHtAgobPaKKjnOTX+v7bS7F/tAsufJwsSOaDYbKN2E=;
+	s=korg; t=1706548254;
+	bh=ArOMi9pI4jw31vdVNK4IkilqKB5Au/PsWMFAazJPfq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g7S5ADTn6vv6WoVjystXiEREx+2kc6UbNLU1lFH8IBLbQyz6gHrJUz0ke6prjXX7q
-	 XRpqqIHaktGyRKYqbxtHkFYUmJpJ22sspjfZhIMek5LFBWgkxNLpZtrVNdeRNYD44x
-	 qR2wSiTBDZ4YjsIQ0pmQ/hW4uzCAVe138b1icIRs=
+	b=p3lmZg7iRFgs/45pnbmPvdLuVZ6sv26eEAHg5yCGgBTT5qJdnOLP+UGpUqR4fGwFo
+	 VCX2Ai8rs/d00fkJdn/6JxAXYcUgUoigORMSzukiLCrU2AxeDqBqwZ51SWbOoRCjyQ
+	 wWBskxgY7vsmlrnemxr2XtUOk86dYvxlyOT6TSQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	alvin.zhuge@gmail.com,
-	renzhamin@gmail.com,
-	Kelvie Wong <kelvie@kelvie.ca>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 048/185] rtc: cmos: Use ACPI alarm for non-Intel x86 systems too
-Date: Mon, 29 Jan 2024 09:04:08 -0800
-Message-ID: <20240129170000.133905518@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 275/346] drm/amdgpu: Avoid fetching vram vendor information
+Date: Mon, 29 Jan 2024 09:05:06 -0800
+Message-ID: <20240129170024.469366833@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,79 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit 3d762e21d56370a43478b55e604b4a83dd85aafc upstream.
+commit 90751bdeee4e3ac87ebf814bf282b0fa97edfeab upstream.
 
-Intel systems > 2015 have been configured to use ACPI alarm instead
-of HPET to avoid s2idle issues.
+For GFX 9.4.3 APUs, the current method of fetching vram vendor
+information is not reliable. Avoid fetching the information.
 
-Having HPET programmed for wakeup causes problems on AMD systems with
-s2idle as well.
-
-One particular case is that the systemd "SuspendThenHibernate" feature
-doesn't work properly on the Framework 13" AMD model. Switching to
-using ACPI alarm fixes the issue.
-
-Adjust the quirk to apply to AMD/Hygon systems from 2021 onwards.
-This matches what has been tested and is specifically to avoid potential
-risk to older systems.
-
-Cc:  <stable@vger.kernel.org> # 6.1+
-Reported-by:  <alvin.zhuge@gmail.com>
-Reported-by:  <renzhamin@gmail.com>
-Closes: https://github.com/systemd/systemd/issues/24279
-Reported-by: Kelvie Wong <kelvie@kelvie.ca>
-Closes: https://community.frame.work/t/systemd-suspend-then-hibernate-wakes-up-after-5-minutes/39392
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20231106162310.85711-1-mario.limonciello@amd.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.7.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-cmos.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 228fb2d11c70..696cfa7025de 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -818,18 +818,24 @@ static void rtc_wake_off(struct device *dev)
- }
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1950,7 +1950,8 @@ static void gmc_v9_4_3_init_vram_info(st
+ 	static const u32 regBIF_BIOS_SCRATCH_4 = 0x50;
+ 	u32 vram_info;
  
- #ifdef CONFIG_X86
--/* Enable use_acpi_alarm mode for Intel platforms no earlier than 2015 */
- static void use_acpi_alarm_quirks(void)
- {
--	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
-+	switch (boot_cpu_data.x86_vendor) {
-+	case X86_VENDOR_INTEL:
-+		if (dmi_get_bios_year() < 2015)
-+			return;
-+		break;
-+	case X86_VENDOR_AMD:
-+	case X86_VENDOR_HYGON:
-+		if (dmi_get_bios_year() < 2021)
-+			return;
-+		break;
-+	default:
- 		return;
--
-+	}
- 	if (!is_hpet_enabled())
- 		return;
- 
--	if (dmi_get_bios_year() < 2015)
--		return;
--
- 	use_acpi_alarm = true;
- }
- #else
--- 
-2.43.0
-
+-	if (!amdgpu_sriov_vf(adev)) {
++	/* Only for dGPU, vendor informaton is reliable */
++	if (!amdgpu_sriov_vf(adev) && !(adev->flags & AMD_IS_APU)) {
+ 		vram_info = RREG32(regBIF_BIOS_SCRATCH_4);
+ 		adev->gmc.vram_vendor = vram_info & 0xF;
+ 	}
 
 
