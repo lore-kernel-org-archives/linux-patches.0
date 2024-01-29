@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6286FE0B;
-	Mon, 29 Jan 2024 17:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B9A6FDF8;
+	Mon, 29 Jan 2024 17:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548482; cv=none; b=mXAwqw5CQdwlvSqdO5Ve5T7cdC8FIBcsVr4YXqu+sBciX/CfiIh2k3Xy0G7VF1ReF8fSX8LNWFKFCst43B2AWazqcqiU+9vvYnRnFGpEG4qbSJjyGYcEtYAL1weUac4mKuzJTlhy8WSqFv/yPmU3p4WAl8vshj6ibONT0Z9B1aw=
+	t=1706548483; cv=none; b=IqSe7m3YYV6c04S4QfYMq60ORYdxUFH/71Jtdy04vHx0/Po0jaQnGGjjMxp6YSzo1Y4+vjZK8BfDBR8tCJ13r/1t+Z4wKwyF+9sqViRCfsfz6foxVSyyxOAkfte4c/27Y6HaRfq3WalQ7tcMVrNfkUXT9XpGzWb9uTLGS+b3RSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548482; c=relaxed/simple;
-	bh=7/zTl4Dh0Hg3DvFu3e/3xrDv6eiv4I4kpPiDIBouxRM=;
+	s=arc-20240116; t=1706548483; c=relaxed/simple;
+	bh=kSPfkoGpoTHCjVq6jogB+IiEDz6ls1TNjX7CrAWhJpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiNTzp5YmhrsINinffBfDGExG/zsBYo/WxpwZAtx3nkU3Pv63sdhE5xHR/spdkznDo1X3Y6WUg5yp1PSFhE77pf/+cBZIjcLqDsrKJ84RjKccLzL7SSWjH8YAeuKS1N9o8ocrBatqppXg0UW0jXmnBCePfeSX7yFjEZXi/OdsVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZJFv//o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hdwceB23thrCZf6lk9JMARrZsWXJOWTyVWtuZr4hnDYtiqWUJY6hV1narFnUspD2uInGtjCDABGgDCFK1LEEC1pMVaNPefjyULwRfKVF0qgMdmWeP937T1ANk7SBG5RkVOa07g2lKex8Bd3kok07eC4v6ZLqGQUNYq9Q6yJU63w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woHqWWmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZJFv//o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588D8C43394;
-	Mon, 29 Jan 2024 17:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woHqWWmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BF9C43390;
+	Mon, 29 Jan 2024 17:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548482;
-	bh=7/zTl4Dh0Hg3DvFu3e/3xrDv6eiv4I4kpPiDIBouxRM=;
+	s=korg; t=1706548483;
+	bh=kSPfkoGpoTHCjVq6jogB+IiEDz6ls1TNjX7CrAWhJpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZJFv//o1AeKYXmGRgnf/IU1bX6NYWE21R71dDn1UUMsYpS/JRUfz6CcFTE1nEiO2
-	 dokO5dLlkMWJewZIaM6/7fHNFWnWIKzP+lkkm36LaAVqdavDIFyd5Lm0kzDs7CSuxy
-	 d1macy0H3QHnJumJZzOsmBK7ziGYIhMEyMXfYjeI=
+	b=woHqWWmpnDlfEKFqYzsxcqlPoTaGrjg7OlXsBUCU3vRUZJr/b0tX/agLawSAGZQme
+	 qIwtpho7CkbB8iiAj9dlc+TS5cDz4uyQ3zCicOAjK4prmpU5svtdZchtWfYEPgMkZx
+	 FCqAv+k0U68FtZPz57rR83TOob8c9Lw8bJ3OlqRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 6.6 102/331] scripts/get_abi: fix source path leak
-Date: Mon, 29 Jan 2024 09:02:46 -0800
-Message-ID: <20240129170017.916513094@linuxfoundation.org>
+	stable@kernel.org,
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.6 103/331] media: videobuf2-dma-sg: fix vmap callback
+Date: Mon, 29 Jan 2024 09:02:47 -0800
+Message-ID: <20240129170017.950165654@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,40 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vegard Nossum <vegard.nossum@oracle.com>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-commit 5889d6ede53bc17252f79c142387e007224aa554 upstream.
+commit 608ca5a60ee47b48fec210aeb7a795a64eb5dcee upstream.
 
-The code currently leaks the absolute path of the ABI files into the
-rendered documentation.
+For dmabuf import users to be able to use the vaddr from another
+videobuf2-dma-sg source, the exporter needs to set a proper vaddr on
+vb2_dma_sg_dmabuf_ops_vmap callback. This patch adds vmap on map if
+buf->vaddr was not set.
 
-There exists code to prevent this, but it is not effective when an
-absolute path is passed, which it is when $srctree is used.
-
-I consider this to be a minimal, stop-gap fix; a better fix would strip
-off the actual prefix instead of hacking it off with a regex.
-
-Link: https://mastodon.social/@vegard/111677490643495163
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/20231231235959.3342928-1-vegard.nossum@oracle.com
+Cc: stable@kernel.org
+Fixes: 7938f4218168 ("dma-buf-map: Rename to iosys-map")
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
+Acked-by: Tomasz Figa <tfiga@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/get_abi.pl |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/common/videobuf2/videobuf2-dma-sg.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/scripts/get_abi.pl
-+++ b/scripts/get_abi.pl
-@@ -98,7 +98,7 @@ sub parse_abi {
- 	$name =~ s,.*/,,;
+--- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
++++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
+@@ -487,9 +487,15 @@ vb2_dma_sg_dmabuf_ops_end_cpu_access(str
+ static int vb2_dma_sg_dmabuf_ops_vmap(struct dma_buf *dbuf,
+ 				      struct iosys_map *map)
+ {
+-	struct vb2_dma_sg_buf *buf = dbuf->priv;
++	struct vb2_dma_sg_buf *buf;
++	void *vaddr;
  
- 	my $fn = $file;
--	$fn =~ s,Documentation/ABI/,,;
-+	$fn =~ s,.*Documentation/ABI/,,;
+-	iosys_map_set_vaddr(map, buf->vaddr);
++	buf = dbuf->priv;
++	vaddr = vb2_dma_sg_vaddr(buf->vb, buf);
++	if (!vaddr)
++		return -EINVAL;
++
++	iosys_map_set_vaddr(map, vaddr);
  
- 	my $nametag = "File $fn";
- 	$data{$nametag}->{what} = "File $name";
+ 	return 0;
+ }
 
 
