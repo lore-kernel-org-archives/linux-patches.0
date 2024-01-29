@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC43C73748;
-	Mon, 29 Jan 2024 17:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4CD73722;
+	Mon, 29 Jan 2024 17:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548544; cv=none; b=EWPLp1XnL2sOyWL9At/pMahLO6oyrqji4DNAThro/86tNSkDD7buuSs+WwMVGJl6QYDvMulYqf0Qjw6YfEw44cI982iEGV8NQX92XqPFPsKg99XLRrpYi6Sqi0O3qiqZ0Vbq5cG2SLUQ/seJpzgJt27ECg5PG1uC3xOo4GK2/4s=
+	t=1706548545; cv=none; b=LOERqzV9AvBXXgVsAn7qBRxKTendoi9xEyEhEqnBIkDqoLSsEzNQFTdKRnapM+ehCJL6M7nmaX19+0lOFe+5CF3VIprVRo+d0L6LFbN45E7sjSF4idXyhy3jJHSFlUkmpMPyrFC/7xuV9XE7rR7jggZqHo+gPKNE5fY+43S3A+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548544; c=relaxed/simple;
-	bh=jBqss7iu/jhCtOyIAseF2CobNIz8KwdTtnWLKosznQU=;
+	s=arc-20240116; t=1706548545; c=relaxed/simple;
+	bh=vkvosLEfMqqJu6FXmkbRvLp0kBANhob8UiQS6l0fyv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuGoQk/HJLh2vJoYMiL/6RDiAKeDxhsvHEePQ/jfiZ/Kw/dUnJflHdHUnJItYR9Za+eu8qkSMGdwxIwk3Qy6W/DQV28HfYhhW3xTh+lnZY7NaeXWHIswMe+9l7ocLQFe1oZsm7odMZqLOvfTl8QwYfd95aPA82z+ijuFk6nQiN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMe7WH8n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3lI/Pjbty8L/1ylIl8n9hVjXvP/ESkJp3akB1C13ix+6mO6n/biuoO+vDOUqBDu0jcRjL+AfkBPLO5POUl2/W9q1qVamDoqsn6uhb1A6HfuzG2OQqx8kF977tUcF57krt7da/FRKeac2Dq+68xVt3fMyqYNzGUCJi0Hme27O4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sc681aKL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMe7WH8n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9588EC433C7;
-	Mon, 29 Jan 2024 17:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sc681aKL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63452C433C7;
+	Mon, 29 Jan 2024 17:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548544;
-	bh=jBqss7iu/jhCtOyIAseF2CobNIz8KwdTtnWLKosznQU=;
+	s=korg; t=1706548545;
+	bh=vkvosLEfMqqJu6FXmkbRvLp0kBANhob8UiQS6l0fyv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMe7WH8nzlhywScJC0EmsBTAGmMnTVNRCoAiW9wKLYbJBG8DqEsYZKiu6E3E5yptw
-	 aR7TTdlw5hdsnlztfsVSVqBQL/Wfvda0Y6I+SZ7cpQ/9bO1NS0painzkkovuQXt1+X
-	 r6jcjSYNZWUZhOcmq+zExmYNMduHrUxASMEkt+8w=
+	b=Sc681aKLJ6TPfTyi6p5DkBFlB2VQe+UYt/NFcZBlZEuF4D70Vb2aKvLlNImjWcvhK
+	 heNF7u+UFY8I6rhOf7f9i3TO+vuq15UUe7q2KAe0i9eJWgIN1UArDYpP27Zngc1t3F
+	 bldO7Q4VJ+vjrEsV+PEoAcNey5XP4pwffGzaElDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Salvatore Dipietro <dipiets@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/331] afs: Hide silly-rename files from userspace
-Date: Mon, 29 Jan 2024 09:04:09 -0800
-Message-ID: <20240129170020.311981607@linuxfoundation.org>
+Subject: [PATCH 6.6 186/331] tcp: Add memory barrier to tcp_push()
+Date: Mon, 29 Jan 2024 09:04:10 -0800
+Message-ID: <20240129170020.338578602@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,52 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Salvatore Dipietro <dipiets@amazon.com>
 
-[ Upstream commit 57e9d49c54528c49b8bffe6d99d782ea051ea534 ]
+[ Upstream commit 7267e8dcad6b2f9fce05a6a06335d7040acbc2b6 ]
 
-There appears to be a race between silly-rename files being created/removed
-and various userspace tools iterating over the contents of a directory,
-leading to such errors as:
+On CPUs with weak memory models, reads and updates performed by tcp_push
+to the sk variables can get reordered leaving the socket throttled when
+it should not. The tasklet running tcp_wfree() may also not observe the
+memory updates in time and will skip flushing any packets throttled by
+tcp_push(), delaying the sending. This can pathologically cause 40ms
+extra latency due to bad interactions with delayed acks.
 
-	find: './kernel/.tmp_cpio_dir/include/dt-bindings/reset/.__afs2080': No such file or directory
-	tar: ./include/linux/greybus/.__afs3C95: File removed before we read it
+Adding a memory barrier in tcp_push removes the bug, similarly to the
+previous commit bf06200e732d ("tcp: tsq: fix nonagle handling").
+smp_mb__after_atomic() is used to not incur in unnecessary overhead
+on x86 since not affected.
 
-when building a kernel.
+Patch has been tested using an AWS c7g.2xlarge instance with Ubuntu
+22.04 and Apache Tomcat 9.0.83 running the basic servlet below:
 
-Fix afs_readdir() so that it doesn't return .__afsXXXX silly-rename files
-to userspace.  This doesn't stop them being looked up directly by name as
-we need to be able to look them up from within the kernel as part of the
-silly-rename algorithm.
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-Fixes: 79ddbfa500b3 ("afs: Implement sillyrename for unlink and rename")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
+public class HelloWorldServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream(),"UTF-8");
+        String s = "a".repeat(3096);
+        osw.write(s,0,s.length());
+        osw.flush();
+    }
+}
+
+Load was applied using wrk2 (https://github.com/kinvolk/wrk2) from an AWS
+c6i.8xlarge instance. Before the patch an additional 40ms latency from P99.99+
+values is observed while, with the patch, the extra latency disappears.
+
+No patch and tcp_autocorking=1
+./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
+  ...
+ 50.000%    0.91ms
+ 75.000%    1.13ms
+ 90.000%    1.46ms
+ 99.000%    1.74ms
+ 99.900%    1.89ms
+ 99.990%   41.95ms  <<< 40+ ms extra latency
+ 99.999%   48.32ms
+100.000%   48.96ms
+
+With patch and tcp_autocorking=1
+./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
+  ...
+ 50.000%    0.90ms
+ 75.000%    1.13ms
+ 90.000%    1.45ms
+ 99.000%    1.72ms
+ 99.900%    1.83ms
+ 99.990%    2.11ms  <<< no 40+ ms extra latency
+ 99.999%    2.53ms
+100.000%    2.62ms
+
+Patch has been also tested on x86 (m7i.2xlarge instance) which it is not
+affected by this issue and the patch doesn't introduce any additional
+delay.
+
+Fixes: 7aa5470c2c09 ("tcp: tsq: move tsq_flags close to sk_wmem_alloc")
+Signed-off-by: Salvatore Dipietro <dipiets@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240119190133.43698-1-dipiets@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dir.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/ipv4/tcp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 5219182e52e1..2df2e9ee130d 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -474,6 +474,14 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
- 			continue;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index f124f6c63915..fb417aee86e6 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -722,6 +722,7 @@ void tcp_push(struct sock *sk, int flags, int mss_now,
+ 		if (!test_bit(TSQ_THROTTLED, &sk->sk_tsq_flags)) {
+ 			NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAUTOCORKING);
+ 			set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
++			smp_mb__after_atomic();
  		}
- 
-+		/* Don't expose silly rename entries to userspace. */
-+		if (nlen > 6 &&
-+		    dire->u.name[0] == '.' &&
-+		    ctx->actor != afs_lookup_filldir &&
-+		    ctx->actor != afs_lookup_one_filldir &&
-+		    memcmp(dire->u.name, ".__afs", 6) == 0)
-+			continue;
-+
- 		/* found the next entry */
- 		if (!dir_emit(ctx, dire->u.name, nlen,
- 			      ntohl(dire->u.vnode),
+ 		/* It is possible TX completion already happened
+ 		 * before we set TSQ_THROTTLED.
 -- 
 2.43.0
 
