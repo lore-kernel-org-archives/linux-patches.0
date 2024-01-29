@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16C6158D71;
-	Mon, 29 Jan 2024 17:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B14E158D71;
+	Mon, 29 Jan 2024 17:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548316; cv=none; b=hiBgyG+2QiATOa8N22lzGiaowQLCLYZdvuQPdN+g/8xd9sDGm6IzfapjTUoh5aC8mDJfi0Ljhv7ZbtOe6NTapDhFcpzNoW4kyI1YWab2NOSfbt3B0M9ROnrcUjND6O9MimA1uaHnVQjEq0qcfTLGDkynRaS9FhTrHrL9sTxXnps=
+	t=1706548317; cv=none; b=oIK+7p3PojmZuOoFG/hqe/xd16u0qKfTsbMWnbo0wql8BmnNYoDew+CrR254+uxVZtoi3sXTh+GOZ0hRJ8MQHFaMk5eZMJvehhCOWAH9jiI5bMh6yOJAfzwDMWthfOXtLRXf3hgpSx8GBXy8h4YHoQXPaM6e2v194MjWqqzDBN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548316; c=relaxed/simple;
-	bh=9MRfjZ2YpF3DK9yNYn+lT177zjKRqKSVP1lo152t/y0=;
+	s=arc-20240116; t=1706548317; c=relaxed/simple;
+	bh=lZ4/N3dkZ3Kfc7so0Sh7sQjwOwNGxXxNC0UcUupv2eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0FLOnVr4bAlAbSfwNLpWzHSAmkQuAsHVbQCibEdetqjKboiS1/zPLer9uhu1y+UPJyVuRDPZBy0+MFbYFaDDfnPQoLh/7ysa87b8/Fxr6eXlnEh5HRVdtmrOlyVO4WLOKK4CrEIp/KRrAnQ40877Mtjjf6Qr2KgWEXx0bM8IgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfQGgPuU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8RJvWGk22sRfZ2VReHD6rsIwJ0rMmFz1b4EewX0v4nQVy7LgMHUFZqddgnGdlWSWiZlD3PyscFsuPJ6qR/Wx1+Mfa5pERmZMONlrwLvqdfsypwZM3KVripoYpYLtBjTzkklIX7ZGtyuobqACc+sUrMX5WViZf5iuDSxc32G0tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUxIVuTr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfQGgPuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994E7C433C7;
-	Mon, 29 Jan 2024 17:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUxIVuTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EC9C43390;
+	Mon, 29 Jan 2024 17:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548316;
-	bh=9MRfjZ2YpF3DK9yNYn+lT177zjKRqKSVP1lo152t/y0=;
+	s=korg; t=1706548317;
+	bh=lZ4/N3dkZ3Kfc7so0Sh7sQjwOwNGxXxNC0UcUupv2eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfQGgPuU6OdsmBfktEg3OlpAM/jkweznfz9icjuU5NXBdPjLRlpYQPdTBa9mTR43/
-	 0ZNu/l3E+91muasZrkFgOQqPF5mOxJ7Gtr1GrSVu0rUu1aK903WYcGNwtNaMlkWeZm
-	 3Is6cT9a3lMGQ3Zjvr2rg4sLXKH5UqcPZrRcXRIM=
+	b=FUxIVuTruv/Myo8JSr1DIYSakvpP/9WWhFMJ2CA3WJNe2qByjK8tPaIq+Dq8/YEW0
+	 L8FcQzaDKEdrtjDMJDqpdz0K4ZzcLlLR+XE9PjpAhMD/o0aVceNK42kld8EAZ4jPnP
+	 o/C57IkAYsAAM3wKVVMbGwNkIOtPcgmDp7eTrZ0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 320/346] firmware: arm_scmi: Fix the clock protocol version for v3.2
-Date: Mon, 29 Jan 2024 09:05:51 -0800
-Message-ID: <20240129170025.888411804@linuxfoundation.org>
+Subject: [PATCH 6.1 091/185] afs: Hide silly-rename files from userspace
+Date: Mon, 29 Jan 2024 09:04:51 -0800
+Message-ID: <20240129170001.522811291@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 27600c96e2ffa6c1b2cb378ddc75c6620c628d04 ]
+[ Upstream commit 57e9d49c54528c49b8bffe6d99d782ea051ea534 ]
 
-The clock protocol version as per the SCMI v3.2 specification is 0x30000.
-Enable the v3.0 clock protocol features only when clock protocol version
-equals 0x30000.
+There appears to be a race between silly-rename files being created/removed
+and various userspace tools iterating over the contents of a directory,
+leading to such errors as:
 
-The previous beta version of the spec had this value set to 0x20001 and
-th same value trickled down from the initial development. The version
-update were missed in the driver.
+	find: './kernel/.tmp_cpio_dir/include/dt-bindings/reset/.__afs2080': No such file or directory
+	tar: ./include/linux/greybus/.__afs3C95: File removed before we read it
 
-Fixes: e49e314a2cf7 ("firmware: arm_scmi: Add clock v3.2 CONFIG_SET support")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20240109150106.2066739-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+when building a kernel.
+
+Fix afs_readdir() so that it doesn't return .__afsXXXX silly-rename files
+to userspace.  This doesn't stop them being looked up directly by name as
+we need to be able to look them up from within the kernel as part of the
+silly-rename algorithm.
+
+Fixes: 79ddbfa500b3 ("afs: Implement sillyrename for unlink and rename")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/clock.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/afs/dir.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/clock.c b/drivers/firmware/arm_scmi/clock.c
-index 42b81c181d68..96b4f0694fed 100644
---- a/drivers/firmware/arm_scmi/clock.c
-+++ b/drivers/firmware/arm_scmi/clock.c
-@@ -951,8 +951,7 @@ static int scmi_clock_protocol_init(const struct scmi_protocol_handle *ph)
- 			scmi_clock_describe_rates_get(ph, clkid, clk);
- 	}
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index 07dc4ec73520..cf811b77ee67 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -473,6 +473,14 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
+ 			continue;
+ 		}
  
--	if (PROTOCOL_REV_MAJOR(version) >= 0x2 &&
--	    PROTOCOL_REV_MINOR(version) >= 0x1) {
-+	if (PROTOCOL_REV_MAJOR(version) >= 0x3) {
- 		cinfo->clock_config_set = scmi_clock_config_set_v2;
- 		cinfo->clock_config_get = scmi_clock_config_get_v2;
- 	} else {
++		/* Don't expose silly rename entries to userspace. */
++		if (nlen > 6 &&
++		    dire->u.name[0] == '.' &&
++		    ctx->actor != afs_lookup_filldir &&
++		    ctx->actor != afs_lookup_one_filldir &&
++		    memcmp(dire->u.name, ".__afs", 6) == 0)
++			continue;
++
+ 		/* found the next entry */
+ 		if (!dir_emit(ctx, dire->u.name, nlen,
+ 			      ntohl(dire->u.vnode),
 -- 
 2.43.0
 
