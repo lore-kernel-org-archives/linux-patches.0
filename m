@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2978015B0FC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD01615B0FC;
 	Mon, 29 Jan 2024 17:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548198; cv=none; b=rA5/OKZ0KJyH5UtgS7TLSeFQa7JxqosXW4AIC5Dcr84NZN1urzL/f0QIulCuAF/KZM2N8neITI9U7kfTvjsYvSPBPSblxZ/nX7tJ3oSPwmS7a9ya4ulNjXfEvjRnyyKhHR0kUwkNPvnZpAoimjcy5vM8SRFVQQWnsYhS9a8uB+I=
+	t=1706548199; cv=none; b=e28RpaAEZefXp4GzWAtEfMfWv13anujM2AzCINyly8/HF3U/fonM2eLw1J0gx1QIghJ4nzeKM9s8uFljLmSSCLGHmu+MXc0TY5gGBl/kZVlugX3QcQZu2ERZ30UAx0eOOMG85DADOlak9S+Oi/YfoTTouoiW6UDJMzk2IT35gH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548198; c=relaxed/simple;
-	bh=+13LCaXo7WdDWgAXDfTe6wz9cfBm0laoFobFC2JXbKU=;
+	s=arc-20240116; t=1706548199; c=relaxed/simple;
+	bh=D55oACpihbRXEs4yvyr8rPEfAc232VaQxWgyKJKta+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atFBtqSvvE3LWY8klolPeLRL8smHfi6CmLu782O/FMsJE2XehMQflR59jIjs5OucPtpsPyTWBUYdIephN9AlH15QlSHbyYP2cYGmuFxw/9h4nDC73HmsUWatcun5U3S3NEhhn2wKIHL5ZuEAG8g0wWcMSU6uwMatc1Z10sJjo/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=paAT8ljP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntR5LCgzv1RsTzVPwYK8x4anWvBZjIhrZQ2Al5cDSBB8ir2CyhsDMQ1UaZxqJQQt20n9ulscoOnl3Znpk9w1mkoLqfnDtIcKk6N+JU7/jz4j8CIEWFKEtkrWdGlTyIND7nIYCxukBW3RYrSnW/nYAP4AtrPSQZFyQ5d43oxDJxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5BczmoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="paAT8ljP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3267C43394;
-	Mon, 29 Jan 2024 17:09:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5BczmoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A478EC433F1;
+	Mon, 29 Jan 2024 17:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548198;
-	bh=+13LCaXo7WdDWgAXDfTe6wz9cfBm0laoFobFC2JXbKU=;
+	bh=D55oACpihbRXEs4yvyr8rPEfAc232VaQxWgyKJKta+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=paAT8ljP9pt+FMfNoya+VRoDCvMUVMPqZ/MRzRo8vPiYRnvYs3FtyF+hiM/BbSgy0
-	 dMR3RSAToAplsKAkXBPdx7kgvDdrSYIkYg7hTt1Tp4yR1UZZBIS3+nNpuHRY12m8r3
-	 a4hbTi3Hd3TTDTFKF67aD8qQR1gutuf0NNpzPBiw=
+	b=x5BczmoXNSSXb3O1D1+iJYi5phSHQjseD8rX31ya2+MdR9frP2X4JX0TRpYPDvEms
+	 L+5SzEPZdvEzGV80IOW2qWmBoKEejUUydWWzBVEhCnHeIN71tQY84UDJ10+oHq+CLV
+	 ypNJY7H4d/cDLgaajubbV0qoFTqTVoN8apelYcCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	syzbot+c52ab18308964d248092@syzkaller.appspotmail.com,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 013/185] hwrng: core - Fix page fault dead lock on mmap-ed hwrng
-Date: Mon, 29 Jan 2024 09:03:33 -0800
-Message-ID: <20240129165959.023463426@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.7 239/346] ksmbd: fix global oob in ksmbd_nl_policy
+Date: Mon, 29 Jan 2024 09:04:30 -0800
+Message-ID: <20240129170023.436144293@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,121 +47,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit 78aafb3884f6bc6636efcc1760c891c8500b9922 upstream.
+commit ebeae8adf89d9a82359f6659b1663d09beec2faa upstream.
 
-There is a dead-lock in the hwrng device read path.  This triggers
-when the user reads from /dev/hwrng into memory also mmap-ed from
-/dev/hwrng.  The resulting page fault triggers a recursive read
-which then dead-locks.
+Similar to a reported issue (check the commit b33fb5b801c6 ("net:
+qualcomm: rmnet: fix global oob in rmnet_policy"), my local fuzzer finds
+another global out-of-bounds read for policy ksmbd_nl_policy. See bug
+trace below:
 
-Fix this by using a stack buffer when calling copy_to_user.
+==================================================================
+BUG: KASAN: global-out-of-bounds in validate_nla lib/nlattr.c:386 [inline]
+BUG: KASAN: global-out-of-bounds in __nla_validate_parse+0x24af/0x2750 lib/nlattr.c:600
+Read of size 1 at addr ffffffff8f24b100 by task syz-executor.1/62810
 
-Reported-by: Edward Adam Davis <eadavis@qq.com>
-Reported-by: syzbot+c52ab18308964d248092@syzkaller.appspotmail.com
-Fixes: 9996508b3353 ("hwrng: core - Replace u32 in driver API with byte array")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+CPU: 0 PID: 62810 Comm: syz-executor.1 Tainted: G                 N 6.1.0 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x8b/0xb3 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:284 [inline]
+ print_report+0x172/0x475 mm/kasan/report.c:395
+ kasan_report+0xbb/0x1c0 mm/kasan/report.c:495
+ validate_nla lib/nlattr.c:386 [inline]
+ __nla_validate_parse+0x24af/0x2750 lib/nlattr.c:600
+ __nla_parse+0x3e/0x50 lib/nlattr.c:697
+ __nlmsg_parse include/net/netlink.h:748 [inline]
+ genl_family_rcv_msg_attrs_parse.constprop.0+0x1b0/0x290 net/netlink/genetlink.c:565
+ genl_family_rcv_msg_doit+0xda/0x330 net/netlink/genetlink.c:734
+ genl_family_rcv_msg net/netlink/genetlink.c:833 [inline]
+ genl_rcv_msg+0x441/0x780 net/netlink/genetlink.c:850
+ netlink_rcv_skb+0x14f/0x410 net/netlink/af_netlink.c:2540
+ genl_rcv+0x24/0x40 net/netlink/genetlink.c:861
+ netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+ netlink_unicast+0x54e/0x800 net/netlink/af_netlink.c:1345
+ netlink_sendmsg+0x930/0xe50 net/netlink/af_netlink.c:1921
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg+0x154/0x190 net/socket.c:734
+ ____sys_sendmsg+0x6df/0x840 net/socket.c:2482
+ ___sys_sendmsg+0x110/0x1b0 net/socket.c:2536
+ __sys_sendmsg+0xf3/0x1c0 net/socket.c:2565
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fdd66a8f359
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fdd65e00168 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007fdd66bbcf80 RCX: 00007fdd66a8f359
+RDX: 0000000000000000 RSI: 0000000020000500 RDI: 0000000000000003
+RBP: 00007fdd66ada493 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffc84b81aff R14: 00007fdd65e00300 R15: 0000000000022000
+ </TASK>
+
+The buggy address belongs to the variable:
+ ksmbd_nl_policy+0x100/0xa80
+
+The buggy address belongs to the physical page:
+page:0000000034f47940 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1ccc4b
+flags: 0x200000000001000(reserved|node=0|zone=2)
+raw: 0200000000001000 ffffea00073312c8 ffffea00073312c8 0000000000000000
+raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffffffff8f24b000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffffffff8f24b080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffffffff8f24b100: f9 f9 f9 f9 00 00 f9 f9 f9 f9 f9 f9 00 00 07 f9
+                   ^
+ ffffffff8f24b180: f9 f9 f9 f9 00 05 f9 f9 f9 f9 f9 f9 00 00 00 05
+ ffffffff8f24b200: f9 f9 f9 f9 00 00 03 f9 f9 f9 f9 f9 00 00 04 f9
+==================================================================
+
+To fix it, add a placeholder named __KSMBD_EVENT_MAX and let
+KSMBD_EVENT_MAX to be its original value - 1 according to what other
+netlink families do. Also change two sites that refer the
+KSMBD_EVENT_MAX to correct value.
+
+Cc: stable@vger.kernel.org
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/core.c |   34 +++++++++++++++++++++-------------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ fs/smb/server/ksmbd_netlink.h |    3 ++-
+ fs/smb/server/transport_ipc.c |    4 ++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/char/hw_random/core.c
-+++ b/drivers/char/hw_random/core.c
-@@ -24,10 +24,13 @@
- #include <linux/random.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
-+#include <linux/string.h>
- #include <linux/uaccess.h>
+--- a/fs/smb/server/ksmbd_netlink.h
++++ b/fs/smb/server/ksmbd_netlink.h
+@@ -304,7 +304,8 @@ enum ksmbd_event {
+ 	KSMBD_EVENT_SPNEGO_AUTHEN_REQUEST,
+ 	KSMBD_EVENT_SPNEGO_AUTHEN_RESPONSE	= 15,
  
- #define RNG_MODULE_NAME		"hw_random"
+-	KSMBD_EVENT_MAX
++	__KSMBD_EVENT_MAX,
++	KSMBD_EVENT_MAX = __KSMBD_EVENT_MAX - 1
+ };
  
-+#define RNG_BUFFER_SIZE (SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES)
-+
- static struct hwrng *current_rng;
- /* the current rng has been explicitly chosen by user via sysfs */
- static int cur_rng_set_by_user;
-@@ -59,7 +62,7 @@ static inline int rng_get_data(struct hw
+ /*
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -74,7 +74,7 @@ static int handle_unsupported_event(stru
+ static int handle_generic_event(struct sk_buff *skb, struct genl_info *info);
+ static int ksmbd_ipc_heartbeat_request(void);
  
- static size_t rng_buffer_size(void)
- {
--	return SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES;
-+	return RNG_BUFFER_SIZE;
- }
+-static const struct nla_policy ksmbd_nl_policy[KSMBD_EVENT_MAX] = {
++static const struct nla_policy ksmbd_nl_policy[KSMBD_EVENT_MAX + 1] = {
+ 	[KSMBD_EVENT_UNSPEC] = {
+ 		.len = 0,
+ 	},
+@@ -403,7 +403,7 @@ static int handle_generic_event(struct s
+ 		return -EPERM;
+ #endif
  
- static void add_early_randomness(struct hwrng *rng)
-@@ -211,6 +214,7 @@ static inline int rng_get_data(struct hw
- static ssize_t rng_dev_read(struct file *filp, char __user *buf,
- 			    size_t size, loff_t *offp)
- {
-+	u8 buffer[RNG_BUFFER_SIZE];
- 	ssize_t ret = 0;
- 	int err = 0;
- 	int bytes_read, len;
-@@ -238,34 +242,37 @@ static ssize_t rng_dev_read(struct file
- 			if (bytes_read < 0) {
- 				err = bytes_read;
- 				goto out_unlock_reading;
-+			} else if (bytes_read == 0 &&
-+				   (filp->f_flags & O_NONBLOCK)) {
-+				err = -EAGAIN;
-+				goto out_unlock_reading;
- 			}
-+
- 			data_avail = bytes_read;
- 		}
- 
--		if (!data_avail) {
--			if (filp->f_flags & O_NONBLOCK) {
--				err = -EAGAIN;
--				goto out_unlock_reading;
--			}
--		} else {
--			len = data_avail;
-+		len = data_avail;
-+		if (len) {
- 			if (len > size)
- 				len = size;
- 
- 			data_avail -= len;
- 
--			if (copy_to_user(buf + ret, rng_buffer + data_avail,
--								len)) {
-+			memcpy(buffer, rng_buffer + data_avail, len);
-+		}
-+		mutex_unlock(&reading_mutex);
-+		put_rng(rng);
-+
-+		if (len) {
-+			if (copy_to_user(buf + ret, buffer, len)) {
- 				err = -EFAULT;
--				goto out_unlock_reading;
-+				goto out;
- 			}
- 
- 			size -= len;
- 			ret += len;
- 		}
- 
--		mutex_unlock(&reading_mutex);
--		put_rng(rng);
- 
- 		if (need_resched())
- 			schedule_timeout_interruptible(1);
-@@ -276,6 +283,7 @@ static ssize_t rng_dev_read(struct file
- 		}
+-	if (type >= KSMBD_EVENT_MAX) {
++	if (type > KSMBD_EVENT_MAX) {
+ 		WARN_ON(1);
+ 		return -EINVAL;
  	}
- out:
-+	memzero_explicit(buffer, sizeof(buffer));
- 	return ret ? : err;
- 
- out_unlock_reading:
 
 
