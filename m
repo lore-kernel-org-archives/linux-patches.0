@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8058415AAC4;
-	Mon, 29 Jan 2024 17:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B103158D76;
+	Mon, 29 Jan 2024 17:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548169; cv=none; b=MihNqMaCgyHlettrwG5y16X7ch/gIZJgkB+lLSMo179fqb6hXpim8KwFAg0U0pDf/zpPSVPO79mELZ/uk38xyVXd6aQThb9wi28r341TrtF46UkwjU6q2GXWgKdOJHCVZq0bE+PepcHwAaSB1rddCqIE6BwafxhZomd5hCj9qG4=
+	t=1706548170; cv=none; b=T75eXH8I40Q7tnmrPlM7bKEZsSInUZowrSqxBzVsziBolHZfFFzyO/nhaMgSmOXL65p/wNiaGBi7+S3mza2GEovKm5pwJiiipBCQSKuKFL9EF5k9aCQWO7CxeFy5OncJAxT9uk/1LITC1FB3/rlHFRSYRCjyU4H7uOZTvPbdd1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548169; c=relaxed/simple;
-	bh=oEQYZYQK+0cSHYMQLXb+fSNsIKzewubhkqYRXLEakVo=;
+	s=arc-20240116; t=1706548170; c=relaxed/simple;
+	bh=2dPwPnwI+7yLNtBgKS/KTqDzS423Tuf8VYN+hJqMzIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ak9wpqQqhe0Mejk0eS1SxqVAxCOePIXs6o7+mXpBCc11SgAU3cbjWdjMMcyifpsU8O4W1vruxFYh1i0ZWAs7bRmwtBrJx7cRb5qQYX5XKPzoBdsfLAx350fsdADV8Tz9Zg/PKKHLgHa1fLdT70Ch+vHM+K00ehLrrU/bkbk/CzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eTxPxXv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCykl1bH4UFvey8pAF/GJrP5oACRLdbI+nnrcuQJuiKIc/GkFSXWzIcgK4L6Gme5tqXDFtUUoK9dP7SLWDns3l47X4IZLDWcz6p5UWx1XujWdvfFXPeFrq3q150v8UzF2XlwMILLn/SvQbY7gMFuJzQORoeukXYkUR2p2XFtKiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpBIP9Zy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eTxPxXv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498F5C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpBIP9Zy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012F8C43390;
 	Mon, 29 Jan 2024 17:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548169;
-	bh=oEQYZYQK+0cSHYMQLXb+fSNsIKzewubhkqYRXLEakVo=;
+	s=korg; t=1706548170;
+	bh=2dPwPnwI+7yLNtBgKS/KTqDzS423Tuf8VYN+hJqMzIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2eTxPxXvj0MEr5H9evq76oXec0kCw8SbstT2XEPwNyBSM0lmSOKiffgOlt2dTjnae
-	 8G9E9yzvKVExJibg1rxaQfKJPKbwhoEHwmEMju50ClR/lZvoFWiYwlOJkkmhQvPDzb
-	 UU/x6lkKIHt9aEJFAeXWDQdHY27lv3qsdzQzeqdA=
+	b=GpBIP9ZyIl1W8lv05mqcwz2j+dGHSDV0HG7Zhd//Rbk5SFNbAgcFruVdhri9ZmqJ0
+	 wSQdXna08lo8YS73lp1nIIrdX3KmeMwnK+1dHSTNfiNX2RWwInRyQWSwjXFSumrbZ9
+	 SFnG1Oo8U84Tg3Ds5tgClxqkaTnmXSIckMbqh0xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 213/346] ice: update xdp_rxq_info::frag_size for ZC enabled Rx queue
-Date: Mon, 29 Jan 2024 09:04:04 -0800
-Message-ID: <20240129170022.648832388@linuxfoundation.org>
+Subject: [PATCH 6.7 214/346] xdp: reflect tail increase for MEM_TYPE_XSK_BUFF_POOL
+Date: Mon, 29 Jan 2024 09:04:05 -0800
+Message-ID: <20240129170022.677920456@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,87 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 3de38c87174225487fc93befeea7d380db80aef6 ]
+[ Upstream commit fbadd83a612c3b7aad2987893faca6bd24aaebb3 ]
 
-Now that ice driver correctly sets up frag_size in xdp_rxq_info, let us
-make it work for ZC multi-buffer as well. ice_rx_ring::rx_buf_len for ZC
-is being set via xsk_pool_get_rx_frame_size() and this needs to be
-propagated up to xdp_rxq_info.
+XSK ZC Rx path calculates the size of data that will be posted to XSK Rx
+queue via subtracting xdp_buff::data_end from xdp_buff::data.
 
-Use a bigger hammer and instead of unregistering only xdp_rxq_info's
-memory model, unregister it altogether and register it again and have
-xdp_rxq_info with correct frag_size value.
+In bpf_xdp_frags_increase_tail(), when underlying memory type of
+xdp_rxq_info is MEM_TYPE_XSK_BUFF_POOL, add offset to data_end in tail
+fragment, so that later on user space will be able to take into account
+the amount of bytes added by XDP program.
 
-Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
+Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20240124191602.566724-9-maciej.fijalkowski@intel.com
+Link: https://lore.kernel.org/r/20240124191602.566724-10-maciej.fijalkowski@intel.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_base.c | 37 ++++++++++++++---------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ net/core/filter.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_base.c b/drivers/net/ethernet/intel/ice/ice_base.c
-index 7fa43827a3f0..4f3e65b47cdc 100644
---- a/drivers/net/ethernet/intel/ice/ice_base.c
-+++ b/drivers/net/ethernet/intel/ice/ice_base.c
-@@ -534,19 +534,27 @@ int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 	ring->rx_buf_len = ring->vsi->rx_buf_len;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 6575288b8580..cee53838310f 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4091,6 +4091,8 @@ static int bpf_xdp_frags_increase_tail(struct xdp_buff *xdp, int offset)
+ 	memset(skb_frag_address(frag) + skb_frag_size(frag), 0, offset);
+ 	skb_frag_size_add(frag, offset);
+ 	sinfo->xdp_frags_size += offset;
++	if (rxq->mem.type == MEM_TYPE_XSK_BUFF_POOL)
++		xsk_buff_get_tail(xdp)->data_end += offset;
  
- 	if (ring->vsi->type == ICE_VSI_PF) {
--		if (!xdp_rxq_info_is_reg(&ring->xdp_rxq))
--			/* coverity[check_return] */
--			__xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
--					   ring->q_index,
--					   ring->q_vector->napi.napi_id,
--					   ring->vsi->rx_buf_len);
-+		if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
-+			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
-+						 ring->q_index,
-+						 ring->q_vector->napi.napi_id,
-+						 ring->rx_buf_len);
-+			if (err)
-+				return err;
-+		}
- 
- 		ring->xsk_pool = ice_xsk_pool(ring);
- 		if (ring->xsk_pool) {
--			xdp_rxq_info_unreg_mem_model(&ring->xdp_rxq);
-+			xdp_rxq_info_unreg(&ring->xdp_rxq);
- 
- 			ring->rx_buf_len =
- 				xsk_pool_get_rx_frame_size(ring->xsk_pool);
-+			err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
-+						 ring->q_index,
-+						 ring->q_vector->napi.napi_id,
-+						 ring->rx_buf_len);
-+			if (err)
-+				return err;
- 			err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
- 							 MEM_TYPE_XSK_BUFF_POOL,
- 							 NULL);
-@@ -557,13 +565,14 @@ int ice_vsi_cfg_rxq(struct ice_rx_ring *ring)
- 			dev_info(dev, "Registered XDP mem model MEM_TYPE_XSK_BUFF_POOL on Rx ring %d\n",
- 				 ring->q_index);
- 		} else {
--			if (!xdp_rxq_info_is_reg(&ring->xdp_rxq))
--				/* coverity[check_return] */
--				__xdp_rxq_info_reg(&ring->xdp_rxq,
--						   ring->netdev,
--						   ring->q_index,
--						   ring->q_vector->napi.napi_id,
--						   ring->vsi->rx_buf_len);
-+			if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
-+				err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
-+							 ring->q_index,
-+							 ring->q_vector->napi.napi_id,
-+							 ring->rx_buf_len);
-+				if (err)
-+					return err;
-+			}
- 
- 			err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
- 							 MEM_TYPE_PAGE_SHARED,
+ 	return 0;
+ }
 -- 
 2.43.0
 
