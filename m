@@ -1,88 +1,223 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 344D714288
-	for <patches@lists.linux.dev>; Sun, 28 Jan 2024 18:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706466418; cv=none; b=hke1ticScDbmUUW7RyzmDInydVwaPjKMpbVM3VH8N74XxRX5vqFawkAFO/K7gQyO7/PZcv6L5mQ1nDj9EyVd1g57XzI6FV+T5lxzg/EejWj0A0N9PGK6eSXuojhd17E25l0Hp0Hk5f56bDP+lNYkFsrAPCsDy9MeMqUnqL0fH1c=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706466418; c=relaxed/simple;
-	bh=UXTngv2IRaXa+2eC4u2kVj1o4DgKsM6J1Yyn4x6/qHw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rP4CaSKzKBI65DvKzM8UZewPQGhW1EZB4EKAfjJImUTINmnJSoycRfxzNl9TurKgJT+6K4uUNGK/h2laky2NeSlkLHAgwojHfBANVMPFA12gHVZmgw3pWtDJcxJpQMG/nBEW/6F4pg9f2Z61jHCppIFqGIUO11/RzHaw8FNYPKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OWcag+vE; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8E910A14
+	for <patches@lists.linux.dev>; Mon, 29 Jan 2024 04:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706500885; cv=fail; b=OVTdA9LN/o2wEjjX7nviMRbEONKBzhGDBkyVIcA0E5ZU0lpRlqCY06UMHyItVWxakmnKGLhhPGe2cFEOC0V21TB8a07bj2/brRWnN9sen+dZiQL8nANYcA+i0ZSVhGApPS66MNfLvAebWzYKSkh9cvuVc07utEdtmAJpzngrTD0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706500885; c=relaxed/simple;
+	bh=ynGo1Cm27aMnyC8VjM34K10vTlbR0R5t/D8/mD1gF8E=;
+	h=Date:From:To:CC:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qO2snnsWXmOmzDcvvwffS4XS9Q2Wp8Sj8JjXE41SYkQ+PdFh/04UFZrI5D+GXd1T++Cx7rgYWnWQfnR++VojOj7iHUCc2uuKlhDmLALvizEDrzPTmd7h6dRtx9tEjdevqFqwE2yiVv3Pk6qO9PbrtVpI+hLEnWjwLnf/MxIBL60=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JKw8erxu; arc=fail smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OWcag+vE"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-602ab446cd8so18959007b3.1
-        for <patches@lists.linux.dev>; Sun, 28 Jan 2024 10:26:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706466416; x=1707071216; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UXTngv2IRaXa+2eC4u2kVj1o4DgKsM6J1Yyn4x6/qHw=;
-        b=OWcag+vE6mHq0xdFYHNUnEokHBDEFLtoGUtzzWDUXnVxJ1a2jntCtdpFZGUpqn9jLv
-         3+Z7g6/Kaou9iPT4gwq037cIH8YL6vIho14ayuxc0ws/VkRMYFKHmwH6hW29kg56R98k
-         UyFr7KFj3ot1+CglBDjb/i5Kaq4CALv0d6f12BMuCoByUWSaeyNQT/0x0vMoC8VKFUi5
-         iXwMFj9OsYkTj2FZ6J1JdVQkLseEUOXjYh6K9BnAQxFX+beVU46hUN+MG6l8B3t+K/gO
-         viEYvf0wXnZMY80CHfW0gEKEuMLAlLZh95n4AkZ/FN6j9wXQ5HKzkHXpaetjeQhrC/uZ
-         33Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706466416; x=1707071216;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UXTngv2IRaXa+2eC4u2kVj1o4DgKsM6J1Yyn4x6/qHw=;
-        b=qB23+euJNRuI1walA/jwJAhSseOww9DVojIANNMYlmFNRWXeBD/dcK0w2TeoHzhewk
-         ch/IFA/MNsGk7ziVgeePA+GpUlt+DRHCyB6xifCK9vpRCdDxkL5Hy0wIm4IX/sRPsLF4
-         Z3AbD2zK9mh9Qe9QnxRTzC2Kl//O7ZlCamhKEvBtBtTkrBubbeEShI3dEJZ1m8wjiNSK
-         qMQ7OXObCY+e9GxKl5FmYpU/zzKk/Zb7I/RxPjsdIPsz1TgeCSkuJr8yJmwcPQ0kSdZ8
-         yNd0Zc9MYpOKvdU5TSOdat/vPfRMnOzw3S3vdxDM5Pj0stRqW9zeATSxfTcEXiqXxJ9U
-         OxBQ==
-X-Gm-Message-State: AOJu0Yzhr1vQd69wUNNYzIQ3fSurqaEcxsIlF1GDXaHZVeNJT15MOKtV
-	naWhAZZ9i9y9joaZZHnuyyKOOn6awZGLr4TCNXJwPKcIkgouCSEn0h321htGUf8vKB/FwJu9zlN
-	vHr8/8P0lbg+wybqAIVJh5PdEmC4=
-X-Google-Smtp-Source: AGHT+IH4qPrdNAcAUFXsMfaYWG5heoS9259jnH7OV1Wc3BHu64nL+mQKDxGhwtH2ZbLGQ3WmWJjvggFPbjyNKRDRnPc=
-X-Received: by 2002:a81:4006:0:b0:5ff:9810:e8d5 with SMTP id
- l6-20020a814006000000b005ff9810e8d5mr2500689ywn.87.1706466416118; Sun, 28 Jan
- 2024 10:26:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JKw8erxu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706500884; x=1738036884;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=ynGo1Cm27aMnyC8VjM34K10vTlbR0R5t/D8/mD1gF8E=;
+  b=JKw8erxuxwOEpN0hpdeZSDrittjjOkf26908a2JRAVP7foUEB699Vpsm
+   SjJB7x/PkJBILLjDvuan5DY6uDvM5bAzjKebxowrfbtBH2RsLjDO20azv
+   /u4sm858tS8hnO8xI/GRP1THmQmskvK9etlGyZ+nqKJA8l2HR2ywW+Jdi
+   lZbTrkZeKgsDGaB27ukQDHOShtGBCKMgyasMyP4kqVdwHHiXkFer4DdIb
+   PkQ0fIGXBxto8V8Ew9OiAktorbCTWBiZgmX6Xnoo6q4riXRWur2lJYZwF
+   1KGlFFqmGedMwHnypZf2UCM8go0s/Ka67+H9iBKPqSmqOxnMkfdbMH8VZ
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10967"; a="2731823"
+X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; 
+   d="scan'208";a="2731823"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jan 2024 20:01:23 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,226,1701158400"; 
+   d="scan'208";a="3328501"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by orviesa004.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 28 Jan 2024 20:01:22 -0800
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Sun, 28 Jan 2024 20:01:21 -0800
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Sun, 28 Jan 2024 20:01:21 -0800
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Sun, 28 Jan 2024 20:01:21 -0800
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.100)
+ by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Sun, 28 Jan 2024 20:01:21 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=b3DMebeduyK2Wi5OumJishoP8VGgp0QomFHF0d8QduMvTeTLuYL4tDRIfzUs7nS3kQSrKHWqxWsalijouqBcJWPjY0FK8+u4gbJr+61FdmoErbyx2aaCzGw5vnrSjlP08OMjfD64jaTpPkNU3317NkxQj4s9nt802TQfrUTK+BrDeDsixanYgDNb42kl7e94gzbp4abegmcnuqiVlLkVK8kxNVlAhY0WrodStCopfo6fHdaZNqeTdKQQ6fOguaN3JpwrtZNNQGdL58bfLOam6RXijp4bpR87OWhPKyoLkN+gMuYQaQKn2zYUbLESqA5uEaXU+n/2z2lMjwqqe7keAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mWbIlmvQl34G2GvkC6C0G0fihG8yeS3iPSAcjC1rYQE=;
+ b=cAHoQr45DMZSIDHajnTQXA20HcQ2AZte9/+aE1nH2vEZF0e9pMTBvPOf+hiQHwzpV4hQ+u+oJpO3adPNrH9JWLZb0sjqpZgyrRSa9yQFH47YW1j+BH+ylwu8lelpohS0Vcg0H27hL98tOZknVXbHVKOMXkpzEe/FW9HJw0qlAxVD4aE8Eah6/q/ZajcmEdGpkptb29hxGtJCQuc3N0qL0PbuhLOAfpPOVuVyxWuyW9aJtroCEi8tRfjnmRrWT5ibKcwNi5BFfgQ8YsUVa2J8kaGpP+FwvR3GC3YdxQvEySzxo74cgwEZiUmpx9kCNT9nYHc360gKFZ6IDYTaMzDbOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH0PR11MB4839.namprd11.prod.outlook.com (2603:10b6:510:42::18)
+ by MN6PR11MB8219.namprd11.prod.outlook.com (2603:10b6:208:471::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.32; Mon, 29 Jan
+ 2024 04:01:18 +0000
+Received: from PH0PR11MB4839.namprd11.prod.outlook.com
+ ([fe80::8cc7:6be8:dd32:a9e5]) by PH0PR11MB4839.namprd11.prod.outlook.com
+ ([fe80::8cc7:6be8:dd32:a9e5%4]) with mapi id 15.20.7228.029; Mon, 29 Jan 2024
+ 04:01:18 +0000
+Date: Mon, 29 Jan 2024 11:55:58 +0800
+From: Pengfei Xu <pengfei.xu@intel.com>
+To: Hans de Goede <hdegoede@redhat.com>
+CC: Ashok Raj <ashok.raj@intel.com>, Ilpo Jarvinen
+	<ilpo.jarvinen@linux.intel.com>, <markgross@kernel.org>, Jithu Joseph
+	<jithu.joseph@intel.com>, <rostedt@goodmis.org>, <tony.luck@intel.com>, LKML
+	<linux-kernel@vger.kernel.org>, <platform-driver-x86@vger.kernel.org>,
+	<patches@lists.linux.dev>, <stable@vger.kernel.org>,
+	<gregkh@linuxfoundation.org>, <heng.su@intel.com>
+Subject: Re: [PATCH 1/5] platform/x86/intel/ifs: Call release_firmware() when
+ handling errors.
+Message-ID: <ZbchziXFXPvIWP4s@xpf.sh.intel.com>
+References: <20240125082254.424859-1-ashok.raj@intel.com>
+ <20240125082254.424859-2-ashok.raj@intel.com>
+ <4e360838-36a9-41c0-a1d5-f369ed78cf04@redhat.com>
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <4e360838-36a9-41c0-a1d5-f369ed78cf04@redhat.com>
+X-ClientProxiedBy: SI2PR06CA0017.apcprd06.prod.outlook.com
+ (2603:1096:4:186::15) To PH0PR11MB4839.namprd11.prod.outlook.com
+ (2603:10b6:510:42::18)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20231023174449.251550-1-ojeda@kernel.org>
-In-Reply-To: <20231023174449.251550-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 28 Jan 2024 19:26:45 +0100
-Message-ID: <CANiq72kGPTxC09GigzcLdD8qP6QPch0M7FB8iyqNHNnXN52L4w@mail.gmail.com>
-Subject: Re: [PATCH 1/4] x86/rust: support RETPOLINE
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, Peter Zijlstra <peterz@infradead.org>, 
-	Josh Poimboeuf <jpoimboe@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, x86@kernel.org, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Daniel Borkmann <daniel@iogearbox.net>, "H. Peter Anvin" <hpa@zytor.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR11MB4839:EE_|MN6PR11MB8219:EE_
+X-MS-Office365-Filtering-Correlation-Id: ce7cfc6d-a2a1-49e0-727f-08dc207ef27a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 9lhkHKH66xKUZ1xUgRPh5WMcDrZEKDWtD7v4X1z62EnqgVjKtL4OxyBg0nP0sXMck4qBaHHhilvkNJ5QMjw94E1UGNn0hMT+qxPAdrOzfcPwgUPkHnQf9tWVwROu8txTalU3f5CKYqv1dNWJnLwrVaAf5ZrcwvT/dvzRByBtXt4C/7vh990aH/XrmXQ6ouh+c1Ighjigo+i6ieQcSRjdr1Brrpga4mFO4zopTH7NXGuWMi0PgRfpmCidNzJTysucyLJpc54gvn45OHPx+zwZp7xpG+9rgolmXdk+HzwiABCwT7k5Rul2fsCLiDOUxP+4RlFYfg05DuMtfodOk0zRQ8/mbhvRJ0aaCkSAbavi0dZO5qJPTDBN+n7Y8bN+K4TvxpCcaf5IhHvP+xWMt2FTVdTW+5+2qZT+HsJcnaZvLUtCra7UbnLOMU2kTG4GXUi3WIauCmfARFjfb8f0hz8QPLSolFqxmffg3NCpvdgkKNH3xXd1ASBdx5RjPRwF8LQ46AlFJdT9xZPe8lzFMEW1qlceo7CydIrBCM+P0KXbPkQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR11MB4839.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(376002)(366004)(136003)(346002)(396003)(230922051799003)(186009)(451199024)(1800799012)(64100799003)(41300700001)(6512007)(478600001)(53546011)(6506007)(6666004)(83380400001)(26005)(44832011)(4326008)(8676002)(8936002)(5660300002)(2906002)(966005)(6486002)(6916009)(54906003)(66476007)(66556008)(66946007)(316002)(86362001)(82960400001)(38100700002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?RjnjEXHsheFkVGZM/t/hAFTLWFdpSiMh4FVhOuHi3RJmHsK06XnQuKHP1Os7?=
+ =?us-ascii?Q?ayGhbb4pymVjQkKIu6YJ0kkE7X0l2v9c4n4Dlm/gmOsQvjZhdx1mY679TsQZ?=
+ =?us-ascii?Q?My8aCbfAfkU0Qkn8oqjr0fLnKh2Rlx5swnYkvr5XdyRc02HyToBM70QhzFqo?=
+ =?us-ascii?Q?qBBghMklFsKI5WqiNG+TAM/bwFA/jMqAGmuqkHSEPoZUrnsiKiqjmCk3LB/U?=
+ =?us-ascii?Q?QEhA8Aku9nAefQBKJXGFJqPZpg+eLedDuE5uBGIKZOG2Haxm7cfy+UrDaLhg?=
+ =?us-ascii?Q?ItKwZJKon9W2/ymC4ZfhaCP5ZzhXQHFg1+gbiryx4pUw8E3jnAZxqt9VSAzq?=
+ =?us-ascii?Q?kaDvPdECoyfEcVzGzOobKEsGItK/a+tmyVgnHWfniDADc+DynEodgYM887rV?=
+ =?us-ascii?Q?ffNNmmc/amvJPq2fGAH1sdJTW4gpzZ0nGbi3uEJnfLiTPsF5ezDxKMP2+qTj?=
+ =?us-ascii?Q?5eAAquc0X41ATEHBlG+lioIPYwTwpveh/rVqVsQlruhzW38riv+w3cSxamHG?=
+ =?us-ascii?Q?AGJpOpKdmXTXPvS43HELgiLvLECNujWM9ubiWZwnDNaBZg9w3USwfgtnW6uw?=
+ =?us-ascii?Q?gVlerEb/AKicH60kJx9NtAmlsM5VPC520jzIk+cd02MYh0lKe9uuz1fJbrG1?=
+ =?us-ascii?Q?i5nuXVlQV2LaWBknqEOWurSfVzBkrbQjnI5PBTJIG3KMvFqan7U3KGh1+LUJ?=
+ =?us-ascii?Q?kNm4lKXrA19iCd/0ttS9+TZtWnUexs9D4HKYY/DstvsSIVmGomOUVkUX/wEH?=
+ =?us-ascii?Q?NdeLq/g/1I0UnCQrkG/vgLXizhX4spvBGwyPOdYYNaE+f0JcpvXCL7XURaQE?=
+ =?us-ascii?Q?nhlP/eOdcBFXxrkMXkk7GG/CW6yWYcrxhvhmDfrKun51pvdaA1k8bSe3nfTB?=
+ =?us-ascii?Q?jiApgGkl4lTPzdW2AI9rjQi0jPvQ4auG3855a7hTVKRM9f+1RxELPip/JLfD?=
+ =?us-ascii?Q?OIMaHwP78O5QmxHUuOdukAYW2fdy3OAWIfHHbb5tCaKx+Njuxbc/Ftxm21gC?=
+ =?us-ascii?Q?XznW+98/gPRVttqabO5NxrkOIibkFW1KhPk0CUdwxYHMKp3rH2abthQc6lqX?=
+ =?us-ascii?Q?/ufoTP8xo03aPwRYsneemcd/vBSvDpZNSiPtTuce7YyKlyLLtahUjo2LzDSF?=
+ =?us-ascii?Q?5ls74AsMFwf5xiz5chtC37rLHW8TvfBIN77bnjwi7OFvnBLfCHoknruvRTaP?=
+ =?us-ascii?Q?pjKQftzQI72ZRVVZyma1yBH9YAn60azlMBpLgHQ/Kbm+P4UaIkXImVtJhqFK?=
+ =?us-ascii?Q?9uR4EDLJzCLrQ0ltx2kDAjjfxM/XsOhxHhWuQSSK+yzIUddow4AiQoPtYmKA?=
+ =?us-ascii?Q?mSFNaj+6qeEArJIMxabNBRjCMj1oh94f8SGJThyTju4zAz06Owz9fwKgcQxf?=
+ =?us-ascii?Q?C17MPxbXgyxTx51P5+tCvmPVPTm3nduZr665AMWEtab2gpAHk6buTorIvknp?=
+ =?us-ascii?Q?D0z369q+/d4v8wxIvGgQuw5SdGeAc+8xY2ALDZ0NGJWR0fhrY+KqBjy8i4yP?=
+ =?us-ascii?Q?U2u4G7Q/xijxHyBIcfqE5FytVI2ezxJBAQLvuqaPm39DeVWHpWL2D1xAhuQg?=
+ =?us-ascii?Q?qD++8w42ks8xlyZmlZskEp4Zc51lKYR7pp06XY2j?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce7cfc6d-a2a1-49e0-727f-08dc207ef27a
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR11MB4839.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jan 2024 04:01:18.7039
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: orIHmSqExT1z0E3dMU3cFG5Z/qHzjGIn8JVDGtUEi8WqywAHv1QzDXdfZMxb5OjC1dilOr0UeFxjCgVGCr2/Og==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR11MB8219
+X-OriginatorOrg: intel.com
 
-On Mon, Oct 23, 2023 at 7:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Support the `RETPOLINE` speculation mitigation by enabling the target
-> features that Clang does.
+On 2024-01-26 at 20:15:46 +0100, Hans de Goede wrote:
+> Hi,
+> 
+> On 1/25/24 09:22, Ashok Raj wrote:
+> > From: Jithu Joseph <jithu.joseph@intel.com>
+> > 
+> > Missing release_firmware() due to error handling blocked any future image
+> > loading.
+> > 
+> > Fix the return code and release_fiwmare() to release the bad image.
+> > 
+> > Fixes: 25a76dbb36dd ("platform/x86/intel/ifs: Validate image size")
+> > Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+> > Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+> > Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+> > Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+> > Reviewed-by: Tony Luck <tony.luck@intel.com>
+> 
+> Thank you for your patch/series, I've applied this patch
+> (series) to my review-hans branch:
+> https://git.kernel.org/pub/scm/linux/kernel/git/pdx86/platform-drivers-x86.git/log/?h=review-hans
+> 
+> Note it will show up in the pdx86 review-hans branch once I've
+> pushed my local branch there, which might take a while.
+> 
+> I will include this patch in my next fixes pull-req to Linus
+> for the current kernel development cycle.
+> 
 
-x86: do you plan/want to pick this series up?
+FYR.
 
+[ CC stable@vger.kernel.org ]
+Missed CC: Stable Tag.
+
+This (follow-up) patch is now upstream into v6.7-rc1:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=25a76dbb36dd
+
+Looks like linux-6.7.y needs the above fixed patch too.
+
+
+Best Regards,
 Thanks!
 
-Cheers,
-Miguel
+
+> Regards,
+> 
+> Hans
+> 
+> 
+> 
+> 
+> > ---
+> >  drivers/platform/x86/intel/ifs/load.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+> > index a1ee1a74fc3c..2cf3b4a8813f 100644
+> > --- a/drivers/platform/x86/intel/ifs/load.c
+> > +++ b/drivers/platform/x86/intel/ifs/load.c
+> > @@ -399,7 +399,8 @@ int ifs_load_firmware(struct device *dev)
+> >  	if (fw->size != expected_size) {
+> >  		dev_err(dev, "File size mismatch (expected %u, actual %zu). Corrupted IFS image.\n",
+> >  			expected_size, fw->size);
+> > -		return -EINVAL;
+> > +		ret = -EINVAL;
+> > +		goto release;
+> >  	}
+> >  
+> >  	ret = image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
+> 
