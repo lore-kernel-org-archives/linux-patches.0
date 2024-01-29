@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BA115AAA7;
-	Mon, 29 Jan 2024 17:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A50915AAB0;
+	Mon, 29 Jan 2024 17:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548073; cv=none; b=L0LAtTTgmhs584uYluvadJ03HxCbsUr5mGO+5EQgztW7z4QSFBF6UQ5N5c/tKaUSzKh+9mfW1uPKrx5po6fpo0sH6qA28ig0Lt3T7UzkIht35KHR0Hd5TH3B79YxLOVuTJLoHOwvxLgyabSTkGRM+XE3upnLMZfp0973BsOnRBI=
+	t=1706548073; cv=none; b=tUpeex7SAhz9QHm22fLy5hnapUZYWTHsqgtDPl8MJl7oY52Rftulb5nRMpZnKlwzxyaruFBxjBWwnCO6f/9afEiuZi+WIeYyzu1Nxvx4GoMd5KSZPwjbKn4u47yguWYRPPoHWY9nZiHRTqwfEfd9w4Ks5BYUGGoVjqcQkD+5qzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548073; c=relaxed/simple;
-	bh=63Y16PujCTVOJ/g02LK3fb/qiRNNaZNu2uDKkzTM+H4=;
+	bh=xMka4iGTZwcz4RGkHjjJ/AiAxDEJucA58bVMs2u5GSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bj6/4mjGSKpSo+5k0c1e0KINAVHt8Ei6OlXF6/NDcJdApBT3XxpAhrsxnCQW4pil10JsZ1N+u+nc3Y9ZAs+IOQDA3j435U1NmW5I19KCwVMwlg83Jr4fj7nI4eztTGw/LTEu3/9XjaSPwopkgykN9UfZF7Op1MPpF3HucJI8Aak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVB5HZLI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cXU4j9EPOzvDYRhuYWoCeF3jyI/9gLF67sdmLEQoXuHkXPtRq0PKxKIGz8uotI1WJ9D45iF5OJJv2hd92LUAdEdZgYkcAhDW2mpk8s7bqeL+q82dDrb8f9xq658o3vM488b4lgme2BLd2GKFkTQK859NjEeB3YgeKnUbLJ49HBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZXbcMm4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVB5HZLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB7CC433F1;
-	Mon, 29 Jan 2024 17:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZXbcMm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3471EC43399;
+	Mon, 29 Jan 2024 17:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548072;
-	bh=63Y16PujCTVOJ/g02LK3fb/qiRNNaZNu2uDKkzTM+H4=;
+	s=korg; t=1706548073;
+	bh=xMka4iGTZwcz4RGkHjjJ/AiAxDEJucA58bVMs2u5GSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVB5HZLI+JD5vH8sdfZyqeTkYBfM4HwZMKgg8EVFHxQ4Tdgsf9P8LUPWGA/tHaL36
-	 OsLej/I5RUxyAj9mZkIPzpLqamJM94ICdeGrrHN2pVwIuS5QpQIGifyXE+rSo+iXjx
-	 IX5vq4MIj1AWymH/FzfZLS9s+3DkQkHMiGNQIZIU=
+	b=SZXbcMm4KwMhZzeVQA/JmLVIkCiq8huiWjgjyP7BIQ+N24uX+6zLsIF4cWrd7oW5E
+	 t3viAKWjhzUjrOYag3+qQx16xNf5UcHUJAxT+qKb9kFEYqoX3h3ZsVt2KZqqGgHR0c
+	 boFYgJwzrWxhkqHav5BWlk6QNUJmpx4yIUhK+NMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.7 081/346] arm64: dts: qcom: Add missing vio-supply for AW2013
-Date: Mon, 29 Jan 2024 09:01:52 -0800
-Message-ID: <20240129170018.776348314@linuxfoundation.org>
+Subject: [PATCH 6.7 082/346] ARM: dts: qcom: sdx55: fix USB DP/DM HS PHY interrupts
+Date: Mon, 29 Jan 2024 09:01:53 -0800
+Message-ID: <20240129170018.806795424@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -50,79 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit cc1ec484f2d0f464ad11b56fe3de2589c23f73ec upstream.
+commit de95f139394a5ed82270f005bc441d2e7c1e51b7 upstream.
 
-Add the missing vio-supply to all usages of the AW2013 LED controller
-to ensure that the regulator needed for pull-up of the interrupt and
-I2C lines is really turned on. While this seems to have worked fine so
-far some of these regulators are not guaranteed to be always-on. For
-example, pm8916_l6 is typically turned off together with the display
-if there aren't any other devices (e.g. sensors) keeping it always-on.
+The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
+controller in order to be able to wake the system up from low-power
+states and to be able to detect disconnect events, which requires
+triggering on falling edges.
 
-Cc: stable@vger.kernel.org # 6.6
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20231204-qcom-aw2013-vio-v1-1-5d264bb5c0b2@gerhold.net
+A recent commit updated the trigger type but failed to change the
+interrupt provider as required. This leads to the current Linux driver
+failing to probe instead of printing an error during suspend and USB
+wakeup not working as intended.
+
+Fixes: d0ec3c4c11c3 ("ARM: dts: qcom: sdx55: fix USB wakeup interrupt types")
+Fixes: fea4b41022f3 ("ARM: dts: qcom: sdx55: Add USB3 and PHY support")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20231213173131.29436-3-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts  |    1 +
- arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts |    1 +
- arch/arm64/boot/dts/qcom/msm8953-xiaomi-mido.dts      |    1 +
- arch/arm64/boot/dts/qcom/msm8953-xiaomi-tissot.dts    |    1 +
- arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts     |    1 +
- 5 files changed, 5 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -93,6 +93,7 @@
- 		#size-cells = <0>;
+--- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
+@@ -585,10 +585,10 @@
+ 					  <&gcc GCC_USB30_MASTER_CLK>;
+ 			assigned-clock-rates = <19200000>, <200000000>;
  
- 		vcc-supply = <&pm8916_l17>;
-+		vio-supply = <&pm8916_l6>;
+-			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 158 IRQ_TYPE_EDGE_BOTH>,
+-				     <GIC_SPI 157 IRQ_TYPE_EDGE_BOTH>;
++			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
++					      <&intc GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+ 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
  
- 		led@0 {
- 			reg = <0>;
---- a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
-@@ -118,6 +118,7 @@
- 		#size-cells = <0>;
- 
- 		vcc-supply = <&pm8916_l16>;
-+		vio-supply = <&pm8916_l5>;
- 
- 		led@0 {
- 			reg = <0>;
---- a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-mido.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-mido.dts
-@@ -111,6 +111,7 @@
- 		reg = <0x45>;
- 
- 		vcc-supply = <&pm8953_l10>;
-+		vio-supply = <&pm8953_l5>;
- 
- 		#address-cells = <1>;
- 		#size-cells = <0>;
---- a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-tissot.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-tissot.dts
-@@ -104,6 +104,7 @@
- 		reg = <0x45>;
- 
- 		vcc-supply = <&pm8953_l10>;
-+		vio-supply = <&pm8953_l5>;
- 
- 		#address-cells = <1>;
- 		#size-cells = <0>;
---- a/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8953-xiaomi-vince.dts
-@@ -113,6 +113,7 @@
- 		reg = <0x45>;
- 
- 		vcc-supply = <&pm8953_l10>;
-+		vio-supply = <&pm8953_l5>;
- 
- 		#address-cells = <1>;
- 		#size-cells = <0>;
 
 
