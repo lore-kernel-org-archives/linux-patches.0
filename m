@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B076B157E62;
-	Mon, 29 Jan 2024 17:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF2915703E;
+	Mon, 29 Jan 2024 17:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548547; cv=none; b=kxQLoBZdueREgG5r9mW94T3sCyCu4fLNawV6VxAyYUgKoGtGcuuth8NNxhieZxPCxy9jpvMEcGJPfcDc4/SzrNuvh8ut7wu6bZYuEV8b0uGi2pZm5pLd/SGefTx7IBxMhcM0IUTOJN1DXBu755jg/0qXNi+oit8R0XXFkNUy86s=
+	t=1706548548; cv=none; b=a3NdPo6KbmGrGkktpYhQedP6KfbBwZmSgeh1BbNFE/CHjfxsCCDUJbf3VRXCGPZkoZ47Quzoe/cQOfhq+4vKv1RhkXv9qWxGrnAY4Yf/pfPfWHAiANwNMxM1MB3w6/rHiLLhv8q+vbNDtHD4B6cheDCiB7BuW5mebFr5e5Eb+Jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548547; c=relaxed/simple;
-	bh=C+n+nFagVjdIhh2G/3iE6Dnsiv1NwRklDoQdLQH25jQ=;
+	s=arc-20240116; t=1706548548; c=relaxed/simple;
+	bh=1iE5O1sbpwzIWTn7OjeL32x/8oXLZq4cQF0dvOHrclM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjDPRylbSKwD5l7sCH0nGC4GSs18pjhgFomZkh/w7IpurBZIKTbJE19EpRvwx6LdNt544ye4h6L9phKYFJD6XiAln/gMFjh9ygq03NpukFlR54Em+3nQP+yLbY2wjhUbEGrMpSpQAMlYUJF7NATppXlCIpWAZ1ezFewaaqu630A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zX/zH2Xs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AtJXFBRa23aHfVcqiW7HJm09TUYZzgiWIfFpqlYXecoqgY7fpxi4SrSl1yVlNMVhFb1LfVnDHjviJkS16+CxpkgzmQeZA3LilCGf9HAxGMKJpu3Yavakvy6eqEbE6w36CG21jhiAZNus0yR6UghMRWv46SQNnDROVNnRFbpY4s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+Il3DPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zX/zH2Xs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79211C433F1;
-	Mon, 29 Jan 2024 17:15:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+Il3DPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33094C433F1;
+	Mon, 29 Jan 2024 17:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548547;
-	bh=C+n+nFagVjdIhh2G/3iE6Dnsiv1NwRklDoQdLQH25jQ=;
+	s=korg; t=1706548548;
+	bh=1iE5O1sbpwzIWTn7OjeL32x/8oXLZq4cQF0dvOHrclM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zX/zH2XsONfDRaMk8ejh+pwiHnPLnPaR5Ukf3sZF0ARhPMzRPtW2ZrOuFm8x3LBVd
-	 jUQLjq9O/54TeCtqP+5tyF28R8nzWd+D90cms92wSCwsbqPgcVm9CMuv743u+BiOPK
-	 fcZNXijMO50wg4ri89hPe8FCTnxTgM2tpu4zjEtY=
+	b=t+Il3DPqW/R9fussq7QaWo7iFyRaUyqbRUOFf+CU+rQWZOzQAx1gE7VBSsjITcO4J
+	 sJr1UTQK4bLodjSYV5Hed6nN1yXzo/sg+wYIT+BVldsIi7xY+5z1NWB9Ec8GXG/qQL
+	 3N7mJEUG/hfVpdUbKEnoSVK0zRLoug74Ohnp7+qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/331] ipv6: init the accept_queues spinlocks in inet6_create
-Date: Mon, 29 Jan 2024 09:04:13 -0800
-Message-ID: <20240129170020.417640537@linuxfoundation.org>
+Subject: [PATCH 6.6 190/331] selftests: fill in some missing configs for net
+Date: Mon, 29 Jan 2024 09:04:14 -0800
+Message-ID: <20240129170020.449111716@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,68 +50,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 435e202d645c197dcfd39d7372eb2a56529b6640 ]
+[ Upstream commit 04fe7c5029cbdbcdb28917f09a958d939a8f19f7 ]
 
-In commit 198bc90e0e73("tcp: make sure init the accept_queue's spinlocks
-once"), the spinlocks of accept_queue are initialized only when socket is
-created in the inet4 scenario. The locks are not initialized when socket
-is created in the inet6 scenario. The kernel reports the following error:
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-Hardware name: Red Hat KVM, BIOS 0.5.1 01/01/2011
-Call Trace:
-<TASK>
-	dump_stack_lvl (lib/dump_stack.c:107)
-	register_lock_class (kernel/locking/lockdep.c:1289)
-	__lock_acquire (kernel/locking/lockdep.c:5015)
-	lock_acquire.part.0 (kernel/locking/lockdep.c:5756)
-	_raw_spin_lock_bh (kernel/locking/spinlock.c:178)
-	inet_csk_listen_stop (net/ipv4/inet_connection_sock.c:1386)
-	tcp_disconnect (net/ipv4/tcp.c:2981)
-	inet_shutdown (net/ipv4/af_inet.c:935)
-	__sys_shutdown (./include/linux/file.h:32 net/socket.c:2438)
-	__x64_sys_shutdown (net/socket.c:2445)
-	do_syscall_64 (arch/x86/entry/common.c:52)
-	entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:129)
-RIP: 0033:0x7f52ecd05a3d
-Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89 f7
-48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff
-ff 73 01 c3 48 8b 0d ab a3 0e 00 f7 d8 64 89 01 48
-RSP: 002b:00007f52ecf5dde8 EFLAGS: 00000293 ORIG_RAX: 0000000000000030
-RAX: ffffffffffffffda RBX: 00007f52ecf5e640 RCX: 00007f52ecd05a3d
-RDX: 00007f52ecc8b188 RSI: 0000000000000000 RDI: 0000000000000004
-RBP: 00007f52ecf5de20 R08: 00007ffdae45c69f R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000293 R12: 00007f52ecf5e640
-R13: 0000000000000000 R14: 00007f52ecc8b060 R15: 00007ffdae45c6e0
+We are missing a lot of config options from net selftests,
+it seems:
 
-Fixes: 198bc90e0e73 ("tcp: make sure init the accept_queue's spinlocks once")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240122102001.2851701-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+tun/tap:     CONFIG_TUN, CONFIG_MACVLAN, CONFIG_MACVTAP
+fib_tests:   CONFIG_NET_SCH_FQ_CODEL
+l2tp:        CONFIG_L2TP, CONFIG_L2TP_V3, CONFIG_L2TP_IP, CONFIG_L2TP_ETH
+sctp-vrf:    CONFIG_INET_DIAG
+txtimestamp: CONFIG_NET_CLS_U32
+vxlan_mdb:   CONFIG_BRIDGE_VLAN_FILTERING
+gre_gso:     CONFIG_NET_IPGRE_DEMUX, CONFIG_IP_GRE, CONFIG_IPV6_GRE
+srv6_end_dt*_l3vpn:   CONFIG_IPV6_SEG6_LWTUNNEL
+ip_local_port_range:  CONFIG_MPTCP
+fib_test:    CONFIG_NET_CLS_BASIC
+rtnetlink:   CONFIG_MACSEC, CONFIG_NET_SCH_HTB, CONFIG_XFRM_INTERFACE
+             CONFIG_NET_IPGRE, CONFIG_BONDING
+fib_nexthops: CONFIG_MPLS, CONFIG_MPLS_ROUTING
+vxlan_mdb:   CONFIG_NET_ACT_GACT
+tls:         CONFIG_TLS, CONFIG_CRYPTO_CHACHA20POLY1305
+psample:     CONFIG_PSAMPLE
+fcnal:       CONFIG_TCP_MD5SIG
+
+Try to add them in a semi-alphabetical order.
+
+Fixes: 62199e3f1658 ("selftests: net: Add VXLAN MDB test")
+Fixes: c12e0d5f267d ("self-tests: introduce self-tests for RPS default mask")
+Fixes: 122db5e3634b ("selftests/net: add MPTCP coverage for IP_LOCAL_PORT_RANGE")
+Link: https://lore.kernel.org/r/20240122203528.672004-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/af_inet6.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/net/config | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
-index 368824fe9719..b6c5b5e25a2f 100644
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -199,6 +199,9 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
- 	if (INET_PROTOSW_REUSE & answer_flags)
- 		sk->sk_reuse = SK_CAN_REUSE;
- 
-+	if (INET_PROTOSW_ICSK & answer_flags)
-+		inet_init_csk_locks(sk);
-+
- 	inet = inet_sk(sk);
- 	inet_assign_bit(IS_ICSK, sk, INET_PROTOSW_ICSK & answer_flags);
- 
+diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
+index 8da562a9ae87..19ff75051660 100644
+--- a/tools/testing/selftests/net/config
++++ b/tools/testing/selftests/net/config
+@@ -1,5 +1,6 @@
+ CONFIG_USER_NS=y
+ CONFIG_NET_NS=y
++CONFIG_BONDING=m
+ CONFIG_BPF_SYSCALL=y
+ CONFIG_TEST_BPF=m
+ CONFIG_NUMA=y
+@@ -14,9 +15,13 @@ CONFIG_VETH=y
+ CONFIG_NET_IPVTI=y
+ CONFIG_IPV6_VTI=y
+ CONFIG_DUMMY=y
++CONFIG_BRIDGE_VLAN_FILTERING=y
+ CONFIG_BRIDGE=y
++CONFIG_CRYPTO_CHACHA20POLY1305=m
+ CONFIG_VLAN_8021Q=y
+ CONFIG_IFB=y
++CONFIG_INET_DIAG=y
++CONFIG_IP_GRE=m
+ CONFIG_NETFILTER=y
+ CONFIG_NETFILTER_ADVANCED=y
+ CONFIG_NF_CONNTRACK=m
+@@ -25,15 +30,36 @@ CONFIG_IP6_NF_IPTABLES=m
+ CONFIG_IP_NF_IPTABLES=m
+ CONFIG_IP6_NF_NAT=m
+ CONFIG_IP_NF_NAT=m
++CONFIG_IPV6_GRE=m
++CONFIG_IPV6_SEG6_LWTUNNEL=y
++CONFIG_L2TP_ETH=m
++CONFIG_L2TP_IP=m
++CONFIG_L2TP=m
++CONFIG_L2TP_V3=y
++CONFIG_MACSEC=m
++CONFIG_MACVLAN=y
++CONFIG_MACVTAP=y
++CONFIG_MPLS=y
++CONFIG_MPTCP=y
+ CONFIG_NF_TABLES=m
+ CONFIG_NF_TABLES_IPV6=y
+ CONFIG_NF_TABLES_IPV4=y
+ CONFIG_NFT_NAT=m
++CONFIG_NET_ACT_GACT=m
++CONFIG_NET_CLS_BASIC=m
++CONFIG_NET_CLS_U32=m
++CONFIG_NET_IPGRE_DEMUX=m
++CONFIG_NET_IPGRE=m
++CONFIG_NET_SCH_FQ_CODEL=m
++CONFIG_NET_SCH_HTB=m
+ CONFIG_NET_SCH_FQ=m
+ CONFIG_NET_SCH_ETF=m
+ CONFIG_NET_SCH_NETEM=y
++CONFIG_PSAMPLE=m
++CONFIG_TCP_MD5SIG=y
+ CONFIG_TEST_BLACKHOLE_DEV=m
+ CONFIG_KALLSYMS=y
++CONFIG_TLS=m
+ CONFIG_TRACEPOINTS=y
+ CONFIG_NET_DROP_MONITOR=m
+ CONFIG_NETDEVSIM=m
+@@ -48,7 +74,9 @@ CONFIG_BAREUDP=m
+ CONFIG_IPV6_IOAM6_LWTUNNEL=y
+ CONFIG_CRYPTO_SM4_GENERIC=y
+ CONFIG_AMT=m
++CONFIG_TUN=y
+ CONFIG_VXLAN=m
+ CONFIG_IP_SCTP=m
+ CONFIG_NETFILTER_XT_MATCH_POLICY=m
+ CONFIG_CRYPTO_ARIA=y
++CONFIG_XFRM_INTERFACE=m
 -- 
 2.43.0
 
