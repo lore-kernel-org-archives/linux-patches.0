@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC9E157E70;
-	Mon, 29 Jan 2024 17:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B885715704F;
+	Mon, 29 Jan 2024 17:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548034; cv=none; b=Wky0jU72M+o33MMU/5eEctFjzgj8Mmh/S6MMgMg4pXmzx0QLrUNUSiRm0AqQTq3vhoH51seeWoB4tgAgUzlL2xujfMi912xPj4hBdbr3mbBeQPIRK71/wvcP8PPuE6ZY7gHgoFourBisIZC3YVRrSWMhVkIk3czOtUcIt8KlnS0=
+	t=1706548035; cv=none; b=ms9ujsGVeSwL83Y3rB3yjL4rhTzkkcYbTGrdVHEsPslnEb1CTkW7qIFAM53l9PbXNuBpj2QTvIIV8EHbmQg43TDusmd23ArZrW5+5u1X+CGAztmuZZ2JroJI7IQkqztjCvyP+bxemzxhRmjQRNH9FnwwJKn1mFlYJZtmEazNQFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548034; c=relaxed/simple;
-	bh=XYu+S71coTePZEvgollNuDnuSyfXiQuyijGSL+PQMgU=;
+	s=arc-20240116; t=1706548035; c=relaxed/simple;
+	bh=EucsL8DCWoaTJCFDvF7p+e4pZTIsLRcHZzBq6QdXxzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1ne7gCw5y9GAxPPM/ytHirv1ruMmztCn0dSXfTE0PpxUum4FHlsPAy09Q41HixcC9oMcmD5YhDczREqUjK6dw0Bml8kebjotJ1Y98NBUmX5CLqnqqL9vA9NAkU1ugkYXjsvNcllXmt6/czlzqwnpyB61blBj8E47sJXaRJ/vRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVpuTLYI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qXWTcNiF8YRIpCESN56mqWAEnrRFB4Y7GGXk3KNjKxikrziFZUztxVF1bDHjJ2UoXhWc8Iok9vyEkvlX+1eYxRlK1WlceCELU2n7mmjP22SVJnGMwFolQR9TR4rmdRVKkjlSd4yxHtRKmd15kFF/xqbc5dAH+IqqVzOf1itqyBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ikm1zg2N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVpuTLYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E5BC433B1;
-	Mon, 29 Jan 2024 17:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ikm1zg2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430E7C433F1;
+	Mon, 29 Jan 2024 17:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548034;
-	bh=XYu+S71coTePZEvgollNuDnuSyfXiQuyijGSL+PQMgU=;
+	s=korg; t=1706548035;
+	bh=EucsL8DCWoaTJCFDvF7p+e4pZTIsLRcHZzBq6QdXxzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVpuTLYIk4Q2T1RjpVVknL9mAYSXFt9Y0h24qSPOwDsfYe4ahn+bKK09xFDZzVaC6
-	 fFO8zhuvPfenKeDaCbr6xwA54o7Wlg3D3QHk6vTeloSGTEL7bEOqegfcDgWV4Pk9De
-	 doKVd1MVGOtov+YsxDfFiQep3pfuvc2Jn6H1Xhzk=
+	b=ikm1zg2NBZMI0vQKSpqhMX8crKAE9nseNBhpRuJXjqmbILp7uhJLjcc+r/c7nEZ7b
+	 j3aLopfqgTH2ALIWrcUTDUmnsF3UW1a9EWgTVbMwIxxogDhdaf7RljOamhv+ghK/SC
+	 4I0rQkaXlJNzNZ4w8WM2d2WeObPkXp6xzx8oLvyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoff Levand <geoff@infradead.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.7 006/346] powerpc/ps3_defconfig: Disable PPC64_BIG_ENDIAN_ELF_ABI_V2
-Date: Mon, 29 Jan 2024 09:00:37 -0800
-Message-ID: <20240129170016.541453568@linuxfoundation.org>
+	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.7 007/346] ext4: allow for the last group to be marked as trimmed
+Date: Mon, 29 Jan 2024 09:00:38 -0800
+Message-ID: <20240129170016.573171941@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -50,47 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoff Levand <geoff@infradead.org>
+From: Suraj Jitindar Singh <surajjs@amazon.com>
 
-commit 482b718a84f08b6fc84879c3e90cc57dba11c115 upstream.
+commit 7c784d624819acbeefb0018bac89e632467cca5a upstream.
 
-Commit 8c5fa3b5c4df ("powerpc/64: Make ELFv2 the default for big-endian
-builds"), merged in Linux-6.5-rc1 changes the calling ABI in a way
-that is incompatible with the current code for the PS3's LV1 hypervisor
-calls.
+The ext4 filesystem tracks the trim status of blocks at the group
+level.  When an entire group has been trimmed then it is marked as
+such and subsequent trim invocations with the same minimum trim size
+will not be attempted on that group unless it is marked as able to be
+trimmed again such as when a block is freed.
 
-This change just adds the line '# CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 is not set'
-to the ps3_defconfig file so that the PPC64_ELF_ABI_V1 is used.
+Currently the last group can't be marked as trimmed due to incorrect
+logic in ext4_last_grp_cluster(). ext4_last_grp_cluster() is supposed
+to return the zero based index of the last cluster in a group. This is
+then used by ext4_try_to_trim_range() to determine if the trim
+operation spans the entire group and as such if the trim status of the
+group should be recorded.
 
-Fixes run time errors like these:
+ext4_last_grp_cluster() takes a 0 based group index, thus the valid
+values for grp are 0..(ext4_get_groups_count - 1). Any group index
+less than (ext4_get_groups_count - 1) is not the last group and must
+have EXT4_CLUSTERS_PER_GROUP(sb) clusters. For the last group we need
+to calculate the number of clusters based on the number of blocks in
+the group. Finally subtract 1 from the number of clusters as zero
+based indexing is expected.  Rearrange the function slightly to make
+it clear what we are calculating and returning.
 
-  BUG: Kernel NULL pointer dereference at 0x00000000
-  Faulting instruction address: 0xc000000000047cf0
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  Call Trace:
-  [c0000000023039e0] [c00000000100ebfc] ps3_create_spu+0xc4/0x2b0 (unreliable)
-  [c000000002303ab0] [c00000000100d4c4] create_spu+0xcc/0x3c4
-  [c000000002303b40] [c00000000100eae4] ps3_enumerate_spus+0xa4/0xf8
+Reproducer:
+// Create file system where the last group has fewer blocks than
+// blocks per group
+$ mkfs.ext4 -b 4096 -g 8192 /dev/nvme0n1 8191
+$ mount /dev/nvme0n1 /mnt
 
-Fixes: 8c5fa3b5c4df ("powerpc/64: Make ELFv2 the default for big-endian builds")
-Cc: stable@vger.kernel.org # v6.5+
-Signed-off-by: Geoff Levand <geoff@infradead.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/df906ac1-5f17-44b9-b0bb-7cd292a0df65@infradead.org
+Before Patch:
+$ fstrim -v /mnt
+/mnt: 25.9 MiB (27156480 bytes) trimmed
+// Group not marked as trimmed so second invocation still discards blocks
+$ fstrim -v /mnt
+/mnt: 25.9 MiB (27156480 bytes) trimmed
+
+After Patch:
+fstrim -v /mnt
+/mnt: 25.9 MiB (27156480 bytes) trimmed
+// Group marked as trimmed so second invocation DOESN'T discard any blocks
+fstrim -v /mnt
+/mnt: 0 B (0 bytes) trimmed
+
+Fixes: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
+Cc:  <stable@vger.kernel.org> # 4.19+
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231213051635.37731-1-surajjs@amazon.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/configs/ps3_defconfig |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/mballoc.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/arch/powerpc/configs/ps3_defconfig
-+++ b/arch/powerpc/configs/ps3_defconfig
-@@ -24,6 +24,7 @@ CONFIG_PS3_VRAM=m
- CONFIG_PS3_LPM=m
- # CONFIG_PPC_OF_BOOT_TRAMPOLINE is not set
- CONFIG_KEXEC=y
-+# CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 is not set
- CONFIG_PPC_4K_PAGES=y
- CONFIG_SCHED_SMT=y
- CONFIG_PM=y
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -6735,11 +6735,16 @@ __acquires(bitlock)
+ static ext4_grpblk_t ext4_last_grp_cluster(struct super_block *sb,
+ 					   ext4_group_t grp)
+ {
+-	if (grp < ext4_get_groups_count(sb))
+-		return EXT4_CLUSTERS_PER_GROUP(sb) - 1;
+-	return (ext4_blocks_count(EXT4_SB(sb)->s_es) -
+-		ext4_group_first_block_no(sb, grp) - 1) >>
+-					EXT4_CLUSTER_BITS(sb);
++	unsigned long nr_clusters_in_group;
++
++	if (grp < (ext4_get_groups_count(sb) - 1))
++		nr_clusters_in_group = EXT4_CLUSTERS_PER_GROUP(sb);
++	else
++		nr_clusters_in_group = (ext4_blocks_count(EXT4_SB(sb)->s_es) -
++					ext4_group_first_block_no(sb, grp))
++				       >> EXT4_CLUSTER_BITS(sb);
++
++	return nr_clusters_in_group - 1;
+ }
+ 
+ static bool ext4_trim_interrupted(void)
 
 
