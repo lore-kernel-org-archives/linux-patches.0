@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A9015D5C5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E428D15D5B3;
 	Mon, 29 Jan 2024 17:13:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548403; cv=none; b=hGQ0jitxzv/0xhWWfyQ46UT1YJXqrvSretgz5GAZbhZwNyPG8Ea5Vl9h3kn7G3itUyrL584QMac0eWmrBa7jPcz9aSNLSpepZu68MYIy5g0G/riSRWVCA3j9KZanOb8gN6eAdiUf2z+Zgt/UOOD5oe07PpCg4rIqKZ+ktxK2JNc=
+	t=1706548404; cv=none; b=E0Ug3KBUogs206ma31sYbt/NqUKzqb3R8DyU9bCMcKF9Xd2X9lMkJ/9g3PbCFCdmlTMQ5QdI4Quu7Yyd8VhHsFr7h0YoNoNn//MBGN1xLdd5hpiVSBJnVmEkQCAlCpuTZSAgDS2aJiPKDCkk0ds2M+OJsnkUN4qTQbr/HDZ9Ti0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548403; c=relaxed/simple;
-	bh=Z0tukAm+c+Gjx0AsBEVNaZLE2cgh5DrJkDFiIZHG9Dk=;
+	s=arc-20240116; t=1706548404; c=relaxed/simple;
+	bh=hJZreGN6t4ekz6AWVu9mBbN9ommLfV9ayhopMB+aTi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGEsKuXHYzTBzfnU3m4AGxU5rzTK8NQCt3+Yt1XHf2X3qWZr4LrdC/azsCJ/9+UPLxfOLSB/rU+jEo7+E38N5gxVAI2sPdIvK+bWRy7mBr04Zo+4Vg4KLTsDrUEmD2O5xbrvA7buP1+qevQm2MfVtrCV3aGPH76KAEajTpmqgmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfrvMJWH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0aWwX8RLdep+1uRP4NM4u5RlSiykYdVstH8EjhpK4YqrMkqDhG+WWTEuIxTAwSN2fGf/O42vQKbj/Mr/3RIcnLNJsMNA1jhDZH54+wulFsdVnTtsPWfzscHJCZ3Rrr/mC0UkHshEn3sgCCI2nUFAqghnRt/vXmqTnFU8ty+HpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0FH7Fnj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfrvMJWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E365AC43390;
-	Mon, 29 Jan 2024 17:13:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0FH7Fnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACCA1C433C7;
+	Mon, 29 Jan 2024 17:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548403;
-	bh=Z0tukAm+c+Gjx0AsBEVNaZLE2cgh5DrJkDFiIZHG9Dk=;
+	bh=hJZreGN6t4ekz6AWVu9mBbN9ommLfV9ayhopMB+aTi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfrvMJWHrcP8y7wZZwCQlsLJd4D2O9soGOTBbKwR3jwgmpPt+k3vLYiiGVR40ngWe
-	 JWVP/feWmuGp19E6uqo4OZ2p3wqEc3bbrOBafjC2YXre5uEsjGlFewaD2NK4UK9aRx
-	 3vvhJM2EunKD/Jyt8UuTUgpYcpFzpB6JTTBKLxsY=
+	b=H0FH7Fnj36AtHcxaRoju2sj2DkjRvQ/Qgje1GxKkQ4i5AK8VY+tW5rFFGY0k87IHX
+	 1XBnG2u5tbG7WiIjmuSERBQ4tpAGddoFpcbcrj8l1QyKPkGcRg93Zq1B9AZrorEaYg
+	 BH4DH9gSSbZuWlxDEvyG0lG+mF4VYKqL+Ne6sWKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 182/185] mips: Call lose_fpu(0) before initializing fcr31 in mips_set_personality_nan
-Date: Mon, 29 Jan 2024 09:06:22 -0800
-Message-ID: <20240129170004.434465895@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 165/185] Revert "powerpc/64s: Increase default stack size to 32KB"
+Date: Mon, 29 Jan 2024 09:06:05 -0800
+Message-ID: <20240129170003.894415139@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -50,57 +49,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+This reverts commit 9ccf64e763aca088b0d25c1274af42b1a6a45135 which is
+upstream commit 18f14afe281648e31ed35c9ad2fcb724c4838ad9.
 
-commit 59be5c35850171e307ca5d3d703ee9ff4096b948 upstream.
+Breaks the build:
 
-If we still own the FPU after initializing fcr31, when we are preempted
-the dirty value in the FPU will be read out and stored into fcr31,
-clobbering our setting.  This can cause an improper floating-point
-environment after execve().  For example:
+arch/powerpc/kvm/book3s_hv_rmhandlers.S:2689: Error: operand out of range (0x0000000000008310 is not between 0xffffffffffff8001 and 0x0000000000008000)
+make[3]: *** [scripts/Makefile.build:382: arch/powerpc/kvm/book3s_hv_rmhandlers.o] Error 1
 
-    zsh% cat measure.c
-    #include <fenv.h>
-    int main() { return fetestexcept(FE_INEXACT); }
-    zsh% cc measure.c -o measure -lm
-    zsh% echo $((1.0/3)) # raising FE_INEXACT
-    0.33333333333333331
-    zsh% while ./measure; do ; done
-    (stopped in seconds)
-
-Call lose_fpu(0) before setting fcr31 to prevent this.
-
-Closes: https://lore.kernel.org/linux-mips/7a6aa1bbdbbe2e63ae96ff163fab0349f58f1b9e.camel@xry111.site/
-Fixes: 9b26616c8d9d ("MIPS: Respect the ISA level in FCSR handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/elf.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/powerpc/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/mips/kernel/elf.c
-+++ b/arch/mips/kernel/elf.c
-@@ -11,6 +11,7 @@
- 
- #include <asm/cpu-features.h>
- #include <asm/cpu-info.h>
-+#include <asm/fpu.h>
- 
- #ifdef CONFIG_MIPS_FP_SUPPORT
- 
-@@ -309,6 +310,11 @@ void mips_set_personality_nan(struct arc
- 	struct cpuinfo_mips *c = &boot_cpu_data;
- 	struct task_struct *t = current;
- 
-+	/* Do this early so t->thread.fpu.fcr31 won't be clobbered in case
-+	 * we are preempted before the lose_fpu(0) in start_thread.
-+	 */
-+	lose_fpu(0);
-+
- 	t->thread.fpu.fcr31 = c->fpu_csr31;
- 	switch (state->nan_2008) {
- 	case 0:
+diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
+index 2c94f9cf1ce0..6050e6e10d32 100644
+--- a/arch/powerpc/Kconfig
++++ b/arch/powerpc/Kconfig
+@@ -806,7 +806,6 @@ config THREAD_SHIFT
+ 	int "Thread shift" if EXPERT
+ 	range 13 15
+ 	default "15" if PPC_256K_PAGES
+-	default "15" if PPC_PSERIES || PPC_POWERNV
+ 	default "14" if PPC64
+ 	default "13"
+ 	help
+-- 
+2.43.0
+
 
 
