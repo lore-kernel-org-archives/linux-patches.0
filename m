@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155CD157E6B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD61E157E6B;
 	Mon, 29 Jan 2024 17:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548313; cv=none; b=UJwkso1V80R1BWYFFQ/XVuVVDdr1tJUWuG7tKkO2zVHMx0ItpY0Pr1shfRmIshMhK7CkOH1njAm75py5nFkKCPNVm07O9cBVugssUvqAjKt0iI17m4WjbbrC/AoG/O+k0loR2tmUpfe2fExefU5G0tMFAREJ7SP3xYA9h1JsVWU=
+	t=1706548313; cv=none; b=nQnpki3MwfnYB8peXjmk+VSgi0mhjfjVLoqDbZLTQlXqtavQ+sgagg1cwiZWgK3SLLbvfVDBIHX4bBtDtvvJMHdie2B58laf/Cm+tLsFlZrUZQ+J+5h7j0x7S7jkvOL09UhAxXEvfRbKTBSi9mINJM2ZS4aVbNNtlRcqrOmIyqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548313; c=relaxed/simple;
-	bh=aXu/egLYB1smXwl2ocIQ6VhdEfnRsZV+8Knbf7q8zV0=;
+	bh=hqSFWHVFawCSvaCQTUq5MWY1hUW8BnpEwDWCn2UDW/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bM1KHx6fH8iEAEbiIvTUE4E6aFNnKp/pe72D5g6R1an8kY7zjyhbwl+s9hGqz5aksfBapq5I7EVnxNpA7hGR9lOhJz0YVqlZwO8bl8JAoYYgllAfIDNVJQKZhPtN+M/5qZKjx6mvmMonHC4jXKcojNliqKLNp6GD9eaUlRpbMD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUBSbPgM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m/GTaZwdpvD+yUb5ZgFQ8qm8WoUWmshL6YZQ4N1hpnvr+CbARFmn5qD+MC4eOxb3Cm3gFHlgvRAu9SiLMW7o+BXxprlIXO8B8LcnW2i6y6cOPjUDhmh4f0pEAgHDQM/8jHAIuQWYkmzQjsiXFw5JROnhFp7rfBq2jeCpa9fVq4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZHWHdNY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUBSbPgM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE12C43399;
-	Mon, 29 Jan 2024 17:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZHWHdNY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A283C433F1;
+	Mon, 29 Jan 2024 17:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548312;
-	bh=aXu/egLYB1smXwl2ocIQ6VhdEfnRsZV+8Knbf7q8zV0=;
+	s=korg; t=1706548313;
+	bh=hqSFWHVFawCSvaCQTUq5MWY1hUW8BnpEwDWCn2UDW/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUBSbPgMgWg80v1a+eLk+LYJ4ncgnkM5DSCQKZWhKHt8bFXr2wp+pktGCO2BhxiFX
-	 3Jn4v+T/yEVKabyTIM3eycduHlhyFtq7em9pBSWgW7jgfzCUjw4kwKdr87bFJtCizn
-	 y8qiU9UPFeBaxb5LUEDjrhyn4eYfxzUKTbQFiRsQ=
+	b=IZHWHdNY1OcruAGoYCGYN+HEe6A8oHm8Vh+Pm0qwg0WWAwpMR8qF/EnaItqkcSLd7
+	 Wv8FOmUUHjuh1mx+rZTa55rIFiCdy5Cw7AKNDWKHkjH5YEhD2AprjddKX6CsmufLst
+	 2e3X6RmnnaEO0nyygNdW+0EqFP+v/dWv5h6tM9q4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 313/346] drm/bridge: parade-ps8640: Make sure we drop the AUX mutex in the error case
-Date: Mon, 29 Jan 2024 09:05:44 -0800
-Message-ID: <20240129170025.682428730@linuxfoundation.org>
+Subject: [PATCH 6.7 318/346] firmware: arm_scmi: Use xa_insert() to store opps
+Date: Mon, 29 Jan 2024 09:05:49 -0800
+Message-ID: <20240129170025.832876997@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,43 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit a20f1b02bafcbf5a32d96a1d4185d6981cf7d016 ]
+[ Upstream commit e8ef4bbe39b9576a73f104f6af743fb9c7b624ba ]
 
-After commit 26db46bc9c67 ("drm/bridge: parade-ps8640: Ensure bridge
-is suspended in .post_disable()"), if we hit the error case in
-ps8640_aux_transfer() then we return without dropping the mutex. Fix
-this oversight.
+When storing opps by level or index use xa_insert() instead of xa_store()
+and add error-checking to spot bad duplicates indexes possibly wrongly
+provided by the platform firmware.
 
-Fixes: 26db46bc9c67 ("drm/bridge: parade-ps8640: Ensure bridge is suspended in .post_disable()")
-Reviewed-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240117103502.1.Ib726a0184913925efc7e99c4d4fc801982e1bc24@changeid
+Fixes: 31c7c1397a33 ("firmware: arm_scmi: Add v3.2 perf level indexing mode support")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20240108185050.1628687-1-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/parade-ps8640.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_scmi/perf.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
-index 166bfc725ef4..14d4dcf239da 100644
---- a/drivers/gpu/drm/bridge/parade-ps8640.c
-+++ b/drivers/gpu/drm/bridge/parade-ps8640.c
-@@ -351,11 +351,13 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
- 	ret = _ps8640_wait_hpd_asserted(ps_bridge, 200 * 1000);
- 	if (ret) {
- 		pm_runtime_put_sync_suspend(dev);
--		return ret;
-+		goto exit;
- 	}
- 	ret = ps8640_aux_transfer_msg(aux, msg);
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
-+
-+exit:
- 	mutex_unlock(&ps_bridge->aux_lock);
+diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+index e11555de99ab..d26eca37dc14 100644
+--- a/drivers/firmware/arm_scmi/perf.c
++++ b/drivers/firmware/arm_scmi/perf.c
+@@ -347,8 +347,8 @@ process_response_opp(struct scmi_opp *opp, unsigned int loop_idx,
+ }
  
- 	return ret;
+ static inline void
+-process_response_opp_v4(struct perf_dom_info *dom, struct scmi_opp *opp,
+-			unsigned int loop_idx,
++process_response_opp_v4(struct device *dev, struct perf_dom_info *dom,
++			struct scmi_opp *opp, unsigned int loop_idx,
+ 			const struct scmi_msg_resp_perf_describe_levels_v4 *r)
+ {
+ 	opp->perf = le32_to_cpu(r->opp[loop_idx].perf_val);
+@@ -359,10 +359,23 @@ process_response_opp_v4(struct perf_dom_info *dom, struct scmi_opp *opp,
+ 	/* Note that PERF v4 reports always five 32-bit words */
+ 	opp->indicative_freq = le32_to_cpu(r->opp[loop_idx].indicative_freq);
+ 	if (dom->level_indexing_mode) {
++		int ret;
++
+ 		opp->level_index = le32_to_cpu(r->opp[loop_idx].level_index);
+ 
+-		xa_store(&dom->opps_by_idx, opp->level_index, opp, GFP_KERNEL);
+-		xa_store(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
++		ret = xa_insert(&dom->opps_by_idx, opp->level_index, opp,
++				GFP_KERNEL);
++		if (ret)
++			dev_warn(dev,
++				 "Failed to add opps_by_idx at %d - ret:%d\n",
++				 opp->level_index, ret);
++
++		ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
++		if (ret)
++			dev_warn(dev,
++				 "Failed to add opps_by_lvl at %d - ret:%d\n",
++				 opp->perf, ret);
++
+ 		hash_add(dom->opps_by_freq, &opp->hash, opp->indicative_freq);
+ 	}
+ }
+@@ -379,7 +392,7 @@ iter_perf_levels_process_response(const struct scmi_protocol_handle *ph,
+ 	if (PROTOCOL_REV_MAJOR(p->version) <= 0x3)
+ 		process_response_opp(opp, st->loop_idx, response);
+ 	else
+-		process_response_opp_v4(p->perf_dom, opp, st->loop_idx,
++		process_response_opp_v4(ph->dev, p->perf_dom, opp, st->loop_idx,
+ 					response);
+ 	p->perf_dom->opp_count++;
+ 
 -- 
 2.43.0
 
