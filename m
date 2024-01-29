@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EBD15958C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B246815958C;
 	Mon, 29 Jan 2024 17:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548100; cv=none; b=Mqc/nQ41fzKHpTUMbM3lDremEIyH8mEX/4GOgGedHDV1xOqBmGZOvLQk7nt+3MxJBPH127cE7Py5QPuwrnyvgBXCjdTNqprYLy5CMoAT0H3QXKc2eqTG268TOIsXPHQrjRbqK1BGr1f5wqq2pTBK52bgivsmzjqvPj9WU2Rl/7c=
+	t=1706548100; cv=none; b=h52Z43waelPYxrOD7Ng0SlCuo6aVKCmp4nwuS6foYnvPCoXnzocwEQM04rUyJqs3wycJM/i0jf+xGEN6+wGNEHt/mu2FpdtsrKvAI8qW4YjNv9xTXKsOBY8U83xSrcaz5L30kxzCcj8Og48Pzj+K/TDwE47YfDq4Omdecc+74pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548100; c=relaxed/simple;
-	bh=aHvaxek9Sji258EIUNvCKAa1/fIEaZboDCvFuVmBzxs=;
+	bh=t2M72Uco+pqkTrATZADnM94gP9fkpEzmuS3iUiaT7xY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6CxbsUgo67ozBkg/o7mdhEWluz0MW1HZe+/xd5lhDNzNmlefVwXrRqkzTwcr/UdbdXMx82vN1teiUoavytHgw6cqdfzMBcdRlT+EfpozH4zZHuhHYVQC2m6qlcesQtHGGNSL288tKL042xK1ykqcAB9mPAUpU8KeGTqSInO41Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1ajNG6o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6FaYiPCTrmD1YoRm1Tp1L/FNqFgnn4eyIKjqU2/Dv4F2D/+v6YCSUt1fOkM0HyOcrD8sWs31zuIrTBURsqpX3MX7p1va+KqdJvIFaKGwICzHGusKleW4TUNXVBOdaSQP42XGmiCj0BiIcfa0GNwcyvIH9FeLvXSxGcL5w08sQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqQlts2W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1ajNG6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B9FC43394;
-	Mon, 29 Jan 2024 17:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqQlts2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B327C433C7;
+	Mon, 29 Jan 2024 17:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548099;
-	bh=aHvaxek9Sji258EIUNvCKAa1/fIEaZboDCvFuVmBzxs=;
+	s=korg; t=1706548100;
+	bh=t2M72Uco+pqkTrATZADnM94gP9fkpEzmuS3iUiaT7xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1ajNG6oJxqpq25alG1e7PK8xuM3NBRSMJiuR9Kv4CUCLISzN6Gs4EO9mHgDhH8S8
-	 RM3BuYPm6VumAgbrNnS5XBqYtIoRA30Rafzw2vuLhGOnotxeZeeWRXfqGcGX63KOvu
-	 deY2UsNTSVYu6hBJ3qSQIp4f/Xi99lfzzwEjObfg=
+	b=fqQlts2WMcEbgivc/5mmuX19qZAfx0tsM2topFv8rO5IHsNfow9qzEaRKDjqUdKcN
+	 rU92UaPmErDIyRJ5hdQujE3Mh4szLpz6/BGPK9KLsySjl1BJcNwkqJkmUEEYRSoS8i
+	 axHApAVmtwqZXCGzBhdV5te6cOlZ7reCa2GS4kbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jrife@google.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.7 093/346] dlm: use kernel_connect() and kernel_bind()
-Date: Mon, 29 Jan 2024 09:02:04 -0800
-Message-ID: <20240129170019.139394405@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.7 084/346] arm64: dts: qcom: sdm845: fix USB SS wakeup
+Date: Mon, 29 Jan 2024 09:01:55 -0800
+Message-ID: <20240129170018.864776400@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -50,74 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit e9cdebbe23f1aa9a1caea169862f479ab3fa2773 upstream.
+commit 971f5d8b0618d09db75184ddd8cca0767514db5d upstream.
 
-Recent changes to kernel_connect() and kernel_bind() ensure that
-callers are insulated from changes to the address parameter made by BPF
-SOCK_ADDR hooks. This patch wraps direct calls to ops->connect() and
-ops->bind() with kernel_connect() and kernel_bind() to protect callers
-in such cases.
+The USB SS PHY interrupts need to be provided by the PDC interrupt
+controller in order to be able to wake the system up from low-power
+states.
 
-Link: https://lore.kernel.org/netdev/9944248dba1bce861375fcce9de663934d933ba9.camel@redhat.com/
-Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
-Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jordan Rife <jrife@google.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
+Cc: stable@vger.kernel.org	# 4.20
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231213173403.29544-4-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/lowcomms.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/dlm/lowcomms.c
-+++ b/fs/dlm/lowcomms.c
-@@ -1817,8 +1817,8 @@ static int dlm_tcp_bind(struct socket *s
- 	memcpy(&src_addr, &dlm_local_addr[0], sizeof(src_addr));
- 	make_sockaddr(&src_addr, 0, &addr_len);
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -4054,7 +4054,7 @@
+ 			assigned-clock-rates = <19200000>, <150000000>;
  
--	result = sock->ops->bind(sock, (struct sockaddr *)&src_addr,
--				 addr_len);
-+	result = kernel_bind(sock, (struct sockaddr *)&src_addr,
-+			     addr_len);
- 	if (result < 0) {
- 		/* This *may* not indicate a critical error */
- 		log_print("could not bind for connect: %d", result);
-@@ -1830,7 +1830,7 @@ static int dlm_tcp_bind(struct socket *s
- static int dlm_tcp_connect(struct connection *con, struct socket *sock,
- 			   struct sockaddr *addr, int addr_len)
- {
--	return sock->ops->connect(sock, addr, addr_len, O_NONBLOCK);
-+	return kernel_connect(sock, addr, addr_len, O_NONBLOCK);
- }
+ 			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+-					      <&intc GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc_intc 6 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&pdc_intc 8 IRQ_TYPE_EDGE_BOTH>,
+ 					      <&pdc_intc 9 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+@@ -4105,7 +4105,7 @@
+ 			assigned-clock-rates = <19200000>, <150000000>;
  
- static int dlm_tcp_listen_validate(void)
-@@ -1862,8 +1862,8 @@ static int dlm_tcp_listen_bind(struct so
- 
- 	/* Bind to our port */
- 	make_sockaddr(&dlm_local_addr[0], dlm_config.ci_tcp_port, &addr_len);
--	return sock->ops->bind(sock, (struct sockaddr *)&dlm_local_addr[0],
--			       addr_len);
-+	return kernel_bind(sock, (struct sockaddr *)&dlm_local_addr[0],
-+			   addr_len);
- }
- 
- static const struct dlm_proto_ops dlm_tcp_ops = {
-@@ -1888,12 +1888,12 @@ static int dlm_sctp_connect(struct conne
- 	int ret;
- 
- 	/*
--	 * Make sock->ops->connect() function return in specified time,
-+	 * Make kernel_connect() function return in specified time,
- 	 * since O_NONBLOCK argument in connect() function does not work here,
- 	 * then, we should restore the default value of this attribute.
- 	 */
- 	sock_set_sndtimeo(sock->sk, 5);
--	ret = sock->ops->connect(sock, addr, addr_len, 0);
-+	ret = kernel_connect(sock, addr, addr_len, 0);
- 	sock_set_sndtimeo(sock->sk, 0);
- 	return ret;
- }
+ 			interrupts-extended = <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
+-					      <&intc GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc_intc 7 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&pdc_intc 10 IRQ_TYPE_EDGE_BOTH>,
+ 					      <&pdc_intc 11 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
 
 
