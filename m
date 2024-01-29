@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8D672244;
-	Mon, 29 Jan 2024 17:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DE97225A;
+	Mon, 29 Jan 2024 17:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548515; cv=none; b=CZJWbEtUKRpifSCd7D6iIFrhJCfPwJw67Yx4Rs0OPicxqHl1mi5biHJ9FFPmoRG33Up+6eDrPK1yYRTsL4Un5ZCphtz49oLxgJLEw3qxWP3lJW0Q0AmsVZVS1FEWJj7NKDMRM3gAdnXxXYuCJX/LjrLScW9bq9D/Mit51zJI/Pc=
+	t=1706548516; cv=none; b=LyFt12Hl3zCvZSjl2y60yJ0W9nlrCGYPZs+X31h2x76suMtRr4wfFDBRESOURoLFAYbtGUQP0q+Fcmr2BbGZhs72h6tFhxZhx4LtWurI58aeRZ39hKTlLWUT6L+zNss+esdnoDmEkWBYlvtr4Vf6XA8zfKe70UCZIyBUtUrTiA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548515; c=relaxed/simple;
-	bh=kxmKYB9RJa3M1gQnTpKHRjf50pErGxR69P8uyvr7tPk=;
+	s=arc-20240116; t=1706548516; c=relaxed/simple;
+	bh=paTDI2RKMyS22isHcnHlheAorETBvufnFwWbGyTAoUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CcvsypO+QnmXwWsClBjj00F5a8bnvKvq1NF53m0tRR7BW2NTe45vUGgyr2t2tN02J/n0jwoNVbcCqLhU3JSUPXRDyLI47A6pJ6KSC2QKestb80wZDez7npmgntUm9mozKaFq0E//oLRMldPM45UCk4/DoGjM+Xr6+SLPPYlBvmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjZsJrej; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sm+FR7X5HEb0Z34eiY6gEMf01OY75DSKjYge25whJPAS8R6ACmHYHst1JqmFDyJUc3FfpKz2Gqte7oJoyiZbT59OGgTOW5uzFCSTCt1PuhcQ8fPd66ZoDIunhSy9wlT8Vzu/45pp5kyKisbCPOLPgQJpdyBk+nQFesCJIelGt4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7OOvOp5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjZsJrej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231FDC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7OOvOp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC599C433C7;
 	Mon, 29 Jan 2024 17:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548515;
-	bh=kxmKYB9RJa3M1gQnTpKHRjf50pErGxR69P8uyvr7tPk=;
+	bh=paTDI2RKMyS22isHcnHlheAorETBvufnFwWbGyTAoUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xjZsJrejMkqBnqzyxAZ1PQDFflgoBndZZBu+KrXa/hZWhvzOUTx3gZIUkrozaDd6z
-	 UMMhxxKjl2eFh02AFjmdzZ+NYmgoZsDzFQQV+NZoDMkm+Y6f/L4RHElcLQCRHHMtWd
-	 AQP40VnavGnhtf2l1jQvLb5C+AD+N9/5oYPMuNKI=
+	b=S7OOvOp5oX8BUnSkMA6KGcB+UjQ9bkMK54sBH9PdAFkKoJeGx6VJg7pHExa7HqD8x
+	 lYo0VReZ3uyrP/GpcBeb/g3bAczvVYdaF3R3mpD6w1Gqjxe1noATMKG77IyUDQQiYA
+	 DuHeW3O+XKpJpeFxUoGJiFvHBBNqaPiCw2isJa9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Subject: [PATCH 6.6 148/331] bpf: exact states comparison for iterator convergence checks
-Date: Mon, 29 Jan 2024 09:03:32 -0800
-Message-ID: <20240129170019.258289579@linuxfoundation.org>
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.6 149/331] selftests/bpf: tests with delayed read/precision makrs in loop body
+Date: Mon, 29 Jan 2024 09:03:33 -0800
+Message-ID: <20240129170019.283087093@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -54,492 +52,554 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit 2793a8b015f7f1caadb9bce9c63dc659f7522676 upstream.
+commit 389ede06c2974b2f878a7ebff6b0f4f707f9db74 upstream.
 
-Convergence for open coded iterators is computed in is_state_visited()
-by examining states with branches count > 1 and using states_equal().
-states_equal() computes sub-state relation using read and precision marks.
-Read and precision marks are propagated from children states,
-thus are not guaranteed to be complete inside a loop when branches
-count > 1. This could be demonstrated using the following unsafe program:
+These test cases try to hide read and precision marks from loop
+convergence logic: marks would only be assigned on subsequent loop
+iterations or after exploring states pushed to env->head stack first.
+Without verifier fix to use exact states comparison logic for
+iterators convergence these tests (except 'triple_continue') would be
+errorneously marked as safe.
 
-     1. r7 = -16
-     2. r6 = bpf_get_prandom_u32()
-     3. while (bpf_iter_num_next(&fp[-8])) {
-     4.   if (r6 != 42) {
-     5.     r7 = -32
-     6.     r6 = bpf_get_prandom_u32()
-     7.     continue
-     8.   }
-     9.   r0 = r10
-    10.   r0 += r7
-    11.   r8 = *(u64 *)(r0 + 0)
-    12.   r6 = bpf_get_prandom_u32()
-    13. }
-
-Here verifier would first visit path 1-3, create a checkpoint at 3
-with r7=-16, continue to 4-7,3 with r7=-32.
-
-Because instructions at 9-12 had not been visitied yet existing
-checkpoint at 3 does not have read or precision mark for r7.
-Thus states_equal() would return true and verifier would discard
-current state, thus unsafe memory access at 11 would not be caught.
-
-This commit fixes this loophole by introducing exact state comparisons
-for iterator convergence logic:
-- registers are compared using regs_exact() regardless of read or
-  precision marks;
-- stack slots have to have identical type.
-
-Unfortunately, this is too strict even for simple programs like below:
-
-    i = 0;
-    while(iter_next(&it))
-      i++;
-
-At each iteration step i++ would produce a new distinct state and
-eventually instruction processing limit would be reached.
-
-To avoid such behavior speculatively forget (widen) range for
-imprecise scalar registers, if those registers were not precise at the
-end of the previous iteration and do not match exactly.
-
-This a conservative heuristic that allows to verify wide range of
-programs, however it precludes verification of programs that conjure
-an imprecise value on the first loop iteration and use it as precise
-on the second.
-
-Test case iter_task_vma_for_each() presents one of such cases:
-
-        unsigned int seen = 0;
-        ...
-        bpf_for_each(task_vma, vma, task, 0) {
-                if (seen >= 1000)
-                        break;
-                ...
-                seen++;
-        }
-
-Here clang generates the following code:
-
-<LBB0_4>:
-      24:       r8 = r6                          ; stash current value of
-                ... body ...                       'seen'
-      29:       r1 = r10
-      30:       r1 += -0x8
-      31:       call bpf_iter_task_vma_next
-      32:       r6 += 0x1                        ; seen++;
-      33:       if r0 == 0x0 goto +0x2 <LBB0_6>  ; exit on next() == NULL
-      34:       r7 += 0x10
-      35:       if r8 < 0x3e7 goto -0xc <LBB0_4> ; loop on seen < 1000
-
-<LBB0_6>:
-      ... exit ...
-
-Note that counter in r6 is copied to r8 and then incremented,
-conditional jump is done using r8. Because of this precision mark for
-r6 lags one state behind of precision mark on r8 and widening logic
-kicks in.
-
-Adding barrier_var(seen) after conditional is sufficient to force
-clang use the same register for both counting and conditional jump.
-
-This issue was discussed in the thread [1] which was started by
-Andrew Werner <awerner32@gmail.com> demonstrating a similar bug
-in callback functions handling. The callbacks would be addressed
-in a followup patch.
-
-[1] https://lore.kernel.org/bpf/97a90da09404c65c8e810cf83c94ac703705dc0e.camel@gmail.com/
-
-Co-developed-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Co-developed-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20231024000917.12153-4-eddyz87@gmail.com
+Link: https://lore.kernel.org/r/20231024000917.12153-5-eddyz87@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf_verifier.h |    1 
- kernel/bpf/verifier.c        |  218 ++++++++++++++++++++++++++++++++++++-------
- 2 files changed, 188 insertions(+), 31 deletions(-)
+ tools/testing/selftests/bpf/progs/iters.c |  518 ++++++++++++++++++++++++++++++
+ 1 file changed, 518 insertions(+)
 
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -383,6 +383,7 @@ struct bpf_verifier_state {
- 	 */
- 	struct bpf_idx_pair *jmp_history;
- 	u32 jmp_history_cnt;
-+	u32 dfs_depth;
- };
+--- a/tools/testing/selftests/bpf/progs/iters.c
++++ b/tools/testing/selftests/bpf/progs/iters.c
+@@ -14,6 +14,13 @@ int my_pid;
+ int arr[256];
+ int small_arr[16] SEC(".data.small_arr");
  
- #define bpf_get_spilled_reg(slot, frame)				\
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -1771,6 +1771,7 @@ static int copy_verifier_state(struct bp
- 	dst_state->parent = src->parent;
- 	dst_state->first_insn_idx = src->first_insn_idx;
- 	dst_state->last_insn_idx = src->last_insn_idx;
-+	dst_state->dfs_depth = src->dfs_depth;
- 	for (i = 0; i <= src->curframe; i++) {
- 		dst = dst_state->frame[i];
- 		if (!dst) {
-@@ -7554,6 +7555,81 @@ static int process_iter_arg(struct bpf_v
++struct {
++	__uint(type, BPF_MAP_TYPE_HASH);
++	__uint(max_entries, 10);
++	__type(key, int);
++	__type(value, int);
++} amap SEC(".maps");
++
+ #ifdef REAL_TEST
+ #define MY_PID_GUARD() if (my_pid != (bpf_get_current_pid_tgid() >> 32)) return 0
+ #else
+@@ -716,4 +723,515 @@ int iter_pass_iter_ptr_to_subprog(const
  	return 0;
  }
  
-+/* Look for a previous loop entry at insn_idx: nearest parent state
-+ * stopped at insn_idx with callsites matching those in cur->frame.
-+ */
-+static struct bpf_verifier_state *find_prev_entry(struct bpf_verifier_env *env,
-+						  struct bpf_verifier_state *cur,
-+						  int insn_idx)
++SEC("?raw_tp")
++__failure
++__msg("R1 type=scalar expected=fp")
++__naked int delayed_read_mark(void)
 +{
-+	struct bpf_verifier_state_list *sl;
-+	struct bpf_verifier_state *st;
-+
-+	/* Explored states are pushed in stack order, most recent states come first */
-+	sl = *explored_state(env, insn_idx);
-+	for (; sl; sl = sl->next) {
-+		/* If st->branches != 0 state is a part of current DFS verification path,
-+		 * hence cur & st for a loop.
-+		 */
-+		st = &sl->state;
-+		if (st->insn_idx == insn_idx && st->branches && same_callsites(st, cur) &&
-+		    st->dfs_depth < cur->dfs_depth)
-+			return st;
-+	}
-+
-+	return NULL;
++	/* This is equivalent to C program below.
++	 * The call to bpf_iter_num_next() is reachable with r7 values &fp[-16] and 0xdead.
++	 * State with r7=&fp[-16] is visited first and follows r6 != 42 ... continue branch.
++	 * At this point iterator next() call is reached with r7 that has no read mark.
++	 * Loop body with r7=0xdead would only be visited if verifier would decide to continue
++	 * with second loop iteration. Absence of read mark on r7 might affect state
++	 * equivalent logic used for iterator convergence tracking.
++	 *
++	 * r7 = &fp[-16]
++	 * fp[-16] = 0
++	 * r6 = bpf_get_prandom_u32()
++	 * bpf_iter_num_new(&fp[-8], 0, 10)
++	 * while (bpf_iter_num_next(&fp[-8])) {
++	 *   r6++
++	 *   if (r6 != 42) {
++	 *     r7 = 0xdead
++	 *     continue;
++	 *   }
++	 *   bpf_probe_read_user(r7, 8, 0xdeadbeef); // this is not safe
++	 * }
++	 * bpf_iter_num_destroy(&fp[-8])
++	 * return 0
++	 */
++	asm volatile (
++		"r7 = r10;"
++		"r7 += -16;"
++		"r0 = 0;"
++		"*(u64 *)(r7 + 0) = r0;"
++		"call %[bpf_get_prandom_u32];"
++		"r6 = r0;"
++		"r1 = r10;"
++		"r1 += -8;"
++		"r2 = 0;"
++		"r3 = 10;"
++		"call %[bpf_iter_num_new];"
++	"1:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_next];"
++		"if r0 == 0 goto 2f;"
++		"r6 += 1;"
++		"if r6 != 42 goto 3f;"
++		"r7 = 0xdead;"
++		"goto 1b;"
++	"3:"
++		"r1 = r7;"
++		"r2 = 8;"
++		"r3 = 0xdeadbeef;"
++		"call %[bpf_probe_read_user];"
++		"goto 1b;"
++	"2:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_destroy];"
++		"r0 = 0;"
++		"exit;"
++		:
++		: __imm(bpf_get_prandom_u32),
++		  __imm(bpf_iter_num_new),
++		  __imm(bpf_iter_num_next),
++		  __imm(bpf_iter_num_destroy),
++		  __imm(bpf_probe_read_user)
++		: __clobber_all
++	);
 +}
 +
-+static void reset_idmap_scratch(struct bpf_verifier_env *env);
-+static bool regs_exact(const struct bpf_reg_state *rold,
-+		       const struct bpf_reg_state *rcur,
-+		       struct bpf_idmap *idmap);
-+
-+static void maybe_widen_reg(struct bpf_verifier_env *env,
-+			    struct bpf_reg_state *rold, struct bpf_reg_state *rcur,
-+			    struct bpf_idmap *idmap)
++SEC("?raw_tp")
++__failure
++__msg("math between fp pointer and register with unbounded")
++__naked int delayed_precision_mark(void)
 +{
-+	if (rold->type != SCALAR_VALUE)
-+		return;
-+	if (rold->type != rcur->type)
-+		return;
-+	if (rold->precise || rcur->precise || regs_exact(rold, rcur, idmap))
-+		return;
-+	__mark_reg_unknown(env, rcur);
++	/* This is equivalent to C program below.
++	 * The test is similar to delayed_iter_mark but verifies that incomplete
++	 * precision don't fool verifier.
++	 * The call to bpf_iter_num_next() is reachable with r7 values -16 and -32.
++	 * State with r7=-16 is visited first and follows r6 != 42 ... continue branch.
++	 * At this point iterator next() call is reached with r7 that has no read
++	 * and precision marks.
++	 * Loop body with r7=-32 would only be visited if verifier would decide to continue
++	 * with second loop iteration. Absence of precision mark on r7 might affect state
++	 * equivalent logic used for iterator convergence tracking.
++	 *
++	 * r8 = 0
++	 * fp[-16] = 0
++	 * r7 = -16
++	 * r6 = bpf_get_prandom_u32()
++	 * bpf_iter_num_new(&fp[-8], 0, 10)
++	 * while (bpf_iter_num_next(&fp[-8])) {
++	 *   if (r6 != 42) {
++	 *     r7 = -32
++	 *     r6 = bpf_get_prandom_u32()
++	 *     continue;
++	 *   }
++	 *   r0 = r10
++	 *   r0 += r7
++	 *   r8 = *(u64 *)(r0 + 0)           // this is not safe
++	 *   r6 = bpf_get_prandom_u32()
++	 * }
++	 * bpf_iter_num_destroy(&fp[-8])
++	 * return r8
++	 */
++	asm volatile (
++		"r8 = 0;"
++		"*(u64 *)(r10 - 16) = r8;"
++		"r7 = -16;"
++		"call %[bpf_get_prandom_u32];"
++		"r6 = r0;"
++		"r1 = r10;"
++		"r1 += -8;"
++		"r2 = 0;"
++		"r3 = 10;"
++		"call %[bpf_iter_num_new];"
++	"1:"
++		"r1 = r10;"
++		"r1 += -8;\n"
++		"call %[bpf_iter_num_next];"
++		"if r0 == 0 goto 2f;"
++		"if r6 != 42 goto 3f;"
++		"r7 = -32;"
++		"call %[bpf_get_prandom_u32];"
++		"r6 = r0;"
++		"goto 1b;\n"
++	"3:"
++		"r0 = r10;"
++		"r0 += r7;"
++		"r8 = *(u64 *)(r0 + 0);"
++		"call %[bpf_get_prandom_u32];"
++		"r6 = r0;"
++		"goto 1b;\n"
++	"2:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_destroy];"
++		"r0 = r8;"
++		"exit;"
++		:
++		: __imm(bpf_get_prandom_u32),
++		  __imm(bpf_iter_num_new),
++		  __imm(bpf_iter_num_next),
++		  __imm(bpf_iter_num_destroy),
++		  __imm(bpf_probe_read_user)
++		: __clobber_all
++	);
 +}
 +
-+static int widen_imprecise_scalars(struct bpf_verifier_env *env,
-+				   struct bpf_verifier_state *old,
-+				   struct bpf_verifier_state *cur)
++SEC("?raw_tp")
++__failure
++__msg("math between fp pointer and register with unbounded")
++__flag(BPF_F_TEST_STATE_FREQ)
++__naked int loop_state_deps1(void)
 +{
-+	struct bpf_func_state *fold, *fcur;
-+	int i, fr;
-+
-+	reset_idmap_scratch(env);
-+	for (fr = old->curframe; fr >= 0; fr--) {
-+		fold = old->frame[fr];
-+		fcur = cur->frame[fr];
-+
-+		for (i = 0; i < MAX_BPF_REG; i++)
-+			maybe_widen_reg(env,
-+					&fold->regs[i],
-+					&fcur->regs[i],
-+					&env->idmap_scratch);
-+
-+		for (i = 0; i < fold->allocated_stack / BPF_REG_SIZE; i++) {
-+			if (!is_spilled_reg(&fold->stack[i]) ||
-+			    !is_spilled_reg(&fcur->stack[i]))
-+				continue;
-+
-+			maybe_widen_reg(env,
-+					&fold->stack[i].spilled_ptr,
-+					&fcur->stack[i].spilled_ptr,
-+					&env->idmap_scratch);
-+		}
-+	}
-+	return 0;
++	/* This is equivalent to C program below.
++	 *
++	 * The case turns out to be tricky in a sense that:
++	 * - states with c=-25 are explored only on a second iteration
++	 *   of the outer loop;
++	 * - states with read+precise mark on c are explored only on
++	 *   second iteration of the inner loop and in a state which
++	 *   is pushed to states stack first.
++	 *
++	 * Depending on the details of iterator convergence logic
++	 * verifier might stop states traversal too early and miss
++	 * unsafe c=-25 memory access.
++	 *
++	 *   j = iter_new();		 // fp[-16]
++	 *   a = 0;			 // r6
++	 *   b = 0;			 // r7
++	 *   c = -24;			 // r8
++	 *   while (iter_next(j)) {
++	 *     i = iter_new();		 // fp[-8]
++	 *     a = 0;			 // r6
++	 *     b = 0;			 // r7
++	 *     while (iter_next(i)) {
++	 *	 if (a == 1) {
++	 *	   a = 0;
++	 *	   b = 1;
++	 *	 } else if (a == 0) {
++	 *	   a = 1;
++	 *	   if (random() == 42)
++	 *	     continue;
++	 *	   if (b == 1) {
++	 *	     *(r10 + c) = 7;  // this is not safe
++	 *	     iter_destroy(i);
++	 *	     iter_destroy(j);
++	 *	     return;
++	 *	   }
++	 *	 }
++	 *     }
++	 *     iter_destroy(i);
++	 *     a = 0;
++	 *     b = 0;
++	 *     c = -25;
++	 *   }
++	 *   iter_destroy(j);
++	 *   return;
++	 */
++	asm volatile (
++		"r1 = r10;"
++		"r1 += -16;"
++		"r2 = 0;"
++		"r3 = 10;"
++		"call %[bpf_iter_num_new];"
++		"r6 = 0;"
++		"r7 = 0;"
++		"r8 = -24;"
++	"j_loop_%=:"
++		"r1 = r10;"
++		"r1 += -16;"
++		"call %[bpf_iter_num_next];"
++		"if r0 == 0 goto j_loop_end_%=;"
++		"r1 = r10;"
++		"r1 += -8;"
++		"r2 = 0;"
++		"r3 = 10;"
++		"call %[bpf_iter_num_new];"
++		"r6 = 0;"
++		"r7 = 0;"
++	"i_loop_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_next];"
++		"if r0 == 0 goto i_loop_end_%=;"
++	"check_one_r6_%=:"
++		"if r6 != 1 goto check_zero_r6_%=;"
++		"r6 = 0;"
++		"r7 = 1;"
++		"goto i_loop_%=;"
++	"check_zero_r6_%=:"
++		"if r6 != 0 goto i_loop_%=;"
++		"r6 = 1;"
++		"call %[bpf_get_prandom_u32];"
++		"if r0 != 42 goto check_one_r7_%=;"
++		"goto i_loop_%=;"
++	"check_one_r7_%=:"
++		"if r7 != 1 goto i_loop_%=;"
++		"r0 = r10;"
++		"r0 += r8;"
++		"r1 = 7;"
++		"*(u64 *)(r0 + 0) = r1;"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_destroy];"
++		"r1 = r10;"
++		"r1 += -16;"
++		"call %[bpf_iter_num_destroy];"
++		"r0 = 0;"
++		"exit;"
++	"i_loop_end_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_destroy];"
++		"r6 = 0;"
++		"r7 = 0;"
++		"r8 = -25;"
++		"goto j_loop_%=;"
++	"j_loop_end_%=:"
++		"r1 = r10;"
++		"r1 += -16;"
++		"call %[bpf_iter_num_destroy];"
++		"r0 = 0;"
++		"exit;"
++		:
++		: __imm(bpf_get_prandom_u32),
++		  __imm(bpf_iter_num_new),
++		  __imm(bpf_iter_num_next),
++		  __imm(bpf_iter_num_destroy)
++		: __clobber_all
++	);
 +}
 +
- /* process_iter_next_call() is called when verifier gets to iterator's next
-  * "method" (e.g., bpf_iter_num_next() for numbers iterator) call. We'll refer
-  * to it as just "iter_next()" in comments below.
-@@ -7595,25 +7671,47 @@ static int process_iter_arg(struct bpf_v
-  * is some statically known limit on number of iterations (e.g., if there is
-  * an explicit `if n > 100 then break;` statement somewhere in the loop).
-  *
-- * One very subtle but very important aspect is that we *always* simulate NULL
-- * condition first (as the current state) before we simulate non-NULL case.
-- * This has to do with intricacies of scalar precision tracking. By simulating
-- * "exit condition" of iter_next() returning NULL first, we make sure all the
-- * relevant precision marks *that will be set **after** we exit iterator loop*
-- * are propagated backwards to common parent state of NULL and non-NULL
-- * branches. Thanks to that, state equivalence checks done later in forked
-- * state, when reaching iter_next() for ACTIVE iterator, can assume that
-- * precision marks are finalized and won't change. Because simulating another
-- * ACTIVE iterator iteration won't change them (because given same input
-- * states we'll end up with exactly same output states which we are currently
-- * comparing; and verification after the loop already propagated back what
-- * needs to be **additionally** tracked as precise). It's subtle, grok
-- * precision tracking for more intuitive understanding.
-+ * Iteration convergence logic in is_state_visited() relies on exact
-+ * states comparison, which ignores read and precision marks.
-+ * This is necessary because read and precision marks are not finalized
-+ * while in the loop. Exact comparison might preclude convergence for
-+ * simple programs like below:
-+ *
-+ *     i = 0;
-+ *     while(iter_next(&it))
-+ *       i++;
-+ *
-+ * At each iteration step i++ would produce a new distinct state and
-+ * eventually instruction processing limit would be reached.
-+ *
-+ * To avoid such behavior speculatively forget (widen) range for
-+ * imprecise scalar registers, if those registers were not precise at the
-+ * end of the previous iteration and do not match exactly.
-+ *
-+ * This is a conservative heuristic that allows to verify wide range of programs,
-+ * however it precludes verification of programs that conjure an
-+ * imprecise value on the first loop iteration and use it as precise on a second.
-+ * For example, the following safe program would fail to verify:
-+ *
-+ *     struct bpf_num_iter it;
-+ *     int arr[10];
-+ *     int i = 0, a = 0;
-+ *     bpf_iter_num_new(&it, 0, 10);
-+ *     while (bpf_iter_num_next(&it)) {
-+ *       if (a == 0) {
-+ *         a = 1;
-+ *         i = 7; // Because i changed verifier would forget
-+ *                // it's range on second loop entry.
-+ *       } else {
-+ *         arr[i] = 42; // This would fail to verify.
-+ *       }
-+ *     }
-+ *     bpf_iter_num_destroy(&it);
-  */
- static int process_iter_next_call(struct bpf_verifier_env *env, int insn_idx,
- 				  struct bpf_kfunc_call_arg_meta *meta)
- {
--	struct bpf_verifier_state *cur_st = env->cur_state, *queued_st;
-+	struct bpf_verifier_state *cur_st = env->cur_state, *queued_st, *prev_st;
- 	struct bpf_func_state *cur_fr = cur_st->frame[cur_st->curframe], *queued_fr;
- 	struct bpf_reg_state *cur_iter, *queued_iter;
- 	int iter_frameno = meta->iter.frameno;
-@@ -7631,6 +7729,19 @@ static int process_iter_next_call(struct
- 	}
- 
- 	if (cur_iter->iter.state == BPF_ITER_STATE_ACTIVE) {
-+		/* Because iter_next() call is a checkpoint is_state_visitied()
-+		 * should guarantee parent state with same call sites and insn_idx.
-+		 */
-+		if (!cur_st->parent || cur_st->parent->insn_idx != insn_idx ||
-+		    !same_callsites(cur_st->parent, cur_st)) {
-+			verbose(env, "bug: bad parent state for iter next call");
-+			return -EFAULT;
-+		}
-+		/* Note cur_st->parent in the call below, it is necessary to skip
-+		 * checkpoint created for cur_st by is_state_visited()
-+		 * right at this instruction.
-+		 */
-+		prev_st = find_prev_entry(env, cur_st->parent, insn_idx);
- 		/* branch out active iter state */
- 		queued_st = push_stack(env, insn_idx + 1, insn_idx, false);
- 		if (!queued_st)
-@@ -7639,6 +7750,8 @@ static int process_iter_next_call(struct
- 		queued_iter = &queued_st->frame[iter_frameno]->stack[iter_spi].spilled_ptr;
- 		queued_iter->iter.state = BPF_ITER_STATE_ACTIVE;
- 		queued_iter->iter.depth++;
-+		if (prev_st)
-+			widen_imprecise_scalars(env, prev_st, queued_st);
- 
- 		queued_fr = queued_st->frame[queued_st->curframe];
- 		mark_ptr_not_null_reg(&queued_fr->regs[BPF_REG_0]);
-@@ -15560,8 +15673,11 @@ static bool regs_exact(const struct bpf_
- 
- /* Returns true if (rold safe implies rcur safe) */
- static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
--		    struct bpf_reg_state *rcur, struct bpf_idmap *idmap)
-+		    struct bpf_reg_state *rcur, struct bpf_idmap *idmap, bool exact)
- {
-+	if (exact)
-+		return regs_exact(rold, rcur, idmap);
-+
- 	if (!(rold->live & REG_LIVE_READ))
- 		/* explored state didn't use this */
- 		return true;
-@@ -15678,7 +15794,7 @@ static bool regsafe(struct bpf_verifier_
- }
- 
- static bool stacksafe(struct bpf_verifier_env *env, struct bpf_func_state *old,
--		      struct bpf_func_state *cur, struct bpf_idmap *idmap)
-+		      struct bpf_func_state *cur, struct bpf_idmap *idmap, bool exact)
- {
- 	int i, spi;
- 
-@@ -15691,7 +15807,12 @@ static bool stacksafe(struct bpf_verifie
- 
- 		spi = i / BPF_REG_SIZE;
- 
--		if (!(old->stack[spi].spilled_ptr.live & REG_LIVE_READ)) {
-+		if (exact &&
-+		    old->stack[spi].slot_type[i % BPF_REG_SIZE] !=
-+		    cur->stack[spi].slot_type[i % BPF_REG_SIZE])
-+			return false;
-+
-+		if (!(old->stack[spi].spilled_ptr.live & REG_LIVE_READ) && !exact) {
- 			i += BPF_REG_SIZE - 1;
- 			/* explored state didn't use this */
- 			continue;
-@@ -15741,7 +15862,7 @@ static bool stacksafe(struct bpf_verifie
- 			 * return false to continue verification of this path
- 			 */
- 			if (!regsafe(env, &old->stack[spi].spilled_ptr,
--				     &cur->stack[spi].spilled_ptr, idmap))
-+				     &cur->stack[spi].spilled_ptr, idmap, exact))
- 				return false;
- 			break;
- 		case STACK_DYNPTR:
-@@ -15823,16 +15944,16 @@ static bool refsafe(struct bpf_func_stat
-  * the current state will reach 'bpf_exit' instruction safely
-  */
- static bool func_states_equal(struct bpf_verifier_env *env, struct bpf_func_state *old,
--			      struct bpf_func_state *cur)
-+			      struct bpf_func_state *cur, bool exact)
- {
- 	int i;
- 
- 	for (i = 0; i < MAX_BPF_REG; i++)
- 		if (!regsafe(env, &old->regs[i], &cur->regs[i],
--			     &env->idmap_scratch))
-+			     &env->idmap_scratch, exact))
- 			return false;
- 
--	if (!stacksafe(env, old, cur, &env->idmap_scratch))
-+	if (!stacksafe(env, old, cur, &env->idmap_scratch, exact))
- 		return false;
- 
- 	if (!refsafe(old, cur, &env->idmap_scratch))
-@@ -15841,17 +15962,23 @@ static bool func_states_equal(struct bpf
- 	return true;
- }
- 
-+static void reset_idmap_scratch(struct bpf_verifier_env *env)
++SEC("?raw_tp")
++__success
++__naked int triple_continue(void)
 +{
-+	env->idmap_scratch.tmp_id_gen = env->id_gen;
-+	memset(&env->idmap_scratch.map, 0, sizeof(env->idmap_scratch.map));
++	/* This is equivalent to C program below.
++	 * High branching factor of the loop body turned out to be
++	 * problematic for one of the iterator convergence tracking
++	 * algorithms explored.
++	 *
++	 * r6 = bpf_get_prandom_u32()
++	 * bpf_iter_num_new(&fp[-8], 0, 10)
++	 * while (bpf_iter_num_next(&fp[-8])) {
++	 *   if (bpf_get_prandom_u32() != 42)
++	 *     continue;
++	 *   if (bpf_get_prandom_u32() != 42)
++	 *     continue;
++	 *   if (bpf_get_prandom_u32() != 42)
++	 *     continue;
++	 *   r0 += 0;
++	 * }
++	 * bpf_iter_num_destroy(&fp[-8])
++	 * return 0
++	 */
++	asm volatile (
++		"r1 = r10;"
++		"r1 += -8;"
++		"r2 = 0;"
++		"r3 = 10;"
++		"call %[bpf_iter_num_new];"
++	"loop_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_next];"
++		"if r0 == 0 goto loop_end_%=;"
++		"call %[bpf_get_prandom_u32];"
++		"if r0 != 42 goto loop_%=;"
++		"call %[bpf_get_prandom_u32];"
++		"if r0 != 42 goto loop_%=;"
++		"call %[bpf_get_prandom_u32];"
++		"if r0 != 42 goto loop_%=;"
++		"r0 += 0;"
++		"goto loop_%=;"
++	"loop_end_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_destroy];"
++		"r0 = 0;"
++		"exit;"
++		:
++		: __imm(bpf_get_prandom_u32),
++		  __imm(bpf_iter_num_new),
++		  __imm(bpf_iter_num_next),
++		  __imm(bpf_iter_num_destroy)
++		: __clobber_all
++	);
 +}
 +
- static bool states_equal(struct bpf_verifier_env *env,
- 			 struct bpf_verifier_state *old,
--			 struct bpf_verifier_state *cur)
-+			 struct bpf_verifier_state *cur,
-+			 bool exact)
- {
- 	int i;
- 
- 	if (old->curframe != cur->curframe)
- 		return false;
- 
--	env->idmap_scratch.tmp_id_gen = env->id_gen;
--	memset(&env->idmap_scratch.map, 0, sizeof(env->idmap_scratch.map));
-+	reset_idmap_scratch(env);
- 
- 	/* Verification state from speculative execution simulation
- 	 * must never prune a non-speculative execution one.
-@@ -15881,7 +16008,7 @@ static bool states_equal(struct bpf_veri
- 	for (i = 0; i <= old->curframe; i++) {
- 		if (old->frame[i]->callsite != cur->frame[i]->callsite)
- 			return false;
--		if (!func_states_equal(env, old->frame[i], cur->frame[i]))
-+		if (!func_states_equal(env, old->frame[i], cur->frame[i], exact))
- 			return false;
- 	}
- 	return true;
-@@ -16136,7 +16263,7 @@ static int is_state_visited(struct bpf_v
- 	struct bpf_verifier_state_list *new_sl;
- 	struct bpf_verifier_state_list *sl, **pprev;
- 	struct bpf_verifier_state *cur = env->cur_state, *new;
--	int i, j, err, states_cnt = 0;
-+	int i, j, n, err, states_cnt = 0;
- 	bool force_new_state = env->test_state_freq || is_force_checkpoint(env, insn_idx);
- 	bool add_new_state = force_new_state;
- 
-@@ -16191,9 +16318,33 @@ static int is_state_visited(struct bpf_v
- 			 * It's safe to assume that iterator loop will finish, taking into
- 			 * account iter_next() contract of eventually returning
- 			 * sticky NULL result.
-+			 *
-+			 * Note, that states have to be compared exactly in this case because
-+			 * read and precision marks might not be finalized inside the loop.
-+			 * E.g. as in the program below:
-+			 *
-+			 *     1. r7 = -16
-+			 *     2. r6 = bpf_get_prandom_u32()
-+			 *     3. while (bpf_iter_num_next(&fp[-8])) {
-+			 *     4.   if (r6 != 42) {
-+			 *     5.     r7 = -32
-+			 *     6.     r6 = bpf_get_prandom_u32()
-+			 *     7.     continue
-+			 *     8.   }
-+			 *     9.   r0 = r10
-+			 *    10.   r0 += r7
-+			 *    11.   r8 = *(u64 *)(r0 + 0)
-+			 *    12.   r6 = bpf_get_prandom_u32()
-+			 *    13. }
-+			 *
-+			 * Here verifier would first visit path 1-3, create a checkpoint at 3
-+			 * with r7=-16, continue to 4-7,3. Existing checkpoint at 3 does
-+			 * not have read or precision mark for r7 yet, thus inexact states
-+			 * comparison would discard current state with r7=-32
-+			 * => unsafe memory access at 11 would not be caught.
- 			 */
- 			if (is_iter_next_insn(env, insn_idx)) {
--				if (states_equal(env, &sl->state, cur)) {
-+				if (states_equal(env, &sl->state, cur, true)) {
- 					struct bpf_func_state *cur_frame;
- 					struct bpf_reg_state *iter_state, *iter_reg;
- 					int spi;
-@@ -16216,7 +16367,7 @@ static int is_state_visited(struct bpf_v
- 			}
- 			/* attempt to detect infinite loop to avoid unnecessary doomed work */
- 			if (states_maybe_looping(&sl->state, cur) &&
--			    states_equal(env, &sl->state, cur) &&
-+			    states_equal(env, &sl->state, cur, false) &&
- 			    !iter_active_depths_differ(&sl->state, cur)) {
- 				verbose_linfo(env, insn_idx, "; ");
- 				verbose(env, "infinite loop detected at insn %d\n", insn_idx);
-@@ -16241,7 +16392,7 @@ skip_inf_loop_check:
- 				add_new_state = false;
- 			goto miss;
- 		}
--		if (states_equal(env, &sl->state, cur)) {
-+		if (states_equal(env, &sl->state, cur, false)) {
- hit:
- 			sl->hit_cnt++;
- 			/* reached equivalent register/stack state,
-@@ -16280,8 +16431,12 @@ miss:
- 		 * to keep checking from state equivalence point of view.
- 		 * Higher numbers increase max_states_per_insn and verification time,
- 		 * but do not meaningfully decrease insn_processed.
-+		 * 'n' controls how many times state could miss before eviction.
-+		 * Use bigger 'n' for checkpoints because evicting checkpoint states
-+		 * too early would hinder iterator convergence.
- 		 */
--		if (sl->miss_cnt > sl->hit_cnt * 3 + 3) {
-+		n = is_force_checkpoint(env, insn_idx) && sl->state.branches > 0 ? 64 : 3;
-+		if (sl->miss_cnt > sl->hit_cnt * n + n) {
- 			/* the state is unlikely to be useful. Remove it to
- 			 * speed up verification
- 			 */
-@@ -16355,6 +16510,7 @@ next:
- 
- 	cur->parent = new;
- 	cur->first_insn_idx = insn_idx;
-+	cur->dfs_depth = new->dfs_depth + 1;
- 	clear_jmp_history(cur);
- 	new_sl->next = *explored_state(env, insn_idx);
- 	*explored_state(env, insn_idx) = new_sl;
++SEC("?raw_tp")
++__success
++__naked int widen_spill(void)
++{
++	/* This is equivalent to C program below.
++	 * The counter is stored in fp[-16], if this counter is not widened
++	 * verifier states representing loop iterations would never converge.
++	 *
++	 * fp[-16] = 0
++	 * bpf_iter_num_new(&fp[-8], 0, 10)
++	 * while (bpf_iter_num_next(&fp[-8])) {
++	 *   r0 = fp[-16];
++	 *   r0 += 1;
++	 *   fp[-16] = r0;
++	 * }
++	 * bpf_iter_num_destroy(&fp[-8])
++	 * return 0
++	 */
++	asm volatile (
++		"r0 = 0;"
++		"*(u64 *)(r10 - 16) = r0;"
++		"r1 = r10;"
++		"r1 += -8;"
++		"r2 = 0;"
++		"r3 = 10;"
++		"call %[bpf_iter_num_new];"
++	"loop_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_next];"
++		"if r0 == 0 goto loop_end_%=;"
++		"r0 = *(u64 *)(r10 - 16);"
++		"r0 += 1;"
++		"*(u64 *)(r10 - 16) = r0;"
++		"goto loop_%=;"
++	"loop_end_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_destroy];"
++		"r0 = 0;"
++		"exit;"
++		:
++		: __imm(bpf_iter_num_new),
++		  __imm(bpf_iter_num_next),
++		  __imm(bpf_iter_num_destroy)
++		: __clobber_all
++	);
++}
++
++SEC("raw_tp")
++__success
++__naked int checkpoint_states_deletion(void)
++{
++	/* This is equivalent to C program below.
++	 *
++	 *   int *a, *b, *c, *d, *e, *f;
++	 *   int i, sum = 0;
++	 *   bpf_for(i, 0, 10) {
++	 *     a = bpf_map_lookup_elem(&amap, &i);
++	 *     b = bpf_map_lookup_elem(&amap, &i);
++	 *     c = bpf_map_lookup_elem(&amap, &i);
++	 *     d = bpf_map_lookup_elem(&amap, &i);
++	 *     e = bpf_map_lookup_elem(&amap, &i);
++	 *     f = bpf_map_lookup_elem(&amap, &i);
++	 *     if (a) sum += 1;
++	 *     if (b) sum += 1;
++	 *     if (c) sum += 1;
++	 *     if (d) sum += 1;
++	 *     if (e) sum += 1;
++	 *     if (f) sum += 1;
++	 *   }
++	 *   return 0;
++	 *
++	 * The body of the loop spawns multiple simulation paths
++	 * with different combination of NULL/non-NULL information for a/b/c/d/e/f.
++	 * Each combination is unique from states_equal() point of view.
++	 * Explored states checkpoint is created after each iterator next call.
++	 * Iterator convergence logic expects that eventually current state
++	 * would get equal to one of the explored states and thus loop
++	 * exploration would be finished (at-least for a specific path).
++	 * Verifier evicts explored states with high miss to hit ratio
++	 * to to avoid comparing current state with too many explored
++	 * states per instruction.
++	 * This test is designed to "stress test" eviction policy defined using formula:
++	 *
++	 *    sl->miss_cnt > sl->hit_cnt * N + N // if true sl->state is evicted
++	 *
++	 * Currently N is set to 64, which allows for 6 variables in this test.
++	 */
++	asm volatile (
++		"r6 = 0;"                  /* a */
++		"r7 = 0;"                  /* b */
++		"r8 = 0;"                  /* c */
++		"*(u64 *)(r10 - 24) = r6;" /* d */
++		"*(u64 *)(r10 - 32) = r6;" /* e */
++		"*(u64 *)(r10 - 40) = r6;" /* f */
++		"r9 = 0;"                  /* sum */
++		"r1 = r10;"
++		"r1 += -8;"
++		"r2 = 0;"
++		"r3 = 10;"
++		"call %[bpf_iter_num_new];"
++	"loop_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_next];"
++		"if r0 == 0 goto loop_end_%=;"
++
++		"*(u64 *)(r10 - 16) = r0;"
++
++		"r1 = %[amap] ll;"
++		"r2 = r10;"
++		"r2 += -16;"
++		"call %[bpf_map_lookup_elem];"
++		"r6 = r0;"
++
++		"r1 = %[amap] ll;"
++		"r2 = r10;"
++		"r2 += -16;"
++		"call %[bpf_map_lookup_elem];"
++		"r7 = r0;"
++
++		"r1 = %[amap] ll;"
++		"r2 = r10;"
++		"r2 += -16;"
++		"call %[bpf_map_lookup_elem];"
++		"r8 = r0;"
++
++		"r1 = %[amap] ll;"
++		"r2 = r10;"
++		"r2 += -16;"
++		"call %[bpf_map_lookup_elem];"
++		"*(u64 *)(r10 - 24) = r0;"
++
++		"r1 = %[amap] ll;"
++		"r2 = r10;"
++		"r2 += -16;"
++		"call %[bpf_map_lookup_elem];"
++		"*(u64 *)(r10 - 32) = r0;"
++
++		"r1 = %[amap] ll;"
++		"r2 = r10;"
++		"r2 += -16;"
++		"call %[bpf_map_lookup_elem];"
++		"*(u64 *)(r10 - 40) = r0;"
++
++		"if r6 == 0 goto +1;"
++		"r9 += 1;"
++		"if r7 == 0 goto +1;"
++		"r9 += 1;"
++		"if r8 == 0 goto +1;"
++		"r9 += 1;"
++		"r0 = *(u64 *)(r10 - 24);"
++		"if r0 == 0 goto +1;"
++		"r9 += 1;"
++		"r0 = *(u64 *)(r10 - 32);"
++		"if r0 == 0 goto +1;"
++		"r9 += 1;"
++		"r0 = *(u64 *)(r10 - 40);"
++		"if r0 == 0 goto +1;"
++		"r9 += 1;"
++
++		"goto loop_%=;"
++	"loop_end_%=:"
++		"r1 = r10;"
++		"r1 += -8;"
++		"call %[bpf_iter_num_destroy];"
++		"r0 = 0;"
++		"exit;"
++		:
++		: __imm(bpf_map_lookup_elem),
++		  __imm(bpf_iter_num_new),
++		  __imm(bpf_iter_num_next),
++		  __imm(bpf_iter_num_destroy),
++		  __imm_addr(amap)
++		: __clobber_all
++	);
++}
++
+ char _license[] SEC("license") = "GPL";
 
 
