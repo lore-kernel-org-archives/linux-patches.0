@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8471276C74;
-	Mon, 29 Jan 2024 17:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DFF76C75;
+	Mon, 29 Jan 2024 17:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548652; cv=none; b=CXj8EvkDROJExerjuvSc/tFX2CO6ebaCxyXtgch1PTUuIEfXHoolVEmpb27uGt3UZ6u/GhwhluwfgkMGi0LS5MaPpJLdWWKyveV2s1ipoBr93oSkhoRwnHWiQ8BMw0KB988AcompVxEtIieKD+kg3g5+Pgw9k7vv1/V6wPcYzKk=
+	t=1706548653; cv=none; b=FThb7X0sKbh65kOrBptJfmh/2hSr9S82SdOz5lyopmjBRvVyfHsEsg5tktk87Gj3nqnaJB5n2vRvKawtlYRzvIlZpiFr8SvOT3QZ4k4TJmCxIvOHXt3LVEjdE27gsljM63JxDTzZAfqjhtctA81j3sXH76zaPPJJ8jXZ6mm7jZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548652; c=relaxed/simple;
-	bh=LI5ah4K2JsWLNQph7YzNqxiahWyjMVH5Y+i9njoH6h8=;
+	s=arc-20240116; t=1706548653; c=relaxed/simple;
+	bh=W+FXRcRoUKGPwT2qy9FeHCb/y5rhYdjjiCIJ6lCsO0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/skFYnPjrT2ceB05p3IWFFHJTSPv9YuYpBMxOHgj2b8loqRU2hqa87G2zLkJ2q9UyApZSsOEjPVDU9E9BInL8Oz1AHXfsJISi6E34CSgQLYcZSTEZKk36Kd/4Ts1QF/gvkrHEBrp/zCKUVAJ1cFepqZXdRQX0x6ZHywI2Hl7JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3EB1Rr7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iYVcb5I+gV4iiAZQBHYRe5MN80cIh9GP0WkIp4MF4/Yozn0URRH6ZXja/rB/Zf8jcK9nbLaFQGMR8QI5zG4TSwZ0RRO56RZwmwTo85im7Lfr5zPwr+J7jwp0ZnUArXUpFHf+A8kUU6OHgRLWpVzbT9fjvA6kUjb9A62U5tGTH04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/z2USzS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3EB1Rr7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1DCC433F1;
-	Mon, 29 Jan 2024 17:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/z2USzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204EFC43390;
+	Mon, 29 Jan 2024 17:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548652;
-	bh=LI5ah4K2JsWLNQph7YzNqxiahWyjMVH5Y+i9njoH6h8=;
+	s=korg; t=1706548653;
+	bh=W+FXRcRoUKGPwT2qy9FeHCb/y5rhYdjjiCIJ6lCsO0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3EB1Rr7MQv7Sf2HJ1JcD0wtY4+a50ASn8LSPi9ZyUClLMX0Gnn2+Q9a2TLsvxHJO
-	 yqVpSIaY04D0/f9aWZf3n9EaM+491JuzdkfZizb56WVFc9kx3en5ZlGhEVc+nO64Qv
-	 0OGEwbmJCk3/Tlz1xm5h82btqEpF4J4wFExVKqOU=
+	b=j/z2USzS5e6Ve1E1VgZpTlcv+IFKYZIXcN55bEWH003B70tA0oNNhb54SnwUKSZGn
+	 i8jPiGYnLue1rE2IP8bh2N3CQziYLz8VTE5KqwapopMYppf5zSGc6iTD9lRebUWg2x
+	 B8pq0qixb6aoc0VajxMOCr1orFNMp5P9G3eqM2zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 298/331] drm/amdgpu/gfx10: set UNORD_DISPATCH in compute MQDs
-Date: Mon, 29 Jan 2024 09:06:02 -0800
-Message-ID: <20240129170023.590657617@linuxfoundation.org>
+	Dawei Li <dawei.li@shingroup.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.6 326/331] genirq: Initialize resend_node hlist for all interrupt descriptors
+Date: Mon, 29 Jan 2024 09:06:30 -0800
+Message-ID: <20240129170024.421646430@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Dawei Li <dawei.li@shingroup.cn>
 
-[ Upstream commit 03ff6d7238b77e5fb2b85dc5fe01d2db9eb893bd ]
+commit b184c8c2889ceef0a137c7d0567ef9fe3d92276e upstream.
 
-This needs to be set to 1 to avoid a potential deadlock in
-the GC 10.x and newer.  On GC 9.x and older, this needs
-to be set to 0.  This can lead to hangs in some mixed
-graphics and compute workloads.  Updated firmware is also
-required for AQL.
+For a CONFIG_SPARSE_IRQ=n kernel, early_irq_init() is supposed to
+initialize all interrupt descriptors.
 
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+It does except for irq_desc::resend_node, which ia only initialized for the
+first descriptor.
+
+Use the indexed decriptor and not the base pointer to address that.
+
+Fixes: bc06a9e08742 ("genirq: Use hlist for managing resend handlers")
+Signed-off-by: Dawei Li <dawei.li@shingroup.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20240122085716.2999875-5-dawei.li@shingroup.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c           | 2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ kernel/irq/irqdesc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-index 34dc3d5bbf35..c2b9dfc6451d 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -6572,7 +6572,7 @@ static int gfx_v10_0_compute_mqd_init(struct amdgpu_device *adev, void *m,
- #ifdef __BIG_ENDIAN
- 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, ENDIAN_SWAP, 1);
- #endif
--	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, UNORD_DISPATCH, 0);
-+	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, UNORD_DISPATCH, 1);
- 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, TUNNEL_DISPATCH, 0);
- 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, PRIV_STATE, 1);
- 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, KMD_QUEUE, 1);
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-index 8b7fed913526..22cbfa1bdadd 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
-@@ -170,6 +170,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
- 	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
- 	m->cp_hqd_pq_control |=
- 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
-+	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
- 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
- 
- 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
--- 
-2.43.0
-
+--- a/kernel/irq/irqdesc.c
++++ b/kernel/irq/irqdesc.c
+@@ -600,7 +600,7 @@ int __init early_irq_init(void)
+ 		mutex_init(&desc[i].request_mutex);
+ 		init_waitqueue_head(&desc[i].wait_for_threads);
+ 		desc_set_defaults(i, &desc[i], node, NULL, NULL);
+-		irq_resend_init(desc);
++		irq_resend_init(&desc[i]);
+ 	}
+ 	return arch_early_irq_init();
+ }
 
 
