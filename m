@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A8415B313;
-	Mon, 29 Jan 2024 17:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E08315B316;
+	Mon, 29 Jan 2024 17:11:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548264; cv=none; b=Hv3Xj4X/ADh8vjdN48AWoWqFwCd2mKVlUjPiYJSBBEMua2J5tR5tZ/2juF3HLI7Cu4bZe2lvRMD5wLCLp198WnYuPr9f1kiqrbqQ2QeIkqH8pyHaWG+WoEs7tVqoTLyKpi2MpiRSBROHATpHoxEuIFmGgMlpLh33UbRJOOksc6E=
+	t=1706548265; cv=none; b=VYObktVxSIpWat8sm2iWdPYiYc01FP0471grBTxp/FpF5+tLTN8wiVBW8QweIGBQ5lhWyyvQZ9W3z1qWdZPGim0GpH2A2ppuxbJJ6MD0mac9jqqD4BqTLHorR0h2MbgsTld9v6N9VUgOlXNgdR53ze1K2WaYVc7PhGtvCJI65Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548264; c=relaxed/simple;
-	bh=soTI/TfVbsA34OUhn0ktYBAKkgQRcB6lzcS10rhRlb4=;
+	s=arc-20240116; t=1706548265; c=relaxed/simple;
+	bh=GsGo1I9QbVwsOZms9QFgyefKstJdGFT1JVU3ZBJAaxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoChiFt6UMaY2tm6gAeRpbWMtGxNvBAbe70LR5Lp/yO3yTWUSi8tFM2G04S49Ms7xhYLlZO7M/shqRa9Muqfkk1g0s0bG5sq0h6nGMQNL0eydwUk3+v1bgPOZ+rCwRwAzu+GHPwyHN3j0eKUy1P0fU/kaS39P37jODn1lfZsWp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6yXDd/Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gk4R34Auqbwz+X6MzdBOySmz29Iefb9eX+z7oel4Rzy7ucIetRGWwV7V18OvLCwFTVPo7wM56eqMxUvbfgSCmLOpkwlhZq3Z8AzD6hj05LOG8SYDiF5l1YhOWh5GvZQxKvhe7fo2nuVRWsDrgtuLr40uKCjZK8jE8SyZ90Z9Vqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzNdeo96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6yXDd/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8677C433A6;
-	Mon, 29 Jan 2024 17:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzNdeo96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC65C43394;
+	Mon, 29 Jan 2024 17:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548263;
-	bh=soTI/TfVbsA34OUhn0ktYBAKkgQRcB6lzcS10rhRlb4=;
+	s=korg; t=1706548264;
+	bh=GsGo1I9QbVwsOZms9QFgyefKstJdGFT1JVU3ZBJAaxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6yXDd/ZOTYlHBfchNh9ZZzgAvM/3tv53xw3aZXH0aHas+CbUejqBS69swpb+g7uR
-	 lba9xTBb87yZ/pbH+XmnUMvpAI4CtYJ4ELuE9JYWi68N5hZstmPUEgjHYyTSu+UfcG
-	 kPMCQYX99WwPRkLHbOJiEqD+vucG3fVHhWCnALxI=
+	b=SzNdeo968ZwuduoSR4WwbkHEk71yVhnRrsyRD4MTO0hBCG91qbphRRabZk/zVI+oB
+	 eHGc4CXrljNRzzuzhZ6hkSki8AoiyZ2Eqlybxn+myOFwO2U1AYHvgn1Uqn0QM/bW7C
+	 XaLiXdjNVtqT+94R1oWlT9RC1t4S0Zm+EW5A985w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 281/346] thermal: intel: hfi: Disable an HFI instance when all its CPUs go offline
-Date: Mon, 29 Jan 2024 09:05:12 -0800
-Message-ID: <20240129170024.641904657@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 055/185] mm/rmap: fix misplaced parenthesis of a likely()
+Date: Mon, 29 Jan 2024 09:04:15 -0800
+Message-ID: <20240129170000.364828537@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 1c53081d773c2cb4461636559b0d55b46559ceec ]
+commit f67f8d4a8c1e1ebc85a6cbdb9a7266f14863461c upstream.
 
-In preparation to support hibernation, add functionality to disable an HFI
-instance during CPU offline. The last CPU of an instance that goes offline
-will disable such instance.
+Running my yearly branch profiler to see where likely/unlikely annotation
+may be added or removed, I discovered this:
 
-The Intel Software Development Manual states that the operating system must
-wait for the hardware to set MSR_IA32_PACKAGE_THERM_STATUS[26] after
-disabling an HFI instance to ensure that it will no longer write on the HFI
-memory. Some processors, however, do not ever set such bit. Wait a minimum
-of 2ms to give time hardware to complete any pending memory writes.
+correct incorrect  %        Function                  File              Line
+ ------- ---------  -        --------                  ----              ----
+       0   457918 100 page_try_dup_anon_rmap         rmap.h               264
+[..]
+  458021        0   0 page_try_dup_anon_rmap         rmap.h               265
 
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 97566d09fd02 ("thermal: intel: hfi: Add syscore callbacks for system-wide PM")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+I thought it was interesting that line 264 of rmap.h had a 100% incorrect
+annotation, but the line directly below it was 100% correct. Looking at the
+code:
+
+	if (likely(!is_device_private_page(page) &&
+	    unlikely(page_needs_cow_for_dma(vma, page))))
+
+It didn't make sense. The "likely()" was around the entire if statement
+(not just the "!is_device_private_page(page)"), which also included the
+"unlikely()" portion of that if condition.
+
+If the unlikely portion is unlikely to be true, that would make the entire
+if condition unlikely to be true, so it made no sense at all to say the
+entire if condition is true.
+
+What is more likely to be likely is just the first part of the if statement
+before the && operation. It's likely to be a misplaced parenthesis. And
+after making the if condition broken into a likely() && unlikely(), both
+now appear to be correct!
+
+Link: https://lkml.kernel.org/r/20231201145936.5ddfdb50@gandalf.local.home
+Fixes:fb3d824d1a46c ("mm/rmap: split page_dup_rmap() into page_dup_file_rmap() and page_try_dup_anon_rmap()")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/intel_hfi.c | 35 +++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ include/linux/rmap.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/intel/intel_hfi.c b/drivers/thermal/intel/intel_hfi.c
-index 820613e293cd..bb25c75acd45 100644
---- a/drivers/thermal/intel/intel_hfi.c
-+++ b/drivers/thermal/intel/intel_hfi.c
-@@ -24,6 +24,7 @@
- #include <linux/bitops.h>
- #include <linux/cpufeature.h>
- #include <linux/cpumask.h>
-+#include <linux/delay.h>
- #include <linux/gfp.h>
- #include <linux/io.h>
- #include <linux/kernel.h>
-@@ -367,6 +368,32 @@ static void hfi_set_hw_table(struct hfi_instance *hfi_instance)
- 	wrmsrl(MSR_IA32_HW_FEEDBACK_PTR, msr_val);
- }
- 
-+/* Caller must hold hfi_instance_lock. */
-+static void hfi_disable(void)
-+{
-+	u64 msr_val;
-+	int i;
-+
-+	rdmsrl(MSR_IA32_HW_FEEDBACK_CONFIG, msr_val);
-+	msr_val &= ~HW_FEEDBACK_CONFIG_HFI_ENABLE_BIT;
-+	wrmsrl(MSR_IA32_HW_FEEDBACK_CONFIG, msr_val);
-+
-+	/*
-+	 * Wait for hardware to acknowledge the disabling of HFI. Some
-+	 * processors may not do it. Wait for ~2ms. This is a reasonable
-+	 * time for hardware to complete any pending actions on the HFI
-+	 * memory.
-+	 */
-+	for (i = 0; i < 2000; i++) {
-+		rdmsrl(MSR_IA32_PACKAGE_THERM_STATUS, msr_val);
-+		if (msr_val & PACKAGE_THERM_STATUS_HFI_UPDATED)
-+			break;
-+
-+		udelay(1);
-+		cpu_relax();
-+	}
-+}
-+
- /**
-  * intel_hfi_online() - Enable HFI on @cpu
-  * @cpu:	CPU in which the HFI will be enabled
-@@ -421,6 +448,10 @@ void intel_hfi_online(unsigned int cpu)
- 	/*
- 	 * Hardware is programmed with the physical address of the first page
- 	 * frame of the table. Hence, the allocated memory must be page-aligned.
-+	 *
-+	 * Some processors do not forget the initial address of the HFI table
-+	 * even after having been reprogrammed. Keep using the same pages. Do
-+	 * not free them.
+--- a/include/linux/rmap.h
++++ b/include/linux/rmap.h
+@@ -250,8 +250,8 @@ static inline int page_try_dup_anon_rmap
+ 	 * guarantee the pinned page won't be randomly replaced in the
+ 	 * future on write faults.
  	 */
- 	hfi_instance->hw_table = alloc_pages_exact(hfi_features.nr_table_pages,
- 						   GFP_KERNEL | __GFP_ZERO);
-@@ -485,6 +516,10 @@ void intel_hfi_offline(unsigned int cpu)
+-	if (likely(!is_device_private_page(page) &&
+-	    unlikely(page_needs_cow_for_dma(vma, page))))
++	if (likely(!is_device_private_page(page)) &&
++	    unlikely(page_needs_cow_for_dma(vma, page)))
+ 		return -EBUSY;
  
- 	mutex_lock(&hfi_instance_lock);
- 	cpumask_clear_cpu(cpu, hfi_instance->cpus);
-+
-+	if (!cpumask_weight(hfi_instance->cpus))
-+		hfi_disable();
-+
- 	mutex_unlock(&hfi_instance_lock);
- }
- 
--- 
-2.43.0
-
+ 	ClearPageAnonExclusive(page);
 
 
