@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03556F063;
-	Mon, 29 Jan 2024 17:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7856F06D;
+	Mon, 29 Jan 2024 17:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548455; cv=none; b=clYKWBVBZxUhx7YDyvVhBftIOyAirKiaXirS+B7EY1ln6pbTWHzpKXV5HAOlmXyTi//wwq2Yw5H+pX1JfbtIDzRwAN7jekOmWcYs3BPHEvBf1FMrRYBsp9BdenefQbmeWYOn0jHoJNOAZS0HCSd3DOT6HjvysW1tnnB1quYfwp8=
+	t=1706548456; cv=none; b=cWcjVeHKUAqCBU5lnx58EwaBmejmQU4M4Rz9hKA0wjBhuqgSIJ8H/ck66NkT/oJNVdM03iDAf9oT518hgmOJlOK6R9qRP5skhMi3c1PFy2s1HwuITYc22lMlNT509tVtmPI5//I2VHYDg2XLruzFsrXQdsGKoxPcbGyDbM3zJFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548455; c=relaxed/simple;
-	bh=R55As2AcTkSCB41KxvHfhH9YtKphN7StdpSXCHYrewU=;
+	s=arc-20240116; t=1706548456; c=relaxed/simple;
+	bh=kZeLg6J0BNf8ppkldDm+7ulco4YEAzBO4PA3ASOo1i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W2vxeUOnWmFXOqeB6jbMfh0y+yO1MG5MseD5ZNh4Bfe8jeR+Ym9XtQR/4sDc7HQ97pcW613Rzn9B7wsXWKeagPr2kqPVgEqfotiHRQ1Qqu7653y6X6SM3G/VPZPR/wNnLx0eXO4ykB/s7TX/hVch4KbYvciLBzzjCAT2t+I3fcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEpojmzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9IX4mnqiccvfqj3L5s/qqlrEQGYfCF3w8iJHDHj+L0Zsaaxr94MJqT399LE/7YiR7Gg0MvrWhbc98JsjntmBGXdBawyJKPVhX+Xdnm+Gs3oRnwY6jSAQw+HKKNyFZcjXzvrMXyrBmanNyuN4cArmorljeOc+KkzHLz5k5D6poM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQXiIpnz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEpojmzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BE2C433F1;
-	Mon, 29 Jan 2024 17:14:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQXiIpnz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBB8C433F1;
+	Mon, 29 Jan 2024 17:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548455;
-	bh=R55As2AcTkSCB41KxvHfhH9YtKphN7StdpSXCHYrewU=;
+	s=korg; t=1706548456;
+	bh=kZeLg6J0BNf8ppkldDm+7ulco4YEAzBO4PA3ASOo1i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEpojmzUp0O6nCqV475nDX57P4p1/o0aIdKbNScEABByhbgYkqOrVKRSxdB1lVK51
-	 cgKhscaNnygGA214hebUtrmOciOK6ax3EE+aUva4WLTkrU8ji5FCnlo47kmMX1ArTl
-	 /b71JBWLDeuMPep6oSf33iPrrY2X6wWaqzmeAUtY=
+	b=dQXiIpnzTsI8m7DRiGqnOri5xDiMoau+zwKpKBuSiW/I8zh+Wtv325njTRuqf5zVy
+	 u4tc9/tXtfKy58M0IuJtMajAF7HaiGMgMzlT8KFGCKfis6sA7KOspwmcRwNP2XJ+Wj
+	 mby/GeTyeC74YiFxFpfTJ6f7XLr55k8BGlgsMJJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Qiang Yu <quic_qianyu@quicinc.com>,
 	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.6 067/331] bus: mhi: host: Add alignment check for event ring read pointer
-Date: Mon, 29 Jan 2024 09:02:11 -0800
-Message-ID: <20240129170016.889846235@linuxfoundation.org>
+Subject: [PATCH 6.6 068/331] bus: mhi: host: Drop chan lock before queuing buffers
+Date: Mon, 29 Jan 2024 09:02:12 -0800
+Message-ID: <20240129170016.918050709@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,41 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+From: Qiang Yu <quic_qianyu@quicinc.com>
 
-commit eff9704f5332a13b08fbdbe0f84059c9e7051d5f upstream.
+commit 01bd694ac2f682fb8017e16148b928482bc8fa4b upstream.
 
-Though we do check the event ring read pointer by "is_valid_ring_ptr"
-to make sure it is in the buffer range, but there is another risk the
-pointer may be not aligned.  Since we are expecting event ring elements
-are 128 bits(struct mhi_ring_element) aligned, an unaligned read pointer
-could lead to multiple issues like DoS or ring buffer memory corruption.
+Ensure read and write locks for the channel are not taken in succession by
+dropping the read lock from parse_xfer_event() such that a callback given
+to client can potentially queue buffers and acquire the write lock in that
+process. Any queueing of buffers should be done without channel read lock
+acquired as it can result in multiple locks and a soft lockup.
 
-So add a alignment check for event ring read pointer.
-
-Fixes: ec32332df764 ("bus: mhi: core: Sanity check values from remote device before use")
-cc: stable@vger.kernel.org
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: <stable@vger.kernel.org> # 5.7
+Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231031-alignment_check-v2-1-1441db7c5efd@quicinc.com
+Link: https://lore.kernel.org/r/1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com
+[mani: added fixes tag and cc'ed stable]
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/host/main.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/bus/mhi/host/main.c
 +++ b/drivers/bus/mhi/host/main.c
-@@ -268,7 +268,8 @@ static void mhi_del_ring_element(struct
+@@ -643,6 +643,8 @@ static int parse_xfer_event(struct mhi_c
+ 			mhi_del_ring_element(mhi_cntrl, tre_ring);
+ 			local_rp = tre_ring->rp;
  
- static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
- {
--	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
-+	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len &&
-+			!(addr & (sizeof(struct mhi_ring_element) - 1));
- }
++			read_unlock_bh(&mhi_chan->lock);
++
+ 			/* notify client */
+ 			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
  
- int mhi_destroy_device(struct device *dev, void *data)
+@@ -668,6 +670,8 @@ static int parse_xfer_event(struct mhi_c
+ 					kfree(buf_info->cb_buf);
+ 				}
+ 			}
++
++			read_lock_bh(&mhi_chan->lock);
+ 		}
+ 		break;
+ 	} /* CC_EOT */
 
 
