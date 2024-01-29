@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44DA159577;
-	Mon, 29 Jan 2024 17:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CAC158D64;
+	Mon, 29 Jan 2024 17:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548232; cv=none; b=gez61IgY4PVDBX93WaWqts6z6v/4vQzC+sI3UGgDapSS8Os/Z0vmIRciFz+FRJvt5phxRW2KlZSzU7JxWWMEyqAWrNPm/vUMjhxb0TaF2WW3vuJ/WQEvI2wawNXeAjNdKkVzNftSCVaXEJQ4D2Z6Dser5THtm7MkCdmNSwFyiNY=
+	t=1706548233; cv=none; b=n9hZN/SIPqwVXZXAbvuswiV8uTIYwmMXc6jNRyzsXCZ95BNxiGR0Fh2PsOP5/ihWFu1pMP9Ci5CmuTPb8xO5yWhbsn5Nrvy4m56B3PqrwowbEwpH85IpBGNAaqOyIRxSZILWXYUruNeuVcA5G1sHpVGG13F8QYjty9GT8MxztrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548232; c=relaxed/simple;
-	bh=Ob17j2weYREMFvuYl1CpcaXXbgy3Y0upbNfijM0m/Es=;
+	s=arc-20240116; t=1706548233; c=relaxed/simple;
+	bh=bPnHeVED4NDG7OOJnTDPeXHBgTkYV68JRcBSHPwA65E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQ+tiqffgXLWTLf7JeP3e+CIPDBcy+cvRxej1i01quMS9CVDWJnyToimjO/4MBxlWIPLSujpnc6WxKeb4rN4JJqD9mFwDv/EINBxz1W+RgMCH9sMf4hbehVkXUXzrRhWCrcOjL95BwcC/TaIEcWc3HLnJZHKLcDXDZPt/7TOcqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoFV/ORv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ifAE6XczNoUuxyfxchj1ue0uhSauwc2A4ChMZtpovTEMSDw/jQ0GSufXoNMSInVpXz+4LZnDX+1gk07BO13KbQLSe2uzWT0xWe5skjM3loarxYxut7lBxuM/iU7TzyTn8TAeKTM1Xd7VoZHPYERuQCSfWIvM2yYPYfUsMj0W1oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/ihRw9T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoFV/ORv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B189C43390;
-	Mon, 29 Jan 2024 17:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/ihRw9T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0A6C43390;
+	Mon, 29 Jan 2024 17:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548232;
-	bh=Ob17j2weYREMFvuYl1CpcaXXbgy3Y0upbNfijM0m/Es=;
+	s=korg; t=1706548233;
+	bh=bPnHeVED4NDG7OOJnTDPeXHBgTkYV68JRcBSHPwA65E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoFV/ORv4bjHuzl5fWs84u1hL606m0spy5pznTrL1LSdCqcvJtZQYGP3OulplMrNS
-	 o33BmDiMkX/5LneEBljZnHGC0yOpCHHpTZ8qRuf17CiGqd6Cwhh0lrE54MOh0v5/wY
-	 Pkxnr4izFpNvVoeqPxRmuaqpfrmledHTh6+iO+Pc=
+	b=F/ihRw9Tg5NgdI1cB2o1XvAeXRNzue19SWcSLFdxYZzVUcNv+ENjmg/ci76hDpbst
+	 jlm1tFeqVtRMMNNaaAhbRtSuq+BmmnMO1u8Xd8OYnY+FeNV54krqpMNK0p50cw1UFG
+	 CkQrRdXoP4P5Oo0aFnQaRlIHyfl6uhEIbNJoAXXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.7 235/346] netfilter: nft_chain_filter: handle NETDEV_UNREGISTER for inet/ingress basechain
-Date: Mon, 29 Jan 2024 09:04:26 -0800
-Message-ID: <20240129170023.313982554@linuxfoundation.org>
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 005/185] iio: adc: ad7091r: Set alert bit in config register
+Date: Mon, 29 Jan 2024 09:03:25 -0800
+Message-ID: <20240129165958.774160746@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,61 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Marcelo Schmitt <marcelo.schmitt@analog.com>
 
-commit 01acb2e8666a6529697141a6017edbf206921913 upstream.
+[ Upstream commit 149694f5e79b0c7a36ceb76e7c0d590db8f151c1 ]
 
-Remove netdevice from inet/ingress basechain in case NETDEV_UNREGISTER
-event is reported, otherwise a stale reference to netdevice remains in
-the hook list.
+The ad7091r-base driver sets up an interrupt handler for firing events
+when inputs are either above or below a certain threshold.
+However, for the interrupt signal to come from the device it must be
+configured to enable the ALERT/BUSY/GPO pin to be used as ALERT, which
+was not being done until now.
+Enable interrupt signals on the ALERT/BUSY/GPO pin by setting the proper
+bit in the configuration register.
 
-Fixes: 60a3815da702 ("netfilter: add inet ingress support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Link: https://lore.kernel.org/r/e8da2ee98d6df88318b14baf3dc9630e20218418.1702746240.git.marcelo.schmitt1@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 020e71c7ffc2 ("iio: adc: ad7091r: Allow users to configure device events")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_chain_filter.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad7091r-base.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/netfilter/nft_chain_filter.c
-+++ b/net/netfilter/nft_chain_filter.c
-@@ -357,9 +357,10 @@ static int nf_tables_netdev_event(struct
- 				  unsigned long event, void *ptr)
- {
- 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
-+	struct nft_base_chain *basechain;
- 	struct nftables_pernet *nft_net;
--	struct nft_table *table;
- 	struct nft_chain *chain, *nr;
-+	struct nft_table *table;
- 	struct nft_ctx ctx = {
- 		.net	= dev_net(dev),
- 	};
-@@ -371,7 +372,8 @@ static int nf_tables_netdev_event(struct
- 	nft_net = nft_pernet(ctx.net);
- 	mutex_lock(&nft_net->commit_mutex);
- 	list_for_each_entry(table, &nft_net->tables, list) {
--		if (table->family != NFPROTO_NETDEV)
-+		if (table->family != NFPROTO_NETDEV &&
-+		    table->family != NFPROTO_INET)
- 			continue;
+diff --git a/drivers/iio/adc/ad7091r-base.c b/drivers/iio/adc/ad7091r-base.c
+index 0e5d3d2e9c98..8aaa854f816f 100644
+--- a/drivers/iio/adc/ad7091r-base.c
++++ b/drivers/iio/adc/ad7091r-base.c
+@@ -28,6 +28,7 @@
+ #define AD7091R_REG_RESULT_CONV_RESULT(x)   ((x) & 0xfff)
  
- 		ctx.family = table->family;
-@@ -380,6 +382,11 @@ static int nf_tables_netdev_event(struct
- 			if (!nft_is_base_chain(chain))
- 				continue;
+ /* AD7091R_REG_CONF */
++#define AD7091R_REG_CONF_ALERT_EN   BIT(4)
+ #define AD7091R_REG_CONF_AUTO   BIT(8)
+ #define AD7091R_REG_CONF_CMD    BIT(10)
  
-+			basechain = nft_base_chain(chain);
-+			if (table->family == NFPROTO_INET &&
-+			    basechain->ops.hooknum != NF_INET_INGRESS)
-+				continue;
+@@ -232,6 +233,11 @@ int ad7091r_probe(struct device *dev, const char *name,
+ 	iio_dev->channels = chip_info->channels;
+ 
+ 	if (irq) {
++		ret = regmap_update_bits(st->map, AD7091R_REG_CONF,
++					 AD7091R_REG_CONF_ALERT_EN, BIT(4));
++		if (ret)
++			return ret;
 +
- 			ctx.chain = chain;
- 			nft_netdev_event(event, dev, &ctx);
- 		}
+ 		ret = devm_request_threaded_irq(dev, irq, NULL,
+ 				ad7091r_event_handler,
+ 				IRQF_TRIGGER_FALLING | IRQF_ONESHOT, name, iio_dev);
+-- 
+2.43.0
+
 
 
