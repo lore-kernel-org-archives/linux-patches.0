@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE151586E8;
-	Mon, 29 Jan 2024 17:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F00157048;
+	Mon, 29 Jan 2024 17:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548058; cv=none; b=YyjAE4Ll3f4R1z9+LI6C4v3wmsTtgp5jH5lgBH/oTQpumGl7dc2RTJ4LwTfFLGgubzt824hv1stc3JODBPE3XuuGmEkqc0mC7T8EhT0lCVNs1bdmQ4b8WV6IFaVuEMRTD90PnMSvEsl7lCvWm/0bHUd3X1u7KkCy+jGiajf5vxg=
+	t=1706548059; cv=none; b=SRqQIci3ypuSDVqjlMAcse8bzCjOqoSNqG9Kk4xb3bK3F9iD58tTBWE6rJXZR+kaAYjPjXkG7D/7x+uFF0T3b/G39lFXhNhJtC5OSNk5qaIsJPR9a8UX2gfH3o/7pavkBAPWXuo2VKoDiRtZQCed5CTS/Cu1tvSMHI4WKij34fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548058; c=relaxed/simple;
-	bh=n25XYIqoYxLRjA9cfrftf4JloTM+KqSAnK6dYuABwq0=;
+	s=arc-20240116; t=1706548059; c=relaxed/simple;
+	bh=H8fNHJC+rmHUwlMZKM/2xasJ0KE+azG82AQ1uw6GeDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaYPWBrsOXOaWiUclGAv+HJH+Dkh/+FcANW6UTIFth0nTVGxwcYsc8NsqBPyxoxXtQwqGwsJC/VE+nfBM12qpI7mz4gJydgezeYlqMTg92zoAcakQrCh4VhCUUI57iDa4k8Ac+4Z8hMg1sdFne+8e63MDRjNxOuxdKIockPfkEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0M5kdcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ffc5gPQKIZuwzdt5p5Knr7t+1sS3rIdFHpVD5zGrPw+vUz/7GAO27aHkyo/1XlfV0ZvzJ/7zgDamO3NyCY7c8Q6EXxUCOLpBFxuHvuS2vI+HwZvnkH4wZW0Bmy+XcIAYyzGPjpb/HeJ8QmeBi3UOMs7v3w0JpENGRHc5w7BotzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjQbqNwn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0M5kdcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506A2C43399;
-	Mon, 29 Jan 2024 17:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjQbqNwn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E24BC433C7;
+	Mon, 29 Jan 2024 17:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548058;
-	bh=n25XYIqoYxLRjA9cfrftf4JloTM+KqSAnK6dYuABwq0=;
+	s=korg; t=1706548059;
+	bh=H8fNHJC+rmHUwlMZKM/2xasJ0KE+azG82AQ1uw6GeDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0M5kdcdmCURw9zO2jwKw2Dsl1ak0aOsPYvSg5qFp72xFcNrHlPIAwrYJeaOnXfyA
-	 2XeI4jOycfZK8sxi4I2TeH2mE4oiBTozfaaJdBbFYTTyWhbw1YQ9aDed6XnHLXsSem
-	 slubRclyz/Oggp1MQHedk1vZ3LHBuDVWCu1yjQvc=
+	b=XjQbqNwnVp+7ahon9ngRMBk5RTeMY3utjHvdR6f36ElrGS2Xk7eprYDCSEl4qPxwL
+	 liBlL7YWV2yvigNafqRK9zkN4rlHkzv7OF0F8mhmcDeHdxYpaInufXu19XlmhWcV4M
+	 hWRrK1uCwvdny8H1k0JuL2cudNAmW608jEWy9dhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.7 028/346] media: imx355: Enable runtime PM before registering async sub-device
-Date: Mon, 29 Jan 2024 09:00:59 -0800
-Message-ID: <20240129170017.209719859@linuxfoundation.org>
+	Charlie Jenkins <charlie@rivosinc.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 056/346] riscv: Fix module loading free order
+Date: Mon, 29 Jan 2024 09:01:27 -0800
+Message-ID: <20240129170018.043387164@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,57 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingbu Cao <bingbu.cao@intel.com>
+From: Charlie Jenkins <charlie@rivosinc.com>
 
-commit efa5fe19c0a9199f49e36e1f5242ed5c88da617d upstream.
+[ Upstream commit 78996eee79ebdfe8b6f0e54cb6dcc792d5129291 ]
 
-As the sensor device maybe accessible right after its async sub-device is
-registered, such as ipu-bridge will try to power up sensor by sensor's
-client device's runtime PM from the async notifier callback, if runtime PM
-is not enabled, it will fail.
+Reverse order of kfree calls to resolve use-after-free error.
 
-So runtime PM should be ready before its async sub-device is registered
-and accessible by others.
-
-Fixes: df0b5c4a7ddd ("media: add imx355 camera sensor driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
+Fixes: d8792a5734b0 ("riscv: Safely remove entries from relocation list")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202312132019.iYGTwW0L-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Closes: https://lore.kernel.org/r/202312120044.wTI1Uyaa-lkp@intel.com/
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240104-module_loading_fix-v3-1-a71f8de6ce0f@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx355.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ arch/riscv/kernel/module.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/i2c/imx355.c
-+++ b/drivers/media/i2c/imx355.c
-@@ -1748,10 +1748,6 @@ static int imx355_probe(struct i2c_clien
- 		goto error_handler_free;
- 	}
+diff --git a/arch/riscv/kernel/module.c b/arch/riscv/kernel/module.c
+index 862834bb1d64..5cf3a693482d 100644
+--- a/arch/riscv/kernel/module.c
++++ b/arch/riscv/kernel/module.c
+@@ -723,8 +723,8 @@ static int add_relocation_to_accumulate(struct module *me, int type,
  
--	ret = v4l2_async_register_subdev_sensor(&imx355->sd);
--	if (ret < 0)
--		goto error_media_entity;
--
- 	/*
- 	 * Device is already turned on by i2c-core with ACPI domain PM.
- 	 * Enable runtime PM and turn off the device.
-@@ -1760,9 +1756,15 @@ static int imx355_probe(struct i2c_clien
- 	pm_runtime_enable(&client->dev);
- 	pm_runtime_idle(&client->dev);
+ 			if (!bucket) {
+ 				kfree(entry);
+-				kfree(rel_head);
+ 				kfree(rel_head->rel_entry);
++				kfree(rel_head);
+ 				return -ENOMEM;
+ 			}
  
-+	ret = v4l2_async_register_subdev_sensor(&imx355->sd);
-+	if (ret < 0)
-+		goto error_media_entity_runtime_pm;
-+
- 	return 0;
- 
--error_media_entity:
-+error_media_entity_runtime_pm:
-+	pm_runtime_disable(&client->dev);
-+	pm_runtime_set_suspended(&client->dev);
- 	media_entity_cleanup(&imx355->sd.entity);
- 
- error_handler_free:
+-- 
+2.43.0
+
 
 
