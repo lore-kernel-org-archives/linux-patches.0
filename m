@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07434755FB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F68755FB;
 	Mon, 29 Jan 2024 17:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548597; cv=none; b=rwiiknOhMvI5wVWtKktQl26vkug8Xv6uuKAHMlW5We7eB1SRfZNTF56BuUlYuPu/f02/Tay6+qJ75O93gmv6FoJ9eBo8C2OJRIhYkK9MXvOoc12vgqrwrfCVdCuL0ydplrMM+vk8dHJboPe29ry22rYaEE5YtBIAC11popuNJv8=
+	t=1706548597; cv=none; b=LZLxFITmfeM/mfsZo1dvV5Z6hwJ/NzUv+QLxYPi/2iPjGSlDyzfu343tm7a9yAblmsuw4WeEQMgglGOGRS31NpjjrQT9wppdS4WMIc/LOOU6Sm8alwU3RGWa4IG0f6qT9xvACkhWacR7r95dVCL6sqtDpTHqnOQ/6G0QDEUewvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548597; c=relaxed/simple;
-	bh=V6fDtlfzT2RPJl1PXwTscg2la3kSRKpaHZq01rncxDY=;
+	bh=iV4VGCs3nDenNB51F+alsaJfB9G61M4YFmRKLubP2/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDoOdwcrTgiYT/3sNepj6fQY1zDv5SS88r9wsumMbroXdMPvqgQqqqzdQsFLWX6LUcTgEO32BgFKdOBtK2Vla5vtcS4WVxKU+4r0vz5DR0zTk6H3NEBIkOb7mKupk+FiEMnyFesOb4+0cS1KZo2GIAqxSyLyHUNfi4nxZi5+ynM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MapfaUCH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKUbDTEbgvB7mm5a16CLVOdtzOc7wKqblZ2p+sF4qUzs0sCuDdSdaCwdLfDaNroOsNnhllrvAgfcTct+xGHBo20PPYiCleDwWIeSmzTz1FS5ovJ5bW0tgfPEA5dhQllJLl1X+qixw2dBGN8KSK20jg49xzzvyzr9Ta+WI8znvp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQNHDLKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MapfaUCH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB01DC433C7;
-	Mon, 29 Jan 2024 17:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQNHDLKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB99C433F1;
+	Mon, 29 Jan 2024 17:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548596;
-	bh=V6fDtlfzT2RPJl1PXwTscg2la3kSRKpaHZq01rncxDY=;
+	s=korg; t=1706548597;
+	bh=iV4VGCs3nDenNB51F+alsaJfB9G61M4YFmRKLubP2/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MapfaUCH/zboDEFpxXnXi6fleC2CEnm7XkUZthoHwgrojhOHnKQtmt84BT1DAmosU
-	 WXcZMPm5ugpudPkFMotM5N6ZbSLq8QAiQljThlGtyCsQwiT11/oeUR6daU+rXKdYG9
-	 Yp0c6RYCB12/ctrl0JTh5KrKrskUjYFgVTaYdGns=
+	b=UQNHDLKOfaNXBLeeUPHXk6jEziM9SQxVuRLRKvmWbdd1/Krl+JS+PlmccpDK3tU6y
+	 vagGtXUMt6LEX/DuTAGrT+ZgNntOKNmCHAHQnov2nCSuAbnSX8rWajO6szWzFqFY5e
+	 yotP5Xv78JK1FWoEGEzy5hTW0mhfFLGqkAv8kWbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Cai Huoqing <cai.huoqing@linux.dev>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Dave Airlie <airlied@redhat.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Jonathan Corbet <corbet@lwn.net>,
-	dri-devel@lists.freedesktop.org,
-	linux-doc@vger.kernel.org,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 257/331] drm: Fix TODO list mentioning non-KMS drivers
-Date: Mon, 29 Jan 2024 09:05:21 -0800
-Message-ID: <20240129170022.408685979@linuxfoundation.org>
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 6.6 258/331] drm/tidss: Fix atomic_flush check
+Date: Mon, 29 Jan 2024 09:05:22 -0800
+Message-ID: <20240129170022.434289682@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -60,63 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 9cf5ca1f485cae406968947a92bf304603999fa1 upstream.
+commit 95d4b471953411854f9c80b568da7fcf753f3801 upstream.
 
-Non-KMS drivers have been removed from DRM. Update the TODO list
-accordingly.
+tidss_crtc_atomic_flush() checks if the crtc is enabled, and if not,
+returns immediately as there's no reason to do any register changes.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: a276afc19eec ("drm: Remove some obsolete drm pciids(tdfx, mga, i810, savage, r128, sis, via)")
-Cc: Cai Huoqing <cai.huoqing@linux.dev>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.3+
-Cc: linux-doc@vger.kernel.org
-Reviewed-by: David Airlie <airlied@gmail.com>
-Reviewed-by: Daniel Vetter <daniel@ffwll.ch>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231122122449.11588-3-tzimmermann@suse.de
+However, the code checks for 'crtc->state->enable', which does not
+reflect the actual HW state. We should instead look at the
+'crtc->state->active' flag.
+
+This causes the tidss_crtc_atomic_flush() to proceed with the flush even
+if the active state is false, which then causes us to hit the
+WARN_ON(!crtc->state->event) check.
+
+Fix this by checking the active flag, and while at it, fix the related
+debug print which had "active" and "needs modeset" wrong way.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-10-ac91b5ea35c0@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/gpu/todo.rst | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/tidss/tidss_crtc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
-index 503d57c75215..41a264bf84ce 100644
---- a/Documentation/gpu/todo.rst
-+++ b/Documentation/gpu/todo.rst
-@@ -337,8 +337,8 @@ connector register/unregister fixes
+--- a/drivers/gpu/drm/tidss/tidss_crtc.c
++++ b/drivers/gpu/drm/tidss/tidss_crtc.c
+@@ -169,13 +169,13 @@ static void tidss_crtc_atomic_flush(stru
+ 	struct tidss_device *tidss = to_tidss(ddev);
+ 	unsigned long flags;
  
- Level: Intermediate
+-	dev_dbg(ddev->dev,
+-		"%s: %s enabled %d, needs modeset %d, event %p\n", __func__,
+-		crtc->name, drm_atomic_crtc_needs_modeset(crtc->state),
+-		crtc->state->enable, crtc->state->event);
++	dev_dbg(ddev->dev, "%s: %s is %sactive, %s modeset, event %p\n",
++		__func__, crtc->name, crtc->state->active ? "" : "not ",
++		drm_atomic_crtc_needs_modeset(crtc->state) ? "needs" : "doesn't need",
++		crtc->state->event);
  
--Remove load/unload callbacks from all non-DRIVER_LEGACY drivers
-----------------------------------------------------------------
-+Remove load/unload callbacks
-+----------------------------
+ 	/* There is nothing to do if CRTC is not going to be enabled. */
+-	if (!crtc->state->enable)
++	if (!crtc->state->active)
+ 		return;
  
- The load/unload callbacks in struct &drm_driver are very much midlayers, plus
- for historical reasons they get the ordering wrong (and we can't fix that)
-@@ -347,8 +347,7 @@ between setting up the &drm_driver structure and calling drm_dev_register().
- - Rework drivers to no longer use the load/unload callbacks, directly coding the
-   load/unload sequence into the driver's probe function.
- 
--- Once all non-DRIVER_LEGACY drivers are converted, disallow the load/unload
--  callbacks for all modern drivers.
-+- Once all drivers are converted, remove the load/unload callbacks.
- 
- Contact: Daniel Vetter
- 
--- 
-2.43.0
-
+ 	/*
 
 
