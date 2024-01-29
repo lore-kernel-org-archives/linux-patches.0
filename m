@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A01015B30A;
-	Mon, 29 Jan 2024 17:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3BB15705C;
+	Mon, 29 Jan 2024 17:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548575; cv=none; b=JU7z5dT/b0/VnsdFHoaOP7fiDMTCnuph+KxB4npqcFLkRRLUNUbrLkjb5PDqwgQKQvlyrzNJeOr3We1bifPhoK0xuiXCDe2YlBr4rfG42OEMleJcN8G0zwKLYhnGPl1A46LSRPALa3IG+O5vK9d6wpwMb2wVjTdFH9jPHsnBXKk=
+	t=1706548576; cv=none; b=QMktyTrlDy7XNZ6VklXAR3b/2Hv1E5V6BbklvFqLYs0HmPbqQBdTgc3x8vsCZqEcF+wxXoI4AO/FnVU9G0Qd5ZBDXGwv3syt7an2FYbxltxfxvutv9+GfEuC70redFkPHAEn7HTfczERzVfW6kcfwKWJ9YYr6yfzxcjIKcepGx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548575; c=relaxed/simple;
-	bh=hUtBs7sjFJglnoeeFETQv+68oGT+GBmeqj/S9dEKpdA=;
+	s=arc-20240116; t=1706548576; c=relaxed/simple;
+	bh=igIZPu6FJJaC4Mlwy+P7SiAnnoeaS2broH/WYKtRSB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZdQvxLYuoXPbl3fNMomTg3w/VBK70PiafaZ2aPVSMF9eFDtUd5Dx2zJIcOAZXnAQNRb9cJQimXQMvXhtGpYnjdjL3F0LriuXlP+9SU9wcS2AkhUgIBQ9+peS9KUxJfEJ4ZnCAZ6V8qRJoYmj0qn238EpZoXNStCVie+Yr4zgnAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tO3EpJKQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fh20CD7LcySt85hDn9p91Zy3JIgPsDCziz7glW3lcaLtp2eCNCNB3BwwIykCPzPPTXZ0iJiEZTEanvnuDDBn745HZ++s8FPRWRYyEYBniEfhqOmW18P3GkdWeQ/eqjdkpUrtxMJq8WiOwIu4/mIVTUTr3y4MemJHmddqkoWyDiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sr2vYO7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tO3EpJKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBD2C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sr2vYO7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82A7C43399;
 	Mon, 29 Jan 2024 17:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548575;
-	bh=hUtBs7sjFJglnoeeFETQv+68oGT+GBmeqj/S9dEKpdA=;
+	s=korg; t=1706548576;
+	bh=igIZPu6FJJaC4Mlwy+P7SiAnnoeaS2broH/WYKtRSB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tO3EpJKQ+Yl6VFRqX5e0TImPs+WrhfI2VuEEnmJ1O7TE9+4uD8HsPb5GTO1lgaNtq
-	 k2ojY34s3zHVQeigxE5f7kJ/B+Tdz6iTnqsjtdfprt2JVxAbHHDZ+QJ+l9Hp5cCzVe
-	 cAiKZQFoTssp8VLVkHkSPTvdnaRrJxuZatZUQHg8=
+	b=Sr2vYO7BO6cMQeEQWK9nNDLjbcC5oG5GmXNpVB30RpOonzFO69e5qvbdhhrfOmb0R
+	 n2PwMOCv77Jvl6J7JRVb0HhzPSsDJn3p6sr1GoFLbai5vUMWqPsPPnH+1X2JCgdkP3
+	 L6skWJiVPMwCqvSPoWMNJ7wZARgJK4YeNaEztmo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 220/331] intel: xsk: initialize skb_frag_t::bv_offset in ZC drivers
-Date: Mon, 29 Jan 2024 09:04:44 -0800
-Message-ID: <20240129170021.316215550@linuxfoundation.org>
+Subject: [PATCH 6.6 229/331] tsnep: Fix XDP_RING_NEED_WAKEUP for empty fill ring
+Date: Mon, 29 Jan 2024 09:04:53 -0800
+Message-ID: <20240129170021.583431704@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,58 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit 290779905d09d5fdf6caa4f58ddefc3f4db0c0a9 ]
+[ Upstream commit 9a91c05f4bd6f6bdd6b8f90445e0da92e3ac956c ]
 
-Ice and i40e ZC drivers currently set offset of a frag within
-skb_shared_info to 0, which is incorrect. xdp_buffs that come from
-xsk_buff_pool always have 256 bytes of a headroom, so they need to be
-taken into account to retrieve xdp_buff::data via skb_frag_address().
-Otherwise, bpf_xdp_frags_increase_tail() would be starting its job from
-xdp_buff::data_hard_start which would result in overwriting existing
-payload.
+The fill ring of the XDP socket may contain not enough buffers to
+completey fill the RX queue during socket creation. In this case the
+flag XDP_RING_NEED_WAKEUP is not set as this flag is only set if the RX
+queue is not completely filled during polling.
 
-Fixes: 1c9ba9c14658 ("i40e: xsk: add RX multi-buffer support")
-Fixes: 1bbc04de607b ("ice: xsk: add RX multi-buffer support")
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20240124191602.566724-8-maciej.fijalkowski@intel.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Set XDP_RING_NEED_WAKEUP flag also if RX queue is not completely filled
+during XDP socket creation.
+
+Fixes: 3fc2333933fd ("tsnep: Add XDP socket zero-copy RX support")
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_xsk.c | 3 ++-
- drivers/net/ethernet/intel/ice/ice_xsk.c   | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/engleder/tsnep_main.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_xsk.c b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-index b75e6b6d317c..1f8ae6f5d980 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_xsk.c
-@@ -418,7 +418,8 @@ i40e_add_xsk_frag(struct i40e_ring *rx_ring, struct xdp_buff *first,
+diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
+index 9fea97671f4b..08e113e785a7 100644
+--- a/drivers/net/ethernet/engleder/tsnep_main.c
++++ b/drivers/net/ethernet/engleder/tsnep_main.c
+@@ -1711,6 +1711,19 @@ static void tsnep_rx_reopen_xsk(struct tsnep_rx *rx)
+ 			allocated--;
+ 		}
  	}
++
++	/* set need wakeup flag immediately if ring is not filled completely,
++	 * first polling would be too late as need wakeup signalisation would
++	 * be delayed for an indefinite time
++	 */
++	if (xsk_uses_need_wakeup(rx->xsk_pool)) {
++		int desc_available = tsnep_rx_desc_available(rx);
++
++		if (desc_available)
++			xsk_set_rx_need_wakeup(rx->xsk_pool);
++		else
++			xsk_clear_rx_need_wakeup(rx->xsk_pool);
++	}
+ }
  
- 	__skb_fill_page_desc_noacc(sinfo, sinfo->nr_frags++,
--				   virt_to_page(xdp->data_hard_start), 0, size);
-+				   virt_to_page(xdp->data_hard_start),
-+				   XDP_PACKET_HEADROOM, size);
- 	sinfo->xdp_frags_size += size;
- 	xsk_buff_add_frag(xdp);
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 33f194c870bb..307c609137bd 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -826,7 +826,8 @@ ice_add_xsk_frag(struct ice_rx_ring *rx_ring, struct xdp_buff *first,
- 	}
- 
- 	__skb_fill_page_desc_noacc(sinfo, sinfo->nr_frags++,
--				   virt_to_page(xdp->data_hard_start), 0, size);
-+				   virt_to_page(xdp->data_hard_start),
-+				   XDP_PACKET_HEADROOM, size);
- 	sinfo->xdp_frags_size += size;
- 	xsk_buff_add_frag(xdp);
- 
+ static bool tsnep_pending(struct tsnep_queue *queue)
 -- 
 2.43.0
 
