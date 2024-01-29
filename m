@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AD415A49D;
-	Mon, 29 Jan 2024 17:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B12158D68;
+	Mon, 29 Jan 2024 17:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548321; cv=none; b=qdqzGCghUWkA9GYdL3B3lCTOWJdEJCSQT2WotQyZ4orF2fB5G0p9pZZYr5hESTgUtATFf4lD/wta8YXIPlCyB107BE5qVoGQTIBPuVX815XRV8LRGQIqiSrXOy+QUBqZHWRLD2cjm8KaFsn76i9xEVU23fDr22xui1UMIvdjCGA=
+	t=1706548322; cv=none; b=sBKYEZbNW+HUBZ8pQ/AXP3BPsJQTNp49LBLBHZo2VwZhRFmxG22HkGGB/qUp9j40JZfQqcKrNa/u2or20aAMZ0jhzUOZqzqTacdVAZcuhhchZOG0QkOQ88F+sfy8cV7m47TyiWlBnkP87TrUKxLjrHCUGdfW6ilABLemnoUC4Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548321; c=relaxed/simple;
-	bh=q1qCLBm8DeZg7Nqrk7KLFX4CTAfyYDrD+7gn2P3ks+s=;
+	s=arc-20240116; t=1706548322; c=relaxed/simple;
+	bh=0/Z6oG2siQuOTB4805l7vdPsmC8tx5IK71iESFT5xtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+DqIBojtMv86xWKvuPQWjUuUMBPrhQMRzZo3tsm7WdJTnyRm2d/oivL7BdDOHx0G2VYMFE0IE2FMSKGKpy98pYJXvfgd+Vn/FJEmZlUbIO3LUmKyBEwZ1+gpbvrXPfZgMPPOKsUuEjAPRhzToosY7GxuzzimAYbacfpD3wnFS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzgSn2y/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RjvvyihespacYAldUnUhLEuRpF0mXuYOzLNRJaEg4fcb5Rkb3WFf+7Zam1VrgZjfLX9aZcGDZvr+JoN3qbHA+ADwhZyYuumkitDdDgBZ/sBi/jekHSfaFacXBezqnfgdB+8lVK2FHtINB9r51OOgquCQMH0gssKn6tJoOXXLmsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0SvEljE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzgSn2y/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 201F3C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0SvEljE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D5EC433F1;
 	Mon, 29 Jan 2024 17:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548321;
-	bh=q1qCLBm8DeZg7Nqrk7KLFX4CTAfyYDrD+7gn2P3ks+s=;
+	bh=0/Z6oG2siQuOTB4805l7vdPsmC8tx5IK71iESFT5xtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzgSn2y/PO4mmqwacyr7+zMYzOgIr+VR0V1oe7e8GSHE7MxpZlqsqymEfQT1PIPG4
-	 wlv52ATJJZ461WqhXBKaDR0eIDWbHP09HfJaxgKs1E/LTsGzuP1VDYep1GaeqjFFro
-	 sZLuf/FSnLT3Mwg5EWz7pzMc4n0TuDINbGQykkjw=
+	b=c0SvEljE2Rx89s4xOADdGJfq7IuK17dP6soxl5HBSU0AWm5Iqrqyjh9TljBwd1s6z
+	 oNlFBJVfQeEEr8nMFPv9xu9Oa0ThFbEEUX3YOIRsoanHZNYfiWFAVmVeSOKYLkr+7s
+	 VBbfYWK6yds8fYY0SIX5JlMwJsrXr3dihdIj6S/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yajun Deng <yajun.deng@linux.dev>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 314/346] memblock: fix crash when reserved memory is not added to memory
-Date: Mon, 29 Jan 2024 09:05:45 -0800
-Message-ID: <20240129170025.709965392@linuxfoundation.org>
+Subject: [PATCH 6.7 323/346] firmware: arm_ffa: Check xa_load() return value
+Date: Mon, 29 Jan 2024 09:05:54 -0800
+Message-ID: <20240129170025.975954440@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,44 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yajun Deng <yajun.deng@linux.dev>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 6a9531c3a88096a26cf3ac582f7ec44f94a7dcb2 ]
+[ Upstream commit c00d9738fd5fce15dc5494d05b7599dce23e8146 ]
 
-After commit 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
-nid of a reserved region is used by init_reserved_page() (with
-CONFIG_DEFERRED_STRUCT_PAGE_INIT=y) to access node strucure.
-In many cases the nid of the reserved memory is not set and this causes
-a crash.
+Add a check to verify the result of xa_load() during the partition
+lookups done while registering/unregistering the scheduler receiver
+interrupt callbacks and while executing the main scheduler receiver
+interrupt callback handler.
 
-When the nid of a reserved region is not set, fall back to
-early_pfn_to_nid(), so that nid of the first_online_node will be passed
-to init_reserved_page().
-
-Fixes: 61167ad5fecd ("mm: pass nid to reserve_bootmem_region()")
-Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
-Link: https://lore.kernel.org/r/20240118061853.2652295-1-yajun.deng@linux.dev
-[rppt: massaged the commit message]
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Fixes: 0184450b8b1e ("firmware: arm_ffa: Add schedule receiver callback mechanism")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20240108-ffa_fixes_6-8-v1-3-75bf7035bc50@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memblock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/arm_ffa/driver.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/mm/memblock.c b/mm/memblock.c
-index 5a88d6d24d79..4823ad979b72 100644
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -2141,6 +2141,9 @@ static void __init memmap_init_reserved_pages(void)
- 			start = region->base;
- 			end = start + region->size;
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 8df92c9521f4..0ea1dd6e55c4 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -733,6 +733,11 @@ static void __do_sched_recv_cb(u16 part_id, u16 vcpu, bool is_per_vcpu)
+ 	void *cb_data;
  
-+			if (nid == NUMA_NO_NODE || nid >= MAX_NUMNODES)
-+				nid = early_pfn_to_nid(PFN_DOWN(start));
+ 	partition = xa_load(&drv_info->partition_info, part_id);
++	if (!partition) {
++		pr_err("%s: Invalid partition ID 0x%x\n", __func__, part_id);
++		return;
++	}
 +
- 			reserve_bootmem_region(start, end, nid);
- 		}
- 	}
+ 	read_lock(&partition->rw_lock);
+ 	callback = partition->callback;
+ 	cb_data = partition->cb_data;
+@@ -915,6 +920,11 @@ static int ffa_sched_recv_cb_update(u16 part_id, ffa_sched_recv_cb callback,
+ 		return -EOPNOTSUPP;
+ 
+ 	partition = xa_load(&drv_info->partition_info, part_id);
++	if (!partition) {
++		pr_err("%s: Invalid partition ID 0x%x\n", __func__, part_id);
++		return -EINVAL;
++	}
++
+ 	write_lock(&partition->rw_lock);
+ 
+ 	cb_valid = !!partition->callback;
 -- 
 2.43.0
 
