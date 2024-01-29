@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903A1163AAD;
-	Mon, 29 Jan 2024 17:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4239E15956D;
+	Mon, 29 Jan 2024 17:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548388; cv=none; b=DSnKr80l+ZtljV4XtQUS9SKTu1q1Vc1aZehKf2VmB0cl/OEZP01o06tWp2TK6ajETcM9JQKImNrfKN6NDSIrqNCpHzLEQjGrL1Uv2IK8Nh+jHugChNsFkP7dczshTpttYQGUhSwMw49JPpqUjnIfshQS1PnF3uEceAqUAesSGpw=
+	t=1706548389; cv=none; b=B8ufxYyOdZ1zQ8cUd9YXDHAzbse4iGZcxYEoNb0HwTdnWo8lGTq1OHD4BIH95D9SBNewfNC9LItw7VzPFjyRo8kiBl7cAnRk2hF+G4RnYyu8iq5X84sbcGeJhlNUDx5QGfseIshIEl3eKdGE/bADvroaM+76b5/mvUAIUrr0UeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548388; c=relaxed/simple;
-	bh=zMq+tPd1ygg3LeGYq03o0g2BbgNyyKfOwZUr5STZ9oc=;
+	s=arc-20240116; t=1706548389; c=relaxed/simple;
+	bh=ce3LbRlXs2vOumIugrHwmSdG45HZpPIyX3iL7/aCD8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRfTLgkJbitTZdXg24UMpnvfmbdQgFZJM8DEQle6vbwBm13qCupvufXvHeeRfrW2PdwUhBlk/d9vQHcnpWkxRBZ8jIWYxiaW1LjXmP36f/hMuv7Ky/tW2CUYwlxF8To8jrWV19+NAs4pGg3rQW+YdUp1IdSA5hTce8RpvSlaeaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBzTlsfi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQ/tKLqaNkcWk5KmSMk+PCZdZ3qP8//sXCdLl7krLtEALlKiRcn1JgtSa2MEw/UX/gco0Tw0HOeGSXReH8Pwcyu+gnVhXBPFfMNJnk8Yodx/2umqNSVItjp0M1OUoYMSzuPhUNvuBUJIKCLcjLg8O/qJEWC2NQX4ygTBBhWEYp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7SqrgXc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBzTlsfi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62316C433B1;
-	Mon, 29 Jan 2024 17:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7SqrgXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD2FC433F1;
+	Mon, 29 Jan 2024 17:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548388;
-	bh=zMq+tPd1ygg3LeGYq03o0g2BbgNyyKfOwZUr5STZ9oc=;
+	s=korg; t=1706548389;
+	bh=ce3LbRlXs2vOumIugrHwmSdG45HZpPIyX3iL7/aCD8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBzTlsfi1EOEc6En6PaIQnYeuIhKgzrxl6zKflnKXualVppdsyKGipn74S8Lcp++G
-	 PfZihpFX1fO7UXjRNLlCgnmFHVFnJBRUIIxspEY9iXZ93Hxq0U52Zyt3/hKCy154wV
-	 mcXoI3o2qSgs2gU7KH6mKiJ3P8gT8eiCoQpE3VVw=
+	b=P7SqrgXcWZGCKEfxFgrV83GKlYJQ6g1wz67pW+F1XQc+El4ZDoQax5UHcAzKktWmo
+	 uxlZ4jFnz9yGDkjxJ1Nu2o1SB1WZ4ciL3oFLMjhPDbiJgFjiI8hxNjodetrEbG+hS0
+	 FCy4ng1vhKjgifWlpkql6KJcPTiAIqCIXrWtMQU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/185] serial: sc16is7xx: fix unconditional activation of THRI interrupt
-Date: Mon, 29 Jan 2024 09:06:01 -0800
-Message-ID: <20240129170003.769274063@linuxfoundation.org>
+Subject: [PATCH 6.1 162/185] btrfs: zoned: factor out prepare_allocation_zoned()
+Date: Mon, 29 Jan 2024 09:06:02 -0800
+Message-ID: <20240129170003.802197895@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -50,73 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 9915753037eba7135b209fef4f2afeca841af816 ]
+[ Upstream commit b271fee9a41ca1474d30639fd6cc912c9901d0f8 ]
 
-Commit cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop") changed
-behavior to unconditionnaly set the THRI interrupt in sc16is7xx_tx_proc().
+Factor out prepare_allocation_zoned() for further extension. While at
+it, optimize the if-branch a bit.
 
-For example when sending a 65 bytes message, and assuming the Tx FIFO is
-initially empty, sc16is7xx_handle_tx() will write the first 64 bytes of the
-message to the FIFO and sc16is7xx_tx_proc() will then activate THRI. When
-the THRI IRQ is fired, the driver will write the remaining byte of the
-message to the FIFO, and disable THRI by calling sc16is7xx_stop_tx().
-
-When sending a 2 bytes message, sc16is7xx_handle_tx() will write the 2
-bytes of the message to the FIFO and call sc16is7xx_stop_tx(), disabling
-THRI. After sc16is7xx_handle_tx() exits, control returns to
-sc16is7xx_tx_proc() which will unconditionally set THRI. When the THRI IRQ
-is fired, the driver simply acknowledges the interrupt and does nothing
-more, since all the data has already been written to the FIFO. This results
-in 2 register writes and 4 register reads all for nothing and taking
-precious cycles from the I2C/SPI bus.
-
-Fix this by enabling the THRI interrupt only when we fill the Tx FIFO to
-its maximum capacity and there are remaining bytes to send in the message.
-
-Fixes: cc4c1d05eb10 ("sc16is7xx: Properly resume TX after stop")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231211171353.2901416-7-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 02444f2ac26e ("btrfs: zoned: optimize hint byte for zoned allocator")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/btrfs/extent-tree.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index 4def1b7266f6..e331b57d6d7d 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -678,6 +678,8 @@ static void sc16is7xx_handle_tx(struct uart_port *port)
- 
- 	if (uart_circ_empty(xmit))
- 		sc16is7xx_stop_tx(port);
-+	else
-+		sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
- 	uart_port_unlock_irqrestore(port, flags);
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 7be3fcfb3f97..2832abe3a984 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -4207,6 +4207,24 @@ static int prepare_allocation_clustered(struct btrfs_fs_info *fs_info,
+ 	return 0;
  }
  
-@@ -804,7 +806,6 @@ static void sc16is7xx_tx_proc(struct kthread_work *ws)
- {
- 	struct uart_port *port = &(to_sc16is7xx_one(ws, tx_work)->port);
- 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
--	unsigned long flags;
- 
- 	if ((port->rs485.flags & SER_RS485_ENABLED) &&
- 	    (port->rs485.delay_rts_before_send > 0))
-@@ -813,10 +814,6 @@ static void sc16is7xx_tx_proc(struct kthread_work *ws)
- 	mutex_lock(&one->efr_lock);
- 	sc16is7xx_handle_tx(port);
- 	mutex_unlock(&one->efr_lock);
--
--	uart_port_lock_irqsave(port, &flags);
--	sc16is7xx_ier_set(port, SC16IS7XX_IER_THRI_BIT);
--	uart_port_unlock_irqrestore(port, flags);
- }
- 
- static void sc16is7xx_reconf_rs485(struct uart_port *port)
++static int prepare_allocation_zoned(struct btrfs_fs_info *fs_info,
++				    struct find_free_extent_ctl *ffe_ctl)
++{
++	if (ffe_ctl->for_treelog) {
++		spin_lock(&fs_info->treelog_bg_lock);
++		if (fs_info->treelog_bg)
++			ffe_ctl->hint_byte = fs_info->treelog_bg;
++		spin_unlock(&fs_info->treelog_bg_lock);
++	} else if (ffe_ctl->for_data_reloc) {
++		spin_lock(&fs_info->relocation_bg_lock);
++		if (fs_info->data_reloc_bg)
++			ffe_ctl->hint_byte = fs_info->data_reloc_bg;
++		spin_unlock(&fs_info->relocation_bg_lock);
++	}
++
++	return 0;
++}
++
+ static int prepare_allocation(struct btrfs_fs_info *fs_info,
+ 			      struct find_free_extent_ctl *ffe_ctl,
+ 			      struct btrfs_space_info *space_info,
+@@ -4217,19 +4235,7 @@ static int prepare_allocation(struct btrfs_fs_info *fs_info,
+ 		return prepare_allocation_clustered(fs_info, ffe_ctl,
+ 						    space_info, ins);
+ 	case BTRFS_EXTENT_ALLOC_ZONED:
+-		if (ffe_ctl->for_treelog) {
+-			spin_lock(&fs_info->treelog_bg_lock);
+-			if (fs_info->treelog_bg)
+-				ffe_ctl->hint_byte = fs_info->treelog_bg;
+-			spin_unlock(&fs_info->treelog_bg_lock);
+-		}
+-		if (ffe_ctl->for_data_reloc) {
+-			spin_lock(&fs_info->relocation_bg_lock);
+-			if (fs_info->data_reloc_bg)
+-				ffe_ctl->hint_byte = fs_info->data_reloc_bg;
+-			spin_unlock(&fs_info->relocation_bg_lock);
+-		}
+-		return 0;
++		return prepare_allocation_zoned(fs_info, ffe_ctl);
+ 	default:
+ 		BUG();
+ 	}
 -- 
 2.43.0
 
