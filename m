@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E611015A49F;
-	Mon, 29 Jan 2024 17:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07D015A49F;
+	Mon, 29 Jan 2024 17:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548296; cv=none; b=lZ8aOUbDJmKXRPH5loDlPEu1gnz+u8bxUU5pqHvo3a2gvfCFvDCDv2X7dW3XlPrjlr7HRrrbaz+DH4MpWKARkenn4XtAMx+7kJAJMxQ81nJ13B/fNYpwSBYqPlBBEpCYDirobp9RVFziHC3zBtTLWqfSLratViPqa+GGCW7lS48=
+	t=1706548296; cv=none; b=qhC90erqgAt+YcXm0y/Co/p/qnXpz0T6rfQvx9ISl+SrS4YBYm+UXzIg9mO+3J0c1Kd9maOjdzKmLGUIQ/Gl9cvckjKMALfHcrsg5YFMZy4P8JZ74rPhAKe4B3e9t3kBjp2hyqR/F9dw/hAJR9vAc65tykZhbBldCnIpI3hIetg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548296; c=relaxed/simple;
-	bh=bqIGbPhxxDUSr5PTTuWQkBaQ+NhTvSTksyAJncI+40E=;
+	bh=zFsfY2XHV2sWTyIbxQfCbXNMZSJhBiUc4rwcR+heyfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlVAf0QJtoaPHRamWVRkFt07hCABSHCY1poMUBLKAh466bLUj3mZYfZB0JxcRCQUNugSkkyZyVIwD9OuC6yXj0yZSN9E4jksU6DzbwLp9NgVOJhljxeFUSlCk6iTbguSSoWszVVAs+1n71/BaH53vGbeDSrs9fKNrZZz4GhIDYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jltpgB9E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1L25A2wWApjN8LqwtXLWZQuZqutkp0ZyA28LiY1RcvXA7KkNlC2vHkJNnSEzx3EflU54HyjlchGspPnJ2Pl7VHuw5J4BeyLK16RLOJkbkFCYu8t2TC942Fbari802IYG6b0XGLlB9KWeGIMvz/FEJE5o8oWB6eiPTF0f/cbV0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbQm4bRV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jltpgB9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBE4C43394;
-	Mon, 29 Jan 2024 17:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbQm4bRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DC1C433F1;
+	Mon, 29 Jan 2024 17:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548295;
-	bh=bqIGbPhxxDUSr5PTTuWQkBaQ+NhTvSTksyAJncI+40E=;
+	s=korg; t=1706548296;
+	bh=zFsfY2XHV2sWTyIbxQfCbXNMZSJhBiUc4rwcR+heyfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jltpgB9Ezs8R5EAjnuizV5/GzqCGI3lB/BxQPPpGvyikNvGoYmfoHwRwDqfjmmA6i
-	 yxy1W27RFQw6t28W8sLDzkW/LNq0nqfxyFxDWgr4SsK4p2xEMtayGz098ytqy4qQDX
-	 IXj6vb8VO82phQ8QqP4YIj5wYMNL+haDFKAIe6fA=
+	b=xbQm4bRVY/j9jTD72KS9oZBd8APfxdtHjWhRZOyC//x1kPQJjNcNOrWz+2C7m7DiA
+	 3ELFfZ30S7y4lv4q+j+UpENYCO12tKUmifkhjVqis+THFvbdxbj6iujffcrkpzLorj
+	 Hed42LDz2evnTLW2vUTg5pM5SyeEwMoliHghcxd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/185] wifi: mac80211: fix potential sta-link leak
-Date: Mon, 29 Jan 2024 09:04:36 -0800
-Message-ID: <20240129170001.046549148@linuxfoundation.org>
+Subject: [PATCH 6.7 304/346] drm/amdgpu/gfx10: set UNORD_DISPATCH in compute MQDs
+Date: Mon, 29 Jan 2024 09:05:35 -0800
+Message-ID: <20240129170025.389157822@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit b01a74b3ca6fd51b62c67733ba7c3280fa6c5d26 ]
+[ Upstream commit 03ff6d7238b77e5fb2b85dc5fe01d2db9eb893bd ]
 
-When a station is allocated, links are added but not
-set to valid yet (e.g. during connection to an AP MLD),
-we might remove the station without ever marking links
-valid, and leak them. Fix that.
+This needs to be set to 1 to avoid a potential deadlock in
+the GC 10.x and newer.  On GC 9.x and older, this needs
+to be set to 0.  This can lead to hangs in some mixed
+graphics and compute workloads.  Updated firmware is also
+required for AQL.
 
-Fixes: cb71f1d136a6 ("wifi: mac80211: add sta link addition/removal")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240111181514.6573998beaf8.I09ac2e1d41c80f82a5a616b8bd1d9d8dd709a6a6@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c           | 2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 49b71453dec3..f3d6c3e4c970 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -396,7 +396,10 @@ void sta_info_free(struct ieee80211_local *local, struct sta_info *sta)
- 	int i;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+index d63cab294883..ecb622b7f970 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -6589,7 +6589,7 @@ static int gfx_v10_0_compute_mqd_init(struct amdgpu_device *adev, void *m,
+ #ifdef __BIG_ENDIAN
+ 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, ENDIAN_SWAP, 1);
+ #endif
+-	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, UNORD_DISPATCH, 0);
++	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, UNORD_DISPATCH, 1);
+ 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, TUNNEL_DISPATCH,
+ 			    prop->allow_tunneling);
+ 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, PRIV_STATE, 1);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+index 8b7fed913526..22cbfa1bdadd 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v10.c
+@@ -170,6 +170,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+ 	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
  
- 	for (i = 0; i < ARRAY_SIZE(sta->link); i++) {
--		if (!(sta->sta.valid_links & BIT(i)))
-+		struct link_sta_info *link_sta;
-+
-+		link_sta = rcu_access_pointer(sta->link[i]);
-+		if (!link_sta)
- 			continue;
- 
- 		sta_remove_link(sta, i, false);
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
 -- 
 2.43.0
 
