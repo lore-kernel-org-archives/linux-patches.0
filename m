@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2C3157E62;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98BE15B2E7;
 	Mon, 29 Jan 2024 17:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548105; cv=none; b=a62BL66BpE95sl5QMNHHDQ1uAtuSGQZQk8U6XvaAoDrAF10ajiKWba9DDeBZysw/sDm5liF8MK1xmSHRo1MH4WPrh6hL9SEWlseM1IETqV2+4DiIq5wc9XZckZcJ2ClTd9nXzOF6QYwQRFWnmA0IX/yC7ZYJRZdLreA9SHjSqvo=
+	t=1706548105; cv=none; b=oVuJnSx2s+DHpEn8GQyUiTV/YsUCr6JWccFVZFmko74Xbthxyt2sbsW1qJbWww/0m6Ur7j+6oaDjBC/oLDEH3RK3kaWfQYnANcFM06nbI5tHh9xA7QN0xtLSLaX0Ic41SXR1rFOBunZnJNM+wWrSArT+LQxOpSiGWU91p+3hMCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548105; c=relaxed/simple;
-	bh=aGQypfmP42p8qt3TOEVezfmeBweXv84UQbjMgSwSyt8=;
+	bh=Yw2Eh4hcSLD98wjw2KP42mQ3ijZGHpK7GzOKNzA0fnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQ42ilLItvqX4pRmebR+XxbnMbT/Da1anYHdYpilUYU19QWUNvsRmuaL91OXekYw1rPXiNmIPDr3zJ8NWxlfTimAZWcwZaGS5Ci6P6GVML7eQJG+/nu6jW3uTwPlDUKqCUmcI2W5gkCpiGd0zLGS0Pb6hk59anhPpNKS4kUsXns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oReyVYoW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SSoLZeL8nu3etuEbgMnSdpU/nxHb+WIG+vhBJuSLNHSz3dJyX7x/w1DiWe3pnbeVYlJ3r6r24sAHv0thIMqIQbyc+Gaf/Ro43dLUFEA7a5VcwKYWGCFckTrxhEYNLSnUFaIWJLh5IySY5crplpo74fEsiP8Qa5DhX4WOucm85KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBWRifL7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oReyVYoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F15C43390;
-	Mon, 29 Jan 2024 17:08:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBWRifL7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F868C433F1;
+	Mon, 29 Jan 2024 17:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548104;
-	bh=aGQypfmP42p8qt3TOEVezfmeBweXv84UQbjMgSwSyt8=;
+	s=korg; t=1706548105;
+	bh=Yw2Eh4hcSLD98wjw2KP42mQ3ijZGHpK7GzOKNzA0fnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oReyVYoWe4PlAaDzFAqn6idvxn7FPW/2fYcuT5gYwZoCfgiaY3ubKLYpWwxv4HtYs
-	 2Y2YnQs0lF1BcNtu6nayZh3mq9KzZZH2RcJOAi+sLWi/B+xflq44oaG8XLKLbVcVcw
-	 RltWJyv0WDrySAEaCOWXbSUIrKYky8jtWkz22xd4=
+	b=cBWRifL7iFuLJOfHA7ZNpUmxeohF3aD6wl+C04i1r1CDG/S2/BZ2awm7svdjQqef7
+	 BPIgcOAOWgGl53wnDmCZSKHi9PDXv4kvb7uFWGEbJgIyKPGR4EGXuFoT+M627VLIXW
+	 /Kz8+1VTyfV+znft+BYBUJw6/bUdHTkd0kZkjzeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 6.7 126/346] rename(): fix the locking of subdirectories
-Date: Mon, 29 Jan 2024 09:02:37 -0800
-Message-ID: <20240129170020.089106136@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.7 127/346] serial: sc16is7xx: improve regmap debugfs by using one regmap per port
+Date: Mon, 29 Jan 2024 09:02:38 -0800
+Message-ID: <20240129170020.115945002@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -50,276 +49,437 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 22e111ed6c83dcde3037fc81176012721bc34c0b upstream.
+commit 3837a0379533aabb9e4483677077479f7c6aa910 upstream.
 
-	We should never lock two subdirectories without having taken
-->s_vfs_rename_mutex; inode pointer order or not, the "order" proposed
-in 28eceeda130f "fs: Lock moved directories" is not transitive, with
-the usual consequences.
+With this current driver regmap implementation, it is hard to make sense
+of the register addresses displayed using the regmap debugfs interface,
+because they do not correspond to the actual register addresses documented
+in the datasheet. For example, register 1 is displayed as registers 04 thru
+07:
 
-	The rationale for locking renamed subdirectory in all cases was
-the possibility of race between rename modifying .. in a subdirectory to
-reflect the new parent and another thread modifying the same subdirectory.
-For a lot of filesystems that's not a problem, but for some it can lead
-to trouble (e.g. the case when short directory contents is kept in the
-inode, but creating a file in it might push it across the size limit
-and copy its contents into separate data block(s)).
+$ cat /sys/kernel/debug/regmap/spi0.0/registers
+  04: 10 -> Port 0, register offset 1
+  05: 10 -> Port 1, register offset 1
+  06: 00 -> Port 2, register offset 1 -> invalid
+  07: 00 -> port 3, register offset 1 -> invalid
+  ...
 
-	However, we need that only in case when the parent does change -
-otherwise ->rename() doesn't need to do anything with .. entry in the
-first place.  Some instances are lazy and do a tautological update anyway,
-but it's really not hard to avoid.
+The reason is that bits 0 and 1 of the register address correspond to the
+channel (port) bits, so the register address itself starts at bit 2, and we
+must 'mentally' shift each register address by 2 bits to get its real
+address/offset.
 
-Amended locking rules for rename():
-	find the parent(s) of source and target
-	if source and target have the same parent
-		lock the common parent
-	else
-		lock ->s_vfs_rename_mutex
-		lock both parents, in ancestor-first order; if neither
-		is an ancestor of another, lock the parent of source
-		first.
-	find the source and target.
-	if source and target have the same parent
-		if operation is an overwriting rename of a subdirectory
-			lock the target subdirectory
-	else
-		if source is a subdirectory
-			lock the source
-		if target is a subdirectory
-			lock the target
-	lock non-directories involved, in inode pointer order if both
-	source and target are such.
+Also, only channels 0 and 1 are supported by the chip, so channel mask
+combinations of 10b and 11b are invalid, and the display of these
+registers is useless.
 
-That way we are guaranteed that parents are locked (for obvious reasons),
-that any renamed non-directory is locked (nfsd relies upon that),
-that any victim is locked (emptiness check needs that, among other things)
-and subdirectory that changes parent is locked (needed to protect the update
-of .. entries).  We are also guaranteed that any operation locking more
-than one directory either takes ->s_vfs_rename_mutex or locks a parent
-followed by its child.
+This patch adds a separate regmap configuration for each port, similar to
+what is done in the max310x driver, so that register addresses displayed
+match the register addresses in the chip datasheet. Also, each port now has
+its own debugfs entry.
 
-Cc: stable@vger.kernel.org
-Fixes: 28eceeda130f "fs: Lock moved directories"
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Example with new regmap implementation:
+
+$ cat /sys/kernel/debug/regmap/spi0.0-port0/registers
+1: 10
+2: 01
+3: 00
+...
+
+$ cat /sys/kernel/debug/regmap/spi0.0-port1/registers
+1: 10
+2: 01
+3: 00
+
+As an added bonus, this also simplifies some operations (read/write/modify)
+because it is no longer necessary to manually shift register addresses.
+
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231030211447.974779-1-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/directory-locking.rst |   29 ++++++-----
- Documentation/filesystems/locking.rst           |    5 +-
- Documentation/filesystems/porting.rst           |   18 +++++++
- fs/namei.c                                      |   60 ++++++++++++++----------
- 4 files changed, 74 insertions(+), 38 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |  143 +++++++++++++++++++++++------------------
+ 1 file changed, 81 insertions(+), 62 deletions(-)
 
---- a/Documentation/filesystems/directory-locking.rst
-+++ b/Documentation/filesystems/directory-locking.rst
-@@ -22,13 +22,16 @@ exclusive.
- 3) object removal.  Locking rules: caller locks parent, finds victim,
- locks victim and calls the method.  Locks are exclusive.
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -301,8 +301,8 @@
  
--4) rename() that is _not_ cross-directory.  Locking rules: caller locks the
--parent and finds source and target.  We lock both (provided they exist).  If we
--need to lock two inodes of different type (dir vs non-dir), we lock directory
--first.  If we need to lock two inodes of the same type, lock them in inode
--pointer order.  Then call the method.  All locks are exclusive.
--NB: we might get away with locking the source (and target in exchange
--case) shared.
-+4) rename() that is _not_ cross-directory.  Locking rules: caller locks
-+the parent and finds source and target.  Then we decide which of the
-+source and target need to be locked.  Source needs to be locked if it's a
-+non-directory; target - if it's a non-directory or about to be removed.
-+Take the locks that need to be taken, in inode pointer order if need
-+to take both (that can happen only when both source and target are
-+non-directories - the source because it wouldn't be locked otherwise
-+and the target because mixing directory and non-directory is allowed
-+only with RENAME_EXCHANGE, and that won't be removing the target).
-+After the locks had been taken, call the method.  All locks are exclusive.
  
- 5) link creation.  Locking rules:
+ /* Misc definitions */
++#define SC16IS7XX_SPI_READ_BIT		BIT(7)
+ #define SC16IS7XX_FIFO_SIZE		(64)
+-#define SC16IS7XX_REG_SHIFT		2
+ #define SC16IS7XX_GPIOS_PER_BANK	4
  
-@@ -44,20 +47,17 @@ rules:
+ struct sc16is7xx_devtype {
+@@ -324,6 +324,7 @@ struct sc16is7xx_one_config {
+ struct sc16is7xx_one {
+ 	struct uart_port		port;
+ 	u8				line;
++	struct regmap			*regmap;
+ 	struct kthread_work		tx_work;
+ 	struct kthread_work		reg_work;
+ 	struct kthread_delayed_work	ms_work;
+@@ -361,48 +362,37 @@ static void sc16is7xx_stop_tx(struct uar
  
- 	* lock the filesystem
- 	* lock parents in "ancestors first" order. If one is not ancestor of
--	  the other, lock them in inode pointer order.
-+	  the other, lock the parent of source first.
- 	* find source and target.
- 	* if old parent is equal to or is a descendent of target
- 	  fail with -ENOTEMPTY
- 	* if new parent is equal to or is a descendent of source
- 	  fail with -ELOOP
--	* Lock both the source and the target provided they exist. If we
--	  need to lock two inodes of different type (dir vs non-dir), we lock
--	  the directory first. If we need to lock two inodes of the same type,
--	  lock them in inode pointer order.
-+	* Lock subdirectories involved (source before target).
-+	* Lock non-directories involved, in inode pointer order.
- 	* call the method.
+ #define to_sc16is7xx_one(p,e)	((container_of((p), struct sc16is7xx_one, e)))
  
--All ->i_rwsem are taken exclusive.  Again, we might get away with locking
--the source (and target in exchange case) shared.
-+All ->i_rwsem are taken exclusive.
- 
- The rules above obviously guarantee that all directories that are going to be
- read, modified or removed by method will be locked by caller.
-@@ -67,6 +67,7 @@ If no directory is its own ancestor, the
- 
- Proof:
- 
-+[XXX: will be updated once we are done massaging the lock_rename()]
- 	First of all, at any moment we have a linear ordering of the
- 	objects - A < B iff (A is an ancestor of B) or (B is not an ancestor
-         of A and ptr(A) < ptr(B)).
---- a/Documentation/filesystems/locking.rst
-+++ b/Documentation/filesystems/locking.rst
-@@ -101,7 +101,7 @@ symlink:	exclusive
- mkdir:		exclusive
- unlink:		exclusive (both)
- rmdir:		exclusive (both)(see below)
--rename:		exclusive (all)	(see below)
-+rename:		exclusive (both parents, some children)	(see below)
- readlink:	no
- get_link:	no
- setattr:	exclusive
-@@ -123,6 +123,9 @@ get_offset_ctx  no
- 	Additionally, ->rmdir(), ->unlink() and ->rename() have ->i_rwsem
- 	exclusive on victim.
- 	cross-directory ->rename() has (per-superblock) ->s_vfs_rename_sem.
-+	->unlink() and ->rename() have ->i_rwsem exclusive on all non-directories
-+	involved.
-+	->rename() has ->i_rwsem exclusive on any subdirectory that changes parent.
- 
- See Documentation/filesystems/directory-locking.rst for more detailed discussion
- of the locking scheme for directory operations.
---- a/Documentation/filesystems/porting.rst
-+++ b/Documentation/filesystems/porting.rst
-@@ -1061,3 +1061,21 @@ export_operations ->encode_fh() no longe
- encode FILEID_INO32_GEN* file handles.
- Filesystems that used the default implementation may use the generic helper
- generic_encode_ino32_fh() explicitly.
-+
-+---
-+
-+**mandatory**
-+
-+If ->rename() update of .. on cross-directory move needs an exclusion with
-+directory modifications, do *not* lock the subdirectory in question in your
-+->rename() - it's done by the caller now [that item should've been added in
-+28eceeda130f "fs: Lock moved directories"].
-+
-+---
-+
-+**mandatory**
-+
-+On same-directory ->rename() the (tautological) update of .. is not protected
-+by any locks; just don't do it if the old parent is the same as the new one.
-+We really can't lock two subdirectories in same-directory rename - not without
-+deadlocks.
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -3021,20 +3021,14 @@ static struct dentry *lock_two_directori
- 	p = d_ancestor(p2, p1);
- 	if (p) {
- 		inode_lock_nested(p2->d_inode, I_MUTEX_PARENT);
--		inode_lock_nested(p1->d_inode, I_MUTEX_CHILD);
-+		inode_lock_nested(p1->d_inode, I_MUTEX_PARENT2);
- 		return p;
- 	}
- 
- 	p = d_ancestor(p1, p2);
--	if (p) {
--		inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
--		inode_lock_nested(p2->d_inode, I_MUTEX_CHILD);
--		return p;
--	}
+-static int sc16is7xx_line(struct uart_port *port)
+-{
+-	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
 -
--	lock_two_inodes(p1->d_inode, p2->d_inode,
--			I_MUTEX_PARENT, I_MUTEX_PARENT2);
--	return NULL;
-+	inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
-+	inode_lock_nested(p2->d_inode, I_MUTEX_PARENT2);
-+	return p;
+-	return one->line;
+-}
+-
+ static u8 sc16is7xx_port_read(struct uart_port *port, u8 reg)
+ {
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 	unsigned int val = 0;
+-	const u8 line = sc16is7xx_line(port);
+ 
+-	regmap_read(s->regmap, (reg << SC16IS7XX_REG_SHIFT) | line, &val);
++	regmap_read(one->regmap, reg, &val);
+ 
+ 	return val;
  }
  
- /*
-@@ -4716,11 +4710,12 @@ SYSCALL_DEFINE2(link, const char __user
-  *
-  *	a) we can get into loop creation.
-  *	b) race potential - two innocent renames can create a loop together.
-- *	   That's where 4.4 screws up. Current fix: serialization on
-+ *	   That's where 4.4BSD screws up. Current fix: serialization on
-  *	   sb->s_vfs_rename_mutex. We might be more accurate, but that's another
-  *	   story.
-- *	c) we have to lock _four_ objects - parents and victim (if it exists),
-- *	   and source.
-+ *	c) we may have to lock up to _four_ objects - parents and victim (if it exists),
-+ *	   and source (if it's a non-directory or a subdirectory that moves to
-+ *	   different parent).
-  *	   And that - after we got ->i_mutex on parents (until then we don't know
-  *	   whether the target exists).  Solution: try to be smart with locking
-  *	   order for inodes.  We rely on the fact that tree topology may change
-@@ -4752,6 +4747,7 @@ int vfs_rename(struct renamedata *rd)
- 	bool new_is_dir = false;
- 	unsigned max_links = new_dir->i_sb->s_max_links;
- 	struct name_snapshot old_name;
-+	bool lock_old_subdir, lock_new_subdir;
+ static void sc16is7xx_port_write(struct uart_port *port, u8 reg, u8 val)
+ {
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+-	const u8 line = sc16is7xx_line(port);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
  
- 	if (source == target)
- 		return 0;
-@@ -4805,15 +4801,32 @@ int vfs_rename(struct renamedata *rd)
- 	take_dentry_name_snapshot(&old_name, old_dentry);
- 	dget(new_dentry);
+-	regmap_write(s->regmap, (reg << SC16IS7XX_REG_SHIFT) | line, val);
++	regmap_write(one->regmap, reg, val);
+ }
+ 
+ static void sc16is7xx_fifo_read(struct uart_port *port, unsigned int rxlen)
+ {
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+-	const u8 line = sc16is7xx_line(port);
+-	u8 addr = (SC16IS7XX_RHR_REG << SC16IS7XX_REG_SHIFT) | line;
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
+-	regcache_cache_bypass(s->regmap, true);
+-	regmap_raw_read(s->regmap, addr, s->buf, rxlen);
+-	regcache_cache_bypass(s->regmap, false);
++	regcache_cache_bypass(one->regmap, true);
++	regmap_raw_read(one->regmap, SC16IS7XX_RHR_REG, s->buf, rxlen);
++	regcache_cache_bypass(one->regmap, false);
+ }
+ 
+ static void sc16is7xx_fifo_write(struct uart_port *port, u8 to_send)
+ {
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+-	const u8 line = sc16is7xx_line(port);
+-	u8 addr = (SC16IS7XX_THR_REG << SC16IS7XX_REG_SHIFT) | line;
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
  	/*
--	 * Lock all moved children. Moved directories may need to change parent
--	 * pointer so they need the lock to prevent against concurrent
--	 * directory changes moving parent pointer. For regular files we've
--	 * historically always done this. The lockdep locking subclasses are
--	 * somewhat arbitrary but RENAME_EXCHANGE in particular can swap
--	 * regular files and directories so it's difficult to tell which
--	 * subclasses to use.
-+	 * Lock children.
-+	 * The source subdirectory needs to be locked on cross-directory
-+	 * rename or cross-directory exchange since its parent changes.
-+	 * The target subdirectory needs to be locked on cross-directory
-+	 * exchange due to parent change and on any rename due to becoming
-+	 * a victim.
-+	 * Non-directories need locking in all cases (for NFS reasons);
-+	 * they get locked after any subdirectories (in inode address order).
-+	 *
-+	 * NOTE: WE ONLY LOCK UNRELATED DIRECTORIES IN CROSS-DIRECTORY CASE.
-+	 * NEVER, EVER DO THAT WITHOUT ->s_vfs_rename_mutex.
+ 	 * Don't send zero-length data, at least on SPI it confuses the chip
+@@ -411,19 +401,17 @@ static void sc16is7xx_fifo_write(struct
+ 	if (unlikely(!to_send))
+ 		return;
+ 
+-	regcache_cache_bypass(s->regmap, true);
+-	regmap_raw_write(s->regmap, addr, s->buf, to_send);
+-	regcache_cache_bypass(s->regmap, false);
++	regcache_cache_bypass(one->regmap, true);
++	regmap_raw_write(one->regmap, SC16IS7XX_THR_REG, s->buf, to_send);
++	regcache_cache_bypass(one->regmap, false);
+ }
+ 
+ static void sc16is7xx_port_update(struct uart_port *port, u8 reg,
+ 				  u8 mask, u8 val)
+ {
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+-	const u8 line = sc16is7xx_line(port);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 
+-	regmap_update_bits(s->regmap, (reg << SC16IS7XX_REG_SHIFT) | line,
+-			   mask, val);
++	regmap_update_bits(one->regmap, reg, mask, val);
+ }
+ 
+ static int sc16is7xx_alloc_line(void)
+@@ -478,7 +466,7 @@ static const struct sc16is7xx_devtype sc
+ 
+ static bool sc16is7xx_regmap_volatile(struct device *dev, unsigned int reg)
+ {
+-	switch (reg >> SC16IS7XX_REG_SHIFT) {
++	switch (reg) {
+ 	case SC16IS7XX_RHR_REG:
+ 	case SC16IS7XX_IIR_REG:
+ 	case SC16IS7XX_LSR_REG:
+@@ -497,7 +485,7 @@ static bool sc16is7xx_regmap_volatile(st
+ 
+ static bool sc16is7xx_regmap_precious(struct device *dev, unsigned int reg)
+ {
+-	switch (reg >> SC16IS7XX_REG_SHIFT) {
++	switch (reg) {
+ 	case SC16IS7XX_RHR_REG:
+ 		return true;
+ 	default:
+@@ -510,6 +498,7 @@ static bool sc16is7xx_regmap_precious(st
+ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ {
+ 	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
++	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+ 	u8 lcr;
+ 	u8 prescaler = 0;
+ 	unsigned long clk = port->uartclk, div = clk / 16 / baud;
+@@ -541,12 +530,12 @@ static int sc16is7xx_set_baud(struct uar
+ 			     SC16IS7XX_LCR_CONF_MODE_B);
+ 
+ 	/* Enable enhanced features */
+-	regcache_cache_bypass(s->regmap, true);
++	regcache_cache_bypass(one->regmap, true);
+ 	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
+ 			      SC16IS7XX_EFR_ENABLE_BIT,
+ 			      SC16IS7XX_EFR_ENABLE_BIT);
+ 
+-	regcache_cache_bypass(s->regmap, false);
++	regcache_cache_bypass(one->regmap, false);
+ 
+ 	/* Put LCR back to the normal mode */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+@@ -562,10 +551,10 @@ static int sc16is7xx_set_baud(struct uar
+ 			     SC16IS7XX_LCR_CONF_MODE_A);
+ 
+ 	/* Write the new divisor */
+-	regcache_cache_bypass(s->regmap, true);
++	regcache_cache_bypass(one->regmap, true);
+ 	sc16is7xx_port_write(port, SC16IS7XX_DLH_REG, div / 256);
+ 	sc16is7xx_port_write(port, SC16IS7XX_DLL_REG, div % 256);
+-	regcache_cache_bypass(s->regmap, false);
++	regcache_cache_bypass(one->regmap, false);
+ 
+ 	/* Put LCR back to the normal mode */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+@@ -1091,7 +1080,7 @@ static void sc16is7xx_set_termios(struct
+ 			     SC16IS7XX_LCR_CONF_MODE_B);
+ 
+ 	/* Configure flow control */
+-	regcache_cache_bypass(s->regmap, true);
++	regcache_cache_bypass(one->regmap, true);
+ 	sc16is7xx_port_write(port, SC16IS7XX_XON1_REG, termios->c_cc[VSTART]);
+ 	sc16is7xx_port_write(port, SC16IS7XX_XOFF1_REG, termios->c_cc[VSTOP]);
+ 
+@@ -1110,7 +1099,7 @@ static void sc16is7xx_set_termios(struct
+ 			      SC16IS7XX_EFR_REG,
+ 			      SC16IS7XX_EFR_FLOWCTRL_BITS,
+ 			      flow);
+-	regcache_cache_bypass(s->regmap, false);
++	regcache_cache_bypass(one->regmap, false);
+ 
+ 	/* Update LCR register */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+@@ -1161,7 +1150,6 @@ static int sc16is7xx_config_rs485(struct
+ static int sc16is7xx_startup(struct uart_port *port)
+ {
+ 	struct sc16is7xx_one *one = to_sc16is7xx_one(port, port);
+-	struct sc16is7xx_port *s = dev_get_drvdata(port->dev);
+ 	unsigned int val;
+ 	unsigned long flags;
+ 
+@@ -1178,7 +1166,7 @@ static int sc16is7xx_startup(struct uart
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
+ 			     SC16IS7XX_LCR_CONF_MODE_B);
+ 
+-	regcache_cache_bypass(s->regmap, true);
++	regcache_cache_bypass(one->regmap, true);
+ 
+ 	/* Enable write access to enhanced features and internal clock div */
+ 	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
+@@ -1196,7 +1184,7 @@ static int sc16is7xx_startup(struct uart
+ 			     SC16IS7XX_TCR_RX_RESUME(24) |
+ 			     SC16IS7XX_TCR_RX_HALT(48));
+ 
+-	regcache_cache_bypass(s->regmap, false);
++	regcache_cache_bypass(one->regmap, false);
+ 
+ 	/* Now, initialize the UART */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, SC16IS7XX_LCR_WORD_LEN_8);
+@@ -1477,7 +1465,7 @@ static int sc16is7xx_setup_mctrl_ports(s
+ 	if (s->mctrl_mask)
+ 		regmap_update_bits(
+ 			s->regmap,
+-			SC16IS7XX_IOCONTROL_REG << SC16IS7XX_REG_SHIFT,
++			SC16IS7XX_IOCONTROL_REG,
+ 			SC16IS7XX_IOCONTROL_MODEM_A_BIT |
+ 			SC16IS7XX_IOCONTROL_MODEM_B_BIT, s->mctrl_mask);
+ 
+@@ -1492,7 +1480,7 @@ static const struct serial_rs485 sc16is7
+ 
+ static int sc16is7xx_probe(struct device *dev,
+ 			   const struct sc16is7xx_devtype *devtype,
+-			   struct regmap *regmap, int irq)
++			   struct regmap *regmaps[], int irq)
+ {
+ 	unsigned long freq = 0, *pfreq = dev_get_platdata(dev);
+ 	unsigned int val;
+@@ -1500,16 +1488,16 @@ static int sc16is7xx_probe(struct device
+ 	int i, ret;
+ 	struct sc16is7xx_port *s;
+ 
+-	if (IS_ERR(regmap))
+-		return PTR_ERR(regmap);
++	for (i = 0; i < devtype->nr_uart; i++)
++		if (IS_ERR(regmaps[i]))
++			return PTR_ERR(regmaps[i]);
+ 
+ 	/*
+ 	 * This device does not have an identification register that would
+ 	 * tell us if we are really connected to the correct device.
+ 	 * The best we can do is to check if communication is at all possible.
  	 */
--	lock_two_inodes(source, target, I_MUTEX_NORMAL, I_MUTEX_NONDIR2);
-+	lock_old_subdir = new_dir != old_dir;
-+	lock_new_subdir = new_dir != old_dir || !(flags & RENAME_EXCHANGE);
-+	if (is_dir) {
-+		if (lock_old_subdir)
-+			inode_lock_nested(source, I_MUTEX_CHILD);
-+		if (target && (!new_is_dir || lock_new_subdir))
-+			inode_lock(target);
-+	} else if (new_is_dir) {
-+		if (lock_new_subdir)
-+			inode_lock_nested(target, I_MUTEX_CHILD);
-+		inode_lock(source);
-+	} else {
-+		lock_two_nondirectories(source, target);
+-	ret = regmap_read(regmap,
+-			  SC16IS7XX_LSR_REG << SC16IS7XX_REG_SHIFT, &val);
++	ret = regmap_read(regmaps[0], SC16IS7XX_LSR_REG, &val);
+ 	if (ret < 0)
+ 		return -EPROBE_DEFER;
+ 
+@@ -1543,7 +1531,7 @@ static int sc16is7xx_probe(struct device
+ 			return -EINVAL;
+ 	}
+ 
+-	s->regmap = regmap;
++	s->regmap = regmaps[0];
+ 	s->devtype = devtype;
+ 	dev_set_drvdata(dev, s);
+ 	mutex_init(&s->efr_lock);
+@@ -1558,8 +1546,8 @@ static int sc16is7xx_probe(struct device
+ 	sched_set_fifo(s->kworker_task);
+ 
+ 	/* reset device, purging any pending irq / data */
+-	regmap_write(s->regmap, SC16IS7XX_IOCONTROL_REG << SC16IS7XX_REG_SHIFT,
+-			SC16IS7XX_IOCONTROL_SRESET_BIT);
++	regmap_write(s->regmap, SC16IS7XX_IOCONTROL_REG,
++		     SC16IS7XX_IOCONTROL_SRESET_BIT);
+ 
+ 	for (i = 0; i < devtype->nr_uart; ++i) {
+ 		s->p[i].line		= i;
+@@ -1583,6 +1571,7 @@ static int sc16is7xx_probe(struct device
+ 		s->p[i].port.ops	= &sc16is7xx_ops;
+ 		s->p[i].old_mctrl	= 0;
+ 		s->p[i].port.line	= sc16is7xx_alloc_line();
++		s->p[i].regmap		= regmaps[i];
+ 
+ 		if (s->p[i].port.line >= SC16IS7XX_MAX_DEVS) {
+ 			ret = -ENOMEM;
+@@ -1611,13 +1600,13 @@ static int sc16is7xx_probe(struct device
+ 		sc16is7xx_port_write(&s->p[i].port, SC16IS7XX_LCR_REG,
+ 				     SC16IS7XX_LCR_CONF_MODE_B);
+ 
+-		regcache_cache_bypass(s->regmap, true);
++		regcache_cache_bypass(regmaps[i], true);
+ 
+ 		/* Enable write access to enhanced features */
+ 		sc16is7xx_port_write(&s->p[i].port, SC16IS7XX_EFR_REG,
+ 				     SC16IS7XX_EFR_ENABLE_BIT);
+ 
+-		regcache_cache_bypass(s->regmap, false);
++		regcache_cache_bypass(regmaps[i], false);
+ 
+ 		/* Restore access to general registers */
+ 		sc16is7xx_port_write(&s->p[i].port, SC16IS7XX_LCR_REG, 0x00);
+@@ -1711,19 +1700,36 @@ static const struct of_device_id __maybe
+ MODULE_DEVICE_TABLE(of, sc16is7xx_dt_ids);
+ 
+ static struct regmap_config regcfg = {
+-	.reg_bits = 7,
+-	.pad_bits = 1,
++	.reg_bits = 5,
++	.pad_bits = 3,
+ 	.val_bits = 8,
+ 	.cache_type = REGCACHE_RBTREE,
+ 	.volatile_reg = sc16is7xx_regmap_volatile,
+ 	.precious_reg = sc16is7xx_regmap_precious,
++	.max_register = SC16IS7XX_EFCR_REG,
+ };
+ 
++static const char *sc16is7xx_regmap_name(unsigned int port_id)
++{
++	static char buf[6];
++
++	snprintf(buf, sizeof(buf), "port%d", port_id);
++
++	return buf;
++}
++
++static unsigned int sc16is7xx_regmap_port_mask(unsigned int port_id)
++{
++	/* CH1,CH0 are at bits 2:1. */
++	return port_id << 1;
++}
++
+ #ifdef CONFIG_SERIAL_SC16IS7XX_SPI
+ static int sc16is7xx_spi_probe(struct spi_device *spi)
+ {
+ 	const struct sc16is7xx_devtype *devtype;
+-	struct regmap *regmap;
++	struct regmap *regmaps[2];
++	unsigned int i;
+ 	int ret;
+ 
+ 	/* Setup SPI bus */
+@@ -1748,11 +1754,20 @@ static int sc16is7xx_spi_probe(struct sp
+ 		devtype = (struct sc16is7xx_devtype *)id_entry->driver_data;
+ 	}
+ 
+-	regcfg.max_register = (0xf << SC16IS7XX_REG_SHIFT) |
+-			      (devtype->nr_uart - 1);
+-	regmap = devm_regmap_init_spi(spi, &regcfg);
++	for (i = 0; i < devtype->nr_uart; i++) {
++		regcfg.name = sc16is7xx_regmap_name(i);
++		/*
++		 * If read_flag_mask is 0, the regmap code sets it to a default
++		 * of 0x80. Since we specify our own mask, we must add the READ
++		 * bit ourselves:
++		 */
++		regcfg.read_flag_mask = sc16is7xx_regmap_port_mask(i) |
++			SC16IS7XX_SPI_READ_BIT;
++		regcfg.write_flag_mask = sc16is7xx_regmap_port_mask(i);
++		regmaps[i] = devm_regmap_init_spi(spi, &regcfg);
 +	}
  
- 	error = -EPERM;
- 	if (IS_SWAPFILE(source) || (target && IS_SWAPFILE(target)))
-@@ -4861,8 +4874,9 @@ int vfs_rename(struct renamedata *rd)
- 			d_exchange(old_dentry, new_dentry);
+-	return sc16is7xx_probe(&spi->dev, devtype, regmap, spi->irq);
++	return sc16is7xx_probe(&spi->dev, devtype, regmaps, spi->irq);
+ }
+ 
+ static void sc16is7xx_spi_remove(struct spi_device *spi)
+@@ -1791,7 +1806,8 @@ static int sc16is7xx_i2c_probe(struct i2
+ {
+ 	const struct i2c_device_id *id = i2c_client_get_device_id(i2c);
+ 	const struct sc16is7xx_devtype *devtype;
+-	struct regmap *regmap;
++	struct regmap *regmaps[2];
++	unsigned int i;
+ 
+ 	if (i2c->dev.of_node) {
+ 		devtype = device_get_match_data(&i2c->dev);
+@@ -1801,11 +1817,14 @@ static int sc16is7xx_i2c_probe(struct i2
+ 		devtype = (struct sc16is7xx_devtype *)id->driver_data;
  	}
- out:
--	inode_unlock(source);
--	if (target)
-+	if (!is_dir || lock_old_subdir)
-+		inode_unlock(source);
-+	if (target && (!new_is_dir || lock_new_subdir))
- 		inode_unlock(target);
- 	dput(new_dentry);
- 	if (!error) {
+ 
+-	regcfg.max_register = (0xf << SC16IS7XX_REG_SHIFT) |
+-			      (devtype->nr_uart - 1);
+-	regmap = devm_regmap_init_i2c(i2c, &regcfg);
++	for (i = 0; i < devtype->nr_uart; i++) {
++		regcfg.name = sc16is7xx_regmap_name(i);
++		regcfg.read_flag_mask = sc16is7xx_regmap_port_mask(i);
++		regcfg.write_flag_mask = sc16is7xx_regmap_port_mask(i);
++		regmaps[i] = devm_regmap_init_i2c(i2c, &regcfg);
++	}
+ 
+-	return sc16is7xx_probe(&i2c->dev, devtype, regmap, i2c->irq);
++	return sc16is7xx_probe(&i2c->dev, devtype, regmaps, i2c->irq);
+ }
+ 
+ static void sc16is7xx_i2c_remove(struct i2c_client *client)
 
 
