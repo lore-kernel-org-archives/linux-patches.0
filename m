@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6698B159583;
-	Mon, 29 Jan 2024 17:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2076D159583;
+	Mon, 29 Jan 2024 17:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548222; cv=none; b=hrl7RU5iBiy7CYLG2oqwEQtYj6nfVhiqFsTZ/7EhKk7YTPub8oMlY2tmAjn3WcmEMfxTX62jUbEdXuxjcSitxRrDSsJ/za3TI9WKHBoMSuOPD3UWRqqBaL/cdtc6OFQ8zaN4RIxm1wvD/T1KsNCvkm8gUryNAVPdKricK1zVkgE=
+	t=1706548223; cv=none; b=oFKYknOqy9qeOlm11u/BvitFRFgKliABrxuotS+XONLlhgfaAWjBt2M08qPhCwN17n7ezvNEuo/9rD5VGtGlzufwzsi/qNqlhDwUFRO9W5Zy4avFyqmVGcSpqbt64v53u5OmZfpp6PNhjRLJOZuxHO7U0eUaX2GMZK5XSqBhsGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548222; c=relaxed/simple;
-	bh=rc+/dLogrqkgvE4P8o91424Q94yRO/eXvazckPtqU3s=;
+	s=arc-20240116; t=1706548223; c=relaxed/simple;
+	bh=dgPsUnHTZZOw7d0SbiECY4NDnQSiTeRjMC3/PAuSvFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJOXczDsT7+VKTJderAZsVRy2SfKxzcJ0PYwqmSFnRu9MT5FGceAgOpOebFZQ0Q4ugPcsyz0+vIKmo8whwhVy1CAWh8UYGHErwIdiduJd9QtZjCOdPB8SQn6obcNZ0HfQgApTCZ4Twgy/alNuGRNgdwjSDWksgOBbu6F2heQF58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhGNs5Nw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n96F+nX1Aro73/v9FI4RUO8O7tZjjyNt8c/AoaQHzijHUUEuGP3+2a9IOrN9AzWaaYXD0PQ0/rdH3m8Mp5UGR/+uLb/EaD8PFvs74Jy2sldOpxV2C1O6IVMfgtps2kbhUFJMbmsqTWwENkkk6RHwu0lQOkJXwdimz45fHgvL5FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cknaOgWp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhGNs5Nw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC71C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cknaOgWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA47AC433F1;
 	Mon, 29 Jan 2024 17:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548222;
-	bh=rc+/dLogrqkgvE4P8o91424Q94yRO/eXvazckPtqU3s=;
+	bh=dgPsUnHTZZOw7d0SbiECY4NDnQSiTeRjMC3/PAuSvFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhGNs5NwF9S7rEHAiL2D+s6oWZBQQsmiWlWRxZEM0StsOGoVJbskcMJzO4Qs9lRdz
-	 GfxNUzsM/sBcy/1F6oUmwE+RJOZxBu6tPZdq8roODx31kNfgQZTO3bxqKsAw6Vtt6Q
-	 yIQs2bzqGNA7M/07Il6uDW7CVyUW1RkZRZprwIqs=
+	b=cknaOgWp9RoX58PGpGo8AC/mc1Pxxi+jLaNLbBN3c3Wke56hIgBQrVcg26kBkBqAk
+	 oN1ipeOva889+ONl6oNlBGFDp2q5RBA1yCzPCWRP+GpJJOpjCBdomGej1szbQf1PMd
+	 R63KP+S0fPETZRUGL/0JvOpn0keaeCvf6muQzyUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aradhya Bhatia <a-bhatia1@ti.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 6.7 252/346] drm/tidss: Fix atomic_flush check
-Date: Mon, 29 Jan 2024 09:04:43 -0800
-Message-ID: <20240129170023.826500825@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 027/185] parisc/firmware: Fix F-extend for PDC addresses
+Date: Mon, 29 Jan 2024 09:03:47 -0800
+Message-ID: <20240129165959.469755366@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,58 +45,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 95d4b471953411854f9c80b568da7fcf753f3801 upstream.
+commit 735ae74f73e55c191d48689bd11ff4a06ea0508f upstream.
 
-tidss_crtc_atomic_flush() checks if the crtc is enabled, and if not,
-returns immediately as there's no reason to do any register changes.
+When running with narrow firmware (64-bit kernel using a 32-bit
+firmware), extend PDC addresses into the 0xfffffff0.00000000
+region instead of the 0xf0f0f0f0.00000000 region.
 
-However, the code checks for 'crtc->state->enable', which does not
-reflect the actual HW state. We should instead look at the
-'crtc->state->active' flag.
+This fixes the power button on the C3700 machine in qemu (64-bit CPU
+with 32-bit firmware), and my assumption is that the previous code was
+really never used (because most 64-bit machines have a 64-bit firmware),
+or it just worked on very old machines because they may only decode
+40-bit of virtual addresses.
 
-This causes the tidss_crtc_atomic_flush() to proceed with the flush even
-if the active state is false, which then causes us to hit the
-WARN_ON(!crtc->state->event) check.
-
-Fix this by checking the active flag, and while at it, fix the related
-debug print which had "active" and "needs modeset" wrong way.
-
-Cc:  <stable@vger.kernel.org>
-Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
-Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
-Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-10-ac91b5ea35c0@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tidss/tidss_crtc.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/parisc/kernel/firmware.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/tidss/tidss_crtc.c
-+++ b/drivers/gpu/drm/tidss/tidss_crtc.c
-@@ -169,13 +169,13 @@ static void tidss_crtc_atomic_flush(stru
- 	struct tidss_device *tidss = to_tidss(ddev);
- 	unsigned long flags;
+--- a/arch/parisc/kernel/firmware.c
++++ b/arch/parisc/kernel/firmware.c
+@@ -123,10 +123,10 @@ static unsigned long f_extend(unsigned l
+ #ifdef CONFIG_64BIT
+ 	if(unlikely(parisc_narrow_firmware)) {
+ 		if((address & 0xff000000) == 0xf0000000)
+-			return 0xf0f0f0f000000000UL | (u32)address;
++			return (0xfffffff0UL << 32) | (u32)address;
  
--	dev_dbg(ddev->dev,
--		"%s: %s enabled %d, needs modeset %d, event %p\n", __func__,
--		crtc->name, drm_atomic_crtc_needs_modeset(crtc->state),
--		crtc->state->enable, crtc->state->event);
-+	dev_dbg(ddev->dev, "%s: %s is %sactive, %s modeset, event %p\n",
-+		__func__, crtc->name, crtc->state->active ? "" : "not ",
-+		drm_atomic_crtc_needs_modeset(crtc->state) ? "needs" : "doesn't need",
-+		crtc->state->event);
- 
- 	/* There is nothing to do if CRTC is not going to be enabled. */
--	if (!crtc->state->enable)
-+	if (!crtc->state->active)
- 		return;
- 
- 	/*
+ 		if((address & 0xf0000000) == 0xf0000000)
+-			return 0xffffffff00000000UL | (u32)address;
++			return (0xffffffffUL << 32) | (u32)address;
+ 	}
+ #endif
+ 	return address;
 
 
