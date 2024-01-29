@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4E715703E;
-	Mon, 29 Jan 2024 17:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B238815703E;
+	Mon, 29 Jan 2024 17:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548246; cv=none; b=QkeF3oJ+Uw20selTGrRD2WG6w2TK2QF1SRFvJS+YfQwl17JrtD/S4gJMbl6LhOjAz328/Jz6hJphrtWNVdEo4m+fZ97KuEYBA7Gm8/77Xm/LJgjQmquHHi4KecEx4zBYUlf+S0eIPJci8gk/4cN6ZBOg06bA5Gx1EQSzWKP3MZM=
+	t=1706548246; cv=none; b=IqeHS7qmdvwNPi7BAf/+YIoKml/dKek2qMgNrf46fSImga3FO6O5WcrbYbm3fp/RQFiDe8/XOn86STtbr77rU2EOJSj12iezTbJ3S8+v+OTZ+IfsGz+wlNXvqvNXmbA6U5P5nVINdwv+evbhaDpJuBQSj6gUhZJ3iFU0BrVfYII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548246; c=relaxed/simple;
-	bh=N6LKTa+7SYkLs3coFQ3qllUDvz6fJJXHpLYh6nsHJZs=;
+	bh=zvIrtF2iMfx4CmaA7XxKrMZEq22VTcZ2B4+h4CivGmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swWvQCFKnMgzcNBO1P0hMR2X7q2dZ9yuBaqX3PF6Ka1aWFxVS5uLMhUK2rDkLqMQrP4in7v5EV+lcfd4YUz4V9h4dfgd8V3y4bctXzKW2aDspTxgI3E9x5y+sleB6292hS4DHNbpwdXsFskxQ7DIOTFMe3gGceWI36+G5tMqMyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AU9pKqYl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N5VWluxrzYZOj1F1P9sakV75GYhnPFY0f8yEm6Cw5BfpJlx/mshD6BubjDT2kcSTPVEgvU0g+KivAil2ynO8G6N2wwiKSfpDlFjCyxjzQ4ascO6TpiM5Rs22WmbnkapfKA573jvHX6cgLi5lO8p7iPF9mwMYZ3wZ3bYZXT/8R3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJwYZ1Y9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AU9pKqYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3003C433C7;
-	Mon, 29 Jan 2024 17:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJwYZ1Y9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFE8C43390;
+	Mon, 29 Jan 2024 17:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548245;
-	bh=N6LKTa+7SYkLs3coFQ3qllUDvz6fJJXHpLYh6nsHJZs=;
+	s=korg; t=1706548246;
+	bh=zvIrtF2iMfx4CmaA7XxKrMZEq22VTcZ2B4+h4CivGmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AU9pKqYlSv3bYYicxxoylw6qvnzpPXtUpLWK3yI9wZCbrMJAnA4vgm6DojqjSejWj
-	 qIod3rtbnV2GUuAAKMi6+PZI8LqYETIaAz/PW7Z8OrxwUvv3+lObA4tGbFPYVCq9oK
-	 rQZDbTeFpICsCkZ642mnHGfupk99WWZKv9vcBZtU=
+	b=SJwYZ1Y97vbIbr6fjC62DyYvozKvej3i3dvP01MlSbDvDFPx/llW4GLzq7GURNSZC
+	 RCvgLeA4NPvAjGv/CfD98xxsOBLIKEOtyWaiRlwZ19Xj8J6qusdFMLxe48DwY5XVH0
+	 znPQ4V1Y0f2P8Qq07WMCrtKQYUK4G8benvDKqRFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 043/185] media: videobuf2-dma-sg: fix vmap callback
-Date: Mon, 29 Jan 2024 09:04:03 -0800
-Message-ID: <20240129165959.967299461@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.7 270/346] drm/amd/display: Align the returned error code with legacy DP
+Date: Mon, 29 Jan 2024 09:05:01 -0800
+Message-ID: <20240129170024.328377743@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +49,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 608ca5a60ee47b48fec210aeb7a795a64eb5dcee upstream.
+commit bfe79f5fff1300d96203383582b078c7b0aec80a upstream.
 
-For dmabuf import users to be able to use the vaddr from another
-videobuf2-dma-sg source, the exporter needs to set a proper vaddr on
-vb2_dma_sg_dmabuf_ops_vmap callback. This patch adds vmap on map if
-buf->vaddr was not set.
+[Why]
+For usb4 connector, AUX transaction is handled by dmub utilizing a differnt
+code path comparing to legacy DP connector. If the usb4 DP connector is
+disconnected, AUX access will report EBUSY and cause igt@kms_dp_aux_dev
+fail.
 
-Cc: stable@kernel.org
-Fixes: 7938f4218168 ("dma-buf-map: Rename to iosys-map")
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Acked-by: Tomasz Figa <tfiga@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[How]
+Align the error code with the one reported by legacy DP as EIO.
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/videobuf2/videobuf2-dma-sg.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-+++ b/drivers/media/common/videobuf2/videobuf2-dma-sg.c
-@@ -494,9 +494,15 @@ vb2_dma_sg_dmabuf_ops_end_cpu_access(str
- static int vb2_dma_sg_dmabuf_ops_vmap(struct dma_buf *dbuf,
- 				      struct iosys_map *map)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -965,6 +965,11 @@ int dm_helper_dmub_aux_transfer_sync(
+ 		struct aux_payload *payload,
+ 		enum aux_return_code_type *operation_result)
  {
--	struct vb2_dma_sg_buf *buf = dbuf->priv;
-+	struct vb2_dma_sg_buf *buf;
-+	void *vaddr;
- 
--	iosys_map_set_vaddr(map, buf->vaddr);
-+	buf = dbuf->priv;
-+	vaddr = vb2_dma_sg_vaddr(buf->vb, buf);
-+	if (!vaddr)
-+		return -EINVAL;
++	if (!link->hpd_status) {
++		*operation_result = AUX_RET_ERROR_HPD_DISCON;
++		return -1;
++	}
 +
-+	iosys_map_set_vaddr(map, vaddr);
- 
- 	return 0;
+ 	return amdgpu_dm_process_dmub_aux_transfer_sync(ctx, link->link_index, payload,
+ 			operation_result);
  }
 
 
