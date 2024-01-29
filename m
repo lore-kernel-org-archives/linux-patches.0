@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6836F15703D;
-	Mon, 29 Jan 2024 17:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FD815FB21;
+	Mon, 29 Jan 2024 17:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548308; cv=none; b=kKSQE0p4f4obaipOYjVCX82Av+79wPQsGocHguZTizaVLxmhY1/fr3wYT/uRN/efJK7uvA4LHXPz1Tzmb/aU7wJIlXO8SeFpGOyEejunklc/fJ0PtFjM9Z0wTIi5GxFtT8MPVtGVym2W+RJKZLF37ajBuRXw6KlfxelCSznOYpc=
+	t=1706548309; cv=none; b=GKhYFx90JFBKdFWxY/Qasc0rxjb0ModB6q/UVp5KmzWmXc4UyymjLTeA6sHGF56UmAy/2m5Pn2RpJmMYVQ7647YQ7SmsaPvofJIC02oR/Ru7YlHsV+byItVd9jNnalbktNLD2S9CbZQ7qUWG5MeBN2Ex9qQFn3NejNlAfPQZzKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548308; c=relaxed/simple;
-	bh=CQxMez5WEmzXKaPJIjiHDnmr0EjxEMnq4u3IT1KpvGM=;
+	s=arc-20240116; t=1706548309; c=relaxed/simple;
+	bh=Kw345+PTE0wUUEuSO08Y4GjYIp8WDKqYfPb9xpZIyn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FK78efx40wSgZiexrIvVRm+ubxcrZdZLIu6waYzh58VaxvrFAOD9o4BluqG9YxJqzsTrDOPgSBmH+qjK7krKgRhdgzwohEfgFdFKuISvpLRX8hHuwZF53G5ghSzpYUHTv6vbY9Q9RVZmiJ7qkvRlp3hNyNhHNQeqIJt/X/9lRPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkXdWI2F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XVxS/BB2Fd3bf5PIHjvmB8X9x+3thw+sx/4LzrfM/jOGkAjw37/RHywTZynj1Nw0m9pqkki/TrZzYPu7t8CrGqxMBliBms+xsLyr1xOggDAHUcWpFVBV28kFBwPQsBthJ1DS2Qpb7fUpbmiO7pNwU0/aAwrf1w9j9lZ5pxcrb/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9SjQFXJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkXdWI2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 310C1C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9SjQFXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAF9C43394;
 	Mon, 29 Jan 2024 17:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548308;
-	bh=CQxMez5WEmzXKaPJIjiHDnmr0EjxEMnq4u3IT1KpvGM=;
+	s=korg; t=1706548309;
+	bh=Kw345+PTE0wUUEuSO08Y4GjYIp8WDKqYfPb9xpZIyn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MkXdWI2F5tbvS7EtnbY1jKCCAbONHkFwVBLRTMhWX4ZiIPHqEAfXd0aLwXDllJWx5
-	 Swn05Brs4ZMg0jItfRVeGHbMnHVf/m5z8ZLxiZvsarDredfz/HLJPXmgJIqa3XyPUH
-	 3W4Kp3OXZssV6dRt64N7MljK4VCSXwHjdbYLgYPA=
+	b=N9SjQFXJZN8OGTgJ6yWoRug+DAKjNLmDyqvR5goVAMmyaxOgLyl3EjCg/SlKeeT6j
+	 r51dSScDshuOPeDhz6MsJPD4Ve07L58Ea6ahG5fnt2m3c8xYBW0n0cQkqe5I0W7ySY
+	 LKpXYM2KQZuaIzJASUUe0mpOcOZZo+3ZvOMwop4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=D0=9C=D0=B0=D1=80=D0=BA=20=D0=9A=D0=BE=D1=80=D0=B5=D0=BD=D0=B1=D0=B5=D1=80=D0=B3?= <socketpair@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/185] net: fix removing a namespace with conflicting altnames
-Date: Mon, 29 Jan 2024 09:04:44 -0800
-Message-ID: <20240129170001.300768409@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.1 059/185] serial: sc16is7xx: remove wasteful static buffer in sc16is7xx_regmap_name()
+Date: Mon, 29 Jan 2024 09:04:19 -0800
+Message-ID: <20240129170000.503450377@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -49,85 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit d09486a04f5da0a812c26217213b89a3b1acf836 ]
+commit 6bcab3c8acc88e265c570dea969fd04f137c8a4c upstream.
 
-Mark reports a BUG() when a net namespace is removed.
+Using a static buffer inside sc16is7xx_regmap_name() was a convenient and
+simple way to set the regmap name without having to allocate and free a
+buffer each time it is called. The drawback is that the static buffer
+wastes memory for nothing once regmap is fully initialized.
 
-    kernel BUG at net/core/dev.c:11520!
+Remove static buffer and use constant strings instead.
 
-Physical interfaces moved outside of init_net get "refunded"
-to init_net when that namespace disappears. The main interface
-name may get overwritten in the process if it would have
-conflicted. We need to also discard all conflicting altnames.
-Recent fixes addressed ensuring that altnames get moved
-with the main interface, which surfaced this problem.
+This also avoids a truncation warning when using "%d" or "%u" in snprintf
+which was flagged by kernel test robot.
 
-Reported-by: Марк Коренберг <socketpair@gmail.com>
-Link: https://lore.kernel.org/all/CAEmTpZFZ4Sv3KwqFOY2WKDHeZYdi0O7N5H1nTvcGp=SAEavtDg@mail.gmail.com/
-Fixes: 7663d522099e ("net: check for altname conflicts when changing netdev's netns")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3837a0379533 ("serial: sc16is7xx: improve regmap debugfs by using one regmap per port")
+Cc:  <stable@vger.kernel.org> # 6.1.x: 3837a03 serial: sc16is7xx: improve regmap debugfs by using one regmap per port
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231211171353.2901416-2-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c | 9 +++++++++
- net/core/dev.h | 3 +++
- 2 files changed, 12 insertions(+)
+ drivers/tty/serial/sc16is7xx.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 0a5566b6f8a2..1ba3662faf0a 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -11323,6 +11323,7 @@ static struct pernet_operations __net_initdata netdev_net_ops = {
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1698,13 +1698,15 @@ static struct regmap_config regcfg = {
+ 	.max_register = SC16IS7XX_EFCR_REG,
+ };
  
- static void __net_exit default_device_exit_net(struct net *net)
+-static const char *sc16is7xx_regmap_name(unsigned int port_id)
++static const char *sc16is7xx_regmap_name(u8 port_id)
  {
-+	struct netdev_name_node *name_node, *tmp;
- 	struct net_device *dev, *aux;
- 	/*
- 	 * Push all migratable network devices back to the
-@@ -11345,6 +11346,14 @@ static void __net_exit default_device_exit_net(struct net *net)
- 		snprintf(fb_name, IFNAMSIZ, "dev%d", dev->ifindex);
- 		if (netdev_name_in_use(&init_net, fb_name))
- 			snprintf(fb_name, IFNAMSIZ, "dev%%d");
-+
-+		netdev_for_each_altname_safe(dev, name_node, tmp)
-+			if (netdev_name_in_use(&init_net, name_node->name)) {
-+				netdev_name_node_del(name_node);
-+				synchronize_rcu();
-+				__netdev_name_node_alt_destroy(name_node);
-+			}
-+
- 		err = dev_change_net_namespace(dev, &init_net, fb_name);
- 		if (err) {
- 			pr_emerg("%s: failed to move %s to init_net: %d\n",
-diff --git a/net/core/dev.h b/net/core/dev.h
-index 9ca91457c197..db9ff8cd8d46 100644
---- a/net/core/dev.h
-+++ b/net/core/dev.h
-@@ -63,6 +63,9 @@ int dev_change_name(struct net_device *dev, const char *newname);
+-	static char buf[6];
+-
+-	snprintf(buf, sizeof(buf), "port%d", port_id);
+-
+-	return buf;
++	switch (port_id) {
++	case 0:	return "port0";
++	case 1:	return "port1";
++	default:
++		WARN_ON(true);
++		return NULL;
++	}
+ }
  
- #define netdev_for_each_altname(dev, namenode)				\
- 	list_for_each_entry((namenode), &(dev)->name_node->list, list)
-+#define netdev_for_each_altname_safe(dev, namenode, next)		\
-+	list_for_each_entry_safe((namenode), (next), &(dev)->name_node->list, \
-+				 list)
- 
- int netdev_name_node_alt_create(struct net_device *dev, const char *name);
- int netdev_name_node_alt_destroy(struct net_device *dev, const char *name);
--- 
-2.43.0
-
+ static unsigned int sc16is7xx_regmap_port_mask(unsigned int port_id)
 
 
