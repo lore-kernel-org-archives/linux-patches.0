@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4957015AAD4;
-	Mon, 29 Jan 2024 17:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7215E15AAD4;
+	Mon, 29 Jan 2024 17:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548406; cv=none; b=Dt6cWKGWGv0Bz5/LbONj92BwwFz6x4wtdZeJNzz6VCl8nXPGsrqwJe1DJHrcqcsesMuj1yxpsrWA0mHRDO/ABHgrR6JkaYCivlzmsppvdMJMqNCBMu6HxULD2AV5lCDv6lJfiv8fnSkdU2mJp8K94CW0MEDSkFPS7d8074OxIkc=
+	t=1706548407; cv=none; b=Ua59Fin+wcQGkLCa0kHDQ0kVdPdaUwrBXIB1p5Dp6KGHoDVTbMtvKLxlCAa06zPVR2GEnQjD2Z28yxDl/Md098owKGlQb89pMUToXhsU0S9O2g9R8MKOc86aeh9GY6hidN+tsT/XCVZoHYF0n+SQx/vZfIV+Y7r7R0nJI4kksGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548406; c=relaxed/simple;
-	bh=7e3N5DPfHPvV6+tt33hTzbMGYZp9qo21S3nzaUHlU6c=;
+	s=arc-20240116; t=1706548407; c=relaxed/simple;
+	bh=p4iMLZti5xz54qVS9Nb3HBGYTaXkPP+VAUjJkfqTKs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haMWS3Q1ui9H12Pxi/3b7o0kyxNQUHgwqKyLVG+Vy+9b9o9rfQB6MVi8MkufYiL/XznWgdw11cLcQ2qPE0DutAwNgTKWaMA/A8k5YxwceCzU1E9ge/8tpJ8CFlFvX/BHTAAU2plcxuh3x8W28HsiuqS3jQEvSZuNFrewjD6hK/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoM9DKAd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GbiF9Dp6mbcEqBoVjggxbEPF8PLwFeZBsq1oDAwW1PcSDZQ2TkUbPg36aQs5NX2qwRCQP7CgzauxsgSGo+wJn4FLqc2yqd3rye8Gt+sM6bGeTZTS4c7UhnY6QkHG3PaWTO4pLO0UV4zwFlAHkcnr2oHgKFIW9aQ05uEFDzjCcEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=An48pbiE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoM9DKAd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6F2C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="An48pbiE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C56C433C7;
 	Mon, 29 Jan 2024 17:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548406;
-	bh=7e3N5DPfHPvV6+tt33hTzbMGYZp9qo21S3nzaUHlU6c=;
+	bh=p4iMLZti5xz54qVS9Nb3HBGYTaXkPP+VAUjJkfqTKs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoM9DKAdoJMwBde+ybxlgIz7NhTFVAkHO9lJp14vISLrW7+Y0hBci1CHcpdeQzr1H
-	 cJzh9uvfYjo3IpmYaXIsrcswF7LHYvfOQ2XOFTQMv8rBImhConUcpcCHX2FqGlx/3e
-	 qYt6CQz/DgZU484zAmDJgVUrk4ZU+qIizPvffkdQ=
+	b=An48pbiEbfCRyZmWs3+m7bcSosrrNGVVhTNU00mf3KXjUzFo8wTSh9qw/2wn3wTso
+	 fp++SfOqxtxIIZw/iBVlIIwzOEtYpBJkHgo4v7Dl8tRQd9ekaFsofPC9prGGmQNwpP
+	 JwH9xuI1K7WkPFOqc3oUBAfHOLOjWXtHLA2DubiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Ogness <john.ogness@linutronix.de>,
-	linux-serial@vger.kernel.org,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.1 185/185] serial: core: fix kernel-doc for uart_port_unlock_irqrestore()
-Date: Mon, 29 Jan 2024 09:06:25 -0800
-Message-ID: <20240129170004.526571865@linuxfoundation.org>
+	Pin-yen Lin <treapking@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 166/185] drm/bridge: parade-ps8640: Wait for HPD when doing an AUX transfer
+Date: Mon, 29 Jan 2024 09:06:06 -0800
+Message-ID: <20240129170003.925820990@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -53,38 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit 29bff582b74ed0bdb7e6986482ad9e6799ea4d2f upstream.
+[ Upstream commit 024b32db43a359e0ded3fcc6cd86247cbbed4224 ]
 
-Fix the function name to avoid a kernel-doc warning:
+Unlike what is claimed in commit f5aa7d46b0ee ("drm/bridge:
+parade-ps8640: Provide wait_hpd_asserted() in struct drm_dp_aux"), if
+someone manually tries to do an AUX transfer (like via `i2cdump ${bus}
+0x50 i`) while the panel is off we don't just get a simple transfer
+error. Instead, the whole ps8640 gets thrown for a loop and goes into
+a bad state.
 
-include/linux/serial_core.h:666: warning: expecting prototype for uart_port_lock_irqrestore(). Prototype was for uart_port_unlock_irqrestore() instead
+Let's put the function to wait for the HPD (and the magical 50 ms
+after first reset) back in when we're doing an AUX transfer. This
+shouldn't actually make things much slower (assuming the panel is on)
+because we should immediately poll and see the HPD high. Mostly this
+is just an extra i2c transfer to the bridge.
 
-Fixes: b0af4bcb4946 ("serial: core: Provide port lock wrappers")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: linux-serial@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Link: https://lore.kernel.org/r/20230927044128.4748-1-rdunlap@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f5aa7d46b0ee ("drm/bridge: parade-ps8640: Provide wait_hpd_asserted() in struct drm_dp_aux")
+Tested-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Pin-yen Lin <treapking@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231221135548.1.I10f326a9305d57ad32cee7f8d9c60518c8be20fb@changeid
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/serial_core.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/parade-ps8640.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/include/linux/serial_core.h
-+++ b/include/linux/serial_core.h
-@@ -653,7 +653,7 @@ static inline void uart_port_unlock_irq(
- }
+diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
+index 083337a27966..146e1ad76223 100644
+--- a/drivers/gpu/drm/bridge/parade-ps8640.c
++++ b/drivers/gpu/drm/bridge/parade-ps8640.c
+@@ -354,6 +354,11 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
+ 	int ret;
  
- /**
-- * uart_port_lock_irqrestore - Unlock the UART port, restore interrupts
-+ * uart_port_unlock_irqrestore - Unlock the UART port, restore interrupts
-  * @up:		Pointer to UART port structure
-  * @flags:	The saved interrupt flags for restore
-  */
+ 	pm_runtime_get_sync(dev);
++	ret = _ps8640_wait_hpd_asserted(ps_bridge, 200 * 1000);
++	if (ret) {
++		pm_runtime_put_sync_suspend(dev);
++		return ret;
++	}
+ 	ret = ps8640_aux_transfer_msg(aux, msg);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
+-- 
+2.43.0
+
 
 
