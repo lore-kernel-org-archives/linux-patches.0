@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21619755E3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96BE755E3;
 	Mon, 29 Jan 2024 17:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548590; cv=none; b=IYibTBR/GAYN7qh49PR6mxHHkzoOI8ftMIM8FI2EBVi1JxqcKTcD4C3XPD2m0+8ENQZlppsrAQwEfenEVOydZVskNovZ69PeRm0KUerRHAIHFKFzojzpx433Dx5/nbg71H/+aercGInC9ltmH072ZH4Cz1NCufAzDL6dReGxIoM=
+	t=1706548591; cv=none; b=if9ueo68Bh8Kgt/yYmHMVyyi/Gb1EGSHMUdn/dPAAZ+X2sJuZeJWOw0XlaEzbUU2d/oULkjwH1c7pdW+MAp7Gx4CTQdgxThlQbFVAqtIbqny4RaXMVWTEc3c6dQNIyijuQUUEb7wlLRCSxI+VjrK27XzA/mADMYSJPA891wX3A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548590; c=relaxed/simple;
-	bh=pKzMWX4fYc8jA9353MZQ84dMfBHENCN64ShymCqX7TY=;
+	s=arc-20240116; t=1706548591; c=relaxed/simple;
+	bh=CJgNPEAX1+NOcvuGLMZv1saz72Wrt4JkEumEv+Fcyeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JR/Jrebs92nGepRvANAX44/pWFRg7tIXQ63ghCyA3yrTj7lODhgiMhL04pJ89u+idhiZyqwyX/ZTJ4UpW+zu/ZfaYhnWJ+9yop4MrA31jVUkvRC9QOyHIQGn6Ozm+IuMINLR42e+hijnzzVhfFN/Oz2dAo1i97t8GUy9s4JEuS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lTNrbtUR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ltsUiPkieZmVO0/rNwmKqr0NOo+Z53hYob89H/KzSsBl/CU273OtWd4msXCimpVeAtMBstSU7hrifZyuKw0YpXNJiORw4ydC2WNwQMEYekJuIah4xfK+BBk5C2dEiTaIACjBdlRa4eRtd5mHh4OIOYf55PRYgQEguVbis8XZqnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJD0i1wZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lTNrbtUR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B40C433F1;
-	Mon, 29 Jan 2024 17:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJD0i1wZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8F1C433F1;
+	Mon, 29 Jan 2024 17:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548590;
-	bh=pKzMWX4fYc8jA9353MZQ84dMfBHENCN64ShymCqX7TY=;
+	bh=CJgNPEAX1+NOcvuGLMZv1saz72Wrt4JkEumEv+Fcyeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lTNrbtURmo5Krw6fQPz/DN1HBxm2n58kxQtJyiGORCNx8+j6DljsKV6Tb6cFTU675
-	 if+cOHZbNGngMwtv4np4u5SLpansgoFUb71rJJN43DV3kOkmA+TYZJJ2AfgftITIio
-	 xZBp7VJS2hJGyGxtaujEzuj/BMPyvhMJe/d2xPsI=
+	b=JJD0i1wZwWAg9GOa31JV+pI6pWtl6QNfVm2LZ0v3LXXlAzYSOlUkLOhTJlL+w/73m
+	 T5daxTbhXCdBNEJotcvQQacE+ExuOXFan0R/FvDnb/bh51c/xM1LL9mTkKhPsyd/KW
+	 AydUe0oQ2UfqWs+f8JXOG/nJByp+1m8u4W7aZukg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
 	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 223/331] i40e: set xdp_rxq_info::frag_size
-Date: Mon, 29 Jan 2024 09:04:47 -0800
-Message-ID: <20240129170021.401418256@linuxfoundation.org>
+Subject: [PATCH 6.6 224/331] i40e: update xdp_rxq_info::frag_size for ZC enabled Rx queue
+Date: Mon, 29 Jan 2024 09:04:48 -0800
+Message-ID: <20240129170021.426036863@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,126 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit a045d2f2d03d23e7db6772dd83e0ba2705dfad93 ]
+[ Upstream commit 0cbb08707c932b3f004bc1a8ec6200ef572c1f5f ]
 
-i40e support XDP multi-buffer so it is supposed to use
-__xdp_rxq_info_reg() instead of xdp_rxq_info_reg() and set the
-frag_size. It can not be simply converted at existing callsite because
-rx_buf_len could be un-initialized, so let us register xdp_rxq_info
-within i40e_configure_rx_ring(), which happen to be called with already
-initialized rx_buf_len value.
+Now that i40e driver correctly sets up frag_size in xdp_rxq_info, let us
+make it work for ZC multi-buffer as well. i40e_ring::rx_buf_len for ZC
+is being set via xsk_pool_get_rx_frame_size() and this needs to be
+propagated up to xdp_rxq_info.
 
-Commit 5180ff1364bc ("i40e: use int for i40e_status") converted 'err' to
-int, so two variables to deal with return codes are not needed within
-i40e_configure_rx_ring(). Remove 'ret' and use 'err' to handle status
-from xdp_rxq_info registration.
-
-Fixes: e213ced19bef ("i40e: add support for XDP multi-buffer Rx")
+Fixes: 1c9ba9c14658 ("i40e: xsk: add RX multi-buffer support")
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20240124191602.566724-11-maciej.fijalkowski@intel.com
+Link: https://lore.kernel.org/r/20240124191602.566724-12-maciej.fijalkowski@intel.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 40 ++++++++++++---------
- drivers/net/ethernet/intel/i40e/i40e_txrx.c |  9 -----
- 2 files changed, 24 insertions(+), 25 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 5b20eba93d04..aadca7b3443c 100644
+index aadca7b3443c..aad39ebff4ab 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_main.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -3578,40 +3578,48 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
- 	struct i40e_hmc_obj_rxq rx_ctx;
- 	int err = 0;
- 	bool ok;
--	int ret;
+@@ -3601,7 +3601,14 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
  
- 	bitmap_zero(ring->state, __I40E_RING_STATE_NBITS);
- 
- 	/* clear the context structure first */
- 	memset(&rx_ctx, 0, sizeof(rx_ctx));
- 
--	if (ring->vsi->type == I40E_VSI_MAIN)
--		xdp_rxq_info_unreg_mem_model(&ring->xdp_rxq);
-+	ring->rx_buf_len = vsi->rx_buf_len;
-+
-+	/* XDP RX-queue info only needed for RX rings exposed to XDP */
-+	if (ring->vsi->type != I40E_VSI_MAIN)
-+		goto skip;
-+
-+	if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
+ 	ring->xsk_pool = i40e_xsk_pool(ring);
+ 	if (ring->xsk_pool) {
++		xdp_rxq_info_unreg(&ring->xdp_rxq);
+ 		ring->rx_buf_len = xsk_pool_get_rx_frame_size(ring->xsk_pool);
 +		err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
 +					 ring->queue_index,
 +					 ring->q_vector->napi.napi_id,
 +					 ring->rx_buf_len);
 +		if (err)
 +			return err;
-+	}
- 
- 	ring->xsk_pool = i40e_xsk_pool(ring);
- 	if (ring->xsk_pool) {
--		ring->rx_buf_len =
--		  xsk_pool_get_rx_frame_size(ring->xsk_pool);
--		ret = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
-+		ring->rx_buf_len = xsk_pool_get_rx_frame_size(ring->xsk_pool);
-+		err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
+ 		err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
  						 MEM_TYPE_XSK_BUFF_POOL,
  						 NULL);
--		if (ret)
--			return ret;
-+		if (err)
-+			return err;
- 		dev_info(&vsi->back->pdev->dev,
- 			 "Registered XDP mem model MEM_TYPE_XSK_BUFF_POOL on Rx ring %d\n",
- 			 ring->queue_index);
- 
- 	} else {
--		ring->rx_buf_len = vsi->rx_buf_len;
--		if (ring->vsi->type == I40E_VSI_MAIN) {
--			ret = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
--							 MEM_TYPE_PAGE_SHARED,
--							 NULL);
--			if (ret)
--				return ret;
--		}
-+		err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
-+						 MEM_TYPE_PAGE_SHARED,
-+						 NULL);
-+		if (err)
-+			return err;
- 	}
- 
-+skip:
- 	xdp_init_buff(&ring->xdp, i40e_rx_pg_size(ring) / 2, &ring->xdp_rxq);
- 
- 	rx_ctx.dbuff = DIV_ROUND_UP(ring->rx_buf_len,
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-index 2e5546e549d9..1df2f9338812 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
-@@ -1556,7 +1556,6 @@ void i40e_free_rx_resources(struct i40e_ring *rx_ring)
- int i40e_setup_rx_descriptors(struct i40e_ring *rx_ring)
- {
- 	struct device *dev = rx_ring->dev;
--	int err;
- 
- 	u64_stats_init(&rx_ring->syncp);
- 
-@@ -1577,14 +1576,6 @@ int i40e_setup_rx_descriptors(struct i40e_ring *rx_ring)
- 	rx_ring->next_to_process = 0;
- 	rx_ring->next_to_use = 0;
- 
--	/* XDP RX-queue info only needed for RX rings exposed to XDP */
--	if (rx_ring->vsi->type == I40E_VSI_MAIN) {
--		err = xdp_rxq_info_reg(&rx_ring->xdp_rxq, rx_ring->netdev,
--				       rx_ring->queue_index, rx_ring->q_vector->napi.napi_id);
--		if (err < 0)
--			return err;
--	}
--
- 	rx_ring->xdp_prog = rx_ring->vsi->xdp_prog;
- 
- 	rx_ring->rx_bi =
 -- 
 2.43.0
 
