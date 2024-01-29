@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA496F095;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2036F095;
 	Mon, 29 Jan 2024 17:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548469; cv=none; b=McwnB24GoEJErfA8dDvUi5OWVvJCxZP2SDmn8or6TkOs1ptRDOuOju01nxXSsv4YU+zNYjkki0A/3VohaBz2rZQdYWj2ImZHyCIBo+1ReMI8KdJMJNwiGWjp3Wz0mYZ47px84Q5BJbDsB6A84r3rVUYk8oSSaZJwomjDNr4E0Q4=
+	t=1706548470; cv=none; b=etevWpFV5Gw0VhzvvEgW6LScjus46L4nTh8CTp8hv4DzCpxqNzWuzwD34ybpmZNOthJNKTrJl7cpyp90LHjOqTqp2hXF03vZqhIJFitJZz1gmxeQtXDGC6+3Syiub1kZ4ABrOlZvh9EbI6DpLnF9V+gyaZ6b3/b5RcEAYDgX9dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548469; c=relaxed/simple;
-	bh=ql48kMrHk/ApuyUnRSXwkCp2mQczZj5SZqZ9crTJGaE=;
+	s=arc-20240116; t=1706548470; c=relaxed/simple;
+	bh=INgI1zFq8FuFLBz3iJcAZ6Wto4uqli+8c3W77McuwVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WHup9iXTt5R3rH66DVqTik/J2b+SABRVAkk+iqua0OBexaZ01t+7DBJd5ieQjFJMRJF46xIst8YfiQCwgd8dJPt4yJjj+rCuVvxWChbykfoD7cxyJYqfPIk0p5QhRwXglIUoaRgM3pdLLEKpRIYssQlSM26WXV0rBCP7mzo43/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvO/1R37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o+i7PJDPVo8BrqzsHCzXcqU5Bn0+pymEWWR1aYVh5Su35rq9BXr91IWvnmtv/FTUOBXMw3Ik2RVX+9T2omS9hEa178r0vfRiEa5cjbJCxqV9Rc1MOfjrXhUDVdb7AcxN3shKXaV5hwUpg4gtb9Fw3+4N/mFHEj6HLL2JpxXzpjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LKwHGqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvO/1R37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B75C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LKwHGqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D2DC43390;
 	Mon, 29 Jan 2024 17:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548469;
-	bh=ql48kMrHk/ApuyUnRSXwkCp2mQczZj5SZqZ9crTJGaE=;
+	bh=INgI1zFq8FuFLBz3iJcAZ6Wto4uqli+8c3W77McuwVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvO/1R37AC5rTs4idUyuCH6f8Cygt/QZDBWQ+T1wC+UEHLUU0+nJ6of4CGOoS5RCk
-	 UcYp8TLZhkYQ4deHcznVKE1uDdvuznjyb/lQM5c8qCj8rUhCcJyZB9C6GRdpIPp/+t
-	 Kz6QAncN59VO7CkClAayoafplFWpXsXfOaWKttys=
+	b=0LKwHGqA1U2aJrcnXQUNIIFzCF13IlaXEVR0PF30W13fFM/BqDg1ddRflN7boxJS7
+	 b95xyFYFslZUYXmalgD2QOcTQBmhpJC6UaDszVpZNPpHG6QgbBKNNdQkVBN5mOxsu5
+	 3CERExBiK531lEGzeobiL+UauWPy9AHses8biEoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Krowiak <akrowiak@linux.ibm.com>,
 	Halil Pasic <pasic@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.6 060/331] s390/vfio-ap: loop over the shadow APCB when filtering guests AP configuration
-Date: Mon, 29 Jan 2024 09:02:04 -0800
-Message-ID: <20240129170016.689684110@linuxfoundation.org>
+Subject: [PATCH 6.6 061/331] s390/vfio-ap: let on_scan_complete() callback filter matrix and update guests APCB
+Date: Mon, 29 Jan 2024 09:02:05 -0800
+Message-ID: <20240129170016.722407099@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,54 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Krowiak <akrowiak@linux.ibm.com>
 
-commit 16fb78cbf56e42b8efb2682a4444ab59e32e7959 upstream.
+commit 774d10196e648e2c0b78da817f631edfb3dfa557 upstream.
 
-While filtering the mdev matrix, it doesn't make sense - and will have
-unexpected results - to filter an APID from the matrix if the APID or one
-of the associated APQIs is not in the host's AP configuration. There are
-two reasons for this:
+When adapters and/or domains are added to the host's AP configuration, this
+may result in multiple queue devices getting created and probed by the
+vfio_ap device driver. For each queue device probed, the matrix of adapters
+and domains assigned to a matrix mdev will be filtered to update the
+guest's APCB. If any adapters or domains get added to or removed from the
+APCB, the guest's AP configuration will be dynamically updated (i.e., hot
+plug/unplug). To dynamically update the guest's configuration, its VCPUs
+must be taken out of SIE for the period of time it takes to make the
+update. This is disruptive to the guest's operation and if there are many
+queues probed due to a change in the host's AP configuration, this could be
+troublesome. The problem is exacerbated by the fact that the
+'on_scan_complete' callback also filters the mdev's matrix and updates
+the guest's AP configuration.
 
-1. An adapter or domain that is not in the host's AP configuration can be
-   assigned to the matrix; this is known as over-provisioning. Queue
-   devices, however, are only created for adapters and domains in the
-   host's AP configuration, so there will be no queues associated with an
-   over-provisioned adapter or domain to filter.
-
-2. The adapter or domain may have been externally removed from the host's
-   configuration via an SE or HMC attached to a DPM enabled LPAR. In this
-   case, the vfio_ap device driver would have been notified by the AP bus
-   via the on_config_changed callback and the adapter or domain would
-   have already been filtered.
-
-Since the matrix_mdev->shadow_apcb.apm and matrix_mdev->shadow_apcb.aqm are
-copied from the mdev matrix sans the APIDs and APQIs not in the host's AP
-configuration, let's loop over those bitmaps instead of those assigned to
-the matrix.
+In order to reduce the potential amount of disruption to the guest that may
+result from a change to the host's AP configuration, let's bypass the
+filtering of the matrix and updating of the guest's AP configuration in the
+probe callback - if due to a host config change - and defer it until the
+'on_scan_complete' callback is invoked after the AP bus finishes its device
+scan operation. This way the filtering and updating will be performed only
+once regardless of the number of queues added.
 
 Signed-off-by: Tony Krowiak <akrowiak@linux.ibm.com>
 Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
 Fixes: 48cae940c31d ("s390/vfio-ap: refresh guest's APCB by filtering AP resources assigned to mdev")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240115185441.31526-3-akrowiak@linux.ibm.com
+Link: https://lore.kernel.org/r/20240115185441.31526-4-akrowiak@linux.ibm.com
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/s390/crypto/vfio_ap_ops.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 --- a/drivers/s390/crypto/vfio_ap_ops.c
 +++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -692,8 +692,9 @@ static bool vfio_ap_mdev_filter_matrix(s
- 	bitmap_and(matrix_mdev->shadow_apcb.aqm, matrix_mdev->matrix.aqm,
- 		   (unsigned long *)matrix_dev->info.aqm, AP_DOMAINS);
+@@ -2084,9 +2084,22 @@ int vfio_ap_mdev_probe_queue(struct ap_d
+ 	if (matrix_mdev) {
+ 		vfio_ap_mdev_link_queue(matrix_mdev, q);
  
--	for_each_set_bit_inv(apid, matrix_mdev->matrix.apm, AP_DEVICES) {
--		for_each_set_bit_inv(apqi, matrix_mdev->matrix.aqm, AP_DOMAINS) {
-+	for_each_set_bit_inv(apid, matrix_mdev->shadow_apcb.apm, AP_DEVICES) {
-+		for_each_set_bit_inv(apqi, matrix_mdev->shadow_apcb.aqm,
-+				     AP_DOMAINS) {
- 			/*
- 			 * If the APQN is not bound to the vfio_ap device
- 			 * driver, then we can't assign it to the guest's
++		/*
++		 * If we're in the process of handling the adding of adapters or
++		 * domains to the host's AP configuration, then let the
++		 * vfio_ap device driver's on_scan_complete callback filter the
++		 * matrix and update the guest's AP configuration after all of
++		 * the new queue devices are probed.
++		 */
++		if (!bitmap_empty(matrix_mdev->apm_add, AP_DEVICES) ||
++		    !bitmap_empty(matrix_mdev->aqm_add, AP_DOMAINS))
++			goto done;
++
+ 		if (vfio_ap_mdev_filter_matrix(matrix_mdev))
+ 			vfio_ap_mdev_update_guest_apcb(matrix_mdev);
+ 	}
++
++done:
+ 	dev_set_drvdata(&apdev->device, q);
+ 	release_update_locks_for_mdev(matrix_mdev);
+ 
 
 
