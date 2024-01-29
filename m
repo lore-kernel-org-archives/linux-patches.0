@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7856F06D;
-	Mon, 29 Jan 2024 17:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378E66F062;
+	Mon, 29 Jan 2024 17:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548456; cv=none; b=cWcjVeHKUAqCBU5lnx58EwaBmejmQU4M4Rz9hKA0wjBhuqgSIJ8H/ck66NkT/oJNVdM03iDAf9oT518hgmOJlOK6R9qRP5skhMi3c1PFy2s1HwuITYc22lMlNT509tVtmPI5//I2VHYDg2XLruzFsrXQdsGKoxPcbGyDbM3zJFc=
+	t=1706548457; cv=none; b=klOeP83JmL7ybOSZTaR8qoXd7cMmc+LAZ+px3S0velSC0tXgN9/HCBl08Ls2OEvBRa8Jjzm6n2lByJl2ErU5ygPJFc743Rmj3Jv2HTF2zdYUMsZRx5zqXzSxyrsM46wp5eSD09BDVmql/eIN3zI2baAfRIAdmDm4FVZUiTbF8+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548456; c=relaxed/simple;
-	bh=kZeLg6J0BNf8ppkldDm+7ulco4YEAzBO4PA3ASOo1i0=;
+	s=arc-20240116; t=1706548457; c=relaxed/simple;
+	bh=/RVfp5prStTJF0adS/CjGVF1PJLp1AlpxJS7me7SVl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9IX4mnqiccvfqj3L5s/qqlrEQGYfCF3w8iJHDHj+L0Zsaaxr94MJqT399LE/7YiR7Gg0MvrWhbc98JsjntmBGXdBawyJKPVhX+Xdnm+Gs3oRnwY6jSAQw+HKKNyFZcjXzvrMXyrBmanNyuN4cArmorljeOc+KkzHLz5k5D6poM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQXiIpnz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQelEuoL+u3gL3OiMoKCafPJ8LP/vVaCMDBx+wPtOpBOa5EO/mDOSYLvx+SLMcpkAA5HWBX1SlZzAFw+g/ClgVeAXZti15jZFhh/9hSIW0ono8gakTJN4vMv3WjPOv/l+1U+wkmwSkZj9/ALCfGTDWVNRqTCH1ScAl+OGMO+g3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLP9LX3i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQXiIpnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBB8C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLP9LX3i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26A6C433C7;
 	Mon, 29 Jan 2024 17:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548456;
-	bh=kZeLg6J0BNf8ppkldDm+7ulco4YEAzBO4PA3ASOo1i0=;
+	s=korg; t=1706548457;
+	bh=/RVfp5prStTJF0adS/CjGVF1PJLp1AlpxJS7me7SVl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQXiIpnzTsI8m7DRiGqnOri5xDiMoau+zwKpKBuSiW/I8zh+Wtv325njTRuqf5zVy
-	 u4tc9/tXtfKy58M0IuJtMajAF7HaiGMgMzlT8KFGCKfis6sA7KOspwmcRwNP2XJ+Wj
-	 mby/GeTyeC74YiFxFpfTJ6f7XLr55k8BGlgsMJJw=
+	b=jLP9LX3iqMz2K18TOiR/VxeE9voQ7zyprGtujir2BwiBwrChLc4+6CBNlQJgt2e/i
+	 yCyETzHLo3l9YuFtY3Lsf3xlWJimpb2nsQj6kX9sdFStSdJC9TCfKxPNNE3cidFe8Y
+	 ADv1ICaJOoeULSEnzm45fMF1GoP1VJSMdInjWqqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bhaumik Bhatt <bbhatt@codeaurora.org>,
 	Qiang Yu <quic_qianyu@quicinc.com>,
 	Jeffrey Hugo <quic_jhugo@quicinc.com>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.6 068/331] bus: mhi: host: Drop chan lock before queuing buffers
-Date: Mon, 29 Jan 2024 09:02:12 -0800
-Message-ID: <20240129170016.918050709@linuxfoundation.org>
+Subject: [PATCH 6.6 069/331] bus: mhi: host: Add spinlock to protect WP access when queueing TREs
+Date: Mon, 29 Jan 2024 09:02:13 -0800
+Message-ID: <20240129170016.945886064@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,49 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-commit 01bd694ac2f682fb8017e16148b928482bc8fa4b upstream.
+commit b89b6a863dd53bc70d8e52d50f9cfaef8ef5e9c9 upstream.
 
-Ensure read and write locks for the channel are not taken in succession by
-dropping the read lock from parse_xfer_event() such that a callback given
-to client can potentially queue buffers and acquire the write lock in that
-process. Any queueing of buffers should be done without channel read lock
-acquired as it can result in multiple locks and a soft lockup.
+Protect WP accesses such that multiple threads queueing buffers for
+incoming data do not race.
 
-Cc: <stable@vger.kernel.org> # 5.7
-Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
+Meanwhile, if CONFIG_TRACE_IRQFLAGS is enabled, irq will be enabled once
+__local_bh_enable_ip is called as part of write_unlock_bh. Hence, let's
+take irqsave lock after TRE is generated to avoid running write_unlock_bh
+when irqsave lock is held.
+
+Cc: stable@vger.kernel.org
+Fixes: 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com
-[mani: added fixes tag and cc'ed stable]
+Link: https://lore.kernel.org/r/1702276972-41296-2-git-send-email-quic_qianyu@quicinc.com
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bus/mhi/host/main.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
 --- a/drivers/bus/mhi/host/main.c
 +++ b/drivers/bus/mhi/host/main.c
-@@ -643,6 +643,8 @@ static int parse_xfer_event(struct mhi_c
- 			mhi_del_ring_element(mhi_cntrl, tre_ring);
- 			local_rp = tre_ring->rp;
+@@ -1127,17 +1127,15 @@ static int mhi_queue(struct mhi_device *
+ 	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
+ 		return -EIO;
  
-+			read_unlock_bh(&mhi_chan->lock);
-+
- 			/* notify client */
- 			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+-	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+-
+ 	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
+-	if (unlikely(ret)) {
+-		ret = -EAGAIN;
+-		goto exit_unlock;
+-	}
++	if (unlikely(ret))
++		return -EAGAIN;
  
-@@ -668,6 +670,8 @@ static int parse_xfer_event(struct mhi_c
- 					kfree(buf_info->cb_buf);
- 				}
- 			}
+ 	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
+ 	if (unlikely(ret))
+-		goto exit_unlock;
++		return ret;
 +
-+			read_lock_bh(&mhi_chan->lock);
- 		}
- 		break;
- 	} /* CC_EOT */
++	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+ 
+ 	/* Packet is queued, take a usage ref to exit M3 if necessary
+ 	 * for host->device buffer, balanced put is done on buffer completion
+@@ -1157,7 +1155,6 @@ static int mhi_queue(struct mhi_device *
+ 	if (dir == DMA_FROM_DEVICE)
+ 		mhi_cntrl->runtime_put(mhi_cntrl);
+ 
+-exit_unlock:
+ 	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+ 
+ 	return ret;
+@@ -1209,6 +1206,9 @@ int mhi_gen_tre(struct mhi_controller *m
+ 	int eot, eob, chain, bei;
+ 	int ret;
+ 
++	/* Protect accesses for reading and incrementing WP */
++	write_lock_bh(&mhi_chan->lock);
++
+ 	buf_ring = &mhi_chan->buf_ring;
+ 	tre_ring = &mhi_chan->tre_ring;
+ 
+@@ -1226,8 +1226,10 @@ int mhi_gen_tre(struct mhi_controller *m
+ 
+ 	if (!info->pre_mapped) {
+ 		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
+-		if (ret)
++		if (ret) {
++			write_unlock_bh(&mhi_chan->lock);
+ 			return ret;
++		}
+ 	}
+ 
+ 	eob = !!(flags & MHI_EOB);
+@@ -1244,6 +1246,8 @@ int mhi_gen_tre(struct mhi_controller *m
+ 	mhi_add_ring_element(mhi_cntrl, tre_ring);
+ 	mhi_add_ring_element(mhi_cntrl, buf_ring);
+ 
++	write_unlock_bh(&mhi_chan->lock);
++
+ 	return 0;
+ }
+ 
 
 
