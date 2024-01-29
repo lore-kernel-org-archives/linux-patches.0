@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF76755FB;
-	Mon, 29 Jan 2024 17:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07434755FB;
+	Mon, 29 Jan 2024 17:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548596; cv=none; b=pKaYGrZkOEz+eCg1TyuvMgAKeVUV1H1FSeQu5gDPZMI0ZLLVeqRzcEF++4EazyuAaS/6lTvJgLPdVaQBMEQMEsNWcbnzvGlbsRUgVYa1iZIrpoCs1l9AutI8iDtZbL6Cq9YKfn6zzB2KF8I/Q4dPGpfDzFf9YmwJ6hBj9Pnz91Y=
+	t=1706548597; cv=none; b=rwiiknOhMvI5wVWtKktQl26vkug8Xv6uuKAHMlW5We7eB1SRfZNTF56BuUlYuPu/f02/Tay6+qJ75O93gmv6FoJ9eBo8C2OJRIhYkK9MXvOoc12vgqrwrfCVdCuL0ydplrMM+vk8dHJboPe29ry22rYaEE5YtBIAC11popuNJv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548596; c=relaxed/simple;
-	bh=9/3nGjYUicCzJNvKaMaR53/3yn6/iE9TpCCJGoEXcPI=;
+	s=arc-20240116; t=1706548597; c=relaxed/simple;
+	bh=V6fDtlfzT2RPJl1PXwTscg2la3kSRKpaHZq01rncxDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYYR18oVlkmb4WhdhEGLMQNhsubdSj7hA8XarwyftzMzkfCrtwgBT1hmyhy0UNnUG19zG9rqfquu2RWm2BqAc0x+hZTQJxu6vAHFNfljNcAB32HyIGmERl9ntg4ibwwu89k+vmIzDN/ahnFD4hXgz3m/fbJapOWLynCPx1HvlL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEzG3G5+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mDoOdwcrTgiYT/3sNepj6fQY1zDv5SS88r9wsumMbroXdMPvqgQqqqzdQsFLWX6LUcTgEO32BgFKdOBtK2Vla5vtcS4WVxKU+4r0vz5DR0zTk6H3NEBIkOb7mKupk+FiEMnyFesOb4+0cS1KZo2GIAqxSyLyHUNfi4nxZi5+ynM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MapfaUCH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEzG3G5+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11547C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MapfaUCH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB01DC433C7;
 	Mon, 29 Jan 2024 17:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548596;
-	bh=9/3nGjYUicCzJNvKaMaR53/3yn6/iE9TpCCJGoEXcPI=;
+	bh=V6fDtlfzT2RPJl1PXwTscg2la3kSRKpaHZq01rncxDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEzG3G5+phehDcYw1ZWevbntg2NgFSPUh5UBJvOFi/pzlaGMM7pWUN1Mm183Izy2f
-	 pNfLp5/naDEwT4OGmgq5HmSMnLCtGnl22+fcCXtq0TYA2K1ZjuWkeqVIX/nZkwNAh6
-	 1vidM+J118Lf+qnhU55gVSuH+dh+PwcS6/aDpAQQ=
+	b=MapfaUCH/zboDEFpxXnXi6fleC2CEnm7XkUZthoHwgrojhOHnKQtmt84BT1DAmosU
+	 WXcZMPm5ugpudPkFMotM5N6ZbSLq8QAiQljThlGtyCsQwiT11/oeUR6daU+rXKdYG9
+	 Yp0c6RYCB12/ctrl0JTh5KrKrskUjYFgVTaYdGns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 6.6 256/331] drm/bridge: nxp-ptn3460: fix i2c_master_send() error checking
-Date: Mon, 29 Jan 2024 09:05:20 -0800
-Message-ID: <20240129170022.381138541@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Cai Huoqing <cai.huoqing@linux.dev>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Dave Airlie <airlied@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Jonathan Corbet <corbet@lwn.net>,
+	dri-devel@lists.freedesktop.org,
+	linux-doc@vger.kernel.org,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 257/331] drm: Fix TODO list mentioning non-KMS drivers
+Date: Mon, 29 Jan 2024 09:05:21 -0800
+Message-ID: <20240129170022.408685979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -50,58 +60,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 914437992876838662c968cb416f832110fb1093 upstream.
+commit 9cf5ca1f485cae406968947a92bf304603999fa1 upstream.
 
-The i2c_master_send/recv() functions return negative error codes or the
-number of bytes that were able to be sent/received.  This code has
-two problems.  1)  Instead of checking if all the bytes were sent or
-received, it checks that at least one byte was sent or received.
-2) If there was a partial send/receive then we should return a negative
-error code but this code returns success.
+Non-KMS drivers have been removed from DRM. Update the TODO list
+accordingly.
 
-Fixes: a9fe713d7d45 ("drm/bridge: Add PTN3460 bridge driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/0cdc2dce-ca89-451a-9774-1482ab2f4762@moroto.mountain
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: a276afc19eec ("drm: Remove some obsolete drm pciids(tdfx, mga, i810, savage, r128, sis, via)")
+Cc: Cai Huoqing <cai.huoqing@linux.dev>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.3+
+Cc: linux-doc@vger.kernel.org
+Reviewed-by: David Airlie <airlied@gmail.com>
+Reviewed-by: Daniel Vetter <daniel@ffwll.ch>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231122122449.11588-3-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/nxp-ptn3460.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ Documentation/gpu/todo.rst | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/bridge/nxp-ptn3460.c
-+++ b/drivers/gpu/drm/bridge/nxp-ptn3460.c
-@@ -56,13 +56,13 @@ static int ptn3460_read_bytes(struct ptn
- 	ret = i2c_master_send(ptn_bridge->client, &addr, 1);
- 	if (ret <= 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret;
-+		return ret ?: -EIO;
- 	}
+diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
+index 503d57c75215..41a264bf84ce 100644
+--- a/Documentation/gpu/todo.rst
++++ b/Documentation/gpu/todo.rst
+@@ -337,8 +337,8 @@ connector register/unregister fixes
  
- 	ret = i2c_master_recv(ptn_bridge->client, buf, len);
--	if (ret <= 0) {
-+	if (ret != len) {
- 		DRM_ERROR("Failed to recv i2c data, ret=%d\n", ret);
--		return ret;
-+		return ret < 0 ? ret : -EIO;
- 	}
+ Level: Intermediate
  
- 	return 0;
-@@ -78,9 +78,9 @@ static int ptn3460_write_byte(struct ptn
- 	buf[1] = val;
+-Remove load/unload callbacks from all non-DRIVER_LEGACY drivers
+----------------------------------------------------------------
++Remove load/unload callbacks
++----------------------------
  
- 	ret = i2c_master_send(ptn_bridge->client, buf, ARRAY_SIZE(buf));
--	if (ret <= 0) {
-+	if (ret != ARRAY_SIZE(buf)) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret;
-+		return ret < 0 ? ret : -EIO;
- 	}
+ The load/unload callbacks in struct &drm_driver are very much midlayers, plus
+ for historical reasons they get the ordering wrong (and we can't fix that)
+@@ -347,8 +347,7 @@ between setting up the &drm_driver structure and calling drm_dev_register().
+ - Rework drivers to no longer use the load/unload callbacks, directly coding the
+   load/unload sequence into the driver's probe function.
  
- 	return 0;
+-- Once all non-DRIVER_LEGACY drivers are converted, disallow the load/unload
+-  callbacks for all modern drivers.
++- Once all drivers are converted, remove the load/unload callbacks.
+ 
+ Contact: Daniel Vetter
+ 
+-- 
+2.43.0
+
 
 
