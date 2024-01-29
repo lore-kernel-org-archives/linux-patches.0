@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E8376043;
-	Mon, 29 Jan 2024 17:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CB876041;
+	Mon, 29 Jan 2024 17:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548623; cv=none; b=iZ9fBZtA3t0UxLWBk0if+5FGAe1G6WXLNH02OHFgTRilggZe2uPmoWPtBN47cPmTH9NV81ZuqCQA1sQU9AnxWQijD3ZwNPVRo1xaXx3ylUppe2FzldIikPCeVu5kt+e/JR/H0ZxLFESv+R/E7zTl/dzPf/akuBFh05b9gtcq/Gs=
+	t=1706548624; cv=none; b=MIcVQ4mfO822zMZYVYMzV+wX2yownYUTNtWQlQfsKlE6A22qPypGGau8rDbNcDf6b3fRRhOQlnl4WTp/7UsVTwBFvm8Avyy2o5ow6Qk+W+ofCFJGtwsofLgXIq5QxgfXvLcBASeqerHqAbcfUNYJJ7f79+MWRZiUpn3EVxzDy8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548623; c=relaxed/simple;
-	bh=YGYTjUjs3lANfHAI2Jjo/4DDpeVF5sONeWhM8ksO3es=;
+	s=arc-20240116; t=1706548624; c=relaxed/simple;
+	bh=vWJ2LI8KhpVZquFwPe3PHOI7+GCWFfMyCTAHKS5bYWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OLbyKhtv55xNiGcjDolXahaEsYEceyx1urSdrrgj7zWyTyTP0NbJJ8Lxoaj7ckiaty/dP7yKm5vh1n580PPY+0aHrrw26uuf+mVDomHdpGkq1OBH9LhQxAb40LvblFiu0BskYRW0+XOv3Kvz2dj12HA1kAsRYeRPMAvJPwl7Reg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9nEVoi/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cjjUchUp4uKw40ePuurj1PLEkGisRSjXwy4659jVk5KWBLkHlZqVda0j/1SiW6h1SwtwbOH7KBiDKftVIfyYpg0gf6umbchXdNsQ27lh0nySBgOzxNPm6N5xfzUxxgYZjSI3ivnBOQKswZe9tXQ5F5IFjRxc2gXRi7ny3Sv9y6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BotWhavY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9nEVoi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C19FC43390;
-	Mon, 29 Jan 2024 17:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BotWhavY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1A5C433F1;
+	Mon, 29 Jan 2024 17:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548623;
-	bh=YGYTjUjs3lANfHAI2Jjo/4DDpeVF5sONeWhM8ksO3es=;
+	s=korg; t=1706548624;
+	bh=vWJ2LI8KhpVZquFwPe3PHOI7+GCWFfMyCTAHKS5bYWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9nEVoi/kdf6LP3wcL/QpY87jSouRtkI9XkQdDa+4L1BRGoUvxG6cKZucjNuspt1g
-	 Ti/mrR/hD9Ffj9IyIzZcuE3EbgQJlkWblVkNLbRCmaO9bDeRh4WRoJ/ueU8wKVo489
-	 St6JrVCFNTJsbU/OqaxiYkiSgMeGJ3/p66F5M30M=
+	b=BotWhavYRwcqnyEBTU5UF7EZE8EbmCrZxEqvhd/A7Y9esKMbsda+gF5Q1wckHiemF
+	 d8Q5xuEU2jPQaTiNVm/7+duxBRoc4psgP1LF80IqPRXtPQOLWClixmIZCewt4bsOYU
+	 gif67WemhdjYGOpXrwJxj4ZhMgJdcAQ3rb8ghnng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 293/331] drm/i915/lnl: Remove watchdog timers for PSR
-Date: Mon, 29 Jan 2024 09:05:57 -0800
-Message-ID: <20240129170023.435920858@linuxfoundation.org>
+Subject: [PATCH 6.6 294/331] drm/i915/psr: Only allow PSR in LPSP mode on HSW non-ULT
+Date: Mon, 29 Jan 2024 09:05:58 -0800
+Message-ID: <20240129170023.467844144@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,59 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Kahola <mika.kahola@intel.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit a2cd15c2411624a7a97bad60d98d7e0a1e5002a6 ]
+[ Upstream commit f9f031dd21a7ce13a13862fa5281d32e1029c70f ]
 
-Watchdog timers for Lunarlake HW were removed for PSR/PSR2
-The patch removes the use of these timers from the driver code.
+On HSW non-ULT (or at least on Dell Latitude E6540) external displays
+start to flicker when we enable PSR on the eDP. We observe a much higher
+SR and PC6 residency than should be possible with an external display,
+and indeen much higher than what we observe with eDP disabled and
+only the external display enabled. Looks like the hardware is somehow
+ignoring the fact that the external display is active during PSR.
 
-BSpec: 69895
+I wasn't able to redproduce this on my HSW ULT machine, or BDW.
+So either there's something specific about this particular laptop
+(eg. some unknown firmware thing) or the issue is limited to just
+non-ULT HSW systems. All known registers that could affect this
+look perfectly reasonable on the affected machine.
 
-v2: Reword commit message (Ville)
-    Drop HPD mask from LNL (Ville)
-    Revise masking logic (Jouni)
-v3: Revise commit message (Ville)
-    Revert HPD mask removal as irrelevant for this patch (Ville)
+As a workaround let's unmask the LPSP event to prevent PSR entry
+except while in LPSP mode (only pipe A + eDP active). This
+will prevent PSR entry entirely when multiple pipes are active.
+The one slight downside is that we now also prevent PSR entry
+when driving eDP with pipe B or C, but I think that's a reasonable
+tradeoff to avoid having to implement a more complex workaround.
 
-Signed-off-by: Mika Kahola <mika.kahola@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 783d8b80871f ("drm/i915/psr: Re-enable PSR1 on hsw/bdw")
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/10092
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240118212131.31868-1-ville.syrjala@linux.intel.com
 Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231010095233.590613-1-mika.kahola@intel.com
-Stable-dep-of: f9f031dd21a7 ("drm/i915/psr: Only allow PSR in LPSP mode on HSW non-ULT")
+(cherry picked from commit 94501c3ca6400e463ff6cc0c9cf4a2feb6a9205d)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 97d5eef10130..848ac483259b 100644
+index 848ac483259b..5cf3db7058b9 100644
 --- a/drivers/gpu/drm/i915/display/intel_psr.c
 +++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -674,7 +674,9 @@ static void hsw_activate_psr1(struct intel_dp *intel_dp)
- 
- 	val |= EDP_PSR_IDLE_FRAMES(psr_compute_idle_frames(intel_dp));
- 
--	val |= EDP_PSR_MAX_SLEEP_TIME(max_sleep_time);
-+	if (DISPLAY_VER(dev_priv) < 20)
-+		val |= EDP_PSR_MAX_SLEEP_TIME(max_sleep_time);
-+
- 	if (IS_HASWELL(dev_priv))
- 		val |= EDP_PSR_MIN_LINK_ENTRY_TIME_8_LINES;
- 
-@@ -1399,8 +1401,10 @@ static void intel_psr_enable_source(struct intel_dp *intel_dp,
+@@ -1400,8 +1400,18 @@ static void intel_psr_enable_source(struct intel_dp *intel_dp,
+ 	 * can rely on frontbuffer tracking.
  	 */
  	mask = EDP_PSR_DEBUG_MASK_MEMUP |
- 	       EDP_PSR_DEBUG_MASK_HPD |
--	       EDP_PSR_DEBUG_MASK_LPSP |
--	       EDP_PSR_DEBUG_MASK_MAX_SLEEP;
-+	       EDP_PSR_DEBUG_MASK_LPSP;
+-	       EDP_PSR_DEBUG_MASK_HPD |
+-	       EDP_PSR_DEBUG_MASK_LPSP;
++	       EDP_PSR_DEBUG_MASK_HPD;
 +
-+	if (DISPLAY_VER(dev_priv) < 20)
-+		mask |= EDP_PSR_DEBUG_MASK_MAX_SLEEP;
++	/*
++	 * For some unknown reason on HSW non-ULT (or at least on
++	 * Dell Latitude E6540) external displays start to flicker
++	 * when PSR is enabled on the eDP. SR/PC6 residency is much
++	 * higher than should be possible with an external display.
++	 * As a workaround leave LPSP unmasked to prevent PSR entry
++	 * when external displays are active.
++	 */
++	if (DISPLAY_VER(dev_priv) >= 8 || IS_HASWELL_ULT(dev_priv))
++		mask |= EDP_PSR_DEBUG_MASK_LPSP;
  
- 	/*
- 	 * No separate pipe reg write mask on hsw/bdw, so have to unmask all
+ 	if (DISPLAY_VER(dev_priv) < 20)
+ 		mask |= EDP_PSR_DEBUG_MASK_MAX_SLEEP;
 -- 
 2.43.0
 
