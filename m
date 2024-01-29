@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB824157059;
-	Mon, 29 Jan 2024 17:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4C9157055;
+	Mon, 29 Jan 2024 17:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548024; cv=none; b=f1/g3Q7Gh2bhHzOFixaAc1lgvmDfsd0kbqCczHsxWvYodBlRiva60Z8aTuZ2XvJikjGMo8Zf9B6qN8qrsPNqm8GzfrFc55OgyqotYtZcV0zxP4/ZRXkJtBvNG+NxcT73EE7yIpLaYCXxHG6HzF184CZSIuFOdaj7CVL9GzMWAyE=
+	t=1706548024; cv=none; b=qMe308l3E4EIUf/Ok+HL9s+BtJ4Mbv8h2tWRngfHFe5CQwZnMdAVINWjIozNU4H9iCSZ96ne5AwJpysSA+F+jNSjwclo7VkCBmncdMFFy/9Z0JMbJ+xWiFz78Fka0cGU/sKK3NRm/QIU4cT7oCupUwRiG5TkVQnkkmQxBheY9Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548024; c=relaxed/simple;
-	bh=m9zGSRSh6MJzfJwAddfstUayqxcc1GLwgrKh8+ZRpDI=;
+	bh=LeJunoJJ+JMguBtPPFt2d2mmxsVYD6eNa2GuQ0kis6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQo8YA/WsDi6k9HW108PphNtysZ6+G0smJ7zeAMuHZKrusTQAvXzYc11wqQXJJ9GlaA8boft1LaOQLiSo0wAphs/O3qetEAeU18jjts3LMU+8hoJK5ZFNpOfCrUTf9R0bM30HiS7omqXsBjiby+/UKx7AZQl3r4l6NVu3aB5m8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzbkQmbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FQtHADCKjA4KdMyzu8zQieuaG8MmsCcacrMe9AeFBtpYq4RL/rGS7dwfyKVmg0+AMC2J3ngsSZZc3MCO9fKdcG5q8mhTFDUho0ClYUj++davh4RJmAxQtZEnBe37We2Z8eD9fMCGk+b/K+fBkKmNz+a1UnVHlWthspCAfS9Zno4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFWbxyNG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzbkQmbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC5BC433F1;
-	Mon, 29 Jan 2024 17:07:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFWbxyNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E42C43390;
+	Mon, 29 Jan 2024 17:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548023;
-	bh=m9zGSRSh6MJzfJwAddfstUayqxcc1GLwgrKh8+ZRpDI=;
+	s=korg; t=1706548024;
+	bh=LeJunoJJ+JMguBtPPFt2d2mmxsVYD6eNa2GuQ0kis6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzbkQmbGDgj/wqUFFJE/YCl4qLMDbi1gfvcsWa230DoxBWWSEhrXuPOOApnolaftZ
-	 jwZF/bdN0ciWrOob5qZvn+2rgABDJlt4ujGaVsWKS9USgz3EYcqV+1dW8Tm3Q8KJYI
-	 Oi0Y3FzUcLsLun2RVgf3pXxj9F3HjR9o8YdUhqt4=
+	b=rFWbxyNGtUlaQaHT+uUVg4kJb03fmr551p239REnwVd8c+A/uZm8js4qOZMyQp2ik
+	 CjtQwNkrH5slQXqW6605lfWvsPduvzztKADNmq+Xa289rUSxnmrI6Ly4rvac6So/cG
+	 N9vBOLdqnyKgsjyElkkyK9Ve9pODl5+Ei5Kra1TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongchen Zhang <zhanghongchen@loongson.cn>,
-	Weihao Li <liweihao@loongson.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.7 017/346] PM: hibernate: Enforce ordering during image compression/decompression
-Date: Mon, 29 Jan 2024 09:00:48 -0800
-Message-ID: <20240129170016.875962907@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+c52ab18308964d248092@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.7 018/346] hwrng: core - Fix page fault dead lock on mmap-ed hwrng
+Date: Mon, 29 Jan 2024 09:00:49 -0800
+Message-ID: <20240129170016.902026660@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,202 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongchen Zhang <zhanghongchen@loongson.cn>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 71cd7e80cfde548959952eac7063aeaea1f2e1c6 upstream.
+commit 78aafb3884f6bc6636efcc1760c891c8500b9922 upstream.
 
-An S4 (suspend to disk) test on the LoongArch 3A6000 platform sometimes
-fails with the following error messaged in the dmesg log:
+There is a dead-lock in the hwrng device read path.  This triggers
+when the user reads from /dev/hwrng into memory also mmap-ed from
+/dev/hwrng.  The resulting page fault triggers a recursive read
+which then dead-locks.
 
-	Invalid LZO compressed length
+Fix this by using a stack buffer when calling copy_to_user.
 
-That happens because when compressing/decompressing the image, the
-synchronization between the control thread and the compress/decompress/crc
-thread is based on a relaxed ordering interface, which is unreliable, and the
-following situation may occur:
-
-CPU 0					CPU 1
-save_image_lzo				lzo_compress_threadfn
-					  atomic_set(&d->stop, 1);
-  atomic_read(&data[thr].stop)
-  data[thr].cmp = data[thr].cmp_len;
-	  				  WRITE data[thr].cmp_len
-
-Then CPU0 gets a stale cmp_len and writes it to disk. During resume from S4,
-wrong cmp_len is loaded.
-
-To maintain data consistency between the two threads, use the acquire/release
-variants of atomic set and read operations.
-
-Fixes: 081a9d043c98 ("PM / Hibernate: Improve performance of LZO/plain hibernation, checksum image")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
-Co-developed-by: Weihao Li <liweihao@loongson.cn>
-Signed-off-by: Weihao Li <liweihao@loongson.cn>
-[ rjw: Subject rewrite and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Edward Adam Davis <eadavis@qq.com>
+Reported-by: syzbot+c52ab18308964d248092@syzkaller.appspotmail.com
+Fixes: 9996508b3353 ("hwrng: core - Replace u32 in driver API with byte array")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/swap.c |   38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/char/hw_random/core.c |   34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
---- a/kernel/power/swap.c
-+++ b/kernel/power/swap.c
-@@ -606,11 +606,11 @@ static int crc32_threadfn(void *data)
- 	unsigned i;
+--- a/drivers/char/hw_random/core.c
++++ b/drivers/char/hw_random/core.c
+@@ -23,10 +23,13 @@
+ #include <linux/sched.h>
+ #include <linux/sched/signal.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include <linux/uaccess.h>
  
- 	while (1) {
--		wait_event(d->go, atomic_read(&d->ready) ||
-+		wait_event(d->go, atomic_read_acquire(&d->ready) ||
- 		                  kthread_should_stop());
- 		if (kthread_should_stop()) {
- 			d->thr = NULL;
--			atomic_set(&d->stop, 1);
-+			atomic_set_release(&d->stop, 1);
- 			wake_up(&d->done);
- 			break;
- 		}
-@@ -619,7 +619,7 @@ static int crc32_threadfn(void *data)
- 		for (i = 0; i < d->run_threads; i++)
- 			*d->crc32 = crc32_le(*d->crc32,
- 			                     d->unc[i], *d->unc_len[i]);
--		atomic_set(&d->stop, 1);
-+		atomic_set_release(&d->stop, 1);
- 		wake_up(&d->done);
- 	}
- 	return 0;
-@@ -649,12 +649,12 @@ static int lzo_compress_threadfn(void *d
- 	struct cmp_data *d = data;
+ #define RNG_MODULE_NAME		"hw_random"
  
- 	while (1) {
--		wait_event(d->go, atomic_read(&d->ready) ||
-+		wait_event(d->go, atomic_read_acquire(&d->ready) ||
- 		                  kthread_should_stop());
- 		if (kthread_should_stop()) {
- 			d->thr = NULL;
- 			d->ret = -1;
--			atomic_set(&d->stop, 1);
-+			atomic_set_release(&d->stop, 1);
- 			wake_up(&d->done);
- 			break;
- 		}
-@@ -663,7 +663,7 @@ static int lzo_compress_threadfn(void *d
- 		d->ret = lzo1x_1_compress(d->unc, d->unc_len,
- 		                          d->cmp + LZO_HEADER, &d->cmp_len,
- 		                          d->wrk);
--		atomic_set(&d->stop, 1);
-+		atomic_set_release(&d->stop, 1);
- 		wake_up(&d->done);
- 	}
- 	return 0;
-@@ -798,7 +798,7 @@ static int save_image_lzo(struct swap_ma
++#define RNG_BUFFER_SIZE (SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES)
++
+ static struct hwrng *current_rng;
+ /* the current rng has been explicitly chosen by user via sysfs */
+ static int cur_rng_set_by_user;
+@@ -58,7 +61,7 @@ static inline int rng_get_data(struct hw
  
- 			data[thr].unc_len = off;
+ static size_t rng_buffer_size(void)
+ {
+-	return SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES;
++	return RNG_BUFFER_SIZE;
+ }
  
--			atomic_set(&data[thr].ready, 1);
-+			atomic_set_release(&data[thr].ready, 1);
- 			wake_up(&data[thr].go);
- 		}
- 
-@@ -806,12 +806,12 @@ static int save_image_lzo(struct swap_ma
- 			break;
- 
- 		crc->run_threads = thr;
--		atomic_set(&crc->ready, 1);
-+		atomic_set_release(&crc->ready, 1);
- 		wake_up(&crc->go);
- 
- 		for (run_threads = thr, thr = 0; thr < run_threads; thr++) {
- 			wait_event(data[thr].done,
--			           atomic_read(&data[thr].stop));
-+				atomic_read_acquire(&data[thr].stop));
- 			atomic_set(&data[thr].stop, 0);
- 
- 			ret = data[thr].ret;
-@@ -850,7 +850,7 @@ static int save_image_lzo(struct swap_ma
+ static void add_early_randomness(struct hwrng *rng)
+@@ -209,6 +212,7 @@ static inline int rng_get_data(struct hw
+ static ssize_t rng_dev_read(struct file *filp, char __user *buf,
+ 			    size_t size, loff_t *offp)
+ {
++	u8 buffer[RNG_BUFFER_SIZE];
+ 	ssize_t ret = 0;
+ 	int err = 0;
+ 	int bytes_read, len;
+@@ -236,34 +240,37 @@ static ssize_t rng_dev_read(struct file
+ 			if (bytes_read < 0) {
+ 				err = bytes_read;
+ 				goto out_unlock_reading;
++			} else if (bytes_read == 0 &&
++				   (filp->f_flags & O_NONBLOCK)) {
++				err = -EAGAIN;
++				goto out_unlock_reading;
  			}
++
+ 			data_avail = bytes_read;
  		}
  
--		wait_event(crc->done, atomic_read(&crc->stop));
-+		wait_event(crc->done, atomic_read_acquire(&crc->stop));
- 		atomic_set(&crc->stop, 0);
- 	}
+-		if (!data_avail) {
+-			if (filp->f_flags & O_NONBLOCK) {
+-				err = -EAGAIN;
+-				goto out_unlock_reading;
+-			}
+-		} else {
+-			len = data_avail;
++		len = data_avail;
++		if (len) {
+ 			if (len > size)
+ 				len = size;
  
-@@ -1132,12 +1132,12 @@ static int lzo_decompress_threadfn(void
- 	struct dec_data *d = data;
+ 			data_avail -= len;
  
- 	while (1) {
--		wait_event(d->go, atomic_read(&d->ready) ||
-+		wait_event(d->go, atomic_read_acquire(&d->ready) ||
- 		                  kthread_should_stop());
- 		if (kthread_should_stop()) {
- 			d->thr = NULL;
- 			d->ret = -1;
--			atomic_set(&d->stop, 1);
-+			atomic_set_release(&d->stop, 1);
- 			wake_up(&d->done);
- 			break;
- 		}
-@@ -1150,7 +1150,7 @@ static int lzo_decompress_threadfn(void
- 			flush_icache_range((unsigned long)d->unc,
- 					   (unsigned long)d->unc + d->unc_len);
- 
--		atomic_set(&d->stop, 1);
-+		atomic_set_release(&d->stop, 1);
- 		wake_up(&d->done);
- 	}
- 	return 0;
-@@ -1335,7 +1335,7 @@ static int load_image_lzo(struct swap_ma
- 		}
- 
- 		if (crc->run_threads) {
--			wait_event(crc->done, atomic_read(&crc->stop));
-+			wait_event(crc->done, atomic_read_acquire(&crc->stop));
- 			atomic_set(&crc->stop, 0);
- 			crc->run_threads = 0;
- 		}
-@@ -1371,7 +1371,7 @@ static int load_image_lzo(struct swap_ma
- 					pg = 0;
+-			if (copy_to_user(buf + ret, rng_buffer + data_avail,
+-								len)) {
++			memcpy(buffer, rng_buffer + data_avail, len);
++		}
++		mutex_unlock(&reading_mutex);
++		put_rng(rng);
++
++		if (len) {
++			if (copy_to_user(buf + ret, buffer, len)) {
+ 				err = -EFAULT;
+-				goto out_unlock_reading;
++				goto out;
  			}
  
--			atomic_set(&data[thr].ready, 1);
-+			atomic_set_release(&data[thr].ready, 1);
- 			wake_up(&data[thr].go);
+ 			size -= len;
+ 			ret += len;
  		}
  
-@@ -1390,7 +1390,7 @@ static int load_image_lzo(struct swap_ma
+-		mutex_unlock(&reading_mutex);
+-		put_rng(rng);
  
- 		for (run_threads = thr, thr = 0; thr < run_threads; thr++) {
- 			wait_event(data[thr].done,
--			           atomic_read(&data[thr].stop));
-+				atomic_read_acquire(&data[thr].stop));
- 			atomic_set(&data[thr].stop, 0);
- 
- 			ret = data[thr].ret;
-@@ -1421,7 +1421,7 @@ static int load_image_lzo(struct swap_ma
- 				ret = snapshot_write_next(snapshot);
- 				if (ret <= 0) {
- 					crc->run_threads = thr + 1;
--					atomic_set(&crc->ready, 1);
-+					atomic_set_release(&crc->ready, 1);
- 					wake_up(&crc->go);
- 					goto out_finish;
- 				}
-@@ -1429,13 +1429,13 @@ static int load_image_lzo(struct swap_ma
+ 		if (need_resched())
+ 			schedule_timeout_interruptible(1);
+@@ -274,6 +281,7 @@ static ssize_t rng_dev_read(struct file
  		}
- 
- 		crc->run_threads = thr;
--		atomic_set(&crc->ready, 1);
-+		atomic_set_release(&crc->ready, 1);
- 		wake_up(&crc->go);
  	}
+ out:
++	memzero_explicit(buffer, sizeof(buffer));
+ 	return ret ? : err;
  
- out_finish:
- 	if (crc->run_threads) {
--		wait_event(crc->done, atomic_read(&crc->stop));
-+		wait_event(crc->done, atomic_read_acquire(&crc->stop));
- 		atomic_set(&crc->stop, 0);
- 	}
- 	stop = ktime_get();
+ out_unlock_reading:
 
 
