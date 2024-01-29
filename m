@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D98415B973;
-	Mon, 29 Jan 2024 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2A415A493;
+	Mon, 29 Jan 2024 17:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548638; cv=none; b=gI1wyMxDXYjDvLhh94dtLcjAUDra9nc8oMKsKWU3/YRy5JOwQ0UCZu4L5oqO3dxRsRdeC2vsD8RIQbIkTVgVJ4qeR1qvfa05A7NgQv5qI9H9u5AiTQEyYnpYmxpZ62brlOU5zmbcYidNRf+yDHrJOI3a3qWflDXOx2OsTTYbusI=
+	t=1706548639; cv=none; b=S5iXE8cPOeajvw6wZB6qt0xkUQDMwKzgyEZ1/4UdGQzUD4mMBQRf6OI8dOT8hqbtW0S25pZaxp+4yTUf/XdlemVlHUQadE+g4Gb5M4W1svohfP56+fOO6RMMQox4VcNsSNNztgJrbUTgGwfUlZd4H2t8vUBX/vfft2Yj+inZs50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548638; c=relaxed/simple;
-	bh=I2zFRQ5mnYDEqzHtiXYsSWzHnHtQZbrzl2V+wR/dx8Y=;
+	s=arc-20240116; t=1706548639; c=relaxed/simple;
+	bh=r3gUyyrBWGbgD400DRqJZKOFE2/qmGi9zaBsu2hmIYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=staEwo55jAtj36VlGm4WXoCQYdR440MganoodLbsrnXow3sTcX3h1qaqe58hlcWvld+uJyTHD0dNBp3bGGhrzdklUilfrELFVc2ct5mpeeHuyAnATK352BNtAAI+yhH4OyqxoEanMRQC0MlVBn4eyTnizaD+5f145Tazo95aXVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1+Te2Gs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OSn4UZ/EvYt4ddnQyUZFCN2Ysxp+WR5jeXqrj5RleiYWZ6FwOGN2sk4Jd7I/XH28vUY7CKqgeU5uD/73MQmR0Wc/dqq1oyOm4kCR8ESFB1RqZDNfpx5NajT1N94701wMAlhHTSlgyoPE+Eyudebd3vcvWR3kdhwakAQ/43uI9S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4EuLr0c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1+Te2Gs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E9FC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4EuLr0c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E379BC433F1;
 	Mon, 29 Jan 2024 17:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548638;
-	bh=I2zFRQ5mnYDEqzHtiXYsSWzHnHtQZbrzl2V+wR/dx8Y=;
+	s=korg; t=1706548639;
+	bh=r3gUyyrBWGbgD400DRqJZKOFE2/qmGi9zaBsu2hmIYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1+Te2GswcrMk+vVIVIvsYXGLV8IGCG2mjbsqov15j5pwa+gaFIKsKwWl1nFymopI
-	 MERCkH7dQFdtv2FnEnozE3F+qoei9uKe5Z+BZ00WKC5+suivgZRNons+xfRw/tE/D4
-	 DJRY5PChSh0CjMYCwd0g5AdISCgx3TQ7KytmOPbA=
+	b=z4EuLr0c9ch5xnQ2KeOrhIoXq8WeHrS5hIouGQ8Qhb4dJkxOvCv1BCmFXLJ4mBZ3E
+	 NQcnKp3xRnHcddkNuWs+yJbj2Wi0tcYwb4I3MbQDKooAsM+PLhn8pxncEc6UyOWykd
+	 BsrKdSqh6U1axio+Z/U+2fi2u/40VyAMPMdG3940=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Allison Karlitskaya <allison.karlitskaya@redhat.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 314/331] spi: intel-pci: Remove Meteor Lake-S SoC PCI ID from the list
-Date: Mon, 29 Jan 2024 09:06:18 -0800
-Message-ID: <20240129170024.072015099@linuxfoundation.org>
+Subject: [PATCH 6.6 315/331] block: Move checking GENHD_FL_NO_PART to bdev_add_partition()
+Date: Mon, 29 Jan 2024 09:06:19 -0800
+Message-ID: <20240129170024.103558219@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,36 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit 6c314425b9ef6b247cefd0903e287eb072580c3b ]
+[ Upstream commit 7777f47f2ea64efd1016262e7b59fab34adfb869 ]
 
-Turns out this "SoC" side controller does not support certain commands,
-such as reading chip JEDEC ID, so the controller is pretty much unusable
-in Linux. We should be using the "PCH" side controller instead. For this
-reason remove this PCI ID from the list.
+Commit 1a721de8489f ("block: don't add or resize partition on the disk
+with GENHD_FL_NO_PART") prevented all operations about partitions on disks
+with GENHD_FL_NO_PART in blkpg_do_ioctl() since they are meaningless.
+However, it changed error code in some scenarios. So move checking
+GENHD_FL_NO_PART to bdev_add_partition() to eliminate impact.
 
-Fixes: c2912d42e86e ("spi: intel-pci: Add support for Meteor Lake-S SPI serial flash")
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://msgid.link/r/20240122120034.2664812-2-mika.westerberg@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1a721de8489f ("block: don't add or resize partition on the disk with GENHD_FL_NO_PART")
+Reported-by: Allison Karlitskaya <allison.karlitskaya@redhat.com>
+Closes: https://lore.kernel.org/all/CAOYeF9VsmqKMcQjo1k6YkGNujwN-nzfxY17N3F-CMikE1tYp+w@mail.gmail.com/
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240118130401.792757-1-lilingfeng@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-intel-pci.c | 1 -
- 1 file changed, 1 deletion(-)
+ block/ioctl.c           | 2 --
+ block/partitions/core.c | 5 +++++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
-index 57d767a68e7b..b9918dcc3802 100644
---- a/drivers/spi/spi-intel-pci.c
-+++ b/drivers/spi/spi-intel-pci.c
-@@ -84,7 +84,6 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0xa2a4), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa324), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa3a4), (unsigned long)&cnl_info },
--	{ PCI_VDEVICE(INTEL, 0xae23), (unsigned long)&cnl_info },
- 	{ },
- };
- MODULE_DEVICE_TABLE(pci, intel_spi_pci_ids);
+diff --git a/block/ioctl.c b/block/ioctl.c
+index a74ef911e279..d1d8e8391279 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -20,8 +20,6 @@ static int blkpg_do_ioctl(struct block_device *bdev,
+ 	struct blkpg_partition p;
+ 	sector_t start, length;
+ 
+-	if (disk->flags & GENHD_FL_NO_PART)
+-		return -EINVAL;
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EACCES;
+ 	if (copy_from_user(&p, upart, sizeof(struct blkpg_partition)))
+diff --git a/block/partitions/core.c b/block/partitions/core.c
+index e137a87f4db0..e58c8b50350b 100644
+--- a/block/partitions/core.c
++++ b/block/partitions/core.c
+@@ -458,6 +458,11 @@ int bdev_add_partition(struct gendisk *disk, int partno, sector_t start,
+ 		goto out;
+ 	}
+ 
++	if (disk->flags & GENHD_FL_NO_PART) {
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	if (partition_overlaps(disk, start, length, -1)) {
+ 		ret = -EBUSY;
+ 		goto out;
 -- 
 2.43.0
 
