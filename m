@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5CE157E79;
-	Mon, 29 Jan 2024 17:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02267161B45;
+	Mon, 29 Jan 2024 17:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548348; cv=none; b=VQ4OofQ4BLDnIQYXdadqFsdhi1CCdoFIpgOPAINNuMdnSWNmDGU3Yxj4tH2xNYeht61V35wsPiWoXwd1CdqgaG2UIhI+CARDewizuBHZtzx80hWrDUt50fLsKgKuP4vBuRPdNEBSA8522DNzBX6ii+AngFbJc0zryr2zjYAraUE=
+	t=1706548349; cv=none; b=uPSSGOXiPAgCYn0UwXCdRanwS0U4AvYTi7nQfSn/SzndyT/NYoPHdBDxxTutGPdBeuwoAoyzTkZeOm5umQQS6qm5Hisn976K5eoHZsBXgkCG7h0w3cnqCgub4Dz11lqjC+1n4SsHR2jUL3Ue0xDxOhFFq9Mom+m1cOW9af6BM/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548348; c=relaxed/simple;
-	bh=kuu1kE6xyH+YxxBw/bB+HNHWJP+ua2qBYBCtN47Isns=;
+	s=arc-20240116; t=1706548349; c=relaxed/simple;
+	bh=OmLsEj9IAD7ysjDOaIWEbmJ7QB6NxRiVs0lW8hi1U1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMYjIh9yliu9xIgi2e/P9xv8BtUwzD/lVPcU5z71BZhepXE0Z+/3HU6asm1/BVeStJw7yPbJTxO58IN/UnG1bQ1mOjeQQY+WrgUjWQ0Dx8uMp091RhoJu0X8dpSC60GBQpPetZrw5JGczMcm4ZjWr9l/Mpby5fHZ9BE0pBu+MpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHIJeJs2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ObeKZEplGk0kAzNwxOjjOsvB47PHj6eLf3bQ8rZWbEvYNvFi+ulbljO5x+wEdJmh9cmCy9xWEdI1Rqtf7n8l9eFsQGMhc5A8tj5c/dZkmCh6CyZY4LBL22cFdrkOWfcMGNGEgTMHpKXIu/mOsKjEuEnXmaeYa87UOV9SULskjvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB/oTSx2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHIJeJs2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F3EC43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB/oTSx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC9FC433C7;
 	Mon, 29 Jan 2024 17:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548348;
-	bh=kuu1kE6xyH+YxxBw/bB+HNHWJP+ua2qBYBCtN47Isns=;
+	bh=OmLsEj9IAD7ysjDOaIWEbmJ7QB6NxRiVs0lW8hi1U1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sHIJeJs25Lmu2N1ACQdhh2IfsY+E8ufBPLIAni0hFtzDvzLujZbvP0fFHlX7Thakr
-	 lqHrbettg1KTNwOsfj0pA3lTc6J4+jj5oarchAXsnOh8imCO9Q2uPAV1uRl4CzgZaV
-	 1JfucT1LJEM6Su8FzPiWwWqaQDZAbEA5rkSru878=
+	b=YB/oTSx2/yMj0YZ2QnCcGa5fcDLFaQy+1ckqne1/a+QzC4rkWFokORnXU+A6v0Rwh
+	 8AAGdAEOdS0V6DIidOumYczSPGUBq7eZoCbpBytdSpW+fQSZWsMPubww7BeIy0iQtM
+	 uaNKh78buZK+H5M9zuJ0qPoFUby0lwYsnoww+Ulk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jenishkumar Maheshbhai Patel <jpatel2@marvell.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pengfei Xu <pengfei.xu@intel.com>,
+	Jithu Joseph <jithu.joseph@intel.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/185] net: mvpp2: clear BM pool before initialization
-Date: Mon, 29 Jan 2024 09:05:10 -0800
-Message-ID: <20240129170002.124467440@linuxfoundation.org>
+Subject: [PATCH 6.7 340/346] platform/x86/intel/ifs: Call release_firmware() when handling errors.
+Date: Mon, 29 Jan 2024 09:06:11 -0800
+Message-ID: <20240129170026.501275283@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,81 +49,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jenishkumar Maheshbhai Patel <jpatel2@marvell.com>
+From: Jithu Joseph <jithu.joseph@intel.com>
 
-[ Upstream commit 9f538b415db862e74b8c5d3abbccfc1b2b6caa38 ]
+[ Upstream commit 8c898ec07a2fc1d4694e81097a48e94a3816308d ]
 
-Register value persist after booting the kernel using
-kexec which results in kernel panic. Thus clear the
-BM pool registers before initialisation to fix the issue.
+Missing release_firmware() due to error handling blocked any future image
+loading.
 
-Fixes: 3f518509dedc ("ethernet: Add new driver for Marvell Armada 375 network unit")
-Signed-off-by: Jenishkumar Maheshbhai Patel <jpatel2@marvell.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://lore.kernel.org/r/20240119035914.2595665-1-jpatel2@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix the return code and release_fiwmare() to release the bad image.
+
+Fixes: 25a76dbb36dd ("platform/x86/intel/ifs: Validate image size")
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240125082254.424859-2-ashok.raj@intel.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_main.c   | 27 ++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/platform/x86/intel/ifs/load.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index f936640cca4e..2f80ee84c7ec 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -614,12 +614,38 @@ static void mvpp23_bm_set_8pool_mode(struct mvpp2 *priv)
- 	mvpp2_write(priv, MVPP22_BM_POOL_BASE_ADDR_HIGH_REG, val);
- }
+diff --git a/drivers/platform/x86/intel/ifs/load.c b/drivers/platform/x86/intel/ifs/load.c
+index a1ee1a74fc3c..2cf3b4a8813f 100644
+--- a/drivers/platform/x86/intel/ifs/load.c
++++ b/drivers/platform/x86/intel/ifs/load.c
+@@ -399,7 +399,8 @@ int ifs_load_firmware(struct device *dev)
+ 	if (fw->size != expected_size) {
+ 		dev_err(dev, "File size mismatch (expected %u, actual %zu). Corrupted IFS image.\n",
+ 			expected_size, fw->size);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto release;
+ 	}
  
-+/* Cleanup pool before actual initialization in the OS */
-+static void mvpp2_bm_pool_cleanup(struct mvpp2 *priv, int pool_id)
-+{
-+	unsigned int thread = mvpp2_cpu_to_thread(priv, get_cpu());
-+	u32 val;
-+	int i;
-+
-+	/* Drain the BM from all possible residues left by firmware */
-+	for (i = 0; i < MVPP2_BM_POOL_SIZE_MAX; i++)
-+		mvpp2_thread_read(priv, thread, MVPP2_BM_PHY_ALLOC_REG(pool_id));
-+
-+	put_cpu();
-+
-+	/* Stop the BM pool */
-+	val = mvpp2_read(priv, MVPP2_BM_POOL_CTRL_REG(pool_id));
-+	val |= MVPP2_BM_STOP_MASK;
-+	mvpp2_write(priv, MVPP2_BM_POOL_CTRL_REG(pool_id), val);
-+}
-+
- static int mvpp2_bm_init(struct device *dev, struct mvpp2 *priv)
- {
- 	enum dma_data_direction dma_dir = DMA_FROM_DEVICE;
- 	int i, err, poolnum = MVPP2_BM_POOLS_NUM;
- 	struct mvpp2_port *port;
- 
-+	if (priv->percpu_pools)
-+		poolnum = mvpp2_get_nrxqs(priv) * 2;
-+
-+	/* Clean up the pool state in case it contains stale state */
-+	for (i = 0; i < poolnum; i++)
-+		mvpp2_bm_pool_cleanup(priv, i);
-+
- 	if (priv->percpu_pools) {
- 		for (i = 0; i < priv->port_count; i++) {
- 			port = priv->port_list[i];
-@@ -629,7 +655,6 @@ static int mvpp2_bm_init(struct device *dev, struct mvpp2 *priv)
- 			}
- 		}
- 
--		poolnum = mvpp2_get_nrxqs(priv) * 2;
- 		for (i = 0; i < poolnum; i++) {
- 			/* the pool in use */
- 			int pn = i / (poolnum / 2);
+ 	ret = image_sanity_check(dev, (struct microcode_header_intel *)fw->data);
 -- 
 2.43.0
 
