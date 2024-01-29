@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68F515D5B8;
-	Mon, 29 Jan 2024 17:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E5F15D5D1;
+	Mon, 29 Jan 2024 17:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548184; cv=none; b=XQfKOLFX7+ytvzvSieWBN+rUXmgIsuPIM1VV+yL+ZYsOFaYBfR7hJlkpXz6t8FFpxm6S8dUGiAdSuro1jwwGpyKRvQPB43TJahBLs9brNC4D9BHalVk+c5VLTSFTK11PnFRxMB+fyobL/s+5SjIoPnN49x7CTfIvWufaKaWP1KI=
+	t=1706548185; cv=none; b=H9TJW0kF231UrJXeXPIwzliOzCgdCbfdeV4LmNufVw70loKT8seV0XnbI541/108HHULnkJLg7J03Lrhevo79mBGbBw1hCCOtm33SXQ4iGaEEIor4a3NCqFaXI9HIDaKoQ5xzEJXQo8NKdoVoxeC7y4ItR8NhjTkjPQ7QqbTzXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548184; c=relaxed/simple;
-	bh=497iyW7Us0Pbt6F1NdTHw6vOiB8O3LxipqKiuqZjlIA=;
+	s=arc-20240116; t=1706548185; c=relaxed/simple;
+	bh=ZfgWbFPGdEXn4EsetL2LFxL/PK1BTv1z8XPv4wsQbfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8Rb6h9p6N1tohBPOvC+KSne3i7Me3VcKF2nQk5T4AZsOWT87AvK1U+p56md8Pw4QlY4EILsqHAiv3KPAVLph7TO9L2XaGeJJo9sy9xkb4vGm3J02O3xso4qT1HQ8iZ1PP9CAGN3bop66iPNWUhhFPf88rv/ig05Azdg2FtM+jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpNplrFq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lIxBXrkD92+Gr6lCt0+JoNh5L3hkCwVGSKxdRii/oHix0YadPsyJfS5FOgB5Abb6/MBYiVbrRNwxrlFUs0JHdAKrjzNAvFjRQWYfoFpgEqUaO1nEoACCXxFeUG1WFjsN9MZOdMDtwuru4EHeLAC7BcfRctW9ijzxzIixWOeKw1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0KwJMjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpNplrFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFD2C433F1;
-	Mon, 29 Jan 2024 17:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0KwJMjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E715C433C7;
+	Mon, 29 Jan 2024 17:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548184;
-	bh=497iyW7Us0Pbt6F1NdTHw6vOiB8O3LxipqKiuqZjlIA=;
+	s=korg; t=1706548185;
+	bh=ZfgWbFPGdEXn4EsetL2LFxL/PK1BTv1z8XPv4wsQbfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpNplrFqlR+eSGnk8cq/1I9C9HdED48pBzJZuiAzyPZMorko334FV3/bYQHl31bJ2
-	 h31JAhRB/plJN+5b97wRmJcpnJYVbS3bMe4sOV7C2xIcrLE6W6mt5YJEnVWkUe47aC
-	 W+EoqdzTtT9ayDWioP+9t08C1qu/I93HDZOExBV0=
+	b=L0KwJMjW2CDWNW8zp86CBZBAfzxGmw0pkLpsaKF9TBA/jtJ7zqCi7KKoVEjbFCcAb
+	 gUxsr8RhHvhn270ayJMkszmK+fES945AzD1KG58GMbBFKia8pEjBmuUoqVEO5+tAF4
+	 AK45pFAX1jHJJB32dkLH+Ar/gPgr8Aj2LopJ9CSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/185] usb: dwc3: gadget: Handle EP0 request dequeuing properly
-Date: Mon, 29 Jan 2024 09:03:23 -0800
-Message-ID: <20240129165958.712827183@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.7 229/346] rbd: dont move requests to the running list on errors
+Date: Mon, 29 Jan 2024 09:04:20 -0800
+Message-ID: <20240129170023.133622539@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +46,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit 730e12fbec53ab59dd807d981a204258a4cfb29a ]
+commit ded080c86b3f99683774af0441a58fc2e3d60cae upstream.
 
-Current EP0 dequeue path will share the same as other EPs.  However, there
-are some special considerations that need to be made for EP0 transfers:
+The running list is supposed to contain requests that are pinning the
+exclusive lock, i.e. those that must be flushed before exclusive lock
+is released.  When wake_lock_waiters() is called to handle an error,
+requests on the acquiring list are failed with that error and no
+flushing takes place.  Briefly moving them to the running list is not
+only pointless but also harmful: if exclusive lock gets acquired
+before all of their state machines are scheduled and go through
+rbd_lock_del_request(), we trigger
 
-  - EP0 transfers never transition into the started_list
-  - EP0 only has one active request at a time
+    rbd_assert(list_empty(&rbd_dev->running_list));
 
-In case there is a vendor specific control message for a function over USB
-FFS, then there is no guarantee on the timeline which the DATA/STATUS stage
-is responded to.  While this occurs, any attempt to end transfers on
-non-control EPs will end up having the DWC3_EP_DELAY_STOP flag set, and
-defer issuing of the end transfer command.  If the USB FFS application
-decides to timeout the control transfer, or if USB FFS AIO path exits, the
-USB FFS driver will issue a call to usb_ep_dequeue() for the ep0 request.
+in rbd_try_acquire_lock().
 
-In case of the AIO exit path, the AIO FS blocks until all pending USB
-requests utilizing the AIO path is completed.  However, since the dequeue
-of ep0 req does not happen properly, all non-control EPs with the
-DWC3_EP_DELAY_STOP flag set will not be handled, and the AIO exit path will
-be stuck waiting for the USB FFS data endpoints to receive a completion
-callback.
-
-Fix is to utilize dwc3_ep0_reset_state() in the dequeue API to ensure EP0
-is brought back to the SETUP state, and ensures that any deferred end
-transfer commands are handled.  This also will end any active transfers
-on EP0, compared to the previous implementation which directly called
-giveback only.
-
-Fixes: fcd2def66392 ("usb: dwc3: gadget: Refactor dwc3_gadget_ep_dequeue")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20231206201814.32664-1-quic_wcheng@quicinc.com
+Cc: stable@vger.kernel.org
+Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/block/rbd.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 5617a75b0d74..c4703f6b2089 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2093,7 +2093,17 @@ static int dwc3_gadget_ep_dequeue(struct usb_ep *ep,
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3452,14 +3452,15 @@ static bool rbd_lock_add_request(struct
+ static void rbd_lock_del_request(struct rbd_img_request *img_req)
+ {
+ 	struct rbd_device *rbd_dev = img_req->rbd_dev;
+-	bool need_wakeup;
++	bool need_wakeup = false;
  
- 	list_for_each_entry(r, &dep->pending_list, list) {
- 		if (r == req) {
--			dwc3_gadget_giveback(dep, req, -ECONNRESET);
-+			/*
-+			 * Explicitly check for EP0/1 as dequeue for those
-+			 * EPs need to be handled differently.  Control EP
-+			 * only deals with one USB req, and giveback will
-+			 * occur during dwc3_ep0_stall_and_restart().  EP0
-+			 * requests are never added to started_list.
-+			 */
-+			if (dep->number > 1)
-+				dwc3_gadget_giveback(dep, req, -ECONNRESET);
-+			else
-+				dwc3_ep0_reset_state(dwc);
- 			goto out;
- 		}
+ 	lockdep_assert_held(&rbd_dev->lock_rwsem);
+ 	spin_lock(&rbd_dev->lock_lists_lock);
+-	rbd_assert(!list_empty(&img_req->lock_item));
+-	list_del_init(&img_req->lock_item);
+-	need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING &&
+-		       list_empty(&rbd_dev->running_list));
++	if (!list_empty(&img_req->lock_item)) {
++		list_del_init(&img_req->lock_item);
++		need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING &&
++			       list_empty(&rbd_dev->running_list));
++	}
+ 	spin_unlock(&rbd_dev->lock_lists_lock);
+ 	if (need_wakeup)
+ 		complete(&rbd_dev->releasing_wait);
+@@ -3842,14 +3843,19 @@ static void wake_lock_waiters(struct rbd
+ 		return;
  	}
--- 
-2.43.0
-
+ 
+-	list_for_each_entry(img_req, &rbd_dev->acquiring_list, lock_item) {
++	while (!list_empty(&rbd_dev->acquiring_list)) {
++		img_req = list_first_entry(&rbd_dev->acquiring_list,
++					   struct rbd_img_request, lock_item);
+ 		mutex_lock(&img_req->state_mutex);
+ 		rbd_assert(img_req->state == RBD_IMG_EXCLUSIVE_LOCK);
++		if (!result)
++			list_move_tail(&img_req->lock_item,
++				       &rbd_dev->running_list);
++		else
++			list_del_init(&img_req->lock_item);
+ 		rbd_img_schedule(img_req, result);
+ 		mutex_unlock(&img_req->state_mutex);
+ 	}
+-
+-	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
+ }
+ 
+ static bool locker_equal(const struct ceph_locker *lhs,
 
 
