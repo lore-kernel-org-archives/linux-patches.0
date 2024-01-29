@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556AC159574;
-	Mon, 29 Jan 2024 17:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB20159574;
+	Mon, 29 Jan 2024 17:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548399; cv=none; b=FP2KqLyHNagSGB32Gao+9X0JWhPerLeXT2YjUWvrZi//vPiHfgQ0rPq9wqE0+MNdn2J0M1K04qOeNZ/x1ERtLajoXne1G3BImyavrtwP2FPc5PlpfKoSrIauJbDTkU2Lh3ZFy8bM8Y6hpSPnMKA31HFfUofGSa5QnA6+FQ9ATHo=
+	t=1706548400; cv=none; b=JHtMrKmNt2oXlIkIIYuR7OuJ7FjTC7tqeN95fhnHfjdvypAoorUGk/iWHJYcC/G/4tjxvfvGQ5jPr1AW4MdsjgbsKgp2R/QLFnW17AUD5rNtFrzKYVI181r/V77VIJhBubEO3PUaeDYcN8UGfnKSFlfekKyGotuTeedsbuZ33jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548399; c=relaxed/simple;
-	bh=il6BlhkL3Qlx65BBHT/I8dH3imDJMflk9cCAz8GXe/4=;
+	s=arc-20240116; t=1706548400; c=relaxed/simple;
+	bh=DzqBuEWXOFov1BIa19rhjFUFKm2VplSrj/8zBOQsxlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMyObhwNYRdbBM+lVgPzUdxamlZk/j661n5OWWH2zjl2Tx82TVLzr58HvukoFfiQ4MFPqbc+2SGwc8uNPy3/KjhlJf3s3mMTxbriUm5hlrOl3JVzPewYls1XCLu7aULdGKrUcrui9GLGry09FOp3cctpvUHMBSF2RqrWU5YpjD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaugyyfl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPv80zsmSnixEQd0FJRVgYrl94wFlt6TXWT5HnfelrZlETlxW9NbAlRXRKEYaORfKFrCIrUXqmoNE5g/heibOvtDSmIHbgZKp/B1AidKyTzNCDcQw0o6wFJFhAlsUCDMB62gjjCNCsTsWy/p+v46zdwMYIKERc+OCkVZRxMNWcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gq31Br67; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaugyyfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB4AC43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gq31Br67"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D997FC433B1;
 	Mon, 29 Jan 2024 17:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548399;
-	bh=il6BlhkL3Qlx65BBHT/I8dH3imDJMflk9cCAz8GXe/4=;
+	bh=DzqBuEWXOFov1BIa19rhjFUFKm2VplSrj/8zBOQsxlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oaugyyfljfT/4XKMU+VuoEcGPMJFsVC/YykWm/vr/kL97QED5LH1+JZDyh4Q/pOjB
-	 ETVzPxunP38G7H4MOcs15hr9iqQ+gTvFS1qgQmf6GAoujQZ6MWWMdGoy4yb6JI93Dr
-	 /t2Wxqim9UgWOyU43dOeP4E81lRK0pPOdZu//I8c=
+	b=gq31Br67OrN4SfyfDfBaa7ZprUJ1ViuzwUpUSpW/DQHb6tQVgWrUci9P5ZL0tLgpp
+	 KdricugLyOm3XJCnV6E6GxZOZF2cadVmN+/na/1xt2MfyqnVJB0mrepch+SVis7gNj
+	 spu9Ehq+7o+21VVuTEh+vaeVi6bx3r2A+4R0Cc94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Yi Wang <hsinyi@chromium.org>,
-	Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 177/185] drm/bridge: anx7625: Ensure bridge is suspended in disable()
-Date: Mon, 29 Jan 2024 09:06:17 -0800
-Message-ID: <20240129170004.282164428@linuxfoundation.org>
+Subject: [PATCH 6.1 178/185] spi: bcm-qspi: fix SFDP BFPT read by usig mspi read
+Date: Mon, 29 Jan 2024 09:06:18 -0800
+Message-ID: <20240129170004.311647386@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -53,84 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hsin-Yi Wang <hsinyi@chromium.org>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-[ Upstream commit 4d5b7daa3c610af3f322ad1e91fc0c752ff32f0e ]
+[ Upstream commit 574bf7bbe83794a902679846770f75a9b7f28176 ]
 
-Similar to commit 26db46bc9c67 ("drm/bridge: parade-ps8640: Ensure bridge
-is suspended in .post_disable()"). Add a mutex to ensure that aux transfer
-won't race with atomic_disable by holding the PM reference and prevent
-the bridge from suspend.
+SFDP read shall use the mspi reads when using the bcm_qspi_exec_mem_op()
+call. This fixes SFDP parameter page read failures seen with parts that
+now use SFDP protocol to read the basic flash parameter table.
 
-Also we need to use pm_runtime_put_sync_suspend() to suspend the bridge
-instead of idle with pm_runtime_put_sync().
-
-Fixes: 3203e497eb76 ("drm/bridge: anx7625: Synchronously run runtime suspend.")
-Fixes: adca62ec370c ("drm/bridge: anx7625: Support reading edid through aux channel")
-Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
-Tested-by: Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>
-Reviewed-by: Pin-yen Lin <treapking@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240118015916.2296741-1-hsinyi@chromium.org
+Fixes: 5f195ee7d830 ("spi: bcm-qspi: Implement the spi_mem interface")
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://msgid.link/r/20240109210033.43249-1-kamal.dasu@broadcom.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/analogix/anx7625.c | 7 ++++++-
- drivers/gpu/drm/bridge/analogix/anx7625.h | 2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/spi/spi-bcm-qspi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
-index cf86cc05b7fc..5f8137e9cfd7 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.c
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
-@@ -1742,6 +1742,7 @@ static ssize_t anx7625_aux_transfer(struct drm_dp_aux *aux,
- 	u8 request = msg->request & ~DP_AUX_I2C_MOT;
- 	int ret = 0;
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index 137e7315a3cf..b24955910147 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -19,7 +19,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/spi/spi.h>
+-#include <linux/spi/spi-mem.h>
++#include <linux/mtd/spi-nor.h>
+ #include <linux/sysfs.h>
+ #include <linux/types.h>
+ #include "spi-bcm-qspi.h"
+@@ -1221,7 +1221,7 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
  
-+	mutex_lock(&ctx->aux_lock);
- 	pm_runtime_get_sync(dev);
- 	msg->reply = 0;
- 	switch (request) {
-@@ -1758,6 +1759,7 @@ static ssize_t anx7625_aux_transfer(struct drm_dp_aux *aux,
- 					msg->size, msg->buffer);
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
-+	mutex_unlock(&ctx->aux_lock);
+ 	/* non-aligned and very short transfers are handled by MSPI */
+ 	if (!IS_ALIGNED((uintptr_t)addr, 4) || !IS_ALIGNED((uintptr_t)buf, 4) ||
+-	    len < 4)
++	    len < 4 || op->cmd.opcode == SPINOR_OP_RDSFDP)
+ 		mspi_read = true;
  
- 	return ret;
- }
-@@ -2454,7 +2456,9 @@ static void anx7625_bridge_atomic_disable(struct drm_bridge *bridge,
- 	ctx->connector = NULL;
- 	anx7625_dp_stop(ctx);
- 
--	pm_runtime_put_sync(dev);
-+	mutex_lock(&ctx->aux_lock);
-+	pm_runtime_put_sync_suspend(dev);
-+	mutex_unlock(&ctx->aux_lock);
- }
- 
- static enum drm_connector_status
-@@ -2648,6 +2652,7 @@ static int anx7625_i2c_probe(struct i2c_client *client)
- 
- 	mutex_init(&platform->lock);
- 	mutex_init(&platform->hdcp_wq_lock);
-+	mutex_init(&platform->aux_lock);
- 
- 	INIT_DELAYED_WORK(&platform->hdcp_work, hdcp_check_work_func);
- 	platform->hdcp_workqueue = create_workqueue("hdcp workqueue");
-diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.h b/drivers/gpu/drm/bridge/analogix/anx7625.h
-index 14f33d6be289..239956199e1b 100644
---- a/drivers/gpu/drm/bridge/analogix/anx7625.h
-+++ b/drivers/gpu/drm/bridge/analogix/anx7625.h
-@@ -471,6 +471,8 @@ struct anx7625_data {
- 	struct workqueue_struct *hdcp_workqueue;
- 	/* Lock for hdcp work queue */
- 	struct mutex hdcp_wq_lock;
-+	/* Lock for aux transfer and disable */
-+	struct mutex aux_lock;
- 	char edid_block;
- 	struct display_timing dt;
- 	u8 display_timing_valid;
+ 	if (!has_bspi(qspi) || mspi_read)
 -- 
 2.43.0
 
