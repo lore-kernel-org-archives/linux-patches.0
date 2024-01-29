@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E2A6FE01;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA856FDE1;
 	Mon, 29 Jan 2024 17:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548481; cv=none; b=glkPNfa29ABv+6X1GNoVW44ZBajPjc1WwwLErsuHHQJeTgRwZq8tmP3dVTvKS345mv+4RyU5C63aknovv6NyU285RaJF62LAuRqYg5Z70kjFxvxMLSmsrIm98IYBcvNBPihV74G7lcGTkXOufzO8DoJ/WsRohT3YMdYdMmZC3W4=
+	t=1706548482; cv=none; b=pQ0gXUgnuHM/IEq5iEG2XLM2/dWw6TwrEL8mgf/eYngypOtkawXZaVnUk+uZJvt8Yt9z6UFZ9WdMMyP4TouYtJcPntgHOW54hq8rBxTtp+w9uOpqrOlOPCV2HJ7YxDOAM6ohiKZ6e1SPiQYDwoigiyTlQFkeg4h93TtL8PjMpZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548481; c=relaxed/simple;
-	bh=H2MnVf3BWFL+45y49hXx7T1Y96x4hcFl10Es82snsSw=;
+	s=arc-20240116; t=1706548482; c=relaxed/simple;
+	bh=sC1md3EQNJkUGgesAou5tSqndH96mHrPjOg5lbOhHUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AgvaVU1jqbftkGklrjMj6OB7judFrzZueOp9YnMu5hdOB4KhpT4VKawJhicAElG95kviJ/vbdLbg3q5tPyCDAGekXhlBNCJ5PSxymiuVAP+cAPl3DW0CLk45aIL4q+I8sAgtlvVN8eBrSE3KkB8mAVdkWnGx9OHJBLXOSZM69r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0namRjyc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSfgMCKB842WBxgkAlgdaqKCEio9V/AfyTdQI42gxObEVTh0MMWCLw6MD62M4ZOO17CZ52WqYx0ig3o2Wr835OJqEHkncy3nsj26Xvh2VyEnYYHwMTj5miUHb2UFn7MrGse9yfaxoH9myiDPolZg5H5FEbKUZBXq/VcatR9nQrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPS2xWgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0namRjyc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10D2C43394;
-	Mon, 29 Jan 2024 17:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPS2xWgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1038C433F1;
+	Mon, 29 Jan 2024 17:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548481;
-	bh=H2MnVf3BWFL+45y49hXx7T1Y96x4hcFl10Es82snsSw=;
+	bh=sC1md3EQNJkUGgesAou5tSqndH96mHrPjOg5lbOhHUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0namRjycgZ3C2M/jjuPR0tjAwN8DbK+LWRKsbUDr63fl72sC9TWzeghP6tigyrJUP
-	 e8xavIg3hxqa5xL8LCdGIw8k9eSwM1brjiBeqTQ70pv8jvLobQafPlMDedWyRFUu7i
-	 laqo40pnTqmspQbbMOjGLWYNpMeMXMSlRTmUQLjE=
+	b=EPS2xWgLPbL/MWhctRJ07XeJlL5QNgHA5SKwDk0Js9oN4YZjVcO0GkoWvTXDbNihr
+	 f6VulXCPbpBc69/ZVmpBBX15ffxpKC39Nll/073j4IxZI4OLQpSMeVO7y+SrEQclIL
+	 Eg0ppT/yDbG6bqXMaTst2fHMrEtyyhX5iKNwyTFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan Rife <jrife@google.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.6 100/331] dlm: use kernel_connect() and kernel_bind()
-Date: Mon, 29 Jan 2024 09:02:44 -0800
-Message-ID: <20240129170017.856415166@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 6.6 101/331] docs: kernel_abi.py: fix command injection
+Date: Mon, 29 Jan 2024 09:02:45 -0800
+Message-ID: <20240129170017.892731162@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -50,74 +51,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan Rife <jrife@google.com>
+From: Vegard Nossum <vegard.nossum@oracle.com>
 
-commit e9cdebbe23f1aa9a1caea169862f479ab3fa2773 upstream.
+commit 3231dd5862779c2e15633c96133a53205ad660ce upstream.
 
-Recent changes to kernel_connect() and kernel_bind() ensure that
-callers are insulated from changes to the address parameter made by BPF
-SOCK_ADDR hooks. This patch wraps direct calls to ops->connect() and
-ops->bind() with kernel_connect() and kernel_bind() to protect callers
-in such cases.
+The kernel-abi directive passes its argument straight to the shell.
+This is unfortunate and unnecessary.
 
-Link: https://lore.kernel.org/netdev/9944248dba1bce861375fcce9de663934d933ba9.camel@redhat.com/
-Fixes: d74bad4e74ee ("bpf: Hooks for sys_connect")
-Fixes: 4fbac77d2d09 ("bpf: Hooks for sys_bind")
+Let's always use paths relative to $srctree/Documentation/ and use
+subprocess.check_call() instead of subprocess.Popen(shell=True).
+
+This also makes the code shorter.
+
+Link: https://fosstodon.org/@jani/111676532203641247
+Reported-by: Jani Nikula <jani.nikula@intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jordan Rife <jrife@google.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20231231235959.3342928-2-vegard.nossum@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/lowcomms.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ Documentation/admin-guide/abi-obsolete.rst |    2 -
+ Documentation/admin-guide/abi-removed.rst  |    2 -
+ Documentation/admin-guide/abi-stable.rst   |    2 -
+ Documentation/admin-guide/abi-testing.rst  |    2 -
+ Documentation/sphinx/kernel_abi.py         |   56 +++++------------------------
+ 5 files changed, 14 insertions(+), 50 deletions(-)
 
---- a/fs/dlm/lowcomms.c
-+++ b/fs/dlm/lowcomms.c
-@@ -1805,8 +1805,8 @@ static int dlm_tcp_bind(struct socket *s
- 	memcpy(&src_addr, &dlm_local_addr[0], sizeof(src_addr));
- 	make_sockaddr(&src_addr, 0, &addr_len);
+--- a/Documentation/admin-guide/abi-obsolete.rst
++++ b/Documentation/admin-guide/abi-obsolete.rst
+@@ -7,5 +7,5 @@ marked to be removed at some later point
+ The description of the interface will document the reason why it is
+ obsolete and when it can be expected to be removed.
  
--	result = sock->ops->bind(sock, (struct sockaddr *)&src_addr,
--				 addr_len);
-+	result = kernel_bind(sock, (struct sockaddr *)&src_addr,
-+			     addr_len);
- 	if (result < 0) {
- 		/* This *may* not indicate a critical error */
- 		log_print("could not bind for connect: %d", result);
-@@ -1818,7 +1818,7 @@ static int dlm_tcp_bind(struct socket *s
- static int dlm_tcp_connect(struct connection *con, struct socket *sock,
- 			   struct sockaddr *addr, int addr_len)
- {
--	return sock->ops->connect(sock, addr, addr_len, O_NONBLOCK);
-+	return kernel_connect(sock, addr, addr_len, O_NONBLOCK);
- }
+-.. kernel-abi:: $srctree/Documentation/ABI/obsolete
++.. kernel-abi:: ABI/obsolete
+    :rst:
+--- a/Documentation/admin-guide/abi-removed.rst
++++ b/Documentation/admin-guide/abi-removed.rst
+@@ -1,5 +1,5 @@
+ ABI removed symbols
+ ===================
  
- static int dlm_tcp_listen_validate(void)
-@@ -1850,8 +1850,8 @@ static int dlm_tcp_listen_bind(struct so
+-.. kernel-abi:: $srctree/Documentation/ABI/removed
++.. kernel-abi:: ABI/removed
+    :rst:
+--- a/Documentation/admin-guide/abi-stable.rst
++++ b/Documentation/admin-guide/abi-stable.rst
+@@ -10,5 +10,5 @@ for at least 2 years.
+ Most interfaces (like syscalls) are expected to never change and always
+ be available.
  
- 	/* Bind to our port */
- 	make_sockaddr(&dlm_local_addr[0], dlm_config.ci_tcp_port, &addr_len);
--	return sock->ops->bind(sock, (struct sockaddr *)&dlm_local_addr[0],
--			       addr_len);
-+	return kernel_bind(sock, (struct sockaddr *)&dlm_local_addr[0],
-+			   addr_len);
- }
+-.. kernel-abi:: $srctree/Documentation/ABI/stable
++.. kernel-abi:: ABI/stable
+    :rst:
+--- a/Documentation/admin-guide/abi-testing.rst
++++ b/Documentation/admin-guide/abi-testing.rst
+@@ -16,5 +16,5 @@ Programs that use these interfaces are s
+ name to the description of these interfaces, so that the kernel
+ developers can easily notify them if any changes occur.
  
- static const struct dlm_proto_ops dlm_tcp_ops = {
-@@ -1876,12 +1876,12 @@ static int dlm_sctp_connect(struct conne
- 	int ret;
+-.. kernel-abi:: $srctree/Documentation/ABI/testing
++.. kernel-abi:: ABI/testing
+    :rst:
+--- a/Documentation/sphinx/kernel_abi.py
++++ b/Documentation/sphinx/kernel_abi.py
+@@ -39,8 +39,6 @@ import sys
+ import re
+ import kernellog
  
- 	/*
--	 * Make sock->ops->connect() function return in specified time,
-+	 * Make kernel_connect() function return in specified time,
- 	 * since O_NONBLOCK argument in connect() function does not work here,
- 	 * then, we should restore the default value of this attribute.
- 	 */
- 	sock_set_sndtimeo(sock->sk, 5);
--	ret = sock->ops->connect(sock, addr, addr_len, 0);
-+	ret = kernel_connect(sock, addr, addr_len, 0);
- 	sock_set_sndtimeo(sock->sk, 0);
- 	return ret;
- }
+-from os import path
+-
+ from docutils import nodes, statemachine
+ from docutils.statemachine import ViewList
+ from docutils.parsers.rst import directives, Directive
+@@ -73,60 +71,26 @@ class KernelCmd(Directive):
+     }
+ 
+     def run(self):
+-
+         doc = self.state.document
+         if not doc.settings.file_insertion_enabled:
+             raise self.warning("docutils: file insertion disabled")
+ 
+-        env = doc.settings.env
+-        cwd = path.dirname(doc.current_source)
+-        cmd = "get_abi.pl rest --enable-lineno --dir "
+-        cmd += self.arguments[0]
+-
+-        if 'rst' in self.options:
+-            cmd += " --rst-source"
+-
+-        srctree = path.abspath(os.environ["srctree"])
++        srctree = os.path.abspath(os.environ["srctree"])
+ 
+-        fname = cmd
++        args = [
++            os.path.join(srctree, 'scripts/get_abi.pl'),
++            'rest',
++            '--enable-lineno',
++            '--dir', os.path.join(srctree, 'Documentation', self.arguments[0]),
++        ]
+ 
+-        # extend PATH with $(srctree)/scripts
+-        path_env = os.pathsep.join([
+-            srctree + os.sep + "scripts",
+-            os.environ["PATH"]
+-        ])
+-        shell_env = os.environ.copy()
+-        shell_env["PATH"]    = path_env
+-        shell_env["srctree"] = srctree
++        if 'rst' in self.options:
++            args.append('--rst-source')
+ 
+-        lines = self.runCmd(cmd, shell=True, cwd=cwd, env=shell_env)
++        lines = subprocess.check_output(args, cwd=os.path.dirname(doc.current_source)).decode('utf-8')
+         nodeList = self.nestedParse(lines, self.arguments[0])
+         return nodeList
+ 
+-    def runCmd(self, cmd, **kwargs):
+-        u"""Run command ``cmd`` and return its stdout as unicode."""
+-
+-        try:
+-            proc = subprocess.Popen(
+-                cmd
+-                , stdout = subprocess.PIPE
+-                , stderr = subprocess.PIPE
+-                , **kwargs
+-            )
+-            out, err = proc.communicate()
+-
+-            out, err = codecs.decode(out, 'utf-8'), codecs.decode(err, 'utf-8')
+-
+-            if proc.returncode != 0:
+-                raise self.severe(
+-                    u"command '%s' failed with return code %d"
+-                    % (cmd, proc.returncode)
+-                )
+-        except OSError as exc:
+-            raise self.severe(u"problems with '%s' directive: %s."
+-                              % (self.name, ErrorString(exc)))
+-        return out
+-
+     def nestedParse(self, lines, fname):
+         env = self.state.document.settings.env
+         content = ViewList()
 
 
