@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4632F15D5D8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14A115B0E2;
 	Mon, 29 Jan 2024 17:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548421; cv=none; b=GAQHXmX31MkjW/vJSvXcWE7We7hIXNfKx7RbFOrESvCpSprV1Z5kMaGMhpGJjfQFsr9CGs9NXR48AlXn3+YqFdkpShs49OwkSeqn1zPcyXUhyXGl9eHnnBBz1UTy6MSOqC4tocrfXqaquSy1pQJa1Gh+JmRlzAl8NgW9p4H1yYA=
+	t=1706548422; cv=none; b=hJYSIb8mNaZ6/LF7zS8QtOWLv6haTTgaOOqKPGu/ublFoTD1iX5yrJInfhc60qi8yEnZg/itFN1rPHR4dQPHzNwi0VXp5jkUa3jdfqSgfaFQQGxZKqCBG3q/AJGkpg8BAte/89J5TpW0zmRA13FGMNWo05VGLBNt8Xj3TyDzJso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548421; c=relaxed/simple;
-	bh=vFko/+BTPMMhlTgjqzntZvxqnf2hPxD/8ZPIixqsLNw=;
+	s=arc-20240116; t=1706548422; c=relaxed/simple;
+	bh=E/6cmeuJtXjhiZpySgFkzpMxf8oI0SlqKRAzpbwVdkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q7RwntYmXGUKFjcNnVZJFiAwMFa9JVJ1z+qIS3TWaYmSSnOY9khqt3oQdrowINiavdk7mQ3ukykbx14B7ULkIVy7BzrH6+rZ/QzKe4KyrYMG3UMN6Y6Zzw59f5ZSn0kjaM0CeTyc1WXdeEiWf45to1aotKA8zNXV+xZxOF6f2+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsoJKrPW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W0scuzJx/A4Cy4NkDSphbyYjNN1IJTSgyWCSqCGCC+EvzZkRahKKDAZyVITDoRoPpa7/eb37rHWFTF31AbuLb98gJjiBQOhs1P5E4Rr+z6Bq/f95IJGjuqc/D/tMVpXW2Tq0kyqfB378bkCvehXBBWwWzE9KVikHqikZ06R/wtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCm9/38w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsoJKrPW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2CCC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCm9/38w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96ABC433C7;
 	Mon, 29 Jan 2024 17:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548421;
-	bh=vFko/+BTPMMhlTgjqzntZvxqnf2hPxD/8ZPIixqsLNw=;
+	bh=E/6cmeuJtXjhiZpySgFkzpMxf8oI0SlqKRAzpbwVdkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsoJKrPWE3YkMS0iYWZxh1kpk1ri2T+WNuJqWzD27ABy9X03iE65GeaDx4OM9o04A
-	 3xT24ZvX+rQkfMsHayjG46zFscOcCdjVktKadsp5clFqTiDJCfRvpH4+RWnTLDqSaT
-	 QvH//3OVxqGxVwRcR1A7i3KhIY7QLIjhpk0eULrc=
+	b=lCm9/38wgehTgXTupRVyIRTnqLGt0ooZXKRZa1DiVOZabTH3tuDZPBQxgAbRCCYl7
+	 SD4sPxfTTbkb8e1Mn69j2aO/TjKMhY4/LT0iznzkVLSllyAvySJ0mv3PCteNcc8bKC
+	 P7JTeRkJNUXenBo4uzleS5baJlHvq6goh15+6MjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Min-Hua Chen <minhuadotchen@gmail.com>,
+	Paulo Alcantara <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/331] docs: sparse: add sparse.rst to toctree
-Date: Mon, 29 Jan 2024 09:01:06 -0800
-Message-ID: <20240129170015.035200270@linuxfoundation.org>
+Subject: [PATCH 6.6 020/331] smb: client: fix parsing of SMB3.1.1 POSIX create context
+Date: Mon, 29 Jan 2024 09:01:24 -0800
+Message-ID: <20240129170015.554339125@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -46,96 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Min-Hua Chen <minhuadotchen@gmail.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit c9ad95adc096f25004d4192258863806a68a9bc8 ]
+[ Upstream commit 76025cc2285d9ede3d717fe4305d66f8be2d9346 ]
 
-Add sparst.rst to toctree, so it can be part of the docs build.
+The data offset for the SMB3.1.1 POSIX create context will always be
+8-byte aligned so having the check 'noff + nlen >= doff' in
+smb2_parse_contexts() is wrong as it will lead to -EINVAL because noff
++ nlen == doff.
 
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Suggested-by: Jonathan Corbet <corbet@lwn.net>
-Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Link: https://lore.kernel.org/r/20230902052512.12184-4-minhuadotchen@gmail.com
-Stable-dep-of: c48a7c44a1d0 ("docs: kernel_feat.py: fix potential command injection")
+Fix the sanity check to correctly handle aligned create context data.
+
+Fixes: af1689a9b770 ("smb: client: fix potential OOBs in smb2_parse_contexts()")
+Signed-off-by: Paulo Alcantara <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../translations/zh_TW/dev-tools/index.rst    | 40 +++++++++++++++++++
- Documentation/translations/zh_TW/index.rst    |  2 +-
- 2 files changed, 41 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/translations/zh_TW/dev-tools/index.rst
+ fs/smb/client/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/translations/zh_TW/dev-tools/index.rst b/Documentation/translations/zh_TW/dev-tools/index.rst
-new file mode 100644
-index 000000000000..8f101db5a07f
---- /dev/null
-+++ b/Documentation/translations/zh_TW/dev-tools/index.rst
-@@ -0,0 +1,40 @@
-+.. include:: ../disclaimer-zh_TW.rst
-+
-+:Original: Documentation/dev-tools/index.rst
-+:Translator: Min-Hua Chen <minhuadotchen@gmail.com>
-+
-+============
-+內核開發工具
-+============
-+
-+本文檔是有關內核開發工具文檔的合集。
-+目前這些文檔已經整理在一起，不需要再花費額外的精力。
-+歡迎任何補丁。
-+
-+有關測試專用工具的簡要概述，參見
-+Documentation/dev-tools/testing-overview.rst
-+
-+.. class:: toc-title
-+
-+	   目錄
-+
-+.. toctree::
-+   :maxdepth: 2
-+
-+   sparse
-+
-+Todolist:
-+
-+ - coccinelle
-+ - kcov
-+ - ubsan
-+ - kmemleak
-+ - kcsan
-+ - kfence
-+ - kgdb
-+ - kselftest
-+ - kunit/index
-+ - testing-overview
-+ - gcov
-+ - kasan
-+ - gdb-kernel-debugging
-diff --git a/Documentation/translations/zh_TW/index.rst b/Documentation/translations/zh_TW/index.rst
-index d1cf0b4d8e46..ffcaf3272fe7 100644
---- a/Documentation/translations/zh_TW/index.rst
-+++ b/Documentation/translations/zh_TW/index.rst
-@@ -55,11 +55,11 @@ TODOList:
-    :maxdepth: 1
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 5276992e3647..888eb59ad86f 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -2185,7 +2185,7 @@ int smb2_parse_contexts(struct TCP_Server_Info *server,
  
-    process/license-rules
-+   dev-tools/index
+ 		noff = le16_to_cpu(cc->NameOffset);
+ 		nlen = le16_to_cpu(cc->NameLength);
+-		if (noff + nlen >= doff)
++		if (noff + nlen > doff)
+ 			return -EINVAL;
  
- TODOList:
- 
- * doc-guide/index
--* dev-tools/index
- * dev-tools/testing-overview
- * kernel-hacking/index
- * rust/index
+ 		name = (char *)cc + noff;
 -- 
 2.43.0
 
