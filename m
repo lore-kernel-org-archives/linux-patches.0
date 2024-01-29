@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2021F15FB2D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C6915A4A8;
 	Mon, 29 Jan 2024 17:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548319; cv=none; b=OAt48Va0QmFtTiQG1QHZfXZGEu7VT5xshHOdMP2hncwBAZBdjsi1GAMcldNJA/hSCJJIkwd/U/MiEobUU4ja4OULVAoxpZaURRSRD7SexbFUkX/No5R2BKD9m+9IkqVLWHhpOdzKrk+HIzG6hWI1ZNcgtaF9Altuw/heIsyB5RU=
+	t=1706548319; cv=none; b=pLSKa5vDkO0hbdgYo0ljBcX0DnoUQHtLNlfO33leBH5pLTH5iYIRaH5+MRol9ZE2C96Cog0vJlv5JY1nBW5r9j8voKAxh3tg3fYZTjXdl2qxY77u8BwNgk/VgaJQG+BQPeZ156IpX1S6Xxlb4KLa0Clk8QDRo8YxsXQs/NbfNtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548319; c=relaxed/simple;
-	bh=8sXKNHuIbm2mUQbtZSSBaGr9g9k5BGAPFi9vUreQKwE=;
+	bh=75wGUEamwXjelpdxQ0X3YXVbPN8D61UEUwz5vTmDxaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTvrtO9wgRKN4vGsv6jOSSl6cnIlSRXjluK0Rb7xQp8raUby/osugBIlKTNRrpt64pekOeOfmOumIumZjANQjHQ/AiVS8W3knatVsSkP/8evOKldJJIyyCntJQ4wTEgSFS4bHzWzEAofL8L6Khn0nzK8Lf9LUCAZabFw+TubvtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3O9R7X/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMJHRbDRhqcgnWrO5F/lWPETF7R3rDl+uYcAfYGZ16YidSL/X/1ajKPKiJYSVxWKHTuayFwBXFppJkalvorcuuFU9wx8YZMcKXduSTapv0hOcHIo/p+9fs3aqHdmBkzLBoO1Yz/eY/hIqAhFVmhVOzhfMTXqGzoDE6UTxBbuZlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkRInjff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3O9R7X/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFC7C43394;
-	Mon, 29 Jan 2024 17:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkRInjff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C60C433C7;
+	Mon, 29 Jan 2024 17:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548318;
-	bh=8sXKNHuIbm2mUQbtZSSBaGr9g9k5BGAPFi9vUreQKwE=;
+	s=korg; t=1706548319;
+	bh=75wGUEamwXjelpdxQ0X3YXVbPN8D61UEUwz5vTmDxaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3O9R7X/TSWIJQO5zE1GJ9YLlsCsrYgT32Hb9H73D1fRtUXl91rSIUkatDNMsbd+q
-	 16oMnZp2rViDZ3GyQ3i0UnmjbHwUAnA0LbKCM8X1KgfkCqSmoN/IiMawOJwRBi1K+d
-	 k58SI00jNFJPpODyhWnHTTok+/59XSJ7D4WeD6ck=
+	b=dkRInjffbZc2Q/tt7G6IXZ92jKlmA1M4ygCia8ZCgiDuDaahj+rv3OSDJKE6pO2qv
+	 ZWynqIdy2sp7otlyUeXORt4hvJCBMY1o8nTK2OEuQr7uTA/wngpRsmxrJqnDeoEeTN
+	 BO+Tm3WYfR6iX48VK1bsmEYkwBD4kMZx/zy6e+68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Dipietro <dipiets@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/185] tcp: Add memory barrier to tcp_push()
-Date: Mon, 29 Jan 2024 09:04:52 -0800
-Message-ID: <20240129170001.556077102@linuxfoundation.org>
+Subject: [PATCH 6.7 322/346] firmware: arm_ffa: Add missing rwlock_init() for the driver partition
+Date: Mon, 29 Jan 2024 09:05:53 -0800
+Message-ID: <20240129170025.948391758@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,103 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salvatore Dipietro <dipiets@amazon.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 7267e8dcad6b2f9fce05a6a06335d7040acbc2b6 ]
+[ Upstream commit 5ff30ade16cd9efc2466d3ea22bbaf370772941a ]
 
-On CPUs with weak memory models, reads and updates performed by tcp_push
-to the sk variables can get reordered leaving the socket throttled when
-it should not. The tasklet running tcp_wfree() may also not observe the
-memory updates in time and will skip flushing any packets throttled by
-tcp_push(), delaying the sending. This can pathologically cause 40ms
-extra latency due to bad interactions with delayed acks.
+Add the missing rwlock initialization for the FF-A partition associated
+the driver in ffa_setup_partitions(). It will the primary scheduler
+partition in the host or the VM partition in the virtualised environment.
+IOW, it corresponds to the partition with VM ID == drv_info->vm_id.
 
-Adding a memory barrier in tcp_push removes the bug, similarly to the
-previous commit bf06200e732d ("tcp: tsq: fix nonagle handling").
-smp_mb__after_atomic() is used to not incur in unnecessary overhead
-on x86 since not affected.
-
-Patch has been tested using an AWS c7g.2xlarge instance with Ubuntu
-22.04 and Apache Tomcat 9.0.83 running the basic servlet below:
-
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class HelloWorldServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-        response.setContentType("text/html;charset=utf-8");
-        OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream(),"UTF-8");
-        String s = "a".repeat(3096);
-        osw.write(s,0,s.length());
-        osw.flush();
-    }
-}
-
-Load was applied using wrk2 (https://github.com/kinvolk/wrk2) from an AWS
-c6i.8xlarge instance. Before the patch an additional 40ms latency from P99.99+
-values is observed while, with the patch, the extra latency disappears.
-
-No patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.91ms
- 75.000%    1.13ms
- 90.000%    1.46ms
- 99.000%    1.74ms
- 99.900%    1.89ms
- 99.990%   41.95ms  <<< 40+ ms extra latency
- 99.999%   48.32ms
-100.000%   48.96ms
-
-With patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.90ms
- 75.000%    1.13ms
- 90.000%    1.45ms
- 99.000%    1.72ms
- 99.900%    1.83ms
- 99.990%    2.11ms  <<< no 40+ ms extra latency
- 99.999%    2.53ms
-100.000%    2.62ms
-
-Patch has been also tested on x86 (m7i.2xlarge instance) which it is not
-affected by this issue and the patch doesn't introduce any additional
-delay.
-
-Fixes: 7aa5470c2c09 ("tcp: tsq: move tsq_flags close to sk_wmem_alloc")
-Signed-off-by: Salvatore Dipietro <dipiets@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240119190133.43698-1-dipiets@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1b6bf41b7a65 ("firmware: arm_ffa: Add notification handling mechanism")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20240108-ffa_fixes_6-8-v1-2-75bf7035bc50@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 1 +
+ drivers/firmware/arm_ffa/driver.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 0b7844a8d571..90e24c3f6557 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -718,6 +718,7 @@ void tcp_push(struct sock *sk, int flags, int mss_now,
- 		if (!test_bit(TSQ_THROTTLED, &sk->sk_tsq_flags)) {
- 			NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAUTOCORKING);
- 			set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
-+			smp_mb__after_atomic();
- 		}
- 		/* It is possible TX completion already happened
- 		 * before we set TSQ_THROTTLED.
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index ed1d6a24934e..8df92c9521f4 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -1237,6 +1237,7 @@ static void ffa_setup_partitions(void)
+ 	info = kzalloc(sizeof(*info), GFP_KERNEL);
+ 	if (!info)
+ 		return;
++	rwlock_init(&info->rw_lock);
+ 	xa_store(&drv_info->partition_info, drv_info->vm_id, info, GFP_KERNEL);
+ 	drv_info->partition_count++;
+ }
 -- 
 2.43.0
 
