@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689281586C5;
-	Mon, 29 Jan 2024 17:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166FA1586C5;
+	Mon, 29 Jan 2024 17:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548370; cv=none; b=kk4pHjL21PyknphZ42gHlseFA5sztER3ZhaAqjj0c8Iw9bsqIycZiY66P1kuGjbtGuW3g+xZTTDBRCQQSnV4D/YtFeKaxwHtta344rppcq4CRnYHMSN6G67ElDp1HuExYEU6WOOjw1NePVYIECqruV4pJQEGp9u2tRK+kDnAt8A=
+	t=1706548371; cv=none; b=bbjY+tbNBcHD8HPjdrE3YanyoIuTPkhG6WQew3O4dtf90l+kYxie/9MN3Smlg0wCdng2Eu+UbohxqItvytGZfTTyFmTx1m1bKIuJej04XUrjQBzuuHFoEahQbbE7ixOWM5KMSFxhNOcpCZinHF9rt0F8E5WcrmAO0apGK/H3F4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548370; c=relaxed/simple;
-	bh=YwPyAC8thzWOc2+lqZjG0uuPMsQROEiA9AB52A70B1w=;
+	s=arc-20240116; t=1706548371; c=relaxed/simple;
+	bh=MX5k1A79hIIa+/ZhQQJWdxWavyw5SdpdOKgMc5OHKAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GHeDHZ/KzwTyZl+DtqIM/GPGmBP/Y8bQEl2jSyLkHiuZUsvX7az+RmvoJZz/sn+QkcqRn/PCKk6NWOyhTW+4zMOsynbAxt4bkB1nh/3kcGxmqNMaIXhiLacr00S32ium27oKesYhUEVylCjzd8pFS9uh3fAWGFvbuArE1EmvDyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8lbSV1W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pETmmDEKLQd5Vs0v700YWIZZT/miRO9zIlFal6ep/n1XY6sQ8yRNNnxq9MxMVBcjYd7Jvj67jCcom/Mw6/MSLq1X7cvknTk7DeLmnKVETnEZgVfYpcfv5+1a7SrN0OH6w1A4mnUd5BW9GBSKu8evPaAgPgfoJHOpLzKaYxPlT8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVEneWdA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8lbSV1W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32490C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVEneWdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CB5C43394;
 	Mon, 29 Jan 2024 17:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548370;
-	bh=YwPyAC8thzWOc2+lqZjG0uuPMsQROEiA9AB52A70B1w=;
+	bh=MX5k1A79hIIa+/ZhQQJWdxWavyw5SdpdOKgMc5OHKAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8lbSV1W46cXpcu2n7AfCDvAxkKsaDkSPtUNk9u726AQA+E9PH4062i6pz+SX0v4B
-	 8DNH0lwSW8u+cZreH90909wgZiNlauWB8G4mfb92FKUuTmI0HmVzC1gLmEaRtzGE/U
-	 7K1twrUi8Hh0AcszkIuWEmJwrpgzE/9Mw0UXJpyU=
+	b=cVEneWdA/5NB40KEnWXpxlovdJWaK6wFljXyVlqh9ZTK8x4RIZPl9LBF48VI9UgM9
+	 0akZg9+pPHQ6ohUJ9gxDL7q+Uns77WdkPqxYcIQuljgJIza6oWO50IgiTqbmmE+RXO
+	 tkvQNakJF1FXy0a7Mz3pMuJ+PemoymiT/ze0ousc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Tang <feng.tang@intel.com>,
-	Jiri Wiesner <jwiesner@suse.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 6.7 344/346] clocksource: Skip watchdog check for large watchdog intervals
-Date: Mon, 29 Jan 2024 09:06:15 -0800
-Message-ID: <20240129170026.637266898@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 112/185] fjes: fix memleaks in fjes_hw_setup
+Date: Mon, 29 Jan 2024 09:05:12 -0800
+Message-ID: <20240129170002.192387025@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,140 +48,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Wiesner <jwiesner@suse.de>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit 644649553508b9bacf0fc7a5bdc4f9e0165576a5 upstream.
+[ Upstream commit f6cc4b6a3ae53df425771000e9c9540cce9b7bb1 ]
 
-There have been reports of the watchdog marking clocksources unstable on
-machines with 8 NUMA nodes:
+In fjes_hw_setup, it allocates several memory and delay the deallocation
+to the fjes_hw_exit in fjes_probe through the following call chain:
 
-  clocksource: timekeeping watchdog on CPU373:
-  Marking clocksource 'tsc' as unstable because the skew is too large:
-  clocksource:   'hpet' wd_nsec: 14523447520
-  clocksource:   'tsc'  cs_nsec: 14524115132
+fjes_probe
+  |-> fjes_hw_init
+        |-> fjes_hw_setup
+  |-> fjes_hw_exit
 
-The measured clocksource skew - the absolute difference between cs_nsec
-and wd_nsec - was 668 microseconds:
+However, when fjes_hw_setup fails, fjes_hw_exit won't be called and thus
+all the resources allocated in fjes_hw_setup will be leaked. In this
+patch, we free those resources in fjes_hw_setup and prevents such leaks.
 
-  cs_nsec - wd_nsec = 14524115132 - 14523447520 = 667612
-
-The kernel used 200 microseconds for the uncertainty_margin of both the
-clocksource and watchdog, resulting in a threshold of 400 microseconds (the
-md variable). Both the cs_nsec and the wd_nsec value indicate that the
-readout interval was circa 14.5 seconds.  The observed behaviour is that
-watchdog checks failed for large readout intervals on 8 NUMA node
-machines. This indicates that the size of the skew was directly proportinal
-to the length of the readout interval on those machines. The measured
-clocksource skew, 668 microseconds, was evaluated against a threshold (the
-md variable) that is suited for readout intervals of roughly
-WATCHDOG_INTERVAL, i.e. HZ >> 1, which is 0.5 second.
-
-The intention of 2e27e793e280 ("clocksource: Reduce clocksource-skew
-threshold") was to tighten the threshold for evaluating skew and set the
-lower bound for the uncertainty_margin of clocksources to twice
-WATCHDOG_MAX_SKEW. Later in c37e85c135ce ("clocksource: Loosen clocksource
-watchdog constraints"), the WATCHDOG_MAX_SKEW constant was increased to
-125 microseconds to fit the limit of NTP, which is able to use a
-clocksource that suffers from up to 500 microseconds of skew per second.
-Both the TSC and the HPET use default uncertainty_margin. When the
-readout interval gets stretched the default uncertainty_margin is no
-longer a suitable lower bound for evaluating skew - it imposes a limit
-that is far stricter than the skew with which NTP can deal.
-
-The root causes of the skew being directly proportinal to the length of
-the readout interval are:
-
-  * the inaccuracy of the shift/mult pairs of clocksources and the watchdog
-  * the conversion to nanoseconds is imprecise for large readout intervals
-
-Prevent this by skipping the current watchdog check if the readout
-interval exceeds 2 * WATCHDOG_INTERVAL. Considering the maximum readout
-interval of 2 * WATCHDOG_INTERVAL, the current default uncertainty margin
-(of the TSC and HPET) corresponds to a limit on clocksource skew of 250
-ppm (microseconds of skew per second).  To keep the limit imposed by NTP
-(500 microseconds of skew per second) for all possible readout intervals,
-the margins would have to be scaled so that the threshold value is
-proportional to the length of the actual readout interval.
-
-As for why the readout interval may get stretched: Since the watchdog is
-executed in softirq context the expiration of the watchdog timer can get
-severely delayed on account of a ksoftirqd thread not getting to run in a
-timely manner. Surely, a system with such belated softirq execution is not
-working well and the scheduling issue should be looked into but the
-clocksource watchdog should be able to deal with it accordingly.
-
-Fixes: 2e27e793e280 ("clocksource: Reduce clocksource-skew threshold")
-Suggested-by: Feng Tang <feng.tang@intel.com>
-Signed-off-by: Jiri Wiesner <jwiesner@suse.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Paul E. McKenney <paulmck@kernel.org>
-Reviewed-by: Feng Tang <feng.tang@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240122172350.GA740@incl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2fcbca687702 ("fjes: platform_driver's .probe and .remove routine")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240122172445.3841883-1-alexious@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/clocksource.c |   25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/net/fjes/fjes_hw.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -99,6 +99,7 @@ static u64 suspend_start;
-  * Interval: 0.5sec.
-  */
- #define WATCHDOG_INTERVAL (HZ >> 1)
-+#define WATCHDOG_INTERVAL_MAX_NS ((2 * WATCHDOG_INTERVAL) * (NSEC_PER_SEC / HZ))
+diff --git a/drivers/net/fjes/fjes_hw.c b/drivers/net/fjes/fjes_hw.c
+index 704e949484d0..b9b5554ea862 100644
+--- a/drivers/net/fjes/fjes_hw.c
++++ b/drivers/net/fjes/fjes_hw.c
+@@ -221,21 +221,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
  
- /*
-  * Threshold: 0.0312s, when doubled: 0.0625s.
-@@ -134,6 +135,7 @@ static DECLARE_WORK(watchdog_work, clock
- static DEFINE_SPINLOCK(watchdog_lock);
- static int watchdog_running;
- static atomic_t watchdog_reset_pending;
-+static int64_t watchdog_max_interval;
+ 	mem_size = FJES_DEV_REQ_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.req_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.req_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.req_buf)) {
++		result = -ENOMEM;
++		goto free_ep_info;
++	}
  
- static inline void clocksource_watchdog_lock(unsigned long *flags)
- {
-@@ -399,8 +401,8 @@ static inline void clocksource_reset_wat
- static void clocksource_watchdog(struct timer_list *unused)
- {
- 	u64 csnow, wdnow, cslast, wdlast, delta;
-+	int64_t wd_nsec, cs_nsec, interval;
- 	int next_cpu, reset_pending;
--	int64_t wd_nsec, cs_nsec;
- 	struct clocksource *cs;
- 	enum wd_read_status read_ret;
- 	unsigned long extra_wait = 0;
-@@ -470,6 +472,27 @@ static void clocksource_watchdog(struct
- 		if (atomic_read(&watchdog_reset_pending))
- 			continue;
+ 	hw->hw_info.req_buf_size = mem_size;
  
-+		/*
-+		 * The processing of timer softirqs can get delayed (usually
-+		 * on account of ksoftirqd not getting to run in a timely
-+		 * manner), which causes the watchdog interval to stretch.
-+		 * Skew detection may fail for longer watchdog intervals
-+		 * on account of fixed margins being used.
-+		 * Some clocksources, e.g. acpi_pm, cannot tolerate
-+		 * watchdog intervals longer than a few seconds.
-+		 */
-+		interval = max(cs_nsec, wd_nsec);
-+		if (unlikely(interval > WATCHDOG_INTERVAL_MAX_NS)) {
-+			if (system_state > SYSTEM_SCHEDULING &&
-+			    interval > 2 * watchdog_max_interval) {
-+				watchdog_max_interval = interval;
-+				pr_warn("Long readout interval, skipping watchdog check: cs_nsec: %lld wd_nsec: %lld\n",
-+					cs_nsec, wd_nsec);
-+			}
-+			watchdog_timer.expires = jiffies;
-+			continue;
-+		}
+ 	mem_size = FJES_DEV_RES_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.res_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.res_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.res_buf)) {
++		result = -ENOMEM;
++		goto free_req_buf;
++	}
+ 
+ 	hw->hw_info.res_buf_size = mem_size;
+ 
+ 	result = fjes_hw_alloc_shared_status_region(hw);
+ 	if (result)
+-		return result;
++		goto free_res_buf;
+ 
+ 	hw->hw_info.buffer_share_bit = 0;
+ 	hw->hw_info.buffer_unshare_reserve_bit = 0;
+@@ -246,11 +250,11 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->tx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
+ 
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->rx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
+ 
+ 			spin_lock_irqsave(&hw->rx_status_lock, flags);
+ 			fjes_hw_setup_epbuf(&buf_pair->tx, mac,
+@@ -273,6 +277,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 	fjes_hw_init_command_registers(hw, &param);
+ 
+ 	return 0;
 +
- 		/* Check the deviation from the watchdog clocksource. */
- 		md = cs->uncertainty_margin + watchdog->uncertainty_margin;
- 		if (abs(cs_nsec - wd_nsec) > md) {
++free_epbuf:
++	for (epidx = 0; epidx < hw->max_epid ; epidx++) {
++		if (epidx == hw->my_epid)
++			continue;
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].tx);
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].rx);
++	}
++	fjes_hw_free_shared_status_region(hw);
++free_res_buf:
++	kfree(hw->hw_info.res_buf);
++	hw->hw_info.res_buf = NULL;
++free_req_buf:
++	kfree(hw->hw_info.req_buf);
++	hw->hw_info.req_buf = NULL;
++free_ep_info:
++	kfree(hw->ep_shm_info);
++	hw->ep_shm_info = NULL;
++	return result;
+ }
+ 
+ static void fjes_hw_cleanup(struct fjes_hw *hw)
+-- 
+2.43.0
+
 
 
