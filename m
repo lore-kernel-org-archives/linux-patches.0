@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9FF157E75;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1794157E75;
 	Mon, 29 Jan 2024 17:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548384; cv=none; b=c0AZxXxXOHGwTvv21R51z/RiGyZ6jBKrjCIfmkwTbEqiEYKN0sVQ5PJRpb+a/KdtZI1z4ss6SdjdIIiFDcc8gsvUA7Va9Lr1tJjfmOCnzd5y6SsgG9rmUMcNxhUeqskOEroG6aBeo/d8iNqvn1/NbVMn+up6Yn9/oFYvsVfDnsM=
+	t=1706548385; cv=none; b=MtEVKpTT7J5BSpt+hfQ01vJByTXnQmnjcKadrcGUcAubCLAvMUwD+//CqsWsfvNDl7RcCh4y72t56UMepAie1QkNLfuLcqEtqyzhw+Edlu8iElCu+xXOIlvvyQrmieWbBMpsqNpfuTWnCNDJPkPl/2Qn7Khj+S+9ex0CepdMgBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548384; c=relaxed/simple;
-	bh=jMisZdPY2cJDcJd4BxiFJEbn7C3yJTgljS8XvW/Q4tg=;
+	s=arc-20240116; t=1706548385; c=relaxed/simple;
+	bh=ShHKUjYqLQB0lRwdLrxnRp3ra/FfB37ATycAP413YWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3kmbVZCBdRsv8PKdeHVK5z0Sp1N1zkTmzbZOSgKr0ITH4i8J60zhy3P704hiUlNp8hQDm49Q5KG1KaDyOV1LqsFETO5NCreGQEyY5+VndUac2fo+uQVCIS32vpNpvvFoVJnbXiqDBcZyYPLX8rkrCTntQDduHnPbR96BqXCIbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1hl0QMn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fsxk0IJl5qqtIlMb/Uzksrg8lkarlPkY/2Dmd6UmbNh/3QUzJGhNEzWarwqkrScL+KPnGQbH4nJ4B52AUkKvjeGj6Cf3gi1X+aV88xE/sE9jtgNa91Z7wwDMBW0yyaR7rrYaUUAqkjiTUD0sDkzhO23kgJTS0LU+z9Ai/biNWqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TFcXnpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1hl0QMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004D0C433A6;
-	Mon, 29 Jan 2024 17:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TFcXnpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC76C433F1;
+	Mon, 29 Jan 2024 17:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548384;
-	bh=jMisZdPY2cJDcJd4BxiFJEbn7C3yJTgljS8XvW/Q4tg=;
+	bh=ShHKUjYqLQB0lRwdLrxnRp3ra/FfB37ATycAP413YWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1hl0QMn/7pfMwP76/Zz9w+GqTnY3yst1XhXaV1OXtGqTcAOv1CIrjgLhEh9K4Voj
-	 9toziOIst/NpJ6Nopm4SeWl+IL9IGUnMB0dmLIYtGuoikWRBUexdnZlf1Knq8W/B7y
-	 4Gsii73JSBaJiwztmvYFaum1dhu6IYeg9rv+FArk=
+	b=1TFcXnpOaxcLfDNMmbzLu0f4H9l4gPWus02RpNt3tL0qyzAZzMatBxX6LuCQ2BMe4
+	 M+p+Oq13G9bsg4AXRkBxKgT5kAnC4PeoGFfbj8EUL5+nCJJXdaeU6Rr1oZY4Cen9ma
+	 BWJXb6qOJ1iM3zjojeWlQ1Y5OHgwNB7XywpYk5o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 6.1 138/185] drm/bridge: nxp-ptn3460: simplify some error checking
-Date: Mon, 29 Jan 2024 09:05:38 -0800
-Message-ID: <20240129170003.027379430@linuxfoundation.org>
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 156/185] ARM: dts: qcom: sdx55: fix USB DP/DM HS PHY interrupts
+Date: Mon, 29 Jan 2024 09:05:56 -0800
+Message-ID: <20240129170003.611591640@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -51,62 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 28d3d0696688154cc04983f343011d07bf0508e4 upstream.
+[ Upstream commit de95f139394a5ed82270f005bc441d2e7c1e51b7 ]
 
-The i2c_master_send/recv() functions return negative error codes or
-they return "len" on success.  So the error handling here can be written
-as just normal checks for "if (ret < 0) return ret;".  No need to
-complicate things.
+The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
+controller in order to be able to wake the system up from low-power
+states and to be able to detect disconnect events, which requires
+triggering on falling edges.
 
-Btw, in this code the "len" parameter can never be zero, but even if
-it were, then I feel like this would still be the best way to write it.
+A recent commit updated the trigger type but failed to change the
+interrupt provider as required. This leads to the current Linux driver
+failing to probe instead of printing an error during suspend and USB
+wakeup not working as intended.
 
-Fixes: 914437992876 ("drm/bridge: nxp-ptn3460: fix i2c_master_send() error checking")
-Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/04242630-42d8-4920-8c67-24ac9db6b3c9@moroto.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d0ec3c4c11c3 ("ARM: dts: qcom: sdx55: fix USB wakeup interrupt types")
+Fixes: fea4b41022f3 ("ARM: dts: qcom: sdx55: Add USB3 and PHY support")
+Cc: stable@vger.kernel.org	# 5.12
+Cc: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20231213173131.29436-3-johan+linaro@kernel.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/nxp-ptn3460.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/qcom-sdx55.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/bridge/nxp-ptn3460.c
-+++ b/drivers/gpu/drm/bridge/nxp-ptn3460.c
-@@ -54,15 +54,15 @@ static int ptn3460_read_bytes(struct ptn
- 	int ret;
+diff --git a/arch/arm/boot/dts/qcom-sdx55.dtsi b/arch/arm/boot/dts/qcom-sdx55.dtsi
+index 7bb2f41049d9..de747859fdc6 100644
+--- a/arch/arm/boot/dts/qcom-sdx55.dtsi
++++ b/arch/arm/boot/dts/qcom-sdx55.dtsi
+@@ -495,10 +495,10 @@ usb: usb@a6f8800 {
+ 					  <&gcc GCC_USB30_MASTER_CLK>;
+ 			assigned-clock-rates = <19200000>, <200000000>;
  
- 	ret = i2c_master_send(ptn_bridge->client, &addr, 1);
--	if (ret <= 0) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret ?: -EIO;
-+		return ret;
- 	}
+-			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 158 IRQ_TYPE_EDGE_BOTH>,
+-				     <GIC_SPI 157 IRQ_TYPE_EDGE_BOTH>;
++			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
++					      <&intc GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>;
+ 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+ 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
  
- 	ret = i2c_master_recv(ptn_bridge->client, buf, len);
--	if (ret != len) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to recv i2c data, ret=%d\n", ret);
--		return ret < 0 ? ret : -EIO;
-+		return ret;
- 	}
- 
- 	return 0;
-@@ -78,9 +78,9 @@ static int ptn3460_write_byte(struct ptn
- 	buf[1] = val;
- 
- 	ret = i2c_master_send(ptn_bridge->client, buf, ARRAY_SIZE(buf));
--	if (ret != ARRAY_SIZE(buf)) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret < 0 ? ret : -EIO;
-+		return ret;
- 	}
- 
- 	return 0;
+-- 
+2.43.0
+
 
 
