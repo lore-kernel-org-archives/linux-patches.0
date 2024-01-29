@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5743615D5C8;
-	Mon, 29 Jan 2024 17:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C35215D5D4;
+	Mon, 29 Jan 2024 17:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548412; cv=none; b=IatYOWkaVmqzuw1aG+NiW+7UnO9hS3h01en9tNUt9B7y7+L7w4/4oKp8ayIsTD2BFEHI5G/aaPto/gTceJm7CUdYNDHBpOH976bBB6X1G2Oi6I4Lo8qFESJeqXT/MtcRZlKI2KtYVZdwK+X6l8cPfXWyT5BuezoBnrUCU1aBht4=
+	t=1706548413; cv=none; b=TOApFm/r12B8sXziug+/dAQRZYCvcWjnkdFQM0hsaJlETZbGX2swGGDI60o8gwf9PYacVZcF/BsoFHdgOeCOV7EOvVrIPINdQotaNnZ9cqYhxs51257iyEYNc/pKdbpanthcw4C548JxDu1IonTW1h8iiwttks4BC1/mwARa50k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548412; c=relaxed/simple;
-	bh=najQxOC9B98PNddNE5huASBMgtlor42ofo2JYgr01Ts=;
+	s=arc-20240116; t=1706548413; c=relaxed/simple;
+	bh=Euatenru3DHV3FxLyGC+D6W3F/93oLqxM0KX/gEQk1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4pucMePIF1+DwBlnGVjt/9qsXpZqUD7YmWCPRJf31AEuUQNc22idrFXcLYfolQ8lr2u6qjwg8VotEp8oRkcx1xCGgv8lLmlqkqvhqfzsyk1q+V/Hr8d5+9OhdT16g9+Ch+p9jKyKrHsTT7+hJH/iMNlppjQ041DTI79Y3T3BAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8KTYV3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O1WWsbwd9C4JjzW3ogNvrj18GKxK2OUDORB5UMiYKO2anTArrH/0ewpCmi0RMRWq3t8eqi7unwa5NcTNZ44Kd/Afa49CHlI68QdRFWEsd/05A70a6i+njJ42UDlEp+wxxcRhLRAct6Lc2L3/EXXXDYfnF0d007O7+e/ksvZpJz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZjo48F1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8KTYV3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F60EC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZjo48F1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8410C433F1;
 	Mon, 29 Jan 2024 17:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548412;
-	bh=najQxOC9B98PNddNE5huASBMgtlor42ofo2JYgr01Ts=;
+	bh=Euatenru3DHV3FxLyGC+D6W3F/93oLqxM0KX/gEQk1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8KTYV3X3thAOFWOah5zNrOz+0Dz1ebZnHoV6IrmNtmFr/y3m+EXYyOw0p5RFBYcd
-	 xQslx2kkTaAojaoZbFIZCcWJ9/5H5LyP/R7IhqewQn6WlYhP0UOhvQEclP6XCFJgkF
-	 qZ8Cjz0JmTwoj3hYIoeukR5UZWMOTtTk2jJdXqhk=
+	b=tZjo48F1BWYp8KXtjOjVZ0sd6buAv29//pnQXd2t2Z9iH24IDFCGA/5Qt8a9h0Bbx
+	 rcHXR6GFVUm/wExLvw1QstsGE+ccXOLfGV14jE92b3D76vL7aoDjkxwftAPcDoebk7
+	 6fdgafFtWuKFn+3R0y/S5+0U4YNYtwHI8yjtqdCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Min-Hua Chen <minhuadotchen@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/185] btrfs: zoned: optimize hint byte for zoned allocator
-Date: Mon, 29 Jan 2024 09:06:03 -0800
-Message-ID: <20240129170003.830455559@linuxfoundation.org>
+Subject: [PATCH 6.6 001/331] docs: sparse: move TW sparse.txt to TW dev-tools
+Date: Mon, 29 Jan 2024 09:01:05 -0800
+Message-ID: <20240129170015.012228808@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
+References: <20240129170014.969142961@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +48,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Min-Hua Chen <minhuadotchen@gmail.com>
 
-[ Upstream commit 02444f2ac26eae6385a65fcd66915084d15dffba ]
+[ Upstream commit 253f68f413a87a4e2bd93e61b00410e5e1b7b774 ]
 
-Writing sequentially to a huge file on btrfs on a SMR HDD revealed a
-decline of the performance (220 MiB/s to 30 MiB/s after 500 minutes).
+Follow Randy's advice [1] to move
+Documentation/translations/zh_TW/sparse.txt
+to
+Documentation/translations/zh_TW/dev-tools/sparse.txt
 
-The performance goes down because of increased latency of the extent
-allocation, which is induced by a traversing of a lot of full block groups.
+[1] https://lore.kernel.org/lkml/bfab7c5b-e4d3-d8d9-afab-f43c0cdf26cf@infradead.org/
 
-So, this patch optimizes the ffe_ctl->hint_byte by choosing a block group
-with sufficient size from the active block group list, which does not
-contain full block groups.
-
-After applying the patch, the performance is maintained well.
-
-Fixes: 2eda57089ea3 ("btrfs: zoned: implement sequential extent allocation")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Suggested-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20230902052512.12184-2-minhuadotchen@gmail.com
+Stable-dep-of: c48a7c44a1d0 ("docs: kernel_feat.py: fix potential command injection")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ Documentation/translations/zh_TW/{ => dev-tools}/sparse.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename Documentation/translations/zh_TW/{ => dev-tools}/sparse.txt (100%)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 2832abe3a984..0d2cc186974d 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -4220,6 +4220,24 @@ static int prepare_allocation_zoned(struct btrfs_fs_info *fs_info,
- 		if (fs_info->data_reloc_bg)
- 			ffe_ctl->hint_byte = fs_info->data_reloc_bg;
- 		spin_unlock(&fs_info->relocation_bg_lock);
-+	} else if (ffe_ctl->flags & BTRFS_BLOCK_GROUP_DATA) {
-+		struct btrfs_block_group *block_group;
-+
-+		spin_lock(&fs_info->zone_active_bgs_lock);
-+		list_for_each_entry(block_group, &fs_info->zone_active_bgs, active_bg_list) {
-+			/*
-+			 * No lock is OK here because avail is monotinically
-+			 * decreasing, and this is just a hint.
-+			 */
-+			u64 avail = block_group->zone_capacity - block_group->alloc_offset;
-+
-+			if (block_group_bits(block_group, ffe_ctl->flags) &&
-+			    avail >= ffe_ctl->num_bytes) {
-+				ffe_ctl->hint_byte = block_group->start;
-+				break;
-+			}
-+		}
-+		spin_unlock(&fs_info->zone_active_bgs_lock);
- 	}
- 
- 	return 0;
+diff --git a/Documentation/translations/zh_TW/sparse.txt b/Documentation/translations/zh_TW/dev-tools/sparse.txt
+similarity index 100%
+rename from Documentation/translations/zh_TW/sparse.txt
+rename to Documentation/translations/zh_TW/dev-tools/sparse.txt
 -- 
 2.43.0
 
