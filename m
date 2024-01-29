@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF79159578;
-	Mon, 29 Jan 2024 17:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B496159578;
+	Mon, 29 Jan 2024 17:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548226; cv=none; b=KJyAA8i58oKpx+8+ZXJJEr6NNLyiYfPmzM2ehcwZLF6mOjtr5GvvhHb91O99F4aj6NRBLHeGsNhG0myDtspabR3lzAj00I6EWXbbHUri4cqwaaDPWB4LHyI0/zxnzqjwJgwT6NgY93BwxHl11HG9Gkz6SoyXFbYc2VqNGpfYsdw=
+	t=1706548227; cv=none; b=ClbrMR8kJ6zlSSdR9p2+6vahn57oiTRn+j7Ugu7dMAcQpNkxRbGPGPovHjGGiInCoBV+yec81Gs6BmPmRbbt9htpEI2ld55LK0vWXmRVfjMKLTJOrCLd7jWBwS3UPi2dRIbEX7Rebq3Eggl78vXfUvcZFI223ZjZtFnK7eYe610=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548226; c=relaxed/simple;
-	bh=9z7x+2vECbG647dsEXztqifsd1ouFgVS/QXp7GF1/UA=;
+	s=arc-20240116; t=1706548227; c=relaxed/simple;
+	bh=P9thSmgN9eDfhQf16KphLi+0uACJVaQ193M1BlRXOO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBuSsUGepnN9OTtRBZPJgalkECH1xrMwXV40vmq78xzEf7DuqxVEa7mBpx/9laoGHiz0riXCPQN+ohZdCSv6RPgQT8rIMcwtCPoyJHosnvAgVdw+fUnC4FPvrMkeJU3Yo127VwRo8uwkZdd7lPPpHBYE1TlDlM8LBHP3DpdYpBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7eJl3cZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hDPmxVTzyxeE5vWxfMZ6S5Xh4I6i3HgxKpAzBbG4Wyud6VNyzOhEVgEIW0GMSyWQIVc4wevpEDEdjKm7HKruGtMi329CEZFPRKbP34Chpr4TVizOepvmzZLETprH/uIso9ztVJBZSnxJGObX7aOEyYpG1bKFUwggtwzv2BeD/2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+0KwGKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7eJl3cZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74427C43394;
-	Mon, 29 Jan 2024 17:10:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+0KwGKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B7BC433C7;
+	Mon, 29 Jan 2024 17:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548226;
-	bh=9z7x+2vECbG647dsEXztqifsd1ouFgVS/QXp7GF1/UA=;
+	s=korg; t=1706548227;
+	bh=P9thSmgN9eDfhQf16KphLi+0uACJVaQ193M1BlRXOO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7eJl3cZx7dQCIyWcl1/pqkKdrSVTaOodP9w47pHI9btboXryXB8jcx4JN8qwAKvD
-	 uabMHWsKKS5FkSwppp1wTzd5rR3vjyPJ5YoqS2nT2oScaWtd0780OG2QXWuhTXIjfo
-	 oK48QBYUoO6h/5cGCdFhjKE3DJw1vlRgrntLbXh4=
+	b=K+0KwGKQuodhyhwDz29jlhxS18BUtrPL7PhSsQzlNU0AjGpVe24SfXnGra3KAt2Eb
+	 +gdFTyeLYhR306iMoMFX9kwwHlDaOvr9VTbJf3pYmnE8zaNHBfgBttQ2J8jKjPCqAB
+	 ewtV3kwVPL+zPB+gYXwZ843ZP6O931feU3GaFOHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nerdopolis <bluescreen_avenger@verizon.net>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Zack Rusin <zackr@vmware.com>,
-	Sima Vetter <daniel.vetter@ffwll.ch>
-Subject: [PATCH 6.7 255/346] drm: Allow drivers to indicate the damage helpers to ignore damage clips
-Date: Mon, 29 Jan 2024 09:04:46 -0800
-Message-ID: <20240129170023.901848154@linuxfoundation.org>
+	Alexander Larsson <alexl@redhat.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.7 233/346] ovl: mark xwhiteouts directory with overlay.opaque=x
+Date: Mon, 29 Jan 2024 09:04:24 -0800
+Message-ID: <20240129170023.258737026@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,80 +50,459 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 35ed38d58257336c1df26b14fd5110b026e2adde upstream.
+commit 420332b94119cdc7db4477cc88484691cb92ae71 upstream.
 
-It allows drivers to set a struct drm_plane_state .ignore_damage_clips in
-their plane's .atomic_check callback, as an indication to damage helpers
-such as drm_atomic_helper_damage_iter_init() that the damage clips should
-be ignored.
+An opaque directory cannot have xwhiteouts, so instead of marking an
+xwhiteouts directory with a new xattr, overload overlay.opaque xattr
+for marking both opaque dir ('y') and xwhiteouts dir ('x').
 
-To be used by drivers that do per-buffer (e.g: virtio-gpu) uploads (rather
-than per-plane uploads), since these type of drivers need to handle buffer
-damages instead of frame damages.
+This is more efficient as the overlay.opaque xattr is checked during
+lookup of directory anyway.
 
-That way, these drivers could force a full plane update if the framebuffer
-attached to a plane's state has changed since the last update (page-flip).
+This also prevents unnecessary checking the xattr when reading a
+directory without xwhiteouts, i.e. most of the time.
 
-Fixes: 01f05940a9a7 ("drm/virtio: Enable fb damage clips property for the primary plane")
-Cc: <stable@vger.kernel.org> # v6.4+
-Reported-by: nerdopolis <bluescreen_avenger@verizon.net>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218115
-Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
-Acked-by: Sima Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231123221315.3579454-2-javierm@redhat.com
+Note that the xwhiteouts marker is not checked on the upper layer and
+on the last layer in lowerstack, where xwhiteouts are not expected.
+
+Fixes: bc8df7a3dc03 ("ovl: Add an alternative type of whiteout")
+Cc: <stable@vger.kernel.org> # v6.7
+Reviewed-by: Alexander Larsson <alexl@redhat.com>
+Tested-by: Alexander Larsson <alexl@redhat.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/gpu/drm-kms.rst       |    2 ++
- drivers/gpu/drm/drm_damage_helper.c |    3 ++-
- include/drm/drm_plane.h             |   10 ++++++++++
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ Documentation/filesystems/overlayfs.rst |   16 +++++++--
+ fs/overlayfs/namei.c                    |   43 ++++++++++++++++---------
+ fs/overlayfs/overlayfs.h                |   23 ++++++++++---
+ fs/overlayfs/ovl_entry.h                |    4 +-
+ fs/overlayfs/readdir.c                  |    7 ++--
+ fs/overlayfs/super.c                    |   15 +++++++++
+ fs/overlayfs/util.c                     |   53 ++++++++++++++++++--------------
+ 7 files changed, 110 insertions(+), 51 deletions(-)
 
---- a/Documentation/gpu/drm-kms.rst
-+++ b/Documentation/gpu/drm-kms.rst
-@@ -548,6 +548,8 @@ Plane Composition Properties
- .. kernel-doc:: drivers/gpu/drm/drm_blend.c
-    :doc: overview
+--- a/Documentation/filesystems/overlayfs.rst
++++ b/Documentation/filesystems/overlayfs.rst
+@@ -145,7 +145,9 @@ filesystem, an overlay filesystem needs
+ that files have been removed.  This is done using whiteouts and opaque
+ directories (non-directories are always opaque).
  
-+.. _damage_tracking_properties:
+-A whiteout is created as a character device with 0/0 device number.
++A whiteout is created as a character device with 0/0 device number or
++as a zero-size regular file with the xattr "trusted.overlay.whiteout".
 +
- Damage Tracking Properties
- --------------------------
+ When a whiteout is found in the upper level of a merged directory, any
+ matching name in the lower level is ignored, and the whiteout itself
+ is also hidden.
+@@ -154,6 +156,13 @@ A directory is made opaque by setting th
+ to "y".  Where the upper filesystem contains an opaque directory, any
+ directory in the lower filesystem with the same name is ignored.
  
---- a/drivers/gpu/drm/drm_damage_helper.c
-+++ b/drivers/gpu/drm/drm_damage_helper.c
-@@ -241,7 +241,8 @@ drm_atomic_helper_damage_iter_init(struc
- 	iter->plane_src.x2 = (src.x2 >> 16) + !!(src.x2 & 0xFFFF);
- 	iter->plane_src.y2 = (src.y2 >> 16) + !!(src.y2 & 0xFFFF);
- 
--	if (!iter->clips || !drm_rect_equals(&state->src, &old_state->src)) {
-+	if (!iter->clips || state->ignore_damage_clips ||
-+	    !drm_rect_equals(&state->src, &old_state->src)) {
- 		iter->clips = NULL;
- 		iter->num_clips = 0;
- 		iter->full_update = true;
---- a/include/drm/drm_plane.h
-+++ b/include/drm/drm_plane.h
-@@ -191,6 +191,16 @@ struct drm_plane_state {
- 	struct drm_property_blob *fb_damage_clips;
- 
- 	/**
-+	 * @ignore_damage_clips:
-+	 *
-+	 * Set by drivers to indicate the drm_atomic_helper_damage_iter_init()
-+	 * helper that the @fb_damage_clips blob property should be ignored.
-+	 *
-+	 * See :ref:`damage_tracking_properties` for more information.
-+	 */
-+	bool ignore_damage_clips;
++An opaque directory should not conntain any whiteouts, because they do not
++serve any purpose.  A merge directory containing regular files with the xattr
++"trusted.overlay.whiteout", should be additionally marked by setting the xattr
++"trusted.overlay.opaque" to "x" on the merge directory itself.
++This is needed to avoid the overhead of checking the "trusted.overlay.whiteout"
++on all entries during readdir in the common case.
 +
-+	/**
- 	 * @src:
- 	 *
- 	 * source coordinates of the plane (in 16.16).
+ readdir
+ -------
+ 
+@@ -534,8 +543,9 @@ A lower dir with a regular whiteout will
+ mount, so to support storing an effective whiteout file in an overlayfs mount an
+ alternative form of whiteout is supported. This form is a regular, zero-size
+ file with the "overlay.whiteout" xattr set, inside a directory with the
+-"overlay.whiteouts" xattr set. Such whiteouts are never created by overlayfs,
+-but can be used by userspace tools (like containers) that generate lower layers.
++"overlay.opaque" xattr set to "x" (see `whiteouts and opaque directories`_).
++These alternative whiteouts are never created by overlayfs, but can be used by
++userspace tools (like containers) that generate lower layers.
+ These alternative whiteouts can be escaped using the standard xattr escape
+ mechanism in order to properly nest to any depth.
+ 
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -18,10 +18,11 @@
+ 
+ struct ovl_lookup_data {
+ 	struct super_block *sb;
+-	struct vfsmount *mnt;
++	const struct ovl_layer *layer;
+ 	struct qstr name;
+ 	bool is_dir;
+ 	bool opaque;
++	bool xwhiteouts;
+ 	bool stop;
+ 	bool last;
+ 	char *redirect;
+@@ -201,17 +202,13 @@ struct dentry *ovl_decode_real_fh(struct
+ 	return real;
+ }
+ 
+-static bool ovl_is_opaquedir(struct ovl_fs *ofs, const struct path *path)
+-{
+-	return ovl_path_check_dir_xattr(ofs, path, OVL_XATTR_OPAQUE);
+-}
+-
+ static struct dentry *ovl_lookup_positive_unlocked(struct ovl_lookup_data *d,
+ 						   const char *name,
+ 						   struct dentry *base, int len,
+ 						   bool drop_negative)
+ {
+-	struct dentry *ret = lookup_one_unlocked(mnt_idmap(d->mnt), name, base, len);
++	struct dentry *ret = lookup_one_unlocked(mnt_idmap(d->layer->mnt), name,
++						 base, len);
+ 
+ 	if (!IS_ERR(ret) && d_flags_negative(smp_load_acquire(&ret->d_flags))) {
+ 		if (drop_negative && ret->d_lockref.count == 1) {
+@@ -232,10 +229,13 @@ static int ovl_lookup_single(struct dent
+ 			     size_t prelen, const char *post,
+ 			     struct dentry **ret, bool drop_negative)
+ {
++	struct ovl_fs *ofs = OVL_FS(d->sb);
+ 	struct dentry *this;
+ 	struct path path;
+ 	int err;
+ 	bool last_element = !post[0];
++	bool is_upper = d->layer->idx == 0;
++	char val;
+ 
+ 	this = ovl_lookup_positive_unlocked(d, name, base, namelen, drop_negative);
+ 	if (IS_ERR(this)) {
+@@ -253,8 +253,8 @@ static int ovl_lookup_single(struct dent
+ 	}
+ 
+ 	path.dentry = this;
+-	path.mnt = d->mnt;
+-	if (ovl_path_is_whiteout(OVL_FS(d->sb), &path)) {
++	path.mnt = d->layer->mnt;
++	if (ovl_path_is_whiteout(ofs, &path)) {
+ 		d->stop = d->opaque = true;
+ 		goto put_and_out;
+ 	}
+@@ -272,7 +272,7 @@ static int ovl_lookup_single(struct dent
+ 			d->stop = true;
+ 			goto put_and_out;
+ 		}
+-		err = ovl_check_metacopy_xattr(OVL_FS(d->sb), &path, NULL);
++		err = ovl_check_metacopy_xattr(ofs, &path, NULL);
+ 		if (err < 0)
+ 			goto out_err;
+ 
+@@ -292,7 +292,12 @@ static int ovl_lookup_single(struct dent
+ 		if (d->last)
+ 			goto out;
+ 
+-		if (ovl_is_opaquedir(OVL_FS(d->sb), &path)) {
++		/* overlay.opaque=x means xwhiteouts directory */
++		val = ovl_get_opaquedir_val(ofs, &path);
++		if (last_element && !is_upper && val == 'x') {
++			d->xwhiteouts = true;
++			ovl_layer_set_xwhiteouts(ofs, d->layer);
++		} else if (val == 'y') {
+ 			d->stop = true;
+ 			if (last_element)
+ 				d->opaque = true;
+@@ -863,7 +868,8 @@ fail:
+  * Returns next layer in stack starting from top.
+  * Returns -1 if this is the last layer.
+  */
+-int ovl_path_next(int idx, struct dentry *dentry, struct path *path)
++int ovl_path_next(int idx, struct dentry *dentry, struct path *path,
++		  const struct ovl_layer **layer)
+ {
+ 	struct ovl_entry *oe = OVL_E(dentry);
+ 	struct ovl_path *lowerstack = ovl_lowerstack(oe);
+@@ -871,13 +877,16 @@ int ovl_path_next(int idx, struct dentry
+ 	BUG_ON(idx < 0);
+ 	if (idx == 0) {
+ 		ovl_path_upper(dentry, path);
+-		if (path->dentry)
++		if (path->dentry) {
++			*layer = &OVL_FS(dentry->d_sb)->layers[0];
+ 			return ovl_numlower(oe) ? 1 : -1;
++		}
+ 		idx++;
+ 	}
+ 	BUG_ON(idx > ovl_numlower(oe));
+ 	path->dentry = lowerstack[idx - 1].dentry;
+-	path->mnt = lowerstack[idx - 1].layer->mnt;
++	*layer = lowerstack[idx - 1].layer;
++	path->mnt = (*layer)->mnt;
+ 
+ 	return (idx < ovl_numlower(oe)) ? idx + 1 : -1;
+ }
+@@ -1055,7 +1064,7 @@ struct dentry *ovl_lookup(struct inode *
+ 	old_cred = ovl_override_creds(dentry->d_sb);
+ 	upperdir = ovl_dentry_upper(dentry->d_parent);
+ 	if (upperdir) {
+-		d.mnt = ovl_upper_mnt(ofs);
++		d.layer = &ofs->layers[0];
+ 		err = ovl_lookup_layer(upperdir, &d, &upperdentry, true);
+ 		if (err)
+ 			goto out;
+@@ -1111,7 +1120,7 @@ struct dentry *ovl_lookup(struct inode *
+ 		else if (d.is_dir || !ofs->numdatalayer)
+ 			d.last = lower.layer->idx == ovl_numlower(roe);
+ 
+-		d.mnt = lower.layer->mnt;
++		d.layer = lower.layer;
+ 		err = ovl_lookup_layer(lower.dentry, &d, &this, false);
+ 		if (err)
+ 			goto out_put;
+@@ -1278,6 +1287,8 @@ struct dentry *ovl_lookup(struct inode *
+ 
+ 	if (upperopaque)
+ 		ovl_dentry_set_opaque(dentry);
++	if (d.xwhiteouts)
++		ovl_dentry_set_xwhiteouts(dentry);
+ 
+ 	if (upperdentry)
+ 		ovl_dentry_set_upper_alias(dentry);
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -50,7 +50,6 @@ enum ovl_xattr {
+ 	OVL_XATTR_METACOPY,
+ 	OVL_XATTR_PROTATTR,
+ 	OVL_XATTR_XWHITEOUT,
+-	OVL_XATTR_XWHITEOUTS,
+ };
+ 
+ enum ovl_inode_flag {
+@@ -70,6 +69,8 @@ enum ovl_entry_flag {
+ 	OVL_E_UPPER_ALIAS,
+ 	OVL_E_OPAQUE,
+ 	OVL_E_CONNECTED,
++	/* Lower stack may contain xwhiteout entries */
++	OVL_E_XWHITEOUTS,
+ };
+ 
+ enum {
+@@ -471,6 +472,10 @@ bool ovl_dentry_test_flag(unsigned long
+ bool ovl_dentry_is_opaque(struct dentry *dentry);
+ bool ovl_dentry_is_whiteout(struct dentry *dentry);
+ void ovl_dentry_set_opaque(struct dentry *dentry);
++bool ovl_dentry_has_xwhiteouts(struct dentry *dentry);
++void ovl_dentry_set_xwhiteouts(struct dentry *dentry);
++void ovl_layer_set_xwhiteouts(struct ovl_fs *ofs,
++			      const struct ovl_layer *layer);
+ bool ovl_dentry_has_upper_alias(struct dentry *dentry);
+ void ovl_dentry_set_upper_alias(struct dentry *dentry);
+ bool ovl_dentry_needs_data_copy_up(struct dentry *dentry, int flags);
+@@ -488,11 +493,10 @@ struct file *ovl_path_open(const struct
+ int ovl_copy_up_start(struct dentry *dentry, int flags);
+ void ovl_copy_up_end(struct dentry *dentry);
+ bool ovl_already_copied_up(struct dentry *dentry, int flags);
+-bool ovl_path_check_dir_xattr(struct ovl_fs *ofs, const struct path *path,
+-			      enum ovl_xattr ox);
++char ovl_get_dir_xattr_val(struct ovl_fs *ofs, const struct path *path,
++			   enum ovl_xattr ox);
+ bool ovl_path_check_origin_xattr(struct ovl_fs *ofs, const struct path *path);
+ bool ovl_path_check_xwhiteout_xattr(struct ovl_fs *ofs, const struct path *path);
+-bool ovl_path_check_xwhiteouts_xattr(struct ovl_fs *ofs, const struct path *path);
+ bool ovl_init_uuid_xattr(struct super_block *sb, struct ovl_fs *ofs,
+ 			 const struct path *upperpath);
+ 
+@@ -567,7 +571,13 @@ static inline bool ovl_is_impuredir(stru
+ 		.mnt = ovl_upper_mnt(ofs),
+ 	};
+ 
+-	return ovl_path_check_dir_xattr(ofs, &upperpath, OVL_XATTR_IMPURE);
++	return ovl_get_dir_xattr_val(ofs, &upperpath, OVL_XATTR_IMPURE) == 'y';
++}
++
++static inline char ovl_get_opaquedir_val(struct ovl_fs *ofs,
++					 const struct path *path)
++{
++	return ovl_get_dir_xattr_val(ofs, path, OVL_XATTR_OPAQUE);
+ }
+ 
+ static inline bool ovl_redirect_follow(struct ovl_fs *ofs)
+@@ -674,7 +684,8 @@ int ovl_get_index_name(struct ovl_fs *of
+ struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh);
+ struct dentry *ovl_lookup_index(struct ovl_fs *ofs, struct dentry *upper,
+ 				struct dentry *origin, bool verify);
+-int ovl_path_next(int idx, struct dentry *dentry, struct path *path);
++int ovl_path_next(int idx, struct dentry *dentry, struct path *path,
++		  const struct ovl_layer **layer);
+ int ovl_verify_lowerdata(struct dentry *dentry);
+ struct dentry *ovl_lookup(struct inode *dir, struct dentry *dentry,
+ 			  unsigned int flags);
+--- a/fs/overlayfs/ovl_entry.h
++++ b/fs/overlayfs/ovl_entry.h
+@@ -40,6 +40,8 @@ struct ovl_layer {
+ 	int idx;
+ 	/* One fsid per unique underlying sb (upper fsid == 0) */
+ 	int fsid;
++	/* xwhiteouts were found on this layer */
++	bool has_xwhiteouts;
+ };
+ 
+ struct ovl_path {
+@@ -59,7 +61,7 @@ struct ovl_fs {
+ 	unsigned int numfs;
+ 	/* Number of data-only lower layers */
+ 	unsigned int numdatalayer;
+-	const struct ovl_layer *layers;
++	struct ovl_layer *layers;
+ 	struct ovl_sb *fs;
+ 	/* workbasedir is the path at workdir= mount option */
+ 	struct dentry *workbasedir;
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -305,8 +305,6 @@ static inline int ovl_dir_read(const str
+ 	if (IS_ERR(realfile))
+ 		return PTR_ERR(realfile);
+ 
+-	rdd->in_xwhiteouts_dir = rdd->dentry &&
+-		ovl_path_check_xwhiteouts_xattr(OVL_FS(rdd->dentry->d_sb), realpath);
+ 	rdd->first_maybe_whiteout = NULL;
+ 	rdd->ctx.pos = 0;
+ 	do {
+@@ -359,10 +357,13 @@ static int ovl_dir_read_merged(struct de
+ 		.is_lowest = false,
+ 	};
+ 	int idx, next;
++	const struct ovl_layer *layer;
+ 
+ 	for (idx = 0; idx != -1; idx = next) {
+-		next = ovl_path_next(idx, dentry, &realpath);
++		next = ovl_path_next(idx, dentry, &realpath, &layer);
+ 		rdd.is_upper = ovl_dentry_upper(dentry) == realpath.dentry;
++		rdd.in_xwhiteouts_dir = layer->has_xwhiteouts &&
++					ovl_dentry_has_xwhiteouts(dentry);
+ 
+ 		if (next != -1) {
+ 			err = ovl_dir_read(&realpath, &rdd);
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1250,6 +1250,7 @@ static struct dentry *ovl_get_root(struc
+ 				   struct ovl_entry *oe)
+ {
+ 	struct dentry *root;
++	struct ovl_fs *ofs = OVL_FS(sb);
+ 	struct ovl_path *lowerpath = ovl_lowerstack(oe);
+ 	unsigned long ino = d_inode(lowerpath->dentry)->i_ino;
+ 	int fsid = lowerpath->layer->fsid;
+@@ -1271,6 +1272,20 @@ static struct dentry *ovl_get_root(struc
+ 			ovl_set_flag(OVL_IMPURE, d_inode(root));
+ 	}
+ 
++	/* Look for xwhiteouts marker except in the lowermost layer */
++	for (int i = 0; i < ovl_numlower(oe) - 1; i++, lowerpath++) {
++		struct path path = {
++			.mnt = lowerpath->layer->mnt,
++			.dentry = lowerpath->dentry,
++		};
++
++		/* overlay.opaque=x means xwhiteouts directory */
++		if (ovl_get_opaquedir_val(ofs, &path) == 'x') {
++			ovl_layer_set_xwhiteouts(ofs, lowerpath->layer);
++			ovl_dentry_set_xwhiteouts(root);
++		}
++	}
++
+ 	/* Root is always merge -> can have whiteouts */
+ 	ovl_set_flag(OVL_WHITEOUTS, d_inode(root));
+ 	ovl_dentry_set_flag(OVL_E_CONNECTED, root);
+--- a/fs/overlayfs/util.c
++++ b/fs/overlayfs/util.c
+@@ -461,6 +461,33 @@ void ovl_dentry_set_opaque(struct dentry
+ 	ovl_dentry_set_flag(OVL_E_OPAQUE, dentry);
+ }
+ 
++bool ovl_dentry_has_xwhiteouts(struct dentry *dentry)
++{
++	return ovl_dentry_test_flag(OVL_E_XWHITEOUTS, dentry);
++}
++
++void ovl_dentry_set_xwhiteouts(struct dentry *dentry)
++{
++	ovl_dentry_set_flag(OVL_E_XWHITEOUTS, dentry);
++}
++
++/*
++ * ovl_layer_set_xwhiteouts() is called before adding the overlay dir
++ * dentry to dcache, while readdir of that same directory happens after
++ * the overlay dir dentry is in dcache, so if some cpu observes that
++ * ovl_dentry_is_xwhiteouts(), it will also observe layer->has_xwhiteouts
++ * for the layers where xwhiteouts marker was found in that merge dir.
++ */
++void ovl_layer_set_xwhiteouts(struct ovl_fs *ofs,
++			      const struct ovl_layer *layer)
++{
++	if (layer->has_xwhiteouts)
++		return;
++
++	/* Write once to read-mostly layer properties */
++	ofs->layers[layer->idx].has_xwhiteouts = true;
++}
++
+ /*
+  * For hard links and decoded file handles, it's possible for ovl_dentry_upper()
+  * to return positive, while there's no actual upper alias for the inode.
+@@ -739,19 +766,6 @@ bool ovl_path_check_xwhiteout_xattr(stru
+ 	return res >= 0;
+ }
+ 
+-bool ovl_path_check_xwhiteouts_xattr(struct ovl_fs *ofs, const struct path *path)
+-{
+-	struct dentry *dentry = path->dentry;
+-	int res;
+-
+-	/* xattr.whiteouts must be a directory */
+-	if (!d_is_dir(dentry))
+-		return false;
+-
+-	res = ovl_path_getxattr(ofs, path, OVL_XATTR_XWHITEOUTS, NULL, 0);
+-	return res >= 0;
+-}
+-
+ /*
+  * Load persistent uuid from xattr into s_uuid if found, or store a new
+  * random generated value in s_uuid and in xattr.
+@@ -811,20 +825,17 @@ fail:
+ 	return false;
+ }
+ 
+-bool ovl_path_check_dir_xattr(struct ovl_fs *ofs, const struct path *path,
+-			       enum ovl_xattr ox)
++char ovl_get_dir_xattr_val(struct ovl_fs *ofs, const struct path *path,
++			   enum ovl_xattr ox)
+ {
+ 	int res;
+ 	char val;
+ 
+ 	if (!d_is_dir(path->dentry))
+-		return false;
++		return 0;
+ 
+ 	res = ovl_path_getxattr(ofs, path, ox, &val, 1);
+-	if (res == 1 && val == 'y')
+-		return true;
+-
+-	return false;
++	return res == 1 ? val : 0;
+ }
+ 
+ #define OVL_XATTR_OPAQUE_POSTFIX	"opaque"
+@@ -837,7 +848,6 @@ bool ovl_path_check_dir_xattr(struct ovl
+ #define OVL_XATTR_METACOPY_POSTFIX	"metacopy"
+ #define OVL_XATTR_PROTATTR_POSTFIX	"protattr"
+ #define OVL_XATTR_XWHITEOUT_POSTFIX	"whiteout"
+-#define OVL_XATTR_XWHITEOUTS_POSTFIX	"whiteouts"
+ 
+ #define OVL_XATTR_TAB_ENTRY(x) \
+ 	[x] = { [false] = OVL_XATTR_TRUSTED_PREFIX x ## _POSTFIX, \
+@@ -854,7 +864,6 @@ const char *const ovl_xattr_table[][2] =
+ 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_METACOPY),
+ 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_PROTATTR),
+ 	OVL_XATTR_TAB_ENTRY(OVL_XATTR_XWHITEOUT),
+-	OVL_XATTR_TAB_ENTRY(OVL_XATTR_XWHITEOUTS),
+ };
+ 
+ int ovl_check_setxattr(struct ovl_fs *ofs, struct dentry *upperdentry,
 
 
