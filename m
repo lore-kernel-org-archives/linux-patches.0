@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C8F157052;
-	Mon, 29 Jan 2024 17:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35125157052;
+	Mon, 29 Jan 2024 17:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548501; cv=none; b=hmKBI5eEmkxJv3RWi43rt+hsqQamPUOe0psGJhfCRvu9dOZb0lKI66c6sjtbY+wX+j5QhfzowzAbV1aBZvlEguqnmJz4bDusfC0zW3TFEKYewr5TI2w4lMr8CzuyHaIkMwsSlcU9d6t5sGrCQCiB4CG/6m8TeKd88Rk0clZ1zkQ=
+	t=1706548502; cv=none; b=ZVx4aoZYoKpIEM9DD+NnWBQBPkIPRjahUVK81rEt9mE/zU0qwCbD49Z7Klou0sOtmrimv1ey0pKYvJPY9RF5sMW4aLmazL513Kel9X+zhMGDjTIJJ2XW3KzhKgIUPLzKo1P0D1yd/DO9GrvSAvzUwKPgnU6erVJ96ElwJpmlgBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548501; c=relaxed/simple;
-	bh=iduBKstbPd/WSxeGnRQ7tZUFT27dq1dkPnqC6eanUSg=;
+	s=arc-20240116; t=1706548502; c=relaxed/simple;
+	bh=usbm3fwtz6GignOAD3MxlIZbkMLChih6DbmDzBLur40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkxONA3m0beV/9RD5l8VOK+WMsmEDgE1Vop1qXmXEZ4HksH6Q1LRBaMBvsMGCd964m0QuX0neqYyrXEvjG/W3hskSq/dXOmH0xZj1+Bb8Vgk3/tAOCtYD0684F+hvPzSy1e1A3fky7KOYEk5SFF5JAHPB3hyZPjnLQjEkQCt/AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SN25+kzb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdMYU46yEzEb48NE8aRTLZhGZ/CJqKKhxoV2db/0sM6/YvBuBWyfggb9Z4SBFrEdrL+9o43jwTpezosBsbUfU4vSgLRUYXj+al0/SbPzQJR5dLxiBZymqzb6kUsmOTbXKG7Rh3CZCNfwDdFt/w3VI9dXwMfDZNnfNxR1DGfvnB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2HlzATm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SN25+kzb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D687C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2HlzATm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F223FC433F1;
 	Mon, 29 Jan 2024 17:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548501;
-	bh=iduBKstbPd/WSxeGnRQ7tZUFT27dq1dkPnqC6eanUSg=;
+	s=korg; t=1706548502;
+	bh=usbm3fwtz6GignOAD3MxlIZbkMLChih6DbmDzBLur40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SN25+kzbob4ZpiaW6QOLttdisifqO3Mzzdoav67T77jZwqsRvqDUZxXONfh3mzGTB
-	 u0tZG4JpgPIAvs/ORh36kEmNIffrIOdPeHyqaSCyzIf3NB4Mrx4fHGxX5yf19hyfy7
-	 kI+iJ/WCDyIAv+lA1+/DVk0CvVxEAyASBqBl23Ps=
+	b=v2HlzATmToEMEMOwqWw3ciBRXgzRmbc5ym/sch993WtlsYUWTRlcTRr1r+SZcsU6O
+	 GcUO/9prksYvsv8c8tUH7O0WQfbr3DDuzq0Y2C9yg3a73DxifRzTOL22rqFydxEdhd
+	 MFmH5qW2bbV6Xz3FWXjKFjHqkqQ2wKz7PIW1kqNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 111/331] arm64: Rename ARM64_WORKAROUND_2966298
-Date: Mon, 29 Jan 2024 09:02:55 -0800
-Message-ID: <20240129170018.168928059@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.6 129/331] serial: sc16is7xx: remove wasteful static buffer in sc16is7xx_regmap_name()
+Date: Mon, 29 Jan 2024 09:03:13 -0800
+Message-ID: <20240129170018.714581556@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,81 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 546b7cde9b1dd36089649101b75266564600ffe5 upstream.
+commit 6bcab3c8acc88e265c570dea969fd04f137c8a4c upstream.
 
-In preparation to apply ARM64_WORKAROUND_2966298 for multiple errata,
-rename the kconfig and capability. No functional change.
+Using a static buffer inside sc16is7xx_regmap_name() was a convenient and
+simple way to set the regmap name without having to allocate and free a
+buffer each time it is called. The drawback is that the static buffer
+wastes memory for nothing once regmap is fully initialized.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20240110-arm-errata-a510-v1-1-d02bc51aeeee@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Remove static buffer and use constant strings instead.
+
+This also avoids a truncation warning when using "%d" or "%u" in snprintf
+which was flagged by kernel test robot.
+
+Fixes: 3837a0379533 ("serial: sc16is7xx: improve regmap debugfs by using one regmap per port")
+Cc:  <stable@vger.kernel.org> # 6.1.x: 3837a03 serial: sc16is7xx: improve regmap debugfs by using one regmap per port
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231211171353.2901416-2-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/Kconfig             |    4 ++++
- arch/arm64/kernel/cpu_errata.c |    4 ++--
- arch/arm64/kernel/entry.S      |    2 +-
- arch/arm64/tools/cpucaps       |    2 +-
- 4 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/tty/serial/sc16is7xx.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -1037,8 +1037,12 @@ config ARM64_ERRATUM_2645198
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1696,13 +1696,15 @@ static struct regmap_config regcfg = {
+ 	.max_register = SC16IS7XX_EFCR_REG,
+ };
  
- 	  If unsure, say Y.
+-static const char *sc16is7xx_regmap_name(unsigned int port_id)
++static const char *sc16is7xx_regmap_name(u8 port_id)
+ {
+-	static char buf[6];
+-
+-	snprintf(buf, sizeof(buf), "port%d", port_id);
+-
+-	return buf;
++	switch (port_id) {
++	case 0:	return "port0";
++	case 1:	return "port1";
++	default:
++		WARN_ON(true);
++		return NULL;
++	}
+ }
  
-+config ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
-+	bool
-+
- config ARM64_ERRATUM_2966298
- 	bool "Cortex-A520: 2966298: workaround for speculatively executed unprivileged load"
-+	select ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
- 	default y
- 	help
- 	  This option adds the workaround for ARM Cortex-A520 erratum 2966298.
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -730,10 +730,10 @@ const struct arm64_cpu_capabilities arm6
- 		.cpu_enable = cpu_clear_bf16_from_user_emulation,
- 	},
- #endif
--#ifdef CONFIG_ARM64_ERRATUM_2966298
-+#ifdef CONFIG_ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
- 	{
- 		.desc = "ARM erratum 2966298",
--		.capability = ARM64_WORKAROUND_2966298,
-+		.capability = ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD,
- 		/* Cortex-A520 r0p0 - r0p1 */
- 		ERRATA_MIDR_REV_RANGE(MIDR_CORTEX_A520, 0, 0, 1),
- 	},
---- a/arch/arm64/kernel/entry.S
-+++ b/arch/arm64/kernel/entry.S
-@@ -428,7 +428,7 @@ alternative_else_nop_endif
- 	ldp	x28, x29, [sp, #16 * 14]
- 
- 	.if	\el == 0
--alternative_if ARM64_WORKAROUND_2966298
-+alternative_if ARM64_WORKAROUND_SPECULATIVE_UNPRIV_LOAD
- 	tlbi	vale1, xzr
- 	dsb	nsh
- alternative_else_nop_endif
---- a/arch/arm64/tools/cpucaps
-+++ b/arch/arm64/tools/cpucaps
-@@ -84,7 +84,6 @@ WORKAROUND_2077057
- WORKAROUND_2457168
- WORKAROUND_2645198
- WORKAROUND_2658417
--WORKAROUND_2966298
- WORKAROUND_AMPERE_AC03_CPU_38
- WORKAROUND_TRBE_OVERWRITE_FILL_MODE
- WORKAROUND_TSB_FLUSH_FAILURE
-@@ -100,3 +99,4 @@ WORKAROUND_NVIDIA_CARMEL_CNP
- WORKAROUND_QCOM_FALKOR_E1003
- WORKAROUND_REPEAT_TLBI
- WORKAROUND_SPECULATIVE_AT
-+WORKAROUND_SPECULATIVE_UNPRIV_LOAD
+ static unsigned int sc16is7xx_regmap_port_mask(unsigned int port_id)
 
 
