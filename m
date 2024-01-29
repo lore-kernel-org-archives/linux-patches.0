@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7094B76051;
-	Mon, 29 Jan 2024 17:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6B576058;
+	Mon, 29 Jan 2024 17:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548632; cv=none; b=fT4kyPMDpzqTjUYMqPf/K7gqOWMoyVCIHjFWeRsNpjNwSNLHBJNONQRpS4XsxaLaCvJ5cw8vdAqm91j7UpkMGiRlj6ZLaLT2pkmWAQLy+w595gQ9pmFRmWFZTz45gFQva+63BJ+4C9d43QvMUwMuToAfiuXHLtRX6nrbTqiYwww=
+	t=1706548633; cv=none; b=KDvB6LsTDkksJR9BSMjbqzjhySM3zX6PnhTfz0isTGILH1ByY5n8to8JjQT1HhoIEW9M8aa6+hmlEG5sBsda0ondL3cigQyNj2FQrW5hQQfOzAqIshza4yAM4p6mzwJZgr8qr3pRYeETW8XuFGyFP590WvT5g4D2pUiXwnPXVhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548632; c=relaxed/simple;
-	bh=YQyhMyeEMHnSsZcIMYHYvErFBUHwaedmZw9HjloZEVc=;
+	s=arc-20240116; t=1706548633; c=relaxed/simple;
+	bh=Isl5y1q60aRo3jJeqnSWSQyo2ep5FblIfXAcCS1m6bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtWQph5cELOEljytWYt3XnWJW7Dm/NNMvqhcYFfNMN3xNLoMpdN5+9YyDZCDT0iNKgMbRuqwaOMH0cf2DHfHRlRPoKMrMeXeBfiKllT+MQzJseEAD1Lc55VnibCaaFIlfu9Jv2GpNF1HlfvH+E2E/viJxyJFtbM+VG67a55o+vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQuMxoKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u3Qi0AK/vkHxLJs8mmAojDKu0qCN/wD+diQuyB2gapxwziOvDM4Zts/apUV7E7Jcz6bHcXLUpA7F/ceol5FA+F9ASICcfSPoZSE4szJfPmgp+SXmkT/A1dXMHXE2uhsImYJUBAcmOaJms0+mikm8BwtLjHvtOD4Jlc/GzekK7do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkajlNj/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQuMxoKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A77FC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkajlNj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC31AC43390;
 	Mon, 29 Jan 2024 17:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548632;
-	bh=YQyhMyeEMHnSsZcIMYHYvErFBUHwaedmZw9HjloZEVc=;
+	s=korg; t=1706548633;
+	bh=Isl5y1q60aRo3jJeqnSWSQyo2ep5FblIfXAcCS1m6bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQuMxoKAwiI4scFr+YCtHogzif3INRiTZoSA6y1za7OS9mDz6HfmnHUBOvXkv7SXs
-	 YONOaAsh1u+KgbgAhuZo/+u6vARkM2ko2+DjQdQ4EOY7aIAgS330U9cSan94QqjTjD
-	 mcLhz/uajlZjNWfiQUSEZnb8Sq4N9uhHlQtySDCo=
+	b=hkajlNj/+Qujk5NL4EjUDN8haTXCqTACCIybrhTFSICSzYusyIP+W1+FSog10JA7o
+	 bJvPASYz6JARji5mV7xORiMR+U9dHKIra5FxTQJGA0UE+nHvWZaTc0J30Wo1zCKf9p
+	 s75bMjk4i3+Ov+f2tDn2D6ZhbqQzkzzi2vdk6mJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Jun Lei <Jun.Lei@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 272/331] drm/amd/display: Fix uninitialized variable usage in core_link_ read_dpcd() & write_dpcd() functions
-Date: Mon, 29 Jan 2024 09:05:36 -0800
-Message-ID: <20240129170022.824973145@linuxfoundation.org>
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 299/331] drm/amdgpu/gfx11: set UNORD_DISPATCH in compute MQDs
+Date: Mon, 29 Jan 2024 09:06:03 -0800
+Message-ID: <20240129170023.620773265@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -56,53 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit a58371d632ebab9ea63f10893a6b6731196b6f8d upstream.
+[ Upstream commit 3380fcad2c906872110d31ddf7aa1fdea57f9df6 ]
 
-The 'status' variable in 'core_link_read_dpcd()' &
-'core_link_write_dpcd()' was uninitialized.
+This needs to be set to 1 to avoid a potential deadlock in
+the GC 10.x and newer.  On GC 9.x and older, this needs
+to be set to 0. This can lead to hangs in some mixed
+graphics and compute workloads. Updated firmware is also
+required for AQL.
 
-Thus, initializing 'status' variable to 'DC_ERROR_UNEXPECTED' by default.
-
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dpcd.c:226 core_link_read_dpcd() error: uninitialized symbol 'status'.
-drivers/gpu/drm/amd/amdgpu/../display/dc/link/protocols/link_dpcd.c:248 core_link_write_dpcd() error: uninitialized symbol 'status'.
-
-Cc: stable@vger.kernel.org
-Cc: Jerry Zuo <jerry.zuo@amd.com>
-Cc: Jun Lei <Jun.Lei@amd.com>
-Cc: Wayne Lin <Wayne.Lin@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dpcd.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c           | 2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dpcd.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dpcd.c
-@@ -205,7 +205,7 @@ enum dc_status core_link_read_dpcd(
- 	uint32_t extended_size;
- 	/* size of the remaining partitioned address space */
- 	uint32_t size_left_to_read;
--	enum dc_status status;
-+	enum dc_status status = DC_ERROR_UNEXPECTED;
- 	/* size of the next partition to be read from */
- 	uint32_t partition_size;
- 	uint32_t data_index = 0;
-@@ -234,7 +234,7 @@ enum dc_status core_link_write_dpcd(
- {
- 	uint32_t partition_size;
- 	uint32_t data_index = 0;
--	enum dc_status status;
-+	enum dc_status status = DC_ERROR_UNEXPECTED;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index 59efd4ece92d..d0c3ec9f4fb6 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -3807,7 +3807,7 @@ static int gfx_v11_0_compute_mqd_init(struct amdgpu_device *adev, void *m,
+ 			    (order_base_2(prop->queue_size / 4) - 1));
+ 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, RPTR_BLOCK_SIZE,
+ 			    (order_base_2(AMDGPU_GPU_PAGE_SIZE / 4) - 1));
+-	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, UNORD_DISPATCH, 0);
++	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, UNORD_DISPATCH, 1);
+ 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, TUNNEL_DISPATCH, 0);
+ 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, PRIV_STATE, 1);
+ 	tmp = REG_SET_FIELD(tmp, CP_HQD_PQ_CONTROL, KMD_QUEUE, 1);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+index 15277f1d5cf0..d722cbd31783 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+@@ -224,6 +224,7 @@ static void update_mqd(struct mqd_manager *mm, void *mqd,
+ 	m->cp_hqd_pq_control = 5 << CP_HQD_PQ_CONTROL__RPTR_BLOCK_SIZE__SHIFT;
+ 	m->cp_hqd_pq_control |=
+ 			ffs(q->queue_size / sizeof(unsigned int)) - 1 - 1;
++	m->cp_hqd_pq_control |= CP_HQD_PQ_CONTROL__UNORD_DISPATCH_MASK;
+ 	pr_debug("cp_hqd_pq_control 0x%x\n", m->cp_hqd_pq_control);
  
- 	while (size) {
- 		partition_size = dpcd_get_next_partition_size(address, size);
+ 	m->cp_hqd_pq_base_lo = lower_32_bits((uint64_t)q->queue_address >> 8);
+-- 
+2.43.0
+
 
 
