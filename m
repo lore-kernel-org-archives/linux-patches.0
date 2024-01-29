@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B338F1586C1;
-	Mon, 29 Jan 2024 17:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753DB1586C1;
+	Mon, 29 Jan 2024 17:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548401; cv=none; b=K72Dvz+i1O2TfxsXh6ejxacBJt0h9215B1A9UCfLHjgwvBXvDZ1kSFw6abXpkX8kkQoooD2eql54XWp1vcy6hKrHP0Ao9AE/Uws7oJTcRozaRO5Fx4gCGc0BNLcR++my1zc97hq9ByZ7MlBmJv9texo1hoQxAV8XoycKQHyyvL0=
+	t=1706548402; cv=none; b=jizV7VGHLpw/axktINSacaV9jpOIxlHhfMo2riNoL9P5k9BknZFjEH6KOEt/j+dz2SRd97FxgNfagsC+haScht3GLfxtUBBHVNBlXE4sImK4XwAvuRgKwJoQ4KgzNgu41DbBukgoJIT6g7ut++YreiV2VtGx0fBR84Lr5CcyBRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548401; c=relaxed/simple;
-	bh=3u/k5uUI9t/95mRk0IlL8VG3rOOHHYRmCPJgGxM2dKE=;
+	s=arc-20240116; t=1706548402; c=relaxed/simple;
+	bh=rkgh9KKWIv73zJCUGbW5pxnmnio5InbZcaZHDZx2BsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yus2Fb1uVRfjtz/9LVw/3vNS0cd4aHGnYO1Bx3F60mFgQCrYXPYfyYDn6ST/1OXX+hr3llHMpCl8xG5skZ2LsJLGcyR/Yce7IN8pg0Ne2y+dJsAttmgPUyMbLkow98URyYlMwjSCJFo1rLl+Lq9QbHnhA9NXMtm+Gl7imGGk5Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08hzMePq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TBmDaClzpOAr+VZ+vnadmU8QN5tJ/dAk6MyxJFLBmbHIu2L5Y8sOZK2sWdCwVrzrDS5CmiB2yFADm1JcajtlqKp14e8Nkzm85UugjLgU2JvQZebN1U1US/JapLF0yJcQeP7GRFsp531v52qwz6MuGbhGivHxMKaXWMqJ8GSpn0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fni6bqGs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08hzMePq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761EFC433F1;
-	Mon, 29 Jan 2024 17:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fni6bqGs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF0FC433C7;
+	Mon, 29 Jan 2024 17:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548401;
-	bh=3u/k5uUI9t/95mRk0IlL8VG3rOOHHYRmCPJgGxM2dKE=;
+	s=korg; t=1706548402;
+	bh=rkgh9KKWIv73zJCUGbW5pxnmnio5InbZcaZHDZx2BsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08hzMePq64HuJMVuVmDB6WnsvNtKrMVrPnoLRQPGbR1P8RW7K5tN5BCzcBbXlNFhz
-	 l4ZkdNOp52B/Jw72srkX/1hCTaxQN28ZW8CBJb0I31BF5DhonHtkQT77hfbqfW3t+m
-	 u26kJ3m4C+4EmSs/UksvGVyi5TrjZmjVVWPKyCWY=
+	b=fni6bqGsSPtCRSBBUat03nol3VQj0DGi1O0pOYy9C3TOAIO+oGEsicYSGZ81xyxXK
+	 eXvXPCILw/ZvK2yw3KLAVF03JVDPquhFVQjGvSgcKlk++z5nNAgZaMp1A4yPU7n8B7
+	 aYIsSAz2jaFhn1RrA9daJEwuX6c1GfZDUysRYB0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Jan Bajkowski <olek2@wp.pl>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/185] MIPS: lantiq: register smp_ops on non-smp platforms
-Date: Mon, 29 Jan 2024 09:06:20 -0800
-Message-ID: <20240129170004.375315380@linuxfoundation.org>
+	Quanquan Cao <caoqq@fujitsu.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: =?UTF-8?q?=5BPATCH=206=2E1=20181/185=5D=20cxl/region=EF=BC=9AFix=20overflow=20issue=20in=20alloc=5Fhpa=28=29?=
+Date: Mon, 29 Jan 2024 09:06:21 -0800
+Message-ID: <20240129170004.405700024@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -45,50 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksander Jan Bajkowski <olek2@wp.pl>
+From: Quanquan Cao <caoqq@fujitsu.com>
 
-[ Upstream commit 4bf2a626dc4bb46f0754d8ac02ec8584ff114ad5 ]
+commit d76779dd3681c01a4c6c3cae4d0627c9083e0ee6 upstream.
 
-Lantiq uses a common kernel config for devices with 24Kc and 34Kc cores.
-The changes made previously to add support for interrupts on all cores
-work on 24Kc platforms with SMP disabled and 34Kc platforms with SMP
-enabled. This patch fixes boot issues on Danube (single core 24Kc) with
-SMP enabled.
+Creating a region with 16 memory devices caused a problem. The div_u64_rem
+function, used for dividing an unsigned 64-bit number by a 32-bit one,
+faced an issue when SZ_256M * p->interleave_ways. The result surpassed
+the maximum limit of the 32-bit divisor (4G), leading to an overflow
+and a remainder of 0.
+note: At this point, p->interleave_ways is 16, meaning 16 * 256M = 4G
 
-Fixes: 730320fd770d ("MIPS: lantiq: enable all hardware interrupts on second VPE")
-Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To fix this issue, I replaced the div_u64_rem function with div64_u64_rem
+and adjusted the type of the remainder.
+
+Signed-off-by: Quanquan Cao <caoqq@fujitsu.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 23a22cd1c98b ("cxl/region: Allocate HPA capacity to regions")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/lantiq/prom.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/cxl/core/region.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/lantiq/prom.c b/arch/mips/lantiq/prom.c
-index be4829cc7a3a..28da4e720d17 100644
---- a/arch/mips/lantiq/prom.c
-+++ b/arch/mips/lantiq/prom.c
-@@ -114,10 +114,9 @@ void __init prom_init(void)
- 	prom_init_cmdline();
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -450,7 +450,7 @@ static int alloc_hpa(struct cxl_region *
+ 	struct cxl_root_decoder *cxlrd = to_cxl_root_decoder(cxlr->dev.parent);
+ 	struct cxl_region_params *p = &cxlr->params;
+ 	struct resource *res;
+-	u32 remainder = 0;
++	u64 remainder = 0;
  
- #if defined(CONFIG_MIPS_MT_SMP)
--	if (cpu_has_mipsmt) {
--		lantiq_smp_ops = vsmp_smp_ops;
-+	lantiq_smp_ops = vsmp_smp_ops;
-+	if (cpu_has_mipsmt)
- 		lantiq_smp_ops.init_secondary = lantiq_init_secondary;
--		register_smp_ops(&lantiq_smp_ops);
--	}
-+	register_smp_ops(&lantiq_smp_ops);
- #endif
- }
--- 
-2.43.0
-
+ 	lockdep_assert_held_write(&cxl_region_rwsem);
+ 
+@@ -470,7 +470,7 @@ static int alloc_hpa(struct cxl_region *
+ 	    (cxlr->mode == CXL_DECODER_PMEM && uuid_is_null(&p->uuid)))
+ 		return -ENXIO;
+ 
+-	div_u64_rem(size, SZ_256M * p->interleave_ways, &remainder);
++	div64_u64_rem(size, (u64)SZ_256M * p->interleave_ways, &remainder);
+ 	if (remainder)
+ 		return -EINVAL;
+ 
 
 
