@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397B315703F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA48415703F;
 	Mon, 29 Jan 2024 17:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548332; cv=none; b=fD+j8xHTPWdODLOpuhH4O4TtSRrFVHMxsVOg6L4jkp3ZxAvesIPWQU+NR+DMdslMbd1w6dPww87fsD8XYz+3IoG3AuTgNqIq4v7G637xQ2FD5W/XRgpuzeHV1F1lSVFzgme4B2rV2NU9WVjRiUhz3CILAN+dfkGoJjZet31gRY4=
+	t=1706548333; cv=none; b=hxl/Az6UyfwEfZ2z/czhRrk175KLQEAATSMHjAfhNbIW5KEcZqvYG8VRYm/dr8An//AF/XuadEaJIRPimQDoz2SweUJcUYecfPZmeMCsNUbdfT/it/kIPg+2kQky+IN8Z6ysfMvFf3Y4uHrdI1lwW6xRn1FlGFqymdPbl1FG0ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548332; c=relaxed/simple;
-	bh=unU0ZrwOjfnfy/X1s9piMgJVNyctT2pgYL7x7sphewQ=;
+	s=arc-20240116; t=1706548333; c=relaxed/simple;
+	bh=Mb+iXT4E05LUFeryHqlBK3UI18IVpPDDE+QFZVl+DIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1XvOKyAfWgfAXlXRzqsskM3I6Ykn2+eAxcweF+M0GshjZeIP1Frh0fpT++EFL2ID3sM14kFhxW87FCZyqtrLJ9fNhBvHJplTDP0sUjGmt06cuhj4MLj4kOUpxJm4nxYLRVd+tXWpwxzLPnbmsjT3pb2JdzQTPofYjbI+BV4PmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9Id/zIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s6pXLtN7T3Hezq19BAHkFSl5/fc6kd+r2hLr+nWWTlr/x8+UhbUPpoPt8G7+K2KqvjtsN2Mc0vZpfst43naW8alAOybQa6CpHUeUj8w3sqIolulL237N9tZ/yPnJmi+HBntUItsq1L4yXogAndrCjtoN5oiQEOjJ/arz2mHkIk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQbl5LZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9Id/zIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35B2C433C7;
-	Mon, 29 Jan 2024 17:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQbl5LZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15DBC433F1;
+	Mon, 29 Jan 2024 17:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548332;
-	bh=unU0ZrwOjfnfy/X1s9piMgJVNyctT2pgYL7x7sphewQ=;
+	bh=Mb+iXT4E05LUFeryHqlBK3UI18IVpPDDE+QFZVl+DIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9Id/zIfJVfeBwpHhdWDvJCHQOUevvsi61xU8Qf/40Q0E8Wf0O9WANvB/LXHEud2s
-	 Ne1ugiiTCRxdPXagHGrVCOl+giFSdua7tlCcm6iug8SS9ehW7/VkIp0j8lwvdTWBYw
-	 3YjBOS0CFlhJkQ/AqH3L4QhF8FEUMryCG+r7oaKc=
+	b=gQbl5LZPSToCsXj6W5idsDcsPyqj6MUsCEYn6tS+vxrs0NwXxITopstaAcHDQd4YI
+	 ve70EvIo8S2PmNJsm34LRO6eLdx+wZP6E4VRysfpdRMSLqgRMpHO7A9WPI5CJri5dy
+	 CO2Pdwf0KUoxpxURFYsRTXLEB6xpNhCDnZQM3gU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/185] net/mlx5e: fix a potential double-free in fs_any_create_groups
-Date: Mon, 29 Jan 2024 09:05:00 -0800
-Message-ID: <20240129170001.807948141@linuxfoundation.org>
+Subject: [PATCH 6.7 330/346] drm/bridge: anx7625: Ensure bridge is suspended in disable()
+Date: Mon, 29 Jan 2024 09:06:01 -0800
+Message-ID: <20240129170026.185206809@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,42 +49,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-[ Upstream commit aef855df7e1bbd5aa4484851561211500b22707e ]
+[ Upstream commit 4d5b7daa3c610af3f322ad1e91fc0c752ff32f0e ]
 
-When kcalloc() for ft->g succeeds but kvzalloc() for in fails,
-fs_any_create_groups() will free ft->g. However, its caller
-fs_any_create_table() will free ft->g again through calling
-mlx5e_destroy_flow_table(), which will lead to a double-free.
-Fix this by setting ft->g to NULL in fs_any_create_groups().
+Similar to commit 26db46bc9c67 ("drm/bridge: parade-ps8640: Ensure bridge
+is suspended in .post_disable()"). Add a mutex to ensure that aux transfer
+won't race with atomic_disable by holding the PM reference and prevent
+the bridge from suspend.
 
-Fixes: 0f575c20bf06 ("net/mlx5e: Introduce Flow Steering ANY API")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Also we need to use pm_runtime_put_sync_suspend() to suspend the bridge
+instead of idle with pm_runtime_put_sync().
+
+Fixes: 3203e497eb76 ("drm/bridge: anx7625: Synchronously run runtime suspend.")
+Fixes: adca62ec370c ("drm/bridge: anx7625: Support reading edid through aux channel")
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Xuxin Xiong <xuxinxiong@huaqin.corp-partner.google.com>
+Reviewed-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240118015916.2296741-1-hsinyi@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 7 ++++++-
+ drivers/gpu/drm/bridge/analogix/anx7625.h | 2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-index e1283531e0b8..671adbad0a40 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
-@@ -436,6 +436,7 @@ static int fs_any_create_groups(struct mlx5e_flow_table *ft)
- 	in = kvzalloc(inlen, GFP_KERNEL);
- 	if  (!in || !ft->g) {
- 		kfree(ft->g);
-+		ft->g = NULL;
- 		kvfree(in);
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 51abe42c639e..5168628f11cf 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -1741,6 +1741,7 @@ static ssize_t anx7625_aux_transfer(struct drm_dp_aux *aux,
+ 	u8 request = msg->request & ~DP_AUX_I2C_MOT;
+ 	int ret = 0;
+ 
++	mutex_lock(&ctx->aux_lock);
+ 	pm_runtime_get_sync(dev);
+ 	msg->reply = 0;
+ 	switch (request) {
+@@ -1757,6 +1758,7 @@ static ssize_t anx7625_aux_transfer(struct drm_dp_aux *aux,
+ 					msg->size, msg->buffer);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
++	mutex_unlock(&ctx->aux_lock);
+ 
+ 	return ret;
+ }
+@@ -2453,7 +2455,9 @@ static void anx7625_bridge_atomic_disable(struct drm_bridge *bridge,
+ 	ctx->connector = NULL;
+ 	anx7625_dp_stop(ctx);
+ 
+-	pm_runtime_put_sync(dev);
++	mutex_lock(&ctx->aux_lock);
++	pm_runtime_put_sync_suspend(dev);
++	mutex_unlock(&ctx->aux_lock);
+ }
+ 
+ static enum drm_connector_status
+@@ -2647,6 +2651,7 @@ static int anx7625_i2c_probe(struct i2c_client *client)
+ 
+ 	mutex_init(&platform->lock);
+ 	mutex_init(&platform->hdcp_wq_lock);
++	mutex_init(&platform->aux_lock);
+ 
+ 	INIT_DELAYED_WORK(&platform->hdcp_work, hdcp_check_work_func);
+ 	platform->hdcp_workqueue = create_workqueue("hdcp workqueue");
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.h b/drivers/gpu/drm/bridge/analogix/anx7625.h
+index 5af819611ebc..80d3fb4e985f 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.h
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.h
+@@ -471,6 +471,8 @@ struct anx7625_data {
+ 	struct workqueue_struct *hdcp_workqueue;
+ 	/* Lock for hdcp work queue */
+ 	struct mutex hdcp_wq_lock;
++	/* Lock for aux transfer and disable */
++	struct mutex aux_lock;
+ 	char edid_block;
+ 	struct display_timing dt;
+ 	u8 display_timing_valid;
 -- 
 2.43.0
 
