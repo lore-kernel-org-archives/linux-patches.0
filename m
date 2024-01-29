@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B14E158D71;
-	Mon, 29 Jan 2024 17:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6958158D71;
+	Mon, 29 Jan 2024 17:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548317; cv=none; b=oIK+7p3PojmZuOoFG/hqe/xd16u0qKfTsbMWnbo0wql8BmnNYoDew+CrR254+uxVZtoi3sXTh+GOZ0hRJ8MQHFaMk5eZMJvehhCOWAH9jiI5bMh6yOJAfzwDMWthfOXtLRXf3hgpSx8GBXy8h4YHoQXPaM6e2v194MjWqqzDBN0=
+	t=1706548318; cv=none; b=K8248JibuyU9QUF9GlgL980TMcpkKmL5t8EP1erf0j3oZF5fb8pmzfi8YpWATlIIm/KziofB6F37mIzhmQU1Fbl5LYyxrb0ija9C977k7Yk3noxuCk+z7+RfbSwKJuvAI/Fd3rpRUapvXiL2c7ld9RUPkQEiqVMleNDroD7Ooac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548317; c=relaxed/simple;
-	bh=lZ4/N3dkZ3Kfc7so0Sh7sQjwOwNGxXxNC0UcUupv2eA=;
+	s=arc-20240116; t=1706548318; c=relaxed/simple;
+	bh=F9YcEt0nqGCqf04bm98MkUmxciGSdGZ9aDyouSkpX94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8RJvWGk22sRfZ2VReHD6rsIwJ0rMmFz1b4EewX0v4nQVy7LgMHUFZqddgnGdlWSWiZlD3PyscFsuPJ6qR/Wx1+Mfa5pERmZMONlrwLvqdfsypwZM3KVripoYpYLtBjTzkklIX7ZGtyuobqACc+sUrMX5WViZf5iuDSxc32G0tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUxIVuTr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sKACcFdXpSI++fpqiT57u0wRtxJYmswBXm8ca2dZYlh5tjEx0PTP7J82ZD/jTerX77r47d4HwiJHSKuarr5kgf2Bz9vueMuUsKWpNKImRh1OyQE3qKfFBU8OXyElrWJm3Nrz3wNn90hcs9ijSFGtERqjk0lsqWgtgdyYiAopt6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAGta8oZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUxIVuTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EC9C43390;
-	Mon, 29 Jan 2024 17:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAGta8oZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206B5C43390;
+	Mon, 29 Jan 2024 17:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548317;
-	bh=lZ4/N3dkZ3Kfc7so0Sh7sQjwOwNGxXxNC0UcUupv2eA=;
+	s=korg; t=1706548318;
+	bh=F9YcEt0nqGCqf04bm98MkUmxciGSdGZ9aDyouSkpX94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUxIVuTruv/Myo8JSr1DIYSakvpP/9WWhFMJ2CA3WJNe2qByjK8tPaIq+Dq8/YEW0
-	 L8FcQzaDKEdrtjDMJDqpdz0K4ZzcLlLR+XE9PjpAhMD/o0aVceNK42kld8EAZ4jPnP
-	 o/C57IkAYsAAM3wKVVMbGwNkIOtPcgmDp7eTrZ0M=
+	b=pAGta8oZGwmW996NPhiNvQp/zI0CSv+a24/N3HVWHE+5wXngFAt79tMogq6LD62C4
+	 WFCvn4a3lhi0E0JtYMqPi85jsqZZa3actfy3+XxIsKDKjo7+FfKEbqdfR/Owfl8bFt
+	 osw3vDUJS5cXlBzFCh9lXLoluhe+m8vtbD6Txq4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/185] afs: Hide silly-rename files from userspace
-Date: Mon, 29 Jan 2024 09:04:51 -0800
-Message-ID: <20240129170001.522811291@linuxfoundation.org>
+Subject: [PATCH 6.7 321/346] firmware: arm_ffa: Add missing rwlock_init() in ffa_setup_partitions()
+Date: Mon, 29 Jan 2024 09:05:52 -0800
+Message-ID: <20240129170025.918914934@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,56 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit 57e9d49c54528c49b8bffe6d99d782ea051ea534 ]
+[ Upstream commit 59b2e242b13192e50bf47df3780bf8a7e2260e98 ]
 
-There appears to be a race between silly-rename files being created/removed
-and various userspace tools iterating over the contents of a directory,
-leading to such errors as:
+Add the missing rwlock initialization for the individual FF-A partition
+information in ffa_setup_partitions().
 
-	find: './kernel/.tmp_cpio_dir/include/dt-bindings/reset/.__afs2080': No such file or directory
-	tar: ./include/linux/greybus/.__afs3C95: File removed before we read it
-
-when building a kernel.
-
-Fix afs_readdir() so that it doesn't return .__afsXXXX silly-rename files
-to userspace.  This doesn't stop them being looked up directly by name as
-we need to be able to look them up from within the kernel as part of the
-silly-rename algorithm.
-
-Fixes: 79ddbfa500b3 ("afs: Implement sillyrename for unlink and rename")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
+Fixes: 0184450b8b1e ("firmware: arm_ffa: Add schedule receiver callback mechanism")
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20240108-ffa_fixes_6-8-v1-1-75bf7035bc50@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dir.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/firmware/arm_ffa/driver.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 07dc4ec73520..cf811b77ee67 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -473,6 +473,14 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 6146b2927d5c..ed1d6a24934e 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -1226,6 +1226,7 @@ static void ffa_setup_partitions(void)
+ 			ffa_device_unregister(ffa_dev);
  			continue;
  		}
- 
-+		/* Don't expose silly rename entries to userspace. */
-+		if (nlen > 6 &&
-+		    dire->u.name[0] == '.' &&
-+		    ctx->actor != afs_lookup_filldir &&
-+		    ctx->actor != afs_lookup_one_filldir &&
-+		    memcmp(dire->u.name, ".__afs", 6) == 0)
-+			continue;
-+
- 		/* found the next entry */
- 		if (!dir_emit(ctx, dire->u.name, nlen,
- 			      ntohl(dire->u.vnode),
++		rwlock_init(&info->rw_lock);
+ 		xa_store(&drv_info->partition_info, tpbuf->id, info, GFP_KERNEL);
+ 	}
+ 	drv_info->partition_count = count;
 -- 
 2.43.0
 
