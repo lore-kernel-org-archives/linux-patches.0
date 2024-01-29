@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A2C15CD6C;
-	Mon, 29 Jan 2024 17:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152F4157E8F;
+	Mon, 29 Jan 2024 17:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548164; cv=none; b=A+LOmm+GNTswv0tKSl1RW27UJnMxSRoM+0ehcRvvvaM5Imhd0sRVeqsHtN4Qst3yq66jM8ndv8JRcdbG3plNlMAxX+uOGu/sDQnjb5Jlv9LQWuTYjuNr/AdB5nzSJ+5M+z5F++UIlW96LpSY3+kfZ4PUFIH09kRsKueCCnkQ3zc=
+	t=1706548165; cv=none; b=VrCvPWjJfIifiUP+Qn8I9CPjyRHxdzVN3Iq292iNl3B2pbV1IlVkeHBepoI65ysH9jIwbopULi3ffdpRfbmeb6+GQdAgqdlib/wtZv6zdB2wufJtytpejQpmVVqt2+ETA4RsZMxmxmN8RqH6pD/rPbPwVaQ+JyRCdOmZsL7H6zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548164; c=relaxed/simple;
-	bh=Aab8x14naEpMA6BkjtfOobI3Q2Xn8rJt5X3oSp0aKKg=;
+	s=arc-20240116; t=1706548165; c=relaxed/simple;
+	bh=2032Vw62K/UAZLiuzO/Y34o7hZNcJZkNq3uNlI2G7WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVBPUyeDfFqZtjh8vDfHZfOVwldfa5iFLtJzYAn9GjQp0Xnotx9XaI41MDqO/vF2SnSX2Iwm79Zuz29jWBUt3b0eNOAcXXYdG6cEdEiOmtdwvs9gaV0gJ5Pxu3qI1AraUfVPZqH802ThfFcLjkC4KFTsRvdXVdMogl0KJjpgmUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmNTUfFE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f+7Oel5eMCU1+KwZtqj9vCJOh6LxaeoPmTIK8B+6Kr7Gitd34LLhek6ylYSI9pmuVBpXyG8i2pcCeNbamvl3Au8qpk0WTEX5I5QLbHw0mMB3f64/HlDzsvIcg19ZprOxd+aitAI7/gfyCwYTcvdM2jBBECk3KQjWfgmV8KSzXLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofmQ+eLg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmNTUfFE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3ACC43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofmQ+eLg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22E4C433A6;
 	Mon, 29 Jan 2024 17:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548164;
-	bh=Aab8x14naEpMA6BkjtfOobI3Q2Xn8rJt5X3oSp0aKKg=;
+	bh=2032Vw62K/UAZLiuzO/Y34o7hZNcJZkNq3uNlI2G7WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmNTUfFEIrZSDZ0RP/JOp98fF8BD44VdO/Vecs489MBTC4mTvxs30MWCu4dDRvhi9
-	 C6M+BFbV2pv/zNvLITdcbtaPGFdvz/VSXlTbKyKGCEvDYgJUJbNd9wAWS12/3SXhvK
-	 MPVpuQFHviY7+Gqz/mzg18S6M03MaztH3VnmN16Q=
+	b=ofmQ+eLgWvihuhhTxWzYCjb+nJ9T2lw8M8D0B1+iq2RAn395lRA7vtYHXWfuD3KBt
+	 273mTgLLEfgN3h/o5z4/uKvjtrcS5nfOj6jWWXpSUab7meZlFsMWUMgdute/nQhbZl
+	 t/MGALFeTZ4mysMdzmbYAgoEzbJVBRnFzSpHKRPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Dipietro <dipiets@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jeffrey E Altman <jaltman@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 180/346] tcp: Add memory barrier to tcp_push()
-Date: Mon, 29 Jan 2024 09:03:31 -0800
-Message-ID: <20240129170021.686494969@linuxfoundation.org>
+Subject: [PATCH 6.7 171/346] afs: Add comments on abort handling
+Date: Mon, 29 Jan 2024 09:03:22 -0800
+Message-ID: <20240129170021.428540835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -52,99 +53,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salvatore Dipietro <dipiets@amazon.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 7267e8dcad6b2f9fce05a6a06335d7040acbc2b6 ]
+[ Upstream commit fe245c8fcdac339e6b42076c828a6bede3a5e948 ]
 
-On CPUs with weak memory models, reads and updates performed by tcp_push
-to the sk variables can get reordered leaving the socket throttled when
-it should not. The tasklet running tcp_wfree() may also not observe the
-memory updates in time and will skip flushing any packets throttled by
-tcp_push(), delaying the sending. This can pathologically cause 40ms
-extra latency due to bad interactions with delayed acks.
+Add some comments on AFS abort code handling in the rotation algorithm and
+adjust the errors produced to match.
 
-Adding a memory barrier in tcp_push removes the bug, similarly to the
-previous commit bf06200e732d ("tcp: tsq: fix nonagle handling").
-smp_mb__after_atomic() is used to not incur in unnecessary overhead
-on x86 since not affected.
-
-Patch has been tested using an AWS c7g.2xlarge instance with Ubuntu
-22.04 and Apache Tomcat 9.0.83 running the basic servlet below:
-
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class HelloWorldServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-        response.setContentType("text/html;charset=utf-8");
-        OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream(),"UTF-8");
-        String s = "a".repeat(3096);
-        osw.write(s,0,s.length());
-        osw.flush();
-    }
-}
-
-Load was applied using wrk2 (https://github.com/kinvolk/wrk2) from an AWS
-c6i.8xlarge instance. Before the patch an additional 40ms latency from P99.99+
-values is observed while, with the patch, the extra latency disappears.
-
-No patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.91ms
- 75.000%    1.13ms
- 90.000%    1.46ms
- 99.000%    1.74ms
- 99.900%    1.89ms
- 99.990%   41.95ms  <<< 40+ ms extra latency
- 99.999%   48.32ms
-100.000%   48.96ms
-
-With patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.90ms
- 75.000%    1.13ms
- 90.000%    1.45ms
- 99.000%    1.72ms
- 99.900%    1.83ms
- 99.990%    2.11ms  <<< no 40+ ms extra latency
- 99.999%    2.53ms
-100.000%    2.62ms
-
-Patch has been also tested on x86 (m7i.2xlarge instance) which it is not
-affected by this issue and the patch doesn't introduce any additional
-delay.
-
-Fixes: 7aa5470c2c09 ("tcp: tsq: move tsq_flags close to sk_wmem_alloc")
-Signed-off-by: Salvatore Dipietro <dipiets@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240119190133.43698-1-dipiets@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Jeffrey E Altman <jaltman@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Stable-dep-of: 17ba6f0bd14f ("afs: Fix error handling with lookup via FS.InlineBulkStatus")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/afs/rotate.c | 101 ++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 90 insertions(+), 11 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index ff6838ca2e58..7bce79beca2b 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -722,6 +722,7 @@ void tcp_push(struct sock *sk, int flags, int mss_now,
- 		if (!test_bit(TSQ_THROTTLED, &sk->sk_tsq_flags)) {
- 			NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAUTOCORKING);
- 			set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
-+			smp_mb__after_atomic();
+diff --git a/fs/afs/rotate.c b/fs/afs/rotate.c
+index a840c3588ebb..a3d127953ac6 100644
+--- a/fs/afs/rotate.c
++++ b/fs/afs/rotate.c
+@@ -13,6 +13,7 @@
+ #include <linux/sched/signal.h>
+ #include "internal.h"
+ #include "afs_fs.h"
++#include "protocol_uae.h"
+ 
+ /*
+  * Begin iteration through a server list, starting with the vnode's last used
+@@ -143,6 +144,11 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 	case -ECONNABORTED:
+ 		/* The far side rejected the operation on some grounds.  This
+ 		 * might involve the server being busy or the volume having been moved.
++		 *
++		 * Note that various V* errors should not be sent to a cache manager
++		 * by a fileserver as they should be translated to more modern UAE*
++		 * errors instead.  IBM AFS and OpenAFS fileservers, however, do leak
++		 * these abort codes.
+ 		 */
+ 		switch (op->ac.abort_code) {
+ 		case VNOVOL:
+@@ -150,6 +156,11 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 			 * - May indicate that the VL is wrong - retry once and compare
+ 			 *   the results.
+ 			 * - May indicate that the fileserver couldn't attach to the vol.
++			 * - The volume might have been temporarily removed so that it can
++			 *   be replaced by a volume restore.  "vos" might have ended one
++			 *   transaction and has yet to create the next.
++			 * - The volume might not be blessed or might not be in-service
++			 *   (administrative action).
+ 			 */
+ 			if (op->flags & AFS_OPERATION_VNOVOL) {
+ 				op->error = -EREMOTEIO;
+@@ -183,16 +194,56 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 			_leave(" = t [vnovol]");
+ 			return true;
+ 
+-		case VSALVAGE: /* TODO: Should this return an error or iterate? */
+ 		case VVOLEXISTS:
+-		case VNOSERVICE:
+ 		case VONLINE:
+-		case VDISKFULL:
+-		case VOVERQUOTA:
+-			op->error = afs_abort_to_error(op->ac.abort_code);
++			/* These should not be returned from the fileserver. */
++			pr_warn("Fileserver returned unexpected abort %d\n",
++				op->ac.abort_code);
++			op->error = -EREMOTEIO;
++			goto next_server;
++
++		case VNOSERVICE:
++			/* Prior to AFS 3.2 VNOSERVICE was returned from the fileserver
++			 * if the volume was neither in-service nor administratively
++			 * blessed.  All usage was replaced by VNOVOL because AFS 3.1 and
++			 * earlier cache managers did not handle VNOSERVICE and assumed
++			 * it was the client OSes errno 105.
++			 *
++			 * Starting with OpenAFS 1.4.8 VNOSERVICE was repurposed as the
++			 * fileserver idle dead time error which was sent in place of
++			 * RX_CALL_TIMEOUT (-3).  The error was intended to be sent if the
++			 * fileserver took too long to send a reply to the client.
++			 * RX_CALL_TIMEOUT would have caused the cache manager to mark the
++			 * server down whereas VNOSERVICE since AFS 3.2 would cause cache
++			 * manager to temporarily (up to 15 minutes) mark the volume
++			 * instance as unusable.
++			 *
++			 * The idle dead logic resulted in cache inconsistency since a
++			 * state changing call that the cache manager assumed was dead
++			 * could still be processed to completion by the fileserver.  This
++			 * logic was removed in OpenAFS 1.8.0 and VNOSERVICE is no longer
++			 * returned.  However, many 1.4.8 through 1.6.24 fileservers are
++			 * still in existence.
++			 *
++			 * AuriStorFS fileservers have never returned VNOSERVICE.
++			 *
++			 * VNOSERVICE should be treated as an alias for RX_CALL_TIMEOUT.
++			 */
++		case RX_CALL_TIMEOUT:
++			op->error = -ETIMEDOUT;
+ 			goto next_server;
+ 
++		case VSALVAGING: /* This error should not be leaked to cache managers
++				  * but is from OpenAFS demand attach fileservers.
++				  * It should be treated as an alias for VOFFLINE.
++				  */
++		case VSALVAGE: /* VSALVAGE should be treated as a synonym of VOFFLINE */
+ 		case VOFFLINE:
++			/* The volume is in use by the volserver or another volume utility
++			 * for an operation that might alter the contents.  The volume is
++			 * expected to come back but it might take a long time (could be
++			 * days).
++			 */
+ 			if (!test_and_set_bit(AFS_VOLUME_OFFLINE, &op->volume->flags)) {
+ 				afs_busy(op->volume, op->ac.abort_code);
+ 				clear_bit(AFS_VOLUME_BUSY, &op->volume->flags);
+@@ -207,11 +258,20 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 			}
+ 			goto busy;
+ 
+-		case VSALVAGING:
+-		case VRESTARTING:
++		case VRESTARTING: /* The fileserver is either shutting down or starting up. */
+ 		case VBUSY:
+-			/* Retry after going round all the servers unless we
+-			 * have a file lock we need to maintain.
++			/* The volume is in use by the volserver or another volume
++			 * utility for an operation that is not expected to alter the
++			 * contents of the volume.  VBUSY does not need to be returned
++			 * for a ROVOL or BACKVOL bound to an ITBusy volserver
++			 * transaction.  The fileserver is permitted to continue serving
++			 * content from ROVOLs and BACKVOLs during an ITBusy transaction
++			 * because the content will not change.  However, many fileserver
++			 * releases do return VBUSY for ROVOL and BACKVOL instances under
++			 * many circumstances.
++			 *
++			 * Retry after going round all the servers unless we have a file
++			 * lock we need to maintain.
+ 			 */
+ 			if (op->flags & AFS_OPERATION_NO_VSLEEP) {
+ 				op->error = -EBUSY;
+@@ -226,7 +286,7 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 				if (!afs_sleep_and_retry(op))
+ 					goto failed;
+ 
+-				 /* Retry with same server & address */
++				/* Retry with same server & address */
+ 				_leave(" = t [vbusy]");
+ 				return true;
+ 			}
+@@ -270,10 +330,29 @@ bool afs_select_fileserver(struct afs_operation *op)
+ 
+ 			goto restart_from_beginning;
+ 
++		case VDISKFULL:
++		case UAENOSPC:
++			/* The partition is full.  Only applies to RWVOLs.
++			 * Translate locally and return ENOSPC.
++			 * No replicas to failover to.
++			 */
++			op->error = -ENOSPC;
++			goto failed_but_online;
++
++		case VOVERQUOTA:
++		case UAEDQUOT:
++			/* Volume is full.  Only applies to RWVOLs.
++			 * Translate locally and return EDQUOT.
++			 * No replicas to failover to.
++			 */
++			op->error = -EDQUOT;
++			goto failed_but_online;
++
+ 		default:
++			op->error = afs_abort_to_error(op->ac.abort_code);
++		failed_but_online:
+ 			clear_bit(AFS_VOLUME_OFFLINE, &op->volume->flags);
+ 			clear_bit(AFS_VOLUME_BUSY, &op->volume->flags);
+-			op->error = afs_abort_to_error(op->ac.abort_code);
+ 			goto failed;
  		}
- 		/* It is possible TX completion already happened
- 		 * before we set TSQ_THROTTLED.
+ 
 -- 
 2.43.0
 
