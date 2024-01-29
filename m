@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE4D1586DC;
-	Mon, 29 Jan 2024 17:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C73157E67;
+	Mon, 29 Jan 2024 17:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548050; cv=none; b=saM7o9rnUSzgkFYrvOgEEoOYEp+Z1uzh2gXUXpEOpod6eCPND/niRLWCW6JDtHIRHkTFlx3j/toQGb2YUl3XqEZGQH2DUYwo/tMW7vXREzl19WOhIZAsbawZj9KdXRBwxer1+yYVtgKDuc2kQOQrhlksei/Uyr7oHkuMEn4Jb30=
+	t=1706548052; cv=none; b=g1owGFs+oL3kR/akpCWySiQE0Jhi85X1u/Zg4OJ+fXpdVCWY1KSdlyyPW4aXAgERQWWIhUQG8YcUehhB8pwu9DnKX371e9wO9bVpZK7LMb9PMN3Lrf6PSb4aoIli6JOT7a6O6a3zO/azWb3DMYmMESnDxeug2yEazsPDFl2+Qa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548050; c=relaxed/simple;
-	bh=XrDsMqoVnQxTnOllqqzKKlehP3InEVnXsb8nLZVe4Rs=;
+	s=arc-20240116; t=1706548052; c=relaxed/simple;
+	bh=e5HpxFkNxTy/9AQzJ31MyM1DRFbc4lLmJjirSTrPBBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBaZ1xPR3rYWLKJsfdK6BDwcHchnpO1/KjlPMLEAwHjxt/5BQ3edTRxCHwPVezEyx6udK05cb2WJvn7f+otMlzNbJoA+xzxJDfKBIFUeeZIah0Xcs3HfVDLw+mun5zVHkBWYFQ60pzzQRl5scAZy2hEUn19sAGsD8xGS/A6P62w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPBVKyMb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UD2hrYaVq02yuSCVobuukv7cmUIPPOZpwvxtPaCAbAMMhUHGFMs7c2QhkRuPMl5U88fHSsDC7582DS1MhKiymlKmWHChCBW3nIDLAa2FfopW9nfpd38oZEScv41tR6ny1Jui/MRYanBZcoHQcradw/Ry8gKt5Kmd1opHPuYFppM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVovv1oT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPBVKyMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E97C43394;
-	Mon, 29 Jan 2024 17:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVovv1oT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC73C433F1;
+	Mon, 29 Jan 2024 17:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548050;
-	bh=XrDsMqoVnQxTnOllqqzKKlehP3InEVnXsb8nLZVe4Rs=;
+	s=korg; t=1706548052;
+	bh=e5HpxFkNxTy/9AQzJ31MyM1DRFbc4lLmJjirSTrPBBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPBVKyMbw5iXXmGMN7DzYye1bBDY6pIs/4aCgvlPGp2lVtPLtIGnATK9AjQG/3dgG
-	 0lE3YCzqW9s5Q5rIJfZaKctbbqfuE8idauwfqoC1FfmWDc7f5uS8owFk/f9/di4Tjg
-	 ryXlLdPC9BMgJUcB2Q9eY2thqqBnJQFMb+EIoe98=
+	b=aVovv1oTYDVYRst7MM5q9cEZW1gIfdTXUKTGNntWc3mNaRNircO9w7VPVZQS8YIXB
+	 MpOa/Bi/6/W0JUtrFlM6gjLw14jLsKkEX2E+Aa0uqpO6JDd+Vyh0/hIwy97MWq10Bu
+	 zLjLG9C/6N/976t9uUQRNSXkj/78ukdkJSbHzQMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 052/346] dmaengine: fix NULL pointer in channel unregistration function
-Date: Mon, 29 Jan 2024 09:01:23 -0800
-Message-ID: <20240129170017.918693757@linuxfoundation.org>
+Subject: [PATCH 6.7 054/346] dmaengine: xilinx: xdma: Fix the count of elapsed periods in cyclic mode
+Date: Mon, 29 Jan 2024 09:01:25 -0800
+Message-ID: <20240129170017.980121472@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -52,53 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amelie Delaunay <amelie.delaunay@foss.st.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit f5c24d94512f1b288262beda4d3dcb9629222fc7 ]
+[ Upstream commit 26ee018ff6d1c326ac9b9be36513e35870ed09db ]
 
-__dma_async_device_channel_register() can fail. In case of failure,
-chan->local is freed (with free_percpu()), and chan->local is nullified.
-When dma_async_device_unregister() is called (because of managed API or
-intentionally by DMA controller driver), channels are unconditionally
-unregistered, leading to this NULL pointer:
-[    1.318693] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
-[...]
-[    1.484499] Call trace:
-[    1.486930]  device_del+0x40/0x394
-[    1.490314]  device_unregister+0x20/0x7c
-[    1.494220]  __dma_async_device_channel_unregister+0x68/0xc0
+Xilinx DMA engine is capable of keeping track of the number of elapsed
+periods and this is an increasing 32-bit counter which is only reset
+when turning off the engine. No need to add this value to our local
+counter.
 
-Look at dma_async_device_register() function error path, channel device
-unregistration is done only if chan->local is not NULL.
-
-Then add the same condition at the beginning of
-__dma_async_device_channel_unregister() function, to avoid NULL pointer
-issue whatever the API used to reach this function.
-
-Fixes: d2fb0a043838 ("dmaengine: break out channel registration")
-Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20231213160452.2598073-1-amelie.delaunay@foss.st.com
+Fixes: cd8c732ce1a5 ("dmaengine: xilinx: xdma: Support cyclic transfers")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20231130111315.729430-2-miquel.raynal@bootlin.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dmaengine.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/dma/xilinx/xdma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
-index b7388ae62d7f..491b22240221 100644
---- a/drivers/dma/dmaengine.c
-+++ b/drivers/dma/dmaengine.c
-@@ -1103,6 +1103,9 @@ EXPORT_SYMBOL_GPL(dma_async_device_channel_register);
- static void __dma_async_device_channel_unregister(struct dma_device *device,
- 						  struct dma_chan *chan)
- {
-+	if (chan->local == NULL)
-+		return;
+diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
+index 84a88029226f..2c9c72d4b5a2 100644
+--- a/drivers/dma/xilinx/xdma.c
++++ b/drivers/dma/xilinx/xdma.c
+@@ -754,9 +754,9 @@ static irqreturn_t xdma_channel_isr(int irq, void *dev_id)
+ 	if (ret)
+ 		goto out;
+ 
+-	desc->completed_desc_num += complete_desc_num;
+-
+ 	if (desc->cyclic) {
++		desc->completed_desc_num = complete_desc_num;
 +
- 	WARN_ONCE(!device->device_release && chan->client_count,
- 		  "%s called while %d clients hold a reference\n",
- 		  __func__, chan->client_count);
+ 		ret = regmap_read(xdev->rmap, xchan->base + XDMA_CHAN_STATUS,
+ 				  &st);
+ 		if (ret)
+@@ -768,6 +768,8 @@ static irqreturn_t xdma_channel_isr(int irq, void *dev_id)
+ 		goto out;
+ 	}
+ 
++	desc->completed_desc_num += complete_desc_num;
++
+ 	/*
+ 	 * if all data blocks are transferred, remove and complete the request
+ 	 */
 -- 
 2.43.0
 
