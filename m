@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7B415956D;
-	Mon, 29 Jan 2024 17:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2182715AAD7;
+	Mon, 29 Jan 2024 17:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548180; cv=none; b=elDAJP1GdTuFETBGsJAvHmDwb2vAVMhJwUfPAWNXg2fqyeRXFRrC0RymWIpil8cW3HGcoXX0PogmE4SlrijxBck9ZcRz5/8S/n3u3ScGwTEllMyb9UPuSvABDbrrb79D7W4BZX+2HxAulV77TCXqSGdFLG/ootaeAmByB+2GO4g=
+	t=1706548181; cv=none; b=glikUYCkqUOiOLjrTbgkhX1XBLG0pUnJc1DivQamfDlda/KsfP7GkxcaYJZaVguaQjPddGtMjItNtudXVWyG5DqxALgDW0iNhx9rF3XP8F/0tkZPzNvXXFhh9k1vIDhF5sXFbiDe6DLAokuC8dfbuC0UQXNHyBylKhqfXwYuXnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548180; c=relaxed/simple;
-	bh=5MOGIy/QXEY5Lo1EL203GLt3XLXRXIvUXLx2GIuYe+M=;
+	s=arc-20240116; t=1706548181; c=relaxed/simple;
+	bh=i/L77O4AR806kyX4YLc0D2J05VhQWlkwHPQirAuC9aI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGJdJ4nBuYDYobbNAd5QjzVWea0V1yvN52a7jYBMkZwsCRmcwjUTgBXWVwOLdMXymeQdMC9cUs7YaC99BobuDkL+/34dAOSN88qEPMvldsNCibzxQwPUloJ0thlDsfxPc/pxWD0GFj16pEJpFiivddgULIKRAiEeW/X8VMgliUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=soJxa+3+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7Uyj6bcWiCaTwdC+te82yy3suK982yRaE9KSINXbiIqYwc/xLiQge6noEh+FgbHjxS/ZgyX+snAI798d6fxk3a9CHFocC+AP06SHX3MAdzdDlciRJDtPxwuiwGa639veFiKDPQtumW4wHLhcvK9XUZKMMVcyn9LHbSnqIVdGg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wIfjW9BI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="soJxa+3+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CC1C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wIfjW9BI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE943C433C7;
 	Mon, 29 Jan 2024 17:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548180;
-	bh=5MOGIy/QXEY5Lo1EL203GLt3XLXRXIvUXLx2GIuYe+M=;
+	s=korg; t=1706548181;
+	bh=i/L77O4AR806kyX4YLc0D2J05VhQWlkwHPQirAuC9aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=soJxa+3+SeJZH3GbH91dLvhXA++A0A3bOy8CZiIDXgMp/gN086c861DuFfMZQLMDn
-	 5ZfZDphN7oxfsC0aS6Q1MmTY9ixX++bnZM/cD0qPUkufcqBcHH2kg659uczhZhcAuI
-	 NOWuWI3rvNejsqhe+eL9Z6bYMgca2HDViPVLPrFg=
+	b=wIfjW9BITZHoKCDlRV78gFFAJnK/0yoUWz+ZcSjzoUDWLgGjinzxNR/pon/zs+Jv/
+	 KSSS2PphTiD9oDW1gFACFWKOcqb1dOwBYJJr79/GwHLAx3zXAOai8qZCtc4JEJnRhp
+	 w6fTmDelVQHxZLKhd55aIW24Yf3QMtp8Zupk6qHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.7 226/346] btrfs: dont warn if discard range is not aligned to sector
-Date: Mon, 29 Jan 2024 09:04:17 -0800
-Message-ID: <20240129170023.042645272@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/185] usb: dwc3: gadget: Refactor EP0 forced stall/restart into a separate API
+Date: Mon, 29 Jan 2024 09:03:21 -0800
+Message-ID: <20240129165958.647131995@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+References: <20240129165958.589924174@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +47,117 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-commit a208b3f132b48e1f94f620024e66fea635925877 upstream.
+[ Upstream commit 8f40fc0808137c157dd408d2632e63bfca2aecdb ]
 
-There's a warning in btrfs_issue_discard() when the range is not aligned
-to 512 bytes, originally added in 4d89d377bbb0 ("btrfs:
-btrfs_issue_discard ensure offset/length are aligned to sector
-boundaries"). We can't do sub-sector writes anyway so the adjustment is
-the only thing that we can do and the warning is unnecessary.
+Several sequences utilize the same routine for forcing the control endpoint
+back into the SETUP phase.  This is required, because those operations need
+to ensure that EP0 is back in the default state.
 
-CC: stable@vger.kernel.org # 4.19+
-Reported-by: syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Link: https://lore.kernel.org/r/20230420212759.29429-3-quic_wcheng@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 3c7af52c7616 ("usb: dwc3: gadget: Queue PM runtime idle on disconnect event")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c | 53 ++++++++++++++++-----------------------
+ 1 file changed, 21 insertions(+), 32 deletions(-)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -1260,7 +1260,8 @@ static int btrfs_issue_discard(struct bl
- 	u64 bytes_left, end;
- 	u64 aligned_start = ALIGN(start, 1 << SECTOR_SHIFT);
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 137602d9076f..339e8c3f7c50 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -139,6 +139,24 @@ int dwc3_gadget_set_link_state(struct dwc3 *dwc, enum dwc3_link_state state)
+ 	return -ETIMEDOUT;
+ }
  
--	if (WARN_ON(start != aligned_start)) {
-+	/* Adjust the range to be aligned to 512B sectors if necessary. */
-+	if (start != aligned_start) {
- 		len -= aligned_start - start;
- 		len = round_down(len, 1 << SECTOR_SHIFT);
- 		start = aligned_start;
++static void dwc3_ep0_reset_state(struct dwc3 *dwc)
++{
++	unsigned int	dir;
++
++	if (dwc->ep0state != EP0_SETUP_PHASE) {
++		dir = !!dwc->ep0_expect_in;
++		if (dwc->ep0state == EP0_DATA_PHASE)
++			dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
++		else
++			dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
++
++		dwc->eps[0]->trb_enqueue = 0;
++		dwc->eps[1]->trb_enqueue = 0;
++
++		dwc3_ep0_stall_and_restart(dwc);
++	}
++}
++
+ /**
+  * dwc3_ep_inc_trb - increment a trb index.
+  * @index: Pointer to the TRB index to increment.
+@@ -2552,16 +2570,9 @@ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
+ 		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
+ 				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
+ 		if (ret == 0) {
+-			unsigned int    dir;
+-
+ 			dev_warn(dwc->dev, "wait for SETUP phase timed out\n");
+ 			spin_lock_irqsave(&dwc->lock, flags);
+-			dir = !!dwc->ep0_expect_in;
+-			if (dwc->ep0state == EP0_DATA_PHASE)
+-				dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
+-			else
+-				dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
+-			dwc3_ep0_stall_and_restart(dwc);
++			dwc3_ep0_reset_state(dwc);
+ 			spin_unlock_irqrestore(&dwc->lock, flags);
+ 		}
+ 	}
+@@ -3848,16 +3859,7 @@ static void dwc3_gadget_disconnect_interrupt(struct dwc3 *dwc)
+ 	dwc->setup_packet_pending = false;
+ 	usb_gadget_set_state(dwc->gadget, USB_STATE_NOTATTACHED);
+ 
+-	if (dwc->ep0state != EP0_SETUP_PHASE) {
+-		unsigned int    dir;
+-
+-		dir = !!dwc->ep0_expect_in;
+-		if (dwc->ep0state == EP0_DATA_PHASE)
+-			dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
+-		else
+-			dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
+-		dwc3_ep0_stall_and_restart(dwc);
+-	}
++	dwc3_ep0_reset_state(dwc);
+ }
+ 
+ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
+@@ -3913,20 +3915,7 @@ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
+ 	 * phase. So ensure that EP0 is in setup phase by issuing a stall
+ 	 * and restart if EP0 is not in setup phase.
+ 	 */
+-	if (dwc->ep0state != EP0_SETUP_PHASE) {
+-		unsigned int	dir;
+-
+-		dir = !!dwc->ep0_expect_in;
+-		if (dwc->ep0state == EP0_DATA_PHASE)
+-			dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
+-		else
+-			dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
+-
+-		dwc->eps[0]->trb_enqueue = 0;
+-		dwc->eps[1]->trb_enqueue = 0;
+-
+-		dwc3_ep0_stall_and_restart(dwc);
+-	}
++	dwc3_ep0_reset_state(dwc);
+ 
+ 	/*
+ 	 * In the Synopsis DesignWare Cores USB3 Databook Rev. 3.30a
+-- 
+2.43.0
+
 
 
