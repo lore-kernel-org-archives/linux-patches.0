@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D3B7404A;
-	Mon, 29 Jan 2024 17:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7677405B;
+	Mon, 29 Jan 2024 17:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548563; cv=none; b=uzZUiZ6rBxIo71Zmz5EQZ/gZEmb/yygt82yp/1DGGE5ihIpdBfb3nIrkLJ3NPB8YQS10hJFFst9tU9l/VHpsMWYzsqZsRYfNMXnfuFkIGn2LArPXPo9h2jhOb0mj4QtBqE3bO7rGkCmy1qpFg02fkFswuTL0wR7yMPkDRgAmq74=
+	t=1706548564; cv=none; b=K6+mLjqtLMEN7YMoo9P2mkEvpUxeIqHOquhuBIiGgZUX0didcE6oAsyx4XhU9HbRmPorkljhCHGBXkE3U0Y6fLzDNHT5ercu06CffF/hooOEiss4DZ0o0onQwbF5aRDC8P6OW9g+fSSaguKFZcmIqwT1+OP9QCd8yt65fKU0nsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548563; c=relaxed/simple;
-	bh=JFYORdmLtLfr7Dmw9m2AB8ezM1n3zvPv2jbHzwdnDvc=;
+	s=arc-20240116; t=1706548564; c=relaxed/simple;
+	bh=0ECCP6ELM9hYyrNda17JcM8D8a6uzHlahUiWnr9sAGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7m+5XjTHpckPw1TB/Fjl1GN3s27WBvW2i5n0Mc8Ums/aPkUek4jKaMXf26SMn/Zi7XaqECpqkKGnVCH9183pqxzi2j0I13g0GRg/smFdgYOfnr4wk/wUP0D1/goB+J7mhd4Jf4wU5gaP9d1GaZ/Y3ZV5AwSB0jBtfXtrhzXLBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+Q8/XJA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PDM0pOjbwwdsoXFthOlKmpsHRSlLDWbOLY5f3FlApszIAXiKpV9RLdHwZMfTzqCiJcQOYL56JJ8cinMUqa1Ibz4X4XIbA72GpAtDYNO5ho6OAHBMWzy0h2KjrHU6xTvnoBVdXqmk9WuvW9qhfXlMFL/kEwoVyZco8P5qlMVoFzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6MVQ9HT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+Q8/XJA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69DA8C433C7;
-	Mon, 29 Jan 2024 17:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6MVQ9HT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346E6C43390;
+	Mon, 29 Jan 2024 17:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548563;
-	bh=JFYORdmLtLfr7Dmw9m2AB8ezM1n3zvPv2jbHzwdnDvc=;
+	s=korg; t=1706548564;
+	bh=0ECCP6ELM9hYyrNda17JcM8D8a6uzHlahUiWnr9sAGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+Q8/XJAinSZ6NzevKIQuSOpxqPCdgmCSGFt0aITYlvgIbnIk2QVe/HGAKOEctCfI
-	 6BqJ5FtlpRVaIeqW8EK8YxJhj0IZnS4KJ8OTcwILwYXZ9+q/etqQtt9xriDZNn9rUL
-	 5TOkfHX3WLNejGLrDdLAXIdE6xrq0XWnbrHpWHNU=
+	b=e6MVQ9HTweLUEwlT5wQcRgxQ2bn0xg8GQd5X9QglKzAI1wenVw1PoSx8F0FuBGqsq
+	 FMMTxZxpAeY87P3FFa+r0WwnuMrRMzpjcuJjQ3wxodefSCfcJ5mMsrAYyqzTxiY5KW
+	 5tms+fFRF6oEK5hTJbS8F3y+F+6FcRk8MFz5R1D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/331] selftests: netdevsim: fix the udp_tunnel_nic test
-Date: Mon, 29 Jan 2024 09:04:35 -0800
-Message-ID: <20240129170021.051869213@linuxfoundation.org>
+Subject: [PATCH 6.6 212/331] xsk: recycle buffer in case Rx queue was full
+Date: Mon, 29 Jan 2024 09:04:36 -0800
+Message-ID: <20240129170021.085326196@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,100 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 0879020a7817e7ce636372c016b4528f541c9f4d ]
+[ Upstream commit 269009893146c495f41e9572dd9319e787c2eba9 ]
 
-This test is missing a whole bunch of checks for interface
-renaming and one ifup. Presumably it was only used on a system
-with renaming disabled and NetworkManager running.
+Add missing xsk_buff_free() call when __xsk_rcv_zc() failed to produce
+descriptor to XSK Rx queue.
 
-Fixes: 91f430b2c49d ("selftests: net: add a test for UDP tunnel info infra")
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240123060529.1033912-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://lore.kernel.org/r/20240124191602.566724-2-maciej.fijalkowski@intel.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/drivers/net/netdevsim/udp_tunnel_nic.sh    | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/xdp/xsk.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-index 1b08e042cf94..185b02d2d4cd 100755
---- a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-+++ b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-@@ -269,6 +269,7 @@ for port in 0 1; do
- 	echo 1 > $NSIM_DEV_SYS/new_port
-     fi
-     NSIM_NETDEV=`get_netdev_name old_netdevs`
-+    ifconfig $NSIM_NETDEV up
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 774a6d1916e4..d849dc04a334 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -166,8 +166,10 @@ static int xsk_rcv_zc(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
+ 		contd = XDP_PKT_CONTD;
  
-     msg="new NIC device created"
-     exp0=( 0 0 0 0 )
-@@ -430,6 +431,7 @@ for port in 0 1; do
-     fi
+ 	err = __xsk_rcv_zc(xs, xskb, len, contd);
+-	if (err || likely(!frags))
+-		goto out;
++	if (err)
++		goto err;
++	if (likely(!frags))
++		return 0;
  
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
+ 	xskb_list = &xskb->pool->xskb_list;
+ 	list_for_each_entry_safe(pos, tmp, xskb_list, xskb_list_node) {
+@@ -176,11 +178,13 @@ static int xsk_rcv_zc(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
+ 		len = pos->xdp.data_end - pos->xdp.data;
+ 		err = __xsk_rcv_zc(xs, pos, len, contd);
+ 		if (err)
+-			return err;
++			goto err;
+ 		list_del(&pos->xskb_list_node);
+ 	}
  
-     overflow_table0 "overflow NIC table"
-@@ -487,6 +489,7 @@ for port in 0 1; do
-     fi
+-out:
++	return 0;
++err:
++	xsk_buff_free(xdp);
+ 	return err;
+ }
  
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     overflow_table0 "overflow NIC table"
-@@ -543,6 +546,7 @@ for port in 0 1; do
-     fi
- 
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     overflow_table0 "destroy NIC"
-@@ -572,6 +576,7 @@ for port in 0 1; do
-     fi
- 
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     msg="create VxLANs v6"
-@@ -632,6 +637,7 @@ for port in 0 1; do
-     fi
- 
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-@@ -687,6 +693,7 @@ for port in 0 1; do
-     fi
- 
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     msg="create VxLANs v6"
-@@ -746,6 +753,7 @@ for port in 0 1; do
-     fi
- 
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     msg="create VxLANs v6"
-@@ -876,6 +884,7 @@ msg="re-add a port"
- 
- echo 2 > $NSIM_DEV_SYS/del_port
- echo 2 > $NSIM_DEV_SYS/new_port
-+NSIM_NETDEV=`get_netdev_name old_netdevs`
- check_tables
- 
- msg="replace VxLAN in overflow table"
 -- 
 2.43.0
 
