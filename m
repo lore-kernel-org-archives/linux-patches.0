@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80464158D87;
-	Mon, 29 Jan 2024 17:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6AF161B54;
+	Mon, 29 Jan 2024 17:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548353; cv=none; b=MZcNpTUST3MQ1V5lqdXGdLwRDSs+vlc1xEu41mxFPOh96MWrdhtj+n3j0ZzuOCsmLQVsZZ8THBChw1oJ5oxlisbhv+63dzWH/uvoiPfoi+rW3x4iiWKiEpg/gmesPC3wAlfIoWqjruZAg0di97eRrSv6oAh2r5OA3IGN7ZUA6Y0=
+	t=1706548354; cv=none; b=TByEVdZlZ6BB9RZSlKo7pIRRo5qpPt4kQXG2+h18nRyfY15v19TtagUDk6ypgX10nUBj6dUFH884nPYmSgrOA0MzYzn42Pi3VkeE7eVmNY2g71+xFPvh5Bw1OCgezfvQ5BpKaHDkkEmf7oSgXdZElP5DsNcDS7HjKileFfQFgFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548353; c=relaxed/simple;
-	bh=RiOVFU0MbE1IJXt0CVy+enmX7HYXOGtDW1usjQWG0Bg=;
+	s=arc-20240116; t=1706548354; c=relaxed/simple;
+	bh=jItDdHDuYmcp6LcWaQXCyDiQl6Rsg0y0LzPLlUUI/xE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uf9ZHB6iKLrZgT3VxM7J9M0rMzvQmAN4c/4S8jIF6v9uSKUNT8b/dsvYJFjaneH6EWFf38USWp7iIIUwd3cWVVyVpR6pyfQB7DZss11zNQ/bqHh+A3DIXu3a43XUNns4eZDFR61Y0SNKz+HhOOpYCFKozA8AYo2+17i07zBrVHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZZmmbY7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmGDwwDylZ7aYt04u05dW3rmnJ7ZpYATctYiTEeTYYIqx5tvYyZ7z7x8pv4KwsfUXKiGNkzfW31KWFeNKHGahI0JxAOw4IV8dmCi3U0PpKUuRWNK8qKU4BQJUWyhXsXvXsrhIJzmLBIjwv4yVVNeyjFIIU+XlmaagG9UMsDOKLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guR+4ylE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZZmmbY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46937C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guR+4ylE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E948FC433F1;
 	Mon, 29 Jan 2024 17:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548353;
-	bh=RiOVFU0MbE1IJXt0CVy+enmX7HYXOGtDW1usjQWG0Bg=;
+	s=korg; t=1706548354;
+	bh=jItDdHDuYmcp6LcWaQXCyDiQl6Rsg0y0LzPLlUUI/xE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZZmmbY7xe4cLHC21Q5aBX1YzfaWfaEmOEgXDdNdX9A21vqm2S8GCoixDUmJn274e
-	 s8yPOFHw0tcnNED3Wx3uDnJfhRpeDtEG55A7g1zuB/35CskQC8E7M/HGck1tE0jV7Z
-	 fwZbEfHSrb2eCZHkjjUPd2Zj94MUucv9b+jj6zlw=
+	b=guR+4ylEfG0Ls/asTAIrfCs5ccRPknOAqkH3TlGCyru39lxgTUDVOnlT3xXBvX9op
+	 TIBnW0l48n2CxbVrEjNyrPgS/+YvN+3ZvFm72VZSoJHUTa/zECt1afasD5XxQdCTsa
+	 9GuaPZJw2MUk+wXDgYr3uzlZ2cTZrTQ0R509UQE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 312/346] drm/bridge: parade-ps8640: Ensure bridge is suspended in .post_disable()
-Date: Mon, 29 Jan 2024 09:05:43 -0800
-Message-ID: <20240129170025.653582492@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.7 342/346] mips: Call lose_fpu(0) before initializing fcr31 in mips_set_personality_nan
+Date: Mon, 29 Jan 2024 09:06:13 -0800
+Message-ID: <20240129170026.566969298@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -51,85 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Xi Ruoyao <xry111@xry111.site>
 
-[ Upstream commit 26db46bc9c675e43230cc6accd110110a7654299 ]
+commit 59be5c35850171e307ca5d3d703ee9ff4096b948 upstream.
 
-The ps8640 bridge seems to expect everything to be power cycled at the
-disable process, but sometimes ps8640_aux_transfer() holds the runtime
-PM reference and prevents the bridge from suspend.
+If we still own the FPU after initializing fcr31, when we are preempted
+the dirty value in the FPU will be read out and stored into fcr31,
+clobbering our setting.  This can cause an improper floating-point
+environment after execve().  For example:
 
-Prevent that by introducing a mutex lock between ps8640_aux_transfer()
-and .post_disable() to make sure the bridge is really powered off.
+    zsh% cat measure.c
+    #include <fenv.h>
+    int main() { return fetestexcept(FE_INEXACT); }
+    zsh% cc measure.c -o measure -lm
+    zsh% echo $((1.0/3)) # raising FE_INEXACT
+    0.33333333333333331
+    zsh% while ./measure; do ; done
+    (stopped in seconds)
 
-Fixes: 826cff3f7ebb ("drm/bridge: parade-ps8640: Enable runtime power management")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240109120528.1292601-1-treapking@chromium.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Call lose_fpu(0) before setting fcr31 to prevent this.
+
+Closes: https://lore.kernel.org/linux-mips/7a6aa1bbdbbe2e63ae96ff163fab0349f58f1b9e.camel@xry111.site/
+Fixes: 9b26616c8d9d ("MIPS: Respect the ISA level in FCSR handling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/parade-ps8640.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/mips/kernel/elf.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
-index fb5e9ae9ad81..166bfc725ef4 100644
---- a/drivers/gpu/drm/bridge/parade-ps8640.c
-+++ b/drivers/gpu/drm/bridge/parade-ps8640.c
-@@ -107,6 +107,7 @@ struct ps8640 {
- 	struct device_link *link;
- 	bool pre_enabled;
- 	bool need_post_hpd_delay;
-+	struct mutex aux_lock;
- };
+--- a/arch/mips/kernel/elf.c
++++ b/arch/mips/kernel/elf.c
+@@ -11,6 +11,7 @@
  
- static const struct regmap_config ps8640_regmap_config[] = {
-@@ -345,6 +346,7 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
- 	struct device *dev = &ps_bridge->page[PAGE0_DP_CNTL]->dev;
- 	int ret;
+ #include <asm/cpu-features.h>
+ #include <asm/cpu-info.h>
++#include <asm/fpu.h>
  
-+	mutex_lock(&ps_bridge->aux_lock);
- 	pm_runtime_get_sync(dev);
- 	ret = _ps8640_wait_hpd_asserted(ps_bridge, 200 * 1000);
- 	if (ret) {
-@@ -354,6 +356,7 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
- 	ret = ps8640_aux_transfer_msg(aux, msg);
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
-+	mutex_unlock(&ps_bridge->aux_lock);
+ #ifdef CONFIG_MIPS_FP_SUPPORT
  
- 	return ret;
- }
-@@ -475,7 +478,18 @@ static void ps8640_atomic_post_disable(struct drm_bridge *bridge,
- 	ps_bridge->pre_enabled = false;
+@@ -309,6 +310,11 @@ void mips_set_personality_nan(struct arc
+ 	struct cpuinfo_mips *c = &boot_cpu_data;
+ 	struct task_struct *t = current;
  
- 	ps8640_bridge_vdo_control(ps_bridge, DISABLE);
-+
-+	/*
-+	 * The bridge seems to expect everything to be power cycled at the
-+	 * disable process, so grab a lock here to make sure
-+	 * ps8640_aux_transfer() is not holding a runtime PM reference and
-+	 * preventing the bridge from suspend.
++	/* Do this early so t->thread.fpu.fcr31 won't be clobbered in case
++	 * we are preempted before the lose_fpu(0) in start_thread.
 +	 */
-+	mutex_lock(&ps_bridge->aux_lock);
++	lose_fpu(0);
 +
- 	pm_runtime_put_sync_suspend(&ps_bridge->page[PAGE0_DP_CNTL]->dev);
-+
-+	mutex_unlock(&ps_bridge->aux_lock);
- }
- 
- static int ps8640_bridge_attach(struct drm_bridge *bridge,
-@@ -624,6 +638,8 @@ static int ps8640_probe(struct i2c_client *client)
- 	if (!ps_bridge)
- 		return -ENOMEM;
- 
-+	mutex_init(&ps_bridge->aux_lock);
-+
- 	ps_bridge->supplies[0].supply = "vdd12";
- 	ps_bridge->supplies[1].supply = "vdd33";
- 	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(ps_bridge->supplies),
--- 
-2.43.0
-
+ 	t->thread.fpu.fcr31 = c->fpu_csr31;
+ 	switch (state->nan_2008) {
+ 	case 0:
 
 
