@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0500157E79;
-	Mon, 29 Jan 2024 17:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D66157E79;
+	Mon, 29 Jan 2024 17:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548346; cv=none; b=WdDsJaG4SCOLKoleuvCaSLU/O5YJxwrHEGRTMZlFS6YtyCMIZAvva61fWUp/zbPn14D9cEFIdcVw4HmpSRJR0rf/3RFBWbgg9OoOokvQlQKcMErcByBKalwXnaIiszbCSlkSvZIJ1BDo8IQZtKzYt0qTAj3GSaE52Wm0Mt12Ass=
+	t=1706548347; cv=none; b=IaRI0YrsZB9JHc8y0jfmEM4p617XnHG/eCTdwjSZUKHOsMpRf3Skp9eD3mcElo+YrgJwl4viTlwUAp9mmDyCY+f9VxpNQPp0eqCktiJ2AQVUNpvkyaf32gym2xdJKsPUUXudf9WnfF1oPw7U8A7gZOvA3JWCWQZ/U03St9jr+/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548346; c=relaxed/simple;
-	bh=NU9IxkYtsutmoK7tUYHf5UH7xNtEU5SMxOWem8rnxfA=;
+	s=arc-20240116; t=1706548347; c=relaxed/simple;
+	bh=28zrTII80AOz81jh0VcLiJ3DKKjQbrdWZRJVMWOwLRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbgzixqvaGQXGQ7X2dJ2yvkp3Z3sFivDn5o+GXGPtbvl7ycS9joE76elRi2SeJ0mahdxXVZXdS45NlrrKTmBjDPQYBT+lklfueZkmwKLMn5hHhnpNHTDGxeLfx+tfVl1Fa2q1VoHbjBsVzpGzJMnAitJ6HeJ/yrdiDKxyg4kig0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rih92B/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1+Qf3Fz3IfysOmFv5EEYWJNmTMFJXqfeyM3Y215TEoaDmipS/9FP/3mD5g0In7BHKmYZSjxGQzTYHi69Ot1jEI0PF3SUA8H2TYEDuCG0yCVUt3DcoZMtUC/Olm3ZYNKdngmiBBw2QsjNSnvL45GRgD3jPNq7Q+YRVKpVLinOyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThrKeO5z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rih92B/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA01C433C7;
-	Mon, 29 Jan 2024 17:12:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThrKeO5z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E206C43399;
+	Mon, 29 Jan 2024 17:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548346;
-	bh=NU9IxkYtsutmoK7tUYHf5UH7xNtEU5SMxOWem8rnxfA=;
+	s=korg; t=1706548347;
+	bh=28zrTII80AOz81jh0VcLiJ3DKKjQbrdWZRJVMWOwLRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rih92B/vaxkNWD9bBsh8wuxwANx3YcBG3yKWMkjlxencoFppDaTCuSbslf2jVyc34
-	 /xn0PofsjgEYSQYWoxyJWdOyZXCNmcYW3H3rJ86stq5MvCdhTw9DY2GWj4KjPCOz7U
-	 fdEikJVKWZNPE9eCutRapeFmWUdCt3YXGDBKkyIo=
+	b=ThrKeO5zsA0SUrDkY9bUnZ/vgY1xonVilbWs0d0pkQomMXDW/km440wXuA8llHfA3
+	 9FiB9It5+bCkOb6mPhssoRUXQ7J00QXF/OOmZZAXoHYGmlEi5wbgBoe8m611L7XJ5p
+	 nMfNhZdaZj0Eb6pHyOVQvtZfmkiX2b78HQ/O6nN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Edlinger <bernd.edlinger@hotmail.de>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/185] net: stmmac: Wait a bit for the reset to take effect
-Date: Mon, 29 Jan 2024 09:05:09 -0800
-Message-ID: <20240129170002.096234392@linuxfoundation.org>
+Subject: [PATCH 6.7 339/346] drm: bridge: samsung-dsim: Dont use FORCE_STOP_STATE
+Date: Mon, 29 Jan 2024 09:06:10 -0800
+Message-ID: <20240129170026.467861734@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,65 +47,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bernd Edlinger <bernd.edlinger@hotmail.de>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit a5f5eee282a0aae80227697e1d9c811b1726d31d ]
+[ Upstream commit ff3d5d04db07e5374758baa7e877fde8d683ebab ]
 
-otherwise the synopsys_id value may be read out wrong,
-because the GMAC_VERSION register might still be in reset
-state, for at least 1 us after the reset is de-asserted.
+The FORCE_STOP_STATE bit is unsuitable to force the DSI link into LP-11
+mode. It seems the bridge internally queues DSI packets and when the
+FORCE_STOP_STATE bit is cleared, they are sent in close succession
+without any useful timing (this also means that the DSI lanes won't go
+into LP-11 mode). The length of this gibberish varies between 1ms and
+5ms. This sometimes breaks an attached bridge (TI SN65DSI84 in this
+case). In our case, the bridge will fail in about 1 per 500 reboots.
 
-Add a wait for 10 us before continuing to be on the safe side.
+The FORCE_STOP_STATE handling was introduced to have the DSI lanes in
+LP-11 state during the .pre_enable phase. But as it turns out, none of
+this is needed at all. Between samsung_dsim_init() and
+samsung_dsim_set_display_enable() the lanes are already in LP-11 mode.
+The code as it was before commit 20c827683de0 ("drm: bridge:
+samsung-dsim: Fix init during host transfer") and 0c14d3130654 ("drm:
+bridge: samsung-dsim: Fix i.MX8M enable flow to meet spec") was correct
+in this regard.
 
-> From what have you got that delay value?
+This patch basically reverts both commits. It was tested on an i.MX8M
+SoC with an SN65DSI84 bridge. The signals were probed and the DSI
+packets were decoded during initialization and link start-up. After this
+patch the first DSI packet on the link is a VSYNC packet and the timing
+is correct.
 
-Just try and error, with very old linux versions and old gcc versions
-the synopsys_id was read out correctly most of the time (but not always),
-with recent linux versions and recnet gcc versions it was read out
-wrongly most of the time, but again not always.
-I don't have access to the VHDL code in question, so I cannot
-tell why it takes so long to get the correct values, I also do not
-have more than a few hardware samples, so I cannot tell how long
-this timeout must be in worst case.
-Experimentally I can tell that the register is read several times
-as zero immediately after the reset is de-asserted, also adding several
-no-ops is not enough, adding a printk is enough, also udelay(1) seems to
-be enough but I tried that not very often, and I have not access to many
-hardware samples to be 100% sure about the necessary delay.
-And since the udelay here is only executed once per device instance,
-it seems acceptable to delay the boot for 10 us.
+Command mode between .pre_enable and .enable was also briefly tested by
+a quick hack. There was no DSI link partner which would have responded,
+but it was made sure the DSI packet was send on the link. As a side
+note, the command mode seems to just work in HS mode. I couldn't find
+that the bridge will handle commands in LP mode.
 
-BTW: my hardware's synopsys id is 0x37.
-
-Fixes: c5e4ddbdfa11 ("net: stmmac: Add support for optional reset control")
-Signed-off-by: Bernd Edlinger <bernd.edlinger@hotmail.de>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/AS8P193MB1285A810BD78C111E7F6AA34E4752@AS8P193MB1285.EURP193.PROD.OUTLOOK.COM
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 20c827683de0 ("drm: bridge: samsung-dsim: Fix init during host transfer")
+Fixes: 0c14d3130654 ("drm: bridge: samsung-dsim: Fix i.MX8M enable flow to meet spec")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231113164344.1612602-1-mwalle@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/bridge/samsung-dsim.c | 32 ++-------------------------
+ 1 file changed, 2 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 8f8de14347a9..e988a60c8561 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7166,6 +7166,9 @@ int stmmac_dvr_probe(struct device *device,
- 		dev_err(priv->device, "unable to bring out of ahb reset: %pe\n",
- 			ERR_PTR(ret));
+diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
+index be5914caa17d..63a1a0c88be4 100644
+--- a/drivers/gpu/drm/bridge/samsung-dsim.c
++++ b/drivers/gpu/drm/bridge/samsung-dsim.c
+@@ -969,10 +969,6 @@ static int samsung_dsim_init_link(struct samsung_dsim *dsi)
+ 	reg = samsung_dsim_read(dsi, DSIM_ESCMODE_REG);
+ 	reg &= ~DSIM_STOP_STATE_CNT_MASK;
+ 	reg |= DSIM_STOP_STATE_CNT(driver_data->reg_values[STOP_STATE_CNT]);
+-
+-	if (!samsung_dsim_hw_is_exynos(dsi->plat_data->hw_type))
+-		reg |= DSIM_FORCE_STOP_STATE;
+-
+ 	samsung_dsim_write(dsi, DSIM_ESCMODE_REG, reg);
  
-+	/* Wait a bit for the reset to take effect */
-+	udelay(10);
-+
- 	/* Init MAC and get the capabilities */
- 	ret = stmmac_hw_init(priv);
+ 	reg = DSIM_BTA_TIMEOUT(0xff) | DSIM_LPDR_TIMEOUT(0xffff);
+@@ -1431,18 +1427,6 @@ static void samsung_dsim_disable_irq(struct samsung_dsim *dsi)
+ 	disable_irq(dsi->irq);
+ }
+ 
+-static void samsung_dsim_set_stop_state(struct samsung_dsim *dsi, bool enable)
+-{
+-	u32 reg = samsung_dsim_read(dsi, DSIM_ESCMODE_REG);
+-
+-	if (enable)
+-		reg |= DSIM_FORCE_STOP_STATE;
+-	else
+-		reg &= ~DSIM_FORCE_STOP_STATE;
+-
+-	samsung_dsim_write(dsi, DSIM_ESCMODE_REG, reg);
+-}
+-
+ static int samsung_dsim_init(struct samsung_dsim *dsi)
+ {
+ 	const struct samsung_dsim_driver_data *driver_data = dsi->driver_data;
+@@ -1492,9 +1476,6 @@ static void samsung_dsim_atomic_pre_enable(struct drm_bridge *bridge,
+ 		ret = samsung_dsim_init(dsi);
+ 		if (ret)
+ 			return;
+-
+-		samsung_dsim_set_display_mode(dsi);
+-		samsung_dsim_set_display_enable(dsi, true);
+ 	}
+ }
+ 
+@@ -1503,12 +1484,8 @@ static void samsung_dsim_atomic_enable(struct drm_bridge *bridge,
+ {
+ 	struct samsung_dsim *dsi = bridge_to_dsi(bridge);
+ 
+-	if (samsung_dsim_hw_is_exynos(dsi->plat_data->hw_type)) {
+-		samsung_dsim_set_display_mode(dsi);
+-		samsung_dsim_set_display_enable(dsi, true);
+-	} else {
+-		samsung_dsim_set_stop_state(dsi, false);
+-	}
++	samsung_dsim_set_display_mode(dsi);
++	samsung_dsim_set_display_enable(dsi, true);
+ 
+ 	dsi->state |= DSIM_STATE_VIDOUT_AVAILABLE;
+ }
+@@ -1521,9 +1498,6 @@ static void samsung_dsim_atomic_disable(struct drm_bridge *bridge,
+ 	if (!(dsi->state & DSIM_STATE_ENABLED))
+ 		return;
+ 
+-	if (!samsung_dsim_hw_is_exynos(dsi->plat_data->hw_type))
+-		samsung_dsim_set_stop_state(dsi, true);
+-
+ 	dsi->state &= ~DSIM_STATE_VIDOUT_AVAILABLE;
+ }
+ 
+@@ -1828,8 +1802,6 @@ static ssize_t samsung_dsim_host_transfer(struct mipi_dsi_host *host,
  	if (ret)
+ 		return ret;
+ 
+-	samsung_dsim_set_stop_state(dsi, false);
+-
+ 	ret = mipi_dsi_create_packet(&xfer.packet, msg);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.43.0
 
