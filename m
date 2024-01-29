@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAB71586D7;
-	Mon, 29 Jan 2024 17:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595E715705F;
+	Mon, 29 Jan 2024 17:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548118; cv=none; b=rvZAOS6fGezFt59gBw9rtLTbvuwi/FZKbkHbJLAhLkK2KtRCOLF98zj6fIYZo2FndkXgpWlnK606haj8JF7Qj7ujVDvNa4yl6ZRAsyOc05aRnfEqkQYyeFxvT0P18/qrzCW4vF5dwyCpn7oSlDtcWCwWL21b/eR4E+0j4hfhFOk=
+	t=1706548119; cv=none; b=oBVpp5Iz29kYvkIjbpjztqsg7HMFq7lIrIxLZWfJAL5qmDcB1LFbohKxQnkucckJc+24mIvnNHAFddMCw9pci2MG+j8DKNQrEThtHY9S/i2Xr0bpd7iVvo4JUcCKYSAx92hOBiPB2i3pw1YWqpIf+lKe9UYb/d1DHP1TaYpD/Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548118; c=relaxed/simple;
-	bh=H+4aWzEl4Vbm+oFoQOfsIawjk2k3cdEUbPkjRKNYG1M=;
+	s=arc-20240116; t=1706548119; c=relaxed/simple;
+	bh=drJ8lor/P9YHejQjOEJ7/9OUi+TQ7dGB4STcQ2jB2Us=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ck3qubBrTR6w4Pov2m/P0EfwiJVjuabE2sc0XWrlZUmeCM/Yj25lNIviG7cGCI3KAs9t0GW1R+gqXak7yf9UrUiJp6JgFf7hZDCf5FlhShBLeX9+lAw+jn0LWTo0MIpfzlIb0/g2C48+CCYBVqYb/Ih+pinQJu481GiTCfk371s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TII8O07F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aARFcckqOFvOSlqdImcZXG4aM5Bp6j+AH/UMcT3ewDZAG9k9yb5qjoHcEG9tVYg9UETRo1TcRq3RafC1WNsyPY8zAOMu8W8Cwcfpg3ggLcgtWCL95kX1JtUY0uZ9br4DLOGJTEKX1xC+p2TSM/XzGynqRnDwtdD4jpQ66KfK4Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCzTlk4M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TII8O07F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64EFFC433C7;
-	Mon, 29 Jan 2024 17:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCzTlk4M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16933C433F1;
+	Mon, 29 Jan 2024 17:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548118;
-	bh=H+4aWzEl4Vbm+oFoQOfsIawjk2k3cdEUbPkjRKNYG1M=;
+	s=korg; t=1706548119;
+	bh=drJ8lor/P9YHejQjOEJ7/9OUi+TQ7dGB4STcQ2jB2Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TII8O07FoFbQ1YhVFP2ps+w90Aa760oU7uC06zWkBLsAEu1PKx3kM7PG6/ng39ioF
-	 IIsZSutFViHCU+jl5iz5q9GnGcY8Punkrtg8FU0zJGPLiuGbM61POMAY55V9cVZLcy
-	 K6MG9zvLj8rSVfESBmd/BHrYf2qu/ckChsmy7UuY=
+	b=TCzTlk4MN6Ak4huJT2dz/HKHNJO6h33Hli9e4ltwycItE+WVKbGBn5f9wLQvAnE5K
+	 4xyV5FVmDW/qqvykGZMVqOxpsoFq3ossLWo5N2RxpblduGtuiAbXOlsa5lWB/dLG+4
+	 0zJoS1t7/wJjsfy2Nvq+IJoPCP2OmW63RNJT0eUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wvw@google.com>,
-	Di Shen <di.shen@unisoc.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.7 119/346] thermal: gov_power_allocator: avoid inability to reset a cdev
-Date: Mon, 29 Jan 2024 09:02:30 -0800
-Message-ID: <20240129170019.885253012@linuxfoundation.org>
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	syzbot+81227d2bd69e9dedb802@syzkaller.appspotmail.com,
+	Sean Christopherson <seanjc@google.com>,
+	Andrei Vagin <avagin@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>,
+	Peter Xu <peterx@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 120/346] fs/proc/task_mmu: move mmu notification mechanism inside mm lock
+Date: Mon, 29 Jan 2024 09:02:31 -0800
+Message-ID: <20240129170019.917774527@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -46,73 +57,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Di Shen <di.shen@unisoc.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit e95fa7404716f6e25021e66067271a4ad8eb1486 upstream.
+commit 4cccb6221cae6d020270606b9e52b1678fc8b71a upstream.
 
-Commit 0952177f2a1f ("thermal/core/power_allocator: Update once
-cooling devices when temp is low") adds an update flag to avoid
-triggering a thermal event when there is no need, and the thermal
-cdev is updated once when the temperature is low.
+Move mmu notification mechanism inside mm lock to prevent race condition
+in other components which depend on it.  The notifier will invalidate
+memory range.  Depending upon the number of iterations, different memory
+ranges would be invalidated.
 
-But when the trips are writable, and switch_on_temp is set to be a
-higher value, the cooling device state may not be reset to 0,
-because last_temperature is smaller than switch_on_temp.
+The following warning would be removed by this patch:
+WARNING: CPU: 0 PID: 5067 at arch/x86/kvm/../../../virt/kvm/kvm_main.c:734 kvm_mmu_notifier_change_pte+0x860/0x960 arch/x86/kvm/../../../virt/kvm/kvm_main.c:734
 
-For example:
-First:
-switch_on_temp=70 control_temp=85;
-Then userspace change the trip_temp:
-switch_on_temp=45 control_temp=55 cur_temp=54
+There is no behavioural and performance change with this patch when
+there is no component registered with the mmu notifier.
 
-Then userspace reset the trip_temp:
-switch_on_temp=70 control_temp=85 cur_temp=57 last_temp=54
-
-At this time, the cooling device state should be reset to 0.
-However, because cur_temp(57) < switch_on_temp(70)
-last_temp(54) < switch_on_temp(70)  ---->  update = false,
-update is false, the cooling device state can not be reset.
-
-Using the observation that tz->passive can also be regarded as the
-temperature status, set the update flag to the tz->passive value.
-
-When the temperature drops below switch_on for the first time, the
-states of cooling devices can be reset once, and tz->passive is updated
-to 0. In the next round, because tz->passive is 0, cdev->state will not
-be updated.
-
-By using the tz->passive value as the "update" flag, the issue above
-can be solved, and the cooling devices can be updated only once when the
-temperature is low.
-
-Fixes: 0952177f2a1f ("thermal/core/power_allocator: Update once cooling devices when temp is low")
-Cc: 5.13+ <stable@vger.kernel.org> # 5.13+
-Suggested-by: Wei Wang <wvw@google.com>
-Signed-off-by: Di Shen <di.shen@unisoc.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[akpm@linux-foundation.org: narrow the scope of `range', per Sean]
+Link: https://lkml.kernel.org/r/20240109112445.590736-1-usama.anjum@collabora.com
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Reported-by: syzbot+81227d2bd69e9dedb802@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/000000000000f6d051060c6785bc@google.com/
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Cc: Andrei Vagin <avagin@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/gov_power_allocator.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/task_mmu.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/drivers/thermal/gov_power_allocator.c
-+++ b/drivers/thermal/gov_power_allocator.c
-@@ -693,7 +693,7 @@ static int power_allocator_throttle(stru
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -2415,7 +2415,6 @@ static long pagemap_scan_flush_buffer(st
  
- 	trip = params->trip_switch_on;
- 	if (trip && tz->temperature < trip->temperature) {
--		update = tz->last_temperature >= trip->temperature;
-+		update = tz->passive;
- 		tz->passive = 0;
- 		reset_pid_controller(params);
- 		allow_maximum_power(tz, update);
+ static long do_pagemap_scan(struct mm_struct *mm, unsigned long uarg)
+ {
+-	struct mmu_notifier_range range;
+ 	struct pagemap_scan_private p = {0};
+ 	unsigned long walk_start;
+ 	size_t n_ranges_out = 0;
+@@ -2431,15 +2430,9 @@ static long do_pagemap_scan(struct mm_st
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Protection change for the range is going to happen. */
+-	if (p.arg.flags & PM_SCAN_WP_MATCHING) {
+-		mmu_notifier_range_init(&range, MMU_NOTIFY_PROTECTION_VMA, 0,
+-					mm, p.arg.start, p.arg.end);
+-		mmu_notifier_invalidate_range_start(&range);
+-	}
+-
+ 	for (walk_start = p.arg.start; walk_start < p.arg.end;
+ 			walk_start = p.arg.walk_end) {
++		struct mmu_notifier_range range;
+ 		long n_out;
+ 
+ 		if (fatal_signal_pending(current)) {
+@@ -2450,8 +2443,20 @@ static long do_pagemap_scan(struct mm_st
+ 		ret = mmap_read_lock_killable(mm);
+ 		if (ret)
+ 			break;
++
++		/* Protection change for the range is going to happen. */
++		if (p.arg.flags & PM_SCAN_WP_MATCHING) {
++			mmu_notifier_range_init(&range, MMU_NOTIFY_PROTECTION_VMA, 0,
++						mm, walk_start, p.arg.end);
++			mmu_notifier_invalidate_range_start(&range);
++		}
++
+ 		ret = walk_page_range(mm, walk_start, p.arg.end,
+ 				      &pagemap_scan_ops, &p);
++
++		if (p.arg.flags & PM_SCAN_WP_MATCHING)
++			mmu_notifier_invalidate_range_end(&range);
++
+ 		mmap_read_unlock(mm);
+ 
+ 		n_out = pagemap_scan_flush_buffer(&p);
+@@ -2477,9 +2482,6 @@ static long do_pagemap_scan(struct mm_st
+ 	if (pagemap_scan_writeback_args(&p.arg, uarg))
+ 		ret = -EFAULT;
+ 
+-	if (p.arg.flags & PM_SCAN_WP_MATCHING)
+-		mmu_notifier_invalidate_range_end(&range);
+-
+ 	kfree(p.vec_buf);
+ 	return ret;
+ }
 
 
