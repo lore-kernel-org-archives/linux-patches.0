@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EBA15DBA8;
-	Mon, 29 Jan 2024 17:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5731115956B;
+	Mon, 29 Jan 2024 17:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548425; cv=none; b=pVsB95Oj18uW68DsIG5h6AQYlczLBD8AGPFfTWxcN/qmKeiNEKowz8unPxPvPTtxDRaP5yiMg9gIKs8UATSrcnpoAPJLWeY4u0tQyawuR5isQCssABZ5ZYCSgUIp10oIGJ3L0qjtraC83oe9aaHc3YRgH0z9EWgAe6ddk+dCQJA=
+	t=1706548426; cv=none; b=a02xVtDr2n02VkBjWX9j+wQeW+e4LW+HcFni4zvoE2k/sfZkJsX+MdnS/hUMvv3hfYrpkYxWtYeoV2AQ5pvSD55w3bRDL5/gj+mt802ccwK+4idTMXRnYpNx1/GpWz0c2A+01s17iGsy2YAiNJw8t4MFKYaZlMbKTLVwmRCZZng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548425; c=relaxed/simple;
-	bh=Tf3yXotavoXlXGrfzrIdzqIY/vGL5Gy/z4kAkQJxivg=;
+	s=arc-20240116; t=1706548426; c=relaxed/simple;
+	bh=RjD7y2An6aAy9zLU9VL0JuXLbSCMMk28Ury3AfzeLd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/EmxDZkY09ehMjtCQ0cuMmO1YcWrSJUgYjj0sN1cS1SQCs6qKB54kJsyM96po/FkOQ4qo0MFsE0lwFy9iM7I4lXJxHlQ2+hLw2gwEuscdpGETgg6pgAneTQx3QJ2e4atNfPARMFYgYruULfNpLIoB1tlbypO0okSbKYTL9r9GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3f6NHz+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VzTkW1ma7jN7ZpMKhsrw2dbzocTTBYdKZRM1vOXz3alWUSZUvc9wd1gBoAGfTYSBKluzRYEy3HKjMrS0+qLgph+XrFr9DV6143Mlw50fWtTYA/t+mPlkXgrrYVivgqjnbffabHtQvn1IPoWs4ZvQufsSKWo+P99Og62BaOTSWh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIF7xxfs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3f6NHz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D027C433F1;
-	Mon, 29 Jan 2024 17:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIF7xxfs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B5CC43390;
+	Mon, 29 Jan 2024 17:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548425;
-	bh=Tf3yXotavoXlXGrfzrIdzqIY/vGL5Gy/z4kAkQJxivg=;
+	s=korg; t=1706548426;
+	bh=RjD7y2An6aAy9zLU9VL0JuXLbSCMMk28Ury3AfzeLd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3f6NHz+NoFWUyF3FTwwHrqI7ScdI4XNTTMKbMOOoyVop0nHL1YVRdaOu6N/V/lrx
-	 ttXr23v32wpxPXZCPdvIFLHNvydK8I5xHdO8aNa/e7Sz8L4PGuaR2raCgVSCakD1hY
-	 COpbdpfR2/O/jZHJiwr780KfQBCdOfbE+4qJ06kY=
+	b=TIF7xxfs6PKPQOhkV3emDq76l1nIAX3n4w4G5A9+UgLu/PZWQXVaZn1wAnkF0HD4E
+	 5ApHe0H0XRnimTVgH8ABN7GFICdvUwrKPB9Qu7dQsfm+ivb0WcePiRC53bFlcokSPx
+	 ys58S0rcLOQ/4pzT3W/cPZawyDhNQ4Hv18UnX2zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/331] Revert "cifs: reconnect work should have reference on server struct"
-Date: Mon, 29 Jan 2024 09:01:29 -0800
-Message-ID: <20240129170015.691470770@linuxfoundation.org>
+Subject: [PATCH 6.6 003/331] docs: kernel_feat.py: fix potential command injection
+Date: Mon, 29 Jan 2024 09:01:07 -0800
+Message-ID: <20240129170015.067909940@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,139 +52,314 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Vegard Nossum <vegard.nossum@oracle.com>
 
-[ Upstream commit 823342524868168bf681f135d01b4ae10f5863ec ]
+[ Upstream commit c48a7c44a1d02516309015b6134c9bb982e17008 ]
 
-This reverts commit 19a4b9d6c372cab6a3b2c9a061a236136fe95274.
+The kernel-feat directive passes its argument straight to the shell.
+This is unfortunate and unnecessary.
 
-This earlier commit was making an assumption that each mod_delayed_work
-called for the reconnect work would result in smb2_reconnect_server
-being called twice. This assumption turns out to be untrue. So reverting
-this change for now.
+Let's always use paths relative to $srctree/Documentation/ and use
+subprocess.check_call() instead of subprocess.Popen(shell=True).
 
-I will submit a follow-up patch to fix the actual problem in a different
-way.
+This also makes the code shorter.
 
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 78e727e58e54 ("cifs: update iface_last_update on each query-and-update")
+This is analogous to commit 3231dd586277 ("docs: kernel_abi.py: fix
+command injection") where we did exactly the same thing for
+kernel_abi.py, somehow I completely missed this one.
+
+Link: https://fosstodon.org/@jani/111676532203641247
+Reported-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Link: https://lore.kernel.org/r/20240110174758.3680506-1-vegard.nossum@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 27 ++++++---------------------
- fs/smb/client/smb2pdu.c | 23 ++++++++++-------------
- 2 files changed, 16 insertions(+), 34 deletions(-)
+ Documentation/admin-guide/features.rst        |  2 +-
+ Documentation/arch/arc/features.rst           |  2 +-
+ Documentation/arch/arm/features.rst           |  2 +-
+ Documentation/arch/arm64/features.rst         |  2 +-
+ Documentation/arch/loongarch/features.rst     |  2 +-
+ Documentation/arch/m68k/features.rst          |  2 +-
+ Documentation/arch/mips/features.rst          |  2 +-
+ Documentation/arch/nios2/features.rst         |  2 +-
+ Documentation/arch/openrisc/features.rst      |  2 +-
+ Documentation/arch/parisc/features.rst        |  2 +-
+ Documentation/arch/s390/features.rst          |  2 +-
+ Documentation/arch/sh/features.rst            |  2 +-
+ Documentation/arch/sparc/features.rst         |  2 +-
+ Documentation/arch/x86/features.rst           |  2 +-
+ Documentation/arch/xtensa/features.rst        |  2 +-
+ Documentation/powerpc/features.rst            |  2 +-
+ Documentation/riscv/features.rst              |  2 +-
+ Documentation/sphinx/kernel_feat.py           | 55 ++++---------------
+ .../zh_CN/arch/loongarch/features.rst         |  2 +-
+ .../translations/zh_CN/arch/mips/features.rst |  2 +-
+ 20 files changed, 30 insertions(+), 63 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index f43f51f2d1c1..2a30245287d5 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -401,13 +401,7 @@ static int __cifs_reconnect(struct TCP_Server_Info *server,
- 			spin_unlock(&server->srv_lock);
- 			cifs_swn_reset_server_dstaddr(server);
- 			cifs_server_unlock(server);
+diff --git a/Documentation/admin-guide/features.rst b/Documentation/admin-guide/features.rst
+index 8c167082a84f..7651eca38227 100644
+--- a/Documentation/admin-guide/features.rst
++++ b/Documentation/admin-guide/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features
++.. kernel-feat:: features
+diff --git a/Documentation/arch/arc/features.rst b/Documentation/arch/arc/features.rst
+index b793583d688a..49ff446ff744 100644
+--- a/Documentation/arch/arc/features.rst
++++ b/Documentation/arch/arc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features arc
++.. kernel-feat:: features arc
+diff --git a/Documentation/arch/arm/features.rst b/Documentation/arch/arm/features.rst
+index 7414ec03dd15..0e76aaf68eca 100644
+--- a/Documentation/arch/arm/features.rst
++++ b/Documentation/arch/arm/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features arm
++.. kernel-feat:: features arm
+diff --git a/Documentation/arch/arm64/features.rst b/Documentation/arch/arm64/features.rst
+index dfa4cb3cd3ef..03321f4309d0 100644
+--- a/Documentation/arch/arm64/features.rst
++++ b/Documentation/arch/arm64/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features arm64
++.. kernel-feat:: features arm64
+diff --git a/Documentation/arch/loongarch/features.rst b/Documentation/arch/loongarch/features.rst
+index ebacade3ea45..009f44c7951f 100644
+--- a/Documentation/arch/loongarch/features.rst
++++ b/Documentation/arch/loongarch/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features loongarch
++.. kernel-feat:: features loongarch
+diff --git a/Documentation/arch/m68k/features.rst b/Documentation/arch/m68k/features.rst
+index 5107a2119472..de7f0ccf7fc8 100644
+--- a/Documentation/arch/m68k/features.rst
++++ b/Documentation/arch/m68k/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features m68k
++.. kernel-feat:: features m68k
+diff --git a/Documentation/arch/mips/features.rst b/Documentation/arch/mips/features.rst
+index 1973d729b29a..6e0ffe3e7354 100644
+--- a/Documentation/arch/mips/features.rst
++++ b/Documentation/arch/mips/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features mips
++.. kernel-feat:: features mips
+diff --git a/Documentation/arch/nios2/features.rst b/Documentation/arch/nios2/features.rst
+index 8449e63f69b2..89913810ccb5 100644
+--- a/Documentation/arch/nios2/features.rst
++++ b/Documentation/arch/nios2/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features nios2
++.. kernel-feat:: features nios2
+diff --git a/Documentation/arch/openrisc/features.rst b/Documentation/arch/openrisc/features.rst
+index 3f7c40d219f2..bae2e25adfd6 100644
+--- a/Documentation/arch/openrisc/features.rst
++++ b/Documentation/arch/openrisc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features openrisc
++.. kernel-feat:: features openrisc
+diff --git a/Documentation/arch/parisc/features.rst b/Documentation/arch/parisc/features.rst
+index 501d7c450037..b3aa4d243b93 100644
+--- a/Documentation/arch/parisc/features.rst
++++ b/Documentation/arch/parisc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features parisc
++.. kernel-feat:: features parisc
+diff --git a/Documentation/arch/s390/features.rst b/Documentation/arch/s390/features.rst
+index 57c296a9d8f3..2883dc950681 100644
+--- a/Documentation/arch/s390/features.rst
++++ b/Documentation/arch/s390/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features s390
++.. kernel-feat:: features s390
+diff --git a/Documentation/arch/sh/features.rst b/Documentation/arch/sh/features.rst
+index f722af3b6c99..fae48fe81e9b 100644
+--- a/Documentation/arch/sh/features.rst
++++ b/Documentation/arch/sh/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features sh
++.. kernel-feat:: features sh
+diff --git a/Documentation/arch/sparc/features.rst b/Documentation/arch/sparc/features.rst
+index c0c92468b0fe..96835b6d598a 100644
+--- a/Documentation/arch/sparc/features.rst
++++ b/Documentation/arch/sparc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features sparc
++.. kernel-feat:: features sparc
+diff --git a/Documentation/arch/x86/features.rst b/Documentation/arch/x86/features.rst
+index b663f15053ce..a33616346a38 100644
+--- a/Documentation/arch/x86/features.rst
++++ b/Documentation/arch/x86/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features x86
++.. kernel-feat:: features x86
+diff --git a/Documentation/arch/xtensa/features.rst b/Documentation/arch/xtensa/features.rst
+index 6b92c7bfa19d..28dcce1759be 100644
+--- a/Documentation/arch/xtensa/features.rst
++++ b/Documentation/arch/xtensa/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features xtensa
++.. kernel-feat:: features xtensa
+diff --git a/Documentation/powerpc/features.rst b/Documentation/powerpc/features.rst
+index aeae73df86b0..ee4b95e04202 100644
+--- a/Documentation/powerpc/features.rst
++++ b/Documentation/powerpc/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features powerpc
++.. kernel-feat:: features powerpc
+diff --git a/Documentation/riscv/features.rst b/Documentation/riscv/features.rst
+index c70ef6ac2368..36e90144adab 100644
+--- a/Documentation/riscv/features.rst
++++ b/Documentation/riscv/features.rst
+@@ -1,3 +1,3 @@
+ .. SPDX-License-Identifier: GPL-2.0
+ 
+-.. kernel-feat:: $srctree/Documentation/features riscv
++.. kernel-feat:: features riscv
+diff --git a/Documentation/sphinx/kernel_feat.py b/Documentation/sphinx/kernel_feat.py
+index 27b701ed3681..bdfaa3e4b202 100644
+--- a/Documentation/sphinx/kernel_feat.py
++++ b/Documentation/sphinx/kernel_feat.py
+@@ -37,8 +37,6 @@ import re
+ import subprocess
+ import sys
+ 
+-from os import path
 -
--			/* increase ref count which reconnect work will drop */
--			spin_lock(&cifs_tcp_ses_lock);
--			server->srv_count++;
--			spin_unlock(&cifs_tcp_ses_lock);
--			if (mod_delayed_work(cifsiod_wq, &server->reconnect, 0))
--				cifs_put_tcp_session(server, false);
-+			mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
- 		}
- 	} while (server->tcpStatus == CifsNeedReconnect);
+ from docutils import nodes, statemachine
+ from docutils.statemachine import ViewList
+ from docutils.parsers.rst import directives, Directive
+@@ -76,33 +74,26 @@ class KernelFeat(Directive):
+         self.state.document.settings.env.app.warn(message, prefix="")
  
-@@ -537,13 +531,7 @@ static int reconnect_dfs_server(struct TCP_Server_Info *server)
- 		spin_unlock(&server->srv_lock);
- 		cifs_swn_reset_server_dstaddr(server);
- 		cifs_server_unlock(server);
+     def run(self):
 -
--		/* increase ref count which reconnect work will drop */
--		spin_lock(&cifs_tcp_ses_lock);
--		server->srv_count++;
--		spin_unlock(&cifs_tcp_ses_lock);
--		if (mod_delayed_work(cifsiod_wq, &server->reconnect, 0))
--			cifs_put_tcp_session(server, false);
-+		mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
- 	} while (server->tcpStatus == CifsNeedReconnect);
+         doc = self.state.document
+         if not doc.settings.file_insertion_enabled:
+             raise self.warning("docutils: file insertion disabled")
  
- 	mutex_lock(&server->refpath_lock);
-@@ -1630,19 +1618,16 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
- 
- 	cancel_delayed_work_sync(&server->echo);
- 
--	if (from_reconnect) {
-+	if (from_reconnect)
- 		/*
- 		 * Avoid deadlock here: reconnect work calls
- 		 * cifs_put_tcp_session() at its end. Need to be sure
- 		 * that reconnect work does nothing with server pointer after
- 		 * that step.
- 		 */
--		if (cancel_delayed_work(&server->reconnect))
--			cifs_put_tcp_session(server, from_reconnect);
--	} else {
--		if (cancel_delayed_work_sync(&server->reconnect))
--			cifs_put_tcp_session(server, from_reconnect);
--	}
-+		cancel_delayed_work(&server->reconnect);
-+	else
-+		cancel_delayed_work_sync(&server->reconnect);
- 
- 	spin_lock(&server->srv_lock);
- 	server->tcpStatus = CifsExiting;
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index f1977987ae74..da752f41a4e6 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3981,6 +3981,12 @@ void smb2_reconnect_server(struct work_struct *work)
- 		}
- 		spin_unlock(&ses->chan_lock);
- 	}
-+	/*
-+	 * Get the reference to server struct to be sure that the last call of
-+	 * cifs_put_tcon() in the loop below won't release the server pointer.
-+	 */
-+	if (tcon_exist || ses_exist)
-+		server->srv_count++;
- 
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
-@@ -4028,17 +4034,13 @@ void smb2_reconnect_server(struct work_struct *work)
- 
- done:
- 	cifs_dbg(FYI, "Reconnecting tcons and channels finished\n");
--	if (resched) {
-+	if (resched)
- 		queue_delayed_work(cifsiod_wq, &server->reconnect, 2 * HZ);
--		mutex_unlock(&pserver->reconnect_mutex);
+         env = doc.settings.env
+-        cwd = path.dirname(doc.current_source)
+-        cmd = "get_feat.pl rest --enable-fname --dir "
+-        cmd += self.arguments[0]
 -
--		/* no need to put tcp session as we're retrying */
--		return;
--	}
- 	mutex_unlock(&pserver->reconnect_mutex);
+-        if len(self.arguments) > 1:
+-            cmd += " --arch " + self.arguments[1]
  
- 	/* now we can safely release srv struct */
--	cifs_put_tcp_session(server, true);
-+	if (tcon_exist || ses_exist)
-+		cifs_put_tcp_session(server, 1);
- }
+-        srctree = path.abspath(os.environ["srctree"])
++        srctree = os.path.abspath(os.environ["srctree"])
  
- int
-@@ -4058,12 +4060,7 @@ SMB2_echo(struct TCP_Server_Info *server)
- 	    server->ops->need_neg(server)) {
- 		spin_unlock(&server->srv_lock);
- 		/* No need to send echo on newly established connections */
--		spin_lock(&cifs_tcp_ses_lock);
--		server->srv_count++;
--		spin_unlock(&cifs_tcp_ses_lock);
--		if (mod_delayed_work(cifsiod_wq, &server->reconnect, 0))
--			cifs_put_tcp_session(server, false);
+-        fname = cmd
++        args = [
++            os.path.join(srctree, 'scripts/get_feat.pl'),
++            'rest',
++            '--enable-fname',
++            '--dir',
++            os.path.join(srctree, 'Documentation', self.arguments[0]),
++        ]
+ 
+-        # extend PATH with $(srctree)/scripts
+-        path_env = os.pathsep.join([
+-            srctree + os.sep + "scripts",
+-            os.environ["PATH"]
+-        ])
+-        shell_env = os.environ.copy()
+-        shell_env["PATH"]    = path_env
+-        shell_env["srctree"] = srctree
++        if len(self.arguments) > 1:
++            args.extend(['--arch', self.arguments[1]])
+ 
+-        lines = self.runCmd(cmd, shell=True, cwd=cwd, env=shell_env)
++        lines = subprocess.check_output(args, cwd=os.path.dirname(doc.current_source)).decode('utf-8')
+ 
+         line_regex = re.compile("^\.\. FILE (\S+)$")
+ 
+@@ -121,30 +112,6 @@ class KernelFeat(Directive):
+         nodeList = self.nestedParse(out_lines, fname)
+         return nodeList
+ 
+-    def runCmd(self, cmd, **kwargs):
+-        u"""Run command ``cmd`` and return its stdout as unicode."""
 -
-+		mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
- 		return rc;
- 	}
- 	spin_unlock(&server->srv_lock);
+-        try:
+-            proc = subprocess.Popen(
+-                cmd
+-                , stdout = subprocess.PIPE
+-                , stderr = subprocess.PIPE
+-                , **kwargs
+-            )
+-            out, err = proc.communicate()
+-
+-            out, err = codecs.decode(out, 'utf-8'), codecs.decode(err, 'utf-8')
+-
+-            if proc.returncode != 0:
+-                raise self.severe(
+-                    u"command '%s' failed with return code %d"
+-                    % (cmd, proc.returncode)
+-                )
+-        except OSError as exc:
+-            raise self.severe(u"problems with '%s' directive: %s."
+-                              % (self.name, ErrorString(exc)))
+-        return out
+-
+     def nestedParse(self, lines, fname):
+         content = ViewList()
+         node    = nodes.section()
+diff --git a/Documentation/translations/zh_CN/arch/loongarch/features.rst b/Documentation/translations/zh_CN/arch/loongarch/features.rst
+index 82bfac180bdc..cec38dda8298 100644
+--- a/Documentation/translations/zh_CN/arch/loongarch/features.rst
++++ b/Documentation/translations/zh_CN/arch/loongarch/features.rst
+@@ -5,4 +5,4 @@
+ :Original: Documentation/arch/loongarch/features.rst
+ :Translator: Huacai Chen <chenhuacai@loongson.cn>
+ 
+-.. kernel-feat:: $srctree/Documentation/features loongarch
++.. kernel-feat:: features loongarch
+diff --git a/Documentation/translations/zh_CN/arch/mips/features.rst b/Documentation/translations/zh_CN/arch/mips/features.rst
+index da1b956e4a40..0d6df97db069 100644
+--- a/Documentation/translations/zh_CN/arch/mips/features.rst
++++ b/Documentation/translations/zh_CN/arch/mips/features.rst
+@@ -10,4 +10,4 @@
+ 
+ .. _cn_features:
+ 
+-.. kernel-feat:: $srctree/Documentation/features mips
++.. kernel-feat:: features mips
 -- 
 2.43.0
 
