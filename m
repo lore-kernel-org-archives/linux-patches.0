@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A9615705F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A450115B961;
 	Mon, 29 Jan 2024 17:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548607; cv=none; b=tj4Ya2hMMmt166dKxxCzB4SaOd8KvnVkmFSmCWCgM0t4YXD2MCkA2hsN+/1hmBN9k19OXnWnWi/+8gEPzr29KH2iaWemSZr0NcI9Y9iOtqgovUGMzWyioK7AWtyZx+PzNdt5GqWOZmVNjfjyhCEAQVI8DbMLHuJvm7LURxNlwY4=
+	t=1706548607; cv=none; b=OB4h/ayGYQoVkybvfJLUkxGTjzG9qnlmGPrzLeCkaFil/zAV0KLkvMxguUmBbGGRmdQBd4L55WqqGpm5wc6YQJBP7N7M0j+JWDI60Kwov8zh0+t/aquS6dhFSo6m2iP/qjrjbFf/NSYg0NGZG756bIZaZgWG24P31eDbhV8pK/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548607; c=relaxed/simple;
-	bh=NO9d6f55VDaN/5Bw1nRwVnfvejlCIRxgthemD7J7QiA=;
+	bh=l4uyJO3Mjm1/BVQgDiv+4ld6vEC1v8t4A+VQcBl/vUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XEMwd/CrNc6qmI1N6ysdMCtuEBi10Sj7cQ/StpHn/MZdtV5SeFovgl2wIIkUiNFoDXVBTzmDmbnn2JtHvJqZDJvxlwo4Ks8x1O1Ams4hJby1s1K4FyPPamgzoOrRgod/lnKpeOgdAQ4HxIyPQ9Qa00r4nQZ0SWn5GFKQz9lJ+P0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMITEE5N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0Nandu/j3u8WGb91/hN0Plm9N5D3y16jeEt1kwVPFMmVdIkSoJtJPTlrFx5THKdy7LoGtH1D6wJQYkB5HYJrQ8R27LsAQbbEpZDXmCEEuJG7rByAfrBcficm2/I89/iJRXUNWRs0jBMVLCSMKFbAaol8Hb8IX2Qw7Jw5uc5BeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtNXl2c/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMITEE5N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF946C433C7;
-	Mon, 29 Jan 2024 17:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtNXl2c/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7032BC433C7;
+	Mon, 29 Jan 2024 17:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548606;
-	bh=NO9d6f55VDaN/5Bw1nRwVnfvejlCIRxgthemD7J7QiA=;
+	s=korg; t=1706548607;
+	bh=l4uyJO3Mjm1/BVQgDiv+4ld6vEC1v8t4A+VQcBl/vUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMITEE5NJOOBVg4OGMdvn86PWeEA5u0jrPZJcHKRSKPKwtLKCYQdHByVdqL7sbMdG
-	 zCL2NvECtO/0oX/PgovcdrpShUHxGmwiVeopDc0dzD/2EYGfBCBMiHnXXSHUN3MBtH
-	 iL9JReRnAiSlyddH5W3o3hDWhT6Cw9fZHxJ+mT6M=
+	b=dtNXl2c/2PIzWG4+68MkiL/bPM/YmwT8nyVN3qzUwOtMATQAR8bvUcZbUK+E9p2ui
+	 nQbj+0X5BPXCMrJbRWW2smUN4AlR03HphodkR5lEXmsjokHJi5pOgL6DOnmYFHIe85
+	 AGFxmaLQys2jVvddWrsJORBlalyBtF7b8e+SoVCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Ma Jun <Jun.Ma2@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 270/331] drm/amd/display: Fix late derefrence dsc check in link_set_dsc_pps_packet()
-Date: Mon, 29 Jan 2024 09:05:34 -0800
-Message-ID: <20240129170022.767755506@linuxfoundation.org>
+Subject: [PATCH 6.6 271/331] drm/amdgpu/pm: Fix the power source flag error
+Date: Mon, 29 Jan 2024 09:05:35 -0800
+Message-ID: <20240129170022.796220002@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -55,50 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-commit 3bb9b1f958c3d986ed90a3ff009f1e77e9553207 upstream.
+commit ca1ffb174f16b699c536734fc12a4162097c49f4 upstream.
 
-In link_set_dsc_pps_packet(), 'struct display_stream_compressor *dsc'
-was dereferenced in a DC_LOGGER_INIT(dsc->ctx->logger); before the 'dsc'
-NULL pointer check.
+The power source flag should be updated when
+[1] System receives an interrupt indicating that the power source
+has changed.
+[2] System resumes from suspend or runtime suspend
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/dc/link/link_dpms.c:905 link_set_dsc_pps_packet() warn: variable dereferenced before check 'dsc' (see line 903)
-
-Cc: stable@vger.kernel.org
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Cc: Wenjing Liu <wenjing.liu@amd.com>
-Cc: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c      |   13 +++----------
+ drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c |    2 ++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    2 ++
+ 3 files changed, 7 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -873,11 +873,15 @@ bool link_set_dsc_pps_packet(struct pipe
- {
- 	struct display_stream_compressor *dsc = pipe_ctx->stream_res.dsc;
- 	struct dc_stream_state *stream = pipe_ctx->stream;
--	DC_LOGGER_INIT(dsc->ctx->logger);
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -24,6 +24,7 @@
  
--	if (!pipe_ctx->stream->timing.flags.DSC || !dsc)
-+	if (!pipe_ctx->stream->timing.flags.DSC)
-+		return false;
-+
-+	if (!dsc)
- 		return false;
+ #include <linux/firmware.h>
+ #include <linux/pci.h>
++#include <linux/power_supply.h>
+ #include <linux/reboot.h>
  
-+	DC_LOGGER_INIT(dsc->ctx->logger);
-+
- 	if (enable) {
- 		struct dsc_config dsc_cfg;
- 		uint8_t dsc_packed_pps[128];
+ #include "amdgpu.h"
+@@ -741,16 +742,8 @@ static int smu_late_init(void *handle)
+ 	 * handle the switch automatically. Driver involvement
+ 	 * is unnecessary.
+ 	 */
+-	if (!smu->dc_controlled_by_gpio) {
+-		ret = smu_set_power_source(smu,
+-					   adev->pm.ac_power ? SMU_POWER_SOURCE_AC :
+-					   SMU_POWER_SOURCE_DC);
+-		if (ret) {
+-			dev_err(adev->dev, "Failed to switch to %s mode!\n",
+-				adev->pm.ac_power ? "AC" : "DC");
+-			return ret;
+-		}
+-	}
++	adev->pm.ac_power = power_supply_is_system_supplied() > 0;
++	smu_set_ac_dc(smu);
+ 
+ 	if ((adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 1)) ||
+ 	    (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 3)))
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
+@@ -1441,10 +1441,12 @@ static int smu_v11_0_irq_process(struct
+ 			case 0x3:
+ 				dev_dbg(adev->dev, "Switched to AC mode!\n");
+ 				schedule_work(&smu->interrupt_work);
++				adev->pm.ac_power = true;
+ 				break;
+ 			case 0x4:
+ 				dev_dbg(adev->dev, "Switched to DC mode!\n");
+ 				schedule_work(&smu->interrupt_work);
++				adev->pm.ac_power = false;
+ 				break;
+ 			case 0x7:
+ 				/*
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -1377,10 +1377,12 @@ static int smu_v13_0_irq_process(struct
+ 			case 0x3:
+ 				dev_dbg(adev->dev, "Switched to AC mode!\n");
+ 				smu_v13_0_ack_ac_dc_interrupt(smu);
++				adev->pm.ac_power = true;
+ 				break;
+ 			case 0x4:
+ 				dev_dbg(adev->dev, "Switched to DC mode!\n");
+ 				smu_v13_0_ack_ac_dc_interrupt(smu);
++				adev->pm.ac_power = false;
+ 				break;
+ 			case 0x7:
+ 				/*
 
 
