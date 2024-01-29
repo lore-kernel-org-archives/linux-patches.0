@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8672157E8F;
-	Mon, 29 Jan 2024 17:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC867157E8F;
+	Mon, 29 Jan 2024 17:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548374; cv=none; b=ukDcoOzpB6pT9Bjle09vQ+eoKMRDLg9Uyj3w0R1qV7eiyP3iMd8fq6Go6zlZiNpJ/XJWnfFHD8HcSxurGMZ4cf5EB0HGr1WiasXxD6qnnuF/uEAQ5z5vC68w2QC/k5Ay7P5JHuMSJHJc2Gas/skcOGVyLyWh1rLoK+KEjhLgJ0E=
+	t=1706548374; cv=none; b=kZjS/gP5NtZskss9RHfS4WViYxJBLLugHQ2fQD2mT7Km46cWnpvSZNbTHYDVTO26GrDzAuodT1Hp/nlDB+ahPSg/5NvsvQkQenGauRe7hx8QxclPyF1vxovCwkHrXreP2hDBuGodZgGKelGRpH/3G8P4dvr5sg+iZRJoYgp2Xrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548374; c=relaxed/simple;
-	bh=bu6ITFeX4H3xnn8T4N9IfQ1WlQczDz+JxDyvEH+Rslk=;
+	bh=KiNyiMxqhyQQv+/3152hs+nyYeMrwyPUIeBgvNq1DMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csKIlvIDBZcs9Q5s4PDbBFYg0z4pHpEiRnkO8/5pX+YyMhnW3UYH2yNMSIuhdsmi32yxppyZPISz7hEYMSkVNvRtvc61Doto8pVQnl3b+oyeIYn69K6YdqRqQ1V7Dy6HHSBpZCK8Ss8KM5a397YTmalC2yhl9MAvWcRU7/Fu5xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiyJuN2y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gy+S4fPa636WyQ2296fDQqcO9otHIKtIXEcPejq3kmTIYj7ROzEDDZE8brLKxaEb/NRJJdyf5ZJ6NoFneO/UALkH1nMHEGQrcxJSbICQddpedkxsSQBZi5Ii4f1JjRVvH8LDikEi1Pc2UgkKjIhMkiiVhmc9r16FjuwsZwEOUyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bm60t5DV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiyJuN2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35E3C43390;
-	Mon, 29 Jan 2024 17:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bm60t5DV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75761C433F1;
+	Mon, 29 Jan 2024 17:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548373;
-	bh=bu6ITFeX4H3xnn8T4N9IfQ1WlQczDz+JxDyvEH+Rslk=;
+	s=korg; t=1706548374;
+	bh=KiNyiMxqhyQQv+/3152hs+nyYeMrwyPUIeBgvNq1DMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZiyJuN2ytXgWaCOGSRYCD8OSZDpmySgFkMlluDEMR4qKmhtiDV+GMwe2fHtDGYc8c
-	 irzT6MRX7BdhnZsGVv9uy0hy98eFX03wb05P68rBlHBa+kvVHfMkhcoBg1qXg8dDNj
-	 mJZhYked3ksCZi3ddRjpNuT5ef3JRgbeZ9MVWFyI=
+	b=bm60t5DVXLDcT20FutmtkXHK5D65vkqGH6HHwM6dxahrzVDzYNLU0KRT/pBvHIalV
+	 3Qe+gOzjqOKYOvkuEtzdnk1X+IL+PAI0rwPvVZNitJ4f2b5ltC2+KI8U0I9Z0WZ29c
+	 fdmNfSLApygv9rAeIYMlRNmG75tBsyDzve7pSAlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	linux-block@vger.kernel.org,
-	nbd@other.debian.org,
-	Simon Horman <horms@kernel.org>
-Subject: [PATCH 6.1 114/185] nbd: always initialize struct msghdr completely
-Date: Mon, 29 Jan 2024 09:05:14 -0800
-Message-ID: <20240129170002.256421367@linuxfoundation.org>
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Anand Jain <anand.jain@oracle.com>,
+	Omar Sandoval <osandov@fb.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 115/185] btrfs: avoid copying BTRFS_ROOT_SUBVOL_DEAD flag to snapshot of subvolume being deleted
+Date: Mon, 29 Jan 2024 09:05:15 -0800
+Message-ID: <20240129170002.292630459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 References: <20240129165958.589924174@linuxfoundation.org>
@@ -55,77 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Omar Sandoval <osandov@fb.com>
 
-commit 78fbb92af27d0982634116c7a31065f24d092826 upstream.
+commit 3324d0547861b16cf436d54abba7052e0c8aa9de upstream.
 
-syzbot complains that msg->msg_get_inq value can be uninitialized [1]
+Sweet Tea spotted a race between subvolume deletion and snapshotting
+that can result in the root item for the snapshot having the
+BTRFS_ROOT_SUBVOL_DEAD flag set. The race is:
 
-struct msghdr got many new fields recently, we should always make
-sure their values is zero by default.
+Thread 1                                      | Thread 2
+----------------------------------------------|----------
+btrfs_delete_subvolume                        |
+  btrfs_set_root_flags(BTRFS_ROOT_SUBVOL_DEAD)|
+                                              |btrfs_mksubvol
+                                              |  down_read(subvol_sem)
+                                              |  create_snapshot
+                                              |    ...
+                                              |    create_pending_snapshot
+                                              |      copy root item from source
+  down_write(subvol_sem)                      |
 
-[1]
- BUG: KMSAN: uninit-value in tcp_recvmsg+0x686/0xac0 net/ipv4/tcp.c:2571
-  tcp_recvmsg+0x686/0xac0 net/ipv4/tcp.c:2571
-  inet_recvmsg+0x131/0x580 net/ipv4/af_inet.c:879
-  sock_recvmsg_nosec net/socket.c:1044 [inline]
-  sock_recvmsg+0x12b/0x1e0 net/socket.c:1066
-  __sock_xmit+0x236/0x5c0 drivers/block/nbd.c:538
-  nbd_read_reply drivers/block/nbd.c:732 [inline]
-  recv_work+0x262/0x3100 drivers/block/nbd.c:863
-  process_one_work kernel/workqueue.c:2627 [inline]
-  process_scheduled_works+0x104e/0x1e70 kernel/workqueue.c:2700
-  worker_thread+0xf45/0x1490 kernel/workqueue.c:2781
-  kthread+0x3ed/0x540 kernel/kthread.c:388
-  ret_from_fork+0x66/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
+This flag is only checked in send and swap activate, which this would
+cause to fail mysteriously.
 
-Local variable msg created at:
-  __sock_xmit+0x4c/0x5c0 drivers/block/nbd.c:513
-  nbd_read_reply drivers/block/nbd.c:732 [inline]
-  recv_work+0x262/0x3100 drivers/block/nbd.c:863
+create_snapshot() now checks the root refs to reject a deleted
+subvolume, so we can fix this by locking subvol_sem earlier so that the
+BTRFS_ROOT_SUBVOL_DEAD flag and the root refs are updated atomically.
 
-CPU: 1 PID: 7465 Comm: kworker/u5:1 Not tainted 6.7.0-rc7-syzkaller-00041-gf016f7547aee #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-Workqueue: nbd5-recv recv_work
-
-Fixes: f94fd25cb0aa ("tcp: pass back data left in socket after receive")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: stable@vger.kernel.org
-Cc: Josef Bacik <josef@toxicpanda.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: linux-block@vger.kernel.org
-Cc: nbd@other.debian.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240112132657.647112-1-edumazet@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+CC: stable@vger.kernel.org # 4.14+
+Reported-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/nbd.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/btrfs/inode.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -494,7 +494,7 @@ static int __sock_xmit(struct nbd_device
- 		       struct iov_iter *iter, int msg_flags, int *sent)
- {
- 	int result;
--	struct msghdr msg;
-+	struct msghdr msg = { };
- 	unsigned int noreclaim_flag;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4689,6 +4689,8 @@ int btrfs_delete_subvolume(struct inode
+ 	u64 root_flags;
+ 	int ret;
  
- 	if (unlikely(!sock)) {
-@@ -509,10 +509,6 @@ static int __sock_xmit(struct nbd_device
- 	noreclaim_flag = memalloc_noreclaim_save();
- 	do {
- 		sock->sk->sk_allocation = GFP_NOIO | __GFP_MEMALLOC;
--		msg.msg_name = NULL;
--		msg.msg_namelen = 0;
--		msg.msg_control = NULL;
--		msg.msg_controllen = 0;
- 		msg.msg_flags = msg_flags | MSG_NOSIGNAL;
++	down_write(&fs_info->subvol_sem);
++
+ 	/*
+ 	 * Don't allow to delete a subvolume with send in progress. This is
+ 	 * inside the inode lock so the error handling that has to drop the bit
+@@ -4700,25 +4702,25 @@ int btrfs_delete_subvolume(struct inode
+ 		btrfs_warn(fs_info,
+ 			   "attempt to delete subvolume %llu during send",
+ 			   dest->root_key.objectid);
+-		return -EPERM;
++		ret = -EPERM;
++		goto out_up_write;
+ 	}
+ 	if (atomic_read(&dest->nr_swapfiles)) {
+ 		spin_unlock(&dest->root_item_lock);
+ 		btrfs_warn(fs_info,
+ 			   "attempt to delete subvolume %llu with active swapfile",
+ 			   root->root_key.objectid);
+-		return -EPERM;
++		ret = -EPERM;
++		goto out_up_write;
+ 	}
+ 	root_flags = btrfs_root_flags(&dest->root_item);
+ 	btrfs_set_root_flags(&dest->root_item,
+ 			     root_flags | BTRFS_ROOT_SUBVOL_DEAD);
+ 	spin_unlock(&dest->root_item_lock);
  
- 		if (send)
+-	down_write(&fs_info->subvol_sem);
+-
+ 	ret = may_destroy_subvol(dest);
+ 	if (ret)
+-		goto out_up_write;
++		goto out_undead;
+ 
+ 	btrfs_init_block_rsv(&block_rsv, BTRFS_BLOCK_RSV_TEMP);
+ 	/*
+@@ -4728,7 +4730,7 @@ int btrfs_delete_subvolume(struct inode
+ 	 */
+ 	ret = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
+ 	if (ret)
+-		goto out_up_write;
++		goto out_undead;
+ 
+ 	trans = btrfs_start_transaction(root, 0);
+ 	if (IS_ERR(trans)) {
+@@ -4794,15 +4796,17 @@ out_end_trans:
+ 	inode->i_flags |= S_DEAD;
+ out_release:
+ 	btrfs_subvolume_release_metadata(root, &block_rsv);
+-out_up_write:
+-	up_write(&fs_info->subvol_sem);
++out_undead:
+ 	if (ret) {
+ 		spin_lock(&dest->root_item_lock);
+ 		root_flags = btrfs_root_flags(&dest->root_item);
+ 		btrfs_set_root_flags(&dest->root_item,
+ 				root_flags & ~BTRFS_ROOT_SUBVOL_DEAD);
+ 		spin_unlock(&dest->root_item_lock);
+-	} else {
++	}
++out_up_write:
++	up_write(&fs_info->subvol_sem);
++	if (!ret) {
+ 		d_invalidate(dentry);
+ 		btrfs_prune_dentries(dest);
+ 		ASSERT(dest->send_in_progress == 0);
 
 
