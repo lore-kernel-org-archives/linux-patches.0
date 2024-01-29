@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5771157E6D;
-	Mon, 29 Jan 2024 17:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D14B157E6D;
+	Mon, 29 Jan 2024 17:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548640; cv=none; b=TDdDwVI8sc2PupQYy1aKZsgH05vxjJLWfz3L+7KLOS22Mvr60x6Q9E8WyKpEFdDAe+FO6AGCmvuRfCSi9WdfiIt9CM89avV27BeykYI7lkOXD9j15OOS5Rc6Tw2BSAD6MI1mvPiTQWROBwPMMLzn1YloCQ8+btvQKWA/A6TUHnY=
+	t=1706548641; cv=none; b=b2LUsIYX8c1Mje3CH2pkely5EnFC+eNPCCFdz0XdTYPqXs9hZQlC48w2NRvYrjIYCMdo+zmQwJnzNs5k2UGYB4+4fSsj1IDunGf+wTJh7PPCP8fPMUFwuRPHbzW3TGKB5AQREGAwzoLHPqF0hfrX2+7ORoKasZjoCZKEoK7Zg6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548640; c=relaxed/simple;
-	bh=p7W3aBZBuLq/cNR90beVlueD0n/Aq/TX4nB0hnrdmpw=;
+	s=arc-20240116; t=1706548641; c=relaxed/simple;
+	bh=Y5CW5M5jxbwXYd1gBZyuUh4Us+RwupiFMh9EKpnP3ZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kmTrLw1VrYwCnHD14a5eX4rAdK7bjnsS6TPphyRQdYx08A3qKQQ55JaajF5ddFVCKpazUBwN9kwJRpsw7t85FS/aZHJOqp651CzPR3nytAXyDb+qAhCG5ZArhNk3WVS/CwnGz/C9fMbJqMzHA2eIadVKuoJt5zHbnwdTrdv2XmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxRH2tS0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rprJYnrHCOExGWXlSJnzG0D0Dw5rY7Nq5aQZawMg1sPZmGUqJBB8NvlU0V67duKfknQRK0Gj1pBUYTjjem8JlJgDPHO+OP7aojIAwzzIQ5/Gm/S2ZdnxZbC1RNzG9XX+1SlZwipARl60VUJdjwDJDlJD3JX5jEzWB/V1RM62aoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEUIIufN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxRH2tS0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD74C433F1;
-	Mon, 29 Jan 2024 17:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEUIIufN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DBBC433F1;
+	Mon, 29 Jan 2024 17:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548640;
-	bh=p7W3aBZBuLq/cNR90beVlueD0n/Aq/TX4nB0hnrdmpw=;
+	s=korg; t=1706548641;
+	bh=Y5CW5M5jxbwXYd1gBZyuUh4Us+RwupiFMh9EKpnP3ZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MxRH2tS0kj13PCOWEmAasigEp6pnx8+YmRro86gbVAr+QUiSDN9/Pd64BcaAm/DgG
-	 PUgBXObhwSPd/ZUGK0UjUJB3qcKdPlSEx1RLHkIB7ZO7VNVLCZ3Dj7kc6254skee7n
-	 6n8aaIi81tJVuKqZ2UESyGioj3ctEa6x0ACmUmSI=
+	b=qEUIIufN5Opt2zM/8O9REIRG9BJ6FEd7kK78Z9VShZQUQUe6YsyI0ra7oyyaAL+lC
+	 NBjAbh0A/X7wlM88DyJZXXXfMMcqzM+Rbhg/GfXbdeIN/BJfwon6PpjEFJ6bk0Qujm
+	 hSveq5Y2XVi8KvkZVNRBStoym3L7leKVXOtyZEn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Wyes Karny <wkarny@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 317/331] cpufreq/amd-pstate: Fix setting scaling max/min freq values
-Date: Mon, 29 Jan 2024 09:06:21 -0800
-Message-ID: <20240129170024.162048288@linuxfoundation.org>
+Subject: [PATCH 6.6 300/331] drm/bridge: parade-ps8640: Wait for HPD when doing an AUX transfer
+Date: Mon, 29 Jan 2024 09:06:04 -0800
+Message-ID: <20240129170023.649095371@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,45 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 22fb4f041999f5f16ecbda15a2859b4ef4cbf47e ]
+[ Upstream commit 024b32db43a359e0ded3fcc6cd86247cbbed4224 ]
 
-Scaling min/max freq values were being cached and lagging a setting
-each time.  Fix the ordering of the clamp call to ensure they work.
+Unlike what is claimed in commit f5aa7d46b0ee ("drm/bridge:
+parade-ps8640: Provide wait_hpd_asserted() in struct drm_dp_aux"), if
+someone manually tries to do an AUX transfer (like via `i2cdump ${bus}
+0x50 i`) while the panel is off we don't just get a simple transfer
+error. Instead, the whole ps8640 gets thrown for a loop and goes into
+a bad state.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217931
-Fixes: febab20caeba ("cpufreq/amd-pstate: Fix scaling_min_freq and scaling_max_freq update")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Wyes Karny <wkarny@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Let's put the function to wait for the HPD (and the magical 50 ms
+after first reset) back in when we're doing an AUX transfer. This
+shouldn't actually make things much slower (assuming the panel is on)
+because we should immediately poll and see the HPD high. Mostly this
+is just an extra i2c transfer to the bridge.
+
+Fixes: f5aa7d46b0ee ("drm/bridge: parade-ps8640: Provide wait_hpd_asserted() in struct drm_dp_aux")
+Tested-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Pin-yen Lin <treapking@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231221135548.1.I10f326a9305d57ad32cee7f8d9c60518c8be20fb@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/parade-ps8640.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 1f6186475715..1791d37fbc53 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1232,14 +1232,13 @@ static void amd_pstate_epp_update_limit(struct cpufreq_policy *policy)
- 	max_limit_perf = div_u64(policy->max * cpudata->highest_perf, cpudata->max_freq);
- 	min_limit_perf = div_u64(policy->min * cpudata->highest_perf, cpudata->max_freq);
+diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
+index 541e4f5afc4c..fb5e9ae9ad81 100644
+--- a/drivers/gpu/drm/bridge/parade-ps8640.c
++++ b/drivers/gpu/drm/bridge/parade-ps8640.c
+@@ -346,6 +346,11 @@ static ssize_t ps8640_aux_transfer(struct drm_dp_aux *aux,
+ 	int ret;
  
-+	WRITE_ONCE(cpudata->max_limit_perf, max_limit_perf);
-+	WRITE_ONCE(cpudata->min_limit_perf, min_limit_perf);
-+
- 	max_perf = clamp_t(unsigned long, max_perf, cpudata->min_limit_perf,
- 			cpudata->max_limit_perf);
- 	min_perf = clamp_t(unsigned long, min_perf, cpudata->min_limit_perf,
- 			cpudata->max_limit_perf);
--
--	WRITE_ONCE(cpudata->max_limit_perf, max_limit_perf);
--	WRITE_ONCE(cpudata->min_limit_perf, min_limit_perf);
--
- 	value = READ_ONCE(cpudata->cppc_req_cached);
- 
- 	if (cpudata->policy == CPUFREQ_POLICY_PERFORMANCE)
+ 	pm_runtime_get_sync(dev);
++	ret = _ps8640_wait_hpd_asserted(ps_bridge, 200 * 1000);
++	if (ret) {
++		pm_runtime_put_sync_suspend(dev);
++		return ret;
++	}
+ 	ret = ps8640_aux_transfer_msg(aux, msg);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_put_autosuspend(dev);
 -- 
 2.43.0
 
