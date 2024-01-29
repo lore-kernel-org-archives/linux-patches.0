@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E865515A48D;
-	Mon, 29 Jan 2024 17:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4BC15A4A3;
+	Mon, 29 Jan 2024 17:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548134; cv=none; b=AEChiJvmsoNsbvNUfr1JTSTmULOaOj0UOi67ZnuX36uLDPh6fL5nmIsW26Lgu1FFeunKKktWaSPa7J7OuN4HI+XIcArsPFcpJnV6ilXqpi2GpM/seN7I5lWKuANq5EshMlEMEeBeWYzhyJ18cwSQTvM+XC6eBLtFA+YkwA2B7uk=
+	t=1706548134; cv=none; b=jmwb3oYM9oxeAm5bNzXiiXfH6aSwaoaRGaACZr89o9yTt5m5Nihg5e69Gj+9yP0coAs//plaIa4Xukgj07aU35SXDfMKNgjzKBXmI1NONzDqlUQosrvWrrUCOjxuMGh0yTiIUbW1u/xE1Zln+ZO/4eHe3NPexChWCT/D70Wuz/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548134; c=relaxed/simple;
-	bh=1Jcfaqt32XyjvhaIlK8GzRRu6mG5GCzNFI0PDy9+otQ=;
+	bh=VWnFCHyNs3OLx7gn5lkjxpn07F7a+hMk8PR9xBPIxM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjJsYGxX9s66IawCwS43hp7KUhuVwpIIvW8IIkrTi08/3+iIf8wA4UTkpkcm+hxhD1jZK1PDN3kpFuwylZAaCQFuLBI4EXa8GcllH3WiU+muvYQwkrbfvz7GCEP7iV9ga+pF8hBa+dwBp+73j3viQqhIQBy9Xvk7Scm4ulkjm/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGbZXHKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J8Yh9C/twn3hW2VDoriWX03uXgwCahbrea5/meQ2x8ARPtHfb3D85V3ry8bLQtWPrLSpmsmM3sLZnVT0ixnP3dFhGuzcAf+rGWTb6YBB+exjTpEvTbEt/iAb/+j555FZO4EMm+M8Wz2Y2gK7EMHncvKE1lR+VAWqApZolW+M/NE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1aFuCovP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGbZXHKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01F7C43390;
-	Mon, 29 Jan 2024 17:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1aFuCovP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66900C433C7;
+	Mon, 29 Jan 2024 17:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548133;
-	bh=1Jcfaqt32XyjvhaIlK8GzRRu6mG5GCzNFI0PDy9+otQ=;
+	s=korg; t=1706548134;
+	bh=VWnFCHyNs3OLx7gn5lkjxpn07F7a+hMk8PR9xBPIxM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGbZXHKiSk0sYsuiQIZW6lj8cDGumhq89ENifoI30wuoQn62z9a4kq7hmT181bxHv
-	 joFETg9QMXz02ch5UOd0jL+V4EOGaaa4F0MH9j/bgl96tRzD7DNNseXXfwSIcunftQ
-	 bRPsA8Uk8zO+Y6xaMzCRtD7G8ZshmWW6yamhLfY8=
+	b=1aFuCovPXsKSSC+t5b1GxFmbrdfAV7wSqMYzTAviFuoJmg55rMv0zx0cOdcbGzMH6
+	 SO8Ks10WH/nqStIcOY5/jDxRC1GTtTmg37Hz11h+j8DyFnqpyCDFpejylL61T8WfMg
+	 Cq9gQWfqpHBWvLhavApPEFQ4kKfVUl+zQNehHZIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Glaza <jan.glaza@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Divya Koppera <divya.koppera@microchip.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 164/346] dpll: fix register pin with unregistered parent pin
-Date: Mon, 29 Jan 2024 09:03:15 -0800
-Message-ID: <20240129170021.222816429@linuxfoundation.org>
+Subject: [PATCH 6.7 165/346] net: micrel: Fix PTP frame parsing for lan8814
+Date: Mon, 29 Jan 2024 09:03:16 -0800
+Message-ID: <20240129170021.252385544@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,67 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 7dc5b18ff71bd6f948810ab8a08b6a6ff8b315c5 ]
+[ Upstream commit aaf632f7ab6dec57bc9329a438f94504fe8034b9 ]
 
-In case of multiple kernel module instances using the same dpll device:
-if only one registers dpll device, then only that one can register
-directly connected pins with a dpll device. When unregistered parent is
-responsible for determining if the muxed pin can be registered with it
-or not, the drivers need to be loaded in serialized order to work
-correctly - first the driver instance which registers the direct pins
-needs to be loaded, then the other instances could register muxed type
-pins.
+The HW has the capability to check each frame if it is a PTP frame,
+which domain it is, which ptp frame type it is, different ip address in
+the frame. And if one of these checks fail then the frame is not
+timestamp. Most of these checks were disabled except checking the field
+minorVersionPTP inside the PTP header. Meaning that once a partner sends
+a frame compliant to 8021AS which has minorVersionPTP set to 1, then the
+frame was not timestamp because the HW expected by default a value of 0
+in minorVersionPTP. This is exactly the same issue as on lan8841.
+Fix this issue by removing this check so the userspace can decide on this.
 
-Allow registration of a pin with a parent even if the parent was not
-yet registered, thus allow ability for unserialized driver instance
-load order.
-Do not WARN_ON notification for unregistered pin, which can be invoked
-for described case, instead just return error.
-
-Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
-Fixes: 9d71b54b65b1 ("dpll: netlink: Add DPLL framework base functions")
-Reviewed-by: Jan Glaza <jan.glaza@intel.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Fixes: ece19502834d ("net: phy: micrel: 1588 support for LAN8814 phy")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Divya Koppera <divya.koppera@microchip.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/net/phy/micrel.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index 5e3b9b5679f9..f8fbf0394288 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -28,8 +28,6 @@ static u32 dpll_xa_id;
- 	WARN_ON_ONCE(!xa_get_mark(&dpll_device_xa, (d)->id, DPLL_REGISTERED))
- #define ASSERT_DPLL_NOT_REGISTERED(d)	\
- 	WARN_ON_ONCE(xa_get_mark(&dpll_device_xa, (d)->id, DPLL_REGISTERED))
--#define ASSERT_PIN_REGISTERED(p)	\
--	WARN_ON_ONCE(!xa_get_mark(&dpll_pin_xa, (p)->id, DPLL_REGISTERED))
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index ce5ad4a82481..858175ca58cd 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -120,6 +120,11 @@
+  */
+ #define LAN8814_1PPM_FORMAT			17179
  
- struct dpll_device_registration {
- 	struct list_head list;
-@@ -614,8 +612,6 @@ dpll_pin_register(struct dpll_device *dpll, struct dpll_pin *pin,
- 	    WARN_ON(!ops->state_on_dpll_get) ||
- 	    WARN_ON(!ops->direction_get))
- 		return -EINVAL;
--	if (ASSERT_DPLL_REGISTERED(dpll))
--		return -EINVAL;
++#define PTP_RX_VERSION				0x0248
++#define PTP_TX_VERSION				0x0288
++#define PTP_MAX_VERSION(x)			(((x) & GENMASK(7, 0)) << 8)
++#define PTP_MIN_VERSION(x)			((x) & GENMASK(7, 0))
++
+ #define PTP_RX_MOD				0x024F
+ #define PTP_RX_MOD_BAD_UDPV4_CHKSUM_FORCE_FCS_DIS_ BIT(3)
+ #define PTP_RX_TIMESTAMP_EN			0x024D
+@@ -3147,6 +3152,12 @@ static void lan8814_ptp_init(struct phy_device *phydev)
+ 	lanphy_write_page_reg(phydev, 5, PTP_TX_PARSE_IP_ADDR_EN, 0);
+ 	lanphy_write_page_reg(phydev, 5, PTP_RX_PARSE_IP_ADDR_EN, 0);
  
- 	mutex_lock(&dpll_lock);
- 	if (WARN_ON(!(dpll->module == pin->module &&
-@@ -693,8 +689,6 @@ int dpll_pin_on_pin_register(struct dpll_pin *parent, struct dpll_pin *pin,
- 	    WARN_ON(!ops->state_on_pin_get) ||
- 	    WARN_ON(!ops->direction_get))
- 		return -EINVAL;
--	if (ASSERT_PIN_REGISTERED(parent))
--		return -EINVAL;
- 
- 	mutex_lock(&dpll_lock);
- 	ret = dpll_xa_ref_pin_add(&pin->parent_refs, parent, ops, priv);
++	/* Disable checking for minorVersionPTP field */
++	lanphy_write_page_reg(phydev, 5, PTP_RX_VERSION,
++			      PTP_MAX_VERSION(0xff) | PTP_MIN_VERSION(0x0));
++	lanphy_write_page_reg(phydev, 5, PTP_TX_VERSION,
++			      PTP_MAX_VERSION(0xff) | PTP_MIN_VERSION(0x0));
++
+ 	skb_queue_head_init(&ptp_priv->tx_queue);
+ 	skb_queue_head_init(&ptp_priv->rx_queue);
+ 	INIT_LIST_HEAD(&ptp_priv->rx_ts_list);
 -- 
 2.43.0
 
