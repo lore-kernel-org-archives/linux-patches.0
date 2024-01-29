@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7471215B98E;
-	Mon, 29 Jan 2024 17:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B83176C62;
+	Mon, 29 Jan 2024 17:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548646; cv=none; b=UBg4A6MNFBCU4HGNu+LiIOQ7+DARvO9nK13k9wsX6oTYCBbYK06C5uKzt4Ebe5yHCOVvzL6zSIWQd7V8RT2hKj//Ny5z+VThvFZ8ibOA52vRY5bbiSeRjCozjfaqm1h2LJNeIFnUfK2KzRSV+NP4PZeJ5ldR+AUtLydD/gd+MuY=
+	t=1706548647; cv=none; b=g1SedZCQJWYlyQ0Q1FgI4W9gaT+rnBWKYusrF5MXhAtndn3y4KzhdxGaSHwglec9lemYRpTFCYx1U20OffhFUzHJtkFUw1bO33XzdRIADsy5QqvvPwYgjhqMD8k1Awj6rckfXgXDHVcLMXF7rd+Uq6AY0l7Ds23qmQAhIgy4IB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548646; c=relaxed/simple;
-	bh=n4wVGzuH7z2Lhmyk0DuqVFXcmdkn0mJudX5AGqipvFw=;
+	s=arc-20240116; t=1706548647; c=relaxed/simple;
+	bh=S3pZbW/ex1O8SR4Qx9ZRT5V3z2r9BHAY/omvmbGlR+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnLYdoDzpON8FeZmHVzWtKmx2GMfzooBRRlKuWWjAPZZ2cwNYkfSVLkXkx/2ldCQTGv3VAj4R1j7rBbPi40C0Ia+mrAEXsOTatgWSoQVUx2O3OG5ANvZ4Uxjcjnw/7agYL0rkwDLY/j7f1za58kRxeNVxyKOlZJbjQSUPUQgqp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYu6+mDR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EU+fTBQWd6hXnTSTQyabKdv8XbjSO1SfwvbIhua4nrCUX/NEeJ4skxlSToUiTJ8c/nwaEtV629N63sfvMl/FrpyzGPBBbMisHTMhMqDxabmkQDADv0Bp/udvKw7xIOll3m6a3zmAlMzqlt/ADHQE1aokMe8bLWaVANgLOw+iFf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfSUoI42; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYu6+mDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2F3C433C7;
-	Mon, 29 Jan 2024 17:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfSUoI42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7686C433F1;
+	Mon, 29 Jan 2024 17:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548645;
-	bh=n4wVGzuH7z2Lhmyk0DuqVFXcmdkn0mJudX5AGqipvFw=;
+	s=korg; t=1706548646;
+	bh=S3pZbW/ex1O8SR4Qx9ZRT5V3z2r9BHAY/omvmbGlR+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYu6+mDR5rS1Yhz8gQJjArtFhslsIclPHMfZM84K4dyVF2aaw6dBw1kIv3Q2FK5zm
-	 4mddrDUh0MEIeG/1yVzfCqYyOw+SaSTgPcQgQz1EqDhXr2a3IOxmjdppwnaKU2XOyl
-	 64dBzYn+Z+d3IOB04FfplgtM9KiTFZj0RRCCzUKc=
+	b=PfSUoI42E8V06+0hYpM2fOmlSDj1jzvPu4UKnf1qXL4vGRNVtZIH3FlGh56hCOtc3
+	 4ywcoS+o0qJ2QgmaEOr837OjIEXQ9j5i9O84rag91E/dJm+Y8VYKDrldVmyPV0giTG
+	 yZyas4snZBFmiACpMI6qgbE0SyVv/IlKX0dqYBPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Inki Dae <inki.dae@samsung.com>,
+	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 323/331] drm: bridge: samsung-dsim: Dont use FORCE_STOP_STATE
-Date: Mon, 29 Jan 2024 09:06:27 -0800
-Message-ID: <20240129170024.323460067@linuxfoundation.org>
+Subject: [PATCH 6.6 301/331] drm: panel-simple: add missing bus flags for Tianma tm070jvhg[30/33]
+Date: Mon, 29 Jan 2024 09:06:05 -0800
+Message-ID: <20240129170023.680438066@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -51,127 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 
-[ Upstream commit ff3d5d04db07e5374758baa7e877fde8d683ebab ]
+[ Upstream commit 45dd7df26cee741b31c25ffdd44fb8794eb45ccd ]
 
-The FORCE_STOP_STATE bit is unsuitable to force the DSI link into LP-11
-mode. It seems the bridge internally queues DSI packets and when the
-FORCE_STOP_STATE bit is cleared, they are sent in close succession
-without any useful timing (this also means that the DSI lanes won't go
-into LP-11 mode). The length of this gibberish varies between 1ms and
-5ms. This sometimes breaks an attached bridge (TI SN65DSI84 in this
-case). In our case, the bridge will fail in about 1 per 500 reboots.
+The DE signal is active high on this display, fill in the missing
+bus_flags. This aligns panel_desc with its display_timing.
 
-The FORCE_STOP_STATE handling was introduced to have the DSI lanes in
-LP-11 state during the .pre_enable phase. But as it turns out, none of
-this is needed at all. Between samsung_dsim_init() and
-samsung_dsim_set_display_enable() the lanes are already in LP-11 mode.
-The code as it was before commit 20c827683de0 ("drm: bridge:
-samsung-dsim: Fix init during host transfer") and 0c14d3130654 ("drm:
-bridge: samsung-dsim: Fix i.MX8M enable flow to meet spec") was correct
-in this regard.
+Fixes: 9a2654c0f62a ("drm/panel: Add and fill drm_panel type field")
+Fixes: b3bfcdf8a3b6 ("drm/panel: simple: add Tianma TM070JVHG33")
 
-This patch basically reverts both commits. It was tested on an i.MX8M
-SoC with an SN65DSI84 bridge. The signals were probed and the DSI
-packets were decoded during initialization and link start-up. After this
-patch the first DSI packet on the link is a VSYNC packet and the timing
-is correct.
-
-Command mode between .pre_enable and .enable was also briefly tested by
-a quick hack. There was no DSI link partner which would have responded,
-but it was made sure the DSI packet was send on the link. As a side
-note, the command mode seems to just work in HS mode. I couldn't find
-that the bridge will handle commands in LP mode.
-
-Fixes: 20c827683de0 ("drm: bridge: samsung-dsim: Fix init during host transfer")
-Fixes: 0c14d3130654 ("drm: bridge: samsung-dsim: Fix i.MX8M enable flow to meet spec")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231113164344.1612602-1-mwalle@kernel.org
+Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Link: https://lore.kernel.org/r/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/samsung-dsim.c | 32 ++-------------------------
- 1 file changed, 2 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/panel/panel-simple.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
-index 19bdb32dbc9a..f24666b48193 100644
---- a/drivers/gpu/drm/bridge/samsung-dsim.c
-+++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-@@ -941,10 +941,6 @@ static int samsung_dsim_init_link(struct samsung_dsim *dsi)
- 	reg = samsung_dsim_read(dsi, DSIM_ESCMODE_REG);
- 	reg &= ~DSIM_STOP_STATE_CNT_MASK;
- 	reg |= DSIM_STOP_STATE_CNT(driver_data->reg_values[STOP_STATE_CNT]);
--
--	if (!samsung_dsim_hw_is_exynos(dsi->plat_data->hw_type))
--		reg |= DSIM_FORCE_STOP_STATE;
--
- 	samsung_dsim_write(dsi, DSIM_ESCMODE_REG, reg);
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 6e46e55d29a9..51f838befb32 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -3782,6 +3782,7 @@ static const struct panel_desc tianma_tm070jdhg30 = {
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+ };
  
- 	reg = DSIM_BTA_TIMEOUT(0xff) | DSIM_LPDR_TIMEOUT(0xffff);
-@@ -1401,18 +1397,6 @@ static void samsung_dsim_disable_irq(struct samsung_dsim *dsi)
- 	disable_irq(dsi->irq);
- }
+ static const struct panel_desc tianma_tm070jvhg33 = {
+@@ -3794,6 +3795,7 @@ static const struct panel_desc tianma_tm070jvhg33 = {
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+ };
  
--static void samsung_dsim_set_stop_state(struct samsung_dsim *dsi, bool enable)
--{
--	u32 reg = samsung_dsim_read(dsi, DSIM_ESCMODE_REG);
--
--	if (enable)
--		reg |= DSIM_FORCE_STOP_STATE;
--	else
--		reg &= ~DSIM_FORCE_STOP_STATE;
--
--	samsung_dsim_write(dsi, DSIM_ESCMODE_REG, reg);
--}
--
- static int samsung_dsim_init(struct samsung_dsim *dsi)
- {
- 	const struct samsung_dsim_driver_data *driver_data = dsi->driver_data;
-@@ -1462,9 +1446,6 @@ static void samsung_dsim_atomic_pre_enable(struct drm_bridge *bridge,
- 		ret = samsung_dsim_init(dsi);
- 		if (ret)
- 			return;
--
--		samsung_dsim_set_display_mode(dsi);
--		samsung_dsim_set_display_enable(dsi, true);
- 	}
- }
- 
-@@ -1473,12 +1454,8 @@ static void samsung_dsim_atomic_enable(struct drm_bridge *bridge,
- {
- 	struct samsung_dsim *dsi = bridge_to_dsi(bridge);
- 
--	if (samsung_dsim_hw_is_exynos(dsi->plat_data->hw_type)) {
--		samsung_dsim_set_display_mode(dsi);
--		samsung_dsim_set_display_enable(dsi, true);
--	} else {
--		samsung_dsim_set_stop_state(dsi, false);
--	}
-+	samsung_dsim_set_display_mode(dsi);
-+	samsung_dsim_set_display_enable(dsi, true);
- 
- 	dsi->state |= DSIM_STATE_VIDOUT_AVAILABLE;
- }
-@@ -1491,9 +1468,6 @@ static void samsung_dsim_atomic_disable(struct drm_bridge *bridge,
- 	if (!(dsi->state & DSIM_STATE_ENABLED))
- 		return;
- 
--	if (!samsung_dsim_hw_is_exynos(dsi->plat_data->hw_type))
--		samsung_dsim_set_stop_state(dsi, true);
--
- 	dsi->state &= ~DSIM_STATE_VIDOUT_AVAILABLE;
- }
- 
-@@ -1795,8 +1769,6 @@ static ssize_t samsung_dsim_host_transfer(struct mipi_dsi_host *host,
- 	if (ret)
- 		return ret;
- 
--	samsung_dsim_set_stop_state(dsi, false);
--
- 	ret = mipi_dsi_create_packet(&xfer.packet, msg);
- 	if (ret < 0)
- 		return ret;
+ static const struct display_timing tianma_tm070rvhg71_timing = {
 -- 
 2.43.0
 
