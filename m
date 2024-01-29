@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F62F6F06C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E476F079;
 	Mon, 29 Jan 2024 17:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548463; cv=none; b=XSNH1VOYd+frMIQm8fdryvSUDzeSlA9e+YP9yCGLAWCfNiCIV68zooDhEISMdgNT1avPaxgpysU9Dqn9kyFBettJacf67gvrR9ERjR6KaaPEgJXotnfT4uvOUUTdpiEB22K3orBQAxJcGDXedQX1av03oKZsyrSXvEzMxhL8pGA=
+	t=1706548463; cv=none; b=fnuQTL0IgcqCOJ1QweT/0/FaHM549tddBYJ5CjWhZX1lGkpuLxsGQqR/1d0FPwJfjQqLzEodjOzn1MHYnZ3jPGGAzK1POj73B0dlC26pQ1FAue8gfOyGChiA0/dOVlxibM8sHHswcWaaEUymgUvZBoMJMO26ejzdlmCRggJK/5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548463; c=relaxed/simple;
-	bh=DoaIjSY7sOUWUst9Bh0Cy2tE5KnpPfvYMycyltxSwf4=;
+	bh=cd54H4Y343OIHaFoR5bLUdbk6y4bjyRL1dpNYLAP2gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbRMNWhEBGZDS1HGyaK1/4eBNmB4ucmwrxgl0EQH0gKYPAp1vbR5mz5ppTWBDwvLG2T1s7pM17gei//5lMfnRpuB4arq14yVLXczDU7MaJHWt78nJ8/2SP5uSxVC/ZkHE8PQEUY19MkdKvr5yOXs31RRvubeSiyqvUNw1YGN85M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANzDtx/q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8+thk5bB9KR5FLHACwlBFaIYBGmajh7nCZDDDtV0knHmgbvc25lnG1SLVnSHvQ0PiIzEEgiKM33nmiRv9168VUFqRhhn+zUbimzH5BZu4Ia2q9NxSgRZ28RgHnUkly5Ml8DwKwMCiTa40ji6UaZ3FjUjXWaq9n8y0++5pqoecg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qRo/Ka2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANzDtx/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF0DC43390;
-	Mon, 29 Jan 2024 17:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qRo/Ka2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C3DC433F1;
+	Mon, 29 Jan 2024 17:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548462;
-	bh=DoaIjSY7sOUWUst9Bh0Cy2tE5KnpPfvYMycyltxSwf4=;
+	s=korg; t=1706548463;
+	bh=cd54H4Y343OIHaFoR5bLUdbk6y4bjyRL1dpNYLAP2gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANzDtx/qb8HwY7iuah5hcsg4JYbVQz1DlJ6s1s6MRAQ8aS8O6q5eIHhIvFk9hjvw4
-	 2D0bbRSR/8H7Rd8Wf5qMLB1cJ7wHEzvviS4q4p832vqzXYma4LkrTIssWQhBN8Yqhi
-	 un8vuVY7M9kbKGwq2ztoUOxPa7OTz9g1EQI+inV0=
+	b=0qRo/Ka2nhH7fdE0g1zRBYy+JeTxLrFzbtjroTsdkPfEMW5GzvsK/aMmfM6oftQe4
+	 3QJoCdu76qGsIFlN7gLJvzVblkDszZxYybZ03J/dXgRXsbe/TQ5D+emrogvQ8dxgMo
+	 kQA3lufAxQZ8uvAE4zT/vB3zwDBxT7V7aGCHBOr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 076/331] ARM: dts: qcom: sdx55: fix pdc #interrupt-cells
-Date: Mon, 29 Jan 2024 09:02:20 -0800
-Message-ID: <20240129170017.147552768@linuxfoundation.org>
+	Cixi Geng <cixi.geng1@unisoc.com>,
+	Chunyan Zhang <chunyan.zhang@unisoc.com>
+Subject: [PATCH 6.6 077/331] arm64: dts: sprd: fix the cpu node for UMS512
+Date: Mon, 29 Jan 2024 09:02:21 -0800
+Message-ID: <20240129170017.179913244@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -53,36 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Cixi Geng <cixi.geng1@unisoc.com>
 
-commit cc25bd06c16aa582596a058d375b2e3133f79b93 upstream.
+commit 2da4f4a7b003441b80f0f12d8a216590f652a40f upstream.
 
-The Qualcomm PDC interrupt controller binding expects two cells in
-interrupt specifiers.
+The UMS512 Socs have 8 cores contains 6 a55 and 2 a75.
+modify the cpu nodes to correct information.
 
-Fixes: 9d038b2e62de ("ARM: dts: qcom: Add SDX55 platform and MTP board support")
-Cc: stable@vger.kernel.org      # 5.12
-Cc: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231213173131.29436-2-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2b4881839a39 ("arm64: dts: sprd: Add support for Unisoc's UMS512")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cixi Geng <cixi.geng1@unisoc.com>
+Link: https://lore.kernel.org/r/20230711162346.5978-1-cixi.geng@linux.dev
+Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/qcom/qcom-sdx55.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/sprd/ums512.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-sdx55.dtsi
-@@ -619,7 +619,7 @@
- 			compatible = "qcom,sdx55-pdc", "qcom,pdc";
- 			reg = <0x0b210000 0x30000>;
- 			qcom,pdc-ranges = <0 179 52>;
--			#interrupt-cells = <3>;
-+			#interrupt-cells = <2>;
- 			interrupt-parent = <&intc>;
- 			interrupt-controller;
- 		};
+diff --git a/arch/arm64/boot/dts/sprd/ums512.dtsi b/arch/arm64/boot/dts/sprd/ums512.dtsi
+index 024be594c47d..97ac550af2f1 100644
+--- a/arch/arm64/boot/dts/sprd/ums512.dtsi
++++ b/arch/arm64/boot/dts/sprd/ums512.dtsi
+@@ -96,7 +96,7 @@ CPU5: cpu@500 {
+ 
+ 		CPU6: cpu@600 {
+ 			device_type = "cpu";
+-			compatible = "arm,cortex-a55";
++			compatible = "arm,cortex-a75";
+ 			reg = <0x0 0x600>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&CORE_PD>;
+@@ -104,7 +104,7 @@ CPU6: cpu@600 {
+ 
+ 		CPU7: cpu@700 {
+ 			device_type = "cpu";
+-			compatible = "arm,cortex-a55";
++			compatible = "arm,cortex-a75";
+ 			reg = <0x0 0x700>;
+ 			enable-method = "psci";
+ 			cpu-idle-states = <&CORE_PD>;
+-- 
+2.43.0
+
 
 
