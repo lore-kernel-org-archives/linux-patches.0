@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10C376C81;
-	Mon, 29 Jan 2024 17:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA9E76C81;
+	Mon, 29 Jan 2024 17:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548655; cv=none; b=VTEsPehIv2l3q6z4SCzJ8Tf+7rYQGc/i0E+vEWVLoyKLv8MSYmym8jEpzz4S/XCz1G0nv0q1OZB9ax4Qm43QAZ8TyeRlaK+Bz+WerBUuBXKt7x7ihYSZO3iGUQ55QBkqiZh3qVEQGHd2otkp91zJ5yvVllFzGzgYrsaUfaLqAxM=
+	t=1706548656; cv=none; b=MrbvaoNh2bY6QtD27O/HMkweOU6VFPfDOY0IenvUEnIxqlRNYOyEDMAV6oNlEoDGlG2hWp/Cy3W0Gk+NWmC8SJwGSlD3ewIe8FgxRjbZCyAvI3RzCkAVE1n8OeC/XlGJei5M+WdX26RnbbLKU+kSb2NM2l5hCgr901MGyUP7Gm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548655; c=relaxed/simple;
-	bh=G4R0lPhdjQ5j3EwfL8tIzdIRVrV8gauwF3o/CojNyE0=;
+	s=arc-20240116; t=1706548656; c=relaxed/simple;
+	bh=Us/p2Kb8UWMp7cf7OHmF17HempDkaA0GdhoElvOp8PY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DseUePnxittLVUUycbljiQ9MxBRjwpsgjHFPa1LVp46XD0bBfZCOkbQWxZae16ePDiC25gulsH+2so7kKQGGUhpuXzaerV/uIZweZjK+aPWYbhTaklwjU1A2T2PalObyaLbhOyGBJffRvrkv7DeMlTHXk1XlLlEI0MPNBe1bJ30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKIl+o/K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HR+7Tvn6NTfnJE6Tp1j1bw0lPUQ55uRmOqzksFcOiovo4g1uR4DhDxw5RZfeeIn6gCVV0YdF9acS3PrFPhfeZ++IVdR1claDD7CsMCjTGSqqbqqTmw2/bSdl9APq0t6FtYUYWZ3pWPk/KUXfqweiYizp0Bf3xYXqmmPpdqxcWgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjsjKwuS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKIl+o/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6587DC433C7;
-	Mon, 29 Jan 2024 17:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjsjKwuS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24376C433F1;
+	Mon, 29 Jan 2024 17:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548655;
-	bh=G4R0lPhdjQ5j3EwfL8tIzdIRVrV8gauwF3o/CojNyE0=;
+	s=korg; t=1706548656;
+	bh=Us/p2Kb8UWMp7cf7OHmF17HempDkaA0GdhoElvOp8PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKIl+o/Km2IqtiVuZ+gu17hjiW6z19WaeaWVFv3rNK5Yj5DBMTKWAsAA08aWlQfSJ
-	 OTBaSakF8gW1koS5Z9NHGSg0tiNpzFClXM7JgbmwFigGuic3Lwy2A3f4LcQZE//H/S
-	 aJKvFhIwd9vjCCfMiZeBVym7u5kZiqS2vvx9Ya7c=
+	b=GjsjKwuS6zY5CQtTJ9rCsfw3tMjVwr7yfx89hszvHFmYH2XOCqhSKDvoL3bw46BmY
+	 jymjp/RziQuSWssbMLRfv2Cuw9qsHhIA/+xdAnPq7bb0lVuzAftYp76aZv72TWbgSa
+	 F8sE9Dtjq3KUX3cKstlhLEp1EPNFu3QzuStBMm5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Richard Palethorpe <rpalethorpe@suse.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 329/331] x86/entry/ia32: Ensure s32 is sign extended to s64
-Date: Mon, 29 Jan 2024 09:06:33 -0800
-Message-ID: <20240129170024.512138793@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Ogness <john.ogness@linutronix.de>,
+	linux-serial@vger.kernel.org,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.6 330/331] serial: core: fix kernel-doc for uart_port_unlock_irqrestore()
+Date: Mon, 29 Jan 2024 09:06:34 -0800
+Message-ID: <20240129170024.539674891@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -52,86 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Palethorpe <rpalethorpe@suse.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 56062d60f117dccfb5281869e0ab61e090baf864 upstream.
+commit 29bff582b74ed0bdb7e6986482ad9e6799ea4d2f upstream.
 
-Presently ia32 registers stored in ptregs are unconditionally cast to
-unsigned int by the ia32 stub. They are then cast to long when passed to
-__se_sys*, but will not be sign extended.
+Fix the function name to avoid a kernel-doc warning:
 
-This takes the sign of the syscall argument into account in the ia32
-stub. It still casts to unsigned int to avoid implementation specific
-behavior. However then casts to int or unsigned int as necessary. So that
-the following cast to long sign extends the value.
+include/linux/serial_core.h:666: warning: expecting prototype for uart_port_lock_irqrestore(). Prototype was for uart_port_unlock_irqrestore() instead
 
-This fixes the io_pgetevents02 LTP test when compiled with -m32. Presently
-the systemcall io_pgetevents_time64() unexpectedly accepts -1 for the
-maximum number of events.
-
-It doesn't appear other systemcalls with signed arguments are effected
-because they all have compat variants defined and wired up.
-
-Fixes: ebeb8c82ffaf ("syscalls/x86: Use 'struct pt_regs' based syscall calling for IA32_EMULATION and x32")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Richard Palethorpe <rpalethorpe@suse.com>
-Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240110130122.3836513-1-nik.borisov@suse.com
-Link: https://lore.kernel.org/ltp/20210921130127.24131-1-rpalethorpe@suse.com/
+Fixes: b0af4bcb4946 ("serial: core: Provide port lock wrappers")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: linux-serial@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Link: https://lore.kernel.org/r/20230927044128.4748-1-rdunlap@infradead.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/syscall_wrapper.h |   25 +++++++++++++++++++++----
- include/linux/syscalls.h               |    1 +
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ include/linux/serial_core.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/syscall_wrapper.h
-+++ b/arch/x86/include/asm/syscall_wrapper.h
-@@ -58,12 +58,29 @@ extern long __ia32_sys_ni_syscall(const
- 		,,regs->di,,regs->si,,regs->dx				\
- 		,,regs->r10,,regs->r8,,regs->r9)			\
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -658,7 +658,7 @@ static inline void uart_port_unlock_irq(
+ }
  
-+
-+/* SYSCALL_PT_ARGS is Adapted from s390x */
-+#define SYSCALL_PT_ARG6(m, t1, t2, t3, t4, t5, t6)			\
-+	SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5), m(t6, (regs->bp))
-+#define SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5)				\
-+	SYSCALL_PT_ARG4(m, t1, t2, t3, t4),  m(t5, (regs->di))
-+#define SYSCALL_PT_ARG4(m, t1, t2, t3, t4)				\
-+	SYSCALL_PT_ARG3(m, t1, t2, t3),  m(t4, (regs->si))
-+#define SYSCALL_PT_ARG3(m, t1, t2, t3)					\
-+	SYSCALL_PT_ARG2(m, t1, t2), m(t3, (regs->dx))
-+#define SYSCALL_PT_ARG2(m, t1, t2)					\
-+	SYSCALL_PT_ARG1(m, t1), m(t2, (regs->cx))
-+#define SYSCALL_PT_ARG1(m, t1) m(t1, (regs->bx))
-+#define SYSCALL_PT_ARGS(x, ...) SYSCALL_PT_ARG##x(__VA_ARGS__)
-+
-+#define __SC_COMPAT_CAST(t, a)						\
-+	(__typeof(__builtin_choose_expr(__TYPE_IS_L(t), 0, 0U)))	\
-+	(unsigned int)a
-+
- /* Mapping of registers to parameters for syscalls on i386 */
- #define SC_IA32_REGS_TO_ARGS(x, ...)					\
--	__MAP(x,__SC_ARGS						\
--	      ,,(unsigned int)regs->bx,,(unsigned int)regs->cx		\
--	      ,,(unsigned int)regs->dx,,(unsigned int)regs->si		\
--	      ,,(unsigned int)regs->di,,(unsigned int)regs->bp)
-+	SYSCALL_PT_ARGS(x, __SC_COMPAT_CAST,				\
-+			__MAP(x, __SC_TYPE, __VA_ARGS__))		\
- 
- #define __SYS_STUB0(abi, name)						\
- 	long __##abi##_##name(const struct pt_regs *regs);		\
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -125,6 +125,7 @@ struct cachestat;
- #define __TYPE_IS_LL(t) (__TYPE_AS(t, 0LL) || __TYPE_AS(t, 0ULL))
- #define __SC_LONG(t, a) __typeof(__builtin_choose_expr(__TYPE_IS_LL(t), 0LL, 0L)) a
- #define __SC_CAST(t, a)	(__force t) a
-+#define __SC_TYPE(t, a)	t
- #define __SC_ARGS(t, a)	a
- #define __SC_TEST(t, a) (void)BUILD_BUG_ON_ZERO(!__TYPE_IS_LL(t) && sizeof(t) > sizeof(long))
- 
+ /**
+- * uart_port_lock_irqrestore - Unlock the UART port, restore interrupts
++ * uart_port_unlock_irqrestore - Unlock the UART port, restore interrupts
+  * @up:		Pointer to UART port structure
+  * @flags:	The saved interrupt flags for restore
+  */
 
 
