@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BE51586D7;
-	Mon, 29 Jan 2024 17:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB961586D7;
+	Mon, 29 Jan 2024 17:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548055; cv=none; b=CVm7XLxeuB2wCB3K5fFw81YXg4hTrme45P7Xv9nfI0ZLTDYPeLF3PjdpIWCBFxQCB+iAU6uDOk3sD4Y27v2K7WJLAFQx0ag4u7MqdzDJpsLz03GwckOY2XrHiu5ADV+V7EqGMxBFlVAn1dPzJHsPHSGv972Z3Ah+NLRrH+9REes=
+	t=1706548055; cv=none; b=Gr69+vmNilhAT6Na/GtBomLSA73y83+2ZQNgX7HDA7hZn82jax/PunpH4pITNElkhZpBV49RGQXPsbrUjzJUXb+w80C39bOnTKwaqTRKjeDu9beL+7zWoxJpmZdI3r1YWhT69h9ZUrlkP4UlHv96mXpye7Fn7YFUsvNLyTztgfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548055; c=relaxed/simple;
-	bh=r+VH3w76J0NVQCnrdkbalUFjyuZ7SJK884C7b5dItWE=;
+	bh=v+G6vW2cuinrVvblkDp3rPbJuirGfjGZwU4vbBHnQRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCkIpkZW92wbas+uB+9MN8a0f2WZd9AWnAsfsFvWaR7/CbgHbiWs50JkJdeCvAhdKi8HMfM8Xya6V9MpwQIs5vkotdOFYi0Z52qlbLTpzG10gUXimaJWe10VxeQA4jyHMCCsBwZj4xuOmLvUzdOW5Q98VwkogejgE2pWXkhiJ8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flRJ4O0D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hiEPGb7Ocwsksquvisqp9vtqcL5WFvMqaNb7tPfdRu0Q+CKnfVmwBrdE+9Aj0gmVmWp61imz0zZ3hllDdZaIQX3aKxOQ3KjYiW9ErhsntwYPDeCFKNFl8zpkX18DTktKjPCG3JppwllMUwhn93XJy3VRXbufOggwXtmoWtBydDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tFzEkQR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flRJ4O0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6D2C433C7;
-	Mon, 29 Jan 2024 17:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tFzEkQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F991C433A6;
+	Mon, 29 Jan 2024 17:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548054;
-	bh=r+VH3w76J0NVQCnrdkbalUFjyuZ7SJK884C7b5dItWE=;
+	s=korg; t=1706548055;
+	bh=v+G6vW2cuinrVvblkDp3rPbJuirGfjGZwU4vbBHnQRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flRJ4O0DDMJgeC36OU7bHs66N7SYWF6KRnSimhBUKDRolim70JakaayoQyOORzupc
-	 Y9wPuR1y825MbaZN49jT6iX9iWkg+wCT6dkPbEY5GlPnZBz7EMRocutPTroND1kZMt
-	 HKVFoVOLVtAHs3izoFwTBIHcrfAoN2FBD+UBef7o=
+	b=0tFzEkQRKnY8ELvDZMoUcRbUh4dfGvTGEUD5s0CGU/IKCWQ9U/v7hUUB7jTBDVsLX
+	 xmgcNJfj3FWS3OHyzCKvV1yRsfBpHXtbPrBEjAlOp89/1qAL6JsYFPrwoz6WhJuJxE
+	 kbQ8iaYJr5STv4iQm1EDKYmnYPlzzXFH6TX15Ij0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Herve Codina <herve.codina@bootlin.com>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 6.7 033/346] soc: fsl: cpm1: tsa: Fix __iomem addresses declaration
-Date: Mon, 29 Jan 2024 09:01:04 -0800
-Message-ID: <20240129170017.360953587@linuxfoundation.org>
+Subject: [PATCH 6.7 034/346] soc: fsl: cpm1: qmc: Fix __iomem addresses declaration
+Date: Mon, 29 Jan 2024 09:01:05 -0800
+Message-ID: <20240129170017.386249523@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 References: <20240129170016.356158639@linuxfoundation.org>
@@ -53,99 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Herve Codina <herve.codina@bootlin.com>
 
-commit fc0c64154e5ddeb6f63c954735bd646ce5b8d9a4 upstream.
+commit a5ec3a21220da06bdda2e686012ca64fdb6c513d upstream.
 
-Running sparse (make C=1) on tsa.c raises a lot of warning such as:
-  --- 8< ---
+Running sparse (make C=1) on qmc.c raises a lot of warning such as:
+  ...
   warning: incorrect type in assignment (different address spaces)
-     expected void *[noderef] si_regs
-     got void [noderef] __iomem *
-  --- 8< ---
+     expected struct cpm_buf_desc [usertype] *[noderef] __iomem bd
+     got struct cpm_buf_desc [noderef] [usertype] __iomem *txbd_free
+  ...
 
 Indeed, some variable were declared 'type *__iomem var' instead of
 'type __iomem *var'.
 
 Use the correct declaration to remove these warnings.
 
-Fixes: 1d4ba0b81c1c ("soc: fsl: cpm1: Add support for TSA")
+Fixes: 3178d58e0b97 ("soc: fsl: cpm1: Add support for QMC")
 Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312051959.9YdRIYbg-lkp@intel.com/
 Signed-off-by: Herve Codina <herve.codina@bootlin.com>
 Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/20231205152116.122512-2-herve.codina@bootlin.com
+Link: https://lore.kernel.org/r/20231205152116.122512-3-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qe/tsa.c |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/soc/fsl/qe/qmc.c |   34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
---- a/drivers/soc/fsl/qe/tsa.c
-+++ b/drivers/soc/fsl/qe/tsa.c
-@@ -98,9 +98,9 @@
- #define TSA_SIRP	0x10
- 
- struct tsa_entries_area {
--	void *__iomem entries_start;
--	void *__iomem entries_next;
--	void *__iomem last_entry;
-+	void __iomem *entries_start;
-+	void __iomem *entries_next;
-+	void __iomem *last_entry;
+--- a/drivers/soc/fsl/qe/qmc.c
++++ b/drivers/soc/fsl/qe/qmc.c
+@@ -175,7 +175,7 @@ struct qmc_chan {
+ 	struct list_head list;
+ 	unsigned int id;
+ 	struct qmc *qmc;
+-	void *__iomem s_param;
++	void __iomem *s_param;
+ 	enum qmc_mode mode;
+ 	u64	tx_ts_mask;
+ 	u64	rx_ts_mask;
+@@ -203,9 +203,9 @@ struct qmc_chan {
+ struct qmc {
+ 	struct device *dev;
+ 	struct tsa_serial *tsa_serial;
+-	void *__iomem scc_regs;
+-	void *__iomem scc_pram;
+-	void *__iomem dpram;
++	void __iomem *scc_regs;
++	void __iomem *scc_pram;
++	void __iomem *dpram;
+ 	u16 scc_pram_offset;
+ 	cbd_t __iomem *bd_table;
+ 	dma_addr_t bd_dma_addr;
+@@ -218,37 +218,37 @@ struct qmc {
+ 	struct qmc_chan *chans[64];
  };
  
- struct tsa_tdm {
-@@ -117,8 +117,8 @@ struct tsa_tdm {
- 
- struct tsa {
- 	struct device *dev;
--	void *__iomem si_regs;
--	void *__iomem si_ram;
-+	void __iomem *si_regs;
-+	void __iomem *si_ram;
- 	resource_size_t si_ram_sz;
- 	spinlock_t	lock;
- 	int tdms; /* TSA_TDMx ORed */
-@@ -135,27 +135,27 @@ static inline struct tsa *tsa_serial_get
- 	return container_of(tsa_serial, struct tsa, serials[tsa_serial->id]);
+-static inline void qmc_write16(void *__iomem addr, u16 val)
++static inline void qmc_write16(void __iomem *addr, u16 val)
+ {
+ 	iowrite16be(val, addr);
  }
  
--static inline void tsa_write32(void *__iomem addr, u32 val)
-+static inline void tsa_write32(void __iomem *addr, u32 val)
+-static inline u16 qmc_read16(void *__iomem addr)
++static inline u16 qmc_read16(void __iomem *addr)
+ {
+ 	return ioread16be(addr);
+ }
+ 
+-static inline void qmc_setbits16(void *__iomem addr, u16 set)
++static inline void qmc_setbits16(void __iomem *addr, u16 set)
+ {
+ 	qmc_write16(addr, qmc_read16(addr) | set);
+ }
+ 
+-static inline void qmc_clrbits16(void *__iomem addr, u16 clr)
++static inline void qmc_clrbits16(void __iomem *addr, u16 clr)
+ {
+ 	qmc_write16(addr, qmc_read16(addr) & ~clr);
+ }
+ 
+-static inline void qmc_write32(void *__iomem addr, u32 val)
++static inline void qmc_write32(void __iomem *addr, u32 val)
  {
  	iowrite32be(val, addr);
  }
  
--static inline void tsa_write8(void *__iomem addr, u32 val)
-+static inline void tsa_write8(void __iomem *addr, u32 val)
- {
- 	iowrite8(val, addr);
- }
- 
--static inline u32 tsa_read32(void *__iomem addr)
-+static inline u32 tsa_read32(void __iomem *addr)
+-static inline u32 qmc_read32(void *__iomem addr)
++static inline u32 qmc_read32(void __iomem *addr)
  {
  	return ioread32be(addr);
  }
  
--static inline void tsa_clrbits32(void *__iomem addr, u32 clr)
-+static inline void tsa_clrbits32(void __iomem *addr, u32 clr)
+-static inline void qmc_setbits32(void *__iomem addr, u32 set)
++static inline void qmc_setbits32(void __iomem *addr, u32 set)
  {
- 	tsa_write32(addr, tsa_read32(addr) & ~clr);
+ 	qmc_write32(addr, qmc_read32(addr) | set);
  }
+@@ -318,7 +318,7 @@ int qmc_chan_write_submit(struct qmc_cha
+ {
+ 	struct qmc_xfer_desc *xfer_desc;
+ 	unsigned long flags;
+-	cbd_t *__iomem bd;
++	cbd_t __iomem *bd;
+ 	u16 ctrl;
+ 	int ret;
  
--static inline void tsa_clrsetbits32(void *__iomem addr, u32 clr, u32 set)
-+static inline void tsa_clrsetbits32(void __iomem *addr, u32 clr, u32 set)
+@@ -374,7 +374,7 @@ static void qmc_chan_write_done(struct q
+ 	void (*complete)(void *context);
+ 	unsigned long flags;
+ 	void *context;
+-	cbd_t *__iomem bd;
++	cbd_t __iomem *bd;
+ 	u16 ctrl;
+ 
+ 	/*
+@@ -425,7 +425,7 @@ int qmc_chan_read_submit(struct qmc_chan
  {
- 	tsa_write32(addr, (tsa_read32(addr) & ~clr) | set);
- }
-@@ -313,7 +313,7 @@ static u32 tsa_serial_id2csel(struct tsa
- static int tsa_add_entry(struct tsa *tsa, struct tsa_entries_area *area,
- 			 u32 count, u32 serial_id)
+ 	struct qmc_xfer_desc *xfer_desc;
+ 	unsigned long flags;
+-	cbd_t *__iomem bd;
++	cbd_t __iomem *bd;
+ 	u16 ctrl;
+ 	int ret;
+ 
+@@ -488,7 +488,7 @@ static void qmc_chan_read_done(struct qm
+ 	void (*complete)(void *context, size_t size);
+ 	struct qmc_xfer_desc *xfer_desc;
+ 	unsigned long flags;
+-	cbd_t *__iomem bd;
++	cbd_t __iomem *bd;
+ 	void *context;
+ 	u16 datalen;
+ 	u16 ctrl;
+@@ -663,7 +663,7 @@ static void qmc_chan_reset_rx(struct qmc
  {
--	void *__iomem addr;
-+	void __iomem *addr;
- 	u32 left;
- 	u32 val;
- 	u32 cnt;
+ 	struct qmc_xfer_desc *xfer_desc;
+ 	unsigned long flags;
+-	cbd_t *__iomem bd;
++	cbd_t __iomem *bd;
+ 	u16 ctrl;
+ 
+ 	spin_lock_irqsave(&chan->rx_lock, flags);
+@@ -694,7 +694,7 @@ static void qmc_chan_reset_tx(struct qmc
+ {
+ 	struct qmc_xfer_desc *xfer_desc;
+ 	unsigned long flags;
+-	cbd_t *__iomem bd;
++	cbd_t __iomem *bd;
+ 	u16 ctrl;
+ 
+ 	spin_lock_irqsave(&chan->tx_lock, flags);
 
 
