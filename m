@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F086115EA8C;
-	Mon, 29 Jan 2024 17:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBE415EA91;
+	Mon, 29 Jan 2024 17:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548523; cv=none; b=OSDrwN/d41Ge27EbnN/pyvktlhrErcDBrRcSOHA6aoKZlCQNhiGEdbaRXZNOwlacpQqfgVgEw5NycDX9JnpW9NdMaeRrDsENceKDPyhgJyWR0MuvG3hrVwjwDHIv2OTAGi+72YP5RInKxgg7wBpR7iJHNQDi8dQ0LaG81kdWtgU=
+	t=1706548523; cv=none; b=NBdhbvp8Ik2ods7g3W93ZSyyQTwOxM7bVCwvfMc10llCHresfS6yChszmRj09U+H0Hzq70r2HUsk/FnkXoVUL5uVYDE8Ej5TCeUtp3QwDqwwfVVqpXuMdBSdyaNCsuCZGcQmoUZAVdjJB7pKS+j0tNn9U2jcwbrAjIvHI9iG6ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548523; c=relaxed/simple;
-	bh=0sDZN+br8R3TqkFj87Ib69prPeoEGOU9WbfGb6VC3kM=;
+	bh=WUJpd1kurrM9HFBxho0gnOxtDuGjtEHzbi6gBFuRupY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ur6eT+HL9cNAjC/G9b2dF7L+4Nw+WZp0kmphxeQ41qey9KQK/r6tbheSem0PPbwzcBgFp/G9y9y5O2ma3hHkTW5Q6tH3m/4nENJJ53NwbTgC1eCFt7t8FZgH6qm2pzBE+xgiHouEU6ec0TFbsW3xufWlkvXkP5D4g8b6Lb7at9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msnbx483; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBJr+EZRI02gyvxcI6CI1c60wHUNJuo3FTbt6J85z0KGJ+8pnDKlg7IOv7QT4yRL4UCTyp3IA650RaTGjTJJSegGv7VCANo0w+WfcFXYZdY+svMfdTN87PBZtjYBVZvUUH/tpEdBUEEXdgJdYlatdiV/izucD7BjF4oVtMapbMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lilumy1K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msnbx483"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1522C433C7;
-	Mon, 29 Jan 2024 17:15:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lilumy1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680E3C43390;
+	Mon, 29 Jan 2024 17:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548522;
-	bh=0sDZN+br8R3TqkFj87Ib69prPeoEGOU9WbfGb6VC3kM=;
+	s=korg; t=1706548523;
+	bh=WUJpd1kurrM9HFBxho0gnOxtDuGjtEHzbi6gBFuRupY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msnbx483YMv3UtRqeEJUtRIT2uUF6zZeFTJ9swROewSbA5bVrsd8ujTTWMfu6ixef
-	 e97zYFizRjMGbLgIDJjOuM5KRnJi8tjaSKNjDkayI9P5LRXN/zao0hjdJw+YS6ID0Q
-	 tISswE6mXy0YlSFU9uuGmbIZUeFqK/K5TlUkIyGg=
+	b=Lilumy1KrZCgw6lT0meeTxueYYwsMW5hnIXVP6KQjw0V6qkq6MBXI3JNSE3FBdyNU
+	 O7MbOLetKpIwbcL1hNCCDjAXVxufxSk/m/hrloIXF5C5+nKNtGz5/SFbpHezrq7t70
+	 67p7CN55NNuAlNq4+UVaSid6qttvt0y/85po2Qo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	Chris Goldsworthy <quic_cgoldswo@quicinc.com>,
-	Michal Hocko <mhocko@suse.com>,
-	David Rientjes <rientjes@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 138/331] mm: page_alloc: unreserve highatomic page blocks before oom
-Date: Mon, 29 Jan 2024 09:03:22 -0800
-Message-ID: <20240129170018.982808411@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.6 156/331] bpf: extract setup_func_entry() utility function
+Date: Mon, 29 Jan 2024 09:03:40 -0800
+Message-ID: <20240129170019.484882412@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
 References: <20240129170014.969142961@linuxfoundation.org>
@@ -59,104 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charan Teja Kalla <quic_charante@quicinc.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit ac3f3b0a55518056bc80ed32a41931c99e1f7d81 upstream.
+commit 58124a98cb8eda69d248d7f1de954c8b2767c945 upstream.
 
-__alloc_pages_direct_reclaim() is called from slowpath allocation where
-high atomic reserves can be unreserved after there is a progress in
-reclaim and yet no suitable page is found.  Later should_reclaim_retry()
-gets called from slow path allocation to decide if the reclaim needs to be
-retried before OOM kill path is taken.
+Move code for simulated stack frame creation to a separate utility
+function. This function would be used in the follow-up change for
+callbacks handling.
 
-should_reclaim_retry() checks the available(reclaimable + free pages)
-memory against the min wmark levels of a zone and returns:
-
-a) true, if it is above the min wmark so that slow path allocation will
-   do the reclaim retries.
-
-b) false, thus slowpath allocation takes oom kill path.
-
-should_reclaim_retry() can also unreserves the high atomic reserves **but
-only after all the reclaim retries are exhausted.**
-
-In a case where there are almost none reclaimable memory and free pages
-contains mostly the high atomic reserves but allocation context can't use
-these high atomic reserves, makes the available memory below min wmark
-levels hence false is returned from should_reclaim_retry() leading the
-allocation request to take OOM kill path.  This can turn into a early oom
-kill if high atomic reserves are holding lot of free memory and
-unreserving of them is not attempted.
-
-(early)OOM is encountered on a VM with the below state:
-[  295.998653] Normal free:7728kB boost:0kB min:804kB low:1004kB
-high:1204kB reserved_highatomic:8192KB active_anon:4kB inactive_anon:0kB
-active_file:24kB inactive_file:24kB unevictable:1220kB writepending:0kB
-present:70732kB managed:49224kB mlocked:0kB bounce:0kB free_pcp:688kB
-local_pcp:492kB free_cma:0kB
-[  295.998656] lowmem_reserve[]: 0 32
-[  295.998659] Normal: 508*4kB (UMEH) 241*8kB (UMEH) 143*16kB (UMEH)
-33*32kB (UH) 7*64kB (UH) 0*128kB 0*256kB 0*512kB 0*1024kB 0*2048kB
-0*4096kB = 7752kB
-
-Per above log, the free memory of ~7MB exist in the high atomic reserves
-is not freed up before falling back to oom kill path.
-
-Fix it by trying to unreserve the high atomic reserves in
-should_reclaim_retry() before __alloc_pages_direct_reclaim() can fallback
-to oom kill path.
-
-Link: https://lkml.kernel.org/r/1700823445-27531-1-git-send-email-quic_charante@quicinc.com
-Fixes: 0aaa29a56e4f ("mm, page_alloc: reserve pageblocks for high-order atomic allocations on demand")
-Signed-off-by: Charan Teja Kalla <quic_charante@quicinc.com>
-Reported-by: Chris Goldsworthy <quic_cgoldswo@quicinc.com>
-Suggested-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Cc: Chris Goldsworthy <quic_cgoldswo@quicinc.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20231121020701.26440-6-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ kernel/bpf/verifier.c |   84 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 48 insertions(+), 36 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -3809,14 +3809,9 @@ should_reclaim_retry(gfp_t gfp_mask, uns
- 	else
- 		(*no_progress_loops)++;
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9167,11 +9167,10 @@ static int set_callee_state(struct bpf_v
+ 			    struct bpf_func_state *caller,
+ 			    struct bpf_func_state *callee, int insn_idx);
  
--	/*
--	 * Make sure we converge to OOM if we cannot make any progress
--	 * several times in the row.
+-static int __check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+-			     int *insn_idx, int subprog,
+-			     set_callee_state_fn set_callee_state_cb)
++static int setup_func_entry(struct bpf_verifier_env *env, int subprog, int callsite,
++			    set_callee_state_fn set_callee_state_cb,
++			    struct bpf_verifier_state *state)
+ {
+-	struct bpf_verifier_state *state = env->cur_state;
+ 	struct bpf_func_state *caller, *callee;
+ 	int err;
+ 
+@@ -9181,13 +9180,53 @@ static int __check_func_call(struct bpf_
+ 		return -E2BIG;
+ 	}
+ 
+-	caller = state->frame[state->curframe];
+ 	if (state->frame[state->curframe + 1]) {
+ 		verbose(env, "verifier bug. Frame %d already allocated\n",
+ 			state->curframe + 1);
+ 		return -EFAULT;
+ 	}
+ 
++	caller = state->frame[state->curframe];
++	callee = kzalloc(sizeof(*callee), GFP_KERNEL);
++	if (!callee)
++		return -ENOMEM;
++	state->frame[state->curframe + 1] = callee;
++
++	/* callee cannot access r0, r6 - r9 for reading and has to write
++	 * into its own stack before reading from it.
++	 * callee can read/write into caller's stack
++	 */
++	init_func_state(env, callee,
++			/* remember the callsite, it will be used by bpf_exit */
++			callsite,
++			state->curframe + 1 /* frameno within this callchain */,
++			subprog /* subprog number within this prog */);
++	/* Transfer references to the callee */
++	err = copy_reference_state(callee, caller);
++	err = err ?: set_callee_state_cb(env, caller, callee, callsite);
++	if (err)
++		goto err_out;
++
++	/* only increment it after check_reg_arg() finished */
++	state->curframe++;
++
++	return 0;
++
++err_out:
++	free_func_state(callee);
++	state->frame[state->curframe + 1] = NULL;
++	return err;
++}
++
++static int __check_func_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
++			     int *insn_idx, int subprog,
++			     set_callee_state_fn set_callee_state_cb)
++{
++	struct bpf_verifier_state *state = env->cur_state;
++	struct bpf_func_state *caller, *callee;
++	int err;
++
++	caller = state->frame[state->curframe];
+ 	err = btf_check_subprog_call(env, subprog, caller->regs);
+ 	if (err == -EFAULT)
+ 		return err;
+@@ -9256,35 +9295,12 @@ static int __check_func_call(struct bpf_
+ 		return 0;
+ 	}
+ 
+-	callee = kzalloc(sizeof(*callee), GFP_KERNEL);
+-	if (!callee)
+-		return -ENOMEM;
+-	state->frame[state->curframe + 1] = callee;
+-
+-	/* callee cannot access r0, r6 - r9 for reading and has to write
+-	 * into its own stack before reading from it.
+-	 * callee can read/write into caller's stack
 -	 */
--	if (*no_progress_loops > MAX_RECLAIM_RETRIES) {
--		/* Before OOM, exhaust highatomic_reserve */
--		return unreserve_highatomic_pageblock(ac, true);
--	}
-+	if (*no_progress_loops > MAX_RECLAIM_RETRIES)
-+		goto out;
-+
+-	init_func_state(env, callee,
+-			/* remember the callsite, it will be used by bpf_exit */
+-			*insn_idx /* callsite */,
+-			state->curframe + 1 /* frameno within this callchain */,
+-			subprog /* subprog number within this prog */);
+-
+-	/* Transfer references to the callee */
+-	err = copy_reference_state(callee, caller);
++	err = setup_func_entry(env, subprog, *insn_idx, set_callee_state_cb, state);
+ 	if (err)
+-		goto err_out;
+-
+-	err = set_callee_state_cb(env, caller, callee, *insn_idx);
+-	if (err)
+-		goto err_out;
++		return err;
  
- 	/*
- 	 * Keep reclaiming pages while there is a chance this will lead
-@@ -3859,6 +3854,11 @@ should_reclaim_retry(gfp_t gfp_mask, uns
- 		schedule_timeout_uninterruptible(1);
- 	else
- 		cond_resched();
-+out:
-+	/* Before OOM, exhaust highatomic_reserve */
-+	if (!ret)
-+		return unreserve_highatomic_pageblock(ac, true);
-+
- 	return ret;
+ 	clear_caller_saved_regs(env, caller->regs);
+ 
+-	/* only increment it after check_reg_arg() finished */
+-	state->curframe++;
+-
+ 	/* and go analyze first insn of the callee */
+ 	*insn_idx = env->subprog_info[subprog].start - 1;
+ 
+@@ -9292,14 +9308,10 @@ static int __check_func_call(struct bpf_
+ 		verbose(env, "caller:\n");
+ 		print_verifier_state(env, caller, true);
+ 		verbose(env, "callee:\n");
+-		print_verifier_state(env, callee, true);
++		print_verifier_state(env, state->frame[state->curframe], true);
+ 	}
+-	return 0;
+ 
+-err_out:
+-	free_func_state(callee);
+-	state->frame[state->curframe + 1] = NULL;
+-	return err;
++	return 0;
  }
  
+ int map_set_for_each_callback_args(struct bpf_verifier_env *env,
 
 
