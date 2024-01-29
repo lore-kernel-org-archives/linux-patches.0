@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3081586DC;
-	Mon, 29 Jan 2024 17:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0688F1586DC;
+	Mon, 29 Jan 2024 17:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548239; cv=none; b=eGroFnnwJiy0Vt7fh62K1p8Zs52hmYmMa07b/mlayWA7Jc4HZBo7ckkI3/jc1G0lZsjuJHt2RJfS4tzxh0A/HiJlK6wbPX9TeReQy0sA/mfj/ikhE6f0FV4icUQptrWYH005/kmz7Jk/fxrc5ETLtgw+lm1d2LRVW3f2A5KgyaM=
+	t=1706548240; cv=none; b=AusttmnITLatQdD5bmVZVA+gAqHsZrz0V35zF8yG4UNaFGNu5/k/OjrVHsoQYlpA8cPQ4CFWBVf79aMynnL8OStnQdInyl9LpPve4DOHTsfVvvP4XEp+D4Di4/TGdGhnuIFLR/Mes1OyUUP0Y4MP5/3m0mRItHenCmKTz4nzX/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548239; c=relaxed/simple;
-	bh=Gst/6Tl7OJF2RQJTy02CjJL+eypLvQWTZ4dT8mSl9IA=;
+	s=arc-20240116; t=1706548240; c=relaxed/simple;
+	bh=M9oSk3Zf7qsJwslg4Vg4AFxi07i+VDZr24aRI4ZkO+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nxphj9/e1SKkLW4eyQt6S3Eu9Uw7xqAK+Tp9mM7ZHWDGvhWTRmOWbngVuEdffbkexxz7N+ozbjNdaBhQ8JwAf1fTfLzEaA3j3dIf7O8X7x0bUkdLOKCDeIzwAWUqYR7XPCtcHEFg7yi9AMBvYBEeGla8VSwKXX81pLUctvtzGno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBfm/Btx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZBoWPQ0JDnEpUXjem9SRO85gTgIl9+RP1SMdCNxwDovivQ9dz4N2/tQI8s/+gAPR0/43CCsV5aoXewedulSkSrg+FCKpbld7i4A60KhXH8lUxrXnhRBL9qcXug12uHpWmoS0nTxQr90vI489MBcJYeIOtwNb92GWE9jW2EH14iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLrxf9yo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBfm/Btx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20233C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLrxf9yo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3123C433F1;
 	Mon, 29 Jan 2024 17:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706548239;
-	bh=Gst/6Tl7OJF2RQJTy02CjJL+eypLvQWTZ4dT8mSl9IA=;
+	bh=M9oSk3Zf7qsJwslg4Vg4AFxi07i+VDZr24aRI4ZkO+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JBfm/BtxAd9BV5Y6OEKGNMMJZQ8J/Okve6EryoLXV/2fEG11Ey9xnCeK2p+fBTwQZ
-	 VLb+Oq083ICZidCfrxy8eFZW3yFdB/4NeWzAkkg6ggyJGj9nJcyUiCvulGpVYSZhEh
-	 0GXoxfIDSSYMB6sErm6WvETS1nt/IlJSeocS2OYI=
+	b=DLrxf9youg0AbaWtugLJygIG0cTpG8X4Amw3EzbEMEW29MEBU1WY9Wb5Q5v0N7pDp
+	 z0wfD7lyuMalkqmHh5XFc9c8J2baFFFA5bT30WwNhBj50wLHRYxLzJdAh7azUcuMUV
+	 C6LIumtZjFO1/eOvgUEOiiKYuqvrpiQvrM8jgKUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Pham <quic_jackp@quicinc.com>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 039/185] arm64: dts: qcom: sm8150: fix USB DP/DM HS PHY interrupts
-Date: Mon, 29 Jan 2024 09:03:59 -0800
-Message-ID: <20240129165959.843425692@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.7 266/346] drm/amd/pm: Add error log for smu v13.0.6 reset
+Date: Mon, 29 Jan 2024 09:04:57 -0800
+Message-ID: <20240129170024.214519669@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,70 +47,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit 134de5e831775e8b178db9b131c1d3769a766982 upstream.
+commit 91739a897c12dcec699e53f390be1b4abdeef3a0 upstream.
 
-The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
-controller in order to be able to wake the system up from low-power
-states and to be able to detect disconnect events, which requires
-triggering on falling edges.
+For all mode-2 reset fail cases, add error log.
 
-A recent commit updated the trigger type but failed to change the
-interrupt provider as required. This leads to the current Linux driver
-failing to probe instead of printing an error during suspend and USB
-wakeup not working as intended.
-
-Fixes: 54524b6987d1 ("arm64: dts: qcom: sm8150: fix USB wakeup interrupt types")
-Fixes: 0c9dde0d2015 ("arm64: dts: qcom: sm8150: Add secondary USB and PHY nodes")
-Fixes: b33d2868e8d3 ("arm64: dts: qcom: sm8150: Add USB and PHY device nodes")
-Cc: stable@vger.kernel.org      # 5.10
-Cc: Jack Pham <quic_jackp@quicinc.com>
-Cc: Jonathan Marek <jonathan@marek.ca>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231213173403.29544-5-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.7.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -3628,10 +3628,10 @@
- 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
+@@ -2192,17 +2192,18 @@ static int smu_v13_0_6_mode2_reset(struc
+ 			continue;
+ 		}
  
--			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&pdc 8 IRQ_TYPE_EDGE_BOTH>,
-+					      <&pdc 9 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+-		if (ret) {
+-			dev_err(adev->dev,
+-				"failed to send mode2 message \tparam: 0x%08x error code %d\n",
+-				SMU_RESET_MODE_2, ret);
++		if (ret)
+ 			goto out;
+-		}
++
+ 	} while (ret == -ETIME && timeout);
  
-@@ -3677,10 +3677,10 @@
- 					  <&gcc GCC_USB30_SEC_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <200000000>;
+ out:
+ 	mutex_unlock(&smu->message_lock);
  
--			interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 490 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 491 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&pdc 10 IRQ_TYPE_EDGE_BOTH>,
-+					      <&pdc 11 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
++	if (ret)
++		dev_err(adev->dev, "failed to send mode2 reset, error code %d",
++			ret);
++
+ 	return ret;
+ }
  
 
 
