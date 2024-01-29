@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE9C15AADC;
-	Mon, 29 Jan 2024 17:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665FE15AADC;
+	Mon, 29 Jan 2024 17:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548196; cv=none; b=SXTIXblyAro759K33IIe/2MZlRnVrmrX71KDGEfoe9vAv+1+SlrRcBe8JiIh1AUrKoxykr9dsc8i/ZKjN2HI/ghc3JGdOhHOlF8gqZG4sUrwq+jVdRCPviCXAklWJ+CFYGT2uEAdffDqWFKsAUMfTbV178mUmELbGYPcpp++cdQ=
+	t=1706548197; cv=none; b=AQsooEhwHMj/iZOX6+XIrrqaBcelEdCKNF3SWkTrf7oSMBNgSwVhEXD/qftbfBlBIRXHY+glc93H6zCKKTvSFLU2d34sIT9ObxAH/c1qFOMqE5VXws3iE3D2GozU35a1nLq6KbJpwymvpCnTrmaKdQVzc3IMt29KKgHb7zNOccg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548196; c=relaxed/simple;
-	bh=eWOQ3s+7Bfzi1AcvugxTVrTPmuRDZWYEVxU/9FnfzMw=;
+	s=arc-20240116; t=1706548197; c=relaxed/simple;
+	bh=Q8+J90TGyvVTm2wgS0yZCz5kBA5W3b/8l0rhrmbU/fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rljqv1P6qGI2X1Rn6lud6i8wbAuiohlKI/4nSvuxpFx97KCI3k11f7XJCvHUaA+Vw6tDWpAE4AWI99+R1EvL5MrbMWeZtEp3UdVvy8ta1BRVZOh6RoGVNSv6zHLaCQmeQQd1JyH5/4yWLkRb2Jxq8pZ1V4UdhpzYQDiD3T8X6zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1ZLNw34; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g6xVuIDS2Gn6PeuhMqi4MAWf15ZKcr1uWvS6D1cAHglVnK0+ldWhD+kl+3DW5ZI3H0h5xHr7oDgBcokrmYnOBFcRjrcryi3eWHf2Jrn9/m+QmQTypJ1lJkJpg8InOufZIB/ZgjzB/lie4yE2tOsbEX7xoeOaVgcKrXpE2cdiXcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNCVcwv5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1ZLNw34"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652AFC43394;
-	Mon, 29 Jan 2024 17:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNCVcwv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3007CC43390;
+	Mon, 29 Jan 2024 17:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548196;
-	bh=eWOQ3s+7Bfzi1AcvugxTVrTPmuRDZWYEVxU/9FnfzMw=;
+	s=korg; t=1706548197;
+	bh=Q8+J90TGyvVTm2wgS0yZCz5kBA5W3b/8l0rhrmbU/fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1ZLNw34RXLBGzdGxOkQ7h/x5dhkoa3CvJKLSvrtHwoNa2xdilnfF7Sfv/y8TN5Fk
-	 KGazEqyQ+/UkFFNZ4DAdtm6kxZQ7thAsvd+GjM2gLRUSipdGNG5/1TULmS9WFV3mNg
-	 I7GB57YqGcaSqhh5+fWkdl6k1UoMD5WwQMPxtK1c=
+	b=VNCVcwv5+27j585gi6YNmc5kCmVVoDPkcr2DvqsHUDIYejdNRGZOFMivm4FtRtlo1
+	 gdYcWrAQZ+O1h6gRDGfO98DAojLMPs49bClojyp5dGxgMyQCVxFEGce3emzIoc8vzu
+	 CBwZeJ+5lPlCJIKUJZh307bPbyD9zytLA1GTHhUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongchen Zhang <zhanghongchen@loongson.cn>,
-	Weihao Li <liweihao@loongson.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 012/185] PM: hibernate: Enforce ordering during image compression/decompression
-Date: Mon, 29 Jan 2024 09:03:32 -0800
-Message-ID: <20240129165958.987279732@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.7 238/346] platform/x86: p2sb: Allow p2sb_bar() calls during PCI device probe
+Date: Mon, 29 Jan 2024 09:04:29 -0800
+Message-ID: <20240129170023.404164958@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,208 +46,297 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongchen Zhang <zhanghongchen@loongson.cn>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-commit 71cd7e80cfde548959952eac7063aeaea1f2e1c6 upstream.
+commit 5913320eb0b3ec88158cfcb0fa5e996bf4ef681b upstream.
 
-An S4 (suspend to disk) test on the LoongArch 3A6000 platform sometimes
-fails with the following error messaged in the dmesg log:
+p2sb_bar() unhides P2SB device to get resources from the device. It
+guards the operation by locking pci_rescan_remove_lock so that parallel
+rescans do not find the P2SB device. However, this lock causes deadlock
+when PCI bus rescan is triggered by /sys/bus/pci/rescan. The rescan
+locks pci_rescan_remove_lock and probes PCI devices. When PCI devices
+call p2sb_bar() during probe, it locks pci_rescan_remove_lock again.
+Hence the deadlock.
 
-	Invalid LZO compressed length
+To avoid the deadlock, do not lock pci_rescan_remove_lock in p2sb_bar().
+Instead, do the lock at fs_initcall. Introduce p2sb_cache_resources()
+for fs_initcall which gets and caches the P2SB resources. At p2sb_bar(),
+refer the cache and return to the caller.
 
-That happens because when compressing/decompressing the image, the
-synchronization between the control thread and the compress/decompress/crc
-thread is based on a relaxed ordering interface, which is unreliable, and the
-following situation may occur:
+Before operating the device at P2SB DEVFN for resource cache, check
+that its device class is PCI_CLASS_MEMORY_OTHER 0x0580 that PCH
+specifications define. This avoids unexpected operation to other devices
+at the same DEVFN.
 
-CPU 0					CPU 1
-save_image_lzo				lzo_compress_threadfn
-					  atomic_set(&d->stop, 1);
-  atomic_read(&data[thr].stop)
-  data[thr].cmp = data[thr].cmp_len;
-	  				  WRITE data[thr].cmp_len
-
-Then CPU0 gets a stale cmp_len and writes it to disk. During resume from S4,
-wrong cmp_len is loaded.
-
-To maintain data consistency between the two threads, use the acquire/release
-variants of atomic set and read operations.
-
-Fixes: 081a9d043c98 ("PM / Hibernate: Improve performance of LZO/plain hibernation, checksum image")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Hongchen Zhang <zhanghongchen@loongson.cn>
-Co-developed-by: Weihao Li <liweihao@loongson.cn>
-Signed-off-by: Weihao Li <liweihao@loongson.cn>
-[ rjw: Subject rewrite and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/linux-pci/6xb24fjmptxxn5js2fjrrddjae6twex5bjaftwqsuawuqqqydx@7cl3uik5ef6j/
+Fixes: 9745fb07474f ("platform/x86/intel: Add Primary to Sideband (P2SB) bridge support")
+Cc: stable@vger.kernel.org
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://lore.kernel.org/r/20240108062059.3583028-2-shinichiro.kawasaki@wdc.com
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by Klara Modin <klarasmodin@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/power/swap.c |   38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+ drivers/platform/x86/p2sb.c |  180 +++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 139 insertions(+), 41 deletions(-)
 
---- a/kernel/power/swap.c
-+++ b/kernel/power/swap.c
-@@ -605,11 +605,11 @@ static int crc32_threadfn(void *data)
- 	unsigned i;
+--- a/drivers/platform/x86/p2sb.c
++++ b/drivers/platform/x86/p2sb.c
+@@ -26,6 +26,21 @@ static const struct x86_cpu_id p2sb_cpu_
+ 	{}
+ };
  
- 	while (1) {
--		wait_event(d->go, atomic_read(&d->ready) ||
-+		wait_event(d->go, atomic_read_acquire(&d->ready) ||
- 		                  kthread_should_stop());
- 		if (kthread_should_stop()) {
- 			d->thr = NULL;
--			atomic_set(&d->stop, 1);
-+			atomic_set_release(&d->stop, 1);
- 			wake_up(&d->done);
- 			break;
- 		}
-@@ -618,7 +618,7 @@ static int crc32_threadfn(void *data)
- 		for (i = 0; i < d->run_threads; i++)
- 			*d->crc32 = crc32_le(*d->crc32,
- 			                     d->unc[i], *d->unc_len[i]);
--		atomic_set(&d->stop, 1);
-+		atomic_set_release(&d->stop, 1);
- 		wake_up(&d->done);
- 	}
++/*
++ * Cache BAR0 of P2SB device functions 0 to 7.
++ * TODO: The constant 8 is the number of functions that PCI specification
++ *       defines. Same definitions exist tree-wide. Unify this definition and
++ *       the other definitions then move to include/uapi/linux/pci.h.
++ */
++#define NR_P2SB_RES_CACHE 8
++
++struct p2sb_res_cache {
++	u32 bus_dev_id;
++	struct resource res;
++};
++
++static struct p2sb_res_cache p2sb_resources[NR_P2SB_RES_CACHE];
++
+ static int p2sb_get_devfn(unsigned int *devfn)
+ {
+ 	unsigned int fn = P2SB_DEVFN_DEFAULT;
+@@ -39,8 +54,16 @@ static int p2sb_get_devfn(unsigned int *
  	return 0;
-@@ -648,12 +648,12 @@ static int lzo_compress_threadfn(void *d
- 	struct cmp_data *d = data;
+ }
  
- 	while (1) {
--		wait_event(d->go, atomic_read(&d->ready) ||
-+		wait_event(d->go, atomic_read_acquire(&d->ready) ||
- 		                  kthread_should_stop());
- 		if (kthread_should_stop()) {
- 			d->thr = NULL;
- 			d->ret = -1;
--			atomic_set(&d->stop, 1);
-+			atomic_set_release(&d->stop, 1);
- 			wake_up(&d->done);
- 			break;
- 		}
-@@ -662,7 +662,7 @@ static int lzo_compress_threadfn(void *d
- 		d->ret = lzo1x_1_compress(d->unc, d->unc_len,
- 		                          d->cmp + LZO_HEADER, &d->cmp_len,
- 		                          d->wrk);
--		atomic_set(&d->stop, 1);
-+		atomic_set_release(&d->stop, 1);
- 		wake_up(&d->done);
- 	}
++static bool p2sb_valid_resource(struct resource *res)
++{
++	if (res->flags)
++		return true;
++
++	return false;
++}
++
+ /* Copy resource from the first BAR of the device in question */
+-static int p2sb_read_bar0(struct pci_dev *pdev, struct resource *mem)
++static void p2sb_read_bar0(struct pci_dev *pdev, struct resource *mem)
+ {
+ 	struct resource *bar0 = &pdev->resource[0];
+ 
+@@ -56,49 +79,66 @@ static int p2sb_read_bar0(struct pci_dev
+ 	mem->end = bar0->end;
+ 	mem->flags = bar0->flags;
+ 	mem->desc = bar0->desc;
+-
+-	return 0;
+ }
+ 
+-static int p2sb_scan_and_read(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
++static void p2sb_scan_and_cache_devfn(struct pci_bus *bus, unsigned int devfn)
+ {
++	struct p2sb_res_cache *cache = &p2sb_resources[PCI_FUNC(devfn)];
+ 	struct pci_dev *pdev;
+-	int ret;
+ 
+ 	pdev = pci_scan_single_device(bus, devfn);
+ 	if (!pdev)
+-		return -ENODEV;
++		return;
+ 
+-	ret = p2sb_read_bar0(pdev, mem);
++	p2sb_read_bar0(pdev, &cache->res);
++	cache->bus_dev_id = bus->dev.id;
+ 
+ 	pci_stop_and_remove_bus_device(pdev);
+-	return ret;
+ }
+ 
+-/**
+- * p2sb_bar - Get Primary to Sideband (P2SB) bridge device BAR
+- * @bus: PCI bus to communicate with
+- * @devfn: PCI slot and function to communicate with
+- * @mem: memory resource to be filled in
+- *
+- * The BIOS prevents the P2SB device from being enumerated by the PCI
+- * subsystem, so we need to unhide and hide it back to lookup the BAR.
+- *
+- * if @bus is NULL, the bus 0 in domain 0 will be used.
+- * If @devfn is 0, it will be replaced by devfn of the P2SB device.
+- *
+- * Caller must provide a valid pointer to @mem.
+- *
+- * Locking is handled by pci_rescan_remove_lock mutex.
+- *
+- * Return:
+- * 0 on success or appropriate errno value on error.
+- */
+-int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
++static int p2sb_scan_and_cache(struct pci_bus *bus, unsigned int devfn)
++{
++	unsigned int slot, fn;
++
++	if (PCI_FUNC(devfn) == 0) {
++		/*
++		 * When function number of the P2SB device is zero, scan it and
++		 * other function numbers, and if devices are available, cache
++		 * their BAR0s.
++		 */
++		slot = PCI_SLOT(devfn);
++		for (fn = 0; fn < NR_P2SB_RES_CACHE; fn++)
++			p2sb_scan_and_cache_devfn(bus, PCI_DEVFN(slot, fn));
++	} else {
++		/* Scan the P2SB device and cache its BAR0 */
++		p2sb_scan_and_cache_devfn(bus, devfn);
++	}
++
++	if (!p2sb_valid_resource(&p2sb_resources[PCI_FUNC(devfn)].res))
++		return -ENOENT;
++
++	return 0;
++}
++
++static struct pci_bus *p2sb_get_bus(struct pci_bus *bus)
++{
++	static struct pci_bus *p2sb_bus;
++
++	bus = bus ?: p2sb_bus;
++	if (bus)
++		return bus;
++
++	/* Assume P2SB is on the bus 0 in domain 0 */
++	p2sb_bus = pci_find_bus(0, 0);
++	return p2sb_bus;
++}
++
++static int p2sb_cache_resources(void)
+ {
+-	struct pci_dev *pdev_p2sb;
+ 	unsigned int devfn_p2sb;
+ 	u32 value = P2SBC_HIDE;
++	struct pci_bus *bus;
++	u16 class;
+ 	int ret;
+ 
+ 	/* Get devfn for P2SB device itself */
+@@ -106,8 +146,17 @@ int p2sb_bar(struct pci_bus *bus, unsign
+ 	if (ret)
+ 		return ret;
+ 
+-	/* if @bus is NULL, use bus 0 in domain 0 */
+-	bus = bus ?: pci_find_bus(0, 0);
++	bus = p2sb_get_bus(NULL);
++	if (!bus)
++		return -ENODEV;
++
++	/*
++	 * When a device with same devfn exists and its device class is not
++	 * PCI_CLASS_MEMORY_OTHER for P2SB, do not touch it.
++	 */
++	pci_bus_read_config_word(bus, devfn_p2sb, PCI_CLASS_DEVICE, &class);
++	if (!PCI_POSSIBLE_ERROR(class) && class != PCI_CLASS_MEMORY_OTHER)
++		return -ENODEV;
+ 
+ 	/*
+ 	 * Prevent concurrent PCI bus scan from seeing the P2SB device and
+@@ -115,17 +164,16 @@ int p2sb_bar(struct pci_bus *bus, unsign
+ 	 */
+ 	pci_lock_rescan_remove();
+ 
+-	/* Unhide the P2SB device, if needed */
++	/*
++	 * The BIOS prevents the P2SB device from being enumerated by the PCI
++	 * subsystem, so we need to unhide and hide it back to lookup the BAR.
++	 * Unhide the P2SB device here, if needed.
++	 */
+ 	pci_bus_read_config_dword(bus, devfn_p2sb, P2SBC, &value);
+ 	if (value & P2SBC_HIDE)
+ 		pci_bus_write_config_dword(bus, devfn_p2sb, P2SBC, 0);
+ 
+-	pdev_p2sb = pci_scan_single_device(bus, devfn_p2sb);
+-	if (devfn)
+-		ret = p2sb_scan_and_read(bus, devfn, mem);
+-	else
+-		ret = p2sb_read_bar0(pdev_p2sb, mem);
+-	pci_stop_and_remove_bus_device(pdev_p2sb);
++	ret = p2sb_scan_and_cache(bus, devfn_p2sb);
+ 
+ 	/* Hide the P2SB device, if it was hidden */
+ 	if (value & P2SBC_HIDE)
+@@ -133,12 +181,62 @@ int p2sb_bar(struct pci_bus *bus, unsign
+ 
+ 	pci_unlock_rescan_remove();
+ 
+-	if (ret)
+-		return ret;
++	return ret;
++}
+ 
+-	if (mem->flags == 0)
++/**
++ * p2sb_bar - Get Primary to Sideband (P2SB) bridge device BAR
++ * @bus: PCI bus to communicate with
++ * @devfn: PCI slot and function to communicate with
++ * @mem: memory resource to be filled in
++ *
++ * If @bus is NULL, the bus 0 in domain 0 will be used.
++ * If @devfn is 0, it will be replaced by devfn of the P2SB device.
++ *
++ * Caller must provide a valid pointer to @mem.
++ *
++ * Return:
++ * 0 on success or appropriate errno value on error.
++ */
++int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
++{
++	struct p2sb_res_cache *cache;
++	int ret;
++
++	bus = p2sb_get_bus(bus);
++	if (!bus)
+ 		return -ENODEV;
+ 
++	if (!devfn) {
++		ret = p2sb_get_devfn(&devfn);
++		if (ret)
++			return ret;
++	}
++
++	cache = &p2sb_resources[PCI_FUNC(devfn)];
++	if (cache->bus_dev_id != bus->dev.id)
++		return -ENODEV;
++
++	if (!p2sb_valid_resource(&cache->res))
++		return -ENOENT;
++
++	memcpy(mem, &cache->res, sizeof(*mem));
  	return 0;
-@@ -797,7 +797,7 @@ static int save_image_lzo(struct swap_ma
- 
- 			data[thr].unc_len = off;
- 
--			atomic_set(&data[thr].ready, 1);
-+			atomic_set_release(&data[thr].ready, 1);
- 			wake_up(&data[thr].go);
- 		}
- 
-@@ -805,12 +805,12 @@ static int save_image_lzo(struct swap_ma
- 			break;
- 
- 		crc->run_threads = thr;
--		atomic_set(&crc->ready, 1);
-+		atomic_set_release(&crc->ready, 1);
- 		wake_up(&crc->go);
- 
- 		for (run_threads = thr, thr = 0; thr < run_threads; thr++) {
- 			wait_event(data[thr].done,
--			           atomic_read(&data[thr].stop));
-+				atomic_read_acquire(&data[thr].stop));
- 			atomic_set(&data[thr].stop, 0);
- 
- 			ret = data[thr].ret;
-@@ -849,7 +849,7 @@ static int save_image_lzo(struct swap_ma
- 			}
- 		}
- 
--		wait_event(crc->done, atomic_read(&crc->stop));
-+		wait_event(crc->done, atomic_read_acquire(&crc->stop));
- 		atomic_set(&crc->stop, 0);
- 	}
- 
-@@ -1131,12 +1131,12 @@ static int lzo_decompress_threadfn(void
- 	struct dec_data *d = data;
- 
- 	while (1) {
--		wait_event(d->go, atomic_read(&d->ready) ||
-+		wait_event(d->go, atomic_read_acquire(&d->ready) ||
- 		                  kthread_should_stop());
- 		if (kthread_should_stop()) {
- 			d->thr = NULL;
- 			d->ret = -1;
--			atomic_set(&d->stop, 1);
-+			atomic_set_release(&d->stop, 1);
- 			wake_up(&d->done);
- 			break;
- 		}
-@@ -1149,7 +1149,7 @@ static int lzo_decompress_threadfn(void
- 			flush_icache_range((unsigned long)d->unc,
- 					   (unsigned long)d->unc + d->unc_len);
- 
--		atomic_set(&d->stop, 1);
-+		atomic_set_release(&d->stop, 1);
- 		wake_up(&d->done);
- 	}
- 	return 0;
-@@ -1334,7 +1334,7 @@ static int load_image_lzo(struct swap_ma
- 		}
- 
- 		if (crc->run_threads) {
--			wait_event(crc->done, atomic_read(&crc->stop));
-+			wait_event(crc->done, atomic_read_acquire(&crc->stop));
- 			atomic_set(&crc->stop, 0);
- 			crc->run_threads = 0;
- 		}
-@@ -1370,7 +1370,7 @@ static int load_image_lzo(struct swap_ma
- 					pg = 0;
- 			}
- 
--			atomic_set(&data[thr].ready, 1);
-+			atomic_set_release(&data[thr].ready, 1);
- 			wake_up(&data[thr].go);
- 		}
- 
-@@ -1389,7 +1389,7 @@ static int load_image_lzo(struct swap_ma
- 
- 		for (run_threads = thr, thr = 0; thr < run_threads; thr++) {
- 			wait_event(data[thr].done,
--			           atomic_read(&data[thr].stop));
-+				atomic_read_acquire(&data[thr].stop));
- 			atomic_set(&data[thr].stop, 0);
- 
- 			ret = data[thr].ret;
-@@ -1420,7 +1420,7 @@ static int load_image_lzo(struct swap_ma
- 				ret = snapshot_write_next(snapshot);
- 				if (ret <= 0) {
- 					crc->run_threads = thr + 1;
--					atomic_set(&crc->ready, 1);
-+					atomic_set_release(&crc->ready, 1);
- 					wake_up(&crc->go);
- 					goto out_finish;
- 				}
-@@ -1428,13 +1428,13 @@ static int load_image_lzo(struct swap_ma
- 		}
- 
- 		crc->run_threads = thr;
--		atomic_set(&crc->ready, 1);
-+		atomic_set_release(&crc->ready, 1);
- 		wake_up(&crc->go);
- 	}
- 
- out_finish:
- 	if (crc->run_threads) {
--		wait_event(crc->done, atomic_read(&crc->stop));
-+		wait_event(crc->done, atomic_read_acquire(&crc->stop));
- 		atomic_set(&crc->stop, 0);
- 	}
- 	stop = ktime_get();
+ }
+ EXPORT_SYMBOL_GPL(p2sb_bar);
++
++static int __init p2sb_fs_init(void)
++{
++	p2sb_cache_resources();
++	return 0;
++}
++
++/*
++ * pci_rescan_remove_lock to avoid access to unhidden P2SB devices can
++ * not be locked in sysfs pci bus rescan path because of deadlock. To
++ * avoid the deadlock, access to P2SB devices with the lock at an early
++ * step in kernel initialization and cache required resources. This
++ * should happen after subsys_initcall which initializes PCI subsystem
++ * and before device_initcall which requires P2SB resources.
++ */
++fs_initcall(p2sb_fs_init);
 
 
