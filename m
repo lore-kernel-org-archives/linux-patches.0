@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE02A15703D;
-	Mon, 29 Jan 2024 17:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EB315703D;
+	Mon, 29 Jan 2024 17:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548307; cv=none; b=QhDvhRutWe6oyy+UvtfUs1WVceUMPLCwQizIKthzldXDbwZUe3lGI/otb1RKsSI7A+AWhKrUQ/5tDBmLUkhiOd82VbB3On8mgFLQQAPqDOP44s+rkSh4QxmUF60sq1dKfQQB0N5Uhp5W2BJ6I6icIRQ+nDNuarrkbresLsmIMWQ=
+	t=1706548307; cv=none; b=C1Zwp+vpOnIB0HT+E89hblELqFN4qyunZ3ohrfGQ6PJ5gYG20eegySk2jGWZUmmEiRRuMoYZZesMRklchjMNrl+3eZic4VbBDwJtOeRc4/BeJ8uuYODYTMLsrQgIYs1O0xeoyg9L/V3R1FDYlN+GOHr0HVMiO5MJf8J77080+n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706548307; c=relaxed/simple;
-	bh=DTrcmHk3baqMVCFjzAOnvpl6yLAnm91wl/OnO+a5ofk=;
+	bh=WUqNF/LCAEURn25OcLW/47xRRMNAk6EMvgSFlnLiFbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntQ1wZ9o/fzrFVEpXZM+DSjQCxRNel+OfAKtcliNR7cDCRFImV6FsF26ugCVMSj34gwZnB0BLjBE2KSQ6geaiSA9BhP0KzT0Jz7zsDCq2AEGdaHnmrEG1RU3EIPCafKzWl1Yg9sEefl8hO5MrDcH9sIbzk0CN+o4wqsk5iZHT5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raCAn+/G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aLWyYoLwQoBauEluwc8U8LpZWms9P1BE2tyPCe24AQ1VkM1NiUqbHFdU48bYHG2u0h1cLK1o2atDyZCQYrLc4aM/SARZsUgyoDRr//KnGzrj9nm0EXBzVHzMrOmfpwcegMEOd6N3vfw3ChbJEsjfI6NYMDL2ya2l/6PGlDdqmX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K8XM9BYG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raCAn+/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64BEC433F1;
-	Mon, 29 Jan 2024 17:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K8XM9BYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DDEC433F1;
+	Mon, 29 Jan 2024 17:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706548306;
-	bh=DTrcmHk3baqMVCFjzAOnvpl6yLAnm91wl/OnO+a5ofk=;
+	s=korg; t=1706548307;
+	bh=WUqNF/LCAEURn25OcLW/47xRRMNAk6EMvgSFlnLiFbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=raCAn+/GHjxinlm8LZqY+H6t03e7Nd7RUt+N9lOYeMnFiUmHcYwfIEI7BHe4zqs5a
-	 DulPCysr17yChTpDcMneZimmYEI4D4VKcTvuJlv3DK4ZkQMUI+REgEnyrFWGU7F+kK
-	 Pb5ZGObYrwO0S9MI/QporhmR10Me6yb78bV5O2h8=
+	b=K8XM9BYGNM5Gi+vihzuyDJY6foE7GsTk0MyPOUkn79cz0bFJDcsPtvN9ZM0UwHYJI
+	 PuAgCcQ23uuv1broV7H0LWMoS0BMff+OiHkyR/N6R7zcbYVSss5q+IGcqBGU/t+8ri
+	 2ImSWaL6HbhdoG7DQGIKgC6lMjT9aCfHqQKV+Hpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Jyri Sarha <jsarha@ti.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/185] udp: fix busy polling
-Date: Mon, 29 Jan 2024 09:04:43 -0800
-Message-ID: <20240129170001.267320680@linuxfoundation.org>
+Subject: [PATCH 6.7 311/346] drm/bridge: sii902x: Fix audio codec unregistration
+Date: Mon, 29 Jan 2024 09:05:42 -0800
+Message-ID: <20240129170025.624971003@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-References: <20240129165958.589924174@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+References: <20240129170016.356158639@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,136 +49,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit a54d51fb2dfb846aedf3751af501e9688db447f5 ]
+[ Upstream commit 3fc6c76a8d208d3955c9e64b382d0ff370bc61fc ]
 
-Generic sk_busy_loop_end() only looks at sk->sk_receive_queue
-for presence of packets.
+The driver never unregisters the audio codec platform device, which can
+lead to a crash on module reloading, nor does it handle the return value
+from sii902x_audio_codec_init().
 
-Problem is that for UDP sockets after blamed commit, some packets
-could be present in another queue: udp_sk(sk)->reader_queue
-
-In some cases, a busy poller could spin until timeout expiration,
-even if some packets are available in udp_sk(sk)->reader_queue.
-
-v3: - make sk_busy_loop_end() nicer (Willem)
-
-v2: - add a READ_ONCE(sk->sk_family) in sk_is_inet() to avoid KCSAN splats.
-    - add a sk_is_inet() check in sk_is_udp() (Willem feedback)
-    - add a sk_is_inet() check in sk_is_tcp().
-
-Fixes: 2276f58ac589 ("udp: use a separate rx queue for packet reception")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Fixes: ff5781634c41 ("drm/bridge: sii902x: Implement HDMI audio support")
+Cc: Jyri Sarha <jsarha@ti.com>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240103-si902x-fixes-v1-2-b9fd3e448411@ideasonboard.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240103-si902x-fixes-v1-2-b9fd3e448411@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skmsg.h   |  6 ------
- include/net/inet_sock.h |  5 -----
- include/net/sock.h      | 18 +++++++++++++++++-
- net/core/sock.c         | 11 +++++++++--
- 4 files changed, 26 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/bridge/sii902x.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
-index c953b8c0d2f4..bd4418377bac 100644
---- a/include/linux/skmsg.h
-+++ b/include/linux/skmsg.h
-@@ -500,12 +500,6 @@ static inline bool sk_psock_strp_enabled(struct sk_psock *psock)
- 	return !!psock->saved_data_ready;
+diff --git a/drivers/gpu/drm/bridge/sii902x.c b/drivers/gpu/drm/bridge/sii902x.c
+index 69da73e414a9..4560ae9cbce1 100644
+--- a/drivers/gpu/drm/bridge/sii902x.c
++++ b/drivers/gpu/drm/bridge/sii902x.c
+@@ -1080,7 +1080,9 @@ static int sii902x_init(struct sii902x *sii902x)
+ 			return ret;
+ 	}
+ 
+-	sii902x_audio_codec_init(sii902x, dev);
++	ret = sii902x_audio_codec_init(sii902x, dev);
++	if (ret)
++		return ret;
+ 
+ 	i2c_set_clientdata(sii902x->i2c, sii902x);
+ 
+@@ -1088,13 +1090,15 @@ static int sii902x_init(struct sii902x *sii902x)
+ 					1, 0, I2C_MUX_GATE,
+ 					sii902x_i2c_bypass_select,
+ 					sii902x_i2c_bypass_deselect);
+-	if (!sii902x->i2cmux)
+-		return -ENOMEM;
++	if (!sii902x->i2cmux) {
++		ret = -ENOMEM;
++		goto err_unreg_audio;
++	}
+ 
+ 	sii902x->i2cmux->priv = sii902x;
+ 	ret = i2c_mux_add_adapter(sii902x->i2cmux, 0, 0, 0);
+ 	if (ret)
+-		return ret;
++		goto err_unreg_audio;
+ 
+ 	sii902x->bridge.funcs = &sii902x_bridge_funcs;
+ 	sii902x->bridge.of_node = dev->of_node;
+@@ -1107,6 +1111,12 @@ static int sii902x_init(struct sii902x *sii902x)
+ 	drm_bridge_add(&sii902x->bridge);
+ 
+ 	return 0;
++
++err_unreg_audio:
++	if (!PTR_ERR_OR_ZERO(sii902x->audio.pdev))
++		platform_device_unregister(sii902x->audio.pdev);
++
++	return ret;
  }
  
--static inline bool sk_is_udp(const struct sock *sk)
--{
--	return sk->sk_type == SOCK_DGRAM &&
--	       sk->sk_protocol == IPPROTO_UDP;
--}
--
- #if IS_ENABLED(CONFIG_NET_SOCK_MSG)
+ static int sii902x_probe(struct i2c_client *client)
+@@ -1179,6 +1189,9 @@ static void sii902x_remove(struct i2c_client *client)
  
- #define BPF_F_STRPARSER	(1UL << 1)
-diff --git a/include/net/inet_sock.h b/include/net/inet_sock.h
-index c2432c2addc8..c98890e21401 100644
---- a/include/net/inet_sock.h
-+++ b/include/net/inet_sock.h
-@@ -270,11 +270,6 @@ struct inet_sock {
- #define IP_CMSG_CHECKSUM	BIT(7)
- #define IP_CMSG_RECVFRAGSIZE	BIT(8)
- 
--static inline bool sk_is_inet(struct sock *sk)
--{
--	return sk->sk_family == AF_INET || sk->sk_family == AF_INET6;
--}
--
- /**
-  * sk_to_full_sk - Access to a full socket
-  * @sk: pointer to a socket
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 6b51e85ae69e..579732d47dfc 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2824,9 +2824,25 @@ static inline void skb_setup_tx_timestamp(struct sk_buff *skb, __u16 tsflags)
- 			   &skb_shinfo(skb)->tskey);
+ 	drm_bridge_remove(&sii902x->bridge);
+ 	i2c_mux_del_adapters(sii902x->i2cmux);
++
++	if (!PTR_ERR_OR_ZERO(sii902x->audio.pdev))
++		platform_device_unregister(sii902x->audio.pdev);
  }
  
-+static inline bool sk_is_inet(const struct sock *sk)
-+{
-+	int family = READ_ONCE(sk->sk_family);
-+
-+	return family == AF_INET || family == AF_INET6;
-+}
-+
- static inline bool sk_is_tcp(const struct sock *sk)
- {
--	return sk->sk_type == SOCK_STREAM && sk->sk_protocol == IPPROTO_TCP;
-+	return sk_is_inet(sk) &&
-+	       sk->sk_type == SOCK_STREAM &&
-+	       sk->sk_protocol == IPPROTO_TCP;
-+}
-+
-+static inline bool sk_is_udp(const struct sock *sk)
-+{
-+	return sk_is_inet(sk) &&
-+	       sk->sk_type == SOCK_DGRAM &&
-+	       sk->sk_protocol == IPPROTO_UDP;
- }
- 
- static inline bool sk_is_stream_unix(const struct sock *sk)
-diff --git a/net/core/sock.c b/net/core/sock.c
-index c50a14a02edd..c8803b95ea0d 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -107,6 +107,7 @@
- #include <linux/interrupt.h>
- #include <linux/poll.h>
- #include <linux/tcp.h>
-+#include <linux/udp.h>
- #include <linux/init.h>
- #include <linux/highmem.h>
- #include <linux/user_namespace.h>
-@@ -4109,8 +4110,14 @@ bool sk_busy_loop_end(void *p, unsigned long start_time)
- {
- 	struct sock *sk = p;
- 
--	return !skb_queue_empty_lockless(&sk->sk_receive_queue) ||
--	       sk_busy_loop_timeout(sk, start_time);
-+	if (!skb_queue_empty_lockless(&sk->sk_receive_queue))
-+		return true;
-+
-+	if (sk_is_udp(sk) &&
-+	    !skb_queue_empty_lockless(&udp_sk(sk)->reader_queue))
-+		return true;
-+
-+	return sk_busy_loop_timeout(sk, start_time);
- }
- EXPORT_SYMBOL(sk_busy_loop_end);
- #endif /* CONFIG_NET_RX_BUSY_POLL */
+ static const struct of_device_id sii902x_dt_ids[] = {
 -- 
 2.43.0
 
