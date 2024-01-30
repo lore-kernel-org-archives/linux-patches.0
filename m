@@ -1,178 +1,203 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5576F53D
-	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 16:24:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400657351A
+	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:21:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714321462; cv=none; b=mguYYl4wCcBiHMlEUXHzRTR2yVbf7lOFEmYvzBNUDB7jwItv1DvMbO47RUxrZOES+CqT5KLnSoNnJyrbd/I89pZODwA1IOwQwHGdBi3ZZvqsmkKjjOPJ0LQsV8pKubHIEurroo7BLb1w1I0O1BVztpSScFpVx5YrIUKP4gSk7lM=
+	t=1714328502; cv=none; b=WbnfYG+k+egCsW/4+z3ZpcXOsp4LKkGvnXrie/yBh1m9OT9hI31YHd3fk1N1dhvNJljRtTmfY+MbHeEUxSm369AZYZHWJbUajUMKoEWJ3a+bbuSCMkax+yKKY4OvQrdimXUXDpTFkGT92uPMGwcytu/5nT0CAc2VAh0ZvOiQdZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714321462; c=relaxed/simple;
-	bh=3pikn3bZ/q6pSwoT63K/PzrujRdRKsme+wtfeGAgkLA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AhLosFQIjZE1BOJMbRo5FqXfhVo1ZJs4By6NDwyM+VN3ZkRJPgIYwctzRX0mln3vkFprvniQZ2mCZBXu/3oic6gBI99E9p7ntVsfs4SrzV9DqieWDbIooYxFKpMxStopo85By9STB1bA8bhID7yUVRsItlxcTgC6iIJb7iaxhFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W6SY7WX8; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1714328502; c=relaxed/simple;
+	bh=/oqmtpSqgS0oRYpjoZJXvxx1gq9IQS5Ja+JYSs4hW1s=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=csGJBxb/5ehvmuSV9LVZ1u4jzmQ6Y26ZCAjfZJ3uXOfXFy//lMsOlbgNlmfX35GQ9XnJqAUAlS2Eoo9TuXGfKAL5Hl2ErxGn4agMyavaK8HsiMOXp1uCWQ8imq4I3Mf0gqc9Pqb0sa2ba5h4GVfUAWtkAQAtV/40wIqpFo48GB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=alien8.de; dkim=permerror (0-bit key) header.d=gmail.com header.i=@gmail.com header.b=BHD3++oE; arc=none smtp.client-ip=65.109.113.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W6SY7WX8"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1e8fce77bb2so28332655ad.0
-        for <patches@lists.linux.dev>; Sun, 28 Apr 2024 09:24:21 -0700 (PDT)
+	dkim=permerror (0-bit key) header.d=gmail.com header.i=@gmail.com header.b="BHD3++oE"
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 103D840E024C
+	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:21:38 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id iR_UBxx4buas for <patches@lists.linux.dev>;
+	Sun, 28 Apr 2024 18:21:28 +0000 (UTC)
+Received: from zn.tnic (pd953020b.dip0.t-ipconnect.de [217.83.2.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 61BE440E00B2
+	for <patches@lists.linux.dev>; Sun, 28 Apr 2024 18:21:27 +0000 (UTC)
+Resent-From: Borislav Petkov <bp@alien8.de>
+Resent-Date: Sun, 28 Apr 2024 20:21:19 +0200
+Resent-Message-ID: <20240428182119.GBZi6Tn-FVCl-zOo3Y@fat_crate.local>
+Resent-To: patches <patches@lists.linux.dev>
+Received: from mail.alien8.de
+	by mad with LMTP
+	id kRD/L2EOuWVl5A4Ac81XFw
+	(envelope-from <adrianhuang0701@gmail.com>)
+	for <bp@alien8.de>; Tue, 30 Jan 2024 14:57:37 +0000
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id AA70340E01BB
+	for <bp@alien8.de>; Tue, 30 Jan 2024 14:57:37 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ymxEqr1rL-u0 for <bp@alien8.de>;
+	Tue, 30 Jan 2024 14:57:31 +0000 (UTC)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPS id 3BABB40E016C
+	for <bp@alien8.de>; Tue, 30 Jan 2024 14:57:23 +0000 (UTC)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1d76671e5a4so28627365ad.0
+        for <bp@alien8.de>; Tue, 30 Jan 2024 06:57:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714321460; x=1714926260; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=KW0sCch2uVnHMEKN8y0EcawfVfKpRrCWXkwv05+gEKE=;
-        b=W6SY7WX88r270ziACTBp2WBlCiF6nayYJ9jOb4TfPTvV/ZMBFZb4ZKT18j9g8WoKBt
-         R3uANdIRKlgSxm0flgH2XHm7AxN5ksTt5nPCj7PhpAynaqv5rK1uGgPIT8Qwda0cl+sv
-         0wOoYz/D/6cRnazGSwvSeX+9yz4uBU6jUgMWJ1ADDy9YqsmSyIquFk3EvXHmkhU5foZq
-         Od0Ua9nVe6I2jixL6CHDIVZ9B6/vV65IzIyFd6J8BivnpovCVsTxt7Q9eg6Wzz2u7KSH
-         Kiknb6L/mJl1KwZQecwQwrC2/kExMlGBdBUiPJ9Iu2tNB51tsFZO4SpysQwhqGaPbbav
-         WzCQ==
+        d=gmail.com; s=20230601; t=1706626641; x=1707231441; darn=alien8.de;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qgdF93aCFnFU++AdEyhzJAawndOS4U2ZSHllF/Afcf0=;
+        b=BHD3++oEKzUbeGTmWKHcE94hioRz5EQsj/eSdsf0KzyANLcXxwJSitWx6oOhEOUy4B
+         34lFPn2S3zcPyafNoYmCXHeNaEzsWpDl52xTa3QyXRxfxUP0fvjd3Qc3jsLEmeih+9Dw
+         xEQ+KJBsTV1DYIWss8PT8TgE9ECdxUEKkMYeHwQGqw1ETSJ8QX8DU5ERuAVYlISgV9Ce
+         x2suLqXAMPmIOfz+4liNurhleVm6BtgkF4HbibCQLdHPrOf0aYjCRJnOXxjGU/fQzTjt
+         BFhKOcRPkdNBGHi9lC7QnayovzD2ZUxWHUQd8MUgAtqVwqb03vc96yaaGvWgFByPO1y2
+         kgWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714321460; x=1714926260;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KW0sCch2uVnHMEKN8y0EcawfVfKpRrCWXkwv05+gEKE=;
-        b=bnNoEN/DNJSOcEmCVj9XeQ0vyGXnEIP2eDLx3SUJbqWzqu8BK+MV9Kuj5EhWaWVHJo
-         3HcjcgamD9WFTrLNtJlVeXIoW/Eb1LmRX+e7RAFr9NfEBfPjl5UBWBhkcOMOBkX478Fu
-         EzVxt8qpCKumsZs3QIG3BB/6TlZfd1EBWQ4sDd5FTfoRV1uMiWHE1lSYGmLlll0v8WYv
-         Fquc5JEwrBseKQTGvvlTkNpeWNOfbooVH7H6xoLYZ4XWpec7n26TbuGrfFYbbDUlrk9T
-         ruVlJC7q1skr+O94+W+7amecJi2e8ypaUcTY5S2e6Fxf+ZiLQ51Oz0is9njvmBGuWYv2
-         XMgA==
-X-Forwarded-Encrypted: i=1; AJvYcCX62avXwMEejt+04tFxkAURV/cgtjkDq99yKnxMJ5r0bGMABiwDw+Wg153Ba5ccTHOoQspKA8kE1zvoPOHt+kILootIyvjrCQ==
-X-Gm-Message-State: AOJu0YzIJ6jGk7iU7DSfYmdXep/sLpDQp+YVO9kPOqgb28VyIr1SUhgC
-	o9z2i3nEiMwX7na6TQthQAIvauGkjb2CLdH/DqCwZ4S+1a3Of3Zj
-X-Google-Smtp-Source: AGHT+IFtN3y7a0lebNWs0c3mgSkrwvR9Hbe8ptHD1guEvftLzxBxYiafmlj+Az7wqIlySWqu9Qr+9Q==
-X-Received: by 2002:a17:902:eccc:b0:1ea:c52d:e03e with SMTP id a12-20020a170902eccc00b001eac52de03emr10122727plh.13.1714321460481;
-        Sun, 28 Apr 2024 09:24:20 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id c6-20020a170903234600b001eb51a43562sm2795133plh.185.2024.04.28.09.24.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 Apr 2024 09:24:19 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <86374002-4585-4e61-8414-33c7612bf940@roeck-us.net>
-Date: Sun, 28 Apr 2024 09:24:16 -0700
+        d=1e100.net; s=20230601; t=1706626641; x=1707231441;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qgdF93aCFnFU++AdEyhzJAawndOS4U2ZSHllF/Afcf0=;
+        b=Uxg9OvwI3bWWYU2Bn04ooWlthLwuUfOCYWBGEQ6zcEwaT2kAFPudPvioTQQ//WU6v9
+         BQq9L5OD0lUnWvzz7IfrMXKKnGgGyGjsyky9LQpJhIV1pdRF9JNGHzgrTgVfNHK0Ee9j
+         lEpZ1J4vFvJS5vXOs1koIdjV3r2IQFUGPmMyW/Tvi6aOQK46GZyDXz0ratQaAOhLMARt
+         9jQ4DZE2i6XMyVQO927RIYAPCkQZHYbUczzhUnUQJjewnVX7ms8/TFLEDhMuX/W3g+NP
+         FePFAAJbSHC5IVfycJ4Z9qFfh2OJMVtjqMTt4Ocamu9UEAyBaDZOWR5CFF7J9GNKNHjb
+         4C7A==
+X-Gm-Message-State: AOJu0YwkXWl6wDFOHZnnAgo7ujb3pGhMc4bo4YRSFc/IGGCluyDaWI9M
+	DRuguWUFPP5YifgSvwuLKKjTVltIfBaAGUOG40RisOnuGRA3w+hC61xMsBK9Rk520w==
+X-Google-Smtp-Source: AGHT+IEzTXPryEhY5ACsO17SDG1eY2YeK28gwBSFRp5XjIUqSN3VxRinsO6zJGlqOrY/QXu+QoDCpw==
+X-Received: by 2002:a17:903:2d1:b0:1d5:8ce6:e4b1 with SMTP id s17-20020a17090302d100b001d58ce6e4b1mr9313826plk.43.1706626641298;
+        Tue, 30 Jan 2024 06:57:21 -0800 (PST)
+Received: from AHUANG12-3ZHH9X.lenovo.com (220-143-209-60.dynamic-ip.hinet.net. [220.143.209.60])
+        by smtp.gmail.com with ESMTPSA id w7-20020a1709029a8700b001d755acec64sm7251656plp.189.2024.01.30.06.57.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 06:57:20 -0800 (PST)
+From: Adrian Huang <adrianhuang0701@gmail.com>
+To: Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Cc: x86@kernel.org,
+	Adrian Huang <adrianhuang0701@gmail.com>,
+	Adrian Huang <ahuang12@lenovo.com>
+Subject: [PATCH] x86/apic: Fix APIC MSR access error when x2apic is disabled
+Date: Tue, 30 Jan 2024 22:56:01 +0800
+Message-Id: <20240130145601.7063-1-adrianhuang0701@gmail.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/141] 6.1.88-rc1 review
-To: Vitaly Chikunov <vt@altlinux.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- allen.lkml@gmail.com, broonie@kernel.org,
- Anders Roxell <anders.roxell@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
- Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>
-References: <20240423213853.356988651@linuxfoundation.org>
- <CA+G9fYuv0nH3K9BJTmJyxLXxvKQjh91KdUi4yjJ0ewncW5cSjw@mail.gmail.com>
- <3yj4eo4ww6wfz4ggaurutemobxi7pwdg7gctnhmwytalimpdcz@hve522lspsdv>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <3yj4eo4ww6wfz4ggaurutemobxi7pwdg7gctnhmwytalimpdcz@hve522lspsdv>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+X-Rspamd-Queue-Id: 3BABB40E016C
+X-Spamd-Result: default: False [-2.63 / 20.00];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 ARC_NA(0.00)[];
+	 RECEIVED_SPAMHAUS_PBL(0.00)[220.143.209.60:received];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_FROM(0.00)[gmail.com];
+	 R_SPF_ALLOW(-0.20)[+ip6:2607:f8b0:4000::/36];
+	 MIME_GOOD(-0.10)[text/plain];
+	 PREVIOUSLY_DELIVERED(0.00)[bp@alien8.de];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 TO_MATCH_ENVRCPT_SOME(0.00)[];
+	 RBL_SEM_IPV6_FAIL(0.00)[2607:f8b0:4864:20::636:query timed out];
+	 DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	 RCPT_COUNT_SEVEN(0.00)[7];
+	 MID_CONTAINS_FROM(1.00)[];
+	 NEURAL_HAM(-0.00)[-1.000];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 FREEMAIL_ENVFROM(0.00)[gmail.com];
+	 ASN(0.00)[asn:15169, ipnet:2607:f8b0::/32, country:US];
+	 RCVD_TLS_ALL(0.00)[];
+	 BAYES_HAM(-2.83)[99.26%];
+	 FREEMAIL_CC(0.00)[kernel.org,gmail.com,lenovo.com]
+X-Rspamd-Server: mad
+Content-Transfer-Encoding: quoted-printable
 
-On 4/28/24 05:32, Vitaly Chikunov wrote:
-> Greg,
-> 
-> On Wed, Apr 24, 2024 at 01:53:35PM +0530, Naresh Kamboju wrote:
->> On Wed, 24 Apr 2024 at 03:14, Greg Kroah-Hartman
->> <gregkh@linuxfoundation.org> wrote:
->>>
->>> This is the start of the stable review cycle for the 6.1.88 release.
->>> There are 141 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>>
->>> Responses should be made by Thu, 25 Apr 2024 21:38:28 +0000.
->>> Anything received after that time might be too late.
->>>
->>> The whole patch series can be found in one patch at:
->>>          https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.88-rc1.gz
->>> or in the git tree and branch at:
->>>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
->>> and the diffstat can be found below.
->>>
->>> thanks,
->>>
->>> greg k-h
->>
->> As Pavel reported,
->>
->> LKFT also found these regressions on 6.1.
->>
->> The arm build failed with gcc-13 and clang-17 on the Linux stable-rc
->> linux.6.1.y branch.
->>
->> arm:
->>   * omap2plus_defconfig - failed
->>   * defconfig  - failed
->>
->> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> I'm curious why v6.1.88 is still released nevertheless the reports of the
-> build regression on ARM32.
-> 
+From: Adrian Huang <ahuang12@lenovo.com>
 
-It would also be interesting to understand why commit 0f4048e1a0c6 ("ASoC:
-ti: Convert Pandora ASoC to GPIO descriptors") was necessary. It doesn't
-immediately look like a bug fix.
+When appending the 'iommu=3Doff' kernel parameter, the kernel complains
+about the following error message [1]:
 
-Thanks,
-Guenter
+unchecked MSR access error: RDMSR from 0x802 at rIP: 0xffffffff94079992 (=
+native_apic_msr_read+0x12/0x50)
+
+The root cause is that:
+  1. x2apic_mode is configured as '1' in check_x2apic().
+  2. apic_x2apic_cluster (assigned to global variable 'apic') is
+     selected in default_acpi_madt_oem_check().
+  3. x2apic_disable() is invoked in try_to_enable_x2apic().
+     Call path:
+       enable_IR_x2apic
+        |- try_to_enable_x2apic
+          |- x2apic_disable
+            |- __x2apic_disable
+            |- apic_set_fixmap
+              |- apic_read_boot_cpu_id(false)
+  4. read_apic_id() in apic_read_boot_cpu_id() invokes
+     native_apic_msr_read(), which leads to the error message.
+     Call path:
+       apic_read_boot_cpu_id
+         |- read_apic_id
+           |- apic_read
+             |- apic->read() ['apic' points to apic_x2apic_cluster]
+	       |- native_apic_msr_read
+
+Since x2apic mode has been disabled by writing MSR_IA32_APICBASE in
+__x2apic_disable, the upcoming MSR accesses will trigger the MSR
+access error. Note that APIC and x2APIC registers are accessed via
+MMIO in xapic mode and those regiters are access via the MSR-based
+interface in x2apic mode [2].
+
+Fix the issue by checking if boot_cpu_physical_apicid has been
+initialized.
+
+[1] https://gist.github.com/AdrianHuang/9e5ce38d410af3ccd0b5ac1703e032bc
+[2] Chapter 16, AMD64 Architecture Programmer=E2=80=99s Manual Volume 2:
+    System Programming
+
+Fixes: d10a904435fa ("x86/apic: Consolidate boot_cpu_physical_apicid init=
+ialization sites")
+Signed-off-by: Adrian Huang <ahuang12@lenovo.com>
+---
+ arch/x86/kernel/apic/apic.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
+index 4667bc4b00ab..6700d6f266ca 100644
+--- a/arch/x86/kernel/apic/apic.c
++++ b/arch/x86/kernel/apic/apic.c
+@@ -1703,6 +1703,9 @@ static __init void apic_read_boot_cpu_id(bool x2api=
+c)
+ 		boot_cpu_physical_apicid =3D native_apic_msr_read(APIC_ID);
+ 		boot_cpu_apic_version =3D GET_APIC_VERSION(native_apic_msr_read(APIC_L=
+VR));
+ 	} else {
++		if (boot_cpu_physical_apicid !=3D BAD_APICID)
++			return;
++
+ 		boot_cpu_physical_apicid =3D read_apic_id();
+ 		boot_cpu_apic_version =3D GET_APIC_VERSION(apic_read(APIC_LVR));
+ 	}
+--=20
+2.25.1
 
