@@ -1,174 +1,128 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2058.outbound.protection.outlook.com [40.107.94.58])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A375E8612E;
-	Tue, 30 Jan 2024 16:04:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.58
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706630678; cv=fail; b=brXg8uiWmqQ3eibU7Ql65827M0K2X9LAAvXcn+KsRtfwMvCGy95gl0vyk8ma+Nu0RoHce39M6y7saYEZIZPeEmhF8PLemHieER9LCIRb2+JCx5RdtVJYvShtKjVXEOkJ9KGMWPlfy6R1H6LKKhUlQ2usKvD9XAjndsw28t54JrQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706630678; c=relaxed/simple;
-	bh=A3pNKEEF7VqaoBvAPesSCsI9M3xENJ+iy6fBf+L0N2k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=EQpnboGc4KXT0uT+vEXQmH2PUNRKiMsCZA2MTMLJTCiSwLZpPQi5IDOxXvNQeFO0CNZJ1liU9zD8QKJWJyzl/Yqra6By0el5RnepBdlq5VYYJ+yWZBi8FaZNRyoxgejvBQ/YBb4xO3DHjQjClh4kV/dtQX5ZHFnlsgjeW2e6llY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nbWT17ZB; arc=fail smtp.client-ip=40.107.94.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B488C1272BA
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 16:09:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706630943; cv=none; b=BkbSlyGOJ+eUOjSlmuABcMBEb99cJfgtnuCS2xCPWsOdmvYY7i8VZ2030NBxOSarv0E3yYl9TtvjnXaiTTJQAPsTvqwstSmD4s/JfV0kPYLUlBHbkYbGs+K5y3VVQP9vwy+tJxzbMGEgKxS35v8nrmaOqcPyP/pfvdYKROGHxHM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706630943; c=relaxed/simple;
+	bh=+QvIc4Z1UoL6JdvZ3iGRTPT0MU1bmVcGBhyue7B95UA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CwmjskyQ3uaRS6/hzuiC3eBCXroAi7zGFgXRDr3MbpqBIzjt/TsGu77FAqIFaqqRAquen036fyBYnsWL47L0wWPixYJrQWFilBRV6A54VV3uhjFMNWYElO6WMV8TP2YvqAI5kOY6P5khtefqAltjZE1OjXJjYVmIiFVDOSjEPT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=dPZEbzOH; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nbWT17ZB"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DvLZDgPM4BhiBaJelWT69DYy2JgVmoX6yG7kcjnB1gXa2y2mdDIA5KSurJ9Xxx7HojL34/Hnp7y9Anj4zJHihujpvzQdCD4J74s1pIL9mHnVHcQfaripJhtKLjSrtJ1l6zcjRr85533js+RSAraF02t8EWXsLqnNAoOe/emYrRz+MVRNokz797AX5WLY87pbM9YZbNfq9JXSLBBct3sz4qozlmwlU8zk5OsTQGhUQalhVD5SzOrvzMvFL1zjBf8cJ3fHSMTbGUAs0zlnG0BAoCIS3cwUv+SOKcbhShX8dNR4cq2WsEoIYCrXr9A5wWw8U+xgXzXcP3cZya5yK5c3Uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+/3pUVzqS1BQ5xK39Tmky5MQ10Iz7Cl+CW2aXic+Jcw=;
- b=kDSs/9fSfFX54s8T4kDFxfQ13oHjHDsMn7lIdwksoI9LLi5q5Ogb45N7L352EoiTBQtuZOA2qwDgH5V1PH6bIawM6RCYrQgZWpCAkK+Ghdf8pkjGRlPmHj7hhybkVZ+7XmF7NKT/G1DeNpL+nnV2mWTqKxNMnqrm43CviqQAFga1idKv+3/dxFoOQxhDmcgTXqoA2MC0GHNN0KQ2nV7bM48rIHTNJXkt5bDfLxKAnkwH/WF5v8cp14tyQVVJfS+PDU0r75xcHr6gyXWXn02xt0eftKpMFAt1tBeKs5AOPaQw2a5Uw413KzIpW8WzlnWlITtxBTxQ/3SJkdPuwrB4DA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+/3pUVzqS1BQ5xK39Tmky5MQ10Iz7Cl+CW2aXic+Jcw=;
- b=nbWT17ZBWRsJ0Bp4DbjhGZ5OyARec3+yRVuYa2Z+9FbZQreYxUzxRMiNau837ZPVQWgNVB5AWEyrqC+EeDikGVuYBT/n5yKiLbQ9yRu5PeBaLKhbSYNHMh5NHI0ZehyPKTFG/qe1/F14cq3r1V9E2Fv3m3Z+x7yiQnUZ6oR0kaV97w5rJkpc0qTse8OwnJ/qbkrn0bZtZtJaXRcaGlVBNN7O7nD8sgmY4A/wW74hJOBqcboj2NfJGNOwzsfRTFltJoIhTl7AnZ/OroeQVe7W6XfQ/UiCwtysWTzJi7UcQAdWIt5KSLFYME6H5weYVVR2NboU2e1vfykrr4EBDXRnsA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by BL1PR12MB5852.namprd12.prod.outlook.com (2603:10b6:208:397::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.34; Tue, 30 Jan
- 2024 16:04:31 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7228.029; Tue, 30 Jan 2024
- 16:04:31 +0000
-Date: Tue, 30 Jan 2024 12:04:30 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-Cc: "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Eric Auger <eric.auger@redhat.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH v4 01/27] iommu/arm-smmu-v3: Check that the RID domain is
- S1 in SVA
-Message-ID: <20240130160430.GC1455070@nvidia.com>
-References: <0-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
- <1-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
- <b3a7b564dcef4b518af0493155b67cc6@huawei.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b3a7b564dcef4b518af0493155b67cc6@huawei.com>
-X-ClientProxiedBy: MN2PR15CA0013.namprd15.prod.outlook.com
- (2603:10b6:208:1b4::26) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="dPZEbzOH"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-595d24ad466so2766964eaf.0
+        for <patches@lists.linux.dev>; Tue, 30 Jan 2024 08:09:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1706630940; x=1707235740; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n46xbHZiZrs5l9dNaQX2aITyBLQAoYywh4YkaSlR7UI=;
+        b=dPZEbzOHPadcExm90Gst1uAiEDiDH8WVUgiVKpRolhtN9YwE1Bd2ISavHEX6EjEbbH
+         CYdpG+pg6lzcWIvoGqVtY7LO7iffUKBlS2OVZWux2zuZVVd+UJIx2diAVwTGgU7U1mPp
+         KQXkaa8DHtL9GZBhN5JA0nzZuDI4qgMs8m3OE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706630940; x=1707235740;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n46xbHZiZrs5l9dNaQX2aITyBLQAoYywh4YkaSlR7UI=;
+        b=BZAk+IhoPiIO4okbsItkMivjkEEsRKCVtTOAP8pqhfZFGI+3ftvEVAD+/qK9UOCYZz
+         WheLSLV72++jPSCvOu+VK76WBRTTQ/qXnvDhcKTtjWqdwmO2mWOVka5UhHDPfmrOXeHF
+         oXmauioUnkGvHstvqfAPfAlbqcWR+p/BwOt4aMSe671iNw8dD5g1a2WtzyCFPZyAf4Gv
+         B3gY3CVuo1ID3ItoOrNw/1ZGwan7AlRkbp/lNTiLMe8EX1GsRZQ7s9fNXleuD4VNlPoz
+         JkOI64pqjdbQez9eW9Q3FUqrlZx8BzkwCtyRN3IYUduMMRrmvU+HSKBZ+/pIuOk9J/vV
+         C8Zg==
+X-Gm-Message-State: AOJu0Yzrqrmg0e8jPGkG6udBioMTLDG32FsJDeEVjZntPxDmUiZ86Rcl
+	M6m+J7UuGcWhq/SQQWwn+hNrSBxApNRfE5qRk7MSt9rKffRxZRiwuw/EBl7yBw==
+X-Google-Smtp-Source: AGHT+IEu0+K/Oojbff9apgYluaQt3t98C1oqPRPT4DG1CrCd7aseQ7XBLqMgZkkswDUs6Y8mnY6Ovw==
+X-Received: by 2002:a4a:e9f7:0:b0:59a:1536:67f5 with SMTP id w23-20020a4ae9f7000000b0059a153667f5mr5936431ooc.7.1706630940670;
+        Tue, 30 Jan 2024 08:09:00 -0800 (PST)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id k2-20020a4ae282000000b00594ee4b4339sm1908393oot.28.2024.01.30.08.08.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 08:09:00 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 30 Jan 2024 10:08:58 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Jani Nikula <jani.nikula@intel.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Jonathan Corbet <corbet@lwn.net>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 003/331] docs: kernel_feat.py: fix potential command
+ injection
+Message-ID: <ZbkfGst991YHqJHK@fedora64.linuxtx.org>
+References: <20240129170014.969142961@linuxfoundation.org>
+ <20240129170015.067909940@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|BL1PR12MB5852:EE_
-X-MS-Office365-Filtering-Correlation-Id: 40e0bd8b-fcc8-4011-fe8f-08dc21ad24e8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	hTi08DFwjWdR1ASY9BLzXy7SK6vJQFsw1Bjn4Rco34AHyLRapgQxEm2j23zMhA0f2pAcjDlx3G9+p/3uOo2KjaCUrI4YXNt+bd9T/mwTNCx21ieuRNE7vEjAqAonbuwQ+eOyDl5Y1LFSVv78byDKQEXyf0ZTWdqXo4JdsgzKa3NrbMu1OH2ZKUP1icjAHpy6e0sgTMmlO38Vd82a5wALHri8H2CQGADHjC5oq0ZxxKP7mFedGw1L+JL2oFYrWE+1RXh+J8IE7PSlXS7pFAIEU6ePavBw2bL4U03opKa7O+ZnKkQpHKCHR4O3VuRA4FHafD7ZKpbJbVm8gp9VIWoml1mz8pmmZflx6Kwc3OA8pZN0103XKvACeC0x6f+3PwD+GZxExfe6YW7+/nyTsX5Vosu+8pWePfjtWTp+39mRcaO1wHaVHbOSbrGgxLDQk7To2q8kM9Gsnf7LW8hknYXSpu3/MpoQ/VHEHZK0FirPzmktN2ZB5hhNxvIMiY5dUuSfx35hYKIM/1W+qZrTBL1BaavgfEV3EHz9mNItaV4vE2reC8K3eCWTKnIB9UIipIJN
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(376002)(366004)(396003)(39860400002)(346002)(230922051799003)(1800799012)(186009)(64100799003)(451199024)(54906003)(6916009)(316002)(83380400001)(66556008)(66946007)(66476007)(86362001)(6486002)(478600001)(38100700002)(1076003)(2616005)(26005)(8676002)(8936002)(6512007)(6506007)(4326008)(7416002)(5660300002)(33656002)(2906002)(41300700001)(36756003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?dTqeAjAdspkl7KwyqM221T/SNT5o9+p7ngoQYo22lYxLuXk7GwW9g7GafPP0?=
- =?us-ascii?Q?EB0I960A48B98kJWivHn1u5Pjp8nGUFGTSJCu20BQ2og6On9a/2K6PmPVJlw?=
- =?us-ascii?Q?b7dLbUu6/fHLT3tt20EQauvy7oHpbsIctBoxR+WCO4mmIfBy1rvFHmyqpoEr?=
- =?us-ascii?Q?gUJoCce3sZXL2yHh//lmb7PZbFqSs3XI5w5mY6fxaP0ovX+XYqOkJGdVC+zm?=
- =?us-ascii?Q?/+Yl9UQN3tInicxlEMQX0VtOFL9w2LLVC0ubEOAeim8qhcHLZAVhX+xjnyHv?=
- =?us-ascii?Q?VImSC2uTHNBxRd0gk4OVEIu7HmQsAwsJgTf87kdM20Ac/bn0ryQxO5Eq6IN2?=
- =?us-ascii?Q?5MhpIY3+ovfAYEmsgzTOBfqbZOAGOOS8jUrKhdycsfhHo3pXSyiZOx7k9VuB?=
- =?us-ascii?Q?N0ItNaGWy0e0kbZ8eb98eFRftMwSj1RbKRWGup2t/NIJBNdtghOG8Z316UQP?=
- =?us-ascii?Q?pzdnu88MV5hSgldPclMFSIOMyBuHQD3rESI9gUrzxLYj3yL2Wvyb7WMr3UtX?=
- =?us-ascii?Q?pprcDx8/94rYmg0YP4izoDiEvMv2MLZGTo2F3ZYNu9XPL83hwxxOBuf8JlAM?=
- =?us-ascii?Q?AazxGry3FxU0eesexWshSvw+Oa65nd7J5O/p2I8YxmYAuxu7+Y9My/fG5XwR?=
- =?us-ascii?Q?szANKo6R3gbI62hP9LfGKqnWx7JaEQ7lJLFOC6dxUvU9gojJPnZPBk2JsOmn?=
- =?us-ascii?Q?C0IiGRaowjiNMjw29MRtZBOd64qsheruQh12I2obMA9c6bVEtPvQr2Ut+GMj?=
- =?us-ascii?Q?R/hu+RnI8iIzbZ6uVc3hqhF2kvnPb+BZAh/zPIcu5TIHD5TolhUl9Layi/iN?=
- =?us-ascii?Q?P3CXlwcstYzWRbJYB8LYpezPDRHnGgW1vM4X1belMhpU5/gLd2UfwXfU99tb?=
- =?us-ascii?Q?kBsRxA4jm6u26xQyhxCjI3lCBBnb0Po5ArbYn/Oc/ektH6daqNLw94qD2Q2F?=
- =?us-ascii?Q?/zq8t3PjzBL8frVQfpZQwQwbaC2B8IQM1LYLxpADcY441BKZ7hOz2/VwEhMj?=
- =?us-ascii?Q?hEYeF/xA3fIGa1aEG7BLw3Ao/2EMZkVtZ9lukuz7/LI0qkXa44nhwPFlpcJs?=
- =?us-ascii?Q?SulKDohsQ6PIT3sdShwirhNtB27nan43OmwMC2VG1ah8DZ79TH1EV0rZZVrp?=
- =?us-ascii?Q?gg8CtxBxELX3+F30xX/oHGPRJlG/iBhojHaSDq8psgfo3us4GNDxNeI8BTeC?=
- =?us-ascii?Q?35nRJa7ydMNPx0MAHKSruP1CoV6PBQ+dfKWMB++6vipKjJFj8d66QCTII8Q4?=
- =?us-ascii?Q?j3VRBDYZKshA0d1I8sN3e/iHY8puUeZSwhqZHzAxyDznkVF+NDytBNnAMVDP?=
- =?us-ascii?Q?fznBjLoj7nITBKqIhL/61SkspbXX2zo8vCDyGsCK/T5mF/C3j5dAZ95Dgbc2?=
- =?us-ascii?Q?njZ0ssaY/wmrIlBTFVnNzwN9jvRLL5lzFKG4GrUBSNiousMGcuEiA/xYFA3k?=
- =?us-ascii?Q?a4e1vkmxtxgHkcOmyCcUbABBOAAx9USZtApOQ2eTGFT0FO9ZbufZKigF2OaE?=
- =?us-ascii?Q?16ifFAzQXuciYgO+oW4oxjjD9IaFmVPEc2Q70fdc3+DV5gcKZcbTCQZ/7s73?=
- =?us-ascii?Q?M6YFJWw18++CmsbQCKYdw3qQ/ddeCZXM6jImXila?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 40e0bd8b-fcc8-4011-fe8f-08dc21ad24e8
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2024 16:04:31.4046
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iP5CgkKgVtJrMiVpQTGA2q5Ph5SgXxm19+tZxoAdoHEAjRBXMEUaEcJNbYMU46ph
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5852
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240129170015.067909940@linuxfoundation.org>
 
-On Tue, Jan 30, 2024 at 08:46:10AM +0000, Shameerali Kolothum Thodi wrote:
-
-> > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> > b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> > index 05722121f00e70..b4549d698f3569 100644
-> > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> > @@ -387,7 +387,13 @@ static int __arm_smmu_sva_bind(struct device *dev,
-> > struct mm_struct *mm)
-> >  	struct arm_smmu_bond *bond;
-> >  	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
-> >  	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
-> > -	struct arm_smmu_domain *smmu_domain =
-> > to_smmu_domain(domain);
-> > +	struct arm_smmu_domain *smmu_domain;
-> > +
-> > +	if (!(domain->type & __IOMMU_DOMAIN_PAGING))
-> > +		return -ENODEV;
-> > +	smmu_domain = to_smmu_domain(iommu_get_domain_for_dev(dev));
+On Mon, Jan 29, 2024 at 09:01:07AM -0800, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
 > 
-> We already have the iommu_domain from above.
-
-Yep
- 
-> > +	if (smmu_domain->stage != ARM_SMMU_DOMAIN_S1)
-> > +		return -ENODEV;
+> ------------------
 > 
-> I think we need to do the above checks in arm_smmu_sva_remove_dev_pasid()
-> as well.
+> From: Vegard Nossum <vegard.nossum@oracle.com>
+> 
+> [ Upstream commit c48a7c44a1d02516309015b6134c9bb982e17008 ]
+> 
+> The kernel-feat directive passes its argument straight to the shell.
+> This is unfortunate and unnecessary.
+> 
+> Let's always use paths relative to $srctree/Documentation/ and use
+> subprocess.check_call() instead of subprocess.Popen(shell=True).
+> 
+> This also makes the code shorter.
+> 
+> This is analogous to commit 3231dd586277 ("docs: kernel_abi.py: fix
+> command injection") where we did exactly the same thing for
+> kernel_abi.py, somehow I completely missed this one.
+> 
+> Link: https://fosstodon.org/@jani/111676532203641247
+> Reported-by: Jani Nikula <jani.nikula@intel.com>
+> Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+> Link: https://lore.kernel.org/r/20240110174758.3680506-1-vegard.nossum@oracle.com
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 
-The core won't call that unless a PASID is already attached, meaning
-we already passed the above check in bind. So it shouldn't need to be
-duplicated.
+This patch seems to be missing something. In 6.6.15-rc1 I get a doc
+build failure with:
 
-Further, at this instant all the RID attach paths are protected by:
+/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/kerneldoc.py:133: SyntaxWarning: invalid escape sequence '\.'
+  line_regex = re.compile("^\.\. LINENO ([0-9]+)$")
+/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/maintainers_include.py:80: SyntaxWarning: invalid escape sequence '\s'
+  pat = '(Documentation/([^\s\?\*]*)\.rst)'
+/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/maintainers_include.py:93: SyntaxWarning: invalid escape sequence '\s'
+  m = re.search("\s(\S):\s", line)
+/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/maintainers_include.py:97: SyntaxWarning: invalid escape sequence '\*'
+  m = re.search("\*([^\*]+)\*", line)
+/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/maintainers_include.py:115: SyntaxWarning: invalid escape sequence '\s'
+  heading = re.sub("\s+", " ", line)
+/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/kernel_abi.py:105: SyntaxWarning: invalid escape sequence '\.'
+  line_regex = re.compile("^\.\. LINENO (\S+)\#([0-9]+)$")
+/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/kernel_feat.py:98: SyntaxWarning: invalid escape sequence '\.'
+  line_regex = re.compile("^\.\. FILE (\S+)$")
+Sphinx parallel build error:
+UnboundLocalError: cannot access local variable 'fname' where it is not associated with a value
+make[2]: *** [Documentation/Makefile:102: htmldocs] Error 2
+make[1]: *** [/builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Makefile:1715: htmldocs] Error 2
 
-	if (arm_smmu_master_sva_enabled(master))
-		return -EBUSY;
-
-Dropping the S1 check was a mistake introduced in commit 386fa64fd52b
-("arm-smmu-v3/sva: Add SVA domain support")
-
-The current logic for SMMUv3 requires that a calling driver assert the
-SVA feature, which locks the STE, and then if the STE was a S1 you can
-install a SVA PASID.
+Reverting this patch allows docs to build.
 
 Thanks,
-Jason
+Justin
