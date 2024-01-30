@@ -1,96 +1,139 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86B9111E
-	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 00:13:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C451171D1;
+	Tue, 30 Jan 2024 00:45:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706573601; cv=none; b=F3zbkxvPtYSOyYjsfaVRtCNdlyvm7ry9TMYLWAiIgjenHDToAxbhFFb3e+O7tNqRuKdDUXf9LW0VOZ5SJP5rv0PWvtykWKsslgFIEnwI2xH5+eagO8t98dpPjZMRa9p5a/+kEJtM/wWgZvTqhtQBGaXoIuSYvQLwjNJ1krfPam4=
+	t=1706575511; cv=none; b=NROOeVPQf6TOpCCoPFuij+kPXfWmnba8m6VUShv5KFtl/EXULJKPozczXnJQpg2ao/8bxx2CETbGTC+6oQyeusdqZsLICad8NldRGzaJlDp0uqpV84LRjEnB+iXOrHBB70JwJfwK6D12l5NH4WvwhAz8KB94dhw8737e+nkBERs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706573601; c=relaxed/simple;
-	bh=QyHmVHAC+TVUo1czRElW+MEYu+2WhF/0iDIr7Kq9EB0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t2nttRFHwad6x1lnOeALNtvu2vO+TOC6KyivoRdJ7N/1vewO8PEWaBtdV7neCepM/xaHSVwe7XGbtWlhlkkQPQD14/+wajbvIz1ThX4fnrTI7qiI9OdXDI6oXfnWOKleTRAcqbIYt17naiA6oYvSsRceVtauPxgd7oyxBbAdbWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mpm+mVam; arc=none smtp.client-ip=209.85.222.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706575511; c=relaxed/simple;
+	bh=YC1N2oEpGjCqkxBB/gMBX4M8pPLAjOZSUACvgMPf924=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UMif8DwRm6+zyPINEKcXaSyZs1SeM8RsM2jFHfYuvPii4HnBndC/DkLZRyuPBs29lcju5MuYLh1Ljb89GZtvmeFjWvBqL97Ur2RECKZiXdyv7P94XLGv/P5OSyKBR4IgOxWfjQadgjsLBRmd2CgnSDklBb5l+FRT0IKbh8fQWPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EsVITYj9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mpm+mVam"
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-7d5c7443956so689857241.0
-        for <patches@lists.linux.dev>; Mon, 29 Jan 2024 16:13:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706573598; x=1707178398; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/fWsHVtzrmK6enBrWP1Xfl/r1UntvZqZVjVd83aREbo=;
-        b=Mpm+mVamr7EUZD8xihlCwahxfItL4Do7LDU4zO/kQCvuhYtzJs9r9iatJfrPYsg2eK
-         +JH+tTROneC585dWgfay2dfBpcgJePJ+zEYmZdQPF0MJUySQv7xsM+uz0Ogv3Y5CpKGM
-         fAJSa8eKWqXTcMkEe+PK78g3jvgFbUoe8dLdmLs5UYT8636XUhii6GBWYq7P+pj+tceL
-         8uOUyLTBoqL2NIIuGlgUj5ubdmdrMiN/GHGqd9y16EkAANUmRFvZCeKhu2jBqKYG+Tou
-         ILbSGDeSJyxQ4FqYxTcDUdtURUPOHauPsovJS6kdWe/Jid4V/de71mhwQ/pzpNUrPVjh
-         i1aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706573598; x=1707178398;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/fWsHVtzrmK6enBrWP1Xfl/r1UntvZqZVjVd83aREbo=;
-        b=u7IDYtW1TyRI3rVzxglwVC+IfQKUCWOWVap6nXCPLd6aM+6lSJHgq/ZSYD+jZCpnlD
-         y6YoV+d1aZK7VNUXLD1QIL18e+AZeX8/bwq/e1hEqZy8d/yhEm+rkGdhaZRMe2LW/6+a
-         CTjKRHWCzohw+as30MC8HNo31mDXKE+VEL/Wa1lZnOdvGuoTjeN9+UkecH1evFMmyg40
-         PtjgQRGzFQHn+vpfyosYKA4tnCNCa6ymoY/M4oqC+5BPKAU0XBCgtxwEo7Ogf0GkDIBO
-         lbLb/IHHlHhQm1zuPNfhlV48b2GWr8B+DMZrgMXG0h2g6rJyO4YHMFw5fjY+hxPncV5l
-         Xnvg==
-X-Gm-Message-State: AOJu0YznD2wO9ranSj+WMSmvbmxR6/+I4z9BCyjnLIuFpoLhyjhEycOu
-	pilwzMtJ8kLVJ4fOuqKwO+98La0Szc9M6Q8+gEcIX5QIPBBZbL9NsljGoDFOvj3yX2fglMl1/4h
-	0gCP194U2tE+/h49p7Z2OENojHlM=
-X-Google-Smtp-Source: AGHT+IH+1Y1YR5slTxNiShlCdeINyqEd3o3AwvXiOlyuarq/aHP544BQNXwdBe3II1geLtxR8QVLb2CAR+sB2ku7SE4=
-X-Received: by 2002:a05:6102:a05:b0:468:2bf:6a91 with SMTP id
- t5-20020a0561020a0500b0046802bf6a91mr3722735vsa.35.1706573598609; Mon, 29 Jan
- 2024 16:13:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EsVITYj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABDE5C433C7;
+	Tue, 30 Jan 2024 00:45:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706575510;
+	bh=YC1N2oEpGjCqkxBB/gMBX4M8pPLAjOZSUACvgMPf924=;
+	h=From:To:Cc:Subject:Date:From;
+	b=EsVITYj953c4uFFFHZ/frw0EiUtZbrrMp+OVQxWbuOaE0N+CeP+uTVtvg0d1HkPbE
+	 dx1xjZuEYidzlqTiWFRGj+SkA/+U6udg9PcDME4tGk23K49tCxu8OA9a+i/MJUELpx
+	 zfgr06iNdTvvKa6poZRHyUzhaW+YgG3/JsUivUtxPgA0NlbZAhvfIincnmBqraRYq+
+	 Ym3kNoML2p6zAT5oQeRN8l7wcJqsH6fONUx2p6UMhh+ytFbKacXcsGSL9RW1n+KEnP
+	 3q3EOAXhUglqEegusNEH88D8ltv1cC/T02mXvBhkKWFf4BK6DTvW1m58/9L/m3VxHY
+	 ryyDMU5hgXARw==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-um@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	David Gow <davidgow@google.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Richard Weinberger <richard@nod.at>,
+	Will Deacon <will@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>
+Subject: [PATCH v2 0/7] of: populate of_root node if bootloader doesn't
+Date: Mon, 29 Jan 2024 16:44:59 -0800
+Message-ID: <20240130004508.1700335-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.43.0.429.g432eaa2c6b-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240129165958.589924174@linuxfoundation.org>
-In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
-From: Allen <allen.lkml@gmail.com>
-Date: Mon, 29 Jan 2024 16:13:07 -0800
-Message-ID: <CAOMdWSKCKXW5ho5PrRmMQJh_qk0hsSt=S7qSBS6pWZ3hrCfV=Q@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/185] 6.1.76-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> This is the start of the stable review cycle for the 6.1.76 release.
-> There are 185 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.76-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+Arch maintainers, please ack/review patches.
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+This is a resend of a series from Frank last year[1]. I worked in Rob's
+review comments to unconditionally call unflatten_device_tree() and
+fixup/audit calls to of_have_populated_dt() so that behavior doesn't
+change.
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+I need this series so I can add DT based tests in the clk framework.
+Either I can merge it through the clk tree once everyone is happy, or
+Rob can merge it through the DT tree and provide some branch so I can
+base clk patches on it.
 
-Thanks.
+Changes from Frank's series[1]:
+ * Add a DTB loaded kunit test
+ * Make of_have_populated_dt() return false if the DTB isn't from the
+   bootloader
+ * Architecture calls made unconditional so that a root node is always
+   made
+
+Changes from v1 (https://lore.kernel.org/r/20240112200750.4062441-1-sboyd@kernel.org):
+ * x86 patch included
+ * arm64 knocks out initial dtb if acpi is in use
+ * keep Kconfig hidden but def_bool enabled otherwise
+
+Frank Rowand (2):
+  of: Create of_root if no dtb provided by firmware
+  of: unittest: treat missing of_root as error instead of fixing up
+
+Stephen Boyd (5):
+  arm64: Unconditionally call unflatten_device_tree()
+  um: Unconditionally call unflatten_device_tree()
+  x86/of: Unconditionally call unflatten_and_copy_device_tree()
+  of: Always unflatten in unflatten_and_copy_device_tree()
+  of: Add KUnit test to confirm DTB is loaded
+
+ arch/arm64/kernel/setup.c    |  7 +++--
+ arch/um/kernel/dtb.c         | 14 +++++-----
+ arch/x86/kernel/devicetree.c | 24 +++++++++--------
+ drivers/of/.kunitconfig      |  3 +++
+ drivers/of/Kconfig           | 11 +++++++-
+ drivers/of/Makefile          |  4 ++-
+ drivers/of/empty_root.dts    |  6 +++++
+ drivers/of/fdt.c             | 52 +++++++++++++++++++++++++-----------
+ drivers/of/of_test.c         | 48 +++++++++++++++++++++++++++++++++
+ drivers/of/platform.c        |  3 ---
+ drivers/of/unittest.c        | 16 +++--------
+ include/linux/of.h           | 25 ++++++++++-------
+ 12 files changed, 151 insertions(+), 62 deletions(-)
+ create mode 100644 drivers/of/.kunitconfig
+ create mode 100644 drivers/of/empty_root.dts
+ create mode 100644 drivers/of/of_test.c
+
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: David Gow <davidgow@google.com>
+Cc: Frank Rowand <frowand.list@gmail.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <x86@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Saurabh Sengar <ssengar@linux.microsoft.com>
+
+[1] https://lore.kernel.org/r/20230317053415.2254616-1-frowand.list@gmail.com
+
+base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
