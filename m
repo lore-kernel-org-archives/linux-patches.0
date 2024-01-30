@@ -1,129 +1,134 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B66A2C868
-	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 01:05:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F6036135
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 01:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706576711; cv=none; b=lEEmkChvp1jzYvwdewTr6IBm90yJNdtatJ3HMo4b/exwWMLg/gEZSBMTn5GvzlBSvSzs74vE18x8C6J9TN+LqQtzaKEBhpF+r9TSBRslSDb1kY5p4oPmxjZxZFxSc0/vsaQMwdK9L7cBrLuMZiSjQBTTV491yuky7Z4zBctvW5g=
+	t=1706578284; cv=none; b=UaN+vpjF6Is2TkgYysyQfdFFaGwB82v+tF4glI9BL3mQEy/izpcq8X0UItffbSMdQd/YB3Y7vWB3Ltenls1qVv1GVHXr30aH188tbfG1G0mBF7UVFMY30h/eiMncgEAXuIQ9ARuYqFjKtZSeyERRNM6mfa9qF8dO6EIBhP/4GZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706576711; c=relaxed/simple;
-	bh=bG7LWMMzQOA4pnHxVE9T5M/eEsZhCIbhOeGSUfM/lKE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AriK6cdD46Orq3gb67r0OVY/qqCQL30fkliXZa2RHSvzZw357OJAgu3H5TxLge2UJMfpcUtnWrMGBe5CoKI5aYD2C+X7LinDc7uIqs5L5YZ1LqPOBZd0fmc/5dHuDkA1iomFgUDlEAIL6IwEolTLPpWlSg5TiCfFKF5CnVtdNu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VH4+r4ue; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1706578284; c=relaxed/simple;
+	bh=l0t9jFgPIDb+BxojStFw/B4mQF8sX83DTK7Dq/RDMiE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PyJKjnATJet0HsK6BGzrahs4QhFeLuVCL6ngDWMw9urGHkBRkAllShWhBucLhFgirCciz/8yAkHpGq8uCjCVBF8RpA3lMiMLBW9QkrQ7zcIXxToDuNxnKhV7IzKuPS1Ee1713MEJJXrloJVAOZ71mL90eVJ7Tuz2tIuUDlbK6XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OdHMqN+J; arc=none smtp.client-ip=209.85.160.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VH4+r4ue"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706576711; x=1738112711;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=bG7LWMMzQOA4pnHxVE9T5M/eEsZhCIbhOeGSUfM/lKE=;
-  b=VH4+r4ue2ZMNASQsQOoTk+/pQDt2Bd3s05csty7MZCeZAy6dTUA0aRci
-   2ZWhMBf5shCzBiIvmiSkxnzwxq2xA6REZP/b6DrwMmuMPeep/mRjub3cc
-   x0BUqU0NwW9nJeTG51QnKr8NN8CKoMAvMKPBHklqfGX+znWZWeIfbCjL6
-   lnnc7bjVfea3Ac6llpgcEnd+oQ6w8YtTZAPFtSHX5GAiDalaTpPxQiiM/
-   qLNAirP7XOUksGl+vaye8NRThXZfdDzgfxqjDTPL2JOu+3LW1yKM3vsFt
-   UPQSnTt+QazJAnQPKSqdoh2aerUO/716RRAS9MLLzRxdxgYEOKc0dyx9O
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="3006763"
-X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
-   d="scan'208";a="3006763"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2024 17:05:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
-   d="scan'208";a="29719504"
-Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2024 17:05:09 -0800
-Date: Mon, 29 Jan 2024 17:05:08 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Borislav Petkov <bp@alien8.de>
-Cc: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>, x86@kernel.org,
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v14 0/8] Add support for Sub-NUMA cluster (SNC) systems
-Message-ID: <ZbhLRDvZrxBZDv2j@agluck-desk3>
-References: <20231204185357.120501-1-tony.luck@intel.com>
- <20240126223837.21835-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OdHMqN+J"
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-21460195d11so2277285fac.2
+        for <patches@lists.linux.dev>; Mon, 29 Jan 2024 17:31:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706578281; x=1707183081; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yKPTGpRJe4iviA3naEAAGwI9bB27NhTfAciTApm6FaU=;
+        b=OdHMqN+JphXPUUaNmtSVslYpo35VMP9UErs/62ZIRm5Hu3BiOl3YTN2CMsY2ZnvzUk
+         3JMuQr44JuymttxdGwRvULyqNNYevmeLGz8l+bSKAbSgxGJsTlbevHgYPAm6VaWJXuF7
+         gh94dfKSubnGm26s7F7jYjFbQkfC06VVq2hhkdfh4W/U6RsE2lPuaWxrCFdP1ZpNnK7V
+         zr++qKplwly/SmLszdSp8fwPsvUVjGRrTz/952q2ZZNu0ZLnuV3ggoQKXmfh3dtliyiU
+         gFjgzwrs0JI/hNBK0E/y/jAOWJm6PVkxciWze5ebNYqPlLaZ8o0THoAz3IBtDDBh6nsJ
+         +Y1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706578281; x=1707183081;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yKPTGpRJe4iviA3naEAAGwI9bB27NhTfAciTApm6FaU=;
+        b=csk9/T9pOZxqzHQVpblbiFxEAjWeDCnjZsSg1U4XEH0UuckmVY8/1BHbkrmkZFtXgv
+         8NyOgtOFzmvNLXdGBJFSmqNn8a+m3qbBAFbJx+a/i6nGSt03GhkHE6Sw9PDfeItZEIG8
+         y8kbvLFWfSQ0RYbvz2WvoDvSI8Qv0JMScqmGUG88IpqKb5L0WvPd/d5MBnOSPi95wKSN
+         JC+PvgV2B86e0ZKsH8XqVdoonUkY1dHAUWXrwgrruPAATK+8eWORbkyswsfGSgUfm/0T
+         Osh7PsdMxnVyn4n9O7VQq3/STs2MJAu9MOQE381CttlR1ZPXUf4FiYTjAPkVQ43YLlnm
+         sO9g==
+X-Gm-Message-State: AOJu0Yz6++E1YxsgMPnAV5RN3+1d08Gh6Wgu0HirmCV7kA8mKqhwf3Fn
+	nsZW8Svw6kjJk80s5MuLBYLhpvCsIJlqETs8Ip+IVWaTmfc+9noHR+LudIh5Rmk=
+X-Google-Smtp-Source: AGHT+IHiRF8RsmyJ9JXE/PR5570OucKCZWuOzmou1M+BxzDtaClKxilJ/q3KJ54CKVlIg/NScbdClw==
+X-Received: by 2002:a05:6870:e0c9:b0:214:8499:1233 with SMTP id a9-20020a056870e0c900b0021484991233mr7224701oab.22.1706578280724;
+        Mon, 29 Jan 2024 17:31:20 -0800 (PST)
+Received: from [192.168.17.16] ([148.222.132.181])
+        by smtp.gmail.com with ESMTPSA id lt7-20020a05687142c700b00214ca092655sm2295401oab.46.2024.01.29.17.31.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jan 2024 17:31:20 -0800 (PST)
+Message-ID: <4a2b55da-ee57-4fca-bb7b-240792b25460@linaro.org>
+Date: Mon, 29 Jan 2024 19:31:17 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240126223837.21835-1-tony.luck@intel.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/185] 6.1.76-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240129165958.589924174@linuxfoundation.org>
+From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-I've been wondering whether the SNC patches were creating way too much
-infrastructure that isn't generally useful. Specifically the capability
-for a reactrl resource to have different scope for monitoring and
-control functions.
+Hello!
 
-That seems like a very strange thing.
+On 29/01/24 11:03 a. m., Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.76 release.
+> There are 185 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.76-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-History here is that Intel CMT, MBM and L3 CAT features arrived in
-quick succession, closely followed by MBA and then L2 CAT. At the time
-it made sense for the "L3" resource to cover all of CMT, MBM and L3 CAT.
+We see build regressions on Arm64, as reported by Naresh earlier, and System/390:
 
-That became slightly odd when MBA (another L3 scoped resource) was
-added. It was given its own "struct rdt_resource". AMD later added
-SMBA as yet another L3-scoped resource with its own "struct resource".
+-----8<-----
+   /builds/linux/drivers/net/ethernet/mellanox/mlx5/core/en/params.c: In function 'mlx5e_build_sq_param':
+   /builds/linux/drivers/net/ethernet/mellanox/mlx5/core/en/params.c:994:53: error: 'MLX5_IPSEC_CAP_CRYPTO' undeclared (first use in this function)
+     994 |                     (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_CRYPTO);
+         |                                                     ^~~~~~~~~~~~~~~~~~~~~
+   /builds/linux/drivers/net/ethernet/mellanox/mlx5/core/en/params.c:994:53: note: each undeclared identifier is reported only once for each function it appears in
+   make[7]: *** [/builds/linux/scripts/Makefile.build:250: drivers/net/ethernet/mellanox/mlx5/core/en/params.o] Error 1
+----->8-----
 
-I wondered how the SNC series would look if I went back to an approach
-from one of the earlier versions. In that one I created a new resource
-for SNC monitoring that was NODE scoped. And then made all the CMT and
-MBM code switch over to using that one when SNC was enabled. That was
-a bit hacky, and I moved from there to the dual domain lists per
-resource.
+Bisection points to:
 
-I just tried out an approach the split the RDT_RESOURCE_L3 resource
-into separate resources, one for control, one for monitoring.
+   commit 1288b23c9c528796ab656d2796705f52c5ffad8a
+   Author: Leon Romanovsky <leonro@nvidia.com>
+   Date:   Tue Dec 12 13:52:55 2023 +0200
 
-It makes the code much simpler:
-
- 8 files changed, 235 insertions(+), 30 deletions(-) [1]
-
-vs.
-
- 9 files changed, 629 insertions(+), 282 deletions(-)
-
-
-Tradeoffs:
-
-The complex series (posted as v14) cleanly split the "rdt_domain"
-structure into two. So it no longer carried all the fields needed
-for both control and monitor, even though only one set was ever
-used. But the cost was a lot of code churn that may never be useful
-for anything other than SNC.
-
-On non-SNC systems the new series produces separate linked lists
-of domains for L3 control & monitor, even though the lists are the
-same, and the domain structures still carry all fields for both
-control and monitor functions.
-
-Question: Does anyone think that single domain with different scope for
-control and monitor is inherently more useful than two separate domains?
+       net/mlx5e: Allow software parsing when IPsec crypto is enabled
+       
+       [ Upstream commit 20f5468a7988dedd94a57ba8acd65ebda6a59723 ]
 
 
-While I get this sorted out, maybe Boris should take James next set
-of MPAM patches as they are, instead of on top of the complex SNC
-series.
+Reverting that commit made the build pass again.
 
--Tony
+Reproducers:
 
-[1] I'll post this set just as soon as I can get time on and SNC machine
-to make sure they actually work.
+   tuxmake --runtime podman --target-arch arm64 --toolchain gcc-13 --kconfig defconfig
+   tuxmake --runtime podman --target-arch s390  --toolchain gcc-13 --kconfig defconfig
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Greetings!
+
+Daniel Díaz
+daniel.diaz@linaro.org
+
