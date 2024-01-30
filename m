@@ -1,58 +1,58 @@
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F6036135
-	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 01:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AC4374D4
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 03:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706578284; cv=none; b=UaN+vpjF6Is2TkgYysyQfdFFaGwB82v+tF4glI9BL3mQEy/izpcq8X0UItffbSMdQd/YB3Y7vWB3Ltenls1qVv1GVHXr30aH188tbfG1G0mBF7UVFMY30h/eiMncgEAXuIQ9ARuYqFjKtZSeyERRNM6mfa9qF8dO6EIBhP/4GZk=
+	t=1706586575; cv=none; b=hH3MllRfK1dZnK0Gv8AVCAzH5b045BLP+bZr8ibleeW3KUDsl7xQYAlfKJniZmbNwPGaE/MpZyZlBdNlXvmtBjcnKzAfKYm+uWQUwWvIpczPJJPwk+AsETIsyF9PCScmVSxSJgtu9i7SRxT0H1646OFB+WJ45N5CHT53nlpNcZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706578284; c=relaxed/simple;
-	bh=l0t9jFgPIDb+BxojStFw/B4mQF8sX83DTK7Dq/RDMiE=;
+	s=arc-20240116; t=1706586575; c=relaxed/simple;
+	bh=k5FKcViiW1KVZ/iqqnhvzAZzYcYxnU21fb3SEdDolM8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PyJKjnATJet0HsK6BGzrahs4QhFeLuVCL6ngDWMw9urGHkBRkAllShWhBucLhFgirCciz/8yAkHpGq8uCjCVBF8RpA3lMiMLBW9QkrQ7zcIXxToDuNxnKhV7IzKuPS1Ee1713MEJJXrloJVAOZ71mL90eVJ7Tuz2tIuUDlbK6XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OdHMqN+J; arc=none smtp.client-ip=209.85.160.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 In-Reply-To:Content-Type; b=LJZ9CV6vgCGc6iNOD60R6Pm4G0HEPOTO207GVMamxN6tAyAVnsiVxxTBE1QRDb0lnIw0erBrlpzZ26v6QhIUgbQdmLEPZrM8oq9C5W+9lB/8/8Di+A1LmlQzy7zL6bXHK+S81E1TPcm//ElEySd7KbxxOOL3xkqdxO1O0xHh3uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nfkcEEPt; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OdHMqN+J"
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-21460195d11so2277285fac.2
-        for <patches@lists.linux.dev>; Mon, 29 Jan 2024 17:31:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nfkcEEPt"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6868823be58so25992336d6.0
+        for <patches@lists.linux.dev>; Mon, 29 Jan 2024 19:49:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706578281; x=1707183081; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1706586573; x=1707191373; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yKPTGpRJe4iviA3naEAAGwI9bB27NhTfAciTApm6FaU=;
-        b=OdHMqN+JphXPUUaNmtSVslYpo35VMP9UErs/62ZIRm5Hu3BiOl3YTN2CMsY2ZnvzUk
-         3JMuQr44JuymttxdGwRvULyqNNYevmeLGz8l+bSKAbSgxGJsTlbevHgYPAm6VaWJXuF7
-         gh94dfKSubnGm26s7F7jYjFbQkfC06VVq2hhkdfh4W/U6RsE2lPuaWxrCFdP1ZpNnK7V
-         zr++qKplwly/SmLszdSp8fwPsvUVjGRrTz/952q2ZZNu0ZLnuV3ggoQKXmfh3dtliyiU
-         gFjgzwrs0JI/hNBK0E/y/jAOWJm6PVkxciWze5ebNYqPlLaZ8o0THoAz3IBtDDBh6nsJ
-         +Y1w==
+        bh=0wqDIIGKeMd5Md178sCLoAs7RDnwq5OUMAf2FUqS9M0=;
+        b=nfkcEEPt0IaHYyQ+EM7Wo1pvVUTpFSVRGDpTUm1lDVYG+JrV48pqS8yHoR3eq5hy5B
+         EeNlDR6UX7lqLVoNgBjlTt935hiVWd2hflZgUSKnamIq5kf58fkVnyKCrduAA8sskY5r
+         q+HlIvDlVzDmymBtHUh4ZyLoSpx2BQXWgAC6fGC1mr3deBRFB00fPJUsB5HzKA/iXRxH
+         tbF2Zjp+W373IO/dgTJoVZvBcwBe8HeLmNjVIQWGM/t0E/5DFtPqmL4FwOb23g1MvGVx
+         +3Me52oxtgiHiz1C7XSRaK6Za2nbN87bCoJLJSUgjoZt3iWXTFtRWtz2BzwONiqvKvtz
+         KoLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706578281; x=1707183081;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1706586573; x=1707191373;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yKPTGpRJe4iviA3naEAAGwI9bB27NhTfAciTApm6FaU=;
-        b=csk9/T9pOZxqzHQVpblbiFxEAjWeDCnjZsSg1U4XEH0UuckmVY8/1BHbkrmkZFtXgv
-         8NyOgtOFzmvNLXdGBJFSmqNn8a+m3qbBAFbJx+a/i6nGSt03GhkHE6Sw9PDfeItZEIG8
-         y8kbvLFWfSQ0RYbvz2WvoDvSI8Qv0JMScqmGUG88IpqKb5L0WvPd/d5MBnOSPi95wKSN
-         JC+PvgV2B86e0ZKsH8XqVdoonUkY1dHAUWXrwgrruPAATK+8eWORbkyswsfGSgUfm/0T
-         Osh7PsdMxnVyn4n9O7VQq3/STs2MJAu9MOQE381CttlR1ZPXUf4FiYTjAPkVQ43YLlnm
-         sO9g==
-X-Gm-Message-State: AOJu0Yz6++E1YxsgMPnAV5RN3+1d08Gh6Wgu0HirmCV7kA8mKqhwf3Fn
-	nsZW8Svw6kjJk80s5MuLBYLhpvCsIJlqETs8Ip+IVWaTmfc+9noHR+LudIh5Rmk=
-X-Google-Smtp-Source: AGHT+IHiRF8RsmyJ9JXE/PR5570OucKCZWuOzmou1M+BxzDtaClKxilJ/q3KJ54CKVlIg/NScbdClw==
-X-Received: by 2002:a05:6870:e0c9:b0:214:8499:1233 with SMTP id a9-20020a056870e0c900b0021484991233mr7224701oab.22.1706578280724;
-        Mon, 29 Jan 2024 17:31:20 -0800 (PST)
-Received: from [192.168.17.16] ([148.222.132.181])
-        by smtp.gmail.com with ESMTPSA id lt7-20020a05687142c700b00214ca092655sm2295401oab.46.2024.01.29.17.31.18
+        bh=0wqDIIGKeMd5Md178sCLoAs7RDnwq5OUMAf2FUqS9M0=;
+        b=MG8Z9KyzqUg5/U3la0GwUcskitf6ocUFqA7M9XfRBYb/NhR9RI8eb4sAG0qlpsUIyy
+         +E3LEspLCq/9sbCgX+FzrtovHGxRhl9hPh1sHn2CZr2CEUq9sjNdwaZEM2HT/PF1bS6X
+         RzDpoMKaLuaQC77kUBZxG2cOYKBDdYau1fQ+MJoSuvJBUKipXnrayI3YigNjG0Bgzpqc
+         vus2dbgnoMObYdQlc7XU0ARtVYje3ewCPttvwZC95t8g+HD8LU8YYIwtBBb5tYLg9f7S
+         hK8u2UIY9nHdAaolD536ELRxI7IcA4uQ7meUrRjto5XO2DNDqqNW96wrNXHHhlBGU35l
+         L7Ow==
+X-Gm-Message-State: AOJu0YzdEhRS5YBquCX6tR27313vy9xbrk9Ft5DDDN1hzMfZNCLdI9N7
+	PC3kroRB7fJpvdPAtEy/KGb8GoBsoGSKxfyEme/keqXaJJuYFaJK
+X-Google-Smtp-Source: AGHT+IFrOLVASNDSFiBUO0ZTs78ql3AcvGGz5d4Y/A3E4+9XyAw8C0CikLM7+9AIpmTDYRuMUeAWmA==
+X-Received: by 2002:a05:6214:c4d:b0:686:aa92:1e5 with SMTP id r13-20020a0562140c4d00b00686aa9201e5mr7339200qvj.5.1706586572687;
+        Mon, 29 Jan 2024 19:49:32 -0800 (PST)
+Received: from [192.168.1.3] (ip68-4-215-93.oc.oc.cox.net. [68.4.215.93])
+        by smtp.gmail.com with ESMTPSA id kv2-20020a056214534200b00684d2729709sm4068667qvb.85.2024.01.29.19.49.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jan 2024 17:31:20 -0800 (PST)
-Message-ID: <4a2b55da-ee57-4fca-bb7b-240792b25460@linaro.org>
-Date: Mon, 29 Jan 2024 19:31:17 -0600
+        Mon, 29 Jan 2024 19:49:32 -0800 (PST)
+Message-ID: <7388e3c0-32bc-424b-9693-5059ddc9f826@gmail.com>
+Date: Mon, 29 Jan 2024 19:49:29 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -67,17 +67,50 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com
 References: <20240129165958.589924174@linuxfoundation.org>
-From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ xsDiBEjPuBIRBACW9MxSJU9fvEOCTnRNqG/13rAGsj+vJqontvoDSNxRgmafP8d3nesnqPyR
+ xGlkaOSDuu09rxuW+69Y2f1TzjFuGpBk4ysWOR85O2Nx8AJ6fYGCoeTbovrNlGT1M9obSFGQ
+ X3IzRnWoqlfudjTO5TKoqkbOgpYqIo5n1QbEjCCwCwCg3DOH/4ug2AUUlcIT9/l3pGvoRJ0E
+ AICDzi3l7pmC5IWn2n1mvP5247urtHFs/uusE827DDj3K8Upn2vYiOFMBhGsxAk6YKV6IP0d
+ ZdWX6fqkJJlu9cSDvWtO1hXeHIfQIE/xcqvlRH783KrihLcsmnBqOiS6rJDO2x1eAgC8meAX
+ SAgsrBhcgGl2Rl5gh/jkeA5ykwbxA/9u1eEuL70Qzt5APJmqVXR+kWvrqdBVPoUNy/tQ8mYc
+ nzJJ63ng3tHhnwHXZOu8hL4nqwlYHRa9eeglXYhBqja4ZvIvCEqSmEukfivk+DlIgVoOAJbh
+ qIWgvr3SIEuR6ayY3f5j0f2ejUMYlYYnKdiHXFlF9uXm1ELrb0YX4GMHz80nRmxvcmlhbiBG
+ YWluZWxsaSA8Zi5mYWluZWxsaUBnbWFpbC5jb20+wmYEExECACYCGyMGCwkIBwMCBBUCCAME
+ FgIDAQIeAQIXgAUCVF/S8QUJHlwd3wAKCRBhV5kVtWN2DvCVAJ4u4/bPF4P3jxb4qEY8I2gS
+ 6hG0gACffNWlqJ2T4wSSn+3o7CCZNd7SLSDOw00ESM+4EhAQAL/o09boR9D3Vk1Tt7+gpYr3
+ WQ6hgYVON905q2ndEoA2J0dQxJNRw3snabHDDzQBAcqOvdi7YidfBVdKi0wxHhSuRBfuOppu
+ pdXkb7zxuPQuSveCLqqZWRQ+Cc2QgF7SBqgznbe6Ngout5qXY5Dcagk9LqFNGhJQzUGHAsIs
+ hap1f0B1PoUyUNeEInV98D8Xd/edM3mhO9nRpUXRK9Bvt4iEZUXGuVtZLT52nK6Wv2EZ1TiT
+ OiqZlf1P+vxYLBx9eKmabPdm3yjalhY8yr1S1vL0gSA/C6W1o/TowdieF1rWN/MYHlkpyj9c
+ Rpc281gAO0AP3V1G00YzBEdYyi0gaJbCEQnq8Vz1vDXFxHzyhgGz7umBsVKmYwZgA8DrrB0M
+ oaP35wuGR3RJcaG30AnJpEDkBYHznI2apxdcuTPOHZyEilIRrBGzDwGtAhldzlBoBwE3Z3MY
+ 31TOpACu1ZpNOMysZ6xiE35pWkwc0KYm4hJA5GFfmWSN6DniimW3pmdDIiw4Ifcx8b3mFrRO
+ BbDIW13E51j9RjbO/nAaK9ndZ5LRO1B/8Fwat7bLzmsCiEXOJY7NNpIEpkoNoEUfCcZwmLrU
+ +eOTPzaF6drw6ayewEi5yzPg3TAT6FV3oBsNg3xlwU0gPK3v6gYPX5w9+ovPZ1/qqNfOrbsE
+ FRuiSVsZQ5s3AAMFD/9XjlnnVDh9GX/r/6hjmr4U9tEsM+VQXaVXqZuHKaSmojOLUCP/YVQo
+ 7IiYaNssCS4FCPe4yrL4FJJfJAsbeyDykMN7wAnBcOkbZ9BPJPNCbqU6dowLOiy8AuTYQ48m
+ vIyQ4Ijnb6GTrtxIUDQeOBNuQC/gyyx3nbL/lVlHbxr4tb6YkhkO6shjXhQh7nQb33FjGO4P
+ WU11Nr9i/qoV8QCo12MQEo244RRA6VMud06y/E449rWZFSTwGqb0FS0seTcYNvxt8PB2izX+
+ HZA8SL54j479ubxhfuoTu5nXdtFYFj5Lj5x34LKPx7MpgAmj0H7SDhpFWF2FzcC1bjiW9mjW
+ HaKaX23Awt97AqQZXegbfkJwX2Y53ufq8Np3e1542lh3/mpiGSilCsaTahEGrHK+lIusl6mz
+ Joil+u3k01ofvJMK0ZdzGUZ/aPMZ16LofjFA+MNxWrZFrkYmiGdv+LG45zSlZyIvzSiG2lKy
+ kuVag+IijCIom78P9jRtB1q1Q5lwZp2TLAJlz92DmFwBg1hyFzwDADjZ2nrDxKUiybXIgZp9
+ aU2d++ptEGCVJOfEW4qpWCCLPbOT7XBr+g/4H3qWbs3j/cDDq7LuVYIe+wchy/iXEJaQVeTC
+ y5arMQorqTFWlEOgRA8OP47L9knl9i4xuR0euV6DChDrguup2aJVU8JPBBgRAgAPAhsMBQJU
+ X9LxBQkeXB3fAAoJEGFXmRW1Y3YOj4UAn3nrFLPZekMeqX5aD/aq/dsbXSfyAKC45Go0YyxV
+ HGuUuzv+GKZ6nsysJw==
 In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hello!
 
-On 29/01/24 11:03 a. m., Greg Kroah-Hartman wrote:
+
+On 1/29/2024 9:03 AM, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.76 release.
 > There are 185 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -96,39 +129,9 @@ On 29/01/24 11:03 a. m., Greg Kroah-Hartman wrote:
 > 
 > greg k-h
 
-We see build regressions on Arm64, as reported by Naresh earlier, and System/390:
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
------8<-----
-   /builds/linux/drivers/net/ethernet/mellanox/mlx5/core/en/params.c: In function 'mlx5e_build_sq_param':
-   /builds/linux/drivers/net/ethernet/mellanox/mlx5/core/en/params.c:994:53: error: 'MLX5_IPSEC_CAP_CRYPTO' undeclared (first use in this function)
-     994 |                     (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_CRYPTO);
-         |                                                     ^~~~~~~~~~~~~~~~~~~~~
-   /builds/linux/drivers/net/ethernet/mellanox/mlx5/core/en/params.c:994:53: note: each undeclared identifier is reported only once for each function it appears in
-   make[7]: *** [/builds/linux/scripts/Makefile.build:250: drivers/net/ethernet/mellanox/mlx5/core/en/params.o] Error 1
------>8-----
-
-Bisection points to:
-
-   commit 1288b23c9c528796ab656d2796705f52c5ffad8a
-   Author: Leon Romanovsky <leonro@nvidia.com>
-   Date:   Tue Dec 12 13:52:55 2023 +0200
-
-       net/mlx5e: Allow software parsing when IPsec crypto is enabled
-       
-       [ Upstream commit 20f5468a7988dedd94a57ba8acd65ebda6a59723 ]
-
-
-Reverting that commit made the build pass again.
-
-Reproducers:
-
-   tuxmake --runtime podman --target-arch arm64 --toolchain gcc-13 --kconfig defconfig
-   tuxmake --runtime podman --target-arch s390  --toolchain gcc-13 --kconfig defconfig
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
