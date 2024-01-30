@@ -1,97 +1,153 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E474F128382
-	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 16:45:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C575B129A87
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 17:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706633136; cv=none; b=XhWymJFmoV0VYRUXHu9jPth1vlCQqBSXOfdlwFmAFLOrowF/fOvv1kkzf3kJbu2HiNlTMR9/JSJWiZnxfTiwDqrYZsW5oEFlwChX79+WnkKBe0IPZRzw+ogQrE1Ch1JOPuzXchaMp5Qtz4yiKt67xkjgqwY7dxcmcK22Aa+fMJ0=
+	t=1706634620; cv=none; b=OERT7dOfHYxHJBc6vaNh6YH9mkp+idYaGQwF789koL+/rSV+XcQIIZb3Hxn81vpkzyP0iibgPTPbsireTJxDcmNK4g3fP8Dub1WlM3SOsW00y/7aOGYM/AhFPrjIohwW2ZzTTsqEhVkpp8UcjNfkmOAvXBbV89QfW8SrHZXNsO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706633136; c=relaxed/simple;
-	bh=AIyoCnIcR0xulr+69tWmalebwTVyrh6N8UZ0ZUx2cy4=;
+	s=arc-20240116; t=1706634620; c=relaxed/simple;
+	bh=qs3bHzLttFydFy/a7bg3wwRcc02Xlp3EA5qTNS+OYVY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q4M4NlcnZRRAj/JzKv/0Pkk849RjOzl4pBMzuYav6YmtUDQCPOKK9Xgd5hwihNoRXS4gUsWMnAfiryJlIfsDsqB/KsnUDWu2Pc8D24HSSc2qHKforaYjJAURNUTPCY+agnfDmai/VV9JDuPaUb9gMDRJyK8TTbySB4prXfCyayM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=WcklD+9L; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=gYBZYLeVVxQ0vXtJfO/3GBhRVE8yTT9Q7mRqgDlzxjFxYfLub/rTZRviF/8jhLqlZ8DZ2l5d/rK07LldxXNZo/oSSjii40YIbTU+9RbVx9wbwfUSWLJCRiS7m5RWQKxoizvbR0KJnigv9GNDdjkRkc5p01CvD1pAZisLKo1BMV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TpdcBd6g; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="WcklD+9L"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6e125818649so1564626a34.1
-        for <patches@lists.linux.dev>; Tue, 30 Jan 2024 08:45:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TpdcBd6g"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d05b06b5f9so11641311fa.3
+        for <patches@lists.linux.dev>; Tue, 30 Jan 2024 09:10:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1706633134; x=1707237934; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=udsWbEyAIPNx44HC24sXqwuDIvjPMZEaViGLb+xNZaU=;
-        b=WcklD+9Lt0Qp0jwHzlJWFVBSymL+9sHzV12KjobNczfwJOsg4fzTwOg3uEoJFwxFtY
-         WEuzyb4tFhsXWfeNG0Nbjf1hpy6cRx6faJzstvBEnERw6d25EiGapbdP4BFBIOtS6Sah
-         2wex1mXTdObAfQ1JmMqLHM768OMelkULJwB98=
+        d=gmail.com; s=20230601; t=1706634612; x=1707239412; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KAf6tgblhFk5SS7xF/05maRRLfXRqqg0AmAUe2SVN0M=;
+        b=TpdcBd6gvfke4YMg0noAHi3K8d0O0A3AqtSC+qo05PUFiJG+tRjjNQQ6whLQM+SEEE
+         PWHoliJsnQk8/JOPkyt5y0Uaeds0t/lL/gPzcxAovnoYvLgxZKtn6yOiGQ+YBrto+pw1
+         JG8Ih9jBLcocNZMaRyK9kWMdUOgk7oksfqGD3cZu8506eGb2qNAIlSvNiuPWkV9PWBbH
+         t4IjyQHCd8thB5UeVwUFYkWATm9YNJ1mCrjyclmBiSQAFCwJ/vHZL7gvJmgbNWzThKVQ
+         B/3F7MBtc+IrNM9nvwZ4rZqr0ERWEA8Ge38OQ+7yhEFzNs5d8zeOPiZYR+ZBgAZYnhGw
+         CFFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706633134; x=1707237934;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=udsWbEyAIPNx44HC24sXqwuDIvjPMZEaViGLb+xNZaU=;
-        b=vLZ+Oa4cOaY6byVrNqpn+HyovkEeUbHB3TZ+D0qi83BXfFEmpv2W/O/Pg4d0MwdTop
-         C6su+dg1KqY5fVNFrS7X6VV561x7t/uve6xB+4eaWdOrHiySt1nokd3A9cORbAnaHs23
-         VUux/tftDk8pSKfjYI++JLrhuaM12qt8FyLOtCLpB4bpCJQrteYcLzScd4IU5MBsQKI4
-         FSM81gNK/Bu0UtCTKmt8vLcujLRKkB5mhFuWWECoh73ZnC2DCHi2mgoxO24C1B1q4BTS
-         c649shaoAdBVxCK1YxghTGQVgfks76OE39/zLNYXT5N8jn48rDgdrvmd41LUkKozT+I0
-         XydQ==
-X-Gm-Message-State: AOJu0Ywnq1aAPqq3VJ89SHCWQR5JkGNzoZtDyhmvST3rhLUt4wwVTrmQ
-	0pfr+R71ED8QF3KgoGcowNQH+nT1EfsJza+pGN3Us2bbxYG9G3lK4HAZJbt4xg==
-X-Google-Smtp-Source: AGHT+IHrg/QN5+BAsP/HIdzVNNMa1PVCKsgnvfGLMoQK3wzAbLjbr/b4izwEksq3Mi5Ce4hSJxR5fw==
-X-Received: by 2002:a9d:730c:0:b0:6e1:152f:ec89 with SMTP id e12-20020a9d730c000000b006e1152fec89mr8085288otk.24.1706633133912;
-        Tue, 30 Jan 2024 08:45:33 -0800 (PST)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id z23-20020a9d62d7000000b006e11970fb7esm1487992otk.67.2024.01.30.08.45.33
+        d=1e100.net; s=20230601; t=1706634612; x=1707239412;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KAf6tgblhFk5SS7xF/05maRRLfXRqqg0AmAUe2SVN0M=;
+        b=nVotvp/dEYiNptkM9sLHA42bemRj9Ew6Jm2GDNqi67GZUBF6muXMmF4Fa7LuR+7Wo7
+         zAhuYyUEcHtbvR/3cSxFXpQC2JpjfwNeR+rfDf9NXAwgLf0vyoZyJZYuRZ50OE0hWBr4
+         Aet1qtUzH8DnEfidkz7tg/NAjGALJSHh67/er7Jzd07aQh5R/3niduF8QR0N89RpDE8u
+         pqIPJdeHTg4h1E+ivZAPF/JKrKQoIX1kFbbLizlTiTC1BVhWK7LV/k58epXlRiXz3nlw
+         evuBu9jSIdbI/ZZNCno4KMagmdnWg5vi6aQ5KZhCCurm4U7wvoKdaBMWvd1ULl6B5C8H
+         46Nw==
+X-Gm-Message-State: AOJu0Yz6x6q8tuHyWi7PcoLRpUM9RuKZ1UCtkN2t/rowIaW13+C55dh/
+	wQSbpDFw0PYeUxI75zcWELWUvBQdGKpZz+Nk+f2JqjKUTnvb3wj+
+X-Google-Smtp-Source: AGHT+IFSUK1TGC/xVKTkhUtyOB2SQ2m2OaxRok6eqOPvn4/MIrrR1kxT9lIoa2q+QUSu0YbJSWLoGQ==
+X-Received: by 2002:a2e:8e73:0:b0:2cd:9503:f91 with SMTP id t19-20020a2e8e73000000b002cd95030f91mr5533320ljk.15.1706634612059;
+        Tue, 30 Jan 2024 09:10:12 -0800 (PST)
+Received: from eldamar.lan (c-82-192-242-114.customer.ggaweb.ch. [82.192.242.114])
+        by smtp.gmail.com with ESMTPSA id ds8-20020a0564021cc800b0055c9280dc51sm5046118edb.14.2024.01.30.09.10.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 08:45:33 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Tue, 30 Jan 2024 10:45:32 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
+        Tue, 30 Jan 2024 09:10:11 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Received: by eldamar.lan (Postfix, from userid 1000)
+	id 6359CBE2DE0; Tue, 30 Jan 2024 18:10:10 +0100 (CET)
+Date: Tue, 30 Jan 2024 18:10:10 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.7 000/346] 6.7.3-rc1 review
-Message-ID: <ZbknrDOTkTeoMc2n@fedora64.linuxtx.org>
-References: <20240129170016.356158639@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>, Sasha Levin <sashal@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 6.1 098/185] net/mlx5e: Allow software parsing when IPsec
+ crypto is enabled
+Message-ID: <ZbktcnbWiq14DiSX@eldamar.lan>
+References: <20240129165958.589924174@linuxfoundation.org>
+ <20240129170001.745906693@linuxfoundation.org>
+ <ZbgFoW5DV4dQxliM@eldamar.lan>
+ <ZbgGrgeP_Wwrrb7C@eldamar.lan>
+ <2024012926-dagger-bazooka-b7da@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2024012926-dagger-bazooka-b7da@gregkh>
 
-On Mon, Jan 29, 2024 at 09:00:31AM -0800, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.7.3 release.
-> There are 346 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.3-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi Greg,
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+On Mon, Jan 29, 2024 at 12:43:05PM -0800, Greg Kroah-Hartman wrote:
+> On Mon, Jan 29, 2024 at 09:12:30PM +0100, Salvatore Bonaccorso wrote:
+> > Hi,
+> > 
+> > On Mon, Jan 29, 2024 at 09:08:02PM +0100, Salvatore Bonaccorso wrote:
+> > > Hi Greg,
+> > > 
+> > > On Mon, Jan 29, 2024 at 09:04:58AM -0800, Greg Kroah-Hartman wrote:
+> > > > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> > > > 
+> > > > ------------------
+> > > > 
+> > > > From: Leon Romanovsky <leonro@nvidia.com>
+> > > > 
+> > > > [ Upstream commit 20f5468a7988dedd94a57ba8acd65ebda6a59723 ]
+> > > > 
+> > > > All ConnectX devices have software parsing capability enabled, but it is
+> > > > more correct to set allow_swp only if capability exists, which for IPsec
+> > > > means that crypto offload is supported.
+> > > > 
+> > > > Fixes: 2451da081a34 ("net/mlx5: Unify device IPsec capabilities check")
+> > > > Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+> > > > Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > > ---
+> > > >  drivers/net/ethernet/mellanox/mlx5/core/en/params.c | 4 ++--
+> > > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+> > > > index 29dd3a04c154..d3de1b7a80bf 100644
+> > > > --- a/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+> > > > +++ b/drivers/net/ethernet/mellanox/mlx5/core/en/params.c
+> > > > @@ -990,8 +990,8 @@ void mlx5e_build_sq_param(struct mlx5_core_dev *mdev,
+> > > >  	void *wq = MLX5_ADDR_OF(sqc, sqc, wq);
+> > > >  	bool allow_swp;
+> > > >  
+> > > > -	allow_swp =
+> > > > -		mlx5_geneve_tx_allowed(mdev) || !!mlx5_ipsec_device_caps(mdev);
+> > > > +	allow_swp = mlx5_geneve_tx_allowed(mdev) ||
+> > > > +		    (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_CRYPTO);
+> > > >  	mlx5e_build_sq_param_common(mdev, param);
+> > > >  	MLX5_SET(wq, wq, log_wq_sz, params->log_sq_size);
+> > > >  	MLX5_SET(sqc, sqc, allow_swp, allow_swp);
+> > > 
+> > > When compiling 6.1.76-rc1 this commit causes the following build
+> > > failure:
+> > > 
+> > > drivers/net/ethernet/mellanox/mlx5/core/en/params.c: In function ‘mlx5e_build_sq_param’:
+> > > drivers/net/ethernet/mellanox/mlx5/core/en/params.c:994:53: error: ‘MLX5_IPSEC_CAP_CRYPTO’ undeclared (first use in this function)
+> > >   994 |                     (mlx5_ipsec_device_caps(mdev) & MLX5_IPSEC_CAP_CRYPTO);
+> > >       |                                                     ^~~~~~~~~~~~~~~~~~~~~
+> > > drivers/net/ethernet/mellanox/mlx5/core/en/params.c:994:53: note: each undeclared identifier is reported only once for each function it appears in
+> > > 
+> > > Attached the used config.
+> > 
+> > Mailserver from leonro@nvidia.com, saeedm@nvidia.com rejected the
+> > message due to the attached test.config.xz . Resending this here again
+> > without attachment so that might reach Leon and Saeed as well.
+> 
+> This works for me, I don't know why it's failing elsewhere.  I'd like to
+> drop it but I really don't want to unless we can figure it out.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+There is an explanation and a proposed fix by Florian Fainelli
+<f.fainelli@gmail.com> in https://lore.kernel.org/stable/8c178bd1-e0c9-4e29-9b63-dd298298bc7b@gmail.com/
+
+Hope this helps!
+
+Regards,
+Salvatore
