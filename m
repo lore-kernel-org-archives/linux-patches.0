@@ -1,80 +1,115 @@
-Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+Received: from omta40.uswest2.a.cloudfilter.net (omta40.uswest2.a.cloudfilter.net [35.89.44.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A7760BB1
-	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 09:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D98065BBE
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 10:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706608551; cv=none; b=FEUvlCDVU5wK6xPC/Q7DAYjtOv4c87Ho4+H5bnSdzeE8EDUsJKwFxfhEfc+ud80PE5dtM7GQsoitRw3BYz7PQo91f8jv0NLvEyslqlS3xgZSjaWme5BI7xVssLsYorMYF6SpyC3F+JgY/zhQV7hdt25caYH8oG1T1jmdR/PKrU8=
+	t=1706610111; cv=none; b=PPzD6a6tmeCHuyFDE44GrqE4qk3f4YU9ZL05j7ck4nZOpHJWuKBOuDPoemm1wgf+/M4s1+Cy92FpBWA2odRRElvGlzT20Ic+cClbv+sFjPE0tLlqv1Uy/BeFoMxKq/b7mqVWQGZ1IGA3WPQWxPuocXK87sYWceoR9jm9GZY3zi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706608551; c=relaxed/simple;
-	bh=GqIKvJeOh+wEVSjUwwyNUvLjkMLBGBxN9VhOWf/Fruk=;
-	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
-	 Message-ID:Subject; b=NQjwSmrMKsFHFNzlv+PUVXEF/+2ndpFd0NcepF2wuQw3LrnTlHqyC28w0qvLxVom3tA3HjDhNF7WSfsd0B50jSaQUT4c2teSWRHh/S3sqJUy4mVpgHNd16hjcIrmJEGYr2IbnQFJ7RUo2pjcUhwLytvDYGeIcZURn9DsQ9zJNA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-Received: from hamburger.collabora.co.uk (hamburger.collabora.co.uk [IPv6:2a01:4f8:1c1b:c794::1])
-	by madrid.collaboradmins.com (Postfix) with ESMTP id E9ED537809D0;
-	Tue, 30 Jan 2024 09:55:46 +0000 (UTC)
-From: "Shreeya Patel" <shreeya.patel@collabora.com>
-In-Reply-To: <20240129170014.969142961@linuxfoundation.org>
-Content-Type: text/plain; charset="utf-8"
-X-Forward: 127.0.0.1
-References: <20240129170014.969142961@linuxfoundation.org>
-Date: Tue, 30 Jan 2024 09:55:46 +0000
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+	s=arc-20240116; t=1706610111; c=relaxed/simple;
+	bh=iHbQQ3MLCCcjMAInoY2a1a8pyT2oDcS0vQnY2cfXPv4=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=O9Yao90QS3xcZiy3G2SKeGtXvLTy0J13FsPehAwN54YPTSHF7NV7DH+Y/0bpPMsQ+sYayxGzlmMOvkhhvj65nU3JkeEcu8zUV0xpQ5KcaTGeEVz/cFZBvrMW9+LVDQaJPPlrHPynZzG/IDawAklRqwjfGxFHHLoN08rmEmUj1eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=joRP6Hu5; arc=none smtp.client-ip=35.89.44.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="joRP6Hu5"
+Received: from eig-obgw-6004a.ext.cloudfilter.net ([10.0.30.197])
+	by cmsmtp with ESMTPS
+	id UhZLrazwT80oiUlDxrfULN; Tue, 30 Jan 2024 10:20:13 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id UlDwrmF1955BJUlDwrVkln; Tue, 30 Jan 2024 10:20:12 +0000
+X-Authority-Analysis: v=2.4 cv=QcR1A+Xv c=1 sm=1 tr=0 ts=65b8cd5c
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=dEuoMetlWLkA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=QDmJc+5Q+8ZglzAdl2BcnLkXPCIgoF/fTkzgIRxIZk4=; b=joRP6Hu54MNNifryzWu3Xy4rOi
+	XQQUmYkYX36/zGnAiAXN+joan8AbUP7d/TLcT7iGP6AKz6Ohi9Jkml6K9Xnp5VsbsViDkkUwVtsQo
+	4dnIFm4Ry5vRAoiqkUHIrzsLaKV44kTZ6KcN047a1j2+2/agGw1G+V7A7aOEtZQmZYcKGC2zU4072
+	JzxH7zIS5BDPCWzPceeeqaKsXx0K7xeiQrhuDqdwWUuxNlM5LbKn7hblFccNAcubLytXWXgPm0e1+
+	P7bt5wfmgPj2luTquSn+EBgrhmrR/h9JbeWzUjW+ClNaFIMgvSFP+NR+lkZWvkZUkxnPPciPIYDYy
+	lq5Z9yOA==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:37536 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1rUlDt-001IsC-2q;
+	Tue, 30 Jan 2024 03:20:09 -0700
+Subject: Re: [PATCH 6.7 000/346] 6.7.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <180be0f0-7b95-73e0-45a4-0c5fec11b487@w6rz.net>
+Date: Tue, 30 Jan 2024 02:20:07 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <670c-65b8c780-3-4f8ec280@27387870>
-Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E6?= 000/331] 
- =?utf-8?q?6=2E6=2E15-rc1?= review
-User-Agent: SOGoMail 5.9.1
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1rUlDt-001IsC-2q
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:37536
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfOxo6CLH8YJJXJUCc+7PQSCmJt8/Gk/CxmizatnSCxqWnmXwgidBjHW3panoHqq+eaTiJiHVxENqx9Tt4h0ZZSXreNx82iBVKm1f/Try2M+qtiQk0l0k
+ iMPxXUz7A0tPEjTUhY0/UPHFhfmWSN8Kxd/z3g1F5LOoXjBqOWokQpJRzwm7Nxkcbto7PZddOcE6ag==
 
-On Monday, January 29, 2024 22:31 IST, Greg Kroah-Hartman <gregkh@linux=
-foundation.org> wrote:
-
-> This is the start of the stable review cycle for the 6.6.15 release.
-> There are 331 patches in this series, all will be posted as a respons=
-e
-> to this one.  If anyone has any issues with these being applied, plea=
-se
+On 1/29/24 9:00 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.7.3 release.
+> There are 346 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+>
 > Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
 > Anything received after that time might be too late.
->=20
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6=
-.15-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.3-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
-.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
 > and the diffstat can be found below.
->=20
+>
+> thanks,
+>
+> greg k-h
 
-KernelCI report for stable-rc/linux-6.6.y for this week :-
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-## stable-rc HEAD for linux-6.6.y:
-Date: 2024-01-30
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
-git/log/?h=3D1ff49073b88be8a41ff42ecbbc2bb82e18783a7e
-
-## Build failures:
-No build failures seen for the stable-rc/linux-6.6.y commit head \o/
-
-## Boot failures:
-No **new** boot failures seen for the stable-rc/linux-6.6.y commit head=
- \o/
-
-Tested-by: kernelci.org bot <bot@kernelci.org>
-
-Thanks,
-Shreeya Patel
+Tested-by: Ron Economos <re@w6rz.net>
 
