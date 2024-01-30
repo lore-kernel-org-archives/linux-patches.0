@@ -1,169 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8617D3716F;
-	Tue, 30 Jan 2024 00:45:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B66A2C868
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 01:05:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706575515; cv=none; b=kE+xAXOnLgozS9uHXvZlFkRTCGpECq8K6RvW/Z+BBwsd7461/0TzulTNxXS9bxBebdEVG/2gS4GtCVsYJR2zbwmZbasRNsJzO0zYYbqEPnNyUPRIn0bRQ88zhjJotEpVRNDqVIMV8WEpFRnAhucnyMufWVkN0fAyVHXzhZ2Y+CM=
+	t=1706576711; cv=none; b=lEEmkChvp1jzYvwdewTr6IBm90yJNdtatJ3HMo4b/exwWMLg/gEZSBMTn5GvzlBSvSzs74vE18x8C6J9TN+LqQtzaKEBhpF+r9TSBRslSDb1kY5p4oPmxjZxZFxSc0/vsaQMwdK9L7cBrLuMZiSjQBTTV491yuky7Z4zBctvW5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706575515; c=relaxed/simple;
-	bh=PiweXFroDHF7yXaa82SMFRXH/FDbm1RzgiHTih6bLA8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LVlxJzGg/RC1xTQiLKm8w98HNxbY/KrcpkoLEA5heqfwXizIuwy3U+waXDa0/X0PRxhisHMGHaAv4KQ83j6v/7+DwJ5zFVfsj0bR/TrGDezEPgCauRPOjvvSomJQyFMMcV1eneDWZemjRdjC+VY42mNirJGlTTp2AhvUHw62U7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TzGOXf0x; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706576711; c=relaxed/simple;
+	bh=bG7LWMMzQOA4pnHxVE9T5M/eEsZhCIbhOeGSUfM/lKE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AriK6cdD46Orq3gb67r0OVY/qqCQL30fkliXZa2RHSvzZw357OJAgu3H5TxLge2UJMfpcUtnWrMGBe5CoKI5aYD2C+X7LinDc7uIqs5L5YZ1LqPOBZd0fmc/5dHuDkA1iomFgUDlEAIL6IwEolTLPpWlSg5TiCfFKF5CnVtdNu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VH4+r4ue; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TzGOXf0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6E4C43609;
-	Tue, 30 Jan 2024 00:45:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706575515;
-	bh=PiweXFroDHF7yXaa82SMFRXH/FDbm1RzgiHTih6bLA8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TzGOXf0xtEnuBMKuXJA6vqerJOp0D0uIDNQFWdGOH3l33XbaHnYJ9I3mYGODL2xxv
-	 FvYYJep2tflHq4V0UcqCEB2qc3z3xiIyVM65MQ8F12kGMHIq0zhX5iTNd0OwzHK3uJ
-	 +D5rvAm5GRr5SPCQ7vSVXDIJvzCWbXCZx1R6KdhL5mC8W37TCpLc6jZVKmF9iSNWQJ
-	 QLggfDM/lA5RPUFdkYhPg/HyXl5R+4b4rdKWSsuxduScfg/a0lFoiNIhC2yqRQoXdj
-	 ajXgXI0puNc540MbLYhob5cDaQwc0mvu8sBP/DHUYcm2YixEL2Rpls3ikHYNE9Xsnw
-	 cWSsF2qgM1ovg==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Rob Herring <robh+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Frank Rowand <frowand.list@gmail.com>,
-	David Gow <davidgow@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>
-Subject: [PATCH v2 7/7] of: Add KUnit test to confirm DTB is loaded
-Date: Mon, 29 Jan 2024 16:45:06 -0800
-Message-ID: <20240130004508.1700335-8-sboyd@kernel.org>
-X-Mailer: git-send-email 2.43.0.429.g432eaa2c6b-goog
-In-Reply-To: <20240130004508.1700335-1-sboyd@kernel.org>
-References: <20240130004508.1700335-1-sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VH4+r4ue"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706576711; x=1738112711;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bG7LWMMzQOA4pnHxVE9T5M/eEsZhCIbhOeGSUfM/lKE=;
+  b=VH4+r4ue2ZMNASQsQOoTk+/pQDt2Bd3s05csty7MZCeZAy6dTUA0aRci
+   2ZWhMBf5shCzBiIvmiSkxnzwxq2xA6REZP/b6DrwMmuMPeep/mRjub3cc
+   x0BUqU0NwW9nJeTG51QnKr8NN8CKoMAvMKPBHklqfGX+znWZWeIfbCjL6
+   lnnc7bjVfea3Ac6llpgcEnd+oQ6w8YtTZAPFtSHX5GAiDalaTpPxQiiM/
+   qLNAirP7XOUksGl+vaye8NRThXZfdDzgfxqjDTPL2JOu+3LW1yKM3vsFt
+   UPQSnTt+QazJAnQPKSqdoh2aerUO/716RRAS9MLLzRxdxgYEOKc0dyx9O
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10968"; a="3006763"
+X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
+   d="scan'208";a="3006763"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2024 17:05:10 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.05,227,1701158400"; 
+   d="scan'208";a="29719504"
+Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2024 17:05:09 -0800
+Date: Mon, 29 Jan 2024 17:05:08 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Borislav Petkov <bp@alien8.de>
+Cc: Fenghua Yu <fenghua.yu@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+	James Morse <james.morse@arm.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Randy Dunlap <rdunlap@infradead.org>, x86@kernel.org,
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v14 0/8] Add support for Sub-NUMA cluster (SNC) systems
+Message-ID: <ZbhLRDvZrxBZDv2j@agluck-desk3>
+References: <20231204185357.120501-1-tony.luck@intel.com>
+ <20240126223837.21835-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240126223837.21835-1-tony.luck@intel.com>
 
-Add a KUnit test that confirms a DTB has been loaded, i.e. there is a
-root node, and that the of_have_populated_dt() API works properly.
+I've been wondering whether the SNC patches were creating way too much
+infrastructure that isn't generally useful. Specifically the capability
+for a reactrl resource to have different scope for monitoring and
+control functions.
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Cc: David Gow <davidgow@google.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/of/.kunitconfig |  3 +++
- drivers/of/Kconfig      |  9 ++++++++
- drivers/of/Makefile     |  2 ++
- drivers/of/of_test.c    | 48 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 62 insertions(+)
- create mode 100644 drivers/of/.kunitconfig
- create mode 100644 drivers/of/of_test.c
+That seems like a very strange thing.
 
-diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
-new file mode 100644
-index 000000000000..5a8fee11978c
---- /dev/null
-+++ b/drivers/of/.kunitconfig
-@@ -0,0 +1,3 @@
-+CONFIG_KUNIT=y
-+CONFIG_OF=y
-+CONFIG_OF_KUNIT_TEST=y
-diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-index 17733285b415..53d1b5dd89e8 100644
---- a/drivers/of/Kconfig
-+++ b/drivers/of/Kconfig
-@@ -37,6 +37,15 @@ config OF_UNITTEST
- 
- 	  If unsure, say N here. This option is not safe to enable.
- 
-+config OF_KUNIT_TEST
-+	tristate "Devicetree KUnit Test" if !KUNIT_ALL_TESTS
-+	depends on KUNIT
-+	default KUNIT_ALL_TESTS
-+	help
-+	  This option builds KUnit unit tests for device tree infrastructure.
-+
-+	  If unsure, say N here, but this option is safe to enable.
-+
- config OF_ALL_DTBS
- 	bool "Build all Device Tree Blobs"
- 	depends on COMPILE_TEST
-diff --git a/drivers/of/Makefile b/drivers/of/Makefile
-index df305348d1cb..251d33532148 100644
---- a/drivers/of/Makefile
-+++ b/drivers/of/Makefile
-@@ -19,4 +19,6 @@ obj-y	+= kexec.o
- endif
- endif
- 
-+obj-$(CONFIG_OF_KUNIT_TEST) += of_test.o
-+
- obj-$(CONFIG_OF_UNITTEST) += unittest-data/
-diff --git a/drivers/of/of_test.c b/drivers/of/of_test.c
-new file mode 100644
-index 000000000000..71a767b42b43
---- /dev/null
-+++ b/drivers/of/of_test.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * KUnit tests for OF APIs
-+ */
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include <kunit/test.h>
-+
-+/*
-+ * Test that the root node "/" can be found by path.
-+ */
-+static void dtb_root_node_found_by_path(struct kunit *test)
-+{
-+	struct device_node *np;
-+
-+	np = of_find_node_by_path("/");
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, np);
-+	of_node_put(np);
-+}
-+
-+/*
-+ * Test that the 'of_root' global variable is always populated when DT code is
-+ * enabled.
-+ */
-+static void dtb_root_node_populates_of_root(struct kunit *test)
-+{
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, of_root);
-+}
-+
-+static struct kunit_case dtb_test_cases[] = {
-+	KUNIT_CASE(dtb_root_node_found_by_path),
-+	KUNIT_CASE(dtb_root_node_populates_of_root),
-+	{}
-+};
-+
-+/*
-+ * Test suite to confirm a DTB is loaded.
-+ */
-+static struct kunit_suite dtb_suite = {
-+	.name = "dtb",
-+	.test_cases = dtb_test_cases,
-+};
-+
-+kunit_test_suites(
-+	&dtb_suite,
-+);
-+MODULE_LICENSE("GPL");
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+History here is that Intel CMT, MBM and L3 CAT features arrived in
+quick succession, closely followed by MBA and then L2 CAT. At the time
+it made sense for the "L3" resource to cover all of CMT, MBM and L3 CAT.
 
+That became slightly odd when MBA (another L3 scoped resource) was
+added. It was given its own "struct rdt_resource". AMD later added
+SMBA as yet another L3-scoped resource with its own "struct resource".
+
+I wondered how the SNC series would look if I went back to an approach
+from one of the earlier versions. In that one I created a new resource
+for SNC monitoring that was NODE scoped. And then made all the CMT and
+MBM code switch over to using that one when SNC was enabled. That was
+a bit hacky, and I moved from there to the dual domain lists per
+resource.
+
+I just tried out an approach the split the RDT_RESOURCE_L3 resource
+into separate resources, one for control, one for monitoring.
+
+It makes the code much simpler:
+
+ 8 files changed, 235 insertions(+), 30 deletions(-) [1]
+
+vs.
+
+ 9 files changed, 629 insertions(+), 282 deletions(-)
+
+
+Tradeoffs:
+
+The complex series (posted as v14) cleanly split the "rdt_domain"
+structure into two. So it no longer carried all the fields needed
+for both control and monitor, even though only one set was ever
+used. But the cost was a lot of code churn that may never be useful
+for anything other than SNC.
+
+On non-SNC systems the new series produces separate linked lists
+of domains for L3 control & monitor, even though the lists are the
+same, and the domain structures still carry all fields for both
+control and monitor functions.
+
+Question: Does anyone think that single domain with different scope for
+control and monitor is inherently more useful than two separate domains?
+
+
+While I get this sorted out, maybe Boris should take James next set
+of MPAM patches as they are, instead of on top of the complex SNC
+series.
+
+-Tony
+
+[1] I'll post this set just as soon as I can get time on and SNC machine
+to make sure they actually work.
