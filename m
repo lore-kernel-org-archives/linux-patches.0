@@ -1,115 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BBE6BB5F;
-	Tue, 30 Jan 2024 13:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41A706BB38
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 13:30:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706620575; cv=none; b=op8k5sf6VhRxkt4EeXhPn4zLy4Wdji/KqasQkPdOI5pVtkFrYT3fm8Ty6dYU69GRZa74JhJgUNCc4O9Mlldnw+BXAbXBFcuXfv5AiWa71lEaD+zArrQsQICgI/je0/PfXnGIu1kHWoMWqbboeXyAL2LhdixZMX1EI33fmm524tU=
+	t=1706621442; cv=none; b=OFQpgConghmidXZuRKfTUc6Zna0cv1214Ot9knDa6zBtE+knCZQEQopjc43kx0oXoDGnPkbXi9xY3+K2wOI5aGOx0Ck/prhPx6XU7j0ViaXWkmveOXlbxVQpy8GUrAiJG01OMKjwu9NkcOBIQs1643QAE+0bgmu9lGAQW5ZL5W8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706620575; c=relaxed/simple;
-	bh=jRzjCLDb/0atRPzlAVeh/A8UabCjn3/OUg4jCrnn7pM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=m66FqokA60nKoROPBn5Ph5wfcWewDro8let0uKZh4C1Xib45QmJK+odb2Mh1UpTXAtvwSb2fscCcNejKhUqJoHANLgRbkS+3VGHkFQwx3xLYsKwNT8PVI/j0GzApweHEJ1CvhU6tzs7pNDrXsltRben8M7nS81OvtFx09lkAd3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OLBa0zWq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706621442; c=relaxed/simple;
+	bh=rG8Dz1/ugp5YRl9zzSKL04gzMjWd9q4YlsAM4wMQHD4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U2HhrREkfyX5Bynktngb0MnR+JwL1wUSJkV339EtGQtCl/2usd4kTfzugsarL5dmyQCmXec4WMqR6UXN/Si2i1z8QMuGTG7HX1Mwmsou4hTzFfsUGuOewuBXQANrDLXEGxOfKpscqypQDAnIu17eq1D1BNnRDHkvHYcPW5W5D54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Rbwg8Kdw; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OLBa0zWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA1EC43399;
-	Tue, 30 Jan 2024 13:16:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706620575;
-	bh=jRzjCLDb/0atRPzlAVeh/A8UabCjn3/OUg4jCrnn7pM=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=OLBa0zWqeww5EZFBUoHSQG3EYCDTvpY+GAFjJQfEhGRzh3rB4Y+uRUwXs+rPTrk+v
-	 ELtTaMQIOQcTSFy2ZEVZUW8R0wWfXNbr8SrgMmRSjA0uQ8jwDvbVMz8cxUGXswa1ik
-	 ZAsflnQwy6D/0IxLGywnicsxOIyz4lrRvl6ph8abTFlFusDeqRhOaS05aRl1hetFvT
-	 x9kK5t4aQ6Pxdt4FW6DETaiaRb0YngNocs3sGQKBzcC4TFXCiTJui3FMXUToH4/Ogr
-	 lpWJcnHzWAHUWED1jxrtSXUhDEWZO0G5ORvzGo9Ql5yA+h/xFxgr1IU+89w3CvRLh7
-	 11KuvXll/fzDg==
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-210e5a5fa70so2052110fac.0;
-        Tue, 30 Jan 2024 05:16:15 -0800 (PST)
-X-Gm-Message-State: AOJu0YzF2AOQeY6ibPy1SfGKozDO+sZaWL++qi/jNlN6AZtW6AaL/voK
-	7wJuJfc2wBOKdY3ZrZg+npc5mAAq+O46HEVGuGjmchlWk81n7pK/HLDW/sFZ7PQm5hv65zfE0vm
-	Mo2HcH+lIfozIf0cgmkLsUAE/9YM=
-X-Google-Smtp-Source: AGHT+IH0QKKzJW8xp+4nnQDbAa1mwu9E2R4b/6ilaCz62C2DDiOxDRG8B3m8HReXobVLIV7LvELXlNZY67ilVEKMsDA=
-X-Received: by 2002:a05:6870:b90a:b0:214:c782:8acd with SMTP id
- gx10-20020a056870b90a00b00214c7828acdmr6716987oab.8.1706620575029; Tue, 30
- Jan 2024 05:16:15 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Rbwg8Kdw"
+Received: by linux.microsoft.com (Postfix, from userid 1127)
+	id CE7A720541E0; Tue, 30 Jan 2024 05:30:39 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com CE7A720541E0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1706621439;
+	bh=ZLNex+omPb8kR2FC1v86zHkS3N/7w2iPpa2gpSI68QM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Rbwg8KdwmuF0kHUacib13DpfzInP3vZHX/+hfW09KnFzo6Vlp6zTGDgLeji3qo5wH
+	 b4tDmJq1rU3aTjakORccWuLGbjBkX/j2KQ4/5/hmdWBeR27ZNjM9JjRMnVELt7dv5F
+	 PFpsMNrlrJPT6b4ufXNLB8DRaNpOLcVTCKPx4XYU=
+Date: Tue, 30 Jan 2024 05:30:39 -0800
+From: Saurabh Singh Sengar <ssengar@linux.microsoft.com>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, linux-um@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
+	Frank Rowand <frowand.list@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH v2 3/7] x86/of: Unconditionally call
+ unflatten_and_copy_device_tree()
+Message-ID: <20240130133039.GA1444@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20240130004508.1700335-1-sboyd@kernel.org>
+ <20240130004508.1700335-4-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240125-fix-riscv-option-arch-llvm-18-v1-0-390ac9cc3cd0@kernel.org>
- <20240129-unripe-pleading-d2753b766e88@spud>
-In-Reply-To: <20240129-unripe-pleading-d2753b766e88@spud>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Tue, 30 Jan 2024 22:15:37 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAT-sKNf9mCxZakeW_zzXiRYxbTaLqC7Z-+M7xYVMRw55Q@mail.gmail.com>
-Message-ID: <CAK7LNAT-sKNf9mCxZakeW_zzXiRYxbTaLqC7Z-+M7xYVMRw55Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] RISC-V: Fix CONFIG_AS_HAS_OPTION_ARCH with tip of
- tree LLVM
-To: Conor Dooley <conor@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, nicolas@fjasle.eu, andy.chiu@sifive.com, 
-	conor.dooley@microchip.com, linux-riscv@lists.infradead.org, 
-	linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
-	stable@vger.kernel.org, Eric Biggers <ebiggers@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240130004508.1700335-4-sboyd@kernel.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-On Tue, Jan 30, 2024 at 1:34=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> On Thu, Jan 25, 2024 at 10:32:10AM -0700, Nathan Chancellor wrote:
-> > Hi all,
-> >
-> > Eric reported that builds of LLVM with [1] (close to tip of tree) have
-> > CONFIG_AS_HAS_OPTION_ARCH=3Dn because the test for expected failure on
-> > invalid input has started succeeding.
-> >
-> > This Kconfig test was added because '.option arch' only causes an
-> > assembler warning when it is unsupported, rather than a hard error,
-> > which is what users of as-instr expect when something is unsupported.
-> >
-> > This can be resolved by turning assembler warnings into errors with
-> > '-Wa,--fatal-warnings' like we do with the compiler with '-Werror',
-> > which is what the first patch does. The second patch removes the invali=
-d
-> > test, as the valid test is good enough with fatal warnings.
-> >
-> > I have diffed several configurations for the different architectures
-> > that use as-instr and I have found no issues.
-> >
-> > I think this could go in through either the kbuild or RISC-V tree with
-> > sufficient acks but I will let them fight over who takes it :)
->
-> I think RISC-V would be good, since building the vector crypto stuff
-> also needs this fix.
+On Mon, Jan 29, 2024 at 04:45:02PM -0800, Stephen Boyd wrote:
+> Call this function unconditionally so that we can populate an empty DTB
+> on platforms that don't boot with a firmware provided or builtin DTB.
+> 
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Cc: Frank Rowand <frowand.list@gmail.com>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Ingo Molnar <mingo@redhat.com>
+> Cc: Borislav Petkov <bp@alien8.de>
+> Cc: Dave Hansen <dave.hansen@linux.intel.com>
+> Cc: <x86@kernel.org>
+> Cc: "H. Peter Anvin" <hpa@zytor.com>
+> Cc: Saurabh Sengar <ssengar@linux.microsoft.com>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+>  arch/x86/kernel/devicetree.c | 24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+> diff --git a/arch/x86/kernel/devicetree.c b/arch/x86/kernel/devicetree.c
+> index afd09924094e..650752d112a6 100644
+> --- a/arch/x86/kernel/devicetree.c
+> +++ b/arch/x86/kernel/devicetree.c
+> @@ -283,22 +283,24 @@ void __init x86_flattree_get_config(void)
+>  	u32 size, map_len;
+>  	void *dt;
+>  
+> -	if (!initial_dtb)
+> -		return;
+> +	if (initial_dtb) {
+> +		map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
+>  
+> -	map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
+> +		dt = early_memremap(initial_dtb, map_len);
+> +		size = fdt_totalsize(dt);
+> +		if (map_len < size) {
+> +			early_memunmap(dt, map_len);
+> +			dt = early_memremap(initial_dtb, size);
+> +			map_len = size;
+> +		}
+>  
+> -	dt = early_memremap(initial_dtb, map_len);
+> -	size = fdt_totalsize(dt);
+> -	if (map_len < size) {
+> -		early_memunmap(dt, map_len);
+> -		dt = early_memremap(initial_dtb, size);
+> -		map_len = size;
+> +		early_init_dt_verify(dt);
+>  	}
+>  
+> -	early_init_dt_verify(dt);
+>  	unflatten_and_copy_device_tree();
+> -	early_memunmap(dt, map_len);
+> +
+> +	if (initial_dtb)
+> +		early_memunmap(dt, map_len);
+>  }
+>  #endif
+>  
+> -- 
+> https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+> https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
 
-OK, then I will give ack instead of applying this series.
+Tested the series in Hyper-V environment. Please feel free to add:
+Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-
-Acked-by: Masahiro Yamada <masahiroy@kernel.org>
-
-
-
-
-
-
-> Tested-by: Conor Dooley <conor.dooley@microchip.com>
-> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-
-
-
-
-
-
-
-
-
---=20
-Best Regards
-Masahiro Yamada
