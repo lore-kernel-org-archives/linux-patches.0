@@ -1,120 +1,209 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41A706BB38
-	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 13:30:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FA16D1B8
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 13:50:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706621442; cv=none; b=OFQpgConghmidXZuRKfTUc6Zna0cv1214Ot9knDa6zBtE+knCZQEQopjc43kx0oXoDGnPkbXi9xY3+K2wOI5aGOx0Ck/prhPx6XU7j0ViaXWkmveOXlbxVQpy8GUrAiJG01OMKjwu9NkcOBIQs1643QAE+0bgmu9lGAQW5ZL5W8=
+	t=1706622624; cv=none; b=HnI6TPOBPwV0jwUYOPfNezSIMISDrW7wgJ1IRBK6GKeYH/PF68n01xFegdnwqenKh4ICaEub5gCB4wFU8AmQFGYKU2ahVMQWvNi1ivXx6oTooLRKnbfLrapUob2kO1XE/oCCvyk+SfkdKiz3tdJfrlCc1SRa6Zbril5oO47XPew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706621442; c=relaxed/simple;
-	bh=rG8Dz1/ugp5YRl9zzSKL04gzMjWd9q4YlsAM4wMQHD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U2HhrREkfyX5Bynktngb0MnR+JwL1wUSJkV339EtGQtCl/2usd4kTfzugsarL5dmyQCmXec4WMqR6UXN/Si2i1z8QMuGTG7HX1Mwmsou4hTzFfsUGuOewuBXQANrDLXEGxOfKpscqypQDAnIu17eq1D1BNnRDHkvHYcPW5W5D54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Rbwg8Kdw; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+	s=arc-20240116; t=1706622624; c=relaxed/simple;
+	bh=S8UoD6Ta1gehN3pZq3TClOoAdLVOWvyfsPQVhm3ikJk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pnW/und5fBAd0JLW2RgwiYC8FyajI47f4V8NkbzZGZvgy6Z470ThAnTRG/lOoXniiFDXvdD5T4B82AgI3nwBpihhCDJMtbMSquwOvzLKxr9orj3yL5ws7d8rtV8bpdDz5qr5w1/TyLasmt4HUM0LUBmWreoHOkFGFqBzZ11Zzg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sV6k+XPL; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Rbwg8Kdw"
-Received: by linux.microsoft.com (Postfix, from userid 1127)
-	id CE7A720541E0; Tue, 30 Jan 2024 05:30:39 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com CE7A720541E0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1706621439;
-	bh=ZLNex+omPb8kR2FC1v86zHkS3N/7w2iPpa2gpSI68QM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rbwg8KdwmuF0kHUacib13DpfzInP3vZHX/+hfW09KnFzo6Vlp6zTGDgLeji3qo5wH
-	 b4tDmJq1rU3aTjakORccWuLGbjBkX/j2KQ4/5/hmdWBeR27ZNjM9JjRMnVELt7dv5F
-	 PFpsMNrlrJPT6b4ufXNLB8DRaNpOLcVTCKPx4XYU=
-Date: Tue, 30 Jan 2024 05:30:39 -0800
-From: Saurabh Singh Sengar <ssengar@linux.microsoft.com>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
-	Frank Rowand <frowand.list@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH v2 3/7] x86/of: Unconditionally call
- unflatten_and_copy_device_tree()
-Message-ID: <20240130133039.GA1444@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20240130004508.1700335-1-sboyd@kernel.org>
- <20240130004508.1700335-4-sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sV6k+XPL"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-7d5bddb0f4cso1088696241.2
+        for <patches@lists.linux.dev>; Tue, 30 Jan 2024 05:50:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1706622621; x=1707227421; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oqRuopth+NFROAnnx4PTjC3pCFiYr+Y26i/bHfvDIrs=;
+        b=sV6k+XPL9x1Zv3vp7TKKG2wE7eDLgZtIPtMs/2vj8tB0+MD21KIwWLLUAFcQi4bZZZ
+         Qjk7rqRj/gp8nFsWI/JcAk1Lg18pvJ9BHlZcMAroy/J7e19MTsuxYRXK9M6oBCy3kg+8
+         bxdjPEPzFYlwOpY6B7ZlZz6cxgD/JqvWBfV/WB/RmY+lRiTM8hCoxVVV5IS8HNsSOfpX
+         JnTOMLYbwxHOPnRA7cb34Ycb2asBMYX7H4//h7lYH7JXH945TislMD/IgPnzqgRxSoA0
+         6xPS2SbMVqBFDJAaVJNgCgKUk3xr6c1oOtyvTBoC+Z3Y9iVSCLebrmx9Gth8fBXn7FXd
+         wLsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706622621; x=1707227421;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oqRuopth+NFROAnnx4PTjC3pCFiYr+Y26i/bHfvDIrs=;
+        b=pZ5xpGgU/OfNBoo7Yttu+FPc+lECnlIwhVDv2SKyGvTjPG2BVlFs/OSlXJO3DDKxQX
+         cQhRlO3XvfOCcTdzCVZknBHsmjtfAXImQKi2Hka8jRM2GDt3YsQmS1k30QcmXVp25W4u
+         rjh+eQ0cpIVfII0ZhZuRDIwiLWyoyiF55rYevGyWUU1mBCZZjBDhRGQArGCZvgGNmOiQ
+         cCnG4PZdP69G84+HyvygE7eYCwxNPU5PHFXeFGp+HCSAAtscpDATzvNiZlEcjIxQzHkm
+         BT8akTmr80KcZ74k11vDeed0PNFL2i4rMY+gRENT2vJ/NasFeO3utN7cBGmRNatTunGR
+         hSdg==
+X-Gm-Message-State: AOJu0Yx7VLGGhScpQz6LfF/COTN+xPMHHYJkp/qxmq+qdaHv8VHmTZU+
+	gDfBABeh3Yo5VVwwwk7JBxzCeypJ/vUkuQibkMpY7KRLVF4GvW5KnGKgijv7GMxqI2E0bKTndhA
+	7MiAe81J0lWeqPWMhEUERIB4t0pEpM8FpqpmC8w==
+X-Google-Smtp-Source: AGHT+IE2NzLxDFSGj5n1fVpRkjkZIulZhy16OZlANragEXfj90Y18vilUxLyU4CKO4r4rgr1zbWvnLR3XGyNXMLS7hc=
+X-Received: by 2002:a05:6102:1242:b0:469:a69e:70c4 with SMTP id
+ p2-20020a056102124200b00469a69e70c4mr3590245vsg.37.1706622621209; Tue, 30 Jan
+ 2024 05:50:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240130004508.1700335-4-sboyd@kernel.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+References: <20240129170016.356158639@linuxfoundation.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 30 Jan 2024 19:20:09 +0530
+Message-ID: <CA+G9fYsT0kWty=aRATVCT1KzMBmbo0_LidV2=b7U+6f+=Sbd6A@mail.gmail.com>
+Subject: Re: [PATCH 6.7 000/346] 6.7.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 29, 2024 at 04:45:02PM -0800, Stephen Boyd wrote:
-> Call this function unconditionally so that we can populate an empty DTB
-> on platforms that don't boot with a firmware provided or builtin DTB.
-> 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Frank Rowand <frowand.list@gmail.com>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Ingo Molnar <mingo@redhat.com>
-> Cc: Borislav Petkov <bp@alien8.de>
-> Cc: Dave Hansen <dave.hansen@linux.intel.com>
-> Cc: <x86@kernel.org>
-> Cc: "H. Peter Anvin" <hpa@zytor.com>
-> Cc: Saurabh Sengar <ssengar@linux.microsoft.com>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> ---
->  arch/x86/kernel/devicetree.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
-> 
-> diff --git a/arch/x86/kernel/devicetree.c b/arch/x86/kernel/devicetree.c
-> index afd09924094e..650752d112a6 100644
-> --- a/arch/x86/kernel/devicetree.c
-> +++ b/arch/x86/kernel/devicetree.c
-> @@ -283,22 +283,24 @@ void __init x86_flattree_get_config(void)
->  	u32 size, map_len;
->  	void *dt;
->  
-> -	if (!initial_dtb)
-> -		return;
-> +	if (initial_dtb) {
-> +		map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
->  
-> -	map_len = max(PAGE_SIZE - (initial_dtb & ~PAGE_MASK), (u64)128);
-> +		dt = early_memremap(initial_dtb, map_len);
-> +		size = fdt_totalsize(dt);
-> +		if (map_len < size) {
-> +			early_memunmap(dt, map_len);
-> +			dt = early_memremap(initial_dtb, size);
-> +			map_len = size;
-> +		}
->  
-> -	dt = early_memremap(initial_dtb, map_len);
-> -	size = fdt_totalsize(dt);
-> -	if (map_len < size) {
-> -		early_memunmap(dt, map_len);
-> -		dt = early_memremap(initial_dtb, size);
-> -		map_len = size;
-> +		early_init_dt_verify(dt);
->  	}
->  
-> -	early_init_dt_verify(dt);
->  	unflatten_and_copy_device_tree();
-> -	early_memunmap(dt, map_len);
-> +
-> +	if (initial_dtb)
-> +		early_memunmap(dt, map_len);
->  }
->  #endif
->  
-> -- 
-> https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-> https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+On Mon, 29 Jan 2024 at 22:37, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.7.3 release.
+> There are 346 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.7.3-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.7.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
-Tested the series in Hyper-V environment. Please feel free to add:
-Tested-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 6.7.3-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.7.y
+* git commit: 7c05c677b6ca67bd17cb1606e63c1962e0c2e2a2
+* git describe: v6.7.2-347-g7c05c677b6ca
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.7.y/build/v6.7.2=
+-347-g7c05c677b6ca
+
+## Test Regressions (compared to v6.7.1-639-g2320541f64ba)
+
+## Metric Regressions (compared to v6.7.1-639-g2320541f64ba)
+
+## Test Fixes (compared to v6.7.1-639-g2320541f64ba)
+
+## Metric Fixes (compared to v6.7.1-639-g2320541f64ba)
+
+## Test result summary
+total: 142243, pass: 124118, fail: 1075, skip: 16831, xfail: 219
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 145 total, 143 passed, 2 failed
+* arm64: 52 total, 50 passed, 2 failed
+* i386: 41 total, 38 passed, 3 failed
+* mips: 26 total, 26 passed, 0 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 36 total, 36 passed, 0 failed
+* riscv: 25 total, 24 passed, 1 failed
+* s390: 13 total, 13 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 45 passed, 1 failed
+
+## Test suites summary
+* boot
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-exec
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-membarrier
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
