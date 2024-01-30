@@ -1,115 +1,89 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB3C57864;
-	Tue, 30 Jan 2024 08:46:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315060BBA
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 09:52:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706604376; cv=none; b=p17RVQ0L989Mtom/ivfN11OJGvNOgJ4TcvibiAKs/8b3WBdMGdc7Rj7WnCqtxNJTsFqd4UMFD2FYcNdLTQOVCkzibH0UPExaY9GNfI5BWc365IDf/YQ46FfduSGTHi0Jw8KHfcvSB7remxmutatNknbwX8cCy8XzDJWwkAZO2RY=
+	t=1706608329; cv=none; b=CoTV3Iqn/qDwZ6vUfZqUfJ5PkHciS+mOUORAnnSThNEs70Qk5GyLJx5imfqIEgK9q5pNknwqcEEkbhS2KS0FZDznQ5Zfg1Xd6nXYD5pgpwNufrz9ZMhtfqFh9u77DLSASBeChdwdCnb4m3W+V2nbjK62IVAbvB7Be9wR//zrTEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706604376; c=relaxed/simple;
-	bh=KGcaW18+wdP+tuNGfWjZaKNswZI7TQLnbQDs5XXUCP8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=jCQzmzCTFK0VrVUUcqsxO7SLeSOa8mZk+He4hsW0u3hxwOaHVgOYYl3/ktrtkFr8vnoDFJdrhpePP8NuRaF1tI/Z4urr6tNumJrngQ6RlCdnuw9Q3GLvQSmwx7Pd8N75Bkl/5OvD+TdIV/EoA2iX4dTuNu0UBQ5QBFB9ZL2bOU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.216])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TPJb23HMJz6JB1k;
-	Tue, 30 Jan 2024 16:42:54 +0800 (CST)
-Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
-	by mail.maildlp.com (Postfix) with ESMTPS id D17E7140C98;
-	Tue, 30 Jan 2024 16:46:10 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
- lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Tue, 30 Jan 2024 08:46:10 +0000
-Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
- lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.035;
- Tue, 30 Jan 2024 08:46:10 +0000
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-CC: Eric Auger <eric.auger@redhat.com>, Jean-Philippe Brucker
-	<jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, Michael Shavit
-	<mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [PATCH v4 01/27] iommu/arm-smmu-v3: Check that the RID domain is
- S1 in SVA
-Thread-Topic: [PATCH v4 01/27] iommu/arm-smmu-v3: Check that the RID domain is
- S1 in SVA
-Thread-Index: AQHaUIOwEvsu/yJdMEqnvQfiRYY9c7DyDZ2g
-Date: Tue, 30 Jan 2024 08:46:10 +0000
-Message-ID: <b3a7b564dcef4b518af0493155b67cc6@huawei.com>
-References: <0-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
- <1-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
-In-Reply-To: <1-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1706608329; c=relaxed/simple;
+	bh=nAmpW4z3loSWjgIoJ07UdUFNgOk6yJCSDOgKJ/GTdq8=;
+	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
+	 Message-ID:Subject; b=BhHiqkBGh/nfiJvyrDGqXQAwdvBZj7tRPCL0UsugsYEYZICRumnCPGBrboMzxVdodVzhy4EVqklb0l4nujNszO0euyG69O9eeUTrBTIejcjzpR5gnNzy6q2irITZ5pUD9jNp2oOQiorLHrc/6gmcDtFoCt7qO9+BTU6/viour/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Received: from hamburger.collabora.co.uk (hamburger.collabora.co.uk [IPv6:2a01:4f8:1c1b:c794::1])
+	by madrid.collaboradmins.com (Postfix) with ESMTP id 046A037809D0;
+	Tue, 30 Jan 2024 09:52:01 +0000 (UTC)
+From: "Shreeya Patel" <shreeya.patel@collabora.com>
+In-Reply-To: <20240129165958.589924174@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 127.0.0.1
+References: <20240129165958.589924174@linuxfoundation.org>
+Date: Tue, 30 Jan 2024 09:52:01 +0000
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, "Gustavo Padovan" <gustavo.padovan@collabora.com>, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Message-ID: <65ea-65b8c700-1-50c62b00@100317325>
+Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?6=2E1?= 000/185] 
+ =?utf-8?q?6=2E1=2E76-rc1?= review
+User-Agent: SOGoMail 5.9.1
+Content-Transfer-Encoding: quoted-printable
 
+On Monday, January 29, 2024 22:33 IST, Greg Kroah-Hartman <gregkh@linux=
+foundation.org> wrote:
 
-
-> -----Original Message-----
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Friday, January 26, 2024 6:15 PM
-> To: iommu@lists.linux.dev; Joerg Roedel <joro@8bytes.org>; linux-arm-
-> kernel@lists.infradead.org; Robin Murphy <robin.murphy@arm.com>; Will
-> Deacon <will@kernel.org>
-> Cc: Eric Auger <eric.auger@redhat.com>; Jean-Philippe Brucker <jean-
-> philippe@linaro.org>; Moritz Fischer <mdf@kernel.org>; Michael Shavit
-> <mshavit@google.com>; Nicolin Chen <nicolinc@nvidia.com>;
-> patches@lists.linux.dev; Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>
-> Subject: [PATCH v4 01/27] iommu/arm-smmu-v3: Check that the RID domain is
-> S1 in SVA
+> This is the start of the stable review cycle for the 6.1.76 release.
+> There are 185 patches in this series, all will be posted as a respons=
+e
+> to this one.  If anyone has any issues with these being applied, plea=
+se
+> let me know.
 >=20
-> This code only works if the RID domain is a S1 domain and has already
-> installed the cdtable.
+> Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
+> Anything received after that time might be too late.
 >=20
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1=
+.76-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
+.git linux-6.1.y
+> and the diffstat can be found below.
 >=20
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> index 05722121f00e70..b4549d698f3569 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-> @@ -387,7 +387,13 @@ static int __arm_smmu_sva_bind(struct device *dev,
-> struct mm_struct *mm)
->  	struct arm_smmu_bond *bond;
->  	struct arm_smmu_master *master =3D dev_iommu_priv_get(dev);
->  	struct iommu_domain *domain =3D iommu_get_domain_for_dev(dev);
-> -	struct arm_smmu_domain *smmu_domain =3D
-> to_smmu_domain(domain);
-> +	struct arm_smmu_domain *smmu_domain;
-> +
-> +	if (!(domain->type & __IOMMU_DOMAIN_PAGING))
-> +		return -ENODEV;
-> +	smmu_domain =3D to_smmu_domain(iommu_get_domain_for_dev(dev));
 
-We already have the iommu_domain from above.
+KernelCI report for stable-rc/linux-6.1.y for this week :-
 
-> +	if (smmu_domain->stage !=3D ARM_SMMU_DOMAIN_S1)
-> +		return -ENODEV;
+## stable-rc HEAD for linux-6.1.y:
+Date: 2024-01-30
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.=
+git/log/?h=3D1f00d9fd963ebf5b448c0a5666c4e83ac97d8f03
 
-I think we need to do the above checks in arm_smmu_sva_remove_dev_pasid()
-as well.
+## Build failures:
+
+arm64:
+    - defconfig (gcc-10) and defconfig+arm64-chromebook (gcc-10)
+    - Build details :- https://linux.kernelci.org/build/stable-rc/branc=
+h/linux-6.1.y/kernel/v6.1.75-186-g1f00d9fd963eb/
+    - Errors :-=20
+    drivers/net/ethernet/mellanox/mlx5/core/en/params.c:994:39: error: =
+=E2=80=98MLX5=5FIPSEC=5FCAP=5FCRYPTO=E2=80=99
+    undeclared (first use in this function)
+
+## Boot failures:
+
+No **new** boot failures seen for the stable-rc/linux-6.1.y commit head=
+ \o/
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
 
 Thanks,
-Shameer
+Shreeya Patel
+
