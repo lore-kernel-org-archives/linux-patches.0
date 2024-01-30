@@ -1,45 +1,45 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1B778B6D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C5378B7F
 	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 22:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.55.52.115
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706653251; cv=none; b=TMJPcqDoSibi5jXdJXL+M8ctnVasaEmoPePVNoy9xd45o0jZZT2mxJkG7hllIGJxHVmcUle5RvP8X2uPG/CsjgnUpzlfmcvN5/G5isyYgcxwoWZjgt7vFDWLnay4GUrUbkqtJbPLy8zckOTjyiigy3WRxd6ppHIsDHqcf+m1Onk=
+	t=1706653251; cv=none; b=Nb15q72+8NKNeGFP4KTTIlmbWiYQKggAhvEIJYPFZSJwD/a33cwTq0NY691Q2krbvUQ+lp+cHpwckW5kLDdSWITXdmsHPt7CBXFLI6rJIUIpn5jIW7SRPew6eJQHU0Xal5XEXs3OcRS7tCuXs1wIB0gEQPLyR+GHOnR4VJoXJKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706653251; c=relaxed/simple;
-	bh=4+Sl+NwFbXMo1a6gRDqTKEVyh7WFVjJ+Uv+TU1KbyG8=;
+	bh=+qqwl/QGgrcrhJ6bwo0zQQqegC4LYQZlox3muG18Qkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XD8hboMxNounsV3QgfGSjhiAutf7zM0OKrl5tv1epr4wZllWpp1RUTQiITvD4rUkCRTmVBwSAqa4lCqDVmFQ1CxJ3QkAQ6o5uEuW3HRBgzC1fBEWwD60boAlQCmYHfzNcYZBBUm6zmfA+gifCPtP/7eOhbPRTY6CMQv0P9Ht1bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fw9JQ5jf; arc=none smtp.client-ip=192.55.52.115
+	 MIME-Version; b=L8JISikVr2U8XMK0310uulzj1GkJ1527n5J3rO/m4YlxT+UhtNBwKJf2cYNiIlpp+/ltIajo/Yo9wPhoEhkGPnjfHlNbuwcsqWG/wvacEMmV0lycC88o6I+bNe1hi11Wmu1WHaSn8Xmr29jtdQuVMkvZu7iS5S+46bWkincJ2Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=a4HcosPg; arc=none smtp.client-ip=192.55.52.115
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fw9JQ5jf"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="a4HcosPg"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1706653249; x=1738189249;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=4+Sl+NwFbXMo1a6gRDqTKEVyh7WFVjJ+Uv+TU1KbyG8=;
-  b=fw9JQ5jfoQWBOiMlFdQ9yUwLEkMaGEOOjL/WCCdDq2WBu7KufTwwyTU8
-   a190jDOLFalFKCxID+aGccZh103DSOksURLYGwEpDVKI5u1xgbtetrdyj
-   lgJJDSXKssrErmWKNnRQjn9JM1jOVnu4HThyrHs3Mj6mMtZjQG5DsvAKE
-   Vt6pzsO7NgqDEbEqaB3cxfLBNlUEuLB23XoEbob/fBA7AXOLZTMnOd2xV
-   GkNq3qc8lLJsYUo0IeNkVetJ5Bbfz12gS01DXlPBAA2+SjxMZcvq29GHf
-   LaQWycrrDt1KYRKwHY/hPepzqVmBBviZW3guVCwcoAWYR2cm3h7TunX5O
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="403041746"
+  bh=+qqwl/QGgrcrhJ6bwo0zQQqegC4LYQZlox3muG18Qkg=;
+  b=a4HcosPgH36/T0CRDXXGoP8KT6Bu5B2l2pMKn3zdvHlCE1CstNkO80ZC
+   pSazcvSGJDUB47+HbyH9t+gmvXoRM5758IJI9T/LmiURfjev9shbew5GH
+   oQ1HG6RVZQcJNCKauKy3jt5R2eZQPP5Bd+UOKEj+pRUFsJuqrE+1pZ9ti
+   GTqJkiLOCzZIPkVBn6ma41Sfgn1ANIA70nIDAHYKB8SUQegusllqENi2b
+   C4uiOrpiQs+okZLHVoahgfjsMZxyJaJXZsQOcbtLosSwlIXmgPu7Ag5rG
+   tAF4OSGNWx32Z5fZn23IY2JHY4FfCbeXYuddR7pRoeSi56sf06nZrc0hV
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="403041812"
 X-IronPort-AV: E=Sophos;i="6.05,230,1701158400"; 
-   d="scan'208";a="403041746"
+   d="scan'208";a="403041812"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
   by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2024 14:20:43 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="1119412847"
+X-IronPort-AV: E=McAfee;i="6600,9927,10969"; a="1119412859"
 X-IronPort-AV: E=Sophos;i="6.05,230,1701158400"; 
-   d="scan'208";a="1119412847"
+   d="scan'208";a="1119412859"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.74])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2024 14:20:42 -0800
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2024 14:20:43 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -56,10 +56,12 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v15-RFC 4/8] x86/resctrl: Add helper function to look up domain_id from scope
-Date: Tue, 30 Jan 2024 14:20:30 -0800
-Message-ID: <20240130222034.37181-5-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>,
+	Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>,
+	Babu Moger <babu.moger@gmail.com>
+Subject: [PATCH v15-RFC 8/8] x86/resctrl: Update documentation with Sub-NUMA cluster changes
+Date: Tue, 30 Jan 2024 14:20:34 -0800
+Message-ID: <20240130222034.37181-9-tony.luck@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240130222034.37181-1-tony.luck@intel.com>
 References: <20240126223837.21835-1-tony.luck@intel.com>
@@ -72,76 +74,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Prepare for more options for scope of resources. Add some diagnostic
-messages if lookup fails.
+With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
+per-NODE instead of per-L3 cache. Suffixes of directories with "L3" in
+their name refer to Sub-NUMA nodes instead of L3 cache ids.
 
+Users should be aware that SNC mode also affects the amount of L3 cache
+available for allocation within each SNC node.
+
+Tested-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Reviewed-by: Peter Newman <peternewman@google.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Shaopeng Tan <tan.shaopeng@jp.fujitsu.com>
+Reviewed-by: Babu Moger <babu.moger@gmail.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/core.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ Documentation/arch/x86/resctrl.rst | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index d89dce63397b..59e6aa7abef5 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -499,6 +499,19 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
- 	return 0;
- }
+diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
+index a6279df64a9d..15f1cff6ee76 100644
+--- a/Documentation/arch/x86/resctrl.rst
++++ b/Documentation/arch/x86/resctrl.rst
+@@ -366,10 +366,10 @@ When control is enabled all CTRL_MON groups will also contain:
+ When monitoring is enabled all MON groups will also contain:
  
-+static int get_domain_id_from_scope(int cpu, enum resctrl_scope scope)
-+{
-+	switch (scope) {
-+	case RESCTRL_L2_CACHE:
-+	case RESCTRL_L3_CACHE:
-+		return get_cpu_cacheinfo_id(cpu, scope);
-+	default:
-+		break;
-+	}
-+
-+	return -EINVAL;
-+}
-+
- /*
-  * domain_add_cpu - Add a cpu to a resource's domain list.
-  *
-@@ -514,12 +527,18 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
-  */
- static void domain_add_cpu(int cpu, struct rdt_resource *r)
- {
--	int id = get_cpu_cacheinfo_id(cpu, r->scope);
-+	int id = get_domain_id_from_scope(cpu, r->scope);
- 	struct list_head *add_pos = NULL;
- 	struct rdt_hw_domain *hw_dom;
- 	struct rdt_domain *d;
- 	int err;
+ "mon_data":
+-	This contains a set of files organized by L3 domain and by
+-	RDT event. E.g. on a system with two L3 domains there will
+-	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
+-	directories have one file per event (e.g. "llc_occupancy",
++	This contains a set of files organized by L3 domain or by NUMA
++	node (depending on whether Sub-NUMA Cluster (SNC) mode is disabled
++	or enabled respectively) and by RDT event.  Each of these
++	directories has one file per event (e.g. "llc_occupancy",
+ 	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
+ 	files provide a read out of the current value of the event for
+ 	all tasks in the group. In CTRL_MON groups these files provide
+@@ -478,6 +478,23 @@ if non-contiguous 1s value is supported. On a system with a 20-bit mask
+ each bit represents 5% of the capacity of the cache. You could partition
+ the cache into four equal parts with masks: 0x1f, 0x3e0, 0x7c00, 0xf8000.
  
-+	if (id < 0) {
-+		pr_warn_once("Can't find domain id for CPU:%d scope:%d for resource %s\n",
-+			     cpu, r->scope, r->name);
-+		return;
-+	}
++Notes on Sub-NUMA Cluster mode
++==============================
++When SNC mode is enabled, Linux may load balance tasks between Sub-NUMA
++nodes much more readily than between regular NUMA nodes since the CPUs
++on Sub-NUMA nodes share the same L3 cache and the system may report
++the NUMA distance between Sub-NUMA nodes with a lower value than used
++for regular NUMA nodes.  Users who do not bind tasks to the CPUs of a
++specific Sub-NUMA node must read the "llc_occupancy", "mbm_total_bytes",
++and "mbm_local_bytes" for all Sub-NUMA nodes where the tasks may execute
++to get the full view of traffic for which the tasks were the source.
 +
- 	d = rdt_find_domain(r, id, &add_pos);
- 	if (IS_ERR(d)) {
- 		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
-@@ -564,10 +583,16 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 
- static void domain_remove_cpu(int cpu, struct rdt_resource *r)
- {
--	int id = get_cpu_cacheinfo_id(cpu, r->scope);
-+	int id = get_domain_id_from_scope(cpu, r->scope);
- 	struct rdt_hw_domain *hw_dom;
- 	struct rdt_domain *d;
- 
-+	if (id < 0) {
-+		pr_warn_once("Can't find domain id for CPU:%d scope:%d for resource %s\n",
-+			     cpu, r->scope, r->name);
-+		return;
-+	}
++The cache allocation feature still provides the same number of
++bits in a mask to control allocation into the L3 cache, but each
++of those ways has its capacity reduced because the cache is divided
++between the SNC nodes. The values reported in the resctrl
++"size" files are adjusted accordingly.
 +
- 	d = rdt_find_domain(r, id, NULL);
- 	if (IS_ERR_OR_NULL(d)) {
- 		pr_warn("Couldn't find cache id for CPU %d\n", cpu);
+ Memory bandwidth Allocation and monitoring
+ ==========================================
+ 
 -- 
 2.43.0
 
