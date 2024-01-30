@@ -1,86 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22B0129A9B;
-	Tue, 30 Jan 2024 16:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E474F128382
+	for <patches@lists.linux.dev>; Tue, 30 Jan 2024 16:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706632534; cv=none; b=hMFasV3o479GaJEyXLQoQgGpoctLBj+xtm1fLcsef3d1/IdTNG0iQFyKU9MT/SmiFTIoe+XBMncRkkvrwNPs3rSjn+LNTMnV5WvOkXZdyMP/iot1XARZu5si6T3td/k+6I0IsY9qexjj/Aq2WAply/uncDoPuLl8Wuu3JOVI/KI=
+	t=1706633136; cv=none; b=XhWymJFmoV0VYRUXHu9jPth1vlCQqBSXOfdlwFmAFLOrowF/fOvv1kkzf3kJbu2HiNlTMR9/JSJWiZnxfTiwDqrYZsW5oEFlwChX79+WnkKBe0IPZRzw+ogQrE1Ch1JOPuzXchaMp5Qtz4yiKt67xkjgqwY7dxcmcK22Aa+fMJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706632534; c=relaxed/simple;
-	bh=PKiVkrb8gj474ShKj8vG0TUwph6AYc1yEkyAji/63Aw=;
+	s=arc-20240116; t=1706633136; c=relaxed/simple;
+	bh=AIyoCnIcR0xulr+69tWmalebwTVyrh6N8UZ0ZUx2cy4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JcY5AedJjxndfHel7pEkEfn4HDWkdSPTY1ZQssNoZGzUqmhSQGKh3LnES47WZivr8U7Iykva/y1d1TMFgMYSNdDO4LIW4WIT7JwAAAT3YGqqZOVOGp/a9LFMqJ+ege+LIVFfyWmh3mi8AjEzUMSJ0lG7BXnCJ85Vch5eSJXNMws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AC9pzC/T; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q4M4NlcnZRRAj/JzKv/0Pkk849RjOzl4pBMzuYav6YmtUDQCPOKK9Xgd5hwihNoRXS4gUsWMnAfiryJlIfsDsqB/KsnUDWu2Pc8D24HSSc2qHKforaYjJAURNUTPCY+agnfDmai/VV9JDuPaUb9gMDRJyK8TTbySB4prXfCyayM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=WcklD+9L; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AC9pzC/T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A92CC43330;
-	Tue, 30 Jan 2024 16:35:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706632534;
-	bh=PKiVkrb8gj474ShKj8vG0TUwph6AYc1yEkyAji/63Aw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AC9pzC/TqRyZjLc/gLjxnkZqoWyuvwWRFbcoy7o+tBbFK0E5u3sXGsezyf/X/E/yp
-	 agNtx9h/6/9mLPkiN9ontmqPq+VZMTpVM3rmi+5L7WvOjlEXjMTQhgrdZFyyEC54fN
-	 pQ6oJ6TqoCCNFDGTXfUvJ98yVIFNVCLnAaf0Nw6Q=
-Date: Tue, 30 Jan 2024 08:21:46 -0800
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiri Slaby <jirislaby@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="WcklD+9L"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6e125818649so1564626a34.1
+        for <patches@lists.linux.dev>; Tue, 30 Jan 2024 08:45:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google; t=1706633134; x=1707237934; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=udsWbEyAIPNx44HC24sXqwuDIvjPMZEaViGLb+xNZaU=;
+        b=WcklD+9Lt0Qp0jwHzlJWFVBSymL+9sHzV12KjobNczfwJOsg4fzTwOg3uEoJFwxFtY
+         WEuzyb4tFhsXWfeNG0Nbjf1hpy6cRx6faJzstvBEnERw6d25EiGapbdP4BFBIOtS6Sah
+         2wex1mXTdObAfQ1JmMqLHM768OMelkULJwB98=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706633134; x=1707237934;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=udsWbEyAIPNx44HC24sXqwuDIvjPMZEaViGLb+xNZaU=;
+        b=vLZ+Oa4cOaY6byVrNqpn+HyovkEeUbHB3TZ+D0qi83BXfFEmpv2W/O/Pg4d0MwdTop
+         C6su+dg1KqY5fVNFrS7X6VV561x7t/uve6xB+4eaWdOrHiySt1nokd3A9cORbAnaHs23
+         VUux/tftDk8pSKfjYI++JLrhuaM12qt8FyLOtCLpB4bpCJQrteYcLzScd4IU5MBsQKI4
+         FSM81gNK/Bu0UtCTKmt8vLcujLRKkB5mhFuWWECoh73ZnC2DCHi2mgoxO24C1B1q4BTS
+         c649shaoAdBVxCK1YxghTGQVgfks76OE39/zLNYXT5N8jn48rDgdrvmd41LUkKozT+I0
+         XydQ==
+X-Gm-Message-State: AOJu0Ywnq1aAPqq3VJ89SHCWQR5JkGNzoZtDyhmvST3rhLUt4wwVTrmQ
+	0pfr+R71ED8QF3KgoGcowNQH+nT1EfsJza+pGN3Us2bbxYG9G3lK4HAZJbt4xg==
+X-Google-Smtp-Source: AGHT+IHrg/QN5+BAsP/HIdzVNNMa1PVCKsgnvfGLMoQK3wzAbLjbr/b4izwEksq3Mi5Ce4hSJxR5fw==
+X-Received: by 2002:a9d:730c:0:b0:6e1:152f:ec89 with SMTP id e12-20020a9d730c000000b006e1152fec89mr8085288otk.24.1706633133912;
+        Tue, 30 Jan 2024 08:45:33 -0800 (PST)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id z23-20020a9d62d7000000b006e11970fb7esm1487992otk.67.2024.01.30.08.45.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Jan 2024 08:45:33 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 30 Jan 2024 10:45:32 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	David Hildenbrand <david@redhat.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Oscar Salvador <osalvador@suse.de>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.7 125/346] mm/sparsemem: fix race in accessing
- memory_section->usage
-Message-ID: <2024013044-snowiness-abreast-2a47@gregkh>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.7 000/346] 6.7.3-rc1 review
+Message-ID: <ZbknrDOTkTeoMc2n@fedora64.linuxtx.org>
 References: <20240129170016.356158639@linuxfoundation.org>
- <20240129170020.057681007@linuxfoundation.org>
- <81752462-c6c7-4a65-b9f2-371573e15499@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <81752462-c6c7-4a65-b9f2-371573e15499@kernel.org>
+In-Reply-To: <20240129170016.356158639@linuxfoundation.org>
 
-On Tue, Jan 30, 2024 at 07:00:36AM +0100, Jiri Slaby wrote:
-> On 29. 01. 24, 18:02, Greg Kroah-Hartman wrote:
-> > 6.7-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Charan Teja Kalla <quic_charante@quicinc.com>
-> > 
-> > commit 5ec8e8ea8b7783fab150cf86404fc38cb4db8800 upstream.
+On Mon, Jan 29, 2024 at 09:00:31AM -0800, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.7.3 release.
+> There are 346 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Hi,
+> Responses should be made by Wed, 31 Jan 2024 16:59:28 +0000.
+> Anything received after that time might be too late.
 > 
-> our machinery (git-fixes) says, this is needed as a fix:
-> commit f6564fce256a3944aa1bc76cb3c40e792d97c1eb
-> Author: Marco Elver <elver@google.com>
-> Date:   Thu Jan 18 11:59:14 2024 +0100
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.3-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> and the diffstat can be found below.
 > 
->     mm, kmsan: fix infinite recursion due to RCU critical section
+> thanks,
 > 
-> 
-> Leaving up to the recipients to decide, as I have no idea…
+> greg k-h
 
-That commit just got merged into Linus's tree, AND it is not marked for
-stable, which is worrying as I have to get the developers's approval to
-add any non-cc-stable mm patch to the tree because they said they would
-always mark them properly :)
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-So I can't take it just yet...
-
-thanks,
-
-greg k-h
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
