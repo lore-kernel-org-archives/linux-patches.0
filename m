@@ -1,82 +1,171 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B6C7AE47
-	for <patches@lists.linux.dev>; Wed, 31 Jan 2024 10:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8A0745C8;
+	Wed, 31 Jan 2024 11:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706698499; cv=none; b=caD58UWlsdD/VbCZ5AsMzcxzHo/YvAtxgqTjjqydjNh3wEoj1NizAaXubdWMqRkGyEkshaFuaWZMoyeUs/VoHcCvP6k+wHDonsAu2tdhEkSIMmEOxdfk2ZQWYjVRxTr6W+EfPq0Kux3CmzaZy7HGlTORg7OE0Nlp+qzR5CnfriI=
+	t=1706700060; cv=none; b=uPD9AFkI2MvZNiTgvveF70fWtaE2AtR3imMi9D3uvLeJTpy9UZAZqhHtaXmKZ9IT6wDYJgRkSe5C0FMv4eCDdTTCieQu5uUL90EgpqmuVf8AcoxnD/imJhVUNHgoGBpmzcwQrmr2BynWO1x9iOeKfZDp5yhN9i/9zv+n/OBno60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706698499; c=relaxed/simple;
-	bh=r8Wx/oQPjcA/lfeAL78zy/yacxpWCalvIEbrmbWXG5Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zoaw2pVn/FP8GPBnE01TtpXfdFxdJ6SQ/PlggPgNTPRZUaWIpCJ62vTc3us4dqELM6kA3um5i58i8MMBgJh6CX733C95kl6N2HRqM2EcOP/NONePSQqnBz829kSs7Z2fQYeJiN6sDwZMi6F3yTSOvGsnQduh9a+UgqdevY5saY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 738871C0079; Wed, 31 Jan 2024 11:54:54 +0100 (CET)
-Date: Wed, 31 Jan 2024 11:54:53 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 000/186] 6.1.76-rc2 review
-Message-ID: <Zbom/Y4vjjZrKBn5@duo.ucw.cz>
-References: <20240130183318.454044155@linuxfoundation.org>
+	s=arc-20240116; t=1706700060; c=relaxed/simple;
+	bh=IjZfiDSUftx65t98JuLiBJx2cybDsZAAjkwGdesTTqo=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=U1kTLZJdWSz0vCFoqTaKq+vLq40RwDTlcwVxFj9dYt8dGumy9aqqqTIlXPVsYHPQA7fQJm/rUq59rq9qPtqf3Sfrt9tQ2ZOaUfCpkY1U9ZIq70EgHgVIlRP46RrZ3Oyp7Y1vrEbzXURo+mtgPOgTEBywT5FbSZwvPsCHyazlZIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TPzzN6LNrz6K5Tg;
+	Wed, 31 Jan 2024 19:17:52 +0800 (CST)
+Received: from lhrpeml500004.china.huawei.com (unknown [7.191.163.9])
+	by mail.maildlp.com (Postfix) with ESMTPS id D16601400D3;
+	Wed, 31 Jan 2024 19:20:48 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
+ lhrpeml500004.china.huawei.com (7.191.163.9) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Wed, 31 Jan 2024 11:20:48 +0000
+Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
+ lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.035;
+ Wed, 31 Jan 2024 11:20:48 +0000
+From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+CC: Eric Auger <eric.auger@redhat.com>, Jean-Philippe Brucker
+	<jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, Michael Shavit
+	<mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v4 14/27] iommu/arm-smmu-v3: Make changing domains be
+ hitless for ATS
+Thread-Topic: [PATCH v4 14/27] iommu/arm-smmu-v3: Make changing domains be
+ hitless for ATS
+Thread-Index: AQHaUIOw1lOGfTAiLU2HDVkp8/O+97Dzxx+A
+Date: Wed, 31 Jan 2024 11:20:48 +0000
+Message-ID: <78401f5d541042f5a71f13bf8af7ed3f@huawei.com>
+References: <0-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
+ <14-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
+In-Reply-To: <14-v4-e7091cdd9e8d+43b1-smmuv3_newapi_p2_jgg@nvidia.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1WdMPOtP07DzbyGD"
-Content-Disposition: inline
-In-Reply-To: <20240130183318.454044155@linuxfoundation.org>
 
 
---1WdMPOtP07DzbyGD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi!
-
-> This is the start of the stable review cycle for the 6.1.76 release.
-> There are 186 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> -----Original Message-----
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Friday, January 26, 2024 6:15 PM
+> To: iommu@lists.linux.dev; Joerg Roedel <joro@8bytes.org>; linux-arm-
+> kernel@lists.infradead.org; Robin Murphy <robin.murphy@arm.com>; Will
+> Deacon <will@kernel.org>
+> Cc: Eric Auger <eric.auger@redhat.com>; Jean-Philippe Brucker <jean-
+> philippe@linaro.org>; Moritz Fischer <mdf@kernel.org>; Michael Shavit
+> <mshavit@google.com>; Nicolin Chen <nicolinc@nvidia.com>;
+> patches@lists.linux.dev; Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>
+> Subject: [PATCH v4 14/27] iommu/arm-smmu-v3: Make changing domains be
+> hitless for ATS
 >=20
-> Responses should be made by Thu, 01 Feb 2024 18:32:32 +0000.
-> Anything received after that time might be too late.
+> The core code allows the domain to be changed on the fly without a forced
+> stop in BLOCKED/IDENTITY. In this flow the driver should just continually
+> maintain the ATS with no change while the STE is updated.
+>=20
+> ATS relies on a linked list smmu_domain->devices to keep track of which
+> masters have the domain programmed, but this list is also used by
+> arm_smmu_share_asid(), unrelated to ats.
+>=20
+> Create two new functions to encapsulate this combined logic:
+>  arm_smmu_attach_prepare()
+>  <caller generates and sets the STE>
+>  arm_smmu_attach_commit()
+>=20
+> The two functions can sequence both enabling ATS and disabling across
+> the STE store. Have every update of the STE use this sequence.
+>=20
+> Installing a S1/S2 domain always enables the ATS if the PCIe device
+> supports it.
+>=20
+> The enable flow is now ordered differently to allow it to be hitless:
+>=20
+>   1) Add the master to the new smmu_domain->devices list
+>   2) Program the STE
+>   3) Enable ATS at PCIe
+>   4) Remove the master from the old smmu_domain
+>=20
+> This flow ensures that invalidations to either domain will generate an AT=
+C
+> invalidation to the device while the STE is being switched. Thus we don't
+> need to turn off the ATS anymore for correctness.
+>=20
+> The disable flow is the reverse:
+>  1) Disable ATS at PCIe
+>  2) Program the STE
+>  3) Invalidate the ATC
+>  4) Remove the master from the old smmu_domain
+>=20
+> Move the nr_ats_masters adjustments to be close to the list
+> manipulations. It is a count of the number of ATS enabled masters
+> currently in the list. This is stricly before and after the STE/CD are
+> revised, and done under the list's spin_lock.
 
-CIP testing did not find any problems here:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
+This part 2 fails to boot in my hardware setup and the bisect points to
+this patch here.
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+Splat:
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+31.988204] Unable to handle kernel NULL pointer dereference at virtual addr=
+ess 0000000000000000
+...
+[   32.357876] Call trace:
+[   32.363018]  arm_smmu_attach_commit+0xa4/0x210
+[   32.372361]  arm_smmu_attach_dev+0x208/0x3b4
+[   32.381344]  __iommu_device_set_domain+0x7c/0x11c
+[   32.391243]  __iommu_group_set_domain_internal+0x90/0x184
+[   32.402601]  iommu_setup_default_domain+0x32c/0x4e8
+[   32.412863]  __iommu_probe_device+0x450/0x478
+...
 
---1WdMPOtP07DzbyGD
-Content-Type: application/pgp-signature; name="signature.asc"
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 199 ++++++++++++++------
+>  1 file changed, 141 insertions(+), 58 deletions(-)
+>=20
+> +static void arm_smmu_attach_commit(struct arm_smmu_master *master,
+> +				   struct attach_state *state)
+> +{
+> +	lockdep_assert_held(&arm_smmu_asid_lock);
+> +
+> +	if (state->want_ats && !master->ats_enabled) {
+> +		arm_smmu_enable_ats(master);
+> +	} else if (master->ats_enabled) {
+> +		/*
+> +		 * The translation has changed, flush the ATC. At this point the
+> +		 * SMMU is translating for the new domain and both the
+> old&new
+> +		 * domain will issue invalidations.
+> +		 */
+> +		arm_smmu_atc_inv_master(master);
+> +	}
+> +	master->ats_enabled =3D state->want_ats;
+> +
+> +	arm_smmu_remove_master_domain(master,
+> +				      iommu_get_domain_for_dev(master-
+> >dev));
 
------BEGIN PGP SIGNATURE-----
+I think the core has not yet set the group->domain since we are still in at=
+tach().
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZbom/QAKCRAw5/Bqldv6
-8vd0AJ9iDHOPh0yZfdI1TyWEicvCDkOU6QCfWUr3uIYsE5cxmDEY6NZta0hFCpk=
-=RvJa
------END PGP SIGNATURE-----
+Thanks,
+Shameer
 
---1WdMPOtP07DzbyGD--
