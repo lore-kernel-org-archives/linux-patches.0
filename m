@@ -1,164 +1,125 @@
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3002E2B9AC
-	for <patches@lists.linux.dev>; Thu,  1 Feb 2024 14:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053125F470;
+	Thu,  1 Feb 2024 14:56:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706798513; cv=none; b=XSVi0YrpvHE3Gx02TH3rOr+QB0KQtyomdQRZ1VjB34bwRah0H8VzExUAQae2+0oHGDdDG3rphNdhU3xII+FsTlE3FUvkp/ZVUTl0Y/EEo956zKBnRZ5VXVVQj+4n8u501V7PUNk55bBf6LTahqyg+3VgNt9wNByKfZB+PJn/4P0=
+	t=1706799420; cv=none; b=LuGKVrrGwblai98CBd+ITeNI/A623LaIdHXDFFo4OfnyarggTzHANdUe4IuvRA1hdTBsCvJC+NiysytXK/TjfC5t7EigNCeYszNzPrKzFIQbMFmSuB1fPokRsvu//aFa4b+092K4UtMsh6YiWye0j9H10cuMsfcDyl9QOySKsZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706798513; c=relaxed/simple;
-	bh=doMIEKjhlaw3cSONB3YjMbb/GGYi2CZhyJNDxYux14c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dfm+HIfI7/E0Gg2s52LRovxECl/ShguZOSkULZDeTm4Ct07w4G5yXDLh+t57Ve228XZTWQhVMb88HAuWh3pztDrQ7hE1xsZpczJIPb5jETjEh35ma29ljS8WowHT+kOEEKGvYjQS/1ZFNf5+RacU8IPq8mF9phPHKYmXGIfsAI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=XxJk3HVI; arc=none smtp.client-ip=209.85.166.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1706799420; c=relaxed/simple;
+	bh=CaSotTQtZ5ozZfcAG4oJoZ1J7EEJkM5AAbIB9wkqbQ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=JASrVs05Dyxr4EoksP3gRmSMuiusDKzajmL6k5EpiP+Z+s3XdllbtDTB8JkuMVbBpdNAGBBskJLPVMagWIH5ff0wr4aX3FZJWNEYb0OO/iAO6iVJqQRDi/yyx9q3+stF+ACQrzIaNxlPvlI102WTMcigFbJPSjkmdulAi2z7NY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=kYkLMXsY; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="XxJk3HVI"
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-7bfdbaa135bso38814239f.3
-        for <patches@lists.linux.dev>; Thu, 01 Feb 2024 06:41:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1706798510; x=1707403310; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zsOO2ZkkdcJTbF0BB2qngAJPCReDSBqBxrVox/Wl9y0=;
-        b=XxJk3HVIvqP0/3Mvhx72So5yyel2n6ICbWe5i4C9mLAlux5aZyzWnox6t+m8Eu7BhW
-         T+kl5mifWfBhbx93QniccSgSxzmAWe4UEbf6x+mxnMqm1Hzv4JTAuog9ebjDxaYN9A97
-         ULsGI8mkginNewu0k+fIg3s1VT+fRGP6SK2iA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706798510; x=1707403310;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zsOO2ZkkdcJTbF0BB2qngAJPCReDSBqBxrVox/Wl9y0=;
-        b=JL+gli+GVBc5pweX0m+doivbO8AxXBXqh1KtmqjeVFNrZJa7oP5ij1u/zFLxUUN7Kf
-         dB/12Wv0swolKEHr6bSWmuJ3uNr/jF0tUBp1ClfAZ3+Mg+mFMZrkzw8cesi32xO6QB9D
-         CMncDAapbfP7Wrgu2fWDeKrTMSmDQ4NLr7B84eABOlHEaim4a0eV5y6lHAiO5EQiuNi0
-         jOomUKJsfII/iFZjMfe+rVkaYFUgMyyEQiuz/wdQ23vHyiiGPflbMB+WSwZvFLYoaGfD
-         UtlC7BT0kQA+l/qbp4W4ZE80eten0VykxiUL8jhzVqMkNL8vbM1fjpbaYbyyElqsudKM
-         2cpQ==
-X-Gm-Message-State: AOJu0YxCsLvUMjiu00CanJ8DDD44wUpeGEE5N7qKRDsMPz8spPb+vG2B
-	XziSVC0gf47ptqTAzTo+lfZdCao3UrZ5gbvMRz9+zNJxayRYdUWjy+7P49CxtsJYb8HAfGLYxFg
-	sOw==
-X-Google-Smtp-Source: AGHT+IGbT6KGTfH4FEMBrylFxzznijw5ZBUBUZ8yPoibbtBPO6g4rXEul7Tg1M36fafeTUUiPblPxg==
-X-Received: by 2002:a05:6602:5c8:b0:7c0:56c:1706 with SMTP id w8-20020a05660205c800b007c0056c1706mr4869606iox.16.1706798509787;
-        Thu, 01 Feb 2024 06:41:49 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWFjKZo+Hcx5gl/oJDOuL0kineugzgGAp6n2YEd6rDw90y/h1Imw/EhQ6f58Khysd3GnEgfFIJWdMZnbpMHOsqFMrLGFmUu0w==
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com. [209.85.166.174])
-        by smtp.gmail.com with ESMTPSA id w20-20020a056638139400b00470fd5f9d8esm374460jad.54.2024.02.01.06.41.49
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Feb 2024 06:41:49 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3637d8ec873so4617865ab.1
-        for <patches@lists.linux.dev>; Thu, 01 Feb 2024 06:41:49 -0800 (PST)
-X-Received: by 2002:a05:6e02:2389:b0:35f:b61f:a8a8 with SMTP id
- bq9-20020a056e02238900b0035fb61fa8a8mr7594283ilb.26.1706798509204; Thu, 01
- Feb 2024 06:41:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="kYkLMXsY"
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 411DbtPw015939;
+	Thu, 1 Feb 2024 14:56:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=pp1; bh=g8OYxdlzV2huCmFXMtD3CVpkeVuBkFHmLcR3IGc+A6w=;
+ b=kYkLMXsYcB7O5QWFlhSuk2jdSdXOUa0djF9mPWotSWwuQCP/jy7WHUmsKHpgHAX0F1nX
+ DnbcnyUvce8L3B186EKtJpW1oDTvv6+OnhaoTG7HM4nS2Lm+luPJcJzg2M1b/7Mq1aQi
+ h8BTBh99RPdzyEJm/x6mIal+n7GQGr4yLV2rs+YBOQ+t32xzBDLoMLXxT5arM8nw9kir
+ SSrvA+WmV2Z/eY8Kls4uQchqdyjyZbaf/fW28fR1ER1//9jCJRahs0UXd3doH1sHBCx/
+ GTlV2i/2JsS806fkdpGj+/VTzRw4ALQAHuLbWeB9iVXNeTfLuG5dNVMMbRhwOt2WzmKB Cw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0cbmah15-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 01 Feb 2024 14:56:55 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 411EIY21006343;
+	Thu, 1 Feb 2024 14:56:55 GMT
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w0cbmagwj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 01 Feb 2024 14:56:54 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 411C1vw4017712;
+	Thu, 1 Feb 2024 14:56:47 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3vwcj04y21-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 01 Feb 2024 14:56:47 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 411Eui6G9110112
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 1 Feb 2024 14:56:44 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4CF8120049;
+	Thu,  1 Feb 2024 14:56:44 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1D38D20040;
+	Thu,  1 Feb 2024 14:56:44 +0000 (GMT)
+Received: from osiris (unknown [9.152.212.60])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Thu,  1 Feb 2024 14:56:44 +0000 (GMT)
+Date: Thu, 1 Feb 2024 15:56:41 +0100
+From: Heiko Carstens <hca@linux.ibm.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, ndesaulniers@google.com, morbo@google.com,
+        justinstitt@google.com, linux-s390@vger.kernel.org,
+        llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] s390: vDSO: Drop '-fPIC' from LDFLAGS
+Message-ID: <20240201145641.6306-B-hca@linux.ibm.com>
+References: <20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: JgClveuNjKfH-p9xrdS5lZnCQ04OA8y4
+X-Proofpoint-GUID: 1baswst15a3OfxG9HL0-iu4ArqovshOg
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240129170014.969142961@linuxfoundation.org> <20240129170015.067909940@linuxfoundation.org>
- <ZbkfGst991YHqJHK@fedora64.linuxtx.org> <87h6iudc7j.fsf@meer.lwn.net>
- <CAFbkSA2tft--ejgJ58o3G-OxNqnm-C6fK4-kXThsN92NYF8V0A@mail.gmail.com> <2024020151-purchase-swerve-a3b3@gregkh>
-In-Reply-To: <2024020151-purchase-swerve-a3b3@gregkh>
-From: Justin Forbes <jforbes@fedoraproject.org>
-Date: Thu, 1 Feb 2024 08:41:38 -0600
-X-Gmail-Original-Message-ID: <CAFbkSA25o88DjaWHc3GRk5vkvANnpi-NJ61XJudz4=ARTyrhtw@mail.gmail.com>
-Message-ID: <CAFbkSA25o88DjaWHc3GRk5vkvANnpi-NJ61XJudz4=ARTyrhtw@mail.gmail.com>
-Subject: Re: [PATCH 6.6 003/331] docs: kernel_feat.py: fix potential command injection
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, stable@vger.kernel.org, patches@lists.linux.dev, 
-	Jani Nikula <jani.nikula@intel.com>, Vegard Nossum <vegard.nossum@oracle.com>, 
-	Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-01_02,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=890
+ suspectscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ clxscore=1011 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402010118
 
-On Thu, Feb 1, 2024 at 8:25=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Thu, Feb 01, 2024 at 06:43:46AM -0600, Justin Forbes wrote:
-> > On Tue, Jan 30, 2024 at 10:21=E2=80=AFAM Jonathan Corbet <corbet@lwn.ne=
-t> wrote:
-> > >
-> > > Justin Forbes <jforbes@fedoraproject.org> writes:
-> > >
-> > > > On Mon, Jan 29, 2024 at 09:01:07AM -0800, Greg Kroah-Hartman wrote:
-> > > >> 6.6-stable review patch.  If anyone has any objections, please let=
- me know.
-> > > >>
-> > > >> ------------------
-> > > >>
-> > > >> From: Vegard Nossum <vegard.nossum@oracle.com>
-> > > >>
-> > > >> [ Upstream commit c48a7c44a1d02516309015b6134c9bb982e17008 ]
-> > > >>
-> > > >> The kernel-feat directive passes its argument straight to the shel=
-l.
-> > > >> This is unfortunate and unnecessary.
-> > > >>
-> > > >> Let's always use paths relative to $srctree/Documentation/ and use
-> > > >> subprocess.check_call() instead of subprocess.Popen(shell=3DTrue).
-> > > >>
-> > > >> This also makes the code shorter.
-> > > >>
-> > > >> This is analogous to commit 3231dd586277 ("docs: kernel_abi.py: fi=
-x
-> > > >> command injection") where we did exactly the same thing for
-> > > >> kernel_abi.py, somehow I completely missed this one.
-> > > >>
-> > > >> Link: https://fosstodon.org/@jani/111676532203641247
-> > > >> Reported-by: Jani Nikula <jani.nikula@intel.com>
-> > > >> Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
-> > > >> Cc: stable@vger.kernel.org
-> > > >> Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-> > > >> Link: https://lore.kernel.org/r/20240110174758.3680506-1-vegard.no=
-ssum@oracle.com
-> > > >> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > >
-> > > > This patch seems to be missing something. In 6.6.15-rc1 I get a doc
-> > > > build failure with:
-> > > >
-> > > > /builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-=
-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/kerneldoc.py:133: S=
-yntaxWarning: invalid escape sequence '\.'
-> > > >   line_regex =3D re.compile("^\.\. LINENO ([0-9]+)$")
-> > >
-> > > Ah ... you're missing 86a0adc029d3 (Documentation/sphinx: fix Python
-> > > string escapes).  That is not a problem with this patch, though; I wo=
-uld
-> > > expect you to get the same error (with Python 3.12) without.
-> >
-> > Well, it appears that 6.6.15 shipped anyway, with this patch included,
-> > but not with 86a0adc029d3.  If anyone else builds docs, this thread
-> > should at least show them the fix.  Perhaps we can get the missing
-> > patch into 6.6.16?
->
-> Sure, but again, that should be independent of this change, right?
+On Tue, Jan 30, 2024 at 08:14:28PM -0700, Nathan Chancellor wrote:
+> '-fPIC' as an option to the linker does not do what it seems like it
+> should. With ld.bfd, it is treated as '-f PIC', which does not make
+> sense based on the meaning of '-f':
+> 
+>   -f SHLIB, --auxiliary SHLIB Auxiliary filter for shared object symbol table
+> 
+> When building with ld.lld (currently under review in a GitHub pull
+> request), it just errors out because '-f' means nothing and neither does
+> '-fPIC':
+> 
+>   ld.lld: error: unknown argument '-fPIC'
+> 
+> '-fPIC' was blindly copied from CFLAGS when the vDSO stopped being
+> linked with '$(CC)', it should not be needed. Remove it to clear up the
+> build failure with ld.lld.
+> 
+> Fixes: 2b2a25845d53 ("s390/vdso: Use $(LD) instead of $(CC) to link vDSO")
+> Link: https://github.com/llvm/llvm-project/pull/75643
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
-I am not sure I would say independent. This particular change causes
-docs to fail the build as I mentioned during rc1.  There were no
-issues building 6.6.14 or previous releases, and no problem building
-6.7.3.
+Applied.
 
-Justin
+> Hi all,
+> 
+> The LLVM folks are working on SystemZ support in ld.lld and this issue
+> came up from my initial testing. There are also some other issues that I
+> have come across in testing that I note in the GitHub pull request
+> linked above. If they seem like kernel issues, any expertise or help
+> would be greatly appreciated towards getting this working.
 
-> thanks,
->
-> greg k-h
->
->
-> >
-> > Jusitn
-> >
-> > > Thanks,
-> > >
-> > > jon
-> > >
-> >
->
+This is great news! Please feel free to involve us at any time.
+We will do our best to help if possible.
