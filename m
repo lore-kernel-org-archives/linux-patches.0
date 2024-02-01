@@ -1,58 +1,57 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452184DA09
-	for <patches@lists.linux.dev>; Thu,  1 Feb 2024 12:16:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF2C15DBA0
+	for <patches@lists.linux.dev>; Thu,  1 Feb 2024 12:18:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706789762; cv=none; b=VyQZv9oIMxjKUgRUuwfI4xrUoolQ1vQDD5BRZIXfoQosb3Xt6l0pEOgV1bwyck76pNzEuomf4GtWcU+fFdg+OxY+NmYLMjjaYktbzzPYr9n3FCcllKB3nDwIXEgazq9JEggjGFV5I8S1KUInhKxyV0LfoNweL5poS0JZQpxDV7I=
+	t=1706789898; cv=none; b=W+DWTKBwPoPDe39KkW6Vo8uq1o9jjTZXzr7QT0U/fzamBUpU95qf4oSpY8P9txszrDroaR3LPGqPEDAJ4uQNeh2b7GsUzH6QzQvmdfVm+/du10c8BAVpiXTm//BIhyOh5Oei2s1QQfcJP86J33FX+DGSu8Bc8DRBYExT+H2S6L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706789762; c=relaxed/simple;
-	bh=SFsL/oGqWpgc6lFN1WEaTjkfK9CV44kWOLq3bM4OCYI=;
+	s=arc-20240116; t=1706789898; c=relaxed/simple;
+	bh=/1cRaREVz8xT34hQ2yr+zfryBpN8OQHocvvm7ZLPpnU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nC6YIh7IjTslGetVQwWbAeP3Rtl+Y9mL8Az4b7mgIAMR40AHBwqgp57Asojwo7RRPONjoqoLJ4ZoHPRUtgM2K4X76220hSa51f9knH1Ha3Ed9fxyLK7aMLYENbjA2CsVsW0rna3O6sOcIdFICvEDDNh/ohbHg3iD8zD0OmKPryA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=OUpHUfrA; arc=none smtp.client-ip=209.85.208.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=qyD9FmX5LkGBHaFJbRsmbiupzzHFtLlhjWgQ8fMyYJrrOeSqqz4j+411uqBEH6Owb9MtPeyEXCnzYrBgzzp6raVCcchWCki04qng4g+OtdE1ayZtSbQ2knTDLYQt7PctZK1YNBXMDy1LiAFUTtgFFHXdxRfxe4A+cWmFoj8SeC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tO/W1jkM; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OUpHUfrA"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-55f85a2a43fso10213a12.1
-        for <patches@lists.linux.dev>; Thu, 01 Feb 2024 04:16:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tO/W1jkM"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40fba1866fdso33105e9.0
+        for <patches@lists.linux.dev>; Thu, 01 Feb 2024 04:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706789758; x=1707394558; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cve+q1TZtCVqvyVnUQyH2Cq09HKM/U+2tnIu1KSKKcg=;
-        b=OUpHUfrAHVNXUjx+oBZSJcTYxZUb3mfIRzdOs/qAWa17GtLKs//fuxgWrJAap5XBsO
-         f+r8DBVRr53LNg534XClqRTadIEeri7X0MfycIpkYd0Pd47sEQoeNFkx7AhaIu//7e4I
-         yPuLplMf4koPXHt80PtrK0/5AER+ef+7XGcvpVGb53ZkPl/csnSkbSpDqoRCSVxmG4ez
-         +mrJTAZQsBUdWrTdujvfWCVKABoHB6mH7S98807JbsAdrBAUW/lvY+NxgmKxM2zhYcEk
-         OXEvUGC+rA4IlUUzPFqe1UfSOwaZYxvL0oYM48p9TcGTdjyQxZg0iq2imXWljOEldDZ3
-         mP0g==
+        d=google.com; s=20230601; t=1706789895; x=1707394695; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=etlYPvb4uOjdfz/Zs8jzDsz/Zvk0DcrwunGCl+SdTFk=;
+        b=tO/W1jkMbBbhQd5vAHkSJkH+Qk4xF4n8kBUZla4GAWrtEB6BtCYvIw+xkdU8V0+nSd
+         L2KEfmW5ZtQb+mlAgqMy0qwfFUHFtnKeD/mdLMd/wi8DO6ugkeTo4AjrwsY3aLBVQp9D
+         DbfiXy4IDAhgqszoc8A6DLkCCNfVONOUO3LZ51zyvx77CLu5XObHKLrgSH2C+0cwJYrv
+         NXYS7RKYpaA2JFA2JyzxtAmztI2HONqdnRxuWy0M63fomUvcaZob+QroCQF5h97opApq
+         ZbEzgVKWt0+/K6KyGFNGguUuare+mfytcPJGvX9NjYzG7ee3kMU8M6BVdEFxLFvjipIC
+         xR3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706789758; x=1707394558;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cve+q1TZtCVqvyVnUQyH2Cq09HKM/U+2tnIu1KSKKcg=;
-        b=R2zV7xWhDpE40KPwdf6UbdlRr+8kqaqWFAjgPmwMbg6ymHd+iYpkNsg8vQEN9UIm5G
-         2a3S8K/CVI1/ObW2WOYijZoh14Q4Tx6Gi6zw9I4Z0Cd4MuoiJv1xVxaW403rgaWiQJD5
-         mp7n8CZsrdu2BQ8RT2EopNZaVeGRkEWH+3KbjUeO3gxXum3+29NeFtQPEJjjKe8VITIB
-         2ZTRk5j631BypD6v9zjpQ0N+9FgrLTbH2X5yi7Ic4JD8YNbPs9l9D6BWJHY2QwCS0aW5
-         pEGPtpfhZLWUaVn8kmsgLX5aIare/T42GEmxODNYnLWp8pHH6CoEGo3jrfYirFuBO44+
-         jj0A==
-X-Gm-Message-State: AOJu0Yw1kY97tjpfnp3vL21scWbzyPb1tdrcDWWomHArjZkUWIe8E7Lq
-	HeVQ/Xy2j42+pynB6bVaSWvrEZ5eShDrPmji1hVhMyx2zd/+WnB0CNCj98GsRA==
-X-Google-Smtp-Source: AGHT+IHy1BHTCsh/42eBIgRQC6BQGnV05xiXKU8/nomBidZfv5pBBsK0ygZYeANcbrgw5sK9uzanEg==
-X-Received: by 2002:a50:d54e:0:b0:55f:b5a3:e2b4 with SMTP id f14-20020a50d54e000000b0055fb5a3e2b4mr122757edj.7.1706789758212;
-        Thu, 01 Feb 2024 04:15:58 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWgcgdkyotuywgnji7Lsr9mrvbMtY2+6Pmuodeoib/LTzKufe2dpr7/6JVlZPI9S/1LXXZaPqQ8egGQBtwyrvrh9AdpIuW9LjrWJLgLXNLP6pOBgWjRYSKM/dzZ5KNzJG4V6/BltYOhve+IVvASamxZXLnkf01ojn+jqb/YHU/TAFMjCImrpqRe+cXrmIaSiEucMQVQ7sUTxdCbzev8oePxvX3LG8hYiQIgrgQNkfKbS8tHvkfDyX0jg0TPEffckSHbFGN9NauYv4OpOTdM+hkIWFU84CnGguuPopMs/V0jEW+uxMWy1tlJAkgJCoRo5pVl7+UEMtlZd0Sxp9uPPduiI0zyOJ49tXJxBuU/yX0t+bQ1+RHsi5Qg
+        d=1e100.net; s=20230601; t=1706789895; x=1707394695;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=etlYPvb4uOjdfz/Zs8jzDsz/Zvk0DcrwunGCl+SdTFk=;
+        b=wUrg1quA2eTaWfFIHoJWsE1s52hzkX48lmuaxJ5rKvlIvbA40o9zkO5Ay63wDLiF3M
+         u+tze8JoN9QYsFK9W2NG2dg1XQonmPbLQej3bK1P+uU8BtVpfqiH4W321kie437tdhyb
+         b5n13WHx9FRj/DivNlex+rON6dcCzEOTieXt6ybIosp/ZynLyLEm8jFdRaF/hN1FR3Bd
+         SICRx7wqxC/w2V5bxDrPM7z9emUh65anXgMF+ARBi8RypjOBueaALZxpxQIBia6lRp5f
+         6D1BIPOgoRTihaQNQnlCqnckVW5C47rJ8XZ5KlIZmG49nN5cKF1wNY94wOlctYjF0cPj
+         MnAA==
+X-Gm-Message-State: AOJu0YxTxk9sO+uVg3nlnxu8pGYCl/yVSv5pf0wMWc0f+cEwFLdpoyZR
+	rVppzFBsrjGH8yrsH7VfHTiqjV9UPsHXPBjrrjT8u93BOg5MePbu2J/K8953qQ==
+X-Google-Smtp-Source: AGHT+IH4n+wXp33JvUNh1CjnR39qfCbYHdkrCfVHZ8bVkGTaBcNE54nTX17nUCCe5TU5kIZolzN4rQ==
+X-Received: by 2002:a05:600c:b8b:b0:40e:f8fa:1dd2 with SMTP id fl11-20020a05600c0b8b00b0040ef8fa1dd2mr145491wmb.6.1706789894956;
+        Thu, 01 Feb 2024 04:18:14 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXCDCsNICh+ywfn69HqrWUJdmj4HMdNklHHAWPDNYP7USkFX8lsXUaUIvDbBXiEFd51hNBw7T5kjZBdk7NTrYxdmmPSqNkfcx90gFyzFXbdIs3OuNX1K7V9BpXjqgBduN80JMInZajcXSwqAY5y0HWvEH+8NHLXSOnISZxDhyE6Rhw/zqJh2gi1gV8Yqd2I4UDUGlsKTFvKGn+o5VC7AKuhhCjjZJHNyUeZlE9gBi8KhN/ZEBsWQucJaJGuVyMnmlRA20kt29u+CjRhnuSTEP3xiUSpEFG4jGcSVCTWb4uYtkMswEubsRIt2RnTFEmr1j1AVZwVC8sdC6O8syr5+BkLW48Y2ixv0GmS/7TsmbzFd4iK06+rOJym
 Received: from google.com (185.83.140.34.bc.googleusercontent.com. [34.140.83.185])
-        by smtp.gmail.com with ESMTPSA id t15-20020a05600c198f00b0040ee51f1025sm4283470wmq.43.2024.02.01.04.15.57
+        by smtp.gmail.com with ESMTPSA id c17-20020a5d5291000000b00337d980a68asm13613302wrv.106.2024.02.01.04.18.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 04:15:57 -0800 (PST)
-Date: Thu, 1 Feb 2024 12:15:53 +0000
+        Thu, 01 Feb 2024 04:18:14 -0800 (PST)
+Date: Thu, 1 Feb 2024 12:18:10 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
@@ -63,99 +62,35 @@ Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	Michael Shavit <mshavit@google.com>,
 	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
 	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Subject: Re: [PATCH v4 06/16] iommu/arm-smmu-v3: Hold arm_smmu_asid_lock
- during all of attach_dev
-Message-ID: <ZbuLeWDvhhufT7Pa@google.com>
+Subject: Re: [PATCH v4 07/16] iommu/arm-smmu-v3: Compute the STE only once
+ for each master
+Message-ID: <ZbuMAq-phWP5KZ3D@google.com>
 References: <0-v4-c93b774edcc4+42d2b-smmuv3_newapi_p1_jgg@nvidia.com>
- <6-v4-c93b774edcc4+42d2b-smmuv3_newapi_p1_jgg@nvidia.com>
+ <7-v4-c93b774edcc4+42d2b-smmuv3_newapi_p1_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6-v4-c93b774edcc4+42d2b-smmuv3_newapi_p1_jgg@nvidia.com>
+In-Reply-To: <7-v4-c93b774edcc4+42d2b-smmuv3_newapi_p1_jgg@nvidia.com>
 
 Hi Jason,
 
-On Thu, Jan 25, 2024 at 07:57:16PM -0400, Jason Gunthorpe wrote:
-> The BTM support wants to be able to change the ASID of any smmu_domain.
-> When it goes to do this it holds the arm_smmu_asid_lock and iterates over
-> the target domain's devices list.
+On Thu, Jan 25, 2024 at 07:57:17PM -0400, Jason Gunthorpe wrote:
+> Currently arm_smmu_install_ste_for_dev() iterates over every SID and
+> computes from scratch an identical STE. Every SID should have the same STE
+> contents. Turn this inside out so that the STE is supplied by the caller
+> and arm_smmu_install_ste_for_dev() simply installs it to every SID.
 > 
-> During attach of a S1 domain we must ensure that the devices list and
-> CD are in sync, otherwise we could miss CD updates or a parallel CD update
-> could push an out of date CD.
+> This is possible now that the STE generation does not inform what sequence
+> should be used to program it.
 > 
-> This is pretty complicated, and almost works today because
-> arm_smmu_detach_dev() removes the master from the linked list before
-> working on the CD entries, preventing parallel update of the CD.
-> 
-> However, it does have an issue where the CD can remain programed while the
-> domain appears to be unattached. arm_smmu_share_asid() will then not clear
-> any CD entriess and install its own CD entry with the same ASID
-> concurrently. This creates a small race window where the IOMMU can see two
-> ASIDs pointing to different translations.
-
-I don’t see the race condition.
-
-The current flow is as follows,
-For SVA, if the asid was used by domain_x, it will do:
-
-lock(arm_smmu_asid_lock)
-Alloc new asid and set cd->asid.
-lock(domain_x->devices_lock)
-Write new CD with the new asid
-unlock(domain_x->devices_lock)
-unlock(arm_smmu_asid_lock)
-
-For attach_dev (domain_y), if the device was attached to domain_z
-//Detach old domain
-lock(domain_z->devices_lock)
-Remove master from old domain
-unlock(domain_z->devices_lock)
-Clear CD
-//Attach new domain
-lock(arm_smmu_asid_lock)
-Allocate ASID
-unlock(arm_smmu_asid_lock)
-
-lock(domain_y->devices_lock)
-Insert new master.
-unlock(domain_y->devices_lock)
-
-lock(arm_smmu_asid_lock)
-Write CD
-unlock(arm_smmu_asid_lock)
-
-
-In case
-1) domain_x == domain_z(old domain)
-Write to the CD is protected by domain_x->devices_lock, so either:
-    a) The device will be removed, so SVA code will not touch it, and the
-    detach will clear the CD.
-    b) The device CD will be updated from the SVA with the new code, but then
-    it will be removed from the domain and cleared.
-
-I don’t see any case where we end with a programmed CD.
-
-2) domain_x == domain_y(new domain)
-
-Similarly the device would either see the new CD(new asid) or the old CD
-then the new CD.
-
-Can you please clarify the race condition? as it seems I am missing something.
-
-> Solve this by wrapping most of the attach flow in the
-> arm_smmu_asid_lock. This locks more than strictly needed to prepare for
-> the next patch which will reorganize the order of the linked list, STE and
-> CD changes.
-> 
-> Move arm_smmu_detach_dev() till after we have initialized the domain so
-> the lock can be held for less time.
+> This allows splitting the STE calculation up according to the call site,
+> which following patches will make use of, and removes the confusing NULL
+> domain special case that only supported arm_smmu_detach_dev().
 > 
 > Reviewed-by: Michael Shavit <mshavit@google.com>
 > Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
@@ -164,73 +99,132 @@ Can you please clarify the race condition? as it seems I am missing something.
 > Tested-by: Moritz Fischer <moritzf@google.com>
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 22 ++++++++++++---------
->  1 file changed, 13 insertions(+), 9 deletions(-)
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 57 ++++++++-------------
+>  1 file changed, 22 insertions(+), 35 deletions(-)
 > 
 > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 9a95d0f1494223..539ef380f457fa 100644
+> index 539ef380f457fa..cf3e348cb9abe1 100644
 > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -2612,8 +2612,6 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->  		return -EBUSY;
->  	}
->  
-> -	arm_smmu_detach_dev(master);
-> -
->  	mutex_lock(&smmu_domain->init_mutex);
->  
->  	if (!smmu_domain->smmu) {
-> @@ -2628,6 +2626,16 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->  	if (ret)
->  		return ret;
->  
-> +	/*
-> +	 * Prevent arm_smmu_share_asid() from trying to change the ASID
-> +	 * of either the old or new domain while we are working on it.
-> +	 * This allows the STE and the smmu_domain->devices list to
-> +	 * be inconsistent during this routine.
-> +	 */
-> +	mutex_lock(&arm_smmu_asid_lock);
-> +
-> +	arm_smmu_detach_dev(master);
-> +
->  	master->domain = smmu_domain;
->  
->  	/*
-> @@ -2653,13 +2661,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->  			}
->  		}
->  
-> -		/*
-> -		 * Prevent SVA from concurrently modifying the CD or writing to
-> -		 * the CD entry
-> -		 */
-> -		mutex_lock(&arm_smmu_asid_lock);
->  		ret = arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID, &smmu_domain->cd);
-> -		mutex_unlock(&arm_smmu_asid_lock);
->  		if (ret) {
->  			master->domain = NULL;
->  			goto out_list_del;
-> @@ -2669,13 +2671,15 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
->  	arm_smmu_install_ste_for_dev(master);
->  
->  	arm_smmu_enable_ats(master);
-> -	return 0;
-> +	goto out_unlock;
->  
->  out_list_del:
->  	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
->  	list_del(&master->domain_head);
->  	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
->  
-> +out_unlock:
-> +	mutex_unlock(&arm_smmu_asid_lock);
->  	return ret;
+> @@ -1588,35 +1588,6 @@ static void arm_smmu_make_s2_domain_ste(struct arm_smmu_ste *target,
+>  				      STRTAB_STE_3_S2TTB_MASK);
 >  }
 >  
+> -static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
+> -				      struct arm_smmu_ste *dst)
+> -{
+> -	struct arm_smmu_domain *smmu_domain = master->domain;
+> -	struct arm_smmu_ste target = {};
+> -
+> -	if (!smmu_domain) {
+> -		if (disable_bypass)
+> -			arm_smmu_make_abort_ste(&target);
+> -		else
+> -			arm_smmu_make_bypass_ste(&target);
+> -		arm_smmu_write_ste(master, sid, dst, &target);
+> -		return;
+> -	}
+> -
+> -	switch (smmu_domain->stage) {
+> -	case ARM_SMMU_DOMAIN_S1:
+> -		arm_smmu_make_cdtable_ste(&target, master, &master->cd_table);
+> -		break;
+> -	case ARM_SMMU_DOMAIN_S2:
+> -		arm_smmu_make_s2_domain_ste(&target, master, smmu_domain);
+> -		break;
+> -	case ARM_SMMU_DOMAIN_BYPASS:
+> -		arm_smmu_make_bypass_ste(&target);
+> -		break;
+> -	}
+> -	arm_smmu_write_ste(master, sid, dst, &target);
+> -}
+> -
+>  static void arm_smmu_init_bypass_stes(struct arm_smmu_ste *strtab,
+>  				      unsigned int nent)
+>  {
+> @@ -2439,7 +2410,8 @@ arm_smmu_get_step_for_sid(struct arm_smmu_device *smmu, u32 sid)
+>  	}
+>  }
+>  
+> -static void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master)
+> +static void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master,
+> +					 const struct arm_smmu_ste *target)
+>  {
+>  	int i, j;
+>  	struct arm_smmu_device *smmu = master->smmu;
+> @@ -2456,7 +2428,7 @@ static void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master)
+>  		if (j < i)
+>  			continue;
+>  
+> -		arm_smmu_write_strtab_ent(master, sid, step);
+> +		arm_smmu_write_ste(master, sid, step, target);
+>  	}
+>  }
+>  
+> @@ -2563,6 +2535,7 @@ static void arm_smmu_disable_pasid(struct arm_smmu_master *master)
+>  static void arm_smmu_detach_dev(struct arm_smmu_master *master)
+>  {
+>  	unsigned long flags;
+> +	struct arm_smmu_ste target;
+>  	struct arm_smmu_domain *smmu_domain = master->domain;
+>  
+>  	if (!smmu_domain)
+> @@ -2576,7 +2549,11 @@ static void arm_smmu_detach_dev(struct arm_smmu_master *master)
+>  
+>  	master->domain = NULL;
+>  	master->ats_enabled = false;
+> -	arm_smmu_install_ste_for_dev(master);
+> +	if (disable_bypass)
+> +		arm_smmu_make_abort_ste(&target);
+> +	else
+> +		arm_smmu_make_bypass_ste(&target);
+> +	arm_smmu_install_ste_for_dev(master, &target);
+>  	/*
+>  	 * Clearing the CD entry isn't strictly required to detach the domain
+>  	 * since the table is uninstalled anyway, but it helps avoid confusion
+> @@ -2591,6 +2568,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  {
+>  	int ret = 0;
+>  	unsigned long flags;
+> +	struct arm_smmu_ste target;
+>  	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+>  	struct arm_smmu_device *smmu;
+>  	struct arm_smmu_domain *smmu_domain = to_smmu_domain(domain);
+> @@ -2652,7 +2630,8 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  	list_add(&master->domain_head, &smmu_domain->devices);
+>  	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
+>  
+> -	if (smmu_domain->stage == ARM_SMMU_DOMAIN_S1) {
+> +	switch (smmu_domain->stage) {
+> +	case ARM_SMMU_DOMAIN_S1:
+>  		if (!master->cd_table.cdtab) {
+>  			ret = arm_smmu_alloc_cd_tables(master);
+>  			if (ret) {
+> @@ -2666,9 +2645,17 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  			master->domain = NULL;
+>  			goto out_list_del;
+>  		}
+> -	}
+>  
+> -	arm_smmu_install_ste_for_dev(master);
+> +		arm_smmu_make_cdtable_ste(&target, master, &master->cd_table);
+> +		break;
+> +	case ARM_SMMU_DOMAIN_S2:
+> +		arm_smmu_make_s2_domain_ste(&target, master, smmu_domain);
+> +		break;
+> +	case ARM_SMMU_DOMAIN_BYPASS:
+> +		arm_smmu_make_bypass_ste(&target);
+> +		break;
+> +	}
+> +	arm_smmu_install_ste_for_dev(master, &target);
+>  
+>  	arm_smmu_enable_ats(master);
+>  	goto out_unlock;
 > -- 
 > 2.43.0
-> 
+>
+
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
 
 Thanks,
 Mostafa
