@@ -1,42 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E69DF9C7
-	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2BEF9CA
+	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706849848; cv=none; b=BASaUVI9M+JSiFCYfLaIkHbXUNMqoXFmFZ5uydkD2r8qOgcyBVa+smJA7q3LdQG94E7FqWH7cWOhcQfWilIIijAWYIr+kkwZbEzoUIQyC1eExGJFxYqm5gR0/lB8dVmGqUJuxyMCvWB+RqOVh1c6wDrKOTtG/UfU0VAhZS72XSs=
+	t=1706849848; cv=none; b=QCTPhHxCIRuW676XjPMYADlfrEXs0nIyFzra9ZDjiXjAwmE3Ogfq5sRDMZVD8OFFQ2+ZUpPPlLqVpXq4m1wZymJ/j52CdgmeqhgV5shzTLdb3hiHHDGhhOSyP/mv+tFKdhz0NAB+//mqdHpk7+cOd6W3Az3x8pXbpQGfE3RUKgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706849848; c=relaxed/simple;
-	bh=VittVlf1b0271e/PJ8Q1PNQZ9T1Axil9WEjsp2ki1d4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mN4oMCrgSX60zcD/nIlyhPVz1i3PKYETC2DlxV1Ze+y7DEEcTHf/OZ/2fOowqEguOhaKXpEs5gZpjzOXHpP0BbEMKdp/YyVNqEKHel5hb7cfnBDnkSBqeHYQ8NSc9rss2zGMJE8RgTTlR/uwRwpjKH+9or7cQXKrkHGnVQHJsTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J+K0hbCq; arc=none smtp.client-ip=192.198.163.8
+	bh=5y4NGXUar57YI25p8xEfMr33IxH4G1iGgFkp7ARQYPM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=sydfC8XyLyWCxokp21LNSwba6wVKgJQCpz1PpnyVoahpAjsjBWWjDvz6OO145shFyokArIAq1CkdgjEiRupGOEOAqTs2VyQSaQZiAWiSvzh76n4qW5OyHf9pYgtM2WNtmoJWUYW9nYMqNWW2wT9+uOFZ2xuLnrrI9bvF1PvJDNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X06nBpSC; arc=none smtp.client-ip=192.198.163.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J+K0hbCq"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X06nBpSC"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706849846; x=1738385846;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=VittVlf1b0271e/PJ8Q1PNQZ9T1Axil9WEjsp2ki1d4=;
-  b=J+K0hbCqsCaSKZ/CiEAlocNL45IAnQy8brVvc6ip0pzlCkyRo75DJaxU
-   I4h2VqdA9pVIjOHv8oXJDy6rRT06x6XzjyAGJETrBASdnDR5djfgScn+q
-   I+gGgNL7qWktML9Ly6C1UKHqUqwcsBftBFLXhgaejQIs2Z6TLpoxbTIJw
-   fMXmr2xMX3Tywkc4OhBPsjP6cm/1XoYR24KCio8Y2fpOWM62+8FgBIDeM
-   ZFG2D5bnOzKSPaHm9+/glZJokRi/W8+kV82bnFOZqm/w37hxBCezTYFvu
-   8A+p0r/Ab8rO9L4lywvRLT0QOixfcWjpVcP/btsxbEmzq1MTatdZ8yFO5
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615782"
+  t=1706849847; x=1738385847;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=5y4NGXUar57YI25p8xEfMr33IxH4G1iGgFkp7ARQYPM=;
+  b=X06nBpSCcFJa/ccHO+TvH10Yy0jQjTtonVm1Fml/qBWPNDz5EdLqlzGL
+   bEEdf7vgqBZATalA4T466LR0WiyDQYDxGZERujWoWih+ZndAL58QM0HFr
+   JHEA8itFJVAJPNgwbJl2ZPMAdte4dLYu8ZRh64ORySZ/kNCULm8pW9pGu
+   2QqEZP5av4atOEKfyuEMffnnV6veA4H+tgmHncsnfwE7haAbhopbPmKmd
+   8hHQR3rRygpKupnCOGVpCA6RIIz7RyWsr1l/2zuKG0mOgnEhVkuYGMrul
+   dSaS7ZJ3j+1nWtH9U+1Gys8CwxiYwmsM+xa+3J69KjZ5p13eqRmHeaEEu
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615788"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="17615782"
+   d="scan'208";a="17615788"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
   by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:25 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339756"
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339759"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="912339756"
+   d="scan'208";a="912339759"
 Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
   by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:24 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -51,10 +52,12 @@ Cc: kvm@vger.kernel.org,
 	reinette.chatre@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 00/17] vfio/pci: Remove duplicate code and logic from VFIO PCI interrupt management
-Date: Thu,  1 Feb 2024 20:56:54 -0800
-Message-Id: <cover.1706849424.git.reinette.chatre@intel.com>
+Subject: [PATCH 01/17] vfio/pci: Use unsigned int instead of unsigned
+Date: Thu,  1 Feb 2024 20:56:55 -0800
+Message-Id: <81103b9a7f0448bbd8740389fbb77f78c150620d.1706849424.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1706849424.git.reinette.chatre@intel.com>
+References: <cover.1706849424.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,68 +66,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Everybody,
+checkpatch.pl warns about usage of bare unsigned.
 
-Duplicate VFIO PCI interrupt management code and logic can be found
-in two areas:
-1) the VFIO PCI core (vfio_pci_core.c) directly accesses the
-   VFIO PCI interrupt lock and data to duplicate actions available
-   via the VFIO PCI interrupt management code (vfio_pci_intrs.c), and
-2) the INTx and MSI/MSI-X interrupt management code within
-   vfio_pci_intrs.c have duplicate logic.
+Change unsigned to unsigned int to eliminate checkpatch.pl
+warnings about existing code that are encountered by changes to the
+interrupt management code at or near lines using bare unsigned.
 
-This series addresses (1) and (2) by first containing VFIO PCI interrupt
-management within the VFIO PCI interrupt management code found in
-vfio_pci_intrs.c and then refactoring the VFIO PCI interrupt management
-code (vfio_pci_intrs.c) to share common logic between INTx, MSI, and
-MSI-X interrupt management.
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+Note to maintainers:
+Originally formed part of the IMS submission below, but is not
+specific to IMS.
+https://lore.kernel.org/lkml/cover.1696609476.git.reinette.chatre@intel.com
 
-Bulk of the changes result in the same actions as before this series.
-Two functional changes to highlight:
-a) "vfio/pci: Consistently acquire mutex for interrupt management"
-   changes vfio_pci_core_disable()->vfio_pci_set_irqs_ioctl() to be
-   called with the igate mutex held.
-b) "vfio/pci: Preserve per-interrupt contexts" changes MSI/MSI-x
-   interrupt management to preserve per-interrupt contexts across interrupt
-   allocate/free.
+ drivers/vfio/pci/vfio_pci_intrs.c | 42 ++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 18 deletions(-)
 
-This work was inspired by (and inherits a few patches from) the IMS [1]
-enabling work but this work is submitted (and expected to be considered)
-independent from IMS.
-
-Any feedback will be appreciated.
-
-Reinette
-
-[1] https://lore.kernel.org/lkml/cover.1696609476.git.reinette.chatre@intel.com/
-
-Reinette Chatre (17):
-  vfio/pci: Use unsigned int instead of unsigned
-  vfio/pci: Remove duplicate check from
-    vfio_pci_set_ctx_trigger_single() wrappers
-  vfio/pci: Consistently acquire mutex for interrupt management
-  vfio/pci: Remove duplicate interrupt management from core VFIO PCI
-  vfio/pci: Limit eventfd signaling to interrupt management code
-  vfio/pci: Remove interrupt index interpretation from wrappers
-  vfio/pci: Preserve per-interrupt contexts
-  vfio/pci: Extract MSI/MSI-X specific code from common flow
-  vfio/pci: Converge similar code flows
-  vfio/pci: Extract INTx specific code from vfio_intx_set_signal()
-  vfio/pci: Perform MSI/MSI-X interrupt management via callbacks
-  vfio/pci: Remove msi term from generic code
-  vfio/pci: Remove vfio_intx_set_signal()
-  vfio/pci: Add utility to trigger INTx eventfd knowing interrupt
-    context
-  vfio/pci: Let enable and disable of interrupt types use same signature
-  vfio/pci: Move vfio_msi_disable() to be with other MSI/MSI-X
-    management code
-  vfio/pci: Remove duplicate interrupt management flow
-
- drivers/vfio/pci/vfio_pci_core.c  |  49 ++-
- drivers/vfio/pci/vfio_pci_intrs.c | 510 ++++++++++++++++++------------
- 2 files changed, 318 insertions(+), 241 deletions(-)
-
-base-commit: 41bccc98fb7931d63d03f326a746ac4d429c1dd3
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 237beac83809..f9280e32972a 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -503,8 +503,9 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+ 	return ret;
+ }
+ 
+-static int vfio_msi_set_block(struct vfio_pci_core_device *vdev, unsigned start,
+-			      unsigned count, int32_t *fds, bool msix)
++static int vfio_msi_set_block(struct vfio_pci_core_device *vdev,
++			      unsigned int start, unsigned int count,
++			      int32_t *fds, bool msix)
+ {
+ 	unsigned int i, j;
+ 	int ret = 0;
+@@ -553,8 +554,9 @@ static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
+  * IOCTL support
+  */
+ static int vfio_pci_set_intx_unmask(struct vfio_pci_core_device *vdev,
+-				    unsigned index, unsigned start,
+-				    unsigned count, uint32_t flags, void *data)
++				    unsigned int index, unsigned int start,
++				    unsigned int count, uint32_t flags,
++				    void *data)
+ {
+ 	if (!is_intx(vdev) || start != 0 || count != 1)
+ 		return -EINVAL;
+@@ -584,8 +586,8 @@ static int vfio_pci_set_intx_unmask(struct vfio_pci_core_device *vdev,
+ }
+ 
+ static int vfio_pci_set_intx_mask(struct vfio_pci_core_device *vdev,
+-				  unsigned index, unsigned start,
+-				  unsigned count, uint32_t flags, void *data)
++				  unsigned int index, unsigned int start,
++				  unsigned int count, uint32_t flags, void *data)
+ {
+ 	if (!is_intx(vdev) || start != 0 || count != 1)
+ 		return -EINVAL;
+@@ -604,8 +606,9 @@ static int vfio_pci_set_intx_mask(struct vfio_pci_core_device *vdev,
+ }
+ 
+ static int vfio_pci_set_intx_trigger(struct vfio_pci_core_device *vdev,
+-				     unsigned index, unsigned start,
+-				     unsigned count, uint32_t flags, void *data)
++				     unsigned int index, unsigned int start,
++				     unsigned int count, uint32_t flags,
++				     void *data)
+ {
+ 	if (is_intx(vdev) && !count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
+ 		vfio_intx_disable(vdev);
+@@ -647,8 +650,9 @@ static int vfio_pci_set_intx_trigger(struct vfio_pci_core_device *vdev,
+ }
+ 
+ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+-				    unsigned index, unsigned start,
+-				    unsigned count, uint32_t flags, void *data)
++				    unsigned int index, unsigned int start,
++				    unsigned int count, uint32_t flags,
++				    void *data)
+ {
+ 	struct vfio_pci_irq_ctx *ctx;
+ 	unsigned int i;
+@@ -755,8 +759,9 @@ static int vfio_pci_set_ctx_trigger_single(struct eventfd_ctx **ctx,
+ }
+ 
+ static int vfio_pci_set_err_trigger(struct vfio_pci_core_device *vdev,
+-				    unsigned index, unsigned start,
+-				    unsigned count, uint32_t flags, void *data)
++				    unsigned int index, unsigned int start,
++				    unsigned int count, uint32_t flags,
++				    void *data)
+ {
+ 	if (index != VFIO_PCI_ERR_IRQ_INDEX || start != 0 || count > 1)
+ 		return -EINVAL;
+@@ -766,8 +771,9 @@ static int vfio_pci_set_err_trigger(struct vfio_pci_core_device *vdev,
+ }
+ 
+ static int vfio_pci_set_req_trigger(struct vfio_pci_core_device *vdev,
+-				    unsigned index, unsigned start,
+-				    unsigned count, uint32_t flags, void *data)
++				    unsigned int index, unsigned int start,
++				    unsigned int count, uint32_t flags,
++				    void *data)
+ {
+ 	if (index != VFIO_PCI_REQ_IRQ_INDEX || start != 0 || count > 1)
+ 		return -EINVAL;
+@@ -777,11 +783,11 @@ static int vfio_pci_set_req_trigger(struct vfio_pci_core_device *vdev,
+ }
+ 
+ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
+-			    unsigned index, unsigned start, unsigned count,
+-			    void *data)
++			    unsigned int index, unsigned int start,
++			    unsigned int count, void *data)
+ {
+-	int (*func)(struct vfio_pci_core_device *vdev, unsigned index,
+-		    unsigned start, unsigned count, uint32_t flags,
++	int (*func)(struct vfio_pci_core_device *vdev, unsigned int index,
++		    unsigned int start, unsigned int count, uint32_t flags,
+ 		    void *data) = NULL;
+ 
+ 	switch (index) {
 -- 
 2.34.1
 
