@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182F5F9C8
-	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC65101DB
+	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706849850; cv=none; b=CI17PGaJ/xrUdhPPLxRYvJmynGB4ID7W71b3onKF8NUguSbhQge/iaWu2p2MdGcKgxePuT3NaspzllVjuugBGvTGmBfFjnD4aMAyHhgBzmM3zE1DqDdNIC9oqBZWCx1/vOcGnbg4x7HmSzUCzkMZl8LQ2dpACYP4BpXdwAjOLmw=
+	t=1706849851; cv=none; b=frFarHnJmAT9RLRerrCWX/GYRDf611wcwST3EnGFPZjUJrIqc33/100eXSks3mof5qX56M1cYpjZxKSMlSP+JVWovtADfyasKmb9no5YX9LmJT6Uj6actaOGngsAUm3qP7M5Fy4eVNET3XnMnuMWH+z5gogeVsNPrXMz21TVN9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706849850; c=relaxed/simple;
-	bh=HP2huTcvvO7TUh3mgU3qMuAjpGy887H4YuFiJWxsEUU=;
+	s=arc-20240116; t=1706849851; c=relaxed/simple;
+	bh=wjShxdkTqGwADOgBt3EJHJs5FYJXIg/tseoEaV8uAgM=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cznFMj1wkPkUiAM54ju0L1/lpwHRBnHqx55Gov7gLNSUJxEliorhtRPhvEeKrWtxfMLrOchrhqdMMRFFNBdi2spXfbgs5XZfhsrx//0R3lUutFo0RHbPyoQ9LkBqL8QGKoVZjYQ9lgsU59oMmt09trWGpkw94J4oBUO7170WVcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ci9q/cyJ; arc=none smtp.client-ip=192.198.163.8
+	 MIME-Version; b=h+LiooV3yfqwWDWfXPczHc26MoycSQt5xqEigxgDQQZE/fdWD0WPa7xWrDOwfCgEzplFDh1vnC0svFqHLAM/DkElpeJV1j0hFg8mduk0CICx46MyhU/2/Liwp7eCUaOQCqQtD89uZmHTzIft/fB+L9P0GT/B1i17nbPe41NzHBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hWDHKiky; arc=none smtp.client-ip=192.198.163.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ci9q/cyJ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hWDHKiky"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1706849849; x=1738385849;
+  t=1706849850; x=1738385850;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=HP2huTcvvO7TUh3mgU3qMuAjpGy887H4YuFiJWxsEUU=;
-  b=ci9q/cyJaAPHMPIORnnSaecv0X8mgHEwyjeEwlBBHywLC5XBj6YsDVlV
-   aUdIQL3G9y5l184hSi8pHXGe7mw9jL2zgTGVwbgAtbIKksQ0sqlDskodF
-   YpfacikInYgFUovCxaeBfUOAKB0EuClqNtPjP96KR3OdnG/uynKLx5sCa
-   X0NqyzaOaGv0o5N+Qu0fMsGWXEZMjzfBBhpELYgs/0fTNqJGQMj2E9jyx
-   rEISMf+RyLZ6N6ZYiCCnYQj0RkPELFOMrMdHgnIbsUuOGjEEoIoXaB6aa
-   UbuH/r1miHMFyaDvhRduXNaa8v2rABUt3e5RUjGLu+jsDkTvbZm5N9WNp
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615803"
+  bh=wjShxdkTqGwADOgBt3EJHJs5FYJXIg/tseoEaV8uAgM=;
+  b=hWDHKikybu6AUycg4O0oPYwBVNvSHN0JWa0LTlEpkXFJFC2UwlIWk7B4
+   4CJYR0u7q4+d4dN8UITwRaahaSVNtbEDldb9m44QCv/9miCWlwiAtlI6Y
+   lPPaqACjaFOGPavV4f4X3XU0DjGY8W0KxwJFm70kWiE5a5vcAnZM3vRDh
+   I0rLwf/Qf6DpPUJ/Lbb8NocBUS3DvgCUhDg2OJeoZm+3l0YyY5033mZbR
+   4/6izxhOJGiJ4JR+V7znizMzu/+y5K11OuJMufKsJuZ2tlnyaGsiwyZZi
+   5YIDviDDO0EOTgwlFTaUf3o5kDBkc+Pc3qiQyglmNeztWiF4qG4jpivTs
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615807"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="17615803"
+   d="scan'208";a="17615807"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
   by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:26 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339768"
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339771"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="912339768"
+   d="scan'208";a="912339771"
 Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
   by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:24 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -52,9 +52,9 @@ Cc: kvm@vger.kernel.org,
 	reinette.chatre@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 04/17] vfio/pci: Remove duplicate interrupt management from core VFIO PCI
-Date: Thu,  1 Feb 2024 20:56:58 -0800
-Message-Id: <93dfe93e8fc53e83ac585ed3a891cefde32b3016.1706849424.git.reinette.chatre@intel.com>
+Subject: [PATCH 05/17] vfio/pci: Limit eventfd signaling to interrupt management code
+Date: Thu,  1 Feb 2024 20:56:59 -0800
+Message-Id: <54ba34d884de30f479bbe3844c4a342980760d79.1706849424.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1706849424.git.reinette.chatre@intel.com>
 References: <cover.1706849424.git.reinette.chatre@intel.com>
@@ -66,53 +66,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The eventfds associated with device request notification and
-error IRQ are managed by the VFIO PCI interrupt management code
-contained in vfio_pci_intrs.c. The VFIO PCI interrupt management
-code supports acquiring, releasing, as well as signaling of
-these eventfd.
+VFIO PCI interrupt management has full support for configuring,
+signaling, and clearing the eventfds associated with device request
+notification and error interrupts.
 
-The VFIO PCI core code duplicates the signaling of device request
-notification and error interrupts and does so by acquiring the lock
-and accessing data that should ideally be contained within the
-VFIO PCI interrupt management code.
+Core VFIO PCI duplicates eventfd signaling while also accessing
+data that should be contained within the interrupt management code.
 
-Do not duplicate but instead call existing VFIO PCI interrupt
-management code to signal device request notification
-and error interrupts.
+Remove the duplicate eventfd signaling from core VFIO PCI
+and rely on VFIO PCI interrupt management for eventfd signaling.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- drivers/vfio/pci/vfio_pci_core.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/vfio/pci/vfio_pci_core.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index d2847ca2f0cb..de097174e455 100644
+index de097174e455..a8235b9c1a81 100644
 --- a/drivers/vfio/pci/vfio_pci_core.c
 +++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -700,16 +700,12 @@ void vfio_pci_core_close_device(struct vfio_device *core_vdev)
- #endif
- 	vfio_pci_core_disable(vdev);
+@@ -1868,21 +1868,20 @@ void vfio_pci_core_request(struct vfio_device *core_vdev, unsigned int count)
+ 	struct vfio_pci_core_device *vdev =
+ 		container_of(core_vdev, struct vfio_pci_core_device, vdev);
+ 	struct pci_dev *pdev = vdev->pdev;
++	int ret;
  
 -	mutex_lock(&vdev->igate);
--	if (vdev->err_trigger) {
--		eventfd_ctx_put(vdev->err_trigger);
--		vdev->err_trigger = NULL;
--	}
++	ret = vfio_pci_set_irqs_ioctl(vdev, VFIO_IRQ_SET_DATA_NONE |
++				      VFIO_IRQ_SET_ACTION_TRIGGER,
++				      VFIO_PCI_REQ_IRQ_INDEX, 0, 1, NULL);
+ 
 -	if (vdev->req_trigger) {
--		eventfd_ctx_put(vdev->req_trigger);
--		vdev->req_trigger = NULL;
--	}
+-		if (!(count % 10))
+-			pci_notice_ratelimited(pdev,
+-				"Relaying device request to user (#%u)\n",
+-				count);
+-		eventfd_signal(vdev->req_trigger);
+-	} else if (count == 0) {
++	if (!ret && !(count % 10)) {
++		pci_notice_ratelimited(pdev,
++				       "Relaying device request to user (#%u)\n",
++				       count);
++	} else if (ret && count == 0) {
+ 		pci_warn(pdev,
+-			"No device request channel registered, blocked until released by user\n");
++			 "No device request channel registered, blocked until released by user\n");
+ 	}
+-
+-	mutex_unlock(&vdev->igate);
+ }
+ EXPORT_SYMBOL_GPL(vfio_pci_core_request);
+ 
+@@ -2292,12 +2291,9 @@ pci_ers_result_t vfio_pci_core_aer_err_detected(struct pci_dev *pdev,
+ {
+ 	struct vfio_pci_core_device *vdev = dev_get_drvdata(&pdev->dev);
+ 
+-	mutex_lock(&vdev->igate);
+-
+-	if (vdev->err_trigger)
+-		eventfd_signal(vdev->err_trigger);
+-
 -	mutex_unlock(&vdev->igate);
 +	vfio_pci_set_irqs_ioctl(vdev, VFIO_IRQ_SET_DATA_NONE |
 +				VFIO_IRQ_SET_ACTION_TRIGGER,
-+				VFIO_PCI_ERR_IRQ_INDEX, 0, 0, NULL);
-+	vfio_pci_set_irqs_ioctl(vdev, VFIO_IRQ_SET_DATA_NONE |
-+				VFIO_IRQ_SET_ACTION_TRIGGER,
-+				VFIO_PCI_REQ_IRQ_INDEX, 0, 0, NULL);
- }
- EXPORT_SYMBOL_GPL(vfio_pci_core_close_device);
++				VFIO_PCI_ERR_IRQ_INDEX, 0, 1, NULL);
  
+ 	return PCI_ERS_RESULT_CAN_RECOVER;
+ }
 -- 
 2.34.1
 
