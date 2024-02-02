@@ -1,166 +1,117 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2042.outbound.protection.outlook.com [40.107.237.42])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA00146919
-	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 16:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706890549; cv=fail; b=TPJ+AKxfinBxQvlQGxFVvtvGL6lEVip4knbeAJiDUc8PaNKL7MVmn28xx7EphKD7FG0lp3XCX2wSYobBtO92EYXpUv3KFverSa4kqzHAQGboWT31wCEVwbcoj/NMmwG5MJqgD+p1ZzTcTEfT4Vy4FRwtSJmhL2JwYLAXoXfKtNE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706890549; c=relaxed/simple;
-	bh=LBuxSqCMvU+N5qYzGQPv1p3p/d5kADUcWWebZq2BceQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=WR2KxCNYmXh2o2ET0vFGMrcx65Q0lqVok64zQ3JD0v6mc+r2xLxPXwKmVm75sOjQCnZ0tWZcvOZVu4dcKG7w2qybnsgEAG8fD/gx187wddGgqZLnlumt/xdd/ywbYvSw1zmFx08q3jXRvPMRYaVpplEPZNwDCy9j2+4Dn/ihkag=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=NPvrSY41; arc=fail smtp.client-ip=40.107.237.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CA71420B9;
+	Fri,  2 Feb 2024 16:30:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706891409; cv=none; b=ZT/a1GldwC+nz8KMO7IxQTphMePq0QCGNZqDr1dM8DRPkrWdb+3HOzuqrGF0Xcumyv1u4gAmmcu7rbc557y0LPM5Ds4orkoIoFkkOxdDcpYcj57rjMifk+d23z8AGCvKA9gcwNQlsF4awqe0r/EQ00rMuG18jEROXc3ROiUsOYg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706891409; c=relaxed/simple;
+	bh=BWx5zc/9MunoZpEToFg41sUYEu6SA2ONTzdVIp4DFg8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QZLYAKPuW8xfRgdXmFnDfSzyMoBlVUv7HNRcg8eGeIDC51EG8VtKLeljlu3ZUwfPHa3WdKW2ZdjimTsBXmL93Ory+f9dD2lo9+9iGPwcX+7N6JpUepRabL0V3VbqklHC/YFguTRbBDfW5vLoepj2tIZgLnRcKoNtrUYm4NC04H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nD0wNsNj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="NPvrSY41"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NlIoS635lXTOrC1pwXZEVotyTXrM+Wj8PT5MCIWk4sLBLUoWn6Nr8PZKha79gDQYIfBD322muLtOG07Om8PqIw6LUowKKLjdGbeQpKNhDmVtbQeItHvixFdx0DFMioDDrB6GttXlnCyfYJtrMkPju27oIn+sUBRN8D09sTaybOfD2Lg2uvas5GPGsmke3m4hOsYftkq0q2mIgY9TAAsATw2o7UJLNQoZbuwz4xx7wSVfWO7et98vEFuJzrWl8VP/3Qh9G9wcA/zMS6wbl5RlK+fprvX95HYR96USVnIQGeHGD5uiTLi27YnF4RvsW0PcxQJnL27sYu05s7oP+Hqm6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FSNGtXGj97Pz13Fr07uNcAHu0LhWWo7eWS+hu7DzZ1o=;
- b=QNgp8j4LK3GT/ole7uLrHtlCWsdNjGkuY55xjrcW4qpBriuso0i78FwrZrvOs6hosAfwzMMQjzni1gktCFXU6RibA4gFmVoTA1nQQGenMlzOL/NmR4BBwswV8lLdfvm36aRhZvlrs4gkMHwlgjpTYudjzSfRZ1tFnFGbi7Z2DTEpTg5C0z3U6TZdyWoDpXL2W01QiaNQRxw8u+cCPbyqj5RzyOSM2JsP9phWP6CX7XsWWJ+p3n2X/RP+cCYZlEEXTq8ewYegMwTM6k7NxPnhczx+IJIRWx8ln2mx5L5+c2XGGIdJdJRD2Jujm9yKX/162ZauFulUSQ4wOR0AShkxEA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FSNGtXGj97Pz13Fr07uNcAHu0LhWWo7eWS+hu7DzZ1o=;
- b=NPvrSY41ZRk6pCp/ai0Cy3obez8yjVjvVhQxYxMUkx4O1gHQBa6C3Rf0+PxthBQb6f64Jg54w1t9VXGNk0gnGBoFtjJn4VTxThWyz20PRJg2XXtfZv/DAGEj6vpULjX4hDa9Tz5jGS2bWpGwD1vQ/g6Yr1ehgseiNAgwXHizMYE+SpeiKJ81H4mZkeqS1pGsPFG+2exyFXiqZDKEGVV4RlRqqHD1NUoloztyWsWbdUERIH4OgvFVlyPg9/j1OiRGbcxXovNcLj6FkG/ZSWD2Yd7RxWHXhLTJWmrsz1NjCn3aRhzEZ6XEKhzxBF7J37i0dHdoZkMBdfnvkCwtPR3aJw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by CH0PR12MB5057.namprd12.prod.outlook.com (2603:10b6:610:e0::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.11; Fri, 2 Feb
- 2024 16:15:41 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7228.029; Fri, 2 Feb 2024
- 16:15:41 +0000
-Date: Fri, 2 Feb 2024 12:15:40 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>, patches@lists.linux.dev
-Subject: Re: [PATCH] drm/tegra: Remove of_dma_configure() from
- host1x_device_add()
-Message-ID: <20240202161540.GU1455070@nvidia.com>
-References: <0-v1-c76c50cd425e+15298-host1x_no_iommu_conf_jgg@nvidia.com>
- <583b9145-cbbe-4a03-8120-e2a66a6093c7@nvidia.com>
- <20240131153312.GM1455070@nvidia.com>
- <a1597113-3ec9-445c-90d1-62df97406fb2@nvidia.com>
- <20240201200212.GQ1455070@nvidia.com>
- <96bc6d37-1000-4651-9a26-a8446dd64803@nvidia.com>
- <20240202143518.GS1455070@nvidia.com>
- <361dcaf5-352e-4162-a952-c690783a2251@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <361dcaf5-352e-4162-a952-c690783a2251@nvidia.com>
-X-ClientProxiedBy: BL6PEPF00016410.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:22e:400:0:1004:0:17) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nD0wNsNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38DBC433F1;
+	Fri,  2 Feb 2024 16:30:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706891409;
+	bh=BWx5zc/9MunoZpEToFg41sUYEu6SA2ONTzdVIp4DFg8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nD0wNsNjQI1fhiecntkw5a6Fp7hmW0qtJo1/A0aveYZgSTrwHYLmWnGWv4zOeLtTK
+	 60PWwFzI7mkJ62Phn1vBRCDQ5aXOdukBrtWjUX/yjlzD6/h+IoreEoHhpR3lMCK08M
+	 Ds+ATzgYHo3pBJ7m1dTef9ZuBxRZNNAy75WdYfHVkyQ2ZHydivsNZZBMpq876kE6KI
+	 YKYSk4ZCHcGjR0Jzh0mqhawazabqc6drmLCcUcuqbWGReBDSLhwO6gLlBQfaS+oQt5
+	 tWBoUCu/mXaVJkQWGlPe1UxcwwvY30RVROsfMuipUMmbowBNPSZjGJ7Rafrt/6H7KA
+	 AJNSq2ugYDc+w==
+Date: Fri, 2 Feb 2024 10:30:06 -0600
+From: Rob Herring <robh@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
+	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
+	devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH v2 1/7] arm64: Unconditionally call
+ unflatten_device_tree()
+Message-ID: <20240202163006.GA209874-robh@kernel.org>
+References: <20240130004508.1700335-1-sboyd@kernel.org>
+ <20240130004508.1700335-2-sboyd@kernel.org>
+ <20240131205405.GA2249327-robh@kernel.org>
+ <efe6a7886c3491cc9c225a903efa2b1e.sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|CH0PR12MB5057:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8f2f2fcc-efca-4838-5329-08dc240a3371
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	NXJIR4CkXVFVBwDcPiTOHoBDUcxbbHamsjp7mg1fkZJ+UvGMDHM2bjdgGBNJO09lXidSo8RQqcTBCRY4jALtDIqvspOek+XAbZbqxzkAw9fulu2ZRQYqtqqgQSeRMiPX5KtXq9ofc957V0oUm2jpAXqicP2C8EJU/2YikToqF9i35/9k+Fle8WEyCGymX8I3/BFKTodcwkrGyTzXWN3tSCc2oEUTIiTe1HRkOc9r5VHSGIk/vS6iTkoEDAfGebqSbGU4EAy9nYGeHCLORHhoqrW2nVcIxj6N2SHdzysS9/L5fcQV0OHAn1kb4jwwJwaok4F9VDcrO/1b1zcq6DroI7shiTRgQBY+iL5VTujx3G0Ocm8z7jVaqDJNn85Ohj1KBrIATeNrZO55k//4kbE2JggXq3mE+6nX5NZjUM551lYldgFFt5MFBvIE+29Tc94rOGKR6vIwGYrPw8CV9U1zhG3jIQ8WuXeIlV7c3tH4DJHSt3CE8o/Yfq1tP5CLwg3Ru6Tq/lbjb1127Qqw8TvIMxabLyFEG/1XJDraeU0v6QoeLn4MK8q6hw3Ha1MiX5OP04ILWH33Y2PrP3Fy4J8M5UGP+KBLh+J/S5shuG6zwOllauIQgbOmYSi7KWjbhDOA9kqYVvi7n+qFvT09IXibDEdSzlKUm85pu7+CROEkECY=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(366004)(346002)(376002)(396003)(39860400002)(230273577357003)(230173577357003)(230922051799003)(186009)(451199024)(64100799003)(1800799012)(83380400001)(1076003)(26005)(6512007)(38100700002)(2616005)(8936002)(5660300002)(66946007)(66476007)(4326008)(8676002)(54906003)(37006003)(6862004)(6486002)(2906002)(478600001)(6506007)(53546011)(66556008)(6636002)(316002)(86362001)(41300700001)(36756003)(33656002)(357404004);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?sqQFL5Ji2GVsId5EF8e5My1NDPs+vpCPNnjpgMixZVeajCT7IFqKqxSjmbaN?=
- =?us-ascii?Q?oXC3gQBbj5fDkiuhpRPrwIb76FF8msgMNJ1MUHNsMqDV1eF9PY6n4bzrlfMH?=
- =?us-ascii?Q?gVSQFD9bbm5cewVeuvraIr6DgLNlmwMk5X9rELBUjO3++YiTTgEIzzHjMe0o?=
- =?us-ascii?Q?/IVIO2WUVlUfPOsK9sdFWEYK9iXerDqYAZ64V3bgZzvezuoEek0/ZzwpAudu?=
- =?us-ascii?Q?FAO8osFV/nEy8cxz4QT/9nmIx/6yy7mBSoXpztNQo5y4e6yZ5OUi5tkisNEC?=
- =?us-ascii?Q?/ZDYNvh4smeYzTNaDSYtgBbEYKM9oDQttz7LCLOw6jsvQxY8mJ53KpemyxjZ?=
- =?us-ascii?Q?ioyhK4m6IwUdBFnlg8uNQggQLm3Oje4/0xltBSKvboW6k6Fltt/3yJ2HZ5T4?=
- =?us-ascii?Q?EmbM2v7tQ0i/d5TK/+9JAaiEZtpNim6qvRwdKF7qlY2ZxEQWl6oQugZE5NZT?=
- =?us-ascii?Q?3nuQp0XXk05aai2zqRP/bg6eC2dc++Qetf2eIF2v7TrB8JmWr+wsL6527Iq9?=
- =?us-ascii?Q?5RTUF0jhpbwaEeh7+PmslvTMUR/Mmyqw2TgEn7uYmDbk6uq2nVm447mPPrvw?=
- =?us-ascii?Q?pbkCrJSI4nZLp3utCa9PZk5uADoQxzuc9O4U1oSYJHBzwcL6v/SonZCI1/5s?=
- =?us-ascii?Q?UHrq+Dc13c/p/8TFEKhREtyBCa4vD/QTJ8g9MRBoUqWMDZf/li20WAGBXsll?=
- =?us-ascii?Q?iR+UsGqQOA/Vp33CSaRPlZWoNBMsC7zhYAXqTQlJwNtD25K5jUyN3jR3vvXi?=
- =?us-ascii?Q?BVrty2BzFoHlYXc7D16JEDxS1d1ZpICSwddzMQFT9edhO9vyFIWyKZW0g1K5?=
- =?us-ascii?Q?f86IDCdROKOLDVA9QJ1U5Ve36d3WYM3Sb8nTE0gsUDT4paHjNoTSUMxcPlpy?=
- =?us-ascii?Q?l+A7kPSTOJqRYhZkzwTQD12RGbzzkndgP1W5h2Tg1VjBHF4OiBdE/1LAcPVP?=
- =?us-ascii?Q?9GwJmvjBs/SuxSs50ARMLla+oqU3m//TL3XQqFrhaYJ9gJfC9a3dUQhk5r9x?=
- =?us-ascii?Q?4D6yyFnGmpux3KoLKStnkzNS2bgA4gK3KT56ea+Ho0ecS5CCi0ZoIihQ+7QC?=
- =?us-ascii?Q?tzlax0DRxBOgwBW7FZ36lZmVYGnX1gnGV9fS/EPkTcu05SiqGwjj46IX83Nm?=
- =?us-ascii?Q?cCIF4toz0EmLyKW2gyy8AIPgYJ5G3vZnOkCgJa8SWX+r5pwzhcoRYP+fMQsT?=
- =?us-ascii?Q?9inFaAc7Tc07hrxXSSISkuwK7KOylCixmrBGVPJ3yVx6jgzO1F5rzemeTKoV?=
- =?us-ascii?Q?9gddNdTsP0fZO66lvUHqLx+Xuy24qI5SyIBIGLzBZKXQ1KKZeCyQ2rYZQicL?=
- =?us-ascii?Q?vf/E8QgMbg8koCFVIocux6UqXQ6waRRCwIDX7H9sGKh4eczNVpx4f6258e65?=
- =?us-ascii?Q?Q1eHk1riAFUcKOdK7mvPVco4OGZRV+WNlyZTbNsk6ladUnCsDIppK1j4cPpK?=
- =?us-ascii?Q?I+rWUKqrK0SM79jvlmkNk2aBbwqr4dhPKJv3Ofa/OzAs13vwzCQfDc24cpHT?=
- =?us-ascii?Q?IeKBjOm/9W+Pa90zglQkjs1w9bEMWnRZTANRBCk8wbbwy/3liXDfjPH3nfrB?=
- =?us-ascii?Q?5hz4KH/Vdb0jl50rKjXPUVhAyuQIPBDw67CrQ4c8?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8f2f2fcc-efca-4838-5329-08dc240a3371
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Feb 2024 16:15:41.2512
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XvkBjNbSnqRowTQ5fScIVGqqobmv2h9gxCeDiWEZuMWWVYmDV1gqbJzYlrqfb60P
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR12MB5057
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <efe6a7886c3491cc9c225a903efa2b1e.sboyd@kernel.org>
 
-On Fri, Feb 02, 2024 at 03:56:52PM +0000, Jon Hunter wrote:
-> 
-> On 02/02/2024 14:35, Jason Gunthorpe wrote:
-> > On Fri, Feb 02, 2024 at 10:40:36AM +0000, Jon Hunter wrote:
-> > 
-> > > > But, what is the actual log output you see, is it -EEXIST?
+On Wed, Jan 31, 2024 at 02:59:53PM -0800, Stephen Boyd wrote:
+> Quoting Rob Herring (2024-01-31 12:54:05)
+> > On Mon, Jan 29, 2024 at 04:45:00PM -0800, Stephen Boyd wrote:
+> > > Call this function unconditionally so that we can populate an empty DTB
+> > > on platforms that don't boot with a firmware provided or builtin DTB.
+> > > Override 'initial_boot_params' to NULL when ACPI is in use but the
+> > > bootloader has loaded a DTB so that we don't allow both ACPI and DT to
+> > > be used during boot. If there isn't a valid initial_boot_params dtb then
+> > > unflatten_device_tree() returns early so this is fine.
 > > > 
-> > > I see ...
+> > > Cc: Rob Herring <robh+dt@kernel.org>
+> > > Cc: Frank Rowand <frowand.list@gmail.com>
+> > > Cc: Catalin Marinas <catalin.marinas@arm.com>
+> > > Cc: Will Deacon <will@kernel.org>
+> > > Cc: Mark Rutland <mark.rutland@arm.com>
+> > > Cc: <linux-arm-kernel@lists.infradead.org>
+> > > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> > > ---
+> > >  arch/arm64/kernel/setup.c | 7 +++++--
+> > >  1 file changed, 5 insertions(+), 2 deletions(-)
 > > > 
-> > >   ERR KERN host1x drm: iommu configuration for device failed with -ENOENT
+> > > diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
+> > > index 417a8a86b2db..ffb1942724ae 100644
+> > > --- a/arch/arm64/kernel/setup.c
+> > > +++ b/arch/arm64/kernel/setup.c
+> > > @@ -351,8 +351,11 @@ void __init __no_sanitize_address setup_arch(char **cmdline_p)
+> > >       /* Parse the ACPI tables for possible boot-time configuration */
+> > >       acpi_boot_table_init();
+> > >  
+> > > -     if (acpi_disabled)
+> > > -             unflatten_device_tree();
+> > > +     /* Don't use the FDT from boot if ACPI is in use */
+> > > +     if (!acpi_disabled)
+> > > +             initial_boot_params = NULL;
 > > 
-> > So that shouldn't happen in you case as far as I can tell, the device
-> > is properly added, link->kobj should be fine and ENOENT shouldn't
-> > happen.
-> > 
-> > > > If it is coming and going is it a race of some kind?
-> > > 
-> > > It is consistent without the above. However, I did not think that the
-> > > above change would change the returning on -ENOENT? I will add more
-> > > debug.
-> > 
-> > I do not think it can either
-> > 
-> > Still wonder if there is some odd race..
-> > 
-> > Let me know when you figure out what is happening - I think there is
-> > some bug here it is not just a harmless warning.
+> > I still think this is a problem for kexec. See 
+> > of_kexec_alloc_and_setup_fdt(). You see it uses initial_boot_params. At 
+> > first glance it looks like it would just write out everything we need. 
+> > But for UEFI boot, I think we need all the chosen properties like 
+> > linux,uefi-mmap-start preserved from the current boot for the next 
+> > kernel we kexec.
 > 
+> Ok, got it.
 > 
-> Yes looks like a race of some sort. Adding a bit of debug also makes the
-> issue go away so difficult to see what is happening.
+> > 
+> > I think you'll have to check acpi_disabled in unflatten_device_tree() 
+> > and unflatten the empty tree leaving initial_boot_params alone. That 
+> > means our FDT and unflattened tree will be different DTs, but I think 
+> > that's fine.
+> 
+> It's sort of scary given that 'initial_boot_params' is an exported
+> global. Maybe that should be hidden away and accessed with a function
+> instead so that this mismatch doesn't break something later on?
 
-I'm wondering if it is racing with iommu driver probing? I looked but
-didn't notice anything obviously wrong there that would cause this
-though.
+What you see now is after I did a pass of minimizing the number of 
+users.
 
-Though, it shouldn't be racing with self-removal of the device it just
-added, that would be crazy???
+BTW, I've now got another use for unconditionally calling 
+unflatten_device_tree() with this[1].
 
-Jason
+Rob
+
+[1] https://lore.kernel.org/all/20240201194653.GA1328565-robh@kernel.org/
