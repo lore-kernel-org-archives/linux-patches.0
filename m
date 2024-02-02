@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB29EAEF
-	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182F5F9C8
+	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706849850; cv=none; b=pbjoFKDM9rfEZ8kGNT5JW9S3AEKQt7FkTepW5oW9GY+mSmyR7azEMKVeMDU1rE7wudnA6rprUUarroFKaa3LsHR5TrewSUN1DHKTpdzlGbFDQhP0+TBGQHcJfK5bKFFizlxyl1e78jUnkPDfwzSoXCqV8xLy1U7Y1W6TEQROsjE=
+	t=1706849850; cv=none; b=CI17PGaJ/xrUdhPPLxRYvJmynGB4ID7W71b3onKF8NUguSbhQge/iaWu2p2MdGcKgxePuT3NaspzllVjuugBGvTGmBfFjnD4aMAyHhgBzmM3zE1DqDdNIC9oqBZWCx1/vOcGnbg4x7HmSzUCzkMZl8LQ2dpACYP4BpXdwAjOLmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706849850; c=relaxed/simple;
-	bh=JWucdCztDGT+G4ZMaH9FIiM5mhLJXuyhplUEEPj9ZAU=;
+	bh=HP2huTcvvO7TUh3mgU3qMuAjpGy887H4YuFiJWxsEUU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hyFQmoTkRkr0qDifPvPrWBwaVJiHPBcAuyCDoQnM2QmxZxv6Xt6r4LJSrj2VEzd5n+49Uz9bGHbrlhDpvlQBlZPNRgPKWtPXj55HJJIiT0dKWjZHF7R+t8+Ex2lAM/PMf/xpZN1cl6F5Y8MqDSWf1ag+RIEi704QdahgTBe13fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=G33JQGfS; arc=none smtp.client-ip=192.198.163.8
+	 MIME-Version; b=cznFMj1wkPkUiAM54ju0L1/lpwHRBnHqx55Gov7gLNSUJxEliorhtRPhvEeKrWtxfMLrOchrhqdMMRFFNBdi2spXfbgs5XZfhsrx//0R3lUutFo0RHbPyoQ9LkBqL8QGKoVZjYQ9lgsU59oMmt09trWGpkw94J4oBUO7170WVcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ci9q/cyJ; arc=none smtp.client-ip=192.198.163.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="G33JQGfS"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ci9q/cyJ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1706849849; x=1738385849;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=JWucdCztDGT+G4ZMaH9FIiM5mhLJXuyhplUEEPj9ZAU=;
-  b=G33JQGfSAFNAwEemVxQvWRWYBcXBnJJLkOwEseI2KZD9lBjS16Z/+AGe
-   BWRleeN8X7Q8juOMluJBTzAHRtioGCVfMT3HSO+C+PfiWZNvkOXqJddHB
-   fHG2dyMZDmThLfSjhAe9oQwkNr2jUfo3LxCi4au5AQYxva1qEL1ye8NrI
-   dXPfduk/fKDFEs1zVEiI1ZvIbhQGH6+v+Yb5khw71jX4vGKvrRU/mjHM+
-   cjVaHA8aLuY9QP9AHin2HkLvxgrZIFNsSnjA5pWs9ACLahZHy9ejak/ii
-   eBXmdiF3pOSgygadSLVNm2pU4ZvBiYmcMNDP+U5VQyZlpw91t22hj1PSo
+  bh=HP2huTcvvO7TUh3mgU3qMuAjpGy887H4YuFiJWxsEUU=;
+  b=ci9q/cyJaAPHMPIORnnSaecv0X8mgHEwyjeEwlBBHywLC5XBj6YsDVlV
+   aUdIQL3G9y5l184hSi8pHXGe7mw9jL2zgTGVwbgAtbIKksQ0sqlDskodF
+   YpfacikInYgFUovCxaeBfUOAKB0EuClqNtPjP96KR3OdnG/uynKLx5sCa
+   X0NqyzaOaGv0o5N+Qu0fMsGWXEZMjzfBBhpELYgs/0fTNqJGQMj2E9jyx
+   rEISMf+RyLZ6N6ZYiCCnYQj0RkPELFOMrMdHgnIbsUuOGjEEoIoXaB6aa
+   UbuH/r1miHMFyaDvhRduXNaa8v2rABUt3e5RUjGLu+jsDkTvbZm5N9WNp
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615798"
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615803"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="17615798"
+   d="scan'208";a="17615803"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
   by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:26 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339765"
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339768"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="912339765"
+   d="scan'208";a="912339768"
 Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
   by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:24 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -52,9 +52,9 @@ Cc: kvm@vger.kernel.org,
 	reinette.chatre@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 03/17] vfio/pci: Consistently acquire mutex for interrupt management
-Date: Thu,  1 Feb 2024 20:56:57 -0800
-Message-Id: <e7d35d7730f3f83417e757bc264a470f8c2671ed.1706849424.git.reinette.chatre@intel.com>
+Subject: [PATCH 04/17] vfio/pci: Remove duplicate interrupt management from core VFIO PCI
+Date: Thu,  1 Feb 2024 20:56:58 -0800
+Message-Id: <93dfe93e8fc53e83ac585ed3a891cefde32b3016.1706849424.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1706849424.git.reinette.chatre@intel.com>
 References: <cover.1706849424.git.reinette.chatre@intel.com>
@@ -66,84 +66,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-vfio_pci_set_irqs_ioctl() is the entrypoint for interrupt management
-via the VFIO_DEVICE_SET_IRQS ioctl(). The igate mutex is obtained
-before calling vfio_pci_set_irqs_ioctl() for management of all interrupt
-types to protect against concurrent changes to the eventfds associated
-with device request notification and error interrupts.
+The eventfds associated with device request notification and
+error IRQ are managed by the VFIO PCI interrupt management code
+contained in vfio_pci_intrs.c. The VFIO PCI interrupt management
+code supports acquiring, releasing, as well as signaling of
+these eventfd.
 
-The igate mutex is not acquired consistently. The mutex is always
-(for all interrupt types) acquired from within vfio_pci_ioctl_set_irqs()
-before calling vfio_pci_set_irqs_ioctl(), but vfio_pci_set_irqs_ioctl() is
-called via vfio_pci_core_disable() without the mutex held. The latter
-is expected to be correct if the code flow can be guaranteed that
-the provided interrupt type is not a device request notification or error
-interrupt.
+The VFIO PCI core code duplicates the signaling of device request
+notification and error interrupts and does so by acquiring the lock
+and accessing data that should ideally be contained within the
+VFIO PCI interrupt management code.
 
-Move igate mutex acquire and release into vfio_pci_set_irqs_ioctl()
-to make the locking consistent irrespective of interrupt type.
-This is one step closer to contain the interrupt management locking
-internals within the interrupt management code so that the VFIO PCI
-core can trigger management of the eventfds associated with device
-request notification and error interrupts without needing to access
-and manipulate VFIO interrupt management locks and data.
+Do not duplicate but instead call existing VFIO PCI interrupt
+management code to signal device request notification
+and error interrupts.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
-Note to maintainers:
-Originally formed part of the IMS submission below, but is not
-specific to IMS.
-https://lore.kernel.org/lkml/cover.1696609476.git.reinette.chatre@intel.com
-
- drivers/vfio/pci/vfio_pci_core.c  |  3 ---
- drivers/vfio/pci/vfio_pci_intrs.c | 10 ++++++++--
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/vfio/pci/vfio_pci_core.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index 1cbc990d42e0..d2847ca2f0cb 100644
+index d2847ca2f0cb..de097174e455 100644
 --- a/drivers/vfio/pci/vfio_pci_core.c
 +++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -1214,12 +1214,9 @@ static int vfio_pci_ioctl_set_irqs(struct vfio_pci_core_device *vdev,
- 			return PTR_ERR(data);
- 	}
+@@ -700,16 +700,12 @@ void vfio_pci_core_close_device(struct vfio_device *core_vdev)
+ #endif
+ 	vfio_pci_core_disable(vdev);
  
 -	mutex_lock(&vdev->igate);
--
- 	ret = vfio_pci_set_irqs_ioctl(vdev, hdr.flags, hdr.index, hdr.start,
- 				      hdr.count, data);
- 
+-	if (vdev->err_trigger) {
+-		eventfd_ctx_put(vdev->err_trigger);
+-		vdev->err_trigger = NULL;
+-	}
+-	if (vdev->req_trigger) {
+-		eventfd_ctx_put(vdev->req_trigger);
+-		vdev->req_trigger = NULL;
+-	}
 -	mutex_unlock(&vdev->igate);
- 	kfree(data);
- 
- 	return ret;
-diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 69ab11863282..97a3bb22b186 100644
---- a/drivers/vfio/pci/vfio_pci_intrs.c
-+++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -793,7 +793,9 @@ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
- 	int (*func)(struct vfio_pci_core_device *vdev, unsigned int index,
- 		    unsigned int start, unsigned int count, uint32_t flags,
- 		    void *data) = NULL;
-+	int ret = -ENOTTY;
- 
-+	mutex_lock(&vdev->igate);
- 	switch (index) {
- 	case VFIO_PCI_INTX_IRQ_INDEX:
- 		switch (flags & VFIO_IRQ_SET_ACTION_TYPE_MASK) {
-@@ -838,7 +840,11 @@ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
- 	}
- 
- 	if (!func)
--		return -ENOTTY;
-+		goto out_unlock;
-+
-+	ret = func(vdev, index, start, count, flags, data);
-+out_unlock:
-+	mutex_unlock(&vdev->igate);
-+	return ret;
- 
--	return func(vdev, index, start, count, flags, data);
++	vfio_pci_set_irqs_ioctl(vdev, VFIO_IRQ_SET_DATA_NONE |
++				VFIO_IRQ_SET_ACTION_TRIGGER,
++				VFIO_PCI_ERR_IRQ_INDEX, 0, 0, NULL);
++	vfio_pci_set_irqs_ioctl(vdev, VFIO_IRQ_SET_DATA_NONE |
++				VFIO_IRQ_SET_ACTION_TRIGGER,
++				VFIO_PCI_REQ_IRQ_INDEX, 0, 0, NULL);
  }
+ EXPORT_SYMBOL_GPL(vfio_pci_core_close_device);
+ 
 -- 
 2.34.1
 
