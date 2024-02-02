@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B503513FE2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B09134CA
 	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706849852; cv=none; b=jRGPjsGTrJpHGG0KXf3eSJemXa385mIUVEjb2BroMAgStvP2SXe+jVBWoZeG8aiE3ZSRz/DGBqA9wFUgRhbYeFdVFoZz2oTaE+YVvz8ROXBD7M/rg9/Ihz1af2lLVcp8hFUCDE+Q8zql/zPUSAFvz2vbVLg90OX3a2V1lOteAi0=
+	t=1706849853; cv=none; b=E6Cy2M+Xr9Ws0m33mR+wNQtczSo4LRUgq/NWBV9TuhSnRO7N1ghAp2OIZR6AypuegupjU2Z3xO4NWmG+UwKOg75Tu1oZFCJozjOOy77o0CBde+o/N7qKjsCDSIJ6m293SjYFpiyFro2zk20h95OyosZSipAw97AG2eT9dTi+Zgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706849852; c=relaxed/simple;
-	bh=Y8mGWLOXkQHarvJTOtXDGSt3QFUWy8OXLPs0vhIlLNk=;
+	s=arc-20240116; t=1706849853; c=relaxed/simple;
+	bh=Kxk7o9A62R7KtL/giSvWj2QXePnCiz/Qp5YtBYfbf9E=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UI8IdXEZW3duowRIllMZrgMjujQHcOVs8LNzffOP7cDVszaecImpmGbckP5xuGW45Dt6DpKhNwfOdLFOZI+akXx/LAk1DV531rxse9INZCb4DurjF9ziNMa3n7AZPLIa9WtvLBFjuZrsP25giSFGzZM62mSqUn8HnrYLbMg49TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PQsAuZ37; arc=none smtp.client-ip=192.198.163.8
+	 MIME-Version; b=J5A/dqRO35Hgkqoa0RvraIpJg8r0xSSrD+iwpf71kqexISTVR60Zcid1U+kq30OP4D244YC8WzOLUeKSZNFk7rRWVVvusqi8P6ddBVLpaQUPnDNFaNrBt0BNiN5coYrSCEK4AR6jIoNF8VXc4snhAZ1y+a8tyE4ks2U+83BmP/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cECKlBix; arc=none smtp.client-ip=192.198.163.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PQsAuZ37"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cECKlBix"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1706849851; x=1738385851;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=Y8mGWLOXkQHarvJTOtXDGSt3QFUWy8OXLPs0vhIlLNk=;
-  b=PQsAuZ37UXb5DGC9EqtvAqIcwzOVEnpFt1Tnp0+BGor7Ki2bZ2HAqW+t
-   yaQC1r2VawmbGGKGeF9HSDmLc+tkjz9D4r1gwVhTgyQOPuGg3cRrboKSy
-   I6Vbg3KPDjMBxgCc3IyX5brBBvPuTIRkUoG6bgWrCm6UqgOCbq8e1n6KP
-   zHB+vb6/GX/rSw0nSEtOglrpm2PTZhqQie3dNPp+0FI9OKMWF2YdOtCT2
-   8nFy2ffxivRS5UnViADfT/qpgloB7q0HO80oixT4fMvUnAfhC3HjN88uS
-   Dmgnwzx2mc6uSGFhTQVu3DvQpMK+kvIhMwfH1xC6jw1E3UroEjsJBD8CR
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615815"
+  bh=Kxk7o9A62R7KtL/giSvWj2QXePnCiz/Qp5YtBYfbf9E=;
+  b=cECKlBixYZPOzIADOR1sI+jQ+WbIbhZsb+tVhlYClZe90yVR87s3jnPg
+   +OSvzKbJnbX969gMypGwfRVAq9aL4wkhXrv+B2qdMfNPQ/ZUiM/BZ7ViZ
+   c6/KAcYwUJ7toU431rx5yR0RXVcSTm0Qx6Q+UKs0ZQCnNrkj+oRm3+47G
+   aUNUbVqQB5C6NyaqJkKw3D+Sec0U+bw8qQAutGMzC8an0leOXqh7ORK3Q
+   WkncBAP2Rnz8j+IKyrgJuO418+wDi084Ito1Rm7yKVAxEramCZD8U7Iw7
+   lLgokr1I8giBC8ODs32O/3TYSKWMLe5d1Pw8cFD5GS8raMTTEOtvlpLX8
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615812"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="17615815"
+   d="scan'208";a="17615812"
 Received: from orsmga004.jf.intel.com ([10.7.209.38])
   by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:26 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339776"
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339774"
 X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
-   d="scan'208";a="912339776"
+   d="scan'208";a="912339774"
 Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
   by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:24 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -52,9 +52,9 @@ Cc: kvm@vger.kernel.org,
 	reinette.chatre@intel.com,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 07/17] vfio/pci: Preserve per-interrupt contexts
-Date: Thu,  1 Feb 2024 20:57:01 -0800
-Message-Id: <d6e32e0e7adaf61da39fb6cd2863298b15a2663e.1706849424.git.reinette.chatre@intel.com>
+Subject: [PATCH 06/17] vfio/pci: Remove interrupt index interpretation from wrappers
+Date: Thu,  1 Feb 2024 20:57:00 -0800
+Message-Id: <ca249ad459c07a36cd64137ee1cc107dcd8b6f4c.1706849424.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1706849424.git.reinette.chatre@intel.com>
 References: <cover.1706849424.git.reinette.chatre@intel.com>
@@ -66,120 +66,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-MSI and MSI-X interrupt management for PCI passthrough devices create
-a new per-interrupt context every time an interrupt is allocated,
-freeing it when the interrupt is freed.
+vfio_pci_set_intx_trigger() and vfio_pci_set_msi_trigger() have similar
+enough flows that can be converged into one shared flow instead of
+duplicated.
 
-The per-interrupt context contains the properties of a particular
-interrupt. Without a property that persists across interrupt allocation
-and free it is acceptable to always create a new per-interrupt context.
+To share code between management of interrupt types it is necessary that
+the type of the interrupt is only interpreted by the code specific to
+the interrupt type being managed.
 
-INTx interrupt context has a "masked" property that persists across
-allocation and free and thus preserves its interrupt context
-across interrupt allocation and free calls.
-
-MSI and MSI-X interrupts already remain allocated across interrupt
-allocation and free requests, additionally maintaining the
-individual interrupt context is a reflection of this existing
-behavior and matches INTx behavior so that more code can be shared.
-
-An additional benefit is that maintaining interrupt context supports
-a potential future use case of emulated interrupts, where the
-"is this interrupt emulated" is a property that needs to persist
-across allocation and free requests.
-
-Persistent interrupt contexts means that existence of per-interrupt
-context no longer implies a valid trigger, pointers to freed memory
-should be cleared, and a new per-interrupt context cannot be assumed
-needing allocation when an interrupt is allocated.
+Remove interrupt type interpretation from what will eventually be
+shared code (vfio_pci_set_msi_trigger(), vfio_msi_set_block()) by
+pushing this interpretation to be within the interrupt
+type specific code (vfio_msi_enable(),
+(temporary) vfio_msi_set_vector_signal()).
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
 Note to maintainers:
-This addition originally formed part of the IMS work below that mostly
-ignored INTx. This work focuses on INTx, MSI, MSI-X where this addition
-is relevant.
+Originally formed part of the IMS submission below, but is not
+specific to IMS.
 https://lore.kernel.org/lkml/cover.1696609476.git.reinette.chatre@intel.com
 
- drivers/vfio/pci/vfio_pci_intrs.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/vfio/pci/vfio_pci_intrs.c | 38 +++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 31f73c70fcd2..7ca2b983b66e 100644
+index 97a3bb22b186..31f73c70fcd2 100644
 --- a/drivers/vfio/pci/vfio_pci_intrs.c
 +++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -427,7 +427,7 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+@@ -346,16 +346,19 @@ static irqreturn_t vfio_msihandler(int irq, void *arg)
+ 	return IRQ_HANDLED;
+ }
  
- 	ctx = vfio_irq_ctx_get(vdev, vector);
+-static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec, bool msix)
++static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec,
++			   unsigned int index)
+ {
+ 	struct pci_dev *pdev = vdev->pdev;
+-	unsigned int flag = msix ? PCI_IRQ_MSIX : PCI_IRQ_MSI;
++	unsigned int flag;
+ 	int ret;
+ 	u16 cmd;
  
--	if (ctx) {
-+	if (ctx && ctx->trigger) {
- 		irq_bypass_unregister_producer(&ctx->producer);
- 		irq = pci_irq_vector(pdev, vector);
- 		cmd = vfio_pci_memory_lock_and_enable(vdev);
-@@ -435,8 +435,9 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
- 		vfio_pci_memory_unlock_and_restore(vdev, cmd);
- 		/* Interrupt stays allocated, will be freed at MSI-X disable. */
- 		kfree(ctx->name);
-+		ctx->name = NULL;
- 		eventfd_ctx_put(ctx->trigger);
--		vfio_irq_ctx_free(vdev, ctx, vector);
-+		ctx->trigger = NULL;
+ 	if (!is_irq_none(vdev))
+ 		return -EINVAL;
+ 
++	flag = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? PCI_IRQ_MSIX : PCI_IRQ_MSI;
++
+ 	/* return the number of supported vectors if we can't get all: */
+ 	cmd = vfio_pci_memory_lock_and_enable(vdev);
+ 	ret = pci_alloc_irq_vectors(pdev, 1, nvec, flag);
+@@ -367,10 +370,9 @@ static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec, bool msi
+ 	}
+ 	vfio_pci_memory_unlock_and_restore(vdev, cmd);
+ 
+-	vdev->irq_type = msix ? VFIO_PCI_MSIX_IRQ_INDEX :
+-				VFIO_PCI_MSI_IRQ_INDEX;
++	vdev->irq_type = index;
+ 
+-	if (!msix) {
++	if (index == VFIO_PCI_MSI_IRQ_INDEX) {
+ 		/*
+ 		 * Compute the virtual hardware field for max msi vectors -
+ 		 * it is the log base 2 of the number of vectors.
+@@ -413,8 +415,10 @@ static int vfio_msi_alloc_irq(struct vfio_pci_core_device *vdev,
+ }
+ 
+ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+-				      unsigned int vector, int fd, bool msix)
++				      unsigned int vector, int fd,
++				      unsigned int index)
+ {
++	bool msix = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? true : false;
+ 	struct pci_dev *pdev = vdev->pdev;
+ 	struct vfio_pci_irq_ctx *ctx;
+ 	struct eventfd_ctx *trigger;
+@@ -505,25 +509,26 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+ 
+ static int vfio_msi_set_block(struct vfio_pci_core_device *vdev,
+ 			      unsigned int start, unsigned int count,
+-			      int32_t *fds, bool msix)
++			      int32_t *fds, unsigned int index)
+ {
+ 	unsigned int i, j;
+ 	int ret = 0;
+ 
+ 	for (i = 0, j = start; i < count && !ret; i++, j++) {
+ 		int fd = fds ? fds[i] : -1;
+-		ret = vfio_msi_set_vector_signal(vdev, j, fd, msix);
++		ret = vfio_msi_set_vector_signal(vdev, j, fd, index);
  	}
  
- 	if (fd < 0)
-@@ -449,16 +450,17 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
- 			return irq;
+ 	if (ret) {
+ 		for (i = start; i < j; i++)
+-			vfio_msi_set_vector_signal(vdev, i, -1, msix);
++			vfio_msi_set_vector_signal(vdev, i, -1, index);
  	}
  
--	ctx = vfio_irq_ctx_alloc(vdev, vector);
--	if (!ctx)
--		return -ENOMEM;
-+	/* Per-interrupt context remain allocated. */
-+	if (!ctx) {
-+		ctx = vfio_irq_ctx_alloc(vdev, vector);
-+		if (!ctx)
-+			return -ENOMEM;
-+	}
- 
- 	ctx->name = kasprintf(GFP_KERNEL_ACCOUNT, "vfio-msi%s[%d](%s)",
- 			      msix ? "x" : "", vector, pci_name(pdev));
--	if (!ctx->name) {
--		ret = -ENOMEM;
--		goto out_free_ctx;
--	}
-+	if (!ctx->name)
-+		return -ENOMEM;
- 
- 	trigger = eventfd_ctx_fdget(fd);
- 	if (IS_ERR(trigger)) {
-@@ -502,8 +504,7 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
- 	eventfd_ctx_put(trigger);
- out_free_name:
- 	kfree(ctx->name);
--out_free_ctx:
--	vfio_irq_ctx_free(vdev, ctx, vector);
-+	ctx->name = NULL;
  	return ret;
  }
  
-@@ -539,6 +540,7 @@ static void vfio_msi_disable(struct vfio_pci_core_device *vdev,
+-static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
++static void vfio_msi_disable(struct vfio_pci_core_device *vdev,
++			     unsigned int index)
+ {
+ 	struct pci_dev *pdev = vdev->pdev;
+ 	struct vfio_pci_irq_ctx *ctx;
+@@ -533,7 +538,7 @@ static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
+ 	xa_for_each(&vdev->ctx, i, ctx) {
  		vfio_virqfd_disable(&ctx->unmask);
  		vfio_virqfd_disable(&ctx->mask);
- 		vfio_msi_set_vector_signal(vdev, i, -1, index);
-+		vfio_irq_ctx_free(vdev, ctx, i);
+-		vfio_msi_set_vector_signal(vdev, i, -1, msix);
++		vfio_msi_set_vector_signal(vdev, i, -1, index);
  	}
  
  	cmd = vfio_pci_memory_lock_and_enable(vdev);
-@@ -694,7 +696,7 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+@@ -656,10 +661,9 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+ {
+ 	struct vfio_pci_irq_ctx *ctx;
+ 	unsigned int i;
+-	bool msix = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? true : false;
  
- 	for (i = start; i < start + count; i++) {
- 		ctx = vfio_irq_ctx_get(vdev, i);
--		if (!ctx)
-+		if (!ctx || !ctx->trigger)
- 			continue;
- 		if (flags & VFIO_IRQ_SET_DATA_NONE) {
- 			eventfd_signal(ctx->trigger);
+ 	if (irq_is(vdev, index) && !count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
+-		vfio_msi_disable(vdev, msix);
++		vfio_msi_disable(vdev, index);
+ 		return 0;
+ 	}
+ 
+@@ -672,15 +676,15 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+ 
+ 		if (vdev->irq_type == index)
+ 			return vfio_msi_set_block(vdev, start, count,
+-						  fds, msix);
++						  fds, index);
+ 
+-		ret = vfio_msi_enable(vdev, start + count, msix);
++		ret = vfio_msi_enable(vdev, start + count, index);
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = vfio_msi_set_block(vdev, start, count, fds, msix);
++		ret = vfio_msi_set_block(vdev, start, count, fds, index);
+ 		if (ret)
+-			vfio_msi_disable(vdev, msix);
++			vfio_msi_disable(vdev, index);
+ 
+ 		return ret;
+ 	}
 -- 
 2.34.1
 
