@@ -1,161 +1,130 @@
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2040.outbound.protection.outlook.com [40.107.236.40])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3669185653
-	for <patches@lists.linux.dev>; Thu,  1 Feb 2024 20:02:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706817742; cv=fail; b=aJbOHUj5tYaWhKw2yFfFO7ud+sW47UFJJW8q9ZknE9NuV3bvSFbf8X7FtQHsyBo4M7dn3+1VTNUsoheFR9rf6z97YiOWHcMt+X+eVSzaaqPeOvujHRMnLVQX/TQMIexlhpnCUsvYdH9KZxvqKaVprY+vxZC1JDIKGG1Ntv9wWVU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706817742; c=relaxed/simple;
-	bh=MiGwTa7dbDv7+u6mD54dob0/QormfZoACybdczyuP2U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Gmay2ITTCy3m4YKkXm7b4Tmm5jK9CHuiAX2aghLzGIwUGHV2zRo7Z4AVDRYvVFbeK4+fGdiMnWb61duHHhB4gmzH38yxt0HoqXwPDb+T/YytlDGUaZrC0cdxBuqHJbWTslGb2xXfKvemUGUFLi7FRcrEaVA8hFSVVpKacIjRPd8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TUEazgj9; arc=fail smtp.client-ip=40.107.236.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E69DF9C7
+	for <patches@lists.linux.dev>; Fri,  2 Feb 2024 04:57:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706849848; cv=none; b=BASaUVI9M+JSiFCYfLaIkHbXUNMqoXFmFZ5uydkD2r8qOgcyBVa+smJA7q3LdQG94E7FqWH7cWOhcQfWilIIijAWYIr+kkwZbEzoUIQyC1eExGJFxYqm5gR0/lB8dVmGqUJuxyMCvWB+RqOVh1c6wDrKOTtG/UfU0VAhZS72XSs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706849848; c=relaxed/simple;
+	bh=VittVlf1b0271e/PJ8Q1PNQZ9T1Axil9WEjsp2ki1d4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mN4oMCrgSX60zcD/nIlyhPVz1i3PKYETC2DlxV1Ze+y7DEEcTHf/OZ/2fOowqEguOhaKXpEs5gZpjzOXHpP0BbEMKdp/YyVNqEKHel5hb7cfnBDnkSBqeHYQ8NSc9rss2zGMJE8RgTTlR/uwRwpjKH+9or7cQXKrkHGnVQHJsTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=J+K0hbCq; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TUEazgj9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=h0ZAMl5XC08k6eGj3viWMjZRsq6QMvc8mmEdeHb4aiaVSM8fHv8iu/M/SZHNjCxtgDV+fVi/t8Fjz8NAevwkZKJxDU/u5GaUxHZPZrJtlRq01Cn8ZWpuvfLOxpXFBWnkf4dnW6UKk2QxuPtLlYAgCLym2So9YU2A8wJTQCTUwpl3r2no1J7l/1YqUjZytqmuMBgl/We/A9RnHgMbPgyoeKUzRsoOOmaH+4f4CMR8lbmjtEC3goGp4LSYBisk326QeKhndKCPs7oAdYkwpYImwfiyI0djuk2A4kAaJGXWnVf2QuKMQOBPXQ6MBlZSgzT14ciPPoBSi4OLTCBdkRKYVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=j27zIEzFVryWl29oY+IXs2SXAftL1Ch68B3TR+mOfH4=;
- b=TL6TVInbTrKpADjuKaBXw1/iBGm9hr45ISweMMbUSFjt7vVA8iEtZM8wWt4xDWfdpKLasziI/QercJSkbwb5ErIH1GifSGET+i29RytnNjmPfxj6yoOfxOWGaCt7+Nr3ZjoH6eEo7VPqqoCVGlSkEgwpSxlkl63KPajI1igBCZ/YDaby5G3jqMhL26Sv52qaDLYLKA6EN+zMmnbQkHUCst97MZBBUv39NHtFVCVzeHS5JHlyTaRTFFseJyaR/UW4SdjAQSIhwj3qSYkFRiWbBYYvAwzL8o2HE7L1DuZEpx8a4b4pW7AyFd5I/mnZmiWIn4xlx3+2H9irRIodWIhvsw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=j27zIEzFVryWl29oY+IXs2SXAftL1Ch68B3TR+mOfH4=;
- b=TUEazgj9mzj9HbQSrA7vMrNrL0xVb7bpRyJs7HV8pbQFNBjfEJ+JHjZGW8FtDDiG4AOMl2JlMaJ9kd1ZR39EXKIgZszW7JDQ5NA8XhiodGSU9zO19hJTGVBG3XC1GMnWROHIAXzLck/dtSId20fPD2Ujgvygp/Ksth4L4XgAfRU1HHNsK0sFwRK1sO3fJBabG0nbMdpd2iMNpbqEbUskd2oglpzrz107YByawzuNtJSdDGAmnIWxBaccktdp24JVtMdKJl9ftou8xeQe022MZfTRYC1qcQUrVXiWsspP8L2povs/Ye2Pt76AieXShGhL7mZz/vys9xweVou/vJlPHw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by PH0PR12MB5401.namprd12.prod.outlook.com (2603:10b6:510:d4::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.8; Thu, 1 Feb
- 2024 20:02:14 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7228.029; Thu, 1 Feb 2024
- 20:02:14 +0000
-Date: Thu, 1 Feb 2024 16:02:12 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>, patches@lists.linux.dev
-Subject: Re: [PATCH] drm/tegra: Remove of_dma_configure() from
- host1x_device_add()
-Message-ID: <20240201200212.GQ1455070@nvidia.com>
-References: <0-v1-c76c50cd425e+15298-host1x_no_iommu_conf_jgg@nvidia.com>
- <583b9145-cbbe-4a03-8120-e2a66a6093c7@nvidia.com>
- <20240131153312.GM1455070@nvidia.com>
- <a1597113-3ec9-445c-90d1-62df97406fb2@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a1597113-3ec9-445c-90d1-62df97406fb2@nvidia.com>
-X-ClientProxiedBy: BLAPR03CA0130.namprd03.prod.outlook.com
- (2603:10b6:208:32e::15) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J+K0hbCq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1706849846; x=1738385846;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=VittVlf1b0271e/PJ8Q1PNQZ9T1Axil9WEjsp2ki1d4=;
+  b=J+K0hbCqsCaSKZ/CiEAlocNL45IAnQy8brVvc6ip0pzlCkyRo75DJaxU
+   I4h2VqdA9pVIjOHv8oXJDy6rRT06x6XzjyAGJETrBASdnDR5djfgScn+q
+   I+gGgNL7qWktML9Ly6C1UKHqUqwcsBftBFLXhgaejQIs2Z6TLpoxbTIJw
+   fMXmr2xMX3Tywkc4OhBPsjP6cm/1XoYR24KCio8Y2fpOWM62+8FgBIDeM
+   ZFG2D5bnOzKSPaHm9+/glZJokRi/W8+kV82bnFOZqm/w37hxBCezTYFvu
+   8A+p0r/Ab8rO9L4lywvRLT0QOixfcWjpVcP/btsxbEmzq1MTatdZ8yFO5
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="17615782"
+X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
+   d="scan'208";a="17615782"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:25 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10971"; a="912339756"
+X-IronPort-AV: E=Sophos;i="6.05,237,1701158400"; 
+   d="scan'208";a="912339756"
+Received: from rchatre-ws.ostc.intel.com ([10.54.69.144])
+  by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2024 20:57:24 -0800
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: jgg@nvidia.com,
+	yishaih@nvidia.com,
+	shameerali.kolothum.thodi@huawei.com,
+	kevin.tian@intel.com,
+	alex.williamson@redhat.com
+Cc: kvm@vger.kernel.org,
+	dave.jiang@intel.com,
+	ashok.raj@intel.com,
+	reinette.chatre@intel.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 00/17] vfio/pci: Remove duplicate code and logic from VFIO PCI interrupt management
+Date: Thu,  1 Feb 2024 20:56:54 -0800
+Message-Id: <cover.1706849424.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH0PR12MB5401:EE_
-X-MS-Office365-Filtering-Correlation-Id: 847ba5cc-8292-4349-bd9b-08dc2360aeeb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	6CB6ar+MqM+ipwUkwqlmTmWH3nZwpO7Gu6woLyRrvVFBzxlUyvqy5F9SuLLlKn950MtyKvtOEWnBF8D2GnD+6GyU8mCS1j0PqsvwbIsJJfIXd+7G4VUBNc1wLWuemRUh5TxTBOOrf31SjDrtZVAWU02/fEpOwXTxBWqvCPGqIScbVahy50KRIgcnxrowBrAanPZCGBgzqjaDtYqLzBEK93CRBaurUzUe8aeyvSEySIf4xg1z0BH5CSiGfGHYIw4A4T3i0gGIdHw2foTAWDNRWMCLD9J8sfIAsEF8YU9in6XwtlF46+dQv0Mg3uzEPSEfELwXA91GVTfoaw8sPX5tMJ9v2JJ/IYkGX4s6P2oeJIXMy+E9DvYblz25VtUGyc6ghn0bgQLBc8ZLKGqr9W2NE1ML7TngdTXjj9PwCekXMr9m+z6oLLrdfUMtRia7GBRIj2AJhPA++JOtsB2EchlF6BDcbdzev90VFDeBXACu4hqFZYDvCeVcyAlnPC096DiP1jzNjp478VTf2B+Y0oJgS5DTjhoUeUTO7T2JziRp/zcmpNtHni2iLBcW67qNi6y8
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(346002)(136003)(376002)(366004)(230922051799003)(1800799012)(186009)(451199024)(64100799003)(1076003)(26005)(2616005)(41300700001)(66946007)(6636002)(83380400001)(36756003)(66476007)(37006003)(54906003)(66556008)(6506007)(6512007)(6486002)(478600001)(38100700002)(316002)(5660300002)(86362001)(33656002)(8936002)(8676002)(2906002)(6862004)(4326008);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?QnCJktmpKZ6IgpnENLdHwkySUMQ/kgmrBsOxG4qxH1M8KuvhIo/fENdYUy1B?=
- =?us-ascii?Q?F1/zTQ2lzkjRvWfLSyZOpW2zF/F1wyVFZ346fSA07O27S7l8aEKzh0LhadGI?=
- =?us-ascii?Q?JXHmn8p/eKQPRHpnO7dHm6w+H4to1jzVyVfHyG78UZFWTpCUl67l4BdRMtWr?=
- =?us-ascii?Q?yERzcBWAkSic0sox/4uD89G4q/4/jvxl7IhiTcR0xm55KPhCqaIIkWt6W/xc?=
- =?us-ascii?Q?kA9dXVeQBcFHAXlQ2svwC4xihL0GatxkRDBS1m1IWHVsdfw1xqOQY1pzgSLk?=
- =?us-ascii?Q?k2D0xDIWCQwJH7uyOJ5+i50k+CGgl8E2LSpfVFmDt/uJivaPSznp0UMAPEAY?=
- =?us-ascii?Q?8uRpD4LH/ans9YGVUlsUv2n2I6nXiI34I7pxYMLCT0KODZiwG2Kh0RpQYWt8?=
- =?us-ascii?Q?AuWsvtRLGlorVdN1L8yxGAlnVxOvwJGOb8KeyGSpADiZxyV7ywFOLUC1nqp8?=
- =?us-ascii?Q?3VgmB18gOncTPh2hvJ2EEgQyOk+/6o8i1QbTqYGcMolGhcHP+yEsc+ZYGAc3?=
- =?us-ascii?Q?MmVVAFXiSGe9QIfIaKl3oApwYOM+YHmY6h6ZDj7n7nVdxcmJern3lmGeF2yB?=
- =?us-ascii?Q?wp+S5cdkAn/yKaAxtUPSmHlrrFvU6tjVs3qLhVhEtT/KpJgfFW8wgHULq6U7?=
- =?us-ascii?Q?UpN2KJtaSkzdyVIyYQeySJJ9v2pwLhHljtklC6/PD0GiJahVhJPjp4VenqJr?=
- =?us-ascii?Q?ZcqWJv7XpG4tJmevagZ4Zza+E27+hm2MKoer7BS6oLB3KsobrkQbpxfuWEXV?=
- =?us-ascii?Q?tOB8gi8u2fm8btHMC3/EtK8qbkoAi5DitHQSbAwbBbacHqtEZgMNrb7G//my?=
- =?us-ascii?Q?s/h8zlxfVR99tmV9J1C5T/TiSM05jRXLEDvjqM7dFdFCWDI24ZLPq2CwO5Hx?=
- =?us-ascii?Q?V/PT/I/+q19H7oGxhDzHJoR1RisoHqT/y0gLjIJAzCkITRmgdZcw2GpicrUo?=
- =?us-ascii?Q?MSehHQ8HqHF0LJCiYuySyXhVjSX6eKjAHK8LE6ilDBSITb0oRu8Ymw21W1aB?=
- =?us-ascii?Q?TKkPkhM4ohyu0xzfBlMzoRE0hEyQnjNZDphZw4w7gkdx5GTONUzPgHe6WZf0?=
- =?us-ascii?Q?bTWL8yXGnbyaHbPdnmV2qemrcA+uO+jC4unbvwk8LL1AaDo0r2xriE6OiVgd?=
- =?us-ascii?Q?GKvx/CydealnYPTuDUqsnNBtfOHkmk+Ewa9SuBvtGJOVgOwGk/QiiLLAeKXJ?=
- =?us-ascii?Q?lWFDRWLDrRqQEkgQWceFVOLsA0/XcFFH/pxoMG7XNhLb/K3IUDwI5NAlxDU6?=
- =?us-ascii?Q?/+6ZzfqHJiJVh9TXM9djZABoQ3SDoM9m8XId/Solte1vulNPZFTVeLYDiHwX?=
- =?us-ascii?Q?OQAdLqVsBqAFRt+za5ip9o4L5pPgyda8ghm8BGFpKsV1Ct4T1IZr1BBLonTG?=
- =?us-ascii?Q?1g0voBwTnYROHFhdqnEqTFG9gA6SoqLJGbNgxmgD200LslkbvRB4lxaFS9zQ?=
- =?us-ascii?Q?DaBy5aFJ73376zP4OUANla4Er+W7c7oGXUYek221f9j6hxx7UoGu8X9sFK5B?=
- =?us-ascii?Q?Txt1bX38Aj3fJ2BeumD2hhm/64qYim1+2n716OPOVzyTrx1YRvzpMuOaVVOR?=
- =?us-ascii?Q?uhDK0OqitYfO5TWnTybamBw4T0GaMrkPCGIU2mV6?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 847ba5cc-8292-4349-bd9b-08dc2360aeeb
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Feb 2024 20:02:14.0198
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /ROuJ7zb0u/+pFfbDtj6ZaRWzPGZqn38fmQzBpW/7EQh3ufvWDxN9Xw3AxoekJp+
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5401
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 01, 2024 at 07:35:24PM +0000, Jon Hunter wrote:
-> > You mean this sequence?
-> > 
-> > 		err = device_add(&ctx->dev);
-> > 		if (err) {
-> > 			dev_err(host1x->dev, "could not add context device %d: %d\n", i, err);
-> > 			put_device(&ctx->dev);
-> > 			goto unreg_devices;
-> > 		}
-> > 
-> > 		err = of_dma_configure_id(&ctx->dev, node, true, &i);
-> > 		if (err) {
-> > 			dev_err(host1x->dev, "IOMMU configuration failed for context device %d: %d\n",
-> > 				i, err);
-> > 			device_unregister(&ctx->dev);
-> > 			goto unreg_devices;
-> > 		}
-> 
-> Yes this sequence.
-> 
-> > I didn't seem an obvious place that this would get fixed up later?
-> > 
-> > device_add() was done before so the iommu_device_link() shouldn't be
-> > failing? Are you hitting a duplicate link (ie remove the nowarn from
-> > iommu_device_link())
-> 
-> 
-> Removing the '_nowarn' does appear to fix it, although it is not clear to me
-> why?
+Hi Everybody,
 
-What did you do to remove? Just the letters or the whole line?
+Duplicate VFIO PCI interrupt management code and logic can be found
+in two areas:
+1) the VFIO PCI core (vfio_pci_core.c) directly accesses the
+   VFIO PCI interrupt lock and data to duplicate actions available
+   via the VFIO PCI interrupt management code (vfio_pci_intrs.c), and
+2) the INTx and MSI/MSI-X interrupt management code within
+   vfio_pci_intrs.c have duplicate logic.
 
-I was thinking the letters because it triggers a large debug message.
+This series addresses (1) and (2) by first containing VFIO PCI interrupt
+management within the VFIO PCI interrupt management code found in
+vfio_pci_intrs.c and then refactoring the VFIO PCI interrupt management
+code (vfio_pci_intrs.c) to share common logic between INTx, MSI, and
+MSI-X interrupt management.
 
-But, what is the actual log output you see, is it -EEXIST?
+Bulk of the changes result in the same actions as before this series.
+Two functional changes to highlight:
+a) "vfio/pci: Consistently acquire mutex for interrupt management"
+   changes vfio_pci_core_disable()->vfio_pci_set_irqs_ioctl() to be
+   called with the igate mutex held.
+b) "vfio/pci: Preserve per-interrupt contexts" changes MSI/MSI-x
+   interrupt management to preserve per-interrupt contexts across interrupt
+   allocate/free.
 
-If it is coming and going is it a race of some kind?
+This work was inspired by (and inherits a few patches from) the IMS [1]
+enabling work but this work is submitted (and expected to be considered)
+independent from IMS.
 
-Jason
+Any feedback will be appreciated.
+
+Reinette
+
+[1] https://lore.kernel.org/lkml/cover.1696609476.git.reinette.chatre@intel.com/
+
+Reinette Chatre (17):
+  vfio/pci: Use unsigned int instead of unsigned
+  vfio/pci: Remove duplicate check from
+    vfio_pci_set_ctx_trigger_single() wrappers
+  vfio/pci: Consistently acquire mutex for interrupt management
+  vfio/pci: Remove duplicate interrupt management from core VFIO PCI
+  vfio/pci: Limit eventfd signaling to interrupt management code
+  vfio/pci: Remove interrupt index interpretation from wrappers
+  vfio/pci: Preserve per-interrupt contexts
+  vfio/pci: Extract MSI/MSI-X specific code from common flow
+  vfio/pci: Converge similar code flows
+  vfio/pci: Extract INTx specific code from vfio_intx_set_signal()
+  vfio/pci: Perform MSI/MSI-X interrupt management via callbacks
+  vfio/pci: Remove msi term from generic code
+  vfio/pci: Remove vfio_intx_set_signal()
+  vfio/pci: Add utility to trigger INTx eventfd knowing interrupt
+    context
+  vfio/pci: Let enable and disable of interrupt types use same signature
+  vfio/pci: Move vfio_msi_disable() to be with other MSI/MSI-X
+    management code
+  vfio/pci: Remove duplicate interrupt management flow
+
+ drivers/vfio/pci/vfio_pci_core.c  |  49 ++-
+ drivers/vfio/pci/vfio_pci_intrs.c | 510 ++++++++++++++++++------------
+ 2 files changed, 318 insertions(+), 241 deletions(-)
+
+base-commit: 41bccc98fb7931d63d03f326a746ac4d429c1dd3
+-- 
+2.34.1
+
