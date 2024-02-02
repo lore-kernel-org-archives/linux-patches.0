@@ -1,117 +1,144 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CA71420B9;
-	Fri,  2 Feb 2024 16:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130AE80605;
+	Fri,  2 Feb 2024 19:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706891409; cv=none; b=ZT/a1GldwC+nz8KMO7IxQTphMePq0QCGNZqDr1dM8DRPkrWdb+3HOzuqrGF0Xcumyv1u4gAmmcu7rbc557y0LPM5Ds4orkoIoFkkOxdDcpYcj57rjMifk+d23z8AGCvKA9gcwNQlsF4awqe0r/EQ00rMuG18jEROXc3ROiUsOYg=
+	t=1706903952; cv=none; b=YmeN40CYbqt0GyfkRoZbCWi+Npia1yHZMNQSuieNrg/R6i2advHBhxv0y70Z08iKArtdps4edU2yYwduQU+HO+6Jh0Nj4yqznyreC+3II1XrO28/3PiJ9hjOR8V3TnRlHTE11KqXrg1Ye1nQmRA+5vpXS8WBwq96IglIOmp7Faw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706891409; c=relaxed/simple;
-	bh=BWx5zc/9MunoZpEToFg41sUYEu6SA2ONTzdVIp4DFg8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QZLYAKPuW8xfRgdXmFnDfSzyMoBlVUv7HNRcg8eGeIDC51EG8VtKLeljlu3ZUwfPHa3WdKW2ZdjimTsBXmL93Ory+f9dD2lo9+9iGPwcX+7N6JpUepRabL0V3VbqklHC/YFguTRbBDfW5vLoepj2tIZgLnRcKoNtrUYm4NC04H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nD0wNsNj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706903952; c=relaxed/simple;
+	bh=fWj3GhXqevF1vJtluLE30ASb6yuFLCaIkc/D6dzeitk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ojyvozBB1Bk9VMGHA8sMaCQPs4Q3GZIgbU/HSaVjFt2UTD+nfK81KkOyfu+vHX1n1PHRfPxsNewCge8tOq8RV2ksGNKA7PWLBPoX+Ful+oGObr6ATcLFoGYkRIve+5hK815Q14dYGL15Za1ChUhwe0HPIYfSz5Us/almve4uMkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R2QLYzmY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nD0wNsNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38DBC433F1;
-	Fri,  2 Feb 2024 16:30:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R2QLYzmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A80D3C433C7;
+	Fri,  2 Feb 2024 19:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706891409;
-	bh=BWx5zc/9MunoZpEToFg41sUYEu6SA2ONTzdVIp4DFg8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nD0wNsNjQI1fhiecntkw5a6Fp7hmW0qtJo1/A0aveYZgSTrwHYLmWnGWv4zOeLtTK
-	 60PWwFzI7mkJ62Phn1vBRCDQ5aXOdukBrtWjUX/yjlzD6/h+IoreEoHhpR3lMCK08M
-	 Ds+ATzgYHo3pBJ7m1dTef9ZuBxRZNNAy75WdYfHVkyQ2ZHydivsNZZBMpq876kE6KI
-	 YKYSk4ZCHcGjR0Jzh0mqhawazabqc6drmLCcUcuqbWGReBDSLhwO6gLlBQfaS+oQt5
-	 tWBoUCu/mXaVJkQWGlPe1UxcwwvY30RVROsfMuipUMmbowBNPSZjGJ7Rafrt/6H7KA
-	 AJNSq2ugYDc+w==
-Date: Fri, 2 Feb 2024 10:30:06 -0600
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
-	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
-	devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>,
+	s=k20201202; t=1706903951;
+	bh=fWj3GhXqevF1vJtluLE30ASb6yuFLCaIkc/D6dzeitk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=R2QLYzmYFMMjI7P1p5u5HXdEmCJTdD+rg7Ivrmi/4Sa4+InZYD1qQ2lmGiA8MnwGw
+	 jp7kUgzY6ezHkErO7zYoaCSiNCg6jqoXuqUUK14R5DlnJo/nQ57GfqYnmbX66lWgvE
+	 rXZEly8xcwh/bXQe7IWRZ0u95hoMGFA7Y9Qkj92EwdHGkNVyZSmVxih4qAevuyAGD6
+	 QNn33JJNy5UbmY5q6+1kakAUD5RnLvzfXQLl4TbqA0AV/sMxfDbi6m+DXYOtPSx9yB
+	 DR7GmkkiSeYiQCFokKasKaCo9KDV5t+ezY+YynZG0ieOENsJ4zGdm5iXxwvypSU7A6
+	 mZUQv6RHuDEZA==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-um@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>
-Subject: Re: [PATCH v2 1/7] arm64: Unconditionally call
- unflatten_device_tree()
-Message-ID: <20240202163006.GA209874-robh@kernel.org>
-References: <20240130004508.1700335-1-sboyd@kernel.org>
- <20240130004508.1700335-2-sboyd@kernel.org>
- <20240131205405.GA2249327-robh@kernel.org>
- <efe6a7886c3491cc9c225a903efa2b1e.sboyd@kernel.org>
+	David Gow <davidgow@google.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Richard Weinberger <richard@nod.at>,
+	Will Deacon <will@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>
+Subject: [PATCH v3 0/7] of: populate of_root node if bootloader doesn't
+Date: Fri,  2 Feb 2024 11:59:01 -0800
+Message-ID: <20240202195909.3458162-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.43.0.594.gd9cf4e227d-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <efe6a7886c3491cc9c225a903efa2b1e.sboyd@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jan 31, 2024 at 02:59:53PM -0800, Stephen Boyd wrote:
-> Quoting Rob Herring (2024-01-31 12:54:05)
-> > On Mon, Jan 29, 2024 at 04:45:00PM -0800, Stephen Boyd wrote:
-> > > Call this function unconditionally so that we can populate an empty DTB
-> > > on platforms that don't boot with a firmware provided or builtin DTB.
-> > > Override 'initial_boot_params' to NULL when ACPI is in use but the
-> > > bootloader has loaded a DTB so that we don't allow both ACPI and DT to
-> > > be used during boot. If there isn't a valid initial_boot_params dtb then
-> > > unflatten_device_tree() returns early so this is fine.
-> > > 
-> > > Cc: Rob Herring <robh+dt@kernel.org>
-> > > Cc: Frank Rowand <frowand.list@gmail.com>
-> > > Cc: Catalin Marinas <catalin.marinas@arm.com>
-> > > Cc: Will Deacon <will@kernel.org>
-> > > Cc: Mark Rutland <mark.rutland@arm.com>
-> > > Cc: <linux-arm-kernel@lists.infradead.org>
-> > > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> > > ---
-> > >  arch/arm64/kernel/setup.c | 7 +++++--
-> > >  1 file changed, 5 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/arch/arm64/kernel/setup.c b/arch/arm64/kernel/setup.c
-> > > index 417a8a86b2db..ffb1942724ae 100644
-> > > --- a/arch/arm64/kernel/setup.c
-> > > +++ b/arch/arm64/kernel/setup.c
-> > > @@ -351,8 +351,11 @@ void __init __no_sanitize_address setup_arch(char **cmdline_p)
-> > >       /* Parse the ACPI tables for possible boot-time configuration */
-> > >       acpi_boot_table_init();
-> > >  
-> > > -     if (acpi_disabled)
-> > > -             unflatten_device_tree();
-> > > +     /* Don't use the FDT from boot if ACPI is in use */
-> > > +     if (!acpi_disabled)
-> > > +             initial_boot_params = NULL;
-> > 
-> > I still think this is a problem for kexec. See 
-> > of_kexec_alloc_and_setup_fdt(). You see it uses initial_boot_params. At 
-> > first glance it looks like it would just write out everything we need. 
-> > But for UEFI boot, I think we need all the chosen properties like 
-> > linux,uefi-mmap-start preserved from the current boot for the next 
-> > kernel we kexec.
-> 
-> Ok, got it.
-> 
-> > 
-> > I think you'll have to check acpi_disabled in unflatten_device_tree() 
-> > and unflatten the empty tree leaving initial_boot_params alone. That 
-> > means our FDT and unflattened tree will be different DTs, but I think 
-> > that's fine.
-> 
-> It's sort of scary given that 'initial_boot_params' is an exported
-> global. Maybe that should be hidden away and accessed with a function
-> instead so that this mismatch doesn't break something later on?
+Arch maintainers, please ack/review patches.
 
-What you see now is after I did a pass of minimizing the number of 
-users.
+This is a resend of a series from Frank last year[1]. I worked in Rob's
+review comments to unconditionally call unflatten_device_tree() and
+fixup/audit calls to of_have_populated_dt() so that behavior doesn't
+change.
 
-BTW, I've now got another use for unconditionally calling 
-unflatten_device_tree() with this[1].
+I need this series so I can add DT based tests in the clk framework.
+Either I can merge it through the clk tree once everyone is happy, or
+Rob can merge it through the DT tree and provide some branch so I can
+base clk patches on it.
 
-Rob
+Changes from Frank's series[1]:
+ * Add a DTB loaded kunit test
+ * Make of_have_populated_dt() return false if the DTB isn't from the
+   bootloader
+ * Architecture calls made unconditional so that a root node is always
+   made
 
-[1] https://lore.kernel.org/all/20240201194653.GA1328565-robh@kernel.org/
+Changes from v2 (https://lore.kernel.org/r/20240130004508.1700335-1-sboyd@kernel.org):
+ * Reorder patches to have OF changes largely first
+ * No longer modify initial_boot_params if ACPI=y
+ * Put arm64 patch back to v1
+
+Changes from v1 (https://lore.kernel.org/r/20240112200750.4062441-1-sboyd@kernel.org):
+ * x86 patch included
+ * arm64 knocks out initial dtb if acpi is in use
+ * keep Kconfig hidden but def_bool enabled otherwise
+
+Frank Rowand (2):
+  of: Create of_root if no dtb provided by firmware
+  of: unittest: treat missing of_root as error instead of fixing up
+
+Stephen Boyd (5):
+  of: Always unflatten in unflatten_and_copy_device_tree()
+  um: Unconditionally call unflatten_device_tree()
+  x86/of: Unconditionally call unflatten_and_copy_device_tree()
+  arm64: Unconditionally call unflatten_device_tree()
+  of: Add KUnit test to confirm DTB is loaded
+
+ arch/arm64/kernel/setup.c    |  3 +-
+ arch/um/kernel/dtb.c         | 14 ++++----
+ arch/x86/kernel/devicetree.c | 24 +++++++-------
+ drivers/of/.kunitconfig      |  3 ++
+ drivers/of/Kconfig           | 11 ++++++-
+ drivers/of/Makefile          |  4 ++-
+ drivers/of/empty_root.dts    |  6 ++++
+ drivers/of/fdt.c             | 64 +++++++++++++++++++++++++++---------
+ drivers/of/of_test.c         | 48 +++++++++++++++++++++++++++
+ drivers/of/platform.c        |  3 --
+ drivers/of/unittest.c        | 16 +++------
+ include/linux/of.h           | 25 ++++++++------
+ 12 files changed, 158 insertions(+), 63 deletions(-)
+ create mode 100644 drivers/of/.kunitconfig
+ create mode 100644 drivers/of/empty_root.dts
+ create mode 100644 drivers/of/of_test.c
+
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Brendan Higgins <brendan.higgins@linux.dev>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: David Gow <davidgow@google.com>
+Cc: Frank Rowand <frowand.list@gmail.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <x86@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Saurabh Sengar <ssengar@linux.microsoft.com>
+
+[1] https://lore.kernel.org/r/20230317053415.2254616-1-frowand.list@gmail.com
+
+base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
