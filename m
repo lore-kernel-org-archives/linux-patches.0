@@ -1,169 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9B1126F01;
-	Fri,  2 Feb 2024 19:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B8585946;
+	Fri,  2 Feb 2024 23:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706903957; cv=none; b=nzD4ffN0CepjBF+gTwe/lnMmHrrYGXVu7LLJ+I0KbU+5PqmCV3j7Fiwho06r7E86lzegfotTrDft72eeWoIH3AeEff5jZjx5rDt94mVcHqCu9jq2MlQPTmdURgQJRVBpHiGjRHWmmR3GVVaPoeqThK9DqPt4n9i640sg/4ZCLdM=
+	t=1706918018; cv=none; b=YuTnGWmMw0Gq9xIs5SKjLO0zmYYeVH0SvGEfZc6QHSVOkJxx+29uABEwdEjmk5T8wx9JC+m3alA/JRpvzjTYjuLTI9eb3q7X2W1k5hP/EGyO7bWnx/h5Hr2+Uu2PfunixFAWa5rdAByswXoOf8mFVGAZq0qZnyaO2bglv8aJ63o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706903957; c=relaxed/simple;
-	bh=PiweXFroDHF7yXaa82SMFRXH/FDbm1RzgiHTih6bLA8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lG22swlSyaidBABSLfN58GNfQpu5CNXjMMDY7I9h+PbrxzXGV53XzEOAdMLs/KF2t3E3EuyDxA6PxquCHK2L5kqrsmo3JDHdp1TNTyYIp9HZFLeBAREGKh79lvrqDZSbD9eMfhFkPJFcx/5WCXxKjJcUfl/kDvGoLS8DjIJHrek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LUsABn4B; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706918018; c=relaxed/simple;
+	bh=ToVjAvQmv/dtNRn5p4/8OjGcotgzRI0qmd7n0/i3AJA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sVfPvS2/xStBFpUsWuVpkNqyUerEyg1KmvIzEhI7WfghfXqrGAX6LnpMsfQXCL9iOJd1g+FsaQ3mhwonkzEzpwxPNT2//2jfj4bd4V4rO2GQXdhsmhI+K3ntWhNgvKFndPRB7T+BBDdTTQhWXigpDHNqPy7v9MNpl9AmNCONHJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Clu3thbS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LUsABn4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0422C43390;
-	Fri,  2 Feb 2024 19:59:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Clu3thbS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC73C433C7;
+	Fri,  2 Feb 2024 23:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706903956;
-	bh=PiweXFroDHF7yXaa82SMFRXH/FDbm1RzgiHTih6bLA8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LUsABn4BtEE+3rLzRs0MQ2C02aC4eRavx+NnUEigQIDN5hEhEZNBOQJZPL8COpFiE
-	 lorefdZOxB8OV+F2B33bLbZYuCDULzTivEsiui+momrj0H+Q4M8bILqL6UXIb2VZG8
-	 2a4s2d8yNcFame9bG1gYjm7fRnJ0b1loqO9DK41wYC40o8K8MLf+BOFe1Y+PHMhias
-	 njRXktKCexQ9Yv8x4+YTqiHhB31aR091ZwIt79dQ9s29u1QvLULGcboC0mabkoiOis
-	 bdoKOrdCx2OSnf4HWEb5yIMklX06Ug8ejLsbsHsTP/c7+WG2Qd9+ZAF9Hq4PyzUetv
-	 l0y+61kYAJv5Q==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Rob Herring <robh+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Frank Rowand <frowand.list@gmail.com>,
-	David Gow <davidgow@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>
-Subject: [PATCH v3 7/7] of: Add KUnit test to confirm DTB is loaded
-Date: Fri,  2 Feb 2024 11:59:08 -0800
-Message-ID: <20240202195909.3458162-8-sboyd@kernel.org>
-X-Mailer: git-send-email 2.43.0.594.gd9cf4e227d-goog
-In-Reply-To: <20240202195909.3458162-1-sboyd@kernel.org>
-References: <20240202195909.3458162-1-sboyd@kernel.org>
+	s=k20201202; t=1706918017;
+	bh=ToVjAvQmv/dtNRn5p4/8OjGcotgzRI0qmd7n0/i3AJA=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Clu3thbSoR8/bxiVDj/+7YLjpR9VmIrYwYhNJwQlNPbwg7l83CnutrlFfMFD907Sg
+	 B447oCeU97r/zGad3HHVC0pzuDGf5Qb6KXpsqcWkoRaPcpNXkSZ2a2sxQf8THivYaN
+	 +WpZkHcoOVWHSBjpzhgy7jCgdKXp0WE8U88W30qe9Ho2IZrii68KRQTMeqkaQXrpdl
+	 JUM6kM26LOqoclr7wmUwZpL/0q1imPWBbCs+1jySwU+iEXFhYG6aYwF7vFlF/J6ts+
+	 KJaoT/rNZqL6+RpLibWGxsAWP7qPYv5bER7dGSqWoGPatiyJeYmtcJXdddSWGiuDbG
+	 HyuW/Czm23xRg==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 02 Feb 2024 16:53:21 -0700
+Subject: [PATCH] x86/coco: Define cc_vendor without
+ CONFIG_ARCH_HAS_CC_PLATFORM
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240202-provide-cc_vendor-without-arch_has_cc_platform-v1-1-09ad5f2a3099@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHCAvWUC/x2N0QoCIRBFf2XxuQFzE6JfiZBBxxwoldG1YNl/T
+ 3o5cDhw764aCVNTt2VXQoMblzzlfFqUT5ifBBymK6PNRU9AlTI4EHjvBuVQBD7cU9k6oPjkEjY
+ 3U31hj0XesBqLa0S6WqvVHK1Ckb//w/vjOH7efz0/gAAAAA==
+To: pbonzini@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
+ dave.hansen@linux.intel.com, x86@kernel.org
+Cc: kirill.shutemov@linux.intel.com, ndesaulniers@google.com, 
+ morbo@google.com, justinstitt@google.com, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2621; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=ToVjAvQmv/dtNRn5p4/8OjGcotgzRI0qmd7n0/i3AJA=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKl7GxpezDlQ0XH0+nVGxhge+Z4nixuUWrfvOzjvZqtVo
+ uH26bn3O0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEKroY/qfcFXhU3mi2N2Lv
+ 1Ot+635tz2TleKKdwvjCa9KTKQv2rp7H8FecZ/HrC1PyTL9dP/ak1bnIJv+phFfytEP5/ae8JZb
+ wpzIDAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Add a KUnit test that confirms a DTB has been loaded, i.e. there is a
-root node, and that the of_have_populated_dt() API works properly.
+After commit a9ef277488cf ("x86/kvm: Fix SEV check in
+sev_map_percpu_data()"), there is a build error when building
+x86_64_defconfig with GCOV using LLVM:
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Cc: David Gow <davidgow@google.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+  ld.lld: error: undefined symbol: cc_vendor
+  >>> referenced by kvm.c
+  >>>               arch/x86/kernel/kvm.o:(kvm_smp_prepare_boot_cpu) in archive vmlinux.a
+
+which corresponds to
+
+  if (cc_vendor != CC_VENDOR_AMD ||
+      !cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
+            return;
+
+Without GCOV, clang is able to eliminate the use of cc_vendor because
+cc_platform_has() evaluates to false when CONFIG_ARCH_HAS_CC_PLATFORM is
+not set, meaning that if statement will be true no matter what value
+cc_vendor has.
+
+With GCOV, the instrumentation keeps the use of cc_vendor around for
+code coverage purposes but cc_vendor is only declared, not defined,
+without CONFIG_ARCH_HAS_CC_PLATFORM, leading to the build error above.
+
+Provide a macro definition of cc_vendor when CONFIG_ARCH_HAS_CC_PLATFORM
+is not set with a value of CC_VENDOR_NONE, so that the first condition
+can always be evaluated/eliminated at compile time, avoiding the build
+error altogether. This is very similar to the situation prior to
+commit da86eb961184 ("x86/coco: Get rid of accessor functions").
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/of/.kunitconfig |  3 +++
- drivers/of/Kconfig      |  9 ++++++++
- drivers/of/Makefile     |  2 ++
- drivers/of/of_test.c    | 48 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 62 insertions(+)
- create mode 100644 drivers/of/.kunitconfig
- create mode 100644 drivers/of/of_test.c
+Commit a9ef277488cf ("x86/kvm: Fix SEV check in sev_map_percpu_data()")
+exposes this build error but I think it is really a problem with commit
+da86eb961184 ("x86/coco: Get rid of accessor functions"), although I am
+not positive so I left out the fixes tag. It would be nice if this could
+go along with KVM tree that has that change but it is obviously well
+within -tip's territory so I will just aim it at both parties and let
+them figure it out :)
+---
+ arch/x86/include/asm/coco.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
-new file mode 100644
-index 000000000000..5a8fee11978c
---- /dev/null
-+++ b/drivers/of/.kunitconfig
-@@ -0,0 +1,3 @@
-+CONFIG_KUNIT=y
-+CONFIG_OF=y
-+CONFIG_OF_KUNIT_TEST=y
-diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-index 17733285b415..53d1b5dd89e8 100644
---- a/drivers/of/Kconfig
-+++ b/drivers/of/Kconfig
-@@ -37,6 +37,15 @@ config OF_UNITTEST
+diff --git a/arch/x86/include/asm/coco.h b/arch/x86/include/asm/coco.h
+index 6ae2d16a7613..76c310b19b11 100644
+--- a/arch/x86/include/asm/coco.h
++++ b/arch/x86/include/asm/coco.h
+@@ -10,13 +10,14 @@ enum cc_vendor {
+ 	CC_VENDOR_INTEL,
+ };
  
- 	  If unsure, say N here. This option is not safe to enable.
- 
-+config OF_KUNIT_TEST
-+	tristate "Devicetree KUnit Test" if !KUNIT_ALL_TESTS
-+	depends on KUNIT
-+	default KUNIT_ALL_TESTS
-+	help
-+	  This option builds KUnit unit tests for device tree infrastructure.
+-extern enum cc_vendor cc_vendor;
+-
+ #ifdef CONFIG_ARCH_HAS_CC_PLATFORM
++extern enum cc_vendor cc_vendor;
+ void cc_set_mask(u64 mask);
+ u64 cc_mkenc(u64 val);
+ u64 cc_mkdec(u64 val);
+ #else
++#define cc_vendor (CC_VENDOR_NONE)
 +
-+	  If unsure, say N here, but this option is safe to enable.
-+
- config OF_ALL_DTBS
- 	bool "Build all Device Tree Blobs"
- 	depends on COMPILE_TEST
-diff --git a/drivers/of/Makefile b/drivers/of/Makefile
-index df305348d1cb..251d33532148 100644
---- a/drivers/of/Makefile
-+++ b/drivers/of/Makefile
-@@ -19,4 +19,6 @@ obj-y	+= kexec.o
- endif
- endif
- 
-+obj-$(CONFIG_OF_KUNIT_TEST) += of_test.o
-+
- obj-$(CONFIG_OF_UNITTEST) += unittest-data/
-diff --git a/drivers/of/of_test.c b/drivers/of/of_test.c
-new file mode 100644
-index 000000000000..71a767b42b43
---- /dev/null
-+++ b/drivers/of/of_test.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * KUnit tests for OF APIs
-+ */
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include <kunit/test.h>
-+
-+/*
-+ * Test that the root node "/" can be found by path.
-+ */
-+static void dtb_root_node_found_by_path(struct kunit *test)
-+{
-+	struct device_node *np;
-+
-+	np = of_find_node_by_path("/");
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, np);
-+	of_node_put(np);
-+}
-+
-+/*
-+ * Test that the 'of_root' global variable is always populated when DT code is
-+ * enabled.
-+ */
-+static void dtb_root_node_populates_of_root(struct kunit *test)
-+{
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, of_root);
-+}
-+
-+static struct kunit_case dtb_test_cases[] = {
-+	KUNIT_CASE(dtb_root_node_found_by_path),
-+	KUNIT_CASE(dtb_root_node_populates_of_root),
-+	{}
-+};
-+
-+/*
-+ * Test suite to confirm a DTB is loaded.
-+ */
-+static struct kunit_suite dtb_suite = {
-+	.name = "dtb",
-+	.test_cases = dtb_test_cases,
-+};
-+
-+kunit_test_suites(
-+	&dtb_suite,
-+);
-+MODULE_LICENSE("GPL");
+ static inline u64 cc_mkenc(u64 val)
+ {
+ 	return val;
+
+---
+base-commit: a9ef277488cfc1b7da88235dc11c338a14f34835
+change-id: 20240202-provide-cc_vendor-without-arch_has_cc_platform-325a3fae8550
+
+Best regards,
 -- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+Nathan Chancellor <nathan@kernel.org>
 
