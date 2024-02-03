@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE15F17541;
-	Sat,  3 Feb 2024 04:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACD3171D4;
+	Sat,  3 Feb 2024 04:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933928; cv=none; b=by3AZYQ7GHz+jROfOjMjDNEjEZNZJr9XYlbhQ/RbDTRCB8h6SBF6bSMbGzzpzS+iuuCueq1rLPeYrFRN4gl4jc4XTyrH2jqk7HTc3KIJxlEcoRd4uRT2Rw3bOLSLa7QzARuP0YZt5N07VzMO0TwVf1Xfat1hXGpI7iJgVFY+Awg=
+	t=1706933929; cv=none; b=Y7Nu4b9hGSYJmg8VHHmrgG63f4lNVImNUc/73/+adH8UJe+2su5J0nQzRqBDdYVgPISVVXHk7wEPVpjL4WXdgHP6yVkyR/KsP1T8lck/UXxIBUKNpI32aYTTkT0elqC18EQtg6t9GmbXeKuJl5f3l8LgSMOuqrXQ9Kly/KWyyK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933928; c=relaxed/simple;
-	bh=fhsSiXb4GDcRfq9JPEmIE5Q3OdpEX/Rb7ViId2bUqqA=;
+	s=arc-20240116; t=1706933929; c=relaxed/simple;
+	bh=tw4SOrVBkY4xPskPYQTb8goULOxeriy+5ZPxoThUxCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VR5V4KYMviMTwRZ+Re/0jk8nNNIoWcFuDSa4/BdY2RgB/Xhh2KwpxLkrrvGNtP4Vq6nGl2S6nQMvnU5XsjhB4/iA4bVBWhbOjZ3iw6y8Y7GpoeDj3a6oRoM4dkegqAD2Rw+7cRRF+T/peeRUNMAtu3lA1nEq5Jvn5j5qt6lBXCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoC0QSXA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YC3n+SPHWCD2my9INzR5FerGPTHZpybYhuWVKrvgFNGtgUtjexlrukjZEp3Zbt8tEH7GsQuz5ccwfY2CLLF8JHNHEd4Z6PAqhMiSp34121LMZXb5jlSrtFvyRkY/TiQ90HN+awn3pmWh8gJ+/ejjQtStLobjdgWhGQOMSQS0EDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffqqloid; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoC0QSXA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF0CC433C7;
-	Sat,  3 Feb 2024 04:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffqqloid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9FFC43390;
+	Sat,  3 Feb 2024 04:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933928;
-	bh=fhsSiXb4GDcRfq9JPEmIE5Q3OdpEX/Rb7ViId2bUqqA=;
+	s=korg; t=1706933929;
+	bh=tw4SOrVBkY4xPskPYQTb8goULOxeriy+5ZPxoThUxCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yoC0QSXAKNZBgIsstRBFfaWR2e4QC6AhIC73Z7DMBgZjo3gACkRYm5Znu4LqWjn30
-	 T9wBagsp2hJQBFhXmClN6tlhwi844XbHIfsKmsyAy+Ph938+3hixTtpmwaJ9i191dM
-	 H4pQzcCfWLNp7grRqcc5kG0GPER2jgI6yylQ07jI=
+	b=ffqqloid7dfHM5RgLIgtIDlm4kLt5SyJaYIsNsGOGMdnHnzCjE+1GyaWbswdI3cNX
+	 gX+pg+W9rB/mSi5pDa/eHoPZOtJBcDc061P1CFfSQUHEH7S4H0EQGbXSCEIszEX7BQ
+	 OKGXbPJSObjyS1cajJEgsZ9shr0AT+zWq7JCBO7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
-	Yu-Che Cheng <giver@chromium.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Piro Yang <piroyangg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 261/353] spmi: mediatek: Fix UAF on device remove
-Date: Fri,  2 Feb 2024 20:06:19 -0800
-Message-ID: <20240203035412.003228706@linuxfoundation.org>
+Subject: [PATCH 6.7 262/353] staging: vme_user: Fix the issue of return the wrong error code
+Date: Fri,  2 Feb 2024 20:06:20 -0800
+Message-ID: <20240203035412.035680910@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,76 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu-Che Cheng <giver@chromium.org>
+From: Piro Yang <piroyangg@gmail.com>
 
-[ Upstream commit e821d50ab5b956ed0effa49faaf29912fd4106d9 ]
+[ Upstream commit 5090a4bc2a2f04b7693b49500ad1287e8d0fb6c3 ]
 
-The pmif driver data that contains the clocks is allocated along with
-spmi_controller.
-On device remove, spmi_controller will be freed first, and then devres
-, including the clocks, will be cleanup.
-This leads to UAF because putting the clocks will access the clocks in
-the pmif driver data, which is already freed along with spmi_controller.
+Fix the issue of returning the -ENOSYS error code when an error occurs.
 
-This can be reproduced by enabling DEBUG_TEST_DRIVER_REMOVE and
-building the kernel with KASAN.
+The error code of -ENOSYS indicates Invalid system call number, but
+there is not system call error. So replace -ENOSYS error code by the
+return -EINVAL error code.
 
-Fix the UAF issue by using unmanaged clk_bulk_get() and putting the
-clocks before freeing spmi_controller.
-
-Reported-by: Fei Shao <fshao@chromium.org>
-Signed-off-by: Yu-Che Cheng <giver@chromium.org>
-Link: https://lore.kernel.org/r/20230717173934.1.If004a6e055a189c7f2d0724fa814422c26789839@changeid
-Tested-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20231206231733.4031901-3-sboyd@kernel.org
+Signed-off-by: Piro Yang <piroyangg@gmail.com>
+Link: https://lore.kernel.org/r/20231219170447.51237-1-piroyangg@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spmi/spmi-mtk-pmif.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/staging/vme_user/vme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spmi/spmi-mtk-pmif.c b/drivers/spmi/spmi-mtk-pmif.c
-index 54c35f5535cb..1261f381cae6 100644
---- a/drivers/spmi/spmi-mtk-pmif.c
-+++ b/drivers/spmi/spmi-mtk-pmif.c
-@@ -475,7 +475,7 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 	for (i = 0; i < arb->nclks; i++)
- 		arb->clks[i].id = pmif_clock_names[i];
+diff --git a/drivers/staging/vme_user/vme.c b/drivers/staging/vme_user/vme.c
+index 5c416c31ec57..9bc2d35405af 100644
+--- a/drivers/staging/vme_user/vme.c
++++ b/drivers/staging/vme_user/vme.c
+@@ -341,7 +341,7 @@ int vme_slave_set(struct vme_resource *resource, int enabled,
  
--	err = devm_clk_bulk_get(&pdev->dev, arb->nclks, arb->clks);
-+	err = clk_bulk_get(&pdev->dev, arb->nclks, arb->clks);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to get clocks: %d\n", err);
- 		goto err_put_ctrl;
-@@ -484,7 +484,7 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 	err = clk_bulk_prepare_enable(arb->nclks, arb->clks);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to enable clocks: %d\n", err);
--		goto err_put_ctrl;
-+		goto err_put_clks;
+ 	if (!bridge->slave_set) {
+ 		dev_err(bridge->parent, "Function not supported\n");
+-		return -ENOSYS;
++		return -EINVAL;
  	}
  
- 	ctrl->cmd = pmif_arb_cmd;
-@@ -510,6 +510,8 @@ static int mtk_spmi_probe(struct platform_device *pdev)
- 
- err_domain_remove:
- 	clk_bulk_disable_unprepare(arb->nclks, arb->clks);
-+err_put_clks:
-+	clk_bulk_put(arb->nclks, arb->clks);
- err_put_ctrl:
- 	spmi_controller_put(ctrl);
- 	return err;
-@@ -521,6 +523,7 @@ static void mtk_spmi_remove(struct platform_device *pdev)
- 	struct pmif *arb = spmi_controller_get_drvdata(ctrl);
- 
- 	clk_bulk_disable_unprepare(arb->nclks, arb->clks);
-+	clk_bulk_put(arb->nclks, arb->clks);
- 	spmi_controller_remove(ctrl);
- 	spmi_controller_put(ctrl);
- }
+ 	if (!(((image->address_attr & aspace) == aspace) &&
 -- 
 2.43.0
 
