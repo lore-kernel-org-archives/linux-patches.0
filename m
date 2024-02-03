@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7838C107B4;
-	Sat,  3 Feb 2024 04:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343E311725;
+	Sat,  3 Feb 2024 04:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933561; cv=none; b=GP2hOneksVE7FeIN4QECJbk2vJEXnsCgWjVcajTQbZg5xyc/qDF6ggnx6APvuGXTwLcQ9ODNgy663TnPl8DN3La9IjZh2UrTQjucXsY3mdksujPjiPjVnKYhwdhVDrwF9gyqdyZkaE3Kn0pJ+dnGsCZ8sv73ShBJo4k5bFw1abU=
+	t=1706933562; cv=none; b=AONZBc0GJQKO6wQkk5TSKOEhFdo4B7BdH51YaXTQvpxud6yJnun9XOJZaZm6Vl3Up4zD7/9A85njJlMz5LejuS2Ym5pPT2PIhp0XgphLLZrMUEmGm2gJ16Llhpg0Fd9yEhEFL9wKz1RAr8N0mX+b7H0x2kD0sjjezCms3FIsL8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933561; c=relaxed/simple;
-	bh=NiAOasD4Jl06ju5HQl1XfTd5aHlMnnTxDOr9dsJRMig=;
+	s=arc-20240116; t=1706933562; c=relaxed/simple;
+	bh=3F3pM9Js0+XiFP5LXQWw4rfKzTgFNvaE+sLJ2emO46Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7uyARTihGbvAFOcdFmIEsq50m1U31XscsVx588XS1HQYkH/XEDhk6kNND8xPFgd9RQRljWVIsbyzxjCCxKngHOOOh/13UiwP8dXa4OitheooyrjwOzKFWdR3wJPrboGofNJ9TMzK47t7r1ElCC0sFWfYvFClaNZ8jJUpRCqE+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eJcInaB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Udqdg7+FL35Gt9hyPBwtCVeHCXXUZ+rULqz+OZ89b7q9GwblXbYOLi9QQWoU/ebpjtw821GtDFMl57ASmYuBpTTgn2TpRPBX8mhA2i+qqJlmari9EpKR4Z39Gm+eF0GA8Uds0QNQNja7ukqZMOdha6cG171/43Dekuq/ygEGP7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKrI3pUg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eJcInaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEDFC43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKrI3pUg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2DAC433C7;
 	Sat,  3 Feb 2024 04:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933561;
-	bh=NiAOasD4Jl06ju5HQl1XfTd5aHlMnnTxDOr9dsJRMig=;
+	s=korg; t=1706933562;
+	bh=3F3pM9Js0+XiFP5LXQWw4rfKzTgFNvaE+sLJ2emO46Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eJcInaBjrIpu9bQw9VphXXtjdVciotNj1AYqfVL9cf46vP77RD6RleEBGVK3Npic
-	 a24+bMQlh51rW0JjsbRL8c5skVglm45OgY1VgP+mljmhEzmpK2BNc0MnuYqcwXKV7H
-	 /57BOUhYtxg1GL7P7CaT8SxUK0qEaxI1i3ak5kNE=
+	b=LKrI3pUgQ904PPI8yRuJjUw9DHkwGMhp4q5DrK0XeGUXWUFeTfCrQHTzmZAAkfQVh
+	 0sD4wUN2hIbPqGWc4N8e+5eSSak5bRWVEBcj9l24/1ac6GerRbCj5hLBy8X6XzL2vL
+	 lvM0/VVuZRdbgHi7ZTU9mDo43czSht0tdn4UU55Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 097/322] minmax: allow min()/max()/clamp() if the arguments have the same signedness.
-Date: Fri,  2 Feb 2024 20:03:14 -0800
-Message-ID: <20240203035402.277406300@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 115/322] net: phy: at803x: fix passing the wrong reference for config_intr
+Date: Fri,  2 Feb 2024 20:03:32 -0800
+Message-ID: <20240203035402.867782858@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -55,170 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <David.Laight@ACULAB.COM>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit d03eba99f5bf7cbc6e2fdde3b6fa36954ad58e09 upstream.
+[ Upstream commit f8fdbf3389f44c7026f16e36cb1f2ff017f7f5b2 ]
 
-The type-check in min()/max() is there to stop unexpected results if a
-negative value gets converted to a large unsigned value.  However it also
-rejects 'unsigned int' v 'unsigned long' compares which are common and
-never problematc.
+Fix passing the wrong reference for config_initr on passing the function
+pointer, drop the wrong & from at803x_config_intr in the PHY struct.
 
-Replace the 'same type' check with a 'same signedness' check.
-
-The new test isn't itself a compile time error, so use static_assert() to
-report the error and give a meaningful error message.
-
-Due to the way builtin_choose_expr() works detecting the error in the
-'non-constant' side (where static_assert() can be used) also detects
-errors when the arguments are constant.
-
-Link: https://lkml.kernel.org/r/fe7e6c542e094bfca655abcd323c1c98@AcuMS.aculab.com
-Signed-off-by: David Laight <david.laight@aculab.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/minmax.h |   62 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 33 insertions(+), 29 deletions(-)
+ drivers/net/phy/at803x.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/linux/minmax.h
-+++ b/include/linux/minmax.h
-@@ -12,9 +12,8 @@
-  *
-  * - avoid multiple evaluations of the arguments (so side-effects like
-  *   "x++" happen only once) when non-constant.
-- * - perform strict type-checking (to generate warnings instead of
-- *   nasty runtime surprises). See the "unnecessary" pointer comparison
-- *   in __typecheck().
-+ * - perform signed v unsigned type-checking (to generate compile
-+ *   errors instead of nasty runtime surprises).
-  * - retain result as a constant expressions when called with only
-  *   constant expressions (to avoid tripping VLA warnings in stack
-  *   allocation usage).
-@@ -22,23 +21,30 @@
- #define __typecheck(x, y) \
- 	(!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
- 
--#define __no_side_effects(x, y) \
--		(__is_constexpr(x) && __is_constexpr(y))
-+/* is_signed_type() isn't a constexpr for pointer types */
-+#define __is_signed(x) 								\
-+	__builtin_choose_expr(__is_constexpr(is_signed_type(typeof(x))),	\
-+		is_signed_type(typeof(x)), 0)
- 
--#define __safe_cmp(x, y) \
--		(__typecheck(x, y) && __no_side_effects(x, y))
-+#define __types_ok(x, y) \
-+	(__is_signed(x) == __is_signed(y))
- 
--#define __cmp(x, y, op)	((x) op (y) ? (x) : (y))
-+#define __cmp_op_min <
-+#define __cmp_op_max >
- 
--#define __cmp_once(x, y, unique_x, unique_y, op) ({	\
-+#define __cmp(op, x, y)	((x) __cmp_op_##op (y) ? (x) : (y))
-+
-+#define __cmp_once(op, x, y, unique_x, unique_y) ({	\
- 		typeof(x) unique_x = (x);		\
- 		typeof(y) unique_y = (y);		\
--		__cmp(unique_x, unique_y, op); })
--
--#define __careful_cmp(x, y, op) \
--	__builtin_choose_expr(__safe_cmp(x, y), \
--		__cmp(x, y, op), \
--		__cmp_once(x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y), op))
-+		static_assert(__types_ok(x, y),		\
-+			#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
-+		__cmp(op, unique_x, unique_y); })
-+
-+#define __careful_cmp(op, x, y)					\
-+	__builtin_choose_expr(__is_constexpr((x) - (y)),	\
-+		__cmp(op, x, y),				\
-+		__cmp_once(op, x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y)))
- 
- #define __clamp(val, lo, hi)	\
- 	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
-@@ -47,17 +53,15 @@
- 		typeof(val) unique_val = (val);				\
- 		typeof(lo) unique_lo = (lo);				\
- 		typeof(hi) unique_hi = (hi);				\
-+		static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
-+				(lo) <= (hi), true),					\
-+			"clamp() low limit " #lo " greater than high limit " #hi);	\
-+		static_assert(__types_ok(val, lo), "clamp() 'lo' signedness error");	\
-+		static_assert(__types_ok(val, hi), "clamp() 'hi' signedness error");	\
- 		__clamp(unique_val, unique_lo, unique_hi); })
- 
--#define __clamp_input_check(lo, hi)					\
--        (BUILD_BUG_ON_ZERO(__builtin_choose_expr(			\
--                __is_constexpr((lo) > (hi)), (lo) > (hi), false)))
--
- #define __careful_clamp(val, lo, hi) ({					\
--	__clamp_input_check(lo, hi) +					\
--	__builtin_choose_expr(__typecheck(val, lo) && __typecheck(val, hi) && \
--			      __typecheck(hi, lo) && __is_constexpr(val) && \
--			      __is_constexpr(lo) && __is_constexpr(hi),	\
-+	__builtin_choose_expr(__is_constexpr((val) - (lo) + (hi)),	\
- 		__clamp(val, lo, hi),					\
- 		__clamp_once(val, lo, hi, __UNIQUE_ID(__val),		\
- 			     __UNIQUE_ID(__lo), __UNIQUE_ID(__hi))); })
-@@ -67,14 +71,14 @@
-  * @x: first value
-  * @y: second value
-  */
--#define min(x, y)	__careful_cmp(x, y, <)
-+#define min(x, y)	__careful_cmp(min, x, y)
- 
- /**
-  * max - return maximum of two values of the same or compatible types
-  * @x: first value
-  * @y: second value
-  */
--#define max(x, y)	__careful_cmp(x, y, >)
-+#define max(x, y)	__careful_cmp(max, x, y)
- 
- /**
-  * umin - return minimum of two non-negative values
-@@ -83,7 +87,7 @@
-  * @y: second value
-  */
- #define umin(x, y)	\
--	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, <)
-+	__careful_cmp(min, (x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull)
- 
- /**
-  * umax - return maximum of two non-negative values
-@@ -91,7 +95,7 @@
-  * @y: second value
-  */
- #define umax(x, y)	\
--	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, >)
-+	__careful_cmp(max, (x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull)
- 
- /**
-  * min3 - return minimum of three values
-@@ -143,7 +147,7 @@
-  * @x: first value
-  * @y: second value
-  */
--#define min_t(type, x, y)	__careful_cmp((type)(x), (type)(y), <)
-+#define min_t(type, x, y)	__careful_cmp(min, (type)(x), (type)(y))
- 
- /**
-  * max_t - return maximum of two values, using the specified type
-@@ -151,7 +155,7 @@
-  * @x: first value
-  * @y: second value
-  */
--#define max_t(type, x, y)	__careful_cmp((type)(x), (type)(y), >)
-+#define max_t(type, x, y)	__careful_cmp(max, (type)(x), (type)(y))
- 
- /*
-  * Do not check the array parameter using __must_be_array().
+diff --git a/drivers/net/phy/at803x.c b/drivers/net/phy/at803x.c
+index 37fb033e1c29..ef203b0807e5 100644
+--- a/drivers/net/phy/at803x.c
++++ b/drivers/net/phy/at803x.c
+@@ -2104,7 +2104,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.write_page		= at803x_write_page,
+ 	.get_features		= at803x_get_features,
+ 	.read_status		= at803x_read_status,
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.get_tunable		= at803x_get_tunable,
+ 	.set_tunable		= at803x_set_tunable,
+@@ -2134,7 +2134,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.resume			= at803x_resume,
+ 	.flags			= PHY_POLL_CABLE_TEST,
+ 	/* PHY_BASIC_FEATURES */
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.cable_test_start	= at803x_cable_test_start,
+ 	.cable_test_get_status	= at803x_cable_test_get_status,
+@@ -2150,7 +2150,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.resume			= at803x_resume,
+ 	.flags			= PHY_POLL_CABLE_TEST,
+ 	/* PHY_BASIC_FEATURES */
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.cable_test_start	= at803x_cable_test_start,
+ 	.cable_test_get_status	= at803x_cable_test_get_status,
+-- 
+2.43.0
+
 
 
