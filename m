@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1D81A29A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FF31A29A;
 	Sat,  3 Feb 2024 04:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933703; cv=none; b=j7H85MkdoW+mxTbCUCZaUSfQsKVlkJp3ll1TZVaiceuSSNRMRDep48uoIABiujFR0Lln74krJ09RT/ltXInNGGAdI2WvuIR9IKwjbzVtdT3T3J5Sx3IN3gPWUOGJMwUVHqAG7wkETyUVLqmZUt3rdNuPzfPfHwjJ5PvvW3bIrt4=
+	t=1706933704; cv=none; b=GBJ8ANJdYGCRJa/xUHeBGM0UZT8jPq+hq8aCSjWU5uNmsSi4jWnH54kW0JuVb67kq2x7N0bimTJSoTyb+3uDIk2eyS2ZiNy4DI9c/1JWsJel/s1Mtca7S6161jl7Kj4hxG8ESL6K2EY93mjACISelLLo8I1IzVZ4zkf3V2WuHsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933703; c=relaxed/simple;
-	bh=CZMBT5qwykYGVsN8qkK1z+En2TUB1MxXdAWQXxjEpGQ=;
+	s=arc-20240116; t=1706933704; c=relaxed/simple;
+	bh=36gHgXM0ihKL2qAyaOOUJVENgKIOoSPkVwzmlG7ddK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNOI7t96G+FcEcoIttVpQQ0hfmFNWVSxfwA5HSr2/xO/HCE3ZPp20iNJnWw3Lz6CGBrmGOhOUC3g3BNBiSgTH79hmeMEpHRYku3pLlkFVExHBavXHcp9yrKFlURZ5BgQ8Qpl53XmKTHUV5bDxAtSjHEUXcPJijvNGjzQ0VVaUEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkVlObPT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZaYo1X1w71D+6WVSh1gsto3VtxEHoiSCq68W/oUEjrg+lh1GxoFzSb1iU2KwN/bD2UwhdnVAg0AVuHHW1ebjMdWHSgRnWiBeyoeBWKWFFYcohf4wzTWkDGZY7SvvypeJMSwRO7X/wvcadwlqO7fp3QlXTXmSdMuV2XAwUwOdBTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ufbT0Z+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkVlObPT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B3DC433B1;
-	Sat,  3 Feb 2024 04:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ufbT0Z+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FDAC433C7;
+	Sat,  3 Feb 2024 04:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933703;
-	bh=CZMBT5qwykYGVsN8qkK1z+En2TUB1MxXdAWQXxjEpGQ=;
+	bh=36gHgXM0ihKL2qAyaOOUJVENgKIOoSPkVwzmlG7ddK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkVlObPTQECdWVUoMoNXe2yU/ly6n0jw9y2frWWXEFWCI6lrRpngWJ9g/3RR+XXb8
-	 fNygvqruYyGj7/5eIYS0sB0GUf3VwvXz/b5u+GHLA8sePFBrpwqkeuRg90v+0vb+Iv
-	 GJC2okXUL8wN/qnZS0dtSYtOm67FUMoRYXjBnZRM=
+	b=2ufbT0Z+Td5wWLKuF6J8XlTIl1ib/kX/uSMUmTAK7xZiSoX25Wran9pAIvNcUcRuM
+	 yRf4X4r58BGnkVDaaqNz6UOZd+WRaLDzHmlvLl5DSeaHnmqEFtM/vxo2enVP9y+M0r
+	 ku9wX5VnSuG61hZh+50hMANZ4wxRCOEGlLdZkE7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Brett Creeley <brett.creeley@amd.com>,
 	Shannon Nelson <shannon.nelson@amd.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 304/322] pds_core: Clear BARs on reset
-Date: Fri,  2 Feb 2024 20:06:41 -0800
-Message-ID: <20240203035408.876346862@linuxfoundation.org>
+Subject: [PATCH 6.6 305/322] pds_core: Rework teardown/setup flow to be more common
+Date: Fri,  2 Feb 2024 20:06:42 -0800
+Message-ID: <20240203035408.906332377@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -55,154 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit e96094c1d11cce4deb5da3c0500d49041ab845b8 ]
+[ Upstream commit bc90fbe0c3182157d2be100a2f6c2edbb1820677 ]
 
-During reset the BARs might be accessed when they are
-unmapped. This can cause unexpected issues, so fix it by
-clearing the cached BAR values so they are not accessed
-until they are re-mapped.
+Currently the teardown/setup flow for driver probe/remove is quite
+a bit different from the reset flows in pdsc_fw_down()/pdsc_fw_up().
+One key piece that's missing are the calls to pci_alloc_irq_vectors()
+and pci_free_irq_vectors(). The pcie reset case is calling
+pci_free_irq_vectors() on reset_prepare, but not calling the
+corresponding pci_alloc_irq_vectors() on reset_done. This is causing
+unexpected/unwanted interrupt behavior due to the adminq interrupt
+being accidentally put into legacy interrupt mode. Also, the
+pci_alloc_irq_vectors()/pci_free_irq_vectors() functions are being
+called directly in probe/remove respectively.
 
-Also, make sure any places that can access the BARs
-when they are NULL are prevented.
+Fix this inconsistency by making the following changes:
+  1. Always call pdsc_dev_init() in pdsc_setup(), which calls
+     pci_alloc_irq_vectors() and get rid of the now unused
+     pds_dev_reinit().
+  2. Always free/clear the pdsc->intr_info in pdsc_teardown()
+     since this structure will get re-alloced in pdsc_setup().
+  3. Move the calls of pci_free_irq_vectors() to pdsc_teardown()
+     since pci_alloc_irq_vectors() will always be called in
+     pdsc_setup()->pdsc_dev_init() for both the probe/remove and
+     reset flows.
+  4. Make sure to only create the debugfs "identity" entry when it
+     doesn't already exist, which it will in the reset case because
+     it's already been created in the initial call to pdsc_dev_init().
 
-Fixes: 49ce92fbee0b ("pds_core: add FW update feature to devlink")
+Fixes: ffa55858330f ("pds_core: implement pci reset handlers")
 Signed-off-by: Brett Creeley <brett.creeley@amd.com>
 Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://lore.kernel.org/r/20240129234035.69802-6-brett.creeley@amd.com
+Link: https://lore.kernel.org/r/20240129234035.69802-7-brett.creeley@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/adminq.c  | 28 +++++++++++++++------
- drivers/net/ethernet/amd/pds_core/dev.c     |  9 ++++++-
- drivers/net/ethernet/amd/pds_core/devlink.c |  3 ++-
- drivers/net/ethernet/amd/pds_core/fw.c      |  3 +++
- drivers/net/ethernet/amd/pds_core/main.c    |  5 ++++
- 5 files changed, 38 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/amd/pds_core/core.c    | 13 +++++--------
+ drivers/net/ethernet/amd/pds_core/core.h    |  1 -
+ drivers/net/ethernet/amd/pds_core/debugfs.c |  4 ++++
+ drivers/net/ethernet/amd/pds_core/dev.c     |  7 -------
+ drivers/net/ethernet/amd/pds_core/main.c    |  2 --
+ 5 files changed, 9 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/adminq.c b/drivers/net/ethernet/amd/pds_core/adminq.c
-index 5edff33d56f3..ea773cfa0af6 100644
---- a/drivers/net/ethernet/amd/pds_core/adminq.c
-+++ b/drivers/net/ethernet/amd/pds_core/adminq.c
-@@ -191,10 +191,16 @@ static int __pdsc_adminq_post(struct pdsc *pdsc,
- 
- 	/* Check that the FW is running */
- 	if (!pdsc_is_fw_running(pdsc)) {
--		u8 fw_status = ioread8(&pdsc->info_regs->fw_status);
--
--		dev_info(pdsc->dev, "%s: post failed - fw not running %#02x:\n",
--			 __func__, fw_status);
-+		if (pdsc->info_regs) {
-+			u8 fw_status =
-+				ioread8(&pdsc->info_regs->fw_status);
-+
-+			dev_info(pdsc->dev, "%s: post failed - fw not running %#02x:\n",
-+				 __func__, fw_status);
-+		} else {
-+			dev_info(pdsc->dev, "%s: post failed - BARs not setup\n",
-+				 __func__);
-+		}
- 		ret = -ENXIO;
- 
- 		goto err_out_unlock;
-@@ -266,10 +272,16 @@ int pdsc_adminq_post(struct pdsc *pdsc,
- 			break;
- 
- 		if (!pdsc_is_fw_running(pdsc)) {
--			u8 fw_status = ioread8(&pdsc->info_regs->fw_status);
--
--			dev_dbg(pdsc->dev, "%s: post wait failed - fw not running %#02x:\n",
--				__func__, fw_status);
-+			if (pdsc->info_regs) {
-+				u8 fw_status =
-+					ioread8(&pdsc->info_regs->fw_status);
-+
-+				dev_dbg(pdsc->dev, "%s: post wait failed - fw not running %#02x:\n",
-+					__func__, fw_status);
-+			} else {
-+				dev_dbg(pdsc->dev, "%s: post wait failed - BARs not setup\n",
-+					__func__);
-+			}
- 			err = -ENXIO;
- 			break;
- 		}
-diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
-index eb178728edba..1d590eb463d0 100644
---- a/drivers/net/ethernet/amd/pds_core/dev.c
-+++ b/drivers/net/ethernet/amd/pds_core/dev.c
-@@ -55,6 +55,9 @@ int pdsc_err_to_errno(enum pds_core_status_code code)
- 
- bool pdsc_is_fw_running(struct pdsc *pdsc)
- {
-+	if (!pdsc->info_regs)
-+		return false;
-+
- 	pdsc->fw_status = ioread8(&pdsc->info_regs->fw_status);
- 	pdsc->last_fw_time = jiffies;
- 	pdsc->last_hb = ioread32(&pdsc->info_regs->fw_heartbeat);
-@@ -175,13 +178,17 @@ int pdsc_devcmd_locked(struct pdsc *pdsc, union pds_core_dev_cmd *cmd,
- {
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index e1f554f25329..eb73c921dc1e 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -407,10 +407,7 @@ int pdsc_setup(struct pdsc *pdsc, bool init)
+ 	int numdescs;
  	int err;
  
-+	if (!pdsc->cmd_regs)
-+		return -ENXIO;
-+
- 	memcpy_toio(&pdsc->cmd_regs->cmd, cmd, sizeof(*cmd));
- 	pdsc_devcmd_dbell(pdsc);
- 	err = pdsc_devcmd_wait(pdsc, cmd->opcode, max_seconds);
--	memcpy_fromio(comp, &pdsc->cmd_regs->comp, sizeof(*comp));
- 
- 	if ((err == -ENXIO || err == -ETIMEDOUT) && pdsc->wq)
- 		queue_work(pdsc->wq, &pdsc->health_work);
-+	else
-+		memcpy_fromio(comp, &pdsc->cmd_regs->comp, sizeof(*comp));
- 
- 	return err;
- }
-diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
-index d2abf32b93fe..d8218bb153d9 100644
---- a/drivers/net/ethernet/amd/pds_core/devlink.c
-+++ b/drivers/net/ethernet/amd/pds_core/devlink.c
-@@ -111,7 +111,8 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
- 
- 	mutex_lock(&pdsc->devcmd_lock);
- 	err = pdsc_devcmd_locked(pdsc, &cmd, &comp, pdsc->devcmd_timeout * 2);
--	memcpy_fromio(&fw_list, pdsc->cmd_regs->data, sizeof(fw_list));
-+	if (!err)
-+		memcpy_fromio(&fw_list, pdsc->cmd_regs->data, sizeof(fw_list));
- 	mutex_unlock(&pdsc->devcmd_lock);
- 	if (err && err != -EIO)
+-	if (init)
+-		err = pdsc_dev_init(pdsc);
+-	else
+-		err = pdsc_dev_reinit(pdsc);
++	err = pdsc_dev_init(pdsc);
+ 	if (err)
  		return err;
-diff --git a/drivers/net/ethernet/amd/pds_core/fw.c b/drivers/net/ethernet/amd/pds_core/fw.c
-index 90a811f3878a..fa626719e68d 100644
---- a/drivers/net/ethernet/amd/pds_core/fw.c
-+++ b/drivers/net/ethernet/amd/pds_core/fw.c
-@@ -107,6 +107,9 @@ int pdsc_firmware_update(struct pdsc *pdsc, const struct firmware *fw,
  
- 	dev_info(pdsc->dev, "Installing firmware\n");
+@@ -479,10 +476,9 @@ void pdsc_teardown(struct pdsc *pdsc, bool removing)
+ 		for (i = 0; i < pdsc->nintrs; i++)
+ 			pdsc_intr_free(pdsc, i);
  
-+	if (!pdsc->cmd_regs)
-+		return -ENXIO;
+-		if (removing) {
+-			kfree(pdsc->intr_info);
+-			pdsc->intr_info = NULL;
+-		}
++		kfree(pdsc->intr_info);
++		pdsc->intr_info = NULL;
++		pdsc->nintrs = 0;
+ 	}
+ 
+ 	if (pdsc->kern_dbpage) {
+@@ -490,6 +486,7 @@ void pdsc_teardown(struct pdsc *pdsc, bool removing)
+ 		pdsc->kern_dbpage = NULL;
+ 	}
+ 
++	pci_free_irq_vectors(pdsc->pdev);
+ 	set_bit(PDSC_S_FW_DEAD, &pdsc->state);
+ }
+ 
+diff --git a/drivers/net/ethernet/amd/pds_core/core.h b/drivers/net/ethernet/amd/pds_core/core.h
+index d6d19f72df00..f410f7d13205 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.h
++++ b/drivers/net/ethernet/amd/pds_core/core.h
+@@ -281,7 +281,6 @@ int pdsc_devcmd_locked(struct pdsc *pdsc, union pds_core_dev_cmd *cmd,
+ 		       union pds_core_dev_comp *comp, int max_seconds);
+ int pdsc_devcmd_init(struct pdsc *pdsc);
+ int pdsc_devcmd_reset(struct pdsc *pdsc);
+-int pdsc_dev_reinit(struct pdsc *pdsc);
+ int pdsc_dev_init(struct pdsc *pdsc);
+ 
+ int pdsc_intr_alloc(struct pdsc *pdsc, char *name,
+diff --git a/drivers/net/ethernet/amd/pds_core/debugfs.c b/drivers/net/ethernet/amd/pds_core/debugfs.c
+index 8ec392299b7d..4e8579ca1c8c 100644
+--- a/drivers/net/ethernet/amd/pds_core/debugfs.c
++++ b/drivers/net/ethernet/amd/pds_core/debugfs.c
+@@ -64,6 +64,10 @@ DEFINE_SHOW_ATTRIBUTE(identity);
+ 
+ void pdsc_debugfs_add_ident(struct pdsc *pdsc)
+ {
++	/* This file will already exist in the reset flow */
++	if (debugfs_lookup("identity", pdsc->dentry))
++		return;
 +
- 	dl = priv_to_devlink(pdsc);
- 	devlink_flash_update_status_notify(dl, "Preparing to flash",
- 					   NULL, 0, 0);
+ 	debugfs_create_file("identity", 0400, pdsc->dentry,
+ 			    pdsc, &identity_fops);
+ }
+diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
+index 1d590eb463d0..f0e39ab40045 100644
+--- a/drivers/net/ethernet/amd/pds_core/dev.c
++++ b/drivers/net/ethernet/amd/pds_core/dev.c
+@@ -309,13 +309,6 @@ static int pdsc_identify(struct pdsc *pdsc)
+ 	return 0;
+ }
+ 
+-int pdsc_dev_reinit(struct pdsc *pdsc)
+-{
+-	pdsc_init_devinfo(pdsc);
+-
+-	return pdsc_identify(pdsc);
+-}
+-
+ int pdsc_dev_init(struct pdsc *pdsc)
+ {
+ 	unsigned int nintrs;
 diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index 4c7f982c12a1..7471a751e4d8 100644
+index 7471a751e4d8..7cc5a6b94939 100644
 --- a/drivers/net/ethernet/amd/pds_core/main.c
 +++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -37,6 +37,11 @@ static void pdsc_unmap_bars(struct pdsc *pdsc)
- 	struct pdsc_dev_bar *bars = pdsc->bars;
- 	unsigned int i;
+@@ -438,7 +438,6 @@ static void pdsc_remove(struct pci_dev *pdev)
+ 		mutex_destroy(&pdsc->config_lock);
+ 		mutex_destroy(&pdsc->devcmd_lock);
  
-+	pdsc->info_regs = NULL;
-+	pdsc->cmd_regs = NULL;
-+	pdsc->intr_status = NULL;
-+	pdsc->intr_ctrl = NULL;
-+
- 	for (i = 0; i < PDS_CORE_BARS_MAX; i++) {
- 		if (bars[i].vaddr)
- 			pci_iounmap(pdsc->pdev, bars[i].vaddr);
+-		pci_free_irq_vectors(pdev);
+ 		pdsc_unmap_bars(pdsc);
+ 		pci_release_regions(pdev);
+ 	}
+@@ -456,7 +455,6 @@ static void pdsc_reset_prepare(struct pci_dev *pdev)
+ 
+ 	pdsc_fw_down(pdsc);
+ 
+-	pci_free_irq_vectors(pdev);
+ 	pdsc_unmap_bars(pdsc);
+ 	pci_release_regions(pdev);
+ 	pci_disable_device(pdev);
 -- 
 2.43.0
 
