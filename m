@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E244A13AC0;
-	Sat,  3 Feb 2024 04:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE7D13AC0;
+	Sat,  3 Feb 2024 04:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933745; cv=none; b=a8MPR6psgMYbeL34zDKyJlkZjkagx0Z0i6yxnhZP/l4oDqeXZtKNbRZYbZz+f99vptukjuJfvJEMXqiRDPBRLdEQ5lnetM1qJqLyImGRZgwJyD7tlpXd1S7xDZ8WLDO7oS7IshepAtoiMwIYHBXFMnB5wn3uT3tV+6ogfo6o57I=
+	t=1706933745; cv=none; b=lWj5bLEYEja57rHnR3FbVqZ2nzR42pbDEE3bThSLjXARzMB9x1KBib80i2uvz+IKdABZ5ff1sZRG2eO8kVDVpjtE1ZAAzncLqSmORYnSDAho/aRuDuXMbr1w9z0GMVUvcvT0Y6YP3k6dZ8adJrlQuUNgsZtkNAPXqlWdqB28mqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933745; c=relaxed/simple;
-	bh=oZSDejc1y/TSO8e4BvpySOawGSXREhDafFXgbzjXWNc=;
+	bh=pJDETNuqL+ortci7qKsDr0LYnqMKXgHRJZ5T5Y/NPko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gw3+t8usChWffG09qGwTXrxYaezywKWFeh4F3uviF1DGID+I+4vVE6IkuI83SpHFcIFdRL0gXBXL5VKePCVkhVSEch7emadGDBG7PDthHbcvlH5XkFiLk+WTME3Cbd0IrovdNxhYSMyFrDf549EMtBNZEYFr/cw3H7uM9Dz57OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsmVMA+l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SWBwx2uuEIN1Dr+ipIldt35j+E6RrX1KhbN0szx53COfPPQFlO0WPxEQp6Xn4PSpUbxbGJxQwWJz6AvVz08jK+KVEGnRYrZow84/ybiKaokPFi76T3JqgtXMkjFmNIh2CYUgAk8N4QJxUlu+tIIyVcDbWkS5Ln7erhptCA1KxKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEOxvp4t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsmVMA+l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5251BC43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEOxvp4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0154EC43394;
 	Sat,  3 Feb 2024 04:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933744;
-	bh=oZSDejc1y/TSO8e4BvpySOawGSXREhDafFXgbzjXWNc=;
+	s=korg; t=1706933745;
+	bh=pJDETNuqL+ortci7qKsDr0LYnqMKXgHRJZ5T5Y/NPko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsmVMA+lHi0eMUsOq4TjXuKhYxy/hEZX35DtiB1J7tSSXZtkxQUTgMQfGZvDucr3d
-	 1R6WoarVtS9BtMAnlf7Rd2lovPxMIXdqwmO9N/NQ/4T+2RsP/z5yav5MPGeLjdIk+Y
-	 U1d+YWMZ/U+G6o7W5pO0wSaiDLxJzis4YmbTxbls=
+	b=GEOxvp4tuVnoKNELzjjW81e7FhSrneYfUlktsUjZTprtQ5ZkeScNK51eGO69HWL5O
+	 NEoal4X/py6Rc4a0AyC4UX3YnwQTLzSwvg44WZzk2EpEYdAfPD/b/2Bxp1z6mzrFfx
+	 /YqIpvelbYDCjN3vwn1mruZuMQrEsBytGjv4G030=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo Ye <bo.ye@mediatek.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yue Hu <huyue2@coolpad.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 029/353] thermal: core: Fix thermal zone suspend-resume synchronization
-Date: Fri,  2 Feb 2024 20:02:27 -0800
-Message-ID: <20240203035404.701418237@linuxfoundation.org>
+Subject: [PATCH 6.7 038/353] erofs: fix up compacted indexes for block size < 4096
+Date: Fri,  2 Feb 2024 20:02:36 -0800
+Message-ID: <20240203035405.004432423@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,130 +52,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 4e814173a8c4f432fd068b1c796f0416328c9d99 ]
+[ Upstream commit 8d2517aaeea3ab8651bb517bca8f3c8664d318ea ]
 
-There are 3 synchronization issues with thermal zone suspend-resume
-during system-wide transitions:
+Previously, the block size always equaled to PAGE_SIZE, therefore
+`lclusterbits` couldn't be less than 12.
 
- 1. The resume code runs in a PM notifier which is invoked after user
-    space has been thawed, so it can run concurrently with user space
-    which can trigger a thermal zone device removal.  If that happens,
-    the thermal zone resume code may use a stale pointer to the next
-    list element and crash, because it does not hold thermal_list_lock
-    while walking thermal_tz_list.
+Since sub-page compressed blocks are now considered, `lobits` for
+a lcluster in each pack cannot always be `lclusterbits` as before.
+Otherwise, there is no enough room for the special value
+`Z_EROFS_LI_D0_CBLKCNT`.
 
- 2. The thermal zone resume code calls thermal_zone_device_init()
-    outside the zone lock, so user space or an update triggered by
-    the platform firmware may see an inconsistent state of a
-    thermal zone leading to unexpected behavior.
+To support smaller block sizes, `lobits` for each compacted lcluster is
+now calculated as:
+   lobits = max(lclusterbits, ilog2(Z_EROFS_LI_D0_CBLKCNT) + 1)
 
- 3. Clearing the in_suspend global variable in thermal_pm_notify()
-    allows __thermal_zone_device_update() to continue for all thermal
-    zones and it may as well run before the thermal_tz_list walk (or
-    at any point during the list walk for that matter) and attempt to
-    operate on a thermal zone that has not been resumed yet.  It may
-    also race destructively with thermal_zone_device_init().
-
-To address these issues, add thermal_list_lock locking to
-thermal_pm_notify(), especially arount the thermal_tz_list,
-make it call thermal_zone_device_init() back-to-back with
-__thermal_zone_device_update() under the zone lock and replace
-in_suspend with per-zone bool "suspend" indicators set and unset
-under the given zone's lock.
-
-Link: https://lore.kernel.org/linux-pm/20231218162348.69101-1-bo.ye@mediatek.com/
-Reported-by: Bo Ye <bo.ye@mediatek.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20231206091057.87027-4-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 30 +++++++++++++++++++++++-------
- include/linux/thermal.h        |  2 ++
- 2 files changed, 25 insertions(+), 7 deletions(-)
+ fs/erofs/zmap.c | 32 ++++++++++++++------------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 1bc7ba459406..45f51727410c 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -37,8 +37,6 @@ static LIST_HEAD(thermal_governor_list);
- static DEFINE_MUTEX(thermal_list_lock);
- static DEFINE_MUTEX(thermal_governor_lock);
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index 7a1a24ae4a2d..e313c936351d 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -82,29 +82,26 @@ static int z_erofs_load_full_lcluster(struct z_erofs_maprecorder *m,
+ }
  
--static atomic_t in_suspend;
--
- static struct thermal_governor *def_governor;
- 
- /*
-@@ -405,7 +403,7 @@ void __thermal_zone_device_update(struct thermal_zone_device *tz,
+ static unsigned int decode_compactedbits(unsigned int lobits,
+-					 unsigned int lomask,
+ 					 u8 *in, unsigned int pos, u8 *type)
  {
- 	const struct thermal_trip *trip;
+ 	const unsigned int v = get_unaligned_le32(in + pos / 8) >> (pos & 7);
+-	const unsigned int lo = v & lomask;
++	const unsigned int lo = v & ((1 << lobits) - 1);
  
--	if (atomic_read(&in_suspend))
-+	if (tz->suspended)
- 		return;
+ 	*type = (v >> lobits) & 3;
+ 	return lo;
+ }
  
- 	if (WARN_ONCE(!tz->ops->get_temp,
-@@ -1514,17 +1512,35 @@ static int thermal_pm_notify(struct notifier_block *nb,
- 	case PM_HIBERNATION_PREPARE:
- 	case PM_RESTORE_PREPARE:
- 	case PM_SUSPEND_PREPARE:
--		atomic_set(&in_suspend, 1);
-+		mutex_lock(&thermal_list_lock);
-+
-+		list_for_each_entry(tz, &thermal_tz_list, node) {
-+			mutex_lock(&tz->lock);
-+
-+			tz->suspended = true;
-+
-+			mutex_unlock(&tz->lock);
-+		}
-+
-+		mutex_unlock(&thermal_list_lock);
- 		break;
- 	case PM_POST_HIBERNATION:
- 	case PM_POST_RESTORE:
- 	case PM_POST_SUSPEND:
--		atomic_set(&in_suspend, 0);
-+		mutex_lock(&thermal_list_lock);
-+
- 		list_for_each_entry(tz, &thermal_tz_list, node) {
-+			mutex_lock(&tz->lock);
-+
-+			tz->suspended = false;
-+
- 			thermal_zone_device_init(tz);
--			thermal_zone_device_update(tz,
--						   THERMAL_EVENT_UNSPECIFIED);
-+			__thermal_zone_device_update(tz, THERMAL_EVENT_UNSPECIFIED);
-+
-+			mutex_unlock(&tz->lock);
- 		}
-+
-+		mutex_unlock(&thermal_list_lock);
- 		break;
- 	default:
- 		break;
-diff --git a/include/linux/thermal.h b/include/linux/thermal.h
-index cee814d5d1ac..1da1739d75d9 100644
---- a/include/linux/thermal.h
-+++ b/include/linux/thermal.h
-@@ -149,6 +149,7 @@ struct thermal_cooling_device {
-  * @node:	node in thermal_tz_list (in thermal_core.c)
-  * @poll_queue:	delayed work for polling
-  * @notify_event: Last notification event
-+ * @suspended: thermal zone suspend indicator
-  */
- struct thermal_zone_device {
- 	int id;
-@@ -181,6 +182,7 @@ struct thermal_zone_device {
- 	struct list_head node;
- 	struct delayed_work poll_queue;
- 	enum thermal_notify_event notify_event;
-+	bool suspended;
- };
+-static int get_compacted_la_distance(unsigned int lclusterbits,
++static int get_compacted_la_distance(unsigned int lobits,
+ 				     unsigned int encodebits,
+ 				     unsigned int vcnt, u8 *in, int i)
+ {
+-	const unsigned int lomask = (1 << lclusterbits) - 1;
+ 	unsigned int lo, d1 = 0;
+ 	u8 type;
  
- /**
+ 	DBG_BUGON(i >= vcnt);
+ 
+ 	do {
+-		lo = decode_compactedbits(lclusterbits, lomask,
+-					  in, encodebits * i, &type);
++		lo = decode_compactedbits(lobits, in, encodebits * i, &type);
+ 
+ 		if (type != Z_EROFS_LCLUSTER_TYPE_NONHEAD)
+ 			return d1;
+@@ -123,15 +120,14 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+ {
+ 	struct erofs_inode *const vi = EROFS_I(m->inode);
+ 	const unsigned int lclusterbits = vi->z_logical_clusterbits;
+-	const unsigned int lomask = (1 << lclusterbits) - 1;
+-	unsigned int vcnt, base, lo, encodebits, nblk, eofs;
++	unsigned int vcnt, base, lo, lobits, encodebits, nblk, eofs;
+ 	int i;
+ 	u8 *in, type;
+ 	bool big_pcluster;
+ 
+ 	if (1 << amortizedshift == 4 && lclusterbits <= 14)
+ 		vcnt = 2;
+-	else if (1 << amortizedshift == 2 && lclusterbits == 12)
++	else if (1 << amortizedshift == 2 && lclusterbits <= 12)
+ 		vcnt = 16;
+ 	else
+ 		return -EOPNOTSUPP;
+@@ -140,6 +136,7 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+ 	m->nextpackoff = round_down(pos, vcnt << amortizedshift) +
+ 			 (vcnt << amortizedshift);
+ 	big_pcluster = vi->z_advise & Z_EROFS_ADVISE_BIG_PCLUSTER_1;
++	lobits = max(lclusterbits, ilog2(Z_EROFS_LI_D0_CBLKCNT) + 1U);
+ 	encodebits = ((vcnt << amortizedshift) - sizeof(__le32)) * 8 / vcnt;
+ 	eofs = erofs_blkoff(m->inode->i_sb, pos);
+ 	base = round_down(eofs, vcnt << amortizedshift);
+@@ -147,15 +144,14 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+ 
+ 	i = (eofs - base) >> amortizedshift;
+ 
+-	lo = decode_compactedbits(lclusterbits, lomask,
+-				  in, encodebits * i, &type);
++	lo = decode_compactedbits(lobits, in, encodebits * i, &type);
+ 	m->type = type;
+ 	if (type == Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
+ 		m->clusterofs = 1 << lclusterbits;
+ 
+ 		/* figure out lookahead_distance: delta[1] if needed */
+ 		if (lookahead)
+-			m->delta[1] = get_compacted_la_distance(lclusterbits,
++			m->delta[1] = get_compacted_la_distance(lobits,
+ 						encodebits, vcnt, in, i);
+ 		if (lo & Z_EROFS_LI_D0_CBLKCNT) {
+ 			if (!big_pcluster) {
+@@ -174,8 +170,8 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+ 		 * of which lo saves delta[1] rather than delta[0].
+ 		 * Hence, get delta[0] by the previous lcluster indirectly.
+ 		 */
+-		lo = decode_compactedbits(lclusterbits, lomask,
+-					  in, encodebits * (i - 1), &type);
++		lo = decode_compactedbits(lobits, in,
++					  encodebits * (i - 1), &type);
+ 		if (type != Z_EROFS_LCLUSTER_TYPE_NONHEAD)
+ 			lo = 0;
+ 		else if (lo & Z_EROFS_LI_D0_CBLKCNT)
+@@ -190,8 +186,8 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+ 		nblk = 1;
+ 		while (i > 0) {
+ 			--i;
+-			lo = decode_compactedbits(lclusterbits, lomask,
+-						  in, encodebits * i, &type);
++			lo = decode_compactedbits(lobits, in,
++						  encodebits * i, &type);
+ 			if (type == Z_EROFS_LCLUSTER_TYPE_NONHEAD)
+ 				i -= lo;
+ 
+@@ -202,8 +198,8 @@ static int unpack_compacted_index(struct z_erofs_maprecorder *m,
+ 		nblk = 0;
+ 		while (i > 0) {
+ 			--i;
+-			lo = decode_compactedbits(lclusterbits, lomask,
+-						  in, encodebits * i, &type);
++			lo = decode_compactedbits(lobits, in,
++						  encodebits * i, &type);
+ 			if (type == Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
+ 				if (lo & Z_EROFS_LI_D0_CBLKCNT) {
+ 					--i;
 -- 
 2.43.0
 
