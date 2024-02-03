@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774BDF9D7;
-	Sat,  3 Feb 2024 04:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F72F9D7;
+	Sat,  3 Feb 2024 04:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933351; cv=none; b=SE+AcReFDSmdjI/1k2mTL13vtDH7MsGPDb2T/RT7cDUrf25jOvCfWU2uuFvuzbrmDd7uXSOvJb6kqrRj5eEjyb0/tGN9QeaJc3l2I/GA59/6h9RfPt4EY9cphLzljAp54XYw58UVq7Rj01FWKvOics/HMrjsVZfPpErAAQQU92w=
+	t=1706933352; cv=none; b=X9clM/gAfCGKSlJvnaSLyWjnqcSouUN0yvDsqau87FcvOzynTEuBovD0iHF72fbeAo6CM0bHPOenkj4o1XZDYzL+2zvq/VjcDfZlw8M7mdPbIGKKy+XARSnwur0J/dUD3HZz0ARG8C3/C6REMgAa4Mlh2DaujhpDk+anNpmeEVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933351; c=relaxed/simple;
-	bh=n0x8oED9LFIZOY6+0EuwEgnUEkq9Lv8k4PSwHQc6sQA=;
+	s=arc-20240116; t=1706933352; c=relaxed/simple;
+	bh=p7AZ315qwMczIEPDmnWMICId6LQNNvXOPBLjz0oxxTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dhtt0FmhishNjEtQWaZbkc0WFcLt1NO9RJp522to/mpmfCHh8EPlf6x44w3RoMZGtGreQNxRixu1OLJlCsYl6D/9Xejq19j0pYVb8sOynAJWgrQ6a/mN3ofYW/nrSgyKUYakDLHLRIubQyGGZk23xGw39KKMhnyk3MX3+LqfLqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBzodRV0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XVdOG4fXMz1pFruxAuyAULuMHhu1Rk6SByiYbQnXeq34TuAiFhms2IrQ/cVEpL6eqxUdFUYnNEqEIgE5mOTF9nfKfZFVGwk7iIl3pYhCcYu6PpeQnJ2PTPwXJXCf0i8dLaL0K30z9K1cIERpaLZlYhOO0OGqg+gbnZFPA/WrghI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyYiZvx2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBzodRV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7D5C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyYiZvx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4870C43399;
 	Sat,  3 Feb 2024 04:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933351;
-	bh=n0x8oED9LFIZOY6+0EuwEgnUEkq9Lv8k4PSwHQc6sQA=;
+	s=korg; t=1706933352;
+	bh=p7AZ315qwMczIEPDmnWMICId6LQNNvXOPBLjz0oxxTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBzodRV0lZWRzwDihf42d118N7Qru3wTM/nJ0Mpn7Jdk2ksbyy41nqEF2wehA/YoL
-	 A6ZZPshmuEBcoPiylkMTFTY2A4sVCZKWw1UIoLfg6Emotuw6g2hGTBTrdci/0Y2cjK
-	 sL9c0QwYRoxFifP3NYmrL0Tj+IshcZxE3K3VXFCI=
+	b=yyYiZvx215kr6V0KcHBiiMIjpXDDEnsb2FHKTGPpxmdNrOMe8MnS2Zx3vRhLFToVo
+	 VaTkG1apJx6n0vKnyyLvjCLFXkZcGs3mYEAGjjQNZXoSWM3u4/EcvEVI6dFFsaagi1
+	 HMIypTFG+e7s1pSBnfMdJatuR7J+q6gY+Zy/sdxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herb Wei <weihao.bj@ieisystem.com>,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/219] net: usb: ax88179_178a: avoid two consecutive device resets
-Date: Fri,  2 Feb 2024 20:03:48 -0800
-Message-ID: <20240203035324.662213010@linuxfoundation.org>
+Subject: [PATCH 6.1 056/219] scsi: mpi3mr: Add PCI checks where SAS5116 diverges from SAS4116
+Date: Fri,  2 Feb 2024 20:03:49 -0800
+Message-ID: <20240203035324.902425937@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -52,41 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Sumit Saxena <sumit.saxena@broadcom.com>
 
-[ Upstream commit d2689b6a86b9d23574bd4b654bf770b6034e2c7e ]
+[ Upstream commit c9260ff28ee561fca5f96425c9328a9698e8427b ]
 
-The device is always reset two consecutive times (ax88179_reset is called
-twice), one from usbnet_probe during the device binding and the other from
-usbnet_open.
+Add PCI IDs checks for the cases where SAS5116 diverges from SAS4116 in
+behavior.
 
-Remove the non-necessary reset during the device binding and let the reset
-operation from open to keep the normal behavior (tested with generic ASIX
-Electronics Corp. AX88179 Gigabit Ethernet device).
-
-Reported-by: Herb Wei <weihao.bj@ieisystem.com>
-Tested-by: Herb Wei <weihao.bj@ieisystem.com>
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Link: https://lore.kernel.org/r/20231120121239.54504-1-jtornosm@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
+Link: https://lore.kernel.org/r/20231123160132.4155-3-sumit.saxena@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 3 ++-
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 5 ++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
-index 5a1bf42ce156..d837c1887416 100644
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1315,8 +1315,6 @@ static int ax88179_bind(struct usbnet *dev, struct usb_interface *intf)
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index d2c7de804b99..41636c4c43af 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -1886,7 +1886,8 @@ static int mpi3mr_create_op_reply_q(struct mpi3mr_ioc *mrioc, u16 qidx)
  
- 	netif_set_tso_max_size(dev->net, 16384);
+ 	reply_qid = qidx + 1;
+ 	op_reply_q->num_replies = MPI3MR_OP_REP_Q_QD;
+-	if (!mrioc->pdev->revision)
++	if ((mrioc->pdev->device == MPI3_MFGPAGE_DEVID_SAS4116) &&
++		!mrioc->pdev->revision)
+ 		op_reply_q->num_replies = MPI3MR_OP_REP_Q_QD4K;
+ 	op_reply_q->ci = 0;
+ 	op_reply_q->ephase = 1;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index 85f5b349c7e4..7a6b006e70c8 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -4963,7 +4963,10 @@ mpi3mr_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		mpi3mr_init_drv_cmd(&mrioc->evtack_cmds[i],
+ 				    MPI3MR_HOSTTAG_EVTACKCMD_MIN + i);
  
--	ax88179_reset(dev);
--
- 	return 0;
- }
+-	if (pdev->revision)
++	if ((pdev->device == MPI3_MFGPAGE_DEVID_SAS4116) &&
++		!pdev->revision)
++		mrioc->enable_segqueue = false;
++	else
+ 		mrioc->enable_segqueue = true;
  
+ 	init_waitqueue_head(&mrioc->reset_waitq);
 -- 
 2.43.0
 
