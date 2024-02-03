@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE9F1F92C;
-	Sat,  3 Feb 2024 04:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112F8101C2;
+	Sat,  3 Feb 2024 04:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933539; cv=none; b=Zz/RLpKwSmSAKD6QPydCi3+Tnc/DHCxkUR7fd6uY6sIZQtN1O80ic8ZX4PoVkpFj7LfJyIMSb2wMShZbCWxtzcua5kfTPv2YxLexU5GB3PDYNrVyzXWScc+ItsIkihjtU+aApCLabNBpU1iflkxjil15CWhf7G16d8lLHDsUWS8=
+	t=1706933540; cv=none; b=dqyT68F7PyRh6cqjWEwGxyxSB24RB7TMwlFat4qycrbwI0WiDA4slTbRfv1Z7/CJ9rgF0EdjL4DbomfsBpcuS3mO9cILtYSy6ySCSu3+/e4VdsCdK65tYO2WT+dtaoMn5ftPzc4/gHB9Gv5bVsacvzS6IMUkVquXsS8XedJJu0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933539; c=relaxed/simple;
-	bh=/RasludhNU2TPvb5f9sxaRnVhuw91QidHVK6XXT0j0Q=;
+	s=arc-20240116; t=1706933540; c=relaxed/simple;
+	bh=TrZW5PXc1mmX52CczXTKh2HsGJYaLKyo4LrkEqW5SnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0VhLTbzn3Oclga8b63J8cNpj/aKIN7XBqmv8BSeEUQbaws2W6r4flYfDufr9EPxV8hvUzusqMjyTom90Y5Hr7HgoOoDIbEA/Ozc7ZcJlGidfZDm6QghvsZabnNvHyg3J4pxhDoWqB90eraSClFOT36PbBb2ftOaTQQY3NvIGUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w4bxHtFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pYk2pH2skgPnhV7YUWhQ3dI9FbLfwSM1qeVTOHF1ePF7wZlNi3dVMt6zKsZanW86OsSkl0HjNdIJ9FleSgU03sNtJQNwPZoWaSZ0eZZcyPlk4AIfiSeQjKLKTHp6Os85bkcbzt8Jf0buBPqQ4z1y0pdfwpUZ04zxy98ol4wSyhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9hzMruc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w4bxHtFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11041C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9hzMruc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD372C433F1;
 	Sat,  3 Feb 2024 04:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933539;
-	bh=/RasludhNU2TPvb5f9sxaRnVhuw91QidHVK6XXT0j0Q=;
+	bh=TrZW5PXc1mmX52CczXTKh2HsGJYaLKyo4LrkEqW5SnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w4bxHtFeGwSQwcvr68wKDKol8LmHWyeHWDFXx4p+5Zm7SWey75QkY1FCNh//X5kx4
-	 syEIo72W7+4vBu1YPPEnm+u3/j2WlJ1te4rxr2IDJxHdkdwk3izdyFsvMRG3UbFXQT
-	 gYXPraIrnUGzPAp+D85/XTsgOliTmBg8mO1aAftA=
+	b=B9hzMrucMUzy3clR+wIHfHLtxhk6e78/dTqGKVDK3ATxYtsuCaXoeewSew6qiCjxQ
+	 4scIvl7XeeM0NDf9wY2tba5sMIMqWg7odFDYXiMqLGNjR7jRlyrmzSq4Ueu1k2gdNg
+	 6rwD+Hz2DVZ59TKv1bqZ1mdA+WqrfUgLVqweaIgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/322] ARM: dts: qcom: mdm9615: fix PMIC node labels
-Date: Fri,  2 Feb 2024 20:02:44 -0800
-Message-ID: <20240203035401.313769766@linuxfoundation.org>
+Subject: [PATCH 6.6 085/322] bpf: Fix a few selftest failures due to llvm18 change
+Date: Fri,  2 Feb 2024 20:03:02 -0800
+Message-ID: <20240203035401.903786405@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,94 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit 0e4688cd4ee6efbeae2b31f75e16961fd7f72735 ]
+[ Upstream commit b16904fd9f01b580db357ef2b1cc9e86d89576c2 ]
 
-Change PM8018 node labels to start with pm8018_ prefix, following other
-Qualcomm PMIC device nodes.
+With latest upstream llvm18, the following test cases failed:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230928110309.1212221-10-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  $ ./test_progs -j
+  #13/2    bpf_cookie/multi_kprobe_link_api:FAIL
+  #13/3    bpf_cookie/multi_kprobe_attach_api:FAIL
+  #13      bpf_cookie:FAIL
+  #77      fentry_fexit:FAIL
+  #78/1    fentry_test/fentry:FAIL
+  #78      fentry_test:FAIL
+  #82/1    fexit_test/fexit:FAIL
+  #82      fexit_test:FAIL
+  #112/1   kprobe_multi_test/skel_api:FAIL
+  #112/2   kprobe_multi_test/link_api_addrs:FAIL
+  [...]
+  #112     kprobe_multi_test:FAIL
+  #356/17  test_global_funcs/global_func17:FAIL
+  #356     test_global_funcs:FAIL
+
+Further analysis shows llvm upstream patch [1] is responsible for the above
+failures. For example, for function bpf_fentry_test7() in net/bpf/test_run.c,
+without [1], the asm code is:
+
+  0000000000000400 <bpf_fentry_test7>:
+     400: f3 0f 1e fa                   endbr64
+     404: e8 00 00 00 00                callq   0x409 <bpf_fentry_test7+0x9>
+     409: 48 89 f8                      movq    %rdi, %rax
+     40c: c3                            retq
+     40d: 0f 1f 00                      nopl    (%rax)
+
+... and with [1], the asm code is:
+
+  0000000000005d20 <bpf_fentry_test7.specialized.1>:
+    5d20: e8 00 00 00 00                callq   0x5d25 <bpf_fentry_test7.specialized.1+0x5>
+    5d25: c3                            retq
+
+... and <bpf_fentry_test7.specialized.1> is called instead of <bpf_fentry_test7>
+and this caused test failures for #13/#77 etc. except #356.
+
+For test case #356/17, with [1] (progs/test_global_func17.c)), the main prog
+looks like:
+
+  0000000000000000 <global_func17>:
+       0:       b4 00 00 00 2a 00 00 00 w0 = 0x2a
+       1:       95 00 00 00 00 00 00 00 exit
+
+... which passed verification while the test itself expects a verification
+failure.
+
+Let us add 'barrier_var' style asm code in both places to prevent function
+specialization which caused selftests failure.
+
+  [1] https://github.com/llvm/llvm-project/pull/72903
+
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20231127050342.1945270-1-yonghong.song@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi |  2 +-
- arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi        | 14 +++++++-------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ net/bpf/test_run.c                                     | 2 +-
+ tools/testing/selftests/bpf/progs/test_global_func17.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi b/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi
-index 92c8003dac25..dac3aa793f71 100644
---- a/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-mdm9615-wp8548.dtsi
-@@ -76,7 +76,7 @@
- 	};
- };
+diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
+index 0841f8d82419..478ee7aba85f 100644
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -543,7 +543,7 @@ struct bpf_fentry_test_t {
  
--&pmicgpio {
-+&pm8018_gpio {
- 	usb_vbus_5v_pins: usb-vbus-5v-state {
- 		pins = "gpio4";
- 		function = "normal";
-diff --git a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-index 63e21aa23642..c0a60bae703b 100644
---- a/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-mdm9615.dtsi
-@@ -261,7 +261,7 @@
- 			reg = <0x500000 0x1000>;
- 			qcom,controller-type = "pmic-arbiter";
+ int noinline bpf_fentry_test7(struct bpf_fentry_test_t *arg)
+ {
+-	asm volatile ("");
++	asm volatile ("": "+r"(arg));
+ 	return (long)arg;
+ }
  
--			pmicintc: pmic {
-+			pm8018: pmic {
- 				compatible = "qcom,pm8018", "qcom,pm8921";
- 				interrupts = <GIC_PPI 226 IRQ_TYPE_LEVEL_HIGH>;
- 				#interrupt-cells = <2>;
-@@ -272,38 +272,38 @@
- 				pwrkey@1c {
- 					compatible = "qcom,pm8018-pwrkey", "qcom,pm8921-pwrkey";
- 					reg = <0x1c>;
--					interrupt-parent = <&pmicintc>;
-+					interrupt-parent = <&pm8018>;
- 					interrupts = <50 IRQ_TYPE_EDGE_RISING>,
- 						     <51 IRQ_TYPE_EDGE_RISING>;
- 					debounce = <15625>;
- 					pull-up;
- 				};
+diff --git a/tools/testing/selftests/bpf/progs/test_global_func17.c b/tools/testing/selftests/bpf/progs/test_global_func17.c
+index a32e11c7d933..5de44b09e8ec 100644
+--- a/tools/testing/selftests/bpf/progs/test_global_func17.c
++++ b/tools/testing/selftests/bpf/progs/test_global_func17.c
+@@ -5,6 +5,7 @@
  
--				pmicmpp: mpps@50 {
-+				pm8018_mpps: mpps@50 {
- 					compatible = "qcom,pm8018-mpp", "qcom,ssbi-mpp";
- 					interrupt-controller;
- 					#interrupt-cells = <2>;
- 					reg = <0x50>;
- 					gpio-controller;
- 					#gpio-cells = <2>;
--					gpio-ranges = <&pmicmpp 0 0 6>;
-+					gpio-ranges = <&pm8018_mpps 0 0 6>;
- 				};
+ __noinline int foo(int *p)
+ {
++	barrier_var(p);
+ 	return p ? (*p = 42) : 0;
+ }
  
- 				rtc@11d {
- 					compatible = "qcom,pm8018-rtc", "qcom,pm8921-rtc";
--					interrupt-parent = <&pmicintc>;
-+					interrupt-parent = <&pm8018>;
- 					interrupts = <39 IRQ_TYPE_EDGE_RISING>;
- 					reg = <0x11d>;
- 					allow-set-time;
- 				};
- 
--				pmicgpio: gpio@150 {
-+				pm8018_gpio: gpio@150 {
- 					compatible = "qcom,pm8018-gpio", "qcom,ssbi-gpio";
- 					reg = <0x150>;
- 					interrupt-controller;
- 					#interrupt-cells = <2>;
- 					gpio-controller;
--					gpio-ranges = <&pmicgpio 0 0 6>;
-+					gpio-ranges = <&pm8018_gpio 0 0 6>;
- 					#gpio-cells = <2>;
- 				};
- 			};
 -- 
 2.43.0
 
