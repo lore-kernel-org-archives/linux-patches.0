@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49795111AE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17A956741;
 	Sat,  3 Feb 2024 04:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933984; cv=none; b=n/iWg2AR6Vzz3akp6E+fdgJP8ZEiMhmqmUY8b30OPFey6GKcWWIiJt+/O/u1gKrZWZ+Kl0w5uUy17UhT1Y1a+QHPyZlwdFtqu3BVREPBWv2KvoiELvVKnJakwilMABaS5GQbyjS813kvcDspI1f8qBAF6AE62GURyySlizo7C+Q=
+	t=1706933985; cv=none; b=dV4lyOjpvRzPBN6kcxXLLfyQ1Ec0K1yu1Qsw8sHFW38YOCm4xm/hIvJsXeeUVCcPeceH3Wx4yQKJ27Wwo1f72iHVwA9VFW2vQ4Mvx8bkI1y7Me+aw+F+N+OjY8sCQaed0/DlwV1Qbvmt0ASpUldTx+oz7HGx0SWRFpFn+6bVaGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933984; c=relaxed/simple;
-	bh=aTxAnlhhgl+6Gq7TLfdjsxsU24q2D46N5Lfjr+TgVWQ=;
+	s=arc-20240116; t=1706933985; c=relaxed/simple;
+	bh=BNcZVunwoneIcefGu8sqSjkE4WWSVK00cDTdLxDkde0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqHVZf42oFDai1AbFQFMJiHFiFD+eDgltkUoDx6A7JVMaB2OafiV4edVH9ja+8kT7faFCBanbiqeuvJnadNccUNN0oAmHKlpLHNjcn5TTNlB487gPQ/ykSWkUW5+jEv/ZTNhzxPPh4C3O+L/3tBtp3tQzxdeB+FAwXNLhxGyQZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEuw/quM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tp12NpHJOUYvodTYgSXAtqPdg7YkI+8+N7T3XMw7EW+gHLhGlKQ+cu4hQgpm+r3cWMUZ9y9kFNbCzJ1jdabl/4uQOC0EydWI20DApJO3uMro10M4kIcv9TMKDXXvdS76HahiCA5HAdtM61uC8x+tI6zqiAxlC83HVuW4Sw4cDTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U74OnPQ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEuw/quM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13172C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U74OnPQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED60C433A6;
 	Sat,  3 Feb 2024 04:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933984;
-	bh=aTxAnlhhgl+6Gq7TLfdjsxsU24q2D46N5Lfjr+TgVWQ=;
+	bh=BNcZVunwoneIcefGu8sqSjkE4WWSVK00cDTdLxDkde0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEuw/quMHc6vo6Ma3w+PdVrfeR5D5OEGPxR4f0s8MqvzmKAOwTV89S7r6p2D8lY1N
-	 3zXe5tAjZ+QKqdUwdX5HGRgN/oAeA61M8cEKKy4foYSID9e7R0kGd80O1eSR9b13Jr
-	 XQDZm6XwegPqtMqJ/rIPS9pZEiMz4ql8x7EsrtX8=
+	b=U74OnPQ5uR3sFEcfZPElzDSdjYR8tE+srurhS2tHBJx3bfPa3T3SIgA1S8yLJuFa9
+	 eFKA8l5o9s5zMZn77y3e95H0iqdk6XoN6PryUHsTUsVMbwWhkcvgQ+Xib1LLFsurGb
+	 05xoOf0RCE8S6KJ9KfKikPMzV/gOqbp9L+5nsE1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 342/353] net: sysfs: Fix /sys/class/net/<iface> path
-Date: Fri,  2 Feb 2024 20:07:40 -0800
-Message-ID: <20240203035414.584620848@linuxfoundation.org>
+Subject: [PATCH 6.7 333/353] pds_core: Use struct pdsc for the pdsc_adminq_isr private data
+Date: Fri,  2 Feb 2024 20:07:31 -0800
+Message-ID: <20240203035414.321261493@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,125 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit ae3f4b44641dfff969604735a0dcbf931f383285 ]
+[ Upstream commit 951705151e50f9022bc96ec8b3fd5697380b1df6 ]
 
-The documentation is pointing to the wrong path for the interface.
-Documentation is pointing to /sys/class/<iface>, instead of
-/sys/class/net/<iface>.
+The initial design for the adminq interrupt was done based
+on client drivers having their own adminq and adminq
+interrupt. So, each client driver's adminq isr would use
+their specific adminqcq for the private data struct. For the
+time being the design has changed to only use a single
+adminq for all clients. So, instead use the struct pdsc for
+the private data to simplify things a bit.
 
-Fix it by adding the `net/` directory before the interface.
+This also has the benefit of not dereferencing the adminqcq
+to access the pdsc struct when the PDSC_S_STOPPING_DRIVER bit
+is set and the adminqcq has actually been cleared/freed.
 
-Fixes: 1a02ef76acfa ("net: sysfs: add documentation entries for /sys/class/<iface>/queues")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240131102150.728960-2-leitao@debian.org
+Fixes: 01ba61b55b20 ("pds_core: Add adminq processing and commands")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://lore.kernel.org/r/20240129234035.69802-4-brett.creeley@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ABI/testing/sysfs-class-net-queues        | 22 +++++++++----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/amd/pds_core/adminq.c | 5 +++--
+ drivers/net/ethernet/amd/pds_core/core.c   | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-class-net-queues b/Documentation/ABI/testing/sysfs-class-net-queues
-index 906ff3ca928a..5bff64d256c2 100644
---- a/Documentation/ABI/testing/sysfs-class-net-queues
-+++ b/Documentation/ABI/testing/sysfs-class-net-queues
-@@ -1,4 +1,4 @@
--What:		/sys/class/<iface>/queues/rx-<queue>/rps_cpus
-+What:		/sys/class/net/<iface>/queues/rx-<queue>/rps_cpus
- Date:		March 2010
- KernelVersion:	2.6.35
- Contact:	netdev@vger.kernel.org
-@@ -8,7 +8,7 @@ Description:
- 		network device queue. Possible values depend on the number
- 		of available CPU(s) in the system.
+diff --git a/drivers/net/ethernet/amd/pds_core/adminq.c b/drivers/net/ethernet/amd/pds_core/adminq.c
+index 5beadabc2136..68be5ea251fc 100644
+--- a/drivers/net/ethernet/amd/pds_core/adminq.c
++++ b/drivers/net/ethernet/amd/pds_core/adminq.c
+@@ -135,8 +135,8 @@ void pdsc_work_thread(struct work_struct *work)
  
--What:		/sys/class/<iface>/queues/rx-<queue>/rps_flow_cnt
-+What:		/sys/class/net/<iface>/queues/rx-<queue>/rps_flow_cnt
- Date:		April 2010
- KernelVersion:	2.6.35
- Contact:	netdev@vger.kernel.org
-@@ -16,7 +16,7 @@ Description:
- 		Number of Receive Packet Steering flows being currently
- 		processed by this particular network device receive queue.
+ irqreturn_t pdsc_adminq_isr(int irq, void *data)
+ {
+-	struct pdsc_qcq *qcq = data;
+-	struct pdsc *pdsc = qcq->pdsc;
++	struct pdsc *pdsc = data;
++	struct pdsc_qcq *qcq;
  
--What:		/sys/class/<iface>/queues/tx-<queue>/tx_timeout
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/tx_timeout
- Date:		November 2011
- KernelVersion:	3.3
- Contact:	netdev@vger.kernel.org
-@@ -24,7 +24,7 @@ Description:
- 		Indicates the number of transmit timeout events seen by this
- 		network interface transmit queue.
+ 	/* Don't process AdminQ when shutting down */
+ 	if (pdsc->state & BIT_ULL(PDSC_S_STOPPING_DRIVER)) {
+@@ -145,6 +145,7 @@ irqreturn_t pdsc_adminq_isr(int irq, void *data)
+ 		return IRQ_HANDLED;
+ 	}
  
--What:		/sys/class/<iface>/queues/tx-<queue>/tx_maxrate
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/tx_maxrate
- Date:		March 2015
- KernelVersion:	4.1
- Contact:	netdev@vger.kernel.org
-@@ -32,7 +32,7 @@ Description:
- 		A Mbps max-rate set for the queue, a value of zero means disabled,
- 		default is disabled.
++	qcq = &pdsc->adminqcq;
+ 	queue_work(pdsc->wq, &qcq->work);
+ 	pds_core_intr_mask(&pdsc->intr_ctrl[qcq->intx], PDS_CORE_INTR_MASK_CLEAR);
  
--What:		/sys/class/<iface>/queues/tx-<queue>/xps_cpus
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/xps_cpus
- Date:		November 2010
- KernelVersion:	2.6.38
- Contact:	netdev@vger.kernel.org
-@@ -42,7 +42,7 @@ Description:
- 		network device transmit queue. Possible values depend on the
- 		number of available CPU(s) in the system.
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index b582729331eb..0356e56a6e99 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -125,7 +125,7 @@ static int pdsc_qcq_intr_alloc(struct pdsc *pdsc, struct pdsc_qcq *qcq)
  
--What:		/sys/class/<iface>/queues/tx-<queue>/xps_rxqs
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/xps_rxqs
- Date:		June 2018
- KernelVersion:	4.18.0
- Contact:	netdev@vger.kernel.org
-@@ -53,7 +53,7 @@ Description:
- 		number of available receive queue(s) in the network device.
- 		Default is disabled.
- 
--What:		/sys/class/<iface>/queues/tx-<queue>/byte_queue_limits/hold_time
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/byte_queue_limits/hold_time
- Date:		November 2011
- KernelVersion:	3.3
- Contact:	netdev@vger.kernel.org
-@@ -62,7 +62,7 @@ Description:
- 		of this particular network device transmit queue.
- 		Default value is 1000.
- 
--What:		/sys/class/<iface>/queues/tx-<queue>/byte_queue_limits/inflight
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/byte_queue_limits/inflight
- Date:		November 2011
- KernelVersion:	3.3
- Contact:	netdev@vger.kernel.org
-@@ -70,7 +70,7 @@ Description:
- 		Indicates the number of bytes (objects) in flight on this
- 		network device transmit queue.
- 
--What:		/sys/class/<iface>/queues/tx-<queue>/byte_queue_limits/limit
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/byte_queue_limits/limit
- Date:		November 2011
- KernelVersion:	3.3
- Contact:	netdev@vger.kernel.org
-@@ -79,7 +79,7 @@ Description:
- 		on this network device transmit queue. This value is clamped
- 		to be within the bounds defined by limit_max and limit_min.
- 
--What:		/sys/class/<iface>/queues/tx-<queue>/byte_queue_limits/limit_max
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/byte_queue_limits/limit_max
- Date:		November 2011
- KernelVersion:	3.3
- Contact:	netdev@vger.kernel.org
-@@ -88,7 +88,7 @@ Description:
- 		queued on this network device transmit queue. See
- 		include/linux/dynamic_queue_limits.h for the default value.
- 
--What:		/sys/class/<iface>/queues/tx-<queue>/byte_queue_limits/limit_min
-+What:		/sys/class/net/<iface>/queues/tx-<queue>/byte_queue_limits/limit_min
- Date:		November 2011
- KernelVersion:	3.3
- Contact:	netdev@vger.kernel.org
+ 	snprintf(name, sizeof(name), "%s-%d-%s",
+ 		 PDS_CORE_DRV_NAME, pdsc->pdev->bus->number, qcq->q.name);
+-	index = pdsc_intr_alloc(pdsc, name, pdsc_adminq_isr, qcq);
++	index = pdsc_intr_alloc(pdsc, name, pdsc_adminq_isr, pdsc);
+ 	if (index < 0)
+ 		return index;
+ 	qcq->intx = index;
 -- 
 2.43.0
 
