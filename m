@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E4612B89;
-	Sat,  3 Feb 2024 04:14:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7179243AD9;
+	Sat,  3 Feb 2024 04:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933662; cv=none; b=DcgKnoX7t4M2wTR4Bv7LAFSSdvQuvMJ98qJGN6kptGh+hzlScWc2H5njHZr9gktYg3NJZFAt1BHIyqXXlZLeSh7ErO2XawUd9GZBeSpE4WLGv8WS+Dy9R0TVklhj+ObwjaJXpszAoUQIDb7yMLBJ52E9kZfiVNsCYHVM4wK2nYQ=
+	t=1706933663; cv=none; b=tHzdq7JisYhd7JcFmbjAvaBrN/Rg7i0w22a/pHwXF2DqONYGgkt7L9OtqzAALsrGqWQMxKbIdqygb0b/Fw0T1gRF2rJcQULokwp1aPfRTbOV8tr9fMNMK3wG5/X0q0EkTTL3p2E8xJa9cWJ16p6wec6MHvRq0063yfm63t9HqJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933662; c=relaxed/simple;
-	bh=RROPyBK58BNDutCZh328bTmQMX+1nxZGLuTGZuFm5fo=;
+	s=arc-20240116; t=1706933663; c=relaxed/simple;
+	bh=eVnnqzkcU+PbqUTLOU+jYLr7BB2XUfV5aUSHvTIhxbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWuYzqUOfrpuUmU0l9Ph0cQwyvdCgxobM0F36kTQ/nPThdG4zjrpLPovGRAuwpyZ7jOdEV8923mCybMJ2nEc25ZN/YBWHj9zgB7/rwnp++8AxQXWoWrFPmSdKDajw0p1sWCKOsJOXpkpvksIbV6K090jBg0Esn7z0T9bZZxMjNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNsqw3n6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1HIxKpgasfUhxp5PR1kYZ1tC+eaj9OTpNPQUT8oIvYS7yf/XJGV2BsuNzk3cHmp8O3+7G/PVgYSDG+0Rs2NB8gLqn56lq3YOByEcaKDI+lkGRvvyboOQ7DV144iP1esSkOfUJe7Ztb7W/Wzi/5bF6Qqe5qz2pDQ4xOzXXYAB8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VXQarzgi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNsqw3n6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC0AC433F1;
-	Sat,  3 Feb 2024 04:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VXQarzgi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3A1C43390;
+	Sat,  3 Feb 2024 04:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933662;
-	bh=RROPyBK58BNDutCZh328bTmQMX+1nxZGLuTGZuFm5fo=;
+	s=korg; t=1706933663;
+	bh=eVnnqzkcU+PbqUTLOU+jYLr7BB2XUfV5aUSHvTIhxbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNsqw3n6eiIjqo/zL4Lc+/EcfAZgrZMveFKWfyXcrvroGoO2hZaThZNMcvYT2I8Ld
-	 iSH+wJIgXU5iQ5ObY6VTsywjIs3LGipUwpEy5ocP/iCunZTt4cak3glclfwJTeSHsc
-	 Iemq12ugHhm5J7ZPrEK4qyk6CBSFDEhutbmPgqLA=
+	b=VXQarzgi5IZS27m1rq665gouqcAqsCUjfd+bZa1InnWf/m7XrIVepNQ9qihY0oSrx
+	 g7PeGOK4muiwqxGjTmVlr6enMSTnR5hTstNqcgCcivnVFSPtSlfHzEkmb9Eg/KVEM0
+	 dUG93eIrkYcit1swbUSwgSF8HQIa5PK64MTslP7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venky Shankar <vshankar@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Xiubo Li <xiubli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/322] ceph: reinitialize mds feature bit even when session in open
-Date: Fri,  2 Feb 2024 20:05:47 -0800
-Message-ID: <20240203035407.238819451@linuxfoundation.org>
+Subject: [PATCH 6.6 251/322] ceph: fix deadlock or deadcode of misusing dget()
+Date: Fri,  2 Feb 2024 20:05:48 -0800
+Message-ID: <20240203035407.271307253@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,43 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venky Shankar <vshankar@redhat.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit f48e0342a74d7770cdf1d11894bdc3b6d989b29e ]
+[ Upstream commit b493ad718b1f0357394d2cdecbf00a44a36fa085 ]
 
-Following along the same lines as per the user-space fix. Right
-now this isn't really an issue with the ceph kernel driver because
-of the feature bit laginess, however, that can change over time
-(when the new snaprealm info type is ported to the kernel driver)
-and depending on the MDS version that's being upgraded can cause
-message decoding issues - so, fix that early on.
+The lock order is incorrect between denty and its parent, we should
+always make sure that the parent get the lock first.
 
-Link: http://tracker.ceph.com/issues/63188
-Signed-off-by: Venky Shankar <vshankar@redhat.com>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
+But since this deadcode is never used and the parent dir will always
+be set from the callers, let's just remove it.
+
+Link: https://lore.kernel.org/r/20231116081919.GZ1957730@ZenIV
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/caps.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 293b93182955..6d76fd0f704a 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -4010,11 +4010,11 @@ static void handle_session(struct ceph_mds_session *session,
- 		if (session->s_state == CEPH_MDS_SESSION_RECONNECTING)
- 			pr_info("mds%d reconnect success\n", session->s_mds);
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 14215ec646f7..7f7e5f5d643c 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -4780,12 +4780,14 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
+ 			       struct inode *dir,
+ 			       int mds, int drop, int unless)
+ {
+-	struct dentry *parent = NULL;
+ 	struct ceph_mds_request_release *rel = *p;
+ 	struct ceph_dentry_info *di = ceph_dentry(dentry);
+ 	int force = 0;
+ 	int ret;
  
-+		session->s_features = features;
- 		if (session->s_state == CEPH_MDS_SESSION_OPEN) {
- 			pr_notice("mds%d is already opened\n", session->s_mds);
- 		} else {
- 			session->s_state = CEPH_MDS_SESSION_OPEN;
--			session->s_features = features;
- 			renewed_caps(mdsc, session, 0);
- 			if (test_bit(CEPHFS_FEATURE_METRIC_COLLECT,
- 				     &session->s_features))
++	/* This shouldn't happen */
++	BUG_ON(!dir);
++
+ 	/*
+ 	 * force an record for the directory caps if we have a dentry lease.
+ 	 * this is racy (can't take i_ceph_lock and d_lock together), but it
+@@ -4795,14 +4797,9 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
+ 	spin_lock(&dentry->d_lock);
+ 	if (di->lease_session && di->lease_session->s_mds == mds)
+ 		force = 1;
+-	if (!dir) {
+-		parent = dget(dentry->d_parent);
+-		dir = d_inode(parent);
+-	}
+ 	spin_unlock(&dentry->d_lock);
+ 
+ 	ret = ceph_encode_inode_release(p, dir, mds, drop, unless, force);
+-	dput(parent);
+ 
+ 	spin_lock(&dentry->d_lock);
+ 	if (ret && di->lease_session && di->lease_session->s_mds == mds) {
 -- 
 2.43.0
 
