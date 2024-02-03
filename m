@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA741B59C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056E81B59C;
 	Sat,  3 Feb 2024 04:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933728; cv=none; b=Wyb3VBQP0yyfBogX9f0n1/vnT7u4lu8nYOEzOHVfWhZEGh5taFvuiReDC2c2zLxa/D/5aoUY+cl2PoEkYhycgijIXZVeY08EIypjdzzr9G4EMCyLO26+ioZnlZRKguYMBLKNvDmEQLJ7syiOrr64+5idnTq0ICGLpnbn9dCmmyM=
+	t=1706933729; cv=none; b=qdYJkDcSw1/ns2gQ6CAiycaX7eYT5arbZz8vbhhwHJa81BSSfCQ6K+w4xpeGsuSMcPfGrplZE4CXJZQcjigJoGTEki2SFDzxZSNiotEJbP44Vbf23mbCHTjrBoP4EPs9YZLMdY3x2cjX87S0ScRwt9s5Zj3fl8r+Ca3tY6yG7gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933728; c=relaxed/simple;
-	bh=1xZnSv44pcOZ55zzPS5w9OFWcm/9pf1KhGMYzwQSYpY=;
+	s=arc-20240116; t=1706933729; c=relaxed/simple;
+	bh=1ToqqlQ9HdKyhwe9DJTiLI7XM4DOnwz4ZQJqeOTsVLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enHTQG0du0kbbru2xdYeW6vFPFLfFd8N16ZBG63GZt0EI7delhNYt59UEbN/fjTxhHdIk1GhFKnD2QW6HMybm8Wei1hdKW42dSvGtBmR/6i1Y7MRZ7hNK3vMsEGzwLmSk8FrnNEpbNBCtK4TFXmQA99XApf4MlP016/RUnoBX/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjU/1tyA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6rWHeWZKiZmFRW1tbUCFYMarWhfHibPCQcyCLmI2+10TYoE7rMa1p+ty6H6p7N8QzAtvTUdXnYGtxhQw6y1sSG3C78MDbWFF9tyVefy0xHpJ9aFsJNl1YFCEiF2HLUm9Lzstu+YK8qdeizYB7gloMmwpOX5oPosmvNbSKUATKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LSUMzWR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjU/1tyA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AB2C433F1;
-	Sat,  3 Feb 2024 04:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LSUMzWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBAEC433C7;
+	Sat,  3 Feb 2024 04:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933727;
-	bh=1xZnSv44pcOZ55zzPS5w9OFWcm/9pf1KhGMYzwQSYpY=;
+	s=korg; t=1706933728;
+	bh=1ToqqlQ9HdKyhwe9DJTiLI7XM4DOnwz4ZQJqeOTsVLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DjU/1tyAzOE7KsSTqRHknjiou0Ck8Jg0p98vBiGUZhcny4rH9A4sD7dM8ukwgf7zx
-	 b0R8XMVTUa/4lYMb9ucODcvV3cC9y5aUxvyjSmy0tVbhCp7EALBFZ4zxanbmHflxVz
-	 oLK5GxSUXM0pa3vAitSRKtVMkmMC0F8APrtNZFlY=
+	b=2LSUMzWREoeKFuvUgFxXdIP7VhvSvYLKaAKW9nEfWXdJuM8xJ8ijwsJfLO4YSvKrU
+	 zbxoW102OGTy6AU6mK8fCj537V8yVO4gYhlPTPWeuQT/8BcCWTFTf6MlVmo+lcXs+p
+	 oQsclTKDQP6SaXm9EX+/HmwtbOTz9hHcQQJuvbcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Aaron Lu <aaron.lu@intel.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Borislav Petkov <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 014/353] debugobjects: Stop accessing objects after releasing hash bucket lock
-Date: Fri,  2 Feb 2024 20:02:12 -0800
-Message-ID: <20240203035404.176230910@linuxfoundation.org>
+Subject: [PATCH 6.7 015/353] sched/fair: Fix tg->load when offlining a CPU
+Date: Fri,  2 Feb 2024 20:02:13 -0800
+Message-ID: <20240203035404.219596403@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,405 +55,276 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 9bb6362652f3f4d74a87d572a91ee1b38e673ef6 ]
+[ Upstream commit f60a631ab9ed5df15e446269ea515f2b8948ba0c ]
 
-After release of the hashbucket lock the tracking object can be modified or
-freed by a concurrent thread.  Using it in such a case is error prone, even
-for printing the object state:
+When a CPU is taken offline, the contribution of its cfs_rqs to task_groups'
+load may remain and will negatively impact the calculation of the share of
+the online CPUs.
 
-    1. T1 tries to deactivate destroyed object, debugobjects detects it,
-       hash bucket lock is released.
+To fix this bug, clear the contribution of an offlining CPU to task groups'
+load and skip its contribution while it is inactive.
 
-    2. T2 preempts T1 and frees the tracking object.
+Here's the reproducer of the anomaly, by Imran Khan:
 
-    3. The freed tracking object is allocated and initialized for a
-       different to be tracked kernel object.
+	"So far I have encountered only one rather lengthy way of reproducing this issue,
+	which is as follows:
 
-    4. T1 resumes and reports error for wrong kernel object.
+	1. Take a KVM guest (booted with 4 CPUs and can be scaled up to 124 CPUs) and
+	   create 2 custom cgroups: /sys/fs/cgroup/cpu/test_group_1 and /sys/fs/cgroup/
+	   cpu/test_group_2
 
-Create a local copy of the tracking object before releasing the hash bucket
-lock and use the local copy for reporting and fixups to prevent this.
+	2. Assign a CPU intensive workload to each of these cgroups and start the
+	   workload.
 
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20231025-debugobjects_fix-v3-1-2bc3bf7084c2@intel.com
+	For my tests I am using following app:
+
+	int main(int argc, char *argv[])
+	{
+		unsigned long count, i, val;
+		if (argc != 2) {
+		      printf("usage: ./a.out <number of random nums to generate> \n");
+		      return 0;
+		}
+
+		count = strtoul(argv[1], NULL, 10);
+
+		printf("Generating %lu random numbers \n", count);
+		for (i = 0; i < count; i++) {
+			val = rand();
+			val = val % 2;
+			//usleep(1);
+		}
+		printf("Generated %lu random numbers \n", count);
+		return 0;
+	}
+
+	Also since the system is booted with 4 CPUs, in order to completely load the
+	system I am also launching 4 instances of same test app under:
+
+	   /sys/fs/cgroup/cpu/
+
+	3. We can see that both of the cgroups get similar CPU time:
+
+        # systemd-cgtop --depth 1
+	Path                                 Tasks    %CPU  Memory  Input/s    Output/s
+	/                                      659      -     5.5G        -        -
+	/system.slice                            -      -     5.7G        -        -
+	/test_group_1                            4      -        -        -        -
+	/test_group_2                            3      -        -        -        -
+	/user.slice                             31      -    56.5M        -        -
+
+	Path                                 Tasks   %CPU   Memory  Input/s    Output/s
+	/                                      659  394.6     5.5G        -        -
+	/test_group_2                            3   65.7        -        -        -
+	/user.slice                             29   55.1    48.0M        -        -
+	/test_group_1                            4   47.3        -        -        -
+	/system.slice                            -    2.2     5.7G        -        -
+
+	Path                                 Tasks  %CPU    Memory  Input/s    Output/s
+	/                                      659  394.8     5.5G        -        -
+	/test_group_1                            4   62.9        -        -        -
+	/user.slice                             28   44.9    54.2M        -        -
+	/test_group_2                            3   44.7        -        -        -
+	/system.slice                            -    0.9     5.7G        -        -
+
+	Path                                 Tasks  %CPU    Memory  Input/s     Output/s
+	/                                      659  394.4     5.5G        -        -
+	/test_group_2                            3   58.8        -        -        -
+	/test_group_1                            4   51.9        -        -        -
+	/user.slice                              30   39.3    59.6M        -        -
+	/system.slice                            -    1.9     5.7G        -        -
+
+	Path                                 Tasks  %CPU     Memory  Input/s    Output/s
+	/                                      659  394.7     5.5G        -        -
+	/test_group_1                            4   60.9        -        -        -
+	/test_group_2                            3   57.9        -        -        -
+	/user.slice                             28   43.5    36.9M        -        -
+	/system.slice                            -    3.0     5.7G        -        -
+
+	Path                                 Tasks  %CPU     Memory  Input/s     Output/s
+	/                                      659  395.0     5.5G        -        -
+	/test_group_1                            4   66.8        -        -        -
+	/test_group_2                            3   56.3        -        -        -
+	/user.slice                             29   43.1    51.8M        -        -
+	/system.slice                            -    0.7     5.7G        -        -
+
+	4. Now move systemd-udevd to one of these test groups, say test_group_1, and
+	   perform scale up to 124 CPUs followed by scale down back to 4 CPUs from the
+	   host side.
+
+	5. Run the same workload i.e 4 instances of CPU hogger under /sys/fs/cgroup/cpu
+	   and one instance of  CPU hogger each in /sys/fs/cgroup/cpu/test_group_1 and
+	   /sys/fs/cgroup/test_group_2.
+
+	It can be seen that test_group_1 (the one where systemd-udevd was moved) is getting
+	much less CPU time than the test_group_2, even though at this point of time both of
+	these groups have only CPU hogger running:
+
+        # systemd-cgtop --depth 1
+	Path                                   Tasks   %CPU   Memory  Input/s   Output/s
+	/                                      1219     -     5.4G        -        -
+	/system.slice                           -       -     5.6G        -        -
+	/test_group_1                           4       -        -        -        -
+	/test_group_2                           3       -        -        -        -
+	/user.slice                            26       -    91.3M        -        -
+
+	Path                                   Tasks  %CPU     Memory  Input/s   Output/s
+	/                                      1221  394.3     5.4G        -        -
+	/test_group_2                             3   82.7        -        -        -
+	/test_group_1                             4   14.3        -        -        -
+	/system.slice                             -    0.8     5.6G        -        -
+	/user.slice                              26    0.4    91.2M        -        -
+
+	Path                                   Tasks  %CPU    Memory  Input/s    Output/s
+	/                                      1221  394.6     5.4G        -        -
+	/test_group_2                             3   67.4        -        -        -
+	/system.slice                             -   24.6     5.6G        -        -
+	/test_group_1                             4   12.5        -        -        -
+	/user.slice                              26    0.4    91.2M        -        -
+
+	Path                                  Tasks  %CPU    Memory  Input/s    Output/s
+	/                                     1221  395.2     5.4G        -        -
+	/test_group_2                            3   60.9        -        -        -
+	/system.slice                            -   27.9     5.6G        -        -
+	/test_group_1                            4   12.2        -        -        -
+	/user.slice                             26    0.4    91.2M        -        -
+
+	Path                                  Tasks  %CPU    Memory  Input/s    Output/s
+	/                                     1221  395.2     5.4G        -        -
+	/test_group_2                            3   69.4        -        -        -
+	/test_group_1                            4   13.9        -        -        -
+	/user.slice                             28    1.6    92.0M        -        -
+	/system.slice                            -    1.0     5.6G        -        -
+
+	Path                                  Tasks  %CPU    Memory  Input/s    Output/s
+	/                                      1221  395.6     5.4G        -        -
+	/test_group_2                             3   59.3        -        -        -
+	/test_group_1                             4   14.1        -        -        -
+	/user.slice                              28    1.3    92.2M        -        -
+	/system.slice                             -    0.7     5.6G        -        -
+
+	Path                                  Tasks  %CPU    Memory  Input/s    Output/s
+	/                                      1221  395.5     5.4G        -        -
+	/test_group_2                            3   67.2        -        -        -
+	/test_group_1                            4   11.5        -        -        -
+	/user.slice                             28    1.3    92.5M        -        -
+	/system.slice                            -    0.6     5.6G        -        -
+
+	Path                                  Tasks  %CPU    Memory  Input/s    Output/s
+	/                                      1221  395.1     5.4G        -        -
+	/test_group_2                             3   76.8        -        -        -
+	/test_group_1                             4   12.9        -        -        -
+	/user.slice                              28    1.3    92.8M        -        -
+	/system.slice                             -    1.2     5.6G        -        -
+
+	From sched_debug data it can be seen that in bad case the load.weight of per-CPU
+	sched entities corresponding to test_group_1 has reduced significantly and
+	also load_avg of test_group_1 remains much higher than that of test_group_2,
+	even though systemd-udevd stopped running long time back and at this point of
+	time both cgroups just have the CPU hogger app as running entity."
+
+[ mingo: Added details from the original discussion, plus minor edits to the patch. ]
+
+Reported-by: Imran Khan <imran.f.khan@oracle.com>
+Tested-by: Imran Khan <imran.f.khan@oracle.com>
+Tested-by: Aaron Lu <aaron.lu@intel.com>
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Imran Khan <imran.f.khan@oracle.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Link: https://lore.kernel.org/r/20231223111545.62135-1-vincent.guittot@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 200 ++++++++++++++++++---------------------------
- 1 file changed, 78 insertions(+), 122 deletions(-)
+ kernel/sched/fair.c | 52 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 2a8e9d63fbe3..fb12a9bacd2f 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -620,9 +620,8 @@ static void debug_objects_fill_pool(void)
- static void
- __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack)
- {
--	enum debug_obj_state state;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
--	struct debug_obj *obj;
- 	unsigned long flags;
- 
- 	debug_objects_fill_pool();
-@@ -643,24 +642,18 @@ __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack
- 	case ODEBUG_STATE_INIT:
- 	case ODEBUG_STATE_INACTIVE:
- 		obj->state = ODEBUG_STATE_INIT;
--		break;
--
--	case ODEBUG_STATE_ACTIVE:
--		state = obj->state;
--		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "init");
--		debug_object_fixup(descr->fixup_init, addr, state);
--		return;
--
--	case ODEBUG_STATE_DESTROYED:
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "init");
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 3070c6f7168e..7ac9f4b1d955 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4098,6 +4098,10 @@ static inline void update_tg_load_avg(struct cfs_rq *cfs_rq)
+ 	if (cfs_rq->tg == &root_task_group)
  		return;
- 	default:
- 		break;
- 	}
  
-+	o = *obj;
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	debug_print_object(&o, "init");
-+
-+	if (o.state == ODEBUG_STATE_ACTIVE)
-+		debug_object_fixup(descr->fixup_init, addr, o.state);
- }
- 
- /**
-@@ -701,11 +694,9 @@ EXPORT_SYMBOL_GPL(debug_object_init_on_stack);
- int debug_object_activate(void *addr, const struct debug_obj_descr *descr)
- {
- 	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
--	enum debug_obj_state state;
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
--	int ret;
- 
- 	if (!debug_objects_enabled)
- 		return 0;
-@@ -717,49 +708,38 @@ int debug_object_activate(void *addr, const struct debug_obj_descr *descr)
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
- 	obj = lookup_object_or_alloc(addr, db, descr, false, true);
--	if (likely(!IS_ERR_OR_NULL(obj))) {
--		bool print_object = false;
--
-+	if (unlikely(!obj)) {
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		debug_objects_oom();
-+		return 0;
-+	} else if (likely(!IS_ERR(obj))) {
- 		switch (obj->state) {
--		case ODEBUG_STATE_INIT:
--		case ODEBUG_STATE_INACTIVE:
--			obj->state = ODEBUG_STATE_ACTIVE;
--			ret = 0;
--			break;
--
- 		case ODEBUG_STATE_ACTIVE:
--			state = obj->state;
--			raw_spin_unlock_irqrestore(&db->lock, flags);
--			debug_print_object(obj, "activate");
--			ret = debug_object_fixup(descr->fixup_activate, addr, state);
--			return ret ? 0 : -EINVAL;
--
- 		case ODEBUG_STATE_DESTROYED:
--			print_object = true;
--			ret = -EINVAL;
-+			o = *obj;
- 			break;
-+		case ODEBUG_STATE_INIT:
-+		case ODEBUG_STATE_INACTIVE:
-+			obj->state = ODEBUG_STATE_ACTIVE;
-+			fallthrough;
- 		default:
--			ret = 0;
--			break;
-+			raw_spin_unlock_irqrestore(&db->lock, flags);
-+			return 0;
- 		}
--		raw_spin_unlock_irqrestore(&db->lock, flags);
--		if (print_object)
--			debug_print_object(obj, "activate");
--		return ret;
- 	}
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	debug_print_object(&o, "activate");
- 
--	/* If NULL the allocation has hit OOM */
--	if (!obj) {
--		debug_objects_oom();
--		return 0;
-+	switch (o.state) {
-+	case ODEBUG_STATE_ACTIVE:
-+	case ODEBUG_STATE_NOTAVAILABLE:
-+		if (debug_object_fixup(descr->fixup_activate, addr, o.state))
-+			return 0;
-+		fallthrough;
-+	default:
-+		return -EINVAL;
- 	}
--
--	/* Object is neither static nor tracked. It's not initialized */
--	debug_print_object(&o, "activate");
--	ret = debug_object_fixup(descr->fixup_activate, addr, ODEBUG_STATE_NOTAVAILABLE);
--	return ret ? 0 : -EINVAL;
- }
- EXPORT_SYMBOL_GPL(debug_object_activate);
- 
-@@ -770,10 +750,10 @@ EXPORT_SYMBOL_GPL(debug_object_activate);
-  */
- void debug_object_deactivate(void *addr, const struct debug_obj_descr *descr)
- {
-+	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
--	bool print_object = false;
- 
- 	if (!debug_objects_enabled)
- 		return;
-@@ -785,33 +765,24 @@ void debug_object_deactivate(void *addr, const struct debug_obj_descr *descr)
- 	obj = lookup_object(addr, db);
- 	if (obj) {
- 		switch (obj->state) {
-+		case ODEBUG_STATE_DESTROYED:
-+			break;
- 		case ODEBUG_STATE_INIT:
- 		case ODEBUG_STATE_INACTIVE:
- 		case ODEBUG_STATE_ACTIVE:
--			if (!obj->astate)
--				obj->state = ODEBUG_STATE_INACTIVE;
--			else
--				print_object = true;
--			break;
--
--		case ODEBUG_STATE_DESTROYED:
--			print_object = true;
--			break;
-+			if (obj->astate)
-+				break;
-+			obj->state = ODEBUG_STATE_INACTIVE;
-+			fallthrough;
- 		default:
--			break;
-+			raw_spin_unlock_irqrestore(&db->lock, flags);
-+			return;
- 		}
-+		o = *obj;
- 	}
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (!obj) {
--		struct debug_obj o = { .object = addr,
--				       .state = ODEBUG_STATE_NOTAVAILABLE,
--				       .descr = descr };
--
--		debug_print_object(&o, "deactivate");
--	} else if (print_object) {
--		debug_print_object(obj, "deactivate");
--	}
-+	debug_print_object(&o, "deactivate");
- }
- EXPORT_SYMBOL_GPL(debug_object_deactivate);
- 
-@@ -822,11 +793,9 @@ EXPORT_SYMBOL_GPL(debug_object_deactivate);
-  */
- void debug_object_destroy(void *addr, const struct debug_obj_descr *descr)
- {
--	enum debug_obj_state state;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
--	struct debug_obj *obj;
- 	unsigned long flags;
--	bool print_object = false;
- 
- 	if (!debug_objects_enabled)
- 		return;
-@@ -836,32 +805,31 @@ void debug_object_destroy(void *addr, const struct debug_obj_descr *descr)
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
- 	obj = lookup_object(addr, db);
--	if (!obj)
--		goto out_unlock;
-+	if (!obj) {
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
++	/* rq has been offline and doesn't contribute to the share anymore: */
++	if (!cpu_active(cpu_of(rq_of(cfs_rq))))
 +		return;
-+	}
- 
- 	switch (obj->state) {
-+	case ODEBUG_STATE_ACTIVE:
-+	case ODEBUG_STATE_DESTROYED:
-+		break;
- 	case ODEBUG_STATE_NONE:
- 	case ODEBUG_STATE_INIT:
- 	case ODEBUG_STATE_INACTIVE:
- 		obj->state = ODEBUG_STATE_DESTROYED;
--		break;
--	case ODEBUG_STATE_ACTIVE:
--		state = obj->state;
-+		fallthrough;
-+	default:
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "destroy");
--		debug_object_fixup(descr->fixup_destroy, addr, state);
- 		return;
--
--	case ODEBUG_STATE_DESTROYED:
--		print_object = true;
--		break;
--	default:
--		break;
++
+ 	/*
+ 	 * For migration heavy workloads, access to tg->load_avg can be
+ 	 * unbound. Limit the update rate to at most once per ms.
+@@ -4114,6 +4118,49 @@ static inline void update_tg_load_avg(struct cfs_rq *cfs_rq)
  	}
--out_unlock:
-+
-+	o = *obj;
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (print_object)
--		debug_print_object(obj, "destroy");
-+	debug_print_object(&o, "destroy");
-+
-+	if (o.state == ODEBUG_STATE_ACTIVE)
-+		debug_object_fixup(descr->fixup_destroy, addr, o.state);
  }
- EXPORT_SYMBOL_GPL(debug_object_destroy);
  
-@@ -872,9 +840,8 @@ EXPORT_SYMBOL_GPL(debug_object_destroy);
-  */
- void debug_object_free(void *addr, const struct debug_obj_descr *descr)
- {
--	enum debug_obj_state state;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
--	struct debug_obj *obj;
- 	unsigned long flags;
- 
- 	if (!debug_objects_enabled)
-@@ -885,24 +852,26 @@ void debug_object_free(void *addr, const struct debug_obj_descr *descr)
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
- 	obj = lookup_object(addr, db);
--	if (!obj)
--		goto out_unlock;
-+	if (!obj) {
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
++static inline void clear_tg_load_avg(struct cfs_rq *cfs_rq)
++{
++	long delta;
++	u64 now;
++
++	/*
++	 * No need to update load_avg for root_task_group, as it is not used.
++	 */
++	if (cfs_rq->tg == &root_task_group)
 +		return;
++
++	now = sched_clock_cpu(cpu_of(rq_of(cfs_rq)));
++	delta = 0 - cfs_rq->tg_load_avg_contrib;
++	atomic_long_add(delta, &cfs_rq->tg->load_avg);
++	cfs_rq->tg_load_avg_contrib = 0;
++	cfs_rq->last_update_tg_load_avg = now;
++}
++
++/* CPU offline callback: */
++static void __maybe_unused clear_tg_offline_cfs_rqs(struct rq *rq)
++{
++	struct task_group *tg;
++
++	lockdep_assert_rq_held(rq);
++
++	/*
++	 * The rq clock has already been updated in
++	 * set_rq_offline(), so we should skip updating
++	 * the rq clock again in unthrottle_cfs_rq().
++	 */
++	rq_clock_start_loop_update(rq);
++
++	rcu_read_lock();
++	list_for_each_entry_rcu(tg, &task_groups, list) {
++		struct cfs_rq *cfs_rq = tg->cfs_rq[cpu_of(rq)];
++
++		clear_tg_load_avg(cfs_rq);
 +	}
- 
- 	switch (obj->state) {
- 	case ODEBUG_STATE_ACTIVE:
--		state = obj->state;
--		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "free");
--		debug_object_fixup(descr->fixup_free, addr, state);
--		return;
-+		break;
- 	default:
- 		hlist_del(&obj->node);
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
- 		free_object(obj);
- 		return;
- 	}
--out_unlock:
++	rcu_read_unlock();
 +
-+	o = *obj;
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	debug_print_object(&o, "free");
++	rq_clock_stop_loop_update(rq);
++}
 +
-+	debug_object_fixup(descr->fixup_free, addr, o.state);
- }
- EXPORT_SYMBOL_GPL(debug_object_free);
+ /*
+  * Called within set_task_rq() right before setting a task's CPU. The
+  * caller only guarantees p->pi_lock is held; no other assumptions,
+@@ -4410,6 +4457,8 @@ static inline bool skip_blocked_update(struct sched_entity *se)
  
-@@ -954,10 +923,10 @@ void
- debug_object_active_state(void *addr, const struct debug_obj_descr *descr,
- 			  unsigned int expect, unsigned int next)
+ static inline void update_tg_load_avg(struct cfs_rq *cfs_rq) {}
+ 
++static inline void clear_tg_offline_cfs_rqs(struct rq *rq) {}
++
+ static inline int propagate_entity_load_avg(struct sched_entity *se)
  {
-+	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
--	bool print_object = false;
+ 	return 0;
+@@ -12415,6 +12464,9 @@ static void rq_offline_fair(struct rq *rq)
  
- 	if (!debug_objects_enabled)
- 		return;
-@@ -970,28 +939,19 @@ debug_object_active_state(void *addr, const struct debug_obj_descr *descr,
- 	if (obj) {
- 		switch (obj->state) {
- 		case ODEBUG_STATE_ACTIVE:
--			if (obj->astate == expect)
--				obj->astate = next;
--			else
--				print_object = true;
--			break;
--
-+			if (obj->astate != expect)
-+				break;
-+			obj->astate = next;
-+			raw_spin_unlock_irqrestore(&db->lock, flags);
-+			return;
- 		default:
--			print_object = true;
- 			break;
- 		}
-+		o = *obj;
- 	}
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (!obj) {
--		struct debug_obj o = { .object = addr,
--				       .state = ODEBUG_STATE_NOTAVAILABLE,
--				       .descr = descr };
--
--		debug_print_object(&o, "active_state");
--	} else if (print_object) {
--		debug_print_object(obj, "active_state");
--	}
-+	debug_print_object(&o, "active_state");
+ 	/* Ensure any throttled groups are reachable by pick_next_task */
+ 	unthrottle_offline_cfs_rqs(rq);
++
++	/* Ensure that we remove rq contribution to group share: */
++	clear_tg_offline_cfs_rqs(rq);
  }
- EXPORT_SYMBOL_GPL(debug_object_active_state);
  
-@@ -999,12 +959,10 @@ EXPORT_SYMBOL_GPL(debug_object_active_state);
- static void __debug_check_no_obj_freed(const void *address, unsigned long size)
- {
- 	unsigned long flags, oaddr, saddr, eaddr, paddr, chunks;
--	const struct debug_obj_descr *descr;
--	enum debug_obj_state state;
-+	int cnt, objs_checked = 0;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
- 	struct hlist_node *tmp;
--	struct debug_obj *obj;
--	int cnt, objs_checked = 0;
- 
- 	saddr = (unsigned long) address;
- 	eaddr = saddr + size;
-@@ -1026,12 +984,10 @@ static void __debug_check_no_obj_freed(const void *address, unsigned long size)
- 
- 			switch (obj->state) {
- 			case ODEBUG_STATE_ACTIVE:
--				descr = obj->descr;
--				state = obj->state;
-+				o = *obj;
- 				raw_spin_unlock_irqrestore(&db->lock, flags);
--				debug_print_object(obj, "free");
--				debug_object_fixup(descr->fixup_free,
--						   (void *) oaddr, state);
-+				debug_print_object(&o, "free");
-+				debug_object_fixup(o.descr->fixup_free, (void *)oaddr, o.state);
- 				goto repeat;
- 			default:
- 				hlist_del(&obj->node);
+ #endif /* CONFIG_SMP */
 -- 
 2.43.0
 
