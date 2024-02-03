@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2E2FBF2;
-	Sat,  3 Feb 2024 04:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE924F89C;
+	Sat,  3 Feb 2024 04:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933859; cv=none; b=HoC641GRDlmjj/qVWsgBNubCWT0ljdgV6qH9JJrxW9oRWvrGD6apBCBJy875ZlQ8PiKWJ3Lht8G48ZXHHpJpY57Cyhja90jf9l+bsbnxDo6Uji5YM3Pj1UIgEoXVKylI4L6hLumEhhf5S2FToJ6y8VVyx0WidUA38bZYQvokVlE=
+	t=1706933860; cv=none; b=EmudnWqDJYx7ZYDyLnGMcxgwJgUj3Mk90eW5ZPTxIbHc95K4THc60uo4zh/HszJyA4SMx+G9NgaGA/DGna77ZF5diSx6EIcnLx3FMJX0ZokjBBviudNNwkBdXQ0JnebaXLhkX+rK5Xz+dYuz7Mi641WyMyJPtD4RIrIoGthRyOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933859; c=relaxed/simple;
-	bh=5ArGNyb3OZ4y3zIGBVD+8BQ/zpy230uSCtfbDfl4jq4=;
+	s=arc-20240116; t=1706933860; c=relaxed/simple;
+	bh=LG+jy7y2/Q/g7LryVmxamr94jXvBtmAN0IweytjDM60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KC/WPA+5LeT717+C3WrA2r5Kic9gd9GadzplPH0QvCJ1dwHJ8Jj0dqljYzj/JxG5x1A9Y2fopCSrV6LshA1Pr77QMPPxLFCDv0e6XjXNETQW0iDfvu1t1jrdLL8IptzZrzWTUn5nsPRC4zzryTMNjLBTLlV+Zs3UrX8PVbOisW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImCs7+zK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qAWmQQZWQa/Jyn9IjZsnBEOOhxjZBq2AcTJ+fkHbiLVxWbjYNd5EAAuaDyTAByIEDiTj4RGpH/Ss8mh9GtY1vfGYCD2VoESUJnQn/Z7nfvXHoRH2rPj3bd1ex1fFnGi+NcML6TtAVCCfMeItlmgHYRgV/Cr08rIE0GH6BdGaceE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKltvwS1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImCs7+zK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35106C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKltvwS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC408C43390;
 	Sat,  3 Feb 2024 04:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933859;
-	bh=5ArGNyb3OZ4y3zIGBVD+8BQ/zpy230uSCtfbDfl4jq4=;
+	s=korg; t=1706933860;
+	bh=LG+jy7y2/Q/g7LryVmxamr94jXvBtmAN0IweytjDM60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ImCs7+zK57VeNEHMX6rsVCI3uhah6f8TreLRxgLyZycytJ/mhD4vKC2m2F5nNVVL3
-	 h1UpblwqK/WRK9nMSazaGVbCKiaIL0VAaF0nYs+LxNDKQ5QaA3AEZxpXDBQ0LQG0g5
-	 yJleZ0EXSbx5xTO+8SFqnwRmiZ6RPakA9eWo4UgM=
+	b=jKltvwS1pwPbxSFXkYez53CNO4uYPnGse6EwqUhB4HECA+3n7KGUGyJFZ5s1lIUTu
+	 3QYD21cUT42K16t9rKErWJWgdw6TSE4rJfyp9r1jEOW9HSNdRxBUhD3p2xiSHrNToa
+	 hOosG8YWRhlSm+LF+asJh0AWZWx81kOJk9Amnj6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Adam Ford <aford173@gmail.com>
-Subject: [PATCH 6.7 191/353] media: rkisp1: Fix IRQ handler return values
-Date: Fri,  2 Feb 2024 20:05:09 -0800
-Message-ID: <20240203035409.714455556@linuxfoundation.org>
+	Xin Ji <xji@analogixsemi.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 170/353] drm/bridge: anx7625: Fix Set HPD irq detect window to 2ms
+Date: Fri,  2 Feb 2024 20:04:48 -0800
+Message-ID: <20240203035409.017892027@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,62 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Xin Ji <xji@analogixsemi.com>
 
-[ Upstream commit 3eb7910e1b16a2c136be26a8380f21469225b2f6 ]
+[ Upstream commit e3af7053de3f685c96158373bc234b2feca1f160 ]
 
-The IRQ handler rkisp1_isr() calls sub-handlers, all of which returns an
-irqreturn_t value, but rkisp1_isr() ignores those values and always
-returns IRQ_HANDLED.
+Polling firmware HPD GPIO status, set HPD irq detect window to 2ms
+after firmware HPD GPIO initial done
 
-Fix this by collecting the return values, and returning IRQ_HANDLED or
-IRQ_NONE as appropriate.
-
-Link: https://lore.kernel.org/r/20231207-rkisp-irq-fix-v3-2-358a2c871a3c@ideasonboard.com
-
-Tested-by: Adam Ford <aford173@gmail.com>  #imx8mp-beacon
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Xin Ji <xji@analogixsemi.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231120091038.284825-2-xji@analogixsemi.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/rockchip/rkisp1/rkisp1-dev.c  | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/analogix/anx7625.c | 51 ++++++++++++++++-------
+ drivers/gpu/drm/bridge/analogix/anx7625.h |  4 ++
+ 2 files changed, 40 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-index b676db9bff62..7b8a361d4c4a 100644
---- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-+++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-@@ -442,17 +442,25 @@ static int rkisp1_entities_register(struct rkisp1_device *rkisp1)
- 
- static irqreturn_t rkisp1_isr(int irq, void *ctx)
- {
-+	irqreturn_t ret = IRQ_NONE;
-+
- 	/*
- 	 * Call rkisp1_capture_isr() first to handle the frame that
- 	 * potentially completed using the current frame_sequence number before
- 	 * it is potentially incremented by rkisp1_isp_isr() in the vertical
- 	 * sync.
- 	 */
--	rkisp1_capture_isr(irq, ctx);
--	rkisp1_isp_isr(irq, ctx);
--	rkisp1_csi_isr(irq, ctx);
- 
--	return IRQ_HANDLED;
-+	if (rkisp1_capture_isr(irq, ctx) == IRQ_HANDLED)
-+		ret = IRQ_HANDLED;
-+
-+	if (rkisp1_isp_isr(irq, ctx) == IRQ_HANDLED)
-+		ret = IRQ_HANDLED;
-+
-+	if (rkisp1_csi_isr(irq, ctx) == IRQ_HANDLED)
-+		ret = IRQ_HANDLED;
-+
-+	return ret;
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.c b/drivers/gpu/drm/bridge/analogix/anx7625.c
+index 5168628f11cf..29d91493b101 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.c
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.c
+@@ -1298,10 +1298,32 @@ static void anx7625_config(struct anx7625_data *ctx)
+ 			  XTAL_FRQ_SEL, XTAL_FRQ_27M);
  }
  
- static const char * const px30_isp_clks[] = {
++static int anx7625_hpd_timer_config(struct anx7625_data *ctx)
++{
++	int ret;
++
++	/* Set irq detect window to 2ms */
++	ret = anx7625_reg_write(ctx, ctx->i2c.tx_p2_client,
++				HPD_DET_TIMER_BIT0_7, HPD_TIME & 0xFF);
++	ret |= anx7625_reg_write(ctx, ctx->i2c.tx_p2_client,
++				 HPD_DET_TIMER_BIT8_15,
++				 (HPD_TIME >> 8) & 0xFF);
++	ret |= anx7625_reg_write(ctx, ctx->i2c.tx_p2_client,
++				 HPD_DET_TIMER_BIT16_23,
++				 (HPD_TIME >> 16) & 0xFF);
++
++	return ret;
++}
++
++static int anx7625_read_hpd_gpio_config_status(struct anx7625_data *ctx)
++{
++	return anx7625_reg_read(ctx, ctx->i2c.rx_p0_client, GPIO_CTRL_2);
++}
++
+ static void anx7625_disable_pd_protocol(struct anx7625_data *ctx)
+ {
+ 	struct device *dev = ctx->dev;
+-	int ret;
++	int ret, val;
+ 
+ 	/* Reset main ocm */
+ 	ret = anx7625_reg_write(ctx, ctx->i2c.rx_p0_client, 0x88, 0x40);
+@@ -1315,6 +1337,19 @@ static void anx7625_disable_pd_protocol(struct anx7625_data *ctx)
+ 		DRM_DEV_DEBUG_DRIVER(dev, "disable PD feature fail.\n");
+ 	else
+ 		DRM_DEV_DEBUG_DRIVER(dev, "disable PD feature succeeded.\n");
++
++	/*
++	 * Make sure the HPD GPIO already be configured after OCM release before
++	 * setting HPD detect window register. Here we poll the status register
++	 * at maximum 40ms, then config HPD irq detect window register
++	 */
++	readx_poll_timeout(anx7625_read_hpd_gpio_config_status,
++			   ctx, val,
++			   ((val & HPD_SOURCE) || (val < 0)),
++			   2000, 2000 * 20);
++
++	/* Set HPD irq detect window to 2ms */
++	anx7625_hpd_timer_config(ctx);
+ }
+ 
+ static int anx7625_ocm_loading_check(struct anx7625_data *ctx)
+@@ -1437,20 +1472,6 @@ static void anx7625_start_dp_work(struct anx7625_data *ctx)
+ 
+ static int anx7625_read_hpd_status_p0(struct anx7625_data *ctx)
+ {
+-	int ret;
+-
+-	/* Set irq detect window to 2ms */
+-	ret = anx7625_reg_write(ctx, ctx->i2c.tx_p2_client,
+-				HPD_DET_TIMER_BIT0_7, HPD_TIME & 0xFF);
+-	ret |= anx7625_reg_write(ctx, ctx->i2c.tx_p2_client,
+-				 HPD_DET_TIMER_BIT8_15,
+-				 (HPD_TIME >> 8) & 0xFF);
+-	ret |= anx7625_reg_write(ctx, ctx->i2c.tx_p2_client,
+-				 HPD_DET_TIMER_BIT16_23,
+-				 (HPD_TIME >> 16) & 0xFF);
+-	if (ret < 0)
+-		return ret;
+-
+ 	return anx7625_reg_read(ctx, ctx->i2c.rx_p0_client, SYSTEM_STSTUS);
+ }
+ 
+diff --git a/drivers/gpu/drm/bridge/analogix/anx7625.h b/drivers/gpu/drm/bridge/analogix/anx7625.h
+index 80d3fb4e985f..39ed35d33836 100644
+--- a/drivers/gpu/drm/bridge/analogix/anx7625.h
++++ b/drivers/gpu/drm/bridge/analogix/anx7625.h
+@@ -259,6 +259,10 @@
+ #define AP_MIPI_RX_EN BIT(5) /* 1: MIPI RX input in  0: no RX in */
+ #define AP_DISABLE_PD BIT(6)
+ #define AP_DISABLE_DISPLAY BIT(7)
++
++#define GPIO_CTRL_2   0x49
++#define HPD_SOURCE    BIT(6)
++
+ /***************************************************************/
+ /* Register definition of device address 0x84 */
+ #define  MIPI_PHY_CONTROL_3            0x03
 -- 
 2.43.0
 
