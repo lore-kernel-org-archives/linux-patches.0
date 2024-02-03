@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85D8134D1;
-	Sat,  3 Feb 2024 04:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562F3134D1;
+	Sat,  3 Feb 2024 04:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933751; cv=none; b=YGBkJBnzQnUQwt9t6nwzsqnYHokCFkRuh80fSw7mpMwGNuQzOIUB+8NgVJZ0304oYeQpn3T0NAYWlE4ATd2zmUsgWt9pDZaIiyLs/n2WJOTKyzBmzmMEOOVoomxEZ8/Hbr+BP3/AV6UsMie7H+xUoMrJt0iEE8shwKPmThuYkiY=
+	t=1706933752; cv=none; b=bLB1vm1ncyyfhGs4soBeDkv/zmejI2CX0b6/XEw2QsGrOEpJHJWQkL4jZ9bolo2VdmU3dH5MnDP6JvssVOpqCsv9orrSt1CAwG28Qq1m6HqAQ2PnQb9seA8vCIyEIDCjZNLi5W1MLMT+yLDR9vkij782Fg2LhsMpggRKY4OSWcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933751; c=relaxed/simple;
-	bh=v7b9FR7S5mVC3TLMk/DhsK8OroTCAOq9q7adPjK8IUc=;
+	s=arc-20240116; t=1706933752; c=relaxed/simple;
+	bh=FPyLVAy/X+ZDyI0gtfKYyli8qpSxe28D+rpRUu5NKH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNoJaVvB4buIWceaw+6nmw/zWQDjY6dpYkvWovBL+izsEfRgJTg0erxL5lXv75kMnUTSxKYJQuvnG4oxXXi4GsRLErmxTalLjdR2doQx2SsRuZ90laXyJKfWouA5eQze5eguxZpNIXYJI2sW4d6RfvI0+UItu0PFlLbXyH0kM44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UC6DUwaM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckCchxfR67RQSqtbgPJ5lX6IVk5EozWL5qKInpOcyayN8mcmMLmB+Z0u79i66J4cgKjp0G4RSWXzv6jQ/jcxCG1wHpLHk+vMpMy2mC+hDvfqOFCj9veiNeVm/PGjnj5ZsfjeDIX4bDAjiuW8uUy00ZYOKLIWszxDLHv5IMMvjgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLzrhifp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UC6DUwaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E87C43394;
-	Sat,  3 Feb 2024 04:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLzrhifp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212E5C433F1;
+	Sat,  3 Feb 2024 04:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933751;
-	bh=v7b9FR7S5mVC3TLMk/DhsK8OroTCAOq9q7adPjK8IUc=;
+	s=korg; t=1706933752;
+	bh=FPyLVAy/X+ZDyI0gtfKYyli8qpSxe28D+rpRUu5NKH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UC6DUwaM17KfgEmLGLh7rUBXXyhY8466h22gtw71LNj9KcaNJRtsd9VP1l9oybhFR
-	 gFnq3v2bt5gKTwDs30NVRaF5CZA1jn3wuDs5qwbx1ASJVbF/mgUXjQmfPuOox9N/7E
-	 uwK/NRvviRvE71iDwheoAhErcccBTAWh+2+Pi9r0=
+	b=WLzrhifpnPpOQMWI0ibHHW9qZhFtvy/5vpjIb0ns639Xa8z5r45uycsE/q1v5klxz
+	 d3fXCL5fLUIDHSvYQVZJMgcR+CSUtzeThMcmvJLaExNFiCin0TLjPB7MHFhiMlNBhe
+	 L6fKYE+VTGn9w5g9MtZKTpzmr1Vnc4jcvE1XCou4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Guo Ren <guoren@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com,
+	Osama Muhammad <osmtendev@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 047/353] arch: consolidate arch_irq_work_raise prototypes
-Date: Fri,  2 Feb 2024 20:02:45 -0800
-Message-ID: <20240203035405.302262031@linuxfoundation.org>
+Subject: [PATCH 6.7 030/353] FS:JFS:UBSAN:array-index-out-of-bounds in dbAdjTree
+Date: Fri,  2 Feb 2024 20:02:28 -0800
+Message-ID: <20240203035404.738152353@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -54,128 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 64bac5ea17d527872121adddfee869c7a0618f8f ]
+[ Upstream commit 9862ec7ac1cbc6eb5ee4a045b5d5b8edbb2f7e68 ]
 
-The prototype was hidden in an #ifdef on x86, which causes a warning:
+Syzkaller reported the following issue:
 
-kernel/irq_work.c:72:13: error: no previous prototype for 'arch_irq_work_raise' [-Werror=missing-prototypes]
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dmap.c:2867:6
+index 196694 is out of range for type 's8[1365]' (aka 'signed char[1365]')
+CPU: 1 PID: 109 Comm: jfsCommit Not tainted 6.6.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:217 [inline]
+ __ubsan_handle_out_of_bounds+0x11c/0x150 lib/ubsan.c:348
+ dbAdjTree+0x474/0x4f0 fs/jfs/jfs_dmap.c:2867
+ dbJoin+0x210/0x2d0 fs/jfs/jfs_dmap.c:2834
+ dbFreeBits+0x4eb/0xda0 fs/jfs/jfs_dmap.c:2331
+ dbFreeDmap fs/jfs/jfs_dmap.c:2080 [inline]
+ dbFree+0x343/0x650 fs/jfs/jfs_dmap.c:402
+ txFreeMap+0x798/0xd50 fs/jfs/jfs_txnmgr.c:2534
+ txUpdateMap+0x342/0x9e0
+ txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
+ jfs_lazycommit+0x47a/0xb70 fs/jfs/jfs_txnmgr.c:2732
+ kthread+0x2d3/0x370 kernel/kthread.c:388
+ ret_from_fork+0x48/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
+================================================================================
+Kernel panic - not syncing: UBSAN: panic_on_warn set ...
+CPU: 1 PID: 109 Comm: jfsCommit Not tainted 6.6.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+ panic+0x30f/0x770 kernel/panic.c:340
+ check_panic_on_warn+0x82/0xa0 kernel/panic.c:236
+ ubsan_epilogue lib/ubsan.c:223 [inline]
+ __ubsan_handle_out_of_bounds+0x13c/0x150 lib/ubsan.c:348
+ dbAdjTree+0x474/0x4f0 fs/jfs/jfs_dmap.c:2867
+ dbJoin+0x210/0x2d0 fs/jfs/jfs_dmap.c:2834
+ dbFreeBits+0x4eb/0xda0 fs/jfs/jfs_dmap.c:2331
+ dbFreeDmap fs/jfs/jfs_dmap.c:2080 [inline]
+ dbFree+0x343/0x650 fs/jfs/jfs_dmap.c:402
+ txFreeMap+0x798/0xd50 fs/jfs/jfs_txnmgr.c:2534
+ txUpdateMap+0x342/0x9e0
+ txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
+ jfs_lazycommit+0x47a/0xb70 fs/jfs/jfs_txnmgr.c:2732
+ kthread+0x2d3/0x370 kernel/kthread.c:388
+ ret_from_fork+0x48/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
+Kernel Offset: disabled
+Rebooting in 86400 seconds..
 
-Some architectures have a working prototype, while others don't.
-Fix this by providing it in only one place that is always visible.
+The issue is caused when the value of lp becomes greater than
+CTLTREESIZE which is the max size of stree. Adding a simple check
+solves this issue.
 
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Dave:
+As the function returns a void, good error handling
+would require a more intrusive code reorganization, so I modified
+Osama's patch at use WARN_ON_ONCE for lack of a cleaner option.
+
+The patch is tested via syzbot.
+
+Reported-by: syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=39ba34a099ac2e9bd3cb
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/irq_work.h     | 2 --
- arch/arm64/include/asm/irq_work.h   | 2 --
- arch/csky/include/asm/irq_work.h    | 2 +-
- arch/powerpc/include/asm/irq_work.h | 1 -
- arch/riscv/include/asm/irq_work.h   | 2 +-
- arch/s390/include/asm/irq_work.h    | 2 --
- arch/x86/include/asm/irq_work.h     | 1 -
- include/linux/irq_work.h            | 3 +++
- 8 files changed, 5 insertions(+), 10 deletions(-)
+ fs/jfs/jfs_dmap.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/include/asm/irq_work.h b/arch/arm/include/asm/irq_work.h
-index 3149e4dc1b54..8895999834cc 100644
---- a/arch/arm/include/asm/irq_work.h
-+++ b/arch/arm/include/asm/irq_work.h
-@@ -9,6 +9,4 @@ static inline bool arch_irq_work_has_interrupt(void)
- 	return is_smp();
- }
- 
--extern void arch_irq_work_raise(void);
--
- #endif /* _ASM_ARM_IRQ_WORK_H */
-diff --git a/arch/arm64/include/asm/irq_work.h b/arch/arm64/include/asm/irq_work.h
-index 81bbfa3a035b..a1020285ea75 100644
---- a/arch/arm64/include/asm/irq_work.h
-+++ b/arch/arm64/include/asm/irq_work.h
-@@ -2,8 +2,6 @@
- #ifndef __ASM_IRQ_WORK_H
- #define __ASM_IRQ_WORK_H
- 
--extern void arch_irq_work_raise(void);
--
- static inline bool arch_irq_work_has_interrupt(void)
- {
- 	return true;
-diff --git a/arch/csky/include/asm/irq_work.h b/arch/csky/include/asm/irq_work.h
-index 33aaf39d6f94..d39fcc1f5395 100644
---- a/arch/csky/include/asm/irq_work.h
-+++ b/arch/csky/include/asm/irq_work.h
-@@ -7,5 +7,5 @@ static inline bool arch_irq_work_has_interrupt(void)
- {
- 	return true;
- }
--extern void arch_irq_work_raise(void);
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 11c77757ead9..d55f0dd8d754 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -2871,6 +2871,9 @@ static void dbAdjTree(dmtree_t * tp, int leafno, int newval)
+ 	/* is the current value the same as the old value ?  if so,
+ 	 * there is nothing to do.
+ 	 */
++	if (WARN_ON_ONCE(lp >= CTLTREESIZE))
++		return;
 +
- #endif /* __ASM_CSKY_IRQ_WORK_H */
-diff --git a/arch/powerpc/include/asm/irq_work.h b/arch/powerpc/include/asm/irq_work.h
-index b8b0be8f1a07..c6d3078bd8c3 100644
---- a/arch/powerpc/include/asm/irq_work.h
-+++ b/arch/powerpc/include/asm/irq_work.h
-@@ -6,6 +6,5 @@ static inline bool arch_irq_work_has_interrupt(void)
- {
- 	return true;
- }
--extern void arch_irq_work_raise(void);
+ 	if (tp->dmt_stree[lp] == newval)
+ 		return;
  
- #endif /* _ASM_POWERPC_IRQ_WORK_H */
-diff --git a/arch/riscv/include/asm/irq_work.h b/arch/riscv/include/asm/irq_work.h
-index b53891964ae0..b27a4d64fc6a 100644
---- a/arch/riscv/include/asm/irq_work.h
-+++ b/arch/riscv/include/asm/irq_work.h
-@@ -6,5 +6,5 @@ static inline bool arch_irq_work_has_interrupt(void)
- {
- 	return IS_ENABLED(CONFIG_SMP);
- }
--extern void arch_irq_work_raise(void);
-+
- #endif /* _ASM_RISCV_IRQ_WORK_H */
-diff --git a/arch/s390/include/asm/irq_work.h b/arch/s390/include/asm/irq_work.h
-index 603783766d0a..f00c9f610d5a 100644
---- a/arch/s390/include/asm/irq_work.h
-+++ b/arch/s390/include/asm/irq_work.h
-@@ -7,6 +7,4 @@ static inline bool arch_irq_work_has_interrupt(void)
- 	return true;
- }
- 
--void arch_irq_work_raise(void);
--
- #endif /* _ASM_S390_IRQ_WORK_H */
-diff --git a/arch/x86/include/asm/irq_work.h b/arch/x86/include/asm/irq_work.h
-index 800ffce0db29..6b4d36c95165 100644
---- a/arch/x86/include/asm/irq_work.h
-+++ b/arch/x86/include/asm/irq_work.h
-@@ -9,7 +9,6 @@ static inline bool arch_irq_work_has_interrupt(void)
- {
- 	return boot_cpu_has(X86_FEATURE_APIC);
- }
--extern void arch_irq_work_raise(void);
- #else
- static inline bool arch_irq_work_has_interrupt(void)
- {
-diff --git a/include/linux/irq_work.h b/include/linux/irq_work.h
-index 8cd11a223260..136f2980cba3 100644
---- a/include/linux/irq_work.h
-+++ b/include/linux/irq_work.h
-@@ -66,6 +66,9 @@ void irq_work_sync(struct irq_work *work);
- void irq_work_run(void);
- bool irq_work_needs_cpu(void);
- void irq_work_single(void *arg);
-+
-+void arch_irq_work_raise(void);
-+
- #else
- static inline bool irq_work_needs_cpu(void) { return false; }
- static inline void irq_work_run(void) { }
 -- 
 2.43.0
 
