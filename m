@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7624B11720;
-	Sat,  3 Feb 2024 04:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B2611717;
+	Sat,  3 Feb 2024 04:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933552; cv=none; b=AY92lq8E552VfJNEax6JummT3noAwp+esltPkyCaDd1xFhjwFy8c4yG5a5K6WlDr+ogyBv/qRyozT7dcbnwJNeLBq1pLPTwYECjbNdTVoPnM4LK5yyi1G8Q8pO3Os6jmtFZKI4WmNpuLv+0n1zLL+5KxpFOeryvtCeMt8JRI2JY=
+	t=1706933553; cv=none; b=nBy61ghn+GsFo2l3SrPmSIhqj2WORSVgZc9qIeqJG84wbvIXoGiruBLhSouw0/b9SLGudwvcKL85VuP9IKa17f73azkHM5WyowI4JhPrUxLVixENMxrwWWg7ly3RO/OPFuq1Zc6wDJWyyG37JS757vDAe3toTkkDZqcB1ETAzDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933552; c=relaxed/simple;
-	bh=rG7XAQjJFcU80kDQxZ5mG1oGMa/5/ImS53AzOhyXKpA=;
+	s=arc-20240116; t=1706933553; c=relaxed/simple;
+	bh=bimm/H/0cykokIHuDJ0htiKl+NgtkFfSsXQ0xxqr0cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HUtNiKOUH4xx9hFWA7A5Tl7G3n0jCRbBFXSIwVm/r/nCdQ1H/mJ2DF5gpg4OHMyOQKLWm65yAqMjeb2+MWF1Vd7JVEwNeT41eZxxXVNniiyoONEWdIn6igbhUPdVRGKXEtl4VzorSFsgzU/IwYtTnV0SXzmtKAmXWjsJwMOw1wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+YC4mgd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lohBoKnR6YjVss3iMw6+zUkkAYBipj4qm+jH8ggCQ4Cv+3FtfdNE3w1eTaIu+Xes2cD2EQ2v8y8W2M86eD0Zp+/X+I3BWCdWRKSfHwuYtYBo/VDFL60UXWeJqjXLTpxrHT+P9N5wcFCu17PGV48aHqPHt+FZMUM95kyJ7FposZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQi1ShUj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+YC4mgd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B518C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQi1ShUj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65A6C433C7;
 	Sat,  3 Feb 2024 04:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933552;
-	bh=rG7XAQjJFcU80kDQxZ5mG1oGMa/5/ImS53AzOhyXKpA=;
+	s=korg; t=1706933553;
+	bh=bimm/H/0cykokIHuDJ0htiKl+NgtkFfSsXQ0xxqr0cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+YC4mgdg+LYU0uZfRGQQtXOYcVP5uZQWKx03wvn4vIWFxhR+VHmIm89eee8lKc0+
-	 mI9NZUqdmYgLvHsezuqY+lSiC9fKjb3UBUkOD594BKSGk/uG/mgmi5T6BWZ9BjihRM
-	 EfRrv7Nhoeiv53OChtZ3rkG4M9e/o0pKqez05DZM=
+	b=BQi1ShUj3ycLCmhfqs2mdQ28/UsoJw4HtYnQtN+NdRWXa87vcbs1PREux94WT0PmS
+	 LyALcdtF9V/vWRO2UI6VLFE3XdwmgNkvSz7LuSi8MYJj2dSlykCWYNomKUCKeFcyUI
+	 Hox1vC/p2NONGNkEOLTrC8PhnPvP4Ayot6BGgzTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/322] selftests/bpf: Fix issues in setup_classid_environment()
-Date: Fri,  2 Feb 2024 20:02:42 -0800
-Message-ID: <20240203035401.235400432@linuxfoundation.org>
+	David Laight <david.laight@aculab.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 096/322] minmax: add umin(a, b) and umax(a, b)
+Date: Fri,  2 Feb 2024 20:03:13 -0800
+Message-ID: <20240203035402.244266080@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,85 +55,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit 4849775587844e44d215289c425bcd70f315efe7 ]
+commit 80fcac55385ccb710d33a20dc1caaef29bd5a921 upstream.
 
-If the net_cls subsystem is already mounted, attempting to mount it again
-in setup_classid_environment() will result in a failure with the error code
-EBUSY. Despite this, tmpfs will have been successfully mounted at
-/sys/fs/cgroup/net_cls. Consequently, the /sys/fs/cgroup/net_cls directory
-will be empty, causing subsequent setup operations to fail.
+Patch series "minmax: Relax type checks in min() and max()", v4.
 
-Here's an error log excerpt illustrating the issue when net_cls has already
-been mounted at /sys/fs/cgroup/net_cls prior to running
-setup_classid_environment():
+The min() (etc) functions in minmax.h require that the arguments have
+exactly the same types.
 
-- Before that change
+However when the type check fails, rather than look at the types and fix
+the type of a variable/constant, everyone seems to jump on min_t().  In
+reality min_t() ought to be rare - when something unusual is being done,
+not normality.
 
-  $ tools/testing/selftests/bpf/test_progs --name=cgroup_v1v2
-  test_cgroup_v1v2:PASS:server_fd 0 nsec
-  test_cgroup_v1v2:PASS:client_fd 0 nsec
-  test_cgroup_v1v2:PASS:cgroup_fd 0 nsec
-  test_cgroup_v1v2:PASS:server_fd 0 nsec
-  run_test:PASS:skel_open 0 nsec
-  run_test:PASS:prog_attach 0 nsec
-  test_cgroup_v1v2:PASS:cgroup-v2-only 0 nsec
-  (cgroup_helpers.c:248: errno: No such file or directory) Opening Cgroup Procs: /sys/fs/cgroup/net_cls/cgroup.procs
-  (cgroup_helpers.c:540: errno: No such file or directory) Opening cgroup classid: /sys/fs/cgroup/net_cls/cgroup-test-work-dir/net_cls.classid
-  run_test:PASS:skel_open 0 nsec
-  run_test:PASS:prog_attach 0 nsec
-  (cgroup_helpers.c:248: errno: No such file or directory) Opening Cgroup Procs: /sys/fs/cgroup/net_cls/cgroup-test-work-dir/cgroup.procs
-  run_test:FAIL:join_classid unexpected error: 1 (errno 2)
-  test_cgroup_v1v2:FAIL:cgroup-v1v2 unexpected error: -1 (errno 2)
-  (cgroup_helpers.c:248: errno: No such file or directory) Opening Cgroup Procs: /sys/fs/cgroup/net_cls/cgroup.procs
-  #44      cgroup_v1v2:FAIL
-  Summary: 0/0 PASSED, 0 SKIPPED, 1 FAILED
+The orginal min() (added in 2.4.9) replaced several inline functions and
+included the type - so matched the implicit casting of the function call.
+This was renamed min_t() in 2.4.10 and the current min() added.  There is
+no actual indication that the conversion of negatve values to large
+unsigned values has ever been an actual problem.
 
-- After that change
-  $ tools/testing/selftests/bpf/test_progs --name=cgroup_v1v2
-  #44      cgroup_v1v2:OK
-  Summary: 1/0 PASSED, 0 SKIPPED, 0 FAILED
+A quick grep shows 5734 min() and 4597 min_t().  Having the casts on
+almost half of the calls shows that something is clearly wrong.
 
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Link: https://lore.kernel.org/r/20231111090034.4248-3-laoar.shao@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If the wrong type is picked (and it is far too easy to pick the type of
+the result instead of the larger input) then significant bits can get
+discarded.
+
+Pretty much the worst example is in the derived clamp_val(), consider:
+        unsigned char x = 200u;
+        y = clamp_val(x, 10u, 300u);
+
+I also suspect that many of the min_t(u16, ...) are actually wrong.  For
+example copy_data() in printk_ringbuffer.c contains:
+
+        data_size = min_t(u16, buf_size, len);
+
+Here buf_size is 'unsigned int' and len 'u16', pass a 64k buffer (can you
+prove that doesn't happen?) and no data is returned.  Apparantly it did -
+and has since been fixed.
+
+The only reason that most of the min_t() are 'fine' is that pretty much
+all the values in the kernel are between 0 and INT_MAX.
+
+Patch 1 adds umin(), this uses integer promotions to convert both
+arguments to 'unsigned long long'.  It can be used to compare a signed
+type that is known to contain a non-negative value with an unsigned type.
+The compiler typically optimises it all away.  Added first so that it can
+be referred to in patch 2.
+
+Patch 2 replaces the 'same type' check with a 'same signedness' one.  This
+makes min(unsigned_int_var, sizeof()) be ok.  The error message is also
+improved and will contain the expanded form of both arguments (useful for
+seeing how constants are defined).
+
+Patch 3 just fixes some whitespace.
+
+Patch 4 allows comparisons of 'unsigned char' and 'unsigned short' to
+signed types.  The integer promotion rules convert them both to 'signed
+int' prior to the comparison so they can never cause a negative value be
+converted to a large positive one.
+
+Patch 5 (rewritted for v4) allows comparisons of unsigned values against
+non-negative constant integer expressions.  This makes
+min(unsigned_int_var, 4) be ok.
+
+The only common case that is still errored is the comparison of signed
+values against unsigned constant integer expressions below __INT_MAX__.
+Typcally min(int_val, sizeof (foo)), the real fix for this is casting the
+constant: min(int_var, (int)sizeof (foo)).
+
+With all the patches applied pretty much all the min_t() could be replaced
+by min(), and most of the rest by umin().  However they all need careful
+inspection due to code like:
+
+        sz = min_t(unsigned char, sz - 1, LIM - 1) + 1;
+
+which converts 0 to LIM.
+
+
+This patch (of 6):
+
+umin() and umax() can be used when min()/max() errors a signed v unsigned
+compare when the signed value is known to be non-negative.
+
+Unlike min_t(some_unsigned_type, a, b) umin() will never mask off high
+bits if an inappropriate type is selected.
+
+The '+ 0u + 0ul + 0ull' may look strange.
+The '+ 0u' is needed for 'signed int' on 64bit systems.
+The '+ 0ul' is needed for 'signed long' on 32bit systems.
+The '+ 0ull' is needed for 'signed long long'.
+
+Link: https://lkml.kernel.org/r/b97faef60ad24922b530241c5d7c933c@AcuMS.aculab.com
+Link: https://lkml.kernel.org/r/41d93ca827a248698ec64bf57e0c05a5@AcuMS.aculab.com
+Signed-off-by: David Laight <david.laight@aculab.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/cgroup_helpers.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ include/linux/minmax.h |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/cgroup_helpers.c b/tools/testing/selftests/bpf/cgroup_helpers.c
-index 2caee8423ee0..f68fbc6c3f52 100644
---- a/tools/testing/selftests/bpf/cgroup_helpers.c
-+++ b/tools/testing/selftests/bpf/cgroup_helpers.c
-@@ -499,10 +499,20 @@ int setup_classid_environment(void)
- 		return 1;
- 	}
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -77,6 +77,23 @@
+ #define max(x, y)	__careful_cmp(x, y, >)
  
--	if (mount("net_cls", NETCLS_MOUNT_PATH, "cgroup", 0, "net_cls") &&
--	    errno != EBUSY) {
--		log_err("mount cgroup net_cls");
--		return 1;
-+	if (mount("net_cls", NETCLS_MOUNT_PATH, "cgroup", 0, "net_cls")) {
-+		if (errno != EBUSY) {
-+			log_err("mount cgroup net_cls");
-+			return 1;
-+		}
+ /**
++ * umin - return minimum of two non-negative values
++ *   Signed types are zero extended to match a larger unsigned type.
++ * @x: first value
++ * @y: second value
++ */
++#define umin(x, y)	\
++	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, <)
 +
-+		if (rmdir(NETCLS_MOUNT_PATH)) {
-+			log_err("rmdir cgroup net_cls");
-+			return 1;
-+		}
-+		if (umount(CGROUP_MOUNT_DFLT)) {
-+			log_err("umount cgroup base");
-+			return 1;
-+		}
- 	}
- 
- 	cleanup_classid_environment();
--- 
-2.43.0
-
++/**
++ * umax - return maximum of two non-negative values
++ * @x: first value
++ * @y: second value
++ */
++#define umax(x, y)	\
++	__careful_cmp((x) + 0u + 0ul + 0ull, (y) + 0u + 0ul + 0ull, >)
++
++/**
+  * min3 - return minimum of three values
+  * @x: first value
+  * @y: second value
 
 
