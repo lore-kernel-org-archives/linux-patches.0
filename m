@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EF4168AF;
-	Sat,  3 Feb 2024 04:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE4B168D9;
+	Sat,  3 Feb 2024 04:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933381; cv=none; b=K/Wfd2DVDXuhSoLIwg0LWeyL9yUeAJD+R3y1Z0u8tlaCR6fanAWRFRfzsNmKTsePkjhVMoE0RVDtc1Y0/Tg+R6HHqyJZdeL8LU2zjoY5qAEBvD8h1qSm+SrlXz9MiwVaOsrPBE0NIcyT/+6ZANEey/9NwH8s7FT7OThT/0hBHCY=
+	t=1706933382; cv=none; b=mzJF8Xtm7rJcF8qtNE6FJ06PuG6T7C0d+rxyGAoR9liPBEGgSo2Z06eFclvHzn8+Je9e/DHkpwjvFn/Vl+NIdQmF682J1vH6SasDZdr6VFTPWE56IM88U1VvR2392NtecMvJ61zx8wwTKqY9PhjNx47SQPD5s3LzYeNpj/w5tCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933381; c=relaxed/simple;
-	bh=nB1JxGzLUhcaY6RavVA8c+uHiHspiIl6Z8NE+LEGnN0=;
+	s=arc-20240116; t=1706933382; c=relaxed/simple;
+	bh=Is61PY5w7sfdry32ovYdK0BZSh2Q2oIlrLHnZOedbVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/Qtq9tvscNrTGr1WFfY5m0F6r27/E+dw0OXRTUdUUZT5lVDYNaPKf3GR7MWf1DSPPgjYl8IONSvYvN3Y0umf3TVm6NW1xsUneR32DTn0SlB4CQA8czYXacyBKlHDH1d5QQZmKLiyfwE4N6hu0p6+yQWl2N7t1hZr2ZAqLAZHcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vs2khuZm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOmMbRL69zXcvZorEMQUtSEJl/YXGPphq9kfE5oHEr415HB3DIO1CSJVDAEr+AkMm+ThO0rX3Q3MCiqP3wHKxJqZJ5K4Wt+eyGiEzd9N0K0wQ4JbP8l5tg2IhknWz7x8nlYhGqWeBeWkwk6P6NKBXcb7/gE2Dlm53bh6H+DLRzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlwgoHbZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vs2khuZm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54878C43394;
-	Sat,  3 Feb 2024 04:09:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlwgoHbZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA22C433F1;
+	Sat,  3 Feb 2024 04:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933381;
-	bh=nB1JxGzLUhcaY6RavVA8c+uHiHspiIl6Z8NE+LEGnN0=;
+	s=korg; t=1706933382;
+	bh=Is61PY5w7sfdry32ovYdK0BZSh2Q2oIlrLHnZOedbVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vs2khuZmaMWwSc6N1DX73KCnMyYNpMmGP9Yf/7hgzySWUUfEjUdkgDC3PX1M6kgaF
-	 aqaAl5YHISauyjKtqFepDAvwUGywQW38VM2K249OXhVNd0Gf91MSe0R4yaq2uYIhRb
-	 +Y6h9p6cwfOu9BoVoAIUDtQ6E3CI2Zy9RbNoPdR4=
+	b=LlwgoHbZCi0IZ5Zqp/LlxJ+U0wKhmRG1fu13bSbL8YpscOLlwAWySk59/HeQF8Dnm
+	 l3QbGrzKcbI8LEHMIDhvfsMrSkVciXW5b48x8xOkpsz0zNAlSjxY4fZ+O240znXcuh
+	 kgruiGClMLsXD7xLlY0H+xOXEKW/cmPPnNh6n6ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenm Chen <zenmchen@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/219] wifi: rtl8xxxu: Add additional USB IDs for RTL8192EU devices
-Date: Fri,  2 Feb 2024 20:04:25 -0800
-Message-ID: <20240203035330.289163441@linuxfoundation.org>
+Subject: [PATCH 6.1 069/219] ARM: dts: imx25/27-eukrea: Fix RTC node name
+Date: Fri,  2 Feb 2024 20:04:02 -0800
+Message-ID: <20240203035326.573790941@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -52,46 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 4e87ca403e2008b9e182239e1abbf6876a55eb33 ]
+[ Upstream commit 68c711b882c262e36895547cddea2c2d56ce611d ]
 
-Add additional USB IDs found in the vendor driver from
-https://github.com/Mange/rtl8192eu-linux-driver to support more
-RTL8192EU devices.
+Node names should be generic. Use 'rtc' as node name to fix
+the following dt-schema warning:
 
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231217123017.1982-1-zenmchen@gmail.com
+imx25-eukrea-mbimxsd25-baseboard.dtb: pcf8563@51: $nodename:0: 'pcf8563@51' does not match '^rtc(@.*|-([0-9]|[1-9][0-9]+))?$'
+	from schema $id: http://devicetree.org/schemas/rtc/nxp,pcf8563.yaml#
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi | 2 +-
+ arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 3a9fa3ff37ac..6dd5ec1e4d8c 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -7030,6 +7030,18 @@ static const struct usb_device_id dev_table[] = {
- 	.driver_info = (unsigned long)&rtl8192eu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x818c, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192eu_fops},
-+/* D-Link DWA-131 rev C1 */
-+{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3312, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192eu_fops},
-+/* TP-Link TL-WN8200ND V2 */
-+{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0126, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192eu_fops},
-+/* Mercusys MW300UM */
-+{USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0100, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192eu_fops},
-+/* Mercusys MW300UH */
-+{USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0104, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192eu_fops},
- #endif
- { }
- };
+diff --git a/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi b/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
+index 0703f62d10d1..93a6e4e680b4 100644
+--- a/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
++++ b/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
+@@ -27,7 +27,7 @@
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
+ 
+-	pcf8563@51 {
++	rtc@51 {
+ 		compatible = "nxp,pcf8563";
+ 		reg = <0x51>;
+ 	};
+diff --git a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
+index 74110bbcd9d4..4b83e2918b55 100644
+--- a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
++++ b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
+@@ -33,7 +33,7 @@
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
+ 
+-	pcf8563@51 {
++	rtc@51 {
+ 		compatible = "nxp,pcf8563";
+ 		reg = <0x51>;
+ 	};
 -- 
 2.43.0
 
