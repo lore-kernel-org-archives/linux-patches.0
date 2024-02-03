@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D822168A9;
-	Sat,  3 Feb 2024 04:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B7A171A4;
+	Sat,  3 Feb 2024 04:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933893; cv=none; b=jl1Xo5P0DBiHtdpV2euqZCxtmA5URuIytFagNWvRDASIiHNACQZeGLfl8yRg0KuOpCrkvW/D3NztrN7JLsAauFtTXMESLR/S8AwUZzzUvkG0FwutMONV3xCuAtFkE0bpp1glLkzTrPG//WKHUqcPsRPm2KUtS2nkLMmHa8twgDE=
+	t=1706933894; cv=none; b=c+VTeVbKBEF5pU4Ee3zzK0AYaYenc3SLmk1lYUSfxj8xuOtEdUj4i8ZXE3V6P4izpFZbeKBcDDK/4nQIOSdLvZtTruIvSTijyaU9uNsWbiLPbl3s3Z7UfD7lbmGUgfzWkpJ04HUhLGRxNG+p72lo0n9JmFhmznMI2jKtJ8O7nx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933893; c=relaxed/simple;
-	bh=khT4/pcJQ0OPcMopZ+dFKyXxmhbR0GYbuXTZjzMPhE4=;
+	s=arc-20240116; t=1706933894; c=relaxed/simple;
+	bh=+p6VXd7fjxbWM4n6TpWFd52/2RvwUpsUmK+kpX0GYe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLpz/fr0u8sGX3fpCAY1fjsda6FHG6rNDKCgBuAqdTaUPDM/vlqloPX/2kbayfidx7IjHCjlPjSpifcpVoB5NIjLMCNdvVF0QbyYRB7hK5N9h8W2jhqgMowQqzV8ONX78NNt2Hf2N4mPAg8kRO7Ot1SJ1V/P2D0tvtf9XKN4V8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJPZNze/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ct1qH1x2acz4kLZaH8XL9ptdR2CXQx4tmuaml8h7ugwHfLuNClSg9rFI7LyASv/5z0iNxGPb6xly3/kY2gaGcGyW0R9DtM9wq3/dOINiCd32Jy7hP0YNdawAQVi3Q6d4EbM1l4EeXuNNiQ72c+elrKN5JSsx7fSXifCHH5rHQ6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvuge945; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJPZNze/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046D0C433F1;
-	Sat,  3 Feb 2024 04:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvuge945"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA457C433C7;
+	Sat,  3 Feb 2024 04:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933893;
-	bh=khT4/pcJQ0OPcMopZ+dFKyXxmhbR0GYbuXTZjzMPhE4=;
+	bh=+p6VXd7fjxbWM4n6TpWFd52/2RvwUpsUmK+kpX0GYe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJPZNze/UyO/JDjLn9Bh1Fr2VME7ZeKo0Q58o4obmV3nP58gAnNmAbiqGRiKES0jI
-	 FgYdaA9pJA81D6sWmvX97sixn6BNOnNy1VcBEt2BFF2p3PK4ZhajjIco8DCytaucwJ
-	 5DJ55HuvoU5BtF1JLzLKbd1Of9Iy8ylr+KYuu/Nc=
+	b=tvuge9456gN4Sz0Kq8O9Xy7vaG8BAHr1WXbPG3ZiNOOa2MZP9rK3fJyDfqUURR8VI
+	 awYbYUQOgwX6FPjrBo1zbjA8lDQeLw6k/cTXiEUpsEi69TngxDF3wTqGWKjot2R1Ac
+	 dUwODPXzWY9fLp34McXwlaaDapCNN1uIKAG3P1U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Peter Lafreniere <peter@n8pjl.ca>,
+	Benjamin Berg <benjamin@sipsolutions.net>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 239/353] um: Fix naming clash between UML and scheduler
-Date: Fri,  2 Feb 2024 20:05:57 -0800
-Message-ID: <20240203035411.241803440@linuxfoundation.org>
+Subject: [PATCH 6.7 240/353] um: Dont use vfprintf() for os_info()
+Date: Fri,  2 Feb 2024 20:05:58 -0800
+Message-ID: <20240203035411.270761577@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,80 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+From: Benjamin Berg <benjamin@sipsolutions.net>
 
-[ Upstream commit 541d4e4d435c8b9bfd29f70a1da4a2db97794e0a ]
+[ Upstream commit 236f9fe39b02c15fa5530b53e9cca48354394389 ]
 
-__cant_sleep was already used and exported by the scheduler.
-The name had to be changed to a UML specific one.
+The threads allocated inside the kernel have only a single page of
+stack. Unfortunately, the vfprintf function in standard glibc may use
+too much stack-space, overflowing it.
 
-Signed-off-by: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Reviewed-by: Peter Lafreniere <peter@n8pjl.ca>
+To make os_info safe to be used by helper threads, use the kernel
+vscnprintf function into a smallish buffer and write out the information
+to stderr.
+
+Signed-off-by: Benjamin Berg <benjamin@sipsolutions.net>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/shared/kern_util.h | 2 +-
- arch/um/kernel/process.c           | 2 +-
- arch/um/os-Linux/helper.c          | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ arch/um/os-Linux/util.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/arch/um/include/shared/kern_util.h b/arch/um/include/shared/kern_util.h
-index d8b8b4f07e42..444bae755b16 100644
---- a/arch/um/include/shared/kern_util.h
-+++ b/arch/um/include/shared/kern_util.h
-@@ -50,7 +50,7 @@ extern void do_uml_exitcalls(void);
-  * Are we disallowed to sleep? Used to choose between GFP_KERNEL and
-  * GFP_ATOMIC.
-  */
--extern int __cant_sleep(void);
-+extern int __uml_cant_sleep(void);
- extern int get_current_pid(void);
- extern int copy_from_user_proc(void *to, void *from, int size);
- extern char *uml_strdup(const char *string);
-diff --git a/arch/um/kernel/process.c b/arch/um/kernel/process.c
-index 106b7da2f8d6..6daffb9d8a8d 100644
---- a/arch/um/kernel/process.c
-+++ b/arch/um/kernel/process.c
-@@ -220,7 +220,7 @@ void arch_cpu_idle(void)
- 	um_idle_sleep();
+diff --git a/arch/um/os-Linux/util.c b/arch/um/os-Linux/util.c
+index fc0f2a9dee5a..1dca4ffbd572 100644
+--- a/arch/um/os-Linux/util.c
++++ b/arch/um/os-Linux/util.c
+@@ -173,23 +173,38 @@ __uml_setup("quiet", quiet_cmd_param,
+ "quiet\n"
+ "    Turns off information messages during boot.\n\n");
+ 
++/*
++ * The os_info/os_warn functions will be called by helper threads. These
++ * have a very limited stack size and using the libc formatting functions
++ * may overflow the stack.
++ * So pull in the kernel vscnprintf and use that instead with a fixed
++ * on-stack buffer.
++ */
++int vscnprintf(char *buf, size_t size, const char *fmt, va_list args);
++
+ void os_info(const char *fmt, ...)
+ {
++	char buf[256];
+ 	va_list list;
++	int len;
+ 
+ 	if (quiet_info)
+ 		return;
+ 
+ 	va_start(list, fmt);
+-	vfprintf(stderr, fmt, list);
++	len = vscnprintf(buf, sizeof(buf), fmt, list);
++	fwrite(buf, len, 1, stderr);
+ 	va_end(list);
  }
  
--int __cant_sleep(void) {
-+int __uml_cant_sleep(void) {
- 	return in_atomic() || irqs_disabled() || in_interrupt();
- 	/* Is in_interrupt() really needed? */
+ void os_warn(const char *fmt, ...)
+ {
++	char buf[256];
+ 	va_list list;
++	int len;
+ 
+ 	va_start(list, fmt);
+-	vfprintf(stderr, fmt, list);
++	len = vscnprintf(buf, sizeof(buf), fmt, list);
++	fwrite(buf, len, 1, stderr);
+ 	va_end(list);
  }
-diff --git a/arch/um/os-Linux/helper.c b/arch/um/os-Linux/helper.c
-index b459745f52e2..3cb8ac63be6e 100644
---- a/arch/um/os-Linux/helper.c
-+++ b/arch/um/os-Linux/helper.c
-@@ -46,7 +46,7 @@ int run_helper(void (*pre_exec)(void *), void *pre_data, char **argv)
- 	unsigned long stack, sp;
- 	int pid, fds[2], ret, n;
- 
--	stack = alloc_stack(0, __cant_sleep());
-+	stack = alloc_stack(0, __uml_cant_sleep());
- 	if (stack == 0)
- 		return -ENOMEM;
- 
-@@ -70,7 +70,7 @@ int run_helper(void (*pre_exec)(void *), void *pre_data, char **argv)
- 	data.pre_data = pre_data;
- 	data.argv = argv;
- 	data.fd = fds[1];
--	data.buf = __cant_sleep() ? uml_kmalloc(PATH_MAX, UM_GFP_ATOMIC) :
-+	data.buf = __uml_cant_sleep() ? uml_kmalloc(PATH_MAX, UM_GFP_ATOMIC) :
- 					uml_kmalloc(PATH_MAX, UM_GFP_KERNEL);
- 	pid = clone(helper_child, (void *) sp, CLONE_VM, &data);
- 	if (pid < 0) {
-@@ -121,7 +121,7 @@ int run_helper_thread(int (*proc)(void *), void *arg, unsigned int flags,
- 	unsigned long stack, sp;
- 	int pid, status, err;
- 
--	stack = alloc_stack(0, __cant_sleep());
-+	stack = alloc_stack(0, __uml_cant_sleep());
- 	if (stack == 0)
- 		return -ENOMEM;
- 
 -- 
 2.43.0
 
