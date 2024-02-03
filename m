@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF102C68F;
-	Sat,  3 Feb 2024 04:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B34A2C68F;
+	Sat,  3 Feb 2024 04:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933977; cv=none; b=tjv4JijmCtPLYQefrgL4pmZ3AOXRzBOxFqoXlfeJ75hML4msKyEnQU3z0lsQj2yMaCaM5PqAf8PWn4Em7G82SOQ8ZN13tYy+h+VLt4HZ7X2Ctpt+Z4qKRnCHoHfUX6LmB1VkIe046NTQyr9v4RirWtEhxdA060Q/Z7YqHl3iSyY=
+	t=1706933978; cv=none; b=sgCx1YrNwBSrY2o629mt8xUev17pxkG6FXweTPe8MlXYw9p7oGbCZT5B8Jlagetv/4Bp6e7Xt06yVFNUe8jfsdTei+gkpwMGgn8dZfPw6qxWXGz+gNiGTBRzqDYERtNKW6xSzu0fgDqugtDPZPkldUUQdrTu8Qg9I3qqtGDhPmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933977; c=relaxed/simple;
-	bh=+j+lGfTUt0hv/myR6pJvlX0MZuvtrUeZDl0Aox59hwA=;
+	s=arc-20240116; t=1706933978; c=relaxed/simple;
+	bh=5u23/lChybvs6Pb/LxkDF18MqFqjKb5830efIvyjj2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LngdV7Di8Jr+4pih2p/ixf4hXGZYwv6ZTaNHw0elZ0831hVQgZf5bnTGBCjTSI4PhKUPGmmI7TfNUTD+aYOGv847AYI4C1F8Kdc2ftzTwwoOzJA7x/l8v66nW9nc+9tFPq1lpyFQcZXaYta94C7Z2qYDQ5GTlsdXLv/v11C4/XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Yi0Go3z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EU3ahS0K6b0UcvjUJKtbeJ24J0y1Z03XtuDzUFilDVx5J8MbWc7BDXs0JNt6mbb8NR1FsvHbT0f4sUH5Fdm+0rshoxCtxgIQtRQjpXF/dx2xYy4ferQ5QpaQZtMDz9Zb9oxRGmvkSlE43MeVWBHwu5Vcn1OA341lPHKYd2Uv63Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP7sovOc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Yi0Go3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98784C43399;
-	Sat,  3 Feb 2024 04:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP7sovOc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43561C433F1;
+	Sat,  3 Feb 2024 04:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933977;
-	bh=+j+lGfTUt0hv/myR6pJvlX0MZuvtrUeZDl0Aox59hwA=;
+	s=korg; t=1706933978;
+	bh=5u23/lChybvs6Pb/LxkDF18MqFqjKb5830efIvyjj2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Yi0Go3zi53z8D2vmTKkZJNBF/mkPDY1bZBWKI+4sgtETdpIpNXKrbySl5LCkkh3Q
-	 Z9d38cDV4L7QT9c+h0y3WJE2sGZg6lSLPW3fIrJKuw+GHfGd8VVTtcIudB2punZKpW
-	 K26J/B48mkLP5owrwN2FfFjEGliqc5dG73uyZuy4=
+	b=CP7sovOc7DJJW4RByLCXbmHDRD4jPcNBtt4JUMWs2xJNN0t+8lZc5CnHOXnlmOBA7
+	 7PixuvbV66DT2IIqtskRtZHeM4vcUtXLUWvHag3VTFZ985Fp/exw9eryLKdJz2lk+1
+	 6zbS7MipnAvcSWHNKAqdsBYbXUyQGBqoheW79TSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Subject: [PATCH 6.7 352/353] selftests/bpf: Remove flaky test_btf_id test
-Date: Fri,  2 Feb 2024 20:07:50 -0800
-Message-ID: <20240203035414.879666595@linuxfoundation.org>
+	Brett Creeley <brett.creeley@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 335/353] pds_core: Clear BARs on reset
+Date: Fri,  2 Feb 2024 20:07:33 -0800
+Message-ID: <20240203035414.380122137@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,53 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Brett Creeley <brett.creeley@amd.com>
 
-commit 56925f389e152dcb8d093435d43b78a310539c23 upstream.
+[ Upstream commit e96094c1d11cce4deb5da3c0500d49041ab845b8 ]
 
-With previous patch, one of subtests in test_btf_id becomes
-flaky and may fail. The following is a failing example:
+During reset the BARs might be accessed when they are
+unmapped. This can cause unexpected issues, so fix it by
+clearing the cached BAR values so they are not accessed
+until they are re-mapped.
 
-  Error: #26 btf
-  Error: #26/174 btf/BTF ID
-    Error: #26/174 btf/BTF ID
-    btf_raw_create:PASS:check 0 nsec
-    btf_raw_create:PASS:check 0 nsec
-    test_btf_id:PASS:check 0 nsec
-    ...
-    test_btf_id:PASS:check 0 nsec
-    test_btf_id:FAIL:check BTF lingersdo_test_get_info:FAIL:check failed: -1
+Also, make sure any places that can access the BARs
+when they are NULL are prevented.
 
-The test tries to prove a btf_id not available after the map is closed.
-But btf_id is freed only after workqueue and a rcu grace period, compared
-to previous case just after a rcu grade period.
-Depending on system workload, workqueue could take quite some time
-to execute function bpf_map_free_deferred() which may cause the test failure.
-Instead of adding arbitrary delays, let us remove the logic to
-check btf_id availability after map is closed.
-
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20231214203820.1469402-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 49ce92fbee0b ("pds_core: add FW update feature to devlink")
+Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://lore.kernel.org/r/20240129234035.69802-6-brett.creeley@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/btf.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/amd/pds_core/adminq.c  | 28 +++++++++++++++------
+ drivers/net/ethernet/amd/pds_core/core.c    |  8 +++++-
+ drivers/net/ethernet/amd/pds_core/dev.c     |  9 ++++++-
+ drivers/net/ethernet/amd/pds_core/devlink.c |  3 ++-
+ drivers/net/ethernet/amd/pds_core/fw.c      |  3 +++
+ drivers/net/ethernet/amd/pds_core/main.c    |  5 ++++
+ 6 files changed, 45 insertions(+), 11 deletions(-)
 
---- a/tools/testing/selftests/bpf/prog_tests/btf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/btf.c
-@@ -4630,11 +4630,6 @@ static int test_btf_id(unsigned int test
- 	/* The map holds the last ref to BTF and its btf_id */
- 	close(map_fd);
- 	map_fd = -1;
--	btf_fd[0] = bpf_btf_get_fd_by_id(map_info.btf_id);
--	if (CHECK(btf_fd[0] >= 0, "BTF lingers")) {
--		err = -1;
--		goto done;
--	}
+diff --git a/drivers/net/ethernet/amd/pds_core/adminq.c b/drivers/net/ethernet/amd/pds_core/adminq.c
+index 5edff33d56f3..ea773cfa0af6 100644
+--- a/drivers/net/ethernet/amd/pds_core/adminq.c
++++ b/drivers/net/ethernet/amd/pds_core/adminq.c
+@@ -191,10 +191,16 @@ static int __pdsc_adminq_post(struct pdsc *pdsc,
  
- 	fprintf(stderr, "OK");
+ 	/* Check that the FW is running */
+ 	if (!pdsc_is_fw_running(pdsc)) {
+-		u8 fw_status = ioread8(&pdsc->info_regs->fw_status);
+-
+-		dev_info(pdsc->dev, "%s: post failed - fw not running %#02x:\n",
+-			 __func__, fw_status);
++		if (pdsc->info_regs) {
++			u8 fw_status =
++				ioread8(&pdsc->info_regs->fw_status);
++
++			dev_info(pdsc->dev, "%s: post failed - fw not running %#02x:\n",
++				 __func__, fw_status);
++		} else {
++			dev_info(pdsc->dev, "%s: post failed - BARs not setup\n",
++				 __func__);
++		}
+ 		ret = -ENXIO;
  
+ 		goto err_out_unlock;
+@@ -266,10 +272,16 @@ int pdsc_adminq_post(struct pdsc *pdsc,
+ 			break;
+ 
+ 		if (!pdsc_is_fw_running(pdsc)) {
+-			u8 fw_status = ioread8(&pdsc->info_regs->fw_status);
+-
+-			dev_dbg(pdsc->dev, "%s: post wait failed - fw not running %#02x:\n",
+-				__func__, fw_status);
++			if (pdsc->info_regs) {
++				u8 fw_status =
++					ioread8(&pdsc->info_regs->fw_status);
++
++				dev_dbg(pdsc->dev, "%s: post wait failed - fw not running %#02x:\n",
++					__func__, fw_status);
++			} else {
++				dev_dbg(pdsc->dev, "%s: post wait failed - BARs not setup\n",
++					__func__);
++			}
+ 			err = -ENXIO;
+ 			break;
+ 		}
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index f44333bd1256..65c8a7072e35 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -600,7 +600,13 @@ void pdsc_fw_up(struct pdsc *pdsc)
+ 
+ static void pdsc_check_pci_health(struct pdsc *pdsc)
+ {
+-	u8 fw_status = ioread8(&pdsc->info_regs->fw_status);
++	u8 fw_status;
++
++	/* some sort of teardown already in progress */
++	if (!pdsc->info_regs)
++		return;
++
++	fw_status = ioread8(&pdsc->info_regs->fw_status);
+ 
+ 	/* is PCI broken? */
+ 	if (fw_status != PDS_RC_BAD_PCI)
+diff --git a/drivers/net/ethernet/amd/pds_core/dev.c b/drivers/net/ethernet/amd/pds_core/dev.c
+index 31940b857e0e..62a38e0a8454 100644
+--- a/drivers/net/ethernet/amd/pds_core/dev.c
++++ b/drivers/net/ethernet/amd/pds_core/dev.c
+@@ -57,6 +57,9 @@ int pdsc_err_to_errno(enum pds_core_status_code code)
+ 
+ bool pdsc_is_fw_running(struct pdsc *pdsc)
+ {
++	if (!pdsc->info_regs)
++		return false;
++
+ 	pdsc->fw_status = ioread8(&pdsc->info_regs->fw_status);
+ 	pdsc->last_fw_time = jiffies;
+ 	pdsc->last_hb = ioread32(&pdsc->info_regs->fw_heartbeat);
+@@ -182,13 +185,17 @@ int pdsc_devcmd_locked(struct pdsc *pdsc, union pds_core_dev_cmd *cmd,
+ {
+ 	int err;
+ 
++	if (!pdsc->cmd_regs)
++		return -ENXIO;
++
+ 	memcpy_toio(&pdsc->cmd_regs->cmd, cmd, sizeof(*cmd));
+ 	pdsc_devcmd_dbell(pdsc);
+ 	err = pdsc_devcmd_wait(pdsc, cmd->opcode, max_seconds);
+-	memcpy_fromio(comp, &pdsc->cmd_regs->comp, sizeof(*comp));
+ 
+ 	if ((err == -ENXIO || err == -ETIMEDOUT) && pdsc->wq)
+ 		queue_work(pdsc->wq, &pdsc->health_work);
++	else
++		memcpy_fromio(comp, &pdsc->cmd_regs->comp, sizeof(*comp));
+ 
+ 	return err;
+ }
+diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
+index e9948ea5bbcd..54864f27c87a 100644
+--- a/drivers/net/ethernet/amd/pds_core/devlink.c
++++ b/drivers/net/ethernet/amd/pds_core/devlink.c
+@@ -111,7 +111,8 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
+ 
+ 	mutex_lock(&pdsc->devcmd_lock);
+ 	err = pdsc_devcmd_locked(pdsc, &cmd, &comp, pdsc->devcmd_timeout * 2);
+-	memcpy_fromio(&fw_list, pdsc->cmd_regs->data, sizeof(fw_list));
++	if (!err)
++		memcpy_fromio(&fw_list, pdsc->cmd_regs->data, sizeof(fw_list));
+ 	mutex_unlock(&pdsc->devcmd_lock);
+ 	if (err && err != -EIO)
+ 		return err;
+diff --git a/drivers/net/ethernet/amd/pds_core/fw.c b/drivers/net/ethernet/amd/pds_core/fw.c
+index 90a811f3878a..fa626719e68d 100644
+--- a/drivers/net/ethernet/amd/pds_core/fw.c
++++ b/drivers/net/ethernet/amd/pds_core/fw.c
+@@ -107,6 +107,9 @@ int pdsc_firmware_update(struct pdsc *pdsc, const struct firmware *fw,
+ 
+ 	dev_info(pdsc->dev, "Installing firmware\n");
+ 
++	if (!pdsc->cmd_regs)
++		return -ENXIO;
++
+ 	dl = priv_to_devlink(pdsc);
+ 	devlink_flash_update_status_notify(dl, "Preparing to flash",
+ 					   NULL, 0, 0);
+diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
+index 5172a5ad8ec6..05fdeb235e5f 100644
+--- a/drivers/net/ethernet/amd/pds_core/main.c
++++ b/drivers/net/ethernet/amd/pds_core/main.c
+@@ -37,6 +37,11 @@ static void pdsc_unmap_bars(struct pdsc *pdsc)
+ 	struct pdsc_dev_bar *bars = pdsc->bars;
+ 	unsigned int i;
+ 
++	pdsc->info_regs = NULL;
++	pdsc->cmd_regs = NULL;
++	pdsc->intr_status = NULL;
++	pdsc->intr_ctrl = NULL;
++
+ 	for (i = 0; i < PDS_CORE_BARS_MAX; i++) {
+ 		if (bars[i].vaddr)
+ 			pci_iounmap(pdsc->pdev, bars[i].vaddr);
+-- 
+2.43.0
+
 
 
