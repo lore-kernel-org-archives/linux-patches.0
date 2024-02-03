@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3767168A9;
-	Sat,  3 Feb 2024 04:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F514F9CE;
+	Sat,  3 Feb 2024 04:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933387; cv=none; b=mDF8uqTmHkKjbBX8m/uD5Ds54NbG/IcR4yjB7g7r72tCrhpEOegS5/J7hrthklD2dU0kcUHfGTfyqId2ChYy18PYE9WVgqb3GSjHbczW7/hIsmyqqyOB4VziP13/v+NhjaNkgTb9+wQUn1BASELvezSclQ/QEa72GvCdtWmqDBo=
+	t=1706933388; cv=none; b=M5MgDb6mjlXrhJWPvl/nWJUXeEgwsok2DzpfIu1nP9qU85bxu9+Bhx7hjJG5y34hRQunYkKKKnr/cT4txRH7OQxc8RELSAd/ZI/Kt/R49wmYmzqZjjep1LvK4/wy9R2UYxJJpt848CBRyCSbiEOUngnyOfSCepmIpd5kTr5eXk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933387; c=relaxed/simple;
-	bh=qjLCcTo+LV50YtOH5Qh17Mr+p8yN1GYGUft6tFCrGIQ=;
+	s=arc-20240116; t=1706933388; c=relaxed/simple;
+	bh=CS5il8hsyE9Q6n2RpEWv9buCaU6SiThH3fx3zr6AyDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHePfUXLhuRfXIubtTmLJTtAWvqg0wC/n00QSKDjt3inlM72XJyyLstSoKcllc8QKOEOut1AevQJbKMhOQ/Iy1pz1IG9t5jciCVOb1pcZ+IiFnn1FqoSVfO5QtXEdYFOe2DchvMQE0WfaPH+rKoEeZy+1NtHal5osUmPtAxKO68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApPG+w/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rlqdm5NYULhuh54lwtBnN4SEty9gM+4UijIamMw6FCCImO9L1/ix1+GPmvTMnLyhieBkj6XoSyx6rIPUKFxo6ojPk+qDKSkE9YiquG70gN+k24L6GJ0ib+Krs7hE7tst3IrA2tdztIM2YYCaYfK3CKstYn02k2tt/4BU4DForgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHRoCbJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApPG+w/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C09BC43390;
-	Sat,  3 Feb 2024 04:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHRoCbJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CD5C433B1;
+	Sat,  3 Feb 2024 04:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933387;
-	bh=qjLCcTo+LV50YtOH5Qh17Mr+p8yN1GYGUft6tFCrGIQ=;
+	s=korg; t=1706933388;
+	bh=CS5il8hsyE9Q6n2RpEWv9buCaU6SiThH3fx3zr6AyDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ApPG+w/UZpqsUE4sX+x7N70hL0qb98V7pqVMcCR/krNaJatMkZNCsYoYG2Jnx1FV5
-	 DUPw/q1exo5rz4PJfy9D9ln2pRxECjiSnNINyapUp/oruQkcPU8IrsaCqramoTnhEf
-	 t0mBZmWyYy145fN8jNkK1P8xLfZCbijTmRlXoWko=
+	b=WHRoCbJ0M0bhM+P/yZ6q2EzCTaJShZSJOkee4yp5d3eIxujAE9RuIxPM/5/vebxiK
+	 QQkdLpwSzIEiyDxAxE8aCfFSw52xrxjAwEEK4wsMGGA+NonH10PVuhcF2MeFK6zb2x
+	 qaK7+oGXryivITihBT4vffmNGChD15Vnopi2AiTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/219] bpf: Set uattr->batch.count as zero before batched update or deletion
-Date: Fri,  2 Feb 2024 20:03:59 -0800
-Message-ID: <20240203035326.039915430@linuxfoundation.org>
+Subject: [PATCH 6.1 094/219] wifi: rtlwifi: rtl8723{be,ae}: using calculate_bit_shift()
+Date: Fri,  2 Feb 2024 20:04:27 -0800
+Message-ID: <20240203035330.510197777@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,49 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 06e5c999f10269a532304e89a6adb2fbfeb0593c ]
+[ Upstream commit 5c16618bc06a41ad68fd8499a21d35ef57ca06c2 ]
 
-generic_map_{delete,update}_batch() doesn't set uattr->batch.count as
-zero before it tries to allocate memory for key. If the memory
-allocation fails, the value of uattr->batch.count will be incorrect.
+Using calculate_bit_shift() to replace rtl8723_phy_calculate_bit_shift().
+And fix an undefined bitwise shift behavior problem.
 
-Fix it by setting uattr->batch.count as zero beore batched update or
-deletion.
-
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231208102355.2628918-6-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-12-suhui@nfschina.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c | 6 +++---
+ drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 8d0c38a8dcf2..1e46a84694b8 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1598,6 +1598,9 @@ int generic_map_delete_batch(struct bpf_map *map,
- 	if (!max_count)
- 		return 0;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
+index fe9b407dc2af..71e29b103da5 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
+@@ -49,7 +49,7 @@ u32 rtl8723e_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 							    rfpath, regaddr);
+ 	}
  
-+	if (put_user(0, &uattr->batch.count))
-+		return -EFAULT;
-+
- 	key = kvmalloc(map->key_size, GFP_USER | __GFP_NOWARN);
- 	if (!key)
- 		return -ENOMEM;
-@@ -1657,6 +1660,9 @@ int generic_map_update_batch(struct bpf_map *map,
- 	if (!max_count)
- 		return 0;
+-	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
  
-+	if (put_user(0, &uattr->batch.count))
-+		return -EFAULT;
-+
- 	key = kvmalloc(map->key_size, GFP_USER | __GFP_NOWARN);
- 	if (!key)
- 		return -ENOMEM;
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -80,7 +80,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = rtl8723_phy_rf_serial_read(hw,
+ 								    rfpath,
+ 								    regaddr);
+-			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
+@@ -89,7 +89,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 		rtl8723_phy_rf_serial_write(hw, rfpath, regaddr, data);
+ 	} else {
+ 		if (bitmask != RFREG_OFFSET_MASK) {
+-			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
+index 2b9313cb93db..094cb36153f5 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
+@@ -41,7 +41,7 @@ u32 rtl8723be_phy_query_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 	spin_lock(&rtlpriv->locks.rf_lock);
+ 
+ 	original_value = rtl8723_phy_rf_serial_read(hw, rfpath, regaddr);
+-	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -68,7 +68,7 @@ void rtl8723be_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path path,
+ 	if (bitmask != RFREG_OFFSET_MASK) {
+ 			original_value = rtl8723_phy_rf_serial_read(hw, path,
+ 								    regaddr);
+-			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data = ((original_value & (~bitmask)) |
+ 				(data << bitshift));
+ 		}
 -- 
 2.43.0
 
