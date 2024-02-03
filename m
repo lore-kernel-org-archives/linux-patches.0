@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C795811188;
-	Sat,  3 Feb 2024 04:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E43A13AD4;
+	Sat,  3 Feb 2024 04:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933486; cv=none; b=fA78vI04F585bWgj305mmqiWM/t0sOpYk7qIStrTtpMqC25JK+QB9IRBjf15P55+zQhno7xh8I4N1KSM64HM8rIsHOvYLfPfUkZ6Sy7JgqSnY5kOwv+JnR4opEys/rPtyphBOnG3Po5YIKzgdf0a0/Im8w8Zq5EgSS7EA55tuZo=
+	t=1706933487; cv=none; b=C7NhEQ+mkszZWvfnIi8ap2igLXlzBfF5J2RUUd0w6tFwUUSA5f/o6qibRyr8WE2Cd3GwjSqhpQPZgNMMKF54MPgeLWFH7inVS0tmJSsdhhNYJxUv2tJmBKHVqZbnADk8Wi8GszrZhIi8z27uBXYZwD/zR4qVb90sUTkdrjxrWOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933486; c=relaxed/simple;
-	bh=ezVxg3VJPd4LDUQc418SmUIcEZViDyDw6yCz8gTRTCo=;
+	s=arc-20240116; t=1706933487; c=relaxed/simple;
+	bh=MLvqJNA/0GSeG0zdGx2mEUn/vjpGbILMjzOUZn662fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gxk5mOZD9POm0EiCSoYsgu0hN3lhizIvye+e2OBGoRK/odZejw0vqMDkhtfBUS0KpKgnbNd5nJmYfKpyxAgU/4ZHankEi/4wZg6tjxxnUi9Sl6nQdUfhiYJS51pFxvjJ7NlZe3p7SJ+hfieapFjkFVs0oBzuID3pv449xOJcrvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUE7JmDX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=moDZzLq5qxYDQ2/TB9WEQiOS79PTGIUqCCiCD2/Qio2i/cL79s6IAl6AzKVzuqg62bo4uIZowXTbUYtdSFI5n/Ufl0VhyVddTa/AA7Nvt10fI4HLaXpuV04bFCARBcKs/ub4OySd5aHjFq/JF/IJWZBXQthVN7+ejMDl9Z1O9kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yubUP9vM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUE7JmDX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F26BC433C7;
-	Sat,  3 Feb 2024 04:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yubUP9vM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A53C433F1;
+	Sat,  3 Feb 2024 04:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933486;
-	bh=ezVxg3VJPd4LDUQc418SmUIcEZViDyDw6yCz8gTRTCo=;
+	s=korg; t=1706933487;
+	bh=MLvqJNA/0GSeG0zdGx2mEUn/vjpGbILMjzOUZn662fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUE7JmDXrBbQLQyb+rNsBsUIXBcp/3QH4zEMmCqwzK9p8O+C/PLmMdrWAj/nRRo/6
-	 25Tcpm4a+kRg0S9d2oyDkFUQhyE7QoUYtjvW6zG3bPtvPe6f2kyVJmAGRO4iQ2e9BA
-	 IcC++8jwuZJTfPSU74jEN/zbgbwR/d+zGAGrFDak=
+	b=yubUP9vMRZLpk2kewZ+6sBnRme+uwM6+GYKNlFa7p7Yk/Kq+/VZeKQYTY2dktj7DC
+	 ZKWpbt/fqEKeaAhkqPjD0hBW6QYincZdRGG/REEziFtFR08NCq7GDge3WVNHMzr+Fq
+	 PrwQ3o69lVUVLm2kul1vlmRgMJaqDObWuT3IAJHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Kunwu Chan <chentao@kylinos.cn>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Huang Shijie <shijie@os.amperecomputing.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/322] powerpc/mm: Fix null-pointer dereference in pgtable_cache_add
-Date: Fri,  2 Feb 2024 20:01:40 -0800
-Message-ID: <20240203035359.158150187@linuxfoundation.org>
+Subject: [PATCH 6.6 004/322] arm64: irq: set the correct node for VMAP stack
+Date: Fri,  2 Feb 2024 20:01:41 -0800
+Message-ID: <20240203035359.191389980@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,46 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Huang Shijie <shijie@os.amperecomputing.com>
 
-[ Upstream commit f46c8a75263f97bda13c739ba1c90aced0d3b071 ]
+[ Upstream commit 75b5e0bf90bffaca4b1f19114065dc59f5cc161f ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+In current code, init_irq_stacks() will call cpu_to_node().
+The cpu_to_node() depends on percpu "numa_node" which is initialized in:
+     arch_call_rest_init() --> rest_init() -- kernel_init()
+	--> kernel_init_freeable() --> smp_prepare_cpus()
 
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231204023223.2447523-1-chentao@kylinos.cn
+But init_irq_stacks() is called in init_IRQ() which is before
+arch_call_rest_init().
+
+So in init_irq_stacks(), the cpu_to_node() does not work, it
+always return 0. In NUMA, it makes the node 1 cpu accesses the IRQ stack which
+is in the node 0.
+
+This patch fixes it by:
+  1.) export the early_cpu_to_node(), and use it in the init_irq_stacks().
+  2.) change init_irq_stacks() to __init function.
+
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Huang Shijie <shijie@os.amperecomputing.com>
+Link: https://lore.kernel.org/r/20231124031513.81548-1-shijie@os.amperecomputing.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/init-common.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/irq.c    | 5 +++--
+ drivers/base/arch_numa.c   | 2 +-
+ include/asm-generic/numa.h | 2 ++
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/mm/init-common.c b/arch/powerpc/mm/init-common.c
-index 119ef491f797..d3a7726ecf51 100644
---- a/arch/powerpc/mm/init-common.c
-+++ b/arch/powerpc/mm/init-common.c
-@@ -126,7 +126,7 @@ void pgtable_cache_add(unsigned int shift)
- 	 * as to leave enough 0 bits in the address to contain it. */
- 	unsigned long minalign = max(MAX_PGTABLE_INDEX_SIZE + 1,
- 				     HUGEPD_SHIFT_MASK + 1);
--	struct kmem_cache *new;
-+	struct kmem_cache *new = NULL;
+diff --git a/arch/arm64/kernel/irq.c b/arch/arm64/kernel/irq.c
+index 6ad5c6ef5329..9f253d8efe90 100644
+--- a/arch/arm64/kernel/irq.c
++++ b/arch/arm64/kernel/irq.c
+@@ -22,6 +22,7 @@
+ #include <linux/vmalloc.h>
+ #include <asm/daifflags.h>
+ #include <asm/exception.h>
++#include <asm/numa.h>
+ #include <asm/softirq_stack.h>
+ #include <asm/stacktrace.h>
+ #include <asm/vmap_stack.h>
+@@ -51,13 +52,13 @@ static void init_irq_scs(void)
+ }
  
- 	/* It would be nice if this was a BUILD_BUG_ON(), but at the
- 	 * moment, gcc doesn't seem to recognize is_power_of_2 as a
-@@ -139,7 +139,8 @@ void pgtable_cache_add(unsigned int shift)
+ #ifdef CONFIG_VMAP_STACK
+-static void init_irq_stacks(void)
++static void __init init_irq_stacks(void)
+ {
+ 	int cpu;
+ 	unsigned long *p;
  
- 	align = max_t(unsigned long, align, minalign);
- 	name = kasprintf(GFP_KERNEL, "pgtable-2^%d", shift);
--	new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
-+	if (name)
-+		new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
- 	if (!new)
- 		panic("Could not allocate pgtable cache for order %d", shift);
+ 	for_each_possible_cpu(cpu) {
+-		p = arch_alloc_vmap_stack(IRQ_STACK_SIZE, cpu_to_node(cpu));
++		p = arch_alloc_vmap_stack(IRQ_STACK_SIZE, early_cpu_to_node(cpu));
+ 		per_cpu(irq_stack_ptr, cpu) = p;
+ 	}
+ }
+diff --git a/drivers/base/arch_numa.c b/drivers/base/arch_numa.c
+index eaa31e567d1e..5b59d133b6af 100644
+--- a/drivers/base/arch_numa.c
++++ b/drivers/base/arch_numa.c
+@@ -144,7 +144,7 @@ void __init early_map_cpu_to_node(unsigned int cpu, int nid)
+ unsigned long __per_cpu_offset[NR_CPUS] __read_mostly;
+ EXPORT_SYMBOL(__per_cpu_offset);
+ 
+-static int __init early_cpu_to_node(int cpu)
++int __init early_cpu_to_node(int cpu)
+ {
+ 	return cpu_to_node_map[cpu];
+ }
+diff --git a/include/asm-generic/numa.h b/include/asm-generic/numa.h
+index 1a3ad6d29833..c32e0cf23c90 100644
+--- a/include/asm-generic/numa.h
++++ b/include/asm-generic/numa.h
+@@ -35,6 +35,7 @@ int __init numa_add_memblk(int nodeid, u64 start, u64 end);
+ void __init numa_set_distance(int from, int to, int distance);
+ void __init numa_free_distance(void);
+ void __init early_map_cpu_to_node(unsigned int cpu, int nid);
++int __init early_cpu_to_node(int cpu);
+ void numa_store_cpu_info(unsigned int cpu);
+ void numa_add_cpu(unsigned int cpu);
+ void numa_remove_cpu(unsigned int cpu);
+@@ -46,6 +47,7 @@ static inline void numa_add_cpu(unsigned int cpu) { }
+ static inline void numa_remove_cpu(unsigned int cpu) { }
+ static inline void arch_numa_init(void) { }
+ static inline void early_map_cpu_to_node(unsigned int cpu, int nid) { }
++static inline int early_cpu_to_node(int cpu) { return 0; }
+ 
+ #endif	/* CONFIG_NUMA */
  
 -- 
 2.43.0
