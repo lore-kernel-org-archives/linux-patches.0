@@ -1,114 +1,170 @@
-Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF064D5A7
-	for <patches@lists.linux.dev>; Sat,  3 Feb 2024 07:09:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8F64EB25
+	for <patches@lists.linux.dev>; Sat,  3 Feb 2024 08:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706944162; cv=none; b=O2JgR8amEyp4ezxYIH6q+MBTEayJgdqB6UTl7vWApYNXgxZKErFyLhglieJXcNxK6Oqo1/I5YLqUC8uIlnSkfSvbfE40PJtWwNvpDAUEMjho3Nsur1vMdCEOP5LAPs2yHRxedmmOnTeW7pAkIBV3R6ClVBkXrQon4yjWvKRczQ4=
+	t=1706947389; cv=none; b=uprip5RD6Ww3auWgjI59blU/CnC7aqL/ukuqGj9NfkTSk9IEDalOfyPv/H/GQ6mDuF5XSa0XqNoZsO+Mxng+N3jKmKYUhFY7WbkSX7IyLim2MD4/Vpl/bdknHfgFDy6wpXhl+as6MCsCzWqkYLiuqNJEGgAeZNCoEVtE2+IvQMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706944162; c=relaxed/simple;
-	bh=s6NSZRW2mLYJfT3I+Oz81FmHjo1C+jKFUvpbebXCPOY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EeF627reSGZxdM0xMh6NO218BBh1vWS11xKD6iyc5Z70fACKRS76lWrdQLWuzsSEAqS9edIB0FRo4iZEd5ubh3dw28X+6HqvrDkotmqjNQGtMlrR0QFhn+mSmvzbjJ+mjUe1bhEYe1OKjU14BVfyiSIioO7c78JphoAxw4qTvXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J137yclf; arc=none smtp.client-ip=209.85.161.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1706947389; c=relaxed/simple;
+	bh=gMNtRuHZqlVs+gCeHOZVKhPIIpO1M/J3dQ6bl+NLLDc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kfEY6m0b0A5cddzhUzUUPmCreVTiDiYxSn34pLiCDtsTZHyknRhC/LC4FBB874+plNo5CKBgvCDsJGnhUft2xB7zB/oYGlpcFDjAyENfsnDAeQNOwnnKOHSja7RtCQF5vvbhuu2+QUoqI2TnqQ4+iwZfIFppIuzAVthCyzKPhW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=zbkcuNM5; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J137yclf"
-Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-59505514213so876513eaf.0
-        for <patches@lists.linux.dev>; Fri, 02 Feb 2024 23:09:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="zbkcuNM5"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-428405a0205so119901cf.1
+        for <patches@lists.linux.dev>; Sat, 03 Feb 2024 00:03:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1706944159; x=1707548959; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qkdp+nCetJUmL046juddo444UhmObUTMOHHVwoJU0Hk=;
-        b=J137yclfWc1twXdj4uADUWjbNRLT4DnGCf/ObayESHCc23Ah5LHCPduB7tcQkY3bxJ
-         ZHAEKuYL11PohoRp2pElxIxVgZ5XwmXkqTBix451fJklA2PfZIosVRywUHh8NTvLXEaK
-         MLnw4EnViZfUngGs+Ln2aEyYiyDkeVMilTpzNK1R8alsIq8OL1Oq8p/B20gVcUvHNBgn
-         9ue1ILo75nIRdn3hMySv8ypklysg7EDdtAwwtRSKIGgdQu1sUGqrqNugdg5Q+nnbeazx
-         AwFET87gPyEBp9qBbTvKRiCB671m2a1oXe7JCuF8TnUCeW7Hiwxaa9FzhnvXTjkqN0YL
-         8mig==
+        d=google.com; s=20230601; t=1706947386; x=1707552186; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V/dKz562DcsjiONFxvINgo9+ddlFuG5fjQGhpUN1sHw=;
+        b=zbkcuNM5vfMwsV0d4cCuTne4dAq1HToCTL/Z2qP/9CKbPN9md1xob+aRhy8FkSiSfJ
+         zpE65yxFM1uIIS6WUpxEbhL6W01jrldh9+ybMxD0cH+kiRCl7Q3/mOENxy6vaE39O625
+         R4yN3Liaev3p385Z5Yuhh3NINPBXOrAyRJl8fZCHgbQUPcNpJDkFigQqMeC4GqDDIxYG
+         4scgvfRqEpFCzzQ4FZi4sVH7jZMMk5lVjkgk3mDW3NIB/AA2i4qmPFJ0XPqJbfzE3X0C
+         b77aXj27AD3M6d7fXC1+sHJLYlTcG8mLhOfv0dhK3NoWkJjTxdlloh+w7kDcOux+tjNw
+         VROQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706944159; x=1707548959;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qkdp+nCetJUmL046juddo444UhmObUTMOHHVwoJU0Hk=;
-        b=hBodbK0cyPvbw7aVfcNkVK+eiTL33G/G0FKO2GvqKJzkD6Hz6ty4skyKqvkchnnmFN
-         iL0RVg5d24XsxwD/HWnZoeSkRrr+U4gmilJctv1RXGOawIccskPLaVnHWWX1KhekIWRC
-         SKsjjFAi3NZ8+fGr62ospfv4P2gIOIiadbkMKI8azT2ObLbdAuC1IYVygBRQ+Qsuobc6
-         zuwSmww6HAKZWfvCRMegCcL+cvX1tK24hEzWZ/Bh6gfC7fl0kZQqOzjdlrysGULMfrb1
-         Hztvs3DCvmi6xZYXfWI275L/km2EQkeI4Onkojzuk7yaleFpnQN4XRaLDjZVHqUY54nG
-         6q0g==
-X-Gm-Message-State: AOJu0YyMPCinE9oVp5lDkXjmy2IHfgh2LGrwnZc/wopPUBua5e4FaNg9
-	vLp/WrinuU5Glw8k8a95sHmzNwtpbq+yZnr9hPhbJVhoLkcgJrqHGRv6BJSXxxc=
-X-Google-Smtp-Source: AGHT+IHrglBEaG8gB/KfduLxZpmV5e2jMRLRkv1itsHxKAdKWVyR0wlfovKnERQhHDyuqDzU/nD4dg==
-X-Received: by 2002:a05:6820:b97:b0:59a:50fc:153 with SMTP id eg23-20020a0568200b9700b0059a50fc0153mr353183oob.0.1706944159019;
-        Fri, 02 Feb 2024 23:09:19 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUwZ4oq7OS9LVvjulXn2cTG9B8kfCQqQuLjJGXAJdW/mbxyQYySlfxfcbzEO0oQGMGAmCJcQMdHjGki0/xu7vgpXBwSUc2rMuWH2q9t8dWc9OR5xUMn3MjvyU3y3EFSZrplg1wyL0fLSfN7pYR6S2vLTs4MY+AOjz4uhb1Pc3tbGXZ9VIgHm9aTyHYCq2rLm6d5bhLsa1r5Ozebk6Dx+Ap8vq3VAJ9Y2hk7pdQb6VKcKN0e0qPIImjG2H9+mZHZg86gzLspt9QNdPvhsmpwu7pEcNvw7QYzEIPK6TYtNlKgrNoSzIxRDiLIKo6MTWhXNRNWBaIDCmQLJLVN51x2QYCuEdiJUeb8BvSzOfI40oTSfbwpx6pZlY0lZpTzwxqG3zwRoXP26k478/mR+td+ZEKd5dxVDZLBiH1c3HBW2YGOu7ZACadUJARSedqWuzSK2yb4W18uMiUFUxpZRskxp9Qjig1SC3WtQoCOOXnH4X5Ko3JCMrE8QsLpgKzxTqVM0t66UZZijOr8GrayHdjsvPEDfRfmbD+PINwHDmbuiDHhRmWeMlP0O6OxiLgfv3FCgZ94e4h8fbvu1IxRwpvvrj9Sk3JvJ2RRg4Iz0gA+UyCNT+t9RG2uBwdjxA==
-Received: from [192.168.17.16] ([138.84.62.70])
-        by smtp.gmail.com with ESMTPSA id e20-20020a4ada14000000b0059a853309f3sm724095oou.46.2024.02.02.23.09.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Feb 2024 23:09:18 -0800 (PST)
-Message-ID: <4344da38-13b2-44db-8a2b-fd65ef5501c1@linaro.org>
-Date: Sat, 3 Feb 2024 01:09:15 -0600
+        d=1e100.net; s=20230601; t=1706947386; x=1707552186;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V/dKz562DcsjiONFxvINgo9+ddlFuG5fjQGhpUN1sHw=;
+        b=gnhhqqP5uLFlZhzGMQrrr/mm8CK41xVDnpqqXWDC3UB+DTmOq+0I8VPgk7aimTycv/
+         veL7rt3UClaVk92wGebgy5GFxvGwqq4peBVq8KdRYdhf+rEYHsulS2e+tryijQu+3qRo
+         LU3l5sNeEbaL+HkARpPjGr93ipv44RFOqupl6EDznOV7pmqXXv+CuSfhGNqCMBA6i6sB
+         l8FAKQzMJ99GQQhr+uQxFaXKqa0DOs87wsQXCJzpDB+YOpHWTwQpkQT6vSTYzjXpzjLc
+         M7Sp0xmlrrwIltbRi0VGXlLX262S0hlrl/C/GUMpIM72KUiN60VkD4bjmwCYnlMYw6/s
+         RNfQ==
+X-Gm-Message-State: AOJu0YyzNmL2SKNgJun+qmzm/6rQgYdQSe/eC4pD0RUo14k1i2Cj3EYr
+	f/SYonS9j0mPyHLLfUcB0L2x1B6E/5sY3aMR8LJLyTLOp7vi7uywdv8Na0Bj9qrzelIamutRpt9
+	Ckj/WQo3SujHsReFEek8JUeCRA+/lupUG2eMeCZmFQ4RSY4kD3ct+EJI=
+X-Google-Smtp-Source: AGHT+IFVxbTLizVpQyjE3c1v4sTHH5c7GSmRCOFZoBqNZS5svcZLQO5eo3wRmOmqUdiaeIL6uWdD31Y1YV0EScyGAzI=
+X-Received: by 2002:ac8:5c56:0:b0:42b:f0dc:2048 with SMTP id
+ j22-20020ac85c56000000b0042bf0dc2048mr125390qtj.18.1706947385486; Sat, 03 Feb
+ 2024 00:03:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/322] 6.6.16-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
- mathias.nyman@linux.intel.com, dmitry.baryshkov@linaro.org
-References: <20240203035359.041730947@linuxfoundation.org>
-From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
-In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <0-v1-210234560de7+69a-smmu_cd_atomic_jgg@nvidia.com>
+In-Reply-To: <0-v1-210234560de7+69a-smmu_cd_atomic_jgg@nvidia.com>
+From: Michael Shavit <mshavit@google.com>
+Date: Sat, 3 Feb 2024 17:02:29 +0900
+Message-ID: <CAKHBV24xmJqH0NFv3M2pDwbY3fRK1tJxP2=50VHXsPma-PLNHA@mail.gmail.com>
+Subject: Re: [PATCH rc] iommu/arm-smmu-v3: Do not use GFP_KERNEL under as spinlock
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
+	linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
+	Will Deacon <will@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello!
+On Fri, Feb 2, 2024 at 11:28=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
+ote:
+>
+> If the SMMU is configured to use a two level CD table then
+> arm_smmu_write_ctx_desc() allocates a CD table leaf internally using
+> GFP_KERNEL. Due to recent changes this is being done under a spinlock to
+> iterate over the device list - thus it will trigger a sleeping while
+> atomic warning:
+>
+>   arm_smmu_sva_set_dev_pasid()
+>     mutex_lock(&sva_lock);
+>     __arm_smmu_sva_bind()
+>      arm_smmu_mmu_notifier_get()
+>       spin_lock_irqsave()
+>       arm_smmu_write_ctx_desc()
+>         arm_smmu_get_cd_ptr()
+>          arm_smmu_alloc_cd_leaf_table()
+>           dmam_alloc_coherent(GFP_KERNEL)
+>
+> This is a 64K high order allocation and really should not be done
+> atomically.
+>
+> The proper answer is to sequence CD programming in a way that does not
+> require the device list or a spinlock. Part two of my lager series does
+> this and already solves this bug.
+>
+> In the mean time we can solve the functional issue by preallocating the C=
+D
+> entry outside any locking. CD leafs are effectively never freed so this
+> guarantees the arm_smmu_write_ctx_desc() inside the lock will not take th=
+e
+> allocation path.
+>
+> Fixes: 24503148c545 ("iommu/arm-smmu-v3: Refactor write_ctx_desc")
+> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Closes: https://lore.kernel.org/all/4e25d161-0cf8-4050-9aa3-dfa21cd63e56@=
+moroto.mountain/
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c | 5 +++++
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c     | 2 +-
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h     | 2 ++
+>  3 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/io=
+mmu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> index 05722121f00e70..068d60732e6481 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> @@ -588,6 +588,11 @@ static int arm_smmu_sva_set_dev_pasid(struct iommu_d=
+omain *domain,
+>  {
+>         int ret =3D 0;
+>         struct mm_struct *mm =3D domain->mm;
+> +       struct arm_smmu_master *master =3D dev_iommu_priv_get(dev);
+> +
+> +       /* Preallocate the required leafs outside locks */
+> +       if (!arm_smmu_get_cd_ptr(master, id))
+> +               return -ENOMEM;
+>
+>         mutex_lock(&sva_lock);
+>         ret =3D __arm_smmu_sva_bind(dev, mm);
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/=
+arm/arm-smmu-v3/arm-smmu-v3.c
+> index 0ffb1cf17e0b2e..ec2bb8685bb50e 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -1019,7 +1019,7 @@ static void arm_smmu_write_cd_l1_desc(__le64 *dst,
+>         WRITE_ONCE(*dst, cpu_to_le64(val));
+>  }
+>
+> -static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 s=
+sid)
+> +__le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
+>  {
+>         __le64 *l1ptr;
+>         unsigned int idx;
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/=
+arm/arm-smmu-v3/arm-smmu-v3.h
+> index 65fb388d51734d..fa0eeb3519ef28 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
+> @@ -748,6 +748,8 @@ extern struct xarray arm_smmu_asid_xa;
+>  extern struct mutex arm_smmu_asid_lock;
+>  extern struct arm_smmu_ctx_desc quiet_cd;
+>
+> +__le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid);
+> +
+>  int arm_smmu_write_ctx_desc(struct arm_smmu_master *smmu_master, int ssi=
+d,
+>                             struct arm_smmu_ctx_desc *cd);
+>  void arm_smmu_tlb_inv_asid(struct arm_smmu_device *smmu, u16 asid);
+>
+> base-commit: c76c50cd425e574df5a071cd7e1805d0764aabff
+> --
+> 2.43.0
+>
 
-On 02/02/24 10:01 p. m., Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.16 release.
-> There are 322 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 05 Feb 2024 03:51:47 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.16-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-
-Same problems as reported on 6.7 and 6.1.
-
-Build error/warning ("variable 'slot_id' is uninitialized", as seen on 6.7 and 6.1) can be found on this branch too, with Clang 17 and Clang nightly on Arm64, Arm32, i386, x86, MIPS, RISC-V.
-
-Build error due to pmicintc is present on this branch too.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
-
+Reviewed-by: Michael Shavit <mshavit@google.com>
