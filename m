@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41831C6A6;
-	Sat,  3 Feb 2024 04:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0D94F5EB;
+	Sat,  3 Feb 2024 04:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933833; cv=none; b=ljaZ88lIHBRDkS8xtEPQ3x5AfcWFBji19hPN9Pbi50wSrq9n4EaFNnRucHyDIi92ERLszD2KR8tnRVuU1W9c9IhoU75n+jg22HKuPue5keJFaCVgIXwhs6CI+RRx12G2+LBEuf/k6+E2bX3ufMUC6wMEcX5YihAawbaZB2dZ9Lk=
+	t=1706933834; cv=none; b=VbQEyZ/AJ8eaALUIiGrSgwzTOkJrF5VFOl+aaiiBoF5K2/XGUka0796fCThiCZoawXEEPsi6lReM3YxjujF53uN0IBniTrDSk+gt7l8B9LLgpToxoZmTLkVoXUOp/kvAFbGk+JDCta5zi5CXcs3AarRBpUINvEyudl9nsqfspfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933833; c=relaxed/simple;
-	bh=Hy+o41DHp8BKmssljAIhmiBCPhF32Lje/6dhCzCUmvw=;
+	s=arc-20240116; t=1706933834; c=relaxed/simple;
+	bh=Mv6BlLe87Cf738bnBJ5C7poHF+T63bXgvMAbLknBLOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O89O/rCbJE7nVDT2amZfpRv9spcZBNlbbJB5X6Kep4KuyBX+JepZtE353WGQZisCxCa6kEbCqgdSxhh1JQ1aOVtAS6wsKoiIdZ8P7qUsrUnHayzG+wvQ85Vpxfmz5vZuY80xbcL83H5LUSkwiaRYlgbjLtTOUejUEfcc1pCXKvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bk3wUFpi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwO6IIoguRD7jLI+36m2rJ0u3yz/md0+aP/EXt2MiZQZHaKSf8y+QHkMSarj+nzB1aSVh2MnMABnsXD53agdxATr1yyiDQKYBAqTyMuXNTBo3Khzsx8qqq1NnI0DdvWHEMmzN81ipHwjxYAocCPqlCiK9c3Lwbq88TL5qhiXlZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imYJ2+kF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bk3wUFpi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D737C433C7;
-	Sat,  3 Feb 2024 04:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imYJ2+kF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680D6C43394;
+	Sat,  3 Feb 2024 04:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933833;
-	bh=Hy+o41DHp8BKmssljAIhmiBCPhF32Lje/6dhCzCUmvw=;
+	s=korg; t=1706933834;
+	bh=Mv6BlLe87Cf738bnBJ5C7poHF+T63bXgvMAbLknBLOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bk3wUFpiYAwDJiHLxnhD23+5MuJuaSXFnscSbY6vcb3Ks4EA8F/gSPaP4PoJf0eHh
-	 6ITR+BpNYeBw++YTb1ss5gFVPr39DvbCIqhWStj23vZDIc3M49OngoxIboKFc3A6oE
-	 9yI9aFQ15l0dZ/fZTrTbx+bGQFCisvTohUkpbDnA=
+	b=imYJ2+kFBFNXzplAJyzkilTXdjHzvNT0j4PUOqQhMgvRHXafMBXbHD5yzOEUl3izJ
+	 3tCcrebe21SBqrfQf3qRHin1Bd1hBpu8MHBzB7Bztnaj1ZRzsW9bUFVyqDTuNh9DPB
+	 Yi02yxrfMC5m6nxRwutHThUVkCuP685Spf4LIGgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 158/353] net: kcm: fix direct access to bv_len
-Date: Fri,  2 Feb 2024 20:04:36 -0800
-Message-ID: <20240203035408.650105687@linuxfoundation.org>
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.7 141/353] ice: fix pre-shifted bit usage
+Date: Fri,  2 Feb 2024 20:04:19 -0800
+Message-ID: <20240203035408.160327479@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,35 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-[ Upstream commit b15a4cfe100b9acd097d3ae7052448bd1cdc2a3b ]
+[ Upstream commit 7173be21ae29ef50ada42fd4464056a9d3f55bb3 ]
 
-Minor fix for kcm: code wanting to access the fields inside an skb
-frag should use the skb_frag_*() helpers, instead of accessing the
-fields directly.
+While converting to FIELD_PREP() and FIELD_GET(), it was noticed that
+some of the RSS defines had *included* the shift in their definitions.
+This is completely outside of normal, such that a developer could easily
+make a mistake and shift at the usage site (like when using
+FIELD_PREP()).
 
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Link: https://lore.kernel.org/r/20240102205959.794513-1-almasrymina@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Rename the defines and set them to the "pre-shifted values" so they
+match the template the driver normally uses for masks and the member
+bits of the mask, which also allows the driver to use FIELD_PREP
+correctly with these values. Use GENMASK() for this changed MASK value.
+
+Do the same for the VLAN EMODE defines as well.
+
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_adminq_cmd.h  | 10 +++++-----
+ drivers/net/ethernet/intel/ice/ice_lib.c         |  3 ++-
+ .../net/ethernet/intel/ice/ice_vsi_vlan_lib.c    | 16 +++++++++++-----
+ 3 files changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index 65d1f6755f98..1184d40167b8 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -634,7 +634,7 @@ static int kcm_write_msgs(struct kcm_sock *kcm)
+diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+index 812a35d79b95..b8437c36ff38 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
++++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+@@ -421,10 +421,10 @@ struct ice_aqc_vsi_props {
+ #define ICE_AQ_VSI_INNER_VLAN_INSERT_PVID	BIT(2)
+ #define ICE_AQ_VSI_INNER_VLAN_EMODE_S		3
+ #define ICE_AQ_VSI_INNER_VLAN_EMODE_M		(0x3 << ICE_AQ_VSI_INNER_VLAN_EMODE_S)
+-#define ICE_AQ_VSI_INNER_VLAN_EMODE_STR_BOTH	(0x0 << ICE_AQ_VSI_INNER_VLAN_EMODE_S)
+-#define ICE_AQ_VSI_INNER_VLAN_EMODE_STR_UP	(0x1 << ICE_AQ_VSI_INNER_VLAN_EMODE_S)
+-#define ICE_AQ_VSI_INNER_VLAN_EMODE_STR		(0x2 << ICE_AQ_VSI_INNER_VLAN_EMODE_S)
+-#define ICE_AQ_VSI_INNER_VLAN_EMODE_NOTHING	(0x3 << ICE_AQ_VSI_INNER_VLAN_EMODE_S)
++#define ICE_AQ_VSI_INNER_VLAN_EMODE_STR_BOTH	0x0U
++#define ICE_AQ_VSI_INNER_VLAN_EMODE_STR_UP	0x1U
++#define ICE_AQ_VSI_INNER_VLAN_EMODE_STR		0x2U
++#define ICE_AQ_VSI_INNER_VLAN_EMODE_NOTHING	0x3U
+ 	u8 inner_vlan_reserved2[3];
+ 	/* ingress egress up sections */
+ 	__le32 ingress_table; /* bitmap, 3 bits per up */
+@@ -490,7 +490,7 @@ struct ice_aqc_vsi_props {
+ #define ICE_AQ_VSI_Q_OPT_RSS_GBL_LUT_S		2
+ #define ICE_AQ_VSI_Q_OPT_RSS_GBL_LUT_M		(0xF << ICE_AQ_VSI_Q_OPT_RSS_GBL_LUT_S)
+ #define ICE_AQ_VSI_Q_OPT_RSS_HASH_S		6
+-#define ICE_AQ_VSI_Q_OPT_RSS_HASH_M		(0x3 << ICE_AQ_VSI_Q_OPT_RSS_HASH_S)
++#define ICE_AQ_VSI_Q_OPT_RSS_HASH_M		GENMASK(7, 6)
+ #define ICE_AQ_VSI_Q_OPT_RSS_HASH_TPLZ		0x0U
+ #define ICE_AQ_VSI_Q_OPT_RSS_HASH_SYM_TPLZ	0x1U
+ #define ICE_AQ_VSI_Q_OPT_RSS_HASH_XOR		0x2U
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 24f95880a2ed..c01950de44ce 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -979,7 +979,8 @@ static void ice_set_dflt_vsi_ctx(struct ice_hw *hw, struct ice_vsi_ctx *ctxt)
+ 	 */
+ 	if (ice_is_dvm_ena(hw)) {
+ 		ctxt->info.inner_vlan_flags |=
+-			ICE_AQ_VSI_INNER_VLAN_EMODE_NOTHING;
++			FIELD_PREP(ICE_AQ_VSI_INNER_VLAN_EMODE_M,
++				   ICE_AQ_VSI_INNER_VLAN_EMODE_NOTHING);
+ 		ctxt->info.outer_vlan_flags =
+ 			(ICE_AQ_VSI_OUTER_VLAN_TX_MODE_ALL <<
+ 			 ICE_AQ_VSI_OUTER_VLAN_TX_MODE_S) &
+diff --git a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
+index 76266e709a39..8307902115ff 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_vsi_vlan_lib.c
+@@ -131,6 +131,7 @@ static int ice_vsi_manage_vlan_stripping(struct ice_vsi *vsi, bool ena)
+ {
+ 	struct ice_hw *hw = &vsi->back->hw;
+ 	struct ice_vsi_ctx *ctxt;
++	u8 *ivf;
+ 	int err;
  
- 		msize = 0;
- 		for (i = 0; i < skb_shinfo(skb)->nr_frags; i++)
--			msize += skb_shinfo(skb)->frags[i].bv_len;
-+			msize += skb_frag_size(&skb_shinfo(skb)->frags[i]);
+ 	/* do not allow modifying VLAN stripping when a port VLAN is configured
+@@ -143,19 +144,24 @@ static int ice_vsi_manage_vlan_stripping(struct ice_vsi *vsi, bool ena)
+ 	if (!ctxt)
+ 		return -ENOMEM;
  
- 		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE,
- 			      skb_shinfo(skb)->frags, skb_shinfo(skb)->nr_frags,
++	ivf = &ctxt->info.inner_vlan_flags;
++
+ 	/* Here we are configuring what the VSI should do with the VLAN tag in
+ 	 * the Rx packet. We can either leave the tag in the packet or put it in
+ 	 * the Rx descriptor.
+ 	 */
+-	if (ena)
++	if (ena) {
+ 		/* Strip VLAN tag from Rx packet and put it in the desc */
+-		ctxt->info.inner_vlan_flags = ICE_AQ_VSI_INNER_VLAN_EMODE_STR_BOTH;
+-	else
++		*ivf = FIELD_PREP(ICE_AQ_VSI_INNER_VLAN_EMODE_M,
++				  ICE_AQ_VSI_INNER_VLAN_EMODE_STR_BOTH);
++	} else {
+ 		/* Disable stripping. Leave tag in packet */
+-		ctxt->info.inner_vlan_flags = ICE_AQ_VSI_INNER_VLAN_EMODE_NOTHING;
++		*ivf = FIELD_PREP(ICE_AQ_VSI_INNER_VLAN_EMODE_M,
++				  ICE_AQ_VSI_INNER_VLAN_EMODE_NOTHING);
++	}
+ 
+ 	/* Allow all packets untagged/tagged */
+-	ctxt->info.inner_vlan_flags |= ICE_AQ_VSI_INNER_VLAN_TX_MODE_ALL;
++	*ivf |= ICE_AQ_VSI_INNER_VLAN_TX_MODE_ALL;
+ 
+ 	ctxt->info.valid_sections = cpu_to_le16(ICE_AQ_VSI_PROP_VLAN_VALID);
+ 
 -- 
 2.43.0
 
