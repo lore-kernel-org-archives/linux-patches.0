@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E5813AE9;
-	Sat,  3 Feb 2024 04:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4457DFC11;
+	Sat,  3 Feb 2024 04:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933372; cv=none; b=tPigWzrP/D1SDgIaASs84lKbN0Nr2UiPX6r7BGvvxrSwzP7X+j24VWJXfkokTeHs3Andxhr4PN2cQcgAriYygyOE3NHCfIQq6TSOS6E89/AFplRGdObeba79AmnWUftmHbdzgMFHvSO5KUAI2ANNfyUVfURqJW89odFZu/2zS5I=
+	t=1706933373; cv=none; b=NkbygWsQZJq0aEEfSn3sVr1RGa0z4DeznS3ze3D5twIpMB6fYJx/Xz+1qFKdtpdobQRZwr8rWlFZTogJOM+ZjZ/WBC2E+i523eAvxSW9wBywMY6HY6n8EEADzSV6nMkou/taHr0QjZDVXRdAu2vYQ7z47iyyclo2B5IjPU48Z+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933372; c=relaxed/simple;
-	bh=7vw6WyWBV5WWbSD/M2N6YfXCD4M4Q1mdSsSB5GKekBA=;
+	s=arc-20240116; t=1706933373; c=relaxed/simple;
+	bh=wboH2sXpbOnCauBy53/UB2S5C5QZUhAk+b/IxIg9Y98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsa1WJxUGCSjcIpvRRF2aRZkcatjCsdd3QviKv7E1CMh9o0sDSXZmxwtu8SxAPtorIMEYREFfzT/B/IHRGP/ZfcpJJWOGEo9wWtGRxHrc5I6v5tVcPI7FOir5vktth6k7l8z2eTqoi/6yG8ovnLS+q0xjY60RrkS9W3lkBWqDfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PtEnl7qp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JC8QRIymWxNhEIbQygwYXT7U95qRA4uoLuAROufZX+tzO2y1wz/4DPAffTrohSYgHPeM1KMGD98PxPNL/USB3o5mqhNVhBa1G+7kEgMdlOL6YN8344Os8rAXZVZ3iaSbT30UDvNQnuE4GdWHhDc73oDoUHPJCxlGDbY23eMLbTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCfpSkW/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PtEnl7qp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA0DC433F1;
-	Sat,  3 Feb 2024 04:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCfpSkW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBEDC433F1;
+	Sat,  3 Feb 2024 04:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933372;
-	bh=7vw6WyWBV5WWbSD/M2N6YfXCD4M4Q1mdSsSB5GKekBA=;
+	s=korg; t=1706933373;
+	bh=wboH2sXpbOnCauBy53/UB2S5C5QZUhAk+b/IxIg9Y98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtEnl7qpQpIsdgoY9cPZPJT9Jbjds/3KeuWDdsph5NfolQo5GlIsOwMeDJEFdTEIq
-	 8K1kx2sU3vyU6L8lIaHnQlCBxsWcl3aXS3RTJ9/oBIfLjb0WCY1d3LKQL0QHQmnY36
-	 CRE5tsI+GqJjPUyX9Lwn5Ojzzvz36pUQqdTCVV64=
+	b=dCfpSkW/rzjMxO7tIsIiuvgSRbVAC4P8ABVNmM4elXEa3Rn78ToiCtAIxuOFW8Nuf
+	 F0vAMqNtAFVc01o3TRxGAJzAgGpU0AS3emNL5gKBYqvSdh1ulu9dQnpeQOkMiePqIN
+	 uVd/XCjRBXx53CcBnKJOWxwSKCwX5gjnj7/hLhC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Yihang Li <liyihang9@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/219] ARM: dts: imx23/28: Fix the DMA controller node name
-Date: Fri,  2 Feb 2024 20:04:14 -0800
-Message-ID: <20240203035328.556708616@linuxfoundation.org>
+Subject: [PATCH 6.1 082/219] scsi: hisi_sas: Set .phy_attached before notifing phyup event HISI_PHYE_PHY_UP_PM
+Date: Fri,  2 Feb 2024 20:04:15 -0800
+Message-ID: <20240203035328.720067811@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,51 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit 858d83ca4b50bbc8693d95cc94310e6d791fb2e6 ]
+[ Upstream commit ce26497c745d0541aec930d5211b431a1c26af97 ]
 
-Per fsl,mxs-dma.yaml, the node name should be 'dma-controller'.
+Currently in directly attached scenario, the phyup event
+HISI_PHYE_PHY_UP_PM is notified before .phy_attached is set - this may
+cause the phyup work hisi_sas_bytes_dmaed() execution failed and the
+attached device will not be found.
 
-Change it to fix the following dt-schema warning.
+To fix it, set .phy_attached before notifing phyup event.
 
-imx28-apf28.dtb: dma-apbx@80024000: $nodename:0: 'dma-apbx@80024000' does not match '^dma-controller(@.*)?$'
-	from schema $id: http://devicetree.org/schemas/dma/fsl,mxs-dma.yaml#
-
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1702525516-51258-2-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx23.dtsi | 2 +-
- arch/arm/boot/dts/imx28.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx23.dtsi b/arch/arm/boot/dts/imx23.dtsi
-index 7f4c602454a5..ec476b159649 100644
---- a/arch/arm/boot/dts/imx23.dtsi
-+++ b/arch/arm/boot/dts/imx23.dtsi
-@@ -414,7 +414,7 @@
- 				status = "disabled";
- 			};
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 0c80ff9affa3..7ae56a2fe232 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -1565,6 +1565,11 @@ static irqreturn_t phy_up_v3_hw(int phy_no, struct hisi_hba *hisi_hba)
+ 	}
  
--			dma_apbx: dma-apbx@80024000 {
-+			dma_apbx: dma-controller@80024000 {
- 				compatible = "fsl,imx23-dma-apbx";
- 				reg = <0x80024000 0x2000>;
- 				interrupts = <7 5 9 26
-diff --git a/arch/arm/boot/dts/imx28.dtsi b/arch/arm/boot/dts/imx28.dtsi
-index 130b4145af82..b15df16ecb01 100644
---- a/arch/arm/boot/dts/imx28.dtsi
-+++ b/arch/arm/boot/dts/imx28.dtsi
-@@ -994,7 +994,7 @@
- 				status = "disabled";
- 			};
+ 	phy->port_id = port_id;
++	spin_lock(&phy->lock);
++	/* Delete timer and set phy_attached atomically */
++	del_timer(&phy->timer);
++	phy->phy_attached = 1;
++	spin_unlock(&phy->lock);
  
--			dma_apbx: dma-apbx@80024000 {
-+			dma_apbx: dma-controller@80024000 {
- 				compatible = "fsl,imx28-dma-apbx";
- 				reg = <0x80024000 0x2000>;
- 				interrupts = <78 79 66 0
+ 	/*
+ 	 * Call pm_runtime_get_noresume() which pairs with
+@@ -1578,11 +1583,6 @@ static irqreturn_t phy_up_v3_hw(int phy_no, struct hisi_hba *hisi_hba)
+ 
+ 	res = IRQ_HANDLED;
+ 
+-	spin_lock(&phy->lock);
+-	/* Delete timer and set phy_attached atomically */
+-	del_timer(&phy->timer);
+-	phy->phy_attached = 1;
+-	spin_unlock(&phy->lock);
+ end:
+ 	if (phy->reset_completion)
+ 		complete(phy->reset_completion);
 -- 
 2.43.0
 
