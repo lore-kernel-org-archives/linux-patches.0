@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04530111AE;
-	Sat,  3 Feb 2024 04:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8AB175AD;
+	Sat,  3 Feb 2024 04:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933569; cv=none; b=RELpiAyQJK5Tzqand0yhCFh8mLKE0eBFJlE0j/pMRfoHX5rrDH5XyDJ1SABQVjV4/TuLuqzUh2TTZaGCOQTsVgetpak8P1LTcPSRt5d7NfvM5uP9wZYw4s+Kn3KJWACNlbBPvR1pSTeU3aDA1uv4+Wl7H3LPPYUejPkNYHSIkXU=
+	t=1706933569; cv=none; b=JbmKQK3GewvSFI8cnq4+GBJj+yrpUxn/nSPNQjwnCYcEwXJZ8TAkepM0eJeSzj6c9Ex5AWrx2RCC6ylXr3PehV5/pD+n+SpGLSbL0pW3oD9sS50dmr1YqulaHm9350yYRUpQ24mEnSFMZelvl3TkDKaf8DsyvP5kvLdnMApjs/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933569; c=relaxed/simple;
-	bh=72CMKQZgZEldiyivTqukoqJqu8ZbrBCXRaAo6PNr71I=;
+	bh=pkWkor3THrzvF2US4F3iDnSMWSVhjUkByjHUOUb38bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NwocOCwCyDx0k0tg2/lIBpKPJ5TGTpTagw1yeRoO4b5H9AMXrsOezGcRpI6VIhzIGGnhRQzFmzfhC7pRrf7nv8D1Gby8HdxvKvIoKL49Ss+R4NUv+eSpFZHEp7M/jAu7Qp0ODfoDNGnK5u+pRO9BXqYIiJbSCNV6tFHR5EQdffY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxwnhHWA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1t1NV/UJci90ClbZNcqGNMcsqIW5bAPjq5a9aB5T/yQ6UAYBiC7G6Dooh/asRroH13IcTLOmSpUTt/w5nglmEvffGWM/stifygDgYMRWAjI0yxo0FT/UH3xmiEpk3N8MlRIUYSYu+t9caGRaCByy8ePBXWElF0m+Xf1VDiaFls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhW8BKSM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxwnhHWA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D09C43399;
-	Sat,  3 Feb 2024 04:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhW8BKSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D5DC433C7;
+	Sat,  3 Feb 2024 04:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933568;
-	bh=72CMKQZgZEldiyivTqukoqJqu8ZbrBCXRaAo6PNr71I=;
+	s=korg; t=1706933569;
+	bh=pkWkor3THrzvF2US4F3iDnSMWSVhjUkByjHUOUb38bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CxwnhHWA6DDLlzJ4YGjBhgv1Z3JN/8zJbZQgYRTW1VRrI5agVWkMDCS6jGsYxQ4ho
-	 UB/1ZcFkyRByuyNQLkpyXBjz24e9KBC/+4+Y/sqYXU/WKtCoPpVm8CLmLK2nvjfUZV
-	 J073E6T4AOR8VJdUrZBcJUKmHz4r3oHrUvxoWDII=
+	b=WhW8BKSMgDp2GJAQ6Zdyqzc7rBnDPZtl+sLP2vQXmD8I8t+toJ/5u4pHyhavkKuxq
+	 eZlzLiqsfGDoPRsal2vE6kV/hcmc8NZFINlTznUJpSjQ+UrEOzWANEwRywIkKJ6YOP
+	 HOGk45FrSgO+IwhPsub8SHF76izTUZycs4IgIZhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/322] ARM: dts: imx27-apf27dev: Fix LED name
-Date: Fri,  2 Feb 2024 20:03:41 -0800
-Message-ID: <20240203035403.150645007@linuxfoundation.org>
+	David Laight <david.laight@aculab.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 098/322] minmax: fix indentation of __cmp_once() and __clamp_once()
+Date: Fri,  2 Feb 2024 20:03:15 -0800
+Message-ID: <20240203035402.307926815@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,39 +55,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit dc35e253d032b959d92e12f081db5b00db26ae64 ]
+commit f4b84b2ff851f01d0fac619eadef47eb41648534 upstream.
 
-Per leds-gpio.yaml, the led names should start with 'led'.
+Remove the extra indentation and align continuation markers.
 
-Change it to fix the following dt-schema warning:
-
-imx27-apf27dev.dtb: leds: 'user' does not match any of the regexes: '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
-
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/bed41317a05c498ea0209eafbcab45a5@AcuMS.aculab.com
+Signed-off-by: David Laight <david.laight@aculab.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx27-apf27dev.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/minmax.h |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-apf27dev.dts b/arch/arm/boot/dts/nxp/imx/imx27-apf27dev.dts
-index f047a8487073..849306cb4532 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-apf27dev.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-apf27dev.dts
-@@ -47,7 +47,7 @@
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_gpio_leds>;
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -35,11 +35,11 @@
+ #define __cmp(op, x, y)	((x) __cmp_op_##op (y) ? (x) : (y))
  
--		user {
-+		led-user {
- 			label = "Heartbeat";
- 			gpios = <&gpio6 14 GPIO_ACTIVE_HIGH>;
- 			linux,default-trigger = "heartbeat";
--- 
-2.43.0
-
+ #define __cmp_once(op, x, y, unique_x, unique_y) ({	\
+-		typeof(x) unique_x = (x);		\
+-		typeof(y) unique_y = (y);		\
+-		static_assert(__types_ok(x, y),		\
+-			#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
+-		__cmp(op, unique_x, unique_y); })
++	typeof(x) unique_x = (x);			\
++	typeof(y) unique_y = (y);			\
++	static_assert(__types_ok(x, y),			\
++		#op "(" #x ", " #y ") signedness error, fix types or consider u" #op "() before " #op "_t()"); \
++	__cmp(op, unique_x, unique_y); })
+ 
+ #define __careful_cmp(op, x, y)					\
+ 	__builtin_choose_expr(__is_constexpr((x) - (y)),	\
+@@ -49,16 +49,16 @@
+ #define __clamp(val, lo, hi)	\
+ 	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
+ 
+-#define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({	\
+-		typeof(val) unique_val = (val);				\
+-		typeof(lo) unique_lo = (lo);				\
+-		typeof(hi) unique_hi = (hi);				\
+-		static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
+-				(lo) <= (hi), true),					\
+-			"clamp() low limit " #lo " greater than high limit " #hi);	\
+-		static_assert(__types_ok(val, lo), "clamp() 'lo' signedness error");	\
+-		static_assert(__types_ok(val, hi), "clamp() 'hi' signedness error");	\
+-		__clamp(unique_val, unique_lo, unique_hi); })
++#define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({		\
++	typeof(val) unique_val = (val);						\
++	typeof(lo) unique_lo = (lo);						\
++	typeof(hi) unique_hi = (hi);						\
++	static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)), 	\
++			(lo) <= (hi), true),					\
++		"clamp() low limit " #lo " greater than high limit " #hi);	\
++	static_assert(__types_ok(val, lo), "clamp() 'lo' signedness error");	\
++	static_assert(__types_ok(val, hi), "clamp() 'hi' signedness error");	\
++	__clamp(unique_val, unique_lo, unique_hi); })
+ 
+ #define __careful_clamp(val, lo, hi) ({					\
+ 	__builtin_choose_expr(__is_constexpr((val) - (lo) + (hi)),	\
 
 
