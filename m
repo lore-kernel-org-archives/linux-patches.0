@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE4B168D9;
-	Sat,  3 Feb 2024 04:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355D5168DD;
+	Sat,  3 Feb 2024 04:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933382; cv=none; b=mzJF8Xtm7rJcF8qtNE6FJ06PuG6T7C0d+rxyGAoR9liPBEGgSo2Z06eFclvHzn8+Je9e/DHkpwjvFn/Vl+NIdQmF682J1vH6SasDZdr6VFTPWE56IM88U1VvR2392NtecMvJ61zx8wwTKqY9PhjNx47SQPD5s3LzYeNpj/w5tCU=
+	t=1706933383; cv=none; b=pnTGnyf4tC9IMIDBaTDGdOpDYr1mnuAlqdh2uQB119zC9QOBdn1DG0k9fNTj37T4Q2weqw9FAn+jZFeIQZ3IeVNkUWvhpPUt1+X8OiU0FsOQMF+6Mwzo12ebFnlwT1rRhkEWGV+nifGmCVS36S1B1S09qTZaQPylKsL3W7d3/jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933382; c=relaxed/simple;
-	bh=Is61PY5w7sfdry32ovYdK0BZSh2Q2oIlrLHnZOedbVw=;
+	s=arc-20240116; t=1706933383; c=relaxed/simple;
+	bh=ST5tEe/5dtcGMbTMxNvdSxsUInWWKdqOJnAK4kf9F1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOmMbRL69zXcvZorEMQUtSEJl/YXGPphq9kfE5oHEr415HB3DIO1CSJVDAEr+AkMm+ThO0rX3Q3MCiqP3wHKxJqZJ5K4Wt+eyGiEzd9N0K0wQ4JbP8l5tg2IhknWz7x8nlYhGqWeBeWkwk6P6NKBXcb7/gE2Dlm53bh6H+DLRzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlwgoHbZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VEjuRABQ2KB4OYWqvGwcYLeBl7oJb7GBirJJZCurorK/PQk35jsrwbwujKWf8tbR57OvL3RzCJi6NrxskGeIr8FHa1EYvjEqrNF6zfBrSxkRFDgADQ8lzfNGInVwpp8eUvKnhKnehMbUnxJEjWFjgJzrcLWPH2kie6az92+2dk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCxRbjkR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlwgoHbZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA22C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCxRbjkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71DEC43399;
 	Sat,  3 Feb 2024 04:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933382;
-	bh=Is61PY5w7sfdry32ovYdK0BZSh2Q2oIlrLHnZOedbVw=;
+	bh=ST5tEe/5dtcGMbTMxNvdSxsUInWWKdqOJnAK4kf9F1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LlwgoHbZCi0IZ5Zqp/LlxJ+U0wKhmRG1fu13bSbL8YpscOLlwAWySk59/HeQF8Dnm
-	 l3QbGrzKcbI8LEHMIDhvfsMrSkVciXW5b48x8xOkpsz0zNAlSjxY4fZ+O240znXcuh
-	 kgruiGClMLsXD7xLlY0H+xOXEKW/cmPPnNh6n6ho=
+	b=BCxRbjkRlljnG4IkF4V86HHIcVooO9MOaTaVD/SB81iITt0BxPI9IfLZbZZsocgla
+	 PIkxASo/QmrRJC2svbFFJP1tqU2JpOi+9dw1JIqzB3RKM2if+8jU9GXzVQUe4pyMnE
+	 Yqa7/7N5kLrORZPzvKb9NqWeSB+7WNiiJjhw9GS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fabio Estevam <festevam@denx.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 069/219] ARM: dts: imx25/27-eukrea: Fix RTC node name
-Date: Fri,  2 Feb 2024 20:04:02 -0800
-Message-ID: <20240203035326.573790941@linuxfoundation.org>
+Subject: [PATCH 6.1 070/219] ARM: dts: imx: Use flash@0,0 pattern
+Date: Fri,  2 Feb 2024 20:04:03 -0800
+Message-ID: <20240203035326.731116235@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -53,48 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 68c711b882c262e36895547cddea2c2d56ce611d ]
+[ Upstream commit 1e1d7cc478fb16816de09740e3c323c0c188d58f ]
 
-Node names should be generic. Use 'rtc' as node name to fix
-the following dt-schema warning:
+Per mtd-physmap.yaml, 'nor@0,0' is not a valid node pattern.
 
-imx25-eukrea-mbimxsd25-baseboard.dtb: pcf8563@51: $nodename:0: 'pcf8563@51' does not match '^rtc(@.*|-([0-9]|[1-9][0-9]+))?$'
-	from schema $id: http://devicetree.org/schemas/rtc/nxp,pcf8563.yaml#
+Change it to 'flash@0,0' to fix the following dt-schema warning:
+
+imx1-ads.dtb: nor@0,0: $nodename:0: 'nor@0,0' does not match '^(flash|.*sram|nand)(@.*)?$'
+	from schema $id: http://devicetree.org/schemas/mtd/mtd-physmap.yaml#
 
 Signed-off-by: Fabio Estevam <festevam@denx.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi | 2 +-
- arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/imx1-ads.dts                  | 2 +-
+ arch/arm/boot/dts/imx1-apf9328.dts              | 2 +-
+ arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi    | 2 +-
+ arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi b/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
-index 0703f62d10d1..93a6e4e680b4 100644
---- a/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
-+++ b/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
-@@ -27,7 +27,7 @@
- 	pinctrl-0 = <&pinctrl_i2c1>;
+diff --git a/arch/arm/boot/dts/imx1-ads.dts b/arch/arm/boot/dts/imx1-ads.dts
+index 5833fb6f15d8..2c817c4a4c68 100644
+--- a/arch/arm/boot/dts/imx1-ads.dts
++++ b/arch/arm/boot/dts/imx1-ads.dts
+@@ -65,7 +65,7 @@
+ 	pinctrl-0 = <&pinctrl_weim>;
  	status = "okay";
  
--	pcf8563@51 {
-+	rtc@51 {
- 		compatible = "nxp,pcf8563";
- 		reg = <0x51>;
- 	};
+-	nor: nor@0,0 {
++	nor: flash@0,0 {
+ 		compatible = "cfi-flash";
+ 		reg = <0 0x00000000 0x02000000>;
+ 		bank-width = <4>;
+diff --git a/arch/arm/boot/dts/imx1-apf9328.dts b/arch/arm/boot/dts/imx1-apf9328.dts
+index 77b21aa7a146..27e72b07b517 100644
+--- a/arch/arm/boot/dts/imx1-apf9328.dts
++++ b/arch/arm/boot/dts/imx1-apf9328.dts
+@@ -45,7 +45,7 @@
+ 	pinctrl-0 = <&pinctrl_weim>;
+ 	status = "okay";
+ 
+-	nor: nor@0,0 {
++	nor: flash@0,0 {
+ 		compatible = "cfi-flash";
+ 		reg = <0 0x00000000 0x02000000>;
+ 		bank-width = <2>;
 diff --git a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
-index 74110bbcd9d4..4b83e2918b55 100644
+index 4b83e2918b55..c7e923584878 100644
 --- a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
 +++ b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
-@@ -33,7 +33,7 @@
- 	pinctrl-0 = <&pinctrl_i2c1>;
+@@ -90,7 +90,7 @@
+ &weim {
  	status = "okay";
  
--	pcf8563@51 {
-+	rtc@51 {
- 		compatible = "nxp,pcf8563";
- 		reg = <0x51>;
- 	};
+-	nor: nor@0,0 {
++	nor: flash@0,0 {
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+ 		compatible = "cfi-flash";
+diff --git a/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi b/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi
+index 3d10273177e9..a5fdc2fd4ce5 100644
+--- a/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi
++++ b/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi
+@@ -322,7 +322,7 @@
+ &weim {
+ 	status = "okay";
+ 
+-	nor: nor@0,0 {
++	nor: flash@0,0 {
+ 		compatible = "cfi-flash";
+ 		reg = <0 0x00000000 0x02000000>;
+ 		bank-width = <2>;
 -- 
 2.43.0
 
