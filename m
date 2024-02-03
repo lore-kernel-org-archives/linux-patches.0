@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F514F9CE;
-	Sat,  3 Feb 2024 04:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA02FC11;
+	Sat,  3 Feb 2024 04:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933388; cv=none; b=M5MgDb6mjlXrhJWPvl/nWJUXeEgwsok2DzpfIu1nP9qU85bxu9+Bhx7hjJG5y34hRQunYkKKKnr/cT4txRH7OQxc8RELSAd/ZI/Kt/R49wmYmzqZjjep1LvK4/wy9R2UYxJJpt848CBRyCSbiEOUngnyOfSCepmIpd5kTr5eXk0=
+	t=1706933389; cv=none; b=Alsbsa6GE7EbZjxLW0xohNolriObbp+EP4WtKO+3zlQFmPAWm/KqSMv3Dz6nhmY6ZDT1N/nlUV2hIBLv1zd+3VRUSJVJubmFatcJYuthiPIiLReWwZrUcU2xpu+z9OC7rIKqFkpuy5Z4KbSZyHKpINRXrtMqLQnOkfQSbmDfDIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933388; c=relaxed/simple;
-	bh=CS5il8hsyE9Q6n2RpEWv9buCaU6SiThH3fx3zr6AyDU=;
+	s=arc-20240116; t=1706933389; c=relaxed/simple;
+	bh=LpGTut7xVwxQCv4xyCrF3bU5ZAq/sacciMwUIr6Ju7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlqdm5NYULhuh54lwtBnN4SEty9gM+4UijIamMw6FCCImO9L1/ix1+GPmvTMnLyhieBkj6XoSyx6rIPUKFxo6ojPk+qDKSkE9YiquG70gN+k24L6GJ0ib+Krs7hE7tst3IrA2tdztIM2YYCaYfK3CKstYn02k2tt/4BU4DForgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHRoCbJ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kABvyleSLc0GEcX1W/mDZ47akRRYUbUR/yki36HMCU2+gtFlogGhGef87lT7rw/lgMacOQ1rIKBWOUDOfuwl7nK/DP7Dq8/QfxgrlUvTy9Q5ehSnrQNZJArmziJgQTypCLF/JQCpeoBfj9Wnc0T8dmEW5yjtuKELktl1KdDFelU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNTDiQlE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHRoCbJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CD5C433B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNTDiQlE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056C7C433C7;
 	Sat,  3 Feb 2024 04:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933388;
-	bh=CS5il8hsyE9Q6n2RpEWv9buCaU6SiThH3fx3zr6AyDU=;
+	s=korg; t=1706933389;
+	bh=LpGTut7xVwxQCv4xyCrF3bU5ZAq/sacciMwUIr6Ju7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHRoCbJ0M0bhM+P/yZ6q2EzCTaJShZSJOkee4yp5d3eIxujAE9RuIxPM/5/vebxiK
-	 QQkdLpwSzIEiyDxAxE8aCfFSw52xrxjAwEEK4wsMGGA+NonH10PVuhcF2MeFK6zb2x
-	 qaK7+oGXryivITihBT4vffmNGChD15Vnopi2AiTA=
+	b=TNTDiQlE3/3wtJX4CrEDgEF+xfs4/ehzhnV9rofS7HnlPD8e7fBN/kK4/2UoW1/8T
+	 zwU/PrAfvaOvfjTl90BBOq6XcmdkqYA1k2Vw0iqeQtB5QTjndi2jVeo4yIxOc/r8m5
+	 wVLpLe06DIFDSCeKNMm4RuidDbuiLBIq/BZHwlt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/219] wifi: rtlwifi: rtl8723{be,ae}: using calculate_bit_shift()
-Date: Fri,  2 Feb 2024 20:04:27 -0800
-Message-ID: <20240203035330.510197777@linuxfoundation.org>
+Subject: [PATCH 6.1 103/219] net: dsa: qca8k: put MDIO bus OF node on qca8k_mdio_register() failure
+Date: Fri,  2 Feb 2024 20:04:36 -0800
+Message-ID: <20240203035331.902500417@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -45,81 +47,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 5c16618bc06a41ad68fd8499a21d35ef57ca06c2 ]
+[ Upstream commit 68e1010cda7967cfca9c8650ee1f4efcae54ab90 ]
 
-Using calculate_bit_shift() to replace rtl8723_phy_calculate_bit_shift().
-And fix an undefined bitwise shift behavior problem.
+of_get_child_by_name() gives us an OF node with an elevated refcount,
+which should be dropped when we're done with it. This is so that,
+if (of_node_check_flag(node, OF_DYNAMIC)) is true, the node's memory can
+eventually be freed.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-12-suhui@nfschina.com
+There are 2 distinct paths to be considered in qca8k_mdio_register():
+
+- devm_of_mdiobus_register() succeeds: since commit 3b73a7b8ec38 ("net:
+  mdio_bus: add refcounting for fwnodes to mdiobus"), the MDIO core
+  treats this well.
+
+- devm_of_mdiobus_register() or anything up to that point fails: it is
+  the duty of the qca8k driver to release the OF node.
+
+This change addresses the second case by making sure that the OF node
+reference is not leaked.
+
+The "mdio" node may be NULL, but of_node_put(NULL) is safe.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c | 6 +++---
- drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/dsa/qca/qca8k-8xxx.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
-index fe9b407dc2af..71e29b103da5 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
-@@ -49,7 +49,7 @@ u32 rtl8723e_phy_query_rf_reg(struct ieee80211_hw *hw,
- 							    rfpath, regaddr);
+diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
+index 1e94ba1031ec..7c3c90c9edbe 100644
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -842,10 +842,15 @@ qca8k_mdio_register(struct qca8k_priv *priv)
+ 	struct dsa_switch *ds = priv->ds;
+ 	struct device_node *mdio;
+ 	struct mii_bus *bus;
++	int err;
++
++	mdio = of_get_child_by_name(priv->dev->of_node, "mdio");
+ 
+ 	bus = devm_mdiobus_alloc(ds->dev);
+-	if (!bus)
+-		return -ENOMEM;
++	if (!bus) {
++		err = -ENOMEM;
++		goto out_put_node;
++	}
+ 
+ 	bus->priv = (void *)priv;
+ 	snprintf(bus->id, MII_BUS_ID_SIZE, "qca8k-%d.%d",
+@@ -855,12 +860,12 @@ qca8k_mdio_register(struct qca8k_priv *priv)
+ 	ds->slave_mii_bus = bus;
+ 
+ 	/* Check if the devicetree declare the port:phy mapping */
+-	mdio = of_get_child_by_name(priv->dev->of_node, "mdio");
+ 	if (of_device_is_available(mdio)) {
+ 		bus->name = "qca8k slave mii";
+ 		bus->read = qca8k_internal_mdio_read;
+ 		bus->write = qca8k_internal_mdio_write;
+-		return devm_of_mdiobus_register(priv->dev, bus, mdio);
++		err = devm_of_mdiobus_register(priv->dev, bus, mdio);
++		goto out_put_node;
  	}
  
--	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
+ 	/* If a mapping can't be found the legacy mapping is used,
+@@ -869,7 +874,13 @@ qca8k_mdio_register(struct qca8k_priv *priv)
+ 	bus->name = "qca8k-legacy slave mii";
+ 	bus->read = qca8k_legacy_mdio_read;
+ 	bus->write = qca8k_legacy_mdio_write;
+-	return devm_mdiobus_register(priv->dev, bus);
++
++	err = devm_mdiobus_register(priv->dev, bus);
++
++out_put_node:
++	of_node_put(mdio);
++
++	return err;
+ }
  
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -80,7 +80,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = rtl8723_phy_rf_serial_read(hw,
- 								    rfpath,
- 								    regaddr);
--			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-@@ -89,7 +89,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
- 		rtl8723_phy_rf_serial_write(hw, rfpath, regaddr, data);
- 	} else {
- 		if (bitmask != RFREG_OFFSET_MASK) {
--			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
-index 2b9313cb93db..094cb36153f5 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
-@@ -41,7 +41,7 @@ u32 rtl8723be_phy_query_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 	spin_lock(&rtlpriv->locks.rf_lock);
- 
- 	original_value = rtl8723_phy_rf_serial_read(hw, rfpath, regaddr);
--	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -68,7 +68,7 @@ void rtl8723be_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path path,
- 	if (bitmask != RFREG_OFFSET_MASK) {
- 			original_value = rtl8723_phy_rf_serial_read(hw, path,
- 								    regaddr);
--			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data = ((original_value & (~bitmask)) |
- 				(data << bitshift));
- 		}
+ static int
 -- 
 2.43.0
 
