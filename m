@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128E4FC11;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5ADFC11;
 	Sat,  3 Feb 2024 04:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933390; cv=none; b=ne2BMOe6zuMRRnKq4ktZKuvsYVzDHXAkQH/s7GS6LScxajQXYbvjksHXOMhrFL01RszE8nauJUmMOcnJwGJq5YWRoPLly3IrDNXG8OXGyivucbPGXvaG9LxExpFI3CGeUTJmPBIP0OwrLHjp6KrIP4PIvmTllBo/N0gp5/Wk81s=
+	t=1706933390; cv=none; b=b8819/e2qYeUwUVXa3cHMPpjEG38KWAmxaYm9qGPS+2IMrhpgVDTMXTGUNL2JiXEvUjmmr3pGhsx4GW2Ccp53POg3n7iBT9ELUZzOc7Tq7NQSuNqsFK0cRwQaZIDgQArEZQrZwvuJ+HC+MMBGiM08yrALAlHzY2KsMxhRplEFiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933390; c=relaxed/simple;
-	bh=COHRHisYInt1p0cW1qiV7JTzRJNwlqpqeRNADM5YbWQ=;
+	bh=aVwnS3VuyjdFl8esDgPvGkdEcfPonjs5Cs7V222KLas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6lbhhNoT7Ng4GTNEuhIswmZsBQ7XCphIOBaqgXOYNZYpaQeFCyQBINP9unI09VRWYGuIBh6/28RJjmyZEXE5Y9QHr65sAy7M2qDq8s13Gsk0uCl0ut2TWsm6Yl6L0ntrX8nQQCfIUWdglaXEgh8v1UvOtgnkhrogQcbBTkM0zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgc7gDms; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=USEulTiA2QeB/v4OBwRelrEftroWSpnr39Ujwuien/beRq81UpzYepih66iSSXrP8UqsfwI1NXJwMN7yXJ85sHjKxOvmkGrMuBL4AEkeK1VNX5ppe+gPiWOjijvEdRJaWmz6fz/r7WL+h5SvzwLcjEc3GovxaILZZXj2E5x1FcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zphSN89/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgc7gDms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAFEC433F1;
-	Sat,  3 Feb 2024 04:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zphSN89/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897B8C43394;
+	Sat,  3 Feb 2024 04:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933389;
-	bh=COHRHisYInt1p0cW1qiV7JTzRJNwlqpqeRNADM5YbWQ=;
+	s=korg; t=1706933390;
+	bh=aVwnS3VuyjdFl8esDgPvGkdEcfPonjs5Cs7V222KLas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgc7gDmsYDE8we67mSvWbwlkbKpZ3+u1P6l6z6FJkQjRqZUWu/f++im4ByGlg2jPu
-	 MHauwSWdV/O68Q8WePxKZ+C25CMeACZOwRlp32a65iJwEJmXn0aOWBKkOC11soXTBa
-	 Qv+pdRKj9sIpscL6Icfkw6XgpmMQ8M/jcHKBE1FY=
+	b=zphSN89//l9+Dzl+rJJhXj/uYemvCOwn1tU89A08iOOuzhcpeU9BdpR/3HQNCFc4A
+	 4wYk9pkoVN5toqSh237+FQx/RiV2aM5rkyzpospmV9oMUKdI1GoupzpoBg8X+1Jpv/
+	 7EZjRd2cZq/A+R8n82DRCuySM0nS7gK9l7h6pxCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/219] f2fs: fix to check return value of f2fs_reserve_new_block()
-Date: Fri,  2 Feb 2024 20:04:37 -0800
-Message-ID: <20240203035332.067869492@linuxfoundation.org>
+Subject: [PATCH 6.1 105/219] ALSA: hda: Refer to correct stream index at loops
+Date: Fri,  2 Feb 2024 20:04:38 -0800
+Message-ID: <20240203035332.202859929@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,67 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 956fa1ddc132e028f3b7d4cf17e6bfc8cb36c7fd ]
+[ Upstream commit 26257869672fd4a06a60c2da841e15fb2cb47bbe ]
 
-Let's check return value of f2fs_reserve_new_block() in do_recover_data()
-rather than letting it fails silently.
+In a couple of loops over the all streams, we check the bitmap against
+the loop counter.  A more correct reference would be, however, the
+index of each stream, instead.
 
-Also refactoring check condition on return value of f2fs_reserve_new_block()
-as below:
-- trigger f2fs_bug_on() only for ENOSPC case;
-- use do-while statement to avoid redundant codes;
+This patch corrects the check of bitmaps to the stream index.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Note that this change doesn't fix anything for now; all existing
+drivers set up the stream indices properly, hence the loop count is
+always equal with the stream index.  That said, this change is only
+for consistency.
+
+Link: https://lore.kernel.org/r/20231121154125.4888-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/recovery.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ sound/hda/hdac_stream.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
-index dea95b48b647..4f4db465220f 100644
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -683,7 +683,16 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
- 		 */
- 		if (dest == NEW_ADDR) {
- 			f2fs_truncate_data_blocks_range(&dn, 1);
--			f2fs_reserve_new_block(&dn);
-+			do {
-+				err = f2fs_reserve_new_block(&dn);
-+				if (err == -ENOSPC) {
-+					f2fs_bug_on(sbi, 1);
-+					break;
-+				}
-+			} while (err &&
-+				IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
-+			if (err)
-+				goto err;
- 			continue;
- 		}
+diff --git a/sound/hda/hdac_stream.c b/sound/hda/hdac_stream.c
+index 741a5d17ae4c..ecd3aec57c87 100644
+--- a/sound/hda/hdac_stream.c
++++ b/sound/hda/hdac_stream.c
+@@ -629,17 +629,15 @@ void snd_hdac_stream_timecounter_init(struct hdac_stream *azx_dev,
+ 	struct hdac_stream *s;
+ 	bool inited = false;
+ 	u64 cycle_last = 0;
+-	int i = 0;
  
-@@ -691,12 +700,14 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
- 		if (f2fs_is_valid_blkaddr(sbi, dest, META_POR)) {
- 
- 			if (src == NULL_ADDR) {
--				err = f2fs_reserve_new_block(&dn);
--				while (err &&
--				       IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION))
-+				do {
- 					err = f2fs_reserve_new_block(&dn);
--				/* We should not get -ENOSPC */
--				f2fs_bug_on(sbi, err);
-+					if (err == -ENOSPC) {
-+						f2fs_bug_on(sbi, 1);
-+						break;
-+					}
-+				} while (err &&
-+					IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
- 				if (err)
- 					goto err;
+ 	list_for_each_entry(s, &bus->stream_list, list) {
+-		if (streams & (1 << i)) {
++		if ((streams & (1 << s->index))) {
+ 			azx_timecounter_init(s, inited, cycle_last);
+ 			if (!inited) {
+ 				inited = true;
+ 				cycle_last = s->tc.cycle_last;
  			}
+ 		}
+-		i++;
+ 	}
+ 
+ 	snd_pcm_gettime(runtime, &runtime->trigger_tstamp);
+@@ -684,14 +682,13 @@ void snd_hdac_stream_sync(struct hdac_stream *azx_dev, bool start,
+ 			  unsigned int streams)
+ {
+ 	struct hdac_bus *bus = azx_dev->bus;
+-	int i, nwait, timeout;
++	int nwait, timeout;
+ 	struct hdac_stream *s;
+ 
+ 	for (timeout = 5000; timeout; timeout--) {
+ 		nwait = 0;
+-		i = 0;
+ 		list_for_each_entry(s, &bus->stream_list, list) {
+-			if (!(streams & (1 << i++)))
++			if (!(streams & (1 << s->index)))
+ 				continue;
+ 
+ 			if (start) {
 -- 
 2.43.0
 
