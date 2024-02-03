@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723E0175A6;
-	Sat,  3 Feb 2024 04:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45688175A6;
+	Sat,  3 Feb 2024 04:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933973; cv=none; b=reHRFfjn47rsgIjFzac5tjgybyrPcvIeaIq74715zpBI+1BjeVIAHsRm1SY3nMWHm8HlApfhYXI8b+LKpKp3X4/svdCSXkW9nyfQz5MSWdqpC2o0ykvpzj/ht56V2Ei0mEsfkE+D91hY1d+kBNaD6zqgGMjhNF9J44xqUUhDO8M=
+	t=1706933974; cv=none; b=RnWPuiOqnKa9fXgjm5E5k/tVQxgtNxlNoKXrI9EjRQKemGkRaG5O3++Cxxiez1DG7Vsp9R5v0IjDlt7q2svtSdsy1GUbi65qRgpl8oM1ePr1kqHD7cLc1pkXWlS6HYDm5je7ksZUPXhHRFwRpqRrxH4GN6rUdvEWL7tZXhsLYcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933973; c=relaxed/simple;
-	bh=OHfwsQAQfDSOx+BOSxPD0zrDjh1OqBPYD+SEw99v49Q=;
+	s=arc-20240116; t=1706933974; c=relaxed/simple;
+	bh=TG4Of/o5PUDxzuAmRxdcf7NJiDgMB39ZF85nSlPnPI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RS72R9jBA3z4TGBMt1rrjfHgRUt7XY74ewMn8mFZm0kx4zQH/9PMPeeV4I7OeTJXwx13BdnxJkBqtC6DrfOy1Vjh1A6oCLOFH176kBNAnTICErrlYgfA/sYtmo8I9Nuw/U2nIR8VlajTuSlhJ29oW8u5XSBFMLL7sn6E4eo7R+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kImF32F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8HcDh9rwbJrY9TcLgaxYP2tPretKg79KcB/cPXPb4tvAjXOrakxpCmk/B4b74o7LAteIIwo/XDKihdtGONpbUqksd2PWalGk+NbTTORty1LH8Y0TzLo/DBd+Ccu2n90t0SCXe6dNlGZ4UzcqGGO1d0NWO7kxovUXNwz4Qsb63c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPET6DnR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kImF32F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3946DC433F1;
-	Sat,  3 Feb 2024 04:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPET6DnR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D289C433F1;
+	Sat,  3 Feb 2024 04:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933973;
-	bh=OHfwsQAQfDSOx+BOSxPD0zrDjh1OqBPYD+SEw99v49Q=;
+	s=korg; t=1706933974;
+	bh=TG4Of/o5PUDxzuAmRxdcf7NJiDgMB39ZF85nSlPnPI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2kImF32FzCtGSw1jKKQEwwiP2ypdFDov9PakOkvJ3OpYm5UHhWwU7fy7lf/UMeWb6
-	 e44gPIcYfMs6bMYfRznIUw38t6SpJ5hDPuXm/l64JT+Nz+xQYOxOLkmNDjGM6JQnzK
-	 sBCPNgXCdSLGOM7T3s5p0LopIqshX45kHo3bn9OI=
+	b=XPET6DnRLSVxu7vhv5zgx5R+EscjNYdkWv9OpseSOqlY1oycShYtPaoms+OmLFWjq
+	 2P3HMN1Ww28ZI+2iEZLJm7b9Qphus9b3x0jlTnRn6m1Tp+hKAJFVL/+h+Je/46gSD+
+	 4QAetiovnAqr86uSNiCy9rAuLCWC0gi5zNqXzVkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Simon Horman <horms@kernel.org>,
+	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 346/353] selftests: net: enable some more knobs
-Date: Fri,  2 Feb 2024 20:07:44 -0800
-Message-ID: <20240203035414.701495761@linuxfoundation.org>
+Subject: [PATCH 6.7 347/353] idpf: avoid compiler padding in virtchnl2_ptype struct
+Date: Fri,  2 Feb 2024 20:07:45 -0800
+Message-ID: <20240203035414.730700077@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,41 +57,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
 
-[ Upstream commit c15a729c9d45aa142fb01a3afee822ab1f0e62a8 ]
+[ Upstream commit f0588b157f48b9c6277a75c9f14650e86d969e03 ]
 
-The rtnetlink tests require additional options currently
-off by default.
+In the arm random config file, kconfig option 'CONFIG_AEABI' is
+disabled which results in adding the compiler flag '-mabi=apcs-gnu'.
+This causes the compiler to add padding in virtchnl2_ptype
+structure to align it to 8 bytes, resulting in the following
+size check failure:
 
-Fixes: 2766a11161cc ("selftests: rtnetlink: add ipsec offload API test")
-Fixes: 5e596ee171ba ("selftests: add xfrm state-policy-monitor to rtnetlink.sh")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/9048ca58e49b962f35dba1dfb2beaf3dab3e0411.1706723341.git.pabeni@redhat.com/
+include/linux/build_bug.h:78:41: error: static assertion failed: "(6) == sizeof(struct virtchnl2_ptype)"
+      78 | #define __static_assert(expr, msg, ...) _Static_assert(expr, msg)
+         |                                         ^~~~~~~~~~~~~~
+include/linux/build_bug.h:77:34: note: in expansion of macro '__static_assert'
+      77 | #define static_assert(expr, ...) __static_assert(expr, ##__VA_ARGS__, #expr)
+         |                                  ^~~~~~~~~~~~~~~
+drivers/net/ethernet/intel/idpf/virtchnl2.h:26:9: note: in expansion of macro 'static_assert'
+      26 |         static_assert((n) == sizeof(struct X))
+         |         ^~~~~~~~~~~~~
+drivers/net/ethernet/intel/idpf/virtchnl2.h:982:1: note: in expansion of macro 'VIRTCHNL2_CHECK_STRUCT_LEN'
+     982 | VIRTCHNL2_CHECK_STRUCT_LEN(6, virtchnl2_ptype);
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Avoid the compiler padding by using "__packed" structure
+attribute for the virtchnl2_ptype struct. Also align the
+structure by using "__aligned(2)" for better code optimization.
+
+Fixes: 0d7502a9b4a7 ("virtchnl: add virtchnl version 2 ops")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202312220250.ufEm8doQ-lkp@intel.com
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
+Tested-by: Krishneil Singh  <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240131222241.2087516-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/config | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/idpf/virtchnl2.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
-index 24a7c7bcbbc1..3b749addd364 100644
---- a/tools/testing/selftests/net/config
-+++ b/tools/testing/selftests/net/config
-@@ -22,6 +22,8 @@ CONFIG_VLAN_8021Q=y
- CONFIG_GENEVE=m
- CONFIG_IFB=y
- CONFIG_INET_DIAG=y
-+CONFIG_INET_ESP=y
-+CONFIG_INET_ESP_OFFLOAD=y
- CONFIG_IP_GRE=m
- CONFIG_NETFILTER=y
- CONFIG_NETFILTER_ADVANCED=y
-@@ -93,3 +95,4 @@ CONFIG_IP_SCTP=m
- CONFIG_NETFILTER_XT_MATCH_POLICY=m
- CONFIG_CRYPTO_ARIA=y
- CONFIG_XFRM_INTERFACE=m
-+CONFIG_XFRM_USER=m
+diff --git a/drivers/net/ethernet/intel/idpf/virtchnl2.h b/drivers/net/ethernet/intel/idpf/virtchnl2.h
+index 8dc837889723..4a3c4454d25a 100644
+--- a/drivers/net/ethernet/intel/idpf/virtchnl2.h
++++ b/drivers/net/ethernet/intel/idpf/virtchnl2.h
+@@ -978,7 +978,7 @@ struct virtchnl2_ptype {
+ 	u8 proto_id_count;
+ 	__le16 pad;
+ 	__le16 proto_id[];
+-};
++} __packed __aligned(2);
+ VIRTCHNL2_CHECK_STRUCT_LEN(6, virtchnl2_ptype);
+ 
+ /**
 -- 
 2.43.0
 
