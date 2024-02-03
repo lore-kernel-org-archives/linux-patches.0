@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9BB13AE8;
-	Sat,  3 Feb 2024 04:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA1E13AE8;
+	Sat,  3 Feb 2024 04:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933483; cv=none; b=r22PrBXbiJbL+yveZ7sPo8xzTpzHCHfrn8z+G9tni5BsZKMe9eYnoikiv1/wTUIF6w0gE2xo71/2tfRvSfIAj6cBAbWWrMa7BeaJEDl99XkOwkcdq2HjF5ZHVJl6FDLFQWkXxgayZdB9RhA62y7QCwmwl0r1zwpWeNAJRRdjhg4=
+	t=1706933484; cv=none; b=Ni0/pp1bWMtN/3N/PZAz3Mq/t5/u3Rz5/6No/sbuoma8O5eFKwLs0atyZ66k/wXxFhTdGDtNk3g3T7rbFkp15baI5ygBsA8JmogZ4Tm7fRQVcZbmQpHCxrpqXVoec6KniVZn8PSLreLmBhGigkP789F/np2ngRKtRzHwLQhrk5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933483; c=relaxed/simple;
-	bh=LZWmPjdllbRUaio46aLGFfveNLpMoyBKVBc25h0h5GY=;
+	s=arc-20240116; t=1706933484; c=relaxed/simple;
+	bh=pIwvqUUAFkNR5FxwVZNPi0K4aVlASyWMPWwuFGStKNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtneFodsaTB1aJtYQwEfozlLq8SMaOGm6L8XnMA2OukdY14x0Ana+289lvDn/3TcAe+HcrVZukEOunW1z4SzyNygScj9OmGLyTh5N2A8bWR5R7HPN9VYY49F75dR3LErUL+XPc+rRmo/MCZQPXJKBV8cfxZtl5FM4TX9ctM0fqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBJN4myq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7mLEfrWATpGRz7SUwJzGO+TKge7uwNdGHTLH5Kjrc/4BRn8fbDJXPpVLruXjPsrsd2cg+7RbLr22VpGHrI93Un8YYY14BtTteSsh5RpmPxFag02yEPFczTg/h2S9z3YsdGzMVKBp+FV3yDlVFNuEh8JNMqJ/06T5P7ypFePc2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glMBCYic; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBJN4myq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7D2C43609;
-	Sat,  3 Feb 2024 04:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glMBCYic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD1C433C7;
+	Sat,  3 Feb 2024 04:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933483;
-	bh=LZWmPjdllbRUaio46aLGFfveNLpMoyBKVBc25h0h5GY=;
+	s=korg; t=1706933484;
+	bh=pIwvqUUAFkNR5FxwVZNPi0K4aVlASyWMPWwuFGStKNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OBJN4myq34fqFQxuaaNxMmYo60Fjx4+ecD0ForFnSbNzdmuSQM+u/Zelj+68bhKm6
-	 pMBLxCp5BC+9WEp2MSPHwDMZ+U1z4UJcwqbEbP6SJirQkGu7znjf3SGjTA1OU4LNAM
-	 Ktkco5vfGLGT+6NTeXrH500hKVrVOxNTU5gM2M88=
+	b=glMBCYicH5vrKOmxxWUjrZS74ojAO/Iug1jYYnm1e4uk6MbWBeoFaykL1Wfuem2Nr
+	 zCaRdLJeL2qee9YsX2Y3+goe09IjwN9XVe9uK+foUGNXlG/R35anFN3VtCdmhxkkoi
+	 ozUos9apotPskTz9440C+l0ScTUfv1WWOsGWjMQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Justin Forbes <jforbes@fedoraproject.org>
-Subject: [PATCH 6.6 001/322] Documentation/sphinx: fix Python string escapes
-Date: Fri,  2 Feb 2024 20:01:38 -0800
-Message-ID: <20240203035359.094891332@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 010/322] powerpc: pmd_move_must_withdraw() is only needed for CONFIG_TRANSPARENT_HUGEPAGE
+Date: Fri,  2 Feb 2024 20:01:47 -0800
+Message-ID: <20240203035359.387356357@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,106 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gray <bgray@linux.ibm.com>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
 
-commit 86a0adc029d338f0da8989e7bb453c1114d51960 upstream.
+[ Upstream commit 0d555b57ee660d8a871781c0eebf006e855e918d ]
 
-Python 3.6 introduced a DeprecationWarning for invalid escape sequences.
-This is upgraded to a SyntaxWarning in Python 3.12, and will eventually
-be a syntax error.
+The linux-next build of powerpc64 allnoconfig fails with:
 
-Fix these now to get ahead of it before it's an error.
+  arch/powerpc/mm/book3s64/pgtable.c:557:5: error: no previous prototype for 'pmd_move_must_withdraw'
+    557 | int pmd_move_must_withdraw(struct spinlock *new_pmd_ptl,
+        |     ^~~~~~~~~~~~~~~~~~~~~~
 
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-Message-ID: <20230912060801.95533-3-bgray@linux.ibm.com>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Cc: Justin Forbes <jforbes@fedoraproject.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Caused by commit:
+
+  c6345dfa6e3e ("Makefile.extrawarn: turn on missing-prototypes globally")
+
+Fix it by moving the function definition under
+CONFIG_TRANSPARENT_HUGEPAGE like the prototype. The function is only
+called when CONFIG_TRANSPARENT_HUGEPAGE=y.
+
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+[mpe: Flesh out change log from linux-next patch]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231127132809.45c2b398@canb.auug.org.au
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/sphinx/cdomain.py             |    2 +-
- Documentation/sphinx/kernel_abi.py          |    2 +-
- Documentation/sphinx/kernel_feat.py         |    2 +-
- Documentation/sphinx/kerneldoc.py           |    2 +-
- Documentation/sphinx/maintainers_include.py |    8 ++++----
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ arch/powerpc/mm/book3s64/pgtable.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/Documentation/sphinx/cdomain.py
-+++ b/Documentation/sphinx/cdomain.py
-@@ -93,7 +93,7 @@ def markup_ctype_refs(match):
- #
- RE_expr = re.compile(r':c:(expr|texpr):`([^\`]+)`')
- def markup_c_expr(match):
--    return '\ ``' + match.group(2) + '``\ '
-+    return '\\ ``' + match.group(2) + '``\\ '
+diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
+index 8f8a62d3ff4d..926bec775f41 100644
+--- a/arch/powerpc/mm/book3s64/pgtable.c
++++ b/arch/powerpc/mm/book3s64/pgtable.c
+@@ -542,6 +542,7 @@ void ptep_modify_prot_commit(struct vm_area_struct *vma, unsigned long addr,
+ 	set_pte_at(vma->vm_mm, addr, ptep, pte);
+ }
  
- #
- # Parse Sphinx 3.x C markups, replacing them by backward-compatible ones
---- a/Documentation/sphinx/kernel_abi.py
-+++ b/Documentation/sphinx/kernel_abi.py
-@@ -102,7 +102,7 @@ class KernelCmd(Directive):
-                 code_block += "\n    " + l
-             lines = code_block + "\n\n"
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ /*
+  * For hash translation mode, we use the deposited table to store hash slot
+  * information and they are stored at PTRS_PER_PMD offset from related pmd
+@@ -563,6 +564,7 @@ int pmd_move_must_withdraw(struct spinlock *new_pmd_ptl,
  
--        line_regex = re.compile("^\.\. LINENO (\S+)\#([0-9]+)$")
-+        line_regex = re.compile(r"^\.\. LINENO (\S+)\#([0-9]+)$")
-         ln = 0
-         n = 0
-         f = fname
---- a/Documentation/sphinx/kernel_feat.py
-+++ b/Documentation/sphinx/kernel_feat.py
-@@ -95,7 +95,7 @@ class KernelFeat(Directive):
+ 	return true;
+ }
++#endif
  
-         lines = subprocess.check_output(args, cwd=os.path.dirname(doc.current_source)).decode('utf-8')
- 
--        line_regex = re.compile("^\.\. FILE (\S+)$")
-+        line_regex = re.compile(r"^\.\. FILE (\S+)$")
- 
-         out_lines = ""
- 
---- a/Documentation/sphinx/kerneldoc.py
-+++ b/Documentation/sphinx/kerneldoc.py
-@@ -130,7 +130,7 @@ class KernelDocDirective(Directive):
-             result = ViewList()
- 
-             lineoffset = 0;
--            line_regex = re.compile("^\.\. LINENO ([0-9]+)$")
-+            line_regex = re.compile(r"^\.\. LINENO ([0-9]+)$")
-             for line in lines:
-                 match = line_regex.search(line)
-                 if match:
---- a/Documentation/sphinx/maintainers_include.py
-+++ b/Documentation/sphinx/maintainers_include.py
-@@ -77,7 +77,7 @@ class MaintainersInclude(Include):
-             line = line.rstrip()
- 
-             # Linkify all non-wildcard refs to ReST files in Documentation/.
--            pat = '(Documentation/([^\s\?\*]*)\.rst)'
-+            pat = r'(Documentation/([^\s\?\*]*)\.rst)'
-             m = re.search(pat, line)
-             if m:
-                 # maintainers.rst is in a subdirectory, so include "../".
-@@ -90,11 +90,11 @@ class MaintainersInclude(Include):
-                 output = "| %s" % (line.replace("\\", "\\\\"))
-                 # Look for and record field letter to field name mappings:
-                 #   R: Designated *reviewer*: FullName <address@domain>
--                m = re.search("\s(\S):\s", line)
-+                m = re.search(r"\s(\S):\s", line)
-                 if m:
-                     field_letter = m.group(1)
-                 if field_letter and not field_letter in fields:
--                    m = re.search("\*([^\*]+)\*", line)
-+                    m = re.search(r"\*([^\*]+)\*", line)
-                     if m:
-                         fields[field_letter] = m.group(1)
-             elif subsystems:
-@@ -112,7 +112,7 @@ class MaintainersInclude(Include):
-                     field_content = ""
- 
-                     # Collapse whitespace in subsystem name.
--                    heading = re.sub("\s+", " ", line)
-+                    heading = re.sub(r"\s+", " ", line)
-                     output = output + "%s\n%s" % (heading, "~" * len(heading))
-                     field_prev = ""
-                 else:
+ /*
+  * Does the CPU support tlbie?
+-- 
+2.43.0
+
 
 
