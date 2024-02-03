@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AF61BC53;
-	Sat,  3 Feb 2024 04:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21ADF11739;
+	Sat,  3 Feb 2024 04:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933787; cv=none; b=XCOvOd2QVuZMKLYAGR22KF7NGYvcnLkj5qNC6OR5rg9mJbWKuse39zJgTOCT4t6rrvjW+0+osdy2XvLWfCPHcw3xP/XVbHVBRX86M4DvGzciCmvcNBKaN1vIMtsmUf9QKiVZCbHPYfc6Q5IY2QglljOM+J6ju3RLsfAygWrWbPo=
+	t=1706933788; cv=none; b=J0PjEh990bsKZ2rqVx+gO+2PFAiQdZBuRnDw1FtTwhU/74ql8Qgv76NG03baXhSUEY+bYg5tlLBp8sAbDh6DDv/cfgsLKv60SDSHWjj3GA8gtgsR+KH8iQixxkx33rlaD8tZzrxjDutpcsEds08BQvuUaxueOiv5N1TGafh+amc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933787; c=relaxed/simple;
-	bh=ApgEl7Lu5MAFldm2Jq1HB5OQW+K+wKOph1QH3f7E4es=;
+	s=arc-20240116; t=1706933788; c=relaxed/simple;
+	bh=/QGYdGwd5eXHJvJp6RdME+w+9sELtvaznN3YiI39tuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsXR/aa4B7ffA/l7d2fHPgbm2up4bgpWtm7mhHI82DYOnX5/lL8BKocddJyNZYIS8A2jaRE/oFon/2NVdVBDAhX0BXkbfvzbMd/xxJVVJA9CLCzFSuXtkVAVYQIpALGd8gFpQzNU4FMFQgDRei2QHBt9zzy0jVQ3nIJI0p9y0Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLKoMz0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTmAgzoDvFuoSbAAA5FM5Db92YQqQylM8WsMtlVBkZyLDG7QFJYLSvM8bEZtST8/SsppAYiqtDVdL2iuCFIUegZKNyU4pTRwm8adKR2p55hqmBVodVXgnNTedHKeaAsQAX/WJ/VUTWPLixy5TtSGp+xGJhkb1HdcUM+Uxx6L/j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/93x2qK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLKoMz0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E30AC433A6;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/93x2qK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B7FC433C7;
 	Sat,  3 Feb 2024 04:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933787;
-	bh=ApgEl7Lu5MAFldm2Jq1HB5OQW+K+wKOph1QH3f7E4es=;
+	s=korg; t=1706933788;
+	bh=/QGYdGwd5eXHJvJp6RdME+w+9sELtvaznN3YiI39tuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLKoMz0ACmMqCrZejJfhGQt/Gx7HQvoJMk+v7CaAC++uApLXOlMjicuaF35SwntGy
-	 SGVsJkbSN7GKQWugPtnqYGLfErUcPqv4kqnizuekiSBbkIY84feUuM5Yi0uwn0R8Sy
-	 d6KpL9GrrSpM4/rXC6RQqbIzOoxGPMytWDDT1YgY=
+	b=F/93x2qKmgURdPkKpiUtE5BdbK/fMxNqB1rPpJr/hvHi/Hh1FmRNzSVPjeMdB8+gb
+	 xSDZoYPQVjcmdxpWCx45HDm6EdHf0N+AjF8284zeoW41s0cgaeKd6pa1pKMocuKwpZ
+	 8XoVA34U915xHlxZFLyVxvBu38pDUYDd3uo3eL9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hou Tao <houtao1@huawei.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 095/353] bpf: Check rcu_read_lock_trace_held() before calling bpf map helpers
-Date: Fri,  2 Feb 2024 20:03:33 -0800
-Message-ID: <20240203035406.804041343@linuxfoundation.org>
+Subject: [PATCH 6.7 096/353] bpf: Set need_defer as false when clearing fd array during map free
+Date: Fri,  2 Feb 2024 20:03:34 -0800
+Message-ID: <20240203035406.833801540@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,89 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 169410eba271afc9f0fb476d996795aa26770c6d ]
+[ Upstream commit 79d93b3c6ffd79abcd8e43345980aa1e904879c4 ]
 
-These three bpf_map_{lookup,update,delete}_elem() helpers are also
-available for sleepable bpf program, so add the corresponding lock
-assertion for sleepable bpf program, otherwise the following warning
-will be reported when a sleepable bpf program manipulates bpf map under
-interpreter mode (aka bpf_jit_enable=0):
+Both map deletion operation, map release and map free operation use
+fd_array_map_delete_elem() to remove the element from fd array and
+need_defer is always true in fd_array_map_delete_elem(). For the map
+deletion operation and map release operation, need_defer=true is
+necessary, because the bpf program, which accesses the element in fd
+array, may still alive. However for map free operation, it is certain
+that the bpf program which owns the fd array has already been exited, so
+setting need_defer as false is appropriate for map free operation.
 
-  WARNING: CPU: 3 PID: 4985 at kernel/bpf/helpers.c:40 ......
-  CPU: 3 PID: 4985 Comm: test_progs Not tainted 6.6.0+ #2
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996) ......
-  RIP: 0010:bpf_map_lookup_elem+0x54/0x60
-  ......
-  Call Trace:
-   <TASK>
-   ? __warn+0xa5/0x240
-   ? bpf_map_lookup_elem+0x54/0x60
-   ? report_bug+0x1ba/0x1f0
-   ? handle_bug+0x40/0x80
-   ? exc_invalid_op+0x18/0x50
-   ? asm_exc_invalid_op+0x1b/0x20
-   ? __pfx_bpf_map_lookup_elem+0x10/0x10
-   ? rcu_lockdep_current_cpu_online+0x65/0xb0
-   ? rcu_is_watching+0x23/0x50
-   ? bpf_map_lookup_elem+0x54/0x60
-   ? __pfx_bpf_map_lookup_elem+0x10/0x10
-   ___bpf_prog_run+0x513/0x3b70
-   __bpf_prog_run32+0x9d/0xd0
-   ? __bpf_prog_enter_sleepable_recur+0xad/0x120
-   ? __bpf_prog_enter_sleepable_recur+0x3e/0x120
-   bpf_trampoline_6442580665+0x4d/0x1000
-   __x64_sys_getpgid+0x5/0x30
-   ? do_syscall_64+0x36/0xb0
-   entry_SYSCALL_64_after_hwframe+0x6e/0x76
-   </TASK>
+So fix it by adding need_defer parameter to bpf_fd_array_map_clear() and
+adding a new helper __fd_array_map_delete_elem() to handle the map
+deletion, map release and map free operations correspondingly.
 
 Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231204140425.1480317-2-houtao@huaweicloud.com
+Link: https://lore.kernel.org/r/20231204140425.1480317-4-houtao@huaweicloud.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ kernel/bpf/arraymap.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 6950f0461634..991186520af0 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -32,12 +32,13 @@
-  *
-  * Different map implementations will rely on rcu in map methods
-  * lookup/update/delete, therefore eBPF programs must run under rcu lock
-- * if program is allowed to access maps, so check rcu_read_lock_held in
-- * all three functions.
-+ * if program is allowed to access maps, so check rcu_read_lock_held() or
-+ * rcu_read_lock_trace_held() in all three functions.
-  */
- BPF_CALL_2(bpf_map_lookup_elem, struct bpf_map *, map, void *, key)
- {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return (unsigned long) map->ops->map_lookup_elem(map, key);
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 9bfad7e96913..c9843dde6908 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -871,7 +871,7 @@ int bpf_fd_array_map_update_elem(struct bpf_map *map, struct file *map_file,
+ 	return 0;
  }
  
-@@ -53,7 +54,8 @@ const struct bpf_func_proto bpf_map_lookup_elem_proto = {
- BPF_CALL_4(bpf_map_update_elem, struct bpf_map *, map, void *, key,
- 	   void *, value, u64, flags)
+-static long fd_array_map_delete_elem(struct bpf_map *map, void *key)
++static long __fd_array_map_delete_elem(struct bpf_map *map, void *key, bool need_defer)
  {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return map->ops->map_update_elem(map, key, value, flags);
+ 	struct bpf_array *array = container_of(map, struct bpf_array, map);
+ 	void *old_ptr;
+@@ -890,13 +890,18 @@ static long fd_array_map_delete_elem(struct bpf_map *map, void *key)
+ 	}
+ 
+ 	if (old_ptr) {
+-		map->ops->map_fd_put_ptr(map, old_ptr, true);
++		map->ops->map_fd_put_ptr(map, old_ptr, need_defer);
+ 		return 0;
+ 	} else {
+ 		return -ENOENT;
+ 	}
  }
  
-@@ -70,7 +72,8 @@ const struct bpf_func_proto bpf_map_update_elem_proto = {
- 
- BPF_CALL_2(bpf_map_delete_elem, struct bpf_map *, map, void *, key)
++static long fd_array_map_delete_elem(struct bpf_map *map, void *key)
++{
++	return __fd_array_map_delete_elem(map, key, true);
++}
++
+ static void *prog_fd_array_get_ptr(struct bpf_map *map,
+ 				   struct file *map_file, int fd)
  {
--	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
-+	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
-+		     !rcu_read_lock_bh_held());
- 	return map->ops->map_delete_elem(map, key);
+@@ -925,13 +930,13 @@ static u32 prog_fd_array_sys_lookup_elem(void *ptr)
+ }
+ 
+ /* decrement refcnt of all bpf_progs that are stored in this map */
+-static void bpf_fd_array_map_clear(struct bpf_map *map)
++static void bpf_fd_array_map_clear(struct bpf_map *map, bool need_defer)
+ {
+ 	struct bpf_array *array = container_of(map, struct bpf_array, map);
+ 	int i;
+ 
+ 	for (i = 0; i < array->map.max_entries; i++)
+-		fd_array_map_delete_elem(map, &i);
++		__fd_array_map_delete_elem(map, &i, need_defer);
+ }
+ 
+ static void prog_array_map_seq_show_elem(struct bpf_map *map, void *key,
+@@ -1072,7 +1077,7 @@ static void prog_array_map_clear_deferred(struct work_struct *work)
+ {
+ 	struct bpf_map *map = container_of(work, struct bpf_array_aux,
+ 					   work)->map;
+-	bpf_fd_array_map_clear(map);
++	bpf_fd_array_map_clear(map, true);
+ 	bpf_map_put(map);
+ }
+ 
+@@ -1222,7 +1227,7 @@ static void perf_event_fd_array_release(struct bpf_map *map,
+ 	for (i = 0; i < array->map.max_entries; i++) {
+ 		ee = READ_ONCE(array->ptrs[i]);
+ 		if (ee && ee->map_file == map_file)
+-			fd_array_map_delete_elem(map, &i);
++			__fd_array_map_delete_elem(map, &i, true);
+ 	}
+ 	rcu_read_unlock();
+ }
+@@ -1230,7 +1235,7 @@ static void perf_event_fd_array_release(struct bpf_map *map,
+ static void perf_event_fd_array_map_free(struct bpf_map *map)
+ {
+ 	if (map->map_flags & BPF_F_PRESERVE_ELEMS)
+-		bpf_fd_array_map_clear(map);
++		bpf_fd_array_map_clear(map, false);
+ 	fd_array_map_free(map);
+ }
+ 
+@@ -1266,7 +1271,7 @@ static void cgroup_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_de
+ 
+ static void cgroup_fd_array_free(struct bpf_map *map)
+ {
+-	bpf_fd_array_map_clear(map);
++	bpf_fd_array_map_clear(map, false);
+ 	fd_array_map_free(map);
+ }
+ 
+@@ -1311,7 +1316,7 @@ static void array_of_map_free(struct bpf_map *map)
+ 	 * is protected by fdget/fdput.
+ 	 */
+ 	bpf_map_meta_free(map->inner_map_meta);
+-	bpf_fd_array_map_clear(map);
++	bpf_fd_array_map_clear(map, false);
+ 	fd_array_map_free(map);
  }
  
 -- 
