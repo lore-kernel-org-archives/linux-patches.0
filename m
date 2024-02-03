@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4C4FC03;
-	Sat,  3 Feb 2024 04:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835AE1AADF;
+	Sat,  3 Feb 2024 04:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933461; cv=none; b=WmVxmkjMjgZkcfUQO5kx5uMMxcHrLkvJxc5v4CDpcTp02tYZlnkDUc3mt7D8KV+hJwVHiu36dGtj3jcY2W5Foo6YUssjF9/42bA4RB/zb6KYHqKKlR9x0IALlS6+8d/Uaj+kpMFv716CA6+UZgmMT0A10KsJT5yDbEhKC++Y8Nw=
+	t=1706933462; cv=none; b=u++/sSQAEF5Mo5ydHjEgFZZN1MLQjUI9hwoHsba46+OYq28xbUOiXAF6jzcNNHXfTmJcFSIPnVzxYpDVORztOgbyEVCakKnLZBBQ4e33az/a1LM4yg+HiKcSs2X5lcDu/dHzy1+PLujByw3heweuwfVT39hyU3NCIPs4XyY6LFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933461; c=relaxed/simple;
-	bh=f0Pypo2ZzZ9GIpGI4JUAbF2ejkjJ/FWHSHUmTDyY81E=;
+	s=arc-20240116; t=1706933462; c=relaxed/simple;
+	bh=oqE50NlU0ZbzSnje1faMbxWl45AfXMpKpD84W371Zxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kI8pCtOkqrN2ZjK62RiXr7z9gXcP1HyIGOG67mieSeUDUXFo3gF+CekzTEsY+9G0x31DSnfGdlsv6cTSj5ufLY+ZBINiO7CcWeWwASdvJ0YYugmQ9P33QKniBbW01+Gz83dcNOQ9FMoD3nrILBUrgwIe1Yeful1fe6Xl16qfUkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJD/ghSW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gI1NkL3uNWBwjx/nmddnKao4UQIMB9QQgs9K7g1eFofvgOGs1qLRzxE+QbRvv5dOvleDmHmAn/msVMpvIACaaqJe56+cKbeDQQ/LvH9P0onr6gBRRfRr0dRUXaOLzQQfYCnJk7n7dz/7YQFUV8irv5InpvSmZC4OUGcwoxCzNRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0213Q6V8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJD/ghSW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94178C433C7;
-	Sat,  3 Feb 2024 04:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0213Q6V8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B33BC433F1;
+	Sat,  3 Feb 2024 04:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933461;
-	bh=f0Pypo2ZzZ9GIpGI4JUAbF2ejkjJ/FWHSHUmTDyY81E=;
+	s=korg; t=1706933462;
+	bh=oqE50NlU0ZbzSnje1faMbxWl45AfXMpKpD84W371Zxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJD/ghSWhOU3eJZBP6sw6KrlQlgeFV+T3tklMo5mA9h0HZtyJRfQuKlQ2dVwFLymn
-	 Jxb45gZ2WOToAdg5R1NJX+eTPsNl0Vo7asHouHcoWrvTrdiauuBtn1CrZ0GcmFSBF3
-	 AK+CplFVpw8xFjv9LEJEzrMyx7axj4kM9dd2DNSA=
+	b=0213Q6V8W++8QMOmwsJ+I7VPpzUEU8wjt7Y7nlXg8BlvGBc7EmaVaLROrVjxWF+UX
+	 Djmo7UiijtpcdYH7IY9aORi9cNkB/OfdEh/fBfPDZWZkk3g9cSAJgjYnGfz+0/f5IC
+	 R0pePrG7t4VC/nyf8YEx8coOOxDRruE/iJXO9kHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Xiubo Li <xiubli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 199/219] ipv6: Ensure natural alignment of const ipv6 loopback and router addresses
-Date: Fri,  2 Feb 2024 20:06:12 -0800
-Message-ID: <20240203035345.136648057@linuxfoundation.org>
+Subject: [PATCH 6.1 176/219] ceph: fix deadlock or deadcode of misusing dget()
+Date: Fri,  2 Feb 2024 20:05:49 -0800
+Message-ID: <20240203035341.463432385@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,75 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@kernel.org>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 60365049ccbacd101654a66ddcb299abfabd4fc5 ]
+[ Upstream commit b493ad718b1f0357394d2cdecbf00a44a36fa085 ]
 
-On a parisc64 kernel I sometimes notice this kernel warning:
-Kernel unaligned access to 0x40ff8814 at ndisc_send_skb+0xc0/0x4d8
+The lock order is incorrect between denty and its parent, we should
+always make sure that the parent get the lock first.
 
-The address 0x40ff8814 points to the in6addr_linklocal_allrouters
-variable and the warning simply means that some ipv6 function tries to
-read a 64-bit word directly from the not-64-bit aligned
-in6addr_linklocal_allrouters variable.
+But since this deadcode is never used and the parent dir will always
+be set from the callers, let's just remove it.
 
-Unaligned accesses are non-critical as the architecture or exception
-handlers usually will fix it up at runtime. Nevertheless it may trigger
-a performance penality for some architectures. For details read the
-"unaligned-memory-access" kernel documentation.
-
-The patch below ensures that the ipv6 loopback and router addresses will
-always be naturally aligned. This prevents the unaligned accesses for
-all architectures.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Fixes: 034dfc5df99eb ("ipv6: export in6addr_loopback to modules")
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/ZbNuFM1bFqoH-UoY@p100
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20231116081919.GZ1957730@ZenIV
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf_core.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ fs/ceph/caps.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/addrconf_core.c b/net/ipv6/addrconf_core.c
-index 507a8353a6bd..c008d21925d7 100644
---- a/net/ipv6/addrconf_core.c
-+++ b/net/ipv6/addrconf_core.c
-@@ -220,19 +220,26 @@ const struct ipv6_stub *ipv6_stub __read_mostly = &(struct ipv6_stub) {
- EXPORT_SYMBOL_GPL(ipv6_stub);
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 36052a362683..111938a6307e 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -4597,12 +4597,14 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
+ 			       struct inode *dir,
+ 			       int mds, int drop, int unless)
+ {
+-	struct dentry *parent = NULL;
+ 	struct ceph_mds_request_release *rel = *p;
+ 	struct ceph_dentry_info *di = ceph_dentry(dentry);
+ 	int force = 0;
+ 	int ret;
  
- /* IPv6 Wildcard Address and Loopback Address defined by RFC2553 */
--const struct in6_addr in6addr_loopback = IN6ADDR_LOOPBACK_INIT;
-+const struct in6_addr in6addr_loopback __aligned(BITS_PER_LONG/8)
-+	= IN6ADDR_LOOPBACK_INIT;
- EXPORT_SYMBOL(in6addr_loopback);
--const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
-+const struct in6_addr in6addr_any __aligned(BITS_PER_LONG/8)
-+	= IN6ADDR_ANY_INIT;
- EXPORT_SYMBOL(in6addr_any);
--const struct in6_addr in6addr_linklocal_allnodes = IN6ADDR_LINKLOCAL_ALLNODES_INIT;
-+const struct in6_addr in6addr_linklocal_allnodes __aligned(BITS_PER_LONG/8)
-+	= IN6ADDR_LINKLOCAL_ALLNODES_INIT;
- EXPORT_SYMBOL(in6addr_linklocal_allnodes);
--const struct in6_addr in6addr_linklocal_allrouters = IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
-+const struct in6_addr in6addr_linklocal_allrouters __aligned(BITS_PER_LONG/8)
-+	= IN6ADDR_LINKLOCAL_ALLROUTERS_INIT;
- EXPORT_SYMBOL(in6addr_linklocal_allrouters);
--const struct in6_addr in6addr_interfacelocal_allnodes = IN6ADDR_INTERFACELOCAL_ALLNODES_INIT;
-+const struct in6_addr in6addr_interfacelocal_allnodes __aligned(BITS_PER_LONG/8)
-+	= IN6ADDR_INTERFACELOCAL_ALLNODES_INIT;
- EXPORT_SYMBOL(in6addr_interfacelocal_allnodes);
--const struct in6_addr in6addr_interfacelocal_allrouters = IN6ADDR_INTERFACELOCAL_ALLROUTERS_INIT;
-+const struct in6_addr in6addr_interfacelocal_allrouters __aligned(BITS_PER_LONG/8)
-+	= IN6ADDR_INTERFACELOCAL_ALLROUTERS_INIT;
- EXPORT_SYMBOL(in6addr_interfacelocal_allrouters);
--const struct in6_addr in6addr_sitelocal_allrouters = IN6ADDR_SITELOCAL_ALLROUTERS_INIT;
-+const struct in6_addr in6addr_sitelocal_allrouters __aligned(BITS_PER_LONG/8)
-+	= IN6ADDR_SITELOCAL_ALLROUTERS_INIT;
- EXPORT_SYMBOL(in6addr_sitelocal_allrouters);
++	/* This shouldn't happen */
++	BUG_ON(!dir);
++
+ 	/*
+ 	 * force an record for the directory caps if we have a dentry lease.
+ 	 * this is racy (can't take i_ceph_lock and d_lock together), but it
+@@ -4612,14 +4614,9 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
+ 	spin_lock(&dentry->d_lock);
+ 	if (di->lease_session && di->lease_session->s_mds == mds)
+ 		force = 1;
+-	if (!dir) {
+-		parent = dget(dentry->d_parent);
+-		dir = d_inode(parent);
+-	}
+ 	spin_unlock(&dentry->d_lock);
  
- static void snmp6_free_dev(struct inet6_dev *idev)
+ 	ret = ceph_encode_inode_release(p, dir, mds, drop, unless, force);
+-	dput(parent);
+ 
+ 	spin_lock(&dentry->d_lock);
+ 	if (ret && di->lease_session && di->lease_session->s_mds == mds) {
 -- 
 2.43.0
 
