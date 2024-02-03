@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E878B11738;
-	Sat,  3 Feb 2024 04:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95445579A;
+	Sat,  3 Feb 2024 04:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933965; cv=none; b=oB+tTnc8UqD679m/B866q7AyJQrSnFAilR3jReACJOLqBDSOnWSwYT12tiASn1YYnLvKaRSE5g2bxAaKyQh3p2oGCis3H1xYRTq/nXV6R5qNfmPL8A6BuK9tLgQGhmnDw6HApmztnv6UFLG5SySbAaNGxc59SZVeJ3kxTxCfv6I=
+	t=1706933965; cv=none; b=ZKlSAP/DMvdxF/8stOOVEqEGtLjht1/yBrS63zgee6RzvVP1z6RtRT709WqMKNc1vDW0JGTimtRYpACIGpr2vAn7zrwJckhBD6eOr2i99tPLxMRyTtvfk8jAyKqetqQhwBA5mIoU2e9z4v8pbkWSdP0CcfFlUQhOSgW81phui7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933965; c=relaxed/simple;
-	bh=pDL+dMXmKoC5eKXNIsBFl1nT4kpb4Ye4LH+i0DkzOdk=;
+	bh=GG+zn1gHkKRiY1DxMgq0+uusL4Y0Ervu8FMBRRqOiSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GYLLNccvbGHtWBNW4RNJmb04eDHew31nvb15wYzKCrrZED4xBVcDfjQa9ClXR++La8zVO0f730oRq7ZY6fjGczw+hozkSTJp2O5+dwSfeYoJtHLjlX7XjM6qniDt4uiXjssquqkczABhTYqijGFxeXtT5x5dUBeeNAeZqjfJ7tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0RsZqSz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ENJ280NOreV9QIOCel/ekcAnF9XJeRSCqh3LHeJcuY8wjracsNPhOE9FuQUSLfO/GhDzRE9psot/uuNQ+BvIijBj0dzJbr5wFdfqApseCclUiwYCql+GiIxqpXJe7Fb29BdcMpNUwua9yL9uDwHynkTGmtvNpjNsYc66fqN/Ce8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvd5NmRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0RsZqSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CB5C433C7;
-	Sat,  3 Feb 2024 04:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvd5NmRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C52FC43390;
+	Sat,  3 Feb 2024 04:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933964;
-	bh=pDL+dMXmKoC5eKXNIsBFl1nT4kpb4Ye4LH+i0DkzOdk=;
+	s=korg; t=1706933965;
+	bh=GG+zn1gHkKRiY1DxMgq0+uusL4Y0Ervu8FMBRRqOiSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0RsZqSzzGNhqx+C3ALRY+5Y8mL3qabQEZ8ec1o+aPnCnGpgy5vZQp4EwAxVctoIw
-	 oC3cmRuA20IDuGPyacLwLxH6Th+xpIBFeihd5wXeVzwAFOpG1GZQTnVckKoumdwIJx
-	 cmQ6I0iZE/etwwcXb9VAwjAb8LUx0h04xERd5y6E=
+	b=pvd5NmRWWh2E5+Y1atmHKlzFNxuuooFsa/v2GDkXwNyPkfXpndGIWjb2s5ZZHui2i
+	 Jd9CMc6u5C5Lo+QGlWwnEh1vqXZ30mqiavgmE/umKtjSZ4xuHIgjsrfeUnDLfk0ADj
+	 Wvp8+Hdvez+FsyHRrat8rBJB5piR213EHID5Vf4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 310/353] net: lan966x: Fix port configuration when using SGMII interface
-Date: Fri,  2 Feb 2024 20:07:08 -0800
-Message-ID: <20240203035413.646644595@linuxfoundation.org>
+Subject: [PATCH 6.7 311/353] tracefs: remove stale update_gid code
+Date: Fri,  2 Feb 2024 20:07:09 -0800
+Message-ID: <20240203035413.680340223@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,40 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 62b4248105353e7d1debd30ca5c57ec5e5f28e35 ]
+[ Upstream commit 29142dc92c37d3259a33aef15b03e6ee25b0d188 ]
 
-In case the interface between the MAC and the PHY is SGMII, then the bit
-GIGA_MODE on the MAC side needs to be set regardless of the speed at
-which it is running.
+The 'eventfs_update_gid()' function is no longer called, so remove it
+(and the helper function it uses).
 
-Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/all/CAHk-=wj+DsZZ=2iTUkJ-Nojs9fjYMvPs1NuoM3yK7aTDtJfPYQ@mail.gmail.com/
+
+Fixes: 8186fff7ab64 ("tracefs/eventfs: Use root and instance inodes as default ownership")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_port.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/tracefs/event_inode.c | 38 --------------------------------------
+ fs/tracefs/internal.h    |  1 -
+ 2 files changed, 39 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_port.c b/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-index 92108d354051..2e83bbb9477e 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-@@ -168,9 +168,10 @@ static void lan966x_port_link_up(struct lan966x_port *port)
- 	lan966x_taprio_speed_set(port, config->speed);
+diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
+index 517f1ae1a058..f2d7ad155c00 100644
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -273,44 +273,6 @@ static void update_inode_attr(struct dentry *dentry, struct inode *inode,
+ 		inode->i_gid = attr->gid;
+ }
  
- 	/* Also the GIGA_MODE_ENA(1) needs to be set regardless of the
--	 * port speed for QSGMII ports.
-+	 * port speed for QSGMII or SGMII ports.
- 	 */
--	if (phy_interface_num_ports(config->portmode) == 4)
-+	if (phy_interface_num_ports(config->portmode) == 4 ||
-+	    config->portmode == PHY_INTERFACE_MODE_SGMII)
- 		mode = DEV_MAC_MODE_CFG_GIGA_MODE_ENA_SET(1);
+-static void update_gid(struct eventfs_inode *ei, kgid_t gid, int level)
+-{
+-	struct eventfs_inode *ei_child;
+-
+-	/* at most we have events/system/event */
+-	if (WARN_ON_ONCE(level > 3))
+-		return;
+-
+-	ei->attr.gid = gid;
+-
+-	if (ei->entry_attrs) {
+-		for (int i = 0; i < ei->nr_entries; i++) {
+-			ei->entry_attrs[i].gid = gid;
+-		}
+-	}
+-
+-	/*
+-	 * Only eventfs_inode with dentries are updated, make sure
+-	 * all eventfs_inodes are updated. If one of the children
+-	 * do not have a dentry, this function must traverse it.
+-	 */
+-	list_for_each_entry_srcu(ei_child, &ei->children, list,
+-				 srcu_read_lock_held(&eventfs_srcu)) {
+-		if (!ei_child->dentry)
+-			update_gid(ei_child, gid, level + 1);
+-	}
+-}
+-
+-void eventfs_update_gid(struct dentry *dentry, kgid_t gid)
+-{
+-	struct eventfs_inode *ei = dentry->d_fsdata;
+-	int idx;
+-
+-	idx = srcu_read_lock(&eventfs_srcu);
+-	update_gid(ei, gid, 0);
+-	srcu_read_unlock(&eventfs_srcu, idx);
+-}
+-
+ /**
+  * create_file - create a file in the tracefs filesystem
+  * @name: the name of the file to create.
+diff --git a/fs/tracefs/internal.h b/fs/tracefs/internal.h
+index 12b7d0150ae9..af3b43fa75cd 100644
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -81,7 +81,6 @@ struct inode *tracefs_get_inode(struct super_block *sb);
+ struct dentry *eventfs_start_creating(const char *name, struct dentry *parent);
+ struct dentry *eventfs_failed_creating(struct dentry *dentry);
+ struct dentry *eventfs_end_creating(struct dentry *dentry);
+-void eventfs_update_gid(struct dentry *dentry, kgid_t gid);
+ void eventfs_set_ei_status_free(struct tracefs_inode *ti, struct dentry *dentry);
  
- 	lan_wr(config->duplex | mode,
+ #endif /* _TRACEFS_INTERNAL_H */
 -- 
 2.43.0
 
