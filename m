@@ -1,46 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCAA55E5E;
-	Sat,  3 Feb 2024 04:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B8855E5E;
+	Sat,  3 Feb 2024 04:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933975; cv=none; b=HiQf7IdJge+LAfJNWEdpJAmZh7vXLDKg7es9WkaVUHBBYmfDyfC6L/RONQybWmxsl5ekKAC36yQTmMD/ErNqDkB82obUMDaCCYeTwnX47i4rgPXOmVL/pi4/wvw00yvsm5KzXIrBWxlKxMQsNxtWpZoD3oIh8tvnkSFQkCyZK+A=
+	t=1706933976; cv=none; b=vFu7zLnjMNRKQIphabKjVt5ea7xZvQK7b5GQFnLubYyJtwm4dIwmYsedbdSEFioiGeRsYbPWAMCoG4w3/6IFnj3gIiE7oDGNaZJ6ni40LaMa177ZM0yzwOYBruX1NpVkDsoUWgaMdJUZpe3GK2Di1xh7RSbRaR8lWg1KuXtiPgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933975; c=relaxed/simple;
-	bh=ivQhcQ/4xe0DbkiR+7ILps5BzoP3knygD/RHbmGSDng=;
+	s=arc-20240116; t=1706933976; c=relaxed/simple;
+	bh=n4Wd4U3K86mYrnwn8GtE/hjQ5oWHmF0QxHIUEexTRVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItF6HRH2Ka3qqXpbWADMq0WDULrRJqZZ+2LynFu/6OpQgJ3DRQef7SXE2jKNjGeF1Ohb4p3gF5sr6vOICsLrEh951CMsjUU8tLsKdhqE+5m2Qquc7OU3tZSJ+2azBzYoM2viQrbsqNM3ofzrbsupqVy7stNO79KVNjqDGpQbZxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0LyPxnZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nPKS/N9C8zs3voPyx0qyXYONCY6kd9N/YEA5TF1gKLkF7T8MGaq8X0JVtfyTsH0QUBdEt1MtXWdRjDUFNZmpyvU7tFPEnzl+vhmkl0JghA1Ef48+tYJjktvzwDhk8VzJNS+z+cPHbbOqrFmQD3XwGZmNmlv7xwFFFMHgl0ks2QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnafXMXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0LyPxnZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF54C43394;
-	Sat,  3 Feb 2024 04:19:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnafXMXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A629C433C7;
+	Sat,  3 Feb 2024 04:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933975;
-	bh=ivQhcQ/4xe0DbkiR+7ILps5BzoP3knygD/RHbmGSDng=;
+	s=korg; t=1706933976;
+	bh=n4Wd4U3K86mYrnwn8GtE/hjQ5oWHmF0QxHIUEexTRVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e0LyPxnZxb7yDc0eEX1GETIqHNrzRAhoxgjEcHOa6hG3HgtJ2R+aScWMVI5XPKmNW
-	 wLCqzzmWiKtbP1ooFyt8lCLkRsX7VAVDjBt+W5ddU4874AXql83QZKUtNKQHw/2Ir3
-	 5IO8E+7yewmRBTY7tsI+3q8D7DBc+KfkoGBqhzDE=
+	b=cnafXMXNhcJ4j/1F8cjXnwRCZA3AlZmjBnJANkLljYwRixYLj52c7hNRTEldzgMjc
+	 IKjii86igbVtR3JziV2mEO+ZB5/7uYE71wCNXo0hQMSwnsATQZmyh4YsW3Cz8NBb0t
+	 z16bNRCF6JYLVghJSLDlowFjtnQSU4evCjnantaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	syzbot+93a9e8a3dea8d6085e12@syzkaller.appspotmail.com,
-	Charan Teja Kalla <quic_charante@quicinc.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 349/353] mm, kmsan: fix infinite recursion due to RCU critical section
-Date: Fri,  2 Feb 2024 20:07:47 -0800
-Message-ID: <20240203035414.786862901@linuxfoundation.org>
+	Jonathan Gray <jsg@jsg.id.au>
+Subject: [PATCH 6.7 350/353] Revert "drm/amd/display: Disable PSR-SU on Parade 0803 TCON again"
+Date: Fri,  2 Feb 2024 20:07:48 -0800
+Message-ID: <20240203035414.816819631@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -59,125 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Jonathan Gray <jsg@jsg.id.au>
 
-commit f6564fce256a3944aa1bc76cb3c40e792d97c1eb upstream.
+This reverts commit f015d8b6405d950f30826b4d8d9e1084dd9ea2a4.
 
-Alexander Potapenko writes in [1]: "For every memory access in the code
-instrumented by KMSAN we call kmsan_get_metadata() to obtain the metadata
-for the memory being accessed.  For virtual memory the metadata pointers
-are stored in the corresponding `struct page`, therefore we need to call
-virt_to_page() to get them.
+duplicated a change made in 6.7
+e7ab758741672acb21c5d841a9f0309d30e48a06
 
-According to the comment in arch/x86/include/asm/page.h,
-virt_to_page(kaddr) returns a valid pointer iff virt_addr_valid(kaddr) is
-true, so KMSAN needs to call virt_addr_valid() as well.
-
-To avoid recursion, kmsan_get_metadata() must not call instrumented code,
-therefore ./arch/x86/include/asm/kmsan.h forks parts of
-arch/x86/mm/physaddr.c to check whether a virtual address is valid or not.
-
-But the introduction of rcu_read_lock() to pfn_valid() added instrumented
-RCU API calls to virt_to_page_or_null(), which is called by
-kmsan_get_metadata(), so there is an infinite recursion now.  I do not
-think it is correct to stop that recursion by doing
-kmsan_enter_runtime()/kmsan_exit_runtime() in kmsan_get_metadata(): that
-would prevent instrumented functions called from within the runtime from
-tracking the shadow values, which might introduce false positives."
-
-Fix the issue by switching pfn_valid() to the _sched() variant of
-rcu_read_lock/unlock(), which does not require calling into RCU.  Given
-the critical section in pfn_valid() is very small, this is a reasonable
-trade-off (with preemptible RCU).
-
-KMSAN further needs to be careful to suppress calls into the scheduler,
-which would be another source of recursion.  This can be done by wrapping
-the call to pfn_valid() into preempt_disable/enable_no_resched().  The
-downside is that this sacrifices breaking scheduling guarantees; however,
-a kernel compiled with KMSAN has already given up any performance
-guarantees due to being heavily instrumented.
-
-Note, KMSAN code already disables tracing via Makefile, and since mmzone.h
-is included, it is not necessary to use the notrace variant, which is
-generally preferred in all other cases.
-
-Link: https://lkml.kernel.org/r/20240115184430.2710652-1-glider@google.com [1]
-Link: https://lkml.kernel.org/r/20240118110022.2538350-1-elver@google.com
-Fixes: 5ec8e8ea8b77 ("mm/sparsemem: fix race in accessing memory_section->usage")
-Signed-off-by: Marco Elver <elver@google.com>
-Reported-by: Alexander Potapenko <glider@google.com>
-Reported-by: syzbot+93a9e8a3dea8d6085e12@syzkaller.appspotmail.com
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Cc: Charan Teja Kalla <quic_charante@quicinc.com>
-Cc: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # 6.7
+Signed-off-by: Jonathan Gray <jsg@jsg.id.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kmsan.h |   17 ++++++++++++++++-
- include/linux/mmzone.h       |    6 +++---
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/modules/power/power_helpers.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/x86/include/asm/kmsan.h
-+++ b/arch/x86/include/asm/kmsan.h
-@@ -64,6 +64,7 @@ static inline bool kmsan_virt_addr_valid
- {
- 	unsigned long x = (unsigned long)addr;
- 	unsigned long y = x - __START_KERNEL_map;
-+	bool ret;
- 
- 	/* use the carry flag to determine if x was < __START_KERNEL_map */
- 	if (unlikely(x > y)) {
-@@ -79,7 +80,21 @@ static inline bool kmsan_virt_addr_valid
- 			return false;
- 	}
- 
--	return pfn_valid(x >> PAGE_SHIFT);
-+	/*
-+	 * pfn_valid() relies on RCU, and may call into the scheduler on exiting
-+	 * the critical section. However, this would result in recursion with
-+	 * KMSAN. Therefore, disable preemption here, and re-enable preemption
-+	 * below while suppressing reschedules to avoid recursion.
-+	 *
-+	 * Note, this sacrifices occasionally breaking scheduling guarantees.
-+	 * Although, a kernel compiled with KMSAN has already given up on any
-+	 * performance guarantees due to being heavily instrumented.
-+	 */
-+	preempt_disable();
-+	ret = pfn_valid(x >> PAGE_SHIFT);
-+	preempt_enable_no_resched();
-+
-+	return ret;
- }
- 
- #endif /* !MODULE */
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -2025,9 +2025,9 @@ static inline int pfn_valid(unsigned lon
- 	if (pfn_to_section_nr(pfn) >= NR_MEM_SECTIONS)
- 		return 0;
- 	ms = __pfn_to_section(pfn);
--	rcu_read_lock();
-+	rcu_read_lock_sched();
- 	if (!valid_section(ms)) {
--		rcu_read_unlock();
-+		rcu_read_unlock_sched();
- 		return 0;
- 	}
- 	/*
-@@ -2035,7 +2035,7 @@ static inline int pfn_valid(unsigned lon
- 	 * the entire section-sized span.
- 	 */
- 	ret = early_section(ms) || pfn_section_valid(ms, pfn);
--	rcu_read_unlock();
-+	rcu_read_unlock_sched();
- 
- 	return ret;
- }
+--- a/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
++++ b/drivers/gpu/drm/amd/display/modules/power/power_helpers.c
+@@ -841,8 +841,6 @@ bool is_psr_su_specific_panel(struct dc_
+ 				isPSRSUSupported = false;
+ 			else if (dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x03)
+ 				isPSRSUSupported = false;
+-			else if (dpcd_caps->sink_dev_id_str[1] == 0x08 && dpcd_caps->sink_dev_id_str[0] == 0x03)
+-				isPSRSUSupported = false;
+ 			else if (dpcd_caps->psr_info.force_psrsu_cap == 0x1)
+ 				isPSRSUSupported = true;
+ 		}
 
 
