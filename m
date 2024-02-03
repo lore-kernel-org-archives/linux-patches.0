@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6153C11720;
-	Sat,  3 Feb 2024 04:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BEB11720;
+	Sat,  3 Feb 2024 04:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933945; cv=none; b=q7CqlwJSHVzwechZpamUY01Xwx5cf4JNoxrjLOiZv9wsyANY6pF3fg6w9e4g3W2qJGviQBgIJwZ9xstlft6JGtytCjxK2V4zC8Jyn3FDHed9TM7qdOq67dazk9SL+wzPlT3VWXaYoXYuuC/VxfaRmpwlFWYe9UN/Q9EjAOUM+WI=
+	t=1706933946; cv=none; b=nbm4Tbb8JdzMOcQhM+XP4EMPg1Hj4fHGCMUAL81q+/EOxPNyFo7X0Xv+tb/Oy4ARCxi3nM6WFzWpVkblm7RYP/IvGxzlR63uwrEE2E2Vyh2a1SfCs4KUQIrnIuoXAALSABCSzNEryWx6O9kN2Rbqav16Rhk7bSXzfimtj/swbQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933945; c=relaxed/simple;
-	bh=Mu3Ee2Miy3ZWQjNzv46yOfxvTGKNpJPYH09yi6bsF/w=;
+	s=arc-20240116; t=1706933946; c=relaxed/simple;
+	bh=P04Lhglh09JisJAP1Cc/YKt/dowaJTvj5+nC0VeJuyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tsJ8CWCBGf9HHtxfbg/SLbaXM2spqU864sSnivnLK1Lqp7e7W29VmYEiNOedyri/JNPhtuXjlIUXR9YDLxkG+MqdhfG97Y3LgBoHJCa+oJyNPHmVexJj4bhXWB/UAx+tGlPCcqRdKsavpLTc7aK0QhbOfjFhUFIMo2KNLDTI26s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMEpR10v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pn1euQaGgGYQNUKhrMliZT5rf6Pk47v6PZ9DCKYcWmeFTgZ8yTdiL5PiM8CMyhsORomEH0J3b9hUAc6Y+AtsYb+P3KVBAQTlbn7olJ0ZXIYMNkSbv3ZqfSUz9Mq1pQREaxFITtzCdFbbPlYRby+ve2Fa3Etb3Xku4kk8iz+Uh6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2zkWsPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMEpR10v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1E3C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2zkWsPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AC4C433F1;
 	Sat,  3 Feb 2024 04:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933945;
-	bh=Mu3Ee2Miy3ZWQjNzv46yOfxvTGKNpJPYH09yi6bsF/w=;
+	bh=P04Lhglh09JisJAP1Cc/YKt/dowaJTvj5+nC0VeJuyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMEpR10vSJ1MJWB0AFsEPhLSs0i2Cj1vCsmxqBfRUPWvZYoN13q/6+zhmlZWoRWD+
-	 qPiG4ZvLk+eCEkW72P4SQy7AjeUVa39QzCvA2jiC6U1QtiTy8WwJkCUU+r3am72eDq
-	 j3izhoWl8Hxfy52s0XTqIHcgd5O8TGDX99aRYeaA=
+	b=I2zkWsPqmoQYH2b4guxRbv4w3PJ+Dsb4DwNvbKANBQtIQc1+085gQck9qmRHhdauP
+	 QN64T5LNNxhpm/3549zsUjVJ9VG+LKKaLJNS/22m53Fmy+cytxsMffKavvkN8D7thm
+	 XRvcCO63aTFtye01IuJmgyyKixznPTDvSEBoB/a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 287/353] perf: Fix the nr_addr_filters fix
-Date: Fri,  2 Feb 2024 20:06:45 -0800
-Message-ID: <20240203035412.866536521@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+864a269c27ee06b58374@syzkaller.appspotmail.com
+Subject: [PATCH 6.7 288/353] wifi: cfg80211: fix RCU dereference in __cfg80211_bss_update
+Date: Fri,  2 Feb 2024 20:06:46 -0800
+Message-ID: <20240203035412.896026208@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,48 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 388a1fb7da6aaa1970c7e2a7d7fcd983a87a8484 ]
+[ Upstream commit 1184950e341c11b6f82bc5b59564411d9537ab27 ]
 
-Thomas reported that commit 652ffc2104ec ("perf/core: Fix narrow
-startup race when creating the perf nr_addr_filters sysfs file") made
-the entire attribute group vanish, instead of only the nr_addr_filters
-attribute.
+Replace rcu_dereference() with rcu_access_pointer() since we hold
+the lock here (and aren't in an RCU critical section).
 
-Additionally a stray return.
-
-Insufficient coffee was involved with both writing and merging the
-patch.
-
-Fixes: 652ffc2104ec ("perf/core: Fix narrow startup race when creating the perf nr_addr_filters sysfs file")
-Reported-by: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Thomas Richter <tmricht@linux.ibm.com>
-Link: https://lkml.kernel.org/r/20231122100756.GP8262@noisy.programming.kicks-ass.net
+Fixes: 32af9a9e1069 ("wifi: cfg80211: free beacon_ies when overridden from hidden BSS")
+Reported-and-tested-by: syzbot+864a269c27ee06b58374@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://msgid.link/tencent_BF8F0DF0258C8DBF124CDDE4DD8D992DCF07@qq.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/wireless/scan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index fbecba5b00b1..7c0330579718 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -11434,12 +11434,10 @@ static umode_t pmu_dev_is_visible(struct kobject *kobj, struct attribute *a, int
- 	struct device *dev = kobj_to_dev(kobj);
- 	struct pmu *pmu = dev_get_drvdata(dev);
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index 082f0bd4ebdd..b9da6f5152cb 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1865,7 +1865,7 @@ __cfg80211_bss_update(struct cfg80211_registered_device *rdev,
+ 					 &hidden->hidden_list);
+ 				hidden->refcount++;
  
--	if (!pmu->nr_addr_filters)
-+	if (n == 2 && !pmu->nr_addr_filters)
- 		return 0;
- 
- 	return a->mode;
--
--	return 0;
- }
- 
- static struct attribute_group pmu_dev_attr_group = {
+-				ies = (void *)rcu_dereference(new->pub.beacon_ies);
++				ies = (void *)rcu_access_pointer(new->pub.beacon_ies);
+ 				rcu_assign_pointer(new->pub.beacon_ies,
+ 						   hidden->pub.beacon_ies);
+ 				if (ies)
 -- 
 2.43.0
 
