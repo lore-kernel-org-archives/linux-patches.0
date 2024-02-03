@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59D0171A6;
-	Sat,  3 Feb 2024 04:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED87E1079D;
+	Sat,  3 Feb 2024 04:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933534; cv=none; b=ajS4YF0fDW5d6TaZh66zvXDON5LE5BXcJTINj1j+x1sH2kU6G6h/G33d2zPGzUQma8Z3RyDaLgAuq/u1Jd11y2jojeV64Lx81gDLffPGSIDVf+xhbk+WBgfFJBekGyXl5tI1cGlx8fzgdWbgh8JllGSHwwQAGUNvF6ORVY6XQA8=
+	t=1706933536; cv=none; b=SHhVPmNzxIDcN+pb/VZtoK4C0BH39y9KGqnP5KgIkGiHNMLVOd/muoCyGmbG5GaQMVBj+esfrHT5EEydw2qqiJ6HDWMSQyWi8SA6Ud4k5SP0920EYFfiAodOudKrnlSA1W6+Kgg3PorFKKhdwCuF0MaBlQ06who6lhMY0ui5niA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933534; c=relaxed/simple;
-	bh=988bYwNPUCLu0SrFXBjxLvs0yhfvkvGKFqd464+O+jE=;
+	s=arc-20240116; t=1706933536; c=relaxed/simple;
+	bh=OH2M3pwxAbICQE1LKU/+dWDZmMraTFjHpd6sk3gK0uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfg0bmmxhIJf2IfVrHeyV7EsjkJqIOqH9Ol5zEgSHQ8TYl0xCknwQtOekxRiMk9o5Wpu+r3cuvxPm3Thq9onlXRKX6hY0/cW+fRYuBBJZIQ8aA31ebYur88GcE2CG/aGre75RVOLrbfb9eKs5XOAT1KC1muzS62rZCaGK9KCbgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oarZdWEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQqdxkQnLSnNhCaqsoscgECEJQXsT1oQnjps1Sv5bkgc22KgKUE0wZ1hUSvy5GU/yica5A3ZE9LneUFQ6wjEZD171+CYUNlBsK/ugJsLRz923mLefamBIG6VZTZoIYxPsmUrIKsRyMKk/OqQ0aURUQUrRDLupxti3TE/nIinA30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yzjo7N3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oarZdWEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CC1CC433C7;
-	Sat,  3 Feb 2024 04:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yzjo7N3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5898EC43390;
+	Sat,  3 Feb 2024 04:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933534;
-	bh=988bYwNPUCLu0SrFXBjxLvs0yhfvkvGKFqd464+O+jE=;
+	s=korg; t=1706933535;
+	bh=OH2M3pwxAbICQE1LKU/+dWDZmMraTFjHpd6sk3gK0uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oarZdWEZqMU0V1aFktCJZUl4gHz4Bo459N59A7auOMS4hEzl9a7UCoN4C6dUV7mMo
-	 RhWLudPucfrUc6rzeWIMnpjxypac4ZZ1xSJvp08/HD51j9mojRi48Uj+oEK6hZmnLV
-	 Aj/nITmeFbaa4TKIVjaKFqo7+O84v3yDH8FZz5E0=
+	b=Yzjo7N3ZIEXcg32BlLLI6zwrRlQHRmfDZtzB9SLyy1/Z94sB55b+eMJ37BOTTyf2Z
+	 s8o7QppqkNiDRDm3uKRrl9/HyH5Gu8/9oNC1DqV9EaBCA7ldIuyl7OS3IufTbg5z0n
+	 y4WbN3EmcS6E808VTffAdkgG5sLR0AW1rpAkAPxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sumit Saxena <sumit.saxena@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/322] scsi: mpi3mr: Add support for SAS5116 PCI IDs
-Date: Fri,  2 Feb 2024 20:02:56 -0800
-Message-ID: <20240203035401.718180473@linuxfoundation.org>
+Subject: [PATCH 6.6 080/322] scsi: mpi3mr: Add PCI checks where SAS5116 diverges from SAS4116
+Date: Fri,  2 Feb 2024 20:02:57 -0800
+Message-ID: <20240203035401.751568174@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,37 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Sumit Saxena <sumit.saxena@broadcom.com>
 
-[ Upstream commit 6fa21eab82be57a3ad2470fac27b982793805336 ]
+[ Upstream commit c9260ff28ee561fca5f96425c9328a9698e8427b ]
 
-Add support for Broadcom's SAS5116 IO/RAID controllers PCI IDs.
+Add PCI IDs checks for the cases where SAS5116 diverges from SAS4116 in
+behavior.
 
 Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
-Link: https://lore.kernel.org/r/20231123160132.4155-2-sumit.saxena@broadcom.com
+Link: https://lore.kernel.org/r/20231123160132.4155-3-sumit.saxena@broadcom.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 3 ++-
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 5 ++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index f039f1d98647..0d148c39ebcc 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -1892,7 +1892,8 @@ static int mpi3mr_create_op_reply_q(struct mpi3mr_ioc *mrioc, u16 qidx)
+ 
+ 	reply_qid = qidx + 1;
+ 	op_reply_q->num_replies = MPI3MR_OP_REP_Q_QD;
+-	if (!mrioc->pdev->revision)
++	if ((mrioc->pdev->device == MPI3_MFGPAGE_DEVID_SAS4116) &&
++		!mrioc->pdev->revision)
+ 		op_reply_q->num_replies = MPI3MR_OP_REP_Q_QD4K;
+ 	op_reply_q->ci = 0;
+ 	op_reply_q->ephase = 1;
 diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index c7c75257425d..5c50701aa3f7 100644
+index 5c50701aa3f7..80d71041086e 100644
 --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -5424,6 +5424,14 @@ static const struct pci_device_id mpi3mr_pci_id_table[] = {
- 		PCI_DEVICE_SUB(MPI3_MFGPAGE_VENDORID_BROADCOM,
- 		    MPI3_MFGPAGE_DEVID_SAS4116, PCI_ANY_ID, PCI_ANY_ID)
- 	},
-+	{
-+		PCI_DEVICE_SUB(MPI3_MFGPAGE_VENDORID_BROADCOM,
-+		    MPI3_MFGPAGE_DEVID_SAS5116_MPI, PCI_ANY_ID, PCI_ANY_ID)
-+	},
-+	{
-+		PCI_DEVICE_SUB(MPI3_MFGPAGE_VENDORID_BROADCOM,
-+		    MPI3_MFGPAGE_DEVID_SAS5116_MPI_MGMT, PCI_ANY_ID, PCI_ANY_ID)
-+	},
- 	{ 0 }
- };
- MODULE_DEVICE_TABLE(pci, mpi3mr_pci_id_table);
+@@ -5095,7 +5095,10 @@ mpi3mr_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		mpi3mr_init_drv_cmd(&mrioc->evtack_cmds[i],
+ 				    MPI3MR_HOSTTAG_EVTACKCMD_MIN + i);
+ 
+-	if (pdev->revision)
++	if ((pdev->device == MPI3_MFGPAGE_DEVID_SAS4116) &&
++		!pdev->revision)
++		mrioc->enable_segqueue = false;
++	else
+ 		mrioc->enable_segqueue = true;
+ 
+ 	init_waitqueue_head(&mrioc->reset_waitq);
 -- 
 2.43.0
 
