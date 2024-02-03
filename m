@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F6E1756F;
-	Sat,  3 Feb 2024 04:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F58017593;
+	Sat,  3 Feb 2024 04:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933565; cv=none; b=gcrcuU9sfPi7sBOyvJMeLOZvMZWCnmKAVFfjK3qA+YzkeLuAj5cRxWm9KV1vg6EQ9LRmP5HrjTbiReAkhSlwyNwgZa7NaE6NSHuifhNNGoZtOjanW1kVW0ClOqn+q6qYYWepvkemeGOwk/CzUfK9npaZpkL14HPU52WpCEx03Fg=
+	t=1706933566; cv=none; b=f2S3Ts9e7Usf9g7glsHCWbi87lViYAl3HXs+QU/aPs4aTH3H9biKJax3/e1N9looj3MAS6usLQn9WPGGfvZPYYW7tyMcW0mKarOIA9iuWBU+MlOEawk7z/0JezCF5i09wH6T9Cx7b/Ow3l+vhgYeF6n0l1H0jaPjoZT9qcjQ1aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933565; c=relaxed/simple;
-	bh=48pMXsbwdB/6WKH0r4ObAU3bcETnjt4uGSnT5pVIGM0=;
+	s=arc-20240116; t=1706933566; c=relaxed/simple;
+	bh=HnVtE6xo9PWn0x864uID6ZXdyL9Xp5GoLfSuclzIbUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouVO0PLfoO8oJJlny9iy7RNtljRR6USucc5OaHpgxJ7IH1dhvTX8evWF1DxdtQgOS1JhIhr+gphmQM4hLF9JO7Gcx+x7GkoqRcAqY/lqtPBH5LBJCq33iw8T4ChRXjY4EVEld167IgYmltr48GKjX50KgN+OzF1f8iYknFpOIf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxOyPobD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nOR5ezDv82uCI3uumuX07Z7xLzo7Mn2jSB0WrYw0mwfEe6yWIiUXUadvP5fg1ndU3smFZnd8XSNOe50wpckyQiDke+NX7yqtS7BkxbCRUiRURtFb0LL4a4PpF8UFvdnN5TvgZQagm07HBnFiWMZ58OdtCgY503PMd9sVo20J+Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAMzTGas; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxOyPobD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8073EC433C7;
-	Sat,  3 Feb 2024 04:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAMzTGas"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A02EC433C7;
+	Sat,  3 Feb 2024 04:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933565;
-	bh=48pMXsbwdB/6WKH0r4ObAU3bcETnjt4uGSnT5pVIGM0=;
+	s=korg; t=1706933566;
+	bh=HnVtE6xo9PWn0x864uID6ZXdyL9Xp5GoLfSuclzIbUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxOyPobDMvHu3IEArKlV5gfrHmYswxy2fj02BeXOUFPTjP8qb3M2yQV+LJvQr9fLs
-	 lPkVw5/gnhjfds9U4vAPqSfJjna8NjLDqIwppFQK49RVuBZQEKCGYHjojWkAUWX+cX
-	 vJVIOMivtmCExQi4EfCLXmDCmvcyzKaiUdWGJLus=
+	b=lAMzTGasHDUdZtIjaoyDYCnvq795wVZidC/WbhxdHy8IzSsUVAh2AlyEGV6ypxKLa
+	 6BakMi9ibeVeVb6V1UGgt4hTm5LXVjUT5nJCPZ+Rajv24ohH6e06DdG5xLc1ePFHv6
+	 TJzTgqsn54jtuusQauj/Pv5Zlm3Q4a8agNq5+fGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Simek <michal.simek@amd.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/322] arm64: zynqmp: Fix clock node name in kv260 cards
-Date: Fri,  2 Feb 2024 20:03:37 -0800
-Message-ID: <20240203035403.014242980@linuxfoundation.org>
+Subject: [PATCH 6.6 121/322] selftests/bpf: fix compiler warnings in RELEASE=1 mode
+Date: Fri,  2 Feb 2024 20:03:38 -0800
+Message-ID: <20240203035403.055343876@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -50,115 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 0bfb7950cc1975372c4c58c3d3f9803f05245d46 ]
+[ Upstream commit 62d9a969f4a95219c757831e9ad66cd4dd9edee5 ]
 
-node name shouldn't use '_' that's why convert it to '-'.
+When compiling BPF selftests with RELEASE=1, we get two new
+warnings, which are treated as errors. Fix them.
 
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20231212225343.1723081-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso | 12 ++++++------
- arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso | 12 ++++++------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ tools/testing/selftests/bpf/veristat.c        | 2 +-
+ tools/testing/selftests/bpf/xdp_hw_metadata.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso
-index dee238739290..92f4190d564d 100644
---- a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso
-+++ b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso
-@@ -22,37 +22,37 @@
- /plugin/;
+diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
+index 655095810d4a..0ad98b6a8e6e 100644
+--- a/tools/testing/selftests/bpf/veristat.c
++++ b/tools/testing/selftests/bpf/veristat.c
+@@ -1214,7 +1214,7 @@ static int cmp_join_stat(const struct verif_stats_join *s1,
+ 			 enum stat_id id, enum stat_variant var, bool asc)
+ {
+ 	const char *str1 = NULL, *str2 = NULL;
+-	double v1, v2;
++	double v1 = 0.0, v2 = 0.0;
+ 	int cmp = 0;
  
- &{/} {
--	si5332_0: si5332_0 { /* u17 */
-+	si5332_0: si5332-0 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <125000000>;
+ 	fetch_join_stat_value(s1, id, var, &str1, &v1);
+diff --git a/tools/testing/selftests/bpf/xdp_hw_metadata.c b/tools/testing/selftests/bpf/xdp_hw_metadata.c
+index 613321eb84c1..adb77c1a6a74 100644
+--- a/tools/testing/selftests/bpf/xdp_hw_metadata.c
++++ b/tools/testing/selftests/bpf/xdp_hw_metadata.c
+@@ -68,7 +68,7 @@ static int open_xsk(int ifindex, struct xsk *xsk, __u32 queue_id)
+ 		.frame_size = XSK_UMEM__DEFAULT_FRAME_SIZE,
+ 		.flags = XDP_UMEM_UNALIGNED_CHUNK_FLAG,
  	};
- 
--	si5332_1: si5332_1 { /* u17 */
-+	si5332_1: si5332-1 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <25000000>;
- 	};
- 
--	si5332_2: si5332_2 { /* u17 */
-+	si5332_2: si5332-2 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <48000000>;
- 	};
- 
--	si5332_3: si5332_3 { /* u17 */
-+	si5332_3: si5332-3 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <24000000>;
- 	};
- 
--	si5332_4: si5332_4 { /* u17 */
-+	si5332_4: si5332-4 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <26000000>;
- 	};
- 
--	si5332_5: si5332_5 { /* u17 */
-+	si5332_5: si5332-5 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <27000000>;
-diff --git a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso
-index 73c5cb156caf..f88b71f5b07a 100644
---- a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso
-+++ b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso
-@@ -17,37 +17,37 @@
- /plugin/;
- 
- &{/} {
--	si5332_0: si5332_0 { /* u17 */
-+	si5332_0: si5332-0 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <125000000>;
- 	};
- 
--	si5332_1: si5332_1 { /* u17 */
-+	si5332_1: si5332-1 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <25000000>;
- 	};
- 
--	si5332_2: si5332_2 { /* u17 */
-+	si5332_2: si5332-2 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <48000000>;
- 	};
- 
--	si5332_3: si5332_3 { /* u17 */
-+	si5332_3: si5332-3 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <24000000>;
- 	};
- 
--	si5332_4: si5332_4 { /* u17 */
-+	si5332_4: si5332-4 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <26000000>;
- 	};
- 
--	si5332_5: si5332_5 { /* u17 */
-+	si5332_5: si5332-5 { /* u17 */
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <27000000>;
+-	__u32 idx;
++	__u32 idx = 0;
+ 	u64 addr;
+ 	int ret;
+ 	int i;
 -- 
 2.43.0
 
