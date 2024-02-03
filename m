@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657991CAA0;
-	Sat,  3 Feb 2024 04:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213231079D;
+	Sat,  3 Feb 2024 04:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933526; cv=none; b=tcKYl0rri1LI74L3Twd8YUB2T1hKGOVQVamU+RrkUbEl8QfCFEpGm7e7Pye+dkTTPd0wURmnHAJhksRIuy7jFFAO2ge0fCmKbduEolu2xI2KCDlZdndj8StCla/eLXtqXhcg2oubRq+q1+R9m3GWkJdP/aDzdXKKO1zV7YBTLvQ=
+	t=1706933527; cv=none; b=YJHQH8y0qBdr5KI25uWu5BPk+O41j3RtufjRtab/+23EKzjGKipio7Spad+W/JHobsf7uwqO1ctKP93nYd5FvrDlqIJsABYpqr31bqpFzzpQ5ri1o2SZjwLAIN8JUj2P2X33wTh3vxl5oknk3ys+nOk+46ZGKOavH4vMIw5mT0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933526; c=relaxed/simple;
-	bh=teE1M8/M5Ke6ogj2bop939hINL9aiAyEbsOhfuvelWc=;
+	s=arc-20240116; t=1706933527; c=relaxed/simple;
+	bh=ac56Vp3nwaMZWIeofzy0KGQgRs3Hqbzx8aahuDSX0IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnnBrUK+bLT8R+fa19KdF4Tphf1J5jyLPTB2yy8TGAlzj2kl523OTjYlsX2uGGxFJQZ2g+NMwrm5GkRTx0ODjNOZDvtk1/3a/UYcAdmhKwCRlltZ8ru+PgyEu2rPUHEoac8izqh1FGyReJhMnDVFY5afiGF9MB/VdV2DLyBqiv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gl9/8NaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JoaOynPaMPQj0vrnuHF58AJdylSwZf3L0Cs0FyPR4yVXR2/jKkQT5Ir637zSLM/QIE7gcSd8gCtfUyEjngifEwC4OMvjs7Gmp17+Ph4UBmwyUns6u20uL7xQ4ACZuZ1+lEFdSBDOp0AyfZ3VbEtejgMPRZ5k0m7Z0/cMmJKJjnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKXLBmUk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gl9/8NaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D999C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKXLBmUk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC77FC433C7;
 	Sat,  3 Feb 2024 04:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933526;
-	bh=teE1M8/M5Ke6ogj2bop939hINL9aiAyEbsOhfuvelWc=;
+	s=korg; t=1706933527;
+	bh=ac56Vp3nwaMZWIeofzy0KGQgRs3Hqbzx8aahuDSX0IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gl9/8NaKUU4RkHBNJKRHu/say+K/alaTYmhOGX2RvP2d8GwKJib3hmEqOQgcresGh
-	 kg/rt8dEr72WQANt8jzQ4+Dbu2uqDxERMkwFqTSR96ECz9kf3iyi8I02hmINv8L5nu
-	 iK9Wbzv1IpZErEPCokC4JIZvBdr5RntI/YvvyVRQ=
+	b=SKXLBmUk8T2Dj/XKqpmqPOYhrTbl3xIeYGXKgQSfA3kGGcWOl9bN0ryDwkM9L/xlR
+	 EquJGsOAKpZ+v5IxHEC84rjVzCXBZZ2CziLTgGdMLbXq33WE57NgDKpEK4MMLPbqbW
+	 hOXHdJWKb2SnLAL8njjcknbs4MpDEL0mDk6Ak4Nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guo Ren <guoren@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/322] s390/boot: always align vmalloc area on segment boundary
-Date: Fri,  2 Feb 2024 20:02:20 -0800
-Message-ID: <20240203035400.480845947@linuxfoundation.org>
+Subject: [PATCH 6.6 044/322] arch: consolidate arch_irq_work_raise prototypes
+Date: Fri,  2 Feb 2024 20:02:21 -0800
+Message-ID: <20240203035400.511432896@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,61 +54,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 65f8780e2d70257200547b5a7654974aa7c37ce1 ]
+[ Upstream commit 64bac5ea17d527872121adddfee869c7a0618f8f ]
 
-The size of vmalloc area depends from various factors
-on boot and could be set to:
+The prototype was hidden in an #ifdef on x86, which causes a warning:
 
-1. Default size as determined by VMALLOC_DEFAULT_SIZE macro;
-2. One half of the virtual address space not occupied by
-   modules and fixed mappings;
-3. The size provided by user with vmalloc= kernel command
-   line parameter;
+kernel/irq_work.c:72:13: error: no previous prototype for 'arch_irq_work_raise' [-Werror=missing-prototypes]
 
-In cases [1] and [2] the vmalloc area base address is aligned
-on Region3 table type boundary, while in case [3] in might get
-aligned on page boundary.
+Some architectures have a working prototype, while others don't.
+Fix this by providing it in only one place that is always visible.
 
-Limit the waste of page tables and always align vmalloc area
-size and base address on segment boundary.
-
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/ipl_parm.c | 2 +-
- arch/s390/boot/startup.c  | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/arm/include/asm/irq_work.h     | 2 --
+ arch/arm64/include/asm/irq_work.h   | 2 --
+ arch/csky/include/asm/irq_work.h    | 2 +-
+ arch/powerpc/include/asm/irq_work.h | 1 -
+ arch/riscv/include/asm/irq_work.h   | 2 +-
+ arch/s390/include/asm/irq_work.h    | 2 --
+ arch/x86/include/asm/irq_work.h     | 1 -
+ include/linux/irq_work.h            | 3 +++
+ 8 files changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/arch/s390/boot/ipl_parm.c b/arch/s390/boot/ipl_parm.c
-index 7b7521762633..4230144645bc 100644
---- a/arch/s390/boot/ipl_parm.c
-+++ b/arch/s390/boot/ipl_parm.c
-@@ -272,7 +272,7 @@ void parse_boot_command_line(void)
- 			memory_limit = round_down(memparse(val, NULL), PAGE_SIZE);
+diff --git a/arch/arm/include/asm/irq_work.h b/arch/arm/include/asm/irq_work.h
+index 3149e4dc1b54..8895999834cc 100644
+--- a/arch/arm/include/asm/irq_work.h
++++ b/arch/arm/include/asm/irq_work.h
+@@ -9,6 +9,4 @@ static inline bool arch_irq_work_has_interrupt(void)
+ 	return is_smp();
+ }
  
- 		if (!strcmp(param, "vmalloc") && val) {
--			vmalloc_size = round_up(memparse(val, NULL), PAGE_SIZE);
-+			vmalloc_size = round_up(memparse(val, NULL), _SEGMENT_SIZE);
- 			vmalloc_size_set = 1;
- 		}
+-extern void arch_irq_work_raise(void);
+-
+ #endif /* _ASM_ARM_IRQ_WORK_H */
+diff --git a/arch/arm64/include/asm/irq_work.h b/arch/arm64/include/asm/irq_work.h
+index 81bbfa3a035b..a1020285ea75 100644
+--- a/arch/arm64/include/asm/irq_work.h
++++ b/arch/arm64/include/asm/irq_work.h
+@@ -2,8 +2,6 @@
+ #ifndef __ASM_IRQ_WORK_H
+ #define __ASM_IRQ_WORK_H
  
-diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
-index d3e48bd9c394..d08db5df6091 100644
---- a/arch/s390/boot/startup.c
-+++ b/arch/s390/boot/startup.c
-@@ -212,7 +212,8 @@ static unsigned long setup_kernel_memory_layout(void)
- 	VMALLOC_END = MODULES_VADDR;
+-extern void arch_irq_work_raise(void);
+-
+ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return true;
+diff --git a/arch/csky/include/asm/irq_work.h b/arch/csky/include/asm/irq_work.h
+index 33aaf39d6f94..d39fcc1f5395 100644
+--- a/arch/csky/include/asm/irq_work.h
++++ b/arch/csky/include/asm/irq_work.h
+@@ -7,5 +7,5 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return true;
+ }
+-extern void arch_irq_work_raise(void);
++
+ #endif /* __ASM_CSKY_IRQ_WORK_H */
+diff --git a/arch/powerpc/include/asm/irq_work.h b/arch/powerpc/include/asm/irq_work.h
+index b8b0be8f1a07..c6d3078bd8c3 100644
+--- a/arch/powerpc/include/asm/irq_work.h
++++ b/arch/powerpc/include/asm/irq_work.h
+@@ -6,6 +6,5 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return true;
+ }
+-extern void arch_irq_work_raise(void);
  
- 	/* allow vmalloc area to occupy up to about 1/2 of the rest virtual space left */
--	vmalloc_size = min(vmalloc_size, round_down(VMALLOC_END / 2, _REGION3_SIZE));
-+	vsize = round_down(VMALLOC_END / 2, _SEGMENT_SIZE);
-+	vmalloc_size = min(vmalloc_size, vsize);
- 	VMALLOC_START = VMALLOC_END - vmalloc_size;
+ #endif /* _ASM_POWERPC_IRQ_WORK_H */
+diff --git a/arch/riscv/include/asm/irq_work.h b/arch/riscv/include/asm/irq_work.h
+index b53891964ae0..b27a4d64fc6a 100644
+--- a/arch/riscv/include/asm/irq_work.h
++++ b/arch/riscv/include/asm/irq_work.h
+@@ -6,5 +6,5 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return IS_ENABLED(CONFIG_SMP);
+ }
+-extern void arch_irq_work_raise(void);
++
+ #endif /* _ASM_RISCV_IRQ_WORK_H */
+diff --git a/arch/s390/include/asm/irq_work.h b/arch/s390/include/asm/irq_work.h
+index 603783766d0a..f00c9f610d5a 100644
+--- a/arch/s390/include/asm/irq_work.h
++++ b/arch/s390/include/asm/irq_work.h
+@@ -7,6 +7,4 @@ static inline bool arch_irq_work_has_interrupt(void)
+ 	return true;
+ }
  
- 	/* split remaining virtual space between 1:1 mapping & vmemmap array */
+-void arch_irq_work_raise(void);
+-
+ #endif /* _ASM_S390_IRQ_WORK_H */
+diff --git a/arch/x86/include/asm/irq_work.h b/arch/x86/include/asm/irq_work.h
+index 800ffce0db29..6b4d36c95165 100644
+--- a/arch/x86/include/asm/irq_work.h
++++ b/arch/x86/include/asm/irq_work.h
+@@ -9,7 +9,6 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return boot_cpu_has(X86_FEATURE_APIC);
+ }
+-extern void arch_irq_work_raise(void);
+ #else
+ static inline bool arch_irq_work_has_interrupt(void)
+ {
+diff --git a/include/linux/irq_work.h b/include/linux/irq_work.h
+index 8cd11a223260..136f2980cba3 100644
+--- a/include/linux/irq_work.h
++++ b/include/linux/irq_work.h
+@@ -66,6 +66,9 @@ void irq_work_sync(struct irq_work *work);
+ void irq_work_run(void);
+ bool irq_work_needs_cpu(void);
+ void irq_work_single(void *arg);
++
++void arch_irq_work_raise(void);
++
+ #else
+ static inline bool irq_work_needs_cpu(void) { return false; }
+ static inline void irq_work_run(void) { }
 -- 
 2.43.0
 
