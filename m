@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83F017555;
-	Sat,  3 Feb 2024 04:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F14611720;
+	Sat,  3 Feb 2024 04:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933944; cv=none; b=WQgZvbnaxzrxKMwDkR7cmcTRsQ28ejhMkkIP16aLHnYrac0GDpL8C6w2iGmZsgDYc/yDOm9KsGmgCVcm1VxtJ5qyRnAfBbxYWL+dNKFyMgPzAp0tNqhkMEPYrCuM6DRO3mTHBmpCHwGvsBtHqodQxQdH4zQHVE4gjDjVa6lMW+Q=
+	t=1706933944; cv=none; b=thfVh98tNqAyU5n6ZLgNcxsks4AHEEH1aXXgrfxTu7Un0ldCaCzHBvg2Lu50WqiGJd1l8pKfaMz/v7HBLoSyRAv3fmgGvHHeWDVbw1p2io0iFaArozoak+wlAozVVHrGtsw5S8C9IDQ7zOLs+FmpEurSHV0Hx6bxEyQtcSoHTw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933944; c=relaxed/simple;
-	bh=l6j61nBP4iY1z0dK5FzpezFkI5zUNEVx2o2jgvwb05k=;
+	bh=ospwZBTkfK7pTTW2kUTq0XV6cBgTjKcrPwIah/LkTps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lJ3yKFqoGKh53Sph6fwQyzcaMOWAeCIG2lL+amEgWD/ECrMCL4at1B6mynmjZVIP4TuglRuoZhkiXr9ZKEkhBCjU62mJn08bdPKezbczRCMD+X2iQQvL5gRqWdh0NWv3xqnto0C8FDC2EiRB3rAQnMia9z2WeH4LhnMdISKNFWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGrg+6LS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SUcja1s3jlJiV8+u0mnZ2QoF4PJVYJL71xEIO7enn0byxpZdVF+Dpjgn8l/jHqA2qD/GpIx/C/znijrtf2GwvNDyL2wlYQoHaHmUIQqDUsR0WXz2SyfOdvq5CaOQLM2BnTBbqq9L23ol2ZKWckPkbj40wW4F2z/VgSqX9EjZPWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jN+jolw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGrg+6LS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1B6C43390;
-	Sat,  3 Feb 2024 04:19:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jN+jolw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65614C433F1;
+	Sat,  3 Feb 2024 04:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933943;
-	bh=l6j61nBP4iY1z0dK5FzpezFkI5zUNEVx2o2jgvwb05k=;
+	s=korg; t=1706933944;
+	bh=ospwZBTkfK7pTTW2kUTq0XV6cBgTjKcrPwIah/LkTps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGrg+6LSb4C562iccuMxNs3g0PPn7gC/0OEOOvWQP1DeV6kkfTTf6JVlcy74XKTK8
-	 ge9ROkE8RZQcmAwreDl+ZFnMkKuS1NEgjo9ZiG/R5tQctP3qzqTQswXSRnQtiBACDR
-	 K3QqP7ffpDUNghsApUdtca6dVyh5SmQ0HIL/esb0=
+	b=jN+jolw1BvxEF4Fib4hcVzc9pvMBy7clvHVg3lqnJ7PQfSDkv0lA4Wo0UrqTlKEx/
+	 QzGsXV9gro+YqTpAsz5qfaHUi2VWGBMN6EZHSrWzWAtHXiV8cST8XBUuTvc4fACxLE
+	 I8SbSfZFj9hgoTbhYgyo7jLaTT/AfzMDyRGHLpKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Tim Lunn <tim@feathertop.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 285/353] drm/amdkfd: Fix node NULL check in svm_range_get_range_boundaries()
-Date: Fri,  2 Feb 2024 20:06:43 -0800
-Message-ID: <20240203035412.791857016@linuxfoundation.org>
+Subject: [PATCH 6.7 286/353] i2c: rk3x: Adjust mask/value offset for i2c2 on rv1126
+Date: Fri,  2 Feb 2024 20:06:44 -0800
+Message-ID: <20240203035412.830024667@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -49,68 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Tim Lunn <tim@feathertop.org>
 
-[ Upstream commit d7a254fad873775ce6c32b77796c81e81e6b7f2e ]
+[ Upstream commit 92a85b7c6262f19c65a1c115cf15f411ba65a57c ]
 
-Range interval [start, last] is ordered by rb_tree, rb_prev, rb_next
-return value still needs NULL check, thus modified from "node" to "rb_node".
+Rockchip RV1126 is using old style i2c controller, the i2c2
+bus uses a non-sequential offset in the grf register for the
+mask/value bits for this bus.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_svm.c:2691 svm_range_get_range_boundaries() warn: can 'node' even be NULL?
+This patch fixes i2c2 bus on rv1126 SoCs.
 
-Suggested-by: Philip Yang <Philip.Yang@amd.com>
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Tim Lunn <tim@feathertop.org>
+Acked-by: Heiko Stuebner <heiko@sntech.de>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-rk3x.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index f66f88d2b643..9af1d094385a 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -2680,6 +2680,7 @@ svm_range_get_range_boundaries(struct kfd_process *p, int64_t addr,
- {
- 	struct vm_area_struct *vma;
- 	struct interval_tree_node *node;
-+	struct rb_node *rb_node;
- 	unsigned long start_limit, end_limit;
+diff --git a/drivers/i2c/busses/i2c-rk3x.c b/drivers/i2c/busses/i2c-rk3x.c
+index 4362db7c5789..086fdf262e7b 100644
+--- a/drivers/i2c/busses/i2c-rk3x.c
++++ b/drivers/i2c/busses/i2c-rk3x.c
+@@ -1295,8 +1295,12 @@ static int rk3x_i2c_probe(struct platform_device *pdev)
+ 			return -EINVAL;
+ 		}
  
- 	vma = vma_lookup(p->mm, addr << PAGE_SHIFT);
-@@ -2699,16 +2700,15 @@ svm_range_get_range_boundaries(struct kfd_process *p, int64_t addr,
- 	if (node) {
- 		end_limit = min(end_limit, node->start);
- 		/* Last range that ends before the fault address */
--		node = container_of(rb_prev(&node->rb),
--				    struct interval_tree_node, rb);
-+		rb_node = rb_prev(&node->rb);
- 	} else {
- 		/* Last range must end before addr because
- 		 * there was no range after addr
- 		 */
--		node = container_of(rb_last(&p->svms.objects.rb_root),
--				    struct interval_tree_node, rb);
-+		rb_node = rb_last(&p->svms.objects.rb_root);
- 	}
--	if (node) {
-+	if (rb_node) {
-+		node = container_of(rb_node, struct interval_tree_node, rb);
- 		if (node->last >= addr) {
- 			WARN(1, "Overlap with prev node and page fault addr\n");
- 			return -EFAULT;
+-		/* 27+i: write mask, 11+i: value */
+-		value = BIT(27 + bus_nr) | BIT(11 + bus_nr);
++		/* rv1126 i2c2 uses non-sequential write mask 20, value 4 */
++		if (i2c->soc_data == &rv1126_soc_data && bus_nr == 2)
++			value = BIT(20) | BIT(4);
++		else
++			/* 27+i: write mask, 11+i: value */
++			value = BIT(27 + bus_nr) | BIT(11 + bus_nr);
+ 
+ 		ret = regmap_write(grf, i2c->soc_data->grf_offset, value);
+ 		if (ret != 0) {
 -- 
 2.43.0
 
