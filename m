@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0FB18EB1;
-	Sat,  3 Feb 2024 04:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F5812B9E;
+	Sat,  3 Feb 2024 04:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933445; cv=none; b=ndN8lY6KcVzfyHlXkb06EZa2jwN1s0UI30Ypk6KqT+EGjUazDCDF59CvmqLTrxVIOnT7awIoWgXiSQ4FiNukoqnFDfmcKuQVVOetv66Ckobo7lXJFGpbM7xhMvbN6VuzDZtnwOoBDXNTrY58YsfxXd4oIhDRWUzQjBtsx2gwlMc=
+	t=1706933446; cv=none; b=qAt9xtzQirC/yVUn6eryphFRYnoNbKfY7JLAwuelGj9WgYVsKslmx/sXGuRjj0zUosbwsl1BRJP35T8jyEpSbbxHzyYaIK6wQvOjF4cVBMYolr12ew1uCljGkcWA2ayAg4WX9qwbahOPk0KG1H/NXwoMeOZDyRLZZof1jrwJAog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933445; c=relaxed/simple;
-	bh=Y+I4CPOFQsLpr/GzPWvhu5X9yIUZwa8vPeiHczfMDPg=;
+	s=arc-20240116; t=1706933446; c=relaxed/simple;
+	bh=HhbeVmbjV0FhZ+5A1p7oFlpNnKwv90Pwv39c38Cuf40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u1ufP0hzG7WwIL1F4woHhmMhP74qnFnSu9czVn3XsvQc7AKDIl3bKRFyk+RyyKUUn1TJPYX6pAUMuLqTZoA/s5Fus3X0t2PwlwGzXCt78gYc07BF1ejqkkKszfubgiwxYSy8JTlSrhZ7AzhrhyzohB20vKUz7wxp+W7tEs6cT6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU/Gdiyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mt3EryfghQHCPvKNQSGuoOM57YWGAFAIHUMoNogKgiyxWUkdJvCtfJE8IabcVnaJUhwrn3UrZHhT0cfjSeQlv8wZCnY+O45xjhdxF4DqwnW9iby15aAdgIXGsPsG/i0nPvsRtxcm8WqlniVcEicgkV/Tfp13ip5V9Xud6G+Onz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfyPh9EP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU/Gdiyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A04C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfyPh9EP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E540CC43390;
 	Sat,  3 Feb 2024 04:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933445;
-	bh=Y+I4CPOFQsLpr/GzPWvhu5X9yIUZwa8vPeiHczfMDPg=;
+	s=korg; t=1706933446;
+	bh=HhbeVmbjV0FhZ+5A1p7oFlpNnKwv90Pwv39c38Cuf40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tU/GdiyvuFrcknRtrA/GWmLtBAKV2a68aQhIq49a3iyC7+iNixFPgqsDzONbuN8Oc
-	 Jnz4Ym/2KKPP+XcdpR3a9kcVcb1nhaT6IyGGCdKyBbMI8sZQ3/yt86D1WrII5BAtve
-	 KugQUsBN/2XY/vqXxmL3eYzjRAoLStH6sBc0KVPQ=
+	b=pfyPh9EP1ndwZjVHlq0096dmmzVc472y0GhDlYcU5zp7mpXFzOP1gc0hC+L0jeNIj
+	 1MB6We9KF6N8oU7R+b5NTZMWWNmt0oV2on3JgJfWYIHUDiY/zVnfvJKihtlETTWp/r
+	 DpywEuCbVRYM6VBQKQLPU5aX00UNpQHhzPDrsbrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
+	Peter Robinson <pbrobinson@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 153/219] xen/gntdev: Fix the abuse of underlying struct page in DMA-buf import
-Date: Fri,  2 Feb 2024 20:05:26 -0800
-Message-ID: <20240203035338.309600016@linuxfoundation.org>
+Subject: [PATCH 6.1 154/219] mfd: ti_am335x_tscadc: Fix TI SoC dependencies
+Date: Fri,  2 Feb 2024 20:05:27 -0800
+Message-ID: <20240203035338.403327698@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -48,153 +45,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+From: Peter Robinson <pbrobinson@gmail.com>
 
-[ Upstream commit 2d2db7d40254d5fb53b11ebd703cd1ed0c5de7a1 ]
+[ Upstream commit 284d16c456e5d4b143f375b8ccc4038ab3f4ee0f ]
 
-DO NOT access the underlying struct page of an sg table exported
-by DMA-buf in dmabuf_imp_to_refs(), this is not allowed.
-Please see drivers/dma-buf/dma-buf.c:mangle_sg_table() for details.
+The ti_am335x_tscadc is specific to some TI SoCs, update
+the dependencies for those SoCs and compile testing.
 
-Fortunately, here (for special Xen device) we can avoid using
-pages and calculate gfns directly from dma addresses provided by
-the sg table.
-
-Suggested-by: Daniel Vetter <daniel@ffwll.ch>
-Signed-off-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Acked-by: Daniel Vetter <daniel@ffwll.ch>
-Link: https://lore.kernel.org/r/20240107103426.2038075-1-olekstysh@gmail.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Link: https://lore.kernel.org/r/20231220155643.445849-1-pbrobinson@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntdev-dmabuf.c | 50 ++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ drivers/mfd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
-index 940e5e9e8a54..335451309566 100644
---- a/drivers/xen/gntdev-dmabuf.c
-+++ b/drivers/xen/gntdev-dmabuf.c
-@@ -11,6 +11,7 @@
- #include <linux/kernel.h>
- #include <linux/errno.h>
- #include <linux/dma-buf.h>
-+#include <linux/dma-direct.h>
- #include <linux/slab.h>
- #include <linux/types.h>
- #include <linux/uaccess.h>
-@@ -50,7 +51,7 @@ struct gntdev_dmabuf {
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 9da8235cb690..43cb511fd8ba 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -1440,6 +1440,7 @@ config MFD_DAVINCI_VOICECODEC
  
- 	/* Number of pages this buffer has. */
- 	int nr_pages;
--	/* Pages of this buffer. */
-+	/* Pages of this buffer (only for dma-buf export). */
- 	struct page **pages;
- };
- 
-@@ -484,7 +485,7 @@ static int dmabuf_exp_from_refs(struct gntdev_priv *priv, int flags,
- /* DMA buffer import support. */
- 
- static int
--dmabuf_imp_grant_foreign_access(struct page **pages, u32 *refs,
-+dmabuf_imp_grant_foreign_access(unsigned long *gfns, u32 *refs,
- 				int count, int domid)
- {
- 	grant_ref_t priv_gref_head;
-@@ -507,7 +508,7 @@ dmabuf_imp_grant_foreign_access(struct page **pages, u32 *refs,
- 		}
- 
- 		gnttab_grant_foreign_access_ref(cur_ref, domid,
--						xen_page_to_gfn(pages[i]), 0);
-+						gfns[i], 0);
- 		refs[i] = cur_ref;
- 	}
- 
-@@ -529,7 +530,6 @@ static void dmabuf_imp_end_foreign_access(u32 *refs, int count)
- 
- static void dmabuf_imp_free_storage(struct gntdev_dmabuf *gntdev_dmabuf)
- {
--	kfree(gntdev_dmabuf->pages);
- 	kfree(gntdev_dmabuf->u.imp.refs);
- 	kfree(gntdev_dmabuf);
- }
-@@ -549,12 +549,6 @@ static struct gntdev_dmabuf *dmabuf_imp_alloc_storage(int count)
- 	if (!gntdev_dmabuf->u.imp.refs)
- 		goto fail;
- 
--	gntdev_dmabuf->pages = kcalloc(count,
--				       sizeof(gntdev_dmabuf->pages[0]),
--				       GFP_KERNEL);
--	if (!gntdev_dmabuf->pages)
--		goto fail;
--
- 	gntdev_dmabuf->nr_pages = count;
- 
- 	for (i = 0; i < count; i++)
-@@ -576,7 +570,8 @@ dmabuf_imp_to_refs(struct gntdev_dmabuf_priv *priv, struct device *dev,
- 	struct dma_buf *dma_buf;
- 	struct dma_buf_attachment *attach;
- 	struct sg_table *sgt;
--	struct sg_page_iter sg_iter;
-+	struct sg_dma_page_iter sg_iter;
-+	unsigned long *gfns;
- 	int i;
- 
- 	dma_buf = dma_buf_get(fd);
-@@ -624,26 +619,31 @@ dmabuf_imp_to_refs(struct gntdev_dmabuf_priv *priv, struct device *dev,
- 
- 	gntdev_dmabuf->u.imp.sgt = sgt;
- 
--	/* Now convert sgt to array of pages and check for page validity. */
-+	gfns = kcalloc(count, sizeof(*gfns), GFP_KERNEL);
-+	if (!gfns) {
-+		ret = ERR_PTR(-ENOMEM);
-+		goto fail_unmap;
-+	}
-+
-+	/*
-+	 * Now convert sgt to array of gfns without accessing underlying pages.
-+	 * It is not allowed to access the underlying struct page of an sg table
-+	 * exported by DMA-buf, but since we deal with special Xen dma device here
-+	 * (not a normal physical one) look at the dma addresses in the sg table
-+	 * and then calculate gfns directly from them.
-+	 */
- 	i = 0;
--	for_each_sgtable_page(sgt, &sg_iter, 0) {
--		struct page *page = sg_page_iter_page(&sg_iter);
--		/*
--		 * Check if page is valid: this can happen if we are given
--		 * a page from VRAM or other resources which are not backed
--		 * by a struct page.
--		 */
--		if (!pfn_valid(page_to_pfn(page))) {
--			ret = ERR_PTR(-EINVAL);
--			goto fail_unmap;
--		}
-+	for_each_sgtable_dma_page(sgt, &sg_iter, 0) {
-+		dma_addr_t addr = sg_page_iter_dma_address(&sg_iter);
-+		unsigned long pfn = bfn_to_pfn(XEN_PFN_DOWN(dma_to_phys(dev, addr)));
- 
--		gntdev_dmabuf->pages[i++] = page;
-+		gfns[i++] = pfn_to_gfn(pfn);
- 	}
- 
--	ret = ERR_PTR(dmabuf_imp_grant_foreign_access(gntdev_dmabuf->pages,
-+	ret = ERR_PTR(dmabuf_imp_grant_foreign_access(gfns,
- 						      gntdev_dmabuf->u.imp.refs,
- 						      count, domid));
-+	kfree(gfns);
- 	if (IS_ERR(ret))
- 		goto fail_end_access;
- 
+ config MFD_TI_AM335X_TSCADC
+ 	tristate "TI ADC / Touch Screen chip support"
++	depends on ARCH_OMAP2PLUS || ARCH_K3 || COMPILE_TEST
+ 	select MFD_CORE
+ 	select REGMAP
+ 	select REGMAP_MMIO
 -- 
 2.43.0
 
