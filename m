@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0526171CE;
-	Sat,  3 Feb 2024 04:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F41171CE;
+	Sat,  3 Feb 2024 04:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933545; cv=none; b=lpPm2FouYtztzDy7TdJ69E7icQqdp0UGey8KyY7/zDQ/wS3jS04OKOumk3zT616bG4TXfit3iS7AqFT2OYZ55vwcugLgCCnIxi5fvZUzUwtvroEzgOjwzmpNMYHO8Gnxz8OcwIJ3AXEV2HUtcYyWwed+xCPpCssA2Mz8LFQSCag=
+	t=1706933546; cv=none; b=dg5MExECT3QypoexwvrwVSp7SgddQKTWgp0Pu7R0zJRxPNU+SCE0QqYqg35yyo7MlWKCdwdc2jN6SoDpo2Ty0yBYiMN+etYv3XofhEBqnVl1aa1JAA1BjIIy+QsWQV64EBacQAzSSViW5RDGwQVS5bqOBxh3xVpGR4OebbZ9qkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933545; c=relaxed/simple;
-	bh=5QA8HAsBL3TgVz/XtPnuzFUOoKbSTZc0fba7bTJirOU=;
+	s=arc-20240116; t=1706933546; c=relaxed/simple;
+	bh=dg19usXIXJKHT2hnZEiWqy1maUQezzyyb357f4h0x9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HvnjH/ezt/Er6ChYZDKQ/jjXrYwg67Cw3OgV5t1hYgGb/yMbkx1qOKKoq+7H7DgiwxTsi44wll3oXwHsxRanW0ivoykmx/kuWK/fSmwLkIBWuIqS+2DknNzjJaIIZ3+RZ4TB5ucLyRkwhjd5xmXzpwjrdcLmVfmpbVCw2LRqL8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYObazfD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pw/gWbxOuhbPR5K2M63XsCE5icokaP8/FcMWatTPXVvD11nJJGToQTCVQchHArrkI3OD3zvzc+s1r7QneYnTJT5Gksn9GTHB1t/alZuhgLe3TE34b7l1UKZRZQurFKv9uYCyWt3lC3rjCqCFv73Ako2i6o4efuML4p7YyB+IME4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPpdsSTj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYObazfD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1D5C43399;
-	Sat,  3 Feb 2024 04:12:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPpdsSTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37797C433F1;
+	Sat,  3 Feb 2024 04:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933545;
-	bh=5QA8HAsBL3TgVz/XtPnuzFUOoKbSTZc0fba7bTJirOU=;
+	s=korg; t=1706933546;
+	bh=dg19usXIXJKHT2hnZEiWqy1maUQezzyyb357f4h0x9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lYObazfDYa0MePG+tL2SyEQASVzkkBfr1fhbMEBGhe1ECf2RtmjCxHg0IFjfK5wqK
-	 zbBlYirY+O+X99dBUydZ8nbHvi79tHHOmeBbScrIrWm7uFvsqJ6oX01H/ZvflKvR3d
-	 ODozz8VKmz3YR/poCc8G9riaGy+65e0FodBC+RlU=
+	b=LPpdsSTjo3zuwDFlt0DP3t1C2wQMLfvSI/yHx2JtXs8XTlShQtZ5D9P5BWVTW6dA9
+	 ZlQDVpVfNYL2wVmUGYV9/8Va/G6RaCYudE59xa1vYV2n/M700TQJPeifVB57qhEvo/
+	 qGN2XeFEPlkeGkdQdPQV6NSjMM525P5KhEToIELg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/322] scsi: libfc: Fix up timeout error in fc_fcp_rec_error()
-Date: Fri,  2 Feb 2024 20:03:10 -0800
-Message-ID: <20240203035402.159611434@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 094/322] minmax: deduplicate __unconst_integer_typeof()
+Date: Fri,  2 Feb 2024 20:03:11 -0800
+Message-ID: <20240203035402.187887587@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,37 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hannes Reinecke <hare@suse.de>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 53122a49f49796beb2c4a1bb702303b66347e29f ]
+commit 5e57418a2031cd5e1863efdf3d7447a16a368172 upstream.
 
-We should set the status to FC_TIMED_OUT when a timeout error is passed to
-fc_fcp_rec_error().
+It appears that compiler_types.h already have an implementation of the
+__unconst_integer_typeof() called __unqual_scalar_typeof().  Use it
+instead of the copy.
 
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Link: https://lore.kernel.org/r/20231129165832.224100-3-hare@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20230911154913.4176033-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Herve Codina <herve.codina@bootlin.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/libfc/fc_fcp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/minmax.h |   26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/scsi/libfc/fc_fcp.c b/drivers/scsi/libfc/fc_fcp.c
-index 3f189cedf6db..05be0810b5e3 100644
---- a/drivers/scsi/libfc/fc_fcp.c
-+++ b/drivers/scsi/libfc/fc_fcp.c
-@@ -1676,7 +1676,7 @@ static void fc_fcp_rec_error(struct fc_fcp_pkt *fsp, struct fc_frame *fp)
- 		if (fsp->recov_retry++ < FC_MAX_RECOV_RETRY)
- 			fc_fcp_rec(fsp);
- 		else
--			fc_fcp_recovery(fsp, FC_ERROR);
-+			fc_fcp_recovery(fsp, FC_TIMED_OUT);
- 		break;
- 	}
- 	fc_fcp_unlock_pkt(fsp);
--- 
-2.43.0
-
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_MINMAX_H
+ #define _LINUX_MINMAX_H
+ 
++#include <linux/compiler_types.h>
+ #include <linux/const.h>
+ #include <linux/types.h>
+ 
+@@ -135,27 +136,6 @@
+ #define max_t(type, x, y)	__careful_cmp((type)(x), (type)(y), >)
+ 
+ /*
+- * Remove a const qualifier from integer types
+- * _Generic(foo, type-name: association, ..., default: association) performs a
+- * comparison against the foo type (not the qualified type).
+- * Do not use the const keyword in the type-name as it will not match the
+- * unqualified type of foo.
+- */
+-#define __unconst_integer_type_cases(type)	\
+-	unsigned type:  (unsigned type)0,	\
+-	signed type:    (signed type)0
+-
+-#define __unconst_integer_typeof(x) typeof(			\
+-	_Generic((x),						\
+-		char: (char)0,					\
+-		__unconst_integer_type_cases(char),		\
+-		__unconst_integer_type_cases(short),		\
+-		__unconst_integer_type_cases(int),		\
+-		__unconst_integer_type_cases(long),		\
+-		__unconst_integer_type_cases(long long),	\
+-		default: (x)))
+-
+-/*
+  * Do not check the array parameter using __must_be_array().
+  * In the following legit use-case where the "array" passed is a simple pointer,
+  * __must_be_array() will return a failure.
+@@ -169,13 +149,13 @@
+  * 'int *buff' and 'int buff[N]' types.
+  *
+  * The array can be an array of const items.
+- * typeof() keeps the const qualifier. Use __unconst_integer_typeof() in order
++ * typeof() keeps the const qualifier. Use __unqual_scalar_typeof() in order
+  * to discard the const qualifier for the __element variable.
+  */
+ #define __minmax_array(op, array, len) ({				\
+ 	typeof(&(array)[0]) __array = (array);				\
+ 	typeof(len) __len = (len);					\
+-	__unconst_integer_typeof(__array[0]) __element = __array[--__len]; \
++	__unqual_scalar_typeof(__array[0]) __element = __array[--__len];\
+ 	while (__len--)							\
+ 		__element = op(__element, __array[__len]);		\
+ 	__element; })
 
 
