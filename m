@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5911119E;
-	Sat,  3 Feb 2024 04:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4331119E;
+	Sat,  3 Feb 2024 04:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933853; cv=none; b=OFrfP2wakJ4czqd0NAI+SPY5hO+ii3b4l90tH42eN8JaoGz3BnMsp+vy4LScBRsKQj7zNNr7aki9Ofra8epUEhKZazlD1f7zwWS2GDPnTdrbREOEjXjlxz2BNFzO+DSNxEQzB4vslpGLi5aaxzmC10YuiNC5Ez9svZLhSXSmpHM=
+	t=1706933854; cv=none; b=XY4+Oj7YX8PDtAs2RP8ssQBGDvzaJIXkdD5bNQuvaHLBTmj1llWP2zK4NulAAgASMltdA2zKnFhhAa6eIpbGeSnX8SpLoAllX3gaocEE3e9cr+yAFhVI/PbIHyEkW/hxJeE+mleGYgqsbz/t5CTE/ycL7tjLCMNzVQHnJrdVJJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933853; c=relaxed/simple;
-	bh=uh3aXaiw4yAKd5vcWgdOWn8LJU1lXwEyUo7z3u4gSuQ=;
+	s=arc-20240116; t=1706933854; c=relaxed/simple;
+	bh=T5yVV9cLGLfZ28zr+U8IpcN22gYDMgJXhGSbq/IZmy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S0gHjslh740DF6Vhw59sjshNENTLdqHbzF0+Q6BJUw8dm0RW55XnIFdD2d8V40CNlXoe3MnimabvCd/Kr1TN1lmnVQwoqhQf+brnsjIw34gAbAHE8YsEL8zQYU6g9yvhSCUZ0krvqMD2ZXw2cLsfssxOV97smyUFXvK0xS2RARs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUqoGw0q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IqPnnAyYd3HkiNe2LJBe8JXoFzkNkg2h2VasTx+hTpCUke+kiIPy3oyxDzDKfoBdyXp8w1BkQpS9+suGIqeBJHT8Mi/sOd7kUeHbSNdGMQrW6+JWFAK+JO7gxwSPfbBVEl4HyXCEDo/jZqS84M+O63PILKRH2RjGxFn7YOFHKB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJvwnhp/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUqoGw0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B46C433F1;
-	Sat,  3 Feb 2024 04:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJvwnhp/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136DEC43390;
+	Sat,  3 Feb 2024 04:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933853;
-	bh=uh3aXaiw4yAKd5vcWgdOWn8LJU1lXwEyUo7z3u4gSuQ=;
+	s=korg; t=1706933854;
+	bh=T5yVV9cLGLfZ28zr+U8IpcN22gYDMgJXhGSbq/IZmy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUqoGw0qP/vNNsvlLV29wYTxcj13fYUmTg4SZ7j2vv1jD4qS+0pJH8bCrTFPDEpWW
-	 t11hgbCdR0/+XkNLEfe4rtDNkuX30W00RyejbUMD5obDaDyqNoXDMfwYOeU0VgrrrI
-	 fEf4c7KofeOxhbnzaboIUKMq/uFoEIdQMBVvJDzQ=
+	b=GJvwnhp/2MsgBqaZeGSLodiRxVtvbSmGOmO1WzJRNHdxZL7vHznso+4ki1tHUERKR
+	 +U0M1VAVXmL+lHCmMSLNg5xJqgi3mmO6hEDYM3ysjE+raGmsj1vYyB6ypIiBk30G/5
+	 Fga7TLmmY99ETwuVdoZK7cHxmOdsI6r4J7UFgjkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Brown <broonie@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 184/353] PCI: add INTEL_HDA_ARL to pci_ids.h
-Date: Fri,  2 Feb 2024 20:05:02 -0800
-Message-ID: <20240203035409.467403200@linuxfoundation.org>
+Subject: [PATCH 6.7 185/353] ALSA: hda: Intel: add HDA_ARL PCI ID support
+Date: Fri,  2 Feb 2024 20:05:03 -0800
+Message-ID: <20240203035409.498494173@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -57,34 +57,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 5ec42bf04d72fd6d0a6855810cc779e0ee31dfd7 ]
+[ Upstream commit a31014ebad617868c246d3985ff80d891f03711e ]
 
-The PCI ID insertion follows the increasing order in the table, but
-this hardware follows MTL (MeteorLake).
+Yet another PCI ID.
 
 Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20231204212710.185976-2-pierre-louis.bossart@linux.intel.com
+Link: https://lore.kernel.org/r/20231204212710.185976-3-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pci_ids.h | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/hda_intel.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index 275799b5f535..97cc0baad0f4 100644
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -3065,6 +3065,7 @@
- #define PCI_DEVICE_ID_INTEL_82443GX_0	0x71a0
- #define PCI_DEVICE_ID_INTEL_82443GX_2	0x71a2
- #define PCI_DEVICE_ID_INTEL_82372FB_1	0x7601
-+#define PCI_DEVICE_ID_INTEL_HDA_ARL	0x7728
- #define PCI_DEVICE_ID_INTEL_HDA_RPL_S	0x7a50
- #define PCI_DEVICE_ID_INTEL_HDA_ADL_S	0x7ad0
- #define PCI_DEVICE_ID_INTEL_HDA_MTL	0x7e28
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 2d1df3654424..2276adc84478 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2504,6 +2504,8 @@ static const struct pci_device_id azx_ids[] = {
+ 	{ PCI_DEVICE_DATA(INTEL, HDA_LNL_P, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE) },
+ 	/* Arrow Lake-S */
+ 	{ PCI_DEVICE_DATA(INTEL, HDA_ARL_S, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE) },
++	/* Arrow Lake */
++	{ PCI_DEVICE_DATA(INTEL, HDA_ARL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE) },
+ 	/* Apollolake (Broxton-P) */
+ 	{ PCI_DEVICE_DATA(INTEL, HDA_APL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_BROXTON) },
+ 	/* Gemini-Lake */
 -- 
 2.43.0
 
