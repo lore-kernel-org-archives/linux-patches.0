@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526601BC5B;
-	Sat,  3 Feb 2024 04:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066BF1BC5E;
+	Sat,  3 Feb 2024 04:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933493; cv=none; b=sIEhDhXyLLRivxwU0j8xF5ZWM2CcB4ESV6mF9BcbsnfdFwxDP7Q9uOtFUpVQEHXUzsP4Yqk2xerrGmTZUXZeHKH6WH71Jus8sYTQvq7v1K39yLPG8IImbVxNl4dxuZ19zvQcG2pIJhUxFKzWXG/67km2SpPe25hyhFEF5bkwih4=
+	t=1706933494; cv=none; b=LdUcYKT/H3nay3kEiSk25ogtBfjbuKt1CTmyOmv+qU3b0bMXveCVZ1YNaKZJV7Vc/BeKwrODbkvKiMSJh9iI9bllj510WPwc2QsRQvUsYIV+dE0ya64QoiH/gdn5bTBuB24z+5pi9OxJ8FC2zz6fJerx6cIYTaCWobhu+F+YLWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933493; c=relaxed/simple;
-	bh=Fav4MeK3fFiX6Qe9NWAYDFWUGloQS1ckA/gEhDzVtws=;
+	s=arc-20240116; t=1706933494; c=relaxed/simple;
+	bh=o10ePO20RA8FR3uB5uwqvGg4eZ3tkuvoQI227xBk53M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8p+0nIwPVXNgwSjHfz0bTXFPfhD0iWZYSzNiHILAFZGeFv6U5kl8hup66JVaCFuuG0N9pNd1UhFwqA4tOTexJLicaVl1YnYULQZT7sT1upwa/CLiQufUkLpIQYEKM5QTGqGvuOPJqLpl94RVH/ueD+fINliA68ABUuVzaAK6/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJWpCMbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d98PLX28tRPvnkeqtaV7kV6Mnh/Cc9V4x+/yyu7gRDmg6lABAyPEvXg9cWcXfjjh0MXQ++vGFkaedMxs8pXCWP4rgOL9CyIylC1MoFWx+aKiiBGg8CmT8aZnB+3hMZUvAmZkm1Mp+jQ6Dvcy7lxEJYcN90R7QwL96fQKpQvLuxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09cxVBAz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJWpCMbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD83C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09cxVBAz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4062C433F1;
 	Sat,  3 Feb 2024 04:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933493;
-	bh=Fav4MeK3fFiX6Qe9NWAYDFWUGloQS1ckA/gEhDzVtws=;
+	bh=o10ePO20RA8FR3uB5uwqvGg4eZ3tkuvoQI227xBk53M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJWpCMbfmKa1qsV3ZZasvt3TF1YASuFHmJiHVq1ghLIeElLbwQScvdfl1YWWy/hZ9
-	 aJnwcMa/j6MCYtd3XctLT2q0A+ghHyDHOp86dGeWK0gYpkHZ7ZiQGv7qvbGqDZASoJ
-	 DM4o747HUGXegJV3xPAyaTp9UnEuPF24Zs01A2AQ=
+	b=09cxVBAzO+ArE+D28cQsfMjqgPPoC47tVT0CQDP5I+EhIjHmVgZV0/EKydFcV1x3l
+	 RTkxST+U3FIFBecEZJlaA545dQOG/c1jlL5nzW8VW2cCBlmrd4K/2tfg9L28W1AuDW
+	 UfCR54fz5VnqiquKtZftkjmgZ/kK/Dj6BHVmQZ88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rae Moar <rmoar@google.com>,
-	David Gow <davidgow@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Joyyoung Huang <huangzaiyang@oppo.com>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/322] kunit: tool: fix parsing of test attributes
-Date: Fri,  2 Feb 2024 20:01:59 -0800
-Message-ID: <20240203035359.764739639@linuxfoundation.org>
+Subject: [PATCH 6.6 023/322] PM / devfreq: Synchronize devfreq_monitor_[start/stop]
+Date: Fri,  2 Feb 2024 20:02:00 -0800
+Message-ID: <20240203035359.802308100@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,55 +53,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rae Moar <rmoar@google.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
 
-[ Upstream commit 8ae27bc7fff4ef467a7964821a6cedb34a05d3b2 ]
+[ Upstream commit aed5ed595960c6d301dcd4ed31aeaa7a8054c0c6 ]
 
-Add parsing of attributes as diagnostic data. Fixes issue with test plan
-being parsed incorrectly as diagnostic data when located after
-suite-level attributes.
+There is a chance if a frequent switch of the governor
+done in a loop result in timer list corruption where
+timer cancel being done from two place one from
+cancel_delayed_work_sync() and followed by expire_timers()
+can be seen from the traces[1].
 
-Note that if there does not exist a test plan line, the diagnostic lines
-between the suite header and the first result will be saved in the suite
-log rather than the first test case log.
+while true
+do
+        echo "simple_ondemand" > /sys/class/devfreq/1d84000.ufshc/governor
+        echo "performance" > /sys/class/devfreq/1d84000.ufshc/governor
+done
 
-Signed-off-by: Rae Moar <rmoar@google.com>
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+It looks to be issue with devfreq driver where
+device_monitor_[start/stop] need to synchronized so that
+delayed work should get corrupted while it is either
+being queued or running or being cancelled.
+
+Let's use polling flag and devfreq lock to synchronize the
+queueing the timer instance twice and work data being
+corrupted.
+
+[1]
+...
+..
+<idle>-0    [003]   9436.209662:  timer_cancel   timer=0xffffff80444f0428
+<idle>-0    [003]   9436.209664:  timer_expire_entry   timer=0xffffff80444f0428  now=0x10022da1c  function=__typeid__ZTSFvP10timer_listE_global_addr  baseclk=0x10022da1c
+<idle>-0    [003]   9436.209718:  timer_expire_exit   timer=0xffffff80444f0428
+kworker/u16:6-14217    [003]   9436.209863:  timer_start   timer=0xffffff80444f0428  function=__typeid__ZTSFvP10timer_listE_global_addr  expires=0x10022da2b  now=0x10022da1c  flags=182452227
+vendor.xxxyyy.ha-1593    [004]   9436.209888:  timer_cancel   timer=0xffffff80444f0428
+vendor.xxxyyy.ha-1593    [004]   9436.216390:  timer_init   timer=0xffffff80444f0428
+vendor.xxxyyy.ha-1593    [004]   9436.216392:  timer_start   timer=0xffffff80444f0428  function=__typeid__ZTSFvP10timer_listE_global_addr  expires=0x10022da2c  now=0x10022da1d  flags=186646532
+vendor.xxxyyy.ha-1593    [005]   9436.220992:  timer_cancel   timer=0xffffff80444f0428
+xxxyyyTraceManag-7795    [004]   9436.261641:  timer_cancel   timer=0xffffff80444f0428
+
+[2]
+
+ 9436.261653][    C4] Unable to handle kernel paging request at virtual address dead00000000012a
+[ 9436.261664][    C4] Mem abort info:
+[ 9436.261666][    C4]   ESR = 0x96000044
+[ 9436.261669][    C4]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 9436.261671][    C4]   SET = 0, FnV = 0
+[ 9436.261673][    C4]   EA = 0, S1PTW = 0
+[ 9436.261675][    C4] Data abort info:
+[ 9436.261677][    C4]   ISV = 0, ISS = 0x00000044
+[ 9436.261680][    C4]   CM = 0, WnR = 1
+[ 9436.261682][    C4] [dead00000000012a] address between user and kernel address ranges
+[ 9436.261685][    C4] Internal error: Oops: 96000044 [#1] PREEMPT SMP
+[ 9436.261701][    C4] Skip md ftrace buffer dump for: 0x3a982d0
+...
+
+[ 9436.262138][    C4] CPU: 4 PID: 7795 Comm: TraceManag Tainted: G S      W  O      5.10.149-android12-9-o-g17f915d29d0c #1
+[ 9436.262141][    C4] Hardware name: Qualcomm Technologies, Inc.  (DT)
+[ 9436.262144][    C4] pstate: 22400085 (nzCv daIf +PAN -UAO +TCO BTYPE=--)
+[ 9436.262161][    C4] pc : expire_timers+0x9c/0x438
+[ 9436.262164][    C4] lr : expire_timers+0x2a4/0x438
+[ 9436.262168][    C4] sp : ffffffc010023dd0
+[ 9436.262171][    C4] x29: ffffffc010023df0 x28: ffffffd0636fdc18
+[ 9436.262178][    C4] x27: ffffffd063569dd0 x26: ffffffd063536008
+[ 9436.262182][    C4] x25: 0000000000000001 x24: ffffff88f7c69280
+[ 9436.262185][    C4] x23: 00000000000000e0 x22: dead000000000122
+[ 9436.262188][    C4] x21: 000000010022da29 x20: ffffff8af72b4e80
+[ 9436.262191][    C4] x19: ffffffc010023e50 x18: ffffffc010025038
+[ 9436.262195][    C4] x17: 0000000000000240 x16: 0000000000000201
+[ 9436.262199][    C4] x15: ffffffffffffffff x14: ffffff889f3c3100
+[ 9436.262203][    C4] x13: ffffff889f3c3100 x12: 00000000049f56b8
+[ 9436.262207][    C4] x11: 00000000049f56b8 x10: 00000000ffffffff
+[ 9436.262212][    C4] x9 : ffffffc010023e50 x8 : dead000000000122
+[ 9436.262216][    C4] x7 : ffffffffffffffff x6 : ffffffc0100239d8
+[ 9436.262220][    C4] x5 : 0000000000000000 x4 : 0000000000000101
+[ 9436.262223][    C4] x3 : 0000000000000080 x2 : ffffff889edc155c
+[ 9436.262227][    C4] x1 : ffffff8001005200 x0 : ffffff80444f0428
+[ 9436.262232][    C4] Call trace:
+[ 9436.262236][    C4]  expire_timers+0x9c/0x438
+[ 9436.262240][    C4]  __run_timers+0x1f0/0x330
+[ 9436.262245][    C4]  run_timer_softirq+0x28/0x58
+[ 9436.262255][    C4]  efi_header_end+0x168/0x5ec
+[ 9436.262265][    C4]  __irq_exit_rcu+0x108/0x124
+[ 9436.262274][    C4]  __handle_domain_irq+0x118/0x1e4
+[ 9436.262282][    C4]  gic_handle_irq.30369+0x6c/0x2bc
+[ 9436.262286][    C4]  el0_irq_naked+0x60/0x6c
+
+Link: https://lore.kernel.org/all/1700860318-4025-1-git-send-email-quic_mojha@quicinc.com/
+Reported-by: Joyyoung Huang <huangzaiyang@oppo.com>
+Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/kunit_parser.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/devfreq/devfreq.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
-index 79d8832c862a..ce34be15c929 100644
---- a/tools/testing/kunit/kunit_parser.py
-+++ b/tools/testing/kunit/kunit_parser.py
-@@ -450,7 +450,7 @@ def parse_diagnostic(lines: LineStream) -> List[str]:
- 	Log of diagnostic lines
- 	"""
- 	log = []  # type: List[str]
--	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START, TAP_START]
-+	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START, TAP_START, TEST_PLAN]
- 	while lines and not any(re.match(lines.peek())
- 			for re in non_diagnostic_lines):
- 		log.append(lines.pop())
-@@ -726,6 +726,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
- 		# test plan
- 		test.name = "main"
- 		ktap_line = parse_ktap_header(lines, test)
-+		test.log.extend(parse_diagnostic(lines))
- 		parse_test_plan(lines, test)
- 		parent_test = True
- 	else:
-@@ -737,6 +738,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
- 		if parent_test:
- 			# If KTAP version line and/or subtest header is found, attempt
- 			# to parse test plan and print test header
-+			test.log.extend(parse_diagnostic(lines))
- 			parse_test_plan(lines, test)
- 			print_test_header(test)
- 	expected_count = test.expected_count
+diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
+index 81d9df89dde6..49c542ecccde 100644
+--- a/drivers/devfreq/devfreq.c
++++ b/drivers/devfreq/devfreq.c
+@@ -461,10 +461,14 @@ static void devfreq_monitor(struct work_struct *work)
+ 	if (err)
+ 		dev_err(&devfreq->dev, "dvfs failed with (%d) error\n", err);
+ 
++	if (devfreq->stop_polling)
++		goto out;
++
+ 	queue_delayed_work(devfreq_wq, &devfreq->work,
+ 				msecs_to_jiffies(devfreq->profile->polling_ms));
+-	mutex_unlock(&devfreq->lock);
+ 
++out:
++	mutex_unlock(&devfreq->lock);
+ 	trace_devfreq_monitor(devfreq);
+ }
+ 
+@@ -483,6 +487,10 @@ void devfreq_monitor_start(struct devfreq *devfreq)
+ 	if (IS_SUPPORTED_FLAG(devfreq->governor->flags, IRQ_DRIVEN))
+ 		return;
+ 
++	mutex_lock(&devfreq->lock);
++	if (delayed_work_pending(&devfreq->work))
++		goto out;
++
+ 	switch (devfreq->profile->timer) {
+ 	case DEVFREQ_TIMER_DEFERRABLE:
+ 		INIT_DEFERRABLE_WORK(&devfreq->work, devfreq_monitor);
+@@ -491,12 +499,16 @@ void devfreq_monitor_start(struct devfreq *devfreq)
+ 		INIT_DELAYED_WORK(&devfreq->work, devfreq_monitor);
+ 		break;
+ 	default:
+-		return;
++		goto out;
+ 	}
+ 
+ 	if (devfreq->profile->polling_ms)
+ 		queue_delayed_work(devfreq_wq, &devfreq->work,
+ 			msecs_to_jiffies(devfreq->profile->polling_ms));
++
++out:
++	devfreq->stop_polling = false;
++	mutex_unlock(&devfreq->lock);
+ }
+ EXPORT_SYMBOL(devfreq_monitor_start);
+ 
+@@ -513,6 +525,14 @@ void devfreq_monitor_stop(struct devfreq *devfreq)
+ 	if (IS_SUPPORTED_FLAG(devfreq->governor->flags, IRQ_DRIVEN))
+ 		return;
+ 
++	mutex_lock(&devfreq->lock);
++	if (devfreq->stop_polling) {
++		mutex_unlock(&devfreq->lock);
++		return;
++	}
++
++	devfreq->stop_polling = true;
++	mutex_unlock(&devfreq->lock);
+ 	cancel_delayed_work_sync(&devfreq->work);
+ }
+ EXPORT_SYMBOL(devfreq_monitor_stop);
 -- 
 2.43.0
 
