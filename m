@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB93F9E6;
-	Sat,  3 Feb 2024 04:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1006310795;
+	Sat,  3 Feb 2024 04:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933359; cv=none; b=tai786yIiAmEqNBCLecEYW+SYPKjsVnM9r0QxKxNNv7B4USzdJmsmHEDUSeaNfQx9tyW04QsoN0l7o/9rcC+j1FNlmNbjCNVm+Br/XvgSt/lcvUTdzTcxSJBiPzMJi9xydcLJZcEIlyhyvFwgBfH0snoU4+8x8IzXoeK6xTrbTo=
+	t=1706933360; cv=none; b=hqZBo/t+x64qCEXoGAZXqMWiMCKZbm2WRg+ttiRrRI1wAIOLnuiBk8aPK7RY2Dkz9jPWbKVvxFGRTjo/E/vrdPljtfrjgL1ySkv+nyaNSmPbsZbMbA7Jl3LxquYjjL7wKLqEz/vAVqQcf/zejyrTKX5uv13zaaf1t4Uc/AJRTRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933359; c=relaxed/simple;
-	bh=qmrIzc+f05uTls8RkElyOocwT8f9hTFNtVfTFAKFyTM=;
+	s=arc-20240116; t=1706933360; c=relaxed/simple;
+	bh=5MEtqB170UnplAhK+8lqAjorG4zmlSoWMQpGPlaNCyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHzj5QgKlepXB/baBV6Gf/n4QIPqPjL8YCr+k13na2zefUvvOW2LWHY3GBqJyIp0jm+9JIECHpRg1O5gzplVrnK2XGMNMX/8ank1MhQ31mHhPX4hL4Yu4aueMkVbU4GK4T8YYKpygdKoWP+uiSCxdly8AVDnqnWMkT1MrrmGcek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sy/dvXIp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBpy128ybBJwEH/JY4KjSFKaqpgeIUzDAXqNgCznu14wj0oRGzpgOb1taUiWzRrEqhtrqR/l9pQSLlerf/WqG+5zvN29HqOHbpQXX/9GSdn1kRzwJjET408W46VJZBZ+I9rAUP7/uUa734M9T9fuVVDL5KnnP6Wb51uQeOL8FlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eq1c1kt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sy/dvXIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E73C433F1;
-	Sat,  3 Feb 2024 04:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eq1c1kt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDEDC433C7;
+	Sat,  3 Feb 2024 04:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933359;
-	bh=qmrIzc+f05uTls8RkElyOocwT8f9hTFNtVfTFAKFyTM=;
+	bh=5MEtqB170UnplAhK+8lqAjorG4zmlSoWMQpGPlaNCyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sy/dvXIp8EWvj+a86W75cjR5dsuyp3O27Eeyy8OUkMFZfa0L7S4+nCk185BoJcJie
-	 JM8mMH5cuMVmdXZQ0NkYSF6GNozPYrDKfp/+80dchoveOxH1qjGm0NnVuiqNWDgyuL
-	 2i4LC+9URA9huf90iLW1O7rxOzjy8ImliDggggTs=
+	b=1eq1c1kteLYE96eWS1l3DVql9Y2ahEJJ5EbcyVYNeqfuIpGEVRYA6y0CDGEFaLakQ
+	 rjNOV/DurtKClX+82d3wvTGbH7U5wDQv8y+zmtGZIjGV7nW+2mF6327e0QrYNi2nLu
+	 oHN+GjYzsj3OFbgwuWDM6LqQiW7Y2h4hB46itXeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/219] wifi: ath11k: fix race due to setting ATH11K_FLAG_EXT_IRQ_ENABLED too early
-Date: Fri,  2 Feb 2024 20:03:55 -0800
-Message-ID: <20240203035325.605336726@linuxfoundation.org>
+Subject: [PATCH 6.1 063/219] bpf: Check rcu_read_lock_trace_held() before calling bpf map helpers
+Date: Fri,  2 Feb 2024 20:03:56 -0800
+Message-ID: <20240203035325.695166070@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -52,71 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 5082b3e3027eae393a4e86874bffb4ce3f83c26e ]
+[ Upstream commit 169410eba271afc9f0fb476d996795aa26770c6d ]
 
-We are seeing below error randomly in the case where only
-one MSI vector is configured:
+These three bpf_map_{lookup,update,delete}_elem() helpers are also
+available for sleepable bpf program, so add the corresponding lock
+assertion for sleepable bpf program, otherwise the following warning
+will be reported when a sleepable bpf program manipulates bpf map under
+interpreter mode (aka bpf_jit_enable=0):
 
-kernel: ath11k_pci 0000:03:00.0: wmi command 16387 timeout
+  WARNING: CPU: 3 PID: 4985 at kernel/bpf/helpers.c:40 ......
+  CPU: 3 PID: 4985 Comm: test_progs Not tainted 6.6.0+ #2
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996) ......
+  RIP: 0010:bpf_map_lookup_elem+0x54/0x60
+  ......
+  Call Trace:
+   <TASK>
+   ? __warn+0xa5/0x240
+   ? bpf_map_lookup_elem+0x54/0x60
+   ? report_bug+0x1ba/0x1f0
+   ? handle_bug+0x40/0x80
+   ? exc_invalid_op+0x18/0x50
+   ? asm_exc_invalid_op+0x1b/0x20
+   ? __pfx_bpf_map_lookup_elem+0x10/0x10
+   ? rcu_lockdep_current_cpu_online+0x65/0xb0
+   ? rcu_is_watching+0x23/0x50
+   ? bpf_map_lookup_elem+0x54/0x60
+   ? __pfx_bpf_map_lookup_elem+0x10/0x10
+   ___bpf_prog_run+0x513/0x3b70
+   __bpf_prog_run32+0x9d/0xd0
+   ? __bpf_prog_enter_sleepable_recur+0xad/0x120
+   ? __bpf_prog_enter_sleepable_recur+0x3e/0x120
+   bpf_trampoline_6442580665+0x4d/0x1000
+   __x64_sys_getpgid+0x5/0x30
+   ? do_syscall_64+0x36/0xb0
+   entry_SYSCALL_64_after_hwframe+0x6e/0x76
+   </TASK>
 
-The reason is, currently, in ath11k_pcic_ext_irq_enable(),
-ATH11K_FLAG_EXT_IRQ_ENABLED is set before NAPI is enabled.
-This results in a race condition: after
-ATH11K_FLAG_EXT_IRQ_ENABLED is set but before NAPI enabled,
-CE interrupt breaks in. Since IRQ is shared by CE and data
-path, ath11k_pcic_ext_interrupt_handler() is also called
-where we call disable_irq_nosync() to disable IRQ. Then
-napi_schedule() is called but it does nothing because NAPI
-is not enabled at that time, meaning
-ath11k_pcic_ext_grp_napi_poll() will never run, so we have
-no chance to call enable_irq() to enable IRQ back. Finally
-we get above error.
-
-Fix it by setting ATH11K_FLAG_EXT_IRQ_ENABLED after all
-NAPI and IRQ work are done. With the fix, we are sure that
-by the time ATH11K_FLAG_EXT_IRQ_ENABLED is set, NAPI is
-enabled.
-
-Note that the fix above also introduce some side effects:
-if ath11k_pcic_ext_interrupt_handler() breaks in after NAPI
-enabled but before ATH11K_FLAG_EXT_IRQ_ENABLED set, nothing
-will be done by the handler this time, the work will be
-postponed till the next time the IRQ fires.
-
-Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23
-
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231117003919.26218-1-quic_bqiang@quicinc.com
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231204140425.1480317-2-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/pcic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/helpers.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/pcic.c b/drivers/net/wireless/ath/ath11k/pcic.c
-index 380f9d37b644..e3b65efcc868 100644
---- a/drivers/net/wireless/ath/ath11k/pcic.c
-+++ b/drivers/net/wireless/ath/ath11k/pcic.c
-@@ -453,8 +453,6 @@ void ath11k_pcic_ext_irq_enable(struct ath11k_base *ab)
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 6212e4ae084b..34135fbd6097 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -28,12 +28,13 @@
+  *
+  * Different map implementations will rely on rcu in map methods
+  * lookup/update/delete, therefore eBPF programs must run under rcu lock
+- * if program is allowed to access maps, so check rcu_read_lock_held in
+- * all three functions.
++ * if program is allowed to access maps, so check rcu_read_lock_held() or
++ * rcu_read_lock_trace_held() in all three functions.
+  */
+ BPF_CALL_2(bpf_map_lookup_elem, struct bpf_map *, map, void *, key)
  {
- 	int i;
- 
--	set_bit(ATH11K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags);
--
- 	for (i = 0; i < ATH11K_EXT_IRQ_GRP_NUM_MAX; i++) {
- 		struct ath11k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
- 
-@@ -465,6 +463,8 @@ void ath11k_pcic_ext_irq_enable(struct ath11k_base *ab)
- 		}
- 		ath11k_pcic_ext_grp_enable(irq_grp);
- 	}
-+
-+	set_bit(ATH11K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags);
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return (unsigned long) map->ops->map_lookup_elem(map, key);
  }
- EXPORT_SYMBOL(ath11k_pcic_ext_irq_enable);
+ 
+@@ -49,7 +50,8 @@ const struct bpf_func_proto bpf_map_lookup_elem_proto = {
+ BPF_CALL_4(bpf_map_update_elem, struct bpf_map *, map, void *, key,
+ 	   void *, value, u64, flags)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return map->ops->map_update_elem(map, key, value, flags);
+ }
+ 
+@@ -66,7 +68,8 @@ const struct bpf_func_proto bpf_map_update_elem_proto = {
+ 
+ BPF_CALL_2(bpf_map_delete_elem, struct bpf_map *, map, void *, key)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return map->ops->map_delete_elem(map, key);
+ }
  
 -- 
 2.43.0
