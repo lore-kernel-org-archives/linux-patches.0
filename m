@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA4171A4;
-	Sat,  3 Feb 2024 04:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D17171A4;
+	Sat,  3 Feb 2024 04:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933899; cv=none; b=FG5YHbIF234cxZRpoEBdQgAMz/L3MmKcznBtiU5JAsWjIuhczuyDUPLYfRhXf0OXSXtZNDxeRmOPNNDyn5w1E5n9q2mJvPhcWQ012taOmq7Jcx+iOMMiOUpMijxEq07aq+ibkc9gdvtJFwecxHqjDmyVSqHDlLk1rniMV19jdAE=
+	t=1706933900; cv=none; b=n7/w24qDHm1EqhhWQF06XfMM6jDhw8abkYF3geqltCBTp1SIIkdduYl+SIBJeZV4TMxi1ogN3K8dBOMVRWMUcd/n/YRm8XOkYYokwzh/3V3NUeHP1bw7Fy7Zq2oGk3RrIOYgtX4iClF8TVa/FmdJofOqiT1kRMq3PZhE/mFxhZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933899; c=relaxed/simple;
-	bh=7zHMazhjr/KlOcHJn/rMdqoK2XymEYi0oZ5+YGOaZGY=;
+	s=arc-20240116; t=1706933900; c=relaxed/simple;
+	bh=thaCHTelpHHuzAvNsw2Hb21jYKCOUkzhZUJbHex23zU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQ7Fg44vYZxm35Mvhav69bRiepPZ0q9mWjbaWWZ78QhGk16IDp0TchSBKor68+JmY7vE2cY4nD2prxry3THM5mS8DBqnSiDqoD61Rmz0tqx4k83GRSNindUnEGSclzSmFO6BvO62VbaiJ7hd4tESVq8fS+eEOdomCO17O8qywEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyrKgIfk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PsuEXjuQkE2CzAh6iuqjWtUqIKHlIbNrEJsblvHeFvnR+5poETk8ayYrHq4pKvR8vglw3srXq7g5KUTpzBSpkrp8ns4NLnOa/8iNgg9KzOBDmS+p/6LXXI6V3AWLPR15WeNXvZUlCKSCqESUsk0hcH3Ov8DG0T4CbriJ2Nhb7rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBSBRGhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyrKgIfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5E6C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBSBRGhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEBAC433F1;
 	Sat,  3 Feb 2024 04:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933899;
-	bh=7zHMazhjr/KlOcHJn/rMdqoK2XymEYi0oZ5+YGOaZGY=;
+	bh=thaCHTelpHHuzAvNsw2Hb21jYKCOUkzhZUJbHex23zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyrKgIfk2HYD8+xz52ne7kLM7DY4ztURGl95aR/BeoHlo2eDVs1CrRb71jyxOg74j
-	 cFWfnv+L6YWEd4+1S8Vn2+SeRQoU0tTpMvL4w9QTQLsc/8bJX2gnIXUXatmtPP0Lg4
-	 Jc2V5YebYzW/Vp7CDZUKuKVF2DXHdg/CjQ98TSIk=
+	b=mBSBRGhdGbDv+ywOoyLw+A64DCzb2hDDWmfHfTeBGAOp1d/KHj1zwf1mBgWBlg1fh
+	 K3OyR7RQ8EG1InP5DuLKN93Hs7uYaOHDCSZb5u+exBpEfNTwTUZ5n9d90Grk7gR7KL
+	 /syox1BErE+rHR459NHNc6MROEMdDORmvhP08iX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederik Haxel <haxel@fzi.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 246/353] riscv: Make XIP bootable again
-Date: Fri,  2 Feb 2024 20:06:04 -0800
-Message-ID: <20240203035411.499566609@linuxfoundation.org>
+Subject: [PATCH 6.7 247/353] xen/gntdev: Fix the abuse of underlying struct page in DMA-buf import
+Date: Fri,  2 Feb 2024 20:06:05 -0800
+Message-ID: <20240203035411.534658060@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -45,83 +48,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frederik Haxel <haxel@fzi.de>
+From: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
 
-[ Upstream commit 66f1e68093979816a23412a3fad066f5bcbc0360 ]
+[ Upstream commit 2d2db7d40254d5fb53b11ebd703cd1ed0c5de7a1 ]
 
-Currently, the XIP kernel seems to fail to boot due to missing
-XIP_FIXUP and a wrong page_offset value. A superfluous XIP_FIXUP
-has also been removed.
+DO NOT access the underlying struct page of an sg table exported
+by DMA-buf in dmabuf_imp_to_refs(), this is not allowed.
+Please see drivers/dma-buf/dma-buf.c:mangle_sg_table() for details.
 
-Signed-off-by: Frederik Haxel <haxel@fzi.de>
-Link: https://lore.kernel.org/r/20231212130116.848530-2-haxel@fzi.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fortunately, here (for special Xen device) we can avoid using
+pages and calculate gfns directly from dma addresses provided by
+the sg table.
+
+Suggested-by: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Link: https://lore.kernel.org/r/20240107103426.2038075-1-olekstysh@gmail.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/head.S | 1 +
- arch/riscv/mm/init.c     | 8 ++++++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/xen/gntdev-dmabuf.c | 50 ++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/arch/riscv/kernel/head.S b/arch/riscv/kernel/head.S
-index 76ace1e0b46f..663881785b2b 100644
---- a/arch/riscv/kernel/head.S
-+++ b/arch/riscv/kernel/head.S
-@@ -89,6 +89,7 @@ relocate_enable_mmu:
- 	/* Compute satp for kernel page tables, but don't load it yet */
- 	srl a2, a0, PAGE_SHIFT
- 	la a1, satp_mode
-+	XIP_FIXUP_OFFSET a1
- 	REG_L a1, 0(a1)
- 	or a2, a2, a1
+diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
+index 4440e626b797..42adc2c1e06b 100644
+--- a/drivers/xen/gntdev-dmabuf.c
++++ b/drivers/xen/gntdev-dmabuf.c
+@@ -11,6 +11,7 @@
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+ #include <linux/dma-buf.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/uaccess.h>
+@@ -50,7 +51,7 @@ struct gntdev_dmabuf {
  
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 2e011cbddf3a..a65937336cdc 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -174,6 +174,9 @@ void __init mem_init(void)
+ 	/* Number of pages this buffer has. */
+ 	int nr_pages;
+-	/* Pages of this buffer. */
++	/* Pages of this buffer (only for dma-buf export). */
+ 	struct page **pages;
+ };
  
- /* Limit the memory size via mem. */
- static phys_addr_t memory_limit;
-+#ifdef CONFIG_XIP_KERNEL
-+#define memory_limit	(*(phys_addr_t *)XIP_FIXUP(&memory_limit))
-+#endif /* CONFIG_XIP_KERNEL */
+@@ -484,7 +485,7 @@ static int dmabuf_exp_from_refs(struct gntdev_priv *priv, int flags,
+ /* DMA buffer import support. */
  
- static int __init early_mem(char *p)
+ static int
+-dmabuf_imp_grant_foreign_access(struct page **pages, u32 *refs,
++dmabuf_imp_grant_foreign_access(unsigned long *gfns, u32 *refs,
+ 				int count, int domid)
  {
-@@ -952,7 +955,7 @@ static void __init create_fdt_early_page_table(uintptr_t fix_fdt_va,
- 	 * setup_vm_final installs the linear mapping. For 32-bit kernel, as the
- 	 * kernel is mapped in the linear mapping, that makes no difference.
- 	 */
--	dtb_early_va = kernel_mapping_pa_to_va(XIP_FIXUP(dtb_pa));
-+	dtb_early_va = kernel_mapping_pa_to_va(dtb_pa);
- #endif
+ 	grant_ref_t priv_gref_head;
+@@ -507,7 +508,7 @@ dmabuf_imp_grant_foreign_access(struct page **pages, u32 *refs,
+ 		}
  
- 	dtb_early_pa = dtb_pa;
-@@ -1055,9 +1058,9 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
- #endif
+ 		gnttab_grant_foreign_access_ref(cur_ref, domid,
+-						xen_page_to_gfn(pages[i]), 0);
++						gfns[i], 0);
+ 		refs[i] = cur_ref;
+ 	}
  
- 	kernel_map.virt_addr = KERNEL_LINK_ADDR + kernel_map.virt_offset;
--	kernel_map.page_offset = _AC(CONFIG_PAGE_OFFSET, UL);
+@@ -529,7 +530,6 @@ static void dmabuf_imp_end_foreign_access(u32 *refs, int count)
  
- #ifdef CONFIG_XIP_KERNEL
-+	kernel_map.page_offset = PAGE_OFFSET_L3;
- 	kernel_map.xiprom = (uintptr_t)CONFIG_XIP_PHYS_ADDR;
- 	kernel_map.xiprom_sz = (uintptr_t)(&_exiprom) - (uintptr_t)(&_xiprom);
+ static void dmabuf_imp_free_storage(struct gntdev_dmabuf *gntdev_dmabuf)
+ {
+-	kfree(gntdev_dmabuf->pages);
+ 	kfree(gntdev_dmabuf->u.imp.refs);
+ 	kfree(gntdev_dmabuf);
+ }
+@@ -549,12 +549,6 @@ static struct gntdev_dmabuf *dmabuf_imp_alloc_storage(int count)
+ 	if (!gntdev_dmabuf->u.imp.refs)
+ 		goto fail;
  
-@@ -1067,6 +1070,7 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
+-	gntdev_dmabuf->pages = kcalloc(count,
+-				       sizeof(gntdev_dmabuf->pages[0]),
+-				       GFP_KERNEL);
+-	if (!gntdev_dmabuf->pages)
+-		goto fail;
+-
+ 	gntdev_dmabuf->nr_pages = count;
  
- 	kernel_map.va_kernel_xip_pa_offset = kernel_map.virt_addr - kernel_map.xiprom;
- #else
-+	kernel_map.page_offset = _AC(CONFIG_PAGE_OFFSET, UL);
- 	kernel_map.phys_addr = (uintptr_t)(&_start);
- 	kernel_map.size = (uintptr_t)(&_end) - kernel_map.phys_addr;
- #endif
+ 	for (i = 0; i < count; i++)
+@@ -576,7 +570,8 @@ dmabuf_imp_to_refs(struct gntdev_dmabuf_priv *priv, struct device *dev,
+ 	struct dma_buf *dma_buf;
+ 	struct dma_buf_attachment *attach;
+ 	struct sg_table *sgt;
+-	struct sg_page_iter sg_iter;
++	struct sg_dma_page_iter sg_iter;
++	unsigned long *gfns;
+ 	int i;
+ 
+ 	dma_buf = dma_buf_get(fd);
+@@ -624,26 +619,31 @@ dmabuf_imp_to_refs(struct gntdev_dmabuf_priv *priv, struct device *dev,
+ 
+ 	gntdev_dmabuf->u.imp.sgt = sgt;
+ 
+-	/* Now convert sgt to array of pages and check for page validity. */
++	gfns = kcalloc(count, sizeof(*gfns), GFP_KERNEL);
++	if (!gfns) {
++		ret = ERR_PTR(-ENOMEM);
++		goto fail_unmap;
++	}
++
++	/*
++	 * Now convert sgt to array of gfns without accessing underlying pages.
++	 * It is not allowed to access the underlying struct page of an sg table
++	 * exported by DMA-buf, but since we deal with special Xen dma device here
++	 * (not a normal physical one) look at the dma addresses in the sg table
++	 * and then calculate gfns directly from them.
++	 */
+ 	i = 0;
+-	for_each_sgtable_page(sgt, &sg_iter, 0) {
+-		struct page *page = sg_page_iter_page(&sg_iter);
+-		/*
+-		 * Check if page is valid: this can happen if we are given
+-		 * a page from VRAM or other resources which are not backed
+-		 * by a struct page.
+-		 */
+-		if (!pfn_valid(page_to_pfn(page))) {
+-			ret = ERR_PTR(-EINVAL);
+-			goto fail_unmap;
+-		}
++	for_each_sgtable_dma_page(sgt, &sg_iter, 0) {
++		dma_addr_t addr = sg_page_iter_dma_address(&sg_iter);
++		unsigned long pfn = bfn_to_pfn(XEN_PFN_DOWN(dma_to_phys(dev, addr)));
+ 
+-		gntdev_dmabuf->pages[i++] = page;
++		gfns[i++] = pfn_to_gfn(pfn);
+ 	}
+ 
+-	ret = ERR_PTR(dmabuf_imp_grant_foreign_access(gntdev_dmabuf->pages,
++	ret = ERR_PTR(dmabuf_imp_grant_foreign_access(gfns,
+ 						      gntdev_dmabuf->u.imp.refs,
+ 						      count, domid));
++	kfree(gfns);
+ 	if (IS_ERR(ret))
+ 		goto fail_end_access;
+ 
 -- 
 2.43.0
 
