@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9FC13FF2;
-	Sat,  3 Feb 2024 04:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993DE1118B;
+	Sat,  3 Feb 2024 04:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933494; cv=none; b=qjQI9+f3DAaqR+e698dieasoq9Z2UkU5fh49N84deyFIcXKuqzIjaP6u76BftBobxOO5cMbQy9ZIqDx8IcUGxEdvBNfM54aXI1irl9n0VVgB1C7CbI9bU1B6R9cgELsAfcadT72WSC0iVN/axOt4/6sB5MvZ9sIPhyYY9SsxhJs=
+	t=1706933495; cv=none; b=I8+Z8ud89s/UpuDg4GtOs+9Cf+7pgk7qT3nOFbFi9b4GkriKyA5rTSsoomCFqakEMws6htXW3SsjEcvaMg5xcZUKjwiO35eSWwK8d7w9LXrLgmQWeaI61uVIpyZS0Qpm/3FPnnVREhR+T9zEtusJff+FeEXmGQnx2dnkEZkFfzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933494; c=relaxed/simple;
-	bh=ySUMBP4UNKUJab3r3wMB+7ISx/qVayjVoZpYnohWnJk=;
+	s=arc-20240116; t=1706933495; c=relaxed/simple;
+	bh=nu766SimR8VrCemGXDtCZD6Gf7m8KSOgYJCUTQoklG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6IbaO5DNJtTg6745KZLHXCzAsz/oDZrFU1dcsFzLNNetU6aPcweWNFsogFoAwC/dZuok/qkAm/1JLuET7erfwgBf84KbTLoJTUeYB7oZCtS5/NYT5vDFWRi5RkXE3O6dV41g2YTVfcy1EXItUN/UgisVbkeAtnP4wEeFZc7aXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AciCHUd1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3GDl5A+64pe8AxppxUTGEK0fzd+RR0e9BaJbQYPsCGb3I9WJJXLVdGihbqEI+flOM/fgQjzl2T8kpWDSDCl7sc3a9Qko3cTwdXs0PNo5KnJwzwyxG6WYmOtN2TCRr9Y0QG3Sn+98P/VVQRD8XflH/55xTP1Ks82CP1cs1yR9Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLqAFN2n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AciCHUd1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CBFC43390;
-	Sat,  3 Feb 2024 04:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLqAFN2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DC6C43399;
+	Sat,  3 Feb 2024 04:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933494;
-	bh=ySUMBP4UNKUJab3r3wMB+7ISx/qVayjVoZpYnohWnJk=;
+	s=korg; t=1706933495;
+	bh=nu766SimR8VrCemGXDtCZD6Gf7m8KSOgYJCUTQoklG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AciCHUd1YNoaCBbfmlHZ4n0ZWKpjC6ypuS/yyF4D1RJSzOI+gEC2wbK+FS/o81hbE
-	 d9HxB20dCxN5Cp/+KxwkpUBBnhacWKOAOtwBfIKd7GvPbcqhbiylJV9rMymZ4cwuyp
-	 Y3vJ5K9VlBTZila/Et7PilAA60I6YVCYPW0cXScI=
+	b=RLqAFN2nsFrL6Fi7iTSgxlbVyK56tVbOU8CIgzqFU9mb1RNDYEfJ6svXJFVG6hyE3
+	 v5Oi6XKHMPKrQ01QgLHVpKwNnB0YEEEV1N3S+PE00dn6LpK/JJkZkur6fBONDOcvO4
+	 WapkZywfxzVMrJnIewHBIxZlsV9Lx/1S3I3UxRRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Xiaofei Tan <tanxiaofei@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	James Morse <james.morse@arm.com>,
+	Bo Ye <bo.ye@mediatek.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/322] ACPI: APEI: set memory failure flags as MF_ACTION_REQUIRED on synchronous events
-Date: Fri,  2 Feb 2024 20:02:01 -0800
-Message-ID: <20240203035359.830587334@linuxfoundation.org>
+Subject: [PATCH 6.6 025/322] thermal: core: Fix thermal zone suspend-resume synchronization
+Date: Fri,  2 Feb 2024 20:02:02 -0800
+Message-ID: <20240203035359.860066050@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -56,141 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a70297d2213253853e95f5b49651f924990c6d3b ]
+[ Upstream commit 4e814173a8c4f432fd068b1c796f0416328c9d99 ]
 
-There are two major types of uncorrected recoverable (UCR) errors :
+There are 3 synchronization issues with thermal zone suspend-resume
+during system-wide transitions:
 
- - Synchronous error: The error is detected and raised at the point of
-   the consumption in the execution flow, e.g. when a CPU tries to
-   access a poisoned cache line. The CPU will take a synchronous error
-   exception such as Synchronous External Abort (SEA) on Arm64 and
-   Machine Check Exception (MCE) on X86. OS requires to take action (for
-   example, offline failure page/kill failure thread) to recover this
-   uncorrectable error.
+ 1. The resume code runs in a PM notifier which is invoked after user
+    space has been thawed, so it can run concurrently with user space
+    which can trigger a thermal zone device removal.  If that happens,
+    the thermal zone resume code may use a stale pointer to the next
+    list element and crash, because it does not hold thermal_list_lock
+    while walking thermal_tz_list.
 
- - Asynchronous error: The error is detected out of processor execution
-   context, e.g. when an error is detected by a background scrubber.
-   Some data in the memory are corrupted. But the data have not been
-   consumed. OS is optional to take action to recover this uncorrectable
-   error.
+ 2. The thermal zone resume code calls thermal_zone_device_init()
+    outside the zone lock, so user space or an update triggered by
+    the platform firmware may see an inconsistent state of a
+    thermal zone leading to unexpected behavior.
 
-When APEI firmware first is enabled, a platform may describe one error
-source for the handling of synchronous errors (e.g. MCE or SEA notification
-), or for handling asynchronous errors (e.g. SCI or External Interrupt
-notification). In other words, we can distinguish synchronous errors by
-APEI notification. For synchronous errors, kernel will kill the current
-process which accessing the poisoned page by sending SIGBUS with
-BUS_MCEERR_AR. In addition, for asynchronous errors, kernel will notify the
-process who owns the poisoned page by sending SIGBUS with BUS_MCEERR_AO in
-early kill mode. However, the GHES driver always sets mf_flags to 0 so that
-all synchronous errors are handled as asynchronous errors in memory failure.
+ 3. Clearing the in_suspend global variable in thermal_pm_notify()
+    allows __thermal_zone_device_update() to continue for all thermal
+    zones and it may as well run before the thermal_tz_list walk (or
+    at any point during the list walk for that matter) and attempt to
+    operate on a thermal zone that has not been resumed yet.  It may
+    also race destructively with thermal_zone_device_init().
 
-To this end, set memory failure flags as MF_ACTION_REQUIRED on synchronous
-events.
+To address these issues, add thermal_list_lock locking to
+thermal_pm_notify(), especially arount the thermal_tz_list,
+make it call thermal_zone_device_init() back-to-back with
+__thermal_zone_device_update() under the zone lock and replace
+in_suspend with per-zone bool "suspend" indicators set and unset
+under the given zone's lock.
 
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Tested-by: Ma Wupeng <mawupeng1@huawei.com>
-Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Reviewed-by: Xiaofei Tan <tanxiaofei@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/linux-pm/20231218162348.69101-1-bo.ye@mediatek.com/
+Reported-by: Bo Ye <bo.ye@mediatek.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/thermal/thermal_core.c | 30 +++++++++++++++++++++++-------
+ include/linux/thermal.h        |  2 ++
+ 2 files changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 63ad0541db38..ab2a82cb1b0b 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -101,6 +101,20 @@ static inline bool is_hest_type_generic_v2(struct ghes *ghes)
- 	return ghes->generic->header.type == ACPI_HEST_TYPE_GENERIC_ERROR_V2;
- }
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 1494ffa59754..dee3022539cf 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -37,8 +37,6 @@ static LIST_HEAD(thermal_governor_list);
+ static DEFINE_MUTEX(thermal_list_lock);
+ static DEFINE_MUTEX(thermal_governor_lock);
  
-+/*
-+ * A platform may describe one error source for the handling of synchronous
-+ * errors (e.g. MCE or SEA), or for handling asynchronous errors (e.g. SCI
-+ * or External Interrupt). On x86, the HEST notifications are always
-+ * asynchronous, so only SEA on ARM is delivered as a synchronous
-+ * notification.
-+ */
-+static inline bool is_hest_sync_notify(struct ghes *ghes)
-+{
-+	u8 notify_type = ghes->generic->notify.type;
-+
-+	return notify_type == ACPI_HEST_NOTIFY_SEA;
-+}
-+
+-static atomic_t in_suspend;
+-
+ static struct thermal_governor *def_governor;
+ 
  /*
-  * This driver isn't really modular, however for the time being,
-  * continuing to use module_param is the easiest way to remain
-@@ -489,7 +503,7 @@ static bool ghes_do_memory_failure(u64 physical_addr, int flags)
- }
- 
- static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
--				       int sev)
-+				       int sev, bool sync)
+@@ -409,7 +407,7 @@ void __thermal_zone_device_update(struct thermal_zone_device *tz,
  {
- 	int flags = -1;
- 	int sec_sev = ghes_severity(gdata->error_severity);
-@@ -503,7 +517,7 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	    (gdata->flags & CPER_SEC_ERROR_THRESHOLD_EXCEEDED))
- 		flags = MF_SOFT_OFFLINE;
- 	if (sev == GHES_SEV_RECOVERABLE && sec_sev == GHES_SEV_RECOVERABLE)
--		flags = 0;
-+		flags = sync ? MF_ACTION_REQUIRED : 0;
+ 	int count;
  
- 	if (flags != -1)
- 		return ghes_do_memory_failure(mem_err->physical_addr, flags);
-@@ -511,9 +525,11 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	return false;
- }
+-	if (atomic_read(&in_suspend))
++	if (tz->suspended)
+ 		return;
  
--static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int sev)
-+static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
-+				       int sev, bool sync)
- {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
-+	int flags = sync ? MF_ACTION_REQUIRED : 0;
- 	bool queued = false;
- 	int sec_sev, i;
- 	char *p;
-@@ -538,7 +554,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int s
- 		 * and don't filter out 'corrected' error here.
- 		 */
- 		if (is_cache && has_pa) {
--			queued = ghes_do_memory_failure(err_info->physical_fault_addr, 0);
-+			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
- 			p += err_info->length;
- 			continue;
+ 	if (WARN_ONCE(!tz->ops->get_temp,
+@@ -1532,17 +1530,35 @@ static int thermal_pm_notify(struct notifier_block *nb,
+ 	case PM_HIBERNATION_PREPARE:
+ 	case PM_RESTORE_PREPARE:
+ 	case PM_SUSPEND_PREPARE:
+-		atomic_set(&in_suspend, 1);
++		mutex_lock(&thermal_list_lock);
++
++		list_for_each_entry(tz, &thermal_tz_list, node) {
++			mutex_lock(&tz->lock);
++
++			tz->suspended = true;
++
++			mutex_unlock(&tz->lock);
++		}
++
++		mutex_unlock(&thermal_list_lock);
+ 		break;
+ 	case PM_POST_HIBERNATION:
+ 	case PM_POST_RESTORE:
+ 	case PM_POST_SUSPEND:
+-		atomic_set(&in_suspend, 0);
++		mutex_lock(&thermal_list_lock);
++
+ 		list_for_each_entry(tz, &thermal_tz_list, node) {
++			mutex_lock(&tz->lock);
++
++			tz->suspended = false;
++
+ 			thermal_zone_device_init(tz);
+-			thermal_zone_device_update(tz,
+-						   THERMAL_EVENT_UNSPECIFIED);
++			__thermal_zone_device_update(tz, THERMAL_EVENT_UNSPECIFIED);
++
++			mutex_unlock(&tz->lock);
  		}
-@@ -666,6 +682,7 @@ static bool ghes_do_proc(struct ghes *ghes,
- 	const guid_t *fru_id = &guid_null;
- 	char *fru_text = "";
- 	bool queued = false;
-+	bool sync = is_hest_sync_notify(ghes);
++
++		mutex_unlock(&thermal_list_lock);
+ 		break;
+ 	default:
+ 		break;
+diff --git a/include/linux/thermal.h b/include/linux/thermal.h
+index a5ae4af955ff..4012f440bfdc 100644
+--- a/include/linux/thermal.h
++++ b/include/linux/thermal.h
+@@ -150,6 +150,7 @@ struct thermal_cooling_device {
+  * @node:	node in thermal_tz_list (in thermal_core.c)
+  * @poll_queue:	delayed work for polling
+  * @notify_event: Last notification event
++ * @suspended: thermal zone suspend indicator
+  */
+ struct thermal_zone_device {
+ 	int id;
+@@ -183,6 +184,7 @@ struct thermal_zone_device {
+ 	struct list_head node;
+ 	struct delayed_work poll_queue;
+ 	enum thermal_notify_event notify_event;
++	bool suspended;
+ };
  
- 	sev = ghes_severity(estatus->error_severity);
- 	apei_estatus_for_each_section(estatus, gdata) {
-@@ -683,13 +700,13 @@ static bool ghes_do_proc(struct ghes *ghes,
- 			atomic_notifier_call_chain(&ghes_report_chain, sev, mem_err);
- 
- 			arch_apei_report_mem_error(sev, mem_err);
--			queued = ghes_handle_memory_failure(gdata, sev);
-+			queued = ghes_handle_memory_failure(gdata, sev, sync);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
- 			ghes_handle_aer(gdata);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
--			queued = ghes_handle_arm_hw_error(gdata, sev);
-+			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
- 		} else {
- 			void *err = acpi_hest_get_payload(gdata);
- 
+ /**
 -- 
 2.43.0
 
