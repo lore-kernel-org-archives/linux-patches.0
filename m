@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B561B94E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A17D134AE;
 	Sat,  3 Feb 2024 04:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933730; cv=none; b=jDgfP5hSxzfN+IMYc7EmpLKZSoPdvHXc8GgRfGe0H+n3WbBHTWOjddF7xPVgqY4DhjFoYv/E/iCANzSIvQovqDspXkF30Y8cm+58W9AZoXAPr7f/cKHLTHUEf2K71OEy+dod40ZVCy8I0Zcb0KjP/sYJWisihQHEudcMVsryP64=
+	t=1706933731; cv=none; b=DAvLCwkQsqTeqVmU9ClPv6//sJ/Z1CoXuoF65UusBAUMy0W4YVi2udumcYNypVSU2hS9Iqw3ETWPi8DSfvpz5ZEQpr2k4Fax4bvUs/xOMJ0URQFGqBXyQeakvUGXt9xAdIbrFAXIGJdtpoilkEIGKBvRa3DmNmcFtbC/V4dZRW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933730; c=relaxed/simple;
-	bh=9d6vwmYG47JD5iQTiTMV+9vCFcKpEebEp6RTxSUnIS0=;
+	s=arc-20240116; t=1706933731; c=relaxed/simple;
+	bh=txeTmLbMV4COHrgC5CyBdSdSeRC4Cm1xrD3VMkobU40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7sDw7LOL2DsM5o088/gHLKxfW7oWqh9o0BijDrAjQgsj2O6qJm/PwynEJgai8CeKWZckGr7JN4dJfTaZJos+KT8hPs/Fl2jOkktyhi/OBPlngSfsK+Skciyl3Pwa7e0AwD/kGpY3K/q2PYJquXFZss8CWQ51eZEH0ci6IJIy3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0z27kpUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kt82owlpyitfe7J/EZ98v9jERyiw4xGzERwgOcWasfQ2V2yYjX5yJkg+4SaEPJIRhI7SkNF/uDhDG32r2FDlhQLydg28HVrUpfCjARnHs/jsiD/h+zIyizj1DJiB176aUU0L9A3Z4/mgXg7bBSQGTNRZd23KEv89p6SOJxG5rvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VckS7Zv0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0z27kpUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CB8C433F1;
-	Sat,  3 Feb 2024 04:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VckS7Zv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8F8C43399;
+	Sat,  3 Feb 2024 04:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933730;
-	bh=9d6vwmYG47JD5iQTiTMV+9vCFcKpEebEp6RTxSUnIS0=;
+	bh=txeTmLbMV4COHrgC5CyBdSdSeRC4Cm1xrD3VMkobU40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0z27kpUg4zjl7LjhPc/RJoCEHXUMbpkeBVkez7LMw8KQdzgO23/BItilkSe4eQGr9
-	 XzFuSOFz3c97kW/aIdydtJvsEee70fBxFULjmGy7zTW0/eqCmRx2PDh76pett+58JK
-	 4VqRasjIZaBswJ765O8Y4BySjVjgURDEimqh+X50=
+	b=VckS7Zv08g9uzxKAvrxRV217YiSrbWXnY4xFPo/MPR5flGeyyYxhloawWtUmC9+Yl
+	 nXimPs9LpQiOhvl87SYzxM57doOPSnOppvc/wOulES1Bsk/IlY0DKDcsxK/pxcZCP8
+	 9vhtJN9Ux+32a5Bh4Y3A+HBGeW4DUWPo9BqVAoSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Riches <chris.riches@nutanix.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Yuntao Wang <ytcoode@gmail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 017/353] audit: Send netlink ACK before setting connection in auditd_set
-Date: Fri,  2 Feb 2024 20:02:15 -0800
-Message-ID: <20240203035404.291916918@linuxfoundation.org>
+Subject: [PATCH 6.7 018/353] ACPI: tables: Correct and clean up the logic of acpi_parse_entries_array()
+Date: Fri,  2 Feb 2024 20:02:16 -0800
+Message-ID: <20240203035404.321468574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,115 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Riches <chris.riches@nutanix.com>
+From: Yuntao Wang <ytcoode@gmail.com>
 
-[ Upstream commit 022732e3d846e197539712e51ecada90ded0572a ]
+[ Upstream commit 4b3805daaacb2168665c6222f261e68accb120dc ]
 
-When auditd_set sets the auditd_conn pointer, audit messages can
-immediately be put on the socket by other kernel threads. If the backlog
-is large or the rate is high, this can immediately fill the socket
-buffer. If the audit daemon requested an ACK for this operation, a full
-socket buffer causes the ACK to get dropped, also setting ENOBUFS on the
-socket.
+The original intention of acpi_parse_entries_array() is to return the
+number of all matching entries on success. This number may be greater than
+the value of the max_entries parameter. When this happens, the function
+will output a warning message, indicating that `count - max_entries`
+matching entries remain unprocessed and have been ignored.
 
-To avoid this race and ensure ACKs get through, fast-track the ACK in
-this specific case to ensure it is sent before auditd_conn is set.
+However, commit 4ceacd02f5a1 ("ACPI / table: Always count matched and
+successfully parsed entries") changed this logic to return the number of
+entries successfully processed by the handler. In this case, when the
+max_entries parameter is not zero, the number of entries successfully
+processed can never be greater than the value of max_entries. In other
+words, the expression `count > max_entries` will always evaluate to false.
+This means that the logic in the final if statement will never be executed.
 
-Signed-off-by: Chris Riches <chris.riches@nutanix.com>
-[PM: fix some tab vs space damage]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Commit 99b0efd7c886 ("ACPI / tables: do not report the number of entries
+ignored by acpi_parse_entries()") mentioned this issue, but it tried to fix
+it by removing part of the warning message. This is meaningless because the
+pr_warn statement will never be executed in the first place.
+
+Commit 8726d4f44150 ("ACPI / tables: fix acpi_parse_entries_array() so it
+traverses all subtables") introduced an errs variable, which is intended to
+make acpi_parse_entries_array() always traverse all of the subtables,
+calling as many of the callbacks as possible. However, it seems that the
+commit does not achieve this goal. For example, when a handler returns an
+error, none of the handlers will be called again in the subsequent
+iterations. This result appears to be no different from before the change.
+
+This patch corrects and cleans up the logic of acpi_parse_entries_array(),
+making it return the number of all matching entries, rather than the number
+of entries successfully processed by handlers. Additionally, if an error
+occurs when executing a handler, the function will return -EINVAL immediately.
+
+This patch should not affect existing users of acpi_parse_entries_array().
+
+Signed-off-by: Yuntao Wang <ytcoode@gmail.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/audit.c | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ lib/fw_table.c | 30 +++++++++---------------------
+ 1 file changed, 9 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/audit.c b/kernel/audit.c
-index 16205dd29843..9c8e5f732c4c 100644
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -487,15 +487,19 @@ static void auditd_conn_free(struct rcu_head *rcu)
-  * @pid: auditd PID
-  * @portid: auditd netlink portid
-  * @net: auditd network namespace pointer
-+ * @skb: the netlink command from the audit daemon
-+ * @ack: netlink ack flag, cleared if ack'd here
-  *
-  * Description:
-  * This function will obtain and drop network namespace references as
-  * necessary.  Returns zero on success, negative values on failure.
-  */
--static int auditd_set(struct pid *pid, u32 portid, struct net *net)
-+static int auditd_set(struct pid *pid, u32 portid, struct net *net,
-+		      struct sk_buff *skb, bool *ack)
- {
- 	unsigned long flags;
- 	struct auditd_connection *ac_old, *ac_new;
-+	struct nlmsghdr *nlh;
- 
- 	if (!pid || !net)
- 		return -EINVAL;
-@@ -507,6 +511,13 @@ static int auditd_set(struct pid *pid, u32 portid, struct net *net)
- 	ac_new->portid = portid;
- 	ac_new->net = get_net(net);
- 
-+	/* send the ack now to avoid a race with the queue backlog */
-+	if (*ack) {
-+		nlh = nlmsg_hdr(skb);
-+		netlink_ack(skb, nlh, 0, NULL);
-+		*ack = false;
-+	}
-+
- 	spin_lock_irqsave(&auditd_conn_lock, flags);
- 	ac_old = rcu_dereference_protected(auditd_conn,
- 					   lockdep_is_held(&auditd_conn_lock));
-@@ -1200,7 +1211,8 @@ static int audit_replace(struct pid *pid)
- 	return auditd_send_unicast_skb(skb);
+diff --git a/lib/fw_table.c b/lib/fw_table.c
+index 294df54e33b6..c49a09ee3853 100644
+--- a/lib/fw_table.c
++++ b/lib/fw_table.c
+@@ -85,11 +85,6 @@ acpi_get_subtable_type(char *id)
+ 	return ACPI_SUBTABLE_COMMON;
  }
  
--static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
-+static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
-+			     bool *ack)
- {
- 	u32			seq;
- 	void			*data;
-@@ -1293,7 +1305,8 @@ static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
- 				/* register a new auditd connection */
- 				err = auditd_set(req_pid,
- 						 NETLINK_CB(skb).portid,
--						 sock_net(NETLINK_CB(skb).sk));
-+						 sock_net(NETLINK_CB(skb).sk),
-+						 skb, ack);
- 				if (audit_enabled != AUDIT_OFF)
- 					audit_log_config_change("audit_pid",
- 								new_pid,
-@@ -1538,9 +1551,10 @@ static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
-  * Parse the provided skb and deal with any messages that may be present,
-  * malformed skbs are discarded.
-  */
--static void audit_receive(struct sk_buff  *skb)
-+static void audit_receive(struct sk_buff *skb)
- {
- 	struct nlmsghdr *nlh;
-+	bool ack;
- 	/*
- 	 * len MUST be signed for nlmsg_next to be able to dec it below 0
- 	 * if the nlmsg_len was not aligned
-@@ -1553,9 +1567,12 @@ static void audit_receive(struct sk_buff  *skb)
+-static __init_or_acpilib bool has_handler(struct acpi_subtable_proc *proc)
+-{
+-	return proc->handler || proc->handler_arg;
+-}
+-
+ static __init_or_acpilib int call_handler(struct acpi_subtable_proc *proc,
+ 					  union acpi_subtable_headers *hdr,
+ 					  unsigned long end)
+@@ -133,7 +128,6 @@ acpi_parse_entries_array(char *id, unsigned long table_size,
+ 	unsigned long table_end, subtable_len, entry_len;
+ 	struct acpi_subtable_entry entry;
+ 	int count = 0;
+-	int errs = 0;
+ 	int i;
  
- 	audit_ctl_lock();
- 	while (nlmsg_ok(nlh, len)) {
--		err = audit_receive_msg(skb, nlh);
--		/* if err or if this message says it wants a response */
--		if (err || (nlh->nlmsg_flags & NLM_F_ACK))
-+		ack = nlh->nlmsg_flags & NLM_F_ACK;
-+		err = audit_receive_msg(skb, nlh, &ack);
+ 	table_end = (unsigned long)table_header + table_header->length;
+@@ -145,25 +139,19 @@ acpi_parse_entries_array(char *id, unsigned long table_size,
+ 	    ((unsigned long)table_header + table_size);
+ 	subtable_len = acpi_get_subtable_header_length(&entry);
+ 
+-	while (((unsigned long)entry.hdr) + subtable_len  < table_end) {
+-		if (max_entries && count >= max_entries)
+-			break;
+-
++	while (((unsigned long)entry.hdr) + subtable_len < table_end) {
+ 		for (i = 0; i < proc_num; i++) {
+ 			if (acpi_get_entry_type(&entry) != proc[i].id)
+ 				continue;
+-			if (!has_handler(&proc[i]) ||
+-			    (!errs &&
+-			     call_handler(&proc[i], entry.hdr, table_end))) {
+-				errs++;
+-				continue;
+-			}
 +
-+		/* send an ack if the user asked for one and audit_receive_msg
-+		 * didn't already do it, or if there was an error. */
-+		if (ack || err)
- 			netlink_ack(skb, nlh, err, NULL);
++			if (!max_entries || count < max_entries)
++				if (call_handler(&proc[i], entry.hdr, table_end))
++					return -EINVAL;
  
- 		nlh = nlmsg_next(nlh, &len);
+ 			proc[i].count++;
++			count++;
+ 			break;
+ 		}
+-		if (i != proc_num)
+-			count++;
+ 
+ 		/*
+ 		 * If entry->length is 0, break from this loop to avoid
+@@ -180,9 +168,9 @@ acpi_parse_entries_array(char *id, unsigned long table_size,
+ 	}
+ 
+ 	if (max_entries && count > max_entries) {
+-		pr_warn("[%4.4s:0x%02x] found the maximum %i entries\n",
+-			id, proc->id, count);
++		pr_warn("[%4.4s:0x%02x] ignored %i entries of %i found\n",
++			id, proc->id, count - max_entries, count);
+ 	}
+ 
+-	return errs ? -EINVAL : count;
++	return count;
+ }
 -- 
 2.43.0
 
