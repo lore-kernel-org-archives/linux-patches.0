@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAB263B1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8801B26E;
 	Sat,  3 Feb 2024 04:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933722; cv=none; b=CLH/kN+gLOwi2nCD5YHhyTRRktjhYppKXnzYJZLVsjvXJFxnKuWPPepesZG7Tmv055v7PE/JGx6jEZ8gSpk0kspYz5N3LZaEc/w0zSSgDcPCZpN8bSbFqtkwlk/plbikzCIchAGfHIPhTQ8FnI9BodeLuZ6v5tilWnyDvkGrbUc=
+	t=1706933722; cv=none; b=qBTwBsiAeS4imbwY5HvHUZYvIy3CzYy4u5/yoJ21V4sPyhvO6tov9wbuif17s880Q3oh/F18gNvHeNBhj9r0wcM+2M8gjtFeMTjKtd+ozAqgKycZCJ9r3YWjgAQYCMwF5bw3sY1bT+1i6VQP/EyThWh6BK4EQZ2GmnCxP3iFEgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933722; c=relaxed/simple;
-	bh=1l+XPyTyBqLpcZHMfu+Ai7w2tkqUglCJNQZD1WS9Ra8=;
+	bh=qQtpXz8puYJcujvt8Za5s9PVlHAbG39wrBxLGd2kwCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQFsLw+qrvAIVN57HONIdpJlAo6srHHWllcRaHVtFlwvuVZXM94Wqz5Zo3HdCUnmJNbcs6ydn5Od9Nu0k5ysXkTz7u6lo16zfvsxMB9CR3OmqcTXADnGHLpxJ2w+jyKDoUAMXKUYLzifPiC4Kz5E7bpWBgbPKlTcecYbQLQn0Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldF3/fIT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDvnNB+P3dqK5iy8I94thUpY1+fc12XshcReczw9Om96YnWEKlc2eDMYm4kMlkjSDv7FnMyU8GenLjSsUYDHJRfTEf++9gatvhRKSsPHiGVq23Mt97nPmW/zpwre/QtT9L81TbvxkWKGxyz6aZJKNX2IngNjSIH3MX1ZkMTq1bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACbHecy+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldF3/fIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C3AC43399;
-	Sat,  3 Feb 2024 04:15:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACbHecy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CCCC433C7;
+	Sat,  3 Feb 2024 04:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933721;
-	bh=1l+XPyTyBqLpcZHMfu+Ai7w2tkqUglCJNQZD1WS9Ra8=;
+	s=korg; t=1706933722;
+	bh=qQtpXz8puYJcujvt8Za5s9PVlHAbG39wrBxLGd2kwCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldF3/fIThM1PMu+LZb6Ry2cNSt/QfOYMReGW/Y86TN46t3Nd+lKFSf9DPAVrXZheb
-	 5yNH7MJ3RsNXIvN+xuv2pjmWmC+7bWQM+lWrV8c31DPyWnLS7oak375L5V85ArLQ8n
-	 6WV5QPXN6rX2LxXjF3+LQDUnVLOWwbYwX6cjZovI=
+	b=ACbHecy+dOU2+HORaqkONHRc6lg+GFsZbNrFi8G5TP5BTIsZRHk9EkByIyxgTNZTt
+	 t8+eBzEa3YUwWT9LtzlNgpPO67Dfnl/zSR82COLnT2wZds92Q8heuUIuo8hUa0aOYg
+	 7kr+xP5lLQPq720Y+2pdux2gvyKOW6kge9klSq8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Subject: [PATCH 6.6 321/322] selftests/bpf: Remove flaky test_btf_id test
-Date: Fri,  2 Feb 2024 20:06:58 -0800
-Message-ID: <20240203035409.407061189@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.6 322/322] bonding: remove print in bond_verify_device_path
+Date: Fri,  2 Feb 2024 20:06:59 -0800
+Message-ID: <20240203035409.437774286@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,53 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-commit 56925f389e152dcb8d093435d43b78a310539c23 upstream.
+commit 486058f42a4728053ae69ebbf78e9731d8ce6f8b upstream.
 
-With previous patch, one of subtests in test_btf_id becomes
-flaky and may fail. The following is a failing example:
+As suggested by Paolo in link[1], if the memory allocation fails, the mm
+layer will emit a lot warning comprising the backtrace, so remove the
+print.
 
-  Error: #26 btf
-  Error: #26/174 btf/BTF ID
-    Error: #26/174 btf/BTF ID
-    btf_raw_create:PASS:check 0 nsec
-    btf_raw_create:PASS:check 0 nsec
-    test_btf_id:PASS:check 0 nsec
-    ...
-    test_btf_id:PASS:check 0 nsec
-    test_btf_id:FAIL:check BTF lingersdo_test_get_info:FAIL:check failed: -1
+[1] https://lore.kernel.org/all/20231118081653.1481260-1-shaozhengchao@huawei.com/
 
-The test tries to prove a btf_id not available after the map is closed.
-But btf_id is freed only after workqueue and a rcu grace period, compared
-to previous case just after a rcu grade period.
-Depending on system workload, workqueue could take quite some time
-to execute function bpf_map_free_deferred() which may cause the test failure.
-Instead of adding arbitrary delays, let us remove the logic to
-check btf_id availability after map is closed.
-
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20231214203820.1469402-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/prog_tests/btf.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/bonding/bond_main.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/tools/testing/selftests/bpf/prog_tests/btf.c
-+++ b/tools/testing/selftests/bpf/prog_tests/btf.c
-@@ -4630,11 +4630,6 @@ static int test_btf_id(unsigned int test
- 	/* The map holds the last ref to BTF and its btf_id */
- 	close(map_fd);
- 	map_fd = -1;
--	btf_fd[0] = bpf_btf_get_fd_by_id(map_info.btf_id);
--	if (CHECK(btf_fd[0] >= 0, "BTF lingers")) {
--		err = -1;
--		goto done;
--	}
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2973,11 +2973,8 @@ struct bond_vlan_tag *bond_verify_device
  
- 	fprintf(stderr, "OK");
- 
+ 	if (start_dev == end_dev) {
+ 		tags = kcalloc(level + 1, sizeof(*tags), GFP_ATOMIC);
+-		if (!tags) {
+-			net_err_ratelimited("%s: %s: Failed to allocate tags\n",
+-					    __func__, start_dev->name);
++		if (!tags)
+ 			return ERR_PTR(-ENOMEM);
+-		}
+ 		tags[level].vlan_proto = BOND_VLAN_PROTO_NONE;
+ 		return tags;
+ 	}
 
 
