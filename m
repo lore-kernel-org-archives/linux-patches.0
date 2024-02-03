@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACB51CAA7;
-	Sat,  3 Feb 2024 04:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BE910A21;
+	Sat,  3 Feb 2024 04:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933860; cv=none; b=Okp8zUd1s4TQRLKM4tOURiGLheE1ae6nlKyhB2Xrv9QAqAlDSZL+jboHPwYANWplkeAal9iVopziQbYu9TIwskL17K+XQ8UEp3HIkCykES0rICEeKb6qmyCItVMx+n5DceSQ9KKGaiOAYszFaiUIrdS6lZT+JrasO62OnsqR1IM=
+	t=1706933861; cv=none; b=SkdYEyDg8XA4jpW/kALU4nNAz0hH8T6W9wuXyW+nJzxxkcBihAnegmySfmmA4oxxD8s+1bNMrXmBgTU7TDj4cteu0WIKacKulzeoWlsISsx0VsLLB0dLWl7+GdzE+rGm9yuvLlHJfy08dkUe0o7QpT5iBp+Hmy0EXzIvWJYXuV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933860; c=relaxed/simple;
-	bh=nfT+3jKhPr/rxaWsYQKrdYhdVarLwvzxp8IofjXTPDI=;
+	s=arc-20240116; t=1706933861; c=relaxed/simple;
+	bh=1LmhcRjwEqDjn4I/24BxWzG1dOQsPabfexHVZ/7mqAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/1C5UgWy0nhQosXnGRLbPlY6xCv/XPupHN76II3o84NLIalwAgdjBfOBDP/vzymiMPq0LaTBPf+ASyGS2N9G+EdPylghbhvJUPqbzGTQ2hDW1yfpYqMn42BZ9Wei//4Jd3DIf70ZUh/aKNzxs9oNLCqSvTjsKckUkyHEcTR/bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wykx7HSG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mX3W/SCknGfg++Y4eN2zMG/V3kke9UTbTJ921BR8+5m0IHyOrtS6uooD61NfgIkxqDnoSq51XBLHUdgs/eaHRx9guL63VGsDugTc/pHNVx9p9nECztwX/qkYxk3xQYEE1Fni+zOEb/Xhr7WT58XV6+15xTR+I6/WsEUitlMWYpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mv5sZ+Bm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wykx7HSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F5EC433F1;
-	Sat,  3 Feb 2024 04:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mv5sZ+Bm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515DAC43390;
+	Sat,  3 Feb 2024 04:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933860;
-	bh=nfT+3jKhPr/rxaWsYQKrdYhdVarLwvzxp8IofjXTPDI=;
+	s=korg; t=1706933861;
+	bh=1LmhcRjwEqDjn4I/24BxWzG1dOQsPabfexHVZ/7mqAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wykx7HSGfl1Rqw1jISf2NLZiimQy07ObOTPKNt3x1huJb4LmWKaOy+NKaBLu6UmiC
-	 2XY4lYx/f6QUFJTilmXSXAjGyLVykaBvijylHPhqWsaDl/zDkg6nCz3pnP62bcsWDl
-	 yTbGxx5kqBrKw6zdileEZ3o9gdFaQ7WnYHnaOXM8=
+	b=mv5sZ+BmIoWakCuMiL3XtZw6/e/9ImBDRMUe8gyLOBvvPZLRX88+B+Y2LolwTZXJE
+	 fs65G7JTQiloiKiCfuzLfmDPWFZeJA3TUaEFMxDHpFyP05SNxLiyVfPsvwmfACkhWg
+	 NfOug1Jt1ErXaoxM8HbW9x0wXp+OdPewWBcuDYjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 171/353] drm/amd/display: Fix tiled display misalignment
-Date: Fri,  2 Feb 2024 20:04:49 -0800
-Message-ID: <20240203035409.048049845@linuxfoundation.org>
+Subject: [PATCH 6.7 172/353] f2fs: fix write pointers on zoned device after roll forward
+Date: Fri,  2 Feb 2024 20:04:50 -0800
+Message-ID: <20240203035409.079434575@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit c4b8394e76adba4f50a3c2696c75b214a291e24a ]
+[ Upstream commit 9dad4d964291295ef48243d4e03972b85138bc9f ]
 
-[Why]
-When otg workaround is applied during clock update, otgs of
-tiled display went out of sync.
+1. do roll forward recovery
+2. update current segments pointers
+3. fix the entire zones' write pointers
+4. do checkpoint
 
-[How]
-To call dc_trigger_sync() after clock update to sync otgs again.
-
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/f2fs/recovery.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index bc098098345c..bbdeda489768 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1964,6 +1964,10 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
- 		wait_for_no_pipes_pending(dc, context);
- 		/* pplib is notified if disp_num changed */
- 		dc->hwss.optimize_bandwidth(dc, context);
-+		/* Need to do otg sync again as otg could be out of sync due to otg
-+		 * workaround applied during clock update
-+		 */
-+		dc_trigger_sync(dc, context);
+diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
+index 16415c770b45..d0f24ccbd1ac 100644
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -917,6 +917,8 @@ int f2fs_recover_fsync_data(struct f2fs_sb_info *sbi, bool check_only)
+ 	if (!err && fix_curseg_write_pointer && !f2fs_readonly(sbi->sb) &&
+ 			f2fs_sb_has_blkzoned(sbi)) {
+ 		err = f2fs_fix_curseg_write_pointer(sbi);
++		if (!err)
++			err = f2fs_check_write_pointer(sbi);
+ 		ret = err;
  	}
  
- 	if (dc->hwss.update_dsc_pg)
 -- 
 2.43.0
 
