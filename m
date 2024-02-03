@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A89C1C69E;
-	Sat,  3 Feb 2024 04:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587FE1C69E;
+	Sat,  3 Feb 2024 04:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933822; cv=none; b=C3kHdtYRL8Qw3+abbbYsajzSDd+OFZvJFNS/3VsU42ZgkVvTwWJOyXHYrOnwxCkErAyJMPjGPs5zFz4ZphEC1F6XuF0kuNkvJqSXHmepY/DcxAs/eT5PLY8hy9KUPdC1ktBLT0jXcfnsXGdvSIxBdt+5vmB4qbaULgRvMzOgv7o=
+	t=1706933823; cv=none; b=D1mV0WLtiq/72s7Qbf1ZFrwuQ8pUeabxFpwU5NqfgXLumipCI3MuM/2XjuvhbXGNn3n8pp1Z615HhookO2VJXZy3qGwsSuyNBBgtox2m6W8HCbuj11E/BYcEzuP3kkykxcx4CT+cTaV/ZjZbqo1t+mPARwrYRqzeu0H7G6DLYYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933822; c=relaxed/simple;
-	bh=rQ+QBSr8qe/M7zsoMcorY5WELMdFcNb5G0V9rRqkDUs=;
+	s=arc-20240116; t=1706933823; c=relaxed/simple;
+	bh=Pe5bXAF+saF+JT2XePyZ83/zFb0Es21vJX80OYcxYG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOejTruu82O8IdLnw6h5Z/Vz1XHFT/bczmBhputRa5vljV9YcFyjLx7W4PQGzbiKmfpf7I76yWTej605FWikMtPyyHq1CaP0bo/t1MNBl1SlOKMV1CmENP9HOXkjRtDeqU58l+zypsdClK3CI7DcPBU+w5kcieSgwUvHBCuUEqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gohJKqhM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QAUXE3IkmPAJr2Bji302Gmj4Qk33vIMEp5dyUs2sz9lB4YOmicpGNeeVw86zaJidCJAFfqHCpcwmnJ6BkLo04DKL1WMrOWpgV/GdMMmYIiO+sNNcROGl1Nok5L3OhALWhtWx9dgEveVh4cRYMeV/cl4Np+xO31qCcRmUP2V3t/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFQkC+F8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gohJKqhM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CAFC433C7;
-	Sat,  3 Feb 2024 04:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFQkC+F8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA1FC43394;
+	Sat,  3 Feb 2024 04:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933822;
-	bh=rQ+QBSr8qe/M7zsoMcorY5WELMdFcNb5G0V9rRqkDUs=;
+	s=korg; t=1706933823;
+	bh=Pe5bXAF+saF+JT2XePyZ83/zFb0Es21vJX80OYcxYG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gohJKqhMU4VKZE79vIlVR4+zxLKKwSRkkXETwGlKAgEpZCJoxLbbXL//SRYjBSsqA
-	 iVVZZImLjRy37Zl0xi3c0LfuquaH/C6nQi9OIZEIZnSKVAcIyHacighVxaieeQMxC4
-	 K5q4on8Ugtw3MlnBGNn7+9Q7FEGV8qrFXN1ce60I=
+	b=uFQkC+F86qiAmYmNMSe4c2lh6OqxGf+17UPYYllYvHe18Q8hCd9C5s2viOh8TcnbS
+	 8g/q7/r4dOYrD2QJCXFI13LnpPjy+F9yZCCrdSf1a7nWpP9o5OB/JXRU+0ara6BFji
+	 Vkc6ZWIUN1qYAetrVZiQWkC0cHWquKLdjdaskByQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 118/353] arm64: zynqmp: Move fixed clock to / for kv260
-Date: Fri,  2 Feb 2024 20:03:56 -0800
-Message-ID: <20240203035407.478335773@linuxfoundation.org>
+Subject: [PATCH 6.7 119/353] arm64: zynqmp: Fix clock node name in kv260 cards
+Date: Fri,  2 Feb 2024 20:03:57 -0800
+Message-ID: <20240203035407.510076691@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,113 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Simek <michal.simek@amd.com>
 
-[ Upstream commit 6a10a19a6bd2fd8d27a510678bf87bd9408f51d8 ]
+[ Upstream commit 0bfb7950cc1975372c4c58c3d3f9803f05245d46 ]
 
-fixed clock nodes can't be on the bus because they are missing reg
-property. That's why move them to root.
-And because it is root it is good to have it as the first node in a file.
+node name shouldn't use '_' that's why convert it to '-'.
 
 Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso | 28 ++++++++---------
- .../boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso | 30 +++++++++----------
- 2 files changed, 29 insertions(+), 29 deletions(-)
+ arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso | 12 ++++++------
+ arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso | 12 ++++++------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso
-index ae1b9b2bdbee..dee238739290 100644
+index dee238739290..92f4190d564d 100644
 --- a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso
 +++ b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revA.dtso
-@@ -21,20 +21,7 @@
- /dts-v1/;
+@@ -22,37 +22,37 @@
  /plugin/;
  
--&i2c1 { /* I2C_SCK C23/C24 - MIO from SOM */
--	#address-cells = <1>;
--	#size-cells = <0>;
--	pinctrl-names = "default", "gpio";
--	pinctrl-0 = <&pinctrl_i2c1_default>;
--	pinctrl-1 = <&pinctrl_i2c1_gpio>;
--	scl-gpios = <&gpio 24 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
--	sda-gpios = <&gpio 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
--
--	/* u14 - 0x40 - ina260 */
--	/* u27 - 0xe0 - STDP4320 DP/HDMI splitter */
--};
--
--&amba {
-+&{/} {
- 	si5332_0: si5332_0 { /* u17 */
+ &{/} {
+-	si5332_0: si5332_0 { /* u17 */
++	si5332_0: si5332-0 { /* u17 */
  		compatible = "fixed-clock";
  		#clock-cells = <0>;
-@@ -72,6 +59,19 @@
+ 		clock-frequency = <125000000>;
  	};
- };
  
-+&i2c1 { /* I2C_SCK C23/C24 - MIO from SOM */
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	pinctrl-names = "default", "gpio";
-+	pinctrl-0 = <&pinctrl_i2c1_default>;
-+	pinctrl-1 = <&pinctrl_i2c1_gpio>;
-+	scl-gpios = <&gpio 24 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+	sda-gpios = <&gpio 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+
-+	/* u14 - 0x40 - ina260 */
-+	/* u27 - 0xe0 - STDP4320 DP/HDMI splitter */
-+};
-+
- /* DP/USB 3.0 and SATA */
- &psgtr {
- 	status = "okay";
+-	si5332_1: si5332_1 { /* u17 */
++	si5332_1: si5332-1 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <25000000>;
+ 	};
+ 
+-	si5332_2: si5332_2 { /* u17 */
++	si5332_2: si5332-2 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <48000000>;
+ 	};
+ 
+-	si5332_3: si5332_3 { /* u17 */
++	si5332_3: si5332-3 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <24000000>;
+ 	};
+ 
+-	si5332_4: si5332_4 { /* u17 */
++	si5332_4: si5332-4 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
+ 	};
+ 
+-	si5332_5: si5332_5 { /* u17 */
++	si5332_5: si5332-5 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <27000000>;
 diff --git a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso
-index b59e48be6465..73c5cb156caf 100644
+index 73c5cb156caf..f88b71f5b07a 100644
 --- a/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso
 +++ b/arch/arm64/boot/dts/xilinx/zynqmp-sck-kv-g-revB.dtso
-@@ -16,21 +16,7 @@
- /dts-v1/;
+@@ -17,37 +17,37 @@
  /plugin/;
  
--&i2c1 { /* I2C_SCK C23/C24 - MIO from SOM */
--	#address-cells = <1>;
--	#size-cells = <0>;
--	pinctrl-names = "default", "gpio";
--	pinctrl-0 = <&pinctrl_i2c1_default>;
--	pinctrl-1 = <&pinctrl_i2c1_gpio>;
--	scl-gpios = <&gpio 24 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
--	sda-gpios = <&gpio 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
--
--	/* u14 - 0x40 - ina260 */
--	/* u43 - 0x2d - usb5744 */
--	/* u27 - 0xe0 - STDP4320 DP/HDMI splitter */
--};
--
--&amba {
-+&{/} {
- 	si5332_0: si5332_0 { /* u17 */
+ &{/} {
+-	si5332_0: si5332_0 { /* u17 */
++	si5332_0: si5332-0 { /* u17 */
  		compatible = "fixed-clock";
  		#clock-cells = <0>;
-@@ -68,6 +54,20 @@
+ 		clock-frequency = <125000000>;
  	};
- };
  
-+&i2c1 { /* I2C_SCK C23/C24 - MIO from SOM */
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	pinctrl-names = "default", "gpio";
-+	pinctrl-0 = <&pinctrl_i2c1_default>;
-+	pinctrl-1 = <&pinctrl_i2c1_gpio>;
-+	scl-gpios = <&gpio 24 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+	sda-gpios = <&gpio 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+
-+	/* u14 - 0x40 - ina260 */
-+	/* u43 - 0x2d - usb5744 */
-+	/* u27 - 0xe0 - STDP4320 DP/HDMI splitter */
-+};
-+
- /* DP/USB 3.0 */
- &psgtr {
- 	status = "okay";
+-	si5332_1: si5332_1 { /* u17 */
++	si5332_1: si5332-1 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <25000000>;
+ 	};
+ 
+-	si5332_2: si5332_2 { /* u17 */
++	si5332_2: si5332-2 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <48000000>;
+ 	};
+ 
+-	si5332_3: si5332_3 { /* u17 */
++	si5332_3: si5332-3 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <24000000>;
+ 	};
+ 
+-	si5332_4: si5332_4 { /* u17 */
++	si5332_4: si5332-4 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
+ 	};
+ 
+-	si5332_5: si5332_5 { /* u17 */
++	si5332_5: si5332-5 { /* u17 */
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <27000000>;
 -- 
 2.43.0
 
