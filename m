@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCE30171A4;
-	Sat,  3 Feb 2024 04:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DD01CD02;
+	Sat,  3 Feb 2024 04:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933529; cv=none; b=jhIf3w6SjjvtLYr6Z6EwWXZSJyjIAvGIWX12BRZqEFEdqKXAXQdTy2m9sIXpAQndEpzM7Q3KDsCY51pRiVMlCx1dr/4w8XW8F9wqId2zvDVLnZChJJ2WMbO4uNUDN52DhEWsreOcduI22ooglRctylZ5alr9bq40ZQnN09l0YII=
+	t=1706933530; cv=none; b=OZHKexk2I/r/fdtgbp9xwabCceXkiNFW1i0Jsj078Jl0CrOHN8RsK6ysDFyB88H/EyVCbQwmFNOym1CopTkSKQrBqAvwXeLHuPr1YRKZu9JtmURc1o4kS1cnho+Ip16CAL5k+ykUmfaoBWLuv0ZP1WihQP1IYeQ8TmowlYj9GlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933529; c=relaxed/simple;
-	bh=abWFhiSGIUjn0d4aFLbV1O9Nowu0njXh0SXdvvWjVAI=;
+	s=arc-20240116; t=1706933530; c=relaxed/simple;
+	bh=MUbqWZS7muOS56gwd7/asman6apKqUz8TqaiToBKPG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXVTirq2aQ3lAerKpPmD9D9R/JAo4oEMBqSAKU6mTNZULPOoH8tuTUnWZ2pD+3/lGxfCM6B4qvPTdGCMx9dGZyDoz72RSAa1TRifGUOSFI86H1cfA3ZvifY7m2kIYck8kv2KaELz3OQOuID8NdWYOqyi9V62G1xqi5VoFhR0LE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFNeORi6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ES4iOXfIgoJm64VAGBXl7FBRMFW/BWnkvLq4izU3d9rDRlZpr8J6Ftf/u6WwdZPRbJBLmbHl2xWxyQ9noKepCtUa5tJg8M+QhgKRStAO2D8X1H9MXl8W1TRIQQYxOnjrul2zWRnVZDx0vZyngMXy46bdv+lVNCShkfwei6wI6vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av3XdACO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFNeORi6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48875C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av3XdACO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F044EC43390;
 	Sat,  3 Feb 2024 04:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933529;
-	bh=abWFhiSGIUjn0d4aFLbV1O9Nowu0njXh0SXdvvWjVAI=;
+	s=korg; t=1706933530;
+	bh=MUbqWZS7muOS56gwd7/asman6apKqUz8TqaiToBKPG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFNeORi6gP5L7E9Bjz+rDwRzh0mqH3mSuIhIGrInuFUPZy4GoYvTkenMdQaKHOqFo
-	 UvCQ2oR9IYE07hhZjSDB5wYFJOG4BJLc0+OiAncmO7sIWlAW64v/V1wj3NBnHG8n+U
-	 r3TO4RnBg6kVPOlT0dkrouDcAKd3rQOzv/6a4bZc=
+	b=av3XdACOBHwVIO7JRIZ7fUPk+gcdKQ4GpjJcHkG6rOiY6zzrotCU15hfEzoxLXS40
+	 sbk9ERAIRLnFhs+N7gJ8ATz4/Q3h6/J+l9cuJWYjghcLk/X9vlwoo6zYKK+siCkMg9
+	 Ryfmnn2kpNUhyWASzYMcnd76GvaYPTByOTjSg/cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/322] KVM: s390: fix setting of fpc register
-Date: Fri,  2 Feb 2024 20:02:24 -0800
-Message-ID: <20240203035400.622697076@linuxfoundation.org>
+Subject: [PATCH 6.6 038/322] crypto: stm32/crc32 - fix parsing list of devices
+Date: Fri,  2 Feb 2024 20:02:15 -0800
+Message-ID: <20240203035400.306417403@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,68 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
 
-[ Upstream commit b988b1bb0053c0dcd26187d29ef07566a565cf55 ]
+[ Upstream commit 0eaef675b94c746900dcea7f6c41b9a103ed5d53 ]
 
-kvm_arch_vcpu_ioctl_set_fpu() allows to set the floating point control
-(fpc) register of a guest cpu. The new value is tested for validity by
-temporarily loading it into the fpc register.
+smatch warnings:
+drivers/crypto/stm32/stm32-crc32.c:108 stm32_crc_get_next_crc() warn:
+can 'crc' even be NULL?
 
-This may lead to corruption of the fpc register of the host process:
-if an interrupt happens while the value is temporarily loaded into the fpc
-register, and within interrupt context floating point or vector registers
-are used, the current fp/vx registers are saved with save_fpu_regs()
-assuming they belong to user space and will be loaded into fp/vx registers
-when returning to user space.
+Use list_first_entry_or_null instead of list_first_entry to retrieve
+the first device registered.
+The function list_first_entry always return a non NULL pointer even if
+the list is empty. Hence checking if the pointer returned is NULL does
+not tell if the list is empty or not.
 
-test_fp_ctl() restores the original user space / host process fpc register
-value, however it will be discarded, when returning to user space.
-
-In result the host process will incorrectly continue to run with the value
-that was supposed to be used for a guest cpu.
-
-Fix this by simply removing the test. There is another test right before
-the SIE context is entered which will handles invalid values.
-
-This results in a change of behaviour: invalid values will now be accepted
-instead of that the ioctl fails with -EINVAL. This seems to be acceptable,
-given that this interface is most likely not used anymore, and this is in
-addition the same behaviour implemented with the memory mapped interface
-(replace invalid values with zero) - see sync_regs() in kvm-s390.c.
-
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
+Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/kvm-s390.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/crypto/stm32/stm32-crc32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
-index b3f17e014cab..49cce436444e 100644
---- a/arch/s390/kvm/kvm-s390.c
-+++ b/arch/s390/kvm/kvm-s390.c
-@@ -4307,10 +4307,6 @@ int kvm_arch_vcpu_ioctl_set_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu)
+diff --git a/drivers/crypto/stm32/stm32-crc32.c b/drivers/crypto/stm32/stm32-crc32.c
+index 90a920e7f664..c439be1650c8 100644
+--- a/drivers/crypto/stm32/stm32-crc32.c
++++ b/drivers/crypto/stm32/stm32-crc32.c
+@@ -104,7 +104,7 @@ static struct stm32_crc *stm32_crc_get_next_crc(void)
+ 	struct stm32_crc *crc;
  
- 	vcpu_load(vcpu);
- 
--	if (test_fp_ctl(fpu->fpc)) {
--		ret = -EINVAL;
--		goto out;
--	}
- 	vcpu->run->s.regs.fpc = fpu->fpc;
- 	if (MACHINE_HAS_VX)
- 		convert_fp_to_vx((__vector128 *) vcpu->run->s.regs.vrs,
-@@ -4318,7 +4314,6 @@ int kvm_arch_vcpu_ioctl_set_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu)
- 	else
- 		memcpy(vcpu->run->s.regs.fprs, &fpu->fprs, sizeof(fpu->fprs));
- 
--out:
- 	vcpu_put(vcpu);
- 	return ret;
- }
+ 	spin_lock_bh(&crc_list.lock);
+-	crc = list_first_entry(&crc_list.dev_list, struct stm32_crc, list);
++	crc = list_first_entry_or_null(&crc_list.dev_list, struct stm32_crc, list);
+ 	if (crc)
+ 		list_move_tail(&crc->list, &crc_list.dev_list);
+ 	spin_unlock_bh(&crc_list.lock);
 -- 
 2.43.0
 
