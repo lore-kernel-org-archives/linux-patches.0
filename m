@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26031BC4F;
-	Sat,  3 Feb 2024 04:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526601BC5B;
+	Sat,  3 Feb 2024 04:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933493; cv=none; b=TLTKv4C0Rs3fEGshdNdLS2RTZkTvwQMw62DpZVI/fcuXR6gtEOQC0qdi3azv2P0p3G5VDMyU8xuWSAxmaK/QK4Z2G+10e28NSuh+uVA1+M6Ghgng0iiLkhG6Gy8ZIFALD1pETPnosLAsiZ1T53fDq8OXgu46CSmbT0oGWzFQH5g=
+	t=1706933493; cv=none; b=sIEhDhXyLLRivxwU0j8xF5ZWM2CcB4ESV6mF9BcbsnfdFwxDP7Q9uOtFUpVQEHXUzsP4Yqk2xerrGmTZUXZeHKH6WH71Jus8sYTQvq7v1K39yLPG8IImbVxNl4dxuZ19zvQcG2pIJhUxFKzWXG/67km2SpPe25hyhFEF5bkwih4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933493; c=relaxed/simple;
-	bh=wr9DuTnJN9vLp57QoF+X0W6xkb2AoI5BzLN3kNkfkvE=;
+	bh=Fav4MeK3fFiX6Qe9NWAYDFWUGloQS1ckA/gEhDzVtws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t23nmwAs+Wt36wFBlsasvcY7C8vauAC4VAvzjbg1vzF5bT7b/RoeZP2fNrJsfdtmQHd2NJqSbIPz55vE2EZaJIqMuxoo+pjGBlgwO0i4WwXTd4WJLull5hfK9gyMoxOD8IXqkfudDFyuZziGdXRq/p3YO7Sk0Yq+aKs1fqJg0ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNTMiG1g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8p+0nIwPVXNgwSjHfz0bTXFPfhD0iWZYSzNiHILAFZGeFv6U5kl8hup66JVaCFuuG0N9pNd1UhFwqA4tOTexJLicaVl1YnYULQZT7sT1upwa/CLiQufUkLpIQYEKM5QTGqGvuOPJqLpl94RVH/ueD+fINliA68ABUuVzaAK6/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJWpCMbf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNTMiG1g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B0FC433F1;
-	Sat,  3 Feb 2024 04:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJWpCMbf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD83C433F1;
+	Sat,  3 Feb 2024 04:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933492;
-	bh=wr9DuTnJN9vLp57QoF+X0W6xkb2AoI5BzLN3kNkfkvE=;
+	s=korg; t=1706933493;
+	bh=Fav4MeK3fFiX6Qe9NWAYDFWUGloQS1ckA/gEhDzVtws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNTMiG1g1QXeY6T+PYKwcJP0Bu6cmt1kndkOfq9KjFXAVEVq9QZ4G1hr1wdJd9tAC
-	 cVbNKg3SQQwwXvXOhlpEBBA8zBWHbwoXAE0dXgUD73wIgxSDEU8gZ2YxUvOQpWMWt0
-	 LmkvJVqjZHu/Zlo43TPer5lU2/1oUaK8GYZPp3P4=
+	b=uJWpCMbfmKa1qsV3ZZasvt3TF1YASuFHmJiHVq1ghLIeElLbwQScvdfl1YWWy/hZ9
+	 aJnwcMa/j6MCYtd3XctLT2q0A+ghHyDHOp86dGeWK0gYpkHZ7ZiQGv7qvbGqDZASoJ
+	 DM4o747HUGXegJV3xPAyaTp9UnEuPF24Zs01A2AQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Rae Moar <rmoar@google.com>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/322] perf/core: Fix narrow startup race when creating the perf nr_addr_filters sysfs file
-Date: Fri,  2 Feb 2024 20:01:50 -0800
-Message-ID: <20240203035359.477480710@linuxfoundation.org>
+Subject: [PATCH 6.6 022/322] kunit: tool: fix parsing of test attributes
+Date: Fri,  2 Feb 2024 20:01:59 -0800
+Message-ID: <20240203035359.764739639@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -50,79 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg KH <gregkh@linuxfoundation.org>
+From: Rae Moar <rmoar@google.com>
 
-[ Upstream commit 652ffc2104ec1f69dd4a46313888c33527145ccf ]
+[ Upstream commit 8ae27bc7fff4ef467a7964821a6cedb34a05d3b2 ]
 
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/2023061204-decal-flyable-6090@gregkh
+Add parsing of attributes as diagnostic data. Fixes issue with test plan
+being parsed incorrectly as diagnostic data when located after
+suite-level attributes.
+
+Note that if there does not exist a test plan line, the diagnostic lines
+between the suite header and the first result will be saved in the suite
+log rather than the first test case log.
+
+Signed-off-by: Rae Moar <rmoar@google.com>
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 40 ++++++++++++++++++++++++++++------------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ tools/testing/kunit/kunit_parser.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 58ecb1c24387..f22c540350a1 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -11413,9 +11413,32 @@ static DEVICE_ATTR_RW(perf_event_mux_interval_ms);
- static struct attribute *pmu_dev_attrs[] = {
- 	&dev_attr_type.attr,
- 	&dev_attr_perf_event_mux_interval_ms.attr,
-+	&dev_attr_nr_addr_filters.attr,
-+	NULL,
-+};
-+
-+static umode_t pmu_dev_is_visible(struct kobject *kobj, struct attribute *a, int n)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct pmu *pmu = dev_get_drvdata(dev);
-+
-+	if (!pmu->nr_addr_filters)
-+		return 0;
-+
-+	return a->mode;
-+
-+	return 0;
-+}
-+
-+static struct attribute_group pmu_dev_attr_group = {
-+	.is_visible = pmu_dev_is_visible,
-+	.attrs = pmu_dev_attrs,
-+};
-+
-+static const struct attribute_group *pmu_dev_groups[] = {
-+	&pmu_dev_attr_group,
- 	NULL,
- };
--ATTRIBUTE_GROUPS(pmu_dev);
- 
- static int pmu_bus_running;
- static struct bus_type pmu_bus = {
-@@ -11452,18 +11475,11 @@ static int pmu_dev_alloc(struct pmu *pmu)
- 	if (ret)
- 		goto free_dev;
- 
--	/* For PMUs with address filters, throw in an extra attribute: */
--	if (pmu->nr_addr_filters)
--		ret = device_create_file(pmu->dev, &dev_attr_nr_addr_filters);
--
--	if (ret)
--		goto del_dev;
--
--	if (pmu->attr_update)
-+	if (pmu->attr_update) {
- 		ret = sysfs_update_groups(&pmu->dev->kobj, pmu->attr_update);
--
--	if (ret)
--		goto del_dev;
-+		if (ret)
-+			goto del_dev;
-+	}
- 
- out:
- 	return ret;
+diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
+index 79d8832c862a..ce34be15c929 100644
+--- a/tools/testing/kunit/kunit_parser.py
++++ b/tools/testing/kunit/kunit_parser.py
+@@ -450,7 +450,7 @@ def parse_diagnostic(lines: LineStream) -> List[str]:
+ 	Log of diagnostic lines
+ 	"""
+ 	log = []  # type: List[str]
+-	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START, TAP_START]
++	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START, TAP_START, TEST_PLAN]
+ 	while lines and not any(re.match(lines.peek())
+ 			for re in non_diagnostic_lines):
+ 		log.append(lines.pop())
+@@ -726,6 +726,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
+ 		# test plan
+ 		test.name = "main"
+ 		ktap_line = parse_ktap_header(lines, test)
++		test.log.extend(parse_diagnostic(lines))
+ 		parse_test_plan(lines, test)
+ 		parent_test = True
+ 	else:
+@@ -737,6 +738,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
+ 		if parent_test:
+ 			# If KTAP version line and/or subtest header is found, attempt
+ 			# to parse test plan and print test header
++			test.log.extend(parse_diagnostic(lines))
+ 			parse_test_plan(lines, test)
+ 			print_test_header(test)
+ 	expected_count = test.expected_count
 -- 
 2.43.0
 
