@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C26A18E27;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C1AFBEE;
 	Sat,  3 Feb 2024 04:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933686; cv=none; b=J7vZRUO0gtfOD9JWMc86tKa9rVH7cbzWVSmEu3uJgfkl699YW+Sn32V0R6+PYci0SqKimCkcv1AfX24zxI1InK14Z7zdfBJ+DdbGxlOX6dVcJmehT9F7OdK5ATCXS2cOcCvsluI5XT07Ey6pcDnh1OAIXxmsLqWRfx/jQPD5vRE=
+	t=1706933687; cv=none; b=EWG1a2giwA9lmyZIcPYGCPVEMwXXme0UMYm/IT6FqbBRHFlpgAgcr/wFf3ZBwvcFOy/jXHxSIuxV7jI2DBJvkhfzrrbQDgsx67rMO9zXYqcRSxu3eqUP3BULqS90+jxD4wScDUFCXgJMxyPUad7Jq356dXaiaVfN3M4RKy0qYzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933686; c=relaxed/simple;
-	bh=oVgbtp3J4xUfFEPj6G6Dk0xUma2RzEFiXo9lGY65Xkg=;
+	s=arc-20240116; t=1706933687; c=relaxed/simple;
+	bh=dzD7u8i/GTn8vVitCsji9KDSG6Xru8hEy7oQMqn1GNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+p8NMjsMfl6zziUHpEGcQEYJM1ROXFSPnodaZD8hjnZ3H8e3+Zp/Bn2Owa0yFq15kRtgryimUGgHHt8eWr0YNS36N0z0enqK0IGQrQXdYsaF5F6LTpykMTepAvj+Tj2cRitbLwt4EFOCdzVBnLW3Oyue/BBkcDyDrdgEHlW6DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3HosiXK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ztex+CKbrZi/die2fFIpNlanznGEC0vIUzqs/WWiYC6srqWHzjEPRqW31aDd94I+xDKNP9fWBKUbl1k6QEjPJ3p6JG5JOvkh6IywX/lKyp4CItbxo2vuAg21RDjhiaXOnx0J9ItwS8iM67Pg0u1JewqZYbKPEt/u+HFSkMkuNp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjd4RUzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3HosiXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E473AC433F1;
-	Sat,  3 Feb 2024 04:14:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjd4RUzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28E1C43394;
+	Sat,  3 Feb 2024 04:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933686;
-	bh=oVgbtp3J4xUfFEPj6G6Dk0xUma2RzEFiXo9lGY65Xkg=;
+	bh=dzD7u8i/GTn8vVitCsji9KDSG6Xru8hEy7oQMqn1GNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n3HosiXKb/2PbXDm/6Ovmo+5kYEGu/dyjTtlAnRfpZTV2kTfo4KkTP2TA5ktNEXsF
-	 tmo41LyiZpcNvTpzxRDnUoRGekih+hiHV8sNXdSs2sheXtexDay6dEQQeQmXewXrAj
-	 TxYgp4zDU1w9esiHB1PTSiluI1eyiGm44HrvkmBE=
+	b=sjd4RUzmxQBRLaWD+tIbXViCljchXz56bt70t361MtiLZ6AnaWdRdg5fDAxOWEyt4
+	 OpRqL1VnbToiHNbfj6pS6vBMtvBuFameftkJb7+PmUgScHCZOBiu6qg9mIV1xr6u+j
+	 9FiypBbdYgnPKJA60cOpqUdAZdW+rceifMTeeNsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/322] riscv: Fix build error on rv32 + XIP
-Date: Fri,  2 Feb 2024 20:06:00 -0800
-Message-ID: <20240203035407.633283569@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Arjun Roy <arjunroy@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	linux-mm@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-fsdevel@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	ZhangPeng <zhangpeng362@huawei.com>
+Subject: [PATCH 6.6 281/322] tcp: add sanity checks to rx zerocopy
+Date: Fri,  2 Feb 2024 20:06:18 -0800
+Message-ID: <20240203035408.175313500@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,48 +57,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 66f962d8939fd2ac74de901d30d30310c8ddca79 ]
+[ Upstream commit 577e4432f3ac810049cb7e6b71f4d96ec7c6e894 ]
 
-commit 66f1e6809397 ("riscv: Make XIP bootable again") restricted page
-offset to the sv39 page offset instead of the default sv57, which makes
-sense since probably the platforms that target XIP kernels do not
-support anything else than sv39 and we do not try to find out the
-largest address space supported on XIP kernels (ie set_satp_mode()).
+TCP rx zerocopy intent is to map pages initially allocated
+from NIC drivers, not pages owned by a fs.
 
-But PAGE_OFFSET_L3 is not defined for rv32, so fix the build error by
-restoring the previous behaviour which picks CONFIG_PAGE_OFFSET for rv32.
+This patch adds to can_map_frag() these additional checks:
 
-Fixes: 66f1e6809397 ("riscv: Make XIP bootable again")
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Closes: https://lore.kernel.org/linux-riscv/344dca85-5c48-44e1-bc64-4fa7973edd12@infradead.org/T/#u
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
-Link: https://lore.kernel.org/r/20240118212120.2087803-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+- Page must not be a compound one.
+- page->mapping must be NULL.
+
+This fixes the panic reported by ZhangPeng.
+
+syzbot was able to loopback packets built with sendfile(),
+mapping pages owned by an ext4 file to TCP rx zerocopy.
+
+r3 = socket$inet_tcp(0x2, 0x1, 0x0)
+mmap(&(0x7f0000ff9000/0x4000)=nil, 0x4000, 0x0, 0x12, r3, 0x0)
+r4 = socket$inet_tcp(0x2, 0x1, 0x0)
+bind$inet(r4, &(0x7f0000000000)={0x2, 0x4e24, @multicast1}, 0x10)
+connect$inet(r4, &(0x7f00000006c0)={0x2, 0x4e24, @empty}, 0x10)
+r5 = openat$dir(0xffffffffffffff9c, &(0x7f00000000c0)='./file0\x00',
+    0x181e42, 0x0)
+fallocate(r5, 0x0, 0x0, 0x85b8)
+sendfile(r4, r5, 0x0, 0x8ba0)
+getsockopt$inet_tcp_TCP_ZEROCOPY_RECEIVE(r4, 0x6, 0x23,
+    &(0x7f00000001c0)={&(0x7f0000ffb000/0x3000)=nil, 0x3000, 0x0, 0x0, 0x0,
+    0x0, 0x0, 0x0, 0x0}, &(0x7f0000000440)=0x40)
+r6 = openat$dir(0xffffffffffffff9c, &(0x7f00000000c0)='./file0\x00',
+    0x181e42, 0x0)
+
+Fixes: 93ab6cc69162 ("tcp: implement mmap() for zero copy receive")
+Link: https://lore.kernel.org/netdev/5106a58e-04da-372a-b836-9d3d0bd2507b@huawei.com/T/
+Reported-and-bisected-by: ZhangPeng <zhangpeng362@huawei.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Arjun Roy <arjunroy@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: linux-mm@vger.kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/tcp.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 5f1921d014b1..e71dd19ac801 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -1058,7 +1058,11 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
- 	kernel_map.virt_addr = KERNEL_LINK_ADDR + kernel_map.virt_offset;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index fb417aee86e6..ab1308affa08 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1786,7 +1786,17 @@ static skb_frag_t *skb_advance_to_frag(struct sk_buff *skb, u32 offset_skb,
  
- #ifdef CONFIG_XIP_KERNEL
-+#ifdef CONFIG_64BIT
- 	kernel_map.page_offset = PAGE_OFFSET_L3;
-+#else
-+	kernel_map.page_offset = _AC(CONFIG_PAGE_OFFSET, UL);
-+#endif
- 	kernel_map.xiprom = (uintptr_t)CONFIG_XIP_PHYS_ADDR;
- 	kernel_map.xiprom_sz = (uintptr_t)(&_exiprom) - (uintptr_t)(&_xiprom);
+ static bool can_map_frag(const skb_frag_t *frag)
+ {
+-	return skb_frag_size(frag) == PAGE_SIZE && !skb_frag_off(frag);
++	struct page *page;
++
++	if (skb_frag_size(frag) != PAGE_SIZE || skb_frag_off(frag))
++		return false;
++
++	page = skb_frag_page(frag);
++
++	if (PageCompound(page) || page->mapping)
++		return false;
++
++	return true;
+ }
  
+ static int find_next_mappable_frag(const skb_frag_t *frag,
 -- 
 2.43.0
 
