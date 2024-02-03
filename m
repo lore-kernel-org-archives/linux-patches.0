@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BE0FBE4;
-	Sat,  3 Feb 2024 04:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8BFFBE4;
+	Sat,  3 Feb 2024 04:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933363; cv=none; b=JbRbFXsB0qaUlNtjFoKOAUW0uZOCQw4NVQyySzkUFU52FUZFNhW39n4CSWqoHMbotVgZp5k0pJunBdoxdwkXqk+F4dGGVIy5Ilqhtj1F2DE1nu5hvA54eRlJ3hdud11ZWkz7+ssTZ4a7psJWALMGtlHYwwmLA7RIjz4kABAvlzY=
+	t=1706933364; cv=none; b=hdYqWMTKzADZPX5MEBXT/Fh1m8GAyiix3RqyuLQfbeinVf8JHaoPM2suKiDt0GYbE0OPsUcbdvcGSSwE32WRq0hQFlU+HzyNi+H2BMTZKbU9EwO9LMiG2tHkYBjMAepxC+8omWbDIetO6lJ9sjlhVf9kfI42C7UyzFgkmN0ZjXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933363; c=relaxed/simple;
-	bh=RuZ3yJz9653v9C6ssg2U83qa+vbASIL5XlVYtBjsqiY=;
+	s=arc-20240116; t=1706933364; c=relaxed/simple;
+	bh=XWTmRF2hbPw7ISaAFDz0dZVkQyq5fKxZus1iHm7cdBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AiNzDeuPUbWanHOFrR2WFZ6cQsH/T6L9b/9lmo9KVsWi2DG8gi54n7jdLdW04vuXlPOm7TkJoErCQYvYld3UtAMtq8PFHe16tJHPENPxMqlkd5ReBhW5ITqTimMWyqXX5C1XUHZW6fR/svrvA6dJavAhqvEA2NMUrxVAtwx2qWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNXRYzHE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rBYmvSrkOq42jcIECgr/qvXQbJ81YuoFgX06YxkS1MTmDrbc+sy6pJMoNYhmxfbKWlB0M5hKnv0mUOL8w/oPGRhdtd5/ySzrJh0E3/AMtUwLMtGmcUvFueRS3RekGkhjnx7fpoEMx3ZxDnV7xygt4Jfr/Qulb1sZkOILGb8y2UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzsVSKe8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNXRYzHE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA89C433C7;
-	Sat,  3 Feb 2024 04:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzsVSKe8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D4EC43399;
+	Sat,  3 Feb 2024 04:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933363;
-	bh=RuZ3yJz9653v9C6ssg2U83qa+vbASIL5XlVYtBjsqiY=;
+	s=korg; t=1706933364;
+	bh=XWTmRF2hbPw7ISaAFDz0dZVkQyq5fKxZus1iHm7cdBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNXRYzHEcY6p/bQVJA3ndF+0ZU1ILolFr13D6E5NZt3YA212OJEjMxk3IwH9IsQKh
-	 T/CgQFErLZtagBRRdeptkDRmrjGpa7lid8zYuLN+0R+9aBfY3+bm64cX7O5WpO08Ku
-	 GPv8zENB/P1pvgs5txKv6/hgNDlQlILf1P42yzKs=
+	b=FzsVSKe8x2vk9/0UBfFLaQtlT+bxxMShFNvjMD8UriU7bySV5Sv8B97pblNzSz8Bx
+	 UwAb5dIl9bXvdX7dI9ASeeNTslFEniI3oiR/7d7BYmyfYQ3SLaoq7hO20PDRQL+Nrk
+	 xkYMKeAZhHVECZ6j855Fu5oPkDHwtPwVigcmAmf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/219] ext4: avoid online resizing failures due to oversized flex bg
-Date: Fri,  2 Feb 2024 20:03:37 -0800
-Message-ID: <20240203035322.742239882@linuxfoundation.org>
+Subject: [PATCH 6.1 045/219] wifi: rt2x00: restart beacon queue when hardware reset
+Date: Fri,  2 Feb 2024 20:03:38 -0800
+Message-ID: <20240203035322.938351207@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -46,135 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit 5d1935ac02ca5aee364a449a35e2977ea84509b0 ]
+[ Upstream commit a11d965a218f0cd95b13fe44d0bcd8a20ce134a8 ]
 
-When we online resize an ext4 filesystem with a oversized flexbg_size,
+When a hardware reset is triggered, all registers are reset, so all
+queues are forced to stop in hardware interface. However, mac80211
+will not automatically stop the queue. If we don't manually stop the
+beacon queue, the queue will be deadlocked and unable to start again.
+This patch fixes the issue where Apple devices cannot connect to the
+AP after calling ieee80211_restart_hw().
 
-     mkfs.ext4 -F -G 67108864 $dev -b 4096 100M
-     mount $dev $dir
-     resize2fs $dev 16G
-
-the following WARN_ON is triggered:
-==================================================================
-WARNING: CPU: 0 PID: 427 at mm/page_alloc.c:4402 __alloc_pages+0x411/0x550
-Modules linked in: sg(E)
-CPU: 0 PID: 427 Comm: resize2fs Tainted: G  E  6.6.0-rc5+ #314
-RIP: 0010:__alloc_pages+0x411/0x550
-Call Trace:
- <TASK>
- __kmalloc_large_node+0xa2/0x200
- __kmalloc+0x16e/0x290
- ext4_resize_fs+0x481/0xd80
- __ext4_ioctl+0x1616/0x1d90
- ext4_ioctl+0x12/0x20
- __x64_sys_ioctl+0xf0/0x150
- do_syscall_64+0x3b/0x90
-==================================================================
-
-This is because flexbg_size is too large and the size of the new_group_data
-array to be allocated exceeds MAX_ORDER. Currently, the minimum value of
-MAX_ORDER is 8, the minimum value of PAGE_SIZE is 4096, the corresponding
-maximum number of groups that can be allocated is:
-
- (PAGE_SIZE << MAX_ORDER) / sizeof(struct ext4_new_group_data) ≈ 21845
-
-And the value that is down-aligned to the power of 2 is 16384. Therefore,
-this value is defined as MAX_RESIZE_BG, and the number of groups added
-each time does not exceed this value during resizing, and is added multiple
-times to complete the online resizing. The difference is that the metadata
-in a flex_bg may be more dispersed.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231023013057.2117948-4-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/TYAP286MB031530EB6D98DCE4DF20766CBCA4A@TYAP286MB0315.JPNP286.PROD.OUTLOOK.COM
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/resize.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00dev.c |  3 +++
+ drivers/net/wireless/ralink/rt2x00/rt2x00mac.c | 11 +++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
-index e76270ee7fe5..f2ed15af703a 100644
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -231,10 +231,17 @@ struct ext4_new_flex_group_data {
- 						   in the flex group */
- 	__u16 *bg_flags;			/* block group flags of groups
- 						   in @groups */
-+	ext4_group_t resize_bg;			/* number of allocated
-+						   new_group_data */
- 	ext4_group_t count;			/* number of groups in @groups
- 						 */
- };
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+index 9a9cfd0ce402..00b945053e19 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+@@ -101,6 +101,7 @@ void rt2x00lib_disable_radio(struct rt2x00_dev *rt2x00dev)
+ 	rt2x00link_stop_tuner(rt2x00dev);
+ 	rt2x00queue_stop_queues(rt2x00dev);
+ 	rt2x00queue_flush_queues(rt2x00dev, true);
++	rt2x00queue_stop_queue(rt2x00dev->bcn);
  
-+/*
-+ * Avoiding memory allocation failures due to too many groups added each time.
-+ */
-+#define MAX_RESIZE_BG				16384
-+
- /*
-  * alloc_flex_gd() allocates a ext4_new_flex_group_data with size of
-  * @flexbg_size.
-@@ -249,14 +256,18 @@ static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
- 	if (flex_gd == NULL)
- 		goto out3;
+ 	/*
+ 	 * Disable radio.
+@@ -1286,6 +1287,7 @@ int rt2x00lib_start(struct rt2x00_dev *rt2x00dev)
+ 	rt2x00dev->intf_ap_count = 0;
+ 	rt2x00dev->intf_sta_count = 0;
+ 	rt2x00dev->intf_associated = 0;
++	rt2x00dev->intf_beaconing = 0;
  
--	flex_gd->count = flexbg_size;
--	flex_gd->groups = kmalloc_array(flexbg_size,
-+	if (unlikely(flexbg_size > MAX_RESIZE_BG))
-+		flex_gd->resize_bg = MAX_RESIZE_BG;
-+	else
-+		flex_gd->resize_bg = flexbg_size;
-+
-+	flex_gd->groups = kmalloc_array(flex_gd->resize_bg,
- 					sizeof(struct ext4_new_group_data),
- 					GFP_NOFS);
- 	if (flex_gd->groups == NULL)
- 		goto out2;
+ 	/* Enable the radio */
+ 	retval = rt2x00lib_enable_radio(rt2x00dev);
+@@ -1312,6 +1314,7 @@ void rt2x00lib_stop(struct rt2x00_dev *rt2x00dev)
+ 	rt2x00dev->intf_ap_count = 0;
+ 	rt2x00dev->intf_sta_count = 0;
+ 	rt2x00dev->intf_associated = 0;
++	rt2x00dev->intf_beaconing = 0;
+ }
  
--	flex_gd->bg_flags = kmalloc_array(flexbg_size, sizeof(__u16),
-+	flex_gd->bg_flags = kmalloc_array(flex_gd->resize_bg, sizeof(__u16),
- 					  GFP_NOFS);
- 	if (flex_gd->bg_flags == NULL)
- 		goto out1;
-@@ -1620,8 +1631,7 @@ static int ext4_flex_group_add(struct super_block *sb,
- 
- static int ext4_setup_next_flex_gd(struct super_block *sb,
- 				    struct ext4_new_flex_group_data *flex_gd,
--				    ext4_fsblk_t n_blocks_count,
--				    unsigned int flexbg_size)
-+				    ext4_fsblk_t n_blocks_count)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_super_block *es = sbi->s_es;
-@@ -1645,7 +1655,7 @@ static int ext4_setup_next_flex_gd(struct super_block *sb,
- 	BUG_ON(last);
- 	ext4_get_group_no_and_offset(sb, n_blocks_count - 1, &n_group, &last);
- 
--	last_group = group | (flexbg_size - 1);
-+	last_group = group | (flex_gd->resize_bg - 1);
- 	if (last_group > n_group)
- 		last_group = n_group;
- 
-@@ -2150,8 +2160,7 @@ int ext4_resize_fs(struct super_block *sb, ext4_fsblk_t n_blocks_count)
- 	/* Add flex groups. Note that a regular group is a
- 	 * flex group with 1 group.
+ static inline void rt2x00lib_set_if_combinations(struct rt2x00_dev *rt2x00dev)
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c b/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
+index 4202c6517783..75fda72c14ca 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
+@@ -598,6 +598,17 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
  	 */
--	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count,
--					      flexbg_size)) {
-+	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count)) {
- 		if (time_is_before_jiffies(last_update_time + HZ * 10)) {
- 			if (last_update_time)
- 				ext4_msg(sb, KERN_INFO,
+ 	if (changes & BSS_CHANGED_BEACON_ENABLED) {
+ 		mutex_lock(&intf->beacon_skb_mutex);
++
++		/*
++		 * Clear the 'enable_beacon' flag and clear beacon because
++		 * the beacon queue has been stopped after hardware reset.
++		 */
++		if (test_bit(DEVICE_STATE_RESET, &rt2x00dev->flags) &&
++		    intf->enable_beacon) {
++			intf->enable_beacon = false;
++			rt2x00queue_clear_beacon(rt2x00dev, vif);
++		}
++
+ 		if (!bss_conf->enable_beacon && intf->enable_beacon) {
+ 			rt2x00dev->intf_beaconing--;
+ 			intf->enable_beacon = false;
 -- 
 2.43.0
 
