@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCCEF9FD;
-	Sat,  3 Feb 2024 04:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650F5F9FD;
+	Sat,  3 Feb 2024 04:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933344; cv=none; b=ioUTK0CD1VyrX/BVGSOwnT34mHfXy81yxlI/nzbkOAFl6lHpsvfj3EF3Qhmywy0kPwiUS0FKk7iANKHU4DnubEUGiZafcYAQoIoqEuGYLNVFxZI31/UVthN8xL7oDEnbXKlySWDXLR9+U+JSgs8h1gQEXcRlV6cUM6vgVWbTxVA=
+	t=1706933345; cv=none; b=bCF9hFqwHmWh3srxNvkbjRF18+r1aCxyWW1j6kYnNUeBKdwPlz1CiSQmToGsYlCkevr0mNUDr3MTDrWcjMFVFQxrhTfjQh26z7qOBBeYWhFU+c4I1F4jEVokJdTQptsIiuYPqUEp3b40Y2qSpGfW7f8BrOXB7NnfHhvfKJhENUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933344; c=relaxed/simple;
-	bh=/ZFBToNICGpzw0Y2VmaeOShfocQF50Em+IO5k3RcEYE=;
+	s=arc-20240116; t=1706933345; c=relaxed/simple;
+	bh=eai0fpTwoItGjqAapeJFgnBTEB0jGPLc7THa266XAfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfozYmEf2+F4nl0sCtTr8fBKkibkA0SNxJIK62i/8SX59R5lOtKyQtkA+zU132ifwN2fsaEE2jA+xHVG+Ibqs/GcS2cd/S+OuaA0aatoQ+xCr4Z0y1DxhOD+wjmZVAc8Kz0rp4klszqfu0Y3FLgXFNgwQ1UtLGC4zP6Gs3N5VXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEISvKgz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nlwCJiaDj9vtIWQRhkzODxXwbLvBTeYEdcJ8ZV4graP+EwpXiiIoB9cD/RYiGgO8iBQaVRk81++JJYXdebwSlAEQ4d57mxW2KK319V/SA1C/q7RbkDZB8wxEGdjZAP5CvgkplK2GGlmZMJP5gyHAs23KHsoUXbQXrCsX2v5KNFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pK3WUA3N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEISvKgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC59C433C7;
-	Sat,  3 Feb 2024 04:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pK3WUA3N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6B2C433C7;
+	Sat,  3 Feb 2024 04:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933344;
-	bh=/ZFBToNICGpzw0Y2VmaeOShfocQF50Em+IO5k3RcEYE=;
+	s=korg; t=1706933345;
+	bh=eai0fpTwoItGjqAapeJFgnBTEB0jGPLc7THa266XAfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PEISvKgzEL4uXF5vvLwgP9CxrCzvEDpRY8hHDHLnmFW7TWjbfKASVkKyNwUKmL5lp
-	 VoTFsHGVig6gleU4/myT6HQReRbHGwYVpt9qKvXg0mbegCKhoHvMw5QEkV7s7ViPQi
-	 EHqAlFJoOtLmeNBENfrrBtD49FA24QCSmig+kEcw=
+	b=pK3WUA3N5Z2gulyiuoZNqHIdnGzyDcdZ0pfrh7ivYX3m4xphbyX/MBThSoINWMlVD
+	 l0Gv33W3mSTe9/l/w9O0mLnxcygujYVD0+3UwwxpaPhB479m2LDt+/kGvbqIgk71hM
+	 HuYNXSunsQaafU+x6ywfV+rLmS1wf4UTEk69diQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Xiaofei Tan <tanxiaofei@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	James Morse <james.morse@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/219] ACPI: APEI: set memory failure flags as MF_ACTION_REQUIRED on synchronous events
-Date: Fri,  2 Feb 2024 20:03:14 -0800
-Message-ID: <20240203035319.515850812@linuxfoundation.org>
+Subject: [PATCH 6.1 012/219] perf/core: Fix narrow startup race when creating the perf nr_addr_filters sysfs file
+Date: Fri,  2 Feb 2024 20:03:05 -0800
+Message-ID: <20240203035318.414877597@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -56,141 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Greg KH <gregkh@linuxfoundation.org>
 
-[ Upstream commit a70297d2213253853e95f5b49651f924990c6d3b ]
+[ Upstream commit 652ffc2104ec1f69dd4a46313888c33527145ccf ]
 
-There are two major types of uncorrected recoverable (UCR) errors :
-
- - Synchronous error: The error is detected and raised at the point of
-   the consumption in the execution flow, e.g. when a CPU tries to
-   access a poisoned cache line. The CPU will take a synchronous error
-   exception such as Synchronous External Abort (SEA) on Arm64 and
-   Machine Check Exception (MCE) on X86. OS requires to take action (for
-   example, offline failure page/kill failure thread) to recover this
-   uncorrectable error.
-
- - Asynchronous error: The error is detected out of processor execution
-   context, e.g. when an error is detected by a background scrubber.
-   Some data in the memory are corrupted. But the data have not been
-   consumed. OS is optional to take action to recover this uncorrectable
-   error.
-
-When APEI firmware first is enabled, a platform may describe one error
-source for the handling of synchronous errors (e.g. MCE or SEA notification
-), or for handling asynchronous errors (e.g. SCI or External Interrupt
-notification). In other words, we can distinguish synchronous errors by
-APEI notification. For synchronous errors, kernel will kill the current
-process which accessing the poisoned page by sending SIGBUS with
-BUS_MCEERR_AR. In addition, for asynchronous errors, kernel will notify the
-process who owns the poisoned page by sending SIGBUS with BUS_MCEERR_AO in
-early kill mode. However, the GHES driver always sets mf_flags to 0 so that
-all synchronous errors are handled as asynchronous errors in memory failure.
-
-To this end, set memory failure flags as MF_ACTION_REQUIRED on synchronous
-events.
-
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Tested-by: Ma Wupeng <mawupeng1@huawei.com>
-Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Reviewed-by: Xiaofei Tan <tanxiaofei@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: James Morse <james.morse@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/2023061204-decal-flyable-6090@gregkh
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ kernel/events/core.c | 40 ++++++++++++++++++++++++++++------------
+ 1 file changed, 28 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 9952f3a792ba..dd808cf65c84 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -99,6 +99,20 @@ static inline bool is_hest_type_generic_v2(struct ghes *ghes)
- 	return ghes->generic->header.type == ACPI_HEST_TYPE_GENERIC_ERROR_V2;
- }
- 
-+/*
-+ * A platform may describe one error source for the handling of synchronous
-+ * errors (e.g. MCE or SEA), or for handling asynchronous errors (e.g. SCI
-+ * or External Interrupt). On x86, the HEST notifications are always
-+ * asynchronous, so only SEA on ARM is delivered as a synchronous
-+ * notification.
-+ */
-+static inline bool is_hest_sync_notify(struct ghes *ghes)
-+{
-+	u8 notify_type = ghes->generic->notify.type;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 8c7d2f4f5fba..1e4841ebc22e 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -11223,9 +11223,32 @@ static DEVICE_ATTR_RW(perf_event_mux_interval_ms);
+ static struct attribute *pmu_dev_attrs[] = {
+ 	&dev_attr_type.attr,
+ 	&dev_attr_perf_event_mux_interval_ms.attr,
++	&dev_attr_nr_addr_filters.attr,
++	NULL,
++};
 +
-+	return notify_type == ACPI_HEST_NOTIFY_SEA;
++static umode_t pmu_dev_is_visible(struct kobject *kobj, struct attribute *a, int n)
++{
++	struct device *dev = kobj_to_dev(kobj);
++	struct pmu *pmu = dev_get_drvdata(dev);
++
++	if (!pmu->nr_addr_filters)
++		return 0;
++
++	return a->mode;
++
++	return 0;
 +}
 +
- /*
-  * This driver isn't really modular, however for the time being,
-  * continuing to use module_param is the easiest way to remain
-@@ -461,7 +475,7 @@ static bool ghes_do_memory_failure(u64 physical_addr, int flags)
- }
++static struct attribute_group pmu_dev_attr_group = {
++	.is_visible = pmu_dev_is_visible,
++	.attrs = pmu_dev_attrs,
++};
++
++static const struct attribute_group *pmu_dev_groups[] = {
++	&pmu_dev_attr_group,
+ 	NULL,
+ };
+-ATTRIBUTE_GROUPS(pmu_dev);
  
- static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
--				       int sev)
-+				       int sev, bool sync)
- {
- 	int flags = -1;
- 	int sec_sev = ghes_severity(gdata->error_severity);
-@@ -475,7 +489,7 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	    (gdata->flags & CPER_SEC_ERROR_THRESHOLD_EXCEEDED))
- 		flags = MF_SOFT_OFFLINE;
- 	if (sev == GHES_SEV_RECOVERABLE && sec_sev == GHES_SEV_RECOVERABLE)
--		flags = 0;
-+		flags = sync ? MF_ACTION_REQUIRED : 0;
+ static int pmu_bus_running;
+ static struct bus_type pmu_bus = {
+@@ -11261,18 +11284,11 @@ static int pmu_dev_alloc(struct pmu *pmu)
+ 	if (ret)
+ 		goto free_dev;
  
- 	if (flags != -1)
- 		return ghes_do_memory_failure(mem_err->physical_addr, flags);
-@@ -483,9 +497,11 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	return false;
- }
+-	/* For PMUs with address filters, throw in an extra attribute: */
+-	if (pmu->nr_addr_filters)
+-		ret = device_create_file(pmu->dev, &dev_attr_nr_addr_filters);
+-
+-	if (ret)
+-		goto del_dev;
+-
+-	if (pmu->attr_update)
++	if (pmu->attr_update) {
+ 		ret = sysfs_update_groups(&pmu->dev->kobj, pmu->attr_update);
+-
+-	if (ret)
+-		goto del_dev;
++		if (ret)
++			goto del_dev;
++	}
  
--static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int sev)
-+static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
-+				       int sev, bool sync)
- {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
-+	int flags = sync ? MF_ACTION_REQUIRED : 0;
- 	bool queued = false;
- 	int sec_sev, i;
- 	char *p;
-@@ -510,7 +526,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int s
- 		 * and don't filter out 'corrected' error here.
- 		 */
- 		if (is_cache && has_pa) {
--			queued = ghes_do_memory_failure(err_info->physical_fault_addr, 0);
-+			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
- 			p += err_info->length;
- 			continue;
- 		}
-@@ -631,6 +647,7 @@ static bool ghes_do_proc(struct ghes *ghes,
- 	const guid_t *fru_id = &guid_null;
- 	char *fru_text = "";
- 	bool queued = false;
-+	bool sync = is_hest_sync_notify(ghes);
- 
- 	sev = ghes_severity(estatus->error_severity);
- 	apei_estatus_for_each_section(estatus, gdata) {
-@@ -648,13 +665,13 @@ static bool ghes_do_proc(struct ghes *ghes,
- 			ghes_edac_report_mem_error(sev, mem_err);
- 
- 			arch_apei_report_mem_error(sev, mem_err);
--			queued = ghes_handle_memory_failure(gdata, sev);
-+			queued = ghes_handle_memory_failure(gdata, sev, sync);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
- 			ghes_handle_aer(gdata);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
--			queued = ghes_handle_arm_hw_error(gdata, sev);
-+			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
- 		} else {
- 			void *err = acpi_hest_get_payload(gdata);
- 
+ out:
+ 	return ret;
 -- 
 2.43.0
 
