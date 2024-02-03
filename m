@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254031756F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2E41756F;
 	Sat,  3 Feb 2024 04:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933556; cv=none; b=gWH28RwCzl1JcOgvmjdtAfry2FXB+X+6+Lx4fg/mhdZQDq2g8bnMsKaYeGtIa94fV9wBJO1zwCPxvFRddfSEVK7zEL8/r+MUlEtSC3meUjxGKdX5BsMg8MMVN2cytbJ/Lc1i5sOR+hkAr2YVPjanMUviYA2T6xG+FcK173+OgSA=
+	t=1706933557; cv=none; b=HQN+CaOWo2RZFPeYAR6TaIweRc8FYmrAnkRMSZzsTtv9aXSKgVwmlnhEaMwtEgelTNsU+2pN1akfLjMgSzD5ZJnyMkxkmi/VlwDNemUjD8JuD5GtHkapAClRFyAht86l5wZPMffDtQeJhIIaR57XNaZvrik/I5INue+CGTdrLSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933556; c=relaxed/simple;
-	bh=d2TnKelmnG+vGWR9HtqDfQkETjRiAWPShyUb3PeRqgQ=;
+	s=arc-20240116; t=1706933557; c=relaxed/simple;
+	bh=zUzQ4Ihf6h/LxZbGKe+vnf3a3RDaalxVnpghbrc/OFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qb2IlHpXLRwMvRt5oIwX8vmhirfUEVQmardgd3wmDphOKA1Dap1QhEh9zW0Yu4pyPvGRhtE9ppUbZ1ISEGrq/X9Z1sobMCJqCgtb3q4lwQEloMHs1b65sSvkQx3ZuWGaErG+z/vilZ3Y16+2X7NgTRmlFhwN328lQ79i3ZHj4ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuIeQQBo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nswcIHFA3HenIhaAPZ7NG78Ngm+TsHyxhSLTowvzH89/aP6GTegIO+ieZb+HtxNch8avblKu31oZnpRE3Q+IPM+Cq6ZEYCLgRCzGIieL5QhKpOwlX+8V8wV7Tqd4pkcFIvwgeiEEBLvXgDqfN9oG/aTvTcklulNV22lQifrifUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtgvQYu3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuIeQQBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFC2C433A6;
-	Sat,  3 Feb 2024 04:12:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtgvQYu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F19C43390;
+	Sat,  3 Feb 2024 04:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933556;
-	bh=d2TnKelmnG+vGWR9HtqDfQkETjRiAWPShyUb3PeRqgQ=;
+	bh=zUzQ4Ihf6h/LxZbGKe+vnf3a3RDaalxVnpghbrc/OFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RuIeQQBoywt5NlNNyp4FGA0OWo6YpoiY6hetJHouYcgrLclzsggrfbwLQ0HTSq6Uf
-	 f2HjpzEx2YKz3B5Y/fEuYMH2dL0TK/UAqv39+eNVocYZQYyYjWO+NV/l33OcJF7wJc
-	 sFxckVxMRu1Q57lr0IHZ0nj+e/MW2Yn7+hW4GBbg=
+	b=QtgvQYu3INQ+FqZfvKA8WS+eDJYSBKySjhx981tTtZ5M2J5D4fXE7sLIlKXDLPnRe
+	 AL/vYaoWVZNLeK/MN1kX0mQz4cUpOfLvnx8fDRw9qMviVSeIpuMHsWYef2JLMLgmHe
+	 jKdMeg341T7WPKzm/Gc+cggEWKAblahuAyY5a6co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Lingbo Kong <quic_lingbok@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 108/322] wifi: wfx: fix possible NULL pointer dereference in wfx_set_mfp_ap()
-Date: Fri,  2 Feb 2024 20:03:25 -0800
-Message-ID: <20240203035402.647803534@linuxfoundation.org>
+Subject: [PATCH 6.6 109/322] wifi: ath12k: fix the issue that the multicast/broadcast indicator is not read correctly for WCN7850
+Date: Fri,  2 Feb 2024 20:03:26 -0800
+Message-ID: <20240203035402.673888750@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -46,100 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Lingbo Kong <quic_lingbok@quicinc.com>
 
-[ Upstream commit fe0a7776d4d19e613bb8dd80fe2d78ae49e8b49d ]
+[ Upstream commit 7133b072dfbfac8763ffb017642c9c894894c50d ]
 
-Since 'ieee80211_beacon_get()' can return NULL, 'wfx_set_mfp_ap()'
-should check the return value before examining skb data. So convert
-the latter to return an appropriate error code and propagate it to
-return from 'wfx_start_ap()' as well. Compile tested only.
+We observe some packets are discarded in ieee80211_rx_handlers_result
+function for WCN7850. This is because the way to get multicast/broadcast
+indicator with RX_MSDU_END_INFO5_DA_IS_MCBC & info5 is incorrect. It should
+use RX_MSDU_END_INFO13_MCAST_BCAST & info13 to get multicast/broadcast
+indicator.
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Tested-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Acked-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231204171130.141394-1-dmantipov@yandex.ru
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
+
+Signed-off-by: Lingbo Kong <quic_lingbok@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231206141759.5430-1-quic_lingbok@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/sta.c | 42 ++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ drivers/net/wireless/ath/ath12k/hal.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/sta.c b/drivers/net/wireless/silabs/wfx/sta.c
-index 626dfb4b7a55..073e870b2641 100644
---- a/drivers/net/wireless/silabs/wfx/sta.c
-+++ b/drivers/net/wireless/silabs/wfx/sta.c
-@@ -354,29 +354,38 @@ static int wfx_upload_ap_templates(struct wfx_vif *wvif)
- 	return 0;
- }
+diff --git a/drivers/net/wireless/ath/ath12k/hal.c b/drivers/net/wireless/ath/ath12k/hal.c
+index e7a150e7158e..b49a4add8828 100644
+--- a/drivers/net/wireless/ath/ath12k/hal.c
++++ b/drivers/net/wireless/ath/ath12k/hal.c
+@@ -889,8 +889,8 @@ static u8 *ath12k_hw_wcn7850_rx_desc_mpdu_start_addr2(struct hal_rx_desc *desc)
  
--static void wfx_set_mfp_ap(struct wfx_vif *wvif)
-+static int wfx_set_mfp_ap(struct wfx_vif *wvif)
+ static bool ath12k_hw_wcn7850_rx_desc_is_da_mcbc(struct hal_rx_desc *desc)
  {
- 	struct ieee80211_vif *vif = wvif_to_vif(wvif);
- 	struct sk_buff *skb = ieee80211_beacon_get(wvif->wdev->hw, vif, 0);
- 	const int ieoffset = offsetof(struct ieee80211_mgmt, u.beacon.variable);
--	const u16 *ptr = (u16 *)cfg80211_find_ie(WLAN_EID_RSN, skb->data + ieoffset,
--						 skb->len - ieoffset);
- 	const int pairwise_cipher_suite_count_offset = 8 / sizeof(u16);
- 	const int pairwise_cipher_suite_size = 4 / sizeof(u16);
- 	const int akm_suite_size = 4 / sizeof(u16);
-+	const u16 *ptr;
- 
--	if (ptr) {
--		ptr += pairwise_cipher_suite_count_offset;
--		if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
--			return;
--		ptr += 1 + pairwise_cipher_suite_size * *ptr;
--		if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
--			return;
--		ptr += 1 + akm_suite_size * *ptr;
--		if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
--			return;
--		wfx_hif_set_mfp(wvif, *ptr & BIT(7), *ptr & BIT(6));
--	}
-+	if (unlikely(!skb))
-+		return -ENOMEM;
-+
-+	ptr = (u16 *)cfg80211_find_ie(WLAN_EID_RSN, skb->data + ieoffset,
-+				      skb->len - ieoffset);
-+	if (unlikely(!ptr))
-+		return -EINVAL;
-+
-+	ptr += pairwise_cipher_suite_count_offset;
-+	if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
-+		return -EINVAL;
-+
-+	ptr += 1 + pairwise_cipher_suite_size * *ptr;
-+	if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
-+		return -EINVAL;
-+
-+	ptr += 1 + akm_suite_size * *ptr;
-+	if (WARN_ON(ptr > (u16 *)skb_tail_pointer(skb)))
-+		return -EINVAL;
-+
-+	wfx_hif_set_mfp(wvif, *ptr & BIT(7), *ptr & BIT(6));
-+	return 0;
+-	return __le16_to_cpu(desc->u.wcn7850.msdu_end.info5) &
+-	       RX_MSDU_END_INFO5_DA_IS_MCBC;
++	return __le32_to_cpu(desc->u.wcn7850.msdu_end.info13) &
++	       RX_MSDU_END_INFO13_MCAST_BCAST;
  }
  
- int wfx_start_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
-@@ -394,8 +403,7 @@ int wfx_start_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	ret = wfx_hif_start(wvif, &vif->bss_conf, wvif->channel);
- 	if (ret > 0)
- 		return -EIO;
--	wfx_set_mfp_ap(wvif);
--	return ret;
-+	return wfx_set_mfp_ap(wvif);
- }
- 
- void wfx_stop_ap(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ static void ath12k_hw_wcn7850_rx_desc_get_dot11_hdr(struct hal_rx_desc *desc,
 -- 
 2.43.0
 
