@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D400101C1;
-	Sat,  3 Feb 2024 04:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238B1101C1;
+	Sat,  3 Feb 2024 04:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933408; cv=none; b=cl0brOJTU7B/cb5WiPBkTWemYq7gOV/Cm67/FKCp4d+lGlVikIjaqF2Xpje+RVyvMO9k6lbpmzMtOfNUQ2aUd5PClEQAz1LcWPp5dqlzlOGLZWH4k+Xr993eDCHmEQH8C8cH2YSamoiQPJ0TddTtEnYA0YjbGEKSiAFkyS4rWts=
+	t=1706933409; cv=none; b=fIR7Yuife3Wb9BVx9gwW8xAhuuu9/tIoS4I04sBIE2Vy7R808z3rnzV6oWEpxlPCvRu44YC5MObbWM5NQFsY0M2EtDi4lHRE2Ht3Eb36y/PHTHkEmpntjcVzVolpHWpkN5hWF7TSaEcXcZNr0WQt9zV6+jxXz75sr3ReRZ7O0c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933408; c=relaxed/simple;
-	bh=aaSUBYznvUu6+uGgsA8kO8tu7iOUMj90eHP3Qm37n6k=;
+	s=arc-20240116; t=1706933409; c=relaxed/simple;
+	bh=yFNMFvCXu9aQHJdvW6lY9cUqj21taBmExrNOzXpiev0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5yj7xRBk0T+WGVuV9PR2Uu0RD+cTuYdH1FMeRUoGnpV56D8h+L/N6wnVs2fqSm/cOD6uhigutt75B584So9E1oGswMmQBvWoxN5hkmrdZYeaVZWx043UAoOuRvX95mabAlJebr7FgCfUzgwNjdH4o6/DiGuuxEdiqcYdNlk0KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtaWCSXP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QgSSsrUU9wKmE+x2m50nH0g7tT65BEJX5iGNDvbbbhwnaBmLOT6RPOlGlTFLh5QngPTZXgd74E/s9E1gWQv+rxio/G9PAqoxso3XzEuHLiazU1s4mY0BzGsFIBQa2jvferVv3D47D/l5Vwjbigg7LBjpDhR9g37VYv7O855fT9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOCh+dih; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtaWCSXP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37914C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOCh+dih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0CBCC433F1;
 	Sat,  3 Feb 2024 04:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933408;
-	bh=aaSUBYznvUu6+uGgsA8kO8tu7iOUMj90eHP3Qm37n6k=;
+	s=korg; t=1706933409;
+	bh=yFNMFvCXu9aQHJdvW6lY9cUqj21taBmExrNOzXpiev0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KtaWCSXP+ttbAR72cVhLBDf4HO42rBNhxcsS4MqrZUG95kYpB8zePbSCAAzaJPHdM
-	 kOATX7W7xbKddG6IblcNWl/hHweaVRmI6fvQdh40M80RL6cE8+m3d4fm9oY/bWdQKI
-	 V0pmb+G3uF+p8mOM2iJhQ9O3UrMgy7MG8ql3PKqg=
+	b=wOCh+dihOd5TAOijcNDdKGZaTRmqHnqMZNEttNL/p+6YEbOBw18dGdAH4wVx3h4xg
+	 Vk+jVcJuubauk0yGaf5W0KBDK8r6hBE5/yVHKHFj96+6DphQgaDG16humbM5FwsVsL
+	 ++rSQRGmG80u7xBpN1W9qw2ui7PSxRteHUnzC48Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Adam Ford <aford173@gmail.com>
-Subject: [PATCH 6.1 121/219] media: rkisp1: Drop IRQF_SHARED
-Date: Fri,  2 Feb 2024 20:04:54 -0800
-Message-ID: <20240203035334.572524833@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 130/219] media: ddbridge: fix an error code problem in ddb_probe
+Date: Fri,  2 Feb 2024 20:05:03 -0800
+Message-ID: <20240203035335.777025516@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -53,42 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 85d2a31fe4d9be1555f621ead7a520d8791e0f74 ]
+[ Upstream commit 09b4195021be69af1e1936cca995712a6d0f2562 ]
 
-In all known platforms the ISP has dedicated IRQ lines, but for some
-reason the driver uses IRQF_SHARED.
+Error code is assigned to 'stat', return 'stat' rather than '-1'.
 
-Supporting IRQF_SHARED properly requires handling interrupts even when
-our device is disabled, and the driver does not handle this. To avoid
-adding such code, and to be sure the driver won't accidentally be used
-in a platform with shared interrupts, let's drop the IRQF_SHARED flag.
-
-Link: https://lore.kernel.org/r/20231207-rkisp-irq-fix-v3-1-358a2c871a3c@ideasonboard.com
-
-Tested-by: Adam Ford <aford173@gmail.com>  #imx8mp-beacon
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c | 2 +-
+ drivers/media/pci/ddbridge/ddbridge-main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-index 2b76339f9381..46d94e4c9745 100644
---- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-+++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-@@ -542,7 +542,7 @@ static int rkisp1_probe(struct platform_device *pdev)
- 		if (irq < 0)
- 			return irq;
+diff --git a/drivers/media/pci/ddbridge/ddbridge-main.c b/drivers/media/pci/ddbridge/ddbridge-main.c
+index 91733ab9f58c..363badab7cf0 100644
+--- a/drivers/media/pci/ddbridge/ddbridge-main.c
++++ b/drivers/media/pci/ddbridge/ddbridge-main.c
+@@ -238,7 +238,7 @@ static int ddb_probe(struct pci_dev *pdev,
+ 	ddb_unmap(dev);
+ 	pci_set_drvdata(pdev, NULL);
+ 	pci_disable_device(pdev);
+-	return -1;
++	return stat;
+ }
  
--		ret = devm_request_irq(dev, irq, info->isrs[i].isr, IRQF_SHARED,
-+		ret = devm_request_irq(dev, irq, info->isrs[i].isr, 0,
- 				       dev_driver_string(dev), dev);
- 		if (ret) {
- 			dev_err(dev, "request irq failed: %d\n", ret);
+ /****************************************************************************/
 -- 
 2.43.0
 
