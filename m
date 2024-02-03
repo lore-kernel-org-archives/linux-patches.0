@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D576D10965;
-	Sat,  3 Feb 2024 04:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844E710965;
+	Sat,  3 Feb 2024 04:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933649; cv=none; b=kQR5xArrlXVGBhRwslN1yu+2Ac1tpSLL9v4w2Mxr6RaDJR7I7QZNe0CvpXMtPCQBL2XWdg1dSGOSFcC6/gAH5z+BBr5oxu58MgHw5ALIyXVj7t3qw5Sn5ufVfgyI3E3HjJ1vztKCanj2p8UFA3uGJZY/WZis72MtYtXOzZ5mcU0=
+	t=1706933650; cv=none; b=iqr3fOd2WZYTZUrQ8bRGsrwZbkQRH/jH7X6PPyzL2zKHZcKEFLEtoqk0ht37yk+SjSptl/zvhlYUZxj9Za1LNKSq335sgtigniJx/6u+ZTX6Wit2grgeocpbkRLFZ9Hy4gePSafJWinBWmk0iq7eUKG6m0c/xiboSm40hHdEhFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933649; c=relaxed/simple;
-	bh=LuTKsXiec32VQxbd3Pi7pvzg1FHlVQjhE8mw3FqVpPg=;
+	s=arc-20240116; t=1706933650; c=relaxed/simple;
+	bh=+HS5+04230q6Nz1fQIDggyJ1Qab5pDOnEyebAUvrq0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YX7j/oQF78zkEe87oOlFOofxRRA6YFVVptWcI5wIBnKu81sfK6xqZxweicUKfayapkSBSbyTTjRtDrcsElPxULzCMTYAwv86ix/6V6TTUn1P2Dz306dcuYWnDVZy0xLW4EGqbjXKmm62NPEX3Q6rhedApSzOQ5MVqhq32ULmWJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlpQS6Hj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEyJHIqM/IKZNV5X7hO3EVCJE+3vxcQNObHAE16P3D/dPKUNNvOhi82vku8IPmKMIKabJTtx0p1JDkavlQEzCZm2Qsq+5v7QafmIRRwN+BuDZEEFMuNqegSXOrU0HYhDaheukK16jZtxRZm77XCCw7JrZhyoX8vHU0BydILvZlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb6hclhr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlpQS6Hj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCBFC433C7;
-	Sat,  3 Feb 2024 04:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb6hclhr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EAC4C433F1;
+	Sat,  3 Feb 2024 04:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933649;
-	bh=LuTKsXiec32VQxbd3Pi7pvzg1FHlVQjhE8mw3FqVpPg=;
+	s=korg; t=1706933650;
+	bh=+HS5+04230q6Nz1fQIDggyJ1Qab5pDOnEyebAUvrq0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LlpQS6HjIqXssSJUhb1iPdY3QtKdk5lK21jGDhrZ8mIJaGfcodKqIseqjPaeZ5AQt
-	 zMrL0kjGCMjtDYjEz1qR4IkTjdsAfJDshrqSFmI3g1w/eTlLqRPEVHav9QbR5Nyamn
-	 gb8eTdKPH4exae2Pbt0Sw4CExhpQLDNUgznsWUVM=
+	b=Cb6hclhr1o9DjZglfJkOzEkqoR2vjqlChrXUXeJw+Y99Oj1/Z5q7P+fJBih2ooSnI
+	 UNiSVjr40zjg+iLOa1gv1+3iTyzNnSajsskSL8Y/ipNDhjXF3EUNcwEaZoliGxhs2e
+	 9QqS0EGGhef5/aEcKkwTT2KuNNj46dbUOX3ldVY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaxiong Tian <tianyaxiong@kylinos.cn>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Hardik Gajjar <hgajjar@de.adit-jv.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 233/322] extcon: fix possible name leak in extcon_dev_register()
-Date: Fri,  2 Feb 2024 20:05:30 -0800
-Message-ID: <20240203035406.721778460@linuxfoundation.org>
+Subject: [PATCH 6.6 234/322] usb: hub: Replace hardcoded quirk value with BIT() macro
+Date: Fri,  2 Feb 2024 20:05:31 -0800
+Message-ID: <20240203035406.749395140@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaxiong Tian <tianyaxiong@kylinos.cn>
+From: Hardik Gajjar <hgajjar@de.adit-jv.com>
 
-[ Upstream commit e66523c72c9aae0ff0dae6859eb77b04de1e8e5f ]
+[ Upstream commit 6666ea93d2c422ebeb8039d11e642552da682070 ]
 
-In the error path after calling dev_set_name(), the device
-name is leaked. To fix this, moving dev_set_name() after the
-error path and before device_register.
+This patch replaces the hardcoded quirk value in the macro with
+BIT().
 
-Link: https://lore.kernel.org/lkml/TYZPR01MB4784ADCD3E951E0863F3DB72D5B8A@TYZPR01MB4784.apcprd01.prod.exchangelabs.com/
-Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Hardik Gajjar <hgajjar@de.adit-jv.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20231205181829.127353-1-hgajjar@de.adit-jv.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/core/hub.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/extcon/extcon.c b/drivers/extcon/extcon.c
-index 6f7a60d2ed91..e7f55c021e56 100644
---- a/drivers/extcon/extcon.c
-+++ b/drivers/extcon/extcon.c
-@@ -1280,8 +1280,6 @@ int extcon_dev_register(struct extcon_dev *edev)
+diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
+index dfc30cebd4c4..f5abfba68e69 100644
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -47,8 +47,8 @@
+ #define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
+ #define USB_PRODUCT_TUSB8041_USB3		0x8140
+ #define USB_PRODUCT_TUSB8041_USB2		0x8142
+-#define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	0x01
+-#define HUB_QUIRK_DISABLE_AUTOSUSPEND		0x02
++#define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	BIT(0)
++#define HUB_QUIRK_DISABLE_AUTOSUSPEND		BIT(1)
  
- 	edev->id = ret;
- 
--	dev_set_name(&edev->dev, "extcon%d", edev->id);
--
- 	ret = extcon_alloc_cables(edev);
- 	if (ret < 0)
- 		goto err_alloc_cables;
-@@ -1310,6 +1308,7 @@ int extcon_dev_register(struct extcon_dev *edev)
- 	RAW_INIT_NOTIFIER_HEAD(&edev->nh_all);
- 
- 	dev_set_drvdata(&edev->dev, edev);
-+	dev_set_name(&edev->dev, "extcon%d", edev->id);
- 	edev->state = 0;
- 
- 	ret = device_register(&edev->dev);
+ #define USB_TP_TRANSMISSION_DELAY	40	/* ns */
+ #define USB_TP_TRANSMISSION_DELAY_MAX	65535	/* ns */
 -- 
 2.43.0
 
