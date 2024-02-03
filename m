@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9810E12B9C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4FB45038;
 	Sat,  3 Feb 2024 04:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933677; cv=none; b=c97d/qFXo/hNGwfofNC4jE7I7aFfQHKaffeg+Hv8iMLfkfdV6o4XEk3BBwqi1PGoroOoztIofVRbbixPbzh4MEc2lnnCdMaIIUAGjrBWlvA2OSxwe5a8dInuy2BmybQvIeXHtCd/ma/0ILGrD7AJVqNGUwWIaXHhUvEfgj1kRgs=
+	t=1706933678; cv=none; b=TNBqVtR8jHeUQwe6To8bkkjVLefUPEdKFvAIlMJdY+1cwMBiLRPEiFHQ6UPj6kyh2t3p926H8qbVN5Igvf9+8EcXKdNbO1FHMnmVWrCwVI2PFVnlvAQwSN3xc4HueVraDz2GVw+gOtlHc0XriBYdbnQlyARhh5Qva76Q9QqRs1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933677; c=relaxed/simple;
-	bh=Rjy2fzlqPvy5zi+P0GQBOal4Qw0Yd9DBqg0MMOrmWP4=;
+	s=arc-20240116; t=1706933678; c=relaxed/simple;
+	bh=/ZwteFnr0H2DFblfA7918EAgnA5+BpxLS3vSL1mtadk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOxqUSpH0TJkvMTik5xj/fVuf2zIcjUUgmXKlpZdrwEQErZ/2k688cchfE4GnZOtLvlM34u197ycuHaBsMW2ITiMaNqKQcQVU1Ic6mjlV9J4MzHUXPoQBFlzruV4kExs5Zm7BMyHU7JOrVXMfkjzO7rnD5pAeuIiB5BTTZRecog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRLti2WO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C181KQBFImGYYTFrEXhAOTWtav3G5HJwEqULgJtns5JgO3yVaS4dyhyHAWuvg8HUssjNDup5JTOjKjciXSAgw4bVVkcciZaYoVkq9I2irSTB65pzFPCJnxxpMkLF6CvQ6wQlqlF7oruO4BD4N1pOHaMBQG79SjOxY1futrn/jhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWAIpXeB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRLti2WO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB33FC433F1;
-	Sat,  3 Feb 2024 04:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWAIpXeB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6401C43390;
+	Sat,  3 Feb 2024 04:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933677;
-	bh=Rjy2fzlqPvy5zi+P0GQBOal4Qw0Yd9DBqg0MMOrmWP4=;
+	bh=/ZwteFnr0H2DFblfA7918EAgnA5+BpxLS3vSL1mtadk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRLti2WOEeGSCgNN3IBuQFwALU61Zdsf0GOvbnTa3H+Jy4nWS7WlO6vISLHsKH2M0
-	 Wp3XPnr4CSUDmHkY0q+f/gHGUPJfcm/sUKKkuEj9wPfvF0NQcWF7WEOiFn+hQ9L24L
-	 cKhBwLFv88fkCMW02j0edz/Zp0eYSAn94RAL0HLs=
+	b=gWAIpXeBtI3Sp3ug04JA6WLXZjFpg7qcuFw2q/n7XxeGXY5/Df+8olzUxq3IyCflj
+	 bfTHwxoV4WQJ8w/wvKfP95JcTimqSE6tLnH+iyF2Ixf2uLQRJ0nXu0S5G1PEw9d34g
+	 q2SJVbAwfn7XEJERszgiWU2ve39eNU4bWDl4GQrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hardik Gajjar <hgajjar@de.adit-jv.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 235/322] usb: hub: Add quirk to decrease IN-ep poll interval for Microchip USB491x hub
-Date: Fri,  2 Feb 2024 20:05:32 -0800
-Message-ID: <20240203035406.782693660@linuxfoundation.org>
+Subject: [PATCH 6.6 262/322] drm/amdkfd: only flush mes process context if mes support is there
+Date: Fri,  2 Feb 2024 20:05:59 -0800
+Message-ID: <20240203035407.601979406@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,95 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hardik Gajjar <hgajjar@de.adit-jv.com>
+From: Jonathan Kim <jonathan.kim@amd.com>
 
-[ Upstream commit 855d75cf8311fee156fabb5639bb53757ca83dd4 ]
+[ Upstream commit 24149412dfc71f7f4a54868702e9145e396263d3 ]
 
-There is a potential delay in notifying Linux USB drivers of downstream
-USB bus activity when connecting a high-speed or superSpeed device via the
-Microchip USB491x hub. This delay is due to the fixed bInterval value of
-12 in the silicon of the Microchip USB491x hub.
+Fix up on mes process context flush to prevent non-mes devices from
+spamming error messages or running into undefined behaviour during
+process termination.
 
-Microchip requested to ignore the device descriptor and decrease that
-value to 9 as it was too late to modify that in silicon.
-
-This patch speeds up the USB enummeration process that helps to pass
-Apple Carplay certifications and improve the User experience when utilizing
-the USB device via Microchip Multihost USB491x Hub.
-
-A new hub quirk HUB_QUIRK_REDUCE_FRAME_INTR_BINTERVAL speeds up
-the notification process for Microchip USB491x hub by limiting
-the maximum bInterval value to 9.
-
-Signed-off-by: Hardik Gajjar <hgajjar@de.adit-jv.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20231205181829.127353-2-hgajjar@de.adit-jv.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bd33bb1409b4 ("drm/amdkfd: fix mes set shader debugger process management")
+Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
+Reviewed-by: Eric Huang <jinhuieric.huang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hub.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
-index f5abfba68e69..bd27741327df 100644
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -47,12 +47,18 @@
- #define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
- #define USB_PRODUCT_TUSB8041_USB3		0x8140
- #define USB_PRODUCT_TUSB8041_USB2		0x8142
-+#define USB_VENDOR_MICROCHIP			0x0424
-+#define USB_PRODUCT_USB4913			0x4913
-+#define USB_PRODUCT_USB4914			0x4914
-+#define USB_PRODUCT_USB4915			0x4915
- #define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	BIT(0)
- #define HUB_QUIRK_DISABLE_AUTOSUSPEND		BIT(1)
-+#define HUB_QUIRK_REDUCE_FRAME_INTR_BINTERVAL	BIT(2)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 8e55e78fce4e..43eff221eae5 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -87,7 +87,8 @@ void kfd_process_dequeue_from_device(struct kfd_process_device *pdd)
+ 		return;
  
- #define USB_TP_TRANSMISSION_DELAY	40	/* ns */
- #define USB_TP_TRANSMISSION_DELAY_MAX	65535	/* ns */
- #define USB_PING_RESPONSE_TIME		400	/* ns */
-+#define USB_REDUCE_FRAME_INTR_BINTERVAL	9
+ 	dev->dqm->ops.process_termination(dev->dqm, &pdd->qpd);
+-	amdgpu_mes_flush_shader_debugger(dev->adev, pdd->proc_ctx_gpu_addr);
++	if (dev->kfd->shared_resources.enable_mes)
++		amdgpu_mes_flush_shader_debugger(dev->adev, pdd->proc_ctx_gpu_addr);
+ 	pdd->already_dequeued = true;
+ }
  
- /* Protect struct usb_device->state and ->children members
-  * Note: Both are also protected by ->dev.sem, except that ->state can
-@@ -1904,6 +1910,14 @@ static int hub_probe(struct usb_interface *intf, const struct usb_device_id *id)
- 		usb_autopm_get_interface_no_resume(intf);
- 	}
- 
-+	if ((id->driver_info & HUB_QUIRK_REDUCE_FRAME_INTR_BINTERVAL) &&
-+	    desc->endpoint[0].desc.bInterval > USB_REDUCE_FRAME_INTR_BINTERVAL) {
-+		desc->endpoint[0].desc.bInterval =
-+			USB_REDUCE_FRAME_INTR_BINTERVAL;
-+		/* Tell the HCD about the interrupt ep's new bInterval */
-+		usb_set_interface(hdev, 0, 0);
-+	}
-+
- 	if (hub_configure(hub, &desc->endpoint[0].desc) >= 0) {
- 		onboard_hub_create_pdevs(hdev, &hub->onboard_hub_devs);
- 
-@@ -5891,6 +5905,21 @@ static const struct usb_device_id hub_id_table[] = {
-       .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
-       .idProduct = USB_PRODUCT_TUSB8041_USB3,
-       .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
-+	{ .match_flags = USB_DEVICE_ID_MATCH_VENDOR
-+			| USB_DEVICE_ID_MATCH_PRODUCT,
-+	  .idVendor = USB_VENDOR_MICROCHIP,
-+	  .idProduct = USB_PRODUCT_USB4913,
-+	  .driver_info = HUB_QUIRK_REDUCE_FRAME_INTR_BINTERVAL},
-+	{ .match_flags = USB_DEVICE_ID_MATCH_VENDOR
-+			| USB_DEVICE_ID_MATCH_PRODUCT,
-+	  .idVendor = USB_VENDOR_MICROCHIP,
-+	  .idProduct = USB_PRODUCT_USB4914,
-+	  .driver_info = HUB_QUIRK_REDUCE_FRAME_INTR_BINTERVAL},
-+	{ .match_flags = USB_DEVICE_ID_MATCH_VENDOR
-+			| USB_DEVICE_ID_MATCH_PRODUCT,
-+	  .idVendor = USB_VENDOR_MICROCHIP,
-+	  .idProduct = USB_PRODUCT_USB4915,
-+	  .driver_info = HUB_QUIRK_REDUCE_FRAME_INTR_BINTERVAL},
-     { .match_flags = USB_DEVICE_ID_MATCH_DEV_CLASS,
-       .bDeviceClass = USB_CLASS_HUB},
-     { .match_flags = USB_DEVICE_ID_MATCH_INT_CLASS,
 -- 
 2.43.0
 
