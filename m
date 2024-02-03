@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921B6171A4;
-	Sat,  3 Feb 2024 04:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA4171A4;
+	Sat,  3 Feb 2024 04:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933898; cv=none; b=e4VVIxSxxW2wfhrS1z+uvy49waqtZQPpiK9dzXSP38igjq+1UoDKleFL8xLw7DkB9UA5Te4LZgJoVnB4NBe9/tPnprmElR4FSaw+kKYXB7+ZoHaEL4GPZ1A2gghR1UJM3fj59s77Ug+MxHJADNU4YACfuo9YsF8rWOXknOCuFXg=
+	t=1706933899; cv=none; b=FG5YHbIF234cxZRpoEBdQgAMz/L3MmKcznBtiU5JAsWjIuhczuyDUPLYfRhXf0OXSXtZNDxeRmOPNNDyn5w1E5n9q2mJvPhcWQ012taOmq7Jcx+iOMMiOUpMijxEq07aq+ibkc9gdvtJFwecxHqjDmyVSqHDlLk1rniMV19jdAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933898; c=relaxed/simple;
-	bh=mR1d7x+M8GIfuVpIHlw+np+dZl+QIl3zupBxPdnOc6k=;
+	s=arc-20240116; t=1706933899; c=relaxed/simple;
+	bh=7zHMazhjr/KlOcHJn/rMdqoK2XymEYi0oZ5+YGOaZGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGDVDSxVoqreS+EvzzcOXOqjd3J1SeRds4xpP/6YOmJlhNAgdS8Sndeay6LktAcMCJ/5rxrBuJYjg/fKPnX/fzy7mFHTiVaV+UHgt7O7Zmn8vvWj55W01ySEkIpJlgtLRBwp0UkxQdvVgBRfYIemEA46//nrjQNmWzS1PsD1+vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVci0VKr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQ7Fg44vYZxm35Mvhav69bRiepPZ0q9mWjbaWWZ78QhGk16IDp0TchSBKor68+JmY7vE2cY4nD2prxry3THM5mS8DBqnSiDqoD61Rmz0tqx4k83GRSNindUnEGSclzSmFO6BvO62VbaiJ7hd4tESVq8fS+eEOdomCO17O8qywEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyrKgIfk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVci0VKr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4F3C433F1;
-	Sat,  3 Feb 2024 04:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyrKgIfk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5E6C433C7;
+	Sat,  3 Feb 2024 04:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933898;
-	bh=mR1d7x+M8GIfuVpIHlw+np+dZl+QIl3zupBxPdnOc6k=;
+	s=korg; t=1706933899;
+	bh=7zHMazhjr/KlOcHJn/rMdqoK2XymEYi0oZ5+YGOaZGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVci0VKrpphC3OoKRVtWtqLXj1oJ72tEW4zcwg2iou5auZzjAf9ylTPBfGUgsEZNO
-	 UzMkmlTxMBjk+Uc3COm5Q4ZRFMJOP7EXwOJ960IghgtoKx1OB8B3FtVngsZGUsBtGQ
-	 L19UOKrfwaes1Y7bHN3iQzi3hyWo2O/M2sxG71uU=
+	b=AyrKgIfk2HYD8+xz52ne7kLM7DY4ztURGl95aR/BeoHlo2eDVs1CrRb71jyxOg74j
+	 cFWfnv+L6YWEd4+1S8Vn2+SeRQoU0tTpMvL4w9QTQLsc/8bJX2gnIXUXatmtPP0Lg4
+	 Jc2V5YebYzW/Vp7CDZUKuKVF2DXHdg/CjQ98TSIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Maltsev <mekosko@projectyo.network>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Frederik Haxel <haxel@fzi.de>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 245/353] ACPI: resource: Skip IRQ override on ASUS ExpertBook B1502CGA
-Date: Fri,  2 Feb 2024 20:06:03 -0800
-Message-ID: <20240203035411.460383460@linuxfoundation.org>
+Subject: [PATCH 6.7 246/353] riscv: Make XIP bootable again
+Date: Fri,  2 Feb 2024 20:06:04 -0800
+Message-ID: <20240203035411.499566609@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,49 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Maltsev <mekosko@projectyo.network>
+From: Frederik Haxel <haxel@fzi.de>
 
-[ Upstream commit e315e8692f7922cd1b2a26bd7a1741cc8ce77085 ]
+[ Upstream commit 66f1e68093979816a23412a3fad066f5bcbc0360 ]
 
-Like the ASUS ExpertBook B1502CBA and various ASUS laptops, the
-ASUS ExpertBook B1502CGA has an ACPI DSDT table that describes IRQ 1 as
-ActiveLow while the kernel overrides it to Edge_High.
+Currently, the XIP kernel seems to fail to boot due to missing
+XIP_FIXUP and a wrong page_offset value. A superfluous XIP_FIXUP
+has also been removed.
 
-	$ sudo dmesg | grep DMI
-	[    0.000000] DMI: ASUSTeK COMPUTER INC. ASUS EXPERTBOOK B1502CGA_B1502CGA/B1502CGA, BIOS B1502CGA.303 06/05/2023
-	$ grep -A 40 PS2K dsdt.dsl | grep IRQ -A 1
-	                IRQ (Level, ActiveLow, Exclusive, )
-	                    {1}
-
-This prevents the keyboard from working. To fix this issue, add this laptop
-to the skip_override_table so that the kernel does not override IRQ 1.
-
-Signed-off-by: Michael Maltsev <mekosko@projectyo.network>
-[ rjw: rebase, replace .ident field with a comment ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Frederik Haxel <haxel@fzi.de>
+Link: https://lore.kernel.org/r/20231212130116.848530-2-haxel@fzi.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/riscv/kernel/head.S | 1 +
+ arch/riscv/mm/init.c     | 8 ++++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 7d58d8b4ca76..03b52d31a3e3 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -461,6 +461,13 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "B1502CBA"),
- 		},
- 	},
-+	{
-+		/* Asus ExpertBook B1502CGA */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "B1502CGA"),
-+		},
-+	},
- 	{
- 		/* Asus ExpertBook B2402CBA */
- 		.matches = {
+diff --git a/arch/riscv/kernel/head.S b/arch/riscv/kernel/head.S
+index 76ace1e0b46f..663881785b2b 100644
+--- a/arch/riscv/kernel/head.S
++++ b/arch/riscv/kernel/head.S
+@@ -89,6 +89,7 @@ relocate_enable_mmu:
+ 	/* Compute satp for kernel page tables, but don't load it yet */
+ 	srl a2, a0, PAGE_SHIFT
+ 	la a1, satp_mode
++	XIP_FIXUP_OFFSET a1
+ 	REG_L a1, 0(a1)
+ 	or a2, a2, a1
+ 
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 2e011cbddf3a..a65937336cdc 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -174,6 +174,9 @@ void __init mem_init(void)
+ 
+ /* Limit the memory size via mem. */
+ static phys_addr_t memory_limit;
++#ifdef CONFIG_XIP_KERNEL
++#define memory_limit	(*(phys_addr_t *)XIP_FIXUP(&memory_limit))
++#endif /* CONFIG_XIP_KERNEL */
+ 
+ static int __init early_mem(char *p)
+ {
+@@ -952,7 +955,7 @@ static void __init create_fdt_early_page_table(uintptr_t fix_fdt_va,
+ 	 * setup_vm_final installs the linear mapping. For 32-bit kernel, as the
+ 	 * kernel is mapped in the linear mapping, that makes no difference.
+ 	 */
+-	dtb_early_va = kernel_mapping_pa_to_va(XIP_FIXUP(dtb_pa));
++	dtb_early_va = kernel_mapping_pa_to_va(dtb_pa);
+ #endif
+ 
+ 	dtb_early_pa = dtb_pa;
+@@ -1055,9 +1058,9 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
+ #endif
+ 
+ 	kernel_map.virt_addr = KERNEL_LINK_ADDR + kernel_map.virt_offset;
+-	kernel_map.page_offset = _AC(CONFIG_PAGE_OFFSET, UL);
+ 
+ #ifdef CONFIG_XIP_KERNEL
++	kernel_map.page_offset = PAGE_OFFSET_L3;
+ 	kernel_map.xiprom = (uintptr_t)CONFIG_XIP_PHYS_ADDR;
+ 	kernel_map.xiprom_sz = (uintptr_t)(&_exiprom) - (uintptr_t)(&_xiprom);
+ 
+@@ -1067,6 +1070,7 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
+ 
+ 	kernel_map.va_kernel_xip_pa_offset = kernel_map.virt_addr - kernel_map.xiprom;
+ #else
++	kernel_map.page_offset = _AC(CONFIG_PAGE_OFFSET, UL);
+ 	kernel_map.phys_addr = (uintptr_t)(&_start);
+ 	kernel_map.size = (uintptr_t)(&_end) - kernel_map.phys_addr;
+ #endif
 -- 
 2.43.0
 
