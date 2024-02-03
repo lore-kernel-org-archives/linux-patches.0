@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CC51CA81;
-	Sat,  3 Feb 2024 04:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6389916423;
+	Sat,  3 Feb 2024 04:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933846; cv=none; b=fJefIZYh2IfNnWk9BiSA/rmvY6CycMVMfPZbxu+DE7Qaz4i3uJiO36t1Xwrd5hu2YWbaAujIikxNIRqKCPqbaivGAK7mBsCkiWLPmRuIXxBZfR9TGHJkLbZb2B7P/5DagwVHnpRP56sLFv5FgPTilBQm1rD+uZEn3v9jLRecuvw=
+	t=1706933847; cv=none; b=rPoyUzoFWWacoUAyJJc6iiz0iXw/SZlE1a5tTIg6VbYKP2pgIdPW5pw31BcjBO3/5jbwxI2lcE/663MGCxZFT7iaya/lgTDD6K/0lmIIBg9Z/Sy0L4GM7NlqQe5Lg252Oh/z9jXDExRcvULyL3++O05yJ8/Q1F49eSCuqfrJatE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933846; c=relaxed/simple;
-	bh=3LQWS+dVRmgHEUkNnnq5Bb4fWxtxDJJcZgW0jDkm6AA=;
+	s=arc-20240116; t=1706933847; c=relaxed/simple;
+	bh=kQCN8NYZbqlbcRaja53WKD7a+uU3Z9LjtrI3BB+sN/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QhMvkH1xw3YgtkT6p4+mSVhSnVxuECxJgIu3BiCVDcJt+KWzxtCeH9w3QJwSGi4IMIOeXF/6CLPfvwDFNtreFotaCm7Rq2qkzKKRDqswj+rXZraBlTSRV5wQxoyIC0HLDzk/uSjcjqB7jiVOhaL4G0BJ7egLUDhngfpRn/m/r6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDgB4cqN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BBuQtzV8lbzqVPB96wUE6qTQqlWU3hdZAMC+kxt3fVEFpnF8Ld1qEdf2JMf8Mfs3NYXRhEjWD8+CA0W84MJvBDSrhhGAXgjb++gYC7S9O+9upOr5msBw8CRmrwAsMt1deJZpfYLXGVvu9W53Ss2Uhg7wOnVoXVz96CITCRkQf4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGIP0VWE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDgB4cqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565CFC433C7;
-	Sat,  3 Feb 2024 04:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGIP0VWE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD03C433F1;
+	Sat,  3 Feb 2024 04:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933846;
-	bh=3LQWS+dVRmgHEUkNnnq5Bb4fWxtxDJJcZgW0jDkm6AA=;
+	s=korg; t=1706933847;
+	bh=kQCN8NYZbqlbcRaja53WKD7a+uU3Z9LjtrI3BB+sN/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDgB4cqNRBGv8EoSmeHJ+L/uImBhxMyis3PxeGeOVEeboBXfzwf/StHSyBzC4FhCt
-	 lABWpeLvj7l4SCVnx0YPW5KrDJWVrwvhR0OwNYYoe17AHb/hZ/N7zqPm/6HnsuAe3O
-	 3i7pnAxSQ+u101RB6w2CR/IccVjhXVPbe7LDsrkg=
+	b=TGIP0VWEl02GGM2fGXdcvdEq3ijdTkVH+8keOif3w/DyDtnixmV+gQSZtrQhmS0+d
+	 Mz68xiqPT99xKFOD6w4x60btPmiGsMsPXHq0TsMFlhx+MOvFSoZqvk268HGJIjCgZc
+	 YaQRtalfdlNohdQi1WMRPWffdKAv0TDYPvaafC0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mao Jinlong <quic_jinlmao@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 139/353] arm64: dts: qcom: Fix coresight warnings in in-ports and out-ports
-Date: Fri,  2 Feb 2024 20:04:17 -0800
-Message-ID: <20240203035408.105875038@linuxfoundation.org>
+Subject: [PATCH 6.7 168/353] RDMA/IPoIB: Fix error code return in ipoib_mcast_join
+Date: Fri,  2 Feb 2024 20:04:46 -0800
+Message-ID: <20240203035408.955966821@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,124 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
+From: Jack Wang <jinpu.wang@ionos.com>
 
-[ Upstream commit bdb6339fd46b8702ea7411b0b414587b86a40562 ]
+[ Upstream commit 753fff78f430704548f45eda52d6d55371a52c0f ]
 
-When a node is only one in port or one out port, address-cells and
-size-cells are not required in in-ports and out-ports. And the number
-and reg of the port need to be removed.
+Return the error code in case of ib_sa_join_multicast fail.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-Link: https://lore.kernel.org/r/20231210072633.4243-5-quic_jinlmao@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Link: https://lore.kernel.org/r/20231121130316.126364-2-jinpu.wang@ionos.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi |  5 +----
- arch/arm64/boot/dts/qcom/sm8150.dtsi |  5 +----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 24 ++++--------------------
- 3 files changed, 6 insertions(+), 28 deletions(-)
+ drivers/infiniband/ulp/ipoib/ipoib_multicast.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 91169e438b46..9e594d21ecd8 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3545,11 +3545,8 @@
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@1 {
--					reg = <1>;
-+				port {
- 					etf_in: endpoint {
- 						remote-endpoint =
- 						  <&merge_funnel_out>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index e302eb7821af..3221478663ac 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -2957,11 +2957,8 @@
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@1 {
--					reg = <1>;
-+				port {
- 					replicator1_in: endpoint {
- 						remote-endpoint = <&replicator_out1>;
- 					};
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 72db75ca7731..d59a99ca872c 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3095,11 +3095,8 @@
- 			clock-names = "apb_pclk";
- 
- 			out-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@0 {
--					reg = <0>;
-+				port {
- 					tpda_out_funnel_qatb: endpoint {
- 						remote-endpoint = <&funnel_qatb_in_tpda>;
- 					};
-@@ -3142,11 +3139,7 @@
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
-+				port {
- 					funnel_qatb_in_tpda: endpoint {
- 						remote-endpoint = <&tpda_out_funnel_qatb>;
- 					};
-@@ -3355,11 +3348,8 @@
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@0 {
--					reg = <0>;
-+				port {
- 					etf_in_funnel_swao_out: endpoint {
- 						remote-endpoint = <&funnel_swao_out_etf>;
- 					};
-@@ -3443,8 +3433,6 @@
- 			clock-names = "apb_pclk";
- 
- 			out-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 				port {
- 					tpdm_mm_out_tpda9: endpoint {
- 						remote-endpoint = <&tpda_9_in_tpdm_mm>;
-@@ -3710,11 +3698,7 @@
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
-+				port {
- 					funnel_apss_merg_in_funnel_apss: endpoint {
- 					remote-endpoint = <&funnel_apss_out_funnel_apss_merg>;
- 					};
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
+index 5b3154503bf4..9e6967a40042 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
+@@ -546,6 +546,7 @@ static int ipoib_mcast_join(struct net_device *dev, struct ipoib_mcast *mcast)
+ 		spin_unlock_irq(&priv->lock);
+ 		complete(&mcast->done);
+ 		spin_lock_irq(&priv->lock);
++		return ret;
+ 	}
+ 	return 0;
+ }
 -- 
 2.43.0
 
