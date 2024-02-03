@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9867D2BB18;
-	Sat,  3 Feb 2024 04:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B0E2BB18;
+	Sat,  3 Feb 2024 04:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933961; cv=none; b=ldfRcacuTBINIW3nTtiCJOCu8S49ypRY2qfyfQcFx1ZiBEG/CM9iUCojQ4zd77LUTZ+SabbKb84miBbvOvAp8btrXs4YHk29/l1WFV25B4z9Qvva69fNvfnrcss0K6pjb4/mPe77sTaQ0k6IyGQjdOkxBHg6s57ARNdrmNV09oQ=
+	t=1706933962; cv=none; b=ktOxjclDpbyRIQA/ASrauYytPFr/8WQpxeE/SniM1Q90QZ9115ZF8f0MWWQg7AwF0aH4eiuVfPgalYSxNYGw1xxwsy17Rl8yivn5UMhhihXOBuFpp96zc8fMrlRDoMqUQBAZO6W7u2N5BN591oHKgq6faUntGcMQwnYW/RdgTXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933961; c=relaxed/simple;
-	bh=v8Qbh1LSmVFogiJ05FvA/QGAwQD6zDyOVXUmAIzupSo=;
+	s=arc-20240116; t=1706933962; c=relaxed/simple;
+	bh=bwG7drlwkkyv1E200nlRDrEx3+ZtJqUTO3Y0dF1SuYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8R+KHLoruFbqGfCcehZSzuIMIdozWxckLXHHRvXuE1kYNNevWSs5MBy/xLL1A+7a+DKb5oibPg5ye+N0CqAGQ+cftE72OoadoqBF8nqtIbTkcrMx2hkDc+q2jxT6lR0R3EA9HrnaeKqtRY1XLlqVXoaQzSrfxMxaxHsGa1y5hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyZJco0r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQzx8SNJrdf8+7vPJ4UG/Xk+LK2R02+3bWTlnqonHjHREaz/TR0emWHYEjKTqTtEcrpEhBaBR4UhBC8lqC7gIXvMAu7VcOZuyxVWAwZSQQ+wjWcubCuEGGBypoVGie+q8Lu8rRZ4Og+/OZ2p57XYXUNGM1S+Q2ehRSTsbXUf2To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZS3F2xs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyZJco0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D62C43394;
-	Sat,  3 Feb 2024 04:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZS3F2xs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C008C433F1;
+	Sat,  3 Feb 2024 04:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933961;
-	bh=v8Qbh1LSmVFogiJ05FvA/QGAwQD6zDyOVXUmAIzupSo=;
+	s=korg; t=1706933962;
+	bh=bwG7drlwkkyv1E200nlRDrEx3+ZtJqUTO3Y0dF1SuYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zyZJco0rVugjCYV9IGQdNN9Vm2JPLg3SJg7+npgGC8tkg3mjaEIhcQK3oqZt33JPr
-	 97K5rV75T9D2XpotZVnQ0X8Owr+gVc6NLU2hRi35hMsesH/jbcGklHxd1NN8CRGyI3
-	 SlqvrbobmR3hpNZ0UrNDxI2DupHqVzemYKW7jWd4=
+	b=KZS3F2xs8qgFRpPkwGAAqo7HzPWEbA1yUTwBa7Mmf0AUHzKJ/focmP6IidgciLsR1
+	 RBSdRoq5kKQoMYclDZNDunE9ksYR2qfxz598QgKk5+ZGlS0gVY5jYDRVzvy6efmv60
+	 3hS6nT37IxVMHxN4glnsdzGurykEn8+O2TdhZfw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 331/353] pds_core: Prevent health thread from running during reset/remove
-Date: Fri,  2 Feb 2024 20:07:29 -0800
-Message-ID: <20240203035414.263629164@linuxfoundation.org>
+Subject: [PATCH 6.7 332/353] pds_core: Cancel AQ work on teardown
+Date: Fri,  2 Feb 2024 20:07:30 -0800
+Message-ID: <20240203035414.291656602@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -55,82 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Brett Creeley <brett.creeley@amd.com>
 
-[ Upstream commit d9407ff11809c6812bb84fe7be9c1367d758e5c8 ]
+[ Upstream commit d321067e2cfa4d5e45401a00912ca9da8d1af631 ]
 
-The PCIe reset handlers can run at the same time as the
-health thread. This can cause the health thread to
-stomp on the PCIe reset. Fix this by preventing the
-health thread from running while a PCIe reset is happening.
+There is a small window where pdsc_work_thread()
+calls pdsc_process_adminq() and pdsc_process_adminq()
+passes the PDSC_S_STOPPING_DRIVER check and starts
+to process adminq/notifyq work and then the driver
+starts a fw_down cycle. This could cause some
+undefined behavior if the notifyqcq/adminqcq are
+free'd while pdsc_process_adminq() is running. Use
+cancel_work_sync() on the adminqcq's work struct
+to make sure any pending work items are cancelled
+and any in progress work items are completed.
 
-As part of this use timer_shutdown_sync() during reset and
-remove to make sure the timer doesn't ever get rearmed.
+Also, make sure to not call cancel_work_sync() if
+the work item has not be initialized. Without this,
+traces will happen in cases where a reset fails and
+teardown is called again or if reset fails and the
+driver is removed.
 
-Fixes: ffa55858330f ("pds_core: implement pci reset handlers")
+Fixes: 01ba61b55b20 ("pds_core: Add adminq processing and commands")
 Signed-off-by: Brett Creeley <brett.creeley@amd.com>
 Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://lore.kernel.org/r/20240129234035.69802-2-brett.creeley@amd.com
+Link: https://lore.kernel.org/r/20240129234035.69802-3-brett.creeley@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/main.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/pds_core/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index 3080898d7b95..5172a5ad8ec6 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -293,7 +293,7 @@ static int pdsc_init_pf(struct pdsc *pdsc)
- err_out_teardown:
- 	pdsc_teardown(pdsc, PDSC_TEARDOWN_REMOVING);
- err_out_unmap_bars:
--	del_timer_sync(&pdsc->wdtimer);
-+	timer_shutdown_sync(&pdsc->wdtimer);
- 	if (pdsc->wq)
- 		destroy_workqueue(pdsc->wq);
- 	mutex_destroy(&pdsc->config_lock);
-@@ -420,7 +420,7 @@ static void pdsc_remove(struct pci_dev *pdev)
- 		 */
- 		pdsc_sriov_configure(pdev, 0);
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index 0d2091e9eb28..b582729331eb 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -464,6 +464,8 @@ void pdsc_teardown(struct pdsc *pdsc, bool removing)
  
--		del_timer_sync(&pdsc->wdtimer);
-+		timer_shutdown_sync(&pdsc->wdtimer);
- 		if (pdsc->wq)
- 			destroy_workqueue(pdsc->wq);
+ 	if (!pdsc->pdev->is_virtfn)
+ 		pdsc_devcmd_reset(pdsc);
++	if (pdsc->adminqcq.work.func)
++		cancel_work_sync(&pdsc->adminqcq.work);
+ 	pdsc_qcq_free(pdsc, &pdsc->notifyqcq);
+ 	pdsc_qcq_free(pdsc, &pdsc->adminqcq);
  
-@@ -445,10 +445,24 @@ static void pdsc_remove(struct pci_dev *pdev)
- 	devlink_free(dl);
- }
- 
-+static void pdsc_stop_health_thread(struct pdsc *pdsc)
-+{
-+	timer_shutdown_sync(&pdsc->wdtimer);
-+	if (pdsc->health_work.func)
-+		cancel_work_sync(&pdsc->health_work);
-+}
-+
-+static void pdsc_restart_health_thread(struct pdsc *pdsc)
-+{
-+	timer_setup(&pdsc->wdtimer, pdsc_wdtimer_cb, 0);
-+	mod_timer(&pdsc->wdtimer, jiffies + 1);
-+}
-+
- void pdsc_reset_prepare(struct pci_dev *pdev)
- {
- 	struct pdsc *pdsc = pci_get_drvdata(pdev);
- 
-+	pdsc_stop_health_thread(pdsc);
- 	pdsc_fw_down(pdsc);
- 
- 	pci_free_irq_vectors(pdev);
-@@ -486,6 +500,7 @@ void pdsc_reset_done(struct pci_dev *pdev)
- 	}
- 
- 	pdsc_fw_up(pdsc);
-+	pdsc_restart_health_thread(pdsc);
- }
- 
- static const struct pci_error_handlers pdsc_err_handler = {
 -- 
 2.43.0
 
