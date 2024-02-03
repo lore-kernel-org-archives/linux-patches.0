@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343E311725;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E059A2BB08;
 	Sat,  3 Feb 2024 04:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933562; cv=none; b=AONZBc0GJQKO6wQkk5TSKOEhFdo4B7BdH51YaXTQvpxud6yJnun9XOJZaZm6Vl3Up4zD7/9A85njJlMz5LejuS2Ym5pPT2PIhp0XgphLLZrMUEmGm2gJ16Llhpg0Fd9yEhEFL9wKz1RAr8N0mX+b7H0x2kD0sjjezCms3FIsL8E=
+	t=1706933563; cv=none; b=mqc8u/L3VAVm02UGPJvoiN7ypY7tWQeaJt2B48smNY8tAE0PwMoGiA6je/0Td7McX4vRQY80xKE7rQwly7RvNzDjuhPKL2Rk13EApbOMnkhA+OtmbVxe94I4k1fUobUmk2+w/OPftsn1yRwkzVUVWRrNOkH1w/o3qQx1ab708mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933562; c=relaxed/simple;
-	bh=3F3pM9Js0+XiFP5LXQWw4rfKzTgFNvaE+sLJ2emO46Q=;
+	s=arc-20240116; t=1706933563; c=relaxed/simple;
+	bh=SB9egFxjXOT2LDQvj2uOBOoK/RYOnDIoURxWZIjGdR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Udqdg7+FL35Gt9hyPBwtCVeHCXXUZ+rULqz+OZ89b7q9GwblXbYOLi9QQWoU/ebpjtw821GtDFMl57ASmYuBpTTgn2TpRPBX8mhA2i+qqJlmari9EpKR4Z39Gm+eF0GA8Uds0QNQNja7ukqZMOdha6cG171/43Dekuq/ygEGP7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKrI3pUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EpL0J0R2RZ8F4kN5RBmXggeims0qS+LUDgw5khFjvQdQlIbQtZibWgNSZ+ke3+z3zWbUcjcXsiBBUa2/wKi5erdOe/RrL+UicwOpJM5fUj6B5FpOKhTmFih74BhjkyaDbYMXAcjrN9NodmKvwFjYfHcjJsmlhMEyk5Ama0JUaRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2IYI1wC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKrI3pUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2DAC433C7;
-	Sat,  3 Feb 2024 04:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2IYI1wC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A656EC433F1;
+	Sat,  3 Feb 2024 04:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933562;
-	bh=3F3pM9Js0+XiFP5LXQWw4rfKzTgFNvaE+sLJ2emO46Q=;
+	bh=SB9egFxjXOT2LDQvj2uOBOoK/RYOnDIoURxWZIjGdR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKrI3pUgQ904PPI8yRuJjUw9DHkwGMhp4q5DrK0XeGUXWUFeTfCrQHTzmZAAkfQVh
-	 0sD4wUN2hIbPqGWc4N8e+5eSSak5bRWVEBcj9l24/1ac6GerRbCj5hLBy8X6XzL2vL
-	 lvM0/VVuZRdbgHi7ZTU9mDo43czSht0tdn4UU55Q=
+	b=W2IYI1wC0WWZXXHloyG6yOCtCYXdtvBnM06jpvzXn9GuBIk/z6QwWF1QPHxzzkIYO
+	 p3rGtFCpd4C0NQI02w1A3GtjpyjCG0EuhMqdjnHfilDMfJb6hw/K7qAbL9r2931v1d
+	 BwxR5fd8FPvJ0Ydg34edvoxyhU8ja73qjFCDXCZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/322] net: phy: at803x: fix passing the wrong reference for config_intr
-Date: Fri,  2 Feb 2024 20:03:32 -0800
-Message-ID: <20240203035402.867782858@linuxfoundation.org>
+Subject: [PATCH 6.6 116/322] ionic: pass opcode to devcmd_wait
+Date: Fri,  2 Feb 2024 20:03:33 -0800
+Message-ID: <20240203035402.896264250@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,52 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit f8fdbf3389f44c7026f16e36cb1f2ff017f7f5b2 ]
+[ Upstream commit 24f110240c03c6b5368f1203bac72883d511e606 ]
 
-Fix passing the wrong reference for config_initr on passing the function
-pointer, drop the wrong & from at803x_config_intr in the PHY struct.
+Don't rely on the PCI memory for the devcmd opcode because we
+read a 0xff value if the PCI bus is broken, which can cause us
+to report a bogus dev_cmd opcode later.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/at803x.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_dev.c  | 1 +
+ drivers/net/ethernet/pensando/ionic/ionic_dev.h  | 1 +
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 2 +-
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/at803x.c b/drivers/net/phy/at803x.c
-index 37fb033e1c29..ef203b0807e5 100644
---- a/drivers/net/phy/at803x.c
-+++ b/drivers/net/phy/at803x.c
-@@ -2104,7 +2104,7 @@ static struct phy_driver at803x_driver[] = {
- 	.write_page		= at803x_write_page,
- 	.get_features		= at803x_get_features,
- 	.read_status		= at803x_read_status,
--	.config_intr		= &at803x_config_intr,
-+	.config_intr		= at803x_config_intr,
- 	.handle_interrupt	= at803x_handle_interrupt,
- 	.get_tunable		= at803x_get_tunable,
- 	.set_tunable		= at803x_set_tunable,
-@@ -2134,7 +2134,7 @@ static struct phy_driver at803x_driver[] = {
- 	.resume			= at803x_resume,
- 	.flags			= PHY_POLL_CABLE_TEST,
- 	/* PHY_BASIC_FEATURES */
--	.config_intr		= &at803x_config_intr,
-+	.config_intr		= at803x_config_intr,
- 	.handle_interrupt	= at803x_handle_interrupt,
- 	.cable_test_start	= at803x_cable_test_start,
- 	.cable_test_get_status	= at803x_cable_test_get_status,
-@@ -2150,7 +2150,7 @@ static struct phy_driver at803x_driver[] = {
- 	.resume			= at803x_resume,
- 	.flags			= PHY_POLL_CABLE_TEST,
- 	/* PHY_BASIC_FEATURES */
--	.config_intr		= &at803x_config_intr,
-+	.config_intr		= at803x_config_intr,
- 	.handle_interrupt	= at803x_handle_interrupt,
- 	.cable_test_start	= at803x_cable_test_start,
- 	.cable_test_get_status	= at803x_cable_test_get_status,
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.c b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+index c06576f43916..22ab0a44fa8c 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+@@ -321,6 +321,7 @@ void ionic_dev_cmd_comp(struct ionic_dev *idev, union ionic_dev_cmd_comp *comp)
+ 
+ void ionic_dev_cmd_go(struct ionic_dev *idev, union ionic_dev_cmd *cmd)
+ {
++	idev->opcode = cmd->cmd.opcode;
+ 	memcpy_toio(&idev->dev_cmd_regs->cmd, cmd, sizeof(*cmd));
+ 	iowrite32(0, &idev->dev_cmd_regs->done);
+ 	iowrite32(1, &idev->dev_cmd_regs->doorbell);
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.h b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+index bd2d4a26f543..23f9d3b8029a 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.h
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+@@ -152,6 +152,7 @@ struct ionic_dev {
+ 	bool fw_hb_ready;
+ 	bool fw_status_ready;
+ 	u8 fw_generation;
++	u8 opcode;
+ 
+ 	u64 __iomem *db_pages;
+ 	dma_addr_t phy_db_pages;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+index 1dc79cecc5cc..baa865af49ad 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+@@ -465,7 +465,7 @@ static int __ionic_dev_cmd_wait(struct ionic *ionic, unsigned long max_seconds,
+ 	 */
+ 	max_wait = jiffies + (max_seconds * HZ);
+ try_again:
+-	opcode = readb(&idev->dev_cmd_regs->cmd.cmd.opcode);
++	opcode = idev->opcode;
+ 	start_time = jiffies;
+ 	for (fw_up = ionic_is_fw_running(idev);
+ 	     !done && fw_up && time_before(jiffies, max_wait);
 -- 
 2.43.0
 
