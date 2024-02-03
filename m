@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EF21CD15;
-	Sat,  3 Feb 2024 04:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A386C1CD15;
+	Sat,  3 Feb 2024 04:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933889; cv=none; b=uQADTZxUeKTHFsPV7oBHYTiTZay2sMwa86mOifmYMW4N9n4Bzks9luxeluCNqGuQvVpUPwaA32T+KtyewOqksE8EWGHpBszUyIg1hDTdoSvHjtPrT5OcJmHU/SZIDOmhDjjBRWzlHyyxDt398ALsWORXXN6vEWjMRvfPnVUnvEo=
+	t=1706933889; cv=none; b=bIZ6bIMJnnTyK3AZKD154C3iBcZGvthZgIHwvuDra/T5a3UelBgbl4h2dXKSB4ITrdNIJuJJAy1TfQQ2frLkSZBZQQo9mfph1Ez8b9k4m7TLLS5Ow3Pye4DUsZ2NrsRk46FTP72mtlb5V91DIYzORUgfW18jJutdtB9qJrRMys8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933889; c=relaxed/simple;
-	bh=OySBzL5UeXKKlRvsvX398yqCV1BX8iKs+bmKbjT3ug0=;
+	bh=ookYTjzVhslnTxb86PN11RhxS1K7+rP3pVGa8tS2iDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FiUZKF5DgUoBPCShGjHAgUfhmLH9fuLdCVFuTW79fs40Dcg9MZnYotby7bOBt9LZgoZOLv+qDTJPXRizfFc3gulPbHRQTHWonMcJAvNOg6xMdPtDhw+pVAFwBZgJSSNy0/F9zO5qzz5O4akTne7oPu7mpEbpuwSzmKu//fONKUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USTb5RzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fu90MZ5raIRVEg8oiNM1PGe0ttuins3DSlid+KIEn15Al8Cv1iRZF35QHHwKay+ZJSZ0QTe+lKKucLI3qHzQ5NpCDq6IeahFGlLS14/f0Q2UsSEYagcj/Mgiwmp3LfglUkK8UZ67/sgj1wOU1E2AhOQI1MVbDrJllRYAL4YkEoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ooW+g6Ei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USTb5RzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8987C433C7;
-	Sat,  3 Feb 2024 04:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ooW+g6Ei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF81C433C7;
+	Sat,  3 Feb 2024 04:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933888;
-	bh=OySBzL5UeXKKlRvsvX398yqCV1BX8iKs+bmKbjT3ug0=;
+	s=korg; t=1706933889;
+	bh=ookYTjzVhslnTxb86PN11RhxS1K7+rP3pVGa8tS2iDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USTb5RzUPoJ6ZkmhpXEQzNFLCZ66RteHh8ifjvS6wUyFKldTLOIUY4GeD6vdMdBsc
-	 EYB34bOBZ777N7EUjIzGRE1mpcEFFrzJqA+iIXp9fsCsXinDlGvYNi2JZzP7W2/P9G
-	 +i+V+qWWTysI9PeteT7QhejVGX4ybtC0isIlDCoA=
+	b=ooW+g6EiAnZq+fDZiijRsOzgEOjPZPaO2PXKVgZ73j21RdRdfKDCRiLCqDIjdJPly
+	 ov7MiKjzybjRWSzWUQ50hUjrW3UgSSLSjQlsR1Zt7OzkeLkWQV8aYrMobNTAgMIwlo
+	 4CyvCxK4V5CvUl1cGNBZ9II0nH0uY1oqqYOyfDtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Felix Kuehling <felix.kuehling@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 233/353] drm/amdgpu: Drop fence check in to_amdgpu_amdkfd_fence()
-Date: Fri,  2 Feb 2024 20:05:51 -0800
-Message-ID: <20240203035411.048892229@linuxfoundation.org>
+Subject: [PATCH 6.7 234/353] drm/amdkfd: Fix iterator used outside loop in kfd_add_peer_prop()
+Date: Fri,  2 Feb 2024 20:05:52 -0800
+Message-ID: <20240203035411.080065087@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -57,13 +57,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit bf2ad4fb8adca89374b54b225d494e0b1956dbea ]
+[ Upstream commit b1a428b45dc7e47c7acc2ad0d08d8a6dda910c4c ]
 
-Return value of container_of(...) can't be null, so null check is not
-required for 'fence'. Hence drop its NULL check.
-
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c:93 to_amdgpu_amdkfd_fence() warn: can 'fence' even be NULL?
+Fix the following about iterator use:
+drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_topology.c:1456 kfd_add_peer_prop() warn: iterator used outside loop: 'iolink3'
 
 Cc: Felix Kuehling <Felix.Kuehling@amd.com>
 Cc: Christian König <christian.koenig@amd.com>
@@ -73,22 +70,44 @@ Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 24 ++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-index 469785d33791..1ef758ac5076 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-@@ -90,7 +90,7 @@ struct amdgpu_amdkfd_fence *to_amdgpu_amdkfd_fence(struct dma_fence *f)
- 		return NULL;
- 
- 	fence = container_of(f, struct amdgpu_amdkfd_fence, base);
--	if (fence && f->ops == &amdkfd_fence_ops)
-+	if (f->ops == &amdkfd_fence_ops)
- 		return fence;
- 
- 	return NULL;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+index 58d775a0668d..e5f7c92eebcb 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+@@ -1452,17 +1452,19 @@ static int kfd_add_peer_prop(struct kfd_topology_device *kdev,
+ 		/* CPU->CPU  link*/
+ 		cpu_dev = kfd_topology_device_by_proximity_domain(iolink1->node_to);
+ 		if (cpu_dev) {
+-			list_for_each_entry(iolink3, &cpu_dev->io_link_props, list)
+-				if (iolink3->node_to == iolink2->node_to)
+-					break;
+-
+-			props->weight += iolink3->weight;
+-			props->min_latency += iolink3->min_latency;
+-			props->max_latency += iolink3->max_latency;
+-			props->min_bandwidth = min(props->min_bandwidth,
+-							iolink3->min_bandwidth);
+-			props->max_bandwidth = min(props->max_bandwidth,
+-							iolink3->max_bandwidth);
++			list_for_each_entry(iolink3, &cpu_dev->io_link_props, list) {
++				if (iolink3->node_to != iolink2->node_to)
++					continue;
++
++				props->weight += iolink3->weight;
++				props->min_latency += iolink3->min_latency;
++				props->max_latency += iolink3->max_latency;
++				props->min_bandwidth = min(props->min_bandwidth,
++							   iolink3->min_bandwidth);
++				props->max_bandwidth = min(props->max_bandwidth,
++							   iolink3->max_bandwidth);
++				break;
++			}
+ 		} else {
+ 			WARN(1, "CPU node not found");
+ 		}
 -- 
 2.43.0
 
