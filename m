@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A297116436;
-	Sat,  3 Feb 2024 04:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8B1101E2;
+	Sat,  3 Feb 2024 04:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933384; cv=none; b=rkBChvYuCgxa9UE4UjTA6Hd32n/uHelY00rfv/vfzw+PJ0dqMObq5kAgNyrPZLFcbKZH3iJVKYv3IM8q+0YbC+EU1FFIa+T80f6Q3u2VnzQcHWkxqrdNk5SD5TXgA2xeB2f+m74XYsKP8kvv9ybWN7F6KAVXM078EEmYBEE4zro=
+	t=1706933385; cv=none; b=YZuT3TZ5vPJmBL322dupUlTwrGI5FOkIe/gmmV2DdvWdUXfrj6Fq5xAV1vWeibs29EsmPKVJW9kQh0QzhjIYboqyoNe2dVhlWZxiZ0Zoc9ANnesKR+VtoaDrwkkT725QZy/HeSEzGJ5MQzC7MlPlfrvY9FssYWwmAbo3BN8I1Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933384; c=relaxed/simple;
-	bh=/673l2NYejh6z++jIjMLypUC91sHlm1tRxxVgLY4pbs=;
+	s=arc-20240116; t=1706933385; c=relaxed/simple;
+	bh=GpGEEH7tEm7ddBBnC7t6g0lv+kz6rIwUlw5cy5lehjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJmDBJIVndErqdPpHU+tJJ8U5n2iRXx+xqz7bBqZ/ynyxYbGYjYAzOHkiCNEGJ6w+HieLAwgNuk5zt2tnzKL3eZayzKr+J5IOtHUG9SBbH8libiO4H4lcr0to1jC0L+mE2QYTlEhQYU7C027yQSgxVsGWz9d9FLDDdyQ4BpJsvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsQHTPZ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qSJNH1ZLU6nLXgqdHrQ4J30MwRSf0FFzlHdkuk8DRhMPaT+Rwo5THcxyvLcQgevJfnl1koUsl0MxA5ilvlwO9/r50hYgmNrNFGGvnWCfnBsN49RwOpYd8iqoyhEKLDJ4G2Mhh+E9pnQXzHp+eP2/IFhcQU5jTwhOXxn4JnsZUmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfIqieu+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsQHTPZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68254C433F1;
-	Sat,  3 Feb 2024 04:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfIqieu+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34099C433F1;
+	Sat,  3 Feb 2024 04:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933384;
-	bh=/673l2NYejh6z++jIjMLypUC91sHlm1tRxxVgLY4pbs=;
+	s=korg; t=1706933385;
+	bh=GpGEEH7tEm7ddBBnC7t6g0lv+kz6rIwUlw5cy5lehjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qsQHTPZ7yXmLFwSX35BRcXam+d9E+sYVMs1Vizj9qieCLNwTABke46s4c7hyAErmJ
-	 oJ0qUxeo2jcffGL96SBD5wtY8b5jwmVe0qWa0rBqXvikDwWi6pa6XygyXtenEmXvru
-	 63nxlyOLoENMvZCaYqTF1HmdY6rjgFdbI/OYB7lU=
+	b=vfIqieu+qKuVMHRYD3eROfrF0dDAeyjhulEqHJ53hEmctGAUAru6U3rIb1SXDbqY8
+	 e+18gkWBIC9cc6Yld37xYPFhxMvGSqd92S2yOfxIeMsJLYf7m0YMBl4Yt78p9zpsUa
+	 ij7aZc1u/74fCPqEhbjuqbSVw0ffq8cpGacDmQSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/219] ARM: dts: imx1: Fix sram node
-Date: Fri,  2 Feb 2024 20:04:05 -0800
-Message-ID: <20240203035327.005671857@linuxfoundation.org>
+Subject: [PATCH 6.1 073/219] net: phy: at803x: fix passing the wrong reference for config_intr
+Date: Fri,  2 Feb 2024 20:04:06 -0800
+Message-ID: <20240203035327.214018348@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,51 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit c248e535973088ba7071ff6f26ab7951143450af ]
+[ Upstream commit f8fdbf3389f44c7026f16e36cb1f2ff017f7f5b2 ]
 
-Per sram.yaml, address-cells, size-cells and ranges are mandatory.
+Fix passing the wrong reference for config_initr on passing the function
+pointer, drop the wrong & from at803x_config_intr in the PHY struct.
 
-The node name should be sram.
-
-Change the node name and pass the required properties to fix the
-following dt-schema warnings:
-
-imx1-apf9328.dtb: esram@300000: $nodename:0: 'esram@300000' does not match '^sram(@.*)?'
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: '#address-cells' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: '#size-cells' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: 'ranges' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx1.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/phy/at803x.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx1.dtsi b/arch/arm/boot/dts/imx1.dtsi
-index e312f1e74e2f..4aeb74479f44 100644
---- a/arch/arm/boot/dts/imx1.dtsi
-+++ b/arch/arm/boot/dts/imx1.dtsi
-@@ -268,9 +268,12 @@
- 			status = "disabled";
- 		};
- 
--		esram: esram@300000 {
-+		esram: sram@300000 {
- 			compatible = "mmio-sram";
- 			reg = <0x00300000 0x20000>;
-+			ranges = <0 0x00300000 0x20000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
- 		};
- 	};
- };
+diff --git a/drivers/net/phy/at803x.c b/drivers/net/phy/at803x.c
+index edd4b1e58d96..75868e63b81b 100644
+--- a/drivers/net/phy/at803x.c
++++ b/drivers/net/phy/at803x.c
+@@ -2051,7 +2051,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.write_page		= at803x_write_page,
+ 	.get_features		= at803x_get_features,
+ 	.read_status		= at803x_read_status,
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.get_tunable		= at803x_get_tunable,
+ 	.set_tunable		= at803x_set_tunable,
+@@ -2081,7 +2081,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.resume			= at803x_resume,
+ 	.flags			= PHY_POLL_CABLE_TEST,
+ 	/* PHY_BASIC_FEATURES */
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.cable_test_start	= at803x_cable_test_start,
+ 	.cable_test_get_status	= at803x_cable_test_get_status,
+@@ -2097,7 +2097,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.resume			= at803x_resume,
+ 	.flags			= PHY_POLL_CABLE_TEST,
+ 	/* PHY_BASIC_FEATURES */
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.cable_test_start	= at803x_cable_test_start,
+ 	.cable_test_get_status	= at803x_cable_test_get_status,
 -- 
 2.43.0
 
