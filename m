@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1917101C5;
-	Sat,  3 Feb 2024 04:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E797BFC11;
+	Sat,  3 Feb 2024 04:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933396; cv=none; b=mDbGSIYx8PPUXx0m320nGFwBOctEjwpaBYsmzLUe5th1A8I5HDac20DF/BvphBaBQ59fN22pO4WbkhPVYKrGMS4gy053JRmA4cWRhTsUWoIduhKrfOwD1vDBbFch3hiyJu9XDA4LqDf3NtT+WLcd4L2bXvpywheE5FmXfmqPTPk=
+	t=1706933397; cv=none; b=bala/xwq8HnfNC/EA0uvwC9rJMeDk0AzdRaYiYwvfq3DX6sGe68ulVQoEAW4dsNOoKH6AaA13IoTwEHpxeA+zJsu/BF7Lb4P1ArGB+EmLFj/FD2ht9LJ2NwBy+3YytSOc6VRgOArC8M4EdYvaMXdz1q7OpOI+Vev6Ia/gxpDKdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933396; c=relaxed/simple;
-	bh=kXufJV42T/yHpRR4asT35p4wo4nG8RMxGuj2jZgThzM=;
+	s=arc-20240116; t=1706933397; c=relaxed/simple;
+	bh=AQjsU0t2Ec6SSUD61nv9GLjyZXUzSTvjBnV5V+/qy0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKF3p9Enz1RqFyC1OAFRMHva3CDd+RYz4fvZ2x7K2qo3ckATMdgzEbqXi8QuE0HlPFDfEwwB+wYKc7rqpI/t9n3QOczgMPJi4/FuUjCSljl+nFnqVZkYL6d459SXSBb95UxG3SsrW6ectrr5l36n8oR1x45KsvktfowQDdFfy50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xy8w4rHW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NIAgB4R5Pe6PREvlZ7udWrTesVI7Qxf8Mq/9Zj4keyB79xw0ZIHIXYLbfX4B5jDakaJx2rtZ0qzDAc6VX/jMPvmKxKoYcp+HflVxzivSrP3KZKFkujG5/uUPZG/T5Jech+n/yeF/I1gwRnESgs97JehAnnccYv7BYVp8VZclWCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWE0ndnH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xy8w4rHW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93CCC433C7;
-	Sat,  3 Feb 2024 04:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWE0ndnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B9BC433F1;
+	Sat,  3 Feb 2024 04:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933395;
-	bh=kXufJV42T/yHpRR4asT35p4wo4nG8RMxGuj2jZgThzM=;
+	s=korg; t=1706933396;
+	bh=AQjsU0t2Ec6SSUD61nv9GLjyZXUzSTvjBnV5V+/qy0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xy8w4rHWuzlZBTIVMHm5iBH63IP9HPkRc4E39F5dvzBE4oKQjfb6IRcKCVtLeab5C
-	 RbVHaPXIkw0JXHw2UlyhgV9bAW6wN4Bxel4ye8PVyvjpzSyHWmufn6fYzfN6CcW8jC
-	 rJgOM6G7h9H28i+SedFAMfaCfzxZGfTLKIUX8KDg=
+	b=UWE0ndnHSmtaIwPDV+bqRHNN9URcfl8B/ma95BpPanwYxhYRcIo92+WL2VUoHj7ZR
+	 W1GX4cLZa5+fIn+6bX05ZmInsMvzq9EMbgm6bgznOZfWrrQm4WjPz9ag/Oa4uYP+Sd
+	 bvFqAC18c3rpgk3w8ao4raf4x3inGm40OkS9ElXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/219] f2fs: fix write pointers on zoned device after roll forward
-Date: Fri,  2 Feb 2024 20:04:45 -0800
-Message-ID: <20240203035333.113293671@linuxfoundation.org>
+Subject: [PATCH 6.1 095/219] wifi: cfg80211: free beacon_ies when overridden from hidden BSS
+Date: Fri,  2 Feb 2024 20:04:28 -0800
+Message-ID: <20240203035330.603478407@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,35 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 9dad4d964291295ef48243d4e03972b85138bc9f ]
+[ Upstream commit 32af9a9e1069e55bc02741fb00ac9d0ca1a2eaef ]
 
-1. do roll forward recovery
-2. update current segments pointers
-3. fix the entire zones' write pointers
-4. do checkpoint
+This is a more of a cosmetic fix. The branch will only be taken if
+proberesp_ies is set, which implies that beacon_ies is not set unless we
+are connected to an AP that just did a channel switch. And, in that case
+we should have found the BSS in the internal storage to begin with.
 
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231220133549.b898e22dadff.Id8c4c10aedd176ef2e18a4cad747b299f150f9df@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/recovery.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/wireless/scan.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
-index 4f4db465220f..53a6487f91e4 100644
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -898,6 +898,8 @@ int f2fs_recover_fsync_data(struct f2fs_sb_info *sbi, bool check_only)
- 	if (!err && fix_curseg_write_pointer && !f2fs_readonly(sbi->sb) &&
- 			f2fs_sb_has_blkzoned(sbi)) {
- 		err = f2fs_fix_curseg_write_pointer(sbi);
-+		if (!err)
-+			err = f2fs_check_write_pointer(sbi);
- 		ret = err;
- 	}
- 
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index b7e1631b3d80..86906557a04e 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1810,8 +1810,12 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
+ 				list_add(&new->hidden_list,
+ 					 &hidden->hidden_list);
+ 				hidden->refcount++;
++
++				ies = (void *)rcu_dereference(new->pub.beacon_ies);
+ 				rcu_assign_pointer(new->pub.beacon_ies,
+ 						   hidden->pub.beacon_ies);
++				if (ies)
++					kfree_rcu(ies, rcu_head);
+ 			}
+ 		} else {
+ 			/*
 -- 
 2.43.0
 
