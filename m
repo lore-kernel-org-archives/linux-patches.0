@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F7C18E0F;
-	Sat,  3 Feb 2024 04:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAB618E0F;
+	Sat,  3 Feb 2024 04:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933439; cv=none; b=eEpEegQ4NbUNt5R5oZ0OjttzeCtBwNLpgU8mMNuUz37D5Ydj4VpIB/Ir2JEtlX8pvKJETkldHj8PG5gJRASxkgEjryWIv+OAZ3sURCsqzK5ytromq2TonDlYhlb49P3AxgCRoToMzV10V8gqctdFpetvcBWaTVPWMdao4pVZVeY=
+	t=1706933440; cv=none; b=N0ahmmrwOTFnlNVoLyWWlHQKqL0oIaYC6NO8vPIiZLRNBbrA38S5KKCdPGT3KzFWF00e4Mi26zE+0LFJ5XtEWdAHwygEhBF/GkSwX39siLRDwBZb37ePsa9qgP2UHg2H6Ua4jRmORoFjm+OqBsCjMbSKZb2uXczwgCrRywOAoqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933439; c=relaxed/simple;
-	bh=R8J8mUspFcl43KgbOcM8OrdtzZHrdiqkc+qTlbtjpy0=;
+	s=arc-20240116; t=1706933440; c=relaxed/simple;
+	bh=gqZI0Y3IR6NOoHy3IlwDkp7F8Qy9ZUtw3AkpZWhJmLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tyGQRIgQITJaWGifFnHv3za78sc1aNvBRp72Da+aAEbx59ki7kG6CPOBD7Yaoe4nbbSRG3NkWbIKNeTwj1prJImoCFya065FThycvQBBVgpVRKXnGCQfmya6ur2jSuvKHF3A/nNFuK5GoNPIwLZxn00w3qsc3IsovJ2bdLxkrq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbFR2kQ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kTAZJWsL3b0YBhjYrYWeR6qGcECmzcvt7qV3XRcxaeIAuKFUvZyqEvbjt2EpVm9i5Kt+JYc7fxC5ap+X9nCaqnMhtUeTnVVW7RvfpJzZOHYoHNxGPj08ZAFSiSy+9dGpg6pHk7uMXVpSPZxTPxZ822CZ2K5EiCZP1C3XrQpLUKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+2DefaM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbFR2kQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA2CC43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+2DefaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A0AC433C7;
 	Sat,  3 Feb 2024 04:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933439;
-	bh=R8J8mUspFcl43KgbOcM8OrdtzZHrdiqkc+qTlbtjpy0=;
+	s=korg; t=1706933440;
+	bh=gqZI0Y3IR6NOoHy3IlwDkp7F8Qy9ZUtw3AkpZWhJmLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbFR2kQ6kl/WxbFYo9w6aULNbP1DmCCrDHM+korhjGEA2ZtxqSE30hmpnUVKw+kqu
-	 mojCc/5zLZzsHS54JuA8yQbRBWNpdwf2kUIoTNuX/rApjC3lDBz9HDWZXYFELksTrn
-	 g91kgacbApjK0J1X7mONKZIdLdbQLrkl2SATDSZk=
+	b=w+2DefaMoGS1aFirJUBFFLZQIV6cTkBQj5rudnDDO25I+KZuKmZiE3VedC2P3ApBh
+	 21HUDsZgBeCSlXqCMouOBWBpnaK6D7GYu76Gm/i5zpJH3HSqnu1k6VAIJAM34cQMTF
+	 VDE4C9OGscwQNpsGHfIX4K6BJFUMueTA6HsSNYrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Chenyuan Mi <cymi20@fudan.edu.cn>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 169/219] misc: lis3lv02d_i2c: Add missing setting of the reg_ctrl callback
-Date: Fri,  2 Feb 2024 20:05:42 -0800
-Message-ID: <20240203035340.354849038@linuxfoundation.org>
+Subject: [PATCH 6.1 170/219] libsubcmd: Fix memory leak in uniq()
+Date: Fri,  2 Feb 2024 20:05:43 -0800
+Message-ID: <20240203035340.496079993@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -50,58 +59,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b1b9f7a494400c0c39f8cd83de3aaa6111c55087 ]
+[ Upstream commit ad30469a841b50dbb541df4d6971d891f703c297 ]
 
-The lis3lv02d_i2c driver was missing a line to set the lis3_dev's
-reg_ctrl callback.
+uniq() will write one command name over another causing the overwritten
+string to be leaked. Fix by doing a pass that removes duplicates and a
+second that removes the holes.
 
-lis3_reg_ctrl(on) is called from the init callback, but due to
-the missing reg_ctrl callback the regulators where never turned off
-again leading to the following oops/backtrace when detaching the driver:
-
-[   82.313527] ------------[ cut here ]------------
-[   82.313546] WARNING: CPU: 1 PID: 1724 at drivers/regulator/core.c:2396 _regulator_put+0x219/0x230
-...
-[   82.313695] RIP: 0010:_regulator_put+0x219/0x230
-...
-[   82.314767] Call Trace:
-[   82.314770]  <TASK>
-[   82.314772]  ? _regulator_put+0x219/0x230
-[   82.314777]  ? __warn+0x81/0x170
-[   82.314784]  ? _regulator_put+0x219/0x230
-[   82.314791]  ? report_bug+0x18d/0x1c0
-[   82.314801]  ? handle_bug+0x3c/0x80
-[   82.314806]  ? exc_invalid_op+0x13/0x60
-[   82.314812]  ? asm_exc_invalid_op+0x16/0x20
-[   82.314845]  ? _regulator_put+0x219/0x230
-[   82.314857]  regulator_bulk_free+0x39/0x60
-[   82.314865]  i2c_device_remove+0x22/0xb0
-
-Add the missing setting of the callback so that the regulators
-properly get turned off again when not used.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20231224183402.95640-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Chenyuan Mi <cymi20@fudan.edu.cn>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20231208000515.1693746-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/lis3lv02d/lis3lv02d_i2c.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/subcmd/help.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-index d7daa01fe7ca..fdec2c30eb16 100644
---- a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-+++ b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-@@ -151,6 +151,7 @@ static int lis3lv02d_i2c_probe(struct i2c_client *client,
- 	lis3_dev.init	  = lis3_i2c_init;
- 	lis3_dev.read	  = lis3_i2c_read;
- 	lis3_dev.write	  = lis3_i2c_write;
-+	lis3_dev.reg_ctrl = lis3_reg_ctrl;
- 	lis3_dev.irq	  = client->irq;
- 	lis3_dev.ac	  = lis3lv02d_axis_map;
- 	lis3_dev.pm_dev	  = &client->dev;
+diff --git a/tools/lib/subcmd/help.c b/tools/lib/subcmd/help.c
+index bf02d62a3b2b..42f57b640f11 100644
+--- a/tools/lib/subcmd/help.c
++++ b/tools/lib/subcmd/help.c
+@@ -50,11 +50,21 @@ void uniq(struct cmdnames *cmds)
+ 	if (!cmds->cnt)
+ 		return;
+ 
+-	for (i = j = 1; i < cmds->cnt; i++)
+-		if (strcmp(cmds->names[i]->name, cmds->names[i-1]->name))
+-			cmds->names[j++] = cmds->names[i];
+-
++	for (i = 1; i < cmds->cnt; i++) {
++		if (!strcmp(cmds->names[i]->name, cmds->names[i-1]->name))
++			zfree(&cmds->names[i - 1]);
++	}
++	for (i = 0, j = 0; i < cmds->cnt; i++) {
++		if (cmds->names[i]) {
++			if (i == j)
++				j++;
++			else
++				cmds->names[j++] = cmds->names[i];
++		}
++	}
+ 	cmds->cnt = j;
++	while (j < i)
++		cmds->names[j++] = NULL;
+ }
+ 
+ void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
 -- 
 2.43.0
 
