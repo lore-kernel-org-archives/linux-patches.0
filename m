@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28915FC03;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4ADFC03;
 	Sat,  3 Feb 2024 04:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933454; cv=none; b=JdMz53d2uGWHHmzuWvaqElMB088/u9A/0S2Y7C/fQwbgmxV+9PdtDXPhqhSO9vFCNHdyJ/Va3KYhQ0Ga0gTXg/ndmyr05SkS2EzDC7P17OkBFhuwMAX2mnrfQrojUEgtaD8SP9etsJm3nbZzMG5KCcZ3G0llU5Ei092YHXwDYJ4=
+	t=1706933455; cv=none; b=nXsYHcEKEV+e+WH5fzOz9r5ZsjIU85qkoWfalQKG1DzOA7iWPKKpJFEFfiFnbh5/BguulMpqlmDklR44sNHNeCAN96nZfDrW9Dvd5SgEEni6qnPzv3xRu1VOdw7H8Nyi9N5rYBwec+LAx+UmogmCatZYzAv9p7TpYKQxYx8mrto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933454; c=relaxed/simple;
-	bh=LTeSYk2u20pcmsBQjbqEGg0uJ5NVt9PSvayngZYJehU=;
+	s=arc-20240116; t=1706933455; c=relaxed/simple;
+	bh=w7nzPg8fc3VQys1+YHOSRVjRNk/2TwU7+3blsQsQngg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBnwhPWfvKkqUiT5LHibyEoDBVRK0JGG//wXykmOxmLC2tzge2L3vEugwZkZ+107vl7e8uluJ56I2ZhXMkUTlx6XLOa4Um7v4dc4SvuNJ0jr9CQM+Ib/xH7ypoVC6C6YW4n1CvizMJbfPi+laoU+IjH0F64ER9bXcG9HhbYIi0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbcWIuv0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nqYiF9n06ZrzupeALKggovQAqbrJ+R2X8tjZg3Qw2ToR02IBVccAoQLnEgIMfXR6ZEaOQfU4+9Ye0tEyscSRfK8BmR1Qc2d66aF/fDD8CCjTqSqsaGXZpqudY7ZJW7qBxhTXb5Kl7z5FL4ayThgzuZjW39m4FxSe4lQkiEeb0As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dx6BMv64; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbcWIuv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6078C433F1;
-	Sat,  3 Feb 2024 04:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dx6BMv64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C95C433F1;
+	Sat,  3 Feb 2024 04:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933454;
-	bh=LTeSYk2u20pcmsBQjbqEGg0uJ5NVt9PSvayngZYJehU=;
+	bh=w7nzPg8fc3VQys1+YHOSRVjRNk/2TwU7+3blsQsQngg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbcWIuv09mF5/z/lw8fIOKJ6rugfY+eL9639nZ22fG2zc+zhadvXZvslr/v5s1Y1F
-	 AjKaJwqorqJsoIOoIG9l9HeLf82F65JWXXqec/7YScS9Ku4cgG1jBVbdei1lJwh5ZE
-	 BOtbqdNinW+686BOiS46t5Bl0LcaWkvecOeYpyZ4=
+	b=dx6BMv64CaryQiI2ZHAS77DHSC+rPsa8sy1wJWzMNNj//mzbGxiDyzzu6iPYba7cQ
+	 yXR2ftyZSYklEQozjaqMB4jUsXeSz6CatEa4mB9E79IjrU90lwzlKyQ4+KErOg4y5O
+	 a1MVyhn5a/c3tiUrKbtDovaoPGhTFuFth8E4zhPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/219] ip6_tunnel: make sure to pull inner header in __ip6_tnl_rcv()
-Date: Fri,  2 Feb 2024 20:06:03 -0800
-Message-ID: <20240203035343.543994075@linuxfoundation.org>
+Subject: [PATCH 6.1 191/219] ipv4: raw: add drop reasons
+Date: Fri,  2 Feb 2024 20:06:04 -0800
+Message-ID: <20240203035343.770665436@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -55,135 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8d975c15c0cd744000ca386247432d57b21f9df0 ]
+[ Upstream commit 42186e6c00352ce9df9e3f12b1ff82e61978d40b ]
 
-syzbot found __ip6_tnl_rcv() could access unitiliazed data [1].
+Use existing helpers and drop reason codes for RAW input path.
 
-Call pskb_inet_may_pull() to fix this, and initialize ipv6h
-variable after this call as it can change skb->head.
-
-[1]
- BUG: KMSAN: uninit-value in __INET_ECN_decapsulate include/net/inet_ecn.h:253 [inline]
- BUG: KMSAN: uninit-value in INET_ECN_decapsulate include/net/inet_ecn.h:275 [inline]
- BUG: KMSAN: uninit-value in IP6_ECN_decapsulate+0x7df/0x1e50 include/net/inet_ecn.h:321
-  __INET_ECN_decapsulate include/net/inet_ecn.h:253 [inline]
-  INET_ECN_decapsulate include/net/inet_ecn.h:275 [inline]
-  IP6_ECN_decapsulate+0x7df/0x1e50 include/net/inet_ecn.h:321
-  ip6ip6_dscp_ecn_decapsulate+0x178/0x1b0 net/ipv6/ip6_tunnel.c:727
-  __ip6_tnl_rcv+0xd4e/0x1590 net/ipv6/ip6_tunnel.c:845
-  ip6_tnl_rcv+0xce/0x100 net/ipv6/ip6_tunnel.c:888
- gre_rcv+0x143f/0x1870
-  ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
-  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
-  ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
-  dst_input include/net/dst.h:461 [inline]
-  ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
-  __netif_receive_skb_one_core net/core/dev.c:5532 [inline]
-  __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5646
-  netif_receive_skb_internal net/core/dev.c:5732 [inline]
-  netif_receive_skb+0x58/0x660 net/core/dev.c:5791
-  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
-  tun_get_user+0x53af/0x66d0 drivers/net/tun.c:2002
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2084 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0x786/0x1200 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xd0 fs/read_write.c:652
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0x6d/0x140 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Uninit was created at:
-  slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
-  slab_alloc_node mm/slub.c:3478 [inline]
-  kmem_cache_alloc_node+0x5e9/0xb10 mm/slub.c:3523
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:560
-  __alloc_skb+0x318/0x740 net/core/skbuff.c:651
-  alloc_skb include/linux/skbuff.h:1286 [inline]
-  alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6334
-  sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2787
-  tun_alloc_skb drivers/net/tun.c:1531 [inline]
-  tun_get_user+0x1e8a/0x66d0 drivers/net/tun.c:1846
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2084 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0x786/0x1200 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xd0 fs/read_write.c:652
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0x6d/0x140 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-CPU: 0 PID: 5034 Comm: syz-executor331 Not tainted 6.7.0-syzkaller-00562-g9f8413c4a66f #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-
-Fixes: 0d3c703a9d17 ("ipv6: Cleanup IPv6 tunnel receive path")
-Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240125170557.2663942-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e622502c310f ("ipmr: fix kernel panic when forwarding mcast packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_tunnel.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ net/ipv4/raw.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 9125e92d9917..2699915bb85b 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -796,8 +796,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 						struct sk_buff *skb),
- 			 bool log_ecn_err)
+diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
+index 639aa5abda9d..19936dc329d8 100644
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -286,11 +286,13 @@ void raw_icmp_error(struct sk_buff *skb, int protocol, u32 info)
+ 
+ static int raw_rcv_skb(struct sock *sk, struct sk_buff *skb)
  {
--	const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
--	int err;
-+	const struct ipv6hdr *ipv6h;
-+	int nh, err;
++	enum skb_drop_reason reason;
++
+ 	/* Charge it to the socket. */
  
- 	if ((!(tpi->flags & TUNNEL_CSUM) &&
- 	     (tunnel->parms.i_flags & TUNNEL_CSUM)) ||
-@@ -829,7 +829,6 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 			goto drop;
- 		}
- 
--		ipv6h = ipv6_hdr(skb);
- 		skb->protocol = eth_type_trans(skb, tunnel->dev);
- 		skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
- 	} else {
-@@ -837,7 +836,23 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 		skb_reset_mac_header(skb);
+ 	ipv4_pktinfo_prepare(sk, skb);
+-	if (sock_queue_rcv_skb(sk, skb) < 0) {
+-		kfree_skb(skb);
++	if (sock_queue_rcv_skb_reason(sk, skb, &reason) < 0) {
++		kfree_skb_reason(skb, reason);
+ 		return NET_RX_DROP;
  	}
  
-+	/* Save offset of outer header relative to skb->head,
-+	 * because we are going to reset the network header to the inner header
-+	 * and might change skb->head.
-+	 */
-+	nh = skb_network_header(skb) - skb->head;
-+
- 	skb_reset_network_header(skb);
-+
-+	if (!pskb_inet_may_pull(skb)) {
-+		DEV_STATS_INC(tunnel->dev, rx_length_errors);
-+		DEV_STATS_INC(tunnel->dev, rx_errors);
-+		goto drop;
-+	}
-+
-+	/* Get the outer header. */
-+	ipv6h = (struct ipv6hdr *)(skb->head + nh);
-+
- 	memset(skb->cb, 0, sizeof(struct inet6_skb_parm));
- 
- 	__skb_tunnel_rx(skb, tunnel->dev, tunnel->net);
+@@ -301,7 +303,7 @@ int raw_rcv(struct sock *sk, struct sk_buff *skb)
+ {
+ 	if (!xfrm4_policy_check(sk, XFRM_POLICY_IN, skb)) {
+ 		atomic_inc(&sk->sk_drops);
+-		kfree_skb(skb);
++		kfree_skb_reason(skb, SKB_DROP_REASON_XFRM_POLICY);
+ 		return NET_RX_DROP;
+ 	}
+ 	nf_reset_ct(skb);
 -- 
 2.43.0
 
