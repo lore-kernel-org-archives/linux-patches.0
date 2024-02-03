@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137FC43AB7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C5A43147;
 	Sat,  3 Feb 2024 04:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933654; cv=none; b=nYedDKRZD4u6uxCxa4q9Q72B3syMdD7J1272KNZqefKeHh50HAgNcGDcMPY4YUrdfY9MwXiLjtUsv+FDncIZMitXGsjkMh5UP2dmXCjqeoVayQzYglDTo3Tyn3Iq3vdcyl/gJ/UG0f52IncXnXDJdgDk9mFeKkSazjtmVxoYHRI=
+	t=1706933654; cv=none; b=NGwS/boPZsanZMh7ywq2Zo2rKmFgXkkELIcyB0kM8B9LDpI3aVFwigIC4w2WE8ve2QtHqoyv1um5PEIVWzxIKFCtdeVTovvxKfT9CUx0g/pDiAyZMcGYLTbPD+syYENsBtv1s+bhWFZeH6+TRgMMHVB5/xInvkF0hSaWumcwGv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933654; c=relaxed/simple;
-	bh=fIQtvV8COOuW9lAQuQdwfrq199VDfUiiH7ipFXsFLn4=;
+	bh=jNRn0KHrkJrlxORtOAvOG35Ew6Fts6vUVxdi5g77m4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NjRvYHxydDT7rAzx0SCVoYR0zKeEX2PI2IPCjm/ThdZWwe28j6BI6foCRmP49QoSTGVYXWsY1iKdHwHmDpUQeKyLy36vept9c+48XmCM7dP9BZ+Ju902GpmeIEHx5j1yeisBeShwrONEf8uAkmG/AamBBaBLvcKl9K0uRBeoiWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBG0pNbk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=motprkM1Si6/926rHoANJk2IFZAZK9gSZjh1kq9hQC90RcspdLYz1bYeNyt7l7rLtQNsdkiOaKG8WTO3meIhEGSfJ0HPa7ohNCDuK0fenyT7WM5GOVU8NudqJEo5jyKpkcA5Bk5nPV/g392n08nrYgHn06HLXdD9H4QyfHrUZtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzOFgJn0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBG0pNbk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3D9C433F1;
-	Sat,  3 Feb 2024 04:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzOFgJn0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BB4C43390;
+	Sat,  3 Feb 2024 04:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933653;
-	bh=fIQtvV8COOuW9lAQuQdwfrq199VDfUiiH7ipFXsFLn4=;
+	s=korg; t=1706933654;
+	bh=jNRn0KHrkJrlxORtOAvOG35Ew6Fts6vUVxdi5g77m4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBG0pNbk8xbKsPsWLAguYxGbpypLUISNLtP5G9E+Ww5GJYmiJQ9OnXC8JMsA6W8dd
-	 A+b5xkRnqiJSm9okNlWzp9eibU2YJ5e9JYLDfTMuE2Ty057jh/2UMrOAVvnu4X/7fV
-	 DzGzV/WkfiSjRGdMUdzwV7HQXShjWvi67cEklpDI=
+	b=OzOFgJn05i6gbpZJAqr7lZTXAxHCiKyGKFL+GRI/+eF91Iy0KKKCPPvtylt9BD2Yt
+	 GrfIlWtrlcVMkb6PXQnbvmXraXojc3tEzydXoVSxvTe5sg7Lxyj6bEmdwXO1cHbQdm
+	 IDAwscP0/U9CyvQtp6SWDh86+DVVIfD21APR9nVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 215/322] drm/amdkfd: Fix iterator used outside loop in kfd_add_peer_prop()
-Date: Fri,  2 Feb 2024 20:05:12 -0800
-Message-ID: <20240203035406.194663269@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Jiadong Zhu <Jiadong.Zhu@amd.com>
+Subject: [PATCH 6.6 216/322] drm/amdgpu: apply the RV2 system aperture fix to RN/CZN as well
+Date: Fri,  2 Feb 2024 20:05:13 -0800
+Message-ID: <20240203035406.227740333@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -48,66 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit b1a428b45dc7e47c7acc2ad0d08d8a6dda910c4c ]
+[ Upstream commit 16783d8ef08448815e149e40c82fc1e1fc41ddbf ]
 
-Fix the following about iterator use:
-drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_topology.c:1456 kfd_add_peer_prop() warn: iterator used outside loop: 'iolink3'
+These chips needs the same fix.  This was previously not seen
+on then since the AGP aperture expanded the system aperture,
+but this showed up again when AGP was disabled.
 
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-and-tested-by: Jiadong Zhu <Jiadong.Zhu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 24 ++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c          | 4 +++-
+ drivers/gpu/drm/amd/amdgpu/gfxhub_v1_2.c          | 4 +++-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v1_0.c           | 4 +++-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 8 ++++++--
+ 4 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-index 6e75e8fa18be..61157fddc15c 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
-@@ -1452,17 +1452,19 @@ static int kfd_add_peer_prop(struct kfd_topology_device *kdev,
- 		/* CPU->CPU  link*/
- 		cpu_dev = kfd_topology_device_by_proximity_domain(iolink1->node_to);
- 		if (cpu_dev) {
--			list_for_each_entry(iolink3, &cpu_dev->io_link_props, list)
--				if (iolink3->node_to == iolink2->node_to)
--					break;
--
--			props->weight += iolink3->weight;
--			props->min_latency += iolink3->min_latency;
--			props->max_latency += iolink3->max_latency;
--			props->min_bandwidth = min(props->min_bandwidth,
--							iolink3->min_bandwidth);
--			props->max_bandwidth = min(props->max_bandwidth,
--							iolink3->max_bandwidth);
-+			list_for_each_entry(iolink3, &cpu_dev->io_link_props, list) {
-+				if (iolink3->node_to != iolink2->node_to)
-+					continue;
-+
-+				props->weight += iolink3->weight;
-+				props->min_latency += iolink3->min_latency;
-+				props->max_latency += iolink3->max_latency;
-+				props->min_bandwidth = min(props->min_bandwidth,
-+							   iolink3->min_bandwidth);
-+				props->max_bandwidth = min(props->max_bandwidth,
-+							   iolink3->max_bandwidth);
-+				break;
-+			}
- 		} else {
- 			WARN(1, "CPU node not found");
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
+index cdc290a474a9..66c6bab75f8a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_0.c
+@@ -102,7 +102,9 @@ static void gfxhub_v1_0_init_system_aperture_regs(struct amdgpu_device *adev)
+ 		WREG32_SOC15_RLC(GC, 0, mmMC_VM_SYSTEM_APERTURE_LOW_ADDR,
+ 			min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18);
+ 
+-		if (adev->apu_flags & AMD_APU_IS_RAVEN2)
++		if (adev->apu_flags & (AMD_APU_IS_RAVEN2 |
++				       AMD_APU_IS_RENOIR |
++				       AMD_APU_IS_GREEN_SARDINE))
+ 		       /*
+ 			* Raven2 has a HW issue that it is unable to use the
+ 			* vram which is out of MC_VM_SYSTEM_APERTURE_HIGH_ADDR.
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_2.c b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_2.c
+index 0834af771549..b50f24f7ea5c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfxhub_v1_2.c
+@@ -139,7 +139,9 @@ gfxhub_v1_2_xcc_init_system_aperture_regs(struct amdgpu_device *adev,
+ 			WREG32_SOC15_RLC(GC, GET_INST(GC, i), regMC_VM_SYSTEM_APERTURE_LOW_ADDR,
+ 				min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18);
+ 
+-			if (adev->apu_flags & AMD_APU_IS_RAVEN2)
++			if (adev->apu_flags & (AMD_APU_IS_RAVEN2 |
++					       AMD_APU_IS_RENOIR |
++					       AMD_APU_IS_GREEN_SARDINE))
+ 			       /*
+ 				* Raven2 has a HW issue that it is unable to use the
+ 				* vram which is out of MC_VM_SYSTEM_APERTURE_HIGH_ADDR.
+diff --git a/drivers/gpu/drm/amd/amdgpu/mmhub_v1_0.c b/drivers/gpu/drm/amd/amdgpu/mmhub_v1_0.c
+index fb91b31056ca..d25f87fb1971 100644
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v1_0.c
+@@ -96,7 +96,9 @@ static void mmhub_v1_0_init_system_aperture_regs(struct amdgpu_device *adev)
+ 	WREG32_SOC15(MMHUB, 0, mmMC_VM_SYSTEM_APERTURE_LOW_ADDR,
+ 		     min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18);
+ 
+-	if (adev->apu_flags & AMD_APU_IS_RAVEN2)
++	if (adev->apu_flags & (AMD_APU_IS_RAVEN2 |
++			       AMD_APU_IS_RENOIR |
++			       AMD_APU_IS_GREEN_SARDINE))
+ 		/*
+ 		 * Raven2 has a HW issue that it is unable to use the vram which
+ 		 * is out of MC_VM_SYSTEM_APERTURE_HIGH_ADDR. So here is the
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index fabbfea33b0c..56a61ac2b3f5 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1247,7 +1247,9 @@ static void mmhub_read_system_context(struct amdgpu_device *adev, struct dc_phy_
+ 	/* AGP aperture is disabled */
+ 	if (agp_bot == agp_top) {
+ 		logical_addr_low = adev->gmc.fb_start >> 18;
+-		if (adev->apu_flags & AMD_APU_IS_RAVEN2)
++		if (adev->apu_flags & (AMD_APU_IS_RAVEN2 |
++				       AMD_APU_IS_RENOIR |
++				       AMD_APU_IS_GREEN_SARDINE))
+ 			/*
+ 			 * Raven2 has a HW issue that it is unable to use the vram which
+ 			 * is out of MC_VM_SYSTEM_APERTURE_HIGH_ADDR. So here is the
+@@ -1259,7 +1261,9 @@ static void mmhub_read_system_context(struct amdgpu_device *adev, struct dc_phy_
+ 			logical_addr_high = adev->gmc.fb_end >> 18;
+ 	} else {
+ 		logical_addr_low = min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18;
+-		if (adev->apu_flags & AMD_APU_IS_RAVEN2)
++		if (adev->apu_flags & (AMD_APU_IS_RAVEN2 |
++				       AMD_APU_IS_RENOIR |
++				       AMD_APU_IS_GREEN_SARDINE))
+ 			/*
+ 			 * Raven2 has a HW issue that it is unable to use the vram which
+ 			 * is out of MC_VM_SYSTEM_APERTURE_HIGH_ADDR. So here is the
 -- 
 2.43.0
 
