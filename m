@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E668211188;
-	Sat,  3 Feb 2024 04:11:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9784011188;
+	Sat,  3 Feb 2024 04:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933489; cv=none; b=u2sXu1G/72+6Bm+oHiuFWv8J4ubVdo9DOgOeQXrDf/ufs+ku8YBl7KbXHN2oTYMFFFui3d5W2HCnCrnOB7PNV9M1BEY/hjBo8npLeciS+wVGvr5Vi4LmjW0v5tYNLLfT1dyob6nNETwlpcN3VcaGTEe2jLYbJ22v4KSWjQp2WFs=
+	t=1706933489; cv=none; b=AFajmR4ijNR4OPyTOrIvMXhJwbqnvMQP8LaDFi08TR1SXNhSg1ksxxyS234ejY54k//sK5pv+HQ4bPJUHE+7RSZCRXkDFOd/Xl5a38oP7a1uBUPG9kgD1LrDmBfCnWwDwVlnc9W3O3UINwMjI7kBW6o6ZVInLcUqnHuPkyonRDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933489; c=relaxed/simple;
-	bh=q5+Q73moqHqY0MnSPCskU2xd90K0VerNRDMF0EYY65k=;
+	bh=blwHsdYyEvbRpH5qK+4dkmmGF9JPQslvf/u8mRBcX84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dhVQgy/DmUlKLZMSV9UVNlOKPhjVrNGTE3gx6uwcvrW/Q3qtJXL1YSlRx53XoX6X800co+5gzj934oLvyAdzwSP1gfGSw7SDMhLPJstKq/eY2lVDowUMfvHlqwnUcpJ0K3G5vQSRbv3v21WYtAdxA8bk9GOw/9E7Lpo08SOkguI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMa5jcE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tTbZ/8komrXgVP+j5pjWLJu6hviF2N3xOJK6Xpd88Jogk58qQywVlkKQJnEq29NkbwQpwfBNJdY3eVo8IlQ6yc8+TI5XAhmPXz/aR4wlXetorDUWOzaSFH2KXNTyVQ7JNXSNEGiP9SvKfHEf9et3BZiYjhvjsDR3flyD926+EDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HI0AqwTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMa5jcE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0341C43390;
-	Sat,  3 Feb 2024 04:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HI0AqwTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E2AC433F1;
+	Sat,  3 Feb 2024 04:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933488;
-	bh=q5+Q73moqHqY0MnSPCskU2xd90K0VerNRDMF0EYY65k=;
+	s=korg; t=1706933489;
+	bh=blwHsdYyEvbRpH5qK+4dkmmGF9JPQslvf/u8mRBcX84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMa5jcE7qqx3A6GcB8qNbVVW4jYXS9G0AgiKFkigdJrdJeUSN5fWwUJdSAWeHLOTo
-	 jvAQ6Smj3xz16HXrisADd4M4BljYdX6P+vy6kSQ1F1m3Rk++ZEtPcjH3c8psuTV7sZ
-	 ek+wXxO+hBSuEbV7tt2XTtcZwuGsYO6S1zaYhlsY=
+	b=HI0AqwTMKPBWVtKccTZm/WmzOBJb8CyFv6Qe7+UW38UswABTJuarnoetBrw1fhpEg
+	 WPiy/gtCM3AasVBxYrKcl4dkcpj3PDWXBa02gc9iAalgNJjd5SW6HZwNejXumVvpDY
+	 XfEYSGOwuWo3pWcMqWpyuneUJXZT3LlO5UfmFdoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/322] powerpc: Fix build error due to is_valid_bugaddr()
-Date: Fri,  2 Feb 2024 20:01:43 -0800
-Message-ID: <20240203035359.257636440@linuxfoundation.org>
+Subject: [PATCH 6.6 007/322] powerpc/mm: Fix build failures due to arch_reserved_kernel_pages()
+Date: Fri,  2 Feb 2024 20:01:44 -0800
+Message-ID: <20240203035359.290036237@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,41 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit f8d3555355653848082c351fa90775214fb8a4fa ]
+[ Upstream commit d8c3f243d4db24675b653f0568bb65dae34e6455 ]
 
-With CONFIG_GENERIC_BUG=n the build fails with:
+With NUMA=n and FA_DUMP=y or PRESERVE_FA_DUMP=y the build fails with:
 
-  arch/powerpc/kernel/traps.c:1442:5: error: no previous prototype for ‘is_valid_bugaddr’ [-Werror=missing-prototypes]
-  1442 | int is_valid_bugaddr(unsigned long addr)
-       |     ^~~~~~~~~~~~~~~~
+  arch/powerpc/kernel/fadump.c:1739:22: error: no previous prototype for ‘arch_reserved_kernel_pages’ [-Werror=missing-prototypes]
+  1739 | unsigned long __init arch_reserved_kernel_pages(void)
+       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The prototype is only defined, and the function is only needed, when
-CONFIG_GENERIC_BUG=y, so move the implementation under that.
+The prototype for arch_reserved_kernel_pages() is in include/linux/mm.h,
+but it's guarded by __HAVE_ARCH_RESERVED_KERNEL_PAGES. The powerpc
+headers define __HAVE_ARCH_RESERVED_KERNEL_PAGES in asm/mmzone.h, which
+is not included into the generic headers when NUMA=n.
+
+Move the definition of __HAVE_ARCH_RESERVED_KERNEL_PAGES into asm/mmu.h
+which is included regardless of NUMA=n.
+
+Additionally the ifdef around __HAVE_ARCH_RESERVED_KERNEL_PAGES needs to
+also check for CONFIG_PRESERVE_FA_DUMP.
 
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231130114433.3053544-2-mpe@ellerman.id.au
+Link: https://msgid.link/20231130114433.3053544-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/traps.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/include/asm/mmu.h    | 4 ++++
+ arch/powerpc/include/asm/mmzone.h | 3 ---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
-index fe3f720c9cd6..2de7f6dcd32b 100644
---- a/arch/powerpc/kernel/traps.c
-+++ b/arch/powerpc/kernel/traps.c
-@@ -1439,10 +1439,12 @@ static int emulate_instruction(struct pt_regs *regs)
- 	return -EINVAL;
- }
+diff --git a/arch/powerpc/include/asm/mmu.h b/arch/powerpc/include/asm/mmu.h
+index 52cc25864a1b..d8b7e246a32f 100644
+--- a/arch/powerpc/include/asm/mmu.h
++++ b/arch/powerpc/include/asm/mmu.h
+@@ -412,5 +412,9 @@ extern void *abatron_pteptrs[2];
+ #include <asm/nohash/mmu.h>
+ #endif
  
-+#ifdef CONFIG_GENERIC_BUG
- int is_valid_bugaddr(unsigned long addr)
- {
- 	return is_kernel_addr(addr);
- }
++#if defined(CONFIG_FA_DUMP) || defined(CONFIG_PRESERVE_FA_DUMP)
++#define __HAVE_ARCH_RESERVED_KERNEL_PAGES
 +#endif
++
+ #endif /* __KERNEL__ */
+ #endif /* _ASM_POWERPC_MMU_H_ */
+diff --git a/arch/powerpc/include/asm/mmzone.h b/arch/powerpc/include/asm/mmzone.h
+index 4c6c6dbd182f..3764d3585d30 100644
+--- a/arch/powerpc/include/asm/mmzone.h
++++ b/arch/powerpc/include/asm/mmzone.h
+@@ -42,9 +42,6 @@ u64 memory_hotplug_max(void);
+ #else
+ #define memory_hotplug_max() memblock_end_of_DRAM()
+ #endif /* CONFIG_NUMA */
+-#ifdef CONFIG_FA_DUMP
+-#define __HAVE_ARCH_RESERVED_KERNEL_PAGES
+-#endif
  
- #ifdef CONFIG_MATH_EMULATION
- static int emulate_math(struct pt_regs *regs)
+ #ifdef CONFIG_MEMORY_HOTPLUG
+ extern int create_section_mapping(unsigned long start, unsigned long end,
 -- 
 2.43.0
 
