@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F098F12B9D;
-	Sat,  3 Feb 2024 04:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0FB18EB1;
+	Sat,  3 Feb 2024 04:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933445; cv=none; b=NYud+f7OfWk/+MK2DrdyEr1jeZ6S4cUSXqMAyweh5NGkjcKmB+E9OHZLYVrnp8sb1h0xo7IBPe3T5QtHhs2IWbe6WwPZSGTQ9uc3+SdjqTYOqxAtwLClnom6ojxjs94a2lCLmIe8utl2vcCLI+czcCfgXhCD6Fk8brqvkfMiCII=
+	t=1706933445; cv=none; b=ndN8lY6KcVzfyHlXkb06EZa2jwN1s0UI30Ypk6KqT+EGjUazDCDF59CvmqLTrxVIOnT7awIoWgXiSQ4FiNukoqnFDfmcKuQVVOetv66Ckobo7lXJFGpbM7xhMvbN6VuzDZtnwOoBDXNTrY58YsfxXd4oIhDRWUzQjBtsx2gwlMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933445; c=relaxed/simple;
-	bh=1xIVM4n4Qzs5qmKBdQiZC6tZopKgC42zU/1mby1rNog=;
+	bh=Y+I4CPOFQsLpr/GzPWvhu5X9yIUZwa8vPeiHczfMDPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/FvUnWrgVFMF2alpMXVHc8Hil6jaUB46DcYFPDS0cEVpYW59bEPHkKZif65ANk5fwW2yNRjJ9tpmWCTb+dDt/nW9OQYsht0iD06FLpxq2htBc08kNnoj6vIfBBbZOdpUAWLogE2uq3f93WkK/CfP/ZFbfIMbqXoW0Le22PJzQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiZRfqTu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u1ufP0hzG7WwIL1F4woHhmMhP74qnFnSu9czVn3XsvQc7AKDIl3bKRFyk+RyyKUUn1TJPYX6pAUMuLqTZoA/s5Fus3X0t2PwlwGzXCt78gYc07BF1ejqkkKszfubgiwxYSy8JTlSrhZ7AzhrhyzohB20vKUz7wxp+W7tEs6cT6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU/Gdiyv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiZRfqTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C70AC433F1;
-	Sat,  3 Feb 2024 04:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU/Gdiyv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A04C433F1;
+	Sat,  3 Feb 2024 04:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933444;
-	bh=1xIVM4n4Qzs5qmKBdQiZC6tZopKgC42zU/1mby1rNog=;
+	s=korg; t=1706933445;
+	bh=Y+I4CPOFQsLpr/GzPWvhu5X9yIUZwa8vPeiHczfMDPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AiZRfqTuTbicAcjujgEK+S57Z89w+l0PIzw7Ksnxm3ggWGbwt5imKJ2vQ/K5eBmqo
-	 fwKozNE41q7Fuol57Avnaxb3oTaT/U53CsE2FzgBKahT7xWKtGN/5f/C8Vt9hFzGyh
-	 aKea5rEC0mTN+sWacL15QiKC0jqUrPubmmlMF4Dw=
+	b=tU/GdiyvuFrcknRtrA/GWmLtBAKV2a68aQhIq49a3iyC7+iNixFPgqsDzONbuN8Oc
+	 Jnz4Ym/2KKPP+XcdpR3a9kcVcb1nhaT6IyGGCdKyBbMI8sZQ3/yt86D1WrII5BAtve
+	 KugQUsBN/2XY/vqXxmL3eYzjRAoLStH6sBc0KVPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Shah <harshitshah.opendev@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/219] i3c: master: cdns: Update maximum prescaler value for i2c clock
-Date: Fri,  2 Feb 2024 20:05:25 -0800
-Message-ID: <20240203035338.224742649@linuxfoundation.org>
+Subject: [PATCH 6.1 153/219] xen/gntdev: Fix the abuse of underlying struct page in DMA-buf import
+Date: Fri,  2 Feb 2024 20:05:26 -0800
+Message-ID: <20240203035338.309600016@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -45,63 +48,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harshit Shah <harshitshah.opendev@gmail.com>
+From: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
 
-[ Upstream commit 374c13f9080a1b9835a5ed3e7bea93cf8e2dc262 ]
+[ Upstream commit 2d2db7d40254d5fb53b11ebd703cd1ed0c5de7a1 ]
 
-As per the Cadence IP document fixed the I2C clock divider value limit from
-16 bits instead of 10 bits. Without this change setting up the I2C clock to
-low frequencies will not work as the prescaler value might be greater than
-10 bit number.
+DO NOT access the underlying struct page of an sg table exported
+by DMA-buf in dmabuf_imp_to_refs(), this is not allowed.
+Please see drivers/dma-buf/dma-buf.c:mangle_sg_table() for details.
 
-I3C clock divider value is 10 bits only. Updating the macro names for both.
+Fortunately, here (for special Xen device) we can avoid using
+pages and calculate gfns directly from dma addresses provided by
+the sg table.
 
-Signed-off-by: Harshit Shah <harshitshah.opendev@gmail.com>
-Link: https://lore.kernel.org/r/1703927483-28682-1-git-send-email-harshitshah.opendev@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Suggested-by: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Link: https://lore.kernel.org/r/20240107103426.2038075-1-olekstysh@gmail.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/i3c-master-cdns.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/xen/gntdev-dmabuf.c | 50 ++++++++++++++++++-------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/i3c/master/i3c-master-cdns.c b/drivers/i3c/master/i3c-master-cdns.c
-index 4a49c75a9408..b9cfda6ae9ae 100644
---- a/drivers/i3c/master/i3c-master-cdns.c
-+++ b/drivers/i3c/master/i3c-master-cdns.c
-@@ -77,7 +77,8 @@
- #define PRESCL_CTRL0			0x14
- #define PRESCL_CTRL0_I2C(x)		((x) << 16)
- #define PRESCL_CTRL0_I3C(x)		(x)
--#define PRESCL_CTRL0_MAX		GENMASK(9, 0)
-+#define PRESCL_CTRL0_I3C_MAX		GENMASK(9, 0)
-+#define PRESCL_CTRL0_I2C_MAX		GENMASK(15, 0)
+diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
+index 940e5e9e8a54..335451309566 100644
+--- a/drivers/xen/gntdev-dmabuf.c
++++ b/drivers/xen/gntdev-dmabuf.c
+@@ -11,6 +11,7 @@
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+ #include <linux/dma-buf.h>
++#include <linux/dma-direct.h>
+ #include <linux/slab.h>
+ #include <linux/types.h>
+ #include <linux/uaccess.h>
+@@ -50,7 +51,7 @@ struct gntdev_dmabuf {
  
- #define PRESCL_CTRL1			0x18
- #define PRESCL_CTRL1_PP_LOW_MASK	GENMASK(15, 8)
-@@ -1234,7 +1235,7 @@ static int cdns_i3c_master_bus_init(struct i3c_master_controller *m)
- 		return -EINVAL;
+ 	/* Number of pages this buffer has. */
+ 	int nr_pages;
+-	/* Pages of this buffer. */
++	/* Pages of this buffer (only for dma-buf export). */
+ 	struct page **pages;
+ };
  
- 	pres = DIV_ROUND_UP(sysclk_rate, (bus->scl_rate.i3c * 4)) - 1;
--	if (pres > PRESCL_CTRL0_MAX)
-+	if (pres > PRESCL_CTRL0_I3C_MAX)
- 		return -ERANGE;
+@@ -484,7 +485,7 @@ static int dmabuf_exp_from_refs(struct gntdev_priv *priv, int flags,
+ /* DMA buffer import support. */
  
- 	bus->scl_rate.i3c = sysclk_rate / ((pres + 1) * 4);
-@@ -1247,7 +1248,7 @@ static int cdns_i3c_master_bus_init(struct i3c_master_controller *m)
- 	max_i2cfreq = bus->scl_rate.i2c;
+ static int
+-dmabuf_imp_grant_foreign_access(struct page **pages, u32 *refs,
++dmabuf_imp_grant_foreign_access(unsigned long *gfns, u32 *refs,
+ 				int count, int domid)
+ {
+ 	grant_ref_t priv_gref_head;
+@@ -507,7 +508,7 @@ dmabuf_imp_grant_foreign_access(struct page **pages, u32 *refs,
+ 		}
  
- 	pres = (sysclk_rate / (max_i2cfreq * 5)) - 1;
--	if (pres > PRESCL_CTRL0_MAX)
-+	if (pres > PRESCL_CTRL0_I2C_MAX)
- 		return -ERANGE;
+ 		gnttab_grant_foreign_access_ref(cur_ref, domid,
+-						xen_page_to_gfn(pages[i]), 0);
++						gfns[i], 0);
+ 		refs[i] = cur_ref;
+ 	}
  
- 	bus->scl_rate.i2c = sysclk_rate / ((pres + 1) * 5);
+@@ -529,7 +530,6 @@ static void dmabuf_imp_end_foreign_access(u32 *refs, int count)
+ 
+ static void dmabuf_imp_free_storage(struct gntdev_dmabuf *gntdev_dmabuf)
+ {
+-	kfree(gntdev_dmabuf->pages);
+ 	kfree(gntdev_dmabuf->u.imp.refs);
+ 	kfree(gntdev_dmabuf);
+ }
+@@ -549,12 +549,6 @@ static struct gntdev_dmabuf *dmabuf_imp_alloc_storage(int count)
+ 	if (!gntdev_dmabuf->u.imp.refs)
+ 		goto fail;
+ 
+-	gntdev_dmabuf->pages = kcalloc(count,
+-				       sizeof(gntdev_dmabuf->pages[0]),
+-				       GFP_KERNEL);
+-	if (!gntdev_dmabuf->pages)
+-		goto fail;
+-
+ 	gntdev_dmabuf->nr_pages = count;
+ 
+ 	for (i = 0; i < count; i++)
+@@ -576,7 +570,8 @@ dmabuf_imp_to_refs(struct gntdev_dmabuf_priv *priv, struct device *dev,
+ 	struct dma_buf *dma_buf;
+ 	struct dma_buf_attachment *attach;
+ 	struct sg_table *sgt;
+-	struct sg_page_iter sg_iter;
++	struct sg_dma_page_iter sg_iter;
++	unsigned long *gfns;
+ 	int i;
+ 
+ 	dma_buf = dma_buf_get(fd);
+@@ -624,26 +619,31 @@ dmabuf_imp_to_refs(struct gntdev_dmabuf_priv *priv, struct device *dev,
+ 
+ 	gntdev_dmabuf->u.imp.sgt = sgt;
+ 
+-	/* Now convert sgt to array of pages and check for page validity. */
++	gfns = kcalloc(count, sizeof(*gfns), GFP_KERNEL);
++	if (!gfns) {
++		ret = ERR_PTR(-ENOMEM);
++		goto fail_unmap;
++	}
++
++	/*
++	 * Now convert sgt to array of gfns without accessing underlying pages.
++	 * It is not allowed to access the underlying struct page of an sg table
++	 * exported by DMA-buf, but since we deal with special Xen dma device here
++	 * (not a normal physical one) look at the dma addresses in the sg table
++	 * and then calculate gfns directly from them.
++	 */
+ 	i = 0;
+-	for_each_sgtable_page(sgt, &sg_iter, 0) {
+-		struct page *page = sg_page_iter_page(&sg_iter);
+-		/*
+-		 * Check if page is valid: this can happen if we are given
+-		 * a page from VRAM or other resources which are not backed
+-		 * by a struct page.
+-		 */
+-		if (!pfn_valid(page_to_pfn(page))) {
+-			ret = ERR_PTR(-EINVAL);
+-			goto fail_unmap;
+-		}
++	for_each_sgtable_dma_page(sgt, &sg_iter, 0) {
++		dma_addr_t addr = sg_page_iter_dma_address(&sg_iter);
++		unsigned long pfn = bfn_to_pfn(XEN_PFN_DOWN(dma_to_phys(dev, addr)));
+ 
+-		gntdev_dmabuf->pages[i++] = page;
++		gfns[i++] = pfn_to_gfn(pfn);
+ 	}
+ 
+-	ret = ERR_PTR(dmabuf_imp_grant_foreign_access(gntdev_dmabuf->pages,
++	ret = ERR_PTR(dmabuf_imp_grant_foreign_access(gfns,
+ 						      gntdev_dmabuf->u.imp.refs,
+ 						      count, domid));
++	kfree(gfns);
+ 	if (IS_ERR(ret))
+ 		goto fail_end_access;
+ 
 -- 
 2.43.0
 
