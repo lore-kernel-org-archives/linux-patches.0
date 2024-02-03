@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D478C4F21B;
-	Sat,  3 Feb 2024 04:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8734D1C6A6;
+	Sat,  3 Feb 2024 04:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933830; cv=none; b=s1xRICUKyGDVuEqrfVTiw6EHKtPbwWjmQZG+2ppWnYOHLCC9yoxVG72hKYK4rnmCbYfU7YXuTzH3aG0iY3wW1HuTIQM60/2vo/gTGsAL0ulzz/ARRaNpKMGvwff0rRXTeq/I/Yw4yk0bXvYk6piZ8AWivvDw2L53/PiPAfzxnJA=
+	t=1706933831; cv=none; b=ZyWC/A5DOVXFUB5h/74tQy2hRxcZIauT9Lc4Li6pdXBFJaSZlZtSrjRQEMG8gofByRwEeYj7e6iva68MKF9SU3hfcwv/qIFTUZmOOKUrHbDvg8PvZTL+A8qNQUNYLkRRihq+ZyWXmxQO7jesiPJeMPqSzmbgAVBJ4CrIGmc/pXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933830; c=relaxed/simple;
-	bh=3hfpKwrL1dkwsBALjzPqEjZ4Gl95YB6Mkeipyfw7BPs=;
+	s=arc-20240116; t=1706933831; c=relaxed/simple;
+	bh=YYlQzTMUkM2QCiMihekzp4IHj1n3BBzNSMHi4PxEDVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gk9EOWHWMlzjmWcritpyppZzYuVI1mLrmgKZzVIEWA3VSh8j/AQJ2fnl3cvKC0vBcYeTSNbmeOf9qYCmYrhzmIkJCnxgoWlLMMjmeM6iErKciiauPvc3gvoOfIJ7GvjraHfcDrWwhHv5GyCegpHu9mB7vqVaBKR8Vf2FSSWmNg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHRBUCZs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nbsw/2fwwUWN+4i8piRSk2JHmSCgbmukGlKaYT9dGp93E7EOtvZ+CG1NRbmF6X4bVHMkPZ8QLCyUzPyv5I/eWGnnow0v78JB0t9JOeO4Vwz2gaUkvzyKsw7BbgbrwbLaih+5DsQ6hSYGKJTn8v/p2GMdLt1fO6sw20Od8X8Bol4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDIrDm49; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHRBUCZs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D216C43399;
-	Sat,  3 Feb 2024 04:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDIrDm49"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509E1C433F1;
+	Sat,  3 Feb 2024 04:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933830;
-	bh=3hfpKwrL1dkwsBALjzPqEjZ4Gl95YB6Mkeipyfw7BPs=;
+	s=korg; t=1706933831;
+	bh=YYlQzTMUkM2QCiMihekzp4IHj1n3BBzNSMHi4PxEDVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHRBUCZs6deo1DBlRpTjlEBcZcLp73DjddMLvjAzaLa42Wbw5Mo9Kje/npuhx0Lm4
-	 X4FqNQTbAg93KbE02m8kglVQfdSPPDwh5fk8a2irsLq6TV8hAAzaxiK9t6afQ2fUFt
-	 Qf9eNOx9iNA8EAqGRqCu0ZH3y65Tu7N0XNxf1+c0=
+	b=gDIrDm49Hcnmxh1s6MWYaSEu/HNVCHqKM34hoRfE7NuizaAQFidGVj4NKt7SiDvWv
+	 uF3NAE3Km8mlj1RxCOU4xtJgQHaz2YO7ZTIStu31TLfqdumugTckml8rZLs6CU51Np
+	 fwcUByhHoSgpbBLhIIEPT/m6gLedVmepL5yEmGEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chunyan Zhang <chunyan.zhang@unisoc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 154/353] arm64: dts: sprd: Add clock reference for pll2 on UMS512
-Date: Fri,  2 Feb 2024 20:04:32 -0800
-Message-ID: <20240203035408.537797869@linuxfoundation.org>
+Subject: [PATCH 6.7 155/353] arm64: dts: sprd: Change UMS512 idle-state nodename to match bindings
+Date: Fri,  2 Feb 2024 20:04:33 -0800
+Message-ID: <20240203035408.563401697@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,31 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Chunyan Zhang <chunyan.zhang@unisoc.com>
 
-[ Upstream commit 829e3e70fe72edc084fbfc4964669594ebe427ce ]
+[ Upstream commit 1cff7243334f851b7dddf450abdaa6223a7a28e3 ]
 
 Fix below dtbs_check warning:
 
-'clocks' is a dependency of 'clock-names'
+idle-states: 'core-pd' does not match any of the regexes: '^(cpu|cluster)-', 'pinctrl-[0-9]+'
 
-Link: https://lore.kernel.org/r/20231221092824.1169453-2-chunyan.zhang@unisoc.com
+Link: https://lore.kernel.org/r/20231221092824.1169453-3-chunyan.zhang@unisoc.com
 Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/sprd/ums512.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/sprd/ums512.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/sprd/ums512.dtsi b/arch/arm64/boot/dts/sprd/ums512.dtsi
-index 97ac550af2f1..91c22667d40f 100644
+index 91c22667d40f..cc4459551e05 100644
 --- a/arch/arm64/boot/dts/sprd/ums512.dtsi
 +++ b/arch/arm64/boot/dts/sprd/ums512.dtsi
-@@ -291,6 +291,7 @@
- 			pll2: clock-controller@0 {
- 				compatible = "sprd,ums512-gc-pll";
- 				reg = <0x0 0x100>;
-+				clocks = <&ext_26m>;
- 				clock-names = "ext-26m";
- 				#clock-cells = <1>;
- 			};
+@@ -113,7 +113,7 @@
+ 
+ 	idle-states {
+ 		entry-method = "psci";
+-		CORE_PD: core-pd {
++		CORE_PD: cpu-pd {
+ 			compatible = "arm,idle-state";
+ 			entry-latency-us = <4000>;
+ 			exit-latency-us = <4000>;
 -- 
 2.43.0
 
