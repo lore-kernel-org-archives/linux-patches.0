@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E42010A13;
-	Sat,  3 Feb 2024 04:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3015710A13;
+	Sat,  3 Feb 2024 04:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933764; cv=none; b=DWMeCeXoISM+tfR5AF+I9bZiZ/7o8kDVzVfOux2vZps3pYb8p4sORaiuMI6TqQXRUCAZFi4DmKfLJzdpXTcnAIQxY2kzhkmS64lN3I0A4Bh209uB+Jq4b16iUpIRPuRYPCY2tJYBfohkhxFMfuyYyXRXpGZodATNAckxXZ90aOE=
+	t=1706933765; cv=none; b=jT2tWYdMivWjG2D/R0PRx7eGkgo6q926FKwHMuzsNAYVcgkzV/BcUmDiXUCib7aqvDBwv++6J8lchel59ZfDv6ybVpSL6H9HswCkpGg6zQFeAqRiqg9bRx9JkwQDL4CwxM3vTgSs4jnyumr/Ut7nO63t1fMdeAsMbMzKyeYOZws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933764; c=relaxed/simple;
-	bh=RkYPKPKt4BqTl/K6NE5f3w/RkT8pglKJaCbYyrX/poI=;
+	s=arc-20240116; t=1706933765; c=relaxed/simple;
+	bh=wEaJKdRQRdt1Gee4UfBpm8ep8ZYPjpDo01ibyThE5Y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLdZgAIb6kiLWdVM6rrQS3YCtkhp17Fv6ISv7AfOyJ3+rA0ok7UKz1y44ekMHRzobppB2i0PYsPWVeKy/9EBvpybcTLxVLsXYoeNUuOQkxcUgUgh6wyr0Gde2SU31+sW9s+al8/Y9LgWcZ02JVriEYENOEZZZC+DE6w9bhZtTgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv8UTQgD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SXARvdLgMev9LKitFjR0gR0603WVcN1MQBLWiWQ/y/APFxTO+8UBZ7WBg2QtHpJllaaPSQ2dT3hxbRxvueo2jMmV6JMYR+LTvo9cD9iQVJuTMOFc8BEwenomIpUB9vojYd4opKL5QniI0uuPHjdCpA2VLG1vhGNb19TWYZ6tpo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ7zxGuM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv8UTQgD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36482C433A6;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ7zxGuM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3E3C433C7;
 	Sat,  3 Feb 2024 04:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933764;
-	bh=RkYPKPKt4BqTl/K6NE5f3w/RkT8pglKJaCbYyrX/poI=;
+	s=korg; t=1706933765;
+	bh=wEaJKdRQRdt1Gee4UfBpm8ep8ZYPjpDo01ibyThE5Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vv8UTQgDu6oS4vAwqnADeIG5iQwx2YlkwD6XajL1bST8P3E+yugOfm7TK0bV6rovW
-	 fd/G772WtnxC55X2qZ6HxwJGqDwBHtYoK7I7e9a6r10koPBbrOTasiGxKlNR5pIWzT
-	 /XnnCQK4oToLig7dTZNiCJVhbYCMuobtesVfoBe0=
+	b=XZ7zxGuMJULTIU18NJeIjueLdUqAfCXwuwu8vmljCtPATXnZTfQUIA94FaVqV1KWH
+	 7S12XtGUska7zIOVztXY9DM/r/m+BRnZfyvJQYru2LOZ4/iCBKnLiVbcUEODeIUfKk
+	 ciuHAm4l/rHdg0Jh5UbCFzfbz/d3N3dk1Mg7PZnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 028/353] OPP: The level field is always of unsigned int type
-Date: Fri,  2 Feb 2024 20:02:26 -0800
-Message-ID: <20240203035404.666361360@linuxfoundation.org>
+Subject: [PATCH 6.7 057/353] cifs: fix in logging in cifs_chan_update_iface
+Date: Fri,  2 Feb 2024 20:02:55 -0800
+Message-ID: <20240203035405.604946319@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -50,63 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit ba367479c7ad0b870461024cd5ae7a1ea6e1e3db ]
+[ Upstream commit 516eea97f92f1e7271f20835cfe9e73774b0f8cc ]
 
-By mistake, dev_pm_opp_find_level_floor() used the level parameter as
-unsigned long instead of unsigned int. Fix it.
+Recently, cifs_chan_update_iface was modified to not
+remove an iface if a suitable replacement was not found.
+With that, there were two conditionals that were exactly
+the same. This change removes that extra condition check.
 
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Also, fixed a logging in the same function to indicate
+the correct message.
+
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/core.c     | 9 +++++++--
- include/linux/pm_opp.h | 4 ++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ fs/smb/client/sess.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-index b2971dd95335..f1e54a3a15c7 100644
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -832,9 +832,14 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_ceil);
-  * use.
-  */
- struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
--					       unsigned long *level)
-+					       unsigned int *level)
- {
--	return _find_key_floor(dev, level, 0, true, _read_level, NULL);
-+	unsigned long temp = *level;
-+	struct dev_pm_opp *opp;
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index 2d3b332a79a1..a16e175731eb 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -440,8 +440,14 @@ cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server)
+ 	}
+ 
+ 	if (!iface) {
+-		cifs_dbg(FYI, "unable to get the interface matching: %pIS\n",
+-			 &ss);
++		if (!chan_index)
++			cifs_dbg(FYI, "unable to get the interface matching: %pIS\n",
++				 &ss);
++		else {
++			cifs_dbg(FYI, "unable to find another interface to replace: %pIS\n",
++				 &old_iface->sockaddr);
++		}
 +
-+	opp = _find_key_floor(dev, &temp, 0, true, _read_level, NULL);
-+	*level = temp;
-+	return opp;
- }
- EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_floor);
+ 		spin_unlock(&ses->iface_lock);
+ 		return 0;
+ 	}
+@@ -459,10 +465,6 @@ cifs_chan_update_iface(struct cifs_ses *ses, struct TCP_Server_Info *server)
+ 		iface->weight_fulfilled++;
  
-diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
-index ccd97bcef269..18a102174c4f 100644
---- a/include/linux/pm_opp.h
-+++ b/include/linux/pm_opp.h
-@@ -157,7 +157,7 @@ struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
- 					      unsigned int *level);
- 
- struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
--					       unsigned long *level);
-+					       unsigned int *level);
- 
- struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev,
- 					   unsigned int *bw, int index);
-@@ -324,7 +324,7 @@ static inline struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
- }
- 
- static inline struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
--							     unsigned long *level)
-+							     unsigned int *level)
- {
- 	return ERR_PTR(-EOPNOTSUPP);
- }
+ 		kref_put(&old_iface->refcount, release_iface);
+-	} else if (old_iface) {
+-		/* if a new candidate is not found, keep things as is */
+-		cifs_dbg(FYI, "could not replace iface: %pIS\n",
+-			 &old_iface->sockaddr);
+ 	} else if (!chan_index) {
+ 		/* special case: update interface for primary channel */
+ 		if (iface) {
 -- 
 2.43.0
 
