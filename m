@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189A113AC6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38ED911181;
 	Sat,  3 Feb 2024 04:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933818; cv=none; b=aMNsT29QPb1UYPobAzNeZu8ghcqziQPq3xQGBumBGCvCqa9UDq+4dxXcCJQhQwMAV5huPwoXTYWtknU8HKjrQ36X53HLsSwRzn+hDN3H/xkeTmuCTbBw5ZQvi1I1dsb9uzBeUnmWFv13EO6Gmz/R/318K8oJZWJLdKYwdwLwSBk=
+	t=1706933819; cv=none; b=SsdyrUm0uhBg8TfaaN2jPbjj4rebZQI2SAiFlCJa4JBdly2koZwUwvvYzYmixTz6X3i2suBUTwe035uJhW2v+Ok+vxC+N1upCl8aslFhEKtlyFzQ9191l+EJv3lfcQVQNhWDD4gXJ+COd8iuTi26rHKLS4NPadsXNcUt5jxK9xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933818; c=relaxed/simple;
-	bh=r/ZdFq0DyknUeo+7EzNMA3Vt8t0y7eVs+ZUSv4+q6ck=;
+	s=arc-20240116; t=1706933819; c=relaxed/simple;
+	bh=0O0hHFDOxH2Q8E/1benfROwA6G80Dc1/E9UYT3Z8fyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zljkf7UdQHI2FeVw6ky7WwpkK/mYt4Do9Qlxj9w06SkJ33rF2VPzDgVWiVNs1F4KoIrI/NrO4lad851aX2nymKRnCyWYFRCee91Ce5hu9lq29bMibL9tlkbd+QcH56UHPBF10CjApDwCiM4Jxh+OZDBV/CjZZJSXLjpTpTuDImE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0z9BXXT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HfHDWvC1WH5g2LJjXEpWVYX3I9APRXP+xE0DHX+HaElLiF+QRWnKxFAcOwAKR5PXDdYnyFN1LzH28DmxbB8j0TrLx8hZsTAtUH5WEXAHtwqW3E8np8uo3EKf9obdbjdtZU4VpcN8+KuTU/SGGsRv9qIW0GCS4UAMIurVwBg/VBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj+eCLMH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0z9BXXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96FDC433C7;
-	Sat,  3 Feb 2024 04:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj+eCLMH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12CCC433F1;
+	Sat,  3 Feb 2024 04:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933817;
-	bh=r/ZdFq0DyknUeo+7EzNMA3Vt8t0y7eVs+ZUSv4+q6ck=;
+	s=korg; t=1706933818;
+	bh=0O0hHFDOxH2Q8E/1benfROwA6G80Dc1/E9UYT3Z8fyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0z9BXXTIOO7gyAJv7TOfFeu+qEq6Hy1xFe4tR8ENSwzlr6NPDZJci9tdHrva2qK1
-	 TvyhY8hg3JX1w1uOPtiTUSP3PJtSopQCDTdiYzoJ+9ydznbiBjrHfKWsod2uIXRIWN
-	 dtOOQaGCTzh/Z154Lix/7qSgZqCAn8acx2UjsmxU=
+	b=rj+eCLMHgMwYmnYx5l9zJVjzSoy5mWtOT/ksHcFZA7fXdivo7vqJfyjaisquMXukk
+	 VFb2VJ6yQFjBVUhwQj27eWwZCExbSz546Zy2zA4KyoeoK72C3Y8nL3Cjwwc7C7G+65
+	 Vxhz6X11ipf0pTAKGDK+9b+lTbKfjs7vuuJ4FhT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mao Jinlong <quic_jinlmao@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 136/353] x86/cfi,bpf: Fix bpf_exception_cb() signature
-Date: Fri,  2 Feb 2024 20:04:14 -0800
-Message-ID: <20240203035408.016252891@linuxfoundation.org>
+Subject: [PATCH 6.7 137/353] arm64: dts: qcom: msm8996: Fix in-ports is a required property
+Date: Fri,  2 Feb 2024 20:04:15 -0800
+Message-ID: <20240203035408.046910586@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,53 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-[ Upstream commit 852486b35f344887786d63250946dd921a05d7e8 ]
+[ Upstream commit 9a6fc510a6a3ec150cb7450aec1e5f257e6fc77b ]
 
-As per the earlier patches, BPF sub-programs have bpf_callback_t
-signature and CFI expects callers to have matching signature. This is
-violated by bpf_prog_aux::bpf_exception_cb().
+Add the inport of funnel@3023000 to fix 'in-ports' is a required property
+warning.
 
-[peterz: Changelog]
-Reported-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/CAADnVQ+Z7UcXXBBhMubhcMM=R-dExk-uHtfOLtoLxQ1XxEpqEA@mail.gmail.com
-Link: https://lore.kernel.org/r/20231215092707.910319166@infradead.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+Link: https://lore.kernel.org/r/20231210072633.4243-3-quic_jinlmao@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h  | 2 +-
- kernel/bpf/helpers.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 7a7859a5cce4..cfc6d2f98058 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -1447,7 +1447,7 @@ struct bpf_prog_aux {
- 	int cgroup_atype; /* enum cgroup_bpf_attach_type */
- 	struct bpf_map *cgroup_storage[MAX_BPF_CGROUP_STORAGE_TYPE];
- 	char name[BPF_OBJ_NAME_LEN];
--	unsigned int (*bpf_exception_cb)(u64 cookie, u64 sp, u64 bp);
-+	u64 (*bpf_exception_cb)(u64 cookie, u64 sp, u64 bp, u64, u64);
- #ifdef CONFIG_SECURITY
- 	void *security;
- #endif
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 991186520af0..b3053af6427d 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -2509,7 +2509,7 @@ __bpf_kfunc void bpf_throw(u64 cookie)
- 	 * which skips compiler generated instrumentation to do the same.
- 	 */
- 	kasan_unpoison_task_stack_below((void *)(long)ctx.sp);
--	ctx.aux->bpf_exception_cb(cookie, ctx.sp, ctx.bp);
-+	ctx.aux->bpf_exception_cb(cookie, ctx.sp, ctx.bp, 0, 0);
- 	WARN(1, "A call to BPF exception callback should never return\n");
- }
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 6ba9da9e6a8b..fa8ec92ce490 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -444,6 +444,19 @@
+ 		reg = <0x0 0x80000000 0x0 0x0>;
+ 	};
  
++	etm {
++		compatible = "qcom,coresight-remote-etm";
++
++		out-ports {
++			port {
++				modem_etm_out_funnel_in2: endpoint {
++					remote-endpoint =
++					  <&funnel_in2_in_modem_etm>;
++				};
++			};
++		};
++	};
++
+ 	psci {
+ 		compatible = "arm,psci-1.0";
+ 		method = "smc";
+@@ -2644,6 +2657,14 @@
+ 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+ 			clock-names = "apb_pclk", "atclk";
+ 
++			in-ports {
++				port {
++					funnel_in2_in_modem_etm: endpoint {
++						remote-endpoint =
++						  <&modem_etm_out_funnel_in2>;
++					};
++				};
++			};
+ 
+ 			out-ports {
+ 				port {
 -- 
 2.43.0
 
