@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF85E1BF24;
-	Sat,  3 Feb 2024 04:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6270B1BF24;
+	Sat,  3 Feb 2024 04:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933799; cv=none; b=cWTsZk9XoEHWRXKc0h0d7R8diNukyEdSItuY9DFuBLMZ/feS4A4oq8H5/nP75vK4Fl3W85OQ34HUSDAW3Gj6Bz+1khXAHrgK39Tu0KNpN8Vo2XFdoa+WPF77zBcycXi7X70EQLI1tEGpDbr1mClgEj8QydnCUpU+6W7u0gRvm5s=
+	t=1706933800; cv=none; b=oGFwhBEFeiKdHviZPLYHDu9cCgGdH1wH5BxA1dQ72v/d/Fx2gEebZSjqNf4WrIbT/3RQx4rLCD1UEFiptuyAgt5elo5KsiHchg46fAD1WVQNDx7nJp9Y+h1gSdnsN+hwAeBIfSl9saQWZG0kZjJc2+y9eHIus3jxlpHnjNjtAJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933799; c=relaxed/simple;
-	bh=0J4wLIG4OAtIoXkfhJUvaDWUX1flcmeGZmEoz4NVx4E=;
+	s=arc-20240116; t=1706933800; c=relaxed/simple;
+	bh=gxPRUaO4yGjuE0UtqSdcpsg3b6556wOXpzevGdfIyz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSU18JfjujdwuHUVVu8sSb9fgZI6+uysMRPEjnbSlWrk2FlHQZQXmVFhc3vf+PlHsbNgxkmyjMSilRLM814PLxkWnZNiAjlgxLEAdW1neArJVZd3LNOiA1F91qLOiTbDgnSQ8Ck7xlvxEpOma6t5hqZGcow1hyxA5cov2c7UopU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2v7m0LM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QEhSr9XHg3H8aV9J5AtYZY8MayblbuTg8U9sOZNeZjLa3cYguvSjHyYOFZ1QmM0JujHNJfO66TsHjWJDKbLtuwRxFaZ8jNDMIyln/qJmmyBNGfqHpVLuzE2ocvzA1bUIoHrdXmv5Ma/+D+Wn0s1LEd4wt+8Evuv3iA30L0IQmPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JX+CgfR0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2v7m0LM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7824FC43390;
-	Sat,  3 Feb 2024 04:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JX+CgfR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CABBC433F1;
+	Sat,  3 Feb 2024 04:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933799;
-	bh=0J4wLIG4OAtIoXkfhJUvaDWUX1flcmeGZmEoz4NVx4E=;
+	s=korg; t=1706933800;
+	bh=gxPRUaO4yGjuE0UtqSdcpsg3b6556wOXpzevGdfIyz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2v7m0LMX1QAuDpfKpEgs2kb7XsaZT1G0qNu+yhVtVFSRvArQXotGCYY7qbunyvFq
-	 UbWNsfM4CVMZzwr/UtH0A9T6NL6i8/afIcLjI7ENdb8jizR7+jU7aRVzjvrerla/Kd
-	 GQykqK+UTFwPl647k5vLVgtRCQXeDTUknaG4Hxmk=
+	b=JX+CgfR0PcSFnu2HoEcorz7t0RjLR99ai1c5mjN6xyRcrcRUfppAy1YbcuG+OlGDG
+	 iiOVczJmv5/2O4NmI16TCuNgS5MtATAFskNiucoE9pF1nAYCT+oIhtFrsRjjD2jf6x
+	 GitXZ7OQEDW63E52xgmMP6LXAWk16XkxUOh1GK8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 111/353] ARM: dts: imx: Use flash@0,0 pattern
-Date: Fri,  2 Feb 2024 20:03:49 -0800
-Message-ID: <20240203035407.273283297@linuxfoundation.org>
+Subject: [PATCH 6.7 087/353] ARM: dts: imx7d: Fix coresight funnel ports
+Date: Fri,  2 Feb 2024 20:03:25 -0800
+Message-ID: <20240203035406.561284070@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,79 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 1e1d7cc478fb16816de09740e3c323c0c188d58f ]
+[ Upstream commit 0d4ac04fa7c3f6dc263dba6f575a2ec7a2d4eca8 ]
 
-Per mtd-physmap.yaml, 'nor@0,0' is not a valid node pattern.
+imx7d uses two ports for 'in-ports', so the syntax port@<num> has to
+be used. imx7d has both port and port@1 nodes present, raising these
+error:
+funnel@30041000: in-ports: More than one condition true in oneOf schema
+funnel@30041000: Unevaluated properties are not allowed
+('in-ports' was unexpected)
 
-Change it to 'flash@0,0' to fix the following dt-schema warning:
+Fix this by also using port@0 for imx7s as well.
 
-imx1-ads.dtb: nor@0,0: $nodename:0: 'nor@0,0' does not match '^(flash|.*sram|nand)(@.*)?$'
-	from schema $id: http://devicetree.org/schemas/mtd/mtd-physmap.yaml#
-
-Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx1-ads.dts                  | 2 +-
- arch/arm/boot/dts/nxp/imx/imx1-apf9328.dts              | 2 +-
- arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi    | 2 +-
- arch/arm/boot/dts/nxp/imx/imx27-phytec-phycore-som.dtsi | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx7d.dtsi | 3 ---
+ arch/arm/boot/dts/nxp/imx/imx7s.dtsi | 6 +++++-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx1-ads.dts b/arch/arm/boot/dts/nxp/imx/imx1-ads.dts
-index 5833fb6f15d8..2c817c4a4c68 100644
---- a/arch/arm/boot/dts/nxp/imx/imx1-ads.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx1-ads.dts
-@@ -65,7 +65,7 @@
- 	pinctrl-0 = <&pinctrl_weim>;
- 	status = "okay";
+diff --git a/arch/arm/boot/dts/nxp/imx/imx7d.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d.dtsi
+index 4b94b8afb55d..0484e349e064 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx7d.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx7d.dtsi
+@@ -217,9 +217,6 @@
+ };
  
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		compatible = "cfi-flash";
- 		reg = <0 0x00000000 0x02000000>;
- 		bank-width = <4>;
-diff --git a/arch/arm/boot/dts/nxp/imx/imx1-apf9328.dts b/arch/arm/boot/dts/nxp/imx/imx1-apf9328.dts
-index 1f11e9542a72..e66eef87a7a4 100644
---- a/arch/arm/boot/dts/nxp/imx/imx1-apf9328.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx1-apf9328.dts
-@@ -45,7 +45,7 @@
- 	pinctrl-0 = <&pinctrl_weim>;
- 	status = "okay";
+ &ca_funnel_in_ports {
+-	#address-cells = <1>;
+-	#size-cells = <0>;
+-
+ 	port@1 {
+ 		reg = <1>;
+ 		ca_funnel_in_port1: endpoint {
+diff --git a/arch/arm/boot/dts/nxp/imx/imx7s.dtsi b/arch/arm/boot/dts/nxp/imx/imx7s.dtsi
+index 5387da8a2a0a..9f216d11a396 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx7s.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx7s.dtsi
+@@ -190,7 +190,11 @@
+ 			clock-names = "apb_pclk";
  
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		compatible = "cfi-flash";
- 		reg = <0 0x00000000 0x02000000>;
- 		bank-width = <2>;
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-index 4b83e2918b55..c7e923584878 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-eukrea-cpuimx27.dtsi
-@@ -90,7 +90,7 @@
- &weim {
- 	status = "okay";
- 
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
- 		compatible = "cfi-flash";
-diff --git a/arch/arm/boot/dts/nxp/imx/imx27-phytec-phycore-som.dtsi b/arch/arm/boot/dts/nxp/imx/imx27-phytec-phycore-som.dtsi
-index 7b2ea4cdae58..8d428c844666 100644
---- a/arch/arm/boot/dts/nxp/imx/imx27-phytec-phycore-som.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx27-phytec-phycore-som.dtsi
-@@ -314,7 +314,7 @@
- &weim {
- 	status = "okay";
- 
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		compatible = "cfi-flash";
- 		reg = <0 0x00000000 0x02000000>;
- 		bank-width = <2>;
+ 			ca_funnel_in_ports: in-ports {
+-				port {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
+ 					ca_funnel_in_port0: endpoint {
+ 						remote-endpoint = <&etm0_out_port>;
+ 					};
 -- 
 2.43.0
 
