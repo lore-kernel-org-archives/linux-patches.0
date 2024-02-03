@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E9710795;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AA110A23;
 	Sat,  3 Feb 2024 04:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933697; cv=none; b=jZjeeVN2c4H6GznxL1av02PUQO8qgZyMoyqs5/3CKQ+0YHPENTkwms0/cEB1jCeVaZzoxsKg3ttuc5PE5xbUgy/tbDfbDBwVSipdE5uIG6HtpE3FJLae0YzRQpJGnievK2uhtYr7IrthBjb+ce1TQ7AC+2HAxovMcvATMMG9Ups=
+	t=1706933698; cv=none; b=m3ONozOEiKF3qefn2YBPzyMbmFERZaUTMIOFZ0hndXKaGwZrwNQh30JvT6iPJo8SKtCihdXHNdA61EmaTrzD/qpL+N0IwJME+GT6gsaRW1dLuC4Iw28S1IiMwvsmDzvEc1SRZ54ZPlOYoLjkGETF0wuAurhhXgP8aLkEYSWdUC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933697; c=relaxed/simple;
-	bh=8IpqVoLxNjItVboBxsZHsjWfH86rP+4wFSEOhyQIUJg=;
+	s=arc-20240116; t=1706933698; c=relaxed/simple;
+	bh=FVEXWIiyE5hFPwDPal7jQxS4NA4QcsYjrSa9ywmagrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ldMf/Mi/Gtql92xJ9uqGKIkKtld55LjQgObmE+9fUyZUO1wO3CDvC7uV5VoY4ud5IC0DHf4XU3A2Zo54hRsBk2ZZdq0PIDMoYgKuL2PERJ104qSBn+vFvp8mas4k3rmYuOqLQLmyP+oK9tnenT3235m1yZmWiZ3lIMqEgIm4Kes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snCSe727; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dm0OZFDYwBx4YPQbdZgOEFdXmv5qUE0n9zVDy4MeWEL5wy1jph7UOqS35w0Vr2uRtLIKdyd/kZAP+TrcbxoL5YN/RCR1bAI7fWEkLFFPxnJXG1wQXQsnGu7Xhw16k/DfJRz+HStcleH661MjCESRql3J6yHrDqcbHRjroqht8gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlBo78gc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snCSe727"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008DFC43390;
-	Sat,  3 Feb 2024 04:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlBo78gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85A5C433F1;
+	Sat,  3 Feb 2024 04:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933697;
-	bh=8IpqVoLxNjItVboBxsZHsjWfH86rP+4wFSEOhyQIUJg=;
+	bh=FVEXWIiyE5hFPwDPal7jQxS4NA4QcsYjrSa9ywmagrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snCSe727EF+BjcxIvwHFuUiIA/5/eSTFlk35j/v+8nsqQ6hUkw9xkrca80gh5PRVf
-	 z4hBuJxhTiW5B5boeCdCMnpf6KD+dKLGS06kLyZamaOEqxWAyQdXWhtzJBChDOhkiR
-	 jKVbNNSGxMN1L46r0bmApfJV43piB0ZLg35IuE34=
+	b=vlBo78gcgwfBOFCq7wVBVODWImhUw3BQ0O01elv0eGjiobEfYk3jcos3rGNcqUEJr
+	 FVEz44yBK8K0PCY6MwcTJg0nVEtUfF3Plh9i4psFrfsNcXCwogzrom6+707edbQyPj
+	 N9NjURMYt4wr/FhDNWD2g3fBXP7ES9lEhQUFuR50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 261/322] drm: using mul_u32_u32() requires linux/math64.h
-Date: Fri,  2 Feb 2024 20:05:58 -0800
-Message-ID: <20240203035407.575435687@linuxfoundation.org>
+Subject: [PATCH 6.6 289/322] selftests: net: Add missing matchall classifier
+Date: Fri,  2 Feb 2024 20:06:26 -0800
+Message-ID: <20240203035408.413868712@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -45,47 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Rothwell <sfr@canb.auug.org.au>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 933a2a376fb3f22ba4774f74233571504ac56b02 ]
+[ Upstream commit b40f873a7c80dbafbb6f4a7a569f2dcaf969d283 ]
 
-Some pending include file cleanups produced this error:
+One of the test cases in the test_bridge_backup_port.sh selftest relies
+on a matchall classifier to drop unrelated traffic so that the Tx drop
+counter on the VXLAN device will only be incremented as a result of
+traffic generated by the test.
 
-In file included from include/linux/kernel.h:27,
-                 from drivers/gpu/ipu-v3/ipu-dp.c:7:
-include/drm/drm_color_mgmt.h: In function 'drm_color_lut_extract':
-include/drm/drm_color_mgmt.h:45:46: error: implicit declaration of function 'mul_u32_u32' [-Werror=implicit-function-declaration]
-   45 |                 return DIV_ROUND_CLOSEST_ULL(mul_u32_u32(user_input, (1 << bit_precision) - 1),
-      |                                              ^~~~~~~~~~~
+However, the configuration option for the matchall classifier is
+missing from the configuration file which might explain the failures we
+see in the netdev CI [1].
 
-Fixes: c6fbb6bca108 ("drm: Fix color LUT rounding")
-Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231219145734.13e40e1e@canb.auug.org.au
+Fix by adding CONFIG_NET_CLS_MATCHALL to the configuration file.
+
+[1]
+ # Backup nexthop ID - invalid IDs
+ # -------------------------------
+ [...]
+ # TEST: Forwarding out of vx0                                         [ OK ]
+ # TEST: No forwarding using backup nexthop ID                         [ OK ]
+ # TEST: Tx drop increased                                             [FAIL]
+ # TEST: IPv6 address family nexthop as backup nexthop                 [ OK ]
+ # TEST: No forwarding out of swp1                                     [ OK ]
+ # TEST: Forwarding out of vx0                                         [ OK ]
+ # TEST: No forwarding using backup nexthop ID                         [ OK ]
+ # TEST: Tx drop increased                                             [FAIL]
+ [...]
+
+Fixes: b408453053fb ("selftests: net: Add bridge backup port and backup nexthop ID test")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20240129123703.1857843-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_color_mgmt.h | 1 +
+ tools/testing/selftests/net/config | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/include/drm/drm_color_mgmt.h b/include/drm/drm_color_mgmt.h
-index 54b2b2467bfd..ed81741036d7 100644
---- a/include/drm/drm_color_mgmt.h
-+++ b/include/drm/drm_color_mgmt.h
-@@ -24,6 +24,7 @@
- #define __DRM_COLOR_MGMT_H__
- 
- #include <linux/ctype.h>
-+#include <linux/math64.h>
- #include <drm/drm_property.h>
- 
- struct drm_crtc;
+diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
+index 56da5d52674c..b4e811f17eb1 100644
+--- a/tools/testing/selftests/net/config
++++ b/tools/testing/selftests/net/config
+@@ -52,6 +52,7 @@ CONFIG_NET_ACT_CT=m
+ CONFIG_NET_ACT_GACT=m
+ CONFIG_NET_CLS_BASIC=m
+ CONFIG_NET_CLS_BPF=m
++CONFIG_NET_CLS_MATCHALL=m
+ CONFIG_NET_CLS_U32=m
+ CONFIG_NET_IPGRE_DEMUX=m
+ CONFIG_NET_IPGRE=m
 -- 
 2.43.0
 
