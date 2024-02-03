@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF46E3C46F;
-	Sat,  3 Feb 2024 04:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBFD10A18;
+	Sat,  3 Feb 2024 04:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933617; cv=none; b=CjtArQPGb4pB4MjP7Mpe3Kj95rLnhFwMDOoaF/iFBM71esIivH1cp3fYAOL78e5OZLU2tyXpgxGMLccF6iyjLVXEXIxJtbqFK1l31G4IdrnDOJYzpEQp84K7M1vJE7tzwR/gHlF6vmCcQ0OEO2GWiLFDjHS+GtbzVQK7WQgtWU8=
+	t=1706933619; cv=none; b=beiVOJTPsPq809iT7OWE0w/iBwECdx52mOoiEAvT5r4/yWtWxudHoSG213XBnxtVGgmIfUL57eUNj25IWnfNxBSKFCvJcNEmf55tWrgZLu6YUN+hlOZG03YE/BIcwS+PJN4BcuC2MH1ewnVGrjIk5dLs2D/XpNUpy5Bhu+0efEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933617; c=relaxed/simple;
-	bh=XVjFhojQkpFV2vN+XhU5OG7lFW3Zs7DcJsIas+0p/Zw=;
+	s=arc-20240116; t=1706933619; c=relaxed/simple;
+	bh=isAKGs+rbHsMyOM+bwcfPmP4YiYJtJfreLmGWl2exeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIVpOEpW8LQsiMWg1+6pJ3SqrRv86EM1JTRKZHQKUfTdmLqnTV8RPjQlPwCBz6UL5d9gPfQ9ML2oPm15aqx/Q2INSJIOC0MYqkK+diBZ4bOvMU/7x/pqif1gFdPkLtIMb0DK58fa/PN0P+ge1u8q7uI6QHstKEZFlaazYZpX9bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2iizRes; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LWkRuKzz7qzcp6sXiSmej87CybIiFPMh5voplZ47CagAwVq60EXNpeUGvakAAs6nI9N9SgYDMuIbo3nJo7nIoqHLil0Vfw5eXouOmuuO7IFtTuEqbAf5dFIKSI9HBEkUJMc1Ruo4L80wuLf6NnP8/lEeuJMFuw8XOhU2q3uAX70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afBIymCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2iizRes"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BAC6C433F1;
-	Sat,  3 Feb 2024 04:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afBIymCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53161C433C7;
+	Sat,  3 Feb 2024 04:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933617;
-	bh=XVjFhojQkpFV2vN+XhU5OG7lFW3Zs7DcJsIas+0p/Zw=;
+	s=korg; t=1706933618;
+	bh=isAKGs+rbHsMyOM+bwcfPmP4YiYJtJfreLmGWl2exeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v2iizResTpICk0PnBdbMOtpFcZVbHLhiV4Hh0D+akYHdnH0duRtjilL3HK7064VA5
-	 bGbLNfkf+5CPoFva2HYF93Jib9Thkr/vA2a02kNaxC8Z1QaINC1BaEaj8uilC5//ZG
-	 2ccT4cA6WLuCwKjiCAU6WviKDo4CUvzrSHLdTapA=
+	b=afBIymCPSATwrLEJ76tTtfefsjnh5rrkbhDjnkFjDqqwCB+hAKmLlwon6+r0/t4A4
+	 8l+MWXc0TTeYdXL+C7USJYu7lsj0S4UkUh/2dS3nbAYmx0GLCDrASZcm5QvHFItchw
+	 Z3aEWfgfLTAdxI2SpJsos04wL4CnGBpJ2RuW66IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umang Jain <umang.jain@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jun Lei <jun.lei@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 192/322] media: i2c: imx335: Fix hblank min/max values
-Date: Fri,  2 Feb 2024 20:04:49 -0800
-Message-ID: <20240203035405.454065892@linuxfoundation.org>
+Subject: [PATCH 6.6 193/322] drm/amd/display: For prefetch mode > 0, extend prefetch if possible
+Date: Fri,  2 Feb 2024 20:04:50 -0800
+Message-ID: <20240203035405.480164027@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,39 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kieran Bingham <kieran.bingham@ideasonboard.com>
+From: Alvin Lee <alvin.lee2@amd.com>
 
-[ Upstream commit d7b95ad7a8d56248dfc34f861e445fad7a4004f4 ]
+[ Upstream commit dd4e4bb28843393065eed279e869fac248d03f0f ]
 
-The V4L2_CID_HBLANK control is marked as readonly and can only be a
-single value.
+[Description]
+For mode programming we want to extend the prefetch as much as possible
+(up to oto, or as long as we can for equ) if we're not already applying
+the 60us prefetch requirement. This is to avoid intermittent underflow
+issues during prefetch.
 
-Set the minimum and maximum value to match the mode value.
+The prefetch extension is applied under the following scenarios:
+1. We're in prefetch mode 1 (i.e. we don't support MCLK switch in blank)
+2. We're using subvp or drr methods of p-state switch, in which case we
+   we don't care if prefetch takes up more of the blanking time
 
-Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
-Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Mode programming typically chooses the smallest prefetch time possible
+(i.e. highest bandwidth during prefetch) presumably to create margin between
+p-states / c-states that happen in vblank and prefetch. Therefore we only
+apply this prefetch extension when p-state in vblank is not required (UCLK
+p-states take up the most vblank time).
+
+Reviewed-by: Jun Lei <jun.lei@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx335.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../dc/dml/dcn32/display_mode_vba_32.c        |  3 ++
+ .../dc/dml/dcn32/display_mode_vba_util_32.c   | 33 +++++++++++++++----
+ .../dc/dml/dcn32/display_mode_vba_util_32.h   |  1 +
+ 3 files changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/i2c/imx335.c b/drivers/media/i2c/imx335.c
-index 482a0b7f040a..26869abd77a6 100644
---- a/drivers/media/i2c/imx335.c
-+++ b/drivers/media/i2c/imx335.c
-@@ -971,8 +971,8 @@ static int imx335_init_controls(struct imx335 *imx335)
- 	imx335->hblank_ctrl = v4l2_ctrl_new_std(ctrl_hdlr,
- 						&imx335_ctrl_ops,
- 						V4L2_CID_HBLANK,
--						IMX335_REG_MIN,
--						IMX335_REG_MAX,
-+						mode->hblank,
-+						mode->hblank,
- 						1, mode->hblank);
- 	if (imx335->hblank_ctrl)
- 		imx335->hblank_ctrl->flags |= V4L2_CTRL_FLAG_READ_ONLY;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
+index cbdfb762c10c..6c84b0fa40f4 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
+@@ -813,6 +813,8 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerforman
+ 					(v->DRAMSpeedPerState[mode_lib->vba.VoltageLevel] <= MEM_STROBE_FREQ_MHZ ||
+ 						v->DCFCLKPerState[mode_lib->vba.VoltageLevel] <= DCFCLK_FREQ_EXTRA_PREFETCH_REQ_MHZ) ?
+ 							mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
++					mode_lib->vba.PrefetchModePerState[mode_lib->vba.VoltageLevel][mode_lib->vba.maxMpcComb] > 0 || mode_lib->vba.DRAMClockChangeRequirementFinal == false,
++
+ 					/* Output */
+ 					&v->DSTXAfterScaler[k],
+ 					&v->DSTYAfterScaler[k],
+@@ -3317,6 +3319,7 @@ void dml32_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
+ 							v->SwathHeightCThisState[k], v->TWait,
+ 							(v->DRAMSpeedPerState[i] <= MEM_STROBE_FREQ_MHZ || v->DCFCLKState[i][j] <= DCFCLK_FREQ_EXTRA_PREFETCH_REQ_MHZ) ?
+ 									mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
++							mode_lib->vba.PrefetchModePerState[i][j] > 0 || mode_lib->vba.DRAMClockChangeRequirementFinal == false,
+ 
+ 							/* Output */
+ 							&v->dummy_vars.dml32_ModeSupportAndSystemConfigurationFull.DSTXAfterScaler[k],
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
+index ecea008f19d3..208b89d13d3f 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
+@@ -3423,6 +3423,7 @@ bool dml32_CalculatePrefetchSchedule(
+ 		unsigned int SwathHeightC,
+ 		double TWait,
+ 		double TPreReq,
++		bool ExtendPrefetchIfPossible,
+ 		/* Output */
+ 		double   *DSTXAfterScaler,
+ 		double   *DSTYAfterScaler,
+@@ -3892,12 +3893,32 @@ bool dml32_CalculatePrefetchSchedule(
+ 			/* Clamp to oto for bandwidth calculation */
+ 			LinesForPrefetchBandwidth = dst_y_prefetch_oto;
+ 		} else {
+-			*DestinationLinesForPrefetch = dst_y_prefetch_equ;
+-			TimeForFetchingMetaPTE = Tvm_equ;
+-			TimeForFetchingRowInVBlank = Tr0_equ;
+-			*PrefetchBandwidth = prefetch_bw_equ;
+-			/* Clamp to equ for bandwidth calculation */
+-			LinesForPrefetchBandwidth = dst_y_prefetch_equ;
++			/* For mode programming we want to extend the prefetch as much as possible
++			 * (up to oto, or as long as we can for equ) if we're not already applying
++			 * the 60us prefetch requirement. This is to avoid intermittent underflow
++			 * issues during prefetch.
++			 *
++			 * The prefetch extension is applied under the following scenarios:
++			 * 1. We're in prefetch mode > 0 (i.e. we don't support MCLK switch in blank)
++			 * 2. We're using subvp or drr methods of p-state switch, in which case we
++			 *    we don't care if prefetch takes up more of the blanking time
++			 *
++			 * Mode programming typically chooses the smallest prefetch time possible
++			 * (i.e. highest bandwidth during prefetch) presumably to create margin between
++			 * p-states / c-states that happen in vblank and prefetch. Therefore we only
++			 * apply this prefetch extension when p-state in vblank is not required (UCLK
++			 * p-states take up the most vblank time).
++			 */
++			if (ExtendPrefetchIfPossible && TPreReq == 0 && VStartup < MaxVStartup) {
++				MyError = true;
++			} else {
++				*DestinationLinesForPrefetch = dst_y_prefetch_equ;
++				TimeForFetchingMetaPTE = Tvm_equ;
++				TimeForFetchingRowInVBlank = Tr0_equ;
++				*PrefetchBandwidth = prefetch_bw_equ;
++				/* Clamp to equ for bandwidth calculation */
++				LinesForPrefetchBandwidth = dst_y_prefetch_equ;
++			}
+ 		}
+ 
+ 		*DestinationLinesToRequestVMInVBlank = dml_ceil(4.0 * TimeForFetchingMetaPTE / LineTime, 1.0) / 4.0;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h
+index 592d174df6c6..5d34735df83d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h
+@@ -747,6 +747,7 @@ bool dml32_CalculatePrefetchSchedule(
+ 		unsigned int SwathHeightC,
+ 		double TWait,
+ 		double TPreReq,
++		bool ExtendPrefetchIfPossible,
+ 		/* Output */
+ 		double   *DSTXAfterScaler,
+ 		double   *DSTYAfterScaler,
 -- 
 2.43.0
 
