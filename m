@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DFB524D0;
-	Sat,  3 Feb 2024 04:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD2D171A4;
+	Sat,  3 Feb 2024 04:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933912; cv=none; b=m93LAwcJe9UVziK+B4hkZaF/7GGbh+VfNZuMGtcK9/iCjQsK1YpDwI0UcvU72ir9MB1JUkSDYYgdhgK+CRU3+1GNxR4EZ8iehh93c3NRsIcxp1FF2zNCKKxjUiOJ3h8S+7921g5v4X0KVIL7KXkXP3s4f2dqJoP4+xgbYjPIEzY=
+	t=1706933912; cv=none; b=dvR21u4wiCzfgp9LmZi4/oZvcE9rnBnkaXRxwDz8bbEsJUmmXZu5WbtyXRd91O8VULRdlEPNnx2nQxa42aNa60XjkNBZP2LoZwq0PqPz0Yd8BQ/pb/veSNnhqvs5rP7cyQFZeqfrk//3QaXAYki9JszDCUG3IkPdqC6jnhe6RNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933912; c=relaxed/simple;
-	bh=v0tHmO/Scku17K03yltkwaWe+00Sr+nuTov9JXbufms=;
+	bh=cgFMRMvYvGnZeANhKquEqx4qWLEygxH3wJoIAdMwFjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmHmYRrcvrxMR11iNQ9vNLpjFh/8ZMVajA7CBzVCTnwaKXG1r0BUXIIsT+qIk53guBwIkqNpg9C1pO4Hk1mi79Sw+qvI/Jso8eIWBw3NoOYwqP6kLnUAwi2u4Uuau/Fz4hwB5RLAbF6szjG7c7fxhkxdedS5NH69EpxmjSOn9XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1fOdfH3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W00dmho22zkxStWcuLBC82B4E+cJJLU6NfBYLiPxVIxnnDNOjYC/QTM6J4cxkTzHps2PvfJ/p8hsz6m5nq4sVGPDb507zODnrksWY0ElGX4lZaLdJW9EF2UjxFWY+AzyTrcEdVDnejfdn6mEMzUJbWsKx2j/5zKD1sD6/D0L91E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wtk88UI1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1fOdfH3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F35C43399;
-	Sat,  3 Feb 2024 04:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wtk88UI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8ABC433F1;
+	Sat,  3 Feb 2024 04:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933911;
-	bh=v0tHmO/Scku17K03yltkwaWe+00Sr+nuTov9JXbufms=;
+	s=korg; t=1706933912;
+	bh=cgFMRMvYvGnZeANhKquEqx4qWLEygxH3wJoIAdMwFjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1fOdfH3tG72rHFDxArBrAa0ajR+o5Yirz3vBp0wl20NHQ5d2q2rWJze7YpkH40aI
-	 QEnEO0H0IzhZhuRYUlzJNaRx7hloZeEB/SMVUzJ9NdYSDXyw4qA7Jn/7CYNSzbZfxP
-	 3Gs2VcGuE93B7/r8NRi4lHrafEe39UB0U6N0f9H8=
+	b=Wtk88UI16tU6URrrBdVyjvFdAeH5TIpi1bR9SqeMRN3Tk1oOoRtJbW3/rnB7664Ec
+	 Xw8mQevWiGj5ayfT24RDFdU8o4fKQwNBj8OCiTyTkJh5VNArE8kPQli1Gs1zuMy+ws
+	 IFE8TdBiBtZFP/mnvYfiqDKLnJ+PVdSmkC8xPClk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Eric Van Hensbergen <ericvh@kernel.org>,
+	Latchesar Ionkov <lucho@ionkov.net>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	v9fs@lists.linux.dev,
+	linux-cachefs@redhat.com,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 264/353] PCI/AER: Decode Requester ID when no error info found
-Date: Fri,  2 Feb 2024 20:06:22 -0800
-Message-ID: <20240203035412.109424914@linuxfoundation.org>
+Subject: [PATCH 6.7 265/353] 9p: Fix initialisation of netfs_inode for 9p
+Date: Fri,  2 Feb 2024 20:06:23 -0800
+Message-ID: <20240203035412.136380818@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,67 +58,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 1291b716bbf969e101d517bfb8ba18d958f758b8 ]
+[ Upstream commit 9546ac78b232bac56ff975072b1965e0e755ebd4 ]
 
-When a device with AER detects an error, it logs error information in its
-own AER Error Status registers.  It may send an Error Message to the Root
-Port (RCEC in the case of an RCiEP), which logs the fact that an Error
-Message was received (Root Error Status) and the Requester ID of the
-message source (Error Source Identification).
+The 9p filesystem is calling netfs_inode_init() in v9fs_init_inode() -
+before the struct inode fields have been initialised from the obtained file
+stats (ie. after v9fs_stat2inode*() has been called), but netfslib wants to
+set a couple of its fields from i_size.
 
-aer_print_port_info() prints the Requester ID from the Root Port Error
-Source in the usual Linux "bb:dd.f" format, but when find_source_device()
-finds no error details in the hierarchy below the Root Port, it printed the
-raw Requester ID without decoding it.
-
-Decode the Requester ID in the usual Linux format so it matches other
-messages.
-
-Sample message changes:
-
-  - pcieport 0000:00:1c.5: AER: Correctable error received: 0000:00:1c.5
-  - pcieport 0000:00:1c.5: AER: can't find device of ID00e5
-  + pcieport 0000:00:1c.5: AER: Correctable error message received from 0000:00:1c.5
-  + pcieport 0000:00:1c.5: AER: found no error details for 0000:00:1c.5
-
-Link: https://lore.kernel.org/r/20231206224231.732765-3-helgaas@kernel.org
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: Marc Dionne <marc.dionne@auristor.com>
+Tested-by: Dominique Martinet <asmadeus@codewreck.org>
+Acked-by: Dominique Martinet <asmadeus@codewreck.org>
+cc: Eric Van Hensbergen <ericvh@kernel.org>
+cc: Latchesar Ionkov <lucho@ionkov.net>
+cc: Dominique Martinet <asmadeus@codewreck.org>
+cc: Christian Schoenebeck <linux_oss@crudebyte.com>
+cc: v9fs@lists.linux.dev
+cc: linux-cachefs@redhat.com
+cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aer.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/9p/v9fs_vfs.h       | 1 +
+ fs/9p/vfs_inode.c      | 6 +++---
+ fs/9p/vfs_inode_dotl.c | 1 +
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index 42a3bd35a3e1..38e3346772cc 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -740,7 +740,7 @@ static void aer_print_port_info(struct pci_dev *dev, struct aer_err_info *info)
- 	u8 bus = info->id >> 8;
- 	u8 devfn = info->id & 0xff;
- 
--	pci_info(dev, "%s%s error received: %04x:%02x:%02x.%d\n",
-+	pci_info(dev, "%s%s error message received from %04x:%02x:%02x.%d\n",
- 		 info->multi_error_valid ? "Multiple " : "",
- 		 aer_error_severity_string[info->severity],
- 		 pci_domain_nr(dev->bus), bus, PCI_SLOT(devfn),
-@@ -929,7 +929,12 @@ static bool find_source_device(struct pci_dev *parent,
- 		pci_walk_bus(parent->subordinate, find_device_iter, e_info);
- 
- 	if (!e_info->error_dev_num) {
--		pci_info(parent, "can't find device of ID%04x\n", e_info->id);
-+		u8 bus = e_info->id >> 8;
-+		u8 devfn = e_info->id & 0xff;
-+
-+		pci_info(parent, "found no error details for %04x:%02x:%02x.%d\n",
-+			 pci_domain_nr(parent->bus), bus, PCI_SLOT(devfn),
-+			 PCI_FUNC(devfn));
- 		return false;
+diff --git a/fs/9p/v9fs_vfs.h b/fs/9p/v9fs_vfs.h
+index 731e3d14b67d..0e8418066a48 100644
+--- a/fs/9p/v9fs_vfs.h
++++ b/fs/9p/v9fs_vfs.h
+@@ -42,6 +42,7 @@ struct inode *v9fs_alloc_inode(struct super_block *sb);
+ void v9fs_free_inode(struct inode *inode);
+ struct inode *v9fs_get_inode(struct super_block *sb, umode_t mode,
+ 			     dev_t rdev);
++void v9fs_set_netfs_context(struct inode *inode);
+ int v9fs_init_inode(struct v9fs_session_info *v9ses,
+ 		    struct inode *inode, umode_t mode, dev_t rdev);
+ void v9fs_evict_inode(struct inode *inode);
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index b845ee18a80b..90dc5ef75516 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -246,7 +246,7 @@ void v9fs_free_inode(struct inode *inode)
+ /*
+  * Set parameters for the netfs library
+  */
+-static void v9fs_set_netfs_context(struct inode *inode)
++void v9fs_set_netfs_context(struct inode *inode)
+ {
+ 	struct v9fs_inode *v9inode = V9FS_I(inode);
+ 	netfs_inode_init(&v9inode->netfs, &v9fs_req_ops);
+@@ -326,8 +326,6 @@ int v9fs_init_inode(struct v9fs_session_info *v9ses,
+ 		err = -EINVAL;
+ 		goto error;
  	}
- 	return true;
+-
+-	v9fs_set_netfs_context(inode);
+ error:
+ 	return err;
+ 
+@@ -359,6 +357,7 @@ struct inode *v9fs_get_inode(struct super_block *sb, umode_t mode, dev_t rdev)
+ 		iput(inode);
+ 		return ERR_PTR(err);
+ 	}
++	v9fs_set_netfs_context(inode);
+ 	return inode;
+ }
+ 
+@@ -464,6 +463,7 @@ static struct inode *v9fs_qid_iget(struct super_block *sb,
+ 		goto error;
+ 
+ 	v9fs_stat2inode(st, inode, sb, 0);
++	v9fs_set_netfs_context(inode);
+ 	v9fs_cache_inode_get_cookie(inode);
+ 	unlock_new_inode(inode);
+ 	return inode;
+diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
+index c7319af2f471..d0636b99f05b 100644
+--- a/fs/9p/vfs_inode_dotl.c
++++ b/fs/9p/vfs_inode_dotl.c
+@@ -128,6 +128,7 @@ static struct inode *v9fs_qid_iget_dotl(struct super_block *sb,
+ 		goto error;
+ 
+ 	v9fs_stat2inode_dotl(st, inode, 0);
++	v9fs_set_netfs_context(inode);
+ 	v9fs_cache_inode_get_cookie(inode);
+ 	retval = v9fs_get_acl(inode, fid);
+ 	if (retval)
 -- 
 2.43.0
 
