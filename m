@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D799710A0A;
-	Sat,  3 Feb 2024 04:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E49E10A0A;
+	Sat,  3 Feb 2024 04:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933584; cv=none; b=uzfvt8YTfN0pkXUkYBBQ3PYbFO30pPknJlwmeo6LatYFGWrgP0+QS4OVi+mML9fluKYvCefE+Rpvw424pmwLrSDYUeOfefeNhZqwFvowulz6/ltH//vaS/PJ5kTKGYTS+btYLVJC0cQoA/ApNsXYhReA3/Urihp8uVJWFDTM/K4=
+	t=1706933585; cv=none; b=des90LufNsCQHfE+nsJq4Ro3WnXH9ySYosB69eiEvvez/JOXbgj465WbtXNU7HXocJuOvSeKoes/G7lXUP4CaYjR+i9I5ydw/sRsd13y6roImTNo61HnNlLnPTV8O3n+eOGvzdQC0XMRdgFCE2H3l6tYSMANDbWJgsLai13qrSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933584; c=relaxed/simple;
-	bh=/HUEX0FQ4OREj+wCKcWNuK+vfbdyibq1g6+uXfos32Q=;
+	s=arc-20240116; t=1706933585; c=relaxed/simple;
+	bh=LJaB3+PWvhTEZVQwnL0o2lpGrZxaa5ciZvfO0rNNOH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etVsiCZnv6vOzf5T7A7mVZTIUV33iAPbBlKhyLgcEdJnVb/PiC0eiiba2sKqSyq1SkqWF//Yo0kjZZ15pmnr8+nnHQvw4P5U+ixhia5aJjdYN+II0pe+amaBo8czTiMWlTKz+xQBLi8yLV+/xvbYYtWIYEQyjgUYNdwDFMVdOnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovogIzOH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=edmoiw3A+6pi0uCk367Yo69Q1/gB/wbGOVjbTkVKJJUJQV/TY3A0zHhm76toi2g88FsNnG/SjwVqKDPNmkrb1BACIxiunubFOJkOFNn4x6J/Cz2qYP3NvVy4ykek7nMSnh96gDSxwsXu0gZA4csTdQKS3lyJ886q9DGPh9T/CEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Up9iXNT4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovogIzOH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04C0C43390;
-	Sat,  3 Feb 2024 04:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Up9iXNT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552F1C433F1;
+	Sat,  3 Feb 2024 04:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933584;
-	bh=/HUEX0FQ4OREj+wCKcWNuK+vfbdyibq1g6+uXfos32Q=;
+	s=korg; t=1706933585;
+	bh=LJaB3+PWvhTEZVQwnL0o2lpGrZxaa5ciZvfO0rNNOH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovogIzOHkL0QMsN0EUQTL635+eU7pwrI+SsDLzGCShnODoH+IsfY7YGzqftYjoDO4
-	 0ttCss16sXltd3WJbEYsO2UpDJ0pZUFFLHpWIuiUIug26aAHT72OpH/6r/f0Iuvbxv
-	 FTz4GAek0EdQzhIW/UGXYfOzLfl8yweUwikFXxq8=
+	b=Up9iXNT46X7V6Pn+GO7ZKbwgAZN/GZbSneOYGlhgLR4TxgK5nZ2INquXjvo3IKF8r
+	 lvu+0J79yDoVH0sAQSpEBXVM7PRDquFGxjD+5MmbPN7wejfwFolLiknoif92c9SRKP
+	 QZacCDD5RAGJPdF3fUN2vL0KN6TJjSoEmhRWttqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	clancy shang <clancy.shang@quectel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/322] scsi: hisi_sas: Set .phy_attached before notifing phyup event HISI_PHYE_PHY_UP_PM
-Date: Fri,  2 Feb 2024 20:03:46 -0800
-Message-ID: <20240203035403.317171504@linuxfoundation.org>
+Subject: [PATCH 6.6 147/322] Bluetooth: hci_sync: fix BR/EDR wakeup bug
+Date: Fri,  2 Feb 2024 20:04:04 -0800
+Message-ID: <20240203035403.937973395@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,54 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yihang Li <liyihang9@huawei.com>
+From: clancy shang <clancy.shang@quectel.com>
 
-[ Upstream commit ce26497c745d0541aec930d5211b431a1c26af97 ]
+[ Upstream commit d4b70ba1eab450eff9c5ef536f07c01d424b7eda ]
 
-Currently in directly attached scenario, the phyup event
-HISI_PHYE_PHY_UP_PM is notified before .phy_attached is set - this may
-cause the phyup work hisi_sas_bytes_dmaed() execution failed and the
-attached device will not be found.
+when Bluetooth set the event mask and enter suspend, the controller
+has hci mode change event coming, it cause controller can not enter
+sleep mode. so it should to set the hci mode change event mask before
+enter suspend.
 
-To fix it, set .phy_attached before notifing phyup event.
-
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1702525516-51258-2-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: clancy shang <clancy.shang@quectel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_sync.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 520fffc14282..e914c0c13bb5 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -1606,6 +1606,11 @@ static irqreturn_t phy_up_v3_hw(int phy_no, struct hisi_hba *hisi_hba)
- 	}
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 9e71362c04b4..5c4efa624625 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -3800,12 +3800,14 @@ static int hci_set_event_mask_sync(struct hci_dev *hdev)
+ 	if (lmp_bredr_capable(hdev)) {
+ 		events[4] |= 0x01; /* Flow Specification Complete */
  
- 	phy->port_id = port_id;
-+	spin_lock(&phy->lock);
-+	/* Delete timer and set phy_attached atomically */
-+	del_timer(&phy->timer);
-+	phy->phy_attached = 1;
-+	spin_unlock(&phy->lock);
- 
- 	/*
- 	 * Call pm_runtime_get_noresume() which pairs with
-@@ -1619,11 +1624,6 @@ static irqreturn_t phy_up_v3_hw(int phy_no, struct hisi_hba *hisi_hba)
- 
- 	res = IRQ_HANDLED;
- 
--	spin_lock(&phy->lock);
--	/* Delete timer and set phy_attached atomically */
--	del_timer(&phy->timer);
--	phy->phy_attached = 1;
--	spin_unlock(&phy->lock);
- end:
- 	if (phy->reset_completion)
- 		complete(phy->reset_completion);
+-		/* Don't set Disconnect Complete when suspended as that
+-		 * would wakeup the host when disconnecting due to
+-		 * suspend.
++		/* Don't set Disconnect Complete and mode change when
++		 * suspended as that would wakeup the host when disconnecting
++		 * due to suspend.
+ 		 */
+-		if (hdev->suspended)
++		if (hdev->suspended) {
+ 			events[0] &= 0xef;
++			events[2] &= 0xf7;
++		}
+ 	} else {
+ 		/* Use a different default for LE-only devices */
+ 		memset(events, 0, sizeof(events));
 -- 
 2.43.0
 
