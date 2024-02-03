@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01EB111AE;
-	Sat,  3 Feb 2024 04:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253B8111AE;
+	Sat,  3 Feb 2024 04:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933573; cv=none; b=oB4QAVLRDNcbx4MZThVLt+UPDqnFeVs5rp7QvVMA7Qd43HffKJh+KbcYzodBKsk72plul1Rny4GrVJ/9xW7QYLO7z5HXfhCRk7rnUtbBDjt/bDjM3MPEGyEWBb07xLAPNBxiFeMA4ZBbBk9222POXtMgD7frSgzynbpOiBNn5Ys=
+	t=1706933574; cv=none; b=XxeFGuQsVX0D17TKEmOFtzBsB7c3OaqboagS/DXtxU4x35ct9F+HDbtHHacsEv+EMV4mT1pS8+xaelxQYfULN3KjkH1k5/QSFCK06aoXhP9ywMJR5TYHVHCxL9loJN8lHTvq/Yfgxt3VMj0Vu4+JbqvTJO57evF6ErO9ldcx5u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933573; c=relaxed/simple;
-	bh=78mIPIL1k+1Dl40KjN9pphfvM52ZY6bRHIgXEb7+Ck0=;
+	s=arc-20240116; t=1706933574; c=relaxed/simple;
+	bh=Fbk69N6Bbch7EPTJszWSb3qo64LsLIipV7G59ibZlAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByQWoBb8HRJ5VWLPCxzZoZWVbHSbpCE0vA/dcBcpQUohwHwk/qIQKax452GJktSJJQFO9Cc1ygkWqfmI0RxRD2xCSIcbd0FsTxNvyWkiKx1d369IWBNFzxHfBOZBXJ86C50LS/RbaupYdgj3wfSInusiYUZRf6Qj8SaCNeZdp2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=up5Wzswg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iC5wQj6dDVgiBzSpts/K+0xIfSZRyblBB8j3xhZbPCZL8UifEs1kKmvojfmnMbl+Td7YzvRtoTznpc6A4yuTVxj1ZJUQRL81NvVuZE0ebi4WCIgj/jDbALv7XrEhXUOlC4SOv1n+pQwws1vLtKJHySvmcDTIoeXzc+UhrySZhk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxgt+lrL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="up5Wzswg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2E6C433F1;
-	Sat,  3 Feb 2024 04:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxgt+lrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8845DC433B1;
+	Sat,  3 Feb 2024 04:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933572;
-	bh=78mIPIL1k+1Dl40KjN9pphfvM52ZY6bRHIgXEb7+Ck0=;
+	s=korg; t=1706933573;
+	bh=Fbk69N6Bbch7EPTJszWSb3qo64LsLIipV7G59ibZlAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=up5WzswgGfBYpJGemhmM+AgNFgVLNDPRJtUkorHKXHKgsYeGFxuogjAFWx3+xbLlj
-	 aBtKaCqYCPrNfUEYJGhZ6BmOJ0iSOs2bYuroINbUztfPMIqThmjNk9w+a7IMonc4kI
-	 XombpePTfaSu+1swLUfY88NYxKQxHQN/kj4dpAjc=
+	b=sxgt+lrLXcy2oDjjb8xvMHRSG8Is573LBeKgRAkUAzwz55rpfY3rWaUpoIfyaMM9O
+	 Mt0oJqXEDuv7Wd2KqFxX4h8RiU0gxjFJEXvIluncZ1Ouly5GE66mtiT0SUjeInYnHT
+	 IxAkLzo5xYdtAZ9U10YZciOLwDtsTZh/xjSqg7V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Waldekranz <tobias@waldekranz.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/322] net: mvmdio: Avoid excessive sleeps in polled mode
-Date: Fri,  2 Feb 2024 20:03:18 -0800
-Message-ID: <20240203035402.405746322@linuxfoundation.org>
+Subject: [PATCH 6.6 102/322] arm64: dts: qcom: sm8550: fix soundwire controllers node name
+Date: Fri,  2 Feb 2024 20:03:19 -0800
+Message-ID: <20240203035402.445010438@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,137 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Waldekranz <tobias@waldekranz.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 7dd12fe34686d89c332b1a05104d18d728591f0a ]
+[ Upstream commit 07c88da81caf0e72c3690b689d30f0d325cfeff4 ]
 
-Before this change, when operating in polled mode, i.e. no IRQ is
-available, every individual C45 access would be hit with a 150us sleep
-after the bus access.
+Fix the following dt bindings check:
+arch/arm64/boot/dts/qcom/sm8550-mtp.dtb: soundwire-controller@6ab0000: $nodename:0: 'soundwire-controller@6ab0000' does not match '^soundwire(@.*)?$'
+from schema $id: http://devicetree.org/schemas/soundwire/qcom,soundwire.yaml#
 
-For example, on a board with a CN9130 SoC connected to an MV88X3310
-PHY, a single C45 read would take around 165us:
-
-    root@infix:~$ mdio f212a600.mdio-mii mmd 4:1 bench 0xc003
-    Performed 1000 reads in 165ms
-
-By replacing the long sleep with a tighter poll loop, we observe a 10x
-increase in bus throughput:
-
-    root@infix:~$ mdio f212a600.mdio-mii mmd 4:1 bench 0xc003
-    Performed 1000 reads in 15ms
-
-Signed-off-by: Tobias Waldekranz <tobias@waldekranz.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Tested-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20231204100811.2708884-3-tobias@waldekranz.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20231106-topic-sm8550-upstream-soundwire-bindings-fix-v1-1-4ded91c805a1@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvmdio.c | 53 ++++++++-------------------
- 1 file changed, 16 insertions(+), 37 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvmdio.c b/drivers/net/ethernet/marvell/mvmdio.c
-index 674913184ebf..2ef613a237d8 100644
---- a/drivers/net/ethernet/marvell/mvmdio.c
-+++ b/drivers/net/ethernet/marvell/mvmdio.c
-@@ -23,6 +23,7 @@
- #include <linux/delay.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
-@@ -58,11 +59,6 @@
-  * - Armada 370       (Globalscale Mirabox):   41us to 43us (Polled)
-  */
- #define MVMDIO_SMI_TIMEOUT		1000 /* 1000us = 1ms */
--#define MVMDIO_SMI_POLL_INTERVAL_MIN	45
--#define MVMDIO_SMI_POLL_INTERVAL_MAX	55
--
--#define MVMDIO_XSMI_POLL_INTERVAL_MIN	150
--#define MVMDIO_XSMI_POLL_INTERVAL_MAX	160
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 3a228d4f0c14..076715ef09d5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -2044,7 +2044,7 @@
+ 			#sound-dai-cells = <1>;
+ 		};
  
- struct orion_mdio_dev {
- 	void __iomem *regs;
-@@ -84,8 +80,6 @@ enum orion_mdio_bus_type {
+-		swr3: soundwire-controller@6ab0000 {
++		swr3: soundwire@6ab0000 {
+ 			compatible = "qcom,soundwire-v2.0.0";
+ 			reg = <0 0x06ab0000 0 0x10000>;
+ 			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
+@@ -2090,7 +2090,7 @@
+ 			#sound-dai-cells = <1>;
+ 		};
  
- struct orion_mdio_ops {
- 	int (*is_done)(struct orion_mdio_dev *);
--	unsigned int poll_interval_min;
--	unsigned int poll_interval_max;
- };
+-		swr1: soundwire-controller@6ad0000 {
++		swr1: soundwire@6ad0000 {
+ 			compatible = "qcom,soundwire-v2.0.0";
+ 			reg = <0 0x06ad0000 0 0x10000>;
+ 			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
+@@ -2155,7 +2155,7 @@
+ 			#sound-dai-cells = <1>;
+ 		};
  
- /* Wait for the SMI unit to be ready for another operation
-@@ -94,34 +88,23 @@ static int orion_mdio_wait_ready(const struct orion_mdio_ops *ops,
- 				 struct mii_bus *bus)
- {
- 	struct orion_mdio_dev *dev = bus->priv;
--	unsigned long timeout = usecs_to_jiffies(MVMDIO_SMI_TIMEOUT);
--	unsigned long end = jiffies + timeout;
--	int timedout = 0;
-+	unsigned long timeout;
-+	int done;
+-		swr0: soundwire-controller@6b10000 {
++		swr0: soundwire@6b10000 {
+ 			compatible = "qcom,soundwire-v2.0.0";
+ 			reg = <0 0x06b10000 0 0x10000>;
+ 			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
+@@ -2182,7 +2182,7 @@
+ 			status = "disabled";
+ 		};
  
--	while (1) {
--	        if (ops->is_done(dev))
-+	if (dev->err_interrupt <= 0) {
-+		if (!read_poll_timeout_atomic(ops->is_done, done, done, 2,
-+					      MVMDIO_SMI_TIMEOUT, false, dev))
-+			return 0;
-+	} else {
-+		/* wait_event_timeout does not guarantee a delay of at
-+		 * least one whole jiffie, so timeout must be no less
-+		 * than two.
-+		 */
-+		timeout = max(usecs_to_jiffies(MVMDIO_SMI_TIMEOUT), 2);
-+
-+		if (wait_event_timeout(dev->smi_busy_wait,
-+				       ops->is_done(dev), timeout))
- 			return 0;
--	        else if (timedout)
--			break;
--
--	        if (dev->err_interrupt <= 0) {
--			usleep_range(ops->poll_interval_min,
--				     ops->poll_interval_max);
--
--			if (time_is_before_jiffies(end))
--				++timedout;
--	        } else {
--			/* wait_event_timeout does not guarantee a delay of at
--			 * least one whole jiffie, so timeout must be no less
--			 * than two.
--			 */
--			if (timeout < 2)
--				timeout = 2;
--			wait_event_timeout(dev->smi_busy_wait,
--				           ops->is_done(dev), timeout);
--
--			++timedout;
--	        }
- 	}
- 
- 	dev_err(bus->parent, "Timeout: SMI busy for too long\n");
-@@ -135,8 +118,6 @@ static int orion_mdio_smi_is_done(struct orion_mdio_dev *dev)
- 
- static const struct orion_mdio_ops orion_mdio_smi_ops = {
- 	.is_done = orion_mdio_smi_is_done,
--	.poll_interval_min = MVMDIO_SMI_POLL_INTERVAL_MIN,
--	.poll_interval_max = MVMDIO_SMI_POLL_INTERVAL_MAX,
- };
- 
- static int orion_mdio_smi_read(struct mii_bus *bus, int mii_id,
-@@ -194,8 +175,6 @@ static int orion_mdio_xsmi_is_done(struct orion_mdio_dev *dev)
- 
- static const struct orion_mdio_ops orion_mdio_xsmi_ops = {
- 	.is_done = orion_mdio_xsmi_is_done,
--	.poll_interval_min = MVMDIO_XSMI_POLL_INTERVAL_MIN,
--	.poll_interval_max = MVMDIO_XSMI_POLL_INTERVAL_MAX,
- };
- 
- static int orion_mdio_xsmi_read_c45(struct mii_bus *bus, int mii_id,
+-		swr2: soundwire-controller@6d30000 {
++		swr2: soundwire@6d30000 {
+ 			compatible = "qcom,soundwire-v2.0.0";
+ 			reg = <0 0x06d30000 0 0x10000>;
+ 			interrupts = <GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
 -- 
 2.43.0
 
