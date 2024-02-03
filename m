@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F78125A9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADB010976;
 	Sat,  3 Feb 2024 04:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933419; cv=none; b=CRr/PR/Sbb3GqB7jFFXilZ88iMmIdF3IUP59pfzKhQdf9Umbnq76+f0g2FJ2oew4UY4R47W87RzhY/iIQM9ZCtlAdy+Y53o5XMu91nBKiM8hi0/j2Jd++uiNhdJwhZXRawPWp/GyurF6Nob3YPD9Th4TcMH75aSL4FDJVL+QJ7A=
+	t=1706933419; cv=none; b=g+mSJBb2SPp9gcLXxlyPygPhsD7SL0invQXdf+zK9FVw32kYUk7cTmgZXaLO0FCyEbDsnb74c89qSa8xXMPyqgd6ufOdwdXn3Ucs7vqLGGRn4bxaA6FB9vp6t+cGlakUhh1NDpqrpG218ewA2hSydou/I7KZ4VvhxNznTQymNfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933419; c=relaxed/simple;
-	bh=lfJW+YRL3UdMrMIiNGiiTZ9mwSPT7zJLTima4NQhj9M=;
+	bh=JSuhpo9wJBTV7jz4dRUsR6twuSp5hyKnp4eaDMaIYcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PmO+8FjcDgRR0jGFhTpZiffQeWoBxpnu894xa5Yf1jePcMdh+iIKFdJzTQuzXtTJjCXTkQP3jTwwTK3EmhYnyOYWSv5uzgV5YTT9KsEm88/Xhh8C8WQ1573btW0RMdyR7Exz5NUlXkYm4+ylKiWh/FGoh36MxoBvQ7DDI9bIcHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vo4p6YUt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=i4T1ysMEe/X/oMFC7UUpaWC9FZfz1FFsvcCVaIjl/Hhqhg9ZFO1U6mj5yRs3DVjbeEM1llW5F9jWhtXyP8qdreCTcVH23PTMW98qyyOJV0wG0gNCcmZXhiRsEAls8v1TXifx/16Dbhtyqdg+Fqvl4frQotZTd8bdRzHtgRUT7w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFFGmJvc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vo4p6YUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC426C43390;
-	Sat,  3 Feb 2024 04:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFFGmJvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91400C43394;
+	Sat,  3 Feb 2024 04:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933418;
-	bh=lfJW+YRL3UdMrMIiNGiiTZ9mwSPT7zJLTima4NQhj9M=;
+	s=korg; t=1706933419;
+	bh=JSuhpo9wJBTV7jz4dRUsR6twuSp5hyKnp4eaDMaIYcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vo4p6YUthbgfPFaglqeVgLiE3ZY0WHIqCOZmctk4LGYYuZZ4LpqgYPftyHfkEZy79
-	 3VEH4QLGjdKZRUH7gJi5hYuY8XtDRZegzOJG5dCWUxTiexSOZd7H3TqBdeCDn2+Owg
-	 5iQ1Rfgb38wZD84PMilwbVbZRu9oF/c6kyja7m2k=
+	b=BFFGmJvcJ3URWdpQVW7X50gzdcsuKtxk3PknmuOmQRAyH7rZv6Tv2AhHwuJpou9AC
+	 LSdd/EgHGyUolez79fGHYhCxKjcVvUW0RVoZt6wc053tdL8aZQuKuiujemKPMxjFJR
+	 yAeM/phn1ps3jl3uy0oAl4USNELd7ikZE983QZRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/219] drm/amdgpu: Let KFD sync with VM fences
-Date: Fri,  2 Feb 2024 20:05:15 -0800
-Message-ID: <20240203035337.421073874@linuxfoundation.org>
+Subject: [PATCH 6.1 143/219] drm/amdgpu: Fix *fw from request_firmware() not released in amdgpu_ucode_request()
+Date: Fri,  2 Feb 2024 20:05:16 -0800
+Message-ID: <20240203035337.536774547@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -53,37 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Kuehling <Felix.Kuehling@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit ec9ba4821fa52b5efdbc4cdf0a77497990655231 ]
+[ Upstream commit 13a1851f923d9a7a78a477497295c2dfd16ad4a4 ]
 
-Change the rules for amdgpu_sync_resv to let KFD synchronize with VM
-fences on page table reservations. This fixes intermittent memory
-corruption after evictions when using amdgpu_vm_handle_moved to update
-page tables for VM mappings managed through render nodes.
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c:1404 amdgpu_ucode_request() warn: '*fw' from request_firmware() not released on lines: 1404.
 
-Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Lijo Lazar <lijo.lazar@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
-index 090e66a1b284..54bdbd83a8cc 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
-@@ -191,7 +191,8 @@ static bool amdgpu_sync_test_fence(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
+index 6e7058a2d1c8..779707f19c88 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
+@@ -1110,9 +1110,13 @@ int amdgpu_ucode_request(struct amdgpu_device *adev, const struct firmware **fw,
  
- 	/* Never sync to VM updates either. */
- 	if (fence_owner == AMDGPU_FENCE_OWNER_VM &&
--	    owner != AMDGPU_FENCE_OWNER_UNDEFINED)
-+	    owner != AMDGPU_FENCE_OWNER_UNDEFINED &&
-+	    owner != AMDGPU_FENCE_OWNER_KFD)
- 		return false;
+ 	if (err)
+ 		return -ENODEV;
++
+ 	err = amdgpu_ucode_validate(*fw);
+-	if (err)
++	if (err) {
+ 		dev_dbg(adev->dev, "\"%s\" failed to validate\n", fw_name);
++		release_firmware(*fw);
++		*fw = NULL;
++	}
  
- 	/* Ignore fences depending on the sync mode */
+ 	return err;
+ }
 -- 
 2.43.0
 
