@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD994F5F2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E145D1C6BC;
 	Sat,  3 Feb 2024 04:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933836; cv=none; b=YV8HuRDfxk0vfMNhX3XSzMtW2AWqszEqmf2Qk0kl5EofIDSa2IQCmtTbFcev8ppbFaF+j+VEnXIHOc2If5HOy1m2SyRET3vMfbga/F/TftSRScWvNLj5CaujZu1xrpZ7p3u12VaYyHEC1Fulok0WAgofjimkPa9QxBuSBJKbm+M=
+	t=1706933837; cv=none; b=uvPwj4Ulj8+tCyEPd6nf1eA1yJSipXTEwRVli7VEv1VvkKcDohhw0adWwP7rUhRIDvvVE18cmYTUGaUDQ6M/SYUbBI20Avs0MiRiAAUzO8q55TsGA1jtwXDEmm6mfGw+qkMD7NsTQRQIlP0eBuzPOrFlr1nnxw9iCNySJOWhlV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933836; c=relaxed/simple;
-	bh=9Do7iVHwTVlEkU9ULDDAVOMOavYIbg3a9cWlVT39SYA=;
+	s=arc-20240116; t=1706933837; c=relaxed/simple;
+	bh=W35Fu/lOlj1WJF2asbSlvTyo6zSiGHN+6bsaIp2MH1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QCD1LLOVe2YVZ+WmqmDMtWFXJ1GtsGb5jj/sMS0t9/JaKX8xNoJqh2vImS2GbbaVS5L+s9Z9m4Vqmotz9M8/crenHUFVnPgNpVXkN08ayMCho46KVrmONOGXhch9q8mmDW4CHbRp8hww3VV5C/xXFCoVHiPRZJdn9qf2C2g7DWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHUoF+tr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tquT6uHIT7DzEhNeSUNL5PGDLEWwJNrFdH1qDiShj4M9kMO/KUP2ObswtcB6ufGlns1Hp8GL6UGXbbXJVszAD7dGvHVSIUCoS0a767V7MZJHwQsKOl2x+i2X69Vd/1S2BE9HbUdT/rLWrNu7EzCHflOpIHPNSlnFW70opkuZ+w0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvUN/eLG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHUoF+tr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C17C433F1;
-	Sat,  3 Feb 2024 04:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvUN/eLG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D1DC43390;
+	Sat,  3 Feb 2024 04:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933836;
-	bh=9Do7iVHwTVlEkU9ULDDAVOMOavYIbg3a9cWlVT39SYA=;
+	bh=W35Fu/lOlj1WJF2asbSlvTyo6zSiGHN+6bsaIp2MH1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHUoF+trnlf7APE3IvSL6THxT8WguvqRqIK3E5oNKn5GgWwk/OL7zJ/L5/nNv6+DY
-	 iFPt7xllO6nPz3xZv8r/UXfeMjkDzmtK09sIRsA9DgKOVKbQk8rqz0nEBu8FQzm5mV
-	 0ov9ftJDew+M9i2NMKXsnMk+1LkVkJ4KIYAjcjKg=
+	b=qvUN/eLGse9TtLWwdF7UL3Z7z//w6RlVs9YiaPJs0hmgaT5x0ekXRM2IBshnEHsz8
+	 M76akKaBWEGlFcFfgefkQzy+T+SyVeAQ6DKG4Kr7y4TUAWQTNWplFgSTanpxt6aN8o
+	 s2oxW2FlJEdsyYnLbQKZZeyffaXhyc9ji527SIGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 160/353] ARM: dts: usr8200: Fix phy registers
-Date: Fri,  2 Feb 2024 20:04:38 -0800
-Message-ID: <20240203035408.712291770@linuxfoundation.org>
+Subject: [PATCH 6.7 161/353] f2fs: fix to check return value of f2fs_reserve_new_block()
+Date: Fri,  2 Feb 2024 20:04:39 -0800
+Message-ID: <20240203035408.736926069@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,77 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 18a1ee9d716d355361da2765f87dbbadcdea03bf ]
+[ Upstream commit 956fa1ddc132e028f3b7d4cf17e6bfc8cb36c7fd ]
 
-The MV88E6060 switch has internal PHY registers at MDIO
-addresses 0x00..0x04. Tie each port to the corresponding
-PHY.
+Let's check return value of f2fs_reserve_new_block() in do_recover_data()
+rather than letting it fails silently.
 
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20231020-ixp4xx-usr8200-dtsfix-v1-1-3a8591dea259@linaro.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Also refactoring check condition on return value of f2fs_reserve_new_block()
+as below:
+- trigger f2fs_bug_on() only for ENOSPC case;
+- use do-while statement to avoid redundant codes;
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ixp/intel-ixp42x-usrobotics-usr8200.dts   | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/f2fs/recovery.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts
-index 90fd51b36e7d..2c89db34c8d8 100644
---- a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts
-+++ b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts
-@@ -165,6 +165,24 @@
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
+index b56d0f1078a7..16415c770b45 100644
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -712,7 +712,16 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		 */
+ 		if (dest == NEW_ADDR) {
+ 			f2fs_truncate_data_blocks_range(&dn, 1);
+-			f2fs_reserve_new_block(&dn);
++			do {
++				err = f2fs_reserve_new_block(&dn);
++				if (err == -ENOSPC) {
++					f2fs_bug_on(sbi, 1);
++					break;
++				}
++			} while (err &&
++				IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
++			if (err)
++				goto err;
+ 			continue;
+ 		}
  
-+				/*
-+				 * PHY 0..4 are internal to the MV88E6060 switch but appear
-+				 * as independent devices.
-+				 */
-+				phy0: ethernet-phy@0 {
-+					reg = <0>;
-+				};
-+				phy1: ethernet-phy@1 {
-+					reg = <1>;
-+				};
-+				phy2: ethernet-phy@2 {
-+					reg = <2>;
-+				};
-+				phy3: ethernet-phy@3 {
-+					reg = <3>;
-+				};
-+
-+				/* Altima AMI101L used by the WAN port */
- 				phy9: ethernet-phy@9 {
- 					reg = <9>;
- 				};
-@@ -181,21 +199,25 @@
- 						port@0 {
- 							reg = <0>;
- 							label = "lan1";
-+							phy-handle = <&phy0>;
- 						};
+@@ -720,12 +729,14 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		if (f2fs_is_valid_blkaddr(sbi, dest, META_POR)) {
  
- 						port@1 {
- 							reg = <1>;
- 							label = "lan2";
-+							phy-handle = <&phy1>;
- 						};
- 
- 						port@2 {
- 							reg = <2>;
- 							label = "lan3";
-+							phy-handle = <&phy2>;
- 						};
- 
- 						port@3 {
- 							reg = <3>;
- 							label = "lan4";
-+							phy-handle = <&phy3>;
- 						};
- 
- 						port@5 {
+ 			if (src == NULL_ADDR) {
+-				err = f2fs_reserve_new_block(&dn);
+-				while (err &&
+-				       IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION))
++				do {
+ 					err = f2fs_reserve_new_block(&dn);
+-				/* We should not get -ENOSPC */
+-				f2fs_bug_on(sbi, err);
++					if (err == -ENOSPC) {
++						f2fs_bug_on(sbi, 1);
++						break;
++					}
++				} while (err &&
++					IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
+ 				if (err)
+ 					goto err;
+ 			}
 -- 
 2.43.0
 
