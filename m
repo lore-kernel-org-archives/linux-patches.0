@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481D013AC6;
-	Sat,  3 Feb 2024 04:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0711813AC6;
+	Sat,  3 Feb 2024 04:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933809; cv=none; b=suO3XcGPqWnRVw7SYtKlWSR1EUuXRZ6YCAkV30aznk02H0qD1rtRmzVgaRRWRmLb/+au+PDoMQSCLquS9HXszaav5yUHN2d+SfYDlGtqFlQ5t/15uRXV6vJPvz/ml0nhyuzJCaU8Nob3EFvfH5Ppvm0ObjrTbJ8BjzL6+dasNPA=
+	t=1706933810; cv=none; b=RAvnOCu99nqNPB/X8FSH8Q9vnKN0l9AcTSrKSkrnbgSqdFhIS/h6ACbh8kYuNFuUH2xxXDLjcW+l2sNGenUjHPkpOfGAmK/g8iBx6gKAzqOs3aAoBOAzzvuC/38f+yuwkeiX+d1RxTUAJZKoL8foex4snJQa4+AINFusQakpVI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933809; c=relaxed/simple;
-	bh=Ly63srSRoJMr9QDZRUjxeco28Obu2gqxmmzBHuLdrdU=;
+	s=arc-20240116; t=1706933810; c=relaxed/simple;
+	bh=QqqoQNf5mPSwkHw3/GLMf5XkDr/12ARtLHixZm5cN9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V20XPONDudf3CLulNSS28VVxEc8wV6q99s9fmG04Ci1xsb8QxUIYmMI5/winSqF6UEUvBejlzQiQ+oNY6sJ4iehcjc+FqvIZ00P98u4J0pNQNnd0d+pXWShVw2S9rfO0Y6FQlHnSvdjv+IdCAaKoIuIUyMuFEKp+HK/BCkIE4Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxzq8F/g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4Sh0YmHPC7HI/ELaKxR6s/H7T4STwVqGEe5yKW8M01Q6xcPTjEOYpxFpdN26YJDrBfwNzE9M01LdZdZjcD6sc6WOe9rqOMqC7x50K3+jwjdvsQUfMH2rwFwl6EKUsjJrtcNB8Xx02AoEDPFgk/WJ3dBsAa5l30a/JI3r1H/SKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lkz4zLz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxzq8F/g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139CFC43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lkz4zLz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C213EC433F1;
 	Sat,  3 Feb 2024 04:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933809;
-	bh=Ly63srSRoJMr9QDZRUjxeco28Obu2gqxmmzBHuLdrdU=;
+	bh=QqqoQNf5mPSwkHw3/GLMf5XkDr/12ARtLHixZm5cN9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yxzq8F/ga8WRI70ROOhwz+IK3o4BwMllCA0K+DD6kIKItdNB6CKVvy5k/G6XRUTex
-	 BtL/Hv8yEvwCV1Y7VN1PLy5o2KyaNShtnVYCKrms41JVhA62B+AcT19kYiN2j+vltB
-	 XKK5+kFP9Jx+ERsUEdaVa/pVwBAU87a8XLk1X/Vw=
+	b=Lkz4zLz9zZ+osSWQJ5tn9NpNPgDR0Thbnv00FrMK9US/diOeirRYql7JBK4K0kzpD
+	 XG+3g4uTwl2csvResXKfYRJiP+D1AuiCXo9FoaVHxPC9+Euc0X9epvL9GCCfV+P/R8
+	 7zQlKuqoa+keIGiWdTX6Q8BptMRhiNeMjz/fPOwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 125/353] ARM: dts: imx23/28: Fix the DMA controller node name
-Date: Fri,  2 Feb 2024 20:04:03 -0800
-Message-ID: <20240203035407.688903687@linuxfoundation.org>
+Subject: [PATCH 6.7 126/353] scsi: lpfc: Reinitialize an NPIVs VMID data structures after FDISC
+Date: Fri,  2 Feb 2024 20:04:04 -0800
+Message-ID: <20240203035407.713943231@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,51 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit 858d83ca4b50bbc8693d95cc94310e6d791fb2e6 ]
+[ Upstream commit 8dc8eb89f4df74593ba4bf30c3d31a0fc6d3ea47 ]
 
-Per fsl,mxs-dma.yaml, the node name should be 'dma-controller'.
+After a follow up FDISC cmpl, an NPIV's VMID data structures are not
+updated.
 
-Change it to fix the following dt-schema warning.
+Fix by calling lpfc_reinit_vmid and copying the physical port's vmid_flag
+to the NPIV's vmid_flag in the NPIV registration cmpl code path.
 
-imx28-apf28.dtb: dma-apbx@80024000: $nodename:0: 'dma-apbx@80024000' does not match '^dma-controller(@.*)?$'
-	from schema $id: http://devicetree.org/schemas/dma/fsl,mxs-dma.yaml#
-
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20231207224039.35466-3-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/mxs/imx23.dtsi | 2 +-
- arch/arm/boot/dts/nxp/mxs/imx28.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/lpfc/lpfc_els.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm/boot/dts/nxp/mxs/imx23.dtsi b/arch/arm/boot/dts/nxp/mxs/imx23.dtsi
-index fdf18b7cb2f6..9cba1d0224f4 100644
---- a/arch/arm/boot/dts/nxp/mxs/imx23.dtsi
-+++ b/arch/arm/boot/dts/nxp/mxs/imx23.dtsi
-@@ -412,7 +412,7 @@
- 				status = "disabled";
- 			};
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index 0829fe6ddff8..7e9b93460e64 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -11130,6 +11130,14 @@ lpfc_cmpl_reg_new_vport(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
+ 	lpfc_nlp_put(ndlp);
  
--			dma_apbx: dma-apbx@80024000 {
-+			dma_apbx: dma-controller@80024000 {
- 				compatible = "fsl,imx23-dma-apbx";
- 				reg = <0x80024000 0x2000>;
- 				interrupts = <7>, <5>, <9>, <26>,
-diff --git a/arch/arm/boot/dts/nxp/mxs/imx28.dtsi b/arch/arm/boot/dts/nxp/mxs/imx28.dtsi
-index 6932d23fb29d..37b9d409a5cd 100644
---- a/arch/arm/boot/dts/nxp/mxs/imx28.dtsi
-+++ b/arch/arm/boot/dts/nxp/mxs/imx28.dtsi
-@@ -990,7 +990,7 @@
- 				status = "disabled";
- 			};
+ 	mempool_free(pmb, phba->mbox_mem_pool);
++
++	/* reinitialize the VMID datastructure before returning.
++	 * this is specifically for vport
++	 */
++	if (lpfc_is_vmid_enabled(phba))
++		lpfc_reinit_vmid(vport);
++	vport->vmid_flag = vport->phba->pport->vmid_flag;
++
+ 	return;
+ }
  
--			dma_apbx: dma-apbx@80024000 {
-+			dma_apbx: dma-controller@80024000 {
- 				compatible = "fsl,imx28-dma-apbx";
- 				reg = <0x80024000 0x2000>;
- 				interrupts = <78>, <79>, <66>, <0>,
 -- 
 2.43.0
 
