@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C1A101C1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E7E101C1;
 	Sat,  3 Feb 2024 04:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933401; cv=none; b=pkghgteLuba2QYsyEh7CQxuB0ABOeIrlOHrxw6COccXO6xQ0GhkmeUQ3Yus7Kuh1Cs1xM7w2Lv438QKXOm63BxU7atRlxzQu8/H8Y0z3DM3M2GeTTdt1UlQL0CsXtJ2kOwozlG6u+EtvLkz9l+wIcVVUZ/zp/TEgPIdPasY40Bc=
+	t=1706933401; cv=none; b=Q+TBne6lH582WTtI1n0ARyU2UpeA+uMW2jxZ7mwSLVuDVsTE3qEWwtuqznLmfSYTZCM9FPDrQoNIyiQCrO3AWmp03+l9jOWg70JqEAqhViJgemsfhBR+xbu46ExX3W6ARpupYhx8Ha3K3UmW1VE6cg559g6cS2mnipTKF9MZvkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933401; c=relaxed/simple;
-	bh=dWPIQ0ScG5L8xH7oZPI+/mrqsRlIiNIsUENxPBxtKmM=;
+	bh=nt9lmC/YR2BOOC5Hc4RcYflwuCd4Ue2YbQoQ+c/XV9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfMcoJfQZC+/9HeygwvLYrhUTr2QgPN3uShyWu2YCZslieEFHjrWdn+NuMKEThpxb+JSyt4SSOQgnRmMYAtDj29Dy3IYpwoZSpMY8kSyFq5cBdQZbqy5OjkFcnZkMIgI1H4cWS2YqsU0pcnuUrn+U0kYZoZUleP2fnyjfkWiueU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBlO345E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rioKiVReHgxRUpNFvX0TIZ8kS7KUt7Kokgg2Y+4kq/28kRUtRJA/NdIKnm8CFhqlGmfnHDV28WSQQqp59Cuh96XWgWUTQchcWCSpN5zSX8z6O9QdWsNhEB8fsGvHDYUYfqyx71qV7FiNHacGfOCUq92JSpzAriszV337hVaGcyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMzsuLAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBlO345E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE075C43390;
-	Sat,  3 Feb 2024 04:10:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMzsuLAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F99DC433F1;
+	Sat,  3 Feb 2024 04:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933401;
-	bh=dWPIQ0ScG5L8xH7oZPI+/mrqsRlIiNIsUENxPBxtKmM=;
+	bh=nt9lmC/YR2BOOC5Hc4RcYflwuCd4Ue2YbQoQ+c/XV9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBlO345EzxLtU0y3jH6h4NDxSqUuxDIuIikOI9DTCac1HhAtZaMjY5VrFnjKA+5AP
-	 gcSyrr8RzpcvUoTmKBYUOo91ECP5o+474IRBIfZiUkga6LoQGJZA3/Gj2ieLFqAM6p
-	 xlr9zqU+mVj0kT0uGI3agx4NjmAHsDN4JhtYD1W8=
+	b=OMzsuLAOMWq24jDqn4mlCRiirgwPd5hkWxlSt5u94+I8hqLu3Z1jJVC+pfcttjwuA
+	 qiMlUk+oA4rb7rDF8jVNJHpg5K050/2BHO51sZdXtGBa6cfvsv7bHMWs5cGncR1mjh
+	 kHeImM7q7RvfskuHxE3BYPbcTKDD2uGibJ8JpzbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Tretter <m.tretter@pengutronix.de>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/219] media: rockchip: rga: fix swizzling for RGB formats
-Date: Fri,  2 Feb 2024 20:04:51 -0800
-Message-ID: <20240203035334.120241630@linuxfoundation.org>
+Subject: [PATCH 6.1 119/219] PCI: add INTEL_HDA_ARL to pci_ids.h
+Date: Fri,  2 Feb 2024 20:04:52 -0800
+Message-ID: <20240203035334.270526533@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -45,78 +48,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Tretter <m.tretter@pengutronix.de>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 9e7dc39260edac180c206bb6149595a40eabae3e ]
+[ Upstream commit 5ec42bf04d72fd6d0a6855810cc779e0ee31dfd7 ]
 
-When using 32 bit RGB formats, the RGA on the rk3568 produces wrong
-colors as the wrong color channels are read or written.  The reason is
-that the format description for the channel swizzeling is wrong and the
-wrong bits are configured. For example, when converting ARGB32 to NV12,
-the alpha channel is used as blue channel.. This doesn't happen if the
-color format is the same on both sides.
+The PCI ID insertion follows the increasing order in the table, but
+this hardware follows MTL (MeteorLake).
 
-Fix the color_swap settings of the formats to correctly handle 32 bit
-RGB formats.
-
-For RGA_COLOR_FMT_XBGR8888, the RGA_COLOR_ALPHA_SWAP bit doesn't have an
-effect. Thus, it isn't possible to handle the V4L2_PIX_FMT_XRGB32. Thus,
-it is removed from the list of supported formats.
-
-Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20231204212710.185976-2-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rga/rga.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ include/linux/pci_ids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/rockchip/rga/rga.c b/drivers/media/platform/rockchip/rga/rga.c
-index 61b25fcf826e..9b20cef5afc6 100644
---- a/drivers/media/platform/rockchip/rga/rga.c
-+++ b/drivers/media/platform/rockchip/rga/rga.c
-@@ -187,25 +187,16 @@ static int rga_setup_ctrls(struct rga_ctx *ctx)
- static struct rga_fmt formats[] = {
- 	{
- 		.fourcc = V4L2_PIX_FMT_ARGB32,
--		.color_swap = RGA_COLOR_RB_SWAP,
-+		.color_swap = RGA_COLOR_ALPHA_SWAP,
- 		.hw_format = RGA_COLOR_FMT_ABGR8888,
- 		.depth = 32,
- 		.uv_factor = 1,
- 		.y_div = 1,
- 		.x_div = 1,
- 	},
--	{
--		.fourcc = V4L2_PIX_FMT_XRGB32,
--		.color_swap = RGA_COLOR_RB_SWAP,
--		.hw_format = RGA_COLOR_FMT_XBGR8888,
--		.depth = 32,
--		.uv_factor = 1,
--		.y_div = 1,
--		.x_div = 1,
--	},
- 	{
- 		.fourcc = V4L2_PIX_FMT_ABGR32,
--		.color_swap = RGA_COLOR_ALPHA_SWAP,
-+		.color_swap = RGA_COLOR_RB_SWAP,
- 		.hw_format = RGA_COLOR_FMT_ABGR8888,
- 		.depth = 32,
- 		.uv_factor = 1,
-@@ -214,7 +205,7 @@ static struct rga_fmt formats[] = {
- 	},
- 	{
- 		.fourcc = V4L2_PIX_FMT_XBGR32,
--		.color_swap = RGA_COLOR_ALPHA_SWAP,
-+		.color_swap = RGA_COLOR_RB_SWAP,
- 		.hw_format = RGA_COLOR_FMT_XBGR8888,
- 		.depth = 32,
- 		.uv_factor = 1,
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index b76ff0850618..73cc1e7dd15a 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -3000,6 +3000,7 @@
+ #define PCI_DEVICE_ID_INTEL_82443GX_0	0x71a0
+ #define PCI_DEVICE_ID_INTEL_82443GX_2	0x71a2
+ #define PCI_DEVICE_ID_INTEL_82372FB_1	0x7601
++#define PCI_DEVICE_ID_INTEL_HDA_ARL	0x7728
+ #define PCI_DEVICE_ID_INTEL_SCH_LPC	0x8119
+ #define PCI_DEVICE_ID_INTEL_SCH_IDE	0x811a
+ #define PCI_DEVICE_ID_INTEL_E6XX_CU	0x8183
 -- 
 2.43.0
 
