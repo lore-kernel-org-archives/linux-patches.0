@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A951B953;
-	Sat,  3 Feb 2024 04:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60D31B952;
+	Sat,  3 Feb 2024 04:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933735; cv=none; b=Mp9VoC4Z/Lw87C2Uu4lnDnuXt8Ob2GcSYAKdtqGAes0MzrDXKSrOS9mhFuYfx1tA01qAd9ncBCBGN0Djlh8iRRpZDO8JvAGZfvmDJV0Dup0/Q7kUHUUx1e+4PiJ7zhgNMjzttlXk8glWXDLXHWg/EZhcuqbPnQsRNWGb0pKigJA=
+	t=1706933736; cv=none; b=km/w9UyHUrxxkS4gIAKfiSQi38sK1m0nZ88yipr2IiNBH5jPf41J0wrFIL/5OO0sMPUgsLbMl/9uCdpjVYpnCEX6b7Yh53k6yCbNrBoN7Zb1FkE6nFbNmTp/pbdlbouKNsTGU7UMQ6B+qc+6yGUiV/BbV6tweeVKKB3w1x9qB/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933735; c=relaxed/simple;
-	bh=82PBtxAAKSs5QJtYQQasEdAVzWpIfNxcHGUBDj434SI=;
+	s=arc-20240116; t=1706933736; c=relaxed/simple;
+	bh=kVDdbehRkJjjTFXdot1nn45gMF5hzbEGS9BTTcMCjVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gb2+n/Bv4qMCmIEprAJW3Do0OzSOsGgzDN7wv1RamE7MM7uO7vSHSVwYVaE93SVSzdt0Vxg96SoJk6Xrp2riqGOk6xesM9UEBFgZ67lCeF+goCr2A/Et1N6Ja8sGEW0Gxoqvh0kPt0Rf77sJyhixDOVWgsTALx0UMNxC+a/CyDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSXGIfXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bW0D9sKDjoygEHc7Q1T3G1F32qw24AqQQOBAe3KXWwA5i705Pvzv3KT1c52IQbuIlz1SOj1XRy3naw0JbMWVeMuAcgHDqRfrwXNgP2cIdk2U78731O48nBoKfuSHVZ3h23uiK6hSeB1GHNvFEbjQAmFBDQkEXJ9Ei0GbivSBlzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE6jJF7/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSXGIfXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02F9C43399;
-	Sat,  3 Feb 2024 04:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE6jJF7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFF5C433A6;
+	Sat,  3 Feb 2024 04:15:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933735;
-	bh=82PBtxAAKSs5QJtYQQasEdAVzWpIfNxcHGUBDj434SI=;
+	s=korg; t=1706933736;
+	bh=kVDdbehRkJjjTFXdot1nn45gMF5hzbEGS9BTTcMCjVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KSXGIfXm7UKwaqg6aH5gDgGAiz8C0EArGKUCrxZoXGjY36pcCupw5v3NYu649Pt0K
-	 al71Jo8oueaeQC6cSHxrf7Ob5LOL30KlIhfJjbtV/Rcz9+9pa6zi3W6KYkHQW6iyob
-	 HF0RiPASRGDnH4myZYaEhR0Q4S7qFT/48GZc84PA=
+	b=zE6jJF7/Hucfl/JwvcUkhyLGYyGOXAxhud340VBbHK8GDeOKqhFkVbPLEaTsCfdz5
+	 Em5Xr3mu1DLc6l/rB5PAdvOSjuy5SK1u3sQiWubo0l48uP07HUfM8DwQkBiZJOBf5R
+	 6WQfaUrgIm6zF0W9swlulOSbkdhCvqlbl4SK0hsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rae Moar <rmoar@google.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
 	David Gow <davidgow@google.com>,
+	Rae Moar <rmoar@google.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 024/353] kunit: tool: fix parsing of test attributes
-Date: Fri,  2 Feb 2024 20:02:22 -0800
-Message-ID: <20240203035404.526776219@linuxfoundation.org>
+Subject: [PATCH 6.7 025/353] kunit: Reset test->priv after each param iteration
+Date: Fri,  2 Feb 2024 20:02:23 -0800
+Message-ID: <20240203035404.566550315@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,55 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rae Moar <rmoar@google.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-[ Upstream commit 8ae27bc7fff4ef467a7964821a6cedb34a05d3b2 ]
+[ Upstream commit 342fb9789267ee3908959bfa136b82e88e2ce918 ]
 
-Add parsing of attributes as diagnostic data. Fixes issue with test plan
-being parsed incorrectly as diagnostic data when located after
-suite-level attributes.
+If we run parameterized test that uses test->priv to prepare some
+custom data, then value of test->priv will leak to the next param
+iteration and may be unexpected.  This could be easily seen if
+we promote example_priv_test to parameterized test as then only
+first test iteration will be successful:
 
-Note that if there does not exist a test plan line, the diagnostic lines
-between the suite header and the first result will be saved in the suite
-log rather than the first test case log.
+$ ./tools/testing/kunit/kunit.py run \
+	--kunitconfig ./lib/kunit/.kunitconfig *.example_priv*
 
-Signed-off-by: Rae Moar <rmoar@google.com>
+[ ] Starting KUnit Kernel (1/1)...
+[ ] ============================================================
+[ ] =================== example (1 subtest) ====================
+[ ] ==================== example_priv_test  ====================
+[ ] [PASSED] example value 3
+[ ] # example_priv_test: initializing
+[ ] # example_priv_test: ASSERTION FAILED at lib/kunit/kunit-example-test.c:230
+[ ] Expected test->priv == ((void *)0), but
+[ ]     test->priv == 0000000060dfe290
+[ ]     ((void *)0) == 0000000000000000
+[ ] # example_priv_test: cleaning up
+[ ] [FAILED] example value 2
+[ ] # example_priv_test: initializing
+[ ] # example_priv_test: ASSERTION FAILED at lib/kunit/kunit-example-test.c:230
+[ ] Expected test->priv == ((void *)0), but
+[ ]     test->priv == 0000000060dfe290
+[ ]     ((void *)0) == 0000000000000000
+[ ] # example_priv_test: cleaning up
+[ ] [FAILED] example value 1
+[ ] # example_priv_test: initializing
+[ ] # example_priv_test: ASSERTION FAILED at lib/kunit/kunit-example-test.c:230
+[ ] Expected test->priv == ((void *)0), but
+[ ]     test->priv == 0000000060dfe290
+[ ]     ((void *)0) == 0000000000000000
+[ ] # example_priv_test: cleaning up
+[ ] [FAILED] example value 0
+[ ] # example_priv_test: initializing
+[ ] # example_priv_test: cleaning up
+[ ] # example_priv_test: pass:1 fail:3 skip:0 total:4
+[ ] ================ [FAILED] example_priv_test ================
+[ ]     # example: initializing suite
+[ ]     # module: kunit_example_test
+[ ]     # example: exiting suite
+[ ] # Totals: pass:1 fail:3 skip:0 total:4
+[ ] ===================== [FAILED] example =====================
+
+Fix that by resetting test->priv after each param iteration, in
+similar way what we did for the test->status.
+
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: David Gow <davidgow@google.com>
+Cc: Rae Moar <rmoar@google.com>
 Reviewed-by: David Gow <davidgow@google.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/kunit_parser.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ lib/kunit/test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
-index 79d8832c862a..ce34be15c929 100644
---- a/tools/testing/kunit/kunit_parser.py
-+++ b/tools/testing/kunit/kunit_parser.py
-@@ -450,7 +450,7 @@ def parse_diagnostic(lines: LineStream) -> List[str]:
- 	Log of diagnostic lines
- 	"""
- 	log = []  # type: List[str]
--	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START, TAP_START]
-+	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START, TAP_START, TEST_PLAN]
- 	while lines and not any(re.match(lines.peek())
- 			for re in non_diagnostic_lines):
- 		log.append(lines.pop())
-@@ -726,6 +726,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
- 		# test plan
- 		test.name = "main"
- 		ktap_line = parse_ktap_header(lines, test)
-+		test.log.extend(parse_diagnostic(lines))
- 		parse_test_plan(lines, test)
- 		parent_test = True
- 	else:
-@@ -737,6 +738,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
- 		if parent_test:
- 			# If KTAP version line and/or subtest header is found, attempt
- 			# to parse test plan and print test header
-+			test.log.extend(parse_diagnostic(lines))
- 			parse_test_plan(lines, test)
- 			print_test_header(test)
- 	expected_count = test.expected_count
+diff --git a/lib/kunit/test.c b/lib/kunit/test.c
+index 7aceb07a1af9..1cdc405daa30 100644
+--- a/lib/kunit/test.c
++++ b/lib/kunit/test.c
+@@ -660,6 +660,7 @@ int kunit_run_tests(struct kunit_suite *suite)
+ 				test.param_index++;
+ 				test.status = KUNIT_SUCCESS;
+ 				test.status_comment[0] = '\0';
++				test.priv = NULL;
+ 			}
+ 		}
+ 
 -- 
 2.43.0
 
