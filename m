@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675ADFBF2;
-	Sat,  3 Feb 2024 04:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0A3FBF2;
+	Sat,  3 Feb 2024 04:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933510; cv=none; b=Y4kR5zERybFy41bmAGIZPHdOjj8v88V+3GvW4ZMcCuo7GfEWsNoj6E+FCKlHArt2jbNXGcgBJ38wypOt+zHF/rQVGVKWZo1N2e6kQKakevHFo62K7ISLMeaBamxkdKtCTYm57QMZcFzl9TlBx+QtgcOxWV5ZJMNT4UWA7DA9i2E=
+	t=1706933511; cv=none; b=jSFSZeLWfZQfPYI+OyEqt47D2kn3sAKGuep0fOdtqWbVsKr0enEEwFR/8K06nli/BZVAFQar/x2RGcWlimEzMUEYlQy3Tqd4MnDBVIPVOOb4CruO54Ubyd3oKzZcTrO/A0wen45VpMep0TxKgxAPlY32AH4x6egrcg/9TU3igIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933510; c=relaxed/simple;
-	bh=ngyvTmchcqoQZSDID24RXZTg63QOoriQVRh1IJa2QQA=;
+	s=arc-20240116; t=1706933511; c=relaxed/simple;
+	bh=ck9X6CuWtItL+1gMrn+Qcy+1H93JIf7m63831EoFgAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCQVOvn53qmbsSCoIa6yEtOwM6uS05rC4z2wJ+dMmqeqWMBYUbrk6PffR+CMkAeMwKN2WxdaGAh3lmlUOSQI5dsCxXd/cD2TauYEOfOcWxhCvPcRC1wFcxU9n2cPQwpOtS/TLH7cE9apueRJ0hHE+O06glEFuAcYyIwmV3+O4ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECB9Afmp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avdp4nSeOYpZd+JYCND23B/owI0YTchp+EYD4hR95lL10GoPP9DwuVEceqW6RP97atXWQvMqxffwtizTHazCd3hwfRXIdi2z1YkQ8KPjCJfBwm1Gj+CmorJWm7iHlImwScmCKIm8tw1TxsjDi9ug9qGKxGrzvaH7RCboZjAf80g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkRi32sQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECB9Afmp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309D1C43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkRi32sQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA096C433F1;
 	Sat,  3 Feb 2024 04:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933510;
-	bh=ngyvTmchcqoQZSDID24RXZTg63QOoriQVRh1IJa2QQA=;
+	bh=ck9X6CuWtItL+1gMrn+Qcy+1H93JIf7m63831EoFgAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ECB9Afmp/OhBbQcvJZTg6B2lQ0z4Dy5FXd5xY3s/+Tav1XkZns5988hAK3tMHIBDf
-	 jo4MGEHbvfYTj9tJ7RIeXM1+lQsNunlywZQUM0FDQy88ZOL3Uq9gkNc9JGKzEjGMUb
-	 vb5Tg4w7/CJ9vl4rVzSGaA5KaleAkJiECVdLs+mg=
+	b=MkRi32sQF143wSPZcpeKOGfxG+Lkmx+1OICLbNYk1V++r3zU5qB5DDhaftjH/PGlh
+	 ReMejc5gOiH4wCOpo2VVPrJcNaYao7MauigGSMIhLZMwfMcCKWoe9HxWh7aHcyfNNA
+	 UjYMwZ5Laojc2N2uHDC1gpVF78Qx9BURqPYuP1WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youquan Song <youquan.song@intel.com>,
-	Zhiquan Li <zhiquan1.li@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 012/322] x86/mce: Mark fatal MCEs page as poison to avoid panic in the kdump kernel
-Date: Fri,  2 Feb 2024 20:01:49 -0800
-Message-ID: <20240203035359.440181327@linuxfoundation.org>
+Subject: [PATCH 6.6 039/322] afs: fix the usage of read_seqbegin_or_lock() in afs_lookup_volume_rcu()
+Date: Fri,  2 Feb 2024 20:02:16 -0800
+Message-ID: <20240203035400.346869940@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,80 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiquan Li <zhiquan1.li@intel.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 9f3b130048bfa2e44a8cfb1b616f826d9d5d8188 ]
+[ Upstream commit 4121b4337146b64560d1e46ebec77196d9287802 ]
 
-Memory errors don't happen very often, especially fatal ones. However,
-in large-scale scenarios such as data centers, that probability
-increases with the amount of machines present.
+David Howells says:
 
-When a fatal machine check happens, mce_panic() is called based on the
-severity grading of that error. The page containing the error is not
-marked as poison.
+ (2) afs_lookup_volume_rcu().
 
-However, when kexec is enabled, tools like makedumpfile understand when
-pages are marked as poison and do not touch them so as not to cause
-a fatal machine check exception again while dumping the previous
-kernel's memory.
+     There can be a lot of volumes known by a system.  A thousand would
+     require a 10-step walk and this is drivable by remote operation, so I
+     think this should probably take a lock on the second pass too.
 
-Therefore, mark the page containing the error as poisoned so that the
-kexec'ed kernel can avoid accessing the page.
+Make the "seq" counter odd on the 2nd pass, otherwise read_seqbegin_or_lock()
+never takes the lock.
 
-  [ bp: Rewrite commit message and comment. ]
-
-Co-developed-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Link: https://lore.kernel.org/r/20231014051754.3759099-1-zhiquan1.li@intel.com
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/20231130115606.GA21571@redhat.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/core.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/afs/callback.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index 6f35f724cc14..20ab11aec60b 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -44,6 +44,7 @@
- #include <linux/sync_core.h>
- #include <linux/task_work.h>
- #include <linux/hardirq.h>
-+#include <linux/kexec.h>
+diff --git a/fs/afs/callback.c b/fs/afs/callback.c
+index a484fa642808..90f9b2a46ff4 100644
+--- a/fs/afs/callback.c
++++ b/fs/afs/callback.c
+@@ -110,13 +110,14 @@ static struct afs_volume *afs_lookup_volume_rcu(struct afs_cell *cell,
+ {
+ 	struct afs_volume *volume = NULL;
+ 	struct rb_node *p;
+-	int seq = 0;
++	int seq = 1;
  
- #include <asm/intel-family.h>
- #include <asm/processor.h>
-@@ -233,6 +234,7 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
- 	struct llist_node *pending;
- 	struct mce_evt_llist *l;
- 	int apei_err = 0;
-+	struct page *p;
+ 	do {
+ 		/* Unfortunately, rbtree walking doesn't give reliable results
+ 		 * under just the RCU read lock, so we have to check for
+ 		 * changes.
+ 		 */
++		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&cell->volume_lock, &seq);
  
- 	/*
- 	 * Allow instrumentation around external facilities usage. Not that it
-@@ -286,6 +288,20 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
- 	if (!fake_panic) {
- 		if (panic_timeout == 0)
- 			panic_timeout = mca_cfg.panic_timeout;
-+
-+		/*
-+		 * Kdump skips the poisoned page in order to avoid
-+		 * touching the error bits again. Poison the page even
-+		 * if the error is fatal and the machine is about to
-+		 * panic.
-+		 */
-+		if (kexec_crash_loaded()) {
-+			if (final && (final->status & MCI_STATUS_ADDRV)) {
-+				p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
-+				if (p)
-+					SetPageHWPoison(p);
-+			}
-+		}
- 		panic(msg);
- 	} else
- 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
+ 		p = rcu_dereference_raw(cell->volumes.rb_node);
 -- 
 2.43.0
 
