@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E6111720;
-	Sat,  3 Feb 2024 04:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217CD11720;
+	Sat,  3 Feb 2024 04:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933942; cv=none; b=Dd6vAU2OWpb0Jkkgn5v7N2LDWHGKOduhwYTLSJtyfVflyRKJIW9djxuPw/xKNaT4hKdDwtvRWt0PiI+pxQECnFBZN7B2BrSICmKlFpJDOcco17ETBceODzkIdWBe2bMiCyCLJSzR+lscpkLv84g4fr4vG14bFr51YhlFCYo4pqs=
+	t=1706933943; cv=none; b=G1YLNsgabYFUxzq3zpVyipHonwZAZyAZ5x/IZ7Fni8sG5rXpYvOQA9NUJAsFsvejfBoYP4RVW8xAgjZkYs4b9iJwxEU/HWqVWv+o0it/C0FpQqT31cxhHB0KAuhi5K+FUgxkYeQcDr4gyZcNBlnXFZWvpa8H15v11DQRSSlWyfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933942; c=relaxed/simple;
-	bh=G81OxffNhmdNTczwPnZfrc+Gy+Yv6kWh3LWqLhmctzk=;
+	s=arc-20240116; t=1706933943; c=relaxed/simple;
+	bh=sEr3vj4BYWPkwbSTGMdOMdGZytZ3GtpKgvCj4UT6KfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sZVLfpwV1KFkLCSbs6ntFhpEuVLMGO0DEi05h7ZDiyjshPypp4AC+KlQUN36VEGk1W4doeXPvuhO/gO+iNPL/T8EHaAKP/JwEXZpY0+hk2xQDEeurBGaOjRuL2lgWAS/RGB6GCnHoPGVwbdGfPzysPi0BYocl9QXUo9rcbBHrto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrIPKFWQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k9q9W/T1VQST1zpKGCRMOmjewdzsaKqPGR1uO5hjfjWkpXhqcR+VUjte+0QqCK1LVfAgsEQj7Gjy9HmELGh+sbiHK2J/TdJhPPfcjLxUx3w4vLKZHhthr7/DO+36zBQhpbD9khchEl5Z6m+UGqLqClSCzvnThYBUXSQ3Onxt8OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egbdLhuO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrIPKFWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A864C43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egbdLhuO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE972C433F1;
 	Sat,  3 Feb 2024 04:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933942;
-	bh=G81OxffNhmdNTczwPnZfrc+Gy+Yv6kWh3LWqLhmctzk=;
+	s=korg; t=1706933943;
+	bh=sEr3vj4BYWPkwbSTGMdOMdGZytZ3GtpKgvCj4UT6KfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nrIPKFWQVO79DXO1W5xNNkG1GxhxM4W3F7em2As+aKGkK06i3BsUJu7PiyL+aD+Os
-	 g/006aiGS4ryHjUIYTvJF7nxn8Ue/2RnJ9FVCywjjxHoW+AeRTPgQCLGjix3aY3+Z/
-	 lMFqpUVFsu6Gcig/Zf+OfJiZMvLazfV4AN9JeVao=
+	b=egbdLhuOQcS5kQ62Idkt6t8AnzPmlTOujjJ5cdfs/ffgHrJjpWJVTZttjo7fx1EmB
+	 3zt+bfuWBZDhaQmC5AYf5mr0zBBIZbJl6p6+U/GeOeAx73MMWLtXvtvFP6Z3u0vEFH
+	 ZQ4jv3tphz8EL2XJIW30evBLWmWDQTFsSElxv/mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Monk Liu <Monk.Liu@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 305/353] selftests: net: add missing required classifier
-Date: Fri,  2 Feb 2024 20:07:03 -0800
-Message-ID: <20240203035413.490885815@linuxfoundation.org>
+Subject: [PATCH 6.7 284/353] drm/amdgpu: Release adev->pm.fw before return in amdgpu_device_need_post()
+Date: Fri,  2 Feb 2024 20:06:42 -0800
+Message-ID: <20240203035412.755850675@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -54,48 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit d3cb3b0088ca92082e2bebc40cc6894a632173e2 ]
+[ Upstream commit 8a44fdd3cf91debbd09b43bd2519ad2b2486ccf4 ]
 
-the udpgro_fraglist self-test uses the BPF classifiers, but the
-current net self-test configuration does not include it, causing
-CI failures:
+In function 'amdgpu_device_need_post(struct amdgpu_device *adev)' -
+'adev->pm.fw' may not be released before return.
 
- # selftests: net: udpgro_frglist.sh
- # ipv6
- # tcp - over veth touching data
- # -l 4 -6 -D 2001:db8::1 -t rx -4 -t
- # Error: TC classifier not found.
- # We have an error talking to the kernel
- # Error: TC classifier not found.
- # We have an error talking to the kernel
+Using the function release_firmware() to release adev->pm.fw.
 
-Add the missing knob.
+Thus fixing the below:
+drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1571 amdgpu_device_need_post() warn: 'adev->pm.fw' from request_firmware() not released on lines: 1554.
 
-Fixes: edae34a3ed92 ("selftests net: add UDP GRO fraglist + bpf self-tests")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/7c3643763b331e9a400e1874fe089193c99a1c3f.1706170897.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Monk Liu <Monk.Liu@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/config | 1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/net/config b/tools/testing/selftests/net/config
-index 413ab9abcf1b..56da5d52674c 100644
---- a/tools/testing/selftests/net/config
-+++ b/tools/testing/selftests/net/config
-@@ -51,6 +51,7 @@ CONFIG_NETFILTER_XT_MATCH_LENGTH=m
- CONFIG_NET_ACT_CT=m
- CONFIG_NET_ACT_GACT=m
- CONFIG_NET_CLS_BASIC=m
-+CONFIG_NET_CLS_BPF=m
- CONFIG_NET_CLS_U32=m
- CONFIG_NET_IPGRE_DEMUX=m
- CONFIG_NET_IPGRE=m
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 3677d644183b..9257c9af3fee 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1485,6 +1485,7 @@ bool amdgpu_device_need_post(struct amdgpu_device *adev)
+ 				return true;
+ 
+ 			fw_ver = *((uint32_t *)adev->pm.fw->data + 69);
++			release_firmware(adev->pm.fw);
+ 			if (fw_ver < 0x00160e00)
+ 				return true;
+ 		}
 -- 
 2.43.0
 
