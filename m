@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29C239877;
-	Sat,  3 Feb 2024 04:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71397F9EB;
+	Sat,  3 Feb 2024 04:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933609; cv=none; b=emmvNhSTqETkOiSNYJQFN9eW10TwCnFZiR438oKabZeZhQI8alZOJDBshShzhjeI2mG5GyJSWHrw2I4UhYwWgkjvTkR1eTpnqM1UKnlAPwRrayeGRH5mWH+4KbJDdIwr6ZUEFMxM6aOv2YhxK83CtfUdv9Ao9ujrZ+bbgcW4pDk=
+	t=1706933610; cv=none; b=AuXJroQVgG54yaK7FeMValtLjVIxqcsWX5PXUttKHawjaCylIfOsOzGqGMC8tCrBoimUiMbzZg6/JQFUG2zxaRoMXWuYhrSjRk9YrR+BGnPZuwEUo9wajUi0+8HExh8VGJZUIy78+rDPeUA1xyVwcTTYPUOyKfRsoRxWEVn4Res=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933609; c=relaxed/simple;
-	bh=X3r8w1cfdHRCAxXqsZPJHKqAli5dwY0Rp59TO8ArO50=;
+	s=arc-20240116; t=1706933610; c=relaxed/simple;
+	bh=dAExpXJexkih4ig8Nl+oFU89zu3iocy186e8RoglAqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LUZMBScK+KMEExvMpnkLZxFDihTOqm+7CzTlsyuDxpTHaozkFL9jsf5UzvsWjCzjGodw3AEcYVRujfwkmFc/lhfNaQRBWjzIEHQZegCJ7Ng6EGfnfljL8iq+Y5Hepe1MjkDYFHZ4lJvXk5t4VFd92+4P8BIcMXtXP8tFs/Ez4TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjbEW45R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cE3BQZ+5PkguTyvh7IfAiCfSCAQ+X/tMi1K4tTn3aOfuzSkoLnX2kp/3G0LVf8hjPQS0eaGS0FFYGBhxLqNh1PWtPzbiPigR5FII/POsgcqzHFCtVZY/m/OWEMOKT1nDTTZX35Mkr6ujkeHVJnG2lxSJfY1kyyvqm6o0qNVi+mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QexpjGIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjbEW45R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B333C433F1;
-	Sat,  3 Feb 2024 04:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QexpjGIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDCBC43399;
+	Sat,  3 Feb 2024 04:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933609;
-	bh=X3r8w1cfdHRCAxXqsZPJHKqAli5dwY0Rp59TO8ArO50=;
+	s=korg; t=1706933610;
+	bh=dAExpXJexkih4ig8Nl+oFU89zu3iocy186e8RoglAqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjbEW45RYKYS055JVhuwZT9OEOQR8wfSykXTMJyiY9mDpRB7NTprjsioTYocXN7Ut
-	 KrR9RIDo3asXj+otalcT00fzAY3mbzIZD/OEmYx7BmCy+qo67WCoDcd8fo6sk4vg9E
-	 p9FJymRZKVx1hOBzuIxP4eFWiVxxGwqhmKPeebzw=
+	b=QexpjGIWSY5kYxxVo6EcMhzKBg5WS/gsD2yCq32Sa5tdW89iZLebJZ+pl6ptF9HoY
+	 D0jukL9wmJWNjyQurj1WE/CecPVo6paD1pItxWQFnUbc6kTB9jmPZpwiXidGqRe1DK
+	 h3U4Gyav0gN7/t6iQHVJa4HufPPPg9MEdvZe0Xmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Adam Ford <aford173@gmail.com>
-Subject: [PATCH 6.6 180/322] media: rkisp1: Drop IRQF_SHARED
-Date: Fri,  2 Feb 2024 20:04:37 -0800
-Message-ID: <20240203035405.071562565@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 157/322] f2fs: fix to check return value of f2fs_reserve_new_block()
+Date: Fri,  2 Feb 2024 20:04:14 -0800
+Message-ID: <20240203035404.294602832@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,42 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 85d2a31fe4d9be1555f621ead7a520d8791e0f74 ]
+[ Upstream commit 956fa1ddc132e028f3b7d4cf17e6bfc8cb36c7fd ]
 
-In all known platforms the ISP has dedicated IRQ lines, but for some
-reason the driver uses IRQF_SHARED.
+Let's check return value of f2fs_reserve_new_block() in do_recover_data()
+rather than letting it fails silently.
 
-Supporting IRQF_SHARED properly requires handling interrupts even when
-our device is disabled, and the driver does not handle this. To avoid
-adding such code, and to be sure the driver won't accidentally be used
-in a platform with shared interrupts, let's drop the IRQF_SHARED flag.
+Also refactoring check condition on return value of f2fs_reserve_new_block()
+as below:
+- trigger f2fs_bug_on() only for ENOSPC case;
+- use do-while statement to avoid redundant codes;
 
-Link: https://lore.kernel.org/r/20231207-rkisp-irq-fix-v3-1-358a2c871a3c@ideasonboard.com
-
-Tested-by: Adam Ford <aford173@gmail.com>  #imx8mp-beacon
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/recovery.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-index 894d5afaff4e..b676db9bff62 100644
---- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-+++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-@@ -542,7 +542,7 @@ static int rkisp1_probe(struct platform_device *pdev)
- 		if (irq < 0)
- 			return irq;
+diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
+index 7be60df277a5..f0de36ef73c2 100644
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -712,7 +712,16 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		 */
+ 		if (dest == NEW_ADDR) {
+ 			f2fs_truncate_data_blocks_range(&dn, 1);
+-			f2fs_reserve_new_block(&dn);
++			do {
++				err = f2fs_reserve_new_block(&dn);
++				if (err == -ENOSPC) {
++					f2fs_bug_on(sbi, 1);
++					break;
++				}
++			} while (err &&
++				IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
++			if (err)
++				goto err;
+ 			continue;
+ 		}
  
--		ret = devm_request_irq(dev, irq, info->isrs[i].isr, IRQF_SHARED,
-+		ret = devm_request_irq(dev, irq, info->isrs[i].isr, 0,
- 				       dev_driver_string(dev), dev);
- 		if (ret) {
- 			dev_err(dev, "request irq failed: %d\n", ret);
+@@ -720,12 +729,14 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		if (f2fs_is_valid_blkaddr(sbi, dest, META_POR)) {
+ 
+ 			if (src == NULL_ADDR) {
+-				err = f2fs_reserve_new_block(&dn);
+-				while (err &&
+-				       IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION))
++				do {
+ 					err = f2fs_reserve_new_block(&dn);
+-				/* We should not get -ENOSPC */
+-				f2fs_bug_on(sbi, err);
++					if (err == -ENOSPC) {
++						f2fs_bug_on(sbi, 1);
++						break;
++					}
++				} while (err &&
++					IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
+ 				if (err)
+ 					goto err;
+ 			}
 -- 
 2.43.0
 
