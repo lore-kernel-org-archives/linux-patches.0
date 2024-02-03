@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9F01BC39;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27144C3AF;
 	Sat,  3 Feb 2024 04:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933779; cv=none; b=Ya9TdGtDzzfHVJYQgYAfCBbDvrZEqB4rr0xIvsYjjrdiDJbt2z8kGoIBpRZNCRJkNBBHHtfRB0VPC428Eb2N0OaUJYoovsiyDqx7novPEvLR7RzsaY2LyOWW4JRvXLawF8Iq5+gJrFtcHitQifE0x3Te9wExqkoN4lMAEWXULks=
+	t=1706933780; cv=none; b=IWtMx0eyAatMcu6OoIc9Zytuxl5OllFw8pH3R7q5rhh5mye9qs11U57ZKr08nPUduNyu2OCjqGd1hOxMnU2zwRklqtkt1BWjOnjn33TfNJtMyFfao/PTnzryfVwtRcukzDcfA4dkyqeyMwRCMF8GAH2C6BP/CO1KUGjj2duRj9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933779; c=relaxed/simple;
-	bh=LsfdYN87QxgVnc99KhRqWGo2XeN2Rx2EGeVny05I4KM=;
+	s=arc-20240116; t=1706933780; c=relaxed/simple;
+	bh=mgmVB2ub7Q4L0qc1oGRtxYe2zRtVycHCnFVNSGj8Lvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Upe+9FFBSrHIGL8SQ95UZUPV4lcNUpznCvl/QSioVMkt7CvH/Y7nWTVvqN5DmS6YAKxfU26p8A43wbLwgt1GQpMDjINTT/+Y3w5DkasqNBu2T2E9ePhzxQg69HVnTmxtyMjZ8k3Xkm0TMFGUGTNfFh9o2J5/40OAWk+0IFb7EZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AszD5MdR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKsTTLn4oVbtfhrdDcVJVC33EDjFhN0/r6CJKBtRU/L0UaFpz8NDCTI1JNpuAuugbD8ronkWnCUUbtsulOlPNo5Ydz+DgHKcnOB9xTNEHHcmw9R5jD6MDzW3hQXM37XSiP31sSn6QJTHmQa0rhKTLX6f8MNaEckBsuTh9jKqocw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ia/XWiqW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AszD5MdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007F9C43394;
-	Sat,  3 Feb 2024 04:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ia/XWiqW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC916C433F1;
+	Sat,  3 Feb 2024 04:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933779;
-	bh=LsfdYN87QxgVnc99KhRqWGo2XeN2Rx2EGeVny05I4KM=;
+	bh=mgmVB2ub7Q4L0qc1oGRtxYe2zRtVycHCnFVNSGj8Lvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AszD5MdRZwxDhfSjQ7TLFt1z/6ZKIEIeNnMHRBkHFCbVaQqz10uDu34hpHbaKODxK
-	 l/0QV3/YOFK32+G+F8StinhIstIuQtuFS9+oWiDb1coSvXo2EVZNRYDc5JCPW+hD1R
-	 ymhp2Pm41aDq34huiuad8egdKEZFiP0LH4VJ9Vts=
+	b=ia/XWiqWtseocnTGq2IJbmRTnaNBO9HjzpwKPcZOQs0qqzBfDUvsNt1vno3Y4BlPl
+	 2bu+TQN/Q6jlxKaS/tOVV/Z0fpTSAHZvlhNnF5x37FUIBXQQcfZnnvO69CSdBaGOzx
+	 C/FK6hG0VwFMFANYle9giyeJe3bI7TywqbxWn100=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herb Wei <weihao.bj@ieisystem.com>,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 083/353] net: usb: ax88179_178a: avoid two consecutive device resets
-Date: Fri,  2 Feb 2024 20:03:21 -0800
-Message-ID: <20240203035406.435399112@linuxfoundation.org>
+Subject: [PATCH 6.7 059/353] ext4: fix inconsistent between segment fstrim and full fstrim
+Date: Fri,  2 Feb 2024 20:02:57 -0800
+Message-ID: <20240203035405.670795689@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,41 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit d2689b6a86b9d23574bd4b654bf770b6034e2c7e ]
+[ Upstream commit 68da4c44b994aea797eb9821acb3a4a36015293e ]
 
-The device is always reset two consecutive times (ax88179_reset is called
-twice), one from usbnet_probe during the device binding and the other from
-usbnet_open.
+Suppose we issue two FITRIM ioctls for ranges [0,15] and [16,31] with
+mininum length of trimmed range set to 8 blocks. If we have say a range of
+blocks 10-22 free, this range will not be trimmed because it straddles the
+boundary of the two FITRIM ranges and neither part is big enough. This is a
+bit surprising to some users that call FITRIM on smaller ranges of blocks
+to limit impact on the system. Also XFS trims all free space extents that
+overlap with the specified range so we are inconsistent among filesystems.
+Let's change ext4_try_to_trim_range() to consider for trimming the whole
+free space extent that straddles the end of specified range, not just the
+part of it within the range.
 
-Remove the non-necessary reset during the device binding and let the reset
-operation from open to keep the normal behavior (tested with generic ASIX
-Electronics Corp. AX88179 Gigabit Ethernet device).
-
-Reported-by: Herb Wei <weihao.bj@ieisystem.com>
-Tested-by: Herb Wei <weihao.bj@ieisystem.com>
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Link: https://lore.kernel.org/r/20231120121239.54504-1-jtornosm@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231216010919.1995851-1-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/ax88179_178a.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/ext4/mballoc.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
-index 5a1bf42ce156..d837c1887416 100644
---- a/drivers/net/usb/ax88179_178a.c
-+++ b/drivers/net/usb/ax88179_178a.c
-@@ -1315,8 +1315,6 @@ static int ax88179_bind(struct usbnet *dev, struct usb_interface *intf)
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index ab023d709f72..8408318e1d32 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -6758,13 +6758,15 @@ static int ext4_try_to_trim_range(struct super_block *sb,
+ __acquires(ext4_group_lock_ptr(sb, e4b->bd_group))
+ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
+ {
+-	ext4_grpblk_t next, count, free_count;
++	ext4_grpblk_t next, count, free_count, last, origin_start;
+ 	bool set_trimmed = false;
+ 	void *bitmap;
  
- 	netif_set_tso_max_size(dev->net, 16384);
++	last = ext4_last_grp_cluster(sb, e4b->bd_group);
+ 	bitmap = e4b->bd_bitmap;
+-	if (start == 0 && max >= ext4_last_grp_cluster(sb, e4b->bd_group))
++	if (start == 0 && max >= last)
+ 		set_trimmed = true;
++	origin_start = start;
+ 	start = max(e4b->bd_info->bb_first_free, start);
+ 	count = 0;
+ 	free_count = 0;
+@@ -6773,7 +6775,10 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
+ 		start = mb_find_next_zero_bit(bitmap, max + 1, start);
+ 		if (start > max)
+ 			break;
+-		next = mb_find_next_bit(bitmap, max + 1, start);
++
++		next = mb_find_next_bit(bitmap, last + 1, start);
++		if (origin_start == 0 && next >= last)
++			set_trimmed = true;
  
--	ax88179_reset(dev);
--
- 	return 0;
- }
- 
+ 		if ((next - start) >= minblocks) {
+ 			int ret = ext4_trim_extent(sb, start, next - start, e4b);
 -- 
 2.43.0
 
