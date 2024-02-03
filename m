@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F58017593;
-	Sat,  3 Feb 2024 04:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F2C11C83;
+	Sat,  3 Feb 2024 04:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933566; cv=none; b=f2S3Ts9e7Usf9g7glsHCWbi87lViYAl3HXs+QU/aPs4aTH3H9biKJax3/e1N9looj3MAS6usLQn9WPGGfvZPYYW7tyMcW0mKarOIA9iuWBU+MlOEawk7z/0JezCF5i09wH6T9Cx7b/Ow3l+vhgYeF6n0l1H0jaPjoZT9qcjQ1aw=
+	t=1706933567; cv=none; b=K7s+jwEVi9f0g1yICRukCRakvb1BzQFRFOVYmmnhkUW8JIwTI2kbGd6Hxw0hr60+Q6HNDqrgcgbyoy7ifxsVFQVblq62ktnNiMxZNjAb8XHtYO/S7VpOU2/3rbj93o6iqZK20qBjW/fapVs1MWmAdHwj1A+4QcTKcVu8JD4WSw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933566; c=relaxed/simple;
-	bh=HnVtE6xo9PWn0x864uID6ZXdyL9Xp5GoLfSuclzIbUw=;
+	s=arc-20240116; t=1706933567; c=relaxed/simple;
+	bh=gtRM2V0vwI4WagPTLYHyy9MGVUlqLaNm27A6pLSUOyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOR5ezDv82uCI3uumuX07Z7xLzo7Mn2jSB0WrYw0mwfEe6yWIiUXUadvP5fg1ndU3smFZnd8XSNOe50wpckyQiDke+NX7yqtS7BkxbCRUiRURtFb0LL4a4PpF8UFvdnN5TvgZQagm07HBnFiWMZ58OdtCgY503PMd9sVo20J+Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAMzTGas; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hNwdK8w7rXgQVSYJf9cIklpE63iV2h35OmU7iaGhraLdwM2izCrCwpVRW1XP2Rl+Wc2Wnh4cNRZG07DAMpllVQc93U3LLW4WkRJ/giXLxSBxX4qSLI1XQ5LrA0gwvizhFTq/nkWCBeo11KtpO4bidmIyA2czM5QNZdcz7GL31ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ure6MvIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAMzTGas"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A02EC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ure6MvIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75B6C433F1;
 	Sat,  3 Feb 2024 04:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933566;
-	bh=HnVtE6xo9PWn0x864uID6ZXdyL9Xp5GoLfSuclzIbUw=;
+	s=korg; t=1706933567;
+	bh=gtRM2V0vwI4WagPTLYHyy9MGVUlqLaNm27A6pLSUOyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAMzTGasHDUdZtIjaoyDYCnvq795wVZidC/WbhxdHy8IzSsUVAh2AlyEGV6ypxKLa
-	 6BakMi9ibeVeVb6V1UGgt4hTm5LXVjUT5nJCPZ+Rajv24ohH6e06DdG5xLc1ePFHv6
-	 TJzTgqsn54jtuusQauj/Pv5Zlm3Q4a8agNq5+fGM=
+	b=Ure6MvIb3FCSqNY7Wp4i9A8fRP6ZAR8yaduVbKkF6TKFey242vL3vpGEhlFcu6ZoD
+	 tXjrKOZMd2L5pnhjVj34NaV4yemFFWYMev2KIvtzuXPz6Pd2wB3KeA58txTDqDJNa6
+	 hU+rFBJdLmpMlJd24UHoKar+17z6ptpWnKcR5FW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/322] selftests/bpf: fix compiler warnings in RELEASE=1 mode
-Date: Fri,  2 Feb 2024 20:03:38 -0800
-Message-ID: <20240203035403.055343876@linuxfoundation.org>
+Subject: [PATCH 6.6 122/322] ARM: dts: imx25: Fix the iim compatible string
+Date: Fri,  2 Feb 2024 20:03:39 -0800
+Message-ID: <20240203035403.088374123@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,50 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 62d9a969f4a95219c757831e9ad66cd4dd9edee5 ]
+[ Upstream commit f0b929f58719fc57a4926ab4fc972f185453d6a5 ]
 
-When compiling BPF selftests with RELEASE=1, we get two new
-warnings, which are treated as errors. Fix them.
+Per imx-iim.yaml, the compatible string should only contain a single
+entry.
 
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20231212225343.1723081-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Use it as "fsl,imx25-iim" to fix the following dt-schema warning:
+
+imx25-karo-tx25.dtb: efuse@53ff0000: compatible: ['fsl,imx25-iim', 'fsl,imx27-iim'] is too long
+	from schema $id: http://devicetree.org/schemas/nvmem/imx-iim.yaml#
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/veristat.c        | 2 +-
- tools/testing/selftests/bpf/xdp_hw_metadata.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx25.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/veristat.c b/tools/testing/selftests/bpf/veristat.c
-index 655095810d4a..0ad98b6a8e6e 100644
---- a/tools/testing/selftests/bpf/veristat.c
-+++ b/tools/testing/selftests/bpf/veristat.c
-@@ -1214,7 +1214,7 @@ static int cmp_join_stat(const struct verif_stats_join *s1,
- 			 enum stat_id id, enum stat_variant var, bool asc)
- {
- 	const char *str1 = NULL, *str2 = NULL;
--	double v1, v2;
-+	double v1 = 0.0, v2 = 0.0;
- 	int cmp = 0;
+diff --git a/arch/arm/boot/dts/nxp/imx/imx25.dtsi b/arch/arm/boot/dts/nxp/imx/imx25.dtsi
+index 5f90d72b840b..5ac4549286bd 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx25.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx25.dtsi
+@@ -543,7 +543,7 @@
+ 			};
  
- 	fetch_join_stat_value(s1, id, var, &str1, &v1);
-diff --git a/tools/testing/selftests/bpf/xdp_hw_metadata.c b/tools/testing/selftests/bpf/xdp_hw_metadata.c
-index 613321eb84c1..adb77c1a6a74 100644
---- a/tools/testing/selftests/bpf/xdp_hw_metadata.c
-+++ b/tools/testing/selftests/bpf/xdp_hw_metadata.c
-@@ -68,7 +68,7 @@ static int open_xsk(int ifindex, struct xsk *xsk, __u32 queue_id)
- 		.frame_size = XSK_UMEM__DEFAULT_FRAME_SIZE,
- 		.flags = XDP_UMEM_UNALIGNED_CHUNK_FLAG,
- 	};
--	__u32 idx;
-+	__u32 idx = 0;
- 	u64 addr;
- 	int ret;
- 	int i;
+ 			iim: efuse@53ff0000 {
+-				compatible = "fsl,imx25-iim", "fsl,imx27-iim";
++				compatible = "fsl,imx25-iim";
+ 				reg = <0x53ff0000 0x4000>;
+ 				interrupts = <19>;
+ 				clocks = <&clks 99>;
 -- 
 2.43.0
 
