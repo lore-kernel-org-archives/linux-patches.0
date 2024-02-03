@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C3E111B0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D657010782;
 	Sat,  3 Feb 2024 04:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933542; cv=none; b=cSoaXSTGrrxQXJzfFrwaFvhp8fQyDzijEL9lWgHKeUqAO0LOE5VZBS1WvBn3319kDTZLhmatgSLf1c7f3tTfKq5BzNmqQ3rDqT5EPRrMxxyaf6ZH/4xiTrPSa49EYW5pVyph/nYPix0byv4QKw0O3GNc3liIVo9yCNyh/p6OENE=
+	t=1706933542; cv=none; b=Vy2TFdH5sa+GzGsnqmfQTtAE8cg74lxGzhwrGTyBcvj0XJz0uujW0lqPgZN/NJrK4auRzIcgea4shXzxs+WWlX+8LS5BzUEM+L5ULJSLK6BwOeYHskTIxvyOg5mV+hZI2K/kmJbLsE7n+1CX1g6sbnQzVdzAYRImIzaNM8EsFVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933542; c=relaxed/simple;
-	bh=DkXQ/ZU+XuywDS1d7u5zHs9+Byx5Lt9MH/pxNeDQbWg=;
+	bh=VFPwUhvYd14MGurl3b2rYvrf43FdwGQvKA8qwma/SW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B+yDnweNshk51C4VSG7621YAmQNKTj/n/COpUkmepDtozH97JAW/z3F99ddBBHSz1wbaAf5k6ceO4y5YlsTgumDp2IGpGAMXxQ70EbRkXfoT+kxzwkF8ngvHv68w+fPu1JzOHWU35+3SJOus0rC0Oe4LLk36xSsQMkGWIt+UQHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWw2VRwM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=afRFEUuprSpyCqnChp3OcXAy65Dlh2psGkAlvLrOza4ZZ7ExuPjj90hXyhO5eH72WHWcXrJconCMC2PpWFRc0fVR4Y9kB1f7iXceXFMZxB6D3TnxK2gEOyviPww3cByCTGeuB8qvCDPDe3zk+0OkxxoTYuYDd71gc9/H+gmWr4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/VT07jP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWw2VRwM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5F0C433F1;
-	Sat,  3 Feb 2024 04:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/VT07jP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03C9C43390;
+	Sat,  3 Feb 2024 04:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933542;
-	bh=DkXQ/ZU+XuywDS1d7u5zHs9+Byx5Lt9MH/pxNeDQbWg=;
+	bh=VFPwUhvYd14MGurl3b2rYvrf43FdwGQvKA8qwma/SW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWw2VRwMz+mGTYLMmrGcujm5znKi+iAQEJA9oVZ1OvP3QWfURXbo5uMWgcqWp6dxs
-	 q0JDYowdMrmvM5IIQjnZxQO0C9s2PN9KtTvB7CuMpRohFVXFMtaJ8PB+kF9tJd4llC
-	 xTsC8+qJgR1TWoPMNEYvR5q5GUPfeYEh86EzB2Rk=
+	b=O/VT07jPIcKP+lGUl4y8w3ZWXe+iJkLPp/7myIyrJbnSGHu3nWqn82wHzcCbgEsqx
+	 4UivbaFjj4LDN5jhiNGwHLBJpu5h6MHh/rvrGMPP1W+cuqWs5sJL94d3ciucCbv1Ah
+	 53NTL7g9pB/B9NNQWarL9taUREFEMyZtnDRa2+QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/322] wifi: rtw89: fix misbehavior of TX beacon in concurrent mode
-Date: Fri,  2 Feb 2024 20:03:05 -0800
-Message-ID: <20240203035402.004176028@linuxfoundation.org>
+Subject: [PATCH 6.6 089/322] bpf: Check rcu_read_lock_trace_held() before calling bpf map helpers
+Date: Fri,  2 Feb 2024 20:03:06 -0800
+Message-ID: <20240203035402.037454429@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,170 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 756b31203d482d2dd1aa6c208978b0410dc7530f ]
+[ Upstream commit 169410eba271afc9f0fb476d996795aa26770c6d ]
 
-In concurrent mode, when STA interface is scanning, it causes
-AP interface TX beacon on wrong channel. We modified it to scan
-with the operating channel when one of the interfaces is already
-connected. Additionally, STA interface need to stop scan when AP
-interface is starting to avoid TX beacon on wrong channel. Finally,
-AP interface need to stop TX beacon when STA interface is scanning
-and switching to non-OP channel,This prevent other device to get
-beacons on wrong channel.
+These three bpf_map_{lookup,update,delete}_elem() helpers are also
+available for sleepable bpf program, so add the corresponding lock
+assertion for sleepable bpf program, otherwise the following warning
+will be reported when a sleepable bpf program manipulates bpf map under
+interpreter mode (aka bpf_jit_enable=0):
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231129070046.18443-5-pkshih@realtek.com
+  WARNING: CPU: 3 PID: 4985 at kernel/bpf/helpers.c:40 ......
+  CPU: 3 PID: 4985 Comm: test_progs Not tainted 6.6.0+ #2
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996) ......
+  RIP: 0010:bpf_map_lookup_elem+0x54/0x60
+  ......
+  Call Trace:
+   <TASK>
+   ? __warn+0xa5/0x240
+   ? bpf_map_lookup_elem+0x54/0x60
+   ? report_bug+0x1ba/0x1f0
+   ? handle_bug+0x40/0x80
+   ? exc_invalid_op+0x18/0x50
+   ? asm_exc_invalid_op+0x1b/0x20
+   ? __pfx_bpf_map_lookup_elem+0x10/0x10
+   ? rcu_lockdep_current_cpu_online+0x65/0xb0
+   ? rcu_is_watching+0x23/0x50
+   ? bpf_map_lookup_elem+0x54/0x60
+   ? __pfx_bpf_map_lookup_elem+0x10/0x10
+   ___bpf_prog_run+0x513/0x3b70
+   __bpf_prog_run32+0x9d/0xd0
+   ? __bpf_prog_enter_sleepable_recur+0xad/0x120
+   ? __bpf_prog_enter_sleepable_recur+0x3e/0x120
+   bpf_trampoline_6442580665+0x4d/0x1000
+   __x64_sys_getpgid+0x5/0x30
+   ? do_syscall_64+0x36/0xb0
+   entry_SYSCALL_64_after_hwframe+0x6e/0x76
+   </TASK>
+
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231204140425.1480317-2-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c       | 17 +++++++++--
- drivers/net/wireless/realtek/rtw89/mac.c      | 29 +++++++++++++++----
- drivers/net/wireless/realtek/rtw89/mac.h      |  1 +
- drivers/net/wireless/realtek/rtw89/mac80211.c |  3 ++
- 4 files changed, 43 insertions(+), 7 deletions(-)
+ kernel/bpf/helpers.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index df1dc2f43c86..468cfa43ec04 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -3912,6 +3912,7 @@ void rtw89_hw_scan_complete(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
- 	rtw89_core_scan_complete(rtwdev, vif, true);
- 	ieee80211_scan_completed(rtwdev->hw, &info);
- 	ieee80211_wake_queues(rtwdev->hw);
-+	rtw89_mac_enable_beacon_for_ap_vifs(rtwdev, true);
- 
- 	rtw89_release_pkt_list(rtwdev);
- 	rtwvif = (struct rtw89_vif *)vif->drv_priv;
-@@ -3929,6 +3930,19 @@ void rtw89_hw_scan_abort(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif)
- 	rtw89_hw_scan_complete(rtwdev, vif, true);
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 607be04db75b..e68ef39cda67 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -31,12 +31,13 @@
+  *
+  * Different map implementations will rely on rcu in map methods
+  * lookup/update/delete, therefore eBPF programs must run under rcu lock
+- * if program is allowed to access maps, so check rcu_read_lock_held in
+- * all three functions.
++ * if program is allowed to access maps, so check rcu_read_lock_held() or
++ * rcu_read_lock_trace_held() in all three functions.
+  */
+ BPF_CALL_2(bpf_map_lookup_elem, struct bpf_map *, map, void *, key)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return (unsigned long) map->ops->map_lookup_elem(map, key);
  }
  
-+static bool rtw89_is_any_vif_connected_or_connecting(struct rtw89_dev *rtwdev)
-+{
-+	struct rtw89_vif *rtwvif;
-+
-+	rtw89_for_each_rtwvif(rtwdev, rtwvif) {
-+		/* This variable implies connected or during attempt to connect */
-+		if (!is_zero_ether_addr(rtwvif->bssid))
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- int rtw89_hw_scan_offload(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
- 			  bool enable)
+@@ -52,7 +53,8 @@ const struct bpf_func_proto bpf_map_lookup_elem_proto = {
+ BPF_CALL_4(bpf_map_update_elem, struct bpf_map *, map, void *, key,
+ 	   void *, value, u64, flags)
  {
-@@ -3941,8 +3955,7 @@ int rtw89_hw_scan_offload(struct rtw89_dev *rtwdev, struct ieee80211_vif *vif,
- 	if (!rtwvif)
- 		return -EINVAL;
- 
--	/* This variable implies connected or during attempt to connect */
--	connected = !is_zero_ether_addr(rtwvif->bssid);
-+	connected = rtw89_is_any_vif_connected_or_connecting(rtwdev);
- 	opt.enable = enable;
- 	opt.target_ch_mode = connected;
- 	if (enable) {
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index fab9f5004a75..3c818c4b4653 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -3833,11 +3833,9 @@ static void rtw89_mac_port_cfg_rx_sync(struct rtw89_dev *rtwdev,
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return map->ops->map_update_elem(map, key, value, flags);
  }
  
- static void rtw89_mac_port_cfg_tx_sw(struct rtw89_dev *rtwdev,
--				     struct rtw89_vif *rtwvif)
-+				     struct rtw89_vif *rtwvif, bool en)
- {
- 	const struct rtw89_port_reg *p = &rtw_port_base;
--	bool en = rtwvif->net_type == RTW89_NET_TYPE_AP_MODE ||
--		  rtwvif->net_type == RTW89_NET_TYPE_AD_HOC;
+@@ -69,7 +71,8 @@ const struct bpf_func_proto bpf_map_update_elem_proto = {
  
- 	if (en)
- 		rtw89_write32_port_set(rtwdev, rtwvif, p->port_cfg, B_AX_BCNTX_EN);
-@@ -3845,6 +3843,24 @@ static void rtw89_mac_port_cfg_tx_sw(struct rtw89_dev *rtwdev,
- 		rtw89_write32_port_clr(rtwdev, rtwvif, p->port_cfg, B_AX_BCNTX_EN);
+ BPF_CALL_2(bpf_map_delete_elem, struct bpf_map *, map, void *, key)
+ {
+-	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
++	WARN_ON_ONCE(!rcu_read_lock_held() && !rcu_read_lock_trace_held() &&
++		     !rcu_read_lock_bh_held());
+ 	return map->ops->map_delete_elem(map, key);
  }
  
-+static void rtw89_mac_port_cfg_tx_sw_by_nettype(struct rtw89_dev *rtwdev,
-+						struct rtw89_vif *rtwvif)
-+{
-+	bool en = rtwvif->net_type == RTW89_NET_TYPE_AP_MODE ||
-+		  rtwvif->net_type == RTW89_NET_TYPE_AD_HOC;
-+
-+	rtw89_mac_port_cfg_tx_sw(rtwdev, rtwvif, en);
-+}
-+
-+void rtw89_mac_enable_beacon_for_ap_vifs(struct rtw89_dev *rtwdev, bool en)
-+{
-+	struct rtw89_vif *rtwvif;
-+
-+	rtw89_for_each_rtwvif(rtwdev, rtwvif)
-+		if (rtwvif->net_type == RTW89_NET_TYPE_AP_MODE)
-+			rtw89_mac_port_cfg_tx_sw(rtwdev, rtwvif, en);
-+}
-+
- static void rtw89_mac_port_cfg_bcn_intv(struct rtw89_dev *rtwdev,
- 					struct rtw89_vif *rtwvif)
- {
-@@ -4137,7 +4153,7 @@ int rtw89_mac_port_update(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif)
- 	rtw89_mac_port_cfg_bcn_prct(rtwdev, rtwvif);
- 	rtw89_mac_port_cfg_rx_sw(rtwdev, rtwvif);
- 	rtw89_mac_port_cfg_rx_sync(rtwdev, rtwvif);
--	rtw89_mac_port_cfg_tx_sw(rtwdev, rtwvif);
-+	rtw89_mac_port_cfg_tx_sw_by_nettype(rtwdev, rtwvif);
- 	rtw89_mac_port_cfg_bcn_intv(rtwdev, rtwvif);
- 	rtw89_mac_port_cfg_hiq_win(rtwdev, rtwvif);
- 	rtw89_mac_port_cfg_hiq_dtim(rtwdev, rtwvif);
-@@ -4298,8 +4314,10 @@ rtw89_mac_c2h_scanofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *c2h,
- 
- 	switch (reason) {
- 	case RTW89_SCAN_LEAVE_CH_NOTIFY:
--		if (rtw89_is_op_chan(rtwdev, band, chan))
-+		if (rtw89_is_op_chan(rtwdev, band, chan)) {
-+			rtw89_mac_enable_beacon_for_ap_vifs(rtwdev, false);
- 			ieee80211_stop_queues(rtwdev->hw);
-+		}
- 		return;
- 	case RTW89_SCAN_END_SCAN_NOTIFY:
- 		if (rtwvif && rtwvif->scan_req &&
-@@ -4317,6 +4335,7 @@ rtw89_mac_c2h_scanofld_rsp(struct rtw89_dev *rtwdev, struct sk_buff *c2h,
- 		if (rtw89_is_op_chan(rtwdev, band, chan)) {
- 			rtw89_assign_entity_chan(rtwdev, rtwvif->sub_entity_idx,
- 						 &rtwdev->scan_info.op_chan);
-+			rtw89_mac_enable_beacon_for_ap_vifs(rtwdev, true);
- 			ieee80211_wake_queues(rtwdev->hw);
- 		} else {
- 			rtw89_chan_create(&new, chan, chan, band,
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
-index 7cf34137c0bc..7c57ab2814c7 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.h
-+++ b/drivers/net/wireless/realtek/rtw89/mac.h
-@@ -974,6 +974,7 @@ int rtw89_mac_port_get_tsf(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif,
- void rtw89_mac_set_he_obss_narrow_bw_ru(struct rtw89_dev *rtwdev,
- 					struct ieee80211_vif *vif);
- void rtw89_mac_stop_ap(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif);
-+void rtw89_mac_enable_beacon_for_ap_vifs(struct rtw89_dev *rtwdev, bool en);
- int rtw89_mac_remove_vif(struct rtw89_dev *rtwdev, struct rtw89_vif *vif);
- void rtw89_mac_disable_cpu(struct rtw89_dev *rtwdev);
- int rtw89_mac_enable_cpu(struct rtw89_dev *rtwdev, u8 boot_reason, bool dlfw);
-diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
-index 5e48618706d9..e70757e4dc2c 100644
---- a/drivers/net/wireless/realtek/rtw89/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
-@@ -472,6 +472,9 @@ static int rtw89_ops_start_ap(struct ieee80211_hw *hw,
- 		return -EOPNOTSUPP;
- 	}
- 
-+	if (rtwdev->scanning)
-+		rtw89_hw_scan_abort(rtwdev, rtwdev->scan_info.scanning_vif);
-+
- 	ether_addr_copy(rtwvif->bssid, vif->bss_conf.bssid);
- 	rtw89_cam_bssid_changed(rtwdev, rtwvif);
- 	rtw89_mac_port_update(rtwdev, rtwvif);
 -- 
 2.43.0
 
