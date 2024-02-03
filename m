@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BD911CB1;
-	Sat,  3 Feb 2024 04:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6190FF9F5;
+	Sat,  3 Feb 2024 04:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933587; cv=none; b=jm4c9UxE2MksNbwIXyGgFLRtDD6PRxuklVc6EMfs3JQUapeXa6mNK1naDUriM1xxLn2sW+K2WBaX6Y4xM264WuMlqcn5wf9kTASyNP9nCF+UEag8Z8B9acz8wTvJf+E9M4OvhNYU+keWfF62UEz/2doTDWtqOmITmqjNDQkxL3o=
+	t=1706933588; cv=none; b=QIWFt3c2W70+LOKKOJT4ctjPpv2mBHL9tMfBTxFXJSUwAgebBY2ZJtPICeaaEHYvANlC3XlgyLOZXUT4yj3WLkG+LaByC+UOjJL1drnGQ6ABfboDxaEhD2PAGm7R3GftkRnpDG2FxMnm4rYUvDJExWTlK87/jW8b09N8HZ+Bshg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933587; c=relaxed/simple;
-	bh=FUQO6O1wI5f6fk9xNEh9UNZSHytymra72tgu2MXDMeU=;
+	s=arc-20240116; t=1706933588; c=relaxed/simple;
+	bh=feshkVubLYRW8q2+/HMSoKy/5q0zID4Btj6YWJVHgBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBwijDQzGXZWwMQIxpA35uF5QUQOo8TlGhQiWy1DhkY7eE9NLRKEBnmFE1oyd7qykyELSaPeznZK7cyJkLoE/Hn6pPIsd0Rw3k8faX8+FhgGsAfNzGlFuUCn6TyiwQ0qawl2pYvDwPUZqSnUiaO+Ew6H601zuWPwpi6YYfaWPxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWLSt6eQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKlao4ZtV6/2hqGipJGwgSxtEAqvXTwzsbLVcC+EJI5DOoMhOKYdfAhBTZghpKD1D90y1BJojMOfFWwr2yINTTfH+nNou9LuJZ0BMOE9AFpVc2q0lcvOUyG+YBhIfzq+rxueqJhSAqfN844erYMxYU7rSqQOJTUOUu86dpDt7ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvjxgfsP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWLSt6eQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E87FC433C7;
-	Sat,  3 Feb 2024 04:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvjxgfsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2EBC433F1;
+	Sat,  3 Feb 2024 04:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933587;
-	bh=FUQO6O1wI5f6fk9xNEh9UNZSHytymra72tgu2MXDMeU=;
+	s=korg; t=1706933588;
+	bh=feshkVubLYRW8q2+/HMSoKy/5q0zID4Btj6YWJVHgBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWLSt6eQ0MoKFRBdwJiWfSyZiwMuWwF1jr9dUas/vTOp7d+BXwo8++Lb+gWysfugA
-	 dXNwUAC1AIqqxZBc/KoiywXa3G3kqQEy/0nJIZQmPOnaXXjnCojAU++1hVbgZHq2RQ
-	 rsmDu2l3p/LNCWTNr2F0lZYxHgeJdlFFbO/tQAOM=
+	b=XvjxgfsPvWcutz6z7hBwnElFzOcNDFVmFlcysXchKRpmyT07uAD1UPvEfIwnPuujH
+	 SG4wss31ghwM1zVDOSgw07SZUkF0U27ULsfxxgF2LrHC9b2a1pKC39dJiYEBnmahMl
+	 as5VYu8YiGg7ULixk/5GYl0pZ+h8nzqoPpO6TiSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chunyan Zhang <chunyan.zhang@unisoc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/322] bridge: cfm: fix enum typo in br_cc_ccm_tx_parse
-Date: Fri,  2 Feb 2024 20:04:07 -0800
-Message-ID: <20240203035404.029413528@linuxfoundation.org>
+Subject: [PATCH 6.6 151/322] arm64: dts: sprd: Add clock reference for pll2 on UMS512
+Date: Fri,  2 Feb 2024 20:04:08 -0800
+Message-ID: <20240203035404.068179833@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,44 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Chunyan Zhang <chunyan.zhang@unisoc.com>
 
-[ Upstream commit c2b2ee36250d967c21890cb801e24af4b6a9eaa5 ]
+[ Upstream commit 829e3e70fe72edc084fbfc4964669594ebe427ce ]
 
-It appears that there is a typo in the code where the nlattr array is
-being parsed with policy br_cfm_cc_ccm_tx_policy, but the instance is
-being accessed via IFLA_BRIDGE_CFM_CC_RDI_INSTANCE, which is associated
-with the policy br_cfm_cc_rdi_policy.
+Fix below dtbs_check warning:
 
-This problem was introduced by commit 2be665c3940d ("bridge: cfm: Netlink
-SET configuration Interface.").
+'clocks' is a dependency of 'clock-names'
 
-Though it seems like a harmless typo since these two enum owns the exact
-same value (1 here), it is quite misleading hence fix it by using the
-correct enum IFLA_BRIDGE_CFM_CC_CCM_TX_INSTANCE here.
-
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20231221092824.1169453-2-chunyan.zhang@unisoc.com
+Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_cfm_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/sprd/ums512.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bridge/br_cfm_netlink.c b/net/bridge/br_cfm_netlink.c
-index 5c4c369f8536..2faab44652e7 100644
---- a/net/bridge/br_cfm_netlink.c
-+++ b/net/bridge/br_cfm_netlink.c
-@@ -362,7 +362,7 @@ static int br_cc_ccm_tx_parse(struct net_bridge *br, struct nlattr *attr,
- 
- 	memset(&tx_info, 0, sizeof(tx_info));
- 
--	instance = nla_get_u32(tb[IFLA_BRIDGE_CFM_CC_RDI_INSTANCE]);
-+	instance = nla_get_u32(tb[IFLA_BRIDGE_CFM_CC_CCM_TX_INSTANCE]);
- 	nla_memcpy(&tx_info.dmac.addr,
- 		   tb[IFLA_BRIDGE_CFM_CC_CCM_TX_DMAC],
- 		   sizeof(tx_info.dmac.addr));
+diff --git a/arch/arm64/boot/dts/sprd/ums512.dtsi b/arch/arm64/boot/dts/sprd/ums512.dtsi
+index 97ac550af2f1..91c22667d40f 100644
+--- a/arch/arm64/boot/dts/sprd/ums512.dtsi
++++ b/arch/arm64/boot/dts/sprd/ums512.dtsi
+@@ -291,6 +291,7 @@
+ 			pll2: clock-controller@0 {
+ 				compatible = "sprd,ums512-gc-pll";
+ 				reg = <0x0 0x100>;
++				clocks = <&ext_26m>;
+ 				clock-names = "ext-26m";
+ 				#clock-cells = <1>;
+ 			};
 -- 
 2.43.0
 
