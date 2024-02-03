@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E311CAA0;
-	Sat,  3 Feb 2024 04:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903C41CAAC;
+	Sat,  3 Feb 2024 04:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933519; cv=none; b=ZTlKBHkAa894pR/8+I/v3fO5Lh5tOS8hHM77DFXgsUiXQNUkoztpxrrARa1iuDrYpDj7j78hoQhSC2FAKg1jgdi/4jxY2VFw+sBxqOvgOs/W/jnK1mVvy1z6iRO3F+MkryfGWYh+NGWBsP3NfoxGAZkuVdXBFZRpDGyec5On8Js=
+	t=1706933520; cv=none; b=E3k+5FYV+f0piEbPmq9eH0FdAuZKJwUW3n+RQGNiNJlkVVaJNPzPjUwdcmJK40+HTyNfpU8Uoc5FyjQNi6m4kvJh4uWnXZgu+Dd9DC6GJ8QTKowxvR3bWc2n992hGFG+iyJXk+LQjDyazHdl5YwNwtlWODultpvESQpuELSYmnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933519; c=relaxed/simple;
-	bh=1csxAtKQdukahJ0ppD+cGCffeiv0aWD+JPnUFV0ewyc=;
+	s=arc-20240116; t=1706933520; c=relaxed/simple;
+	bh=lpz/JIz5KVrH/Hn3d+OxzE2BjhqAc35ncro2htZhQuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HI/Jfxj71EiB/Pg7LApFM/V11T8QzJ9z3bHxfiq7hOm4fH/TFBeaQe6GJ1DwXJ0cB8so59WHMinhMhtTd/arfxdPH7OPMWx85KshIWssHex6UWuwdYPPTqjhREBsFi0s8QRV9NkflOkisGmTQTkdnMGjRcCYvcnsBJ6cBnCr3pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOCgrXsg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+2UMFS/NFcdECrLokj7bXXaJb+vLXKpqc1D3SRoDLPWEnuJh7tTao/cP0jJCMxA2+COOQCqJ/9sd/k8VkCnkqE6T4SV6HTHXmPo6z5ugikhy0pvZAbhct3Pr+txkLYROUI/oTlylkDxjIP2OIRSS4Lexdt0g6tWA/p5nHpF/z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjEzkZuY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOCgrXsg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD6BC43390;
-	Sat,  3 Feb 2024 04:11:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjEzkZuY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CBAC433C7;
+	Sat,  3 Feb 2024 04:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933519;
-	bh=1csxAtKQdukahJ0ppD+cGCffeiv0aWD+JPnUFV0ewyc=;
+	s=korg; t=1706933520;
+	bh=lpz/JIz5KVrH/Hn3d+OxzE2BjhqAc35ncro2htZhQuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOCgrXsg5uZFUJw7ig+YTrENt61QzGCXwqfoBcPXRxZBvrO47KXqIXXsPkn/dEoQt
-	 zV8CE2bDO3lX349inRVEoJcW0VTjacoZslomr4oiJVgIw2c1JpTAqy0JiC/OKzYaE5
-	 4uV1mYdoVf1rWN2/5TzMGrd3TNAD3bnCPHfroRvg=
+	b=HjEzkZuYjU2hcEB2jqD5ksr4CY7Yingyx30smChAJOgFef+YnhAQnHzGwoQrLwzxT
+	 U6LfGD9pzNhSKED22y92rm0udvIOQYYnrSYAh7coP2JvZbd5pcDwc3Uu8IGhlxqeia
+	 LYlj6JgPyTSJRO9tNwUA1Nh2Qc2h0nyiO6dOlOy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/322] wifi: rtw89: fix timeout calculation in rtw89_roc_end()
-Date: Fri,  2 Feb 2024 20:02:35 -0800
-Message-ID: <20240203035401.012665045@linuxfoundation.org>
+Subject: [PATCH 6.6 059/322] wifi: rt2x00: restart beacon queue when hardware reset
+Date: Fri,  2 Feb 2024 20:02:36 -0800
+Message-ID: <20240203035401.041617833@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,39 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit e416514e309f7e25e577fee45a65f246f67b2261 ]
+[ Upstream commit a11d965a218f0cd95b13fe44d0bcd8a20ce134a8 ]
 
-Since 'rtw89_core_tx_kick_off_and_wait()' assumes timeout
-(actually RTW89_ROC_TX_TIMEOUT) in milliseconds, I suppose
-that RTW89_ROC_IDLE_TIMEOUT is in milliseconds as well. If
-so, 'msecs_to_jiffies()' should be used in a call to
-'ieee80211_queue_delayed_work()' from 'rtw89_roc_end()'.
-Compile tested only.
+When a hardware reset is triggered, all registers are reset, so all
+queues are forced to stop in hardware interface. However, mac80211
+will not automatically stop the queue. If we don't manually stop the
+beacon queue, the queue will be deadlocked and unable to start again.
+This patch fixes the issue where Apple devices cannot connect to the
+AP after calling ieee80211_restart_hw().
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20231024143137.30393-1-dmantipov@yandex.ru
+Link: https://lore.kernel.org/r/TYAP286MB031530EB6D98DCE4DF20766CBCA4A@TYAP286MB0315.JPNP286.PROD.OUTLOOK.COM
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00dev.c |  3 +++
+ drivers/net/wireless/ralink/rt2x00/rt2x00mac.c | 11 +++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 133bf289bacb..535393eca564 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -2548,7 +2548,7 @@ void rtw89_roc_end(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif)
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+index 9a9cfd0ce402..00b945053e19 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+@@ -101,6 +101,7 @@ void rt2x00lib_disable_radio(struct rt2x00_dev *rt2x00dev)
+ 	rt2x00link_stop_tuner(rt2x00dev);
+ 	rt2x00queue_stop_queues(rt2x00dev);
+ 	rt2x00queue_flush_queues(rt2x00dev, true);
++	rt2x00queue_stop_queue(rt2x00dev->bcn);
  
- 	if (hw->conf.flags & IEEE80211_CONF_IDLE)
- 		ieee80211_queue_delayed_work(hw, &roc->roc_work,
--					     RTW89_ROC_IDLE_TIMEOUT);
-+					     msecs_to_jiffies(RTW89_ROC_IDLE_TIMEOUT));
+ 	/*
+ 	 * Disable radio.
+@@ -1286,6 +1287,7 @@ int rt2x00lib_start(struct rt2x00_dev *rt2x00dev)
+ 	rt2x00dev->intf_ap_count = 0;
+ 	rt2x00dev->intf_sta_count = 0;
+ 	rt2x00dev->intf_associated = 0;
++	rt2x00dev->intf_beaconing = 0;
+ 
+ 	/* Enable the radio */
+ 	retval = rt2x00lib_enable_radio(rt2x00dev);
+@@ -1312,6 +1314,7 @@ void rt2x00lib_stop(struct rt2x00_dev *rt2x00dev)
+ 	rt2x00dev->intf_ap_count = 0;
+ 	rt2x00dev->intf_sta_count = 0;
+ 	rt2x00dev->intf_associated = 0;
++	rt2x00dev->intf_beaconing = 0;
  }
  
- void rtw89_roc_work(struct work_struct *work)
+ static inline void rt2x00lib_set_if_combinations(struct rt2x00_dev *rt2x00dev)
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c b/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
+index 4202c6517783..75fda72c14ca 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
+@@ -598,6 +598,17 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
+ 	 */
+ 	if (changes & BSS_CHANGED_BEACON_ENABLED) {
+ 		mutex_lock(&intf->beacon_skb_mutex);
++
++		/*
++		 * Clear the 'enable_beacon' flag and clear beacon because
++		 * the beacon queue has been stopped after hardware reset.
++		 */
++		if (test_bit(DEVICE_STATE_RESET, &rt2x00dev->flags) &&
++		    intf->enable_beacon) {
++			intf->enable_beacon = false;
++			rt2x00queue_clear_beacon(rt2x00dev, vif);
++		}
++
+ 		if (!bss_conf->enable_beacon && intf->enable_beacon) {
+ 			rt2x00dev->intf_beaconing--;
+ 			intf->enable_beacon = false;
 -- 
 2.43.0
 
