@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B8710965;
-	Sat,  3 Feb 2024 04:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C74D10965;
+	Sat,  3 Feb 2024 04:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933647; cv=none; b=r7hZ3Rm6PBRdNwPaV5YhPGAwoiM9HfN43J6fE+tGgLDvHBRjG7oKTfQvimgLjzDMhelqklbNNAe0NmoYtOa2iTsTzVjWEG9X1CrVNGRMhPJrFLuzOR4Hb+FQCCHOvaakGUQIsfsokTNOFQB/AJNWDkBP6o0YyZUlZ5sKgV/yrTA=
+	t=1706933648; cv=none; b=rBQx+ZY4bDKHz1RlG1hb9RLh2SMQMQykDqOzGYK7rX5L/nK2De0zTSVhKu78iG2uJOw/E7ND44qnPUgOGifUwDPBRY5mmAXv9MQ6JmikPhyEJFEQ+yB/KER+MatLr0M6Kg9+7ZOyckOl3BDkeDMCS/e3d1WkYD7ZcYBsJYmTC+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933647; c=relaxed/simple;
-	bh=9NcnF+CZYd8mQKxMEyQjPxkLXNMWTuvBcpo7kwJtZ+Y=;
+	s=arc-20240116; t=1706933648; c=relaxed/simple;
+	bh=yyLIcQo5dnCIiTGEREKIWX3FvcHPBdAg8ldHZPwUB9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/pHQCMxOd6Xhjm97myxZDwsrCc15IY5Z3wTugwTfyNxQ2PZuphrtZiVcykatAt52AjZ6ldorXtQr7KumPAU7ME6c/9H6iaUbwqXuOWnm8xP5GtcMg8SLsiefjLUD8NBoH1QGAxs6nSjod1fnfn6uUw3nLrMIJP3McLEqhcrWqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GW6Ssgk8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dv3TBjmJ3ho/dB9IsSAh6Ak1JF8CiNRfFoiUcDRO0AbzB0HqoZOS9ZtDInLYloSf0auztjF+3/UdMwJu7ZntUhS5l9YA1qbsrui/MWBlihr0FS5m8IEpzHNf9JwfVHwJ3n2GAY5GSqfIhhCLfNxhr+RbTp/p3SrfW27GFclKWOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=va8eyJ8G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GW6Ssgk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EF9C433A6;
-	Sat,  3 Feb 2024 04:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="va8eyJ8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268A2C433C7;
+	Sat,  3 Feb 2024 04:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933647;
-	bh=9NcnF+CZYd8mQKxMEyQjPxkLXNMWTuvBcpo7kwJtZ+Y=;
+	s=korg; t=1706933648;
+	bh=yyLIcQo5dnCIiTGEREKIWX3FvcHPBdAg8ldHZPwUB9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GW6Ssgk8co1n/EoWtlND/0lyY15NAufkn7kmULTBROy5efKuQgT/LM+1nVuQs1oQS
-	 nuXsXtFrARjMgkxjxWG5ffudo/XlykbsENnPdfz+03yRz9TmM20JCB9+OO09bMmxUE
-	 jtR/vKRsCdcvCWnzuDpQbQ14sgSkp8lvRLXQP5r8=
+	b=va8eyJ8GvY8sbWbJC9KDcnxcTakcGniVLX+SFfGAlHlYc4pp1Knu94jnfBFoEOQ0y
+	 U84PzjOeEFDAUGyp+XbFQp8C3UiUY/RZsHFl+FGTfM1BCDviUQWxP6ADQK/4ob5LnB
+	 EPBBik/ImpsOQWnwm14SDrcFl/ZQ/zH7JGP/P/Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Stodden <dns@arista.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Dmitry Safonov <dima@arista.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	John Garry <john.g.garry@oracle.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	Will Deacon <will@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 230/322] PCI: switchtec: Fix stdev_release() crash after surprise hot remove
-Date: Fri,  2 Feb 2024 20:05:27 -0800
-Message-ID: <20240203035406.632880482@linuxfoundation.org>
+Subject: [PATCH 6.6 231/322] perf cs-etm: Bump minimum OpenCSD version to ensure a bugfix is present
+Date: Fri,  2 Feb 2024 20:05:28 -0800
+Message-ID: <20240203035406.665227222@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,102 +57,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Stodden <dns@arista.com>
+From: James Clark <james.clark@arm.com>
 
-[ Upstream commit df25461119d987b8c81d232cfe4411e91dcabe66 ]
+[ Upstream commit 2dbba30fd69b604802a9535b74bddb5bcca23793 ]
 
-A PCI device hot removal may occur while stdev->cdev is held open. The call
-to stdev_release() then happens during close or exit, at a point way past
-switchtec_pci_remove(). Otherwise the last ref would vanish with the
-trailing put_device(), just before return.
+Since commit d927ef5004ef ("perf cs-etm: Add exception level consistency
+check"), the exception that was added to Perf will be triggered unless
+the following bugfix from OpenCSD is present:
 
-At that later point in time, the devm cleanup has already removed the
-stdev->mmio_mrpc mapping. Also, the stdev->pdev reference was not a counted
-one. Therefore, in DMA mode, the iowrite32() in stdev_release() will cause
-a fatal page fault, and the subsequent dma_free_coherent(), if reached,
-would pass a stale &stdev->pdev->dev pointer.
+ - _Version 1.2.1_:
+  - __Bugfix__:
+    ETM4x / ETE - output of context elements to client can in some
+    circumstances be delayed until after subsequent atoms have been
+    processed leading to incorrect memory decode access via the client
+    callbacks. Fixed to flush context elements immediately they are
+    committed.
 
-Fix by moving MRPC DMA shutdown into switchtec_pci_remove(), after
-stdev_kill(). Counting the stdev->pdev ref is now optional, but may prevent
-future accidents.
+Rather than remove the assert and silently fail, just increase the
+minimum version requirement to avoid hard to debug issues and
+regressions.
 
-Reproducible via the script at
-https://lore.kernel.org/r/20231113212150.96410-1-dns@arista.com
-
-Link: https://lore.kernel.org/r/20231122042316.91208-2-dns@arista.com
-Signed-off-by: Daniel Stodden <dns@arista.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Reviewed-by: Dmitry Safonov <dima@arista.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: James Clark <james.clark@arm.com>
+Tested-by: Leo Yan <leo.yan@linaro.org>
+Cc: John Garry <john.g.garry@oracle.com>
+Cc: Mike Leach <mike.leach@linaro.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org
+Link: https://lore.kernel.org/r/20230901133716.677499-1-james.clark@arm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/switch/switchtec.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ tools/build/feature/test-libopencsd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
-index 5b921387eca6..1804794d0e68 100644
---- a/drivers/pci/switch/switchtec.c
-+++ b/drivers/pci/switch/switchtec.c
-@@ -1308,13 +1308,6 @@ static void stdev_release(struct device *dev)
- {
- 	struct switchtec_dev *stdev = to_stdev(dev);
+diff --git a/tools/build/feature/test-libopencsd.c b/tools/build/feature/test-libopencsd.c
+index eb6303ff446e..4cfcef9da3e4 100644
+--- a/tools/build/feature/test-libopencsd.c
++++ b/tools/build/feature/test-libopencsd.c
+@@ -4,9 +4,9 @@
+ /*
+  * Check OpenCSD library version is sufficient to provide required features
+  */
+-#define OCSD_MIN_VER ((1 << 16) | (1 << 8) | (1))
++#define OCSD_MIN_VER ((1 << 16) | (2 << 8) | (1))
+ #if !defined(OCSD_VER_NUM) || (OCSD_VER_NUM < OCSD_MIN_VER)
+-#error "OpenCSD >= 1.1.1 is required"
++#error "OpenCSD >= 1.2.1 is required"
+ #endif
  
--	if (stdev->dma_mrpc) {
--		iowrite32(0, &stdev->mmio_mrpc->dma_en);
--		flush_wc_buf(stdev);
--		writeq(0, &stdev->mmio_mrpc->dma_addr);
--		dma_free_coherent(&stdev->pdev->dev, sizeof(*stdev->dma_mrpc),
--				stdev->dma_mrpc, stdev->dma_mrpc_dma_addr);
--	}
- 	kfree(stdev);
- }
- 
-@@ -1358,7 +1351,7 @@ static struct switchtec_dev *stdev_create(struct pci_dev *pdev)
- 		return ERR_PTR(-ENOMEM);
- 
- 	stdev->alive = true;
--	stdev->pdev = pdev;
-+	stdev->pdev = pci_dev_get(pdev);
- 	INIT_LIST_HEAD(&stdev->mrpc_queue);
- 	mutex_init(&stdev->mrpc_mutex);
- 	stdev->mrpc_busy = 0;
-@@ -1391,6 +1384,7 @@ static struct switchtec_dev *stdev_create(struct pci_dev *pdev)
- 	return stdev;
- 
- err_put:
-+	pci_dev_put(stdev->pdev);
- 	put_device(&stdev->dev);
- 	return ERR_PTR(rc);
- }
-@@ -1644,6 +1638,18 @@ static int switchtec_init_pci(struct switchtec_dev *stdev,
- 	return 0;
- }
- 
-+static void switchtec_exit_pci(struct switchtec_dev *stdev)
-+{
-+	if (stdev->dma_mrpc) {
-+		iowrite32(0, &stdev->mmio_mrpc->dma_en);
-+		flush_wc_buf(stdev);
-+		writeq(0, &stdev->mmio_mrpc->dma_addr);
-+		dma_free_coherent(&stdev->pdev->dev, sizeof(*stdev->dma_mrpc),
-+				  stdev->dma_mrpc, stdev->dma_mrpc_dma_addr);
-+		stdev->dma_mrpc = NULL;
-+	}
-+}
-+
- static int switchtec_pci_probe(struct pci_dev *pdev,
- 			       const struct pci_device_id *id)
- {
-@@ -1703,6 +1709,9 @@ static void switchtec_pci_remove(struct pci_dev *pdev)
- 	ida_free(&switchtec_minor_ida, MINOR(stdev->dev.devt));
- 	dev_info(&stdev->dev, "unregistered.\n");
- 	stdev_kill(stdev);
-+	switchtec_exit_pci(stdev);
-+	pci_dev_put(stdev->pdev);
-+	stdev->pdev = NULL;
- 	put_device(&stdev->dev);
- }
- 
+ int main(void)
 -- 
 2.43.0
 
