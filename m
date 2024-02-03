@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263DC171D4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98C0171CE;
 	Sat,  3 Feb 2024 04:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933938; cv=none; b=NYBEN5LciMhT+GUO3rJvrVrptE/JS4HbccxKMLjT55TB9YIugwtKcrYYM0jn9ue2MZtVXr1J9aNv+bdgCU70xwheuK7spljud8tKcicL6A/n1AUgDwOAcc9ArS4wsHIu7fdve6JpvfcTPNli+isoAchnpSOzY0wt4pS4Ulrr+ck=
+	t=1706933938; cv=none; b=sVwDQee+k9Pb9BU00e9gEjDbbWT2o1YdAxLKqkeWZXemfPL29JmummnU7C1zNxFgiTEDrCWli32FcmiweHR+kCqlVHPwTM/LKqcxosSxiP+rYXn5T7pG/tUK1HQiUZNY8Lfm4dewmb5NTJxkJLnA+tpuk/4kK0T0cRbxWBQEx/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933938; c=relaxed/simple;
-	bh=rC9yz0Iq1BoxsR/iztL/KRAWGJ4VzYTQbPE4o2XNSY8=;
+	bh=0bofXfwELl64weF8rsdraMK9hyASRhPJAd2BXm5iWfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tB6pEMU9MJDw9GhfUgDdJVtUqRA7lmWhQWPPJja4S8PlWDQbQo5oaM63Z2SvcHWnIjwp2OGBKHFs15EEDsRyUcaP1/Xpn2nINoNy6aLrOUE4zcc3UGRL9k92brg2PwLCwM4mFiavZ5/xDfgmyQ0tdOpfWyd+EHayUQ/6xBLlopA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4jBU3Du; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eCNW+FDGrOr78VYWTLqW2K0tlD2c9ZRlCyjolSdJU/E8Yj2ZgSLeI4v9gTjzTCd2CfvJuZ9pJB0yyxQPmJaW329lXdkgVwvi//VUtJJRZsrmhtjxJBdaMpW/wyt5rjfbpjFV0PjUx2O8MG//0wMMgxc4tTMBzAeHVCQfdG88/nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKZVqLqp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4jBU3Du"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4936C433F1;
-	Sat,  3 Feb 2024 04:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKZVqLqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D19C43390;
+	Sat,  3 Feb 2024 04:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933938;
-	bh=rC9yz0Iq1BoxsR/iztL/KRAWGJ4VzYTQbPE4o2XNSY8=;
+	bh=0bofXfwELl64weF8rsdraMK9hyASRhPJAd2BXm5iWfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4jBU3DuRg9lZCkpPaRKOaKxMfrHXBxdfowkIAx50VHza1pvpMtcccrO5QGWnMV5g
-	 HhKU8d+8v4k8DE6JNhFdYUuxeQ+yh0UzhxBlWFexSX8J4skbWKC36rIkZ50ZGpjT1j
-	 C/b1tKLKAccEhTvsg+9uu4We7CZTkTOngVXz9HEc=
+	b=lKZVqLqpMmR/IJRM5GM7YIk0qgwF5ePtliaqYK2nPMssBdrcphoiLzpXuZ1/BGOVS
+	 ICxyHLwe3aJHX16wyr+5Zvxw4REdeLq6lTJXFWoXdnTif9v1dVdzdPVx78SKVuPF+p
+	 g9Esgsr3weRSiOI6fS5Awc7tp7bEAGHdXH/z6/yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiaojian Du <Xiaojian.Du@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 300/353] gve: Fix skb truesize underestimation
-Date: Fri,  2 Feb 2024 20:06:58 -0800
-Message-ID: <20240203035413.329850710@linuxfoundation.org>
+Subject: [PATCH 6.7 283/353] drm/amdgpu: Fix with right return code -EIO in amdgpu_gmc_vram_checking()
+Date: Fri,  2 Feb 2024 20:06:41 -0800
+Message-ID: <20240203035412.723169736@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -45,64 +48,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Praveen Kaligineedi <pkaligineedi@google.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 534326711000c318fe1523c77308450522baa499 ]
+[ Upstream commit fac4ebd79fed60e79cccafdad45a2bb8d3795044 ]
 
-For a skb frag with a newly allocated copy page, the true size is
-incorrectly set to packet buffer size. It should be set to PAGE_SIZE
-instead.
+The amdgpu_gmc_vram_checking() function in emulation checks whether
+all of the memory range of shared system memory could be accessed by
+GPU, from this aspect, -EIO is returned for error scenarios.
 
-Fixes: 82fd151d38d9 ("gve: Reduce alloc and copy costs in the GQ rx path")
-Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Link: https://lore.kernel.org/r/20240124161025.1819836-1-pkaligineedi@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/gmc_v6_0.c:919 gmc_v6_0_hw_init() warn: missing error code? 'r'
+drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c:1103 gmc_v7_0_hw_init() warn: missing error code? 'r'
+drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c:1223 gmc_v8_0_hw_init() warn: missing error code? 'r'
+drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c:2344 gmc_v9_0_hw_init() warn: missing error code? 'r'
+
+Cc: Xiaojian Du <Xiaojian.Du@amd.com>
+Cc: Lijo Lazar <lijo.lazar@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_rx.c b/drivers/net/ethernet/google/gve/gve_rx.c
-index 73655347902d..93ff7c8ec905 100644
---- a/drivers/net/ethernet/google/gve/gve_rx.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx.c
-@@ -362,7 +362,7 @@ static enum pkt_hash_types gve_rss_type(__be16 pkt_flags)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+index d2f273d77e59..55784a9f26c4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -1045,21 +1045,28 @@ int amdgpu_gmc_vram_checking(struct amdgpu_device *adev)
+ 	 * seconds, so here, we just pick up three parts for emulation.
+ 	 */
+ 	ret = memcmp(vram_ptr, cptr, 10);
+-	if (ret)
+-		return ret;
++	if (ret) {
++		ret = -EIO;
++		goto release_buffer;
++	}
  
- static struct sk_buff *gve_rx_add_frags(struct napi_struct *napi,
- 					struct gve_rx_slot_page_info *page_info,
--					u16 packet_buffer_size, u16 len,
-+					unsigned int truesize, u16 len,
- 					struct gve_rx_ctx *ctx)
- {
- 	u32 offset = page_info->page_offset + page_info->pad;
-@@ -395,10 +395,10 @@ static struct sk_buff *gve_rx_add_frags(struct napi_struct *napi,
- 	if (skb != ctx->skb_head) {
- 		ctx->skb_head->len += len;
- 		ctx->skb_head->data_len += len;
--		ctx->skb_head->truesize += packet_buffer_size;
-+		ctx->skb_head->truesize += truesize;
- 	}
- 	skb_add_rx_frag(skb, num_frags, page_info->page,
--			offset, len, packet_buffer_size);
-+			offset, len, truesize);
+ 	ret = memcmp(vram_ptr + (size / 2), cptr, 10);
+-	if (ret)
+-		return ret;
++	if (ret) {
++		ret = -EIO;
++		goto release_buffer;
++	}
  
- 	return ctx->skb_head;
+ 	ret = memcmp(vram_ptr + size - 10, cptr, 10);
+-	if (ret)
+-		return ret;
++	if (ret) {
++		ret = -EIO;
++		goto release_buffer;
++	}
+ 
++release_buffer:
+ 	amdgpu_bo_free_kernel(&vram_bo, &vram_gpu,
+ 			&vram_ptr);
+ 
+-	return 0;
++	return ret;
  }
-@@ -492,7 +492,7 @@ static struct sk_buff *gve_rx_copy_to_pool(struct gve_rx_ring *rx,
  
- 		memcpy(alloc_page_info.page_address, src, page_info->pad + len);
- 		skb = gve_rx_add_frags(napi, &alloc_page_info,
--				       rx->packet_buffer_size,
-+				       PAGE_SIZE,
- 				       len, ctx);
- 
- 		u64_stats_update_begin(&rx->statss);
+ static ssize_t current_memory_partition_show(
 -- 
 2.43.0
 
