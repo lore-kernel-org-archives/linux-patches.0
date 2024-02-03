@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45154FC11;
-	Sat,  3 Feb 2024 04:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF1011181;
+	Sat,  3 Feb 2024 04:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933376; cv=none; b=WYFeXITZAXDlT+OSsvEwMT4hu4vl9S23Md8jIITohS66A213w93JlyJ9LDIstczJ5pjC7+wvz/+36u3xR2mLYqptC86ej0FU3EddlnCXYz5cvYKj++WiVE53jfHCmWEZPnFeWVws3gxcgBLsSLxxzBV6lXqZbfKmwlFugAo9Iqo=
+	t=1706933377; cv=none; b=Mtpe7DPmWjyt01m5yVPyeOzbz9qKquZliaVzF5mtUW7X1ZrfXsFavEsPQQrGFWs75lOIEqYA4ICSqNW5hfc49uyH9Hkd3wTUYpOrYch197zK2cYSDrTAlozm5xs06v5GhN0PuCTgYXqw3oKCVb87d5GnAC/abfn6DVvnoUpakwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933376; c=relaxed/simple;
-	bh=E7ERQZ8HTO9OIYdbKh8gcPYBWdy4l2ssUZpjg+EFZnI=;
+	s=arc-20240116; t=1706933377; c=relaxed/simple;
+	bh=06KqJUgZxp3QR+iUqdGIar+59qXuTCFxVsl+XgL3xek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhOP+BXBRuJsWw2wF/IqvRGAX3uIypSGZ0s+ZCvtUyRwHfsENOVCAAk0b7Bf52wzNR33kg2Mz4L4mN2UcpXPz9Tei7gI3y+nzWEovNINLWoCyQrXpoiIRu8r93Akt4DY9ziUlwzRVbYfkCPa45449BG5Y0vRrR1OoRN8+XOVNQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6ZERYeq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rUQHO41/s+60YviXzVrDssjNzhSWCJ4dlu8zWp4cpK1nNx33D1Z0sA12rY3HvLtJ5LI1Y7jXytjhAymNO3ouXY3ZWRzBX/AWvT+BGZBXiJr8G1aFJxRbhDAPLuocc/KrC7KQ13gP7YLqJSD26X5fpSL+KZI1jWpFj5bXT/5ZReM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvxVkw8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6ZERYeq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3C9C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvxVkw8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F60C433A6;
 	Sat,  3 Feb 2024 04:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933376;
-	bh=E7ERQZ8HTO9OIYdbKh8gcPYBWdy4l2ssUZpjg+EFZnI=;
+	bh=06KqJUgZxp3QR+iUqdGIar+59qXuTCFxVsl+XgL3xek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6ZERYeqhfzHO46Dh3+oKbmBGzPLjsZZbDxcRhA2M7Y+5kPiK2pwAAFVQY0i+WXPQ
-	 yk+2Q1C0MtCyfRPociG0TRXsWpY6OC3PJd50JlSJz4TcEEylCSTndoXPbzIla1QylO
-	 R5CEFQBp8oIE8qVd4R5taO5nq39f+aRe08L9tj0E=
+	b=DvxVkw8Yn/sUEar07keHtYs03OTxOXrpWFK/rOkSJMdxl2x2yfkB2kBecVEAGgT7j
+	 8ww+XKR9/1uy3W1G6zZcoXw9uxBz77zKD7uHgUH294TB00IRQgZmaQafCnaPdAd/ui
+	 /RGPl6R+jb5B62cVwoFW6H6NKhGgnbQov55xALkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/219] ARM: dts: rockchip: fix rk3036 hdmi ports node
-Date: Fri,  2 Feb 2024 20:04:01 -0800
-Message-ID: <20240203035326.380234551@linuxfoundation.org>
+Subject: [PATCH 6.1 086/219] block: prevent an integer overflow in bvec_try_merge_hw_page
+Date: Fri,  2 Feb 2024 20:04:19 -0800
+Message-ID: <20240203035329.343315459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,49 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 27ded76ef0fcfcf939914532aae575cf23c221b4 ]
+[ Upstream commit 3f034c374ad55773c12dd8f3c1607328e17c0072 ]
 
-Fix hdmi ports node so that it matches the
-rockchip,inno-hdmi.yaml binding.
+Reordered a check to avoid a possible overflow when adding len to bv_len.
 
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/9a2afac1-ed5c-382d-02b0-b2f5f1af3abb@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20231204173419.782378-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3036.dtsi | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ block/bio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/rk3036.dtsi b/arch/arm/boot/dts/rk3036.dtsi
-index 78686fc72ce6..c420c7c642cb 100644
---- a/arch/arm/boot/dts/rk3036.dtsi
-+++ b/arch/arm/boot/dts/rk3036.dtsi
-@@ -402,12 +402,20 @@
- 		pinctrl-0 = <&hdmi_ctl>;
- 		status = "disabled";
+diff --git a/block/bio.c b/block/bio.c
+index 6c22dd7b6f27..74c2818c7ec9 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -927,7 +927,7 @@ static bool bio_try_merge_hw_seg(struct request_queue *q, struct bio *bio,
  
--		hdmi_in: port {
-+		ports {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
--			hdmi_in_vop: endpoint@0 {
-+
-+			hdmi_in: port@0 {
- 				reg = <0>;
--				remote-endpoint = <&vop_out_hdmi>;
-+
-+				hdmi_in_vop: endpoint {
-+					remote-endpoint = <&vop_out_hdmi>;
-+				};
-+			};
-+
-+			hdmi_out: port@1 {
-+				reg = <1>;
- 			};
- 		};
- 	};
+ 	if ((addr1 | mask) != (addr2 | mask))
+ 		return false;
+-	if (bv->bv_len + len > queue_max_segment_size(q))
++	if (len > queue_max_segment_size(q) - bv->bv_len)
+ 		return false;
+ 	return __bio_try_merge_page(bio, page, len, offset, same_page);
+ }
 -- 
 2.43.0
 
