@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08CBFBE4;
-	Sat,  3 Feb 2024 04:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5BE0FBE4;
+	Sat,  3 Feb 2024 04:09:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933363; cv=none; b=ALrqLq5dwiRHTcPhGcPHf3UfaX4JwoT4EKvnMepbTuQeeaWF1qo8+X/jzrpSoANtDbGw7+VNDt4CystDsxNpAiMOKsgAPsWNaK29WbRkUMwl/duAvT+a/WUhN23wBd7/idXu07matKTUNIkaq6LiyGiDJgybagHRj7iFzWJ49HY=
+	t=1706933363; cv=none; b=JbRbFXsB0qaUlNtjFoKOAUW0uZOCQw4NVQyySzkUFU52FUZFNhW39n4CSWqoHMbotVgZp5k0pJunBdoxdwkXqk+F4dGGVIy5Ilqhtj1F2DE1nu5hvA54eRlJ3hdud11ZWkz7+ssTZ4a7psJWALMGtlHYwwmLA7RIjz4kABAvlzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933363; c=relaxed/simple;
-	bh=FrV22SFLRiTlYGGHRUpEMjnbrkv5PFpxCQ7A9spMRe4=;
+	bh=RuZ3yJz9653v9C6ssg2U83qa+vbASIL5XlVYtBjsqiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8C0dxWOle9iiZCOeeMiSQ16EeRb0nYpkpC8VE28cvvl5DgjDtD5ff/sdOQSV1rbypCwHM6le/Dti/6lIFRJV/vAXbRJdb/Gq4qAe39uAblzcLmzGCkiEonq4RYP3AxTH7KUptha6+7bfbpw5uPOWteZII5A9asB1r80eJmmEAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E94C/U09; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AiNzDeuPUbWanHOFrR2WFZ6cQsH/T6L9b/9lmo9KVsWi2DG8gi54n7jdLdW04vuXlPOm7TkJoErCQYvYld3UtAMtq8PFHe16tJHPENPxMqlkd5ReBhW5ITqTimMWyqXX5C1XUHZW6fR/svrvA6dJavAhqvEA2NMUrxVAtwx2qWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNXRYzHE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E94C/U09"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B86D1C433C7;
-	Sat,  3 Feb 2024 04:09:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNXRYzHE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA89C433C7;
+	Sat,  3 Feb 2024 04:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933362;
-	bh=FrV22SFLRiTlYGGHRUpEMjnbrkv5PFpxCQ7A9spMRe4=;
+	s=korg; t=1706933363;
+	bh=RuZ3yJz9653v9C6ssg2U83qa+vbASIL5XlVYtBjsqiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E94C/U090tgPgE0/HVG8x0AAKOL0wCs6BfUsaxaH6l41UqtB6bDSBoF6aNrxhCmZZ
-	 O4FQh6SiwIV8FfyiTh7FUnAG1uG16ovCRNuw/EpZMghVW2qTYjXaWPAJssenmuRDjd
-	 sulBmLN+GJ5DbBer4G5nehzfM2R4wtIRGxyYsY7o=
+	b=PNXRYzHEcY6p/bQVJA3ndF+0ZU1ILolFr13D6E5NZt3YA212OJEjMxk3IwH9IsQKh
+	 T/CgQFErLZtagBRRdeptkDRmrjGpa7lid8zYuLN+0R+9aBfY3+bm64cX7O5WpO08Ku
+	 GPv8zENB/P1pvgs5txKv6/hgNDlQlILf1P42yzKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/219] ext4: remove unnecessary check from alloc_flex_gd()
-Date: Fri,  2 Feb 2024 20:03:36 -0800
-Message-ID: <20240203035322.620006333@linuxfoundation.org>
+Subject: [PATCH 6.1 044/219] ext4: avoid online resizing failures due to oversized flex bg
+Date: Fri,  2 Feb 2024 20:03:37 -0800
+Message-ID: <20240203035322.742239882@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -46,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -54,40 +55,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit b099eb87de105cf07cad731ded6fb40b2675108b ]
+[ Upstream commit 5d1935ac02ca5aee364a449a35e2977ea84509b0 ]
 
-In commit 967ac8af4475 ("ext4: fix potential integer overflow in
-alloc_flex_gd()"), an overflow check is added to alloc_flex_gd() to
-prevent the allocated memory from being smaller than expected due to
-the overflow. However, after kmalloc() is replaced with kmalloc_array()
-in commit 6da2ec56059c ("treewide: kmalloc() -> kmalloc_array()"), the
-kmalloc_array() function has an overflow check, so the above problem
-will not occur. Therefore, the extra check is removed.
+When we online resize an ext4 filesystem with a oversized flexbg_size,
+
+     mkfs.ext4 -F -G 67108864 $dev -b 4096 100M
+     mount $dev $dir
+     resize2fs $dev 16G
+
+the following WARN_ON is triggered:
+==================================================================
+WARNING: CPU: 0 PID: 427 at mm/page_alloc.c:4402 __alloc_pages+0x411/0x550
+Modules linked in: sg(E)
+CPU: 0 PID: 427 Comm: resize2fs Tainted: G  E  6.6.0-rc5+ #314
+RIP: 0010:__alloc_pages+0x411/0x550
+Call Trace:
+ <TASK>
+ __kmalloc_large_node+0xa2/0x200
+ __kmalloc+0x16e/0x290
+ ext4_resize_fs+0x481/0xd80
+ __ext4_ioctl+0x1616/0x1d90
+ ext4_ioctl+0x12/0x20
+ __x64_sys_ioctl+0xf0/0x150
+ do_syscall_64+0x3b/0x90
+==================================================================
+
+This is because flexbg_size is too large and the size of the new_group_data
+array to be allocated exceeds MAX_ORDER. Currently, the minimum value of
+MAX_ORDER is 8, the minimum value of PAGE_SIZE is 4096, the corresponding
+maximum number of groups that can be allocated is:
+
+ (PAGE_SIZE << MAX_ORDER) / sizeof(struct ext4_new_group_data) ≈ 21845
+
+And the value that is down-aligned to the power of 2 is 16384. Therefore,
+this value is defined as MAX_RESIZE_BG, and the number of groups added
+each time does not exceed this value during resizing, and is added multiple
+times to complete the online resizing. The difference is that the metadata
+in a flex_bg may be more dispersed.
 
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231023013057.2117948-3-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20231023013057.2117948-4-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/resize.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/ext4/resize.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
-index 31f5da7f9f6c..e76270ee7fe5 100644
+index e76270ee7fe5..f2ed15af703a 100644
 --- a/fs/ext4/resize.c
 +++ b/fs/ext4/resize.c
-@@ -249,10 +249,7 @@ static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
+@@ -231,10 +231,17 @@ struct ext4_new_flex_group_data {
+ 						   in the flex group */
+ 	__u16 *bg_flags;			/* block group flags of groups
+ 						   in @groups */
++	ext4_group_t resize_bg;			/* number of allocated
++						   new_group_data */
+ 	ext4_group_t count;			/* number of groups in @groups
+ 						 */
+ };
+ 
++/*
++ * Avoiding memory allocation failures due to too many groups added each time.
++ */
++#define MAX_RESIZE_BG				16384
++
+ /*
+  * alloc_flex_gd() allocates a ext4_new_flex_group_data with size of
+  * @flexbg_size.
+@@ -249,14 +256,18 @@ static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
  	if (flex_gd == NULL)
  		goto out3;
  
--	if (flexbg_size >= UINT_MAX / sizeof(struct ext4_new_group_data))
--		goto out2;
- 	flex_gd->count = flexbg_size;
--
- 	flex_gd->groups = kmalloc_array(flexbg_size,
+-	flex_gd->count = flexbg_size;
+-	flex_gd->groups = kmalloc_array(flexbg_size,
++	if (unlikely(flexbg_size > MAX_RESIZE_BG))
++		flex_gd->resize_bg = MAX_RESIZE_BG;
++	else
++		flex_gd->resize_bg = flexbg_size;
++
++	flex_gd->groups = kmalloc_array(flex_gd->resize_bg,
  					sizeof(struct ext4_new_group_data),
  					GFP_NOFS);
+ 	if (flex_gd->groups == NULL)
+ 		goto out2;
+ 
+-	flex_gd->bg_flags = kmalloc_array(flexbg_size, sizeof(__u16),
++	flex_gd->bg_flags = kmalloc_array(flex_gd->resize_bg, sizeof(__u16),
+ 					  GFP_NOFS);
+ 	if (flex_gd->bg_flags == NULL)
+ 		goto out1;
+@@ -1620,8 +1631,7 @@ static int ext4_flex_group_add(struct super_block *sb,
+ 
+ static int ext4_setup_next_flex_gd(struct super_block *sb,
+ 				    struct ext4_new_flex_group_data *flex_gd,
+-				    ext4_fsblk_t n_blocks_count,
+-				    unsigned int flexbg_size)
++				    ext4_fsblk_t n_blocks_count)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	struct ext4_super_block *es = sbi->s_es;
+@@ -1645,7 +1655,7 @@ static int ext4_setup_next_flex_gd(struct super_block *sb,
+ 	BUG_ON(last);
+ 	ext4_get_group_no_and_offset(sb, n_blocks_count - 1, &n_group, &last);
+ 
+-	last_group = group | (flexbg_size - 1);
++	last_group = group | (flex_gd->resize_bg - 1);
+ 	if (last_group > n_group)
+ 		last_group = n_group;
+ 
+@@ -2150,8 +2160,7 @@ int ext4_resize_fs(struct super_block *sb, ext4_fsblk_t n_blocks_count)
+ 	/* Add flex groups. Note that a regular group is a
+ 	 * flex group with 1 group.
+ 	 */
+-	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count,
+-					      flexbg_size)) {
++	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count)) {
+ 		if (time_is_before_jiffies(last_update_time + HZ * 10)) {
+ 			if (last_update_time)
+ 				ext4_msg(sb, KERN_INFO,
 -- 
 2.43.0
 
