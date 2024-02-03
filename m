@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458572C68E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01EB111AE;
 	Sat,  3 Feb 2024 04:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933572; cv=none; b=M4PKcbEgyu3yrlMxmz03lkxwM6DciCFuK8uyT6/dQzPzMHDSS8HNnvOZCiw/pqIQVE3l299hrb/mcM/GH/obUFygtBvExowybrnCKRnJwvaXDT0dcpEy4LALvD5WKQBbBWUn7snf3J4tY2dxy8LMQN/aJmY7xq3WrUAdqmsbl94=
+	t=1706933573; cv=none; b=oB4QAVLRDNcbx4MZThVLt+UPDqnFeVs5rp7QvVMA7Qd43HffKJh+KbcYzodBKsk72plul1Rny4GrVJ/9xW7QYLO7z5HXfhCRk7rnUtbBDjt/bDjM3MPEGyEWBb07xLAPNBxiFeMA4ZBbBk9222POXtMgD7frSgzynbpOiBNn5Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933572; c=relaxed/simple;
-	bh=FKn//aFH4tjNzgvyeqamkVcPvynE+d9eFrOv+0jc704=;
+	s=arc-20240116; t=1706933573; c=relaxed/simple;
+	bh=78mIPIL1k+1Dl40KjN9pphfvM52ZY6bRHIgXEb7+Ck0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbr1RQSvtaYn+5kSIK7HeMDDf9dSOBZUNrpTFtE7UwUcdoIjjqNxNH/rQEktNxYQe/9yXgSonAf8H6q3FSkgiSNgVu20G311sPSELwyPfs2mox8TOGBkzIy3hgUozQjDqSV9btgIYG15Z+8APgf4suIcPCntIT5ElrRriLpCKk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpiSYjUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ByQWoBb8HRJ5VWLPCxzZoZWVbHSbpCE0vA/dcBcpQUohwHwk/qIQKax452GJktSJJQFO9Cc1ygkWqfmI0RxRD2xCSIcbd0FsTxNvyWkiKx1d369IWBNFzxHfBOZBXJ86C50LS/RbaupYdgj3wfSInusiYUZRf6Qj8SaCNeZdp2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=up5Wzswg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpiSYjUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10291C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="up5Wzswg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2E6C433F1;
 	Sat,  3 Feb 2024 04:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933572;
-	bh=FKn//aFH4tjNzgvyeqamkVcPvynE+d9eFrOv+0jc704=;
+	bh=78mIPIL1k+1Dl40KjN9pphfvM52ZY6bRHIgXEb7+Ck0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dpiSYjUieRcgSonQUGCsmjQh8HySbrQQvi26O6mJsZQ45qPxufyurc7CVIl/wFNed
-	 rzgCo6twg4WQvaUkHMpeCkGJo38tenswA70LCovHK64KfMrJjyuBHwIOXpBx+6xVEB
-	 7xhhIosdpt2HPUT7tWgNYVRL/YjeAtFA6yyq7rfs=
+	b=up5WzswgGfBYpJGemhmM+AgNFgVLNDPRJtUkorHKXHKgsYeGFxuogjAFWx3+xbLlj
+	 aBtKaCqYCPrNfUEYJGhZ6BmOJ0iSOs2bYuroINbUztfPMIqThmjNk9w+a7IMonc4kI
+	 XombpePTfaSu+1swLUfY88NYxKQxHQN/kj4dpAjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 100/322] minmax: relax check to allow comparison between unsigned arguments and signed constants
-Date: Fri,  2 Feb 2024 20:03:17 -0800
-Message-ID: <20240203035402.369507034@linuxfoundation.org>
+	Tobias Waldekranz <tobias@waldekranz.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 101/322] net: mvmdio: Avoid excessive sleeps in polled mode
+Date: Fri,  2 Feb 2024 20:03:18 -0800
+Message-ID: <20240203035402.405746322@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -55,72 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Laight <David.Laight@ACULAB.COM>
+From: Tobias Waldekranz <tobias@waldekranz.com>
 
-commit 867046cc7027703f60a46339ffde91a1970f2901 upstream.
+[ Upstream commit 7dd12fe34686d89c332b1a05104d18d728591f0a ]
 
-Allow (for example) min(unsigned_var, 20).
+Before this change, when operating in polled mode, i.e. no IRQ is
+available, every individual C45 access would be hit with a 150us sleep
+after the bus access.
 
-The opposite min(signed_var, 20u) is still errored.
+For example, on a board with a CN9130 SoC connected to an MV88X3310
+PHY, a single C45 read would take around 165us:
 
-Since a comparison between signed and unsigned never makes the unsigned
-value negative it is only necessary to adjust the __types_ok() test.
+    root@infix:~$ mdio f212a600.mdio-mii mmd 4:1 bench 0xc003
+    Performed 1000 reads in 165ms
 
-Link: https://lkml.kernel.org/r/633b64e2f39e46bb8234809c5595b8c7@AcuMS.aculab.com
-Signed-off-by: David Laight <david.laight@aculab.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+By replacing the long sleep with a tighter poll loop, we observe a 10x
+increase in bus throughput:
+
+    root@infix:~$ mdio f212a600.mdio-mii mmd 4:1 bench 0xc003
+    Performed 1000 reads in 15ms
+
+Signed-off-by: Tobias Waldekranz <tobias@waldekranz.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Tested-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20231204100811.2708884-3-tobias@waldekranz.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/minmax.h |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/marvell/mvmdio.c | 53 ++++++++-------------------
+ 1 file changed, 16 insertions(+), 37 deletions(-)
 
---- a/include/linux/minmax.h
-+++ b/include/linux/minmax.h
-@@ -10,13 +10,18 @@
- /*
-  * min()/max()/clamp() macros must accomplish three things:
-  *
-- * - avoid multiple evaluations of the arguments (so side-effects like
-+ * - Avoid multiple evaluations of the arguments (so side-effects like
-  *   "x++" happen only once) when non-constant.
-- * - perform signed v unsigned type-checking (to generate compile
-- *   errors instead of nasty runtime surprises).
-- * - retain result as a constant expressions when called with only
-+ * - Retain result as a constant expressions when called with only
-  *   constant expressions (to avoid tripping VLA warnings in stack
-  *   allocation usage).
-+ * - Perform signed v unsigned type-checking (to generate compile
-+ *   errors instead of nasty runtime surprises).
-+ * - Unsigned char/short are always promoted to signed int and can be
-+ *   compared against signed or unsigned arguments.
-+ * - Unsigned arguments can be compared against non-negative signed constants.
-+ * - Comparison of a signed argument against an unsigned constant fails
-+ *   even if the constant is below __INT_MAX__ and could be cast to int.
+diff --git a/drivers/net/ethernet/marvell/mvmdio.c b/drivers/net/ethernet/marvell/mvmdio.c
+index 674913184ebf..2ef613a237d8 100644
+--- a/drivers/net/ethernet/marvell/mvmdio.c
++++ b/drivers/net/ethernet/marvell/mvmdio.c
+@@ -23,6 +23,7 @@
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+@@ -58,11 +59,6 @@
+  * - Armada 370       (Globalscale Mirabox):   41us to 43us (Polled)
   */
- #define __typecheck(x, y) \
- 	(!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
-@@ -26,9 +31,14 @@
- 	__builtin_choose_expr(__is_constexpr(is_signed_type(typeof(x))),	\
- 		is_signed_type(typeof(x)), 0)
+ #define MVMDIO_SMI_TIMEOUT		1000 /* 1000us = 1ms */
+-#define MVMDIO_SMI_POLL_INTERVAL_MIN	45
+-#define MVMDIO_SMI_POLL_INTERVAL_MAX	55
+-
+-#define MVMDIO_XSMI_POLL_INTERVAL_MIN	150
+-#define MVMDIO_XSMI_POLL_INTERVAL_MAX	160
  
--#define __types_ok(x, y) 			\
--	(__is_signed(x) == __is_signed(y) ||	\
--		__is_signed((x) + 0) == __is_signed((y) + 0))
-+/* True for a non-negative signed int constant */
-+#define __is_noneg_int(x)	\
-+	(__builtin_choose_expr(__is_constexpr(x) && __is_signed(x), x, -1) >= 0)
+ struct orion_mdio_dev {
+ 	void __iomem *regs;
+@@ -84,8 +80,6 @@ enum orion_mdio_bus_type {
+ 
+ struct orion_mdio_ops {
+ 	int (*is_done)(struct orion_mdio_dev *);
+-	unsigned int poll_interval_min;
+-	unsigned int poll_interval_max;
+ };
+ 
+ /* Wait for the SMI unit to be ready for another operation
+@@ -94,34 +88,23 @@ static int orion_mdio_wait_ready(const struct orion_mdio_ops *ops,
+ 				 struct mii_bus *bus)
+ {
+ 	struct orion_mdio_dev *dev = bus->priv;
+-	unsigned long timeout = usecs_to_jiffies(MVMDIO_SMI_TIMEOUT);
+-	unsigned long end = jiffies + timeout;
+-	int timedout = 0;
++	unsigned long timeout;
++	int done;
+ 
+-	while (1) {
+-	        if (ops->is_done(dev))
++	if (dev->err_interrupt <= 0) {
++		if (!read_poll_timeout_atomic(ops->is_done, done, done, 2,
++					      MVMDIO_SMI_TIMEOUT, false, dev))
++			return 0;
++	} else {
++		/* wait_event_timeout does not guarantee a delay of at
++		 * least one whole jiffie, so timeout must be no less
++		 * than two.
++		 */
++		timeout = max(usecs_to_jiffies(MVMDIO_SMI_TIMEOUT), 2);
 +
-+#define __types_ok(x, y) 					\
-+	(__is_signed(x) == __is_signed(y) ||			\
-+		__is_signed((x) + 0) == __is_signed((y) + 0) ||	\
-+		__is_noneg_int(x) || __is_noneg_int(y))
++		if (wait_event_timeout(dev->smi_busy_wait,
++				       ops->is_done(dev), timeout))
+ 			return 0;
+-	        else if (timedout)
+-			break;
+-
+-	        if (dev->err_interrupt <= 0) {
+-			usleep_range(ops->poll_interval_min,
+-				     ops->poll_interval_max);
+-
+-			if (time_is_before_jiffies(end))
+-				++timedout;
+-	        } else {
+-			/* wait_event_timeout does not guarantee a delay of at
+-			 * least one whole jiffie, so timeout must be no less
+-			 * than two.
+-			 */
+-			if (timeout < 2)
+-				timeout = 2;
+-			wait_event_timeout(dev->smi_busy_wait,
+-				           ops->is_done(dev), timeout);
+-
+-			++timedout;
+-	        }
+ 	}
  
- #define __cmp_op_min <
- #define __cmp_op_max >
+ 	dev_err(bus->parent, "Timeout: SMI busy for too long\n");
+@@ -135,8 +118,6 @@ static int orion_mdio_smi_is_done(struct orion_mdio_dev *dev)
+ 
+ static const struct orion_mdio_ops orion_mdio_smi_ops = {
+ 	.is_done = orion_mdio_smi_is_done,
+-	.poll_interval_min = MVMDIO_SMI_POLL_INTERVAL_MIN,
+-	.poll_interval_max = MVMDIO_SMI_POLL_INTERVAL_MAX,
+ };
+ 
+ static int orion_mdio_smi_read(struct mii_bus *bus, int mii_id,
+@@ -194,8 +175,6 @@ static int orion_mdio_xsmi_is_done(struct orion_mdio_dev *dev)
+ 
+ static const struct orion_mdio_ops orion_mdio_xsmi_ops = {
+ 	.is_done = orion_mdio_xsmi_is_done,
+-	.poll_interval_min = MVMDIO_XSMI_POLL_INTERVAL_MIN,
+-	.poll_interval_max = MVMDIO_XSMI_POLL_INTERVAL_MAX,
+ };
+ 
+ static int orion_mdio_xsmi_read_c45(struct mii_bus *bus, int mii_id,
+-- 
+2.43.0
+
 
 
