@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F7111705;
-	Sat,  3 Feb 2024 04:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766E311705;
+	Sat,  3 Feb 2024 04:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933923; cv=none; b=mKaaXnKSJ5WXTzJXes9sAg2OVuKDreuYc5N54osSs+TPWcTr+GSFjgPDwgg3NbBrGqMP5EUQqF8h0MYVzXhq/WEmGqV1b6b0suU+/1lrG9xzJzN2fx1BQnZDRzl91PDq2CJd6MqNJdcKuxRxrXi1rKL2chp+hwuTH9sCVp3c+aE=
+	t=1706933924; cv=none; b=OYAMSZXul428cst6UBPKruPyWB5MwSrlE7y7suuceZVm7D0NeeoqMjRGchs35VRYRbYGaWqaCLbq41BSxIQqxXWZIhwsGu71ZXWqErtsikhjRMrM9UIjqjpORpkKtMCCDhzomuksG3Ij9JeX+2GgBQvA5L3p/KKd6UwZq2iFxug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933923; c=relaxed/simple;
-	bh=SoPZCF6a+waGbRmxLTZUW9zNu8Im2HpVj4AAPKAy7EI=;
+	s=arc-20240116; t=1706933924; c=relaxed/simple;
+	bh=brJRFVkEndT2QClkYnvRuloQ44gxPqLw3bHbWY3oa54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Atp22COqFOzadxbZMQw6cXNNKN9rzN06euyQHwGS8gv8+mUfcoI1ZKgyDETG0a9lcaP/4csH1ICf5S3B330bvvboQOVtjDAcz02lEb7Y9/XfYGOxPostrI4SmDxIAmQFjQqe9PrXxS7CSPEjBn71EyPFNmMMNCQpzfRec2CRzY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJP4Di9v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iYCRbbf8SZBDDbHB1uFUR+WlXf9NxNtzXp+BfIADyrx3JW85q9XBEUmApmmeUAsKq2/flyut034qMWvHj2XUotmCxIIwGhVOsIsqzZNL8PjeMNOfJanCVOWQ4gfI1VeamSgOpZL0cG53zZdHqOjBaFPfH1kYkz7/kWB3W6jL5nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzKYAyo6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJP4Di9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A4F5C43394;
-	Sat,  3 Feb 2024 04:18:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzKYAyo6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4B7C433C7;
+	Sat,  3 Feb 2024 04:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933923;
-	bh=SoPZCF6a+waGbRmxLTZUW9zNu8Im2HpVj4AAPKAy7EI=;
+	s=korg; t=1706933924;
+	bh=brJRFVkEndT2QClkYnvRuloQ44gxPqLw3bHbWY3oa54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJP4Di9vObqYk/jbNOirJLAZ7O8NmvMN1V6j2+xeSeGQLqWgpEwdQinIHwX/NimKu
-	 VwGInHVRAQ1h5075Qrzv2LSB8O0vkpcVn/fjqWL9XQaMpXhIFgdZ4ZhAmzAQq1/QKF
-	 /R1myLe7cWk09eeJPu7wd1mgufdBvBqd/6lqGh0s=
+	b=xzKYAyo60oul/+9Z2/vG8SeIODFBbdvhQt0LdnWpR8/DcKFkoA7IgSikB+AZKlM6o
+	 VEpY+Zr8v3HXzbwHuy1alKA1AxSOn4ZCvoB8Ie7J2T1n1KlMCP5GAkFZaq4LO0rsto
+	 wDwy7wDY3HpMrBZ2zooggc4tcg+sprQuh3QBErOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Wenchao Hao <haowenchao2@huawei.com>,
 	Xiubo Li <xiubli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 279/353] ceph: fix deadlock or deadcode of misusing dget()
-Date: Fri,  2 Feb 2024 20:06:37 -0800
-Message-ID: <20240203035412.600441339@linuxfoundation.org>
+Subject: [PATCH 6.7 280/353] ceph: fix invalid pointer access if get_quota_realm return ERR_PTR
+Date: Fri,  2 Feb 2024 20:06:38 -0800
+Message-ID: <20240203035412.629851993@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,62 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Wenchao Hao <haowenchao2@huawei.com>
 
-[ Upstream commit b493ad718b1f0357394d2cdecbf00a44a36fa085 ]
+[ Upstream commit 0f4cf64eabc6e16cfc2704f1960e82dc79d91c8d ]
 
-The lock order is incorrect between denty and its parent, we should
-always make sure that the parent get the lock first.
+This issue is reported by smatch that get_quota_realm() might return
+ERR_PTR but we did not handle it. It's not a immediate bug, while we
+still should address it to avoid potential bugs if get_quota_realm()
+is changed to return other ERR_PTR in future.
 
-But since this deadcode is never used and the parent dir will always
-be set from the callers, let's just remove it.
+Set ceph_snap_realm's pointer in get_quota_realm()'s to address this
+issue, the pointer would be set to NULL if get_quota_realm() failed
+to get struct ceph_snap_realm, so no ERR_PTR would happen any more.
 
-Link: https://lore.kernel.org/r/20231116081919.GZ1957730@ZenIV
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+[ xiubli: minor code style clean up ]
+
+Signed-off-by: Wenchao Hao <haowenchao2@huawei.com>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ fs/ceph/quota.c | 39 ++++++++++++++++++++++-----------------
+ 1 file changed, 22 insertions(+), 17 deletions(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index 2c0b8dc3dd0d..9c02f328c966 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -4887,13 +4887,15 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
- 			       struct inode *dir,
- 			       int mds, int drop, int unless)
+diff --git a/fs/ceph/quota.c b/fs/ceph/quota.c
+index 9d36c3532de1..06ee397e0c3a 100644
+--- a/fs/ceph/quota.c
++++ b/fs/ceph/quota.c
+@@ -197,10 +197,10 @@ void ceph_cleanup_quotarealms_inodes(struct ceph_mds_client *mdsc)
+ }
+ 
+ /*
+- * This function walks through the snaprealm for an inode and returns the
+- * ceph_snap_realm for the first snaprealm that has quotas set (max_files,
++ * This function walks through the snaprealm for an inode and set the
++ * realmp with the first snaprealm that has quotas set (max_files,
+  * max_bytes, or any, depending on the 'which_quota' argument).  If the root is
+- * reached, return the root ceph_snap_realm instead.
++ * reached, set the realmp with the root ceph_snap_realm instead.
+  *
+  * Note that the caller is responsible for calling ceph_put_snap_realm() on the
+  * returned realm.
+@@ -211,10 +211,9 @@ void ceph_cleanup_quotarealms_inodes(struct ceph_mds_client *mdsc)
+  * this function will return -EAGAIN; otherwise, the snaprealms walk-through
+  * will be restarted.
+  */
+-static struct ceph_snap_realm *get_quota_realm(struct ceph_mds_client *mdsc,
+-					       struct inode *inode,
+-					       enum quota_get_realm which_quota,
+-					       bool retry)
++static int get_quota_realm(struct ceph_mds_client *mdsc, struct inode *inode,
++			   enum quota_get_realm which_quota,
++			   struct ceph_snap_realm **realmp, bool retry)
  {
--	struct dentry *parent = NULL;
- 	struct ceph_mds_request_release *rel = *p;
- 	struct ceph_dentry_info *di = ceph_dentry(dentry);
- 	struct ceph_client *cl;
- 	int force = 0;
- 	int ret;
+ 	struct ceph_client *cl = mdsc->fsc->client;
+ 	struct ceph_inode_info *ci = NULL;
+@@ -222,8 +221,10 @@ static struct ceph_snap_realm *get_quota_realm(struct ceph_mds_client *mdsc,
+ 	struct inode *in;
+ 	bool has_quota;
  
-+	/* This shouldn't happen */
-+	BUG_ON(!dir);
-+
++	if (realmp)
++		*realmp = NULL;
+ 	if (ceph_snap(inode) != CEPH_NOSNAP)
+-		return NULL;
++		return 0;
+ 
+ restart:
+ 	realm = ceph_inode(inode)->i_snap_realm;
+@@ -250,7 +251,7 @@ static struct ceph_snap_realm *get_quota_realm(struct ceph_mds_client *mdsc,
+ 				break;
+ 			ceph_put_snap_realm(mdsc, realm);
+ 			if (!retry)
+-				return ERR_PTR(-EAGAIN);
++				return -EAGAIN;
+ 			goto restart;
+ 		}
+ 
+@@ -259,8 +260,11 @@ static struct ceph_snap_realm *get_quota_realm(struct ceph_mds_client *mdsc,
+ 		iput(in);
+ 
+ 		next = realm->parent;
+-		if (has_quota || !next)
+-		       return realm;
++		if (has_quota || !next) {
++			if (realmp)
++				*realmp = realm;
++			return 0;
++		}
+ 
+ 		ceph_get_snap_realm(mdsc, next);
+ 		ceph_put_snap_realm(mdsc, realm);
+@@ -269,7 +273,7 @@ static struct ceph_snap_realm *get_quota_realm(struct ceph_mds_client *mdsc,
+ 	if (realm)
+ 		ceph_put_snap_realm(mdsc, realm);
+ 
+-	return NULL;
++	return 0;
+ }
+ 
+ bool ceph_quota_is_same_realm(struct inode *old, struct inode *new)
+@@ -277,6 +281,7 @@ bool ceph_quota_is_same_realm(struct inode *old, struct inode *new)
+ 	struct ceph_mds_client *mdsc = ceph_sb_to_mdsc(old->i_sb);
+ 	struct ceph_snap_realm *old_realm, *new_realm;
+ 	bool is_same;
++	int ret;
+ 
+ restart:
  	/*
- 	 * force an record for the directory caps if we have a dentry lease.
- 	 * this is racy (can't take i_ceph_lock and d_lock together), but it
-@@ -4903,14 +4905,9 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
- 	spin_lock(&dentry->d_lock);
- 	if (di->lease_session && di->lease_session->s_mds == mds)
- 		force = 1;
--	if (!dir) {
--		parent = dget(dentry->d_parent);
--		dir = d_inode(parent);
--	}
- 	spin_unlock(&dentry->d_lock);
+@@ -286,9 +291,9 @@ bool ceph_quota_is_same_realm(struct inode *old, struct inode *new)
+ 	 * dropped and we can then restart the whole operation.
+ 	 */
+ 	down_read(&mdsc->snap_rwsem);
+-	old_realm = get_quota_realm(mdsc, old, QUOTA_GET_ANY, true);
+-	new_realm = get_quota_realm(mdsc, new, QUOTA_GET_ANY, false);
+-	if (PTR_ERR(new_realm) == -EAGAIN) {
++	get_quota_realm(mdsc, old, QUOTA_GET_ANY, &old_realm, true);
++	ret = get_quota_realm(mdsc, new, QUOTA_GET_ANY, &new_realm, false);
++	if (ret == -EAGAIN) {
+ 		up_read(&mdsc->snap_rwsem);
+ 		if (old_realm)
+ 			ceph_put_snap_realm(mdsc, old_realm);
+@@ -492,8 +497,8 @@ bool ceph_quota_update_statfs(struct ceph_fs_client *fsc, struct kstatfs *buf)
+ 	bool is_updated = false;
  
- 	ret = ceph_encode_inode_release(p, dir, mds, drop, unless, force);
--	dput(parent);
- 
- 	cl = ceph_inode_to_client(dir);
- 	spin_lock(&dentry->d_lock);
+ 	down_read(&mdsc->snap_rwsem);
+-	realm = get_quota_realm(mdsc, d_inode(fsc->sb->s_root),
+-				QUOTA_GET_MAX_BYTES, true);
++	get_quota_realm(mdsc, d_inode(fsc->sb->s_root), QUOTA_GET_MAX_BYTES,
++			&realm, true);
+ 	up_read(&mdsc->snap_rwsem);
+ 	if (!realm)
+ 		return false;
 -- 
 2.43.0
 
