@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7327F11CBE;
-	Sat,  3 Feb 2024 04:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2031111CBE;
+	Sat,  3 Feb 2024 04:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933427; cv=none; b=XZRfH5wpyRXRK+dJ61CHGa+bGMRhI3zjj3fJsBM3u10toSMLaDpxfCbedCVEgyl40+zGRT+1/uoDemH/Et/fKWQRxNGUJUT/kentPyUJIBad34Uq9U3KRVUIwXxL+hH5aAP6Ff9pIuyhr4rzCu8NJOrqduzCjqqRLiSFr9GtCXo=
+	t=1706933428; cv=none; b=hFPGk7T7GGYc8zWZa+CI0Gd8fCeraJLjp7elVHHSXtl0y3J+C8YgqsQUZB3C3GDk9uCcKK0i8et+4sO1qIB+/st5Vy2BqZVa1CWfeEYk9GdEqdNitmGxi1aG4QL4LoMKfYE7icQc1XMo1AWzuSTQK8sDszaBJjn07rfsU8FqE4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933427; c=relaxed/simple;
-	bh=8hUlnYrzgDTZMTB6gvkR02gkpjBuBcmZKxxH2YkoBU0=;
+	s=arc-20240116; t=1706933428; c=relaxed/simple;
+	bh=dnlPbdbolLxdr5RfNICWLH6ktmk+w3Jouw4nTeZBIe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c4lpyTrUaxnkaEHM3I6g9hFOjGnmzqXgwUdeN4eaOSNaNQf7HgolW+NY9s1NwMdzcuuYD0xeHwg8tH1vdyrM57rczwRRNFZKgF4uhDHmict2OqV1ECO5hidFx80KgW6NAtO3qFkqLrD2JcwnpYZFaJPMjFI3wuVmGQK/qx1q20I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwLkCOyF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Deflqr+xqTdd9mD9WvXy2Z5J0Kc/Bm82hu4OgCc+AMt/0wbczPleqHH/UBQaxHm3frfqNjTnj7IGhnYSK0cPeKZAUUE9Z8l0F9qaDgy1skDQwprHPwh2zqWp2PKvPUYQPDWMoNvmfQpvItuETlwOWUMXhDbhPpgdgJ0Yd5kHnCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhIEGgYW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwLkCOyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B9FC43394;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhIEGgYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF391C433F1;
 	Sat,  3 Feb 2024 04:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933427;
-	bh=8hUlnYrzgDTZMTB6gvkR02gkpjBuBcmZKxxH2YkoBU0=;
+	s=korg; t=1706933428;
+	bh=dnlPbdbolLxdr5RfNICWLH6ktmk+w3Jouw4nTeZBIe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwLkCOyFBZqE+QAQMsDHe+umQbalj8L4E8M5UkPErfBv/6AzAROZz4xm8nXgma1o7
-	 GJ9HWMP/RZLU0aSKTHhWV7tC+L8J3gc8Fgvlwu0yNFmWS75LOGeV8OMgME9l/b0geO
-	 2KcKu+Um1I6hLMEwltkudIfwivf3LG9mJyfoyCP4=
+	b=fhIEGgYWTRfKW2IXoNVkITkiADGqBqAJPZyb9lHzuKINIXRVYmJm1XrDbi9EmxhWn
+	 5/dBHmXyI5lWKridmOuACWbJqrXYXnDFfjfEtDpKrdCP+tTBVcAyswuXPuekt0++TS
+	 hjG5c3AXT7zyOxMlxvlaZbBsEYx+1k+Wp8qcnW8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/219] ALSA: hda: Intel: add HDA_ARL PCI ID support
-Date: Fri,  2 Feb 2024 20:04:53 -0800
-Message-ID: <20240203035334.380609507@linuxfoundation.org>
+Subject: [PATCH 6.1 147/219] leds: trigger: panic: Dont register panic notifier if creating the trigger failed
+Date: Fri,  2 Feb 2024 20:05:20 -0800
+Message-ID: <20240203035337.842388098@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -48,43 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit a31014ebad617868c246d3985ff80d891f03711e ]
+[ Upstream commit afacb21834bb02785ddb0c3ec197208803b74faa ]
 
-Yet another PCI ID.
+It doesn't make sense to register the panic notifier if creating the
+panic trigger failed.
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20231204212710.185976-3-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/8a61e229-5388-46c7-919a-4d18cc7362b2@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/leds/trigger/ledtrig-panic.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 5aaf3dcecf27..a26f2a2d44cf 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2549,6 +2549,8 @@ static const struct pci_device_id azx_ids[] = {
- 	/* Lunarlake-P */
- 	{ PCI_DEVICE(0x8086, 0xa828),
- 	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE},
-+	/* Arrow Lake */
-+	{ PCI_DEVICE_DATA(INTEL, HDA_ARL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE) },
- 	/* Broxton-P(Apollolake) */
- 	{ PCI_DEVICE(0x8086, 0x5a98),
- 	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_BROXTON },
+diff --git a/drivers/leds/trigger/ledtrig-panic.c b/drivers/leds/trigger/ledtrig-panic.c
+index 64abf2e91608..5a6b21bfeb9a 100644
+--- a/drivers/leds/trigger/ledtrig-panic.c
++++ b/drivers/leds/trigger/ledtrig-panic.c
+@@ -64,10 +64,13 @@ static long led_panic_blink(int state)
+ 
+ static int __init ledtrig_panic_init(void)
+ {
++	led_trigger_register_simple("panic", &trigger);
++	if (!trigger)
++		return -ENOMEM;
++
+ 	atomic_notifier_chain_register(&panic_notifier_list,
+ 				       &led_trigger_panic_nb);
+ 
+-	led_trigger_register_simple("panic", &trigger);
+ 	panic_blink = led_panic_blink;
+ 	return 0;
+ }
 -- 
 2.43.0
 
