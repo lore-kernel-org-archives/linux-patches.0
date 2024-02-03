@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38ED911181;
-	Sat,  3 Feb 2024 04:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A820C4EB39;
+	Sat,  3 Feb 2024 04:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933819; cv=none; b=SsdyrUm0uhBg8TfaaN2jPbjj4rebZQI2SAiFlCJa4JBdly2koZwUwvvYzYmixTz6X3i2suBUTwe035uJhW2v+Ok+vxC+N1upCl8aslFhEKtlyFzQ9191l+EJv3lfcQVQNhWDD4gXJ+COd8iuTi26rHKLS4NPadsXNcUt5jxK9xs=
+	t=1706933819; cv=none; b=JxT9F3+leBskrkFyvjK/2hIwKge2VwBecceeK6dzRK8V0fq7Ja4E/n4jVg1dcfC/I+WkZ6+odH25tcJKuveme6jJRL6dVPTOAUohxJOQYX9NA/HKhuVLzHiR3enYs9XlCdEdKshglQTtl4zdgvpGyTDrmjuLBZ2Doz/yGYrYybo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933819; c=relaxed/simple;
-	bh=0O0hHFDOxH2Q8E/1benfROwA6G80Dc1/E9UYT3Z8fyY=;
+	bh=l+2wbBwFOFE2bTSjC0QG3kIfjC1aYXigaRMQbtvm+W0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HfHDWvC1WH5g2LJjXEpWVYX3I9APRXP+xE0DHX+HaElLiF+QRWnKxFAcOwAKR5PXDdYnyFN1LzH28DmxbB8j0TrLx8hZsTAtUH5WEXAHtwqW3E8np8uo3EKf9obdbjdtZU4VpcN8+KuTU/SGGsRv9qIW0GCS4UAMIurVwBg/VBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj+eCLMH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKyOgfyesuRL5kHA+Xgk1Y+Okm3fdxPIVQ2bXwoMsIOmqsDLQw6lNy8VHcqmUpm/i7h6v8ESw4IjOGxmVDfQfAYIJexUMbHpTiydEwvFxJm8W99NR7V9FluYuddLpWz7tkdovjZjDenhb02t+6QhJBugBLpdJCC3RMW99KRaqpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zU567Ffr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj+eCLMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12CCC433F1;
-	Sat,  3 Feb 2024 04:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zU567Ffr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AA2C433F1;
+	Sat,  3 Feb 2024 04:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933818;
-	bh=0O0hHFDOxH2Q8E/1benfROwA6G80Dc1/E9UYT3Z8fyY=;
+	s=korg; t=1706933819;
+	bh=l+2wbBwFOFE2bTSjC0QG3kIfjC1aYXigaRMQbtvm+W0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rj+eCLMHgMwYmnYx5l9zJVjzSoy5mWtOT/ksHcFZA7fXdivo7vqJfyjaisquMXukk
-	 VFb2VJ6yQFjBVUhwQj27eWwZCExbSz546Zy2zA4KyoeoK72C3Y8nL3Cjwwc7C7G+65
-	 Vxhz6X11ipf0pTAKGDK+9b+lTbKfjs7vuuJ4FhT8=
+	b=zU567FfrLvG6sW8urU2JlwXtvmzqaGByjHob4BltDX9kt7zw2lzls/pZtsmFtLLqO
+	 YzKV34GZpKdIPaHQzvSS6Ea9Q7k60HA+hr7c7KkU1X7sTV8f2i3mNOvvi/SM6J4Cfp
+	 Spdih7lHTc3AnswIRr7mEEwQdYzivUKz7AJxu4yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mao Jinlong <quic_jinlmao@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 137/353] arm64: dts: qcom: msm8996: Fix in-ports is a required property
-Date: Fri,  2 Feb 2024 20:04:15 -0800
-Message-ID: <20240203035408.046910586@linuxfoundation.org>
+Subject: [PATCH 6.7 138/353] arm64: dts: qcom: msm8998: Fix out-ports is a required property
+Date: Fri,  2 Feb 2024 20:04:16 -0800
+Message-ID: <20240203035408.076313334@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -54,59 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-[ Upstream commit 9a6fc510a6a3ec150cb7450aec1e5f257e6fc77b ]
+[ Upstream commit ae5ee3562a2519214b12228545e88a203dd68bbd ]
 
-Add the inport of funnel@3023000 to fix 'in-ports' is a required property
-warning.
+out-ports is a required property for coresight ETM. Add out-ports for
+ETM nodes to fix the warning.
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-Link: https://lore.kernel.org/r/20231210072633.4243-3-quic_jinlmao@quicinc.com
+Link: https://lore.kernel.org/r/20231210072633.4243-4-quic_jinlmao@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 6ba9da9e6a8b..fa8ec92ce490 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -444,6 +444,19 @@
- 		reg = <0x0 0x80000000 0x0 0x0>;
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index b485bf925ce6..ebc5ba1b369e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -2031,9 +2031,11 @@
  
-+	etm {
-+		compatible = "qcom,coresight-remote-etm";
-+
-+		out-ports {
-+			port {
-+				modem_etm_out_funnel_in2: endpoint {
-+					remote-endpoint =
-+					  <&funnel_in2_in_modem_etm>;
-+				};
-+			};
-+		};
-+	};
-+
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-@@ -2644,6 +2657,14 @@
- 			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
- 			clock-names = "apb_pclk", "atclk";
+ 			cpu = <&CPU4>;
  
-+			in-ports {
+-			port {
+-				etm4_out: endpoint {
+-					remote-endpoint = <&apss_funnel_in4>;
++			out-ports {
 +				port {
-+					funnel_in2_in_modem_etm: endpoint {
-+						remote-endpoint =
-+						  <&modem_etm_out_funnel_in2>;
++					etm4_out: endpoint {
++						remote-endpoint = <&apss_funnel_in4>;
 +					};
-+				};
-+			};
+ 				};
+ 			};
+ 		};
+@@ -2048,9 +2050,11 @@
  
- 			out-ports {
- 				port {
+ 			cpu = <&CPU5>;
+ 
+-			port {
+-				etm5_out: endpoint {
+-					remote-endpoint = <&apss_funnel_in5>;
++			out-ports {
++				port {
++					etm5_out: endpoint {
++						remote-endpoint = <&apss_funnel_in5>;
++					};
+ 				};
+ 			};
+ 		};
+@@ -2065,9 +2069,11 @@
+ 
+ 			cpu = <&CPU6>;
+ 
+-			port {
+-				etm6_out: endpoint {
+-					remote-endpoint = <&apss_funnel_in6>;
++			out-ports {
++				port {
++					etm6_out: endpoint {
++						remote-endpoint = <&apss_funnel_in6>;
++					};
+ 				};
+ 			};
+ 		};
+@@ -2082,9 +2088,11 @@
+ 
+ 			cpu = <&CPU7>;
+ 
+-			port {
+-				etm7_out: endpoint {
+-					remote-endpoint = <&apss_funnel_in7>;
++			out-ports {
++				port {
++					etm7_out: endpoint {
++						remote-endpoint = <&apss_funnel_in7>;
++					};
+ 				};
+ 			};
+ 		};
 -- 
 2.43.0
 
