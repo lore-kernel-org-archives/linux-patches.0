@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FB44C3B3;
-	Sat,  3 Feb 2024 04:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9F01BC39;
+	Sat,  3 Feb 2024 04:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933778; cv=none; b=HWr93oc/+uQE7UHq7y6EZPn0q6IotQF4+yQGe7ojvudSaqKszeG34D/w8nA87tRcWRs6b67dZ+rxOG23GYGLFKICs5H9tDjbSV15lNbwpmfWXdRLG9xgKeEeKv2DrqSC2KiSk9QSpvEiCdpHBbTeZR25i2hpsZj+BUVGuTDYfxE=
+	t=1706933779; cv=none; b=Ya9TdGtDzzfHVJYQgYAfCBbDvrZEqB4rr0xIvsYjjrdiDJbt2z8kGoIBpRZNCRJkNBBHHtfRB0VPC428Eb2N0OaUJYoovsiyDqx7novPEvLR7RzsaY2LyOWW4JRvXLawF8Iq5+gJrFtcHitQifE0x3Te9wExqkoN4lMAEWXULks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933778; c=relaxed/simple;
-	bh=mg23ImoLiQK9aF4lsuWFfLRt+Lx7t7Oh1kSFzQZhkvk=;
+	s=arc-20240116; t=1706933779; c=relaxed/simple;
+	bh=LsfdYN87QxgVnc99KhRqWGo2XeN2Rx2EGeVny05I4KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYBjiSceTIXHwmhtFw15uOwpop3VP9chiSenF9JFWFbvStZbahWQVD4DeCnw7g3v/sWvi0GAV6uU4yX73U7aK5Wlggh8RWg6xpk3XkaqyPGwsMTsYZLkRZoJ5UEJbCLA0nvK+6XajenNzTYaITY/FCIT+/Ul2rksv4cXQ2avfwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnZy+lfZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Upe+9FFBSrHIGL8SQ95UZUPV4lcNUpznCvl/QSioVMkt7CvH/Y7nWTVvqN5DmS6YAKxfU26p8A43wbLwgt1GQpMDjINTT/+Y3w5DkasqNBu2T2E9ePhzxQg69HVnTmxtyMjZ8k3Xkm0TMFGUGTNfFh9o2J5/40OAWk+0IFb7EZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AszD5MdR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnZy+lfZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B7CC433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AszD5MdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 007F9C43394;
 	Sat,  3 Feb 2024 04:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933778;
-	bh=mg23ImoLiQK9aF4lsuWFfLRt+Lx7t7Oh1kSFzQZhkvk=;
+	s=korg; t=1706933779;
+	bh=LsfdYN87QxgVnc99KhRqWGo2XeN2Rx2EGeVny05I4KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnZy+lfZsJWeasKmXlPpvLh88rXisKn/CRidtwCNSdJmGquzCkCvuS0dyJgVfyisp
-	 5v30Igv5C/2f3opE4LLQQ6ldSIHCF61yBWH95mrFKxm1DOWaUS/XKvKNdQMpJYiUh7
-	 DhZhkXFQM70c4kfhCXKuBYY+bsopv9RJeE6mBkRs=
+	b=AszD5MdRZwxDhfSjQ7TLFt1z/6ZKIEIeNnMHRBkHFCbVaQqz10uDu34hpHbaKODxK
+	 l/0QV3/YOFK32+G+F8StinhIstIuQtuFS9+oWiDb1coSvXo2EVZNRYDc5JCPW+hD1R
+	 ymhp2Pm41aDq34huiuad8egdKEZFiP0LH4VJ9Vts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Herb Wei <weihao.bj@ieisystem.com>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 082/353] bonding: return -ENOMEM instead of BUG in alb_upper_dev_walk
-Date: Fri,  2 Feb 2024 20:03:20 -0800
-Message-ID: <20240203035406.400459177@linuxfoundation.org>
+Subject: [PATCH 6.7 083/353] net: usb: ax88179_178a: avoid two consecutive device resets
+Date: Fri,  2 Feb 2024 20:03:21 -0800
+Message-ID: <20240203035406.435399112@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,67 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit d6b83f1e3707c4d60acfa58afd3515e17e5d5384 ]
+[ Upstream commit d2689b6a86b9d23574bd4b654bf770b6034e2c7e ]
 
-If failed to allocate "tags" or could not find the final upper device from
-start_dev's upper list in bond_verify_device_path(), only the loopback
-detection of the current upper device should be affected, and the system is
-no need to be panic.
-So return -ENOMEM in alb_upper_dev_walk to stop walking, print some warn
-information when failed to allocate memory for vlan tags in
-bond_verify_device_path.
+The device is always reset two consecutive times (ax88179_reset is called
+twice), one from usbnet_probe during the device binding and the other from
+usbnet_open.
 
-I also think that the following function calls
-netdev_walk_all_upper_dev_rcu
----->>>alb_upper_dev_walk
----------->>>bond_verify_device_path
->From this way, "end device" can eventually be obtained from "start device"
-in bond_verify_device_path, IS_ERR(tags) could be instead of
-IS_ERR_OR_NULL(tags) in alb_upper_dev_walk.
+Remove the non-necessary reset during the device binding and let the reset
+operation from open to keep the normal behavior (tested with generic ASIX
+Electronics Corp. AX88179 Gigabit Ethernet device).
 
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Link: https://lore.kernel.org/r/20231118081653.1481260-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Herb Wei <weihao.bj@ieisystem.com>
+Tested-by: Herb Wei <weihao.bj@ieisystem.com>
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Link: https://lore.kernel.org/r/20231120121239.54504-1-jtornosm@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_alb.c  | 3 ++-
- drivers/net/bonding/bond_main.c | 5 ++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/usb/ax88179_178a.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
-index dc2c7b979656..7edf0fd58c34 100644
---- a/drivers/net/bonding/bond_alb.c
-+++ b/drivers/net/bonding/bond_alb.c
-@@ -985,7 +985,8 @@ static int alb_upper_dev_walk(struct net_device *upper,
- 	if (netif_is_macvlan(upper) && !strict_match) {
- 		tags = bond_verify_device_path(bond->dev, upper, 0);
- 		if (IS_ERR_OR_NULL(tags))
--			BUG();
-+			return -ENOMEM;
-+
- 		alb_send_lp_vid(slave, upper->dev_addr,
- 				tags[0].vlan_proto, tags[0].vlan_id);
- 		kfree(tags);
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 8e6cc0e133b7..9c1652886f4e 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2973,8 +2973,11 @@ struct bond_vlan_tag *bond_verify_device_path(struct net_device *start_dev,
+diff --git a/drivers/net/usb/ax88179_178a.c b/drivers/net/usb/ax88179_178a.c
+index 5a1bf42ce156..d837c1887416 100644
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1315,8 +1315,6 @@ static int ax88179_bind(struct usbnet *dev, struct usb_interface *intf)
  
- 	if (start_dev == end_dev) {
- 		tags = kcalloc(level + 1, sizeof(*tags), GFP_ATOMIC);
--		if (!tags)
-+		if (!tags) {
-+			net_err_ratelimited("%s: %s: Failed to allocate tags\n",
-+					    __func__, start_dev->name);
- 			return ERR_PTR(-ENOMEM);
-+		}
- 		tags[level].vlan_proto = BOND_VLAN_PROTO_NONE;
- 		return tags;
- 	}
+ 	netif_set_tso_max_size(dev->net, 16384);
+ 
+-	ax88179_reset(dev);
+-
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
