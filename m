@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EE5F9E4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DED5F9E4;
 	Sat,  3 Feb 2024 04:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933318; cv=none; b=O6r2aeAAiHcq+JnpTbq3AHe3FVvVq78Ot9LxtBlnSC8QFWDFsZeEp84+PKW5xslG4d6awjT4v4YAJG2I6O5Z2snztE471yG8l+t677BUpYDLBJ3u0rl3SMdUYPlxoc4FM+6dDO32Bc+YPN36W9qySJbk2FoIcNJ1rked6TukYoY=
+	t=1706933319; cv=none; b=mPXJDUEryET2vZ7I2rmh/I4jE7c+WUFr1vNf+sw6duy16trYEg3jGUgf7OsZTPCGq939OkCNmjgwNzV+/0YIJyol6xP2qScGDeAgRTE5YSruuNLU7fD3zUh5hfxq7jQfujF9O10apatfb7YOjTvgDKeuNdnf9xS7uIemBJlK3x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933318; c=relaxed/simple;
-	bh=tAtY343UX3ZWyDTHLb2V4FnOO7U+SYpBw6xPBaSnIdI=;
+	s=arc-20240116; t=1706933319; c=relaxed/simple;
+	bh=7IC6lLNeH3+xqXhhmXebZFUfqhnd2nu20TaXZX+t8xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qczRBT2PdGke+EYAp4byQQpmITF2lsicafxpHRvDA5E1s7jvMeL0ZAIj5eBwGFqvL6Lv6fUo6STyJv/jItXeUaxipVaoAUeAWBqMvgdeen1oXGv6zv0cU5mGRhcTZTpBIzwNaBZaUSd9ALi++ZyfxKP90tngit/MWMjWVhwClOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KIvZ9XJl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NRlwJjh0vO5ojWMcFaEdM8nnkl8nTeyj//Gj28Q+CcfutPBvdNMqUXDpeHn0jMQ7vP/03StgJpZbYOo3O6yJJQ24/lxA4teMZyS8peSoSUsrKV6Klyk+uFKmaip8/DqfmOQE+D6VQ8Id+bWPuUeCEHoB39pH4UTz9IvTPHf3ULg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPUD2pxJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KIvZ9XJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C036BC43390;
-	Sat,  3 Feb 2024 04:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPUD2pxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9140BC433C7;
+	Sat,  3 Feb 2024 04:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933317;
-	bh=tAtY343UX3ZWyDTHLb2V4FnOO7U+SYpBw6xPBaSnIdI=;
+	s=korg; t=1706933318;
+	bh=7IC6lLNeH3+xqXhhmXebZFUfqhnd2nu20TaXZX+t8xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIvZ9XJlcv7g8Ce9iTwJuGEP++jdTkR2b6QPUGn3DHQb4570xR2NQk4eZPqUTrJV7
-	 bFWFWSQ8XN3zAX4aaN2InGEML+FrSMabde6vQSbP+np2NBA/Z9jBzINSTqmhoe3ZVq
-	 Zb6J6ZM3HQT87/whhtbLymtT+QyZ2pKQS9hJmsl0=
+	b=pPUD2pxJjCNOwmtx7sSsr/jV6RKvTmrEspdnPxqyE4jdYD2zhTbY1QYLSpmcYN5bu
+	 ExnTWhbO4E69UoacYITJpFTfAbjvuNhaVJM5FouVVl8+TdceNiKLqGGHw8QBMNMM8V
+	 f4NUiUSQKjprDjgRsDv2IlckSWB7Vw81wRKva2RQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youquan Song <youquan.song@intel.com>,
-	Zhiquan Li <zhiquan1.li@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Kunwu Chan <chentao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/219] x86/mce: Mark fatal MCEs page as poison to avoid panic in the kdump kernel
-Date: Fri,  2 Feb 2024 20:03:04 -0800
-Message-ID: <20240203035318.352896023@linuxfoundation.org>
+Subject: [PATCH 6.1 002/219] powerpc/mm: Fix null-pointer dereference in pgtable_cache_add
+Date: Fri,  2 Feb 2024 20:02:55 -0800
+Message-ID: <20240203035317.567951613@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -53,80 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiquan Li <zhiquan1.li@intel.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-[ Upstream commit 9f3b130048bfa2e44a8cfb1b616f826d9d5d8188 ]
+[ Upstream commit f46c8a75263f97bda13c739ba1c90aced0d3b071 ]
 
-Memory errors don't happen very often, especially fatal ones. However,
-in large-scale scenarios such as data centers, that probability
-increases with the amount of machines present.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-When a fatal machine check happens, mce_panic() is called based on the
-severity grading of that error. The page containing the error is not
-marked as poison.
-
-However, when kexec is enabled, tools like makedumpfile understand when
-pages are marked as poison and do not touch them so as not to cause
-a fatal machine check exception again while dumping the previous
-kernel's memory.
-
-Therefore, mark the page containing the error as poisoned so that the
-kexec'ed kernel can avoid accessing the page.
-
-  [ bp: Rewrite commit message and comment. ]
-
-Co-developed-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Youquan Song <youquan.song@intel.com>
-Signed-off-by: Zhiquan Li <zhiquan1.li@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Link: https://lore.kernel.org/r/20231014051754.3759099-1-zhiquan1.li@intel.com
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231204023223.2447523-1-chentao@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/core.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/powerpc/mm/init-common.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
-index f1a748da5fab..cad6ea1911e9 100644
---- a/arch/x86/kernel/cpu/mce/core.c
-+++ b/arch/x86/kernel/cpu/mce/core.c
-@@ -44,6 +44,7 @@
- #include <linux/sync_core.h>
- #include <linux/task_work.h>
- #include <linux/hardirq.h>
-+#include <linux/kexec.h>
+diff --git a/arch/powerpc/mm/init-common.c b/arch/powerpc/mm/init-common.c
+index 119ef491f797..d3a7726ecf51 100644
+--- a/arch/powerpc/mm/init-common.c
++++ b/arch/powerpc/mm/init-common.c
+@@ -126,7 +126,7 @@ void pgtable_cache_add(unsigned int shift)
+ 	 * as to leave enough 0 bits in the address to contain it. */
+ 	unsigned long minalign = max(MAX_PGTABLE_INDEX_SIZE + 1,
+ 				     HUGEPD_SHIFT_MASK + 1);
+-	struct kmem_cache *new;
++	struct kmem_cache *new = NULL;
  
- #include <asm/intel-family.h>
- #include <asm/processor.h>
-@@ -239,6 +240,7 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
- 	struct llist_node *pending;
- 	struct mce_evt_llist *l;
- 	int apei_err = 0;
-+	struct page *p;
+ 	/* It would be nice if this was a BUILD_BUG_ON(), but at the
+ 	 * moment, gcc doesn't seem to recognize is_power_of_2 as a
+@@ -139,7 +139,8 @@ void pgtable_cache_add(unsigned int shift)
  
- 	/*
- 	 * Allow instrumentation around external facilities usage. Not that it
-@@ -292,6 +294,20 @@ static noinstr void mce_panic(const char *msg, struct mce *final, char *exp)
- 	if (!fake_panic) {
- 		if (panic_timeout == 0)
- 			panic_timeout = mca_cfg.panic_timeout;
-+
-+		/*
-+		 * Kdump skips the poisoned page in order to avoid
-+		 * touching the error bits again. Poison the page even
-+		 * if the error is fatal and the machine is about to
-+		 * panic.
-+		 */
-+		if (kexec_crash_loaded()) {
-+			if (final && (final->status & MCI_STATUS_ADDRV)) {
-+				p = pfn_to_online_page(final->addr >> PAGE_SHIFT);
-+				if (p)
-+					SetPageHWPoison(p);
-+			}
-+		}
- 		panic(msg);
- 	} else
- 		pr_emerg(HW_ERR "Fake kernel panic: %s\n", msg);
+ 	align = max_t(unsigned long, align, minalign);
+ 	name = kasprintf(GFP_KERNEL, "pgtable-2^%d", shift);
+-	new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
++	if (name)
++		new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
+ 	if (!new)
+ 		panic("Could not allocate pgtable cache for order %d", shift);
+ 
 -- 
 2.43.0
 
