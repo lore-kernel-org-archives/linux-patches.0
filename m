@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD46B134C1;
-	Sat,  3 Feb 2024 04:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2E7134D9;
+	Sat,  3 Feb 2024 04:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933368; cv=none; b=jjA8WPp/7qw0BrAxF+zGfwZLvK/OlnsEDJbQXD2H6jphxCl2eJGoAPISfcIcPDC0RwTzNiP0P4lq4MeQMN94Wj6GAVTPGr6/q1eDhbLJvKqn2Ums3OSdt3PNcHW9Ot8qHBUw6v1WiM2UDoFfyiNAeh9hRzpV3G555NwttZXdZNA=
+	t=1706933369; cv=none; b=GM+MuY7XD2/0wcrlcpA0l1jgemzN9YsM+WF0TeSUQUQiQs6YlWbfG3an1qG6wJgksWssHp6pzChghOq3qWYZ2oyo6sBGjqRF2OkGrvKSFL1dYe/YGvMNt6EsZN7qnOPUpClCkQeNSjzcHLzDk6NdIgxn3H553vkiJLnfvt+LiNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933368; c=relaxed/simple;
-	bh=E65ZQWj9d7qoRpfMa8Jzb593JJBcZ7p4ukRtey2e9I0=;
+	s=arc-20240116; t=1706933369; c=relaxed/simple;
+	bh=zAayvX1wkrF6Pd0I+kxxakfVyNXzpnQNo8AFcbsqLoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVDMBi27LdpPTH5TJ4ywaJ5pHOnE5CFx+PbA3se5GHarOsYiySTDbeas65cG2QGFvlonW7nEWNQRH6d8zArnOm5x6Gni6sCgwgUWuqYyU6yNpaaLolqfMPuN8eX1f68aMTFLY51M8yflrVc+4YlSnjBMcoHUsTgGZ7RNCBrPqWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Se0PVhJP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VSDivaGnLKi0CfSa1RE1xBzWm9+zxOuTvdHhIgGF2TZGoHPTJBzHKPr9h09L6boEOkklBctku8zUQOHk6YYI6MKny+Buzjtg+Of/oTkc2TqIEBIplsa7QAhAvjn54QzyzKK7ppaP0XrYbRoFsvsRJX6xvqVFsNvrWWQZZkb6FQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfeWTmzP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Se0PVhJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95092C433C7;
-	Sat,  3 Feb 2024 04:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfeWTmzP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C3BC43390;
+	Sat,  3 Feb 2024 04:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933368;
-	bh=E65ZQWj9d7qoRpfMa8Jzb593JJBcZ7p4ukRtey2e9I0=;
+	s=korg; t=1706933369;
+	bh=zAayvX1wkrF6Pd0I+kxxakfVyNXzpnQNo8AFcbsqLoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Se0PVhJPI3bwnNO9dTgQJyjsMQ3DHjzFD5YhrlSkwP2fe2flSvGxlSclYHLMsq4gS
-	 +UDKxAdqtmXKosRzSS3JSZCjtCRaxTsrkbbRYWUn6UR5xlFg0AMmaVKcaVUYadi1yb
-	 prpwwZslios40PAbn28NXzjzoTM23BTUVf90HTsQ=
+	b=zfeWTmzPM61trDi8bF9w46Nca3aUDtTpJNToOAJB1WM4dYNI9+M30HUd/OBxyYWRM
+	 IADuGLVz97eqbSKeZztPjJtykJ03DdHyBYn0Oc4v0akA7rNbSUxs2AG4sCnVlc11JC
+	 AKoW7Xcm2uxER4HQ4mMPZGPPEjTNXzBj8+Pyd5uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	linux-block@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/219] block/rnbd-srv: Check for unlikely string overflow
-Date: Fri,  2 Feb 2024 20:04:09 -0800
-Message-ID: <20240203035327.793760130@linuxfoundation.org>
+Subject: [PATCH 6.1 077/219] ARM: dts: imx25: Fix the iim compatible string
+Date: Fri,  2 Feb 2024 20:04:10 -0800
+Message-ID: <20240203035327.916519914@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -56,86 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 9e4bf6a08d1e127bcc4bd72557f2dfafc6bc7f41 ]
+[ Upstream commit f0b929f58719fc57a4926ab4fc972f185453d6a5 ]
 
-Since "dev_search_path" can technically be as large as PATH_MAX,
-there was a risk of truncation when copying it and a second string
-into "full_path" since it was also PATH_MAX sized. The W=1 builds were
-reporting this warning:
+Per imx-iim.yaml, the compatible string should only contain a single
+entry.
 
-drivers/block/rnbd/rnbd-srv.c: In function 'process_msg_open.isra':
-drivers/block/rnbd/rnbd-srv.c:616:51: warning: '%s' directive output may be truncated writing up to 254 bytes into a region of size between 0 and 4095 [-Wformat-truncation=]
-  616 |                 snprintf(full_path, PATH_MAX, "%s/%s",
-      |                                                   ^~
-In function 'rnbd_srv_get_full_path',
-    inlined from 'process_msg_open.isra' at drivers/block/rnbd/rnbd-srv.c:721:14: drivers/block/rnbd/rnbd-srv.c:616:17: note: 'snprintf' output between 2 and 4351 bytes into a destination of size 4096
-  616 |                 snprintf(full_path, PATH_MAX, "%s/%s",
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  617 |                          dev_search_path, dev_name);
-      |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use it as "fsl,imx25-iim" to fix the following dt-schema warning:
 
-To fix this, unconditionally check for truncation (as was already done
-for the case where "%SESSNAME%" was present).
+imx25-karo-tx25.dtb: efuse@53ff0000: compatible: ['fsl,imx25-iim', 'fsl,imx27-iim'] is too long
+	from schema $id: http://devicetree.org/schemas/nvmem/imx-iim.yaml#
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312100355.lHoJPgKy-lkp@intel.com/
-Cc: Md. Haris Iqbal <haris.iqbal@ionos.com>
-Cc: Jack Wang <jinpu.wang@ionos.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc:  <linux-block@vger.kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Acked-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Link: https://lore.kernel.org/r/20231212214738.work.169-kees@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/rnbd/rnbd-srv.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ arch/arm/boot/dts/imx25.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
-index 2cfed2e58d64..ad451224e663 100644
---- a/drivers/block/rnbd/rnbd-srv.c
-+++ b/drivers/block/rnbd/rnbd-srv.c
-@@ -587,6 +587,7 @@ static char *rnbd_srv_get_full_path(struct rnbd_srv_session *srv_sess,
- {
- 	char *full_path;
- 	char *a, *b;
-+	int len;
+diff --git a/arch/arm/boot/dts/imx25.dtsi b/arch/arm/boot/dts/imx25.dtsi
+index 5f90d72b840b..5ac4549286bd 100644
+--- a/arch/arm/boot/dts/imx25.dtsi
++++ b/arch/arm/boot/dts/imx25.dtsi
+@@ -543,7 +543,7 @@
+ 			};
  
- 	full_path = kmalloc(PATH_MAX, GFP_KERNEL);
- 	if (!full_path)
-@@ -598,19 +599,19 @@ static char *rnbd_srv_get_full_path(struct rnbd_srv_session *srv_sess,
- 	 */
- 	a = strnstr(dev_search_path, "%SESSNAME%", sizeof(dev_search_path));
- 	if (a) {
--		int len = a - dev_search_path;
-+		len = a - dev_search_path;
- 
- 		len = snprintf(full_path, PATH_MAX, "%.*s/%s/%s", len,
- 			       dev_search_path, srv_sess->sessname, dev_name);
--		if (len >= PATH_MAX) {
--			pr_err("Too long path: %s, %s, %s\n",
--			       dev_search_path, srv_sess->sessname, dev_name);
--			kfree(full_path);
--			return ERR_PTR(-EINVAL);
--		}
- 	} else {
--		snprintf(full_path, PATH_MAX, "%s/%s",
--			 dev_search_path, dev_name);
-+		len = snprintf(full_path, PATH_MAX, "%s/%s",
-+			       dev_search_path, dev_name);
-+	}
-+	if (len >= PATH_MAX) {
-+		pr_err("Too long path: %s, %s, %s\n",
-+		       dev_search_path, srv_sess->sessname, dev_name);
-+		kfree(full_path);
-+		return ERR_PTR(-EINVAL);
- 	}
- 
- 	/* eliminitate duplicated slashes */
+ 			iim: efuse@53ff0000 {
+-				compatible = "fsl,imx25-iim", "fsl,imx27-iim";
++				compatible = "fsl,imx25-iim";
+ 				reg = <0x53ff0000 0x4000>;
+ 				interrupts = <19>;
+ 				clocks = <&clks 99>;
 -- 
 2.43.0
 
