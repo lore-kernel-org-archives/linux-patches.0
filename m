@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AD653E27;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D762254676;
 	Sat,  3 Feb 2024 04:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933948; cv=none; b=cqSwZswusjqxM8/uRUsarpOvED2MHmixK6TLvimRWHvMjhzSqcQu7nveVVvLOprIQoY4M2Or1Nf3g68srWrVQ/Puv3Hy97/cS1wCUokMMtKkJ3oong8C08v0tKP1ZId4BNdHZoKO0CzDtVTo9kVGixqe1r6JVaHC/D8ipjFLTd0=
+	t=1706933948; cv=none; b=hT5u01LiLfrN/oj2zcLZV3YDQ/7AnJBdYoZUeiJrZFKiiQyMRVUUnVZj6cf0bQPuv3g6sOwBz+V0kTQpxMMQDWeRT8YVDG1tYbYvvV4uYMi+u8n5KTrmiNe9Q3Xj38PON83PaVKeCwCzR978ir3tPI5CIa5CsyWYUY9/oWD3/D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933948; c=relaxed/simple;
-	bh=vtRzVSc+VLyIlivhnpsvhXpTKsL4U7he4TxJxsWWQYQ=;
+	bh=VOw/VAPKQDtrJrTZdWEdYgO3Dx1gT5r50RrRWmuGZz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNTKfTWwGyODRXhfR7F5pb1nDEu2aP2dgl7mQiJ05ehlrDNq1BFTTYmd0ySfD8+LkeLSHQlPZkKR49BpNFsx9OZ39ipQIo71YN9sWdokHiWB1yVEIqTIlxh5srHl6Ui0hwjdeFhJP0yEXXgI1+29xsZOjb9XbKqqOa/wdgF08KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3/KBfB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tpxWPVIL2gKMVEV4ClyZL4GzZnBpd1pnYjb9C2kCv3lKcS4jDCNpT26PysSubVOFOHsGSstNxByrIarBMlBaTvjgqX+uJGIQuBw0Qja0TP7Q8+ZmFXkYKvUHDpsq3sLf0O5UC2eRRmxuD96OCZOElVcrC4pqsKsL7EO/w8DE688=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNOgh1T1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3/KBfB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14BBC43390;
-	Sat,  3 Feb 2024 04:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNOgh1T1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A048DC433C7;
+	Sat,  3 Feb 2024 04:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933948;
-	bh=vtRzVSc+VLyIlivhnpsvhXpTKsL4U7he4TxJxsWWQYQ=;
+	bh=VOw/VAPKQDtrJrTZdWEdYgO3Dx1gT5r50RrRWmuGZz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3/KBfB5ApM055wmf5XlIwdi/AP97xjnHffsuuzaajX0XvlkZu4izN7zDMQtczWsX
-	 +f/PKd0zpP7ENH8fA5XXwkOQTmUcpfjFscWEbDTE+ooW2FmofGdNq63/zU7dW9wIxF
-	 VcpkUEPyHh32hLhBfMLKvbKrVqE+yIywo8MW9fSY=
+	b=sNOgh1T1VJT2r0c6a4sU+Feqf7YLDMYK/JPfo+3KiDSnyAR4biJsAcuu4Nk6037+e
+	 NGkLq7IWWRhwZMKYQP2MGghW/2jH+k7Goliu3NVuKMgoDscTgQ/64HUegQZ7fBQFGy
+	 8aJfvJXoIz0U+s5iXS/J6M46/ebzTQo5uRITDzvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 281/353] drm/amdgpu: fix avg vs input power reporting on smu7
-Date: Fri,  2 Feb 2024 20:06:39 -0800
-Message-ID: <20240203035412.659652819@linuxfoundation.org>
+Subject: [PATCH 6.7 307/353] ip6_tunnel: make sure to pull inner header in __ip6_tnl_rcv()
+Date: Fri,  2 Feb 2024 20:07:05 -0800
+Message-ID: <20240203035413.552448541@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,55 +53,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 25852d4b97572ff62ffee574cb8bb4bc551af23a ]
+[ Upstream commit 8d975c15c0cd744000ca386247432d57b21f9df0 ]
 
-Hawaii, Bonaire, Fiji, and Tonga support average power, the others
-support current power.
+syzbot found __ip6_tnl_rcv() could access unitiliazed data [1].
 
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Call pskb_inet_may_pull() to fix this, and initialize ipv6h
+variable after this call as it can change skb->head.
+
+[1]
+ BUG: KMSAN: uninit-value in __INET_ECN_decapsulate include/net/inet_ecn.h:253 [inline]
+ BUG: KMSAN: uninit-value in INET_ECN_decapsulate include/net/inet_ecn.h:275 [inline]
+ BUG: KMSAN: uninit-value in IP6_ECN_decapsulate+0x7df/0x1e50 include/net/inet_ecn.h:321
+  __INET_ECN_decapsulate include/net/inet_ecn.h:253 [inline]
+  INET_ECN_decapsulate include/net/inet_ecn.h:275 [inline]
+  IP6_ECN_decapsulate+0x7df/0x1e50 include/net/inet_ecn.h:321
+  ip6ip6_dscp_ecn_decapsulate+0x178/0x1b0 net/ipv6/ip6_tunnel.c:727
+  __ip6_tnl_rcv+0xd4e/0x1590 net/ipv6/ip6_tunnel.c:845
+  ip6_tnl_rcv+0xce/0x100 net/ipv6/ip6_tunnel.c:888
+ gre_rcv+0x143f/0x1870
+  ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
+  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
+  ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
+  dst_input include/net/dst.h:461 [inline]
+  ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
+  NF_HOOK include/linux/netfilter.h:314 [inline]
+  ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
+  __netif_receive_skb_one_core net/core/dev.c:5532 [inline]
+  __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5646
+  netif_receive_skb_internal net/core/dev.c:5732 [inline]
+  netif_receive_skb+0x58/0x660 net/core/dev.c:5791
+  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
+  tun_get_user+0x53af/0x66d0 drivers/net/tun.c:2002
+  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+  call_write_iter include/linux/fs.h:2084 [inline]
+  new_sync_write fs/read_write.c:497 [inline]
+  vfs_write+0x786/0x1200 fs/read_write.c:590
+  ksys_write+0x20f/0x4c0 fs/read_write.c:643
+  __do_sys_write fs/read_write.c:655 [inline]
+  __se_sys_write fs/read_write.c:652 [inline]
+  __x64_sys_write+0x93/0xd0 fs/read_write.c:652
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0x6d/0x140 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+Uninit was created at:
+  slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
+  slab_alloc_node mm/slub.c:3478 [inline]
+  kmem_cache_alloc_node+0x5e9/0xb10 mm/slub.c:3523
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:560
+  __alloc_skb+0x318/0x740 net/core/skbuff.c:651
+  alloc_skb include/linux/skbuff.h:1286 [inline]
+  alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6334
+  sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2787
+  tun_alloc_skb drivers/net/tun.c:1531 [inline]
+  tun_get_user+0x1e8a/0x66d0 drivers/net/tun.c:1846
+  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
+  call_write_iter include/linux/fs.h:2084 [inline]
+  new_sync_write fs/read_write.c:497 [inline]
+  vfs_write+0x786/0x1200 fs/read_write.c:590
+  ksys_write+0x20f/0x4c0 fs/read_write.c:643
+  __do_sys_write fs/read_write.c:655 [inline]
+  __se_sys_write fs/read_write.c:652 [inline]
+  __x64_sys_write+0x93/0xd0 fs/read_write.c:652
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0x6d/0x140 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+CPU: 0 PID: 5034 Comm: syz-executor331 Not tainted 6.7.0-syzkaller-00562-g9f8413c4a66f #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
+
+Fixes: 0d3c703a9d17 ("ipv6: Cleanup IPv6 tunnel receive path")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240125170557.2663942-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_tunnel.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index b1a8799e2dee..aa91730e4eaf 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -3999,6 +3999,7 @@ static int smu7_read_sensor(struct pp_hwmgr *hwmgr, int idx,
- 	uint32_t sclk, mclk, activity_percent;
- 	uint32_t offset, val_vid;
- 	struct smu7_hwmgr *data = (struct smu7_hwmgr *)(hwmgr->backend);
-+	struct amdgpu_device *adev = hwmgr->adev;
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index 46c19bd48990..9bbabf750a21 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -796,8 +796,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 						struct sk_buff *skb),
+ 			 bool log_ecn_err)
+ {
+-	const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
+-	int err;
++	const struct ipv6hdr *ipv6h;
++	int nh, err;
  
- 	/* size must be at least 4 bytes for all sensors */
- 	if (*size < 4)
-@@ -4042,7 +4043,21 @@ static int smu7_read_sensor(struct pp_hwmgr *hwmgr, int idx,
- 		*size = 4;
- 		return 0;
- 	case AMDGPU_PP_SENSOR_GPU_INPUT_POWER:
--		return smu7_get_gpu_power(hwmgr, (uint32_t *)value);
-+		if ((adev->asic_type != CHIP_HAWAII) &&
-+		    (adev->asic_type != CHIP_BONAIRE) &&
-+		    (adev->asic_type != CHIP_FIJI) &&
-+		    (adev->asic_type != CHIP_TONGA))
-+			return smu7_get_gpu_power(hwmgr, (uint32_t *)value);
-+		else
-+			return -EOPNOTSUPP;
-+	case AMDGPU_PP_SENSOR_GPU_AVG_POWER:
-+		if ((adev->asic_type != CHIP_HAWAII) &&
-+		    (adev->asic_type != CHIP_BONAIRE) &&
-+		    (adev->asic_type != CHIP_FIJI) &&
-+		    (adev->asic_type != CHIP_TONGA))
-+			return -EOPNOTSUPP;
-+		else
-+			return smu7_get_gpu_power(hwmgr, (uint32_t *)value);
- 	case AMDGPU_PP_SENSOR_VDDGFX:
- 		if ((data->vr_config & VRCONF_VDDGFX_MASK) ==
- 		    (VR_SVI2_PLANE_2 << VRCONF_VDDGFX_SHIFT))
+ 	if ((!(tpi->flags & TUNNEL_CSUM) &&
+ 	     (tunnel->parms.i_flags & TUNNEL_CSUM)) ||
+@@ -829,7 +829,6 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 			goto drop;
+ 		}
+ 
+-		ipv6h = ipv6_hdr(skb);
+ 		skb->protocol = eth_type_trans(skb, tunnel->dev);
+ 		skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
+ 	} else {
+@@ -837,7 +836,23 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 		skb_reset_mac_header(skb);
+ 	}
+ 
++	/* Save offset of outer header relative to skb->head,
++	 * because we are going to reset the network header to the inner header
++	 * and might change skb->head.
++	 */
++	nh = skb_network_header(skb) - skb->head;
++
+ 	skb_reset_network_header(skb);
++
++	if (!pskb_inet_may_pull(skb)) {
++		DEV_STATS_INC(tunnel->dev, rx_length_errors);
++		DEV_STATS_INC(tunnel->dev, rx_errors);
++		goto drop;
++	}
++
++	/* Get the outer header. */
++	ipv6h = (struct ipv6hdr *)(skb->head + nh);
++
+ 	memset(skb->cb, 0, sizeof(struct inet6_skb_parm));
+ 
+ 	__skb_tunnel_rx(skb, tunnel->dev, tunnel->net);
 -- 
 2.43.0
 
