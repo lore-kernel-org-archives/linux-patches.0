@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96BC1CAA5;
-	Sat,  3 Feb 2024 04:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5849E1CAA5;
+	Sat,  3 Feb 2024 04:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933863; cv=none; b=NgnoVkfnf95K3jSlEMiEnGd+SoQiEePeKE0rhA87TRCbhdNs9weH4G05RCV1c9ZG4SpZgaEwAqMFtRRSq3zCQuKCsjWQeK7FOu12nrxeYmgqEWVHmwRtl+1X3h460CBnQk2pTyjRQgJxmgQ6ZN3dR2HiS5HA3AIIn4DbKESG7S4=
+	t=1706933864; cv=none; b=UGVyJLEEc0JSdt8cMee2qh43NTtrIesGGzo37DdqSXtNtIsjU9FkAS7FFkwIgV6xM6K+Fd3wuuDtyxpr8lWvm2T/BcEX40TjFVfJ7/FRIr6unvLAnopMayIWqQrie/CCRp5NlOeeX6b8sR/zvKyK3RzzjNCGLumQmEkFNdIKXNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933863; c=relaxed/simple;
-	bh=tkwHYwTZWUrLt/WOAQ+MUOaTP3BXaU6pkeigFoURRus=;
+	s=arc-20240116; t=1706933864; c=relaxed/simple;
+	bh=/mPlyNOC83xaNvx1jrFRRIeS5IDuFaXbvwpaPssj9YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mz0XUI59tijO9NZjf0Qblp/wynWh+86Ey+rBqiRUuaH+LJxIdiWPrxCT7aDW3ehJSd57sqXG+sFDBwsU1SCpDNzwi4/c/f1jyNYk8llNQMB0OqkT0p3XMEki/RDRnB6g3nHzS0W887bF2S2kdmmiLAuW/Qm9YAgRrJYv252zbrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnKEuzIp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ujn286MbEZyOkwpO9Jgz3aSQP3umjkX4aOv6qTKHbNRcCvP0vF4E44zprcbgRvsDTi0Wr6NO2TE2vu0nXIGG4iL7bU1hZcvIVRbtt0fpUmKc0my6L+zUa+KozbRYLlMha+rEfNccWmo7iIUFuSeVjCjYVgNqcWdv3PVfmg0QZmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcBw8VZ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnKEuzIp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B940C433F1;
-	Sat,  3 Feb 2024 04:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcBw8VZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2125AC43390;
+	Sat,  3 Feb 2024 04:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933863;
-	bh=tkwHYwTZWUrLt/WOAQ+MUOaTP3BXaU6pkeigFoURRus=;
+	s=korg; t=1706933864;
+	bh=/mPlyNOC83xaNvx1jrFRRIeS5IDuFaXbvwpaPssj9YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mnKEuzIpqwPq8523NLhRHtNziiNhe5gMk3IjAC/vZvTtfjamWhVNyIMPu/hYFzGHn
-	 IOJt/0L/6tT5J+ncqR0SFSkYwGBrbHz0iZARke7r3xmAh7mA1d6ZBDYS3NuDsldYbe
-	 tCzUhxR/H6zGu9yw8fNQaSLtF5y3Cop1usc5DsAg=
+	b=PcBw8VZ+nxqI3RHe5SrebTNxz6uCFOoxtaUGTPDgvzsAiqVZP0sPTAAqRzmQGamkn
+	 OPx/WoyhJFY5LE7E54pNvYggfOkuDxie1NfThRrLJSzTOXK4lCfKnuaVbdeE1FmmCi
+	 POeNo9VLnACn7kwGc47208mxR8876QNRe7WQpVaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Wenjing Liu <wenjing.liu@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Ilya Bakoulin <ilya.bakoulin@amd.com>,
+	Nicholas Susanto <nicholas.susanto@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 175/353] drm/amd/display: Fix MST PBN/X.Y value calculations
-Date: Fri,  2 Feb 2024 20:04:53 -0800
-Message-ID: <20240203035409.181389830@linuxfoundation.org>
+Subject: [PATCH 6.7 176/353] drm/amd/display: Fix disable_otg_wa logic
+Date: Fri,  2 Feb 2024 20:04:54 -0800
+Message-ID: <20240203035409.213588957@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -54,55 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Bakoulin <ilya.bakoulin@amd.com>
+From: Nicholas Susanto <nicholas.susanto@amd.com>
 
-[ Upstream commit 94bbf802efd0a8f13147d6664af6e653637340a8 ]
+[ Upstream commit 2ce156482a6fef349d2eba98e5070c412d3af662 ]
 
-Changing PBN calculation to be more in line with spec. We don't need to
-inflate PBN_NATIVE value by the 1.006 margin, since that is already
-taken care of in the get_pbn_per_slot function.
+[Why]
+When switching to another HDMI mode, we are unnecesarilly
+disabling/enabling FIFO causing both HPO and DIG registers to be set at
+the same time when only HPO is supposed to be set.
+
+This can lead to a system hang the next time we change refresh rates as
+there are cases when we don't disable OTG/FIFO but FIFO is enabled when
+it isn't supposed to be.
+
+[How]
+Removing the enable/disable FIFO entirely.
 
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Ilya Bakoulin <ilya.bakoulin@amd.com>
+Signed-off-by: Nicholas Susanto <nicholas.susanto@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ .../gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c  | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index 04d1ecd6e593..d28564b1b28a 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -1061,18 +1061,21 @@ static struct fixed31_32 get_pbn_from_bw_in_kbps(uint64_t kbps)
- 	uint32_t denominator = 1;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+index 45ede6440a79..4ef90a3add1c 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+@@ -126,21 +126,13 @@ static void dcn35_disable_otg_wa(struct clk_mgr *clk_mgr_base, struct dc_state *
+ 			continue;
+ 		if (pipe->stream && (pipe->stream->dpms_off || dc_is_virtual_signal(pipe->stream->signal) ||
+ 				     !pipe->stream->link_enc)) {
+-			struct stream_encoder *stream_enc = pipe->stream_res.stream_enc;
+-
+ 			if (disable) {
+-				if (stream_enc && stream_enc->funcs->disable_fifo)
+-					pipe->stream_res.stream_enc->funcs->disable_fifo(stream_enc);
+-
+ 				if (pipe->stream_res.tg && pipe->stream_res.tg->funcs->immediate_disable_crtc)
+ 					pipe->stream_res.tg->funcs->immediate_disable_crtc(pipe->stream_res.tg);
  
- 	/*
--	 * margin 5300ppm + 300ppm ~ 0.6% as per spec, factor is 1.006
-+	 * The 1.006 factor (margin 5300ppm + 300ppm ~ 0.6% as per spec) is not
-+	 * required when determining PBN/time slot utilization on the link between
-+	 * us and the branch, since that overhead is already accounted for in
-+	 * the get_pbn_per_slot function.
-+	 *
- 	 * The unit of 54/64Mbytes/sec is an arbitrary unit chosen based on
- 	 * common multiplier to render an integer PBN for all link rate/lane
- 	 * counts combinations
- 	 * calculate
--	 * peak_kbps *= (1006/1000)
- 	 * peak_kbps *= (64/54)
--	 * peak_kbps *= 8    convert to bytes
-+	 * peak_kbps /= (8 * 1000) convert to bytes
- 	 */
- 
--	numerator = 64 * PEAK_FACTOR_X1000;
--	denominator = 54 * 8 * 1000 * 1000;
-+	numerator = 64;
-+	denominator = 54 * 8 * 1000;
- 	kbps *= numerator;
- 	peak_kbps = dc_fixpt_from_fraction(kbps, denominator);
- 
+ 				reset_sync_context_for_pipe(dc, context, i);
+ 			} else {
+ 				pipe->stream_res.tg->funcs->enable_crtc(pipe->stream_res.tg);
+-
+-				if (stream_enc && stream_enc->funcs->enable_fifo)
+-					pipe->stream_res.stream_enc->funcs->enable_fifo(stream_enc);
+ 			}
+ 		}
+ 	}
 -- 
 2.43.0
 
