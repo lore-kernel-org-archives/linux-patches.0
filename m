@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F01107B4;
-	Sat,  3 Feb 2024 04:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70682111B1;
+	Sat,  3 Feb 2024 04:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933339; cv=none; b=onG18UthIsGm56i+UtGfUmfOvOfW7mANHsbnth74K1iHHgLWHngOyF2dd92ODTE0uJAECLBgIxykfgrJtzeGvtcddlJBPhXkP6XVz7uYy48mLKIPUlYYJsW1cUVjlEQ5e5GNbNoc5sf4K/qDUKeDp3EgskPug83mDbf0OkTuBR0=
+	t=1706933339; cv=none; b=eAhIsO2vSy6Y5Dpy1m/5cw5vNI4wBVYXtkzNSdXQt9XiT7ta84FjzuxvJyjWERu3KF88AXUXwXKwzGX97IgF29eySapqawPaC7of/4V7Y70sH/D8okAV9T+q6xHUN9NwUoH/25pYh0dQyWNsFG9PKGVCrO4zcqG8Pkr7KzFwYPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933339; c=relaxed/simple;
-	bh=c0xbOHAPLxXTXIlqej5iN4ROxZiR2o2PzC413CFGZsc=;
+	bh=8P9HvZaV1k6CB/h5H9k/6tZ0tdRJRJt8NsxMoRi87Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ua0bOFrktN7PWALPTqgFKw9OmIW8SBYJB9K5mO1T8hhIy7USAqEjbuAli5ntYq7twx/K5hS0V8TWnuVJ6Ck6U7Lqtuz7SoJu2v6hFuGqYUXKYSN17pxpaWO+bbsYcKmf9t4hwrpEVNAipNG1OTPjLrTBBm8ySwYxyXTNYgXX8mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icJjqBQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jbche7A0fzsoayYMyJAlvKeubNQIPoLgdf6oGdlL1PLqi2Bbg4WVz/Ii9WdcSsIAk7FPrb6mkWR3uV0IBhl4jDZWIg4md8P9r0Sa6zhA+A3107VQQItkR4htPmU5P9kMkBZcmitB0NsUTAt+5mBIx37RykgXdp3TNTLPrG+4h8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUVhUBpi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icJjqBQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3A3C433C7;
-	Sat,  3 Feb 2024 04:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUVhUBpi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3736AC433C7;
+	Sat,  3 Feb 2024 04:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933337;
-	bh=c0xbOHAPLxXTXIlqej5iN4ROxZiR2o2PzC413CFGZsc=;
+	s=korg; t=1706933339;
+	bh=8P9HvZaV1k6CB/h5H9k/6tZ0tdRJRJt8NsxMoRi87Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icJjqBQ+lanAJLea5Fkk4y0EoAp5pqebKXg5Oq7R8mxtGf1PLU7Pc35OqMQyy6Yqz
-	 1H/NbR4GJrJciMvdnMgvtWVbBwsaIEygRPVI9FRNTWcU9QnLTRdGED5rujfn97rG6P
-	 hLQdUf7t9rurZ60Xfcg8bxYOxaszewBg9gDCznqo=
+	b=CUVhUBpiZzRWKu5SEGz5UaVzIamnDJZlbscJ7Tto6v1FYXkRkn7iJGP46eW60R3CT
+	 ZvYyrve1ZKs1mA3ZxnwQUEVY4hw5OTy6M4IJhMpWVMRmMhqNHXjpT4Ti7d3oKZNQ+X
+	 uvDz4D/+ZAKqHf1wq8EmER33bhAvU7ZMW+U1v/Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Krowiak <akrowiak@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/219] s390/vfio-ap: fix sysfs status attribute for AP queue devices
-Date: Fri,  2 Feb 2024 20:03:29 -0800
-Message-ID: <20240203035321.491781337@linuxfoundation.org>
+Subject: [PATCH 6.1 038/219] KVM: s390: fix setting of fpc register
+Date: Fri,  2 Feb 2024 20:03:31 -0800
+Message-ID: <20240203035321.790009535@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -53,93 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Krowiak <akrowiak@linux.ibm.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit a0d8f4eeb7c4ffaee21702bcc91a09b3988c5b7a ]
+[ Upstream commit b988b1bb0053c0dcd26187d29ef07566a565cf55 ]
 
-The 'status' attribute for AP queue devices bound to the vfio_ap device
-driver displays incorrect status when the mediated device is attached to a
-guest, but the queue device is not passed through. In the current
-implementation, the status displayed is 'in_use' which is not correct; it
-should be 'assigned'. This can happen if one of the queue devices
-associated with a given adapter is not bound to the vfio_ap device driver.
-For example:
+kvm_arch_vcpu_ioctl_set_fpu() allows to set the floating point control
+(fpc) register of a guest cpu. The new value is tested for validity by
+temporarily loading it into the fpc register.
 
-Queues listed in /sys/bus/ap/drivers/vfio_ap:
-14.0005
-14.0006
-14.000d
-16.0006
-16.000d
+This may lead to corruption of the fpc register of the host process:
+if an interrupt happens while the value is temporarily loaded into the fpc
+register, and within interrupt context floating point or vector registers
+are used, the current fp/vx registers are saved with save_fpu_regs()
+assuming they belong to user space and will be loaded into fp/vx registers
+when returning to user space.
 
-Queues listed in /sys/devices/vfio_ap/matrix/$UUID/matrix
-14.0005
-14.0006
-14.000d
-16.0005
-16.0006
-16.000d
+test_fp_ctl() restores the original user space / host process fpc register
+value, however it will be discarded, when returning to user space.
 
-Queues listed in /sys/devices/vfio_ap/matrix/$UUID/guest_matrix
-14.0005
-14.0006
-14.000d
+In result the host process will incorrectly continue to run with the value
+that was supposed to be used for a guest cpu.
 
-The reason no queues for adapter 0x16 are listed in the guest_matrix is
-because queue 16.0005 is not bound to the vfio_ap device driver, so no
-queue associated with the adapter is passed through to the guest;
-therefore, each queue device for adapter 0x16 should display 'assigned'
-instead of 'in_use', because those queues are not in use by a guest, but
-only assigned to the mediated device.
+Fix this by simply removing the test. There is another test right before
+the SIE context is entered which will handles invalid values.
 
-Let's check the AP configuration for the guest to determine whether a
-queue device is passed through before displaying a status of 'in_use'.
+This results in a change of behaviour: invalid values will now be accepted
+instead of that the ioctl fails with -EINVAL. This seems to be acceptable,
+given that this interface is most likely not used anymore, and this is in
+addition the same behaviour implemented with the memory mapped interface
+(replace invalid values with zero) - see sync_regs() in kvm-s390.c.
 
-Signed-off-by: Tony Krowiak <akrowiak@linux.ibm.com>
-Acked-by: Halil Pasic <pasic@linux.ibm.com>
-Acked-by: Harald Freudenberger <freude@linux.ibm.com>
-Link: https://lore.kernel.org/r/20231108201135.351419-1-akrowiak@linux.ibm.com
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ arch/s390/kvm/kvm-s390.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
-index 0659aa2863ab..86a8bd532489 100644
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -1742,6 +1742,7 @@ static ssize_t status_show(struct device *dev,
- {
- 	ssize_t nchars = 0;
- 	struct vfio_ap_queue *q;
-+	unsigned long apid, apqi;
- 	struct ap_matrix_mdev *matrix_mdev;
- 	struct ap_device *apdev = to_ap_dev(dev);
+diff --git a/arch/s390/kvm/kvm-s390.c b/arch/s390/kvm/kvm-s390.c
+index 3775363471f0..f604946ab2c8 100644
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -4138,10 +4138,6 @@ int kvm_arch_vcpu_ioctl_set_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu)
  
-@@ -1749,8 +1750,21 @@ static ssize_t status_show(struct device *dev,
- 	q = dev_get_drvdata(&apdev->device);
- 	matrix_mdev = vfio_ap_mdev_for_queue(q);
+ 	vcpu_load(vcpu);
  
-+	/* If the queue is assigned to the matrix mediated device, then
-+	 * determine whether it is passed through to a guest; otherwise,
-+	 * indicate that it is unassigned.
-+	 */
- 	if (matrix_mdev) {
--		if (matrix_mdev->kvm)
-+		apid = AP_QID_CARD(q->apqn);
-+		apqi = AP_QID_QUEUE(q->apqn);
-+		/*
-+		 * If the queue is passed through to the guest, then indicate
-+		 * that it is in use; otherwise, indicate that it is
-+		 * merely assigned to a matrix mediated device.
-+		 */
-+		if (matrix_mdev->kvm &&
-+		    test_bit_inv(apid, matrix_mdev->shadow_apcb.apm) &&
-+		    test_bit_inv(apqi, matrix_mdev->shadow_apcb.aqm))
- 			nchars = scnprintf(buf, PAGE_SIZE, "%s\n",
- 					   AP_QUEUE_IN_USE);
- 		else
+-	if (test_fp_ctl(fpu->fpc)) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
+ 	vcpu->run->s.regs.fpc = fpu->fpc;
+ 	if (MACHINE_HAS_VX)
+ 		convert_fp_to_vx((__vector128 *) vcpu->run->s.regs.vrs,
+@@ -4149,7 +4145,6 @@ int kvm_arch_vcpu_ioctl_set_fpu(struct kvm_vcpu *vcpu, struct kvm_fpu *fpu)
+ 	else
+ 		memcpy(vcpu->run->s.regs.fprs, &fpu->fprs, sizeof(fpu->fprs));
+ 
+-out:
+ 	vcpu_put(vcpu);
+ 	return ret;
+ }
 -- 
 2.43.0
 
