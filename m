@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7FA1118F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E311CAA0;
 	Sat,  3 Feb 2024 04:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933519; cv=none; b=gH8ovOMIEdTKeJcqgoszBr9BcZtZ6YckzHauTiD+w81wgp3YkUoZwl93lK4MWZXcKGURtefp6MGB4DDPj+kBjVcdNe/sWMU9eRt/bsfEKF+9QlKw7kKNnY9E9dUNFsHG5ZxtmqaWCGUiq9a7mIKlBaWJK8ALYuDX25MID08UHRM=
+	t=1706933519; cv=none; b=ZTlKBHkAa894pR/8+I/v3fO5Lh5tOS8hHM77DFXgsUiXQNUkoztpxrrARa1iuDrYpDj7j78hoQhSC2FAKg1jgdi/4jxY2VFw+sBxqOvgOs/W/jnK1mVvy1z6iRO3F+MkryfGWYh+NGWBsP3NfoxGAZkuVdXBFZRpDGyec5On8Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933519; c=relaxed/simple;
-	bh=LuUPXKVUT7Yd1hVVrcX2gp5UkCZKWbZbB/olk+Gauik=;
+	bh=1csxAtKQdukahJ0ppD+cGCffeiv0aWD+JPnUFV0ewyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPnm56hwAOH2pyTuSkn3FF49NBgt6e9Ot2/ywEHg2sZPipQfxrHUeLl8OspakVTu8DvH5/CdUgGABgiUasW6JqfulELSbPxX/7FAFOXwzVsP8MrXd+Vy6+FPSD5G4crjA5hOx6/WgRG5OQcz8572rJ6JnphOkp0adHvHNikALA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Trma5ER0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HI/Jfxj71EiB/Pg7LApFM/V11T8QzJ9z3bHxfiq7hOm4fH/TFBeaQe6GJ1DwXJ0cB8so59WHMinhMhtTd/arfxdPH7OPMWx85KshIWssHex6UWuwdYPPTqjhREBsFi0s8QRV9NkflOkisGmTQTkdnMGjRcCYvcnsBJ6cBnCr3pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOCgrXsg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Trma5ER0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA05CC43399;
-	Sat,  3 Feb 2024 04:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOCgrXsg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD6BC43390;
+	Sat,  3 Feb 2024 04:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933518;
-	bh=LuUPXKVUT7Yd1hVVrcX2gp5UkCZKWbZbB/olk+Gauik=;
+	s=korg; t=1706933519;
+	bh=1csxAtKQdukahJ0ppD+cGCffeiv0aWD+JPnUFV0ewyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Trma5ER0B4rCQ8fVY/tJOxfWN8tEei8aemQbOLt98llGz1ApoBqvXevUXHrosxWjs
-	 UmJTDYWAm6gt71xJFOJi54lyuU5FYgwsPwclmSegVAXq+6UsvIRtb6KeIVWg0cQcXD
-	 ho6fdZbhozwN1i3aD3xzRsJ8ej6gAoUNano0WHxU=
+	b=VOCgrXsg5uZFUJw7ig+YTrENt61QzGCXwqfoBcPXRxZBvrO47KXqIXXsPkn/dEoQt
+	 zV8CE2bDO3lX349inRVEoJcW0VTjacoZslomr4oiJVgIw2c1JpTAqy0JiC/OKzYaE5
+	 4uV1mYdoVf1rWN2/5TzMGrd3TNAD3bnCPHfroRvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/322] afs: fix the usage of read_seqbegin_or_lock() in afs_find_server*()
-Date: Fri,  2 Feb 2024 20:02:17 -0800
-Message-ID: <20240203035400.386902290@linuxfoundation.org>
+Subject: [PATCH 6.6 058/322] wifi: rtw89: fix timeout calculation in rtw89_roc_end()
+Date: Fri,  2 Feb 2024 20:02:35 -0800
+Message-ID: <20240203035401.012665045@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,87 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 1702e0654ca9a7bcd7c7619c8a5004db58945b71 ]
+[ Upstream commit e416514e309f7e25e577fee45a65f246f67b2261 ]
 
-David Howells says:
+Since 'rtw89_core_tx_kick_off_and_wait()' assumes timeout
+(actually RTW89_ROC_TX_TIMEOUT) in milliseconds, I suppose
+that RTW89_ROC_IDLE_TIMEOUT is in milliseconds as well. If
+so, 'msecs_to_jiffies()' should be used in a call to
+'ieee80211_queue_delayed_work()' from 'rtw89_roc_end()'.
+Compile tested only.
 
- (5) afs_find_server().
-
-     There could be a lot of servers in the list and each server can have
-     multiple addresses, so I think this would be better with an exclusive
-     second pass.
-
-     The server list isn't likely to change all that often, but when it does
-     change, there's a good chance several servers are going to be
-     added/removed one after the other.  Further, this is only going to be
-     used for incoming cache management/callback requests from the server,
-     which hopefully aren't going to happen too often - but it is remotely
-     drivable.
-
- (6) afs_find_server_by_uuid().
-
-     Similarly to (5), there could be a lot of servers to search through, but
-     they are in a tree not a flat list, so it should be faster to process.
-     Again, it's not likely to change that often and, again, when it does
-     change it's likely to involve multiple changes.  This can be driven
-     remotely by an incoming cache management request but is mostly going to
-     be driven by setting up or reconfiguring a volume's server list -
-     something that also isn't likely to happen often.
-
-Make the "seq" counter odd on the 2nd pass, otherwise read_seqbegin_or_lock()
-never takes the lock.
-
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/20231130115614.GA21581@redhat.com/
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20231024143137.30393-1-dmantipov@yandex.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/server.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index b5237206eac3..0bd2f5ba6900 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -27,7 +27,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 	const struct afs_addr_list *alist;
- 	struct afs_server *server = NULL;
- 	unsigned int i;
--	int seq = 0, diff;
-+	int seq = 1, diff;
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 133bf289bacb..535393eca564 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -2548,7 +2548,7 @@ void rtw89_roc_end(struct rtw89_dev *rtwdev, struct rtw89_vif *rtwvif)
  
- 	rcu_read_lock();
+ 	if (hw->conf.flags & IEEE80211_CONF_IDLE)
+ 		ieee80211_queue_delayed_work(hw, &roc->roc_work,
+-					     RTW89_ROC_IDLE_TIMEOUT);
++					     msecs_to_jiffies(RTW89_ROC_IDLE_TIMEOUT));
+ }
  
-@@ -35,6 +35,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 		if (server)
- 			afs_unuse_server_notime(net, server, afs_server_trace_put_find_rsq);
- 		server = NULL;
-+		seq++; /* 2 on the 1st/lockless path, otherwise odd */
- 		read_seqbegin_or_lock(&net->fs_addr_lock, &seq);
- 
- 		if (srx->transport.family == AF_INET6) {
-@@ -90,7 +91,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
- {
- 	struct afs_server *server = NULL;
- 	struct rb_node *p;
--	int diff, seq = 0;
-+	int diff, seq = 1;
- 
- 	_enter("%pU", uuid);
- 
-@@ -102,7 +103,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
- 		if (server)
- 			afs_unuse_server(net, server, afs_server_trace_put_uuid_rsq);
- 		server = NULL;
--
-+		seq++; /* 2 on the 1st/lockless path, otherwise odd */
- 		read_seqbegin_or_lock(&net->fs_lock, &seq);
- 
- 		p = net->fs_servers.rb_node;
+ void rtw89_roc_work(struct work_struct *work)
 -- 
 2.43.0
 
