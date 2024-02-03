@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432D810A13;
-	Sat,  3 Feb 2024 04:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B6510A21;
+	Sat,  3 Feb 2024 04:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933331; cv=none; b=aGiy6c93UdC73eqPNBZCc7GHXWkAYonhK4j7lP8TVijMUd4p5PUDl2H4SQkuOxLvm+lZD1T2x51RzBeKCbYHTY571bMRJPFKq7y3gTcwXfK/ngQmAvjRcuVRM5d+C0m0MSj4dqqFyPVB8e9N3A/59mHUUuKaWFhn91HVGSnA3YA=
+	t=1706933332; cv=none; b=eZUd19RWmzAZHlOWcDYNylfCZn13fDwh4VAvoKmjHfGb+jbamdsdNHTXV6HuTSclougXAT5jPRpDhwLtNEVOyxAP4I/ZM8xVx9S0Hylu5QQ48/ps7VHxb/1ZybgtYe+bi4w6VSc5ZP3dLpjrt9wouu8IRsGrMFKKVGTgzF5SPIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933331; c=relaxed/simple;
-	bh=gk4+CX2Oer8H5kuv1ba5l4pJ6fK+k0pFwDYKSrUgX2U=;
+	s=arc-20240116; t=1706933332; c=relaxed/simple;
+	bh=+OAw/pGo5Vf1nDDQ/N76eaJZYSt4YY4/I6RHqxeT3dM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CW//srlEhgF5tOS7xV9CZ1Iy1wIqHqTGNsOwrYZViQSqX1/dmF8pIatXWlrdwbFeQJUOtK2d4atNDT6Gm//fQDcQ/sVzV6RIrdCWw5dPISKZfrNosZGIOWSXHa5c0QWDLQmrkhh7jL06AcrDWDXJdXoMKcRD5jhBKJum6iULwas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcO+u8YG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZ4YS5zWR8CLNhN5tk6thuOuCvmWKf6vxEVGEBlmGpghbhq81nKWztOPRZsXlItArRZVPHIuosLBvpcTxbPopLjl/0cTble22lb5h7m0F30PVPgnLufG1TguXbJGNAcieLZGV/ZTh0sf+t4BOoErfmyG9hLY743bJx0jCngtlrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s942w0s2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcO+u8YG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A697C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s942w0s2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA08CC433F1;
 	Sat,  3 Feb 2024 04:08:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933331;
-	bh=gk4+CX2Oer8H5kuv1ba5l4pJ6fK+k0pFwDYKSrUgX2U=;
+	bh=+OAw/pGo5Vf1nDDQ/N76eaJZYSt4YY4/I6RHqxeT3dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcO+u8YGla2CBZS/KtwjhQA3kDi/5cH0jHkiNnla725vcBrXT9fU0jeN9yxZmK0Gs
-	 ZRTgvbBbqLiJzrq6cCAYU6S7/fqbmt/Srf4LvsV1Qt6lUc1ASsvkHKPxRgEBDLvggA
-	 /LN059IUwhqzd2bIiL3XAGdHBT7ab++xR3UzRDMg=
+	b=s942w0s2loe5WUAMgPFC1VQW/cSJbhuQbLyM6s/9rvMcRLwwhbeO24Je7q8uDEohc
+	 9+yLhQmodxH0F87pugRjkJghh8QjRCgpnebgQgxFgvOPAktFgFf4NlHuSlwaocvny3
+	 2aGoNK6RjuIyqYWE0CzIxGrlC4J4Il5/0c5eckv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharat Bhushan <bbhushan2@marvell.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chao Yu <chao@kernel.org>,
+	Yue Hu <huyue2@coolpad.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/219] crypto: octeontx2 - Fix cptvf driver cleanup
-Date: Fri,  2 Feb 2024 20:03:21 -0800
-Message-ID: <20240203035320.337089061@linuxfoundation.org>
+Subject: [PATCH 6.1 029/219] erofs: fix ztailpacking for subpage compressed blocks
+Date: Fri,  2 Feb 2024 20:03:22 -0800
+Message-ID: <20240203035320.456328068@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,69 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bharat Bhushan <bbhushan2@marvell.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit c480a421a4faf693c38e60b0fe6e554c9a3fee02 ]
+[ Upstream commit e5aba911dee5e20fa82efbe13e0af8f38ea459e7 ]
 
-This patch fixes following cleanup issues:
- - Missing instruction queue free on cleanup. This
-   will lead to memory leak.
- - lfs->lfs_num is set to zero before cleanup, which
-   will lead to improper cleanup.
+`pageofs_in` should be the compressed data offset of the page rather
+than of the block.
 
-Signed-off-by: Bharat Bhushan <bbhushan2@marvell.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Acked-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20231214161337.753049-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/marvell/octeontx2/otx2_cptlf.c      | 6 ++++--
- drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c | 3 +++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ fs/erofs/zdata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptlf.c b/drivers/crypto/marvell/octeontx2/otx2_cptlf.c
-index 71e5f79431af..6e4a78e1f3ce 100644
---- a/drivers/crypto/marvell/octeontx2/otx2_cptlf.c
-+++ b/drivers/crypto/marvell/octeontx2/otx2_cptlf.c
-@@ -419,8 +419,8 @@ int otx2_cptlf_init(struct otx2_cptlfs_info *lfs, u8 eng_grp_mask, int pri,
- 	return 0;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index cf9a2fa7f55d..47e71964eeff 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -652,7 +652,6 @@ static int z_erofs_register_pcluster(struct z_erofs_decompress_frontend *fe)
  
- free_iq:
--	otx2_cpt_free_instruction_queues(lfs);
- 	cptlf_hw_cleanup(lfs);
-+	otx2_cpt_free_instruction_queues(lfs);
- detach_rsrcs:
- 	otx2_cpt_detach_rsrcs_msg(lfs);
- clear_lfs_num:
-@@ -431,11 +431,13 @@ EXPORT_SYMBOL_NS_GPL(otx2_cptlf_init, CRYPTO_DEV_OCTEONTX2_CPT);
- 
- void otx2_cptlf_shutdown(struct otx2_cptlfs_info *lfs)
- {
--	lfs->lfs_num = 0;
- 	/* Cleanup LFs hardware side */
- 	cptlf_hw_cleanup(lfs);
-+	/* Free instruction queues */
-+	otx2_cpt_free_instruction_queues(lfs);
- 	/* Send request to detach LFs */
- 	otx2_cpt_detach_rsrcs_msg(lfs);
-+	lfs->lfs_num = 0;
- }
- EXPORT_SYMBOL_NS_GPL(otx2_cptlf_shutdown, CRYPTO_DEV_OCTEONTX2_CPT);
- 
-diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c b/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c
-index 392e9fee05e8..6f3373f9928c 100644
---- a/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c
-+++ b/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c
-@@ -249,8 +249,11 @@ static void cptvf_lf_shutdown(struct otx2_cptlfs_info *lfs)
- 	otx2_cptlf_unregister_interrupts(lfs);
- 	/* Cleanup LFs software side */
- 	lf_sw_cleanup(lfs);
-+	/* Free instruction queues */
-+	otx2_cpt_free_instruction_queues(lfs);
- 	/* Send request to detach LFs */
- 	otx2_cpt_detach_rsrcs_msg(lfs);
-+	lfs->lfs_num = 0;
- }
- 
- static int cptvf_lf_init(struct otx2_cptvf_dev *cptvf)
+ 	if (ztailpacking) {
+ 		pcl->obj.index = 0;	/* which indicates ztailpacking */
+-		pcl->pageofs_in = erofs_blkoff(map->m_pa);
+ 		pcl->tailpacking_size = map->m_plen;
+ 	} else {
+ 		pcl->obj.index = map->m_pa >> PAGE_SHIFT;
+@@ -852,6 +851,7 @@ static int z_erofs_do_read_page(struct z_erofs_decompress_frontend *fe,
+ 		get_page(fe->map.buf.page);
+ 		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page,
+ 			   fe->map.buf.page);
++		fe->pcl->pageofs_in = map->m_pa & ~PAGE_MASK;
+ 		fe->mode = Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE;
+ 	} else {
+ 		/* bind cache first when cached decompression is preferred */
 -- 
 2.43.0
 
