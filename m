@@ -1,96 +1,68 @@
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BB520DD2;
-	Sat,  3 Feb 2024 19:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.109.113.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC475FDBD;
+	Sat,  3 Feb 2024 19:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706987281; cv=none; b=AEnFXZypNMTGpFX+b30JDn0RyI7q/+fVniwxofXhVXzKqYOUhDFL6WmJHrdYIxXoLC39I+gFX+mvIMVy96Rl3pO9qGN51BA2kG53gZErXOSly96FkyxO6nrPYLBdNywgtrKzvORY8zpszn/vKjmNsHJDSv2qJgYjHuzcKxlO/tc=
+	t=1706987842; cv=none; b=jvdt3mDxfmUaInppvNjQv7hYabPVUIHdrNZCHqXI7weF1xHOj96f3H2/3CGxWA/uSUJkq/NNUvqzTpv1bpl5/7wXBYCPlh8DxueTYU8uVCRCoJ3nio9sut+PtV/avvbyfWuyShKMeNwnfk/MniRdMsLUcFFqYP6F25SBfKWIhns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706987281; c=relaxed/simple;
-	bh=WvftTD3UruN16UX3EdI8dyX1uJUVfdutBsChQnJrkQk=;
+	s=arc-20240116; t=1706987842; c=relaxed/simple;
+	bh=cUKQD5l+1MKQ5ALHJqAwUm/2vPwtxJRjNN0WsVYURE0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pyWJNggZB+wSBlHyfCpESBvWSsrJeCkvBi1jmzlJuBsOsbPqAYVHbyB1WX9IUwmkqlzJk191JkagBzI0RfM3/HOudvDdshMYu8/QsrABYnZPbHe2vMG3K1QIbo6S10eSFee6cCN0fWIxPdvKKCt3DS8X4/uqGkKhfHxm9//CObw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de; spf=pass smtp.mailfrom=alien8.de; dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b=IwGJ5Tp4; arc=none smtp.client-ip=65.109.113.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=alien8.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alien8.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=kAGhbRvOsLplLtnd19u9sVFkSkeZY88+LMYxNRKKBNDC64j6z0SyEZT5sjY/TYLsFPJYR3DIdA4A3wLKemls6ArIlfHJViHAhKGPl/LHpcVOo/bqw8BXCNq+uRStfguwNo6WmzH3hXH7FV75/rnCUh0M+HEe/ymKWpBXQqWDB6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Y76r2LQ+; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="IwGJ5Tp4"
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 8DCBD40E01A9;
-	Sat,  3 Feb 2024 19:07:50 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
-	header.d=alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 9K7J7D8BM0dn; Sat,  3 Feb 2024 19:07:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1706987268; bh=neqK9J0OIh+eRJ1A2dGOjmSVUdK+ZOx6SQ3ir+I2BHc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IwGJ5Tp47Zg5Ie2Y49UXGS8LLZeew8utJRRKMf/WCxLQNynknl3+hq7Y+mwydJ4Yp
-	 07p1ubSLm+Qkwirzx6npqwFsGIDMhNb3s2IB69EHUV930SFVRx9ad5XqwhSFlC39qA
-	 wBznWesNSo6wvjucuzmcPt+8ZHaBDvwZmjeQm002Ya8CxSs5rJ2As9iAudOlGkHV6r
-	 0NZKmy5x0hyzWH8QlaGqnQnPXH7SGg49TL4YxWV8clLbD7eb8vmXRNniS+WM/nuSmY
-	 ypQyw70JRiVsESL/iVvNLL5HsInsD6YKHcQ4eFXRLpLGfiiAw7ICSyFoofv9fuXML9
-	 cElRkCOhlrvd+s6p7mjY9kq/gJU+9Anp/KetGoHv3c5X75h2z59ED5nZB29EExJDfI
-	 llnFgWEMcnL3EixKL6JA5o2CTGxx3JXBJ82E3g/iT9V8/2vtLDziQeuXZPujLhZuFC
-	 DtFNkP5lV56qpBXqYLPfkcrzMZ8EKI3ZqqoCBj2phP3KyHETTK87b8EKhxFI9wO7bQ
-	 lzUYP60Acq5M7QmuX0NkFoYJ1fsqC4ci0GG54N1S18CW/EBXEmVDU3tlrt8GOaSlUJ
-	 d67fns73R5CP5/1DHxudT9ZSh5YvOPXi2WE9/pAXz/Q3JfNhc8Pfr/LxlG3bNxNsab
-	 tHw/D9qBknlM4yjgmzPX6/wg=
-Received: from zn.tnic (pd953021b.dip0.t-ipconnect.de [217.83.2.27])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 0237640E016C;
-	Sat,  3 Feb 2024 19:07:34 +0000 (UTC)
-Date: Sat, 3 Feb 2024 20:07:29 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: pbonzini@redhat.com, tglx@linutronix.de, mingo@redhat.com,
-	dave.hansen@linux.intel.com, x86@kernel.org,
-	kirill.shutemov@linux.intel.com, ndesaulniers@google.com,
-	morbo@google.com, justinstitt@google.com,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] x86/coco: Define cc_vendor without
- CONFIG_ARCH_HAS_CC_PLATFORM
-Message-ID: <20240203190729.GHZb6O8UborcetShlw@fat_crate.local>
-References: <20240202-provide-cc_vendor-without-arch_has_cc_platform-v1-1-09ad5f2a3099@kernel.org>
- <20240203102925.GFZb4VhT1IwX-XRxTV@fat_crate.local>
- <20240203160806.GA520926@dev-fedora.aadp>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Y76r2LQ+"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=OeXvRrWTn2B5fELpXRSJLDCDquzmrC8sae4TRHzYbAg=; b=Y76r2LQ+HoxNn7WwtjSIi/sFJ+
+	ftpm9b0l50zljouy5cqMeRC0NzZbCA0EEGfsuKs6ohpSkHXs+YHGsBzpXJRsFckotRYN0f1RIw6Gt
+	NGPytj+a7dj+mnXLIek9cd8H97BUizxltVO0pzWiwIqZBH3Z6rXw7qyD1Kgy1BxA0iCvy+3ARzbei
+	Ew8w77/qyviMN4DYUdt7GKW+pR56TSwFmh0nj5lj34eXmMkN0r8D49STNiU9mfqS6TFGO/4YCS/gP
+	dzKKwwnKw81+cFy2K6i104PlPDnH3VZGbLXmwtPjmc+/0WokuSYarUW94+w8kGDI64zHoFDzx0CYl
+	dQf8UMaw==;
+Received: from willy by casper.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rWLVf-00000004eZ0-0LnQ;
+	Sat, 03 Feb 2024 19:17:03 +0000
+Date: Sat, 3 Feb 2024 19:17:02 +0000
+From: Matthew Wilcox <willy@infradead.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Eric Dumazet <edumazet@google.com>, Arjun Roy <arjunroy@google.com>,
+	linux-mm@vger.kernel.org, Andrew Morton <akpm@linux-foundation.org>,
+	linux-fsdevel@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	ZhangPeng <zhangpeng362@huawei.com>
+Subject: Re: [PATCH 6.1 194/219] tcp: add sanity checks to rx zerocopy
+Message-ID: <Zb6RLr7OoZsUboQD@casper.infradead.org>
+References: <20240203035317.354186483@linuxfoundation.org>
+ <20240203035344.297241145@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240203160806.GA520926@dev-fedora.aadp>
+In-Reply-To: <20240203035344.297241145@linuxfoundation.org>
 
-On Sat, Feb 03, 2024 at 09:08:06AM -0700, Nathan Chancellor wrote:
-> I have no issues with blaming a9ef277488cf but I think da86eb961184 is
-> equally blamable for removing the option to use cc_vendor in generic x86
-> code where CONFIG_ARCH_HAS_CC_PLATFORM may not be set. Hopefully that at
-> least carifies the "which is it?" question, I'll do whatever you think
-> is best.
+On Fri, Feb 02, 2024 at 08:06:07PM -0800, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Eric Dumazet <edumazet@google.com>
+> 
+> [ Upstream commit 577e4432f3ac810049cb7e6b71f4d96ec7c6e894 ]
 
-I guess I wasn't clear enough, sorry about that. Of the two, that one
-should be in Fixes which is the first one which causes the build issue
-so that the fix can be backported to the respective kernels.
-
-IOW, if you can't trigger with da86eb961184, then a9ef277488cf should be
-in Fixes and your fix should go through the KVM tree, along with
-a9ef277488cf.
-
-How does that sound?
-
-Thx.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+Um, I thought this was an inapproproate way to fix the problem and I
+said so at the time.  Why did this get applied?  I'm starting to get
+quite angry at networking developers poking around in the guts of MM.
+They don't know what they're doing and it shows.
