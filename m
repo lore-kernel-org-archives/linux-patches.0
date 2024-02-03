@@ -1,125 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E395D757;
-	Sat,  3 Feb 2024 19:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5079134AB
+	for <patches@lists.linux.dev>; Sat,  3 Feb 2024 21:27:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706989888; cv=none; b=KUbkux2MqyDkhSCkdpnV8RNYUw2+abD2Kl9S/HlUv3woTk2jUKhDz44ubvYZ7/vaQH+iVFeinulEzmofsT/YpZT7Wo7V7Kz8k2A7xhS+o5KgRdemYUm6VBmJfdR9+BLMgIgoUUlr7HFfxV6j73HZ8cLHK7JvnwpYywAWxpqXABg=
+	t=1706995651; cv=none; b=XTTxPRfjJ8e99B4jjCrF6JwXTGOs9LyZxrNPllycoKvBwSc8k6sJloXrqvgrZSzdLnkuYF1fcVrlgkZC6EjZcJjMcXYK/y+dcOX6iv+NdRsTDbz+DnV6asKC6D4bVPrSqKpui+RMlbuQH2Aftotu7FIo0ur2MlCTtIkY86brKDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706989888; c=relaxed/simple;
-	bh=CkL6qC5JZ5yo4X5o1O2oLxpExi8WJptCktnHcAcwneA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=JFEaJDFrYF/5oiDYEjwYcWpKDqBFwO/m0v6DKzTsmoU5IzuHPDmmguCnRt+0YdOInJKDQd3Zqfv5e2KLy6eokWO5ADVJaVf22u1yhpmbGUFGaLrr/fO5fU3XZ6hz+eLcPJOirp9KvCyfMl56G4mxh36dZmB1YNcB1LdeeVguzYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HS+gxaJb; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HS+gxaJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED9EC433F1;
-	Sat,  3 Feb 2024 19:51:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706989887;
-	bh=CkL6qC5JZ5yo4X5o1O2oLxpExi8WJptCktnHcAcwneA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HS+gxaJb3fXG+6PzyPsTfca3u1HdfzhfyeXRl/1/oS8GF6HSXnsoTX2il4Yj28Ic0
-	 NuaQl2BY8MJeXUKcWmgqYwTIMtP/5Gr1y6JisU2o8oJolf/ZIy9xNpEfebLUZQXv0M
-	 hM45M48wP1Rf+YFDj94mvDo3k06tCac/+VpLrvpzQs+Uysv2gg/BDkzdFWTEfa+CeE
-	 pdzkAALVZ+JrByVg5cyKgbs6MA40e4Z4CvDC9GkHCZ3ZNdTh++J45zco84wSs3Kh5m
-	 nv+AqMLjzZ/YGU3n1zNW5X69k/KlSo8LRBnSghJEqJYCINJXyUeU0l849L708A6UmU
-	 NMKxdvIx5rrSA==
-From: SeongJae Park <sj@kernel.org>
+	s=arc-20240116; t=1706995651; c=relaxed/simple;
+	bh=sa2VZ3JRojeX2iIGRy552r7LDY8RoUJIuejgbe8/1CM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FjwQIgb2CBJm2o/OxkHxoD/BMjA6+XP7SZZzK7bbELdZmQXJo++HlzHRtj76pYtNWfuBZ1SC3UX4B5Ox8DdeP21YJDl++PjYeM9xdpYBmzJ6POmeQ8OXjyiY3dLRoT7JZwEAQU6XrHiX/8xYPH5DQnw/kmFK+wtJLcHE31NhGik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 8ED9E1C0077; Sat,  3 Feb 2024 22:27:20 +0100 (CET)
+Date: Sat, 3 Feb 2024 22:27:20 +0100
+From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	damon@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>
-Subject: Re: [PATCH 6.6 000/326] 6.6.16-rc2 review
-Date: Sat,  3 Feb 2024 11:51:24 -0800
-Message-Id: <20240203195125.56639-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240203174810.768708706@linuxfoundation.org>
-References: 
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 000/221] 6.1.77-rc2 review
+Message-ID: <Zb6vuNkaubUQ6NFU@duo.ucw.cz>
+References: <20240203174756.358721205@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="oYDmB5pbcd87lbrp"
+Content-Disposition: inline
+In-Reply-To: <20240203174756.358721205@linuxfoundation.org>
 
-Hello,
 
-On Sat,  3 Feb 2024 09:52:59 -0800 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+--oYDmB5pbcd87lbrp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This is the start of the stable review cycle for the 6.6.16 release.
-> There are 326 patches in this series, all will be posted as a response
+Hi!
+
+> This is the start of the stable review cycle for the 6.1.77 release.
+> There are 221 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Mon, 05 Feb 2024 17:47:20 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.16-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+CIP testing did not find any problems here:
 
-Tested-by: SeongJae Park <sj@kernel.org>
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
 
-[1] https://github.com/awslabs/damon-tests/tree/next/corr
-[2] 8e1719211b07 ("Linux 6.6.16-rc2")
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
-Thanks,
-SJ
+No problems detected with 6.6 or 6.7, either.
 
-[...]
+Best regards,
+                                                                Pavel
 
----
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
-ok 1 selftests: damon: debugfs_attrs.sh
-ok 2 selftests: damon: debugfs_schemes.sh
-ok 3 selftests: damon: debugfs_target_ids.sh
-ok 4 selftests: damon: debugfs_empty_targets.sh
-ok 5 selftests: damon: debugfs_huge_count_read_write.sh
-ok 6 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 7 selftests: damon: debugfs_rm_non_contexts.sh
-ok 8 selftests: damon: sysfs.sh
-ok 9 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 10 selftests: damon: reclaim.sh
-ok 11 selftests: damon: lru_sort.sh
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh
-ok 12 selftests: damon-tests: build_m68k.sh
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
+--oYDmB5pbcd87lbrp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZb6vuAAKCRAw5/Bqldv6
+8gmXAKCRyWTNT6Bp9nCZohyAaDiuN9O7NgCffzT6LhvMFnMDGs9HvZRNDHbeccU=
+=bCZZ
+-----END PGP SIGNATURE-----
+
+--oYDmB5pbcd87lbrp--
