@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64254210E2;
-	Sat,  3 Feb 2024 04:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F76A17541;
+	Sat,  3 Feb 2024 04:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933927; cv=none; b=n9XO7Y8DSAMiLFNK6zxsB/g+vIXPThnPzEep0Ys/3zQ4nw9qfxL1vcdb78UscXZGu7OcMk8nPf0XbLtf5MVw2N8Mo2ud2JR2NBCrdXZwA0xOjWCg/K4I7BvtRDdDK8u/jkXX8jXt7GifiF4+U815bh8T7ahauHn13T1z2a8Jg6c=
+	t=1706933928; cv=none; b=F8TtMaDD64bOEMHA/s1uIS/lWK7i1/jMFwMWAbiL5oxRfolngt6ImQdqQp+8cnGGZ09NHNV55HsjmNwbg0JjCPiYG1CUzqmfM8tmFaK5cKNKIjsXqMGXn0SNuaglBl1vxh+wLFZGQ+MJkI719/kPwL5B5y7XODtvlyoARcLoP2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933927; c=relaxed/simple;
-	bh=MEMWWicxXwVQwNBqm7/uIIj9jfjCPGETMsjMuQ6tTIk=;
+	s=arc-20240116; t=1706933928; c=relaxed/simple;
+	bh=t9gynKT+wbSWhHdNRBUSE+45tVHYs4R3atAmu1T6oOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGp+3Qvfk5HO7kB/eFvRMy9Wyv1MFFHGgCw60xf4LAXLJXKdT2uJDsgSRdni1EAx5Fq9LPgAzDrvTj7RQ541TL239jvivMVM3S001lXFjsedtuQGsRTV29bmj9cdDJHdO22QWu0nPGzo6bWXwceKua9S+zceQpvHzEFbSJ+8f04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAxVJBc0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nj5fFHjU+f6QP0b9CcCBvqwT9BBwwiTw/6WHjbkDGcBeigfiydo2+mFcEquuFZpj7Q5Y5jRw+1nYHu35kD57RkTigbvmxYIZ7gZTL1uaxV8+GhwRmeOAd0joytdtzNKeVlB6o4vqk72Ic3tbujnP5zS5iQgHkpecv8GH0ilZo3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTbzIJ/0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAxVJBc0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25586C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTbzIJ/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A64C43399;
 	Sat,  3 Feb 2024 04:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933927;
-	bh=MEMWWicxXwVQwNBqm7/uIIj9jfjCPGETMsjMuQ6tTIk=;
+	bh=t9gynKT+wbSWhHdNRBUSE+45tVHYs4R3atAmu1T6oOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DAxVJBc0IbJdfVagALws+Q12tLNJSs/jYkiwJ6gOeipwgtyxRHPk/YntsU7+FZtIM
-	 WtUVCcKy2cvKh3Sg8qglQ4nm/2IoDv71CvLdUzYHoxI7067WqSJI8UYO41WsbfyYmY
-	 0jtU212Rx3eIhy+8zs6WDaeaa/owGovtTjUSaphA=
+	b=hTbzIJ/0DYAB5tYNI+bKM6pNfFm5QE07EG377wA/Q1Fcnqh4JGJa0QuVtPb5lKkSi
+	 2fTKsNlb1ybJnIFeuRmx1mqq+9VWreXFazGH/I/LwRYtc5+zQxkCkq0Mo7PwGAud/D
+	 OEh4ja44jDyrO5MySxSEytUWAcCq3AxKnZkpSqrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Crescent CY Hsieh <crescentcy.hsieh@moxa.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 259/353] tty: serial: 8250: Set RS422 interface by default to fix Moxa RS422/RS485 PCIe boards
-Date: Fri,  2 Feb 2024 20:06:17 -0800
-Message-ID: <20240203035411.941429171@linuxfoundation.org>
+Subject: [PATCH 6.7 260/353] fs/kernfs/dir: obey S_ISGID
+Date: Fri,  2 Feb 2024 20:06:18 -0800
+Message-ID: <20240203035411.975576365@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,115 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Crescent CY Hsieh <crescentcy.hsieh@moxa.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 43f012df3c1e979966524f79b5371fde6545488a ]
+[ Upstream commit 5133bee62f0ea5d4c316d503cc0040cac5637601 ]
 
-MOXA PCIe RS422/RS485 boards will not function by default because of the
-initial default serial interface of all MOXA PCIe boards is set to
-RS232.
+Handling of S_ISGID is usually done by inode_init_owner() in all other
+filesystems, but kernfs doesn't use that function.  In kernfs, struct
+kernfs_node is the primary data structure, and struct inode is only
+created from it on demand.  Therefore, inode_init_owner() can't be
+used and we need to imitate its behavior.
 
-This patch fixes the problem above by setting the initial default serial
-interface to RS422 for those MOXA RS422/RS485 PCIe boards.
+S_ISGID support is useful for the cgroup filesystem; it allows
+subtrees managed by an unprivileged process to retain a certain owner
+gid, which then enables sharing access to the subtree with another
+unprivileged process.
 
-Signed-off-by: Crescent CY Hsieh <crescentcy.hsieh@moxa.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20231214060234.6147-1-crescentcy.hsieh@moxa.com
+--
+v1 -> v2: minor coding style fix (comment)
+
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20231208093310.297233-2-max.kellermann@ionos.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci.c | 58 +++++++++++++++++++++++++++++-
- 1 file changed, 57 insertions(+), 1 deletion(-)
+ fs/kernfs/dir.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_pci.c b/drivers/tty/serial/8250/8250_pci.c
-index 614be0f13a31..8ccf691935b7 100644
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -19,6 +19,7 @@
- #include <linux/serial_core.h>
- #include <linux/8250_pci.h>
- #include <linux/bitops.h>
-+#include <linux/bitfield.h>
- 
- #include <asm/byteorder.h>
- #include <asm/io.h>
-@@ -1970,6 +1971,20 @@ pci_sunix_setup(struct serial_private *priv,
- 
- #define MOXA_GPIO_PIN2	BIT(2)
- 
-+#define MOXA_RS232	0x00
-+#define MOXA_RS422	0x01
-+#define MOXA_RS485_4W	0x0B
-+#define MOXA_RS485_2W	0x0F
-+#define MOXA_UIR_OFFSET	0x04
-+#define MOXA_EVEN_RS_MASK	GENMASK(3, 0)
-+#define MOXA_ODD_RS_MASK	GENMASK(7, 4)
-+
-+enum {
-+	MOXA_SUPP_RS232 = BIT(0),
-+	MOXA_SUPP_RS422 = BIT(1),
-+	MOXA_SUPP_RS485 = BIT(2),
-+};
-+
- static bool pci_moxa_is_mini_pcie(unsigned short device)
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index 8b2bd65d70e7..62d39ecf0a46 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -676,6 +676,18 @@ struct kernfs_node *kernfs_new_node(struct kernfs_node *parent,
  {
- 	if (device == PCI_DEVICE_ID_MOXA_CP102N	||
-@@ -1983,13 +1998,54 @@ static bool pci_moxa_is_mini_pcie(unsigned short device)
- 	return false;
- }
+ 	struct kernfs_node *kn;
  
-+static unsigned int pci_moxa_supported_rs(struct pci_dev *dev)
-+{
-+	switch (dev->device & 0x0F00) {
-+	case 0x0000:
-+	case 0x0600:
-+		return MOXA_SUPP_RS232;
-+	case 0x0100:
-+		return MOXA_SUPP_RS232 | MOXA_SUPP_RS422 | MOXA_SUPP_RS485;
-+	case 0x0300:
-+		return MOXA_SUPP_RS422 | MOXA_SUPP_RS485;
-+	}
-+	return 0;
-+}
++	if (parent->mode & S_ISGID) {
++		/* this code block imitates inode_init_owner() for
++		 * kernfs
++		 */
 +
-+static int pci_moxa_set_interface(const struct pci_dev *dev,
-+				  unsigned int port_idx,
-+				  u8 mode)
-+{
-+	resource_size_t iobar_addr = pci_resource_start(dev, 2);
-+	resource_size_t UIR_addr = iobar_addr + MOXA_UIR_OFFSET + port_idx / 2;
-+	u8 val;
++		if (parent->iattr)
++			gid = parent->iattr->ia_gid;
 +
-+	val = inb(UIR_addr);
-+
-+	if (port_idx % 2) {
-+		val &= ~MOXA_ODD_RS_MASK;
-+		val |= FIELD_PREP(MOXA_ODD_RS_MASK, mode);
-+	} else {
-+		val &= ~MOXA_EVEN_RS_MASK;
-+		val |= FIELD_PREP(MOXA_EVEN_RS_MASK, mode);
-+	}
-+	outb(val, UIR_addr);
-+
-+	return 0;
-+}
-+
- static int pci_moxa_init(struct pci_dev *dev)
- {
- 	unsigned short device = dev->device;
- 	resource_size_t iobar_addr = pci_resource_start(dev, 2);
--	unsigned int num_ports = (device & 0x00F0) >> 4;
-+	unsigned int num_ports = (device & 0x00F0) >> 4, i;
- 	u8 val;
- 
-+	if (!(pci_moxa_supported_rs(dev) & MOXA_SUPP_RS232)) {
-+		for (i = 0; i < num_ports; ++i)
-+			pci_moxa_set_interface(dev, i, MOXA_RS422);
++		if (flags & KERNFS_DIR)
++			mode |= S_ISGID;
 +	}
 +
- 	/*
- 	 * Enable hardware buffer to prevent break signal output when system boots up.
- 	 * This hardware buffer is only supported on Mini PCIe series.
+ 	kn = __kernfs_new_node(kernfs_root(parent), parent,
+ 			       name, mode, uid, gid, flags);
+ 	if (kn) {
 -- 
 2.43.0
 
