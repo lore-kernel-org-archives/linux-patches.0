@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2031111CBE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40C0125C4;
 	Sat,  3 Feb 2024 04:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933428; cv=none; b=hFPGk7T7GGYc8zWZa+CI0Gd8fCeraJLjp7elVHHSXtl0y3J+C8YgqsQUZB3C3GDk9uCcKK0i8et+4sO1qIB+/st5Vy2BqZVa1CWfeEYk9GdEqdNitmGxi1aG4QL4LoMKfYE7icQc1XMo1AWzuSTQK8sDszaBJjn07rfsU8FqE4Y=
+	t=1706933428; cv=none; b=Uu3qLvL+od9iB/bu+0G88fC+47X8VsZNYTwVKqyOFBJVG5ZUCUKr5zdSgM4QJh5odtADKHs1/yEE1Dcydd9CEwNbjK/vcmpcCPpLbcceAEdxKzyv1HJyekXaeMp94eUUJt5bO4oM+tU/QTv3r+hMnNgytOTrwfODfUNI/XHUoPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933428; c=relaxed/simple;
-	bh=dnlPbdbolLxdr5RfNICWLH6ktmk+w3Jouw4nTeZBIe4=;
+	bh=7fePzX+zl5ebI+Sf2gTKMcHZX4vXjX7p1M4GbpoiaOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Deflqr+xqTdd9mD9WvXy2Z5J0Kc/Bm82hu4OgCc+AMt/0wbczPleqHH/UBQaxHm3frfqNjTnj7IGhnYSK0cPeKZAUUE9Z8l0F9qaDgy1skDQwprHPwh2zqWp2PKvPUYQPDWMoNvmfQpvItuETlwOWUMXhDbhPpgdgJ0Yd5kHnCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhIEGgYW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YJdIWvcjPegeNWx2uwz+HiGzYd0JYRoitAheorv+5a2wezEmxQrOO0tj5SLv1xEmwG4iOCPbRkFsE9A+7js+4P0gG+vf0bhGF9SGVAB5sy4Gxe33zE2Xm85stNRPNHf1wmI6NoE/svy9GRXV9d9UfjFLlLFHUKxs5mv/j7d9/fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1uIfW5j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhIEGgYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF391C433F1;
-	Sat,  3 Feb 2024 04:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1uIfW5j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E168C43390;
+	Sat,  3 Feb 2024 04:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933428;
-	bh=dnlPbdbolLxdr5RfNICWLH6ktmk+w3Jouw4nTeZBIe4=;
+	bh=7fePzX+zl5ebI+Sf2gTKMcHZX4vXjX7p1M4GbpoiaOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fhIEGgYWTRfKW2IXoNVkITkiADGqBqAJPZyb9lHzuKINIXRVYmJm1XrDbi9EmxhWn
-	 5/dBHmXyI5lWKridmOuACWbJqrXYXnDFfjfEtDpKrdCP+tTBVcAyswuXPuekt0++TS
-	 hjG5c3AXT7zyOxMlxvlaZbBsEYx+1k+Wp8qcnW8I=
+	b=Z1uIfW5jh+Nd8tysanVEZGpkvnHcxrfRfvStulVyqrDxrz5GWAdnwNlXO8/jxeoKj
+	 v1bX8LtmKTWznWlKhwnLCm2DvkY9sZ03f7KD+vUQkebfKNkvnFGTsba3tUjefGOdEG
+	 lisU836NuRXB1WjWpZBTBdJlMn6TRfZRQq44KkUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Huang Rui <ray.huang@amd.com>,
+	Vicki Pfau <vi@endrift.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/219] leds: trigger: panic: Dont register panic notifier if creating the trigger failed
-Date: Fri,  2 Feb 2024 20:05:20 -0800
-Message-ID: <20240203035337.842388098@linuxfoundation.org>
+Subject: [PATCH 6.1 156/219] PCI: Only override AMD USB controller if required
+Date: Fri,  2 Feb 2024 20:05:29 -0800
+Message-ID: <20240203035338.653418450@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,40 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit afacb21834bb02785ddb0c3ec197208803b74faa ]
+[ Upstream commit e585a37e5061f6d5060517aed1ca4ccb2e56a34c ]
 
-It doesn't make sense to register the panic notifier if creating the
-panic trigger failed.
+By running a Van Gogh device (Steam Deck), the following message
+was noticed in the kernel log:
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/8a61e229-5388-46c7-919a-4d18cc7362b2@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+  pci 0000:04:00.3: PCI class overridden (0x0c03fe -> 0x0c03fe) so dwc3 driver can claim this instead of xhci
+
+Effectively this means the quirk executed but changed nothing, since the
+class of this device was already the proper one (likely adjusted by newer
+firmware versions).
+
+Check and perform the override only if necessary.
+
+Link: https://lore.kernel.org/r/20231120160531.361552-1-gpiccoli@igalia.com
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Vicki Pfau <vi@endrift.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/trigger/ledtrig-panic.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/quirks.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/leds/trigger/ledtrig-panic.c b/drivers/leds/trigger/ledtrig-panic.c
-index 64abf2e91608..5a6b21bfeb9a 100644
---- a/drivers/leds/trigger/ledtrig-panic.c
-+++ b/drivers/leds/trigger/ledtrig-panic.c
-@@ -64,10 +64,13 @@ static long led_panic_blink(int state)
- 
- static int __init ledtrig_panic_init(void)
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 030c8e665757..51d634fbdfb8 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -607,10 +607,13 @@ static void quirk_amd_dwc_class(struct pci_dev *pdev)
  {
-+	led_trigger_register_simple("panic", &trigger);
-+	if (!trigger)
-+		return -ENOMEM;
-+
- 	atomic_notifier_chain_register(&panic_notifier_list,
- 				       &led_trigger_panic_nb);
+ 	u32 class = pdev->class;
  
--	led_trigger_register_simple("panic", &trigger);
- 	panic_blink = led_panic_blink;
- 	return 0;
+-	/* Use "USB Device (not host controller)" class */
+-	pdev->class = PCI_CLASS_SERIAL_USB_DEVICE;
+-	pci_info(pdev, "PCI class overridden (%#08x -> %#08x) so dwc3 driver can claim this instead of xhci\n",
+-		 class, pdev->class);
++	if (class != PCI_CLASS_SERIAL_USB_DEVICE) {
++		/* Use "USB Device (not host controller)" class */
++		pdev->class = PCI_CLASS_SERIAL_USB_DEVICE;
++		pci_info(pdev,
++			"PCI class overridden (%#08x -> %#08x) so dwc3 driver can claim this instead of xhci\n",
++			class, pdev->class);
++	}
  }
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
+ 		quirk_amd_dwc_class);
 -- 
 2.43.0
 
