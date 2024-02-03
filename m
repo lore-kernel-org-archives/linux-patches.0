@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A5D171A4;
-	Sat,  3 Feb 2024 04:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE67171A4;
+	Sat,  3 Feb 2024 04:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933903; cv=none; b=Oq0bnusAdn7djELbqgnt/z10YtJ8lFOpv9TSJ3W1IAElJESCCUlEF1IXxLfQ70lDpFaO1fd5G3y4igf9d4Ns5O0MbErpWxh1cCpg9ofVI4yHgHDsyg0EuDnSOEax73uyo3q/aHE/Lg/J1rLjZkytFCeUiwvy3FJXF+WfosaP1jg=
+	t=1706933904; cv=none; b=qx7uQEhv4LiRNyVvYw3MIkewjXTafa8lbM39m4L/4RACAtvgWiKfwIhhhn38yf06B6lLrPjzlVfL8cJKeC1gstAbLQIgkA/cdVpCOhlDBtWDVP1pnHq0XAbr6FMITPQJVANwLtQ8TC/R+RMW5qsFFMGK0+lTOnpuwhpQIi/0CxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933903; c=relaxed/simple;
-	bh=g9lWkjE4t+2X5brtia5P4AknTEcblOsQIHw0Y3BHsWg=;
+	s=arc-20240116; t=1706933904; c=relaxed/simple;
+	bh=lAwX/te4T7DI0QpDimUsmGuOYVvIIUE3E+byIMfRWJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdT8eiu80h1nHme4ivp450DCwqKwkm/KppI1q+u0/khtoCcyBoIJJHIx9SMamc462K2FwPKXCxsbfJV4M6yuDknZpsj0F9XI9IDq9JzaQpnBY5k7+C1NxpYhyXqyLgo5sb2h+ilzi98KkSmGAdEqaMYTwEUJm0xg1jiIUOm2dtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANVWai02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4ZajqxZcqEiUbYiNNG/NcagMX01RehACjOZ3WlWHPN9ZEKbjZJ1B08EXFT8TkQarGQHqeKZhw40I9bEfFeqrQ1qIA6Oly0i8eTIqM5qCflUurGUNUgQegzmh1t88e95O/4fEPPr6lV9q3oEnRP5hhKyPHSL9/5Uuy5h/JRqjfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qprwu3+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANVWai02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0098C433F1;
-	Sat,  3 Feb 2024 04:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qprwu3+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65EA5C43394;
+	Sat,  3 Feb 2024 04:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933903;
-	bh=g9lWkjE4t+2X5brtia5P4AknTEcblOsQIHw0Y3BHsWg=;
+	s=korg; t=1706933904;
+	bh=lAwX/te4T7DI0QpDimUsmGuOYVvIIUE3E+byIMfRWJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANVWai02Q+bVMb02E2G5A+Zd8P2+rACPc1ms0JwX7Jxbn60MrJsKppKpqw8xGM6n8
-	 zlLPnCw5DIhhWih21CPX2BwNS4VcSJmH+MffYQbxYJQconK/jBjQn3NCgtyU+0PamB
-	 2RJvIgfx1H3MIxtbkIaHSVwkXGTm24/MI8sJ3W+E=
+	b=Qprwu3+lj2U2PLs1YFeJbBrlFF3B+r9w9BGXn6JklZX1vRIdIQM51TzDRNtOhGgPT
+	 QGMeguK/mGvGZ0mMAYNju8psEewszWjZ/+agiGY56Cawn6IuDchAb2UhEFRClsHEku
+	 ERjz2OZQZo9wyYFAxAPWfgSeT2LbbjcTtjuLfTY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"Stanley.Yang" <Stanley.Yang@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 252/353] perf cs-etm: Bump minimum OpenCSD version to ensure a bugfix is present
-Date: Fri,  2 Feb 2024 20:06:10 -0800
-Message-ID: <20240203035411.706914415@linuxfoundation.org>
+Subject: [PATCH 6.7 226/353] drm/amdgpu: Fix ecc irq enable/disable unpaired
+Date: Fri,  2 Feb 2024 20:05:44 -0800
+Message-ID: <20240203035410.820392778@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -57,56 +53,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Stanley.Yang <Stanley.Yang@amd.com>
 
-[ Upstream commit 2dbba30fd69b604802a9535b74bddb5bcca23793 ]
+[ Upstream commit a32c6f7f5737cc7e31cd7ad5133f0d96fca12ea6 ]
 
-Since commit d927ef5004ef ("perf cs-etm: Add exception level consistency
-check"), the exception that was added to Perf will be triggered unless
-the following bugfix from OpenCSD is present:
+The ecc_irq is disabled while GPU mode2 reset suspending process,
+but not be enabled during GPU mode2 reset resume process.
 
- - _Version 1.2.1_:
-  - __Bugfix__:
-    ETM4x / ETE - output of context elements to client can in some
-    circumstances be delayed until after subsequent atoms have been
-    processed leading to incorrect memory decode access via the client
-    callbacks. Fixed to flush context elements immediately they are
-    committed.
+Changed from V1:
+	only do sdma/gfx ras_late_init in aldebaran_mode2_restore_ip
+	delete amdgpu_ras_late_resume function
 
-Rather than remove the assert and silently fail, just increase the
-minimum version requirement to avoid hard to debug issues and
-regressions.
+Changed from V2:
+	check umc ras supported before put ecc_irq
 
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Tested-by: Leo Yan <leo.yan@linaro.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Link: https://lore.kernel.org/r/20230901133716.677499-1-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Stanley.Yang <Stanley.Yang@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/test-libopencsd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/aldebaran.c | 26 +++++++++++++++++++++++++-
+ drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c |  4 ++++
+ drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c |  5 +++++
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c  |  4 ++++
+ 4 files changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/tools/build/feature/test-libopencsd.c b/tools/build/feature/test-libopencsd.c
-index eb6303ff446e..4cfcef9da3e4 100644
---- a/tools/build/feature/test-libopencsd.c
-+++ b/tools/build/feature/test-libopencsd.c
-@@ -4,9 +4,9 @@
- /*
-  * Check OpenCSD library version is sufficient to provide required features
-  */
--#define OCSD_MIN_VER ((1 << 16) | (1 << 8) | (1))
-+#define OCSD_MIN_VER ((1 << 16) | (2 << 8) | (1))
- #if !defined(OCSD_VER_NUM) || (OCSD_VER_NUM < OCSD_MIN_VER)
--#error "OpenCSD >= 1.1.1 is required"
-+#error "OpenCSD >= 1.2.1 is required"
- #endif
+diff --git a/drivers/gpu/drm/amd/amdgpu/aldebaran.c b/drivers/gpu/drm/amd/amdgpu/aldebaran.c
+index 02f4c6f9d4f6..576067d66bb9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/aldebaran.c
++++ b/drivers/gpu/drm/amd/amdgpu/aldebaran.c
+@@ -330,6 +330,7 @@ aldebaran_mode2_restore_hwcontext(struct amdgpu_reset_control *reset_ctl,
+ {
+ 	struct list_head *reset_device_list = reset_context->reset_device_list;
+ 	struct amdgpu_device *tmp_adev = NULL;
++	struct amdgpu_ras *con;
+ 	int r;
  
- int main(void)
+ 	if (reset_device_list == NULL)
+@@ -355,7 +356,30 @@ aldebaran_mode2_restore_hwcontext(struct amdgpu_reset_control *reset_ctl,
+ 		 */
+ 		amdgpu_register_gpu_instance(tmp_adev);
+ 
+-		/* Resume RAS */
++		/* Resume RAS, ecc_irq */
++		con = amdgpu_ras_get_context(tmp_adev);
++		if (!amdgpu_sriov_vf(tmp_adev) && con) {
++			if (tmp_adev->sdma.ras &&
++				tmp_adev->sdma.ras->ras_block.ras_late_init) {
++				r = tmp_adev->sdma.ras->ras_block.ras_late_init(tmp_adev,
++						&tmp_adev->sdma.ras->ras_block.ras_comm);
++				if (r) {
++					dev_err(tmp_adev->dev, "SDMA failed to execute ras_late_init! ret:%d\n", r);
++					goto end;
++				}
++			}
++
++			if (tmp_adev->gfx.ras &&
++				tmp_adev->gfx.ras->ras_block.ras_late_init) {
++				r = tmp_adev->gfx.ras->ras_block.ras_late_init(tmp_adev,
++						&tmp_adev->gfx.ras->ras_block.ras_comm);
++				if (r) {
++					dev_err(tmp_adev->dev, "GFX failed to execute ras_late_init! ret:%d\n", r);
++					goto end;
++				}
++			}
++		}
++
+ 		amdgpu_ras_resume(tmp_adev);
+ 
+ 		/* Update PSP FW topology after reset */
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+index a5a05c16c10d..6c5185608854 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+@@ -1041,6 +1041,10 @@ static int gmc_v10_0_hw_fini(void *handle)
+ 
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
+ 
++	if (adev->gmc.ecc_irq.funcs &&
++		amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__UMC))
++		amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c
+index 23d7b548d13f..c9c653cfc765 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v11_0.c
+@@ -941,6 +941,11 @@ static int gmc_v11_0_hw_fini(void *handle)
+ 	}
+ 
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
++
++	if (adev->gmc.ecc_irq.funcs &&
++		amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__UMC))
++		amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
++
+ 	gmc_v11_0_gart_disable(adev);
+ 
+ 	return 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+index 77e625f24cd0..776acdfc7209 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -2381,6 +2381,10 @@ static int gmc_v9_0_hw_fini(void *handle)
+ 
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
+ 
++	if (adev->gmc.ecc_irq.funcs &&
++		amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__UMC))
++		amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
