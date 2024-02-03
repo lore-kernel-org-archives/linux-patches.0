@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996FC10A09;
-	Sat,  3 Feb 2024 04:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6C910A09;
+	Sat,  3 Feb 2024 04:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933576; cv=none; b=UFQV+JZITPg68x8OO2cAwllFIXFN8Y12rJyVjxOB/SH6F8eLosXH3grs8Dk2ooDLFQu0ihiMye1fQfREaCptjDAHLDVOyIabBdZp2LozBTaDj4W5MN4ccb1r3rlXE1t0wF8hdCNGz+AX3l8mDD6Z2MDjtNlRvL3UJt8yZqEd98s=
+	t=1706933577; cv=none; b=WNZClKDrwgwemqBqMdGjWBd/Gz7FFmmk2QNjAk1tAk+LtjxSxSNlaVVB7jfrmvbBWcxeW6xrkhgzG3V5tSrxwvsGjqTTOr+pWjTNe7IFijSbjJG3riZPbMNID9hl5ldT3VlE8OiotZc9/UUb2h1eQO2m/AKxxK8dMlka+zfRe5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933576; c=relaxed/simple;
-	bh=v35n3UlDa1mDMfHJRYd4luEd1ISiUa1eNbsCXQcwuI4=;
+	s=arc-20240116; t=1706933577; c=relaxed/simple;
+	bh=NOdxeJu9orPyAO2KV9daU7o96hPIqkIUXLZGsAftCsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfyxryuSv64H3MG05v+kkWcXGRULO0rErTHaGX2yDUpdFsghKvjUvr0hR8R3J/MQ01VSYHrGe/XDxaDgisyDufq6QfEx2HOevTxVlb06UmKg+LHqcfL5UlN4j16/CXL+905j4FkAvy5ZkxecX7iSeo1LDegC/Wc42d3We8bXe9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uahwuDxe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T3FgVkH84hbcwoZ3JNabZtmv8jvUUTSP/aJAsUsR2NPNDFLpyX85iTl2ekKxRFku3aCxaqM7/TKI3wVNixol6nTgBUKSzbd4FmZLLQjpl6ckEzocHKmPNI7xvV004aTYWSDQ3rbK6xGEDF1PMULcFMckybkExnDhLAtqoncLGQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5PLmvHu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uahwuDxe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D49FC43330;
-	Sat,  3 Feb 2024 04:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5PLmvHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29657C433C7;
+	Sat,  3 Feb 2024 04:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933576;
-	bh=v35n3UlDa1mDMfHJRYd4luEd1ISiUa1eNbsCXQcwuI4=;
+	s=korg; t=1706933577;
+	bh=NOdxeJu9orPyAO2KV9daU7o96hPIqkIUXLZGsAftCsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uahwuDxeuGykxk/AEhSanHzN3KtKOtrhhITPLuwSGyhJf1Usr9/XFHe2/XCclr8JV
-	 gjg7W37JBpA2qmIfAdIcdqDqiwcjLTEUZGqsBQ3kTMZvYswgxPXLB/6PtnAegRxO1a
-	 NQFMdAn8PDWbBOU+G5SfJRbi9g3ICLtc48MXtYA0=
+	b=q5PLmvHuwGQ7nNX8H3OQ/yrxgS3RKmAFZQIquYMZZR3uF4UmIwTzLhBSgywWo5eOL
+	 uep1RqTxWxO/AykMYIbSfY0f25239mtmOgoTBsN/p0aGcYC6O4kX4Jga5csfinUnX8
+	 KFWREnOXdPwHFGhx4r2KIlGdtDG+j9qKLwKcy1Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mao Jinlong <quic_jinlmao@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 128/322] scsi: lpfc: Move determination of vmid_flag after VMID reinitialization completes
-Date: Fri,  2 Feb 2024 20:03:45 -0800
-Message-ID: <20240203035403.283374914@linuxfoundation.org>
+Subject: [PATCH 6.6 137/322] arm64: dts: qcom: Fix coresight warnings in in-ports and out-ports
+Date: Fri,  2 Feb 2024 20:03:54 -0800
+Message-ID: <20240203035403.577094943@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,59 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
 
-[ Upstream commit aba0fb0ef607a71511d23a07406f11130c1a54c5 ]
+[ Upstream commit bdb6339fd46b8702ea7411b0b414587b86a40562 ]
 
-If priority tagging is set in the service parameters of a FLOGI cmpl, then
-we update the vmid_flag.  In the current logic, if a follow up FLOGI cmpl
-updates its service parameters such that priority tagging is no longer set,
-then the vmid_flag ends up keeping stale data.
+When a node is only one in port or one out port, address-cells and
+size-cells are not required in in-ports and out-ports. And the number
+and reg of the port need to be removed.
 
-Fix by ensuring we clear the vmid_flag member during lpfc_reinit_vmid, and
-check the priority tagging service parameter after reinitialization of the
-vmid data structures.
-
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20231207224039.35466-4-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+Link: https://lore.kernel.org/r/20231210072633.4243-5-quic_jinlmao@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_els.c  | 6 +++---
- drivers/scsi/lpfc/lpfc_vmid.c | 1 +
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |  5 +----
+ arch/arm64/boot/dts/qcom/sm8150.dtsi |  5 +----
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 24 ++++--------------------
+ 3 files changed, 6 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
-index 932d47951cf3..18b8325fd419 100644
---- a/drivers/scsi/lpfc/lpfc_els.c
-+++ b/drivers/scsi/lpfc/lpfc_els.c
-@@ -1119,12 +1119,12 @@ lpfc_cmpl_els_flogi(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
- 			 vport->port_state, vport->fc_flag,
- 			 sp->cmn.priority_tagging, kref_read(&ndlp->kref));
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 63f6515692e8..234d7875cd8e 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -3555,11 +3555,8 @@
+ 			};
  
--	if (sp->cmn.priority_tagging)
--		vport->phba->pport->vmid_flag |= (LPFC_VMID_ISSUE_QFPA |
--						  LPFC_VMID_TYPE_PRIO);
- 	/* reinitialize the VMID datastructure before returning */
- 	if (lpfc_is_vmid_enabled(phba))
- 		lpfc_reinit_vmid(vport);
-+	if (sp->cmn.priority_tagging)
-+		vport->phba->pport->vmid_flag |= (LPFC_VMID_ISSUE_QFPA |
-+						  LPFC_VMID_TYPE_PRIO);
+ 			in-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
  
- 	/*
- 	 * Address a timing race with dev_loss.  If dev_loss is active on
-diff --git a/drivers/scsi/lpfc/lpfc_vmid.c b/drivers/scsi/lpfc/lpfc_vmid.c
-index cf8ba840d0ea..773e02ae20c3 100644
---- a/drivers/scsi/lpfc/lpfc_vmid.c
-+++ b/drivers/scsi/lpfc/lpfc_vmid.c
-@@ -321,5 +321,6 @@ lpfc_reinit_vmid(struct lpfc_vport *vport)
- 	if (!hash_empty(vport->hash_table))
- 		hash_for_each_safe(vport->hash_table, bucket, tmp, cur, hnode)
- 			hash_del(&cur->hnode);
-+	vport->vmid_flag = 0;
- 	write_unlock(&vport->vmid_lock);
- }
+-				port@1 {
+-					reg = <1>;
++				port {
+ 					etf_in: endpoint {
+ 						remote-endpoint =
+ 						  <&merge_funnel_out>;
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index f7e35e220018..26b6d84548a5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -2973,11 +2973,8 @@
+ 			};
+ 
+ 			in-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 
+-				port@1 {
+-					reg = <1>;
++				port {
+ 					replicator1_in: endpoint {
+ 						remote-endpoint = <&replicator_out1>;
+ 					};
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 1a98481d0c7f..64a656dcfa1f 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2830,11 +2830,8 @@
+ 			clock-names = "apb_pclk";
+ 
+ 			out-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 
+-				port@0 {
+-					reg = <0>;
++				port {
+ 					tpda_out_funnel_qatb: endpoint {
+ 						remote-endpoint = <&funnel_qatb_in_tpda>;
+ 					};
+@@ -2877,11 +2874,7 @@
+ 			};
+ 
+ 			in-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
++				port {
+ 					funnel_qatb_in_tpda: endpoint {
+ 						remote-endpoint = <&tpda_out_funnel_qatb>;
+ 					};
+@@ -3090,11 +3083,8 @@
+ 			};
+ 
+ 			in-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 
+-				port@0 {
+-					reg = <0>;
++				port {
+ 					etf_in_funnel_swao_out: endpoint {
+ 						remote-endpoint = <&funnel_swao_out_etf>;
+ 					};
+@@ -3178,8 +3168,6 @@
+ 			clock-names = "apb_pclk";
+ 
+ 			out-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+ 				port {
+ 					tpdm_mm_out_tpda9: endpoint {
+ 						remote-endpoint = <&tpda_9_in_tpdm_mm>;
+@@ -3445,11 +3433,7 @@
+ 			};
+ 
+ 			in-ports {
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				port@0 {
+-					reg = <0>;
++				port {
+ 					funnel_apss_merg_in_funnel_apss: endpoint {
+ 					remote-endpoint = <&funnel_apss_out_funnel_apss_merg>;
+ 					};
 -- 
 2.43.0
 
