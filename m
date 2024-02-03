@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D90210A13;
-	Sat,  3 Feb 2024 04:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2561BC35;
+	Sat,  3 Feb 2024 04:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933760; cv=none; b=fDR3RYyOR/FLKJoPBqFz1ZqvTrsaEuOJ+dVmBadjjGo0KTjfcFNh2tHN9HTyuDMt4LzEE/yswq8XQwlpgK8z7wiTKSKs7OjbITm1l0TgQCIYZ7mewRVq555arrNFYLRpkgYIyvNZuR2FMuxCbs0YPFcr+BywUM05xcl0knHhYqI=
+	t=1706933760; cv=none; b=oSo4EHlZrYmdNYTJoCMcRI9wRT10PJuTQgZaBR2ThN15w+oawFr2RmkLE5YWYrXrczMEQOQdc+B6S0noYBIxxyLIqBhK0uRwxQeBLChzSia57rGK3NX3aY9HOnKrikO1ZUMmw3MZO18leXQfl7+wq6fG9ELES3Hmzp7EXSmRnk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933760; c=relaxed/simple;
-	bh=hWdQKtoNUOWOt1Dvf2qUmupzyTueEVqvuzUmh+vCijg=;
+	bh=5k52NRJq3Ndrv7jR1Dud4AONoHYaiMm/1qzIqbLbKkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+Kjal7WoJLZrnEe/uKiIcGslWVRSiy57DU1jDQ1Whhj4czE1epM/VbwsbOW+SClK0WvJU+qtTLVeWkdK0MYKHOaZlvPCZ4DlTanaYfnb7E6k/b+fpA+kM8kxfjnrqXCbTgL6LJjR8D7fRWuldzVkVLnaqrctXea1mntfXMdJTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZGyR2sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oU/JjOHeOoO8pRJ/9tqZoJQcYhrFxAwekMgdWwtB+5LSSRUkNH1J5tUdDoj8kptUsm1McuFTNLzli5OL/EyYjaYVr85wOCQUmtJbTJWT7TAoUc5WT24tfjLyDolFSJGkWEKKgfI3rIB4xNwohOpPRnEDB4xJE+EAS20YdT7k1Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nG13LV3R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZGyR2sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8CA7C43390;
-	Sat,  3 Feb 2024 04:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nG13LV3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A76C433F1;
+	Sat,  3 Feb 2024 04:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933759;
-	bh=hWdQKtoNUOWOt1Dvf2qUmupzyTueEVqvuzUmh+vCijg=;
+	s=korg; t=1706933760;
+	bh=5k52NRJq3Ndrv7jR1Dud4AONoHYaiMm/1qzIqbLbKkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZGyR2sbsKdiKDl5s9IbIqfDpBLrD95RUd2nVE6hRpnG9d0QIovMvomuldQ5o2jjM
-	 8248s6ZQVET6QcqC+Oy6i9Uec5a1BeQcNUVDUD8N7R1NmKCEABWnts60/VX6v0WBi+
-	 MglbgxVn1+d3g8WwTWZqzNNfbLeOgaRrqV6/gU6c=
+	b=nG13LV3RevB94626GJ8LUYsHoQ8w6Cy8GQj+IGXSvVaeB9JmoshGtnft61O2C/RKh
+	 oWFw+lYHCMmo4xWk+woI7bnHnFkMOwE5znyabPWGYGmTSODbSdnt93WvXtkHsIeOhC
+	 d2cuu+0tgzNqSLQOB/pLiswLt/fREKrESedeIP8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com,
 	Manas Ghandat <ghandatmanas@gmail.com>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 032/353] jfs: fix slab-out-of-bounds Read in dtSearch
-Date: Fri,  2 Feb 2024 20:02:30 -0800
-Message-ID: <20240203035404.808644987@linuxfoundation.org>
+Subject: [PATCH 6.7 033/353] jfs: fix array-index-out-of-bounds in dbAdjTree
+Date: Fri,  2 Feb 2024 20:02:31 -0800
+Message-ID: <20240203035404.840419550@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -55,41 +54,235 @@ Content-Transfer-Encoding: 8bit
 
 From: Manas Ghandat <ghandatmanas@gmail.com>
 
-[ Upstream commit fa5492ee89463a7590a1449358002ff7ef63529f ]
+[ Upstream commit 74ecdda68242b174920fe7c6133a856fb7d8559b ]
 
-Currently while searching for current page in the sorted entry table
-of the page there is a out of bound access. Added a bound check to fix
-the error.
+Currently there is a bound check missing in the dbAdjTree while
+accessing the dmt_stree. To add the required check added the bool is_ctl
+which is required to determine the size as suggest in the following
+commit.
+https://lore.kernel.org/linux-kernel-mentees/f9475918-2186-49b8-b801-6f0f9e75f4fa@oracle.com/
 
-Dave:
-Set return code to -EIO
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202310241724.Ed02yUz9-lkp@intel.com/
+Reported-by: syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=39ba34a099ac2e9bd3cb
 Signed-off-by: Manas Ghandat <ghandatmanas@gmail.com>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dtree.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/jfs/jfs_dmap.c | 60 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 31 insertions(+), 29 deletions(-)
 
-diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
-index f3d3e8b3f50c..031d8f570f58 100644
---- a/fs/jfs/jfs_dtree.c
-+++ b/fs/jfs/jfs_dtree.c
-@@ -633,6 +633,11 @@ int dtSearch(struct inode *ip, struct component_name * key, ino_t * data,
- 		for (base = 0, lim = p->header.nextindex; lim; lim >>= 1) {
- 			index = base + (lim >> 1);
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index d55f0dd8d754..cb3cda1390ad 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -63,10 +63,10 @@
+  */
+ static void dbAllocBits(struct bmap * bmp, struct dmap * dp, s64 blkno,
+ 			int nblocks);
+-static void dbSplit(dmtree_t * tp, int leafno, int splitsz, int newval);
+-static int dbBackSplit(dmtree_t * tp, int leafno);
+-static int dbJoin(dmtree_t * tp, int leafno, int newval);
+-static void dbAdjTree(dmtree_t * tp, int leafno, int newval);
++static void dbSplit(dmtree_t *tp, int leafno, int splitsz, int newval, bool is_ctl);
++static int dbBackSplit(dmtree_t *tp, int leafno, bool is_ctl);
++static int dbJoin(dmtree_t *tp, int leafno, int newval, bool is_ctl);
++static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl);
+ static int dbAdjCtl(struct bmap * bmp, s64 blkno, int newval, int alloc,
+ 		    int level);
+ static int dbAllocAny(struct bmap * bmp, s64 nblocks, int l2nb, s64 * results);
+@@ -2103,7 +2103,7 @@ static int dbFreeDmap(struct bmap * bmp, struct dmap * dp, s64 blkno,
+ 		 * system.
+ 		 */
+ 		if (dp->tree.stree[word] == NOFREE)
+-			dbBackSplit((dmtree_t *) & dp->tree, word);
++			dbBackSplit((dmtree_t *)&dp->tree, word, false);
  
-+			if (stbl[index] < 0) {
-+				rc = -EIO;
-+				goto out;
-+			}
+ 		dbAllocBits(bmp, dp, blkno, nblocks);
+ 	}
+@@ -2189,7 +2189,7 @@ static void dbAllocBits(struct bmap * bmp, struct dmap * dp, s64 blkno,
+ 			 * the binary system of the leaves if need be.
+ 			 */
+ 			dbSplit(tp, word, BUDMIN,
+-				dbMaxBud((u8 *) & dp->wmap[word]));
++				dbMaxBud((u8 *)&dp->wmap[word]), false);
+ 
+ 			word += 1;
+ 		} else {
+@@ -2229,7 +2229,7 @@ static void dbAllocBits(struct bmap * bmp, struct dmap * dp, s64 blkno,
+ 				 * system of the leaves to reflect the current
+ 				 * allocation (size).
+ 				 */
+-				dbSplit(tp, word, size, NOFREE);
++				dbSplit(tp, word, size, NOFREE, false);
+ 
+ 				/* get the number of dmap words handled */
+ 				nw = BUDSIZE(size, BUDMIN);
+@@ -2336,7 +2336,7 @@ static int dbFreeBits(struct bmap * bmp, struct dmap * dp, s64 blkno,
+ 			/* update the leaf for this dmap word.
+ 			 */
+ 			rc = dbJoin(tp, word,
+-				    dbMaxBud((u8 *) & dp->wmap[word]));
++				    dbMaxBud((u8 *)&dp->wmap[word]), false);
+ 			if (rc)
+ 				return rc;
+ 
+@@ -2369,7 +2369,7 @@ static int dbFreeBits(struct bmap * bmp, struct dmap * dp, s64 blkno,
+ 
+ 				/* update the leaf.
+ 				 */
+-				rc = dbJoin(tp, word, size);
++				rc = dbJoin(tp, word, size, false);
+ 				if (rc)
+ 					return rc;
+ 
+@@ -2521,16 +2521,16 @@ dbAdjCtl(struct bmap * bmp, s64 blkno, int newval, int alloc, int level)
+ 		 * that it is at the front of a binary buddy system.
+ 		 */
+ 		if (oldval == NOFREE) {
+-			rc = dbBackSplit((dmtree_t *) dcp, leafno);
++			rc = dbBackSplit((dmtree_t *)dcp, leafno, true);
+ 			if (rc) {
+ 				release_metapage(mp);
+ 				return rc;
+ 			}
+ 			oldval = dcp->stree[ti];
+ 		}
+-		dbSplit((dmtree_t *) dcp, leafno, dcp->budmin, newval);
++		dbSplit((dmtree_t *) dcp, leafno, dcp->budmin, newval, true);
+ 	} else {
+-		rc = dbJoin((dmtree_t *) dcp, leafno, newval);
++		rc = dbJoin((dmtree_t *) dcp, leafno, newval, true);
+ 		if (rc) {
+ 			release_metapage(mp);
+ 			return rc;
+@@ -2561,7 +2561,7 @@ dbAdjCtl(struct bmap * bmp, s64 blkno, int newval, int alloc, int level)
+ 				 */
+ 				if (alloc) {
+ 					dbJoin((dmtree_t *) dcp, leafno,
+-					       oldval);
++					       oldval, true);
+ 				} else {
+ 					/* the dbJoin() above might have
+ 					 * caused a larger binary buddy system
+@@ -2571,9 +2571,9 @@ dbAdjCtl(struct bmap * bmp, s64 blkno, int newval, int alloc, int level)
+ 					 */
+ 					if (dcp->stree[ti] == NOFREE)
+ 						dbBackSplit((dmtree_t *)
+-							    dcp, leafno);
++							    dcp, leafno, true);
+ 					dbSplit((dmtree_t *) dcp, leafno,
+-						dcp->budmin, oldval);
++						dcp->budmin, oldval, true);
+ 				}
+ 
+ 				/* release the buffer and return the error.
+@@ -2621,7 +2621,7 @@ dbAdjCtl(struct bmap * bmp, s64 blkno, int newval, int alloc, int level)
+  *
+  * serialization: IREAD_LOCK(ipbmap) or IWRITE_LOCK(ipbmap) held on entry/exit;
+  */
+-static void dbSplit(dmtree_t * tp, int leafno, int splitsz, int newval)
++static void dbSplit(dmtree_t *tp, int leafno, int splitsz, int newval, bool is_ctl)
+ {
+ 	int budsz;
+ 	int cursz;
+@@ -2643,7 +2643,7 @@ static void dbSplit(dmtree_t * tp, int leafno, int splitsz, int newval)
+ 		while (cursz >= splitsz) {
+ 			/* update the buddy's leaf with its new value.
+ 			 */
+-			dbAdjTree(tp, leafno ^ budsz, cursz);
++			dbAdjTree(tp, leafno ^ budsz, cursz, is_ctl);
+ 
+ 			/* on to the next size and buddy.
+ 			 */
+@@ -2655,7 +2655,7 @@ static void dbSplit(dmtree_t * tp, int leafno, int splitsz, int newval)
+ 	/* adjust the dmap tree to reflect the specified leaf's new
+ 	 * value.
+ 	 */
+-	dbAdjTree(tp, leafno, newval);
++	dbAdjTree(tp, leafno, newval, is_ctl);
+ }
+ 
+ 
+@@ -2686,7 +2686,7 @@ static void dbSplit(dmtree_t * tp, int leafno, int splitsz, int newval)
+  *
+  * serialization: IREAD_LOCK(ipbmap) or IWRITE_LOCK(ipbmap) held on entry/exit;
+  */
+-static int dbBackSplit(dmtree_t * tp, int leafno)
++static int dbBackSplit(dmtree_t *tp, int leafno, bool is_ctl)
+ {
+ 	int budsz, bud, w, bsz, size;
+ 	int cursz;
+@@ -2737,7 +2737,7 @@ static int dbBackSplit(dmtree_t * tp, int leafno)
+ 				 * system in two.
+ 				 */
+ 				cursz = leaf[bud] - 1;
+-				dbSplit(tp, bud, cursz, cursz);
++				dbSplit(tp, bud, cursz, cursz, is_ctl);
+ 				break;
+ 			}
+ 		}
+@@ -2765,7 +2765,7 @@ static int dbBackSplit(dmtree_t * tp, int leafno)
+  *
+  * RETURN VALUES: none
+  */
+-static int dbJoin(dmtree_t * tp, int leafno, int newval)
++static int dbJoin(dmtree_t *tp, int leafno, int newval, bool is_ctl)
+ {
+ 	int budsz, buddy;
+ 	s8 *leaf;
+@@ -2820,12 +2820,12 @@ static int dbJoin(dmtree_t * tp, int leafno, int newval)
+ 			if (leafno < buddy) {
+ 				/* leafno is the left buddy.
+ 				 */
+-				dbAdjTree(tp, buddy, NOFREE);
++				dbAdjTree(tp, buddy, NOFREE, is_ctl);
+ 			} else {
+ 				/* buddy is the left buddy and becomes
+ 				 * leafno.
+ 				 */
+-				dbAdjTree(tp, leafno, NOFREE);
++				dbAdjTree(tp, leafno, NOFREE, is_ctl);
+ 				leafno = buddy;
+ 			}
+ 
+@@ -2838,7 +2838,7 @@ static int dbJoin(dmtree_t * tp, int leafno, int newval)
+ 
+ 	/* update the leaf value.
+ 	 */
+-	dbAdjTree(tp, leafno, newval);
++	dbAdjTree(tp, leafno, newval, is_ctl);
+ 
+ 	return 0;
+ }
+@@ -2859,21 +2859,23 @@ static int dbJoin(dmtree_t * tp, int leafno, int newval)
+  *
+  * RETURN VALUES: none
+  */
+-static void dbAdjTree(dmtree_t * tp, int leafno, int newval)
++static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
+ {
+ 	int lp, pp, k;
+-	int max;
++	int max, size;
 +
- 			if (p->header.flag & BT_LEAF) {
- 				/* uppercase leaf name to compare */
- 				cmp =
++	size = is_ctl ? CTLTREESIZE : TREESIZE;
+ 
+ 	/* pick up the index of the leaf for this leafno.
+ 	 */
+ 	lp = leafno + le32_to_cpu(tp->dmt_leafidx);
+ 
++	if (WARN_ON_ONCE(lp >= size || lp < 0))
++		return;
++
+ 	/* is the current value the same as the old value ?  if so,
+ 	 * there is nothing to do.
+ 	 */
+-	if (WARN_ON_ONCE(lp >= CTLTREESIZE))
+-		return;
+-
+ 	if (tp->dmt_stree[lp] == newval)
+ 		return;
+ 
 -- 
 2.43.0
 
