@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494211BC3C;
-	Sat,  3 Feb 2024 04:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AD61B95C;
+	Sat,  3 Feb 2024 04:16:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933762; cv=none; b=l2uyvcoLMRoguozQIHcxL6yx+5Tt3/WJ1B4d8k3URRGGeAyTX51t7ceUw+TgC6YdOsSUMvwBgAfst+TLXSZ+bhlZKQf7RznimQW1ksMciNO/gyUkqppGJFm4gQR2mPmsOm0TdmsiLckCW0exh5JsB+trG61P9Ve7uyQhH3Zx34E=
+	t=1706933763; cv=none; b=nDvInDcSlv8J9scZaE3UYe2zABz6N6AycV8obSScVC3Wpv4wWGhHxrbOFmOBuQNlR44NgnxKo4i5jJINvVlJ4jxHxIROf8JYlt+ARYJgkPZTGTY83Uep1ckRdWTJPPSTPI/RuSBYtgUAQnurvIGi1eHEx7m4ULtS9OJ1+TnGd4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933762; c=relaxed/simple;
-	bh=OO5MwZ/Y3HM0w26tXUe+5kl0xyI/+JS4aLTqeeCREZs=;
+	s=arc-20240116; t=1706933763; c=relaxed/simple;
+	bh=VTwRQuJ4P7sAGTNbEECfrXhSP/NZg037TZUzs46U4x8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aiMI/Y+FbwhY5eiXfioW6WMKVUMc6g5+1DT+ha7hAuDIIUeXlI7f0czKqFkBfsy06cXjio0GQULfk5JQ5phSbwrVVLHoeeQjYJh/TSEZT2aow64n1YpRKMO7KXs0JtnnCjHG/AvdfAKTD90vR1revy7L9Qdihpp0jeyRLErE95I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcI9j7o6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUIjZf/a/SKOCqlevSl2HSUirFGHaIv/g1opnrNhwRSQgnBJ4kZ5AiCWBCatz9PJhf6WnsKkCi67IVlduOpypHUdAGtdJRJ3YAP0LPLMJp5IZ6WIk9O24jts5vMNXvmynBkR+WCp6opjYR8tFWcQ23jL1qRUi5gLv3cvg4KDvvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G249fsmY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcI9j7o6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124D2C43399;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G249fsmY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE860C43390;
 	Sat,  3 Feb 2024 04:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933762;
-	bh=OO5MwZ/Y3HM0w26tXUe+5kl0xyI/+JS4aLTqeeCREZs=;
+	bh=VTwRQuJ4P7sAGTNbEECfrXhSP/NZg037TZUzs46U4x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UcI9j7o6//KqpAp1VJzal2TlBxb9HSXum7WncJCsC2mpKgWtJJEcUc3qwUTiXPqbh
-	 TBK9o2+HxqP5VOct8j+uxNHoPm+qZhm5TZQSNhRXJ84wkTOyfS1gyO7co41xxcOGP1
-	 q00aJIiex6lAfhhLFk5dHjKeMqKgnF1GAXEA+FaM=
+	b=G249fsmYwN5Y8RYhRYBz3MFv48LnTxEvcCLWytLOuN5LibF6CR5BrCO/PfI1Avm1J
+	 nZUUtS5OUoXlmI1G70hMqtJSCvtwiK7yRm3HlR7EPjZPssC/vKfvlC6BEdV1hMzm2Y
+	 yWOZ3H16Fbo7zb6vFtWCon1LZSJA2PaGP/641XWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jie Ho <jiajie.ho@starfivetech.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 035/353] hwrng: starfive - Fix dev_err_probe return error
-Date: Fri,  2 Feb 2024 20:02:33 -0800
-Message-ID: <20240203035404.907407683@linuxfoundation.org>
+Subject: [PATCH 6.7 036/353] crypto: p10-aes-gcm - Avoid -Wstringop-overflow warnings
+Date: Fri,  2 Feb 2024 20:02:34 -0800
+Message-ID: <20240203035404.938651767@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,36 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jie Ho <jiajie.ho@starfivetech.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 2d37b3649c412b3bcecfea932cb677f7a5775b15 ]
+[ Upstream commit aaa03fdb56c781db4a4831dd5d6ec8817918c726 ]
 
-Current dev_err_probe will return 0 instead of proper error code if
-driver failed to get irq number. Fix the return err code.
+The compiler doesn't know that `32` is an offset into the Hash table:
 
-Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202311160649.3GhKCfhd-lkp@intel.com/
+ 56 struct Hash_ctx {
+ 57         u8 H[16];       /* subkey */
+ 58         u8 Htable[256]; /* Xi, Hash table(offset 32) */
+ 59 };
+
+So, it legitimately complains about a potential out-of-bounds issue
+if `256 bytes` are accessed in `htable` (this implies going
+`32 bytes` beyond the boundaries of `Htable`):
+
+arch/powerpc/crypto/aes-gcm-p10-glue.c: In function 'gcmp10_init':
+arch/powerpc/crypto/aes-gcm-p10-glue.c:120:9: error: 'gcm_init_htable' accessing 256 bytes in a region of size 224 [-Werror=stringop-overflow=]
+  120 |         gcm_init_htable(hash->Htable+32, hash->H);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arch/powerpc/crypto/aes-gcm-p10-glue.c:120:9: note: referencing argument 1 of type 'unsigned char[256]'
+arch/powerpc/crypto/aes-gcm-p10-glue.c:120:9: note: referencing argument 2 of type 'unsigned char[16]'
+arch/powerpc/crypto/aes-gcm-p10-glue.c:40:17: note: in a call to function 'gcm_init_htable'
+   40 | asmlinkage void gcm_init_htable(unsigned char htable[256], unsigned char Xi[16]);
+      |                 ^~~~~~~~~~~~~~~
+
+Address this by avoiding specifying the size of `htable` in the function
+prototype; and just for consistency, do the same for parameter `Xi`.
+
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/linux-next/20231121131903.68a37932@canb.auug.org.au/
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/jh7110-trng.c | 2 +-
+ arch/powerpc/crypto/aes-gcm-p10-glue.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/hw_random/jh7110-trng.c b/drivers/char/hw_random/jh7110-trng.c
-index 38474d48a25e..b1f94e3c0c6a 100644
---- a/drivers/char/hw_random/jh7110-trng.c
-+++ b/drivers/char/hw_random/jh7110-trng.c
-@@ -300,7 +300,7 @@ static int starfive_trng_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(&pdev->dev, irq, starfive_trng_irq, 0, pdev->name,
- 			       (void *)trng);
- 	if (ret)
--		return dev_err_probe(&pdev->dev, irq,
-+		return dev_err_probe(&pdev->dev, ret,
- 				     "Failed to register interrupt handler\n");
+diff --git a/arch/powerpc/crypto/aes-gcm-p10-glue.c b/arch/powerpc/crypto/aes-gcm-p10-glue.c
+index 4b6e899895e7..f62ee54076c0 100644
+--- a/arch/powerpc/crypto/aes-gcm-p10-glue.c
++++ b/arch/powerpc/crypto/aes-gcm-p10-glue.c
+@@ -37,7 +37,7 @@ asmlinkage void aes_p10_gcm_encrypt(u8 *in, u8 *out, size_t len,
+ 				    void *rkey, u8 *iv, void *Xi);
+ asmlinkage void aes_p10_gcm_decrypt(u8 *in, u8 *out, size_t len,
+ 				    void *rkey, u8 *iv, void *Xi);
+-asmlinkage void gcm_init_htable(unsigned char htable[256], unsigned char Xi[16]);
++asmlinkage void gcm_init_htable(unsigned char htable[], unsigned char Xi[]);
+ asmlinkage void gcm_ghash_p10(unsigned char *Xi, unsigned char *Htable,
+ 		unsigned char *aad, unsigned int alen);
  
- 	trng->hclk = devm_clk_get(&pdev->dev, "hclk");
 -- 
 2.43.0
 
