@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E19518AF6;
-	Sat,  3 Feb 2024 04:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F7C18E0F;
+	Sat,  3 Feb 2024 04:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933438; cv=none; b=gh1SbAUVVHGN0cQzUZibVqRUbYOiX7c97hAplSOw2s6U5LUWl4amV0njCGEMnAir8ec5EF12ouBxFVD8AkfVIQQd3Xzm103Q493DrCit3FNbw5XB8YAgxu2/jiB6IpXexUS/tBb0iDR0RqbpOSWXIKd9hoEXobVFixw7rFiqHww=
+	t=1706933439; cv=none; b=eEpEegQ4NbUNt5R5oZ0OjttzeCtBwNLpgU8mMNuUz37D5Ydj4VpIB/Ir2JEtlX8pvKJETkldHj8PG5gJRASxkgEjryWIv+OAZ3sURCsqzK5ytromq2TonDlYhlb49P3AxgCRoToMzV10V8gqctdFpetvcBWaTVPWMdao4pVZVeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933438; c=relaxed/simple;
-	bh=zIf1TwFvbLVoKt9klxpOgV40/Ty2Swa3EUG6joyUFHo=;
+	s=arc-20240116; t=1706933439; c=relaxed/simple;
+	bh=R8J8mUspFcl43KgbOcM8OrdtzZHrdiqkc+qTlbtjpy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rM1yBfhQ9s4pVWpS2+u8uE7zz7oK8YoJSsocTbeqDauwq+ld/Mcwrsoxhg49IUj0uHtccuWfXE3YTjJ9ArCzrMvAgsoY/a3PTadCXjGAqaXv5bkUgK2t8KI2F/dY3XIwQdBmU/SdhnQHovAo26B5h3OpaLi1231FJOTh40weYVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+PJhn8T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyGQRIgQITJaWGifFnHv3za78sc1aNvBRp72Da+aAEbx59ki7kG6CPOBD7Yaoe4nbbSRG3NkWbIKNeTwj1prJImoCFya065FThycvQBBVgpVRKXnGCQfmya6ur2jSuvKHF3A/nNFuK5GoNPIwLZxn00w3qsc3IsovJ2bdLxkrq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbFR2kQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+PJhn8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCCFC433F1;
-	Sat,  3 Feb 2024 04:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbFR2kQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA2CC43399;
+	Sat,  3 Feb 2024 04:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933438;
-	bh=zIf1TwFvbLVoKt9klxpOgV40/Ty2Swa3EUG6joyUFHo=;
+	s=korg; t=1706933439;
+	bh=R8J8mUspFcl43KgbOcM8OrdtzZHrdiqkc+qTlbtjpy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+PJhn8TTZ/H00Sz1fjP2LsOlVBmUAHlwLOvVujxS/vZQePnFpE5fTkDN2XkenIvV
-	 XmWqKQdoL/5llIBkeQXChw7vw4G7olRlHOpwbgLtHZO+YGg1p4jrtPka2/qBAbrAg4
-	 N8XiPnUF/Fh714v1N8UHINTnimBkxAl2fK0xETCc=
+	b=jbFR2kQ6kl/WxbFYo9w6aULNbP1DmCCrDHM+korhjGEA2ZtxqSE30hmpnUVKw+kqu
+	 mojCc/5zLZzsHS54JuA8yQbRBWNpdwf2kUIoTNuX/rApjC3lDBz9HDWZXYFELksTrn
+	 g91kgacbApjK0J1X7mONKZIdLdbQLrkl2SATDSZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Eric Van Hensbergen <ericvh@kernel.org>,
-	Latchesar Ionkov <lucho@ionkov.net>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	v9fs@lists.linux.dev,
-	linux-cachefs@redhat.com,
-	linux-fsdevel@vger.kernel.org,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/219] 9p: Fix initialisation of netfs_inode for 9p
-Date: Fri,  2 Feb 2024 20:05:41 -0800
-Message-ID: <20240203035340.210209579@linuxfoundation.org>
+Subject: [PATCH 6.1 169/219] misc: lis3lv02d_i2c: Add missing setting of the reg_ctrl callback
+Date: Fri,  2 Feb 2024 20:05:42 -0800
+Message-ID: <20240203035340.354849038@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -58,96 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 9546ac78b232bac56ff975072b1965e0e755ebd4 ]
+[ Upstream commit b1b9f7a494400c0c39f8cd83de3aaa6111c55087 ]
 
-The 9p filesystem is calling netfs_inode_init() in v9fs_init_inode() -
-before the struct inode fields have been initialised from the obtained file
-stats (ie. after v9fs_stat2inode*() has been called), but netfslib wants to
-set a couple of its fields from i_size.
+The lis3lv02d_i2c driver was missing a line to set the lis3_dev's
+reg_ctrl callback.
 
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Tested-by: Marc Dionne <marc.dionne@auristor.com>
-Tested-by: Dominique Martinet <asmadeus@codewreck.org>
-Acked-by: Dominique Martinet <asmadeus@codewreck.org>
-cc: Eric Van Hensbergen <ericvh@kernel.org>
-cc: Latchesar Ionkov <lucho@ionkov.net>
-cc: Dominique Martinet <asmadeus@codewreck.org>
-cc: Christian Schoenebeck <linux_oss@crudebyte.com>
-cc: v9fs@lists.linux.dev
-cc: linux-cachefs@redhat.com
-cc: linux-fsdevel@vger.kernel.org
+lis3_reg_ctrl(on) is called from the init callback, but due to
+the missing reg_ctrl callback the regulators where never turned off
+again leading to the following oops/backtrace when detaching the driver:
+
+[   82.313527] ------------[ cut here ]------------
+[   82.313546] WARNING: CPU: 1 PID: 1724 at drivers/regulator/core.c:2396 _regulator_put+0x219/0x230
+...
+[   82.313695] RIP: 0010:_regulator_put+0x219/0x230
+...
+[   82.314767] Call Trace:
+[   82.314770]  <TASK>
+[   82.314772]  ? _regulator_put+0x219/0x230
+[   82.314777]  ? __warn+0x81/0x170
+[   82.314784]  ? _regulator_put+0x219/0x230
+[   82.314791]  ? report_bug+0x18d/0x1c0
+[   82.314801]  ? handle_bug+0x3c/0x80
+[   82.314806]  ? exc_invalid_op+0x13/0x60
+[   82.314812]  ? asm_exc_invalid_op+0x16/0x20
+[   82.314845]  ? _regulator_put+0x219/0x230
+[   82.314857]  regulator_bulk_free+0x39/0x60
+[   82.314865]  i2c_device_remove+0x22/0xb0
+
+Add the missing setting of the callback so that the regulators
+properly get turned off again when not used.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20231224183402.95640-1-hdegoede@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/v9fs_vfs.h       | 1 +
- fs/9p/vfs_inode.c      | 6 +++---
- fs/9p/vfs_inode_dotl.c | 1 +
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/misc/lis3lv02d/lis3lv02d_i2c.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/9p/v9fs_vfs.h b/fs/9p/v9fs_vfs.h
-index bc417da7e9c1..633fe4f527b8 100644
---- a/fs/9p/v9fs_vfs.h
-+++ b/fs/9p/v9fs_vfs.h
-@@ -46,6 +46,7 @@ struct inode *v9fs_alloc_inode(struct super_block *sb);
- void v9fs_free_inode(struct inode *inode);
- struct inode *v9fs_get_inode(struct super_block *sb, umode_t mode,
- 			     dev_t rdev);
-+void v9fs_set_netfs_context(struct inode *inode);
- int v9fs_init_inode(struct v9fs_session_info *v9ses,
- 		    struct inode *inode, umode_t mode, dev_t rdev);
- void v9fs_evict_inode(struct inode *inode);
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index 4d1a4a8d9277..5e2657c1dbbe 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -250,7 +250,7 @@ void v9fs_free_inode(struct inode *inode)
- /*
-  * Set parameters for the netfs library
-  */
--static void v9fs_set_netfs_context(struct inode *inode)
-+void v9fs_set_netfs_context(struct inode *inode)
- {
- 	struct v9fs_inode *v9inode = V9FS_I(inode);
- 	netfs_inode_init(&v9inode->netfs, &v9fs_req_ops);
-@@ -344,8 +344,6 @@ int v9fs_init_inode(struct v9fs_session_info *v9ses,
- 		err = -EINVAL;
- 		goto error;
- 	}
--
--	v9fs_set_netfs_context(inode);
- error:
- 	return err;
- 
-@@ -377,6 +375,7 @@ struct inode *v9fs_get_inode(struct super_block *sb, umode_t mode, dev_t rdev)
- 		iput(inode);
- 		return ERR_PTR(err);
- 	}
-+	v9fs_set_netfs_context(inode);
- 	return inode;
- }
- 
-@@ -479,6 +478,7 @@ static struct inode *v9fs_qid_iget(struct super_block *sb,
- 		goto error;
- 
- 	v9fs_stat2inode(st, inode, sb, 0);
-+	v9fs_set_netfs_context(inode);
- 	v9fs_cache_inode_get_cookie(inode);
- 	unlock_new_inode(inode);
- 	return inode;
-diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index 5cfa4b4f070f..e15ad46833e0 100644
---- a/fs/9p/vfs_inode_dotl.c
-+++ b/fs/9p/vfs_inode_dotl.c
-@@ -130,6 +130,7 @@ static struct inode *v9fs_qid_iget_dotl(struct super_block *sb,
- 		goto error;
- 
- 	v9fs_stat2inode_dotl(st, inode, 0);
-+	v9fs_set_netfs_context(inode);
- 	v9fs_cache_inode_get_cookie(inode);
- 	retval = v9fs_get_acl(inode, fid);
- 	if (retval)
+diff --git a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
+index d7daa01fe7ca..fdec2c30eb16 100644
+--- a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
++++ b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
+@@ -151,6 +151,7 @@ static int lis3lv02d_i2c_probe(struct i2c_client *client,
+ 	lis3_dev.init	  = lis3_i2c_init;
+ 	lis3_dev.read	  = lis3_i2c_read;
+ 	lis3_dev.write	  = lis3_i2c_write;
++	lis3_dev.reg_ctrl = lis3_reg_ctrl;
+ 	lis3_dev.irq	  = client->irq;
+ 	lis3_dev.ac	  = lis3lv02d_axis_map;
+ 	lis3_dev.pm_dev	  = &client->dev;
 -- 
 2.43.0
 
