@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E8D22F14;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26B7101D0;
 	Sat,  3 Feb 2024 04:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933920; cv=none; b=f65UAN+D5OYRXRyu5s+e1iYc2sXVqTzl3ctuksy2hmKwyyRmyf3vn6ybMR/y7geDjZ1p8N3c0RUDuogtdrcnwTx9iRXRiyjZV3myK1K9kY8G5DkEm8V46suNv8BoLC2f+MbDU4bkM/Qs63UZZpEQywOXnTTB/4bG6r1y7gWViy0=
+	t=1706933920; cv=none; b=dWAmNv4iIOBS+ZkcZYTsOOguCj+PB/OYcvNNG7NOQauBMW4woO4trHPuQ6lbNg6InIGSEMJxOyZd4wYPXOaJgY6hIvb3JwuQdea+Je5BQkrAZM5+oXAn8Csta9iUDHLlxIr7Gfs04yJLhrIHni6ZLtQP9wlW3p2PRqBGHMhmNMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933920; c=relaxed/simple;
-	bh=h/7cu8GNBa2y2afzukx59fGSrGx/HEig1kEjjw89V7Q=;
+	bh=agd+TKI3qn+HQLaL5UJFZXxy37libFCciCYFEGejKfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YH9ICETlcRuXdlWcif1nTn4B5W9+Fd3qX9cQ33EuLj19URrjmM++di7HpSXKZ9qY/vCafvwTY7j6Pf/WdbCIYr0sl97Z1qm0exEeIj6c8Ntc0F2on3rbijoQSywcZiGvlPn7zv2Pc3aoz+v2Hh4vNaSuSUkd56XWmqarbvD1x0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nb0R7YTE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dUT+9ORUW7BBm924e7hKoOOp2lmiOdUvGE6TrdqW5Wc/yMW1Ulff3zlFENs5h4l1+Z2V9kotVlePQcr65h7hPkf3R6pipW6ZDi5n6UVl2ple77/EvBSOtpPfajRIB32gCHpghSeyFPjdOVRWXCMzEe0jF96aColOGkj69Dwy5jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eraJB9RG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nb0R7YTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C756CC433F1;
-	Sat,  3 Feb 2024 04:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eraJB9RG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0C6C43390;
+	Sat,  3 Feb 2024 04:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933919;
-	bh=h/7cu8GNBa2y2afzukx59fGSrGx/HEig1kEjjw89V7Q=;
+	s=korg; t=1706933920;
+	bh=agd+TKI3qn+HQLaL5UJFZXxy37libFCciCYFEGejKfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nb0R7YTE7r/6JLH/coqosNHGQ2+epz5My11y+IIgEbPm/8w3+FYwvgp6YxHqB82Nr
-	 UERs6RI1NfrD6u9jj9rPh2TiMqVwk6aRkWnScNkbhVgX05QsmJ2DrJn8NMJ78q0yf/
-	 DADIManyaIQO3/gLUAbSlZdT5DittJixgUUZiHWM=
+	b=eraJB9RGQWg7cEAbLRIVKscVP3EOy+ohyzJ1bvvfRdgk9Fz1g7TBU8bT7K40DwNPi
+	 MXOoJAVuAdYVLLhc6NsWG39QXj8gXd22QN8GrUAV8bJEaReZRRJelsM7IObtQ8nnq5
+	 oKw2Z++UOv8O85bHhv77H1fGUwjvdk58lX61r8Q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlene Liu <charlene.liu@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Daniel Miess <daniel.miess@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 274/353] Revert "drm/amd/display: Fix conversions between bytes and KB"
-Date: Fri,  2 Feb 2024 20:06:32 -0800
-Message-ID: <20240203035412.430120166@linuxfoundation.org>
+Subject: [PATCH 6.7 275/353] drm/amdkfd: Fix lock dependency warning with srcu
+Date: Fri,  2 Feb 2024 20:06:33 -0800
+Message-ID: <20240203035412.466728835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -54,38 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Miess <daniel.miess@amd.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit bf282eb92b84709d99186ad5940b9997eb3c1ff2 ]
+[ Upstream commit 2a9de42e8d3c82c6990d226198602be44f43f340 ]
 
-This reverts commit d0f639c5869399bf6dde4d694d5f8c0ab8c0ec46.
+======================================================
+WARNING: possible circular locking dependency detected
+6.5.0-kfd-yangp #2289 Not tainted
+------------------------------------------------------
+kworker/0:2/996 is trying to acquire lock:
+        (srcu){.+.+}-{0:0}, at: __synchronize_srcu+0x5/0x1a0
 
-The previous commit causes failure to light up for 1080p
-eDP + 8k HDMI panel combo.
+but task is already holding lock:
+        ((work_completion)(&svms->deferred_list_work)){+.+.}-{0:0}, at:
+	process_one_work+0x211/0x560
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Daniel Miess <daniel.miess@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+which lock already depends on the new lock.
+
+the existing dependency chain (in reverse order) is:
+
+-> #3 ((work_completion)(&svms->deferred_list_work)){+.+.}-{0:0}:
+        __flush_work+0x88/0x4f0
+        svm_range_list_lock_and_flush_work+0x3d/0x110 [amdgpu]
+        svm_range_set_attr+0xd6/0x14c0 [amdgpu]
+        kfd_ioctl+0x1d1/0x630 [amdgpu]
+        __x64_sys_ioctl+0x88/0xc0
+
+-> #2 (&info->lock#2){+.+.}-{3:3}:
+        __mutex_lock+0x99/0xc70
+        amdgpu_amdkfd_gpuvm_restore_process_bos+0x54/0x740 [amdgpu]
+        restore_process_helper+0x22/0x80 [amdgpu]
+        restore_process_worker+0x2d/0xa0 [amdgpu]
+        process_one_work+0x29b/0x560
+        worker_thread+0x3d/0x3d0
+
+-> #1 ((work_completion)(&(&process->restore_work)->work)){+.+.}-{0:0}:
+        __flush_work+0x88/0x4f0
+        __cancel_work_timer+0x12c/0x1c0
+        kfd_process_notifier_release_internal+0x37/0x1f0 [amdgpu]
+        __mmu_notifier_release+0xad/0x240
+        exit_mmap+0x6a/0x3a0
+        mmput+0x6a/0x120
+        do_exit+0x322/0xb90
+        do_group_exit+0x37/0xa0
+        __x64_sys_exit_group+0x18/0x20
+        do_syscall_64+0x38/0x80
+
+-> #0 (srcu){.+.+}-{0:0}:
+        __lock_acquire+0x1521/0x2510
+        lock_sync+0x5f/0x90
+        __synchronize_srcu+0x4f/0x1a0
+        __mmu_notifier_release+0x128/0x240
+        exit_mmap+0x6a/0x3a0
+        mmput+0x6a/0x120
+        svm_range_deferred_list_work+0x19f/0x350 [amdgpu]
+        process_one_work+0x29b/0x560
+        worker_thread+0x3d/0x3d0
+
+other info that might help us debug this:
+Chain exists of:
+  srcu --> &info->lock#2 --> (work_completion)(&svms->deferred_list_work)
+
+Possible unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+        lock((work_completion)(&svms->deferred_list_work));
+                        lock(&info->lock#2);
+			lock((work_completion)(&svms->deferred_list_work));
+        sync(srcu);
+
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-index 62ce95bac8f2..9be5ebf3a8c0 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/display_mode_core.c
-@@ -6229,7 +6229,7 @@ static void set_calculate_prefetch_schedule_params(struct display_mode_lib_st *m
- 				CalculatePrefetchSchedule_params->GPUVMEnable = mode_lib->ms.cache_display_cfg.plane.GPUVMEnable;
- 				CalculatePrefetchSchedule_params->HostVMEnable = mode_lib->ms.cache_display_cfg.plane.HostVMEnable;
- 				CalculatePrefetchSchedule_params->HostVMMaxNonCachedPageTableLevels = mode_lib->ms.cache_display_cfg.plane.HostVMMaxPageTableLevels;
--				CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes;
-+				CalculatePrefetchSchedule_params->HostVMMinPageSize = mode_lib->ms.soc.hostvm_min_page_size_kbytes * 1024;
- 				CalculatePrefetchSchedule_params->DynamicMetadataEnable = mode_lib->ms.cache_display_cfg.plane.DynamicMetadataEnable[k];
- 				CalculatePrefetchSchedule_params->DynamicMetadataVMEnabled = mode_lib->ms.ip.dynamic_metadata_vm_enabled;
- 				CalculatePrefetchSchedule_params->DynamicMetadataLinesBeforeActiveRequired = mode_lib->ms.cache_display_cfg.plane.DynamicMetadataLinesBeforeActiveRequired[k];
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index 92d8b1513e57..f66f88d2b643 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -2366,8 +2366,10 @@ static void svm_range_deferred_list_work(struct work_struct *work)
+ 		mutex_unlock(&svms->lock);
+ 		mmap_write_unlock(mm);
+ 
+-		/* Pairs with mmget in svm_range_add_list_work */
+-		mmput(mm);
++		/* Pairs with mmget in svm_range_add_list_work. If dropping the
++		 * last mm refcount, schedule release work to avoid circular locking
++		 */
++		mmput_async(mm);
+ 
+ 		spin_lock(&svms->deferred_list_lock);
+ 	}
 -- 
 2.43.0
 
