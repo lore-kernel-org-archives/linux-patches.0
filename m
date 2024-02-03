@@ -1,131 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B8585946;
-	Fri,  2 Feb 2024 23:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9313137B;
+	Sat,  3 Feb 2024 01:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706918018; cv=none; b=YuTnGWmMw0Gq9xIs5SKjLO0zmYYeVH0SvGEfZc6QHSVOkJxx+29uABEwdEjmk5T8wx9JC+m3alA/JRpvzjTYjuLTI9eb3q7X2W1k5hP/EGyO7bWnx/h5Hr2+Uu2PfunixFAWa5rdAByswXoOf8mFVGAZq0qZnyaO2bglv8aJ63o=
+	t=1706922750; cv=none; b=Exjfs2iBBsOl7jPXrQhYxxRat/SsNkB50OXBPzbgx4sxnHoP6v1zI1N32kE+R1+MCubvFKp7bjsZYPsGZokdNJ3F65/48I9IZtWNmttUm33oe3PhsSThsUb2i+IWID0ORbPSOBtB+8HBScs/yzLdeeObus+UYEbqZEXlggDPUZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706918018; c=relaxed/simple;
-	bh=ToVjAvQmv/dtNRn5p4/8OjGcotgzRI0qmd7n0/i3AJA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sVfPvS2/xStBFpUsWuVpkNqyUerEyg1KmvIzEhI7WfghfXqrGAX6LnpMsfQXCL9iOJd1g+FsaQ3mhwonkzEzpwxPNT2//2jfj4bd4V4rO2GQXdhsmhI+K3ntWhNgvKFndPRB7T+BBDdTTQhWXigpDHNqPy7v9MNpl9AmNCONHJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Clu3thbS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1706922750; c=relaxed/simple;
+	bh=2DiNg+AV7VuJ2EwtZlmsfWoLff7eCS+w/xEf/uARMwI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dOBT9paUM5T2yPtD4/BI8diTndNTnk6rQp8JPB0pSW49zRL8SNTQe2YK5O5jZqWdzMie4EKYpVVId9GmXOP+jNTG3iw5jOfQqUlICr7Mr0AGEagG3WDU2n1vUTui2g5GKwhbMDy8wjPDnqwp+si72iODQ7xcGo0/qSeb/WMX89g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNE9eojQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Clu3thbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC73C433C7;
-	Fri,  2 Feb 2024 23:53:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706918017;
-	bh=ToVjAvQmv/dtNRn5p4/8OjGcotgzRI0qmd7n0/i3AJA=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Clu3thbSoR8/bxiVDj/+7YLjpR9VmIrYwYhNJwQlNPbwg7l83CnutrlFfMFD907Sg
-	 B447oCeU97r/zGad3HHVC0pzuDGf5Qb6KXpsqcWkoRaPcpNXkSZ2a2sxQf8THivYaN
-	 +WpZkHcoOVWHSBjpzhgy7jCgdKXp0WE8U88W30qe9Ho2IZrii68KRQTMeqkaQXrpdl
-	 JUM6kM26LOqoclr7wmUwZpL/0q1imPWBbCs+1jySwU+iEXFhYG6aYwF7vFlF/J6ts+
-	 KJaoT/rNZqL6+RpLibWGxsAWP7qPYv5bER7dGSqWoGPatiyJeYmtcJXdddSWGiuDbG
-	 HyuW/Czm23xRg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 02 Feb 2024 16:53:21 -0700
-Subject: [PATCH] x86/coco: Define cc_vendor without
- CONFIG_ARCH_HAS_CC_PLATFORM
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNE9eojQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C03C433C7;
+	Sat,  3 Feb 2024 01:12:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1706922749;
+	bh=2DiNg+AV7VuJ2EwtZlmsfWoLff7eCS+w/xEf/uARMwI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eNE9eojQwUc6DjSQklExt40eZUahaqQYQkmoWPFEI0OXb+T0MElo6Zy1Wp1FhDxY2
+	 T2PKMk+fuVx/ng/Wqu/B6guq2BJ9F1WcNPlcHy3+rj18P7Tzg3/T5KjO/rqzT1fz9A
+	 H2Ci8pHC+kcPdmwCj0fOQQakETltS0lmL3WwK3D4=
+Date: Fri, 2 Feb 2024 17:12:28 -0800
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Marco Elver <elver@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>, Jiri Slaby <jirislaby@kernel.org>,
+	Alexander Potapenko <glider@google.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Charan Teja Kalla <quic_charante@quicinc.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.7 125/346] mm/sparsemem: fix race in accessing
+ memory_section->usage
+Message-ID: <2024020221-disburse-scrawny-ff90@gregkh>
+References: <20240129170016.356158639@linuxfoundation.org>
+ <20240129170020.057681007@linuxfoundation.org>
+ <81752462-c6c7-4a65-b9f2-371573e15499@kernel.org>
+ <2024013044-snowiness-abreast-2a47@gregkh>
+ <7d963e3f-2677-4459-b60e-2590d6cddc79@suse.cz>
+ <CANpmjNOdRXcok7oyQ=-G7iYthy7f6zHMjJ+TZqGP+vzwRT4+pg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240202-provide-cc_vendor-without-arch_has_cc_platform-v1-1-09ad5f2a3099@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAHCAvWUC/x2N0QoCIRBFf2XxuQFzE6JfiZBBxxwoldG1YNl/T
- 3o5cDhw764aCVNTt2VXQoMblzzlfFqUT5ifBBymK6PNRU9AlTI4EHjvBuVQBD7cU9k6oPjkEjY
- 3U31hj0XesBqLa0S6WqvVHK1Ckb//w/vjOH7efz0/gAAAAA==
-To: pbonzini@redhat.com, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
- dave.hansen@linux.intel.com, x86@kernel.org
-Cc: kirill.shutemov@linux.intel.com, ndesaulniers@google.com, 
- morbo@google.com, justinstitt@google.com, linux-kernel@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2621; i=nathan@kernel.org;
- h=from:subject:message-id; bh=ToVjAvQmv/dtNRn5p4/8OjGcotgzRI0qmd7n0/i3AJA=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKl7GxpezDlQ0XH0+nVGxhge+Z4nixuUWrfvOzjvZqtVo
- uH26bn3O0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEKroY/qfcFXhU3mi2N2Lv
- 1Ot+635tz2TleKKdwvjCa9KTKQv2rp7H8FecZ/HrC1PyTL9dP/ak1bnIJv+phFfytEP5/ae8JZb
- wpzIDAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANpmjNOdRXcok7oyQ=-G7iYthy7f6zHMjJ+TZqGP+vzwRT4+pg@mail.gmail.com>
 
-After commit a9ef277488cf ("x86/kvm: Fix SEV check in
-sev_map_percpu_data()"), there is a build error when building
-x86_64_defconfig with GCOV using LLVM:
+On Fri, Feb 02, 2024 at 10:50:26AM +0100, Marco Elver wrote:
+> On Fri, 2 Feb 2024 at 10:44, Vlastimil Babka <vbabka@suse.cz> wrote:
+> >
+> >
+> >
+> > On 1/30/24 17:21, Greg Kroah-Hartman wrote:
+> > > On Tue, Jan 30, 2024 at 07:00:36AM +0100, Jiri Slaby wrote:
+> > >> On 29. 01. 24, 18:02, Greg Kroah-Hartman wrote:
+> > >>> 6.7-stable review patch.  If anyone has any objections, please let me know.
+> > >>>
+> > >>> ------------------
+> > >>>
+> > >>> From: Charan Teja Kalla <quic_charante@quicinc.com>
+> > >>>
+> > >>> commit 5ec8e8ea8b7783fab150cf86404fc38cb4db8800 upstream.
+> > >>
+> > >> Hi,
+> > >>
+> > >> our machinery (git-fixes) says, this is needed as a fix:
+> > >> commit f6564fce256a3944aa1bc76cb3c40e792d97c1eb
+> > >> Author: Marco Elver <elver@google.com>
+> > >> Date:   Thu Jan 18 11:59:14 2024 +0100
+> > >>
+> > >>     mm, kmsan: fix infinite recursion due to RCU critical section
+> > >>
+> > >>
+> > >> Leaving up to the recipients to decide, as I have no idea…
+> >
+> > Let's Cc the people involved in f6564fce256a394
+> >
+> > > That commit just got merged into Linus's tree, AND it is not marked for
+> > > stable, which is worrying as I have to get the developers's approval to
+> > > add any non-cc-stable mm patch to the tree because they said they would
+> > > always mark them properly :)
+> > >
+> > > So I can't take it just yet...
+> 
+> So 5ec8e8ea8b7783fab150cf86404fc38cb4db8800 is being backported to
+> stable, which means that the issue that f6564fce256a394 fixed will be
+> present in stable. I didn't mark f6564fce256a394 as stable as the
+> problem doesn't exist in stable (yet), but if the problem-introducing
+> commit is being backported, then yes, please also backport
+> f6564fce256a394 to stable.
 
-  ld.lld: error: undefined symbol: cc_vendor
-  >>> referenced by kvm.c
-  >>>               arch/x86/kernel/kvm.o:(kvm_smp_prepare_boot_cpu) in archive vmlinux.a
+Thanks, now queued up.
 
-which corresponds to
-
-  if (cc_vendor != CC_VENDOR_AMD ||
-      !cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT))
-            return;
-
-Without GCOV, clang is able to eliminate the use of cc_vendor because
-cc_platform_has() evaluates to false when CONFIG_ARCH_HAS_CC_PLATFORM is
-not set, meaning that if statement will be true no matter what value
-cc_vendor has.
-
-With GCOV, the instrumentation keeps the use of cc_vendor around for
-code coverage purposes but cc_vendor is only declared, not defined,
-without CONFIG_ARCH_HAS_CC_PLATFORM, leading to the build error above.
-
-Provide a macro definition of cc_vendor when CONFIG_ARCH_HAS_CC_PLATFORM
-is not set with a value of CC_VENDOR_NONE, so that the first condition
-can always be evaluated/eliminated at compile time, avoiding the build
-error altogether. This is very similar to the situation prior to
-commit da86eb961184 ("x86/coco: Get rid of accessor functions").
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-Commit a9ef277488cf ("x86/kvm: Fix SEV check in sev_map_percpu_data()")
-exposes this build error but I think it is really a problem with commit
-da86eb961184 ("x86/coco: Get rid of accessor functions"), although I am
-not positive so I left out the fixes tag. It would be nice if this could
-go along with KVM tree that has that change but it is obviously well
-within -tip's territory so I will just aim it at both parties and let
-them figure it out :)
----
- arch/x86/include/asm/coco.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/arch/x86/include/asm/coco.h b/arch/x86/include/asm/coco.h
-index 6ae2d16a7613..76c310b19b11 100644
---- a/arch/x86/include/asm/coco.h
-+++ b/arch/x86/include/asm/coco.h
-@@ -10,13 +10,14 @@ enum cc_vendor {
- 	CC_VENDOR_INTEL,
- };
- 
--extern enum cc_vendor cc_vendor;
--
- #ifdef CONFIG_ARCH_HAS_CC_PLATFORM
-+extern enum cc_vendor cc_vendor;
- void cc_set_mask(u64 mask);
- u64 cc_mkenc(u64 val);
- u64 cc_mkdec(u64 val);
- #else
-+#define cc_vendor (CC_VENDOR_NONE)
-+
- static inline u64 cc_mkenc(u64 val)
- {
- 	return val;
-
----
-base-commit: a9ef277488cfc1b7da88235dc11c338a14f34835
-change-id: 20240202-provide-cc_vendor-without-arch_has_cc_platform-325a3fae8550
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+greg k-h
