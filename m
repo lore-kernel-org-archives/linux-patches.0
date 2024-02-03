@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB7C111AA;
-	Sat,  3 Feb 2024 04:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4776B111AA;
+	Sat,  3 Feb 2024 04:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933895; cv=none; b=siJAWxHy1cNvSdXLjphHute4Rdboyp5zOPQdHhiPT/wM/s2H2D9yvcWIyArlBNRwbrmGvEMctflBjpuqHhSnhKFutbKhFUXh3S/0X9q8iBY+5ZYsa4J8i+DHSideWDyhfhyZD6h7CtcC11ZKTf1+KHbPS76DoAqRZewN2Wc1dZM=
+	t=1706933896; cv=none; b=mjGhg30PiWXjBbwym66dA1aKCej+6375y/O37ZIdZxZIx5vh77p5CXO77jbRGbAO+fppCXo84wBwZSq/Fg0pkJKh2kfFq7xz+s2KgjYTcCIOedSeQ40n3j7+jNghPkUWlkSAbZJzc5RaEjsZZsjueWG5cMCLz4aJXrtMqIXqoDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933895; c=relaxed/simple;
-	bh=/FvYLrmxg79nmucSl+NgUC7Crin09AhRKIVGNJ5kr64=;
+	s=arc-20240116; t=1706933896; c=relaxed/simple;
+	bh=AvUMsbQA1DYeX70JtclSlZDqkIs2e7RteekPw19hsHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TamGTZWztX1tDMFlbDuYln4Bxgcp9mEywP2EXJX8db2cmxLHmWjwQ2QDlZEd/jcxXgwQecFfroWg6RLMXyzrv4BwakeOHc4HeoIFNaxOUt4HIylGQAQsbGOJb8VLB8xu16jnUrcAfW2sZYKOYAPigM9+gCKkqoJxvfgMkI8WjqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYrzti1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4JcVYyJBeQYI3CmUeyclguz0AQKrsHp5jtsFOqQbq9EbQPjOiE0JDLOkNipzux4v4fW5MpxvmK21Ne5oAnCzNQmM9fbAENMRfdXpNzouf0+6RkZc9EctJK0E+31Wjhe8KTti6Juu1EInTcEoX3qOrnP03jtyP8P7zp+5Pu7OeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+Q2glmy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYrzti1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C1CC43390;
-	Sat,  3 Feb 2024 04:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+Q2glmy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12458C433C7;
+	Sat,  3 Feb 2024 04:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933895;
-	bh=/FvYLrmxg79nmucSl+NgUC7Crin09AhRKIVGNJ5kr64=;
+	s=korg; t=1706933896;
+	bh=AvUMsbQA1DYeX70JtclSlZDqkIs2e7RteekPw19hsHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYrzti1TbXjnkeWJ/SiW2PTUt4gqIF9g9cF0S3V5BjBk0zHOwgm5juDiyWn/5kRqu
-	 8Nu4s86qHmSNi/BBMmBiLUN4Ya8tlbnrM9LMJY2+TM6XBmmRps1AOviP9N7XOb4QBF
-	 FBi5G2nibb8F2ZtgRp3/W4fy8oCfVptsIh8q75W4=
+	b=a+Q2glmyjl5iSnh2mL9cwLQP7mo5fB+mjZOxe1ZZCLX5mDcfwMv5EadEcYkCQqFej
+	 ZldrQc1bsf92Qo0A5I5IvhPNHXB9rnENIWemd7FRV5uXnLa83ZRVs4YwxS3kpC66mc
+	 qNCZ8PwPn3OCZxKChf/S53lSxQNwNJbvkOh/IxIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Whitchurch <Vincent.Whitchurch@axis.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Richard Weinberger <richard@nod.at>,
+	"Oliver F. Brown" <oliver.brown@oss.nxp.com>,
+	Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 242/353] um: time-travel: fix time corruption
-Date: Fri,  2 Feb 2024 20:06:00 -0800
-Message-ID: <20240203035411.347563487@linuxfoundation.org>
+Subject: [PATCH 6.7 225/353] clk: imx: clk-imx8qxp: fix LVDS bypass, pixel and phy clocks
+Date: Fri,  2 Feb 2024 20:05:43 -0800
+Message-ID: <20240203035410.790140864@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -52,91 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit abe4eaa8618bb36c2b33e9cdde0499296a23448c ]
+[ Upstream commit 3f5f63adeea7e7aa715e101ffe4b4ac9705f9664 ]
 
-In 'basic' time-travel mode (without =inf-cpu or =ext), we
-still get timer interrupts. These can happen at arbitrary
-points in time, i.e. while in timer_read(), which pushes
-time forward just a little bit. Then, if we happen to get
-the interrupt after calculating the new time to push to,
-but before actually finishing that, the interrupt will set
-the time to a value that's incompatible with the forward,
-and we'll crash because time goes backwards when we do the
-forwarding.
+To be compatible with SCU firmware based on 1.15 a different clock
+routing for LVDS is needed.
 
-Fix this by reading the time_travel_time, calculating the
-adjustment, and doing the adjustment all with interrupts
-disabled.
-
-Reported-by: Vincent Whitchurch <Vincent.Whitchurch@axis.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Oliver F. Brown <oliver.brown@oss.nxp.com>
+Signed-off-by: Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20231218122407.2757175-1-alexander.stein@ew.tq-group.com/
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/kernel/time.c | 32 +++++++++++++++++++++++++++-----
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ drivers/clk/imx/clk-imx8qxp.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/arch/um/kernel/time.c b/arch/um/kernel/time.c
-index fddd1dec27e6..3e270da6b6f6 100644
---- a/arch/um/kernel/time.c
-+++ b/arch/um/kernel/time.c
-@@ -432,9 +432,29 @@ static void time_travel_update_time(unsigned long long next, bool idle)
- 	time_travel_del_event(&ne);
- }
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index 41f0a45aa162..7d8883916cac 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -66,6 +66,22 @@ static const char * const lcd_pxl_sels[] = {
+ 	"lcd_pxl_bypass_div_clk",
+ };
  
-+static void time_travel_update_time_rel(unsigned long long offs)
-+{
-+	unsigned long flags;
++static const char *const lvds0_sels[] = {
++	"clk_dummy",
++	"clk_dummy",
++	"clk_dummy",
++	"clk_dummy",
++	"mipi0_lvds_bypass_clk",
++};
 +
-+	/*
-+	 * Disable interrupts before calculating the new time so
-+	 * that a real timer interrupt (signal) can't happen at
-+	 * a bad time e.g. after we read time_travel_time but
-+	 * before we've completed updating the time.
-+	 */
-+	local_irq_save(flags);
-+	time_travel_update_time(time_travel_time + offs, false);
-+	local_irq_restore(flags);
-+}
++static const char *const lvds1_sels[] = {
++	"clk_dummy",
++	"clk_dummy",
++	"clk_dummy",
++	"clk_dummy",
++	"mipi1_lvds_bypass_clk",
++};
 +
- void time_travel_ndelay(unsigned long nsec)
- {
--	time_travel_update_time(time_travel_time + nsec, false);
-+	/*
-+	 * Not strictly needed to use _rel() version since this is
-+	 * only used in INFCPU/EXT modes, but it doesn't hurt and
-+	 * is more readable too.
-+	 */
-+	time_travel_update_time_rel(nsec);
- }
- EXPORT_SYMBOL(time_travel_ndelay);
+ static const char * const mipi_sels[] = {
+ 	"clk_dummy",
+ 	"clk_dummy",
+@@ -207,9 +223,9 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
+ 	/* MIPI-LVDS SS */
+ 	imx_clk_scu("mipi0_bypass_clk", IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_BYPASS);
+ 	imx_clk_scu("mipi0_pixel_clk", IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_PER);
+-	imx_clk_scu("mipi0_lvds_pixel_clk", IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC2);
+ 	imx_clk_scu("mipi0_lvds_bypass_clk", IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_BYPASS);
+-	imx_clk_scu("mipi0_lvds_phy_clk", IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC3);
++	imx_clk_scu2("mipi0_lvds_pixel_clk", lvds0_sels, ARRAY_SIZE(lvds0_sels), IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC2);
++	imx_clk_scu2("mipi0_lvds_phy_clk", lvds0_sels, ARRAY_SIZE(lvds0_sels), IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC3);
+ 	imx_clk_scu2("mipi0_dsi_tx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_MST_BUS);
+ 	imx_clk_scu2("mipi0_dsi_rx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_SLV_BUS);
+ 	imx_clk_scu2("mipi0_dsi_phy_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_PHY);
+@@ -219,9 +235,9 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
  
-@@ -568,7 +588,11 @@ static void time_travel_set_start(void)
- #define time_travel_time 0
- #define time_travel_ext_waiting 0
+ 	imx_clk_scu("mipi1_bypass_clk", IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_BYPASS);
+ 	imx_clk_scu("mipi1_pixel_clk", IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_PER);
+-	imx_clk_scu("mipi1_lvds_pixel_clk", IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC2);
+ 	imx_clk_scu("mipi1_lvds_bypass_clk", IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_BYPASS);
+-	imx_clk_scu("mipi1_lvds_phy_clk", IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC3);
++	imx_clk_scu2("mipi1_lvds_pixel_clk", lvds1_sels, ARRAY_SIZE(lvds1_sels), IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC2);
++	imx_clk_scu2("mipi1_lvds_phy_clk", lvds1_sels, ARRAY_SIZE(lvds1_sels), IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC3);
  
--static inline void time_travel_update_time(unsigned long long ns, bool retearly)
-+static inline void time_travel_update_time(unsigned long long ns, bool idle)
-+{
-+}
-+
-+static inline void time_travel_update_time_rel(unsigned long long offs)
- {
- }
- 
-@@ -720,9 +744,7 @@ static u64 timer_read(struct clocksource *cs)
- 		 */
- 		if (!irqs_disabled() && !in_interrupt() && !in_softirq() &&
- 		    !time_travel_ext_waiting)
--			time_travel_update_time(time_travel_time +
--						TIMER_MULTIPLIER,
--						false);
-+			time_travel_update_time_rel(TIMER_MULTIPLIER);
- 		return time_travel_time / TIMER_MULTIPLIER;
- 	}
- 
+ 	imx_clk_scu2("mipi1_dsi_tx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_MST_BUS);
+ 	imx_clk_scu2("mipi1_dsi_rx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_SLV_BUS);
 -- 
 2.43.0
 
