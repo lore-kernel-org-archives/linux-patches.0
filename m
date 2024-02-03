@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BD61BF3F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BBD1BF3F;
 	Sat,  3 Feb 2024 04:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933499; cv=none; b=JHguBQetKcOU+CztBJJODl0v5gFYTcnrCsp6vV34Rzl5uR++AW6vm/7p2H/p8Zz77esWbhE/yiWPgXbJa8hIdSbR4l9BPv1JQuHYGA3XO3SZmOd+Ms6lzm7NjT+2tWALhr7uVW4xoM51Gd2LU0/7ohLcV4Lk18SOS07VXPbcFuM=
+	t=1706933499; cv=none; b=QVBSN08yZP4zh+mWi6yz+phxwG5L2SbQWDuYigmQX7mJN8WHiaF+/ekugsCk/Zkc8ZZKCX9EsidQ0trI3a6PhvhOOnt6XY6KWvXh6IurOS/CM8xZy3iscGXJlLMpgwJvPOYvJ3nfp7qG9EOPvoQOLDkTe3ebQ7H2MHiKlgj+04s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933499; c=relaxed/simple;
-	bh=oyF318lAPMceF/3ldDTWI8TX0sD/dnyvlm9PtfGctck=;
+	bh=1AHauRYHtZu58dzwVeqc5o2Xs4gUtOPBnf36noNT/VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuRz8TFkHYyQD6CF7stj0mrTPkNXxK+JE6FfFvyEplFv8TpjoN+E05bjnemn5SAsfCMIfwsjNpzYsUsJjWfWu2MvcN9oymLwP2KrpoOfYkrUgXpPo37e/67SHZxHHpEufQdtC2s+wjLPUAr8SV47WaOzfLevkYHpyayZ5hlfivo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uba/Iz5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ejlxrzmjpZKMPhIeixqrh0v5CArz530NvfU8UXj2Hi+oM4ljI/xSHjRvERqjAGdtM/q6pmKQqFqrf8nlhWX8hIUecBNEzWXH/V5ZPkambShj79TWuohfjxYyVavJX+jSpZqcjzAoQRiuLpvHPNlUhDPRX19FNNbQzhDg7q6W/cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ph6GQwWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uba/Iz5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2046C43399;
-	Sat,  3 Feb 2024 04:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ph6GQwWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E29C433C7;
+	Sat,  3 Feb 2024 04:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933499;
-	bh=oyF318lAPMceF/3ldDTWI8TX0sD/dnyvlm9PtfGctck=;
+	bh=1AHauRYHtZu58dzwVeqc5o2Xs4gUtOPBnf36noNT/VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uba/Iz5hpxeIicWsIb52ImfH8XnSxl5R3kFnVfnVTQpcdZVgB1fjYU9xOa5O4YHhX
-	 HU5u7VPkvnunDWxUE13NOx6m3e+oPaNbhBJdV33m62ZF0xwUzYMnOYSje5W30PXlFC
-	 uZWes6ezFPqi6U7T1124GFEntg5ye3sayA1OD2mg=
+	b=Ph6GQwWsReVEE+gd59zutLPb6cyEqy6UkZo5pJ7BBnJ0ExHQlLWTfkmjSORrSBLkN
+	 Oq+QqyH1WgKk2DLOEnJI5K6VFYDiFe/wLj5rmwuUXXIz3Ifqso2fLv1RNZBw/cXTOm
+	 +9GzBCOn6SkT+GsGlpdrq31biexNl30iUOMtNkqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+01cf2dbcbe2022454388@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 030/322] jfs: fix uaf in jfs_evict_inode
-Date: Fri,  2 Feb 2024 20:02:07 -0800
-Message-ID: <20240203035400.027455510@linuxfoundation.org>
+	Jia Jie Ho <jiajie.ho@starfivetech.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 031/322] hwrng: starfive - Fix dev_err_probe return error
+Date: Fri,  2 Feb 2024 20:02:08 -0800
+Message-ID: <20240203035400.064996118@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,48 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Jia Jie Ho <jiajie.ho@starfivetech.com>
 
-[ Upstream commit e0e1958f4c365e380b17ccb35617345b31ef7bf3 ]
+[ Upstream commit 2d37b3649c412b3bcecfea932cb677f7a5775b15 ]
 
-When the execution of diMount(ipimap) fails, the object ipimap that has been
-released may be accessed in diFreeSpecial(). Asynchronous ipimap release occurs
-when rcu_core() calls jfs_free_node().
+Current dev_err_probe will return 0 instead of proper error code if
+driver failed to get irq number. Fix the return err code.
 
-Therefore, when diMount(ipimap) fails, sbi->ipimap should not be initialized as
-ipimap.
-
-Reported-and-tested-by: syzbot+01cf2dbcbe2022454388@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Jia Jie Ho <jiajie.ho@starfivetech.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202311160649.3GhKCfhd-lkp@intel.com/
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_mount.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/char/hw_random/jh7110-trng.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_mount.c b/fs/jfs/jfs_mount.c
-index b83aae56a1f2..631b8bd3e438 100644
---- a/fs/jfs/jfs_mount.c
-+++ b/fs/jfs/jfs_mount.c
-@@ -172,15 +172,15 @@ int jfs_mount(struct super_block *sb)
- 	}
- 	jfs_info("jfs_mount: ipimap:0x%p", ipimap);
+diff --git a/drivers/char/hw_random/jh7110-trng.c b/drivers/char/hw_random/jh7110-trng.c
+index 38474d48a25e..b1f94e3c0c6a 100644
+--- a/drivers/char/hw_random/jh7110-trng.c
++++ b/drivers/char/hw_random/jh7110-trng.c
+@@ -300,7 +300,7 @@ static int starfive_trng_probe(struct platform_device *pdev)
+ 	ret = devm_request_irq(&pdev->dev, irq, starfive_trng_irq, 0, pdev->name,
+ 			       (void *)trng);
+ 	if (ret)
+-		return dev_err_probe(&pdev->dev, irq,
++		return dev_err_probe(&pdev->dev, ret,
+ 				     "Failed to register interrupt handler\n");
  
--	/* map further access of per fileset inodes by the fileset inode */
--	sbi->ipimap = ipimap;
--
- 	/* initialize fileset inode allocation map */
- 	if ((rc = diMount(ipimap))) {
- 		jfs_err("jfs_mount: diMount failed w/rc = %d", rc);
- 		goto err_ipimap;
- 	}
- 
-+	/* map further access of per fileset inodes by the fileset inode */
-+	sbi->ipimap = ipimap;
-+
- 	return rc;
- 
- 	/*
+ 	trng->hclk = devm_clk_get(&pdev->dev, "hclk");
 -- 
 2.43.0
 
