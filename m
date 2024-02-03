@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBDB13AC6;
-	Sat,  3 Feb 2024 04:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE0913AC6;
+	Sat,  3 Feb 2024 04:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933813; cv=none; b=Dlg4W+v5omDDaF1QUDbQhYdrjW6qKEukNtrY4GZ9A694U71WKZcmiaUBc/n2VTnzqhYA8FSX+xIRwl2vNU4ek/Xv3scI6wjtBgwz9s2W7rkN1KpH5P8W6GHzJXf+z+wMvfixLUEgrMnuvDgC8B3TpyM/M3/RfKkdjx3samK/GJc=
+	t=1706933814; cv=none; b=Je9UauH+bBVUagMKQzYiZz0Vuwrm2N4sg86IpXRQzOju2uxtCVFqfIlMh7lG+JSEcE6k7qlckDdaVDCvKv2BTr7KYmfevLsUmZ+Av3r0wyscKItl99dpaPfMa62ApL1dcKQ7eKTspRAMP8mWynyBuLEy7fUcirNxlexfarjV9bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933813; c=relaxed/simple;
-	bh=O7AmCnhorDsluDHacePlfy8sxq74fJTOs9b9VnEuthU=;
+	s=arc-20240116; t=1706933814; c=relaxed/simple;
+	bh=t9j2Ves5IwtewQraNJZAXjIiaFix2xBfWUYV/Nd0FK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f0aaMIeAlwubB1AyTSED6Hcg1RyJUNZk05//MkZhlcEmoZxX4EqQKUCzyExKu0TxOr2XGsdIE9VcQyWOnM2JEvoAEmlV9lgZU+zwNrFI0PNMtzN1rBj8ENqcNOHNfwN/scUmRuUaTVvfj/PZUZ6SiJHyOT9lSOWrtM/yI/lAhKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhCmc3fS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VFx/545GZ2sxT1uzht4ySwqSAU1QqsXd0eFzBA2RvXx2UxtUbxDbm2IbSGUaY0xb0C/ZvvNyO1riJZFCSwZlzBPk0mOLyW4Y4hBlZ5pwgHw3z2DBZh6fZb52Un75bfo7tyuUZCsVqCahW8cm631Zcl/qtuy0JO1MDGsFHTmrVYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjZMXUeP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhCmc3fS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A157C433C7;
-	Sat,  3 Feb 2024 04:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjZMXUeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15534C43390;
+	Sat,  3 Feb 2024 04:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933813;
-	bh=O7AmCnhorDsluDHacePlfy8sxq74fJTOs9b9VnEuthU=;
+	s=korg; t=1706933814;
+	bh=t9j2Ves5IwtewQraNJZAXjIiaFix2xBfWUYV/Nd0FK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhCmc3fSo+TAPyKh6z3KfaTK4hkoRlU70+KRbkHjRQAZW7A+3R+D/5OXvZO7Sldlc
-	 kmST7sMOVqgmUuZaMoC7zLMqNPaE8TxVaWF/bCl2t8j87OHplVHvX46UHdeWECJ5eQ
-	 hJkxRpe443EXl3m/P2r80uTAC+zSVXS0CfgJpbaQ=
+	b=yjZMXUePIS6rXHLvuc2w7nNFME0jIoO3/B8WK8OJWOl6YNIBaKRpp6oZVWl6/7+2c
+	 YGx3TCtAEKsc6E1bxhc32AyBa8WM6Nv+iFOkQeok+wUe35P1+yJzD7rHBimaBnGX+w
+	 5/loeNLOBz+TOaEgJG3hqGUFqfh9KrO+jiwETYPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Tobias Waldekranz <tobias@waldekranz.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 131/353] net: dsa: mv88e6xxx: Fix mv88e6352_serdes_get_stats error path
-Date: Fri,  2 Feb 2024 20:04:09 -0800
-Message-ID: <20240203035407.866796273@linuxfoundation.org>
+Subject: [PATCH 6.7 114/353] net: phy: at803x: fix passing the wrong reference for config_intr
+Date: Fri,  2 Feb 2024 20:03:52 -0800
+Message-ID: <20240203035407.364138321@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,100 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Waldekranz <tobias@waldekranz.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit fc82a08ae795ee6b73fb6b50785f7be248bec7b5 ]
+[ Upstream commit f8fdbf3389f44c7026f16e36cb1f2ff017f7f5b2 ]
 
-mv88e6xxx_get_stats, which collects stats from various sources,
-expects all callees to return the number of stats read. If an error
-occurs, 0 should be returned.
+Fix passing the wrong reference for config_initr on passing the function
+pointer, drop the wrong & from at803x_config_intr in the PHY struct.
 
-Prevent future mishaps of this kind by updating the return type to
-reflect this contract.
-
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Tobias Waldekranz <tobias@waldekranz.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.h   |  4 ++--
- drivers/net/dsa/mv88e6xxx/serdes.c | 10 +++++-----
- drivers/net/dsa/mv88e6xxx/serdes.h |  8 ++++----
- 3 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/phy/at803x.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.h b/drivers/net/dsa/mv88e6xxx/chip.h
-index 44383a03ef2f..c54d305a1d83 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.h
-+++ b/drivers/net/dsa/mv88e6xxx/chip.h
-@@ -601,8 +601,8 @@ struct mv88e6xxx_ops {
- 	int (*serdes_get_sset_count)(struct mv88e6xxx_chip *chip, int port);
- 	int (*serdes_get_strings)(struct mv88e6xxx_chip *chip,  int port,
- 				  uint8_t *data);
--	int (*serdes_get_stats)(struct mv88e6xxx_chip *chip,  int port,
--				uint64_t *data);
-+	size_t (*serdes_get_stats)(struct mv88e6xxx_chip *chip, int port,
-+				   uint64_t *data);
- 
- 	/* SERDES registers for ethtool */
- 	int (*serdes_get_regs_len)(struct mv88e6xxx_chip *chip,  int port);
-diff --git a/drivers/net/dsa/mv88e6xxx/serdes.c b/drivers/net/dsa/mv88e6xxx/serdes.c
-index 3b4b42651fa3..01ea53940786 100644
---- a/drivers/net/dsa/mv88e6xxx/serdes.c
-+++ b/drivers/net/dsa/mv88e6xxx/serdes.c
-@@ -177,8 +177,8 @@ static uint64_t mv88e6352_serdes_get_stat(struct mv88e6xxx_chip *chip,
- 	return val;
- }
- 
--int mv88e6352_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
--			       uint64_t *data)
-+size_t mv88e6352_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
-+				  uint64_t *data)
- {
- 	struct mv88e6xxx_port *mv88e6xxx_port = &chip->ports[port];
- 	struct mv88e6352_serdes_hw_stat *stat;
-@@ -187,7 +187,7 @@ int mv88e6352_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
- 
- 	err = mv88e6352_g2_scratch_port_has_serdes(chip, port);
- 	if (err <= 0)
--		return err;
-+		return 0;
- 
- 	BUILD_BUG_ON(ARRAY_SIZE(mv88e6352_serdes_hw_stats) >
- 		     ARRAY_SIZE(mv88e6xxx_port->serdes_stats));
-@@ -429,8 +429,8 @@ static uint64_t mv88e6390_serdes_get_stat(struct mv88e6xxx_chip *chip, int lane,
- 	return reg[0] | ((u64)reg[1] << 16) | ((u64)reg[2] << 32);
- }
- 
--int mv88e6390_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
--			       uint64_t *data)
-+size_t mv88e6390_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
-+				  uint64_t *data)
- {
- 	struct mv88e6390_serdes_hw_stat *stat;
- 	int lane;
-diff --git a/drivers/net/dsa/mv88e6xxx/serdes.h b/drivers/net/dsa/mv88e6xxx/serdes.h
-index aac95cab46e3..ff5c3ab31e15 100644
---- a/drivers/net/dsa/mv88e6xxx/serdes.h
-+++ b/drivers/net/dsa/mv88e6xxx/serdes.h
-@@ -127,13 +127,13 @@ unsigned int mv88e6390_serdes_irq_mapping(struct mv88e6xxx_chip *chip,
- int mv88e6352_serdes_get_sset_count(struct mv88e6xxx_chip *chip, int port);
- int mv88e6352_serdes_get_strings(struct mv88e6xxx_chip *chip,
- 				 int port, uint8_t *data);
--int mv88e6352_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
--			       uint64_t *data);
-+size_t mv88e6352_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
-+				  uint64_t *data);
- int mv88e6390_serdes_get_sset_count(struct mv88e6xxx_chip *chip, int port);
- int mv88e6390_serdes_get_strings(struct mv88e6xxx_chip *chip,
- 				 int port, uint8_t *data);
--int mv88e6390_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
--			       uint64_t *data);
-+size_t mv88e6390_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
-+				  uint64_t *data);
- 
- int mv88e6352_serdes_get_regs_len(struct mv88e6xxx_chip *chip, int port);
- void mv88e6352_serdes_get_regs(struct mv88e6xxx_chip *chip, int port, void *_p);
+diff --git a/drivers/net/phy/at803x.c b/drivers/net/phy/at803x.c
+index 37fb033e1c29..ef203b0807e5 100644
+--- a/drivers/net/phy/at803x.c
++++ b/drivers/net/phy/at803x.c
+@@ -2104,7 +2104,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.write_page		= at803x_write_page,
+ 	.get_features		= at803x_get_features,
+ 	.read_status		= at803x_read_status,
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.get_tunable		= at803x_get_tunable,
+ 	.set_tunable		= at803x_set_tunable,
+@@ -2134,7 +2134,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.resume			= at803x_resume,
+ 	.flags			= PHY_POLL_CABLE_TEST,
+ 	/* PHY_BASIC_FEATURES */
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.cable_test_start	= at803x_cable_test_start,
+ 	.cable_test_get_status	= at803x_cable_test_get_status,
+@@ -2150,7 +2150,7 @@ static struct phy_driver at803x_driver[] = {
+ 	.resume			= at803x_resume,
+ 	.flags			= PHY_POLL_CABLE_TEST,
+ 	/* PHY_BASIC_FEATURES */
+-	.config_intr		= &at803x_config_intr,
++	.config_intr		= at803x_config_intr,
+ 	.handle_interrupt	= at803x_handle_interrupt,
+ 	.cable_test_start	= at803x_cable_test_start,
+ 	.cable_test_get_status	= at803x_cable_test_get_status,
 -- 
 2.43.0
 
