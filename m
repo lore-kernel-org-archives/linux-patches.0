@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A99B101C1;
-	Sat,  3 Feb 2024 04:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A090101C1;
+	Sat,  3 Feb 2024 04:10:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933403; cv=none; b=mdFwkda2QRG1WaLZ+j6LYDIF9brWdY4fatZdcehwPEPioNc+af0K+5DFqevDUYaEqJTgimvZH8vcWTOqdUvXUHyXV1/MY9i5kOOAzeIAZNS/lYOcYmpZZTVk9t0NIfUdkS9oXTVqbliQmBpwLTb0PkPSR+OPUSSDU1WMk/YbCGw=
+	t=1706933404; cv=none; b=Mrr3VTyW/m4CqRTa/Voh53LMgethDVegH8QQViVwF53CAkwt3gJTUYJjWfv5Zdch/hwMkvPILuFV7QsnFjhsiE6AQA9jcbeclmhoRMXns6rOFr44BeYP9C44XwMTXUODmtWJTRP+eWf6KK6d4uBqXyaaddrwny5J6lwIsnIwY3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933403; c=relaxed/simple;
-	bh=zz2p8MT9QvJEMqyfOCsXm87A7PtJjSHVJFcLuQexTlw=;
+	s=arc-20240116; t=1706933404; c=relaxed/simple;
+	bh=5rIser0X5Ol4YPy/ZTDWTf/54pNwp07LVJJkvYdoS/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4m+DS5+7FUJpX10XEG53Q9PK3B7at/TJvkl2OssUsTEv02sCaWqeLG5C6UlNJzYP9zoMbySjSjMEcHvlZoiM0qN+fioDuSIMG6743ek/uNvGlOstNzGm1GDg61ZoEj0KRNza2l5HDPuWiLZHW0WhuZxLUCIQoZZmcXt7MKhO18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y01DMftS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uJiKglY5PlqLH064D8MVXRycnaWfcE3UlP9vEp5yC6mLiH0S3Qo/bi1bAhb99Ie+tVTzg6rQdGd6arUtNEcd67X5OXWIPjY4lmsw2NQChr+3pxFnfzFBfIy926zdd3X1pyZiDIT2bF+GfvFNDUIaDwmchwAhmcLmrIbAPy7gOv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTU6+y76; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y01DMftS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219E5C433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTU6+y76"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60DFC433C7;
 	Sat,  3 Feb 2024 04:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933403;
-	bh=zz2p8MT9QvJEMqyfOCsXm87A7PtJjSHVJFcLuQexTlw=;
+	s=korg; t=1706933404;
+	bh=5rIser0X5Ol4YPy/ZTDWTf/54pNwp07LVJJkvYdoS/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y01DMftSowlt0mBwAD3wgwDNZM2pxrGPoD0AdP4qUWzY7YcBjKFF4BlTqhFQWMBnu
-	 3rZuA942YKm4pN/KdInduewtiV2K8heR7MXZtNxi3poSpz6aAUEbC9cZHR5Ib9xIfB
-	 9cUW4V/iFzfUakc98b/Wa8WxT+qTy5c20KJAd4bo=
+	b=TTU6+y76ZdS5C8gFYT8JMC1Qqu7Bc95lt8ZmXT3+UchX7xiJfN3zPKLf8bXWJbewG
+	 mtZFo83+YGafBVlVnpy1PWnKht7w8WnF0Utoa4iwp7kVrRY00BmHhfoZKuht9oeJBm
+	 0wCD7rjWWCHAOwqIpeAAKrrAQdoF51vq1P064tQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	clancy shang <clancy.shang@quectel.com>,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/219] Bluetooth: hci_sync: fix BR/EDR wakeup bug
-Date: Fri,  2 Feb 2024 20:04:30 -0800
-Message-ID: <20240203035330.840411694@linuxfoundation.org>
+Subject: [PATCH 6.1 098/219] Bluetooth: L2CAP: Fix possible multiple reject send
+Date: Fri,  2 Feb 2024 20:04:31 -0800
+Message-ID: <20240203035330.980324989@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -45,51 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: clancy shang <clancy.shang@quectel.com>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-[ Upstream commit d4b70ba1eab450eff9c5ef536f07c01d424b7eda ]
+[ Upstream commit 96a3398b467ab8aada3df2f3a79f4b7835d068b8 ]
 
-when Bluetooth set the event mask and enter suspend, the controller
-has hci mode change event coming, it cause controller can not enter
-sleep mode. so it should to set the hci mode change event mask before
-enter suspend.
+In case of an incomplete command or a command with a null identifier 2
+reject packets will be sent, one with the identifier and one with 0.
+Consuming the data of the command will prevent it.
+This allows to send a reject packet for each corrupted command in a
+multi-command packet.
 
-Signed-off-by: clancy shang <clancy.shang@quectel.com>
+Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index d74fe13f3dce..45d19294aa77 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -3780,12 +3780,14 @@ static int hci_set_event_mask_sync(struct hci_dev *hdev)
- 	if (lmp_bredr_capable(hdev)) {
- 		events[4] |= 0x01; /* Flow Specification Complete */
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 4c5793053393..81f5974e5eb5 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6527,7 +6527,8 @@ static inline void l2cap_sig_channel(struct l2cap_conn *conn,
+ 		if (len > skb->len || !cmd->ident) {
+ 			BT_DBG("corrupted command");
+ 			l2cap_sig_send_rej(conn, cmd->ident);
+-			break;
++			skb_pull(skb, len > skb->len ? skb->len : len);
++			continue;
+ 		}
  
--		/* Don't set Disconnect Complete when suspended as that
--		 * would wakeup the host when disconnecting due to
--		 * suspend.
-+		/* Don't set Disconnect Complete and mode change when
-+		 * suspended as that would wakeup the host when disconnecting
-+		 * due to suspend.
- 		 */
--		if (hdev->suspended)
-+		if (hdev->suspended) {
- 			events[0] &= 0xef;
-+			events[2] &= 0xf7;
-+		}
- 	} else {
- 		/* Use a different default for LE-only devices */
- 		memset(events, 0, sizeof(events));
+ 		err = l2cap_bredr_sig_cmd(conn, cmd, len, skb->data);
 -- 
 2.43.0
 
