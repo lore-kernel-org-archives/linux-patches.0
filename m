@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A50010A1C;
-	Sat,  3 Feb 2024 04:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6373A125BF;
+	Sat,  3 Feb 2024 04:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933355; cv=none; b=TCdLQ/XG6Z/KkQpzIIPM2x3xETj3OSePYP9Gly98YLcb5Cr13Pq0bG+kO+zlS15IQ90lSK9NklURYV8X+ei53k8SGoRqh4rietLU/k3Lteg0qheOVXq2N110fpEzJdrWQVnU3vUh5Uorc3KvYSleWyk2IjD1sGIYlPOQ3RnPLCE=
+	t=1706933356; cv=none; b=a6US9r/PqguOlHZ5YUNfzLzF/hKU1NtY4p2Pv/J2vhFLUx57i1GWUJQ9q6O5djN6ej64EKQPV9vgiAXcMODm/fgMWtuDuayM68v3MLRalQS3nPJfKrqs5yA/L3UnRQNKOf/PQ7T7tMNilcztFaUpr5nMUPRpB1kRtgu4L8sYG4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933355; c=relaxed/simple;
-	bh=j2ErxtO4+aSfwwXca9vhGo/dFQxqWQ/MGL8sITEYOes=;
+	s=arc-20240116; t=1706933356; c=relaxed/simple;
+	bh=piBN4nJawsqj/5DWdOnfWUMVS88+6o6bksvt5TlaR70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2oRyXJVRPob0ioDPRrDZG3ndI1yxnWP/L0fWbGXxirCtSVQqJc7XrO4I2tZkmwe6gCPWOC2ylm0sUwcSQ1DN+oBc0uCU7rMEsIgFEGbHoj+737fxpOIpi+VyRLDbLMNk62S3ELXyK7JkHgqRWMegWC2fboTsnOfpdfBcX5I4hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTWKDEoA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJFB9olcvQ8mda/rNYLlRgcAZn/1uHmTj3bXk2/nje7fuFKKnZGnI9CIrSj+uptw26p6x9EFHBhTIUuDNgXyUm6ZO0AwHv2Efr72zqQpqdS5U/91TeZW8GkeFlbTS3xkBkwjWGPVCBZCzAjrmOEhcGMm12oSsGjfNuB+NWGAKpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kgt8Apku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTWKDEoA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F4AC433F1;
-	Sat,  3 Feb 2024 04:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kgt8Apku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC4DC433C7;
+	Sat,  3 Feb 2024 04:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933355;
-	bh=j2ErxtO4+aSfwwXca9vhGo/dFQxqWQ/MGL8sITEYOes=;
+	s=korg; t=1706933356;
+	bh=piBN4nJawsqj/5DWdOnfWUMVS88+6o6bksvt5TlaR70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTWKDEoAa3NSnzPR4GhUEa3s+NkRby0tZiH0hYCanZwtoVOAbGOt/cgQkVbqEOHPu
-	 jYYcoMEXOkacYZ3fTgGlsEvkOvipxgc/o+8KBDKP+V5LWT52M2dB5NMNO9xwAiXG0i
-	 OetaL8kPZjY4dd+kqBvFcaFxXl3WT207gmLlU5WI=
+	b=Kgt8ApkuNuokSfXoteTfumFGZEcEd1qwfYT/Ccr9i1w2q91hTrozYYqHZoK6fDjr2
+	 9WiDlIs7tXv3iiG/3yZ8GnyFFD4Bi/viYvTg7oDD1itcpaSni98Ak+5zi5oXKkq5Je
+	 cuqeQkHAYJkds/BSrllILFK/1V4ayMT5j8fA0nww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/219] ext4: fix inconsistent between segment fstrim and full fstrim
-Date: Fri,  2 Feb 2024 20:03:34 -0800
-Message-ID: <20240203035322.287845291@linuxfoundation.org>
+Subject: [PATCH 6.1 059/219] ARM: dts: imx7s: Fix lcdif compatible
+Date: Fri,  2 Feb 2024 20:03:52 -0800
+Message-ID: <20240203035325.273482933@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -52,64 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 68da4c44b994aea797eb9821acb3a4a36015293e ]
+[ Upstream commit 5f55da4cc37051cda600ea870ce8cf29f1297715 ]
 
-Suppose we issue two FITRIM ioctls for ranges [0,15] and [16,31] with
-mininum length of trimmed range set to 8 blocks. If we have say a range of
-blocks 10-22 free, this range will not be trimmed because it straddles the
-boundary of the two FITRIM ranges and neither part is big enough. This is a
-bit surprising to some users that call FITRIM on smaller ranges of blocks
-to limit impact on the system. Also XFS trims all free space extents that
-overlap with the specified range so we are inconsistent among filesystems.
-Let's change ext4_try_to_trim_range() to consider for trimming the whole
-free space extent that straddles the end of specified range, not just the
-part of it within the range.
+imx7d-lcdif is compatible to imx6sx-lcdif. MXSFB_V6 supports overlay
+by using LCDC_AS_CTRL register. This registers used by overlay plane:
+* LCDC_AS_CTRL
+* LCDC_AS_BUF
+* LCDC_AS_NEXT_BUF
+are listed in i.MX7D RM as well.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231216010919.1995851-1-yebin10@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/imx7s.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 33be702d6e38..c1515daf1def 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6444,13 +6444,15 @@ static int ext4_try_to_trim_range(struct super_block *sb,
- __acquires(ext4_group_lock_ptr(sb, e4b->bd_group))
- __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
- {
--	ext4_grpblk_t next, count, free_count;
-+	ext4_grpblk_t next, count, free_count, last, origin_start;
- 	bool set_trimmed = false;
- 	void *bitmap;
+diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
+index 7c153c3e8238..44085ef27977 100644
+--- a/arch/arm/boot/dts/imx7s.dtsi
++++ b/arch/arm/boot/dts/imx7s.dtsi
+@@ -818,7 +818,7 @@
+ 			};
  
-+	last = ext4_last_grp_cluster(sb, e4b->bd_group);
- 	bitmap = e4b->bd_bitmap;
--	if (start == 0 && max >= ext4_last_grp_cluster(sb, e4b->bd_group))
-+	if (start == 0 && max >= last)
- 		set_trimmed = true;
-+	origin_start = start;
- 	start = max(e4b->bd_info->bb_first_free, start);
- 	count = 0;
- 	free_count = 0;
-@@ -6459,7 +6461,10 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
- 		start = mb_find_next_zero_bit(bitmap, max + 1, start);
- 		if (start > max)
- 			break;
--		next = mb_find_next_bit(bitmap, max + 1, start);
-+
-+		next = mb_find_next_bit(bitmap, last + 1, start);
-+		if (origin_start == 0 && next >= last)
-+			set_trimmed = true;
- 
- 		if ((next - start) >= minblocks) {
- 			int ret = ext4_trim_extent(sb, start, next - start, e4b);
+ 			lcdif: lcdif@30730000 {
+-				compatible = "fsl,imx7d-lcdif", "fsl,imx28-lcdif";
++				compatible = "fsl,imx7d-lcdif", "fsl,imx6sx-lcdif";
+ 				reg = <0x30730000 0x10000>;
+ 				interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX7D_LCDIF_PIXEL_ROOT_CLK>,
 -- 
 2.43.0
 
