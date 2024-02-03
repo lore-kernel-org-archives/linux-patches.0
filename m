@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946B510965;
-	Sat,  3 Feb 2024 04:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1784121B;
+	Sat,  3 Feb 2024 04:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933633; cv=none; b=EjYSIFDOKaTch5Q0J1Uc23DJ4RLv3qx0ghUnm+zK3gjzZIXPfJ2BHMCOM8wK3v7pHBo4JWBuQogB2YO4eHsSpBpfcYLEwDha8qvxGY94SkM+HtTOH8CA9Mdl7DDUSpkTypngLzr5Oc38G3jyP2FIaeTQ6BwC3J/c5aGm/ZQQymk=
+	t=1706933634; cv=none; b=pnkVilh96IMLJtRG78danHHgsGQA33NXafE+cDEdx5Sv3BEXHf6sJlrCaAcMLfm3G1wU2Ye38Z5y8unfWivkclQBCkbZj5U/3FRBPI3KxWqScb3k8JwVBB97BxYSwLzF7BSxohvyjZ1sTw5DKn2tEbVrVNcALKQoCdxEO/88gWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933633; c=relaxed/simple;
-	bh=GJiRNEtdQe/LCtUr/bNbPJJSS6ey0B/dQkUpqKJ61WA=;
+	s=arc-20240116; t=1706933634; c=relaxed/simple;
+	bh=uLKuTEgV9+UtKFwTnc69F8Og4c3O1jyOkv/eVEdTEDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfpcphB+B954HCi9sKFRJ736x0ub8ak6IBLca2WtxO3Pyrh868uexD6s/cng2FC2kjiJWXgvT1DCzk4dMw2YfAg90cUF4klDz/6AuZatN+rc7z6Ztl30l2sspm0SHcOYbsjf5gcPEefWDOWAgNmKWkmlGhFqm6O+xRp4NVeZITo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=em8ykU2m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AMMergj0S4VBbAkmeYjm84rcV/SR+oPx1zto5NJdcz7hsAJ9sorAOGViw0rGXCsgwhvF6HfNzsrNlfOZaKg41oy7lYDTZliygf6QXxx7J+QenK+b3akpWHKO4GEsOsdzHPviFrN4CmZ9zhtk9D3PZMT+y6SnTyJTEFE2sRgidQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bs5RXq1r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="em8ykU2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC4CC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bs5RXq1r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88D9C43390;
 	Sat,  3 Feb 2024 04:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933633;
-	bh=GJiRNEtdQe/LCtUr/bNbPJJSS6ey0B/dQkUpqKJ61WA=;
+	s=korg; t=1706933634;
+	bh=uLKuTEgV9+UtKFwTnc69F8Og4c3O1jyOkv/eVEdTEDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=em8ykU2mF6evPn0q+ehwXTT23XfFO5fQJypbSnRieW1F2pU6DgYLNJiMgOnBU7o2H
-	 iwPnA3MKndxxit1NubK6Hd+bf/8oXiG6yb/gmWmNH4VzJqoY3IG2G+BeF8BNbVgsce
-	 rrgsofByKGA1TmejpLROv50D2ZoYCBs7w16H+u04=
+	b=Bs5RXq1rSYkKKG9Mh8o0VntVi5jNMvKlnwYM5MBn1s6pZWwvrxkEYgpDtxrP38G9o
+	 USJGnreWF4mseC3AKaJpqU+jeLf3lsEW4HXihCqrARXk3drdRm6/Z3mltJgt9u2BZO
+	 i/JchfVQyZbzPmBSh4CfBS3fGWaHobUg/HE1CAKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 187/322] f2fs: fix to tag gcing flag on page during block migration
-Date: Fri,  2 Feb 2024 20:04:44 -0800
-Message-ID: <20240203035405.303390124@linuxfoundation.org>
+Subject: [PATCH 6.6 188/322] drm/exynos: Call drm_atomic_helper_shutdown() at shutdown/unbind time
+Date: Fri,  2 Feb 2024 20:04:45 -0800
+Message-ID: <20240203035405.330707509@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,62 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 4961acdd65c956e97c1a000c82d91a8c1cdbe44b ]
+[ Upstream commit 16ac5b21b31b439f03cdf44c153c5f5af94fb3eb ]
 
-It needs to add missing gcing flag on page during block migration,
-in order to garantee migrated data be persisted during checkpoint,
-otherwise out-of-order persistency between data and node may cause
-data corruption after SPOR.
+Based on grepping through the source code this driver appears to be
+missing a call to drm_atomic_helper_shutdown() at system shutdown time
+and at driver unbind time. Among other things, this means that if a
+panel is in use that it won't be cleanly powered off at system
+shutdown time.
 
-Similar issue was fixed by commit 2d1fe8a86bf5 ("f2fs: fix to tag
-gcing flag on page during file defragment").
+The fact that we should call drm_atomic_helper_shutdown() in the case
+of OS shutdown/restart and at driver remove (or unbind) time comes
+straight out of the kernel doc "driver instance overview" in
+drm_drv.c.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+A few notes about this fix:
+- When adding drm_atomic_helper_shutdown() to the unbind path, I added
+  it after drm_kms_helper_poll_fini() since that's when other drivers
+  seemed to have it.
+- Technically with a previous patch, ("drm/atomic-helper:
+  drm_atomic_helper_shutdown(NULL) should be a noop"), we don't
+  actually need to check to see if our "drm" pointer is NULL before
+  calling drm_atomic_helper_shutdown(). We'll leave the "if" test in,
+  though, so that this patch can land without any dependencies. It
+  could potentially be removed later.
+- This patch also makes sure to set the drvdata to NULL in the case of
+  bind errors to make sure that shutdown can't access freed data.
+
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 4 +++-
- fs/f2fs/file.c     | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_drm_drv.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 7514661bbfbb..372616ca8fb5 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1029,8 +1029,10 @@ static void set_cluster_dirty(struct compress_ctx *cc)
- 	int i;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+index 8399256cb5c9..5380fb6c55ae 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+@@ -300,6 +300,7 @@ static int exynos_drm_bind(struct device *dev)
+ 	drm_mode_config_cleanup(drm);
+ 	exynos_drm_cleanup_dma(drm);
+ 	kfree(private);
++	dev_set_drvdata(dev, NULL);
+ err_free_drm:
+ 	drm_dev_put(drm);
  
- 	for (i = 0; i < cc->cluster_size; i++)
--		if (cc->rpages[i])
-+		if (cc->rpages[i]) {
- 			set_page_dirty(cc->rpages[i]);
-+			set_page_private_gcing(cc->rpages[i]);
-+		}
+@@ -313,6 +314,7 @@ static void exynos_drm_unbind(struct device *dev)
+ 	drm_dev_unregister(drm);
+ 
+ 	drm_kms_helper_poll_fini(drm);
++	drm_atomic_helper_shutdown(drm);
+ 
+ 	component_unbind_all(drm->dev, drm);
+ 	drm_mode_config_cleanup(drm);
+@@ -350,9 +352,18 @@ static int exynos_drm_platform_remove(struct platform_device *pdev)
+ 	return 0;
  }
  
- static int prepare_compress_overwrite(struct compress_ctx *cc,
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index a631d706e117..dcf2d926ab59 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1317,6 +1317,7 @@ static int __clone_blkaddrs(struct inode *src_inode, struct inode *dst_inode,
- 			}
- 			memcpy_page(pdst, 0, psrc, 0, PAGE_SIZE);
- 			set_page_dirty(pdst);
-+			set_page_private_gcing(pdst);
- 			f2fs_put_page(pdst, 1);
- 			f2fs_put_page(psrc, 1);
- 
-@@ -4059,6 +4060,7 @@ static int redirty_blocks(struct inode *inode, pgoff_t page_idx, int len)
- 		f2fs_bug_on(F2FS_I_SB(inode), !page);
- 
- 		set_page_dirty(page);
-+		set_page_private_gcing(page);
- 		f2fs_put_page(page, 1);
- 		f2fs_put_page(page, 0);
- 	}
++static void exynos_drm_platform_shutdown(struct platform_device *pdev)
++{
++	struct drm_device *drm = platform_get_drvdata(pdev);
++
++	if (drm)
++		drm_atomic_helper_shutdown(drm);
++}
++
+ static struct platform_driver exynos_drm_platform_driver = {
+ 	.probe	= exynos_drm_platform_probe,
+ 	.remove	= exynos_drm_platform_remove,
++	.shutdown = exynos_drm_platform_shutdown,
+ 	.driver	= {
+ 		.name	= "exynos-drm",
+ 		.pm	= &exynos_drm_pm_ops,
 -- 
 2.43.0
 
