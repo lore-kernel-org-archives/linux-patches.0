@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98C0171CE;
-	Sat,  3 Feb 2024 04:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7919E171D4;
+	Sat,  3 Feb 2024 04:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933938; cv=none; b=sVwDQee+k9Pb9BU00e9gEjDbbWT2o1YdAxLKqkeWZXemfPL29JmummnU7C1zNxFgiTEDrCWli32FcmiweHR+kCqlVHPwTM/LKqcxosSxiP+rYXn5T7pG/tUK1HQiUZNY8Lfm4dewmb5NTJxkJLnA+tpuk/4kK0T0cRbxWBQEx/w=
+	t=1706933939; cv=none; b=Qpc/vgcUqzxxA0or+GPKfIBGOERgodWbJj1gCqGICYa2EF2JvcMzyrsDL5nMJ4F803Q9IKiTmgMUdEgSgpEuDqV/r/Z+FcwcabCL6sx/iT6xPzBbkLHrjRLs01mmuN/fqEkPySncxFD80SdHbJfKakoTtrBNUY6OAMiaGgWYO2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933938; c=relaxed/simple;
-	bh=0bofXfwELl64weF8rsdraMK9hyASRhPJAd2BXm5iWfk=;
+	s=arc-20240116; t=1706933939; c=relaxed/simple;
+	bh=3I/DZVFQQ7AQbQwyhYf9tIj0k7shBttptve6+PDhRNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eCNW+FDGrOr78VYWTLqW2K0tlD2c9ZRlCyjolSdJU/E8Yj2ZgSLeI4v9gTjzTCd2CfvJuZ9pJB0yyxQPmJaW329lXdkgVwvi//VUtJJRZsrmhtjxJBdaMpW/wyt5rjfbpjFV0PjUx2O8MG//0wMMgxc4tTMBzAeHVCQfdG88/nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKZVqLqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxdCu/Yb4+gN8SZ8YvICPNDOYMzSMgYSiCwsqmpmt3gqK1cuvO/K8rhQy4/KCjiJxK6Kv0S1mg3bDgLJw1npn2wPzrfBn4W4I5BRzeIV4XHzOR+a1OIOlfW28Jzs5wbhP/Hc6sxi4ptp3Xvak/wWHuqbpXqerZKobk0HK4u5Whg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1m3ehOR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKZVqLqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D19C43390;
-	Sat,  3 Feb 2024 04:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1m3ehOR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421A5C433C7;
+	Sat,  3 Feb 2024 04:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933938;
-	bh=0bofXfwELl64weF8rsdraMK9hyASRhPJAd2BXm5iWfk=;
+	s=korg; t=1706933939;
+	bh=3I/DZVFQQ7AQbQwyhYf9tIj0k7shBttptve6+PDhRNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKZVqLqpMmR/IJRM5GM7YIk0qgwF5ePtliaqYK2nPMssBdrcphoiLzpXuZ1/BGOVS
-	 ICxyHLwe3aJHX16wyr+5Zvxw4REdeLq6lTJXFWoXdnTif9v1dVdzdPVx78SKVuPF+p
-	 g9Esgsr3weRSiOI6fS5Awc7tp7bEAGHdXH/z6/yo=
+	b=a1m3ehORQHC315zs0s79Df3R0ndyWXI8lMsEPw00krZZbHJFsDKvex9xIHIXkVft7
+	 cyyWWjgk0l4U2OsLdUQL3nc2c/b3q1fIa3QfYQS49aXhzLnfpHT3CIDEaeo9RFbylh
+	 2ffr0+YG45pLs+NR/MLd6aAoef9SiXPfkomdQYrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaojian Du <Xiaojian.Du@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Elad Yifee <eladwf@users.github.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 283/353] drm/amdgpu: Fix with right return code -EIO in amdgpu_gmc_vram_checking()
-Date: Fri,  2 Feb 2024 20:06:41 -0800
-Message-ID: <20240203035412.723169736@linuxfoundation.org>
+Subject: [PATCH 6.7 301/353] net: ethernet: mtk_eth_soc: set DMA coherent mask to get PPE working
+Date: Fri,  2 Feb 2024 20:06:59 -0800
+Message-ID: <20240203035413.363704481@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -48,80 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit fac4ebd79fed60e79cccafdad45a2bb8d3795044 ]
+[ Upstream commit cae1f1c36661f28c92a1db9113961a9ebd61dbaa ]
 
-The amdgpu_gmc_vram_checking() function in emulation checks whether
-all of the memory range of shared system memory could be accessed by
-GPU, from this aspect, -EIO is returned for error scenarios.
+Set DMA coherent mask to 32-bit which makes PPE offloading engine start
+working on BPi-R4 which got 4 GiB of RAM.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/gmc_v6_0.c:919 gmc_v6_0_hw_init() warn: missing error code? 'r'
-drivers/gpu/drm/amd/amdgpu/gmc_v7_0.c:1103 gmc_v7_0_hw_init() warn: missing error code? 'r'
-drivers/gpu/drm/amd/amdgpu/gmc_v8_0.c:1223 gmc_v8_0_hw_init() warn: missing error code? 'r'
-drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c:2344 gmc_v9_0_hw_init() warn: missing error code? 'r'
-
-Cc: Xiaojian Du <Xiaojian.Du@amd.com>
-Cc: Lijo Lazar <lijo.lazar@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 2d75891ebc09 ("net: ethernet: mtk_eth_soc: support 36-bit DMA addressing on MT7988")
+Suggested-by: Elad Yifee <eladwf@users.github.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/97e90925368b405f0974b9b15f1b7377c4a329ad.1706113251.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-index d2f273d77e59..55784a9f26c4 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -1045,21 +1045,28 @@ int amdgpu_gmc_vram_checking(struct amdgpu_device *adev)
- 	 * seconds, so here, we just pick up three parts for emulation.
- 	 */
- 	ret = memcmp(vram_ptr, cptr, 10);
--	if (ret)
--		return ret;
-+	if (ret) {
-+		ret = -EIO;
-+		goto release_buffer;
-+	}
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 3cf6589cfdac..d2c039f83019 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -4758,7 +4758,10 @@ static int mtk_probe(struct platform_device *pdev)
+ 	}
  
- 	ret = memcmp(vram_ptr + (size / 2), cptr, 10);
--	if (ret)
--		return ret;
-+	if (ret) {
-+		ret = -EIO;
-+		goto release_buffer;
-+	}
- 
- 	ret = memcmp(vram_ptr + size - 10, cptr, 10);
--	if (ret)
--		return ret;
-+	if (ret) {
-+		ret = -EIO;
-+		goto release_buffer;
-+	}
- 
-+release_buffer:
- 	amdgpu_bo_free_kernel(&vram_bo, &vram_gpu,
- 			&vram_ptr);
- 
--	return 0;
-+	return ret;
- }
- 
- static ssize_t current_memory_partition_show(
+ 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_36BIT_DMA)) {
+-		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(36));
++		err = dma_set_mask(&pdev->dev, DMA_BIT_MASK(36));
++		if (!err)
++			err = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
++
+ 		if (err) {
+ 			dev_err(&pdev->dev, "Wrong DMA config\n");
+ 			return -EINVAL;
 -- 
 2.43.0
 
