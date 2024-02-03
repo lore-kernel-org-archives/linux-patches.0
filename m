@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993DE1118B;
-	Sat,  3 Feb 2024 04:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6247D1BDEB;
+	Sat,  3 Feb 2024 04:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933495; cv=none; b=I8+Z8ud89s/UpuDg4GtOs+9Cf+7pgk7qT3nOFbFi9b4GkriKyA5rTSsoomCFqakEMws6htXW3SsjEcvaMg5xcZUKjwiO35eSWwK8d7w9LXrLgmQWeaI61uVIpyZS0Qpm/3FPnnVREhR+T9zEtusJff+FeEXmGQnx2dnkEZkFfzg=
+	t=1706933496; cv=none; b=omRQVBrskgkAhxqVQByuNgFDo9pbCBFDQp1n/9k3t2MsBUnvZefcI+ofbL8mRKDq5JNRNec2ykKfl8Lb0SPeTvvkdB3NRxHXuJTt1vyM92yJn5hy/f+kWyDMQtScJ3KSm1+3b2gae8jFkUMHSozAqoI3Mx2cHEYdeIA6sKm9vFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933495; c=relaxed/simple;
-	bh=nu766SimR8VrCemGXDtCZD6Gf7m8KSOgYJCUTQoklG0=;
+	s=arc-20240116; t=1706933496; c=relaxed/simple;
+	bh=TiDi/TbjJxvHoBndV2aotguz7sBWn6tti0J95T/axlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3GDl5A+64pe8AxppxUTGEK0fzd+RR0e9BaJbQYPsCGb3I9WJJXLVdGihbqEI+flOM/fgQjzl2T8kpWDSDCl7sc3a9Qko3cTwdXs0PNo5KnJwzwyxG6WYmOtN2TCRr9Y0QG3Sn+98P/VVQRD8XflH/55xTP1Ks82CP1cs1yR9Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLqAFN2n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQ9scIiJvg85QfKUNQHHwAqs/iyTnNjXXcQ7c8u9UzdK/BZP/Bm/IFS3wNX13LLjzzrdoTqjL98i/38RYcYqB5lSCb3R0ySE6XTbbwbTzZN4ahezgkiJvKRAUbdJPypO0U0IjxpSyKL56sAlwlxWzniPuLY5ndf/0ScbX5LmHAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+7Iam6A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLqAFN2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DC6C43399;
-	Sat,  3 Feb 2024 04:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+7Iam6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7F5C433C7;
+	Sat,  3 Feb 2024 04:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933495;
-	bh=nu766SimR8VrCemGXDtCZD6Gf7m8KSOgYJCUTQoklG0=;
+	s=korg; t=1706933496;
+	bh=TiDi/TbjJxvHoBndV2aotguz7sBWn6tti0J95T/axlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLqAFN2nsFrL6Fi7iTSgxlbVyK56tVbOU8CIgzqFU9mb1RNDYEfJ6svXJFVG6hyE3
-	 v5Oi6XKHMPKrQ01QgLHVpKwNnB0YEEEV1N3S+PE00dn6LpK/JJkZkur6fBONDOcvO4
-	 WapkZywfxzVMrJnIewHBIxZlsV9Lx/1S3I3UxRRw=
+	b=i+7Iam6AmQA76H8OFmEA1w44ZEiJ/PQJrTvd1AfPCH59yb2gTbxDWEFJHHjDUmtb4
+	 JM+10zLmjsxDce+uYW3BxBB9WTbERg5kQrqYeO712bvJmtQ5o7HgZaIN7V+no5nGfo
+	 A9Rp2E0KTWh4lzYTtOuh7c6/MROybC+wc5gDckcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo Ye <bo.ye@mediatek.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com,
+	Osama Muhammad <osmtendev@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/322] thermal: core: Fix thermal zone suspend-resume synchronization
-Date: Fri,  2 Feb 2024 20:02:02 -0800
-Message-ID: <20240203035359.860066050@linuxfoundation.org>
+Subject: [PATCH 6.6 026/322] FS:JFS:UBSAN:array-index-out-of-bounds in dbAdjTree
+Date: Fri,  2 Feb 2024 20:02:03 -0800
+Message-ID: <20240203035359.893514899@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,130 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 4e814173a8c4f432fd068b1c796f0416328c9d99 ]
+[ Upstream commit 9862ec7ac1cbc6eb5ee4a045b5d5b8edbb2f7e68 ]
 
-There are 3 synchronization issues with thermal zone suspend-resume
-during system-wide transitions:
+Syzkaller reported the following issue:
 
- 1. The resume code runs in a PM notifier which is invoked after user
-    space has been thawed, so it can run concurrently with user space
-    which can trigger a thermal zone device removal.  If that happens,
-    the thermal zone resume code may use a stale pointer to the next
-    list element and crash, because it does not hold thermal_list_lock
-    while walking thermal_tz_list.
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dmap.c:2867:6
+index 196694 is out of range for type 's8[1365]' (aka 'signed char[1365]')
+CPU: 1 PID: 109 Comm: jfsCommit Not tainted 6.6.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:217 [inline]
+ __ubsan_handle_out_of_bounds+0x11c/0x150 lib/ubsan.c:348
+ dbAdjTree+0x474/0x4f0 fs/jfs/jfs_dmap.c:2867
+ dbJoin+0x210/0x2d0 fs/jfs/jfs_dmap.c:2834
+ dbFreeBits+0x4eb/0xda0 fs/jfs/jfs_dmap.c:2331
+ dbFreeDmap fs/jfs/jfs_dmap.c:2080 [inline]
+ dbFree+0x343/0x650 fs/jfs/jfs_dmap.c:402
+ txFreeMap+0x798/0xd50 fs/jfs/jfs_txnmgr.c:2534
+ txUpdateMap+0x342/0x9e0
+ txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
+ jfs_lazycommit+0x47a/0xb70 fs/jfs/jfs_txnmgr.c:2732
+ kthread+0x2d3/0x370 kernel/kthread.c:388
+ ret_from_fork+0x48/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
+================================================================================
+Kernel panic - not syncing: UBSAN: panic_on_warn set ...
+CPU: 1 PID: 109 Comm: jfsCommit Not tainted 6.6.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+ panic+0x30f/0x770 kernel/panic.c:340
+ check_panic_on_warn+0x82/0xa0 kernel/panic.c:236
+ ubsan_epilogue lib/ubsan.c:223 [inline]
+ __ubsan_handle_out_of_bounds+0x13c/0x150 lib/ubsan.c:348
+ dbAdjTree+0x474/0x4f0 fs/jfs/jfs_dmap.c:2867
+ dbJoin+0x210/0x2d0 fs/jfs/jfs_dmap.c:2834
+ dbFreeBits+0x4eb/0xda0 fs/jfs/jfs_dmap.c:2331
+ dbFreeDmap fs/jfs/jfs_dmap.c:2080 [inline]
+ dbFree+0x343/0x650 fs/jfs/jfs_dmap.c:402
+ txFreeMap+0x798/0xd50 fs/jfs/jfs_txnmgr.c:2534
+ txUpdateMap+0x342/0x9e0
+ txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
+ jfs_lazycommit+0x47a/0xb70 fs/jfs/jfs_txnmgr.c:2732
+ kthread+0x2d3/0x370 kernel/kthread.c:388
+ ret_from_fork+0x48/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
+Kernel Offset: disabled
+Rebooting in 86400 seconds..
 
- 2. The thermal zone resume code calls thermal_zone_device_init()
-    outside the zone lock, so user space or an update triggered by
-    the platform firmware may see an inconsistent state of a
-    thermal zone leading to unexpected behavior.
+The issue is caused when the value of lp becomes greater than
+CTLTREESIZE which is the max size of stree. Adding a simple check
+solves this issue.
 
- 3. Clearing the in_suspend global variable in thermal_pm_notify()
-    allows __thermal_zone_device_update() to continue for all thermal
-    zones and it may as well run before the thermal_tz_list walk (or
-    at any point during the list walk for that matter) and attempt to
-    operate on a thermal zone that has not been resumed yet.  It may
-    also race destructively with thermal_zone_device_init().
+Dave:
+As the function returns a void, good error handling
+would require a more intrusive code reorganization, so I modified
+Osama's patch at use WARN_ON_ONCE for lack of a cleaner option.
 
-To address these issues, add thermal_list_lock locking to
-thermal_pm_notify(), especially arount the thermal_tz_list,
-make it call thermal_zone_device_init() back-to-back with
-__thermal_zone_device_update() under the zone lock and replace
-in_suspend with per-zone bool "suspend" indicators set and unset
-under the given zone's lock.
+The patch is tested via syzbot.
 
-Link: https://lore.kernel.org/linux-pm/20231218162348.69101-1-bo.ye@mediatek.com/
-Reported-by: Bo Ye <bo.ye@mediatek.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=39ba34a099ac2e9bd3cb
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 30 +++++++++++++++++++++++-------
- include/linux/thermal.h        |  2 ++
- 2 files changed, 25 insertions(+), 7 deletions(-)
+ fs/jfs/jfs_dmap.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 1494ffa59754..dee3022539cf 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -37,8 +37,6 @@ static LIST_HEAD(thermal_governor_list);
- static DEFINE_MUTEX(thermal_list_lock);
- static DEFINE_MUTEX(thermal_governor_lock);
- 
--static atomic_t in_suspend;
--
- static struct thermal_governor *def_governor;
- 
- /*
-@@ -409,7 +407,7 @@ void __thermal_zone_device_update(struct thermal_zone_device *tz,
- {
- 	int count;
- 
--	if (atomic_read(&in_suspend))
-+	if (tz->suspended)
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 11c77757ead9..d55f0dd8d754 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -2871,6 +2871,9 @@ static void dbAdjTree(dmtree_t * tp, int leafno, int newval)
+ 	/* is the current value the same as the old value ?  if so,
+ 	 * there is nothing to do.
+ 	 */
++	if (WARN_ON_ONCE(lp >= CTLTREESIZE))
++		return;
++
+ 	if (tp->dmt_stree[lp] == newval)
  		return;
  
- 	if (WARN_ONCE(!tz->ops->get_temp,
-@@ -1532,17 +1530,35 @@ static int thermal_pm_notify(struct notifier_block *nb,
- 	case PM_HIBERNATION_PREPARE:
- 	case PM_RESTORE_PREPARE:
- 	case PM_SUSPEND_PREPARE:
--		atomic_set(&in_suspend, 1);
-+		mutex_lock(&thermal_list_lock);
-+
-+		list_for_each_entry(tz, &thermal_tz_list, node) {
-+			mutex_lock(&tz->lock);
-+
-+			tz->suspended = true;
-+
-+			mutex_unlock(&tz->lock);
-+		}
-+
-+		mutex_unlock(&thermal_list_lock);
- 		break;
- 	case PM_POST_HIBERNATION:
- 	case PM_POST_RESTORE:
- 	case PM_POST_SUSPEND:
--		atomic_set(&in_suspend, 0);
-+		mutex_lock(&thermal_list_lock);
-+
- 		list_for_each_entry(tz, &thermal_tz_list, node) {
-+			mutex_lock(&tz->lock);
-+
-+			tz->suspended = false;
-+
- 			thermal_zone_device_init(tz);
--			thermal_zone_device_update(tz,
--						   THERMAL_EVENT_UNSPECIFIED);
-+			__thermal_zone_device_update(tz, THERMAL_EVENT_UNSPECIFIED);
-+
-+			mutex_unlock(&tz->lock);
- 		}
-+
-+		mutex_unlock(&thermal_list_lock);
- 		break;
- 	default:
- 		break;
-diff --git a/include/linux/thermal.h b/include/linux/thermal.h
-index a5ae4af955ff..4012f440bfdc 100644
---- a/include/linux/thermal.h
-+++ b/include/linux/thermal.h
-@@ -150,6 +150,7 @@ struct thermal_cooling_device {
-  * @node:	node in thermal_tz_list (in thermal_core.c)
-  * @poll_queue:	delayed work for polling
-  * @notify_event: Last notification event
-+ * @suspended: thermal zone suspend indicator
-  */
- struct thermal_zone_device {
- 	int id;
-@@ -183,6 +184,7 @@ struct thermal_zone_device {
- 	struct list_head node;
- 	struct delayed_work poll_queue;
- 	enum thermal_notify_event notify_event;
-+	bool suspended;
- };
- 
- /**
 -- 
 2.43.0
 
