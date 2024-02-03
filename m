@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B7818E27;
-	Sat,  3 Feb 2024 04:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C26A18E27;
+	Sat,  3 Feb 2024 04:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933685; cv=none; b=GpU/G87WAPtN2NiRUzIGPStQsOMDCTQk+eP/JV3VMwUithL8i6YZ/zVMT2oYnS2AIfni2qr1r19HzKuCdFhWjBS1TOVtyr10UVDhbDvHD4SqvZzPTvfC8RETmUOybfMaTsIsYU2YlBWmhghh3UdVPqu0lcRnzifZWDurrsBWS5o=
+	t=1706933686; cv=none; b=J7vZRUO0gtfOD9JWMc86tKa9rVH7cbzWVSmEu3uJgfkl699YW+Sn32V0R6+PYci0SqKimCkcv1AfX24zxI1InK14Z7zdfBJ+DdbGxlOX6dVcJmehT9F7OdK5ATCXS2cOcCvsluI5XT07Ey6pcDnh1OAIXxmsLqWRfx/jQPD5vRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933685; c=relaxed/simple;
-	bh=w4iWHtTPodE9TM22TJ/Hz+l9GEqotChOhC0IAzMCuV4=;
+	s=arc-20240116; t=1706933686; c=relaxed/simple;
+	bh=oVgbtp3J4xUfFEPj6G6Dk0xUma2RzEFiXo9lGY65Xkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=caHt7VPU9ARYmdrXrEwNuRiLgw5pGauBQH3mP6JG/hjOt1Lmbj8a0AASP5PEaDMhc9X8mWP3Fq79KLJZXHuCxGdfPNN9RBQsdWgpnTZnXijs81EO7aKdAzLlcUlK7DiduAaSn10xMznsq54PCRKXRGnk5DkfHsy87N2rL1QOjJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIjDKB8X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+p8NMjsMfl6zziUHpEGcQEYJM1ROXFSPnodaZD8hjnZ3H8e3+Zp/Bn2Owa0yFq15kRtgryimUGgHHt8eWr0YNS36N0z0enqK0IGQrQXdYsaF5F6LTpykMTepAvj+Tj2cRitbLwt4EFOCdzVBnLW3Oyue/BBkcDyDrdgEHlW6DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3HosiXK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIjDKB8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1EEC433B1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3HosiXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E473AC433F1;
 	Sat,  3 Feb 2024 04:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933685;
-	bh=w4iWHtTPodE9TM22TJ/Hz+l9GEqotChOhC0IAzMCuV4=;
+	s=korg; t=1706933686;
+	bh=oVgbtp3J4xUfFEPj6G6Dk0xUma2RzEFiXo9lGY65Xkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIjDKB8XVaTPKsh2AzWGiiCkU9hjH3VKSC1VpSSFYrzjAEKwYz75K/fm91EBG384X
-	 Jx2M3YjtIfZHisU8hhy16wSrDghkO4v3pk3LdJitiO6Z4h6EeN6PzAKXry176Ilo1e
-	 Mp7TPYUOUFE3tSsiCU+hXOWEWKwCv4MHR0zwhR1I=
+	b=n3HosiXKb/2PbXDm/6Ovmo+5kYEGu/dyjTtlAnRfpZTV2kTfo4KkTP2TA5ktNEXsF
+	 tmo41LyiZpcNvTpzxRDnUoRGekih+hiHV8sNXdSs2sheXtexDay6dEQQeQmXewXrAj
+	 TxYgp4zDU1w9esiHB1PTSiluI1eyiGm44HrvkmBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 280/322] net: lan966x: Fix port configuration when using SGMII interface
-Date: Fri,  2 Feb 2024 20:06:17 -0800
-Message-ID: <20240203035408.142432715@linuxfoundation.org>
+Subject: [PATCH 6.6 263/322] riscv: Fix build error on rv32 + XIP
+Date: Fri,  2 Feb 2024 20:06:00 -0800
+Message-ID: <20240203035407.633283569@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,40 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 62b4248105353e7d1debd30ca5c57ec5e5f28e35 ]
+[ Upstream commit 66f962d8939fd2ac74de901d30d30310c8ddca79 ]
 
-In case the interface between the MAC and the PHY is SGMII, then the bit
-GIGA_MODE on the MAC side needs to be set regardless of the speed at
-which it is running.
+commit 66f1e6809397 ("riscv: Make XIP bootable again") restricted page
+offset to the sv39 page offset instead of the default sv57, which makes
+sense since probably the platforms that target XIP kernels do not
+support anything else than sv39 and we do not try to find out the
+largest address space supported on XIP kernels (ie set_satp_mode()).
 
-Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+But PAGE_OFFSET_L3 is not defined for rv32, so fix the build error by
+restoring the previous behaviour which picks CONFIG_PAGE_OFFSET for rv32.
+
+Fixes: 66f1e6809397 ("riscv: Make XIP bootable again")
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Closes: https://lore.kernel.org/linux-riscv/344dca85-5c48-44e1-bc64-4fa7973edd12@infradead.org/T/#u
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org> # build-tested
+Link: https://lore.kernel.org/r/20240118212120.2087803-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_port.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/riscv/mm/init.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_port.c b/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-index 92108d354051..2e83bbb9477e 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-@@ -168,9 +168,10 @@ static void lan966x_port_link_up(struct lan966x_port *port)
- 	lan966x_taprio_speed_set(port, config->speed);
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 5f1921d014b1..e71dd19ac801 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -1058,7 +1058,11 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
+ 	kernel_map.virt_addr = KERNEL_LINK_ADDR + kernel_map.virt_offset;
  
- 	/* Also the GIGA_MODE_ENA(1) needs to be set regardless of the
--	 * port speed for QSGMII ports.
-+	 * port speed for QSGMII or SGMII ports.
- 	 */
--	if (phy_interface_num_ports(config->portmode) == 4)
-+	if (phy_interface_num_ports(config->portmode) == 4 ||
-+	    config->portmode == PHY_INTERFACE_MODE_SGMII)
- 		mode = DEV_MAC_MODE_CFG_GIGA_MODE_ENA_SET(1);
+ #ifdef CONFIG_XIP_KERNEL
++#ifdef CONFIG_64BIT
+ 	kernel_map.page_offset = PAGE_OFFSET_L3;
++#else
++	kernel_map.page_offset = _AC(CONFIG_PAGE_OFFSET, UL);
++#endif
+ 	kernel_map.xiprom = (uintptr_t)CONFIG_XIP_PHYS_ADDR;
+ 	kernel_map.xiprom_sz = (uintptr_t)(&_exiprom) - (uintptr_t)(&_xiprom);
  
- 	lan_wr(config->duplex | mode,
 -- 
 2.43.0
 
