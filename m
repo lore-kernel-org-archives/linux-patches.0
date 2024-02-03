@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238B1101C1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C93101C1;
 	Sat,  3 Feb 2024 04:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933409; cv=none; b=fIR7Yuife3Wb9BVx9gwW8xAhuuu9/tIoS4I04sBIE2Vy7R808z3rnzV6oWEpxlPCvRu44YC5MObbWM5NQFsY0M2EtDi4lHRE2Ht3Eb36y/PHTHkEmpntjcVzVolpHWpkN5hWF7TSaEcXcZNr0WQt9zV6+jxXz75sr3ReRZ7O0c4=
+	t=1706933410; cv=none; b=ATfQcDowedBiOgJ+CWQ3XDNR1l5uAHGRLpIkfPUS9knAK/OBAx9rEZUBMpk+TYFn2UxJGwZh14dxPQNgh0TPc2//b0YVBX3dTS4G76olLslIBPMXsfWyvGg9P7n7MpDGS2KKSqdGzID/uJh0xyxAZ1vSnFe53roGv1jbvr+bHgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933409; c=relaxed/simple;
-	bh=yFNMFvCXu9aQHJdvW6lY9cUqj21taBmExrNOzXpiev0=;
+	s=arc-20240116; t=1706933410; c=relaxed/simple;
+	bh=aWpGc/NMHrQ30jg0dn0e2x9uvvz+tAi2yvh0gGHU7lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgSSsrUU9wKmE+x2m50nH0g7tT65BEJX5iGNDvbbbhwnaBmLOT6RPOlGlTFLh5QngPTZXgd74E/s9E1gWQv+rxio/G9PAqoxso3XzEuHLiazU1s4mY0BzGsFIBQa2jvferVv3D47D/l5Vwjbigg7LBjpDhR9g37VYv7O855fT9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOCh+dih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RD3to8uFQp4IzJ/jrdA7ShLF+jPobaZqzgOAcBIgv7scJ6I/4FPXHJTMKwqcbJVPwCjihYP6oH9kpFv2XDWFD7c9Ct7MCJIZQVyaGAD5Loh07mcRKe3UYw2iBNb1LcaJc/nMCpD86CEC2S8gSCcP8RkCWtrH+5KEPIUcSRtY+N0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTYl34Tx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOCh+dih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0CBCC433F1;
-	Sat,  3 Feb 2024 04:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTYl34Tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA814C43390;
+	Sat,  3 Feb 2024 04:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933409;
-	bh=yFNMFvCXu9aQHJdvW6lY9cUqj21taBmExrNOzXpiev0=;
+	bh=aWpGc/NMHrQ30jg0dn0e2x9uvvz+tAi2yvh0gGHU7lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wOCh+dihOd5TAOijcNDdKGZaTRmqHnqMZNEttNL/p+6YEbOBw18dGdAH4wVx3h4xg
-	 Vk+jVcJuubauk0yGaf5W0KBDK8r6hBE5/yVHKHFj96+6DphQgaDG16humbM5FwsVsL
-	 ++rSQRGmG80u7xBpN1W9qw2ui7PSxRteHUnzC48Y=
+	b=mTYl34Tx/Wv4L4qfoMNnNXzYYfQ001WSBL/ZouL6RBJQ/FV3/IK9oEy8/3QPu0xmY
+	 hmAlsSbiV/ZB0/HmvO6hj3bBe07S5RiD5ETpcT9g2gkZl4BBpniGSeq+KsG7Tg3qlB
+	 AdjH5BcUMdDi1EUOFZhRFNQlCRgU0dPmHok545zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
+	Umang Jain <umang.jain@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/219] media: ddbridge: fix an error code problem in ddb_probe
-Date: Fri,  2 Feb 2024 20:05:03 -0800
-Message-ID: <20240203035335.777025516@linuxfoundation.org>
+Subject: [PATCH 6.1 131/219] media: i2c: imx335: Fix hblank min/max values
+Date: Fri,  2 Feb 2024 20:05:04 -0800
+Message-ID: <20240203035335.906799958@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -51,32 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Kieran Bingham <kieran.bingham@ideasonboard.com>
 
-[ Upstream commit 09b4195021be69af1e1936cca995712a6d0f2562 ]
+[ Upstream commit d7b95ad7a8d56248dfc34f861e445fad7a4004f4 ]
 
-Error code is assigned to 'stat', return 'stat' rather than '-1'.
+The V4L2_CID_HBLANK control is marked as readonly and can only be a
+single value.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
+Set the minimum and maximum value to match the mode value.
+
+Reviewed-by: Umang Jain <umang.jain@ideasonboard.com>
+Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/ddbridge/ddbridge-main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/imx335.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/ddbridge/ddbridge-main.c b/drivers/media/pci/ddbridge/ddbridge-main.c
-index 91733ab9f58c..363badab7cf0 100644
---- a/drivers/media/pci/ddbridge/ddbridge-main.c
-+++ b/drivers/media/pci/ddbridge/ddbridge-main.c
-@@ -238,7 +238,7 @@ static int ddb_probe(struct pci_dev *pdev,
- 	ddb_unmap(dev);
- 	pci_set_drvdata(pdev, NULL);
- 	pci_disable_device(pdev);
--	return -1;
-+	return stat;
- }
- 
- /****************************************************************************/
+diff --git a/drivers/media/i2c/imx335.c b/drivers/media/i2c/imx335.c
+index 078ede2b7a00..8e91767d6130 100644
+--- a/drivers/media/i2c/imx335.c
++++ b/drivers/media/i2c/imx335.c
+@@ -971,8 +971,8 @@ static int imx335_init_controls(struct imx335 *imx335)
+ 	imx335->hblank_ctrl = v4l2_ctrl_new_std(ctrl_hdlr,
+ 						&imx335_ctrl_ops,
+ 						V4L2_CID_HBLANK,
+-						IMX335_REG_MIN,
+-						IMX335_REG_MAX,
++						mode->hblank,
++						mode->hblank,
+ 						1, mode->hblank);
+ 	if (imx335->hblank_ctrl)
+ 		imx335->hblank_ctrl->flags |= V4L2_CTRL_FLAG_READ_ONLY;
 -- 
 2.43.0
 
