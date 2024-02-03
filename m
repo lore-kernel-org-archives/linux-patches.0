@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E0F5027F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E0850A6A;
 	Sat,  3 Feb 2024 04:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933882; cv=none; b=rcK3VmPPazLo65e/YK6UuBHgixCs6pVpxjh7DPMrEAASh7yP5LZLRZyZV7uKgNvP3u3ruIezDCO8NeObKw6GyappeLvCUsD85xmjNAHyjWtjBOvgQx3NbPbHZ2XooS6mtfvUBgYnpbXUIn+K2A1AwW1RAn68HXmxD76KCunzyDw=
+	t=1706933882; cv=none; b=QicMSzO5Bn7XQC+X3l4qnrHrR9KQpSYKW54jv1JSSeVzafaYTkpM6QArIe2yKL+XNTWiQsYEW5Tg7lhNTDUgp3eAJ59IALRU8A8jx4SOpqkTU5kIp4D5tGhv5lxYh6fdm+HiJdoJT8hKFUoadw8B4vxxe9qdohNJVRrgD5+GxnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933882; c=relaxed/simple;
-	bh=TQlsH6a8Nyygal1SM5q6497fayvp0FZKBRvs1aki9bs=;
+	bh=9+sWO6TVRNcwXco3+suF+Yj+s9N+0OfOHbCZ6jYDXN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sbagyLZCyIdp/bkL24i012RCrWW4rqWYVAy4Vqn2H5xDHnXvKP1Zhy8BR6FdcLlmOGsUfVOzQ6Lr9t5pPW6CXFTgVEys+N+149CHqeiF1utpFoI21vKwF17eE6dX1Z86dggydB3rcjsx/FmsPOTMn1dMTODNE42MHoVITvH05mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdVExNUC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CiX8XLj+F7QbdQB7SfUPoqQwGidhR4fOQapkmQtPuK2NoCxnDNBfrU1C1cF0vX/YHdliRWG4kIV1Ngk4t1657golIVKFOjddP1KCh3Q7h9j7LsT13/zeJ/M7UzpD/oMaIyZP5Wt9kxumaM9WISeCeDcSv8792LNvy9BP0Nid2k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOtIF9bg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdVExNUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC12C433C7;
-	Sat,  3 Feb 2024 04:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOtIF9bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB86C433F1;
+	Sat,  3 Feb 2024 04:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933882;
-	bh=TQlsH6a8Nyygal1SM5q6497fayvp0FZKBRvs1aki9bs=;
+	bh=9+sWO6TVRNcwXco3+suF+Yj+s9N+0OfOHbCZ6jYDXN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdVExNUC7N+SH3ZmRRuXWSuWK1or5jK3WkjnSyj3xp/oLm/RqOvT0e28Q+yOnXjAL
-	 tQ7+TJciTFNA+4Fne2fJcjAhCN2VHPW4bMji7a2vf0OAw+Aqjs41aMRN+uIG7nWG8p
-	 +MNhmKtkZ296dBslMSkJfmhi9kyrGxiwUgQIn1ds=
+	b=IOtIF9bgEy5UHvjDXRQJHKAK4wmcrf3Jsuxn8JSvj3iz2/Ao1fruZwbQxyeSm3tMr
+	 KxnKpQ0Xr92MYzIuc+li55iyrb9+7OWX0Nb2tM9HzNbXakzTJ4Nd+n0Pwzc0yluDpI
+	 Am2GpgixbFFqhQ7zSA+j/GXWNW3/aHy6suzoSP+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Michael Strauss <michael.strauss@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lukasz Stelmach <l.stelmach@samsung.com>,
+	James Seo <james@equiv.tech>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 222/353] drm/amd/display: Fix lightup regression with DP2 single display configs
-Date: Fri,  2 Feb 2024 20:05:40 -0800
-Message-ID: <20240203035410.701189540@linuxfoundation.org>
+Subject: [PATCH 6.7 196/353] hwmon: (hp-wmi-sensors) Fix failure to load on EliteDesk 800 G6
+Date: Fri,  2 Feb 2024 20:05:14 -0800
+Message-ID: <20240203035409.889115484@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -49,52 +46,277 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Strauss <michael.strauss@amd.com>
+From: James Seo <james@equiv.tech>
 
-[ Upstream commit 5a82b8d6c05f9b30828ede1b103b9ee5cb5c912e ]
+[ Upstream commit c9ba592580947b81f33f514320aeef02ddc001fd ]
 
-[WHY]
-Previous fix for multiple displays downstream of DP2 MST hub caused regression
+The EliteDesk 800 G6 stores a raw WMI string within the ACPI object in its
+BIOS corresponding to one instance of HPBIOS_PlatformEvents.Name. This is
+evidently a valid way of representing a WMI data item as far as the
+Microsoft ACPI-WMI mapper is concerned, but is preventing the driver from
+loading.
 
-[HOW]
-Match sink IDs instead of sink struct addresses
+This seems quite rare, but add support for such strings. Treating this as a
+quirk pretty much means adding that support anyway.
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Michael Strauss <michael.strauss@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Also clean up an oversight in update_numeric_sensor_from_wobj() in which
+the result of hp_wmi_strdup() was being used without error checking.
+
+Reported-by: Lukasz Stelmach <l.stelmach@samsung.com>
+Closes: https://lore.kernel.org/linux-hwmon/7850a0bd-60e7-88f8-1d6c-0bb0e3234fdc@roeck-us.net/
+Tested-by: Lukasz Stelmach <l.stelmach@samsung.com>
+Signed-off-by: James Seo <james@equiv.tech>
+Link: https://lore.kernel.org/r/20231123054918.157098-1-james@equiv.tech
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml2_utils.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hwmon/hp-wmi-sensors.c | 127 ++++++++++++++++++++++++++++-----
+ 1 file changed, 111 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml2_utils.c b/drivers/gpu/drm/amd/display/dc/dml2/dml2_utils.c
-index 2498b8341199..d6a68484153c 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_utils.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_utils.c
-@@ -157,6 +157,14 @@ bool is_dp2p0_output_encoder(const struct pipe_ctx *pipe_ctx)
- {
- 	/* If this assert is hit then we have a link encoder dynamic management issue */
- 	ASSERT(pipe_ctx->stream_res.hpo_dp_stream_enc ? pipe_ctx->link_res.hpo_dp_link_enc != NULL : true);
-+	/* Count MST hubs once by treating only 1st remote sink in topology as an encoder */
-+	if (pipe_ctx->stream->link && pipe_ctx->stream->link->remote_sinks[0]) {
-+		return (pipe_ctx->stream_res.hpo_dp_stream_enc &&
-+			pipe_ctx->link_res.hpo_dp_link_enc &&
-+			dc_is_dp_signal(pipe_ctx->stream->signal) &&
-+			(pipe_ctx->stream->link->remote_sinks[0]->sink_id == pipe_ctx->stream->sink->sink_id));
-+	}
+diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
+index 17ae62f88bbf..b5325d0e72b9 100644
+--- a/drivers/hwmon/hp-wmi-sensors.c
++++ b/drivers/hwmon/hp-wmi-sensors.c
+@@ -17,6 +17,8 @@
+  *     Available: https://github.com/linuxhw/ACPI
+  * [4] P. Rohár, "bmfdec - Decompile binary MOF file (BMF) from WMI buffer",
+  *     2017. [Online]. Available: https://github.com/pali/bmfdec
++ * [5] Microsoft Corporation, "Driver-Defined WMI Data Items", 2017. [Online].
++ *     Available: https://learn.microsoft.com/en-us/windows-hardware/drivers/kernel/driver-defined-wmi-data-items
+  */
+ 
+ #include <linux/acpi.h>
+@@ -24,6 +26,7 @@
+ #include <linux/hwmon.h>
+ #include <linux/jiffies.h>
+ #include <linux/mutex.h>
++#include <linux/nls.h>
+ #include <linux/units.h>
+ #include <linux/wmi.h>
+ 
+@@ -395,6 +398,50 @@ struct hp_wmi_sensors {
+ 	struct mutex lock;	/* Lock polling WMI and driver state changes. */
+ };
+ 
++static bool is_raw_wmi_string(const u8 *pointer, u32 length)
++{
++	const u16 *ptr;
++	u16 len;
 +
- 	return (pipe_ctx->stream_res.hpo_dp_stream_enc &&
- 		pipe_ctx->link_res.hpo_dp_link_enc &&
- 		dc_is_dp_signal(pipe_ctx->stream->signal));
++	/* WMI strings are length-prefixed UTF-16 [5]. */
++	if (length <= sizeof(*ptr))
++		return false;
++
++	length -= sizeof(*ptr);
++	ptr = (const u16 *)pointer;
++	len = *ptr;
++
++	return len <= length && !(len & 1);
++}
++
++static char *convert_raw_wmi_string(const u8 *buf)
++{
++	const wchar_t *src;
++	unsigned int cps;
++	unsigned int len;
++	char *dst;
++	int i;
++
++	src = (const wchar_t *)buf;
++
++	/* Count UTF-16 code points. Exclude trailing null padding. */
++	cps = *src / sizeof(*src);
++	while (cps && !src[cps])
++		cps--;
++
++	/* Each code point becomes up to 3 UTF-8 characters. */
++	len = min(cps * 3, HP_WMI_MAX_STR_SIZE - 1);
++
++	dst = kmalloc((len + 1) * sizeof(*dst), GFP_KERNEL);
++	if (!dst)
++		return NULL;
++
++	i = utf16s_to_utf8s(++src, cps, UTF16_LITTLE_ENDIAN, dst, len);
++	dst[i] = '\0';
++
++	return dst;
++}
++
+ /* hp_wmi_strdup - devm_kstrdup, but length-limited */
+ static char *hp_wmi_strdup(struct device *dev, const char *src)
+ {
+@@ -412,6 +459,23 @@ static char *hp_wmi_strdup(struct device *dev, const char *src)
+ 	return dst;
+ }
+ 
++/* hp_wmi_wstrdup - hp_wmi_strdup, but for a raw WMI string */
++static char *hp_wmi_wstrdup(struct device *dev, const u8 *buf)
++{
++	char *src;
++	char *dst;
++
++	src = convert_raw_wmi_string(buf);
++	if (!src)
++		return NULL;
++
++	dst = hp_wmi_strdup(dev, strim(src));	/* Note: Copy is trimmed. */
++
++	kfree(src);
++
++	return dst;
++}
++
+ /*
+  * hp_wmi_get_wobj - poll WMI for a WMI object instance
+  * @guid: WMI object GUID
+@@ -462,8 +526,14 @@ static int check_wobj(const union acpi_object *wobj,
+ 	for (prop = 0; prop <= last_prop; prop++) {
+ 		type = elements[prop].type;
+ 		valid_type = property_map[prop];
+-		if (type != valid_type)
++		if (type != valid_type) {
++			if (type == ACPI_TYPE_BUFFER &&
++			    valid_type == ACPI_TYPE_STRING &&
++			    is_raw_wmi_string(elements[prop].buffer.pointer,
++					      elements[prop].buffer.length))
++				continue;
+ 			return -EINVAL;
++		}
+ 	}
+ 
+ 	return 0;
+@@ -480,7 +550,9 @@ static int extract_acpi_value(struct device *dev,
+ 		break;
+ 
+ 	case ACPI_TYPE_STRING:
+-		*out_string = hp_wmi_strdup(dev, strim(element->string.pointer));
++		*out_string = element->type == ACPI_TYPE_BUFFER ?
++			hp_wmi_wstrdup(dev, element->buffer.pointer) :
++			hp_wmi_strdup(dev, strim(element->string.pointer));
+ 		if (!*out_string)
+ 			return -ENOMEM;
+ 		break;
+@@ -861,7 +933,9 @@ update_numeric_sensor_from_wobj(struct device *dev,
+ {
+ 	const union acpi_object *elements;
+ 	const union acpi_object *element;
+-	const char *string;
++	const char *new_string;
++	char *trimmed;
++	char *string;
+ 	bool is_new;
+ 	int offset;
+ 	u8 size;
+@@ -885,11 +959,21 @@ update_numeric_sensor_from_wobj(struct device *dev,
+ 	offset = is_new ? size - 1 : -2;
+ 
+ 	element = &elements[HP_WMI_PROPERTY_CURRENT_STATE + offset];
+-	string = strim(element->string.pointer);
+-
+-	if (strcmp(string, nsensor->current_state)) {
+-		devm_kfree(dev, nsensor->current_state);
+-		nsensor->current_state = hp_wmi_strdup(dev, string);
++	string = element->type == ACPI_TYPE_BUFFER ?
++		convert_raw_wmi_string(element->buffer.pointer) :
++		element->string.pointer;
++
++	if (string) {
++		trimmed = strim(string);
++		if (strcmp(trimmed, nsensor->current_state)) {
++			new_string = hp_wmi_strdup(dev, trimmed);
++			if (new_string) {
++				devm_kfree(dev, nsensor->current_state);
++				nsensor->current_state = new_string;
++			}
++		}
++		if (element->type == ACPI_TYPE_BUFFER)
++			kfree(string);
+ 	}
+ 
+ 	/* Old variant: -2 (not -1) because it lacks the Size property. */
+@@ -996,11 +1080,15 @@ static int check_event_wobj(const union acpi_object *wobj)
+ 			  HP_WMI_EVENT_PROPERTY_STATUS);
+ }
+ 
+-static int populate_event_from_wobj(struct hp_wmi_event *event,
++static int populate_event_from_wobj(struct device *dev,
++				    struct hp_wmi_event *event,
+ 				    union acpi_object *wobj)
+ {
+ 	int prop = HP_WMI_EVENT_PROPERTY_NAME;
+ 	union acpi_object *element;
++	acpi_object_type type;
++	char *string;
++	u32 value;
+ 	int err;
+ 
+ 	err = check_event_wobj(wobj);
+@@ -1009,20 +1097,24 @@ static int populate_event_from_wobj(struct hp_wmi_event *event,
+ 
+ 	element = wobj->package.elements;
+ 
+-	/* Extracted strings are NOT device-managed copies. */
+-
+ 	for (; prop <= HP_WMI_EVENT_PROPERTY_CATEGORY; prop++, element++) {
++		type = hp_wmi_event_property_map[prop];
++
++		err = extract_acpi_value(dev, element, type, &value, &string);
++		if (err)
++			return err;
++
+ 		switch (prop) {
+ 		case HP_WMI_EVENT_PROPERTY_NAME:
+-			event->name = strim(element->string.pointer);
++			event->name = string;
+ 			break;
+ 
+ 		case HP_WMI_EVENT_PROPERTY_DESCRIPTION:
+-			event->description = strim(element->string.pointer);
++			event->description = string;
+ 			break;
+ 
+ 		case HP_WMI_EVENT_PROPERTY_CATEGORY:
+-			event->category = element->integer.value;
++			event->category = value;
+ 			break;
+ 
+ 		default:
+@@ -1511,8 +1603,8 @@ static void hp_wmi_notify(u32 value, void *context)
+ 	struct acpi_buffer out = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct hp_wmi_sensors *state = context;
+ 	struct device *dev = &state->wdev->dev;
++	struct hp_wmi_event event = {};
+ 	struct hp_wmi_info *fan_info;
+-	struct hp_wmi_event event;
+ 	union acpi_object *wobj;
+ 	acpi_status err;
+ 	int event_type;
+@@ -1546,7 +1638,7 @@ static void hp_wmi_notify(u32 value, void *context)
+ 
+ 	wobj = out.pointer;
+ 
+-	err = populate_event_from_wobj(&event, wobj);
++	err = populate_event_from_wobj(dev, &event, wobj);
+ 	if (err) {
+ 		dev_warn(dev, "Bad event data (ACPI type %d)\n", wobj->type);
+ 		goto out_free_wobj;
+@@ -1577,6 +1669,9 @@ static void hp_wmi_notify(u32 value, void *context)
+ out_free_wobj:
+ 	kfree(wobj);
+ 
++	devm_kfree(dev, event.name);
++	devm_kfree(dev, event.description);
++
+ out_unlock:
+ 	mutex_unlock(&state->lock);
+ }
 -- 
 2.43.0
 
