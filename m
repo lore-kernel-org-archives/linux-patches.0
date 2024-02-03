@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71420101CE;
-	Sat,  3 Feb 2024 04:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD994F5F2;
+	Sat,  3 Feb 2024 04:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933835; cv=none; b=L79npwVlFoT7nwLA8GV8GedONNqkFuf9GUYi1Zyx5BtNSWMWOT6RXVAD6JETZSyj8Hs1Ixu3+3Sw9AwHrdBD6ZTKPBI7R1ByJWMV4YI8COTcWE46PAfcZhpfPOMSh3uIrzduy2gI8VMbbWGGkl/SFq9953P+1zYQf9obmfhhmuU=
+	t=1706933836; cv=none; b=YV8HuRDfxk0vfMNhX3XSzMtW2AWqszEqmf2Qk0kl5EofIDSa2IQCmtTbFcev8ppbFaF+j+VEnXIHOc2If5HOy1m2SyRET3vMfbga/F/TftSRScWvNLj5CaujZu1xrpZ7p3u12VaYyHEC1Fulok0WAgofjimkPa9QxBuSBJKbm+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933835; c=relaxed/simple;
-	bh=JDwDOEtPHHFHGAldNKzSwETI36qj1YIb527HQYdFq10=;
+	s=arc-20240116; t=1706933836; c=relaxed/simple;
+	bh=9Do7iVHwTVlEkU9ULDDAVOMOavYIbg3a9cWlVT39SYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e11Drnoj2YYvf73uGQAJpzBWIt9EdMrVJ+WGfIWbK5SHxY8R9uenM3v4Gd7RhbBy0M0b6jzg/cTvgUwwoUXNMqizX9hwMTnFWKDLQX2GerLRFqiime8ycPFC5ZhDC1KNuXKddrPDBOE3s53IIKdyipmCX3maLli8fVbYsXgx9qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdfyXeM6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCD1LLOVe2YVZ+WmqmDMtWFXJ1GtsGb5jj/sMS0t9/JaKX8xNoJqh2vImS2GbbaVS5L+s9Z9m4Vqmotz9M8/crenHUFVnPgNpVXkN08ayMCho46KVrmONOGXhch9q8mmDW4CHbRp8hww3VV5C/xXFCoVHiPRZJdn9qf2C2g7DWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHUoF+tr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdfyXeM6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37005C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHUoF+tr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C17C433F1;
 	Sat,  3 Feb 2024 04:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933835;
-	bh=JDwDOEtPHHFHGAldNKzSwETI36qj1YIb527HQYdFq10=;
+	s=korg; t=1706933836;
+	bh=9Do7iVHwTVlEkU9ULDDAVOMOavYIbg3a9cWlVT39SYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdfyXeM67C1JGLH6WKAgEyF6IoAyf9uhW9+6bwOJVl3LkQ8QOU4wVkQ/KnniTmMbY
-	 BbOVgsnTLhD0LK3mNZn5dI9ah7FRPBtjL6FF+skn4wKlvO0bp8FzINLBevVwO2goRc
-	 C8pVkHXuDXggoHhx7hhoAjPL7wFyMQolYqNmSXP4=
+	b=ZHUoF+trnlf7APE3IvSL6THxT8WguvqRqIK3E5oNKn5GgWwk/OL7zJ/L5/nNv6+DY
+	 iFPt7xllO6nPz3xZv8r/UXfeMjkDzmtK09sIRsA9DgKOVKbQk8rqz0nEBu8FQzm5mV
+	 0ov9ftJDew+M9i2NMKXsnMk+1LkVkJ4KIYAjcjKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 159/353] net: dsa: qca8k: put MDIO bus OF node on qca8k_mdio_register() failure
-Date: Fri,  2 Feb 2024 20:04:37 -0800
-Message-ID: <20240203035408.681120107@linuxfoundation.org>
+Subject: [PATCH 6.7 160/353] ARM: dts: usr8200: Fix phy registers
+Date: Fri,  2 Feb 2024 20:04:38 -0800
+Message-ID: <20240203035408.712291770@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -47,97 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 68e1010cda7967cfca9c8650ee1f4efcae54ab90 ]
+[ Upstream commit 18a1ee9d716d355361da2765f87dbbadcdea03bf ]
 
-of_get_child_by_name() gives us an OF node with an elevated refcount,
-which should be dropped when we're done with it. This is so that,
-if (of_node_check_flag(node, OF_DYNAMIC)) is true, the node's memory can
-eventually be freed.
+The MV88E6060 switch has internal PHY registers at MDIO
+addresses 0x00..0x04. Tie each port to the corresponding
+PHY.
 
-There are 2 distinct paths to be considered in qca8k_mdio_register():
-
-- devm_of_mdiobus_register() succeeds: since commit 3b73a7b8ec38 ("net:
-  mdio_bus: add refcounting for fwnodes to mdiobus"), the MDIO core
-  treats this well.
-
-- devm_of_mdiobus_register() or anything up to that point fails: it is
-  the duty of the qca8k driver to release the OF node.
-
-This change addresses the second case by making sure that the OF node
-reference is not leaked.
-
-The "mdio" node may be NULL, but of_node_put(NULL) is safe.
-
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20231020-ixp4xx-usr8200-dtsfix-v1-1-3a8591dea259@linaro.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ .../ixp/intel-ixp42x-usrobotics-usr8200.dts   | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
-index ec57d9d52072..5f47a290bd6e 100644
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -949,10 +949,15 @@ qca8k_mdio_register(struct qca8k_priv *priv)
- 	struct dsa_switch *ds = priv->ds;
- 	struct device_node *mdio;
- 	struct mii_bus *bus;
-+	int err;
+diff --git a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts
+index 90fd51b36e7d..2c89db34c8d8 100644
+--- a/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts
++++ b/arch/arm/boot/dts/intel/ixp/intel-ixp42x-usrobotics-usr8200.dts
+@@ -165,6 +165,24 @@
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
++				/*
++				 * PHY 0..4 are internal to the MV88E6060 switch but appear
++				 * as independent devices.
++				 */
++				phy0: ethernet-phy@0 {
++					reg = <0>;
++				};
++				phy1: ethernet-phy@1 {
++					reg = <1>;
++				};
++				phy2: ethernet-phy@2 {
++					reg = <2>;
++				};
++				phy3: ethernet-phy@3 {
++					reg = <3>;
++				};
 +
-+	mdio = of_get_child_by_name(priv->dev->of_node, "mdio");
++				/* Altima AMI101L used by the WAN port */
+ 				phy9: ethernet-phy@9 {
+ 					reg = <9>;
+ 				};
+@@ -181,21 +199,25 @@
+ 						port@0 {
+ 							reg = <0>;
+ 							label = "lan1";
++							phy-handle = <&phy0>;
+ 						};
  
- 	bus = devm_mdiobus_alloc(ds->dev);
--	if (!bus)
--		return -ENOMEM;
-+	if (!bus) {
-+		err = -ENOMEM;
-+		goto out_put_node;
-+	}
+ 						port@1 {
+ 							reg = <1>;
+ 							label = "lan2";
++							phy-handle = <&phy1>;
+ 						};
  
- 	bus->priv = (void *)priv;
- 	snprintf(bus->id, MII_BUS_ID_SIZE, "qca8k-%d.%d",
-@@ -962,12 +967,12 @@ qca8k_mdio_register(struct qca8k_priv *priv)
- 	ds->user_mii_bus = bus;
+ 						port@2 {
+ 							reg = <2>;
+ 							label = "lan3";
++							phy-handle = <&phy2>;
+ 						};
  
- 	/* Check if the devicetree declare the port:phy mapping */
--	mdio = of_get_child_by_name(priv->dev->of_node, "mdio");
- 	if (of_device_is_available(mdio)) {
- 		bus->name = "qca8k user mii";
- 		bus->read = qca8k_internal_mdio_read;
- 		bus->write = qca8k_internal_mdio_write;
--		return devm_of_mdiobus_register(priv->dev, bus, mdio);
-+		err = devm_of_mdiobus_register(priv->dev, bus, mdio);
-+		goto out_put_node;
- 	}
+ 						port@3 {
+ 							reg = <3>;
+ 							label = "lan4";
++							phy-handle = <&phy3>;
+ 						};
  
- 	/* If a mapping can't be found the legacy mapping is used,
-@@ -976,7 +981,13 @@ qca8k_mdio_register(struct qca8k_priv *priv)
- 	bus->name = "qca8k-legacy user mii";
- 	bus->read = qca8k_legacy_mdio_read;
- 	bus->write = qca8k_legacy_mdio_write;
--	return devm_mdiobus_register(priv->dev, bus);
-+
-+	err = devm_mdiobus_register(priv->dev, bus);
-+
-+out_put_node:
-+	of_node_put(mdio);
-+
-+	return err;
- }
- 
- static int
+ 						port@5 {
 -- 
 2.43.0
 
