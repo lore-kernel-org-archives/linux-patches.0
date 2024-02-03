@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6D1118F;
-	Sat,  3 Feb 2024 04:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7FA1118F;
+	Sat,  3 Feb 2024 04:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933518; cv=none; b=aOYt/s8XXjNCeE3g9CX70IDOjJzR2o+FOwqXqsl5aLOSPUYksGfWfuDPwdRT0upKj7INFdrqAHrV6Zqn16adMHd5w7EEAg8J9Rb2JJxOJFjg0zNcy335AN0OKgI8O5fWKHOsR0zGgwwGyRRyZg3tlDD+tn/VyFDPg6pZlpMedyE=
+	t=1706933519; cv=none; b=gH8ovOMIEdTKeJcqgoszBr9BcZtZ6YckzHauTiD+w81wgp3YkUoZwl93lK4MWZXcKGURtefp6MGB4DDPj+kBjVcdNe/sWMU9eRt/bsfEKF+9QlKw7kKNnY9E9dUNFsHG5ZxtmqaWCGUiq9a7mIKlBaWJK8ALYuDX25MID08UHRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933518; c=relaxed/simple;
-	bh=/tM3sVWF9z7WHa9SWqL9EtDEMWBaKE7b739+dirJjlM=;
+	s=arc-20240116; t=1706933519; c=relaxed/simple;
+	bh=LuUPXKVUT7Yd1hVVrcX2gp5UkCZKWbZbB/olk+Gauik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RLezlCyNmouf0cT8QSmtui9DSrqo9OGrrOD/hEIgVxhn2WnN8v3kROEVrviRgX2tn1hGWxt2wTYgRDz6psUMZHnwRqDjeFMIE4RQqPxBugAtW/tfLkqR92YZJ8wV7KdAnStzn3AFJNStWLG0Erodzlz/pNKPPzCZUz4Pgsi9TfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=075WpYJ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qPnm56hwAOH2pyTuSkn3FF49NBgt6e9Ot2/ywEHg2sZPipQfxrHUeLl8OspakVTu8DvH5/CdUgGABgiUasW6JqfulELSbPxX/7FAFOXwzVsP8MrXd+Vy6+FPSD5G4crjA5hOx6/WgRG5OQcz8572rJ6JnphOkp0adHvHNikALA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Trma5ER0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="075WpYJ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348B1C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Trma5ER0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA05CC43399;
 	Sat,  3 Feb 2024 04:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933518;
-	bh=/tM3sVWF9z7WHa9SWqL9EtDEMWBaKE7b739+dirJjlM=;
+	bh=LuUPXKVUT7Yd1hVVrcX2gp5UkCZKWbZbB/olk+Gauik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=075WpYJ1x7VKdU0BkstbdtJlwrSfN36mSmI8D+jtiFbr+6G5W/tPIYEW9S7yUmQYv
-	 uUbaUeY7MOx6GInWkT70+aqoEsgb3MXpP1GfaxwCT+prwTzXUc7MqV5OH4oBRWHVRH
-	 0kHLhf0epqpVHb6ChJNHD3UEOxmCitpDduC4c3mI=
+	b=Trma5ER0B4rCQ8fVY/tJOxfWN8tEei8aemQbOLt98llGz1ApoBqvXevUXHrosxWjs
+	 UmJTDYWAm6gt71xJFOJi54lyuU5FYgwsPwclmSegVAXq+6UsvIRtb6KeIVWg0cQcXD
+	 ho6fdZbhozwN1i3aD3xzRsJ8ej6gAoUNano0WHxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Oleg Nesterov <oleg@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/322] ext4: avoid online resizing failures due to oversized flex bg
-Date: Fri,  2 Feb 2024 20:02:34 -0800
-Message-ID: <20240203035400.985101082@linuxfoundation.org>
+Subject: [PATCH 6.6 040/322] afs: fix the usage of read_seqbegin_or_lock() in afs_find_server*()
+Date: Fri,  2 Feb 2024 20:02:17 -0800
+Message-ID: <20240203035400.386902290@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -46,135 +47,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 5d1935ac02ca5aee364a449a35e2977ea84509b0 ]
+[ Upstream commit 1702e0654ca9a7bcd7c7619c8a5004db58945b71 ]
 
-When we online resize an ext4 filesystem with a oversized flexbg_size,
+David Howells says:
 
-     mkfs.ext4 -F -G 67108864 $dev -b 4096 100M
-     mount $dev $dir
-     resize2fs $dev 16G
+ (5) afs_find_server().
 
-the following WARN_ON is triggered:
-==================================================================
-WARNING: CPU: 0 PID: 427 at mm/page_alloc.c:4402 __alloc_pages+0x411/0x550
-Modules linked in: sg(E)
-CPU: 0 PID: 427 Comm: resize2fs Tainted: G  E  6.6.0-rc5+ #314
-RIP: 0010:__alloc_pages+0x411/0x550
-Call Trace:
- <TASK>
- __kmalloc_large_node+0xa2/0x200
- __kmalloc+0x16e/0x290
- ext4_resize_fs+0x481/0xd80
- __ext4_ioctl+0x1616/0x1d90
- ext4_ioctl+0x12/0x20
- __x64_sys_ioctl+0xf0/0x150
- do_syscall_64+0x3b/0x90
-==================================================================
+     There could be a lot of servers in the list and each server can have
+     multiple addresses, so I think this would be better with an exclusive
+     second pass.
 
-This is because flexbg_size is too large and the size of the new_group_data
-array to be allocated exceeds MAX_ORDER. Currently, the minimum value of
-MAX_ORDER is 8, the minimum value of PAGE_SIZE is 4096, the corresponding
-maximum number of groups that can be allocated is:
+     The server list isn't likely to change all that often, but when it does
+     change, there's a good chance several servers are going to be
+     added/removed one after the other.  Further, this is only going to be
+     used for incoming cache management/callback requests from the server,
+     which hopefully aren't going to happen too often - but it is remotely
+     drivable.
 
- (PAGE_SIZE << MAX_ORDER) / sizeof(struct ext4_new_group_data) ≈ 21845
+ (6) afs_find_server_by_uuid().
 
-And the value that is down-aligned to the power of 2 is 16384. Therefore,
-this value is defined as MAX_RESIZE_BG, and the number of groups added
-each time does not exceed this value during resizing, and is added multiple
-times to complete the online resizing. The difference is that the metadata
-in a flex_bg may be more dispersed.
+     Similarly to (5), there could be a lot of servers to search through, but
+     they are in a tree not a flat list, so it should be faster to process.
+     Again, it's not likely to change that often and, again, when it does
+     change it's likely to involve multiple changes.  This can be driven
+     remotely by an incoming cache management request but is mostly going to
+     be driven by setting up or reconfiguring a volume's server list -
+     something that also isn't likely to happen often.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231023013057.2117948-4-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Make the "seq" counter odd on the 2nd pass, otherwise read_seqbegin_or_lock()
+never takes the lock.
+
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/20231130115614.GA21581@redhat.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/resize.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ fs/afs/server.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
-index df47b269efce..be280268da9f 100644
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -231,10 +231,17 @@ struct ext4_new_flex_group_data {
- 						   in the flex group */
- 	__u16 *bg_flags;			/* block group flags of groups
- 						   in @groups */
-+	ext4_group_t resize_bg;			/* number of allocated
-+						   new_group_data */
- 	ext4_group_t count;			/* number of groups in @groups
- 						 */
- };
+diff --git a/fs/afs/server.c b/fs/afs/server.c
+index b5237206eac3..0bd2f5ba6900 100644
+--- a/fs/afs/server.c
++++ b/fs/afs/server.c
+@@ -27,7 +27,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
+ 	const struct afs_addr_list *alist;
+ 	struct afs_server *server = NULL;
+ 	unsigned int i;
+-	int seq = 0, diff;
++	int seq = 1, diff;
  
-+/*
-+ * Avoiding memory allocation failures due to too many groups added each time.
-+ */
-+#define MAX_RESIZE_BG				16384
-+
- /*
-  * alloc_flex_gd() allocates a ext4_new_flex_group_data with size of
-  * @flexbg_size.
-@@ -249,14 +256,18 @@ static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
- 	if (flex_gd == NULL)
- 		goto out3;
+ 	rcu_read_lock();
  
--	flex_gd->count = flexbg_size;
--	flex_gd->groups = kmalloc_array(flexbg_size,
-+	if (unlikely(flexbg_size > MAX_RESIZE_BG))
-+		flex_gd->resize_bg = MAX_RESIZE_BG;
-+	else
-+		flex_gd->resize_bg = flexbg_size;
-+
-+	flex_gd->groups = kmalloc_array(flex_gd->resize_bg,
- 					sizeof(struct ext4_new_group_data),
- 					GFP_NOFS);
- 	if (flex_gd->groups == NULL)
- 		goto out2;
+@@ -35,6 +35,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
+ 		if (server)
+ 			afs_unuse_server_notime(net, server, afs_server_trace_put_find_rsq);
+ 		server = NULL;
++		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&net->fs_addr_lock, &seq);
  
--	flex_gd->bg_flags = kmalloc_array(flexbg_size, sizeof(__u16),
-+	flex_gd->bg_flags = kmalloc_array(flex_gd->resize_bg, sizeof(__u16),
- 					  GFP_NOFS);
- 	if (flex_gd->bg_flags == NULL)
- 		goto out1;
-@@ -1619,8 +1630,7 @@ static int ext4_flex_group_add(struct super_block *sb,
- 
- static int ext4_setup_next_flex_gd(struct super_block *sb,
- 				    struct ext4_new_flex_group_data *flex_gd,
--				    ext4_fsblk_t n_blocks_count,
--				    unsigned int flexbg_size)
-+				    ext4_fsblk_t n_blocks_count)
+ 		if (srx->transport.family == AF_INET6) {
+@@ -90,7 +91,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
  {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_super_block *es = sbi->s_es;
-@@ -1644,7 +1654,7 @@ static int ext4_setup_next_flex_gd(struct super_block *sb,
- 	BUG_ON(last);
- 	ext4_get_group_no_and_offset(sb, n_blocks_count - 1, &n_group, &last);
+ 	struct afs_server *server = NULL;
+ 	struct rb_node *p;
+-	int diff, seq = 0;
++	int diff, seq = 1;
  
--	last_group = group | (flexbg_size - 1);
-+	last_group = group | (flex_gd->resize_bg - 1);
- 	if (last_group > n_group)
- 		last_group = n_group;
+ 	_enter("%pU", uuid);
  
-@@ -2147,8 +2157,7 @@ int ext4_resize_fs(struct super_block *sb, ext4_fsblk_t n_blocks_count)
- 	/* Add flex groups. Note that a regular group is a
- 	 * flex group with 1 group.
- 	 */
--	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count,
--					      flexbg_size)) {
-+	while (ext4_setup_next_flex_gd(sb, flex_gd, n_blocks_count)) {
- 		if (time_is_before_jiffies(last_update_time + HZ * 10)) {
- 			if (last_update_time)
- 				ext4_msg(sb, KERN_INFO,
+@@ -102,7 +103,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
+ 		if (server)
+ 			afs_unuse_server(net, server, afs_server_trace_put_uuid_rsq);
+ 		server = NULL;
+-
++		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&net->fs_lock, &seq);
+ 
+ 		p = net->fs_servers.rb_node;
 -- 
 2.43.0
 
