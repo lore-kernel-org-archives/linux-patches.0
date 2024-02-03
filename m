@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFA74176E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95E84176E;
 	Sat,  3 Feb 2024 04:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933641; cv=none; b=u1nNKuDpXpOI+2xEjXkL1coocnkBbtSPbx0rJTrwOR7XGOo38co25eYauVkQipIug3e8Q2I4Su1f5Gbgf4+g3dKTcB9yYrXTi2aPL/0ANZ3o4F+dEGHuBrunM9F7LeRW6o3k973ccRDu5R5XKPvgXPSl1wDlWsWLY/O4xkLWg6w=
+	t=1706933641; cv=none; b=eOtvwU9Yy/5UemWrcRSDftZM/fcpnHq5vGWEFQZ66/XucgDSK2xqhdT7+27/stcALESZ9nv5oZluyTR06ssQnTBhjwbCb7SXWTKvFOIMsol581kKXOOVQ/Ee4MVnqZZXg50shqhMecs37cgGbzP/iyIG2DM7h3vupsvpOiyuopI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933641; c=relaxed/simple;
-	bh=cedAAfGbLv9Bekibj1469OOzXliW03eax9zW7wfXvEs=;
+	bh=HZQ/MTbFbliWaRqYs7Uf5ZOgPU1lS++5R+yQttDr2iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RhZwR01tztNmBx6Cs7BM+E9P5yRYjMv4pvS0Wrw1YxJCRfv+sU/1LBriaIaLY6dnKl+fDH2VppRsH53TArWoSnuik7v48Kvyx2YinuGNltgU1aRbPGj1UTzeq6QYksWJdafha8b8ZuFAgymaHk1h7hWfWzmE6YsyyDJuGR/YRxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bW4ZTLhO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkNRYE9DVd9KmTcMPbdIc1h0xPRhsnQu+zJyghmUucUPS8g3MzmGBHr7C/vIDhADCNgQe0G97UQPl53wIxHMgzOnUH0qVTSb6fm6k8TIco41l7hV7uzInJ4cImfiJ6t2jLuaa9UYM0wWe6eDN1dK9zAiG1TxQiCMR/J1+BTwbvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJRKG4Yo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bW4ZTLhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC66C43394;
-	Sat,  3 Feb 2024 04:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJRKG4Yo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91690C433F1;
+	Sat,  3 Feb 2024 04:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933641;
-	bh=cedAAfGbLv9Bekibj1469OOzXliW03eax9zW7wfXvEs=;
+	bh=HZQ/MTbFbliWaRqYs7Uf5ZOgPU1lS++5R+yQttDr2iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bW4ZTLhO3iNduq1uEuXIlzsn/y3cxnBatkF0sgIhVBVEYSQtqqILkw+RvhPvwDTj/
-	 pIJOSvbBVDqnq45iDLDyqJNLuxmTvI+5GKqhjPPD+PhLTzvMRziulJuW2UZ6WGiGkV
-	 Xarv/7aun3nY61Kcwb7x0d/2xuIZdW/dIdTGlWiA=
+	b=lJRKG4YofFA3R38cnNgTUfIQpROAQpOsKPBKF3dJTLLr2vOAP7ykAhm6hmyBQEBEM
+	 u1xe9IehX/+e+c4V5grrijN+2phojjTganMloRiiobPhln3eBKKy1jLnCbpXsS5Df0
+	 U49t90wMHa/P/H2+C8HALM9gfxlY+zvCV7YRIzSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Vincent Whitchurch <Vincent.Whitchurch@axis.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/322] um: net: Fix return type of uml_net_start_xmit()
-Date: Fri,  2 Feb 2024 20:05:19 -0800
-Message-ID: <20240203035406.402725082@linuxfoundation.org>
+Subject: [PATCH 6.6 223/322] um: time-travel: fix time corruption
+Date: Fri,  2 Feb 2024 20:05:20 -0800
+Message-ID: <20240203035406.428904455@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -53,51 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 7d748f60a4b82b50bf25fad1bd42d33f049f76aa ]
+[ Upstream commit abe4eaa8618bb36c2b33e9cdde0499296a23448c ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-warning in clang aims to catch these at compile time, which reveals:
+In 'basic' time-travel mode (without =inf-cpu or =ext), we
+still get timer interrupts. These can happen at arbitrary
+points in time, i.e. while in timer_read(), which pushes
+time forward just a little bit. Then, if we happen to get
+the interrupt after calculating the new time to push to,
+but before actually finishing that, the interrupt will set
+the time to a value that's incompatible with the forward,
+and we'll crash because time goes backwards when we do the
+forwarding.
 
-  arch/um/drivers/net_kern.c:353:21: warning: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Wincompatible-function-pointer-types-strict]
-    353 |         .ndo_start_xmit         = uml_net_start_xmit,
-        |                                   ^~~~~~~~~~~~~~~~~~
-  1 warning generated.
+Fix this by reading the time_travel_time, calculating the
+adjustment, and doing the adjustment all with interrupts
+disabled.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of uml_net_start_xmit()
-to match the prototype's to resolve the warning. While UML does not
-currently implement support for kCFI, it could in the future, which
-means this warning becomes a fatal CFI failure at run time.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310031340.v1vPh207-lkp@intel.com/
-Acked-by: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Vincent Whitchurch <Vincent.Whitchurch@axis.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/net_kern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/um/kernel/time.c | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/arch/um/drivers/net_kern.c b/arch/um/drivers/net_kern.c
-index 3d7836c46507..cabcc501b448 100644
---- a/arch/um/drivers/net_kern.c
-+++ b/arch/um/drivers/net_kern.c
-@@ -204,7 +204,7 @@ static int uml_net_close(struct net_device *dev)
- 	return 0;
+diff --git a/arch/um/kernel/time.c b/arch/um/kernel/time.c
+index fddd1dec27e6..3e270da6b6f6 100644
+--- a/arch/um/kernel/time.c
++++ b/arch/um/kernel/time.c
+@@ -432,9 +432,29 @@ static void time_travel_update_time(unsigned long long next, bool idle)
+ 	time_travel_del_event(&ne);
  }
  
--static int uml_net_start_xmit(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t uml_net_start_xmit(struct sk_buff *skb, struct net_device *dev)
++static void time_travel_update_time_rel(unsigned long long offs)
++{
++	unsigned long flags;
++
++	/*
++	 * Disable interrupts before calculating the new time so
++	 * that a real timer interrupt (signal) can't happen at
++	 * a bad time e.g. after we read time_travel_time but
++	 * before we've completed updating the time.
++	 */
++	local_irq_save(flags);
++	time_travel_update_time(time_travel_time + offs, false);
++	local_irq_restore(flags);
++}
++
+ void time_travel_ndelay(unsigned long nsec)
  {
- 	struct uml_net_private *lp = netdev_priv(dev);
- 	unsigned long flags;
+-	time_travel_update_time(time_travel_time + nsec, false);
++	/*
++	 * Not strictly needed to use _rel() version since this is
++	 * only used in INFCPU/EXT modes, but it doesn't hurt and
++	 * is more readable too.
++	 */
++	time_travel_update_time_rel(nsec);
+ }
+ EXPORT_SYMBOL(time_travel_ndelay);
+ 
+@@ -568,7 +588,11 @@ static void time_travel_set_start(void)
+ #define time_travel_time 0
+ #define time_travel_ext_waiting 0
+ 
+-static inline void time_travel_update_time(unsigned long long ns, bool retearly)
++static inline void time_travel_update_time(unsigned long long ns, bool idle)
++{
++}
++
++static inline void time_travel_update_time_rel(unsigned long long offs)
+ {
+ }
+ 
+@@ -720,9 +744,7 @@ static u64 timer_read(struct clocksource *cs)
+ 		 */
+ 		if (!irqs_disabled() && !in_interrupt() && !in_softirq() &&
+ 		    !time_travel_ext_waiting)
+-			time_travel_update_time(time_travel_time +
+-						TIMER_MULTIPLIER,
+-						false);
++			time_travel_update_time_rel(TIMER_MULTIPLIER);
+ 		return time_travel_time / TIMER_MULTIPLIER;
+ 	}
+ 
 -- 
 2.43.0
 
