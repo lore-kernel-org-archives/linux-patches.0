@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95445579A;
-	Sat,  3 Feb 2024 04:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EBC175A7;
+	Sat,  3 Feb 2024 04:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933965; cv=none; b=ZKlSAP/DMvdxF/8stOOVEqEGtLjht1/yBrS63zgee6RzvVP1z6RtRT709WqMKNc1vDW0JGTimtRYpACIGpr2vAn7zrwJckhBD6eOr2i99tPLxMRyTtvfk8jAyKqetqQhwBA5mIoU2e9z4v8pbkWSdP0CcfFlUQhOSgW81phui7c=
+	t=1706933966; cv=none; b=pg7lA0aIKjUxSwHkcbMqn491pdBJcA47UPfqyOai0cuy9yvo6bk7mbKvla3SH3hI9FLg5PAuex6AAkIGNi0HytnUH1aEWNov8dGySK5cycLi7DdfvrizTZyhbXKevO7sjukuqqu57RBzlbBTren3O0FVAZ33FqdkFL6PXiT5V8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933965; c=relaxed/simple;
-	bh=GG+zn1gHkKRiY1DxMgq0+uusL4Y0Ervu8FMBRRqOiSM=;
+	s=arc-20240116; t=1706933966; c=relaxed/simple;
+	bh=RiXyXNhymkkvviQSNnwYpVOPEA0ydlZ/XETrFgRqA3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENJ280NOreV9QIOCel/ekcAnF9XJeRSCqh3LHeJcuY8wjracsNPhOE9FuQUSLfO/GhDzRE9psot/uuNQ+BvIijBj0dzJbr5wFdfqApseCclUiwYCql+GiIxqpXJe7Fb29BdcMpNUwua9yL9uDwHynkTGmtvNpjNsYc66fqN/Ce8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvd5NmRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3kDUtweGSfTCZqn3HIgjKFDjzJ0pTd+zXzh0NiZWOOtujpQCfN8Tv/0KNAklvr2mreEqsYIWxqEe5Q9Tp4pNZB6aveVTJe21gv88Jn11GqnZvOCEeTHpaNidKq5MTE9UDmEpmNlAUQsoQze+GaMs5LgDTOXC9vnmnSwVvQz/dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q13cUmfe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvd5NmRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C52FC43390;
-	Sat,  3 Feb 2024 04:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q13cUmfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBCAC433C7;
+	Sat,  3 Feb 2024 04:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933965;
-	bh=GG+zn1gHkKRiY1DxMgq0+uusL4Y0Ervu8FMBRRqOiSM=;
+	s=korg; t=1706933966;
+	bh=RiXyXNhymkkvviQSNnwYpVOPEA0ydlZ/XETrFgRqA3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvd5NmRWWh2E5+Y1atmHKlzFNxuuooFsa/v2GDkXwNyPkfXpndGIWjb2s5ZZHui2i
-	 Jd9CMc6u5C5Lo+QGlWwnEh1vqXZ30mqiavgmE/umKtjSZ4xuHIgjsrfeUnDLfk0ADj
-	 Wvp8+Hdvez+FsyHRrat8rBJB5piR213EHID5Vf4o=
+	b=Q13cUmfeFf76O0pnMQ5O6jMsDrivHLJNZM0PiXNRwglNMRzrwfItDf1LYBgjvrj/f
+	 lol9eMOtaZwbcQwu/Io+TQiY1HXICOo7VBNqdKWz69A8Z0jnr5wtTwo7Gaa3z7H5q6
+	 pjIpSAgYpCFmOFQR2bBsvdf+Tj652+n4NUFS9ypQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 311/353] tracefs: remove stale update_gid code
-Date: Fri,  2 Feb 2024 20:07:09 -0800
-Message-ID: <20240203035413.680340223@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Arjun Roy <arjunroy@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	linux-mm@vger.kernel.org,
+	Andrew Morton <akpm@linux-foundation.org>,
+	linux-fsdevel@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	ZhangPeng <zhangpeng362@huawei.com>
+Subject: [PATCH 6.7 312/353] tcp: add sanity checks to rx zerocopy
+Date: Fri,  2 Feb 2024 20:07:10 -0800
+Message-ID: <20240203035413.711094580@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,85 +57,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 29142dc92c37d3259a33aef15b03e6ee25b0d188 ]
+[ Upstream commit 577e4432f3ac810049cb7e6b71f4d96ec7c6e894 ]
 
-The 'eventfs_update_gid()' function is no longer called, so remove it
-(and the helper function it uses).
+TCP rx zerocopy intent is to map pages initially allocated
+from NIC drivers, not pages owned by a fs.
 
-Link: https://lore.kernel.org/all/CAHk-=wj+DsZZ=2iTUkJ-Nojs9fjYMvPs1NuoM3yK7aTDtJfPYQ@mail.gmail.com/
+This patch adds to can_map_frag() these additional checks:
 
-Fixes: 8186fff7ab64 ("tracefs/eventfs: Use root and instance inodes as default ownership")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+- Page must not be a compound one.
+- page->mapping must be NULL.
+
+This fixes the panic reported by ZhangPeng.
+
+syzbot was able to loopback packets built with sendfile(),
+mapping pages owned by an ext4 file to TCP rx zerocopy.
+
+r3 = socket$inet_tcp(0x2, 0x1, 0x0)
+mmap(&(0x7f0000ff9000/0x4000)=nil, 0x4000, 0x0, 0x12, r3, 0x0)
+r4 = socket$inet_tcp(0x2, 0x1, 0x0)
+bind$inet(r4, &(0x7f0000000000)={0x2, 0x4e24, @multicast1}, 0x10)
+connect$inet(r4, &(0x7f00000006c0)={0x2, 0x4e24, @empty}, 0x10)
+r5 = openat$dir(0xffffffffffffff9c, &(0x7f00000000c0)='./file0\x00',
+    0x181e42, 0x0)
+fallocate(r5, 0x0, 0x0, 0x85b8)
+sendfile(r4, r5, 0x0, 0x8ba0)
+getsockopt$inet_tcp_TCP_ZEROCOPY_RECEIVE(r4, 0x6, 0x23,
+    &(0x7f00000001c0)={&(0x7f0000ffb000/0x3000)=nil, 0x3000, 0x0, 0x0, 0x0,
+    0x0, 0x0, 0x0, 0x0}, &(0x7f0000000440)=0x40)
+r6 = openat$dir(0xffffffffffffff9c, &(0x7f00000000c0)='./file0\x00',
+    0x181e42, 0x0)
+
+Fixes: 93ab6cc69162 ("tcp: implement mmap() for zero copy receive")
+Link: https://lore.kernel.org/netdev/5106a58e-04da-372a-b836-9d3d0bd2507b@huawei.com/T/
+Reported-and-bisected-by: ZhangPeng <zhangpeng362@huawei.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Arjun Roy <arjunroy@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: linux-mm@vger.kernel.org
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tracefs/event_inode.c | 38 --------------------------------------
- fs/tracefs/internal.h    |  1 -
- 2 files changed, 39 deletions(-)
+ net/ipv4/tcp.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/tracefs/event_inode.c b/fs/tracefs/event_inode.c
-index 517f1ae1a058..f2d7ad155c00 100644
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -273,44 +273,6 @@ static void update_inode_attr(struct dentry *dentry, struct inode *inode,
- 		inode->i_gid = attr->gid;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 7bce79beca2b..b30ef770a6cc 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1786,7 +1786,17 @@ static skb_frag_t *skb_advance_to_frag(struct sk_buff *skb, u32 offset_skb,
+ 
+ static bool can_map_frag(const skb_frag_t *frag)
+ {
+-	return skb_frag_size(frag) == PAGE_SIZE && !skb_frag_off(frag);
++	struct page *page;
++
++	if (skb_frag_size(frag) != PAGE_SIZE || skb_frag_off(frag))
++		return false;
++
++	page = skb_frag_page(frag);
++
++	if (PageCompound(page) || page->mapping)
++		return false;
++
++	return true;
  }
  
--static void update_gid(struct eventfs_inode *ei, kgid_t gid, int level)
--{
--	struct eventfs_inode *ei_child;
--
--	/* at most we have events/system/event */
--	if (WARN_ON_ONCE(level > 3))
--		return;
--
--	ei->attr.gid = gid;
--
--	if (ei->entry_attrs) {
--		for (int i = 0; i < ei->nr_entries; i++) {
--			ei->entry_attrs[i].gid = gid;
--		}
--	}
--
--	/*
--	 * Only eventfs_inode with dentries are updated, make sure
--	 * all eventfs_inodes are updated. If one of the children
--	 * do not have a dentry, this function must traverse it.
--	 */
--	list_for_each_entry_srcu(ei_child, &ei->children, list,
--				 srcu_read_lock_held(&eventfs_srcu)) {
--		if (!ei_child->dentry)
--			update_gid(ei_child, gid, level + 1);
--	}
--}
--
--void eventfs_update_gid(struct dentry *dentry, kgid_t gid)
--{
--	struct eventfs_inode *ei = dentry->d_fsdata;
--	int idx;
--
--	idx = srcu_read_lock(&eventfs_srcu);
--	update_gid(ei, gid, 0);
--	srcu_read_unlock(&eventfs_srcu, idx);
--}
--
- /**
-  * create_file - create a file in the tracefs filesystem
-  * @name: the name of the file to create.
-diff --git a/fs/tracefs/internal.h b/fs/tracefs/internal.h
-index 12b7d0150ae9..af3b43fa75cd 100644
---- a/fs/tracefs/internal.h
-+++ b/fs/tracefs/internal.h
-@@ -81,7 +81,6 @@ struct inode *tracefs_get_inode(struct super_block *sb);
- struct dentry *eventfs_start_creating(const char *name, struct dentry *parent);
- struct dentry *eventfs_failed_creating(struct dentry *dentry);
- struct dentry *eventfs_end_creating(struct dentry *dentry);
--void eventfs_update_gid(struct dentry *dentry, kgid_t gid);
- void eventfs_set_ei_status_free(struct tracefs_inode *ti, struct dentry *dentry);
- 
- #endif /* _TRACEFS_INTERNAL_H */
+ static int find_next_mappable_frag(const skb_frag_t *frag,
 -- 
 2.43.0
 
