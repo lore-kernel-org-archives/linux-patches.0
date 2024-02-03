@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E861079D;
-	Sat,  3 Feb 2024 04:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356731079D;
+	Sat,  3 Feb 2024 04:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933523; cv=none; b=gOD8kH2kR+sZ4b+fH9cKaoyjO9vDgCiaWjP8Y4xbgZ0IeJK3hOPcmI92dy0SPdLX7ReBRPzdLEbyb9n4xY65BGxo5kC4AFbUbeqOnXMo8F0J/1CAsgNkDFJ2wGCl3GWkrUpv4zvAk8UXCo1cZEaOmWnywYePbnfWyJ+0KCdyIgQ=
+	t=1706933524; cv=none; b=pKPXyoO7/vx/5k9MYqSm4rWQ+k2r0U3sXRHPYpyBPeuJe1ZCBggHYklKAec6un9uBHn7WaeBNsMO9ru418M7Nnceg1/aIROtD7VoEnZvkLgcZ89dAszflodXsr7lLlJKD0e4kV8wqJxvB1lYcJmQRHEkb/XwRi4WcDxWqV0Q6kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933523; c=relaxed/simple;
-	bh=DBBCSrsj/WYnpi51K7vr5KnxPdpyLjWyF7imB3BpMLc=;
+	s=arc-20240116; t=1706933524; c=relaxed/simple;
+	bh=f98+fcH1FEwRECtkrrA/U+vXIWCedQpV8HE4aGThKXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYMenpg8390IAk838I1mlI6y7XvMh9Ssg9kWXK8FSd3HHfeIaMUMCjIsL6lQiGnQpRGRnlzudcGoYnjH00yzfSIXStRgYwuXZX4nL9BiWApJPLNGAS9wASnU39HJAw9CGotea1vuFDkxreJeTQfc5WfuDzD91aNS2YS/l/SVJ+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/zK57gx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SFs2TX/HcGi7CY9G+K+zPexwoLZ3xsd73s+XFAKvmYCJGTbzwXvURc/WEzSJgi1UgYQuKhq/Ke9uvS085wkLncy1pgbA0ya6U/wCSOymEiT0Y3JDZ1zAEVRBpA9QmtmBvm2ScS1C2QBzamFm9EZrnjR/hOK7qAvVK1sLVPjVlcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dR7Jz08V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/zK57gx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE6CC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dR7Jz08V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF4CC433A6;
 	Sat,  3 Feb 2024 04:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933523;
-	bh=DBBCSrsj/WYnpi51K7vr5KnxPdpyLjWyF7imB3BpMLc=;
+	s=korg; t=1706933524;
+	bh=f98+fcH1FEwRECtkrrA/U+vXIWCedQpV8HE4aGThKXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/zK57gxc3CB5sqYGLnMRUBCk4dZrMyDfwuZxpOhREO/p4M2UoYG4XUPjbWyAWDBF
-	 FRofFUB4hqQePlStt4gIsuQmZhpAwb2fWOot8nmy+AAjJJOnn3qiU3a/cVRNwuZ/P0
-	 j7Hxp15szKdmH7aQa0+rFHE1KEDUlaNMze+gz7qQ=
+	b=dR7Jz08VMGzMZWP+EvnOqLzaINW1j1DG+coq5dLlQYmovxwRNAw7ha8NcAQzyc65B
+	 wcfjF0ETQ5TxqEzwq9PKU6aUrhg+PTPJYeFNPE0qJqNKb5Ilha1uPNfefoZGKYAwxi
+	 xBgfZz2ZIqJHx5rLNBbXnmANGFGPzlbZl8fa0abw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alan Maguire <alan.maguire@oracle.com>,
+	Shiji Yang <yangshiji66@outlook.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/322] selftests/bpf: Fix pyperf180 compilation failure with clang18
-Date: Fri,  2 Feb 2024 20:02:40 -0800
-Message-ID: <20240203035401.179198011@linuxfoundation.org>
+Subject: [PATCH 6.6 064/322] wifi: rt2x00: correct wrong BBP register in RxDCOC calibration
+Date: Fri,  2 Feb 2024 20:02:41 -0800
+Message-ID: <20240203035401.206354266@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,81 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Shiji Yang <yangshiji66@outlook.com>
 
-[ Upstream commit 100888fb6d8a185866b1520031ee7e3182b173de ]
+[ Upstream commit 50da74e1e8b682853d1e07fc8bbe3a0774ae5e09 ]
 
-With latest clang18 (main branch of llvm-project repo), when building bpf selftests,
-    [~/work/bpf-next (master)]$ make -C tools/testing/selftests/bpf LLVM=1 -j
+Refer to Mediatek vendor driver RxDCOC_Calibration() function, when
+performing gainfreeze calibration, we should write register 140
+instead of 141. This fix can reduce the total calibration time from
+6 seconds to 1 second.
 
-The following compilation error happens:
-    fatal error: error in backend: Branch target out of insn range
-    ...
-    Stack dump:
-    0.      Program arguments: clang -g -Wall -Werror -D__TARGET_ARCH_x86 -mlittle-endian
-      -I/home/yhs/work/bpf-next/tools/testing/selftests/bpf/tools/include
-      -I/home/yhs/work/bpf-next/tools/testing/selftests/bpf -I/home/yhs/work/bpf-next/tools/include/uapi
-      -I/home/yhs/work/bpf-next/tools/testing/selftests/usr/include -idirafter
-      /home/yhs/work/llvm-project/llvm/build.18/install/lib/clang/18/include -idirafter /usr/local/include
-      -idirafter /usr/include -Wno-compare-distinct-pointer-types -DENABLE_ATOMICS_TESTS -O2 --target=bpf
-      -c progs/pyperf180.c -mcpu=v3 -o /home/yhs/work/bpf-next/tools/testing/selftests/bpf/pyperf180.bpf.o
-    1.      <eof> parser at end of file
-    2.      Code generation
-    ...
-
-The compilation failure only happens to cpu=v2 and cpu=v3. cpu=v4 is okay
-since cpu=v4 supports 32-bit branch target offset.
-
-The above failure is due to upstream llvm patch [1] where some inlining behavior
-are changed in clang18.
-
-To workaround the issue, previously all 180 loop iterations are fully unrolled.
-The bpf macro __BPF_CPU_VERSION__ (implemented in clang18 recently) is used to avoid
-unrolling changes if cpu=v4. If __BPF_CPU_VERSION__ is not available and the
-compiler is clang18, the unrollng amount is unconditionally reduced.
-
-  [1] https://github.com/llvm/llvm-project/commit/1a2e77cf9e11dbf56b5720c607313a566eebb16e
-
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Tested-by: Alan Maguire <alan.maguire@oracle.com>
-Link: https://lore.kernel.org/bpf/20231110193644.3130906-1-yonghong.song@linux.dev
+Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/TYAP286MB0315B13B89DF57B6B27BB854BCAFA@TYAP286MB0315.JPNP286.PROD.OUTLOOK.COM
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/pyperf180.c | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/net/wireless/ralink/rt2x00/rt2800lib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/pyperf180.c b/tools/testing/selftests/bpf/progs/pyperf180.c
-index c39f559d3100..42c4a8b62e36 100644
---- a/tools/testing/selftests/bpf/progs/pyperf180.c
-+++ b/tools/testing/selftests/bpf/progs/pyperf180.c
-@@ -1,4 +1,26 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2019 Facebook
- #define STACK_MAX_LEN 180
-+
-+/* llvm upstream commit at clang18
-+ *   https://github.com/llvm/llvm-project/commit/1a2e77cf9e11dbf56b5720c607313a566eebb16e
-+ * changed inlining behavior and caused compilation failure as some branch
-+ * target distance exceeded 16bit representation which is the maximum for
-+ * cpu v1/v2/v3. Macro __BPF_CPU_VERSION__ is later implemented in clang18
-+ * to specify which cpu version is used for compilation. So a smaller
-+ * unroll_count can be set if __BPF_CPU_VERSION__ is less than 4, which
-+ * reduced some branch target distances and resolved the compilation failure.
-+ *
-+ * To capture the case where a developer/ci uses clang18 but the corresponding
-+ * repo checkpoint does not have __BPF_CPU_VERSION__, a smaller unroll_count
-+ * will be set as well to prevent potential compilation failures.
-+ */
-+#ifdef __BPF_CPU_VERSION__
-+#if __BPF_CPU_VERSION__ < 4
-+#define UNROLL_COUNT 90
-+#endif
-+#elif __clang_major__ == 18
-+#define UNROLL_COUNT 90
-+#endif
-+
- #include "pyperf.h"
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2800lib.c b/drivers/net/wireless/ralink/rt2x00/rt2800lib.c
+index e65cc00fa17c..c13ae87f94f4 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2800lib.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2800lib.c
+@@ -8695,7 +8695,7 @@ static void rt2800_rxdcoc_calibration(struct rt2x00_dev *rt2x00dev)
+ 	rt2800_rfcsr_write_bank(rt2x00dev, 5, 4, saverfb5r4);
+ 	rt2800_rfcsr_write_bank(rt2x00dev, 7, 4, saverfb7r4);
+ 
+-	rt2800_bbp_write(rt2x00dev, 158, 141);
++	rt2800_bbp_write(rt2x00dev, 158, 140);
+ 	bbpreg = rt2800_bbp_read(rt2x00dev, 159);
+ 	bbpreg = bbpreg & (~0x40);
+ 	rt2800_bbp_write(rt2x00dev, 159, bbpreg);
 -- 
 2.43.0
 
