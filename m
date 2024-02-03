@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA0F9E9;
-	Sat,  3 Feb 2024 04:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A077D175BB;
+	Sat,  3 Feb 2024 04:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933579; cv=none; b=r/xJRlrST+YgNLEvJtAtRlhIiUyEP/AdlJ2EV1XMKkbiD9kfXNws9Jt5HcoPAzHsRXsmQ8ZAcPoPvUtu+dx3OJ8KMnn/Rn+7rV6cEdjS/+UftJOH+RjLow9riBwWcG35zAH9SX7/y0D29IT24mDjeqpjcORmVG+jSY5pwMej114=
+	t=1706933579; cv=none; b=sSlOZNkUZeVBQerEwmKGOdgfiGOstryn5mMCnRzfv8l7meMTbur8BBKz3FFq3w+W8c+9jQj7XZqeqMwL+RygP1UVjK38Q1o+ZjC7JzkKaxQpW2BcT5xDf5q0EXMv7jNRyVAtsO+CKavxuJ1B2qmd/+dPP6qlV79YfdWn5lbY+2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933579; c=relaxed/simple;
-	bh=WNyNu0WXNpO7P3fXc1YXYRAoXjJ5cxkaOdH0Ii4LbmU=;
+	bh=aGkC5sj/r7CJSOLLkcHQ0ozth5rgwx2aZbYbpHQfKt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYoQiYyBtfVE0WycitKgCZrjjL9NJBMhxoSmLvfHrKvX27xIvh8GUaBhAg9az0Sao90+awnxDSRxSiJtVrTUNOYcfryYX/J6k/sRkc8HgB3KyIvA3uL59eP1vqoxbSVLEite/OTydw5gja2Ozoh0DkmUyJ+Viz3ofJtV+hxa3Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yaqj49GD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtwiO47gTOlb/NWH8Wiq7ANlQcvEtM2+aFRxs9vpze+VBsy/R765eiqIyqI+fhgqYMZjMUM7quZSXVJ/yCQXQxtpV+g5t/14Sucjmcc1MXs7HdV3RWj1Xw1/Q/dVgq8ukQxJZCg0+sN8k4RCVr8SjaJfUjRRjBwIIDKvaHA/rpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0B1aIj55; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yaqj49GD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38B4C433F1;
-	Sat,  3 Feb 2024 04:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0B1aIj55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFEBC433C7;
+	Sat,  3 Feb 2024 04:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933578;
-	bh=WNyNu0WXNpO7P3fXc1YXYRAoXjJ5cxkaOdH0Ii4LbmU=;
+	s=korg; t=1706933579;
+	bh=aGkC5sj/r7CJSOLLkcHQ0ozth5rgwx2aZbYbpHQfKt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yaqj49GDwIfVyCMH19Zv893V/GA8yiHj5cLeDfFohK+EK/1GmoJef8X1Tt+c0rjeL
-	 kouZXy4HKhOi89NaPuBYnEAIVPerbQ0GiodEITvojngg6jSJu3SLX0dv+B88u4hMg9
-	 Odv/M2tCBmqoAzb9oFr1Stp856lk1ZkDYtACEgs4=
+	b=0B1aIj55zqtgts9aJl+0K8St6vjEM3XzlA6ius/NtTTFdO94qJDJVpJ34adAlSo6D
+	 jE2LSLOJnW7sCSpGruUhgzR8CAcdh5Ed4USpzK3VUxLcU7Zy+Pbpk1nf87BgWQTsEA
+	 jcObbXODW9yr4VrBdwYQ54VL3vu+R+W6twTvf7W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Zenm Chen <zenmchen@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 139/322] arm64: dts: amlogic: fix format for s4 uart node
-Date: Fri,  2 Feb 2024 20:03:56 -0800
-Message-ID: <20240203035403.645449524@linuxfoundation.org>
+Subject: [PATCH 6.6 140/322] wifi: rtl8xxxu: Add additional USB IDs for RTL8192EU devices
+Date: Fri,  2 Feb 2024 20:03:57 -0800
+Message-ID: <20240203035403.678313458@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,64 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xianwei Zhao <xianwei.zhao@amlogic.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-[ Upstream commit eb54ef36282f670c704ed5af8593da62bebba80d ]
+[ Upstream commit 4e87ca403e2008b9e182239e1abbf6876a55eb33 ]
 
-Aliases use lowercase letters and place status in end.
+Add additional USB IDs found in the vendor driver from
+https://github.com/Mange/rtl8192eu-linux-driver to support more
+RTL8192EU devices.
 
-Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20231215-s4-dts-v1-1-7831ab6972be@amlogic.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231217123017.1982-1-zenmchen@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts | 4 ++--
- arch/arm64/boot/dts/amlogic/meson-s4.dtsi             | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts b/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts
-index 8ffbcb2b1ac5..bbd3c05cbd90 100644
---- a/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts
-+++ b/arch/arm64/boot/dts/amlogic/meson-s4-s805x2-aq222.dts
-@@ -15,7 +15,7 @@
- 	#size-cells = <2>;
- 
- 	aliases {
--		serial0 = &uart_B;
-+		serial0 = &uart_b;
- 	};
- 
- 	memory@0 {
-@@ -25,6 +25,6 @@
- 
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 5d102a1246a3..77b356fedd82 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -7959,6 +7959,18 @@ static const struct usb_device_id dev_table[] = {
+ 	.driver_info = (unsigned long)&rtl8192eu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x818c, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* D-Link DWA-131 rev C1 */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3312, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* TP-Link TL-WN8200ND V2 */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0126, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* Mercusys MW300UM */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0100, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* Mercusys MW300UH */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0104, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
+ #endif
+ { }
  };
- 
--&uart_B {
-+&uart_b {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-index f24460186d3d..55ddea6dc9f8 100644
---- a/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-s4.dtsi
-@@ -118,14 +118,14 @@
- 					<10 11 12 13 14 15 16 17 18 19 20 21>;
- 			};
- 
--			uart_B: serial@7a000 {
-+			uart_b: serial@7a000 {
- 				compatible = "amlogic,meson-s4-uart",
- 					     "amlogic,meson-ao-uart";
- 				reg = <0x0 0x7a000 0x0 0x18>;
- 				interrupts = <GIC_SPI 169 IRQ_TYPE_EDGE_RISING>;
--				status = "disabled";
- 				clocks = <&xtal>, <&xtal>, <&xtal>;
- 				clock-names = "xtal", "pclk", "baud";
-+				status = "disabled";
- 			};
- 
- 			reset: reset-controller@2000 {
 -- 
 2.43.0
 
