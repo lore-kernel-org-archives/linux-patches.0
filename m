@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D004910A0E;
-	Sat,  3 Feb 2024 04:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B8010A0E;
+	Sat,  3 Feb 2024 04:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933589; cv=none; b=T2HqR8j8Y5+D1uY78wsZ9XUmRJpF7I1O2LNtnJWyTKs2BUm7ovWG2729AZUpOxV52knARsQBBcR5+QcAdv5XFqzUpuTxOK9pkKZobK5U/XGvmjGLy+Dl2pyayV8yCucsWmq+c+7GSVSYKnTQbiKdVQygjJzoriTmEggCAjnLlMY=
+	t=1706933590; cv=none; b=i3oDcrk0QhSv48WdfhFJZMvp2C7gJjYhnp34d3wQOikp8YbP0Xg0RjIMQ2Q88rV6dx7qSoZ08FKB9z5sn4fQ8C9y1QsqsOnQIbbQ6+Hk/QKgvn5h+gi9u6hpMcqKRefyR4V55WaJ54kqNGeP/lO9oepq7GWM5tQUhGDtxMH8ZFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933589; c=relaxed/simple;
-	bh=A1ksihDo2y3EcvezdaD98ccofTWAg1d6EgCTzbkTG18=;
+	s=arc-20240116; t=1706933590; c=relaxed/simple;
+	bh=pU13pbZPsKZ/owANeLI7NmsQr44DB+0IdQjGz0J+FD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ufpRUW9+5+qZIv8kcwEOX2ZoJwpZKZLSwoKB3m2OiThk/6U813iB7cJ8reWh1mmBpazsg5LI3kmNYQ0lY38jEYNLSH5VhTeypiq63kD8knPeIfuxRyuZ/q0gyL7oiayn82FegJ+eR0/M95mI17mL64NOFd73w5mH9mLNbJykMTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hv4DTG+G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j96dMoonEuL+qtbbnFysxbPE3w3uXYeVXNmb1zeAX00vh0dXQehGx0Yt87vQ8RTeCwuEIAkkRTzthtHgM9J+lfqEAWdUqWGLRpvVLJx68Bg3qXKpGXKJx4nKuNRTtmDSXyUsVzh0q+4HBVZb/xc5C58zFr6KV7ViDuunh/Urz7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/gtnB0b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hv4DTG+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98961C43394;
-	Sat,  3 Feb 2024 04:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/gtnB0b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2EBC433F1;
+	Sat,  3 Feb 2024 04:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933589;
-	bh=A1ksihDo2y3EcvezdaD98ccofTWAg1d6EgCTzbkTG18=;
+	s=korg; t=1706933590;
+	bh=pU13pbZPsKZ/owANeLI7NmsQr44DB+0IdQjGz0J+FD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hv4DTG+GI9MGxOhHdLLQ6pndZP9PQeYYyUuo75Ym2iyfAF12lumU4ifSgG4V3Fx7u
-	 vdHjGzeV+JpOUImWl77Q9ZiIx42V1ITJbbuwVgzh/qEh9BoKymyxUl++wB44AzthyC
-	 pAvMekHKaueezH2SSYDOR7RN3cziJxTXyutmU6eM=
+	b=j/gtnB0bZgVrvqJjg6EW/RuxnRBCWGxIgk3FU1REWrUJdXrjasmniFA7KLYcx1LGi
+	 wG5vVOqui5MhZYVFK6LipQmkHId2IJlteXIgDLFa0a8d25xIcV6gQWT3H+QsFbblgf
+	 KnD9lVJUfWKJKMNJAoE0TeM4mt2aEfg3q4RmXxgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jan Sokolowski <jan.sokolowski@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
 	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Andrii Staikov <andrii.staikov@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 153/322] i40e: Fix VF disable behavior to block all traffic
-Date: Fri,  2 Feb 2024 20:04:10 -0800
-Message-ID: <20240203035404.140883100@linuxfoundation.org>
+Subject: [PATCH 6.6 130/322] ice: fix ICE_AQ_VSI_Q_OPT_RSS_* register values
+Date: Fri,  2 Feb 2024 20:03:47 -0800
+Message-ID: <20240203035403.349706623@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -56,118 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Staikov <andrii.staikov@intel.com>
+From: Ahmed Zaki <ahmed.zaki@intel.com>
 
-[ Upstream commit 31deb12e85c35ddd2c037f0107d05d8674cab2c0 ]
+[ Upstream commit 20f73b60bb5c276cee9b1a530f100c677bc74af8 ]
 
-Currently, if a VF is disabled using the
-'ip link set dev $ETHX vf $VF_NUM state disable' command, the VF is still
-able to receive traffic.
+Fix the values of the ICE_AQ_VSI_Q_OPT_RSS_* registers. Shifting is
+already done when the values are used, no need to double shift. Bug was
+not discovered earlier since only ICE_AQ_VSI_Q_OPT_RSS_TPLZ (Zero) is
+currently used.
 
-Fix the behavior of the 'ip link set dev $ETHX vf $VF_NUM state disable'
-to completely shutdown the VF's queues making it entirely disabled and
-not able to receive or send any traffic.
+Also, rename ICE_AQ_VSI_Q_OPT_RSS_XXX to ICE_AQ_VSI_Q_OPT_RSS_HASH_XXX
+for consistency.
 
-Modify the behavior of the 'ip link set $ETHX vf $VF_NUM state enable'
-command to make a VF do reinitialization bringing the queues back up.
-
-Co-developed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Jan Sokolowski <jan.sokolowski@intel.com>
+Co-developed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Andrii Staikov <andrii.staikov@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Link: https://lore.kernel.org/r/20231213003321.605376-5-ahmed.zaki@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 32 +++++++++++++++++++
- .../ethernet/intel/i40e/i40e_virtchnl_pf.h    |  1 +
- 2 files changed, 33 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_adminq_cmd.h |  8 ++++----
+ drivers/net/ethernet/intel/ice/ice_lib.c        |  4 ++--
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c   | 12 +++++-------
+ 3 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index a97ca2224da0..cc4c53470db2 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2605,6 +2605,14 @@ static int i40e_vc_enable_queues_msg(struct i40e_vf *vf, u8 *msg)
- 	int aq_ret = 0;
- 	int i;
- 
-+	if (vf->is_disabled_from_host) {
-+		aq_ret = -EPERM;
-+		dev_info(&pf->pdev->dev,
-+			 "Admin has disabled VF %d, will not enable queues\n",
-+			 vf->vf_id);
-+		goto error_param;
-+	}
-+
- 	if (!test_bit(I40E_VF_STATE_ACTIVE, &vf->vf_states)) {
- 		aq_ret = -EINVAL;
- 		goto error_param;
-@@ -4732,9 +4740,12 @@ int i40e_ndo_set_vf_link_state(struct net_device *netdev, int vf_id, int link)
- 	struct i40e_link_status *ls = &pf->hw.phy.link_info;
- 	struct virtchnl_pf_event pfe;
- 	struct i40e_hw *hw = &pf->hw;
-+	struct i40e_vsi *vsi;
-+	unsigned long q_map;
- 	struct i40e_vf *vf;
- 	int abs_vf_id;
- 	int ret = 0;
-+	int tmp;
- 
- 	if (test_and_set_bit(__I40E_VIRTCHNL_OP_PENDING, pf->state)) {
- 		dev_warn(&pf->pdev->dev, "Unable to configure VFs, other operation is pending.\n");
-@@ -4757,17 +4768,38 @@ int i40e_ndo_set_vf_link_state(struct net_device *netdev, int vf_id, int link)
- 	switch (link) {
- 	case IFLA_VF_LINK_STATE_AUTO:
- 		vf->link_forced = false;
-+		vf->is_disabled_from_host = false;
-+		/* reset needed to reinit VF resources */
-+		i40e_vc_reset_vf(vf, true);
- 		i40e_set_vf_link_state(vf, &pfe, ls);
+diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+index 29f7a9852aec..fafe083d1446 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
++++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+@@ -491,10 +491,10 @@ struct ice_aqc_vsi_props {
+ #define ICE_AQ_VSI_Q_OPT_RSS_GBL_LUT_M		(0xF << ICE_AQ_VSI_Q_OPT_RSS_GBL_LUT_S)
+ #define ICE_AQ_VSI_Q_OPT_RSS_HASH_S		6
+ #define ICE_AQ_VSI_Q_OPT_RSS_HASH_M		(0x3 << ICE_AQ_VSI_Q_OPT_RSS_HASH_S)
+-#define ICE_AQ_VSI_Q_OPT_RSS_TPLZ		(0x0 << ICE_AQ_VSI_Q_OPT_RSS_HASH_S)
+-#define ICE_AQ_VSI_Q_OPT_RSS_SYM_TPLZ		(0x1 << ICE_AQ_VSI_Q_OPT_RSS_HASH_S)
+-#define ICE_AQ_VSI_Q_OPT_RSS_XOR		(0x2 << ICE_AQ_VSI_Q_OPT_RSS_HASH_S)
+-#define ICE_AQ_VSI_Q_OPT_RSS_JHASH		(0x3 << ICE_AQ_VSI_Q_OPT_RSS_HASH_S)
++#define ICE_AQ_VSI_Q_OPT_RSS_HASH_TPLZ		0x0U
++#define ICE_AQ_VSI_Q_OPT_RSS_HASH_SYM_TPLZ	0x1U
++#define ICE_AQ_VSI_Q_OPT_RSS_HASH_XOR		0x2U
++#define ICE_AQ_VSI_Q_OPT_RSS_HASH_JHASH		0x3U
+ 	u8 q_opt_tc;
+ #define ICE_AQ_VSI_Q_OPT_TC_OVR_S		0
+ #define ICE_AQ_VSI_Q_OPT_TC_OVR_M		(0x1F << ICE_AQ_VSI_Q_OPT_TC_OVR_S)
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index a66c3b6ccec1..4e7f67f54f1c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -1186,12 +1186,12 @@ static void ice_set_rss_vsi_ctx(struct ice_vsi_ctx *ctxt, struct ice_vsi *vsi)
+ 	case ICE_VSI_PF:
+ 		/* PF VSI will inherit RSS instance of PF */
+ 		lut_type = ICE_AQ_VSI_Q_OPT_RSS_LUT_PF;
+-		hash_type = ICE_AQ_VSI_Q_OPT_RSS_TPLZ;
++		hash_type = ICE_AQ_VSI_Q_OPT_RSS_HASH_TPLZ;
  		break;
- 	case IFLA_VF_LINK_STATE_ENABLE:
- 		vf->link_forced = true;
- 		vf->link_up = true;
-+		vf->is_disabled_from_host = false;
-+		/* reset needed to reinit VF resources */
-+		i40e_vc_reset_vf(vf, true);
- 		i40e_set_vf_link_state(vf, &pfe, ls);
- 		break;
- 	case IFLA_VF_LINK_STATE_DISABLE:
- 		vf->link_forced = true;
- 		vf->link_up = false;
- 		i40e_set_vf_link_state(vf, &pfe, ls);
-+
-+		vsi = pf->vsi[vf->lan_vsi_idx];
-+		q_map = BIT(vsi->num_queue_pairs) - 1;
-+
-+		vf->is_disabled_from_host = true;
-+
-+		/* Try to stop both Tx&Rx rings even if one of the calls fails
-+		 * to ensure we stop the rings even in case of errors.
-+		 * If any of them returns with an error then the first
-+		 * error that occurred will be returned.
-+		 */
-+		tmp = i40e_ctrl_vf_tx_rings(vsi, q_map, false);
-+		ret = i40e_ctrl_vf_rx_rings(vsi, q_map, false);
-+
-+		ret = tmp ? tmp : ret;
+ 	case ICE_VSI_VF:
+ 		/* VF VSI will gets a small RSS table which is a VSI LUT type */
+ 		lut_type = ICE_AQ_VSI_Q_OPT_RSS_LUT_VSI;
+-		hash_type = ICE_AQ_VSI_Q_OPT_RSS_TPLZ;
++		hash_type = ICE_AQ_VSI_Q_OPT_RSS_HASH_TPLZ;
  		break;
  	default:
- 		ret = -EINVAL;
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
-index bda9ba668c41..cf190762421c 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.h
-@@ -98,6 +98,7 @@ struct i40e_vf {
- 	bool link_forced;
- 	bool link_up;		/* only valid if VF link is forced */
- 	bool spoofchk;
-+	bool is_disabled_from_host; /* PF ctrl of VF enable/disable */
- 	u16 num_vlan;
+ 		dev_dbg(dev, "Unsupported VSI type %s\n",
+diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+index 62337e6569b2..e7ab78bb0f86 100644
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -820,8 +820,8 @@ static int ice_vc_handle_rss_cfg(struct ice_vf *vf, u8 *msg, bool add)
+ 		int status;
  
- 	/* ADq related variables */
+ 		lut_type = ICE_AQ_VSI_Q_OPT_RSS_LUT_VSI;
+-		hash_type = add ? ICE_AQ_VSI_Q_OPT_RSS_XOR :
+-				ICE_AQ_VSI_Q_OPT_RSS_TPLZ;
++		hash_type = add ? ICE_AQ_VSI_Q_OPT_RSS_HASH_XOR :
++				ICE_AQ_VSI_Q_OPT_RSS_HASH_TPLZ;
+ 
+ 		ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+ 		if (!ctx) {
+@@ -829,11 +829,9 @@ static int ice_vc_handle_rss_cfg(struct ice_vf *vf, u8 *msg, bool add)
+ 			goto error_param;
+ 		}
+ 
+-		ctx->info.q_opt_rss = ((lut_type <<
+-					ICE_AQ_VSI_Q_OPT_RSS_LUT_S) &
+-				       ICE_AQ_VSI_Q_OPT_RSS_LUT_M) |
+-				       (hash_type &
+-					ICE_AQ_VSI_Q_OPT_RSS_HASH_M);
++		ctx->info.q_opt_rss =
++			FIELD_PREP(ICE_AQ_VSI_Q_OPT_RSS_LUT_M, lut_type) |
++			FIELD_PREP(ICE_AQ_VSI_Q_OPT_RSS_HASH_M, hash_type);
+ 
+ 		/* Preserve existing queueing option setting */
+ 		ctx->info.q_opt_rss |= (vsi->info.q_opt_rss &
 -- 
 2.43.0
 
