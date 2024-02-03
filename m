@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E395125AC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92BE17BC4;
 	Sat,  3 Feb 2024 04:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933595; cv=none; b=LEIlVb97aNfSlu9Q1ewz7QWNDTUcX9dwHedQapetN05RWc2WCvyfFc/xv73jG1iCZlm4IiqVCYUKaF8uNQWYICZtRx0mjLNR39AxXNSlEg3mLEpsMeZIQlQ8Xs9NPRufL0EL68h9RNb0T9k+HAMf/zCj27QT/DsnNwSXdE92xgA=
+	t=1706933595; cv=none; b=kNsVZkLSw4dukF6+/IfdZeVFNz663yixfCrc+IhQUgghUL2i//PvVeYpL8p40HpRHdEfHYAyoVBZmbzGO5Qq/Pm8b86uUgjI8KmSOmvif+EwnU3WOp2wALevsFH/+8qem1Ug+oJZOlDs+dIDcgf9X9iWdDuduHiofc2MMaNWs4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933595; c=relaxed/simple;
-	bh=UDDYiMU8BJNs5qVegKCvgRB8xvt7dTZKtmb3ouarVak=;
+	bh=jFCTz9qqPYvSqujlr5z/Z+3OMnpedauA938lBVHkAhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b1x6qhVDalcbVaTdOd3xkvdfNmkAif+wvMVxRiIORRMN8XnmuVJqxXhiL/D8wVuhLVHojvabWH4IVn+4XeAYx7ds9dqWrcYwEVRJdgIahW/ZhZnMb+EIVvxC7/3UJ1jRCWIRGK2s164tgroysC0PgjIhPPK7SSAT5CvJKczQKnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YC3tcnqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IxboBTPvoL6MDVuoTNuIHgYpRU+d3cIpeSJe7VJj2B/XLZ0lKZjZIzJ7yQEx4Jt3NcFINKsR4gTEiFuP+sKeLTn1nEuBhDKbeyflC1oSVhz0/D6yZvR5NqbkSLfK4WHCu0FzQA56/eMPvsP58VliePhu+ETxwjJ5YOa7J5Z/M/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qS+jCxLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YC3tcnqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCDFC43390;
-	Sat,  3 Feb 2024 04:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qS+jCxLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B42C43390;
+	Sat,  3 Feb 2024 04:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933594;
-	bh=UDDYiMU8BJNs5qVegKCvgRB8xvt7dTZKtmb3ouarVak=;
+	s=korg; t=1706933595;
+	bh=jFCTz9qqPYvSqujlr5z/Z+3OMnpedauA938lBVHkAhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YC3tcnqsRnnBDXVXV+wA6OG81N3TAGsI2UWX7nAgyJChYUwqc2oBU8JJZXcbA6lpG
-	 5ihHUf98beyaeg/UNHVn2ZoWVP5hRqquyKc5gED3W0wcQcVXdp7ec0bxYqsENIi/Xt
-	 sIHuKZ54SDFdscbFFTlOhOaDjGyVyLRuva/pNlpo=
+	b=qS+jCxLCL7Lnv8RL47h4aHQHzKdb9GdhRKBC5Hk8XSBFciaUEpgXvgi3C55Sh4hqX
+	 izavzA164u4SxouCtaBDwmok7zXE3HD4WV8fofHcyWbF4bE8iNZJRwREZ3dUPdfVhl
+	 m5NxpEJuxX/iMKRYoMovEmwxSFS8fezOHtLZMoAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mao Jinlong <quic_jinlmao@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/322] arm64: dts: qcom: msm8998: Fix out-ports is a required property
-Date: Fri,  2 Feb 2024 20:03:53 -0800
-Message-ID: <20240203035403.543312936@linuxfoundation.org>
+Subject: [PATCH 6.6 127/322] scsi: lpfc: Reinitialize an NPIVs VMID data structures after FDISC
+Date: Fri,  2 Feb 2024 20:03:44 -0800
+Message-ID: <20240203035403.255764406@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,86 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit ae5ee3562a2519214b12228545e88a203dd68bbd ]
+[ Upstream commit 8dc8eb89f4df74593ba4bf30c3d31a0fc6d3ea47 ]
 
-out-ports is a required property for coresight ETM. Add out-ports for
-ETM nodes to fix the warning.
+After a follow up FDISC cmpl, an NPIV's VMID data structures are not
+updated.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-Link: https://lore.kernel.org/r/20231210072633.4243-4-quic_jinlmao@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix by calling lpfc_reinit_vmid and copying the physical port's vmid_flag
+to the NPIV's vmid_flag in the NPIV registration cmpl code path.
+
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20231207224039.35466-3-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++----------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/scsi/lpfc/lpfc_els.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index f180047cacb0..f91c58c844af 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2034,9 +2034,11 @@
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index 54e47f268235..932d47951cf3 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -11110,6 +11110,14 @@ lpfc_cmpl_reg_new_vport(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
+ 	lpfc_nlp_put(ndlp);
  
- 			cpu = <&CPU4>;
+ 	mempool_free(pmb, phba->mbox_mem_pool);
++
++	/* reinitialize the VMID datastructure before returning.
++	 * this is specifically for vport
++	 */
++	if (lpfc_is_vmid_enabled(phba))
++		lpfc_reinit_vmid(vport);
++	vport->vmid_flag = vport->phba->pport->vmid_flag;
++
+ 	return;
+ }
  
--			port {
--				etm4_out: endpoint {
--					remote-endpoint = <&apss_funnel_in4>;
-+			out-ports {
-+				port {
-+					etm4_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in4>;
-+					};
- 				};
- 			};
- 		};
-@@ -2051,9 +2053,11 @@
- 
- 			cpu = <&CPU5>;
- 
--			port {
--				etm5_out: endpoint {
--					remote-endpoint = <&apss_funnel_in5>;
-+			out-ports {
-+				port {
-+					etm5_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in5>;
-+					};
- 				};
- 			};
- 		};
-@@ -2068,9 +2072,11 @@
- 
- 			cpu = <&CPU6>;
- 
--			port {
--				etm6_out: endpoint {
--					remote-endpoint = <&apss_funnel_in6>;
-+			out-ports {
-+				port {
-+					etm6_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in6>;
-+					};
- 				};
- 			};
- 		};
-@@ -2085,9 +2091,11 @@
- 
- 			cpu = <&CPU7>;
- 
--			port {
--				etm7_out: endpoint {
--					remote-endpoint = <&apss_funnel_in7>;
-+			out-ports {
-+				port {
-+					etm7_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in7>;
-+					};
- 				};
- 			};
- 		};
 -- 
 2.43.0
 
