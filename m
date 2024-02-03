@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80BDFBF2;
-	Sat,  3 Feb 2024 04:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2E2FBF2;
+	Sat,  3 Feb 2024 04:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933858; cv=none; b=DbfrNwWb7GdJq5tWNBwXu7YgcISSxTCFmPRnbetM14hyMZsR4lLFnVR1Guk6unkvFj9d03e2TL+6W+bpFqVFGKme8QGiH4uH/hqVpB50XvzS/hc34BNzGX8xN+0pSLHidELxYVkrY/M/D5YyDTipfSfNkk3EsUTgUrptoY9kd9E=
+	t=1706933859; cv=none; b=HoC641GRDlmjj/qVWsgBNubCWT0ljdgV6qH9JJrxW9oRWvrGD6apBCBJy875ZlQ8PiKWJ3Lht8G48ZXHHpJpY57Cyhja90jf9l+bsbnxDo6Uji5YM3Pj1UIgEoXVKylI4L6hLumEhhf5S2FToJ6y8VVyx0WidUA38bZYQvokVlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933858; c=relaxed/simple;
-	bh=tt7x1MrDZu0AWT45Aaw75yRV9fgjFI/A3qBbo1H3nxk=;
+	s=arc-20240116; t=1706933859; c=relaxed/simple;
+	bh=5ArGNyb3OZ4y3zIGBVD+8BQ/zpy230uSCtfbDfl4jq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpNSRpDxT3TChRWJvMDFLt5z8hUcSKQsbIMRa3aJr/91WVNai8xqVjJHf3nfYUQ+TxaF3H8hNdJgVLdvvbyzRKoGNjhRjr/LIkXnaMjSUbDyAdkaW6KrqIVBn9bvGxvOVcfz7l3WMouYuQ9xZK4+ynoGDBZLy4ZIzdwRiLgCF/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HgnwZjbz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KC/WPA+5LeT717+C3WrA2r5Kic9gd9GadzplPH0QvCJ1dwHJ8Jj0dqljYzj/JxG5x1A9Y2fopCSrV6LshA1Pr77QMPPxLFCDv0e6XjXNETQW0iDfvu1t1jrdLL8IptzZrzWTUn5nsPRC4zzryTMNjLBTLlV+Zs3UrX8PVbOisW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImCs7+zK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HgnwZjbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4EDC433C7;
-	Sat,  3 Feb 2024 04:17:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImCs7+zK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35106C433F1;
+	Sat,  3 Feb 2024 04:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933858;
-	bh=tt7x1MrDZu0AWT45Aaw75yRV9fgjFI/A3qBbo1H3nxk=;
+	s=korg; t=1706933859;
+	bh=5ArGNyb3OZ4y3zIGBVD+8BQ/zpy230uSCtfbDfl4jq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HgnwZjbz2rOZxV+eFfDeMXZmHfMFqh3TP0Va18RntauObtexE9ZVYwDKPQ+VP7wLK
-	 vVZ173rqK/gRpW3U5cDxfpbjLKCUBL5506OI3EENxsdwJGtAxzudoMTOl9IxdtrRaJ
-	 9SIk+A86cCegrYYE2yFMigDnSrhGL4nIpPYkMOI0=
+	b=ImCs7+zK57VeNEHMX6rsVCI3uhah6f8TreLRxgLyZycytJ/mhD4vKC2m2F5nNVVL3
+	 h1UpblwqK/WRK9nMSazaGVbCKiaIL0VAaF0nYs+LxNDKQ5QaA3AEZxpXDBQ0LQG0g5
+	 yJleZ0EXSbx5xTO+8SFqnwRmiZ6RPakA9eWo4UgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Adam Ford <aford173@gmail.com>
-Subject: [PATCH 6.7 190/353] media: rkisp1: Drop IRQF_SHARED
-Date: Fri,  2 Feb 2024 20:05:08 -0800
-Message-ID: <20240203035409.680899716@linuxfoundation.org>
+Subject: [PATCH 6.7 191/353] media: rkisp1: Fix IRQ handler return values
+Date: Fri,  2 Feb 2024 20:05:09 -0800
+Message-ID: <20240203035409.714455556@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -55,17 +55,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 85d2a31fe4d9be1555f621ead7a520d8791e0f74 ]
+[ Upstream commit 3eb7910e1b16a2c136be26a8380f21469225b2f6 ]
 
-In all known platforms the ISP has dedicated IRQ lines, but for some
-reason the driver uses IRQF_SHARED.
+The IRQ handler rkisp1_isr() calls sub-handlers, all of which returns an
+irqreturn_t value, but rkisp1_isr() ignores those values and always
+returns IRQ_HANDLED.
 
-Supporting IRQF_SHARED properly requires handling interrupts even when
-our device is disabled, and the driver does not handle this. To avoid
-adding such code, and to be sure the driver won't accidentally be used
-in a platform with shared interrupts, let's drop the IRQF_SHARED flag.
+Fix this by collecting the return values, and returning IRQ_HANDLED or
+IRQ_NONE as appropriate.
 
-Link: https://lore.kernel.org/r/20231207-rkisp-irq-fix-v3-1-358a2c871a3c@ideasonboard.com
+Link: https://lore.kernel.org/r/20231207-rkisp-irq-fix-v3-2-358a2c871a3c@ideasonboard.com
 
 Tested-by: Adam Ford <aford173@gmail.com>  #imx8mp-beacon
 Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
@@ -73,22 +72,43 @@ Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../media/platform/rockchip/rkisp1/rkisp1-dev.c  | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-index 894d5afaff4e..b676db9bff62 100644
+index b676db9bff62..7b8a361d4c4a 100644
 --- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
 +++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-@@ -542,7 +542,7 @@ static int rkisp1_probe(struct platform_device *pdev)
- 		if (irq < 0)
- 			return irq;
+@@ -442,17 +442,25 @@ static int rkisp1_entities_register(struct rkisp1_device *rkisp1)
  
--		ret = devm_request_irq(dev, irq, info->isrs[i].isr, IRQF_SHARED,
-+		ret = devm_request_irq(dev, irq, info->isrs[i].isr, 0,
- 				       dev_driver_string(dev), dev);
- 		if (ret) {
- 			dev_err(dev, "request irq failed: %d\n", ret);
+ static irqreturn_t rkisp1_isr(int irq, void *ctx)
+ {
++	irqreturn_t ret = IRQ_NONE;
++
+ 	/*
+ 	 * Call rkisp1_capture_isr() first to handle the frame that
+ 	 * potentially completed using the current frame_sequence number before
+ 	 * it is potentially incremented by rkisp1_isp_isr() in the vertical
+ 	 * sync.
+ 	 */
+-	rkisp1_capture_isr(irq, ctx);
+-	rkisp1_isp_isr(irq, ctx);
+-	rkisp1_csi_isr(irq, ctx);
+ 
+-	return IRQ_HANDLED;
++	if (rkisp1_capture_isr(irq, ctx) == IRQ_HANDLED)
++		ret = IRQ_HANDLED;
++
++	if (rkisp1_isp_isr(irq, ctx) == IRQ_HANDLED)
++		ret = IRQ_HANDLED;
++
++	if (rkisp1_csi_isr(irq, ctx) == IRQ_HANDLED)
++		ret = IRQ_HANDLED;
++
++	return ret;
+ }
+ 
+ static const char * const px30_isp_clks[] = {
 -- 
 2.43.0
 
