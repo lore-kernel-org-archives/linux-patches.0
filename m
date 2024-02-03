@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18240134C6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D0C134C6;
 	Sat,  3 Feb 2024 04:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933738; cv=none; b=uTdkoUsQQTtir0CZWE2rYftlsSDRErQsCZeLMO581Wijdj7BFfcZyuZxOWW6A4EK6Sqgdxz1kgGFnUE9mx8WMKHNCkHwb5qFBFGZ8XiMOedUv3o7b4HutaTggrw3hVrRfOwu1uYI6oVP1b/ASqgG0K7JPqeL1K9oGU3u3iOZUTM=
+	t=1706933738; cv=none; b=Vq3N9yqWpB58cb2Nt+Iki/5dDPsgI3yir/rQbJE1r2OSSqgGwGG6dUvkPHQuGOXtBSSB5tc9DR4/mcnCUe32ubFfFbi1oGwV5uCEBxoH3Q7k/rV7Q8rjmT4gtfojMRk0DhSZm/yUeHmhoCDNeOSfVZOkXEkQERZJkEjYC22Ykjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933738; c=relaxed/simple;
-	bh=jD10W1LCeQjAk8zhyjwwqxuSHRy8bsXQ+Zz32A0hU6c=;
+	bh=9aLKuRlm3SHCw20GC8ZtBfbXRfDxiJkBzekA5a23dCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EvXu27v1wG9w0MKrtzC8kE7jweWKpwF3mehmE6ibpC+VHAEbdTB3m43MK7IPNK8ScAA/aQxhhVeVTYfoGxozRqmxJTq/5Izn4eqcvq04fsrEMv3rEsODh1qv4xCUr+2pqKVjs2Xe/S0SKA+mxw7bgzBqMaOzXX9a1JYCs2GHeSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTl5dBlo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBxMXoaSh9/ZxnxxEvYEbJKRCBvn9RMP/vVLcGQVv+C5qVJB9G3Ddwga95D4RaGaJIl5B476+3bY3/fE/YXWZ6jrF/PQKhFTr4hO7G8V6QpPpYmJtWJ22K1hwpG0aANbUgPAdrch5IC252zDlu8D9Ib6gYMbg6CdZkmNGSD1NHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/y4z6eG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTl5dBlo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27CAC433F1;
-	Sat,  3 Feb 2024 04:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/y4z6eG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBC5C433C7;
+	Sat,  3 Feb 2024 04:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933737;
-	bh=jD10W1LCeQjAk8zhyjwwqxuSHRy8bsXQ+Zz32A0hU6c=;
+	s=korg; t=1706933738;
+	bh=9aLKuRlm3SHCw20GC8ZtBfbXRfDxiJkBzekA5a23dCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTl5dBlokwXRzwhCSdcxlW4R7uTWMgV154ZVyiH7sYFhFq9VbD0dLNHtoUv6hIGii
-	 ag4dI5EiVj8sx6u3y0433SEJtZfvr+AsXVCjzxGQgQfo3bBBruuCxE9JACOe/h8zPD
-	 of5jGNc82lfdsRg9NnAVQzyXBBRTqxqks2hA6Ebs=
+	b=D/y4z6eGhDbnR84kP66TndJbRSj+cB1bmi+RcbB9aarUDJ7S2EXd5P+OUwiAJ32FE
+	 oElBe9jJw7o6K4sQ+YimcmegfOa1GfdXNEh7/DvWDNNFUHjW1WZDJDKWmrV+8OTZu+
+	 kX9DBdG5raerf3foAiBfy7hZqd8dTbMRiCAZQWE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Xiaofei Tan <tanxiaofei@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	James Morse <james.morse@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 027/353] ACPI: APEI: set memory failure flags as MF_ACTION_REQUIRED on synchronous events
-Date: Fri,  2 Feb 2024 20:02:25 -0800
-Message-ID: <20240203035404.629091026@linuxfoundation.org>
+Subject: [PATCH 6.7 004/353] drivers/perf: pmuv3: dont expose SW_INCR event in sysfs
+Date: Fri,  2 Feb 2024 20:02:02 -0800
+Message-ID: <20240203035403.813228675@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -56,141 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit a70297d2213253853e95f5b49651f924990c6d3b ]
+[ Upstream commit ca6f537e459e2da4b331fe8928d1a0b0f9301f42 ]
 
-There are two major types of uncorrected recoverable (UCR) errors :
+The SW_INCR event is somewhat unusual, and depends on the specific HW
+counter that it is programmed into. When programmed into PMEVCNTR<n>,
+SW_INCR will count any writes to PMSWINC_EL0 with bit n set, ignoring
+writes to SW_INCR with bit n clear.
 
- - Synchronous error: The error is detected and raised at the point of
-   the consumption in the execution flow, e.g. when a CPU tries to
-   access a poisoned cache line. The CPU will take a synchronous error
-   exception such as Synchronous External Abort (SEA) on Arm64 and
-   Machine Check Exception (MCE) on X86. OS requires to take action (for
-   example, offline failure page/kill failure thread) to recover this
-   uncorrectable error.
+Event rotation means that there's no fixed relationship between
+perf_events and HW counters, so this isn't all that useful.
 
- - Asynchronous error: The error is detected out of processor execution
-   context, e.g. when an error is detected by a background scrubber.
-   Some data in the memory are corrupted. But the data have not been
-   consumed. OS is optional to take action to recover this uncorrectable
-   error.
+Further, we program PMUSERENR.{SW,EN}=={0,0}, which causes EL0 writes to
+PMSWINC_EL0 to be trapped and handled as UNDEFINED, resulting in a
+SIGILL to userspace.
 
-When APEI firmware first is enabled, a platform may describe one error
-source for the handling of synchronous errors (e.g. MCE or SEA notification
-), or for handling asynchronous errors (e.g. SCI or External Interrupt
-notification). In other words, we can distinguish synchronous errors by
-APEI notification. For synchronous errors, kernel will kill the current
-process which accessing the poisoned page by sending SIGBUS with
-BUS_MCEERR_AR. In addition, for asynchronous errors, kernel will notify the
-process who owns the poisoned page by sending SIGBUS with BUS_MCEERR_AO in
-early kill mode. However, the GHES driver always sets mf_flags to 0 so that
-all synchronous errors are handled as asynchronous errors in memory failure.
+Given that, it's not a good idea to expose SW_INCR in sysfs. Hide it as
+we did for CHAIN back in commit:
 
-To this end, set memory failure flags as MF_ACTION_REQUIRED on synchronous
-events.
+  4ba2578fa7b55701 ("arm64: perf: don't expose CHAIN event in sysfs")
 
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Tested-by: Ma Wupeng <mawupeng1@huawei.com>
-Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Reviewed-by: Xiaofei Tan <tanxiaofei@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: James Morse <james.morse@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20231204115847.2993026-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/perf/arm_pmuv3.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 63ad0541db38..ab2a82cb1b0b 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -101,6 +101,20 @@ static inline bool is_hest_type_generic_v2(struct ghes *ghes)
- 	return ghes->generic->header.type == ACPI_HEST_TYPE_GENERIC_ERROR_V2;
- }
+diff --git a/drivers/perf/arm_pmuv3.c b/drivers/perf/arm_pmuv3.c
+index 6ca7be05229c..0e80fdc9f9ca 100644
+--- a/drivers/perf/arm_pmuv3.c
++++ b/drivers/perf/arm_pmuv3.c
+@@ -169,7 +169,11 @@ armv8pmu_events_sysfs_show(struct device *dev,
+ 	PMU_EVENT_ATTR_ID(name, armv8pmu_events_sysfs_show, config)
  
-+/*
-+ * A platform may describe one error source for the handling of synchronous
-+ * errors (e.g. MCE or SEA), or for handling asynchronous errors (e.g. SCI
-+ * or External Interrupt). On x86, the HEST notifications are always
-+ * asynchronous, so only SEA on ARM is delivered as a synchronous
-+ * notification.
-+ */
-+static inline bool is_hest_sync_notify(struct ghes *ghes)
-+{
-+	u8 notify_type = ghes->generic->notify.type;
-+
-+	return notify_type == ACPI_HEST_NOTIFY_SEA;
-+}
-+
- /*
-  * This driver isn't really modular, however for the time being,
-  * continuing to use module_param is the easiest way to remain
-@@ -489,7 +503,7 @@ static bool ghes_do_memory_failure(u64 physical_addr, int flags)
- }
- 
- static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
--				       int sev)
-+				       int sev, bool sync)
- {
- 	int flags = -1;
- 	int sec_sev = ghes_severity(gdata->error_severity);
-@@ -503,7 +517,7 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	    (gdata->flags & CPER_SEC_ERROR_THRESHOLD_EXCEEDED))
- 		flags = MF_SOFT_OFFLINE;
- 	if (sev == GHES_SEV_RECOVERABLE && sec_sev == GHES_SEV_RECOVERABLE)
--		flags = 0;
-+		flags = sync ? MF_ACTION_REQUIRED : 0;
- 
- 	if (flags != -1)
- 		return ghes_do_memory_failure(mem_err->physical_addr, flags);
-@@ -511,9 +525,11 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	return false;
- }
- 
--static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int sev)
-+static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
-+				       int sev, bool sync)
- {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
-+	int flags = sync ? MF_ACTION_REQUIRED : 0;
- 	bool queued = false;
- 	int sec_sev, i;
- 	char *p;
-@@ -538,7 +554,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int s
- 		 * and don't filter out 'corrected' error here.
- 		 */
- 		if (is_cache && has_pa) {
--			queued = ghes_do_memory_failure(err_info->physical_fault_addr, 0);
-+			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
- 			p += err_info->length;
- 			continue;
- 		}
-@@ -666,6 +682,7 @@ static bool ghes_do_proc(struct ghes *ghes,
- 	const guid_t *fru_id = &guid_null;
- 	char *fru_text = "";
- 	bool queued = false;
-+	bool sync = is_hest_sync_notify(ghes);
- 
- 	sev = ghes_severity(estatus->error_severity);
- 	apei_estatus_for_each_section(estatus, gdata) {
-@@ -683,13 +700,13 @@ static bool ghes_do_proc(struct ghes *ghes,
- 			atomic_notifier_call_chain(&ghes_report_chain, sev, mem_err);
- 
- 			arch_apei_report_mem_error(sev, mem_err);
--			queued = ghes_handle_memory_failure(gdata, sev);
-+			queued = ghes_handle_memory_failure(gdata, sev, sync);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
- 			ghes_handle_aer(gdata);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
--			queued = ghes_handle_arm_hw_error(gdata, sev);
-+			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
- 		} else {
- 			void *err = acpi_hest_get_payload(gdata);
- 
+ static struct attribute *armv8_pmuv3_event_attrs[] = {
+-	ARMV8_EVENT_ATTR(sw_incr, ARMV8_PMUV3_PERFCTR_SW_INCR),
++	/*
++	 * Don't expose the sw_incr event in /sys. It's not usable as writes to
++	 * PMSWINC_EL0 will trap as PMUSERENR.{SW,EN}=={0,0} and event rotation
++	 * means we don't have a fixed event<->counter relationship regardless.
++	 */
+ 	ARMV8_EVENT_ATTR(l1i_cache_refill, ARMV8_PMUV3_PERFCTR_L1I_CACHE_REFILL),
+ 	ARMV8_EVENT_ATTR(l1i_tlb_refill, ARMV8_PMUV3_PERFCTR_L1I_TLB_REFILL),
+ 	ARMV8_EVENT_ATTR(l1d_cache_refill, ARMV8_PMUV3_PERFCTR_L1D_CACHE_REFILL),
 -- 
 2.43.0
 
