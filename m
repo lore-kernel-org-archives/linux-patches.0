@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E059A2BB08;
-	Sat,  3 Feb 2024 04:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D3311738;
+	Sat,  3 Feb 2024 04:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933563; cv=none; b=mqc8u/L3VAVm02UGPJvoiN7ypY7tWQeaJt2B48smNY8tAE0PwMoGiA6je/0Td7McX4vRQY80xKE7rQwly7RvNzDjuhPKL2Rk13EApbOMnkhA+OtmbVxe94I4k1fUobUmk2+w/OPftsn1yRwkzVUVWRrNOkH1w/o3qQx1ab708mo=
+	t=1706933563; cv=none; b=SnMVSbUZ4R7C77+pduds0oFKBX2QOdOjMpE3JteU3hpX6KjRy8Xh/OdBUdJbVjNhElMuY9autOmf1xspmavmrFncXXNThfm9OrHRTaNxB4BPexVAg+Weu8pN4MkvtsfOVxZ81a5hM1Ly1YnWFUwavGD5XIQv5OzPrAh2C6VdSFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933563; c=relaxed/simple;
-	bh=SB9egFxjXOT2LDQvj2uOBOoK/RYOnDIoURxWZIjGdR8=;
+	bh=+hkHKW0NjfnVGkZtPLucM0ZriVXfTjVwi3Ifax/mlx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpL0J0R2RZ8F4kN5RBmXggeims0qS+LUDgw5khFjvQdQlIbQtZibWgNSZ+ke3+z3zWbUcjcXsiBBUa2/wKi5erdOe/RrL+UicwOpJM5fUj6B5FpOKhTmFih74BhjkyaDbYMXAcjrN9NodmKvwFjYfHcjJsmlhMEyk5Ama0JUaRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2IYI1wC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+z9kTXuhvJ/fqS6HcdSWTLbZ1P/FH13ZPGxFgf7RcAKQWqUqwS5fByHxHPzH7wnAf45nOVe3ef7S5QCtiQ2GYNB2QbBhAhIO3zibeUtP0xlRulcksEHe3DAf0viFBSFNJQABt7pdRu/glKDnczrNfUa1Ek86saM9eZCKyCpSE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QO11kNAx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2IYI1wC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A656EC433F1;
-	Sat,  3 Feb 2024 04:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QO11kNAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B691C433F1;
+	Sat,  3 Feb 2024 04:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933562;
-	bh=SB9egFxjXOT2LDQvj2uOBOoK/RYOnDIoURxWZIjGdR8=;
+	s=korg; t=1706933563;
+	bh=+hkHKW0NjfnVGkZtPLucM0ZriVXfTjVwi3Ifax/mlx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2IYI1wC0WWZXXHloyG6yOCtCYXdtvBnM06jpvzXn9GuBIk/z6QwWF1QPHxzzkIYO
-	 p3rGtFCpd4C0NQI02w1A3GtjpyjCG0EuhMqdjnHfilDMfJb6hw/K7qAbL9r2931v1d
-	 BwxR5fd8FPvJ0Ydg34edvoxyhU8ja73qjFCDXCZ8=
+	b=QO11kNAxB/hojEPRlOLA/JiIHAbUNZHsrEKp3jAQtJwzALphdV3P9hYCGRK08ArJi
+	 uoOjOOli0oF98m5Pq72Z2qkCxSGoqVIIs1I6KrQoNqTi/cDJCSGJB+N2oLKNruO58+
+	 /bLXLZHCtgk2jh4EkZgpI/ZKgWz2wlFoIkqYVVr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Brett Creeley <brett.creeley@amd.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/322] ionic: pass opcode to devcmd_wait
-Date: Fri,  2 Feb 2024 20:03:33 -0800
-Message-ID: <20240203035402.896264250@linuxfoundation.org>
+Subject: [PATCH 6.6 117/322] ionic: bypass firmware cmds when stuck in reset
+Date: Fri,  2 Feb 2024 20:03:34 -0800
+Message-ID: <20240203035402.927711271@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -54,59 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 24f110240c03c6b5368f1203bac72883d511e606 ]
+[ Upstream commit ca5fdf9a7c5b65968c718f2be159cda4c13556a1 ]
 
-Don't rely on the PCI memory for the devcmd opcode because we
-read a 0xff value if the PCI bus is broken, which can cause us
-to report a bogus dev_cmd opcode later.
+If the driver or firmware is stuck in reset state, don't bother
+trying to use adminq commands.  This speeds up shutdown and
+prevents unnecessary timeouts and error messages.
+
+This includes a bit of rework on ionic_adminq_post_wait()
+and ionic_adminq_post_wait_nomsg() to both use
+__ionic_adminq_post_wait() which can do the checks needed in
+both cases.
 
 Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
 Reviewed-by: Brett Creeley <brett.creeley@amd.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_dev.c  | 1 +
- drivers/net/ethernet/pensando/ionic/ionic_dev.h  | 1 +
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 2 +-
- 3 files changed, 3 insertions(+), 1 deletion(-)
+ .../ethernet/pensando/ionic/ionic_bus_pci.c   |  4 ++++
+ .../net/ethernet/pensando/ionic/ionic_lif.c   |  3 +++
+ .../net/ethernet/pensando/ionic/ionic_main.c  | 20 ++++++++++++-------
+ 3 files changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.c b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-index c06576f43916..22ab0a44fa8c 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-@@ -321,6 +321,7 @@ void ionic_dev_cmd_comp(struct ionic_dev *idev, union ionic_dev_cmd_comp *comp)
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+index d6ce113a4210..fa4237c27e06 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+@@ -392,6 +392,10 @@ static void ionic_remove(struct pci_dev *pdev)
+ 	del_timer_sync(&ionic->watchdog_timer);
  
- void ionic_dev_cmd_go(struct ionic_dev *idev, union ionic_dev_cmd *cmd)
+ 	if (ionic->lif) {
++		/* prevent adminq cmds if already known as down */
++		if (test_and_clear_bit(IONIC_LIF_F_FW_RESET, ionic->lif->state))
++			set_bit(IONIC_LIF_F_FW_STOPPING, ionic->lif->state);
++
+ 		ionic_lif_unregister(ionic->lif);
+ 		ionic_devlink_unregister(ionic);
+ 		ionic_lif_deinit(ionic->lif);
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index c9bd2c57a37d..adb0f9b01bb1 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -3238,6 +3238,9 @@ static void ionic_lif_reset(struct ionic_lif *lif)
  {
-+	idev->opcode = cmd->cmd.opcode;
- 	memcpy_toio(&idev->dev_cmd_regs->cmd, cmd, sizeof(*cmd));
- 	iowrite32(0, &idev->dev_cmd_regs->done);
- 	iowrite32(1, &idev->dev_cmd_regs->doorbell);
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.h b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
-index bd2d4a26f543..23f9d3b8029a 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_dev.h
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
-@@ -152,6 +152,7 @@ struct ionic_dev {
- 	bool fw_hb_ready;
- 	bool fw_status_ready;
- 	u8 fw_generation;
-+	u8 opcode;
+ 	struct ionic_dev *idev = &lif->ionic->idev;
  
- 	u64 __iomem *db_pages;
- 	dma_addr_t phy_db_pages;
++	if (!ionic_is_fw_running(idev))
++		return;
++
+ 	mutex_lock(&lif->ionic->dev_cmd_lock);
+ 	ionic_dev_cmd_lif_reset(idev, lif->index);
+ 	ionic_dev_cmd_wait(lif->ionic, DEVCMD_TIMEOUT);
 diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 1dc79cecc5cc..baa865af49ad 100644
+index baa865af49ad..f019277fec57 100644
 --- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
 +++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -465,7 +465,7 @@ static int __ionic_dev_cmd_wait(struct ionic *ionic, unsigned long max_seconds,
- 	 */
- 	max_wait = jiffies + (max_seconds * HZ);
- try_again:
--	opcode = readb(&idev->dev_cmd_regs->cmd.cmd.opcode);
-+	opcode = idev->opcode;
- 	start_time = jiffies;
- 	for (fw_up = ionic_is_fw_running(idev);
- 	     !done && fw_up && time_before(jiffies, max_wait);
+@@ -410,22 +410,28 @@ int ionic_adminq_wait(struct ionic_lif *lif, struct ionic_admin_ctx *ctx,
+ 				      do_msg);
+ }
+ 
+-int ionic_adminq_post_wait(struct ionic_lif *lif, struct ionic_admin_ctx *ctx)
++static int __ionic_adminq_post_wait(struct ionic_lif *lif,
++				    struct ionic_admin_ctx *ctx,
++				    const bool do_msg)
+ {
+ 	int err;
+ 
++	if (!ionic_is_fw_running(&lif->ionic->idev))
++		return 0;
++
+ 	err = ionic_adminq_post(lif, ctx);
+ 
+-	return ionic_adminq_wait(lif, ctx, err, true);
++	return ionic_adminq_wait(lif, ctx, err, do_msg);
+ }
+ 
+-int ionic_adminq_post_wait_nomsg(struct ionic_lif *lif, struct ionic_admin_ctx *ctx)
++int ionic_adminq_post_wait(struct ionic_lif *lif, struct ionic_admin_ctx *ctx)
+ {
+-	int err;
+-
+-	err = ionic_adminq_post(lif, ctx);
++	return __ionic_adminq_post_wait(lif, ctx, true);
++}
+ 
+-	return ionic_adminq_wait(lif, ctx, err, false);
++int ionic_adminq_post_wait_nomsg(struct ionic_lif *lif, struct ionic_admin_ctx *ctx)
++{
++	return __ionic_adminq_post_wait(lif, ctx, false);
+ }
+ 
+ static void ionic_dev_cmd_clean(struct ionic *ionic)
 -- 
 2.43.0
 
