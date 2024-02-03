@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5811119E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA06111193;
 	Sat,  3 Feb 2024 04:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933855; cv=none; b=WpH/J3AlQyhcr2ss+W1ahJ4mrrNJpwBaLdOuNe6Pa63q0Y5VIxVCKwSPrkbVg92J68V4sNu+8QoAXiRFPF+BqTMiwEkffxIb0zyXHZ1x4cloJ6G/Rq25XAJOkg1f0IEiAuzAwkgfyi5BvnT8sdizZ1iWGjf8A49Qm0LXUOLFeQI=
+	t=1706933855; cv=none; b=Rh7WUiysI6kNL+dZjqoYit1xcJVDnMOnC2p9PtPkMT22USN2qWUo9GuIo6K03XMaZfyZDR7l/wNEwADSN+OgZedOdm54kSvUjLNofKuokg15zdeP1mgne0xt2BqmqwcLQN9KDBu/pZpWibajiBMa7MGiecvdcO132pnBtnFZak4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933855; c=relaxed/simple;
-	bh=iwkAdeoESeVr/DuLzbqB9zwq5CsljHhxlMamahf4820=;
+	bh=gxhuNjXhEj1RIXAPqYIIUoow5mRZzFJ16DM5RZgTZ5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nZMNZ6EpWcJVyL2OVgIw4vSniERPsk9lBYr1ejz8j+L8owJhgJcPD4o6uK0nU1QbefBxjHv8nyYfG0W2ElcXaBSLwC0gQwou3d0RXWQXl9RDRinTug9XXAz+Wcef3zlMONRlal3XZhtI6vnO+iPqopmcnmzhW3Qwik/5vcK/tqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIciLSCT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hu2TexyFxakztMbEO4cimCpjS4bmqA6n36gbkwYfljuGWYjzYE0UpTjDwaN9Gj0e0Ivu/T+U3TV2mq4kFXrmhGj4HB4qhDSPaPjKrUy6hAOetNUtHxhINdVznDkubuG2Rf+NUlw2pMJB381om/5tbFQLfaBCEMPRSrjee6iyqyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7E5ANjz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIciLSCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9665C43394;
-	Sat,  3 Feb 2024 04:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7E5ANjz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7251FC433F1;
+	Sat,  3 Feb 2024 04:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933854;
-	bh=iwkAdeoESeVr/DuLzbqB9zwq5CsljHhxlMamahf4820=;
+	s=korg; t=1706933855;
+	bh=gxhuNjXhEj1RIXAPqYIIUoow5mRZzFJ16DM5RZgTZ5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIciLSCTdIFBSLRiKHoJ+NJLlQs88b8aFQ15mAb7arT65uUEYbrwNtjTCTfdILRn5
-	 zg/8dDfb0VYAQyYPtDYzz60G2+x+tqqRr0+VV6fcCBoa9KQNILrLd35FsZvJ0+hnj9
-	 6fJxfGJt1aheWin+dehafLC2Vmy/T93EaFqsadC8=
+	b=p7E5ANjzFd7K538gM1AZk2PmAwWBZ28L6yALzUGRwp2M0UXifGJHxFcY13pImS84x
+	 TE/F2HEgX3mS9i2jQ0KaEBjKFLp0MqsKb25qKfNMsCgtV0XttuedYyMd727UoyVc6o
+	 TsgUUPdkJyprfYz6GWadzE/ZjqerqTv7xsKCDAYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 186/353] ALSA: hda: intel-dspcfg: add filters for ARL-S and ARL
-Date: Fri,  2 Feb 2024 20:05:04 -0800
-Message-ID: <20240203035409.531595470@linuxfoundation.org>
+Subject: [PATCH 6.7 169/353] drm/panel-edp: Add override_edid_mode quirk for generic edp
+Date: Fri,  2 Feb 2024 20:04:47 -0800
+Message-ID: <20240203035408.991272785@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -48,51 +45,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Hsin-Yi Wang <hsinyi@chromium.org>
 
-[ Upstream commit 7a9d6bbe8a663c817080be55d9fecf19a4a8fd8f ]
+[ Upstream commit 9f7843b515811aea6c56527eb195b622e9c01f12 ]
 
-Same usual filters, SOF is required for DMIC and/or SoundWire support.
+Generic edp gets mode from edid. However, some panels report incorrect
+mode in this way, resulting in glitches on panel. Introduce a new quirk
+additional_mode to the generic edid to pick a correct hardcoded mode.
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20231204212710.185976-4-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231117215056.1883314-2-hsinyi@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/intel-dsp-config.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/panel/panel-edp.c | 48 +++++++++++++++++++++++++++++--
+ 1 file changed, 45 insertions(+), 3 deletions(-)
 
-diff --git a/sound/hda/intel-dsp-config.c b/sound/hda/intel-dsp-config.c
-index 756fa0aa69bb..6a384b922e4f 100644
---- a/sound/hda/intel-dsp-config.c
-+++ b/sound/hda/intel-dsp-config.c
-@@ -521,6 +521,16 @@ static const struct config_entry config_table[] = {
- 		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
- 		.device = PCI_DEVICE_ID_INTEL_HDA_MTL,
- 	},
-+	/* ArrowLake-S */
-+	{
-+		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
-+		.device = PCI_DEVICE_ID_INTEL_HDA_ARL_S,
-+	},
-+	/* ArrowLake */
-+	{
-+		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
-+		.device = PCI_DEVICE_ID_INTEL_HDA_ARL,
-+	},
- #endif
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 7dc6fb7308ce..cba5a93e6082 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -203,6 +203,9 @@ struct edp_panel_entry {
  
- /* Lunar Lake */
+ 	/** @name: Name of this panel (for printing to logs). */
+ 	const char *name;
++
++	/** @override_edid_mode: Override the mode obtained by edid. */
++	const struct drm_display_mode *override_edid_mode;
+ };
+ 
+ struct panel_edp {
+@@ -301,6 +304,24 @@ static unsigned int panel_edp_get_display_modes(struct panel_edp *panel,
+ 	return num;
+ }
+ 
++static int panel_edp_override_edid_mode(struct panel_edp *panel,
++					struct drm_connector *connector,
++					const struct drm_display_mode *override_mode)
++{
++	struct drm_display_mode *mode;
++
++	mode = drm_mode_duplicate(connector->dev, override_mode);
++	if (!mode) {
++		dev_err(panel->base.dev, "failed to add additional mode\n");
++		return 0;
++	}
++
++	mode->type |= DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
++	drm_mode_set_name(mode);
++	drm_mode_probed_add(connector, mode);
++	return 1;
++}
++
+ static int panel_edp_get_non_edid_modes(struct panel_edp *panel,
+ 					struct drm_connector *connector)
+ {
+@@ -568,6 +589,9 @@ static int panel_edp_get_modes(struct drm_panel *panel,
+ {
+ 	struct panel_edp *p = to_panel_edp(panel);
+ 	int num = 0;
++	bool has_override_edid_mode = p->detected_panel &&
++				      p->detected_panel != ERR_PTR(-EINVAL) &&
++				      p->detected_panel->override_edid_mode;
+ 
+ 	/* probe EDID if a DDC bus is available */
+ 	if (p->ddc) {
+@@ -575,9 +599,18 @@ static int panel_edp_get_modes(struct drm_panel *panel,
+ 
+ 		if (!p->edid)
+ 			p->edid = drm_get_edid(connector, p->ddc);
+-
+-		if (p->edid)
+-			num += drm_add_edid_modes(connector, p->edid);
++		if (p->edid) {
++			if (has_override_edid_mode) {
++				/*
++				 * override_edid_mode is specified. Use
++				 * override_edid_mode instead of from edid.
++				 */
++				num += panel_edp_override_edid_mode(p, connector,
++						p->detected_panel->override_edid_mode);
++			} else {
++				num += drm_add_edid_modes(connector, p->edid);
++			}
++		}
+ 
+ 		pm_runtime_mark_last_busy(panel->dev);
+ 		pm_runtime_put_autosuspend(panel->dev);
+@@ -1830,6 +1863,15 @@ static const struct panel_delay delay_200_500_e200 = {
+ 	.delay = _delay \
+ }
+ 
++#define EDP_PANEL_ENTRY2(vend_chr_0, vend_chr_1, vend_chr_2, product_id, _delay, _name, _mode) \
++{ \
++	.name = _name, \
++	.panel_id = drm_edid_encode_panel_id(vend_chr_0, vend_chr_1, vend_chr_2, \
++					     product_id), \
++	.delay = _delay, \
++	.override_edid_mode = _mode \
++}
++
+ /*
+  * This table is used to figure out power sequencing delays for panels that
+  * are detected by EDID. Entries here may point to entries in the
 -- 
 2.43.0
 
