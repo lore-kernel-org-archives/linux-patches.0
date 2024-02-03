@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E857110A09;
-	Sat,  3 Feb 2024 04:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF3310A09;
+	Sat,  3 Feb 2024 04:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933582; cv=none; b=hxfRwPQlcOtoFl87fC6nGZEGolUAaMSarlEWnNu2MzbCGDu45P9Yhy6WxPIp1v4DREz9eD5Nvu+9VtvzaZA3xiQq9ZVmiN2BJUlyNug82WfYT5z2y7UT1gAOxiw1pMVguR8FCnm78dXhngkfA24wTSkPs+6CqXM9/glCogmDihQ=
+	t=1706933582; cv=none; b=K43OSr//iOAhwhNUfnWRjnjt6oZqu+nMwv2jbetXs0MGraIqL0CeaGJVXOjkqJo/7UYB10eG8pkMB6JybSANYFi3X8284y+wliSDzQqKk55BYUsqQ9gfu1OG0xFJaCBJRR+QjLDYjtgn7GK35IX0++2qq0itkOz3VKOksK/wxsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706933582; c=relaxed/simple;
-	bh=PyFEWjh1aX77pe2iZcqXCTkQ3Aw/3Bqm5qkcu/AlcIE=;
+	bh=HWm/tLckfHNq4X10TFWQhiYp+xldV9cgsw1BvtEHHrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrmavyPN8Kg44F/U4hlu/b4p+WzpUo4EFRhZvC/Os9VWrt5uaQGfMpRFSVs8XWWv08c2CJm7nUuq8d6PGyuHhwn/u6xXohS0cIXnGPyoygHovcz7/3nBdnclHVbQ2thw/rbo4ca9639s3dRPyR/KJRN1Qev328+tr5c5PnfpzWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PXpeKsz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4P8xBhfF5o0aYq0CXIhJB1ZJEvmaWPwU2XdCoSKIUN+sivogRyqCMFQTFmMH5Ta6twf2p9p/l11WmgwCMR8E7MdnK42dCjW8CsYSuKnIQy7wd2qew9JbuQ7JeEXxti49xmfYp/WpIYwsKLpI21OaPovSevBOV2ke/NTgswNLLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJGq3/ai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PXpeKsz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B131BC433F1;
-	Sat,  3 Feb 2024 04:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJGq3/ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664D3C43394;
+	Sat,  3 Feb 2024 04:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933581;
-	bh=PyFEWjh1aX77pe2iZcqXCTkQ3Aw/3Bqm5qkcu/AlcIE=;
+	s=korg; t=1706933582;
+	bh=HWm/tLckfHNq4X10TFWQhiYp+xldV9cgsw1BvtEHHrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PXpeKszSfJzHA6XQy4rJucqnpklUarHSf8+RcdyK6cDVnhKdfH/xV219iawvE+OC
-	 CBxo8c2JYnXnyUDA1VY5x/OguxFXTgB2fR9vz/q3vaJzitSYSGaZ5oKBMBpbrDI6zf
-	 0Mms+0UuJ1iY2Q1xrsXXrLOAm3utgmg5tZneYlQ0=
+	b=HJGq3/aiiSp1Rhz0W1d6C9L4cWjRj3KguUcT8A2nk1Skh6V4ipH6Ez9B8PDo2XeQr
+	 2k2UH/y/YjlFONblHPpOlgqq/OgKwvFiQBk+t8ClEErqPD0IDVur6uvIFlbqzCVHz4
+	 TQ3bYyEPHKDs7w5iNDv3yOYUO24dJnTzYXP7VM2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 143/322] wifi: rtlwifi: rtl8723{be,ae}: using calculate_bit_shift()
-Date: Fri,  2 Feb 2024 20:04:00 -0800
-Message-ID: <20240203035403.783238579@linuxfoundation.org>
+Subject: [PATCH 6.6 144/322] wifi: cfg80211: free beacon_ies when overridden from hidden BSS
+Date: Fri,  2 Feb 2024 20:04:01 -0800
+Message-ID: <20240203035403.819893844@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -51,75 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 5c16618bc06a41ad68fd8499a21d35ef57ca06c2 ]
+[ Upstream commit 32af9a9e1069e55bc02741fb00ac9d0ca1a2eaef ]
 
-Using calculate_bit_shift() to replace rtl8723_phy_calculate_bit_shift().
-And fix an undefined bitwise shift behavior problem.
+This is a more of a cosmetic fix. The branch will only be taken if
+proberesp_ies is set, which implies that beacon_ies is not set unless we
+are connected to an AP that just did a channel switch. And, in that case
+we should have found the BSS in the internal storage to begin with.
 
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231219065739.1895666-12-suhui@nfschina.com
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231220133549.b898e22dadff.Id8c4c10aedd176ef2e18a4cad747b299f150f9df@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c | 6 +++---
- drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ net/wireless/scan.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
-index fe9b407dc2af..71e29b103da5 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
-@@ -49,7 +49,7 @@ u32 rtl8723e_phy_query_rf_reg(struct ieee80211_hw *hw,
- 							    rfpath, regaddr);
- 	}
- 
--	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -80,7 +80,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
- 			original_value = rtl8723_phy_rf_serial_read(hw,
- 								    rfpath,
- 								    regaddr);
--			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-@@ -89,7 +89,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
- 		rtl8723_phy_rf_serial_write(hw, rfpath, regaddr, data);
- 	} else {
- 		if (bitmask != RFREG_OFFSET_MASK) {
--			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data =
- 			    ((original_value & (~bitmask)) |
- 			     (data << bitshift));
-diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
-index 2b9313cb93db..094cb36153f5 100644
---- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
-@@ -41,7 +41,7 @@ u32 rtl8723be_phy_query_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
- 	spin_lock(&rtlpriv->locks.rf_lock);
- 
- 	original_value = rtl8723_phy_rf_serial_read(hw, rfpath, regaddr);
--	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+	bitshift = calculate_bit_shift(bitmask);
- 	readback_value = (original_value & bitmask) >> bitshift;
- 
- 	spin_unlock(&rtlpriv->locks.rf_lock);
-@@ -68,7 +68,7 @@ void rtl8723be_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path path,
- 	if (bitmask != RFREG_OFFSET_MASK) {
- 			original_value = rtl8723_phy_rf_serial_read(hw, path,
- 								    regaddr);
--			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
-+			bitshift = calculate_bit_shift(bitmask);
- 			data = ((original_value & (~bitmask)) |
- 				(data << bitshift));
- 		}
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index bd4dd75e446e..04ef7cdd39b5 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1829,8 +1829,12 @@ __cfg80211_bss_update(struct cfg80211_registered_device *rdev,
+ 				list_add(&new->hidden_list,
+ 					 &hidden->hidden_list);
+ 				hidden->refcount++;
++
++				ies = (void *)rcu_dereference(new->pub.beacon_ies);
+ 				rcu_assign_pointer(new->pub.beacon_ies,
+ 						   hidden->pub.beacon_ies);
++				if (ies)
++					kfree_rcu(ies, rcu_head);
+ 			}
+ 		} else {
+ 			/*
 -- 
 2.43.0
 
