@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6270B1BF24;
-	Sat,  3 Feb 2024 04:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC531118B;
+	Sat,  3 Feb 2024 04:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933800; cv=none; b=oGFwhBEFeiKdHviZPLYHDu9cCgGdH1wH5BxA1dQ72v/d/Fx2gEebZSjqNf4WrIbT/3RQx4rLCD1UEFiptuyAgt5elo5KsiHchg46fAD1WVQNDx7nJp9Y+h1gSdnsN+hwAeBIfSl9saQWZG0kZjJc2+y9eHIus3jxlpHnjNjtAJ4=
+	t=1706933801; cv=none; b=chnABiSo/L9VUL1KMf6jfGIphodaGx4zgq81/oE5KP6G7Gmtp1/qiX9ZuicN/aSkQ70Vg8Ew0ge1WHz2cZqb61rtK+/ZwZo1Bx+ezDs1y8eJpluS+ijaOsXu5b79CtszTQfKjNjopWPPQY9hZtAc52LtFzlYhbko3MUin3Ku6g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933800; c=relaxed/simple;
-	bh=gxPRUaO4yGjuE0UtqSdcpsg3b6556wOXpzevGdfIyz0=;
+	s=arc-20240116; t=1706933801; c=relaxed/simple;
+	bh=WYOkevGUyIivK2l0MoZskS5iFATQJ3v4xoKDjqhiy9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEhSr9XHg3H8aV9J5AtYZY8MayblbuTg8U9sOZNeZjLa3cYguvSjHyYOFZ1QmM0JujHNJfO66TsHjWJDKbLtuwRxFaZ8jNDMIyln/qJmmyBNGfqHpVLuzE2ocvzA1bUIoHrdXmv5Ma/+D+Wn0s1LEd4wt+8Evuv3iA30L0IQmPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JX+CgfR0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1g4PQnUCVBGkIEpWH/bY3zbEpYfwAxpf7ECbKyxVzXDUKu6/2/1gnUDAIkjPq9vqlh86xA9QBRuK+DOuNCjbQkkJ9Zl8jOlE9MKOXRtx7aP61tLa1lGGjUyF88ZJNe8FsGyZJLQn/tHQA22dtT0xdoRJ2BgG4XJPHZ8CP6b59M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdQa7OKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JX+CgfR0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CABBC433F1;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdQa7OKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61E6C433C7;
 	Sat,  3 Feb 2024 04:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933800;
-	bh=gxPRUaO4yGjuE0UtqSdcpsg3b6556wOXpzevGdfIyz0=;
+	bh=WYOkevGUyIivK2l0MoZskS5iFATQJ3v4xoKDjqhiy9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JX+CgfR0PcSFnu2HoEcorz7t0RjLR99ai1c5mjN6xyRcrcRUfppAy1YbcuG+OlGDG
-	 iiOVczJmv5/2O4NmI16TCuNgS5MtATAFskNiucoE9pF1nAYCT+oIhtFrsRjjD2jf6x
-	 GitXZ7OQEDW63E52xgmMP6LXAWk16XkxUOh1GK8c=
+	b=UdQa7OKY4T9HlPHckwSkYK6UgWWf/TpIAHrQrNSf7dkaptdgMSIh5qa9u1z+yr18w
+	 u6nC0zTx2irB1pf0uZTZrGoxgSLKn1sL8T1CEWOYt/vkS0BAPcZBSlx/GwJjXakRQ0
+	 UgjUht9LSaNf961+tDr/TCIbSqADsKuK2VEjwz3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 087/353] ARM: dts: imx7d: Fix coresight funnel ports
-Date: Fri,  2 Feb 2024 20:03:25 -0800
-Message-ID: <20240203035406.561284070@linuxfoundation.org>
+Subject: [PATCH 6.7 088/353] ARM: dts: imx7s: Fix lcdif compatible
+Date: Fri,  2 Feb 2024 20:03:26 -0800
+Message-ID: <20240203035406.590590765@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,56 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 0d4ac04fa7c3f6dc263dba6f575a2ec7a2d4eca8 ]
+[ Upstream commit 5f55da4cc37051cda600ea870ce8cf29f1297715 ]
 
-imx7d uses two ports for 'in-ports', so the syntax port@<num> has to
-be used. imx7d has both port and port@1 nodes present, raising these
-error:
-funnel@30041000: in-ports: More than one condition true in oneOf schema
-funnel@30041000: Unevaluated properties are not allowed
-('in-ports' was unexpected)
-
-Fix this by also using port@0 for imx7s as well.
+imx7d-lcdif is compatible to imx6sx-lcdif. MXSFB_V6 supports overlay
+by using LCDC_AS_CTRL register. This registers used by overlay plane:
+* LCDC_AS_CTRL
+* LCDC_AS_BUF
+* LCDC_AS_NEXT_BUF
+are listed in i.MX7D RM as well.
 
 Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx7d.dtsi | 3 ---
- arch/arm/boot/dts/nxp/imx/imx7s.dtsi | 6 +++++-
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx7s.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx7d.dtsi b/arch/arm/boot/dts/nxp/imx/imx7d.dtsi
-index 4b94b8afb55d..0484e349e064 100644
---- a/arch/arm/boot/dts/nxp/imx/imx7d.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx7d.dtsi
-@@ -217,9 +217,6 @@
- };
- 
- &ca_funnel_in_ports {
--	#address-cells = <1>;
--	#size-cells = <0>;
--
- 	port@1 {
- 		reg = <1>;
- 		ca_funnel_in_port1: endpoint {
 diff --git a/arch/arm/boot/dts/nxp/imx/imx7s.dtsi b/arch/arm/boot/dts/nxp/imx/imx7s.dtsi
-index 5387da8a2a0a..9f216d11a396 100644
+index 9f216d11a396..3bd33255266e 100644
 --- a/arch/arm/boot/dts/nxp/imx/imx7s.dtsi
 +++ b/arch/arm/boot/dts/nxp/imx/imx7s.dtsi
-@@ -190,7 +190,11 @@
- 			clock-names = "apb_pclk";
+@@ -815,7 +815,7 @@
+ 			};
  
- 			ca_funnel_in_ports: in-ports {
--				port {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
- 					ca_funnel_in_port0: endpoint {
- 						remote-endpoint = <&etm0_out_port>;
- 					};
+ 			lcdif: lcdif@30730000 {
+-				compatible = "fsl,imx7d-lcdif", "fsl,imx28-lcdif";
++				compatible = "fsl,imx7d-lcdif", "fsl,imx6sx-lcdif";
+ 				reg = <0x30730000 0x10000>;
+ 				interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&clks IMX7D_LCDIF_PIXEL_ROOT_CLK>,
 -- 
 2.43.0
 
