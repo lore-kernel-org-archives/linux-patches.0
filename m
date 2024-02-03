@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457B8168AC;
-	Sat,  3 Feb 2024 04:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0331A168AC;
+	Sat,  3 Feb 2024 04:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933516; cv=none; b=i8LlYl3NyIqfrISuhZrFSM3cJl/QlUvMIK8oE6+6eAWUI1+J5PgrWzHbgSZk553bUHO6CCYRDoGI7bdSq2ZYDkWhTI1aW1zOzXpZpuTjXeW/aaufnmvzKMeeEsACfPDFq3lyI0Wzq6CyXIEjSlxhFypPZHjjxXt8kiDyqFtHOJ4=
+	t=1706933517; cv=none; b=hXFrrjJixRG+YP1DzoKXOIAGRnnrl6J/roV2G3RZjJMzgbjS8WZD6O/gyBgPHJ3u+PziptKMktKG0AcloFHF0ofSGkIKCgla5J6MtmZfoM7sJ4K9q5Z+ELwR2FWn/69tcZm4EOv/COYmN56YIcXIKmzxjM4lb0ySOwwAP4cZwvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933516; c=relaxed/simple;
-	bh=HRzg/VquCcd7kmMJpKZckmYB2bDpFxsoTBnipw+XsL8=;
+	s=arc-20240116; t=1706933517; c=relaxed/simple;
+	bh=+clXW1yEOlyzdthNLTEHrC+f2LFW01u2obeIqe9plbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2phrHA2MkImcJQVr/lQd4UXCT38fRF4WwRyh3KqU3o+OEErXjlZCLQfL9VC59KoMY/hljwIdvP/pCOuKMlnXV9RPikLRJGpzTV2xukjx2Ne6h8uaPd/9z83FZhoRxibSyiU6PO7aGLPDYuffZl23UZn+3GBIawIESHlM1TMmWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDFbK1Id; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ojxA/JwNDIWDV5Xacq+w+CmH1ck/RP/twfWDWmAosdQf6g6IC2076mOf5CgPRy4U1UOHSH1ExSU7WOlQUoVZU3GaZEt21a96M2JakXO1tFvB97rsMGDIKNLb92PsXflgp6VWyS36Ekvl0H2JETSKSTSEgX8RRQrpvK1tuKjxr3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bF0mkh8T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDFbK1Id"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0660CC43394;
-	Sat,  3 Feb 2024 04:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bF0mkh8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BD6C433F1;
+	Sat,  3 Feb 2024 04:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933516;
-	bh=HRzg/VquCcd7kmMJpKZckmYB2bDpFxsoTBnipw+XsL8=;
+	bh=+clXW1yEOlyzdthNLTEHrC+f2LFW01u2obeIqe9plbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDFbK1IdD4dbOQE1eEDEvtC9zm64lZk7ru4+oyV2O9WwHFurdgI1iBNpmaqf6bTEs
-	 Fo3s0Ua41xErKaSzn/dFsypjdbL2xVZto97DuvmVQKbai7qCRjfD0mY3WJrDOk/E4i
-	 5lYWIW8ok1dzl0+d057D5Fu6tMCPII+cgQGlsB08=
+	b=bF0mkh8TGgdi+jrWfsTO3lmRmtv0rAhjPPBEI3VELdURdETadP9cekOlCIF5gq4y5
+	 /RSrMlRo6Oe8KBvmoedgntNNOHZMSyceBPuW53Hl0ADYZgJmY37ExkBm/idx657xnV
+	 cWiKrwdnecHxACJ1zGtjU5P/kCX2II4RDFzj9vL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/322] ext4: fix inconsistent between segment fstrim and full fstrim
-Date: Fri,  2 Feb 2024 20:02:31 -0800
-Message-ID: <20240203035400.874770854@linuxfoundation.org>
+Subject: [PATCH 6.6 055/322] ext4: unify the type of flexbg_size to unsigned int
+Date: Fri,  2 Feb 2024 20:02:32 -0800
+Message-ID: <20240203035400.909985763@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -52,64 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 68da4c44b994aea797eb9821acb3a4a36015293e ]
+[ Upstream commit 658a52344fb139f9531e7543a6e0015b630feb38 ]
 
-Suppose we issue two FITRIM ioctls for ranges [0,15] and [16,31] with
-mininum length of trimmed range set to 8 blocks. If we have say a range of
-blocks 10-22 free, this range will not be trimmed because it straddles the
-boundary of the two FITRIM ranges and neither part is big enough. This is a
-bit surprising to some users that call FITRIM on smaller ranges of blocks
-to limit impact on the system. Also XFS trims all free space extents that
-overlap with the specified range so we are inconsistent among filesystems.
-Let's change ext4_try_to_trim_range() to consider for trimming the whole
-free space extent that straddles the end of specified range, not just the
-part of it within the range.
+The maximum value of flexbg_size is 2^31, but the maximum value of int
+is (2^31 - 1), so overflow may occur when the type of flexbg_size is
+declared as int.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
+For example, when uninit_mask is initialized in ext4_alloc_group_tables(),
+if flexbg_size == 2^31, the initialized uninit_mask is incorrect, and this
+may causes set_flexbg_block_bitmap() to trigger a BUG_ON().
+
+Therefore, the flexbg_size type is declared as unsigned int to avoid
+overflow and memory waste.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231216010919.1995851-1-yebin10@huawei.com
+Link: https://lore.kernel.org/r/20231023013057.2117948-2-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/ext4/resize.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 9a4b73485ded..1fd4ed19060d 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -6910,13 +6910,15 @@ static int ext4_try_to_trim_range(struct super_block *sb,
- __acquires(ext4_group_lock_ptr(sb, e4b->bd_group))
- __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
+diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
+index 667381180b26..f3a9b97bb7e7 100644
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -241,7 +241,7 @@ struct ext4_new_flex_group_data {
+  *
+  * Returns NULL on failure otherwise address of the allocated structure.
+  */
+-static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned long flexbg_size)
++static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
  {
--	ext4_grpblk_t next, count, free_count;
-+	ext4_grpblk_t next, count, free_count, last, origin_start;
- 	bool set_trimmed = false;
- 	void *bitmap;
+ 	struct ext4_new_flex_group_data *flex_gd;
  
-+	last = ext4_last_grp_cluster(sb, e4b->bd_group);
- 	bitmap = e4b->bd_bitmap;
--	if (start == 0 && max >= ext4_last_grp_cluster(sb, e4b->bd_group))
-+	if (start == 0 && max >= last)
- 		set_trimmed = true;
-+	origin_start = start;
- 	start = max(e4b->bd_info->bb_first_free, start);
- 	count = 0;
- 	free_count = 0;
-@@ -6925,7 +6927,10 @@ __releases(ext4_group_lock_ptr(sb, e4b->bd_group))
- 		start = mb_find_next_zero_bit(bitmap, max + 1, start);
- 		if (start > max)
- 			break;
--		next = mb_find_next_bit(bitmap, max + 1, start);
-+
-+		next = mb_find_next_bit(bitmap, last + 1, start);
-+		if (origin_start == 0 && next >= last)
-+			set_trimmed = true;
+@@ -296,7 +296,7 @@ static void free_flex_gd(struct ext4_new_flex_group_data *flex_gd)
+  */
+ static int ext4_alloc_group_tables(struct super_block *sb,
+ 				struct ext4_new_flex_group_data *flex_gd,
+-				int flexbg_size)
++				unsigned int flexbg_size)
+ {
+ 	struct ext4_new_group_data *group_data = flex_gd->groups;
+ 	ext4_fsblk_t start_blk;
+@@ -397,12 +397,12 @@ static int ext4_alloc_group_tables(struct super_block *sb,
+ 		group = group_data[0].group;
  
- 		if ((next - start) >= minblocks) {
- 			int ret = ext4_trim_extent(sb, start, next - start, e4b);
+ 		printk(KERN_DEBUG "EXT4-fs: adding a flex group with "
+-		       "%d groups, flexbg size is %d:\n", flex_gd->count,
++		       "%u groups, flexbg size is %u:\n", flex_gd->count,
+ 		       flexbg_size);
+ 
+ 		for (i = 0; i < flex_gd->count; i++) {
+ 			ext4_debug(
+-			       "adding %s group %u: %u blocks (%d free, %d mdata blocks)\n",
++			       "adding %s group %u: %u blocks (%u free, %u mdata blocks)\n",
+ 			       ext4_bg_has_super(sb, group + i) ? "normal" :
+ 			       "no-super", group + i,
+ 			       group_data[i].blocks_count,
+@@ -1623,7 +1623,7 @@ static int ext4_flex_group_add(struct super_block *sb,
+ static int ext4_setup_next_flex_gd(struct super_block *sb,
+ 				    struct ext4_new_flex_group_data *flex_gd,
+ 				    ext4_fsblk_t n_blocks_count,
+-				    unsigned long flexbg_size)
++				    unsigned int flexbg_size)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	struct ext4_super_block *es = sbi->s_es;
+@@ -2007,8 +2007,9 @@ int ext4_resize_fs(struct super_block *sb, ext4_fsblk_t n_blocks_count)
+ 	ext4_fsblk_t o_blocks_count;
+ 	ext4_fsblk_t n_blocks_count_retry = 0;
+ 	unsigned long last_update_time = 0;
+-	int err = 0, flexbg_size = 1 << sbi->s_log_groups_per_flex;
++	int err = 0;
+ 	int meta_bg;
++	unsigned int flexbg_size = ext4_flex_bg_size(sbi);
+ 
+ 	/* See if the device is actually as big as what was requested */
+ 	bh = ext4_sb_bread(sb, n_blocks_count - 1, 0);
 -- 
 2.43.0
 
