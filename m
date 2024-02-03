@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29361B95C;
-	Sat,  3 Feb 2024 04:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E42010A13;
+	Sat,  3 Feb 2024 04:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933763; cv=none; b=KaWbdt/ta8VmhCKOMgQrkVZcCT/QiDCGuING4Amc9lH5hSPkpQ3+Du2JXlDZ5OWul4UnXagja1xgqR0wN3nN503Tsfgt/O6cvQPCPo0CrvYGCrHzJCbpnp6knGFTgrsxw2Mlyg/4c1AJ+7oQV7KEcIXyLG4DmQmjnm5Gi9jCdCM=
+	t=1706933764; cv=none; b=DWMeCeXoISM+tfR5AF+I9bZiZ/7o8kDVzVfOux2vZps3pYb8p4sORaiuMI6TqQXRUCAZFi4DmKfLJzdpXTcnAIQxY2kzhkmS64lN3I0A4Bh209uB+Jq4b16iUpIRPuRYPCY2tJYBfohkhxFMfuyYyXRXpGZodATNAckxXZ90aOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933763; c=relaxed/simple;
-	bh=zf+QbtGGM2eFtba5voPG0y+8zXMOuFpDHt4OLTs2GLM=;
+	s=arc-20240116; t=1706933764; c=relaxed/simple;
+	bh=RkYPKPKt4BqTl/K6NE5f3w/RkT8pglKJaCbYyrX/poI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oM0LjeFwxqVOhd92psAWLjKdnDIv8jCmWcV4xPrDiBwvyVKlF6tPKdDthRCkO5f8MEBztXKfRdXDNnwzvaBh2nsNXCJH9Mp9CDfOprJrZxnpibGST7D1CDU1SMcVTYedr/9O2oDxZsz/7wdwt5JRPOETX7J9ueFQe9B1YA2DwYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WUq+CEsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uLdZgAIb6kiLWdVM6rrQS3YCtkhp17Fv6ISv7AfOyJ3+rA0ok7UKz1y44ekMHRzobppB2i0PYsPWVeKy/9EBvpybcTLxVLsXYoeNUuOQkxcUgUgh6wyr0Gde2SU31+sW9s+al8/Y9LgWcZ02JVriEYENOEZZZC+DE6w9bhZtTgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv8UTQgD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WUq+CEsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA64C433F1;
-	Sat,  3 Feb 2024 04:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv8UTQgD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36482C433A6;
+	Sat,  3 Feb 2024 04:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933763;
-	bh=zf+QbtGGM2eFtba5voPG0y+8zXMOuFpDHt4OLTs2GLM=;
+	s=korg; t=1706933764;
+	bh=RkYPKPKt4BqTl/K6NE5f3w/RkT8pglKJaCbYyrX/poI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUq+CEsXJxbrBH9sKefs87DzIMejt9QjfvV567uXlnmDBm/DOmvZIawAJd2+jpUGx
-	 HGBD5j1qHePCLueyH1M7+bbZxLfw1ANQoaXl1Xa9iGv5L2a/xtItc3sj5ACA7omjM0
-	 dCJ70YyhWBumSfM9F4hm2DRwXuikFju4ur6FEGBE=
+	b=Vv8UTQgDu6oS4vAwqnADeIG5iQwx2YlkwD6XajL1bST8P3E+yugOfm7TK0bV6rovW
+	 fd/G772WtnxC55X2qZ6HxwJGqDwBHtYoK7I7e9a6r10koPBbrOTasiGxKlNR5pIWzT
+	 /XnnCQK4oToLig7dTZNiCJVhbYCMuobtesVfoBe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weichen Chen <weichen.chen@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Kees Cook <keescook@chromium.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 037/353] pstore/ram: Fix crash when setting number of cpus to an odd number
-Date: Fri,  2 Feb 2024 20:02:35 -0800
-Message-ID: <20240203035404.971368417@linuxfoundation.org>
+Subject: [PATCH 6.7 028/353] OPP: The level field is always of unsigned int type
+Date: Fri,  2 Feb 2024 20:02:26 -0800
+Message-ID: <20240203035404.666361360@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -53,45 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weichen Chen <weichen.chen@mediatek.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit d49270a04623ce3c0afddbf3e984cb245aa48e9c ]
+[ Upstream commit ba367479c7ad0b870461024cd5ae7a1ea6e1e3db ]
 
-When the number of cpu cores is adjusted to 7 or other odd numbers,
-the zone size will become an odd number.
-The address of the zone will become:
-    addr of zone0 = BASE
-    addr of zone1 = BASE + zone_size
-    addr of zone2 = BASE + zone_size*2
-    ...
-The address of zone1/3/5/7 will be mapped to non-alignment va.
-Eventually crashes will occur when accessing these va.
+By mistake, dev_pm_opp_find_level_floor() used the level parameter as
+unsigned long instead of unsigned int. Fix it.
 
-So, use ALIGN_DOWN() to make sure the zone size is even
-to avoid this bug.
-
-Signed-off-by: Weichen Chen <weichen.chen@mediatek.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Tested-by: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Link: https://lore.kernel.org/r/20230224023632.6840-1-weichen.chen@mediatek.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/opp/core.c     | 9 +++++++--
+ include/linux/pm_opp.h | 4 ++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index d36702c7ab3c..88b34fdbf759 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -529,6 +529,7 @@ static int ramoops_init_przs(const char *name,
- 	}
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index b2971dd95335..f1e54a3a15c7 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -832,9 +832,14 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_ceil);
+  * use.
+  */
+ struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
+-					       unsigned long *level)
++					       unsigned int *level)
+ {
+-	return _find_key_floor(dev, level, 0, true, _read_level, NULL);
++	unsigned long temp = *level;
++	struct dev_pm_opp *opp;
++
++	opp = _find_key_floor(dev, &temp, 0, true, _read_level, NULL);
++	*level = temp;
++	return opp;
+ }
+ EXPORT_SYMBOL_GPL(dev_pm_opp_find_level_floor);
  
- 	zone_sz = mem_sz / *cnt;
-+	zone_sz = ALIGN_DOWN(zone_sz, 2);
- 	if (!zone_sz) {
- 		dev_err(dev, "%s zone size == 0\n", name);
- 		goto fail;
+diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
+index ccd97bcef269..18a102174c4f 100644
+--- a/include/linux/pm_opp.h
++++ b/include/linux/pm_opp.h
+@@ -157,7 +157,7 @@ struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
+ 					      unsigned int *level);
+ 
+ struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
+-					       unsigned long *level);
++					       unsigned int *level);
+ 
+ struct dev_pm_opp *dev_pm_opp_find_bw_ceil(struct device *dev,
+ 					   unsigned int *bw, int index);
+@@ -324,7 +324,7 @@ static inline struct dev_pm_opp *dev_pm_opp_find_level_ceil(struct device *dev,
+ }
+ 
+ static inline struct dev_pm_opp *dev_pm_opp_find_level_floor(struct device *dev,
+-							     unsigned long *level)
++							     unsigned int *level)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
 -- 
 2.43.0
 
