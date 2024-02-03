@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633BE18638;
-	Sat,  3 Feb 2024 04:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164B518654;
+	Sat,  3 Feb 2024 04:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933436; cv=none; b=FlYdwz5gJVXs+6Fo4vmgegOpcRea7v3zq2Vw5aGaQXSmggHGjjVID33rNvyDay7WChLDfTgM5w7cULzY1IwtPHMtXyy24QdiCogSNs4ljYVIz6VFCOCAGzujTvoRMyK0VMUXFCgO4ABvgu7a/VMVZTIa03CnAtfO2kt0n0607yA=
+	t=1706933437; cv=none; b=FQqOSE6+tSIWu1USIZQEZO4AV7y1lSnaanHcRbfCwI7VmN+M9Zr77hkehUs0yj45IveVp7szJQEHFByHD9j0z4vKBCfi1rIMql7clfwrkbBMKgWbx1vteeDgUa9+ZZGuJCHRJ3Noz53Ix15Mn1uX3VXfkHc3WPUVYgGGD2jgpxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933436; c=relaxed/simple;
-	bh=l76E9VScVXCFNossq7cJkObdXQdJdksDTuC5KszZqew=;
+	s=arc-20240116; t=1706933437; c=relaxed/simple;
+	bh=9ag5clWcaL8OmqRfqyHV7mMgHI/2/MePGgrsdVHrVbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEFCWnIl11KKTHtoxdWPAHFu2ks6/B82Qfh9b8ZLCcOQbYEgWI/1x4zSeSaW9oXQR7wSUkYo+BgpAmha7Jz+Iw4QZiYUdmn/XQ1fuNI0L16yXAFnTxqM+CaYV76Tjlpjg/yLVb4dDtJvdWAdLhQgrngvwjU+iU4a86HbVNFaqAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrHmcYU0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dqyWV3i5FE5zAq+UztcT+g/ejNF4yaVwXwXh+C3ajPZuX9Lyru0yNSssOt4LFUt9+e1UKmCIJbbCark4i2eCkD3pf2Tscr2V0R5vTdklHniX6s60Ib+q/AYsoJvkifjuJJTAGditGBX8yQmWDgk2zcDkt1HhCz5OJ3jAEAdKyoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgAUhhSM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrHmcYU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC84C433B2;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgAUhhSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1162C433C7;
 	Sat,  3 Feb 2024 04:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
 	s=korg; t=1706933436;
-	bh=l76E9VScVXCFNossq7cJkObdXQdJdksDTuC5KszZqew=;
+	bh=9ag5clWcaL8OmqRfqyHV7mMgHI/2/MePGgrsdVHrVbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrHmcYU0E14EvyOE02A/17f13s6HJWXGcmDOevePI2zOkOCZNrEgP66hUSG4a2k8r
-	 4fK+xS3Q3Y2A2NbwDQMvC9Gtz8l1sDTQESpH2OqBKl0bU6/eFl6nYsCTcrS6vhNRZH
-	 r5xjqh7n249H3jeP5lcJ22ZBwHJrkdlA9iDv4Ub8=
+	b=rgAUhhSMTnRwyFNSm9WF6y2aSAu6j6fFZroe04HEephHbs7KSUsHQq0G8fCmX2hp0
+	 BCKlsxA3lykUsJZWT3Puuye39KMbvlKhnhA6soZKO+J2EdHDBi40GDGwTRtpq2SS3M
+	 KtAVc6wrRAxS9Qz+dwgruEMv7cQQcWdsBnLVy3p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Peter Lafreniere <peter@n8pjl.ca>,
-	Richard Weinberger <richard@nod.at>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/219] um: Fix naming clash between UML and scheduler
-Date: Fri,  2 Feb 2024 20:05:21 -0800
-Message-ID: <20240203035337.923324789@linuxfoundation.org>
+Subject: [PATCH 6.1 166/219] PCI: Fix 64GT/s effective data rate calculation
+Date: Fri,  2 Feb 2024 20:05:39 -0800
+Message-ID: <20240203035339.837407032@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035317.354186483@linuxfoundation.org>
 References: <20240203035317.354186483@linuxfoundation.org>
@@ -46,86 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 541d4e4d435c8b9bfd29f70a1da4a2db97794e0a ]
+[ Upstream commit ac4f1897fa5433a1b07a625503a91b6aa9d7e643 ]
 
-__cant_sleep was already used and exported by the scheduler.
-The name had to be changed to a UML specific one.
+Unlike the lower rates, the PCIe 64GT/s Data Rate uses 1b/1b encoding, not
+128b/130b (PCIe r6.1 sec 1.2, Table 1-1).  Correct the PCIE_SPEED2MBS_ENC()
+calculation to reflect that.
 
-Signed-off-by: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Reviewed-by: Peter Lafreniere <peter@n8pjl.ca>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Link: https://lore.kernel.org/r/20240102172701.65501-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/shared/kern_util.h | 2 +-
- arch/um/kernel/process.c           | 2 +-
- arch/um/os-Linux/helper.c          | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/pci/pci.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/um/include/shared/kern_util.h b/arch/um/include/shared/kern_util.h
-index d8b8b4f07e42..444bae755b16 100644
---- a/arch/um/include/shared/kern_util.h
-+++ b/arch/um/include/shared/kern_util.h
-@@ -50,7 +50,7 @@ extern void do_uml_exitcalls(void);
-  * Are we disallowed to sleep? Used to choose between GFP_KERNEL and
-  * GFP_ATOMIC.
-  */
--extern int __cant_sleep(void);
-+extern int __uml_cant_sleep(void);
- extern int get_current_pid(void);
- extern int copy_from_user_proc(void *to, void *from, int size);
- extern char *uml_strdup(const char *string);
-diff --git a/arch/um/kernel/process.c b/arch/um/kernel/process.c
-index 010bc422a09d..a351c87db248 100644
---- a/arch/um/kernel/process.c
-+++ b/arch/um/kernel/process.c
-@@ -220,7 +220,7 @@ void arch_cpu_idle(void)
- 	raw_local_irq_enable();
- }
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index ed6d75d138c7..e1d02b7c6029 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -274,7 +274,7 @@ void pci_bus_put(struct pci_bus *bus);
  
--int __cant_sleep(void) {
-+int __uml_cant_sleep(void) {
- 	return in_atomic() || irqs_disabled() || in_interrupt();
- 	/* Is in_interrupt() really needed? */
- }
-diff --git a/arch/um/os-Linux/helper.c b/arch/um/os-Linux/helper.c
-index b459745f52e2..3cb8ac63be6e 100644
---- a/arch/um/os-Linux/helper.c
-+++ b/arch/um/os-Linux/helper.c
-@@ -46,7 +46,7 @@ int run_helper(void (*pre_exec)(void *), void *pre_data, char **argv)
- 	unsigned long stack, sp;
- 	int pid, fds[2], ret, n;
- 
--	stack = alloc_stack(0, __cant_sleep());
-+	stack = alloc_stack(0, __uml_cant_sleep());
- 	if (stack == 0)
- 		return -ENOMEM;
- 
-@@ -70,7 +70,7 @@ int run_helper(void (*pre_exec)(void *), void *pre_data, char **argv)
- 	data.pre_data = pre_data;
- 	data.argv = argv;
- 	data.fd = fds[1];
--	data.buf = __cant_sleep() ? uml_kmalloc(PATH_MAX, UM_GFP_ATOMIC) :
-+	data.buf = __uml_cant_sleep() ? uml_kmalloc(PATH_MAX, UM_GFP_ATOMIC) :
- 					uml_kmalloc(PATH_MAX, UM_GFP_KERNEL);
- 	pid = clone(helper_child, (void *) sp, CLONE_VM, &data);
- 	if (pid < 0) {
-@@ -121,7 +121,7 @@ int run_helper_thread(int (*proc)(void *), void *arg, unsigned int flags,
- 	unsigned long stack, sp;
- 	int pid, status, err;
- 
--	stack = alloc_stack(0, __cant_sleep());
-+	stack = alloc_stack(0, __uml_cant_sleep());
- 	if (stack == 0)
- 		return -ENOMEM;
- 
+ /* PCIe speed to Mb/s reduced by encoding overhead */
+ #define PCIE_SPEED2MBS_ENC(speed) \
+-	((speed) == PCIE_SPEED_64_0GT ? 64000*128/130 : \
++	((speed) == PCIE_SPEED_64_0GT ? 64000*1/1 : \
+ 	 (speed) == PCIE_SPEED_32_0GT ? 32000*128/130 : \
+ 	 (speed) == PCIE_SPEED_16_0GT ? 16000*128/130 : \
+ 	 (speed) == PCIE_SPEED_8_0GT  ?  8000*128/130 : \
 -- 
 2.43.0
 
