@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5559C12B7E;
-	Sat,  3 Feb 2024 04:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2240112B9C;
+	Sat,  3 Feb 2024 04:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933673; cv=none; b=dQNeMJqBW63R3mucFzsvdUuBP4mvlESunzYYqRZpdvKXerr6xiIUut7+nFDSH4n7xqf7E1W0Qjg9WphfLmsFc6cy1J673li5sUCbnbBSKAs8M0VOuLHSdyBsSZ/puJELpRFnqysctNXJPsiV/HgQnvPplCGSUiq3/Uc4J0lwikA=
+	t=1706933674; cv=none; b=Sinu34JSS083iJp3Zs7cpHHU3Nuk+oIbDRZPMmtxbv908PfuC7KQednXVYNizcDqZNE7/75EDbUUPmowjzZZJKBp3efxn9aAG4jm8WPYsXVdrv00ZssWIJYmNbuZvDedPIozEf4ZugIHe3Eq51zpH/GWzODkip+CMlnj27dTBlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933673; c=relaxed/simple;
-	bh=B1nc5D2aEBW/981f5YcIqnTIbn7kg8UnPjUIOmbWeFY=;
+	s=arc-20240116; t=1706933674; c=relaxed/simple;
+	bh=TjlP6CPuqIVJGgG+DRnR7omwmBSuGTZsIGPmCtrNLWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KrRm9D9qyLFE0UlnDkbqNtHQ8ZsAYjGwJXlprAIovC2aTFfab4uerL8gVrCASTeMvJh7h/uyPTSGqem88jQ0FciHyUEH4SuKvTNE8S9pfaHfOAzXcmu0vXphaNmPoUc+LL5LW2DzmqlI2F6cOAjsRHVZb3ATou9xFnBPwXwFM58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2j6OqYGt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rA/ReHXDQVdUPRRzapQIXPpnfuKrjxC2A19K9T4dfLkxIjSYWL8KT6ZcP/mEOhrNa0d9ZrPWtewfYuaG8UaxaNjmhjNXfAINoKs4wkHma2sQ5J8aXflUzAkdtYWIw5FBqS4406zDMNpMPIAoPsRl6CXu7sCKKqxRYocoV6yrbmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iu7WTI31; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2j6OqYGt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B608C43390;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iu7WTI31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3BFC43390;
 	Sat,  3 Feb 2024 04:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933673;
-	bh=B1nc5D2aEBW/981f5YcIqnTIbn7kg8UnPjUIOmbWeFY=;
+	s=korg; t=1706933674;
+	bh=TjlP6CPuqIVJGgG+DRnR7omwmBSuGTZsIGPmCtrNLWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2j6OqYGtb0B8/xBD3F0y49kjtEczOnAc6MRzbm0efzDguCOh743z6dwPF8+qBRRfv
-	 gVqj1teaDgpMji9/z5nEtbFr4y+32GmByzxa/uIYEX6XyHGU3GOloPk74JDBdAQwBo
-	 h6rIa7nADT25rS71nCBW6lmVNiuGWWQ9S6px2ufc=
+	b=iu7WTI31bVtxybkRxeOE6vjK4lP2l9S0wkNzQO8DChdmNgkOsOxcOAnEECHr451bL
+	 qKUKHagwWRtGZBOdwMjUbU5BE6gnJfnpaKYCKGRJ0qAvfnJhDVp1zEZpl/G+LF0wqx
+	 gIItplMr6zLAOVM5JdWqKKQ4ydyU3PDY+o0kT6ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/322] PCI: Fix 64GT/s effective data rate calculation
-Date: Fri,  2 Feb 2024 20:05:37 -0800
-Message-ID: <20240203035406.934711137@linuxfoundation.org>
+Subject: [PATCH 6.6 241/322] PCI/AER: Decode Requester ID when no error info found
+Date: Fri,  2 Feb 2024 20:05:38 -0800
+Message-ID: <20240203035406.968547708@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035359.041730947@linuxfoundation.org>
 References: <20240203035359.041730947@linuxfoundation.org>
@@ -45,42 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit ac4f1897fa5433a1b07a625503a91b6aa9d7e643 ]
+[ Upstream commit 1291b716bbf969e101d517bfb8ba18d958f758b8 ]
 
-Unlike the lower rates, the PCIe 64GT/s Data Rate uses 1b/1b encoding, not
-128b/130b (PCIe r6.1 sec 1.2, Table 1-1).  Correct the PCIE_SPEED2MBS_ENC()
-calculation to reflect that.
+When a device with AER detects an error, it logs error information in its
+own AER Error Status registers.  It may send an Error Message to the Root
+Port (RCEC in the case of an RCiEP), which logs the fact that an Error
+Message was received (Root Error Status) and the Requester ID of the
+message source (Error Source Identification).
 
-Link: https://lore.kernel.org/r/20240102172701.65501-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+aer_print_port_info() prints the Requester ID from the Root Port Error
+Source in the usual Linux "bb:dd.f" format, but when find_source_device()
+finds no error details in the hierarchy below the Root Port, it printed the
+raw Requester ID without decoding it.
+
+Decode the Requester ID in the usual Linux format so it matches other
+messages.
+
+Sample message changes:
+
+  - pcieport 0000:00:1c.5: AER: Correctable error received: 0000:00:1c.5
+  - pcieport 0000:00:1c.5: AER: can't find device of ID00e5
+  + pcieport 0000:00:1c.5: AER: Correctable error message received from 0000:00:1c.5
+  + pcieport 0000:00:1c.5: AER: found no error details for 0000:00:1c.5
+
+Link: https://lore.kernel.org/r/20231206224231.732765-3-helgaas@kernel.org
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/pcie/aer.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 5484048f457d..99abc4cec0df 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -269,7 +269,7 @@ void pci_bus_put(struct pci_bus *bus);
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index 40d84cb0c601..c9afe4362835 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -740,7 +740,7 @@ static void aer_print_port_info(struct pci_dev *dev, struct aer_err_info *info)
+ 	u8 bus = info->id >> 8;
+ 	u8 devfn = info->id & 0xff;
  
- /* PCIe speed to Mb/s reduced by encoding overhead */
- #define PCIE_SPEED2MBS_ENC(speed) \
--	((speed) == PCIE_SPEED_64_0GT ? 64000*128/130 : \
-+	((speed) == PCIE_SPEED_64_0GT ? 64000*1/1 : \
- 	 (speed) == PCIE_SPEED_32_0GT ? 32000*128/130 : \
- 	 (speed) == PCIE_SPEED_16_0GT ? 16000*128/130 : \
- 	 (speed) == PCIE_SPEED_8_0GT  ?  8000*128/130 : \
+-	pci_info(dev, "%s%s error received: %04x:%02x:%02x.%d\n",
++	pci_info(dev, "%s%s error message received from %04x:%02x:%02x.%d\n",
+ 		 info->multi_error_valid ? "Multiple " : "",
+ 		 aer_error_severity_string[info->severity],
+ 		 pci_domain_nr(dev->bus), bus, PCI_SLOT(devfn),
+@@ -928,7 +928,12 @@ static bool find_source_device(struct pci_dev *parent,
+ 		pci_walk_bus(parent->subordinate, find_device_iter, e_info);
+ 
+ 	if (!e_info->error_dev_num) {
+-		pci_info(parent, "can't find device of ID%04x\n", e_info->id);
++		u8 bus = e_info->id >> 8;
++		u8 devfn = e_info->id & 0xff;
++
++		pci_info(parent, "found no error details for %04x:%02x:%02x.%d\n",
++			 pci_domain_nr(parent->bus), bus, PCI_SLOT(devfn),
++			 PCI_FUNC(devfn));
+ 		return false;
+ 	}
+ 	return true;
 -- 
 2.43.0
 
