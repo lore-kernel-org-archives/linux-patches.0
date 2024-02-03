@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B1AF9F6;
-	Sat,  3 Feb 2024 04:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D4F10A13;
+	Sat,  3 Feb 2024 04:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706933758; cv=none; b=PwUlZ3/8jRaL8laiZvJNbCl2WZecaeFSD2Q9mwNzgEC+9eHAmxrr/dqx8qzPPAO8vzgBzdOnJav6npJo0zYGmq3bJ0iWmJ0wUxPeMI9TY+3uSWPGTt9mZdNwlJqOMICH6WkERz8pOO5g6pha5okDU/obJU8JAPYYFKEWO2GlQb0=
+	t=1706933759; cv=none; b=oqQEKkfwiakignhNG2OOshoq5LY0gWnLHGBNU4KvlRCHrfqxJ0f7Hev5qF9tV253WNKTvLHzmi38wiv5S1WbSEMowVTovhjbNwxytoOxJ+fmZVRII9ROsvwuqLHSecF/vF/xom1Uvirv8pPzOAUqndvCMFACCbx267bA6dpfrD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706933758; c=relaxed/simple;
-	bh=LzhrGulXMT4eFsul6s64hiRzBkF+CzjoRYa4SB669us=;
+	s=arc-20240116; t=1706933759; c=relaxed/simple;
+	bh=LU/7qkc4qSsMiAbqAjf8jQcy68PZLHIUsQc+S4ZmiZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZR1Lap1lmpgkVc1Cio6onRrH6R4QZK8ah6lM0gBOBrgdlTp6I2yhMMZkm4daj/lo9ihkYE8xLwGxApZwLZpGjm3tXvTR8XjkXO/F0Uw2T879sPIfCvJ2BA9RalmAIWu3EBLS2Vcjb911fq3+d0hhol+z+s8xJdIn6nrfMsjwmWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oORA2reA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rtHPOEuVrFS05uc728Q25pRsqyPTEqdqWtsL5qDHjA03Z/qEXLBh6UPR+Ok+7Y7g03mOMRgljV6+86GouerGUGr4un4Idnoc/FmxzD8v2J2hYklKJEAHlNfjGKy1RQQlW05mp6bsMkkoNf1iO7dkV47RNqnSZVOs6yKFqC/BEO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiyCAC0Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oORA2reA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D280C433C7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiyCAC0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EBCC433F1;
 	Sat,  3 Feb 2024 04:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1706933758;
-	bh=LzhrGulXMT4eFsul6s64hiRzBkF+CzjoRYa4SB669us=;
+	s=korg; t=1706933759;
+	bh=LU/7qkc4qSsMiAbqAjf8jQcy68PZLHIUsQc+S4ZmiZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oORA2reAHelPbsEkK05osEFN9VfipqdGjX1wT95ySIljN0pNGYBnJTnN/WTe76Jyc
-	 MACbz0bC3WXcFgLZUjdJxNWWVNKvG+mloXmxNT45fbVEUZrgDRpHWHSaY9bhj6XYSI
-	 rKODilGgVan/Z0iFSy1xr+H5vaypWmPrQG11KVJw=
+	b=CiyCAC0QPNfzz3hFq304h8UwvCl3p3/0LbaO15rKKcR4l/iCk0g+TAhHWTAxKJHk5
+	 E1aGW8l+sqqS3MXrHbuH12eyvQap3G5a1t4lnyrqsaYd2Febdg+Jv+JtiqZbsQAejG
+	 w2tUZkJS5rUY+W6IvyvqOPuYT4Nau8sOezZ5+gJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 055/353] smb: client: fix renaming of reparse points
-Date: Fri,  2 Feb 2024 20:02:53 -0800
-Message-ID: <20240203035405.541862699@linuxfoundation.org>
+	Osama Muhammad <osmtendev@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+d4b1df2e9d4ded6488ec@syzkaller.appspotmail.com
+Subject: [PATCH 6.7 031/353] UBSAN: array-index-out-of-bounds in dtSplitRoot
+Date: Fri,  2 Feb 2024 20:02:29 -0800
+Message-ID: <20240203035404.771693317@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240203035403.657508530@linuxfoundation.org>
 References: <20240203035403.657508530@linuxfoundation.org>
@@ -51,213 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 7435d51b7ea2ab7801279c43ecd72063e9d5c92f ]
+[ Upstream commit 27e56f59bab5ddafbcfe69ad7a4a6ea1279c1b16 ]
 
-The client was sending an SMB2_CREATE request without setting
-OPEN_REPARSE_POINT flag thus failing the entire rename operation.
+Syzkaller reported the following issue:
 
-Fix this by setting OPEN_REPARSE_POINT in create options for
-SMB2_CREATE request when the source inode is a repase point.
+oop0: detected capacity change from 0 to 32768
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dtree.c:1971:9
+index -2 is out of range for type 'struct dtslot [128]'
+CPU: 0 PID: 3613 Comm: syz-executor270 Not tainted 6.0.0-syzkaller-09423-g493ffd6605b2 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:151 [inline]
+ __ubsan_handle_out_of_bounds+0xdb/0x130 lib/ubsan.c:283
+ dtSplitRoot+0x8d8/0x1900 fs/jfs/jfs_dtree.c:1971
+ dtSplitUp fs/jfs/jfs_dtree.c:985 [inline]
+ dtInsert+0x1189/0x6b80 fs/jfs/jfs_dtree.c:863
+ jfs_mkdir+0x757/0xb00 fs/jfs/namei.c:270
+ vfs_mkdir+0x3b3/0x590 fs/namei.c:4013
+ do_mkdirat+0x279/0x550 fs/namei.c:4038
+ __do_sys_mkdirat fs/namei.c:4053 [inline]
+ __se_sys_mkdirat fs/namei.c:4051 [inline]
+ __x64_sys_mkdirat+0x85/0x90 fs/namei.c:4051
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fcdc0113fd9
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffeb8bc67d8 EFLAGS: 00000246 ORIG_RAX: 0000000000000102
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fcdc0113fd9
+RDX: 0000000000000000 RSI: 0000000020000340 RDI: 0000000000000003
+RBP: 00007fcdc00d37a0 R08: 0000000000000000 R09: 00007fcdc00d37a0
+R10: 00005555559a72c0 R11: 0000000000000246 R12: 00000000f8008000
+R13: 0000000000000000 R14: 00083878000000f8 R15: 0000000000000000
+ </TASK>
+
+The issue is caused when the value of fsi becomes less than -1.
+The check to break the loop when fsi value becomes -1 is present
+but syzbot was able to produce value less than -1 which cause the error.
+This patch simply add the change for the values less than 0.
+
+The patch is tested via syzbot.
+
+Reported-and-tested-by: syzbot+d4b1df2e9d4ded6488ec@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=d4b1df2e9d4ded6488ec
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h  | 22 +++++++++++++++++-----
- fs/smb/client/cifsproto.h |  7 ++++---
- fs/smb/client/cifssmb.c   |  8 ++++----
- fs/smb/client/inode.c     |  3 ++-
- fs/smb/client/smb2inode.c | 38 +++++++++++++++++++++++---------------
- fs/smb/client/smb2proto.h |  8 +++++---
- 6 files changed, 55 insertions(+), 31 deletions(-)
+ fs/jfs/jfs_dtree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index 5e32c79f03a7..4d07b96038d8 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -205,9 +205,18 @@ struct cifs_open_info_data {
- 	};
- };
+diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
+index 92b7c533407c..f3d3e8b3f50c 100644
+--- a/fs/jfs/jfs_dtree.c
++++ b/fs/jfs/jfs_dtree.c
+@@ -1970,7 +1970,7 @@ static int dtSplitRoot(tid_t tid,
+ 		do {
+ 			f = &rp->slot[fsi];
+ 			fsi = f->next;
+-		} while (fsi != -1);
++		} while (fsi >= 0);
  
--#define cifs_open_data_reparse(d) \
--	((d)->reparse_point || \
--	 (le32_to_cpu((d)->fi.Attributes) & ATTR_REPARSE))
-+static inline bool cifs_open_data_reparse(struct cifs_open_info_data *data)
-+{
-+	struct smb2_file_all_info *fi = &data->fi;
-+	u32 attrs = le32_to_cpu(fi->Attributes);
-+	bool ret;
-+
-+	ret = data->reparse_point || (attrs & ATTR_REPARSE);
-+	if (ret)
-+		attrs |= ATTR_REPARSE;
-+	fi->Attributes = cpu_to_le32(attrs);
-+	return ret;
-+}
- 
- static inline void cifs_free_open_info(struct cifs_open_info_data *data)
- {
-@@ -390,8 +399,11 @@ struct smb_version_operations {
- 	int (*rename_pending_delete)(const char *, struct dentry *,
- 				     const unsigned int);
- 	/* send rename request */
--	int (*rename)(const unsigned int, struct cifs_tcon *, const char *,
--		      const char *, struct cifs_sb_info *);
-+	int (*rename)(const unsigned int xid,
-+		      struct cifs_tcon *tcon,
-+		      struct dentry *source_dentry,
-+		      const char *from_name, const char *to_name,
-+		      struct cifs_sb_info *cifs_sb);
- 	/* send create hardlink request */
- 	int (*create_hardlink)(const unsigned int, struct cifs_tcon *,
- 			       const char *, const char *,
-diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
-index 46feaa0880bd..5af921b400d7 100644
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -435,9 +435,10 @@ extern int CIFSPOSIXDelFile(const unsigned int xid, struct cifs_tcon *tcon,
- 			int remap_special_chars);
- extern int CIFSSMBDelFile(const unsigned int xid, struct cifs_tcon *tcon,
- 			  const char *name, struct cifs_sb_info *cifs_sb);
--extern int CIFSSMBRename(const unsigned int xid, struct cifs_tcon *tcon,
--			 const char *from_name, const char *to_name,
--			 struct cifs_sb_info *cifs_sb);
-+int CIFSSMBRename(const unsigned int xid, struct cifs_tcon *tcon,
-+		  struct dentry *source_dentry,
-+		  const char *from_name, const char *to_name,
-+		  struct cifs_sb_info *cifs_sb);
- extern int CIFSSMBRenameOpenFile(const unsigned int xid, struct cifs_tcon *tcon,
- 				 int netfid, const char *target_name,
- 				 const struct nls_table *nls_codepage,
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 9ee348e6d106..5bdea01919e8 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -2149,10 +2149,10 @@ CIFSSMBFlush(const unsigned int xid, struct cifs_tcon *tcon, int smb_file_id)
- 	return rc;
- }
- 
--int
--CIFSSMBRename(const unsigned int xid, struct cifs_tcon *tcon,
--	      const char *from_name, const char *to_name,
--	      struct cifs_sb_info *cifs_sb)
-+int CIFSSMBRename(const unsigned int xid, struct cifs_tcon *tcon,
-+		  struct dentry *source_dentry,
-+		  const char *from_name, const char *to_name,
-+		  struct cifs_sb_info *cifs_sb)
- {
- 	int rc = 0;
- 	RENAME_REQ *pSMB = NULL;
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 09c5c0f5c96e..eb54e4893777 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -2219,7 +2219,8 @@ cifs_do_rename(const unsigned int xid, struct dentry *from_dentry,
- 		return -ENOSYS;
- 
- 	/* try path-based rename first */
--	rc = server->ops->rename(xid, tcon, from_path, to_path, cifs_sb);
-+	rc = server->ops->rename(xid, tcon, from_dentry,
-+				 from_path, to_path, cifs_sb);
- 
- 	/*
- 	 * Don't bother with rename by filehandle unless file is busy and
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index c94940af5d4b..c3e28673e0cd 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -781,11 +781,11 @@ smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon, const char *name,
- 				ACL_NO_MODE, NULL, SMB2_OP_DELETE, NULL, NULL, NULL, NULL, NULL);
- }
- 
--static int
--smb2_set_path_attr(const unsigned int xid, struct cifs_tcon *tcon,
--		   const char *from_name, const char *to_name,
--		   struct cifs_sb_info *cifs_sb, __u32 access, int command,
--		   struct cifsFileInfo *cfile)
-+static int smb2_set_path_attr(const unsigned int xid, struct cifs_tcon *tcon,
-+			      const char *from_name, const char *to_name,
-+			      struct cifs_sb_info *cifs_sb,
-+			      __u32 create_options, __u32 access,
-+			      int command, struct cifsFileInfo *cfile)
- {
- 	__le16 *smb2_to_name = NULL;
- 	int rc;
-@@ -796,25 +796,33 @@ smb2_set_path_attr(const unsigned int xid, struct cifs_tcon *tcon,
- 		goto smb2_rename_path;
+ 		f->next = n;
  	}
- 	rc = smb2_compound_op(xid, tcon, cifs_sb, from_name, access,
--			      FILE_OPEN, 0, ACL_NO_MODE, smb2_to_name,
-+			      FILE_OPEN, create_options, ACL_NO_MODE, smb2_to_name,
- 			      command, cfile, NULL, NULL, NULL, NULL);
- smb2_rename_path:
- 	kfree(smb2_to_name);
- 	return rc;
- }
- 
--int
--smb2_rename_path(const unsigned int xid, struct cifs_tcon *tcon,
--		 const char *from_name, const char *to_name,
--		 struct cifs_sb_info *cifs_sb)
-+int smb2_rename_path(const unsigned int xid,
-+		     struct cifs_tcon *tcon,
-+		     struct dentry *source_dentry,
-+		     const char *from_name, const char *to_name,
-+		     struct cifs_sb_info *cifs_sb)
- {
-+	struct cifsInodeInfo *ci;
- 	struct cifsFileInfo *cfile;
-+	__u32 co = 0;
- 
-+	if (source_dentry) {
-+		ci = CIFS_I(d_inode(source_dentry));
-+		if (ci->cifsAttrs & ATTR_REPARSE)
-+			co |= OPEN_REPARSE_POINT;
-+	}
- 	drop_cached_dir_by_name(xid, tcon, from_name, cifs_sb);
- 	cifs_get_writable_path(tcon, from_name, FIND_WR_WITH_DELETE, &cfile);
- 
--	return smb2_set_path_attr(xid, tcon, from_name, to_name,
--				  cifs_sb, DELETE, SMB2_OP_RENAME, cfile);
-+	return smb2_set_path_attr(xid, tcon, from_name, to_name, cifs_sb,
-+				  co, DELETE, SMB2_OP_RENAME, cfile);
- }
- 
- int
-@@ -822,9 +830,9 @@ smb2_create_hardlink(const unsigned int xid, struct cifs_tcon *tcon,
- 		     const char *from_name, const char *to_name,
- 		     struct cifs_sb_info *cifs_sb)
- {
--	return smb2_set_path_attr(xid, tcon, from_name, to_name, cifs_sb,
--				  FILE_READ_ATTRIBUTES, SMB2_OP_HARDLINK,
--				  NULL);
-+	return smb2_set_path_attr(xid, tcon, from_name, to_name,
-+				  cifs_sb, 0, FILE_READ_ATTRIBUTES,
-+				  SMB2_OP_HARDLINK, NULL);
- }
- 
- int
-diff --git a/fs/smb/client/smb2proto.h b/fs/smb/client/smb2proto.h
-index 0e371f7e2854..7cbf1a76b42d 100644
---- a/fs/smb/client/smb2proto.h
-+++ b/fs/smb/client/smb2proto.h
-@@ -80,9 +80,11 @@ extern int smb2_rmdir(const unsigned int xid, struct cifs_tcon *tcon,
- 		      const char *name, struct cifs_sb_info *cifs_sb);
- extern int smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon,
- 		       const char *name, struct cifs_sb_info *cifs_sb);
--extern int smb2_rename_path(const unsigned int xid, struct cifs_tcon *tcon,
--			    const char *from_name, const char *to_name,
--			    struct cifs_sb_info *cifs_sb);
-+int smb2_rename_path(const unsigned int xid,
-+		     struct cifs_tcon *tcon,
-+		     struct dentry *source_dentry,
-+		     const char *from_name, const char *to_name,
-+		     struct cifs_sb_info *cifs_sb);
- extern int smb2_create_hardlink(const unsigned int xid, struct cifs_tcon *tcon,
- 				const char *from_name, const char *to_name,
- 				struct cifs_sb_info *cifs_sb);
 -- 
 2.43.0
 
