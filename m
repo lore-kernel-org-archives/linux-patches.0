@@ -1,179 +1,159 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBAC28688;
-	Sun,  4 Feb 2024 20:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3C32C1A4
+	for <patches@lists.linux.dev>; Sun,  4 Feb 2024 21:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.222.135.140
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707078727; cv=none; b=kow6sqyn1yIHXqFq6BiiFyiNgO6qXwrHjDKKFHHsXAa0EUEkunNTcwiJ/x0lNXNifwhGN5//FOpFmurtOY6OkdB6BXs1vRFdPAxpIvg28Y4zEEC6t7SnjtKWVptSmHKggpVhWkCwdTgxSyli+9EcgYQEUEKEIliglYRHgin8S54=
+	t=1707082037; cv=none; b=crwwAAo3RAX9kULFKSFZvLPHz+bQmA+j4Q/al5eXT7uCmGi2KdJ5Lh/kQ+42vraNt6wCWs/fcdFn74o3eAx+CsGiJ75ylNIzYdjXcVitaTmGSPoes85rydJhhPqVUKJsB8KttrIuk8+SCFOWBryhJcVe4A1JU6ALKyMLOsSbXAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707078727; c=relaxed/simple;
-	bh=dxhoQ6gha6jprWyOLA1prEutTcOkboFoDMbU9dgUZ/E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IRCwHUXuEvKkseNhObN1Y1hv0XtY5RQEb6WcdkiiBkZn4zOh5iM0r9tSBnTk+3S22Yu2ahA4wb4EmPhC1XR9Hr11K+IP28stwM5A/eZ0np6MkipMVtQuBauWZ8sBdTaLps+ItpJ1Ru8usPrqXILwdO2Wd2YUaDNnjOjuqR0Yi3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=TISutnB0; arc=none smtp.client-ip=82.195.75.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
+	s=arc-20240116; t=1707082037; c=relaxed/simple;
+	bh=LUlrgJz18o9KJqJG7IuYyn8FmI3UltapoK5rh+HPJWU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=bsMp9lTz5A2UGJJmb1chG0nwAmhODb6OoIvGWRGpmnZEcVUkwQnvz6my9LSqb8yGDYS1rz3/3kJL7u8lYYozPI5V2UXw2qjdmVjYo447yw7G481V94pW7zXCb0YJltHBUric9lM9mzVzdZFey2r1Ci1rxKev9Xg2PQrgT0U55Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl; spf=pass smtp.mailfrom=o2.pl; dkim=pass (1024-bit key) header.d=o2.pl header.i=@o2.pl header.b=D+H2rcFS; arc=none smtp.client-ip=193.222.135.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=o2.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="TISutnB0"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Reply-To:Content-ID:Content-Description;
-	bh=PDoQmKoIo+4pyBX8IxmJjNLKSWVkWqDmvzeuM7hEdyg=; b=TISutnB0Zld8cjXp773EH2WRMx
-	8qqEFllTEiWimZnMosmELTaueeV3cm69r+oj53++rSG3TwkQTxMTu6EoixFE6fI/ZEWdcJdzdzzn0
-	Fpq3UKrPSSXhIvzNx55yljsnzq+Ugc2WX8NZI5k/MmsE5cLWkrpOSUoCwyEvEOjmtKiLUpjBokc5G
-	xhtnKBxsBBzbwNQptvmrZrhjmVOKhT4/tN9PaHpxbqaw9gsIhO0df3+5FgNZcT1YOxQiwB/30avKc
-	SGcyJeoR4nGKcVk1gnggBBmhGGFOFFUq8/61c7CbeoMDC88/JwaQ0mzJIEXFrq7mn4o0ylvgGMFPy
-	amz06Y6g==;
-Received: from authenticated user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.94.2)
-	(envelope-from <carnil@debian.org>)
-	id 1rWj9a-00Aqkl-D4; Sun, 04 Feb 2024 20:31:50 +0000
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id A2052BE2DE0; Sun,  4 Feb 2024 21:31:48 +0100 (CET)
-Date: Sun, 4 Feb 2024 21:31:48 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Vegard Nossum <vegard.nossum@oracle.com>
-Cc: Justin Forbes <jforbes@fedoraproject.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jonathan Corbet <corbet@lwn.net>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: Re: [PATCH 6.6 003/331] docs: kernel_feat.py: fix potential command
- injection
-Message-ID: <Zb_0NEeCqok8icwz@eldamar.lan>
-References: <20240129170015.067909940@linuxfoundation.org>
- <ZbkfGst991YHqJHK@fedora64.linuxtx.org>
- <87h6iudc7j.fsf@meer.lwn.net>
- <CAFbkSA2tft--ejgJ58o3G-OxNqnm-C6fK4-kXThsN92NYF8V0A@mail.gmail.com>
- <2024020151-purchase-swerve-a3b3@gregkh>
- <CAFbkSA25o88DjaWHc3GRk5vkvANnpi-NJ61XJudz4=ARTyrhtw@mail.gmail.com>
- <CAFbkSA3M74kvF+v_URm593xSnJTVzeKmy2K6dw0WQYw7BDdwmg@mail.gmail.com>
- <CAFbkSA3vHDn-Pk9fB6PbWeniGHH6W3bo=jQ9utE9xh88S8bzxA@mail.gmail.com>
- <1a160e5f-d5ce-4711-b683-808ab87b289b@oracle.com>
- <Zb_DwdZ3PUr1VbBg@eldamar.lan>
+	dkim=pass (1024-bit key) header.d=o2.pl header.i=@o2.pl header.b="D+H2rcFS"
+Received: (wp-smtpd smtp.tlen.pl 26750 invoked from network); 4 Feb 2024 22:27:05 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=1024a;
+          t=1707082025; bh=ewIuHQmdWZ/T4IDehw1MX7Z1a4OC8Yu8CZToZGj945c=;
+          h=From:Subject:To:Cc;
+          b=D+H2rcFSzQ/61rC76B2nq+LOd7MylQfNeCaT7k4hRho5PKId7RMX6oJ3NkLKyI0SO
+           3GSbIEDutcyy31kLqpLjDOO9gfTOYmJ2imAbc4DcG7defYmIO3BCx2o+f/KkL9R/i2
+           LzGkD/dJkpdqNGHJAylLT6eWBDJYYl0Zei4XStlY=
+Received: from aafa224.neoplus.adsl.tpnet.pl (HELO [192.168.1.22]) (mat.jonczyk@o2.pl@[83.4.130.224])
+          (envelope-sender <mat.jonczyk@o2.pl>)
+          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
+          for <gregkh@linuxfoundation.org>; 4 Feb 2024 22:27:05 +0100
+Message-ID: <30066ce7-0f8a-40a7-b5b2-5494940c4cd5@o2.pl>
+Date: Sun, 4 Feb 2024 22:27:00 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Mateusz_Jo=C5=84czyk?= <mat.jonczyk@o2.pl>
+Subject: Re: [PATCH 6.1 000/221] 6.1.77-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240203174756.358721205@linuxfoundation.org>
+Content-Language: en-GB
+Autocrypt: addr=mat.jonczyk@o2.pl; keydata=
+ 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
+ TANkZ3QqXNX2
+In-Reply-To: <20240203174756.358721205@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zb_DwdZ3PUr1VbBg@eldamar.lan>
-X-Debian-User: carnil
+X-WP-MailID: ad3470a62378a6444059b57b457f8ad1
+X-WP-AV: skaner antywirusowy Poczty o2
+X-WP-SPAM: NO 0000000 [QdO0]                               
 
-On Sun, Feb 04, 2024 at 06:05:05PM +0100, Salvatore Bonaccorso wrote:
-> Hi,
-> 
-> On Thu, Feb 01, 2024 at 05:34:25PM +0100, Vegard Nossum wrote:
-> > 
-> > On 01/02/2024 16:07, Justin Forbes wrote:
-> > > On Thu, Feb 1, 2024 at 8:58 AM Justin Forbes <jforbes@fedoraproject.org> wrote:
-> > > > On Thu, Feb 1, 2024 at 8:41 AM Justin Forbes <jforbes@fedoraproject.org> wrote:
-> > > > > On Thu, Feb 1, 2024 at 8:25 AM Greg Kroah-Hartman
-> > > > > <gregkh@linuxfoundation.org> wrote:
-> > > > > > On Thu, Feb 01, 2024 at 06:43:46AM -0600, Justin Forbes wrote:
-> > > > > > > On Tue, Jan 30, 2024 at 10:21 AM Jonathan Corbet <corbet@lwn.net> wrote:
-> > > > > > > > Justin Forbes <jforbes@fedoraproject.org> writes:
-> > > > > > > > > On Mon, Jan 29, 2024 at 09:01:07AM -0800, Greg Kroah-Hartman wrote:
-> > > > > > > > > > 6.6-stable review patch.  If anyone has any objections, please let me know.
-> > > > > > > > > > 
-> > > > > > > > > > ------------------
-> > > > > > > > > > 
-> > > > > > > > > > From: Vegard Nossum <vegard.nossum@oracle.com>
-> > > > > > > > > > 
-> > > > > > > > > > [ Upstream commit c48a7c44a1d02516309015b6134c9bb982e17008 ]
-> > > > > > > > > > 
-> > > > > > > > > > The kernel-feat directive passes its argument straight to the shell.
-> > > > > > > > > > This is unfortunate and unnecessary.
-> > 
-> > [...]
-> > 
-> > > > > > > > > This patch seems to be missing something. In 6.6.15-rc1 I get a doc
-> > > > > > > > > build failure with:
-> > > > > > > > > 
-> > > > > > > > > /builddir/build/BUILD/kernel-6.6.14-332-g1ff49073b88b/linux-6.6.15-0.rc1.1ff49073b88b.200.fc39.noarch/Documentation/sphinx/kerneldoc.py:133: SyntaxWarning: invalid escape sequence '\.'
-> > > > > > > > >    line_regex = re.compile("^\.\. LINENO ([0-9]+)$")
-> > > > > > > > 
-> > > > > > > > Ah ... you're missing 86a0adc029d3 (Documentation/sphinx: fix Python
-> > > > > > > > string escapes).  That is not a problem with this patch, though; I would
-> > > > > > > > expect you to get the same error (with Python 3.12) without.
-> > > > > > > 
-> > > > > > > Well, it appears that 6.6.15 shipped anyway, with this patch included,
-> > > > > > > but not with 86a0adc029d3.  If anyone else builds docs, this thread
-> > > > > > > should at least show them the fix.  Perhaps we can get the missing
-> > > > > > > patch into 6.6.16?
-> > > > > > 
-> > > > > > Sure, but again, that should be independent of this change, right?
-> > > > > 
-> > > > > I am not sure I would say independent. This particular change causes
-> > > > > docs to fail the build as I mentioned during rc1.  There were no
-> > > > > issues building 6.6.14 or previous releases, and no problem building
-> > > > > 6.7.3.
-> > > > 
-> > > > I can confirm that adding this patch to 6.6.15 makes docs build again.
-> > > 
-> > > I lied, it just fails slightly differently. Some of the noise is gone,
-> > > but we still have:
-> > > Sphinx parallel build error:
-> > > UnboundLocalError: cannot access local variable 'fname' where it is
-> > > not associated with a value
-> > > make[2]: *** [Documentation/Makefile:102: htmldocs] Error 2
-> > > make[1]: *** [/builddir/build/BUILD/kernel-6.6.15/linux-6.6.15-200.fc39.noarch/Makefile:1715:
-> > > htmldocs] Error 2
-> > 
-> > The old version of the script unconditionally assigned a value to the
-> > local variable 'fname' (not a value that makes sense to me, since it's
-> > literally assigning the whole command, not just a filename, but that's a
-> > separate issue), and I removed that so it's only conditionally assigned.
-> > This is almost certainly a bug in my patch.
-> > 
-> > I'm guessing maybe a different patch between 6.6 and current mainline is
-> > causing 'fname' to always get assigned for the newer versions and thus
-> > make the run succeed, in spite of the bug.
-> > 
-> > Something like the patch below (completely untested) should restore the
-> > previous behaviour, but I'm not convinced it's correct.
-> > 
-> > 
-> > Vegard
-> > 
-> > diff --git a/Documentation/sphinx/kernel_feat.py
-> > b/Documentation/sphinx/kernel_feat.py
-> > index b9df61eb4501..15713be8b657 100644
-> > --- a/Documentation/sphinx/kernel_feat.py
-> > +++ b/Documentation/sphinx/kernel_feat.py
-> > @@ -93,6 +93,8 @@ class KernelFeat(Directive):
-> >          if len(self.arguments) > 1:
-> >              args.extend(['--arch', self.arguments[1]])
-> > 
-> > +        fname = ' '.join(args)
-> > +
-> >          lines = subprocess.check_output(args,
-> > cwd=os.path.dirname(doc.current_source)).decode('utf-8')
-> > 
-> >          line_regex = re.compile(r"^\.\. FILE (\S+)$")
-> 
-> We have as well a documention build problem in Debian, cf.
-> https://buildd.debian.org/status/fetch.php?pkg=linux&arch=all&ver=6.6.15-1&stamp=1707050360&raw=0
-> though not yet using python 3.12 as default.
-> 
-> Your above change seems to workaround the issue in fact, but need to
-> do a full build yet.
+W dniu 3.02.2024 o 18:52, Greg Kroah-Hartman pisze:
+> This is the start of the stable review cycle for the 6.1.77 release.
+> There are 221 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Mon, 05 Feb 2024 17:47:20 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.77-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-For Debian I'm temporarily reverting from the 6.6.15 upload:
+Hello,
 
-e961f8c6966a ("docs: kernel_feat.py: fix potential command injection")
+Tested-on a HP 17-by0001nw laptop with an Intel Kaby Lake CPU and Ubuntu 20.04.
 
-This is not the best solution, but unbreaks several other builds.
+Used technologies: ext4, vfat, mdraid on top of a NVMe and SATA drive (in a
+write-mostly mode).
 
-The alternative would be to apply Vegard's workaround or the proper
-solution for that.
+Suspend to disk and suspend to RAM work.
 
-Regards,
-Salvatore
+Nitpicks:
+
+- the laptop once failed to shut down completely, it hung with a black screen
+(the kernel messages from the shutdown disappeared). This did not happen again
+with 2-3 tries. IIRC this has happened on this laptop in the past.
+
+- I have been running long SMART tests on 2 external USB hard drives.
+One of them, a TOSHIBA USB 3.0 hard drive briefly disconnected with the
+following dmesg messages:
+
+usb 2-2: USB disconnect, device number 4
+xhci_hcd 0000:00:14.0: WARN Set TR Deq Ptr cmd failed due to incorrect slot or ep state.
+sd 2:0:0:0: [sdc] tag#0 FAILED Result: hostbyte=DID_ERROR driverbyte=DRIVER_OK cmd_age=0s
+sd 2:0:0:0: [sdc] tag#0 CDB: ATA command pass through(16) 85 06 20 00 00 00 00 00 00 00 00 00 00 00 e5 00
+device offline error, dev sdc, sector 263659521 op 0x1:(WRITE) flags 0x0 phys_seg 1 prio class 2
+Buffer I/O error on dev sdc2, logical block 1, lost async page write
+sd 2:0:0:0: [sdc] Synchronizing SCSI cache
+sd 2:0:0:0: [sdc] Synchronize Cache(10) failed: Result: hostbyte=DID_NO_CONNECT driverbyte=DRIVER_OK
+usb 2-2: new SuperSpeed USB device number 5 using xhci_hcd
+
+The hard drive was later reset out of the blue:
+
+usb 2-1: reset SuperSpeed USB device number 7 using xhci_hcd
+
+This may have been caused by faulty cabling / USB sockets.
+
+Tested-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
+
+Greetings,
+
+Mateusz Jończyk
+
