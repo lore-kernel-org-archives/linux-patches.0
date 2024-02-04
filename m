@@ -1,135 +1,258 @@
-Received: from smtp0-kfki.kfki.hu (smtp0-kfki.kfki.hu [148.6.0.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC50225CE;
-	Sun,  4 Feb 2024 15:32:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.6.0.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F099B23750
+	for <patches@lists.linux.dev>; Sun,  4 Feb 2024 16:58:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707060737; cv=none; b=Wdp+oW74Gkxa9M59gAsqmJ4eVfaE5bv6Wlinq4QsMUaCoRscuoM6avBCeECQFhGj7TcuEjBtCOfoL7JoVe9AkaE1K0l3Q4bI9oMYK5hamnK2QT44h1tiB45WRjnukj1KTX9etTFVtTmo+RKIZztYpbc6LxypaQ24ENvVeDE3IQo=
+	t=1707065887; cv=none; b=jaaUYPn8i9wqkMDUjU9sj6goiXYHr4Wa1ARiGQvPaRC4VKz88SzQN/tXgurZkfNn7S6h7wMJdYHtN/AuAof8Vi9kYR6KwNCl6ZCdWdiFV+Ao5kmwfHOG0z9gdD0GBxnrdbTkIU1YIYxnRKfHUfGp5ZpkJ+A06johAgXoy8Svh5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707060737; c=relaxed/simple;
-	bh=jwDrZsMZ7TVHMuUi91brQ9rocuIOobyLD6+lUJBnvUI=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Jm9KWcGR2JqovajM1X1dERZj6jlC2k/pnWQN8UYEKvxdIEfh2Euw460KdP8vKcuP+h7JEk5G/nN/3Go3xvZ6C76vKy6ZjKu1CSTMHgvXFqN7cY0tXwjdurrQsIyVwoa9mHE+2IB1dnasv1JKOtLIvSvL0MGD0Z5fr9iJgwMPwLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=blackhole.kfki.hu; spf=pass smtp.mailfrom=blackhole.kfki.hu; dkim=pass (1024-bit key) header.d=blackhole.kfki.hu header.i=@blackhole.kfki.hu header.b=UwIZHIkR; arc=none smtp.client-ip=148.6.0.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=blackhole.kfki.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=blackhole.kfki.hu
+	s=arc-20240116; t=1707065887; c=relaxed/simple;
+	bh=IuTP+J3Y35zedBXGGOlbZsgbiGFUnU5q+tKuIf5u0v8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bRxWJo5XKPboJ2kb+lJxZ/XxZe/gp2IyKqlq5nyp9cTgEJ/DHrujHCrNjrJNsQpfYKLuXumgPhkUsJHmYA015TrGEF/3yJQPT+3cm5W+PUS2ZTGfIkbqMlBUhLCYd/43Vxx6ohYtDANVOtjKqXZglUlE6h9i7r0mKvyxf7d1sco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XrF857DI; arc=none smtp.client-ip=209.85.222.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=blackhole.kfki.hu header.i=@blackhole.kfki.hu header.b="UwIZHIkR"
-Received: from localhost (localhost [127.0.0.1])
-	by smtp0.kfki.hu (Postfix) with ESMTP id 2EC836740101;
-	Sun,  4 Feb 2024 16:24:29 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	blackhole.kfki.hu; h=content-id:mime-version:references
-	:message-id:in-reply-to:from:from:date:date:received:received
-	:received:received; s=20151130; t=1707060267; x=1708874668; bh=K
-	ZFufjh9ilb6Wwl4goYBCX1Sb+SwToj3yoyhFgXKpc4=; b=UwIZHIkRmac2TkFnq
-	BWIOmrDIcVMOU4pnzfVeLgbCKHr1OKuudZW06A9akTV5E4LAFT8maDyrdIP6VxbI
-	tnZwFGcJpLaNIAaX639XuaGESGuK8u5/kgKlyznhTNdSGO5jD2OSIczVCPvAAAY7
-	QXbadrDFsErgTfQ0BKd2Iaa3Z4=
-X-Virus-Scanned: Debian amavisd-new at smtp0.kfki.hu
-Received: from smtp0.kfki.hu ([127.0.0.1])
-	by localhost (smtp0.kfki.hu [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP; Sun,  4 Feb 2024 16:24:27 +0100 (CET)
-Received: from mentat.rmki.kfki.hu (host-94-248-211-167.kabelnet.hu [94.248.211.167])
-	(Authenticated sender: kadlecsik.jozsef@wigner.hu)
-	by smtp0.kfki.hu (Postfix) with ESMTPSA id E5A0267400FF;
-	Sun,  4 Feb 2024 16:24:25 +0100 (CET)
-Received: by mentat.rmki.kfki.hu (Postfix, from userid 1000)
-	id 803175A2; Sun,  4 Feb 2024 16:24:25 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by mentat.rmki.kfki.hu (Postfix) with ESMTP id 766CF268;
-	Sun,  4 Feb 2024 16:24:25 +0100 (CET)
-Date: Sun, 4 Feb 2024 16:24:25 +0100 (CET)
-From: Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-cc: Bagas Sanjaya <bagasdotme@gmail.com>, stable@vger.kernel.org, 
-    patches@lists.linux.dev, Ale Crismani <ale.crismani@automattic.com>, 
-    David Wang <00107082@163.com>, Pablo Neira Ayuso <pablo@netfilter.org>, 
-    Sasha Levin <sashal@kernel.org>, 
-    =?UTF-8?B?0KHRgtCw0YEg0J3QuNGH0LjQv9C+0YDQvtCy0LjRhw==?= <stasn77@gmail.com>, 
-    Linux Regressions <regressions@lists.linux.dev>
-Subject: Re: [PATCH 6.6 295/322] netfilter: ipset: fix performance regression
- in swap operation
-In-Reply-To: <2024020441-grumpily-crumb-03c3@gregkh>
-Message-ID: <303d8488-312a-9fe3-1115-3fe66ff0e688@blackhole.kfki.hu>
-References: <20240203035359.041730947@linuxfoundation.org> <20240203035408.592513874@linuxfoundation.org> <Zb81_PFP54xFYQSd@archie.me> <2024020441-grumpily-crumb-03c3@gregkh>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XrF857DI"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-7d5bbbe592dso1856387241.0
+        for <patches@lists.linux.dev>; Sun, 04 Feb 2024 08:58:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1707065884; x=1707670684; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b8XvHeWqXLXOzR1av0qUjRtuCxZWJXJt2cLmpLDy0zg=;
+        b=XrF857DI3M7BHUpUOJR/W7fQHtIhdZEU+JpZMz6kHEKvBY50CjFVX7IrlL0rUTeY/l
+         i+iaBQ9EkDACeLUocutWiJJ33ThVLezptE5Bx9uq1SYuWioom+bBKBqkdg3vpdMZ1tcf
+         GAp2qgZjKqKzh8uxp2VbwvTci5PmMK8Gt5ZKEL/wzXGueCnk2+3mMkzc1MFiCiyO7M63
+         vH1V5kmbawzEa5qjVH5UhtRK/FdewhyHaN6fS7aqGNSBFRtwZlH3QauQ2srKgXK5Ls1E
+         hoRH3MATkUEVX0RBotUtKIKnvDDrNM62zE4SW/UvQqNIHxcWGwPmAaOUQkSkX12viVia
+         JJzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707065884; x=1707670684;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b8XvHeWqXLXOzR1av0qUjRtuCxZWJXJt2cLmpLDy0zg=;
+        b=aJeHxafhruFQG18xE5yt8vDDcfPzSXpKmUefe+1gpkWpNGRHHPRwGBdHa8FxOvBKY3
+         doMrFk/vH6si24Y3JrlI3MhbUVNYky1kDDoHgFfdtya8+Z0URRn8JpvxwGB4ckgVGr6X
+         vgT+tE2peTt6nHOPt4VTE0aneFw0M2+xO7nzjwn6O41R+KeDN6IQ64X6AjHy7ws7XJa1
+         Al7kkiY9uOurmBYOwAmLZnN6ojJhiuU7GIhuJ4S+0b2q0DMASEAiwIrImMN9kZ4V/KTL
+         90Rl6yC+nS8yZqrvCqhWKWIMt+IukF6QBKmubykDiedMSM/4ozkZIevSSlIkcBj6l2kX
+         QN9A==
+X-Gm-Message-State: AOJu0YymBIW9mggkN3ascTdXfOmlZZp6I7EEBDtwZ0bkUtjvGBq0rFNp
+	pypfV8ADhDEAZY55TdDFnsb9A36gKf5J3wm66xhiYKrDrpcDHt+FAY3XRxxrZKtkRoPaGEh6y7l
+	45/BK2KrfjQgs1bJCoId9/REaE/B6PbWp1ZEf5g==
+X-Google-Smtp-Source: AGHT+IHEsRB/Mqs/FoDCyqXrIjS1/UK0qIRnrPqn1MRy6XCPhqYEdBs7AUMEkpcSt6P8sei/I7o7vPk7kXgzFvNQ+K0=
+X-Received: by 2002:a67:ad12:0:b0:46b:3a27:9895 with SMTP id
+ t18-20020a67ad12000000b0046b3a279895mr12110278vsl.14.1707065883820; Sun, 04
+ Feb 2024 08:58:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="1393428146-1326496185-1707060111=:224058"
-Content-ID: <ea6c5de-9135-1b16-be4d-405d3051726f@blackhole.kfki.hu>
-X-deepspam: ham 0%
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---1393428146-1326496185-1707060111=:224058
-Content-Type: text/plain; charset=UTF-8
-Content-ID: <37e15f1d-6934-d83d-ed3e-f68222c6c4d@blackhole.kfki.hu>
+References: <20240203174756.358721205@linuxfoundation.org>
+In-Reply-To: <20240203174756.358721205@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sun, 4 Feb 2024 22:27:52 +0530
+Message-ID: <CA+G9fYt2je2FKwdgm31isfxF2xm+HAZ-+vfwmiXhS2SpdBGLFw@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/221] 6.1.77-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, 4 Feb 2024, Greg Kroah-Hartman wrote:
+On Sat, 3 Feb 2024 at 23:22, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.77 release.
+> There are 221 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Mon, 05 Feb 2024 17:47:20 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.77-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> On Sun, Feb 04, 2024 at 02:00:12PM +0700, Bagas Sanjaya wrote:
-> > On Fri, Feb 02, 2024 at 08:06:32PM -0800, Greg Kroah-Hartman wrote:
-> > > 6.6-stable review patch.  If anyone has any objections, please let =
-me know.
-> > >=20
-> > > ------------------
-> > >=20
-> > > From: Jozsef Kadlecsik <kadlec@netfilter.org>
-> > >=20
-> > > [ Upstream commit 97f7cf1cd80eeed3b7c808b7c12463295c751001 ]
-> > >=20
-> > > The patch "netfilter: ipset: fix race condition between swap/destro=
-y
-> > > and kernel side add/del/test", commit 28628fa9 fixes a race conditi=
-on.
-> > > But the synchronize_rcu() added to the swap function unnecessarily =
-slows
-> > > it down: it can safely be moved to destroy and use call_rcu() inste=
-ad.
-> > >=20
-> > > Eric Dumazet pointed out that simply calling the destroy functions =
-as
-> > > rcu callback does not work: sets with timeout use garbage collector=
-s
-> > > which need cancelling at destroy which can wait. Therefore the dest=
-roy
-> > > functions are split into two: cancelling garbage collectors safely =
-at
-> > > executing the command received by netlink and moving the remaining
-> > > part only into the rcu callback.
-> >=20
-> > Hi,
-> >=20
-> > =D0=A1=D1=82=D0=B0=D1=81 =D0=9D=D0=B8=D1=87=D0=B8=D0=BF=D0=BE=D1=80=D0=
-=BE=D0=B2=D0=B8=D1=87 <stasn77@gmail.com> reported ipset kernel panic wit=
-h this
-> > patch [1]. He noted that reverting it fixed the regression.
-> >=20
-> > Thanks.
-> >=20
-> > [1]: https://lore.kernel.org/stable/CAH37n11s_8qjBaDrao3PKct4FriCWNXH=
-WBBHe-ddMYHSw4wK0Q@mail.gmail.com/
->=20
-> Is this also an issue in Linus's tree?
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-I'm going to send a patch in my next email which fixes the issue. Sorry,=20
-splitting the destroy operation into two halves was not taken into accoun=
-t=20
-at every location.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Best regards,
-Jozsef
+NOTE:
+----
+Following Powerpc defconfig clang nightly build errors noticed linux-6.7.y,
+linux-6.6.y, linux-6.1.y and Linux next-20240201 tag.
 
---=20
-E-mail  : kadlec@blackhole.kfki.hu, kadlecsik.jozsef@wigner.hu
-PGP key : https://wigner.hu/~kadlec/pgp_public_key.txt
-Address : Wigner Research Centre for Physics
-          H-1525 Budapest 114, POB. 49, Hungary
---1393428146-1326496185-1707060111=:224058--
+  error: option '-msoft-float' cannot be specified with '-maltivec'
+  make[5]: *** [scripts/Makefile.build:243: arch/powerpc/lib/xor_vmx.o] Err=
+or 1
+
+We may have to wait for the following clang fix patch to get accepted
+into mainline
+ - https://lore.kernel.org/llvm/20240127-ppc-xor_vmx-drop-msoft-float-v1-1-=
+f24140e81376@kernel.org/
+
+
+## Build
+* kernel: 6.6.16-rc2
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.6.y
+* git commit: 8e1719211b07ef9172b231100722f54ffc23ed27
+* git describe: v6.6.15-327-g8e1719211b07
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.1=
+5-327-g8e1719211b07
+
+## Test Regressions (compared to v6.6.15)
+
+## Metric Regressions (compared to v6.6.15)
+
+## Test Fixes (compared to v6.6.15)
+
+## Metric Fixes (compared to v6.6.15)
+
+## Test result summary
+total: 155032, pass: 133733, fail: 2219, skip: 18908, xfail: 172
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 147 total, 146 passed, 1 failed
+* arm64: 53 total, 52 passed, 1 failed
+* i386: 43 total, 42 passed, 1 failed
+* mips: 26 total, 26 passed, 0 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 36 total, 34 passed, 2 failed
+* riscv: 18 total, 18 passed, 0 failed
+* s390: 13 total, 13 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 48 total, 46 passed, 2 failed
+
+## Test suites summary
+* boot
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+
+--
+Linaro LKFT
+https://lkft.linaro.org
