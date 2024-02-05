@@ -1,142 +1,102 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5605F85C70
-	for <patches@lists.linux.dev>; Mon,  5 Feb 2024 19:55:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA601386BC;
+	Mon,  5 Feb 2024 20:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707162948; cv=none; b=NtZTTAGI9B+3pwZsqIHVsf2TE6CFr4wnJumBAaX1yXOs53o8C9cRumbznCk+//DaO3CvIvlLc3CgLSVgFILhIrS6kk4KslbCJd4HI9GZGzfdHt80OzPXBpK2hTnNnZacNBrpVn89dNakZdn/qdnd47hICHcN0nuFbbXlQzSuPfM=
+	t=1707166266; cv=none; b=mkIiUkDcrHKHExDbF0pbAnOkoVfZw2VasB5i9xV6PTGhFNCvb0C+feYGHXaE05lwkt6uLX0rGa0iMCxToShyDuey6ATzDfVsVY885E3kgrpkygNu3zPG+aodVINf5xlKqrkcPZH33NoZl2RsCxWNJZk5qRz2PqXIcA1Lasm2CXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707162948; c=relaxed/simple;
-	bh=6KR5cC4rdQoGKm5Xws5HnQANaoT9euc9PGHJMySesSY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j/VT+T8X7FYCHaDKrjpPmrSdGAzaUjy2X+ZatizQHFeRUXVg40jzLHey5fOCTR98C7hN0QF+JQ5j8J6IHGbhDOm2vF9iHV2npI/3vuu4F4OS6GyflUzCTSccKhbQ6DcpzbgqQX3p3v0kYYUlXvtWrYq7rInH4rvN6d0uLnzdwGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6043efd46f8so15990057b3.0
-        for <patches@lists.linux.dev>; Mon, 05 Feb 2024 11:55:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707162944; x=1707767744;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Pg0vleuARG2tQFPXTpmZPKI66XOaTEWhuPP2csZ8T84=;
-        b=DPQ8Og6yETaGVVem2p+BfA41HEiT5ent7rodvzCR4R35/YS1IL4zAs79XrjIdf+21Z
-         zoJcYYY4M9rZOU+X24Upv76ek/vax3dh9LXkcislekOYfc/UY5EeJd0hNnz7hQ/+bakY
-         ROByOxSUmphGW6PbVc9P8hJhP8mmivLc07BRz6zNrVw/xO6GmcjGiRxYrKBb43hyjZCS
-         Sb+w7iN8ajB2Yf0XOXei6bq3W7lLxHjGSyZhAmIqW/U4wwbH2M5e3+BFxLMt5QTEpaW0
-         0Yf8rnhKVyFI3wgVaPzsllV+HWJzFSUt6xsW9gSWjXUtyvIHM2sjAUmCRr8oqCqt6bDe
-         1Egw==
-X-Gm-Message-State: AOJu0YxvRa8Rqad2TPV3wd15SUZYXqZUrc6rhILueuIb+jV96OiyjwHO
-	vMjr1i3980GmAK7G3AfDAUtZAvkwXuHr6ugy7rxgmoKWWOjNuWW3dNd6EdlRg5s=
-X-Google-Smtp-Source: AGHT+IGLHBD4/cAOPd5Mnpt6EfkoqOwk34lgeW8n0PP8oW1cONp2ZAHD+LT3r5HIo5RDvUtFJm6tgw==
-X-Received: by 2002:a81:4fcc:0:b0:603:ee92:9729 with SMTP id d195-20020a814fcc000000b00603ee929729mr647508ywb.1.1707162944532;
-        Mon, 05 Feb 2024 11:55:44 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVScOmC2n7u9ztC4QJJl0a/VNUWB8t71tZi4ez/gpT3qm6gbmDtwaSKoG5oxkHm51In+6hGtJOD7EBWFEYN4Z4D3MiUQMP0sg==
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com. [209.85.128.174])
-        by smtp.gmail.com with ESMTPSA id m16-20020a819c10000000b006041c534663sm101529ywa.131.2024.02.05.11.55.44
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Feb 2024 11:55:44 -0800 (PST)
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6043efd46f8so15989717b3.0
-        for <patches@lists.linux.dev>; Mon, 05 Feb 2024 11:55:44 -0800 (PST)
-X-Received: by 2002:a81:aa0f:0:b0:5ee:7299:e2cf with SMTP id
- i15-20020a81aa0f000000b005ee7299e2cfmr562941ywh.52.1707162942877; Mon, 05 Feb
- 2024 11:55:42 -0800 (PST)
+	s=arc-20240116; t=1707166266; c=relaxed/simple;
+	bh=vQirxtGuigMN/0Rn0eLAvFQzJ+WGBoW9ePK4iBJJ/OY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qPVE0gzfW8ZmNR6++4UR4gNxqH/nf+86YprQg8fewPlr+kkKCqhclZ+Xk2u45w2tJA9k0kT0r0/MxAYbg+DFgvmtaXImpu3tgTW+WAwkUWkprtHqh/QYBv3TdHXu2JVawqdAUW0hdEXUS5Efs5P1EugLhotLX2uBhRZvp3sGn3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LstfVTsF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LstfVTsF"
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 415Kgjrg013057;
+	Mon, 5 Feb 2024 20:50:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=+GazEYcOfj78Iv0+lnmZ8xLRg78Ggjpx3nxYAAFeqvU=; b=Ls
+	tfVTsFCedBpR3yoAmG6F45iw8P02Rf3jbtEpYPKArRpYFnMDkqi+RKrAe6RFhdOF
+	13G32h4rzsNdOOhL0KveFLGJzpTI+NO5HixU3gaOxUfjR689uCXVSFRn2BawTwfc
+	CImh0kGSRnvGxr7fciTCLP2y2Gmadc1VGqjJwpGe+HE5P1r/Smh0Js/etSMrKVpM
+	e1dQKhl4vMLil/c/TtFndT3Lid4h1u74SCDRHRt99Eq8+lOhBUzlyQ8ASjdO9t6R
+	vVn9M0Yf0F637S/wMG4tXrhDjzYQf6GeUN7MhOsVZ0lyhNQRZ5QaO3mxJEYqWsRg
+	C6XeAWiQMkHslaYyPVvw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w2v729pba-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 05 Feb 2024 20:50:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 415KooVE008944
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 Feb 2024 20:50:50 GMT
+Received: from [10.110.62.200] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 5 Feb
+ 2024 12:50:49 -0800
+Message-ID: <b3c7578e-d8d1-4f3f-9cd7-eb3fda57aae4@quicinc.com>
+Date: Mon, 5 Feb 2024 12:50:48 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240202195909.3458162-1-sboyd@kernel.org> <20240202195909.3458162-8-sboyd@kernel.org>
- <CABVgOS=A8BQ6HHpBKFqg-N10ckk2XYavaS-MPXvZ0wenrVm=1g@mail.gmail.com> <89892ecd6b1b043db58258705c32b02b.sboyd@kernel.org>
-In-Reply-To: <89892ecd6b1b043db58258705c32b02b.sboyd@kernel.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Mon, 5 Feb 2024 20:55:29 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUuP5Ya2gU3V_ET=Ji_+yx+jr7eCch5uDJSqvQN9jJM3g@mail.gmail.com>
-Message-ID: <CAMuHMdUuP5Ya2gU3V_ET=Ji_+yx+jr7eCch5uDJSqvQN9jJM3g@mail.gmail.com>
-Subject: Re: [PATCH v3 7/7] of: Add KUnit test to confirm DTB is loaded
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: David Gow <davidgow@google.com>, Rob Herring <robh+dt@kernel.org>, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, 
-	devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>, 
-	Brendan Higgins <brendan.higgins@linux.dev>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] wifi: ath12k: Fix uninitialized use of ret in
+ ath12k_mac_allocate()
+Content-Language: en-US
+To: Nathan Chancellor <nathan@kernel.org>, <kvalo@kernel.org>
+CC: <morbo@google.com>, <justinstitt@google.com>, <quic_periyasa@quicinc.com>,
+        <ath12k@lists.infradead.org>, <linux-wireless@vger.kernel.org>,
+        <llvm@lists.linux.dev>, <patches@lists.linux.dev>
+References: <20240205-ath12k-mac-wuninitialized-v1-1-3fda7b17357f@kernel.org>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+In-Reply-To: <20240205-ath12k-mac-wuninitialized-v1-1-3fda7b17357f@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1eWMtrjngK4Z-rmsMQgfwWnFjBCRDPj3
+X-Proofpoint-ORIG-GUID: 1eWMtrjngK4Z-rmsMQgfwWnFjBCRDPj3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-05_14,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1011 spamscore=0
+ mlxscore=0 priorityscore=1501 bulkscore=0 suspectscore=0 mlxlogscore=727
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2401310000 definitions=main-2402050155
 
-Hi Stephen,
+On 2/5/2024 11:49 AM, Nathan Chancellor wrote:
+> Clang warns (or errors with CONFIG_WERROR=y):
+> 
+>   drivers/net/wireless/ath/ath12k/mac.c:8060:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
+>    8060 |         return ret;
+>         |                ^~~
+>   drivers/net/wireless/ath/ath12k/mac.c:8022:9: note: initialize the variable 'ret' to silence this warning
+>    8022 |         int ret, i, j;
+>         |                ^
+>         |                 = 0
+>   1 error generated.
+> 
+> Commit 6db6e70a17f6 ("wifi: ath12k: Introduce the container for mac80211
+> hw") added a completely uninitialized use of ret. Prior to that change,
+> -ENOMEM was returned to the callers of ath12k_mac_allocate() whenever
+> ath12k_mac_hw_allocate() failed. Assign that value to ret to make sure
+> it is always initialized when used and clear up the warning.
+> 
+> Closes: https://github.com/ClangBuiltLinux/linux/issues/1989i
+> Fixes: 6db6e70a17f6 ("wifi: ath12k: Introduce the container for mac80211 hw")
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 
-On Mon, Feb 5, 2024 at 8:19=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wrot=
-e:
-> Quoting David Gow (2024-02-02 20:10:17)
-> > On Sat, 3 Feb 2024 at 03:59, Stephen Boyd <sboyd@kernel.org> wrote:
-> > > Add a KUnit test that confirms a DTB has been loaded, i.e. there is a
-> > > root node, and that the of_have_populated_dt() API works properly.
-> > >
-> > > Cc: Rob Herring <robh+dt@kernel.org>
-> > > Cc: Frank Rowand <frowand.list@gmail.com>
-> > > Cc: David Gow <davidgow@google.com>
-> > > Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> > > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> > > ---
-> >
-> > This looks pretty good to me test-wise, though it still fails on m68k.
-> > (Everything else I tried it on works, though I've definitely not tried
-> > _every_ architecture.)
-> >
-> > aarch64: PASSED
-> > i386: PASSED
-> > x86_64: PASSED
-> > x86_64 KASAN: PASSED
-> > powerpc64: PASSED
-> > UML: PASSED
-> > UML LLVM: PASSED
-> > m68k: FAILED
-> > > $ qemu-system-m68k -nodefaults -m 1024 -kernel .kunit-all-m68k/vmlinu=
-x -append 'kunit.enable=3D1 console=3Dhvc0 kunit_shutdown=3Dreboot' -no-reb=
-oot -nographic -serial stdio -machine virt
-> > > [11:55:05] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D dtb (2 subtests) =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-> > > [11:55:05] # dtb_root_node_found_by_path: EXPECTATION FAILED at drive=
-rs/of/of_test.c:18
-> > > [11:55:05] Expected np is not null, but is
-> > > [11:55:05] [FAILED] dtb_root_node_found_by_path
-> > > [11:55:05] # dtb_root_node_populates_of_root: EXPECTATION FAILED at d=
-rivers/of/of_test.c:28
-> > > [11:55:05] Expected of_root is not null, but is
-> > > [11:55:05] [FAILED] dtb_root_node_populates_of_root
-> > > [11:55:05]     # module: of_test
-> > > [11:55:05] # dtb: pass:0 fail:2 skip:0 total:2
-> > > [11:55:05] # Totals: pass:0 fail:2 skip:0 total:2
-> > > [11:55:05] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D [FAILED] dtb =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
->
-> Ah yeah I forgot to mention that. m68k fails because it doesn't call the
-> unflatten_(and_copy)?_device_tree() function, so we don't populate a
-> root node on that architecture. One solution would be to make CONFIG_OF
-> unavailable on m68k. Or we have to make sure DT works on any
-> architecture. Rob, what do you prefer here?
-
-I guess the latter?
-Alpha, hexagon, parisc, s390, and sparc are also lacking calls
-to unflatten.*device_tree().
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
