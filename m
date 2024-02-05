@@ -1,124 +1,187 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6EA5B1F5;
-	Mon,  5 Feb 2024 21:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A191EB46
+	for <patches@lists.linux.dev>; Mon,  5 Feb 2024 22:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707170051; cv=none; b=jKbRoa16qeNjhB7Rf/eJXd89xlfSaY3csbWzxCJwGLQpUue8qz4avLqWT0bA7RNqacSzcjwSXs7v3MCgNDY+OiEIg4AL9qsvR733MLvHA17r9Qio58mEckiyVHkx/1XmsvzrL42T+0AePS2+1kiLScE3gfebVxYV4/+f0KC6jY0=
+	t=1707172577; cv=none; b=b32RzjJ05lYo5dP1j2bf+ohTjAwTWSRvwok+qIbZ09kSNp9tAViy/A2qRhfBHbUGlPpmld3QD0XdGT7VyDHC5RpFMpDXkkCnKARklgXrAI1uO29soNzgFQfg9ZOc/N1GEJkUVmO62+EeM+q1RowyEhVFFvxcctfXPsY6IotqqU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707170051; c=relaxed/simple;
-	bh=6GEDCFQk41XP9DzQmt+P7xWPiXzZfQEwbIAYsyL/6lY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qbhl8GS2kDBWg61yAEi3qNM2cW3ILLQBPn6jbktmtKp4r5TQIlphUG5szhsiJDYKHyQ3rXGILksbxv/Ujsx58djGs5Pj++cuDrNopb6/8wv0RrTHJvbPnud2eomaFVYdOV1c/ffGMj51qN5yzH5kAEUgDj4hW7a9WYVdNpSWQB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jj2o3pkn; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707172577; c=relaxed/simple;
+	bh=YfcVwTdvsAFjLJ7bKvK6o7HK5jBfK7DuYGaXvtDcedI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=eVpatZIWdImlX3gmkD7Uap4yrVGkPXl5dwgeYvGVZXJWbzvoOsY0DkgvFtgFykDiy6CUJxOAzhxEhpT1sa85lj2sdejIkTKtGKZaAV9YYHrt2V7dFMNk/V8f4qaIzjHlwSIkT6Xx/TU/tKRuDIcubbjTFzUyWGZHURGhpuwfuy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=WBzFp770; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jj2o3pkn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC07C433C7;
-	Mon,  5 Feb 2024 21:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707170050;
-	bh=6GEDCFQk41XP9DzQmt+P7xWPiXzZfQEwbIAYsyL/6lY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Jj2o3pkngkvdJslLtmThbXMGJLXgEonRU0XkDkA5VSynRzNafZQYBhR0MwS2Yl2Av
-	 WSXySO4kdnczUeTzv1GpIyQQ1tDJb+Pp1mJ2cqmarPN5orAlu3n6091jZg3mSMRER7
-	 nOEuXRcSkcgkayi+1PhrreJvPypDfAHU5GegfQRvTCNHFBIfKKNQp6LcVDU5UWe9fA
-	 v93Gd0MoGmDc34Y+chk4j+l7UMWP+fy83EW0ZIlsAeUkCSUC1pXxCwzNkQ7TpEIuZx
-	 Ekupidglumd3Aode9f/uAldY8t3ukiCX2HOujyZiQSmdGUGQVGfaEYoiGUG2q3e4Mx
-	 br5mYdGEBztJw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 05 Feb 2024 14:54:05 -0700
-Subject: [PATCH] drm/amd/display: Increase frame-larger-than for all
- display_mode_vba files
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="WBzFp770"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1707172574;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=b/wNE6tBX1rJP2YgS+TTAYHWSHylnSq7QWSxIGxGiQU=;
+	b=WBzFp770OM+Vi3Fl+dvdDJbH5q3V1vk9t20460q51cY2Dx3NCpPemsxaVE1Zaqf40dlCuS
+	Kxyn5r+bsVtKt1zZQll2eW3AM08BwqqR69F5BEzyEyju58viTQUWLCmBjpg2CuH5y1key8
+	M6/OzV+ZD9ENfHkHVVIeeRvDywc9iqA=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-696-1NvIUMgEP96gTP5Ye0y_Wg-1; Mon, 05 Feb 2024 17:36:13 -0500
+X-MC-Unique: 1NvIUMgEP96gTP5Ye0y_Wg-1
+Received: by mail-io1-f71.google.com with SMTP id ca18e2360f4ac-7c02ed38aa5so21306939f.3
+        for <patches@lists.linux.dev>; Mon, 05 Feb 2024 14:36:13 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707172572; x=1707777372;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b/wNE6tBX1rJP2YgS+TTAYHWSHylnSq7QWSxIGxGiQU=;
+        b=WkltGSDDKBsHQP6nUgvSz8ajwc2If80bHSDktWdvHoAwYqDb6WwjczL6HfpTwpY03B
+         DMWy7SRjnrfjXjdLe/xezLoTB7s2cYSt/V0kdEsmuW90kiTFNlSs+siZPt1ov9HI2783
+         YJMRPuo6C1oCpXb4m2jL2acgskdvTtPLTA1AhkrNR3ZUugohtrJfmaZ8oa3O1u8GE+wW
+         sYphoHL+aymGNM1+aJyqDwQoLm2MjpWZ4q3xEg+kAXWNk5jrwUMYP8oAdY8PefopDIct
+         jfNl2ZLNUYiiuZZ2Vbp7c4UK5K4geBHK6wgdHmDXd2V0ZdMgI+Nvj4t9Mxlb9EicIPKF
+         ep7Q==
+X-Gm-Message-State: AOJu0Yx5OiJgnYTq/HuaWa0s+QnbuyT4xJ4XF/HsxoDHHLYAEhFOPNLO
+	jEjnP/6JP4EE9xWI0ClfVNjGGWK6KAndobyMQxGVCLXBYye02cXZX+TkrbNxgLqSvbY8LcVB5+D
+	/vlb3yW8G4BY1CR0w0SY4AUVPI3yDrIhBRk/yX4RRX5sVPcCoE6fmgrY=
+X-Received: by 2002:a6b:7319:0:b0:7bc:3ceb:6552 with SMTP id e25-20020a6b7319000000b007bc3ceb6552mr1154901ioh.5.1707172572381;
+        Mon, 05 Feb 2024 14:36:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGtVaTOnvJXbtI7Z0LmCNhuS4b4H75P6HvsKq3NUMpcOrnRrwioOYZJ9zRQS2wuftp2ln8C+g==
+X-Received: by 2002:a6b:7319:0:b0:7bc:3ceb:6552 with SMTP id e25-20020a6b7319000000b007bc3ceb6552mr1154887ioh.5.1707172572139;
+        Mon, 05 Feb 2024 14:36:12 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUxCfQVCbR6pJ43tYfgys9BBxKwFqEwjwo0/e6nDvW1ISVo8+mYOlffXtXJFJ14F5XcWgVsTOM0/lWGsGjCeeNchPDFH6U3hjMlvIG1E/RpYzwQGn0Vv4F4oxP1aj4rqM92Q0HFDG4zjxmMcBz1AO3qedBjQNf04lKdRX9wtMIZvpMUjWdZ93DF52L0/dCbRRKYFW+JiFR04cUr4o+fnRJuTIfaB+MMf/ib0D8Ss4mZDeEpB642IQV1ncmLOznxeLucxdn4e4erxQ0Evji5NNA7dQciS5FDGurXe85llqZsv85H1mngThVSQ08NPoGTn9iVie8QFA==
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id 25-20020a0566380a5900b00471374f17a3sm190892jap.136.2024.02.05.14.36.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Feb 2024 14:36:11 -0800 (PST)
+Date: Mon, 5 Feb 2024 15:34:52 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: jgg@nvidia.com, yishaih@nvidia.com,
+ shameerali.kolothum.thodi@huawei.com, kevin.tian@intel.com,
+ kvm@vger.kernel.org, dave.jiang@intel.com, ashok.raj@intel.com,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 03/17] vfio/pci: Consistently acquire mutex for
+ interrupt management
+Message-ID: <20240205153452.4a9bddfd.alex.williamson@redhat.com>
+In-Reply-To: <e7d35d7730f3f83417e757bc264a470f8c2671ed.1706849424.git.reinette.chatre@intel.com>
+References: <cover.1706849424.git.reinette.chatre@intel.com>
+ <e7d35d7730f3f83417e757bc264a470f8c2671ed.1706849424.git.reinette.chatre@intel.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240205-amdgpu-raise-flt-for-dml-vba-files-v1-1-9bc8c8b98fb4@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAPxYwWUC/x3NywqDMBBG4VeRWXcgTc2ifZXSRTR/7EC8MFOlI
- L67weW3OWcngwqMXs1Oik1M5qnifmuo/8ZpAEuqJu9867wLHMc0LCtrFAPn8uM8K6ex8NZFzlJ
- gDIQuxGcf0D6ohhZFlv81eX+O4wQUV7JbdAAAAA==
-To: harry.wentland@amd.com, sunpeng.li@amd.com, Rodrigo.Siqueira@amd.com, 
- alexander.deucher@amd.com
-Cc: christian.koenig@amd.com, Xinhui.Pan@amd.com, morbo@google.com, 
- justinstitt@google.com, amd-gfx@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, stable@vger.kernel.org, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3644; i=nathan@kernel.org;
- h=from:subject:message-id; bh=6GEDCFQk41XP9DzQmt+P7xWPiXzZfQEwbIAYsyL/6lY=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKkHIxnj9YTvrShxvWjc1DiTy07ynlzcAc6LYifEJZkWC
- VXXirJ0lLIwiHExyIopslQ/Vj1uaDjnLOONU5Ng5rAygQxh4OIUgInsVGdk+BHpcmr2r5kGQTMk
- Shd21Z6M5OET7p/ZEyf/12Z6pt7njYwMq3/f7WIIe2TkI/OmcAPbuVePSva0SKnYpwZNCmpP+L2
- GHwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-After a recent change in LLVM, allmodconfig (which has CONFIG_KCSAN=y
-and CONFIG_WERROR=y enabled) has a few new instances of
--Wframe-larger-than for the mode support and system configuration
-functions:
+On Thu,  1 Feb 2024 20:56:57 -0800
+Reinette Chatre <reinette.chatre@intel.com> wrote:
 
-  drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn20/display_mode_vba_20v2.c:3393:6: error: stack frame size (2144) exceeds limit (2048) in 'dml20v2_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
-   3393 | void dml20v2_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
-        |      ^
-  1 error generated.
+> vfio_pci_set_irqs_ioctl() is the entrypoint for interrupt management
+> via the VFIO_DEVICE_SET_IRQS ioctl(). The igate mutex is obtained
+> before calling vfio_pci_set_irqs_ioctl() for management of all interrupt
+> types to protect against concurrent changes to the eventfds associated
+> with device request notification and error interrupts.
+> 
+> The igate mutex is not acquired consistently. The mutex is always
+> (for all interrupt types) acquired from within vfio_pci_ioctl_set_irqs()
+> before calling vfio_pci_set_irqs_ioctl(), but vfio_pci_set_irqs_ioctl() is
+> called via vfio_pci_core_disable() without the mutex held. The latter
+> is expected to be correct if the code flow can be guaranteed that
+> the provided interrupt type is not a device request notification or error
+> interrupt.
 
-  drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn21/display_mode_vba_21.c:3520:6: error: stack frame size (2192) exceeds limit (2048) in 'dml21_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
-   3520 | void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
-        |      ^
-  1 error generated.
+The latter is correct because it's always a physical interrupt type
+(INTx/MSI/MSIX), vdev->irq_type dictates this, and the interrupt code
+prevents the handler from being called after the interrupt is disabled.
+It's intentional that we don't acquire igate here since we only need to
+prevent a race with concurrent user access, which cannot occur in the
+fd release path.  The igate mutex is acquired consistently, where it's
+required. 
 
-  drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn20/display_mode_vba_20.c:3286:6: error: stack frame size (2128) exceeds limit (2048) in 'dml20_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
-   3286 | void dml20_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
-        |      ^
-  1 error generated.
+It would be more forthcoming to describe that potential future emulated
+device interrupts don't make the same guarantees, but if that's true,
+why can't they?
 
-Without the sanitizers enabled, there are no warnings.
+> Move igate mutex acquire and release into vfio_pci_set_irqs_ioctl()
+> to make the locking consistent irrespective of interrupt type.
+> This is one step closer to contain the interrupt management locking
+> internals within the interrupt management code so that the VFIO PCI
+> core can trigger management of the eventfds associated with device
+> request notification and error interrupts without needing to access
+> and manipulate VFIO interrupt management locks and data.
 
-This was the catalyst for commit 6740ec97bcdb ("drm/amd/display:
-Increase frame warning limit with KASAN or KCSAN in dml2") and that same
-change was made to dml in commit 5b750b22530f ("drm/amd/display:
-Increase frame warning limit with KASAN or KCSAN in dml") but the
-frame_warn_flag variable was not applied to all files. Do so now to
-clear up the warnings and make all these files consistent.
+If all we want to do is move the mutex into vfio_pci_intr.c then we
+could rename to __vfio_pci_set_irqs_ioctl() and create a wrapper around
+it that grabs the mutex.  The disable path could use the lockless
+version and we wouldn't need to clutter the exit path unlocking the
+mutex as done below.  Thanks,
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issue/1990
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/gpu/drm/amd/display/dc/dml/Makefile | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Alex
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-index 6042a5a6a44f..59ade76ffb18 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -72,11 +72,11 @@ CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_vba.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn10/dcn10_fpu.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/dcn20_fpu.o := $(dml_ccflags)
--CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20.o := $(dml_ccflags)
-+CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20.o := $(dml_ccflags) $(frame_warn_flag)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_rq_dlg_calc_20.o := $(dml_ccflags)
--CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags)
-+CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_mode_vba_20v2.o := $(dml_ccflags) $(frame_warn_flag)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn20/display_rq_dlg_calc_20v2.o := $(dml_ccflags)
--CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_mode_vba_21.o := $(dml_ccflags)
-+CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_mode_vba_21.o := $(dml_ccflags) $(frame_warn_flag)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn21/display_rq_dlg_calc_21.o := $(dml_ccflags)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_mode_vba_30.o := $(dml_ccflags) $(frame_warn_flag)
- CFLAGS_$(AMDDALPATH)/dc/dml/dcn30/display_rq_dlg_calc_30.o := $(dml_ccflags)
-
----
-base-commit: 6813cdca4ab94a238f8eb0cef3d3f3fcbdfb0ee0
-change-id: 20240205-amdgpu-raise-flt-for-dml-vba-files-ee5b5a9c5e43
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+> ---
+> Note to maintainers:
+> Originally formed part of the IMS submission below, but is not
+> specific to IMS.
+> https://lore.kernel.org/lkml/cover.1696609476.git.reinette.chatre@intel.com
+> 
+>  drivers/vfio/pci/vfio_pci_core.c  |  3 ---
+>  drivers/vfio/pci/vfio_pci_intrs.c | 10 ++++++++--
+>  2 files changed, 8 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+> index 1cbc990d42e0..d2847ca2f0cb 100644
+> --- a/drivers/vfio/pci/vfio_pci_core.c
+> +++ b/drivers/vfio/pci/vfio_pci_core.c
+> @@ -1214,12 +1214,9 @@ static int vfio_pci_ioctl_set_irqs(struct vfio_pci_core_device *vdev,
+>  			return PTR_ERR(data);
+>  	}
+>  
+> -	mutex_lock(&vdev->igate);
+> -
+>  	ret = vfio_pci_set_irqs_ioctl(vdev, hdr.flags, hdr.index, hdr.start,
+>  				      hdr.count, data);
+>  
+> -	mutex_unlock(&vdev->igate);
+>  	kfree(data);
+>  
+>  	return ret;
+> diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+> index 69ab11863282..97a3bb22b186 100644
+> --- a/drivers/vfio/pci/vfio_pci_intrs.c
+> +++ b/drivers/vfio/pci/vfio_pci_intrs.c
+> @@ -793,7 +793,9 @@ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
+>  	int (*func)(struct vfio_pci_core_device *vdev, unsigned int index,
+>  		    unsigned int start, unsigned int count, uint32_t flags,
+>  		    void *data) = NULL;
+> +	int ret = -ENOTTY;
+>  
+> +	mutex_lock(&vdev->igate);
+>  	switch (index) {
+>  	case VFIO_PCI_INTX_IRQ_INDEX:
+>  		switch (flags & VFIO_IRQ_SET_ACTION_TYPE_MASK) {
+> @@ -838,7 +840,11 @@ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
+>  	}
+>  
+>  	if (!func)
+> -		return -ENOTTY;
+> +		goto out_unlock;
+> +
+> +	ret = func(vdev, index, start, count, flags, data);
+> +out_unlock:
+> +	mutex_unlock(&vdev->igate);
+> +	return ret;
+>  
+> -	return func(vdev, index, start, count, flags, data);
+>  }
 
