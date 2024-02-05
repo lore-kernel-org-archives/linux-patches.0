@@ -1,76 +1,76 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A191EB46
-	for <patches@lists.linux.dev>; Mon,  5 Feb 2024 22:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B971EF1E
+	for <patches@lists.linux.dev>; Mon,  5 Feb 2024 22:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707172577; cv=none; b=b32RzjJ05lYo5dP1j2bf+ohTjAwTWSRvwok+qIbZ09kSNp9tAViy/A2qRhfBHbUGlPpmld3QD0XdGT7VyDHC5RpFMpDXkkCnKARklgXrAI1uO29soNzgFQfg9ZOc/N1GEJkUVmO62+EeM+q1RowyEhVFFvxcctfXPsY6IotqqU0=
+	t=1707172579; cv=none; b=tVIrYFXgAlGFQ+pf701k0U2DoYJ152u8izNySZW6OGN2d6BiUE51HAzyITKX0SH9TQtuZBWOvlSNJvYxJOizoqGyVvfFOZJSr9QojQsoeYbYtQOiz+RsuUVSAZzLMyqU4agYmpvClQWvDiI7DHFrkdKdgq2WFVqjyhVjR9DqU10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707172577; c=relaxed/simple;
-	bh=YfcVwTdvsAFjLJ7bKvK6o7HK5jBfK7DuYGaXvtDcedI=;
+	s=arc-20240116; t=1707172579; c=relaxed/simple;
+	bh=65VZqcI8OBYyezS/SkDpbLVIz1ao5vEb1GGI1u6RZ9I=;
 	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eVpatZIWdImlX3gmkD7Uap4yrVGkPXl5dwgeYvGVZXJWbzvoOsY0DkgvFtgFykDiy6CUJxOAzhxEhpT1sa85lj2sdejIkTKtGKZaAV9YYHrt2V7dFMNk/V8f4qaIzjHlwSIkT6Xx/TU/tKRuDIcubbjTFzUyWGZHURGhpuwfuy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=WBzFp770; arc=none smtp.client-ip=170.10.133.124
+	 MIME-Version:Content-Type; b=nMZD92KKHTVaJsifitmnijT85s+deB1QugKsA7QKxiERkJHMa7wpzRYqkheq/5pkoP4Tksamv8vgV4sQXLtD5Dfjw45ELFRvpTwN9OSk+gBiBH1LjNgKN5sPc2FPEwMdj0oXSX5Y82KFPFKqpezcX7FTwZ/y4s3G5fCMSKQMN+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EXhc3sXQ; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="WBzFp770"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EXhc3sXQ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1707172574;
+	s=mimecast20190719; t=1707172576;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=b/wNE6tBX1rJP2YgS+TTAYHWSHylnSq7QWSxIGxGiQU=;
-	b=WBzFp770OM+Vi3Fl+dvdDJbH5q3V1vk9t20460q51cY2Dx3NCpPemsxaVE1Zaqf40dlCuS
-	Kxyn5r+bsVtKt1zZQll2eW3AM08BwqqR69F5BEzyEyju58viTQUWLCmBjpg2CuH5y1key8
-	M6/OzV+ZD9ENfHkHVVIeeRvDywc9iqA=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=DrWATdsv9Jzyg9vM7+tgmPJwxqLwuEEi9F/It25NMr0=;
+	b=EXhc3sXQ+O0LXxg1+exWPsF+MGWkJiKsN8g/YMG2hOe3dNlfJON3Mbb2vtvL0JAqnf6YET
+	+x5o5ygzU1vCOQrNqj0L+2hHET2npDFRjn9ZGDOV9y/0V/BxRwfkQ8vo2R3Df72d0/sY2m
+	ly1CTE7vALZHpIr1wB+uaDoc3WuIX+0=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-1NvIUMgEP96gTP5Ye0y_Wg-1; Mon, 05 Feb 2024 17:36:13 -0500
-X-MC-Unique: 1NvIUMgEP96gTP5Ye0y_Wg-1
-Received: by mail-io1-f71.google.com with SMTP id ca18e2360f4ac-7c02ed38aa5so21306939f.3
-        for <patches@lists.linux.dev>; Mon, 05 Feb 2024 14:36:13 -0800 (PST)
+ us-mta-90-2-1V-gwWPvaY02wTlZiMEw-1; Mon, 05 Feb 2024 17:36:15 -0500
+X-MC-Unique: 2-1V-gwWPvaY02wTlZiMEw-1
+Received: by mail-io1-f69.google.com with SMTP id ca18e2360f4ac-7c064b035acso236233439f.3
+        for <patches@lists.linux.dev>; Mon, 05 Feb 2024 14:36:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707172572; x=1707777372;
+        d=1e100.net; s=20230601; t=1707172574; x=1707777374;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=b/wNE6tBX1rJP2YgS+TTAYHWSHylnSq7QWSxIGxGiQU=;
-        b=WkltGSDDKBsHQP6nUgvSz8ajwc2If80bHSDktWdvHoAwYqDb6WwjczL6HfpTwpY03B
-         DMWy7SRjnrfjXjdLe/xezLoTB7s2cYSt/V0kdEsmuW90kiTFNlSs+siZPt1ov9HI2783
-         YJMRPuo6C1oCpXb4m2jL2acgskdvTtPLTA1AhkrNR3ZUugohtrJfmaZ8oa3O1u8GE+wW
-         sYphoHL+aymGNM1+aJyqDwQoLm2MjpWZ4q3xEg+kAXWNk5jrwUMYP8oAdY8PefopDIct
-         jfNl2ZLNUYiiuZZ2Vbp7c4UK5K4geBHK6wgdHmDXd2V0ZdMgI+Nvj4t9Mxlb9EicIPKF
-         ep7Q==
-X-Gm-Message-State: AOJu0Yx5OiJgnYTq/HuaWa0s+QnbuyT4xJ4XF/HsxoDHHLYAEhFOPNLO
-	jEjnP/6JP4EE9xWI0ClfVNjGGWK6KAndobyMQxGVCLXBYye02cXZX+TkrbNxgLqSvbY8LcVB5+D
-	/vlb3yW8G4BY1CR0w0SY4AUVPI3yDrIhBRk/yX4RRX5sVPcCoE6fmgrY=
-X-Received: by 2002:a6b:7319:0:b0:7bc:3ceb:6552 with SMTP id e25-20020a6b7319000000b007bc3ceb6552mr1154901ioh.5.1707172572381;
-        Mon, 05 Feb 2024 14:36:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtVaTOnvJXbtI7Z0LmCNhuS4b4H75P6HvsKq3NUMpcOrnRrwioOYZJ9zRQS2wuftp2ln8C+g==
-X-Received: by 2002:a6b:7319:0:b0:7bc:3ceb:6552 with SMTP id e25-20020a6b7319000000b007bc3ceb6552mr1154887ioh.5.1707172572139;
-        Mon, 05 Feb 2024 14:36:12 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUxCfQVCbR6pJ43tYfgys9BBxKwFqEwjwo0/e6nDvW1ISVo8+mYOlffXtXJFJ14F5XcWgVsTOM0/lWGsGjCeeNchPDFH6U3hjMlvIG1E/RpYzwQGn0Vv4F4oxP1aj4rqM92Q0HFDG4zjxmMcBz1AO3qedBjQNf04lKdRX9wtMIZvpMUjWdZ93DF52L0/dCbRRKYFW+JiFR04cUr4o+fnRJuTIfaB+MMf/ib0D8Ss4mZDeEpB642IQV1ncmLOznxeLucxdn4e4erxQ0Evji5NNA7dQciS5FDGurXe85llqZsv85H1mngThVSQ08NPoGTn9iVie8QFA==
+        bh=DrWATdsv9Jzyg9vM7+tgmPJwxqLwuEEi9F/It25NMr0=;
+        b=lkNvsfxRbmEQZ22seAQ+Nl0uOj93i5t5UisePv4k81XM/hr2rnnAPmzCjhGhFAojV5
+         t4vz6L5Q/DwANc9zzWK1mhWYLqqu4CqH0myqmLM/o6T0IP/jQiemJacShp8bizsUlYeP
+         UxsPI9cRTks6lPauczBRpXzdefvFfboffRT4sWCH5Jt4tEmSnOPxxo6dO8ZhDeWMAHVO
+         4pr7RrUJtY5Tqk8IwGaJiCMq5jrV0J1nMlyqINOmizSUf94gF1M7vusaXXh6znHCzOYA
+         uEig74Q74kiK7ujrA0FawWfpP/RGTgcTp4T1uABYVq6FOa7OCgzbmLWSDYQ7mjOYrgep
+         1IdQ==
+X-Gm-Message-State: AOJu0YyzwLmBASvSpi6VkwgX4VPuVZPJ1DkQdK+UXNHYfxa/uDUbCmTQ
+	TS8xzPEBEoMOzS/aR1U9d7+AhBt8w8O/DzLqBxYkWfxs2AY5KOr0wF36IV4KU2g4NeL2uFm5FfF
+	tWHmRsDdH6u4TMTLXYC7iTp5ML1TaLkCE8jAU3D8RnldhVhZ4GyElSB4=
+X-Received: by 2002:a6b:da08:0:b0:7bf:fe52:683f with SMTP id x8-20020a6bda08000000b007bffe52683fmr540851iob.8.1707172574675;
+        Mon, 05 Feb 2024 14:36:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHQWAIahfub6hm77mreRm7GYe/Dz7f7kDH7bXORnIVgzzMoYsIFNHpVbNKRUvnquD/8icXjCQ==
+X-Received: by 2002:a6b:da08:0:b0:7bf:fe52:683f with SMTP id x8-20020a6bda08000000b007bffe52683fmr540831iob.8.1707172574401;
+        Mon, 05 Feb 2024 14:36:14 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXj9YYEyHa6aI3wpgtiA14LMfn+g0H8W19QcRJqcoeOx5eK52pnBU5RI6YwSpywMlQu3f7PgnJ8bnRbB6Y88hxImu306ii8Nh3ZiFVDxdjbDcO6bQMKVxvV8whyDMK1eTUsDvhqdlwCjJKP/uwEbaOECUw1AFjSWrHCzsr8DccWGUmg8mTzQG9l9th5H8Nvsig2IgZOAI34B7Yu3gH2eCVUOzy5MA+iIXGufVP6NUBgd/eeUNhGtWiHHIW/3JEVTcuHBCPhBvnf6/xgbq8FCxViWRNkResj5hq31xzjorMfacikGDYItOX5365kdbdJlt5/jwcKBg==
 Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id 25-20020a0566380a5900b00471374f17a3sm190892jap.136.2024.02.05.14.36.11
+        by smtp.gmail.com with ESMTPSA id 25-20020a0566380a5900b00471374f17a3sm190892jap.136.2024.02.05.14.36.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 14:36:11 -0800 (PST)
-Date: Mon, 5 Feb 2024 15:34:52 -0700
+        Mon, 05 Feb 2024 14:36:13 -0800 (PST)
+Date: Mon, 5 Feb 2024 15:35:02 -0700
 From: Alex Williamson <alex.williamson@redhat.com>
 To: Reinette Chatre <reinette.chatre@intel.com>
 Cc: jgg@nvidia.com, yishaih@nvidia.com,
  shameerali.kolothum.thodi@huawei.com, kevin.tian@intel.com,
  kvm@vger.kernel.org, dave.jiang@intel.com, ashok.raj@intel.com,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 03/17] vfio/pci: Consistently acquire mutex for
- interrupt management
-Message-ID: <20240205153452.4a9bddfd.alex.williamson@redhat.com>
-In-Reply-To: <e7d35d7730f3f83417e757bc264a470f8c2671ed.1706849424.git.reinette.chatre@intel.com>
+Subject: Re: [PATCH 06/17] vfio/pci: Remove interrupt index interpretation
+ from wrappers
+Message-ID: <20240205153502.051ff2bf.alex.williamson@redhat.com>
+In-Reply-To: <ca249ad459c07a36cd64137ee1cc107dcd8b6f4c.1706849424.git.reinette.chatre@intel.com>
 References: <cover.1706849424.git.reinette.chatre@intel.com>
- <e7d35d7730f3f83417e757bc264a470f8c2671ed.1706849424.git.reinette.chatre@intel.com>
+	<ca249ad459c07a36cd64137ee1cc107dcd8b6f4c.1706849424.git.reinette.chatre@intel.com>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -83,51 +83,23 @@ X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On Thu,  1 Feb 2024 20:56:57 -0800
+On Thu,  1 Feb 2024 20:57:00 -0800
 Reinette Chatre <reinette.chatre@intel.com> wrote:
 
-> vfio_pci_set_irqs_ioctl() is the entrypoint for interrupt management
-> via the VFIO_DEVICE_SET_IRQS ioctl(). The igate mutex is obtained
-> before calling vfio_pci_set_irqs_ioctl() for management of all interrupt
-> types to protect against concurrent changes to the eventfds associated
-> with device request notification and error interrupts.
+> vfio_pci_set_intx_trigger() and vfio_pci_set_msi_trigger() have similar
+> enough flows that can be converged into one shared flow instead of
+> duplicated.
 > 
-> The igate mutex is not acquired consistently. The mutex is always
-> (for all interrupt types) acquired from within vfio_pci_ioctl_set_irqs()
-> before calling vfio_pci_set_irqs_ioctl(), but vfio_pci_set_irqs_ioctl() is
-> called via vfio_pci_core_disable() without the mutex held. The latter
-> is expected to be correct if the code flow can be guaranteed that
-> the provided interrupt type is not a device request notification or error
-> interrupt.
-
-The latter is correct because it's always a physical interrupt type
-(INTx/MSI/MSIX), vdev->irq_type dictates this, and the interrupt code
-prevents the handler from being called after the interrupt is disabled.
-It's intentional that we don't acquire igate here since we only need to
-prevent a race with concurrent user access, which cannot occur in the
-fd release path.  The igate mutex is acquired consistently, where it's
-required. 
-
-It would be more forthcoming to describe that potential future emulated
-device interrupts don't make the same guarantees, but if that's true,
-why can't they?
-
-> Move igate mutex acquire and release into vfio_pci_set_irqs_ioctl()
-> to make the locking consistent irrespective of interrupt type.
-> This is one step closer to contain the interrupt management locking
-> internals within the interrupt management code so that the VFIO PCI
-> core can trigger management of the eventfds associated with device
-> request notification and error interrupts without needing to access
-> and manipulate VFIO interrupt management locks and data.
-
-If all we want to do is move the mutex into vfio_pci_intr.c then we
-could rename to __vfio_pci_set_irqs_ioctl() and create a wrapper around
-it that grabs the mutex.  The disable path could use the lockless
-version and we wouldn't need to clutter the exit path unlocking the
-mutex as done below.  Thanks,
-
-Alex
-
+> To share code between management of interrupt types it is necessary that
+> the type of the interrupt is only interpreted by the code specific to
+> the interrupt type being managed.
+> 
+> Remove interrupt type interpretation from what will eventually be
+> shared code (vfio_pci_set_msi_trigger(), vfio_msi_set_block()) by
+> pushing this interpretation to be within the interrupt
+> type specific code (vfio_msi_enable(),
+> (temporary) vfio_msi_set_vector_signal()).
+> 
 > Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 > ---
 > Note to maintainers:
@@ -135,53 +107,139 @@ Alex
 > specific to IMS.
 > https://lore.kernel.org/lkml/cover.1696609476.git.reinette.chatre@intel.com
 > 
->  drivers/vfio/pci/vfio_pci_core.c  |  3 ---
->  drivers/vfio/pci/vfio_pci_intrs.c | 10 ++++++++--
->  2 files changed, 8 insertions(+), 5 deletions(-)
+>  drivers/vfio/pci/vfio_pci_intrs.c | 38 +++++++++++++++++--------------
+>  1 file changed, 21 insertions(+), 17 deletions(-)
 > 
-> diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-> index 1cbc990d42e0..d2847ca2f0cb 100644
-> --- a/drivers/vfio/pci/vfio_pci_core.c
-> +++ b/drivers/vfio/pci/vfio_pci_core.c
-> @@ -1214,12 +1214,9 @@ static int vfio_pci_ioctl_set_irqs(struct vfio_pci_core_device *vdev,
->  			return PTR_ERR(data);
->  	}
->  
-> -	mutex_lock(&vdev->igate);
-> -
->  	ret = vfio_pci_set_irqs_ioctl(vdev, hdr.flags, hdr.index, hdr.start,
->  				      hdr.count, data);
->  
-> -	mutex_unlock(&vdev->igate);
->  	kfree(data);
->  
->  	return ret;
 > diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-> index 69ab11863282..97a3bb22b186 100644
+> index 97a3bb22b186..31f73c70fcd2 100644
 > --- a/drivers/vfio/pci/vfio_pci_intrs.c
 > +++ b/drivers/vfio/pci/vfio_pci_intrs.c
-> @@ -793,7 +793,9 @@ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
->  	int (*func)(struct vfio_pci_core_device *vdev, unsigned int index,
->  		    unsigned int start, unsigned int count, uint32_t flags,
->  		    void *data) = NULL;
-> +	int ret = -ENOTTY;
+> @@ -346,16 +346,19 @@ static irqreturn_t vfio_msihandler(int irq, void *arg)
+>  	return IRQ_HANDLED;
+>  }
 >  
-> +	mutex_lock(&vdev->igate);
->  	switch (index) {
->  	case VFIO_PCI_INTX_IRQ_INDEX:
->  		switch (flags & VFIO_IRQ_SET_ACTION_TYPE_MASK) {
-> @@ -838,7 +840,11 @@ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
+> -static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec, bool msix)
+> +static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec,
+> +			   unsigned int index)
+>  {
+>  	struct pci_dev *pdev = vdev->pdev;
+> -	unsigned int flag = msix ? PCI_IRQ_MSIX : PCI_IRQ_MSI;
+> +	unsigned int flag;
+>  	int ret;
+>  	u16 cmd;
+>  
+>  	if (!is_irq_none(vdev))
+>  		return -EINVAL;
+>  
+> +	flag = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? PCI_IRQ_MSIX : PCI_IRQ_MSI;
+> +
+>  	/* return the number of supported vectors if we can't get all: */
+>  	cmd = vfio_pci_memory_lock_and_enable(vdev);
+>  	ret = pci_alloc_irq_vectors(pdev, 1, nvec, flag);
+> @@ -367,10 +370,9 @@ static int vfio_msi_enable(struct vfio_pci_core_device *vdev, int nvec, bool msi
+>  	}
+>  	vfio_pci_memory_unlock_and_restore(vdev, cmd);
+>  
+> -	vdev->irq_type = msix ? VFIO_PCI_MSIX_IRQ_INDEX :
+> -				VFIO_PCI_MSI_IRQ_INDEX;
+> +	vdev->irq_type = index;
+>  
+> -	if (!msix) {
+> +	if (index == VFIO_PCI_MSI_IRQ_INDEX) {
+>  		/*
+>  		 * Compute the virtual hardware field for max msi vectors -
+>  		 * it is the log base 2 of the number of vectors.
+> @@ -413,8 +415,10 @@ static int vfio_msi_alloc_irq(struct vfio_pci_core_device *vdev,
+>  }
+>  
+>  static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+> -				      unsigned int vector, int fd, bool msix)
+> +				      unsigned int vector, int fd,
+> +				      unsigned int index)
+>  {
+> +	bool msix = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? true : false;
+
+Cleanup the unnecessary ternary while here, this can just be:
+
+	bool msix = (index == VFIO_PCI_MSIX_IRQ_INDEX);
+
+Thanks,
+
+Alex
+
+>  	struct pci_dev *pdev = vdev->pdev;
+>  	struct vfio_pci_irq_ctx *ctx;
+>  	struct eventfd_ctx *trigger;
+> @@ -505,25 +509,26 @@ static int vfio_msi_set_vector_signal(struct vfio_pci_core_device *vdev,
+>  
+>  static int vfio_msi_set_block(struct vfio_pci_core_device *vdev,
+>  			      unsigned int start, unsigned int count,
+> -			      int32_t *fds, bool msix)
+> +			      int32_t *fds, unsigned int index)
+>  {
+>  	unsigned int i, j;
+>  	int ret = 0;
+>  
+>  	for (i = 0, j = start; i < count && !ret; i++, j++) {
+>  		int fd = fds ? fds[i] : -1;
+> -		ret = vfio_msi_set_vector_signal(vdev, j, fd, msix);
+> +		ret = vfio_msi_set_vector_signal(vdev, j, fd, index);
 >  	}
 >  
->  	if (!func)
-> -		return -ENOTTY;
-> +		goto out_unlock;
-> +
-> +	ret = func(vdev, index, start, count, flags, data);
-> +out_unlock:
-> +	mutex_unlock(&vdev->igate);
-> +	return ret;
+>  	if (ret) {
+>  		for (i = start; i < j; i++)
+> -			vfio_msi_set_vector_signal(vdev, i, -1, msix);
+> +			vfio_msi_set_vector_signal(vdev, i, -1, index);
+>  	}
 >  
-> -	return func(vdev, index, start, count, flags, data);
+>  	return ret;
 >  }
+>  
+> -static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
+> +static void vfio_msi_disable(struct vfio_pci_core_device *vdev,
+> +			     unsigned int index)
+>  {
+>  	struct pci_dev *pdev = vdev->pdev;
+>  	struct vfio_pci_irq_ctx *ctx;
+> @@ -533,7 +538,7 @@ static void vfio_msi_disable(struct vfio_pci_core_device *vdev, bool msix)
+>  	xa_for_each(&vdev->ctx, i, ctx) {
+>  		vfio_virqfd_disable(&ctx->unmask);
+>  		vfio_virqfd_disable(&ctx->mask);
+> -		vfio_msi_set_vector_signal(vdev, i, -1, msix);
+> +		vfio_msi_set_vector_signal(vdev, i, -1, index);
+>  	}
+>  
+>  	cmd = vfio_pci_memory_lock_and_enable(vdev);
+> @@ -656,10 +661,9 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+>  {
+>  	struct vfio_pci_irq_ctx *ctx;
+>  	unsigned int i;
+> -	bool msix = (index == VFIO_PCI_MSIX_IRQ_INDEX) ? true : false;
+>  
+>  	if (irq_is(vdev, index) && !count && (flags & VFIO_IRQ_SET_DATA_NONE)) {
+> -		vfio_msi_disable(vdev, msix);
+> +		vfio_msi_disable(vdev, index);
+>  		return 0;
+>  	}
+>  
+> @@ -672,15 +676,15 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+>  
+>  		if (vdev->irq_type == index)
+>  			return vfio_msi_set_block(vdev, start, count,
+> -						  fds, msix);
+> +						  fds, index);
+>  
+> -		ret = vfio_msi_enable(vdev, start + count, msix);
+> +		ret = vfio_msi_enable(vdev, start + count, index);
+>  		if (ret)
+>  			return ret;
+>  
+> -		ret = vfio_msi_set_block(vdev, start, count, fds, msix);
+> +		ret = vfio_msi_set_block(vdev, start, count, fds, index);
+>  		if (ret)
+> -			vfio_msi_disable(vdev, msix);
+> +			vfio_msi_disable(vdev, index);
+>  
+>  		return ret;
+>  	}
 
