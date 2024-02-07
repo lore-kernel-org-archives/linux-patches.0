@@ -1,186 +1,217 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2050.outbound.protection.outlook.com [40.107.244.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318861CD1E
-	for <patches@lists.linux.dev>; Tue,  6 Feb 2024 23:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707261582; cv=none; b=mMDC0Aq5dNYp5tOnzGkzX26uZ6vI+w5OVecbUdZFBVAZYAVh9pZwpClA+aCa8dBT7GySAJi1wVgWTLTX1DyNj1rB9zDipVD3fBloTxzVorEFmflhJo77l7WYR2K4VPAsaStYvo5CMFzTKIDZ7EmMwvIogNm4GqocJsRj//p+eCE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707261582; c=relaxed/simple;
-	bh=mSp1+JYDb7NdH17RZ+qMLPdVmrJ42e3fPvlEjXiGpZc=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ou+DBM4KhntyAnBArlOydmJ4tSzTLstlIrX+j64SZvK4ORCcHG9tw6QGqtnsVgA7qW6bcjw9NUZD9WZ/UF3gKIKevoXZ6QFjucnrGYyQ7wWWRPReL44sudFHaRV84W/nn/+qeDk85yFogyxmXovsaCNpPDK6GJ51ZFMdtnhBEJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=XPNLdvn5; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA371CD13;
+	Wed,  7 Feb 2024 05:27:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707283664; cv=fail; b=eDQoyaAUOHPdyfMcIvO9T9UDNatlK2U/df2wifKUxDY6TD5r7Preu1TndktCYSF3/+2sgfJxv1VktlM3+oNhXHzf2UVgt/qcAHO695PsxJEvhV2as7WmvMMa1Gi2G0dVK5Os29z5bYTXWDtTFk+vTSq3wXikrGubY+3HgEgmlu8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707283664; c=relaxed/simple;
+	bh=Tl9pBjvxJkoc8RcfKTw9UgQYVa3iT1zXK32y7VsSbrE=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tM7mKw1U3WoX3WHU9EUPKhWWDs1z3VmX0BpvlBqCfcDDfyN1PlrSTntQ7z76CZQbNM+xAzJlyIRbdauRHb3Na0GYgeNjfyfmyS3yBX7tB+0TynlIoDh3ygW/o58LX6kgQvk7wQnW/cuHMaRoaG9jlDZ3DEYx3trrH+zY5n3qxao=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=eNkbxGlp; arc=fail smtp.client-ip=40.107.244.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="XPNLdvn5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1707261579;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/9lQWrs1kWLDUb9rNRJMZocZRASv82NRrn4c/SQZik0=;
-	b=XPNLdvn5V6bTVv/AXIx/40HLOU3SbTPJ8u609S6aAjQFMJ4I+PVOmI75YZRMH/X0Ne5/xU
-	lkEe57jZ+0cWUv9vlW/EhTMuGTurTeZpmFPwHXFsuQMzDSg6CTxnVPBNXO3C1wbGp0sLVg
-	kaeK+n2JdexH1DNU/4eXgiWGw/St1PE=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-YDck_N1wP6yQZyLFaklzWQ-1; Tue, 06 Feb 2024 18:19:37 -0500
-X-MC-Unique: YDck_N1wP6yQZyLFaklzWQ-1
-Received: by mail-io1-f69.google.com with SMTP id ca18e2360f4ac-7bfd755ae39so4013039f.1
-        for <patches@lists.linux.dev>; Tue, 06 Feb 2024 15:19:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707261577; x=1707866377;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/9lQWrs1kWLDUb9rNRJMZocZRASv82NRrn4c/SQZik0=;
-        b=n3xmJfLlq1jhFNTx9hRAtbuy1x4ZutvsbN8jKr8psHDVWvRi8yZQ1brVemzDVpnLLH
-         zEzqERTZAXq7TTHXSiL4v6oy6BDiuwJ9EhY3p31LB7RE83Jopz14+9gvkSdMoXgRA7N9
-         wj7nxYdtmYTwE5zaOgm0CPuIUkcEpiRPfBEvFgYIwjKygI9+Wqb7v449tb44itmAfwq+
-         /q6cra4V4LeIRctD3Vy/zRzESzG5joyhXl5S6k1HJj0GUaPPRexxCkGvs7k9YkRqsC5e
-         tKDNCIFRH1VHa5ysMw0ocVuZby7KXiKfh/ehBA0xoyTRGuVBrpO/+iLPpTfLsKrlDP1A
-         WeYw==
-X-Forwarded-Encrypted: i=1; AJvYcCUawuQhxttpI50PSc815c5a9ZPgsrj4g/lDzMj2AZhOEIJycCJLD8u0cwnQ/62SE958KzOGRQJjcEokfVmOt6/435tpLTaAAw==
-X-Gm-Message-State: AOJu0YwmZhN3Gk2n1KhdGbMk64so4XovqgIj3Lv4sAAN8vhaESE/sFLD
-	BZQxokr0HOc5DLS/GvKi089ggpOhJ53zC4I1nvKYp2D3n1rz0WLM7j41WNaqJ1DZ0L+HKAE3CNG
-	u52zUpdpEFng6bBM/ouzjrEmKxf7jN6xiQQKlkFkkNW6ifUFSs5unKKk=
-X-Received: by 2002:a6b:d90c:0:b0:7c3:eda4:ea11 with SMTP id r12-20020a6bd90c000000b007c3eda4ea11mr3842362ioc.16.1707261577001;
-        Tue, 06 Feb 2024 15:19:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEXK/MFQbXmN+Uf8XVzJe4tvZZl/EZvTIdNvNxAoxSmujnNBpZGeCU0PDhYylr2/KYfzAQzoA==
-X-Received: by 2002:a6b:d90c:0:b0:7c3:eda4:ea11 with SMTP id r12-20020a6bd90c000000b007c3eda4ea11mr3842343ioc.16.1707261576688;
-        Tue, 06 Feb 2024 15:19:36 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVxQNy7WM81D1KyTsj5b6dysZmQ7irl+mHz/wXIJCehZJzT0rzy+38bzv2vK3ShDIBzaGnFianyWRV+Hdsia6yEsRrKo2XUlAzSu2R7lPibY72NFRgkL6J1H4gguFl0tSVtOPFdoSDj6gOxqFGFXrShMogteJqdI2GP0UhDD2LGRyM9B5Wc+7HDrTXKN44RMTBUNTuq7aMfFxLTXCzPdV4FZ1UgM7UOCYN7m5m0EnQ23l/aEj0OzE8fhqLrcF+Mya/rFzyaRajzcLY69xrxYnzGhpt+N80pc4GtLcrRAz51m/QHUQtyk020l/znzMSPys9qDlGZ3Q==
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id s24-20020a6bdc18000000b007c3f616986csm369762ioc.40.2024.02.06.15.19.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 15:19:36 -0800 (PST)
-Date: Tue, 6 Feb 2024 16:19:34 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: <jgg@nvidia.com>, <yishaih@nvidia.com>,
- <shameerali.kolothum.thodi@huawei.com>, <kevin.tian@intel.com>,
- <kvm@vger.kernel.org>, <dave.jiang@intel.com>, <ashok.raj@intel.com>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH 15/17] vfio/pci: Let enable and disable of interrupt
- types use same signature
-Message-ID: <20240206161934.684237d3.alex.williamson@redhat.com>
-In-Reply-To: <ce617344-ab6e-49f3-adbd-47be9fb87bf9@intel.com>
-References: <cover.1706849424.git.reinette.chatre@intel.com>
-	<bf87e46c249941ebbfacb20ee9ff92e8efd2a595.1706849424.git.reinette.chatre@intel.com>
-	<20240205153542.0883e2ff.alex.williamson@redhat.com>
-	<5784cc9b-697a-40fa-99b0-b75530f51214@intel.com>
-	<20240206150341.798bb9fe.alex.williamson@redhat.com>
-	<ce617344-ab6e-49f3-adbd-47be9fb87bf9@intel.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="eNkbxGlp"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NPuwVBn+sAZZi3iSTT04fDXzRcfB0xPERjuf5+rXO0kxawFAQbcP1hrJHvbaXYvYqmnqmcYJEgrbAj8bR8mifnBmCLEy5UhilJmrx4GUcazFCycCrWJT1052DesDnXGvO4BRcgDHMAGKYGLi2HsNmhZC+z9BONEqBgMrslNxFsi2CH4IhjbKHm9wHIpHKNsSqIUgNsjpTFYpcLU2IRg4ssbJUajQAWGCr5sTHvsiyQ6FmYsnm0+NM3ODm3E3MKh7970PzLs0qwYHx8T2EqJlBixJa2VVGulKrp/vj2ZArNc5jhXMn4E8zUguOXHk6zrw0G0wJXKUd+zSH/zju/AmhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=w0dwV7HmDAHfOSvQASR/37B7q1RTmCyG4cx4oGQU2sU=;
+ b=F+a0BlF8qSYXd9HyigwQrGIDn6s0a6B7eZ4knC8I9bz6pwm48Zx2h8x4/ozRDNrBJDL2lQq5/oxTN36ema4gdGyyHkrAbHQx5Eu2WKwoj/7PX0XmOsPavZNGn4Ub2tOAJBqcQ1rKwRoz6TtoO3VmMhWsKpWfe65Y0Jp96yt/J87n2OjIVr2j1jO8USgJmxOfz2n3CsPKVFiBw2JP7NCJa+8K28f7ktgGVPA1Lqi6fB9b8iwSeknIvHBrCCtzMJRVZf8UnxGUUfYKQpJ3+GKvVbpHRS3lANd8qFiafGqdl5HKhNrqtMMQ2DvP8QrKY5FuUUeJyV0DccMVPqeeIJ0OLQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=w0dwV7HmDAHfOSvQASR/37B7q1RTmCyG4cx4oGQU2sU=;
+ b=eNkbxGlpQBlTQUWEZB/e2Q1sKfHpHsq5re8mV9Mib4gWVC2Lw/e4xh/fxXh6zpmQRVgNLEO+2YoCN0irysPydy++n/cNok76RXgoPXuOGVAsYgNGHt8v8BEqrzG1GlEuEqKJhHn0CVb1mxDg8jNppZCaf/afXUAAgx3QGFWOTAYULMaRPFFdcB1PqB8YrD5V24aaYFCVxPaYRQKeYDZqsuROlrwubhoYobentQsoIlPuVxreLHh4n9b8ZTyJa7cNQFEf0zWXVqArQJ+G644GqHl8IgwNx7mb3BoNKKjRR5UwAib7AwxmmA63FpzFEjQsYuZjVCi5y6Tr5TLxrIzQ6g==
+Received: from SJ0PR03CA0291.namprd03.prod.outlook.com (2603:10b6:a03:39e::26)
+ by DS7PR12MB6215.namprd12.prod.outlook.com (2603:10b6:8:95::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7270.17; Wed, 7 Feb 2024 05:27:40 +0000
+Received: from SJ5PEPF000001D6.namprd05.prod.outlook.com
+ (2603:10b6:a03:39e:cafe::48) by SJ0PR03CA0291.outlook.office365.com
+ (2603:10b6:a03:39e::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.37 via Frontend
+ Transport; Wed, 7 Feb 2024 05:27:39 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ5PEPF000001D6.mail.protection.outlook.com (10.167.242.58) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7249.19 via Frontend Transport; Wed, 7 Feb 2024 05:27:39 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 6 Feb 2024
+ 21:27:25 -0800
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 6 Feb
+ 2024 21:27:24 -0800
+Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com (10.129.68.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41 via Frontend
+ Transport; Tue, 6 Feb 2024 21:27:23 -0800
+Date: Tue, 6 Feb 2024 21:27:22 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>,
+	<linux-arm-kernel@lists.infradead.org>, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Joerg Roedel
+	<jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>, Moritz Fischer
+	<moritzf@google.com>, Michael Shavit <mshavit@google.com>,
+	<patches@lists.linux.dev>, Shameer Kolothum
+	<shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh <smostafa@google.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v5 00/17] Update SMMUv3 to the modern iommu API (part 1/3)
+Message-ID: <ZcMUujkhNkhEpOSP@Asurada-Nvidia>
+References: <0-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <0-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D6:EE_|DS7PR12MB6215:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2c034bbd-ef32-4643-7121-08dc279d805c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	rLsrpCWYRJkJb2tYx2JGqJ9fOQRORRgFUD9Wk1dyBz/o/amUMQkaJxmtAIJvdbQXJZCaA92+u7KmVm0ie19cfxa3FebnY8jlNbUV+kHwmnKLVYqjgJJq8XSjPAl6juYq0SkPzdm59fgTZMdlEEfjGpZLlZaJfRB1ML1boznyH1nzwSb5cFfB6BO0M6eOgepFTN3ouJ0gGQ8ccdwA1+mOaKL103deLOoZHw5t8SMwwUsH9bBezcOxx6gpBRY1Ar2VMJrrtde4fAouXKsYmHMFHcrrZXYQKYSRcDbtSU39aePMOOw6Dtjyl00m6dLp6lIdxH0g6WbexuMMQUKxDi5lR+blG+eXfJHY/R3UdJ2ThDpYWeBYvbxlniqxxHdbV3NLH3VzTYlm9DwIj85gV6EY5Zs5ccQid5Mfg2J7ssGXIZQhNuI1BY6wY7ACYwlm70vCYHp0yXgsJWYF6EXoJw+zMh+pvMF3QvVgOykz8RlCKQToWIYqVO4q9C4xmJ0kfFo2gXmF7ZEEl+NzvyHsky+qms7HhgcJu3U7T41dCxDHbiWR4MaFGSN1xVpeISKJ0JbV0wDeKwwatrpLwDa5TXQAVnMSCWQwTSNNtGL2ITM+QXoEayUzvzkwtiNFnbt/tU42ztg4lNc7iruxLkG0AimtE6D3eH+GFV9ar3lGnqDMSn1NLYK/4OpjZraG1o0UvmAGeCCL3OalfYtwaoqoySYx5xHxfh4wisd0T4VZdAMUeOnfVS3PdvMlXv6UiBsImrfONa3a+clnbmGlK7FiFi88xQ==
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230031)(4636009)(396003)(136003)(346002)(39860400002)(376002)(230922051799003)(451199024)(82310400011)(186009)(1800799012)(64100799003)(46966006)(36840700001)(40470700004)(26005)(336012)(478600001)(86362001)(426003)(36860700001)(9686003)(33716001)(356005)(47076005)(966005)(55016003)(40480700001)(7636003)(83380400001)(40460700003)(82740400003)(316002)(54906003)(70586007)(4326008)(8676002)(70206006)(5660300002)(41300700001)(7416002)(15650500001)(2906002)(6636002)(6862004)(8936002);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2024 05:27:39.6345
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2c034bbd-ef32-4643-7121-08dc279d805c
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001D6.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6215
 
-On Tue, 6 Feb 2024 14:22:04 -0800
-Reinette Chatre <reinette.chatre@intel.com> wrote:
-
-> Hi Alex,
+On Tue, Feb 06, 2024 at 11:12:37AM -0400, Jason Gunthorpe wrote:
+> The SMMUv3 driver was originally written in 2015 when the iommu driver
+> facing API looked quite different. The API has evolved, especially lately,
+> and the driver has fallen behind.
 > 
-> On 2/6/2024 2:03 PM, Alex Williamson wrote:
-> > On Tue, 6 Feb 2024 13:46:37 -0800
-> > Reinette Chatre <reinette.chatre@intel.com> wrote:
-> >   
-> >> Hi Alex,
-> >>
-> >> On 2/5/2024 2:35 PM, Alex Williamson wrote:  
-> >>> On Thu,  1 Feb 2024 20:57:09 -0800
-> >>> Reinette Chatre <reinette.chatre@intel.com> wrote:    
-> >>
-> >> ..
-> >>  
-> >>>> @@ -715,13 +724,13 @@ static int vfio_pci_set_intx_trigger(struct vfio_pci_core_device *vdev,
-> >>>>  		if (is_intx(vdev))
-> >>>>  			return vfio_irq_set_block(vdev, start, count, fds, index);
-> >>>>  
-> >>>> -		ret = vfio_intx_enable(vdev);
-> >>>> +		ret = vfio_intx_enable(vdev, start, count, index);    
-> >>>
-> >>> Please trace what happens when a user calls SET_IRQS to setup a trigger
-> >>> eventfd with start = 0, count = 1, followed by any other combination of
-> >>> start and count values once is_intx() is true.  vfio_intx_enable()
-> >>> cannot be the only place we bounds check the user, all of the INTx
-> >>> callbacks should be an error or nop if vector != 0.  Thanks,
-> >>>     
-> >>
-> >> Thank you very much for catching this. I plan to add the vector
-> >> check to the device_name() and request_interrupt() callbacks. I do
-> >> not think it is necessary to add the vector check to disable() since
-> >> it does not operate on a range and from what I can tell it depends on
-> >> a successful enable() that already contains the vector check. Similar,
-> >> free_interrupt() requires a successful request_interrupt() (that will
-> >> have vector check in next version).
-> >> send_eventfd() requires a valid interrupt context that is only
-> >> possible if enable() or request_interrupt() succeeded.  
-> > 
-> > Sounds reasonable.
-> >   
-> >> If user space creates an eventfd with start = 0 and count = 1
-> >> and then attempts to trigger the eventfd using another combination then
-> >> the changes in this series will result in a nop while the current
-> >> implementation will result in -EINVAL. Is this acceptable?  
-> > 
-> > I think by nop, you mean the ioctl returns success.  Was the call a
-> > success?  Thanks,  
+> This work aims to bring make the SMMUv3 driver the best IOMMU driver with
+> the most comprehensive implementation of the API. After all parts it
+> addresses:
 > 
-> Yes, I mean the ioctl returns success without taking any
-> action (nop).
+>  - Global static BLOCKED and IDENTITY domains with 'never fail' attach
+>    semantics. BLOCKED is desired for efficient VFIO.
 > 
-> It is not obvious to me how to interpret "success" because from what I
-> understand current INTx and MSI/MSI-x are behaving differently when
-> considering this flow. If I understand correctly, INTx will return
-> an error if user space attempts to trigger an eventfd that has not
-> been set up while MSI and MSI-x will return 0.
+>  - Support map before attach for PAGING iommu_domains.
 > 
-> I can restore existing INTx behavior by adding more logic and a return
-> code to the send_eventfd() callback so that the different interrupt types
-> can maintain their existing behavior.
+>  - attach_dev failure does not change the HW configuration.
+> 
+>  - Fully hitless transitions between IDENTITY -> DMA -> IDENTITY.
+>    The API has IOMMU_RESV_DIRECT which is expected to be
+>    continuously translating.
+> 
+>  - Safe transitions between PAGING -> BLOCKED, do not ever temporarily
+>    do IDENTITY. This is required for iommufd security.
+> 
+>  - Full PASID API support including:
+>     - S1/SVA domains attached to PASIDs
+>     - IDENTITY/BLOCKED/S1 attached to RID
+>     - Change of the RID domain while PASIDs are attached
+> 
+>  - Streamlined SVA support using the core infrastructure
+> 
+>  - Hitless, whenever possible, change between two domains
+> 
+>  - iommufd IOMMU_GET_HW_INFO, IOMMU_HWPT_ALLOC_NEST_PARENT, and
+>    IOMMU_DOMAIN_NESTED support
+> 
+> Over all these things are going to become more accessible to iommufd, and
+> exposed to VMs, so it is important for the driver to have a robust
+> implementation of the API.
+> 
+> The work is split into three parts, with this part largely focusing on the
+> STE and building up to the BLOCKED & IDENTITY global static domains.
+> 
+> The second part largely focuses on the CD and builds up to having a common
+> PASID infrastructure that SVA and S1 domains equally use.
+> 
+> The third part has some random cleanups and the iommufd related parts.
+> 
+> Overall this takes the approach of turning the STE/CD programming upside
+> down where the CD/STE value is computed right at a driver callback
+> function and then pushed down into programming logic. The programming
+> logic hides the details of the required CD/STE tear-less update. This
+> makes the CD/STE functions independent of the arm_smmu_domain which makes
+> it fairly straightforward to untangle all the different call chains, and
+> add news ones.
+> 
+> Further, this frees the arm_smmu_domain related logic from keeping track
+> of what state the STE/CD is currently in so it can carefully sequence the
+> correct update. There are many new update pairs that are subtly introduced
+> as the work progresses.
+> 
+> The locking to support BTM via arm_smmu_asid_lock is a bit subtle right
+> now and patches throughout this work adjust and tighten this so that it is
+> clearer and doesn't get broken.
+> 
+> Once the lower STE layers no longer need to touch arm_smmu_domain we can
+> isolate struct arm_smmu_domain to be only used for PAGING domains, audit
+> all the to_smmu_domain() calls to be only in PAGING domain ops, and
+> introduce the normal global static BLOCKED/IDENTITY domains using the new
+> STE infrastructure. Part 2 will ultimately migrate SVA over to use
+> arm_smmu_domain as well.
+> 
+> All parts are on github:
+> 
+>  https://github.com/jgunthorpe/linux/commits/smmuv3_newapi
+> 
+> v5:
+>  - Rebase on v6.8-rc3
+>  - Remove the writer argument to arm_smmu_entry_writer_ops get_used()
+>  - Swap order of hweight tests so one call to hweight8() can be removed
+>  - Add STRTAB_STE_2_S2VMID used for STRTAB_STE_0_CFG_S1_TRANS, for
+>    S2 bypass the VMID is used but 0
+>  - Be more exact when generating STEs and store 0's to document the HW
+>    is using that value and 0 is actually a deliberate choice for VMID and
+>    SHCFG.
+>  - Remove cd_table argument to arm_smmu_make_cdtable_ste()
+>  - Put arm_smmu_rmr_install_bypass_ste() after setting up a 2 level table
+>  - Pull patch "Check that the RID domain is S1 in SVA" from part 2 to
+>    guard against memory corruption on failure paths
+>  - Tighten the used logic for SHCFG to accommodate nesting patches in
+>    part 3
+>  - Additional comments and commit message adjustments
 
-Ah yes, I see the dilemma now.  INTx always checked start/count were
-valid but MSI/X plowed through regardless, and with this series we've
-standardized the loop around the MSI/X flow.
+I have retested this v5 alone with SVA cases and system sanity.
 
-Tricky, but probably doesn't really matter.  Unless we break someone.
+I also did similar tests with part-2 in the "smmuv3_newapi" branch,
+plus adding "iommu.passthrough=y" string to cover the S1DSS.BYPASS
+use case.
 
-I can ignore that INTx can be masked and signaling a masked vector
-doesn't do anything, but signaling an unconfigured vector feels like an
-error condition and trying to create verbiage in the uAPI header to
-weasel out of that error and unconditionally return success makes me
-cringe.
+After that, I retested the entire branch including part-3 with a
+nested-smmu VM, to cover different STE configurations.
 
-What if we did this:
+All results look good.
 
-        uint8_t *bools = data;
-	...
-        for (i = start; i < start + count; i++) {
-                if ((flags & VFIO_IRQ_SET_DATA_NONE) ||
-                    ((flags & VFIO_IRQ_SET_DATA_BOOL) && bools[i - start])) {
-                        ctx = vfio_irq_ctx_get(vdev, i);
-                        if (!ctx || !ctx->trigger)
-                                return -EINVAL;
-                        intr_ops[index].send_eventfd(vdev, ctx);
-                }
-        }
-
-And we note the behavior change for MSI/X in the commit log and if
-someone shouts that we broke them, we can make that an -errno or
-continue based on is_intx().  Sound ok?  Thanks,
-
-Alex
-
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
