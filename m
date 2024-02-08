@@ -1,127 +1,332 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7A1383AC;
-	Thu,  8 Feb 2024 20:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70325149DF8
+	for <patches@lists.linux.dev>; Thu,  8 Feb 2024 21:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707423692; cv=none; b=bdcxN1G2N190QUXaHj+B3oxloNEq+nDxWJtLZSOS8a0KgwqAWNn/xTCtNff/c/mvRLUk3WX7SP4fROcAT4RoOE4bXyms/+KTzK+w0Xcn3ej5u3tlxJxujjK5pV3/SMu8bowG2kORBIPRMg+7S03BNOq1Uk+Iidfs7A5ZnUPNGzw=
+	t=1707426525; cv=none; b=DlKshtylX2N1k7RGweW/Ke/xbO6OUUCs9+e/uQIzmKNfTi/qpQiPzuSIOiAzU+Leb+gLvVZyTHfcuDYM+PKw3eXngRpVW/zX2VEzX6w/J63i58LaPWTSIg9KSVSx1K6MBHssSLGwb+sPM9c7cPh6QXqB9sShSXf8vtSCJPC/NlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707423692; c=relaxed/simple;
-	bh=FH8fbuchXr295/cl9XVN63SHOJd9euhFBo7S/R60/uc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SmaRNN7lPanMazC1GoBQcd0+Mf5Tie4F3J14n3Js0uHuoY0f+abGVBwzFPxBu9KXcoCmxSosLSB3XEX6yP0UacmfBUcEdvgYkSNbkXcpVp+/QbYrZGp4aatripH90uS7mx9Hae/Bg5mCF15m3RN1ZVJXKURSOwhIpCmUZFzaQ+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iZLGP+Hq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707426525; c=relaxed/simple;
+	bh=NJd5ro/Dk6gqk+wousDZO3e2YpebOtIF9SpkKM9kPs8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Cm+dZENkhdcPjODZ/oo9d4VF/yssIJ8YIM6CGfkOlbzDFWvs//ZlUPdTT5IHV03V5WxtrL4uKOU264p7yLrlK1DTmcE7GJghw82DEQn1P6SoEirBxe4m4rvAbHDUrAmITyvOmNrKDckySyQeAhNzaYEjDjm4pujCe+XlRWOZMjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Xkk7e6Fk; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iZLGP+Hq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DE0C433F1;
-	Thu,  8 Feb 2024 20:21:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707423691;
-	bh=FH8fbuchXr295/cl9XVN63SHOJd9euhFBo7S/R60/uc=;
-	h=From:Date:Subject:To:Cc:From;
-	b=iZLGP+HqVUVnrEgMOTFY84TxpPyXDwGiLTL3i/fEQH2lgoflXSLZJFnZdvSTgOkiw
-	 jmulPvDIrLt94n56j0neAD2N3y1miHWN+uZ92rfWWEdI+oaEtJv1RFEcBAYifuihBe
-	 RjphdedL9zrarPG0WMumv6Zda4HfDBDsPMEOy5AtoB3lSUHFcVDCmS0t9GJSeboZvr
-	 V5FZCqxNHiiJgduOShRquh/W46cMHIsfR2d3Bw0gZrQBQBCsYiewRNzJYQcoHQfQT6
-	 hSH4hGSW7kWxYSjsWr7CZI8bhVh4JDNcf/LiYWU054Oh+/PTnN/ByddnAcLxf7Y/3Q
-	 9BjZZdaSzdYSw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Thu, 08 Feb 2024 13:21:06 -0700
-Subject: [PATCH] kbuild: Fix changing ELF file type for output of gen_btf
- for big endian
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Xkk7e6Fk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1707426521;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=n6Lom6fJfEX98E0m960fMPaVVmvrlkRK2vpWlXZeIZM=;
+	b=Xkk7e6Fkt3X6ZAIzAlBK4b8o06d+M2+XrRgQwX2Psn8cnj7obEuKzZYmBjrawXD9RfpIKY
+	qG7TGGTx5NtZ7q5wqPMjlNSBTFL/+DzZspZJE3LFHngU2v9qUARus4elw6f/fUjtpBbgHQ
+	CJzvzMCbutcWlU16Tv6EuKefveRmb68=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-o9dyP9MTPM-ABTuXZhY52A-1; Thu, 08 Feb 2024 16:08:40 -0500
+X-MC-Unique: o9dyP9MTPM-ABTuXZhY52A-1
+Received: by mail-io1-f70.google.com with SMTP id ca18e2360f4ac-7bf48e0f513so19110739f.0
+        for <patches@lists.linux.dev>; Thu, 08 Feb 2024 13:08:39 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707426519; x=1708031319;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n6Lom6fJfEX98E0m960fMPaVVmvrlkRK2vpWlXZeIZM=;
+        b=biG5vkBnrLdFRppp/mBngCI2H+rrw7jBWVf7u6gePxnDUpqOr6KwrlNYScNExeYR5s
+         c5leuEolmkvWrn4BF+Nk1cjYHC+KJVy1v0L7ASIR232Gb+vnn7qmYGH5xSnoKIWqm8Rc
+         TAd6nxlS1ZB+KU3I3l2T+F3wxVYO6tu87u5mFp1E8/2NWjkKRZHFroGFCnaSRRKT+d5w
+         JNWBmET1yOyea6+stXz4b9dawzg6N7WyA0orX7J+M3r9W8DalXBEy8uiniAWUHT1oKwX
+         KeIM/0xNwKp5stn2dVkdwKmEbuvtcUktVVwI1cDZsWj0MQNDnSs4GPKizfMhiALwyJ/o
+         3cJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVEg9l1tbqzgTeZrNsvrb6K5k+5pFBLJhD9Ej4Lf995OO7xbqlTrJznFnqVEZ6LiCfatB8zB8BbG4lpT6CdMM8X5qQBrDgioA==
+X-Gm-Message-State: AOJu0YwVeR+ljSOhT/mObFYD0joDH0B8EBuSYqZMcoaOjaJWOjMK/MGa
+	tlXBomACxnrpxd6QkQnhcQnA0fj3PY5YzYsEe/WX0OgKUMHQO6tlyBP6DHM/UJedU+kYY8bOPvY
+	ceUlU8c87fD3FXxcPnB74m67BzjS4KGl4gsqu7y+8bfWmB4e5Xxmql8o=
+X-Received: by 2002:a6b:5b14:0:b0:7c3:f542:66d5 with SMTP id v20-20020a6b5b14000000b007c3f54266d5mr1050000ioh.4.1707426519214;
+        Thu, 08 Feb 2024 13:08:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFZQ2zdMK0ogtlSgUF6h1GEGSod27Nz77anah68mxU9CUZ87LOYvVB84P/FMytNVpRB3ljpww==
+X-Received: by 2002:a6b:5b14:0:b0:7c3:f542:66d5 with SMTP id v20-20020a6b5b14000000b007c3f54266d5mr1049975ioh.4.1707426518924;
+        Thu, 08 Feb 2024 13:08:38 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW38rfROHn9z/eBTCsfQUaiaXUIqanljDwgob2akrCPyr+WOFBAFABd+odnSrd6cPEvclnjvROBSHS110I8o6p9P/wPhNFNLMzz9GGLdVTYdaxQg5pja5pGlpI2ajqQrYPVS4+BjWWqhw/sXlmmRuDVf/JAqowZMOBkG2pi5xgyEEVMWCpRB/b9NakJUVwT4CnVKSx4HZX/E/I6pMhBAQhVkFNQx4hLFRxBSAJxwxEpLfrZ58LeLu89A1LQKQlNKYasInlDHIK3VpaPkW0jNm1X3g6axL+QO1yWhWYO0Q65brwkOY68iiT9tcaLBF1UWQx3qZfUuA==
+Received: from redhat.com ([38.15.36.11])
+        by smtp.gmail.com with ESMTPSA id m7-20020a02c887000000b00470f2874365sm46817jao.137.2024.02.08.13.08.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Feb 2024 13:08:38 -0800 (PST)
+Date: Thu, 8 Feb 2024 14:08:36 -0700
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Reinette Chatre <reinette.chatre@intel.com>
+Cc: <jgg@nvidia.com>, <yishaih@nvidia.com>,
+ <shameerali.kolothum.thodi@huawei.com>, <kevin.tian@intel.com>,
+ <kvm@vger.kernel.org>, <dave.jiang@intel.com>, <ashok.raj@intel.com>,
+ <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+Subject: Re: [PATCH 15/17] vfio/pci: Let enable and disable of interrupt
+ types use same signature
+Message-ID: <20240208140836.76a212d3.alex.williamson@redhat.com>
+In-Reply-To: <63ba0079-a035-4595-a40e-8c063b4a59eb@intel.com>
+References: <cover.1706849424.git.reinette.chatre@intel.com>
+	<bf87e46c249941ebbfacb20ee9ff92e8efd2a595.1706849424.git.reinette.chatre@intel.com>
+	<20240205153542.0883e2ff.alex.williamson@redhat.com>
+	<5784cc9b-697a-40fa-99b0-b75530f51214@intel.com>
+	<20240206150341.798bb9fe.alex.williamson@redhat.com>
+	<ce617344-ab6e-49f3-adbd-47be9fb87bf9@intel.com>
+	<20240206161934.684237d3.alex.williamson@redhat.com>
+	<63ba0079-a035-4595-a40e-8c063b4a59eb@intel.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.38; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org>
-X-B4-Tracking: v=1; b=H4sIALE3xWUC/x2NQQqDMBBFryKz7ock1NL2KqWLxEzsgB0lsaKId
- zd08+At3v87Fc7ChZ7NTpkXKTJqFXtpqPt47RkSq5Mz7mqcuSPJCh4S5m1ihDlh+Q6ivxVBFGN
- lD9YoXhFD17besnWPG9W9KXON/1+v93GcyaHWvXsAAAA=
-To: masahiroy@kernel.org
-Cc: nicolas@fjasle.eu, ndesaulniers@google.com, morbo@google.com, 
- justinstitt@google.com, keescook@chromium.org, maskray@google.com, 
- linux-kbuild@vger.kernel.org, bpf@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, stable@vger.kernel.org, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2831; i=nathan@kernel.org;
- h=from:subject:message-id; bh=FH8fbuchXr295/cl9XVN63SHOJd9euhFBo7S/R60/uc=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKlHzU/NN9p7SGvdqcIZ9UdMTaQ9sy9o8flFHr/8fbXxu
- +JP70VbOkpZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBE9u5hZLjbfmXxQsfdMVP+
- btS8E3UtcH5yWcWZIGWuqP4N5iZ1Ru8YGe5vT2K8eHatw5Mp36aLt2VL20ssX6RlNjH5tPdd9x3
- /4ngB
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Commit 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-changed the ELF type of .btf.vmlinux.bin.o from ET_EXEC to ET_REL via
-dd, which works fine for little endian platforms:
+On Wed, 7 Feb 2024 15:30:15 -0800
+Reinette Chatre <reinette.chatre@intel.com> wrote:
 
-   00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
-  -00000010  03 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |................|
-  +00000010  01 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |................|
+> Hi Alex,
+> 
+> On 2/6/2024 3:19 PM, Alex Williamson wrote:
+> > On Tue, 6 Feb 2024 14:22:04 -0800
+> > Reinette Chatre <reinette.chatre@intel.com> wrote:  
+> >> On 2/6/2024 2:03 PM, Alex Williamson wrote:  
+> >>> On Tue, 6 Feb 2024 13:46:37 -0800
+> >>> Reinette Chatre <reinette.chatre@intel.com> wrote:  
+> >>>> On 2/5/2024 2:35 PM, Alex Williamson wrote:    
+> >>>>> On Thu,  1 Feb 2024 20:57:09 -0800
+> >>>>> Reinette Chatre <reinette.chatre@intel.com> wrote:      
+> >>>>
+> >>>> ..
+> >>>>    
+> >>>>>> @@ -715,13 +724,13 @@ static int vfio_pci_set_intx_trigger(struct vfio_pci_core_device *vdev,
+> >>>>>>  		if (is_intx(vdev))
+> >>>>>>  			return vfio_irq_set_block(vdev, start, count, fds, index);
+> >>>>>>  
+> >>>>>> -		ret = vfio_intx_enable(vdev);
+> >>>>>> +		ret = vfio_intx_enable(vdev, start, count, index);      
+> >>>>>
+> >>>>> Please trace what happens when a user calls SET_IRQS to setup a trigger
+> >>>>> eventfd with start = 0, count = 1, followed by any other combination of
+> >>>>> start and count values once is_intx() is true.  vfio_intx_enable()
+> >>>>> cannot be the only place we bounds check the user, all of the INTx
+> >>>>> callbacks should be an error or nop if vector != 0.  Thanks,
+> >>>>>       
+> >>>>
+> >>>> Thank you very much for catching this. I plan to add the vector
+> >>>> check to the device_name() and request_interrupt() callbacks. I do
+> >>>> not think it is necessary to add the vector check to disable() since
+> >>>> it does not operate on a range and from what I can tell it depends on
+> >>>> a successful enable() that already contains the vector check. Similar,
+> >>>> free_interrupt() requires a successful request_interrupt() (that will
+> >>>> have vector check in next version).
+> >>>> send_eventfd() requires a valid interrupt context that is only
+> >>>> possible if enable() or request_interrupt() succeeded.    
+> >>>
+> >>> Sounds reasonable.
+> >>>     
+> >>>> If user space creates an eventfd with start = 0 and count = 1
+> >>>> and then attempts to trigger the eventfd using another combination then
+> >>>> the changes in this series will result in a nop while the current
+> >>>> implementation will result in -EINVAL. Is this acceptable?    
+> >>>
+> >>> I think by nop, you mean the ioctl returns success.  Was the call a
+> >>> success?  Thanks,    
+> >>
+> >> Yes, I mean the ioctl returns success without taking any
+> >> action (nop).
+> >>
+> >> It is not obvious to me how to interpret "success" because from what I
+> >> understand current INTx and MSI/MSI-x are behaving differently when
+> >> considering this flow. If I understand correctly, INTx will return
+> >> an error if user space attempts to trigger an eventfd that has not
+> >> been set up while MSI and MSI-x will return 0.
+> >>
+> >> I can restore existing INTx behavior by adding more logic and a return
+> >> code to the send_eventfd() callback so that the different interrupt types
+> >> can maintain their existing behavior.  
+> > 
+> > Ah yes, I see the dilemma now.  INTx always checked start/count were
+> > valid but MSI/X plowed through regardless, and with this series we've
+> > standardized the loop around the MSI/X flow.
+> > 
+> > Tricky, but probably doesn't really matter.  Unless we break someone.
+> > 
+> > I can ignore that INTx can be masked and signaling a masked vector
+> > doesn't do anything, but signaling an unconfigured vector feels like an
+> > error condition and trying to create verbiage in the uAPI header to
+> > weasel out of that error and unconditionally return success makes me
+> > cringe.
+> > 
+> > What if we did this:
+> > 
+> >         uint8_t *bools = data;
+> > 	...
+> >         for (i = start; i < start + count; i++) {
+> >                 if ((flags & VFIO_IRQ_SET_DATA_NONE) ||
+> >                     ((flags & VFIO_IRQ_SET_DATA_BOOL) && bools[i - start])) {
+> >                         ctx = vfio_irq_ctx_get(vdev, i);
+> >                         if (!ctx || !ctx->trigger)
+> >                                 return -EINVAL;
+> >                         intr_ops[index].send_eventfd(vdev, ctx);
+> >                 }
+> >         }
+> >   
+> 
+> This looks good. Thank you very much. Will do.
+> 
+> I studied the code more and have one more observation related to this portion
+> of the flow:
+> From what I can tell this change makes the INTx code more robust. If I
+> understand current implementation correctly it seems possible to enable
+> INTx but not have interrupt allocated. In this case the interrupt context
+> (ctx) will exist but ctx->trigger will be NULL. Current
+> vfio_pci_set_intx_trigger()->vfio_send_intx_eventfd() only checks if
+> ctx is valid. It looks like it may call eventfd_signal(NULL) where
+> pointer is dereferenced.
+> 
+> If this is correct then I think a separate fix that can easily be
+> backported may be needed. Something like:
 
-However, for big endian platforms, it changes the wrong byte, resulting
-in an invalid ELF file type, which ld.lld rejects:
+Good find.  I think it's a bit more complicated though.  There are
+several paths to vfio_send_intx_eventfd:
 
-   00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF............|
-  -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
-  +00000010  01 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
+ - vfio_intx_handler
 
-  Type:                              <unknown>: 103
+	This can only be called between request_irq() and free_irq()
+	where trigger is always valid.  igate is not held.
 
-  ld.lld: error: .btf.vmlinux.bin.o: unknown file type
+ - vfio_pci_intx_unmask
 
-Fix this by using a different seek value for dd when targeting big
-endian, so that the correct byte gets changed and everything works
-correctly for all linkers.
+	Callers hold igate, additional test of ctx->trigger makes this
+	safe.
 
-   00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF............|
-  -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
-  +00000010  00 01 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
+ - vfio_pci_set_intx_trigger
 
-  Type:                              REL (Relocatable file)
+	Same as above.
 
-Cc: stable@vger.kernel.org
-Fixes: 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-Link: https://github.com/llvm/llvm-project/pull/75643
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- scripts/link-vmlinux.sh | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ - Through unmask eventfd (virqfd)
 
-diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-index a432b171be82..8a9f48b3cb32 100755
---- a/scripts/link-vmlinux.sh
-+++ b/scripts/link-vmlinux.sh
-@@ -135,8 +135,15 @@ gen_btf()
- 	${OBJCOPY} --only-section=.BTF --set-section-flags .BTF=alloc,readonly \
- 		--strip-all ${1} ${2} 2>/dev/null
- 	# Change e_type to ET_REL so that it can be used to link final vmlinux.
--	# Unlike GNU ld, lld does not allow an ET_EXEC input.
--	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 status=none
-+	# Unlike GNU ld, lld does not allow an ET_EXEC input. Make sure the correct
-+	# byte gets changed with big endian platforms, otherwise e_type may be an
-+	# invalid value.
-+	if is_enabled CONFIG_CPU_BIG_ENDIAN; then
-+		seek=17
-+	else
-+		seek=16
-+	fi
-+	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=${seek} status=none
+	Here be dragons.
+
+In the virqfd case, a write to the eventfd calls virqfd_wakeup() where
+we'll call the handler, vfio_pci_intx_unmask_handler(), and based on
+the result schedule the thread, vfio_send_intx_eventfd().  Both of
+these look suspicious.  They're not called under igate, so testing
+ctx->trigger doesn't resolve the race.
+
+I think an option is to wrap the virqfd entry points in igate where we
+can then do something similar to your suggestion.  I don't think we
+want to WARN_ON(!ctx->trigger) because that's then a user reachable
+condition.  Instead we can just quietly follow the same exit paths.
+
+I think that means we end up with something like this:
+
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 237beac83809..ace7e1dbc607 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -92,12 +92,21 @@ static void vfio_send_intx_eventfd(void *opaque, void *unused)
+ 		struct vfio_pci_irq_ctx *ctx;
+ 
+ 		ctx = vfio_irq_ctx_get(vdev, 0);
+-		if (WARN_ON_ONCE(!ctx))
++		if (WARN_ON_ONCE(!ctx) || !ctx->trigger)
+ 			return;
+ 		eventfd_signal(ctx->trigger);
+ 	}
  }
  
- # Create ${2} .S file with all symbols from the ${1} object file
++static void vfio_send_intx_eventfd_virqfd(void *opaque, void *unused)
++{
++	struct vfio_pci_core_device *vdev = opaque;
++
++	mutex_lock(&vdev->igate);
++	vfio_send_intx_eventfd(opaque, unused);
++	mutex_unlock(&vdev->igate);
++}
++
+ /* Returns true if the INTx vfio_pci_irq_ctx.masked value is changed. */
+ bool vfio_pci_intx_mask(struct vfio_pci_core_device *vdev)
+ {
+@@ -170,7 +179,7 @@ static int vfio_pci_intx_unmask_handler(void *opaque, void *unused)
+ 	}
+ 
+ 	ctx = vfio_irq_ctx_get(vdev, 0);
+-	if (WARN_ON_ONCE(!ctx))
++	if (WARN_ON_ONCE(!ctx) || !ctx->trigger)
+ 		goto out_unlock;
+ 
+ 	if (ctx->masked && !vdev->virq_disabled) {
+@@ -194,6 +203,18 @@ static int vfio_pci_intx_unmask_handler(void *opaque, void *unused)
+ 	return ret;
+ }
+ 
++static int vfio_pci_intx_unmask_handler_virqfd(void *opaque, void *unused)
++{
++	struct vfio_pci_core_device *vdev = opaque;
++	int ret;
++
++	mutex_lock(&vdev->igate);
++	ret = vfio_pci_intx_unmask_handler(opaque, unused);
++	mutex_unlock(&vdev->igate);
++
++	return ret;
++}
++
+ void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
+ {
+ 	if (vfio_pci_intx_unmask_handler(vdev, NULL) > 0)
+@@ -572,10 +593,10 @@ static int vfio_pci_set_intx_unmask(struct vfio_pci_core_device *vdev,
+ 		if (WARN_ON_ONCE(!ctx))
+ 			return -EINVAL;
+ 		if (fd >= 0)
+-			return vfio_virqfd_enable((void *) vdev,
+-						  vfio_pci_intx_unmask_handler,
+-						  vfio_send_intx_eventfd, NULL,
+-						  &ctx->unmask, fd);
++			return vfio_virqfd_enable((void *)vdev,
++					vfio_pci_intx_unmask_handler_virqfd,
++					vfio_send_intx_eventfd_virqfd, NULL,
++					&ctx->unmask, fd);
+ 
+ 		vfio_virqfd_disable(&ctx->unmask);
+ 	}
 
----
-base-commit: 54be6c6c5ae8e0d93a6c4641cb7528eb0b6ba478
-change-id: 20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-dbc55a1e1296
 
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
+WDYT?
+ 
+> > And we note the behavior change for MSI/X in the commit log and if
+> > someone shouts that we broke them, we can make that an -errno or
+> > continue based on is_intx().  Sound ok?  Thanks,  
+> 
+> I'll be sure to highlight the impact on MSI/MSI-x. Please do expect this
+> in the final patch "vfio/pci: Remove duplicate interrupt management flow"
+> though since that is where the different flows are merged.
+> 
+> I am not familiar with how all user space interacts with this flow and if/how
+> this may break things. I did look at Qemu code and I was not able to find
+> where it intentionally triggers MSI/MSI-x interrupts, I could only find it
+> for INTx.
+
+Being able to trigger the interrupt via ioctl is more of a diagnostic
+feature, not typically used in production.
+ 
+> If this does break things I would like to also consider moving the
+> different behavior into the interrupt type's respective send_eventfd()
+> callback instead of adding interrupt type specific code (like
+> is_intx()) into the shared flow.
+
+Sure, we can pick the best option in the slim (imo) chance the change
+affects anyone.  Thanks,
+
+Alex
 
