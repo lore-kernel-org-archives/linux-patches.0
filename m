@@ -1,332 +1,196 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from e2i605.smtp2go.com (e2i605.smtp2go.com [103.2.142.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70325149DF8
-	for <patches@lists.linux.dev>; Thu,  8 Feb 2024 21:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD3E4C3AF
+	for <patches@lists.linux.dev>; Thu,  8 Feb 2024 21:11:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.2.142.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707426525; cv=none; b=DlKshtylX2N1k7RGweW/Ke/xbO6OUUCs9+e/uQIzmKNfTi/qpQiPzuSIOiAzU+Leb+gLvVZyTHfcuDYM+PKw3eXngRpVW/zX2VEzX6w/J63i58LaPWTSIg9KSVSx1K6MBHssSLGwb+sPM9c7cPh6QXqB9sShSXf8vtSCJPC/NlI=
+	t=1707426723; cv=none; b=oDTAHJ7lxVNoUs1qmxKM5sLp1PBmDTrUBG+eE5Yn57jYBP2J8fY0anEJyyOhIEFwfi0q78aSkKEfmIgtJSN5SG8+z+zsKskqfZ5YVnqvxq7oMqrhzil2BtkCB3/MkCdplJQFOm6rTb6JH9gsLVAjGCC5Q000bNR4BS6cbUPCt9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707426525; c=relaxed/simple;
-	bh=NJd5ro/Dk6gqk+wousDZO3e2YpebOtIF9SpkKM9kPs8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Cm+dZENkhdcPjODZ/oo9d4VF/yssIJ8YIM6CGfkOlbzDFWvs//ZlUPdTT5IHV03V5WxtrL4uKOU264p7yLrlK1DTmcE7GJghw82DEQn1P6SoEirBxe4m4rvAbHDUrAmITyvOmNrKDckySyQeAhNzaYEjDjm4pujCe+XlRWOZMjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Xkk7e6Fk; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1707426723; c=relaxed/simple;
+	bh=gzAJXh0AuWP2Tj6EfnlN6wMOTN9/0yYV+XNsGIOcsSc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WPsMizhSVkTe8WfUptQEdx0tcNntdJyEL/hwLKvI6+YG6m1GnNhtl+HW9mWtCPBN4BvHP/5nwXMsmOvT9H5RGmT9tWaYL0Lkhd0Jn/WYC0b4VD+lSLxedu43jJHewgmXci8W0kjAnS8pRxHvSDPQakHEfRLmu/WERKjDwO7EdP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=em1174286.fjasle.eu; dkim=pass (2048-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b=rC20/Rft; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=ATjNaE1B; dkim=pass (1024-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=xE1PUwcQ; arc=none smtp.client-ip=103.2.142.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=em1174286.fjasle.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Xkk7e6Fk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1707426521;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=n6Lom6fJfEX98E0m960fMPaVVmvrlkRK2vpWlXZeIZM=;
-	b=Xkk7e6Fkt3X6ZAIzAlBK4b8o06d+M2+XrRgQwX2Psn8cnj7obEuKzZYmBjrawXD9RfpIKY
-	qG7TGGTx5NtZ7q5wqPMjlNSBTFL/+DzZspZJE3LFHngU2v9qUARus4elw6f/fUjtpBbgHQ
-	CJzvzMCbutcWlU16Tv6EuKefveRmb68=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-o9dyP9MTPM-ABTuXZhY52A-1; Thu, 08 Feb 2024 16:08:40 -0500
-X-MC-Unique: o9dyP9MTPM-ABTuXZhY52A-1
-Received: by mail-io1-f70.google.com with SMTP id ca18e2360f4ac-7bf48e0f513so19110739f.0
-        for <patches@lists.linux.dev>; Thu, 08 Feb 2024 13:08:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707426519; x=1708031319;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n6Lom6fJfEX98E0m960fMPaVVmvrlkRK2vpWlXZeIZM=;
-        b=biG5vkBnrLdFRppp/mBngCI2H+rrw7jBWVf7u6gePxnDUpqOr6KwrlNYScNExeYR5s
-         c5leuEolmkvWrn4BF+Nk1cjYHC+KJVy1v0L7ASIR232Gb+vnn7qmYGH5xSnoKIWqm8Rc
-         TAd6nxlS1ZB+KU3I3l2T+F3wxVYO6tu87u5mFp1E8/2NWjkKRZHFroGFCnaSRRKT+d5w
-         JNWBmET1yOyea6+stXz4b9dawzg6N7WyA0orX7J+M3r9W8DalXBEy8uiniAWUHT1oKwX
-         KeIM/0xNwKp5stn2dVkdwKmEbuvtcUktVVwI1cDZsWj0MQNDnSs4GPKizfMhiALwyJ/o
-         3cJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVEg9l1tbqzgTeZrNsvrb6K5k+5pFBLJhD9Ej4Lf995OO7xbqlTrJznFnqVEZ6LiCfatB8zB8BbG4lpT6CdMM8X5qQBrDgioA==
-X-Gm-Message-State: AOJu0YwVeR+ljSOhT/mObFYD0joDH0B8EBuSYqZMcoaOjaJWOjMK/MGa
-	tlXBomACxnrpxd6QkQnhcQnA0fj3PY5YzYsEe/WX0OgKUMHQO6tlyBP6DHM/UJedU+kYY8bOPvY
-	ceUlU8c87fD3FXxcPnB74m67BzjS4KGl4gsqu7y+8bfWmB4e5Xxmql8o=
-X-Received: by 2002:a6b:5b14:0:b0:7c3:f542:66d5 with SMTP id v20-20020a6b5b14000000b007c3f54266d5mr1050000ioh.4.1707426519214;
-        Thu, 08 Feb 2024 13:08:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFZQ2zdMK0ogtlSgUF6h1GEGSod27Nz77anah68mxU9CUZ87LOYvVB84P/FMytNVpRB3ljpww==
-X-Received: by 2002:a6b:5b14:0:b0:7c3:f542:66d5 with SMTP id v20-20020a6b5b14000000b007c3f54266d5mr1049975ioh.4.1707426518924;
-        Thu, 08 Feb 2024 13:08:38 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW38rfROHn9z/eBTCsfQUaiaXUIqanljDwgob2akrCPyr+WOFBAFABd+odnSrd6cPEvclnjvROBSHS110I8o6p9P/wPhNFNLMzz9GGLdVTYdaxQg5pja5pGlpI2ajqQrYPVS4+BjWWqhw/sXlmmRuDVf/JAqowZMOBkG2pi5xgyEEVMWCpRB/b9NakJUVwT4CnVKSx4HZX/E/I6pMhBAQhVkFNQx4hLFRxBSAJxwxEpLfrZ58LeLu89A1LQKQlNKYasInlDHIK3VpaPkW0jNm1X3g6axL+QO1yWhWYO0Q65brwkOY68iiT9tcaLBF1UWQx3qZfUuA==
-Received: from redhat.com ([38.15.36.11])
-        by smtp.gmail.com with ESMTPSA id m7-20020a02c887000000b00470f2874365sm46817jao.137.2024.02.08.13.08.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Feb 2024 13:08:38 -0800 (PST)
-Date: Thu, 8 Feb 2024 14:08:36 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Reinette Chatre <reinette.chatre@intel.com>
-Cc: <jgg@nvidia.com>, <yishaih@nvidia.com>,
- <shameerali.kolothum.thodi@huawei.com>, <kevin.tian@intel.com>,
- <kvm@vger.kernel.org>, <dave.jiang@intel.com>, <ashok.raj@intel.com>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH 15/17] vfio/pci: Let enable and disable of interrupt
- types use same signature
-Message-ID: <20240208140836.76a212d3.alex.williamson@redhat.com>
-In-Reply-To: <63ba0079-a035-4595-a40e-8c063b4a59eb@intel.com>
-References: <cover.1706849424.git.reinette.chatre@intel.com>
-	<bf87e46c249941ebbfacb20ee9ff92e8efd2a595.1706849424.git.reinette.chatre@intel.com>
-	<20240205153542.0883e2ff.alex.williamson@redhat.com>
-	<5784cc9b-697a-40fa-99b0-b75530f51214@intel.com>
-	<20240206150341.798bb9fe.alex.williamson@redhat.com>
-	<ce617344-ab6e-49f3-adbd-47be9fb87bf9@intel.com>
-	<20240206161934.684237d3.alex.williamson@redhat.com>
-	<63ba0079-a035-4595-a40e-8c063b4a59eb@intel.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+	dkim=pass (2048-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b="rC20/Rft";
+	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="ATjNaE1B";
+	dkim=pass (1024-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="xE1PUwcQ"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=smtpservice.net; s=mp6320.a1-4.dyn; x=1707427608; h=Feedback-ID:
+	X-Smtpcorp-Track:Message-ID:Subject:To:From:Date:Reply-To:Sender:
+	List-Unsubscribe; bh=AkSd+9ljsMOd7NA01/E1CL+KQikkc5RfKtKGGSWOSqg=; b=rC20/Rft
+	gaOCj3xffSDxIgD8IMF9KUBgRqNDmFN3uiSnYJPUVeabnl9E7y+UDdTKOFotpLhRnTuoqHzJqwgiJ
+	UIFQwGzO59z6x0M20gANxcLA2Ro7iOk+phnNqCTebgVeEiHTvODOuGEzEpMBzCRK2XtyMbnCWFePb
+	s7kPAbUeVE30imOzTyT/IHAanKMDpExZQAgnKaQGoZhh4/IqTrmNHLC7OJVdwxXVBPshQ2Nd7JKsT
+	4CE4rVe+UxIHT6ujPzZ/H8R5bT5X7aNAtzkAhEmrEaXwtd3O8DS+nbU47BGT/X3c4QAVFiyQSQRbL
+	dZcnE/yQiZild5TKUOzn77VtMA==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fjasle.eu;
+ i=@fjasle.eu; q=dns/txt; s=s1174286; t=1707426708; h=from : subject :
+ to : message-id : date;
+ bh=AkSd+9ljsMOd7NA01/E1CL+KQikkc5RfKtKGGSWOSqg=;
+ b=ATjNaE1BhNCDRPkxWVRdWU5o02HoswvQmXQIAkUQEwEf5LVxRrJwQArWYht47FXHZcJQt
+ lE+b/F1uE/DoNgeBOOZP69/jHVwX5UrXMy5XN52kjL5p+S9yOSdcf1gzt/tG/1lS7Q4UwLL
+ ehqSu+4QUoHH9VEdMY4rveV74MhKIRwlx5STcZf5JyFhKZmXvtjCqF6O4eC8LlXHjTaczqc
+ SV2rcPeoTc4n2ccqRpr0Nb7tKHggwmqn/CS9SZBebiurHuFX9lMxpMDpXklAJZFhryqOxWm
+ sOMraSVrRZC+prTioTHrpC5JCFbxKZwCZlw5eqcpIR6bhMo889IdNGNMNOdQ==
+Received: from [10.139.162.187] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.94.2-S2G) (envelope-from <nicolas@fjasle.eu>)
+ id 1rYBfe-qt4Jyo-EJ; Thu, 08 Feb 2024 21:10:59 +0000
+Received: from [10.85.249.164] (helo=leknes.fjasle.eu)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.96.1-S2G) (envelope-from <nicolas@fjasle.eu>)
+ id 1rYBfd-4XfCcG-2o; Thu, 08 Feb 2024 21:10:58 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=fjasle.eu; s=mail;
+ t=1707426655; bh=gzAJXh0AuWP2Tj6EfnlN6wMOTN9/0yYV+XNsGIOcsSc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=xE1PUwcQLvNxCpxh2E6tXBVZCGwTH6W4SofQhNfO6QGaZrwyPYKNp0LHyiECrVfjS
+ z3S63tY/aF5luf6wbL+jrpE8KUX1t/P/3lnOAc2c16HyIPn9i0MxhtoaTtdkb+045B
+ YfNihq/0HaPCRfZ8EG+CKZTSNlMDr38HVeO1S7Ec=
+Received: by leknes.fjasle.eu (Postfix, from userid 1000)
+ id EDEF03E8DB; Thu,  8 Feb 2024 22:10:54 +0100 (CET)
+Date: Thu, 8 Feb 2024 22:10:54 +0100
+From: Nicolas Schier <nicolas@fjasle.eu>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: masahiroy@kernel.org, ndesaulniers@google.com, morbo@google.com,
+ justinstitt@google.com, keescook@chromium.org, maskray@google.com,
+ linux-kbuild@vger.kernel.org, bpf@vger.kernel.org,
+ llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] kbuild: Fix changing ELF file type for output of gen_btf
+ for big endian
+Message-ID: <ZcVDXhFQB1tzka3C@fjasle.eu>
+References: <20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-
-On Wed, 7 Feb 2024 15:30:15 -0800
-Reinette Chatre <reinette.chatre@intel.com> wrote:
-
-> Hi Alex,
-> 
-> On 2/6/2024 3:19 PM, Alex Williamson wrote:
-> > On Tue, 6 Feb 2024 14:22:04 -0800
-> > Reinette Chatre <reinette.chatre@intel.com> wrote:  
-> >> On 2/6/2024 2:03 PM, Alex Williamson wrote:  
-> >>> On Tue, 6 Feb 2024 13:46:37 -0800
-> >>> Reinette Chatre <reinette.chatre@intel.com> wrote:  
-> >>>> On 2/5/2024 2:35 PM, Alex Williamson wrote:    
-> >>>>> On Thu,  1 Feb 2024 20:57:09 -0800
-> >>>>> Reinette Chatre <reinette.chatre@intel.com> wrote:      
-> >>>>
-> >>>> ..
-> >>>>    
-> >>>>>> @@ -715,13 +724,13 @@ static int vfio_pci_set_intx_trigger(struct vfio_pci_core_device *vdev,
-> >>>>>>  		if (is_intx(vdev))
-> >>>>>>  			return vfio_irq_set_block(vdev, start, count, fds, index);
-> >>>>>>  
-> >>>>>> -		ret = vfio_intx_enable(vdev);
-> >>>>>> +		ret = vfio_intx_enable(vdev, start, count, index);      
-> >>>>>
-> >>>>> Please trace what happens when a user calls SET_IRQS to setup a trigger
-> >>>>> eventfd with start = 0, count = 1, followed by any other combination of
-> >>>>> start and count values once is_intx() is true.  vfio_intx_enable()
-> >>>>> cannot be the only place we bounds check the user, all of the INTx
-> >>>>> callbacks should be an error or nop if vector != 0.  Thanks,
-> >>>>>       
-> >>>>
-> >>>> Thank you very much for catching this. I plan to add the vector
-> >>>> check to the device_name() and request_interrupt() callbacks. I do
-> >>>> not think it is necessary to add the vector check to disable() since
-> >>>> it does not operate on a range and from what I can tell it depends on
-> >>>> a successful enable() that already contains the vector check. Similar,
-> >>>> free_interrupt() requires a successful request_interrupt() (that will
-> >>>> have vector check in next version).
-> >>>> send_eventfd() requires a valid interrupt context that is only
-> >>>> possible if enable() or request_interrupt() succeeded.    
-> >>>
-> >>> Sounds reasonable.
-> >>>     
-> >>>> If user space creates an eventfd with start = 0 and count = 1
-> >>>> and then attempts to trigger the eventfd using another combination then
-> >>>> the changes in this series will result in a nop while the current
-> >>>> implementation will result in -EINVAL. Is this acceptable?    
-> >>>
-> >>> I think by nop, you mean the ioctl returns success.  Was the call a
-> >>> success?  Thanks,    
-> >>
-> >> Yes, I mean the ioctl returns success without taking any
-> >> action (nop).
-> >>
-> >> It is not obvious to me how to interpret "success" because from what I
-> >> understand current INTx and MSI/MSI-x are behaving differently when
-> >> considering this flow. If I understand correctly, INTx will return
-> >> an error if user space attempts to trigger an eventfd that has not
-> >> been set up while MSI and MSI-x will return 0.
-> >>
-> >> I can restore existing INTx behavior by adding more logic and a return
-> >> code to the send_eventfd() callback so that the different interrupt types
-> >> can maintain their existing behavior.  
-> > 
-> > Ah yes, I see the dilemma now.  INTx always checked start/count were
-> > valid but MSI/X plowed through regardless, and with this series we've
-> > standardized the loop around the MSI/X flow.
-> > 
-> > Tricky, but probably doesn't really matter.  Unless we break someone.
-> > 
-> > I can ignore that INTx can be masked and signaling a masked vector
-> > doesn't do anything, but signaling an unconfigured vector feels like an
-> > error condition and trying to create verbiage in the uAPI header to
-> > weasel out of that error and unconditionally return success makes me
-> > cringe.
-> > 
-> > What if we did this:
-> > 
-> >         uint8_t *bools = data;
-> > 	...
-> >         for (i = start; i < start + count; i++) {
-> >                 if ((flags & VFIO_IRQ_SET_DATA_NONE) ||
-> >                     ((flags & VFIO_IRQ_SET_DATA_BOOL) && bools[i - start])) {
-> >                         ctx = vfio_irq_ctx_get(vdev, i);
-> >                         if (!ctx || !ctx->trigger)
-> >                                 return -EINVAL;
-> >                         intr_ops[index].send_eventfd(vdev, ctx);
-> >                 }
-> >         }
-> >   
-> 
-> This looks good. Thank you very much. Will do.
-> 
-> I studied the code more and have one more observation related to this portion
-> of the flow:
-> From what I can tell this change makes the INTx code more robust. If I
-> understand current implementation correctly it seems possible to enable
-> INTx but not have interrupt allocated. In this case the interrupt context
-> (ctx) will exist but ctx->trigger will be NULL. Current
-> vfio_pci_set_intx_trigger()->vfio_send_intx_eventfd() only checks if
-> ctx is valid. It looks like it may call eventfd_signal(NULL) where
-> pointer is dereferenced.
-> 
-> If this is correct then I think a separate fix that can easily be
-> backported may be needed. Something like:
-
-Good find.  I think it's a bit more complicated though.  There are
-several paths to vfio_send_intx_eventfd:
-
- - vfio_intx_handler
-
-	This can only be called between request_irq() and free_irq()
-	where trigger is always valid.  igate is not held.
-
- - vfio_pci_intx_unmask
-
-	Callers hold igate, additional test of ctx->trigger makes this
-	safe.
-
- - vfio_pci_set_intx_trigger
-
-	Same as above.
-
- - Through unmask eventfd (virqfd)
-
-	Here be dragons.
-
-In the virqfd case, a write to the eventfd calls virqfd_wakeup() where
-we'll call the handler, vfio_pci_intx_unmask_handler(), and based on
-the result schedule the thread, vfio_send_intx_eventfd().  Both of
-these look suspicious.  They're not called under igate, so testing
-ctx->trigger doesn't resolve the race.
-
-I think an option is to wrap the virqfd entry points in igate where we
-can then do something similar to your suggestion.  I don't think we
-want to WARN_ON(!ctx->trigger) because that's then a user reachable
-condition.  Instead we can just quietly follow the same exit paths.
-
-I think that means we end up with something like this:
-
-diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
-index 237beac83809..ace7e1dbc607 100644
---- a/drivers/vfio/pci/vfio_pci_intrs.c
-+++ b/drivers/vfio/pci/vfio_pci_intrs.c
-@@ -92,12 +92,21 @@ static void vfio_send_intx_eventfd(void *opaque, void *unused)
- 		struct vfio_pci_irq_ctx *ctx;
- 
- 		ctx = vfio_irq_ctx_get(vdev, 0);
--		if (WARN_ON_ONCE(!ctx))
-+		if (WARN_ON_ONCE(!ctx) || !ctx->trigger)
- 			return;
- 		eventfd_signal(ctx->trigger);
- 	}
- }
- 
-+static void vfio_send_intx_eventfd_virqfd(void *opaque, void *unused)
-+{
-+	struct vfio_pci_core_device *vdev = opaque;
-+
-+	mutex_lock(&vdev->igate);
-+	vfio_send_intx_eventfd(opaque, unused);
-+	mutex_unlock(&vdev->igate);
-+}
-+
- /* Returns true if the INTx vfio_pci_irq_ctx.masked value is changed. */
- bool vfio_pci_intx_mask(struct vfio_pci_core_device *vdev)
- {
-@@ -170,7 +179,7 @@ static int vfio_pci_intx_unmask_handler(void *opaque, void *unused)
- 	}
- 
- 	ctx = vfio_irq_ctx_get(vdev, 0);
--	if (WARN_ON_ONCE(!ctx))
-+	if (WARN_ON_ONCE(!ctx) || !ctx->trigger)
- 		goto out_unlock;
- 
- 	if (ctx->masked && !vdev->virq_disabled) {
-@@ -194,6 +203,18 @@ static int vfio_pci_intx_unmask_handler(void *opaque, void *unused)
- 	return ret;
- }
- 
-+static int vfio_pci_intx_unmask_handler_virqfd(void *opaque, void *unused)
-+{
-+	struct vfio_pci_core_device *vdev = opaque;
-+	int ret;
-+
-+	mutex_lock(&vdev->igate);
-+	ret = vfio_pci_intx_unmask_handler(opaque, unused);
-+	mutex_unlock(&vdev->igate);
-+
-+	return ret;
-+}
-+
- void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
- {
- 	if (vfio_pci_intx_unmask_handler(vdev, NULL) > 0)
-@@ -572,10 +593,10 @@ static int vfio_pci_set_intx_unmask(struct vfio_pci_core_device *vdev,
- 		if (WARN_ON_ONCE(!ctx))
- 			return -EINVAL;
- 		if (fd >= 0)
--			return vfio_virqfd_enable((void *) vdev,
--						  vfio_pci_intx_unmask_handler,
--						  vfio_send_intx_eventfd, NULL,
--						  &ctx->unmask, fd);
-+			return vfio_virqfd_enable((void *)vdev,
-+					vfio_pci_intx_unmask_handler_virqfd,
-+					vfio_send_intx_eventfd_virqfd, NULL,
-+					&ctx->unmask, fd);
- 
- 		vfio_virqfd_disable(&ctx->unmask);
- 	}
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="zTk1qaPnG2VuQe0/"
+Content-Disposition: inline
+In-Reply-To: <20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org>
+X-Smtpcorp-Track: 1rYUfd4bfCcG2o.xZNo1KhvI2W4B
+Feedback-ID: 1174286m:1174286a9YXZ7r:1174286sYq_OVzP5R
+X-Report-Abuse: Please forward a copy of this message, including all headers,
+ to <abuse-report@smtp2go.com>
 
 
-WDYT?
- 
-> > And we note the behavior change for MSI/X in the commit log and if
-> > someone shouts that we broke them, we can make that an -errno or
-> > continue based on is_intx().  Sound ok?  Thanks,  
-> 
-> I'll be sure to highlight the impact on MSI/MSI-x. Please do expect this
-> in the final patch "vfio/pci: Remove duplicate interrupt management flow"
-> though since that is where the different flows are merged.
-> 
-> I am not familiar with how all user space interacts with this flow and if/how
-> this may break things. I did look at Qemu code and I was not able to find
-> where it intentionally triggers MSI/MSI-x interrupts, I could only find it
-> for INTx.
+--zTk1qaPnG2VuQe0/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Being able to trigger the interrupt via ioctl is more of a diagnostic
-feature, not typically used in production.
- 
-> If this does break things I would like to also consider moving the
-> different behavior into the interrupt type's respective send_eventfd()
-> callback instead of adding interrupt type specific code (like
-> is_intx()) into the shared flow.
+On Thu, Feb 08, 2024 at 01:21:06PM -0700 Nathan Chancellor wrote:
+> Commit 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
+> changed the ELF type of .btf.vmlinux.bin.o from ET_EXEC to ET_REL via
+> dd, which works fine for little endian platforms:
+>=20
+>    00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF.....=
+=2E......|
+>   -00000010  03 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |.........=
+=2E......|
+>   +00000010  01 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |.........=
+=2E......|
+>=20
+> However, for big endian platforms, it changes the wrong byte, resulting
+> in an invalid ELF file type, which ld.lld rejects:
+>=20
+>    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF.....=
+=2E......|
+>   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.........=
+=2E......|
+>   +00000010  01 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.........=
+=2E......|
+>=20
+>   Type:                              <unknown>: 103
+>=20
+>   ld.lld: error: .btf.vmlinux.bin.o: unknown file type
+>=20
+> Fix this by using a different seek value for dd when targeting big
+> endian, so that the correct byte gets changed and everything works
+> correctly for all linkers.
+>=20
+>    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF.....=
+=2E......|
+>   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.........=
+=2E......|
+>   +00000010  00 01 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.........=
+=2E......|
+>=20
+>   Type:                              REL (Relocatable file)
+>=20
+> Cc: stable@vger.kernel.org
+> Fixes: 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
+> Link: https://github.com/llvm/llvm-project/pull/75643
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  scripts/link-vmlinux.sh | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+> index a432b171be82..8a9f48b3cb32 100755
+> --- a/scripts/link-vmlinux.sh
+> +++ b/scripts/link-vmlinux.sh
+> @@ -135,8 +135,15 @@ gen_btf()
+>  	${OBJCOPY} --only-section=3D.BTF --set-section-flags .BTF=3Dalloc,reado=
+nly \
+>  		--strip-all ${1} ${2} 2>/dev/null
+>  	# Change e_type to ET_REL so that it can be used to link final vmlinux.
+> -	# Unlike GNU ld, lld does not allow an ET_EXEC input.
+> -	printf '\1' | dd of=3D${2} conv=3Dnotrunc bs=3D1 seek=3D16 status=3Dnone
+> +	# Unlike GNU ld, lld does not allow an ET_EXEC input. Make sure the cor=
+rect
+> +	# byte gets changed with big endian platforms, otherwise e_type may be =
+an
+> +	# invalid value.
+> +	if is_enabled CONFIG_CPU_BIG_ENDIAN; then
+> +		seek=3D17
+> +	else
+> +		seek=3D16
+> +	fi
+> +	printf '\1' | dd of=3D${2} conv=3Dnotrunc bs=3D1 seek=3D${seek} status=
+=3Dnone
+>  }
+> =20
+>  # Create ${2} .S file with all symbols from the ${1} object file
+>=20
+> ---
+> base-commit: 54be6c6c5ae8e0d93a6c4641cb7528eb0b6ba478
+> change-id: 20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-dbc55a1e1296
+>=20
+> Best regards,
+> --=20
+> Nathan Chancellor <nathan@kernel.org>
+>=20
 
-Sure, we can pick the best option in the slim (imo) chance the change
-affects anyone.  Thanks,
+Thanks for the verbose examples!
+Looks good to me.
 
-Alex
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
 
+--zTk1qaPnG2VuQe0/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEh0E3p4c3JKeBvsLGB1IKcBYmEmkFAmXFQ1AACgkQB1IKcBYm
+EmnYTw//fDS4aaPzwOImLhpKzX3i1BC6Qx2THMdosxC72mSxiGL2TPRWRq/eGRln
+ywqA6ZiSICotXS+vXCQHVgycTKquxjTybXb0OxNaV1Tx3RrE3NfgKZ1+KtrMePoy
+bjbU5SYJ6kYKUOR3laTcc0YcSbAH0GgAL6S43ZyWjtuJKha6puzXvQdz5H6SvfiT
+eKsXy/nQvy+7vuWxWhT+sgx9KGLMPisSqVtrTiC5XjoKB6KH8Emn7xOx6SQEL/12
+NfV5ESzVOeXrQjgkUaYPm8dHlseZynIr5F4FPsAB6jGJUg7o/Y2Ye7S5e/dqxLWL
+haddv3lmmVeuKWOcLl2LWQEK2EWOfqNMDAYrjWSruuQqNIuVtuUwmBkdVvq+H1Lt
+oPXt4A/qScMAjWjBQAp382jx952rzBnSlQ5t7tXsuff0XE+JWslZZHzn4l11G4C6
+p0DCERyQkCEP8aOf1NKdn9NILmlT76ecy4koe44/V/eVWtybLeQWVMN9O/nwNFBK
+fJkJ+gPRn+PajfYeorZk3sBnPSKQMHGw1x2+1C0rFKSdxVgVuRsyuBgQse/wVWWW
+aCRm/K27PwfJAhW3WplFUlzjMm7ejN8DHhDTUrlLN9yswke46jY3NhDLQJQMeMUx
+XthcV13qCT75e9GfpZuO1hgO26my+rHV/kkt0nuGNl0Fx8wHmv0=
+=OENS
+-----END PGP SIGNATURE-----
+
+--zTk1qaPnG2VuQe0/--
