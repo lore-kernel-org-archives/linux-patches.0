@@ -1,157 +1,213 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773A15025C
-	for <patches@lists.linux.dev>; Thu,  8 Feb 2024 23:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FAA5025F
+	for <patches@lists.linux.dev>; Thu,  8 Feb 2024 23:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707433265; cv=none; b=SyhEv0+rplK+h/qcE/k6PSZi4N0wcnhgp62zqaFM4oC2eC5q3sAhBDsbusSfqht58cFWtkzZxKJgRbB6v3LiP781676H+V83NCCrHC2eXk+3xizdKJi6v+PoDyo+dqPEbF5boG4bNq+8K9pPnHhnoTNZxPNIN+7b9+dLrkzzZak=
+	t=1707434055; cv=none; b=gr2p4Ppt6vGvbq+3ZtV3r+Sn/VcZQlN4Ie1tV39+NKvIO6Muts9Yv10QSXoQ/DeZdDV/YwZUpL7MU1jlneSlLNAvmN4OEpYKDCY5f8jhHGdtKHaq4pltHWClOCihnVfS9zQYwxOcM7J1uZ4WyBYOTjJDrj8LM3DKApm8J8EBLLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707433265; c=relaxed/simple;
-	bh=T9DDf7RsGoXWqs5fi1eBpo3w0CqfgK/I8uG6yNAa+ug=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=agpeRjaHEpGBjLbZxJiS60xxfR5hrkpXG5nhv4AQ+zP9gkwuQa0C1HhKNI5MKtRaeRVgRNHC5Qbq1oq9JP7wTSP9XWur+GR7eawl9cd4vidTJPCyQhRDJO78dLrxbOJrsQPQo4nXxDXxZ8zyCS5qoDlOv7QBlKBtC7w+rv/+DN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=A7ShvIoK; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1707434055; c=relaxed/simple;
+	bh=me8ZF9MFV3b25A/LpyNIDRWvjZIMoVYXkuh8e+uhqu4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NJoe/exWN2HseBqrCKmfCajgPgK1QjRyeanI1oUBNXAsEOubfcyXQQ9wL25X5t2G24nU4CQ3H7IZGIlkQW7Uq3GSSxIqA13uSvvxbiBWJLrRqD5E6lJIXrUJlMVxhl2jPqQrF91etJjSJhiTxAlqITTbaEg7n34YlGQlC8tpwVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CE+jHtm/; arc=none smtp.client-ip=209.85.166.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="A7ShvIoK"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a389ea940f1so38693666b.3
-        for <patches@lists.linux.dev>; Thu, 08 Feb 2024 15:01:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CE+jHtm/"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7c4085a960aso11429139f.3
+        for <patches@lists.linux.dev>; Thu, 08 Feb 2024 15:14:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707433261; x=1708038061; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zTWSYLzAcDMw/2lTiSmQrTx2vg4LrA8IhSZigmrVOqg=;
-        b=A7ShvIoKrlrX15N4drUy+DvTDjhAp7xeKnSzuxJV5uAED53Ys5Cno5noHlFCWUUQs0
-         Q99EmzIjlhrf77X2AxMUNCkjYfUGUdKoItY+R62pRqjZZm3VbzHnQPDcssZRxUmTDapq
-         +qd8Q17K25MIOeg/s3N3JOW8VOChHEOZVRWK0gC07yLGxGt9LRaszLj/evMR9b/12Ah4
-         KGyLOCW5BeLOtjUyiqywt9VYwiF2gagHa2r/O9qwTqJqn4WOKBmguswimcRjWq5sZgvx
-         djxBNZCnCkNhVVdDzhxFmPRkFeHFKicmNVFQff8jfCO2clkvh+/6N7K44d9KODE/Sp19
-         ewTw==
+        d=google.com; s=20230601; t=1707434052; x=1708038852; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pe6jnI7sJWQLdADxcvkIM7ZK9uT6CeFtU8HHzuib1uI=;
+        b=CE+jHtm/+Wf7nXddkjLITlBKKhRz1SR95pbyoOtT29cYkHFxk+RUCks3TCIfKLoOjP
+         orQuUuSS1aXbWsycFyczjSYXXNQuxtyu/mjiJqKlikEVFVNOHvifS9dVYs9A/gNGj1MO
+         hpNUPhiAYuDcxe7qbwpx77Jza6yqZST8Jc+rw/uTEg1nvK0W3G7dKYoLoDXm2uHnyIQn
+         Ay+0+VXxky/OY6/lly2DpVI1KMj3s/MRpcY84n83Ltey995fnhmvRZeGKwalGY21nlLa
+         LaRAl4BcybJeCKEtclrZgL9N4DsDRL/r3hAVqweIWk5kAK1bHMsN4VV0Q3Pbd+8E7q0F
+         SSHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707433261; x=1708038061;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zTWSYLzAcDMw/2lTiSmQrTx2vg4LrA8IhSZigmrVOqg=;
-        b=nOB90AEtDk96mta1o3KramAj3qrOeY6D2cYC7UzjFIvjOs78o47jKIUovZ3oqPejAT
-         Qeg53se1vDhNOqwO6IJvlsyKoYME+o0Db+Eur3DQpcVY87U9Kg7evKPlX5M/hrSvteKA
-         pQj5ZPpy9oelB0GR4N4EiWOQwOeaXVfRIxcqpJiAGDNF0Hc6YCEeTvB+Fola5rBI0JF5
-         WiED3AwtrZYFymDQivxzhngvCtFGEU3SKyaWqGt38eeB/vaCBxOuOKf8e8FjDO3eN7jc
-         YjMNVZTsThp7lMkz+XE7CgKxEyepGBGA6tFiDB8Xw4n4hwmK9JOKvgRGVfPkvfxqwZAN
-         t+IQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVfsvz4JMuujoM2FuGrfPi0ft8DmC+m+DRTRbME9VAG8Er8UG3E6Btc2+ImgarIMQaQnbepu+pX5PUmJ1kf7Yy9SZm/Od3QZQ==
-X-Gm-Message-State: AOJu0Ywkvifg1OH1Ce5fPBnte11LjZL9u6Q+ycTy48Ksa5yg3UbN2a+f
-	rPc8UIr0wZ1kK+b1EL1PnXXjEF6Cb4P+liUfBaBmW1ZKjppzZcbo8JWGXX/iv8TM9/bSVoNbxLu
-	qKSK6rZOC+eXSha8hSYouXBdUjG7+z3MGqlkZ
-X-Google-Smtp-Source: AGHT+IH8BJDXACmNpp8QPe3ebkb//40qQr/VkDrymZgcm+C+RRTeTAoH+7Eei6pPd766qsIY5vYGmF8zo397bshm+fY=
-X-Received: by 2002:a17:906:491a:b0:a3b:bed0:e497 with SMTP id
- b26-20020a170906491a00b00a3bbed0e497mr528049ejq.8.1707433260596; Thu, 08 Feb
- 2024 15:01:00 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707434052; x=1708038852;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pe6jnI7sJWQLdADxcvkIM7ZK9uT6CeFtU8HHzuib1uI=;
+        b=GbeKPdIYFVYmXduXpIWH5ylT0LWbGaoWJlj9v3PZNvy0qrM0EXIbKOqHxWa5yoMMto
+         1dgjxMLPFtnDVWJvanSB4nYLxPiBvECjnnCOoWL4yuoZQYBhkV20TKITpgYKlLxqsb1V
+         8IWuBRsldpoX7owvj64qCd7pDTOwyrp0A8neStldEtMRAFsdSq8gwdXJ3dtYuMkEWzP+
+         BNsunalhMJFAOV8kinCsr5w+mC1RXqnscwgg1Bn9bzbrkwyrvEacjf5lfRwIBlic7Ocp
+         FH07AhwaZUW6T2AHDz+hf8f/oxiDC0T83l3JZdk6tGPBUgPOlwY8FJ7T0GtViOX7Ji41
+         7uEA==
+X-Forwarded-Encrypted: i=1; AJvYcCVXR/HqEfGvABuFCC8mTR5sn2CvHn/4rai2FljcNXTQql98FXWgDDTLaomFCeP/KcP9x3hAaFJ1K5BCr1poFQXhJX20jSgUzw==
+X-Gm-Message-State: AOJu0Yxqq0DIOv+LyRzOliN4qr8eOnNxd+PddP7qHY6n5ixR47A9QRoM
+	3iMlEN3aLgESLXY7Bf7FLDhkWb34ePE9E6Phs0CXH+B/4ZD+iY7w+r2CUCfYjg==
+X-Google-Smtp-Source: AGHT+IHCKa/qnllJa3a8anZ50HmqNn75qJTTGYvPU2+WwjU6U+rngyIqVcN2/lsJ591YBvYTq0dxLw==
+X-Received: by 2002:a6b:6b15:0:b0:7c4:6c8:fe2a with SMTP id g21-20020a6b6b15000000b007c406c8fe2amr64594ioc.11.1707434052059;
+        Thu, 08 Feb 2024 15:14:12 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV/sQAnakA0PHqUvHJVwEnGRDfLGGR1Y3EMsnDtlTssTQZLJmdAZJb4weX5gsjP0GHz87cjZ+J4aTm3lhvE8vGjJ7gUV+F94Ka/SSo/b0jZGktJv8SsWuN+Yrn45Ipj+rKMx3j6PTbvF7sIXTY9e4mk+6newdRmq9RdiFbg4fYoOZuLNbxx4HXoEGYuFDdtn2v4l5+YOsvluP3SnMTPSMvLEJwmE6Mrlt7FC4AUaj0/1y4WFnSQi890D49iGXs7laiKi57+1CfTmrGa5diaVMarJ9O9titiQNcX/FXJQYyh6OVxOY1bQ3N5yXIxcec1OGFFBIH7m541j3LvNbQIEAyVT65ZyucUjxkLBvXNwqxZmVLQYDKJGzdW3u+sFiPdyA==
+Received: from google.com (20.10.132.34.bc.googleusercontent.com. [34.132.10.20])
+        by smtp.gmail.com with ESMTPSA id t30-20020a05663836de00b004714adc2d2fsm106510jau.46.2024.02.08.15.14.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Feb 2024 15:14:11 -0800 (PST)
+Date: Thu, 8 Feb 2024 23:14:07 +0000
+From: Justin Stitt <justinstitt@google.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com,
+	borntraeger@linux.ibm.com, svens@linux.ibm.com, maskray@google.com,
+	ndesaulniers@google.com, linux-s390@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 00/11] s390: Support linking with ld.lld
+Message-ID: <20240208231407.vkisblrowjvivsxb@google.com>
+References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org>
-In-Reply-To: <20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org>
-From: Justin Stitt <justinstitt@google.com>
-Date: Thu, 8 Feb 2024 15:00:48 -0800
-Message-ID: <CAFhGd8oACnUVU-HXD0m_7ES3t5dOTSpGkvkE1R1Xdmgh-Q94Gw@mail.gmail.com>
-Subject: Re: [PATCH] s390: vDSO: Drop '-fPIC' from LDFLAGS
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com, 
-	borntraeger@linux.ibm.com, svens@linux.ibm.com, ndesaulniers@google.com, 
-	morbo@google.com, linux-s390@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
 
-On Tue, Jan 30, 2024 at 7:14=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> '-fPIC' as an option to the linker does not do what it seems like it
-> should. With ld.bfd, it is treated as '-f PIC', which does not make
-> sense based on the meaning of '-f':
->
->   -f SHLIB, --auxiliary SHLIB Auxiliary filter for shared object symbol t=
-able
->
-> When building with ld.lld (currently under review in a GitHub pull
-> request), it just errors out because '-f' means nothing and neither does
-> '-fPIC':
->
->   ld.lld: error: unknown argument '-fPIC'
->
-> '-fPIC' was blindly copied from CFLAGS when the vDSO stopped being
-> linked with '$(CC)', it should not be needed. Remove it to clear up the
-> build failure with ld.lld.
->
-> Fixes: 2b2a25845d53 ("s390/vdso: Use $(LD) instead of $(CC) to link vDSO"=
-)
-> Link: https://github.com/llvm/llvm-project/pull/75643
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Hi,
 
-Yep, fixes the problems I was having with ld.lld.
-
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-
-> ---
+On Wed, Feb 07, 2024 at 05:14:52PM -0700, Nathan Chancellor wrote:
 > Hi all,
 >
-> The LLVM folks are working on SystemZ support in ld.lld and this issue
-> came up from my initial testing. There are also some other issues that I
-> have come across in testing that I note in the GitHub pull request
-> linked above. If they seem like kernel issues, any expertise or help
-> would be greatly appreciated towards getting this working.
+> This series allows the s390 kernel to be linked with ld.lld (support for
+> s390 is under review at [1]). This implicitly depends on [2], which was
+> created and sent before it was realized that this series was necessary.
 >
-> Cheers,
-> Nathan
+> The first chunk of this series enables support for
+> CONFIG_LD_ORPHAN_WARN, as it was discovered during testing that the
+> kernel fails to build with ld.lld due to differences in orphan section
+> handling, which would have been caught with the linker's orphan section
+> warnings ahead of the actual build error. There are no warnings when
+> building ARCH=s390 defconfig and allmodconfig with GCC 6 through 13 or
+> tip of tree Clang using ld.bfd or ld.lld
+>
+> The final patch resolves a series of errors due to ld.lld having a
+> different default for checking for DT_TEXTREL ('-z text') vs ld.bfd,
+> which defaults to '-z notext' (but this is configurable at build time).
+>
+> There is one outstanding issue due to something that ld.lld does not
+> support that the kernel relies on:
+>
+>   ld.lld: error: drivers/nvme/host/fc.o:(__bug_table): writable SHF_MERGE section is not supported
+>
+> This was changed in the kernel in commit e21f8baf8d9a ("s390/bug: add
+> entry size to the __bug_table section"). Is this change truly necessary?
+> I selectively applied a revert on top of current mainline and I did not
+> observe any issues with either Clang or GCC.
+>
+> diff --git a/arch/s390/include/asm/bug.h b/arch/s390/include/asm/bug.h
+> index aebe1e22c7be..c500d45fb465 100644
+> --- a/arch/s390/include/asm/bug.h
+> +++ b/arch/s390/include/asm/bug.h
+> @@ -14,7 +14,7 @@
+>  		".section .rodata.str,\"aMS\",@progbits,1\n"	\
+>  		"1:	.asciz	\""__FILE__"\"\n"		\
+>  		".previous\n"					\
+> -		".section __bug_table,\"awM\",@progbits,%2\n"	\
+> +		".section __bug_table,\"aw\"\n"			\
+>  		"2:	.long	0b-.\n"				\
+>  		"	.long	1b-.\n"				\
+>  		"	.short	%0,%1\n"			\
+> @@ -30,7 +30,7 @@
+>  #define __EMIT_BUG(x) do {					\
+>  	asm_inline volatile(					\
+>  		"0:	mc	0,0\n"				\
+> -		".section __bug_table,\"awM\",@progbits,%1\n"	\
+> +		".section __bug_table,\"aw\"\n"			\
+>  		"1:	.long	0b-.\n"				\
+>  		"	.short	%0\n"				\
+>  		"	.org	1b+%1\n"			\
+>
+> If it is necessary, is there any way to work around this error? For
+> testing purposes, disabling CONFIG_BUG is easy enough but that is not
+> usable in the real world.
+>
+> To test this series with ld.lld, you'll need to build ld.lld from the
+> pull request, which is easy to do following LLVM's instructions [3].
+> Here is a TL;DR version I tested that just builds LLD with minimal noise
+> during the build.
+>
+> $ git clone https://github.com/llvm/llvm-project
+> $ cd llvm-project
+> $ git fetch https://github.com/llvm/llvm-project pull/75643/head
+> $ git switch -d FETCH_HEAD
+> $ cmake \
+>     -B build \
+>     -G Ninja \
+>     -S llvm \
+>     --log-level=NOTICE \
+>     -Wno-dev \
+>     -DCMAKE_BUILD_TYPE=Release \
+>     -DLLVM_ENABLE_PROJECTS=lld \
+>     -DLLVM_ENABLE_WARNINGS=OFF \
+>     -DLLVM_TARGETS_TO_BUILD=SystemZ
+> $ ninja -C build lld
+> $ export PATH=$PWD/build/bin:$PATH
+>
+> Then build the kernel with 'LD=ld.lld' in addition to whatever command
+> line you use (I tested both Clang and GCC). I can boot an ld.lld linked
+> kernel built with both compilers in QEMU with this series.
+
+Yeah, this all works for me and I am able to boot. I did need to use the
+diff present in 0/11 to remove the warnings regarding SHF_MERGE
+sections. It should probably be a patch in this series instead of a
+inlined diff?
+
+>
+> [    1.386970] Linux version 6.8.0-rc3-00043-g05761ede85d6-dirty (nathan@dev-fedora.aadp) (s390-linux-gcc (GCC) 13.2.0, ClangBuiltLinux LLD 19.0.0) #1 SMP Wed Feb  7 16:51:12 MST 2024
+>
+> [    0.871923] Linux version 6.8.0-rc3-00043-g05761ede85d6-dirty (nathan@dev-fedora.aadp) (ClangBuiltLinux clang version 19.0.0git (https://github.com/llvm/llvm-project 417075e56aeba5a5b20301c7bfeba9c2a800982b), ClangBuiltLinux LLD 19.0.0) #1 SMP Wed Feb  7 17:01:22 MST 2024
+>
+> [1]: https://github.com/llvm/llvm-project/pull/75643
+> [2]: https://lore.kernel.org/r/20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org/
+^^^^^^^^^
+I needed this too, as I was getting a warnings about -fPIC being an
+unknown option.
+
+
+All in all, works great for me building on clang and booting with qemu.
+
+Tested-by: Justin Stitt <justinstitt@google.com>
+
+> [3]: https://llvm.org/docs/CMake.html
+>
 > ---
->  arch/s390/kernel/vdso32/Makefile | 2 +-
->  arch/s390/kernel/vdso64/Makefile | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+> Nathan Chancellor (11):
+>       s390: boot: Add support for CONFIG_LD_ORPHAN_WARN
+>       s390: vmlinux.lds.S: Handle '.data.rel' sections explicitly
+>       s390: vmlinux.lds.S: Explicitly handle '.got' and '.plt' sections
+>       s390: vmlinux.lds.S: Discard unnecessary sections
+>       s390/boot: vmlinux.lds.S: Handle '.init.text'
+>       s390/boot: vmlinux.lds.S: Handle '.rela' sections
+>       s390/boot: vmlinux.lds.S: Handle DWARF debug sections
+>       s390/boot: vmlinux.lds.S: Handle ELF required sections
+>       s390/boot: vmlinux.lds.S: Handle commonly discarded sections
+>       s390: Select CONFIG_ARCH_WANT_LD_ORPHAN_WARN
+>       s390: Link vmlinux with '-z notext'
 >
-> diff --git a/arch/s390/kernel/vdso32/Makefile b/arch/s390/kernel/vdso32/M=
-akefile
-> index caec7db6f966..b12a274cbb47 100644
-> --- a/arch/s390/kernel/vdso32/Makefile
-> +++ b/arch/s390/kernel/vdso32/Makefile
-> @@ -22,7 +22,7 @@ KBUILD_CFLAGS_32 :=3D $(filter-out -m64,$(KBUILD_CFLAGS=
-))
->  KBUILD_CFLAGS_32 :=3D $(filter-out -mno-pic-data-is-text-relative,$(KBUI=
-LD_CFLAGS_32))
->  KBUILD_CFLAGS_32 +=3D -m31 -fPIC -shared -fno-common -fno-builtin
->
-> -LDFLAGS_vdso32.so.dbg +=3D -fPIC -shared -soname=3Dlinux-vdso32.so.1 \
-> +LDFLAGS_vdso32.so.dbg +=3D -shared -soname=3Dlinux-vdso32.so.1 \
->         --hash-style=3Dboth --build-id=3Dsha1 -melf_s390 -T
->
->  $(targets:%=3D$(obj)/%.dbg): KBUILD_CFLAGS =3D $(KBUILD_CFLAGS_32)
-> diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/M=
-akefile
-> index e3c9085f8fa7..caa4ebff8a19 100644
-> --- a/arch/s390/kernel/vdso64/Makefile
-> +++ b/arch/s390/kernel/vdso64/Makefile
-> @@ -26,7 +26,7 @@ KBUILD_AFLAGS_64 +=3D -m64
->  KBUILD_CFLAGS_64 :=3D $(filter-out -m64,$(KBUILD_CFLAGS))
->  KBUILD_CFLAGS_64 :=3D $(filter-out -mno-pic-data-is-text-relative,$(KBUI=
-LD_CFLAGS_64))
->  KBUILD_CFLAGS_64 +=3D -m64 -fPIC -fno-common -fno-builtin
-> -ldflags-y :=3D -fPIC -shared -soname=3Dlinux-vdso64.so.1 \
-> +ldflags-y :=3D -shared -soname=3Dlinux-vdso64.so.1 \
->              --hash-style=3Dboth --build-id=3Dsha1 -T
->
->  $(targets:%=3D$(obj)/%.dbg): KBUILD_CFLAGS =3D $(KBUILD_CFLAGS_64)
->
+>  arch/s390/Kconfig              |  1 +
+>  arch/s390/Makefile             |  2 +-
+>  arch/s390/boot/Makefile        |  5 +++--
+>  arch/s390/boot/vmlinux.lds.S   | 28 ++++++++++++++++++++++++++++
+>  arch/s390/kernel/vmlinux.lds.S | 28 +++++++++++++++++++++++++++-
+>  5 files changed, 60 insertions(+), 4 deletions(-)
 > ---
-> base-commit: 41bccc98fb7931d63d03f326a746ac4d429c1dd3
-> change-id: 20240130-s390-vdso-drop-fpic-from-ldflags-0338365b4bc5
+> base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+> change-id: 20240207-s390-lld-and-orphan-warn-d0ff4ff657b0
 >
 > Best regards,
 > --
 > Nathan Chancellor <nathan@kernel.org>
 >
+
+Thanks
+Justin
