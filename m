@@ -1,45 +1,45 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8038B84A4C
-	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 19:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB714CE0B
+	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 19:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707505569; cv=none; b=jqsBduOePoAbT1HQt/+kFB822UhG4OkDEb9uRikrGWF8MMRxQ9g5kG1XgqLlkLVrpgG+/ulXzqhOaQfNEgTrNRLmh5c5sFpEtToF94vyCZZiUVb/rqtBW/bLSkc50ebEIVX9QZqS+3KoHrKpPI7jvapPn47eIq8Wq/g6yG3Ak7U=
+	t=1707506628; cv=none; b=VQ1b4r8Cso1NXgOXu2hl+b8WOKbPeI6VcETqujGYZbnWH/+0LbzHBzjdUqGxE9yaRku/aQ/PD/CzD+pRJveZMpPV4gCqRb4p1SjFJUZ+s1ki+i4/xnek4/STFcpBVKKwhkpFotXwovkgXukYzTEdh+vF8vzjFHtpVgsiOb8PXKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707505569; c=relaxed/simple;
-	bh=bIcHkUcTe01Z5+BZ75l+ELTY5lq3c2PvPuqRwnGgQCE=;
+	s=arc-20240116; t=1707506628; c=relaxed/simple;
+	bh=WC9tRxWrrOmUk1nUbdcPHKUUN+d2WwGkjgKMha0qJoc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OVa3vadgQZ4mXrioGhm/4R88GeaAOLSg19DYuGkWgN1Xm9nwh6nwzoPv0rWmoNv5OtpY5bs9iwyj3xVF/ho090gqNkFciqssBN4FgwxpMVfO0HNXWBSIW7PucV85J2lUbfB70u08U4zPSTjoT091JrBXwmKKvNW/ezwQfk1puFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dou+h7Xa; arc=none smtp.client-ip=198.175.65.21
+	 Content-Type:Content-Disposition:In-Reply-To; b=G53OOqAcvYiS4lr8EBxgU+yvUWLLTRtbVTvUUMKTrNin9fiTgJZAnNWPZwcgUOpQaV9niszv9hpeWHZhFMHQ1bzoXG4kxheA8p2MEagPtNHMUAfski5ABxIhcD0dtM1ncQXmEVYEIFFCNaX+j83m0xykldCYw5BswZKuabBcv/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZbcER6GM; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dou+h7Xa"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZbcER6GM"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707505567; x=1739041567;
+  t=1707506627; x=1739042627;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=bIcHkUcTe01Z5+BZ75l+ELTY5lq3c2PvPuqRwnGgQCE=;
-  b=Dou+h7XaUfVq85I8jvsINrBxFTjTtn3dBxHZ9UtmYu6ZUODOvXgiK5Ag
-   7845lbCm/pJTuq9l5RUQZuP/34xICs9d5QmE1zk6wjSQ+fvB0rcdDNy1k
-   EvgSealaP9zhE7DYvD7UwqCnOa4RyjK/IwRIyXCLIuwfzcHm5F8sMYfbJ
-   oZy4kJmXc9G02teg0r1gNwPQEXc/PKaYbOikzQ6PjwmwpmsrRZsbmoiA8
-   7ypyMCrXxkCIXx21b0CrYnxwKQVZjDyaq2cVx8v9uHIyzJPNRs3Cg7dA4
-   Se+xWq+bcqA1rR5UfdrXeVVsx9jT4ThW59khtcZGIGnzbuN1OY1USAy2y
+  bh=WC9tRxWrrOmUk1nUbdcPHKUUN+d2WwGkjgKMha0qJoc=;
+  b=ZbcER6GMB12IJCFECEDP+DhN/nfiRdaaVJQX2YYIErrhjiaoDfeJ7xhc
+   3MioLNIrUx/MwHL+qK2gut8YGs9a4DgPCadutjG3OQGypuriLh8NoVnmv
+   vrXGnJRfxt3+JRlA5BEOuggfIzqV0hEcr3d5wr3GtN8KaId58qDQNFluy
+   pCMSIyspRDPwyBTCIp1g/kIpYN1/urAD9Q+xD7mWZLHF1c3oXsmYczMGL
+   BoqXVfPfIVD/2JJh38l4Fs8EbrbGaIRdZN6e07Mr4mx3789J5cS0tACLE
+   AoEtOYXNxiuxx8EeamleGwuZR1r84lnmk0XPEwX+P7JLuTFPZ09+I6/bm
    w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="1392499"
+X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="1395673"
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="1392499"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:06:07 -0800
+   d="scan'208";a="1395673"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:23:46 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="6661661"
+   d="scan'208";a="39452963"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:06:05 -0800
-Date: Fri, 9 Feb 2024 11:06:05 -0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:23:46 -0800
+Date: Fri, 9 Feb 2024 11:23:44 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: "Moger, Babu" <babu.moger@amd.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
@@ -53,13 +53,13 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Drew Fustini <dfustini@baylibre.com>, linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v15-RFC 4/8] x86/resctrl: Add helper function to look up
- domain_id from scope
-Message-ID: <ZcZ3nVgWPpPBi1QA@agluck-desk3>
+Subject: Re: [PATCH v15-RFC 5/8] x86/resctrl: Add "NODE" as an option for
+ resource scope
+Message-ID: <ZcZ7wEUzESxUhs-y@agluck-desk3>
 References: <20240126223837.21835-1-tony.luck@intel.com>
  <20240130222034.37181-1-tony.luck@intel.com>
- <20240130222034.37181-5-tony.luck@intel.com>
- <ef4b6a21-a477-42f0-950c-246b5cc48f47@amd.com>
+ <20240130222034.37181-6-tony.luck@intel.com>
+ <6628954f-c7e9-4040-9f03-7b5b6a6d082d@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,27 +68,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ef4b6a21-a477-42f0-950c-246b5cc48f47@amd.com>
+In-Reply-To: <6628954f-c7e9-4040-9f03-7b5b6a6d082d@amd.com>
 
-On Fri, Feb 09, 2024 at 09:28:52AM -0600, Moger, Babu wrote:
-> > +	if (id < 0) {
-> > +		pr_warn_once("Can't find domain id for CPU:%d scope:%d for resource %s\n",
-> > +			     cpu, r->scope, r->name);
+On Fri, Feb 09, 2024 at 09:29:03AM -0600, Moger, Babu wrote:
+> Hi Tony,
 > 
-> Will it be good to move pr_warn_once inside get_domain_id_from_scope
-> instead of repeating during every call?
+> This patch probably needs to be merged with with patch 7.
 
-Yes. Will move from here to get_domain_id_from_scope().
+If it just added RESCTRL_NODE to the enum and the switch() I'd
+agree (as patch 7 is where RESCTRL_NODE first used). But this
+patch also adds the sanity checks on scope where it has to be
+a cache level.
 
-> > +	if (id < 0) {
-> > +		pr_warn_once("Can't find domain id for CPU:%d scope:%d for resource %s\n",
-> > +			     cpu, r->scope, r->name);
-> 
-> Same comment as above. Will it be good to move pr_warn_once inside
-> get_domain_id_from_scope ?
+Patch 7 is already on the big side (119 lines added to core.c).
 
-Moved this one too.
-
-Thanks
+If you really think this series needs to cut back the
+number of patches, I could move the sanity check pieces
+from here to patch 3 (where the enum is introduced) and
+just the RESCTRL_NODE bits to patch 7.
 
 -Tony
