@@ -1,45 +1,45 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D595A787
-	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 18:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FC880C11
+	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 18:57:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707504689; cv=none; b=iXLLzyGkNgRBYolvp4kNON9uCqum007L5Vbyh00p/0uFyvD4qFGLosPEdl1NDxqnQVA+lgXR4l6AZxwY0zl86R6gcPPYEUxvUOdv9Cis0eUI9+gFsQhgwkMyAJaSGrYU33FJWVRy6kHGYMfYpT4T+r7a85mM4aNixhGj+l6L6Qw=
+	t=1707505036; cv=none; b=c+m6+8RGBqDOW6uCPxSdbK27bU06rNh1DLBiPDMSl9VkR1ZMkbwGXYIJpaMuYnG5ng4T1s7fVNBshbwRJlXnlMO6gaYrZI0aPPlidOtREJzd4XWxSyejhYItAyzIZ6zZtT2z3a8QCRvbMKo75dURPxLBAWYL944TL7boSCT5HUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707504689; c=relaxed/simple;
-	bh=zSd+Tr0N5ssM9VaLZc8HIHGHOmryVhAXfEsuY8XuY+k=;
+	s=arc-20240116; t=1707505036; c=relaxed/simple;
+	bh=bUAK1DEExzQReycv2NXfZg8Az8jhS3bv+ZGUUQ7Mu+E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f0QlWVaRcpbdAN3y5YX6a9Ud33vuhcptaWs5q5QU2mBC38+Kf3IjEq84nf7aUNy1bFMmKjtfgpgCH4XpWE1mJPuYgOjXuLj41lJcvksqKBUi/LXLpsKfSmKKTuJWOH2nZfM/PXojR5Xovfd7NiJ2k0KvLuID3x9Ceb4HPf48lxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=a+VcpdL1; arc=none smtp.client-ip=198.175.65.13
+	 Content-Type:Content-Disposition:In-Reply-To; b=AsEGOZ0EdeWVq+zlWmqad4ronxrtuKqlkE9zg4w2xLWn9fs/nJ0vn+K0NpJm+hrPB3FeWYbuhTFcBW22jSuAXpGOnPtyGWXtaAggK9zgA3GBc9B3uhDrC2+WbSNztatRRQvK4xFE/bfxDncxzB8Sm7DBE62A9UkCvWVxRL7jOt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cT+W+JNe; arc=none smtp.client-ip=198.175.65.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="a+VcpdL1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cT+W+JNe"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707504688; x=1739040688;
+  t=1707505035; x=1739041035;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=zSd+Tr0N5ssM9VaLZc8HIHGHOmryVhAXfEsuY8XuY+k=;
-  b=a+VcpdL1J/FuEuKOFdxg1Gp1+sV7KXNvqZQRhzVIaHLBoy7NivYqbLCS
-   ejkaLBi3njfyrwSwJMKVmdFU1yoPoH4X0IpFDq8mKwDW8/SXikfkcdwBi
-   DjH/sOdL2asHxNpdzjD0yoK+AJizhWhQR1PQ82C3K3+L1NP2gypO4lJu5
-   sXZJTmsooeL1ZEgjh0tICszn28LTyNp3IfpKY0kwHkjrrK+BgM+dQaWE+
-   GXYZ8qV6pte33EoRNefRiZdo+XW6iu5wk3QTmc0f8Sxy3HeEh8uOMy0Aa
-   PylcLJoiGNePpBe7APoK4Cyp9rC105qIKudMldqn9QLX3FdKgxCCyqndv
+  bh=bUAK1DEExzQReycv2NXfZg8Az8jhS3bv+ZGUUQ7Mu+E=;
+  b=cT+W+JNeGArekz3WmmLkKkus96GW6XTzDtHtVv4X0WTiHINgwvPxFvaQ
+   Xvo2xqVPBkda9fMMox6HMP2g6EVBjxX69NbPG5eGQczHsjaVAiih9qliQ
+   RigiCAIZiYEaeiXX1YaazP795w9defDwCh2txiae8/iDHrgGPZ8Vgaym/
+   kSYv2Ivcuv1pB1+A5CJd0dHB6wd/r9pS+Bbj79mVLDsRPetsuvi3P+ncK
+   m+oY0jFlzd1UqJ9DLVa8SEwh0StxO8uRV0op7hjqEiVEglvlVfbomn0Kf
+   OLMq92Hzzr8BlR+zRG3ff6ZvvMTMCIWMLJgpxjD1iUNVWybPL2ICSGcCr
    g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="12568991"
+X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="18897082"
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="12568991"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 10:51:27 -0800
+   d="scan'208";a="18897082"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 10:57:14 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="2043753"
+   d="scan'208";a="2350762"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 10:51:27 -0800
-Date: Fri, 9 Feb 2024 10:51:25 -0800
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 10:57:14 -0800
+Date: Fri, 9 Feb 2024 10:57:11 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: "Moger, Babu" <babu.moger@amd.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
@@ -53,13 +53,13 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Drew Fustini <dfustini@baylibre.com>, linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v15-RFC 2/8] x86/resctrl: Move all monitoring functions
- to RDT_RESOURCE_L3_MON
-Message-ID: <ZcZ0LVHwkOKVApzi@agluck-desk3>
+Subject: Re: [PATCH v15-RFC 3/8] x86/resctrl: Prepare for non-cache-scoped
+ resources
+Message-ID: <ZcZ1hxQTjyCoQr5F@agluck-desk3>
 References: <20240126223837.21835-1-tony.luck@intel.com>
  <20240130222034.37181-1-tony.luck@intel.com>
- <20240130222034.37181-3-tony.luck@intel.com>
- <fa80f524-eff6-4513-a03a-3fb111289d86@amd.com>
+ <20240130222034.37181-4-tony.luck@intel.com>
+ <b3e77817-e070-48a7-a92b-630603c81556@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,46 +68,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <fa80f524-eff6-4513-a03a-3fb111289d86@amd.com>
+In-Reply-To: <b3e77817-e070-48a7-a92b-630603c81556@amd.com>
 
-On Fri, Feb 09, 2024 at 09:28:25AM -0600, Moger, Babu wrote:
-> Tony,
+On Fri, Feb 09, 2024 at 09:28:35AM -0600, Moger, Babu wrote:
+> Hi Tony,
 > 
 > On 1/30/24 16:20, Tony Luck wrote:
-> > Switch over all places that setup and use monitoring funtions to
+> > Not all resources are scoped in line with some level of hardware cache.
 > 
-> functions?
+> same level?
 
-Yes. Will fix.
+No. "same" isn't what I meant here. If I shuffle this around:
 
-> > use the new resource structure.
-> > 
-> > Signed-off-by: Tony Luck <tony.luck@intel.com>
-> > ---
-> >  arch/x86/kernel/cpu/resctrl/core.c     |  6 ++++--
-> >  arch/x86/kernel/cpu/resctrl/monitor.c  | 12 ++++--------
-> >  arch/x86/kernel/cpu/resctrl/rdtgroup.c |  2 +-
-> >  3 files changed, 9 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> > index c50f55d7790e..0828575c3e13 100644
-> > --- a/arch/x86/kernel/cpu/resctrl/core.c
-> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> > @@ -591,11 +591,13 @@ static void domain_remove_cpu(int cpu, struct rdt_resource *r)
-> >  		return;
-> >  	}
-> >  
-> > -	if (r == &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl) {
-> > +	if (r == &rdt_resources_all[RDT_RESOURCE_L3_MON].r_resctrl) {
-> >  		if (is_mbm_enabled() && cpu == d->mbm_work_cpu) {
-> >  			cancel_delayed_work(&d->mbm_over);
-> >  			mbm_setup_overflow_handler(d, 0);
-> >  		}
-> > +	}
-> > +	if (r == &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl) {
-> 
-> RDT_RESOURCE_L3_MON?
+	Not all resources are scoped to match the scope of a hardware
+	cache level.
 
-Good catch.
+Is that more clear?
+
 
 -Tony
