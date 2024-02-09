@@ -1,45 +1,45 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FC880C11
-	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 18:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8038B84A4C
+	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 19:06:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707505036; cv=none; b=c+m6+8RGBqDOW6uCPxSdbK27bU06rNh1DLBiPDMSl9VkR1ZMkbwGXYIJpaMuYnG5ng4T1s7fVNBshbwRJlXnlMO6gaYrZI0aPPlidOtREJzd4XWxSyejhYItAyzIZ6zZtT2z3a8QCRvbMKo75dURPxLBAWYL944TL7boSCT5HUo=
+	t=1707505569; cv=none; b=jqsBduOePoAbT1HQt/+kFB822UhG4OkDEb9uRikrGWF8MMRxQ9g5kG1XgqLlkLVrpgG+/ulXzqhOaQfNEgTrNRLmh5c5sFpEtToF94vyCZZiUVb/rqtBW/bLSkc50ebEIVX9QZqS+3KoHrKpPI7jvapPn47eIq8Wq/g6yG3Ak7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707505036; c=relaxed/simple;
-	bh=bUAK1DEExzQReycv2NXfZg8Az8jhS3bv+ZGUUQ7Mu+E=;
+	s=arc-20240116; t=1707505569; c=relaxed/simple;
+	bh=bIcHkUcTe01Z5+BZ75l+ELTY5lq3c2PvPuqRwnGgQCE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AsEGOZ0EdeWVq+zlWmqad4ronxrtuKqlkE9zg4w2xLWn9fs/nJ0vn+K0NpJm+hrPB3FeWYbuhTFcBW22jSuAXpGOnPtyGWXtaAggK9zgA3GBc9B3uhDrC2+WbSNztatRRQvK4xFE/bfxDncxzB8Sm7DBE62A9UkCvWVxRL7jOt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cT+W+JNe; arc=none smtp.client-ip=198.175.65.10
+	 Content-Type:Content-Disposition:In-Reply-To; b=OVa3vadgQZ4mXrioGhm/4R88GeaAOLSg19DYuGkWgN1Xm9nwh6nwzoPv0rWmoNv5OtpY5bs9iwyj3xVF/ho090gqNkFciqssBN4FgwxpMVfO0HNXWBSIW7PucV85J2lUbfB70u08U4zPSTjoT091JrBXwmKKvNW/ezwQfk1puFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dou+h7Xa; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cT+W+JNe"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dou+h7Xa"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707505035; x=1739041035;
+  t=1707505567; x=1739041567;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=bUAK1DEExzQReycv2NXfZg8Az8jhS3bv+ZGUUQ7Mu+E=;
-  b=cT+W+JNeGArekz3WmmLkKkus96GW6XTzDtHtVv4X0WTiHINgwvPxFvaQ
-   Xvo2xqVPBkda9fMMox6HMP2g6EVBjxX69NbPG5eGQczHsjaVAiih9qliQ
-   RigiCAIZiYEaeiXX1YaazP795w9defDwCh2txiae8/iDHrgGPZ8Vgaym/
-   kSYv2Ivcuv1pB1+A5CJd0dHB6wd/r9pS+Bbj79mVLDsRPetsuvi3P+ncK
-   m+oY0jFlzd1UqJ9DLVa8SEwh0StxO8uRV0op7hjqEiVEglvlVfbomn0Kf
-   OLMq92Hzzr8BlR+zRG3ff6ZvvMTMCIWMLJgpxjD1iUNVWybPL2ICSGcCr
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="18897082"
+  bh=bIcHkUcTe01Z5+BZ75l+ELTY5lq3c2PvPuqRwnGgQCE=;
+  b=Dou+h7XaUfVq85I8jvsINrBxFTjTtn3dBxHZ9UtmYu6ZUODOvXgiK5Ag
+   7845lbCm/pJTuq9l5RUQZuP/34xICs9d5QmE1zk6wjSQ+fvB0rcdDNy1k
+   EvgSealaP9zhE7DYvD7UwqCnOa4RyjK/IwRIyXCLIuwfzcHm5F8sMYfbJ
+   oZy4kJmXc9G02teg0r1gNwPQEXc/PKaYbOikzQ6PjwmwpmsrRZsbmoiA8
+   7ypyMCrXxkCIXx21b0CrYnxwKQVZjDyaq2cVx8v9uHIyzJPNRs3Cg7dA4
+   Se+xWq+bcqA1rR5UfdrXeVVsx9jT4ThW59khtcZGIGnzbuN1OY1USAy2y
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="1392499"
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="18897082"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 10:57:14 -0800
+   d="scan'208";a="1392499"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:06:07 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="2350762"
+   d="scan'208";a="6661661"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 10:57:14 -0800
-Date: Fri, 9 Feb 2024 10:57:11 -0800
+  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:06:05 -0800
+Date: Fri, 9 Feb 2024 11:06:05 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: "Moger, Babu" <babu.moger@amd.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
@@ -53,13 +53,13 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Drew Fustini <dfustini@baylibre.com>, linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v15-RFC 3/8] x86/resctrl: Prepare for non-cache-scoped
- resources
-Message-ID: <ZcZ1hxQTjyCoQr5F@agluck-desk3>
+Subject: Re: [PATCH v15-RFC 4/8] x86/resctrl: Add helper function to look up
+ domain_id from scope
+Message-ID: <ZcZ3nVgWPpPBi1QA@agluck-desk3>
 References: <20240126223837.21835-1-tony.luck@intel.com>
  <20240130222034.37181-1-tony.luck@intel.com>
- <20240130222034.37181-4-tony.luck@intel.com>
- <b3e77817-e070-48a7-a92b-630603c81556@amd.com>
+ <20240130222034.37181-5-tony.luck@intel.com>
+ <ef4b6a21-a477-42f0-950c-246b5cc48f47@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,22 +68,27 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b3e77817-e070-48a7-a92b-630603c81556@amd.com>
+In-Reply-To: <ef4b6a21-a477-42f0-950c-246b5cc48f47@amd.com>
 
-On Fri, Feb 09, 2024 at 09:28:35AM -0600, Moger, Babu wrote:
-> Hi Tony,
+On Fri, Feb 09, 2024 at 09:28:52AM -0600, Moger, Babu wrote:
+> > +	if (id < 0) {
+> > +		pr_warn_once("Can't find domain id for CPU:%d scope:%d for resource %s\n",
+> > +			     cpu, r->scope, r->name);
 > 
-> On 1/30/24 16:20, Tony Luck wrote:
-> > Not all resources are scoped in line with some level of hardware cache.
+> Will it be good to move pr_warn_once inside get_domain_id_from_scope
+> instead of repeating during every call?
+
+Yes. Will move from here to get_domain_id_from_scope().
+
+> > +	if (id < 0) {
+> > +		pr_warn_once("Can't find domain id for CPU:%d scope:%d for resource %s\n",
+> > +			     cpu, r->scope, r->name);
 > 
-> same level?
+> Same comment as above. Will it be good to move pr_warn_once inside
+> get_domain_id_from_scope ?
 
-No. "same" isn't what I meant here. If I shuffle this around:
+Moved this one too.
 
-	Not all resources are scoped to match the scope of a hardware
-	cache level.
-
-Is that more clear?
-
+Thanks
 
 -Tony
