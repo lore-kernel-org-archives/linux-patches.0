@@ -1,45 +1,45 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB714CE0B
-	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 19:23:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330B57BB17
+	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 19:35:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707506628; cv=none; b=VQ1b4r8Cso1NXgOXu2hl+b8WOKbPeI6VcETqujGYZbnWH/+0LbzHBzjdUqGxE9yaRku/aQ/PD/CzD+pRJveZMpPV4gCqRb4p1SjFJUZ+s1ki+i4/xnek4/STFcpBVKKwhkpFotXwovkgXukYzTEdh+vF8vzjFHtpVgsiOb8PXKU=
+	t=1707507317; cv=none; b=oWDa70IAQSQTT/GbQHkwH90g0W5uSgaqlAIdOCVtjAfHH0czRQ/ppVFZqQMh7A217dt/Gnlj+fG+B3bN43MPYkCYfoDYSemvjb5zDxSKehMYT2KInU/LJGtT/StTacqRP2bQ+HgzFuVAZw2/eo4S9TAt/AsDUCKUU4AbQfDyH30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707506628; c=relaxed/simple;
-	bh=WC9tRxWrrOmUk1nUbdcPHKUUN+d2WwGkjgKMha0qJoc=;
+	s=arc-20240116; t=1707507317; c=relaxed/simple;
+	bh=xhzwrO+6ZlV1l0qgiqyNhA2TgTafW1vbnrmWtuXQhXU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G53OOqAcvYiS4lr8EBxgU+yvUWLLTRtbVTvUUMKTrNin9fiTgJZAnNWPZwcgUOpQaV9niszv9hpeWHZhFMHQ1bzoXG4kxheA8p2MEagPtNHMUAfski5ABxIhcD0dtM1ncQXmEVYEIFFCNaX+j83m0xykldCYw5BswZKuabBcv/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZbcER6GM; arc=none smtp.client-ip=198.175.65.21
+	 Content-Type:Content-Disposition:In-Reply-To; b=hLgdhLra2F5L2cFr8oUTyzyODYFTWYbRTSRn86HMYoD5gatAQk9hj8c2F7Qy92N7fSYhz1gUVhdJRNi3hNLMmvYnKW20YJqYmYeHe0owrPzUrKC3n36VkoBsKCYLtRY1ozDJkEQioGfoaXXFSKu7vd3yj6D7qu68LjdNHyD1cKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GHULZBc0; arc=none smtp.client-ip=192.198.163.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZbcER6GM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GHULZBc0"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707506627; x=1739042627;
+  t=1707507314; x=1739043314;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=WC9tRxWrrOmUk1nUbdcPHKUUN+d2WwGkjgKMha0qJoc=;
-  b=ZbcER6GMB12IJCFECEDP+DhN/nfiRdaaVJQX2YYIErrhjiaoDfeJ7xhc
-   3MioLNIrUx/MwHL+qK2gut8YGs9a4DgPCadutjG3OQGypuriLh8NoVnmv
-   vrXGnJRfxt3+JRlA5BEOuggfIzqV0hEcr3d5wr3GtN8KaId58qDQNFluy
-   pCMSIyspRDPwyBTCIp1g/kIpYN1/urAD9Q+xD7mWZLHF1c3oXsmYczMGL
-   BoqXVfPfIVD/2JJh38l4Fs8EbrbGaIRdZN6e07Mr4mx3789J5cS0tACLE
-   AoEtOYXNxiuxx8EeamleGwuZR1r84lnmk0XPEwX+P7JLuTFPZ09+I6/bm
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="1395673"
+  bh=xhzwrO+6ZlV1l0qgiqyNhA2TgTafW1vbnrmWtuXQhXU=;
+  b=GHULZBc0IwH1WVl31TVc8ImVr78SOmbcNfkdNIMp1FBRPMQFD6GxlWHV
+   FqpSOMKE2uPQJbxbBYtX+jmXOWkKhZk69p8VKUhMahoB/y3PV4zfuV15S
+   OhC9l4MgIikYLWbluOkYH/rG9gfSx6PsNtfTM5ax85RNnvb+QQ/r9/ilA
+   AeXd6aD/OfBNvsZyBqKTOgIT8CvMsUNtonQpGTDokf0JHBDSnZArnBYDz
+   OwOm/i795apr4Jxvq15xq/Z6gu6Kphp1CaAAy6a7YmHQe7NN9eGhwmjSs
+   RiGYxbY0U7s/OHNOEaRUP2wTO3xQD23Fr4OPlFXIHA+y0eitNPtd2CR1G
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10979"; a="1641129"
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="1395673"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:23:46 -0800
+   d="scan'208";a="1641129"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:35:13 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,257,1701158400"; 
-   d="scan'208";a="39452963"
+   d="scan'208";a="33099836"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.74])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:23:46 -0800
-Date: Fri, 9 Feb 2024 11:23:44 -0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Feb 2024 11:35:13 -0800
+Date: Fri, 9 Feb 2024 11:35:12 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: "Moger, Babu" <babu.moger@amd.com>
 Cc: Fenghua Yu <fenghua.yu@intel.com>,
@@ -53,13 +53,12 @@ Cc: Fenghua Yu <fenghua.yu@intel.com>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Drew Fustini <dfustini@baylibre.com>, linux-kernel@vger.kernel.org,
 	linux-doc@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v15-RFC 5/8] x86/resctrl: Add "NODE" as an option for
- resource scope
-Message-ID: <ZcZ7wEUzESxUhs-y@agluck-desk3>
+Subject: Re: [PATCH v15-RFC 6/8] x86/resctrl: Introduce snc_nodes_per_l3_cache
+Message-ID: <ZcZ-cDqGLTtHpB1T@agluck-desk3>
 References: <20240126223837.21835-1-tony.luck@intel.com>
  <20240130222034.37181-1-tony.luck@intel.com>
- <20240130222034.37181-6-tony.luck@intel.com>
- <6628954f-c7e9-4040-9f03-7b5b6a6d082d@amd.com>
+ <20240130222034.37181-7-tony.luck@intel.com>
+ <89dc9022-c9a4-42dc-8710-be2d6d9a4e7c@amd.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -68,23 +67,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6628954f-c7e9-4040-9f03-7b5b6a6d082d@amd.com>
+In-Reply-To: <89dc9022-c9a4-42dc-8710-be2d6d9a4e7c@amd.com>
 
-On Fri, Feb 09, 2024 at 09:29:03AM -0600, Moger, Babu wrote:
-> Hi Tony,
+On Fri, Feb 09, 2024 at 09:29:16AM -0600, Moger, Babu wrote:
+> >  
+> > +extern unsigned int snc_nodes_per_l3_cache;
 > 
-> This patch probably needs to be merged with with patch 7.
+> I feel this can be part of rdt_resource instead of global.
 
-If it just added RESCTRL_NODE to the enum and the switch() I'd
-agree (as patch 7 is where RESCTRL_NODE first used). But this
-patch also adds the sanity checks on scope where it has to be
-a cache level.
+Mixed emotions about that. It would be another field that appears
+in every instance of rdt_resource, but only used by the RDT_RESOURCE_L3_MON
+copy.
 
-Patch 7 is already on the big side (119 lines added to core.c).
+> 
+> > +
+> >  enum resctrl_res_level {
+> >  	RDT_RESOURCE_L3_MON,
+> >  	RDT_RESOURCE_L3,
+> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+> > index b741cbf61843..dc886d2c9a33 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/core.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> > @@ -48,6 +48,12 @@ int max_name_width, max_data_width;
+> >   */
+> >  bool rdt_alloc_capable;
+> >  
+> > +/*
+> > + * Number of SNC nodes that share each L3 cache.  Default is 1 for
+> > + * systems that do not support SNC, or have SNC disabled.
+> > + */
+> > +unsigned int snc_nodes_per_l3_cache = 1;
+> > +
+> >  static void
+> >  mba_wrmsr_intel(struct rdt_domain *d, struct msr_param *m,
+> >  		struct rdt_resource *r);
+> > diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+> > index 080cad0d7288..357919bbadbe 100644
+> > --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> > +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> > @@ -148,8 +148,18 @@ static inline struct rmid_entry *__rmid_entry(u32 rmid)
+> >  
+> >  static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
+> >  {
+> > +	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+> 
+> RDT_RESOURCE_L3_MON?
 
-If you really think this series needs to cut back the
-number of patches, I could move the sanity check pieces
-from here to patch 3 (where the enum is introduced) and
-just the RESCTRL_NODE bits to patch 7.
+Second good catch.
+
+> 
+> > +	int cpu = smp_processor_id();
+> > +	int rmid_offset = 0;
+> >  	u64 msr_val;
+> >  
+> > +	/*
+> > +	 * When SNC mode is on, need to compute the offset to read the
+> > +	 * physical RMID counter for the node to which this CPU belongs.
+> > +	 */
+> > +	if (snc_nodes_per_l3_cache > 1)
+> > +		rmid_offset = (cpu_to_node(cpu) % snc_nodes_per_l3_cache) * r->num_rmid;
+> 
+> Not sure if you have tested or not. r->num_rmid is initialized for the
+> resource RDT_RESOURCE_L3_MON. For other resource it is always 0.
+
+I hadn't got time on the SNC machine to try this out. Thanks
+for catching this one, I'd have been scratching my head for a
+while to track the symptoms of this problem back to this mistake.
+
+Thanks
 
 -Tony
