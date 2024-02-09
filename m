@@ -1,142 +1,227 @@
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846CD657A3
-	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 07:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B6628DC1;
+	Fri,  9 Feb 2024 11:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707462579; cv=none; b=u9h2kVLQBEPqm8no5wlY6XY5Q8sXj7r7ays7Xnkx48+BoeA59fAKrh94C6mldoBSUrYlZCupyEGut3T2hxUxf+PZ1PTFf2tENXPzL8qMTQwuvtdKTFknFoDcWKEXOVps52Nff6pUljeCCHj6/6vBYVV1nsHa/V2y+BJiMLJDoJs=
+	t=1707477659; cv=none; b=uOM745a24MjUgqBNMyaiuRcn3O5j/YvPs44c+wr20iexDTc8Iu8Qi2tIxpyBRFmH4LBuM9mrahxeZW6cA+9hU9TnMhA6CxTLxsdIKN1odMSIRRhL5/kiDvcHVyvdeMtL0cCtZaZisX7QzdstkGDmntFkF0YoNlfqx0lpSJtjMow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707462579; c=relaxed/simple;
-	bh=2BecjwjxWB2L3ulwqYvp9rQ/5AQPmxbNsodwlauhfRM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GrS4K1SE+p7VwWzj8odNzI6rPFWmf1szCS8gyAV/jiDUqlOObwnL2vkKaluHnPFl48620TBmgslUPgk+3/L68TRpbeHxKe2bap8L/2KYbLdhh2zOyE9TaD2WaJ6ap0HPJypBsoxGt8Ilk1TlWhqXCpFHZpnmtqOOvQeN/jpC3Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=LUTcD4HZ; arc=none smtp.client-ip=185.67.36.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+	s=arc-20240116; t=1707477659; c=relaxed/simple;
+	bh=EQDhFl9ifLuO0cWW60pqujcWcLUCCDzUvFz8nDzjWEA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qoJz6xEXOSImLM/r4QPRz7GreB8Q+f0TLmEsad1EKdTRvdEGVm00d4WJZRd2M/97YiR59gYSdVwEZBk82HgESrRN7OkMwcqMolqHHFiEhRpQXbXz6uJn1v2HCDSSizx7QbAGuMetVp8x/7pOk4rdDsCpgkPJb6KDYWYtTnGZ1tM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=WPOo5mjY; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="LUTcD4HZ"
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id 8147124002A
-	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 08:09:34 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-	t=1707462574; bh=2BecjwjxWB2L3ulwqYvp9rQ/5AQPmxbNsodwlauhfRM=;
-	h=Message-ID:Subject:From:To:Cc:Date:Content-Type:
-	 Content-Transfer-Encoding:MIME-Version:From;
-	b=LUTcD4HZIKhxNe17j2uLNmMpvxEADiXNnEJ9e2h54tnhoZfwg8TXsXIEMflZZElCX
-	 IEk8trTg+fF3K7xaPnmu/FJaf70d0n6VMpeC008QjRLFZ/C+38AhsP5hWqz7uUjCbe
-	 rjnFJJcedm6CoKCH9vQvQK6V/xKcv+LrQR9o4Wy1hyZxUmScWJIKGfDY6ZOjTankgH
-	 ewzrkTiQvgIileXrJZ+ppNWe1kcrduSfxJ+3lWM7Xbu8soSpg261EFfFIMIvoi/KvO
-	 Tpn2UmnPCnMenmEO16bZ+aX2LXwi8eDnMX21msT0pvIm7JRabQUmElU99MsFsCnyqD
-	 oT2icYXwWzsfQ==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4TWQ2f0klvz9rxK;
-	Fri,  9 Feb 2024 08:09:29 +0100 (CET)
-Message-ID: <fdfcc3b6e1a884bb986acf072bcc13611eae8bdd.camel@posteo.de>
-Subject: Re: [PATCH 5.4 058/194] mtd: Fix gluebi NULL pointer dereference
- caused by ftl notifier
-From: Martin Kepplinger-Novakovic <martink@posteo.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, ZhaoLong Wang <wangzhaolong1@huawei.com>, 
- Zhihao Cheng <chengzhihao1@huawei.com>, Richard Weinberger
- <richard@nod.at>, Miquel Raynal <miquel.raynal@bootlin.com>, Sasha Levin
- <sashal@kernel.org>,  linux-mtd@lists.infradead.org, vigneshr@ti.com,
- dpervushin@embeddedalley.com,  Artem.Bityutskiy@nokia.com,
- linux-kernel@vger.kernel.org, yi.zhang@huawei.com,  yangerkun@huawei.com,
- Henri Roosen <Henri.Roosen@ginzinger.com>, Melchior Franz
- <Melchior.Franz@ginzinger.com>
-Date: Fri, 09 Feb 2024 07:09:29 +0000
-In-Reply-To: <20240122235721.687806578@linuxfoundation.org>
-References: <20240122235719.206965081@linuxfoundation.org>
-	 <20240122235721.687806578@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="WPOo5mjY"
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 419B7smf017740;
+	Fri, 9 Feb 2024 11:20:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=pp1; bh=AFRBt1FCWwZFCacHJwy/3XlOLZrPPJkYg4TH+/NMzCY=;
+ b=WPOo5mjYBYH2IErMw43bckQqh1/4kYc59Mlb1elBZP72pBgJxps+ciUAG95KQzIPdcV8
+ Y3sXAcMbSEuAlbdkku+NXUmybtws7qQ8VFXngPu+HKrUFg+6pJ42vQN2IDvnmeYPYWfW
+ nxN1pg0g4nlr7yKgldgcC9NL05Jpl1HXjZhxifysJ84z2+/p3qI2saNvZ3POkTa4Kgub
+ lZJE5TjAINvFm/HtsjAP+tI1ZJ/FOg2Kjv+QsZmc7ixiZvUwXH/JnIcmjNac30ktCsP5
+ UThMof80NLOpl5D3fiGJ03iLhEFbe1G9Ybwp83dBhrG0aLFvHpXIZY9uOtgA+XGoVqr3 eg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w5gkbc4pe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Feb 2024 11:20:52 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 419BJ0Zi005843;
+	Fri, 9 Feb 2024 11:20:52 GMT
+Received: from ppma22.wdc07v.mail.ibm.com (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w5gkbc4p3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Feb 2024 11:20:52 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 4199OWPH008770;
+	Fri, 9 Feb 2024 11:20:51 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+	by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w20702x02-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Feb 2024 11:20:51 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
+	by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 419BKmWQ65864186
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 9 Feb 2024 11:20:48 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5E23A20043;
+	Fri,  9 Feb 2024 11:20:48 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E0D3020040;
+	Fri,  9 Feb 2024 11:20:47 +0000 (GMT)
+Received: from osiris (unknown [9.179.1.234])
+	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Fri,  9 Feb 2024 11:20:47 +0000 (GMT)
+Date: Fri, 9 Feb 2024 12:20:46 +0100
+From: Heiko Carstens <hca@linux.ibm.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, maskray@google.com, ndesaulniers@google.com,
+        linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 00/11] s390: Support linking with ld.lld
+Message-ID: <20240209112046.13241-C-hca@linux.ibm.com>
+References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: SGrVWr2aETRlna7KZhmAL39hFcON2Vc3
+X-Proofpoint-ORIG-GUID: Fb5LnhK3ZSaXbrsL69WJpWi9iLmMuwBX
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-09_08,2024-02-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ adultscore=0 suspectscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=999
+ impostorscore=0 bulkscore=0 phishscore=0 malwarescore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2402090082
 
-QW0gTW9udGFnLCBkZW0gMjIuMDEuMjAyNCB1bSAxNTo1NiAtMDgwMCBzY2hyaWViIEdyZWcgS3Jv
-YWgtSGFydG1hbjoKPiA1LjQtc3RhYmxlIHJldmlldyBwYXRjaC7CoCBJZiBhbnlvbmUgaGFzIGFu
-eSBvYmplY3Rpb25zLCBwbGVhc2UgbGV0IG1lCj4ga25vdy4KPiAKPiAtLS0tLS0tLS0tLS0tLS0t
-LS0KPiAKPiBGcm9tOiBaaGFvTG9uZyBXYW5nIDx3YW5nemhhb2xvbmcxQGh1YXdlaS5jb20+Cj4g
-Cj4gWyBVcHN0cmVhbSBjb21taXQgYTQzYmRjMzc2ZGVhYjVmZmYxY2ViOTNkY2E1NWJjYWI4ZGJk
-YzFkNiBdCj4gCj4gSWYgYm90aCBmdGwua28gYW5kIGdsdWViaS5rbyBhcmUgbG9hZGVkLCB0aGUg
-bm90aWZpZXIgb2YgZnRsCj4gdHJpZ2dlcnMgTlVMTCBwb2ludGVyIGRlcmVmZXJlbmNlIHdoZW4g
-dHJ5aW5nIHRvIGFjY2Vzcwo+IOKAmGdsdWViaS0+ZGVzY+KAmSBpbiBnbHVlYmlfcmVhZCgpLgo+
-IAo+IHViaV9nbHVlYmlfaW5pdAo+IMKgIHViaV9yZWdpc3Rlcl92b2x1bWVfbm90aWZpZXIKPiDC
-oMKgwqAgdWJpX2VudW1lcmF0ZV92b2x1bWVzCj4gwqDCoMKgwqDCoCB1Ymlfbm90aWZ5X2FsbAo+
-IMKgwqDCoMKgwqDCoMKgIGdsdWViaV9ub3RpZnnCoMKgwqAgbmItPm5vdGlmaWVyX2NhbGwoKQo+
-IMKgwqDCoMKgwqDCoMKgwqDCoCBnbHVlYmlfY3JlYXRlCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBtdGRfZGV2aWNlX3JlZ2lzdGVyCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbXRkX2Rl
-dmljZV9wYXJzZV9yZWdpc3Rlcgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBhZGRf
-bXRkX2RldmljZQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYmxrdHJhbnNf
-bm90aWZ5X2FkZMKgwqAgbm90LT5hZGQoKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgIGZ0bF9hZGRfbXRkwqDCoMKgwqDCoMKgwqDCoCB0ci0+YWRkX210ZCgpCj4gwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHNjYW5faGVhZGVyCj4gwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBtdGRfcmVhZAo+IMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIG10ZF9yZWFk
-X29vYgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBtdGRfcmVhZF9vb2Jfc3RkCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBnbHVlYmlfcmVhZMKgwqAgbXRkLT5yZWFkKCkKPiDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCBnbHVlYmktPmRlc2MgLSBOVUxMCj4gCj4gRGV0YWlsZWQgcmVwcm9kdWN0aW9uIGluZm9y
-bWF0aW9uIGF2YWlsYWJsZSBhdCB0aGUgTGluayBbMV0sCj4gCj4gSW4gdGhlIG5vcm1hbCBjYXNl
-LCBvYnRhaW4gZ2x1ZWJpLT5kZXNjIGluIHRoZSBnbHVlYmlfZ2V0X2RldmljZSgpLAo+IGFuZCBh
-Y2Nlc3MgZ2x1ZWJpLT5kZXNjIGluIHRoZSBnbHVlYmlfcmVhZCgpLiBIb3dldmVyLAo+IGdsdWVi
-aV9nZXRfZGV2aWNlKCkgaXMgbm90IGV4ZWN1dGVkIGluIGFkdmFuY2UgaW4gdGhlCj4gZnRsX2Fk
-ZF9tdGQoKSBwcm9jZXNzLCB3aGljaCBsZWFkcyB0byBOVUxMIHBvaW50ZXIgZGVyZWZlcmVuY2Uu
-Cj4gCj4gVGhlIHNvbHV0aW9uIGZvciB0aGUgZ2x1ZWJpIG1vZHVsZSBpcyB0byBydW4gamZmczIg
-b24gdGhlIFVCSQo+IHZvbHVtZSB3aXRob3V0IGNvbnNpZGVyaW5nIHdvcmtpbmcgd2l0aCBmdGwg
-b3IgbXRkYmxvY2sgWzJdLgo+IFRoZXJlZm9yZSwgdGhpcyBwcm9ibGVtIGNhbiBiZSBhdm9pZGVk
-IGJ5IHByZXZlbnRpbmcgZ2x1ZWJpIGZyb20KPiBjcmVhdGluZyB0aGUgbXRkYmxvY2sgZGV2aWNl
-IGFmdGVyIGNyZWF0aW5nIG10ZCBwYXJ0aXRpb24gb2YgdGhlCj4gdHlwZSBNVERfVUJJVk9MVU1F
-Lgo+IAo+IEZpeGVzOiAyYmEzZDc2YTFlMjkgKCJVQkk6IG1ha2UgZ2x1ZWJpIGEgc2VwYXJhdGUg
-bW9kdWxlIikKPiBMaW5rOiBodHRwczovL2J1Z3ppbGxhLmtlcm5lbC5vcmcvc2hvd19idWcuY2dp
-P2lkPTIxNzk5MsKgWzFdCj4gTGluazoKPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9sa21sLzQ0
-MTEwNzEwMC4yMzczNC4xNjk3OTA0NTgwMjUyLkphdmFNYWlsLnppbWJyYUBub2QuYXQvCj4gwqBb
-Ml0KPiBTaWduZWQtb2ZmLWJ5OiBaaGFvTG9uZyBXYW5nIDx3YW5nemhhb2xvbmcxQGh1YXdlaS5j
-b20+Cj4gUmV2aWV3ZWQtYnk6IFpoaWhhbyBDaGVuZyA8Y2hlbmd6aGloYW8xQGh1YXdlaS5jb20+
-Cj4gQWNrZWQtYnk6IFJpY2hhcmQgV2VpbmJlcmdlciA8cmljaGFyZEBub2QuYXQ+Cj4gU2lnbmVk
-LW9mZi1ieTogTWlxdWVsIFJheW5hbCA8bWlxdWVsLnJheW5hbEBib290bGluLmNvbT4KPiBMaW5r
-Ogo+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xpbnV4LW10ZC8yMDIzMTIyMDAyNDYxOS4yMTM4
-NjI1LTEtd2FuZ3poYW9sb25nMUBodWF3ZWkuY29tCj4gU2lnbmVkLW9mZi1ieTogU2FzaGEgTGV2
-aW4gPHNhc2hhbEBrZXJuZWwub3JnPgo+IC0tLQo+IMKgZHJpdmVycy9tdGQvbXRkX2Jsa2RldnMu
-YyB8IDQgKystLQo+IMKgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlv
-bnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9tdGQvbXRkX2Jsa2RldnMuYyBiL2RyaXZl
-cnMvbXRkL210ZF9ibGtkZXZzLmMKPiBpbmRleCAwYzA1Zjc3ZjliMjEuLmRkMGQwYmY1ZjU3ZiAx
-MDA2NDQKPiAtLS0gYS9kcml2ZXJzL210ZC9tdGRfYmxrZGV2cy5jCj4gKysrIGIvZHJpdmVycy9t
-dGQvbXRkX2Jsa2RldnMuYwo+IEBAIC01MzMsNyArNTMzLDcgQEAgc3RhdGljIHZvaWQgYmxrdHJh
-bnNfbm90aWZ5X2FkZChzdHJ1Y3QgbXRkX2luZm8KPiAqbXRkKQo+IMKgewo+IMKgwqDCoMKgwqDC
-oMKgwqBzdHJ1Y3QgbXRkX2Jsa3RyYW5zX29wcyAqdHI7Cj4gwqAKPiAtwqDCoMKgwqDCoMKgwqBp
-ZiAobXRkLT50eXBlID09IE1URF9BQlNFTlQpCj4gK8KgwqDCoMKgwqDCoMKgaWYgKG10ZC0+dHlw
-ZSA9PSBNVERfQUJTRU5UIHx8IG10ZC0+dHlwZSA9PSBNVERfVUJJVk9MVU1FKQo+IMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0dXJuOwo+IMKgCj4gwqDCoMKgwqDCoMKgwqDCoGxp
-c3RfZm9yX2VhY2hfZW50cnkodHIsICZibGt0cmFuc19tYWpvcnMsIGxpc3QpCj4gQEAgLTU3Niw3
-ICs1NzYsNyBAQCBpbnQgcmVnaXN0ZXJfbXRkX2Jsa3RyYW5zKHN0cnVjdCBtdGRfYmxrdHJhbnNf
-b3BzCj4gKnRyKQo+IMKgwqDCoMKgwqDCoMKgwqBsaXN0X2FkZCgmdHItPmxpc3QsICZibGt0cmFu
-c19tYWpvcnMpOwo+IMKgCj4gwqDCoMKgwqDCoMKgwqDCoG10ZF9mb3JfZWFjaF9kZXZpY2UobXRk
-KQo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAobXRkLT50eXBlICE9IE1URF9B
-QlNFTlQpCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGlmIChtdGQtPnR5cGUgIT0g
-TVREX0FCU0VOVCAmJiBtdGQtPnR5cGUgIT0KPiBNVERfVUJJVk9MVU1FKQo+IMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHRyLT5hZGRfbXRkKHRyLCBtdGQp
-Owo+IMKgCj4gwqDCoMKgwqDCoMKgwqDCoG11dGV4X3VubG9jaygmbXRkX3RhYmxlX211dGV4KTsK
-CkhpIEdyZWcsIGhpIHBhdGNoLWRldmVsb3BlcnMsCgp3YWl0IGEgc2Vjb25kLiB0aGlzIGFscmVh
-ZHkgd2VudCBpbnRvIHY1LjQuMjY4IGJ1dCBzdGlsbDogRG9lc24ndCB0aGlzCmJyZWFrIHVzZXJz
-cGFjZT8KCkFjY29yZGluZyB0bwpodHRwczovL2xvcmUua2VybmVsLm9yZy9sa21sLzQ0MTEwNzEw
-MC4yMzczNC4xNjk3OTA0NTgwMjUyLkphdmFNYWlsLnppbWJyYUBub2QuYXQvCndoZXJlIHRoaXMg
-c29sdXRpb24gc2VlbXMgdG8gY29tZSBmcm9tLCB0aGUgYmVoYXZpb3VyIGNoYW5nZXM6ICJubwpt
-dGRibG9jayAoaGVuY2UsIGFsc28gbm8gRlRMcykgb24gdG9wIG9mIGdsdWViaS4iCgpJIGZlbGwg
-YWNjcm9zcyB0aGlzIGJlY2F1c2Ugb2YgYW4gb3V0LW9mLXRyZWUgbW9kdWxlIHRoYXQgZG9lcwpz
-eXNfbW91bnQoKSBhbiBtdGRibG9jaywgc28gSSB3b24ndCBjb21wbGFpbiBhYm91dCBteSBjb2Rl
-IHNwZWNpZmljYWxseQo6KSBCdXQgZG9lc24ndCBpdCBicmVhayBtb3VudGluZywgc2F5LCBqZmZz
-MiBpbnNpZGUgYW4gdWJpIHZpYQptdGRibG9jaz8gSWYgc28sIGlzIHRoaXMgcmVhbGx5IHNvbWV0
-aGluZyB0aGF0IHlvdSB3YW50IHRvIHNlZQpiYWNrcG9ydGVkIHRvIG9sZCBrZXJuZWxzPwoKT3Ig
-ZGlmZmVyZW50bHkgcHV0OiBIYXMgdGhpcyBwYXRjaCBiZWVuIHBpY2tlZCB1cCBmb3Igb2xkIHN0
-YWJsZQprZXJuZWxzIGJ5IHNjcmlwdHMgb3IgYnkgYSBodW1hbj8KCkkganVzdCB3YW50IHRvIG1h
-a2Ugc3VyZSwgYW5kIHdobyBrbm93cywgaXQgbWlnaHQgaGVscCBvdGhlcnMgdG9vLCB3aG8Kd291
-bGQganVzdCBkbyBhIChwb3NzaWJseSBkYW5nZXJvdXM/KSByZXZlcnQgaW4gdGhlaXIgdHJlZXMu
-Cgp0aGFua3MhCiAgICAgICAgICAgICAgICAgICAgICAgICAgbWFydGluCgoK
+Hi Nathan,
+
+> This series allows the s390 kernel to be linked with ld.lld (support for
+> s390 is under review at [1]). This implicitly depends on [2], which was
+> created and sent before it was realized that this series was necessary.
+...
+> There is one outstanding issue due to something that ld.lld does not
+> support that the kernel relies on:
+> 
+>   ld.lld: error: drivers/nvme/host/fc.o:(__bug_table): writable SHF_MERGE section is not supported
+> 
+> This was changed in the kernel in commit e21f8baf8d9a ("s390/bug: add
+> entry size to the __bug_table section"). Is this change truly necessary?
+> I selectively applied a revert on top of current mainline and I did not
+> observe any issues with either Clang or GCC.
+
+No it is not necessary. As the original patch stated this was a pre-req
+patch for objtool, for which we still don't have support. This (or
+something different) might be needed. But for now this can easily be
+reverted.
+
+> Then build the kernel with 'LD=ld.lld' in addition to whatever command
+> line you use (I tested both Clang and GCC). I can boot an ld.lld linked
+> kernel built with both compilers in QEMU with this series.
+> 
+> [    1.386970] Linux version 6.8.0-rc3-00043-g05761ede85d6-dirty (nathan@dev-fedora.aadp) (s390-linux-gcc (GCC) 13.2.0, ClangBuiltLinux LLD 19.0.0) #1 SMP Wed Feb  7 16:51:12 MST 2024
+> 
+> [    0.871923] Linux version 6.8.0-rc3-00043-g05761ede85d6-dirty (nathan@dev-fedora.aadp) (ClangBuiltLinux clang version 19.0.0git (https://github.com/llvm/llvm-project 417075e56aeba5a5b20301c7bfeba9c2a800982b), ClangBuiltLinux LLD 19.0.0) #1 SMP Wed Feb  7 17:01:22 MST 2024
+
+Tested, and works for me. Thanks a lot for your work. This is highly
+appreciated!
+
+I applied this series internally to get some CI runs over the weekend, and
+push it to our external repository beginning of next week. As suggested by
+you I reverted the commit you mentioned above, and also removed ENTRY from
+our vdso linker scripts, similar to what you did already for powerpc (see
+patches below).
+
+Please feel free to send patches for both of the issues, and I'll replace
+my patches with your patches.
+
+From 30a0a88d0e6c4802b748a942bb3f6f1b223f53ba Mon Sep 17 00:00:00 2001
+From: Heiko Carstens <hca@linux.ibm.com>
+Date: Fri, 9 Feb 2024 11:48:25 +0100
+Subject: [PATCH 1/2] s390/bug: remove entry size from __bug_table section
+
+Commit e21f8baf8d9a ("s390/bug: add entry size to the __bug_table section")
+changed the __EMIT_BUG() inline assembly to emit mergeable __bug_table
+entries. This is at least currently not needed, but causes problems with
+the upcoming s390 ld.lld support:
+
+  ld.lld: error: drivers/nvme/host/fc.o:(__bug_table): writable SHF_MERGE section is not supported
+
+Therefore revert the change for now.
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/all/20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org/
+Suggested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+---
+ arch/s390/include/asm/bug.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/s390/include/asm/bug.h b/arch/s390/include/asm/bug.h
+index aebe1e22c7be..c500d45fb465 100644
+--- a/arch/s390/include/asm/bug.h
++++ b/arch/s390/include/asm/bug.h
+@@ -14,7 +14,7 @@
+ 		".section .rodata.str,\"aMS\",@progbits,1\n"	\
+ 		"1:	.asciz	\""__FILE__"\"\n"		\
+ 		".previous\n"					\
+-		".section __bug_table,\"awM\",@progbits,%2\n"	\
++		".section __bug_table,\"aw\"\n"			\
+ 		"2:	.long	0b-.\n"				\
+ 		"	.long	1b-.\n"				\
+ 		"	.short	%0,%1\n"			\
+@@ -30,7 +30,7 @@
+ #define __EMIT_BUG(x) do {					\
+ 	asm_inline volatile(					\
+ 		"0:	mc	0,0\n"				\
+-		".section __bug_table,\"awM\",@progbits,%1\n"	\
++		".section __bug_table,\"aw\"\n"			\
+ 		"1:	.long	0b-.\n"				\
+ 		"	.short	%0\n"				\
+ 		"	.org	1b+%1\n"			\
+-- 
+2.40.1
+
+From bdca9b8dcf3f0884341f491d54502d4cbe660446 Mon Sep 17 00:00:00 2001
+From: Heiko Carstens <hca@linux.ibm.com>
+Date: Fri, 9 Feb 2024 11:54:01 +0100
+Subject: [PATCH 2/2] s390/vdso: remove unused ENTRY in linker scripts
+
+When linking vdso64.so.dbg with ld.lld, there is a warning about not
+finding _start for the starting address:
+
+  ld.lld: warning: cannot find entry symbol _start; not setting start address
+
+Fix this be removing the unused ENTRY in both vdso linker scripts. See
+commit e247172854a5 ("powerpc/vdso: Remove unused ENTRY in linker
+scripts"), which solved the same problem for powerpc, for further details.
+
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+---
+ arch/s390/kernel/vdso32/vdso32.lds.S | 1 -
+ arch/s390/kernel/vdso64/vdso64.lds.S | 1 -
+ 2 files changed, 2 deletions(-)
+
+diff --git a/arch/s390/kernel/vdso32/vdso32.lds.S b/arch/s390/kernel/vdso32/vdso32.lds.S
+index edf5ff1debe1..65b9513a5a0e 100644
+--- a/arch/s390/kernel/vdso32/vdso32.lds.S
++++ b/arch/s390/kernel/vdso32/vdso32.lds.S
+@@ -9,7 +9,6 @@
+ 
+ OUTPUT_FORMAT("elf32-s390", "elf32-s390", "elf32-s390")
+ OUTPUT_ARCH(s390:31-bit)
+-ENTRY(_start)
+ 
+ SECTIONS
+ {
+diff --git a/arch/s390/kernel/vdso64/vdso64.lds.S b/arch/s390/kernel/vdso64/vdso64.lds.S
+index 4461ea151e49..37e2a505e81d 100644
+--- a/arch/s390/kernel/vdso64/vdso64.lds.S
++++ b/arch/s390/kernel/vdso64/vdso64.lds.S
+@@ -9,7 +9,6 @@
+ 
+ OUTPUT_FORMAT("elf64-s390", "elf64-s390", "elf64-s390")
+ OUTPUT_ARCH(s390:64-bit)
+-ENTRY(_start)
+ 
+ SECTIONS
+ {
+-- 
+2.40.1
 
