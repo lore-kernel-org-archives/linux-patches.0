@@ -1,213 +1,142 @@
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FAA5025F
-	for <patches@lists.linux.dev>; Thu,  8 Feb 2024 23:14:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846CD657A3
+	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 07:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707434055; cv=none; b=gr2p4Ppt6vGvbq+3ZtV3r+Sn/VcZQlN4Ie1tV39+NKvIO6Muts9Yv10QSXoQ/DeZdDV/YwZUpL7MU1jlneSlLNAvmN4OEpYKDCY5f8jhHGdtKHaq4pltHWClOCihnVfS9zQYwxOcM7J1uZ4WyBYOTjJDrj8LM3DKApm8J8EBLLA=
+	t=1707462579; cv=none; b=u9h2kVLQBEPqm8no5wlY6XY5Q8sXj7r7ays7Xnkx48+BoeA59fAKrh94C6mldoBSUrYlZCupyEGut3T2hxUxf+PZ1PTFf2tENXPzL8qMTQwuvtdKTFknFoDcWKEXOVps52Nff6pUljeCCHj6/6vBYVV1nsHa/V2y+BJiMLJDoJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707434055; c=relaxed/simple;
-	bh=me8ZF9MFV3b25A/LpyNIDRWvjZIMoVYXkuh8e+uhqu4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NJoe/exWN2HseBqrCKmfCajgPgK1QjRyeanI1oUBNXAsEOubfcyXQQ9wL25X5t2G24nU4CQ3H7IZGIlkQW7Uq3GSSxIqA13uSvvxbiBWJLrRqD5E6lJIXrUJlMVxhl2jPqQrF91etJjSJhiTxAlqITTbaEg7n34YlGQlC8tpwVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=CE+jHtm/; arc=none smtp.client-ip=209.85.166.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707462579; c=relaxed/simple;
+	bh=2BecjwjxWB2L3ulwqYvp9rQ/5AQPmxbNsodwlauhfRM=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=GrS4K1SE+p7VwWzj8odNzI6rPFWmf1szCS8gyAV/jiDUqlOObwnL2vkKaluHnPFl48620TBmgslUPgk+3/L68TRpbeHxKe2bap8L/2KYbLdhh2zOyE9TaD2WaJ6ap0HPJypBsoxGt8Ilk1TlWhqXCpFHZpnmtqOOvQeN/jpC3Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=LUTcD4HZ; arc=none smtp.client-ip=185.67.36.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CE+jHtm/"
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7c4085a960aso11429139f.3
-        for <patches@lists.linux.dev>; Thu, 08 Feb 2024 15:14:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707434052; x=1708038852; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pe6jnI7sJWQLdADxcvkIM7ZK9uT6CeFtU8HHzuib1uI=;
-        b=CE+jHtm/+Wf7nXddkjLITlBKKhRz1SR95pbyoOtT29cYkHFxk+RUCks3TCIfKLoOjP
-         orQuUuSS1aXbWsycFyczjSYXXNQuxtyu/mjiJqKlikEVFVNOHvifS9dVYs9A/gNGj1MO
-         hpNUPhiAYuDcxe7qbwpx77Jza6yqZST8Jc+rw/uTEg1nvK0W3G7dKYoLoDXm2uHnyIQn
-         Ay+0+VXxky/OY6/lly2DpVI1KMj3s/MRpcY84n83Ltey995fnhmvRZeGKwalGY21nlLa
-         LaRAl4BcybJeCKEtclrZgL9N4DsDRL/r3hAVqweIWk5kAK1bHMsN4VV0Q3Pbd+8E7q0F
-         SSHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707434052; x=1708038852;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pe6jnI7sJWQLdADxcvkIM7ZK9uT6CeFtU8HHzuib1uI=;
-        b=GbeKPdIYFVYmXduXpIWH5ylT0LWbGaoWJlj9v3PZNvy0qrM0EXIbKOqHxWa5yoMMto
-         1dgjxMLPFtnDVWJvanSB4nYLxPiBvECjnnCOoWL4yuoZQYBhkV20TKITpgYKlLxqsb1V
-         8IWuBRsldpoX7owvj64qCd7pDTOwyrp0A8neStldEtMRAFsdSq8gwdXJ3dtYuMkEWzP+
-         BNsunalhMJFAOV8kinCsr5w+mC1RXqnscwgg1Bn9bzbrkwyrvEacjf5lfRwIBlic7Ocp
-         FH07AhwaZUW6T2AHDz+hf8f/oxiDC0T83l3JZdk6tGPBUgPOlwY8FJ7T0GtViOX7Ji41
-         7uEA==
-X-Forwarded-Encrypted: i=1; AJvYcCVXR/HqEfGvABuFCC8mTR5sn2CvHn/4rai2FljcNXTQql98FXWgDDTLaomFCeP/KcP9x3hAaFJ1K5BCr1poFQXhJX20jSgUzw==
-X-Gm-Message-State: AOJu0Yxqq0DIOv+LyRzOliN4qr8eOnNxd+PddP7qHY6n5ixR47A9QRoM
-	3iMlEN3aLgESLXY7Bf7FLDhkWb34ePE9E6Phs0CXH+B/4ZD+iY7w+r2CUCfYjg==
-X-Google-Smtp-Source: AGHT+IHCKa/qnllJa3a8anZ50HmqNn75qJTTGYvPU2+WwjU6U+rngyIqVcN2/lsJ591YBvYTq0dxLw==
-X-Received: by 2002:a6b:6b15:0:b0:7c4:6c8:fe2a with SMTP id g21-20020a6b6b15000000b007c406c8fe2amr64594ioc.11.1707434052059;
-        Thu, 08 Feb 2024 15:14:12 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCV/sQAnakA0PHqUvHJVwEnGRDfLGGR1Y3EMsnDtlTssTQZLJmdAZJb4weX5gsjP0GHz87cjZ+J4aTm3lhvE8vGjJ7gUV+F94Ka/SSo/b0jZGktJv8SsWuN+Yrn45Ipj+rKMx3j6PTbvF7sIXTY9e4mk+6newdRmq9RdiFbg4fYoOZuLNbxx4HXoEGYuFDdtn2v4l5+YOsvluP3SnMTPSMvLEJwmE6Mrlt7FC4AUaj0/1y4WFnSQi890D49iGXs7laiKi57+1CfTmrGa5diaVMarJ9O9titiQNcX/FXJQYyh6OVxOY1bQ3N5yXIxcec1OGFFBIH7m541j3LvNbQIEAyVT65ZyucUjxkLBvXNwqxZmVLQYDKJGzdW3u+sFiPdyA==
-Received: from google.com (20.10.132.34.bc.googleusercontent.com. [34.132.10.20])
-        by smtp.gmail.com with ESMTPSA id t30-20020a05663836de00b004714adc2d2fsm106510jau.46.2024.02.08.15.14.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Feb 2024 15:14:11 -0800 (PST)
-Date: Thu, 8 Feb 2024 23:14:07 +0000
-From: Justin Stitt <justinstitt@google.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com,
-	borntraeger@linux.ibm.com, svens@linux.ibm.com, maskray@google.com,
-	ndesaulniers@google.com, linux-s390@vger.kernel.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 00/11] s390: Support linking with ld.lld
-Message-ID: <20240208231407.vkisblrowjvivsxb@google.com>
-References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="LUTcD4HZ"
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout01.posteo.de (Postfix) with ESMTPS id 8147124002A
+	for <patches@lists.linux.dev>; Fri,  9 Feb 2024 08:09:34 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+	t=1707462574; bh=2BecjwjxWB2L3ulwqYvp9rQ/5AQPmxbNsodwlauhfRM=;
+	h=Message-ID:Subject:From:To:Cc:Date:Content-Type:
+	 Content-Transfer-Encoding:MIME-Version:From;
+	b=LUTcD4HZIKhxNe17j2uLNmMpvxEADiXNnEJ9e2h54tnhoZfwg8TXsXIEMflZZElCX
+	 IEk8trTg+fF3K7xaPnmu/FJaf70d0n6VMpeC008QjRLFZ/C+38AhsP5hWqz7uUjCbe
+	 rjnFJJcedm6CoKCH9vQvQK6V/xKcv+LrQR9o4Wy1hyZxUmScWJIKGfDY6ZOjTankgH
+	 ewzrkTiQvgIileXrJZ+ppNWe1kcrduSfxJ+3lWM7Xbu8soSpg261EFfFIMIvoi/KvO
+	 Tpn2UmnPCnMenmEO16bZ+aX2LXwi8eDnMX21msT0pvIm7JRabQUmElU99MsFsCnyqD
+	 oT2icYXwWzsfQ==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4TWQ2f0klvz9rxK;
+	Fri,  9 Feb 2024 08:09:29 +0100 (CET)
+Message-ID: <fdfcc3b6e1a884bb986acf072bcc13611eae8bdd.camel@posteo.de>
+Subject: Re: [PATCH 5.4 058/194] mtd: Fix gluebi NULL pointer dereference
+ caused by ftl notifier
+From: Martin Kepplinger-Novakovic <martink@posteo.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, ZhaoLong Wang <wangzhaolong1@huawei.com>, 
+ Zhihao Cheng <chengzhihao1@huawei.com>, Richard Weinberger
+ <richard@nod.at>, Miquel Raynal <miquel.raynal@bootlin.com>, Sasha Levin
+ <sashal@kernel.org>,  linux-mtd@lists.infradead.org, vigneshr@ti.com,
+ dpervushin@embeddedalley.com,  Artem.Bityutskiy@nokia.com,
+ linux-kernel@vger.kernel.org, yi.zhang@huawei.com,  yangerkun@huawei.com,
+ Henri Roosen <Henri.Roosen@ginzinger.com>, Melchior Franz
+ <Melchior.Franz@ginzinger.com>
+Date: Fri, 09 Feb 2024 07:09:29 +0000
+In-Reply-To: <20240122235721.687806578@linuxfoundation.org>
+References: <20240122235719.206965081@linuxfoundation.org>
+	 <20240122235721.687806578@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
 
-Hi,
+QW0gTW9udGFnLCBkZW0gMjIuMDEuMjAyNCB1bSAxNTo1NiAtMDgwMCBzY2hyaWViIEdyZWcgS3Jv
+YWgtSGFydG1hbjoKPiA1LjQtc3RhYmxlIHJldmlldyBwYXRjaC7CoCBJZiBhbnlvbmUgaGFzIGFu
+eSBvYmplY3Rpb25zLCBwbGVhc2UgbGV0IG1lCj4ga25vdy4KPiAKPiAtLS0tLS0tLS0tLS0tLS0t
+LS0KPiAKPiBGcm9tOiBaaGFvTG9uZyBXYW5nIDx3YW5nemhhb2xvbmcxQGh1YXdlaS5jb20+Cj4g
+Cj4gWyBVcHN0cmVhbSBjb21taXQgYTQzYmRjMzc2ZGVhYjVmZmYxY2ViOTNkY2E1NWJjYWI4ZGJk
+YzFkNiBdCj4gCj4gSWYgYm90aCBmdGwua28gYW5kIGdsdWViaS5rbyBhcmUgbG9hZGVkLCB0aGUg
+bm90aWZpZXIgb2YgZnRsCj4gdHJpZ2dlcnMgTlVMTCBwb2ludGVyIGRlcmVmZXJlbmNlIHdoZW4g
+dHJ5aW5nIHRvIGFjY2Vzcwo+IOKAmGdsdWViaS0+ZGVzY+KAmSBpbiBnbHVlYmlfcmVhZCgpLgo+
+IAo+IHViaV9nbHVlYmlfaW5pdAo+IMKgIHViaV9yZWdpc3Rlcl92b2x1bWVfbm90aWZpZXIKPiDC
+oMKgwqAgdWJpX2VudW1lcmF0ZV92b2x1bWVzCj4gwqDCoMKgwqDCoCB1Ymlfbm90aWZ5X2FsbAo+
+IMKgwqDCoMKgwqDCoMKgIGdsdWViaV9ub3RpZnnCoMKgwqAgbmItPm5vdGlmaWVyX2NhbGwoKQo+
+IMKgwqDCoMKgwqDCoMKgwqDCoCBnbHVlYmlfY3JlYXRlCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBtdGRfZGV2aWNlX3JlZ2lzdGVyCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbXRkX2Rl
+dmljZV9wYXJzZV9yZWdpc3Rlcgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBhZGRf
+bXRkX2RldmljZQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYmxrdHJhbnNf
+bm90aWZ5X2FkZMKgwqAgbm90LT5hZGQoKQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIGZ0bF9hZGRfbXRkwqDCoMKgwqDCoMKgwqDCoCB0ci0+YWRkX210ZCgpCj4gwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHNjYW5faGVhZGVyCj4gwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBtdGRfcmVhZAo+IMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIG10ZF9yZWFk
+X29vYgo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCBtdGRfcmVhZF9vb2Jfc3RkCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBnbHVlYmlfcmVhZMKgwqAgbXRkLT5yZWFkKCkKPiDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCBnbHVlYmktPmRlc2MgLSBOVUxMCj4gCj4gRGV0YWlsZWQgcmVwcm9kdWN0aW9uIGluZm9y
+bWF0aW9uIGF2YWlsYWJsZSBhdCB0aGUgTGluayBbMV0sCj4gCj4gSW4gdGhlIG5vcm1hbCBjYXNl
+LCBvYnRhaW4gZ2x1ZWJpLT5kZXNjIGluIHRoZSBnbHVlYmlfZ2V0X2RldmljZSgpLAo+IGFuZCBh
+Y2Nlc3MgZ2x1ZWJpLT5kZXNjIGluIHRoZSBnbHVlYmlfcmVhZCgpLiBIb3dldmVyLAo+IGdsdWVi
+aV9nZXRfZGV2aWNlKCkgaXMgbm90IGV4ZWN1dGVkIGluIGFkdmFuY2UgaW4gdGhlCj4gZnRsX2Fk
+ZF9tdGQoKSBwcm9jZXNzLCB3aGljaCBsZWFkcyB0byBOVUxMIHBvaW50ZXIgZGVyZWZlcmVuY2Uu
+Cj4gCj4gVGhlIHNvbHV0aW9uIGZvciB0aGUgZ2x1ZWJpIG1vZHVsZSBpcyB0byBydW4gamZmczIg
+b24gdGhlIFVCSQo+IHZvbHVtZSB3aXRob3V0IGNvbnNpZGVyaW5nIHdvcmtpbmcgd2l0aCBmdGwg
+b3IgbXRkYmxvY2sgWzJdLgo+IFRoZXJlZm9yZSwgdGhpcyBwcm9ibGVtIGNhbiBiZSBhdm9pZGVk
+IGJ5IHByZXZlbnRpbmcgZ2x1ZWJpIGZyb20KPiBjcmVhdGluZyB0aGUgbXRkYmxvY2sgZGV2aWNl
+IGFmdGVyIGNyZWF0aW5nIG10ZCBwYXJ0aXRpb24gb2YgdGhlCj4gdHlwZSBNVERfVUJJVk9MVU1F
+Lgo+IAo+IEZpeGVzOiAyYmEzZDc2YTFlMjkgKCJVQkk6IG1ha2UgZ2x1ZWJpIGEgc2VwYXJhdGUg
+bW9kdWxlIikKPiBMaW5rOiBodHRwczovL2J1Z3ppbGxhLmtlcm5lbC5vcmcvc2hvd19idWcuY2dp
+P2lkPTIxNzk5MsKgWzFdCj4gTGluazoKPiBodHRwczovL2xvcmUua2VybmVsLm9yZy9sa21sLzQ0
+MTEwNzEwMC4yMzczNC4xNjk3OTA0NTgwMjUyLkphdmFNYWlsLnppbWJyYUBub2QuYXQvCj4gwqBb
+Ml0KPiBTaWduZWQtb2ZmLWJ5OiBaaGFvTG9uZyBXYW5nIDx3YW5nemhhb2xvbmcxQGh1YXdlaS5j
+b20+Cj4gUmV2aWV3ZWQtYnk6IFpoaWhhbyBDaGVuZyA8Y2hlbmd6aGloYW8xQGh1YXdlaS5jb20+
+Cj4gQWNrZWQtYnk6IFJpY2hhcmQgV2VpbmJlcmdlciA8cmljaGFyZEBub2QuYXQ+Cj4gU2lnbmVk
+LW9mZi1ieTogTWlxdWVsIFJheW5hbCA8bWlxdWVsLnJheW5hbEBib290bGluLmNvbT4KPiBMaW5r
+Ogo+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2xpbnV4LW10ZC8yMDIzMTIyMDAyNDYxOS4yMTM4
+NjI1LTEtd2FuZ3poYW9sb25nMUBodWF3ZWkuY29tCj4gU2lnbmVkLW9mZi1ieTogU2FzaGEgTGV2
+aW4gPHNhc2hhbEBrZXJuZWwub3JnPgo+IC0tLQo+IMKgZHJpdmVycy9tdGQvbXRkX2Jsa2RldnMu
+YyB8IDQgKystLQo+IMKgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlv
+bnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9tdGQvbXRkX2Jsa2RldnMuYyBiL2RyaXZl
+cnMvbXRkL210ZF9ibGtkZXZzLmMKPiBpbmRleCAwYzA1Zjc3ZjliMjEuLmRkMGQwYmY1ZjU3ZiAx
+MDA2NDQKPiAtLS0gYS9kcml2ZXJzL210ZC9tdGRfYmxrZGV2cy5jCj4gKysrIGIvZHJpdmVycy9t
+dGQvbXRkX2Jsa2RldnMuYwo+IEBAIC01MzMsNyArNTMzLDcgQEAgc3RhdGljIHZvaWQgYmxrdHJh
+bnNfbm90aWZ5X2FkZChzdHJ1Y3QgbXRkX2luZm8KPiAqbXRkKQo+IMKgewo+IMKgwqDCoMKgwqDC
+oMKgwqBzdHJ1Y3QgbXRkX2Jsa3RyYW5zX29wcyAqdHI7Cj4gwqAKPiAtwqDCoMKgwqDCoMKgwqBp
+ZiAobXRkLT50eXBlID09IE1URF9BQlNFTlQpCj4gK8KgwqDCoMKgwqDCoMKgaWYgKG10ZC0+dHlw
+ZSA9PSBNVERfQUJTRU5UIHx8IG10ZC0+dHlwZSA9PSBNVERfVUJJVk9MVU1FKQo+IMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgcmV0dXJuOwo+IMKgCj4gwqDCoMKgwqDCoMKgwqDCoGxp
+c3RfZm9yX2VhY2hfZW50cnkodHIsICZibGt0cmFuc19tYWpvcnMsIGxpc3QpCj4gQEAgLTU3Niw3
+ICs1NzYsNyBAQCBpbnQgcmVnaXN0ZXJfbXRkX2Jsa3RyYW5zKHN0cnVjdCBtdGRfYmxrdHJhbnNf
+b3BzCj4gKnRyKQo+IMKgwqDCoMKgwqDCoMKgwqBsaXN0X2FkZCgmdHItPmxpc3QsICZibGt0cmFu
+c19tYWpvcnMpOwo+IMKgCj4gwqDCoMKgwqDCoMKgwqDCoG10ZF9mb3JfZWFjaF9kZXZpY2UobXRk
+KQo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAobXRkLT50eXBlICE9IE1URF9B
+QlNFTlQpCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGlmIChtdGQtPnR5cGUgIT0g
+TVREX0FCU0VOVCAmJiBtdGQtPnR5cGUgIT0KPiBNVERfVUJJVk9MVU1FKQo+IMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHRyLT5hZGRfbXRkKHRyLCBtdGQp
+Owo+IMKgCj4gwqDCoMKgwqDCoMKgwqDCoG11dGV4X3VubG9jaygmbXRkX3RhYmxlX211dGV4KTsK
+CkhpIEdyZWcsIGhpIHBhdGNoLWRldmVsb3BlcnMsCgp3YWl0IGEgc2Vjb25kLiB0aGlzIGFscmVh
+ZHkgd2VudCBpbnRvIHY1LjQuMjY4IGJ1dCBzdGlsbDogRG9lc24ndCB0aGlzCmJyZWFrIHVzZXJz
+cGFjZT8KCkFjY29yZGluZyB0bwpodHRwczovL2xvcmUua2VybmVsLm9yZy9sa21sLzQ0MTEwNzEw
+MC4yMzczNC4xNjk3OTA0NTgwMjUyLkphdmFNYWlsLnppbWJyYUBub2QuYXQvCndoZXJlIHRoaXMg
+c29sdXRpb24gc2VlbXMgdG8gY29tZSBmcm9tLCB0aGUgYmVoYXZpb3VyIGNoYW5nZXM6ICJubwpt
+dGRibG9jayAoaGVuY2UsIGFsc28gbm8gRlRMcykgb24gdG9wIG9mIGdsdWViaS4iCgpJIGZlbGwg
+YWNjcm9zcyB0aGlzIGJlY2F1c2Ugb2YgYW4gb3V0LW9mLXRyZWUgbW9kdWxlIHRoYXQgZG9lcwpz
+eXNfbW91bnQoKSBhbiBtdGRibG9jaywgc28gSSB3b24ndCBjb21wbGFpbiBhYm91dCBteSBjb2Rl
+IHNwZWNpZmljYWxseQo6KSBCdXQgZG9lc24ndCBpdCBicmVhayBtb3VudGluZywgc2F5LCBqZmZz
+MiBpbnNpZGUgYW4gdWJpIHZpYQptdGRibG9jaz8gSWYgc28sIGlzIHRoaXMgcmVhbGx5IHNvbWV0
+aGluZyB0aGF0IHlvdSB3YW50IHRvIHNlZQpiYWNrcG9ydGVkIHRvIG9sZCBrZXJuZWxzPwoKT3Ig
+ZGlmZmVyZW50bHkgcHV0OiBIYXMgdGhpcyBwYXRjaCBiZWVuIHBpY2tlZCB1cCBmb3Igb2xkIHN0
+YWJsZQprZXJuZWxzIGJ5IHNjcmlwdHMgb3IgYnkgYSBodW1hbj8KCkkganVzdCB3YW50IHRvIG1h
+a2Ugc3VyZSwgYW5kIHdobyBrbm93cywgaXQgbWlnaHQgaGVscCBvdGhlcnMgdG9vLCB3aG8Kd291
+bGQganVzdCBkbyBhIChwb3NzaWJseSBkYW5nZXJvdXM/KSByZXZlcnQgaW4gdGhlaXIgdHJlZXMu
+Cgp0aGFua3MhCiAgICAgICAgICAgICAgICAgICAgICAgICAgbWFydGluCgoK
 
-On Wed, Feb 07, 2024 at 05:14:52PM -0700, Nathan Chancellor wrote:
-> Hi all,
->
-> This series allows the s390 kernel to be linked with ld.lld (support for
-> s390 is under review at [1]). This implicitly depends on [2], which was
-> created and sent before it was realized that this series was necessary.
->
-> The first chunk of this series enables support for
-> CONFIG_LD_ORPHAN_WARN, as it was discovered during testing that the
-> kernel fails to build with ld.lld due to differences in orphan section
-> handling, which would have been caught with the linker's orphan section
-> warnings ahead of the actual build error. There are no warnings when
-> building ARCH=s390 defconfig and allmodconfig with GCC 6 through 13 or
-> tip of tree Clang using ld.bfd or ld.lld
->
-> The final patch resolves a series of errors due to ld.lld having a
-> different default for checking for DT_TEXTREL ('-z text') vs ld.bfd,
-> which defaults to '-z notext' (but this is configurable at build time).
->
-> There is one outstanding issue due to something that ld.lld does not
-> support that the kernel relies on:
->
->   ld.lld: error: drivers/nvme/host/fc.o:(__bug_table): writable SHF_MERGE section is not supported
->
-> This was changed in the kernel in commit e21f8baf8d9a ("s390/bug: add
-> entry size to the __bug_table section"). Is this change truly necessary?
-> I selectively applied a revert on top of current mainline and I did not
-> observe any issues with either Clang or GCC.
->
-> diff --git a/arch/s390/include/asm/bug.h b/arch/s390/include/asm/bug.h
-> index aebe1e22c7be..c500d45fb465 100644
-> --- a/arch/s390/include/asm/bug.h
-> +++ b/arch/s390/include/asm/bug.h
-> @@ -14,7 +14,7 @@
->  		".section .rodata.str,\"aMS\",@progbits,1\n"	\
->  		"1:	.asciz	\""__FILE__"\"\n"		\
->  		".previous\n"					\
-> -		".section __bug_table,\"awM\",@progbits,%2\n"	\
-> +		".section __bug_table,\"aw\"\n"			\
->  		"2:	.long	0b-.\n"				\
->  		"	.long	1b-.\n"				\
->  		"	.short	%0,%1\n"			\
-> @@ -30,7 +30,7 @@
->  #define __EMIT_BUG(x) do {					\
->  	asm_inline volatile(					\
->  		"0:	mc	0,0\n"				\
-> -		".section __bug_table,\"awM\",@progbits,%1\n"	\
-> +		".section __bug_table,\"aw\"\n"			\
->  		"1:	.long	0b-.\n"				\
->  		"	.short	%0\n"				\
->  		"	.org	1b+%1\n"			\
->
-> If it is necessary, is there any way to work around this error? For
-> testing purposes, disabling CONFIG_BUG is easy enough but that is not
-> usable in the real world.
->
-> To test this series with ld.lld, you'll need to build ld.lld from the
-> pull request, which is easy to do following LLVM's instructions [3].
-> Here is a TL;DR version I tested that just builds LLD with minimal noise
-> during the build.
->
-> $ git clone https://github.com/llvm/llvm-project
-> $ cd llvm-project
-> $ git fetch https://github.com/llvm/llvm-project pull/75643/head
-> $ git switch -d FETCH_HEAD
-> $ cmake \
->     -B build \
->     -G Ninja \
->     -S llvm \
->     --log-level=NOTICE \
->     -Wno-dev \
->     -DCMAKE_BUILD_TYPE=Release \
->     -DLLVM_ENABLE_PROJECTS=lld \
->     -DLLVM_ENABLE_WARNINGS=OFF \
->     -DLLVM_TARGETS_TO_BUILD=SystemZ
-> $ ninja -C build lld
-> $ export PATH=$PWD/build/bin:$PATH
->
-> Then build the kernel with 'LD=ld.lld' in addition to whatever command
-> line you use (I tested both Clang and GCC). I can boot an ld.lld linked
-> kernel built with both compilers in QEMU with this series.
-
-Yeah, this all works for me and I am able to boot. I did need to use the
-diff present in 0/11 to remove the warnings regarding SHF_MERGE
-sections. It should probably be a patch in this series instead of a
-inlined diff?
-
->
-> [    1.386970] Linux version 6.8.0-rc3-00043-g05761ede85d6-dirty (nathan@dev-fedora.aadp) (s390-linux-gcc (GCC) 13.2.0, ClangBuiltLinux LLD 19.0.0) #1 SMP Wed Feb  7 16:51:12 MST 2024
->
-> [    0.871923] Linux version 6.8.0-rc3-00043-g05761ede85d6-dirty (nathan@dev-fedora.aadp) (ClangBuiltLinux clang version 19.0.0git (https://github.com/llvm/llvm-project 417075e56aeba5a5b20301c7bfeba9c2a800982b), ClangBuiltLinux LLD 19.0.0) #1 SMP Wed Feb  7 17:01:22 MST 2024
->
-> [1]: https://github.com/llvm/llvm-project/pull/75643
-> [2]: https://lore.kernel.org/r/20240130-s390-vdso-drop-fpic-from-ldflags-v1-1-094ad104fc55@kernel.org/
-^^^^^^^^^
-I needed this too, as I was getting a warnings about -fPIC being an
-unknown option.
-
-
-All in all, works great for me building on clang and booting with qemu.
-
-Tested-by: Justin Stitt <justinstitt@google.com>
-
-> [3]: https://llvm.org/docs/CMake.html
->
-> ---
-> Nathan Chancellor (11):
->       s390: boot: Add support for CONFIG_LD_ORPHAN_WARN
->       s390: vmlinux.lds.S: Handle '.data.rel' sections explicitly
->       s390: vmlinux.lds.S: Explicitly handle '.got' and '.plt' sections
->       s390: vmlinux.lds.S: Discard unnecessary sections
->       s390/boot: vmlinux.lds.S: Handle '.init.text'
->       s390/boot: vmlinux.lds.S: Handle '.rela' sections
->       s390/boot: vmlinux.lds.S: Handle DWARF debug sections
->       s390/boot: vmlinux.lds.S: Handle ELF required sections
->       s390/boot: vmlinux.lds.S: Handle commonly discarded sections
->       s390: Select CONFIG_ARCH_WANT_LD_ORPHAN_WARN
->       s390: Link vmlinux with '-z notext'
->
->  arch/s390/Kconfig              |  1 +
->  arch/s390/Makefile             |  2 +-
->  arch/s390/boot/Makefile        |  5 +++--
->  arch/s390/boot/vmlinux.lds.S   | 28 ++++++++++++++++++++++++++++
->  arch/s390/kernel/vmlinux.lds.S | 28 +++++++++++++++++++++++++++-
->  5 files changed, 60 insertions(+), 4 deletions(-)
-> ---
-> base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
-> change-id: 20240207-s390-lld-and-orphan-warn-d0ff4ff657b0
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
-
-Thanks
-Justin
