@@ -1,133 +1,298 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657AF5226;
-	Sat, 10 Feb 2024 02:59:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8BC2134B
+	for <patches@lists.linux.dev>; Sat, 10 Feb 2024 07:09:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707533976; cv=none; b=stoYyxEAhke4ebkMQp3jHJn7LdGcxnYjFTV8FRDyT3xYjOe9iG3fp04FpefoEV9BZ7khQtAaBnF4Kv94m8hp0vr50hAal0Y09uuYNh4krqgiZ70TtD90Mn5vP33ZbPqIiJgGgj8eRsSIaZ42Rhsar+p+uYV7PDFOJ8NDdVB+zhU=
+	t=1707548982; cv=none; b=n+6qBR1lP+GtH0Yj2MakzAUtagI1BJhFbIhGkP4cvIlw2e3ngYjiXBBzSYz5brxTGM2viYP7zhqrnkbU8HIZIKNqgElgegLeR31mpcznj+OPAgt3LYi6V3DeCu0uLqyDaalpc2fP4YktV3/mJ98b6LUH/uABewk+yDrmoh304Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707533976; c=relaxed/simple;
-	bh=2lP+NSQhJ4c3moxHDlaunCfBTdIXLlNuFrDcFX1+1pE=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=nJHgTKX9g7+PGXh4dzsinlMNJFiIXhlEpbSuFScK8IB94q8nT5anSFwrCjPoXqCBAEWOjsbdKPfcmD8Ek0TSaNx65gmJvlrNVQR79sBsC29jhMD7La0jntORTD3Rl4uOlJdps2kUU/gEgOaPNO5WcAf9ONZzh445EBFwYu2L43k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=syYrFvDR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707548982; c=relaxed/simple;
+	bh=mbC0DB1VSkueSEIQOEMgbsEihDdd9hh6PSWoWxt8Hnc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=P+OUj9cMTVRQxTt/wZR+nrXLHuJWGOgrPD2ndvbfzbtNsziVRKu4hzEeWw1KSgxE5rWj4GzUET606X/HvRwTz6EXxoT4GvE97me3fViz4OsxUOU9vHaeH6Y28QPzyig9MySNcBA2Qv4RQC4UqlfPonj/pJrcP7H4WqLNzeA9eUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=abpKfsgE; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="syYrFvDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A872DC433F1;
-	Sat, 10 Feb 2024 02:59:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707533975;
-	bh=2lP+NSQhJ4c3moxHDlaunCfBTdIXLlNuFrDcFX1+1pE=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=syYrFvDRzT653oWWDp8sFGcDJPCsnBbiq/Rh5N533i/1ZAPuPKKfb2urx8dmIPuxN
-	 HvhWAo0LRLHoZLAfmr+r8pi/UTRSALYpQUk6iRbffi526uRWZXB8K7peKdASwUJiCx
-	 hueU0WPHflJ4Jouf6M2u3HuOlk+5SUEDEV+3OWMvW/UszAAS1QroWA/xKpM3O9AuuS
-	 MHyjv9m76ReLhXjfE20Nb2pXg4I4YocmFKiCYiGBtNOGuT4eKGTg8pwTJ8apJK9PHF
-	 KCTKL9oq6/oGGyP2PYqxSgpDqQeEr5ETzpglwUB0YrFKfLt9CvbFjX1mK5MJqw6Nor
-	 0EeXid8XjhdDg==
-Message-ID: <2185a3cc3152a0b9a94b0c64353bc9a1.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="abpKfsgE"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6e09493eb8eso805650b3a.1
+        for <patches@lists.linux.dev>; Fri, 09 Feb 2024 23:09:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1707548979; x=1708153779; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b9ybKrfRhqeTAtLZZp91eR3wd0aV+0gDZsFZ2lmBVz4=;
+        b=abpKfsgEXTpk4SytXprjGH9ZVNK4kNcH/P6xfpEHcHEk3Iju/kyc72v0AndATEQ6mm
+         sQQp/8HPuCkPz6HDFQuAM8jg/t53rrxVt3legaMjmXQ+56/N4gdR/b+nnb8q4Zn0vd1M
+         dK1J5UimbpwQVgiAyfnH5cKJWv6r9Ddt+Dn2s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707548979; x=1708153779;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=b9ybKrfRhqeTAtLZZp91eR3wd0aV+0gDZsFZ2lmBVz4=;
+        b=ec+cNggVU+19gliexOzbYeVe46oOB/NIbXmWYzD86bouBui1X+qHCQdHITQU3bSEK8
+         dQBFtWhof7gViyCpIpXY6sdz5Y0BkqXHx7Rno794WGrrn9hrEcauDGeLDSflnjOCDq0M
+         XAeWqP5kvjJpoYSgKGt6YpmZP6B3b+T3lk91cF01T4pJx6liOOigFdHhfonjlKPq9Taz
+         nM+stpcJlOQkNlbGLY8KkjuKAp630SHHmpzegubCfcB8xX2PFZp5Azf2bV0+JuVFQ9Mm
+         cJtvEhpg96ESO+utq6x+xqq5S9PSKLrDQtwC9m78yWkikQVxloOoB1/JCGSn0hSsDFye
+         4MmA==
+X-Gm-Message-State: AOJu0YymVvfWu6jNMaTpjoud3+YgagufN1sQPWj3u+Hj0jH5Dy8rfhgp
+	kvHdynwt5fRXhM9FW37HekkvUPOxT1hs/3NSEkde/ua+OEjC7Wmzst8HCL2YCg==
+X-Google-Smtp-Source: AGHT+IHHFtmTz4F6HkKCsABtdOtMPEvj2ixjc3Xu597pI5qeBktFMLaxG/9FeC2ZBzrgjmMIjMeamQ==
+X-Received: by 2002:a05:6a20:2d11:b0:19e:8a29:5e81 with SMTP id g17-20020a056a202d1100b0019e8a295e81mr2125042pzl.20.1707548979163;
+        Fri, 09 Feb 2024 23:09:39 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXukExwyisG683fg4h7pCl9rSIdxSMepDxpCM5dZ1O3HwsoS+nhng0ZD5rEZzlXs9GCVBcrtR2ahVrw9Tq+G75+AcxYBu6xzpYBwlSgTvre9uLLLINyC1uDx8QMFg/Uwvh/rDuEY6zof6+m901UXuFLunQ6MEYVEz1MqrsyoJUCTA5RP9w4WcwgUljdNy8efAMFoQ3lk332aFb0Aij/BoEM568msE7RR61tbj4Fm1ppOvvk28c/NG+kX2C5FvqrVZHFNH7SEc6+30VdeVE1i1DCaFPL1xa6vRJuKsNMvRTI1y/HM+Ggrp9HxUfaz3znu1b8St9e7okrMQovFcoDIZtjECCVRm9AsuDVMftg7VRs02tsnYOuyIs+qclbP7wPH9CqTe4Mienk8CICB7cqX7bWbOb7bV0TYRqo58lHQmWoY6RYVjENzX+rKP2mDr6fi0KedWE0ZIz+eRJF1chQWDHwWeUYN6AY9CndeAYz/Onb+wIvtNbOZmRidiilc8mQ55QRLsxnRMofAz2lzhdElSVJQxfET9ygcLKUE/qdRMnCAhgc3y3ZSdUJN4FsA203B6Q924VAQqVZmi+no22dFJaG5PRF8Y6idsNMD6wss+zhCYywwCmyMpxp/i1irUam42Cps33RK49GIGC4XGkFu/UI6Bg/C4pi7vaHwMcK40bmBHFtLheoVGghflGzfTmaKDKjKS8bPS9LZW0QkIpHysEK0ijpRhaUAP9OeGgWDwZyqEciZQPAZjYPHER2AEQa8jFV+4brprEP/zRKa6EsBOjtSDjia+33bkj+LSgZ/fge9XnptZN7snWBopOstR8OAUxdvjHP1bh7w9BzOu9tYQW7qh5DcS5kNqszUtb61B0GyTd9jWX4QB9W3aRvRk7BBbcqeJhc5zzBnK9FmFtyE4QVWxtfVJPc01IidMb9NDIZKNvox38te7RJ6caZ8R8nIjIstp
+ 4lGz0SjfgHZwjWvR2r9qWWj8HnjqDNj1y46zO15w2RjzLoQ0s/7gVZf+XqC5fea2YnxjCsFQO340QTn5W4+MFayh2Az1o4vV/QSz6cxraHru/ru5sePzI8qWlLfG5zUGPjko4maXtW8PMN7gihFpXWcbgPZ0FQrr5ceC74vIWunIVHs0Am6nU6ozeW19l0665suTVqD7L1WolrlSpKKiRjpp/lHwyyxVJB7QMPkcN5ZnKjv0ET2uvp60Ls246xA9kNT3qcmRuqqNoarBUMlI+A5l1EUu2CY6L9wJDH8y83qCg/8OvSVs3CTBz5pzF7Q1r+kO1qm+DPnUl2nTlhUSxZZxgFiIqAYDfECac0aalVi9KxfYb6VyjfCFgH/ui5zqs5WNFCWCvxexV+SAWxhW4qfMH6ALqq3t8PQIGuKvpzWFiOKOZdMoJiSQ3canXFCdRyNHh1R04AXBwPQaW95JZK0Nrrzix11McAxOdnbXFfmWycBbh2dK5W3GPdiShdLqa3MsarkGA0lGvSp7oDN+225ESySKGvIap3lLcCdHyh4m/eDAupHMH+0hUv/Zx2HiBF5/gR3EVjbKaqASOP71qFbazz5BGUGh4p1TgaSLJPm2yIxKpCgyxE/C5ja6PnOLTjlx2LDh7ss4pKSWoOnPKpzqP7dfzaNWJvw8O0STC36DwN
+Received: from localhost (175.199.125.34.bc.googleusercontent.com. [34.125.199.175])
+        by smtp.gmail.com with UTF8SMTPSA id y26-20020a63495a000000b005ce998b9391sm2846522pgk.67.2024.02.09.23.09.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Feb 2024 23:09:38 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: chrome-platform@lists.linux.dev
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Douglas Anderson <dianders@chromium.org>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Andy Gross <agross@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Benson Leung <bleung@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Daniel Scally <djrscally@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Lee Jones <lee@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	linux-acpi@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	maciek swiech <drmasquatch@google.com>,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Prashant Malani <pmalani@chromium.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 00/22] platform/chrome: Add DT USB/DP muxing/topology to Trogdor
+Date: Fri,  9 Feb 2024 23:09:11 -0800
+Message-ID: <20240210070934.2549994-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.43.0.687.g38aa6559b0-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAMuHMdUuP5Ya2gU3V_ET=Ji_+yx+jr7eCch5uDJSqvQN9jJM3g@mail.gmail.com>
-References: <20240202195909.3458162-1-sboyd@kernel.org> <20240202195909.3458162-8-sboyd@kernel.org> <CABVgOS=A8BQ6HHpBKFqg-N10ckk2XYavaS-MPXvZ0wenrVm=1g@mail.gmail.com> <89892ecd6b1b043db58258705c32b02b.sboyd@kernel.org> <CAMuHMdUuP5Ya2gU3V_ET=Ji_+yx+jr7eCch5uDJSqvQN9jJM3g@mail.gmail.com>
-Subject: Re: [PATCH v3 7/7] of: Add KUnit test to confirm DTB is loaded
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: David Gow <davidgow@google.com>, Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>, Brendan Higgins <brendan.higgins@linux.dev>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Fri, 09 Feb 2024 18:59:33 -0800
-User-Agent: alot/0.10
+Content-Transfer-Encoding: 8bit
 
-Quoting Geert Uytterhoeven (2024-02-05 11:55:29)
-> On Mon, Feb 5, 2024 at 8:19=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wr=
-ote:
-> > Quoting David Gow (2024-02-02 20:10:17)
-> > > On Sat, 3 Feb 2024 at 03:59, Stephen Boyd <sboyd@kernel.org> wrote:
-> > > > Add a KUnit test that confirms a DTB has been loaded, i.e. there is=
- a
-> > > > root node, and that the of_have_populated_dt() API works properly.
-> > > >
-> > > > Cc: Rob Herring <robh+dt@kernel.org>
-> > > > Cc: Frank Rowand <frowand.list@gmail.com>
-> > > > Cc: David Gow <davidgow@google.com>
-> > > > Cc: Brendan Higgins <brendan.higgins@linux.dev>
-> > > > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-> > > > ---
-> > >
-> > > This looks pretty good to me test-wise, though it still fails on m68k.
-> > > (Everything else I tried it on works, though I've definitely not tried
-> > > _every_ architecture.)
-> > >
-> > > aarch64: PASSED
-> > > i386: PASSED
-> > > x86_64: PASSED
-> > > x86_64 KASAN: PASSED
-> > > powerpc64: PASSED
-> > > UML: PASSED
-> > > UML LLVM: PASSED
-> > > m68k: FAILED
-> > > > $ qemu-system-m68k -nodefaults -m 1024 -kernel .kunit-all-m68k/vmli=
-nux -append 'kunit.enable=3D1 console=3Dhvc0 kunit_shutdown=3Dreboot' -no-r=
-eboot -nographic -serial stdio -machine virt
-> > > > [11:55:05] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D dtb (2 subtests) =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-> > > > [11:55:05] # dtb_root_node_found_by_path: EXPECTATION FAILED at dri=
-vers/of/of_test.c:18
-> > > > [11:55:05] Expected np is not null, but is
-> > > > [11:55:05] [FAILED] dtb_root_node_found_by_path
-> > > > [11:55:05] # dtb_root_node_populates_of_root: EXPECTATION FAILED at=
- drivers/of/of_test.c:28
-> > > > [11:55:05] Expected of_root is not null, but is
-> > > > [11:55:05] [FAILED] dtb_root_node_populates_of_root
-> > > > [11:55:05]     # module: of_test
-> > > > [11:55:05] # dtb: pass:0 fail:2 skip:0 total:2
-> > > > [11:55:05] # Totals: pass:0 fail:2 skip:0 total:2
-> > > > [11:55:05] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D [FAILED] dtb =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> > Ah yeah I forgot to mention that. m68k fails because it doesn't call the
-> > unflatten_(and_copy)?_device_tree() function, so we don't populate a
-> > root node on that architecture. One solution would be to make CONFIG_OF
-> > unavailable on m68k. Or we have to make sure DT works on any
-> > architecture. Rob, what do you prefer here?
->=20
-> I guess the latter?
-> Alpha, hexagon, parisc, s390, and sparc are also lacking calls
-> to unflatten.*device_tree().
->=20
+This series adds support for fully describing the USB/DP topology on
+ChromeOS Trogdor devices in DT. Trogdor devices have a single DP phy in
+the AP that is muxed to one of two usb type-c connectors depending on
+which port asserts HPD first to the EC. We'd like to know which port is
+connected to an external monitor to provide a better experience to the
+user about things like which type-c port is displaying DP or which
+type-c hub is acting up, etc. Describing the connection all the way from
+the source to the connector will allow us to do this. There will be some
+more work to do after this to wire up sysfs connections, but that work
+has already started or finished so it should be mostly minor changes to
+support DT there.
 
-sparc does that on purpose. Perhaps it's simplest to call
-unflatten_device_tree() if of_root is still NULL after setup_arch()
-returns.
+This patch series is large, unfortunately, and is ordered in logical
+groups: gpio, USB, DRM, typec, and finally dts to put it all together.
+There's more that could be put in here, e.g. supporting ChromeOS Corsola
+devices, but I wanted to get something out there early instead of
+waiting to make this work with everything that exists today and posting
+it then.
 
----8<---
-diff --git a/init/main.c b/init/main.c
-index e24b0780fdff..02f5cf8be6c1 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -97,6 +97,8 @@
- #include <linux/jump_label.h>
- #include <linux/kcsan.h>
- #include <linux/init_syscalls.h>
-+#include <linux/of.h>
-+#include <linux/of_fdt.h>
- #include <linux/stackdepot.h>
- #include <linux/randomize_kstack.h>
- #include <net/net_namespace.h>
-@@ -895,6 +897,8 @@ void start_kernel(void)
- 	pr_notice("%s", linux_banner);
- 	early_security_init();
- 	setup_arch(&command_line);
-+	if (!of_root)
-+		unflatten_device_tree();
- 	setup_boot_config();
- 	setup_command_line(command_line);
- 	setup_nr_cpu_ids();
+Onto the patches: 
+
+First is the EC GPIO driver, which is dependency free and can be merged
+at any time. It's only needed to provide information about which port
+the EC is steering DP to, because the EC had a bug where it never told
+the AP about which port has HPD asserted or not.
+
+Second is the USB binding and hub patches. These are used to describe
+how the USB hub is wired up on all the Trogdor devices, and make the
+connect_type be something besides "unknown" on DT devices. ACPI has
+supported setting a proper connect_type for some time now. These can
+also be merged pretty much dependency free, except that the dt binding
+will be needed to avoid DT binding check failures. I don't think those
+checks are fatal though, so probably also fine to take this part
+independently.
+
+Third is the DRM bridge patches. These are used to implement lane
+assignment for DP altmode configurations through the drm_bridge code.
+The typec code will use this to tell the DP phy how many lanes of DP to
+drive and which lanes to drive out to the USB type-c connector. Adding
+support for lane assignment allows us to implement DP muxing as well,
+physically splitting the DP lanes on the DP phy so that hardware doesn't
+have to use an analog mux to steer two DP lanes to one or the other
+type-c port. These are a hard dependency for the typec code.
+
+Fourth is the typec patches, that ties together everything that comes
+before it in this series. The EC typec switch driver implements a
+drm_bridge that can signal HPD from the type-c connector through the
+bridge chain, mux the DP phy in software so that we don't have to use an
+analog mux, and implement orientation control for boards like Kukui that
+directly connect the DP phy to the type-c port, necessitating lane
+assignment to flip the lanes to match the cable orientation.
+
+Finally, the dts patches wire everything up to fully describe the USB/DT
+topology on Trogdor. This includes the USB hub, the EC gpios, the DP
+controller, and the external connectors like the usb-c and usb-a
+connectors.
+
+After this initial version I will probably split this series and send
+parts in pieces to more rapidly send new versions. Those parts will
+refer back to this version in the cover letter so we can all get the
+full context. I don't expect to merge this through one maintainer tree
+immediately, so I set the 'To' line to chrome-platform to reflect the
+overall target audience.
+
+Prashant Malani (1):
+  platform/chrome: cros_ec_typec: Purge blocking switch devlinks
+
+Stephen Boyd (21):
+  dt-bindings: gpio: Add binding for ChromeOS EC GPIO controller
+  gpio: Add ChromeOS EC GPIO driver
+  dt-bindings: usb: Add downstream facing ports to realtek binding
+  usb: core: Set connect_type of ports based on DT node
+  drm/atomic-helper: Introduce lane remapping support to bridges
+  drm/bridge: Verify lane assignment is going to work during
+    atomic_check
+  device property: Add remote endpoint to devcon matcher
+  platform/chrome: cros_typec_switch: Use read_poll_timeout helper
+  platform/chrome: cros_typec_switch: Move port creation code to
+    sub-function
+  platform/chrome: cros_typec_switch: Use fwnode instead of ACPI APIs
+  platform/chrome: cros_typec_switch: Use dev_err_probe()
+  dt-bindings: chrome: Add google,cros-ec-typec-switch binding
+  platform/chrome: cros_typec_switch: Add support for signaling HPD to
+    drm_bridge
+  platform/chrome: cros_typec_switch: Support DP muxing via DRM lane
+    assignment
+  platform/chrome: cros_typec_switch: Support orientation-switch
+  platform/chrome: cros_typec_switch: Handle lack of HPD information
+  dt-bindings: chrome: Add binding for ChromeOS Pogo pin connector
+  arm64: dts: qcom: sc7180: quackingstick: Disable instead of delete
+    usb_c1
+  arm64: dts: qcom: sc7180: pazquel: Add missing comment header
+  arm64: dts: qcom: sc7180-trogdor: Make clamshell/detachable fragments
+  arm64: dts: qcom: sc7180-trogdor: Wire up USB and DP to
+    usb-c-connectors
+
+ .../chrome/google,cros-ec-typec-switch.yaml   | 365 ++++++++++++
+ .../chrome/google,pogo-pin-connector.yaml     |  61 ++
+ .../bindings/gpio/google,cros-ec-gpio.yaml    |  49 ++
+ .../bindings/mfd/google,cros-ec.yaml          |   8 +
+ .../bindings/usb/realtek,rts5411.yaml         |  50 ++
+ .../dts/qcom/sc7180-trogdor-clamshell.dtsi    |  30 +
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  52 +-
+ .../dts/qcom/sc7180-trogdor-detachable.dtsi   |  25 +
+ .../dts/qcom/sc7180-trogdor-homestar.dtsi     |  54 +-
+ .../dts/qcom/sc7180-trogdor-kingoftown.dts    |  57 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  58 +-
+ .../boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  59 +-
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  46 +-
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    |  46 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |   2 +-
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |  52 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 175 ++++++
+ drivers/base/property.c                       |   7 +-
+ drivers/gpio/Kconfig                          |  10 +
+ drivers/gpio/Makefile                         |   1 +
+ drivers/gpio/gpio-cros-ec.c                   | 218 +++++++
+ drivers/gpu/drm/drm_atomic_state_helper.c     |   2 +
+ drivers/gpu/drm/drm_bridge.c                  |  50 ++
+ drivers/platform/chrome/Kconfig               |   3 +-
+ drivers/platform/chrome/cros_ec_typec.c       |  10 +
+ drivers/platform/chrome/cros_typec_switch.c   | 555 +++++++++++++++---
+ drivers/usb/core/port.c                       |  37 ++
+ drivers/usb/roles/class.c                     |   4 +-
+ drivers/usb/typec/mux.c                       |   8 +
+ drivers/usb/typec/retimer.c                   |   7 +-
+ include/drm/drm_atomic.h                      |  31 +
+ include/drm/drm_bridge.h                      |   4 +
+ include/linux/property.h                      |   5 +-
+ 33 files changed, 2026 insertions(+), 115 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/chrome/google,cros-ec-typec-switch.yaml
+ create mode 100644 Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
+ create mode 100644 Documentation/devicetree/bindings/gpio/google,cros-ec-gpio.yaml
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
+ create mode 100644 drivers/gpio/gpio-cros-ec.c
+
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Andy Gross <agross@kernel.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Benson Leung <bleung@chromium.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: <chrome-platform@lists.linux.dev>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: <cros-qcom-dts-watchers@chromium.org>
+Cc: Daniel Scally <djrscally@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: David Airlie <airlied@gmail.com>
+Cc: <devicetree@vger.kernel.org>
+Cc: <dri-devel@lists.freedesktop.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: Ivan Orlov <ivan.orlov0322@gmail.com>
+Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: Jonas Karlman <jonas@kwiboo.se>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
+Cc: Lee Jones <lee@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: <linux-acpi@vger.kernel.org>
+Cc: <linux-arm-msm@vger.kernel.org>
+Cc: <linux-gpio@vger.kernel.org>
+Cc: <linux-usb@vger.kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: maciek swiech <drmasquatch@google.com>
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Pin-yen Lin <treapking@chromium.org>
+Cc: Prashant Malani <pmalani@chromium.org>
+Cc: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Cc: Robert Foss <rfoss@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+
+base-commit: 0dd3ee31125508cd67f7e7172247f05b7fd1753a
+-- 
+https://chromeos.dev
