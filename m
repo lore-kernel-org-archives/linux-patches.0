@@ -1,66 +1,66 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A223D54D
-	for <patches@lists.linux.dev>; Sat, 10 Feb 2024 11:51:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116143D54F
+	for <patches@lists.linux.dev>; Sat, 10 Feb 2024 11:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707565913; cv=none; b=aeMafTTIzdWumTgS/6ZRg72L/WLsareLubhboo6lkolgnS0c4rka8JAKBQpHqwYVUf6sBj2gAA0hk5lmZalPshHnSbhAswhBzER93Hgml6JaFuqskp7CA+GXwdZQ38ZvZk8wilIqpZjobpphxTngqy4FqzalLRXkhyrQwZnFAdo=
+	t=1707566009; cv=none; b=PyWYmOckRpS05xZFWTOVdl3HmxSOyhz0BxxRuVJ6blzEYUnf4pAHJprHCi069wwqwa5PUHgxQz1Mw9buUiTN2D3wZbF7gWHr1HbHI2dxA0e4zGR42vfbIjyLC67hPy6+tAQiPrTH0/sg9dzigAUSQgKrx768AoCDygQXuVpR2go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707565913; c=relaxed/simple;
-	bh=7rc3pZKZQ3h12KuocOBjke7RPf57CY1ulO+EwZZN21A=;
+	s=arc-20240116; t=1707566009; c=relaxed/simple;
+	bh=9bQZqD23DARa5dmQXwWYHcnI+MX2yoHshObqALvEMWE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GourNhyEJnZhLkpMFLXN1kjwT/IoovK24corHwkHoUYIJIvE83v1h5N15cL3WLAT8oselyvAU7WowXDqG89B5yEiP6JggsgEv2/kLzYAEhLKv8GGgZpENPtXrj/UC6x0s4AAmukBpcks1wrRemv+g9fqHSlhiX85EcCAupsW6Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bh8odkm+; arc=none smtp.client-ip=209.85.219.169
+	 To:Cc:Content-Type; b=bdTIAHEUYWS56XT/eVIWNjUTz+WIqsRRallNHz/hD3JTQqZ+9v4Q94mHAo5rKyTHpUJXEtY9t564Yn2OeKs97AjLoaoMvmcYoha11jh3oCHeZVdZHmbM/NMzW+LbBkcWCxl14N2LLLy7Mc8UeIuTuS+miL77SCd1vCF0EnhblJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yQHK7Kd8; arc=none smtp.client-ip=209.85.219.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bh8odkm+"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-dc6e08fde11so1921094276.1
-        for <patches@lists.linux.dev>; Sat, 10 Feb 2024 03:51:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yQHK7Kd8"
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dc6c0dc50dcso1514967276.2
+        for <patches@lists.linux.dev>; Sat, 10 Feb 2024 03:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707565911; x=1708170711; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1707566007; x=1708170807; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/RWQV9SF+U2wQY2whqhrKlZUzNhMlpaeidneMuAvWr8=;
-        b=Bh8odkm+giSOg5+1mHydLdjVBXWlC2ve018Df5LnQW9LBv98taelqmpR4TO9a83Fxo
-         xwEYT5wnw0IKmV+QHpaNVvG9bkIh57spLXGoerIB+MqoYnXaDd9Mped00TYGwgJrVayH
-         282nUEe4Uf0FTLU0+O9UBukMHHR3VKrm7gdYfYGtBmLGhxfl8miRhDsuIhvPqo4I+kI5
-         Qiki88W7TQApM8gEX4zsT3StFTg/dXW4M/4ulufmHq1ra4eXirk6MvnwOQ+JsgAi9tiJ
-         GqKHRVLFDXix6Ljo2KCECWjIzG1NqQHSOhU2MacKGM7q72wZ4r66n2W/QPvxaxK2MmSS
-         6RDg==
+        bh=XWXgSyVP+N1LKifAWR9rUMalj+Xn0R6HoByIzflb0PQ=;
+        b=yQHK7Kd8f9BiMtbW5We6o057++DlSHtpY0Hty1uyyTi+kMhbWIIczB2UDweDM7uPaY
+         kWqRf4FVHTzveF/zSjIxzpAdL1YnLRS5JnwJAHs72gdnKPuX5MhTmoKfP3w++1EPQlFi
+         09Y0pPbqMUjlQpfYL7fYIBQYD1twKCAhkcelhbQC2hxE02HKPANMLkcZ8h5MDXvph1XL
+         NMutEPjwOxpwiZLduDi7wYONCNUYszn4yzX2G+vzR/H+MyYV/5bcKLYzXdR3NUnmQjUU
+         ksvU4QR3Jsg1IgVStL6h4qQR7vha30wsf8TsIjv0NocL7zJ30AwcBrZ+cU3vtZgF7XJ9
+         kM0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707565911; x=1708170711;
+        d=1e100.net; s=20230601; t=1707566007; x=1708170807;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/RWQV9SF+U2wQY2whqhrKlZUzNhMlpaeidneMuAvWr8=;
-        b=T+LABhdcLxlwRmSDq2PneDt/MY2aMrw3Hh+PGTD9nLfibyc+tG6k6u3Jn+p7jKtBy2
-         0bjPjHKPQS92flwoJlVyraRglEhRBLMzqyw9fqusGi/OMXYtlXA/iCgiSgg0H1tBw0h7
-         fe1msWfiTo+5Xs11JtIuPWixIHAClhvi6jy9KmoDjy7jsZc0okMpFepCg0MZNXViIxJ2
-         ++De8H0YWfuCfZbpQlCOE7tJ5c34sS6V3LBUKoaIHyGzKZh6rK8JDcVA0kWevyCuWjgO
-         1Lv9KTYQ3mSQr6tC1pLUkx9LDvO3wy+DMvFjREQ2hBWLEWOgDCQAed7TiAnspnBZx+1D
-         6EFQ==
-X-Gm-Message-State: AOJu0YzLYFlNS2DpqQRXBJT/mekKtlcrEK9zA2Tf7SwbXkiY/X1hN7os
-	7MpKznN9XCaGXb3yxsQvo26ybqBRDcAwYJbZtTKhFssEFm/uBO0YrbXPbt5ZbRxhA8MjFkEQNW2
-	lMWAoX++B0rjlQfFaJEfcoiDUmQKHcbulakHYVA==
-X-Google-Smtp-Source: AGHT+IHFyIHD774MV2fP+SnSwgZs21+HYOwYBlaQnlLEfF4zRO80UDtJtaZAZIQJ+wWMOfEhJRsDBXclS9ily9CzMOU=
-X-Received: by 2002:a25:bf8c:0:b0:dbd:2b6:6cfd with SMTP id
- l12-20020a25bf8c000000b00dbd02b66cfdmr1415270ybk.2.1707565910913; Sat, 10 Feb
- 2024 03:51:50 -0800 (PST)
+        bh=XWXgSyVP+N1LKifAWR9rUMalj+Xn0R6HoByIzflb0PQ=;
+        b=DyXNUfmuAAIj+KvFPRkOI+ZygfCDYUsjoLSpbjPjpw68PWqUvcecpcmVtUOK51LlPN
+         IlVP7Ti2t8inyGDiAA1DiimoXDYtm4F7+vnHj+zLfHQYExMvpcZhdSQoYGfhNFZ167cS
+         VpHTyOrJk/Lr9FJVXMcBCNE/bQlKBunYclKNOKdisXQ06it8k5ahrOOQ0aozBnLzM966
+         aIi9H97L8yfOX/zgIjam043tFLOcfR30KUJuSi1QdrKdpViO4slMm+HyBJjl8/hIgEVY
+         S081vYfhycMHFyRkqPcxoLuDIre/KNtLhPwhGhl/fkA5OQml0JeOrdAxDwDQUFvDXJdD
+         IrfQ==
+X-Gm-Message-State: AOJu0YzRHA67LbonNhd50smTzQxF/HmjQKj+JxsBpf+FEKE6cMbCzOZv
+	ndJxmPELfem/eVxEDnOG2ryMUfUcKzr3MCe6nlRofP9CXAyVKsihSkhVQPG77QjFWLoxaMz7EjY
+	CcD+YGUVHTJgZ9Fvpv13UZkDyQ5v1Q5uJsKtUIQ==
+X-Google-Smtp-Source: AGHT+IFMW08q299IizgKGdLgUOVbSLepSnMhrSOl8xiICHLdby/JMn0zC+h9YOLRZctZ72Bz13hmpDHWTJ95DQfia/Y=
+X-Received: by 2002:a25:8686:0:b0:dc7:47b7:6d69 with SMTP id
+ z6-20020a258686000000b00dc747b76d69mr1199763ybk.60.1707566006887; Sat, 10 Feb
+ 2024 03:53:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-21-swboyd@chromium.org>
-In-Reply-To: <20240210070934.2549994-21-swboyd@chromium.org>
+References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-22-swboyd@chromium.org>
+In-Reply-To: <20240210070934.2549994-22-swboyd@chromium.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 10 Feb 2024 13:51:40 +0200
-Message-ID: <CAA8EJpoS3+NJCMnR3HhGrh73W39ivz9O6PX3Fov_an3cY+sLLw@mail.gmail.com>
-Subject: Re: [PATCH 20/22] arm64: dts: qcom: sc7180: pazquel: Add missing
- comment header
+Date: Sat, 10 Feb 2024 13:53:16 +0200
+Message-ID: <CAA8EJprROcMa5U0Q8fMk_aJpk6ecMoDKhtD31CCss-bHu2S+7Q@mail.gmail.com>
+Subject: Re: [PATCH 21/22] arm64: dts: qcom: sc7180-trogdor: Make
+ clamshell/detachable fragments
 To: Stephen Boyd <swboyd@chromium.org>
 Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
@@ -72,11 +72,19 @@ Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 10 Feb 2024 at 09:16, Stephen Boyd <swboyd@chromium.org> wrote:
+On Sat, 10 Feb 2024 at 09:17, Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> We put a header before modifying pinctrl nodes defined in
-> sc7180-trogdor.dtsi in every other file. Add one here so we know that
-> this section is for pinctrl modifications.
+> At a high-level, detachable Trogdors (sometimes known as Strongbads)
+> don't have a cros_ec keyboard, while all clamshell Trogdors (only known
+> as Trogdors) always have a cros_ec keyboard. Looking closer though, all
+> clamshells have a USB type-A connector and a hardwired USB camera. And
+> all detachables replace the USB camera with a MIPI based one and swap
+> the USB type-a connector for the detachable keyboard pogo pins.
+>
+> Split the detachable and clamshell bits into different files so we can
+> describe these differences in one place instead of in each board that
+> includes sc7180-trogdor.dtsi. For now this is just the keyboard part,
+> but eventually this will include the type-a port and the pogo pins.
 >
 > Cc: <cros-qcom-dts-watchers@chromium.org>
 > Cc: Andy Gross <agross@kernel.org>
@@ -90,8 +98,21 @@ On Sat, 10 Feb 2024 at 09:16, Stephen Boyd <swboyd@chromium.org> wrote:
 > Cc: Pin-yen Lin <treapking@chromium.org>
 > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
+>  .../boot/dts/qcom/sc7180-trogdor-clamshell.dtsi      |  9 +++++++++
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  5 +----
+>  .../boot/dts/qcom/sc7180-trogdor-detachable.dtsi     | 12 ++++++++++++
+>  .../arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi |  7 +------
+>  .../boot/dts/qcom/sc7180-trogdor-kingoftown.dts      |  2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  3 +--
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi |  2 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  2 +-
+>  .../boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi  |  7 +------
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts       |  2 +-
+>  .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi    |  5 +----
+>  11 files changed, 30 insertions(+), 26 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-clamshell.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-detachable.dtsi
+>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
