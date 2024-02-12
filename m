@@ -1,231 +1,175 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7F35B20C
-	for <patches@lists.linux.dev>; Sun, 11 Feb 2024 13:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E9C4B5CD;
+	Mon, 12 Feb 2024 13:55:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707658782; cv=none; b=YJWeKKEF8Auf+Z7DHiah1Mdm1wTc9pw6oqoD7hyI5JDITkyFSApxmlrO37DNkuu9fdVSf8CkQfzTri1c0CU7m8iZnA8FcATtpOeeoQkmlzdXiZ/XCzUW/nkUuakXZkxSjaluwq11FdypiEsySJRAXIXY+HZDeJsrqu2D2lA9xdo=
+	t=1707746126; cv=none; b=E+LY1Ffpx5LLk4Gp+DGdNgSwuZxb5QEGtHufsdaEOdRETjuWcuWSsMHtm8ZtvZ1b+B9T3dYrDqbmX7RyNpFOD5NbKXPsC0vlQW0XKDt93OGtLFEyF7sF67i5TZpntBwmS7J1TDoIlQVox2NLYOu4LSakFCZ4be4KygJR5PlMUyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707658782; c=relaxed/simple;
-	bh=KFXA3+R8s3SRSrnMPGr4IKA8IpENg695bBUFqWDk888=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fYJq7k51H26jmsnz24FDMrgOLIvj34VtwxKDwVmqgQlANC9IjUxL4aq3oyVqrgAkogcy0jTRN9JLPhRmcfhHpG4bhP/bklweDPU9iI9SKWzl8DwlJG7MfC88eG5UTVtAPjIUi+wBDWzEGAaJJaa3KXPnTkpN4xOqu4geIuqk+Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D/cv88Kc; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1707746126; c=relaxed/simple;
+	bh=l8lJVhpkkMOQn4SYIDOmKjhE1C4PJtr6LTU/kQWgbWM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=o9/OY4ygrHxsUbyiI3RLPoFtq8Xiid3u7nHGikTuVjr5K/0anmyCCxaERnBoHzvP+yraO3C7M38gvS1P+lPQaqMCFM73GicNZb4Sm50nE30Qsrn8/96TWQ9RWxCImngk3fetodfj8GZz3KHWip7ZZtpwIgnEKxa4DjecEfzHFLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=DxQCJbvS; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D/cv88Kc"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41090edfeb3so7638185e9.2
-        for <patches@lists.linux.dev>; Sun, 11 Feb 2024 05:39:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707658778; x=1708263578; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6G9u/3Fv5PjWFy9vLWBNpDOe87eSjSZPsXbRj18KFs8=;
-        b=D/cv88Kcej9AJ9rJUWIDeXLSIxVFFJYOVF6jajazELh542OfzaUXqUW8yFztGnmtNS
-         QFTv40nUpmbjLDJezsrNViT6jjQhLxh4Dsui8DygpS/F49Iro48HMvGDMl4lT1hdB5Ri
-         nA8yYhbphbAg/CZdrTAk2ie9gXLv8wy/ri9zGiky7jNFNT3ruSHSCe0Un+3Xa5VD0vtP
-         O+wTnsNND68kzV/dF5EPLr52bt0pvV1qzztKkvgUZ5X5BwnAhIuNUsw1QQNS07LFIgNK
-         4u8vbC4HW1HgEYr7kseUGft0Nkv+CrL6SHwO7+ET3mJbX4vpLbkFkwaNcM2u5vT+a8h7
-         /TbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707658778; x=1708263578;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6G9u/3Fv5PjWFy9vLWBNpDOe87eSjSZPsXbRj18KFs8=;
-        b=ctbSq5WiPOL1fzTjV+uJEF/Ugg1H+aSWRFn2prkEL9A8NGNlBkb7dKO0koHlyoDyqK
-         2FTkk/J9ayHC8hs0GAXloGKt1HTUF1+UdBY6csB1aoxDCHB/EGDvqgTuSfehHqI3k9k+
-         uQgVuK+hKoOeBPfm6ZFy+BqQJSjlKG7FX+SUSTsmSXlQkZQiVjM0M15Fp9jdVRBj4Vk8
-         wXdlTaqHVbPRNxDsu+5PBVPgl30+LT9pB5GuwwyeagbnIBvqWX1c12mLMdk4p0xJN27u
-         I7L+IrD4AGEEMXUEoiPcal7ePrfgog0/yYMgbmeQxQTbmsHc0cX0RRt2b9Qvh2GgEpEL
-         r/OQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWwGWYIWgdQa3Lfu84ktsJTvjYAtpbf4v/3ILDAfR9wsgaxhfYrEXmS1pBX9nCXoZYCGwKndCQe57iHKETvnSlLa7hyxXgkcg==
-X-Gm-Message-State: AOJu0YwDMvHn52ZTOt1XUvE1rO0xSlmNy2yzw8lOx+pdwNUA3/fN8YUj
-	1Q3at35T+w2fBfvqqyVXFiLvzpwX1VUaRdzAYboc5XI8wjUNC2dEAryF5DntOtA=
-X-Google-Smtp-Source: AGHT+IFhKe1Ykkm1DMRUxBcpjsBg4xpnvNk23OIVIgnQlMx0Ax0hAYhxRnQLZMqoPn7GtxgmI6HcaQ==
-X-Received: by 2002:a05:600c:1548:b0:40f:d25c:41d0 with SMTP id f8-20020a05600c154800b0040fd25c41d0mr4205573wmg.29.1707658778513;
-        Sun, 11 Feb 2024 05:39:38 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCX4punkyvwAWYEniQVwYVWbB/v6b+g/PXt7uDYTIxJstOipFWEm7iWnAZn5ShkiRbYtOlTmEL2ePa1gLfuyYDYvfke0pN0THBEMVxJADXdih1B7pKpPQm8zpDd+auAvCvNZWuDiJece1udC1Im02ybYLzd8YocKCdHcauBXN2zQlMXshLWdB44QZ0h2fCk/il8Gj2c2bmyIc5lbqiZsP/C0q3Okwgxz2Iyuk4laObqp65Kc9XBSfMmwTxWJA0rClYWk7cyuBcp5rq9wD1RsO+XTkHOtqJXvhddwSjyLtgld+2HUJmESyyz/HVm0uFNmPAAG8IfkPd7yUX60NP9dj9LcGjzOLD55oTQ9XAQW2d0u85FG+cgVjmuvi8z2t7mmhxxVpE24l+zndY0Oeooilei3HSNJs9OeNrpBXiblLydzOC4HjwhMs36D3kH309Bh0C63IZudNC3h21Z4+uZzh1qDO2DodA6oBP4aZ7vTsuI=
-Received: from [192.168.1.20] ([178.197.223.6])
-        by smtp.gmail.com with ESMTPSA id v1-20020a05600c214100b00410395dc7d1sm5828918wml.7.2024.02.11.05.39.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Feb 2024 05:39:38 -0800 (PST)
-Message-ID: <18ac05fb-a78d-4e95-a73d-461f509cdc5f@linaro.org>
-Date: Sun, 11 Feb 2024 14:39:36 +0100
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="DxQCJbvS"
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 41CDll6R002089;
+	Mon, 12 Feb 2024 13:55:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=pp1; bh=1VsmOyecYehuELNL1sbz6IGptMSx6hES5aL/RB2W1V8=;
+ b=DxQCJbvSXEYk/EtPG7SslOqdyu76QYro297XQenBo3AbxyjIOrWw7qJED+5ls5ysySY9
+ 2y5WTncbztnEnJxUHbSCipJ2m7dfS0BLI+DAgQPvhAwh0IeFLSXkFuYCAEKH9OMnVdGz
+ lAaAlcnaSFv5aH8hRLneWSai2QnH1BPMsN6lAAY7jMow0Lp1/oJe2rkSjam+rV6VMt84
+ gB9sEAKCqQvG0d5dQvObAvLS7syI0XbolWIu2wdL408mD4MB6+hHEbbfzoeK1hoFeT+N
+ roDNtT3AHOCPl4CMfKg+ex2LrcKLUKE4tEh4JkNQUdV9L05C3KDlDBVyw7cBYxMks7Ce TQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w7mheg56b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 13:55:21 +0000
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41CDn1N3006548;
+	Mon, 12 Feb 2024 13:55:20 GMT
+Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w7mheg561-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 13:55:20 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 41CDhtIc024961;
+	Mon, 12 Feb 2024 13:55:19 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w6mfp0vce-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 12 Feb 2024 13:55:19 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 41CDtDnF17105456
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 12 Feb 2024 13:55:15 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A1C2920043;
+	Mon, 12 Feb 2024 13:55:13 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 02BFD20040;
+	Mon, 12 Feb 2024 13:55:13 +0000 (GMT)
+Received: from osiris (unknown [9.171.5.16])
+	by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Mon, 12 Feb 2024 13:55:12 +0000 (GMT)
+Date: Mon, 12 Feb 2024 14:55:11 +0100
+From: Heiko Carstens <hca@linux.ibm.com>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+        svens@linux.ibm.com, maskray@google.com, ndesaulniers@google.com,
+        linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 04/11] s390: vmlinux.lds.S: Discard unnecessary sections
+Message-ID: <20240212135511.65142-A-hca@linux.ibm.com>
+References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
+ <20240207-s390-lld-and-orphan-warn-v1-4-8a665b3346ab@kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240207-s390-lld-and-orphan-warn-v1-4-8a665b3346ab@kernel.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: tuVIMDreazdkQtVfRLrmJ6yBZCO6xFUF
+X-Proofpoint-GUID: y5h8jGMhNdFw4guclN1-R3JpP2Oi7u6i
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/22] dt-bindings: chrome: Add binding for ChromeOS Pogo
- pin connector
-Content-Language: en-US
-To: Stephen Boyd <swboyd@chromium.org>, chrome-platform@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>,
- Pin-yen Lin <treapking@chromium.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Benson Leung <bleung@chromium.org>,
- Guenter Roeck <groeck@chromium.org>
-References: <20240210070934.2549994-1-swboyd@chromium.org>
- <20240210070934.2549994-19-swboyd@chromium.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240210070934.2549994-19-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-12_10,2024-02-12_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0 spamscore=0
+ phishscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402120105
 
-On 10/02/2024 08:09, Stephen Boyd wrote:
-> Describe the set of pins used to connect the detachable keyboard on
-> detachable ChromeOS devices. The set of pins is called the "pogo pins".
-> It's basically USB 2.0 with an extra pin for base detection. We expect
-> to find a keyboard on the other side of this connector with a specific
-> vid/pid, so describe that as a child device at the port of the usb
-> device connected upstream.
+On Wed, Feb 07, 2024 at 05:14:56PM -0700, Nathan Chancellor wrote:
+> When building with CONFIG_LD_ORPHAN_WARN after selecting
+> CONFIG_ARCH_HAS_LD_ORPHAN_WARN, there are some warnings around certain
+> ELF sections that are unnecessary for the kernel's purposes.
 > 
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: <devicetree@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+>   s390-linux-ld: warning: orphan section `.dynstr' from `arch/s390/kernel/head64.o' being placed in section `.dynstr'
+>   s390-linux-ld: warning: orphan section `.dynamic' from `arch/s390/kernel/head64.o' being placed in section `.dynamic'
+>   s390-linux-ld: warning: orphan section `.hash' from `arch/s390/kernel/head64.o' being placed in section `.hash'
+>   s390-linux-ld: warning: orphan section `.gnu.hash' from `arch/s390/kernel/head64.o' being placed in section `.gnu.hash'
+> 
+> Add them to the discards to clear up the warnings, which matches other
+> architectures.
+> 
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
->  .../chrome/google,pogo-pin-connector.yaml     | 61 +++++++++++++++++++
->  1 file changed, 61 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
-> new file mode 100644
-> index 000000000000..5ba68fd95fcd
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/chrome/google,pogo-pin-connector.yaml
-> @@ -0,0 +1,61 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/chrome/google,pogo-pin-connector.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Google Pogo Pin Connector
-> +
-> +maintainers:
-> +  - Stephen Boyd <swboyd@chromium.org>
-> +
+>  arch/s390/kernel/vmlinux.lds.S | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+...
+> -		*(.interp)
+> +		*(.interp .dynamic)
+> +		*(.dynstr .hash .gnu.hash)
 
-Missing description describing the hardware.
+This seems to be wrong, since it leads to 1000s of error messages when
+using the "crash" utility e.g. when looking into a live dump of system
+with the generated debug info:
 
-> +properties:
-> +  compatible:
-> +    const: google,pogo-pin-connector
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +  port:
-> +    $ref: /schemas/graph.yaml#/properties/port
-> +    description: Connection to USB2 port providing USB signals
-> +    required:
-> +      - endpoint
+BFD: /usr/lib/debug/usr/lib/modules/6.8.0-20240211.rc3.git0.bdca9b8dcf3f.300.fc39.s390x/vmlinux: attempt to load strings from a non-string section (number 0)
 
-Drop required.
+I will change this commit to the below; it seems to work and is in
+line with other architectures:
 
+-----
 
-> +
-> +patternProperties:
-> +  "^keyboard@[0-9a-f]{1,2}$":
-> +    description: The detachable keyboard
+When building with CONFIG_LD_ORPHAN_WARN after selecting
+CONFIG_ARCH_HAS_LD_ORPHAN_WARN, there are some warnings around certain
+ELF sections:
 
-If this is detachable why do you define it in DT? Only hard-wired USB
-devices, which need some sort of special handling. are described in DT.
+  s390-linux-ld: warning: orphan section `.dynstr' from `arch/s390/kernel/head64.o' being placed in section `.dynstr'
+  s390-linux-ld: warning: orphan section `.dynamic' from `arch/s390/kernel/head64.o' being placed in section `.dynamic'
+  s390-linux-ld: warning: orphan section `.hash' from `arch/s390/kernel/head64.o' being placed in section `.hash'
+  s390-linux-ld: warning: orphan section `.gnu.hash' from `arch/s390/kernel/head64.o' being placed in section `.gnu.hash'
 
-> +    type: object
-> +    $ref: /schemas/usb/usb-device.yaml
+Explicitly keep those sections like other architectures when
+CONFIG_RELOCATABLE is enabled, which is always true for s390.
 
-On this level:
-unevaluatedProperties: false
+[hca@linux.ibm.com: keep sections instead of discarding]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20240207-s390-lld-and-orphan-warn-v1-4-8a665b3346ab@kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+---
+ arch/s390/kernel/vmlinux.lds.S | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-> +
-> +required:
-> +  - compatible
-> +  - '#address-cells'
-> +  - '#size-cells'
-
-Use one type of quotes, either ' or ".
-
-> +  - port
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    connector {
-> +        compatible = "google,pogo-pin-connector";
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        keyboard@2 {
-> +          compatible = "usb18d1,504c";
-
-Messed indentation.
-
-> +          reg = <2>;
-> +        };
-> +
-Best regards,
-Krzysztof
+diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
+index 661a487a3048..d46e3c383952 100644
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -200,6 +200,21 @@ SECTIONS
+ 		*(.rela*)
+ 		__rela_dyn_end = .;
+ 	}
++	.dynamic ALIGN(8) : {
++		*(.dynamic)
++	}
++	.dynsym ALIGN(8) : {
++		*(.dynsym)
++	}
++	.dynstr ALIGN(8) : {
++		*(.dynstr)
++	}
++	.hash ALIGN(8) : {
++		*(.hash)
++	}
++	.gnu.hash ALIGN(8) : {
++		*(.gnu.hash)
++	}
+ 
+ 	. = ALIGN(PAGE_SIZE);
+ 	__init_end = .;		/* freed after init ends here */
+-- 
+2.40.1
 
