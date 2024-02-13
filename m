@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF895F54E;
-	Tue, 13 Feb 2024 17:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CE75F56B;
+	Tue, 13 Feb 2024 17:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845193; cv=none; b=cIlGHx24igjcBQBlGX/tHH/GBQiyvA2HphJ7rquhTToB/Q1cMiMgztsLC6zoG75E3V/Q5K840Nf3sNVsClpime6TzjvkJIO8Vktqyx+vkmz2nHIm5uNn/b+So699lFDMjn0kxCusDqKceKZ1WvoPCYc1dVV9QyBxCxnimWUQMTs=
+	t=1707845197; cv=none; b=Os2pyQ/0IvaazD+JJDoNwf2s/06VyftfkI5ysuTM55jhoVFj6caqdce/x5QgmUDvp+SFG/YSvzYWLgAAOeR4UN0or4G8R8aF+jJazC3/i2oGzU2mnE8NwBox2Ot1QCdTx2w1T+QxvcQ9/vd/EzF//8uXfdjC1jn4xmdm4/7gWCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845193; c=relaxed/simple;
-	bh=dg0CObtt0ZxiKsn0Yu2iDi1Y4EbVOSMJF37kcPWBHio=;
+	s=arc-20240116; t=1707845197; c=relaxed/simple;
+	bh=W+Y1dtXR22GhTJ2ilG0vtotMTZAiTXyuUsFMD3Ck3pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJg3P/c2PoAuiRK9YyUetNhFRsvZMM7fFaT9g1+9AA95QWkU/N0FcA7LcUpAo0W9/nH0Z/7R9TjoqV7K+oUDW69UvucVOhmdyfXG2t0O1QdsOJ5uu1l3aaxqmUBbIcksp33M7F0BCdZAHx3ypc12pmjFzSkL1n+lx+8oT5ZEfkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8JlKH7w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OqNXFMQesMSwIZFxuqWIVYjncSQOliBNYg39p70pO5Kkoy5a/XNoiXAev96qgukGRo4OLFUI+uZysTRtBPFnlJik3AiwC1zKpk9Y3LvZJo8epkr/qb16pGkcg5CM4U3cN2Q79wU8t/ialtMpLbPMD8bhf4GwRqIEVVve4SQ9u2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBIl/ggE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8JlKH7w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFF7C433F1;
-	Tue, 13 Feb 2024 17:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBIl/ggE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677C3C43399;
+	Tue, 13 Feb 2024 17:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845193;
-	bh=dg0CObtt0ZxiKsn0Yu2iDi1Y4EbVOSMJF37kcPWBHio=;
+	s=korg; t=1707845196;
+	bh=W+Y1dtXR22GhTJ2ilG0vtotMTZAiTXyuUsFMD3Ck3pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8JlKH7w+5pWUisVXQ4zHRK/8R5h0AkuEYkD0WsXssOtXvI5MfGMP5xtszIGfmbFT
-	 umvgD0P3cyIli0DtwHxhBLSW+3cF9P6BQdHBdNQ30S7165fyL3GE14kVZdzJwMChV4
-	 BmE0TDsd94XQoCfTHeQ12GoeszcIL71JigECiXDE=
+	b=xBIl/ggEkYA2soYpX0/CO4/3KdKzGnopLoqpUuCkEOJ0kywKwrc+Fx4yGyqeGUXV9
+	 R3FNcsdnQjdEoppxdWxvKgzGW9Z1Xwu7ewYJ3EIN8TFUl2byoO+bOCZC5IBqWg9I7z
+	 TTOlWasGzg10JSD6eYax047gwByeunOTVM+AYGms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanhua Gao <guanhua.gao@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 002/121] dmaengine: fsl-dpaa2-qdma: Fix the size of dma pools
-Date: Tue, 13 Feb 2024 18:20:11 +0100
-Message-ID: <20240213171853.023775762@linuxfoundation.org>
+Subject: [PATCH 6.6 003/121] dmaengine: ti: k3-udma: Report short packet errors
+Date: Tue, 13 Feb 2024 18:20:12 +0100
+Message-ID: <20240213171853.053494031@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,52 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanhua Gao <guanhua.gao@nxp.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit b73e43dcd7a8be26880ef8ff336053b29e79dbc5 ]
+[ Upstream commit bc9847c9ba134cfe3398011e343dcf6588c1c902 ]
 
-In case of long format of qDMA command descriptor, there are one frame
-descriptor, three entries in the frame list and two data entries. So the
-size of dma_pool_create for these three fields should be the same with
-the total size of entries respectively, or the contents may be overwritten
-by the next allocated descriptor.
+Propagate the TR response status to the device using BCDMA
+split-channels. For example CSI-RX driver should be able to check if a
+frame was not transferred completely (short packet) and needs to be
+discarded.
 
-Fixes: 7fdf9b05c73b ("dmaengine: fsl-dpaa2-qdma: Add NXP dpaa2 qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Guanhua Gao <guanhua.gao@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20240118162917.2951450-1-Frank.Li@nxp.com
+Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20240103-tr_resp_err-v1-1-2fdf6d48ab92@ti.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/dma/ti/k3-udma.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-index a42a37634881..da91bc9a8e6f 100644
---- a/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-+++ b/drivers/dma/fsl-dpaa2-qdma/dpaa2-qdma.c
-@@ -38,15 +38,17 @@ static int dpaa2_qdma_alloc_chan_resources(struct dma_chan *chan)
- 	if (!dpaa2_chan->fd_pool)
- 		goto err;
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 30fd2f386f36..037f1408e798 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -3968,6 +3968,7 @@ static void udma_desc_pre_callback(struct virt_dma_chan *vc,
+ {
+ 	struct udma_chan *uc = to_udma_chan(&vc->chan);
+ 	struct udma_desc *d;
++	u8 status;
  
--	dpaa2_chan->fl_pool = dma_pool_create("fl_pool", dev,
--					      sizeof(struct dpaa2_fl_entry),
--					      sizeof(struct dpaa2_fl_entry), 0);
-+	dpaa2_chan->fl_pool =
-+		dma_pool_create("fl_pool", dev,
-+				 sizeof(struct dpaa2_fl_entry) * 3,
-+				 sizeof(struct dpaa2_fl_entry), 0);
-+
- 	if (!dpaa2_chan->fl_pool)
- 		goto err_fd;
+ 	if (!vd)
+ 		return;
+@@ -3977,12 +3978,12 @@ static void udma_desc_pre_callback(struct virt_dma_chan *vc,
+ 	if (d->metadata_size)
+ 		udma_fetch_epib(uc, d);
  
- 	dpaa2_chan->sdd_pool =
- 		dma_pool_create("sdd_pool", dev,
--				sizeof(struct dpaa2_qdma_sd_d),
-+				sizeof(struct dpaa2_qdma_sd_d) * 2,
- 				sizeof(struct dpaa2_qdma_sd_d), 0);
- 	if (!dpaa2_chan->sdd_pool)
- 		goto err_fl;
+-	/* Provide residue information for the client */
+ 	if (result) {
+ 		void *desc_vaddr = udma_curr_cppi5_desc_vaddr(d, d->desc_idx);
+ 
+ 		if (cppi5_desc_get_type(desc_vaddr) ==
+ 		    CPPI5_INFO0_DESC_TYPE_VAL_HOST) {
++			/* Provide residue information for the client */
+ 			result->residue = d->residue -
+ 					  cppi5_hdesc_get_pktlen(desc_vaddr);
+ 			if (result->residue)
+@@ -3991,7 +3992,12 @@ static void udma_desc_pre_callback(struct virt_dma_chan *vc,
+ 				result->result = DMA_TRANS_NOERROR;
+ 		} else {
+ 			result->residue = 0;
+-			result->result = DMA_TRANS_NOERROR;
++			/* Propagate TR Response errors to the client */
++			status = d->hwdesc[0].tr_resp_base->status;
++			if (status)
++				result->result = DMA_TRANS_ABORTED;
++			else
++				result->result = DMA_TRANS_NOERROR;
+ 		}
+ 	}
+ }
 -- 
 2.43.0
 
