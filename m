@@ -1,119 +1,104 @@
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A366168F
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 22:19:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670C762143
+	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 22:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707862746; cv=none; b=rwMHf5+IL0NEIiEwMZMtOS4sZYGTrH5W5oPhG4R0D/UUCNtN/pwh2+f1uXTUJVdUjAE8x/gIRRSoKsqMN7xwZ73Y3uw2Ry/WSC9cLdXpWtpNxtGu4hmg26TMP1p5FgJHy7SV+5qMnZlvaeDoVb1b1W6d46SvhF06bYnr4THUnBs=
+	t=1707862758; cv=none; b=ecX6kxNU1BNJOiALVkrKQcKahEHkf0W5wlVNkhXQeGNjHsFyApBdXFjQERb/aONkaCRCKIsKyl1UZMbZGTXPckwCWWFHSL6GqcZvAGSswWgouENd8PUWVH3ouCSxtS5irX07/bCC1rA4kGlx67vZARTpmtV8d+bYNlp8Zlir4bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707862746; c=relaxed/simple;
-	bh=fupPzFq/mOzPQg49g5zT0ntfs9nXTHiAGCPpCwKSJQA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CLKMXs0Ln3boVZAoOa4HqjdP9oBafdFtkdUNF6fTRTQe87URqHcWdcVk4YFTw4ZAh8+ib0BU6gzfxUue8j8jZXJyK004+MWQ68S2x3cgoGsDV5qAUMuTGu3/QjiMhHKmoHt2Ic5QVPl0eSFHW7+HHSRGvaT+dkXqutcH6SvkCwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=mwzmgUZU; arc=none smtp.client-ip=209.85.167.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1707862758; c=relaxed/simple;
+	bh=fTJeE/0vTi3j4ZDncZgiJFys8r51ebCtKQPYxoUm5CQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JCwSFRgN5O1OzUH3tAYOqxiMQT1kGd7Y53RX5zQ4c07NQLJ/EuomjxeNEeSpUSoX8I90FI3z7WjhVbp/Ak1luyz7O2Taif+fxEp0bqF2YjOTTh5dsrfULtEZuzf+mzm5D9XUPSUf8/E++4m4eU2ceIPSCezrET8U3bgErCK4d4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SGh3GVAi; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="mwzmgUZU"
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3bd72353d9fso3599871b6e.3
-        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 14:19:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGh3GVAi"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-785d5705681so20137685a.1
+        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 14:19:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1707862744; x=1708467544; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NEtsz3nbQBwXPKC2RpUXbyPnr0oHPliF/lmcdhUWxA0=;
-        b=mwzmgUZUm7+AePCAZYKRLBpAzP6OMRfHLz1crjABzv8yTsUfACUmpRtQmMA1+w9Azt
-         A1tdMXxeKYwFmKjxoJC+jfVKgY0At3KbRw8h6bx4vTokP6ZCG5AuAq7xxoA2enLw6TQK
-         GGwiytCyFcfPh8naAGaAjd008SCM/LWy50pDA=
+        d=gmail.com; s=20230601; t=1707862756; x=1708467556; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HOwk/2w2eY60TLURHPvbKuNQvYKfknP+nGTPYSp2+GU=;
+        b=SGh3GVAiSiq4kpZkOhpOMNY4+Xc1A8VDT8ZIbsE0XWHED0uZ0S8rBgZzFTxCeiHBb8
+         K7S3LnnCZaskovTgKDMtmk4olxswXeQNBtqRlOWGNuQZUNrUu9SZzQoC6d6203ytICcI
+         P0JeKZM6AglhYB1q17WtqAMSK/nuoahptMQz1bSE94o5L59jPClgBSoI2ExmyS+K7T3L
+         oNzDidJu5eChL0fddrFW0Kj1n9wzdccZNHZ65iUv72ADysFgajRlk5XmyMCZMzrik/o/
+         0AWmuLgtcGkz0AyqR78NdZUC+wIEElQJC4UX9E5+9WfLK4gO2/Sgtk9ippULK2OvFk9J
+         tuRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707862744; x=1708467544;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NEtsz3nbQBwXPKC2RpUXbyPnr0oHPliF/lmcdhUWxA0=;
-        b=TZpEKM2kcNETLVNFrvrmFTF5W5KMKgeuJyYT3rh9d4U/g2nwxCwc8W3kyejT5hp8/k
-         EoU8ztGP/NcJcfC/EqqVFqkkPINZ9APMmcjKqveYwVyuCA09KFQCCS5TfA8tjoOm7yjL
-         2mKRKpgO2gysgSocEgzSkkKXqeXs7xrmcxPrQWNKRzBAQGwRad/I+lzx12uUWlDV0X9S
-         ZIP68cwYHbzI3qCQQMRakK3JMS+dMLuJFrUxJZ1IwbZynY9EdXW5BDnVwaWqcaeRH+7x
-         FbqTTrNj5bV1Jmg0/bgqC7h1XzvzJTOH9ZKaQ5cf3TQ/UW5NdO9MQn9l/UONHLGwEvsV
-         H3hw==
-X-Forwarded-Encrypted: i=1; AJvYcCU/ByQKgkyW6vQIBoMo7PEDid2pIc4ilFD5Y8eD/A0rlN0k88ymrf4el1Hjy8HvIECOb1lJ89tdrqlRSERoWk3+jSxG3eq1XA==
-X-Gm-Message-State: AOJu0YyA4pQy3OvufpZjUYbpRd7EeGoJFOPd0iDOGG9hbf21Sn+4hKu2
-	7N/QdqWPGMB8bijIepj/M9AUG6/hKoEICDsLPFL6vU568EpPIB+SAac/sX160Q==
-X-Google-Smtp-Source: AGHT+IHTEQ8wwSveSYvl+t5iWH5jHvKp2JNEd3pVIZ53DZ3GINpiRg01YzM7bjG1Y+XAbeMm+x+wJg==
-X-Received: by 2002:a05:6871:3a13:b0:21a:80cd:734a with SMTP id pu19-20020a0568713a1300b0021a80cd734amr874714oac.52.1707862743756;
-        Tue, 13 Feb 2024 14:19:03 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVqeObbu+ItRZ+eJqf1kncpf5EJ3lH1k5WBhURpbH35pDNdgVhmgrUO67MPvRBOssCYpMpuZghAsI3gVHGWXQ4zr5EoG3JEt5HFIFo4MXQb4GLBfeW2Dv2KZ0v5EjBveV4M/WQpFaCz4yzmL+T4uwyZ86MetJ1r1AGxX1kRO6hoPoQRG11vhleH5xqUGld6pFZPXIGLUB1ZGyf2YJVkUL45tEUt82021f7fv6OGKR0LrZh5dLpaZQ/uCXbrNxGplqQbgaVf1wYD2j6RBG8myUgu97IRAqeuJpaSOneq4dc4fblBs6CE8zzvLMFec+AuCgM+CY+hPM0vF5opoCQPMAFIjCdgpVWJbETbd9cjuiq1Y6n0
-Received: from www.outflux.net ([198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id ck25-20020a056a02091900b005d8b89bbf20sm2522310pgb.63.2024.02.13.14.19.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 14:19:03 -0800 (PST)
-Date: Tue, 13 Feb 2024 14:19:02 -0800
-From: Kees Cook <keescook@chromium.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: masahiroy@kernel.org, nicolas@fjasle.eu, ndesaulniers@google.com,
-	morbo@google.com, justinstitt@google.com, maskray@google.com,
-	linux-kbuild@vger.kernel.org, bpf@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] kbuild: Fix changing ELF file type for output of
- gen_btf for big endian
-Message-ID: <202402131418.3DB3FF7@keescook>
-References: <20240212-fix-elf-type-btf-vmlinux-bin-o-big-endian-v2-1-22c0a6352069@kernel.org>
+        d=1e100.net; s=20230601; t=1707862756; x=1708467556;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HOwk/2w2eY60TLURHPvbKuNQvYKfknP+nGTPYSp2+GU=;
+        b=o8WTbjqr/68fyyMS48V9QC/cf4L7R86lbsHtvf+QkGESng5uNWreuK4EwNST4zACil
+         NjH3GhsR4ifPU42hrQueMLa3K5MBYYDxnROiLLEiuyUxRXvusjjbRpxxPOAng2LyvI7u
+         SPSeLq0VJnaz4/SJYlD1SWm0Q4Uh8YrZZzP3d5R3xWGMfx8lbZ/iomFg6J/RFZ/5hyxS
+         sDG9nCACAH+LqpmAbx31JnlcxjxZzzWV45k5XIGnXu7Q8m1BlMFyJI4iYbPOmOf7+639
+         QYHx2pD9rcVvEY2uhdu6ZIFO35kXm5G7Mg8fi0wjGxPwvI3MyArvAqglC1VBFC2f67TU
+         DLgA==
+X-Gm-Message-State: AOJu0Yx4kGIiJoo4yczi+uvBBUpFM4ryAlnSOCxJvbWvl3dgG4ow5p4T
+	WRq7npRRI4L9hgcrK47vOjaRx/PxrX+Yg9fxvnXIuwWTvxO14UPU
+X-Google-Smtp-Source: AGHT+IHGHrykYSlNOyjcS/UZ6V4dNHsB1WQ6ZHMxk3R/TLseCIBbsBNj5CZuJv4DpukvlbxrMZDZEw==
+X-Received: by 2002:a05:620a:9c6:b0:787:18b5:f56b with SMTP id y6-20020a05620a09c600b0078718b5f56bmr305955qky.34.1707862756217;
+        Tue, 13 Feb 2024 14:19:16 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUQWEXelBgT9oVykeo4eUb5AO+sFg5/aRwKxasJIC9ql0n+08RV5wwSQteDqeZJKuXvu3Qg3T0TmXGKycuzb+o8bpeTeeojh9w7381pktWRSaj1hidZhDJErIils6+ExmR4BJtsD5Hzt4u+jQtqx20JjbsfcFlGZz3koKLI7snxS71tg7Ej+4jgR3FZQyjxxgaWY15Lcv9zbN4mH3T9YbKyDUdGYLLWL6XuBMdu3OXRv+AdgErqK4pPcmyFHF/DqEnofsRC9mzsC0lh2xCYJw5iW41d6ZNbYgEthTtPZgzbWcbMC09ZVYPP7IwKrytZ01exUluV5pvs4Oe0yFpoJAFV5JCgfiNi8zhqIN794NRF8pNWwnZPWfPbkj70f3XvlgrJRAanyAqQehNmZ3DjZh+t5wjXgq+ykRAjcaGk6Tc89LIUQhLMt69STQ8v22/7qJgSQW435DXaYzMEQ0ds59IRxQXeUPH5kwNyQBqS4SrAuh/2NQ0Rxm5SkqOJiZIzRJJilhlxiR+g
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id d9-20020a05620a166900b00783f1e600aasm3282430qko.38.2024.02.13.14.19.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Feb 2024 14:19:15 -0800 (PST)
+Message-ID: <ff048126-fc13-46d5-a77d-d7ccd21578fc@gmail.com>
+Date: Tue, 13 Feb 2024 14:19:12 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240212-fix-elf-type-btf-vmlinux-bin-o-big-endian-v2-1-22c0a6352069@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.7 000/124] 6.7.5-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com
+References: <20240213171853.722912593@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Feb 12, 2024 at 07:05:10PM -0700, Nathan Chancellor wrote:
-> Commit 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-> changed the ELF type of .btf.vmlinux.bin.o to ET_REL via dd, which works
-> fine for little endian platforms:
+On 2/13/24 09:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.7.5 release.
+> There are 124 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->    00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
->   -00000010  03 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |................|
->   +00000010  01 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |................|
+> Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
+> Anything received after that time might be too late.
 > 
-> However, for big endian platforms, it changes the wrong byte, resulting
-> in an invalid ELF file type, which ld.lld rejects:
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> and the diffstat can be found below.
 > 
->    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF............|
->   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
->   +00000010  01 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
+> thanks,
 > 
->   Type:                              <unknown>: 103
-> 
->   ld.lld: error: .btf.vmlinux.bin.o: unknown file type
-> 
-> Fix this by updating the entire 16-bit e_type field rather than just a
-> single byte, so that everything works correctly for all platforms and
-> linkers.
-> 
->    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF............|
->   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
->   +00000010  00 01 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
-> 
->   Type:                              REL (Relocatable file)
-> 
-> While in the area, update the comment to mention that binutils 2.35+
-> matches LLD's behavior of rejecting an ET_EXEC input, which occurred
-> after the comment was added.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-> Link: https://github.com/llvm/llvm-project/pull/75643
-> Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> greg k-h
 
-Writing the u16 looks fine to me.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Kees Cook
+Florian
+
