@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB2D5F54E;
-	Tue, 13 Feb 2024 17:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9E65FDDF;
+	Tue, 13 Feb 2024 17:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845564; cv=none; b=ljGDSd1FYTu2xHxaj6C+FA2DzwoabdFS55wawOxMQ4Bq8pfylAQJub24WvHtgtLUQGWT7znkyZX5/yyAf1sEeRfH+zi/JFwQqfKHP+HBsHVl3hlKfWgIINCksURVxOF0fyNLKtVGcdd2FwbzNIrgLmhiKtWf+6Gfy+YXVOaN6no=
+	t=1707845567; cv=none; b=FNjrlzp5PojUlnJgy3zVBIbxOuA4IQGiln2nhIjh8SwIkNnoS9noxQUZj4E4UcLwb63kglyAq63YjNXJXEOgk5wus3TfxUL0k5/f7IXo6AdN4l5V37FbcWwMfd+x6uRREhgT1FoiC3aPZ31W3Mt+YNAzFP5eaGkroiL2V/e7Fo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845564; c=relaxed/simple;
-	bh=T9UjOiiKyY6dnm6W2KxCACkJkIM4jLIpEUHv19NLCjg=;
+	s=arc-20240116; t=1707845567; c=relaxed/simple;
+	bh=6DvIEJQ7cQNB0HrkYxHzhU07II9VkVbEYYxRZhIY1Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7Jb6xxhHtTOyRx1LrK4PMNy/sqHBt+HRGNv9q0ziLeoyRNS+eE8tMZB30CVH/AD9TUSqM2Onch9XeunwjK/pMwxmmQbGfAh51qkBRpyqAghyqG6PLrBBQh2kjknzsAGe3PQGKigE2aQ3Spq3qNJDIFmsBwzgLjKLP1SZMDAOjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D82ieYb8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jYz6BlSV6gqzWgGo4You1A0WEsQvFjVhtLsTGKLNZJ4R7gWV6uvg5Jaz3B6+uu+g5O9b/FR3KdtRhOWESGhsQxdqS8o+npiynzg5yEwWKJg5m6opZ1mDX4XqYHYDmJTjU2WaPLBYt1n6xFc/KYwkodAemh/gMUN6rrqs4US/REM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVIgzi4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D82ieYb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F72C433C7;
-	Tue, 13 Feb 2024 17:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVIgzi4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D86AC433F1;
+	Tue, 13 Feb 2024 17:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845564;
-	bh=T9UjOiiKyY6dnm6W2KxCACkJkIM4jLIpEUHv19NLCjg=;
+	s=korg; t=1707845567;
+	bh=6DvIEJQ7cQNB0HrkYxHzhU07II9VkVbEYYxRZhIY1Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D82ieYb8JX8VGP9/Ej4nu6kcWGaG6cAJmT4f4zxDjqU5P8X8/j1F2KU7NsL9ZLvNL
-	 bDEt7tPDDUc1bEPjYgkju4EGcW4jaf0AS7Z7GDlIEFUqzHC3mFAZl47PisEXA/TIJT
-	 WDl4In5p7eZAZNF7PKEa0u6MAWDrsQqvyJYE2H2I=
+	b=PVIgzi4N02E/trMsRLZb/Wi2O3CgFfVOYKifdhKopCcBsJvl0fkgCXHpgCcJ1tNBj
+	 3Bm5o4A0Dicu571hPXdvMu/cp+nyh29A+X9n/WQYMVNGUb8pKKpt8oZP9tw7DFJvqc
+	 1WDIyBuknH6lKmw8mFgBB+Q+Je8xim7jHluCIBhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@gmail.com>,
-	David Laight <David.Laight@ACULAB.COM>,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	regressions@leemhuis.info
-Subject: [PATCH 6.6 116/121] media: solo6x10: replace max(a, min(b, c)) by clamp(b, a, c)
-Date: Tue, 13 Feb 2024 18:22:05 +0100
-Message-ID: <20240213171856.373579744@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 117/121] io_uring/net: fix sr->len for IORING_OP_RECV with MSG_WAITALL and buffers
+Date: Tue, 13 Feb 2024 18:22:06 +0100
+Message-ID: <20240213171856.403075045@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -54,60 +49,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien Jarno <aurelien@aurel32.net>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 31e97d7c9ae3de072d7b424b2cf706a03ec10720 upstream.
+commit 72bd80252feeb3bef8724230ee15d9f7ab541c6e upstream.
 
-This patch replaces max(a, min(b, c)) by clamp(b, a, c) in the solo6x10
-driver.  This improves the readability and more importantly, for the
-solo6x10-p2m.c file, this reduces on my system (x86-64, gcc 13):
+If we use IORING_OP_RECV with provided buffers and pass in '0' as the
+length of the request, the length is retrieved from the selected buffer.
+If MSG_WAITALL is also set and we get a short receive, then we may hit
+the retry path which decrements sr->len and increments the buffer for
+a retry. However, the length is still zero at this point, which means
+that sr->len now becomes huge and import_ubuf() will cap it to
+MAX_RW_COUNT and subsequently return -EFAULT for the range as a whole.
 
- - the preprocessed size from 121 MiB to 4.5 MiB;
+Fix this by always assigning sr->len once the buffer has been selected.
 
- - the build CPU time from 46.8 s to 1.6 s;
-
- - the build memory from 2786 MiB to 98MiB.
-
-In fine, this allows this relatively simple C file to be built on a
-32-bit system.
-
-Reported-by: Jiri Slaby <jirislaby@gmail.com>
-Closes: https://lore.kernel.org/lkml/18c6df0d-45ed-450c-9eda-95160a2bbb8e@gmail.com/
-Cc:  <stable@vger.kernel.org> # v6.7+
-Suggested-by: David Laight <David.Laight@ACULAB.COM>
-Signed-off-by: Aurelien Jarno <aurelien@aurel32.net>
-Reviewed-by: David Laight <David.Laight@ACULAB.COM>
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: <regressions@leemhuis.info>
+Cc: stable@vger.kernel.org
+Fixes: 7ba89d2af17a ("io_uring: ensure recv and recvmsg handle MSG_WAITALL correctly")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/solo6x10/solo6x10-offsets.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ io_uring/net.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/pci/solo6x10/solo6x10-offsets.h
-+++ b/drivers/media/pci/solo6x10/solo6x10-offsets.h
-@@ -57,16 +57,16 @@
- #define SOLO_MP4E_EXT_ADDR(__solo) \
- 	(SOLO_EREF_EXT_ADDR(__solo) + SOLO_EREF_EXT_AREA(__solo))
- #define SOLO_MP4E_EXT_SIZE(__solo) \
--	max((__solo->nr_chans * 0x00080000),				\
--	    min(((__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo)) -	\
--		 __SOLO_JPEG_MIN_SIZE(__solo)), 0x00ff0000))
-+	clamp(__solo->sdram_size - SOLO_MP4E_EXT_ADDR(__solo) -	\
-+	      __SOLO_JPEG_MIN_SIZE(__solo),			\
-+	      __solo->nr_chans * 0x00080000, 0x00ff0000)
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -902,6 +902,7 @@ retry_multishot:
+ 		if (!buf)
+ 			return -ENOBUFS;
+ 		sr->buf = buf;
++		sr->len = len;
+ 	}
  
- #define __SOLO_JPEG_MIN_SIZE(__solo)		(__solo->nr_chans * 0x00080000)
- #define SOLO_JPEG_EXT_ADDR(__solo) \
- 		(SOLO_MP4E_EXT_ADDR(__solo) + SOLO_MP4E_EXT_SIZE(__solo))
- #define SOLO_JPEG_EXT_SIZE(__solo) \
--	max(__SOLO_JPEG_MIN_SIZE(__solo),				\
--	    min((__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo)), 0x00ff0000))
-+	clamp(__solo->sdram_size - SOLO_JPEG_EXT_ADDR(__solo),	\
-+	      __SOLO_JPEG_MIN_SIZE(__solo), 0x00ff0000)
- 
- #define SOLO_SDRAM_END(__solo) \
- 	(SOLO_JPEG_EXT_ADDR(__solo) + SOLO_JPEG_EXT_SIZE(__solo))
+ 	ret = import_ubuf(ITER_DEST, sr->buf, len, &msg.msg_iter);
 
 
