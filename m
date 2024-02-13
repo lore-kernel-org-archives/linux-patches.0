@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5581E5FDD8;
-	Tue, 13 Feb 2024 17:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B3F5FDB5;
+	Tue, 13 Feb 2024 17:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845030; cv=none; b=pkJBVbc1SrC2YlHSOY0x95NfbbSCVhEzCMFdVzDGSFQlgQU1l4+VBaSRsWlfgoI/TGDKcziPeRNm9nzaezY7XUPz7uHW6y49IUIYi6TtfLVOmaM0lUaVboY9/5BgUQpsIAUa84IYbk2zHL2PeWMiVYfaYI2x//gnKikLm1RqPmk=
+	t=1707845034; cv=none; b=fV+mb9q5eZ4l4GD4Egm/7NSwjYKDCV3XyNvEiSA9a1pwKUjkBYXXaGprmt6Oq8E2K5oOP5SV+Y5fov2lofd0uqAnVkJLPvciHiwfQUDqz82iJK+vkO5u4VjMgEcz/PghJj/zraj5xjQIdj1KgQlHb6MNV+q9bOJsQVSd+Gz4WO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845030; c=relaxed/simple;
-	bh=R2Ww+BDKfkuYHMME2VwVWxu5i6a7gSBTapt0B8n4U54=;
+	s=arc-20240116; t=1707845034; c=relaxed/simple;
+	bh=BciVfmgLf2y/2co8oVe5o5ECGoSncEIJ0njqLzZmEZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=syt56zCXSdZ3I8sQ22WV/T7uysylcEju4xPn8xY4+qp8KLAK47GsVW0fYPCyobHMiVoENAC9t1O8U06Xm5OrnMHBoghYuBYaFPv7t62wtziD6K+FMiWy4EcFVGAm9LBucGXM9rGwMo4wKQE+3wDng19ynX9ziEJnYqqxmINlWUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ2FgIf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=REgzJmqiUbuVtQbJeOQtWpq2JNfCX7+/pJomp43l/upFf8OfY+XvFqQxjh2WEnxTduRXxPZ2KtxPWVpaLwlHHub5zGcH2v/QYq5PHsumCnwf39BSLeuJx4K4CeSHRJ/miPng8TGADZxSrl8I3xdYYKqba8becH+k/Ysv87S0HAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3jwCFTt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ2FgIf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BBDC433C7;
-	Tue, 13 Feb 2024 17:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3jwCFTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0632C433C7;
+	Tue, 13 Feb 2024 17:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845030;
-	bh=R2Ww+BDKfkuYHMME2VwVWxu5i6a7gSBTapt0B8n4U54=;
+	s=korg; t=1707845033;
+	bh=BciVfmgLf2y/2co8oVe5o5ECGoSncEIJ0njqLzZmEZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZ2FgIf8FvqB+dvRI4k7DPy4IzLXnCvZSnFc3QDU5PkaRb4Ll6Bosc3PoCVWvDXWw
-	 T2DoBQP2Z6gmWM1A3mnQ5quq6j+m4PPEa2q+9Nh28Gs60EV0leRZ4tQDqwhjA+r8Jg
-	 vzj3R6NbEFBiWkGKbEGIYaN9VnkWeHgFy9ebGTgM=
+	b=j3jwCFTto/w0ZdGK4/1nOtx44w4kNVq1kitun/UB/zHkczFpscDMmA1doui0XUZMV
+	 PQTcqvGtJWZh1D1kbv45LbUgEBJhMfSSjpes4RCS3c3aJTaLcPeQQwUvEcQZdQOBo8
+	 KGS0CAxCaayM4CvM7Lp5su9jVx8yk9uMIylSYC+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <j-luthra@ti.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/64] dmaengine: ti: k3-udma: Report short packet errors
-Date: Tue, 13 Feb 2024 18:20:49 +0100
-Message-ID: <20240213171844.830813079@linuxfoundation.org>
+Subject: [PATCH 6.1 04/64] dmaengine: fsl-qdma: Fix a memory leak related to the status queue DMA
+Date: Tue, 13 Feb 2024 18:20:50 +0100
+Message-ID: <20240213171844.869158801@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
 References: <20240213171844.702064831@linuxfoundation.org>
@@ -52,65 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit bc9847c9ba134cfe3398011e343dcf6588c1c902 ]
+[ Upstream commit 968bc1d7203d384e72afe34124a1801b7af76514 ]
 
-Propagate the TR response status to the device using BCDMA
-split-channels. For example CSI-RX driver should be able to check if a
-frame was not transferred completely (short packet) and needs to be
-discarded.
+This dma_alloc_coherent() is undone in the remove function, but not in the
+error handling path of fsl_qdma_probe().
 
-Fixes: 25dcb5dd7b7c ("dmaengine: ti: New driver for K3 UDMA")
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20240103-tr_resp_err-v1-1-2fdf6d48ab92@ti.com
+Switch to the managed version to fix the issue in the probe and simplify
+the remove function.
+
+Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/a0ef5d0f5a47381617ef339df776ddc68ce48173.1704621515.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/k3-udma.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/dma/fsl-qdma.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index b86b809eb1f7..82e7acfda6ed 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -3963,6 +3963,7 @@ static void udma_desc_pre_callback(struct virt_dma_chan *vc,
+diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
+index 045ead46ec8f..5cc887acb05b 100644
+--- a/drivers/dma/fsl-qdma.c
++++ b/drivers/dma/fsl-qdma.c
+@@ -563,11 +563,11 @@ static struct fsl_qdma_queue
+ 	/*
+ 	 * Buffer for queue command
+ 	 */
+-	status_head->cq = dma_alloc_coherent(&pdev->dev,
+-					     sizeof(struct fsl_qdma_format) *
+-					     status_size,
+-					     &status_head->bus_addr,
+-					     GFP_KERNEL);
++	status_head->cq = dmam_alloc_coherent(&pdev->dev,
++					      sizeof(struct fsl_qdma_format) *
++					      status_size,
++					      &status_head->bus_addr,
++					      GFP_KERNEL);
+ 	if (!status_head->cq) {
+ 		devm_kfree(&pdev->dev, status_head);
+ 		return NULL;
+@@ -1272,8 +1272,6 @@ static void fsl_qdma_cleanup_vchan(struct dma_device *dmadev)
+ 
+ static int fsl_qdma_remove(struct platform_device *pdev)
  {
- 	struct udma_chan *uc = to_udma_chan(&vc->chan);
- 	struct udma_desc *d;
-+	u8 status;
+-	int i;
+-	struct fsl_qdma_queue *status;
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct fsl_qdma_engine *fsl_qdma = platform_get_drvdata(pdev);
  
- 	if (!vd)
- 		return;
-@@ -3972,12 +3973,12 @@ static void udma_desc_pre_callback(struct virt_dma_chan *vc,
- 	if (d->metadata_size)
- 		udma_fetch_epib(uc, d);
+@@ -1282,11 +1280,6 @@ static int fsl_qdma_remove(struct platform_device *pdev)
+ 	of_dma_controller_free(np);
+ 	dma_async_device_unregister(&fsl_qdma->dma_dev);
  
--	/* Provide residue information for the client */
- 	if (result) {
- 		void *desc_vaddr = udma_curr_cppi5_desc_vaddr(d, d->desc_idx);
- 
- 		if (cppi5_desc_get_type(desc_vaddr) ==
- 		    CPPI5_INFO0_DESC_TYPE_VAL_HOST) {
-+			/* Provide residue information for the client */
- 			result->residue = d->residue -
- 					  cppi5_hdesc_get_pktlen(desc_vaddr);
- 			if (result->residue)
-@@ -3986,7 +3987,12 @@ static void udma_desc_pre_callback(struct virt_dma_chan *vc,
- 				result->result = DMA_TRANS_NOERROR;
- 		} else {
- 			result->residue = 0;
--			result->result = DMA_TRANS_NOERROR;
-+			/* Propagate TR Response errors to the client */
-+			status = d->hwdesc[0].tr_resp_base->status;
-+			if (status)
-+				result->result = DMA_TRANS_ABORTED;
-+			else
-+				result->result = DMA_TRANS_NOERROR;
- 		}
- 	}
+-	for (i = 0; i < fsl_qdma->block_number; i++) {
+-		status = fsl_qdma->status[i];
+-		dma_free_coherent(&pdev->dev, sizeof(struct fsl_qdma_format) *
+-				status->n_cq, status->cq, status->bus_addr);
+-	}
+ 	return 0;
  }
+ 
 -- 
 2.43.0
 
