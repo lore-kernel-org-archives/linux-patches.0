@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537A3A93C;
-	Tue, 13 Feb 2024 17:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32ABA93C;
+	Tue, 13 Feb 2024 17:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845849; cv=none; b=qG7rKfDpZzN18ew94+JQPyN2F7SNVm2/cyhjWT1/YZRzEgrQzHaiKuaZJ4iL57UPTcHHvaCWknOtg+LPo9nMbPUCNJ3ZtZ0VAn0y/cLr3CpR9DQhhbilY9Y4CbFdsbf3uwAueVdisa+dfg6UjcdZ2gMmroMGydBxgZd22x3pd/4=
+	t=1707845852; cv=none; b=dPNWc2rTdJQ0Dc/rcv2IRvHW+prKsDHgWlug0++tCSj5jPBlXoRUbIObKw0GBhEvVg94RA0SizOuwwM66NyuVz+XS6CJ07awtbST4+lj/LyJjbih6ECfrT7jgOQQy1tT/7tqx5ivtg9/ET116BinHUQGHDMyaFnlBsAszS4alMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845849; c=relaxed/simple;
-	bh=oR6fjsbodhjmPlPMku2wi6ObbfLdNM6sr5yYSMqcdR4=;
+	s=arc-20240116; t=1707845852; c=relaxed/simple;
+	bh=xDXBdO7X7D2rl1xGPXuybohR70inYd3iteQQP0lP62U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWSwTtNTrl0g9u3BmX5sTC1ynlNpYUFjNhKRPPP7nYA0VVr/mrBRgt20mfFczZYem4W/SXxlEWOjn4ggIsxcSpq4oS71oKlYka6+x7qs5hDvAidsgAi8IrCWOvtk37k/zu7QVyYpQrCHMk5U49dFPqIsTrHJqeAr+Ot0Ii7VTeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOs1eifA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uo2ADhKcYUjBA03soDmbQQ+K5CkHyHUr8qeev6yi/3R7Pf+K92JryK9lGgSkC3Eh1hQf9K4ecSAn8Z+AfLT4ynDb+O/2nNaotaP6G+LfONeTwZCciFchfPWBY1gkiccs40saoHU5dsAZAIFhdawydmFOL3SWRBMcbOxwatwAW2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhFIRlpv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOs1eifA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AFEC433F1;
-	Tue, 13 Feb 2024 17:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhFIRlpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D63C433C7;
+	Tue, 13 Feb 2024 17:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845849;
-	bh=oR6fjsbodhjmPlPMku2wi6ObbfLdNM6sr5yYSMqcdR4=;
+	s=korg; t=1707845852;
+	bh=xDXBdO7X7D2rl1xGPXuybohR70inYd3iteQQP0lP62U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOs1eifAw1lRy2Ag2lxzt6WhEHiEighLpH8FBWfbKitDcygjO3Pw0qvdKvtm6C353
-	 SB6CJyZXHzJpMk6W4+ApVLdogDASox1TxbVD2Td22fe625TV5tOWrF7H+erNprhigk
-	 ZALV/qw7Rw71kv5CR4gxlHaPHPICW9dcodWGnbxs=
+	b=MhFIRlpvPNYLxxrtMp9c79eZeOO1vAuwfnd/Sjvz5p8PCwq+NhkCI+XAfU6kRjTh+
+	 wFWSV5s5l7OZ96H26xOr3r02JF4YPpYERDFSJWkY6EQk6Qn+y7KSy+aF+DVqLBY46d
+	 BPgz2EEvBivDCiV1deJEW5RzWeyiRN1p7hhfjfPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Chen <vincent.chen@sifive.com>,
 	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 074/124] riscv: mm: execute local TLB flush after populating vmemmap
-Date: Tue, 13 Feb 2024 18:21:36 +0100
-Message-ID: <20240213171855.899103453@linuxfoundation.org>
+Subject: [PATCH 6.7 075/124] riscv: Fix set_huge_pte_at() for NAPOT mapping
+Date: Tue, 13 Feb 2024 18:21:37 +0100
+Message-ID: <20240213171855.927694823@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,78 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Chen <vincent.chen@sifive.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit d9807d60c145836043ffa602328ea1d66dc458b1 ]
+[ Upstream commit 1458eb2c9d88ad4b35eb6d6a4aa1d43d8fbf7f62 ]
 
-The spare_init() calls memmap_populate() many times to create VA to PA
-mapping for the VMEMMAP area, where all "struct page" are located once
-CONFIG_SPARSEMEM_VMEMMAP is defined. These "struct page" are later
-initialized in the zone_sizes_init() function. However, during this
-process, no sfence.vma instruction is executed for this VMEMMAP area.
-This omission may cause the hart to fail to perform page table walk
-because some data related to the address translation is invisible to the
-hart. To solve this issue, the local_flush_tlb_kernel_range() is called
-right after the sparse_init() to execute a sfence.vma instruction for this
-VMEMMAP area, ensuring that all data related to the address translation
-is visible to the hart.
+As stated by the privileged specification, we must clear a NAPOT
+mapping and emit a sfence.vma before setting a new translation.
 
-Fixes: d95f1a542c3d ("RISC-V: Implement sparsemem")
-Signed-off-by: Vincent Chen <vincent.chen@sifive.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240117140333.2479667-1-vincent.chen@sifive.com
-Fixes: 7a92fc8b4d20 ("mm: Introduce flush_cache_vmap_early()")
+Fixes: 82a1a1f3bfb6 ("riscv: mm: support Svnapot in hugetlb page")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240117195741.1926459-2-alexghiti@rivosinc.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/tlbflush.h | 1 +
- arch/riscv/mm/init.c              | 4 ++++
- arch/riscv/mm/tlbflush.c          | 3 ++-
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ arch/riscv/mm/hugetlbpage.c | 42 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 40 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/include/asm/tlbflush.h b/arch/riscv/include/asm/tlbflush.h
-index a60416bbe190..51664ae4852e 100644
---- a/arch/riscv/include/asm/tlbflush.h
-+++ b/arch/riscv/include/asm/tlbflush.h
-@@ -67,6 +67,7 @@ static inline void flush_tlb_kernel_range(unsigned long start,
- 
- #define flush_tlb_mm(mm) flush_tlb_all()
- #define flush_tlb_mm_range(mm, start, end, page_size) flush_tlb_all()
-+#define local_flush_tlb_kernel_range(start, end) flush_tlb_all()
- #endif /* !CONFIG_SMP || !CONFIG_MMU */
- 
- #endif /* _ASM_RISCV_TLBFLUSH_H */
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index ad77ed410d4d..ee224fe18d18 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -1385,6 +1385,10 @@ void __init misc_mem_init(void)
- 	early_memtest(min_low_pfn << PAGE_SHIFT, max_low_pfn << PAGE_SHIFT);
- 	arch_numa_init();
- 	sparse_init();
-+#ifdef CONFIG_SPARSEMEM_VMEMMAP
-+	/* The entire VMEMMAP region has been populated. Flush TLB for this region */
-+	local_flush_tlb_kernel_range(VMEMMAP_START, VMEMMAP_END);
-+#endif
- 	zone_sizes_init();
- 	arch_reserve_crashkernel();
- 	memblock_dump_all();
-diff --git a/arch/riscv/mm/tlbflush.c b/arch/riscv/mm/tlbflush.c
-index 8aadc5f71c93..1f90721d22e9 100644
---- a/arch/riscv/mm/tlbflush.c
-+++ b/arch/riscv/mm/tlbflush.c
-@@ -66,9 +66,10 @@ static inline void local_flush_tlb_range_asid(unsigned long start,
- 		local_flush_tlb_range_threshold_asid(start, size, stride, asid);
+diff --git a/arch/riscv/mm/hugetlbpage.c b/arch/riscv/mm/hugetlbpage.c
+index b52f0210481f..24c0179565d8 100644
+--- a/arch/riscv/mm/hugetlbpage.c
++++ b/arch/riscv/mm/hugetlbpage.c
+@@ -177,13 +177,36 @@ pte_t arch_make_huge_pte(pte_t entry, unsigned int shift, vm_flags_t flags)
+ 	return entry;
  }
  
-+/* Flush a range of kernel pages without broadcasting */
- void local_flush_tlb_kernel_range(unsigned long start, unsigned long end)
++static void clear_flush(struct mm_struct *mm,
++			unsigned long addr,
++			pte_t *ptep,
++			unsigned long pgsize,
++			unsigned long ncontig)
++{
++	struct vm_area_struct vma = TLB_FLUSH_VMA(mm, 0);
++	unsigned long i, saddr = addr;
++
++	for (i = 0; i < ncontig; i++, addr += pgsize, ptep++)
++		ptep_get_and_clear(mm, addr, ptep);
++
++	flush_tlb_range(&vma, saddr, addr);
++}
++
++/*
++ * When dealing with NAPOT mappings, the privileged specification indicates that
++ * "if an update needs to be made, the OS generally should first mark all of the
++ * PTEs invalid, then issue SFENCE.VMA instruction(s) covering all 4 KiB regions
++ * within the range, [...] then update the PTE(s), as described in Section
++ * 4.2.1.". That's the equivalent of the Break-Before-Make approach used by
++ * arm64.
++ */
+ void set_huge_pte_at(struct mm_struct *mm,
+ 		     unsigned long addr,
+ 		     pte_t *ptep,
+ 		     pte_t pte,
+ 		     unsigned long sz)
  {
--	local_flush_tlb_range_asid(start, end, PAGE_SIZE, FLUSH_TLB_NO_ASID);
-+	local_flush_tlb_range_asid(start, end - start, PAGE_SIZE, FLUSH_TLB_NO_ASID);
+-	unsigned long hugepage_shift;
++	unsigned long hugepage_shift, pgsize;
+ 	int i, pte_num;
+ 
+ 	if (sz >= PGDIR_SIZE)
+@@ -198,7 +221,22 @@ void set_huge_pte_at(struct mm_struct *mm,
+ 		hugepage_shift = PAGE_SHIFT;
+ 
+ 	pte_num = sz >> hugepage_shift;
+-	for (i = 0; i < pte_num; i++, ptep++, addr += (1 << hugepage_shift))
++	pgsize = 1 << hugepage_shift;
++
++	if (!pte_present(pte)) {
++		for (i = 0; i < pte_num; i++, ptep++, addr += pgsize)
++			set_ptes(mm, addr, ptep, pte, 1);
++		return;
++	}
++
++	if (!pte_napot(pte)) {
++		set_ptes(mm, addr, ptep, pte, 1);
++		return;
++	}
++
++	clear_flush(mm, addr, ptep, pgsize, pte_num);
++
++	for (i = 0; i < pte_num; i++, ptep++, addr += pgsize)
+ 		set_pte_at(mm, addr, ptep, pte);
  }
  
- static void __ipi_flush_tlb_all(void *info)
 -- 
 2.43.0
 
