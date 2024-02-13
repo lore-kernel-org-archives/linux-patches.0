@@ -1,121 +1,143 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF443125B4
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 05:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE1A381A0;
+	Tue, 13 Feb 2024 11:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707802397; cv=none; b=C7owcmQuNrALmsHuqBSaiYwhr/QYc7jhL51EfXs+p8304J6OmD3hikaqtgOtAzWauLihPJyetRy7oV0rkIXIQk7OmXgAR9tPp4R8iUIw2vmIjuFIyzUttWdhyUzF41rqO7cN+LM+DYwF3h++LrHIowELtr+3QyyPgVOpXe2rpY4=
+	t=1707823221; cv=none; b=NvcNflJM5RAU5x7IlNtusldQrd38ehSDwzV6Vg4gL1/gkLfE4hulWm8n6+W6atIwIZyPx1ui0Wxu1pjrklsHcCCeJWLbbOPxKWZf1sYWQ9XhyygkgOFhntoTmjYDLDM5UAUKTPpbSfKRL8r9PQJcib5KRoWnv1+lLpucECnv+4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707802397; c=relaxed/simple;
-	bh=02Q8SrULMcBSD7ttAGWmB8PIKrympbUDiwhvHFHIOIs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RiekRuJyV2HYXJNV+Ybw1ubUu0qK9aP9K0vUGGdratI5o5b3CixyxKPZ5wSUBve4EHhhCNmJWF7Mquvx9qPViLHOirBz43kLUoUCYGAslqOuzdyPQcG/LvgAje4U1D4Bbv48jSIe8iAGjSMLapHl8pyv2JxYEXAofcXiHMvOTEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=RT00wacb; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707823221; c=relaxed/simple;
+	bh=OBqVJC0Sb2klbh4axOYTY3Oo23HaXmEF6nu0XHPIbuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=poxsTqyvvBZ6XtTwJqJeKucHcFLFefv7OY1+FVrp5VEYwT+e9U3FeC2bBdAG5z6381wAJtDD72yJRmPvSqONq60NtThXHwEZ+BGKufhOgX6xpWvE5hFNFsQ9gKk4J8UOIelUCyNZwA4Fj9pUU6ecMT/ppGb0QLFDFXGHrMjVbks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sc2h6tHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="RT00wacb"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-56101dee221so4237a12.1
-        for <patches@lists.linux.dev>; Mon, 12 Feb 2024 21:33:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707802394; x=1708407194; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XETlmfsLFShyCAFBnC+zhCwZVHqHy0Tkff4Gvlg5js4=;
-        b=RT00wacb33RKW2/ABFl1gUs8zICd10bmRAwsYLIHEKu2DEixMnn+2Zwx5j8wHLkd8W
-         Xe4OTTB0mBAjMVftlqF4vUc9qbRaO6t1Es5GiKL2zjDCXlCbMi+BhLE89a8dbUNcKKMG
-         jBQXK96o3LQJNGblGpWo8M8+A9cW/RM7Wum/YuKitzYfxPdJ+OVSa8MjiYK9n1atdDBf
-         3cAm5bDtWsB7mQ5LBQbOfh1k8F5q2QBOLtTCDPEFzzji3Z0HyEzSGNWkmq/m+Q2zdCT2
-         FRGRcvYLus393EzgUc9va8n+u/dmZXg/1ZJEoH1tfs+7PxYGR53XkGJ/aBSiHUb+9VeV
-         vOHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707802394; x=1708407194;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XETlmfsLFShyCAFBnC+zhCwZVHqHy0Tkff4Gvlg5js4=;
-        b=iouzeyQFOxXCk9qdKuWWvUHrkQh0Xt5K89VB6/K6UBfqP3EyVOX5v5yYm931FGZc9L
-         nZC7jF+2216A7EDbYsk1Fcw8Kt+Gx0GwBwqLedv2zj/PGc0+S4OqOcx/cS5TJV4RGITW
-         iiGFkmFvJIRp9Ss2LQ7uPfxKceCFcpbvpaYusWoqSmJajH+PYszZbADCC88pdkIzaPai
-         aw4B+aUDJiPSuEIxOjcMEX8TuKVqz2H3jVQ0ajgLsK/0lV7GrkY57SLXYnJzJIoQPqwf
-         jkgZbh0iAs9nbSRfg6c+gZPRjhNQBv5+ytDuJ+3LC2zbSR/wMjEIaPgEoFsK82/jaqxe
-         r6vA==
-X-Gm-Message-State: AOJu0Yxlqida2H/WOs9ofN4i1G9RX8x997TKsrX8/GL8HU508R3a1y4a
-	gO1UcYq1dkrxiXXuBjMH5CFX3bJIPYSGDl33X5HDZkdpWFYpLLE3f7qQFXFnmeHNg3/Mdca0aRE
-	ZuXb9vRPRF2R3hbt+c8ycd9YDV6HvORjPknQo
-X-Google-Smtp-Source: AGHT+IGZwj4j5QHgqbf9M6ktVVQXLrk8Drh5qXX7tCSAml5AXcdIY2mAHCO3BaKHjRfwXHDOxgMo1HGswGGrIk/pIvc=
-X-Received: by 2002:a50:f615:0:b0:561:d84d:f6ce with SMTP id
- c21-20020a50f615000000b00561d84df6cemr80706edn.6.1707802393936; Mon, 12 Feb
- 2024 21:33:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sc2h6tHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24826C433F1;
+	Tue, 13 Feb 2024 11:20:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707823220;
+	bh=OBqVJC0Sb2klbh4axOYTY3Oo23HaXmEF6nu0XHPIbuU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Sc2h6tHe+OJP6LB6CPm4cOgwikiGtHW8YPoLlC590oqJNAS/mmj5YWQCLjeh7hdnM
+	 R9ZHWoP1WlGCq930SXB7nYyf4k6MVVxaHmdjZ0eEDm54HwhbbLCSRU5226iIkhT3Gc
+	 oKOtXiPaA9fK6oF7sMN7Q/GhKKnppKmubccRc+0qsYPyLLWcXgoEd3oloEfcriimhU
+	 cj3ke4Do8Jjlh+DWmOD3zIrasJiZR/dMcdYSddrND1AuOiIW4Y/6b/STCOGLJU0nFG
+	 E1mrNKSoAn5shQcRjgns5ggv9jHinxWTvPQwJ+AgRDGWouvKQ425jsZuv9CwVhWKGc
+	 4Eq/b1oT8XxLQ==
+Date: Tue, 13 Feb 2024 11:20:15 +0000
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev
+Subject: Re: [PATCH rc] iommu/arm-smmu-v3: Do not use GFP_KERNEL under as
+ spinlock
+Message-ID: <20240213112015.GB28517@willie-the-truck>
+References: <0-v1-210234560de7+69a-smmu_cd_atomic_jgg@nvidia.com>
+ <20240208125846.GA23290@willie-the-truck>
+ <20240208142729.GH10476@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org> <20240207-s390-lld-and-orphan-warn-v1-7-8a665b3346ab@kernel.org>
-In-Reply-To: <20240207-s390-lld-and-orphan-warn-v1-7-8a665b3346ab@kernel.org>
-From: Fangrui Song <maskray@google.com>
-Date: Mon, 12 Feb 2024 21:33:02 -0800
-Message-ID: <CAFP8O3KuJRuDFC3M=4DS2SVjzo-gcKzNYVAPLmsexnjEifOuZw@mail.gmail.com>
-Subject: Re: [PATCH 07/11] s390/boot: vmlinux.lds.S: Handle DWARF debug sections
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com, 
-	borntraeger@linux.ibm.com, svens@linux.ibm.com, ndesaulniers@google.com, 
-	linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240208142729.GH10476@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Wed, Feb 7, 2024 at 4:15=E2=80=AFPM Nathan Chancellor <nathan@kernel.org=
-> wrote:
->
-> When building with CONFIG_LD_ORPHAN_WARN after selecting
-> CONFIG_ARCH_HAS_LD_ORPHAN_WARN, there are several series of warnings for
-> each file in arch/s390/boot due to the boot linker script not handling
-> the DWARF debug sections:
->
->   s390-linux-ld: warning: orphan section `.debug_line' from `arch/s390/bo=
-ot/head.o' being placed in section `.debug_line'
->   s390-linux-ld: warning: orphan section `.debug_info' from `arch/s390/bo=
-ot/head.o' being placed in section `.debug_info'
->   s390-linux-ld: warning: orphan section `.debug_abbrev' from `arch/s390/=
-boot/head.o' being placed in section `.debug_abbrev'
->   s390-linux-ld: warning: orphan section `.debug_aranges' from `arch/s390=
-/boot/head.o' being placed in section `.debug_aranges'
->   s390-linux-ld: warning: orphan section `.debug_str' from `arch/s390/boo=
-t/head.o' being placed in section `.debug_str'
->
-> include/asm-generic/vmlinux.lds.h has a macro for DWARF debug sections
-> named DWARF_DEBUG, use it to clear up the warnings.
->
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  arch/s390/boot/vmlinux.lds.S | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/arch/s390/boot/vmlinux.lds.S b/arch/s390/boot/vmlinux.lds.S
-> index ff8c62d84f98..83af17bfe630 100644
-> --- a/arch/s390/boot/vmlinux.lds.S
-> +++ b/arch/s390/boot/vmlinux.lds.S
-> @@ -122,6 +122,8 @@ SECTIONS
->         }
->         _end =3D .;
->
-> +       DWARF_DEBUG
-> +
->         /*
->          * Sections that should stay zero sized, which is safer to
->          * explicitly check instead of blindly discarding.
->
-> --
-> 2.43.0
->
+Hi Jason,
 
-Reviewed-by: Fangrui Song <maskray@google.com>
+On Thu, Feb 08, 2024 at 10:27:29AM -0400, Jason Gunthorpe wrote:
+> On Thu, Feb 08, 2024 at 12:58:47PM +0000, Will Deacon wrote:
+> > On Fri, Feb 02, 2024 at 10:28:05AM -0400, Jason Gunthorpe wrote:
+> > > If the SMMU is configured to use a two level CD table then
+> > > arm_smmu_write_ctx_desc() allocates a CD table leaf internally using
+> > > GFP_KERNEL. Due to recent changes this is being done under a spinlock to
+> > > iterate over the device list - thus it will trigger a sleeping while
+> > > atomic warning:
+> > > 
+> > >   arm_smmu_sva_set_dev_pasid()
+> > >     mutex_lock(&sva_lock);
+> > >     __arm_smmu_sva_bind()
+> > >      arm_smmu_mmu_notifier_get()
+> > >       spin_lock_irqsave()
+> > >       arm_smmu_write_ctx_desc()
+> > > 	arm_smmu_get_cd_ptr()
+> > >          arm_smmu_alloc_cd_leaf_table()
+> > > 	  dmam_alloc_coherent(GFP_KERNEL)
+> > > 
+> > > This is a 64K high order allocation and really should not be done
+> > > atomically.
+> > > 
+> > > The proper answer is to sequence CD programming in a way that does not
+> > > require the device list or a spinlock. Part two of my lager series does
+> > > this and already solves this bug.
+> > > 
+> > > In the mean time we can solve the functional issue by preallocating the CD
+> > > entry outside any locking. CD leafs are effectively never freed so this
+> > > guarantees the arm_smmu_write_ctx_desc() inside the lock will not take the
+> > > allocation path.
+> > > 
+> > > Fixes: 24503148c545 ("iommu/arm-smmu-v3: Refactor write_ctx_desc")
+> > > Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> > > Closes: https://lore.kernel.org/all/4e25d161-0cf8-4050-9aa3-dfa21cd63e56@moroto.mountain/
+> > > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> > > ---
+> > >  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c | 5 +++++
+> > >  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c     | 2 +-
+> > >  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h     | 2 ++
+> > >  3 files changed, 8 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> > > index 05722121f00e70..068d60732e6481 100644
+> > > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> > > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
+> > > @@ -588,6 +588,11 @@ static int arm_smmu_sva_set_dev_pasid(struct iommu_domain *domain,
+> > >  {
+> > >  	int ret = 0;
+> > >  	struct mm_struct *mm = domain->mm;
+> > > +	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
+> > > +
+> > > +	/* Preallocate the required leafs outside locks */
+> > > +	if (!arm_smmu_get_cd_ptr(master, id))
+> > > +		return -ENOMEM;
+> > 
+> > What guarantees that all the masters in the domain share the same l2 CD
+> > table?
+> 
+> Nothing, in fact they don't.
+> 
+> However, a multi-master RID domain is something that doesn't fully
+> work with SVA today. This code is functionally/security wrong to
+> install the PASID into all the masters that share the RID domain.
+> 
+> In practice that doesn't happen because the iommu group size when
+> PASID is enabled is restricted to 1 and the DMA API is the thing that
+> has created a unique per-group domain to be able to turn SVA on at
+> all.
+> 
+> So, the RID domain's list has one master entry that is the same as the
+> set_dev_pasid's master.
+> 
+> Which is why this patch works, it prealloctes the only master that
+> matters for the only configuration where SVA works and is used today.
+> 
+> iommufd could violate these assumptions which is part of why I'm
+> fixing all of this in preparation to enable PASID support for all
+> drivers in iommufd.
 
+Damn, all the surrounding rework has really left this poor code in a bit
+of a state. Could you please respin your fix, but with an additional change
+to arm_smmu_mmu_notifier_get() so that it returns an error if there is
+more than one device in the domain, with some of the above in a comment?
 
---=20
-=E5=AE=8B=E6=96=B9=E7=9D=BF
+Cheers,
+
+Will
