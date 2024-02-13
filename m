@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617C5AD55;
-	Tue, 13 Feb 2024 17:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743CD5FF19;
+	Tue, 13 Feb 2024 17:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845740; cv=none; b=Ue4NyFwTjhra9/7ch41tDF2yq2bd8j0waMW4ItcRaU/7vCYgOx63+2zcuLai5dVtZ44MX9VL1nbb1tws0TXFq5BfLDbOFJAVldvLF3bzLy5VLs/5PxKy9f57dsnJqlgGkN4Nc3y0TAp7tNxF9H81zzsdFuOCBlH53CmyLsb+OkE=
+	t=1707845743; cv=none; b=rL4ljQooBXVtFcKLce5ZQlS4PvaPt79p/0P0OXkwgqyNAVeVucfJeXBCOTKWw3fAFWnxKpV6lgkLKBiwYxYRIXD9qL8J8Q6T3yd/xYmrLZQhTSoYjRVO2cJ9io3P/IWuvjtQHdP57LMgWe7Uk9lV+g6PEL1d1zdmM8j25t4g/Ns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845740; c=relaxed/simple;
-	bh=SaOv5pqg6XCQEEjnO+4K8fSK/GoMYzKol24M1UjBB+M=;
+	s=arc-20240116; t=1707845743; c=relaxed/simple;
+	bh=xVw0g+wV7KN5RAJ8qFIfWI0qfKiKnXQSn8DCpr0ISSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rz0EwLOA2/G3lLhFprZG7pAjLKyWoWt2i3QuHmkZh1DFJr9wLJYrVbObjXQnvB4lVmvOEHTv74ghsXGEdz7KkbtNfPmmnq0eKJVit3v0qrZrulqxtqqjVWg0koQJQNuL6zI2Dts5AIzqISG788FQNpfQgj5YgE41igLczjLhMjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVHAFSDt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6FuxtUQhBmpfsc8tFtigOf/kz4oLQ6/ECxZIxPYg00lihlw2mEKbtDZ7SoSm3arhM9In+ARWnIA6TSHLyZbxFdaeZ/YulQ6Qf4rpeUZxAnaO2DZKdE2puAu4I6wlkypcNlHmyZXuiK6nTsn0VwvoSYWbKsf46ld8J2VCLmfDj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHX1cDQx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVHAFSDt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA39AC433F1;
-	Tue, 13 Feb 2024 17:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHX1cDQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E3FC433F1;
+	Tue, 13 Feb 2024 17:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845740;
-	bh=SaOv5pqg6XCQEEjnO+4K8fSK/GoMYzKol24M1UjBB+M=;
+	s=korg; t=1707845743;
+	bh=xVw0g+wV7KN5RAJ8qFIfWI0qfKiKnXQSn8DCpr0ISSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVHAFSDtD5cdM4WxYuwZyEDClSvCZ0234TPUAaxAKHxj/8LWXW15mpf/20zOHOcqA
-	 0JxeNyFLLXFv0fDHSnRTkGJ/53vxI0oSSkG59TVXqPzUAvRFUh3LMi13aRrOA/Hi8a
-	 QEJiloM9ji0YHS+YG6LCYgAdjfX+eUqKcKx8917Y=
+	b=LHX1cDQxbrLuBfC9VWoB/t0AZWtDh5CX+0qxlTrfYd/cWXzz7mHR9fj+GN9MZg+WH
+	 sPsKSVEUyMO4HbWuJhQwpuKRNVOnFLn6BEwP3QOjQOvKGd5+Pi0cybZqePYNP4jzFp
+	 zP17H7hXp9LgKpezlKqd4t1skOf0A6K8ZrXMI9r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Prylli <lprylli@netflix.com>,
-	Alexander Hansen <alexander.hansen@9elements.com>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 043/124] hwmon: (aspeed-pwm-tacho) mutex for tach reading
-Date: Tue, 13 Feb 2024 18:21:05 +0100
-Message-ID: <20240213171854.995599982@linuxfoundation.org>
+Subject: [PATCH 6.7 044/124] hwmon: (coretemp) Fix out-of-bounds memory access
+Date: Tue, 13 Feb 2024 18:21:06 +0100
+Message-ID: <20240213171855.025006423@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,63 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Prylli <lprylli@netflix.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 1168491e7f53581ba7b6014a39a49cfbbb722feb ]
+[ Upstream commit 4e440abc894585a34c2904a32cd54af1742311b3 ]
 
-the ASPEED_PTCR_RESULT Register can only hold the result for a
-single fan input. Adding a mutex to protect the register until the
-reading is done.
+Fix a bug that pdata->cpu_map[] is set before out-of-bounds check.
+The problem might be triggered on systems with more than 128 cores per
+package.
 
-Signed-off-by: Loic Prylli <lprylli@netflix.com>
-Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
-Fixes: 2d7a548a3eff ("drivers: hwmon: Support for ASPEED PWM/Fan tach")
-Link: https://lore.kernel.org/r/121d888762a1232ef403cf35230ccf7b3887083a.1699007401.git.alexander.hansen@9elements.com
+Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240202092144.71180-2-rui.zhang@intel.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: fdaf0c8629d4 ("hwmon: (coretemp) Fix bogus core_id to attr name mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aspeed-pwm-tacho.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hwmon/coretemp.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/aspeed-pwm-tacho.c b/drivers/hwmon/aspeed-pwm-tacho.c
-index 997df4b40509..b2ae2176f11f 100644
---- a/drivers/hwmon/aspeed-pwm-tacho.c
-+++ b/drivers/hwmon/aspeed-pwm-tacho.c
-@@ -193,6 +193,8 @@ struct aspeed_pwm_tacho_data {
- 	u8 fan_tach_ch_source[16];
- 	struct aspeed_cooling_device *cdev[8];
- 	const struct attribute_group *groups[3];
-+	/* protects access to shared ASPEED_PTCR_RESULT */
-+	struct mutex tach_lock;
- };
- 
- enum type { TYPEM, TYPEN, TYPEO };
-@@ -527,6 +529,8 @@ static int aspeed_get_fan_tach_ch_rpm(struct aspeed_pwm_tacho_data *priv,
- 	u8 fan_tach_ch_source, type, mode, both;
- 	int ret;
- 
-+	mutex_lock(&priv->tach_lock);
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index ba82d1e79c13..e78c76919111 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -509,18 +509,14 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
+ 	if (pkg_flag) {
+ 		attr_no = PKG_SYSFS_ATTR_NO;
+ 	} else {
+-		index = ida_alloc(&pdata->ida, GFP_KERNEL);
++		index = ida_alloc_max(&pdata->ida, NUM_REAL_CORES - 1, GFP_KERNEL);
+ 		if (index < 0)
+ 			return index;
 +
- 	regmap_write(priv->regmap, ASPEED_PTCR_TRIGGER, 0);
- 	regmap_write(priv->regmap, ASPEED_PTCR_TRIGGER, 0x1 << fan_tach_ch);
+ 		pdata->cpu_map[index] = topology_core_id(cpu);
+ 		attr_no = index + BASE_SYSFS_ATTR_NO;
+ 	}
  
-@@ -544,6 +548,8 @@ static int aspeed_get_fan_tach_ch_rpm(struct aspeed_pwm_tacho_data *priv,
- 		ASPEED_RPM_STATUS_SLEEP_USEC,
- 		usec);
- 
-+	mutex_unlock(&priv->tach_lock);
-+
- 	/* return -ETIMEDOUT if we didn't get an answer. */
- 	if (ret)
- 		return ret;
-@@ -903,6 +909,7 @@ static int aspeed_pwm_tacho_probe(struct platform_device *pdev)
- 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
-+	mutex_init(&priv->tach_lock);
- 	priv->regmap = devm_regmap_init(dev, NULL, (__force void *)regs,
- 			&aspeed_pwm_tacho_regmap_config);
- 	if (IS_ERR(priv->regmap))
+-	if (attr_no > MAX_CORE_DATA - 1) {
+-		err = -ERANGE;
+-		goto ida_free;
+-	}
+-
+ 	tdata = init_temp_data(cpu, pkg_flag);
+ 	if (!tdata) {
+ 		err = -ENOMEM;
 -- 
 2.43.0
 
