@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0195F54E;
-	Tue, 13 Feb 2024 17:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577895F54E;
+	Tue, 13 Feb 2024 17:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845548; cv=none; b=eM+jTvxPF3476Ofz4DkRZM64pqGy8XpzOtwH8CHte2/okrMzraPNEjYfpBNx1XZoqdAjHp1NEZQ+TzBhx7S8QGyDq1aZ7X62ikOiEYJwVgaFnR/aHM6nELvByoBH/x/byPIn06VcpjgHh1wB9pvzaxedgNnrH0oNpx0Wwlkp3Ls=
+	t=1707845551; cv=none; b=I+1mUSBAnsfDdYO0U6+I/pAv37oawMFdd1RuuaR4i58oGMpUlUTIgZs71THGnalB/Ebj+dsHhCsL7c+T8TQaTpvPzse3UwEjAjFln5qg/oiy4WKntpiWvfaE8WyyRIRnFnkNmIYAg9trBaHQ2+0YtpTIRcBaFFxEZ8cvd59JHLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845548; c=relaxed/simple;
-	bh=MNZIiiX3wpBkMFYJNkrHxZFB5SbRZJkRrAL0UL0UjBM=;
+	s=arc-20240116; t=1707845551; c=relaxed/simple;
+	bh=BVP8A5xP5/Obj8bflOPRUFtiuP4rB1oloHsbXTjR6g4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YpA1jXIhm6Jh/BDHqTM+Xk49ZDBPc1LEJtqamtrEhG/Wa1LxQc6dcRMwbvvZVBd3w9+a1Zugzmw/Y1vFG/UtUY+t9VUfITDBHnHbVoiIvcPgWX2VbhJdCL48yrvdx9p3iVBIw0/ehCOOdNz4B5MrlS72zuOdNVZqky6++qaphMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=texWPkua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3R/XlJlPArg22YN0VVfjHpNPjxhypSQnqSaikACPUyGs7r3tUhqpplFGElYEYV1zQBngRTJrublOcoDIazxSb+YVcCs4RMJJviBcP8qmHEfkXGIoVouC1XlWjax8vhLhN2J/mXsFu4q5iaRAkgNkpnj0crz0mn1Sewl4V4x41Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPD3WWJZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="texWPkua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99397C433F1;
-	Tue, 13 Feb 2024 17:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPD3WWJZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F5FC433C7;
+	Tue, 13 Feb 2024 17:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845548;
-	bh=MNZIiiX3wpBkMFYJNkrHxZFB5SbRZJkRrAL0UL0UjBM=;
+	s=korg; t=1707845551;
+	bh=BVP8A5xP5/Obj8bflOPRUFtiuP4rB1oloHsbXTjR6g4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=texWPkuaQwNTAPQvZFZSJ6mURnPEkO4OaVEUm9nLZZd2uCj89UvNB4DtN7kFUM76e
-	 dwJm9BgpW8Z/acYB8LvSqAYWOJQpEVhgu9OQ5IR0FTP6j51bOHgZ7BVKJevOZ07I5W
-	 b/4E7RbPXMJK3pu5byeS7u50tbPK2wDHGpT+FMJo=
+	b=kPD3WWJZvB0kwk6/Sg9iR011om8RZSEo5qymDBeRNPkdC547yLAFOMzT7mTzNkcQz
+	 6tt6L7IuUtUTirkaKFu+dWxfx1gzgygaD7e3KSPtzt/RO8q2FnNBBoKHN1OhtEKATB
+	 C+DHzm7mLzQhQLayAfFhmutm95r4lgPV2yS5l/fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/121] netfilter: nft_set_pipapo: add helper to release pcpu scratch area
-Date: Tue, 13 Feb 2024 18:21:31 +0100
-Message-ID: <20240213171855.383381029@linuxfoundation.org>
+Subject: [PATCH 6.6 073/121] selftests: cmsg_ipv6: repeat the exact packet
+Date: Tue, 13 Feb 2024 18:21:22 +0100
+Message-ID: <20240213171855.125304519@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,96 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 47b1c03c3c1a119435480a1e73f27197dc59131d ]
+[ Upstream commit 4b00d0c513da58b68df015968721b11396fe4ab3 ]
 
-After next patch simple kfree() is not enough anymore, so add
-a helper for it.
+cmsg_ipv6 test requests tcpdump to capture 4 packets,
+and sends until tcpdump quits. Only the first packet
+is "real", however, and the rest are basic UDP packets.
+So if tcpdump doesn't start in time it will miss
+the real packet and only capture the UDP ones.
 
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 5a8cdf6fd860 ("netfilter: nft_set_pipapo: remove scratch_aligned pointer")
+This makes the test fail on slow machine (no KVM or with
+debug enabled) 100% of the time, while it passes in fast
+environments.
+
+Repeat the "real" / expected packet.
+
+Fixes: 9657ad09e1fa ("selftests: net: test IPV6_TCLASS")
+Fixes: 05ae83d5a4a2 ("selftests: net: test IPV6_HOPLIMIT")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/cmsg_ipv6.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 58e595a84cd0..b6bca59b7ba6 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1101,6 +1101,24 @@ static void pipapo_map(struct nft_pipapo_match *m,
- 		f->mt[map[i].to + j].e = e;
- }
+diff --git a/tools/testing/selftests/net/cmsg_ipv6.sh b/tools/testing/selftests/net/cmsg_ipv6.sh
+index 330d0b1ceced..c921750ca118 100755
+--- a/tools/testing/selftests/net/cmsg_ipv6.sh
++++ b/tools/testing/selftests/net/cmsg_ipv6.sh
+@@ -91,7 +91,7 @@ for ovr in setsock cmsg both diff; do
+ 	check_result $? 0 "TCLASS $prot $ovr - pass"
  
-+/**
-+ * pipapo_free_scratch() - Free per-CPU map at original (not aligned) address
-+ * @m:		Matching data
-+ * @cpu:	CPU number
-+ */
-+static void pipapo_free_scratch(const struct nft_pipapo_match *m, unsigned int cpu)
-+{
-+	struct nft_pipapo_scratch *s;
-+	void *mem;
-+
-+	s = *per_cpu_ptr(m->scratch, cpu);
-+	if (!s)
-+		return;
-+
-+	mem = s;
-+	kfree(mem);
-+}
-+
- /**
-  * pipapo_realloc_scratch() - Reallocate scratch maps for partial match results
-  * @clone:	Copy of matching data with pending insertions and deletions
-@@ -1133,7 +1151,7 @@ static int pipapo_realloc_scratch(struct nft_pipapo_match *clone,
- 			return -ENOMEM;
- 		}
+ 	while [ -d /proc/$BG ]; do
+-	    $NSEXE ./cmsg_sender -6 -p u $TGT6 1234
++	    $NSEXE ./cmsg_sender -6 -p $p $m $((TOS2)) $TGT6 1234
+ 	done
  
--		kfree(*per_cpu_ptr(clone->scratch, i));
-+		pipapo_free_scratch(clone, i);
+ 	tcpdump -r $TMPF -v 2>&1 | grep "class $TOS2" >> /dev/null
+@@ -128,7 +128,7 @@ for ovr in setsock cmsg both diff; do
+ 	check_result $? 0 "HOPLIMIT $prot $ovr - pass"
  
- 		*per_cpu_ptr(clone->scratch, i) = scratch;
+ 	while [ -d /proc/$BG ]; do
+-	    $NSEXE ./cmsg_sender -6 -p u $TGT6 1234
++	    $NSEXE ./cmsg_sender -6 -p $p $m $LIM $TGT6 1234
+ 	done
  
-@@ -1358,7 +1376,7 @@ static struct nft_pipapo_match *pipapo_clone(struct nft_pipapo_match *old)
- 	}
- out_scratch_realloc:
- 	for_each_possible_cpu(i)
--		kfree(*per_cpu_ptr(new->scratch, i));
-+		pipapo_free_scratch(new, i);
- #ifdef NFT_PIPAPO_ALIGN
- 	free_percpu(new->scratch_aligned);
- #endif
-@@ -1646,7 +1664,7 @@ static void pipapo_free_match(struct nft_pipapo_match *m)
- 	int i;
- 
- 	for_each_possible_cpu(i)
--		kfree(*per_cpu_ptr(m->scratch, i));
-+		pipapo_free_scratch(m, i);
- 
- #ifdef NFT_PIPAPO_ALIGN
- 	free_percpu(m->scratch_aligned);
-@@ -2247,7 +2265,7 @@ static void nft_pipapo_destroy(const struct nft_ctx *ctx,
- 		free_percpu(m->scratch_aligned);
- #endif
- 		for_each_possible_cpu(cpu)
--			kfree(*per_cpu_ptr(m->scratch, cpu));
-+			pipapo_free_scratch(m, cpu);
- 		free_percpu(m->scratch);
- 		pipapo_free_fields(m);
- 		kfree(m);
-@@ -2264,7 +2282,7 @@ static void nft_pipapo_destroy(const struct nft_ctx *ctx,
- 		free_percpu(priv->clone->scratch_aligned);
- #endif
- 		for_each_possible_cpu(cpu)
--			kfree(*per_cpu_ptr(priv->clone->scratch, cpu));
-+			pipapo_free_scratch(priv->clone, cpu);
- 		free_percpu(priv->clone->scratch);
- 
- 		pipapo_free_fields(priv->clone);
+ 	tcpdump -r $TMPF -v 2>&1 | grep "hlim $LIM[^0-9]" >> /dev/null
 -- 
 2.43.0
 
