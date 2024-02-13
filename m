@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6615F54E;
-	Tue, 13 Feb 2024 17:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDC35F54E;
+	Tue, 13 Feb 2024 17:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845442; cv=none; b=k+b9b/7WTd1Ks2RlDeWidUTaFBqtbCQ1bs43yUIfxFBXSBMLIyWAf8Avuym0XvQKgJDMnQPNM3FcAPvpFP80FcR8hu8v9dYC61q31hFjGqlx6+yYxzaNlXwgUYHwfhJzfECEfDV5R3FP0PLyeQux47PuGVYNp4shnQL57+8ZkTk=
+	t=1707845446; cv=none; b=dTxrZaUMIymAZzLVr4hQmrZoLuBDepUCFBlb8Z/k35/O1KInjRkXNPCLDkG9OMVrO8M5z9dsgiohKLLiqXbJ0hB0J4Lqtxe1GUkqwLJmxYINfmCJMEsV9DGDmg/CG8S2x3o9fIYB8JPxygD4mM//IH5KrFMalsXUnOjpEYPv9cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845442; c=relaxed/simple;
-	bh=nzfACSUFisCZP5J1p9bmTE2ZfssKUtRydspu7D2E52s=;
+	s=arc-20240116; t=1707845446; c=relaxed/simple;
+	bh=aT3BMxODy9oUPPXWrouqVSZ415OVbSCjN4CJeifYRs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jn37lx8bo4AS3Y1CJeeryMnp7iqDSxbNtA8tipvujfBCMoZk2m9dmZGXzSE2M7QDpDkOsp72eMADzl4HRgwrJulxmCrOod0DjgwiVi03BVuxkpm4X/nq7TXDAzPjZHp6LCiVjXvDhcaKUkoy5ZW3jEzT+8cWxwtKF16WWgjt8x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjiKmC91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gzy/hXtkbJJyz1w9LUlaG77pTRz5hNfrx5TR7jY0CPngdBp7h0jY/qTJnieYEIk3uJQRJB7Yay6e7pGbM6t4YRZqyFXHEvhdJLmfv1fUSWjjS1KGTrfw1zwhUXBGcjNe3nXW3EX8feFRiKgL0SA6G7+1T8R5w48K8+LbGeTUbzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPu2jSGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjiKmC91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA81C433C7;
-	Tue, 13 Feb 2024 17:30:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPu2jSGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B69C433F1;
+	Tue, 13 Feb 2024 17:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845442;
-	bh=nzfACSUFisCZP5J1p9bmTE2ZfssKUtRydspu7D2E52s=;
+	s=korg; t=1707845445;
+	bh=aT3BMxODy9oUPPXWrouqVSZ415OVbSCjN4CJeifYRs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VjiKmC91cpNJoqv4Z9dZZDnaGLuokNDd+TlY5pXWN+Fl5j71vhTmJrly7r9YGSRQ2
-	 CjtWUHL7IeJpd7jZ/+BHJtrPLkSqEDyWi/DBCWdtaG3IG7EABy21t2EnrNlPyn1p+T
-	 RbP8N1x2mxn1f3Fj+2sCQfRJ3ZTScbpM8nlUL5Vo=
+	b=VPu2jSGuF61pYHW0cKVLp4fCOaREcicF3bhUdz7b+8LvVzKn24xndb0RClIgy4w6s
+	 Epciho3jKrf/GB8SQlaBJm+0p99C/3Mz49E5ykIOTP5DnMcIFCKPe1DQnRik39TGar
+	 r3ruRDhYQaUW2rtkaxqA2XravM3gGe1c4+MtszTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tom Englund <tomenglund26@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/121] selftests/net: convert unicast_extensions.sh to run it in unique namespace
-Date: Tue, 13 Feb 2024 18:21:00 +0100
-Message-ID: <20240213171854.486733998@linuxfoundation.org>
+Subject: [PATCH 6.6 042/121] x86/efistub: Avoid placing the kernel below LOAD_PHYSICAL_ADDR
+Date: Tue, 13 Feb 2024 18:20:51 +0100
+Message-ID: <20240213171854.226968428@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,188 +51,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 0f4765d0b48d90ede9788c7edb2e072eee20f88e ]
+[ Upstream commit 2f77465b05b1270c832b5e2ee27037672ad2a10a ]
 
-Here is the test result after conversion.
+The EFI stub's kernel placement logic randomizes the physical placement
+of the kernel by taking all available memory into account, and picking a
+region at random, based on a random seed.
 
- # ./unicast_extensions.sh
- /usr/bin/which: no nettest in (/root/.local/bin:/root/bin:/usr/share/Modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin)
- ###########################################################################
- Unicast address extensions tests (behavior of reserved IPv4 addresses)
- ###########################################################################
- TEST: assign and ping within 240/4 (1 of 2) (is allowed)            [ OK ]
- TEST: assign and ping within 240/4 (2 of 2) (is allowed)            [ OK ]
- TEST: assign and ping within 0/8 (1 of 2) (is allowed)              [ OK ]
+When KASLR is disabled, this seed is set to 0x0, and this results in the
+lowest available region of memory to be selected for loading the kernel,
+even if this is below LOAD_PHYSICAL_ADDR. Some of this memory is
+typically reserved for the GFP_DMA region, to accommodate masters that
+can only access the first 16 MiB of system memory.
 
- ...
+Even if such devices are rare these days, we may still end up with a
+warning in the kernel log, as reported by Tom:
 
- TEST: assign and ping class D address (is forbidden)                [ OK ]
- TEST: routing using class D (is forbidden)                          [ OK ]
- TEST: routing using 127/8 (is forbidden)                            [ OK ]
+ swapper/0: page allocation failure: order:10, mode:0xcc1(GFP_KERNEL|GFP_DMA), nodemask=(null),cpuset=/,mems_allowed=0
 
-Acked-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e71e016ad0f6 ("selftests: net: fix tcp listener handling in pmtu.sh")
+Fix this by tweaking the random allocation logic to accept a low bound
+on the placement, and set it to LOAD_PHYSICAL_ADDR.
+
+Fixes: a1b87d54f4e4 ("x86/efistub: Avoid legacy decompressor when doing EFI boot")
+Reported-by: Tom Englund <tomenglund26@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218404
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/unicast_extensions.sh       | 99 +++++++++----------
- 1 file changed, 46 insertions(+), 53 deletions(-)
+ drivers/firmware/efi/libstub/efistub.h     |  3 ++-
+ drivers/firmware/efi/libstub/kaslr.c       |  2 +-
+ drivers/firmware/efi/libstub/randomalloc.c | 12 +++++++-----
+ drivers/firmware/efi/libstub/x86-stub.c    |  1 +
+ drivers/firmware/efi/libstub/zboot.c       |  2 +-
+ 5 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/net/unicast_extensions.sh b/tools/testing/selftests/net/unicast_extensions.sh
-index 2d10ccac898a..b7a2cb9e7477 100755
---- a/tools/testing/selftests/net/unicast_extensions.sh
-+++ b/tools/testing/selftests/net/unicast_extensions.sh
-@@ -28,8 +28,7 @@
- # These tests provide an easy way to flip the expected result of any
- # of these behaviors for testing kernel patches that change them.
+diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
+index 212687c30d79..c04b82ea40f2 100644
+--- a/drivers/firmware/efi/libstub/efistub.h
++++ b/drivers/firmware/efi/libstub/efistub.h
+@@ -956,7 +956,8 @@ efi_status_t efi_get_random_bytes(unsigned long size, u8 *out);
  
--# Kselftest framework requirement - SKIP code is 4.
--ksft_skip=4
-+source ./lib.sh
+ efi_status_t efi_random_alloc(unsigned long size, unsigned long align,
+ 			      unsigned long *addr, unsigned long random_seed,
+-			      int memory_type, unsigned long alloc_limit);
++			      int memory_type, unsigned long alloc_min,
++			      unsigned long alloc_max);
  
- # nettest can be run from PATH or from same directory as this selftest
- if ! which nettest >/dev/null; then
-@@ -61,20 +60,20 @@ _do_segmenttest(){
- 	# foo --- bar
- 	# Arguments: ip_a ip_b prefix_length test_description
- 	#
--	# Caller must set up foo-ns and bar-ns namespaces
-+	# Caller must set up $foo_ns and $bar_ns namespaces
- 	# containing linked veth devices foo and bar,
- 	# respectively.
+ efi_status_t efi_random_get_seed(void);
  
--	ip -n foo-ns address add $1/$3 dev foo || return 1
--	ip -n foo-ns link set foo up || return 1
--	ip -n bar-ns address add $2/$3 dev bar || return 1
--	ip -n bar-ns link set bar up || return 1
-+	ip -n $foo_ns address add $1/$3 dev foo || return 1
-+	ip -n $foo_ns link set foo up || return 1
-+	ip -n $bar_ns address add $2/$3 dev bar || return 1
-+	ip -n $bar_ns link set bar up || return 1
+diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
+index 62d63f7a2645..1a9808012abd 100644
+--- a/drivers/firmware/efi/libstub/kaslr.c
++++ b/drivers/firmware/efi/libstub/kaslr.c
+@@ -119,7 +119,7 @@ efi_status_t efi_kaslr_relocate_kernel(unsigned long *image_addr,
+ 		 */
+ 		status = efi_random_alloc(*reserve_size, min_kimg_align,
+ 					  reserve_addr, phys_seed,
+-					  EFI_LOADER_CODE, EFI_ALLOC_LIMIT);
++					  EFI_LOADER_CODE, 0, EFI_ALLOC_LIMIT);
+ 		if (status != EFI_SUCCESS)
+ 			efi_warn("efi_random_alloc() failed: 0x%lx\n", status);
+ 	} else {
+diff --git a/drivers/firmware/efi/libstub/randomalloc.c b/drivers/firmware/efi/libstub/randomalloc.c
+index 674a064b8f7a..4e96a855fdf4 100644
+--- a/drivers/firmware/efi/libstub/randomalloc.c
++++ b/drivers/firmware/efi/libstub/randomalloc.c
+@@ -17,7 +17,7 @@
+ static unsigned long get_entry_num_slots(efi_memory_desc_t *md,
+ 					 unsigned long size,
+ 					 unsigned long align_shift,
+-					 u64 alloc_limit)
++					 u64 alloc_min, u64 alloc_max)
+ {
+ 	unsigned long align = 1UL << align_shift;
+ 	u64 first_slot, last_slot, region_end;
+@@ -30,11 +30,11 @@ static unsigned long get_entry_num_slots(efi_memory_desc_t *md,
+ 		return 0;
  
--	ip netns exec foo-ns timeout 2 ping -c 1 $2 || return 1
--	ip netns exec bar-ns timeout 2 ping -c 1 $1 || return 1
-+	ip netns exec $foo_ns timeout 2 ping -c 1 $2 || return 1
-+	ip netns exec $bar_ns timeout 2 ping -c 1 $1 || return 1
+ 	region_end = min(md->phys_addr + md->num_pages * EFI_PAGE_SIZE - 1,
+-			 alloc_limit);
++			 alloc_max);
+ 	if (region_end < size)
+ 		return 0;
  
--	nettest -B -N bar-ns -O foo-ns -r $1 || return 1
--	nettest -B -N foo-ns -O bar-ns -r $2 || return 1
-+	nettest -B -N $bar_ns -O $foo_ns -r $1 || return 1
-+	nettest -B -N $foo_ns -O $bar_ns -r $2 || return 1
+-	first_slot = round_up(md->phys_addr, align);
++	first_slot = round_up(max(md->phys_addr, alloc_min), align);
+ 	last_slot = round_down(region_end - size + 1, align);
  
- 	return 0
- }
-@@ -88,31 +87,31 @@ _do_route_test(){
- 	# Arguments: foo_ip foo1_ip bar1_ip bar_ip prefix_len test_description
- 	# Displays test result and returns success or failure.
+ 	if (first_slot > last_slot)
+@@ -56,7 +56,8 @@ efi_status_t efi_random_alloc(unsigned long size,
+ 			      unsigned long *addr,
+ 			      unsigned long random_seed,
+ 			      int memory_type,
+-			      unsigned long alloc_limit)
++			      unsigned long alloc_min,
++			      unsigned long alloc_max)
+ {
+ 	unsigned long total_slots = 0, target_slot;
+ 	unsigned long total_mirrored_slots = 0;
+@@ -78,7 +79,8 @@ efi_status_t efi_random_alloc(unsigned long size,
+ 		efi_memory_desc_t *md = (void *)map->map + map_offset;
+ 		unsigned long slots;
  
--	# Caller must set up foo-ns, bar-ns, and router-ns
-+	# Caller must set up $foo_ns, $bar_ns, and $router_ns
- 	# containing linked veth devices foo-foo1, bar1-bar
--	# (foo in foo-ns, foo1 and bar1 in router-ns, and
--	# bar in bar-ns).
--
--	ip -n foo-ns address add $1/$5 dev foo || return 1
--	ip -n foo-ns link set foo up || return 1
--	ip -n foo-ns route add default via $2 || return 1
--	ip -n bar-ns address add $4/$5 dev bar || return 1
--	ip -n bar-ns link set bar up || return 1
--	ip -n bar-ns route add default via $3 || return 1
--	ip -n router-ns address add $2/$5 dev foo1 || return 1
--	ip -n router-ns link set foo1 up || return 1
--	ip -n router-ns address add $3/$5 dev bar1 || return 1
--	ip -n router-ns link set bar1 up || return 1
--
--	echo 1 | ip netns exec router-ns tee /proc/sys/net/ipv4/ip_forward
--
--	ip netns exec foo-ns timeout 2 ping -c 1 $2 || return 1
--	ip netns exec foo-ns timeout 2 ping -c 1 $4 || return 1
--	ip netns exec bar-ns timeout 2 ping -c 1 $3 || return 1
--	ip netns exec bar-ns timeout 2 ping -c 1 $1 || return 1
--
--	nettest -B -N bar-ns -O foo-ns -r $1 || return 1
--	nettest -B -N foo-ns -O bar-ns -r $4 || return 1
-+	# (foo in $foo_ns, foo1 and bar1 in $router_ns, and
-+	# bar in $bar_ns).
-+
-+	ip -n $foo_ns address add $1/$5 dev foo || return 1
-+	ip -n $foo_ns link set foo up || return 1
-+	ip -n $foo_ns route add default via $2 || return 1
-+	ip -n $bar_ns address add $4/$5 dev bar || return 1
-+	ip -n $bar_ns link set bar up || return 1
-+	ip -n $bar_ns route add default via $3 || return 1
-+	ip -n $router_ns address add $2/$5 dev foo1 || return 1
-+	ip -n $router_ns link set foo1 up || return 1
-+	ip -n $router_ns address add $3/$5 dev bar1 || return 1
-+	ip -n $router_ns link set bar1 up || return 1
-+
-+	echo 1 | ip netns exec $router_ns tee /proc/sys/net/ipv4/ip_forward
-+
-+	ip netns exec $foo_ns timeout 2 ping -c 1 $2 || return 1
-+	ip netns exec $foo_ns timeout 2 ping -c 1 $4 || return 1
-+	ip netns exec $bar_ns timeout 2 ping -c 1 $3 || return 1
-+	ip netns exec $bar_ns timeout 2 ping -c 1 $1 || return 1
-+
-+	nettest -B -N $bar_ns -O $foo_ns -r $1 || return 1
-+	nettest -B -N $foo_ns -O $bar_ns -r $4 || return 1
+-		slots = get_entry_num_slots(md, size, ilog2(align), alloc_limit);
++		slots = get_entry_num_slots(md, size, ilog2(align), alloc_min,
++					    alloc_max);
+ 		MD_NUM_SLOTS(md) = slots;
+ 		total_slots += slots;
+ 		if (md->attribute & EFI_MEMORY_MORE_RELIABLE)
+diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
+index 5d0934ae7dc8..4a11470bed5e 100644
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -831,6 +831,7 @@ static efi_status_t efi_decompress_kernel(unsigned long *kernel_entry)
  
- 	return 0
- }
-@@ -121,17 +120,15 @@ segmenttest(){
- 	# Sets up veth link and tries to connect over it.
- 	# Arguments: ip_a ip_b prefix_len test_description
- 	hide_output
--	ip netns add foo-ns
--	ip netns add bar-ns
--	ip link add foo netns foo-ns type veth peer name bar netns bar-ns
-+	setup_ns foo_ns bar_ns
-+	ip link add foo netns $foo_ns type veth peer name bar netns $bar_ns
+ 	status = efi_random_alloc(alloc_size, CONFIG_PHYSICAL_ALIGN, &addr,
+ 				  seed[0], EFI_LOADER_CODE,
++				  LOAD_PHYSICAL_ADDR,
+ 				  EFI_X86_KERNEL_ALLOC_LIMIT);
+ 	if (status != EFI_SUCCESS)
+ 		return status;
+diff --git a/drivers/firmware/efi/libstub/zboot.c b/drivers/firmware/efi/libstub/zboot.c
+index bdb17eac0cb4..1ceace956758 100644
+--- a/drivers/firmware/efi/libstub/zboot.c
++++ b/drivers/firmware/efi/libstub/zboot.c
+@@ -119,7 +119,7 @@ efi_zboot_entry(efi_handle_t handle, efi_system_table_t *systab)
+ 		}
  
- 	test_result=0
- 	_do_segmenttest "$@" || test_result=1
- 
--	ip netns pids foo-ns | xargs -r kill -9
--	ip netns pids bar-ns | xargs -r kill -9
--	ip netns del foo-ns
--	ip netns del bar-ns
-+	ip netns pids $foo_ns | xargs -r kill -9
-+	ip netns pids $bar_ns | xargs -r kill -9
-+	cleanup_ns $foo_ns $bar_ns
- 	show_output
- 
- 	# inverted tests will expect failure instead of success
-@@ -147,21 +144,17 @@ route_test(){
- 	# Returns success or failure.
- 
- 	hide_output
--	ip netns add foo-ns
--	ip netns add bar-ns
--	ip netns add router-ns
--	ip link add foo netns foo-ns type veth peer name foo1 netns router-ns
--	ip link add bar netns bar-ns type veth peer name bar1 netns router-ns
-+	setup_ns foo_ns bar_ns router_ns
-+	ip link add foo netns $foo_ns type veth peer name foo1 netns $router_ns
-+	ip link add bar netns $bar_ns type veth peer name bar1 netns $router_ns
- 
- 	test_result=0
- 	_do_route_test "$@" || test_result=1
- 
--	ip netns pids foo-ns | xargs -r kill -9
--	ip netns pids bar-ns | xargs -r kill -9
--	ip netns pids router-ns | xargs -r kill -9
--	ip netns del foo-ns
--	ip netns del bar-ns
--	ip netns del router-ns
-+	ip netns pids $foo_ns | xargs -r kill -9
-+	ip netns pids $bar_ns | xargs -r kill -9
-+	ip netns pids $router_ns | xargs -r kill -9
-+	cleanup_ns $foo_ns $bar_ns $router_ns
- 
- 	show_output
- 
+ 		status = efi_random_alloc(alloc_size, min_kimg_align, &image_base,
+-					  seed, EFI_LOADER_CODE, EFI_ALLOC_LIMIT);
++					  seed, EFI_LOADER_CODE, 0, EFI_ALLOC_LIMIT);
+ 		if (status != EFI_SUCCESS) {
+ 			efi_err("Failed to allocate memory\n");
+ 			goto free_cmdline;
 -- 
 2.43.0
 
