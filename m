@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4D1604BC;
-	Tue, 13 Feb 2024 17:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95FDF605A7;
+	Tue, 13 Feb 2024 17:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845759; cv=none; b=FN+dWc5uBhoDba++ndW0fHXpXPVYwWPUo2EEzmmQMtTikJBtMV7F1Q1cHn7W0HfW/MPrlueJXdLkouVRoDMUbMeAhphOxtnzYTx6lynzlp2MxA/W9RgDC52/No70y41bVdcGRHwb3OUwKVuqYIMN3TNZZOw59O2Lzil1J8hIgOw=
+	t=1707845762; cv=none; b=CEWppwvfxfBtvsoX16QmdLp1J3s61r0x0XPgpmKq3D5L6/NAhQ2xTfi9hShkhpBYRfuyzXKTxvmN3CR+fqY7VKZKE8rRgWwCOBjv1JZ1Bpa1Pg4KIKesu6JoJKB1z5i31Zoo2R9SzEtZ7/XR5LjOcG9MyDHG34XXxMgemJhBvdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845759; c=relaxed/simple;
-	bh=FAVQ1lVItBMoTTt2BSjI2ICT+LS7/vdy0HzpaSO1NXE=;
+	s=arc-20240116; t=1707845762; c=relaxed/simple;
+	bh=SKB9LGcnM/HPv+ewi5mpHs09g7YxWma7TQo3KFzu2xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3WqnnUJmhKt1214BqJQr0Q+z3Rvt+NaChfQBpKT7Iu1ysnYvM1Qlh8DvxsB2c5TNfLEInJE5BJIq0m3NlGoYQpk7huKfKwv/CFud6Aqhzi1J/0lBytR92RhHwrsZTxUM0ug1QLKtznNNJ7ZFoegZbGLhRSUxPUCqhYC77T93eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnf8V1qZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=daG0+IrdyFkwt0H4ShrjAYCXCibg0D0Bl7qIGyJjzs8NTo2wtMSUiDSzYjNPsPxTOUJYNVznZxpk3eQ3xy8h5ZBddHGOfhdnxrIguxBQvdyiWVFn4WXlL7awpDJWwsDl7FME4YcLZE85ZmB1jWQi5QKDRaeOH+lPOryreOExPiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRFQmmnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnf8V1qZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB431C433C7;
-	Tue, 13 Feb 2024 17:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRFQmmnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D62C433F1;
+	Tue, 13 Feb 2024 17:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845759;
-	bh=FAVQ1lVItBMoTTt2BSjI2ICT+LS7/vdy0HzpaSO1NXE=;
+	s=korg; t=1707845762;
+	bh=SKB9LGcnM/HPv+ewi5mpHs09g7YxWma7TQo3KFzu2xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnf8V1qZD//KMLMWnjoFh1/d/aAqMb/a0bR5+5LwWkkx2LpXaa4veGDdxHykSEeoV
-	 wRyuRc/Yz8GJXXXhlAtbkqfdi/zTs6uT9LeBp2rMuxX/PH9rDwMuD8fcRArXGEGiEF
-	 I73PHquPBAsqPqJnI65zr2z0tBk6/927ZQQZ8nsg=
+	b=ZRFQmmnIiEPcC7riIucrwzHK41+JbNVD4zK0i6SWDegDBFrTN1JG7fFVTrVrqaSPC
+	 LE0QfKvkXXaPPm9Y5NqAAICb2PxG1bRZ+3oK6wIN/HAX0FmZva5HJc9ang7kGMT9/o
+	 IG3u42Y7gs1UcjzQtA8Qo4QNmu/X0UugAt5d1yec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-afs@lists.infradead.org,
 	netdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 049/124] rxrpc: Fix generation of serial numbers to skip zero
-Date: Tue, 13 Feb 2024 18:21:11 +0100
-Message-ID: <20240213171855.167470143@linuxfoundation.org>
+Subject: [PATCH 6.7 050/124] rxrpc: Fix delayed ACKs to not set the reference serial number
+Date: Tue, 13 Feb 2024 18:21:12 +0100
+Message-ID: <20240213171855.196690148@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -59,23 +59,10 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit f31041417bf7f4a4df8b3bfb52cb31bbe805b934 ]
+[ Upstream commit e7870cf13d20f56bfc19f9c3e89707c69cf104ef ]
 
-In the Rx protocol, every packet generated is marked with a per-connection
-monotonically increasing serial number.  This number can be referenced in
-an ACK packet generated in response to an incoming packet - thereby
-allowing the sender to use this for RTT determination, amongst other
-things.
-
-However, if the reference field in the ACK is zero, it doesn't refer to any
-incoming packet (it could be a ping to find out if a packet got lost, for
-example) - so we shouldn't generate zero serial numbers.
-
-Fix the generation of serial numbers to retry if it comes up with a zero.
-
-Furthermore, since the serial numbers are only ever allocated within the
-I/O thread this connection is bound to, there's no need for atomics so
-remove that too.
+Fix the construction of delayed ACKs to not set the reference serial number
+as they can't be used as an RTT reference.
 
 Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
 Signed-off-by: David Howells <dhowells@redhat.com>
@@ -89,135 +76,53 @@ cc: netdev@vger.kernel.org
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/ar-internal.h | 16 +++++++++++++++-
- net/rxrpc/conn_event.c  |  2 +-
- net/rxrpc/output.c      |  8 ++++----
- net/rxrpc/proc.c        |  2 +-
- net/rxrpc/rxkad.c       |  4 ++--
- 5 files changed, 23 insertions(+), 9 deletions(-)
+ net/rxrpc/ar-internal.h | 1 -
+ net/rxrpc/call_event.c  | 6 +-----
+ 2 files changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index 5d5b19f20d1e..efbe82926769 100644
+index efbe82926769..041add7654b2 100644
 --- a/net/rxrpc/ar-internal.h
 +++ b/net/rxrpc/ar-internal.h
-@@ -507,7 +507,7 @@ struct rxrpc_connection {
- 	enum rxrpc_call_completion completion;	/* Completion condition */
- 	s32			abort_code;	/* Abort code of connection abort */
- 	int			debug_id;	/* debug ID for printks */
--	atomic_t		serial;		/* packet serial number counter */
-+	rxrpc_serial_t		tx_serial;	/* Outgoing packet serial number counter */
- 	unsigned int		hi_serial;	/* highest serial number received */
- 	u32			service_id;	/* Service ID, possibly upgraded */
- 	u32			security_level;	/* Security level selected */
-@@ -819,6 +819,20 @@ static inline bool rxrpc_sending_to_client(const struct rxrpc_txbuf *txb)
+@@ -693,7 +693,6 @@ struct rxrpc_call {
+ 	/* Receive-phase ACK management (ACKs we send). */
+ 	u8			ackr_reason;	/* reason to ACK */
+ 	u16			ackr_sack_base;	/* Starting slot in SACK table ring */
+-	rxrpc_serial_t		ackr_serial;	/* serial of packet being ACK'd */
+ 	rxrpc_seq_t		ackr_window;	/* Base of SACK window */
+ 	rxrpc_seq_t		ackr_wtop;	/* Base of SACK window */
+ 	unsigned int		ackr_nr_unacked; /* Number of unacked packets */
+diff --git a/net/rxrpc/call_event.c b/net/rxrpc/call_event.c
+index e363f21a2014..c61efe08695d 100644
+--- a/net/rxrpc/call_event.c
++++ b/net/rxrpc/call_event.c
+@@ -43,8 +43,6 @@ void rxrpc_propose_delay_ACK(struct rxrpc_call *call, rxrpc_serial_t serial,
+ 	unsigned long expiry = rxrpc_soft_ack_delay;
+ 	unsigned long now = jiffies, ack_at;
  
- #include <trace/events/rxrpc.h>
+-	call->ackr_serial = serial;
+-
+ 	if (rxrpc_soft_ack_delay < expiry)
+ 		expiry = rxrpc_soft_ack_delay;
+ 	if (call->peer->srtt_us != 0)
+@@ -373,7 +371,6 @@ static void rxrpc_send_initial_ping(struct rxrpc_call *call)
+ bool rxrpc_input_call_event(struct rxrpc_call *call, struct sk_buff *skb)
+ {
+ 	unsigned long now, next, t;
+-	rxrpc_serial_t ackr_serial;
+ 	bool resend = false, expired = false;
+ 	s32 abort_code;
  
-+/*
-+ * Allocate the next serial number on a connection.  0 must be skipped.
-+ */
-+static inline rxrpc_serial_t rxrpc_get_next_serial(struct rxrpc_connection *conn)
-+{
-+	rxrpc_serial_t serial;
-+
-+	serial = conn->tx_serial;
-+	if (serial == 0)
-+		serial = 1;
-+	conn->tx_serial = serial + 1;
-+	return serial;
-+}
-+
- /*
-  * af_rxrpc.c
-  */
-diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
-index 95f4bc206b3d..ec5eae60ab0c 100644
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -117,7 +117,7 @@ void rxrpc_conn_retransmit_call(struct rxrpc_connection *conn,
- 	iov[2].iov_base	= &ack_info;
- 	iov[2].iov_len	= sizeof(ack_info);
+@@ -423,8 +420,7 @@ bool rxrpc_input_call_event(struct rxrpc_call *call, struct sk_buff *skb)
+ 	if (time_after_eq(now, t)) {
+ 		trace_rxrpc_timer(call, rxrpc_timer_exp_ack, now);
+ 		cmpxchg(&call->delay_ack_at, t, now + MAX_JIFFY_OFFSET);
+-		ackr_serial = xchg(&call->ackr_serial, 0);
+-		rxrpc_send_ACK(call, RXRPC_ACK_DELAY, ackr_serial,
++		rxrpc_send_ACK(call, RXRPC_ACK_DELAY, 0,
+ 			       rxrpc_propose_ack_ping_for_lost_ack);
+ 	}
  
--	serial = atomic_inc_return(&conn->serial);
-+	serial = rxrpc_get_next_serial(conn);
- 
- 	pkt.whdr.epoch		= htonl(conn->proto.epoch);
- 	pkt.whdr.cid		= htonl(conn->proto.cid | channel);
-diff --git a/net/rxrpc/output.c b/net/rxrpc/output.c
-index a0906145e829..4a292f860ae3 100644
---- a/net/rxrpc/output.c
-+++ b/net/rxrpc/output.c
-@@ -216,7 +216,7 @@ int rxrpc_send_ack_packet(struct rxrpc_call *call, struct rxrpc_txbuf *txb)
- 	iov[0].iov_len	= sizeof(txb->wire) + sizeof(txb->ack) + n;
- 	len = iov[0].iov_len;
- 
--	serial = atomic_inc_return(&conn->serial);
-+	serial = rxrpc_get_next_serial(conn);
- 	txb->wire.serial = htonl(serial);
- 	trace_rxrpc_tx_ack(call->debug_id, serial,
- 			   ntohl(txb->ack.firstPacket),
-@@ -302,7 +302,7 @@ int rxrpc_send_abort_packet(struct rxrpc_call *call)
- 	iov[0].iov_base	= &pkt;
- 	iov[0].iov_len	= sizeof(pkt);
- 
--	serial = atomic_inc_return(&conn->serial);
-+	serial = rxrpc_get_next_serial(conn);
- 	pkt.whdr.serial = htonl(serial);
- 
- 	iov_iter_kvec(&msg.msg_iter, WRITE, iov, 1, sizeof(pkt));
-@@ -334,7 +334,7 @@ int rxrpc_send_data_packet(struct rxrpc_call *call, struct rxrpc_txbuf *txb)
- 	_enter("%x,{%d}", txb->seq, txb->len);
- 
- 	/* Each transmission of a Tx packet needs a new serial number */
--	serial = atomic_inc_return(&conn->serial);
-+	serial = rxrpc_get_next_serial(conn);
- 	txb->wire.serial = htonl(serial);
- 
- 	if (test_bit(RXRPC_CONN_PROBING_FOR_UPGRADE, &conn->flags) &&
-@@ -558,7 +558,7 @@ void rxrpc_send_conn_abort(struct rxrpc_connection *conn)
- 
- 	len = iov[0].iov_len + iov[1].iov_len;
- 
--	serial = atomic_inc_return(&conn->serial);
-+	serial = rxrpc_get_next_serial(conn);
- 	whdr.serial = htonl(serial);
- 
- 	iov_iter_kvec(&msg.msg_iter, WRITE, iov, 2, len);
-diff --git a/net/rxrpc/proc.c b/net/rxrpc/proc.c
-index 682636d3b060..208312c244f6 100644
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -181,7 +181,7 @@ static int rxrpc_connection_seq_show(struct seq_file *seq, void *v)
- 		   atomic_read(&conn->active),
- 		   state,
- 		   key_serial(conn->key),
--		   atomic_read(&conn->serial),
-+		   conn->tx_serial,
- 		   conn->hi_serial,
- 		   conn->channels[0].call_id,
- 		   conn->channels[1].call_id,
-diff --git a/net/rxrpc/rxkad.c b/net/rxrpc/rxkad.c
-index b52dedcebce0..6b32d61d4cdc 100644
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -664,7 +664,7 @@ static int rxkad_issue_challenge(struct rxrpc_connection *conn)
- 
- 	len = iov[0].iov_len + iov[1].iov_len;
- 
--	serial = atomic_inc_return(&conn->serial);
-+	serial = rxrpc_get_next_serial(conn);
- 	whdr.serial = htonl(serial);
- 
- 	ret = kernel_sendmsg(conn->local->socket, &msg, iov, 2, len);
-@@ -721,7 +721,7 @@ static int rxkad_send_response(struct rxrpc_connection *conn,
- 
- 	len = iov[0].iov_len + iov[1].iov_len + iov[2].iov_len;
- 
--	serial = atomic_inc_return(&conn->serial);
-+	serial = rxrpc_get_next_serial(conn);
- 	whdr.serial = htonl(serial);
- 
- 	rxrpc_local_dont_fragment(conn->local, false);
 -- 
 2.43.0
 
