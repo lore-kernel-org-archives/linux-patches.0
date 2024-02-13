@@ -1,58 +1,59 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469C05EE6C
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 15:37:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E206C5F574
+	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 15:39:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707838672; cv=none; b=AR74kKUqJ5axm4Y8EVNqfU7YhVgK4hNtnW4jZaLUelflk5+r8C60oRVk6xh5wJc8VfJ+C/d0GS2vtwxVmh35WKRCRnmrRkTxBMzcoG8rWy2RE42SxtxgCm5/nCA1MfUH6cc0S4yY7ahIW6jbkUO0g81vbuH549LvcMCqyL3Jz8o=
+	t=1707838745; cv=none; b=qcZX25CG7jCnp32zEdbczOdyF1geuLM8V9HwGJRld5emdcmYq0mZZeOr7fXmY94+BVqvOJXMcdXH13pY6lOnmFasBFUoGjzIj1wkeiNBSpD30q7OlH7gTnwhQ3iNQ2PTcxr9dtRpU5vc4sVL9lP9kQDYOfccVaTC5XfVchdIoKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707838672; c=relaxed/simple;
-	bh=AJ2ShXMY9mclzo7RH3al2C9ykS8lXSKpfydDfw4OJLA=;
+	s=arc-20240116; t=1707838745; c=relaxed/simple;
+	bh=L1Lus6uaMIL3OY6Dg1PFhHKAkVF/O0Gj/XjTib5m130=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q2WrWwt+HaVmnuJLuToryOA/5arNtD1rQYXignnVjEgkMd5i/JuX1DuxiYvAeNJom7cbVBPP6z4M7qid5sDNdqlWPZBF1lT+kTGWHvl1EZw9zXM7/v4RlbpHqssPeG45/zfEK07cbTffjZSEYKhlNsTngVC/1ORzAXZTc0cwfVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=bN3EYP8B; arc=none smtp.client-ip=209.85.128.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=D5CGsTjnoakP0iQf78nSMe6NhRvYq3h2tfS8fxDv3azH3kl8toNeF0K9IOxssGkPXhfS/aiSHb/OMBXECZJkgaKKcnzPSBak3hi2Sc4/h4NPiT+RPxV3sX+n8zMflT1chsKug00vGdh1OpzvDfONJJGf10akdhv+m64KYFoqnqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=R8R+OgFF; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bN3EYP8B"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40f0218476aso56285e9.1
-        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 07:37:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R8R+OgFF"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40f0218476aso56485e9.1
+        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 07:39:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707838668; x=1708443468; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zwr6PKiZpNhLTE2guxAZqjlW96JM5kQoMb1X0WZ59CU=;
-        b=bN3EYP8B3ps9maKZe6XYPoen3xQ3GrgsdsFKjIfaR1rLDRTy19wXK3uqXLp6nNq48y
-         3l2GE3DYFixQrDRrlAxCzjYoWyABzKKZepxHaHQZldVZh3/Tg2BUDj/XeBHswZsuEpY6
-         +smCJKwhtkKqPKfbb/kPcSfU+b6guAlgapflVehCUx1vOFgKcZTaahJCU1N15zh4vPgV
-         dvNMj7xvwQF+of6FrQvbuxhhhXH66gyAniG+NvegNTEVECYYgyhwt6q9cdnk0fcdCU7v
-         WAf2tD0BNsfpoKB3+sEo3Lcg9fE/ghGthRkVfhVmp2HB7cllht4xTJgqxBeZo5sj7WjB
-         Focw==
+        d=google.com; s=20230601; t=1707838742; x=1708443542; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ahN0nmrpb9Pg2/fqwLNzPwdlfnOoMk8HeVysrNU2Hkg=;
+        b=R8R+OgFFbLFcqSsMSIzRGe1gvMeN+7bll/lBaBxE5q311Zg1aJMX5boRoabRkoFs/y
+         NX9xLDN+uJbA3Yd71PrF3T3Na5vQx3qTLMbVGFlehvP3LyTGEG/gFNP/I7xTT3OeUSJs
+         I4+RyXsQ9vfUmBsrmyuIqHDhwbKYprTXAAGhorFvr+qzwqWY4yx3XYcMXed6AaAnqtRO
+         NUwAU0q7uYYhFdZbY+HQwIT8aGtwNPp2PwcOzfz8If9cT3FiFBfRTOzz7DKVx5EBP/zl
+         DosZ/58B07X3ULjw9m+COrvyuxIrugZze3v1SpsEXbKVO7zwTXNEM5Wnrz04Rt3RjNIS
+         YIlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707838668; x=1708443468;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zwr6PKiZpNhLTE2guxAZqjlW96JM5kQoMb1X0WZ59CU=;
-        b=bNJtjQ0EBeyh9B7cKvlASkgL8gPdH1lWxhhDANuyCZvhH8lWOjQiBdZwW/jq3YPfG6
-         z+yzP0HAa/pFBn0TQBZVmzMGOAfFaZxAxPxDPFU7AI6MNf14lsoYT7rZdT3AdY2FQ30P
-         Edmi8c3ZElyaM2nGKtm6Xai0YAH8TbdLMi+XaaRKN2Hxctu7fXs6FmDmdjTfKJTMZv1P
-         soDUlAT6K2x+qn0SCa0PAMVgLmaCbN+QNGNs9c3EaD0hGHbk1snHr3Yx58iBqmthT8n6
-         OhQ9RFZO2gUFHTSW2GgljRKxx/h4JQieZucPioCAsbHo8vIJpfbZiOEAu6MKjK0imacJ
-         36zQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUxOAjoh7r4MtubNGr+pFTuRgkdw5LGjktoLcKTfpf0MT7SGbr8MnmymBtyVXFcK8mTYVxe+F0uKOjlreHg/wOHOpA/kQqXyQ==
-X-Gm-Message-State: AOJu0Yy1YoP5DttE0G2mYFRU3mKEthwJG1PKhqfg1DCa0SefOkx8n7eA
-	shfjuttVgddNuQLo//D+uGxjnoFm21AvJLrz7oLjTa7n404bXsT9AR+9IzIU3Q==
-X-Google-Smtp-Source: AGHT+IHtsU5AWhMPPiPV60/mKu/c1RVNIy8lz4Y19Wq//wfQ65ZRTok6AKBtoFN6I/zlMgz+M2mYcA==
-X-Received: by 2002:a05:600c:3d05:b0:411:c03e:217c with SMTP id bh5-20020a05600c3d0500b00411c03e217cmr110189wmb.1.1707838668442;
-        Tue, 13 Feb 2024 07:37:48 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUIEKZahnjEoFxPo2yqL67J4jEmvZOYyvfU1gzL2Qd6fxYKmkx18l93i5SVRdDWQtc77GT2wSjtCQy6+yaXxocP7dukAEaRZY+C0D6rODQ3rCYDK8RzPdpU4k6ehXzd5Xe6ETfiej+pZOeRIA28aWQ7dRaGPAWc7QorbQ2CbbsxPv4dTpjIvLoGyGMqz3EEOaUxoo9fRAoQEwmfBBDbBwgf7lSgpczfVE+vB92+9EmskxbgA5HroFh0v7Zf+QLdRVgpkxB3ilfOWmsA8CgBVLb4sWxAdZmJTLqKGl985Wrhh3xWkSTXX08Z0zQC9z/vyAgaaTCt/oRvgnb/CTj8ktqrFusTceqzLEfc1g+rxNBDnMYyrt2edxWIr9UKtzSVtitEoLAfWyf9fDKOqIP9twNiB8nowYIqS31uGUhaVF0JymIrrbEZEyxAUKQPiPBJxhJL9ZI6PSHBDwTzrgBXaYV66kbDdOuXHW77BM8xYiifwTiCS7YeRQ==
+        d=1e100.net; s=20230601; t=1707838742; x=1708443542;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ahN0nmrpb9Pg2/fqwLNzPwdlfnOoMk8HeVysrNU2Hkg=;
+        b=ICgXFG71WKDw2VAEayrPXn/MqZkkkw6izGktB1CLJIQgMwUq1hbupOxzrEqtUf2drB
+         QY3SwcXoOC2fsKvIThdx7wcEE7Xn4upjqGprnlrwtj5J0BFXQDo+nplv1B348DjefD7N
+         t1eX+Wlrvjc8If722mW1BMGwjfKE2+3BGdSAfAZ360AKyccMc+kB6OROFXSFsRYSqk7v
+         zgvs6DKyBDbISteZTrQ3uJsjQi0lcnP3q/e+8xrDSmeYiStHa7BWOq8yLGL12nZDV1HL
+         inL/tng0LHuZaNCDqlyyTDWkIgluf0fSFS7RGuUxgzbjvfuwzeAvPNbjZjfETh21d+Dw
+         lG+g==
+X-Forwarded-Encrypted: i=1; AJvYcCVPILciHJlQOtZ4KZCXyI5fSbsBq5toqwma3SCrAxhlQNczsUG7aZIIvAsheDgn3B76cB7S9vFlgXutWXFCSJneEPF7OwpGuQ==
+X-Gm-Message-State: AOJu0Yx9fHp0t3gHKkgI7LHwZfxuAJjMEocO1vLye2Gpf8j/CjffBxSc
+	MMF5ghFuOO8lQsTXZkUv77/7CXzkM8RlDarUlR4zAqLZQtwXRMT7+YGJHdLGFg==
+X-Google-Smtp-Source: AGHT+IE0BU+kteu4xy3hpmJ4do7EkKNyGdY32im6cPy0bJisixaZyEIG/V2mOJb9jwVfQ8HO/5E0qA==
+X-Received: by 2002:a05:600c:6014:b0:411:c78a:748 with SMTP id az20-20020a05600c601400b00411c78a0748mr91089wmb.5.1707838741801;
+        Tue, 13 Feb 2024 07:39:01 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUdBtwYXsCMSLcXzB/hmOPLaOMVNI6/JirIc920WYcRWfF7hwSMpXfnnueJB7M0PZ0xfL7musl1vnFEhI5YKV8Rgi0EDm7zgKbKFCobNeKaMHert3Pib7qesGtKXsJUzAEoZdmtn3p/HZ0KNppCLNcYzIm1rO4Gf2GPBKGJdsy8r29FrZTmuP3F8CPWtPiw4TRNcT4dVgyUo7LPDGKAFdz8FDF+R4qNoELKx6/N69zMvfy0RY2Anre9TwfRZmNRw1qq0qH5w89MSehqf3+KXt6V7UnWRCimSkJn2IX9QA65GTw3WhTtkx+8G+aHRUDtTeQ1lh3KKaZXO+wR8sCmPD9f+gGRhYqmMEtF7LknACYdJLoZGIJQ87qJypbTvGgaUV3rIhgMMSsuOF2DXvtkn9gUeOHioV1YNtII9uMpARAUgzbUmR5VtQ1KgSGZAG8F82TuHbrzkntCa4KfB1yye0END5o+alKPTkBDmFyePh5v0yeJkIEfIA==
 Received: from google.com (185.83.140.34.bc.googleusercontent.com. [34.140.83.185])
-        by smtp.gmail.com with ESMTPSA id n40-20020a05600c3ba800b00411c724fa10sm1694378wms.2.2024.02.13.07.37.47
+        by smtp.gmail.com with ESMTPSA id q17-20020a5d61d1000000b0033940016d6esm9776711wrv.93.2024.02.13.07.39.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 07:37:47 -0800 (PST)
-Date: Tue, 13 Feb 2024 15:37:43 +0000
+        Tue, 13 Feb 2024 07:39:01 -0800 (PST)
+Date: Tue, 13 Feb 2024 15:38:57 +0000
 From: Mostafa Saleh <smostafa@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
@@ -66,95 +67,129 @@ Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
 	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
 	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v5 03/17] iommu/arm-smmu-v3: Move
- arm_smmu_rmr_install_bypass_ste()
-Message-ID: <ZcuMx0w6MDWpkLne@google.com>
+Subject: Re: [PATCH v5 06/17] iommu/arm-smmu-v3: Hold arm_smmu_asid_lock
+ during all of attach_dev
+Message-ID: <ZcuNESWmrC9jZ9lM@google.com>
 References: <0-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
- <3-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+ <6-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
 
 Hi Jason,
 
-On Tue, Feb 06, 2024 at 11:12:40AM -0400, Jason Gunthorpe wrote:
-> Logically arm_smmu_init_strtab() is the function that allocates and
-> populates the stream table with the initial value of the STEs. After this
-> function returns the stream table should be fully ready.
+On Tue, Feb 06, 2024 at 11:12:43AM -0400, Jason Gunthorpe wrote:
+> The BTM support wants to be able to change the ASID of any smmu_domain.
+> When it goes to do this it holds the arm_smmu_asid_lock and iterates over
+> the target domain's devices list.
 > 
-> arm_smmu_rmr_install_bypass_ste() adjusts the initial stream table to force
-> any SIDs that the FW says have IOMMU_RESV_DIRECT to use bypass. This
-> ensures there is no disruption to the identity mapping during boot.
+> During attach of a S1 domain we must ensure that the devices list and
+> CD are in sync, otherwise we could miss CD updates or a parallel CD update
+> could push an out of date CD.
 > 
-> Put arm_smmu_rmr_install_bypass_ste() into arm_smmu_init_strtab(), it
-> already executes immediately after arm_smmu_init_strtab().
+> This is pretty complicated, and almost works today because
+> arm_smmu_detach_dev() removes the master from the linked list before
+> working on the CD entries, preventing parallel update of the CD.
 > 
-> No functional change intended.
+> However, it does have an issue where the CD can remain programed while the
+> domain appears to be unattached. arm_smmu_share_asid() will then not clear
+> any CD entriess and install its own CD entry with the same ASID
+> concurrently. This creates a small race window where the IOMMU can see two
+> ASIDs pointing to different translations.
+> 
+> Solve this by wrapping most of the attach flow in the
+> arm_smmu_asid_lock. This locks more than strictly needed to prepare for
+> the next patch which will reorganize the order of the linked list, STE and
+> CD changes.
+> 
+> Move arm_smmu_detach_dev() till after we have initialized the domain so
+> the lock can be held for less time.
+>
 
-I think arm_smmu_init_strtab is quite low level to abstract FW configuration in it.
-For example in KVM[1] we'd re-use a big part of this driver and rely on similar
-low-level functions. But no strong opinion.
+This seems a bit theoretical to me also it requires mis-programming as the master
+will issue DMA in detach, but as this is not a hot path, I don’t think overlocking
+will is a problem.
 
-[1] https://lore.kernel.org/kvmarm/20230201125328.2186498-1-jean-philippe@linaro.org/
+Reviewed-by: Mostafa Saleh <smostafa@google.com>
 
-
-Thanks,
-Mostafa
-
+> Reviewed-by: Michael Shavit <mshavit@google.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 > Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 > Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 > Tested-by: Moritz Fischer <moritzf@google.com>
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 22 ++++++++++++---------
+>  1 file changed, 13 insertions(+), 9 deletions(-)
 > 
 > diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 6123e5ad95822c..2ab36dcf7c61f5 100644
+> index 417b2c877ff311..1229545ae6db4e 100644
 > --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 > +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -101,6 +101,8 @@ static struct arm_smmu_option_prop arm_smmu_options[] = {
->  	{ 0, NULL},
->  };
+> @@ -2639,8 +2639,6 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  		return -EBUSY;
+>  	}
 >  
-> +static void arm_smmu_rmr_install_bypass_ste(struct arm_smmu_device *smmu);
-> +
->  static void parse_driver_options(struct arm_smmu_device *smmu)
->  {
->  	int i = 0;
-> @@ -3256,6 +3258,7 @@ static int arm_smmu_init_strtab_linear(struct arm_smmu_device *smmu)
->  	cfg->strtab_base_cfg = reg;
->  
->  	arm_smmu_init_bypass_stes(strtab, cfg->num_l1_ents);
-> +
->  	return 0;
->  }
->  
-> @@ -3279,6 +3282,8 @@ static int arm_smmu_init_strtab(struct arm_smmu_device *smmu)
->  
->  	ida_init(&smmu->vmid_map);
->  
-> +	/* Check for RMRs and install bypass STEs if any */
-> +	arm_smmu_rmr_install_bypass_ste(smmu);
->  	return 0;
->  }
->  
-> @@ -4073,9 +4078,6 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
->  	/* Record our private device structure */
->  	platform_set_drvdata(pdev, smmu);
->  
-> -	/* Check for RMRs and install bypass STEs if any */
-> -	arm_smmu_rmr_install_bypass_ste(smmu);
+> -	arm_smmu_detach_dev(master);
 > -
->  	/* Reset the device */
->  	ret = arm_smmu_device_reset(smmu, bypass);
+>  	mutex_lock(&smmu_domain->init_mutex);
+>  
+>  	if (!smmu_domain->smmu) {
+> @@ -2655,6 +2653,16 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
 >  	if (ret)
+>  		return ret;
+>  
+> +	/*
+> +	 * Prevent arm_smmu_share_asid() from trying to change the ASID
+> +	 * of either the old or new domain while we are working on it.
+> +	 * This allows the STE and the smmu_domain->devices list to
+> +	 * be inconsistent during this routine.
+> +	 */
+> +	mutex_lock(&arm_smmu_asid_lock);
+> +
+> +	arm_smmu_detach_dev(master);
+> +
+>  	master->domain = smmu_domain;
+>  
+>  	/*
+> @@ -2680,13 +2688,7 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  			}
+>  		}
+>  
+> -		/*
+> -		 * Prevent SVA from concurrently modifying the CD or writing to
+> -		 * the CD entry
+> -		 */
+> -		mutex_lock(&arm_smmu_asid_lock);
+>  		ret = arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID, &smmu_domain->cd);
+> -		mutex_unlock(&arm_smmu_asid_lock);
+>  		if (ret) {
+>  			master->domain = NULL;
+>  			goto out_list_del;
+> @@ -2696,13 +2698,15 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
+>  	arm_smmu_install_ste_for_dev(master);
+>  
+>  	arm_smmu_enable_ats(master);
+> -	return 0;
+> +	goto out_unlock;
+>  
+>  out_list_del:
+>  	spin_lock_irqsave(&smmu_domain->devices_lock, flags);
+>  	list_del(&master->domain_head);
+>  	spin_unlock_irqrestore(&smmu_domain->devices_lock, flags);
+>  
+> +out_unlock:
+> +	mutex_unlock(&arm_smmu_asid_lock);
+>  	return ret;
+>  }
+>  
 > -- 
 > 2.43.0
 > 
