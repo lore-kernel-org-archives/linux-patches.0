@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA645F54E;
-	Tue, 13 Feb 2024 17:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5025FDDF;
+	Tue, 13 Feb 2024 17:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845436; cv=none; b=A+ha7SmG3g/TcU0ptVJQLx4KSmBWpFNbnNdYMCmUQ6xnwC+1DKrSKGsix9cQ2BDmoYzBQv3f1HxcnxqRj6oOqvIueqteTXwN+/WLtYLvEYa9MpYEpwEbZQpqt5Z2/2B296wumB224aVf0AmvyjOvgvFu447aq9sabFzaYMPdv8w=
+	t=1707845439; cv=none; b=KOKXIfzYcGrRCuh1pMsAuM/f55XlXB6eO9ZFSMaTjrHN87IxsBLDfdEG5tLPfACnjqPLfJgUzEXXMV+jWwksFzKm3KGlXn8P1JjCVTi137HH0/4oWTx6u+TRJYiIuzHvXGlVYZzmVDmhkULfePO9L1ZIiupN53eTdDJyS3zBx1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845436; c=relaxed/simple;
-	bh=fA/LYaRAh7SMVOZatT1gNri84hGIdfqzeoZZig1mS1g=;
+	s=arc-20240116; t=1707845439; c=relaxed/simple;
+	bh=CpbPyGJw029ckf5abzVXdAL+OmNWOPufzqaPgbPTyqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUPOQFkuprQbKEJ2RbpchcvYv9MzYyX8T3mYt90GvSABT2bRX0DEwIuzNtTk6cA3acoTKVpkni13jQA4X48ghuqVQwk9Tp2hI7eyZJzfP4GgMmvH+5dmKZs655R9rksaYH+1AgYuREIaK23LOoqKV6jOatQEHmRt8fmXM6xbaqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tetp/Via; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvA7FtPvC/XSa73wJkWw/45eN2j5859TXvOsniVILnNiJ87veMUWUJMv4q+hFKLfB5Z2MknB2Ozm1mgy3vuzB/wilAqP5BCGbdiE45yEtXhUqpEKWmqYm7UDHSzfcPy13Q9YT1Q8GfCS0pufB6+RiYwUHGnR7n+Jc1GNZ/+skgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8dxtE5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tetp/Via"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046CFC433F1;
-	Tue, 13 Feb 2024 17:30:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8dxtE5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F98DC433F1;
+	Tue, 13 Feb 2024 17:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845435;
-	bh=fA/LYaRAh7SMVOZatT1gNri84hGIdfqzeoZZig1mS1g=;
+	s=korg; t=1707845438;
+	bh=CpbPyGJw029ckf5abzVXdAL+OmNWOPufzqaPgbPTyqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tetp/Viaw6OqTomEJ5d7gwGGQbaE4UU380gnb0ZG5i4Oj0SZaBZmw7mMG+PDNu3uH
-	 wdLOQmZQBiWiVNRJLwUy3zUuQ1ahe8yB3GRT3jWVcpC0EWankugIPKX+OGAye/FRGW
-	 cdULgNy9wWcbM25o0q/hV2WedSGytgsXc5hk2pVA=
+	b=y8dxtE5JDUODiVLoMWsX99J4br5GsmgNmAyq/8Dsr7mJrxJmuzuJrb8eBIzoQs75B
+	 DQxU+uxCVtRzIWxu62rvlKWdsaelITUn8Tyi9ZZxbxMbEc01SF8h/2FPLrhV3Uyy/3
+	 kXdl/lX0de3+jKiB2LZyEi+WgKXgXCiq6inTX0Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/121] net: atlantic: Fix DMA mapping for PTP hwts ring
-Date: Tue, 13 Feb 2024 18:20:58 +0100
-Message-ID: <20240213171854.428474298@linuxfoundation.org>
+Subject: [PATCH 6.6 050/121] selftests: net: cut more slack for gro fwd tests.
+Date: Tue, 13 Feb 2024 18:20:59 +0100
+Message-ID: <20240213171854.458189587@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,120 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 2e7d3b67630dfd8f178c41fa2217aa00e79a5887 ]
+[ Upstream commit cb9f4a30fb85e1f4f149ada595a67899adb3db19 ]
 
-Function aq_ring_hwts_rx_alloc() maps extra AQ_CFG_RXDS_DEF bytes
-for PTP HWTS ring but then generic aq_ring_free() does not take this
-into account.
-Create and use a specific function to free HWTS ring to fix this
-issue.
+The udpgro_fwd.sh self-tests are somewhat unstable. There are
+a few timing constraints the we struggle to meet on very slow
+environments.
 
-Trace:
-[  215.351607] ------------[ cut here ]------------
-[  215.351612] DMA-API: atlantic 0000:4b:00.0: device driver frees DMA memory with different size [device address=0x00000000fbdd0000] [map size=34816 bytes] [unmap size=32768 bytes]
-[  215.351635] WARNING: CPU: 33 PID: 10759 at kernel/dma/debug.c:988 check_unmap+0xa6f/0x2360
-...
-[  215.581176] Call Trace:
-[  215.583632]  <TASK>
-[  215.585745]  ? show_trace_log_lvl+0x1c4/0x2df
-[  215.590114]  ? show_trace_log_lvl+0x1c4/0x2df
-[  215.594497]  ? debug_dma_free_coherent+0x196/0x210
-[  215.599305]  ? check_unmap+0xa6f/0x2360
-[  215.603147]  ? __warn+0xca/0x1d0
-[  215.606391]  ? check_unmap+0xa6f/0x2360
-[  215.610237]  ? report_bug+0x1ef/0x370
-[  215.613921]  ? handle_bug+0x3c/0x70
-[  215.617423]  ? exc_invalid_op+0x14/0x50
-[  215.621269]  ? asm_exc_invalid_op+0x16/0x20
-[  215.625480]  ? check_unmap+0xa6f/0x2360
-[  215.629331]  ? mark_lock.part.0+0xca/0xa40
-[  215.633445]  debug_dma_free_coherent+0x196/0x210
-[  215.638079]  ? __pfx_debug_dma_free_coherent+0x10/0x10
-[  215.643242]  ? slab_free_freelist_hook+0x11d/0x1d0
-[  215.648060]  dma_free_attrs+0x6d/0x130
-[  215.651834]  aq_ring_free+0x193/0x290 [atlantic]
-[  215.656487]  aq_ptp_ring_free+0x67/0x110 [atlantic]
-...
-[  216.127540] ---[ end trace 6467e5964dd2640b ]---
-[  216.132160] DMA-API: Mapped at:
-[  216.132162]  debug_dma_alloc_coherent+0x66/0x2f0
-[  216.132165]  dma_alloc_attrs+0xf5/0x1b0
-[  216.132168]  aq_ring_hwts_rx_alloc+0x150/0x1f0 [atlantic]
-[  216.132193]  aq_ptp_ring_alloc+0x1bb/0x540 [atlantic]
-[  216.132213]  aq_nic_init+0x4a1/0x760 [atlantic]
+Instead of skipping the whole tests in such envs, increase the
+test resilience WRT very slow hosts: increase the inter-packets
+timeouts, avoid resetting the counters every second and finally
+disable reduce the background traffic noise.
 
-Fixes: 94ad94558b0f ("net: aquantia: add PTP rings infrastructure")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20240201094752.883026-1-ivecera@redhat.com
+Tested with:
+
+for I in $(seq 1 100); do
+	./tools/testing/selftests/kselftest_install/run_kselftest.sh \
+		-t net:udpgro_fwd.sh || exit -1
+done
+
+in a slow environment.
+
+Fixes: a062260a9d5f ("selftests: net: add UDP GRO forwarding self-tests")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/f4b6b11064a0d39182a9ae6a853abae3e9b4426a.1706812005.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ptp.c  |  4 ++--
- drivers/net/ethernet/aquantia/atlantic/aq_ring.c | 13 +++++++++++++
- drivers/net/ethernet/aquantia/atlantic/aq_ring.h |  1 +
- 3 files changed, 16 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/udpgro_fwd.sh     | 14 ++++++++++++--
+ tools/testing/selftests/net/udpgso_bench_rx.c |  2 +-
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
-index abd4832e4ed2..5acb3e16b567 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ptp.c
-@@ -993,7 +993,7 @@ int aq_ptp_ring_alloc(struct aq_nic_s *aq_nic)
- 	return 0;
+diff --git a/tools/testing/selftests/net/udpgro_fwd.sh b/tools/testing/selftests/net/udpgro_fwd.sh
+index d6b9c759043c..9cd5e885e91f 100755
+--- a/tools/testing/selftests/net/udpgro_fwd.sh
++++ b/tools/testing/selftests/net/udpgro_fwd.sh
+@@ -39,6 +39,10 @@ create_ns() {
+ 	for ns in $NS_SRC $NS_DST; do
+ 		ip netns add $ns
+ 		ip -n $ns link set dev lo up
++
++		# disable route solicitations to decrease 'noise' traffic
++		ip netns exec $ns sysctl -qw net.ipv6.conf.default.router_solicitations=0
++		ip netns exec $ns sysctl -qw net.ipv6.conf.all.router_solicitations=0
+ 	done
  
- err_exit_hwts_rx:
--	aq_ring_free(&aq_ptp->hwts_rx);
-+	aq_ring_hwts_rx_free(&aq_ptp->hwts_rx);
- err_exit_ptp_rx:
- 	aq_ring_free(&aq_ptp->ptp_rx);
- err_exit_ptp_tx:
-@@ -1011,7 +1011,7 @@ void aq_ptp_ring_free(struct aq_nic_s *aq_nic)
- 
- 	aq_ring_free(&aq_ptp->ptp_tx);
- 	aq_ring_free(&aq_ptp->ptp_rx);
--	aq_ring_free(&aq_ptp->hwts_rx);
-+	aq_ring_hwts_rx_free(&aq_ptp->hwts_rx);
- 
- 	aq_ptp_skb_ring_release(&aq_ptp->skb_ring);
- }
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-index cda8597b4e14..f7433abd6591 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -919,6 +919,19 @@ void aq_ring_free(struct aq_ring_s *self)
- 	}
+ 	ip link add name veth$SRC type veth peer name veth$DST
+@@ -80,6 +84,12 @@ create_vxlan_pair() {
+ 		create_vxlan_endpoint $BASE$ns veth$ns $BM_NET_V6$((3 - $ns)) vxlan6$ns 6
+ 		ip -n $BASE$ns addr add dev vxlan6$ns $OL_NET_V6$ns/24 nodad
+ 	done
++
++	# preload neighbur cache, do avoid some noisy traffic
++	local addr_dst=$(ip -j -n $BASE$DST link show dev vxlan6$DST  |jq -r '.[]["address"]')
++	local addr_src=$(ip -j -n $BASE$SRC link show dev vxlan6$SRC  |jq -r '.[]["address"]')
++	ip -n $BASE$DST neigh add dev vxlan6$DST lladdr $addr_src $OL_NET_V6$SRC
++	ip -n $BASE$SRC neigh add dev vxlan6$SRC lladdr $addr_dst $OL_NET_V6$DST
  }
  
-+void aq_ring_hwts_rx_free(struct aq_ring_s *self)
-+{
-+	if (!self)
-+		return;
-+
-+	if (self->dx_ring) {
-+		dma_free_coherent(aq_nic_get_dev(self->aq_nic),
-+				  self->size * self->dx_size + AQ_CFG_RXDS_DEF,
-+				  self->dx_ring, self->dx_ring_pa);
-+		self->dx_ring = NULL;
-+	}
-+}
-+
- unsigned int aq_ring_fill_stats_data(struct aq_ring_s *self, u64 *data)
- {
- 	unsigned int count;
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.h b/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
-index 52847310740a..d627ace850ff 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.h
-@@ -210,6 +210,7 @@ int aq_ring_rx_fill(struct aq_ring_s *self);
- int aq_ring_hwts_rx_alloc(struct aq_ring_s *self,
- 			  struct aq_nic_s *aq_nic, unsigned int idx,
- 			  unsigned int size, unsigned int dx_size);
-+void aq_ring_hwts_rx_free(struct aq_ring_s *self);
- void aq_ring_hwts_rx_clean(struct aq_ring_s *self, struct aq_nic_s *aq_nic);
+ is_ipv6() {
+@@ -119,7 +129,7 @@ run_test() {
+ 	# not enable GRO
+ 	ip netns exec $NS_DST $ipt -A INPUT -p udp --dport 4789
+ 	ip netns exec $NS_DST $ipt -A INPUT -p udp --dport 8000
+-	ip netns exec $NS_DST ./udpgso_bench_rx -C 1000 -R 10 -n 10 -l 1300 $rx_args &
++	ip netns exec $NS_DST ./udpgso_bench_rx -C 2000 -R 100 -n 10 -l 1300 $rx_args &
+ 	local spid=$!
+ 	wait_local_port_listen "$NS_DST" 8000 udp
+ 	ip netns exec $NS_SRC ./udpgso_bench_tx $family -M 1 -s 13000 -S 1300 -D $dst
+@@ -168,7 +178,7 @@ run_bench() {
+ 	# bind the sender and the receiver to different CPUs to try
+ 	# get reproducible results
+ 	ip netns exec $NS_DST bash -c "echo 2 > /sys/class/net/veth$DST/queues/rx-0/rps_cpus"
+-	ip netns exec $NS_DST taskset 0x2 ./udpgso_bench_rx -C 1000 -R 10  &
++	ip netns exec $NS_DST taskset 0x2 ./udpgso_bench_rx -C 2000 -R 100  &
+ 	local spid=$!
+ 	wait_local_port_listen "$NS_DST" 8000 udp
+ 	ip netns exec $NS_SRC taskset 0x1 ./udpgso_bench_tx $family -l 3 -S 1300 -D $dst
+diff --git a/tools/testing/selftests/net/udpgso_bench_rx.c b/tools/testing/selftests/net/udpgso_bench_rx.c
+index f35a924d4a30..1cbadd267c96 100644
+--- a/tools/testing/selftests/net/udpgso_bench_rx.c
++++ b/tools/testing/selftests/net/udpgso_bench_rx.c
+@@ -375,7 +375,7 @@ static void do_recv(void)
+ 			do_flush_udp(fd);
  
- unsigned int aq_ring_fill_stats_data(struct aq_ring_s *self, u64 *data);
+ 		tnow = gettimeofday_ms();
+-		if (tnow > treport) {
++		if (!cfg_expected_pkt_nr && tnow > treport) {
+ 			if (packets)
+ 				fprintf(stderr,
+ 					"%s rx: %6lu MB/s %8lu calls/s\n",
 -- 
 2.43.0
 
