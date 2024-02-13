@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348D85FF05;
-	Tue, 13 Feb 2024 17:34:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD836026B;
+	Tue, 13 Feb 2024 17:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845689; cv=none; b=HxBUXZS72PlKpe4qkcYm2RB2rLiv7l8e8SUPyIzAVwrLuzWT0nRJK6S5Zf+VMzQG1d2sDlNU1as+Z6BX87yJCLX2qN0PoGwcPQ1RuhjAadKcT3d6oODRLO2O23SXmPsI3MXYp0A7XLnlW+9PVxhoK3pqJYfT1qSTpBcBC8fIDVw=
+	t=1707845692; cv=none; b=r+jPLPeeXwv1jcRxOa8w7i9xZ5nPCCivTZMIJU/dmFexqehl1wSSfkDpQrnjgORmfXm/oTMSfN2Dk6fGDfTsJgydMiw2ApwXK7vXkugoNamPRXw7MlszJB56H5mjjEHV8l+HAbA0pmR4fpzEB4xrL2Sf7YEhN/DsYOWIge9o4EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845689; c=relaxed/simple;
-	bh=vt2xaN+67h1aBlqR+1Gob+CJIsA+raoGw5JbvumC4bg=;
+	s=arc-20240116; t=1707845692; c=relaxed/simple;
+	bh=L2MD9NCEGlgwmPtoRQ9JCJyYQ5AjyjIXbLf412IkTeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qpg0AyXEeciyjUPQLSr1X4HmX8Q34iB2e9BmHppjswYHqSTpqSqL7VjyhRnu7R6lXQp2uxufUvGQFOeI6ygl3sO9R6HUnlISi6McjKXxE3GcVESMi/oBHFJxxw07mcUvL432EIhM4Sx0qrqmwdMzZatwyJwGnS/9vk8hxQaksOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgVwIld2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lckQJ8nCaAwjolIClGaF/aDgsrA7x8st7rxuq3DM4NmiHw12azoGikLMuwJmS7JUAw77MhQsOUFHKKxgXoFhqAvt4DhxAXfco5SXPvh2ZWC6HbFW3qOLYYQaVndLXRc/6iDudyrdolPZhedTf9C8XCOMQ8ENY6Xqp+WfMrs81EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZ2nsJez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgVwIld2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF5AC433C7;
-	Tue, 13 Feb 2024 17:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZ2nsJez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAC3C433C7;
+	Tue, 13 Feb 2024 17:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845689;
-	bh=vt2xaN+67h1aBlqR+1Gob+CJIsA+raoGw5JbvumC4bg=;
+	s=korg; t=1707845692;
+	bh=L2MD9NCEGlgwmPtoRQ9JCJyYQ5AjyjIXbLf412IkTeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgVwIld26r9hbnWVJ7PsRfWgxDg+mclCEGc6TxiWB90LAGaKchXStjh9TNQNcLudU
-	 Id8VkaN8exA2W+OhXql2IYjwPFTvyG1l2zAHzOi8KZjtY/lZPwD6Z2CR4KSWvc/QmU
-	 xMd5O47hw1Q/4PiZJIMM/3W394gayp1ESytCct80=
+	b=lZ2nsJezwPWtpSgoJRXqxvnlu6yyZrEX/ZdnT/+NxsVgVwAuI740M29gt67/a6vqS
+	 uPUnNoJi6aTYjAZlIAErbBiDdGPUM5cWH9sxbC/MCrHNz6gSF4B7W72NA+KTT3Wa0R
+	 3uKCGQMbZvOXAgOUuP0bxNGV+BmY6ZKQjWPkUbj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Furong Xu <0x1207@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 022/124] net: stmmac: xgmac: fix handling of DPP safety error for DMA channels
-Date: Tue, 13 Feb 2024 18:20:44 +0100
-Message-ID: <20240213171854.378999933@linuxfoundation.org>
+Subject: [PATCH 6.7 031/124] netdevsim: avoid potential loop in nsim_dev_trap_report_work()
+Date: Tue, 13 Feb 2024 18:20:53 +0100
+Message-ID: <20240213171854.640696852@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,156 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Furong Xu <0x1207@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 46eba193d04f8bd717e525eb4110f3c46c12aec3 ]
+[ Upstream commit ba5e1272142d051dcc57ca1d3225ad8a089f9858 ]
 
-Commit 56e58d6c8a56 ("net: stmmac: Implement Safety Features in
-XGMAC core") checks and reports safety errors, but leaves the
-Data Path Parity Errors for each channel in DMA unhandled at all, lead to
-a storm of interrupt.
-Fix it by checking and clearing the DMA_DPP_Interrupt_Status register.
+Many syzbot reports include the following trace [1]
 
-Fixes: 56e58d6c8a56 ("net: stmmac: Implement Safety Features in XGMAC core")
-Signed-off-by: Furong Xu <0x1207@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+If nsim_dev_trap_report_work() can not grab the mutex,
+it should rearm itself at least one jiffie later.
+
+[1]
+Sending NMI from CPU 1 to CPUs 0:
+NMI backtrace for cpu 0
+CPU: 0 PID: 32383 Comm: kworker/0:2 Not tainted 6.8.0-rc2-syzkaller-00031-g861c0981648f #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
+Workqueue: events nsim_dev_trap_report_work
+ RIP: 0010:bytes_is_nonzero mm/kasan/generic.c:89 [inline]
+ RIP: 0010:memory_is_nonzero mm/kasan/generic.c:104 [inline]
+ RIP: 0010:memory_is_poisoned_n mm/kasan/generic.c:129 [inline]
+ RIP: 0010:memory_is_poisoned mm/kasan/generic.c:161 [inline]
+ RIP: 0010:check_region_inline mm/kasan/generic.c:180 [inline]
+ RIP: 0010:kasan_check_range+0x101/0x190 mm/kasan/generic.c:189
+Code: 07 49 39 d1 75 0a 45 3a 11 b8 01 00 00 00 7c 0b 44 89 c2 e8 21 ed ff ff 83 f0 01 5b 5d 41 5c c3 48 85 d2 74 4f 48 01 ea eb 09 <48> 83 c0 01 48 39 d0 74 41 80 38 00 74 f2 eb b6 41 bc 08 00 00 00
+RSP: 0018:ffffc90012dcf998 EFLAGS: 00000046
+RAX: fffffbfff258af1e RBX: fffffbfff258af1f RCX: ffffffff8168eda3
+RDX: fffffbfff258af1f RSI: 0000000000000004 RDI: ffffffff92c578f0
+RBP: fffffbfff258af1e R08: 0000000000000000 R09: fffffbfff258af1e
+R10: ffffffff92c578f3 R11: ffffffff8acbcbc0 R12: 0000000000000002
+R13: ffff88806db38400 R14: 1ffff920025b9f42 R15: ffffffff92c578e8
+FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000c00994e078 CR3: 000000002c250000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <NMI>
+ </NMI>
+ <TASK>
+  instrument_atomic_read include/linux/instrumented.h:68 [inline]
+  atomic_read include/linux/atomic/atomic-instrumented.h:32 [inline]
+  queued_spin_is_locked include/asm-generic/qspinlock.h:57 [inline]
+  debug_spin_unlock kernel/locking/spinlock_debug.c:101 [inline]
+  do_raw_spin_unlock+0x53/0x230 kernel/locking/spinlock_debug.c:141
+  __raw_spin_unlock_irqrestore include/linux/spinlock_api_smp.h:150 [inline]
+  _raw_spin_unlock_irqrestore+0x22/0x70 kernel/locking/spinlock.c:194
+  debug_object_activate+0x349/0x540 lib/debugobjects.c:726
+  debug_work_activate kernel/workqueue.c:578 [inline]
+  insert_work+0x30/0x230 kernel/workqueue.c:1650
+  __queue_work+0x62e/0x11d0 kernel/workqueue.c:1802
+  __queue_delayed_work+0x1bf/0x270 kernel/workqueue.c:1953
+  queue_delayed_work_on+0x106/0x130 kernel/workqueue.c:1989
+  queue_delayed_work include/linux/workqueue.h:563 [inline]
+  schedule_delayed_work include/linux/workqueue.h:677 [inline]
+  nsim_dev_trap_report_work+0x9c0/0xc80 drivers/net/netdevsim/dev.c:842
+  process_one_work+0x886/0x15d0 kernel/workqueue.c:2633
+  process_scheduled_works kernel/workqueue.c:2706 [inline]
+  worker_thread+0x8b9/0x1290 kernel/workqueue.c:2787
+  kthread+0x2c6/0x3a0 kernel/kthread.c:388
+  ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
+ </TASK>
+
+Fixes: 012ec02ae441 ("netdevsim: convert driver to use unlocked devlink API during init/fini")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20240201175324.3752746-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/common.h  |  1 +
- .../net/ethernet/stmicro/stmmac/dwxgmac2.h    |  3 +
- .../ethernet/stmicro/stmmac/dwxgmac2_core.c   | 57 ++++++++++++++++++-
- 3 files changed, 60 insertions(+), 1 deletion(-)
+ drivers/net/netdevsim/dev.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-index e3f650e88f82..588e44d57f29 100644
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -216,6 +216,7 @@ struct stmmac_safety_stats {
- 	unsigned long mac_errors[32];
- 	unsigned long mtl_errors[32];
- 	unsigned long dma_errors[32];
-+	unsigned long dma_dpp_errors[32];
- };
+diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
+index b4d3b9cde8bd..92a7a36b93ac 100644
+--- a/drivers/net/netdevsim/dev.c
++++ b/drivers/net/netdevsim/dev.c
+@@ -835,14 +835,14 @@ static void nsim_dev_trap_report_work(struct work_struct *work)
+ 				      trap_report_dw.work);
+ 	nsim_dev = nsim_trap_data->nsim_dev;
  
- /* Number of fields in Safety Stats */
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-index a4e8b498dea9..7d7133ef4994 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-@@ -319,6 +319,8 @@
- #define XGMAC_RXCEIE			BIT(4)
- #define XGMAC_TXCEIE			BIT(0)
- #define XGMAC_MTL_ECC_INT_STATUS	0x000010cc
-+#define XGMAC_MTL_DPP_CONTROL		0x000010e0
-+#define XGMAC_DDPP_DISABLE		BIT(0)
- #define XGMAC_MTL_TXQ_OPMODE(x)		(0x00001100 + (0x80 * (x)))
- #define XGMAC_TQS			GENMASK(25, 16)
- #define XGMAC_TQS_SHIFT			16
-@@ -401,6 +403,7 @@
- #define XGMAC_DCEIE			BIT(1)
- #define XGMAC_TCEIE			BIT(0)
- #define XGMAC_DMA_ECC_INT_STATUS	0x0000306c
-+#define XGMAC_DMA_DPP_INT_STATUS	0x00003074
- #define XGMAC_DMA_CH_CONTROL(x)		(0x00003100 + (0x80 * (x)))
- #define XGMAC_SPH			BIT(24)
- #define XGMAC_PBLx8			BIT(16)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-index a74e71db79f9..e7eccc0c406f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -830,6 +830,43 @@ static const struct dwxgmac3_error_desc dwxgmac3_dma_errors[32]= {
- 	{ false, "UNKNOWN", "Unknown Error" }, /* 31 */
- };
- 
-+static const char * const dpp_rx_err = "Read Rx Descriptor Parity checker Error";
-+static const char * const dpp_tx_err = "Read Tx Descriptor Parity checker Error";
-+static const struct dwxgmac3_error_desc dwxgmac3_dma_dpp_errors[32] = {
-+	{ true, "TDPES0", dpp_tx_err },
-+	{ true, "TDPES1", dpp_tx_err },
-+	{ true, "TDPES2", dpp_tx_err },
-+	{ true, "TDPES3", dpp_tx_err },
-+	{ true, "TDPES4", dpp_tx_err },
-+	{ true, "TDPES5", dpp_tx_err },
-+	{ true, "TDPES6", dpp_tx_err },
-+	{ true, "TDPES7", dpp_tx_err },
-+	{ true, "TDPES8", dpp_tx_err },
-+	{ true, "TDPES9", dpp_tx_err },
-+	{ true, "TDPES10", dpp_tx_err },
-+	{ true, "TDPES11", dpp_tx_err },
-+	{ true, "TDPES12", dpp_tx_err },
-+	{ true, "TDPES13", dpp_tx_err },
-+	{ true, "TDPES14", dpp_tx_err },
-+	{ true, "TDPES15", dpp_tx_err },
-+	{ true, "RDPES0", dpp_rx_err },
-+	{ true, "RDPES1", dpp_rx_err },
-+	{ true, "RDPES2", dpp_rx_err },
-+	{ true, "RDPES3", dpp_rx_err },
-+	{ true, "RDPES4", dpp_rx_err },
-+	{ true, "RDPES5", dpp_rx_err },
-+	{ true, "RDPES6", dpp_rx_err },
-+	{ true, "RDPES7", dpp_rx_err },
-+	{ true, "RDPES8", dpp_rx_err },
-+	{ true, "RDPES9", dpp_rx_err },
-+	{ true, "RDPES10", dpp_rx_err },
-+	{ true, "RDPES11", dpp_rx_err },
-+	{ true, "RDPES12", dpp_rx_err },
-+	{ true, "RDPES13", dpp_rx_err },
-+	{ true, "RDPES14", dpp_rx_err },
-+	{ true, "RDPES15", dpp_rx_err },
-+};
-+
- static void dwxgmac3_handle_dma_err(struct net_device *ndev,
- 				    void __iomem *ioaddr, bool correctable,
- 				    struct stmmac_safety_stats *stats)
-@@ -841,6 +878,13 @@ static void dwxgmac3_handle_dma_err(struct net_device *ndev,
- 
- 	dwxgmac3_log_error(ndev, value, correctable, "DMA",
- 			   dwxgmac3_dma_errors, STAT_OFF(dma_errors), stats);
-+
-+	value = readl(ioaddr + XGMAC_DMA_DPP_INT_STATUS);
-+	writel(value, ioaddr + XGMAC_DMA_DPP_INT_STATUS);
-+
-+	dwxgmac3_log_error(ndev, value, false, "DMA_DPP",
-+			   dwxgmac3_dma_dpp_errors,
-+			   STAT_OFF(dma_dpp_errors), stats);
- }
- 
- static int
-@@ -881,6 +925,12 @@ dwxgmac3_safety_feat_config(void __iomem *ioaddr, unsigned int asp,
- 	value |= XGMAC_TMOUTEN; /* FSM Timeout Feature */
- 	writel(value, ioaddr + XGMAC_MAC_FSM_CONTROL);
- 
-+	/* 5. Enable Data Path Parity Protection */
-+	value = readl(ioaddr + XGMAC_MTL_DPP_CONTROL);
-+	/* already enabled by default, explicit enable it again */
-+	value &= ~XGMAC_DDPP_DISABLE;
-+	writel(value, ioaddr + XGMAC_MTL_DPP_CONTROL);
-+
- 	return 0;
- }
- 
-@@ -914,7 +964,11 @@ static int dwxgmac3_safety_feat_irq_status(struct net_device *ndev,
- 		ret |= !corr;
+-	/* For each running port and enabled packet trap, generate a UDP
+-	 * packet with a random 5-tuple and report it.
+-	 */
+ 	if (!devl_trylock(priv_to_devlink(nsim_dev))) {
+-		schedule_delayed_work(&nsim_dev->trap_data->trap_report_dw, 0);
++		schedule_delayed_work(&nsim_dev->trap_data->trap_report_dw, 1);
+ 		return;
  	}
  
--	err = dma & (XGMAC_DEUIS | XGMAC_DECIS);
-+	/* DMA_DPP_Interrupt_Status is indicated by MCSIS bit in
-+	 * DMA_Safety_Interrupt_Status, so we handle DMA Data Path
-+	 * Parity Errors here
++	/* For each running port and enabled packet trap, generate a UDP
++	 * packet with a random 5-tuple and report it.
 +	 */
-+	err = dma & (XGMAC_DEUIS | XGMAC_DECIS | XGMAC_MCSIS);
- 	corr = dma & XGMAC_DECIS;
- 	if (err) {
- 		dwxgmac3_handle_dma_err(ndev, ioaddr, corr, stats);
-@@ -930,6 +984,7 @@ static const struct dwxgmac3_error {
- 	{ dwxgmac3_mac_errors },
- 	{ dwxgmac3_mtl_errors },
- 	{ dwxgmac3_dma_errors },
-+	{ dwxgmac3_dma_dpp_errors },
- };
- 
- static int dwxgmac3_safety_feat_dump(struct stmmac_safety_stats *stats,
+ 	list_for_each_entry(nsim_dev_port, &nsim_dev->port_list, list) {
+ 		if (!netif_running(nsim_dev_port->ns->netdev))
+ 			continue;
 -- 
 2.43.0
 
