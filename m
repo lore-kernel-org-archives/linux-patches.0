@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134BC5FB94;
-	Tue, 13 Feb 2024 17:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4DB5FF1E;
+	Tue, 13 Feb 2024 17:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845671; cv=none; b=QS2n7ZQAHNt7I6uVi3Yqh8SZCF51ZBb8nbcyOlap56QeTpi4xCCumWZ3WGMVlfz7Uwx3zI7OOJG3ZUhbLJKwcJcd4dRcISS5RYtjI+177XYG1PFbsIquhLYUFumbei/BUf0I+//iAhKDm18CTC2R53nWua4VhLfAlbs97MIKMZo=
+	t=1707845674; cv=none; b=NJrXwnKzs2Jcm4o70BoeL+ItDI52ac2HFy/9DB0DV+EmH6qNJ9DvQXolLAQeJtvjJnl5a2/mEoDhKISpA4LePZwkl5bznTpcANiQadppHG3P8R3zWNrNDwB/cSqKTpawxO8QdiCc2XX4diA039Dl1dKkLZTIXeQaH4xxIoIB1cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845671; c=relaxed/simple;
-	bh=T1x4CsDJPPFQgGuw+N3EAOpNajp4grN5F36KvZ8qZ9s=;
+	s=arc-20240116; t=1707845674; c=relaxed/simple;
+	bh=LT8ivqJ3leH3LCQaD0NIX1nsrprmlYAKV6x6TfhJp0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+5LUGKIoC3UpbBTX4Vf09poN/whcLUc/f0GValPDBkQPYayOdzQ3g8/4DCfeoDlOPn1RuVtZV+JzPQMpEuQ8WWK1WV+Cc292HiLJhntg+Zab99g/dQqYhCdGaXwN29/fORx1TKyZ8hMviuOxj6kuLfJUA95IcigYNjZj6U0Qzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDLz9Ypm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ha05S9zRazYeO+vh8PBUNy8CJwCE1PlbYwKhy+fJvo5MANJ/aMNDiyRLpMsLklFGsigY9JTuGVDqcGAqbFyD/Lvov3aB0SZcM5Zsv+77T3CVwZZxCPg5Sn8pYueh+eplkmmRgVew7EUgyT20s32umOwhaw/Gg1juzG5BKeaqSBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZBLQuhI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDLz9Ypm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C28FC433C7;
-	Tue, 13 Feb 2024 17:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZBLQuhI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94293C433C7;
+	Tue, 13 Feb 2024 17:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845670;
-	bh=T1x4CsDJPPFQgGuw+N3EAOpNajp4grN5F36KvZ8qZ9s=;
+	s=korg; t=1707845674;
+	bh=LT8ivqJ3leH3LCQaD0NIX1nsrprmlYAKV6x6TfhJp0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDLz9YpmzUqny767ClanaC8X3zLVgIJhZW3g8JssHgXPN2/v48yY3P8Er1YLlVKw8
-	 PR+7oyf2uYl2dwempaWAaLaBQiZWALyQ0KnI6A5a33cSji6yzdwmQbR5vacoRhLjJF
-	 3Q4HHGkmWZjTGK+sAnYTjq/Wzqi2QBnHOYO1vZx0=
+	b=aZBLQuhI7Z+zhsceW7szo+JM016uWkeFFiRx8McUy3OxYtgFSHanuerkmjJO8h3H5
+	 iK1sJTmzRWpeqy5S2alz1TEHwvqd8yzvkOxQ6UbImAYYisZk9yC77A8nVeJ5HyHQpn
+	 ocs7Fcpcc1s8vMhV1ypuHJa9+v82ITwRI2nL0LmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mantas Pucka <mantas@8devices.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 007/124] phy: qcom-qmp-usb: fix serdes init sequence for IPQ6018
-Date: Tue, 13 Feb 2024 18:20:29 +0100
-Message-ID: <20240213171853.944332886@linuxfoundation.org>
+Subject: [PATCH 6.7 008/124] phy: renesas: rcar-gen3-usb2: Fix returning wrong error code
+Date: Tue, 13 Feb 2024 18:20:30 +0100
+Message-ID: <20240213171853.973961686@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,64 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mantas Pucka <mantas@8devices.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 62a5df451ab911421da96655fcc4d1e269ff6e2f ]
+[ Upstream commit 249abaf3bf0dd07f5ddebbb2fe2e8f4d675f074e ]
 
-Commit 23fd679249df ("phy: qcom-qmp: add USB3 PHY support for IPQ6018")
-noted that IPQ6018 init is identical to IPQ8074. Yet downstream uses
-separate serdes init sequence for IPQ6018. Since already existing IPQ9574
-serdes init sequence is identical, just reuse it and fix failing USB3 mode
-in IPQ6018.
+Even if device_create_file() returns error code,
+rcar_gen3_phy_usb2_probe() will return zero because the "ret" is
+variable shadowing.
 
-Fixes: 23fd679249df ("phy: qcom-qmp: add USB3 PHY support for IPQ6018")
-Signed-off-by: Mantas Pucka <mantas@8devices.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/1706026160-17520-3-git-send-email-mantas@8devices.com
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202312161021.gOLDl48K-lkp@intel.com/
+Fixes: 441a681b8843 ("phy: rcar-gen3-usb2: fix implementation for runtime PM")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20240105093703.3359949-1-yoshihiro.shimoda.uh@renesas.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 896a37c1e592..a3719719e2e0 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1325,6 +1325,24 @@ static const struct qmp_usb_offsets qmp_usb_offsets_v5 = {
- 	.rx		= 0x1000,
- };
- 
-+static const struct qmp_phy_cfg ipq6018_usb3phy_cfg = {
-+	.lanes			= 1,
-+
-+	.offsets		= &qmp_usb_offsets_ipq8074,
-+
-+	.serdes_tbl		= ipq9574_usb3_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(ipq9574_usb3_serdes_tbl),
-+	.tx_tbl			= msm8996_usb3_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(msm8996_usb3_tx_tbl),
-+	.rx_tbl			= ipq8074_usb3_rx_tbl,
-+	.rx_tbl_num		= ARRAY_SIZE(ipq8074_usb3_rx_tbl),
-+	.pcs_tbl		= ipq8074_usb3_pcs_tbl,
-+	.pcs_tbl_num		= ARRAY_SIZE(ipq8074_usb3_pcs_tbl),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= qmp_v3_usb3phy_regs_layout,
-+};
-+
- static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
- 	.lanes			= 1,
- 
-@@ -2233,7 +2251,7 @@ static int qmp_usb_probe(struct platform_device *pdev)
- static const struct of_device_id qmp_usb_of_match_table[] = {
- 	{
- 		.compatible = "qcom,ipq6018-qmp-usb3-phy",
--		.data = &ipq8074_usb3phy_cfg,
-+		.data = &ipq6018_usb3phy_cfg,
- 	}, {
- 		.compatible = "qcom,ipq8074-qmp-usb3-phy",
- 		.data = &ipq8074_usb3phy_cfg,
+diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+index e53eace7c91e..6387c0d34c55 100644
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -673,8 +673,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 	channel->irq = platform_get_irq_optional(pdev, 0);
+ 	channel->dr_mode = rcar_gen3_get_dr_mode(dev->of_node);
+ 	if (channel->dr_mode != USB_DR_MODE_UNKNOWN) {
+-		int ret;
+-
+ 		channel->is_otg_channel = true;
+ 		channel->uses_otg_pins = !of_property_read_bool(dev->of_node,
+ 							"renesas,no-otg-pins");
+@@ -738,8 +736,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 		ret = PTR_ERR(provider);
+ 		goto error;
+ 	} else if (channel->is_otg_channel) {
+-		int ret;
+-
+ 		ret = device_create_file(dev, &dev_attr_role);
+ 		if (ret < 0)
+ 			goto error;
 -- 
 2.43.0
 
