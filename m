@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4262A93C;
-	Tue, 13 Feb 2024 17:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DFC6027A;
+	Tue, 13 Feb 2024 17:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845840; cv=none; b=XKKBGxfo1Qwk6tHXXw/IxqDUxDo67NEAh9EF6BFqzEjKDFYUgGJxzYH45olLQhUdGA79qo0hPL0Hy8pc7jUHBmbH1zZWSi8Cfm/ftav3sgxDMoYiy9ExBu32mwdNi/iqA3ul80Dk2P+w/gCmsjGaO/1KsYR8us98aDdkTqUhYrc=
+	t=1707845843; cv=none; b=NVMZqrIoO/bg/LAJPRv/tZBthr8juglIkJz1c/EE1RKPsCesfLg8K66w939aqXmnPcq5XFvYl3+Mu+tCvPBBtJ0dmPiDWnSUd0MjuseSylwfgbcX7XGy7+F20TivzeprvGeE1x56DJkRDkTCh/Ea9p/pMYLUXJNd5M7ZUw1hONs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845840; c=relaxed/simple;
-	bh=1Mw0Mmsj/7ldoPtsQ0Cjhr9IgMH7zn1KiyIhIVn8y10=;
+	s=arc-20240116; t=1707845843; c=relaxed/simple;
+	bh=mjcgVbvOCu5a7q9mSDtJ2SXMfOSFUOaciUDbny4Ab+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNxeIjcqNd5yZM3aq+wpKfH1fDL+eWONOry8W8dECe93272d6mowN6UeJqwi5odtAtDwoNDNONvluhW53/49eQWyH9sR1tI6lvFYijYsKprB2UzeJosXQQpQ92ZiK6STjVZhIB2Hj/5I13ONR8TzI3LwX6CwXqYeAnGm7fQGXCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IX6f0s3w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ulvsDI22RCKtzGoTFV+0mMFFgBtmRnSjtycE//EZlYFx9n3wlVjrZNk9facIg8euljuxaCmdSUPRySuqQf0B8zzvLePpDZHgnQWuFZkWfwtDrie2ZlgSAZcxJPI1j2BWpaEEKaccd0ITmJBSXJWjiXPcpy8h0AMdaVy0r3/zdu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iqagxk5C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IX6f0s3w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F21C433F1;
-	Tue, 13 Feb 2024 17:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iqagxk5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717D4C433C7;
+	Tue, 13 Feb 2024 17:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845839;
-	bh=1Mw0Mmsj/7ldoPtsQ0Cjhr9IgMH7zn1KiyIhIVn8y10=;
+	s=korg; t=1707845842;
+	bh=mjcgVbvOCu5a7q9mSDtJ2SXMfOSFUOaciUDbny4Ab+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IX6f0s3w/iyNpTtt6cEa1j8aYiJMNZEqfWZrhkxqfBU9jSk0dY0xPnQA8SjMkw3Zc
-	 EW75+eyIiF83tqRp0+013Qhe95cdt4QFYp1NfmVpGIjN3gSRvhLrMpt6QQJ5jlcT0c
-	 W57/xJ17ffW2DWSh0ZM2hYjPX9viDEdCFKc6yd6w=
+	b=Iqagxk5CDDWla7RrhE0ofanvye4HcM9JjDVqrQINvVZ0HTtlkgbZFAWi10cVD79/5
+	 49hyBiQjzeE6hmYJBKk17RppwNV2A5ErYxaiErMLsQ8gFSNDYkj+rew4CDzUNpuaU9
+	 RrHhdhJc6/kwEoogm/ATqFhIZaABSn8C2dRsijKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+5142b87a9abc510e14fa@syzkaller.appspotmail.com
-Subject: [PATCH 6.7 054/124] tipc: Check the bearer type before calling tipc_udp_nl_bearer_add()
-Date: Tue, 13 Feb 2024 18:21:16 +0100
-Message-ID: <20240213171855.318529920@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 072/124] fs/ntfs3: Fix an NULL dereference bug
+Date: Tue, 13 Feb 2024 18:21:34 +0100
+Message-ID: <20240213171855.842078148@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -53,78 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 3871aa01e1a779d866fa9dfdd5a836f342f4eb87 ]
+[ Upstream commit b2dd7b953c25ffd5912dda17e980e7168bebcf6c ]
 
-syzbot reported the following general protection fault [1]:
+The issue here is when this is called from ntfs_load_attr_list().  The
+"size" comes from le32_to_cpu(attr->res.data_size) so it can't overflow
+on a 64bit systems but on 32bit systems the "+ 1023" can overflow and
+the result is zero.  This means that the kmalloc will succeed by
+returning the ZERO_SIZE_PTR and then the memcpy() will crash with an
+Oops on the next line.
 
-general protection fault, probably for non-canonical address 0xdffffc0000000010: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000080-0x0000000000000087]
-...
-RIP: 0010:tipc_udp_is_known_peer+0x9c/0x250 net/tipc/udp_media.c:291
-...
-Call Trace:
- <TASK>
- tipc_udp_nl_bearer_add+0x212/0x2f0 net/tipc/udp_media.c:646
- tipc_nl_bearer_add+0x21e/0x360 net/tipc/bearer.c:1089
- genl_family_rcv_msg_doit+0x1fc/0x2e0 net/netlink/genetlink.c:972
- genl_family_rcv_msg net/netlink/genetlink.c:1052 [inline]
- genl_rcv_msg+0x561/0x800 net/netlink/genetlink.c:1067
- netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2544
- genl_rcv+0x28/0x40 net/netlink/genetlink.c:1076
- netlink_unicast_kernel net/netlink/af_netlink.c:1341 [inline]
- netlink_unicast+0x53b/0x810 net/netlink/af_netlink.c:1367
- netlink_sendmsg+0x8b7/0xd70 net/netlink/af_netlink.c:1909
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0xd5/0x180 net/socket.c:745
- ____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
- ___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
- __sys_sendmsg+0x117/0x1e0 net/socket.c:2667
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-The cause of this issue is that when tipc_nl_bearer_add() is called with
-the TIPC_NLA_BEARER_UDP_OPTS attribute, tipc_udp_nl_bearer_add() is called
-even if the bearer is not UDP.
-
-tipc_udp_is_known_peer() called by tipc_udp_nl_bearer_add() assumes that
-the media_ptr field of the tipc_bearer has an udp_bearer type object, so
-the function goes crazy for non-UDP bearers.
-
-This patch fixes the issue by checking the bearer type before calling
-tipc_udp_nl_bearer_add() in tipc_nl_bearer_add().
-
-Fixes: ef20cd4dd163 ("tipc: introduce UDP replicast")
-Reported-and-tested-by: syzbot+5142b87a9abc510e14fa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5142b87a9abc510e14fa [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
-Link: https://lore.kernel.org/r/20240131152310.4089541-1-syoshida@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ntfs3/ntfs_fs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 2cde375477e3..878415c43527 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -1086,6 +1086,12 @@ int tipc_nl_bearer_add(struct sk_buff *skb, struct genl_info *info)
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index f6706143d14b..a46d30b84bf3 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -473,7 +473,7 @@ bool al_delete_le(struct ntfs_inode *ni, enum ATTR_TYPE type, CLST vcn,
+ int al_update(struct ntfs_inode *ni, int sync);
+ static inline size_t al_aligned(size_t size)
+ {
+-	return (size + 1023) & ~(size_t)1023;
++	return size_add(size, 1023) & ~(size_t)1023;
+ }
  
- #ifdef CONFIG_TIPC_MEDIA_UDP
- 	if (attrs[TIPC_NLA_BEARER_UDP_OPTS]) {
-+		if (b->media->type_id != TIPC_MEDIA_TYPE_UDP) {
-+			rtnl_unlock();
-+			NL_SET_ERR_MSG(info->extack, "UDP option is unsupported");
-+			return -EINVAL;
-+		}
-+
- 		err = tipc_udp_nl_bearer_add(b,
- 					     attrs[TIPC_NLA_BEARER_UDP_OPTS]);
- 		if (err) {
+ /* Globals from bitfunc.c */
 -- 
 2.43.0
 
