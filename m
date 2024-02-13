@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C743E5F56B;
-	Tue, 13 Feb 2024 17:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24A35F56B;
+	Tue, 13 Feb 2024 17:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845804; cv=none; b=tdviCAupsFwHj4CUjtJdONq0fHF2CCuasrmooyYPVkHsddNsdPH3GhiOdzxPRKrTWNWqSqtvqyp8OzA70qec533MXnapmiQX4J94c1LB0jbx+IoMmLAeOUUrqgy4zZWaRnOTVjy5V6+YPtfbBro8PzXe1Rqs+rCH/RQ1U7PPimA=
+	t=1707845808; cv=none; b=Yg5dqhK/gYMt4NUF2mbDCkqvvZ+vKQ4QJ9wlmJa3EghFXdH2qGLqYlaNbaXPEVCL6FXTcBQOhnsoPDyD2C8UJ5qxO9Ib7ZI9S32/YOOXxv8NuQzHc6UEI3IcVhZ81P96gAnUVi1ElQRbfxvKF898MyAmmICF632/vhnIFR6/M+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845804; c=relaxed/simple;
-	bh=Jrg+Wu2wXsdf6fj3lADd4LXy3y0bjk/MOnCsn4wiTTQ=;
+	s=arc-20240116; t=1707845808; c=relaxed/simple;
+	bh=m/b/5mzAHkAT8uQxxTDm3VVj7smfkmmktujzT8GCQVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5+qzWCT09NZIF17JyvzWefhY2815ZeUibw1Hy/nhnCEFBCopXoKcNt1tcLh62QDG+R9YuwujboVmxYAMg7Bcefx10fumViUGqkPmUacn40PExT7jeaf3ti7FtsJh/aE/nHRSvmkklad7TlOjPGxgrRPPmrlAQgJLwub53qXV/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7dDeMkq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XBkjN7V4p/z416q7FPtHPEVTdz7jp3aktM5tDFGMnnCSq5P0n1QHqGSZUBIedonNpIvzX2FALJKpmlYRPWxxkQUXt4jJk6eQFFFg1B+rF8tewdrQK23WgwIFEHnHSZm1meemq7TFlpSUxIk6kRtA7pYkCGrOnKw/QVaIIFuHDx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVEAVRtj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7dDeMkq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C07C433F1;
-	Tue, 13 Feb 2024 17:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVEAVRtj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2D0C433F1;
+	Tue, 13 Feb 2024 17:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845804;
-	bh=Jrg+Wu2wXsdf6fj3lADd4LXy3y0bjk/MOnCsn4wiTTQ=;
+	s=korg; t=1707845807;
+	bh=m/b/5mzAHkAT8uQxxTDm3VVj7smfkmmktujzT8GCQVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H7dDeMkq1Bg3NKlsOXwUXOs+/OZHkPidbZbqsNfAswdvgsYN+fyYm2olOwPehZt4T
-	 VR4xmuGa+CV0AUl6T+M03wQWnfzkYFhj4gJpSAZk0rM25z2CLW0wcK7O7ZvO8TRDhJ
-	 d7ZsTXs4bJbJacF/MHxjYC7qL3HIGtcpwznmfpCw=
+	b=LVEAVRtj37lg5OWtnd/fAtGreWOzKGP+ZSBjYNPlh0izf/AaxqCwZS1RtMq3C5ZQ2
+	 7ncIdAVsq8XFG9OeeS4iKhNUINy/W2zDaE59IA23OR9WAysvd97YMd0Ez/G5EFhSry
+	 NEegTKcenisj7QQq3lKnCq5DGpnthP05jsTXTPA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yongqiang Sun <yongqiang.sun@amd.com>,
+	Anthony Koo <Anthony.Koo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 053/124] selftests: net: let big_tcp test cope with slow env
-Date: Tue, 13 Feb 2024 18:21:15 +0100
-Message-ID: <20240213171855.289076798@linuxfoundation.org>
+Subject: [PATCH 6.7 062/124] drm/amd/display: Fix panel_cntl could be null in dcn21_set_backlight_level()
+Date: Tue, 13 Feb 2024 18:21:24 +0100
+Message-ID: <20240213171855.548369095@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -53,47 +55,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit a19747c3b9bf6476cc36d0a3a5ef0ff92999169e ]
+[ Upstream commit e96fddb32931d007db12b1fce9b5e8e4c080401b ]
 
-In very slow environments, most big TCP cases including
-segmentation and reassembly of big TCP packets have a good
-chance to fail: by default the TCP client uses write size
-well below 64K. If the host is low enough autocorking is
-unable to build real big TCP packets.
+'panel_cntl' structure used to control the display panel could be null,
+dereferencing it could lead to a null pointer access.
 
-Address the issue using much larger write operations.
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn21/dcn21_hwseq.c:269 dcn21_set_backlight_level() error: we previously assumed 'panel_cntl' could be null (see line 250)
 
-Note that is hard to observe the issue without an extremely
-slow and/or overloaded environment; reduce the TCP transfer
-time to allow for much easier/faster reproducibility.
-
-Fixes: 6bb382bcf742 ("selftests: add a selftest for big tcp")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 474ac4a875ca ("drm/amd/display: Implement some asic specific abm call backs.")
+Cc: Yongqiang Sun <yongqiang.sun@amd.com>
+Cc: Anthony Koo <Anthony.Koo@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Anthony Koo <Anthony.Koo@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/big_tcp.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../amd/display/dc/hwss/dcn21/dcn21_hwseq.c   | 39 ++++++++++---------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/tools/testing/selftests/net/big_tcp.sh b/tools/testing/selftests/net/big_tcp.sh
-index cde9a91c4797..2db9d15cd45f 100755
---- a/tools/testing/selftests/net/big_tcp.sh
-+++ b/tools/testing/selftests/net/big_tcp.sh
-@@ -122,7 +122,9 @@ do_netperf() {
- 	local netns=$1
- 
- 	[ "$NF" = "6" ] && serip=$SERVER_IP6
--	ip net exec $netns netperf -$NF -t TCP_STREAM -H $serip 2>&1 >/dev/null
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn21/dcn21_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn21/dcn21_hwseq.c
+index 8e88dcaf88f5..a9cd39f77360 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn21/dcn21_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn21/dcn21_hwseq.c
+@@ -237,34 +237,35 @@ bool dcn21_set_backlight_level(struct pipe_ctx *pipe_ctx,
+ {
+ 	struct dc_context *dc = pipe_ctx->stream->ctx;
+ 	struct abm *abm = pipe_ctx->stream_res.abm;
++	struct timing_generator *tg = pipe_ctx->stream_res.tg;
+ 	struct panel_cntl *panel_cntl = pipe_ctx->stream->link->panel_cntl;
++	uint32_t otg_inst;
 +
-+	# use large write to be sure to generate big tcp packets
-+	ip net exec $netns netperf -$NF -t TCP_STREAM -l 1 -H $serip -- -m 262144 2>&1 >/dev/null
- }
++	if (!abm && !tg && !panel_cntl)
++		return false;
++
++	otg_inst = tg->inst;
  
- do_test() {
+ 	if (dc->dc->res_pool->dmcu) {
+ 		dce110_set_backlight_level(pipe_ctx, backlight_pwm_u16_16, frame_ramp);
+ 		return true;
+ 	}
+ 
+-	if (abm != NULL) {
+-		uint32_t otg_inst = pipe_ctx->stream_res.tg->inst;
+-
+-		if (abm && panel_cntl) {
+-			if (abm->funcs && abm->funcs->set_pipe_ex) {
+-				abm->funcs->set_pipe_ex(abm,
+-						otg_inst,
+-						SET_ABM_PIPE_NORMAL,
+-						panel_cntl->inst,
+-						panel_cntl->pwrseq_inst);
+-			} else {
+-					dmub_abm_set_pipe(abm,
+-							otg_inst,
+-							SET_ABM_PIPE_NORMAL,
+-							panel_cntl->inst,
+-							panel_cntl->pwrseq_inst);
+-			}
+-		}
++	if (abm->funcs && abm->funcs->set_pipe_ex) {
++		abm->funcs->set_pipe_ex(abm,
++					otg_inst,
++					SET_ABM_PIPE_NORMAL,
++					panel_cntl->inst,
++					panel_cntl->pwrseq_inst);
++	} else {
++		dmub_abm_set_pipe(abm,
++				  otg_inst,
++				  SET_ABM_PIPE_NORMAL,
++				  panel_cntl->inst,
++				  panel_cntl->pwrseq_inst);
+ 	}
+ 
+-	if (abm && abm->funcs && abm->funcs->set_backlight_level_pwm)
++	if (abm->funcs && abm->funcs->set_backlight_level_pwm)
+ 		abm->funcs->set_backlight_level_pwm(abm, backlight_pwm_u16_16,
+ 			frame_ramp, 0, panel_cntl->inst);
+ 	else
 -- 
 2.43.0
 
