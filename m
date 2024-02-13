@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5707D5FF0C;
-	Tue, 13 Feb 2024 17:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981E45FF0A;
+	Tue, 13 Feb 2024 17:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845488; cv=none; b=vDOiX3R2PMHYCNTgx2eb6CHMa6tEa4+Y7FMMgf0ldzLe3qpETlSCrjfZ8aWNTZRXTOz7hJDw7111+XMtYGLVkrDN4TgVbr8KaseasJzLK7qU6t2fNHNZjcRlpXGMD6GPPaMHi5vWTT2eVQey/9PHDakObQJCdkupY9VTRrRgSgk=
+	t=1707845495; cv=none; b=hyQV+JPVqHlak58iMb5/kMY3yh9bpEn4CwLnWOscqezScyciasDImwHSmLFV/nkODLkIIhM3PcX5gtf/dqlabV/lk9PeGevizOJAu//TOPRYjyhD3sTqkAPX98KZweefO9PTsUHOI6D5C0k8PuOtHP8UlWZT4xjxl8sOuek9CEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845488; c=relaxed/simple;
-	bh=lzrTaNbcS/oVZZc4e2Vx4tK0RdZ6TwLXvTQi277+J2U=;
+	s=arc-20240116; t=1707845495; c=relaxed/simple;
+	bh=3tSHqSU+kLM19rQ0N6CpIWLRYMHB24LHK8mAaF+LJ30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPx2VZwLc88MYV3+8bzhTNBmrUWR+lYYgZUceRyn/TQKpRvmFjFGcGRVH1myF7XXx/lbPYim2Dp8/lXgB3fxxmpylO1QUptcAHEm5lgdyVa5Gu2VXAg6NVH111kWIPWTHjub5MP7Hdq2bvBr1XadcSlkm6d7Gv1MRkAudUgBtSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcXWumLY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpKYh+MAf6FBrXymMuhv2mGSZMvElVWS1uC91PwIRTCWi1zl7zGbLXWB7VwiYyEkFfoFMi6VbuA4wBpM/SPWzuxqe70hA7IEo/78wuLZOCiSlDmRcqc2kVpjZubqpY5wZ4Ei7pQOAY1GkzgOfsF2aoJ1sOsb4lmXM7qHbqJTSqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/O/XDEe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcXWumLY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB3DC433F1;
-	Tue, 13 Feb 2024 17:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/O/XDEe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0223C433F1;
+	Tue, 13 Feb 2024 17:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845487;
-	bh=lzrTaNbcS/oVZZc4e2Vx4tK0RdZ6TwLXvTQi277+J2U=;
+	s=korg; t=1707845495;
+	bh=3tSHqSU+kLM19rQ0N6CpIWLRYMHB24LHK8mAaF+LJ30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcXWumLYMiGJqy5VSmgG1pOtd7FasHjCafstm2U57n1UWMJFdOPpO9dPfRUaSfK++
-	 wTBf4pi59y7qyAz0gUIOFlnbiDKps1pML77vRGLUDVmu7loKretSxBkOQ/Tyo7caIk
-	 xSTKKbXn6agnFTd6CyOn8uBRnk1S8dmo0IxHEXFc=
+	b=z/O/XDEeu+zmOwyhoO1olEhg9MOAP6QJ8jF3MHkcwpB8GJ46jNCvurH0RYL26sZI1
+	 r17VaojRb20d11h0NBg9mVUdJqhtSoiLEwyqV/Z2skkd5f/czpSPc4jo3ClSRZ3JCW
+	 1w3H/eoxQOHZ8k1uMFSt62lKnxxQlnQPc7DJq5sM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/121] riscv: Flush the tlb when a page directory is freed
-Date: Tue, 13 Feb 2024 18:21:42 +0100
-Message-ID: <20240213171855.706765912@linuxfoundation.org>
+Subject: [PATCH 6.6 094/121] libceph: rename read_sparse_msg_*() to read_partial_sparse_msg_*()
+Date: Tue, 13 Feb 2024 18:21:43 +0100
+Message-ID: <20240213171855.736007006@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,36 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit 97cf301fa42e8ea6e0a24de97bc0abcdc87d9504 ]
+[ Upstream commit ee97302fbc0c98a25732d736fc73aaf4d62c4128 ]
 
-The riscv privileged specification mandates to flush the TLB whenever a
-page directory is modified, so add that to tlb_flush().
+These functions are supposed to behave like other read_partial_*()
+handlers: the contract with messenger v1 is that the handler bails if
+the area of the message it's responsible for is already processed.
+This comes up when handling short reads from the socket.
 
-Fixes: c5e9b2c2ae82 ("riscv: Improve tlb_flush()")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Link: https://lore.kernel.org/r/20240128120405.25876-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+[ idryomov: changelog ]
+
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Acked-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Stable-dep-of: 8e46a2d068c9 ("libceph: just wait for more data to be available on the socket")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/tlb.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/messenger_v1.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/include/asm/tlb.h b/arch/riscv/include/asm/tlb.h
-index 1eb5682b2af6..50b63b5c15bd 100644
---- a/arch/riscv/include/asm/tlb.h
-+++ b/arch/riscv/include/asm/tlb.h
-@@ -16,7 +16,7 @@ static void tlb_flush(struct mmu_gather *tlb);
- static inline void tlb_flush(struct mmu_gather *tlb)
+diff --git a/net/ceph/messenger_v1.c b/net/ceph/messenger_v1.c
+index f9a50d7f0d20..4cb60bacf5f5 100644
+--- a/net/ceph/messenger_v1.c
++++ b/net/ceph/messenger_v1.c
+@@ -991,7 +991,7 @@ static inline int read_partial_message_section(struct ceph_connection *con,
+ 	return read_partial_message_chunk(con, section, sec_len, crc);
+ }
+ 
+-static int read_sparse_msg_extent(struct ceph_connection *con, u32 *crc)
++static int read_partial_sparse_msg_extent(struct ceph_connection *con, u32 *crc)
  {
- #ifdef CONFIG_MMU
--	if (tlb->fullmm || tlb->need_flush_all)
-+	if (tlb->fullmm || tlb->need_flush_all || tlb->freed_tables)
- 		flush_tlb_mm(tlb->mm);
- 	else
- 		flush_tlb_mm_range(tlb->mm, tlb->start, tlb->end,
+ 	struct ceph_msg_data_cursor *cursor = &con->in_msg->cursor;
+ 	bool do_bounce = ceph_test_opt(from_msgr(con->msgr), RXBOUNCE);
+@@ -1026,7 +1026,7 @@ static int read_sparse_msg_extent(struct ceph_connection *con, u32 *crc)
+ 	return 1;
+ }
+ 
+-static int read_sparse_msg_data(struct ceph_connection *con)
++static int read_partial_sparse_msg_data(struct ceph_connection *con)
+ {
+ 	struct ceph_msg_data_cursor *cursor = &con->in_msg->cursor;
+ 	bool do_datacrc = !ceph_test_opt(from_msgr(con->msgr), NOCRC);
+@@ -1043,7 +1043,7 @@ static int read_sparse_msg_data(struct ceph_connection *con)
+ 							 con->v1.in_sr_len,
+ 							 &crc);
+ 		else if (cursor->sr_resid > 0)
+-			ret = read_sparse_msg_extent(con, &crc);
++			ret = read_partial_sparse_msg_extent(con, &crc);
+ 
+ 		if (ret <= 0) {
+ 			if (do_datacrc)
+@@ -1254,7 +1254,7 @@ static int read_partial_message(struct ceph_connection *con)
+ 			return -EIO;
+ 
+ 		if (m->sparse_read)
+-			ret = read_sparse_msg_data(con);
++			ret = read_partial_sparse_msg_data(con);
+ 		else if (ceph_test_opt(from_msgr(con->msgr), RXBOUNCE))
+ 			ret = read_partial_msg_data_bounce(con);
+ 		else
 -- 
 2.43.0
 
