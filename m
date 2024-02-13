@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E925FEFA;
-	Tue, 13 Feb 2024 17:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C59A5FF10;
+	Tue, 13 Feb 2024 17:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845076; cv=none; b=ScQ9M8DQ4RIze/ktOaFjw53aBBNXXTDe2GkJ//70j07KvhHybrA7M7r535R7LdiHdHYVFV4ppDkpcTifDce9oxq1FciNjT8o2ySAQxWc8MMk8VeYcCTGm0XK9IPqrvHEA4WOqbV/ueCwIIrQVNvjI8Wmvhr1pJOl9AcnkxCGrec=
+	t=1707845079; cv=none; b=awRlcvEqeCUv/01as1+EAhhnFACroK6W7bL3qp7cAaTPLNgJO1ZPsMF5D0DYwRjnn32w3qSwi65vbji+9F0h/WblR4sZphdNiRty4rdWseZm2y+UCk4bypk+WQzAqY4fsIpLT5Y4bbaR4Fx+vfFNUNQcsKz8tdTM+x9RtbMl3Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845076; c=relaxed/simple;
-	bh=2Ag7ixUgMEziCumLdmUfoA9QkDFQowJi1x4go9TCZt4=;
+	s=arc-20240116; t=1707845079; c=relaxed/simple;
+	bh=EfYLTaaW/mifBJZZ2HlJyPwh+t/zUHTHF0io/kLAQbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dpz81VDvZ6KQ6vz1BJvRh5vKZYpg0Fwoq2DyO44ZdB+e/EoK2Qfgs2XPNqM4A/sUVPX1CEu/4NGY4i4PUi+XYibp4DhQRgQfH1m2xvMU2nv5lqYoPNGqsvJelcmlGGm7jylfnYyW2Q0lc1Sd4kP/752kEZZvjk+K+lUf7+f1NIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J35j9NcU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGsoC6U6oiBYVmbxaJ0vy5jNJmhVs6X0+RKx+UtvCwGflVjl+UJ4om+TobSPqvl5Eequ8ylfAE35IjNkS2smJSL6ztF22sT/UcRC0CEWzgJa7u7er2YaVrvSBK5/rGAH/AakUQPF1gz6glrGBbQqyc1gj4baHgNWlrGg7JvzVAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJDBiRZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J35j9NcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA20C433F1;
-	Tue, 13 Feb 2024 17:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJDBiRZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E269C433C7;
+	Tue, 13 Feb 2024 17:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845075;
-	bh=2Ag7ixUgMEziCumLdmUfoA9QkDFQowJi1x4go9TCZt4=;
+	s=korg; t=1707845078;
+	bh=EfYLTaaW/mifBJZZ2HlJyPwh+t/zUHTHF0io/kLAQbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J35j9NcUDZWnAq4HIxqqizuOLqy5ZJkEsW555nBLmlHENH5M+3kiGmE7JKs35okOh
-	 EMo29+HbuGwZItuMThbsad8bUNkja6QevuKD0EYGCebtIuAwZmMHW9H297uCutXPER
-	 cgD5jVq5obC4rdKOUpoOfreYEVCOrcvxxKwY/RGA=
+	b=fJDBiRZVlB6gz7OzlrN1Q4uU3goBUs4pMaPnqYIDdk7MrUUi9a9vnNNtVJhsu5TAT
+	 CuwavkB6lhVgO8KHnSI88VGmmLk5VfH2CefPmPSpcAXNOrm/G/+9aBlcA0SNt9yoFV
+	 Zvhg/O0n7ZkervqF+XHISI4xVHMq8/WON8feUbOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 40/64] fs/ntfs3: Fix an NULL dereference bug
-Date: Tue, 13 Feb 2024 18:21:26 +0100
-Message-ID: <20240213171846.008021403@linuxfoundation.org>
+Subject: [PATCH 6.1 41/64] scsi: core: Move scsi_host_busy() out of host lock if it is for per-command
+Date: Tue, 13 Feb 2024 18:21:27 +0100
+Message-ID: <20240213171846.043137952@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
 References: <20240213171844.702064831@linuxfoundation.org>
@@ -51,38 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit b2dd7b953c25ffd5912dda17e980e7168bebcf6c ]
+[ Upstream commit 4e6c9011990726f4d175e2cdfebe5b0b8cce4839 ]
 
-The issue here is when this is called from ntfs_load_attr_list().  The
-"size" comes from le32_to_cpu(attr->res.data_size) so it can't overflow
-on a 64bit systems but on 32bit systems the "+ 1023" can overflow and
-the result is zero.  This means that the kmalloc will succeed by
-returning the ZERO_SIZE_PTR and then the memcpy() will crash with an
-Oops on the next line.
+Commit 4373534a9850 ("scsi: core: Move scsi_host_busy() out of host lock
+for waking up EH handler") intended to fix a hard lockup issue triggered by
+EH. The core idea was to move scsi_host_busy() out of the host lock when
+processing individual commands for EH. However, a suggested style change
+inadvertently caused scsi_host_busy() to remain under the host lock. Fix
+this by calling scsi_host_busy() outside the lock.
 
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 4373534a9850 ("scsi: core: Move scsi_host_busy() out of host lock for waking up EH handler")
+Cc: Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240203024521.2006455-1-ming.lei@redhat.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs_fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_error.c | 3 ++-
+ drivers/scsi/scsi_lib.c   | 4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 8c9abaf139e6..74482ef569ab 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -467,7 +467,7 @@ bool al_delete_le(struct ntfs_inode *ni, enum ATTR_TYPE type, CLST vcn,
- int al_update(struct ntfs_inode *ni, int sync);
- static inline size_t al_aligned(size_t size)
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 66290961c47c..cfa6f0edff17 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -277,11 +277,12 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
  {
--	return (size + 1023) & ~(size_t)1023;
-+	return size_add(size, 1023) & ~(size_t)1023;
+ 	struct scsi_cmnd *scmd = container_of(head, typeof(*scmd), rcu);
+ 	struct Scsi_Host *shost = scmd->device->host;
++	unsigned int busy = scsi_host_busy(shost);
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(shost->host_lock, flags);
+ 	shost->host_failed++;
+-	scsi_eh_wakeup(shost, scsi_host_busy(shost));
++	scsi_eh_wakeup(shost, busy);
+ 	spin_unlock_irqrestore(shost->host_lock, flags);
  }
  
- /* Globals from bitfunc.c */
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 0e7e9f1e5a02..5c5954b78585 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -280,9 +280,11 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
+ 	rcu_read_lock();
+ 	__clear_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+ 	if (unlikely(scsi_host_in_recovery(shost))) {
++		unsigned int busy = scsi_host_busy(shost);
++
+ 		spin_lock_irqsave(shost->host_lock, flags);
+ 		if (shost->host_failed || shost->host_eh_scheduled)
+-			scsi_eh_wakeup(shost, scsi_host_busy(shost));
++			scsi_eh_wakeup(shost, busy);
+ 		spin_unlock_irqrestore(shost->host_lock, flags);
+ 	}
+ 	rcu_read_unlock();
 -- 
 2.43.0
 
