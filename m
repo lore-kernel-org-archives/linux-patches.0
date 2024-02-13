@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D7C5FF0B;
-	Tue, 13 Feb 2024 17:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4DF5FF04;
+	Tue, 13 Feb 2024 17:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845949; cv=none; b=I+b2qI8fsffifAhzuqi/V3JgdixT/aJZkejYJtIzjTaYrYSbwksg2OSgdVyG2chkvj59Usrz+xb0ikxGKReGA1QB/+hdeAhQHd/6hpW2Xt1NSnZFMR5C5xg2qw0F3H5RMBjalxdRZdrAGzbMgGvhXVpCf1pglg2u0N7IUxE0s6c=
+	t=1707845952; cv=none; b=m+fkgh8ojPeELI6IeAwxMG2N87PvreuuKMUlSHm139piQeO4v6YAISSMlnFdSM5CwLQ0TcFHOLrncw0ZyCe0QmYNj77EzgjskvaswQNDYKwZKR7hRWyYEjXsnS4LDdYyzAYG9zRWsezE8oWI8nhk6Hn4YW5wOxP5wYvFZQ5/V3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845949; c=relaxed/simple;
-	bh=X13TC1xQg2vaGq8qcIfXM6BKJzrrINLYCUuabn256Vg=;
+	s=arc-20240116; t=1707845952; c=relaxed/simple;
+	bh=nbgkVGmzcpsgH1eLTbVcXFUPdixJ8ImJDCAKXvkOenQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YmyLvGQMPKAnchzw5SEjCmdcXkSQ7f6QJkugrB/t3Qd3kciLDF8ahcdYhDfuJbRIYEklYUaXdIMyCHVQDCbvrSt6A4gSiUdDgZjIHU2UfmyoDpP9I3PgQhb7f5wepHSwvHEFYxKdgMTPiUxg9sdsO23idHfywMeJK2Urb61aQJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7wsgpqh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOxCzoCNP0acdLGL/deY352NXnc4YO54RdAsYLgZhB8JNN4+IdeJRRr/NjRplknGvPWNN6qFvbyD5vTOaxRn8hWsvRj+IDjZC/WPetPGHSRRbG+9OiyRt1jRABNdD65xQJZAuYI3DcqOfWAVLwpjo2XfJGegaO5SOJxLyli5Eg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asi6Bw9l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7wsgpqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEB1C433C7;
-	Tue, 13 Feb 2024 17:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asi6Bw9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2421BC433C7;
+	Tue, 13 Feb 2024 17:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845949;
-	bh=X13TC1xQg2vaGq8qcIfXM6BKJzrrINLYCUuabn256Vg=;
+	s=korg; t=1707845952;
+	bh=nbgkVGmzcpsgH1eLTbVcXFUPdixJ8ImJDCAKXvkOenQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7wsgpqhQbpdX7kq6H3tD3PRZPpJwI03espgaRZwqnbGK3wrD07xAeeE4R46xRTPJ
-	 w6of3u1Wed26GdoQBIPeJsSkfgmpq54dccM0n9OsTTSGkNHrm9UWGJwdqfWqewKcmj
-	 ANWIJkkDIJz3ia+Nq0DbkncSg2skOovK2h0WgN10=
+	b=asi6Bw9ldmLapBIedYBi5z44+gUwl4Ev6BUfCJbJZ+WLsyHRgsSHGqgXkDOlCYlXO
+	 Ar60l4rfY9lzHUGSTEg58uJ/lN2kxGjQVI4/edW6nB701PtYcNs+Jo4XpofGWWh8E2
+	 JjBSNpIKD17ooJRYmM8GfizAQjoquRGcKpIxxHNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Breno=20Leit=C3=A3o?= <leitao@debian.org>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 086/124] blk-iocost: Fix an UBSAN shift-out-of-bounds warning
-Date: Tue, 13 Feb 2024 18:21:48 +0100
-Message-ID: <20240213171856.245393440@linuxfoundation.org>
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Eilon Rinat <eilon.rinat@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.7 104/124] wifi: iwlwifi: mvm: fix a battery life regression
+Date: Tue, 13 Feb 2024 18:22:06 +0100
+Message-ID: <20240213171856.766729935@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -46,76 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 2a427b49d02995ea4a6ff93a1432c40fa4d36821 ]
+commit 1fa942f31665ea5dc5d4d95893dd13723eaa97cc upstream.
 
-When iocg_kick_delay() is called from a CPU different than the one which set
-the delay, @now may be in the past of @iocg->delay_at leading to the
-following warning:
+Fix the DBG_CONFIG_TOKEN to not enable debug components that would
+prevent the device to save power.
 
-  UBSAN: shift-out-of-bounds in block/blk-iocost.c:1359:23
-  shift exponent 18446744073709 is too large for 64-bit type 'u64' (aka 'unsigned long long')
-  ...
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x79/0xc0
-   __ubsan_handle_shift_out_of_bounds+0x2ab/0x300
-   iocg_kick_delay+0x222/0x230
-   ioc_rqos_merge+0x1d7/0x2c0
-   __rq_qos_merge+0x2c/0x80
-   bio_attempt_back_merge+0x83/0x190
-   blk_attempt_plug_merge+0x101/0x150
-   blk_mq_submit_bio+0x2b1/0x720
-   submit_bio_noacct_nocheck+0x320/0x3e0
-   __swap_writepage+0x2ab/0x9d0
-
-The underflow itself doesn't really affect the behavior in any meaningful
-way; however, the past timestamp may exaggerate the delay amount calculated
-later in the code, which shouldn't be a material problem given the nature of
-the delay mechanism.
-
-If @now is in the past, this CPU is racing another CPU which recently set up
-the delay and there's nothing this CPU can contribute w.r.t. the delay.
-Let's bail early from iocg_kick_delay() in such cases.
-
-Reported-by: Breno Leitão <leitao@debian.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Fixes: 5160a5a53c0c ("blk-iocost: implement delay adjustment hysteresis")
-Link: https://lore.kernel.org/r/ZVvc9L_CYk5LO1fT@slm.duckdns.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fc2fe0a5e856 ("wifi: iwlwifi: fw: disable firmware debug asserts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Eilon Rinat <eilon.rinat@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240128084842.90d2600edc27.Id657ea2f0ddb131f5f9d0ac39aeb8c88754fe54b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-iocost.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/fw/api/debug.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 089fcb9cfce3..7ee8d85c2c68 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -1353,6 +1353,13 @@ static bool iocg_kick_delay(struct ioc_gq *iocg, struct ioc_now *now)
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/debug.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/debug.h
+@@ -531,7 +531,7 @@ enum iwl_fw_dbg_config_cmd_type {
+ }; /* LDBG_CFG_CMD_TYPE_API_E_VER_1 */
  
- 	lockdep_assert_held(&iocg->waitq.lock);
+ /* this token disables debug asserts in the firmware */
+-#define IWL_FW_DBG_CONFIG_TOKEN 0x00011301
++#define IWL_FW_DBG_CONFIG_TOKEN 0x00010001
  
-+	/*
-+	 * If the delay is set by another CPU, we may be in the past. No need to
-+	 * change anything if so. This avoids decay calculation underflow.
-+	 */
-+	if (time_before64(now->now, iocg->delay_at))
-+		return false;
-+
- 	/* calculate the current delay in effect - 1/2 every second */
- 	tdelta = now->now - iocg->delay_at;
- 	if (iocg->delay)
--- 
-2.43.0
-
+ /**
+  * struct iwl_fw_dbg_config_cmd - configure FW debug
 
 
