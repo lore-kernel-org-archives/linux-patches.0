@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C59A5FF10;
-	Tue, 13 Feb 2024 17:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7266A5FB86;
+	Tue, 13 Feb 2024 17:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845079; cv=none; b=awRlcvEqeCUv/01as1+EAhhnFACroK6W7bL3qp7cAaTPLNgJO1ZPsMF5D0DYwRjnn32w3qSwi65vbji+9F0h/WblR4sZphdNiRty4rdWseZm2y+UCk4bypk+WQzAqY4fsIpLT5Y4bbaR4Fx+vfFNUNQcsKz8tdTM+x9RtbMl3Co=
+	t=1707845082; cv=none; b=PjVYoFdO76PY/HqkCliIrhGV5pF9DbqWXwYDG1a6e2W0it9i/cblPGEWX4GjwohQv0QovEXLUYeRUjWT9vGTgy+yqfU4hSgxRRRUEOfAODo7Hcbpbf2cYJZnj5Z+vo6QWEe34Hic1pJh4itLukMPpx43su1E0n42hfsoQfKLDu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845079; c=relaxed/simple;
-	bh=EfYLTaaW/mifBJZZ2HlJyPwh+t/zUHTHF0io/kLAQbA=;
+	s=arc-20240116; t=1707845082; c=relaxed/simple;
+	bh=uZpQRxp+1a8U2Au+PsT3U55rBEQg0XL5q4PJcgzAbpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGsoC6U6oiBYVmbxaJ0vy5jNJmhVs6X0+RKx+UtvCwGflVjl+UJ4om+TobSPqvl5Eequ8ylfAE35IjNkS2smJSL6ztF22sT/UcRC0CEWzgJa7u7er2YaVrvSBK5/rGAH/AakUQPF1gz6glrGBbQqyc1gj4baHgNWlrGg7JvzVAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJDBiRZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bbjrEdPiIueDsBgUyVfDQ2LEUuQXm/DjzojYERTCU4TeQqzymMPHarr7HLt3PzebJymadzmDpPuyDG+pTMf9Ok+/PuYi772aCITd3/Q2GKI6c3kWHAiFlUpjSdSQ7tXO3STCItq1jgyspbxLoQh1kqtRO6+x2c5yw9U67Pvuez0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdTkxkHg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJDBiRZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E269C433C7;
-	Tue, 13 Feb 2024 17:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdTkxkHg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA941C433C7;
+	Tue, 13 Feb 2024 17:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845078;
-	bh=EfYLTaaW/mifBJZZ2HlJyPwh+t/zUHTHF0io/kLAQbA=;
+	s=korg; t=1707845082;
+	bh=uZpQRxp+1a8U2Au+PsT3U55rBEQg0XL5q4PJcgzAbpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJDBiRZVlB6gz7OzlrN1Q4uU3goBUs4pMaPnqYIDdk7MrUUi9a9vnNNtVJhsu5TAT
-	 CuwavkB6lhVgO8KHnSI88VGmmLk5VfH2CefPmPSpcAXNOrm/G/+9aBlcA0SNt9yoFV
-	 Zvhg/O0n7ZkervqF+XHISI4xVHMq8/WON8feUbOk=
+	b=qdTkxkHgN4IGdCmR99d8gCjGO62LXRsGwmxAoSk2l3ZHJF13iGR29q5D4X13Ey2ZL
+	 8LGyiGqGWlhJxpPT2aHYpgGVdhFsicvJ4DZxtvqLhu9GkvUdgSybaFFvv3FbKVHiVI
+	 45fvrRYytxiCaJ8olHbG7wPftB6xM4kBOpehnMvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Breno=20Leit=C3=A3o?= <leitao@debian.org>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 41/64] scsi: core: Move scsi_host_busy() out of host lock if it is for per-command
-Date: Tue, 13 Feb 2024 18:21:27 +0100
-Message-ID: <20240213171846.043137952@linuxfoundation.org>
+Subject: [PATCH 6.1 42/64] blk-iocost: Fix an UBSAN shift-out-of-bounds warning
+Date: Tue, 13 Feb 2024 18:21:28 +0100
+Message-ID: <20240213171846.071921248@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
 References: <20240213171844.702064831@linuxfoundation.org>
@@ -48,72 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 4e6c9011990726f4d175e2cdfebe5b0b8cce4839 ]
+[ Upstream commit 2a427b49d02995ea4a6ff93a1432c40fa4d36821 ]
 
-Commit 4373534a9850 ("scsi: core: Move scsi_host_busy() out of host lock
-for waking up EH handler") intended to fix a hard lockup issue triggered by
-EH. The core idea was to move scsi_host_busy() out of the host lock when
-processing individual commands for EH. However, a suggested style change
-inadvertently caused scsi_host_busy() to remain under the host lock. Fix
-this by calling scsi_host_busy() outside the lock.
+When iocg_kick_delay() is called from a CPU different than the one which set
+the delay, @now may be in the past of @iocg->delay_at leading to the
+following warning:
 
-Fixes: 4373534a9850 ("scsi: core: Move scsi_host_busy() out of host lock for waking up EH handler")
-Cc: Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20240203024521.2006455-1-ming.lei@redhat.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  UBSAN: shift-out-of-bounds in block/blk-iocost.c:1359:23
+  shift exponent 18446744073709 is too large for 64-bit type 'u64' (aka 'unsigned long long')
+  ...
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x79/0xc0
+   __ubsan_handle_shift_out_of_bounds+0x2ab/0x300
+   iocg_kick_delay+0x222/0x230
+   ioc_rqos_merge+0x1d7/0x2c0
+   __rq_qos_merge+0x2c/0x80
+   bio_attempt_back_merge+0x83/0x190
+   blk_attempt_plug_merge+0x101/0x150
+   blk_mq_submit_bio+0x2b1/0x720
+   submit_bio_noacct_nocheck+0x320/0x3e0
+   __swap_writepage+0x2ab/0x9d0
+
+The underflow itself doesn't really affect the behavior in any meaningful
+way; however, the past timestamp may exaggerate the delay amount calculated
+later in the code, which shouldn't be a material problem given the nature of
+the delay mechanism.
+
+If @now is in the past, this CPU is racing another CPU which recently set up
+the delay and there's nothing this CPU can contribute w.r.t. the delay.
+Let's bail early from iocg_kick_delay() in such cases.
+
+Reported-by: Breno Leitão <leitao@debian.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 5160a5a53c0c ("blk-iocost: implement delay adjustment hysteresis")
+Link: https://lore.kernel.org/r/ZVvc9L_CYk5LO1fT@slm.duckdns.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 3 ++-
- drivers/scsi/scsi_lib.c   | 4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ block/blk-iocost.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 66290961c47c..cfa6f0edff17 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -277,11 +277,12 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
- {
- 	struct scsi_cmnd *scmd = container_of(head, typeof(*scmd), rcu);
- 	struct Scsi_Host *shost = scmd->device->host;
-+	unsigned int busy = scsi_host_busy(shost);
- 	unsigned long flags;
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 7dd6a33e1d6a..e6557024e3da 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -1337,6 +1337,13 @@ static bool iocg_kick_delay(struct ioc_gq *iocg, struct ioc_now *now)
  
- 	spin_lock_irqsave(shost->host_lock, flags);
- 	shost->host_failed++;
--	scsi_eh_wakeup(shost, scsi_host_busy(shost));
-+	scsi_eh_wakeup(shost, busy);
- 	spin_unlock_irqrestore(shost->host_lock, flags);
- }
+ 	lockdep_assert_held(&iocg->waitq.lock);
  
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 0e7e9f1e5a02..5c5954b78585 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -280,9 +280,11 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- 	rcu_read_lock();
- 	__clear_bit(SCMD_STATE_INFLIGHT, &cmd->state);
- 	if (unlikely(scsi_host_in_recovery(shost))) {
-+		unsigned int busy = scsi_host_busy(shost);
++	/*
++	 * If the delay is set by another CPU, we may be in the past. No need to
++	 * change anything if so. This avoids decay calculation underflow.
++	 */
++	if (time_before64(now->now, iocg->delay_at))
++		return false;
 +
- 		spin_lock_irqsave(shost->host_lock, flags);
- 		if (shost->host_failed || shost->host_eh_scheduled)
--			scsi_eh_wakeup(shost, scsi_host_busy(shost));
-+			scsi_eh_wakeup(shost, busy);
- 		spin_unlock_irqrestore(shost->host_lock, flags);
- 	}
- 	rcu_read_unlock();
+ 	/* calculate the current delay in effect - 1/2 every second */
+ 	tdelta = now->now - iocg->delay_at;
+ 	if (iocg->delay)
 -- 
 2.43.0
 
