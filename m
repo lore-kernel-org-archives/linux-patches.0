@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D268457885;
-	Tue, 13 Feb 2024 17:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2377FA93C;
+	Tue, 13 Feb 2024 17:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845985; cv=none; b=oOlOCTRuU0d193YVttoTNOnJzWM808n7cJmEhwlWNMH5GtW8CgzOz67xWaKDmkzZ+mDWCHyWtlI+EWLJOGEJe4ZuY/+kudQkS3fvpAJuRL5vnmXkT3lZDQ9LrUWV4k7KPNxo4+syqIQtukCEyZev5tYX1598xod0GKUyY/wjlAg=
+	t=1707845989; cv=none; b=ZEBuS8E0/uSvGYxG3NpmTj8nIWOudKp3zaQQrLZVo4CUVFdRmkQ6wL27wo00NfsmHPuW+hueKvTdr3FKtiNl9lsUEyGRgPrAj84Mzg2ai/xeqipmq08x5P4mfOEmQ9R4JEc6x5apC5p+GNE50E9YCBFHSmWSjN6q4Ab+Hp/DqgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845985; c=relaxed/simple;
-	bh=2Tdpp9wvSMaOhcIlaE/vRHkZEcxUfZq0fCW7/lY0uNc=;
+	s=arc-20240116; t=1707845989; c=relaxed/simple;
+	bh=WqciRkJFRN33gNk82wn6UGlIanvuVJud/3sQ9xl0Oe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYA2OUmErTW/0+7fi9oVuMUBShMz2GBm7dI4a50Ld62P7aP0DlIGZ2wQD9HyNwpnOmhNm1pb4DXpTC2YUzG+Fk2YcZU4R6BloT1wF6IqWAJpGh2XjygKbyldAklJdK8kamwQs6jKxC+9AcdHZT7yf2dLlLVVfVZBnkUWYq+k+pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obhh2ZxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CiuskwmNsXXKOEGljbQ5xDef2CMr2zH/SAkbh/aF3aQMlrn/nXiuAh+2sUKRYWwsRI+/9J3475mT/HYV1fBj7B68A0yYnOznJFInjo68kqd6rroBP8hc9zE23vq1/N/+h1TruZgapIt+8n7JMzzNCpIS7pessxbMu5fPlsXuo1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEXx9t6V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obhh2ZxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433E5C433C7;
-	Tue, 13 Feb 2024 17:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEXx9t6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D08C433C7;
+	Tue, 13 Feb 2024 17:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845985;
-	bh=2Tdpp9wvSMaOhcIlaE/vRHkZEcxUfZq0fCW7/lY0uNc=;
+	s=korg; t=1707845989;
+	bh=WqciRkJFRN33gNk82wn6UGlIanvuVJud/3sQ9xl0Oe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obhh2ZxB4wmYChARLTHY7ZYt+WnLfn9nFyuqPPC3bbyDVisTovAEwiQnmfEq0UL4q
-	 x1EMB3pZ1VaxJ/sffgUo+mUZpQnnVLh1xWa7XqTvMM0Fmb5I3wAAjFx3d2MNS68Jvi
-	 sLIJu6qatpFskbCP6FsFhzFNtOk859hmzMIM4/7c=
+	b=rEXx9t6VBQ6IahoeZAhIqjNzywEaVrvZXqOHDPtF/E/al+r8PDuVYYrnae4cca5Bd
+	 DtDlf9+tdoooX7mS3eqlehXqDUjHPIU4UiFciJt3pFVQzD0nUFoWy3wABrVoCiOGl8
+	 30LQNUBNhZzkBr+3P+TjZrq4kRpShWMzlUc4nC0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 6.7 111/124] bch2_ioctl_subvolume_destroy(): fix locking
-Date: Tue, 13 Feb 2024 18:22:13 +0100
-Message-ID: <20240213171856.974094755@linuxfoundation.org>
+	Kent Overstreet <kent.overstreet@linux.dev>
+Subject: [PATCH 6.7 112/124] bcachefs: Dont pass memcmp() as a pointer
+Date: Tue, 13 Feb 2024 18:22:14 +0100
+Message-ID: <20240213171857.002790594@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -49,71 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Kent Overstreet <kent.overstreet@linux.dev>
 
-commit bbe6a7c899e7f265c5a6d01a178336a405e98ed6 upstream.
+commit 0124f42da70c513dc371b73688663c54e5a9666f upstream.
 
-make it use user_path_locked_at() to get the normal directory protection
-for modifications, as well as stable ->d_parent and ->d_name in victim
+Some (buggy!) compilers have issues with this.
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: https://github.com/koverstreet/bcachefs/issues/625
+Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/bcachefs/fs-ioctl.c |   31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ fs/bcachefs/replicas.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/bcachefs/fs-ioctl.c
-+++ b/fs/bcachefs/fs-ioctl.c
-@@ -451,33 +451,36 @@ static long bch2_ioctl_subvolume_create(
- static long bch2_ioctl_subvolume_destroy(struct bch_fs *c, struct file *filp,
- 				struct bch_ioctl_subvolume arg)
+--- a/fs/bcachefs/replicas.c
++++ b/fs/bcachefs/replicas.c
+@@ -9,6 +9,12 @@
+ static int bch2_cpu_replicas_to_sb_replicas(struct bch_fs *,
+ 					    struct bch_replicas_cpu *);
+ 
++/* Some (buggy!) compilers don't allow memcmp to be passed as a pointer */
++static int bch2_memcmp(const void *l, const void *r, size_t size)
++{
++	return memcmp(l, r, size);
++}
++
+ /* Replicas tracking - in memory: */
+ 
+ static void verify_replicas_entry(struct bch_replicas_entry *e)
+@@ -33,7 +39,7 @@ void bch2_replicas_entry_sort(struct bch
+ 
+ static void bch2_cpu_replicas_sort(struct bch_replicas_cpu *r)
  {
-+	const char __user *name = (void __user *)(unsigned long)arg.dst_ptr;
- 	struct path path;
- 	struct inode *dir;
-+	struct dentry *victim;
- 	int ret = 0;
- 
- 	if (arg.flags)
- 		return -EINVAL;
- 
--	ret = user_path_at(arg.dirfd,
--			(const char __user *)(unsigned long)arg.dst_ptr,
--			LOOKUP_FOLLOW, &path);
--	if (ret)
--		return ret;
-+	victim = user_path_locked_at(arg.dirfd, name, &path);
-+	if (IS_ERR(victim))
-+		return PTR_ERR(victim);
- 
--	if (path.dentry->d_sb->s_fs_info != c) {
-+	if (victim->d_sb->s_fs_info != c) {
- 		ret = -EXDEV;
- 		goto err;
- 	}
--
--	dir = path.dentry->d_parent->d_inode;
--
--	ret = __bch2_unlink(dir, path.dentry, true);
--	if (ret)
-+	if (!d_is_positive(victim)) {
-+		ret = -ENOENT;
- 		goto err;
--
--	fsnotify_rmdir(dir, path.dentry);
--	d_delete(path.dentry);
-+	}
-+	dir = d_inode(path.dentry);
-+	ret = __bch2_unlink(dir, victim, true);
-+	if (!ret) {
-+		fsnotify_rmdir(dir, victim);
-+		d_delete(victim);
-+	}
-+	inode_unlock(dir);
- err:
-+	dput(victim);
- 	path_put(&path);
- 	return ret;
+-	eytzinger0_sort(r->entries, r->nr, r->entry_size, memcmp, NULL);
++	eytzinger0_sort(r->entries, r->nr, r->entry_size, bch2_memcmp, NULL);
  }
+ 
+ static void bch2_replicas_entry_v0_to_text(struct printbuf *out,
+@@ -833,7 +839,7 @@ static int bch2_cpu_replicas_validate(st
+ 	sort_cmp_size(cpu_r->entries,
+ 		      cpu_r->nr,
+ 		      cpu_r->entry_size,
+-		      memcmp, NULL);
++		      bch2_memcmp, NULL);
+ 
+ 	for (i = 0; i < cpu_r->nr; i++) {
+ 		struct bch_replicas_entry *e =
 
 
