@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350C75FEFF;
-	Tue, 13 Feb 2024 17:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5707D5FF0C;
+	Tue, 13 Feb 2024 17:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845485; cv=none; b=IHIkbRDb1cWY6myoNd0grf7dJSJWvddfFqIsNiAkmX80+v3z0+zokZm+uRcVdPQdG07URGHQe/LB1106CVgHWY81YD9l+440sluF2PylyN9UmD6a9boZBMs2bthaUXmXTB69DtzrxHiOBfkTJAVCtT1G4XzwsOKC2iS7gMgWEns=
+	t=1707845488; cv=none; b=vDOiX3R2PMHYCNTgx2eb6CHMa6tEa4+Y7FMMgf0ldzLe3qpETlSCrjfZ8aWNTZRXTOz7hJDw7111+XMtYGLVkrDN4TgVbr8KaseasJzLK7qU6t2fNHNZjcRlpXGMD6GPPaMHi5vWTT2eVQey/9PHDakObQJCdkupY9VTRrRgSgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845485; c=relaxed/simple;
-	bh=R2hGyFa92Ays4ByvQL8/1QatGznnCTYeD75TehR2yAE=;
+	s=arc-20240116; t=1707845488; c=relaxed/simple;
+	bh=lzrTaNbcS/oVZZc4e2Vx4tK0RdZ6TwLXvTQi277+J2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOewkrm62P0Mlpp6RTdBVPwbiOcNstAq9dFpBogJ7+TgxwLABwzl7FqQ5AGMdpIFDce/BLDNfII7SwnDfkyeRnk7M9ThA3wjknSN35pFJ0gN9kTnrMIFkMHQYkGBVkW5E4/yyknOPX+AW00jjxL+qvwsyWXnjtNXSHybadh6mTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQsEsO3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BPx2VZwLc88MYV3+8bzhTNBmrUWR+lYYgZUceRyn/TQKpRvmFjFGcGRVH1myF7XXx/lbPYim2Dp8/lXgB3fxxmpylO1QUptcAHEm5lgdyVa5Gu2VXAg6NVH111kWIPWTHjub5MP7Hdq2bvBr1XadcSlkm6d7Gv1MRkAudUgBtSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lcXWumLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQsEsO3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0F6C433C7;
-	Tue, 13 Feb 2024 17:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lcXWumLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB3DC433F1;
+	Tue, 13 Feb 2024 17:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845484;
-	bh=R2hGyFa92Ays4ByvQL8/1QatGznnCTYeD75TehR2yAE=;
+	s=korg; t=1707845487;
+	bh=lzrTaNbcS/oVZZc4e2Vx4tK0RdZ6TwLXvTQi277+J2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQsEsO3MUiwGN1jjB6XfrFHezqmbL32TjR7OK9GRztykIUhmkPVFXply53mL9DLsa
-	 BpYglZrfX30NhlRYbiIhY0azPIlZmnZ/JjvuHfbme1C6fGSWstjZaGoAJIa7RJoMIo
-	 nFhbbuDIyp2v1sLZvaP4N2CtsqkfermUbOwzrthM=
+	b=lcXWumLYMiGJqy5VSmgG1pOtd7FasHjCafstm2U57n1UWMJFdOPpO9dPfRUaSfK++
+	 wTBf4pi59y7qyAz0gUIOFlnbiDKps1pML77vRGLUDVmu7loKretSxBkOQ/Tyo7caIk
+	 xSTKKbXn6agnFTd6CyOn8uBRnk1S8dmo0IxHEXFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/121] netfilter: nft_compat: reject unused compat flag
-Date: Tue, 13 Feb 2024 18:21:24 +0100
-Message-ID: <20240213171855.182389913@linuxfoundation.org>
+Subject: [PATCH 6.6 093/121] riscv: Flush the tlb when a page directory is freed
+Date: Tue, 13 Feb 2024 18:21:42 +0100
+Message-ID: <20240213171855.706765912@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -50,51 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 292781c3c5485ce33bd22b2ef1b2bed709b4d672 ]
+[ Upstream commit 97cf301fa42e8ea6e0a24de97bc0abcdc87d9504 ]
 
-Flag (1 << 0) is ignored is set, never used, reject it it with EINVAL
-instead.
+The riscv privileged specification mandates to flush the TLB whenever a
+page directory is modified, so add that to tlb_flush().
 
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: c5e9b2c2ae82 ("riscv: Improve tlb_flush()")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Link: https://lore.kernel.org/r/20240128120405.25876-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/netfilter/nf_tables.h | 2 ++
- net/netfilter/nft_compat.c               | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/tlb.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
-index ca30232b7bc8..117c6a9b845b 100644
---- a/include/uapi/linux/netfilter/nf_tables.h
-+++ b/include/uapi/linux/netfilter/nf_tables.h
-@@ -285,9 +285,11 @@ enum nft_rule_attributes {
- /**
-  * enum nft_rule_compat_flags - nf_tables rule compat flags
-  *
-+ * @NFT_RULE_COMPAT_F_UNUSED: unused
-  * @NFT_RULE_COMPAT_F_INV: invert the check result
-  */
- enum nft_rule_compat_flags {
-+	NFT_RULE_COMPAT_F_UNUSED = (1 << 0),
- 	NFT_RULE_COMPAT_F_INV	= (1 << 1),
- 	NFT_RULE_COMPAT_F_MASK	= NFT_RULE_COMPAT_F_INV,
- };
-diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
-index 001b6841a4b6..ed71d5ecbe0a 100644
---- a/net/netfilter/nft_compat.c
-+++ b/net/netfilter/nft_compat.c
-@@ -212,7 +212,8 @@ static int nft_parse_compat(const struct nlattr *attr, u16 *proto, bool *inv)
- 		return -EINVAL;
- 
- 	flags = ntohl(nla_get_be32(tb[NFTA_RULE_COMPAT_FLAGS]));
--	if (flags & ~NFT_RULE_COMPAT_F_MASK)
-+	if (flags & NFT_RULE_COMPAT_F_UNUSED ||
-+	    flags & ~NFT_RULE_COMPAT_F_MASK)
- 		return -EINVAL;
- 	if (flags & NFT_RULE_COMPAT_F_INV)
- 		*inv = true;
+diff --git a/arch/riscv/include/asm/tlb.h b/arch/riscv/include/asm/tlb.h
+index 1eb5682b2af6..50b63b5c15bd 100644
+--- a/arch/riscv/include/asm/tlb.h
++++ b/arch/riscv/include/asm/tlb.h
+@@ -16,7 +16,7 @@ static void tlb_flush(struct mmu_gather *tlb);
+ static inline void tlb_flush(struct mmu_gather *tlb)
+ {
+ #ifdef CONFIG_MMU
+-	if (tlb->fullmm || tlb->need_flush_all)
++	if (tlb->fullmm || tlb->need_flush_all || tlb->freed_tables)
+ 		flush_tlb_mm(tlb->mm);
+ 	else
+ 		flush_tlb_mm_range(tlb->mm, tlb->start, tlb->end,
 -- 
 2.43.0
 
