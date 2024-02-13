@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A685FF03;
-	Tue, 13 Feb 2024 17:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033C75FF0E;
+	Tue, 13 Feb 2024 17:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845715; cv=none; b=K7UGOh6q0o3o1MF3gpvyZrdJPXCI54WZQKoJcMPkM7G/MsmpDljHF6W/zRKGiy6mC84FmeGxRRKIq11+pPvQg3WYaIJPP/f9qdEVm/g/Gf/P7uUI9KMvb6ePQfRrb8v+cqUgz2hKDZIlVIpc1tUww4dPdwP1ZnCEIQ1xQQFlcIw=
+	t=1707845720; cv=none; b=Hn+sTUCARJ+fI3A35sl+G9pPn0h0rWwuxvbpAiuBvImYkMratBohfbp2fH5k26Mmh5XaRgvOzav2lUbsU+e62KPxWRoVudomiwRB5zeLbCtNPntL7/lTPNAfjTVv/w0y5t58fqlHTPJpKd/Utsg58P+KuCBiYQJG+OTVRY7o8Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845715; c=relaxed/simple;
-	bh=3mzD82XRSJOdRWf2jO8pxLfERGhJRXBQbA+CaUCQyvA=;
+	s=arc-20240116; t=1707845720; c=relaxed/simple;
+	bh=X8b0CZV+ZsVoWJHzzLVrnMfZjz4qKswL7IhlZScpOWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fmmo9nPG7Gjr5AbPchvVd1HWAQ1vdsx5v6vsA5VH14k2DytAZe3my19jL8TMhe3wl9ulZjTCjxCPrKDRk7sG+HJs3NcfQIl9YWFs6si3LNUr7k3kvCJyja9EpSgknHDPy8EuA0SPeZu8rGZu08JoS0F8l7Zf3mPiMh2kf3w31O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwueLHD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PemiQMfivnhz6UfIE1GShkbStlBV+ud9v8AVkfw+gtN+F4GVEaRO9mm9VHdUDQzRuJPFieHashXDlQOeBTaBeRmFSCGTAS8UTZW69dG+nFFodqf2GGQd7Mb3E8IH9FhOGV6NnQMHSBMn9zhDgmNaWn0i9dzPBxv5YQaswWUovGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mi2QupGy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwueLHD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4011C433C7;
-	Tue, 13 Feb 2024 17:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mi2QupGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDEAC43390;
+	Tue, 13 Feb 2024 17:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845715;
-	bh=3mzD82XRSJOdRWf2jO8pxLfERGhJRXBQbA+CaUCQyvA=;
+	s=korg; t=1707845718;
+	bh=X8b0CZV+ZsVoWJHzzLVrnMfZjz4qKswL7IhlZScpOWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bwueLHD3wMqu1pu9jRKPFwgvwiQ5kpqRihsLiiwgIwMz79+LiJbhpGXDaXM4ispHA
-	 r8Q2WbPrI/vdFDTrHggSBNIO+pD7N0iod+gMKGe+yHUtNoXpOcS8kkuMCj2nisJDgK
-	 RE/UTX7znCwUnK4+KCrxjWzlOy4FJYm9jL6OM77o=
+	b=mi2QupGyBQOr+6JQTX2QTP6qVb1oZiUhNmI6KILwMDfYCIlbk3Jznyb63C5X8WSkm
+	 +NUSrlVDhbxbU9ZzemgBOk654ybBLkQSZpYMuRe/MTjnYMfGa1BP4f4tM5U2ZhP3l6
+	 WEyYFwve2keUcMxc1z1tuub0hDp4eO+72d33tQOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 038/124] selftests: net: avoid just another constant wait
-Date: Tue, 13 Feb 2024 18:21:00 +0100
-Message-ID: <20240213171854.844738814@linuxfoundation.org>
+Subject: [PATCH 6.7 039/124] tsnep: Fix mapping for zero copy XDP_TX action
+Date: Tue, 13 Feb 2024 18:21:01 +0100
+Message-ID: <20240213171854.873418144@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,67 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit 691bb4e49c98a47bc643dd808453136ce78b15b4 ]
+[ Upstream commit d7f5fb33cf77247b7bf9a871aaeea72ca4f51ad7 ]
 
-Using hard-coded constant timeout to wait for some expected
-event is deemed to fail sooner or later, especially in slow
-env.
+For XDP_TX action xdp_buff is converted to xdp_frame. The conversion is
+done by xdp_convert_buff_to_frame(). The memory type of the resulting
+xdp_frame depends on the memory type of the xdp_buff. For page pool
+based xdp_buff it produces xdp_frame with memory type
+MEM_TYPE_PAGE_POOL. For zero copy XSK pool based xdp_buff it produces
+xdp_frame with memory type MEM_TYPE_PAGE_ORDER0.
 
-Our CI has spotted another of such race:
-   # TEST: ipv6: cleanup of cached exceptions - nexthop objects          [FAIL]
-   #   can't delete veth device in a timely manner, PMTU dst likely leaked
+tsnep_xdp_xmit_back() is not prepared for that and uses always the page
+pool buffer type TSNEP_TX_TYPE_XDP_TX. This leads to invalid mappings
+and the transmission of undefined data.
 
-Replace the crude sleep with a loop looking for the expected condition
-at low interval for a much longer range.
+Improve tsnep_xdp_xmit_back() to use the generic buffer type
+TSNEP_TX_TYPE_XDP_NDO for zero copy XDP_TX.
 
-Fixes: b3cc4f8a8a41 ("selftests: pmtu: add explicit tests for PMTU exceptions cleanup")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/fd5c745e9bb665b724473af6a9373a8c2a62b247.1706812005.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3fc2333933fd ("tsnep: Add XDP socket zero-copy RX support")
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/engleder/tsnep_main.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index f0febc19baae..d65fdd407d73 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1957,6 +1957,13 @@ check_command() {
- 	return 0
- }
+diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
+index 9aeff2b37a61..64eadd320798 100644
+--- a/drivers/net/ethernet/engleder/tsnep_main.c
++++ b/drivers/net/ethernet/engleder/tsnep_main.c
+@@ -719,17 +719,25 @@ static void tsnep_xdp_xmit_flush(struct tsnep_tx *tx)
  
-+check_running() {
-+	pid=${1}
-+	cmd=${2}
+ static bool tsnep_xdp_xmit_back(struct tsnep_adapter *adapter,
+ 				struct xdp_buff *xdp,
+-				struct netdev_queue *tx_nq, struct tsnep_tx *tx)
++				struct netdev_queue *tx_nq, struct tsnep_tx *tx,
++				bool zc)
+ {
+ 	struct xdp_frame *xdpf = xdp_convert_buff_to_frame(xdp);
+ 	bool xmit;
++	u32 type;
+ 
+ 	if (unlikely(!xdpf))
+ 		return false;
+ 
++	/* no page pool for zero copy */
++	if (zc)
++		type = TSNEP_TX_TYPE_XDP_NDO;
++	else
++		type = TSNEP_TX_TYPE_XDP_TX;
 +
-+	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
-+}
-+
- test_cleanup_vxlanX_exception() {
- 	outer="${1}"
- 	encap="vxlan"
-@@ -1987,11 +1994,12 @@ test_cleanup_vxlanX_exception() {
+ 	__netif_tx_lock(tx_nq, smp_processor_id());
  
- 	${ns_a} ip link del dev veth_A-R1 &
- 	iplink_pid=$!
--	sleep 1
--	if [ "$(cat /proc/${iplink_pid}/cmdline 2>/dev/null | tr -d '\0')" = "iplinkdeldevveth_A-R1" ]; then
--		err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
--		return 1
--	fi
-+	for i in $(seq 1 20); do
-+		check_running ${iplink_pid} "iplinkdeldevveth_A-R1" || return 0
-+		sleep 0.1
-+	done
-+	err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
-+	return 1
- }
+-	xmit = tsnep_xdp_xmit_frame_ring(xdpf, tx, TSNEP_TX_TYPE_XDP_TX);
++	xmit = tsnep_xdp_xmit_frame_ring(xdpf, tx, type);
  
- test_cleanup_ipv6_exception() {
+ 	/* Avoid transmit queue timeout since we share it with the slow path */
+ 	if (xmit)
+@@ -1273,7 +1281,7 @@ static bool tsnep_xdp_run_prog(struct tsnep_rx *rx, struct bpf_prog *prog,
+ 	case XDP_PASS:
+ 		return false;
+ 	case XDP_TX:
+-		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx))
++		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx, false))
+ 			goto out_failure;
+ 		*status |= TSNEP_XDP_TX;
+ 		return true;
+@@ -1323,7 +1331,7 @@ static bool tsnep_xdp_run_prog_zc(struct tsnep_rx *rx, struct bpf_prog *prog,
+ 	case XDP_PASS:
+ 		return false;
+ 	case XDP_TX:
+-		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx))
++		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx, true))
+ 			goto out_failure;
+ 		*status |= TSNEP_XDP_TX;
+ 		return true;
 -- 
 2.43.0
 
