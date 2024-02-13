@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C7C5F56B;
-	Tue, 13 Feb 2024 17:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64E65F56B;
+	Tue, 13 Feb 2024 17:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845502; cv=none; b=pbjnV7EaiZ+jY3HexLoTt1/uNFH11BqkrHS3qihAKapGfJFkiGne62RnBDLBAyVmoUeVbKndnvQaZtfUGJMPipdPmlkZcf4ONUg5n+4oVpHQuhEat3b3Zxm8VLsD1u7YGghdyH8OlKH+4B0/PCW5Rj0ttCOkWUQ6qVWz5h6TjE4=
+	t=1707845506; cv=none; b=E7xYJ/GFyPLkI2gmgRR29ANiNANeThMJrIfCY0L4aREoukrMs+K+eh9R91+2X2L5AFrRRDk4FwkXODgRx7JiNVk20h3GC4iDVJ+yFn/qiAKatHjaeMOhi9Bk8dNeFYSTNLewGljWnGPCUCNXqMApJqq1Z7/oJAy9oRqDy+cFV7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845502; c=relaxed/simple;
-	bh=61+KpM3i28zBZ//68MjaWYQSfXm2Gjgt+YdRwNoeyvY=;
+	s=arc-20240116; t=1707845506; c=relaxed/simple;
+	bh=VGGKE5ppvxRax8i/AsDWAJ6fohwXGYxPLs/gSN8yv/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RYaJg4dbWZnfpZNu+G0748vtmLk1Jsb2ikVWsS4qkekFpbDclZTHjoDc5EaKzCu2BOY83xjDDsAZA5PqryjER/JzymPzsDvUzOkfFVXRNrgPXg3sazw0uJG1MUimk8FGoGNtzirKuyEefOVN8+jhlZAoJ0NOk3/wXZHHhVyWGZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHDEAco2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WHXjyM+GT88w8TxByGkB/k4g7nePb0QSVcN9KCIAL2/+CrkFGMfJVTPHhE4Bh7hZSWy1EaJUdJG87ihv/P04flewrNbYrXBAt3lNeX75hPbZVGklQPsZLhHm3PnCiXBkFii1HEkzqUeA8wb10VAN5u6ye3Zz8IDPYK2FimcW4p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtSb+jIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHDEAco2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48C9C433C7;
-	Tue, 13 Feb 2024 17:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtSb+jIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1729FC433F1;
+	Tue, 13 Feb 2024 17:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845502;
-	bh=61+KpM3i28zBZ//68MjaWYQSfXm2Gjgt+YdRwNoeyvY=;
+	s=korg; t=1707845505;
+	bh=VGGKE5ppvxRax8i/AsDWAJ6fohwXGYxPLs/gSN8yv/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHDEAco2mDGAgMOqcsv4EuewiR8yTbKpYtnG4SMU2PzcRsLHSbd4Ia5KrXkzwgyNN
-	 2Gb2mS9H+xYSxLSE3pngAk/xdFLmyIfsOsrU8Vasneh6RM9OUNHLgvFujKLqmY7BL9
-	 KvpNSldEk/RBkq/kVOITfcr3Qhlwe7Z3diVYLWwU=
+	b=FtSb+jIk2Udn7jeccru0DHHEFZabXqNL2kV0XxPsEwrzNhH9pkgIq6D+2zt2Z/zmJ
+	 1hBz26KPyiBc2LFojER2epLWjNvS97MLRdS/fGCLMfBFDGFf9Nw+Atje3xBa4E7PtD
+	 0qXr6k3RS3OplD8GZhsJH24MUFHzN7C6/Nm3/dKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/121] riscv: Fix arch_hugetlb_migration_supported() for NAPOT
-Date: Tue, 13 Feb 2024 18:21:45 +0100
-Message-ID: <20240213171855.799103733@linuxfoundation.org>
+Subject: [PATCH 6.6 097/121] riscv: declare overflow_stack as exported from traps.c
+Date: Tue, 13 Feb 2024 18:21:46 +0100
+Message-ID: <20240213171855.827215010@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -51,85 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit ce68c035457bdd025a9961e0ba2157323090c581 ]
+[ Upstream commit 2cf963787529f615f7c93bdcf13a5e82029e7f38 ]
 
-arch_hugetlb_migration_supported() must be reimplemented to add support
-for NAPOT hugepages, which is done here.
+The percpu area overflow_stacks is exported from arch/riscv/kernel/traps.c
+for use in the entry code, but is not declared anywhere. Add the relevant
+declaration to arch/riscv/include/asm/stacktrace.h to silence the following
+sparse warning:
 
-Fixes: 82a1a1f3bfb6 ("riscv: mm: support Svnapot in hugetlb page")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20240130120114.106003-1-alexghiti@rivosinc.com
+arch/riscv/kernel/traps.c:395:1: warning: symbol '__pcpu_scope_overflow_stack' was not declared. Should it be static?
+
+We don't add the stackinfo_get_overflow() call as for some of the other
+architectures as this doesn't seem to be used yet, so just silence the
+warning.
+
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: be97d0db5f44 ("riscv: VMAP_STACK overflow detection thread-safe")
+Link: https://lore.kernel.org/r/20231123134214.81481-1-ben.dooks@codethink.co.uk
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/hugetlb.h |  3 +++
- arch/riscv/mm/hugetlbpage.c      | 16 +++++++++++++---
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ arch/riscv/include/asm/stacktrace.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/riscv/include/asm/hugetlb.h b/arch/riscv/include/asm/hugetlb.h
-index 4c5b0e929890..20f9c3ba2341 100644
---- a/arch/riscv/include/asm/hugetlb.h
-+++ b/arch/riscv/include/asm/hugetlb.h
-@@ -11,6 +11,9 @@ static inline void arch_clear_hugepage_flags(struct page *page)
+diff --git a/arch/riscv/include/asm/stacktrace.h b/arch/riscv/include/asm/stacktrace.h
+index f7e8ef2418b9..b1495a7e06ce 100644
+--- a/arch/riscv/include/asm/stacktrace.h
++++ b/arch/riscv/include/asm/stacktrace.h
+@@ -21,4 +21,9 @@ static inline bool on_thread_stack(void)
+ 	return !(((unsigned long)(current->stack) ^ current_stack_pointer) & ~(THREAD_SIZE - 1));
  }
- #define arch_clear_hugepage_flags arch_clear_hugepage_flags
  
-+bool arch_hugetlb_migration_supported(struct hstate *h);
-+#define arch_hugetlb_migration_supported arch_hugetlb_migration_supported
 +
- #ifdef CONFIG_RISCV_ISA_SVNAPOT
- #define __HAVE_ARCH_HUGE_PTE_CLEAR
- void huge_pte_clear(struct mm_struct *mm, unsigned long addr,
-diff --git a/arch/riscv/mm/hugetlbpage.c b/arch/riscv/mm/hugetlbpage.c
-index 87af75ee7186..e7b69281875b 100644
---- a/arch/riscv/mm/hugetlbpage.c
-+++ b/arch/riscv/mm/hugetlbpage.c
-@@ -364,7 +364,7 @@ void huge_pte_clear(struct mm_struct *mm,
- 		pte_clear(mm, addr, ptep);
- }
- 
--static __init bool is_napot_size(unsigned long size)
-+static bool is_napot_size(unsigned long size)
- {
- 	unsigned long order;
- 
-@@ -392,7 +392,7 @@ arch_initcall(napot_hugetlbpages_init);
- 
- #else
- 
--static __init bool is_napot_size(unsigned long size)
-+static bool is_napot_size(unsigned long size)
- {
- 	return false;
- }
-@@ -409,7 +409,7 @@ int pmd_huge(pmd_t pmd)
- 	return pmd_leaf(pmd);
- }
- 
--bool __init arch_hugetlb_valid_size(unsigned long size)
-+static bool __hugetlb_valid_size(unsigned long size)
- {
- 	if (size == HPAGE_SIZE)
- 		return true;
-@@ -421,6 +421,16 @@ bool __init arch_hugetlb_valid_size(unsigned long size)
- 		return false;
- }
- 
-+bool __init arch_hugetlb_valid_size(unsigned long size)
-+{
-+	return __hugetlb_valid_size(size);
-+}
++#ifdef CONFIG_VMAP_STACK
++DECLARE_PER_CPU(unsigned long [OVERFLOW_STACK_SIZE/sizeof(long)], overflow_stack);
++#endif /* CONFIG_VMAP_STACK */
 +
-+bool arch_hugetlb_migration_supported(struct hstate *h)
-+{
-+	return __hugetlb_valid_size(huge_page_size(h));
-+}
-+
- #ifdef CONFIG_CONTIG_ALLOC
- static __init int gigantic_pages_init(void)
- {
+ #endif /* _ASM_RISCV_STACKTRACE_H */
 -- 
 2.43.0
 
