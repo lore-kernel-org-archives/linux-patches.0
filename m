@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080025FF19;
-	Tue, 13 Feb 2024 17:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C305F54E;
+	Tue, 13 Feb 2024 17:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845238; cv=none; b=WOL/UFHJTPkYEjSu+wz1uj+BY7H0T6iYFcglRX82NXQl4L2ELhEh1QHySbpYgR3KX1FYHUhHVdNIymd39cd2P8Wyb24QvZy+xxP9WTEZmeH/xrl8IUNpg396XKZBlnCtI5LbHNtQyNqupnv5eJt10wJB2mWHkwQl4GizkASQnCA=
+	t=1707845241; cv=none; b=MsvXuoO9zj8fsOPvOWrIdFjZQNMOOyqkJeOZvpRyw+W99mxhYY0i8LDrpxEyAR9/IMzDeD6BJ5zlma8thFR7hrBsGfOxEiurNwnXUKy0p5ociGR4RFvk+zolFxflehydW1381nXT6hkBESGfeD9El3h+++toNhtt1x+ssOjWOCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845238; c=relaxed/simple;
-	bh=S1KFbAp3ocWHr6a32XFIEvDpb4a7KWFn761OJWkixLk=;
+	s=arc-20240116; t=1707845241; c=relaxed/simple;
+	bh=B44iKJQRA5fa6sCfs/7UzpINMeiotHqjtFrah0aKq0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWCGnr7q7EicLDBBc3vIHFbBww0+8Bsxaz6ZI3JZ0ozNt8PTKxR0SqbTQ9mcMG1FFBy1oHpAbZl6tftz6DUJmYbVqCUnr4JziD91oNLKlpb1F1grMfsjZjp/9lodZiwkajEDIhNtKT1O3qhbDf4d/qjJ61DCSu9w/oCMXpllYLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLcNmpX6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHBx7cePy69dBu9bZQBEvKqmINQY+PiKFOmksdSf21aFr02Lf3eRdNphXagg0RDeZUQoFJNAYIwDCXMEiSktQlUfuXPiKjEMBQNtRU2S6NdPsXZ3nEffNHnflN+Bq5/gsG5nwWBcPwYhI+FYa21imG1QTonvIcixDJo29ILStwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLm6QPAH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLcNmpX6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115FCC433F1;
-	Tue, 13 Feb 2024 17:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLm6QPAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40606C433F1;
+	Tue, 13 Feb 2024 17:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845237;
-	bh=S1KFbAp3ocWHr6a32XFIEvDpb4a7KWFn761OJWkixLk=;
+	s=korg; t=1707845240;
+	bh=B44iKJQRA5fa6sCfs/7UzpINMeiotHqjtFrah0aKq0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLcNmpX6DhXFdH/8ank08E8FckQbwo81JTfjgQHQZrkohWi61Yd3XRdW73AcXq15v
-	 NyKXIH+T51IJe+UPoLTjcV4qHC4hASoL7iVLDwpP8/5F+DIANQrUsdEL5ai5Z6Y9dy
-	 LTWeGzW89t0t655CqW9mBvHnilwsF/U/QRS0bAQA=
+	b=eLm6QPAHxEbVoVFrYMWgczHodRJSQgcIvX1Kumgd+GRhxWJ9338w5nG2B9ITz6Erq
+	 e37pBHx4m313n4L7sOsAlp/oO8+XUjsL45pAA6QtgZtjEI9fNWTv47qsscXEZBeXdj
+	 8v2W276mZIRA9ZHPdJ+zDsQDa5nQ91b3DtsC09lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cheng Lin <cheng.lin130@zte.com.cn>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Catherine Hoang <catherine.hoang@oracle.com>,
 	Chandan Babu R <chandanbabu@kernel.org>,
+	Catherine Hoang <catherine.hoang@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/121] xfs: make sure maxlen is still congruent with prod when rounding down
-Date: Tue, 13 Feb 2024 18:20:32 +0100
-Message-ID: <20240213171853.650236500@linuxfoundation.org>
+Subject: [PATCH 6.6 024/121] xfs: introduce protection for drop nlink
+Date: Tue, 13 Feb 2024 18:20:33 +0100
+Message-ID: <20240213171853.679407295@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -53,115 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Cheng Lin <cheng.lin130@zte.com.cn>
 
-commit f6a2dae2a1f52ea23f649c02615d073beba4cc35 upstream.
+commit 2b99e410b28f5a75ae417e6389e767c7745d6fce upstream.
 
-In commit 2a6ca4baed62, we tried to fix an overflow problem in the
-realtime allocator that was caused by an overly large maxlen value
-causing xfs_rtcheck_range to run off the end of the realtime bitmap.
-Unfortunately, there is a subtle bug here -- maxlen (and minlen) both
-have to be aligned with @prod, but @prod can be larger than 1 if the
-user has set an extent size hint on the file, and that extent size hint
-is larger than the realtime extent size.
+When abnormal drop_nlink are detected on the inode,
+return error, to avoid corruption propagation.
 
-If the rt free space extents are not aligned to this file's extszhint
-because other files without extent size hints allocated space (or the
-number of rt extents is similarly not aligned), then it's possible that
-maxlen after clamping to sb_rextents will no longer be aligned to prod.
-The allocation will succeed just fine, but we still trip the assertion.
-
-Fix the problem by reducing maxlen by any misalignment with prod.  While
-we're at it, split the assertions into two so that we can tell which
-value had the bad alignment.
-
-Fixes: 2a6ca4baed62 ("xfs: make sure the rt allocator doesn't run off the end")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Cheng Lin <cheng.lin130@zte.com.cn>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_rtalloc.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ fs/xfs/xfs_inode.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/xfs/xfs_rtalloc.c b/fs/xfs/xfs_rtalloc.c
-index 31fd65b3aaa9..0e4e2df08aed 100644
---- a/fs/xfs/xfs_rtalloc.c
-+++ b/fs/xfs/xfs_rtalloc.c
-@@ -211,6 +211,23 @@ xfs_rtallocate_range(
- 	return error;
- }
- 
-+/*
-+ * Make sure we don't run off the end of the rt volume.  Be careful that
-+ * adjusting maxlen downwards doesn't cause us to fail the alignment checks.
-+ */
-+static inline xfs_extlen_t
-+xfs_rtallocate_clamp_len(
-+	struct xfs_mount	*mp,
-+	xfs_rtblock_t		startrtx,
-+	xfs_extlen_t		rtxlen,
-+	xfs_extlen_t		prod)
-+{
-+	xfs_extlen_t		ret;
+diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
+index 4d55f58d99b7..fb85c5c81745 100644
+--- a/fs/xfs/xfs_inode.c
++++ b/fs/xfs/xfs_inode.c
+@@ -918,6 +918,13 @@ xfs_droplink(
+ 	xfs_trans_t *tp,
+ 	xfs_inode_t *ip)
+ {
++	if (VFS_I(ip)->i_nlink == 0) {
++		xfs_alert(ip->i_mount,
++			  "%s: Attempt to drop inode (%llu) with nlink zero.",
++			  __func__, ip->i_ino);
++		return -EFSCORRUPTED;
++	}
 +
-+	ret = min(mp->m_sb.sb_rextents, startrtx + rtxlen) - startrtx;
-+	return rounddown(ret, prod);
-+}
-+
- /*
-  * Attempt to allocate an extent minlen<=len<=maxlen starting from
-  * bitmap block bbno.  If we don't get maxlen then use prod to trim
-@@ -248,7 +265,7 @@ xfs_rtallocate_extent_block(
- 	     i <= end;
- 	     i++) {
- 		/* Make sure we don't scan off the end of the rt volume. */
--		maxlen = min(mp->m_sb.sb_rextents, i + maxlen) - i;
-+		maxlen = xfs_rtallocate_clamp_len(mp, i, maxlen, prod);
+ 	xfs_trans_ichgtime(tp, ip, XFS_ICHGTIME_CHG);
  
- 		/*
- 		 * See if there's a free extent of maxlen starting at i.
-@@ -355,7 +372,8 @@ xfs_rtallocate_extent_exact(
- 	int		isfree;		/* extent is free */
- 	xfs_rtblock_t	next;		/* next block to try (dummy) */
- 
--	ASSERT(minlen % prod == 0 && maxlen % prod == 0);
-+	ASSERT(minlen % prod == 0);
-+	ASSERT(maxlen % prod == 0);
- 	/*
- 	 * Check if the range in question (for maxlen) is free.
- 	 */
-@@ -438,7 +456,9 @@ xfs_rtallocate_extent_near(
- 	xfs_rtblock_t	n;		/* next block to try */
- 	xfs_rtblock_t	r;		/* result block */
- 
--	ASSERT(minlen % prod == 0 && maxlen % prod == 0);
-+	ASSERT(minlen % prod == 0);
-+	ASSERT(maxlen % prod == 0);
-+
- 	/*
- 	 * If the block number given is off the end, silently set it to
- 	 * the last block.
-@@ -447,7 +467,7 @@ xfs_rtallocate_extent_near(
- 		bno = mp->m_sb.sb_rextents - 1;
- 
- 	/* Make sure we don't run off the end of the rt volume. */
--	maxlen = min(mp->m_sb.sb_rextents, bno + maxlen) - bno;
-+	maxlen = xfs_rtallocate_clamp_len(mp, bno, maxlen, prod);
- 	if (maxlen < minlen) {
- 		*rtblock = NULLRTBLOCK;
- 		return 0;
-@@ -638,7 +658,8 @@ xfs_rtallocate_extent_size(
- 	xfs_rtblock_t	r;		/* result block number */
- 	xfs_suminfo_t	sum;		/* summary information for extents */
- 
--	ASSERT(minlen % prod == 0 && maxlen % prod == 0);
-+	ASSERT(minlen % prod == 0);
-+	ASSERT(maxlen % prod == 0);
- 	ASSERT(maxlen != 0);
- 
- 	/*
+ 	drop_nlink(VFS_I(ip));
 -- 
 2.43.0
 
