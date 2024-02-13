@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DB55F54E;
-	Tue, 13 Feb 2024 17:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE335F54E;
+	Tue, 13 Feb 2024 17:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845555; cv=none; b=ZPpgs9sHAdUtSvTHWvIjoAQiTBEN7MN2EzJHbbIqizb2cuoem+5E3P9zLRLWd5YgBzeX/gAepQuhfTexcvOCW5g04VEhin9AlfuG307cmkBLx9DS3B19vD2htV9mvWuGhxUIxT5WpXd8mADNJSunq4QzzjYV5W8gJY4qfoEfPC0=
+	t=1707845558; cv=none; b=Vxj9cjXdUbPfIvtw12khJl1/ZArdaHsnDHGPa9Y6wv6oVbGgeVbnkAHyCF+NzrT2vhXPlcAJtWTu5LD3IvIH9cvGA0F3I4QxR2xtw+Njf+r+eYo7LNCFdBs4YrQtkEVpV705w79aFcz+RfWerYOBZ+K9EKQVQ4ANVn5Fw2mX+9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845555; c=relaxed/simple;
-	bh=TmYtdWRlgP16Xcv5i0RH2N8Lgphc47Xirlvnx3CgYto=;
+	s=arc-20240116; t=1707845558; c=relaxed/simple;
+	bh=FNTsyfkrZbCs6vZdGVYAa4o6B6tsei0OwzS2Ef7cSV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WzqYxa6zahU5R1HC0TVvj4Z5lgnBmJxiXbTYTxIqNIOOiN6rw3of29UemggApF/jly9yDLCzQk/Me7lMp2GUG14Ie4g9HxkzfV49b30C9GmHEUVQolRGSZ0IjZAT2vyPOoz+xxuz9EIYYF82WgJ/ixck9FvhTkVEEGDpA2paR/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhJBjvTE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FiXQFRNHymOd7mKR/z2FsXu25saueP1BDDih8S7kPlShU08Wi5OAYJwx24P2MOA7fGO1F52O9KmZYlkzUg0Sqcq8b9wr8ElINHrdD9p8XIxpXmlbR07o1xsVssOiXjptmakCdiWheBeI4REXBj8zFk1eN4CAp6MBOCpJ9MAR89c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BG1R13JB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhJBjvTE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3594CC43394;
-	Tue, 13 Feb 2024 17:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BG1R13JB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D06AC433F1;
+	Tue, 13 Feb 2024 17:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845554;
-	bh=TmYtdWRlgP16Xcv5i0RH2N8Lgphc47Xirlvnx3CgYto=;
+	s=korg; t=1707845557;
+	bh=FNTsyfkrZbCs6vZdGVYAa4o6B6tsei0OwzS2Ef7cSV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rhJBjvTEK9NZMxSbvhsQARQTbypMdV/3oziAM+XdvirapgjCBFgpXcGXBlgTAtcTu
-	 Dg6aYku2UjiXqi4Kx4mFBMly/kE+zdD8WG1rCMEjWse5wJeu5zcmwlfZ+y16gxzQ7F
-	 froGVVRWm/ZDglJngcfbm20xl5j2bJXGLCtDm5L0=
+	b=BG1R13JB5P9Qt2rrTMlcWBQphWwpzz6B5oLKHc+L63ACUuach1z1/OCGHiMvervsX
+	 U8eTNqijjpV1G0Pk60GYTz1YUbL0ta9AagilrJaD3UVkmqHqgdXdBgATlae4Alld/l
+	 mbrFKKN4DEhdmZqeTtOQ6z9qQoDbdtrn2IFkgbdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Wang <frank.wang@rock-chips.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 105/121] Revert "usb: typec: tcpm: fix cc role at port reset"
-Date: Tue, 13 Feb 2024 18:21:54 +0100
-Message-ID: <20240213171856.056990515@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 114/121] Input: atkbd - skip ATKBD_CMD_SETLEDS when skipping ATKBD_CMD_GETID
+Date: Tue, 13 Feb 2024 18:22:03 +0100
+Message-ID: <20240213171856.315652010@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -51,50 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit b717dfbf73e842d15174699fe2c6ee4fdde8aa1f upstream.
+commit 683cd8259a9b883a51973511f860976db2550a6e upstream.
 
-This reverts commit 1e35f074399dece73d5df11847d4a0d7a6f49434.
+After commit 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in
+translated mode") the keyboard on Dell XPS 13 9350 / 9360 / 9370 models
+has stopped working after a suspend/resume.
 
-Given that ERROR_RECOVERY calls into PORT_RESET for Hi-Zing
-the CC pins, setting CC pins to default state during PORT_RESET
-breaks error recovery.
+The problem appears to be that atkbd_probe() fails when called
+from atkbd_reconnect() on resume, which on systems where
+ATKBD_CMD_GETID is skipped can only happen by ATKBD_CMD_SETLEDS
+failing. ATKBD_CMD_SETLEDS failing because ATKBD_CMD_GETID was
+skipped is weird, but apparently that is what is happening.
 
-4.5.2.2.2.1 ErrorRecovery State Requirements
-The port shall not drive VBUS or VCONN, and shall present a
-high-impedance to ground (above zOPEN) on its CC1 and CC2 pins.
+Fix this by also skipping ATKBD_CMD_SETLEDS when skipping
+ATKBD_CMD_GETID.
 
-Hi-Zing the CC pins is the inteded behavior for PORT_RESET.
-CC pins are set to default state after tErrorRecovery in
-PORT_RESET_WAIT_OFF.
-
-4.5.2.2.2.2 Exiting From ErrorRecovery State
-A Sink shall transition to Unattached.SNK after tErrorRecovery.
-A Source shall transition to Unattached.SRC after tErrorRecovery.
-
+Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Closes: https://lore.kernel.org/linux-input/0aa4a61f-c939-46fe-a572-08022e8931c7@molgen.mpg.de/
+Closes: https://bbs.archlinux.org/viewtopic.php?pid=2146300
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218424
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2260517
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Cc: stable@vger.kernel.org
-Cc: Frank Wang <frank.wang@rock-chips.com>
-Fixes: 1e35f074399d ("usb: typec: tcpm: fix cc role at port reset")
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240117114742.2587779-1-badhri@google.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240126160724.13278-2-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/input/keyboard/atkbd.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -4862,8 +4862,7 @@ static void run_state_machine(struct tcp
- 		break;
- 	case PORT_RESET:
- 		tcpm_reset_port(port);
--		tcpm_set_cc(port, tcpm_default_state(port) == SNK_UNATTACHED ?
--			    TYPEC_CC_RD : tcpm_rp_cc(port));
-+		tcpm_set_cc(port, TYPEC_CC_OPEN);
- 		tcpm_set_state(port, PORT_RESET_WAIT_OFF,
- 			       PD_T_ERROR_RECOVERY);
- 		break;
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -811,7 +811,6 @@ static int atkbd_probe(struct atkbd *atk
+ {
+ 	struct ps2dev *ps2dev = &atkbd->ps2dev;
+ 	unsigned char param[2];
+-	bool skip_getid;
+ 
+ /*
+  * Some systems, where the bit-twiddling when testing the io-lines of the
+@@ -825,6 +824,11 @@ static int atkbd_probe(struct atkbd *atk
+ 				 "keyboard reset failed on %s\n",
+ 				 ps2dev->serio->phys);
+ 
++	if (atkbd_skip_getid(atkbd)) {
++		atkbd->id = 0xab83;
++		return 0;
++	}
++
+ /*
+  * Then we check the keyboard ID. We should get 0xab83 under normal conditions.
+  * Some keyboards report different values, but the first byte is always 0xab or
+@@ -833,18 +837,17 @@ static int atkbd_probe(struct atkbd *atk
+  */
+ 
+ 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
+-	skip_getid = atkbd_skip_getid(atkbd);
+-	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
++	if (ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
+ 
+ /*
+- * If the get ID command was skipped or failed, we check if we can at least set
++ * If the get ID command failed, we check if we can at least set
+  * the LEDs on the keyboard. This should work on every keyboard out there.
+  * It also turns the LEDs off, which we want anyway.
+  */
+ 		param[0] = 0;
+ 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
+ 			return -1;
+-		atkbd->id = skip_getid ? 0xab83 : 0xabba;
++		atkbd->id = 0xabba;
+ 		return 0;
+ 	}
+ 
 
 
