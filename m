@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20AB65FF17;
-	Tue, 13 Feb 2024 17:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DC65FF17;
+	Tue, 13 Feb 2024 17:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845921; cv=none; b=cPKMTdq+z0Dwz41hMcLRjehSXJ3hfp4v91WWmC1EcXC0660vnfKR4wZdHx+1qqL48l/943Qa+JNhJ4uMqKI2k7Ua5KhnmqpIvfo/S3l6GNC9b/vvhcDTxSOtDu7Nx41lDujC9VQnyl6XrHnEs1X1GVdXp9ySN2ZTmBFWj7rkI6A=
+	t=1707845924; cv=none; b=n5DJRBuVqvfLqqdfy56/1F0+QeWf8kUW6iDGNQUQXC8++5umKLoQuVq15mW8JGKbgJVwPQCgAZ1Siq+aZQ0HsSStEe5sXpLeGr3QmIJDXtOK1hgFEwIENXOdf9vuuRenaFTTZHE0rLBaS1++N/PZa3aS/3aclbuukr0rXE7lLpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845921; c=relaxed/simple;
-	bh=Lh5LXjp9ZtuKgVFdKFwmnZIzyY8nVQwsvRHy5SsW+dg=;
+	s=arc-20240116; t=1707845924; c=relaxed/simple;
+	bh=DXkUfBpeQdiN9d98QrXbpDqwi3c+Uq3DmzWEVsBf7zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfYeJqmpjbjH/S18/kNzJcQ+FWbO6T5/M/kMfXgxavPrOPwIqgd+de/BZQKCwfn9GMT6SJDY5PygX1N/2PPtpYLwNk7wePCNa79kbfJrNcq7njebiPnrTvmynB2fy3V+3+qnHmugiuVcIYqr7PBgnDbn2xXzHusHd6eJbx9Awso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+vkLXyT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c6mjjtJrSFWMU68qOWzWPVzpwjch0wNLszFz4OekyiTzw0WZQK6cG7zrwaOExvhZU0RXi1T5X288d/+eZ3vcEXcyVDUhtBOvBzwz6HDhs3UlZdHY27Y/iIGdYrdOCD2mdcvxk7yW4cQDAdC5fLyaxwCdN0xp/a3e/+27WkjD2zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHz41qgE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+vkLXyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AACDC433C7;
-	Tue, 13 Feb 2024 17:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHz41qgE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A28C433F1;
+	Tue, 13 Feb 2024 17:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845921;
-	bh=Lh5LXjp9ZtuKgVFdKFwmnZIzyY8nVQwsvRHy5SsW+dg=;
+	s=korg; t=1707845924;
+	bh=DXkUfBpeQdiN9d98QrXbpDqwi3c+Uq3DmzWEVsBf7zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+vkLXyTCq5PkDad85JLhyH8T01ZNCK2FDXIQXr1/xem2OeEQjUrqNkcyyHpbK6X5
-	 DzEgLaqPmGteIn+5maFEDr5VpsOMiH2z8AD0GA9fxa6W/SEGGgdgcoBg3xh1vPlecx
-	 MnyWJI0ppNmg67fnkXDU6DcotgDhxNfE3Bm9CwJI=
+	b=tHz41qgEXIZsY6iu/EOiEWjNiEQ0LXbjyJsu7ZmXHb3AaTChGGWWevxwy/nmif1cz
+	 gXdE0OBpf/JmcUsARQReoBGiBaXYl0KMbLvG31/yGgD8F599uCINuf9jfMQdXHOMKh
+	 IFOtPSxj92JYOxg3mdoK7xPNOV7MAUqoy0A/fPOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>
-Subject: [PATCH 6.7 097/124] usb: host: xhci-plat: Add support for XHCI_SG_TRB_CACHE_SIZE_QUIRK
-Date: Tue, 13 Feb 2024 18:21:59 +0100
-Message-ID: <20240213171856.563949676@linuxfoundation.org>
+	=?UTF-8?q?Micha=C5=82=20Pecio?= <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.7 098/124] xhci: process isoc TD properly when there was a transaction error mid TD.
+Date: Tue, 13 Feb 2024 18:22:00 +0100
+Message-ID: <20240213171856.593015803@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -43,44 +44,181 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 520b391e3e813c1dd142d1eebb3ccfa6d08c3995 upstream.
+commit 5372c65e1311a16351ef03dd096ff576e6477674 upstream.
 
-Upstream commit bac1ec551434 ("usb: xhci: Set quirk for
-XHCI_SG_TRB_CACHE_SIZE_QUIRK") introduced a new quirk in XHCI
-which fixes XHC timeout, which was seen on synopsys XHCs while
-using SG buffers. Currently this quirk can only be set using
-xhci private data. But there are some drivers like dwc3/host.c
-which adds adds quirks using software node for xhci device.
-Hence set this xhci quirk by iterating over device properties.
+The last TRB of a isoc TD might not trigger an event if there was
+an error event for a TRB mid TD. This is seen on a NEC Corporation
+uPD720200 USB 3.0 Host
 
-Cc: stable@vger.kernel.org # 5.11
-Fixes: bac1ec551434 ("usb: xhci: Set quirk for XHCI_SG_TRB_CACHE_SIZE_QUIRK")
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/20240116055816.1169821-3-quic_prashk@quicinc.com
+After an error mid a multi-TRB TD the xHC should according to xhci 4.9.1
+generate events for passed TRBs with IOC flag set if it proceeds to the
+next TD. This event is either a copy of the original error, or a
+"success" transfer event.
+
+If that event is missing then the driver and xHC host get out of sync as
+the driver is still expecting a transfer event for that first TD, while
+xHC host is already sending events for the next TD in the list.
+This leads to
+"Transfer event TRB DMA ptr not part of current TD" messages.
+
+As a solution we tag the isoc TDs that get error events mid TD.
+If an event doesn't match the first TD, then check if the tag is
+set, and event points to the next TD.
+In that case give back the fist TD and process the next TD normally
+
+Make sure TD status and transferred length stay valid in both cases
+with and without final TD completion event.
+
+Reported-by: Michał Pecio <michal.pecio@gmail.com>
+Closes: https://lore.kernel.org/linux-usb/20240112235205.1259f60c@foxbook/
+Tested-by: Michał Pecio <michal.pecio@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240125152737.2983959-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-plat.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/host/xhci-ring.c |   74 ++++++++++++++++++++++++++++++++++---------
+ drivers/usb/host/xhci.h      |    1 
+ 2 files changed, 61 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -250,6 +250,9 @@ int xhci_plat_probe(struct platform_devi
- 		if (device_property_read_bool(tmpdev, "quirk-broken-port-ped"))
- 			xhci->quirks |= XHCI_BROKEN_PORT_PED;
- 
-+		if (device_property_read_bool(tmpdev, "xhci-sg-trb-cache-size-quirk"))
-+			xhci->quirks |= XHCI_SG_TRB_CACHE_SIZE_QUIRK;
-+
- 		device_property_read_u32(tmpdev, "imod-interval-ns",
- 					 &xhci->imod_interval);
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2375,6 +2375,9 @@ static int process_isoc_td(struct xhci_h
+ 	/* handle completion code */
+ 	switch (trb_comp_code) {
+ 	case COMP_SUCCESS:
++		/* Don't overwrite status if TD had an error, see xHCI 4.9.1 */
++		if (td->error_mid_td)
++			break;
+ 		if (remaining) {
+ 			frame->status = short_framestatus;
+ 			if (xhci->quirks & XHCI_TRUST_TX_LENGTH)
+@@ -2400,8 +2403,9 @@ static int process_isoc_td(struct xhci_h
+ 		break;
+ 	case COMP_USB_TRANSACTION_ERROR:
+ 		frame->status = -EPROTO;
++		sum_trbs_for_length = true;
+ 		if (ep_trb != td->last_trb)
+-			return 0;
++			td->error_mid_td = true;
+ 		break;
+ 	case COMP_STOPPED:
+ 		sum_trbs_for_length = true;
+@@ -2421,6 +2425,9 @@ static int process_isoc_td(struct xhci_h
+ 		break;
  	}
+ 
++	if (td->urb_length_set)
++		goto finish_td;
++
+ 	if (sum_trbs_for_length)
+ 		frame->actual_length = sum_trb_lengths(xhci, ep->ring, ep_trb) +
+ 			ep_trb_len - remaining;
+@@ -2429,6 +2436,14 @@ static int process_isoc_td(struct xhci_h
+ 
+ 	td->urb->actual_length += frame->actual_length;
+ 
++finish_td:
++	/* Don't give back TD yet if we encountered an error mid TD */
++	if (td->error_mid_td && ep_trb != td->last_trb) {
++		xhci_dbg(xhci, "Error mid isoc TD, wait for final completion event\n");
++		td->urb_length_set = true;
++		return 0;
++	}
++
+ 	return finish_td(xhci, ep, ep_ring, td, trb_comp_code);
+ }
+ 
+@@ -2807,17 +2822,51 @@ static int handle_tx_event(struct xhci_h
+ 		}
+ 
+ 		if (!ep_seg) {
+-			if (!ep->skip ||
+-			    !usb_endpoint_xfer_isoc(&td->urb->ep->desc)) {
+-				/* Some host controllers give a spurious
+-				 * successful event after a short transfer.
+-				 * Ignore it.
+-				 */
+-				if ((xhci->quirks & XHCI_SPURIOUS_SUCCESS) &&
+-						ep_ring->last_td_was_short) {
+-					ep_ring->last_td_was_short = false;
+-					goto cleanup;
++
++			if (ep->skip && usb_endpoint_xfer_isoc(&td->urb->ep->desc)) {
++				skip_isoc_td(xhci, td, ep, status);
++				goto cleanup;
++			}
++
++			/*
++			 * Some hosts give a spurious success event after a short
++			 * transfer. Ignore it.
++			 */
++			if ((xhci->quirks & XHCI_SPURIOUS_SUCCESS) &&
++			    ep_ring->last_td_was_short) {
++				ep_ring->last_td_was_short = false;
++				goto cleanup;
++			}
++
++			/*
++			 * xhci 4.10.2 states isoc endpoints should continue
++			 * processing the next TD if there was an error mid TD.
++			 * So host like NEC don't generate an event for the last
++			 * isoc TRB even if the IOC flag is set.
++			 * xhci 4.9.1 states that if there are errors in mult-TRB
++			 * TDs xHC should generate an error for that TRB, and if xHC
++			 * proceeds to the next TD it should genete an event for
++			 * any TRB with IOC flag on the way. Other host follow this.
++			 * So this event might be for the next TD.
++			 */
++			if (td->error_mid_td &&
++			    !list_is_last(&td->td_list, &ep_ring->td_list)) {
++				struct xhci_td *td_next = list_next_entry(td, td_list);
++
++				ep_seg = trb_in_td(xhci, td_next->start_seg, td_next->first_trb,
++						   td_next->last_trb, ep_trb_dma, false);
++				if (ep_seg) {
++					/* give back previous TD, start handling new */
++					xhci_dbg(xhci, "Missing TD completion event after mid TD error\n");
++					ep_ring->dequeue = td->last_trb;
++					ep_ring->deq_seg = td->last_trb_seg;
++					inc_deq(xhci, ep_ring);
++					xhci_td_cleanup(xhci, td, ep_ring, td->status);
++					td = td_next;
+ 				}
++			}
++
++			if (!ep_seg) {
+ 				/* HC is busted, give up! */
+ 				xhci_err(xhci,
+ 					"ERROR Transfer event TRB DMA ptr not "
+@@ -2829,9 +2878,6 @@ static int handle_tx_event(struct xhci_h
+ 					  ep_trb_dma, true);
+ 				return -ESHUTDOWN;
+ 			}
+-
+-			skip_isoc_td(xhci, td, ep, status);
+-			goto cleanup;
+ 		}
+ 		if (trb_comp_code == COMP_SHORT_PACKET)
+ 			ep_ring->last_td_was_short = true;
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1547,6 +1547,7 @@ struct xhci_td {
+ 	struct xhci_segment	*bounce_seg;
+ 	/* actual_length of the URB has already been set */
+ 	bool			urb_length_set;
++	bool			error_mid_td;
+ 	unsigned int		num_trbs;
+ };
+ 
 
 
