@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2E95F56B;
-	Tue, 13 Feb 2024 17:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C244D5FF04;
+	Tue, 13 Feb 2024 17:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845574; cv=none; b=HEg+LrbTEdhtCT3yhy/KFDRkkQ1u+6leIxSy7D5BqMm9ugA/uT9WLvxD58yeOsL1i9/nbQtjPuP2P/q3enesi2d7A1ioZt38313gnUMDaGif49s6aBo9xHgw4yCmBpqUoUl4bSPdUUbbHe/D+a8uo0FC/KMlWB0PeMLtl3QluxM=
+	t=1707845579; cv=none; b=LXOJqOzPl3QUFKk43NNyX9f4e7Hy+/vX0ITmOII26s0vYfQcLy8H3wdman45yObQZJAjzWwP6JKlS2wHlsJc4wrBLjLT5VyXAzm2uxXREXJAJs+WrTUirLi5fD7OYbsLVC7I7RYkd16xSzRwvLnaPK9YJ+MaiL6OW7HTzRw5E4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845574; c=relaxed/simple;
-	bh=vt1Ata/LlLg0iy821nVek4DspNuXtGFPo0vDlkFLTxQ=;
+	s=arc-20240116; t=1707845579; c=relaxed/simple;
+	bh=3XaMkirfwC0HLumJGOtWBkRo7mH4fHYx1CcTrJMmqBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNcBhQ1tvwVJu7O6wdyGZk29QoREkV3oJRX8RHxXCaXWRUYeEieJYQtEyn2Rfqwj0kM6Yr0huPr55nktJzRyVaEEi4PwyCRH40wgc90WnwFNVNFeSr39ATZyDWLjKHnUOvhpoWFEgfsAEZB4yX7QMCZnBpYuhDYS7Z2R93e8W/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwrN+mBu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mXlIVdV5r8Gu9yRkwDH32XHMn71FlSVFPIeytZ0EJvAOb2wBb0ujOSNdAwQGpHOTC4onkxidRsoxeUd8bI6bht9yCX6WAbxyA2ArbYGh9a0OfgOefUDrEzdsg1ps8a1Rdg0NaYFYc2nRKBHE1KA+JPMRz7Wyc6sknuWliAeqdH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEiTLIZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwrN+mBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC82C433F1;
-	Tue, 13 Feb 2024 17:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEiTLIZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9348C433F1;
+	Tue, 13 Feb 2024 17:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845574;
-	bh=vt1Ata/LlLg0iy821nVek4DspNuXtGFPo0vDlkFLTxQ=;
+	s=korg; t=1707845577;
+	bh=3XaMkirfwC0HLumJGOtWBkRo7mH4fHYx1CcTrJMmqBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwrN+mBu4xswy1Ncm2g+L5elAg3T1q7+tzs2lMn5kI3LGJMhYD1YC2r6j8FxclD6f
-	 HZys7vbbOhdVA7g/rn6Zto8wEnxCHsuuV9d/1GuFf6hT42y/TT/dM2aXln+iiSQDy0
-	 Eo34dxF1F5n435ynwmtO/jivTJSkQYFKyZf+xDRE=
+	b=wEiTLIZc64s2JSCb+cqzxNW0nSddM5GrZy9dwfx2obJh1HzflfNfNx57KSsmTXTqQ
+	 NwZ6VxOHN4ppii8ESoJ2bYkt2mK8l38vJ0OiYxLYQj15teL8RXTa3pWb/4pTK0FJAy
+	 bOqxFFTXexisttxUFnTIVU1ji5IhU335v8oy5wXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 119/121] io_uring/net: un-indent mshot retry path in io_recv_finish()
-Date: Tue, 13 Feb 2024 18:22:08 +0100
-Message-ID: <20240213171856.459895981@linuxfoundation.org>
+Subject: [PATCH 6.6 120/121] io_uring/poll: add requeue return code from poll multishot handling
+Date: Tue, 13 Feb 2024 18:22:09 +0100
+Message-ID: <20240213171856.488704650@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -51,65 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-Commit 91e5d765a82fb2c9d0b7ad930d8953208081ddf1 upstream.
+Commit 704ea888d646cb9d715662944cf389c823252ee0 upstream.
 
-In preparation for putting some retry logic in there, have the done
-path just skip straight to the end rather than have too much nesting
-in here.
+Since our poll handling is edge triggered, multishot handlers retry
+internally until they know that no more data is available. In
+preparation for limiting these retries, add an internal return code,
+IOU_REQUEUE, which can be used to inform the poll backend about the
+handler wanting to retry, but that this should happen through a normal
+task_work requeue rather than keep hammering on the issue side for this
+one request.
 
-No functional changes in this patch.
+No functional changes in this patch, nobody is using this return code
+just yet.
 
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |   36 ++++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ io_uring/io_uring.h |    7 +++++++
+ io_uring/poll.c     |    9 ++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -645,23 +645,27 @@ static inline bool io_recv_finish(struct
- 		return true;
- 	}
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -31,6 +31,13 @@ enum {
+ 	IOU_ISSUE_SKIP_COMPLETE	= -EIOCBQUEUED,
  
--	if (!mshot_finished) {
--		if (io_fill_cqe_req_aux(req, issue_flags & IO_URING_F_COMPLETE_DEFER,
--					*ret, cflags | IORING_CQE_F_MORE)) {
--			io_recv_prep_retry(req);
--			/* Known not-empty or unknown state, retry */
--			if (cflags & IORING_CQE_F_SOCK_NONEMPTY ||
--			    msg->msg_inq == -1)
--				return false;
--			if (issue_flags & IO_URING_F_MULTISHOT)
--				*ret = IOU_ISSUE_SKIP_COMPLETE;
--			else
--				*ret = -EAGAIN;
--			return true;
--		}
--		/* Otherwise stop multishot but use the current result. */
--	}
-+	if (mshot_finished)
-+		goto finish;
- 
-+	/*
-+	 * Fill CQE for this receive and see if we should keep trying to
-+	 * receive from this socket.
+ 	/*
++	 * Requeue the task_work to restart operations on this request. The
++	 * actual value isn't important, should just be not an otherwise
++	 * valid error code, yet less than -MAX_ERRNO and valid internally.
 +	 */
-+	if (io_fill_cqe_req_aux(req, issue_flags & IO_URING_F_COMPLETE_DEFER,
-+				*ret, cflags | IORING_CQE_F_MORE)) {
-+		io_recv_prep_retry(req);
-+		/* Known not-empty or unknown state, retry */
-+		if (cflags & IORING_CQE_F_SOCK_NONEMPTY || msg->msg_inq == -1)
-+			return false;
-+		if (issue_flags & IO_URING_F_MULTISHOT)
-+			*ret = IOU_ISSUE_SKIP_COMPLETE;
-+		else
-+			*ret = -EAGAIN;
-+		return true;
-+	}
-+	/* Otherwise stop multishot but use the current result. */
-+finish:
- 	io_req_set_res(req, *ret, cflags);
++	IOU_REQUEUE		= -3072,
++
++	/*
+ 	 * Intended only when both IO_URING_F_MULTISHOT is passed
+ 	 * to indicate to the poll runner that multishot should be
+ 	 * removed and the result is set on req->cqe.res.
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -226,6 +226,7 @@ enum {
+ 	IOU_POLL_NO_ACTION = 1,
+ 	IOU_POLL_REMOVE_POLL_USE_RES = 2,
+ 	IOU_POLL_REISSUE = 3,
++	IOU_POLL_REQUEUE = 4,
+ };
  
- 	if (issue_flags & IO_URING_F_MULTISHOT)
+ static void __io_poll_execute(struct io_kiocb *req, int mask)
+@@ -324,6 +325,8 @@ static int io_poll_check_events(struct i
+ 			int ret = io_poll_issue(req, ts);
+ 			if (ret == IOU_STOP_MULTISHOT)
+ 				return IOU_POLL_REMOVE_POLL_USE_RES;
++			else if (ret == IOU_REQUEUE)
++				return IOU_POLL_REQUEUE;
+ 			if (ret < 0)
+ 				return ret;
+ 		}
+@@ -346,8 +349,12 @@ void io_poll_task_func(struct io_kiocb *
+ 	int ret;
+ 
+ 	ret = io_poll_check_events(req, ts);
+-	if (ret == IOU_POLL_NO_ACTION)
++	if (ret == IOU_POLL_NO_ACTION) {
+ 		return;
++	} else if (ret == IOU_POLL_REQUEUE) {
++		__io_poll_execute(req, 0);
++		return;
++	}
+ 	io_poll_remove_entries(req);
+ 	io_poll_tw_hash_eject(req, ts);
+ 
 
 
