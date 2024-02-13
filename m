@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A48F6024A;
-	Tue, 13 Feb 2024 17:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95944604DD;
+	Tue, 13 Feb 2024 17:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845699; cv=none; b=kVewkAD/thcwJMt88bBZ0Lyl6wqGGapPsXLnR1mNJus98JOCAmFrkN4WfaEfKIlz6B8hxhzvRIcddx/ytgvH3WXNVgFEOHUedbQ9rMJQtpjQJ2olJSZnQ8ye3io+kUehwVZjQQ81kaDB/eUvcQ34YXb+7rlE+ha0OPfoTaRuMIo=
+	t=1707845702; cv=none; b=NMItd+S9Pg6JijX1bFOTjjpxp6ynyULJI5C8Ta8YrGLsjfpOxfVs6d70C50F7zJGpDSlly98vqL3LG/FXC9FPBxCjpPCVX+eNKuJaoW9LnypeOtg9VLysvvJfEq6nTC7/ud15mLpZ789ipIJG5sGo63JRD/49FRGSiZWstW7rME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845699; c=relaxed/simple;
-	bh=NcEjaMmrjIcqpAOk18KdVE6dnJ63LfdN7O8fzAAt4Ms=;
+	s=arc-20240116; t=1707845702; c=relaxed/simple;
+	bh=kThvbYePJ2CAk9YeIMIQl/0/165Cqkm+zlN2M9/kSAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaE8Wz1X3QRDk8fTA1xNVlSiEJu/ZfW4Q4h8QmdUFq/7ZiWBRtFnjcdcQrfz0vDbeOWymdSftT2lDfpLKBWCKdhgIUxmPZbdt6Ysrb/aq83U4eKZJir0BWrXU837YRpvgEmxCkSDwYBqRHLc3/EJ09vvcRK/7zfbGrozplTL8+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU0pr54z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpT79eMLDw4W9GZ+TGhpHE0adZl0iR22iSPLc08vQWuyH7BmhEYNLkPT6duUQDDKUdK5gtfAh40M7XKxeXOBusBTRarTtNC9RNPp/QcOsJTORqhjtqRKjZvF79Yt8qqeNfHtflLOFIAHVl9fz8Q9KNjM8RA5N2ZC+S6y4/RNkI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5WpASnV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU0pr54z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29ACC43394;
-	Tue, 13 Feb 2024 17:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5WpASnV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED01DC433F1;
+	Tue, 13 Feb 2024 17:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845699;
-	bh=NcEjaMmrjIcqpAOk18KdVE6dnJ63LfdN7O8fzAAt4Ms=;
+	s=korg; t=1707845702;
+	bh=kThvbYePJ2CAk9YeIMIQl/0/165Cqkm+zlN2M9/kSAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KU0pr54zEDTau8hyKyVKy0nQOyaBPXivZPgS/nwwfOFUcGeOv7U3+rH0S7VbPiayk
-	 PFMTiOA0w2FrSKXq7kSkJltEfICQDWDIG+T2cFf1NWMobwjN3/N2FfV8uaapN50mTz
-	 /TDrIld2EXsA3TGEHwTB0WqA+YR48K2ogcvqTbJE=
+	b=N5WpASnVwj56r8U9k515Uhb+txdZLWkyoez0LTe3pjMznbAF1MOyleKJKPpawft4B
+	 6rLToBrn7uXlm1Fj4y/PDazCOC9EKzJaMHF4vNuFUbuAEdwDQtIm+h3Cw/OLyzEHUN
+	 fGxOYlgVq/R6jXhRIl2bWXmvbYUd/JXPU5FC60PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
 	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 033/124] selftests: net: cut more slack for gro fwd tests.
-Date: Tue, 13 Feb 2024 18:20:55 +0100
-Message-ID: <20240213171854.698733384@linuxfoundation.org>
+Subject: [PATCH 6.7 034/124] selftests/net: convert unicast_extensions.sh to run it in unique namespace
+Date: Tue, 13 Feb 2024 18:20:56 +0100
+Message-ID: <20240213171854.729279113@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,98 +52,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit cb9f4a30fb85e1f4f149ada595a67899adb3db19 ]
+[ Upstream commit 0f4765d0b48d90ede9788c7edb2e072eee20f88e ]
 
-The udpgro_fwd.sh self-tests are somewhat unstable. There are
-a few timing constraints the we struggle to meet on very slow
-environments.
+Here is the test result after conversion.
 
-Instead of skipping the whole tests in such envs, increase the
-test resilience WRT very slow hosts: increase the inter-packets
-timeouts, avoid resetting the counters every second and finally
-disable reduce the background traffic noise.
+ # ./unicast_extensions.sh
+ /usr/bin/which: no nettest in (/root/.local/bin:/root/bin:/usr/share/Modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin)
+ ###########################################################################
+ Unicast address extensions tests (behavior of reserved IPv4 addresses)
+ ###########################################################################
+ TEST: assign and ping within 240/4 (1 of 2) (is allowed)            [ OK ]
+ TEST: assign and ping within 240/4 (2 of 2) (is allowed)            [ OK ]
+ TEST: assign and ping within 0/8 (1 of 2) (is allowed)              [ OK ]
 
-Tested with:
+ ...
 
-for I in $(seq 1 100); do
-	./tools/testing/selftests/kselftest_install/run_kselftest.sh \
-		-t net:udpgro_fwd.sh || exit -1
-done
+ TEST: assign and ping class D address (is forbidden)                [ OK ]
+ TEST: routing using class D (is forbidden)                          [ OK ]
+ TEST: routing using 127/8 (is forbidden)                            [ OK ]
 
-in a slow environment.
-
-Fixes: a062260a9d5f ("selftests: net: add UDP GRO forwarding self-tests")
+Acked-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/f4b6b11064a0d39182a9ae6a853abae3e9b4426a.1706812005.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e71e016ad0f6 ("selftests: net: fix tcp listener handling in pmtu.sh")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgro_fwd.sh     | 14 ++++++++++++--
- tools/testing/selftests/net/udpgso_bench_rx.c |  2 +-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ .../selftests/net/unicast_extensions.sh       | 99 +++++++++----------
+ 1 file changed, 46 insertions(+), 53 deletions(-)
 
-diff --git a/tools/testing/selftests/net/udpgro_fwd.sh b/tools/testing/selftests/net/udpgro_fwd.sh
-index d6b9c759043c..9cd5e885e91f 100755
---- a/tools/testing/selftests/net/udpgro_fwd.sh
-+++ b/tools/testing/selftests/net/udpgro_fwd.sh
-@@ -39,6 +39,10 @@ create_ns() {
- 	for ns in $NS_SRC $NS_DST; do
- 		ip netns add $ns
- 		ip -n $ns link set dev lo up
-+
-+		# disable route solicitations to decrease 'noise' traffic
-+		ip netns exec $ns sysctl -qw net.ipv6.conf.default.router_solicitations=0
-+		ip netns exec $ns sysctl -qw net.ipv6.conf.all.router_solicitations=0
- 	done
+diff --git a/tools/testing/selftests/net/unicast_extensions.sh b/tools/testing/selftests/net/unicast_extensions.sh
+index 2d10ccac898a..b7a2cb9e7477 100755
+--- a/tools/testing/selftests/net/unicast_extensions.sh
++++ b/tools/testing/selftests/net/unicast_extensions.sh
+@@ -28,8 +28,7 @@
+ # These tests provide an easy way to flip the expected result of any
+ # of these behaviors for testing kernel patches that change them.
  
- 	ip link add name veth$SRC type veth peer name veth$DST
-@@ -80,6 +84,12 @@ create_vxlan_pair() {
- 		create_vxlan_endpoint $BASE$ns veth$ns $BM_NET_V6$((3 - $ns)) vxlan6$ns 6
- 		ip -n $BASE$ns addr add dev vxlan6$ns $OL_NET_V6$ns/24 nodad
- 	done
-+
-+	# preload neighbur cache, do avoid some noisy traffic
-+	local addr_dst=$(ip -j -n $BASE$DST link show dev vxlan6$DST  |jq -r '.[]["address"]')
-+	local addr_src=$(ip -j -n $BASE$SRC link show dev vxlan6$SRC  |jq -r '.[]["address"]')
-+	ip -n $BASE$DST neigh add dev vxlan6$DST lladdr $addr_src $OL_NET_V6$SRC
-+	ip -n $BASE$SRC neigh add dev vxlan6$SRC lladdr $addr_dst $OL_NET_V6$DST
+-# Kselftest framework requirement - SKIP code is 4.
+-ksft_skip=4
++source ./lib.sh
+ 
+ # nettest can be run from PATH or from same directory as this selftest
+ if ! which nettest >/dev/null; then
+@@ -61,20 +60,20 @@ _do_segmenttest(){
+ 	# foo --- bar
+ 	# Arguments: ip_a ip_b prefix_length test_description
+ 	#
+-	# Caller must set up foo-ns and bar-ns namespaces
++	# Caller must set up $foo_ns and $bar_ns namespaces
+ 	# containing linked veth devices foo and bar,
+ 	# respectively.
+ 
+-	ip -n foo-ns address add $1/$3 dev foo || return 1
+-	ip -n foo-ns link set foo up || return 1
+-	ip -n bar-ns address add $2/$3 dev bar || return 1
+-	ip -n bar-ns link set bar up || return 1
++	ip -n $foo_ns address add $1/$3 dev foo || return 1
++	ip -n $foo_ns link set foo up || return 1
++	ip -n $bar_ns address add $2/$3 dev bar || return 1
++	ip -n $bar_ns link set bar up || return 1
+ 
+-	ip netns exec foo-ns timeout 2 ping -c 1 $2 || return 1
+-	ip netns exec bar-ns timeout 2 ping -c 1 $1 || return 1
++	ip netns exec $foo_ns timeout 2 ping -c 1 $2 || return 1
++	ip netns exec $bar_ns timeout 2 ping -c 1 $1 || return 1
+ 
+-	nettest -B -N bar-ns -O foo-ns -r $1 || return 1
+-	nettest -B -N foo-ns -O bar-ns -r $2 || return 1
++	nettest -B -N $bar_ns -O $foo_ns -r $1 || return 1
++	nettest -B -N $foo_ns -O $bar_ns -r $2 || return 1
+ 
+ 	return 0
  }
+@@ -88,31 +87,31 @@ _do_route_test(){
+ 	# Arguments: foo_ip foo1_ip bar1_ip bar_ip prefix_len test_description
+ 	# Displays test result and returns success or failure.
  
- is_ipv6() {
-@@ -119,7 +129,7 @@ run_test() {
- 	# not enable GRO
- 	ip netns exec $NS_DST $ipt -A INPUT -p udp --dport 4789
- 	ip netns exec $NS_DST $ipt -A INPUT -p udp --dport 8000
--	ip netns exec $NS_DST ./udpgso_bench_rx -C 1000 -R 10 -n 10 -l 1300 $rx_args &
-+	ip netns exec $NS_DST ./udpgso_bench_rx -C 2000 -R 100 -n 10 -l 1300 $rx_args &
- 	local spid=$!
- 	wait_local_port_listen "$NS_DST" 8000 udp
- 	ip netns exec $NS_SRC ./udpgso_bench_tx $family -M 1 -s 13000 -S 1300 -D $dst
-@@ -168,7 +178,7 @@ run_bench() {
- 	# bind the sender and the receiver to different CPUs to try
- 	# get reproducible results
- 	ip netns exec $NS_DST bash -c "echo 2 > /sys/class/net/veth$DST/queues/rx-0/rps_cpus"
--	ip netns exec $NS_DST taskset 0x2 ./udpgso_bench_rx -C 1000 -R 10  &
-+	ip netns exec $NS_DST taskset 0x2 ./udpgso_bench_rx -C 2000 -R 100  &
- 	local spid=$!
- 	wait_local_port_listen "$NS_DST" 8000 udp
- 	ip netns exec $NS_SRC taskset 0x1 ./udpgso_bench_tx $family -l 3 -S 1300 -D $dst
-diff --git a/tools/testing/selftests/net/udpgso_bench_rx.c b/tools/testing/selftests/net/udpgso_bench_rx.c
-index f35a924d4a30..1cbadd267c96 100644
---- a/tools/testing/selftests/net/udpgso_bench_rx.c
-+++ b/tools/testing/selftests/net/udpgso_bench_rx.c
-@@ -375,7 +375,7 @@ static void do_recv(void)
- 			do_flush_udp(fd);
+-	# Caller must set up foo-ns, bar-ns, and router-ns
++	# Caller must set up $foo_ns, $bar_ns, and $router_ns
+ 	# containing linked veth devices foo-foo1, bar1-bar
+-	# (foo in foo-ns, foo1 and bar1 in router-ns, and
+-	# bar in bar-ns).
+-
+-	ip -n foo-ns address add $1/$5 dev foo || return 1
+-	ip -n foo-ns link set foo up || return 1
+-	ip -n foo-ns route add default via $2 || return 1
+-	ip -n bar-ns address add $4/$5 dev bar || return 1
+-	ip -n bar-ns link set bar up || return 1
+-	ip -n bar-ns route add default via $3 || return 1
+-	ip -n router-ns address add $2/$5 dev foo1 || return 1
+-	ip -n router-ns link set foo1 up || return 1
+-	ip -n router-ns address add $3/$5 dev bar1 || return 1
+-	ip -n router-ns link set bar1 up || return 1
+-
+-	echo 1 | ip netns exec router-ns tee /proc/sys/net/ipv4/ip_forward
+-
+-	ip netns exec foo-ns timeout 2 ping -c 1 $2 || return 1
+-	ip netns exec foo-ns timeout 2 ping -c 1 $4 || return 1
+-	ip netns exec bar-ns timeout 2 ping -c 1 $3 || return 1
+-	ip netns exec bar-ns timeout 2 ping -c 1 $1 || return 1
+-
+-	nettest -B -N bar-ns -O foo-ns -r $1 || return 1
+-	nettest -B -N foo-ns -O bar-ns -r $4 || return 1
++	# (foo in $foo_ns, foo1 and bar1 in $router_ns, and
++	# bar in $bar_ns).
++
++	ip -n $foo_ns address add $1/$5 dev foo || return 1
++	ip -n $foo_ns link set foo up || return 1
++	ip -n $foo_ns route add default via $2 || return 1
++	ip -n $bar_ns address add $4/$5 dev bar || return 1
++	ip -n $bar_ns link set bar up || return 1
++	ip -n $bar_ns route add default via $3 || return 1
++	ip -n $router_ns address add $2/$5 dev foo1 || return 1
++	ip -n $router_ns link set foo1 up || return 1
++	ip -n $router_ns address add $3/$5 dev bar1 || return 1
++	ip -n $router_ns link set bar1 up || return 1
++
++	echo 1 | ip netns exec $router_ns tee /proc/sys/net/ipv4/ip_forward
++
++	ip netns exec $foo_ns timeout 2 ping -c 1 $2 || return 1
++	ip netns exec $foo_ns timeout 2 ping -c 1 $4 || return 1
++	ip netns exec $bar_ns timeout 2 ping -c 1 $3 || return 1
++	ip netns exec $bar_ns timeout 2 ping -c 1 $1 || return 1
++
++	nettest -B -N $bar_ns -O $foo_ns -r $1 || return 1
++	nettest -B -N $foo_ns -O $bar_ns -r $4 || return 1
  
- 		tnow = gettimeofday_ms();
--		if (tnow > treport) {
-+		if (!cfg_expected_pkt_nr && tnow > treport) {
- 			if (packets)
- 				fprintf(stderr,
- 					"%s rx: %6lu MB/s %8lu calls/s\n",
+ 	return 0
+ }
+@@ -121,17 +120,15 @@ segmenttest(){
+ 	# Sets up veth link and tries to connect over it.
+ 	# Arguments: ip_a ip_b prefix_len test_description
+ 	hide_output
+-	ip netns add foo-ns
+-	ip netns add bar-ns
+-	ip link add foo netns foo-ns type veth peer name bar netns bar-ns
++	setup_ns foo_ns bar_ns
++	ip link add foo netns $foo_ns type veth peer name bar netns $bar_ns
+ 
+ 	test_result=0
+ 	_do_segmenttest "$@" || test_result=1
+ 
+-	ip netns pids foo-ns | xargs -r kill -9
+-	ip netns pids bar-ns | xargs -r kill -9
+-	ip netns del foo-ns
+-	ip netns del bar-ns
++	ip netns pids $foo_ns | xargs -r kill -9
++	ip netns pids $bar_ns | xargs -r kill -9
++	cleanup_ns $foo_ns $bar_ns
+ 	show_output
+ 
+ 	# inverted tests will expect failure instead of success
+@@ -147,21 +144,17 @@ route_test(){
+ 	# Returns success or failure.
+ 
+ 	hide_output
+-	ip netns add foo-ns
+-	ip netns add bar-ns
+-	ip netns add router-ns
+-	ip link add foo netns foo-ns type veth peer name foo1 netns router-ns
+-	ip link add bar netns bar-ns type veth peer name bar1 netns router-ns
++	setup_ns foo_ns bar_ns router_ns
++	ip link add foo netns $foo_ns type veth peer name foo1 netns $router_ns
++	ip link add bar netns $bar_ns type veth peer name bar1 netns $router_ns
+ 
+ 	test_result=0
+ 	_do_route_test "$@" || test_result=1
+ 
+-	ip netns pids foo-ns | xargs -r kill -9
+-	ip netns pids bar-ns | xargs -r kill -9
+-	ip netns pids router-ns | xargs -r kill -9
+-	ip netns del foo-ns
+-	ip netns del bar-ns
+-	ip netns del router-ns
++	ip netns pids $foo_ns | xargs -r kill -9
++	ip netns pids $bar_ns | xargs -r kill -9
++	ip netns pids $router_ns | xargs -r kill -9
++	cleanup_ns $foo_ns $bar_ns $router_ns
+ 
+ 	show_output
+ 
 -- 
 2.43.0
 
