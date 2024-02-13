@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC5BA93C;
-	Tue, 13 Feb 2024 17:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC88A93C;
+	Tue, 13 Feb 2024 17:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707846046; cv=none; b=XgaqOVc+LWFGQoK+UwAqYzXQqmR7bV7KnO+vauJoTQFrz/JXQcIzMWAUCNrqjwkp7PXcT8KiFfF5jTDZtIJ8FbTqHV2kYtPsQACH3p0aUsLqeOkBcArSA7knmdqvLrQy1/JC0m8EhuAiks1ionZ/+xV8tBJxjwh3qhJWeQaBHos=
+	t=1707846049; cv=none; b=V7wPDuIgtg4/rc2HwFB0MF3cwEVeaerm74VBLngeJK+ZGDu+nUOZLNa4oEr2zfabIIvDDylgV6ZND2SeEyvXW3FPRKb4AY/Z2hbSKcMuSyfm7QHuffFC/wmvIKpBNxKykttfU+T5n35fnhBwN5JQyJVECxTLeaaadwmbVOpI/5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707846046; c=relaxed/simple;
-	bh=c7lK6giwbSvg096fPclawhJGMosqt10/NGyHPh9+YwQ=;
+	s=arc-20240116; t=1707846049; c=relaxed/simple;
+	bh=uAEW1Nt5n4rzmUGIu7FIeAIiBCFvoxIoWi1sov1IlA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4OX1I70xug94N7u/2po5lY7frb98V+lTRJNyJFHn9OMpO442AlODWqvUIYKK2aenob0QSRX0Dn2PngVqZs3YzDyvENELILQBmZIlvgSx5vuTvTLaS8OElk9gX/TsE1zxlY0DS3Hs6ZWhWRaqt4dvwjzy5xESVPNBcfXaVkR0xA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EInz9aB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YyY8x9ocIsjrMQKiS4KI941bDHlmLBp8gdgsYoQm4tAxTsTn5WN9D5897dtr/EWPl7F3M36aI8BquZuZ345kQg9eyh2L988A3AX6wYgNtNj7T9yGeUONeqyfWRGrmJ5XraygzRNd7ZJrQ/MdO48HNk7eV0BkIgHU+14Of9WspDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NX4qWaxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EInz9aB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5CEC433C7;
-	Tue, 13 Feb 2024 17:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NX4qWaxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153B1C43390;
+	Tue, 13 Feb 2024 17:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707846046;
-	bh=c7lK6giwbSvg096fPclawhJGMosqt10/NGyHPh9+YwQ=;
+	s=korg; t=1707846049;
+	bh=uAEW1Nt5n4rzmUGIu7FIeAIiBCFvoxIoWi1sov1IlA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2EInz9aBlHOhm6VLBeYAwHhLVH9mtHnyTL8aP4Nb+y4Tn57wpNosTT03xpAKnqVRB
-	 YeoJIq/MAtJp8dcGzVqmNeEdPSBI4dmihuXlkZMVpY5644HmpwpPTwrZb285ftoJdQ
-	 gn+ZaEfhjROMFeVKa1LpOrrs8SToKegBFheJC2dM=
+	b=NX4qWaxVWrrNV7gn2nHneedIix6s3h5VKhiWJSaoDxdX0G2+sMmE5OcSDmjBEQxIy
+	 /R0S1rVtWpHih4nxC9LidVpFOtmV/oGX6m0fIxpFv2K642wY8rACtfv+pB8tLIMcif
+	 IOEgQ8xwzOIckPIoYxnY0giKFesVHvKB8rz99gDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ted Chang <tedchang2010@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 121/124] Revert "ASoC: amd: Add new dmi entries for acp5x platform"
-Date: Tue, 13 Feb 2024 18:22:23 +0100
-Message-ID: <20240213171857.262054284@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.7 122/124] io_uring/poll: add requeue return code from poll multishot handling
+Date: Tue, 13 Feb 2024 18:22:24 +0100
+Message-ID: <20240213171857.291558926@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -53,52 +49,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-This reverts commit 4b6986b170f2f23e390bbd2d50784caa9cb67093 which is
-commit c3ab23a10771bbe06300e5374efa809789c65455 upstream.
+Commit 704ea888d646cb9d715662944cf389c823252ee0 upstream.
 
-Link: https://lore.kernel.org/r/CAD_nV8BG0t7US=+C28kQOR==712MPfZ9m-fuKksgoZCgrEByCw@mail.gmail.com
-Reported-by: Ted Chang <tedchang2010@gmail.com>
-Cc: Takashi Iwai <tiwai@suse.de>
-Cc: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>
+Since our poll handling is edge triggered, multishot handlers retry
+internally until they know that no more data is available. In
+preparation for limiting these retries, add an internal return code,
+IOU_REQUEUE, which can be used to inform the poll backend about the
+handler wanting to retry, but that this should happen through a normal
+task_work requeue rather than keep hammering on the issue side for this
+one request.
+
+No functional changes in this patch, nobody is using this return code
+just yet.
+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/acp-config.c |   15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ io_uring/io_uring.h |    7 +++++++
+ io_uring/poll.c     |    9 ++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
---- a/sound/soc/amd/acp-config.c
-+++ b/sound/soc/amd/acp-config.c
-@@ -3,7 +3,7 @@
- // This file is provided under a dual BSD/GPLv2 license. When using or
- // redistributing this file, you may do so under either license.
- //
--// Copyright(c) 2021, 2023 Advanced Micro Devices, Inc.
-+// Copyright(c) 2021 Advanced Micro Devices, Inc.
- //
- // Authors: Ajit Kumar Pandey <AjitKumar.Pandey@amd.com>
- //
-@@ -45,19 +45,6 @@ static const struct config_entry config_
- 				},
- 			},
- 			{}
--		},
--	},
--	{
--		.flags = FLAG_AMD_LEGACY,
--		.device = ACP_PCI_DEV_ID,
--		.dmi_table = (const struct dmi_system_id []) {
--			{
--				.matches = {
--					DMI_MATCH(DMI_SYS_VENDOR, "Valve"),
--					DMI_MATCH(DMI_PRODUCT_NAME, "Jupiter"),
--				},
--			},
--			{}
- 		},
- 	},
- 	{
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -31,6 +31,13 @@ enum {
+ 	IOU_ISSUE_SKIP_COMPLETE	= -EIOCBQUEUED,
+ 
+ 	/*
++	 * Requeue the task_work to restart operations on this request. The
++	 * actual value isn't important, should just be not an otherwise
++	 * valid error code, yet less than -MAX_ERRNO and valid internally.
++	 */
++	IOU_REQUEUE		= -3072,
++
++	/*
+ 	 * Intended only when both IO_URING_F_MULTISHOT is passed
+ 	 * to indicate to the poll runner that multishot should be
+ 	 * removed and the result is set on req->cqe.res.
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -226,6 +226,7 @@ enum {
+ 	IOU_POLL_NO_ACTION = 1,
+ 	IOU_POLL_REMOVE_POLL_USE_RES = 2,
+ 	IOU_POLL_REISSUE = 3,
++	IOU_POLL_REQUEUE = 4,
+ };
+ 
+ static void __io_poll_execute(struct io_kiocb *req, int mask)
+@@ -329,6 +330,8 @@ static int io_poll_check_events(struct i
+ 			int ret = io_poll_issue(req, ts);
+ 			if (ret == IOU_STOP_MULTISHOT)
+ 				return IOU_POLL_REMOVE_POLL_USE_RES;
++			else if (ret == IOU_REQUEUE)
++				return IOU_POLL_REQUEUE;
+ 			if (ret < 0)
+ 				return ret;
+ 		}
+@@ -351,8 +354,12 @@ void io_poll_task_func(struct io_kiocb *
+ 	int ret;
+ 
+ 	ret = io_poll_check_events(req, ts);
+-	if (ret == IOU_POLL_NO_ACTION)
++	if (ret == IOU_POLL_NO_ACTION) {
+ 		return;
++	} else if (ret == IOU_POLL_REQUEUE) {
++		__io_poll_execute(req, 0);
++		return;
++	}
+ 	io_poll_remove_entries(req);
+ 	io_poll_tw_hash_eject(req, ts);
+ 
 
 
