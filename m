@@ -1,40 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CEE5F56B;
-	Tue, 13 Feb 2024 17:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6CE5F54E;
+	Tue, 13 Feb 2024 17:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845426; cv=none; b=PoPSS1KjzVmfrRVopF+6i8s+4XM9C4GNbruwm3xxbEt++uRw4MxZcK+fhrZeJV9hUx/6TPE0FcWPd9Dmoxe11WQqHJWPaurkKl4OTuiJpbe0tIab6bMy69egQHISq8GYJ1Ivi6iBOnM+ZWAqDhohjXe0slLgm69dyut4CROcmPc=
+	t=1707845429; cv=none; b=SOLCpIlC75g5jP1vtWAXJxuEd1ETWHUnRtbyGloaIQvSt27nLbVKA28VzgxjqEx2uLUm7twWaGKOzm6H6tCLhl6xL3KCz7CtcYAMigqshs4E6O1CUWPOVSByQgbBAEXWCYUUxOmuwLrT+qpehgxoZnAuBeoqHwqdQtkeEUIA25s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845426; c=relaxed/simple;
-	bh=il5t/aeEsqDwUIjakmaDPgfJtDHIEl6lx8bhjIYuJDc=;
+	s=arc-20240116; t=1707845429; c=relaxed/simple;
+	bh=z8a7KXxzlJCy1KAGomN+QSyEvuuTq4eK+r2ZO0KkfOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhjpcicoPWTv/CuwGxUBVINSfrCXpDNhndKO5hZdHh9UcMiYotOXLzjjPxIZsMOt30AG0hOfw+5Pod1Xea62NF1C1jn07OhGV8GVhpd0Ytq3CEEXqbvtZmh4lTYD6/xjyWK5a7rMiFbVVZqzZoVRUsqiZ9W/qn1lVyS5CXYPvYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/tFrcwz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPoIYP2Chkm5aWL2nKll+UJWmB6ghKXRtfJb4uRwlTQzmeuPlorzP44197+sKHlyEbvaNCvjONdu1TC7b6ebD1JF9mR1z/AyfvN/7g17lr64povsiwK4LquGFiCj5sL3QQ+Yzyz4j047eq/0SN3iSXuq5MtPITOLT5GApB7WOfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQjQIywL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/tFrcwz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60132C433F1;
-	Tue, 13 Feb 2024 17:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQjQIywL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702EAC433C7;
+	Tue, 13 Feb 2024 17:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845425;
-	bh=il5t/aeEsqDwUIjakmaDPgfJtDHIEl6lx8bhjIYuJDc=;
+	s=korg; t=1707845429;
+	bh=z8a7KXxzlJCy1KAGomN+QSyEvuuTq4eK+r2ZO0KkfOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/tFrcwzQcKlWcsupwn1DV3zZ1/TMYullDk/wvgTglD9GixwPJ6B7Nn9WpP7ic+az
-	 UxZYlO0IRxipLNn1Z7aSIHqeUhyIjbsUVHhCsftxu/NdB+z9Wg2FFeG+Kys/WSpkMI
-	 iEaP71MS/mvSNF2IlN/kL7Od43EPCkM1mB4rPSG8=
+	b=CQjQIywLuq2CTMrLI+4RBE02BX7zz3Ded56ThVRt1T9LcMlIJji29Hddhlbs6PDZD
+	 EvYxCbN5/PZj2cYZCA8Sp76sGqoG0CRJgv8MpdqHnMNOwTDTtUtUvRgrvIuGBV0qdf
+	 AbweLs7C8EMpmtKPYo0ffEFaNz+j6Uj5tLLDK70Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Arend van Spriel <aspriel@gmail.com>,
+	Franky Lin <franky.lin@broadcom.com>,
+	Hante Meuleman <hante.meuleman@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Chi-hsien Lin <chi-hsien.lin@infineon.com>,
+	Ian Lin <ian.lin@infineon.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Wright Feng <wright.feng@cypress.com>,
+	Hector Martin <marcan@marcan.st>,
+	linux-wireless@vger.kernel.org,
+	brcm80211-dev-list.pdl@broadcom.com,
+	Kees Cook <keescook@chromium.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/121] wifi: iwlwifi: exit eSR only after the FW does
-Date: Tue, 13 Feb 2024 18:20:55 +0100
-Message-ID: <20240213171854.341170843@linuxfoundation.org>
+Subject: [PATCH 6.6 047/121] wifi: brcmfmac: Adjust n_channels usage for __counted_by
+Date: Tue, 13 Feb 2024 18:20:56 +0100
+Message-ID: <20240213171854.370100539@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -53,58 +64,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 16867c38bcd3be2eb9016a3198a096f93959086e ]
+[ Upstream commit 5bdda0048c8d1bbe2019513b2d6200cc0d09c7bd ]
 
-Currently the driver exits eSR by calling
-iwl_mvm_esr_mode_inactive() before updating the FW
-(by deactivating one of the links), and therefore before
-sending the EML frame notifying that we are no longer in eSR.
+After commit e3eac9f32ec0 ("wifi: cfg80211: Annotate struct
+cfg80211_scan_request with __counted_by"), the compiler may enforce
+dynamic array indexing of req->channels to stay below n_channels. As a
+result, n_channels needs to be increased _before_ accessing the newly
+added array index. Increment it first, then use "i" for the prior index.
+Solves this warning in the coming GCC that has __counted_by support:
 
-This is wrong for several reasons:
-1. The driver sends SMPS activation frames when we are still in eSR
-   and SMPS should be disabled when in eSR
-2. The driver restores RLC configuration as it was before eSR
-   entering, and RLC command shouldn't be sent in eSR
+../drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c: In function 'brcmf_internal_escan_add_info':
+../drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:3783:46: warning: operation on 'req->
+n_channels' may be undefined [-Wsequence-point]
+ 3783 |                 req->channels[req->n_channels++] = chan;
+      |                               ~~~~~~~~~~~~~~~^~
 
-Fix this by calling iwl_mvm_esr_mode_inactive() after FW update
-
-Fixes: 12bacfc2c065 ("wifi: iwlwifi: handle eSR transitions")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://msgid.link/20240201155157.d8d9dc277d4e.Ib5aee0fd05e35b1da7f18753eb3c8fa0a3f872f3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: e3eac9f32ec0 ("wifi: cfg80211: Annotate struct cfg80211_scan_request with __counted_by")
+Cc: Arend van Spriel <aspriel@gmail.com>
+Cc: Franky Lin <franky.lin@broadcom.com>
+Cc: Hante Meuleman <hante.meuleman@broadcom.com>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: Chi-hsien Lin <chi-hsien.lin@infineon.com>
+Cc: Ian Lin <ian.lin@infineon.com>
+Cc: Johannes Berg <johannes.berg@intel.com>
+Cc: Wright Feng <wright.feng@cypress.com>
+Cc: Hector Martin <marcan@marcan.st>
+Cc: linux-wireless@vger.kernel.org
+Cc: brcm80211-dev-list.pdl@broadcom.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240126223150.work.548-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index 1e58f0234293..2d1fd7ac8577 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -435,6 +435,9 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
- 		mvmvif->ap_ibss_active = false;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 2a90bb24ba77..6049f9a761d9 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -3780,8 +3780,10 @@ static int brcmf_internal_escan_add_info(struct cfg80211_scan_request *req,
+ 		if (req->channels[i] == chan)
+ 			break;
  	}
+-	if (i == req->n_channels)
+-		req->channels[req->n_channels++] = chan;
++	if (i == req->n_channels) {
++		req->n_channels++;
++		req->channels[i] = chan;
++	}
  
-+	iwl_mvm_link_changed(mvm, vif, link_conf,
-+			     LINK_CONTEXT_MODIFY_ACTIVE, false);
-+
- 	if (iwl_mvm_is_esr_supported(mvm->fwrt.trans) && n_active > 1) {
- 		int ret = iwl_mvm_esr_mode_inactive(mvm, vif);
- 
-@@ -446,9 +449,6 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
- 	if (vif->type == NL80211_IFTYPE_MONITOR)
- 		iwl_mvm_mld_rm_snif_sta(mvm, vif);
- 
--	iwl_mvm_link_changed(mvm, vif, link_conf,
--			     LINK_CONTEXT_MODIFY_ACTIVE, false);
--
- 	if (switching_chanctx)
- 		return;
- 	mvmvif->link[link_id]->phy_ctxt = NULL;
+ 	for (i = 0; i < req->n_ssids; i++) {
+ 		if (req->ssids[i].ssid_len == ssid_len &&
 -- 
 2.43.0
 
