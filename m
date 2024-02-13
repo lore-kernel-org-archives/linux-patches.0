@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1345F54E;
-	Tue, 13 Feb 2024 17:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3610A5F54E;
+	Tue, 13 Feb 2024 17:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845597; cv=none; b=jUrXSJopoyhrhoJomtEZzaLg9neSz1lp7UjjrsbVU6EamQmj0jq2TO+5GHFBN5aXJN/13HLe26dROYkC0SK3+BuFMbENDwtc8A0ugHj7bRRl/qSmAXEp4rS6TCpch3nBX/dRyaLXTh+MZKwC1h7a6uhZpqGTwU6LvqHuxEAakx4=
+	t=1707845601; cv=none; b=pKjJNwbMUWdkAfl7hcd3yAtINFVjN4y/J+flwCgzPwFH07S9rSzzhp+GNMVVwX3s+6pkjUc7QHZIfEQqo2yHMhYV7BshlK1LB86r2xR6hYs7qytqh1NqF7pmuF19f4W8qD20zU68sbX1VjnMbX+zADfR//GVCxmbdZge3NqX+Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845597; c=relaxed/simple;
-	bh=i5zOQ26wnXK89MsprVC0Uf0a3P+aj6S3x2u3Hv3dbZs=;
+	s=arc-20240116; t=1707845601; c=relaxed/simple;
+	bh=0K3n0oAWn1asTuBXpuYIKf1aclXVI9AdsGM/2SD2LX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EgL1SsUS69Svf3FG5gNOYKhAumgEP9DwFKU9yiGB8DGbnm0D60tUx1MZyYeDNhshtcpLIopvv07C7gUcVlSXu101fcLvqU/FjUlzexXYRldhWCMDqsszA32lk3AFPJR3r57Q6M6Nu79oFLuFALD6vQNuCDylkQRbvp50s8B01eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVVk/G8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IbuGXakH0nfi12Oqf5w3NXtG0CzEUvFY2gkChl5CSnh4eoOWHVyfs7oaQikUOAW+xnLGCT7S61DWdaQgVtEjIuSgbdsW/YOUy40EQSElnv61zgPOe5+90RRrSfym/9uO1YOj6ckewwnVGrceuCX3xiM3LkwBUnhrPL/APAFpdmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLwaiaIu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVVk/G8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBB8C433C7;
-	Tue, 13 Feb 2024 17:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLwaiaIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C98C433C7;
+	Tue, 13 Feb 2024 17:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845597;
-	bh=i5zOQ26wnXK89MsprVC0Uf0a3P+aj6S3x2u3Hv3dbZs=;
+	s=korg; t=1707845601;
+	bh=0K3n0oAWn1asTuBXpuYIKf1aclXVI9AdsGM/2SD2LX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVVk/G8AdSMhXBK/VI3t4aAxf3XCctstjVAr8Z1ajVERI84AML8uEdTTxEcLATGyY
-	 u8D7xcP9ZwrU6pWTg6UebmYBMxHPBnqBGJ676VdnwTHiayRy3kI0Sp+d/ew4Z09xyv
-	 J0HvGrY5aHD3SqpTQa75UrXqy+AwcGEXuAXgMT4k=
+	b=eLwaiaIuV71YlAM+XS6QwldaodtLrW3GGBq0aWH5jI0nN2p5x2F8JUKxSm9q84IEM
+	 LNVKaa8/0YzpAHIpUK5FBGgV2Ag000SZkZixHV4ZocUOisq/wg1OU4CVdsvqbZbbrk
+	 KFqT9LgRUPMxmJGI1z9XKnZlAzDhSkW62csUOj1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 110/121] xhci: handle isoc Babble and Buffer Overrun events properly
-Date: Tue, 13 Feb 2024 18:21:59 +0100
-Message-ID: <20240213171856.202712440@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 111/121] usb: dwc3: pci: add support for the Intel Arrow Lake-H
+Date: Tue, 13 Feb 2024 18:22:00 +0100
+Message-ID: <20240213171856.230923645@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -50,51 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 7c4650ded49e5b88929ecbbb631efb8b0838e811 upstream.
+commit de4b5b28c87ccae4da268a53c5df135437f5cfde upstream.
 
-xHCI 4.9 explicitly forbids assuming that the xHC has released its
-ownership of a multi-TRB TD when it reports an error on one of the
-early TRBs. Yet the driver makes such assumption and releases the TD,
-allowing the remaining TRBs to be freed or overwritten by new TDs.
+This patch adds the necessary PCI ID for Intel Arrow Lake-H
+devices.
 
-The xHC should also report completion of the final TRB due to its IOC
-flag being set by us, regardless of prior errors. This event cannot
-be recognized if the TD has already been freed earlier, resulting in
-"Transfer event TRB DMA ptr not part of current TD" error message.
-
-Fix this by reusing the logic for processing isoc Transaction Errors.
-This also handles hosts which fail to report the final completion.
-
-Fix transfer length reporting on Babble errors. They may be caused by
-device malfunction, no guarantee that the buffer has been filled.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240125152737.2983959-5-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20240115092820.1454492-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-pci.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2395,9 +2395,13 @@ static int process_isoc_td(struct xhci_h
- 	case COMP_BANDWIDTH_OVERRUN_ERROR:
- 		frame->status = -ECOMM;
- 		break;
--	case COMP_ISOCH_BUFFER_OVERRUN:
- 	case COMP_BABBLE_DETECTED_ERROR:
-+		sum_trbs_for_length = true;
-+		fallthrough;
-+	case COMP_ISOCH_BUFFER_OVERRUN:
- 		frame->status = -EOVERFLOW;
-+		if (ep_trb != td->last_trb)
-+			td->error_mid_td = true;
- 		break;
- 	case COMP_INCOMPATIBLE_DEVICE_ERROR:
- 	case COMP_STALL_ERROR:
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -51,6 +51,8 @@
+ #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
+ #define PCI_DEVICE_ID_INTEL_MTLS		0x7f6f
+ #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
++#define PCI_DEVICE_ID_INTEL_ARLH		0x7ec1
++#define PCI_DEVICE_ID_INTEL_ARLH_PCH		0x777e
+ #define PCI_DEVICE_ID_INTEL_TGL			0x9a15
+ #define PCI_DEVICE_ID_AMD_MR			0x163a
+ 
+@@ -421,6 +423,8 @@ static const struct pci_device_id dwc3_p
+ 	{ PCI_DEVICE_DATA(INTEL, MTLP, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, MTL, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, MTLS, &dwc3_pci_intel_swnode) },
++	{ PCI_DEVICE_DATA(INTEL, ARLH, &dwc3_pci_intel_swnode) },
++	{ PCI_DEVICE_DATA(INTEL, ARLH_PCH, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, TGL, &dwc3_pci_intel_swnode) },
+ 
+ 	{ PCI_DEVICE_DATA(AMD, NL_USB, &dwc3_pci_amd_swnode) },
 
 
