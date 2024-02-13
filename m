@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9F95F54E;
-	Tue, 13 Feb 2024 17:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E275FEF0;
+	Tue, 13 Feb 2024 17:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845208; cv=none; b=lB/K2KmTLy/S2wY29MU7F4Y3R5Dr3hlfkZ0MVNBkJAQ8F7EnVcy05kove+29VS1ShBSZ8c1fOWK50vdFBoxiWf7Te8Szx3zH2YD9TBb1xBmwtrHtQ2hSUjA5NkKt6jGEt/VAf6geEHbxXNw2nBJ0q73nnS7n+P61Hm/bqms+Q5U=
+	t=1707845212; cv=none; b=cLwHg0B4/xn5vwxIocbUB42xbcI6GcJIWsfKky99G1PvLXT2r3SNP3CGdiD9iUOURaOdf87cFxwbhUbDAk+Qj4w01d/AcLsf8XHAgsthbVhaOiW9KCUM5OaIKtLkqHqzgb+H2/0n6kNmnq51lMKq3vx36w2DLgC6oRUKM13gqcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845208; c=relaxed/simple;
-	bh=GJIiGiIZcFODCKMHFGcVvfKwf5TQnGw36csl/jIScBw=;
+	s=arc-20240116; t=1707845212; c=relaxed/simple;
+	bh=mdUQzURQp0OhbRCHRD+2BJW8jtxMdTwt6ZvdmftXhZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzKbiQC8LXvSbRspdw6znDKv8ilNPG8boZhx5feFXzTp/T32lYNo5yxXd8upnNp3T6Hh480wKLjOBya7pMMG2cnUqYXQ23e56+piop12BnNvtyIXFG7fOT9KbvzyCiTEA9hgl5rMv0jxETXpXgsobotA/Jeky+5NDOdps+32z9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPAanaqD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TRnE4xcSjL6f6TfytNexxnDmsYfcqmZy6Q0s9LCOzvv4GIrMq1ZNPVu29GZSs/exEJNOLx4LFB2ZUKj1IWR+KidrFyAgjZUe14NsYBnu2F0pqhSQfpx05WUrIWarF93FD9lxsvvetO3bDPu0oX2t9WIiQZ05E7VRJmjs7hBNPqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgKAF73E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPAanaqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC28C433F1;
-	Tue, 13 Feb 2024 17:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgKAF73E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9049AC433F1;
+	Tue, 13 Feb 2024 17:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845208;
-	bh=GJIiGiIZcFODCKMHFGcVvfKwf5TQnGw36csl/jIScBw=;
+	s=korg; t=1707845212;
+	bh=mdUQzURQp0OhbRCHRD+2BJW8jtxMdTwt6ZvdmftXhZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPAanaqDg7kq50AwOFBs8MobjTet3ndGgPreaSXf+8Fd6qsdFcO8BAfQQPYHVNdUi
-	 dqR4+w4+8uQ2nJS9XVPpZGQJg+xQn9/ySgKu7RFLqVqVjq4RukMzwMOMmgbJpEASjQ
-	 6D7QUAhbKMWYvpMLdtsRLFKN0li4vDc5PxAT4hDs=
+	b=zgKAF73E+EAwtInxHJMNOnUmIKjt5gr9eOQykB2wbBW+x4TgNHWWYDqwc99ZKC44J
+	 TlNm8NbTWBfAiw/0nEoxORDtokeD2Y+dPWB2OvBtH+yBCKN+OhW/jO5IO23MCvqWZU
+	 jQpKOu97AD2cesZC5cE0qgPLS1ziD99BTuUAs3s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 005/121] dmaengine: fsl-qdma: Fix a memory leak related to the queue command DMA
-Date: Tue, 13 Feb 2024 18:20:14 +0100
-Message-ID: <20240213171853.112928857@linuxfoundation.org>
+Subject: [PATCH 6.6 006/121] phy: renesas: rcar-gen3-usb2: Fix returning wrong error code
+Date: Tue, 13 Feb 2024 18:20:15 +0100
+Message-ID: <20240213171853.141262231@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -51,45 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 3aa58cb51318e329d203857f7a191678e60bb714 ]
+[ Upstream commit 249abaf3bf0dd07f5ddebbb2fe2e8f4d675f074e ]
 
-This dma_alloc_coherent() is undone neither in the remove function, nor in
-the error handling path of fsl_qdma_probe().
+Even if device_create_file() returns error code,
+rcar_gen3_phy_usb2_probe() will return zero because the "ret" is
+variable shadowing.
 
-Switch to the managed version to fix both issues.
-
-Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/7f66aa14f59d32b13672dde28602b47deb294e1f.1704621515.git.christophe.jaillet@wanadoo.fr
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202312161021.gOLDl48K-lkp@intel.com/
+Fixes: 441a681b8843 ("phy: rcar-gen3-usb2: fix implementation for runtime PM")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20240105093703.3359949-1-yoshihiro.shimoda.uh@renesas.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-qdma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
-index e4606ab27745..e4c293b76e05 100644
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -514,11 +514,11 @@ static struct fsl_qdma_queue
- 			queue_temp = queue_head + i + (j * queue_num);
- 
- 			queue_temp->cq =
--			dma_alloc_coherent(&pdev->dev,
--					   sizeof(struct fsl_qdma_format) *
--					   queue_size[i],
--					   &queue_temp->bus_addr,
--					   GFP_KERNEL);
-+			dmam_alloc_coherent(&pdev->dev,
-+					    sizeof(struct fsl_qdma_format) *
-+					    queue_size[i],
-+					    &queue_temp->bus_addr,
-+					    GFP_KERNEL);
- 			if (!queue_temp->cq)
- 				return NULL;
- 			queue_temp->block_base = fsl_qdma->block_base +
+diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+index e53eace7c91e..6387c0d34c55 100644
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -673,8 +673,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 	channel->irq = platform_get_irq_optional(pdev, 0);
+ 	channel->dr_mode = rcar_gen3_get_dr_mode(dev->of_node);
+ 	if (channel->dr_mode != USB_DR_MODE_UNKNOWN) {
+-		int ret;
+-
+ 		channel->is_otg_channel = true;
+ 		channel->uses_otg_pins = !of_property_read_bool(dev->of_node,
+ 							"renesas,no-otg-pins");
+@@ -738,8 +736,6 @@ static int rcar_gen3_phy_usb2_probe(struct platform_device *pdev)
+ 		ret = PTR_ERR(provider);
+ 		goto error;
+ 	} else if (channel->is_otg_channel) {
+-		int ret;
+-
+ 		ret = device_create_file(dev, &dev_attr_role);
+ 		if (ret < 0)
+ 			goto error;
 -- 
 2.43.0
 
