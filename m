@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDF6A93C;
-	Tue, 13 Feb 2024 17:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D731EB22;
+	Tue, 13 Feb 2024 17:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845875; cv=none; b=PALFRG3VU9LX/C08LYs6P1QVhCEczuSw/Bp5PvwYg4NQHUET39MeGO7Xk835LEXgwkWnTUOpGY447fFqvg98EfNfrC5nv12WsxXMOptmzNmi9l01guxqtO9rh/Z7N4PtHHM3RF2MnndtAoNz67Ov5cyFxnCXBfvP6Sf/db5PHyU=
+	t=1707845878; cv=none; b=Acx+U9ALJUlAgZrcvRUq8Q0WvQM/V0kgk4ukNGcvlSJi70y+zhI884VW3t5GPhCyE7aL91u5two+lhsFcKXny84O6EMMXhDEH/mqYpLyuiHBE89ctqbZi+cgmJb2qcbh0WDwhBIlnhvHYQyY1dU0K6R1J7tD+3ZViB1rqLBJkf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845875; c=relaxed/simple;
-	bh=plmjdmOliC9jsIPHSSD1MDQGdoAjUSvp9AzeL5lSsTk=;
+	s=arc-20240116; t=1707845878; c=relaxed/simple;
+	bh=o1Yalo5tkqf20UxD+WRX+7KNPX48M8qtaBo0qEUnmgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LL/hrosxuJk+Wo2sz22xSiQbWzHtxGm/I222/6zK5RoMfb/uxH3TcjAUtXr/SCkw2RkzuznJOqv+hmuP9Gci9WAQAFilJp+bXAIf/QvWic9K+sD7Yusc9NcDLyyuEoegXzqhQbspwsSN971QhiVexlqoWXEtW7KdZbW7gBn/Ufs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZSprP3C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMLsXDHcyOAkld90rogpbUNL2zDdeE8mOMsBl8U1wk+Syf40OGTtAW9JQmrmMVf1nCVuQG9QwHxI++UpziLh4RwSHYgdFF8qn9arU8OYSeqvnj8jflBcI20TT1lsAVV9S4LAkWovqK8b+Q3cl2dgvqGehOkEMLVzL0BKzp0BiCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fy6WSUW/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZSprP3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB88FC433C7;
-	Tue, 13 Feb 2024 17:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fy6WSUW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B54C43330;
+	Tue, 13 Feb 2024 17:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845875;
-	bh=plmjdmOliC9jsIPHSSD1MDQGdoAjUSvp9AzeL5lSsTk=;
+	s=korg; t=1707845878;
+	bh=o1Yalo5tkqf20UxD+WRX+7KNPX48M8qtaBo0qEUnmgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZSprP3CHC7zZy9hiUBtJYDhXd0HV835ZW9vd2qElamb4eDDXeWgjSn8CjgM+Fkkq
-	 qoqz4SWncIk1BoYi7I+b2YoSBpecv8IY/igjeELASHq6MCVT8sTVi+Jgc0I9mKFbw1
-	 XfUebOb04zhRW4lUdt/y6k3Ob7PgyGzmF9UPiLCo=
+	b=fy6WSUW/KuwWKJXlaYt3kmBQYzBItEiSn84AU5AjNiXCRARnA+aFXFrs1BMAaizbt
+	 DEODDMNGM5FB4jVbQlH3xuU8IdlT9VgxVdb99XRgE8Vzzbu0NZlEQxzcyAopvB+B67
+	 g7p1Y1fV8wuvE3hhovHPM2QeOe52ZLUt0/2ID1uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fa3ef895554bdbfd1183@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 055/124] af_unix: Call kfree_skb() for dead unix_(sk)->oob_skb in GC.
-Date: Tue, 13 Feb 2024 18:21:17 +0100
-Message-ID: <20240213171855.347589006@linuxfoundation.org>
+Subject: [PATCH 6.7 082/124] riscv: Fix arch_hugetlb_migration_supported() for NAPOT
+Date: Tue, 13 Feb 2024 18:21:44 +0100
+Message-ID: <20240213171856.130172015@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -53,110 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 1279f9d9dec2d7462823a18c29ad61359e0a007d ]
+[ Upstream commit ce68c035457bdd025a9961e0ba2157323090c581 ]
 
-syzbot reported a warning [0] in __unix_gc() with a repro, which
-creates a socketpair and sends one socket's fd to itself using the
-peer.
+arch_hugetlb_migration_supported() must be reimplemented to add support
+for NAPOT hugepages, which is done here.
 
-  socketpair(AF_UNIX, SOCK_STREAM, 0, [3, 4]) = 0
-  sendmsg(4, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\360", iov_len=1}],
-          msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET,
-                                      cmsg_type=SCM_RIGHTS, cmsg_data=[3]}],
-          msg_controllen=24, msg_flags=0}, MSG_OOB|MSG_PROBE|MSG_DONTWAIT|MSG_ZEROCOPY) = 1
-
-This forms a self-cyclic reference that GC should finally untangle
-but does not due to lack of MSG_OOB handling, resulting in memory
-leak.
-
-Recently, commit 11498715f266 ("af_unix: Remove io_uring code for
-GC.") removed io_uring's dead code in GC and revealed the problem.
-
-The code was executed at the final stage of GC and unconditionally
-moved all GC candidates from gc_candidates to gc_inflight_list.
-That papered over the reported problem by always making the following
-WARN_ON_ONCE(!list_empty(&gc_candidates)) false.
-
-The problem has been there since commit 2aab4b969002 ("af_unix: fix
-struct pid leaks in OOB support") added full scm support for MSG_OOB
-while fixing another bug.
-
-To fix this problem, we must call kfree_skb() for unix_sk(sk)->oob_skb
-if the socket still exists in gc_candidates after purging collected skb.
-
-Then, we need to set NULL to oob_skb before calling kfree_skb() because
-it calls last fput() and triggers unix_release_sock(), where we call
-duplicate kfree_skb(u->oob_skb) if not NULL.
-
-Note that the leaked socket remained being linked to a global list, so
-kmemleak also could not detect it.  We need to check /proc/net/protocol
-to notice the unfreed socket.
-
-[0]:
-WARNING: CPU: 0 PID: 2863 at net/unix/garbage.c:345 __unix_gc+0xc74/0xe80 net/unix/garbage.c:345
-Modules linked in:
-CPU: 0 PID: 2863 Comm: kworker/u4:11 Not tainted 6.8.0-rc1-syzkaller-00583-g1701940b1a02 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
-Workqueue: events_unbound __unix_gc
-RIP: 0010:__unix_gc+0xc74/0xe80 net/unix/garbage.c:345
-Code: 8b 5c 24 50 e9 86 f8 ff ff e8 f8 e4 22 f8 31 d2 48 c7 c6 30 6a 69 89 4c 89 ef e8 97 ef ff ff e9 80 f9 ff ff e8 dd e4 22 f8 90 <0f> 0b 90 e9 7b fd ff ff 48 89 df e8 5c e7 7c f8 e9 d3 f8 ff ff e8
-RSP: 0018:ffffc9000b03fba0 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffffc9000b03fc10 RCX: ffffffff816c493e
-RDX: ffff88802c02d940 RSI: ffffffff896982f3 RDI: ffffc9000b03fb30
-RBP: ffffc9000b03fce0 R08: 0000000000000001 R09: fffff52001607f66
-R10: 0000000000000003 R11: 0000000000000002 R12: dffffc0000000000
-R13: ffffc9000b03fc10 R14: ffffc9000b03fc10 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9400000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005559c8677a60 CR3: 000000000d57a000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- process_one_work+0x889/0x15e0 kernel/workqueue.c:2633
- process_scheduled_works kernel/workqueue.c:2706 [inline]
- worker_thread+0x8b9/0x12a0 kernel/workqueue.c:2787
- kthread+0x2c6/0x3b0 kernel/kthread.c:388
- ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:242
- </TASK>
-
-Reported-by: syzbot+fa3ef895554bdbfd1183@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=fa3ef895554bdbfd1183
-Fixes: 2aab4b969002 ("af_unix: fix struct pid leaks in OOB support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240203183149.63573-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 82a1a1f3bfb6 ("riscv: mm: support Svnapot in hugetlb page")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240130120114.106003-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/garbage.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/riscv/include/asm/hugetlb.h |  3 +++
+ arch/riscv/mm/hugetlbpage.c      | 16 +++++++++++++---
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 2405f0f9af31..8f63f0b4bf01 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -314,6 +314,17 @@ void unix_gc(void)
- 	/* Here we are. Hitlist is filled. Die. */
- 	__skb_queue_purge(&hitlist);
+diff --git a/arch/riscv/include/asm/hugetlb.h b/arch/riscv/include/asm/hugetlb.h
+index 4c5b0e929890..20f9c3ba2341 100644
+--- a/arch/riscv/include/asm/hugetlb.h
++++ b/arch/riscv/include/asm/hugetlb.h
+@@ -11,6 +11,9 @@ static inline void arch_clear_hugepage_flags(struct page *page)
+ }
+ #define arch_clear_hugepage_flags arch_clear_hugepage_flags
  
-+#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
-+	list_for_each_entry_safe(u, next, &gc_candidates, link) {
-+		struct sk_buff *skb = u->oob_skb;
++bool arch_hugetlb_migration_supported(struct hstate *h);
++#define arch_hugetlb_migration_supported arch_hugetlb_migration_supported
 +
-+		if (skb) {
-+			u->oob_skb = NULL;
-+			kfree_skb(skb);
-+		}
-+	}
-+#endif
-+
- 	spin_lock(&unix_gc_lock);
+ #ifdef CONFIG_RISCV_ISA_SVNAPOT
+ #define __HAVE_ARCH_HUGE_PTE_CLEAR
+ void huge_pte_clear(struct mm_struct *mm, unsigned long addr,
+diff --git a/arch/riscv/mm/hugetlbpage.c b/arch/riscv/mm/hugetlbpage.c
+index 87af75ee7186..e7b69281875b 100644
+--- a/arch/riscv/mm/hugetlbpage.c
++++ b/arch/riscv/mm/hugetlbpage.c
+@@ -364,7 +364,7 @@ void huge_pte_clear(struct mm_struct *mm,
+ 		pte_clear(mm, addr, ptep);
+ }
  
- 	/* There could be io_uring registered files, just push them back to
+-static __init bool is_napot_size(unsigned long size)
++static bool is_napot_size(unsigned long size)
+ {
+ 	unsigned long order;
+ 
+@@ -392,7 +392,7 @@ arch_initcall(napot_hugetlbpages_init);
+ 
+ #else
+ 
+-static __init bool is_napot_size(unsigned long size)
++static bool is_napot_size(unsigned long size)
+ {
+ 	return false;
+ }
+@@ -409,7 +409,7 @@ int pmd_huge(pmd_t pmd)
+ 	return pmd_leaf(pmd);
+ }
+ 
+-bool __init arch_hugetlb_valid_size(unsigned long size)
++static bool __hugetlb_valid_size(unsigned long size)
+ {
+ 	if (size == HPAGE_SIZE)
+ 		return true;
+@@ -421,6 +421,16 @@ bool __init arch_hugetlb_valid_size(unsigned long size)
+ 		return false;
+ }
+ 
++bool __init arch_hugetlb_valid_size(unsigned long size)
++{
++	return __hugetlb_valid_size(size);
++}
++
++bool arch_hugetlb_migration_supported(struct hstate *h)
++{
++	return __hugetlb_valid_size(huge_page_size(h));
++}
++
+ #ifdef CONFIG_CONTIG_ALLOC
+ static __init int gigantic_pages_init(void)
+ {
 -- 
 2.43.0
 
