@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23925FF0D;
-	Tue, 13 Feb 2024 17:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538715F56B;
+	Tue, 13 Feb 2024 17:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845274; cv=none; b=FofTpEwVUvgqLY5SrCvPfdALwU6i6v56ulcRYw1fmd1kqOZYE8AMAgnWFLeRQ4ITgJeh+TpvPwcUrGv61fKQEtSi4qr8tA6kpDPgyq0qF8K5lbyJxUpQ1xRJnB8lHU6wzv7iGi2RwcetXFEYY7guwsizYoqJBrMjeC0uGDpe87A=
+	t=1707845277; cv=none; b=Qppy0gyKnIYryg4Yvt9f0qMdD9a+Mw8tp1Z9UxGqV4qV4LvFOVmH9FLcKsCINMrdgJHWnzt/q2geXOEdQzLRixrCiLSSgcchKhOzX1dUaRAJ71CNbfsitaP0RkhJ7GRbnwYWlgY9J/P4DLaDHaUVZLiBlWlNAlpuCjXP8INZPI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845274; c=relaxed/simple;
-	bh=bk088VhOqT59aGjSMM6am5Ua8qx4W+MhbQCZJQv8Sj4=;
+	s=arc-20240116; t=1707845277; c=relaxed/simple;
+	bh=2xPJD4DLILEHCFxVghBRyQlDINzfWSWCv6/j5NxkaO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcQQPUq0n1q1hYZOsG3DZQ7WtEUbwlIGUf+2iqVakoG5TF+UQn4a1jbJOz+7xGddZ0fsjyNz0BNnK1NTyaeuxZ3SpH0RoGzTXc7mx6aUqTLCaqPLx5OMNsPSBApn1HTVM84XA3Co1apLuNgo8FB++zBweu567x5W/u/AFn2P+So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Yh6sfAp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pSYdMJu7Am457zxcaqaLyo9MEKtIvey3jjrpmdx80dO0oI3EeTBFQCom2JpB54yniUjGDamAHsrkOOp6YnKoikowlWWXH9VMJZM5vNMy7N9ecCsgCSL2jiei6j3vYn9SFp/jLZHbtp8sNSm7b86i/QTiThOrEbhPVikn7nsyrCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjzX/PFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Yh6sfAp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33265C433F1;
-	Tue, 13 Feb 2024 17:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjzX/PFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD7DC433C7;
+	Tue, 13 Feb 2024 17:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845273;
-	bh=bk088VhOqT59aGjSMM6am5Ua8qx4W+MhbQCZJQv8Sj4=;
+	s=korg; t=1707845277;
+	bh=2xPJD4DLILEHCFxVghBRyQlDINzfWSWCv6/j5NxkaO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Yh6sfApCsjLZcTFKWSpgviDsrhs2W7mqbZjaPx7ej9gksWm/RUlHhPDWbuAq/wGt
-	 SfBNoKrrKkSS6q2xHgUV00yDP4JX6YG0qO8adhx361+J+Y9AxvC7K4LlrDzAoUfyNj
-	 92dHojFlmAfhEJtUOHi2xYw9vFIqvDcXysfQ+MkQ=
+	b=kjzX/PFmyNu3qrqwDj0fMV6Zuv0wO3cE4E7+FxeX0f8aAQM/w5QU9Sl6NvHMMlast
+	 pHi+j4rumlh79zy23WpKtflaszon3urbL8KllpaMw3g0Jb++RsN7BVftjprOxt7qlm
+	 oH3sgs1PlnlkTpk4Exf2CxpqvUtP9oYJoTd5g8yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Chandan Babu R <chandanbabu@kernel.org>,
 	Catherine Hoang <catherine.hoang@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/121] xfs: inode recovery does not validate the recovered inode
-Date: Tue, 13 Feb 2024 18:20:42 +0100
-Message-ID: <20240213171853.956310557@linuxfoundation.org>
+Subject: [PATCH 6.6 034/121] xfs: clean up dqblk extraction
+Date: Tue, 13 Feb 2024 18:20:43 +0100
+Message-ID: <20240213171853.985585720@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -53,75 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 038ca189c0d2c1570b4d922f25b524007c85cf94 upstream.
+commit ed17f7da5f0c8b65b7b5f7c98beb0aadbc0546ee upstream.
 
-Discovered when trying to track down a weird recovery corruption
-issue that wasn't detected at recovery time.
+Since the introduction of xfs_dqblk in V5, xfs really ought to find the
+dqblk pointer from the dquot buffer, then compute the xfs_disk_dquot
+pointer from the dqblk pointer.  Fix the open-coded xfs_buf_offset calls
+and do the type checking in the correct order.
 
-The specific corruption was a zero extent count field when big
-extent counts are in use, and it turns out the dinode verifier
-doesn't detect that specific corruption case, either. So fix it too.
+Note that this has made no practical difference since the start of the
+xfs_disk_dquot is coincident with the start of the xfs_dqblk.
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
 Acked-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_inode_buf.c   |  3 +++
- fs/xfs/xfs_inode_item_recover.c | 14 +++++++++++++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_dquot.c              | 5 +++--
+ fs/xfs/xfs_dquot_item_recover.c | 7 ++++---
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_inode_buf.c b/fs/xfs/libxfs/xfs_inode_buf.c
-index a35781577cad..0f970a0b3382 100644
---- a/fs/xfs/libxfs/xfs_inode_buf.c
-+++ b/fs/xfs/libxfs/xfs_inode_buf.c
-@@ -508,6 +508,9 @@ xfs_dinode_verify(
- 	if (mode && nextents + naextents > nblocks)
- 		return __this_address;
+diff --git a/fs/xfs/xfs_dquot.c b/fs/xfs/xfs_dquot.c
+index ac6ba646624d..a013b87ab8d5 100644
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -562,7 +562,8 @@ xfs_dquot_from_disk(
+ 	struct xfs_dquot	*dqp,
+ 	struct xfs_buf		*bp)
+ {
+-	struct xfs_disk_dquot	*ddqp = bp->b_addr + dqp->q_bufoffset;
++	struct xfs_dqblk	*dqb = xfs_buf_offset(bp, dqp->q_bufoffset);
++	struct xfs_disk_dquot	*ddqp = &dqb->dd_diskdq;
  
-+	if (nextents + naextents == 0 && nblocks != 0)
-+		return __this_address;
-+
- 	if (S_ISDIR(mode) && nextents > mp->m_dir_geo->max_extents)
- 		return __this_address;
+ 	/*
+ 	 * Ensure that we got the type and ID we were looking for.
+@@ -1250,7 +1251,7 @@ xfs_qm_dqflush(
+ 	}
  
-diff --git a/fs/xfs/xfs_inode_item_recover.c b/fs/xfs/xfs_inode_item_recover.c
-index e6609067ef26..144198a6b270 100644
---- a/fs/xfs/xfs_inode_item_recover.c
-+++ b/fs/xfs/xfs_inode_item_recover.c
-@@ -286,6 +286,7 @@ xlog_recover_inode_commit_pass2(
- 	struct xfs_log_dinode		*ldip;
- 	uint				isize;
- 	int				need_free = 0;
-+	xfs_failaddr_t			fa;
+ 	/* Flush the incore dquot to the ondisk buffer. */
+-	dqblk = bp->b_addr + dqp->q_bufoffset;
++	dqblk = xfs_buf_offset(bp, dqp->q_bufoffset);
+ 	xfs_dquot_to_disk(&dqblk->dd_diskdq, dqp);
  
- 	if (item->ri_buf[0].i_len == sizeof(struct xfs_inode_log_format)) {
- 		in_f = item->ri_buf[0].i_addr;
-@@ -530,8 +531,19 @@ xlog_recover_inode_commit_pass2(
- 	    (dip->di_mode != 0))
- 		error = xfs_recover_inode_owner_change(mp, dip, in_f,
- 						       buffer_list);
--	/* re-generate the checksum. */
-+	/* re-generate the checksum and validate the recovered inode. */
- 	xfs_dinode_calc_crc(log->l_mp, dip);
-+	fa = xfs_dinode_verify(log->l_mp, in_f->ilf_ino, dip);
-+	if (fa) {
-+		XFS_CORRUPTION_ERROR(
-+			"Bad dinode after recovery",
-+				XFS_ERRLEVEL_LOW, mp, dip, sizeof(*dip));
-+		xfs_alert(mp,
-+			"Metadata corruption detected at %pS, inode 0x%llx",
-+			fa, in_f->ilf_ino);
-+		error = -EFSCORRUPTED;
-+		goto out_release;
-+	}
+ 	/*
+diff --git a/fs/xfs/xfs_dquot_item_recover.c b/fs/xfs/xfs_dquot_item_recover.c
+index 8966ba842395..db2cb5e4197b 100644
+--- a/fs/xfs/xfs_dquot_item_recover.c
++++ b/fs/xfs/xfs_dquot_item_recover.c
+@@ -65,6 +65,7 @@ xlog_recover_dquot_commit_pass2(
+ {
+ 	struct xfs_mount		*mp = log->l_mp;
+ 	struct xfs_buf			*bp;
++	struct xfs_dqblk		*dqb;
+ 	struct xfs_disk_dquot		*ddq, *recddq;
+ 	struct xfs_dq_logformat		*dq_f;
+ 	xfs_failaddr_t			fa;
+@@ -130,14 +131,14 @@ xlog_recover_dquot_commit_pass2(
+ 		return error;
  
- 	ASSERT(bp->b_mount == mp);
- 	bp->b_flags |= _XBF_LOGRECOVERY;
+ 	ASSERT(bp);
+-	ddq = xfs_buf_offset(bp, dq_f->qlf_boffset);
++	dqb = xfs_buf_offset(bp, dq_f->qlf_boffset);
++	ddq = &dqb->dd_diskdq;
+ 
+ 	/*
+ 	 * If the dquot has an LSN in it, recover the dquot only if it's less
+ 	 * than the lsn of the transaction we are replaying.
+ 	 */
+ 	if (xfs_has_crc(mp)) {
+-		struct xfs_dqblk *dqb = (struct xfs_dqblk *)ddq;
+ 		xfs_lsn_t	lsn = be64_to_cpu(dqb->dd_lsn);
+ 
+ 		if (lsn && lsn != -1 && XFS_LSN_CMP(lsn, current_lsn) >= 0) {
+@@ -147,7 +148,7 @@ xlog_recover_dquot_commit_pass2(
+ 
+ 	memcpy(ddq, recddq, item->ri_buf[1].i_len);
+ 	if (xfs_has_crc(mp)) {
+-		xfs_update_cksum((char *)ddq, sizeof(struct xfs_dqblk),
++		xfs_update_cksum((char *)dqb, sizeof(struct xfs_dqblk),
+ 				 XFS_DQUOT_CRC_OFF);
+ 	}
+ 
 -- 
 2.43.0
 
