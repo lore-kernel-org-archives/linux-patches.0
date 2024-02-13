@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ECA51025;
-	Mon, 12 Feb 2024 23:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A1A8F4D;
+	Tue, 13 Feb 2024 00:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707780480; cv=none; b=Ob5jWBUO+pBgBcXjMrA3jnx4mmXv10P8/owiYk0EEIUxi8jNDhO2QkJor2VXo4413V0GiS2fYAlTTiV8y8g+EVL5+ExS1Y9RVApZfqInAgTN+lXEfyoQZxFfUPKmQES0klLDx3KhwPHJUU0D8uGHU2cdnOF+Nk9RZRpiyHaT6J4=
+	t=1707783351; cv=none; b=QMqStliUnZ9FNemRheOolVdzBYxE9TWPk/BYUEIhQd+gfydM+KnKn0UmclDv2Ur/iPKknojuC2spg/H5MLealwEvPaHnVUMGxwes8Uk4duBhpcB0hYLQmT7772wnr2cgiIon4Er0s0UYj2Adu2CMSiUZ4d/JQa+TqZl+U7+YaLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707780480; c=relaxed/simple;
-	bh=K5hnkWF2pr9qY4CMY8S2FGPFj4eYlUn4D0jII5LC88I=;
+	s=arc-20240116; t=1707783351; c=relaxed/simple;
+	bh=pGauPJe3pc7ZiPndNvLC3iAdr8bnuuyJx3XLyQ1nH+w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S1WYCN2T5fTkzXcVNcBIjqudm7Hp0poWvrThMH1X1EGWlH10J83jIYtLa72e8K/KoJ9N8xYgXlo114sbK16ySZqEDRsC3M0fMtOa5Gk9B3jZ1RgyG6wsyWQwRs3KigYfE9t05o6auKddfPzJzY8BtC9mvupBe5YTo7Yije4Ygx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z3qhP0eK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=SbEb/2IKfxuZi/U/wStm/6irA3oNrvghU+I82kB9OVEqOOgjVIarOQuGQqDExE9NUQK7bd24YAVb8X9BB2S9JuUgEplyGL7etbhSAp2Qa+6pLaIbopMki4IJ/5p0+i0HNgLzxTmXwqo9DaPCdSY0eYinuMK4YwhUMKKnE1VrKbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HRu7Kq5N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z3qhP0eK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F07EC433F1;
-	Mon, 12 Feb 2024 23:27:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HRu7Kq5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF56C433C7;
+	Tue, 13 Feb 2024 00:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707780479;
-	bh=K5hnkWF2pr9qY4CMY8S2FGPFj4eYlUn4D0jII5LC88I=;
+	s=k20201202; t=1707783350;
+	bh=pGauPJe3pc7ZiPndNvLC3iAdr8bnuuyJx3XLyQ1nH+w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z3qhP0eKL69hznd9YtDHbdoj0ZXRgCuF1To9aggV8TWYpzbLhEG8ozPKGiRPIBVut
-	 Pksi/9/lV6Jz9Uo58kbf8h4itYXIMkDEtmX/ZmVaflf+N0rgdEZz8KTnmqnzXKqDBa
-	 AnyggUHWOF2jRCU5muZJvZjeLbwUwDNEfvtfaXhZRldjG7ZS6/UYb+2xuN9UWBKZv5
-	 seYIippDmVkkjnHwm/tNKJAMktXoDgrDcGuuoNCuLQ2kYpvqSiINnBAS/rw9l2UAzj
-	 EDstOhNfdq0Ocbbx95UmH1LJS6kghx9HB2MGPrvHFCjgP6PowWqbemtZ4tf0UHcNEl
-	 /CzgxKGOZN38w==
-Date: Mon, 12 Feb 2024 16:27:57 -0700
+	b=HRu7Kq5N/r4Q6jC40gbj2fXRkIiJyYdybBD3jAEG3u44DQawDKCCRf+OriNIkmHaM
+	 O3xoK/t+u2mlk2oGrPlWC1AVzhoCdxc4H/vMthGgbSyd2JPogTpSca5HWd1ojKQ+Hu
+	 /I0MMY0o/MgkV63FyVi9cNFSYbRPOIURWXvlLAUpTxLJzeO6/LGRxtHp3q4jOh0tf3
+	 kFviHv6324k/eNaAEuPr5p815McbZcv53aZhuxFNiZwumJpmJiH/e2/hT+y/Cj1od2
+	 uI4ynLfy+l2Uv8xkpD76mgu2SIMTCWDt1l2CkMICuGW4EHWSEaGv/DuvHsMH5z4oeL
+	 kFMgaFSlAMBMA==
+Date: Mon, 12 Feb 2024 17:15:48 -0700
 From: Nathan Chancellor <nathan@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: justinstitt@google.com, linux-media@vger.kernel.org,
-	llvm@lists.linux.dev, mchehab@kernel.org, morbo@google.com,
-	ndesaulniers@google.com, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] media: mxl5xx: Move xpt structures off stack
-Message-ID: <20240212232757.GA3221859@dev-arch.thelio-3990X>
-References: <20240111-dvb-mxl5xx-move-structs-off-stack-v1-1-ca4230e67c11@kernel.org>
- <20240210162604.342349-1-ojeda@kernel.org>
+To: Heiko Carstens <hca@linux.ibm.com>
+Cc: gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+	svens@linux.ibm.com, maskray@google.com, ndesaulniers@google.com,
+	linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 04/11] s390: vmlinux.lds.S: Discard unnecessary sections
+Message-ID: <20240213001548.GA3272429@dev-arch.thelio-3990X>
+References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
+ <20240207-s390-lld-and-orphan-warn-v1-4-8a665b3346ab@kernel.org>
+ <20240212135511.65142-A-hca@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,32 +46,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240210162604.342349-1-ojeda@kernel.org>
+In-Reply-To: <20240212135511.65142-A-hca@linux.ibm.com>
 
-On Sat, Feb 10, 2024 at 05:26:04PM +0100, Miguel Ojeda wrote:
-> > On Thu, 11 Jan 2024 17:40:36 -0700 Nathan Chancellor <nathan@kernel.org> wrote:
-> >
-> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1977
+On Mon, Feb 12, 2024 at 02:55:11PM +0100, Heiko Carstens wrote:
+> On Wed, Feb 07, 2024 at 05:14:56PM -0700, Nathan Chancellor wrote:
+> > When building with CONFIG_LD_ORPHAN_WARN after selecting
+> > CONFIG_ARCH_HAS_LD_ORPHAN_WARN, there are some warnings around certain
+> > ELF sections that are unnecessary for the kernel's purposes.
+> > 
+> >   s390-linux-ld: warning: orphan section `.dynstr' from `arch/s390/kernel/head64.o' being placed in section `.dynstr'
+> >   s390-linux-ld: warning: orphan section `.dynamic' from `arch/s390/kernel/head64.o' being placed in section `.dynamic'
+> >   s390-linux-ld: warning: orphan section `.hash' from `arch/s390/kernel/head64.o' being placed in section `.hash'
+> >   s390-linux-ld: warning: orphan section `.gnu.hash' from `arch/s390/kernel/head64.o' being placed in section `.gnu.hash'
+> > 
+> > Add them to the discards to clear up the warnings, which matches other
+> > architectures.
+> > 
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> >  arch/s390/kernel/vmlinux.lds.S | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> ...
+> > -		*(.interp)
+> > +		*(.interp .dynamic)
+> > +		*(.dynstr .hash .gnu.hash)
 > 
-> The next one: 1978 :)
+> This seems to be wrong, since it leads to 1000s of error messages when
+> using the "crash" utility e.g. when looking into a live dump of system
+> with the generated debug info:
+> 
+> BFD: /usr/lib/debug/usr/lib/modules/6.8.0-20240211.rc3.git0.bdca9b8dcf3f.300.fc39.s390x/vmlinux: attempt to load strings from a non-string section (number 0)
+> 
+> I will change this commit to the below; it seems to work and is in
+> line with other architectures:
 
-This is probably the third link I have messed up in the past couple of
-weeks :/ Mauro, do you want a v2 for these two minor issues or can you
-fix them up during application?
-
-> > of the stackvia 'static const', which is a better location for these
-> 
-> Nit: space.
-> 
-> Built-tested for loongarch64:
-> 
-> Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
-> Tested-by: Miguel Ojeda <ojeda@kernel.org>
-> 
-> With this applied, I have a `WERROR`-clean `defconfig` build with a Rust-enabled
-> kernel using LLVM 18 (using LLVM-provided apt pre-releases).
-
-Thanks for taking a look, this is great to hear!
+Thanks a lot for catching that, your final change seems good to me.
+Here's to hoping I did not get anything else wrong :)
 
 Cheers,
 Nathan
+
+> -----
+> 
+> When building with CONFIG_LD_ORPHAN_WARN after selecting
+> CONFIG_ARCH_HAS_LD_ORPHAN_WARN, there are some warnings around certain
+> ELF sections:
+> 
+>   s390-linux-ld: warning: orphan section `.dynstr' from `arch/s390/kernel/head64.o' being placed in section `.dynstr'
+>   s390-linux-ld: warning: orphan section `.dynamic' from `arch/s390/kernel/head64.o' being placed in section `.dynamic'
+>   s390-linux-ld: warning: orphan section `.hash' from `arch/s390/kernel/head64.o' being placed in section `.hash'
+>   s390-linux-ld: warning: orphan section `.gnu.hash' from `arch/s390/kernel/head64.o' being placed in section `.gnu.hash'
+> 
+> Explicitly keep those sections like other architectures when
+> CONFIG_RELOCATABLE is enabled, which is always true for s390.
+> 
+> [hca@linux.ibm.com: keep sections instead of discarding]
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Link: https://lore.kernel.org/r/20240207-s390-lld-and-orphan-warn-v1-4-8a665b3346ab@kernel.org
+> Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+> ---
+>  arch/s390/kernel/vmlinux.lds.S | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
+> 
+> diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
+> index 661a487a3048..d46e3c383952 100644
+> --- a/arch/s390/kernel/vmlinux.lds.S
+> +++ b/arch/s390/kernel/vmlinux.lds.S
+> @@ -200,6 +200,21 @@ SECTIONS
+>  		*(.rela*)
+>  		__rela_dyn_end = .;
+>  	}
+> +	.dynamic ALIGN(8) : {
+> +		*(.dynamic)
+> +	}
+> +	.dynsym ALIGN(8) : {
+> +		*(.dynsym)
+> +	}
+> +	.dynstr ALIGN(8) : {
+> +		*(.dynstr)
+> +	}
+> +	.hash ALIGN(8) : {
+> +		*(.hash)
+> +	}
+> +	.gnu.hash ALIGN(8) : {
+> +		*(.gnu.hash)
+> +	}
+>  
+>  	. = ALIGN(PAGE_SIZE);
+>  	__init_end = .;		/* freed after init ends here */
+> -- 
+> 2.40.1
+> 
