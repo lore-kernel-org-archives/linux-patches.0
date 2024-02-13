@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BB15F54E;
-	Tue, 13 Feb 2024 17:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8AC5F56B;
+	Tue, 13 Feb 2024 17:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845611; cv=none; b=ikTgRGFDkb/0c+SR8+PYboBJu5HyArbMWdAV55GxD5/KtcbIAyiP738R43OpwREqkR2wqCvynimOJo8PheFWTPBto8EK0CLO36SisY2D8PbCL26sMBwKGH+EoTGbj/iJYw8f8wXIPT0YjVk6rC3LHYsROVev3MEsDTheD1z7/lM=
+	t=1707845614; cv=none; b=dyBUgAMYYuqPtUKXzVazzqg5fnOq7VeVS3VDqIplMTZ1a0iGJOD8++hbtb2qGq/Fs3CtcMQ3Vp4EwX6jCSnmC3XmD7/n4WWxUq1zp/BmS3SbvI5cvXxwmBS9o/swifqfkBYmlaf+45NUjcvZshPLMqjwOolPniDy47ua8UfQFyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845611; c=relaxed/simple;
-	bh=X6mnyXjCH4iopVWBxJOqNcK24PrLcxb3aW4hWrpqm7U=;
+	s=arc-20240116; t=1707845614; c=relaxed/simple;
+	bh=lEIXvlL3sgyV8Td+xbVHp3ucke9pPBMyWx+Uxar21qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhmwRAuczNv2ud8Mv6uaDiyu4XNaUllWC011cvPY6TGW09oekqD65ZsF/oS09vX1h8oniv0K0nMjjOcszriNHNaWe5NzrRix/wzZb5JMl9ZibwvBjNs9jFjedX5Ywt5PVzrOIq5u7Lt5CteTi+3UclXfEuCjHJaXquEElnHmCKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KP0QkcQg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NCFSEFzOFEkPFUNaRjsdAbZQpzE3yV0Yg3k4A2YJFn1z2QPYvJePIro2AnPhGAnavOkmRisWaZpQub5KQRNM+rTkgaoKrPylrwEOCc+eLS6N87PTSawPlzXTdyFkbVk+pAdHolQoYar/SzArAdpCC4mYk+2opK8xx12OIVOShBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OS1w7rLI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KP0QkcQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4013C433F1;
-	Tue, 13 Feb 2024 17:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OS1w7rLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04070C433C7;
+	Tue, 13 Feb 2024 17:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845611;
-	bh=X6mnyXjCH4iopVWBxJOqNcK24PrLcxb3aW4hWrpqm7U=;
+	s=korg; t=1707845614;
+	bh=lEIXvlL3sgyV8Td+xbVHp3ucke9pPBMyWx+Uxar21qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KP0QkcQgWJkZT9yXeFXsR0qHTZNAb2DgvjAWmzXNAHhhq9ozJo8cOt+1ubLA/0krY
-	 dqB8pMTsu2tONQnNcnpxstPBQx2LIrBtcdnTsy/Z9vsfII/M2w6Ns5YP7h8Vf5SU8F
-	 Rg2iaH9zHEV5aUMSujokgd0OiVD4aoAIBlBA9EEM=
+	b=OS1w7rLIWOZVil5lwYm3chycMHk1ddZVXO8ulh1jdadYUBy7CEUY+ncO/Xa9Btom4
+	 UzQrpXLjfMLVdtxTN3uAeNgI6f14bggOh2j+vTXEs8+0pywZbDhjK3UP73JG5ggxwb
+	 tQ6Jv0IFe8JT9eizkp2mzfK/dktau5pcj80bOtlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonard Dallmayr <leonard.dallmayr@mailbox.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 104/121] USB: serial: cp210x: add ID for IMST iM871A-USB
-Date: Tue, 13 Feb 2024 18:21:53 +0100
-Message-ID: <20240213171856.027054908@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 001/124] ext4: regenerate buddy after block freeing failed if under fc replay
+Date: Tue, 13 Feb 2024 18:20:23 +0100
+Message-ID: <20240213171853.769579689@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
-In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
-References: <20240213171852.948844634@linuxfoundation.org>
+In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
+References: <20240213171853.722912593@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,35 +48,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leonard Dallmayr <leonard.dallmayr@mailbox.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 12b17b4eb82a41977eb848048137b5908d52845c upstream.
+[ Upstream commit c9b528c35795b711331ed36dc3dbee90d5812d4e ]
 
-The device IMST USB-Stick for Smart Meter is a rebranded IMST iM871A-USB
-Wireless M-Bus USB-adapter. It is used to read wireless water, gas and
-electricity meters.
+This mostly reverts commit 6bd97bf273bd ("ext4: remove redundant
+mb_regenerate_buddy()") and reintroduces mb_regenerate_buddy(). Based on
+code in mb_free_blocks(), fast commit replay can end up marking as free
+blocks that are already marked as such. This causes corruption of the
+buddy bitmap so we need to regenerate it in that case.
 
-Signed-off-by: Leonard Dallmayr <leonard.dallmayr@mailbox.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Jan Kara <jack@suse.cz>
+Fixes: 6bd97bf273bd ("ext4: remove redundant mb_regenerate_buddy()")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-4-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/cp210x.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/mballoc.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -146,6 +146,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x10C4, 0x85F8) }, /* Virtenio Preon32 */
- 	{ USB_DEVICE(0x10C4, 0x8664) }, /* AC-Services CAN-IF */
- 	{ USB_DEVICE(0x10C4, 0x8665) }, /* AC-Services OBD-IF */
-+	{ USB_DEVICE(0x10C4, 0x87ED) }, /* IMST USB-Stick for Smart Meter */
- 	{ USB_DEVICE(0x10C4, 0x8856) },	/* CEL EM357 ZigBee USB Stick - LR */
- 	{ USB_DEVICE(0x10C4, 0x8857) },	/* CEL EM357 ZigBee USB Stick */
- 	{ USB_DEVICE(0x10C4, 0x88A4) }, /* MMB Networks ZigBee USB Device */
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 8408318e1d32..3c5786841c6c 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -1233,6 +1233,24 @@ void ext4_mb_generate_buddy(struct super_block *sb,
+ 	atomic64_add(period, &sbi->s_mb_generation_time);
+ }
+ 
++static void mb_regenerate_buddy(struct ext4_buddy *e4b)
++{
++	int count;
++	int order = 1;
++	void *buddy;
++
++	while ((buddy = mb_find_buddy(e4b, order++, &count)))
++		mb_set_bits(buddy, 0, count);
++
++	e4b->bd_info->bb_fragments = 0;
++	memset(e4b->bd_info->bb_counters, 0,
++		sizeof(*e4b->bd_info->bb_counters) *
++		(e4b->bd_sb->s_blocksize_bits + 2));
++
++	ext4_mb_generate_buddy(e4b->bd_sb, e4b->bd_buddy,
++		e4b->bd_bitmap, e4b->bd_group, e4b->bd_info);
++}
++
+ /* The buddy information is attached the buddy cache inode
+  * for convenience. The information regarding each group
+  * is loaded via ext4_mb_load_buddy. The information involve
+@@ -1921,6 +1939,8 @@ static void mb_free_blocks(struct inode *inode, struct ext4_buddy *e4b,
+ 			ext4_mark_group_bitmap_corrupted(
+ 				sb, e4b->bd_group,
+ 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
++		} else {
++			mb_regenerate_buddy(e4b);
+ 		}
+ 		goto done;
+ 	}
+-- 
+2.43.0
+
 
 
