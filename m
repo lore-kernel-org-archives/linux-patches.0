@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11A05FDB5;
-	Tue, 13 Feb 2024 17:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AD95FBB5;
+	Tue, 13 Feb 2024 17:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707844975; cv=none; b=g2WTBl+uv5KlXqqOOO9aCDN/7JOWLH63s07Divs8O5u3xNNxdukA1vyyPkSA7TMebMsi5yDgAZwpKw6D8OEc5HrXYAaYyzGoBgV4EmkmT/ssjpFg+Ssq5WrQPaiMsi4Z0sWW18MOCOcUEuMW2N9IJ0iVkIR9riL6t4jf1cc4thM=
+	t=1707844978; cv=none; b=Y+SAUlLSWfmsGUQD0674yi7v3In1GWgvyGOXY5XPozumYtyVm91lw3GQQaLkl4keTnohoVZqg0+1II20Ovxb5Q6HpuD4f8vxDGc/hgjQRO0fjLR6uOx7ozAC0SahzK9UxNcb9B3SHibGxxH33xMI39TvmpOv1NzSSKhxOrkKLK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707844975; c=relaxed/simple;
-	bh=ggorJiLnHNfhONmO5V+lCLm/Uq1GkFOGmgn6tuDFUMk=;
+	s=arc-20240116; t=1707844978; c=relaxed/simple;
+	bh=AnOQoQvnUieirpDHhhoGKLvZ+J0r9X/JEigTsXokEzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c97moWs/NsncrrdbUJqMLTYmStThLXmpN5x1LvAEdDSinQUAmlQVT1pxqlkwIKzKQXhRy30f+Uyt4iyIJ6xy6x6iZEL7NZg+NGQvTwYNUCgjxrDpTnkQ0jBTtRN0orpvjEis1XBs6PcQxZLvg53yGoFub/mB5TStT5qJjc0DaTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4SILU40; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HghrxJfJBTetj9RSgocswwT/zki2IKRgo4tmDOMStnebSIjWf48C4hf4MdkgEzwDUci1xEYsFDeBeKJUXCWC1jDDhOr+QCZNebRe6sb3RWmnaNyKcGyccAETMjjhIexSrfb64xSYcNkBBrIYKNzBZqQSxxd+c05Dy4ZMXoh4qIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2C72Ta1u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4SILU40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9813C433C7;
-	Tue, 13 Feb 2024 17:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2C72Ta1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120CCC433F1;
+	Tue, 13 Feb 2024 17:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707844974;
-	bh=ggorJiLnHNfhONmO5V+lCLm/Uq1GkFOGmgn6tuDFUMk=;
+	s=korg; t=1707844977;
+	bh=AnOQoQvnUieirpDHhhoGKLvZ+J0r9X/JEigTsXokEzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4SILU40cELaTsvdAuMcn1nLG1b13JF080UNTX5IxqhXTYjki8dM7yswpuJKER06n
-	 Ad7iKIvsWsskAaMi1moamBUi/43r+EUj20ttj0OI1tJzChp5hJOcoxkp5vKzUBEzLQ
-	 FkUdl1JIPGxTAokv/NtToF1PJKatoxVrmYo3DSW4=
+	b=2C72Ta1uOD6r+7Hr5RFGrV3RHYaLwD7B8OYxdB6HeF0Q4NefKRXIBC7SRloGzJFzy
+	 acTtvgSe34/tcS/IB+UFqQpqs3Y0e1vQBlCuAK8Co9bNKvMVEI63C9TCFv0OlO6oME
+	 +1FBZ5jIUJDybHwCU3uQYGQDNg7mYLb4+LkPeHI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 11/64] drm/msm/dp: return correct Colorimetry for DP_TEST_DYNAMIC_RANGE_CEA case
-Date: Tue, 13 Feb 2024 18:20:57 +0100
-Message-ID: <20240213171845.084647237@linuxfoundation.org>
+Subject: [PATCH 6.1 12/64] drm/msm/dpu: check for valid hw_pp in dpu_encoder_helper_phys_cleanup
+Date: Tue, 13 Feb 2024 18:20:58 +0100
+Message-ID: <20240213171845.115540581@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
 References: <20240213171844.702064831@linuxfoundation.org>
@@ -52,89 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit fcccdafd91f8bdde568b86ff70848cf83f029add ]
+[ Upstream commit 7f3d03c48b1eb6bc45ab20ca98b8b11be25f9f52 ]
 
-MSA MISC0 bit 1 to 7 contains Colorimetry Indicator Field.
-dp_link_get_colorimetry_config() returns wrong colorimetry value
-in the DP_TEST_DYNAMIC_RANGE_CEA case in the current implementation.
-Hence fix this problem by having dp_link_get_colorimetry_config()
-return defined CEA RGB colorimetry value in the case of
-DP_TEST_DYNAMIC_RANGE_CEA.
+The commit 8b45a26f2ba9 ("drm/msm/dpu: reserve cdm blocks for writeback
+in case of YUV output") introduced a smatch warning about another
+conditional block in dpu_encoder_helper_phys_cleanup() which had assumed
+hw_pp will always be valid which may not necessarily be true.
 
-Changes in V2:
--- drop retrieving colorimetry from colorspace
--- drop dr = link->dp_link.test_video.test_dyn_range assignment
+Lets fix the other conditional block by making sure hw_pp is valid
+before dereferencing it.
 
-Changes in V3:
--- move defined MISCr0a Colorimetry vale to dp_reg.h
--- rewording commit title
--- rewording commit text to more precise describe this patch
-
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: ae4d721ce100 ("drm/msm/dpu: add an API to reset the encoder related hw blocks")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/574888/
-Link: https://lore.kernel.org/r/1705526010-597-1-git-send-email-quic_khsieh@quicinc.com
+Patchwork: https://patchwork.freedesktop.org/patch/574878/
+Link: https://lore.kernel.org/r/20240117194109.21609-1-quic_abhinavk@quicinc.com
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_link.c | 12 +++++++-----
- drivers/gpu/drm/msm/dp/dp_reg.h  |  3 +++
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index 3c7884c85f61..ceb382fa56d5 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -7,6 +7,7 @@
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 38d38f923df6..25245ef386db 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2053,7 +2053,7 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 	}
  
- #include <drm/drm_print.h>
+ 	/* reset the merge 3D HW block */
+-	if (phys_enc->hw_pp->merge_3d) {
++	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
+ 		phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc->hw_pp->merge_3d,
+ 				BLEND_3D_NONE);
+ 		if (phys_enc->hw_ctl->ops.update_pending_flush_merge_3d)
+@@ -2069,7 +2069,7 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 	if (phys_enc->hw_wb)
+ 		intf_cfg.wb = phys_enc->hw_wb->idx;
  
-+#include "dp_reg.h"
- #include "dp_link.h"
- #include "dp_panel.h"
+-	if (phys_enc->hw_pp->merge_3d)
++	if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d)
+ 		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
  
-@@ -1075,7 +1076,7 @@ int dp_link_process_request(struct dp_link *dp_link)
- 
- int dp_link_get_colorimetry_config(struct dp_link *dp_link)
- {
--	u32 cc;
-+	u32 cc = DP_MISC0_COLORIMERY_CFG_LEGACY_RGB;
- 	struct dp_link_private *link;
- 
- 	if (!dp_link) {
-@@ -1089,10 +1090,11 @@ int dp_link_get_colorimetry_config(struct dp_link *dp_link)
- 	 * Unless a video pattern CTS test is ongoing, use RGB_VESA
- 	 * Only RGB_VESA and RGB_CEA supported for now
- 	 */
--	if (dp_link_is_video_pattern_requested(link))
--		cc = link->dp_link.test_video.test_dyn_range;
--	else
--		cc = DP_TEST_DYNAMIC_RANGE_VESA;
-+	if (dp_link_is_video_pattern_requested(link)) {
-+		if (link->dp_link.test_video.test_dyn_range &
-+					DP_TEST_DYNAMIC_RANGE_CEA)
-+			cc = DP_MISC0_COLORIMERY_CFG_CEA_RGB;
-+	}
- 
- 	return cc;
- }
-diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
-index 268602803d9a..176a503ece9c 100644
---- a/drivers/gpu/drm/msm/dp/dp_reg.h
-+++ b/drivers/gpu/drm/msm/dp/dp_reg.h
-@@ -129,6 +129,9 @@
- #define DP_MISC0_COLORIMETRY_CFG_SHIFT		(0x00000001)
- #define DP_MISC0_TEST_BITS_DEPTH_SHIFT		(0x00000005)
- 
-+#define DP_MISC0_COLORIMERY_CFG_LEGACY_RGB	(0)
-+#define DP_MISC0_COLORIMERY_CFG_CEA_RGB		(0x04)
-+
- #define REG_DP_VALID_BOUNDARY			(0x00000030)
- #define REG_DP_VALID_BOUNDARY_2			(0x00000034)
- 
+ 	if (ctl->ops.reset_intf_cfg)
 -- 
 2.43.0
 
