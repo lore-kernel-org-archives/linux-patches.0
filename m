@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BEA5F54E;
-	Tue, 13 Feb 2024 17:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BB15F54E;
+	Tue, 13 Feb 2024 17:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845608; cv=none; b=Uu0kbbsd13Q95V8KHl/eS44Qsn+882bBQtFYO5qel5AkLsQMAq48/ErOmVXbUTLpp+CAdOBTQfGmmuert/IWwSWyEouMgQa640X7UqKYj2NgU5PZ7jqmu47a/5ywNnlHI7I9gYAuXT9taaodIoU3ZEbd+B6GL9aZZX2sgLbfdIA=
+	t=1707845611; cv=none; b=ikTgRGFDkb/0c+SR8+PYboBJu5HyArbMWdAV55GxD5/KtcbIAyiP738R43OpwREqkR2wqCvynimOJo8PheFWTPBto8EK0CLO36SisY2D8PbCL26sMBwKGH+EoTGbj/iJYw8f8wXIPT0YjVk6rC3LHYsROVev3MEsDTheD1z7/lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845608; c=relaxed/simple;
-	bh=qzp0UQ+sS/sLbd9wsx/BwgqvV3EFixOTnv8O4ao00JU=;
+	s=arc-20240116; t=1707845611; c=relaxed/simple;
+	bh=X6mnyXjCH4iopVWBxJOqNcK24PrLcxb3aW4hWrpqm7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2SfwP8QpzAgu5a2NiggKbDamzw5CHwasI9XeBowoYopBVI83mhBXpbRkEQNNJiY40e/0JFKuB8tx3bTiUBIfyOHSGbPsCKSwXCH+WDmvdmzLAP49Cev+DL3SnZerlDVhPCpFfCQVTCSmEw0Nw02xlq7YB5jdXUESAafSm7/0AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6jsrM2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MhmwRAuczNv2ud8Mv6uaDiyu4XNaUllWC011cvPY6TGW09oekqD65ZsF/oS09vX1h8oniv0K0nMjjOcszriNHNaWe5NzrRix/wzZb5JMl9ZibwvBjNs9jFjedX5Ywt5PVzrOIq5u7Lt5CteTi+3UclXfEuCjHJaXquEElnHmCKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KP0QkcQg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6jsrM2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591F3C433C7;
-	Tue, 13 Feb 2024 17:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KP0QkcQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4013C433F1;
+	Tue, 13 Feb 2024 17:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845607;
-	bh=qzp0UQ+sS/sLbd9wsx/BwgqvV3EFixOTnv8O4ao00JU=;
+	s=korg; t=1707845611;
+	bh=X6mnyXjCH4iopVWBxJOqNcK24PrLcxb3aW4hWrpqm7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6jsrM2pYfRQb/RSUxnN6xOODzL2JzH6BWxvKZIEEtLuur4IWUZhd3o9IxxwcAatH
-	 xduU81hgxzkwFoHyXhSWfI1XBuywLGr6xbdHsbg9NVqbggqWIqgoDQI18NHeey415R
-	 mEgYJK5Hn+Qmbi6iHaQjpoCkMxYrAdRfaMbfG/6o=
+	b=KP0QkcQgWJkZT9yXeFXsR0qHTZNAb2DgvjAWmzXNAHhhq9ozJo8cOt+1ubLA/0krY
+	 dqB8pMTsu2tONQnNcnpxstPBQx2LIrBtcdnTsy/Z9vsfII/M2w6Ns5YP7h8Vf5SU8F
+	 Rg2iaH9zHEV5aUMSujokgd0OiVD4aoAIBlBA9EEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 113/121] Input: i8042 - fix strange behavior of touchpad on Clevo NS70PU
-Date: Tue, 13 Feb 2024 18:22:02 +0100
-Message-ID: <20240213171856.287681293@linuxfoundation.org>
+	Leonard Dallmayr <leonard.dallmayr@mailbox.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 104/121] USB: serial: cp210x: add ID for IMST iM871A-USB
+Date: Tue, 13 Feb 2024 18:21:53 +0100
+Message-ID: <20240213171856.027054908@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -50,47 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Leonard Dallmayr <leonard.dallmayr@mailbox.org>
 
-commit a60e6c3918d20848906ffcdfcf72ca6a8cfbcf2e upstream.
+commit 12b17b4eb82a41977eb848048137b5908d52845c upstream.
 
-When closing the laptop lid with an external screen connected, the mouse
-pointer has a constant movement to the lower right corner. Opening the
-lid again stops this movement, but after that the touchpad does no longer
-register clicks.
+The device IMST USB-Stick for Smart Meter is a rebranded IMST iM871A-USB
+Wireless M-Bus USB-adapter. It is used to read wireless water, gas and
+electricity meters.
 
-The touchpad is connected both via i2c-hid and PS/2, the predecessor of
-this device (NS70MU) has the same layout in this regard and also strange
-behaviour caused by the psmouse and the i2c-hid driver fighting over
-touchpad control. This fix is reusing the same workaround by just
-disabling the PS/2 aux port, that is only used by the touchpad, to give the
-i2c-hid driver the lone control over the touchpad.
-
-v2: Rebased on current master
-
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Leonard Dallmayr <leonard.dallmayr@mailbox.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231205163602.16106-1-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/cp210x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1210,6 +1210,12 @@ static const struct dmi_system_id i8042_
- 	},
- 	{
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "NS5x_7xPU"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOAUX)
-+	},
-+	{
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "NJ50_70CU"),
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -146,6 +146,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(0x10C4, 0x85F8) }, /* Virtenio Preon32 */
+ 	{ USB_DEVICE(0x10C4, 0x8664) }, /* AC-Services CAN-IF */
+ 	{ USB_DEVICE(0x10C4, 0x8665) }, /* AC-Services OBD-IF */
++	{ USB_DEVICE(0x10C4, 0x87ED) }, /* IMST USB-Stick for Smart Meter */
+ 	{ USB_DEVICE(0x10C4, 0x8856) },	/* CEL EM357 ZigBee USB Stick - LR */
+ 	{ USB_DEVICE(0x10C4, 0x8857) },	/* CEL EM357 ZigBee USB Stick */
+ 	{ USB_DEVICE(0x10C4, 0x88A4) }, /* MMB Networks ZigBee USB Device */
 
 
