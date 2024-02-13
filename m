@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88435FEF0;
-	Tue, 13 Feb 2024 17:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339D75FEF0;
+	Tue, 13 Feb 2024 17:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707844994; cv=none; b=ZrJRjFwffhWH3WPj2j6vnHICIzes8WGt+Dh9WDy2P6OGy1WlgUPE9N8DCs0hGrpA7OcAEYFyQyDB/0Pt9N6Q4GuboNxU0lXGOhvL28C/DXgNoXHi45fwXWde29SkyWAlPFLy139IZa+XY5x+3Xk+0R2QRtU7nO8PCVfI9/JsLBQ=
+	t=1707844998; cv=none; b=ZhVjNevzvgdk6t6IqNSkpZAM3pCXIxQr1yd9hpM9jXLNvsURPQARtxDDwMsHxM7fVXaaakkfHSLJI5iIgGVQF+yOnnT4H3cuBTzUbh+LJ+Y1er8poUUrUrXn9AiuzQbzNX0njVDgfYdeQUzFeLflsOtgwMWjk7s+z1SQztAXK8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707844994; c=relaxed/simple;
-	bh=VBVGkBJm6vKP0FtPyaNbEvkk+6eLIl156MuF2STr+2Q=;
+	s=arc-20240116; t=1707844998; c=relaxed/simple;
+	bh=3h5HWLhO9MdaLK6mSpemL5r/faIlEB+qtzlNOFytjT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BjlKwv8LsD9Gq09Fwai2bYKjmnlw4wqlpqsA07vgWzHEqSkN/YUl8V/wE9+ML7UMXJ3N7ZcKml6VER58JSWS00HG6U+Sp4ONSzp215a33K61L0Mv6d3xlcwpLKBkiVpsJJKPw+iS6NmAUQ8vINxCKIzypSgvHDUZ4YchnMffxfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N04AIiff; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AjVIOjmXAbzkd2FVnoBMow4GXnh9yC36KUtLai5NKYckR7NG81nXrXW+0U4T1n3DRLD2SB3JYlPdxkbWpjUpKVwLr7xNtkvmTDiCsvxUKlx2nWrUk7Oz9OyhfkyPzhKsY0RaBsOMQd6boYl3DGMgZ5uCC+pyeC3TNJrzXKdvXE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSlqW/ZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N04AIiff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BBEC433C7;
-	Tue, 13 Feb 2024 17:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSlqW/ZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57196C433F1;
+	Tue, 13 Feb 2024 17:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707844994;
-	bh=VBVGkBJm6vKP0FtPyaNbEvkk+6eLIl156MuF2STr+2Q=;
+	s=korg; t=1707844998;
+	bh=3h5HWLhO9MdaLK6mSpemL5r/faIlEB+qtzlNOFytjT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N04AIiffAZP1Cz2NfZI3B1Y4sqHbHdv2wCMz9S0p4mRmd9i8EOIZeOvUbV28utEtj
-	 C8M7puypk72bRsVvuKVUFhOHohyT2ZRHti9/Cf7WHqxrgCPJdv6SS9xBR5vYmK96tt
-	 5UHwPoqlCl86rxBxFVLxLDR75XDbQudqD4jNMblg=
+	b=YSlqW/ZHTQsixpTNrzMybkiF3GHHO5jBc947kkDVHhMvZuhKbPivymewqXq7q611J
+	 kLbxdFpKWYeLWapWeo4bhY9pPMZC1QLszFQIXWjBnMju41+AN8DeJeoUuRUGNJeshN
+	 bC7L4jRiVBuGS/PUCotWQhUDSO32Qc7xkiM7r+ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/64] selftests: net: cut more slack for gro fwd tests.
-Date: Tue, 13 Feb 2024 18:21:03 +0100
-Message-ID: <20240213171845.270318417@linuxfoundation.org>
+Subject: [PATCH 6.1 18/64] selftests: net: avoid just another constant wait
+Date: Tue, 13 Feb 2024 18:21:04 +0100
+Message-ID: <20240213171845.308783619@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
 References: <20240213171844.702064831@linuxfoundation.org>
@@ -54,96 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit cb9f4a30fb85e1f4f149ada595a67899adb3db19 ]
+[ Upstream commit 691bb4e49c98a47bc643dd808453136ce78b15b4 ]
 
-The udpgro_fwd.sh self-tests are somewhat unstable. There are
-a few timing constraints the we struggle to meet on very slow
-environments.
+Using hard-coded constant timeout to wait for some expected
+event is deemed to fail sooner or later, especially in slow
+env.
 
-Instead of skipping the whole tests in such envs, increase the
-test resilience WRT very slow hosts: increase the inter-packets
-timeouts, avoid resetting the counters every second and finally
-disable reduce the background traffic noise.
+Our CI has spotted another of such race:
+   # TEST: ipv6: cleanup of cached exceptions - nexthop objects          [FAIL]
+   #   can't delete veth device in a timely manner, PMTU dst likely leaked
 
-Tested with:
+Replace the crude sleep with a loop looking for the expected condition
+at low interval for a much longer range.
 
-for I in $(seq 1 100); do
-	./tools/testing/selftests/kselftest_install/run_kselftest.sh \
-		-t net:udpgro_fwd.sh || exit -1
-done
-
-in a slow environment.
-
-Fixes: a062260a9d5f ("selftests: net: add UDP GRO forwarding self-tests")
+Fixes: b3cc4f8a8a41 ("selftests: pmtu: add explicit tests for PMTU exceptions cleanup")
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/f4b6b11064a0d39182a9ae6a853abae3e9b4426a.1706812005.git.pabeni@redhat.com
+Link: https://lore.kernel.org/r/fd5c745e9bb665b724473af6a9373a8c2a62b247.1706812005.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgro_fwd.sh     | 14 ++++++++++++--
- tools/testing/selftests/net/udpgso_bench_rx.c |  2 +-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/pmtu.sh | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/net/udpgro_fwd.sh b/tools/testing/selftests/net/udpgro_fwd.sh
-index c079565add39..9690a5d7ffd7 100755
---- a/tools/testing/selftests/net/udpgro_fwd.sh
-+++ b/tools/testing/selftests/net/udpgro_fwd.sh
-@@ -37,6 +37,10 @@ create_ns() {
- 	for ns in $NS_SRC $NS_DST; do
- 		ip netns add $ns
- 		ip -n $ns link set dev lo up
-+
-+		# disable route solicitations to decrease 'noise' traffic
-+		ip netns exec $ns sysctl -qw net.ipv6.conf.default.router_solicitations=0
-+		ip netns exec $ns sysctl -qw net.ipv6.conf.all.router_solicitations=0
- 	done
- 
- 	ip link add name veth$SRC type veth peer name veth$DST
-@@ -78,6 +82,12 @@ create_vxlan_pair() {
- 		create_vxlan_endpoint $BASE$ns veth$ns $BM_NET_V6$((3 - $ns)) vxlan6$ns 6
- 		ip -n $BASE$ns addr add dev vxlan6$ns $OL_NET_V6$ns/24 nodad
- 	done
-+
-+	# preload neighbur cache, do avoid some noisy traffic
-+	local addr_dst=$(ip -j -n $BASE$DST link show dev vxlan6$DST  |jq -r '.[]["address"]')
-+	local addr_src=$(ip -j -n $BASE$SRC link show dev vxlan6$SRC  |jq -r '.[]["address"]')
-+	ip -n $BASE$DST neigh add dev vxlan6$DST lladdr $addr_src $OL_NET_V6$SRC
-+	ip -n $BASE$SRC neigh add dev vxlan6$SRC lladdr $addr_dst $OL_NET_V6$DST
+diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
+index 1b6e484e586d..00ab4c6e4044 100755
+--- a/tools/testing/selftests/net/pmtu.sh
++++ b/tools/testing/selftests/net/pmtu.sh
+@@ -1928,6 +1928,13 @@ check_command() {
+ 	return 0
  }
  
- is_ipv6() {
-@@ -117,7 +127,7 @@ run_test() {
- 	# not enable GRO
- 	ip netns exec $NS_DST $ipt -A INPUT -p udp --dport 4789
- 	ip netns exec $NS_DST $ipt -A INPUT -p udp --dport 8000
--	ip netns exec $NS_DST ./udpgso_bench_rx -C 1000 -R 10 -n 10 -l 1300 $rx_args &
-+	ip netns exec $NS_DST ./udpgso_bench_rx -C 2000 -R 100 -n 10 -l 1300 $rx_args &
- 	local spid=$!
- 	sleep 0.1
- 	ip netns exec $NS_SRC ./udpgso_bench_tx $family -M 1 -s 13000 -S 1300 -D $dst
-@@ -166,7 +176,7 @@ run_bench() {
- 	# bind the sender and the receiver to different CPUs to try
- 	# get reproducible results
- 	ip netns exec $NS_DST bash -c "echo 2 > /sys/class/net/veth$DST/queues/rx-0/rps_cpus"
--	ip netns exec $NS_DST taskset 0x2 ./udpgso_bench_rx -C 1000 -R 10  &
-+	ip netns exec $NS_DST taskset 0x2 ./udpgso_bench_rx -C 2000 -R 100  &
- 	local spid=$!
- 	sleep 0.1
- 	ip netns exec $NS_SRC taskset 0x1 ./udpgso_bench_tx $family -l 3 -S 1300 -D $dst
-diff --git a/tools/testing/selftests/net/udpgso_bench_rx.c b/tools/testing/selftests/net/udpgso_bench_rx.c
-index f35a924d4a30..1cbadd267c96 100644
---- a/tools/testing/selftests/net/udpgso_bench_rx.c
-+++ b/tools/testing/selftests/net/udpgso_bench_rx.c
-@@ -375,7 +375,7 @@ static void do_recv(void)
- 			do_flush_udp(fd);
++check_running() {
++	pid=${1}
++	cmd=${2}
++
++	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
++}
++
+ test_cleanup_vxlanX_exception() {
+ 	outer="${1}"
+ 	encap="vxlan"
+@@ -1958,11 +1965,12 @@ test_cleanup_vxlanX_exception() {
  
- 		tnow = gettimeofday_ms();
--		if (tnow > treport) {
-+		if (!cfg_expected_pkt_nr && tnow > treport) {
- 			if (packets)
- 				fprintf(stderr,
- 					"%s rx: %6lu MB/s %8lu calls/s\n",
+ 	${ns_a} ip link del dev veth_A-R1 &
+ 	iplink_pid=$!
+-	sleep 1
+-	if [ "$(cat /proc/${iplink_pid}/cmdline 2>/dev/null | tr -d '\0')" = "iplinkdeldevveth_A-R1" ]; then
+-		err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
+-		return 1
+-	fi
++	for i in $(seq 1 20); do
++		check_running ${iplink_pid} "iplinkdeldevveth_A-R1" || return 0
++		sleep 0.1
++	done
++	err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
++	return 1
+ }
+ 
+ test_cleanup_ipv6_exception() {
 -- 
 2.43.0
 
