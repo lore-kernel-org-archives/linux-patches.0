@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8AC5F56B;
-	Tue, 13 Feb 2024 17:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B2AAD55;
+	Tue, 13 Feb 2024 17:33:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845614; cv=none; b=dyBUgAMYYuqPtUKXzVazzqg5fnOq7VeVS3VDqIplMTZ1a0iGJOD8++hbtb2qGq/Fs3CtcMQ3Vp4EwX6jCSnmC3XmD7/n4WWxUq1zp/BmS3SbvI5cvXxwmBS9o/swifqfkBYmlaf+45NUjcvZshPLMqjwOolPniDy47ua8UfQFyM=
+	t=1707845618; cv=none; b=C/5eKwqcA3OjzdK9CQ89kAnWd8SymeV4LrdCZYYJfTpNAAHEfaMRqScgLwCLCrRCnXRPoC7yOKXx0kjv/cpl2/koX4DKP1lsBvjh4w//DU94z/AJHd//Hmp2fG0JyQ6rFBgUmfnze5l9HQd7xh6iEeX/OZEW/mDoXBuoRAJt8PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845614; c=relaxed/simple;
-	bh=lEIXvlL3sgyV8Td+xbVHp3ucke9pPBMyWx+Uxar21qM=;
+	s=arc-20240116; t=1707845618; c=relaxed/simple;
+	bh=MXsLK+V06Uj0SIRMzzloo/8KG+urlFSDPuZKP6jgeyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCFSEFzOFEkPFUNaRjsdAbZQpzE3yV0Yg3k4A2YJFn1z2QPYvJePIro2AnPhGAnavOkmRisWaZpQub5KQRNM+rTkgaoKrPylrwEOCc+eLS6N87PTSawPlzXTdyFkbVk+pAdHolQoYar/SzArAdpCC4mYk+2opK8xx12OIVOShBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OS1w7rLI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UuWiD/IElp5G1QgLPdpYr6JaRYc2ZLHYjhzqTBIbzt50O5uVqOpRdbigsCSrxXD7cR9fkP+Qv1tDhmjXD+tWTk6j1YvogGnl8+N13ZV+Pg22mqIZsj9ayhBDY5vYW56NyAPJuAB8fSbqxaAf7eb2ZFL+NrsN9YoFV/0DzbC0UWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKEMiK7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OS1w7rLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04070C433C7;
-	Tue, 13 Feb 2024 17:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKEMiK7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2FFC433F1;
+	Tue, 13 Feb 2024 17:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845614;
-	bh=lEIXvlL3sgyV8Td+xbVHp3ucke9pPBMyWx+Uxar21qM=;
+	s=korg; t=1707845618;
+	bh=MXsLK+V06Uj0SIRMzzloo/8KG+urlFSDPuZKP6jgeyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OS1w7rLIWOZVil5lwYm3chycMHk1ddZVXO8ulh1jdadYUBy7CEUY+ncO/Xa9Btom4
-	 UzQrpXLjfMLVdtxTN3uAeNgI6f14bggOh2j+vTXEs8+0pywZbDhjK3UP73JG5ggxwb
-	 tQ6Jv0IFe8JT9eizkp2mzfK/dktau5pcj80bOtlU=
+	b=dKEMiK7wUNmLFdaeORRg1mCZQx2LVBJhMlozQ6oGWdpiuk3P0ierRb7uo/PyOTRQe
+	 Z6+hCKYTVkZ9pLSGL5sLAZEFysDW+EvdG8eNFO29V6YjoN/6JCtHIgjqnLMwfmknNp
+	 I9v0Ll+Z7x0lDBDHrJvjPHfCkk7Ax86Fcnor/XtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Ian Rogers <irogers@google.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 001/124] ext4: regenerate buddy after block freeing failed if under fc replay
-Date: Tue, 13 Feb 2024 18:20:23 +0100
-Message-ID: <20240213171853.769579689@linuxfoundation.org>
+Subject: [PATCH 6.7 010/124] perf test: Fix perf script tests on s390
+Date: Tue, 13 Feb 2024 18:20:32 +0100
+Message-ID: <20240213171854.034168794@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,65 +57,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit c9b528c35795b711331ed36dc3dbee90d5812d4e ]
+[ Upstream commit 2dac1f089add90a45d93fe8217938281532b86c7 ]
 
-This mostly reverts commit 6bd97bf273bd ("ext4: remove redundant
-mb_regenerate_buddy()") and reintroduces mb_regenerate_buddy(). Based on
-code in mb_free_blocks(), fast commit replay can end up marking as free
-blocks that are already marked as such. This causes corruption of the
-buddy bitmap so we need to regenerate it in that case.
+In linux next repo, test case 'perf script tests' fails on s390.
 
-Reported-by: Jan Kara <jack@suse.cz>
-Fixes: 6bd97bf273bd ("ext4: remove redundant mb_regenerate_buddy()")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-4-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+The root case is a command line invocation of 'perf record' with
+call-graph information. On s390 only DWARF formatted call-graphs are
+supported and only on software events.
+
+Change the command line parameters for s390.
+
+Output before:
+
+  # perf test 89
+  89: perf script tests              : FAILED!
+  #
+
+Output after:
+
+  # perf test 89
+  89: perf script tests              : Ok
+  #
+
+Fixes: 0dd5041c9a0eaf8c ("perf addr_location: Add init/exit/copy functions")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240125100351.936262-1-tmricht@linux.ibm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ tools/perf/tests/shell/script.sh | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 8408318e1d32..3c5786841c6c 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1233,6 +1233,24 @@ void ext4_mb_generate_buddy(struct super_block *sb,
- 	atomic64_add(period, &sbi->s_mb_generation_time);
+diff --git a/tools/perf/tests/shell/script.sh b/tools/perf/tests/shell/script.sh
+index 5ae7bd0031a8..2973adab445d 100755
+--- a/tools/perf/tests/shell/script.sh
++++ b/tools/perf/tests/shell/script.sh
+@@ -54,7 +54,14 @@ def sample_table(*args):
+ def call_path_table(*args):
+     print(f'call_path_table({args}')
+ _end_of_file_
+-	perf record -g -o "${perfdatafile}" true
++	case $(uname -m)
++	in s390x)
++		cmd_flags="--call-graph dwarf -e cpu-clock";;
++	*)
++		cmd_flags="-g";;
++	esac
++
++	perf record $cmd_flags -o "${perfdatafile}" true
+ 	perf script -i "${perfdatafile}" -s "${db_test}"
+ 	echo "DB test [Success]"
  }
- 
-+static void mb_regenerate_buddy(struct ext4_buddy *e4b)
-+{
-+	int count;
-+	int order = 1;
-+	void *buddy;
-+
-+	while ((buddy = mb_find_buddy(e4b, order++, &count)))
-+		mb_set_bits(buddy, 0, count);
-+
-+	e4b->bd_info->bb_fragments = 0;
-+	memset(e4b->bd_info->bb_counters, 0,
-+		sizeof(*e4b->bd_info->bb_counters) *
-+		(e4b->bd_sb->s_blocksize_bits + 2));
-+
-+	ext4_mb_generate_buddy(e4b->bd_sb, e4b->bd_buddy,
-+		e4b->bd_bitmap, e4b->bd_group, e4b->bd_info);
-+}
-+
- /* The buddy information is attached the buddy cache inode
-  * for convenience. The information regarding each group
-  * is loaded via ext4_mb_load_buddy. The information involve
-@@ -1921,6 +1939,8 @@ static void mb_free_blocks(struct inode *inode, struct ext4_buddy *e4b,
- 			ext4_mark_group_bitmap_corrupted(
- 				sb, e4b->bd_group,
- 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
-+		} else {
-+			mb_regenerate_buddy(e4b);
- 		}
- 		goto done;
- 	}
 -- 
 2.43.0
 
