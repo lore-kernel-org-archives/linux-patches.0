@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625C2A93C;
-	Tue, 13 Feb 2024 17:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C250EA93C;
+	Tue, 13 Feb 2024 17:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845992; cv=none; b=NOYb/agLM+G/XBG4PQq9UozctruD02BL67B9X+/s8hZINZHngd3/A+s+Yu/fvoR0e18tov71i/9zDU/3IAu/zGr2N9Q3btPnAH11GERBJn0KNACPN5rEDUVrsnAPZq6x8s4mSAxcF4iTi/vMwrKWpqE4NPWm1w3VIYi6Z/VGAFI=
+	t=1707845995; cv=none; b=jsZC8WeoRA2kozLn8Bn4GsJi/8hU8Knk+ikz4rtxLLtKypklGR3e/d2gYSXm+rdLI9YGYNL58Mdegl0PpAAZFQqgf50uJiPdVAt9Y7VIYNH3n6CSoLYgxhe+Rg8sAMOfTloysJS6hGUHX8DSR54QxBxwR0ceayFqs92a55FS9/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845992; c=relaxed/simple;
-	bh=klCTKgQ3Do5bVcicaF1oiMdjWK+pBkr9j+GKoZrErf0=;
+	s=arc-20240116; t=1707845995; c=relaxed/simple;
+	bh=E8QRCELMxBGLuk3SFYdPjAOFEnsHPBKo5NSoJLFE5fY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmOUSS9QveYhaGqwEnJMEuEZye97Ws9fb1iNKa5MiNhnMhKRt1z0gggJQcaFxy+NIFv0r5MjmwNVQIuq7NDHSspnS+AtDSrETW7WMPTde42ZsDb5gh9bye1upmk5KFmEhyhjTIiihW3Yi5yFm7onqpq5jneL7mEPuRjXfwmBkbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Slen0SQz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BH0m68TEedPDXCChmrupq7su6RT9/j15HAywk0ljTiv9kIonrGJ/8TjiDN7uAGYdTAUkBIO8ZOtJm++5frx1lntuKNEAdUlEtVasbNP5ZWE0RkG7XNwWY2YxWlQcLtqe4kU77NwbBnKcmtJRWeXO0zxi091BJT2GM6aatry3TI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sY8P6YRL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Slen0SQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB301C433F1;
-	Tue, 13 Feb 2024 17:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sY8P6YRL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237E9C433F1;
+	Tue, 13 Feb 2024 17:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845992;
-	bh=klCTKgQ3Do5bVcicaF1oiMdjWK+pBkr9j+GKoZrErf0=;
+	s=korg; t=1707845995;
+	bh=E8QRCELMxBGLuk3SFYdPjAOFEnsHPBKo5NSoJLFE5fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Slen0SQz417C0O/GDro4cu4gwf6s+BwjuSUReBCd5+RSRDz/ASKxW1XIiEG4uF2ZW
-	 sXNX6EoTzgWQNSXaqWjaxQswo06HyWNOwobFZOKBeuYl11ilGZ8DvrBNPyzfhckwFf
-	 PD/Sm5QHcuijG5qW5k8ou5rjifeKwYZNuTMg+biE=
+	b=sY8P6YRLKa+Py+xJfRFFIhQjdF+H4sKoFeEFCdZ3/DBStWYZnhBUQO5dzzPjmr9xi
+	 kYWUSwcFm+UWviCRVEeeF67hWEeKgnZK3V602qJEeboK3elpMUluI7gFAOZ3zU2C+d
+	 T5mXu1XdZtyWKMDGDymeTJct/KyHj4v8ovEyIUOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hill <daniel@gluo.nz>,
-	Kent Overstreet <kent.overstreet@linux.dev>
-Subject: [PATCH 6.7 113/124] bcachefs: rebalance should wakeup on shutdown if disabled
-Date: Tue, 13 Feb 2024 18:22:15 +0100
-Message-ID: <20240213171857.031386175@linuxfoundation.org>
+	Alexander Tsoy <alexander@tsoy.me>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.7 087/124] ALSA: usb-audio: Add delay quirk for MOTU M Series 2nd revision
+Date: Tue, 13 Feb 2024 18:21:49 +0100
+Message-ID: <20240213171856.274340196@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -50,60 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hill <daniel@gluo.nz>
+From: Alexander Tsoy <alexander@tsoy.me>
 
-commit 0c069781ddfa4e31c169a8eced1ee90b8929d522 upstream.
+commit d915a6850e27efb383cd4400caadfe47792623df upstream.
 
-Signed-off-by: Daniel Hill <daniel@gluo.nz>
-Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
+Audio control requests that sets sampling frequency sometimes fail on
+this card. Adding delay between control messages eliminates that problem.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217601
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
+Link: https://lore.kernel.org/r/20240124130239.358298-1-alexander@tsoy.me
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/bcachefs/move.c      |    2 +-
- fs/bcachefs/move.h      |    1 +
- fs/bcachefs/rebalance.c |   12 ++++++++++--
- 3 files changed, 12 insertions(+), 3 deletions(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/bcachefs/move.c
-+++ b/fs/bcachefs/move.c
-@@ -152,7 +152,7 @@ void bch2_move_ctxt_wait_for_io(struct m
- 		atomic_read(&ctxt->write_sectors) != sectors_pending);
- }
- 
--static void bch2_moving_ctxt_flush_all(struct moving_context *ctxt)
-+void bch2_moving_ctxt_flush_all(struct moving_context *ctxt)
- {
- 	move_ctxt_wait_event(ctxt, list_empty(&ctxt->reads));
- 	bch2_trans_unlock_long(ctxt->trans);
---- a/fs/bcachefs/move.h
-+++ b/fs/bcachefs/move.h
-@@ -81,6 +81,7 @@ void bch2_moving_ctxt_init(struct moving
- 			   struct write_point_specifier, bool);
- struct moving_io *bch2_moving_ctxt_next_pending_write(struct moving_context *);
- void bch2_moving_ctxt_do_pending_writes(struct moving_context *);
-+void bch2_moving_ctxt_flush_all(struct moving_context *);
- void bch2_move_ctxt_wait_for_io(struct moving_context *);
- int bch2_move_ratelimit(struct moving_context *);
- 
---- a/fs/bcachefs/rebalance.c
-+++ b/fs/bcachefs/rebalance.c
-@@ -317,8 +317,16 @@ static int do_rebalance(struct moving_co
- 			     BTREE_ID_rebalance_work, POS_MIN,
- 			     BTREE_ITER_ALL_SNAPSHOTS);
- 
--	while (!bch2_move_ratelimit(ctxt) &&
--	       !kthread_wait_freezable(r->enabled)) {
-+	while (!bch2_move_ratelimit(ctxt)) {
-+		if (!r->enabled) {
-+			bch2_moving_ctxt_flush_all(ctxt);
-+			kthread_wait_freezable(r->enabled ||
-+					       kthread_should_stop());
-+		}
-+
-+		if (kthread_should_stop())
-+			break;
-+
- 		bch2_trans_begin(trans);
- 
- 		ret = bkey_err(k = next_rebalance_entry(trans, &rebalance_work_iter));
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2073,6 +2073,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x0763, 0x2031, /* M-Audio Fast Track C600 */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
++	DEVICE_FLG(0x07fd, 0x000b, /* MOTU M Series 2nd hardware revision */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x08bb, 0x2702, /* LineX FM Transmitter */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x0951, 0x16ad, /* Kingston HyperX */
 
 
