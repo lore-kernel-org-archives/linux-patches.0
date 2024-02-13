@@ -1,84 +1,207 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9945FDD7;
-	Tue, 13 Feb 2024 20:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880225FF03;
+	Tue, 13 Feb 2024 20:52:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.63.252.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707856637; cv=none; b=s215btleW19aPiAROK1xx9kzPr9nWfFe+IlLEVq3LAef71efgruk+MoZpXNnvOKpB757mN3kKM6++F9ud7gw6bAHMSHouqq/wwJu8BFGU5EHEBMWNfLRCPXfiGKiXr+cFdvj7wjXaMEF4FFxfhN8uPT+Rei0LYrT7thiBzLzKmI=
+	t=1707857552; cv=none; b=YrSu86UddSUFpplDwL8zckC8Cgiw0UZUZTNbLoZztDtFOI5rb4gZWBe9YcM6gb1TfjMEuUFj8NwJuXaP+bdNkrsnfXQEsNsb1VadVOCXHqrkn8NYhHdjSidO2S3bEId//uNhZth5ZsgwkBq2HLkgKRjZEbuukqLICYJSzsbeavo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707856637; c=relaxed/simple;
-	bh=n/wW7PIGgqQXSlQ0F7NCV5oNj8FXGjtLdH3aZqJKeHE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CwLoOdMfSMH/a+ZqMmC6Uufiogy8sP3vuC+cY/2CbE3QljMmj/ZQ1GFoe4WtIrEg4Wxo15eQUGnA7C1Zwc9+ZevrXQkBn75WXWMh9DF6uZRmLT0mlNyZhzsO06yBiZ6BtpurTvDS8B8TDa4BUq0nbpi/TFPx0wbE2Qo2pQk9Um0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OGvc+fK+; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707857552; c=relaxed/simple;
+	bh=64I1TgtHDDIt6/p7AHX6u2hXP67VwmvVIRlSAqFWpzA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lffe9PcQ4Ab37s2gsy6gTOacuhpWWo/jmNXEZbp55j4RPXQLzy6IDFWU4cE8R8rcZiTSe4Xjye8T670bORy64rUUI2JHKVTEoPeLe7OBBKojATWlWKiJ+GalqFYosL+3rHUpsPwAfgfjjTgAaop3LHKCUv7DwfHxbJwQuKNwFj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=fjasle.eu; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=OVfsxu8f; arc=none smtp.client-ip=194.63.252.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fjasle.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OGvc+fK+"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc236729a2bso1234943276.0;
-        Tue, 13 Feb 2024 12:37:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707856635; x=1708461435; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n/wW7PIGgqQXSlQ0F7NCV5oNj8FXGjtLdH3aZqJKeHE=;
-        b=OGvc+fK+romig5bqIBqGZ1YkPy0Z1tn5tatK5hK12CQ2kwa8qi/dBO2Q0QweD2y96n
-         Rlw7AdKl9cqDNRHnM5ctbNAWGH/P6PKdQHDUZ7KRksC5r4y5JM52rmOGLym6wVD0Xqxj
-         2rmMxh2kEFp39xIdQfJCVSgITdbw6RGO10HGTAhM5LJ0RWqGd3JkjH0ARMXyIJhAngVE
-         U0Np6uWugRqk5eyVx4voKXvRepoRCb5KnXOfHyFlF4vTZ+4cogP1oOUgC3+w/y4o3wxD
-         pjzPW/VSNaaR04ju2w0Kb8QoE8gxNcstluZunsK80UVPuCTYpJJJeETypTJbRLgnh9UM
-         3pVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707856635; x=1708461435;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n/wW7PIGgqQXSlQ0F7NCV5oNj8FXGjtLdH3aZqJKeHE=;
-        b=qZceGdeXzf4gwmKzdyru/hGQ7c2asRqbkYozmf89D8oltcyZvGWNMf5Kv2EgLAzhJK
-         q6AtIa6WpTj0WlU321JmdfpusgpX73ch5FdQHDCziD7rb8aaL9ef3kY2PQdirKB+HxAc
-         bmA/DxUcS1s4s7YRkjfN0Gq+pICNys/pEW6egg+kMvgAnLBi4yHuzLepGx58MvkwpHpG
-         ErzIDk5FbmwOX3brNaGgKyFracZeoAnzPusjVh+SGMd3DnJ6sxTKcsJLtxozx2FekttA
-         d9/l/H/y67noouhDuCBjhAfxAiX5gA4CCvS8aa3/Y1LxOTS4Q2kL5+EJLFxixlA2UePV
-         4A7w==
-X-Forwarded-Encrypted: i=1; AJvYcCXY1wyzkPGh9kbe5KBZfc98KqnPfi3V+q+VdnH9PlGrGEfNFW+IGw2Aljovmt9XjZHeI7E8VHqhdlNiuFgx6LhzOKWXdQZuQi2jMWAo0S7Ma/7HDCbBjwqResAJeNo=
-X-Gm-Message-State: AOJu0YwyTWK/D8oJBCa7UfFDKQLkXhJ8fY707c1GmVyNpkx+z6AgTdj0
-	X4foGneXhg4WHoZY9Fm/0wlIQx2bN4oAaUEaWWzotiWl2rYaHugHPy4olCwxpZUMbu+wF9Q/AF9
-	HKs8NcneoPQshRN0Qf0e327ARKm0cLD5+
-X-Google-Smtp-Source: AGHT+IE7LRxEWEyLjD3Dvo0o8c7YVHNu9ELBH7AyR73SwTWGh6EmoBFMKAf18L2S2tVVni7yUNl0BAAtY4km7kss1Cs=
-X-Received: by 2002:a25:ae16:0:b0:dcd:3172:7271 with SMTP id
- a22-20020a25ae16000000b00dcd31727271mr445383ybj.3.1707856635046; Tue, 13 Feb
- 2024 12:37:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="OVfsxu8f"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fjasle.eu;
+	s=ds202307; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=AynPBu8jS0YBZE5dCSOc1gqeyaauXcsGk9RK7JNo4+E=; b=OVfsxu8fyN677OC6MCjrWC9Msm
+	YgE2jZ+MuT/ObdYNvqwDd6jNqdDDlQOn2T90JuFIa7XQrz7hc5Wnv4DiXOa1s+XDGZMYwxV6TAOzl
+	+7beOSD+8xCsjHSh3NqSEBumSecmG3el6PHcJOQs5kdxdUqPtSgqgyIqTTIRF+galECY/WVS1zOYs
+	hDliJrLgHjS0DluetlyEa26cfpoEc4hNyACTh02TGjewGvA6tuJ22l6h2hcxuFSEy8pRjvXfAulb5
+	WJT9oRkUsCJsnsAQ0oInuuKqbQTsvj1fPwW6g9q3/vgI+2w8htu+kUvHX6WZKk//xtPYkA8LX0n7m
+	z1HvapMA==;
+Received: from [2001:9e8:9d1:8401:6f0:21ff:fe91:394] (port=36842 helo=bergen.fjasle.eu)
+	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <nicolas@fjasle.eu>)
+	id 1rZzlN-00HT8U-CK;
+	Tue, 13 Feb 2024 21:52:21 +0100
+Date: Tue, 13 Feb 2024 21:52:14 +0100
+From: Nicolas Schier <nicolas@fjasle.eu>
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, ndesaulniers@google.com,
+	morbo@google.com, justinstitt@google.com, keescook@chromium.org,
+	maskray@google.com, linux-kbuild@vger.kernel.org,
+	bpf@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2] kbuild: Fix changing ELF file type for output of
+ gen_btf for big endian
+Message-ID: <ZcvWfsv1ohV5qHSI@bergen.fjasle.eu>
+References: <20240212-fix-elf-type-btf-vmlinux-bin-o-big-endian-v2-1-22c0a6352069@kernel.org>
+ <CAK7LNATK=8V+BroyN+uo9OynkfR6s6HtRgh=LF7yan7cPkbaTA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240111-dvb-mxl5xx-move-structs-off-stack-v1-1-ca4230e67c11@kernel.org>
- <20240210162604.342349-1-ojeda@kernel.org> <20240212232757.GA3221859@dev-arch.thelio-3990X>
-In-Reply-To: <20240212232757.GA3221859@dev-arch.thelio-3990X>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 13 Feb 2024 21:37:03 +0100
-Message-ID: <CANiq72nYc0aVOwYKgJ13Fsdp84jZqxPsL=VdCQjGtoFdFVZziQ@mail.gmail.com>
-Subject: Re: [PATCH] media: mxl5xx: Move xpt structures off stack
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, justinstitt@google.com, linux-media@vger.kernel.org, 
-	llvm@lists.linux.dev, mchehab@kernel.org, morbo@google.com, 
-	ndesaulniers@google.com, patches@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="k3DOEzKl6wHMV12g"
+Content-Disposition: inline
+In-Reply-To: <CAK7LNATK=8V+BroyN+uo9OynkfR6s6HtRgh=LF7yan7cPkbaTA@mail.gmail.com>
+X-Operating-System: Debian GNU/Linux trixie/sid
+Jabber-ID: nicolas@jabber.no
+
+
+--k3DOEzKl6wHMV12g
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 13, 2024 at 12:28=E2=80=AFAM Nathan Chancellor <nathan@kernel.o=
-rg> wrote:
->
-> Thanks for taking a look, this is great to hear!
+On Tue 13 Feb 2024 11:15:40 GMT, Masahiro Yamada wrote:
+> On Tue, Feb 13, 2024 at 11:06=E2=80=AFAM Nathan Chancellor=20
+> <nathan@kernel.org> wrote:
+> >
+> > Commit 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
+> > changed the ELF type of .btf.vmlinux.bin.o to ET_REL via dd, which works
+> > fine for little endian platforms:
+> >
+> >    00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF...=
+=2E........|
+> >   -00000010  03 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |.......=
+=2E........|
+> >   +00000010  01 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |.......=
+=2E........|
+> >
+> > However, for big endian platforms, it changes the wrong byte, resulting
+> > in an invalid ELF file type, which ld.lld rejects:
+> >
+> >    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF...=
+=2E........|
+> >   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
+=2E........|
+> >   +00000010  01 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
+=2E........|
+> >
+> >   Type:                              <unknown>: 103
+> >
+> >   ld.lld: error: .btf.vmlinux.bin.o: unknown file type
+> >
+> > Fix this by updating the entire 16-bit e_type field rather than just a
+> > single byte, so that everything works correctly for all platforms and
+> > linkers.
+> >
+> >    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF...=
+=2E........|
+> >   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
+=2E........|
+> >   +00000010  00 01 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
+=2E........|
+> >
+> >   Type:                              REL (Relocatable file)
+> >
+> > While in the area, update the comment to mention that binutils 2.35+
+> > matches LLD's behavior of rejecting an ET_EXEC input, which occurred
+> > after the comment was added.
+> >
+> > Cc: stable@vger.kernel.org
+> > Fixes: 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
+> > Link: https://github.com/llvm/llvm-project/pull/75643
+> > Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>=20
+>=20
+> Thanks.
+>=20
+> I will wait for a few days until
+> the reviewers come back to give Reviewed-by again.
 
-My pleasure!
+thanks, v2 looks even better.
 
-I am happy to report that it also worked with the new toolchain you
-just uploaded (i.e. the one that included `libclang.so` :)
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
 
-Cheers,
-Miguel
+> > ---
+> > Changes in v2:
+> > - Rather than change the seek value for dd, update the entire e_type
+> >   field (Masahiro). Due to this change, I did not carry forward the
+> >   tags of v1.
+> > - Slightly update commit message to remove mention of ET_EXEC, which
+> >   does not match the dump (Masahiro).
+> > - Update comment to mention binutils 2.35+ has the same behavior as LLD
+> >   (Fangrui).
+> > - Link to v1: https://lore.kernel.org/r/20240208-fix-elf-type-btf-vmlin=
+ux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org
+> > ---
+> >  scripts/link-vmlinux.sh | 9 +++++++--
+> >  1 file changed, 7 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+> > index a432b171be82..7862a8101747 100755
+> > --- a/scripts/link-vmlinux.sh
+> > +++ b/scripts/link-vmlinux.sh
+> > @@ -135,8 +135,13 @@ gen_btf()
+> >         ${OBJCOPY} --only-section=3D.BTF --set-section-flags .BTF=3Dall=
+oc,readonly \
+> >                 --strip-all ${1} ${2} 2>/dev/null
+> >         # Change e_type to ET_REL so that it can be used to link final =
+vmlinux.
+> > -       # Unlike GNU ld, lld does not allow an ET_EXEC input.
+> > -       printf '\1' | dd of=3D${2} conv=3Dnotrunc bs=3D1 seek=3D16 stat=
+us=3Dnone
+> > +       # GNU ld 2.35+ and lld do not allow an ET_EXEC input.
+> > +       if is_enabled CONFIG_CPU_BIG_ENDIAN; then
+> > +               et_rel=3D'\0\1'
+> > +       else
+> > +               et_rel=3D'\1\0'
+> > +       fi
+> > +       printf "${et_rel}" | dd of=3D${2} conv=3Dnotrunc bs=3D1 seek=3D=
+16 status=3Dnone
+> >  }
+> >
+> >  # Create ${2} .S file with all symbols from the ${1} object file
+> >
+> > ---
+> > base-commit: 54be6c6c5ae8e0d93a6c4641cb7528eb0b6ba478
+> > change-id: 20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-dbc55a1e1=
+296
+> >
+> > Best regards,
+> > --
+> > Nathan Chancellor <nathan@kernel.org>
+> >
+> >
+>=20
+>=20
+> --=20
+> Best Regards
+> Masahiro Yamada
+
+--k3DOEzKl6wHMV12g
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEh0E3p4c3JKeBvsLGB1IKcBYmEmkFAmXL1nkACgkQB1IKcBYm
+EmknARAA2E4GEywHnpFzwMKgFe11O30rRL3/W2ji1MkLji9oI5NquTUJZ6Qw/9Nc
+LT69QvkdpCrRX+zpqqI+hCV5CsyXzUKbOmcd0FQ3F6jxB35QM4ko1sYLJBcw3Xau
+waRdyD0agJ3IbcF85/f3xIvUk33Qhm55yMzLx/IZl7YKwI3/E4iO3JSWY1IfijMo
+l9fWpu7ZOSHrbglfgONr3GPt9vLwVBP5hXxwbkbR9r2VRL8Mc5oHHFMJYcY4y3bF
+wQVT7Fsz++dgnxD8VoyBBtVWrmrFx9pc/3sGbgK6tECwuVKd4ZzeGi0uRaB94Shy
+AoigytM4RQo8CxDhI3E952P1IYStX3yitI6hVcYcpOK6rOikKqwc9SZvmOyNbleY
+mUkeddNa3TA90BIJ1TdG+SFWdpfbx1R516pkagHLkt89jYq4uvb5pDs4QO65umxN
+D0OMvKaRBpPZNmy90557DA4s0BOhs6DZWmCGWR/nsz7h5zPHi7kDVwH4I7M+1VI6
+L2hQXFIYWvY17HAXHXyULgefp4bEhnvCCAzckkf6edpVdzloBhYWkzoGQn9eoERP
+NT9cRMElIP5s7ejDDaB5fwog6K5oNg6Wjbce2aV0Kpb8QTx2pDT1aw2Ml+RUm83N
+kiAoHupA7gVA1dio5hG1x7KZDHwK6CfhzhPFGnfFa0wNs7iWqmU=
+=ghs2
+-----END PGP SIGNATURE-----
+
+--k3DOEzKl6wHMV12g--
