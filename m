@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEA35FEFD;
-	Tue, 13 Feb 2024 17:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BE55F54E;
+	Tue, 13 Feb 2024 17:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845374; cv=none; b=Y2k7dbz3F9/c/nK9eOyqXD5OeLZyTPOxZFeEviJpT0lM+x5wKZHOY65GkAtuYuP/V6+f0uBieqbhFws5Ij5pvL/oL85vh3JqVJqeYrTQ2KkQzZ0WVniTJg+O+dD+wB+TP20nihItBwDve/pbPk6a8PMEyqiSRz1o5cQf0w7yE0g=
+	t=1707845378; cv=none; b=POv/pmVH4J+gS2DOk0CLlQRhqBGjxLAKJ4POJ9EQiaFyUTZa9uhEhop0brtd1OofKvyBQ1aIRQkerqmy0CoumMx2Zao2YJbRRXEC0ajTGa1RMbEsn7iGArtfciXRzjJ8gB0Di8TQAG1zJd08yz0krj3toLMVxLywK3ScX8ZRy7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845374; c=relaxed/simple;
-	bh=2Bjp44ywFoN0PazWgQc3fZjNp3L2A9eyV2AIf3ku824=;
+	s=arc-20240116; t=1707845378; c=relaxed/simple;
+	bh=YtRTiqpQ07KK6jqVhbjI3Ce+xi9n3uycWKHMxWtW4U4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aR8hXXw+N2/M98Op21jTlUGDBK7iqMCvUSQNHSobTjmdvfqt39t0tNgJv+OR1Q/q9CJA1uI6heAN3MudzJopg8xOvR2R8d8Yaavw/+QuSSXMEz0AQEVUcQGf2zbweNoCqNoMJ8uE3bjG72QZpFuvcBPWfT5s4VcV1Z0dE7kmJDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4cOh0sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACp72/wEDccf5XQenfGSwVFaxkLDcp7IZaJmynMnw1IWLfGcS3T0xlZPqc7EAb0D7w5mwOIyLApXDHt/L0lEWYaZp6aHr7wn28IrybUO8c9IsOnctojIeRYncu8gvkGXldLZ+DcbtDwzwQrXJomsOo4yvQLlqUyAEUTBPiCrP4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLc3bjGF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4cOh0sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732B3C433C7;
-	Tue, 13 Feb 2024 17:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLc3bjGF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB98C433F1;
+	Tue, 13 Feb 2024 17:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845373;
-	bh=2Bjp44ywFoN0PazWgQc3fZjNp3L2A9eyV2AIf3ku824=;
+	s=korg; t=1707845377;
+	bh=YtRTiqpQ07KK6jqVhbjI3Ce+xi9n3uycWKHMxWtW4U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4cOh0sbNqkx7u74fHi2pHvoaAceqSsGemkn6RJqzxwEcrlog4kyZfPPWALXfJ8gV
-	 +BZlrqQmCbI4IPQIEYdMq+tIPIpdmF0xMgBqvxQ3eeqQE97/MAsDRcWxLAVwqfV7hX
-	 5Zjzb15/oEMcJDxoduSvShpWnCvv2pst0QM8Upmg=
+	b=gLc3bjGF7v64zUk6WN6qNGe/gtuxLuWjpVRJDOWgFNvO+CJwLJehAt9bhNZJUDZx2
+	 KYisHbRzerBz0r8oNNkcSzvCtB7UnDZYBTa5HrLa+WZ6j8SEm+DBplDSSdDYsOlbUm
+	 T/wSA4Zk8eQHGlqiJvCTddrVjXJ70udRi2LnAB48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/121] hwmon: (coretemp) Fix out-of-bounds memory access
-Date: Tue, 13 Feb 2024 18:21:10 +0100
-Message-ID: <20240213171854.775517574@linuxfoundation.org>
+Subject: [PATCH 6.6 044/121] wifi: mac80211: fix RCU use in TDLS fast-xmit
+Date: Tue, 13 Feb 2024 18:20:53 +0100
+Message-ID: <20240213171854.284441896@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -51,50 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 4e440abc894585a34c2904a32cd54af1742311b3 ]
+[ Upstream commit 9480adfe4e0f0319b9da04b44e4eebd5ad07e0cd ]
 
-Fix a bug that pdata->cpu_map[] is set before out-of-bounds check.
-The problem might be triggered on systems with more than 128 cores per
-package.
+This looks up the link under RCU protection, but isn't
+guaranteed to actually have protection. Fix that.
 
-Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240202092144.71180-2-rui.zhang@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: fdaf0c8629d4 ("hwmon: (coretemp) Fix bogus core_id to attr name mapping")
+Fixes: 8cc07265b691 ("wifi: mac80211: handle TDLS data frames with MLO")
+Link: https://msgid.link/20240129155348.8a9c0b1e1d89.I553f96ce953bb41b0b877d592056164dec20d01c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/mac80211/tx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index ba82d1e79c13..e78c76919111 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -509,18 +509,14 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
- 	if (pkg_flag) {
- 		attr_no = PKG_SYSFS_ATTR_NO;
- 	} else {
--		index = ida_alloc(&pdata->ida, GFP_KERNEL);
-+		index = ida_alloc_max(&pdata->ida, NUM_REAL_CORES - 1, GFP_KERNEL);
- 		if (index < 0)
- 			return index;
-+
- 		pdata->cpu_map[index] = topology_core_id(cpu);
- 		attr_no = index + BASE_SYSFS_ATTR_NO;
- 	}
- 
--	if (attr_no > MAX_CORE_DATA - 1) {
--		err = -ERANGE;
--		goto ida_free;
--	}
--
- 	tdata = init_temp_data(cpu, pkg_flag);
- 	if (!tdata) {
- 		err = -ENOMEM;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index d45d4be63dd8..5481acbfc1d4 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3086,10 +3086,11 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
+ 			/* DA SA BSSID */
+ 			build.da_offs = offsetof(struct ieee80211_hdr, addr1);
+ 			build.sa_offs = offsetof(struct ieee80211_hdr, addr2);
++			rcu_read_lock();
+ 			link = rcu_dereference(sdata->link[tdls_link_id]);
+-			if (WARN_ON_ONCE(!link))
+-				break;
+-			memcpy(hdr->addr3, link->u.mgd.bssid, ETH_ALEN);
++			if (!WARN_ON_ONCE(!link))
++				memcpy(hdr->addr3, link->u.mgd.bssid, ETH_ALEN);
++			rcu_read_unlock();
+ 			build.hdr_len = 24;
+ 			break;
+ 		}
 -- 
 2.43.0
 
