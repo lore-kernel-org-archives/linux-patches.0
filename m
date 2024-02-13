@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC90A93C;
-	Tue, 13 Feb 2024 17:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C037A93C;
+	Tue, 13 Feb 2024 17:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845882; cv=none; b=lHLCFsh78zv7PSIBz8waOB6Y3orc0j0QiTXbr9h7M9nlVvgqOik1lpk0yA9qhO1/GQZ6KzODb/BPsq5H81xAEORK1XnKQqCdxGFhAHh4i7nm6oETLO2mrnvDGxakB17OHr3DiLQNCc6Kj7mQyk5+lvxs/nC5W2ONH3oTnQiJ2mY=
+	t=1707845885; cv=none; b=dO0tvksYt2tqjFZN5HES9ovpSBQyhHgXWPHvnSwf7ip80yCpyliRJAQPYRvqsOHvK8lGQyiq2Am6edU+ML4wB8nsfczBsIBlYdzXGIAwgFFCgZqM8SVyVT640t0elVQxvGPqUoNTUYzmXEBLjrpnhertnqCbgfjet1l4v/uXteU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845882; c=relaxed/simple;
-	bh=AHYyHA/8OUICtCYjn7CtE6Yf4axhd/f5j/p2EmN8pyc=;
+	s=arc-20240116; t=1707845885; c=relaxed/simple;
+	bh=VQInYca/90D1tz1h8NDOEf7JG09O3ZAQzXy/LWAIsA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AAL9NM+DG5kshBNtziHQvA2p8IAQwI0VupGV+NFgjvnvGBdzg9LPqdEfBHDqlBmLl3gP8LyqAW0xknRC6QCyZ+wShavCvXgatS/S2zt1TI4oU8j+UMu20JJnV/v1fteVEzsaVfFFnqFxqzLZtxmId0FBBRDynYb8ZlwjlNVja0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHvtwj+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QcF8JiK2sLdUNyRd5Xip9qT0+Ex2qfN6W9KuBkBNpib2aZXCIoCPLi+ct8NueAqKqURzPJecu+t6SLGmWtt7cU9Luaa+qTMoCzC15WISTr5Msuu06ETN4gPFqlA2353quC2L1ae4bZ+hCihiafVwEquVJClW4yuZW677jx6Jc6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdH7F6sC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHvtwj+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45914C433F1;
-	Tue, 13 Feb 2024 17:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdH7F6sC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A270C433F1;
+	Tue, 13 Feb 2024 17:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845881;
-	bh=AHYyHA/8OUICtCYjn7CtE6Yf4axhd/f5j/p2EmN8pyc=;
+	s=korg; t=1707845885;
+	bh=VQInYca/90D1tz1h8NDOEf7JG09O3ZAQzXy/LWAIsA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pHvtwj+YDBMetoErSy0k9W9dwF93CnzbZG8IwsPtMYWES/rED2oljdc0mNEr70I7y
-	 t70ABkCTQugGrwr+zGU/zWt9IdxhPf7E8KQrj6oZAZC/Jlcvf6T2nJQglqglUFHJ45
-	 70cNV8FnDLA4A/2N0uF3rAPWivwusx4Zjs4WdKJE=
+	b=WdH7F6sCZq7N9VWgbFgg0852emaqqlIeM2QROu8gpZGZfgMUMRu+COTxEsq4f6NjN
+	 tOn1cEOh9a3/LeHoyjo4pD2TRprNGbBcpVhRfjvbEZ9ucAa2SmKcmCEez/ppHXS7gX
+	 6AzylsaxOwG/MRCvzrlt9hIQX3TQYvuc6eW4HiVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 083/124] riscv: declare overflow_stack as exported from traps.c
-Date: Tue, 13 Feb 2024 18:21:45 +0100
-Message-ID: <20240213171856.159322269@linuxfoundation.org>
+Subject: [PATCH 6.7 056/124] devlink: avoid potential loop in devlink_rel_nested_in_notify_work()
+Date: Tue, 13 Feb 2024 18:21:18 +0100
+Message-ID: <20240213171855.376184376@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,45 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 2cf963787529f615f7c93bdcf13a5e82029e7f38 ]
+[ Upstream commit 58086721b7781c3e35b19c9b78c8f5a791070ba3 ]
 
-The percpu area overflow_stacks is exported from arch/riscv/kernel/traps.c
-for use in the entry code, but is not declared anywhere. Add the relevant
-declaration to arch/riscv/include/asm/stacktrace.h to silence the following
-sparse warning:
+In case devlink_rel_nested_in_notify_work() can not take the devlink
+lock mutex. Convert the work to delayed work and in case of reschedule
+do it jiffie later and avoid potential looping.
 
-arch/riscv/kernel/traps.c:395:1: warning: symbol '__pcpu_scope_overflow_stack' was not declared. Should it be static?
-
-We don't add the stackinfo_get_overflow() call as for some of the other
-architectures as this doesn't seem to be used yet, so just silence the
-warning.
-
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Fixes: be97d0db5f44 ("riscv: VMAP_STACK overflow detection thread-safe")
-Link: https://lore.kernel.org/r/20231123134214.81481-1-ben.dooks@codethink.co.uk
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c137743bce02 ("devlink: introduce object and nested devlink relationship infra")
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20240205171114.338679-1-jiri@resnulli.us
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/stacktrace.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/devlink/core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/riscv/include/asm/stacktrace.h b/arch/riscv/include/asm/stacktrace.h
-index f7e8ef2418b9..b1495a7e06ce 100644
---- a/arch/riscv/include/asm/stacktrace.h
-+++ b/arch/riscv/include/asm/stacktrace.h
-@@ -21,4 +21,9 @@ static inline bool on_thread_stack(void)
- 	return !(((unsigned long)(current->stack) ^ current_stack_pointer) & ~(THREAD_SIZE - 1));
+diff --git a/net/devlink/core.c b/net/devlink/core.c
+index 6984877e9f10..cbf8560c9375 100644
+--- a/net/devlink/core.c
++++ b/net/devlink/core.c
+@@ -46,7 +46,7 @@ struct devlink_rel {
+ 		u32 obj_index;
+ 		devlink_rel_notify_cb_t *notify_cb;
+ 		devlink_rel_cleanup_cb_t *cleanup_cb;
+-		struct work_struct notify_work;
++		struct delayed_work notify_work;
+ 	} nested_in;
+ };
+ 
+@@ -70,7 +70,7 @@ static void __devlink_rel_put(struct devlink_rel *rel)
+ static void devlink_rel_nested_in_notify_work(struct work_struct *work)
+ {
+ 	struct devlink_rel *rel = container_of(work, struct devlink_rel,
+-					       nested_in.notify_work);
++					       nested_in.notify_work.work);
+ 	struct devlink *devlink;
+ 
+ 	devlink = devlinks_xa_get(rel->nested_in.devlink_index);
+@@ -96,13 +96,13 @@ static void devlink_rel_nested_in_notify_work(struct work_struct *work)
+ 	return;
+ 
+ reschedule_work:
+-	schedule_work(&rel->nested_in.notify_work);
++	schedule_delayed_work(&rel->nested_in.notify_work, 1);
  }
  
-+
-+#ifdef CONFIG_VMAP_STACK
-+DECLARE_PER_CPU(unsigned long [OVERFLOW_STACK_SIZE/sizeof(long)], overflow_stack);
-+#endif /* CONFIG_VMAP_STACK */
-+
- #endif /* _ASM_RISCV_STACKTRACE_H */
+ static void devlink_rel_nested_in_notify_work_schedule(struct devlink_rel *rel)
+ {
+ 	__devlink_rel_get(rel);
+-	schedule_work(&rel->nested_in.notify_work);
++	schedule_delayed_work(&rel->nested_in.notify_work, 0);
+ }
+ 
+ static struct devlink_rel *devlink_rel_alloc(void)
+@@ -123,8 +123,8 @@ static struct devlink_rel *devlink_rel_alloc(void)
+ 	}
+ 
+ 	refcount_set(&rel->refcount, 1);
+-	INIT_WORK(&rel->nested_in.notify_work,
+-		  &devlink_rel_nested_in_notify_work);
++	INIT_DELAYED_WORK(&rel->nested_in.notify_work,
++			  &devlink_rel_nested_in_notify_work);
+ 	return rel;
+ }
+ 
 -- 
 2.43.0
 
