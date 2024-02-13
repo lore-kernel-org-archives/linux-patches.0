@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA4C5F54E;
-	Tue, 13 Feb 2024 17:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB6C5FB90;
+	Tue, 13 Feb 2024 17:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845168; cv=none; b=rDtTuFGku9H+MOTgepkTKvmdRW2PNPPPYzHC5Zeq9HslOXCUQAyl8W/44Bspn6FRjtnw+gTxcsQTQs3EtQBOq7+VAMt3nSQ1dFw/P53IkbykFOWa3Iqr02QXmZvwLK6dgbNqpHOYlgWPhDUtzeua5160frCWC+NwtV5W4ccKTg8=
+	t=1707845171; cv=none; b=WAqz0jIHI5PWKDAtLjUJHWK0r3V213J8oTQ2kVkeBj2lzvwF1MaKicRp7Hj4XZjanqdqO/xn431ySqMv6Gs9Gyip4V3dlMBpkWw7J5SPxf7vGEavZ+k5xW2wKvDuqa0PWyHTauD3g86SXsFLXEVkhbbLRcutbdXWT9XAplwD8p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845168; c=relaxed/simple;
-	bh=djLbFt4MQ8xIx3jvoHhcqYgA+nZFjsJAGUBMRHCsHsk=;
+	s=arc-20240116; t=1707845171; c=relaxed/simple;
+	bh=zZSXT8qLKc7v5j0P3TXPAdEwW0Vcc7YzIFPhwPa6nJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PMDEbWi4gDar+tla3th7pn+uFYV9TKDpsdcfK1lOcr6uot0GFpuaqv/p++7sX0LaFz1BYI0RfjI2sU24rZRc/ItEDEAltee6h3YuYHAD4NakqaXndOdUMLxisjXzfel6+zjP4beqmZRc71Hn8NQGmAcXo3Xxi9+/OAfJKt6z83k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cg86WUsV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cnAIxNkqSfLakwpZF7F1cj6emnsoVEcveqotpxPTHuf5ktHh+wHQ/e2wMv6XlkHt6sGo6dg2WeUI0ZZ0AnGtAAJ4eJTRVtZGBNjAw/tXVoCWdI2Pp3WZMtCJDr5jX84E7SfHYUgTBIufBKkeap+X0XF00618Y23hKLxRaVJ4888=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azq83frp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cg86WUsV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4217FC433C7;
-	Tue, 13 Feb 2024 17:26:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azq83frp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD10C433C7;
+	Tue, 13 Feb 2024 17:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845167;
-	bh=djLbFt4MQ8xIx3jvoHhcqYgA+nZFjsJAGUBMRHCsHsk=;
+	s=korg; t=1707845170;
+	bh=zZSXT8qLKc7v5j0P3TXPAdEwW0Vcc7YzIFPhwPa6nJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cg86WUsVOhy9PnvKG8qsAb6rise84dRXD0PnPAUEax/9q6PGQ8xeSOEIYzIy5VrjK
-	 1CJoLS71ZbUZvdlZf65H/RTirMC5e641z9t+uHWLGVg2pb4HTE6TtY3Qi0tsPr/c8L
-	 wcQltJOkuOfwVFOmXFvOjVg2Fcz7vhE4BA44xYi4=
+	b=azq83frpbDIg9P6KbesR0M++bHR289P9eRNfBbE1PHCwqpic+P5XLnz0Pcz1x09DE
+	 t7iximG4MlU0yu/pk9gKO323FxE0nRxv/DP7273dCPsBkH/8XWU9dwvVHFLsNvEmJb
+	 9KCLxBcXFjtgarNJIcSBeiMxwCC73GiWlNgpUULc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathu Baronia <prathubaronia2011@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 6.1 60/64] vhost: use kzalloc() instead of kmalloc() followed by memset()
-Date: Tue, 13 Feb 2024 18:21:46 +0100
-Message-ID: <20240213171846.629933212@linuxfoundation.org>
+	Mike Marciniszyn <mike.marciniszyn@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.1 61/64] RDMA/irdma: Fix support for 64k pages
+Date: Tue, 13 Feb 2024 18:21:47 +0100
+Message-ID: <20240213171846.658731660@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
 References: <20240213171844.702064831@linuxfoundation.org>
@@ -52,39 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathu Baronia <prathubaronia2011@gmail.com>
+From: Mike Marciniszyn <mike.marciniszyn@intel.com>
 
-commit 4d8df0f5f79f747d75a7d356d9b9ea40a4e4c8a9 upstream.
+commit 03769f72d66edab82484449ed594cb6b00ae0223 upstream.
 
-Use kzalloc() to allocate new zeroed out msg node instead of
-memsetting a node allocated with kmalloc().
+Virtual QP and CQ require a 4K HW page size but the driver passes
+PAGE_SIZE to ib_umem_find_best_pgsz() instead.
 
-Signed-off-by: Prathu Baronia <prathubaronia2011@gmail.com>
-Message-Id: <20230522085019.42914-1-prathubaronia2011@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Fix this by using the appropriate 4k value in the bitmap passed to
+ib_umem_find_best_pgsz().
+
+Fixes: 693a5386eff0 ("RDMA/irdma: Split mr alloc and free into new functions")
+Link: https://lore.kernel.org/r/20231129202143.1434-4-shiraz.saleem@intel.com
+Signed-off-by: Mike Marciniszyn <mike.marciniszyn@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vhost.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -2588,12 +2588,11 @@ EXPORT_SYMBOL_GPL(vhost_disable_notify);
- /* Create a new message. */
- struct vhost_msg_node *vhost_new_msg(struct vhost_virtqueue *vq, int type)
- {
--	struct vhost_msg_node *node = kmalloc(sizeof *node, GFP_KERNEL);
-+	/* Make sure all padding within the structure is initialized. */
-+	struct vhost_msg_node *node = kzalloc(sizeof(*node), GFP_KERNEL);
- 	if (!node)
- 		return NULL;
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2825,7 +2825,7 @@ static struct ib_mr *irdma_reg_user_mr(s
+ 	iwmr->ibmr.pd = pd;
+ 	iwmr->ibmr.device = pd->device;
+ 	iwmr->ibmr.iova = virt;
+-	iwmr->page_size = PAGE_SIZE;
++	iwmr->page_size = SZ_4K;
  
--	/* Make sure all padding within the structure is initialized. */
--	memset(&node->msg, 0, sizeof node->msg);
- 	node->vq = vq;
- 	node->msg.type = type;
- 	return node;
+ 	if (req.reg_type == IRDMA_MEMREG_TYPE_MEM) {
+ 		iwmr->page_size = ib_umem_find_best_pgsz(region,
 
 
