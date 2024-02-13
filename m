@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77895F54E;
-	Tue, 13 Feb 2024 17:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFF15FF0B;
+	Tue, 13 Feb 2024 17:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845405; cv=none; b=XLyih9u6mhuZvGvkLzHqf/FDpb1ZBVIAzD6SlwCnG1tbfgyS2kOcIATlXSQCLBz96DjKo12Y1w2ONircKk7y31RwEoNBb6CRrWHFSxTOYLMKEplk0unp8gJpeTI+rhyavZwE1FFHzB7XRseEMHZ3gBIvIN60HN1oM4FvzdJ4iyA=
+	t=1707845409; cv=none; b=heRAtQbEJuTrXckZZlsjD1g3u8Z5VHrWou3b0jNLyIHMJjQ+KWsmlU/otqQHHCVmNrLznUGyhNlMHyoBN0jH7/iFN+txqrYWT/Wtngy7jb5oh2HONu+hWbiohfgpNPsT1/7uhcS5y/NE2SeGJd8189kz+d1omTOpV4HAOqBq12A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845405; c=relaxed/simple;
-	bh=MLbMvJdpIBdJkd/iSnasDW6VTYImbinpw8fBV4WwJ/o=;
+	s=arc-20240116; t=1707845409; c=relaxed/simple;
+	bh=hgmTlZZ3iqaA5ItYOOJ+Jhcwro4jUSBtoLpwQgRO+fA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWnovQ/RPo7McIkYdB4K8/VpaWGEPaOU45iAQ5u2sGI2HoEevUGCJk7o1cZcMWO3ax9OBvpj9HWgI0KEzBhxuDFKw3brKG/zP4ykXbUkzq42zcqzzGWaykQ4h5t6Hn+ylg7ghZUU2QkZk6D0EdK/QbWHJRHiulRaIskIRTSCdiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO4TDH6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C68HrD8WV/5RaGtv3Uwj1WH7gl2XtMXIVEL7HAhuQ38ELALUDskq9A+q9aDAZugo4xdj7Pp8EdVho6M+NwBlftBGhnqQ/lHS173FVJx0wmxqBVF0KHP60p8GdgWR2b0accegY+PI9xsxuVp8m5vRe6cbcrOOFts1kxbrYPBL5SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iup7iYL6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO4TDH6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB405C433F1;
-	Tue, 13 Feb 2024 17:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iup7iYL6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4875FC433C7;
+	Tue, 13 Feb 2024 17:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845405;
-	bh=MLbMvJdpIBdJkd/iSnasDW6VTYImbinpw8fBV4WwJ/o=;
+	s=korg; t=1707845408;
+	bh=hgmTlZZ3iqaA5ItYOOJ+Jhcwro4jUSBtoLpwQgRO+fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YO4TDH6ASb2R1Qskk/cF3PGvFw/GY/xoQILaqiH74OQllKvqow5GlZsLfHKVCjJPK
-	 gfdiETrRCDe2rf9Wd7qEqVS3nk7AlaLdQ8Oq8cga/0CNIW5r/s2MzfdtxN7QU7o2Hh
-	 j8SQ1WVgH4bFsVOwCHX0ah0gi8WFxnch6h7ydqi0=
+	b=Iup7iYL6r84d8OzYJwkHKYKi/O0iFXx2xz2qlnqtg/LgVbpg/B5DT1CEWXZrvR2RJ
+	 d54/moMS0l7S1F8mtWpbALhE1awe2JPPMVrf407A/8j5M09qhO6+QLZ9WmLX8AXfUE
+	 ZyJo8/mmeOgL9F3uFZUAeZCWCE2rlDeI7fIjLlTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
+	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/121] rxrpc: Fix counting of new acks and nacks
-Date: Tue, 13 Feb 2024 18:21:17 +0100
-Message-ID: <20240213171854.980496966@linuxfoundation.org>
+Subject: [PATCH 6.6 069/121] selftests: net: let big_tcp test cope with slow env
+Date: Tue, 13 Feb 2024 18:21:18 +0100
+Message-ID: <20240213171855.009937367@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -57,383 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 41b7fa157ea1c8c3a575ca7f5f32034de9bee3ae ]
+[ Upstream commit a19747c3b9bf6476cc36d0a3a5ef0ff92999169e ]
 
-Fix the counting of new acks and nacks when parsing a packet - something
-that is used in congestion control.
+In very slow environments, most big TCP cases including
+segmentation and reassembly of big TCP packets have a good
+chance to fail: by default the TCP client uses write size
+well below 64K. If the host is low enough autocorking is
+unable to build real big TCP packets.
 
-As the code stands, it merely notes if there are any nacks whereas what we
-really should do is compare the previous SACK table to the new one,
-assuming we get two successive ACK packets with nacks in them.  However, we
-really don't want to do that if we can avoid it as the tables might not
-correspond directly as one may be shifted from the other - something that
-will only get harder to deal with once extended ACK tables come into full
-use (with a capacity of up to 8192).
+Address the issue using much larger write operations.
 
-Instead, count the number of nacks shifted out of the old SACK, the number
-of nacks retained in the portion still active and the number of new acks
-and nacks in the new table then calculate what we need.
+Note that is hard to observe the issue without an extremely
+slow and/or overloaded environment; reduce the TCP transfer
+time to allow for much easier/faster reproducibility.
 
-Note this ends up a bit of an estimate as the Rx protocol allows acks to be
-withdrawn by the receiver and packets requested to be retransmitted.
-
-Fixes: d57a3a151660 ("rxrpc: Save last ACK's SACK table rather than marking txbufs")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
+Fixes: 6bb382bcf742 ("selftests: add a selftest for big tcp")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rxrpc.h |   8 ++-
- net/rxrpc/ar-internal.h      |  20 ++++--
- net/rxrpc/call_event.c       |   6 +-
- net/rxrpc/call_object.c      |   1 +
- net/rxrpc/input.c            | 115 +++++++++++++++++++++++++++++------
- 5 files changed, 122 insertions(+), 28 deletions(-)
+ tools/testing/selftests/net/big_tcp.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index f7e537f64db4..0dd4a21d172d 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -128,6 +128,7 @@
- 	EM(rxrpc_skb_eaten_by_unshare_nomem,	"ETN unshar-nm") \
- 	EM(rxrpc_skb_get_conn_secured,		"GET conn-secd") \
- 	EM(rxrpc_skb_get_conn_work,		"GET conn-work") \
-+	EM(rxrpc_skb_get_last_nack,		"GET last-nack") \
- 	EM(rxrpc_skb_get_local_work,		"GET locl-work") \
- 	EM(rxrpc_skb_get_reject_work,		"GET rej-work ") \
- 	EM(rxrpc_skb_get_to_recvmsg,		"GET to-recv  ") \
-@@ -141,6 +142,7 @@
- 	EM(rxrpc_skb_put_error_report,		"PUT error-rep") \
- 	EM(rxrpc_skb_put_input,			"PUT input    ") \
- 	EM(rxrpc_skb_put_jumbo_subpacket,	"PUT jumbo-sub") \
-+	EM(rxrpc_skb_put_last_nack,		"PUT last-nack") \
- 	EM(rxrpc_skb_put_purge,			"PUT purge    ") \
- 	EM(rxrpc_skb_put_rotate,		"PUT rotate   ") \
- 	EM(rxrpc_skb_put_unknown,		"PUT unknown  ") \
-@@ -1549,7 +1551,7 @@ TRACE_EVENT(rxrpc_congest,
- 		    memcpy(&__entry->sum, summary, sizeof(__entry->sum));
- 			   ),
+diff --git a/tools/testing/selftests/net/big_tcp.sh b/tools/testing/selftests/net/big_tcp.sh
+index cde9a91c4797..2db9d15cd45f 100755
+--- a/tools/testing/selftests/net/big_tcp.sh
++++ b/tools/testing/selftests/net/big_tcp.sh
+@@ -122,7 +122,9 @@ do_netperf() {
+ 	local netns=$1
  
--	    TP_printk("c=%08x r=%08x %s q=%08x %s cw=%u ss=%u nA=%u,%u+%u r=%u b=%u u=%u d=%u l=%x%s%s%s",
-+	    TP_printk("c=%08x r=%08x %s q=%08x %s cw=%u ss=%u nA=%u,%u+%u,%u b=%u u=%u d=%u l=%x%s%s%s",
- 		      __entry->call,
- 		      __entry->ack_serial,
- 		      __print_symbolic(__entry->sum.ack_reason, rxrpc_ack_names),
-@@ -1557,9 +1559,9 @@ TRACE_EVENT(rxrpc_congest,
- 		      __print_symbolic(__entry->sum.mode, rxrpc_congest_modes),
- 		      __entry->sum.cwnd,
- 		      __entry->sum.ssthresh,
--		      __entry->sum.nr_acks, __entry->sum.saw_nacks,
-+		      __entry->sum.nr_acks, __entry->sum.nr_retained_nacks,
- 		      __entry->sum.nr_new_acks,
--		      __entry->sum.nr_rot_new_acks,
-+		      __entry->sum.nr_new_nacks,
- 		      __entry->top - __entry->hard_ack,
- 		      __entry->sum.cumulative_acks,
- 		      __entry->sum.dup_acks,
-diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
-index f6375772fa93..bda3f6690b32 100644
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -198,11 +198,19 @@ struct rxrpc_host_header {
-  */
- struct rxrpc_skb_priv {
- 	struct rxrpc_connection *conn;	/* Connection referred to (poke packet) */
--	u16		offset;		/* Offset of data */
--	u16		len;		/* Length of data */
--	u8		flags;
-+	union {
-+		struct {
-+			u16		offset;		/* Offset of data */
-+			u16		len;		/* Length of data */
-+			u8		flags;
- #define RXRPC_RX_VERIFIED	0x01
--
-+		};
-+		struct {
-+			rxrpc_seq_t	first_ack;	/* First packet in acks table */
-+			u8		nr_acks;	/* Number of acks+nacks */
-+			u8		nr_nacks;	/* Number of nacks */
-+		};
-+	};
- 	struct rxrpc_host_header hdr;	/* RxRPC packet header from this packet */
- };
- 
-@@ -688,6 +696,7 @@ struct rxrpc_call {
- 	u8			cong_dup_acks;	/* Count of ACKs showing missing packets */
- 	u8			cong_cumul_acks; /* Cumulative ACK count */
- 	ktime_t			cong_tstamp;	/* Last time cwnd was changed */
-+	struct sk_buff		*cong_last_nack; /* Last ACK with nacks received */
- 
- 	/* Receive-phase ACK management (ACKs we send). */
- 	u8			ackr_reason;	/* reason to ACK */
-@@ -725,7 +734,8 @@ struct rxrpc_call {
- struct rxrpc_ack_summary {
- 	u16			nr_acks;		/* Number of ACKs in packet */
- 	u16			nr_new_acks;		/* Number of new ACKs in packet */
--	u16			nr_rot_new_acks;	/* Number of rotated new ACKs */
-+	u16			nr_new_nacks;		/* Number of new nacks in packet */
-+	u16			nr_retained_nacks;	/* Number of nacks retained between ACKs */
- 	u8			ack_reason;
- 	bool			saw_nacks;		/* Saw NACKs in packet */
- 	bool			new_low_nack;		/* T if new low NACK found */
-diff --git a/net/rxrpc/call_event.c b/net/rxrpc/call_event.c
-index c61efe08695d..0f78544d043b 100644
---- a/net/rxrpc/call_event.c
-+++ b/net/rxrpc/call_event.c
-@@ -112,6 +112,7 @@ static void rxrpc_congestion_timeout(struct rxrpc_call *call)
- void rxrpc_resend(struct rxrpc_call *call, struct sk_buff *ack_skb)
- {
- 	struct rxrpc_ackpacket *ack = NULL;
-+	struct rxrpc_skb_priv *sp;
- 	struct rxrpc_txbuf *txb;
- 	unsigned long resend_at;
- 	rxrpc_seq_t transmitted = READ_ONCE(call->tx_transmitted);
-@@ -139,14 +140,15 @@ void rxrpc_resend(struct rxrpc_call *call, struct sk_buff *ack_skb)
- 	 * explicitly NAK'd packets.
- 	 */
- 	if (ack_skb) {
-+		sp = rxrpc_skb(ack_skb);
- 		ack = (void *)ack_skb->data + sizeof(struct rxrpc_wire_header);
- 
--		for (i = 0; i < ack->nAcks; i++) {
-+		for (i = 0; i < sp->nr_acks; i++) {
- 			rxrpc_seq_t seq;
- 
- 			if (ack->acks[i] & 1)
- 				continue;
--			seq = ntohl(ack->firstPacket) + i;
-+			seq = sp->first_ack + i;
- 			if (after(txb->seq, transmitted))
- 				break;
- 			if (after(txb->seq, seq))
-diff --git a/net/rxrpc/call_object.c b/net/rxrpc/call_object.c
-index f10b37c14772..0a50341d920a 100644
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -685,6 +685,7 @@ static void rxrpc_destroy_call(struct work_struct *work)
- 
- 	del_timer_sync(&call->timer);
- 
-+	rxrpc_free_skb(call->cong_last_nack, rxrpc_skb_put_last_nack);
- 	rxrpc_cleanup_ring(call);
- 	while ((txb = list_first_entry_or_null(&call->tx_sendmsg,
- 					       struct rxrpc_txbuf, call_link))) {
-diff --git a/net/rxrpc/input.c b/net/rxrpc/input.c
-index 92495e73b869..9691de00ade7 100644
---- a/net/rxrpc/input.c
-+++ b/net/rxrpc/input.c
-@@ -45,11 +45,9 @@ static void rxrpc_congestion_management(struct rxrpc_call *call,
- 	}
- 
- 	cumulative_acks += summary->nr_new_acks;
--	cumulative_acks += summary->nr_rot_new_acks;
- 	if (cumulative_acks > 255)
- 		cumulative_acks = 255;
- 
--	summary->mode = call->cong_mode;
- 	summary->cwnd = call->cong_cwnd;
- 	summary->ssthresh = call->cong_ssthresh;
- 	summary->cumulative_acks = cumulative_acks;
-@@ -151,6 +149,7 @@ static void rxrpc_congestion_management(struct rxrpc_call *call,
- 		cwnd = RXRPC_TX_MAX_WINDOW;
- 	call->cong_cwnd = cwnd;
- 	call->cong_cumul_acks = cumulative_acks;
-+	summary->mode = call->cong_mode;
- 	trace_rxrpc_congest(call, summary, acked_serial, change);
- 	if (resend)
- 		rxrpc_resend(call, skb);
-@@ -213,7 +212,6 @@ static bool rxrpc_rotate_tx_window(struct rxrpc_call *call, rxrpc_seq_t to,
- 	list_for_each_entry_rcu(txb, &call->tx_buffer, call_link, false) {
- 		if (before_eq(txb->seq, call->acks_hard_ack))
- 			continue;
--		summary->nr_rot_new_acks++;
- 		if (test_bit(RXRPC_TXBUF_LAST, &txb->flags)) {
- 			set_bit(RXRPC_CALL_TX_LAST, &call->flags);
- 			rot_last = true;
-@@ -254,6 +252,11 @@ static void rxrpc_end_tx_phase(struct rxrpc_call *call, bool reply_begun,
- {
- 	ASSERT(test_bit(RXRPC_CALL_TX_LAST, &call->flags));
- 
-+	if (unlikely(call->cong_last_nack)) {
-+		rxrpc_free_skb(call->cong_last_nack, rxrpc_skb_put_last_nack);
-+		call->cong_last_nack = NULL;
-+	}
+ 	[ "$NF" = "6" ] && serip=$SERVER_IP6
+-	ip net exec $netns netperf -$NF -t TCP_STREAM -H $serip 2>&1 >/dev/null
 +
- 	switch (__rxrpc_call_state(call)) {
- 	case RXRPC_CALL_CLIENT_SEND_REQUEST:
- 	case RXRPC_CALL_CLIENT_AWAIT_REPLY:
-@@ -702,6 +705,43 @@ static void rxrpc_input_ackinfo(struct rxrpc_call *call, struct sk_buff *skb,
- 		wake_up(&call->waitq);
++	# use large write to be sure to generate big tcp packets
++	ip net exec $netns netperf -$NF -t TCP_STREAM -l 1 -H $serip -- -m 262144 2>&1 >/dev/null
  }
  
-+/*
-+ * Determine how many nacks from the previous ACK have now been satisfied.
-+ */
-+static rxrpc_seq_t rxrpc_input_check_prev_ack(struct rxrpc_call *call,
-+					      struct rxrpc_ack_summary *summary,
-+					      rxrpc_seq_t seq)
-+{
-+	struct sk_buff *skb = call->cong_last_nack;
-+	struct rxrpc_ackpacket ack;
-+	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
-+	unsigned int i, new_acks = 0, retained_nacks = 0;
-+	rxrpc_seq_t old_seq = sp->first_ack;
-+	u8 *acks = skb->data + sizeof(struct rxrpc_wire_header) + sizeof(ack);
-+
-+	if (after_eq(seq, old_seq + sp->nr_acks)) {
-+		summary->nr_new_acks += sp->nr_nacks;
-+		summary->nr_new_acks += seq - (old_seq + sp->nr_acks);
-+		summary->nr_retained_nacks = 0;
-+	} else if (seq == old_seq) {
-+		summary->nr_retained_nacks = sp->nr_nacks;
-+	} else {
-+		for (i = 0; i < sp->nr_acks; i++) {
-+			if (acks[i] == RXRPC_ACK_TYPE_NACK) {
-+				if (before(old_seq + i, seq))
-+					new_acks++;
-+				else
-+					retained_nacks++;
-+			}
-+		}
-+
-+		summary->nr_new_acks += new_acks;
-+		summary->nr_retained_nacks = retained_nacks;
-+	}
-+
-+	return old_seq + sp->nr_acks;
-+}
-+
- /*
-  * Process individual soft ACKs.
-  *
-@@ -711,25 +751,51 @@ static void rxrpc_input_ackinfo(struct rxrpc_call *call, struct sk_buff *skb,
-  * the timer on the basis that the peer might just not have processed them at
-  * the time the ACK was sent.
-  */
--static void rxrpc_input_soft_acks(struct rxrpc_call *call, u8 *acks,
--				  rxrpc_seq_t seq, int nr_acks,
--				  struct rxrpc_ack_summary *summary)
-+static void rxrpc_input_soft_acks(struct rxrpc_call *call,
-+				  struct rxrpc_ack_summary *summary,
-+				  struct sk_buff *skb,
-+				  rxrpc_seq_t seq,
-+				  rxrpc_seq_t since)
- {
--	unsigned int i;
-+	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
-+	unsigned int i, old_nacks = 0;
-+	rxrpc_seq_t lowest_nak = seq + sp->nr_acks;
-+	u8 *acks = skb->data + sizeof(struct rxrpc_wire_header) + sizeof(struct rxrpc_ackpacket);
- 
--	for (i = 0; i < nr_acks; i++) {
-+	for (i = 0; i < sp->nr_acks; i++) {
- 		if (acks[i] == RXRPC_ACK_TYPE_ACK) {
- 			summary->nr_acks++;
--			summary->nr_new_acks++;
-+			if (after_eq(seq, since))
-+				summary->nr_new_acks++;
- 		} else {
--			if (!summary->saw_nacks &&
--			    call->acks_lowest_nak != seq + i) {
--				call->acks_lowest_nak = seq + i;
--				summary->new_low_nack = true;
--			}
- 			summary->saw_nacks = true;
-+			if (before(seq, since)) {
-+				/* Overlap with previous ACK */
-+				old_nacks++;
-+			} else {
-+				summary->nr_new_nacks++;
-+				sp->nr_nacks++;
-+			}
-+
-+			if (before(seq, lowest_nak))
-+				lowest_nak = seq;
- 		}
-+		seq++;
-+	}
-+
-+	if (lowest_nak != call->acks_lowest_nak) {
-+		call->acks_lowest_nak = lowest_nak;
-+		summary->new_low_nack = true;
- 	}
-+
-+	/* We *can* have more nacks than we did - the peer is permitted to drop
-+	 * packets it has soft-acked and re-request them.  Further, it is
-+	 * possible for the nack distribution to change whilst the number of
-+	 * nacks stays the same or goes down.
-+	 */
-+	if (old_nacks < summary->nr_retained_nacks)
-+		summary->nr_new_acks += summary->nr_retained_nacks - old_nacks;
-+	summary->nr_retained_nacks = old_nacks;
- }
- 
- /*
-@@ -773,7 +839,7 @@ static void rxrpc_input_ack(struct rxrpc_call *call, struct sk_buff *skb)
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	struct rxrpc_ackinfo info;
- 	rxrpc_serial_t ack_serial, acked_serial;
--	rxrpc_seq_t first_soft_ack, hard_ack, prev_pkt;
-+	rxrpc_seq_t first_soft_ack, hard_ack, prev_pkt, since;
- 	int nr_acks, offset, ioffset;
- 
- 	_enter("");
-@@ -789,6 +855,8 @@ static void rxrpc_input_ack(struct rxrpc_call *call, struct sk_buff *skb)
- 	prev_pkt = ntohl(ack.previousPacket);
- 	hard_ack = first_soft_ack - 1;
- 	nr_acks = ack.nAcks;
-+	sp->first_ack = first_soft_ack;
-+	sp->nr_acks = nr_acks;
- 	summary.ack_reason = (ack.reason < RXRPC_ACK__INVALID ?
- 			      ack.reason : RXRPC_ACK__INVALID);
- 
-@@ -858,6 +926,16 @@ static void rxrpc_input_ack(struct rxrpc_call *call, struct sk_buff *skb)
- 	if (nr_acks > 0)
- 		skb_condense(skb);
- 
-+	if (call->cong_last_nack) {
-+		since = rxrpc_input_check_prev_ack(call, &summary, first_soft_ack);
-+		rxrpc_free_skb(call->cong_last_nack, rxrpc_skb_put_last_nack);
-+		call->cong_last_nack = NULL;
-+	} else {
-+		summary.nr_new_acks = first_soft_ack - call->acks_first_seq;
-+		call->acks_lowest_nak = first_soft_ack + nr_acks;
-+		since = first_soft_ack;
-+	}
-+
- 	call->acks_latest_ts = skb->tstamp;
- 	call->acks_first_seq = first_soft_ack;
- 	call->acks_prev_seq = prev_pkt;
-@@ -866,7 +944,7 @@ static void rxrpc_input_ack(struct rxrpc_call *call, struct sk_buff *skb)
- 	case RXRPC_ACK_PING:
- 		break;
- 	default:
--		if (after(acked_serial, call->acks_highest_serial))
-+		if (acked_serial && after(acked_serial, call->acks_highest_serial))
- 			call->acks_highest_serial = acked_serial;
- 		break;
- 	}
-@@ -905,8 +983,9 @@ static void rxrpc_input_ack(struct rxrpc_call *call, struct sk_buff *skb)
- 	if (nr_acks > 0) {
- 		if (offset > (int)skb->len - nr_acks)
- 			return rxrpc_proto_abort(call, 0, rxrpc_eproto_ackr_short_sack);
--		rxrpc_input_soft_acks(call, skb->data + offset, first_soft_ack,
--				      nr_acks, &summary);
-+		rxrpc_input_soft_acks(call, &summary, skb, first_soft_ack, since);
-+		rxrpc_get_skb(skb, rxrpc_skb_get_last_nack);
-+		call->cong_last_nack = skb;
- 	}
- 
- 	if (test_bit(RXRPC_CALL_TX_LAST, &call->flags) &&
+ do_test() {
 -- 
 2.43.0
 
