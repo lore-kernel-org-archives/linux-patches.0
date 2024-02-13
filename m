@@ -1,202 +1,141 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842968813
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 02:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4665711723
+	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 05:18:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707792470; cv=none; b=Nxbm8QU3C4oxolMbs0HbZSWIbuyV/k8U5oqzsCKCH2adgJiwgQrQSScLbzrW48Jkwm985YktugChkLgdb2/m1nkg0rVUxDwfe/FABMzu3lUqUEHJWC4dKgvndQ/09zcJTA/5yll3SZ3ICGLCfzHL+3vXXDaT4ulELQ1fS1Azs0g=
+	t=1707801532; cv=none; b=tOIqbNeVwOBX04MRuzG5lEOlinvE3a0WpBh+dyNg3tI2GL+s+85Mxrl0VDT4TX6ht7aWkmFRRypBDkm0uaJl6jQ8sRRdT0jg6mqK3ONMy+kYJL0WVYUs7n2Lsd9OkyP6vK9y5kRWvF/8yfpAcKye6OBIvJLCfjLHUjV7NMhHpd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707792470; c=relaxed/simple;
-	bh=1ENHKjt3Uc2mr1Ke1IQDakTrAi2JOlr6brAtfQuPsQY=;
+	s=arc-20240116; t=1707801532; c=relaxed/simple;
+	bh=eiQTgF1UiR8Q+fk0Adp4OuUfIL1afzXcdoTxy37Yy5M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TeyrOsw+pKiT8Wu3Tbvx3CajviuXkQv/M/9pWqAlKfFjAW7ZC8+hgpo223XeOk2PB2DGiT6JWLMfIxfSrLwjGbfANqJtp4V+hPx5QcOJ/+V0+/KV20NCg1FA8sFUe6Zq3V6LPJU1C5IDu7EPsZUzjsMm+67ya8Ez0z2ucFZrS1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yVCRnV7B; arc=none smtp.client-ip=209.85.208.47
+	 To:Cc:Content-Type; b=j0b+ezCb7U3p6BCUjPrg58Uqo8WlxTKbkWEcz3BICRpe1MilyRP5GR/6sbQ7Az2GZnJ1k4Vk7GFMnidQN9i1+yjY2g+Z6TGmlfKldDGi9a1zHR983hNzo72uZHv9KFX6arEhPBwiZxLUWWhYtSw+kiYv40KeiyOJ0y3K/eLCZkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=P43UKvjV; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yVCRnV7B"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-560530f4e21so3546a12.1
-        for <patches@lists.linux.dev>; Mon, 12 Feb 2024 18:47:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P43UKvjV"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-410acf9e776so21515e9.1
+        for <patches@lists.linux.dev>; Mon, 12 Feb 2024 21:18:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707792466; x=1708397266; darn=lists.linux.dev;
+        d=google.com; s=20230601; t=1707801527; x=1708406327; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zgrUTvQOJUYDuKbHFZKlpKXYvoGRnWvQmByrFkbKhpY=;
-        b=yVCRnV7BfDfVLLE4SshJG5dnQT0F2H5Pd/mUBBbn11LkIgsVbGIDojUGZ+cYmO7rOh
-         2AQlZMY6NPvUVb6+Z6I4/AyzAZkwwqZHXQq8QeOVdJvs8iv9LGX+JMmk4s04gdvNvO7q
-         mLeXd5vBXTW3C2WxprRFF8kSKriXr+N82WgvNU7nuPJW9knXIdcAdM1JP/ckL7WQqX/u
-         zPUOhv1B6uo4dUU5aQvYTYIOqIuAxuJ1cRafQ5ILlupn+iKSKUyvwq5kaQ3mdlqx+m5r
-         WLZP98dZAnqxTsTnshnp2CscRRajLRp9XswOgsKY/Dn6wZ58P+Dgr6L2jpd/1IqKXqP5
-         mANQ==
+        bh=ghVxi5tVAq5eNnLPMygpM8GWrTrZsdJ/UPlOsCNOXcM=;
+        b=P43UKvjVN/WVM/8Lziai7Y21wcKkCRXL7eI+3cTgN19NUdCvkvxuxM3ZpfpGcZiKzM
+         mi8VyfiLJYtxghVitjgoZAdZtaeWkFvK5hNQJL0Hy/up63bRxeqijTfMwB8ayyhD+XqQ
+         7dhjXzDkiwrVPp7QCzHyJNmp7fta47yTGUpQXHVTIQ7NU13XdsaTyCy5xf/ZEUg/9Mkb
+         epTGePX8lbMIWSuj+0GwHEUzheq1DSpVzmRZszwU8x/wzmw3XkZZbDAodPhScQGHmy8d
+         QyW2TUgRgWRn85gPuJ5xQZnguHRhlmnlAgRjtsWKU/ZaRzAPTuYNIusTFkVNkrqYChQG
+         d1Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707792466; x=1708397266;
+        d=1e100.net; s=20230601; t=1707801527; x=1708406327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zgrUTvQOJUYDuKbHFZKlpKXYvoGRnWvQmByrFkbKhpY=;
-        b=N6eLlaPVC9dP7LMElt13Pv4Mog4zi4DO3L5fFul1At8/RTh0sjBy5K5Ov8poSMNcnf
-         Vj4OUfKaT5uGuu/YUEJsOGc1u3KaoDi/Aq/JZn+2bKiDIGyi+pX4atUQTBBaTJgWkjeW
-         86MV0xw/3eD6XYYp7yyhYW29l2iasp0yykYqbxFaqbHHZZQHcoYnXlQyeFvB6om6Zvba
-         diZPBf2m58IAf426tQkKfqvwsgiBmnR2YXib6rc+vBH0wN549Z8C23kt50j0CDl8vi1/
-         auweQsw32oNF0/tFeoYD1X3/Te7f0GW78V2BRJjfWecwR+zB7C0b1ewRUbyhAFFso6P+
-         Lk5g==
-X-Gm-Message-State: AOJu0YzZKKJyK4+kB3CpYQqm4M5CKZNSI/wSsoPGf/gcGkdElnPjgWOk
-	zJ+7qfV4tYMQ0Vqdxgi/uHvNrxKT1+zzi/kLqiB5lBizYBc4u9fUYg5s0vkjApn+7e4uZB/hH3V
-	e25mGMyBnZrkN99IQsC4ZV0ZFBUJadGGygPCk
-X-Google-Smtp-Source: AGHT+IEct+r39gbb5nT7BKUPki00osiOdxLM8JznhwylxUtmHwxRUvLEwmdDrymuS+ebBIImPsxnRRZuVs2lgoq7LJ8=
-X-Received: by 2002:a50:9f21:0:b0:561:519f:85c4 with SMTP id
- b30-20020a509f21000000b00561519f85c4mr67882edf.4.1707792465570; Mon, 12 Feb
- 2024 18:47:45 -0800 (PST)
+        bh=ghVxi5tVAq5eNnLPMygpM8GWrTrZsdJ/UPlOsCNOXcM=;
+        b=qvwCkMx3gfd1lSBprUQ0zYyTZbTapUxjivJqzhGTzPhWjMa1euAiTNBk10Qw6rJJhU
+         Jkn4Puov0aoRLH5OCGqAfmdpBo86IpO9IMiODCYA45ojb/JXMiHWfYeuX6fqRjZCqToU
+         8PQSaLbygu1OoAhxfC+85YtUhXUMsB3xJ5nqGJ3YGkbDwe3GGaR4z0ii5zHeAOcSJC/L
+         KDu44M7Wh7eJs4DEhndyEoCCL/ITdZ/ktbDOqj6N+e8/EzApz2JBaZP/7R8noR/vrQ+p
+         YxI/KxgQNsJjOoLU5BctGiCMlpsq40rl9iq2Zjvf45iuiiSGnNj4nPrEgoVwZ6yU++yX
+         I12A==
+X-Forwarded-Encrypted: i=1; AJvYcCU1vGuDlBKI4K/iGtV2/7PKEta6yrYyKzfhCuxUCFIah5W9yM+x8H8fY3D5ty1GvAnlLa/mTgwhIDmYUrTmXpoOKGLchMIR0g==
+X-Gm-Message-State: AOJu0YxTDKQb+BKGZWpVpIReZg//BvEZNpa1MVvTVpKZAguB8j/sLO6E
+	MdqR75jHQAo0XL9p/5yUfnIqJ6t1/KiXTUG/MOkZ+7RiRPoQR1uPscDsgIk3kS43zJPN6NATLJP
+	8Vop4aXz1WVhMQBxUY+9Nb9v7ygAAbHzGQr1n
+X-Google-Smtp-Source: AGHT+IGIk9vgIyNEuPvEQWVSn9DTVK8z4lhSQ+F7yHiGndjDMSMn8pMG1+J6wBdEBW/Ugy8gdDTVKttr2XXSPJJzZys=
+X-Received: by 2002:a05:600c:3d8e:b0:410:87e5:42da with SMTP id
+ bi14-20020a05600c3d8e00b0041087e542damr61264wmb.2.1707801527358; Mon, 12 Feb
+ 2024 21:18:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240212-fix-elf-type-btf-vmlinux-bin-o-big-endian-v2-1-22c0a6352069@kernel.org>
- <CAK7LNATK=8V+BroyN+uo9OynkfR6s6HtRgh=LF7yan7cPkbaTA@mail.gmail.com>
-In-Reply-To: <CAK7LNATK=8V+BroyN+uo9OynkfR6s6HtRgh=LF7yan7cPkbaTA@mail.gmail.com>
+References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org> <20240207-s390-lld-and-orphan-warn-v1-6-8a665b3346ab@kernel.org>
+In-Reply-To: <20240207-s390-lld-and-orphan-warn-v1-6-8a665b3346ab@kernel.org>
 From: Fangrui Song <maskray@google.com>
-Date: Mon, 12 Feb 2024 18:47:32 -0800
-Message-ID: <CAFP8O3LVgVRsrBAmJKV02bw2yrHziTFeRtJsnqx0iXieYMTJUg@mail.gmail.com>
-Subject: Re: [PATCH v2] kbuild: Fix changing ELF file type for output of
- gen_btf for big endian
+Date: Mon, 12 Feb 2024 21:18:34 -0800
+Message-ID: <CAFP8O3+L6Jpgktk50UBKg_SodH-DTAW2syZueUqxdZsxrOT3bg@mail.gmail.com>
+Subject: Re: [PATCH 06/11] s390/boot: vmlinux.lds.S: Handle '.rela' sections
 To: Nathan Chancellor <nathan@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, nicolas@fjasle.eu, ndesaulniers@google.com, 
-	morbo@google.com, justinstitt@google.com, keescook@chromium.org, 
-	linux-kbuild@vger.kernel.org, bpf@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev, stable@vger.kernel.org
+Cc: hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com, 
+	borntraeger@linux.ibm.com, svens@linux.ibm.com, ndesaulniers@google.com, 
+	linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 12, 2024 at 6:16=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.o=
-rg> wrote:
+On Wed, Feb 7, 2024 at 4:15=E2=80=AFPM Nathan Chancellor <nathan@kernel.org=
+> wrote:
 >
-> On Tue, Feb 13, 2024 at 11:06=E2=80=AFAM Nathan Chancellor <nathan@kernel=
-.org> wrote:
-> >
-> > Commit 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-> > changed the ELF type of .btf.vmlinux.bin.o to ET_REL via dd, which work=
-s
-> > fine for little endian platforms:
-> >
-> >    00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF...=
-.........|
-> >   -00000010  03 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |.......=
-.........|
-> >   +00000010  01 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |.......=
-.........|
-> >
-> > However, for big endian platforms, it changes the wrong byte, resulting
-> > in an invalid ELF file type, which ld.lld rejects:
-> >
-> >    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF...=
-.........|
-> >   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
-.........|
-> >   +00000010  01 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
-.........|
-> >
-> >   Type:                              <unknown>: 103
-> >
-> >   ld.lld: error: .btf.vmlinux.bin.o: unknown file type
-> >
-> > Fix this by updating the entire 16-bit e_type field rather than just a
-> > single byte, so that everything works correctly for all platforms and
-> > linkers.
-> >
-> >    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF...=
-.........|
-> >   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
-.........|
-> >   +00000010  00 01 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |.......=
-.........|
-> >
-> >   Type:                              REL (Relocatable file)
-> >
-> > While in the area, update the comment to mention that binutils 2.35+
-> > matches LLD's behavior of rejecting an ET_EXEC input, which occurred
-> > after the comment was added.
-> >
-> > Cc: stable@vger.kernel.org
-> > Fixes: 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-> > Link: https://github.com/llvm/llvm-project/pull/75643
-> > Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-
-Thanks for updating the comment.
-
-Reviewed-by: Fangrui Song <maskray@google.com>
-
+> When building with CONFIG_LD_ORPHAN_WARN after selecting
+> CONFIG_ARCH_HAS_LD_ORPHAN_WARN, there are several warnings from
+> arch/s390/boot/head.o due to the unhandled presence of '.rela' sections:
 >
-> Thanks.
+>   s390-linux-ld: warning: orphan section `.rela.iplt' from `arch/s390/boo=
+t/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.head.text' from `arch/s39=
+0/boot/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.got' from `arch/s390/boot=
+/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.data' from `arch/s390/boo=
+t/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.data.rel.ro' from `arch/s=
+390/boot/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.iplt' from `arch/s390/boo=
+t/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.head.text' from `arch/s39=
+0/boot/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.got' from `arch/s390/boot=
+/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.data' from `arch/s390/boo=
+t/head.o' being placed in section `.rela.dyn'
+>   s390-linux-ld: warning: orphan section `.rela.data.rel.ro' from `arch/s=
+390/boot/head.o' being placed in section `.rela.dyn'
 >
-> I will wait for a few days until
-> the reviewers come back to give Reviewed-by again.
+> These sections are unneeded for the decompressor and they are not
+> emitted in the binary currently. In a manner similar to other
+> architectures, coalesce the sections into '.rela.dyn' and ensure it is
+> zero sized, which is a safe/tested approach versus full discard.
 >
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+>  arch/s390/boot/vmlinux.lds.S | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
+> diff --git a/arch/s390/boot/vmlinux.lds.S b/arch/s390/boot/vmlinux.lds.S
+> index 2f0bc05664ed..ff8c62d84f98 100644
+> --- a/arch/s390/boot/vmlinux.lds.S
+> +++ b/arch/s390/boot/vmlinux.lds.S
+> @@ -137,6 +137,10 @@ SECTIONS
+>                 *(.igot .igot.plt)
+>         }
+>         ASSERT(SIZEOF(.plt) =3D=3D 0, "Unexpected run-time procedure link=
+ages detected!")
+> +       .rela.dyn : {
+> +               *(.rela.*) *(.rela_*)
+> +       }
+> +       ASSERT(SIZEOF(.rela.dyn) =3D=3D 0, "Unexpected run-time relocatio=
+ns (.rela) detected!")
 >
->
->
-> > ---
-> > Changes in v2:
-> > - Rather than change the seek value for dd, update the entire e_type
-> >   field (Masahiro). Due to this change, I did not carry forward the
-> >   tags of v1.
-> > - Slightly update commit message to remove mention of ET_EXEC, which
-> >   does not match the dump (Masahiro).
-> > - Update comment to mention binutils 2.35+ has the same behavior as LLD
-> >   (Fangrui).
-> > - Link to v1: https://lore.kernel.org/r/20240208-fix-elf-type-btf-vmlin=
-ux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org
-> > ---
-> >  scripts/link-vmlinux.sh | 9 +++++++--
-> >  1 file changed, 7 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-> > index a432b171be82..7862a8101747 100755
-> > --- a/scripts/link-vmlinux.sh
-> > +++ b/scripts/link-vmlinux.sh
-> > @@ -135,8 +135,13 @@ gen_btf()
-> >         ${OBJCOPY} --only-section=3D.BTF --set-section-flags .BTF=3Dall=
-oc,readonly \
-> >                 --strip-all ${1} ${2} 2>/dev/null
-> >         # Change e_type to ET_REL so that it can be used to link final =
-vmlinux.
-> > -       # Unlike GNU ld, lld does not allow an ET_EXEC input.
-> > -       printf '\1' | dd of=3D${2} conv=3Dnotrunc bs=3D1 seek=3D16 stat=
-us=3Dnone
-> > +       # GNU ld 2.35+ and lld do not allow an ET_EXEC input.
-> > +       if is_enabled CONFIG_CPU_BIG_ENDIAN; then
-> > +               et_rel=3D'\0\1'
-> > +       else
-> > +               et_rel=3D'\1\0'
-> > +       fi
-> > +       printf "${et_rel}" | dd of=3D${2} conv=3Dnotrunc bs=3D1 seek=3D=
-16 status=3Dnone
-> >  }
-> >
-> >  # Create ${2} .S file with all symbols from the ${1} object file
-> >
-> > ---
-> > base-commit: 54be6c6c5ae8e0d93a6c4641cb7528eb0b6ba478
-> > change-id: 20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-dbc55a1e1=
-296
-> >
-> > Best regards,
-> > --
-> > Nathan Chancellor <nathan@kernel.org>
-> >
-> >
->
+>         /* Sections to be discarded */
+>         /DISCARD/ : {
 >
 > --
-> Best Regards
-> Masahiro Yamada
+> 2.43.0
 >
 
+Commit 5354e84598f264793265cc99b4be2a2295826c86 ("x86/build: Add
+asserts for unwanted sections")
+specifies `*(.rela.*) *(.rela_*)` but it's not clear why `.rela_*` is
+included. We only need .rela.* (see also ld.bfd --verbose)
+
+This patch LGTM with this changed.
 
 --=20
 =E5=AE=8B=E6=96=B9=E7=9D=BF
