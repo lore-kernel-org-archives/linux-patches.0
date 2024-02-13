@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F1A5FF07;
-	Tue, 13 Feb 2024 17:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A685FF03;
+	Tue, 13 Feb 2024 17:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845712; cv=none; b=f30N8qqMega9JStO6n+mg1JuY7/+k1yPcf3KOtZN9f4xa4Fm2ZqHPc8vDbYmJXwYf2UM+Zq6QiIkuOEpcRcJq8tijTgjl/z9YjIN6Y+2LbnEcPJHNDECWAabLr2+MzVtdMi2rW1u10EXdiC3kxbZaWlVd+sGdxj5bJ+pcXPWa78=
+	t=1707845715; cv=none; b=K7UGOh6q0o3o1MF3gpvyZrdJPXCI54WZQKoJcMPkM7G/MsmpDljHF6W/zRKGiy6mC84FmeGxRRKIq11+pPvQg3WYaIJPP/f9qdEVm/g/Gf/P7uUI9KMvb6ePQfRrb8v+cqUgz2hKDZIlVIpc1tUww4dPdwP1ZnCEIQ1xQQFlcIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845712; c=relaxed/simple;
-	bh=E/Cu5d+kOj4S2Nyl5CFtp4hKfK66MlwWRu85GImAdh0=;
+	s=arc-20240116; t=1707845715; c=relaxed/simple;
+	bh=3mzD82XRSJOdRWf2jO8pxLfERGhJRXBQbA+CaUCQyvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ko0okz+mCCliJSGjMzyAMNOjWXxyDq7+BAOJZUVFBa0YDbJ1HlNPo2n+2vg8LlR4YK2mF46A/8gfn4TeNd+ioksfDGlsWUqRapucTYXoAlwK/MsJg4shIcLXNnxC2nZqnWtvTFFeKDu7Fy2OfLpb0o/Y5CwbufpPmfKy3AISCdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gd/ys8PE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fmmo9nPG7Gjr5AbPchvVd1HWAQ1vdsx5v6vsA5VH14k2DytAZe3my19jL8TMhe3wl9ulZjTCjxCPrKDRk7sG+HJs3NcfQIl9YWFs6si3LNUr7k3kvCJyja9EpSgknHDPy8EuA0SPeZu8rGZu08JoS0F8l7Zf3mPiMh2kf3w31O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwueLHD3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gd/ys8PE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E8FC433F1;
-	Tue, 13 Feb 2024 17:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwueLHD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4011C433C7;
+	Tue, 13 Feb 2024 17:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845712;
-	bh=E/Cu5d+kOj4S2Nyl5CFtp4hKfK66MlwWRu85GImAdh0=;
+	s=korg; t=1707845715;
+	bh=3mzD82XRSJOdRWf2jO8pxLfERGhJRXBQbA+CaUCQyvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gd/ys8PE2e9WJPOw20nWOX8gkKpoo8NZIyH+K0zOyWxIbDFc+jO71odulRq1WswB5
-	 xwsqt103s8VMoSezD5mrFanK6lCgNGBSbqGO7Wv53MYTwgPl30mUP/D17GD3QGdTdb
-	 H9ck2Xvlxy0I4n/r1VPC60GDT7LXnpHBJAk44jW8=
+	b=bwueLHD3wMqu1pu9jRKPFwgvwiQ5kpqRihsLiiwgIwMz79+LiJbhpGXDaXM4ispHA
+	 r8Q2WbPrI/vdFDTrHggSBNIO+pD7N0iod+gMKGe+yHUtNoXpOcS8kkuMCj2nisJDgK
+	 RE/UTX7znCwUnK4+KCrxjWzlOy4FJYm9jL6OM77o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 037/124] selftests: net: fix tcp listener handling in pmtu.sh
-Date: Tue, 13 Feb 2024 18:20:59 +0100
-Message-ID: <20240213171854.815524681@linuxfoundation.org>
+Subject: [PATCH 6.7 038/124] selftests: net: avoid just another constant wait
+Date: Tue, 13 Feb 2024 18:21:00 +0100
+Message-ID: <20240213171854.844738814@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -54,60 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit e71e016ad0f6e641a7898b8cda5f62f8e2beb2f1 ]
+[ Upstream commit 691bb4e49c98a47bc643dd808453136ce78b15b4 ]
 
-The pmtu.sh test uses a few TCP listener in a problematic way:
-It hard-codes a constant timeout to wait for the listener starting-up
-in background. That introduces unneeded latency and on very slow and
-busy host it can fail.
+Using hard-coded constant timeout to wait for some expected
+event is deemed to fail sooner or later, especially in slow
+env.
 
-Additionally the test starts again the same listener in the same
-namespace on the same port, just after the previous connection
-completed. Fast host can attempt starting the new server before the
-old one really closed the socket.
+Our CI has spotted another of such race:
+   # TEST: ipv6: cleanup of cached exceptions - nexthop objects          [FAIL]
+   #   can't delete veth device in a timely manner, PMTU dst likely leaked
 
-Address the issues using the wait_local_port_listen helper and
-explicitly waiting for the background listener process exit.
+Replace the crude sleep with a loop looking for the expected condition
+at low interval for a much longer range.
 
-Fixes: 136a1b434bbb ("selftests: net: test vxlan pmtu exceptions with tcp")
+Fixes: b3cc4f8a8a41 ("selftests: pmtu: add explicit tests for PMTU exceptions cleanup")
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/f8e8f6d44427d8c45e9f6a71ee1a321047452087.1706812005.git.pabeni@redhat.com
+Link: https://lore.kernel.org/r/fd5c745e9bb665b724473af6a9373a8c2a62b247.1706812005.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/pmtu.sh | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 3f118e3f1c66..f0febc19baae 100755
+index f0febc19baae..d65fdd407d73 100755
 --- a/tools/testing/selftests/net/pmtu.sh
 +++ b/tools/testing/selftests/net/pmtu.sh
-@@ -199,6 +199,7 @@
- #	Same as above but with IPv6
+@@ -1957,6 +1957,13 @@ check_command() {
+ 	return 0
+ }
  
- source lib.sh
-+source net_helper.sh
++check_running() {
++	pid=${1}
++	cmd=${2}
++
++	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
++}
++
+ test_cleanup_vxlanX_exception() {
+ 	outer="${1}"
+ 	encap="vxlan"
+@@ -1987,11 +1994,12 @@ test_cleanup_vxlanX_exception() {
  
- PAUSE_ON_FAIL=no
- VERBOSE=0
-@@ -1336,13 +1337,15 @@ test_pmtu_ipvX_over_bridged_vxlanY_or_geneveY_exception() {
- 			TCPDST="TCP:[${dst}]:50000"
- 		fi
- 		${ns_b} socat -T 3 -u -6 TCP-LISTEN:50000 STDOUT > $tmpoutfile &
-+		local socat_pid=$!
+ 	${ns_a} ip link del dev veth_A-R1 &
+ 	iplink_pid=$!
+-	sleep 1
+-	if [ "$(cat /proc/${iplink_pid}/cmdline 2>/dev/null | tr -d '\0')" = "iplinkdeldevveth_A-R1" ]; then
+-		err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
+-		return 1
+-	fi
++	for i in $(seq 1 20); do
++		check_running ${iplink_pid} "iplinkdeldevveth_A-R1" || return 0
++		sleep 0.1
++	done
++	err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
++	return 1
+ }
  
--		sleep 1
-+		wait_local_port_listen ${NS_B} 50000 tcp
- 
- 		dd if=/dev/zero status=none bs=1M count=1 | ${target} socat -T 3 -u STDIN $TCPDST,connect-timeout=3
- 
- 		size=$(du -sb $tmpoutfile)
- 		size=${size%%/tmp/*}
-+		wait ${socat_pid}
- 
- 		[ $size -ne 1048576 ] && err "File size $size mismatches exepcted value in locally bridged vxlan test" && return 1
- 	done
+ test_cleanup_ipv6_exception() {
 -- 
 2.43.0
 
