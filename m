@@ -1,79 +1,78 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4D1605BB
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 19:34:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4F4DDB2;
+	Tue, 13 Feb 2024 19:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707852901; cv=none; b=bJ9vFcfHlecK8v/Gdkziw9yUup+/8I2DIj6xym3fHLS7iSDTeJHPjsbWX0+21cToLfzUyIE5MvzaimJbUidzdbedU+Pk/GL/ChG46SVqen+rY52Oiww7XTWjd9x+/dkA0Y9rfYwhB9p7I6J24uYGiYY7PmIE8ZwNANpYbPpy7Ag=
+	t=1707853886; cv=none; b=kO4CCU3SnnlqWGeYZpOcT+Ydpi6082y6e6nC7UvGwEZ2JBAlMnigdWXEddAJH3r3EwUMQwLZN64pFlTeK6vpuvUotkgnuBXbNJVALUI+1zXVJo67WywCWyczGgqz3l2aMA7zmSLMtcE56Ju5x0So6H/xaDPZ6gCilRNE9izBgLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707852901; c=relaxed/simple;
-	bh=aJWJrXyLc63CPeKY3I4R5D1IGFgFdyU8SgZEuYZ0nTQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u8CjZVEbtVjSJMA4kngPtfqPOIheknjor12p9ohnv/MER75XViZAHdNntKAktwuT/gWFgqgYcf+coBfiznUy9nWVfJX/81iOvxQ1nBgdneB+d9vzkqG0TCggS3ZVn/SpL+EL7YQUuNhPzPj1H6k3oxNkADrT/fXXuxoqcnrHOnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 94B511C0082; Tue, 13 Feb 2024 20:34:56 +0100 (CET)
-Date: Tue, 13 Feb 2024 20:34:56 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 00/64] 6.1.78-rc1 review
-Message-ID: <ZcvEYEubgjxVqfBl@duo.ucw.cz>
-References: <20240213171844.702064831@linuxfoundation.org>
+	s=arc-20240116; t=1707853886; c=relaxed/simple;
+	bh=KuK5uyDDIiIDiDO2w1KdFqOt7xFCRYumWnA866RirUk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GEInS8ZL/aFUSrzbHZSMCf8ruAt85usUJXUIKUdwPPjaOTooT9kR452wwLaPKLSJYA7meKPqs74SNxbBxkOGoiTu7x1spKMv+TwR4u7jiPqXAbnzwCw4MSnaausZZEpee5CX132JMXS6BMpozqJSz7td9b05aaasTP7zg7gcis0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kF5v5gCt; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kF5v5gCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B6AC433F1;
+	Tue, 13 Feb 2024 19:51:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707853885;
+	bh=KuK5uyDDIiIDiDO2w1KdFqOt7xFCRYumWnA866RirUk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kF5v5gCtazd2CXADufMj6ONmf2H6VAxsK/MJdXfLRCaiyo1ZYoyPk9zHvy+nmkT94
+	 Z/l6vb4+FYsL0u49fJqfyU5k1zpOn2CN/UZT8ncyKGiRX3OhSdUw2QQnUUHZr5EmzF
+	 L6M7hm8Nsbyy+5igU+dE4Gtl3EQBl/M6g/8XkztEQLh36OSuhDvSY6+8qg3OCcBXh3
+	 13YnjIpnGgNI2tR57ZjehAg4oWzZ5w3SAz+2f6dmKQIHEiA4YFa1+zeKZxX2UDEQjm
+	 hLaJDlHheg3OCSpM2V+166g/n6aDyR4FbqgCFJrwBEjq+OG9E5WEaor7N0zf55Jtsr
+	 1DTiMkXSHRehQ==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org,
+	allen.lkml@gmail.com,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.6 000/121] 6.6.17-rc1 review
+Date: Tue, 13 Feb 2024 20:51:14 +0100
+Message-ID: <20240213195114.752663-1-ojeda@kernel.org>
+In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
+References: <20240213171852.948844634@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="mv6UydqCPo68S79Z"
-Content-Disposition: inline
-In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-
---mv6UydqCPo68S79Z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.1.78 release.
-> There are 64 patches in this series, all will be posted as a response
+On Tue, 13 Feb 2024 18:20:09 +0100, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.17 release.
+> There are 121 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
+> Anything received after that time might be too late.
 
-CIP testing did not find any problems here:
+Built and QEMU-booted for Rust:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+Cheers,
+Miguel
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---mv6UydqCPo68S79Z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZcvEYAAKCRAw5/Bqldv6
-8gomAKCmmZDB14Ev4n6BmpMyHpPywRDJ1gCgnjNZTCgbIBRv8U+aNqIB9cXTjYM=
-=jV3Y
------END PGP SIGNATURE-----
-
---mv6UydqCPo68S79Z--
