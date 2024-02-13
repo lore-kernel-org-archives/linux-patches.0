@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577895F54E;
-	Tue, 13 Feb 2024 17:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DB55F54E;
+	Tue, 13 Feb 2024 17:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845551; cv=none; b=I+1mUSBAnsfDdYO0U6+I/pAv37oawMFdd1RuuaR4i58oGMpUlUTIgZs71THGnalB/Ebj+dsHhCsL7c+T8TQaTpvPzse3UwEjAjFln5qg/oiy4WKntpiWvfaE8WyyRIRnFnkNmIYAg9trBaHQ2+0YtpTIRcBaFFxEZ8cvd59JHLw=
+	t=1707845555; cv=none; b=ZPpgs9sHAdUtSvTHWvIjoAQiTBEN7MN2EzJHbbIqizb2cuoem+5E3P9zLRLWd5YgBzeX/gAepQuhfTexcvOCW5g04VEhin9AlfuG307cmkBLx9DS3B19vD2htV9mvWuGhxUIxT5WpXd8mADNJSunq4QzzjYV5W8gJY4qfoEfPC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845551; c=relaxed/simple;
-	bh=BVP8A5xP5/Obj8bflOPRUFtiuP4rB1oloHsbXTjR6g4=;
+	s=arc-20240116; t=1707845555; c=relaxed/simple;
+	bh=TmYtdWRlgP16Xcv5i0RH2N8Lgphc47Xirlvnx3CgYto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I3R/XlJlPArg22YN0VVfjHpNPjxhypSQnqSaikACPUyGs7r3tUhqpplFGElYEYV1zQBngRTJrublOcoDIazxSb+YVcCs4RMJJviBcP8qmHEfkXGIoVouC1XlWjax8vhLhN2J/mXsFu4q5iaRAkgNkpnj0crz0mn1Sewl4V4x41Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPD3WWJZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzqYxa6zahU5R1HC0TVvj4Z5lgnBmJxiXbTYTxIqNIOOiN6rw3of29UemggApF/jly9yDLCzQk/Me7lMp2GUG14Ie4g9HxkzfV49b30C9GmHEUVQolRGSZ0IjZAT2vyPOoz+xxuz9EIYYF82WgJ/ixck9FvhTkVEEGDpA2paR/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhJBjvTE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPD3WWJZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F5FC433C7;
-	Tue, 13 Feb 2024 17:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhJBjvTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3594CC43394;
+	Tue, 13 Feb 2024 17:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845551;
-	bh=BVP8A5xP5/Obj8bflOPRUFtiuP4rB1oloHsbXTjR6g4=;
+	s=korg; t=1707845554;
+	bh=TmYtdWRlgP16Xcv5i0RH2N8Lgphc47Xirlvnx3CgYto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPD3WWJZvB0kwk6/Sg9iR011om8RZSEo5qymDBeRNPkdC547yLAFOMzT7mTzNkcQz
-	 6tt6L7IuUtUTirkaKFu+dWxfx1gzgygaD7e3KSPtzt/RO8q2FnNBBoKHN1OhtEKATB
-	 C+DHzm7mLzQhQLayAfFhmutm95r4lgPV2yS5l/fI=
+	b=rhJBjvTEK9NZMxSbvhsQARQTbypMdV/3oziAM+XdvirapgjCBFgpXcGXBlgTAtcTu
+	 Dg6aYku2UjiXqi4Kx4mFBMly/kE+zdD8WG1rCMEjWse5wJeu5zcmwlfZ+y16gxzQ7F
+	 froGVVRWm/ZDglJngcfbm20xl5j2bJXGLCtDm5L0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/121] selftests: cmsg_ipv6: repeat the exact packet
-Date: Tue, 13 Feb 2024 18:21:22 +0100
-Message-ID: <20240213171855.125304519@linuxfoundation.org>
+	Frank Wang <frank.wang@rock-chips.com>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 105/121] Revert "usb: typec: tcpm: fix cc role at port reset"
+Date: Tue, 13 Feb 2024 18:21:54 +0100
+Message-ID: <20240213171856.056990515@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,56 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-[ Upstream commit 4b00d0c513da58b68df015968721b11396fe4ab3 ]
+commit b717dfbf73e842d15174699fe2c6ee4fdde8aa1f upstream.
 
-cmsg_ipv6 test requests tcpdump to capture 4 packets,
-and sends until tcpdump quits. Only the first packet
-is "real", however, and the rest are basic UDP packets.
-So if tcpdump doesn't start in time it will miss
-the real packet and only capture the UDP ones.
+This reverts commit 1e35f074399dece73d5df11847d4a0d7a6f49434.
 
-This makes the test fail on slow machine (no KVM or with
-debug enabled) 100% of the time, while it passes in fast
-environments.
+Given that ERROR_RECOVERY calls into PORT_RESET for Hi-Zing
+the CC pins, setting CC pins to default state during PORT_RESET
+breaks error recovery.
 
-Repeat the "real" / expected packet.
+4.5.2.2.2.1 ErrorRecovery State Requirements
+The port shall not drive VBUS or VCONN, and shall present a
+high-impedance to ground (above zOPEN) on its CC1 and CC2 pins.
 
-Fixes: 9657ad09e1fa ("selftests: net: test IPV6_TCLASS")
-Fixes: 05ae83d5a4a2 ("selftests: net: test IPV6_HOPLIMIT")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Hi-Zing the CC pins is the inteded behavior for PORT_RESET.
+CC pins are set to default state after tErrorRecovery in
+PORT_RESET_WAIT_OFF.
+
+4.5.2.2.2.2 Exiting From ErrorRecovery State
+A Sink shall transition to Unattached.SNK after tErrorRecovery.
+A Source shall transition to Unattached.SRC after tErrorRecovery.
+
+Cc: stable@vger.kernel.org
+Cc: Frank Wang <frank.wang@rock-chips.com>
+Fixes: 1e35f074399d ("usb: typec: tcpm: fix cc role at port reset")
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20240117114742.2587779-1-badhri@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/cmsg_ipv6.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/cmsg_ipv6.sh b/tools/testing/selftests/net/cmsg_ipv6.sh
-index 330d0b1ceced..c921750ca118 100755
---- a/tools/testing/selftests/net/cmsg_ipv6.sh
-+++ b/tools/testing/selftests/net/cmsg_ipv6.sh
-@@ -91,7 +91,7 @@ for ovr in setsock cmsg both diff; do
- 	check_result $? 0 "TCLASS $prot $ovr - pass"
- 
- 	while [ -d /proc/$BG ]; do
--	    $NSEXE ./cmsg_sender -6 -p u $TGT6 1234
-+	    $NSEXE ./cmsg_sender -6 -p $p $m $((TOS2)) $TGT6 1234
- 	done
- 
- 	tcpdump -r $TMPF -v 2>&1 | grep "class $TOS2" >> /dev/null
-@@ -128,7 +128,7 @@ for ovr in setsock cmsg both diff; do
- 	check_result $? 0 "HOPLIMIT $prot $ovr - pass"
- 
- 	while [ -d /proc/$BG ]; do
--	    $NSEXE ./cmsg_sender -6 -p u $TGT6 1234
-+	    $NSEXE ./cmsg_sender -6 -p $p $m $LIM $TGT6 1234
- 	done
- 
- 	tcpdump -r $TMPF -v 2>&1 | grep "hlim $LIM[^0-9]" >> /dev/null
--- 
-2.43.0
-
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -4862,8 +4862,7 @@ static void run_state_machine(struct tcp
+ 		break;
+ 	case PORT_RESET:
+ 		tcpm_reset_port(port);
+-		tcpm_set_cc(port, tcpm_default_state(port) == SNK_UNATTACHED ?
+-			    TYPEC_CC_RD : tcpm_rp_cc(port));
++		tcpm_set_cc(port, TYPEC_CC_OPEN);
+ 		tcpm_set_state(port, PORT_RESET_WAIT_OFF,
+ 			       PD_T_ERROR_RECOVERY);
+ 		break;
 
 
