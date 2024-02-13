@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E645D6025A;
-	Tue, 13 Feb 2024 17:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65908604AB;
+	Tue, 13 Feb 2024 17:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845631; cv=none; b=jYzplAXBFZgeIgRs8D5UR0H9QsK6EG3zNsJEVMhPwEiQAmww5yeUL8YLYzs/VnwbHBaH7bd+h6I9qimEGPB0t4LQxsLuuMXDuePPS+dFV5Q9bLFZsAW2j+6cIfIXcdJRb/2jonGiMFVkl8JQf5lp4pDTVf5S2GbOIDdwDGzHq/M=
+	t=1707845634; cv=none; b=cPXhZO/PIGPOSUZpQUz5bCfOWzkmgjvCInT7skaEIopoO5HJKjUfGmH26zMxxFj8B2BUalhjcF/uAl+pTy6KZ8TND9wFrBdq+KeEi4sAsyS2ZEKINrI+oPOa2YejN7/9VTTHJgwzlSf7JTDVHpiVKJj7/Q2bskMySBMLMJjY8XM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845631; c=relaxed/simple;
-	bh=3YMAMW9u+o0KHvl2aIDJoWCn5Q1woWiy0jMltdoh5XE=;
+	s=arc-20240116; t=1707845634; c=relaxed/simple;
+	bh=6+o/bc7tL0/dZTEp5Kh5yKFIcvXlY2o+tsEerln5J34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4SvuFfRwpDCicHIfN4xPIvZ/IwSXuD4i1HyeD79GVcJ6VOCheQ15MC3h5S3SMIkCFTJJsZnn+l/N7m8krAw7Z5vlv4Fr1e6oHuuYapcbZ2mzUVDYippVkZO3ZgzAVUzXxF250ZSbAVhSTK14aqOtca41DZU9NtJ3XhMPfvh+yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsP7kHsw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GVHCwL5DXDufW3y4Jtta+oTW7zyeo2T0EJyrW92Nm8vaSood5TFOC3FG6xquAfURom4b2WUwbuSUlR3RGdDyvYaf9DPUYWTPt3FMGlXc5e0j7rj1cOvP4r1NzMjmdiLmLFse8AcNuN/Dz80mfSlm8RZGT3MEG4e6++1NdFExX1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vN2UIJMD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsP7kHsw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47286C433C7;
-	Tue, 13 Feb 2024 17:33:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vN2UIJMD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2A5C433F1;
+	Tue, 13 Feb 2024 17:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845630;
-	bh=3YMAMW9u+o0KHvl2aIDJoWCn5Q1woWiy0jMltdoh5XE=;
+	s=korg; t=1707845634;
+	bh=6+o/bc7tL0/dZTEp5Kh5yKFIcvXlY2o+tsEerln5J34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lsP7kHswhlzW7jtftysiAogQKeuHXYRN+k5ougyJ5nVMRSd+DmuWltJ2A4L6n0xSp
-	 471yvXo4jYTp221J8QMwM/TzemtY+O8OOE5vIykVur0b1MZMTVfv9nCCl5+0G2s4kJ
-	 Vs6xDrg43Yh3bigFb9ZHvMFq373pbGA15LsKBWKw=
+	b=vN2UIJMDVA7iT9vKFPCJaKPXfWmwMi0Cg3tNiMz83CYrzmz42WKOCQDAoHnd3PHai
+	 oQhoNkuQHez1VoACU9U4IqwlKxoTqqfqTGuRfR+ZxsonujCrhWn3WID7eZSlCavq9d
+	 Rt0y/1eyjbc2oAO9cZkAr9i49/t74tPAWY3p6224=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 014/124] cifs: avoid redundant calls to disable multichannel
-Date: Tue, 13 Feb 2024 18:20:36 +0100
-Message-ID: <20240213171854.150669724@linuxfoundation.org>
+Subject: [PATCH 6.7 015/124] cifs: failure to add channel on iface should bump up weight
+Date: Tue, 13 Feb 2024 18:20:37 +0100
+Message-ID: <20240213171854.179418063@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -53,38 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit e77e15fa5eb1c830597c5ca53ea7af973bae2f78 ]
+[ Upstream commit 6aac002bcfd554aff6d3ebb55e1660d078d70ab0 ]
 
-When the server reports query network interface info call
-as unsupported following a tree connect, it means that
-multichannel is unsupported, even if the server capabilities
-report otherwise.
+After the interface selection policy change to do a weighted
+round robin, each iface maintains a weight_fulfilled. When the
+weight_fulfilled reaches the total weight for the iface, we know
+that the weights can be reset and ifaces can be allocated from
+scratch again.
 
-When this happens, cifs_chan_skip_or_disable is called to
-disable multichannel on the client. However, we only need
-to call this when multichannel is currently setup.
+During channel allocation failures on a particular channel,
+weight_fulfilled is not incremented. If a few interfaces are
+inactive, we could end up in a situation where the active
+interfaces are all allocated for the total_weight, and inactive
+ones are all that remain. This can cause a situation where
+no more channels can be allocated further.
 
-Fixes: f591062bdbf4 ("cifs: handle servers that still advertise multichannel after disabling")
+This change fixes it by increasing weight_fulfilled, even when
+channel allocation failure happens. This could mean that if
+there are temporary failures in channel allocation, the iface
+weights may not strictly be adhered to. But that's still okay.
+
+Fixes: a6d8fb54a515 ("cifs: distribute channels across interfaces based on speed")
 Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/sess.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index f5006aa97f5b..5d9c87d2e1e0 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -410,7 +410,7 @@ smb2_reconnect(__le16 smb2_command, struct cifs_tcon *tcon,
- 		rc = SMB3_request_interfaces(xid, tcon, false);
- 		free_xid(xid);
+diff --git a/fs/smb/client/sess.c b/fs/smb/client/sess.c
+index a16e175731eb..a1b973456471 100644
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -269,6 +269,8 @@ int cifs_try_adding_channels(struct cifs_ses *ses)
+ 					 &iface->sockaddr,
+ 					 rc);
+ 				kref_put(&iface->refcount, release_iface);
++				/* failure to add chan should increase weight */
++				iface->weight_fulfilled++;
+ 				continue;
+ 			}
  
--		if (rc == -EOPNOTSUPP) {
-+		if (rc == -EOPNOTSUPP && ses->chan_count > 1) {
- 			/*
- 			 * some servers like Azure SMB server do not advertise
- 			 * that multichannel has been disabled with server
 -- 
 2.43.0
 
