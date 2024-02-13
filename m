@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65CE604A2;
-	Tue, 13 Feb 2024 17:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116865FF0A;
+	Tue, 13 Feb 2024 17:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845705; cv=none; b=Zkiq5WdoUSJjkMjm2l0kY7Sgua6BS/hpTm+uy4wBjib00LMpU3NY8V8CTMTS4cO7E5vIoZWsk6YJqSXwSdETDphtnzskG/RrGZPKAwtzpH31EsVqM8PP+6gS3jUHmvmjfY2whZqg7Cerb0oLCsyk4/r5+It7xth0pBqUZSnxC4k=
+	t=1707845709; cv=none; b=H3kNn3EY+tva6Hy2FZOG7SJ+tP7RgkqspPM8vJgeE0xVS+gGvYResSnZN+G7TISExmO6LoyF5OG+qtBTKUUJMEaeF5GRwCVGHuNJ8ZEnriagWOgU1wSW5Atx5KU7Q9FgCbZy02d86O6c+4JaFEy5NF8gQF978f9O3CVLJOuRsPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845705; c=relaxed/simple;
-	bh=jiplrRBAbriW+aJem5kzACGGHOYqV6tl68AWzmcrB54=;
+	s=arc-20240116; t=1707845709; c=relaxed/simple;
+	bh=cslD5R1vSbtnzi3WRA9wLmHcnR+wpuC5IZ5q1CX5o8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tmv7KA7QbvF6tFordXHvY6D+Q8gKixZ1Pwdj/fQRoOE41muHElYlvGYTlP4Bz3EsMLsWfiqtCrYUJZ5yAu7xQvdUTvP4jD296xQQ4PaSCkmElit8fCLRWhzX/jOudUy6wy6WIZDmE+VAYBISg6CtVbtBkLGXaitcbFMx8+Pnd1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WITzLOxs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ozKsBkY8uRwG8mzKIMMe41752Eb5d8CLwyCoVpAUj+IvAM0y/oGf+xpwq2HOOI1dBxf5aRLdI0rhfThEyR9xpc5PEgwTaSO9cZLQj57U64wI/kgWvIrS6tS85pvVfHTK/NM+Y7+2TqRB2fMxRPNxTDG0fFdDh5oXLUb4DUvBLAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtOzGKpw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WITzLOxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB30C433F1;
-	Tue, 13 Feb 2024 17:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtOzGKpw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6755CC433C7;
+	Tue, 13 Feb 2024 17:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845705;
-	bh=jiplrRBAbriW+aJem5kzACGGHOYqV6tl68AWzmcrB54=;
+	s=korg; t=1707845708;
+	bh=cslD5R1vSbtnzi3WRA9wLmHcnR+wpuC5IZ5q1CX5o8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WITzLOxsN/5T33E+DXRYZKaJDRcL/kyRJ5MDKLmc6OuEx1MKrkEtGP2kFIHk0ttHj
-	 mpyev5sfRtkLd6f1uk14it5cejKUoo/NpCA46QE7qrLaGU7NlJsHaTCIlm2EUEUtuO
-	 g3ord8AYWHLQgNzpdWGJE5u9htxmNVH8yPcjp4+I=
+	b=QtOzGKpwAFA1+SLEPjg/McQezGKwDpNI9JihsvXEUgPEtraDzGwEg/f49ITVRxAw1
+	 r71vAXkkXcrpM2aSAC7J8lDisCilIAoUsEmqeIcJtOsP+L2Maic2kmsRi2wo1ROHz2
+	 Gt5tKeeC43SKF6Y9kRnhDMAXQHhrP0WYlnMnaj/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <oliver.sang@intel.com>,
+	Yujie Liu <yujie.liu@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Hangbin Liu <liuhangbin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 035/124] selftests/net: convert pmtu.sh to run it in unique namespace
-Date: Tue, 13 Feb 2024 18:20:57 +0100
-Message-ID: <20240213171854.758439078@linuxfoundation.org>
+Subject: [PATCH 6.7 036/124] selftests/net: change shebang to bash to support "source"
+Date: Tue, 13 Feb 2024 18:20:58 +0100
+Message-ID: <20240213171854.786916270@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -51,106 +55,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Yujie Liu <yujie.liu@intel.com>
 
-[ Upstream commit 378f082eaf3760cd7430fbcb1e4f8626bb6bc0ae ]
+[ Upstream commit 05d92cb0e919239c29b3a26da1f76f1e18fed7d3 ]
 
-pmtu test use /bin/sh, so we need to source ./lib.sh instead of lib.sh
-Here is the test result after conversion.
+The patch set [1] added a general lib.sh in net selftests, and converted
+several test scripts to source the lib.sh.
 
- # ./pmtu.sh
- TEST: ipv4: PMTU exceptions                                         [ OK ]
- TEST: ipv4: PMTU exceptions - nexthop objects                       [ OK ]
- TEST: ipv6: PMTU exceptions                                         [ OK ]
- TEST: ipv6: PMTU exceptions - nexthop objects                       [ OK ]
- ...
- TEST: ipv4: list and flush cached exceptions - nexthop objects      [ OK ]
- TEST: ipv6: list and flush cached exceptions                        [ OK ]
- TEST: ipv6: list and flush cached exceptions - nexthop objects      [ OK ]
- TEST: ipv4: PMTU exception w/route replace                          [ OK ]
- TEST: ipv4: PMTU exception w/route replace - nexthop objects        [ OK ]
- TEST: ipv6: PMTU exception w/route replace                          [ OK ]
- TEST: ipv6: PMTU exception w/route replace - nexthop objects        [ OK ]
+unicast_extensions.sh (converted in [1]) and pmtu.sh (converted in [2])
+have a /bin/sh shebang which may point to various shells in different
+distributions, but "source" is only available in some of them. For
+example, "source" is a built-it function in bash, but it cannot be
+used in dash.
 
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Refer to other scripts that were converted together, simply change the
+shebang to bash to fix the following issues when the default /bin/sh
+points to other shells.
+
+not ok 51 selftests: net: unicast_extensions.sh # exit=1
+
+v1 -> v2:
+  - Fix pmtu.sh which has the same issue as unicast_extensions.sh,
+    suggested by Hangbin
+  - Change the style of the "source" line to be consistent with other
+    tests, suggested by Hangbin
+
+Link: https://lore.kernel.org/all/20231202020110.362433-1-liuhangbin@gmail.com/ [1]
+Link: https://lore.kernel.org/all/20231219094856.1740079-1-liuhangbin@gmail.com/ [2]
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Fixes: 378f082eaf37 ("selftests/net: convert pmtu.sh to run it in unique namespace")
+Fixes: 0f4765d0b48d ("selftests/net: convert unicast_extensions.sh to run it in unique namespace")
+Signed-off-by: Yujie Liu <yujie.liu@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Link: https://lore.kernel.org/r/20231229131931.3961150-1-yujie.liu@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: e71e016ad0f6 ("selftests: net: fix tcp listener handling in pmtu.sh")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ tools/testing/selftests/net/pmtu.sh               | 4 ++--
+ tools/testing/selftests/net/unicast_extensions.sh | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 4a5f031be232..8518eaacf4b5 100755
+index 8518eaacf4b5..3f118e3f1c66 100755
 --- a/tools/testing/selftests/net/pmtu.sh
 +++ b/tools/testing/selftests/net/pmtu.sh
-@@ -198,8 +198,7 @@
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ #
+ # Check that route PMTU values match expectations, and that initial device MTU
+@@ -198,7 +198,7 @@
  # - pmtu_ipv6_route_change
  #	Same as above but with IPv6
  
--# Kselftest framework requirement - SKIP code is 4.
--ksft_skip=4
-+source ./lib.sh
+-source ./lib.sh
++source lib.sh
  
  PAUSE_ON_FAIL=no
  VERBOSE=0
-@@ -268,16 +267,6 @@ tests="
- 	pmtu_ipv4_route_change		ipv4: PMTU exception w/route replace	1
- 	pmtu_ipv6_route_change		ipv6: PMTU exception w/route replace	1"
+diff --git a/tools/testing/selftests/net/unicast_extensions.sh b/tools/testing/selftests/net/unicast_extensions.sh
+index b7a2cb9e7477..f52aa5f7da52 100755
+--- a/tools/testing/selftests/net/unicast_extensions.sh
++++ b/tools/testing/selftests/net/unicast_extensions.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ #
+ # By Seth Schoen (c) 2021, for the IPv4 Unicast Extensions Project
+@@ -28,7 +28,7 @@
+ # These tests provide an easy way to flip the expected result of any
+ # of these behaviors for testing kernel patches that change them.
  
--NS_A="ns-A"
--NS_B="ns-B"
--NS_C="ns-C"
--NS_R1="ns-R1"
--NS_R2="ns-R2"
--ns_a="ip netns exec ${NS_A}"
--ns_b="ip netns exec ${NS_B}"
--ns_c="ip netns exec ${NS_C}"
--ns_r1="ip netns exec ${NS_R1}"
--ns_r2="ip netns exec ${NS_R2}"
- # Addressing and routing for tests with routers: four network segments, with
- # index SEGMENT between 1 and 4, a common prefix (PREFIX4 or PREFIX6) and an
- # identifier ID, which is 1 for hosts (A and B), 2 for routers (R1 and R2).
-@@ -543,13 +532,17 @@ setup_ip6ip6() {
- }
+-source ./lib.sh
++source lib.sh
  
- setup_namespaces() {
-+	setup_ns NS_A NS_B NS_C NS_R1 NS_R2
- 	for n in ${NS_A} ${NS_B} ${NS_C} ${NS_R1} ${NS_R2}; do
--		ip netns add ${n} || return 1
--
- 		# Disable DAD, so that we don't have to wait to use the
- 		# configured IPv6 addresses
- 		ip netns exec ${n} sysctl -q net/ipv6/conf/default/accept_dad=0
- 	done
-+	ns_a="ip netns exec ${NS_A}"
-+	ns_b="ip netns exec ${NS_B}"
-+	ns_c="ip netns exec ${NS_C}"
-+	ns_r1="ip netns exec ${NS_R1}"
-+	ns_r2="ip netns exec ${NS_R2}"
- }
- 
- setup_veth() {
-@@ -839,7 +832,7 @@ setup_bridge() {
- 	run_cmd ${ns_a} ip link set br0 up
- 
- 	run_cmd ${ns_c} ip link add veth_C-A type veth peer name veth_A-C
--	run_cmd ${ns_c} ip link set veth_A-C netns ns-A
-+	run_cmd ${ns_c} ip link set veth_A-C netns ${NS_A}
- 
- 	run_cmd ${ns_a} ip link set veth_A-C up
- 	run_cmd ${ns_c} ip link set veth_C-A up
-@@ -944,9 +937,7 @@ cleanup() {
- 	done
- 	socat_pids=
- 
--	for n in ${NS_A} ${NS_B} ${NS_C} ${NS_R1} ${NS_R2}; do
--		ip netns del ${n} 2> /dev/null
--	done
-+	cleanup_all_ns
- 
- 	ip link del veth_A-C			2>/dev/null
- 	ip link del veth_A-R1			2>/dev/null
+ # nettest can be run from PATH or from same directory as this selftest
+ if ! which nettest >/dev/null; then
 -- 
 2.43.0
 
