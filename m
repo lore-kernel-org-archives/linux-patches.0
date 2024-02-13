@@ -1,206 +1,167 @@
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2040.outbound.protection.outlook.com [40.107.236.40])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFEF60266;
-	Tue, 13 Feb 2024 17:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707846649; cv=fail; b=F/WulFn6VUP02iprmafATuZ3hlGZ1JV1tmlTYhD6ZQcgJQRDmAgjOR1nfUJ5DUqeSW+18Ld2CGeTg+WGP/xUbMzLI8qd8cknxnRDgd0ECrDtOSbkWS+F9RrS9cQJdi9FlqNXM/U3UypzK2LyZvroY7GO+WNWFIv/tHQbh6Ga1F4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707846649; c=relaxed/simple;
-	bh=xpJ/FomTTBMfAI4fzRuwCRglKLrAWnpxh+VFOBMlChk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=VMGbuGzZaykYx8Zq/ihDGVEXR5B/QSI8HAv1M9j9e4fCTZ6L5HFK3tPF/iugy35LSt38jqjttLvcIEBE5ko7dxfB6t0Xr8PGoxn+E68nm2h1uPPkkxiot3KQdfUGK4E/01uiga1h+2dD58SORy4X3Lj/883W3q/6WBP8vVh6n4Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=p2pym76B; arc=fail smtp.client-ip=40.107.236.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D315FF08
+	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 17:52:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707846735; cv=none; b=Rteaf08U88EiTisEO+7JBhji5gxkhhLXQ+CCTBMp4X+rGMcRcujSBq3MYA6aIoSMkPuCnuCHzUauo2GVGCFMEE81DTC6E8vqT8W4bIsvDXgW8fHG8ySUvFa22w8rQjaIWedJUqkMCb65JYHTNuloyaVggTADEWXHOaQyJV/IaHE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707846735; c=relaxed/simple;
+	bh=L8FC9DVO0Mg3A15dXzRFV/FVQ7qBDm65d4gp1EA3LVs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LGSWq7y2mzbzznC7Q/YgAR6vBYW+HrFpiaZmYDkiTqlHFqhavwDZI9AWTC9cRzj2147RA4P1ns/Uz0gToFKMoKLPmyTp1HzrYNsKEeXsx06iv2elSoi4c23z9XkkN7bgpH6U1ErZHhtPHvopUE8rw7diyL5THc+LWfdABIM+xzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=daxJyUTO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="p2pym76B"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=KBjCmn54R5FKqu/hSiG1zS6Y+SQQ83aSePcUXWx2reSlFL5C0W2r2tQjZB+ZMl82tXMTMbGLJ8aF9cV+9/GVeMBcI1uDwfSb4XhG2FJkTv/gN9qwPriibj9xB9qc4I+4a604HB+ZYsLOBp2gxJo3ktBfRdU8SQwre8BYhOEK6fHkeifAuWnK0zFKpjzKaofzo2PTpHHbhEIDS5VKHLLCpZrvmw+S1D4fHNrIzXNZ1WTJ1lD73wMfAXV/tMJRP/ItmDV/wTGAyj+qsxM5Is1ny9xz/KKF9toiRof8YB10EuBYlVC3qGNleIwBEw3s260Rr2FzhxzjKm3WPTiFnfEQxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1hgJZtjf4tNqKcFDnybAEonklDTtvJDWpJY56i5sJOc=;
- b=RtkZB70XGFdR20Fe8NY3jd5GKUdhSUSDKyfQBqmXDg1YylONuH3ilBSutBpeg66in3KRydgBKrtZ0tSvgpLo/W05ZNWjxXGmoOWma8YojeuN/qti6vRueOroG9iiRh5PihmYPgAd1l0k2QcZ++ZP01/rPBd6deP2N/N2o9HCj1Pb07vqq1OI3ZrLAc3muFO56XtXFlQzHB9lQV2XkE2ZItCbjQdlZUMIzGMWCOomzj3MHMphFKGFPCnGo9xiwGQVMP2l4+nt52R5n1rtth739+brxvbWM7EnxymwCk4QLTgZ8DKw0nV0CZ7cBrY9rWIm5a1SuzqQ8iocreB4IgPzHg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1hgJZtjf4tNqKcFDnybAEonklDTtvJDWpJY56i5sJOc=;
- b=p2pym76BGaDToZpLOraLIdJZOgG31zNgPjUHCuIgadoOYr8usF3kGd6JXbX8FDxf9iMufidjzY95Ar+MiRNtjMngilJJ8apNF3dBEtLHBO4Uur/rbpn7AA1axLcDDccH7KJPeL8129ezLddW1snra58AL/a5EHkeLv7dfqbvFFIkM7XZ5KHoBCORlJOd0aTIxyFAe31YJPjWvdovCe2ZlkujTHn+6cAdesexObHcIPtlRTYRvFF0E1EISTf4GlvKiW6VA487VlmB8cVkXx7u/XHHjcgsaBZVR7QOfHZWQCi/b4F961bxMO3Jt7MnDuetOJOqvcCsFwTL1pDnT/ScHQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by DS0PR12MB7558.namprd12.prod.outlook.com (2603:10b6:8:133::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.25; Tue, 13 Feb
- 2024 17:50:43 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7292.022; Tue, 13 Feb 2024
- 17:50:43 +0000
-Date: Tue, 13 Feb 2024 13:50:42 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Mostafa Saleh <smostafa@google.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v5 09/17] iommu/arm-smmu-v3: Put writing the context
- descriptor in the right order
-Message-ID: <20240213175042.GF1088888@nvidia.com>
-References: <0-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
- <9-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
- <ZcuN_YZBzxJ2wvAg@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZcuN_YZBzxJ2wvAg@google.com>
-X-ClientProxiedBy: BL1P221CA0013.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:2c5::11) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="daxJyUTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 444B5C43399
+	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 17:52:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707846735;
+	bh=L8FC9DVO0Mg3A15dXzRFV/FVQ7qBDm65d4gp1EA3LVs=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=daxJyUTOygGsSs/Ac0C/RS+vBvjT/1OTIQY0OFsLXyg/qVAC9zQVSgdMg5WnyLGM/
+	 gdaRq59lek46Ry+Jxj0SH/yjhMw216i1oEawpKa7Xrxx6ZsWt5BJoW8dr6GOuZSSs9
+	 SbACEIWrB1LROLgcDZpe37bRsJO/raRjwIx+hNR/XBCn1FKxYfZMJIejONxoulwpiV
+	 QCbelNCiNug+7eWsobbzEPtB7X5eZly6u2MGRL4aQgZ+EfG+AdsVFIq1uQiTi8OYTx
+	 49n/n7UrCuFgv3YDGT8KLYOpCg1M2yuJ2ZhVvqYVr0Wlx+183OrsBkgSCcGwN20W9F
+	 E2O78WbM+JQhQ==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d0e521de4eso40571191fa.2
+        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 09:52:15 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCX97eFnYynTzST/a2kCLHj0DwDHcSiFmo+1dC+VQGfu5oMhmjM0ByzjYdqhQ71ytDQ7L7lRZqdpAxbIJbSUMTdigp1CgR7APg==
+X-Gm-Message-State: AOJu0Yy9jJxxxaApvYWkXgST9tGofOQXnbXfBdCq7Xs6wEZb9dhQnyFr
+	0oTdIRfxkB/0xS+Vj9PWVo4iLNOGX43ijxCFWYrRgLr1Zhxc5S9Dp6LMjV0xtSn/4XFYxHd012a
+	Qp3KTEPCabrBdDz0Vzgadky4pUQ==
+X-Google-Smtp-Source: AGHT+IHuJy9IhWrPjMlCvqKJHMknK0u5AfC6XtdFikCh6p+qjoUnM3Y3a9lEYpei+DOe2y5nhijH2ca4zis+r3nNpfE=
+X-Received: by 2002:a2e:9992:0:b0:2d0:fd1e:c588 with SMTP id
+ w18-20020a2e9992000000b002d0fd1ec588mr297630lji.9.1707846733488; Tue, 13 Feb
+ 2024 09:52:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DS0PR12MB7558:EE_
-X-MS-Office365-Filtering-Correlation-Id: fe5cacf4-8c0a-41a3-ad84-08dc2cbc4caf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	DZt5BxkjcyyXnu1/uf16XNJH3jsTpRXxuQsoMAhh4Gm1CtW+cBb4h1SadJuRRmqwbVrsyHd9dhEh3/6C6Xkk0M75Bhdq0diSbKBqiSKFZifbgyekqAqIEMf8g4Qp3wETqndf2zDMR6uehz39P0O8Qxr/of2alRecH2R43rl1ghupmwK+49Au6z7tnl2o3rWiYEq2CNAGwpNwgpV/SyjH1+uSvO+4bEiff+BPd/ex/yr3WAfVcpjXg6YitV+tCIYX1Vkv2fsv8rtjjrIdRgVnwnysNElFFi651pK9Zh7ylqIPZECpPTA4J6ga8Bqla8oLrlcP8w3MvnxMV9srcMj073ic+vaQki3FDiEG5oPC7L2z3FqoG7y6C4VqCkzQxWmQa1rSPO7J2JtmrPlAorgFP7GzNMkTFTW8iIWwZqPhWApFrCayMF/CpttJPWky4syxx1YV8S/jAA3HfANOcXI8JJpvyQCI7F8TRbt4s87hSad13Ylxm0UPmhhzyZ+ftPIEW53qP9BpU5pdngR7YxxbveQ3ke/nYbFAKJ4QuVBpV9uJ12rcTAshC1Y9Va0vo7MQ
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(366004)(39860400002)(136003)(376002)(346002)(230922051799003)(64100799003)(451199024)(186009)(1800799012)(2906002)(7416002)(1076003)(2616005)(41300700001)(478600001)(26005)(83380400001)(5660300002)(66946007)(8676002)(66476007)(4326008)(8936002)(6916009)(33656002)(36756003)(66556008)(6506007)(6512007)(54906003)(6486002)(316002)(38100700002)(86362001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UG5YL2VXOG9NRysyZHV6ak82d2xBZlBxc0E5L2N6WlpTZ0RsL2pEZVpFbW9R?=
- =?utf-8?B?QkhBUVNhNm5vZXNjcGlaUnBhK094anZnazlrNEw2V1JkNTQ2WnhxWUI5djIw?=
- =?utf-8?B?dVlaOVE5eE04aU8xWWhuM0R1ZDh2bFVPODF1YjBNc3g0YWVUakpGb1NCUlo1?=
- =?utf-8?B?eXc1ZFhUU3gzN1NPQVNGZU9OVitOLytiaWQvUkxTQU9CWTVlTHI2RURYNy9q?=
- =?utf-8?B?MXgySXk0cyszeThDNzMydWNvd29xRTEyNnNjeTdybmN6MG8vWmdzeGM1bUEr?=
- =?utf-8?B?ekFJY3JrY0JhTWhTSWdTSGlDT0xvS2VsR09OQlk4OERVNHc3UTRBU05MajE4?=
- =?utf-8?B?dnNCVWhMUlNxeldvWVRjOGNvN3hlenB1ZjFZVko4MTJJQmh2cjlKSWlINENL?=
- =?utf-8?B?bWFxUm1kaW9hSGExbEJtNUJ2czFWdlhhajZBbCtqZ2lOUStHVGs3bW83dFo1?=
- =?utf-8?B?eFdRbnJ6K0dwS1drRlNRd3VaWjZISml2ZXdsRGtZdWxnS2lYYzBiMmY5dnJk?=
- =?utf-8?B?RHlMNDc4MHUvRGV1Um4xL2dOdXE4S25MUWhNamJVeHpZWTlIb1RaZ0s3Y29O?=
- =?utf-8?B?Rk41Ym9GaUxNMDBBa1U4clg4dmtQS01MYjdSRENCWUlub2lXRTl3ZjRkcjV5?=
- =?utf-8?B?ZUJ4MUxlN0s0cVNXNlNZZmZ1WDRxdGpVMGVrdUgzVnp2aVhET09tQ3hxK1pR?=
- =?utf-8?B?MlAxc01IcFVSMXdWSWpCOExnL0RvZ1VwY0x5WkhsbUhKRzhZUDZMelZiQ0Mv?=
- =?utf-8?B?VVdKbVRsM1NKV3NwaU9sZVFSeVFBYjkxNHQwN2VXaFoxbmIwWllzV3FmVlZ4?=
- =?utf-8?B?QjVkakxQaTdpTmV0UVM2TDFzTlpQaTBnQkZRblZqd1lHdVBlZnBGT09iOFVB?=
- =?utf-8?B?ME9hYlJZcTVpYnZNM2pCdHc5VGdqWUNFcVhyVUNjUnpNWHR6SGJWUXJVd2dB?=
- =?utf-8?B?Ryt0UjB3YmV6WFBrSkx4NkNBbGpWbWNKMFhDRkRuVEdUL2twRXVBelE2T3Bx?=
- =?utf-8?B?NlhPMWxEb01paGZNczRIbUlEQ1dIV0dZRkdXc2habUxLb1VrWDhTcTk5R29E?=
- =?utf-8?B?ZTZTMVEwbVN2MkJwbTNyeDdrSWMzSVlNaHJwc3phQWM3RU9kZE5leWROM0JI?=
- =?utf-8?B?d0RtSlhhMHNJSEUvbnhnMXlqUkdINkJDRkpIbU02dUxRNXVWS2NPOEpWWTZU?=
- =?utf-8?B?N2FHakt6K2tKVndPemczMllFQk52UE1lNkxsaHJ6NlZMb2JRcG5ZU0FzZGZL?=
- =?utf-8?B?aXdzcG52RUx1dFlsbmRpRW5UYzdVTy94TjAxZk1WM1VQV0JrZHNZMXdRQkp3?=
- =?utf-8?B?am5YbS84SWRqY1Y4LzA2dXBQclJpRmFxT0ZjVmhWRm53dmNBRlFVOWkvRFJ5?=
- =?utf-8?B?UjVEaTBlQWVoN0dhWFlFQjhKNVpQeFdkWFpJcE5NZEd4eFU1UEU0SVI0MXl3?=
- =?utf-8?B?ZWpUSVJhTStDTnBKdjRrZVdGb05uOXo2L0xVTVJBV2xCdlpQbGtLOHJSaWoz?=
- =?utf-8?B?OXRKSG4ySDdCeHgyNXhyUDhLYkVyTmpyaXJIZGZtbXVBemxXZk1xbThFa0ds?=
- =?utf-8?B?WTJqNjVQVzJUVkUxY2Mxc1hmbjA2NHcwcEhMdkNLeitaQ1hwWkM3MzRMZzBU?=
- =?utf-8?B?VDlReDFwc1FwSEdZVXdYdjFhZ1BpcEZvMTZMcWdrSGhjM3Rmbm9Wc0RzbThk?=
- =?utf-8?B?ZGkzeW9LVFNGcVY5c3NLYk5SRTJIV1hxVzExRzRxV2NFcGF1bmZINWduak5n?=
- =?utf-8?B?KzdXR0sxOGQvS29mQ08wNWQ5NHVMSEFlNzlwY3A3UTdIVkRIMWNCbXZPOFc0?=
- =?utf-8?B?cUtKNjdtNkZZUTYxYk8wZlVkb04zUEJ0UFVQYlVENlZRc2tZaTNTZm5sQlRr?=
- =?utf-8?B?UmdpYTF3UHJWU2oxYTNHaUZEYmdlSno1WjV5dUViZkxSb1BqazFOMHR2TGha?=
- =?utf-8?B?cGhldDV3elpwOUlwb2IrRnp1NHI3bTlLTGJxcDBiRTVUYzdteXh1MlRGTU1l?=
- =?utf-8?B?eEtiRjlaTTltWURwZVptWWhqSEtIaVhIQUh1N0R3VVJQVHNpdkxISHAzL1FV?=
- =?utf-8?B?MERlN05OMGM5eGF0SEI5WVB5dkExTGpkbm5TZzYyOUtmRkZtNzVIcGttWGRk?=
- =?utf-8?Q?3owijpEd9Ad01IG84hzQCEacf?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fe5cacf4-8c0a-41a3-ad84-08dc2cbc4caf
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2024 17:50:43.3192
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /JTA7K2oVRh+mzFJnsIcIZqdzlWAGDwWOnTx7ytnacqTzOpR5VdNgyFBxXMNwdun
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7558
+References: <20240202195909.3458162-1-sboyd@kernel.org> <20240202195909.3458162-8-sboyd@kernel.org>
+ <CABVgOS=A8BQ6HHpBKFqg-N10ckk2XYavaS-MPXvZ0wenrVm=1g@mail.gmail.com>
+ <89892ecd6b1b043db58258705c32b02b.sboyd@kernel.org> <CAMuHMdUuP5Ya2gU3V_ET=Ji_+yx+jr7eCch5uDJSqvQN9jJM3g@mail.gmail.com>
+ <2185a3cc3152a0b9a94b0c64353bc9a1.sboyd@kernel.org>
+In-Reply-To: <2185a3cc3152a0b9a94b0c64353bc9a1.sboyd@kernel.org>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Tue, 13 Feb 2024 17:52:00 +0000
+X-Gmail-Original-Message-ID: <CAL_JsqLrRXdPZ+u9XG960V7sXECBi5Ko7BYdreftYz-O=Hwieg@mail.gmail.com>
+Message-ID: <CAL_JsqLrRXdPZ+u9XG960V7sXECBi5Ko7BYdreftYz-O=Hwieg@mail.gmail.com>
+Subject: Re: [PATCH v3 7/7] of: Add KUnit test to confirm DTB is loaded
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>, David Gow <davidgow@google.com>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, 
+	devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>, 
+	Brendan Higgins <brendan.higgins@linux.dev>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 13, 2024 at 03:42:53PM +0000, Mostafa Saleh wrote:
-> > @@ -2659,6 +2651,17 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
-> >  				master->domain = NULL;
-> >  				goto out_list_del;
-> >  			}
-> > +		} else {
-> > +			/*
-> > +			 * arm_smmu_write_ctx_desc() relies on the entry being
-> > +			 * invalid to work, clear any existing entry.
-> > +			 */
-> > +			ret = arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID,
-> > +						      NULL);
-> > +			if (ret) {
-> > +				master->domain = NULL;
-> > +				goto out_list_del;
-> > +			}
-> 
-> Instead of having duplicate
->            if (ret) {
->                master->domain = NULL;
->                goto out_list_del;
->            }
-> 
-> In the if and the else, we can just move it outside.
+On Fri, Feb 9, 2024 at 8:59=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wrot=
+e:
+>
+> Quoting Geert Uytterhoeven (2024-02-05 11:55:29)
+> > On Mon, Feb 5, 2024 at 8:19=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> =
+wrote:
+> > > Quoting David Gow (2024-02-02 20:10:17)
+> > > > On Sat, 3 Feb 2024 at 03:59, Stephen Boyd <sboyd@kernel.org> wrote:
+> > > > > Add a KUnit test that confirms a DTB has been loaded, i.e. there =
+is a
+> > > > > root node, and that the of_have_populated_dt() API works properly=
+.
+> > > > >
+> > > > > Cc: Rob Herring <robh+dt@kernel.org>
+> > > > > Cc: Frank Rowand <frowand.list@gmail.com>
+> > > > > Cc: David Gow <davidgow@google.com>
+> > > > > Cc: Brendan Higgins <brendan.higgins@linux.dev>
+> > > > > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> > > > > ---
+> > > >
+> > > > This looks pretty good to me test-wise, though it still fails on m6=
+8k.
+> > > > (Everything else I tried it on works, though I've definitely not tr=
+ied
+> > > > _every_ architecture.)
+> > > >
+> > > > aarch64: PASSED
+> > > > i386: PASSED
+> > > > x86_64: PASSED
+> > > > x86_64 KASAN: PASSED
+> > > > powerpc64: PASSED
+> > > > UML: PASSED
+> > > > UML LLVM: PASSED
+> > > > m68k: FAILED
+> > > > > $ qemu-system-m68k -nodefaults -m 1024 -kernel .kunit-all-m68k/vm=
+linux -append 'kunit.enable=3D1 console=3Dhvc0 kunit_shutdown=3Dreboot' -no=
+-reboot -nographic -serial stdio -machine virt
+> > > > > [11:55:05] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D dtb (2 subtests) =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+> > > > > [11:55:05] # dtb_root_node_found_by_path: EXPECTATION FAILED at d=
+rivers/of/of_test.c:18
+> > > > > [11:55:05] Expected np is not null, but is
+> > > > > [11:55:05] [FAILED] dtb_root_node_found_by_path
+> > > > > [11:55:05] # dtb_root_node_populates_of_root: EXPECTATION FAILED =
+at drivers/of/of_test.c:28
+> > > > > [11:55:05] Expected of_root is not null, but is
+> > > > > [11:55:05] [FAILED] dtb_root_node_populates_of_root
+> > > > > [11:55:05]     # module: of_test
+> > > > > [11:55:05] # dtb: pass:0 fail:2 skip:0 total:2
+> > > > > [11:55:05] # Totals: pass:0 fail:2 skip:0 total:2
+> > > > > [11:55:05] =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D [FAILED] dtb =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+> > >
+> > > Ah yeah I forgot to mention that. m68k fails because it doesn't call =
+the
+> > > unflatten_(and_copy)?_device_tree() function, so we don't populate a
+> > > root node on that architecture. One solution would be to make CONFIG_=
+OF
+> > > unavailable on m68k. Or we have to make sure DT works on any
+> > > architecture. Rob, what do you prefer here?
+> >
+> > I guess the latter?
+> > Alpha, hexagon, parisc, s390, and sparc are also lacking calls
+> > to unflatten.*device_tree().
+> >
+>
+> sparc does that on purpose. Perhaps it's simplest to call
+> unflatten_device_tree() if of_root is still NULL after setup_arch()
+> returns.
+>
+> ---8<---
+> diff --git a/init/main.c b/init/main.c
+> index e24b0780fdff..02f5cf8be6c1 100644
+> --- a/init/main.c
+> +++ b/init/main.c
+> @@ -97,6 +97,8 @@
+>  #include <linux/jump_label.h>
+>  #include <linux/kcsan.h>
+>  #include <linux/init_syscalls.h>
+> +#include <linux/of.h>
+> +#include <linux/of_fdt.h>
+>  #include <linux/stackdepot.h>
+>  #include <linux/randomize_kstack.h>
+>  #include <net/net_namespace.h>
+> @@ -895,6 +897,8 @@ void start_kernel(void)
+>         pr_notice("%s", linux_banner);
+>         early_security_init();
+>         setup_arch(&command_line);
+> +       if (!of_root)
 
-Stylistically I often try to avoid shifting the error path from its
-statement, but it is OK either way..
+of_root is another thing I'd like to remove direct access to. That
+check could be inside unflatten_device_tree().
 
-However, part 2 removes the need for error handling here entirely, so
-let's leave it.
+> +               unflatten_device_tree();
 
-> > @@ -2668,15 +2671,23 @@ static int arm_smmu_attach_dev(struct iommu_domain *domain, struct device *dev)
-> >  		}
-> >  
-> >  		arm_smmu_make_cdtable_ste(&target, master);
-> > +		arm_smmu_install_ste_for_dev(master, &target);
-> >  		break;
-> >  	case ARM_SMMU_DOMAIN_S2:
-> >  		arm_smmu_make_s2_domain_ste(&target, master, smmu_domain);
-> > +		arm_smmu_install_ste_for_dev(master, &target);
-> > +		if (master->cd_table.cdtab)
-> > +			arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID,
-> > +						      NULL);
-> >  		break;
-> >  	case ARM_SMMU_DOMAIN_BYPASS:
-> >  		arm_smmu_make_bypass_ste(&target);
-> > +		arm_smmu_install_ste_for_dev(master, &target);
-> > +		if (master->cd_table.cdtab)
-> > +			arm_smmu_write_ctx_desc(master, IOMMU_NO_PASID,
-> > +						      NULL);
-> >  		break;
-> >  	}
-> This invalidates the CD while the STE is in bypass/S2 which is a new behavior
-> to the driver, 
+That's back to what Frank had essentially and I wanted to avoid.
 
-Yes
+I think I'd just disable the tests on the above arches and let them
+opt-in. I could be convinced otherwise though.
 
-> I don’t see anything from the user manual about this, so I
-> believe that is fine.
-
-Nor do I. Nor can I see any reason why HW would care. We also
-invalidate ASID's and VMID's after their tables have been removed from
-the STE/CD too.
-
-There are other options here if this is found out to be a trouble but
-they are convoluted enough to not do them without a concrete reason.
-
-Thanks,
-Jason
+Rob
