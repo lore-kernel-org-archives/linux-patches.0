@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132C05FF0C;
-	Tue, 13 Feb 2024 17:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D1C5F54E;
+	Tue, 13 Feb 2024 17:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845722; cv=none; b=gX9QL1roEBLZJvdjFFM+ADvf1rbXcArb41R5aUU4VSYUN8HWmmOnB1l6RCdSuOgmmjruWK9qHpz9eRDvca4X0e9TQXcRLbzrjbzbzbFJp85GJuJekAfCLx1SX7BI4vTslLyrkLCesZRhvDrGrtHkMceU68rRK/m5To24r59MDE8=
+	t=1707845725; cv=none; b=hMzNmO05P632IAmbba4FtFYzIoCMThtEKWvyxAnYPFUZUHpgzUSu9dFbW68eivC66guAoK6rHf+NA3kagKevU7g9NgXQlto0yHOEHO7BuJwpgxbCWlgdMUiG4op/IvdXCspk2fMM0MtFUajEZytxGFjVVcyohIfQTHNpBcWqBDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845722; c=relaxed/simple;
-	bh=Jjqa76e/X5yxR2e0vaG+jLrQ38GF7gg3hr9ak8gzq8M=;
+	s=arc-20240116; t=1707845725; c=relaxed/simple;
+	bh=lVGp/9fYjcHUUZGUO3WtPLcFjOS35ul9iacUwcNHI3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DyMY5JpWZ3Lfn4lbZh25tUbB6j4srRJxrBol3vbyBujgSfIpYBftsANsJhhzySkMp4pA/3C0rJp7JQ4sdD9lwkbnBhF9QdUHRg0f/gM7Fw++iFEoSTPSkNeUQnDcB1XsLEseoq3itxV2L1EXDecOya1BbHI2b8ZJ7y3eAzymQNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDNznOAW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XV3uUMuSK13heKsZqVaDVlvW3hSHgD2DaY7JPK/tpT5G3EHEEphSWXI2bDUa36fFpiA2QBuKdDcbOx0CzH69LaCIV7sPCcVwxK0EdE/+enXrEJzRmMdzi/1J1BJMlBTRLCyUf2+k+QVo9gphXAJ5aoF9N151L/Bh5sK8yK8Ke8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKeX5PDQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDNznOAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B365C433F1;
-	Tue, 13 Feb 2024 17:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKeX5PDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED5EC433C7;
+	Tue, 13 Feb 2024 17:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845721;
-	bh=Jjqa76e/X5yxR2e0vaG+jLrQ38GF7gg3hr9ak8gzq8M=;
+	s=korg; t=1707845725;
+	bh=lVGp/9fYjcHUUZGUO3WtPLcFjOS35ul9iacUwcNHI3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDNznOAWPvlsVbS120IWTRMDmfBQcj3y7/dzSCpdqt4TdW7hKROZE3n1PWouplhey
-	 JJBJ1VDIVWcoZYn0E6OLS5ph9a5Q7caTSgFDOePEMFvzC6TSxMAzaFToYtf/J1+/fF
-	 ie/9uqhS/Jkjb/mLhaJeVHItOoLQ61Bh8eZn2aMo=
+	b=cKeX5PDQ1lWiCk25p1UzSumJP6scHB2KQLfqjXKNoj4doxbfiYQWBreBpiB9LJgcV
+	 QuXKoCu6jDcfcD1Eqla0GLs7okaP38rDndU/nCK1GY4SMnCfLAVQwSBd76v7Koi/F2
+	 ZvVktMtmRx8NCqOwDJ4jbM9RKF1rpqYjRuHrEouc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 040/124] tunnels: fix out of bounds access when building IPv6 PMTU error
-Date: Tue, 13 Feb 2024 18:21:02 +0100
-Message-ID: <20240213171854.902436610@linuxfoundation.org>
+Subject: [PATCH 6.7 023/124] wifi: cfg80211: consume both probe response and beacon IEs
+Date: Tue, 13 Feb 2024 18:20:45 +0100
+Message-ID: <20240213171854.407964909@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -52,52 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit d75abeec401f8c86b470e7028a13fcdc87e5dd06 ]
+[ Upstream commit f510bcc21ed97911b811c5bf36ed43a0e94ab702 ]
 
-If the ICMPv6 error is built from a non-linear skb we get the following
-splat,
+When doing a channel switch, cfg80211_update_known_bss may be called
+with a BSS where both proberesp_ies and beacon_ies is set. If that
+happens, both need to be consumed.
 
-  BUG: KASAN: slab-out-of-bounds in do_csum+0x220/0x240
-  Read of size 4 at addr ffff88811d402c80 by task netperf/820
-  CPU: 0 PID: 820 Comm: netperf Not tainted 6.8.0-rc1+ #543
-  ...
-   kasan_report+0xd8/0x110
-   do_csum+0x220/0x240
-   csum_partial+0xc/0x20
-   skb_tunnel_check_pmtu+0xeb9/0x3280
-   vxlan_xmit_one+0x14c2/0x4080
-   vxlan_xmit+0xf61/0x5c00
-   dev_hard_start_xmit+0xfb/0x510
-   __dev_queue_xmit+0x7cd/0x32a0
-   br_dev_queue_push_xmit+0x39d/0x6a0
-
-Use skb_checksum instead of csum_partial who cannot deal with non-linear
-SKBs.
-
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20231211085121.07a88656d7df.I0fe9fc599382de0eccf96455617e377d9c231966@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 177fbbcb4ed6 ("wifi: cfg80211: detect stuck ECSA element in probe resp")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/scan.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index 586b1b3e35b8..80ccd6661aa3 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -332,7 +332,7 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
- 	};
- 	skb_reset_network_header(skb);
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index b9da6f5152cb..f819ca3891fc 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1746,7 +1746,9 @@ cfg80211_update_known_bss(struct cfg80211_registered_device *rdev,
+ 				   new->pub.proberesp_ies);
+ 		if (old)
+ 			kfree_rcu((struct cfg80211_bss_ies *)old, rcu_head);
+-	} else if (rcu_access_pointer(new->pub.beacon_ies)) {
++	}
++
++	if (rcu_access_pointer(new->pub.beacon_ies)) {
+ 		const struct cfg80211_bss_ies *old;
  
--	csum = csum_partial(icmp6h, len, 0);
-+	csum = skb_checksum(skb, skb_transport_offset(skb), len, 0);
- 	icmp6h->icmp6_cksum = csum_ipv6_magic(&nip6h->saddr, &nip6h->daddr, len,
- 					      IPPROTO_ICMPV6, csum);
- 
+ 		if (known->pub.hidden_beacon_bss &&
 -- 
 2.43.0
 
