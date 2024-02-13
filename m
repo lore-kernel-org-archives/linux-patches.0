@@ -1,154 +1,135 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6625FF0A
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 17:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA93F605A9
+	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 18:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707847057; cv=none; b=Pf047xVFXvkVOQK2JpE9pOT+wO2du7JlJkuFvmuO6082gdeBlDLS3rjc6rbGrIbzUnSkzbY+4EjAEffVOmkdfNMirVyg4FNEMjwk/gVm3s8j3FgXVRxNq2KpifBi/+AHaviqVZjiMmtxht+VrZos+R0KX9rynrnouBIZKgmJEfE=
+	t=1707847900; cv=none; b=YSxpnF810XXi3320J2qRdyiv7lgY/TZ2d9eyQP+seGJwIoy4rUBQO7FQyMVt0wcwVT1QVFzt8m3hK7u7KKN2Yg7xypXRzq+scLSe92cSa8KBCzODKmkBtHirIo4qwY/FHNWYUnhT6+djtXQO6nDfiPgkycYaQ/wBdeJZFxKPM/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707847057; c=relaxed/simple;
-	bh=vGsPH/6NepigkHWNcE1Gp/jZaGblgkAQJ/VePx7mqOY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gWTkguapDyb7JmiBadnEUiowv8W5ev+aCXsi2Lg9iRI14161/Mo6JDtDGhJ7cSrhDZgrpaXzf3CM4QYo1Jyn46XB0E4sYQgGRnoUAGwhg382osjRedtOaF2l3tXyhaX+ZaYujLTMEFFkYC5Fhr1AhURlB5HyPdYL5rP1vni5RiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZRhUft3u; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZRhUft3u"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dcc73148611so1110246276.3
-        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 09:57:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1707847054; x=1708451854; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ThFEwmSsic89kjVyr0919FUZo6LtjSuhDb8efYOkiGI=;
-        b=ZRhUft3uOxc5RFaO3zjVQdNU8hvkRhfbazC15YSa+2Xi7reVNVZoXPMY9AK5kIbw68
-         QRwYEwbwoxMeqDrbU0Y7MwiJQUDq7iCAVN5UnmGvIpXXU6SOUAnml7wEzItNcJ/c32m1
-         Ll21BW7dAjyrZCNtpvWgBzj6O/tmp3SoJT1X2ZjhMPX/PfgB0O5NLyN2xX+iJnfba9Y2
-         zsW5da/HsZnXbaVy0VMcmGj2rYDO5tsMPFuZbeQm042w//m6fE4EurybyNo7LJpJtBrd
-         4Ga5h9sLnvBfFEVKyJOCku0tIhZhzqiEN2jOwWDmBkkSx0PEG91gSzDeuHEuGFhq+8ql
-         3DHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707847054; x=1708451854;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ThFEwmSsic89kjVyr0919FUZo6LtjSuhDb8efYOkiGI=;
-        b=rZJ8iZ7F01T7Guwl+3umlBQkgc8JlJJEjD0Dxqe5v6Ucv68yamIsjsE9RaibYH3kXo
-         JxQE74rTYrc/dv2Y3pF/ZPiI+LeSSH3NSNVDHAurBES/K8LNvYlKNdsJj5NPztTMGD/E
-         Qz2j4R4g+qgJw8m2C4YwJ8h3MBppVbPQcfFmiUNclvezr/4InEbbKqJJNpvBupVAvw+K
-         FQktXYy4hnm2kHgxnf5Sd2uRuRIodRbC8uwo60DttsGEvPn/VLaOQxA1vopXEQEvDDx+
-         LUfb//bu+x6/iQ7D270d+DKooTyKEA79rRkl+Kc8YM47MQqle+GfnYAU3kqw1e9VE0ZG
-         jQVg==
-X-Forwarded-Encrypted: i=1; AJvYcCUTNegFw0+Xh1YcfaZSym+ad+yT+kVvgArMxUsu3BJuQnAxOk47MEH6+CEZR5sZvDmkgEHcIa1BrEpRC/z5vCF6tEA2PG+z9A==
-X-Gm-Message-State: AOJu0YwRSRuy2PT1lhWbs3ZaAmjZe9H48AT7LPBFWwvsDaqxOI38zLsl
-	CHheY9Ua1+CXb7/Dvjyt2RmzYBPp3E0LhZv7v7YWHWB9eOXGw8v9PxU5z01HkAK7hN89R6FMTdh
-	6x4oR6BarnWu+prjE1JJ1plxxu8WcFEgGwlyxEw==
-X-Google-Smtp-Source: AGHT+IFRRPRaR8chVvPorzyjWv+0RJ/A9PgRqWUgzNW1aKca1HP9qDR/iO3FDMZxa24LIqZrVhfY5xeJjXYhOT7SiAk=
-X-Received: by 2002:a25:ec0c:0:b0:dc6:cd76:5ddf with SMTP id
- j12-20020a25ec0c000000b00dc6cd765ddfmr8977451ybh.39.1707847054395; Tue, 13
- Feb 2024 09:57:34 -0800 (PST)
+	s=arc-20240116; t=1707847900; c=relaxed/simple;
+	bh=gkS582LnEt5AZDBlyZUbpbZ4EnHP61TwjQ5pjt1x8Ew=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QqDDOlN4eAT5qrmzeKPHSNiAK2NeQzHJ6EvyTpPBIyC6S4JFd6PfeMHeXdkxZuATys5vafvX0WkzF7IHsf1DQeLUzWqcKmOKeLFT8c6a1raJpXuIP5qI39+y9yCcbrTwKxGzERnFiFM3mIqDUIQ09RZxG3zkIFiJfEu75nEMiEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A57831FB;
+	Tue, 13 Feb 2024 10:12:19 -0800 (PST)
+Received: from [10.1.197.60] (eglon.cambridge.arm.com [10.1.197.60])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E8B393F766;
+	Tue, 13 Feb 2024 10:11:30 -0800 (PST)
+Message-ID: <a36b14b0-84d0-f815-b8c9-d10841f8b5d0@arm.com>
+Date: Tue, 13 Feb 2024 18:11:29 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-3-swboyd@chromium.org>
-In-Reply-To: <20240210070934.2549994-3-swboyd@chromium.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 13 Feb 2024 18:57:22 +0100
-Message-ID: <CACRpkdaxW+2q9=CPpkJZK7tWh5T7smnvqoEhEGezV9TvOw9wqQ@mail.gmail.com>
-Subject: Re: [PATCH 02/22] gpio: Add ChromeOS EC GPIO driver
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
-	linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v15-RFC 0/8] Add support for Sub-NUMA cluster (SNC)
+ systems
+Content-Language: en-GB
+To: Tony Luck <tony.luck@intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>
+Cc: "babu.moger@amd.com" <babu.moger@amd.com>,
+ "Yu, Fenghua" <fenghua.yu@intel.com>, Peter Newman <peternewman@google.com>,
+ Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
+ "x86@kernel.org" <x86@kernel.org>, Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+ Jamie Iles <quic_jiles@quicinc.com>, Randy Dunlap <rdunlap@infradead.org>,
+ Drew Fustini <dfustini@baylibre.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>
+References: <20240126223837.21835-1-tony.luck@intel.com>
+ <20240130222034.37181-1-tony.luck@intel.com>
+ <91bd281e-e21f-4b60-9e73-2f14fcbec316@amd.com>
+ <642f81da-669b-4057-8b97-2894dd57842b@intel.com>
+ <SJ1PR11MB6083036DC25D4FA55B02589AFC482@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <16a63923-2fd2-4d44-a8a3-32d8d6eeee9e@intel.com>
+ <ZcqWFr8fX9G0hoJU@agluck-desk3>
+From: James Morse <james.morse@arm.com>
+In-Reply-To: <ZcqWFr8fX9G0hoJU@agluck-desk3>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Stephen,
+Hello,
 
-thanks for your patch!
+On 12/02/2024 22:05, Tony Luck wrote:
+> On Mon, Feb 12, 2024 at 01:43:56PM -0800, Reinette Chatre wrote:
+>> On 2/12/2024 11:57 AM, Luck, Tony wrote:
+>>>>> To be honest, I like this series more than the previous series. I always
+>>>>> thought RDT_RESOURCE_L3_MON should have been a separate resource by itself.
+>>>>
+>>>> Would you prefer that your "Reviewed-by" tag be removed from the
+>>>> previous series?
+>>>
+>>> I'm thinking that I could continue splitting things and break "struct rdt_resource" into
+>>> separate "ctrl" and "mon" structures. Then we'd have a clean split from top to bottom.
+>>
+>> It is not obvious what you mean with "continue splitting things". Are you
+>> speaking about "continue splitting from v14" or "continue splitting from v15-RFC"?
+> 
+> I'm speaking of some future potential changes. Not proposing to
+> do this now.
+> 
+>> I think that any solution needs to consider what makes sense for resctrl
+>> as a whole instead of how to support SNC with smallest patch possible.
 
-Overall it looks good I have a few nitpicks
+>> There should not be any changes that makes resctrl harder to understand
+>> and maintain, as exemplified by confusion introduced by a simple thing as
+>> resource name choice [1].
+>>
+>>>
+>>> Doing that would get rid of the rdt_resources_all[] array. Replacing with individual
+>>> rdt_hw_ctrl_resource and rdt_hw_mon_resource declarations for each feature.
+>>>
+>>> Features found on a system would be added to a list of ctrl or list of mon resources.
+>>
+>> Could you please elaborate what is architecturally wrong with v14 and how this
+>> new proposal addresses that?
+> 
+> There is nothing architecturally wrong with v14. I thought it was more
+> complex than it needed to be. You have convinced me that my v15-RFC
+> series, while simpler, is not a reasonable path for long-term resctrl
+> maintainability.
 
-On Sat, Feb 10, 2024 at 8:09=E2=80=AFAM Stephen Boyd <swboyd@chromium.org> =
-wrote:
+I'm not sure if its helpful to describe a third approach at this point - but on the off
+chance its useful:
+With SNC enable, the L3 monitors are unaffected, but the controls behave as if they were
+part of some other component in the system..
 
-> The ChromeOS embedded controller (EC) supports setting the state of
-> GPIOs when the system is unlocked, and getting the state of GPIOs in all
-> cases. The GPIOs are on the EC itself, so the EC acts similar to a GPIO
-> expander. Add a driver to get and set the GPIOs on the EC through the
-> host command interface.
->
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
-> Cc: Benson Leung <bleung@chromium.org>
-> Cc: Guenter Roeck <groeck@chromium.org>
-> Cc: <linux-gpio@vger.kernel.org>
-> Cc: <chrome-platform@lists.linux.dev>
-> Cc: Pin-yen Lin <treapking@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-(...)
+ACPI describes something called "memory side caches" [0] in the HMAT table, which are
+outside the CPU cache hierarchy, and are associated with a Proximity-Domain. I've heard
+that one of Arm's partners has built a system with MPAM controls on something like this.
+How would we support this - and would this be a better fit for the way SNC behaves?
 
-> +config GPIO_CROS_EC
-> +       tristate "ChromeOS EC GPIO support"
-> +       depends on CROS_EC
-> +       help
-> +         GPIO driver for exposing GPIOs on the ChromeOS Embedded
-> +         Controller.
-> +
-> +         This driver can also be built as a module. If so, the module
-> +         will be called gpio-cros-ec.
+I think this would be a new resource and schema, 'MSC'(?) with domain-ids using the NUMA
+nid. As these aren't CPU caches, they wouldn't appear in the same part of the sysfs
+hierarchy, and wouldn't necessarily have a cache-id.
 
-Classified as "MFD Expander" but I honestly don't know anything better.
+For SNC systems, I think this would look like CMT on the L3, and CAT on the 'MSC'.
+Existing software wouldn't know to use the new schema, but equally wouldn't be surprised
+by the domain-ids being something other than the cache-id, and the controls and monitors
+not lining up.
+Where its not quite right for SNC is sysfs may not describe a memory side cache, but one
+would be present in resctrl. I don't think that's a problem - unless these systems do also
+have a memory-side-cache that behaves differently. (where is the controls being applied at
+the 'near' side of the link - I don't think the difference matters)
 
-> +#include <linux/bitops.h>
-> +#include <linux/errno.h>
-> +#include <linux/gpio/driver.h>
-> +#include <linux/init.h>
 
-Do you need init.h?
-I guess maybe... I thought module would be enough for this.
+I'm a little nervous that the SNC support looks strange if we ever add support for
+something like the above. Given its described in ACPI, I assume there are plenty of
+machines out there that look like this.
 
-> +static int cros_ec_gpio_request(struct gpio_chip *chip, unsigned gpio_pi=
-n)
-> +{
-> +       if (gpio_pin < chip->ngpio)
-> +               return 0;
-> +
-> +       return -EINVAL;
-> +}
+(Why aren't memory-side-caches a CPU cache? They live near the memory controller and cache
+based on the PA, not the CPU that issued the transaction)
 
-If this check is needed, it should be in gpiolib I think?
 
-> +#ifdef CONFIG_OF
+Thanks,
 
-This ifdef should not be needed these days.
+James
 
-> +static const struct of_device_id cros_ec_gpio_of_match[] =3D {
-> +       { .compatible =3D "google,cros-ec-gpio" },
-> +       {}
-> +};
-> +MODULE_DEVICE_TABLE(of, cros_ec_gpio_of_match);
-> +#endif
-> +
-> +static struct platform_driver cros_ec_gpio_driver =3D {
-> +       .probe =3D cros_ec_gpio_probe,
-> +       .driver =3D {
-> +               .name =3D "cros-ec-gpio",
-> +               .of_match_table =3D of_match_ptr(cros_ec_gpio_of_match),
-
-Nor the of_match_ptr() business.
-
-With these fixed/addressed:
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-
-Yours,
-Linus Walleij
+[0]
+https://uefi.org/specs/ACPI/6.5/05_ACPI_Software_Programming_Model.html#memory-side-cache-overview
