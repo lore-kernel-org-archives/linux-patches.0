@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FE95F54E;
-	Tue, 13 Feb 2024 17:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CEE5F56B;
+	Tue, 13 Feb 2024 17:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845422; cv=none; b=t/QOoaimu0PGH9cBjprlSA64BVJvUTOrKRNpL8oVNtMinrqCczkeNuNkg21diKsrtLzqbMvtVvsG51DNyuDkkLEGcZiDqVPa0SVZl1DKL8LsFBgvxxQmBw6S9eOAKRMKGKGemQBeCcHkUlP7JfUdnJwQrx/gP0N25ISP00ytJN8=
+	t=1707845426; cv=none; b=PoPSS1KjzVmfrRVopF+6i8s+4XM9C4GNbruwm3xxbEt++uRw4MxZcK+fhrZeJV9hUx/6TPE0FcWPd9Dmoxe11WQqHJWPaurkKl4OTuiJpbe0tIab6bMy69egQHISq8GYJ1Ivi6iBOnM+ZWAqDhohjXe0slLgm69dyut4CROcmPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845422; c=relaxed/simple;
-	bh=9O40NIgiArQNRjDhjHJFZqTAZxXPco6n4G7BV9sj+ik=;
+	s=arc-20240116; t=1707845426; c=relaxed/simple;
+	bh=il5t/aeEsqDwUIjakmaDPgfJtDHIEl6lx8bhjIYuJDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nwJ7XN1Hl/t85+abffqzebfm7kKFzX5nUDsTGcFxDbPZcq2zbxU74pOt0wLz1s/Vq+YKMDADJscTckpuDQbpBGl4j258ucNz2dqLvxfBhK9jmwRgdCOVCxHuO1/onuwJpqBxTMZJpuiemVsPqBhEZhbPcDVg2vN83oqf7Hr/PYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUPIyNvN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhjpcicoPWTv/CuwGxUBVINSfrCXpDNhndKO5hZdHh9UcMiYotOXLzjjPxIZsMOt30AG0hOfw+5Pod1Xea62NF1C1jn07OhGV8GVhpd0Ytq3CEEXqbvtZmh4lTYD6/xjyWK5a7rMiFbVVZqzZoVRUsqiZ9W/qn1lVyS5CXYPvYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/tFrcwz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUPIyNvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF07CC433F1;
-	Tue, 13 Feb 2024 17:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/tFrcwz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60132C433F1;
+	Tue, 13 Feb 2024 17:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845422;
-	bh=9O40NIgiArQNRjDhjHJFZqTAZxXPco6n4G7BV9sj+ik=;
+	s=korg; t=1707845425;
+	bh=il5t/aeEsqDwUIjakmaDPgfJtDHIEl6lx8bhjIYuJDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUPIyNvNkA4Czi2Oh/SavgBLMp1xOW6bTx2QYtN4mOFWQc/nQy3IJiNtmuCDBTKBx
-	 aMkMTCepL//CDiyaMlqgdu0oM0bqNRhH+KOPMAQ45Ra+z/YeIXWgZ9wpyL/fWTGaxI
-	 z0wDUAr/csyNnOs8vkkcuf9BLwVZDp1K8jVxg12k=
+	b=T/tFrcwzQcKlWcsupwn1DV3zZ1/TMYullDk/wvgTglD9GixwPJ6B7Nn9WpP7ic+az
+	 UxZYlO0IRxipLNn1Z7aSIHqeUhyIjbsUVHhCsftxu/NdB+z9Wg2FFeG+Kys/WSpkMI
+	 iEaP71MS/mvSNF2IlN/kL7Od43EPCkM1mB4rPSG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+c5da1f087c9e4ec6c933@syzkaller.appspotmail.com
-Subject: [PATCH 6.6 072/121] ppp_async: limit MRU to 64K
-Date: Tue, 13 Feb 2024 18:21:21 +0100
-Message-ID: <20240213171855.096447322@linuxfoundation.org>
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 046/121] wifi: iwlwifi: exit eSR only after the FW does
+Date: Tue, 13 Feb 2024 18:20:55 +0100
+Message-ID: <20240213171854.341170843@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -53,89 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit cb88cb53badb8aeb3955ad6ce80b07b598e310b8 ]
+[ Upstream commit 16867c38bcd3be2eb9016a3198a096f93959086e ]
 
-syzbot triggered a warning [1] in __alloc_pages():
+Currently the driver exits eSR by calling
+iwl_mvm_esr_mode_inactive() before updating the FW
+(by deactivating one of the links), and therefore before
+sending the EML frame notifying that we are no longer in eSR.
 
-WARN_ON_ONCE_GFP(order > MAX_PAGE_ORDER, gfp)
+This is wrong for several reasons:
+1. The driver sends SMPS activation frames when we are still in eSR
+   and SMPS should be disabled when in eSR
+2. The driver restores RLC configuration as it was before eSR
+   entering, and RLC command shouldn't be sent in eSR
 
-Willem fixed a similar issue in commit c0a2a1b0d631 ("ppp: limit MRU to 64K")
+Fix this by calling iwl_mvm_esr_mode_inactive() after FW update
 
-Adopt the same sanity check for ppp_async_ioctl(PPPIOCSMRU)
-
-[1]:
-
- WARNING: CPU: 1 PID: 11 at mm/page_alloc.c:4543 __alloc_pages+0x308/0x698 mm/page_alloc.c:4543
-Modules linked in:
-CPU: 1 PID: 11 Comm: kworker/u4:0 Not tainted 6.8.0-rc2-syzkaller-g41bccc98fb79 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-Workqueue: events_unbound flush_to_ldisc
-pstate: 204000c5 (nzCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __alloc_pages+0x308/0x698 mm/page_alloc.c:4543
- lr : __alloc_pages+0xc8/0x698 mm/page_alloc.c:4537
-sp : ffff800093967580
-x29: ffff800093967660 x28: ffff8000939675a0 x27: dfff800000000000
-x26: ffff70001272ceb4 x25: 0000000000000000 x24: ffff8000939675c0
-x23: 0000000000000000 x22: 0000000000060820 x21: 1ffff0001272ceb8
-x20: ffff8000939675e0 x19: 0000000000000010 x18: ffff800093967120
-x17: ffff800083bded5c x16: ffff80008ac97500 x15: 0000000000000005
-x14: 1ffff0001272cebc x13: 0000000000000000 x12: 0000000000000000
-x11: ffff70001272cec1 x10: 1ffff0001272cec0 x9 : 0000000000000001
-x8 : ffff800091c91000 x7 : 0000000000000000 x6 : 000000000000003f
-x5 : 00000000ffffffff x4 : 0000000000000000 x3 : 0000000000000020
-x2 : 0000000000000008 x1 : 0000000000000000 x0 : ffff8000939675e0
-Call trace:
-  __alloc_pages+0x308/0x698 mm/page_alloc.c:4543
-  __alloc_pages_node include/linux/gfp.h:238 [inline]
-  alloc_pages_node include/linux/gfp.h:261 [inline]
-  __kmalloc_large_node+0xbc/0x1fc mm/slub.c:3926
-  __do_kmalloc_node mm/slub.c:3969 [inline]
-  __kmalloc_node_track_caller+0x418/0x620 mm/slub.c:4001
-  kmalloc_reserve+0x17c/0x23c net/core/skbuff.c:590
-  __alloc_skb+0x1c8/0x3d8 net/core/skbuff.c:651
-  __netdev_alloc_skb+0xb8/0x3e8 net/core/skbuff.c:715
-  netdev_alloc_skb include/linux/skbuff.h:3235 [inline]
-  dev_alloc_skb include/linux/skbuff.h:3248 [inline]
-  ppp_async_input drivers/net/ppp/ppp_async.c:863 [inline]
-  ppp_asynctty_receive+0x588/0x186c drivers/net/ppp/ppp_async.c:341
-  tty_ldisc_receive_buf+0x12c/0x15c drivers/tty/tty_buffer.c:390
-  tty_port_default_receive_buf+0x74/0xac drivers/tty/tty_port.c:37
-  receive_buf drivers/tty/tty_buffer.c:444 [inline]
-  flush_to_ldisc+0x284/0x6e4 drivers/tty/tty_buffer.c:494
-  process_one_work+0x694/0x1204 kernel/workqueue.c:2633
-  process_scheduled_works kernel/workqueue.c:2706 [inline]
-  worker_thread+0x938/0xef4 kernel/workqueue.c:2787
-  kthread+0x288/0x310 kernel/kthread.c:388
-  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-and-tested-by: syzbot+c5da1f087c9e4ec6c933@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20240205171004.1059724-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 12bacfc2c065 ("wifi: iwlwifi: handle eSR transitions")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://msgid.link/20240201155157.d8d9dc277d4e.Ib5aee0fd05e35b1da7f18753eb3c8fa0a3f872f3@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index fbaaa8c102a1..e94a4b08fd63 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -460,6 +460,10 @@ ppp_async_ioctl(struct ppp_channel *chan, unsigned int cmd, unsigned long arg)
- 	case PPPIOCSMRU:
- 		if (get_user(val, p))
- 			break;
-+		if (val > U16_MAX) {
-+			err = -EINVAL;
-+			break;
-+		}
- 		if (val < PPP_MRU)
- 			val = PPP_MRU;
- 		ap->mru = val;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 1e58f0234293..2d1fd7ac8577 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -435,6 +435,9 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
+ 		mvmvif->ap_ibss_active = false;
+ 	}
+ 
++	iwl_mvm_link_changed(mvm, vif, link_conf,
++			     LINK_CONTEXT_MODIFY_ACTIVE, false);
++
+ 	if (iwl_mvm_is_esr_supported(mvm->fwrt.trans) && n_active > 1) {
+ 		int ret = iwl_mvm_esr_mode_inactive(mvm, vif);
+ 
+@@ -446,9 +449,6 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
+ 	if (vif->type == NL80211_IFTYPE_MONITOR)
+ 		iwl_mvm_mld_rm_snif_sta(mvm, vif);
+ 
+-	iwl_mvm_link_changed(mvm, vif, link_conf,
+-			     LINK_CONTEXT_MODIFY_ACTIVE, false);
+-
+ 	if (switching_chanctx)
+ 		return;
+ 	mvmvif->link[link_id]->phy_ctxt = NULL;
 -- 
 2.43.0
 
