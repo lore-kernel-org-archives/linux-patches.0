@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66845FF0B;
-	Tue, 13 Feb 2024 17:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C7C5F56B;
+	Tue, 13 Feb 2024 17:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845499; cv=none; b=F+KRNIRWjudBkjr/h3tbIUl/VoZ2q/TgYBRcMZWiCcqa6GuH3Twy1YHLTg9ceuw4E+B3KjzgqQZImch825zDck4ewZE38vgMy+nPWefYDqicI5+2TBRMnbYOekaWFVXML5SZKo+e6dQ2aWgtG1khp1k2HzdklugSxO337oHJ1+U=
+	t=1707845502; cv=none; b=pbjnV7EaiZ+jY3HexLoTt1/uNFH11BqkrHS3qihAKapGfJFkiGne62RnBDLBAyVmoUeVbKndnvQaZtfUGJMPipdPmlkZcf4ONUg5n+4oVpHQuhEat3b3Zxm8VLsD1u7YGghdyH8OlKH+4B0/PCW5Rj0ttCOkWUQ6qVWz5h6TjE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845499; c=relaxed/simple;
-	bh=GCVKmxmfukvh7U8b6hM2SfjtJdSyYqNg5JHgJXW6d5g=;
+	s=arc-20240116; t=1707845502; c=relaxed/simple;
+	bh=61+KpM3i28zBZ//68MjaWYQSfXm2Gjgt+YdRwNoeyvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0QHUenEI7AIWysf32ai/radt0vE+ZQpVjfGEzrQH8WzCWq82TjUCxXYo6WH3HyqEEdh3uNQGV5Ju6JMBgODSQRbTQuBKjY9I5r6yy+Ko2bF9C5Ue3vINpotszBa/jyhl0V0KKYUOS6gMkktsV8nerbMuO45B2BlOHr7mCSSVq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOnzWwGb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RYaJg4dbWZnfpZNu+G0748vtmLk1Jsb2ikVWsS4qkekFpbDclZTHjoDc5EaKzCu2BOY83xjDDsAZA5PqryjER/JzymPzsDvUzOkfFVXRNrgPXg3sazw0uJG1MUimk8FGoGNtzirKuyEefOVN8+jhlZAoJ0NOk3/wXZHHhVyWGZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHDEAco2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOnzWwGb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8B8C433C7;
-	Tue, 13 Feb 2024 17:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHDEAco2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48C9C433C7;
+	Tue, 13 Feb 2024 17:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845498;
-	bh=GCVKmxmfukvh7U8b6hM2SfjtJdSyYqNg5JHgJXW6d5g=;
+	s=korg; t=1707845502;
+	bh=61+KpM3i28zBZ//68MjaWYQSfXm2Gjgt+YdRwNoeyvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOnzWwGb5sbhlZYD1MQ1VeVysaeM0tC/IwKhQm1AIHeVt/EzoYUuMEWoYsQiBIipw
-	 TkChaXcPqecZN/JS8XVIRNHby0p4EhzeWmOUQkwOodSqkZGIzlrLVeX+Yb2+CG9ZQq
-	 3Sh3bJ/zyoFkfcGQ70OMsZooMPdsw3ZR5Ajl+KgI=
+	b=mHDEAco2mDGAgMOqcsv4EuewiR8yTbKpYtnG4SMU2PzcRsLHSbd4Ia5KrXkzwgyNN
+	 2Gb2mS9H+xYSxLSE3pngAk/xdFLmyIfsOsrU8Vasneh6RM9OUNHLgvFujKLqmY7BL9
+	 KvpNSldEk/RBkq/kVOITfcr3Qhlwe7Z3diVYLWwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/121] libceph: just wait for more data to be available on the socket
-Date: Tue, 13 Feb 2024 18:21:44 +0100
-Message-ID: <20240213171855.765448267@linuxfoundation.org>
+Subject: [PATCH 6.6 096/121] riscv: Fix arch_hugetlb_migration_supported() for NAPOT
+Date: Tue, 13 Feb 2024 18:21:45 +0100
+Message-ID: <20240213171855.799103733@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,172 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 8e46a2d068c92a905d01cbb018b00d66991585ab ]
+[ Upstream commit ce68c035457bdd025a9961e0ba2157323090c581 ]
 
-A short read may occur while reading the message footer from the
-socket.  Later, when the socket is ready for another read, the
-messenger invokes all read_partial_*() handlers, including
-read_partial_sparse_msg_data().  The expectation is that
-read_partial_sparse_msg_data() would bail, allowing the messenger to
-invoke read_partial() for the footer and pick up where it left off.
+arch_hugetlb_migration_supported() must be reimplemented to add support
+for NAPOT hugepages, which is done here.
 
-However read_partial_sparse_msg_data() violates that and ends up
-calling into the state machine in the OSD client.  The sparse-read
-state machine assumes that it's a new op and interprets some piece of
-the footer as the sparse-read header and returns bogus extents/data
-length, etc.
-
-To determine whether read_partial_sparse_msg_data() should bail, let's
-reuse cursor->total_resid.  Because once it reaches to zero that means
-all the extents and data have been successfully received in last read,
-else it could break out when partially reading any of the extents and
-data.  And then osd_sparse_read() could continue where it left off.
-
-[ idryomov: changelog ]
-
-Link: https://tracker.ceph.com/issues/63586
-Fixes: d396f89db39a ("libceph: add sparse read support to msgr1")
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 82a1a1f3bfb6 ("riscv: mm: support Svnapot in hugetlb page")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240130120114.106003-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ceph/messenger.h |  2 +-
- net/ceph/messenger_v1.c        | 25 +++++++++++++------------
- net/ceph/messenger_v2.c        |  4 ++--
- net/ceph/osd_client.c          |  9 +++------
- 4 files changed, 19 insertions(+), 21 deletions(-)
+ arch/riscv/include/asm/hugetlb.h |  3 +++
+ arch/riscv/mm/hugetlbpage.c      | 16 +++++++++++++---
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/ceph/messenger.h b/include/linux/ceph/messenger.h
-index 2eaaabbe98cb..1717cc57cdac 100644
---- a/include/linux/ceph/messenger.h
-+++ b/include/linux/ceph/messenger.h
-@@ -283,7 +283,7 @@ struct ceph_msg {
- 	struct kref kref;
- 	bool more_to_follow;
- 	bool needs_out_seq;
--	bool sparse_read;
-+	u64 sparse_read_total;
- 	int front_alloc_len;
+diff --git a/arch/riscv/include/asm/hugetlb.h b/arch/riscv/include/asm/hugetlb.h
+index 4c5b0e929890..20f9c3ba2341 100644
+--- a/arch/riscv/include/asm/hugetlb.h
++++ b/arch/riscv/include/asm/hugetlb.h
+@@ -11,6 +11,9 @@ static inline void arch_clear_hugepage_flags(struct page *page)
+ }
+ #define arch_clear_hugepage_flags arch_clear_hugepage_flags
  
- 	struct ceph_msgpool *pool;
-diff --git a/net/ceph/messenger_v1.c b/net/ceph/messenger_v1.c
-index 4cb60bacf5f5..0cb61c76b9b8 100644
---- a/net/ceph/messenger_v1.c
-+++ b/net/ceph/messenger_v1.c
-@@ -160,8 +160,9 @@ static size_t sizeof_footer(struct ceph_connection *con)
- static void prepare_message_data(struct ceph_msg *msg, u32 data_len)
- {
- 	/* Initialize data cursor if it's not a sparse read */
--	if (!msg->sparse_read)
--		ceph_msg_data_cursor_init(&msg->cursor, msg, data_len);
-+	u64 len = msg->sparse_read_total ? : data_len;
++bool arch_hugetlb_migration_supported(struct hstate *h);
++#define arch_hugetlb_migration_supported arch_hugetlb_migration_supported
 +
-+	ceph_msg_data_cursor_init(&msg->cursor, msg, len);
+ #ifdef CONFIG_RISCV_ISA_SVNAPOT
+ #define __HAVE_ARCH_HUGE_PTE_CLEAR
+ void huge_pte_clear(struct mm_struct *mm, unsigned long addr,
+diff --git a/arch/riscv/mm/hugetlbpage.c b/arch/riscv/mm/hugetlbpage.c
+index 87af75ee7186..e7b69281875b 100644
+--- a/arch/riscv/mm/hugetlbpage.c
++++ b/arch/riscv/mm/hugetlbpage.c
+@@ -364,7 +364,7 @@ void huge_pte_clear(struct mm_struct *mm,
+ 		pte_clear(mm, addr, ptep);
  }
  
- /*
-@@ -1036,7 +1037,7 @@ static int read_partial_sparse_msg_data(struct ceph_connection *con)
- 	if (do_datacrc)
- 		crc = con->in_data_crc;
+-static __init bool is_napot_size(unsigned long size)
++static bool is_napot_size(unsigned long size)
+ {
+ 	unsigned long order;
  
--	do {
-+	while (cursor->total_resid) {
- 		if (con->v1.in_sr_kvec.iov_base)
- 			ret = read_partial_message_chunk(con,
- 							 &con->v1.in_sr_kvec,
-@@ -1044,23 +1045,23 @@ static int read_partial_sparse_msg_data(struct ceph_connection *con)
- 							 &crc);
- 		else if (cursor->sr_resid > 0)
- 			ret = read_partial_sparse_msg_extent(con, &crc);
--
--		if (ret <= 0) {
--			if (do_datacrc)
--				con->in_data_crc = crc;
--			return ret;
--		}
-+		if (ret <= 0)
-+			break;
+@@ -392,7 +392,7 @@ arch_initcall(napot_hugetlbpages_init);
  
- 		memset(&con->v1.in_sr_kvec, 0, sizeof(con->v1.in_sr_kvec));
- 		ret = con->ops->sparse_read(con, cursor,
- 				(char **)&con->v1.in_sr_kvec.iov_base);
-+		if (ret <= 0) {
-+			ret = ret ? ret : 1;  /* must return > 0 to indicate success */
-+			break;
-+		}
- 		con->v1.in_sr_len = ret;
--	} while (ret > 0);
-+	}
+ #else
  
- 	if (do_datacrc)
- 		con->in_data_crc = crc;
- 
--	return ret < 0 ? ret : 1;  /* must return > 0 to indicate success */
-+	return ret;
+-static __init bool is_napot_size(unsigned long size)
++static bool is_napot_size(unsigned long size)
+ {
+ 	return false;
+ }
+@@ -409,7 +409,7 @@ int pmd_huge(pmd_t pmd)
+ 	return pmd_leaf(pmd);
  }
  
- static int read_partial_msg_data(struct ceph_connection *con)
-@@ -1253,7 +1254,7 @@ static int read_partial_message(struct ceph_connection *con)
- 		if (!m->num_data_items)
- 			return -EIO;
+-bool __init arch_hugetlb_valid_size(unsigned long size)
++static bool __hugetlb_valid_size(unsigned long size)
+ {
+ 	if (size == HPAGE_SIZE)
+ 		return true;
+@@ -421,6 +421,16 @@ bool __init arch_hugetlb_valid_size(unsigned long size)
+ 		return false;
+ }
  
--		if (m->sparse_read)
-+		if (m->sparse_read_total)
- 			ret = read_partial_sparse_msg_data(con);
- 		else if (ceph_test_opt(from_msgr(con->msgr), RXBOUNCE))
- 			ret = read_partial_msg_data_bounce(con);
-diff --git a/net/ceph/messenger_v2.c b/net/ceph/messenger_v2.c
-index d09a39ff2cf0..a901cae2f106 100644
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -1132,7 +1132,7 @@ static int decrypt_tail(struct ceph_connection *con)
- 	struct sg_table enc_sgt = {};
- 	struct sg_table sgt = {};
- 	struct page **pages = NULL;
--	bool sparse = con->in_msg->sparse_read;
-+	bool sparse = !!con->in_msg->sparse_read_total;
- 	int dpos = 0;
- 	int tail_len;
- 	int ret;
-@@ -2064,7 +2064,7 @@ static int prepare_read_tail_plain(struct ceph_connection *con)
- 	}
- 
- 	if (data_len(msg)) {
--		if (msg->sparse_read)
-+		if (msg->sparse_read_total)
- 			con->v2.in_state = IN_S_PREPARE_SPARSE_DATA;
- 		else
- 			con->v2.in_state = IN_S_PREPARE_READ_DATA;
-diff --git a/net/ceph/osd_client.c b/net/ceph/osd_client.c
-index d3a759e052c8..8d9760397b88 100644
---- a/net/ceph/osd_client.c
-+++ b/net/ceph/osd_client.c
-@@ -5510,7 +5510,7 @@ static struct ceph_msg *get_reply(struct ceph_connection *con,
- 	}
- 
- 	m = ceph_msg_get(req->r_reply);
--	m->sparse_read = (bool)srlen;
-+	m->sparse_read_total = srlen;
- 
- 	dout("get_reply tid %lld %p\n", tid, m);
- 
-@@ -5777,11 +5777,8 @@ static int prep_next_sparse_read(struct ceph_connection *con,
- 	}
- 
- 	if (o->o_sparse_op_idx < 0) {
--		u64 srlen = sparse_data_requested(req);
--
--		dout("%s: [%d] starting new sparse read req. srlen=0x%llx\n",
--		     __func__, o->o_osd, srlen);
--		ceph_msg_data_cursor_init(cursor, con->in_msg, srlen);
-+		dout("%s: [%d] starting new sparse read req\n",
-+		     __func__, o->o_osd);
- 	} else {
- 		u64 end;
- 
++bool __init arch_hugetlb_valid_size(unsigned long size)
++{
++	return __hugetlb_valid_size(size);
++}
++
++bool arch_hugetlb_migration_supported(struct hstate *h)
++{
++	return __hugetlb_valid_size(huge_page_size(h));
++}
++
+ #ifdef CONFIG_CONTIG_ALLOC
+ static __init int gigantic_pages_init(void)
+ {
 -- 
 2.43.0
 
