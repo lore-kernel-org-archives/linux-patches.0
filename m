@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0685F54E;
-	Tue, 13 Feb 2024 17:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0C65F56B;
+	Tue, 13 Feb 2024 17:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845528; cv=none; b=A5Xilv9wQpTCvUUbXEZjExxMumR6pTLE6QiYafWydv5b+FeWvq3P+zF6RHvfnyk3TBn9Iu5BlJAjUq83dB4VdKWeWlWYNl/TrLkeZy/e7r3P5LmMv3oNkamiYQwxh+mxK7YVntOon7KE7QpknRpdwQR4j+KqdjgNwjMIDeYzEyc=
+	t=1707845532; cv=none; b=u6NPNIVkCSlAyPCPg8bISnLoGAKqImgnb6KBozo7il/kfcRJlcl8hdtcCJFvZy/zD2qQUARkzHdpPwJ85p6sbhGrfB8W+aS9PnpezRmJhnSvg2efK6LsM5K0XLEqIr2nLI/90vd2WwXewoBfUKrXXjDzI2+z0+LBb8k3us734yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845528; c=relaxed/simple;
-	bh=uCwFoZ546f34TLGCTIU6ka1Fl+rvVJAu+h+cPyajwu0=;
+	s=arc-20240116; t=1707845532; c=relaxed/simple;
+	bh=3LrP2aTGyvtsW4hq8w1i+Elpy0VQ/ayWkZmmJA9FCxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0vqoCi3NtagWFir+/HnhMR1JnjEN/ZwFKm/vr6w8rTTChfOhGE5LbmuAwrEpOQdjygaGqgVvY5Hz0Gy9sZ0t6LGte7lvIXtYJNcrobrIUFNoNIHPVDhmrzRqGO2uYgMILqe7rzb7VrHr0/GLNv11XzYLH5H64EoXxS4ySRMcN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTx+nwm1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hy6Z0brbjZRlxU3VQNJUn61zRJvqVRR/FHrU4EqvtTt29YNP57pXdw1vUPHGJPj43UHB1Gfo4EkrJbCdkRiUGRttFKo89ouKPmFm+iXGl34qQWSP+b+Hat0ZYRjM6aElXC+IHYX8vcYfHGtKmPaslkhS4Nu89wqGfw2sUMjvX90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hU4Ue8cT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTx+nwm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E61C433F1;
-	Tue, 13 Feb 2024 17:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hU4Ue8cT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A03C433C7;
+	Tue, 13 Feb 2024 17:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845528;
-	bh=uCwFoZ546f34TLGCTIU6ka1Fl+rvVJAu+h+cPyajwu0=;
+	s=korg; t=1707845531;
+	bh=3LrP2aTGyvtsW4hq8w1i+Elpy0VQ/ayWkZmmJA9FCxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTx+nwm1qSTo0VmLLNyNpLxmAFDWzv0JRqAB+6qCDa81c5JnWfMxtW+sEchK14/Ng
-	 D2cZeQW112cgnLxAdof5nEBbXBLlOjB+Zfaeg0PM3Y7jiH5WAwAGeHn9vX4h8C/6rl
-	 n4rJAZ3pwZw1NHyuCNuvm7kr2EsCYUjNKAq21y6k=
+	b=hU4Ue8cTZRMHZ2UyXoW4exiYgLxXAsWhX2b2ZMo5BUFXYqpvbLYVV3MYpUJEIV9WC
+	 szy0HNQkLg3X3IMyWrU5Auf5sE/h37nXMjz5smzke8qWg7rp+Y66jiHVcmgUv1OtNd
+	 pWVVSacmklVhw5rF7jJRuSAx+CCb13SvBlxQdXnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puliang Lu <puliang.lu@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 103/121] USB: serial: option: add Fibocom FM101-GL variant
-Date: Tue, 13 Feb 2024 18:21:52 +0100
-Message-ID: <20240213171855.998979713@linuxfoundation.org>
+	Yongqiang Sun <yongqiang.sun@amd.com>,
+	Anthony Koo <Anthony.Koo@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 077/121] drm/amd/display: Fix panel_cntl could be null in dcn21_set_backlight_level()
+Date: Tue, 13 Feb 2024 18:21:26 +0100
+Message-ID: <20240213171855.239942870@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -50,54 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puliang Lu <puliang.lu@fibocom.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit b4a1f4eaf1d798066affc6ad040f76eb1a16e1c9 upstream.
+[ Upstream commit e96fddb32931d007db12b1fce9b5e8e4c080401b ]
 
-Update the USB serial option driver support for the Fibocom
-FM101-GL
-LTE modules as there are actually several different variants.
-- VID:PID 2cb7:01a3, FM101-GL are laptop M.2 cards (with
-MBIM interfaces for /Linux/Chrome OS)
+'panel_cntl' structure used to control the display panel could be null,
+dereferencing it could lead to a null pointer access.
 
-0x01a3:mbim,gnss
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn21/dcn21_hwseq.c:269 dcn21_set_backlight_level() error: we previously assumed 'panel_cntl' could be null (see line 250)
 
-Here are the outputs of usb-devices:
-
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=2cb7 ProdID=01a3 Rev=05.04
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom FM101-GL Module
-S:  SerialNumber=5ccd5cd4
-C:  #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Signed-off-by: Puliang Lu <puliang.lu@fibocom.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 474ac4a875ca ("drm/amd/display: Implement some asic specific abm call backs.")
+Cc: Yongqiang Sun <yongqiang.sun@amd.com>
+Cc: Anthony Koo <Anthony.Koo@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Anthony Koo <Anthony.Koo@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ .../drm/amd/display/dc/dcn21/dcn21_hwseq.c    | 39 ++++++++++---------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2269,6 +2269,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a2, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a3, 0xff) },			/* Fibocom FM101-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a4, 0xff),			/* Fibocom FM101-GL (laptop MBIM) */
- 	  .driver_info = RSVD(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
+index f99b1bc49694..7238930e6383 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_hwseq.c
+@@ -237,34 +237,35 @@ bool dcn21_set_backlight_level(struct pipe_ctx *pipe_ctx,
+ {
+ 	struct dc_context *dc = pipe_ctx->stream->ctx;
+ 	struct abm *abm = pipe_ctx->stream_res.abm;
++	struct timing_generator *tg = pipe_ctx->stream_res.tg;
+ 	struct panel_cntl *panel_cntl = pipe_ctx->stream->link->panel_cntl;
++	uint32_t otg_inst;
++
++	if (!abm && !tg && !panel_cntl)
++		return false;
++
++	otg_inst = tg->inst;
+ 
+ 	if (dc->dc->res_pool->dmcu) {
+ 		dce110_set_backlight_level(pipe_ctx, backlight_pwm_u16_16, frame_ramp);
+ 		return true;
+ 	}
+ 
+-	if (abm != NULL) {
+-		uint32_t otg_inst = pipe_ctx->stream_res.tg->inst;
+-
+-		if (abm && panel_cntl) {
+-			if (abm->funcs && abm->funcs->set_pipe_ex) {
+-				abm->funcs->set_pipe_ex(abm,
+-						otg_inst,
+-						SET_ABM_PIPE_NORMAL,
+-						panel_cntl->inst,
+-						panel_cntl->pwrseq_inst);
+-			} else {
+-					dmub_abm_set_pipe(abm,
+-							otg_inst,
+-							SET_ABM_PIPE_NORMAL,
+-							panel_cntl->inst,
+-							panel_cntl->pwrseq_inst);
+-			}
+-		}
++	if (abm->funcs && abm->funcs->set_pipe_ex) {
++		abm->funcs->set_pipe_ex(abm,
++					otg_inst,
++					SET_ABM_PIPE_NORMAL,
++					panel_cntl->inst,
++					panel_cntl->pwrseq_inst);
++	} else {
++		dmub_abm_set_pipe(abm,
++				  otg_inst,
++				  SET_ABM_PIPE_NORMAL,
++				  panel_cntl->inst,
++				  panel_cntl->pwrseq_inst);
+ 	}
+ 
+-	if (abm && abm->funcs && abm->funcs->set_backlight_level_pwm)
++	if (abm->funcs && abm->funcs->set_backlight_level_pwm)
+ 		abm->funcs->set_backlight_level_pwm(abm, backlight_pwm_u16_16,
+ 			frame_ramp, 0, panel_cntl->inst);
+ 	else
+-- 
+2.43.0
+
 
 
