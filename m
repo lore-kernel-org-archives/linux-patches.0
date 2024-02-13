@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE597604BF;
-	Tue, 13 Feb 2024 17:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B052605C1;
+	Tue, 13 Feb 2024 17:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845753; cv=none; b=i+ZecUzOGSLiXNNNxWvwzrC38wBIvNuROf2zkMUo66eZMFn3cIt4MhMpvz4r4lKxDQoNu8cXzIgIqydI9/0BYCKQJUoEPAtr7KKHns2jfSofnlp3W/E0z21ue2OVRO2js8yij4szFzAnDJyb2dV1dPOZ6DOV7NvzUn1e8YlcllE=
+	t=1707845756; cv=none; b=mX3LAa1Xx6Ta15kLG5cwZ4NRZAzww1kZi1s56kFsI1SroGpRGa06kC00HTvEctIk3HJLvC+1Eag+l95kclKzW0Z+gx6ZkpW1vNFtz19mQRWXY6fJrzqr5nIi0YhsEINlY1codIJgqHydUMcLR7AVYpbkTxgMulmcLxBvNBoAw5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845753; c=relaxed/simple;
-	bh=Qkl2lQO7eyQ0SPavBtfbIrV56R2VMvFwVTgN4GiRUXw=;
+	s=arc-20240116; t=1707845756; c=relaxed/simple;
+	bh=dohQ7W3ep41G7ZgXAOaNDn8ouWcG9bxnxbnfMyecECE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfH+4aNuWNSiiggIncbTbux4GTaFsxnxeHfXoKhEklTqtVZLqz8YTCUT4Z0IhNfIxQMO3zI73J9y7kO0tLg4rWY8O+QX1g3GFFx8b1+twjnkmE6Jf7D03gW+82sGEXJ7zVT0m0QRWMkYFIsgtq2uj+ypqcb3jcV5IAwodTcBkD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ckmiz5p+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SzKk2VESr7BRoNLuqxhSBjKCjKr8nBzSsvxG+0QrNaq9/U6GF/BdsGeqfqMcVDeB84hurURCPesFwU3DqM/iehtuCD01u05qsx8z+Yf35WMK9xiQd5xqmRguvFTF4Kv+YyHck/jS7K/pM4sUWCMOBrhRQKxKrM/hazeB66Xkv5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4872YC2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ckmiz5p+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6336FC43390;
-	Tue, 13 Feb 2024 17:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4872YC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837E0C433F1;
+	Tue, 13 Feb 2024 17:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845752;
-	bh=Qkl2lQO7eyQ0SPavBtfbIrV56R2VMvFwVTgN4GiRUXw=;
+	s=korg; t=1707845755;
+	bh=dohQ7W3ep41G7ZgXAOaNDn8ouWcG9bxnxbnfMyecECE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ckmiz5p+gpKgKuAxWJ2U7mCqD0yS3RNr13TDB/JFEg/qTLSBiO+o477vtjTvona+L
-	 kZNYiTygNua2mNkjzW1Rs/dRy+QCVgLUksSXmj6DgvbbqSNpu+iaC2oky+DuRIUBKA
-	 dp8JcONXedqBI8EzKbyc3l4dr3VYtJwD0LxRJgY8=
+	b=E4872YC2tUAzvBQ7Hs1rQ9R4j0ZAFIaQIsq0kY/zJdPIXd/wFUN3eraBCuOT+Due0
+	 qERrhtvqwUTTYp2ufHRh0VrVvJA0hiVmD0Qcjeu+WeO/CnBdtd/GReugruVgq6Mq2E
+	 N95RtTjXbshTo1lKJ4s2eQr/01hZjmU6lK5/kZXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Zhenyu Wang <zhenyuw@linux.intel.com>,
+	Mike Beaton <mjsbeaton@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 047/124] drm/i915/gvt: Fix uninitialized variable in handle_mmio()
-Date: Tue, 13 Feb 2024 18:21:09 +0100
-Message-ID: <20240213171855.110630068@linuxfoundation.org>
+Subject: [PATCH 6.7 048/124] x86/efistub: Use 1:1 file:memory mapping for PE/COFF .compat section
+Date: Tue, 13 Feb 2024 18:21:10 +0100
+Message-ID: <20240213171855.139118700@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -51,39 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 47caa96478b99d6d1199b89467cc3e5a6cc754ee ]
+[ Upstream commit 1ad55cecf22f05f1c884adf63cc09d3c3e609ebf ]
 
-This code prints the wrong variable in the warning message.  It should
-print "i" instead of "info->offset".  On the first iteration "info" is
-uninitialized leading to a crash and on subsequent iterations it prints
-the previous offset instead of the current one.
+The .compat section is a dummy PE section that contains the address of
+the 32-bit entrypoint of the 64-bit kernel image if it is bootable from
+32-bit firmware (i.e., CONFIG_EFI_MIXED=y)
 
-Fixes: e0f74ed4634d ("i915/gvt: Separate the MMIO tracking table from GVT-g")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
-Link: http://patchwork.freedesktop.org/patch/msgid/11957c20-b178-4027-9b0a-e32e9591dd7c@moroto.mountain
-Reviewed-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+This section is only 8 bytes in size and is only referenced from the
+loader, and so it is placed at the end of the memory view of the image,
+to avoid the need for padding it to 4k, which is required for sections
+appearing in the middle of the image.
+
+Unfortunately, this violates the PE/COFF spec, and even if most EFI
+loaders will work correctly (including the Tianocore reference
+implementation), PE loaders do exist that reject such images, on the
+basis that both the file and memory views of the file contents should be
+described by the section headers in a monotonically increasing manner
+without leaving any gaps.
+
+So reorganize the sections to avoid this issue. This results in a slight
+padding overhead (< 4k) which can be avoided if desired by disabling
+CONFIG_EFI_MIXED (which is only needed in rare cases these days)
+
+Fixes: 3e3eabe26dc8 ("x86/boot: Increase section and file alignment to 4k/512")
+Reported-by: Mike Beaton <mjsbeaton@gmail.com>
+Link: https://lkml.kernel.org/r/CAHzAAWQ6srV6LVNdmfbJhOwhBw5ZzxxZZ07aHt9oKkfYAdvuQQ%40mail.gmail.com
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gvt/handlers.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/boot/header.S | 14 ++++++--------
+ arch/x86/boot/setup.ld |  6 +++---
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gvt/handlers.c b/drivers/gpu/drm/i915/gvt/handlers.c
-index a9f7fa9b90bd..d30f8814d9b1 100644
---- a/drivers/gpu/drm/i915/gvt/handlers.c
-+++ b/drivers/gpu/drm/i915/gvt/handlers.c
-@@ -2850,8 +2850,7 @@ static int handle_mmio(struct intel_gvt_mmio_table_iter *iter, u32 offset,
- 	for (i = start; i < end; i += 4) {
- 		p = intel_gvt_find_mmio_info(gvt, i);
- 		if (p) {
--			WARN(1, "dup mmio definition offset %x\n",
--				info->offset);
-+			WARN(1, "dup mmio definition offset %x\n", i);
+diff --git a/arch/x86/boot/header.S b/arch/x86/boot/header.S
+index b2771710ed98..a1bbedd989e4 100644
+--- a/arch/x86/boot/header.S
++++ b/arch/x86/boot/header.S
+@@ -106,8 +106,7 @@ extra_header_fields:
+ 	.word	0				# MinorSubsystemVersion
+ 	.long	0				# Win32VersionValue
  
- 			/* We return -EEXIST here to make GVT-g load fail.
- 			 * So duplicated MMIO can be found as soon as
+-	.long	setup_size + ZO__end + pecompat_vsize
+-						# SizeOfImage
++	.long	setup_size + ZO__end		# SizeOfImage
+ 
+ 	.long	salign				# SizeOfHeaders
+ 	.long	0				# CheckSum
+@@ -143,7 +142,7 @@ section_table:
+ 	.ascii	".setup"
+ 	.byte	0
+ 	.byte	0
+-	.long	setup_size - salign 		# VirtualSize
++	.long	pecompat_fstart - salign 	# VirtualSize
+ 	.long	salign				# VirtualAddress
+ 	.long	pecompat_fstart - salign	# SizeOfRawData
+ 	.long	salign				# PointerToRawData
+@@ -156,8 +155,8 @@ section_table:
+ #ifdef CONFIG_EFI_MIXED
+ 	.asciz	".compat"
+ 
+-	.long	8				# VirtualSize
+-	.long	setup_size + ZO__end		# VirtualAddress
++	.long	pecompat_fsize			# VirtualSize
++	.long	pecompat_fstart			# VirtualAddress
+ 	.long	pecompat_fsize			# SizeOfRawData
+ 	.long	pecompat_fstart			# PointerToRawData
+ 
+@@ -172,17 +171,16 @@ section_table:
+ 	 * modes this image supports.
+ 	 */
+ 	.pushsection ".pecompat", "a", @progbits
+-	.balign	falign
+-	.set	pecompat_vsize, salign
++	.balign	salign
+ 	.globl	pecompat_fstart
+ pecompat_fstart:
+ 	.byte	0x1				# Version
+ 	.byte	8				# Size
+ 	.word	IMAGE_FILE_MACHINE_I386		# PE machine type
+ 	.long	setup_size + ZO_efi32_pe_entry	# Entrypoint
++	.byte	0x0				# Sentinel
+ 	.popsection
+ #else
+-	.set	pecompat_vsize, 0
+ 	.set	pecompat_fstart, setup_size
+ #endif
+ 	.ascii	".text"
+diff --git a/arch/x86/boot/setup.ld b/arch/x86/boot/setup.ld
+index 83bb7efad8ae..3a2d1360abb0 100644
+--- a/arch/x86/boot/setup.ld
++++ b/arch/x86/boot/setup.ld
+@@ -24,6 +24,9 @@ SECTIONS
+ 	.text		: { *(.text .text.*) }
+ 	.text32		: { *(.text32) }
+ 
++	.pecompat	: { *(.pecompat) }
++	PROVIDE(pecompat_fsize = setup_size - pecompat_fstart);
++
+ 	. = ALIGN(16);
+ 	.rodata		: { *(.rodata*) }
+ 
+@@ -36,9 +39,6 @@ SECTIONS
+ 	. = ALIGN(16);
+ 	.data		: { *(.data*) }
+ 
+-	.pecompat	: { *(.pecompat) }
+-	PROVIDE(pecompat_fsize = setup_size - pecompat_fstart);
+-
+ 	.signature	: {
+ 		setup_sig = .;
+ 		LONG(0x5a5aaa55)
 -- 
 2.43.0
 
