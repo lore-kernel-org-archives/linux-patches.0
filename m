@@ -1,59 +1,59 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936C04501B
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 21:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60AA633E3
+	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 21:54:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707858936; cv=none; b=JcjpVgdJvgSbLj7WUs5BI4AlmOGwXxXCvJc88K74e8NvWlk0lZxou7WGxMs9nT2GVQA2L1HJdNM2IBhdyEXoubLb+JVBSewcU/avdanp6fSsJRVNY9EuZXyUdNoOe/JAcgtygU90jwSfzJpGai3PqtLXsD9IDTm/dqIp+fgKDQg=
+	t=1707861249; cv=none; b=SOYdbAwlLPiphG+A/RHWz1WMXNDzexBT7ItPphzPhGAH3+gmSk74Lr0v4v56EXUVXb6jq1/M3z5SnGXhTgDzZ14gUJKxTTXuU/Xl97XSDxJ/5zdS07d+Up1MIhiL1kpAwZO6mIbC4VX/mQcIQOJNAMBb9Lv5YM2lXL/6gsbx1DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707858936; c=relaxed/simple;
-	bh=EbEBam2DPhvqop6UPMlhU9nHqFEE/WOYvpjAwdknIyI=;
+	s=arc-20240116; t=1707861249; c=relaxed/simple;
+	bh=YEjdCuL5yKWkN7QxzBGvlvpObgsWijJH0+E1q3ZXhVQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BfluEzzW0MY0q+oWfYmdTkn2G1ZHPGvFB/Xby/6t2bNVQOCkW1Yfw45Wh2nq1tbxiqS7f6jwPk9zuRtYwRmPDQouTKwMqIgvB3hJLgnHcw552yOXr/cD34ME0B8DbqcER8lDwmeWN4T/zbqPH1p8wrdKo2Z85fzBRnQG8HIrnIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GacVvenu; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type; b=hMmCi+GqX7kzzBSLHv/CHDUcbVRK8eipRGaQWl1uWQDPlB5vTrkil4wWRI4AjvnzPt44IDjuA0egDIG6zVIcBYAyQqhb8FjRbBDWFWAJJfYG+CaXsFYyVA4Yao9aNQSK3rfyjUrBNvWDx0P9JmZdtMzPuCs5sYmFfQaYGHS02pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=TbDErWqQ; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GacVvenu"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6e10303de41so765701b3a.1
-        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 13:15:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="TbDErWqQ"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dcbc6a6808fso2072080276.2
+        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 13:54:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707858934; x=1708463734; darn=lists.linux.dev;
+        d=sifive.com; s=google; t=1707861246; x=1708466046; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xCH4mpJrtdkHcy5Gp3rBryy4KbkaCk76Oc9ftECoQB0=;
-        b=GacVvenueYYLvuJWQrd5JY7JSULFTY4l1gajXhBvijg2HDFaSXL+VICbU7TntgYqNw
-         5sTvf1ghSxAM+unBZrwSNQrYzS0QuxWLxCBQQPJzOrUHO0opIrWvMHE5aJ/8nYCUujwF
-         BhZTxNS6xtwIlS8vxwe+K/RxM6zGg7a6KiMHXyor2mahUH5arTp3LfrZjYs6eeym8El+
-         /D1qdNOpF3TrtOF8hq2e6PaKdtVkL6It2fVUrpxFCFxrF+iFZehQpfkacP3U7D3XZgQV
-         gDDjpx6UaF0fi75KhV1ESi2g64Kkqg+Q3I5EStqlC1lS2GrDjQW3hkb+1cuU03zC9JhW
-         K3FA==
+        bh=YiSBrgcNMXQpKrdt+zpe9I2vnZuMe+BZLRs60AOrzNE=;
+        b=TbDErWqQ8euwfNaEwbS2OoycQAteR/hloWtzhZXbbs3JgUT4nUTQybADqeqBdhSPne
+         WnsMFF6ZDl+GPwQ+FMpnu/Z8Bw6ksHdRFr5+qdFt6V/+vmOQSGj6yEzfrdOO9nZtYi9E
+         SUKcjrfPRBwYWpHXKVt+oTWl8UNSSGn+pTOSx1EeHsMzKfe6qrJL1sKLg53Vp8pmTuzp
+         zFONkLnjt2CTGAwF6zdBO/uEkQoniCj4jvC/BmfElzxa9WX58EsfBA9moOCXN+TwIiBH
+         2Zr5peyqjKED/rdqkcuaFkyl1lcoSgsKbkpeso/FvmUMDyJyksFnMsjqGB9BNj1oOjef
+         eI6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707858934; x=1708463734;
+        d=1e100.net; s=20230601; t=1707861246; x=1708466046;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xCH4mpJrtdkHcy5Gp3rBryy4KbkaCk76Oc9ftECoQB0=;
-        b=WJBKOJNRfjOWj5vsVwhYe209wW+SA5Gcb9ZPOr9V4q8KJ+ZTHMXRjwgPukSY2st+bc
-         KJi7zqHPN3CTjTN9rWb+Xu4Z0dXRvZZZzaHWTa2PgaTvqL9ha+HO8tXM9rN3nwE0mI4o
-         ekIk+Na5oE4UsDDa7aKlRXHt2KvmgzbJjlfZAXwjYv7FGpxL45U8vo6/UnT+SwWTB5XN
-         4JWHO5vGN4eRR1+vTFWmbNJyQaXx4SkutviuN/szhTOMwCWCXeWf3Yp4QyX2/UHQTx4v
-         28J+DYakknakTV4aHklhRICKFEMqAVRx/jL+ExsPSuFsoGGuW3DY9GIXEqi7Yh+ZVIA5
-         aIwA==
-X-Gm-Message-State: AOJu0YykFQduuQEEWzxWj9ZwBxGjUlbFwN/FtO6xx/W+MxswSw0pDiSk
-	KINPRGf1MWilVmNGAv1QMrGrHsvS5yLArKhEOe9VnsKNsPAKUYsG
-X-Google-Smtp-Source: AGHT+IGMozuO4ZP0nMkADvUX4ufkSliK3mf9oJHd92aYPZ65CwU4TZenkgsud0N4B7N3eB0WZm8/YA==
-X-Received: by 2002:a05:6a00:9381:b0:6dd:da40:948d with SMTP id ka1-20020a056a00938100b006ddda40948dmr545635pfb.25.1707858933002;
-        Tue, 13 Feb 2024 13:15:33 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCX8XUpZd/YAPzW6iYQ6tCsx5stATh8kC0YbNlBIcaDgobZPKh2cA1T2EG8lJU4QutuO/nhD8Mt+huYQP19ha4iF4sCUIa1Xlk3OLK+/L1lWnEIYGYMinF4+RGT+ET5R/WFU0UVLhCNykVM9GYZTQxOsW/lLeTnER8+pxGr8Upg57yc3JHyA0L279wZCQAAAETRGKSMI2vVFm0NGRR7nuC75FzzXW06J40pM3RYQSrmPRNDohtMPCpe3KWignFkC2t9BKKXt3NG5/YeXa5JJbzUyxpJ6OykYZo7Gyhyrc2GKE7guaafmYRUzXG4+3lrS7r7LnzIQQ6CVnMaxg1U2/xTDkJnoz8abMAUmj/6CgfflwOUQ6ACdpBDV0yms88DVuxEUrUkZBzEBi+bU+DUFMtt6mqf6Sa0Z6CwxaIRf4QC18PiPHuPvFjnW8Nk3IEJBxAfUIANl/zKBRDNz/2kjfPddO9PTtPThK5SQjG5I285XJP/x6WYo6tg1LkNGSOj/6rVqv/9EbJ1K
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id q6-20020aa79826000000b006e07eb192ffsm7838008pfl.44.2024.02.13.13.15.31
+        bh=YiSBrgcNMXQpKrdt+zpe9I2vnZuMe+BZLRs60AOrzNE=;
+        b=l8GwPAu1c2GtvlPW3gzaXGFFog02QLRDulCiatW8uVhyheFfqlxr8xZpE/C6aCPebe
+         D0Y5Q5w8NBZuDybxkB7qbl0CrRqXo30n9nJp1x7kIOym05TyCFd2TmeypqSgRhruhVNQ
+         xg6s39+gzL6IN+96nMHFizXQeYP+sT7mpXnqy9gI682ml6nW2cDOsPg2+4E9VOSixMvB
+         FldwaaFHT12TgCS+ZZAmUY7CFGlhHVPpS/vO6LCpWDVQWfQarQPCFxLDqppkf3+6diWD
+         972/EqMloggxS7xdmUcnFigLxWTjMkkSca8PN8/xLsdDPLRmCl1DwMF0HB/8yvooEuYs
+         sRuQ==
+X-Gm-Message-State: AOJu0YzN7ThJjlKinSJksh5EvshPTXTrjM/sd7362t7b5PAXDNsWWt5z
+	44pJKs11/zUP4+fZaQMjjAtEPgocrWbsriqTHl52NuqoQOYWN96qCICgmICNhWQ=
+X-Google-Smtp-Source: AGHT+IG7XT1xWxLdCMIuHT7v3IZ8xvZzw9XxT1zTWnvHpxQ1DM2esqyBQHDjfIdFgaoG1gaLpqac+g==
+X-Received: by 2002:a25:abc1:0:b0:dcc:e187:6ceb with SMTP id v59-20020a25abc1000000b00dcce1876cebmr394122ybi.17.1707861246660;
+        Tue, 13 Feb 2024 13:54:06 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVt4Jq9WCh3PPzLc9Rru/Znz+w8p5oCzAbhntF/R9kGUvW2+iVP33MpHUbOsAc0ZJSY4hmw8YLG0NB6HACBYfGHRcAi6CLvFhgZmiOWi8dlQmB4xyli1TlZhRp4Or+jOIJdIFnaIkT61oqSyliPNA+OXjzHsiDgJ/RgHJBtfzBJxgJb0tw3xINsVOoxXAPWQSceU/NiWk2CCVyb35ShTv+Z1C58rKZzV1SXTEONW3hj+QKHT1wOdonLqq4yXMJqsA8StYwFa7pn7Q==
+Received: from [100.64.0.1] ([170.85.8.192])
+        by smtp.gmail.com with ESMTPSA id z7-20020ae9c107000000b00787164b8af6sm1300818qki.125.2024.02.13.13.54.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Feb 2024 13:15:32 -0800 (PST)
-Message-ID: <bc81f220-8e88-47f3-b8a0-fc4ea23284df@gmail.com>
-Date: Tue, 13 Feb 2024 13:15:30 -0800
+        Tue, 13 Feb 2024 13:54:06 -0800 (PST)
+Message-ID: <cb0ec33c-fe3e-4384-baf7-3cdc15e2bcd9@sifive.com>
+Date: Tue, 13 Feb 2024 15:54:03 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,44 +61,109 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/64] 6.1.78-rc1 review
+Subject: Re: [PATCH 6.6 085/121] riscv: Improve tlb_flush()
 Content-Language: en-US
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com
-References: <20240213171844.702064831@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: patches@lists.linux.dev, Alexandre Ghiti <alexghiti@rivosinc.com>,
+ Andrew Jones <ajones@ventanamicro.com>, Palmer Dabbelt
+ <palmer@rivosinc.com>, Sasha Levin <sashal@kernel.org>,
+ Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+References: <20240213171852.948844634@linuxfoundation.org>
+ <20240213171855.473974449@linuxfoundation.org>
+From: Samuel Holland <samuel.holland@sifive.com>
+In-Reply-To: <20240213171855.473974449@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 2/13/24 09:20, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.78 release.
-> There are 64 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.78-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On 2024-02-13 11:21 AM, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+This patch has a bug that was fixed in 97cf301fa42e ("riscv: Flush the tlb when
+a page directory is freed"), so that fix should be backported as well.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Regards,
+Samuel
+
+> ------------------
+> 
+> From: Alexandre Ghiti <alexghiti@rivosinc.com>
+> 
+> [ Upstream commit c5e9b2c2ae82231d85d9650854e7b3e97dde33da ]
+> 
+> For now, tlb_flush() simply calls flush_tlb_mm() which results in a
+> flush of the whole TLB. So let's use mmu_gather fields to provide a more
+> fine-grained flush of the TLB.
+> 
+> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
+> Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com> # On RZ/Five SMARC
+> Link: https://lore.kernel.org/r/20231030133027.19542-2-alexghiti@rivosinc.com
+> Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+> Stable-dep-of: d9807d60c145 ("riscv: mm: execute local TLB flush after populating vmemmap")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  arch/riscv/include/asm/tlb.h      | 8 +++++++-
+>  arch/riscv/include/asm/tlbflush.h | 3 +++
+>  arch/riscv/mm/tlbflush.c          | 7 +++++++
+>  3 files changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/riscv/include/asm/tlb.h b/arch/riscv/include/asm/tlb.h
+> index 120bcf2ed8a8..1eb5682b2af6 100644
+> --- a/arch/riscv/include/asm/tlb.h
+> +++ b/arch/riscv/include/asm/tlb.h
+> @@ -15,7 +15,13 @@ static void tlb_flush(struct mmu_gather *tlb);
+>  
+>  static inline void tlb_flush(struct mmu_gather *tlb)
+>  {
+> -	flush_tlb_mm(tlb->mm);
+> +#ifdef CONFIG_MMU
+> +	if (tlb->fullmm || tlb->need_flush_all)
+> +		flush_tlb_mm(tlb->mm);
+> +	else
+> +		flush_tlb_mm_range(tlb->mm, tlb->start, tlb->end,
+> +				   tlb_get_unmap_size(tlb));
+> +#endif
+>  }
+>  
+>  #endif /* _ASM_RISCV_TLB_H */
+> diff --git a/arch/riscv/include/asm/tlbflush.h b/arch/riscv/include/asm/tlbflush.h
+> index a09196f8de68..f5c4fb0ae642 100644
+> --- a/arch/riscv/include/asm/tlbflush.h
+> +++ b/arch/riscv/include/asm/tlbflush.h
+> @@ -32,6 +32,8 @@ static inline void local_flush_tlb_page(unsigned long addr)
+>  #if defined(CONFIG_SMP) && defined(CONFIG_MMU)
+>  void flush_tlb_all(void);
+>  void flush_tlb_mm(struct mm_struct *mm);
+> +void flush_tlb_mm_range(struct mm_struct *mm, unsigned long start,
+> +			unsigned long end, unsigned int page_size);
+>  void flush_tlb_page(struct vm_area_struct *vma, unsigned long addr);
+>  void flush_tlb_range(struct vm_area_struct *vma, unsigned long start,
+>  		     unsigned long end);
+> @@ -52,6 +54,7 @@ static inline void flush_tlb_range(struct vm_area_struct *vma,
+>  }
+>  
+>  #define flush_tlb_mm(mm) flush_tlb_all()
+> +#define flush_tlb_mm_range(mm, start, end, page_size) flush_tlb_all()
+>  #endif /* !CONFIG_SMP || !CONFIG_MMU */
+>  
+>  /* Flush a range of kernel pages */
+> diff --git a/arch/riscv/mm/tlbflush.c b/arch/riscv/mm/tlbflush.c
+> index 77be59aadc73..fa03289853d8 100644
+> --- a/arch/riscv/mm/tlbflush.c
+> +++ b/arch/riscv/mm/tlbflush.c
+> @@ -132,6 +132,13 @@ void flush_tlb_mm(struct mm_struct *mm)
+>  	__flush_tlb_range(mm, 0, -1, PAGE_SIZE);
+>  }
+>  
+> +void flush_tlb_mm_range(struct mm_struct *mm,
+> +			unsigned long start, unsigned long end,
+> +			unsigned int page_size)
+> +{
+> +	__flush_tlb_range(mm, start, end - start, page_size);
+> +}
+> +
+>  void flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
+>  {
+>  	__flush_tlb_range(vma->vm_mm, addr, PAGE_SIZE, PAGE_SIZE);
 
