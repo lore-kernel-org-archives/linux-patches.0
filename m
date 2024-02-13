@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDD65F54E;
-	Tue, 13 Feb 2024 17:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB105F54E;
+	Tue, 13 Feb 2024 17:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845357; cv=none; b=Ystg54vaAxYyq0xoT2CWca9jmrGp5M3j5qYUMHAuTs5jg7LL+9D1cUtpcyycNNrlBq9ncDo59qF6DgYSuSHuDtsozf47DUvyRnJ02bsdqUnJb54Kwkuk4/cCa88B0V9QX7oz7HnWYAYCy0gkAuP5jjj0F/qgan3YQl6MIXlVCew=
+	t=1707845360; cv=none; b=GITRgAwLhG6fYVUWCmf1/G2tsdxWAWIljKh9H5/zKMzUR/sbftLcb2Ar6Lsy/ZC4MfF8WWrRh7KiHZCXpC2zKayOxxTyD+en/KgMQHiQE4JFvDAIwTKN0cnz4XFc0vVqkYARRXkhdHydWPzEn0VQ/r1g6GwSY73wSDu+RZP6iik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845357; c=relaxed/simple;
-	bh=HGRMdyOj6VLTFhu/2SQGWLzV6PWbC7sbLR/hZ9dvhhA=;
+	s=arc-20240116; t=1707845360; c=relaxed/simple;
+	bh=ncIRK+/s4mJ/gQKbU5TnV6SzvK8m9pFurqJTsXs+nj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brFLr45FGYv9OizUr4fY6GcUP2gvT759IQPmBbgJEjlZG+ZIvVjokhRqEyYakKvthIVGct+AghuTRw3wrM/HJWPAG9y+vGoOCKn30t67bC+Upec6Q15O8EE1OUUFdhL93JXT8FyZ0DbJatfF38+7iKVwIZ9QYiiIFqPl+oCB52w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBJKx3u3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMUvJ0qqwZQBlyv34Xd+nrbnps7MwiEijTvu96F9oSm9D8oJjvyOh7XNWDbCSeS60ym1/CtOeIPoZLjjbwkf1clj4/UdfvJrxk6Y+o2pFsrPK5VT49SpS5ZbWsEmk0zYCBDfw5mWVdxYdLPMNhi5DT+CirpNBKoBuSKHjNAvDGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DilIjqsr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBJKx3u3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FE7C433C7;
-	Tue, 13 Feb 2024 17:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DilIjqsr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90EFC433F1;
+	Tue, 13 Feb 2024 17:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845357;
-	bh=HGRMdyOj6VLTFhu/2SQGWLzV6PWbC7sbLR/hZ9dvhhA=;
+	s=korg; t=1707845360;
+	bh=ncIRK+/s4mJ/gQKbU5TnV6SzvK8m9pFurqJTsXs+nj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBJKx3u3sXZPwWGFmGj+c/xFVBp8tkDa9NGccPBNoAIhQ9U8Wquh34fohMJimhI3y
-	 9UOTC0FZm+uv7zf0BzcikPvGz268BsKWr4QrJ9yemMzt8hf8PO6r2VlOLoAKvG8F4j
-	 xzJsYbpfKp6eDD3y8oD5I4Z451DNq+tZQWgSIq3Y=
+	b=DilIjqsrsvjpm8hidxpNtLMu/yDyz9N+TrDSHESyjkClSd4x6Lgi2AaTnK+zWWN+E
+	 z0PHJ3BjbLRnUeZKJP9Hr2A9JJkvn1WMzSHvMjrEWPFWResdoBPhBVMrGNS5ElNxMO
+	 RxBiIZgbQKj3eNbTmA7Nf9ADFq0GPc/2+Mr3Oc4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Jiri Pirko <jiri@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/121] tsnep: Fix mapping for zero copy XDP_TX action
-Date: Tue, 13 Feb 2024 18:21:05 +0100
-Message-ID: <20240213171854.630841428@linuxfoundation.org>
+Subject: [PATCH 6.6 057/121] tunnels: fix out of bounds access when building IPv6 PMTU error
+Date: Tue, 13 Feb 2024 18:21:06 +0100
+Message-ID: <20240213171854.659620947@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -51,82 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit d7f5fb33cf77247b7bf9a871aaeea72ca4f51ad7 ]
+[ Upstream commit d75abeec401f8c86b470e7028a13fcdc87e5dd06 ]
 
-For XDP_TX action xdp_buff is converted to xdp_frame. The conversion is
-done by xdp_convert_buff_to_frame(). The memory type of the resulting
-xdp_frame depends on the memory type of the xdp_buff. For page pool
-based xdp_buff it produces xdp_frame with memory type
-MEM_TYPE_PAGE_POOL. For zero copy XSK pool based xdp_buff it produces
-xdp_frame with memory type MEM_TYPE_PAGE_ORDER0.
+If the ICMPv6 error is built from a non-linear skb we get the following
+splat,
 
-tsnep_xdp_xmit_back() is not prepared for that and uses always the page
-pool buffer type TSNEP_TX_TYPE_XDP_TX. This leads to invalid mappings
-and the transmission of undefined data.
+  BUG: KASAN: slab-out-of-bounds in do_csum+0x220/0x240
+  Read of size 4 at addr ffff88811d402c80 by task netperf/820
+  CPU: 0 PID: 820 Comm: netperf Not tainted 6.8.0-rc1+ #543
+  ...
+   kasan_report+0xd8/0x110
+   do_csum+0x220/0x240
+   csum_partial+0xc/0x20
+   skb_tunnel_check_pmtu+0xeb9/0x3280
+   vxlan_xmit_one+0x14c2/0x4080
+   vxlan_xmit+0xf61/0x5c00
+   dev_hard_start_xmit+0xfb/0x510
+   __dev_queue_xmit+0x7cd/0x32a0
+   br_dev_queue_push_xmit+0x39d/0x6a0
 
-Improve tsnep_xdp_xmit_back() to use the generic buffer type
-TSNEP_TX_TYPE_XDP_NDO for zero copy XDP_TX.
+Use skb_checksum instead of csum_partial who cannot deal with non-linear
+SKBs.
 
-Fixes: 3fc2333933fd ("tsnep: Add XDP socket zero-copy RX support")
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/engleder/tsnep_main.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/ipv4/ip_tunnel_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
-index 08e113e785a7..4f36b29d66c8 100644
---- a/drivers/net/ethernet/engleder/tsnep_main.c
-+++ b/drivers/net/ethernet/engleder/tsnep_main.c
-@@ -668,17 +668,25 @@ static void tsnep_xdp_xmit_flush(struct tsnep_tx *tx)
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 586b1b3e35b8..80ccd6661aa3 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -332,7 +332,7 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
+ 	};
+ 	skb_reset_network_header(skb);
  
- static bool tsnep_xdp_xmit_back(struct tsnep_adapter *adapter,
- 				struct xdp_buff *xdp,
--				struct netdev_queue *tx_nq, struct tsnep_tx *tx)
-+				struct netdev_queue *tx_nq, struct tsnep_tx *tx,
-+				bool zc)
- {
- 	struct xdp_frame *xdpf = xdp_convert_buff_to_frame(xdp);
- 	bool xmit;
-+	u32 type;
+-	csum = csum_partial(icmp6h, len, 0);
++	csum = skb_checksum(skb, skb_transport_offset(skb), len, 0);
+ 	icmp6h->icmp6_cksum = csum_ipv6_magic(&nip6h->saddr, &nip6h->daddr, len,
+ 					      IPPROTO_ICMPV6, csum);
  
- 	if (unlikely(!xdpf))
- 		return false;
- 
-+	/* no page pool for zero copy */
-+	if (zc)
-+		type = TSNEP_TX_TYPE_XDP_NDO;
-+	else
-+		type = TSNEP_TX_TYPE_XDP_TX;
-+
- 	__netif_tx_lock(tx_nq, smp_processor_id());
- 
--	xmit = tsnep_xdp_xmit_frame_ring(xdpf, tx, TSNEP_TX_TYPE_XDP_TX);
-+	xmit = tsnep_xdp_xmit_frame_ring(xdpf, tx, type);
- 
- 	/* Avoid transmit queue timeout since we share it with the slow path */
- 	if (xmit)
-@@ -1222,7 +1230,7 @@ static bool tsnep_xdp_run_prog(struct tsnep_rx *rx, struct bpf_prog *prog,
- 	case XDP_PASS:
- 		return false;
- 	case XDP_TX:
--		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx))
-+		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx, false))
- 			goto out_failure;
- 		*status |= TSNEP_XDP_TX;
- 		return true;
-@@ -1272,7 +1280,7 @@ static bool tsnep_xdp_run_prog_zc(struct tsnep_rx *rx, struct bpf_prog *prog,
- 	case XDP_PASS:
- 		return false;
- 	case XDP_TX:
--		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx))
-+		if (!tsnep_xdp_xmit_back(rx->adapter, xdp, tx_nq, tx, true))
- 			goto out_failure;
- 		*status |= TSNEP_XDP_TX;
- 		return true;
 -- 
 2.43.0
 
