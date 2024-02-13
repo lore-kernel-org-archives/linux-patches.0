@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BE55F54E;
-	Tue, 13 Feb 2024 17:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CED5FF17;
+	Tue, 13 Feb 2024 17:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845378; cv=none; b=POv/pmVH4J+gS2DOk0CLlQRhqBGjxLAKJ4POJ9EQiaFyUTZa9uhEhop0brtd1OofKvyBQ1aIRQkerqmy0CoumMx2Zao2YJbRRXEC0ajTGa1RMbEsn7iGArtfciXRzjJ8gB0Di8TQAG1zJd08yz0krj3toLMVxLywK3ScX8ZRy7A=
+	t=1707845380; cv=none; b=lXvPlhtoKa+FsIOb1BzLriDCXNPmGkF++DZHTwbTilmIEvC4DVBdpmQdhfoop0DqAJU1dEb5+IFRZfjDFla1U3aIpgakfSKgNPo+XJXBOjtHDJfnSLAHyXQ8U7sV/ImyjpKrJ0vJhQ3he3+1rUewf+xB339RHcbjyjW3dGjXfAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845378; c=relaxed/simple;
-	bh=YtRTiqpQ07KK6jqVhbjI3Ce+xi9n3uycWKHMxWtW4U4=;
+	s=arc-20240116; t=1707845380; c=relaxed/simple;
+	bh=akBmmAWVa6FlhJEcE3tNuLD3zXvYGjoISR+AQxPf7Mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACp72/wEDccf5XQenfGSwVFaxkLDcp7IZaJmynMnw1IWLfGcS3T0xlZPqc7EAb0D7w5mwOIyLApXDHt/L0lEWYaZp6aHr7wn28IrybUO8c9IsOnctojIeRYncu8gvkGXldLZ+DcbtDwzwQrXJomsOo4yvQLlqUyAEUTBPiCrP4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLc3bjGF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hLT8/c7Ykxwjz6iResziNEEAhUP8Dm1OFPeeEN13ZCqf1iurYvZMYgJq81jnYTK8i8++N5U5NFKOahfKzUuRoL/tXZZ4xHKA9js9zqmH2C0cl8Xr20S/wIdaWUSaoukJDCshfFeKOIdEqjzSUEtQXolXsQHpQkAH1yCyRBje/WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fu6gjg2b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLc3bjGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB98C433F1;
-	Tue, 13 Feb 2024 17:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fu6gjg2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A87C433F1;
+	Tue, 13 Feb 2024 17:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845377;
-	bh=YtRTiqpQ07KK6jqVhbjI3Ce+xi9n3uycWKHMxWtW4U4=;
+	s=korg; t=1707845380;
+	bh=akBmmAWVa6FlhJEcE3tNuLD3zXvYGjoISR+AQxPf7Mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLc3bjGF7v64zUk6WN6qNGe/gtuxLuWjpVRJDOWgFNvO+CJwLJehAt9bhNZJUDZx2
-	 KYisHbRzerBz0r8oNNkcSzvCtB7UnDZYBTa5HrLa+WZ6j8SEm+DBplDSSdDYsOlbUm
-	 T/wSA4Zk8eQHGlqiJvCTddrVjXJ70udRi2LnAB48=
+	b=fu6gjg2bxGf5Akqp6L3TMaT0Nq+DELNUh5+ZkXVRskcI6LaBAxSjAQqXOHmZ4VIEv
+	 1552MrYUnkQ4DSUDax5AT89GZ/vaaD6nAUFcoUVDaoFaDMkICd3FQoh1s9vcgoxd0a
+	 iWyQsN0Qv2lX52G8iv+0ANAu4xOIe2swHVS9Oi2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/121] wifi: mac80211: fix RCU use in TDLS fast-xmit
-Date: Tue, 13 Feb 2024 18:20:53 +0100
-Message-ID: <20240213171854.284441896@linuxfoundation.org>
+Subject: [PATCH 6.6 062/121] hwmon: (coretemp) Fix bogus core_id to attr name mapping
+Date: Tue, 13 Feb 2024 18:21:11 +0100
+Message-ID: <20240213171854.804993324@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -50,40 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 9480adfe4e0f0319b9da04b44e4eebd5ad07e0cd ]
+[ Upstream commit fdaf0c8629d4524a168cb9e4ad4231875749b28c ]
 
-This looks up the link under RCU protection, but isn't
-guaranteed to actually have protection. Fix that.
+Before commit 7108b80a542b ("hwmon/coretemp: Handle large core ID
+value"), there is a fixed mapping between
+1. cpu_core_id
+2. the index in pdata->core_data[] array
+3. the sysfs attr name, aka "tempX_"
+The later two always equal cpu_core_id + 2.
 
-Fixes: 8cc07265b691 ("wifi: mac80211: handle TDLS data frames with MLO")
-Link: https://msgid.link/20240129155348.8a9c0b1e1d89.I553f96ce953bb41b0b877d592056164dec20d01c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+After the commit, pdata->core_data[] index is got from ida so that it
+can handle sparse core ids and support more cores within a package.
+
+However, the commit erroneously maps the sysfs attr name to
+pdata->core_data[] index instead of cpu_core_id + 2.
+
+As a result, the code is not aligned with the comments, and brings user
+visible changes in hwmon sysfs on systems with sparse core id.
+
+For example, before commit 7108b80a542b ("hwmon/coretemp: Handle large
+core ID value"),
+/sys/class/hwmon/hwmon2/temp2_label:Core 0
+/sys/class/hwmon/hwmon2/temp3_label:Core 1
+/sys/class/hwmon/hwmon2/temp4_label:Core 2
+/sys/class/hwmon/hwmon2/temp5_label:Core 3
+/sys/class/hwmon/hwmon2/temp6_label:Core 4
+/sys/class/hwmon/hwmon3/temp10_label:Core 8
+/sys/class/hwmon/hwmon3/temp11_label:Core 9
+after commit,
+/sys/class/hwmon/hwmon2/temp2_label:Core 0
+/sys/class/hwmon/hwmon2/temp3_label:Core 1
+/sys/class/hwmon/hwmon2/temp4_label:Core 2
+/sys/class/hwmon/hwmon2/temp5_label:Core 3
+/sys/class/hwmon/hwmon2/temp6_label:Core 4
+/sys/class/hwmon/hwmon2/temp7_label:Core 8
+/sys/class/hwmon/hwmon2/temp8_label:Core 9
+
+Restore the previous behavior and rework the code, comments and variable
+names to avoid future confusions.
+
+Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Link: https://lore.kernel.org/r/20240202092144.71180-3-rui.zhang@intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/hwmon/coretemp.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index d45d4be63dd8..5481acbfc1d4 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3086,10 +3086,11 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
- 			/* DA SA BSSID */
- 			build.da_offs = offsetof(struct ieee80211_hdr, addr1);
- 			build.sa_offs = offsetof(struct ieee80211_hdr, addr2);
-+			rcu_read_lock();
- 			link = rcu_dereference(sdata->link[tdls_link_id]);
--			if (WARN_ON_ONCE(!link))
--				break;
--			memcpy(hdr->addr3, link->u.mgd.bssid, ETH_ALEN);
-+			if (!WARN_ON_ONCE(!link))
-+				memcpy(hdr->addr3, link->u.mgd.bssid, ETH_ALEN);
-+			rcu_read_unlock();
- 			build.hdr_len = 24;
- 			break;
- 		}
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index e78c76919111..95f4c0b00b2d 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -419,7 +419,7 @@ static ssize_t show_temp(struct device *dev,
+ }
+ 
+ static int create_core_attrs(struct temp_data *tdata, struct device *dev,
+-			     int attr_no)
++			     int index)
+ {
+ 	int i;
+ 	static ssize_t (*const rd_ptr[TOTAL_ATTRS]) (struct device *dev,
+@@ -431,13 +431,20 @@ static int create_core_attrs(struct temp_data *tdata, struct device *dev,
+ 	};
+ 
+ 	for (i = 0; i < tdata->attr_size; i++) {
++		/*
++		 * We map the attr number to core id of the CPU
++		 * The attr number is always core id + 2
++		 * The Pkgtemp will always show up as temp1_*, if available
++		 */
++		int attr_no = tdata->is_pkg_data ? 1 : tdata->cpu_core_id + 2;
++
+ 		snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
+ 			 "temp%d_%s", attr_no, suffixes[i]);
+ 		sysfs_attr_init(&tdata->sd_attrs[i].dev_attr.attr);
+ 		tdata->sd_attrs[i].dev_attr.attr.name = tdata->attr_name[i];
+ 		tdata->sd_attrs[i].dev_attr.attr.mode = 0444;
+ 		tdata->sd_attrs[i].dev_attr.show = rd_ptr[i];
+-		tdata->sd_attrs[i].index = attr_no;
++		tdata->sd_attrs[i].index = index;
+ 		tdata->attrs[i] = &tdata->sd_attrs[i].dev_attr.attr;
+ 	}
+ 	tdata->attr_group.attrs = tdata->attrs;
+@@ -495,26 +502,25 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
+ 	struct platform_data *pdata = platform_get_drvdata(pdev);
+ 	struct cpuinfo_x86 *c = &cpu_data(cpu);
+ 	u32 eax, edx;
+-	int err, index, attr_no;
++	int err, index;
+ 
+ 	if (!housekeeping_cpu(cpu, HK_TYPE_MISC))
+ 		return 0;
+ 
+ 	/*
+-	 * Find attr number for sysfs:
+-	 * We map the attr number to core id of the CPU
+-	 * The attr number is always core id + 2
+-	 * The Pkgtemp will always show up as temp1_*, if available
++	 * Get the index of tdata in pdata->core_data[]
++	 * tdata for package: pdata->core_data[1]
++	 * tdata for core: pdata->core_data[2] .. pdata->core_data[NUM_REAL_CORES + 1]
+ 	 */
+ 	if (pkg_flag) {
+-		attr_no = PKG_SYSFS_ATTR_NO;
++		index = PKG_SYSFS_ATTR_NO;
+ 	} else {
+ 		index = ida_alloc_max(&pdata->ida, NUM_REAL_CORES - 1, GFP_KERNEL);
+ 		if (index < 0)
+ 			return index;
+ 
+ 		pdata->cpu_map[index] = topology_core_id(cpu);
+-		attr_no = index + BASE_SYSFS_ATTR_NO;
++		index += BASE_SYSFS_ATTR_NO;
+ 	}
+ 
+ 	tdata = init_temp_data(cpu, pkg_flag);
+@@ -540,20 +546,20 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
+ 		if (get_ttarget(tdata, &pdev->dev) >= 0)
+ 			tdata->attr_size++;
+ 
+-	pdata->core_data[attr_no] = tdata;
++	pdata->core_data[index] = tdata;
+ 
+ 	/* Create sysfs interfaces */
+-	err = create_core_attrs(tdata, pdata->hwmon_dev, attr_no);
++	err = create_core_attrs(tdata, pdata->hwmon_dev, index);
+ 	if (err)
+ 		goto exit_free;
+ 
+ 	return 0;
+ exit_free:
+-	pdata->core_data[attr_no] = NULL;
++	pdata->core_data[index] = NULL;
+ 	kfree(tdata);
+ ida_free:
+ 	if (!pkg_flag)
+-		ida_free(&pdata->ida, index);
++		ida_free(&pdata->ida, index - BASE_SYSFS_ATTR_NO);
+ 	return err;
+ }
+ 
 -- 
 2.43.0
 
