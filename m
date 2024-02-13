@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBB25F54E;
-	Tue, 13 Feb 2024 17:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59875F54E;
+	Tue, 13 Feb 2024 17:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845347; cv=none; b=kSYFdxFq2Vxqs+3OnS+ekabbagkcUgzsWnlBeSqSxNMU+F/Xweyh0QgrMmV5ekeI3frfVHTvtwHRc7yBVWEjoG37fD+DKHKbm5XpMfJ4JUKbO4I9/0SwyF/Kgzbw9Nq5VYaYiAF0rjFDmxKl+u+JEfKy2iaT9xxeWwnDeLQz9+w=
+	t=1707845350; cv=none; b=csp/DGjllLQ2XgN9DCvWUzRzyv60jqTnnIRZYCwIDQXnwY1K7qcRVSCzlK+4Fau1pgnBVSVKK+qvcK+OO3R0F1Jsvc4+dpnoHp8WmqSotSQvBpFbQfs8yi946Aap63BL6CdSgvFNShOmyL7s6yxuGyjfTQUL8UQ/slWD2SPx6Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845347; c=relaxed/simple;
-	bh=F1XJUdLRdi+g8y0cSc46yVKLWTnic4oDroLYChA1XFs=;
+	s=arc-20240116; t=1707845350; c=relaxed/simple;
+	bh=yyOnRfagP7PeA8BSp751pAXqrlR28ocGEvpaHSEOU0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbrUTEGQCKSWWG94fTq7tbVr3ID/n89TI9Vh0Vqu9yhQZRculUBtmcQLPBlyt6s43K0vPhLFmN1vHWAEdPH6YPQ38UUMz5U3mIqZv7mh4LAWG3xE/gWVmFKYAioj3hHx15KVy19UN3FRHG6FbTv92Pvu27pDjRkkit9J6VedGFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqZwDoV0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YIg6MBlnvv1L6/53VX44cilYDRf9Mmjhh76JrRm6l5E9LL21HlFMyyUZCTZ0zaYduJFXOJ3wnCMYN/IffalCB/UsjRiiHFIwb6Mdc8SkEyxmmOkBcFSRaXcrL/GwIUX7BBKGZTkJWpUSUz5CWfBbILyhlLtAvOvH6lePyHx9VZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPAdZLaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqZwDoV0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC21C433F1;
-	Tue, 13 Feb 2024 17:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPAdZLaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DDCC433F1;
+	Tue, 13 Feb 2024 17:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845347;
-	bh=F1XJUdLRdi+g8y0cSc46yVKLWTnic4oDroLYChA1XFs=;
+	s=korg; t=1707845350;
+	bh=yyOnRfagP7PeA8BSp751pAXqrlR28ocGEvpaHSEOU0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqZwDoV0NvKF2fLYCLPLpk0hhpNlCmMN8SL9yJa3Gu4zScvadWsH5Jy0p/7FtAzCw
-	 qH1z7F89Lg7KkUOGJDmaqJwazK8haFaBb0l1AuKoXFzSF71il+P3vIXIm5+62fhVsY
-	 +9CDQTWQqI0LBtzVvyzw428C/0kkPau7KDXndSBw=
+	b=uPAdZLaUN5SjVUBUR6MUKVpzYBZFtGElosAZtEeGvNRU7YOFeXPKjK1OYgo4LgCfp
+	 h4tTCR6RJ3uyBVvpqD8SmAHL6FotfjAYp0RNwCg31+AJT6Bb0sxnCCMcOzUjdE5nMO
+	 AWogV+fDeMbQH8sXzcl2RZaWkagPRCaNq+iLNfIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Yujie Liu <yujie.liu@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/121] selftests/net: change shebang to bash to support "source"
-Date: Tue, 13 Feb 2024 18:21:02 +0100
-Message-ID: <20240213171854.544334114@linuxfoundation.org>
+Subject: [PATCH 6.6 054/121] selftests: net: fix tcp listener handling in pmtu.sh
+Date: Tue, 13 Feb 2024 18:21:03 +0100
+Message-ID: <20240213171854.574030453@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -55,87 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yujie Liu <yujie.liu@intel.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 05d92cb0e919239c29b3a26da1f76f1e18fed7d3 ]
+[ Upstream commit e71e016ad0f6e641a7898b8cda5f62f8e2beb2f1 ]
 
-The patch set [1] added a general lib.sh in net selftests, and converted
-several test scripts to source the lib.sh.
+The pmtu.sh test uses a few TCP listener in a problematic way:
+It hard-codes a constant timeout to wait for the listener starting-up
+in background. That introduces unneeded latency and on very slow and
+busy host it can fail.
 
-unicast_extensions.sh (converted in [1]) and pmtu.sh (converted in [2])
-have a /bin/sh shebang which may point to various shells in different
-distributions, but "source" is only available in some of them. For
-example, "source" is a built-it function in bash, but it cannot be
-used in dash.
+Additionally the test starts again the same listener in the same
+namespace on the same port, just after the previous connection
+completed. Fast host can attempt starting the new server before the
+old one really closed the socket.
 
-Refer to other scripts that were converted together, simply change the
-shebang to bash to fix the following issues when the default /bin/sh
-points to other shells.
+Address the issues using the wait_local_port_listen helper and
+explicitly waiting for the background listener process exit.
 
-not ok 51 selftests: net: unicast_extensions.sh # exit=1
-
-v1 -> v2:
-  - Fix pmtu.sh which has the same issue as unicast_extensions.sh,
-    suggested by Hangbin
-  - Change the style of the "source" line to be consistent with other
-    tests, suggested by Hangbin
-
-Link: https://lore.kernel.org/all/20231202020110.362433-1-liuhangbin@gmail.com/ [1]
-Link: https://lore.kernel.org/all/20231219094856.1740079-1-liuhangbin@gmail.com/ [2]
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Fixes: 378f082eaf37 ("selftests/net: convert pmtu.sh to run it in unique namespace")
-Fixes: 0f4765d0b48d ("selftests/net: convert unicast_extensions.sh to run it in unique namespace")
-Signed-off-by: Yujie Liu <yujie.liu@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Link: https://lore.kernel.org/r/20231229131931.3961150-1-yujie.liu@intel.com
+Fixes: 136a1b434bbb ("selftests: net: test vxlan pmtu exceptions with tcp")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/f8e8f6d44427d8c45e9f6a71ee1a321047452087.1706812005.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e71e016ad0f6 ("selftests: net: fix tcp listener handling in pmtu.sh")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh               | 4 ++--
- tools/testing/selftests/net/unicast_extensions.sh | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/pmtu.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 8518eaacf4b5..3f118e3f1c66 100755
+index 3f118e3f1c66..f0febc19baae 100755
 --- a/tools/testing/selftests/net/pmtu.sh
 +++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
- #
- # Check that route PMTU values match expectations, and that initial device MTU
-@@ -198,7 +198,7 @@
- # - pmtu_ipv6_route_change
+@@ -199,6 +199,7 @@
  #	Same as above but with IPv6
  
--source ./lib.sh
-+source lib.sh
+ source lib.sh
++source net_helper.sh
  
  PAUSE_ON_FAIL=no
  VERBOSE=0
-diff --git a/tools/testing/selftests/net/unicast_extensions.sh b/tools/testing/selftests/net/unicast_extensions.sh
-index b7a2cb9e7477..f52aa5f7da52 100755
---- a/tools/testing/selftests/net/unicast_extensions.sh
-+++ b/tools/testing/selftests/net/unicast_extensions.sh
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/bin/bash
- # SPDX-License-Identifier: GPL-2.0
- #
- # By Seth Schoen (c) 2021, for the IPv4 Unicast Extensions Project
-@@ -28,7 +28,7 @@
- # These tests provide an easy way to flip the expected result of any
- # of these behaviors for testing kernel patches that change them.
+@@ -1336,13 +1337,15 @@ test_pmtu_ipvX_over_bridged_vxlanY_or_geneveY_exception() {
+ 			TCPDST="TCP:[${dst}]:50000"
+ 		fi
+ 		${ns_b} socat -T 3 -u -6 TCP-LISTEN:50000 STDOUT > $tmpoutfile &
++		local socat_pid=$!
  
--source ./lib.sh
-+source lib.sh
+-		sleep 1
++		wait_local_port_listen ${NS_B} 50000 tcp
  
- # nettest can be run from PATH or from same directory as this selftest
- if ! which nettest >/dev/null; then
+ 		dd if=/dev/zero status=none bs=1M count=1 | ${target} socat -T 3 -u STDIN $TCPDST,connect-timeout=3
+ 
+ 		size=$(du -sb $tmpoutfile)
+ 		size=${size%%/tmp/*}
++		wait ${socat_pid}
+ 
+ 		[ $size -ne 1048576 ] && err "File size $size mismatches exepcted value in locally bridged vxlan test" && return 1
+ 	done
 -- 
 2.43.0
 
