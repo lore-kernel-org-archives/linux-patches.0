@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07475F54E;
-	Tue, 13 Feb 2024 17:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781235F54E;
+	Tue, 13 Feb 2024 17:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845132; cv=none; b=Yc9vw9QqGx+iL1Z4mHFb4gC50yyXUPEu7IU9q/vXLptB5YkUAzZ/CjpcQeb7G8ZLdgpL4YTkn9OPgHSgvZ/hLXD0b/gwgLUSFCAKLdB2Paw9vtmRR1/7Tp42MSAaqXV+lsEyoaN6qweZJosNIjbF7hLATpWJqFXJgIDuLnf4tbM=
+	t=1707845135; cv=none; b=WjQUKV9W9i2WirSZTHj7BhnAfZEHMIrPpA4jmyaSW9VqE+uPZ1Xl3mUbUMG40dyDRwp7QkYGe2sChF3HkzRNePHxGQPOlPog0axAp2Ugfi/EuMZ7PmP+KggSDFQyoImY6kje1xXsMXgDxTT3evaS4IJJ8XxBApknaP1x/IH30hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845132; c=relaxed/simple;
-	bh=GPgry5InaS/1EPoTi0zW/T0CpQ8q6ZEwtQIKc42keMc=;
+	s=arc-20240116; t=1707845135; c=relaxed/simple;
+	bh=OkuSVXJKQ8Xdho2+St+AIbEpsSEDTgVdXEnQkaVb6K8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjjggL6PE0EtZ7J5NaxttV7fjSIcS5eP6L5HDvKMwys8eIykmtsrWhk5OuGDvK20QlVNm8sP+JFY1G16WWFp+WzBletLwPOQ/rncAeA87AA4xJKhikbQ+AWhh14Hz2xgFyVHVzlcE4JNnD85NWWCsPMeA3I7VgpsfexscwnYyRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YuYr6/+a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4MWkO/BW7o0dRfH8+PxhoyvmQVXs15MC+YCcb/APUO9wCsF9aDxgR/HwoS2xlQLGM4uPVdu3/4cAkbj+j1Te/1vMkyJPcZSRIr+ygRXOYiY+RZ88y9mfAupyx/JunfEFPVuLhPefxSJR/gBXj69T1Vr7c1TWzLyBxj1qS9JZ2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bw82lcXU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YuYr6/+a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FEBC433F1;
-	Tue, 13 Feb 2024 17:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bw82lcXU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A639C433C7;
+	Tue, 13 Feb 2024 17:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845131;
-	bh=GPgry5InaS/1EPoTi0zW/T0CpQ8q6ZEwtQIKc42keMc=;
+	s=korg; t=1707845135;
+	bh=OkuSVXJKQ8Xdho2+St+AIbEpsSEDTgVdXEnQkaVb6K8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YuYr6/+aBdLNc6pJQ43aSYzZgbghfc5Q3Wn+0d/uWfLW6qVKDXxf3eNdW7lkTOiR5
-	 t2XjuUxv+fWMTKZpByfAKC+ywjoGvVN7t2KEep5fB/DU8REd9Uco8OGewk5eZ3k14e
-	 WxwlCj1uaJA0UvHXke4XTMZ7wgizhW5I7Yi+oUdM=
+	b=bw82lcXU9ua1wTxW4vLKoeu02bdFnD8VNRj5wk6X5cJ+uf1c71nWB8BRh9xDlfS4x
+	 VQG4blIL6n6+3LkaI/f0+34iDYrR7pBgm01oyMgWmVkSblgNLJuF3+fYP0SOVv+Awy
+	 ihsPTp6v47N9B+T+jcXszzPyBblXE+nyIA2F0Hcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 55/64] hrtimer: Report offline hrtimer enqueue
-Date: Tue, 13 Feb 2024 18:21:41 +0100
-Message-ID: <20240213171846.460261587@linuxfoundation.org>
+	syzbot+fa3ef895554bdbfd1183@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 29/64] af_unix: Call kfree_skb() for dead unix_(sk)->oob_skb in GC.
+Date: Tue, 13 Feb 2024 18:21:15 +0100
+Message-ID: <20240213171845.668600346@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
 References: <20240213171844.702064831@linuxfoundation.org>
@@ -51,78 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit dad6a09f3148257ac1773cd90934d721d68ab595 upstream.
+[ Upstream commit 1279f9d9dec2d7462823a18c29ad61359e0a007d ]
 
-The hrtimers migration on CPU-down hotplug process has been moved
-earlier, before the CPU actually goes to die. This leaves a small window
-of opportunity to queue an hrtimer in a blind spot, leaving it ignored.
+syzbot reported a warning [0] in __unix_gc() with a repro, which
+creates a socketpair and sends one socket's fd to itself using the
+peer.
 
-For example a practical case has been reported with RCU waking up a
-SCHED_FIFO task right before the CPUHP_AP_IDLE_DEAD stage, queuing that
-way a sched/rt timer to the local offline CPU.
+  socketpair(AF_UNIX, SOCK_STREAM, 0, [3, 4]) = 0
+  sendmsg(4, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\360", iov_len=1}],
+          msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET,
+                                      cmsg_type=SCM_RIGHTS, cmsg_data=[3]}],
+          msg_controllen=24, msg_flags=0}, MSG_OOB|MSG_PROBE|MSG_DONTWAIT|MSG_ZEROCOPY) = 1
 
-Make sure such situations never go unnoticed and warn when that happens.
+This forms a self-cyclic reference that GC should finally untangle
+but does not due to lack of MSG_OOB handling, resulting in memory
+leak.
 
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Reported-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240129235646.3171983-4-boqun.feng@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Recently, commit 11498715f266 ("af_unix: Remove io_uring code for
+GC.") removed io_uring's dead code in GC and revealed the problem.
+
+The code was executed at the final stage of GC and unconditionally
+moved all GC candidates from gc_candidates to gc_inflight_list.
+That papered over the reported problem by always making the following
+WARN_ON_ONCE(!list_empty(&gc_candidates)) false.
+
+The problem has been there since commit 2aab4b969002 ("af_unix: fix
+struct pid leaks in OOB support") added full scm support for MSG_OOB
+while fixing another bug.
+
+To fix this problem, we must call kfree_skb() for unix_sk(sk)->oob_skb
+if the socket still exists in gc_candidates after purging collected skb.
+
+Then, we need to set NULL to oob_skb before calling kfree_skb() because
+it calls last fput() and triggers unix_release_sock(), where we call
+duplicate kfree_skb(u->oob_skb) if not NULL.
+
+Note that the leaked socket remained being linked to a global list, so
+kmemleak also could not detect it.  We need to check /proc/net/protocol
+to notice the unfreed socket.
+
+[0]:
+WARNING: CPU: 0 PID: 2863 at net/unix/garbage.c:345 __unix_gc+0xc74/0xe80 net/unix/garbage.c:345
+Modules linked in:
+CPU: 0 PID: 2863 Comm: kworker/u4:11 Not tainted 6.8.0-rc1-syzkaller-00583-g1701940b1a02 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/25/2024
+Workqueue: events_unbound __unix_gc
+RIP: 0010:__unix_gc+0xc74/0xe80 net/unix/garbage.c:345
+Code: 8b 5c 24 50 e9 86 f8 ff ff e8 f8 e4 22 f8 31 d2 48 c7 c6 30 6a 69 89 4c 89 ef e8 97 ef ff ff e9 80 f9 ff ff e8 dd e4 22 f8 90 <0f> 0b 90 e9 7b fd ff ff 48 89 df e8 5c e7 7c f8 e9 d3 f8 ff ff e8
+RSP: 0018:ffffc9000b03fba0 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffffc9000b03fc10 RCX: ffffffff816c493e
+RDX: ffff88802c02d940 RSI: ffffffff896982f3 RDI: ffffc9000b03fb30
+RBP: ffffc9000b03fce0 R08: 0000000000000001 R09: fffff52001607f66
+R10: 0000000000000003 R11: 0000000000000002 R12: dffffc0000000000
+R13: ffffc9000b03fc10 R14: ffffc9000b03fc10 R15: 0000000000000001
+FS:  0000000000000000(0000) GS:ffff8880b9400000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005559c8677a60 CR3: 000000000d57a000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ process_one_work+0x889/0x15e0 kernel/workqueue.c:2633
+ process_scheduled_works kernel/workqueue.c:2706 [inline]
+ worker_thread+0x8b9/0x12a0 kernel/workqueue.c:2787
+ kthread+0x2c6/0x3b0 kernel/kthread.c:388
+ ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:242
+ </TASK>
+
+Reported-by: syzbot+fa3ef895554bdbfd1183@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=fa3ef895554bdbfd1183
+Fixes: 2aab4b969002 ("af_unix: fix struct pid leaks in OOB support")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20240203183149.63573-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hrtimer.h |    4 +++-
- kernel/time/hrtimer.c   |    3 +++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ net/unix/garbage.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -197,6 +197,7 @@ enum  hrtimer_base_type {
-  * @max_hang_time:	Maximum time spent in hrtimer_interrupt
-  * @softirq_expiry_lock: Lock which is taken while softirq based hrtimer are
-  *			 expired
-+ * @online:		CPU is online from an hrtimers point of view
-  * @timer_waiters:	A hrtimer_cancel() invocation waits for the timer
-  *			callback to finish.
-  * @expires_next:	absolute time of the next event, is required for remote
-@@ -219,7 +220,8 @@ struct hrtimer_cpu_base {
- 	unsigned int			hres_active		: 1,
- 					in_hrtirq		: 1,
- 					hang_detected		: 1,
--					softirq_activated       : 1;
-+					softirq_activated       : 1,
-+					online			: 1;
- #ifdef CONFIG_HIGH_RES_TIMERS
- 	unsigned int			nr_events;
- 	unsigned short			nr_retries;
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1082,6 +1082,7 @@ static int enqueue_hrtimer(struct hrtime
- 			   enum hrtimer_mode mode)
- {
- 	debug_activate(timer, mode);
-+	WARN_ON_ONCE(!base->cpu_base->online);
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index dc2763540393..767b338a7a2d 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -314,6 +314,17 @@ void unix_gc(void)
+ 	/* Here we are. Hitlist is filled. Die. */
+ 	__skb_queue_purge(&hitlist);
  
- 	base->cpu_base->active_bases |= 1 << base->index;
++#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
++	list_for_each_entry_safe(u, next, &gc_candidates, link) {
++		struct sk_buff *skb = u->oob_skb;
++
++		if (skb) {
++			u->oob_skb = NULL;
++			kfree_skb(skb);
++		}
++	}
++#endif
++
+ 	spin_lock(&unix_gc_lock);
  
-@@ -2180,6 +2181,7 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	cpu_base->softirq_next_timer = NULL;
- 	cpu_base->expires_next = KTIME_MAX;
- 	cpu_base->softirq_expires_next = KTIME_MAX;
-+	cpu_base->online = 1;
- 	hrtimer_cpu_base_init_expiry_lock(cpu_base);
- 	return 0;
- }
-@@ -2247,6 +2249,7 @@ int hrtimers_cpu_dying(unsigned int dyin
- 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
- 
- 	raw_spin_unlock(&new_base->lock);
-+	old_base->online = 0;
- 	raw_spin_unlock(&old_base->lock);
- 
- 	return 0;
+ 	/* There could be io_uring registered files, just push them back to
+-- 
+2.43.0
+
 
 
