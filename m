@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB105F54E;
-	Tue, 13 Feb 2024 17:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBFC5FDDF;
+	Tue, 13 Feb 2024 17:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845360; cv=none; b=GITRgAwLhG6fYVUWCmf1/G2tsdxWAWIljKh9H5/zKMzUR/sbftLcb2Ar6Lsy/ZC4MfF8WWrRh7KiHZCXpC2zKayOxxTyD+en/KgMQHiQE4JFvDAIwTKN0cnz4XFc0vVqkYARRXkhdHydWPzEn0VQ/r1g6GwSY73wSDu+RZP6iik=
+	t=1707845364; cv=none; b=mbFjcFWp5ZlLBBSLqPiFnLoxAWjuK7On1TS25Cl/sgwp/jD3d6A8Lu0skXoIH3UY/y2LbhUQg7f0wL7VWlB5NuJ4p9IDya/SWVVR+d9PhggPJq5EZ5BdLm+MWy7GBweZp9cSXRjuhXGVQTt9i+T+v//eGWUqYS4udyBDdGb9+do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845360; c=relaxed/simple;
-	bh=ncIRK+/s4mJ/gQKbU5TnV6SzvK8m9pFurqJTsXs+nj0=;
+	s=arc-20240116; t=1707845364; c=relaxed/simple;
+	bh=GOSZNMpepZSiRXQb6OCR0aA+kwVSo+yAJoDC7Siw2Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMUvJ0qqwZQBlyv34Xd+nrbnps7MwiEijTvu96F9oSm9D8oJjvyOh7XNWDbCSeS60ym1/CtOeIPoZLjjbwkf1clj4/UdfvJrxk6Y+o2pFsrPK5VT49SpS5ZbWsEmk0zYCBDfw5mWVdxYdLPMNhi5DT+CirpNBKoBuSKHjNAvDGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DilIjqsr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IIy8cKpznxXtHnJbssN1nSM12rJBds6/UzWZGX2HMVo+1RGCP//FNMh+HGO4dAZuD3xwIuH6VECF7jEE1xNNXzhKKL4elZUFl+ODim9CUJhRYagIX1M170XrTsbps4DFA8hRbdfXnC+LE7+5bx2dD1E2dWnpFF2ToFA1+OpYj84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzGazTuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DilIjqsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90EFC433F1;
-	Tue, 13 Feb 2024 17:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzGazTuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541C5C433C7;
+	Tue, 13 Feb 2024 17:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845360;
-	bh=ncIRK+/s4mJ/gQKbU5TnV6SzvK8m9pFurqJTsXs+nj0=;
+	s=korg; t=1707845363;
+	bh=GOSZNMpepZSiRXQb6OCR0aA+kwVSo+yAJoDC7Siw2Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DilIjqsrsvjpm8hidxpNtLMu/yDyz9N+TrDSHESyjkClSd4x6Lgi2AaTnK+zWWN+E
-	 z0PHJ3BjbLRnUeZKJP9Hr2A9JJkvn1WMzSHvMjrEWPFWResdoBPhBVMrGNS5ElNxMO
-	 RxBiIZgbQKj3eNbTmA7Nf9ADFq0GPc/2+Mr3Oc4s=
+	b=VzGazTuAplnC+J9UghunL9XHR/gYTgMnh56YHsIR6xaWZUUXmRlt/1RSAh+58Tjcg
+	 W7DbL+XNoP1KkncaRZc287DkvIbos8bLtyepCBwmFkdA97dkuW5uoPktLnf4DVd452
+	 xMv7mueXCZIPYHW5f/VrrWgxfZ/ElSVvTHWmaX3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoine Tenart <atenart@kernel.org>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
 	Jiri Pirko <jiri@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/121] tunnels: fix out of bounds access when building IPv6 PMTU error
-Date: Tue, 13 Feb 2024 18:21:06 +0100
-Message-ID: <20240213171854.659620947@linuxfoundation.org>
+Subject: [PATCH 6.6 058/121] atm: idt77252: fix a memleak in open_card_ubr0
+Date: Tue, 13 Feb 2024 18:21:07 +0100
+Message-ID: <20240213171854.688032569@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
 References: <20240213171852.948844634@linuxfoundation.org>
@@ -52,51 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit d75abeec401f8c86b470e7028a13fcdc87e5dd06 ]
+[ Upstream commit f3616173bf9be9bf39d131b120d6eea4e6324cb5 ]
 
-If the ICMPv6 error is built from a non-linear skb we get the following
-splat,
+When alloc_scq fails, card->vcs[0] (i.e. vc) should be freed. Otherwise,
+in the following call chain:
 
-  BUG: KASAN: slab-out-of-bounds in do_csum+0x220/0x240
-  Read of size 4 at addr ffff88811d402c80 by task netperf/820
-  CPU: 0 PID: 820 Comm: netperf Not tainted 6.8.0-rc1+ #543
-  ...
-   kasan_report+0xd8/0x110
-   do_csum+0x220/0x240
-   csum_partial+0xc/0x20
-   skb_tunnel_check_pmtu+0xeb9/0x3280
-   vxlan_xmit_one+0x14c2/0x4080
-   vxlan_xmit+0xf61/0x5c00
-   dev_hard_start_xmit+0xfb/0x510
-   __dev_queue_xmit+0x7cd/0x32a0
-   br_dev_queue_push_xmit+0x39d/0x6a0
+idt77252_init_one
+  |-> idt77252_dev_open
+        |-> open_card_ubr0
+              |-> alloc_scq [failed]
+  |-> deinit_card
+        |-> vfree(card->vcs);
 
-Use skb_checksum instead of csum_partial who cannot deal with non-linear
-SKBs.
+card->vcs is freed and card->vcs[0] is leaked.
 
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
 Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/atm/idt77252.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index 586b1b3e35b8..80ccd6661aa3 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -332,7 +332,7 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
- 	};
- 	skb_reset_network_header(skb);
- 
--	csum = csum_partial(icmp6h, len, 0);
-+	csum = skb_checksum(skb, skb_transport_offset(skb), len, 0);
- 	icmp6h->icmp6_cksum = csum_ipv6_magic(&nip6h->saddr, &nip6h->daddr, len,
- 					      IPPROTO_ICMPV6, csum);
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index e327a0229dc1..e7f713cd70d3 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -2930,6 +2930,8 @@ open_card_ubr0(struct idt77252_dev *card)
+ 	vc->scq = alloc_scq(card, vc->class);
+ 	if (!vc->scq) {
+ 		printk("%s: can't get SCQ.\n", card->name);
++		kfree(card->vcs[0]);
++		card->vcs[0] = NULL;
+ 		return -ENOMEM;
+ 	}
  
 -- 
 2.43.0
