@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ECC1EB22;
-	Tue, 13 Feb 2024 17:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB281EB22;
+	Tue, 13 Feb 2024 17:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845787; cv=none; b=rDU4lVRy1EAsY+rl7YAOyes/VarQL88TY0d47I5IZQzM61PSka54aRvPkEP70e6We+N0SAch6tm7RHoLj7AC32uRdI/oGEJWRGOMnANghDn0071WQhdB40bJIyWus7EP/87E3XS8eIImIF1y7SkldwMSDko0AyUcNCUsPMYL3ac=
+	t=1707845790; cv=none; b=EUYjNkLZo3NqrE5loTzrzj+KLqTQpqUPvSWnj8PKbzDyH02BkEx32JKi0KCaNEQfbdnQu12M1r1IaRb1adDZJPT+wNNM6NuH2gFftj7+X9iQkx8fxeD7mB6K1njzlgayrqeG3N2pKybeX0GIIjENEkqFGF7/rbSVwEtZRUc5sXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845787; c=relaxed/simple;
-	bh=gI0yEYTg+5oXf78+i0QpYTHqV1UxW9uZHzognPFDdbc=;
+	s=arc-20240116; t=1707845790; c=relaxed/simple;
+	bh=7L0w9XNh4e0xuxWg1D6qqpcrOsJ5GkAgHc2uzxkkrA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBl+hL5SsMuxAAXuGAW7gNpGUKDjXNnqASedGpNePbb9M3arI+Ym9/Ja9SGCS5HeUQxcCMVvKgoKXNJ5ZvgExg9aUlb11gqK5m/GykGPmbKw2vYzURa4rpWz+gaCMyErIVG81ghLNjvXd4eaRLPBSchwqgUT3vfrqXqO8Kwipxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5t0pUQV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYjO7Zskt6jUsRZcayCuI0xEXRwUPpgVzOPWdTWPHcbuAWAXesDK3Y3CSrL1v4gZl4RIfdEh0zuvWwgZOOup1+AMHDC0Txorz8Pan++RXOd4A8ACAoINXGnE/SRmQENmkY1krmbpTi2mpEMAuG8bBAfDPCkzz+obae5/250K8IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9lF9lYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5t0pUQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A73C433F1;
-	Tue, 13 Feb 2024 17:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9lF9lYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FBCC43390;
+	Tue, 13 Feb 2024 17:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707845787;
-	bh=gI0yEYTg+5oXf78+i0QpYTHqV1UxW9uZHzognPFDdbc=;
+	s=korg; t=1707845790;
+	bh=7L0w9XNh4e0xuxWg1D6qqpcrOsJ5GkAgHc2uzxkkrA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5t0pUQVsINSd5U5Ak8r41IoCCtwDhcBOMFULB+8IrMD2WNYymgr0iaMrc6mivDNZ
-	 wXZ0J+1X1fklmpOOH8jprwH7u/ZUtj+UuOvdmo1yIXOCn6YycwqllZiD4QYyOf/UIq
-	 IV+6FoyLn/6ze52CTNqC5dg7AeRYoaGXAJbtM4e8=
+	b=j9lF9lYQSUbezzL7g6UKaunz3QygGayOANS1tYUY6SMB/dXjbz0Bg9ep5PO/O8P/t
+	 mEjHp24bPBTA9+QnmmC540A9nII01jSoSJjPjVkp4Tl5xr0dAkSODWKtVYwMlB7xSN
+	 oeIyhVER9l1+O/xlrfSHA+V56VIs/hzCcNuWPqeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 028/124] wifi: mac80211: fix waiting for beacons logic
-Date: Tue, 13 Feb 2024 18:20:50 +0100
-Message-ID: <20240213171854.552866642@linuxfoundation.org>
+Subject: [PATCH 6.7 029/124] wifi: iwlwifi: exit eSR only after the FW does
+Date: Tue, 13 Feb 2024 18:20:51 +0100
+Message-ID: <20240213171854.582382053@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240213171853.722912593@linuxfoundation.org>
 References: <20240213171853.722912593@linuxfoundation.org>
@@ -50,35 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit a0b4f2291319c5d47ecb196b90400814fdcfd126 ]
+[ Upstream commit 16867c38bcd3be2eb9016a3198a096f93959086e ]
 
-This should be waiting if we don't have a beacon yet,
-but somehow I managed to invert the logic. Fix that.
+Currently the driver exits eSR by calling
+iwl_mvm_esr_mode_inactive() before updating the FW
+(by deactivating one of the links), and therefore before
+sending the EML frame notifying that we are no longer in eSR.
 
-Fixes: 74e1309acedc ("wifi: mac80211: mlme: look up beacon elems only if needed")
-Link: https://msgid.link/20240131164856.922701229546.I239b379e7cee04608e73c016b737a5245e5b23dd@changeid
+This is wrong for several reasons:
+1. The driver sends SMPS activation frames when we are still in eSR
+   and SMPS should be disabled when in eSR
+2. The driver restores RLC configuration as it was before eSR
+   entering, and RLC command shouldn't be sent in eSR
+
+Fix this by calling iwl_mvm_esr_mode_inactive() after FW update
+
+Fixes: 12bacfc2c065 ("wifi: iwlwifi: handle eSR transitions")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://msgid.link/20240201155157.d8d9dc277d4e.Ib5aee0fd05e35b1da7f18753eb3c8fa0a3f872f3@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index bbe36d87ac59..5a03bf1de6bb 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -8025,8 +8025,7 @@ int ieee80211_mgd_assoc(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 1f36e934ef69..893b69fc841b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -438,6 +438,9 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
+ 		mvmvif->ap_ibss_active = false;
+ 	}
  
- 		rcu_read_lock();
- 		beacon_ies = rcu_dereference(req->bss->beacon_ies);
++	iwl_mvm_link_changed(mvm, vif, link_conf,
++			     LINK_CONTEXT_MODIFY_ACTIVE, false);
++
+ 	if (iwl_mvm_is_esr_supported(mvm->fwrt.trans) && n_active > 1) {
+ 		int ret = iwl_mvm_esr_mode_inactive(mvm, vif);
+ 
+@@ -449,9 +452,6 @@ __iwl_mvm_mld_unassign_vif_chanctx(struct iwl_mvm *mvm,
+ 	if (vif->type == NL80211_IFTYPE_MONITOR)
+ 		iwl_mvm_mld_rm_snif_sta(mvm, vif);
+ 
+-	iwl_mvm_link_changed(mvm, vif, link_conf,
+-			     LINK_CONTEXT_MODIFY_ACTIVE, false);
 -
--		if (beacon_ies) {
-+		if (!beacon_ies) {
- 			/*
- 			 * Wait up to one beacon interval ...
- 			 * should this be more if we miss one?
+ 	if (switching_chanctx)
+ 		return;
+ 	mvmvif->link[link_id]->phy_ctxt = NULL;
 -- 
 2.43.0
 
