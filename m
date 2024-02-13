@@ -1,78 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4F4DDB2;
-	Tue, 13 Feb 2024 19:51:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9945FDD7;
+	Tue, 13 Feb 2024 20:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707853886; cv=none; b=kO4CCU3SnnlqWGeYZpOcT+Ydpi6082y6e6nC7UvGwEZ2JBAlMnigdWXEddAJH3r3EwUMQwLZN64pFlTeK6vpuvUotkgnuBXbNJVALUI+1zXVJo67WywCWyczGgqz3l2aMA7zmSLMtcE56Ju5x0So6H/xaDPZ6gCilRNE9izBgLc=
+	t=1707856637; cv=none; b=s215btleW19aPiAROK1xx9kzPr9nWfFe+IlLEVq3LAef71efgruk+MoZpXNnvOKpB757mN3kKM6++F9ud7gw6bAHMSHouqq/wwJu8BFGU5EHEBMWNfLRCPXfiGKiXr+cFdvj7wjXaMEF4FFxfhN8uPT+Rei0LYrT7thiBzLzKmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707853886; c=relaxed/simple;
-	bh=KuK5uyDDIiIDiDO2w1KdFqOt7xFCRYumWnA866RirUk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GEInS8ZL/aFUSrzbHZSMCf8ruAt85usUJXUIKUdwPPjaOTooT9kR452wwLaPKLSJYA7meKPqs74SNxbBxkOGoiTu7x1spKMv+TwR4u7jiPqXAbnzwCw4MSnaausZZEpee5CX132JMXS6BMpozqJSz7td9b05aaasTP7zg7gcis0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kF5v5gCt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707856637; c=relaxed/simple;
+	bh=n/wW7PIGgqQXSlQ0F7NCV5oNj8FXGjtLdH3aZqJKeHE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CwLoOdMfSMH/a+ZqMmC6Uufiogy8sP3vuC+cY/2CbE3QljMmj/ZQ1GFoe4WtIrEg4Wxo15eQUGnA7C1Zwc9+ZevrXQkBn75WXWMh9DF6uZRmLT0mlNyZhzsO06yBiZ6BtpurTvDS8B8TDa4BUq0nbpi/TFPx0wbE2Qo2pQk9Um0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OGvc+fK+; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kF5v5gCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B6AC433F1;
-	Tue, 13 Feb 2024 19:51:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707853885;
-	bh=KuK5uyDDIiIDiDO2w1KdFqOt7xFCRYumWnA866RirUk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kF5v5gCtazd2CXADufMj6ONmf2H6VAxsK/MJdXfLRCaiyo1ZYoyPk9zHvy+nmkT94
-	 Z/l6vb4+FYsL0u49fJqfyU5k1zpOn2CN/UZT8ncyKGiRX3OhSdUw2QQnUUHZr5EmzF
-	 L6M7hm8Nsbyy+5igU+dE4Gtl3EQBl/M6g/8XkztEQLh36OSuhDvSY6+8qg3OCcBXh3
-	 13YnjIpnGgNI2tR57ZjehAg4oWzZ5w3SAz+2f6dmKQIHEiA4YFa1+zeKZxX2UDEQjm
-	 hLaJDlHheg3OCSpM2V+166g/n6aDyR4FbqgCFJrwBEjq+OG9E5WEaor7N0zf55Jtsr
-	 1DTiMkXSHRehQ==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org,
-	allen.lkml@gmail.com,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	srw@sladewatkins.net,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.6 000/121] 6.6.17-rc1 review
-Date: Tue, 13 Feb 2024 20:51:14 +0100
-Message-ID: <20240213195114.752663-1-ojeda@kernel.org>
-In-Reply-To: <20240213171852.948844634@linuxfoundation.org>
-References: <20240213171852.948844634@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OGvc+fK+"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc236729a2bso1234943276.0;
+        Tue, 13 Feb 2024 12:37:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707856635; x=1708461435; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n/wW7PIGgqQXSlQ0F7NCV5oNj8FXGjtLdH3aZqJKeHE=;
+        b=OGvc+fK+romig5bqIBqGZ1YkPy0Z1tn5tatK5hK12CQ2kwa8qi/dBO2Q0QweD2y96n
+         Rlw7AdKl9cqDNRHnM5ctbNAWGH/P6PKdQHDUZ7KRksC5r4y5JM52rmOGLym6wVD0Xqxj
+         2rmMxh2kEFp39xIdQfJCVSgITdbw6RGO10HGTAhM5LJ0RWqGd3JkjH0ARMXyIJhAngVE
+         U0Np6uWugRqk5eyVx4voKXvRepoRCb5KnXOfHyFlF4vTZ+4cogP1oOUgC3+w/y4o3wxD
+         pjzPW/VSNaaR04ju2w0Kb8QoE8gxNcstluZunsK80UVPuCTYpJJJeETypTJbRLgnh9UM
+         3pVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707856635; x=1708461435;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n/wW7PIGgqQXSlQ0F7NCV5oNj8FXGjtLdH3aZqJKeHE=;
+        b=qZceGdeXzf4gwmKzdyru/hGQ7c2asRqbkYozmf89D8oltcyZvGWNMf5Kv2EgLAzhJK
+         q6AtIa6WpTj0WlU321JmdfpusgpX73ch5FdQHDCziD7rb8aaL9ef3kY2PQdirKB+HxAc
+         bmA/DxUcS1s4s7YRkjfN0Gq+pICNys/pEW6egg+kMvgAnLBi4yHuzLepGx58MvkwpHpG
+         ErzIDk5FbmwOX3brNaGgKyFracZeoAnzPusjVh+SGMd3DnJ6sxTKcsJLtxozx2FekttA
+         d9/l/H/y67noouhDuCBjhAfxAiX5gA4CCvS8aa3/Y1LxOTS4Q2kL5+EJLFxixlA2UePV
+         4A7w==
+X-Forwarded-Encrypted: i=1; AJvYcCXY1wyzkPGh9kbe5KBZfc98KqnPfi3V+q+VdnH9PlGrGEfNFW+IGw2Aljovmt9XjZHeI7E8VHqhdlNiuFgx6LhzOKWXdQZuQi2jMWAo0S7Ma/7HDCbBjwqResAJeNo=
+X-Gm-Message-State: AOJu0YwyTWK/D8oJBCa7UfFDKQLkXhJ8fY707c1GmVyNpkx+z6AgTdj0
+	X4foGneXhg4WHoZY9Fm/0wlIQx2bN4oAaUEaWWzotiWl2rYaHugHPy4olCwxpZUMbu+wF9Q/AF9
+	HKs8NcneoPQshRN0Qf0e327ARKm0cLD5+
+X-Google-Smtp-Source: AGHT+IE7LRxEWEyLjD3Dvo0o8c7YVHNu9ELBH7AyR73SwTWGh6EmoBFMKAf18L2S2tVVni7yUNl0BAAtY4km7kss1Cs=
+X-Received: by 2002:a25:ae16:0:b0:dcd:3172:7271 with SMTP id
+ a22-20020a25ae16000000b00dcd31727271mr445383ybj.3.1707856635046; Tue, 13 Feb
+ 2024 12:37:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240111-dvb-mxl5xx-move-structs-off-stack-v1-1-ca4230e67c11@kernel.org>
+ <20240210162604.342349-1-ojeda@kernel.org> <20240212232757.GA3221859@dev-arch.thelio-3990X>
+In-Reply-To: <20240212232757.GA3221859@dev-arch.thelio-3990X>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 13 Feb 2024 21:37:03 +0100
+Message-ID: <CANiq72nYc0aVOwYKgJ13Fsdp84jZqxPsL=VdCQjGtoFdFVZziQ@mail.gmail.com>
+Subject: Re: [PATCH] media: mxl5xx: Move xpt structures off stack
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, justinstitt@google.com, linux-media@vger.kernel.org, 
+	llvm@lists.linux.dev, mchehab@kernel.org, morbo@google.com, 
+	ndesaulniers@google.com, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 13 Feb 2024 18:20:09 +0100, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Tue, Feb 13, 2024 at 12:28=E2=80=AFAM Nathan Chancellor <nathan@kernel.o=
+rg> wrote:
 >
-> This is the start of the stable review cycle for the 6.6.17 release.
-> There are 121 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
-> Anything received after that time might be too late.
+> Thanks for taking a look, this is great to hear!
 
-Built and QEMU-booted for Rust:
+My pleasure!
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+I am happy to report that it also worked with the new toolchain you
+just uploaded (i.e. the one that included `libclang.so` :)
 
 Cheers,
 Miguel
-
