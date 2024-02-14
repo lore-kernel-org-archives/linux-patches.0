@@ -1,75 +1,108 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2048.outbound.protection.outlook.com [40.107.244.48])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E36C13A88D;
-	Wed, 14 Feb 2024 19:09:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16055C905
+	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 19:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707937801; cv=fail; b=dOussoQM6Z+we7qUs9I+PW5wtt7HfnouWOYtx8WMSnizetq6SCJG1rJ5v0quhC/9nADbOZIgtiuzyGw04d878wuxLp7+ucKu5Gc+CX//L3uxyfcxgpqgXZQ8P6j05bP/qzuvAn1MXZC0TktS89dhxnJnWkVvADTThFUvjd06nP0=
+	t=1707939434; cv=fail; b=Zy3/+OEKRDbRwq0ETqFfoosiAdZq4vwShXxmWd5Qt+9O+7nQ1zLZt7kYR/Xd7/oymXmGy0eh2m45wAf11nbfmGUt81jPeMB6+aTbAb1A5h2I1ExJgVgnxXZRr8TpVFUW/MPclz3v7+OjnDdhomgmbVEEYFTmi9b4v/8/2vVlNTQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707937801; c=relaxed/simple;
-	bh=TWnNY8a4AqR/18YdwQLRxGaly8OoOqguJfyyvRVM0n8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=KiOtnBfb/d0lIeFYAWGfTMFdwxNvvZufOqfSFh69F2ldn2FZx6QSGSo9e9gi2EdCWi6yji4RDGx575wmwtOeu5j6kq+7sZqleRys2aZXuuVon1BjJDhCPyL9WgkX9NtoxE3nAQMVl5bmgiDgoy/IgEmiL3UMpxY+an7Xazoa/Ao=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MfP2/axN; arc=fail smtp.client-ip=40.107.244.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1707939434; c=relaxed/simple;
+	bh=D6fCW5xDkKDvWGnWxXUnd5KBj6ZuYpZ9Kfrhr6VTrGA=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=cYSnNI/D5L/w5e9lDgytJdsBAEbzvD1cU+2AQsynXsRnXilJvAczZiyrFreAOdGai0uZKWK/6T2UM4ztQQfZG3xwmCRX1ihIorQLYjlt9v5utbTGJr0pm8ss1OjbxcMUzte7kku6tqoNxWKpb6nHVSocPUQBa8vLpIoUyPTr71c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EDaXEJ2x; arc=fail smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MfP2/axN"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EDaXEJ2x"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1707939432; x=1739475432;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=D6fCW5xDkKDvWGnWxXUnd5KBj6ZuYpZ9Kfrhr6VTrGA=;
+  b=EDaXEJ2xJ1KnMPczyhWfggSlSuSM/bjj1Yx1/BFYbzZAXtb745AQN5a6
+   6IbJeP60dTbQWWybEvEBfPVI6urhjZt8kOhuqU+za0Aot+QxLlSIMuSz2
+   L9ZPUtmzB58Pyk4N445vWSzUBRN1earUkfBPPFqlJjpBcy5lNHX0N6ngM
+   NkcOEQ9qwpIX8ux4IIK65Ea4c/8V42ySpFJT0h7lPRO1XD1YmIZA6f9qR
+   kbxdyL1bbdsATRZECLPiH6bh89iU11c62O1A3UiJEko/NXvyay1eWLqDC
+   hBrwJuZc2cS2+f3VPLYeM5xCRXSggOF6wMxam0oyAS89A1cvzxiBbdsLt
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10984"; a="2145789"
+X-IronPort-AV: E=Sophos;i="6.06,160,1705392000"; 
+   d="scan'208";a="2145789"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2024 11:37:12 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,160,1705392000"; 
+   d="scan'208";a="3574960"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmviesa006.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 14 Feb 2024 11:37:10 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Wed, 14 Feb 2024 11:37:10 -0800
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Wed, 14 Feb 2024 11:37:10 -0800
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Wed, 14 Feb 2024 11:37:10 -0800
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.168)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Wed, 14 Feb 2024 11:37:09 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HzJVczwP33ccGgeZwbDCOJKTjf/yJCCYowMRFjryti7itM99JF+VdPhYnp8nsKhPGcbdNpXVl95zS2emlkoTJ5dqiGzmV2AtKvH00Tg+ImvGmFOkcWVu9CGjY5vZ0Io1T26ly6NcvgWTstiul3FOZFy2KKRcJqQFYOZVFtcFjAJlsZGxrWvLtEOghDfpEX0NwtQZ2uVp4AHAq4mVxyljneluBtJJTXX9lg5s7I1PRfQ/fOMQsOCxRdgluAXFUgNH0GGg1ENaaGcJYWhxx8ijNCAhht8rFzwy+pm1nlHX7F+1VVEFsi08vlXvMZVTwIg+VAjhYUdN5GUtRcfEt+CK4g==
+ b=bNM7ZZaAVC8POCmryiI5cFUCTDc+0dLrNfibPQcSj1K+JmfciRkifrqkKi6rtSJbyURapiE2QI45ixaQBf1TJYIgqMveZRaW98996mT2DFUVW5DUUP02qOeow+HLP5Dmgc17kz3JW56SVZD30GiSf9x0AhEUIgUmJWQ5I9Bkp6t8I3RQamLVyXei9aOmrYJcxNrHN0JafYeYbZrcyfWXZVBn356V2RqkHn7emsGP9yOSX/E91YxodL2Tv+Dtm9tX/t6bPLNv0owDpyNWXF97StKT5rpDEQNsDZjlUmY4/uAEwhB3SrKf6ChhfEyoP8hLAw9zoxfRSy0IRb/cVcc3DQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hjPSRiOL4c5LtIjw3rKiQB0Cdo5AcMviM8MoRZN16As=;
- b=IQIoznOkLSjvCJP8YVnbovSyr5EujeZpIlXNF92fg6jcU8SC2PY3u1H3K/v6cl2WtccP4V3OVDRo84U8kwoaAXmigdlcEcwFHq8MoXYbvWYgVFYcIqOl1D5xySpzuizVl700rThPMe9kH+uA6EUsjI8SdiK0uJjnDOdKMtuab2aoDd7femra0qkLeoYfJpt6g60z4L6K/gPSPKXjCkUrZdu3fdwul/9+/lQZHZum37BLsJkkrw33Fb0Vl7PyOdNP5XYo+U8iLMopvqvmI0XRgPKSXJ21+GBficlNGmNPoAz/q0Br8AB0fxblFLrgUZjTNWKqWokt3iDP/H6qj79eEA==
+ bh=xYTNKBilL0/KYOUuDQnC7ckj9RgEa2hnWSW8z48jjL8=;
+ b=hZQi7FZgeJXf1aVRf9VEl60QC717EpsBkmUK/kdxFtDdioHVvxqAHtsXDduLUaBGWYtcW5ChidO2bx6VtBESdhOrStGokAUKDf+8Zrz1h0s7Y0D/gLf0fHFSjKd79hE906o/7rmM2bQaQWvmqbAa17+c6dDzsPQ/VkOPgsN3ujsz4Opmyxp6Kyf1NKFNkn3detYgXxT5m19Hpt+V5g7zHz3xCzyU1aZWkH1dlzRURWBmNfk7iYJxn3fTvUKNiPGf5sfmbTcHDMNDyHg+C1WR+fqrYBnfakCOPImtNdLNQNN9ub8ABskZzrhPZljks9HXYfd5FZFQedc7ABd0XT17LA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hjPSRiOL4c5LtIjw3rKiQB0Cdo5AcMviM8MoRZN16As=;
- b=MfP2/axNLfQI+jA7UGCzjuIcoX0OJo09a0J8nWkzFTAGxkAucKJX1651nSxg48k/aL4QBu22MoOf2INxfAX2dkxi3PDu5bmznMXQpxUM4y22jzz86TujuSksN59zDqvXFU543csqi5CPkJrHf7PMY8susNHNluyfvMWCXfok5GRMa70xI4524rz6Oykb2obv/5oFZ5F0576UWFxvNSaxypHY7BqVgHKMH9/E2xkQvpHgHXd876b0FDXUClHUTdc+O47O2wc8uhFIh/ttzosTYzQNnmzPx5pP4FsGuu5uBGm9o6P5OJiNdqqBSQBXVulrldpyNaIovLLGkU0QBGT2rw==
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by DS0PR12MB8765.namprd12.prod.outlook.com (2603:10b6:8:14e::6) with
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by CH3PR11MB8156.namprd11.prod.outlook.com (2603:10b6:610:165::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.24; Wed, 14 Feb
- 2024 19:09:55 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7292.022; Wed, 14 Feb 2024
- 19:09:55 +0000
-Date: Wed, 14 Feb 2024 15:09:54 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Will Deacon <will@kernel.org>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev
-Subject: Re: [PATCH rc] iommu/arm-smmu-v3: Do not use GFP_KERNEL under as
- spinlock
-Message-ID: <20240214190954.GI1088888@nvidia.com>
-References: <0-v1-210234560de7+69a-smmu_cd_atomic_jgg@nvidia.com>
- <20240208125846.GA23290@willie-the-truck>
- <20240208142729.GH10476@nvidia.com>
- <20240213112015.GB28517@willie-the-truck>
- <20240213121850.GH4048826@nvidia.com>
- <20240213125456.GA28844@willie-the-truck>
- <20240213133045.GA989297@nvidia.com>
- <20240213135627.GD28926@willie-the-truck>
- <20240213140033.GB989297@nvidia.com>
- <20240214170030.GB31927@willie-the-truck>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240214170030.GB31927@willie-the-truck>
-X-ClientProxiedBy: BL1P221CA0004.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:2c5::15) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.26; Wed, 14 Feb
+ 2024 19:37:08 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::c903:6ee5:ed69:f4fa]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::c903:6ee5:ed69:f4fa%7]) with mapi id 15.20.7270.031; Wed, 14 Feb 2024
+ 19:37:07 +0000
+Message-ID: <51e67264-27f5-4b66-8a08-eda47000bf9b@intel.com>
+Date: Wed, 14 Feb 2024 11:37:05 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/17] vfio/pci: Let enable and disable of interrupt types
+ use same signature
+To: Alex Williamson <alex.williamson@redhat.com>
+CC: <jgg@nvidia.com>, <yishaih@nvidia.com>,
+	<shameerali.kolothum.thodi@huawei.com>, <kevin.tian@intel.com>,
+	<kvm@vger.kernel.org>, <dave.jiang@intel.com>, <ashok.raj@intel.com>,
+	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
+References: <cover.1706849424.git.reinette.chatre@intel.com>
+ <bf87e46c249941ebbfacb20ee9ff92e8efd2a595.1706849424.git.reinette.chatre@intel.com>
+ <20240205153542.0883e2ff.alex.williamson@redhat.com>
+ <5784cc9b-697a-40fa-99b0-b75530f51214@intel.com>
+ <20240206150341.798bb9fe.alex.williamson@redhat.com>
+ <ce617344-ab6e-49f3-adbd-47be9fb87bf9@intel.com>
+ <20240206161934.684237d3.alex.williamson@redhat.com>
+ <63ba0079-a035-4595-a40e-8c063b4a59eb@intel.com>
+ <20240208140836.76a212d3.alex.williamson@redhat.com>
+Content-Language: en-US
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <20240208140836.76a212d3.alex.williamson@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0028.namprd03.prod.outlook.com
+ (2603:10b6:303:8f::33) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -77,159 +110,252 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DS0PR12MB8765:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0cc56067-057e-4950-8fc3-08dc2d90877a
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|CH3PR11MB8156:EE_
+X-MS-Office365-Filtering-Correlation-Id: 740fd5a0-7f2d-4efb-9447-08dc2d94547a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	1WMmZTjYsfrrOpW8ExdryzNRKaNmixq8T8pTbv8+SMFsWVdzsudiICryxIewl7HI3c3MjZr8oHZmHC+cc1PABhZVL3/D9WyxYmxlauvZp3UjfrHWA+3U2p+e1pvgmsnpfchBLJBI81duJEyJhfGOKDTiuffIJasgkvoWMINY3l1MSMZ9OvQ52CNyDE1GuXqhZiOWOc1BWGWlgbAkCFIRKtcc+0rgHSfYzZETbQpUtV9a8FJxd6m7f9eDkElPMN64pnna7ZPMKDHqIdqfOIUl91Qa7xqjgxGprE3EDcc5yFw3Or0M1zIq9aDF8Ae5ZIT+sUmI2lu9WDjU1PjUT20N6sWxH1gUO93XsfrAfgLTFfj7pROVhIo+M2xKRhGoYKNR5MLvWPTLof19s7z3ofloBchALzYoFMz9D2PGdnL8F9wxU1Szk8KNL4b/mketJ/ll66iHWY2g0qEeO4me2nMMO1tgwj+FGxsFnA32GXMBQT9i/bt3cBz4ZZA1LuicuS1I5mVORvTtdAaNjsCk9o8LzwElkDbCczOw0MmOkSXPr+wTwkJcB+UiIGnps8KO9ra6
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(376002)(346002)(396003)(366004)(39860400002)(230922051799003)(451199024)(64100799003)(186009)(1800799012)(1076003)(2616005)(26005)(83380400001)(38100700002)(478600001)(4326008)(66556008)(8936002)(6916009)(66946007)(8676002)(5660300002)(2906002)(6486002)(6506007)(6512007)(316002)(36756003)(41300700001)(54906003)(66476007)(86362001)(33656002);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: ouCjqNNlBkoi0vnMRv+JuiuzisZRdriwnLWuSpTD04LQN69lvuuuhrX+hZ6GlQ9Bl/DAk9U1DtfdFz4BmgJ7pDVlNKbXhvPKbPmCx2o9bocZnffmpqwaZbvfxdzGclzSKasDatzlz77EqQx5Lp1zKZwGJj4fgTjYQFOJc3X3aSp4gel5DxvzcAOfHYmKFqoCau+Ibn4QzQGAzgGjXw/bcQwigQ2xbJMW9ZJhxrrjb52XCjkH3+9eea9BQsc7pF8lA91+6CFLUA/Td3oXcxZT7pxjHi9Rh5lapD26mZzSWEzJ7m4raQnkfriCruY865Ps9dfU04FACS8nDCIeFkvbYhfIbly7509U0/oxv3FlHB0W99zQd1Cp8LehNDXeurYDIwGP0SqcvbZy3UewO4svzwNIgtPcKzsVbU8LlE7U+fdTBmCVAdwL/y7I6i4NrXmCU6uGb+lYUPQd4CSVjLzpe3s4zrFsPQ6Vglm7LUb+akFZNVoLpew98x+xoMvR9VTQl6Y4s3opoY9E8BxZ8rWPDRd6nsgfKwleQuY0e8ZSqsnTYL9CjOwJx2w8i/4pmOS9
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(366004)(396003)(346002)(376002)(136003)(230922051799003)(1800799012)(186009)(64100799003)(451199024)(31686004)(6512007)(6486002)(478600001)(41300700001)(44832011)(4326008)(8676002)(8936002)(2906002)(5660300002)(6506007)(53546011)(6916009)(66476007)(66556008)(66946007)(316002)(2616005)(83380400001)(31696002)(82960400001)(86362001)(26005)(38100700002)(36756003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?A2kRSZIBix6mD42UjgeQAglKz9eh9bkBz5O/5HFLl/gsOr1LT4G8YgigzI8q?=
- =?us-ascii?Q?n1benItyOVrz2bhXK3f0XlPAT0nLNEeMcvVLJN4jaDdsa7j9PnePlqvEE79Y?=
- =?us-ascii?Q?x+GgjOII1iK7CmzPcPnnA/uc3SpTZ3SaRLuJUHIwIb+xT0fBysdlwb9Mt2He?=
- =?us-ascii?Q?m0W+kC267x/aMDzRV0RqdbWz/YiqyQ+6DtRw1wJpOqBFWgybW8QkhgeBmNTa?=
- =?us-ascii?Q?cj6GhZVGsp1PIxentyVYpqn8QARub1K4HuWxP65vQmUJJjhVNlxRcBTBCOMn?=
- =?us-ascii?Q?UJvBcffYr+AVShJNFCBlhiDdff2yNZdb84zXVd9LhbZNLv+Lbk20to0o7WPY?=
- =?us-ascii?Q?azV9w+z2Suvu48QH9jObUVQaYliStEuTQXej7hU6vvCpzhop+Zgh3YQZIhQD?=
- =?us-ascii?Q?pUApLhvfoFhRanHdX3jFEUnbaeohujKvqkndVIA2hV5kWJ/tGKQX2b20erI5?=
- =?us-ascii?Q?anHOvHcubr53AYr2Pv4O9xq4ewEPRNUY3/hJG6wkco5jblf805Ho2CUNh2JK?=
- =?us-ascii?Q?irhL3eP1avxgjXcYMOTgdmQSsJk4CZEjMZpb2AvCViJGRmm6JuCe4D9uvEaz?=
- =?us-ascii?Q?/NdXWdIDV/E+uWKntnOlN1ZliMdwqbE9ZqWial7Z7HO6qzv783Y4xCEuvooa?=
- =?us-ascii?Q?A7kEXP7cHqAYah+0lPAd+CLWnOZGlCbrdI/NcN1AZN/vPYr8Jfi67JbSzBU2?=
- =?us-ascii?Q?Z6nAf9S+UgMq9hXepV3FPys+TEu/sC3j9xGtWK4KXtSz6rDcZVkQIDWKQ37q?=
- =?us-ascii?Q?NU3stt6rkCvf8i5EF+MHBDC4OHICryNUe7f3UQuilAQfz80kxFUui8Qs33pp?=
- =?us-ascii?Q?6RdNBwLmZ0eFvkxagmk/Ty7AlcWC+6RMt8ZpdBdqAPoQ73mUraDzHoepW4YT?=
- =?us-ascii?Q?U1n59n6FoKGWKyhsR0RXdueV1NtEwFbB/rlE02h4R6xlyYPopGXXPIxIwf71?=
- =?us-ascii?Q?n0YbKsmIYq93PKm1E4bA9+aY7RLPgohXzcPvB78TPVGRP4qNHu8dRDDEShdR?=
- =?us-ascii?Q?KAmOQySptudz9BvK5neblUw3kpCIawq9CBCC/4jOKgXgRFY67jo5quhsS2uj?=
- =?us-ascii?Q?y9kELsddfIzW60rEIdvCZtT+L2OFaLXbP2GcWjQTL8//iSyEN7gzQHqJdOOc?=
- =?us-ascii?Q?iqsN7r4DOXXlFW1j3PUxX5Pun+YOfkByH+7E44eKwjzxLeFwrrRo3zlHnJk8?=
- =?us-ascii?Q?kDsAAov74J+KQWIaBw+AFS7veM5RwiMlgUx+M686SWMfRFvCuGQTv6Vxjx40?=
- =?us-ascii?Q?uqpY1VaSyztm4KooSZ1H+tndQcsaPzsSvcgtok7jthHbYyrtS0ktNfqOCPmh?=
- =?us-ascii?Q?SGeItxjktHwU4IBegatOlleEbLu+OB1cHlTS485RzALiRTON2GM+nkIXuWV8?=
- =?us-ascii?Q?ZDSIuc4bFxymV0OXPyLQwkIIJPn7keNvVCadyvcEhei0wB9jCm+XVd5uOxt6?=
- =?us-ascii?Q?XQElcZ8t31FKXtYn0rxqkJ6N4NAbdk3B8DEJuT4diJPAuLlL5L0JMmErhJ8G?=
- =?us-ascii?Q?RDhugePlwCir27Dq92Oven7yFDEsrDrBfDI+jsQahunQGLJPQHPbcs2Q72CE?=
- =?us-ascii?Q?n5YC1LSXEjuwQo7dZBo=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0cc56067-057e-4950-8fc3-08dc2d90877a
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SXpYRURYenVzZGdmeURsSDVjTG9GWVZOcTUwU29hdkc2Q3ZLQUtmZU1Gd2tw?=
+ =?utf-8?B?MHpGamFyUXRJMVloZEZ3bVRWUHhBa1JaUk9XMXM1MzQyMjUyb1puVVVTdGVO?=
+ =?utf-8?B?UEYvQUh4Nnc1cUFOVnNwZ1gvVCtscXgxS2NMRm9lWGZVdEdDdlhkNk1yYXNj?=
+ =?utf-8?B?NFY4TnBVTFBTUXdYVTZWYkJPV2Z4NE13REFKbUFRVDR0b0k4VlZNNlg5d21I?=
+ =?utf-8?B?NjFVb1BkZ2thdVc1Z2prVUs2aTRYQk5IT2tIcjVHTDRLaDdFMEVXTTUyNjM2?=
+ =?utf-8?B?MWFKN2YzSFFIajJiRVgyRXI5R0Y0Rm5nQnRVNElZNDJWazZHMzVXOFJZemZS?=
+ =?utf-8?B?bGpBY05DY2tqOWZ4K0NGYUNETU9uejlrSTA1cHJUV1VVQktvTG5PaWlvUERJ?=
+ =?utf-8?B?NktjMU9qdVhGRkZpZys3bzlnVzdRNFV4VEhNYzVKYWVacnVZYjM0U2NDNFh6?=
+ =?utf-8?B?UXNzekhENW9jbGN3bktCeE1DYmlQR1Zsa043MHk3R3V6K0hlOEpVR1ZPYUlv?=
+ =?utf-8?B?Qmh4ak5xdk9JNjBKM1M5R1lhY0hvM3hkaG5acUpBdW43MytBenJJa0hzbXlS?=
+ =?utf-8?B?ZzB1Q0ZiUmFxd0V4UkVHQ2xPZXAvZ3dkSDgzQWtYenI2ZU1vVXE4c3JLaExS?=
+ =?utf-8?B?bjJNSnhtT0hSRDhYQnFCSUFWU2Zhb1o1UUJDdG9lMEVEZUI4a3hldWtOdWdK?=
+ =?utf-8?B?NDZLakVOaXpOM1dhZFhveWJrdmtGME85RzAxdGx4NEs3K0JOK0dRNXBwVDUr?=
+ =?utf-8?B?aGVna3NITGdBelFZMy9DejRvUHdpSE5yZG1KbC9jVXkvTUdUM3hWdjZ0NnJT?=
+ =?utf-8?B?TDNBVTF2c2lMNW0valR5Q1Zia2dxdWViUWd4L0ZlekVpSzdENmhwMkl0MTJF?=
+ =?utf-8?B?SHJUb1lERWR1WmI1azMyQm5lcENxUlMwOXFSV3lYbExDdFd1QnF5YktQQjYv?=
+ =?utf-8?B?UVpiZExtNStuK0phL3pRM2tCZ3hRS0hpVmtrVTVXYUNmejk4R2UzQjg1Y3M0?=
+ =?utf-8?B?MlZQU2N2VnZXZXhJdDFzcVFZUDRrSFFwNTkwUU16Y2FOQUwrSmliZ2l2SENp?=
+ =?utf-8?B?NmlxYUJIK1FuZkRLM0w5aGNzSjk0UGNoLzdHNHFaL2E1ekZEYTZSUkRiSHdo?=
+ =?utf-8?B?cGw2WWJubDY0UC9ORW8yeWdxVUJIT09GK2JlbDR3WkZrQVlnV0F1TTZXbEFU?=
+ =?utf-8?B?Q3VoM0Vkd05iMXdVSVRkUUZKS0NmRVNCVnMxN1I2L0dhckFUc0pUMGtjM2w4?=
+ =?utf-8?B?TzJCa1pRODBBQzFRRWFKT0lqSC9SNjNGMEREREE1K0ZyZFJpM0I0ZjE0YlpX?=
+ =?utf-8?B?YlNkcGNKUGRMOWlMOCt4ekJxek5uZGgvMWNTaFFPQlVKUUpJY3ZEVEJyTEpK?=
+ =?utf-8?B?L0NnTGJ5VlhtRHdKY0dnNmhaZUdGV3pLRXA0TjRPTmwyZFFPRENxbnArVFF4?=
+ =?utf-8?B?ejdDdEFtT0s5TEkrblk4eXVSOGVIY3plOHhSekF0YzVmMThHVkpXNk94bnV4?=
+ =?utf-8?B?OGhWMDhNYlV6UENzbzBYVjNPd3ROTHAvZ2kyMGhweXRQTTA1enQ1eEt4Y1c4?=
+ =?utf-8?B?OHNJT3UxSjl6NXUwWWNjVVpKL3ZScytKeXgxMWZTNVpVb0wxYmYvNHc1RzVz?=
+ =?utf-8?B?N2Y1c0JFekpIeUhKdkJXalpQUjRPbk9RZzBrenQ2VG5sQXVHMTEwSTZLRWIx?=
+ =?utf-8?B?UklvZTlwSUt6ZG5QSE1RWmhndFBHVW5hYm9udU9Cck82M29DdVl5OHBTTzBF?=
+ =?utf-8?B?c0labVRLeWVvakY3aXlOTHpVR2VJUUtuQkorOCsyaWRPdmFabExMNHJQYmRE?=
+ =?utf-8?B?dWNHZ2s2VGxQYXpHTCtzdFBhdmRPSFlXWUpBMXkwYitNQXQ1a2lXcU1IK0Rm?=
+ =?utf-8?B?MmxUTWVPTGZ3S1FQWGhEZ2JqYkFrQnRNSlZJN25YeGx1SENFU0FPKyt4NEtG?=
+ =?utf-8?B?LzcvcDlkL3BjUEFXVERQQXhjOGFsQlJyOTFvWWIxOXZQODRCSDR2UXlTRFN0?=
+ =?utf-8?B?eHRYVzhhYW5aNGRxNUoxOWlNdjlpWWFtdFBvNGRPWW1KWlZGQzJ0a0g2UFVx?=
+ =?utf-8?B?TTAxSHVRSTA1Ymc5Vmg5ZjNZWG1sdWIyaXRCMEJYRkxvTlNlVUViaFhzWkNx?=
+ =?utf-8?B?aUdyN0hEZHl2M1hOSldDcEY2ZVZBcUpqeU85TnV4UTBCSmZnUmxmcmFTcmM1?=
+ =?utf-8?B?d0E9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 740fd5a0-7f2d-4efb-9447-08dc2d94547a
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2024 19:09:55.2361
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2024 19:37:07.7651
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: f7prjt6HsJul7tcJiZAuydDJbtKHUFqdu4DhzueGgagGlMbRUsJNU4O+lDmnZIos
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8765
+X-MS-Exchange-CrossTenant-UserPrincipalName: wtPPnoVZYHhQWg3Gj5LEEv/hLoI4P+j99xrV7T8fnJZfeASK9P5v5wMUfuEjebI8cGGfTDcHgCXszUtO2qFCxtK0g7WhVqCiyIrvEHhCSkQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8156
+X-OriginatorOrg: intel.com
 
-On Wed, Feb 14, 2024 at 05:00:30PM +0000, Will Deacon wrote:
+Hi Alex,
 
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 0ffb1cf17e0b..e48f2b46f25e 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -1019,7 +1019,10 @@ static void arm_smmu_write_cd_l1_desc(__le64 *dst,
->  	WRITE_ONCE(*dst, cpu_to_le64(val));
->  }
->  
-> -static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
-> +static __le64 *
-> +__arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid,
-> +		      int (*cd_alloc)(struct arm_smmu_device *,
-> +				      struct arm_smmu_l1_ctx_desc *))
->  {
->  	__le64 *l1ptr;
->  	unsigned int idx;
-> @@ -1033,7 +1036,7 @@ static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
->  	idx = ssid >> CTXDESC_SPLIT;
->  	l1_desc = &cd_table->l1_desc[idx];
->  	if (!l1_desc->l2ptr) {
-> -		if (arm_smmu_alloc_cd_leaf_table(smmu, l1_desc))
-> +		if (!cd_alloc || cd_alloc(smmu, l1_desc))
->  			return NULL;
->  
->  		l1ptr = cd_table->cdtab + idx * CTXDESC_L1_DESC_DWORDS;
-> @@ -1045,6 +1048,19 @@ static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
->  	return l1_desc->l2ptr + idx * CTXDESC_CD_DWORDS;
->  }
->  
-> +static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
-> +{
-> +	return __arm_smmu_get_cd_ptr(master, ssid, NULL);
-> +}
+Apologies for the delay. This was due to two parts:
+* I studied these code paths more and I think there may be one more
+  flow that can be made more robust (more later),
+* I spent a lot of time trying to trigger all the affected code paths but
+  here I did not have much luck. I would prefer to run tests that trigger
+  these flows so that I can get some help from the kernel lock debugging.
+  From what I can tell the irqfd flows can be triggered with the help of the
+  kernel-irqchip option to Qemu but on the hardware I have access to I
+  could only try kernel-irqchip=auto and that did not trigger the flows
+  (the irqfd is set up but the eventfd is never signaled).
+  I am not familiar with this area, do you perhaps have guidance on how
+  I can test these flows or do you perhaps have access to needed environments
+  to test this?
 
-I think this will break arm_smmu_write_ctx_desc() which requires
-allocation behavior to install the SSID0 in a two level table?
+On 2/8/2024 1:08 PM, Alex Williamson wrote:
+> On Wed, 7 Feb 2024 15:30:15 -0800
+> Reinette Chatre <reinette.chatre@intel.com> wrote:
 
-> +int arm_smmu_init_cd_table(struct arm_smmu_master *master, int ssid)
-> +{
-> +	if (!__arm_smmu_get_cd_ptr(master, ssid, arm_smmu_alloc_cd_leaf_table))
-> +		return -ENOMEM;
-> +
-> +	return 0;
-> +}
+>> I studied the code more and have one more observation related to this portion
+>> of the flow:
+>> From what I can tell this change makes the INTx code more robust. If I
+>> understand current implementation correctly it seems possible to enable
+>> INTx but not have interrupt allocated. In this case the interrupt context
+>> (ctx) will exist but ctx->trigger will be NULL. Current
+>> vfio_pci_set_intx_trigger()->vfio_send_intx_eventfd() only checks if
+>> ctx is valid. It looks like it may call eventfd_signal(NULL) where
+>> pointer is dereferenced.
+>>
+>> If this is correct then I think a separate fix that can easily be
+>> backported may be needed. Something like:
+> 
+> Good find.  I think it's a bit more complicated though.  There are
+> several paths to vfio_send_intx_eventfd:
+> 
+>  - vfio_intx_handler
+> 
+> 	This can only be called between request_irq() and free_irq()
+> 	where trigger is always valid.  igate is not held.
+> 
+>  - vfio_pci_intx_unmask
+> 
+> 	Callers hold igate, additional test of ctx->trigger makes this
+> 	safe.
 
-And this does not compose well with the rest of where we are going. At
-the end there are 7 calls to arm_smmu_get_cd_ptr(), all need
-allocation except for two (clear and mmu notifier release)
+Two callers of vfio_pci_intx_unmask() do not seem to hold igate:
+vfio_basic_config_write() and vfio_pci_core_runtime_resume().
 
-Better to add a noalloc version. Also 'bool noalloc' would be clearer
-than a function pointer without obfuscating the control flow.
+Considering this I wonder if we could add something like below to the
+solution you propose. On a high level the outside callers (VFIO PCI core)
+will keep using vfio_pci_intx_unmask() that will now take igate while
+the interrupt management code gets a new internal __vfio_pci_intx_unmask()
+that should be called with igate held. This results in:
 
-Also I don't think this should go to -rc, it is not fixing any
-bug. The preallocation is enough. Making more clarity for this
-confused code is a nice to have at best.
-
-How about this instead as a -next patch:
-
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-@@ -288,10 +288,11 @@ static const struct mmu_notifier_ops arm_smmu_mmu_notifier_ops = {
+@@ -215,12 +223,20 @@ static int vfio_pci_intx_unmask_handler_virqfd(void *opaque, void *unused)
+ 	return ret;
+ }
  
- /* Allocate or get existing MMU notifier for this {domain, mm} pair */
- static struct arm_smmu_mmu_notifier *
--arm_smmu_mmu_notifier_get(struct arm_smmu_domain *smmu_domain,
-+arm_smmu_mmu_notifier_get(struct arm_smmu_master *true_master,
-+                         struct arm_smmu_domain *smmu_domain,
-                          struct mm_struct *mm)
+-void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
++static void __vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
  {
--       int ret;
-+       int ret = 0;
-        unsigned long flags;
-        struct arm_smmu_ctx_desc *cd;
-        struct arm_smmu_mmu_notifier *smmu_mn;
-@@ -327,8 +328,15 @@ arm_smmu_mmu_notifier_get(struct arm_smmu_domain *smmu_domain,
++	lockdep_assert_held(&vdev->igate);
+ 	if (vfio_pci_intx_unmask_handler(vdev, NULL) > 0)
+ 		vfio_send_intx_eventfd(vdev, NULL);
+ }
  
-        spin_lock_irqsave(&smmu_domain->devices_lock, flags);
-        list_for_each_entry(master, &smmu_domain->devices, domain_head) {
--               ret = arm_smmu_write_ctx_desc(master, mm_get_enqcmd_pasid(mm),
--                                             cd);
-+               /*
-+                * A limitation of the current SVA code requires the RID
-+                * smmu_domain to be unique to the actual master.
-+                */
-+               if (WARN_ON(master != true_master))
-+                       ret = -EINVAL;
-+               if (!ret)
-+                       ret = arm_smmu_write_ctx_desc(
-+                               master, mm_get_enqcmd_pasid(mm), cd);
-                if (ret) {
-                        list_for_each_entry_from_reverse(
-                                master, &smmu_domain->devices, domain_head)
-@@ -398,7 +406,7 @@ static int __arm_smmu_sva_bind(struct device *dev, struct mm_struct *mm)
++void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
++{
++	mutex_lock(&vdev->igate);
++	__vfio_pci_intx_unmask(vdev);
++	mutex_unlock(&vdev->igate);
++}
++
+ static irqreturn_t vfio_intx_handler(int irq, void *dev_id)
+ {
+ 	struct vfio_pci_core_device *vdev = dev_id;
+@@ -581,11 +597,11 @@ static int vfio_pci_set_intx_unmask(struct vfio_pci_core_device *vdev,
+ 		return -EINVAL;
  
-        bond->mm = mm;
- 
--       bond->smmu_mn = arm_smmu_mmu_notifier_get(smmu_domain, mm);
-+       bond->smmu_mn = arm_smmu_mmu_notifier_get(master, smmu_domain, mm);
-        if (IS_ERR(bond->smmu_mn)) {
-                ret = PTR_ERR(bond->smmu_mn);
-                goto err_free_bond;
+ 	if (flags & VFIO_IRQ_SET_DATA_NONE) {
+-		vfio_pci_intx_unmask(vdev);
++		__vfio_pci_intx_unmask(vdev);
+ 	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
+ 		uint8_t unmask = *(uint8_t *)data;
+ 		if (unmask)
+-			vfio_pci_intx_unmask(vdev);
++			__vfio_pci_intx_unmask(vdev);
+ 	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
+ 		struct vfio_pci_irq_ctx *ctx = vfio_irq_ctx_get(vdev, 0);
+ 		int32_t fd = *(int32_t *)data;
 
-Thanks,
-Jason
+> 
+>  - vfio_pci_set_intx_trigger
+> 
+> 	Same as above.
+> 
+>  - Through unmask eventfd (virqfd)
+> 
+> 	Here be dragons.
+> 
+> In the virqfd case, a write to the eventfd calls virqfd_wakeup() where
+> we'll call the handler, vfio_pci_intx_unmask_handler(), and based on
+> the result schedule the thread, vfio_send_intx_eventfd().  Both of
+> these look suspicious.  They're not called under igate, so testing
+> ctx->trigger doesn't resolve the race.
+> 
+> I think an option is to wrap the virqfd entry points in igate where we
+> can then do something similar to your suggestion.  I don't think we
+> want to WARN_ON(!ctx->trigger) because that's then a user reachable
+> condition.  Instead we can just quietly follow the same exit paths.
+> 
+> I think that means we end up with something like this:
+> 
+> diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+> index 237beac83809..ace7e1dbc607 100644
+> --- a/drivers/vfio/pci/vfio_pci_intrs.c
+> +++ b/drivers/vfio/pci/vfio_pci_intrs.c
+> @@ -92,12 +92,21 @@ static void vfio_send_intx_eventfd(void *opaque, void *unused)
+>  		struct vfio_pci_irq_ctx *ctx;
+>  
+>  		ctx = vfio_irq_ctx_get(vdev, 0);
+> -		if (WARN_ON_ONCE(!ctx))
+> +		if (WARN_ON_ONCE(!ctx) || !ctx->trigger)
+>  			return;
+>  		eventfd_signal(ctx->trigger);
+>  	}
+>  }
+>  
+> +static void vfio_send_intx_eventfd_virqfd(void *opaque, void *unused)
+> +{
+> +	struct vfio_pci_core_device *vdev = opaque;
+> +
+> +	mutex_lock(&vdev->igate);
+> +	vfio_send_intx_eventfd(opaque, unused);
+> +	mutex_unlock(&vdev->igate);
+> +}
+> +
+>  /* Returns true if the INTx vfio_pci_irq_ctx.masked value is changed. */
+>  bool vfio_pci_intx_mask(struct vfio_pci_core_device *vdev)
+>  {
+> @@ -170,7 +179,7 @@ static int vfio_pci_intx_unmask_handler(void *opaque, void *unused)
+>  	}
+>  
+>  	ctx = vfio_irq_ctx_get(vdev, 0);
+> -	if (WARN_ON_ONCE(!ctx))
+> +	if (WARN_ON_ONCE(!ctx) || !ctx->trigger)
+>  		goto out_unlock;
+>  
+>  	if (ctx->masked && !vdev->virq_disabled) {
+> @@ -194,6 +203,18 @@ static int vfio_pci_intx_unmask_handler(void *opaque, void *unused)
+>  	return ret;
+>  }
+>  
+> +static int vfio_pci_intx_unmask_handler_virqfd(void *opaque, void *unused)
+> +{
+> +	struct vfio_pci_core_device *vdev = opaque;
+> +	int ret;
+> +
+> +	mutex_lock(&vdev->igate);
+> +	ret = vfio_pci_intx_unmask_handler(opaque, unused);
+> +	mutex_unlock(&vdev->igate);
+> +
+> +	return ret;
+> +}
+> +
+>  void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev)
+>  {
+>  	if (vfio_pci_intx_unmask_handler(vdev, NULL) > 0)
+> @@ -572,10 +593,10 @@ static int vfio_pci_set_intx_unmask(struct vfio_pci_core_device *vdev,
+>  		if (WARN_ON_ONCE(!ctx))
+>  			return -EINVAL;
+>  		if (fd >= 0)
+> -			return vfio_virqfd_enable((void *) vdev,
+> -						  vfio_pci_intx_unmask_handler,
+> -						  vfio_send_intx_eventfd, NULL,
+> -						  &ctx->unmask, fd);
+> +			return vfio_virqfd_enable((void *)vdev,
+> +					vfio_pci_intx_unmask_handler_virqfd,
+> +					vfio_send_intx_eventfd_virqfd, NULL,
+> +					&ctx->unmask, fd);
+>  
+>  		vfio_virqfd_disable(&ctx->unmask);
+>  	}
+> 
+> 
+> WDYT?
+
+This looks good to me. Thank you very much for taking the time to
+write it.
+
+Reinette
