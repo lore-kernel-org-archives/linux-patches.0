@@ -1,151 +1,77 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727A2604AA;
-	Wed, 14 Feb 2024 17:00:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7F0127B61;
+	Wed, 14 Feb 2024 17:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707930036; cv=none; b=WqZO/FfpWo1EAuRUNFhtuYTuJoXYO7vR9Xir2YW6IZe2qnNMnbVEVPvGV1O+8rbjQ+VS/ftHrrIF77kKd5gSp9+UbK0pjAZRb5RBvXqTFLqqKYNu9n9TRIGdMNc6l98kNC6z3LhiL3uyriDKTH78etbQgkz5Cck42wg7buN9B6U=
+	t=1707932533; cv=none; b=ojQrl7/a9k3HI7hYDakYFd3NyBN/p0OV7WmqQRjUP0pJjCJ2rRibum4Q+CLFz86W/RSBG8FqWEGGshOagpac2A6wUxWbIhbD3NcLtJdnNaXptvc6HZiFYYHHwtupyftHBB8RVGKkCbVtv2NpSrE9UiNsE3O9xW9qWk1HTUbZzwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707930036; c=relaxed/simple;
-	bh=Z6rrMvEP6XhNUYQaqN3A0gAvieP0dNhtgVysnYh/Urc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gv2zxeJDDzbZ/U/GS1q6lI9ZD1mcKTS8SNNFIASEGb5vnWS902PSjvwCfoC40yuB11tb389WrF73Qkxf5Kp2+ec23eSopN7956mSguFw/xG77/QBEafQb1NIJb+1B8gx7mXknHUSJuT1EjetMh5gNRr/LCW6vK1bCMuZ6aX72Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G6w9jYal; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707932533; c=relaxed/simple;
+	bh=9HAt1wH13l4e0td53MGTulRzGQf3ZC8x9JSGKEjhRPc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d3FNgccesC7WdPbhtOBxFepTDZubR8x/1ZMzGcooNhUWgVClBkPBzqJphfG2MHFJz2J3j2/vxj3Y9J4zuHLoF84Y2vsfWmw+OM3eZydS2G9LNSSDzA7aVx8eP1OXHx2380iyADoP00s1RIqpWsbJZ8yXSxscTMgT3uXkCP/Cnuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ZZE+mQ5S; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G6w9jYal"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165DDC433F1;
-	Wed, 14 Feb 2024 17:00:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707930035;
-	bh=Z6rrMvEP6XhNUYQaqN3A0gAvieP0dNhtgVysnYh/Urc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=G6w9jYalv0wMQ79t+8DDbDRceD0QKT/3QiBDvSA3ANWA89srL1EaOGKfAaw+ghBYd
-	 DVstHA5FbtvHi/0LOvaqAUE1PCUuFlIpU+CP8o4Y+V+HPxhh4D5jeiaLGAVTytxpO9
-	 84HEOgePx6MZsOj3ZczfK/+F2PAKkxUPdlIxHhbrYohi/aWLwk/nS3RDa+D4wm+rPw
-	 J3Xh+A+wsMeAhWvoMFI2oB0DKTEkBYXuzgftwA4QBTRXrtt6RpIy/y+Jaj/QPQ/ENQ
-	 MJst1BgSiDlcU9oqI7tHqAIRv+Dx6wORESp0CYog3yqGCvowcn+GaWfQpK+B4NRnVp
-	 /hyTHDDVF72Wg==
-Date: Wed, 14 Feb 2024 17:00:30 +0000
-From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev
-Subject: Re: [PATCH rc] iommu/arm-smmu-v3: Do not use GFP_KERNEL under as
- spinlock
-Message-ID: <20240214170030.GB31927@willie-the-truck>
-References: <0-v1-210234560de7+69a-smmu_cd_atomic_jgg@nvidia.com>
- <20240208125846.GA23290@willie-the-truck>
- <20240208142729.GH10476@nvidia.com>
- <20240213112015.GB28517@willie-the-truck>
- <20240213121850.GH4048826@nvidia.com>
- <20240213125456.GA28844@willie-the-truck>
- <20240213133045.GA989297@nvidia.com>
- <20240213135627.GD28926@willie-the-truck>
- <20240213140033.GB989297@nvidia.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ZZE+mQ5S"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=rCqjAOgUyt+KMQLgmOWKy4Rs0nGvE2mK6EC5NStgV8w=; b=ZZE+mQ5See51z9iONY/ajauZMI
+	LG1Qhb8X+IG7BISS8BakhilYQMPpTfsVxD2LWepJLQBUKOtFLhiglbuurDPppkrMxWRaZL+Og1Y6L
+	wZuLU+GYHsQqrCgGucwWqX1DfOrAns/gfmVKEUzgrEtnSkWXbutxgEKVFFZJjAShiazMNX+QMtuVl
+	MHx8+l8TFookK3bmI6LB3nsJOKVJ0MYZlo2h15peXjSoOnVhyTN3/+vTSlTtlth+ZeGFnP84B7bLF
+	DTBHK6nvo3lMdxNsj9X3Cl1xtrOBQMuEs+XX2AD7hh1pFAkXipPHlFUO4iz1s0vtORhBHWw5wAYd2
+	gYspOO3g==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1raJGt-0000000DmZm-1rQf;
+	Wed, 14 Feb 2024 17:42:11 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: fstests@vger.kernel.org
+Cc: linux-fsdevel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH fstests] common/config: fix CANON_DEVS=yes when file does not exist
+Date: Wed, 14 Feb 2024 09:42:08 -0800
+Message-ID: <20240214174209.3284958-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240213140033.GB989297@nvidia.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Tue, Feb 13, 2024 at 10:00:33AM -0400, Jason Gunthorpe wrote:
-> On Tue, Feb 13, 2024 at 01:56:28PM +0000, Will Deacon wrote:
-> 
-> > I can write it as a full patch if you prefer (and I'll need your help to
-> > test it), but I was really hoping to continue the discussion so you could
-> > spin a v2.
-> 
-> No worries, I'll take care of it, just need to understand what we have
-> agreed.
+CANON_DEVS=yes allows you to use symlinks for devices, so fstests
+resolves them back to the real backind device. The iteration for
+resolving the backind device works obviously if you have the file
+present, but if one was not present there is a parsing error. Fix
+this parsing error introduced by a0c36009103b8 ("fstests: add helper
+to canonicalize devices used to enable persistent disks").
 
-Cheers. I finished the diff off anyway, as it's basically just merging
-the thing I sent with the rest of your patch. What do you reckon?
+Fixes: a0c36009103b8 ("fstests: add helper to canonicalize devices used to enable persistent disks"
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ common/config | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Will
+diff --git a/common/config b/common/config
+index a3b15b96f336..2a1434bb11b9 100644
+--- a/common/config
++++ b/common/config
+@@ -679,7 +679,7 @@ _canonicalize_devices()
+ 			if [ -L $i ]; then
+ 				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $(readlink -e $i)"
+ 			else
+-				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $i)"
++				NEW_SCRATCH_POOL="$NEW_SCRATCH_POOL $i"
+ 			fi
+ 		done
+ 		SCRATCH_DEV_POOL="$NEW_SCRATCH_POOL"
+-- 
+2.42.0
 
---->8
-
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-index 05722121f00e..128f61a705c7 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-sva.c
-@@ -588,6 +588,12 @@ static int arm_smmu_sva_set_dev_pasid(struct iommu_domain *domain,
- {
- 	int ret = 0;
- 	struct mm_struct *mm = domain->mm;
-+	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
-+
-+	/* Pre-allocate the CD leaf table without any locks held */
-+	ret = arm_smmu_init_cd_table(master, id);
-+	if (ret)
-+		return ret;
- 
- 	mutex_lock(&sva_lock);
- 	ret = __arm_smmu_sva_bind(dev, mm);
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 0ffb1cf17e0b..e48f2b46f25e 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1019,7 +1019,10 @@ static void arm_smmu_write_cd_l1_desc(__le64 *dst,
- 	WRITE_ONCE(*dst, cpu_to_le64(val));
- }
- 
--static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
-+static __le64 *
-+__arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid,
-+		      int (*cd_alloc)(struct arm_smmu_device *,
-+				      struct arm_smmu_l1_ctx_desc *))
- {
- 	__le64 *l1ptr;
- 	unsigned int idx;
-@@ -1033,7 +1036,7 @@ static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
- 	idx = ssid >> CTXDESC_SPLIT;
- 	l1_desc = &cd_table->l1_desc[idx];
- 	if (!l1_desc->l2ptr) {
--		if (arm_smmu_alloc_cd_leaf_table(smmu, l1_desc))
-+		if (!cd_alloc || cd_alloc(smmu, l1_desc))
- 			return NULL;
- 
- 		l1ptr = cd_table->cdtab + idx * CTXDESC_L1_DESC_DWORDS;
-@@ -1045,6 +1048,19 @@ static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
- 	return l1_desc->l2ptr + idx * CTXDESC_CD_DWORDS;
- }
- 
-+static __le64 *arm_smmu_get_cd_ptr(struct arm_smmu_master *master, u32 ssid)
-+{
-+	return __arm_smmu_get_cd_ptr(master, ssid, NULL);
-+}
-+
-+int arm_smmu_init_cd_table(struct arm_smmu_master *master, int ssid)
-+{
-+	if (!__arm_smmu_get_cd_ptr(master, ssid, arm_smmu_alloc_cd_leaf_table))
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
- int arm_smmu_write_ctx_desc(struct arm_smmu_master *master, int ssid,
- 			    struct arm_smmu_ctx_desc *cd)
- {
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 65fb388d5173..cc42cede77bc 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -748,6 +748,7 @@ extern struct xarray arm_smmu_asid_xa;
- extern struct mutex arm_smmu_asid_lock;
- extern struct arm_smmu_ctx_desc quiet_cd;
- 
-+int arm_smmu_init_cd_table(struct arm_smmu_master *smmu_master, int ssid);
- int arm_smmu_write_ctx_desc(struct arm_smmu_master *smmu_master, int ssid,
- 			    struct arm_smmu_ctx_desc *cd);
- void arm_smmu_tlb_inv_asid(struct arm_smmu_device *smmu, u16 asid);
