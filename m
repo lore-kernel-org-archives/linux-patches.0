@@ -1,125 +1,102 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603AC1B958;
-	Wed, 14 Feb 2024 12:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0764524CD;
+	Wed, 14 Feb 2024 13:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707913269; cv=none; b=sw1nAaJRXAfEjKHhYR1/ARS8YPlC878a+JIMBGEHlx0kZlaln6nO7Lza4Go5nIYUk3HwPF5vktzos9aszbHbVJ+YDc5HN8vM8nGwjuJ2CFNRfLX5p/C8iXEkg68TDd3rE9lIxSKNZGlErU69XRf4xWQrkueKM5Z+C5XW5XFKk2k=
+	t=1707916127; cv=none; b=D8YDYmXh4JUP19LpxM+2LYF7hrkmGOer8IXNBi5gC76F+JESICTIkxE33xLBQ3737uE7zxf6qPkx8Hmy63NQjCTHmobYqG+P8KHXLVLt5n8LJ7D5i2N8sWNoGJ5sNednD47w+8dKIg6EwamR8NsTbjKTQJ8NthqWx4C88te1BT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707913269; c=relaxed/simple;
-	bh=aIqkrOHtKqJDGMeDzYy3CfldpGmYtvA6DaHcAmqcblU=;
+	s=arc-20240116; t=1707916127; c=relaxed/simple;
+	bh=IHcwF1sOsEfQq3VWY3GdXolnhsPbOpMy0ZYtGeksXTg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Se6gPl0mqDyD5RZRofRgojpfKPPIhVGY5tFBt5fZ3zZXjxC8jpkIfOYKuUDFSKjteRPWBgeDf25fFa82uh8dTygv8iHNpXI4pWU6jC/Z4Ilux1DJIblsVRdlC0uXpvWGXGbDE1BmcUcFAdwtNXVdtJpeLgZr9ksBDi574GjrrfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Yg4IzNAj; arc=none smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=AqrI90FZC3G35F11jJgieWUpYz2Tk2YbybiAeK7M62qyjU5cFZiET8h76OLgXIeBNQZqhZTOtuyxZf29xk4YkQd04Lqns0Tx96bV6+g9WlmCUTEIVLud5LmA6ut1qigOrNVYa3UlrnvgszyNdR/lZXZVn5XOgNwMGUfDd4KnSbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGkHxOHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Yg4IzNAj"
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 41EC7pdZ007384;
-	Wed, 14 Feb 2024 12:21:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=pp1;
- bh=jX1r2vNiq7tijCHOf5ggnrNhX5LsSoM4ejl+DOG68kM=;
- b=Yg4IzNAjmsXY+5pXLyUq9xzHiv6XGRm76YinQXYKw44JIKP1a1YqywrmwBsOfx3m6RMt
- st3+ft+rtRqa5bb1a1mWshU9Y4k62Zzpb5xQcW6nF6ngHyHvVxRm0QhRILBlB9FsPG66
- F6GhnVei1cLWIZIOr7PnwUgC2x1UKxyRG4BOSc8BGgGNbEYvYsef1GEkvD+8RoDP1jWs
- TB+6dMowYSthJr7HeRwWh3H5FdLQtotg/G3uKngAeVqhYKSllz6PigoFFaiMCx1LU9KN
- geEjAkREnCtBLKrnkDS4SKtId5cVCHeP3R6iCH1XeeqvL1Zeja0KG2YqaDOTC0WWHGoM eA== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w8w8h88qm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 12:21:04 +0000
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41EC7xEI007563;
-	Wed, 14 Feb 2024 12:21:03 GMT
-Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w8w8h88qf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 12:21:03 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 41EAQ2VM016203;
-	Wed, 14 Feb 2024 12:21:02 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w6mymnphe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 14 Feb 2024 12:21:02 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com [10.20.54.104])
-	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 41ECKuNl63832360
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 14 Feb 2024 12:20:59 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id D87B22004D;
-	Wed, 14 Feb 2024 12:20:56 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A787520040;
-	Wed, 14 Feb 2024 12:20:56 +0000 (GMT)
-Received: from osiris (unknown [9.152.212.60])
-	by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Wed, 14 Feb 2024 12:20:56 +0000 (GMT)
-Date: Wed, 14 Feb 2024 13:20:55 +0100
-From: Heiko Carstens <hca@linux.ibm.com>
-To: Fangrui Song <maskray@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, gor@linux.ibm.com,
-        agordeev@linux.ibm.com, borntraeger@linux.ibm.com, svens@linux.ibm.com,
-        ndesaulniers@google.com, linux-s390@vger.kernel.org,
-        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-        patches@lists.linux.dev
-Subject: Re: [PATCH 03/11] s390: vmlinux.lds.S: Explicitly handle '.got' and
- '.plt' sections
-Message-ID: <20240214122055.6438-D-hca@linux.ibm.com>
-References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
- <20240207-s390-lld-and-orphan-warn-v1-3-8a665b3346ab@kernel.org>
- <CAFP8O3KHsjCWowDTBxOq7GQ3bdsA2tAMO5Y4YfKR374Dz_Z54g@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGkHxOHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A620C433F1;
+	Wed, 14 Feb 2024 13:08:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1707916126;
+	bh=IHcwF1sOsEfQq3VWY3GdXolnhsPbOpMy0ZYtGeksXTg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=CGkHxOHC41g8N0yA/P5KY/a2156nEPyA5bHeL44W9xbbcceIGO3sVZGSjpGljbA5l
+	 +tEsDMGegPnkPcZtasOFnLyIJySkxC+bypjQXpBP9c+2iSIXF2Qywy96vZUlQrYTYK
+	 rMLsFSrg4QptLba4OG+jC2OnxtwEo9FMuGXjF8qM=
+Date: Wed, 14 Feb 2024 14:08:42 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com,
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 6.1 00/64] 6.1.78-rc1 review
+Message-ID: <2024021422-reckless-remark-e721@gregkh>
+References: <20240213171844.702064831@linuxfoundation.org>
+ <83771838-c346-4a90-92c1-6ba592a620ac@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFP8O3KHsjCWowDTBxOq7GQ3bdsA2tAMO5Y4YfKR374Dz_Z54g@mail.gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 5a72m7GXjghwGqHKx0FzSGfFzrXD8YEy
-X-Proofpoint-GUID: Oq-do3-waeoNosdhtVkGdgzEAWO5NxXG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-14_04,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=384 spamscore=0
- mlxscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015 phishscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2402140095
+In-Reply-To: <83771838-c346-4a90-92c1-6ba592a620ac@nvidia.com>
 
-On Mon, Feb 12, 2024 at 09:31:53PM -0800, Fangrui Song wrote:
-> On Wed, Feb 7, 2024 at 4:15 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> > +       ASSERT(SIZEOF(.got.plt) == 0, "Unexpected GOT/PLT entries detected!")
-> > +       .plt : {
-> > +               *(.plt)
-> > +               *(.plt.*)
-> > +               *(.iplt)
-> > +               *(.igot .igot.plt)
-> > +       }
-> > +       ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
-> > +
+On Wed, Feb 14, 2024 at 09:03:59AM +0000, Jon Hunter wrote:
+> Hi Greg,
 > 
-> It seems that arches that drop .plt typically place input section
-> description on one line. This saves vertical space.
-> It's shorter to use one input section description to match multiple
-> sections, e.g.
+> On 13/02/2024 17:20, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.78 release.
+> > There are 64 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.78-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
 > 
->     *(.plt .iplt)
+> 
+> Builds are failing for Tegra ...
+> 
+> Test results for stable-v6.1:
+>     10 builds:	3 pass, 7 fail
+>     6 boots:	6 pass, 0 fail
+>     18 tests:	18 pass, 0 fail
+> 
+> Linux version:	6.1.78-rc1-gb29c5b14893f
+> Boards tested:	tegra124-jetson-tk1, tegra20-ventana,
+>                 tegra30-cardhu-a04
+> 
+> Builds failed:	aarch64+defconfig+jetson, arm+multi_v7
+> 
+> 
+> > Furong Xu <0x1207@gmail.com>
+> >      net: stmmac: xgmac: fix handling of DPP safety error for DMA channels
+> 
+> The above commit is causing a build regression for older toolchains and
+> I have reported this [0]. This is also seen on the mainline and -next and
+> there is a fix in the works [1].
+> 
+> Note this is breaking the build for linux-6.6.y and linux-6.7.y too.
 
-Yes, I'll change Nathan's patch so it looks like arm64:
+Thanks, I've now queued up the fix.  Do you need me to push out a -rc2
+for this issue for your testing?
 
-	/*
-	 * Sections that should stay zero sized, which is safer to
-	 * explicitly check instead of blindly discarding.
-	 */
-	.plt : {
-		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
-	}
+thanks,
+
+greg k-h
