@@ -1,168 +1,131 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFC2633E0
-	for <patches@lists.linux.dev>; Tue, 13 Feb 2024 23:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1658F800
+	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 00:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707868599; cv=none; b=F029mNHxNcdUlWmt8RDOK3hNlj8P39Zq+Bk8BRGMOi+8Y72y4AKwqS8TzTrtiJo3eDk1Su5wOo0m6WuP2S6UGp1iy1ACPNvJajI3Z79l2ySosSKzVZQ1Fy/kzh66bzaWPMvlbnyLnAsf1Q/d64n3Dv9yHYIaRixKXpVR62SraLg=
+	t=1707869014; cv=none; b=Z519gW4HYDjuD2QThH4MMMt0Ad7KQyjamKn0Me/ZOAxyooLrki6w1lbgdikxD5dFMINyxekROSQAR9Cxhutx4bJNO05Ouc/nP9HCd92FzlDVNZ8fm0qtIQV34DwEfKHr0MM9A0ukdAfnos3R9tDe5OTkByNsucfxIFTvj2hg270=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707868599; c=relaxed/simple;
-	bh=eG1Z7qXp1jDGBo50wsnYjDQwhUF5D2ifiNDV1RQ+kpQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dx/VZO1vqGNLwswVjDBBhbcVYpLSw0f2QZerORjHACvQ+fu+VrlURBrxcTX5cTHZaDST+yEr1H7PYDdZSqSG9452T/NLjXM7FpE/KdCeJgq9yTGwAo2KsckK7BVdMDwTM3NuT9Q2lAElj0cHtYrrYecYPIHEW/gZYAO1nd2XnJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JKubzfen; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707869014; c=relaxed/simple;
+	bh=LUHwCmgFvsLI2w7Qfq1pAeSWXQrKo7dao4Gqpb0bey4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=J6LdSkKqXqTKfwkwLYVeKXTuwbbbAXd9BqXbSpx4Kx89/sy7pWTs5VzZHi4VqTLLhHAZsJkccAljHADiYq09JEmxGztW2HSgzHvSpdAOBBWnCAlgCOzsgQ87bRJGyv1JFw8uTK5At234Wu0/vTht5quwXGweALnqnOu/csZzods=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=X7uM66UW; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JKubzfen"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3642df0dc88so132645ab.1
-        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 15:56:36 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="X7uM66UW"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5620f15c3e5so1065532a12.2
+        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 16:03:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707868596; x=1708473396; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=j5i0+7qUkGUR+StQ2aGirnK2+rjtRkZXXH7K9o3+5lE=;
-        b=JKubzfenSfn4I61kyZJ1AYPFwqXFTcO/p5jU8KivUduS0qda5jeHyQmUoIsQWkp+rd
-         XTv8qJ3E/unPgCP4aaAUpDN1dP/c0dwfrMJT4soe/zCILs8HSb3vEpdB5qPKL2px8Uqo
-         pf3OJcaiyOhG289O0Dw2P9Jta1jcgdbphTsG5xL4qbBUQpVFA4Kd5BV5jEteVnVUk7lO
-         ZfrboAr+McMdUsDgmIo/h0NvXcOB3+/jsOYyCNiNV8GNbkx7yTV/1kPmvDigVSSEF0x9
-         i9n5BYGFDV1aj9VE4R2vv5BseN1Z8K2wiEJHNKj90TV2atricYtIX/QfsaI1jUn/qux6
-         UF9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707868596; x=1708473396;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=chromium.org; s=google; t=1707869009; x=1708473809; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j5i0+7qUkGUR+StQ2aGirnK2+rjtRkZXXH7K9o3+5lE=;
-        b=MAfYKGLhT1lgFR3tR++9hGKehYyIfOEUjczt+/+zAXNXqDf/FHAwGp86sn3w4YoVom
-         TWxsKO/3IL94GQ5NkWu0TZK1lxH8VlFv6xN8MC/yEQ2mBM9It3nwBCD1aa5uWqygJrU0
-         nGRmKTV8JUosZapwU+zLFakjZOc8FJlb7th9t0TRXq085rfW1LVhTIG/dTN01gm/9/bV
-         phIAUnhJsvxMD3ZBQuL1LbaPE0zRyQVCyQs4g60bUSbQ9+q28u/2Vl4mEECmuKFpHgT1
-         ykoR/50MNNR29SOB6qE9db5ygYaZniLxlWiR4UsejqKaHbnz9B9qjwJl5ddxcyB+6zCW
-         qeAA==
-X-Forwarded-Encrypted: i=1; AJvYcCXA0eBrgbCS5QOTnu8Y3SBaPnSdwvUGJ2GtLrErQFL9rBaP/4dW7bPD+dPGkxlcSsKpJWDzUWsnaSv8Yww7vsfzKmw4U2PKbQ==
-X-Gm-Message-State: AOJu0YxLLwmHz+4XznpyeR7bhj78rdmribl2sUqUKMajFSSzgPJdecPU
-	4SU5a6q1I8qiV+2v2UQMcI0AGfLSQYM9Mzj5DXBR1qbYwS1l004xm4CvFSyKOw==
-X-Google-Smtp-Source: AGHT+IG62RuLwq2OLE5Yz0FmcAHGNtv9/YBtgvIUbfni/ZF6on/cLe36ocrjEhGbaxm7Edp0+sjhbg==
-X-Received: by 2002:a05:6e02:1bc7:b0:363:cbb8:53c7 with SMTP id x7-20020a056e021bc700b00363cbb853c7mr1787567ilv.23.1707868596087;
-        Tue, 13 Feb 2024 15:56:36 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXYvP9l0sxOZNWxefz67TKAm7Fu6CaEpFHauX0AQItVIogkJSLzPJZFx0UakEwLZxl00t5oU+31mhKid7inxkeFp2reqoNF7I1kQxXuMe0ZLLjU+VNcyvi5h0kzhX+TyeJ1VP43aVOT4m3qsJuZ2WTnAEwLcwMnWktU04ycyXRDgCmsBODEflPdYmaHZucstimY66Km2/Z5gIAEwJ1hCoRUXhk25LYKDboLX3KT8nLXdpopsd/2CwWbSm4unOobRINWMcfmsvORIfDXc7r/Zsi25RKx+qHoRGHeVwQ1Bb6ybiJKW3ABwCmcS53hIVlmX6p+Il8fLHtHn7VLINZCCIx57OjUssEr+x0lmRVkHqzYzjQ=
-Received: from google.com (20.10.132.34.bc.googleusercontent.com. [34.132.10.20])
-        by smtp.gmail.com with ESMTPSA id n11-20020a02cc0b000000b004739f0fc27fsm2028449jap.164.2024.02.13.15.56.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 15:56:35 -0800 (PST)
-Date: Tue, 13 Feb 2024 23:56:30 +0000
-From: Justin Stitt <justinstitt@google.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: masahiroy@kernel.org, nicolas@fjasle.eu, ndesaulniers@google.com,
-	morbo@google.com, keescook@chromium.org, maskray@google.com,
-	linux-kbuild@vger.kernel.org, bpf@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2] kbuild: Fix changing ELF file type for output of
- gen_btf for big endian
-Message-ID: <20240213235630.423raijsgijkgrnj@google.com>
-References: <20240212-fix-elf-type-btf-vmlinux-bin-o-big-endian-v2-1-22c0a6352069@kernel.org>
+        bh=LUHwCmgFvsLI2w7Qfq1pAeSWXQrKo7dao4Gqpb0bey4=;
+        b=X7uM66UWgHwZdVe7gJawEVdd+NgemqdBQMH6G8rSUrJJsOvuEPeVTgURaqIfKbVmcA
+         IzpyMLwW8cpe/ypwagDPcWzJWrC0d+CVyNOciHEVUCAOiftHVzZrDwvfh2sEZRxhHxWb
+         hBLWLMvVlvZ04rLDRP3WBotYf4zM8U82ZMXwc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707869009; x=1708473809;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LUHwCmgFvsLI2w7Qfq1pAeSWXQrKo7dao4Gqpb0bey4=;
+        b=pqWWNejJs0vdEqe8ZovHKbIxRVUa5ttWQyf4/6hzK9XogG8hy2vdh8IXh3f+sOO3Sv
+         q4uoIPKcKvsEMESfcEFqY73W1ynpn516J3n30cr+TQmxEfuAIpCxXeoqnwWQ0aE8TAbP
+         UOKdCNf3fTEVu3SgyWdBvfwWWhXy2xGU1nJDnjSxQQIVev8gGQrHopo44pwCrOuQ4G20
+         2PTtT7YeSwnIqMQIisX+jJZYurrH4ZsqDHIfxLpvENn9Bu41/aE8+2czVVGUbbmMD8Ds
+         bYZQZkrdEgdUStP0TOAFnrPiHSkvKIKFFfXC4SFnRcX8uY7xTWArFOADEHMl6RSWAUCl
+         hAKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWdhX88jBKCYke8s63yH4VCcv1wXcD7JQd5j4APgjvB8ge0rXliEYfprjnUWOW8FOlNTCORogw11rNgleZ7N46y9J/yK3BtCQ==
+X-Gm-Message-State: AOJu0YyjPCXTreyUo1T219jHdvvWy9hc9WKnxkzXqurw9u5kqaEpSNd+
+	EJhGg69qcuck/fTe4zpZ/7IgCfCNkXZxhf6Qdj/hjAfAsM9sJ8pwQmlfug9k8YZn9QgO7dS0tTd
+	v6A6s
+X-Google-Smtp-Source: AGHT+IHG1nEegKiuqkGizzh2ojboOEHzMdjSyr9q5vzgyaJud0qBZIqgzw6PdMAexYvyXQS9fIkFwQ==
+X-Received: by 2002:a05:6402:120c:b0:562:9e3:520b with SMTP id c12-20020a056402120c00b0056209e3520bmr754206edw.18.1707869009106;
+        Tue, 13 Feb 2024 16:03:29 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWOpvTtrIOfKeqHFCtgoWCqXsrFmgpg397ph+iOkPBrBB7RST2sHxVnx+/RT4k9llKLRDNh2/7rPykBOEgUXDidN9YRrDpo8Q==
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com. [209.85.128.52])
+        by smtp.gmail.com with ESMTPSA id et10-20020a056402378a00b005624d90a07fsm166780edb.15.2024.02.13.16.03.27
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Feb 2024 16:03:28 -0800 (PST)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-410c9f17c9eso100825e9.0
+        for <patches@lists.linux.dev>; Tue, 13 Feb 2024 16:03:27 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXFs5QxmF+rkEiiMQIVG6vkG5IhMO9aVQRFyiOoWHBGo7/RYwNU0w0ZGBzsGcUx7L6fGI6kUNI2GmD97gswhoigD+uesDDnuw==
+X-Received: by 2002:a05:600c:519b:b0:411:e5c1:9b2a with SMTP id
+ fa27-20020a05600c519b00b00411e5c19b2amr21434wmb.2.1707869006878; Tue, 13 Feb
+ 2024 16:03:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240212-fix-elf-type-btf-vmlinux-bin-o-big-endian-v2-1-22c0a6352069@kernel.org>
+References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-5-swboyd@chromium.org>
+In-Reply-To: <20240210070934.2549994-5-swboyd@chromium.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Tue, 13 Feb 2024 16:03:11 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=UuunNnXJ0kAzRPVy0DX7Wv2eQOa-fMJQ-aKtaGnyQaQA@mail.gmail.com>
+Message-ID: <CAD=FV=UuunNnXJ0kAzRPVy0DX7Wv2eQOa-fMJQ-aKtaGnyQaQA@mail.gmail.com>
+Subject: Re: [PATCH 04/22] usb: core: Set connect_type of ports based on DT node
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Pin-yen Lin <treapking@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Matthias Kaehlcke <mka@chromium.org>, linux-usb@vger.kernel.org, 
+	maciek swiech <drmasquatch@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Mon, Feb 12, 2024 at 07:05:10PM -0700, Nathan Chancellor wrote:
-> Commit 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-> changed the ELF type of .btf.vmlinux.bin.o to ET_REL via dd, which works
-> fine for little endian platforms:
+On Fri, Feb 9, 2024 at 11:09=E2=80=AFPM Stephen Boyd <swboyd@chromium.org> =
+wrote:
 >
->    00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
->   -00000010  03 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |................|
->   +00000010  01 00 b7 00 01 00 00 00  00 00 00 80 00 80 ff ff  |................|
+> When a USB hub is described in DT, such as any device that matches the
+> onboard-hub driver, the connect_type is set to "unknown" or
+> USB_PORT_CONNECT_TYPE_UNKNOWN. This makes any device plugged into that
+> USB port report their 'removable' device attribute as "unknown". Improve
+> the connect_type attribute for ports, and in turn the removable
+> attribute for USB devices, by looking for child devices with a reg
+> property or an OF graph when the device is described in DT.
 >
-> However, for big endian platforms, it changes the wrong byte, resulting
-> in an invalid ELF file type, which ld.lld rejects:
->
->    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF............|
->   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
->   +00000010  01 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
->
->   Type:                              <unknown>: 103
->
->   ld.lld: error: .btf.vmlinux.bin.o: unknown file type
->
-> Fix this by updating the entire 16-bit e_type field rather than just a
-> single byte, so that everything works correctly for all platforms and
-> linkers.
->
->    00000000  7f 45 4c 46 02 02 01 00  00 00 00 00 00 00 00 00  |.ELF............|
->   -00000010  00 03 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
->   +00000010  00 01 00 16 00 00 00 01  00 00 00 00 00 10 00 00  |................|
->
->   Type:                              REL (Relocatable file)
->
-> While in the area, update the comment to mention that binutils 2.35+
-> matches LLD's behavior of rejecting an ET_EXEC input, which occurred
-> after the comment was added.
->
-> Cc: stable@vger.kernel.org
-> Fixes: 90ceddcb4950 ("bpf: Support llvm-objcopy for vmlinux BTF")
-> Link: https://github.com/llvm/llvm-project/pull/75643
-> Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> If the graph exists, endpoints that are connected to a remote node must
+> be something like a usb-{a,b,c}-connector compatible node, or an
+> intermediate node like a redriver, and not a hardwired USB device on the
+> board. Set the connect_type to USB_PORT_CONNECT_TYPE_HOT_PLUG in this
+> case because the device is going to be plugged in. Set the connect_type
+> to USB_PORT_CONNECT_TYPE_HARD_WIRED if there's a child node for the port
+> like 'device@2' for port2. Set the connect_type to USB_PORT_NOT_USED if
+> there isn't an endpoint or child node corresponding to the port number.
 
-I prefer this version to v1 as well. This seems better than setting the
-seek value.
+The above sounds good, but then I look at patch #18 ("dt-bindings:
+chrome: Add binding for ChromeOS Pogo pin connector") and patch #22
+("arm64: dts: qcom: sc7180-trogdor: Wire up USB and DP to
+usb-c-connectors") and it makes my Spidey Sense tingle.
 
-Reviewed-by: Justin Stitt <justinstitt@google.com>
+Specifically, I _think_ if a port is "hard wired" that can sometimes
+tell the system that the port is a bit more trusted. In the case of
+the "pogo" pins on detachables, though, I don't _think_ there's
+anything that prevents someone from making a "pogo to USB A port"
+adapter and then you could plug anything you wanted into the pogo
+port. If there's any extra trust given to these "internal" ports a
+nefarious attacker could presumably abuse that trust for the pogo
+pins.
 
-> ---
-> Changes in v2:
-> - Rather than change the seek value for dd, update the entire e_type
->   field (Masahiro). Due to this change, I did not carry forward the
->   tags of v1.
-> - Slightly update commit message to remove mention of ET_EXEC, which
->   does not match the dump (Masahiro).
-> - Update comment to mention binutils 2.35+ has the same behavior as LLD
->   (Fangrui).
-> - Link to v1: https://lore.kernel.org/r/20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-v1-1-cb3112491edc@kernel.org
-> ---
->  scripts/link-vmlinux.sh | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
-> index a432b171be82..7862a8101747 100755
-> --- a/scripts/link-vmlinux.sh
-> +++ b/scripts/link-vmlinux.sh
-> @@ -135,8 +135,13 @@ gen_btf()
->  	${OBJCOPY} --only-section=.BTF --set-section-flags .BTF=alloc,readonly \
->  		--strip-all ${1} ${2} 2>/dev/null
->  	# Change e_type to ET_REL so that it can be used to link final vmlinux.
-> -	# Unlike GNU ld, lld does not allow an ET_EXEC input.
-> -	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 status=none
-> +	# GNU ld 2.35+ and lld do not allow an ET_EXEC input.
-> +	if is_enabled CONFIG_CPU_BIG_ENDIAN; then
-> +		et_rel='\0\1'
-> +	else
-> +		et_rel='\1\0'
-> +	fi
-> +	printf "${et_rel}" | dd of=${2} conv=notrunc bs=1 seek=16 status=none
->  }
->
->  # Create ${2} .S file with all symbols from the ${1} object file
->
-> ---
-> base-commit: 54be6c6c5ae8e0d93a6c4641cb7528eb0b6ba478
-> change-id: 20240208-fix-elf-type-btf-vmlinux-bin-o-big-endian-dbc55a1e1296
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
-Thanks
-Justin
+I have no idea if this is a realistic concern or not. I'm about 95%
+sure that hardwired "PCIe" ports get extra trust and get "deferred
+IOMMU flush" enabled and, in the case of PCIe, that actually is a real
+security hole. For USB, though, I think the system is more isolated by
+the USB host controller so I'm not sure that there is any extra trust
+given to "hard wired" ports. ...so maybe the answer here is to just
+ignore my rambling. ...or maybe the answer here is that everything is
+fine but patches #18 and #22 should be modified not to cause the pogo
+pins to be considered as "hard wired" since they really aren't...
+
+
+-Doug
