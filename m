@@ -1,93 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE90250F6;
-	Wed, 14 Feb 2024 22:54:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBA22E62F
+	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 23:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707951244; cv=none; b=JlThhxwHTg59DSzkQkfFZ7JCOqNpLSRmdSiyEZ2VIh6TVKWqnpMZiaBOqb91qhk1INCoIiqmhclppxmyKv4As0aNN/VUVVW3mLDCmp6c7I8GKmcLx/HlbAG3agq5DvI95meeH6NuzG/aja6Dej7f5xCfWVerThVMyvmPeILtitQ=
+	t=1707953301; cv=none; b=ZkaRPPO4DaaCvIuoPwy708gzIeCEK4HBFQR2Q2pAXOa+Tgg0HewnfEHwLnq+wHEdKCeq9qAy0UGfXu47vCSwBfLw70m6JR/ljPegrntFWxLiEirm6c1m/WH44Z/VnxKQ/OfPRjQXBVVScPCvDHzdDsdlYB1DZ1YMGYY8L06COUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707951244; c=relaxed/simple;
-	bh=7zPvpgdu9M/4TgZk75pw4da+3dcufuwAo9LaXXY4FSY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=cjIFffVZFZOSG3L4mJj/SmsrqPwauVxqAAW0z9ksXa+5GWgmmIMzVLNj0itCnM/GnbQEuCyw5agx/nYrt5NyCEiS5C+kTzRNYsRdlVmil63lOvSiIhP7JIEOuxgDuEt9P/9a7z0MBizfOH6DDXm55rgV3qcvXz3aKEQKj9cRtUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wi2jXtFf; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707953301; c=relaxed/simple;
+	bh=5h7Y8lbUNLMAQRCOLPW9ArsrBAoUhQhbkWbJuOI5ap8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MtNT9ioTIfYG5SztjqvYe7D4yQOnDPU/C3v7fBDDhilrMEHaIgJOxcu/R79XysDLVrqCuuoUAexZWWd+Hrhh7P4hSdrDH5JDsyddE/jMpv9/aUCWLSamtwFdubsmelNTR3IiUxXQJLgGzT4ezCdSiOlVorYOKXj8DPAsPS6GK8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lxu3q31L; arc=none smtp.client-ip=209.85.222.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wi2jXtFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081B4C433C7;
-	Wed, 14 Feb 2024 22:54:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707951243;
-	bh=7zPvpgdu9M/4TgZk75pw4da+3dcufuwAo9LaXXY4FSY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=Wi2jXtFfLTZr0F2by/Ac4uNb+L7cx/kycnaH9Z7cuPnCALbL6rCSNFz/8N42AKCzm
-	 BtsJ9v9OCjm9K0DnnDYGY4frmUyMyBmpO7/bsnlFPI/I0/s2FNB/Mr4lr0fn+H/6zl
-	 NDEf0nlGUNwOWz8Ev5RDzmTz0iNz/Ef+X2Nf1K5Cn87mrqJXoAYHtmh03eGurX2viD
-	 RFZBnI2Ekl1Fubfnu8Pqvn/Azo+QTp/Su/ztRJaQuZrM8dbvFRi6SG+n3j8qSWVuS8
-	 qzX1U34ua3HG3o485UJSbXRlFLrzG/ZyHFAmunXz+2h7kVj5RDD5vvR0g05v5G7RVq
-	 slqwXsxM+ocXA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 14 Feb 2024 15:53:48 -0700
-Subject: [PATCH] s390: Don't allow CONFIG_COMPAT with LD=ld.lld
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lxu3q31L"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-7d2e007751eso113742241.1
+        for <patches@lists.linux.dev>; Wed, 14 Feb 2024 15:28:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707953299; x=1708558099; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tz9FuZCe1t/s/sOzWyWj2VJKhDH3TaEC7G892r1B5/M=;
+        b=lxu3q31LDJQA3GLOzAFfsr31LrHYxrgaYL9QiuDIlo2kboyG7AyVVgLv3VLtcz5DOF
+         6b5drE3/rYxcvd+Mw9Fo1b56Hrts+anDIVfLunel32g6rZcqajRSQk5+FYismT5/4r3F
+         0OCSUdNuMRUCGjsO0/0pnMq6GJBThhxMD14fBm6HTf8xDxOGLgQ8MzjUmbcw3TOSPw7p
+         EUZGpRv7UZFWSP8elIEaT0IUi2k+wqOlc2/jchHy9FvKP7u404rVPEWTVuiiD9dCTuW4
+         orjW4dtuHzQztJxbnqNGDO4dUMPaDqFl9aksj56FRCTNFC/sXpqMQsi/P5pVJcmiMbsg
+         uD8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707953299; x=1708558099;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tz9FuZCe1t/s/sOzWyWj2VJKhDH3TaEC7G892r1B5/M=;
+        b=IHVcg2Ak6XfDTBaT9n9438oLyt8L7Ayh9vDIarRRc9MlqYkW8F+n3byg+d1k4RnF15
+         2gx2oWveGydhRxjsSys/l7qEw7AbWma7qEc6x7a/DgNZVsDM5IHeQ/5v9ejDTBjG1N+Z
+         +grR05qL7BapzTJLDbLpdA8Z6I/mPVdgk+QnkPp46cmuJUdkiGyzo8Um3+zAnYm+zKr5
+         oW0K9aaR74Z2a0SKjZeeArvWMVFNhwquGO0AejYjXBt7x2GKgT8ArsR1oOxIdrszCh8f
+         O7O8PzCgwUvl8w5QpBHvyPg/ogvTGpqq2KClBGOflHAzVjvAxLdS6Q0NMAtLWRihjRnt
+         iDHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVS+ROyK3KQ2d9MK55gda4sBHFrWZp7SR2QyumM+ERjFdqGwWxx8/2b/LFv6px+GoEZGYy0c//fsNPeWcXCh3oeTd8qzt91Qg==
+X-Gm-Message-State: AOJu0Yyj4S6hA4wu+RYFRL9CbBiiI3SJYwu+CFQdtzYmDJ4ihNfcFfCW
+	g+prXiPcZNXHUKaUbNSYmbVqxucl/IEwb/4SrZ7wmGhhTpkADo4918ZM8NxbqcEhsAQbUR87Z3u
+	feCxag08l2kYVKBZl8eB+jRAFIg8=
+X-Google-Smtp-Source: AGHT+IGGaF2GFe2/KikEaqiK30P94DS+IncALzUVkEmkbzsrhehvMIx3y8vq2VpyOfV1iYqslom2UvHXddgzvvjkSO8=
+X-Received: by 2002:a1f:6242:0:b0:4c0:24e6:f49d with SMTP id
+ w63-20020a1f6242000000b004c024e6f49dmr4185961vkb.1.1707953298928; Wed, 14 Feb
+ 2024 15:28:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240214-s390-compat-lld-dep-v1-1-abf1f4b5e514@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAHtEzWUC/x3MywqAIBBA0V+JWTdgZs9fiRamUw30EI0IpH9PW
- p7FvRECeaYAfRbB082BzyOhyDMwqz4WQrbJIIVUQhYKQ9kJNOfu9IXbZtGSw7apdG06NVFTQSq
- dp5mf/zqM7/sBpcGjtmUAAAA=
-To: hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com
-Cc: borntraeger@linux.ibm.com, svens@linux.ibm.com, morbo@google.com, 
- justinstitt@google.com, linux-s390@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.13-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1251; i=nathan@kernel.org;
- h=from:subject:message-id; bh=7zPvpgdu9M/4TgZk75pw4da+3dcufuwAo9LaXXY4FSY=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDKlnXbreXk45+qN2+vcD2/TunfzMt//loXf6y94aHXl0I
- cdHMuhFVEcpC4MYF4OsmCJL9WPV44aGc84y3jg1CWYOKxPIEAYuTgGYyN9IRoazfs0bikq3na3a
- tmN5S+oHh4rOGZwBouvFIqUbG4+cbFBiZNgke3rPZIt0F9bkwvel4QeWTtE0eqwZvCI4c90/t0X
- LzVgA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20240214142247.920076071@linuxfoundation.org>
+In-Reply-To: <20240214142247.920076071@linuxfoundation.org>
+From: Allen <allen.lkml@gmail.com>
+Date: Wed, 14 Feb 2024 15:28:07 -0800
+Message-ID: <CAOMdWS+=9Zp=rCJf8X0eXghkhOOwYTzWaEH2Z-8kjMx9w4DrgA@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/124] 6.6.17-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-When building 'ARCH=s390 defconfig compat.config' with GCC and
-LD=ld.lld, there is an error when attempting to link the compat vDSO:
+> This is the start of the stable review cycle for the 6.6.17 release.
+> There are 124 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 16 Feb 2024 14:22:24 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.17-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-  ld.lld: error: unknown emulation: elf_s390
-  make[4]: *** [arch/s390/kernel/vdso32/Makefile:48: arch/s390/kernel/vdso32/vdso32.so.dbg] Error 1
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-Much like clang, ld.lld only supports the 64-bit s390 emulation. Add a
-dependency on not using LLD to CONFIG_COMPAT to avoid breaking the build
-with this toolchain combination.
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/s390/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index 771235aee6bf..39e937309fc2 100644
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -449,7 +449,7 @@ config COMPAT
- 	select COMPAT_OLD_SIGACTION
- 	select HAVE_UID16
- 	depends on MULTIUSER
--	depends on !CC_IS_CLANG
-+	depends on !CC_IS_CLANG && !LD_IS_LLD
- 	help
- 	  Select this option if you want to enable your system kernel to
- 	  handle system-calls from ELF binaries for 31 bit ESA.  This option
-
----
-base-commit: 616c4ea9bce426aa6efd6dc333bdd479ce352df0
-change-id: 20240214-s390-compat-lld-dep-875a6c94be75
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Thanks.
