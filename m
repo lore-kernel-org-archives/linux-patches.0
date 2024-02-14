@@ -1,110 +1,81 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F5455C2B;
-	Wed, 14 Feb 2024 14:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109DC57884;
+	Wed, 14 Feb 2024 14:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707920608; cv=none; b=jPRxm2wX30Ah1nylrwZ/L1HVqcFODXKW1cyaxzBWdf+jqJMgW9dpKYYlodhphTnDHgYgKVboP+9ZqfMo9B+AuTxE45Sq5cczS20btavNlRqSJCdHjStUd3jb4XqkO19gWT986dsoYSebm4zFnDLTMtNqrpX6nRE37PQemTg6mXM=
+	t=1707920631; cv=none; b=Epcjs+Fto7x7RgtbW/kqwjC/8Tyb/bAw0J7vTI9sgE2BgpDHo43VgYyfYLVJ/EmS97hdCZANHny4sN3sTWhg2im9yxIa0UnLjBWX18Bmm9UcOpeeYRI4OadyW7Hp/NCiJ2nh742dqhPAQETR+TkQtRCwg9l7dztuotKm54tuaqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707920608; c=relaxed/simple;
-	bh=Mufo7QEixa/saMH4nPt9rUB9pLUn5tKDkcuXjluUZpU=;
+	s=arc-20240116; t=1707920631; c=relaxed/simple;
+	bh=Y0DEqoKoiJNmnLXHIlNiOeBFv27RaLviCDR7jKHAn14=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CwVnAGabAznuJWsj/LulewgXB+XO35SUVsI4tHed8VckFwZCXGW3gsGsevSX7bDWy1J4S1qB5hi4ii0xFfzbTnN3ggY+90RAhZjDnyVaA+EjWDqAej+gy+DyqdcnVVHCty9tiDWfCnkZl9ScIX0wfHRyVOUIlqm3g2XT9zFjXI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aK0vGsTH; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=WhbQuqx3jmqnC20TOuCOxx+m2W6NI8Mt7E+hRQMafcdh3XohXY05i72xoaFqeJSfCWsru5Gxo0BQQ1TrHOPPTnhZy/Lg7xZj4MEtEYjEUdMqTz3GkbSvN9ncfqHpad8oUjkwTTyS0cE0gWpMtWD2lbwuxcipe1xO0AmU0jyFqLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCAkV9Mj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aK0vGsTH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844ECC433C7;
-	Wed, 14 Feb 2024 14:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCAkV9Mj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113E4C433F1;
+	Wed, 14 Feb 2024 14:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1707920608;
-	bh=Mufo7QEixa/saMH4nPt9rUB9pLUn5tKDkcuXjluUZpU=;
+	s=korg; t=1707920630;
+	bh=Y0DEqoKoiJNmnLXHIlNiOeBFv27RaLviCDR7jKHAn14=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aK0vGsTHEZvh+MwhN6vDZ93Lal1aDL2/mht7nnXd9I6atr3e5WL69y80mbzic5kmb
-	 1yfeJDYYO6x1OaD7f+H5i+KEEgTRS5TIzZvTnxf79Uvi4h4nRbH246+IkFfq2aVwqY
-	 B3TsSD+UCd0TqM7/WwF1YrkNh0/5dIaYBABijQi8=
-Date: Wed, 14 Feb 2024 15:23:22 +0100
+	b=QCAkV9MjcTfGyGPNnHxfstxDQyy/S4HtJYeB9GL2FyPKXt1cb4gqlI3VFB6WoP9y7
+	 IHCZ0y78kxqFRVJt1LCkSBgA+Xlfndxdzkyl6EsCMLN3jAF1QcVXVJ5yK2dLVJi5qe
+	 cy0lPl4j26b+Jcj4q7rxZoQZYqgn6HW/ivGYujSU=
+Date: Wed, 14 Feb 2024 15:23:47 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	allen.lkml@gmail.com,
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.1 00/64] 6.1.78-rc1 review
-Message-ID: <2024021409-elusive-overlaid-4fef@gregkh>
+To: =?utf-8?Q?Micha=C5=82?= Pecio <michal.pecio@gmail.com>
+Cc: Mathias Nyman <mathias.nyman@linux.intel.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH 6.1 53/64] xhci: process isoc TD properly when there was
+ a transaction error mid TD.
+Message-ID: <2024021426-utter-startup-d4a1@gregkh>
 References: <20240213171844.702064831@linuxfoundation.org>
- <83771838-c346-4a90-92c1-6ba592a620ac@nvidia.com>
- <2024021422-reckless-remark-e721@gregkh>
- <d74b1c1d-a0dd-43f4-ad6a-0dca69329c16@nvidia.com>
+ <20240213171846.401480216@linuxfoundation.org>
+ <20240213194726.7262e240@foxbook>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d74b1c1d-a0dd-43f4-ad6a-0dca69329c16@nvidia.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240213194726.7262e240@foxbook>
 
-On Wed, Feb 14, 2024 at 01:15:47PM +0000, Jon Hunter wrote:
+On Tue, Feb 13, 2024 at 07:47:26PM +0100, Michał Pecio wrote:
+> > 6.1-stable review patch.  If anyone has any objections, please let me
+> > know.
 > 
-> On 14/02/2024 13:08, Greg Kroah-Hartman wrote:
-> > On Wed, Feb 14, 2024 at 09:03:59AM +0000, Jon Hunter wrote:
-> > > Hi Greg,
-> > > 
-> > > On 13/02/2024 17:20, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.1.78 release.
-> > > > There are 64 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > > The whole patch series can be found in one patch at:
-> > > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.78-rc1.gz
-> > > > or in the git tree and branch at:
-> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > > and the diffstat can be found below.
-> > > > 
-> > > > thanks,
-> > > > 
-> > > > greg k-h
-> > > 
-> > > 
-> > > Builds are failing for Tegra ...
-> > > 
-> > > Test results for stable-v6.1:
-> > >      10 builds:	3 pass, 7 fail
-> > >      6 boots:	6 pass, 0 fail
-> > >      18 tests:	18 pass, 0 fail
-> > > 
-> > > Linux version:	6.1.78-rc1-gb29c5b14893f
-> > > Boards tested:	tegra124-jetson-tk1, tegra20-ventana,
-> > >                  tegra30-cardhu-a04
-> > > 
-> > > Builds failed:	aarch64+defconfig+jetson, arm+multi_v7
-> > > 
-> > > 
-> > > > Furong Xu <0x1207@gmail.com>
-> > > >       net: stmmac: xgmac: fix handling of DPP safety error for DMA channels
-> > > 
-> > > The above commit is causing a build regression for older toolchains and
-> > > I have reported this [0]. This is also seen on the mainline and -next and
-> > > there is a fix in the works [1].
-> > > 
-> > > Note this is breaking the build for linux-6.6.y and linux-6.7.y too.
-> > 
-> > Thanks, I've now queued up the fix.  Do you need me to push out a -rc2
-> > for this issue for your testing?
+> I'm afraid this patch needs a little backporting for 6.1.x and earlier,
+> because it frees entries in the transfer ring and this seems to involve
+> updating a free space counter (num_trbs_free) on those kernel versions.
+> 
+> There may be other incompatibilities, particularly in earlier versions,
+> I'm not clamining that this is a complete review.
 > 
 > 
-> Ideally yes. That would be great.
+> Related patch "handle isoc Babble and Buffer Overrun events properly"
+> depends on this one and needs to wait until issues are resolved.
+> 
+> 
+> This is the problematic part which calls xhci_td_cleanup() and bypasses
+> finish_td() where the counting is normally done:
+> > +				if (ep_seg) {
+> > +					/* give back previous TD, start handling new */
+> > +					xhci_dbg(xhci, "Missing TD completion event after mid TD error\n");
+> > +					ep_ring->dequeue = td->last_trb;
+> > +					ep_ring->deq_seg = td->last_trb_seg;
+> > +					inc_deq(xhci, ep_ring);
+> > +					xhci_td_cleanup(xhci, td, ep_ring, td->status);
+> > +					td = td_next;
+> >  				}
 
-Ok, will do in a few minutes, thanks for testing!
+Ok, I will drop this for 6.1.x and older, please submit a working commit
+for these kernels if you wish to see it in them.
+
+thanks,
 
 greg k-h
