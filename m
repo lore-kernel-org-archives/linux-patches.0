@@ -1,108 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2686127B5D;
-	Wed, 14 Feb 2024 19:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7730C1DDD1
+	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 21:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707940666; cv=none; b=V9RTwYidUajzqQkEY/ElDYc4wEdcC25moPlpYpEgTO4mRcgDaegU0bewjWZJpk5GuHbNmR5/mza7FqK0ZPUmZa1B/6ssphnc8mrkX5NxzdPkOySI4hUdaXmaI+t0a/9Eo+Wk1vIYH8N21QaXyidv7tps7OHq8Az316Y2JGtdOXU=
+	t=1707946345; cv=none; b=LDP8+qqdJ/1fXv8QeeIWb3n3/C+DjfZEkJkTMhmcFGNaajjcvm94l7pC6TpbNlYrvkFP9WlxU8nKMSkUee8eZDUCo+frM524JpydHz4MyMxxmYgHR1QZt3xlzF8XXs7Fq8IB1tEBAVx6PKmyff5J20oKzwjxsLhMIge70CnQslM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707940666; c=relaxed/simple;
-	bh=2ZTZOAZ6r5nb9GcIJQVf/4h+mDGM0VJEAdW0eJhu87g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IRhItdsif2PPk1jCbxlOGSLSA4hrJ1KFRyZSp+F37cBTpaNjIp61QVlrHkQ75lkI05WEyRtdQX84o6sIA8tNbdqfR00tGjGuNhWhJ/d600yKZlDlfC4lyrBkip0QaMcyHOmhnM8DgUGkCTj/+0wntXwjzZ0jODPCavBGafP2f94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FxX8f/LD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1707946345; c=relaxed/simple;
+	bh=mzDDSMUcdlm0Up4f4mJcp+HyVxmyqjTrTC7RCdD9z7Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cOVny51B9519rcPxxuoIlLYlwe2hTvz1NBej7USTTzv3y0vlYfpm1vZrebl4WYVEq73BkHQzAnmS/5JwY/5Nmq+KUO+lB3bz5vUX4N4yY7PWD2K5tw9bs00xqpYVsnldRiVzIbm8gJpd36aMI1Y9spKnOIcc/qrJgTYhJTzUYTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UwL42+YV; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FxX8f/LD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAA2C433F1;
-	Wed, 14 Feb 2024 19:57:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707940665;
-	bh=2ZTZOAZ6r5nb9GcIJQVf/4h+mDGM0VJEAdW0eJhu87g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FxX8f/LD6QoHhkCzBrEJ9Wn/ZZYo462aDGZnIA1StRjxsYdJuZz7BcoK64zUhWsCe
-	 XKltXqUknpd+PgayVtVtX1h6dZgCbo5zlBkwR//O/XOSRl1Kn74hiwr87uY1DyUATf
-	 IzbdHaFdNE+m1dl9tWabnUMjgz1Eq7yT9qQIpdsx9Hrd2JFGfY8C+jyRrgxbC9Qnqe
-	 hdwuK5cqwnHkm6EJjkPGAikVekklrlRRc5tuOAJBrISugYyGSEYy/1sDDfgZOdMHzG
-	 UdttM6sOYpi4OxsRsC5mTgKowL1t6foyM40J+YZV1aLoUGfLvKu/eJMceolh59B9OY
-	 3kCTd3DK6asKw==
-Date: Wed, 14 Feb 2024 12:57:42 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Heiko Carstens <hca@linux.ibm.com>
-Cc: gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
-	svens@linux.ibm.com, maskray@google.com, ndesaulniers@google.com,
-	linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 00/11] s390: Support linking with ld.lld
-Message-ID: <20240214195742.GB1179178@dev-arch.thelio-3990X>
-References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
- <20240214134328.6438-F-hca@linux.ibm.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UwL42+YV"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4120933b710so5465e9.0
+        for <patches@lists.linux.dev>; Wed, 14 Feb 2024 13:32:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1707946343; x=1708551143; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q7jzhXS2LwlH6Na13t2uRB5AnuKFssoLivXgy4Bk1Ws=;
+        b=UwL42+YVVhLh5Ai627JEnY6JOT7soNQsgqCipaPdq1iYgmwNRULc0bifvU0b/VRikG
+         LTYsfLvZA4GGgoo74HPDkjamdqJV0J04TGKsLdxebr4R8dfBdNbn6QNyJeUIfhnYveNl
+         U9qAmjhL1V8L0FV0FpvMLidBLiwCQUhL3klD/NvZP7tDvPVjgnVZlhpPJz6IMdPSvavh
+         Rn6FxRETmLNf/rH59qEoDSB6iezEux+k+W8nbu9mvE1ea3JQqa7qDeqx7uzC/u9877Vq
+         zNgLfXRtWXcYIl60MwIVvmbhQevNTlw/uRZP37mY7Apxgh8ulWQd0MVtz/9BVPG4O/5l
+         E5sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707946343; x=1708551143;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q7jzhXS2LwlH6Na13t2uRB5AnuKFssoLivXgy4Bk1Ws=;
+        b=tRKvy+z5XAb5qMyx74hMaaJepyLXJJH92aqS/npI5lLrZ5EKdASPEiQQsx33+n9VWK
+         mM0dlImQDTRih0qdG6K9dIknQu+hxDm3zTBk84hlaakHTpKuwY5c9C1D80yBe4sm/hbx
+         PK+brcHvkpCMGxajUmrDVwgXuvCVw1qi6QearODRcDyM2yXst/EVD7Xvbl5VPNbdcE6T
+         tE/Z12fUtEnXPglvLBfhej2BY/z0zUVW5S3npmfz5TNfRIyYIgz1nDYjUFgjaIQp/9BX
+         MCV9LrhO73h2D4UviKK/rPjNEAiAG6w9BXBIgS4hNAlxNe6jTukC1mAOb7FXPNXy8h0o
+         So7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW3NPK77bta1rjqVunZlB84ZAyMOHOYsvYY0VXsKRqFY7jnC13lSsqaGk2n+M+0HXgHbuRDSO/g6M2/tW5IfjHS7kVEBauR2Q==
+X-Gm-Message-State: AOJu0YxWd0s7+TMo9oJiqGX1b/7O8MOd58L1cb+qJPfYeEfOLncxFDCS
+	4ClQXxARghF0+AyXi+sJXgoT9soFFpuyWt6SAjZD7qwic1J2XkvzsLMBONnvv5UPxTS7gmTpfsr
+	yPlNK9MtH79b6AFp+l0j7UQS+o4G/w9FIrDH5
+X-Google-Smtp-Source: AGHT+IE5ehL53MTjl/C7JyHdLt/tpxzFhvMTW9TYqxUkVLe03JhGEAREu202kUoVCBnpW7EKcv+ZGc8eHAGUZNCg7gE=
+X-Received: by 2002:a05:600c:a01a:b0:411:e72d:e5c9 with SMTP id
+ jg26-20020a05600ca01a00b00411e72de5c9mr223035wmb.5.1707946342669; Wed, 14 Feb
+ 2024 13:32:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240214134328.6438-F-hca@linux.ibm.com>
+References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
+ <20240207-s390-lld-and-orphan-warn-v1-6-8a665b3346ab@kernel.org>
+ <CAFP8O3+L6Jpgktk50UBKg_SodH-DTAW2syZueUqxdZsxrOT3bg@mail.gmail.com> <20240214121755.6438-C-hca@linux.ibm.com>
+In-Reply-To: <20240214121755.6438-C-hca@linux.ibm.com>
+From: Fangrui Song <maskray@google.com>
+Date: Wed, 14 Feb 2024 13:32:09 -0800
+Message-ID: <CAFP8O3+uLO9a2n3NuQd9bhzRtpG4GvzoJyMuasGZuCrkBRqq_A@mail.gmail.com>
+Subject: Re: [PATCH 06/11] s390/boot: vmlinux.lds.S: Handle '.rela' sections
+To: Heiko Carstens <hca@linux.ibm.com>
+Cc: Nathan Chancellor <nathan@kernel.org>, gor@linux.ibm.com, agordeev@linux.ibm.com, 
+	borntraeger@linux.ibm.com, svens@linux.ibm.com, ndesaulniers@google.com, 
+	linux-s390@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 14, 2024 at 02:43:28PM +0100, Heiko Carstens wrote:
-> On Wed, Feb 07, 2024 at 05:14:52PM -0700, Nathan Chancellor wrote:
-> > Hi all,
-> > 
-> > This series allows the s390 kernel to be linked with ld.lld (support for
-> > s390 is under review at [1]). This implicitly depends on [2], which was
-> > created and sent before it was realized that this series was necessary.
+On Wed, Feb 14, 2024 at 4:18=E2=80=AFAM Heiko Carstens <hca@linux.ibm.com> =
+wrote:
+>
+> On Mon, Feb 12, 2024 at 09:18:34PM -0800, Fangrui Song wrote:
+> > >         ASSERT(SIZEOF(.plt) =3D=3D 0, "Unexpected run-time procedure =
+linkages detected!")
+> > > +       .rela.dyn : {
+> > > +               *(.rela.*) *(.rela_*)
+> > > +       }
+> > > +       ASSERT(SIZEOF(.rela.dyn) =3D=3D 0, "Unexpected run-time reloc=
+ations (.rela) detected!")
 > ...
-> > Nathan Chancellor (11):
-> >       s390: boot: Add support for CONFIG_LD_ORPHAN_WARN
-> >       s390: vmlinux.lds.S: Handle '.data.rel' sections explicitly
-> >       s390: vmlinux.lds.S: Explicitly handle '.got' and '.plt' sections
-> >       s390: vmlinux.lds.S: Discard unnecessary sections
-> >       s390/boot: vmlinux.lds.S: Handle '.init.text'
-> >       s390/boot: vmlinux.lds.S: Handle '.rela' sections
-> >       s390/boot: vmlinux.lds.S: Handle DWARF debug sections
-> >       s390/boot: vmlinux.lds.S: Handle ELF required sections
-> >       s390/boot: vmlinux.lds.S: Handle commonly discarded sections
-> >       s390: Select CONFIG_ARCH_WANT_LD_ORPHAN_WARN
-> >       s390: Link vmlinux with '-z notext'
-> > 
-> >  arch/s390/Kconfig              |  1 +
-> >  arch/s390/Makefile             |  2 +-
-> >  arch/s390/boot/Makefile        |  5 +++--
-> >  arch/s390/boot/vmlinux.lds.S   | 28 ++++++++++++++++++++++++++++
-> >  arch/s390/kernel/vmlinux.lds.S | 28 +++++++++++++++++++++++++++-
-> >  5 files changed, 60 insertions(+), 4 deletions(-)
-> 
-> Now available at:
-> https://git.kernel.org/pub/scm/linux/kernel/git/s390/linux.git/log/?h=features
-> 
-> And should be in linux-next soon.
-> 
-> Thanks a lot! :)
+> > Commit 5354e84598f264793265cc99b4be2a2295826c86 ("x86/build: Add
+> > asserts for unwanted sections")
+> > specifies `*(.rela.*) *(.rela_*)` but it's not clear why `.rela_*` is
+> > included. We only need .rela.* (see also ld.bfd --verbose)
+> >
+> > This patch LGTM with this changed.
+>
+> I'll keep it as it is, just to be consistent with x86.
 
-Thank you for bearing with the issues that came up in the series and
-getting it reviewed and accepted quickly!
+Sent https://lore.kernel.org/all/20240214212929.3753766-1-maskray@google.co=
+m/
+("[PATCH] x86/build: Simplify patterns for unwanted section")
+to simplify the patterns in x86 vmlinux.lds.S:)
 
-The ld.lld pull request has been merged into main:
 
-https://github.com/llvm/llvm-project/commit/fe3406e349884e4ef61480dd0607f1e237102c74
-
-and Fangrui requested a backport to 18.1.0, so it is possible that
-people will get access to this even quicker:
-
-https://github.com/llvm/llvm-project/pull/81675
-
-I did not CC you all on this one but it is needed to avoid a link error
-with ld.lld when CONFIG_DEBUG_INFO_BTF is enabled but it is not specific
-to s390 so it will go via the kbuild tree (hopefully for 6.8):
-
-https://lore.kernel.org/20240212-fix-elf-type-btf-vmlinux-bin-o-big-endian-v2-1-22c0a6352069@kernel.org/
-
-With that change on top of features, all my builds pass successfully
-with ld.lld :) I'll be sending another change your way shortly for
-something that came up during my testing with GCC + ld.lld.
-
-Cheers,
-Nathan
+--=20
+=E5=AE=8B=E6=96=B9=E7=9D=BF
