@@ -1,142 +1,183 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2056.outbound.protection.outlook.com [40.107.94.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C694C12B66
-	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 09:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707901451; cv=none; b=mOfm87YsopxUFYrM+nSrUmuoYJXwdRjdmxLkBCZFe64teKyQ7CcjYTT+C3MwO6Vd3GI3omIwv3cN1jFN0oxblkwdHqnVKYY30sGNQLmBdb/CKKGhI85/vVlsVkvBZcZGapUnF2gFCYEfeYZzoKb9g6X0zIh87olnYPB+GP2nCkY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707901451; c=relaxed/simple;
-	bh=rpgV4wBwpmf2U50ULZ3ebv972rYJ3/mX3GPQGpHSHoY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p2uZ039nKyUIkZaH0cs1wh9suaFujCxPtHF/sfbK9g9ZDytalyLFt4nO+j/LMNheb4fC7iPy5M6OEw1iNL2oRIaH84LsTJinZLxcNIx7OrUmi8sH1z8U1F+y2Zsd1P9Qtt7HPh6PJyqidFDrZlz0wb4ELYicOSAq++R3WbE76D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a293f2280c7so737207966b.1
-        for <patches@lists.linux.dev>; Wed, 14 Feb 2024 01:04:09 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707901448; x=1708506248;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gTvHBfKi/LlnrDDQ+eNufkwxVRRyjF+bIBbaCg0NopQ=;
-        b=DrZIfa3rDj6vIZ2Xtz1rHx156O6EEWqO1y8TvV7vW/j4NH4QnIYxvpx7zYg509YeGf
-         5j1TsHTsgUX2vzvchgtW5S4oMMakxYKXq7GPKroQneGYvSaCQeh3mJFuo778xyISL8aX
-         Z1OvkHZv2sF7eL2lXkkBz+lLtWwPGy8JSAI5Aszt1cQcq6njeAQB8JFBkQqk9LGC77WV
-         Fbxvx39zReteLKqunmnFhytFQmhfpnUXflvJTfSvPCdBRQ/NJ38XFJE6MjY3OC5qHigH
-         fXqqVgVxCLloo1ukXy9m9PRFWaqYcKaQy0JTko9ymwuFXc+ppPiZEsZzMYDpTmZpMHEi
-         EvYg==
-X-Gm-Message-State: AOJu0YyZE6GuMrivrvJ1Z7sIsUXTYEJLN1DckXNmEPPt2A4owBSbj5gE
-	Fixkyvb+w2ONCiZe2nO2uqePXKg0t/2dbfeRbvs91OvdxlU/+wlu
-X-Google-Smtp-Source: AGHT+IG/9xgj6sYf/UwOI82L4fHcii8O/khAn6DY+oeaR+mkWvZWHzPNaVDy8gTyOtWfHCoS+i7sFg==
-X-Received: by 2002:a17:906:6c9a:b0:a3d:1f59:7412 with SMTP id s26-20020a1709066c9a00b00a3d1f597412mr1541182ejr.72.1707901447694;
-        Wed, 14 Feb 2024 01:04:07 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU5OJmirT74ruSFoT7UB5qu6j4ZvYoxxTo7KPUr8Oq9JrahokUOQtJsOWwDCL070L7wgXsIIB2RTgKhnMg/FUFL9CODZEOLzEKp5I4FMjznUuR9g2C2awoVxWuwoQ2yZ9NaS8xoZ1cKUni4lbQzdqzQmI0L20VL8pX+VULpXv1C1HRCtcOAwGKx7C7LObwJBn4uYtjugITkkO8+
-Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:59? ([2a0b:e7c0:0:107::aaaa:59])
-        by smtp.gmail.com with ESMTPSA id s8-20020a1709066c8800b00a3be8b717dasm2096536ejr.58.2024.02.14.01.04.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Feb 2024 01:04:07 -0800 (PST)
-Message-ID: <04565cd3-c6ee-4678-af6e-a00fa6d415d4@kernel.org>
-Date: Wed, 14 Feb 2024 10:04:05 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3108D12B60
+	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 09:04:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707901452; cv=fail; b=dBZFQz6WjG4seen1relxacPa6XWw15va8RS2mutum4iTa+wz6ukL+GVXz5zN3xFrjei0tdRJb0QBvWRzflFZ+LIRYGCaAYh+R0byIPmQN5/uaqGtl7PUgsfhKnjIdhlPFgsGY0ShfofGqt9a8kAtvubXCD/k6bKoAn8PBCCdFwQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707901452; c=relaxed/simple;
+	bh=RAP5XF4B8iighzngbjs8/c2imvGKuNMK0aQGHv1OmwY=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=pXLkbHJaZzkhn+YUS5bCmC5gWBnZt0sNRTo4s9iUsD4ukDSaktN7Ce82t+p4DZWYXq1uSI26OweQd/fLY2bLOR1ZOdS1QnvzPmDXJqkYMIPGHk7Mp2h858eKeViTfnGmqb442d9WU7mKGGACBP3GYQe3C6M1fRcqBF6/JpLP4NY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=en43cS5U; arc=fail smtp.client-ip=40.107.94.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="en43cS5U"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KHAUCKquxXrp3LYNhZbN7I3i3UUjNbo0qdf3BFnD1dSKa/MAdxABaYk4lGkkTmenKymI8puy9r+0mhl06E2nv2WjV7Myl2bvlkhMNgcmCWw/eYMlUT2N1ODJx/v/+gKsgj2NphWAd7E/wVcx2U9RMod5UCAW/+J754MSOk9is3EIVkZ8FVksfw9EloCbozHtqBxbJ3JlR47wLJwKfSLOjj6BUU/qEC2PPAsu5vO8glfHE8jLrQrqR1A8eycLhF0gGV9WMaZbEp7yTfiFMpH88mg8fBlUvvCyfRfr6uleI3brtQehi4qPtx3GILs2DYz34UvZOi0hMLCq73jqPIuKCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=o9fEetD3Fx1wumFSblDwUFbVaqoz8UoaTAsvDTJu/IE=;
+ b=lxyfyR2fSmOeXz3ISsWzxpi5S3YPKxJ5L1botU3smXJHuy8YQ4nGWZ3qkIR+c6Sn9EGk9TsX+BaA4lckspZmgGA8mMX6KKpu6RiBuZL+bMCnH79rBZmWZIEekiITra/2jfB9unpBGMIFDW6/1MrGZ2X4FaSR0+DCs0fhHtwVaAswyGslvtMha3EoKLoLeAfTHVOiBbAkEO6/LIzXrwo2puWI1RZUd4sWcV60LQzaddhg+KlABEnvAwRI/UBzyAgF5Vvqr4jSx6LttWv+kU5JJ+yfezP3382UTqVKqAAGAJ3xtHm9tKWfsuFLplr/kexViT+90DgdRpJ+fT4J8DtGnQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=o9fEetD3Fx1wumFSblDwUFbVaqoz8UoaTAsvDTJu/IE=;
+ b=en43cS5URLUr3KV+fh9Q2joDLjHLeLSz94mnuvquIoFudYm2CdhyHZovjIlTt3iXYNg+Et9udVtP35KiQi4tG02zEJbR7lzJ4J8wBmHMwlhn7MPiDm0i5kQGAW4L5SpzJxintCDcNGmMR57yhWjA2pp19e7dH+fGRPZTlJ0AYjugW13hvsimEJ86iGgg3n1/3qZX1DfFwx67zFEkEOgqc2xW+0uvBpkH08i/sv6ud99zPcr2W7FZU9vEGmcxMYHYCuFKkq2rgtyH4jwi/wiQIOkIbpy4wKHiryfrp4BwK74g32uRTtmkS89bC2dTbB3Mu8fRaZ8IAVXTwmE5Fz2gfQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
+ DS0PR12MB7945.namprd12.prod.outlook.com (2603:10b6:8:153::19) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7292.11; Wed, 14 Feb 2024 09:04:06 +0000
+Received: from CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::f462:16b8:4857:38b7]) by CO6PR12MB5444.namprd12.prod.outlook.com
+ ([fe80::f462:16b8:4857:38b7%5]) with mapi id 15.20.7292.022; Wed, 14 Feb 2024
+ 09:04:06 +0000
+Message-ID: <83771838-c346-4a90-92c1-6ba592a620ac@nvidia.com>
+Date: Wed, 14 Feb 2024 09:03:59 +0000
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 00/64] 6.1.78-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com,
+ "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+References: <20240213171844.702064831@linuxfoundation.org>
+From: Jon Hunter <jonathanh@nvidia.com>
+In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO4P123CA0562.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:33b::12) To CO6PR12MB5444.namprd12.prod.outlook.com
+ (2603:10b6:5:35e::8)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.7 073/124] mm: Introduce flush_cache_vmap_early()
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Alexandre Ghiti <alexghiti@rivosinc.com>,
- Geert Uytterhoeven <geert@linux-m68k.org>, Dennis Zhou <dennis@kernel.org>,
- Sasha Levin <sashal@kernel.org>
-References: <20240213171853.722912593@linuxfoundation.org>
- <20240213171855.870608761@linuxfoundation.org>
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20240213171855.870608761@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|DS0PR12MB7945:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0a08daf4-70ff-4116-18b2-08dc2d3be5a1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	CwGM627H2PvvyhPObU1D+pftssgWxKW/KB/vAEhMRJnhEB/cftSSTml4uW1un0kfoh/vJwQeGCBRW0tkP5my/8g1ANOLYjTaf6GOya97H3L/thhNiYVg09EO19eHLXT9gFjvfS8ZCo9Epyxsyjam0VKTvpfgkmP2rBAFjV0hzFPet+05C1zIRoiNey7yEjdSr09G4NQAOs+FIcIjj3vbacj8udQcNLXiskgg2vQNzXWDGnCe0/8z7AGYujYMNJkiD5EbWVyTEbSaasDcVhLAz6AJd0pI6/zBt8yIYjiDA/nnl3uy8q6AQoKyMQ4RWEzzJrTRvVliz4QpSBoMHInfrAUH+Gs7va2ixytX+ZF0Jro1eE7m18+H81aLoJQtVUCskjgFrCJOioaveG0zpsVOF6yrwxrB7ULLKWWpNfDku0N4lViIqiaTQud6PYhpdrdUuGS1dhj7Sx5GYysMCVJF7OX5u2Vj2Y0VZ+kLPNuuHgWEGiO8Xw6GHMwWfuBcWUD2HNGD/m6q1awOyeVmLB1JWRyeG1+bIb9VexTGZEUGco//w1tFy4IX3rDgyMAck+zECdOvwe7M9nokPLlH0SPJOzASYHmuQAqXYxofyBZ65jw=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(396003)(136003)(346002)(39860400002)(230922051799003)(64100799003)(451199024)(1800799012)(186009)(7416002)(5660300002)(2906002)(6512007)(478600001)(53546011)(55236004)(31696002)(86362001)(6506007)(36756003)(2616005)(966005)(26005)(41300700001)(6486002)(66946007)(66556008)(4326008)(8676002)(66476007)(8936002)(38100700002)(316002)(6666004)(31686004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WVlPQ01pU1JFZU81T21LbzhYYW1wdThKa0duMFl3S2RsZmhqWDk3YncyS2RZ?=
+ =?utf-8?B?amhLQjZ1aytZSVduM2NmY0Nab203M0xTTlpFdEZNRmk2eUVGQ1BadHVkOW5O?=
+ =?utf-8?B?YUNqekxtS1dQYnYzUUlUYWRVNWIyRVhua1pQaEc1Z1N0U1VlNG5mMmpySnhK?=
+ =?utf-8?B?Y3lyZnB6L0NEWkZQRHdUWXdVejNSaHRMUlgvMVNCTTR1Y3oxVlNkRmhubnZP?=
+ =?utf-8?B?alEvcXFpMkV2a2ROV01DbG9CZFc4ZmFjQ3dURk8xS2F3OWdrYmRia0tocUd2?=
+ =?utf-8?B?aGdrZ1Ira1hzWXcxeDRMdDc4TTNRR1RUSk5zQXFzbGE3Y2pLQjMwS1gzem54?=
+ =?utf-8?B?SlZnVFA1RUtjNlAwbmFaQ0JXUWdncjRFNEY3RUJ6WjNGQ3BKMm9VVHhLYzdE?=
+ =?utf-8?B?OEs0VCtwV1dYZWtUU2grMXROWStVTWtlYlV4TW03aUJnc09ndTFSTkxIWm9i?=
+ =?utf-8?B?Nk9mQzhCYkxaTnBNVkJRNzZNbUVGT0JVbzBHazNSSCtkdzFkUGMvcURhc3VF?=
+ =?utf-8?B?WlFaMGNxYjN2cTZGVXp3cUI1TG9tRkQ4aysxNXl4anZpQ2hPL2tOL1Iyd1Ri?=
+ =?utf-8?B?YkZXc0pWdW5NRkUyT2szVEhKMkhMLzR1cjk0SjdGM0QvTmw0QUFHcGR1VjRT?=
+ =?utf-8?B?akF2ZXVwYThQRm9JSTErM3g3UHllakp2N3pMa21NYmMrSk43UFp0YStkdjVU?=
+ =?utf-8?B?aXlBdWxpb1hxTUkvZlpLUWNrTEdrZDM0WWR6UEdRZ2Q2VTRtcmU4Y3ptMWlx?=
+ =?utf-8?B?MDdnK0k4akFIQWNtRnVEY2xvakJvbXd3a3QzOE0zRlJ2eDhVck5VWE5WM05P?=
+ =?utf-8?B?QkJUNWxkWmNHSEF5ajJwOU9KQzcwZllHT0FnREZVRm1IK2JMMVVXaTdpWUtK?=
+ =?utf-8?B?ZlNzRnQ0R2NvTVBQaitZZnVFbTQ3eFN0MlhUdUhLeUdjZmZHRDlxV3dQN2cz?=
+ =?utf-8?B?ODROeGw0Y0plOHhvam55NzhpVG5GM2EzUzVlU2o5K1l1VG1uWkNqN3hYd1pQ?=
+ =?utf-8?B?V2lBKytrRmdGSU8wNko4b3VnS09MOC9tdnM4bkp6QzFqZmVDMnhZYnR1VGdr?=
+ =?utf-8?B?aVNoc1Y2STZPVGJXVzBSdWNzWjlXZzRJclFhaGxDV0MvSDA0b2prdzhBRlFr?=
+ =?utf-8?B?UUE0YmRpM2JvRmFIYndoenRldjZIbEVHT2s1OXZkRTF0Nmd0QVhNQTgxVnlY?=
+ =?utf-8?B?eWdCbFF4Mkp2MjJ5azdzVng0azVoZGpmeDZqVzI3ZTNpbUZjN0dTTXZTK2RR?=
+ =?utf-8?B?NW04ZHVJTDRDbDFScEJxMWQ0YXgwMm5PTmtKdUZmZ25GdEhJajhveENmcXY0?=
+ =?utf-8?B?V2JTblc4NjdoYmRPMzZuUy80eWxSL0o4ejM0dkpDdzdzN3owTVV3N2lCUkYv?=
+ =?utf-8?B?dUJWRUREYzFSbGFCSUJnaWZEdjlwamZmVmhjMkFCYnJpUXZRaWdVQlVTUlJi?=
+ =?utf-8?B?dXk0YmlDM1FkUWdsUG5iL0NQc3BrbFdxQlNhdFN0eFFkWTVJVExtVFpKd2t5?=
+ =?utf-8?B?OHR4THJMZUN5SUI5VXFiNVRRaHNCSUtTRVZ6L3dWZ2t3Vmg0YjlTTXZWaUwx?=
+ =?utf-8?B?OW8zejZESGZ1QXl3WWIyRUovM1kwbTV0SmNLSHlHVjJwZ296L2tOa21XREUw?=
+ =?utf-8?B?UWhBbnFaYjkwTU1xdVNGcFdyNzh1YmhQeVZzLzVSOUQzbThzRGxoYjFxZmxZ?=
+ =?utf-8?B?TmlRWU1HZlBhZkpSN0pxWmNwbDNYbjltWmd5NTMwWG1Jd0dPU3NmaVhzWTZr?=
+ =?utf-8?B?VDV6VHFoQUM4cHAwSEgxRDd6OW1DK01BNHNOMXJvczg1NGdlV3BzTXlOSnYx?=
+ =?utf-8?B?WkhFV2N4SlByU3M0UEZkZDlZTDJpUE05R3lrQ0EwQXRTWSszU1pTZkkvbllL?=
+ =?utf-8?B?MjdXMVB3YlcyaGxtRDA2MzhSckp3amlRb05HUnBBWklwejlqekQzbDc3UGFL?=
+ =?utf-8?B?VE9QTTV2MFE1QXpzSjJ5Y3pmVHMrYTRYUk9xZnJhUUMvWGhwV2E5TE9BQ1lQ?=
+ =?utf-8?B?Z0pyNzVhOGZYcnREb2FTZUZqcnk4cStMeGp0ekNJRWcyTXBCYnpWbDRla3FL?=
+ =?utf-8?B?NS8zbE5WbjNOQWRtdTZPbXZJaitWQ3N0eC9DNjhibXd5N0llVzdiZ2ZTQnBQ?=
+ =?utf-8?B?QkI2djMvdmRFbWdVUlQyc1dKc0dsSXI0UWZtTElQVU0vZm5SSGV0WGlRM05x?=
+ =?utf-8?B?dHc9PQ==?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a08daf4-70ff-4116-18b2-08dc2d3be5a1
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2024 09:04:05.9691
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: O8f6K+E6aKmDNL7nJrIORjM9b4bipAVnpsH/iRHa7K2PJ2bSzWnexZ4NNonXJ1YK041jmYbax9KTI4Iwgw0rGg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7945
 
-On 13. 02. 24, 18:21, Greg Kroah-Hartman wrote:
-> 6.7-stable review patch.  If anyone has any objections, please let me know.
+Hi Greg,
+
+On 13/02/2024 17:20, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.78 release.
+> There are 64 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> ------------------
+> Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
+> Anything received after that time might be too late.
 > 
-> From: Alexandre Ghiti <alexghiti@rivosinc.com>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.78-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 > 
-> [ Upstream commit 7a92fc8b4d20680e4c20289a670d8fca2d1f2c1b ]
+> thanks,
 > 
-> The pcpu setup when using the page allocator sets up a new vmalloc
-> mapping very early in the boot process, so early that it cannot use the
-> flush_cache_vmap() function which may depend on structures not yet
-> initialized (for example in riscv, we currently send an IPI to flush
-> other cpus TLB).
-...
-> --- a/arch/riscv/mm/tlbflush.c
-> +++ b/arch/riscv/mm/tlbflush.c
-> @@ -66,6 +66,11 @@ static inline void local_flush_tlb_range_asid(unsigned long start,
->   		local_flush_tlb_range_threshold_asid(start, size, stride, asid);
->   }
->   
-> +void local_flush_tlb_kernel_range(unsigned long start, unsigned long end)
-> +{
-> +	local_flush_tlb_range_asid(start, end, PAGE_SIZE, FLUSH_TLB_NO_ASID);
-
-This apparently requires also:
-commit ebd4acc0cbeae9efea15993b11b05bd32942f3f0
-Author: Alexandre Ghiti <alexghiti@rivosinc.com>
-Date:   Tue Jan 23 14:27:30 2024 +0100
-
-     riscv: Fix wrong size passed to local_flush_tlb_range_asid()
+> greg k-h
 
 
-thanks,
+Builds are failing for Tegra ...
+
+Test results for stable-v6.1:
+     10 builds:	3 pass, 7 fail
+     6 boots:	6 pass, 0 fail
+     18 tests:	18 pass, 0 fail
+
+Linux version:	6.1.78-rc1-gb29c5b14893f
+Boards tested:	tegra124-jetson-tk1, tegra20-ventana,
+                 tegra30-cardhu-a04
+
+Builds failed:	aarch64+defconfig+jetson, arm+multi_v7
+
+
+> Furong Xu <0x1207@gmail.com>
+>      net: stmmac: xgmac: fix handling of DPP safety error for DMA channels
+
+The above commit is causing a build regression for older toolchains and
+I have reported this [0]. This is also seen on the mainline and -next and
+there is a fix in the works [1].
+
+Note this is breaking the build for linux-6.6.y and linux-6.7.y too.
+
+Jon
+
+[0] https://lore.kernel.org/linux-tegra/c25eb595-8d91-40ea-9f52-efa15ebafdbc@nvidia.com/
+[1] https://lore.kernel.org/netdev/20240208-xgmac-const-v1-1-e69a1eeabfc8@kernel.org/
+
 -- 
-js
-suse labs
-
+nvpublic
