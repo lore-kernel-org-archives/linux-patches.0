@@ -1,152 +1,109 @@
-Received: from smtpout39.security-mail.net (smtpout39.security-mail.net [85.31.212.39])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A63718EB1
-	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 11:25:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=85.31.212.39
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707909911; cv=fail; b=kA+P74QJNMAPFPqDX7JbLboHE56eNZD4YBSYhLEpaHX0XXoZMb+2FNL061czDYgYMn6LiUiSECPO0/PBsHXeJqg3Ypt4WO/XP4mtyNJIlcUc5Y4MmlWq2t6eveOKaL1IEZX1h0JakIcdY8OBpZsfYzmwALxqgaEaCTdwOcsksSc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707909911; c=relaxed/simple;
-	bh=rodBFnauBKkzzUOSkDDq9hjz/O0BbkzgvGHsphon4Fo=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=BLT0peX6TC0JRwb4I2kU6bKKIYkT5iHmcdvl5q+9S0glUOmMlosLEYLPMSnfNwRauf1JstTD6DC7ExaaDZ4nHOqkbb8ffp5f3wKlcgMH+CbJ/EXOD/AbDCWE7paBcsCi+Zn2cPtqNdVGAa7zSZUJx81UvaK98b/u90u4ACZj2BA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com; spf=pass smtp.mailfrom=kalrayinc.com; dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=mbcyOHw3; dkim=fail (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=IrkVKLKr reason="signature verification failed"; arc=fail smtp.client-ip=85.31.212.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kalrayinc.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B717B1B958;
+	Wed, 14 Feb 2024 12:18:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707913093; cv=none; b=Cwi69qQH8hF9mz9queFb0ARscAyvdT3jKpXKiHNQ0D9HaGMMeFZmNUCX5dcubUc2bc+qPuPilNAJrYBNeoGbACItQ2dM0Be7fA/N7wuCBsl9VZou5skfRm2+AuMKFz3/QlBjdQ9IkOwd5W3lc1gDdVlyWJIS6TT+2SDFfM016Go=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707913093; c=relaxed/simple;
+	bh=ydQckTFp1oxftSLw2+09PZBN+NmK7Vl3pl5OWF9pR1k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=scyTvuxxXobUd2PJbjh/N4EXA/5eQDaXUGC5GRzJehUNhSDX65kHzIXzUOAI0RCSev1fasHZFgL+Jq5iTzimDE/WQ9zt74pwodyJ0dLp19MJ3gSe8iYW8XKeS817erLhmhb/pyNNti4aB9J/BXBqPo0fAYj+X/355w1zBFoPQGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=O2g1UjlX; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="mbcyOHw3";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="IrkVKLKr"
-Received: from localhost (localhost [127.0.0.1])
-	by fx304.security-mail.net (Postfix) with ESMTP id 6F28975E756
-	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 12:22:58 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kalrayinc.com;
-	s=sec-sig-email; t=1707909778;
-	bh=rodBFnauBKkzzUOSkDDq9hjz/O0BbkzgvGHsphon4Fo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=mbcyOHw3SAJQsvmzax61NY1vnggnXsR7ryvJ2LuJSF/fj9aAqEECPUhHB2so3nPAF
-	 Eo0Dpirm8rBtJEX0JDoKgkzeegZmYRxgwAXOOx+ihObWC+udtB4O2M9sDuyz5LBedO
-	 YnSuTOl6cFjCzLKJ2zDgt+abRWjBqTKjF2TpizhA=
-Received: from fx304 (localhost [127.0.0.1]) by fx304.security-mail.net
- (Postfix) with ESMTP id 1FEB375EB2C; Wed, 14 Feb 2024 12:22:58 +0100 (CET)
-Received: from FRA01-MR2-obe.outbound.protection.outlook.com
- (mail-mr2fra01on0101.outbound.protection.outlook.com [104.47.25.101]) by
- fx304.security-mail.net (Postfix) with ESMTPS id 94FAD75E4EA; Wed, 14 Feb
- 2024 12:22:57 +0100 (CET)
-Received: from MR1P264MB1890.FRAP264.PROD.OUTLOOK.COM (2603:10a6:501:13::5)
- by PR0P264MB2936.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:1d5::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.27; Wed, 14 Feb
- 2024 11:22:56 +0000
-Received: from MR1P264MB1890.FRAP264.PROD.OUTLOOK.COM
- ([fe80::93d5:e45b:12c4:a835]) by MR1P264MB1890.FRAP264.PROD.OUTLOOK.COM
- ([fe80::93d5:e45b:12c4:a835%4]) with mapi id 15.20.7292.026; Wed, 14 Feb
- 2024 11:22:56 +0000
-X-Virus-Scanned: E-securemail
-Secumail-id: <582f.65cca291.92daa.0>
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gEt6HrKhaD7F9A/gmtqYE5v64oy5t6CqssO0X6FkD/L05c8D5qZu7kpr/+QrkuQDn1SPjpEOnEbZuqfSqMxGgciBavMWj5HTnaz9sJ+KYvXEylpAuh24LiGgkvWvaREMudeW24DAFIrUMDHgoiRnTRhyTdfv4CMLzIyfYAqsbpvc/yG/gHgVJeSOBTz6DsSVK+STWqnuSMJClEWMOCHkhEzVwl2iQiuKZLd/wEuPLfnoc8kRLF1QLaeAIzveaarmKfWN2yREWy8mPXUg7Zjlyknaukg24L9eKQMPRgAcdEh0OsMIKCqgJIb/MOgKQxeYWMtNnjl07ja4fslNUCSaqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microsoft.com; s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GprOen5lM/BJOFvh6fOJnlZRRMI2NOJfX55qwDxXbWM=;
- b=jip2btKBRyGzhpimX+itz4l6rspdbHZPvFEXTL61rx1zxyM1W+TGfiIUqvUGoxy5uJiUe06pavJlDLnZebLh3fHM+OJkPHWYaeiLdWusnKwmhoxOftiaSfRES2VdmlLlw7KP4OMsqKlIgPfdFFIqvBvu3NpcTergz6UPOB/0088x9y/NGeo6BJgiQOYyi9i/lJ2X1v4AV/vcLohXTWhn/1bGzMO+KwxFwJK556Uu7Q4Woah3q92uHwCS3oxydGJ7lNhACBh895Lj/ScFX6xWdeSDZJAhwwX2UoDUyKRTNN8OIAFihX/C+bslLfO4E0GpvA3q07eytQ9bx5VMFM8xRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=kalrayinc.com; dmarc=pass action=none
- header.from=kalrayinc.com; dkim=pass header.d=kalrayinc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalrayinc.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GprOen5lM/BJOFvh6fOJnlZRRMI2NOJfX55qwDxXbWM=;
- b=IrkVKLKrNUKMC76dnnrTffQ/0HDAEZCMvEvENalNKhCGC5dz3puE0W+jZQUJ8JkxDzbmxeihWtJ01cXDCd9YmWoDVMTR4HYIilyLL2U/Qk+j6AUit7VfmcAFddWOmwarNBq3FCfzfay4kNgdnBZ4wlLFxWIjeW/oxnpyx4cfNaqV/QkC8x2zyqwN/norkd7AdvCG1AOwYSZInsDXGpVxYapBpewLXpE+qC8AJpgN/hi0KtAsuNSopXReAGsFXJzVdM20vsGjqfDAZppbcwwwYhtq8oZ4l6efRMrk7f/Uidco1eNpXngfFOVVPHgJGHQZFlmKIWN17oupuX+pZCiSDQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=kalrayinc.com;
-Message-ID: <e1a4c9cd-445c-42b2-8d95-4bbf924c3d19@kalrayinc.com>
-Date: Wed, 14 Feb 2024 12:22:54 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/64] 6.1.78-rc1 review
-Content-Language: en-us, fr
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20240213171844.702064831@linuxfoundation.org>
-From: Yann Sionneau <ysionneau@kalrayinc.com>
-In-Reply-To: <20240213171844.702064831@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PR3P195CA0002.EURP195.PROD.OUTLOOK.COM
- (2603:10a6:102:b6::7) To MR1P264MB1890.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:501:13::5)
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="O2g1UjlX"
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 41EC6nFk027524;
+	Wed, 14 Feb 2024 12:18:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to : cc :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=pp1; bh=FO7kM2t1hHvlMoHVxfJUhmtbNNq5lW1oJMoCJ4hc5cM=;
+ b=O2g1UjlXw3xG+Sl67LOcpTE/0vEkkypeHCW5dTO0ubQoyFzJ6tR9oDTcJ2LZgHwO4mrc
+ b7aLFyHklsPoy/BjDMuRztJrsBuk614h2UO/BUpmzSqHvejwPBJJMKWj+ZQZYUcmp2cG
+ 0bl3xTvQz81aHmUZl8qpgxLwLjZucF+L1JT3pf1VIXCRAB3jj1n1Y72USOxmwwkzzOdO
+ f5fOJXLmqA712+qPvX0/q5UTEpABhDoVhX9h4kkN0PTiho8u2E8VrO4kB9lmNld3C/m9
+ e5gLCPtupydRIHKXmPhgXITezUlKuoqy6Gms9TjnufNYSsHH0nCubL4nBURlMD0WIg70 RA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w8w8409b9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Feb 2024 12:18:04 +0000
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41EC8F2b000930;
+	Wed, 14 Feb 2024 12:18:04 GMT
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w8w84099g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Feb 2024 12:18:04 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 41EAQm4J016517;
+	Wed, 14 Feb 2024 12:18:02 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3w6mymnp45-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 14 Feb 2024 12:18:02 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 41ECHudX5964342
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 14 Feb 2024 12:17:58 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C31CE20040;
+	Wed, 14 Feb 2024 12:17:56 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 80FAB2004B;
+	Wed, 14 Feb 2024 12:17:56 +0000 (GMT)
+Received: from osiris (unknown [9.152.212.60])
+	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+	Wed, 14 Feb 2024 12:17:56 +0000 (GMT)
+Date: Wed, 14 Feb 2024 13:17:55 +0100
+From: Heiko Carstens <hca@linux.ibm.com>
+To: Fangrui Song <maskray@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>, gor@linux.ibm.com,
+        agordeev@linux.ibm.com, borntraeger@linux.ibm.com, svens@linux.ibm.com,
+        ndesaulniers@google.com, linux-s390@vger.kernel.org,
+        linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+        patches@lists.linux.dev
+Subject: Re: [PATCH 06/11] s390/boot: vmlinux.lds.S: Handle '.rela' sections
+Message-ID: <20240214121755.6438-C-hca@linux.ibm.com>
+References: <20240207-s390-lld-and-orphan-warn-v1-0-8a665b3346ab@kernel.org>
+ <20240207-s390-lld-and-orphan-warn-v1-6-8a665b3346ab@kernel.org>
+ <CAFP8O3+L6Jpgktk50UBKg_SodH-DTAW2syZueUqxdZsxrOT3bg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MR1P264MB1890:EE_|PR0P264MB2936:EE_
-X-MS-Office365-Filtering-Correlation-Id: cabcbe80-a1ac-45bb-8ada-08dc2d4f4b00
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: AzQ0pjGhrCz40qa7fe3dvfgP6LH4FYbSr0LlrdzVuvQo+Czsvxx2mM7yOquGKO5CgSHLAxAbe+PvAAHDaa4aZNsVLx5ngZTItR115wC2NsJFHjqRyuO3BVT/Ou4NNMASIasfgoWlyydP3ZFSYTVDccy5kVWQg3ldURzc36+TNtREcMFMawYMMjKhAnel1/jDNZZQDDeV5ju3/8EYlRy6YzBKq8gJ4aQQr9iQ04raHC/MuhrqacOXn5KbizDrvdJpNaDByNAq+4o2X7XnohJed6PgR1vDOP64dxGf3WNx5kBXC6ZM7aDU08YnqNB/iTIJdO3h8uWjwtLE69xInciC3osu88Y5x3a+XBWdmimwibocmbsTOT/77ICDGLKjvw/zexHqc2iN/+50v41vdtDk0XudTca3jqnPTC/ShOwph3YmyctbA300QAbdsf8tAzyBo7G9qxeAqo4z54VfGRv7FVecFYnR109xLszcgWIab/+aERwzHT4ckN953QkIAoS2ruzwhdmkqNNpRkWcWiHnP+3kJ9rQLE8mMBIKpsXxCJ8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MR1P264MB1890.FRAP264.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(136003)(396003)(346002)(366004)(376002)(39850400004)(230922051799003)(186009)(1800799012)(451199024)(64100799003)(478600001)(6512007)(966005)(6486002)(41300700001)(31686004)(8676002)(8936002)(2906002)(7416002)(4326008)(5660300002)(53546011)(6506007)(66476007)(66556008)(316002)(66946007)(2616005)(31696002)(86362001)(38100700002)(36756003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: aT0FI99nM5lvWYqV1oyxfzUB7AW0UvgPxUMRCeJNxFnX3CTGp1VEtu0zRU/mo4TQchUHKC8A1wAc0mGMRIJuCvlzULg5E+uBW8RAHqhYP5V6Bl+Yuj+5srAdKCvpDcH0mJrI2CohlvJfUVUpdGg4CgsUUXb/K7Z05WISe3czoICJjwtwC4sceE7HF/LrVsg6imuqwZlCQgt0N3GT8xHFxyKeHin6KjIGkaEf0vdSmyUBJeG1Sak17npLKWyUeaK89/C096nEGc1NWBNopFGoYzUWrj2GkAx4NQy/y4anWBm/1lKNUF7sSPI63Y0gqtrZNmfpMvEfXZR7vD1yd/ysHAqERs/u8a5yLnTpUcX52MiJQfUu2kzL72wRdlEIUf8px/xrmAA2c52VlUbQRM0Bbl31oDL1vWKKQMJDcnjxE92FAAYopn+4K4GgJjfZ4K9gfcxQ73c7gkQaIKyTAFYlJ1ZnxFnDOWOSI2n6CdBTFYFduvXxXB4NRtdiiQ/HCSXlVuTSAOE49EUr972+DHdQ5LMVW05fU+UNEM6yAY2+F1SspI3N1tAQ5+PEiR6EGA7y0e5X8wJVGNYd6WjHc/zp8uMAqhy2FU+bBlpGjgSPHulRGzwLXAVs8GCx0SCUcHq/q+31Lu1v9q2XFuCFepuSUh4l3ssA3wo19KCgVQxWCRNvR9oZJfCH0JXWdOLsCAW7GsxsVs7bi6vp7fbZ0XsdIn72Dg9e5ssDrq6rdcTXMSY7V4/NquebILWMGzhjrC7F4Mb1Dj1CjkQMBWpj/nb0hL9n6Ro8aovl2IIcWo+SdzxvwkVDdrJhDkdRdDMu82evkU/ytdcTP9RgBT/eUoJJ4JB/gosF7fB6+7ygaptwDJz6yY513g0TOKNUbeMahEcIQ/phVVaoDQ0prTBGHLY2STqGaaiHjWJ2xQPnXRfiZjT739t5s6wWmgnygh/0XfLB
- DiGREH9IHMyWjXUlKuELiHRpuVe5SaHyV7StS5GnLh/9Vbn5DZSENUQitD3tg3ZaGQkNxx8VZgO+U4R4ZvaC1Qu6h0rzGnS5HMT971csLQbKxcZl03ohUXA/EvDilkXun4RomoJzGdv2++87KR9bsNToXYuxkid+Kls0ocKLJMXDM9nYwy/mwfJBHkM9889vDVTPNUJ+ZDWTI7jKMh9e5eV4+pQx5xbNG7Xu8wbSuYDObjetufnYKyXVg3s8JaJuJR7ENcZ0DikTP/9i+zuT6QTY6FJYzJocFnZ/psPXzKfadp7ZqQwgwWZor/jgRmouhj+UItCgEMhHyA9EItogsLAOgSufPTyzgJWHqtksuoVHWawwSoJLHONE1wNfS2lQungg1pnXZGyIhGupDhqSIiRwk6y94XHcYjGxi1B5McvlF1uJ+zx2td4CuO4bUEbfiywQLgWPGhS0Ga6wwdC9GoPwqio+7Zu0fPsOy7MFEH785ExwVaPCgOaJzGrUkkrE/1KymdwFsFMX5qrWIzjSabJF6DbclfOsBNpM8tattkksktJqYrdNZ0BOhM0gLBj9BgG+6T6EO1ig9ko+2vkWXdcveZVMbpHwxoLoDo0njrUtpEZ7qAjmcQY199RnZtI7JOMiaeu8i/tQjzV8ES5hJp1AAdz41yV/xEZHSRdp0t4d0gArqzYWww/F4WPgKCXn4tzTm0RzpVG7hLQKMwdmKQ==
-X-OriginatorOrg: kalrayinc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: cabcbe80-a1ac-45bb-8ada-08dc2d4f4b00
-X-MS-Exchange-CrossTenant-AuthSource: MR1P264MB1890.FRAP264.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Feb 2024 11:22:56.5254
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 8931925d-7620-4a64-b7fe-20afd86363d3
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: W+4N2RTtGQjl/kXPRcmuG76lj6RSYtk5UnnAuzl0sIHLO5bwY8KbqElUzoJ1ql4rg8EYyfpHbSNjfkG67MW1Yw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR0P264MB2936
-X-ALTERMIMEV2_out: done
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFP8O3+L6Jpgktk50UBKg_SodH-DTAW2syZueUqxdZsxrOT3bg@mail.gmail.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: HFECV309TxvMBgETUAvxE9F6Rql2XSz-
+X-Proofpoint-GUID: e4JmGb2ncB2o78Tu8NB0WgnTfDIi6Sps
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-14_05,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=307 adultscore=0
+ spamscore=0 impostorscore=0 suspectscore=0 mlxscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402140096
 
-Hi Greg,
+On Mon, Feb 12, 2024 at 09:18:34PM -0800, Fangrui Song wrote:
+> >         ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
+> > +       .rela.dyn : {
+> > +               *(.rela.*) *(.rela_*)
+> > +       }
+> > +       ASSERT(SIZEOF(.rela.dyn) == 0, "Unexpected run-time relocations (.rela) detected!")
+...
+> Commit 5354e84598f264793265cc99b4be2a2295826c86 ("x86/build: Add
+> asserts for unwanted sections")
+> specifies `*(.rela.*) *(.rela_*)` but it's not clear why `.rela_*` is
+> included. We only need .rela.* (see also ld.bfd --verbose)
+> 
+> This patch LGTM with this changed.
 
-On 13/02/2024 18:20, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.78 release.
-> There are 64 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 15 Feb 2024 17:18:29 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.78-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
-
-I tested 6.1.78-rc1 (b29c5b14893f) on Kalray kvx arch (not upstream yet), just to let you know everything works in our CI.
-
-It ran on real hw (k200, k200lp and k300 boards), on qemu as well as on our internal instruction set simulator (ISS).
-
-Tests were run on several interfaces/drivers (usb, qsfp ethernet, eMMC, PCIe endpoint+RC, SPI, remoteproc, uart, iommu). LTP and uClibc-ng testsuites are also run without any regression.
-
-Everything looks fine to us.
-
-Tested-by: Yann Sionneau <ysionneau@kalrayinc.com>
-
-Thanks a lot!
-
--- 
-
-Yann
-
-
-
-
-
+I'll keep it as it is, just to be consistent with x86.
