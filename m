@@ -1,134 +1,103 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8011419AC
-	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 23:51:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7464145326
+	for <patches@lists.linux.dev>; Wed, 14 Feb 2024 23:57:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707954682; cv=none; b=U+JoJsF/a84BrwOd0istbapDM1QU7UECq2eNUPawMwrhUDBFZl/tMQM3aLKIkjpwHoD+y1922ph5fkoqB1+TDK12W+MBp6wZ3KLFbiNYqLy5HRhekmHQNK8PFEEaRzHiLtpK9//2UoaDNqXODS2NnXp5qda5mpflgekiH5J/iJI=
+	t=1707955051; cv=none; b=NTc6aouIxbDChRXq0U1YYW5jI0fGwT44OeSvUKgyE8M3y8SK/ibuCbWQXGNMQKgcZzIK49eUNV37VwlQkiHNaB0wtVx5NVCzq6ZEXkpSMV+gfslSyuU4ufTjsA4k942gQ4C06nLz7paqViESuH0j3d2oY7j7NlzLR1Ovv/S5vAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707954682; c=relaxed/simple;
-	bh=gC+EHOPYgEnF4B4thgpejb8qEq5JPx1Zww7p4djo4U8=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eX/U2ih+Ln4uh21+JchetcDKxmXz57e/FPS24BjDWYYsGc6z5nRKSEJBOqddzrAYSujJd95MQFkgFlt7xOAeCP6MkmYYDItU0p/Vk9qnbL7aE6pVpAuBLsUchqkE5Gi+7OYvj9nAxc0+MlSb5V7wfuJWLQquWN6ei7J6CcjzSds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=DduY15y7; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1707955051; c=relaxed/simple;
+	bh=VqSJFmpRhmAQYjXv/G4gNLTLSwvkjnB6qhWoxX234c8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LQQ46Phu41RJJByAMoMg8bO3+MUcXAwBm++NIDg/U68HMNTpINuHhW56sNFhsly2B62GbsBOoD1m5TNhEgiuyvKP8zKI8hVa/XNozoG87MV8pgE3LwHDADqtFXRaAqNBx0oUGJHLYC+IWsGI8XQIE5nwfFXHgp/E0fY2JI9RHCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F/u6UEMy; arc=none smtp.client-ip=209.85.167.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="DduY15y7"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-51178bbb5d9so318313e87.2
-        for <patches@lists.linux.dev>; Wed, 14 Feb 2024 15:51:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F/u6UEMy"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3c02b993a5aso287305b6e.1
+        for <patches@lists.linux.dev>; Wed, 14 Feb 2024 15:57:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1707954678; x=1708559478; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gC+EHOPYgEnF4B4thgpejb8qEq5JPx1Zww7p4djo4U8=;
-        b=DduY15y72o05v24QJhWpmh7FC2eT2qDBeBuXBTzQ7vzDh2ncXxDV/GMUbU79Fa1fig
-         BBs6Gqx6GN1RXLMHW323zZVEQZFZXL34TRmjOHgy8TxaFcGkCUlPzrTQzNDuOg59eitS
-         nr+XrCA5OopQIo0K71y60J372D5rJn1tGA3O8=
+        d=gmail.com; s=20230601; t=1707955048; x=1708559848; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ezJuggmm91LEsLCew+tJs/aRiavsyGNCiHmODaOsV/E=;
+        b=F/u6UEMyvxot8f7hQM9Kfn29CpH0Aw+der6i9qqleCM2E4uUdyT1U7iXDQFbWrElsC
+         wIpQIUBWaV78V/ik57k1xlp1zeWWzvzaws6ivQj/kIBLr0plfjEjAdEAnRFQRquXUbeI
+         FFYOpahqLj5JikRysfLG6b0EyIKSz6UTIxRiCKQ+5M1N9n4MR8Qv6oYVlStNuC9pFkTU
+         eKQAQYFqJq23ZocOBemHErYn31rYMu0P6zfhYGRH8WMeZvyrFnufn9FdLmu28brcQy8e
+         s7XJ/tHpOxcPFEtQp5FqcaxWQVunzma9p+b6ZOmJe1PH+LiEe8RrrzVHgwmwwBtf5Gmk
+         T0jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707954678; x=1708559478;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=gC+EHOPYgEnF4B4thgpejb8qEq5JPx1Zww7p4djo4U8=;
-        b=tu2qpjfCQMR5DmytpnDJUJnS6Z3q33nugCLqr5fV9NtaCY0VQj7GlQUbY5u+Fk370h
-         y6KmmGHMmrtBjFWTacUAf84TnOBdOfWmjJ8nyog4CdoXq7cZIi5iOXqhlyFvRPv6P9Bg
-         JLchOp9mpxQCkuAjotJrtN/EWMXn5cqiWqlZvpdwPWqRcKUhs93RbpBeKgbG/BYRCobx
-         FEgy+/bRCJeA0VXzUvIl2+jQUvWxdbIEqB7a2clKxIosHqWVweHr+GDToP6PYO/B0aXc
-         3LOoefqUazfmL3iUhSPwKtBadOlCTWHcCwQy63Aoh2jmcII5sD3pSIc7uRLV9WAOmQrP
-         AVAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX1NjYya8aaldl8YIGD8kjEIOpiOW0DNMqOJdk/DdI8STOd8juHcIoGhzC3vf0F91BUJzRXPVmA3DyC9Cw8gQEIJitEc8xElg==
-X-Gm-Message-State: AOJu0YwlgCkz3H5FihIXJVmTtTrW5dEaJ+qd2J6gHAXpfghYtAhfOA+m
-	/+PXGyHEPWr5H0ViAELSHsuK/IPZUtJAh7T3eWz7G3yhWI9xAsWhSgm0lkT+AWeZ3Gy5j05EOPd
-	AeHZJf8/FEpxFoEXRAtinik7ZjsBs4bhE8ZxX
-X-Google-Smtp-Source: AGHT+IHY6HUhss7mHx1ExihADt6J1OI5zkXYcKo2xuLwjQ63JGNlMqWZ5oVvebM0eOWq56qXmv8DOgdu6dbCXc/ooo8=
-X-Received: by 2002:a05:6512:3ca5:b0:511:87c6:3060 with SMTP id
- h37-20020a0565123ca500b0051187c63060mr321912lfv.12.1707954678054; Wed, 14 Feb
- 2024 15:51:18 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 14 Feb 2024 15:51:17 -0800
+        d=1e100.net; s=20230601; t=1707955048; x=1708559848;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ezJuggmm91LEsLCew+tJs/aRiavsyGNCiHmODaOsV/E=;
+        b=pMsut5IHfxJEcLqd8NvSZGqk+0+U23gHn8OObex6keG53f0m7zOmWRsQLTSrAF3KPB
+         1u7TPYa8yLEPhXf4EWOUzDG3kAP31ZX5vHeCFhjIMshSL7YIEIy1gaNHeniHjVEYLEAe
+         V6bMnY7drVtVVN/y1/Q0TaTfJ1xL6xZvULEBnqn72YbUQT2GWVgmNtXxWxg4ltxL++7V
+         Rk8WBVEDK6HVHJhudCL0Ctz9bLI1g6cAyw290sJ0NCOs/caEL4VAVzOnP3RrS3yCmFbw
+         m//rOcMHBnwz26IgbPGFzD2HID7juFuzP496cF9v6Zpe4mI2xd4AIUvxcZAv8qruJd4A
+         2Vaw==
+X-Gm-Message-State: AOJu0YwyB7lAEDO5p2feP3xQ8JoeZsa8XCbXWHMlldJMiE9jv8WRRh7Q
+	YJLoPmvTVSYpRlWzBXLjZ60PgTAueXbOilGas1FPy4npunWmkQqm
+X-Google-Smtp-Source: AGHT+IFmteV6QcMkwcLvoWrAbxzXbTXPEKz8uD88/kDBh4zvX4Ff7Pu096JAki/XNnJe8oo8yXlF4w==
+X-Received: by 2002:a05:6808:218:b0:3c0:3b90:ae24 with SMTP id l24-20020a056808021800b003c03b90ae24mr311493oie.24.1707955048504;
+        Wed, 14 Feb 2024 15:57:28 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id mv3-20020a056214338300b0068cb4ed4840sm78127qvb.62.2024.02.14.15.57.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Feb 2024 15:57:27 -0800 (PST)
+Message-ID: <bfb2446f-69e6-41df-9fb3-10eb4308ea0b@gmail.com>
+Date: Wed, 14 Feb 2024 15:57:24 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=UuunNnXJ0kAzRPVy0DX7Wv2eQOa-fMJQ-aKtaGnyQaQA@mail.gmail.com>
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-5-swboyd@chromium.org>
- <CAD=FV=UuunNnXJ0kAzRPVy0DX7Wv2eQOa-fMJQ-aKtaGnyQaQA@mail.gmail.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 14 Feb 2024 15:51:17 -0800
-Message-ID: <CAE-0n51b9=BJv6PMmsdLDT7tcgKT63qrqNknp-CQd5BOb1dhjA@mail.gmail.com>
-Subject: Re: [PATCH 04/22] usb: core: Set connect_type of ports based on DT node
-To: Doug Anderson <dianders@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Pin-yen Lin <treapking@chromium.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Matthias Kaehlcke <mka@chromium.org>, linux-usb@vger.kernel.org, 
-	maciek swiech <drmasquatch@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 00/65] 6.1.78-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, allen.lkml@gmail.com
+References: <20240214142941.551330912@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20240214142941.551330912@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Quoting Doug Anderson (2024-02-13 16:03:11)
-> Hi,
->
-> On Fri, Feb 9, 2024 at 11:09=E2=80=AFPM Stephen Boyd <swboyd@chromium.org=
-> wrote:
-> >
-> > When a USB hub is described in DT, such as any device that matches the
-> > onboard-hub driver, the connect_type is set to "unknown" or
-> > USB_PORT_CONNECT_TYPE_UNKNOWN. This makes any device plugged into that
-> > USB port report their 'removable' device attribute as "unknown". Improv=
-e
-> > the connect_type attribute for ports, and in turn the removable
-> > attribute for USB devices, by looking for child devices with a reg
-> > property or an OF graph when the device is described in DT.
-> >
-> > If the graph exists, endpoints that are connected to a remote node must
-> > be something like a usb-{a,b,c}-connector compatible node, or an
-> > intermediate node like a redriver, and not a hardwired USB device on th=
-e
-> > board. Set the connect_type to USB_PORT_CONNECT_TYPE_HOT_PLUG in this
-> > case because the device is going to be plugged in. Set the connect_type
-> > to USB_PORT_CONNECT_TYPE_HARD_WIRED if there's a child node for the por=
-t
-> > like 'device@2' for port2. Set the connect_type to USB_PORT_NOT_USED if
-> > there isn't an endpoint or child node corresponding to the port number.
->
-> The above sounds good, but then I look at patch #18 ("dt-bindings:
-> chrome: Add binding for ChromeOS Pogo pin connector") and patch #22
-> ("arm64: dts: qcom: sc7180-trogdor: Wire up USB and DP to
-> usb-c-connectors") and it makes my Spidey Sense tingle.
->
-> Specifically, I _think_ if a port is "hard wired" that can sometimes
-> tell the system that the port is a bit more trusted. In the case of
-> the "pogo" pins on detachables, though, I don't _think_ there's
-> anything that prevents someone from making a "pogo to USB A port"
-> adapter and then you could plug anything you wanted into the pogo
-> port. If there's any extra trust given to these "internal" ports a
-> nefarious attacker could presumably abuse that trust for the pogo
-> pins.
+On 2/14/24 06:30, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.78 release.
+> There are 65 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 16 Feb 2024 14:28:54 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.78-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-The pogo pins on detachables are connected via the OF graph, so they are
-only ever going to be either "not connected" or "hotplug". They can't
-become "hard wired" because they're not a child node with a reg property
-corresponding to the USB port.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
->
-> I have no idea if this is a realistic concern or not. I'm about 95%
-> sure that hardwired "PCIe" ports get extra trust and get "deferred
-> IOMMU flush" enabled and, in the case of PCIe, that actually is a real
-> security hole. For USB, though, I think the system is more isolated by
-> the USB host controller so I'm not sure that there is any extra trust
-> given to "hard wired" ports. ...so maybe the answer here is to just
-> ignore my rambling. ...or maybe the answer here is that everything is
-> fine but patches #18 and #22 should be modified not to cause the pogo
-> pins to be considered as "hard wired" since they really aren't...
->
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
-Pogo pins should be considered hot plug with this patch series, but I
-will double check that I didn't mess up that logic.
