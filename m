@@ -1,225 +1,130 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6371870
-	for <patches@lists.linux.dev>; Thu, 15 Feb 2024 01:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9613C17
+	for <patches@lists.linux.dev>; Thu, 15 Feb 2024 03:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707961958; cv=none; b=I4TL3Rnn/fJf/iZ23BJcv4ITYBCv91J63hbRKIqyOgiyI89igK0vp0oM0FzQ6tCOodPmw6Qoy1jLGSyWuWVrAI/bMO+ihJaqnUPF6M0eW3linOIKqZ/rZ89L8G+2eGaU9vn6iLkHQdZZTw4qVB2FH378qQMCyjL9Pag8A9cL3O4=
+	t=1707969284; cv=none; b=XGhu5wQkGQTKcg+UQVxJajKtIsbAL5s6tkKTwX0aVImsdl2vEEWUuRv1kJEJd7nvaYYQvaXylR45+5RzlhDBBSSYy2Ij+CvJsNbY9U9Hg+duy1j36M31mobT+zeim/XmojnnnH6vHQs750IA7kkKBoxlXgFJTh8gFKUcnHTAjHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707961958; c=relaxed/simple;
-	bh=WM4lIFwJI9aZm3EQ8zP4FUSooeEH5PxJSUNKg7XTZcc=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eJfFXXpdC9D01TFhjG8IRI1Jwj7LW7PNJApCy+jdxA41BeJvd1t9JGjb6pkY9HvgJxtrD9RLtiLYBgssoCGyJO2oT9Zy9vcspsNtO/QZN3qoGbUf8YoCd5WmmNcZ5+S5hqzkmkwImOay+9FWkejR8jsZdqxkFuNh7rJ9pXNDX80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Imi8ohj0; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1707969284; c=relaxed/simple;
+	bh=u9GREmREsa9K16Mj/qJJepYXwLaWhgNfbB48MjQKbpk=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XY5ulCOAkYrVfQ/mNZN8552AhUF63exYb03juVrv7ZW54GbUXa1ag729mZ+uscczW41SrCPNMs8YMvbck3KoTlA68eyPXdXrjJfXz4qi1mY/q1LH0dEhvjewAr3jquLNj3R9Wktm70YWKo42cKVcJKUB4r7dGlH4Wx4bN0WqaWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=u1yChdZw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=QxaIbbKd; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=u1yChdZw; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=QxaIbbKd; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Imi8ohj0"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-511acd26befso460644e87.1
-        for <patches@lists.linux.dev>; Wed, 14 Feb 2024 17:52:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1707961954; x=1708566754; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lUDhpSWaktAHgDMHaIrpDrRKHGUYByMrZIOMk1w7exc=;
-        b=Imi8ohj0dL/kPFSkQ8cCbsI6nnrtMRG6ZJ0wOeS6wxWb1xYhHYXxMgLnYO+ahFA3Q0
-         8fO2HDdHFQH6MchOWK3EH9ros1iNBsQzTIHTMyaVck/RYQPXlIjPVP+9cQdpUjYNaeWv
-         l7vEo/hJaIbnpZ5IRcZ1SAWDGK8GMKj5pxLNc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707961954; x=1708566754;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lUDhpSWaktAHgDMHaIrpDrRKHGUYByMrZIOMk1w7exc=;
-        b=Zs33bIIo5jIQO6pONWkrwT2vzB6KDshC7/n+FFGmWR0hnbxILR9y5qFYcM6AwMbal6
-         BlmuRLeaocSdjBnKpSKXF7dtLBOqbrr4VxD0DChyGvBhwdVibGOYWI3NigLrFXfSH9hi
-         JrEhNHgbxOfuIetj3gHqy6JbyvTZz3YVXYYGQBXeLvGLeD4h78VbCwRxyzml83BDwUTE
-         4W8etbnCz/xRb5q3V2MLrQ0nJcn950sNbDROOb8OM/bRDxXJ3s7Rqw4E4SHvy1ZUEsXM
-         OwvQwF+SNyNYzl0JUbYW0Zo8SnvaOD0uaV2A+qhf7GOVFYrxmT9JM/7tllLu8pA/ABRq
-         Y32Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUHntdrzAKGDwzRGAl4hDfqNv7dahdc58Nwr25AVGSPjqIxbOBSeGOptn1bzrxGnW/PIPj2AdUh4jyL2ThjlTFHjs4WhXx3bQ==
-X-Gm-Message-State: AOJu0YyLzNf18q+/F9iz8BmBokDUhOMh7gzBLkX1CvsmZA4AHc18vIyF
-	TmnLHW0ZpwpH38nkX4bq3JOP25/UptFAkhZ06hITVoZC3lLgkeJosdwBHppX3s8bN1Kmg8YIFl2
-	x/Als47EspAbICz8iE9f/CE6/LkcfQK/ovVSq
-X-Google-Smtp-Source: AGHT+IGRTMpBbk9bxMzh6L25v7/Xsvqzk7aZ8aOwSIfCL6t8r+0G7VepodLsRuDT3PsIwVmpPB02ksb47t2sauMlvis=
-X-Received: by 2002:a05:6512:2c8f:b0:512:88a8:1520 with SMTP id
- dw15-20020a0565122c8f00b0051288a81520mr107848lfb.18.1707961954357; Wed, 14
- Feb 2024 17:52:34 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 14 Feb 2024 17:52:33 -0800
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="u1yChdZw";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="QxaIbbKd";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="u1yChdZw";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="QxaIbbKd"
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [10.150.64.98])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 300E91F844;
+	Thu, 15 Feb 2024 03:54:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1707969280; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5kN76w+1MfjsyiMW5EtqFNsorHmy7CzsOWoopjdKlgo=;
+	b=u1yChdZw7tSy04b6f69Vjus7ecHVSfxFWVzBVEjkOjvWQURYBvJLR7ZF7Ai/sqtHrOffKH
+	1Fm8Md/G1P2eNfZxAhJzgGhq8VEVwLY0dRK6JGjv5p0JTDGmsPcvdf+ujUw2cOUm2VhWNF
+	lLffWvy2HU1fAjek49m0u07iUacOXio=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1707969280;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5kN76w+1MfjsyiMW5EtqFNsorHmy7CzsOWoopjdKlgo=;
+	b=QxaIbbKd+/HVbVptW3t9ootZU1tck9HajlzdIJR9Hbz3bhARbBbRQF3u6DdlfDOVYx5Tds
+	xLH2n0Z1APTFUmCA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1707969280; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5kN76w+1MfjsyiMW5EtqFNsorHmy7CzsOWoopjdKlgo=;
+	b=u1yChdZw7tSy04b6f69Vjus7ecHVSfxFWVzBVEjkOjvWQURYBvJLR7ZF7Ai/sqtHrOffKH
+	1Fm8Md/G1P2eNfZxAhJzgGhq8VEVwLY0dRK6JGjv5p0JTDGmsPcvdf+ujUw2cOUm2VhWNF
+	lLffWvy2HU1fAjek49m0u07iUacOXio=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1707969280;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5kN76w+1MfjsyiMW5EtqFNsorHmy7CzsOWoopjdKlgo=;
+	b=QxaIbbKd+/HVbVptW3t9ootZU1tck9HajlzdIJR9Hbz3bhARbBbRQF3u6DdlfDOVYx5Tds
+	xLH2n0Z1APTFUmCA==
+Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 2CB95139E2;
+	Thu, 15 Feb 2024 03:54:37 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap2.dmz-prg2.suse.org with ESMTPSA
+	id GueuM/2KzWWjKgAAn2gu4w
+	(envelope-from <ddiss@suse.de>); Thu, 15 Feb 2024 03:54:37 +0000
+Date: Thu, 15 Feb 2024 14:54:22 +1100
+From: David Disseldorp <ddiss@suse.de>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: fstests@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ patches@lists.linux.dev
+Subject: Re: [PATCH fstests] common/config: fix CANON_DEVS=yes when file
+ does not exist
+Message-ID: <20240215145422.2e12bb9b@echidna>
+In-Reply-To: <20240214174209.3284958-1-mcgrof@kernel.org>
+References: <20240214174209.3284958-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <46ac6ab8-b0a5-497d-91b6-1d2ced33184b@linaro.org>
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-14-swboyd@chromium.org>
- <46ac6ab8-b0a5-497d-91b6-1d2ced33184b@linaro.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Wed, 14 Feb 2024 17:52:33 -0800
-Message-ID: <CAE-0n52TzOAqN8Y7EdJPjDxY2iY-6Jr-Pq8fFMFtF-cXo5+OyA@mail.gmail.com>
-Subject: Re: [PATCH 13/22] dt-bindings: chrome: Add google,cros-ec-typec-switch
- binding
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, chrome-platform@lists.linux.dev
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Douglas Anderson <dianders@chromium.org>, 
-	Pin-yen Lin <treapking@chromium.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Lee Jones <lee@kernel.org>, Benson Leung <bleung@chromium.org>, 
-	Guenter Roeck <groeck@chromium.org>, Prashant Malani <pmalani@chromium.org>, 
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [0.40 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 RCPT_COUNT_THREE(0.00)[4];
+	 TO_DN_SOME(0.00)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 MID_RHS_NOT_FQDN(0.50)[];
+	 RCVD_TLS_ALL(0.00)[];
+	 BAYES_HAM(-0.00)[23.61%]
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Spam-Score: 0.40
 
-Quoting Krzysztof Kozlowski (2024-02-11 05:34:25)
-> On 10/02/2024 08:09, Stephen Boyd wrote:
-> > Add a binding for the USB type-c switch controls found on some ChromeOS
-> > Embedded Controllers (ECs). When this device is a mode switch, it takes
-> > one DisplayPort (DP) port as input and some number (possibly zero) of
-> > USB SuperSpeed ports (bundles of USB SS lanes) as input, and muxes those
-> > lanes into USB type-c SuperSpeed lanes suitable for the SSTRX1/2 pins on
-> > a usb-c-connector. When this device is an orientation switch, it
-> > redirects the DP lanes to the proper USB type-c SSTRX lanes.
-> >
-> > Cc: Rob Herring <robh+dt@kernel.org>
-> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> > Cc: Conor Dooley <conor+dt@kernel.org>
-> > Cc: Lee Jones <lee@kernel.org>
-> > Cc: Benson Leung <bleung@chromium.org>
-> > Cc: Guenter Roeck <groeck@chromium.org>
-> > Cc: Prashant Malani <pmalani@chromium.org>
-> > Cc: Tzung-Bi Shih <tzungbi@kernel.org>
-> > Cc: <devicetree@vger.kernel.org>
-> > Cc: <chrome-platform@lists.linux.dev>
-> > Cc: Pin-yen Lin <treapking@chromium.org>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >  .../chrome/google,cros-ec-typec-switch.yaml   | 365 ++++++++++++++++++
-> >  .../bindings/mfd/google,cros-ec.yaml          |   5 +
-> >  2 files changed, 370 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/chrome/google,cros-ec-typec-switch.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/chrome/google,cros-ec-typec-switch.yaml b/Documentation/devicetree/bindings/chrome/google,cros-ec-typec-switch.yaml
-> > new file mode 100644
-> > index 000000000000..17a0ba928f5d
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/chrome/google,cros-ec-typec-switch.yaml
-> > @@ -0,0 +1,365 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/chrome/google,cros-ec-typec-switch.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Google Chrome OS EC(Embedded Controller) USB Type C Switch
-> > +
-> > +maintainers:
-> > +  - Benson Leung <bleung@chromium.org>
-> > +  - Prashant Malani <pmalani@chromium.org>
-> > +  - Stephen Boyd <swboyd@chromium.org>
-> > +
-> > +description:
-> > +  Chrome OS devices have an Embedded Controller(EC) which has access to USB
-> > +  Type C switching. This node is intended to allow the OS to control Type C
-> > +  signal muxing for USB-C orientation and alternate modes. The node for this
-> > +  device should be under a cros-ec node like google,cros-ec-spi.
-> > +
->
-> If this is USB Type C switch, then you miss reference to
-> usb-switch.yaml, but then ports look a bit different.
+On Wed, 14 Feb 2024 09:42:08 -0800, Luis Chamberlain wrote:
 
-Thanks for the pointer. I suspect that's in linux-next only? I'm going
-to move this to the cros-ec-typec.yaml file but I'll still need some
-sort of property like 'mode-switch' or 'orientation-switch' to describe
-what needs to be done in the kernel by changing lane assignments in the
-drm_bridge.
+> CANON_DEVS=yes allows you to use symlinks for devices, so fstests
+> resolves them back to the real backind device. The iteration for
+> resolving the backind device works obviously if you have the file
 
-One problem with those properties is that they're boolean for the whole
-device. If I have a google,cros-ec-typec node that has two input DP
-ports and two output USB-C ports then it may be that one port needs
-orientation switching and the other only needs to do mode switching.
-This needs to be expressed somehow and a top-level boolean property
-doesn't do that. It could be part of the DP endpoint node itself.
+s/backind/backing
 
-Also I don't know how to indicate that mode switching can't be changed
-here directly. For example, on Trogdor the mode is switched by the EC,
-and the kernel can't change the mode. Changing DP lane assignments isn't
-going to change the situation either. The mode is still going to be
-something like DP+USB, or just DP, etc. Maybe there needs to be a
-different property, like 'dp-mode-lane-assignment = <array of ports>',
-that indicates which DP ports need to do lane assignment or
-'dp-orientation-lane-assignment = <array of ports>' for orientation
-control. Either way, I'm saying that 'mode-switch' and
-'orientation-switch' properties don't make any sense here. I was using
-them to wedge the code into the typec switch callbacks, but if I move
-this into the cros-ec-typec driver then I don't need them.
+> present, but if one was not present there is a parsing error. Fix
+> this parsing error introduced by a0c36009103b8 ("fstests: add helper
+> to canonicalize devices used to enable persistent disks").
+> 
+> Fixes: a0c36009103b8 ("fstests: add helper to canonicalize devices used to enable persistent disks"
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 
->
-> > +
-> > +  no-hpd:
-> > +    description: Indicates this device doesn't signal HPD for DisplayPort
-> > +    type: boolean
-> > +
-> > +  ports:
-[...]
-> > +
-> > +          endpoint@7:
-> > +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
-> > +            description: USB-C data for EC's 7th type-c port
-> > +            unevaluatedProperties: false
-> > +            properties:
-> > +              data-lanes:
-> > +                $ref: /schemas/types.yaml#/definitions/uint32-array
-> > +                description: |
-> > +                  An array of physical USB-C data lane indexes.
-> > +                  - 0 is SSRX1 lane
-> > +                  - 1 is SSTX1 lane
-> > +                  - 2 is SSTX2 lane
-> > +                  - 3 is SSRX2 lane
-> > +                minItems: 4
-> > +                maxItems: 4
-> > +                items:
-> > +                  maximum: 3
-> > +
-> > +        anyOf:
-> > +          - required:
-> > +              - endpoint@0
->
-> I don't get what you want to say here. This anyOf should have no effect.
-
-I'm trying to say that there should be at least one usb-c data lane
-output endpoint if there's a port@2 (usb-c output).
-
->
-> > +          - required:
-> > +              - endpoint@1
-> > +          - required:
-> > +              - endpoint@2
-[...]
->
-> > +
-> > +required:
-> > +  - compatible
-> > +  - ports
-> > +
-> > +allOf:
-> > +  - if:
-> > +      properties:
-> > +        no-hpd: true
->
-> I don't understand this either. What is it for? Where did you see such
-> syntax?
-
-This is saying that if the no-hpd property is present then the port@0
-port (DP input port) is required. Otherwise no-hpd doesn't really make
-any sense because this device isn't muxing DP onto USB type-c connectors.
-
-I found this syntax by searching the schema website and reading this
-page[1]. The last yellow note about "country" not being a required
-property led me to this syntax.
-
-[1] https://json-schema.org/understanding-json-schema/reference/conditionals#ifthenelse
+Reviewed-by: David Disseldorp <ddiss@suse.de>
