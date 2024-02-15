@@ -1,116 +1,161 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8499A69DFE
-	for <patches@lists.linux.dev>; Thu, 15 Feb 2024 11:47:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BF113175A;
+	Thu, 15 Feb 2024 13:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707997668; cv=none; b=sHwy9AZ+iuZZpPEtzj0BjezQa/idFsa/uTqd9PRNyCttxi2tQb0nslV98YN3Q8K0ChlDUTLVCrL7NVDYQ19YIIVAL2RqCSm+gQpR1LrmhWeGP5+a9PjxBPAzD9WINw0ia0lp/V3qqgEhCLWi/MMKdMcNuORcpTR3Jh3t/25KVIg=
+	t=1708005000; cv=none; b=n+v4JfJBmdBH58jiRnOBVjdKdEcI6D1cAClYI+4DmbfbecCHo/zuoyPAL3nVIeKFLhjELEy8je01QgBE+Xdmfm63wOJkIY4Edte0AzVuCC7mh3cRX6YS494YNllnZmKt1VDiAsFXJekcSxd3MuPLiK9jDWK6MX3DFk3RoJvrizA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707997668; c=relaxed/simple;
-	bh=LN1fd7tD77fB42zqbauIV0Aa4K8khZa+u2KvtOVoSpw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r1QU6Hb9xC5KC8OnhcfGJVEaIWKQsTkNgcQYh1krRYgQsns/CwqQB2r4RJmr8Hwo3rH2lIxAR7K3WKfpbK61OhWzcmsM3G9rLpVqspuslO2AYhCzjIe33FhxRwj7TDaWWYvwwxyS2KqD5T7r/1N7rA+b2aUFFAXo7zdxBFnbiXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=Qj2eItOI; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	s=arc-20240116; t=1708005000; c=relaxed/simple;
+	bh=BPsx6HPohDJ6rSCspeipzi590qL9h/shf0Xs+0e6IzM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KXhbHPNjCGeEhOD4Tq0AoMzwb3kG+7bmlCl8Jzm4coKn5igp5TS9ba15sHYhiT1pwmVMRJQIJSSfDSh453VTfrBXWD7mdrJROaOBcev5xPN7tkpbmtPAzEHYTECc9hcJXHY0J08M06IgaUMirYodJd1W1FI1BdqVHTyOt9wlg00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H9eqwgcz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="Qj2eItOI"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-337cc8e72f5so456190f8f.1
-        for <patches@lists.linux.dev>; Thu, 15 Feb 2024 03:47:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1707997664; x=1708602464; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jDZkTUXyfxckUhrTkjTJWxTxMlTrhxiy3HMA9uLoreY=;
-        b=Qj2eItOIZ8XUpQjPJ5YzzgcuP7ZeOF/cQBsEkK0hoH3l/p5XZndXEzMCJOyLUnF2Dz
-         z/mJN68bfeTv9CLi+4oFXrPAnoJpjE0HRlsQ8johmLIPAvdSYt5IkiU09WYXMcGJ3sp+
-         Tplg9TtN3fOo8XJFEWh0sl5bnG468kXDUauR8OqOjzF1MEYJuy36jmGmNjV2CPumFnSR
-         5NHk/ryMuNtYWyEh/SzzzgojnsmvpOmSgVn/UVfVV9HP5z79QuKpi3CzXz7iJsr9wo+7
-         qK3cPGzARSOHXiRqVAXRQwBkFRT76w7MyntiV2KTnk2MIZ+FYtMOvbm2QXTQ/S5qZ7Vr
-         NHmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707997664; x=1708602464;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jDZkTUXyfxckUhrTkjTJWxTxMlTrhxiy3HMA9uLoreY=;
-        b=BC/T5fapb2MBsTP53XshZTBpXIA7xVfklhYUJeEDOYI4Z5dkC4KqaZ0hK0igwehI5Q
-         Es30u1bAh2W2ogehkyBaOrQR6KGn45i/nTeRjSWRMFUd9zooxvWTkJkYISJI2YRVXVqC
-         NxN2/n5kJ7ox++EGgtk87IBskEOc9A+4Bm4Dzl2wBvyQ13QkY1/2AX1iqDKHoHLE7AkZ
-         12nhPLV356/ssLLd+vcXgpVwUJXspP1I7K9/hsPDng9z3CeplC34Yc/caI7Y7oyPxmsl
-         3P/kLnvnBlt6upFpl0TdiXcdP/yiKj1XcAHxZs2+R7/xpNFrl7sEnA8k7k4/O4Nl+M+9
-         C4RA==
-X-Forwarded-Encrypted: i=1; AJvYcCXUjg9oK05hmIZb5htfRKxu/ODdwwlqCwocFNan5CxuJmjM8ugY5JadunfE5yIKRluOxntNC9yRRFclvrooC3fM0040rNFFtA==
-X-Gm-Message-State: AOJu0Yxm67sa4VIlZv9KTBEw3XrtXYyNjH/IAeVfvwWlcuaIcY64Yrax
-	gSoJ8fZQq0z7/lUGnpEB2lM7waD6JA7NBKumv6Bf22k2o2A/V0oGWvBP+Qb7kOgruA0JoDI7IPY
-	1VmEdcFtF2tzOG5YWIpZ22CEIu/Z4tNK6/q4HIg==
-X-Google-Smtp-Source: AGHT+IEPa0xe746/mLrXSvxwPwOUcEJ2izyVagCxfrOZJvxe8P6kn5FD8DsuToN4BWhfhL8fRGnF9fn34vnFWVpVl0k=
-X-Received: by 2002:a5d:66c2:0:b0:336:76de:c171 with SMTP id
- k2-20020a5d66c2000000b0033676dec171mr1213235wrw.62.1707997663921; Thu, 15 Feb
- 2024 03:47:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H9eqwgcz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E716AC43390;
+	Thu, 15 Feb 2024 13:49:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708004999;
+	bh=BPsx6HPohDJ6rSCspeipzi590qL9h/shf0Xs+0e6IzM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=H9eqwgczN+4DD4O9zYilmjP7tRzpuH4bbbd/jgcvotZB0PmZ1v926jwXovnvwwDVU
+	 r/yGueiE4nxheSLfIz7qp9FIY4f47tmUSEfgOfTWNCC4T7qoJW3HQYz8xAAX0rC5rF
+	 TUCFLwy8Z4qV6mhUXZzXUep6FxhzSxYHe7sD9jx3SrKU8I3mUOCZ9pEmBJ6KEqxcpP
+	 DVq27TNObXEPO3SYM3y0wfZ7Hms1zT3JeQYgmodTK+Z1rblbBc58De+2sGpQ3QiDQN
+	 drIonniZ81crua9GLBO2jVLGUDoniBjZ2dnO8lb783rkwH6lOSn3gkFEvnich7PBCI
+	 O9qct+qQqZsVg==
+Date: Thu, 15 Feb 2024 13:49:53 +0000
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
+	Moritz Fischer <moritzf@google.com>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v5 01/17] iommu/arm-smmu-v3: Make STE programming
+ independent of the callers
+Message-ID: <20240215134952.GA690@willie-the-truck>
+References: <0-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+ <1-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240214142247.920076071@linuxfoundation.org>
-In-Reply-To: <20240214142247.920076071@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Thu, 15 Feb 2024 20:47:32 +0900
-Message-ID: <CAKL4bV6VJexFZwG4fHjZQ7eqSzUee3+VZH2baxvJqJqSneNj7w@mail.gmail.com>
-Subject: Re: [PATCH 6.6 000/124] 6.6.17-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Greg
+Hi Jason,
 
-On Wed, Feb 14, 2024 at 11:30=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.17 release.
-> There are 124 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 16 Feb 2024 14:22:24 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.17-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Feb 06, 2024 at 11:12:38AM -0400, Jason Gunthorpe wrote:
+> As the comment in arm_smmu_write_strtab_ent() explains, this routine has
+> been limited to only work correctly in certain scenarios that the caller
+> must ensure. Generally the caller must put the STE into ABORT or BYPASS
+> before attempting to program it to something else.
 
-6.6.17-rc2 tested.
+This is looking pretty good now, but I have a few comments inline.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 330 ++++++++++++++++----
+>  1 file changed, 263 insertions(+), 67 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index 0ffb1cf17e0b2e..f0b915567cbcdc 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -48,6 +48,21 @@ enum arm_smmu_msi_index {
+>  	ARM_SMMU_MAX_MSIS,
+>  };
+>  
+> +struct arm_smmu_entry_writer_ops;
+> +struct arm_smmu_entry_writer {
+> +	const struct arm_smmu_entry_writer_ops *ops;
+> +	struct arm_smmu_master *master;
+> +};
+> +
+> +struct arm_smmu_entry_writer_ops {
+> +	unsigned int num_entry_qwords;
+> +	__le64 v_bit;
+> +	void (*get_used)(const __le64 *entry, __le64 *used);
+> +	void (*sync)(struct arm_smmu_entry_writer *writer);
+> +};
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Can we avoid the indirection for now, please? I'm sure we'll want it later
+when you extend this to CDs, but for the initial support it just makes it
+more difficult to follow the flow. Should be a trivial thing to drop, I
+hope.
 
-[    0.000000] Linux version 6.6.17-rc2rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
-Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Thu Feb 15 19:52:35 JST 2024
+> +static void arm_smmu_get_ste_used(const __le64 *ent, __le64 *used_bits)
+>  {
+> +	unsigned int cfg = FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(ent[0]));
+> +
+> +	used_bits[0] = cpu_to_le64(STRTAB_STE_0_V);
+> +	if (!(ent[0] & cpu_to_le64(STRTAB_STE_0_V)))
+> +		return;
+> +
+> +	/*
+> +	 * See 13.5 Summary of attribute/permission configuration fields for the
+> +	 * SHCFG behavior. It is only used for BYPASS, including S1DSS BYPASS,
+> +	 * and S2 only.
+> +	 */
+> +	if (cfg == STRTAB_STE_0_CFG_BYPASS ||
+> +	    cfg == STRTAB_STE_0_CFG_S2_TRANS ||
+> +	    (cfg == STRTAB_STE_0_CFG_S1_TRANS &&
+> +	     FIELD_GET(STRTAB_STE_1_S1DSS, le64_to_cpu(ent[1])) ==
+> +		     STRTAB_STE_1_S1DSS_BYPASS))
+> +		used_bits[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
 
-Thanks
+Huh, SHCFG is really getting in the way here, isn't it? I think it also
+means we don't have a "hitless" transition from stage-2 translation ->
+bypass. I'm inclined to leave it set to "use incoming" all the time; the
+only difference I can see is if you have stage-2 translation and a
+master emitting outer-shareable transactions, in which case they'd now
+be outer-shareable instead of inner-shareable, which I think is harmless.
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Additionally, it looks like there's an existing buglet here in that we
+shouldn't set SHCFG if SMMU_IDR1.ATTR_TYPES_OVR == 0.
+
+> +
+> +	used_bits[0] |= cpu_to_le64(STRTAB_STE_0_CFG);
+> +	switch (cfg) {
+> +	case STRTAB_STE_0_CFG_ABORT:
+> +	case STRTAB_STE_0_CFG_BYPASS:
+> +		break;
+> +	case STRTAB_STE_0_CFG_S1_TRANS:
+> +		used_bits[0] |= cpu_to_le64(STRTAB_STE_0_S1FMT |
+> +					    STRTAB_STE_0_S1CTXPTR_MASK |
+> +					    STRTAB_STE_0_S1CDMAX);
+> +		used_bits[1] |=
+> +			cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |
+> +				    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |
+> +				    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_STRW);
+> +		used_bits[1] |= cpu_to_le64(STRTAB_STE_1_EATS);
+> +		used_bits[2] |= cpu_to_le64(STRTAB_STE_2_S2VMID);
+> +		break;
+> +	case STRTAB_STE_0_CFG_S2_TRANS:
+> +		used_bits[1] |=
+> +			cpu_to_le64(STRTAB_STE_1_EATS);
+> +		used_bits[2] |=
+> +			cpu_to_le64(STRTAB_STE_2_S2VMID | STRTAB_STE_2_VTCR |
+> +				    STRTAB_STE_2_S2AA64 | STRTAB_STE_2_S2ENDI |
+> +				    STRTAB_STE_2_S2PTW | STRTAB_STE_2_S2R);
+> +		used_bits[3] |= cpu_to_le64(STRTAB_STE_3_S2TTB_MASK);
+> +		break;
+
+With SHCFG fixed, can we go a step further with this and simply identify
+the live qwords directly, rather than on a field-by-field basis? I think
+we should be able to do the same "hitless" transitions you want with the
+coarser granularity.
+
+Will
