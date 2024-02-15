@@ -1,94 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0EE13DB92;
-	Thu, 15 Feb 2024 21:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B691419AD
+	for <patches@lists.linux.dev>; Thu, 15 Feb 2024 22:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708034262; cv=none; b=LtGkANG199WfhTgJa1UIHMSrsgLkqRwFOGr5Lgb32SUgIGiVyBc8EMUcoEqUb47j2cSPC7R+oSwcm678nWZkVK09B+dr/D5ZSI9Y4jtuY9mQ1sJWM/QSQEUoQzuXpjJHZIQTvKj59vqUyCbA0ZO/HvscRQ/6XFn9bIbCzLsbPq4=
+	t=1708034428; cv=none; b=CuV+YZeTaYXKe/HTGLC/tgTUMWaDlkvVwT1kuz4kD+rrFLW5NKzeIzlJyEI4uOKpFVBr1FCO0aRoyIzYwZHUxN3an2DHpUUezF8cRSenKWGluLjVzJA4ORA1L9IzYzPXR1SJtO/7rDQxrmpD11Ox9Dzbk2ILCexsHSJ9r8TpgpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708034262; c=relaxed/simple;
-	bh=T7MZeg+yLjaU4BtqowdnnpbuIdHLYtXGFMcH9SwnC3o=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=V6WopTJ0krUuKlWeei1EOXn0xfBWd+xIMww7Tp8uhiYJVvg74Y3mNb5Tq4Au4jo7CmvibuVnsFCCzImsKL0Z5gk41WISfzb6w1Tx3XfQEgd1ia+JBQYKQy6poW1hAk/Twd3BhXLdDpUXcY94g4/mCmstIhFu5h7RibjgJeGClRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HKqLNhPX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708034428; c=relaxed/simple;
+	bh=m0ottLDJAZHNYRCNzmWiH7yuWIWrCPNNHSBS/QgSsrU=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=f1TNe1QHHM4ZQt3gI/Sb1DgkFfPKwVSgZyzJCqQEtSe0dRqC7BMVdoLDXmejUrwjOCSlInFTZRvilhK26d83EWwjC8YbSP/W74RvNp0KBh2usok/4+SA757eeXc3sh9p1aojL2j6Er/+3aSh2ES38zqF4SvIGcgsvrmP99ThVUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=V0WuFR4k; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HKqLNhPX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F234FC433C7;
-	Thu, 15 Feb 2024 21:57:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708034262;
-	bh=T7MZeg+yLjaU4BtqowdnnpbuIdHLYtXGFMcH9SwnC3o=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=HKqLNhPXnNKvbiW3EkbP1vnJu/P3vG86/ySfYdF3/dkJRvBlKdC16LT5mZItEadLZ
-	 598aG+3ah3tkmZLOIrdMCA71Mv1dhqn/X9wN6XZE2PFnEQ6u9ytiCXPexNV6EfMqDL
-	 +S/VfoHHM1M1sW6VN+xeXqAf7GACRVuBldgxHQqrhOn1ISIO28LWtV2GGCUmEB3zYg
-	 LhUL9oistI6vrDdKAo/sunUbQYDUYBQ9qCuFzIPCyK9fbnmogWsbeD7/IbCkVRVYdg
-	 ZDB69vXMxMVXPPwP5isAT3K/QDz1xP57NY8LETK4c19bJ9dWpvu+gdz4RikrKAAj9r
-	 WXx8+d2ecNk+g==
-Message-ID: <3e67766fa85be7dd865c5ec9dea1b53b.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="V0WuFR4k"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d11d17dddeso1610201fa.3
+        for <patches@lists.linux.dev>; Thu, 15 Feb 2024 14:00:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1708034425; x=1708639225; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BDDVrcRz/Ycf8cdbcrLManVLDT9HHxZVyCSEzgV1aZM=;
+        b=V0WuFR4kwvL1Eb8QsFxA0Dczf/TyJFiyOvkIYvIOZP5qUTFESJ4xistnL3vldnamQN
+         gRy70qA2sZbMDjpa4poQSdsGbPJYzJVXshcCiHvnmw3VM9fOXpyULx/PJSnJJSP6f0tG
+         lWVtzL0yiUt3oYS92scB8Nwr49AkeA7EGSMDY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708034425; x=1708639225;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BDDVrcRz/Ycf8cdbcrLManVLDT9HHxZVyCSEzgV1aZM=;
+        b=f72prHh4ly8EKLdMPjUB2CkIDUrR4PFqHo3Q/XQVNkJb84oSSnc+/4/X1BMyzL4mHU
+         pRGtEciO/YvLIxAXl+mRlXJo76q5qQh8HulVJXcrae9b3hPvyHDaTa+2ZHiTOIm/HVsS
+         BnQHa3gtae1kXw/669996TC8WaPKa4/oIKipAEcPoiv5wSy7kFqeubJhDlb9gDoYebEy
+         lBELXDsq9m23OlmC6Mb7OKQ1JHNv+bc3thGTJ33Yn8c5yH6Z1Etv3BMEltPgQXvfPTBo
+         5P6spwOxBl1t5mvkyjKpurwLCbLq3IyMUryGnesWrwcVF7JvG42FrcZEoJzysEzsgqWe
+         myjw==
+X-Forwarded-Encrypted: i=1; AJvYcCX1pbeC26TwRSJk2+NndgQ6jyKur6Ap9nf95+0iL39Zofa62DHZb50GuckTAQz4aGYHHVGp2PdolmoyTDkS4NuOYlQeCLdtZg==
+X-Gm-Message-State: AOJu0YyuJ6TqJe+OTi/8r0EhYytsXpsy/4rrh6v5e636sgsV41Rb6fBG
+	ooOjgqzFZBKrE3XQ2mK6wdnsKrXZmIcKezRyqKudxeKIyJwevWeaoCwsNbJmhicL0LAn8arA10J
+	+RLzLzwrCswd/2TMsyX0JKaJHABcPA8bn4Dsj
+X-Google-Smtp-Source: AGHT+IHZsX1oCvcJlSf5XfTcHW/43KxOJRGh8S4YaM6TXMZR2b4sKxAd9QenLzmlOUm+lpukKlbDAdnYnvVvVUmkqm4=
+X-Received: by 2002:a2e:a98f:0:b0:2d0:c490:affe with SMTP id
+ x15-20020a2ea98f000000b002d0c490affemr2710448ljq.19.1708034424733; Thu, 15
+ Feb 2024 14:00:24 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 15 Feb 2024 14:00:24 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAL_JsqLrRXdPZ+u9XG960V7sXECBi5Ko7BYdreftYz-O=Hwieg@mail.gmail.com>
-References: <20240202195909.3458162-1-sboyd@kernel.org> <20240202195909.3458162-8-sboyd@kernel.org> <CABVgOS=A8BQ6HHpBKFqg-N10ckk2XYavaS-MPXvZ0wenrVm=1g@mail.gmail.com> <89892ecd6b1b043db58258705c32b02b.sboyd@kernel.org> <CAMuHMdUuP5Ya2gU3V_ET=Ji_+yx+jr7eCch5uDJSqvQN9jJM3g@mail.gmail.com> <2185a3cc3152a0b9a94b0c64353bc9a1.sboyd@kernel.org> <CAL_JsqLrRXdPZ+u9XG960V7sXECBi5Ko7BYdreftYz-O=Hwieg@mail.gmail.com>
-Subject: Re: [PATCH v3 7/7] of: Add KUnit test to confirm DTB is loaded
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>, David Gow <davidgow@google.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Frank Rowand <frowand.list@gmail.com>, Brendan Higgins <brendan.higgins@linux.dev>
-To: Rob Herring <robh+dt@kernel.org>
-Date: Thu, 15 Feb 2024 13:57:39 -0800
+In-Reply-To: <20240215140638.GA4162082-robh@kernel.org>
+References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-2-swboyd@chromium.org>
+ <20240215140638.GA4162082-robh@kernel.org>
+From: Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.10
+Date: Thu, 15 Feb 2024 14:00:24 -0800
+Message-ID: <CAE-0n51R307Tg7p9=GNFfUB2tE0o5JWBNpU=rX_HUe9ydSXW7A@mail.gmail.com>
+Subject: Re: [PATCH 01/22] dt-bindings: gpio: Add binding for ChromeOS EC GPIO controller
+To: Rob Herring <robh@kernel.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Lee Jones <lee@kernel.org>, Benson Leung <bleung@chromium.org>, 
+	Guenter Roeck <groeck@chromium.org>, linux-gpio@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Quoting Rob Herring (2024-02-13 09:52:00)
-> On Fri, Feb 9, 2024 at 8:59=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wr=
-ote:
-> >
-> > ---8<---
-> > diff --git a/init/main.c b/init/main.c
-> > index e24b0780fdff..02f5cf8be6c1 100644
-> > --- a/init/main.c
-> > +++ b/init/main.c
-> > @@ -97,6 +97,8 @@
-> >  #include <linux/jump_label.h>
-> >  #include <linux/kcsan.h>
-> >  #include <linux/init_syscalls.h>
-> > +#include <linux/of.h>
-> > +#include <linux/of_fdt.h>
-> >  #include <linux/stackdepot.h>
-> >  #include <linux/randomize_kstack.h>
-> >  #include <net/net_namespace.h>
-> > @@ -895,6 +897,8 @@ void start_kernel(void)
-> >         pr_notice("%s", linux_banner);
-> >         early_security_init();
-> >         setup_arch(&command_line);
-> > +       if (!of_root)
->=20
-> of_root is another thing I'd like to remove direct access to. That
-> check could be inside unflatten_device_tree().
+Quoting Rob Herring (2024-02-15 06:06:38)
+> On Fri, Feb 09, 2024 at 11:09:12PM -0800, Stephen Boyd wrote:
+> > +
+> > +description:
+> > +  Google's ChromeOS EC has a gpio controller inside the Embedded Controller
+> > +  (EC) and controlled via a host-command interface. The node for this
+> > +  device should be under a cros-ec node like google,cros-ec-spi.
+>
+> Why do we need a child node here?
+>
 
-Ok.
-
->=20
-> > +               unflatten_device_tree();
->=20
-> That's back to what Frank had essentially and I wanted to avoid.
-
-Alright, fair enough.
-
->=20
-> I think I'd just disable the tests on the above arches and let them
-> opt-in. I could be convinced otherwise though.
->=20
-
-Kunit folks would prefer to skip tests when dependencies aren't
-satisfied. The OF_UNITTEST config already depends on !SPARC so perhaps
-it's simplest to have tests skip if OF_EARLY_FLATREE=3Dn. Then
-OF_EARLY_FLATREE can be def_bool OF && !(SPARC || M68K || other arches).
-The OF_UNITTEST config can depend on OF_EARLY_FLATREE instead of select
-it then. This way new supporting architectures can remove themselves
-from the def_bool line when they start calling unflatten_device_tree().
+When in Rome... but I get your point. I will work on moving #gpio-cells
+and gpio-controller into the cros-ec binding and populating some child
+device from the mfd driver.
