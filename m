@@ -1,96 +1,245 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7930F131731
-	for <patches@lists.linux.dev>; Thu, 15 Feb 2024 16:49:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C7EF137C3D;
+	Thu, 15 Feb 2024 17:27:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708015779; cv=none; b=q8ddi89czdwT/sakP+YCWpNzlV6GO7JcRh2mgUG+7ck0HJ5tVuYeq2zBIk6MpvBj3pIgB4h/ITRceqxDWsh/MQrsgWIJUB7BqbnTxkdx3SfjzOS3OhfEWu5x9ZFs7ENiKPWpHna5/lJIiwZwcrHvwXU2FboL8Mt7MUiLwF59pys=
+	t=1708018036; cv=none; b=X2m+i/2qBGuDlOv7j7KH83N5pABZpN38OCVtID7NMa/evX50c2O/OR8wmoVwOopOSCgC/hf9xwyPQw/kcAQArsCZREHMsozbN9T/Mu/kHMZsMrwcJZRawDjTGb3lvl00XUIW8hVVGce/OAssbLdym+1hOEPHHaDv0SpvYPuhSMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708015779; c=relaxed/simple;
-	bh=nDBJprtupek6jtz+xxAg9qE3vBo3ZI3396Tj94+XKjg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NiPUUDqFL6jKdW+IpijYgpWs2c6fccgUX3L2mixJwlAnxFYyPOx6sa58wmn+xdGQ/TmwVC03gXKHZAdT1EMxnmf7epebfgKRxRZv0QP2hAH2dIwtsC4Kc2wRn1+M/q0F48hRHXKpS/jdh+t75rV0/NTLGd343jtBApSfbk4tUd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VAIIzEUj; arc=none smtp.client-ip=209.85.221.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VAIIzEUj"
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-4c0232861afso332014e0c.1
-        for <patches@lists.linux.dev>; Thu, 15 Feb 2024 08:49:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708015777; x=1708620577; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/bbFkvOmHONTA1ff9N/8CU619rdiPvpvqzPbqsPJyy0=;
-        b=VAIIzEUj2TKHNjGbF40uflxu71Qyw0jSo+aSnOL+QdGcrEQ4c+IsBIO/bCVUQaOwCH
-         cJhG82Nmoo+UmusZ58RpJB+wgGqqFuc/EJZvuFg4YZ4YYsBmxiQOBNv6e4RkQjZNjkoA
-         r/zmJS7jzH9OLJxAkkbqcF3E0mhD4CytyxQI5D6HWdtvv/+I3XiHTgBdK6VPL1cyraXb
-         p7UhPu4ubXaPsWFYR6n2lsz/dUEbb/Q7k07V1hawrGjeBoV1iogdOttLBSdeTqG7qHyz
-         Wn4JNtvdi8mKkE65kM9juc04Gvcd1E29chuC/Q6zP9nH5mjS5BUv3dUeR3CDcfOb5t5W
-         NpnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708015777; x=1708620577;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/bbFkvOmHONTA1ff9N/8CU619rdiPvpvqzPbqsPJyy0=;
-        b=DLeRpdYXtfQp6xyhvsc0hpFyibZFGEl9VI6Q9V2d4iDBbTdCK8oHhDoeVBmsLBc1B4
-         uSS4w255Pdoc1Y0Q/8kUTxqmYYRdH+EiS3Q4Jb/K+RKhO01CbJgZFGtjgiLzu19Q4Yw9
-         tnEvfM/4FBe7zn4cj9tYMCEn8JNrAnD2DBVlegKuve2X5zbeA3oIc2AmwftN7ttwydv0
-         Aami9ayYK8tgfCBBgFDtoe/XYuQkqTX38/EoTgJK8xmi0m13mSR+apqUc6dugHKSbZbU
-         Y435wI8DhrBBJ78Y1CHEcRGxgb/32vpbE0kpJkUhpuARQT+nROz0KrgEMTe7xFlpfhDV
-         gzBA==
-X-Forwarded-Encrypted: i=1; AJvYcCVLMCi51bIz9KaVQJhM4Op5AasH7G6CaUkDqdLPWqveoLiw49/HeMYPAtQRAVZs1GG4/Tj6UP/FDe/nyarLZ3pyJxxdh4DJ9w==
-X-Gm-Message-State: AOJu0YxxZ2CZqquxXK3DdsWthXMBdNcJtvDT0VFOQg7q4PKsXO2NDWkc
-	+emk3pTw+hR03ikuE3LUxvEeK3Gg/eZvnYeCl1tnOlrPJrs8tZ8SzhmuEn1ksQ3qjW77jT3nQCD
-	PFCFCleyepsoG0gnIWuBp1t9aaRI=
-X-Google-Smtp-Source: AGHT+IFVL8vctjaTh51mhc7/RxZwMTHNMS1gtWZUf4uRKGMewRW1zbnifsv/ppry04OIayZYguikNJJRVZIWLqu6Y14=
-X-Received: by 2002:a1f:4b87:0:b0:4c0:29e5:d31f with SMTP id
- y129-20020a1f4b87000000b004c029e5d31fmr2180656vka.2.1708015777272; Thu, 15
- Feb 2024 08:49:37 -0800 (PST)
+	s=arc-20240116; t=1708018036; c=relaxed/simple;
+	bh=lWvCCrL0otxYkI2wF2GdFaV8HsB0kJrulPLEU4rda1Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p0ug1G3hTVHjxo4w7Go4UPLg+DP5DM/lg226IXHe7Hp37urn07zASI6e/RY7kQl30HRWcdgYkRSVWptFZyPgFXYKpiu233ndGxf8KVVFryV7cZd09u9OPJi0Tg89rWMuoBGnfs6FRvM/8FWJViQjJ+SqxiOO9fqASfv+C59AHS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 877B51FB;
+	Thu, 15 Feb 2024 09:27:54 -0800 (PST)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AB0A13F766;
+	Thu, 15 Feb 2024 09:27:11 -0800 (PST)
+Message-ID: <2ca7f64e-a9e3-4d47-b04f-726c86223fd6@arm.com>
+Date: Thu, 15 Feb 2024 17:27:09 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240214142941.551330912@linuxfoundation.org>
-In-Reply-To: <20240214142941.551330912@linuxfoundation.org>
-From: Allen <allen.lkml@gmail.com>
-Date: Thu, 15 Feb 2024 08:49:25 -0800
-Message-ID: <CAOMdWSKJZFYaD3TT9fk8Cj3GSpK_pyEVrgHaXTik3n8VR7UxzA@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/65] 6.1.78-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 02/17] iommu/arm-smmu-v3: Consolidate the STE
+ generation for abort/bypass
+Content-Language: en-GB
+To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, linux-arm-kernel@lists.infradead.org,
+ Will Deacon <will@kernel.org>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
+ Moritz Fischer <moritzf@google.com>, Michael Shavit <mshavit@google.com>,
+ Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ Mostafa Saleh <smostafa@google.com>, Zhangfei Gao <zhangfei.gao@linaro.org>
+References: <2-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <2-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> This is the start of the stable review cycle for the 6.1.78 release.
-> There are 65 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 16 Feb 2024 14:28:54 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.78-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+On 06/02/2024 3:12 pm, Jason Gunthorpe wrote:
+> This allows writing the flow of arm_smmu_write_strtab_ent() around abort
+> and bypass domains more naturally.
+> 
+> Note that the core code no longer supplies NULL domains, though there is
+> still a flow in the driver that end up in arm_smmu_write_strtab_ent() with
+> NULL. A later patch will remove it.
+> 
+> Remove the duplicate calculation of the STE in arm_smmu_init_bypass_stes()
+> and remove the force parameter. arm_smmu_rmr_install_bypass_ste() can now
+> simply invoke arm_smmu_make_bypass_ste() directly.
+> 
+> Reviewed-by: Michael Shavit <mshavit@google.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Reviewed-by: Mostafa Saleh <smostafa@google.com>
+> Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+> Tested-by: Moritz Fischer <moritzf@google.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 97 ++++++++++++---------
+>   1 file changed, 55 insertions(+), 42 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index f0b915567cbcdc..6123e5ad95822c 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -1498,6 +1498,24 @@ static void arm_smmu_write_ste(struct arm_smmu_master *master, u32 sid,
+>   	}
+>   }
+>   
+> +static void arm_smmu_make_abort_ste(struct arm_smmu_ste *target)
+> +{
+> +	memset(target, 0, sizeof(*target));
+> +	target->data[0] = cpu_to_le64(
+> +		STRTAB_STE_0_V |
+> +		FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_ABORT));
+> +}
+> +
+> +static void arm_smmu_make_bypass_ste(struct arm_smmu_ste *target)
+> +{
+> +	memset(target, 0, sizeof(*target));
+> +	target->data[0] = cpu_to_le64(
+> +		STRTAB_STE_0_V |
+> +		FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_BYPASS));
+> +	target->data[1] = cpu_to_le64(
+> +		FIELD_PREP(STRTAB_STE_1_SHCFG, STRTAB_STE_1_SHCFG_INCOMING));
+> +}
+> +
+>   static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
+>   				      struct arm_smmu_ste *dst)
+>   {
+> @@ -1508,37 +1526,31 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
+>   	struct arm_smmu_domain *smmu_domain = master->domain;
+>   	struct arm_smmu_ste target = {};
+>   
+> -	if (smmu_domain) {
+> -		switch (smmu_domain->stage) {
+> -		case ARM_SMMU_DOMAIN_S1:
+> -			cd_table = &master->cd_table;
+> -			break;
+> -		case ARM_SMMU_DOMAIN_S2:
+> -			s2_cfg = &smmu_domain->s2_cfg;
+> -			break;
+> -		default:
+> -			break;
+> -		}
+> +	if (!smmu_domain) {
+> +		if (disable_bypass)
+> +			arm_smmu_make_abort_ste(&target);
+> +		else
+> +			arm_smmu_make_bypass_ste(&target);
+> +		arm_smmu_write_ste(master, sid, dst, &target);
+> +		return;
+> +	}
+> +
+> +	switch (smmu_domain->stage) {
+> +	case ARM_SMMU_DOMAIN_S1:
+> +		cd_table = &master->cd_table;
+> +		break;
+> +	case ARM_SMMU_DOMAIN_S2:
+> +		s2_cfg = &smmu_domain->s2_cfg;
+> +		break;
+> +	case ARM_SMMU_DOMAIN_BYPASS:
+> +		arm_smmu_make_bypass_ste(&target);
+> +		arm_smmu_write_ste(master, sid, dst, &target);
+> +		return;
+>   	}
+>   
+>   	/* Nuke the existing STE_0 value, as we're going to rewrite it */
+>   	val = STRTAB_STE_0_V;
+>   
+> -	/* Bypass/fault */
+> -	if (!smmu_domain || !(cd_table || s2_cfg)) {
+> -		if (!smmu_domain && disable_bypass)
+> -			val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_ABORT);
+> -		else
+> -			val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_BYPASS);
+> -
+> -		target.data[0] = cpu_to_le64(val);
+> -		target.data[1] = cpu_to_le64(FIELD_PREP(STRTAB_STE_1_SHCFG,
+> -						STRTAB_STE_1_SHCFG_INCOMING));
+> -		target.data[2] = 0; /* Nuke the VMID */
+> -		arm_smmu_write_ste(master, sid, dst, &target);
+> -		return;
+> -	}
+> -
+>   	if (cd_table) {
+>   		u64 strw = smmu->features & ARM_SMMU_FEAT_E2H ?
+>   			STRTAB_STE_1_STRW_EL2 : STRTAB_STE_1_STRW_NSEL1;
+> @@ -1583,22 +1595,20 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
+>   	arm_smmu_write_ste(master, sid, dst, &target);
+>   }
+>   
+> +/*
+> + * This can safely directly manipulate the STE memory without a sync sequence
+> + * because the STE table has not been installed in the SMMU yet.
+> + */
+>   static void arm_smmu_init_bypass_stes(struct arm_smmu_ste *strtab,
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+This name is long out-of-date - if we're refreshing this area, please 
+rename to something relevant to what it actually does, e.g. 
+s/bypass/initial/.
 
-Thanks.
+Although frankly I also think that at this point we should just get rid 
+of the disable_bypass parameter altogether - it's been almost entirely 
+meaningless since default domain support was added, and any tenuous 
+cases for wanting inital STEs to be bypass should probably be using RMRs 
+now anyway.
+
+Thanks,
+Robin.
+
+> -				      unsigned int nent, bool force)
+> +				      unsigned int nent)
+>   {
+>   	unsigned int i;
+> -	u64 val = STRTAB_STE_0_V;
+> -
+> -	if (disable_bypass && !force)
+> -		val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_ABORT);
+> -	else
+> -		val |= FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_BYPASS);
+>   
+>   	for (i = 0; i < nent; ++i) {
+> -		strtab->data[0] = cpu_to_le64(val);
+> -		strtab->data[1] = cpu_to_le64(FIELD_PREP(
+> -			STRTAB_STE_1_SHCFG, STRTAB_STE_1_SHCFG_INCOMING));
+> -		strtab->data[2] = 0;
+> +		if (disable_bypass)
+> +			arm_smmu_make_abort_ste(strtab);
+> +		else
+> +			arm_smmu_make_bypass_ste(strtab);
+>   		strtab++;
+>   	}
+>   }
+> @@ -1626,7 +1636,7 @@ static int arm_smmu_init_l2_strtab(struct arm_smmu_device *smmu, u32 sid)
+>   		return -ENOMEM;
+>   	}
+>   
+> -	arm_smmu_init_bypass_stes(desc->l2ptr, 1 << STRTAB_SPLIT, false);
+> +	arm_smmu_init_bypass_stes(desc->l2ptr, 1 << STRTAB_SPLIT);
+>   	arm_smmu_write_strtab_l1_desc(strtab, desc);
+>   	return 0;
+>   }
+> @@ -3245,7 +3255,7 @@ static int arm_smmu_init_strtab_linear(struct arm_smmu_device *smmu)
+>   	reg |= FIELD_PREP(STRTAB_BASE_CFG_LOG2SIZE, smmu->sid_bits);
+>   	cfg->strtab_base_cfg = reg;
+>   
+> -	arm_smmu_init_bypass_stes(strtab, cfg->num_l1_ents, false);
+> +	arm_smmu_init_bypass_stes(strtab, cfg->num_l1_ents);
+>   	return 0;
+>   }
+>   
+> @@ -3956,7 +3966,6 @@ static void arm_smmu_rmr_install_bypass_ste(struct arm_smmu_device *smmu)
+>   	iort_get_rmr_sids(dev_fwnode(smmu->dev), &rmr_list);
+>   
+>   	list_for_each_entry(e, &rmr_list, list) {
+> -		struct arm_smmu_ste *step;
+>   		struct iommu_iort_rmr_data *rmr;
+>   		int ret, i;
+>   
+> @@ -3969,8 +3978,12 @@ static void arm_smmu_rmr_install_bypass_ste(struct arm_smmu_device *smmu)
+>   				continue;
+>   			}
+>   
+> -			step = arm_smmu_get_step_for_sid(smmu, rmr->sids[i]);
+> -			arm_smmu_init_bypass_stes(step, 1, true);
+> +			/*
+> +			 * STE table is not programmed to HW, see
+> +			 * arm_smmu_init_bypass_stes()
+> +			 */
+> +			arm_smmu_make_bypass_ste(
+> +				arm_smmu_get_step_for_sid(smmu, rmr->sids[i]));
+>   		}
+>   	}
+>   
