@@ -1,74 +1,141 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9895314691F;
-	Fri, 16 Feb 2024 18:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B136C1350F4;
+	Fri, 16 Feb 2024 19:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708109181; cv=none; b=mCJbu/lj+zAp8D+Bn8kkwydUABal+rSugUJTjtPsh4KGOMEBu/lOQywSPmV+gsMzD+jMyc8ojE6VNqJei8voZkCUbdA5S0u/W5y01/yDGzQz9BErlyuzXm/H6Lpi1Hh9d5QeM2h5T8yi3MCarKcGQntZPyCu82S4kKD9AaNSBsY=
+	t=1708113362; cv=none; b=nNo6m48fnAd52+MSKkSBi9pDnS+6BTdhPGV9mU6kE3+3xjv9fz/hr2vxjbAh3IsxkfwZmik3cnxRpQyAU1JmqzYoAkS7VviStzwkqXwsnEGyg35KNBZblm4EIIumDJPwJpdhCflDXSN/ZfxA4S2LuDMB9T3nIjqhavVNyK0UFbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708109181; c=relaxed/simple;
-	bh=LcjvOvjEXzkOCTEy61gj08EIdshAwDu7VquV5xvMt3M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BrCOm21PtZqjiR9qdBghbzLaymCUAvYB+14IXppAanDGq/qEsbSUcL4FVv1W3mVyRfyGTwWKu764uENTDsoPbeYprn/x39pZjX4YECQ4rSIGqHqECk5kah6lQdhZvrruo8/IeU4NVxr6ITAIvLexqVjmjGQZG6oBu7uTPxcaopU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vT/cqhPP; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708113362; c=relaxed/simple;
+	bh=T1UbgkGOJwrEIoiF1stukcNe2NTIBEUIQmqKJruW/dg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=lwoR3+/WzLevtPUpM8Y5PsVkM50/t7FUSHQxHI2kOcikTzkkOWOGbdM3phHTrCkjanjo2yxE2eOVxyWbeshNGQ43SGdmccO9RH6CehTlLicMsUtywhR4sClEOguMkPI3RuHWrWsqIZ7bAj1zC0z2IgvPK6fA00PXupr6UEwODFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KecpzTTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vT/cqhPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CDFC433F1;
-	Fri, 16 Feb 2024 18:46:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708109181;
-	bh=LcjvOvjEXzkOCTEy61gj08EIdshAwDu7VquV5xvMt3M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vT/cqhPPHJetmA9NSdmrixhGoLhlczK07b3nwyV9cKR/N3/Q7XLV0aRnZ5ohLJ2uY
-	 4uOXy9JlUyMXbHv/+xqfSLJfnidJyBRABC1O6uecPHJwlu1/ji/lxhO7tM2/uAwXOi
-	 NdoLhK8KgjBd9NQ/48YALhsv4X4MvZL0hKNsaRqQ=
-Date: Fri, 16 Feb 2024 19:46:13 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Frank Wang <frank.wang@rock-chips.com>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Guenter Roeck <linux@roeck-us.net>, Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH 6.7 093/124] Revert "usb: typec: tcpm: fix cc role at
- port reset"
-Message-ID: <2024021630-unfold-landmine-5999@gregkh>
-References: <20240213171853.722912593@linuxfoundation.org>
- <20240213171856.446249309@linuxfoundation.org>
- <571afc70-dd77-4678-bdd0-673e15cdd5ad@leemhuis.info>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KecpzTTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD31DC433F1;
+	Fri, 16 Feb 2024 19:56:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708113362;
+	bh=T1UbgkGOJwrEIoiF1stukcNe2NTIBEUIQmqKJruW/dg=;
+	h=From:Date:Subject:To:Cc:From;
+	b=KecpzTTxQsYYMW6aGOoSccWrNxaSqKEZGTQnMBjuxFpk8MQ0C2c0AjTjksT3kN0T5
+	 sLZyWMyHnCmYLiBMsAciMvuzmicSLuinWLs/w3SDuftuIHU/fDHXrkiOBKBc1JJLTZ
+	 +pfGOIY9d4ZZH1/mUryM7Y925hkk8a+z2cnLNrhrPYllHtNImYr/uH7nh1/+AgaK5g
+	 lfvKSaK5mIu9A/8B4R+TJqwsIWyEoxJoJd5JA9kllXOCeUDlUwpT9rcpQqS8RyHSvN
+	 nWr6jqyZMIfbsijr4PMf8kRioup3Hky2Apm/mnRse+4i6BxFpKJdcVPOljhx10W8OX
+	 rIoATcXVAw+sQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 16 Feb 2024 12:55:53 -0700
+Subject: [PATCH] s390/boot: Add 'alloc' to info.bin .vmlinux.info section
+ flags
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <571afc70-dd77-4678-bdd0-673e15cdd5ad@leemhuis.info>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240216-s390-fix-boot-with-llvm-objcopy-v1-1-0ac623daf42b@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAMi9z2UC/x2NywqDMBAAf0X23IUkPlr7K+Ihiatusa4koi3iv
+ xs8DgwzB0QKTBHe2QGBNo4scwL9yMCPdh4IuUsMRplCGV1hzGuFPf/Qiay48zriNG1fFPfxsvx
+ R6do+q/xFpeshVZZAyb4PTXueFzcwHxZxAAAA
+To: hca@linux.ibm.com, gor@linux.ibm.com, agordeev@linux.ibm.com
+Cc: borntraeger@linux.ibm.com, svens@linux.ibm.com, morbo@google.com, 
+ justinstitt@google.com, linux-s390@vger.kernel.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Ulrich Weigand <ulrich.weigand@de.ibm.com>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4039; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=T1UbgkGOJwrEIoiF1stukcNe2NTIBEUIQmqKJruW/dg=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDKnn917USnvtm732yfWcfK/ENIFf1vPNWk0cXnteF/tdy
+ jSzRHx3RykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjI/D0Mv9nnXbyxOdFv91tn
+ +wkmhZnZdnqsQvFJJ5q3/zA75Vinnc3wvzD2jHOu+J6g+/uPaekmeu2a8ixIZImN/qQnJ49Pzl4
+ ayQAA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Fri, Feb 16, 2024 at 07:54:42AM +0100, Thorsten Leemhuis wrote:
-> On 13.02.24 18:21, Greg Kroah-Hartman wrote:
-> > 6.7-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Badhri Jagan Sridharan <badhri@google.com>
-> > 
-> > commit b717dfbf73e842d15174699fe2c6ee4fdde8aa1f upstream.
-> > 
-> > This reverts commit 1e35f074399dece73d5df11847d4a0d7a6f49434.
-> 
-> TWIMC, that patch (which is also queued for the next 6.6.y-rc) afaics is
-> causing boot issues on rk3399-roc-pc for Mark [now CCed] with mainline.
-> For details see:
-> 
-> https://lore.kernel.org/lkml/ZcVPHtPt2Dppe_9q@finisterre.sirena.org.uk/https://lore.kernel.org/all/20240212-usb-fix-renegade-v1-1-22c43c88d635@kernel.org/
+When attempting to boot a kernel compiled with OBJCOPY=llvm-objcopy,
+there is a crash right at boot:
 
-Yeah, this is tough, this is a revert to fix a previous regression, so I
-think we need to stay here, at the "we fixed a regression, but the
-original problem is back" stage until people can figure it out and
-provide a working change for everyone.
+  Out of memory allocating 6d7800 bytes 8 aligned in range 0:20000000
+  Reserved memory ranges:
+  0000000000000000 a394c3c30d90cdaf DECOMPRESSOR
+  Usable online memory ranges (info source: sclp read info [3]):
+  0000000000000000 0000000020000000
+  Usable online memory total: 20000000 Reserved: a394c3c30d90cdaf Free: 0
+  Call Trace:
+  (sp:0000000000033e90 [<0000000000012fbc>] physmem_alloc_top_down+0x5c/0x104)
+   sp:0000000000033f00 [<0000000000011d56>] startup_kernel+0x3a6/0x77c
+   sp:0000000000033f60 [<00000000000100f4>] startup_normal+0xd4/0xd4
 
-thanks,
+GNU objcopy does not have any issues. Looking at differences between the
+object files in each build reveals info.bin does not get properly
+populated with llvm-objcopy, which results in an empty .vmlinux.info
+section.
 
-greg k-h
+  $ file {gnu,llvm}-objcopy/arch/s390/boot/info.bin
+  gnu-objcopy/arch/s390/boot/info.bin:  data
+  llvm-objcopy/arch/s390/boot/info.bin: empty
+
+  $ llvm-readelf --section-headers {gnu,llvm}-objcopy/arch/s390/boot/vmlinux | rg 'File:|\.vmlinux\.info|\.decompressor\.syms'
+  File: gnu-objcopy/arch/s390/boot/vmlinux
+    [12] .vmlinux.info     PROGBITS        0000000000034000 035000 000078 00  WA  0   0  1
+    [13] .decompressor.syms PROGBITS       0000000000034078 035078 000b00 00  WA  0   0  1
+  File: llvm-objcopy/arch/s390/boot/vmlinux
+    [12] .vmlinux.info     PROGBITS        0000000000034000 035000 000000 00  WA  0   0  1
+    [13] .decompressor.syms PROGBITS       0000000000034000 035000 000b00 00  WA  0   0  1
+
+Ulrich points out that llvm-objcopy only copies sections marked as alloc
+with a binary output target, whereas the .vmlinux.info section is only
+marked as load. Add 'alloc' in addition to 'load', so that both objcopy
+implementations work properly:
+
+  $ file {gnu,llvm}-objcopy/arch/s390/boot/info.bin
+  gnu-objcopy/arch/s390/boot/info.bin:  data
+  llvm-objcopy/arch/s390/boot/info.bin: data
+
+  $ llvm-readelf --section-headers {gnu,llvm}-objcopy/arch/s390/boot/vmlinux | rg 'File:|\.vmlinux\.info|\.decompressor\.syms'
+  File: gnu-objcopy/arch/s390/boot/vmlinux
+    [12] .vmlinux.info     PROGBITS        0000000000034000 035000 000078 00  WA  0   0  1
+    [13] .decompressor.syms PROGBITS       0000000000034078 035078 000b00 00  WA  0   0  1
+  File: llvm-objcopy/arch/s390/boot/vmlinux
+    [12] .vmlinux.info     PROGBITS        0000000000034000 035000 000078 00  WA  0   0  1
+    [13] .decompressor.syms PROGBITS       0000000000034078 035078 000b00 00  WA  0   0  1
+
+Closes: https://github.com/ClangBuiltLinux/linux/issues/1996
+Link: https://github.com/llvm/llvm-project/commit/3c02cb7492fc78fb678264cebf57ff88e478e14f
+Suggested-by: Ulrich Weigand <ulrich.weigand@de.ibm.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+No fixes tag because I have not tested to see if there are other issues
+on older kernel versions yet (so I don't think prioritizing a backport
+is necessary yet) but I think commit 5a2e1853d689 ("s390: avoid vmlinux
+segments overlap") introduced this.
+---
+ arch/s390/boot/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/s390/boot/Makefile b/arch/s390/boot/Makefile
+index ace0bda1ad24..d40135efdec4 100644
+--- a/arch/s390/boot/Makefile
++++ b/arch/s390/boot/Makefile
+@@ -94,7 +94,7 @@ OBJCOPYFLAGS_syms.o := -I binary -O elf64-s390 -B s390:64-bit --rename-section .
+ $(obj)/syms.o: $(obj)/syms.bin FORCE
+ 	$(call if_changed,objcopy)
+ 
+-OBJCOPYFLAGS_info.bin := -O binary --only-section=.vmlinux.info --set-section-flags .vmlinux.info=load
++OBJCOPYFLAGS_info.bin := -O binary --only-section=.vmlinux.info --set-section-flags .vmlinux.info=alloc,load
+ $(obj)/info.bin: vmlinux FORCE
+ 	$(call if_changed,objcopy)
+ 
+
+---
+base-commit: 03325e9b64c48313527f0373c4688d393b1edaf3
+change-id: 20240216-s390-fix-boot-with-llvm-objcopy-019a7638e5bf
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
