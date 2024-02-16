@@ -1,90 +1,232 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B691419AD
-	for <patches@lists.linux.dev>; Thu, 15 Feb 2024 22:00:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7261F13FF2;
+	Fri, 16 Feb 2024 01:08:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708034428; cv=none; b=CuV+YZeTaYXKe/HTGLC/tgTUMWaDlkvVwT1kuz4kD+rrFLW5NKzeIzlJyEI4uOKpFVBr1FCO0aRoyIzYwZHUxN3an2DHpUUezF8cRSenKWGluLjVzJA4ORA1L9IzYzPXR1SJtO/7rDQxrmpD11Ox9Dzbk2ILCexsHSJ9r8TpgpI=
+	t=1708045687; cv=none; b=kw+1CnCJtZcFe1oHonRVpAo8xkEG8hH8Y+iEeh1ILZSRKl+mImHunNYbajLe2k9+VGdbICSMvgZynM7hcnAhX/DX7agDZtgacZDp7POEqJ8f72triHB0+3o1JFEMeVM7YJFuH+hCXyrMIuEo/sPqLlNqyCmxdm+GiswnJyDVOY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708034428; c=relaxed/simple;
-	bh=m0ottLDJAZHNYRCNzmWiH7yuWIWrCPNNHSBS/QgSsrU=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f1TNe1QHHM4ZQt3gI/Sb1DgkFfPKwVSgZyzJCqQEtSe0dRqC7BMVdoLDXmejUrwjOCSlInFTZRvilhK26d83EWwjC8YbSP/W74RvNp0KBh2usok/4+SA757eeXc3sh9p1aojL2j6Er/+3aSh2ES38zqF4SvIGcgsvrmP99ThVUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=V0WuFR4k; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1708045687; c=relaxed/simple;
+	bh=My17f7uHZuJxcTtAV9t+RcWRqII/pvS+5iVRXxFEj/A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Dd9EcJBdSvPLvocdS4KOhutdsI0rcSrjji7ATCUnc+0Jw/dtJnvsHOE1V5FpG+1ICAdasVU4CtQDAZfRhsrEendbgZqOZe5UkGD5EM/pGlHzlYFgXrGEWu0Zb0FHxG+Br30+2KuhqX4Z4z1jnW7BhcnYnDK3Aoo5N9w3RVsgqR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=IJuHR3LP; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="V0WuFR4k"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d11d17dddeso1610201fa.3
-        for <patches@lists.linux.dev>; Thu, 15 Feb 2024 14:00:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1708034425; x=1708639225; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BDDVrcRz/Ycf8cdbcrLManVLDT9HHxZVyCSEzgV1aZM=;
-        b=V0WuFR4kwvL1Eb8QsFxA0Dczf/TyJFiyOvkIYvIOZP5qUTFESJ4xistnL3vldnamQN
-         gRy70qA2sZbMDjpa4poQSdsGbPJYzJVXshcCiHvnmw3VM9fOXpyULx/PJSnJJSP6f0tG
-         lWVtzL0yiUt3oYS92scB8Nwr49AkeA7EGSMDY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708034425; x=1708639225;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BDDVrcRz/Ycf8cdbcrLManVLDT9HHxZVyCSEzgV1aZM=;
-        b=f72prHh4ly8EKLdMPjUB2CkIDUrR4PFqHo3Q/XQVNkJb84oSSnc+/4/X1BMyzL4mHU
-         pRGtEciO/YvLIxAXl+mRlXJo76q5qQh8HulVJXcrae9b3hPvyHDaTa+2ZHiTOIm/HVsS
-         BnQHa3gtae1kXw/669996TC8WaPKa4/oIKipAEcPoiv5wSy7kFqeubJhDlb9gDoYebEy
-         lBELXDsq9m23OlmC6Mb7OKQ1JHNv+bc3thGTJ33Yn8c5yH6Z1Etv3BMEltPgQXvfPTBo
-         5P6spwOxBl1t5mvkyjKpurwLCbLq3IyMUryGnesWrwcVF7JvG42FrcZEoJzysEzsgqWe
-         myjw==
-X-Forwarded-Encrypted: i=1; AJvYcCX1pbeC26TwRSJk2+NndgQ6jyKur6Ap9nf95+0iL39Zofa62DHZb50GuckTAQz4aGYHHVGp2PdolmoyTDkS4NuOYlQeCLdtZg==
-X-Gm-Message-State: AOJu0YyuJ6TqJe+OTi/8r0EhYytsXpsy/4rrh6v5e636sgsV41Rb6fBG
-	ooOjgqzFZBKrE3XQ2mK6wdnsKrXZmIcKezRyqKudxeKIyJwevWeaoCwsNbJmhicL0LAn8arA10J
-	+RLzLzwrCswd/2TMsyX0JKaJHABcPA8bn4Dsj
-X-Google-Smtp-Source: AGHT+IHZsX1oCvcJlSf5XfTcHW/43KxOJRGh8S4YaM6TXMZR2b4sKxAd9QenLzmlOUm+lpukKlbDAdnYnvVvVUmkqm4=
-X-Received: by 2002:a2e:a98f:0:b0:2d0:c490:affe with SMTP id
- x15-20020a2ea98f000000b002d0c490affemr2710448ljq.19.1708034424733; Thu, 15
- Feb 2024 14:00:24 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 Feb 2024 14:00:24 -0800
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="IJuHR3LP"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=qm60aItTwcr3Su9bNh4f1xdBtrQH68Cvyk9SmUymlAQ=; b=IJuHR3LPpMwjbWKKIimIXZMjWd
+	Nxpf9YZhVXkj1dbBwMnQuRq6RwN0tq2cjBXB5liLBa+ze8ZaRBHuCAV+VNhqZRgYA7gPZzJyjErDz
+	z71tLa9Y3wFs5ihE+2lTWNzH9YWkk3nVAzsOWHPvNPlOx9KLFKbJKaYyD6r2tG1VCriQEnlykv4kc
+	3OO6kiQS8QtJWosbwb/JfBmlnAvBnihks+ICUPQUU+MHo71eOnsT7Y7vsK/L/gutbJwji/wOVTOEU
+	4Jk4Cu8bjowRkSrV6hvFpSNYKCZrYER2Gpk6/Jt+qCA6nSrMJx/Z7U8VCB6gluXmzYkccWgWwIo/J
+	fX36Z5+Q==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1ramhx-00000000gsF-0EMQ;
+	Fri, 16 Feb 2024 01:08:05 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: fstests@vger.kernel.org,
+	anand.jain@oracle.com
+Cc: linux-fsdevel@vger.kernel.org,
+	kdevops@lists.linux.dev,
+	patches@lists.linux.dev,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH v2 fstests] check: add support for --start-after
+Date: Thu, 15 Feb 2024 17:08:02 -0800
+Message-ID: <20240216010803.164750-1-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20240215140638.GA4162082-robh@kernel.org>
-References: <20240210070934.2549994-1-swboyd@chromium.org> <20240210070934.2549994-2-swboyd@chromium.org>
- <20240215140638.GA4162082-robh@kernel.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Thu, 15 Feb 2024 14:00:24 -0800
-Message-ID: <CAE-0n51R307Tg7p9=GNFfUB2tE0o5JWBNpU=rX_HUe9ydSXW7A@mail.gmail.com>
-Subject: Re: [PATCH 01/22] dt-bindings: gpio: Add binding for ChromeOS EC GPIO controller
-To: Rob Herring <robh@kernel.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Lee Jones <lee@kernel.org>, Benson Leung <bleung@chromium.org>, 
-	Guenter Roeck <groeck@chromium.org>, linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Quoting Rob Herring (2024-02-15 06:06:38)
-> On Fri, Feb 09, 2024 at 11:09:12PM -0800, Stephen Boyd wrote:
-> > +
-> > +description:
-> > +  Google's ChromeOS EC has a gpio controller inside the Embedded Controller
-> > +  (EC) and controlled via a host-command interface. The node for this
-> > +  device should be under a cros-ec node like google,cros-ec-spi.
->
-> Why do we need a child node here?
->
+Often times one is running a new test baseline we want to continue to
+start testing where we left off if the last test was a crash. To do
+this the first thing that occurred to me was to use the check.time
+file as an expunge file but that doesn't work so well if you crashed
+as the file turns out empty.
 
-When in Rome... but I get your point. I will work on moving #gpio-cells
-and gpio-controller into the cros-ec binding and populating some child
-device from the mfd driver.
+So instead add super simple argument --start-after which let's you
+skip all tests until the test infrastructure has "seen" the test
+you want to skip. This does obviously work best if you are not using
+a random order, but that is rather implied. If you do use a random
+order --start-after still works, the final output will however just
+be randomized of course, but it should let you skip a failed known
+crash at least. The real value to --start-after though is for when
+you use a non-randomized order.
+
+If the target test is not found in your test list we complain and
+bail. This is not as obvious when you specify groups, so likewise
+we do a special check when you use groups to ensure the test is at
+least part of one group.
+
+Demo:
+
+root@demo-xfs-reflink /var/lib/xfstests # ./check -s xfs_reflink -n -g soak --start-after generic/025
+Start after test generic/025 not found in any group specified.
+Be sure you specify a test present in one of your test run groups if using --start-after.
+
+Your set of groups have these tests:
+
+generic/476 generic/521 generic/522 generic/616 generic/617 generic/642 generic/650
+
+root@demo-xfs-reflink /var/lib/xfstests # ./check -s xfs_reflink -n -g soak --start-after generic/522
+SECTION       -- xfs_reflink
+RECREATING    -- xfs on /dev/loop16
+FSTYP         -- xfs (non-debug)
+PLATFORM      -- Linux/x86_64 demo-xfs-reflink 6.5.0-5-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.5.13-1 (2023-11-29)
+MKFS_OPTIONS  -- -f -f -m reflink=1,rmapbt=1, -i sparse=1, /dev/loop5
+MOUNT_OPTIONS -- /dev/loop5 /media/scratch
+
+generic/616
+generic/617
+generic/642
+generic/650
+
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+
+Changes since v1:
+
+This all addresses Anand Jain's feedback.
+
+ - Skip tests completely which are not going to be run
+ - Sanity test to ensure the test is part of a group, if you listed
+   groups, and if not provide a useful output giving the list of all
+   tests in your group so you can know better which one is a valid test
+   to skip
+ - Sanity test to ensure the test you specified is valid
+ - Moves the trim during file processing now using a routine
+   trim_start_after()
+
+ check | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
+
+diff --git a/check b/check
+index 71b9fbd07522..1c76f33192ba 100755
+--- a/check
++++ b/check
+@@ -18,6 +18,8 @@ showme=false
+ have_test_arg=false
+ randomize=false
+ exact_order=false
++start_after=false
++start_after_test=""
+ export here=`pwd`
+ xfile=""
+ subdir_xfile=""
+@@ -80,6 +82,7 @@ check options
+     -b			brief test summary
+     -R fmt[,fmt]	generate report in formats specified. Supported formats: xunit, xunit-quiet
+     --large-fs		optimise scratch device for large filesystems
++    --start-after	only start testing after the test specified
+     -s section		run only specified section from config file
+     -S section		exclude the specified section from the config file
+     -L <n>		loop tests <n> times following a failure, measuring aggregate pass/fail metrics
+@@ -120,6 +123,8 @@ examples:
+  check -x stress xfs/*
+  check -X .exclude -g auto
+  check -E ~/.xfstests.exclude
++ check --start-after btrfs/010
++ check -n -g soak --start-after generic/522
+ '
+ 	    exit 1
+ }
+@@ -204,6 +209,24 @@ trim_test_list()
+ 	rm -f $tmp.grep
+ }
+ 
++# takes the list of tests to run in $tmp.list and skips all tests until
++# the specified test is found. This will ensure the tests start after the
++# test specified, it skips the test specified.
++trim_start_after()
++{
++	local skip_test="$1"
++	local starts_regexp=$(echo $skip_test | sed -e 's|\/|\\/|')
++	local grep_start_after=" | awk 'f;/.*'$starts_regexp'/{f=1}'"
++
++	if grep -q $skip_test $tmp.list ; then
++		rm -f $tmp.grep
++		awk 'f;/.*'$starts_regexp'/{f=1}' $tmp.list > $tmp.tmp
++		mv $tmp.tmp $tmp.list
++	else
++		echo "Test $skip_test not found in test list, be sure to use a valid test if using --start-after"
++		exit 1
++	fi
++}
+ 
+ _wallclock()
+ {
+@@ -233,6 +256,9 @@ _prepare_test_list()
+ 		# no test numbers, do everything
+ 		get_all_tests
+ 	else
++		local group_all
++		local start_after_found=0
++		list=""
+ 		for group in $GROUP_LIST; do
+ 			list=$(get_group_list $group)
+ 			if [ -z "$list" ]; then
+@@ -240,11 +266,28 @@ _prepare_test_list()
+ 				exit 1
+ 			fi
+ 
++			if [[ $start_after && $start_after_found -ne 1 ]]; then
++				echo $list | grep -q $start_after_test
++				if [[ $? -eq 0 ]]; then
++					start_after_found=1
++				fi
++			fi
+ 			for t in $list; do
+ 				grep -s "^$t\$" $tmp.list >/dev/null || \
+ 							echo "$t" >>$tmp.list
+ 			done
++			group_all="$group_all $list"
+ 		done
++		if [[ $start_after && $start_after_found -ne 1 ]]; then
++			group_all=$(echo $group_all | sed -e 's|tests/||g')
++			echo "Start after test $start_after_test not found in any group specified."
++			echo "Be sure you specify a test present in one of your test run groups if using --start-after."
++			echo
++			echo "Your set of groups have these tests:"
++			echo
++			echo -e $group_all
++			exit 1
++		fi
+ 	fi
+ 
+ 	# Specified groups to exclude
+@@ -258,6 +301,10 @@ _prepare_test_list()
+ 		trim_test_list $list
+ 	done
+ 
++	if [[ $start_after ]]; then
++		trim_start_after $start_after_test
++	fi
++
+ 	# sort the list of tests into numeric order unless we're running tests
+ 	# in the exact order specified
+ 	if ! $exact_order; then
+@@ -313,6 +360,11 @@ while [ $# -gt 0 ]; do
+ 				<(sed "s/#.*$//" $xfile)
+ 		fi
+ 		;;
++	--start-after)
++		start_after=true
++		start_after_test="$2"
++		shift
++		;;
+ 	-s)	RUN_SECTION="$RUN_SECTION $2"; shift ;;
+ 	-S)	EXCLUDE_SECTION="$EXCLUDE_SECTION $2"; shift ;;
+ 	-l)	diff="diff" ;;
+-- 
+2.43.0
+
