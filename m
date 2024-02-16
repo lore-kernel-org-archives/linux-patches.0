@@ -1,224 +1,155 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2040.outbound.protection.outlook.com [40.107.236.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020F312EBC8;
-	Fri, 16 Feb 2024 16:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708101717; cv=none; b=lm7SMc3txE8UFzk+jaGan5dgr0AgS49sEr/3X+OSvsjSw84JxD/tFgcKut4CtMGCekadfN8ebc+eC35sBKfkDTNcL7z0YJ9qxl3LRs2d7RKfQEa0Bshmi7CyNBwbUDJh5oBPfAZV0hqMqYnISjOqzXRRWy0+ImKPh9pQ/oygAP0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708101717; c=relaxed/simple;
-	bh=lk6cazMY7bINlHC/Mcpt2DmUOaSf+FCwwiPwGdqRLbM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qCEwElZ4FBRLBSdtqwlIh0Np0o7jPtXKQ/R3/f3N0q5LBTNP5NcNq1jXh0wGDnnFNafCQ+lgzX5XfINob99YiK2oUJzRjlQPVB4a4UnxChC+eRSPgnYj2cjw+Sw4+RvLOspfME01SqGKgtZwNpEu8Q5hhEGh1fjZeXBHrMvvAIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=eNChAris; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375C3134CDF;
+	Fri, 16 Feb 2024 17:12:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.40
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708103543; cv=fail; b=S/ayO/NS/gqNJSU7fvAUMQEE+kHs3jVtjkBvr0M6zMsnGY/tQEPpzgc8yqQIQjEFT+tN/tDvcgYgTOv/oIHOgCOHlVCJ7g/KFeMZSxhPz1AWEVU5chSnfyseyo6AF56OjDzWe02Rq0CBsnW1PRLnCr0WFY4Yp0YIJHEJ9QiDiFI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708103543; c=relaxed/simple;
+	bh=wYp6oU5inBuZ2VTWuOhv7oo5eX6uKmXFbipcVb0lYyM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=W4T6xJ+Qmxkof1pASPeE1oMAiFh2dYCo+duhTUslyZQ+TryGEgmA2y+i7nn/d4Xo5XYyRbWUouo6OANWb2GfuHZyzaNzJAlbwQdK1WyHmK5/KNA8lAaC9wAyi0XPBqTgTOFFoBN3zb6/nVwQRREJJoOV5yCMyxQoFuzzK7jJoNk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=KVgcpHq5; arc=fail smtp.client-ip=40.107.236.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="eNChAris"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Yk1HolHXPWN9hgYOAzyuhKeVjYPro7ng/mtemAfIEp4=; b=eNChArisJY4N+lAXV+ujOG0m3+
-	0qSbiugTwFI1bUCErPC06iWsDJyj2ZXOBUtBOwbOwWF89B7sur2UcgJzd4Xtp1CEldFEOhYqf2gIC
-	iKHbmq1takivCEPqC/QQdSxz7xMV/looUFzZIs4MhreYAuTCbMPT2GR6RrDI0fJq0vbKCWFIYOj21
-	cm6yyrNOdX8JHj0V1328TApfF0xd8yz+VuIRmO+7UpGgBuziXXZXACxd8VLCrci/WOLNnokrxhMgz
-	7x3xjnTdSkCtTwxp3YVyzJLIlf1RGHbBCPG4eLXyJ+0XM8XOq8uYV69p6u29CjOo6RQNp7w9vC2+o
-	W8w1r4/w==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rb1Hf-000000031tg-20Zp;
-	Fri, 16 Feb 2024 16:41:55 +0000
-Date: Fri, 16 Feb 2024 08:41:55 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Andrey Albershteyn <aalbersh@redhat.com>
-Cc: fstests@vger.kernel.org, anand.jain@oracle.com,
-	linux-fsdevel@vger.kernel.org, kdevops@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 fstests] check: add support for --start-after
-Message-ID: <Zc-QUziNTR3Bw9r2@bombadil.infradead.org>
-References: <20240216010803.164750-1-mcgrof@kernel.org>
- <avlvdgunqc4hf5p2gzrb22cptsybskifpejylpehzcofkpbkm3@mvnva74o4boy>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="KVgcpHq5"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=iNs0p4qHwbW8ZxsQFoAlBRIJgYi+jkcD51ejOwATSxAjwAlScr0uutKuRH8fsPh8HS8ML9RcAqkAWjiGVjI7PTWjZwAdqCMx5F9zZdHBsc7YXtrVqM/4zpwVyY/6i8j7jo1maUqMomnyA18+ieIWGl6u97Ey69sonK948+nvKtcmk0ec9Sti9W4TRX7JwkbGgabUNxnW5+h+ahjnuaVCj34owoasbdzK22GkVcuQ/Qu3e9J7yHfsO6aIFnwNhNtkrBMr8T2JstiMqavSL6aD+WP/GdwKQSkANBFlQb3BGriUXs5YNjUZVo3trexNfLlTvrxbBQwMvoHL/5g8q6Si/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=G+9dvBbc6jKFtUXGKbZPYAfiG38qiFpWRJ/GIoLcH9o=;
+ b=Epmy994s571Dtyou/v/ZUSguV2IXyTDbjoP/tG08ZpQ6y45Tq2AGtURw/mRSLJk2QaBf9c2WdYAkd3NjvS7loBaUPQF7Dqo4knb86Ihwr2b/LmWvpi4SmkpBsz+XxkCcSLBwdIg7wcUU/R4ueQENGhipkjnxOTRO6qYf0iAeVI5dsc+S5NvT2ysD/3WDPQOKRkBNK36lsBLmXN0nSjzqTEM4deO7eztrwojUY54idmgZGDAVXhuMwhzUOvPpbx0N7N/PyKWfL5nfv+uzQFCnMuv2k4P45EiHGjKx1mjVfG8tbSH/uYCtQRkPm9cJQUVlZLWMt7eZibx49WhDBwLP9g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G+9dvBbc6jKFtUXGKbZPYAfiG38qiFpWRJ/GIoLcH9o=;
+ b=KVgcpHq5J1PjxjfSSSa7W7wnoj/8wYnmZ5H0y2GkrUVgEjh3S9B4DfBCCQqJ/RSKEo2IjYV1BUwDdVWMQwtTPDZzNR3o2yC/7roduiRFq7Kpjy+VmAhq2uWqeN2UOPcDzUdQSUpz+0VrwT9X4Rq8dxK4eh31Rau48Y8Zq5rPaUamsMajkOp+goe/AZISrm7udVVvkhq61hl9tqilFbDafGwHEPm+sq0nRec0IAhShSuQhcmEGAKLsQgAWXQzcImLHTiJUjfncWhgPPGs0Ttb9aIWFuTNplL/sEdESEeQGODAea5Sgh3Tn+wmrDawgfvh99EtqhDHhKdZAZJK1QuICg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by BL3PR12MB6570.namprd12.prod.outlook.com (2603:10b6:208:38d::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.31; Fri, 16 Feb
+ 2024 17:12:18 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7316.012; Fri, 16 Feb 2024
+ 17:12:18 +0000
+Date: Fri, 16 Feb 2024 13:12:17 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
+	Moritz Fischer <moritzf@google.com>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v5 04/17] iommu/arm-smmu-v3: Move the STE generation for
+ S1 and S2 domains into functions
+Message-ID: <20240216171217.GA102281@nvidia.com>
+References: <0-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+ <4-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+X-ClientProxiedBy: BL0PR0102CA0059.prod.exchangelabs.com
+ (2603:10b6:208:25::36) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <avlvdgunqc4hf5p2gzrb22cptsybskifpejylpehzcofkpbkm3@mvnva74o4boy>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|BL3PR12MB6570:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7ca26aec-abb0-4ebe-3b5f-08dc2f126e07
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	5yf6NubUqYuj6qMsljmxaO0vdioH2LB0Y8dymulpFQg7N1t9EyAX0SjR7RnLMKk7W++ttGUHlQ+mQhDZmtiog26LrACzO3EjeXtKO0fLV0S7R8gLXa+0ShIAh6s4E/bm+P9XyyFjJdLVvFC48IbjwpqTGtMlAHMm7Oh6uoxQaRPG/44dMaPa5AZ+Gbb+2TpbfbmKgoHZSCdsXVN1u2Ig/qnNZRjb0BVyZG+HIPD/cmAj5a1o9R0lV3q4dmzk8hSbrUk8R+8US0qzWwAZlyUNrDdCJmT14ebEgpYo0KGAT+ux16DjwBgv3GUFizb92ehJxV7rS2ICgKi9VxYhU+Z47aYo/syh9ehH3Gc4WmyNkPHUiZT0bc39x7ib2MtLxaw5IlMV5jc22Z57urWUW9yi/AhmF/0ILxLlmdGmVFGwSSqPUds2ynUlkrnSYE/ATHUcvm3WH3TzZv3KoZJDvk7Vz/9DH2v0AfNIrBruzvCfR6kcuD2ujMvx9tPnNe8JCrIIxZJjDeXHXZT3oBuDYWJpnNG7yjQ7yBn4TGewr6ozgFEzCEyDeal4TRRPfyC7XhVY
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(396003)(136003)(39860400002)(366004)(376002)(230922051799003)(1800799012)(451199024)(186009)(64100799003)(2906002)(41300700001)(316002)(2616005)(6486002)(478600001)(6506007)(6512007)(4326008)(8936002)(110136005)(8676002)(5660300002)(7416002)(26005)(1076003)(66946007)(54906003)(66556008)(66476007)(33656002)(86362001)(38100700002)(36756003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?F8Xh1432QMW2wPOCVpsigA7nVKPhMCo8uZ+sh248L7ZnL9XZnZ68gSCMFc9f?=
+ =?us-ascii?Q?oKmv9sG8nGyGS0St/WZHjTFCITcCe3ZzAUKSFLn6QvjjI6TQ8n1CNS0IGO/6?=
+ =?us-ascii?Q?jGhE/L9QLLRvuxpGRYhaEQpzRXHiHhezSCRgi92Yo6FuLl1xodE4MLkMkNly?=
+ =?us-ascii?Q?GBGmM9i7M0oWUZ8UJsfdboIIBOD1ISjzD1kIqZVax5ukBamAYDCv656gdpI3?=
+ =?us-ascii?Q?jOqlKzoWgc9yxSCWxsJa6ofP/VgkRPac72ZC/XiqINV/aSF4oM6YcbTrnJxZ?=
+ =?us-ascii?Q?5AjWq11VoyaRhGb23Wm3KF0/OJVVFOUqvUvEr+iG40ZOesvLaPl2Ip43eaGA?=
+ =?us-ascii?Q?XVcmgiLvaC6dIPqSIELYme9aEDV7sxxymEl/2GAuwQnG1NDpxiu9qArmPnuu?=
+ =?us-ascii?Q?/49FQyje0xPfMnydIHTFIGAZi+z4xrl/G4FF9u9FcQuy/KuCSPWJxAtx25JZ?=
+ =?us-ascii?Q?clFmf/B4sdUog5dPCzFwsTRM3Xuz5AemtVQZH6hgrS4QD2IwTAj3YhnBCA48?=
+ =?us-ascii?Q?9L/eO0zJ3rG53tOaPdKQlWMl38bn2yoHZe00+aNC22mbLzf9O0Py0CZRA6fd?=
+ =?us-ascii?Q?K8ymv2c0/qTDvRRNy+twUtAPVUkl+oN2T1opEnffHSiQJWo8Dond/p42daha?=
+ =?us-ascii?Q?Hcad+uid55PcJsn9NhUGNjpyfBh6Plj+OlKw6A6Z/uwKUidCLJlyLSXbdRGp?=
+ =?us-ascii?Q?sSLtULqBoZXOeTFBpSGaILqB6hQcKgblBUoV75qfxiLH9PAsr/Rrs0vCQs1I?=
+ =?us-ascii?Q?7XuHJvD9MC9igIVvRRvccVfwWiKQzlPwhAlT0dWVP4NhxxwfxBmdLaJBK9LG?=
+ =?us-ascii?Q?LNcG1zfANXtNhY2Gx4AuJB5ch0ulHdWWXEal3NcIOpIY46q3HKXr3GCA2wlt?=
+ =?us-ascii?Q?1/tV+F35OcfZP+Zue51iJ7yXoBKFweqkt0TJ1BEmb/OxhJRUuXYlBs+Nzh7W?=
+ =?us-ascii?Q?m3VWx/AhhVrZKy8A/5aYSu3WjQUh+daG1PNefBfK34AoQnW8dIJ4sazUzZvW?=
+ =?us-ascii?Q?Rv12isa0Nm6Jwt3Qdh0hiqfzFM/KF9BOVTYWFyoyNLuuQLruHi7sC6ULyMFl?=
+ =?us-ascii?Q?EKapGa6ABIzzDrHeGGT5xmgMucfrb16TRrbQ3V/yyN+4sbqExTUzvcKWx0Z5?=
+ =?us-ascii?Q?E6KefhnIOhOVCuaQykrRwITE470r5fHMjhjq846JrErveCSi5hHCxaSnozIC?=
+ =?us-ascii?Q?RKVTC6kRxHtmhc8qLzdsYgkgOiQ1QDHr1OXCa1L33Af5UAFhGI7bcBfYn5Uh?=
+ =?us-ascii?Q?fWdf6hc+MhPjtzGbTU7ThbjN1AjQxERlVPpYT1a9i6QSG3e6UKQxwXxP12WX?=
+ =?us-ascii?Q?xr22OdOrpS88DvE+Vt32A93CgBRUHtJyjkrfEEdvqkC6q5M//zs6NW6ud3Xu?=
+ =?us-ascii?Q?BUt4F2m54dy964O3SyKH3SFbSGCqepA0YvNuresy3z6UCK/tQmxxHPckiDy1?=
+ =?us-ascii?Q?TDkXFPgNA38hRnZI56EvL+0rVkvPHDO8MvwFemd8f1mCDBVee08e3Xbbs0pL?=
+ =?us-ascii?Q?pfdO0nGw/qZos/GwOUeXkoHdJyDaiCTtZkx++uGaisTs6IGpDee/LtMjH2ky?=
+ =?us-ascii?Q?O5qtflkOVgVmat2RSJKXvEcYDoZ2VdOC95OQz0Il?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7ca26aec-abb0-4ebe-3b5f-08dc2f126e07
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Feb 2024 17:12:18.3254
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /+peb2UnndMYh6nHJ9kASC916C+ErK+zdh4OOi/G4KsZkDkvEyNruN1Kh2SRwaPv
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6570
 
-On Fri, Feb 16, 2024 at 10:03:31AM +0100, Andrey Albershteyn wrote:
-> On 2024-02-15 17:08:02, Luis Chamberlain wrote:
-> > Often times one is running a new test baseline we want to continue to
-> > start testing where we left off if the last test was a crash. To do
-> > this the first thing that occurred to me was to use the check.time
-> > file as an expunge file but that doesn't work so well if you crashed
-> > as the file turns out empty.
-> > 
-> > So instead add super simple argument --start-after which let's you
-> > skip all tests until the test infrastructure has "seen" the test
-> > you want to skip. This does obviously work best if you are not using
-> > a random order, but that is rather implied. If you do use a random
-> > order --start-after still works, the final output will however just
-> > be randomized of course, but it should let you skip a failed known
-> > crash at least. The real value to --start-after though is for when
-> > you use a non-randomized order.
-> > 
-> > If the target test is not found in your test list we complain and
-> > bail. This is not as obvious when you specify groups, so likewise
-> > we do a special check when you use groups to ensure the test is at
-> > least part of one group.
-> > 
-> > Demo:
-> > 
-> > root@demo-xfs-reflink /var/lib/xfstests # ./check -s xfs_reflink -n -g soak --start-after generic/025
-> > Start after test generic/025 not found in any group specified.
-> > Be sure you specify a test present in one of your test run groups if using --start-after.
-> > 
-> > Your set of groups have these tests:
-> > 
-> > generic/476 generic/521 generic/522 generic/616 generic/617 generic/642 generic/650
-> > 
-> > root@demo-xfs-reflink /var/lib/xfstests # ./check -s xfs_reflink -n -g soak --start-after generic/522
-> > SECTION       -- xfs_reflink
-> > RECREATING    -- xfs on /dev/loop16
-> > FSTYP         -- xfs (non-debug)
-> > PLATFORM      -- Linux/x86_64 demo-xfs-reflink 6.5.0-5-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.5.13-1 (2023-11-29)
-> > MKFS_OPTIONS  -- -f -f -m reflink=1,rmapbt=1, -i sparse=1, /dev/loop5
-> > MOUNT_OPTIONS -- /dev/loop5 /media/scratch
-> > 
-> > generic/616
-> > generic/617
-> > generic/642
-> > generic/650
-> > 
-> > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> > ---
-> > 
-> > Changes since v1:
-> > 
-> > This all addresses Anand Jain's feedback.
-> > 
-> >  - Skip tests completely which are not going to be run
-> >  - Sanity test to ensure the test is part of a group, if you listed
-> >    groups, and if not provide a useful output giving the list of all
-> >    tests in your group so you can know better which one is a valid test
-> >    to skip
-> >  - Sanity test to ensure the test you specified is valid
-> >  - Moves the trim during file processing now using a routine
-> >    trim_start_after()
-> > 
-> >  check | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 52 insertions(+)
-> > 
-> > diff --git a/check b/check
-> > index 71b9fbd07522..1c76f33192ba 100755
-> > --- a/check
-> > +++ b/check
-> > @@ -18,6 +18,8 @@ showme=false
-> >  have_test_arg=false
-> >  randomize=false
-> >  exact_order=false
-> > +start_after=false
-> > +start_after_test=""
-> >  export here=`pwd`
-> >  xfile=""
-> >  subdir_xfile=""
-> > @@ -80,6 +82,7 @@ check options
-> >      -b			brief test summary
-> >      -R fmt[,fmt]	generate report in formats specified. Supported formats: xunit, xunit-quiet
-> >      --large-fs		optimise scratch device for large filesystems
-> > +    --start-after	only start testing after the test specified
-> >      -s section		run only specified section from config file
-> >      -S section		exclude the specified section from the config file
-> >      -L <n>		loop tests <n> times following a failure, measuring aggregate pass/fail metrics
-> > @@ -120,6 +123,8 @@ examples:
-> >   check -x stress xfs/*
-> >   check -X .exclude -g auto
-> >   check -E ~/.xfstests.exclude
-> > + check --start-after btrfs/010
-> > + check -n -g soak --start-after generic/522
-> >  '
-> >  	    exit 1
-> >  }
-> > @@ -204,6 +209,24 @@ trim_test_list()
-> >  	rm -f $tmp.grep
-> >  }
-> >  
-> > +# takes the list of tests to run in $tmp.list and skips all tests until
-> > +# the specified test is found. This will ensure the tests start after the
-> > +# test specified, it skips the test specified.
-> > +trim_start_after()
-> > +{
-> > +	local skip_test="$1"
-> > +	local starts_regexp=$(echo $skip_test | sed -e 's|\/|\\/|')
-> > +	local grep_start_after=" | awk 'f;/.*'$starts_regexp'/{f=1}'"
-> 
-> Looks like grep_start_after is not used
-> Otherwise, LGTM:
-> Reviewed-by: Andrey Albershteyn <aalbersh@redhat.com>
+On Tue, Feb 06, 2024 at 11:12:41AM -0400, Jason Gunthorpe wrote:
+> +static void arm_smmu_make_s2_domain_ste(struct arm_smmu_ste *target,
+> +					struct arm_smmu_master *master,
+> +					struct arm_smmu_domain *smmu_domain)
+> +{
+> +	struct arm_smmu_s2_cfg *s2_cfg = &smmu_domain->s2_cfg;
+> +
+> +	memset(target, 0, sizeof(*target));
+> +	target->data[0] = cpu_to_le64(
+> +		STRTAB_STE_0_V |
+> +		FIELD_PREP(STRTAB_STE_0_CFG, STRTAB_STE_0_CFG_S2_TRANS));
+> +
+> +	target->data[1] = cpu_to_le64(
+> +		FIELD_PREP(STRTAB_STE_1_EATS,
+> +			   master->ats_enabled ? STRTAB_STE_1_EATS_TRANS : 0) |
+> +		FIELD_PREP(STRTAB_STE_1_SHCFG,
+> +			   STRTAB_STE_1_SHCFG_NON_SHARABLE));
 
-Thanks I've made these changes, will send a v3:
+Just so we are on the same page.. The above NON_SHARABLE is a mistake
+here since v1.
 
-diff --git a/check b/check
-index 1c76f33192ba..d0bf7ea43870 100755
---- a/check
-+++ b/check
-@@ -18,7 +18,6 @@ showme=false
- have_test_arg=false
- randomize=false
- exact_order=false
--start_after=false
- start_after_test=""
- export here=`pwd`
- xfile=""
-@@ -216,7 +215,6 @@ trim_start_after()
- {
- 	local skip_test="$1"
- 	local starts_regexp=$(echo $skip_test | sed -e 's|\/|\\/|')
--	local grep_start_after=" | awk 'f;/.*'$starts_regexp'/{f=1}'"
- 
- 	if grep -q $skip_test $tmp.list ; then
- 		rm -f $tmp.grep
-@@ -266,7 +264,7 @@ _prepare_test_list()
- 				exit 1
- 			fi
- 
--			if [[ $start_after && $start_after_found -ne 1 ]]; then
-+			if [[ "$start_after_test" != "" && $start_after_found -ne 1 ]]; then
- 				echo $list | grep -q $start_after_test
- 				if [[ $? -eq 0 ]]; then
- 					start_after_found=1
-@@ -278,7 +276,7 @@ _prepare_test_list()
- 			done
- 			group_all="$group_all $list"
- 		done
--		if [[ $start_after && $start_after_found -ne 1 ]]; then
-+		if [[ "$start_after_test" != "" && $start_after_found -ne 1 ]]; then
- 			group_all=$(echo $group_all | sed -e 's|tests/||g')
- 			echo "Start after test $start_after_test not found in any group specified."
- 			echo "Be sure you specify a test present in one of your test run groups if using --start-after."
-@@ -301,7 +299,7 @@ _prepare_test_list()
- 		trim_test_list $list
- 	done
- 
--	if [[ $start_after ]]; then
-+	if [[ "$start_after_test" != "" ]]; then
- 		trim_start_after $start_after_test
- 	fi
- 
-@@ -361,7 +359,10 @@ while [ $# -gt 0 ]; do
- 		fi
- 		;;
- 	--start-after)
--		start_after=true
-+		if $randomize; then
-+			echo "Cannot specify -r and --start-after."
-+			exit 1
-+		fi
- 		start_after_test="$2"
- 		shift
- 		;;
+It is hard to follow arm_smmu_write_strtab_ent() so we all missed that
+the S2 ends up re-using the qword[1] that was installed by the
+bypass/abort STE that has to be in place prior to installing the S2.
+
+Only the S1 path sets SHCFG to 0 because the HW doesn't use it due to
+the current driver not using S1DSS.
+
+Jason
