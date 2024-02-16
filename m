@@ -1,115 +1,138 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD3312FB18;
-	Fri, 16 Feb 2024 16:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D63C12F36A;
+	Fri, 16 Feb 2024 16:40:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708100934; cv=none; b=sOww8gTZM8EV9kJZIfeJ8Ur4G+VT8pD67SADOH5Cee+s6BJeFQRaySK6bdnpenpgDQ1d+pCDDe2n/BfMwEH6yRCh+di6P1guuZkReF/SEOu1qwNtI/JjSHt3uI+V/PQdkM0zoebI54vCQOnh30KM8a9/lmibXJ09WYPKeC9ttow=
+	t=1708101625; cv=none; b=iunBzwQZ6cP0zLC/gUyhXpA4jQNP3ecJk0iedFxXaZPBU9CPpajQB6O4QpgEfl/TUqNph7G+bHCBCydx6Bm20UBhExiI4RpLanlq8ISCXtUmHIpNAN2jTl6XaP82k0Igrd+qONOxTvo0apIkoy3YwkYqMaxXZgyyyHTEG6xwBN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708100934; c=relaxed/simple;
-	bh=bLayoZaZJLZiF5BMJqBebQLCc+RBwyhci3ZXz7tlJMY=;
+	s=arc-20240116; t=1708101625; c=relaxed/simple;
+	bh=2fpSaUSpmNmZFejPzHSidGZ2KRLUi8JLJZRr4uGD0eM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uS+im3yjui+jqWmUx0iG5pRDsAx7hwwaSGb0L/LCzfADA/qiMRuqdPJilg+7jSEawxlhr+oFkjiqOmCi7ceyyneuLHcwdMEpZtqsmK8ZpRAVkNlUoGymTy1EMQVcR36nEGFis2/3HDNxghGyWcWUqeF15iEMS3zu4IANz6GCpCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=krob6DhG; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=pt12NxOpfPGmxFrorHF0uJoLqhpOyDgXSFcB5CiWZzkdF/L3pCJraVh5j+Ys7NoeHmCEiKEwEZbrMz+7nyTHICCcCLLsj1UdjC/M8gCbxszeulFsBNR8xfrfW3UQW7QBwuBKI9XwRb5/nQayFiBZNene1zUOIU4CRevCLdgTzwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=0YvxCAIK; arc=none smtp.client-ip=198.137.202.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="krob6DhG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F7FC433C7;
-	Fri, 16 Feb 2024 16:28:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708100934;
-	bh=bLayoZaZJLZiF5BMJqBebQLCc+RBwyhci3ZXz7tlJMY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=krob6DhGMHFi1yO0jo5VUTbEo0bOL7nK+lnOcMUcxZCCEvNFnktE8Ik+Vv19iMdwV
-	 xrtviPpTD/7N+XnLu8Ds2ujzxszL1tRgQviMaufpHWGoNJkrGXhW+MATA5OHsepKEP
-	 YllORJMXxrpXwrgTDbLCZWMBA4gV82a1FA82gN9ggJRiMeJg+yT+r/m2T9vlzL7o13
-	 V+EAps5cCqhgF+MFwd1P6FtWjqePxRDbecuixlPABVczSzme1Yot66/qBB3faMhuK3
-	 xZj4zg20BKtSgS5XBRK/KoUYP/7mz9FHNe0ahFw11NycFL+COgiKNb0z4hqfOCGw35
-	 4lMcJs6rwCwRg==
-Date: Fri, 16 Feb 2024 16:28:47 +0000
-From: Will Deacon <will@kernel.org>
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v5 01/17] iommu/arm-smmu-v3: Make STE programming
- independent of the callers
-Message-ID: <20240216162847.GA2292@willie-the-truck>
-References: <0-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
- <1-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
- <20240215134952.GA690@willie-the-truck>
- <20240215160135.GL1088888@nvidia.com>
- <02fac0ab-07ac-448e-ae4e-26788ed4fce9@arm.com>
- <a0c62629-999f-4aa1-86c7-3104811f84d0@arm.com>
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="0YvxCAIK"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=wKsTqNR6AtcCk0lTtaZMcMyccUl13BohQSF+nkXoPn0=; b=0YvxCAIKf89JEmy5lmXcvqvL3N
+	g/cFYXDUHlfXg0GuPTW65E0cJUCYBhtQ46Zwl8U11yeGQ6kIUCRhU9/Nv5/TsW9vnpN1eb/f0T4Cf
+	+5dq6gHVBrnwkRvRh9yQ2QwdXSiOp3r7OIyULjTLjVVPAmq/22QQuFfJ1lPTldZ0XVRytqWVhXg7r
+	TS49wU9+aQQho33IPDmaECGmoJvHQ1YpiT/zit9dytM27GHaM05OXlfA6z6Qj5P2mtvNp3+RU/OVl
+	DjsHzPokcn3zkByCpztDTxSNkkRSGjX5YstJ9KYPxtuauFmu/Pp6xEuTGrD9EJ0m9DRatTjud0DXx
+	dpaao4Uw==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
+	id 1rb1GB-000000031jo-2JX2;
+	Fri, 16 Feb 2024 16:40:23 +0000
+Date: Fri, 16 Feb 2024 08:40:23 -0800
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Zorro Lang <zlang@redhat.com>
+Cc: fstests@vger.kernel.org, aalbersh@redhat.com, chandan.babu@oracle.com,
+	amir73il@gmail.com, djwong@kernel.org,
+	linux-fsdevel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] check: add support for --start-after
+Message-ID: <Zc-P91LVKAZAgSwy@bombadil.infradead.org>
+References: <20230907221030.3037715-1-mcgrof@kernel.org>
+ <20230908052727.ccyxadtibouis74h@zlang-mailbox>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a0c62629-999f-4aa1-86c7-3104811f84d0@arm.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20230908052727.ccyxadtibouis74h@zlang-mailbox>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Thu, Feb 15, 2024 at 08:11:38PM +0000, Robin Murphy wrote:
-> On 2024-02-15 6:42 pm, Robin Murphy wrote:
-> [...]
-> > > > > +static void arm_smmu_get_ste_used(const __le64 *ent, __le64
-> > > > > *used_bits)
-> > > > >   {
-> > > > > +    unsigned int cfg = FIELD_GET(STRTAB_STE_0_CFG,
-> > > > > le64_to_cpu(ent[0]));
-> > > > > +
-> > > > > +    used_bits[0] = cpu_to_le64(STRTAB_STE_0_V);
-> > > > > +    if (!(ent[0] & cpu_to_le64(STRTAB_STE_0_V)))
-> > > > > +        return;
-> > > > > +
-> > > > > +    /*
-> > > > > +     * See 13.5 Summary of attribute/permission
-> > > > > configuration fields for the
-> > > > > +     * SHCFG behavior. It is only used for BYPASS,
-> > > > > including S1DSS BYPASS,
-> > > > > +     * and S2 only.
-> > > > > +     */
-> > > > > +    if (cfg == STRTAB_STE_0_CFG_BYPASS ||
-> > > > > +        cfg == STRTAB_STE_0_CFG_S2_TRANS ||
-> > > > > +        (cfg == STRTAB_STE_0_CFG_S1_TRANS &&
-> > > > > +         FIELD_GET(STRTAB_STE_1_S1DSS, le64_to_cpu(ent[1])) ==
-> > > > > +             STRTAB_STE_1_S1DSS_BYPASS))
-> > > > > +        used_bits[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
-> > > > 
-> > > > Huh, SHCFG is really getting in the way here, isn't it?
-> > > 
-> > > I wouldn't say that.. It is just a complicated bit of the spec. One of
-> > > the things we recently did was to audit all the cache settings and, at
-> > > least, we then realized that SHCFG was being subtly used by S2 as
-> > > well..
+Sorry for some reason I missed this.
+
+On Fri, Sep 08, 2023 at 01:27:27PM +0800, Zorro Lang wrote:
+> On Thu, Sep 07, 2023 at 03:10:30PM -0700, Luis Chamberlain wrote:
+> > Often times one is running a new test baseline we want to continue to
+> > start testing where we left off if the last test was a crash. To do
+> > this the first thing that occurred to me was to use the check.time
+> > file as an expunge file but that doesn't work so well if you crashed
+> > as the file turns out empty.
 > > 
-> > Yeah, that really shouldn't be subtle; incoming attributes are replaced
-> > by S1 translation, thus they are relevant to not-S1 configs.
+> > So instead add super simple argument --start-after which let's you
+> > skip all tests until the test infrastructure has "seen" the test
+> > you want to skip. This does obviously work best if you are not using
+> > a random order, but that is rather implied.
+> > 
+> > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> > ---
+> >  check | 17 +++++++++++++++++
+> >  1 file changed, 17 insertions(+)
+> > 
+> > diff --git a/check b/check
+> > index 71b9fbd07522..1ecf07c1cb37 100755
+> > --- a/check
+> > +++ b/check
+> > @@ -18,6 +18,8 @@ showme=false
+> >  have_test_arg=false
+> >  randomize=false
+> >  exact_order=false
+> > +start_after=false
+> > +start_after_test=""
+> >  export here=`pwd`
+> >  xfile=""
+> >  subdir_xfile=""
+> > @@ -80,6 +82,7 @@ check options
+> >      -b			brief test summary
+> >      -R fmt[,fmt]	generate report in formats specified. Supported formats: xunit, xunit-quiet
+> >      --large-fs		optimise scratch device for large filesystems
+> > +    --start-after	only start testing after the test specified
 > 
-> That said, in this specific case I don't understand why we're worrying about
-> SHCFG here at all - we're never going to make use of any value other than
-> "use incoming" because we can't rely on it being implemented in the first
-> place, and even if it is, we really don't want to start getting into the
-> forced-coherency notion that the DMA layer can'#t understand and devicetree
-> can't describe.
+> This option conflicts with "-r" option.
 
-Yup, that's exactly what I'm thinking. We currently set it to NSH when
-translation is enabled, so that the stage-2 shareability is effectively
-an override. However, the device is either coherent, or it isn't, and so
-we should just leave this always set to "use incoming" in my opinion,
-which means we no longer need to care about qword 1 for the bypass case.
+I will add a check.
 
-Will
+> >      -s section		run only specified section from config file
+> >      -S section		exclude the specified section from the config file
+> >      -L <n>		loop tests <n> times following a failure, measuring aggregate pass/fail metrics
+> > @@ -313,6 +316,11 @@ while [ $# -gt 0 ]; do
+> >  				<(sed "s/#.*$//" $xfile)
+> >  		fi
+> >  		;;
+> > +	--start-after)
+> > +		start_after=true
+> > +		start_after_test="$2"
+> 
+> Do we really need two variables at here?
+
+We can stick with one but we just need to use:
+
+if [[ "$start_after_test != "" ]]
+
+> 
+> > +		shift
+> > +		;;
+> >  	-s)	RUN_SECTION="$RUN_SECTION $2"; shift ;;
+> >  	-S)	EXCLUDE_SECTION="$EXCLUDE_SECTION $2"; shift ;;
+> >  	-l)	diff="diff" ;;
+> > @@ -591,6 +599,15 @@ _expunge_test()
+> >  {
+> >  	local TEST_ID="$1"
+> >  
+> > +	if $start_after; then
+> > +		if [[ "$start_after_test" == ${TEST_ID}* ]]; then
+> > +			start_after=false
+> > +		fi
+> > +		echo "       [skipped]"
+> > +		return 0
+> > +
+> > +	fi
+> 
+> I can't understand how you use the --start-after. I though you'd like to remove
+> all cases before the "start-after" from the running list. But when I saw here,
+> I'm a little confused.
+
+I hope the demo in the 2nd version of the patch helps. I'll send a v3.
+
+  Luis
