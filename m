@@ -1,181 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07DC21112;
-	Sat, 17 Feb 2024 01:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373991CA86
+	for <patches@lists.linux.dev>; Sat, 17 Feb 2024 05:57:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708131963; cv=none; b=uIsQBiCmGM3StojGfCjgMquuorQ82bKQr0lVz1qxjzG/adnq/vZP9n4Hr34epCfwoo4JVz1TccCWg95TJ9upTS8+0GimjvQiBF4zVPWqjRmHWCmpP16eghHO4S63eeSZsFT1XNqabuFlomwsMK0h3oFrlvKO4SsYCyS3txKBneg=
+	t=1708149461; cv=none; b=bdf0jq9UVLelicYiFxSXzd7LlbY4H6y/OXXhDKN74P19X6zkXy6kjQbNfLgUhDbJ8iNQaiiMdF0+9gzMf9tCx/6qgDm10v6rPfxYiJrL9oBw6VoVSxxlrrTldHJ29iCSjZWLZJ/i6SvdVetc5ApyHbuRH47oeeuTYrCW7gtgzzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708131963; c=relaxed/simple;
-	bh=J3WMalAjgz0rnHbmeT8QD4FpP4dD0hu4Yj+NzkEppQE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoYrz9lO0oishzan+DgenCRJe2Xzc/3NpM1q4L+THlZXVmhNRSwZIkIi1tP0bBXZaa/5/hpUjvSZr6Ba3R8FG0j6z5Sr6OtfJxz7LqcwSAv9uPvIBA6SZz/uuT+Z39n344FcsoqvawWxbpslx9lOYbhmFAGoxUq0AzXsq7X7yRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EAOa4fi4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708149461; c=relaxed/simple;
+	bh=te3NvISa2cg+5326YYQR9qU1/sfQi28dFBgXgq7HymI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hAOuGhaDTOsYEJgiILsS5v1S9qLKubiCcl6Obae84FVGEpVgdNUg73vteEdqyP1xow2oWzwX+u/6jyxeHTbvRTCwFewQ0BmwrpvDY5TfcOcE+lahoIOANAb67wRTXiAbXcsY5zP02p5LE/BTYXFzygORbT+DXoFtsWTsfrvZDRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j1lVmWvL; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EAOa4fi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE8DC433A6;
-	Sat, 17 Feb 2024 01:06:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708131963;
-	bh=J3WMalAjgz0rnHbmeT8QD4FpP4dD0hu4Yj+NzkEppQE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAOa4fi46Q5W6L0e8l/qgg64ROvD783Ms6lXCLYZpxVg35KK7iz4ZOPqJG55vnPGq
-	 3UeRnJKaA3I3cKg6k8nOeUWz9METclLEOdD2v/vwKpzE0krhoMDcnzcf32fLp60VJM
-	 TsuqeU8cRg0jhmjmGbtWhR66ChQwQ7qIhwKmEc6mNkXVzW0mVxPXvpIFCOvDJP4Ug0
-	 5GQ1D1ccdPvjJlEHgSowFvSe0mQgCZKbefm6SWMC5Ip+4IplYU/9M+WdLtT1NdVNNg
-	 COT3rSgSj0bQbQPCU6igti603mJcNcGUWeyv11PFrXku2BBWdb9jKivpvYiB0ZyZVU
-	 Kkj8/nueN6ZGw==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Rob Herring <robh+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-um@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org,
-	kunit-dev@googlegroups.com,
-	linux-kselftest@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Frank Rowand <frowand.list@gmail.com>,
-	David Gow <davidgow@google.com>,
-	Brendan Higgins <brendan.higgins@linux.dev>
-Subject: [PATCH v4 7/7] of: Add KUnit test to confirm DTB is loaded
-Date: Fri, 16 Feb 2024 17:05:56 -0800
-Message-ID: <20240217010557.2381548-8-sboyd@kernel.org>
-X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-In-Reply-To: <20240217010557.2381548-1-sboyd@kernel.org>
-References: <20240217010557.2381548-1-sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j1lVmWvL"
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-785bdb57dfaso311109585a.1
+        for <patches@lists.linux.dev>; Fri, 16 Feb 2024 21:57:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708149459; x=1708754259; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+uCjdazgHe9L1xw/mXjLr8atA9J7oVAnfB8tvbVqeMc=;
+        b=j1lVmWvLSm2Csv8/IFgDX9d3aMNpxskayqQHO1xvYTj+oodVNR3JuZz7yuIqGKU4OU
+         79tSt9CgXsE/ebdLgL4OErZb2U8qVYIqgUe4MEqg3Ykv3Kz4QbYjlmKvmGgfvv/jezPh
+         JX2iUVZk74ijIlXI5H0Ywa7r+VDrSYe1NC/xLEGpwU/fzFjlKp4TBwEf9X/OymgIV4JL
+         XsNwxhN7ZF7KudayIpGnIZ8d0xP8J9FDqfqe1d8JWzIoRSXUbOe+VjkYVFV4AE8DkDuW
+         DWH65W1KoTvMH/l7+b8MyMDmy6hqlB/SpXepWhamKCtePjKh+r0m6pq8AzDKjGaZtYBV
+         Rw5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708149459; x=1708754259;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+uCjdazgHe9L1xw/mXjLr8atA9J7oVAnfB8tvbVqeMc=;
+        b=W/5PpaqFoVPz9mItP3h6hNbvEaDTJ7XHk5AwEUfm0HoJFNnTvXdlMw8M0JGKRAPTDP
+         azVD5nucspKFXyXNADbzsPaDY6CEVuw2zHPLsuExSH+lOQSbQpeBb/uvidMmEAnrxDsi
+         tuc3eeV/NQKIJrpuFOelT2Q4tx9pLDnemePq7CwTKoqwiKFah8xUx8C/Is1XEQG88RCO
+         F6/RHNkf08mEszGadS9UXqFry0NZlNm44D7pG/8ZdtYin5V3w7ONpnCYcNzS38ce5KAd
+         E3R3/UzSgfON3P8p2WlC2c/taQwEqPwnHzEO8jSHLb3+WODNDE21XyTJ5iAhCbdXXLtG
+         +cRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUdLhG3qZBBzXZq/iOk/1bOrcvIZp8SN8+YC4rcySWQAnT/ZWfKIIlbPdby9Jc9d+F9G3h7vrBMzPZNQ3rJDLJ7e6mYRi3PmA==
+X-Gm-Message-State: AOJu0YyLcnpOXNLj39cVeeC35kqH+ecTu6g/F4rA6VNUDr2QaWc/no2p
+	ISsBlaHFwYolg56cL4qcbzby4Pt0EB/OnrqzVVK36t+IJTAjivp6
+X-Google-Smtp-Source: AGHT+IHwSaPs/0sTuYyvoGkTZ9yU/0PeCt6IS+EHLIK/2TZ+2uktYLYLIeclv/Cjb75EaezoyQI1FA==
+X-Received: by 2002:a0c:e408:0:b0:68f:35f5:8e96 with SMTP id o8-20020a0ce408000000b0068f35f58e96mr5046198qvl.25.1708149459024;
+        Fri, 16 Feb 2024 21:57:39 -0800 (PST)
+Received: from fauth1-smtp.messagingengine.com (fauth1-smtp.messagingengine.com. [103.168.172.200])
+        by smtp.gmail.com with ESMTPSA id ks6-20020a056214310600b0068f2b9a6ec7sm702735qvb.18.2024.02.16.21.57.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 Feb 2024 21:57:38 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfauth.nyi.internal (Postfix) with ESMTP id B55151200043;
+	Sat, 17 Feb 2024 00:57:37 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Sat, 17 Feb 2024 00:57:37 -0500
+X-ME-Sender: <xms:0UrQZdnfl4NbTm4uWwvRVrT6KieJBsb00dcr25ZfdE3qfs15uacr3A>
+    <xme:0UrQZY1hyUy8DmVym6YNHGUBsFsc5lNvw0_d32anhjOlz2QQ5urOLEcsw6yrQP9tq
+    lBIFoxJg79MTnh4_Q>
+X-ME-Received: <xmr:0UrQZTqPv8oUezjWvoIIodh5eP7ENC5bWY2foa9JZUls14MjyMBHrfMvSKvkbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefgdeklecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhn
+    ucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrth
+    htvghrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudff
+    iedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsg
+    hoqhhunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieeg
+    qddujeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigi
+    hmvgdrnhgrmhgv
+X-ME-Proxy: <xmx:0UrQZdmDmQj-P7KHbcNASwtq7JAZ1BrQPiK-E-lqlF65y2xhdvLgzw>
+    <xmx:0UrQZb3dIYw7qCeZEQJj9YmN5RTW4f8e5oDhDqTAt-JPDWrZ17tZMw>
+    <xmx:0UrQZcvTxegSNMCIva8DBaFco6dAUbvTZaFvuRtT8NQMQyMtGrRFOA>
+    <xmx:0UrQZS10S57g9lkxQrt_FC_ZufMGm7kpcGl1dfJOf10mLNIdT9NZ5nGSoH8>
+Feedback-ID: iad51458e:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 17 Feb 2024 00:57:37 -0500 (EST)
+Date: Fri, 16 Feb 2024 21:57:29 -0800
+From: Boqun Feng <boqun.feng@gmail.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 2/2] rust: upgrade to Rust 1.76.0
+Message-ID: <ZdBKycd6mPI5cpkA@boqun-archlinux>
+References: <20240217002638.57373-1-ojeda@kernel.org>
+ <20240217002638.57373-2-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240217002638.57373-2-ojeda@kernel.org>
 
-Add a KUnit test that confirms a DTB has been loaded, i.e. there is a
-root node, and that the of_have_populated_dt() API works properly. We
-skip the test when CONFIG_OF_EARLY_FLATREE=n because in that case we
-know architecture code hasn't called unflatten_(and_copy_)?device_tree()
-which would populate some sort of root node.
+On Sat, Feb 17, 2024 at 01:26:38AM +0100, Miguel Ojeda wrote:
+> This is the next upgrade to the Rust toolchain, from 1.75.0 to 1.76.0
+> (i.e. the latest) [1].
+> 
 
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Reviewed-by: David Gow <davidgow@google.com>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/of/.kunitconfig |  3 +++
- drivers/of/Kconfig      |  9 +++++++
- drivers/of/Makefile     |  2 ++
- drivers/of/of_test.c    | 57 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 71 insertions(+)
- create mode 100644 drivers/of/.kunitconfig
- create mode 100644 drivers/of/of_test.c
+I've applied this on the merge point of for-next/rust-for-arm64 in arm64
+tree and today's rust-next (patch #1 has a small conflict with the
+target.json changes in arm64 tree), tested with kunit for both x86 and
+arm64.
 
-diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
-new file mode 100644
-index 000000000000..5a8fee11978c
---- /dev/null
-+++ b/drivers/of/.kunitconfig
-@@ -0,0 +1,3 @@
-+CONFIG_KUNIT=y
-+CONFIG_OF=y
-+CONFIG_OF_KUNIT_TEST=y
-diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-index d738fbad9c36..dd726c7056bf 100644
---- a/drivers/of/Kconfig
-+++ b/drivers/of/Kconfig
-@@ -36,6 +36,15 @@ config OF_UNITTEST
- 
- 	  If unsure, say N here. This option is not safe to enable.
- 
-+config OF_KUNIT_TEST
-+	tristate "Devicetree KUnit Test" if !KUNIT_ALL_TESTS
-+	depends on KUNIT
-+	default KUNIT_ALL_TESTS
-+	help
-+	  This option builds KUnit unit tests for device tree infrastructure.
-+
-+	  If unsure, say N here, but this option is safe to enable.
-+
- config OF_ALL_DTBS
- 	bool "Build all Device Tree Blobs"
- 	depends on COMPILE_TEST
-diff --git a/drivers/of/Makefile b/drivers/of/Makefile
-index df305348d1cb..251d33532148 100644
---- a/drivers/of/Makefile
-+++ b/drivers/of/Makefile
-@@ -19,4 +19,6 @@ obj-y	+= kexec.o
- endif
- endif
- 
-+obj-$(CONFIG_OF_KUNIT_TEST) += of_test.o
-+
- obj-$(CONFIG_OF_UNITTEST) += unittest-data/
-diff --git a/drivers/of/of_test.c b/drivers/of/of_test.c
-new file mode 100644
-index 000000000000..a9301d293f01
---- /dev/null
-+++ b/drivers/of/of_test.c
-@@ -0,0 +1,57 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * KUnit tests for OF APIs
-+ */
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include <kunit/test.h>
-+
-+/*
-+ * Test that the root node "/" can be found by path.
-+ */
-+static void of_dtb_root_node_found_by_path(struct kunit *test)
-+{
-+	struct device_node *np;
-+
-+	np = of_find_node_by_path("/");
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, np);
-+	of_node_put(np);
-+}
-+
-+/*
-+ * Test that the 'of_root' global variable is always populated when DT code is
-+ * enabled. Remove this test once of_root is removed from global access.
-+ */
-+static void of_dtb_root_node_populates_of_root(struct kunit *test)
-+{
-+	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, of_root);
-+}
-+
-+static struct kunit_case of_dtb_test_cases[] = {
-+	KUNIT_CASE(of_dtb_root_node_found_by_path),
-+	KUNIT_CASE(of_dtb_root_node_populates_of_root),
-+	{}
-+};
-+
-+static int of_dtb_test_init(struct kunit *test)
-+{
-+	if (!IS_ENABLED(CONFIG_OF_EARLY_FLATTREE))
-+		kunit_skip(test, "requires CONFIG_OF_EARLY_FLATTREE");
-+
-+	return 0;
-+}
-+
-+/*
-+ * Test suite to confirm a DTB is loaded.
-+ */
-+static struct kunit_suite of_dtb_suite = {
-+	.name = "of_dtb",
-+	.test_cases = of_dtb_test_cases,
-+	.init = of_dtb_test_init,
-+};
-+
-+kunit_test_suites(
-+	&of_dtb_suite,
-+);
-+MODULE_LICENSE("GPL");
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+Tested-by: Boqun Feng <boqun.feng@gmail.com>
 
+Regards,
+Boqun
+
+> See the upgrade policy [2] and the comments on the first upgrade in
+> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+> 
+
+[...]
