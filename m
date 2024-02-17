@@ -1,99 +1,38 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373991CA86
-	for <patches@lists.linux.dev>; Sat, 17 Feb 2024 05:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5476A1CA87
+	for <patches@lists.linux.dev>; Sat, 17 Feb 2024 06:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708149461; cv=none; b=bdf0jq9UVLelicYiFxSXzd7LlbY4H6y/OXXhDKN74P19X6zkXy6kjQbNfLgUhDbJ8iNQaiiMdF0+9gzMf9tCx/6qgDm10v6rPfxYiJrL9oBw6VoVSxxlrrTldHJ29iCSjZWLZJ/i6SvdVetc5ApyHbuRH47oeeuTYrCW7gtgzzQ=
+	t=1708150125; cv=none; b=jOCLn9tGJsRbNx1CzF68bx9ev5FY72n36gqDvpRBNXxOYGO6y1lMJe2daLmcwUhEoh1PwZBmJWXx+fJ5do+/sE32aIaphI9bFo2YfrrEBXkmhjRnvxR15o2vx80Jvg/VLqwHtMaVjdQuaxbr/7AIi3Dc7JzjHCIbw5qhFUoSUD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708149461; c=relaxed/simple;
-	bh=te3NvISa2cg+5326YYQR9qU1/sfQi28dFBgXgq7HymI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hAOuGhaDTOsYEJgiILsS5v1S9qLKubiCcl6Obae84FVGEpVgdNUg73vteEdqyP1xow2oWzwX+u/6jyxeHTbvRTCwFewQ0BmwrpvDY5TfcOcE+lahoIOANAb67wRTXiAbXcsY5zP02p5LE/BTYXFzygORbT+DXoFtsWTsfrvZDRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j1lVmWvL; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708150125; c=relaxed/simple;
+	bh=JJk+VcCM1E2a2uLJVejf1CeHDGP1bTGEGRIKuBC9RMc=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=njnwCQhgr8ZIrMsZQUEupql7RirRtE9XZDCKYARr9R59iVPHwI5AzCvLMFPdlXTeMhgmsTUPLneHykSlM+tx/MSUAfuUUEzGfOrUEbjKqBuXzmhDjxLL/WEvryr00wjE4G4E7FEiAPr0jKa4+EynouhIXplhoMOioSO+sq7MlIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=gfBvQkxs; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j1lVmWvL"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-785bdb57dfaso311109585a.1
-        for <patches@lists.linux.dev>; Fri, 16 Feb 2024 21:57:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708149459; x=1708754259; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+uCjdazgHe9L1xw/mXjLr8atA9J7oVAnfB8tvbVqeMc=;
-        b=j1lVmWvLSm2Csv8/IFgDX9d3aMNpxskayqQHO1xvYTj+oodVNR3JuZz7yuIqGKU4OU
-         79tSt9CgXsE/ebdLgL4OErZb2U8qVYIqgUe4MEqg3Ykv3Kz4QbYjlmKvmGgfvv/jezPh
-         JX2iUVZk74ijIlXI5H0Ywa7r+VDrSYe1NC/xLEGpwU/fzFjlKp4TBwEf9X/OymgIV4JL
-         XsNwxhN7ZF7KudayIpGnIZ8d0xP8J9FDqfqe1d8JWzIoRSXUbOe+VjkYVFV4AE8DkDuW
-         DWH65W1KoTvMH/l7+b8MyMDmy6hqlB/SpXepWhamKCtePjKh+r0m6pq8AzDKjGaZtYBV
-         Rw5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708149459; x=1708754259;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:feedback-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+uCjdazgHe9L1xw/mXjLr8atA9J7oVAnfB8tvbVqeMc=;
-        b=W/5PpaqFoVPz9mItP3h6hNbvEaDTJ7XHk5AwEUfm0HoJFNnTvXdlMw8M0JGKRAPTDP
-         azVD5nucspKFXyXNADbzsPaDY6CEVuw2zHPLsuExSH+lOQSbQpeBb/uvidMmEAnrxDsi
-         tuc3eeV/NQKIJrpuFOelT2Q4tx9pLDnemePq7CwTKoqwiKFah8xUx8C/Is1XEQG88RCO
-         F6/RHNkf08mEszGadS9UXqFry0NZlNm44D7pG/8ZdtYin5V3w7ONpnCYcNzS38ce5KAd
-         E3R3/UzSgfON3P8p2WlC2c/taQwEqPwnHzEO8jSHLb3+WODNDE21XyTJ5iAhCbdXXLtG
-         +cRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUdLhG3qZBBzXZq/iOk/1bOrcvIZp8SN8+YC4rcySWQAnT/ZWfKIIlbPdby9Jc9d+F9G3h7vrBMzPZNQ3rJDLJ7e6mYRi3PmA==
-X-Gm-Message-State: AOJu0YyLcnpOXNLj39cVeeC35kqH+ecTu6g/F4rA6VNUDr2QaWc/no2p
-	ISsBlaHFwYolg56cL4qcbzby4Pt0EB/OnrqzVVK36t+IJTAjivp6
-X-Google-Smtp-Source: AGHT+IHwSaPs/0sTuYyvoGkTZ9yU/0PeCt6IS+EHLIK/2TZ+2uktYLYLIeclv/Cjb75EaezoyQI1FA==
-X-Received: by 2002:a0c:e408:0:b0:68f:35f5:8e96 with SMTP id o8-20020a0ce408000000b0068f35f58e96mr5046198qvl.25.1708149459024;
-        Fri, 16 Feb 2024 21:57:39 -0800 (PST)
-Received: from fauth1-smtp.messagingengine.com (fauth1-smtp.messagingengine.com. [103.168.172.200])
-        by smtp.gmail.com with ESMTPSA id ks6-20020a056214310600b0068f2b9a6ec7sm702735qvb.18.2024.02.16.21.57.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Feb 2024 21:57:38 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfauth.nyi.internal (Postfix) with ESMTP id B55151200043;
-	Sat, 17 Feb 2024 00:57:37 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Sat, 17 Feb 2024 00:57:37 -0500
-X-ME-Sender: <xms:0UrQZdnfl4NbTm4uWwvRVrT6KieJBsb00dcr25ZfdE3qfs15uacr3A>
-    <xme:0UrQZY1hyUy8DmVym6YNHGUBsFsc5lNvw0_d32anhjOlz2QQ5urOLEcsw6yrQP9tq
-    lBIFoxJg79MTnh4_Q>
-X-ME-Received: <xmr:0UrQZTqPv8oUezjWvoIIodh5eP7ENC5bWY2foa9JZUls14MjyMBHrfMvSKvkbw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefgdeklecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeuohhquhhn
-    ucfhvghnghcuoegsohhquhhnrdhfvghnghesghhmrghilhdrtghomheqnecuggftrfgrth
-    htvghrnhephedugfduffffteeutddvheeuveelvdfhleelieevtdeguefhgeeuveeiudff
-    iedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsg
-    hoqhhunhdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqieelvdeghedtieeg
-    qddujeejkeehheehvddqsghoqhhunhdrfhgvnhhgpeepghhmrghilhdrtghomhesfhhigi
-    hmvgdrnhgrmhgv
-X-ME-Proxy: <xmx:0UrQZdmDmQj-P7KHbcNASwtq7JAZ1BrQPiK-E-lqlF65y2xhdvLgzw>
-    <xmx:0UrQZb3dIYw7qCeZEQJj9YmN5RTW4f8e5oDhDqTAt-JPDWrZ17tZMw>
-    <xmx:0UrQZcvTxegSNMCIva8DBaFco6dAUbvTZaFvuRtT8NQMQyMtGrRFOA>
-    <xmx:0UrQZS10S57g9lkxQrt_FC_ZufMGm7kpcGl1dfJOf10mLNIdT9NZ5nGSoH8>
-Feedback-ID: iad51458e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 17 Feb 2024 00:57:37 -0500 (EST)
-Date: Fri, 16 Feb 2024 21:57:29 -0800
-From: Boqun Feng <boqun.feng@gmail.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	linux-kbuild@vger.kernel.org, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 2/2] rust: upgrade to Rust 1.76.0
-Message-ID: <ZdBKycd6mPI5cpkA@boqun-archlinux>
-References: <20240217002638.57373-1-ojeda@kernel.org>
- <20240217002638.57373-2-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="gfBvQkxs"
+Received: by linux.microsoft.com (Postfix, from userid 1127)
+	id C4E4E207FD41; Fri, 16 Feb 2024 22:08:43 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C4E4E207FD41
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1708150123;
+	bh=NveygydDoL1I2tmP3079U8gSOyukDLicRi2/sGv+Fsk=;
+	h=Date:From:To:Subject:From;
+	b=gfBvQkxsgvrgxvx8ei0YKYLbPX0oTpuG0burQvCToL5cZSLkV07frfUcXgTQgv1oF
+	 MNIa9jyUEvhxrey7hcAan+vv1VahEWdFY3d8aw5t4gA2lB4B9YgTW/Y9AjnjZyb67J
+	 g3GPUMUBsWzrORMWhXrsbLTxrE3is3npS94RZbFs=
+Date: Fri, 16 Feb 2024 22:08:43 -0800
+From: Saurabh Singh Sengar <ssengar@linux.microsoft.com>
+To: Frank Rowand <frowand.list@gmail.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, robh+dt@kernel.org,
+	linux-um@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
+	kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/7] of: Create of_root if no dtb provided by firmware
+Message-ID: <20240217060843.GA16460@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -102,25 +41,218 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240217002638.57373-2-ojeda@kernel.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 
-On Sat, Feb 17, 2024 at 01:26:38AM +0100, Miguel Ojeda wrote:
-> This is the next upgrade to the Rust toolchain, from 1.75.0 to 1.76.0
-> (i.e. the latest) [1].
+On Fri, Feb 16, 2024 at 05:05:51PM -0800, Frank Rowand wrote:
+> When enabling CONFIG_OF on a platform where 'of_root' is not populated
+> by firmware, we end up without a root node. In order to apply overlays
+> and create subnodes of the root node, we need one. Create this root node
+> by unflattening an empty builtin dtb.
 > 
-
-I've applied this on the merge point of for-next/rust-for-arm64 in arm64
-tree and today's rust-next (patch #1 has a small conflict with the
-target.json changes in arm64 tree), tested with kunit for both x86 and
-arm64.
-
-Tested-by: Boqun Feng <boqun.feng@gmail.com>
-
-Regards,
-Boqun
-
-> See the upgrade policy [2] and the comments on the first upgrade in
-> commit 3ed03f4da06e ("rust: upgrade to Rust 1.68.2").
+> If firmware provides a flattened device tree (FDT) then the FDT is
+> unflattened via setup_arch(). Otherwise, the call to
+> unflatten(_and_copy)?_device_tree() will create an empty root node.
 > 
+> We make of_have_populated_dt() return true only if the DTB was loaded by
+> firmware so that existing callers don't change behavior after this
+> patch. The call in the of platform code is removed because it prevents
+> overlays from creating platform devices when the empty root node is
+> used.
+> 
+> [sboyd@kernel.org: Update of_have_populated_dt() to treat this empty dtb
+> as not populated. Drop setup_of() initcall]
+> 
+> Signed-off-by: Frank Rowand <frowand.list@gmail.com>
+> Link: https://lore.kernel.org/r/20230317053415.2254616-2-frowand.list@gmail.com
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+>  drivers/of/Kconfig        |  5 ++---
+>  drivers/of/Makefile       |  2 +-
+>  drivers/of/empty_root.dts |  6 ++++++
+>  drivers/of/fdt.c          | 32 +++++++++++++++++++++++++++++++-
+>  drivers/of/platform.c     |  3 ---
+>  include/linux/of.h        | 25 +++++++++++++++----------
+>  6 files changed, 55 insertions(+), 18 deletions(-)
+>  create mode 100644 drivers/of/empty_root.dts
+> 
+> diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
+> index da9826accb1b..d738fbad9c36 100644
+> --- a/drivers/of/Kconfig
+> +++ b/drivers/of/Kconfig
+> @@ -14,9 +14,8 @@ if OF
+>  
+>  config OF_UNITTEST
+>  	bool "Device Tree runtime unit tests"
+> -	depends on !SPARC
+> +	depends on OF_EARLY_FLATTREE
+>  	select IRQ_DOMAIN
+> -	select OF_EARLY_FLATTREE
+>  	select OF_RESOLVE
+>  	help
+>  	  This option builds in test cases for the device tree infrastructure
+> @@ -54,7 +53,7 @@ config OF_FLATTREE
+>  	select CRC32
+>  
+>  config OF_EARLY_FLATTREE
+> -	bool
+> +	def_bool OF && !(SPARC || ALPHA || HEXAGON || M68K || PARISC || S390)
+>  	select DMA_DECLARE_COHERENT if HAS_DMA && HAS_IOMEM
+>  	select OF_FLATTREE
+>  
+> diff --git a/drivers/of/Makefile b/drivers/of/Makefile
+> index eff624854575..df305348d1cb 100644
+> --- a/drivers/of/Makefile
+> +++ b/drivers/of/Makefile
+> @@ -2,7 +2,7 @@
+>  obj-y = base.o cpu.o device.o module.o platform.o property.o
+>  obj-$(CONFIG_OF_KOBJ) += kobj.o
+>  obj-$(CONFIG_OF_DYNAMIC) += dynamic.o
+> -obj-$(CONFIG_OF_FLATTREE) += fdt.o
+> +obj-$(CONFIG_OF_FLATTREE) += fdt.o empty_root.dtb.o
+>  obj-$(CONFIG_OF_EARLY_FLATTREE) += fdt_address.o
+>  obj-$(CONFIG_OF_PROMTREE) += pdt.o
+>  obj-$(CONFIG_OF_ADDRESS)  += address.o
+> diff --git a/drivers/of/empty_root.dts b/drivers/of/empty_root.dts
+> new file mode 100644
+> index 000000000000..cf9e97a60f48
+> --- /dev/null
+> +++ b/drivers/of/empty_root.dts
+> @@ -0,0 +1,6 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/dts-v1/;
+> +
+> +/ {
+> +
+> +};
+> diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
+> index dfeba8b8ce94..e5a385285149 100644
+> --- a/drivers/of/fdt.c
+> +++ b/drivers/of/fdt.c
+> @@ -8,6 +8,7 @@
+>  
+>  #define pr_fmt(fmt)	"OF: fdt: " fmt
+>  
+> +#include <linux/acpi.h>
+>  #include <linux/crash_dump.h>
+>  #include <linux/crc32.h>
+>  #include <linux/kernel.h>
+> @@ -32,6 +33,13 @@
+>  
+>  #include "of_private.h"
+>  
+> +/*
+> + * __dtb_empty_root_begin[] and __dtb_empty_root_end[] magically created by
+> + * cmd_dt_S_dtb in scripts/Makefile.lib
+> + */
+> +extern uint8_t __dtb_empty_root_begin[];
+> +extern uint8_t __dtb_empty_root_end[];
+> +
+>  /*
+>   * of_fdt_limit_memory - limit the number of regions in the /memory node
+>   * @limit: maximum entries
+> @@ -1343,7 +1351,29 @@ static void *__init copy_device_tree(void *fdt)
+>   */
+>  void __init unflatten_device_tree(void)
+>  {
+> -	__unflatten_device_tree(initial_boot_params, NULL, &of_root,
+> +	void *fdt = initial_boot_params;
+> +
+> +	/* Don't use the bootloader provided DTB if ACPI is enabled */
+> +	if (!acpi_disabled)
+> +		fdt = NULL;
+> +
+> +	/*
+> +	 * Populate an empty root node when ACPI is enabled or bootloader
+> +	 * doesn't provide one.
+> +	 */
+> +	if (!fdt) {
+> +		fdt = (void *) __dtb_empty_root_begin;
+> +		/* fdt_totalsize() will be used for copy size */
+> +		if (fdt_totalsize(fdt) >
+> +		    __dtb_empty_root_end - __dtb_empty_root_begin) {
+> +			pr_err("invalid size in dtb_empty_root\n");
+> +			return;
+> +		}
+> +		of_fdt_crc32 = crc32_be(~0, fdt, fdt_totalsize(fdt));
+> +		fdt = copy_device_tree(fdt);
+> +	}
+> +
+> +	__unflatten_device_tree(fdt, NULL, &of_root,
+>  				early_init_dt_alloc_memory_arch, false);
+>  
+>  	/* Get pointer to "/chosen" and "/aliases" nodes for use everywhere */
+> diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+> index b7708a06dc78..39c0ceee3e95 100644
+> --- a/drivers/of/platform.c
+> +++ b/drivers/of/platform.c
+> @@ -510,9 +510,6 @@ static int __init of_platform_default_populate_init(void)
+>  
+>  	device_links_supplier_sync_state_pause();
+>  
+> -	if (!of_have_populated_dt())
+> -		return -ENODEV;
+> -
+>  	if (IS_ENABLED(CONFIG_PPC)) {
+>  		struct device_node *boot_display = NULL;
+>  		struct platform_device *dev;
+> diff --git a/include/linux/of.h b/include/linux/of.h
+> index 331e05918f11..168357486260 100644
+> --- a/include/linux/of.h
+> +++ b/include/linux/of.h
+> @@ -180,11 +180,6 @@ static inline bool is_of_node(const struct fwnode_handle *fwnode)
+>  			&__of_fwnode_handle_node->fwnode : NULL;	\
+>  	})
+>  
+> -static inline bool of_have_populated_dt(void)
+> -{
+> -	return of_root != NULL;
+> -}
+> -
+>  static inline bool of_node_is_root(const struct device_node *node)
+>  {
+>  	return node && (node->parent == NULL);
+> @@ -557,11 +552,6 @@ static inline struct device_node *of_find_node_with_property(
+>  
+>  #define of_fwnode_handle(node) NULL
+>  
+> -static inline bool of_have_populated_dt(void)
+> -{
+> -	return false;
+> -}
+> -
+>  static inline struct device_node *of_get_compatible_child(const struct device_node *parent,
+>  					const char *compatible)
+>  {
+> @@ -1645,6 +1635,21 @@ static inline bool of_device_is_system_power_controller(const struct device_node
+>  	return of_property_read_bool(np, "system-power-controller");
+>  }
+>  
+> +/**
+> + * of_have_populated_dt() - Has DT been populated by bootloader
+> + *
+> + * Return: True if a DTB has been populated by the bootloader and it isn't the
+> + * empty builtin one. False otherwise.
+> + */
+> +static inline bool of_have_populated_dt(void)
+> +{
+> +#ifdef CONFIG_OF
+> +	return of_property_present(of_root, "compatible");
 
-[...]
+This adds the strict check for compatible which makes compatible
+to be mandatory for root nodes. So far, DeviceTree without compatible
+property in root nodes can work. Do we want to make this documented
+somewhere ?
+
+- Saurabh
+
+> +#else
+> +	return false;
+> +#endif
+> +}
+> +
+>  /*
+>   * Overlay support
+>   */
+> -- 
+> 2.34.1
