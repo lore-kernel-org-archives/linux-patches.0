@@ -1,104 +1,100 @@
-Received: from lithops.sigma-star.at (lithops.sigma-star.at [195.201.40.130])
+Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0B026AEC
-	for <patches@lists.linux.dev>; Sun, 18 Feb 2024 10:32:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.40.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406024EB58
+	for <patches@lists.linux.dev>; Sun, 18 Feb 2024 11:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708252359; cv=none; b=eSkFK10hNH/axxRa9I7CtVnNDg0O2v/mHEAZ1jVhyyuLiRq/9Ja3rBEUXfjuQ+YzPo2oi/MKL2ER7vJ5S0P9jUa2O0MuTocboNb5cuJ3njvQWA2Nm4fEJ/D4aM/SlmhmYOTmRjBkEA3P5+OQMqfOGn7Un7bH+Apkp+emppErl0I=
+	t=1708256895; cv=none; b=DfUnyUcYKQlf16oq2CgdNYJDx694jsZiWj+vZX27FZkdBC5Pl8Fn8aPx9XmHx45fNWbNIz5T6BK6oS9NJKCRQbNyj5TBZQwEAYrJ8Edf914G/oUtU/ctcmhyGYbZh7bcmjVqn1m64nXsIrLtjLfI2MwrNjf6ZPe6H23ka1swe40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708252359; c=relaxed/simple;
-	bh=QQ40rigSvgbbHgAfJv6HyWAMqrbMRDPMJB7xB30mk9g=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=ls6isx/aJsICqkYLi+9ys3cMo5JAREPKYi4rwHRoUPqGWDCmdsD+VREFE8voIgUNWWY0yyH9IisIejUHMVLe5ph70h4Yke3+SUkOsnb6SvQViS1DnQ+uDDKB0zhgh3xvJZLKxGnTjsNIDmdQPg2fy/uVu0Cq53Go1Pg6Q5M/rIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nod.at; spf=fail smtp.mailfrom=nod.at; arc=none smtp.client-ip=195.201.40.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nod.at
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nod.at
-Received: from localhost (localhost [127.0.0.1])
-	by lithops.sigma-star.at (Postfix) with ESMTP id D2C2D626FB03;
-	Sun, 18 Feb 2024 11:25:56 +0100 (CET)
-Received: from lithops.sigma-star.at ([127.0.0.1])
-	by localhost (lithops.sigma-star.at [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id zTwMf50YHRo2; Sun, 18 Feb 2024 11:25:56 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by lithops.sigma-star.at (Postfix) with ESMTP id 34C4362348B6;
-	Sun, 18 Feb 2024 11:25:56 +0100 (CET)
-Received: from lithops.sigma-star.at ([127.0.0.1])
-	by localhost (lithops.sigma-star.at [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id BNvjYnE6md31; Sun, 18 Feb 2024 11:25:56 +0100 (CET)
-Received: from lithops.sigma-star.at (lithops.sigma-star.at [195.201.40.130])
-	by lithops.sigma-star.at (Postfix) with ESMTP id ECFFF64507D7;
-	Sun, 18 Feb 2024 11:25:55 +0100 (CET)
-Date: Sun, 18 Feb 2024 11:25:55 +0100 (CET)
-From: Richard Weinberger <richard@nod.at>
-To: chengzhihao1 <chengzhihao1@huawei.com>
-Cc: Martin Kepplinger-Novakovic <martink@posteo.de>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	stable <stable@vger.kernel.org>, patches@lists.linux.dev, 
-	ZhaoLong Wang <wangzhaolong1@huawei.com>, 
-	Miquel Raynal <miquel.raynal@bootlin.com>, 
-	Sasha Levin <sashal@kernel.org>, 
-	linux-mtd <linux-mtd@lists.infradead.org>, 
-	Vignesh Raghavendra <vigneshr@ti.com>, 
-	dpervushin <dpervushin@embeddedalley.com>, 
-	Artem Bityutskiy <Artem.Bityutskiy@nokia.com>, 
-	linux-kernel <linux-kernel@vger.kernel.org>, 
-	yi zhang <yi.zhang@huawei.com>, yangerkun <yangerkun@huawei.com>, 
-	Henri Roosen <Henri.Roosen@ginzinger.com>, 
-	Melchior Franz <Melchior.Franz@ginzinger.com>
-Message-ID: <1171523562.70108.1708251955853.JavaMail.zimbra@nod.at>
-In-Reply-To: <a53aacd3-4270-2d80-f14c-8cfd763e4404@huawei.com>
-References: <20240122235719.206965081@linuxfoundation.org> <20240122235721.687806578@linuxfoundation.org> <fdfcc3b6e1a884bb986acf072bcc13611eae8bdd.camel@posteo.de> <a53aacd3-4270-2d80-f14c-8cfd763e4404@huawei.com>
+	s=arc-20240116; t=1708256895; c=relaxed/simple;
+	bh=PkNyafTg64GjrN52zqLU5irSUucWFHzmZf4YKP75Q8o=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=WBv/J7Rw1bD4HE7ZnD1dEi08pPwbqv8eEMmduACDJUn67bYynYLwwgBHsc7+DWFUuzpxoQzigAaNe8tTr5qPfuRnJueMzePZd06OqH+M6rZx9IymX2brpBTh7vy3hhGLBOWwSDl17cG7266abUP0hsxZ/mCQr9Vz81hXsJYf7Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Td3lb03Khz1gyrl;
+	Sun, 18 Feb 2024 19:46:03 +0800 (CST)
+Received: from kwepemm600013.china.huawei.com (unknown [7.193.23.68])
+	by mail.maildlp.com (Postfix) with ESMTPS id 0F73E1A0172;
+	Sun, 18 Feb 2024 19:48:09 +0800 (CST)
+Received: from [10.174.178.46] (10.174.178.46) by
+ kwepemm600013.china.huawei.com (7.193.23.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Sun, 18 Feb 2024 19:48:07 +0800
 Subject: Re: [PATCH 5.4 058/194] mtd: Fix gluebi NULL pointer dereference
  caused by ftl notifier
+To: Richard Weinberger <richard@nod.at>
+CC: Martin Kepplinger-Novakovic <martink@posteo.de>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, stable <stable@vger.kernel.org>,
+	<patches@lists.linux.dev>, ZhaoLong Wang <wangzhaolong1@huawei.com>, Miquel
+ Raynal <miquel.raynal@bootlin.com>, Sasha Levin <sashal@kernel.org>,
+	linux-mtd <linux-mtd@lists.infradead.org>, Vignesh Raghavendra
+	<vigneshr@ti.com>, dpervushin <dpervushin@embeddedalley.com>, Artem
+ Bityutskiy <Artem.Bityutskiy@nokia.com>, linux-kernel
+	<linux-kernel@vger.kernel.org>, yi zhang <yi.zhang@huawei.com>, yangerkun
+	<yangerkun@huawei.com>, Henri Roosen <Henri.Roosen@ginzinger.com>, Melchior
+ Franz <Melchior.Franz@ginzinger.com>
+References: <20240122235719.206965081@linuxfoundation.org>
+ <20240122235721.687806578@linuxfoundation.org>
+ <fdfcc3b6e1a884bb986acf072bcc13611eae8bdd.camel@posteo.de>
+ <a53aacd3-4270-2d80-f14c-8cfd763e4404@huawei.com>
+ <1171523562.70108.1708251955853.JavaMail.zimbra@nod.at>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
+Message-ID: <912b7429-c294-418e-2082-ab269382f1f0@huawei.com>
+Date: Sun, 18 Feb 2024 19:48:06 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Zimbra 8.8.12_GA_3807 (ZimbraWebClient - FF97 (Linux)/8.8.12_GA_3809)
-Thread-Topic: Fix gluebi NULL pointer dereference caused by ftl notifier
-Thread-Index: qlWIfU/4hKJxU5rpLtwP8PpFM4piaQ==
+In-Reply-To: <1171523562.70108.1708251955853.JavaMail.zimbra@nod.at>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemm600013.china.huawei.com (7.193.23.68)
 
------ Urspr=C3=BCngliche Mail -----
-> Von: "chengzhihao1" <chengzhihao1@huawei.com>
->> Hi Greg, hi patch-developers,
->>=20
->> wait a second. this already went into v5.4.268 but still: Doesn't this
->> break userspace?
->>=20
->> According to
->> https://lore.kernel.org/lkml/441107100.23734.1697904580252.JavaMail.zimb=
-ra@nod.at/
->> where this solution seems to come from, the behaviour changes: "no
->> mtdblock (hence, also no FTLs) on top of gluebi."
->>=20
->> I fell accross this because of an out-of-tree module that does
->> sys_mount() an mtdblock, so I won't complain about my code specifically
->> :) But doesn't it break mounting, say, jffs2 inside an ubi via
->> mtdblock? If so, is this really something that you want to see
->> backported to old kernels?
->>=20
->> Or differently put: Has this patch been picked up for old stable
->> kernels by scripts or by a human?
->>=20
->> I just want to make sure, and who knows, it might help others too, who
->> would just do a (possibly dangerous?) revert in their trees.
->>=20
->=20
-> This change does affect the mounting(mtdblock based on gluebi) behavior
-> in userspace. It was picked into stable versions because the fixed
-> problem is serious and easy to be reproduced, I guess.
-> A temporary solution is that modify mounting source target in userspace,
-> just replace mtdblock with mtd char device. For example, mount -t jffs2
-> mtd0 /mnt
+在 2024/2/18 18:25, Richard Weinberger 写道:
+> ----- Ursprüngliche Mail -----
+>> Von: "chengzhihao1" <chengzhihao1@huawei.com>
+>>> Hi Greg, hi patch-developers,
+>>>
+>>> wait a second. this already went into v5.4.268 but still: Doesn't this
+>>> break userspace?
+>>>
+>>> According to
+>>> https://lore.kernel.org/lkml/441107100.23734.1697904580252.JavaMail.zimbra@nod.at/
+>>> where this solution seems to come from, the behaviour changes: "no
+>>> mtdblock (hence, also no FTLs) on top of gluebi."
+>>>
+>>> I fell accross this because of an out-of-tree module that does
+>>> sys_mount() an mtdblock, so I won't complain about my code specifically
+>>> :) But doesn't it break mounting, say, jffs2 inside an ubi via
+>>> mtdblock? If so, is this really something that you want to see
+>>> backported to old kernels?
+>>>
+>>> Or differently put: Has this patch been picked up for old stable
+>>> kernels by scripts or by a human?
+>>>
+>>> I just want to make sure, and who knows, it might help others too, who
+>>> would just do a (possibly dangerous?) revert in their trees.
+>>>
+>>
+>> This change does affect the mounting(mtdblock based on gluebi) behavior
+>> in userspace. It was picked into stable versions because the fixed
+>> problem is serious and easy to be reproduced, I guess.
+>> A temporary solution is that modify mounting source target in userspace,
+>> just replace mtdblock with mtd char device. For example, mount -t jffs2
+>> mtd0 /mnt
+> 
+> I don't think this needs backporting to stable. It's not serious because you
+> still need to be root to setup and trigger such a scenario.
+> 
 
-I don't think this needs backporting to stable. It's not serious because yo=
-u
-still need to be root to setup and trigger such a scenario.
 
-Thanks,
-//richard
+Yes. I feel okay to revert this patch on stable versions.
