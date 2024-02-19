@@ -1,273 +1,90 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E6236122;
-	Mon, 19 Feb 2024 13:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B383A267
+	for <patches@lists.linux.dev>; Mon, 19 Feb 2024 16:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708348863; cv=none; b=GJJlVDPfROQ4vBkCcl0V/UZ/dAauYkiZT4HB2FrOkTLOhztfCXSJHkcERw4NTmTC5dadocUzkSdHJMZAOXTX4WjkMtjbeuURcODgkdIkLqxzAIa1R41WaGXkW6gjTFevq+qPGbvFf6zKJ8tGqppgOf5kiDvkjWuLUp4+KBTgUic=
+	t=1708358484; cv=none; b=q0/uoYNJ1LWgOSzPzk0J5b1hGaMlT+qmS2gYPeuqXjIbBPCUv+oav/G9LlIbeevNkmlYeO6yhmf46dRQjGKpAfoezZVpSWhL4LMSnj4p+bGdUkrf7s+U9J2a0T/3cgXI6wp95tIo05Zww7o9ckA5R/0FUlqM/17xDae0w7gfuEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708348863; c=relaxed/simple;
-	bh=PHxysolwHCICHguH06UI9CO3yBfYK+0gqoHhV2sQpAo=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rRN5qsRYFO3MhC1nnNwSYSydamPHUkfD3vQUO6YEjTFWvu7rGBo4RiZMvB+fCZiFyHRzNAa9qncO+LSdLrtXnsisUqZt2ijCHSRsczlVK1Qa57ZyNkLw8yqnVu25HDMHb6yXIkBfDiHvxuvttmQp5ch6gP66UXDhSSvLV//ATnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=UXJHEsA4; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Kva81qCp; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=UXJHEsA4; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Kva81qCp; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1708358484; c=relaxed/simple;
+	bh=RjJaUO3UTTrFsrhoX11/20RQ9F41KV1HxKWjbf2SUaA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=k6nE4FUp2lrDxEVRm1EKfRQvzWEgYB3Hd646ejckDbRM4OjbsHWgVlOxuY2poWs4StiIl8j1KYL0D4/rumVW9hTVLBHOX1qpKvqVgYTIE5Q/q6I9OzpT4kXM/gAGbHH7RrhcbwoZghrAEnjTWBL80WBZC0ESVwTIu4ThqYe+FGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MQKvXuRm; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="UXJHEsA4";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Kva81qCp";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="UXJHEsA4";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Kva81qCp"
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:98])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 6AD8F1FD14;
-	Mon, 19 Feb 2024 13:20:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1708348858; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bxhXTOS+wh3BB5bUSZa4GxJ5gFzvL6KQIPRFGLV4sIk=;
-	b=UXJHEsA4fYqr4+pG0+PzXHuISQOnic/4yiJsENKU8rREcUVfyWl1keP5WEdKBqfVAiyxk+
-	1wOg/5zMWXcXtjGacfLe0xlcze26aIuDIxL3xRsQ0uW8DaL5wyjzl1y5gG6LDdsSxBhrEd
-	3ROS8w0qrKb2TQsvTvchT21r8UBl/A0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1708348858;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bxhXTOS+wh3BB5bUSZa4GxJ5gFzvL6KQIPRFGLV4sIk=;
-	b=Kva81qCp7jb0cj7grfn+mgRIRTYkkXqnUiaguSBdr3zrocwqkwu6jlfmwi9awGibikrsiL
-	sCv9G/ySqlcWPBBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1708348858; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bxhXTOS+wh3BB5bUSZa4GxJ5gFzvL6KQIPRFGLV4sIk=;
-	b=UXJHEsA4fYqr4+pG0+PzXHuISQOnic/4yiJsENKU8rREcUVfyWl1keP5WEdKBqfVAiyxk+
-	1wOg/5zMWXcXtjGacfLe0xlcze26aIuDIxL3xRsQ0uW8DaL5wyjzl1y5gG6LDdsSxBhrEd
-	3ROS8w0qrKb2TQsvTvchT21r8UBl/A0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1708348858;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=bxhXTOS+wh3BB5bUSZa4GxJ5gFzvL6KQIPRFGLV4sIk=;
-	b=Kva81qCp7jb0cj7grfn+mgRIRTYkkXqnUiaguSBdr3zrocwqkwu6jlfmwi9awGibikrsiL
-	sCv9G/ySqlcWPBBA==
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 8F5D313585;
-	Mon, 19 Feb 2024 13:20:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap2.dmz-prg2.suse.org with ESMTPSA
-	id PtGyD7dV02U6BAAAn2gu4w
-	(envelope-from <ddiss@suse.de>); Mon, 19 Feb 2024 13:20:55 +0000
-Date: Tue, 20 Feb 2024 00:20:15 +1100
-From: David Disseldorp <ddiss@suse.de>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: fstests@vger.kernel.org, anand.jain@oracle.com, aalbersh@redhat.com,
- linux-fsdevel@vger.kernel.org, kdevops@lists.linux.dev,
- patches@lists.linux.dev
-Subject: Re: [PATCH v3 fstests] check: add support for --start-after
-Message-ID: <20240220002015.52ba31bc@echidna>
-In-Reply-To: <20240216180946.784869-1-mcgrof@kernel.org>
-References: <20240216180946.784869-1-mcgrof@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQKvXuRm"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-607f8482b88so29075137b3.0
+        for <patches@lists.linux.dev>; Mon, 19 Feb 2024 08:01:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708358481; x=1708963281; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RjJaUO3UTTrFsrhoX11/20RQ9F41KV1HxKWjbf2SUaA=;
+        b=MQKvXuRmFs/VjwkT1hsNN4LunVkOkbOODTYj8sX+AqGBPx9tUW39uCTzClwVcnG7c2
+         vlJ54InC0jhp/WJatWk1/Uc92aWlw0sRNtvCpKrt5DUXJJTtITqROBCDicqjXaHQHAWm
+         F3UxysGv+FXarxxdMKU05MGnNDCJxNtIrUQurnvPKLE6lzwg9PtFHPFezoRfOj3kEY26
+         YVo166uLi9+tcALSJ0IxaIAmHsr6YT+A1zQKDDHPYWIwDwHst0uM9roOn9OpjCIOxYqh
+         2a4qaDmQAxznTmDBMdsIjGRwiuQREHAVxEFXbRViXRL/W/N3bXgxRmNhHnHeo727xys9
+         Tl9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708358481; x=1708963281;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RjJaUO3UTTrFsrhoX11/20RQ9F41KV1HxKWjbf2SUaA=;
+        b=H1FB3DGb4WD3r0+U9pdJM4YFIzz/7D9eAFVjvLa3E2mvebt+0QCHE0/eG7cIzKnWws
+         SIiZ7YLBbQ0AM3U9d04aVAX9puRRf0mrwWHiMGTH3iIV8/yG53wFzA/Utt6o6nO8Q/eO
+         kyFLJ9/QyH3+DL7bl3lztkoVppQyez0xhnGUkQkNJbnGKeIxUbMFgZgt9uOJUzgdRCpe
+         QWQzvVWlJum1I6layc+vWX7uA66xH/gYcQEHocfiiKbLDhvwmhpkR5zMfFTjNSgSpTJ1
+         j3/T+Pv6n8WhtjbeRtlQkxn1ViouWjb8u6fCJnvR+QHM1qyjm2PmVEbVApHnkdN/m9KB
+         OJoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW9S2bBCTEs07U5lCiGgBs+12SoZ8mto8HnYgvZ9UNjqs6Psga+u9whslXQlS0QPa+QPplW7zI7DphuDpN3yawMt4CNUsx5+Q==
+X-Gm-Message-State: AOJu0YyyBRQpfLT7QZJVNr92CjNOqG9SH19iPp6kXl++ULoNJjMEs/oZ
+	sGBj7xLR6UHiIi4ppBVnMOBemUIz/asclf0+Hq8vUIAysr7Wj//7q3Cle9mSCiJsvX9F7RjfHkq
+	FcDj5d9saFbHDq3jXO698vUXFILQ=
+X-Google-Smtp-Source: AGHT+IFV7cnfqHWd3LWv+ZHLoC4tmJGJ/Lk4xaw+zFGGTkElEoABI2C5HfHRAkYwwL44+IqGRK7P3TWcTOqJsPV5ric=
+X-Received: by 2002:a81:b614:0:b0:607:f4b9:11aa with SMTP id
+ u20-20020a81b614000000b00607f4b911aamr10367352ywh.21.1708358460925; Mon, 19
+ Feb 2024 08:01:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UXJHEsA4;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Kva81qCp
-X-Spamd-Result: default: False [-2.81 / 50.00];
-	 ARC_NA(0.00)[];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:98:from];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 DKIM_TRACE(0.00)[suse.de:+];
-	 MX_GOOD(-0.01)[];
-	 RCPT_COUNT_SEVEN(0.00)[7];
-	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 MID_RHS_NOT_FQDN(0.50)[];
-	 RCVD_TLS_ALL(0.00)[];
-	 BAYES_HAM(-3.00)[100.00%]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 6AD8F1FD14
-X-Spam-Level: 
-X-Spam-Score: -2.81
-X-Spam-Flag: NO
+References: <20240217002717.57507-1-ojeda@kernel.org> <CAH5fLgirUqw2hkEgFKOV4a2N2sW-GAGVY=KkkyzptMN+H2txfQ@mail.gmail.com>
+In-Reply-To: <CAH5fLgirUqw2hkEgFKOV4a2N2sW-GAGVY=KkkyzptMN+H2txfQ@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 19 Feb 2024 17:00:49 +0100
+Message-ID: <CANiq72=r9cE5ZT7EWe77g2dfprBx+DBrujo=mcA7r1hoO+=P0w@mail.gmail.com>
+Subject: Re: [PATCH] rust: upgrade to Rust 1.77.0
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 16 Feb 2024 10:09:46 -0800, Luis Chamberlain wrote:
+On Mon, Feb 19, 2024 at 10:06=E2=80=AFAM Alice Ryhl <aliceryhl@google.com> =
+wrote:
+>
+> Maybe you should just add the as_ptr method to ThisModule now? It will
+> silence the warning, and doesn't trigger a warning of its own since it
+> is pub.
 
-...
->  check | 53 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 53 insertions(+)
-> 
-> diff --git a/check b/check
-> index 71b9fbd07522..f081bf8ce685 100755
-> --- a/check
-> +++ b/check
-> @@ -18,6 +18,7 @@ showme=false
->  have_test_arg=false
->  randomize=false
->  exact_order=false
-> +start_after_test=""
->  export here=`pwd`
->  xfile=""
->  subdir_xfile=""
-> @@ -80,6 +81,7 @@ check options
->      -b			brief test summary
->      -R fmt[,fmt]	generate report in formats specified. Supported formats: xunit, xunit-quiet
->      --large-fs		optimise scratch device for large filesystems
-> +    --start-after	only start testing after the test specified
+Yeah, either way is fine -- I meant the patch to be independent and to
+avoid adding an API without a user, but it is not a big deal.
 
-The usage text should include the <test> parameter.
+> Reviewed-by: Alice Ryhl <aliceryhl@google.com>
 
->      -s section		run only specified section from config file
->      -S section		exclude the specified section from the config file
->      -L <n>		loop tests <n> times following a failure, measuring aggregate pass/fail metrics
-> @@ -120,6 +122,8 @@ examples:
->   check -x stress xfs/*
->   check -X .exclude -g auto
->   check -E ~/.xfstests.exclude
-> + check --start-after btrfs/010
-> + check -n -g soak --start-after generic/522
->  '
->  	    exit 1
->  }
-> @@ -204,6 +208,23 @@ trim_test_list()
->  	rm -f $tmp.grep
->  }
->  
-> +# takes the list of tests to run in $tmp.list and skips all tests until
-> +# the specified test is found. This will ensure the tests start after the
-> +# test specified, it skips the test specified.
-> +trim_start_after()
-> +{
-> +	local skip_test="$1"
-> +	local starts_regexp=$(echo $skip_test | sed -e 's|\/|\\/|')
-> +
-> +	if grep -q $skip_test $tmp.list ; then
-> +		rm -f $tmp.grep
-> +		awk 'f;/.*'$starts_regexp'/{f=1}' $tmp.list > $tmp.tmp
-> +		mv $tmp.tmp $tmp.list
-> +	else
-> +		echo "Test $skip_test not found in test list, be sure to use a valid test if using --start-after"
-> +		exit 1
-> +	fi
-> +}
+Thanks!
 
-nit: it should be possible to collapse the sed+grep+awk into something a
-bit more straightforward, e.g.
-
-trim_start_after()
-{
-        if awk -v skip_test="tests/$1" \
-           'f; $0 == skip_test {f=1} END {exit f}' $tmp.list > $tmp.tmp; then
-                echo "$1 not found in test list, be sure to use a valid test if using --start-after"
-                rm $tmp.tmp
-                exit 1
-        fi
-        mv $tmp.tmp $tmp.list
-}
-
->  
->  _wallclock()
->  {
-> @@ -233,6 +254,9 @@ _prepare_test_list()
->  		# no test numbers, do everything
->  		get_all_tests
->  	else
-> +		local group_all
-> +		local start_after_found=0
-> +		list=""
->  		for group in $GROUP_LIST; do
->  			list=$(get_group_list $group)
->  			if [ -z "$list" ]; then
-> @@ -240,11 +264,28 @@ _prepare_test_list()
->  				exit 1
->  			fi
->  
-> +			if [[ "$start_after_test" != "" && $start_after_found -ne 1 ]]; then
-> +				echo $list | grep -q $start_after_test
-> +				if [[ $? -eq 0 ]]; then
-> +					start_after_found=1
-> +				fi
-> +			fi
->  			for t in $list; do
->  				grep -s "^$t\$" $tmp.list >/dev/null || \
->  							echo "$t" >>$tmp.list
->  			done
-> +			group_all="$group_all $list"
->  		done
-> +		if [[ "$start_after_test" != "" && $start_after_found -ne 1 ]]; then
-> +			group_all=$(echo $group_all | sed -e 's|tests/||g')
-> +			echo "Start after test $start_after_test not found in any group specified."
-> +			echo "Be sure you specify a test present in one of your test run groups if using --start-after."
-> +			echo
-> +			echo "Your set of groups have these tests:"
-> +			echo
-> +			echo $group_all
-> +			exit 1
-> +		fi
->  	fi
-
-Can't all of the _prepare_test_list() changes above be dropped?
-trim_start_after() already performs the check that the test exists, and
-with the above dropped we could also do things like, e.g.
-  ./check --start-after generic/002 generic/00[1-9]
-
->  	# Specified groups to exclude
-> @@ -258,6 +299,10 @@ _prepare_test_list()
->  		trim_test_list $list
->  	done
->  
-> +	if [[ "$start_after_test" != "" ]]; then
-> +		trim_start_after $start_after_test
-> +	fi
-> +
->  	# sort the list of tests into numeric order unless we're running tests
->  	# in the exact order specified
->  	if ! $exact_order; then
-> @@ -313,6 +358,14 @@ while [ $# -gt 0 ]; do
->  				<(sed "s/#.*$//" $xfile)
->  		fi
->  		;;
-> +	--start-after)
-> +		if $randomize; then
-> +			echo "Cannot specify -r and --start-after."
-> +			exit 1
-> +		fi
-
-IIUC, this will only trigger if -r is parsed before --start-after, so it
-should be moved after the loop.
-
-> +		start_after_test="$2"
-> +		shift
-> +		;;
->  	-s)	RUN_SECTION="$RUN_SECTION $2"; shift ;;
->  	-S)	EXCLUDE_SECTION="$EXCLUDE_SECTION $2"; shift ;;
->  	-l)	diff="diff" ;;
-
+Cheers,
+Miguel
