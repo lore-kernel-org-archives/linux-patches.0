@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E69F612D7;
-	Tue, 20 Feb 2024 21:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A318612D7;
+	Tue, 20 Feb 2024 21:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463897; cv=none; b=QNlb8FfdM7PT4IU04ilILK6AMVVYEFpIo9kSUvdc9vTn6bh12mDbl2Vxss6s1JAVmvLhVZBeZ0VNjvGSTSCnwyIn/RvIQctP+bKzgdhbzGhUOvsXJLZGKg2Hjj0dbLDCmSQKP25se6+xja9MWkWCvHy/x98UJysOh5eM82QZYEY=
+	t=1708463900; cv=none; b=XztvNueSMDyr7qCuFVZ20twmOTsguSM+ysvqTAILbTtGFB3RocHzWubTx5gqH9I5qkxqkQdA5H5PvyosE/ZZ9BMurg9F+8JHaL1OPMagXn3t8DoUONkMobdFlwqphX8Vmffor8kqPReYwipH9y6Cme8s80sL6ZsK1O16ka/ogBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463897; c=relaxed/simple;
-	bh=Lf7ljG+JVyslXUvBda8cdY2Z4WxgG7ie3JIdyw9ioj4=;
+	s=arc-20240116; t=1708463900; c=relaxed/simple;
+	bh=ikosG2nnf9/zlBtmb7Xh5xuR09E0hGpvt5vx4X5lqP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrrWTREYkEXkP8AcbCJwhH/yrrt2y6LzPcfxklEs3Wah3QaQ9d9fa0XkwoV3Nc/DKMJ8L3vmFwfoFgO4sXWCrfrzE7c3bbEAuVrrcWCQ1INZYef1u67aj/bC9AketBgshxAfoy0Jt07F2K9T7uFTs56+CsT8R9wfUNg46xXur5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J0yEIkTw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sumuVHQAN7f3sNSU0+JAbQZuuQRAyRrxYuWcgPeXw057z/WHk44vJeVDMLqmpnWaHvX7JkRgdxk/fBaLRV3OoFUDc0WjgoXCNWXsSRmt1519pglAzxLGolXHnoAvCIT7QqnLn2kZspBS+Kp/S1QF3omOUj586pO4TGnl0FNfdKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhUGGv+/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J0yEIkTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FC3C43399;
-	Tue, 20 Feb 2024 21:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhUGGv+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A03C433C7;
+	Tue, 20 Feb 2024 21:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463897;
-	bh=Lf7ljG+JVyslXUvBda8cdY2Z4WxgG7ie3JIdyw9ioj4=;
+	s=korg; t=1708463900;
+	bh=ikosG2nnf9/zlBtmb7Xh5xuR09E0hGpvt5vx4X5lqP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0yEIkTw3mgn9aENwrGRWgYBB7K3F4pSQsPuzmd5rVm3sHX1Vfw6wQplzLPTzVWCM
-	 5JtrYP0iloIBQ7HpWHWChFAbECW5WpEk1cbn+16VT+n7qYiTbsHF4ZzCCLosYSpuAw
-	 GQ8YwDyf5psjgRR5LY3nTdxBkZW/EoEJ4zNrvZ/w=
+	b=ZhUGGv+/YydA976LyhaNHqk9NXubMgGd/pqosyixoW8oK9qvxla3bUNQwlAGNkc6K
+	 9cfVK4rmc2bhxEMpsrPS7WhwSkkirJHDah2bNh0Jos1P92neDh6UEZTFlpX1DezVvD
+	 QEa/DaFyzKbXGUE3ByceS+MfNnsWkdX90PZadZ9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Emil Kronborg <emil.kronborg@protonmail.com>,
-	stable <stable@kernel.org>,
-	Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH 6.6 188/331] serial: mxs-auart: fix tx
-Date: Tue, 20 Feb 2024 21:55:04 +0100
-Message-ID: <20240220205643.466743448@linuxfoundation.org>
+	Aleksander Mazur <deweloper@wp.pl>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	stable@kernel.org
+Subject: [PATCH 6.6 189/331] x86/Kconfig: Transmeta Crusoe is CPU family 5, not 6
+Date: Tue, 20 Feb 2024 21:55:05 +0100
+Message-ID: <20240220205643.494601605@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,54 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Aleksander Mazur <deweloper@wp.pl>
 
-commit 7be50f2e8f20fc2299069b28dea59a28e3abe20a upstream.
+commit f6a1892585cd19e63c4ef2334e26cd536d5b678d upstream.
 
-Emil reports:
-  After updating Linux on an i.MX28 board, serial communication over
-  AUART broke. When I TX from the board and measure on the TX pin, it
-  seems like the HW fifo is not emptied before the transmission is
-  stopped.
+The kernel built with MCRUSOE is unbootable on Transmeta Crusoe.  It shows
+the following error message:
 
-MXS performs weird things with stop_tx(). The driver makes it
-conditional on uart_tx_stopped().
+  This kernel requires an i686 CPU, but only detected an i586 CPU.
+  Unable to boot - please use a kernel appropriate for your CPU.
 
-So the driver needs special handling. Pass the brand new UART_TX_NOSTOP
-to uart_port_tx_flags() and handle the stop on its own.
+Remove MCRUSOE from the condition introduced in commit in Fixes, effectively
+changing X86_MINIMUM_CPU_FAMILY back to 5 on that machine, which matches the
+CPU family given by CPUID.
 
-Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
-Reported-by: Emil Kronborg <emil.kronborg@protonmail.com>
-Cc: stable <stable@kernel.org>
-Fixes: 2d141e683e9a ("tty: serial: use uart_port_tx() helper")
-Closes: https://lore.kernel.org/all/miwgbnvy3hjpnricubg76ytpn7xoceehwahupy25bubbduu23s@om2lptpa26xw/
-Tested-by: Stefan Wahren <wahrenst@gmx.net>
-Tested-by: Emil Kronborg <emil.kronborg@protonmail.com>
-Link: https://lore.kernel.org/r/20240201105557.28043-2-jirislaby@kernel.org
+  [ bp: Massage commit message. ]
+
+Fixes: 25d76ac88821 ("x86/Kconfig: Explicitly enumerate i686-class CPUs in Kconfig")
+Signed-off-by: Aleksander Mazur <deweloper@wp.pl>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: H. Peter Anvin <hpa@zytor.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240123134309.1117782-1-deweloper@wp.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/mxs-auart.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/Kconfig.cpu |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/mxs-auart.c
-+++ b/drivers/tty/serial/mxs-auart.c
-@@ -605,13 +605,16 @@ static void mxs_auart_tx_chars(struct mx
- 		return;
- 	}
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -375,7 +375,7 @@ config X86_CMOV
+ config X86_MINIMUM_CPU_FAMILY
+ 	int
+ 	default "64" if X86_64
+-	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCRUSOE || MCORE2 || MK7 || MK8)
++	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCORE2 || MK7 || MK8)
+ 	default "5" if X86_32 && X86_CMPXCHG64
+ 	default "4"
  
--	pending = uart_port_tx(&s->port, ch,
-+	pending = uart_port_tx_flags(&s->port, ch, UART_TX_NOSTOP,
- 		!(mxs_read(s, REG_STAT) & AUART_STAT_TXFF),
- 		mxs_write(ch, s, REG_DATA));
- 	if (pending)
- 		mxs_set(AUART_INTR_TXIEN, s, REG_INTR);
- 	else
- 		mxs_clr(AUART_INTR_TXIEN, s, REG_INTR);
-+
-+	if (uart_tx_stopped(&s->port))
-+               mxs_auart_stop_tx(&s->port);
- }
- 
- static void mxs_auart_rx_char(struct mxs_auart_port *s)
 
 
