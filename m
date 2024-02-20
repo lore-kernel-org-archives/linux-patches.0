@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A5A14A4E2;
-	Tue, 20 Feb 2024 20:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B5E1509AE;
+	Tue, 20 Feb 2024 20:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462772; cv=none; b=ITU2EOlLLK7vE6Ck3iyK+YS7tHo86d69oc/eL/4w9rPS8Ob+8OBujA1hagUy79OPJMrsQV7R48Jxieic4L4GzZRf2zbPRhU4cRnOaO7qtYd0Cn1mEP4Y4simaLgP0Aaz+J7aJeTO22Xcwwgnbq5ZhlrCXnNBFgc2ofJEf/wiu6Q=
+	t=1708462775; cv=none; b=iGO5htehUiBSm64zkJ3cdMWMTdY0waZm58HDOBj58Oaw9cb5kpHnRs4X72geIWf4zsNznEJ40eIsxkVVJAwp2dW2IcrYNtrPi3Ot+Gxswuk+yIxOp4U5NT+7mOjx4ft6QjxMde1HrQAJus9m8DU7X0TDRymR4SxujpZqpUiO+8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462772; c=relaxed/simple;
-	bh=h80ZGe2dml+7jDi9KGvYp/DGzKXRc9S5f38CjxPhvKI=;
+	s=arc-20240116; t=1708462775; c=relaxed/simple;
+	bh=y/V4IIf6ciH9PlP3TmXsrIuY9nmEHcHoezHy512dvGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKqbS0IleX94M4UWPjXpMr/t64PMOhcyQ0Yy1A/ak/n6MnDYvVVOvbpwXeVkluZkhshli7478gi9ert9Bzvar/56pWzUs+mnF7F0CKdcRL8GAP6fvXAoZ4qjZb6n7/qysyReOeaVWv4Gw/JSUK4yavISUqXcQAGweprwxX3pn9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEU7uzAr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKbLfInMgMWYRIDlrG6sYUvvrmwRvbbHHQXF5ol7BIoWA7E1qhlbyWlqYi4bxQRJVxbYjDjAltT3SI8mDCC2zSFc6v2iGWsqAAyjJyzcG5sNI2d4NthcfISLuTsApNBVAY4WbFuWHg/3MYW6bdGpPImP8OcnusKmZkagrk9z6/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASwytcgl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEU7uzAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1274FC43390;
-	Tue, 20 Feb 2024 20:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASwytcgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A6CC433F1;
+	Tue, 20 Feb 2024 20:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462771;
-	bh=h80ZGe2dml+7jDi9KGvYp/DGzKXRc9S5f38CjxPhvKI=;
+	s=korg; t=1708462774;
+	bh=y/V4IIf6ciH9PlP3TmXsrIuY9nmEHcHoezHy512dvGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XEU7uzArtIv5bJiFQ4eYFOpuhST5ClOR94V73TSrF6bofiVKiYPpFO2jJ9PwUXGRX
-	 FyE3ybRNAwQjroKS+i5Ais9gyDPJ5NuGkS0ZL0e6wJg9G8kN16L55Gtgb3Y5/fsFPY
-	 liCwqY+mZyuzhmdiw6o2dhL7n027GCFeNy/CeRPk=
+	b=ASwytcgltRsihMCgCs+2pFeEeUtumIX9B2ZID6wbVC8CxDtJW7IMFOauoqFGontTM
+	 3YFpx6kF0JweM7QFzmJ7Q140UdeeQceUZnnqfEDYveaUlFSCptIlrxwsZdi1yaCA0+
+	 L+UCT8Q4TIFFppmHHpXk+T/6I1wmG4e65WBYrbhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/197] MIPS: Add memory clobber to csum_ipv6_magic() inline assembler
-Date: Tue, 20 Feb 2024 21:49:50 +0100
-Message-ID: <20240220204842.011983609@linuxfoundation.org>
+Subject: [PATCH 6.1 032/197] i40e: Do not allow untrusted VF to remove administratively set MAC
+Date: Tue, 20 Feb 2024 21:49:51 +0100
+Message-ID: <20240220204842.040976099@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -53,52 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit d55347bfe4e66dce2e1e7501e5492f4af3e315f8 ]
+[ Upstream commit 73d9629e1c8c1982f13688c4d1019c3994647ccc ]
 
-After 'lib: checksum: Use aligned accesses for ip_fast_csum and
-csum_ipv6_magic tests' was applied, the test_csum_ipv6_magic unit test
-started failing for all mips platforms, both little and bit endian.
-Oddly enough, adding debug code into test_csum_ipv6_magic() made the
-problem disappear.
+Currently when PF administratively sets VF's MAC address and the VF
+is put down (VF tries to delete all MACs) then the MAC is removed
+from MAC filters and primary VF MAC is zeroed.
 
-The gcc manual says:
+Do not allow untrusted VF to remove primary MAC when it was set
+administratively by PF.
 
-"The "memory" clobber tells the compiler that the assembly code performs
- memory reads or writes to items other than those listed in the input
- and output operands (for example, accessing the memory pointed to by one
- of the input parameters)
-"
+Reproducer:
+1) Create VF
+2) Set VF interface up
+3) Administratively set the VF's MAC
+4) Put VF interface down
 
-This is definitely the case for csum_ipv6_magic(). Indeed, adding the
-'memory' clobber fixes the problem.
+[root@host ~]# echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
+[root@host ~]# ip link set enp2s0f0v0 up
+[root@host ~]# ip link set enp2s0f0 vf 0 mac fe:6c:b5:da:c7:7d
+[root@host ~]# ip link show enp2s0f0
+23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
+    vf 0     link/ether fe:6c:b5:da:c7:7d brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
+[root@host ~]# ip link set enp2s0f0v0 down
+[root@host ~]# ip link show enp2s0f0
+23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
+    vf 0     link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
 
-Cc: Charlie Jenkins <charlie@rivosinc.com>
-Cc: Palmer Dabbelt <palmer@rivosinc.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 700bbf6c1f9e ("i40e: allow VF to remove any MAC filter")
+Fixes: ceb29474bbbc ("i40e: Add support for VF to specify its primary MAC address")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240208180335.1844996-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/checksum.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 38 ++++++++++++++++---
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/arch/mips/include/asm/checksum.h b/arch/mips/include/asm/checksum.h
-index 4044eaf989ac..0921ddda11a4 100644
---- a/arch/mips/include/asm/checksum.h
-+++ b/arch/mips/include/asm/checksum.h
-@@ -241,7 +241,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
- 	"	.set	pop"
- 	: "=&r" (sum), "=&r" (tmp)
- 	: "r" (saddr), "r" (daddr),
--	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum));
-+	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum)
-+	: "memory");
- 
- 	return csum_fold(sum);
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 3d3db58090ed..ed4be80fec2a 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2846,6 +2846,24 @@ static int i40e_vc_get_stats_msg(struct i40e_vf *vf, u8 *msg)
+ 				      (u8 *)&stats, sizeof(stats));
  }
+ 
++/**
++ * i40e_can_vf_change_mac
++ * @vf: pointer to the VF info
++ *
++ * Return true if the VF is allowed to change its MAC filters, false otherwise
++ */
++static bool i40e_can_vf_change_mac(struct i40e_vf *vf)
++{
++	/* If the VF MAC address has been set administratively (via the
++	 * ndo_set_vf_mac command), then deny permission to the VF to
++	 * add/delete unicast MAC addresses, unless the VF is trusted
++	 */
++	if (vf->pf_set_mac && !vf->trusted)
++		return false;
++
++	return true;
++}
++
+ #define I40E_MAX_MACVLAN_PER_HW 3072
+ #define I40E_MAX_MACVLAN_PER_PF(num_ports) (I40E_MAX_MACVLAN_PER_HW /	\
+ 	(num_ports))
+@@ -2905,8 +2923,8 @@ static inline int i40e_check_vf_permission(struct i40e_vf *vf,
+ 		 * The VF may request to set the MAC address filter already
+ 		 * assigned to it so do not return an error in that case.
+ 		 */
+-		if (!test_bit(I40E_VIRTCHNL_VF_CAP_PRIVILEGE, &vf->vf_caps) &&
+-		    !is_multicast_ether_addr(addr) && vf->pf_set_mac &&
++		if (!i40e_can_vf_change_mac(vf) &&
++		    !is_multicast_ether_addr(addr) &&
+ 		    !ether_addr_equal(addr, vf->default_lan_addr.addr)) {
+ 			dev_err(&pf->pdev->dev,
+ 				"VF attempting to override administratively set MAC address, bring down and up the VF interface to resume normal operation\n");
+@@ -3049,19 +3067,29 @@ static int i40e_vc_del_mac_addr_msg(struct i40e_vf *vf, u8 *msg)
+ 			ret = I40E_ERR_INVALID_MAC_ADDR;
+ 			goto error_param;
+ 		}
+-		if (ether_addr_equal(al->list[i].addr, vf->default_lan_addr.addr))
+-			was_unimac_deleted = true;
+ 	}
+ 	vsi = pf->vsi[vf->lan_vsi_idx];
+ 
+ 	spin_lock_bh(&vsi->mac_filter_hash_lock);
+ 	/* delete addresses from the list */
+-	for (i = 0; i < al->num_elements; i++)
++	for (i = 0; i < al->num_elements; i++) {
++		const u8 *addr = al->list[i].addr;
++
++		/* Allow to delete VF primary MAC only if it was not set
++		 * administratively by PF or if VF is trusted.
++		 */
++		if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
++		    i40e_can_vf_change_mac(vf))
++			was_unimac_deleted = true;
++		else
++			continue;
++
+ 		if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
+ 			ret = I40E_ERR_INVALID_MAC_ADDR;
+ 			spin_unlock_bh(&vsi->mac_filter_hash_lock);
+ 			goto error_param;
+ 		}
++	}
+ 
+ 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
+ 
 -- 
 2.43.0
 
