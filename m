@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C5B446C9;
-	Tue, 20 Feb 2024 21:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42566446C9;
+	Tue, 20 Feb 2024 21:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464836; cv=none; b=Z0cN0Uchr8Il9PrlFdfKqX9GSEhZeci9+eXyJTSP9p+jag5rNaWJRoqR/Wjzi38neCDvD6DzL9yObhZ+kYtvEZFifVBh0wLz6n6T0GuddXS8IYSFEm1bJ5X7A58dyE0+bpbm2xVEAyegYHTBzRiTVhPXe1f/eYGXZs+7GoIfhRU=
+	t=1708464839; cv=none; b=uVKclcZxAmm+LavKreHU3VujmHx+bXPZ3oHHax9XRrpsF0OhEDu+eP9ke1RV7b5aFU+u1qNfg3e8wuizEWQyMwPxNffhUmXpkwQHbKCaO5LPkRxEAugXgqTRgrTviydR3AXdNs61fdTr4tVEEGIwVjyQf07kngoxrogM8Hb93js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464836; c=relaxed/simple;
-	bh=H+jUv4belu5s7kDQ0ezq6z/U5SBojhsJlRcGiwBa/kE=;
+	s=arc-20240116; t=1708464839; c=relaxed/simple;
+	bh=K6AZK+pCAbzORmqCzYJYRf1AklVbm5xDz+rHS9/j5+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kktlCQw0VKqmOG52b4Dym7Uwi2f66MQ85n58lL+0q3o605bIj5GjAI16frZ8F4wz1xIa/4p9PkOREd+HzVADGdjHWP9VkKJdoniSCm4w134vFoBCZYUYPPlWy00274R7Y7wV/rc/R6q6KtBw6KSFZwung84PP72WSmn4CiQ+TQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2GuCH2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbA7kGl6uR5VMzTf5cErmwYMsOj6HwRMdUCMecc+wmSy+jyIDJzKkheRFwNLB/Sc5GuAe1//GsHz/6cDd5FWm0yPDTq7d7kDXS2NMYwrtV5+xpU0B45/17iZRRT4EfRtQnbsgequwrtH7L4VklLC9sn/4+tN5sKsy+CcYCjBp5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PH3NOnrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2GuCH2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B535C433C7;
-	Tue, 20 Feb 2024 21:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PH3NOnrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B9CC433C7;
+	Tue, 20 Feb 2024 21:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464835;
-	bh=H+jUv4belu5s7kDQ0ezq6z/U5SBojhsJlRcGiwBa/kE=;
+	s=korg; t=1708464839;
+	bh=K6AZK+pCAbzORmqCzYJYRf1AklVbm5xDz+rHS9/j5+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2GuCH2Kk2EYPArlEC773XETzGTBXRNXzQdA9eFttt0yFY8fp+CMOhcZ256kr9N8G
-	 t6WwhX0xgspFUArR3Z+7xHZxOWLLN22bhFUtFt/jpjPiNm/On5e5TdWUURJWA9LaeR
-	 lllxG73XZZ3sdWdtcC4TyhD6bFR0++pZ5UfPYDjY=
+	b=PH3NOnrzBCXtTFMVlEOPOAnqZLt1X9H2UUy35L17PDHB5VuIgzH9KqRxXtkT6fUDk
+	 7mNfuHgN9bC6W0wnDn2YLZZGkfKY8q9twCzWwizlT/tn2HSvXH+jCxiuFwjtJmLBI5
+	 VYb/ORvTfqh6NuKECflN07DQyGcHUxy+eNT2YThQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.7 152/309] ALSA: hda/realtek: Enable headset mic on Vaio VJFE-ADL
-Date: Tue, 20 Feb 2024 21:55:11 +0100
-Message-ID: <20240220205637.927228291@linuxfoundation.org>
+Subject: [PATCH 6.7 153/309] ALSA: hda/realtek - Add speaker pin verbtable for Dell dual speaker platform
+Date: Tue, 20 Feb 2024 21:55:12 +0100
+Message-ID: <20240220205637.955727184@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,31 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit c7de2d9bb68a5fc71c25ff96705a80a76c8436eb upstream.
+commit fcfc9f711d1e2fc7876ac12b1b16c509404b9625 upstream.
 
-Vaio VJFE-ADL is equipped with ALC269VC, and it needs
-ALC298_FIXUP_SPK_VOLUME quirk to make its headset mic work.
+SSID 0x0c0d platform. It can't mute speaker when HP plugged.
+This patch add quirk to fill speaker pin verbtable.
+And disable speaker passthrough.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240201122114.30080-1-edson.drosdeck@gmail.com
+Link: https://lore.kernel.org/r/38b82976a875451d833d514cee34ff6a@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10312,6 +10312,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
-+	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+@@ -439,6 +439,10 @@ static void alc_fill_eapd_coef(struct hd
+ 		alc_update_coef_idx(codec, 0x67, 0xf000, 0x3000);
+ 		fallthrough;
+ 	case 0x10ec0215:
++	case 0x10ec0285:
++	case 0x10ec0289:
++		alc_update_coef_idx(codec, 0x36, 1<<13, 0);
++		fallthrough;
+ 	case 0x10ec0230:
+ 	case 0x10ec0233:
+ 	case 0x10ec0235:
+@@ -452,9 +456,7 @@ static void alc_fill_eapd_coef(struct hd
+ 	case 0x10ec0283:
+ 	case 0x10ec0286:
+ 	case 0x10ec0288:
+-	case 0x10ec0285:
+ 	case 0x10ec0298:
+-	case 0x10ec0289:
+ 	case 0x10ec0300:
+ 		alc_update_coef_idx(codec, 0x10, 1<<9, 0);
+ 		break;
+@@ -9722,6 +9724,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1028, 0x0b71, "Dell Inspiron 16 Plus 7620", ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1028, 0x0beb, "Dell XPS 15 9530 (2023)", ALC289_FIXUP_DELL_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1028, 0x0c03, "Dell Precision 5340", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1028, 0x0c0d, "Dell Oasis", ALC289_FIXUP_RTK_AMP_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1028, 0x0c19, "Dell Precision 3340", ALC236_FIXUP_DELL_DUAL_CODECS),
+ 	SND_PCI_QUIRK(0x1028, 0x0c1a, "Dell Precision 3340", ALC236_FIXUP_DELL_DUAL_CODECS),
+ 	SND_PCI_QUIRK(0x1028, 0x0c1b, "Dell Precision 3440", ALC236_FIXUP_DELL_DUAL_CODECS),
 
 
