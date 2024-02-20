@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E5B612D7;
-	Tue, 20 Feb 2024 21:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABDF1612D7;
+	Tue, 20 Feb 2024 21:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463903; cv=none; b=SiWdZxTcL47LyZUOApCKGZp5eG+y4gV539rALndk704zzlvENXTY+aVcXdVX/8Tb8Z38eJk+equSE2F5onb5Jm7nDR15pjT+WRal8B7GYrjJH9imk7Np36iJtn+OEdbHv0/srFfeXOYl7tIs/gnk1R1cW88S+QdgA2By3JPEJSs=
+	t=1708463906; cv=none; b=gLFU4RuXWo+5nmfPMsOCWeC6fKYUfU86UOhSsRz6ne4NYp+OAVazt1G2rEF+2FNBfccuOAFC4gZjH7ZpBxMZP0K4XKnGiVLzuEIB9EzTFrhL+5cdjUhSlkO3qE8fMN7hJ7D596tBODdgCOX2xAWzTpXVy2Jmo9QmWNnFZ9qFfaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463903; c=relaxed/simple;
-	bh=tDgqNZKehYE/uL+A3jcwLfnrb7TINTytfv58ZdCAymQ=;
+	s=arc-20240116; t=1708463906; c=relaxed/simple;
+	bh=cr0zIS5PqahbwG/t2DOBiBq5XEYGp6WDIeaE3tl3d9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ka7tFe3kJgctbtyltpI4KkjQHRRcmapR3bzj6WR2UhjtJ6x6nIBVseXB7b3hjMm6gfnww/XPtoMtjqVWDZnKQ0FTJXuvFekxgKaoKlSQ8sRI5HUXkoCb6WsYPgCcTG42lRHBKKRuI7jP33laDvX+WvHeL9PvggugM69giDlQWkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1ya0EvA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gf1/8GZAaRW/1iRXjt9kanJaCGa1CjjRrNVUrYfgQH98XXxm336CxFYcbNg3OmloWi+SLtZvLkWCGUmHsoj0EmaIhWi7CdyRGIOhVXT8YhXZeNJVd1jStQxirwsmmg6zzCj7Gr2IYAi9yX7ICe+i5I6UpS2uGBZKuh9FvyBkXKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCoBGn3k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1ya0EvA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D069FC433F1;
-	Tue, 20 Feb 2024 21:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCoBGn3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41AAC43390;
+	Tue, 20 Feb 2024 21:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463903;
-	bh=tDgqNZKehYE/uL+A3jcwLfnrb7TINTytfv58ZdCAymQ=;
+	s=korg; t=1708463906;
+	bh=cr0zIS5PqahbwG/t2DOBiBq5XEYGp6WDIeaE3tl3d9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a1ya0EvAJ5NlzaScQSFRqvAxFB1AtOp4By7ytTJlA77iwm5CRKm67hmbsuoL2Uvpy
-	 Kj1RfPEYz0lMtHFAs233laxiEyI/N0bXff0DlRV6spM5wBOOYvEDoUU5rPamQNf55M
-	 yUprJhzoxI76D/pHHJcg+SQiAwMP1tRFYnH20jkw=
+	b=TCoBGn3kO6hB8VfMtGs5BahomAYq50SMrlHefe+zxxX8Zx7tdaBxU1Hw9i7/195m9
+	 K+1szaumNFZvBbWqyAQ2Uc3qww+EkNhlzwZ5EkRodwrmVx58o/7JAVO02g6ascd4kV
+	 oIoiP+4m5dQPIY5TLNVfa9WsUJCklkV1VN64jiVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Bogomolov <bogomolov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrei Vagin <avagin@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.6 190/331] x86/fpu: Stop relying on userspace for info to fault in xsave buffer
-Date: Tue, 20 Feb 2024 21:55:06 +0100
-Message-ID: <20240220205643.533359326@linuxfoundation.org>
+	Prasad Pandit <pjp@fedoraproject.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 191/331] KVM: x86: make KVM_REQ_NMI request iff NMI pending for vcpu
+Date: Tue, 20 Feb 2024 21:55:07 +0100
+Message-ID: <20240220205643.577013924@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,94 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Vagin <avagin@google.com>
+From: Prasad Pandit <pjp@fedoraproject.org>
 
-commit d877550eaf2dc9090d782864c96939397a3c6835 upstream.
+commit 6231c9e1a9f35b535c66709aa8a6eda40dbc4132 upstream.
 
-Before this change, the expected size of the user space buffer was
-taken from fx_sw->xstate_size. fx_sw->xstate_size can be changed
-from user-space, so it is possible construct a sigreturn frame where:
+kvm_vcpu_ioctl_x86_set_vcpu_events() routine makes 'KVM_REQ_NMI'
+request for a vcpu even when its 'events->nmi.pending' is zero.
+Ex:
+    qemu_thread_start
+     kvm_vcpu_thread_fn
+      qemu_wait_io_event
+       qemu_wait_io_event_common
+        process_queued_cpu_work
+         do_kvm_cpu_synchronize_post_init/_reset
+          kvm_arch_put_registers
+           kvm_put_vcpu_events (cpu, level=[2|3])
 
- * fx_sw->xstate_size is smaller than the size required by valid bits in
-   fx_sw->xfeatures.
- * user-space unmaps parts of the sigrame fpu buffer so that not all of
-   the buffer required by xrstor is accessible.
+This leads vCPU threads in QEMU to constantly acquire & release the
+global mutex lock, delaying the guest boot due to lock contention.
+Add check to make KVM_REQ_NMI request only if vcpu has NMI pending.
 
-In this case, xrstor tries to restore and accesses the unmapped area
-which results in a fault. But fault_in_readable succeeds because buf +
-fx_sw->xstate_size is within the still mapped area, so it goes back and
-tries xrstor again. It will spin in this loop forever.
-
-Instead, fault in the maximum size which can be touched by XRSTOR (taken
-from fpstate->user_size).
-
-[ dhansen: tweak subject / changelog ]
-
-Fixes: fcb3635f5018 ("x86/fpu/signal: Handle #PF in the direct restore path")
-Reported-by: Konstantin Bogomolov <bogomolov@google.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Andrei Vagin <avagin@google.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240130063603.3392627-1-avagin%40google.com
+Fixes: bdedff263132 ("KVM: x86: Route pending NMIs from userspace through process_nmi()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+Link: https://lore.kernel.org/r/20240103075343.549293-1-ppandit@redhat.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/signal.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ arch/x86/kvm/x86.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/fpu/signal.c
-+++ b/arch/x86/kernel/fpu/signal.c
-@@ -274,12 +274,13 @@ static int __restore_fpregs_from_user(vo
-  * Attempt to restore the FPU registers directly from user memory.
-  * Pagefaults are handled and any errors returned are fatal.
-  */
--static bool restore_fpregs_from_user(void __user *buf, u64 xrestore,
--				     bool fx_only, unsigned int size)
-+static bool restore_fpregs_from_user(void __user *buf, u64 xrestore, bool fx_only)
- {
- 	struct fpu *fpu = &current->thread.fpu;
- 	int ret;
- 
-+	/* Restore enabled features only. */
-+	xrestore &= fpu->fpstate->user_xfeatures;
- retry:
- 	fpregs_lock();
- 	/* Ensure that XFD is up to date */
-@@ -309,7 +310,7 @@ retry:
- 		if (ret != X86_TRAP_PF)
- 			return false;
- 
--		if (!fault_in_readable(buf, size))
-+		if (!fault_in_readable(buf, fpu->fpstate->user_size))
- 			goto retry;
- 		return false;
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -5300,7 +5300,8 @@ static int kvm_vcpu_ioctl_x86_set_vcpu_e
+ 	if (events->flags & KVM_VCPUEVENT_VALID_NMI_PENDING) {
+ 		vcpu->arch.nmi_pending = 0;
+ 		atomic_set(&vcpu->arch.nmi_queued, events->nmi.pending);
+-		kvm_make_request(KVM_REQ_NMI, vcpu);
++		if (events->nmi.pending)
++			kvm_make_request(KVM_REQ_NMI, vcpu);
  	}
-@@ -339,7 +340,6 @@ static bool __fpu_restore_sig(void __use
- 	struct user_i387_ia32_struct env;
- 	bool success, fx_only = false;
- 	union fpregs_state *fpregs;
--	unsigned int state_size;
- 	u64 user_xfeatures = 0;
+ 	static_call(kvm_x86_set_nmi_mask)(vcpu, events->nmi.masked);
  
- 	if (use_xsave()) {
-@@ -349,17 +349,14 @@ static bool __fpu_restore_sig(void __use
- 			return false;
- 
- 		fx_only = !fx_sw_user.magic1;
--		state_size = fx_sw_user.xstate_size;
- 		user_xfeatures = fx_sw_user.xfeatures;
- 	} else {
- 		user_xfeatures = XFEATURE_MASK_FPSSE;
--		state_size = fpu->fpstate->user_size;
- 	}
- 
- 	if (likely(!ia32_fxstate)) {
- 		/* Restore the FPU registers directly from user memory. */
--		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only,
--						state_size);
-+		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only);
- 	}
- 
- 	/*
 
 
