@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA48151CF4;
-	Tue, 20 Feb 2024 21:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F8A151CEF;
+	Tue, 20 Feb 2024 21:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463044; cv=none; b=kHiuVxQNYyAq2GgmACNLTlKL0uS1cdAhTRqLTNWKYHVKe4I33W4oXFuDFt1xnSyf8IPO/2GrfNqKjc8a6RGhEpc+lTZflxOUSjEXKlJkmiaeUZB+lPHMSri5MD7dfXzM+0Wx5UA9WSr9TAyUsjwK3wafKdLQbZOd6JstBceg2xE=
+	t=1708463047; cv=none; b=uxNHyIeytFJBYPQwKhYj3C6/K497RtG8WgjddV0qNK86lPbDyzKRW8IY7XepQCVcRg8uE60ZC6DvKIZOOj0XXDZJMg4tBzShQQu3hlf+NuwXc+ENxJJ0Cl6m7uip5uOprD4ZZlbIccqRw3+aYQPzDX4yggkgqbeJlQSQgKKO0dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463044; c=relaxed/simple;
-	bh=V7jItIPJ76X8au/4zlH0+rsgiwgEa3U9xmZ02lloB0s=;
+	s=arc-20240116; t=1708463047; c=relaxed/simple;
+	bh=H8ZyO2tMapicuImcMekJLIhCjsLo7mhBbfqLHCjgm6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sbvdK1sd5cyLCTkxfsyWTpbfVRPLRAU04Zd5tqPcxU0Fg3fu+yZV/Uyd9Dtu+KIC58B0AUgQO/sbHJyax6Z73hg11p56M8m44tz9PBw2VsYTFVBEaTY/zq9l7LdPGTWxyBcMe4ckr6fo8dljWJMY+pn6nln/yUpt8D6WUTxlKEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEuTaaL/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXWSLZVc4MzWM/YZ+uFb5hp4Lv/GmDgR8WMpaYCal+Dxn6MiM/52Zzm46IpOFg7vYCNHt+yi8gwvK91BvbbVA3nv0NVp4S+Vo/qJMwGkQc9kGXh0UubgxoN6k/Ijya3jB+lEkuFKUAlonYM+dlGoTCxDeo1xNxv2Z/euV3EtDUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKD9O5jz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEuTaaL/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2888C433C7;
-	Tue, 20 Feb 2024 21:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKD9O5jz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC512C433F1;
+	Tue, 20 Feb 2024 21:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463044;
-	bh=V7jItIPJ76X8au/4zlH0+rsgiwgEa3U9xmZ02lloB0s=;
+	s=korg; t=1708463047;
+	bh=H8ZyO2tMapicuImcMekJLIhCjsLo7mhBbfqLHCjgm6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEuTaaL/UxYFm2M4ll+UU1pk+2u17Xu8pQovH5ZOwTb1c8nZ6v0A9jsV5ZAcYeFSR
-	 NAislypUyV6WC7Lii2QB2zkT/a18GL7PPOt/+67Qul2obanzsEWZchipe9Jc2I0G6K
-	 80z1mv07oYDuQMmPJ2RVYsisGpwijnoDyu/cm4ZQ=
+	b=EKD9O5jzb1OtcaBsJ/w4Ai84S+OvImHlOULe0PAt4sUW+7bp5SRX3d8KXskyAmOQO
+	 jCxvc+1ppQLp9emz+S/YtTmEekbLxnpSb4lSupEzpwFucF6pLQwkZVtHONZQqUD/Nh
+	 h4CxLIOg4lBBOh1I4v5CWgAOxE76rElZcAIUmWkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 118/197] ring-buffer: Clean ring_buffer_poll_wait() error return
-Date: Tue, 20 Feb 2024 21:51:17 +0100
-Message-ID: <20240220204844.606976677@linuxfoundation.org>
+	Hui Zhou <hui.zhou@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 119/197] nfp: flower: fix hardware offload for the transfer layer port
+Date: Tue, 20 Feb 2024 21:51:18 +0100
+Message-ID: <20240220204844.636744354@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,41 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Hui Zhou <hui.zhou@corigine.com>
 
-commit 66bbea9ed6446b8471d365a22734dc00556c4785 upstream.
+commit 3a007b8009b5f8af021021b7a590a6da0dc4c6e0 upstream.
 
-The return type for ring_buffer_poll_wait() is __poll_t. This is behind
-the scenes an unsigned where we can set event bits. In case of a
-non-allocated CPU, we do return instead -EINVAL (0xffffffea). Lucky us,
-this ends up setting few error bits (EPOLLERR | EPOLLHUP | EPOLLNVAL), so
-user-space at least is aware something went wrong.
+The nfp driver will merge the tp source port and tp destination port
+into one dword which the offset must be zero to do hardware offload.
+However, the mangle action for the tp source port and tp destination
+port is separated for tc ct action. Modify the mangle action for the
+FLOW_ACT_MANGLE_HDR_TYPE_TCP and FLOW_ACT_MANGLE_HDR_TYPE_UDP to
+satisfy the nfp driver offload check for the tp port.
 
-Nonetheless, this is an incorrect code. Replace that -EINVAL with a
-proper EPOLLERR to clean that output. As this doesn't change the
-behaviour, there's no need to treat this change as a bug fix.
+The mangle action provides a 4B value for source, and a 4B value for
+the destination, but only 2B of each contains the useful information.
+For offload the 2B of each is combined into a single 4B word. Since the
+incoming mask for the source is '0xFFFF<mask>' the shift-left will
+throw away the 0xFFFF part. When this gets combined together in the
+offload it will clear the destination field. Fix this by setting the
+lower bits back to 0xFFFF, effectively doing a rotate-left operation on
+the mask.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240131140955.3322792-1-vdonnefort@google.com
-
-Cc: stable@vger.kernel.org
-Fixes: 6721cb6002262 ("ring-buffer: Do not poll non allocated cpu buffers")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 5cee92c6f57a ("nfp: flower: support hw offload for ct nat action")
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Hui Zhou <hui.zhou@corigine.com>
+Signed-off-by: Louis Peens <louis.peens@corigine.com>
+Link: https://lore.kernel.org/r/20240124151909.31603-3-louis.peens@corigine.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/netronome/nfp/flower/conntrack.c |   24 ++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1095,7 +1095,7 @@ __poll_t ring_buffer_poll_wait(struct tr
- 		full = 0;
- 	} else {
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
--			return -EINVAL;
-+			return EPOLLERR;
+--- a/drivers/net/ethernet/netronome/nfp/flower/conntrack.c
++++ b/drivers/net/ethernet/netronome/nfp/flower/conntrack.c
+@@ -1379,10 +1379,30 @@ static void nfp_nft_ct_translate_mangle_
+ 		mangle_action->mangle.mask = (__force u32)cpu_to_be32(mangle_action->mangle.mask);
+ 		return;
  
- 		cpu_buffer = buffer->buffers[cpu];
- 		work = &cpu_buffer->irq_work;
++	/* Both struct tcphdr and struct udphdr start with
++	 *	__be16 source;
++	 *	__be16 dest;
++	 * so we can use the same code for both.
++	 */
+ 	case FLOW_ACT_MANGLE_HDR_TYPE_TCP:
+ 	case FLOW_ACT_MANGLE_HDR_TYPE_UDP:
+-		mangle_action->mangle.val = (__force u16)cpu_to_be16(mangle_action->mangle.val);
+-		mangle_action->mangle.mask = (__force u16)cpu_to_be16(mangle_action->mangle.mask);
++		if (mangle_action->mangle.offset == offsetof(struct tcphdr, source)) {
++			mangle_action->mangle.val =
++				(__force u32)cpu_to_be32(mangle_action->mangle.val << 16);
++			/* The mask of mangle action is inverse mask,
++			 * so clear the dest tp port with 0xFFFF to
++			 * instead of rotate-left operation.
++			 */
++			mangle_action->mangle.mask =
++				(__force u32)cpu_to_be32(mangle_action->mangle.mask << 16 | 0xFFFF);
++		}
++		if (mangle_action->mangle.offset == offsetof(struct tcphdr, dest)) {
++			mangle_action->mangle.offset = 0;
++			mangle_action->mangle.val =
++				(__force u32)cpu_to_be32(mangle_action->mangle.val);
++			mangle_action->mangle.mask =
++				(__force u32)cpu_to_be32(mangle_action->mangle.mask);
++		}
+ 		return;
+ 
+ 	default:
 
 
