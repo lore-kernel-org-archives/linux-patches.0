@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3FE14AD12;
-	Tue, 20 Feb 2024 21:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB9E14AD12;
+	Tue, 20 Feb 2024 21:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463341; cv=none; b=AERO83WUpYN3sKt+2+bpsMMRx4pNEWEL9qfs/YLz8vJ/LpHUjUhnP8pmlj1YHt/5T57HMZLf5sWcIyexw5U3nZkbo62xtjhCehUvxcIitqjnZ9sauxYBIu4AToHxDGOl+8GUQz91nz5mLvmiphb5cBfLJ5lOiAcT06sJLefRt/k=
+	t=1708463344; cv=none; b=erHAkX2ubSUQp8mtXMNU38Jih/RNiSJAgFnNMYV1k7c9itJx8LWBZZKn8IZ0D3IwaYxl/Iv7GXC722MKMp/vC8xEhW2bLBh3kLQPPPR12SOxZMISlTCXVECpFCVyxEwrrzlPY+FAqXLC/CjfnYXVLAytFdgO4Di4n0sPrwvhbGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463341; c=relaxed/simple;
-	bh=7b2LDCpUhG0FeIg0CxaOktk5HFOljrrqArl4+gRMXos=;
+	s=arc-20240116; t=1708463344; c=relaxed/simple;
+	bh=H7UVuALMMvza4udjflVKC888AZPb79K+ypjlKdLqsd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CzQoJ//x8eNmiOeSVIATodw0oLzmKagnKCax0q+UHq9OnunBxZYx/ty5XL17dp+dz3N4ohT+2s6E1BdgHJgBFyqnfKs6NporACVE+prZE7Bx7Zjy0B9WM3piABxB+3j4iwMKu1DK/akWVJlkcnfNQ1Zp9kj02orIelLw9lJba/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOfLfmQR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0sLnVpYzPbT0LjJRta8vvsEme1Yg3Jt/BQvDVmfFKSSfnp3+R1IbC4+wP//GsYObNA1s5p8kamnjWEk5RkPC72j8dZdVekdYIlRsRGiFFYOsEYFnrYHw1jU+62GKMAcK/5f+DLhXfNMZ3XXKQXwkkVPDoV9GWtiHaWT5O57G9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wQrP8fv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOfLfmQR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8726DC433F1;
-	Tue, 20 Feb 2024 21:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wQrP8fv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071A8C433F1;
+	Tue, 20 Feb 2024 21:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463341;
-	bh=7b2LDCpUhG0FeIg0CxaOktk5HFOljrrqArl4+gRMXos=;
+	s=korg; t=1708463344;
+	bh=H7UVuALMMvza4udjflVKC888AZPb79K+ypjlKdLqsd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOfLfmQRMbwoPg3udDUqBjmb5zNgZmsZf2yppMv6zXbftrYVKwyfor8CKI8oC8ZG2
-	 qCPm9fizKKB3o5uwswYdHWeHjdghZ4glkXDNPqqWDGWLjVhlWSpx2HGoAgPwGNizcT
-	 ULCdJjGwD3YIeJRDqHTDlvgBvAgL6FAhAP8GEHD0=
+	b=2wQrP8fv0U5kTw3Hb+9fpIW7PjZzLQzU4fhBjrdewcQxk+lph1neAiJUcwlpzWMAK
+	 528l0cOt1Rn1o72xj0qRiQ81jfQ6MrNvfCJ95+IdDO9P3gJPDBW560bhL9yC6CHVGk
+	 sqyhilQNEWwK2auo6n2nGalN88UBayOwk6qxP6hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/331] KVM: selftests: Delete superfluous, unused "stage" variable in AMX test
-Date: Tue, 20 Feb 2024 21:52:10 +0100
-Message-ID: <20240220205638.031119383@linuxfoundation.org>
+Subject: [PATCH 6.6 015/331] KVM: selftests: Avoid infinite loop in hyperv_features when invtsc is missing
+Date: Tue, 20 Feb 2024 21:52:11 +0100
+Message-ID: <20240220205638.065692134@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,53 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Vitaly Kuznetsov <vkuznets@redhat.com>
 
-[ Upstream commit 46fee9e38995af9ae16a8cc7d05031486d44cf35 ]
+[ Upstream commit 8ad4855273488c9bd5320b3fee80f66f0023f326 ]
 
-Delete the AMX's tests "stage" counter, as the counter is no longer used,
-which makes clang unhappy:
+When X86_FEATURE_INVTSC is missing, guest_test_msrs_access() was supposed
+to skip testing dependent Hyper-V invariant TSC feature. Unfortunately,
+'continue' does not lead to that as stage is not incremented. Moreover,
+'vm' allocated with vm_create_with_one_vcpu() is not freed and the test
+runs out of available file descriptors very quickly.
 
-  x86_64/amx_test.c:224:6: error: variable 'stage' set but not used
-          int stage, ret;
-              ^
-  1 error generated.
-
-Note, "stage" was never really used, it just happened to be dumped out by
-a (failed) assertion on run->exit_reason, i.e. the AMX test has no concept
-of stages, the code was likely copy+pasted from a different test.
-
-Fixes: c96f57b08012 ("KVM: selftests: Make vCPU exit reason test assertion common")
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://lore.kernel.org/r/20240109220302.399296-1-seanjc@google.com
+Fixes: bd827bd77537 ("KVM: selftests: Test Hyper-V invariant TSC control")
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Link: https://lore.kernel.org/r/20240129085847.2674082-1-vkuznets@redhat.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kvm/x86_64/amx_test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/kvm/x86_64/hyperv_features.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/kvm/x86_64/amx_test.c b/tools/testing/selftests/kvm/x86_64/amx_test.c
-index 11329e5ff945..309ee5c72b46 100644
---- a/tools/testing/selftests/kvm/x86_64/amx_test.c
-+++ b/tools/testing/selftests/kvm/x86_64/amx_test.c
-@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
- 	vm_vaddr_t amx_cfg, tiledata, xstate;
- 	struct ucall uc;
- 	u32 amx_offset;
--	int stage, ret;
-+	int ret;
+diff --git a/tools/testing/selftests/kvm/x86_64/hyperv_features.c b/tools/testing/selftests/kvm/x86_64/hyperv_features.c
+index 9f28aa276c4e..a726831b8024 100644
+--- a/tools/testing/selftests/kvm/x86_64/hyperv_features.c
++++ b/tools/testing/selftests/kvm/x86_64/hyperv_features.c
+@@ -454,7 +454,7 @@ static void guest_test_msrs_access(void)
+ 		case 44:
+ 			/* MSR is not available when CPUID feature bit is unset */
+ 			if (!has_invtsc)
+-				continue;
++				goto next_stage;
+ 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
+ 			msr->write = false;
+ 			msr->fault_expected = true;
+@@ -462,7 +462,7 @@ static void guest_test_msrs_access(void)
+ 		case 45:
+ 			/* MSR is vailable when CPUID feature bit is set */
+ 			if (!has_invtsc)
+-				continue;
++				goto next_stage;
+ 			vcpu_set_cpuid_feature(vcpu, HV_ACCESS_TSC_INVARIANT);
+ 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
+ 			msr->write = false;
+@@ -471,7 +471,7 @@ static void guest_test_msrs_access(void)
+ 		case 46:
+ 			/* Writing bits other than 0 is forbidden */
+ 			if (!has_invtsc)
+-				continue;
++				goto next_stage;
+ 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
+ 			msr->write = true;
+ 			msr->write_val = 0xdeadbeef;
+@@ -480,7 +480,7 @@ static void guest_test_msrs_access(void)
+ 		case 47:
+ 			/* Setting bit 0 enables the feature */
+ 			if (!has_invtsc)
+-				continue;
++				goto next_stage;
+ 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
+ 			msr->write = true;
+ 			msr->write_val = 1;
+@@ -513,6 +513,7 @@ static void guest_test_msrs_access(void)
+ 			return;
+ 		}
  
- 	/*
- 	 * Note, all off-by-default features must be enabled before anything
-@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
- 	memset(addr_gva2hva(vm, xstate), 0, PAGE_SIZE * DIV_ROUND_UP(XSAVE_SIZE, PAGE_SIZE));
- 	vcpu_args_set(vcpu, 3, amx_cfg, tiledata, xstate);
- 
--	for (stage = 1; ; stage++) {
-+	for (;;) {
- 		vcpu_run(vcpu);
- 		TEST_ASSERT_KVM_EXIT_REASON(vcpu, KVM_EXIT_IO);
- 
++next_stage:
+ 		stage++;
+ 		kvm_vm_free(vm);
+ 	}
 -- 
 2.43.0
 
