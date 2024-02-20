@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D743A14F9C8;
-	Tue, 20 Feb 2024 21:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C9A446C9;
+	Tue, 20 Feb 2024 21:38:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465091; cv=none; b=pZaezl+DIYoeY4uebVmrUNJnCZJfX7j4TMuI6EW6uTsxiZB2CdVZgDRJDzeB4FUGy1jYCMoISQXuXtjCC5pTHC0m/ClC6ZDmzx+X8qBEOVp4pDzTAMem6ij83HYGJAH1tvxsdgGwhKHvu8C8eVhF/3o1TcDMXKy1tzIGHW/IWYc=
+	t=1708465095; cv=none; b=AG5RoU8pYIQheuzYyq2ijNk4/I0it6f8zYspjlb7175LeIuZW1Ey2/s4SxHCU2sEF4YoG5L1eBxV9grbHElLHff6DbYUCRWO9/f8TATHs9NW1FLRdAYGSEEIv8/F5pyhOoN742kKnhJlwjjo9NeMrTKsdRQ4pFl/M+EzeZLSRBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465091; c=relaxed/simple;
-	bh=A2vbwPZwgrWOPNdDRqUPJlfpEf+gDpsIXmjgxYL+x50=;
+	s=arc-20240116; t=1708465095; c=relaxed/simple;
+	bh=qSglAj94h3vPXXHkfs5TiY2K6CNadqTGidPVvPnX2AY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3uYiqfjG73h/q4sEzbGoLkOsBKJMyCWJj3wDNQZ8ri44Rgkkk8uICdCSc1V2HaQiIUICYgc7XRLRF8xdHn6P0HqP5GXnCxiDSwbzXmjeLujjiTxCuYJXmPwnvjjzSGaWnAJC8sBzSBc2Xn5AtyovZn8oxwdmGRYFnJR5uB8LOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G295MRig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WywnrdkAYwSnsE2VUdvvKZmQFJyoC20ZzI6t/PSgdpqfp51gOcZblWo9Y3id46G0tK18hkvxstkFwe0o+nLthnI7bAyVK4/Yxj634ksbnG5MYoEl8lougIWanIwfnuTU3J0AaQKM9uIIHIZtqMpA61ity/tV25urmewhdPugI+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m43ThUcU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G295MRig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62EFDC433C7;
-	Tue, 20 Feb 2024 21:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m43ThUcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A61C433C7;
+	Tue, 20 Feb 2024 21:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465091;
-	bh=A2vbwPZwgrWOPNdDRqUPJlfpEf+gDpsIXmjgxYL+x50=;
+	s=korg; t=1708465094;
+	bh=qSglAj94h3vPXXHkfs5TiY2K6CNadqTGidPVvPnX2AY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G295MRigwRywYbdCfIU61jUrQCKqxVWr8qbfW7tZQzE9tNHH4/4WLTBrOWJtqTMYc
-	 3lB9L6LRvS6uF5fE3qZ+aGnxD9Wfo/uLi5Dg7hO8eZdDP9i8tn+iLASfa0nqaewF7s
-	 rAcaMTIaktcGdnDQmftetqGtHH/Kzo400WuIr91E=
+	b=m43ThUcUI0n5AvspdnRHc2LvNzcNAqkohsjLFlC++YCJIXekDl3Ue0sUuENQk64t+
+	 BQsVEhTsXPsjmhYbykRhrFh90Jfql1+bJY35rNgYe69uTL1l5amgxIAiJfSjRrld6U
+	 aQiYoNlzPZvJbzJANVcT4inpQOoDlT3tKkKw8sKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zhang <mizhang@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.7 234/309] KVM: x86/pmu: Fix type length error when reading pmu->fixed_ctr_ctrl
-Date: Tue, 20 Feb 2024 21:56:33 +0100
-Message-ID: <20240220205640.476232033@linuxfoundation.org>
+	Steve Wahl <steve.wahl@hpe.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.7 235/309] x86/mm/ident_map: Use gbpages only where full GB page should be mapped.
+Date: Tue, 20 Feb 2024 21:56:34 +0100
+Message-ID: <20240220205640.505488441@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,39 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingwei Zhang <mizhang@google.com>
+From: Steve Wahl <steve.wahl@hpe.com>
 
-commit 05519c86d6997cfb9bb6c82ce1595d1015b718dc upstream.
+commit d794734c9bbfe22f86686dc2909c25f5ffe1a572 upstream.
 
-Use a u64 instead of a u8 when taking a snapshot of pmu->fixed_ctr_ctrl
-when reprogramming fixed counters, as truncating the value results in KVM
-thinking fixed counter 2 is already disabled (the bug also affects fixed
-counters 3+, but KVM doesn't yet support those).  As a result, if the
-guest disables fixed counter 2, KVM will get a false negative and fail to
-reprogram/disable emulation of the counter, which can leads to incorrect
-counts and spurious PMIs in the guest.
+When ident_pud_init() uses only gbpages to create identity maps, large
+ranges of addresses not actually requested can be included in the
+resulting table; a 4K request will map a full GB.  On UV systems, this
+ends up including regions that will cause hardware to halt the system
+if accessed (these are marked "reserved" by BIOS).  Even processor
+speculation into these regions is enough to trigger the system halt.
 
-Fixes: 76d287b2342e ("KVM: x86/pmu: Drop "u8 ctrl, int idx" for reprogram_fixed_counter()")
+Only use gbpages when map creation requests include the full GB page
+of space.  Fall back to using smaller 2M pages when only portions of a
+GB page are included in the request.
+
+No attempt is made to coalesce mapping requests. If a request requires
+a map entry at the 2M (pmd) level, subsequent mapping requests within
+the same 1G region will also be at the pmd level, even if adjacent or
+overlapping such requests could have been combined to map a full
+gbpage.  Existing usage starts with larger regions and then adds
+smaller regions, so this should not have any great consequence.
+
+[ dhansen: fix up comment formatting, simplifty changelog ]
+
+Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mingwei Zhang <mizhang@google.com>
-Link: https://lore.kernel.org/r/20240123221220.3911317-1-mizhang@google.com
-[sean: rewrite changelog to call out the effects of the bug]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/all/20240126164841.170866-1-steve.wahl%40hpe.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/pmu_intel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/mm/ident_map.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kvm/vmx/pmu_intel.c
-+++ b/arch/x86/kvm/vmx/pmu_intel.c
-@@ -71,7 +71,7 @@ static int fixed_pmc_events[] = {
- static void reprogram_fixed_counters(struct kvm_pmu *pmu, u64 data)
- {
- 	struct kvm_pmc *pmc;
--	u8 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
-+	u64 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
- 	int i;
+--- a/arch/x86/mm/ident_map.c
++++ b/arch/x86/mm/ident_map.c
+@@ -26,18 +26,31 @@ static int ident_pud_init(struct x86_map
+ 	for (; addr < end; addr = next) {
+ 		pud_t *pud = pud_page + pud_index(addr);
+ 		pmd_t *pmd;
++		bool use_gbpage;
  
- 	pmu->fixed_ctr_ctrl = data;
+ 		next = (addr & PUD_MASK) + PUD_SIZE;
+ 		if (next > end)
+ 			next = end;
+ 
+-		if (info->direct_gbpages) {
+-			pud_t pudval;
++		/* if this is already a gbpage, this portion is already mapped */
++		if (pud_large(*pud))
++			continue;
++
++		/* Is using a gbpage allowed? */
++		use_gbpage = info->direct_gbpages;
+ 
+-			if (pud_present(*pud))
+-				continue;
++		/* Don't use gbpage if it maps more than the requested region. */
++		/* at the begining: */
++		use_gbpage &= ((addr & ~PUD_MASK) == 0);
++		/* ... or at the end: */
++		use_gbpage &= ((next & ~PUD_MASK) == 0);
++
++		/* Never overwrite existing mappings */
++		use_gbpage &= !pud_present(*pud);
++
++		if (use_gbpage) {
++			pud_t pudval;
+ 
+-			addr &= PUD_MASK;
+ 			pudval = __pud((addr - info->offset) | info->page_flag);
+ 			set_pud(pud, pudval);
+ 			continue;
 
 
