@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C57152DE8;
-	Tue, 20 Feb 2024 21:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB02151CD8;
+	Tue, 20 Feb 2024 21:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463416; cv=none; b=p69/4s4+846eoM8XJaVrC4bmvMfnJvLeVXaYmMbTHv1rBQ4fViyk0uyj6L+lpMGsHMvtwBFXlA62omaNSJj8dGMEE3ZMQSIy3bLaUWLSXa/qYvzLyq/DoFPXzkmft+e6kC/u9AH31TVjLjgPUVhY3BGpq1pZFKWGXnw7HlBj0Cs=
+	t=1708463419; cv=none; b=dj3oqP+PNK8m90NdaxNJZml0lxIqMr1Za91SG2FYrpqNUDlpIv7FVqIEvnHstYT70+jQg66sAnEt8UiRlOuU1BbT4AdUTo60/4w8zm1CNKaa1qoKNzYJ2ia2YJhhpe48ztCfTTa1UOg+e15ZM0/ido618OW8uvGHitynSjBarEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463416; c=relaxed/simple;
-	bh=2rEuN7zFtA9vklIpAascVFyO6DPCWVL+pRNuznlpfZU=;
+	s=arc-20240116; t=1708463419; c=relaxed/simple;
+	bh=Mx14k+vfClSWlh6S+NrvOYfBDIpD2rzpcQQpGU+Wazw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2AiQ57A6XTNcAO6Qv5VoLTWgBKnckSEllHFF03o321E9O4c+4r2eY/XZ7y3gHLhhMwLpGZr5ULp7HXFluHpWQYDEV6HWrAr97BRYNvzh0MGt3K1o8/Jn6HqKXJ8zV1+jWIIczgZVxolOo2mIcZVaRfkeyMV+z3V/MHBuW6mm90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLGALcOK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J3opr6nLd8Tp6GjCYoFtIz4swWLoXQ0FrPV/0Gj738k8GXvC+paslAqecShP05okyQuHPudBbdxpM5QzpRwpXYreibkpOZGrJekpz6oXc7ukkuMS18FT8EkZb2Sv1Q8VGVskRpaq3PYPh/VZroscCmfFr3ElAF4HE/VkPijVZQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4BZbNkp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLGALcOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCBEC43390;
-	Tue, 20 Feb 2024 21:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4BZbNkp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91E1C433C7;
+	Tue, 20 Feb 2024 21:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463415;
-	bh=2rEuN7zFtA9vklIpAascVFyO6DPCWVL+pRNuznlpfZU=;
+	s=korg; t=1708463418;
+	bh=Mx14k+vfClSWlh6S+NrvOYfBDIpD2rzpcQQpGU+Wazw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLGALcOKpqavMk+xeQj9QdUif54LOkAUQ/6V4UWDPwXayNxH+ItDcDDBfK/7Y4P6r
-	 uGv95m9bTdAzWioDDKIRqSirND7xYuw2ey5hfNEJCaCJC+H0QfTUI07VsLj6Kacw0c
-	 Fm39IqbdxTqpO8K804TtpL/nlHGs/a1FylucRnQI=
+	b=i4BZbNkpQP/Cq2I3VxEnIe5mshxYaWAmXlGunV4RfNzdOZhpm9Pkhpu8Pv4Uk7sk7
+	 yo6OkTyvH5Z1O5BvmqYOKJPqjNfzu1Ass4RZWZHJw9bYXJhSVwfn7cago1TAFsokby
+	 CqdfL0c2hsHrge9lvWU0ORbSiYCnDmHgq3Z9HS+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Conole <aconole@redhat.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/331] net: openvswitch: limit the number of recursions from action sets
-Date: Tue, 20 Feb 2024 21:52:33 +0100
-Message-ID: <20240220205638.771195994@linuxfoundation.org>
+Subject: [PATCH 6.6 038/331] lan966x: Fix crash when adding interface under a lag
+Date: Tue, 20 Feb 2024 21:52:34 +0100
+Message-ID: <20240220205638.805306128@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,212 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Conole <aconole@redhat.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-[ Upstream commit 6e2f90d31fe09f2b852de25125ca875aabd81367 ]
+[ Upstream commit 15faa1f67ab405d47789d4702f587ec7df7ef03e ]
 
-The ovs module allows for some actions to recursively contain an action
-list for complex scenarios, such as sampling, checking lengths, etc.
-When these actions are copied into the internal flow table, they are
-evaluated to validate that such actions make sense, and these calls
-happen recursively.
+There is a crash when adding one of the lan966x interfaces under a lag
+interface. The issue can be reproduced like this:
+ip link add name bond0 type bond miimon 100 mode balance-xor
+ip link set dev eth0 master bond0
 
-The ovs-vswitchd userspace won't emit more than 16 recursion levels
-deep.  However, the module has no such limit and will happily accept
-limits larger than 16 levels nested.  Prevent this by tracking the
-number of recursions happening and manually limiting it to 16 levels
-nested.
+The reason is because when adding a interface under the lag it would go
+through all the ports and try to figure out which other ports are under
+that lag interface. And the issue is that lan966x can have ports that are
+NULL pointer as they are not probed. So then iterating over these ports
+it would just crash as they are NULL pointers.
+The fix consists in actually checking for NULL pointers before accessing
+something from the ports. Like we do in other places.
 
-The initial implementation of the sample action would track this depth
-and prevent more than 3 levels of recursion, but this was removed to
-support the clone use case, rather than limited at the current userspace
-limit.
-
-Fixes: 798c166173ff ("openvswitch: Optimize sample action for the clone use cases")
-Signed-off-by: Aaron Conole <aconole@redhat.com>
+Fixes: cabc9d49333d ("net: lan966x: Add lag support for lan966x")
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240207132416.1488485-2-aconole@redhat.com
+Link: https://lore.kernel.org/r/20240206123054.3052966-1-horatiu.vultur@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow_netlink.c | 49 +++++++++++++++++++++++-----------
- 1 file changed, 33 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_lag.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index 88965e2068ac..ebc5728aab4e 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -48,6 +48,7 @@ struct ovs_len_tbl {
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c b/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c
+index 41fa2523d91d..5f2cd9a8cf8f 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c
+@@ -37,19 +37,24 @@ static void lan966x_lag_set_aggr_pgids(struct lan966x *lan966x)
  
- #define OVS_ATTR_NESTED -1
- #define OVS_ATTR_VARIABLE -2
-+#define OVS_COPY_ACTIONS_MAX_DEPTH 16
+ 	/* Now, set PGIDs for each active LAG */
+ 	for (lag = 0; lag < lan966x->num_phys_ports; ++lag) {
+-		struct net_device *bond = lan966x->ports[lag]->bond;
++		struct lan966x_port *port = lan966x->ports[lag];
+ 		int num_active_ports = 0;
++		struct net_device *bond;
+ 		unsigned long bond_mask;
+ 		u8 aggr_idx[16];
  
- static bool actions_may_change_flow(const struct nlattr *actions)
- {
-@@ -2545,13 +2546,15 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 				  const struct sw_flow_key *key,
- 				  struct sw_flow_actions **sfa,
- 				  __be16 eth_type, __be16 vlan_tci,
--				  u32 mpls_label_count, bool log);
-+				  u32 mpls_label_count, bool log,
-+				  u32 depth);
+-		if (!bond || (visited & BIT(lag)))
++		if (!port || !port->bond || (visited & BIT(lag)))
+ 			continue;
  
- static int validate_and_copy_sample(struct net *net, const struct nlattr *attr,
- 				    const struct sw_flow_key *key,
- 				    struct sw_flow_actions **sfa,
- 				    __be16 eth_type, __be16 vlan_tci,
--				    u32 mpls_label_count, bool log, bool last)
-+				    u32 mpls_label_count, bool log, bool last,
-+				    u32 depth)
- {
- 	const struct nlattr *attrs[OVS_SAMPLE_ATTR_MAX + 1];
- 	const struct nlattr *probability, *actions;
-@@ -2602,7 +2605,8 @@ static int validate_and_copy_sample(struct net *net, const struct nlattr *attr,
- 		return err;
++		bond = port->bond;
+ 		bond_mask = lan966x_lag_get_mask(lan966x, bond);
  
- 	err = __ovs_nla_copy_actions(net, actions, key, sfa,
--				     eth_type, vlan_tci, mpls_label_count, log);
-+				     eth_type, vlan_tci, mpls_label_count, log,
-+				     depth + 1);
+ 		for_each_set_bit(p, &bond_mask, lan966x->num_phys_ports) {
+ 			struct lan966x_port *port = lan966x->ports[p];
  
- 	if (err)
- 		return err;
-@@ -2617,7 +2621,8 @@ static int validate_and_copy_dec_ttl(struct net *net,
- 				     const struct sw_flow_key *key,
- 				     struct sw_flow_actions **sfa,
- 				     __be16 eth_type, __be16 vlan_tci,
--				     u32 mpls_label_count, bool log)
-+				     u32 mpls_label_count, bool log,
-+				     u32 depth)
- {
- 	const struct nlattr *attrs[OVS_DEC_TTL_ATTR_MAX + 1];
- 	int start, action_start, err, rem;
-@@ -2660,7 +2665,8 @@ static int validate_and_copy_dec_ttl(struct net *net,
- 		return action_start;
- 
- 	err = __ovs_nla_copy_actions(net, actions, key, sfa, eth_type,
--				     vlan_tci, mpls_label_count, log);
-+				     vlan_tci, mpls_label_count, log,
-+				     depth + 1);
- 	if (err)
- 		return err;
- 
-@@ -2674,7 +2680,8 @@ static int validate_and_copy_clone(struct net *net,
- 				   const struct sw_flow_key *key,
- 				   struct sw_flow_actions **sfa,
- 				   __be16 eth_type, __be16 vlan_tci,
--				   u32 mpls_label_count, bool log, bool last)
-+				   u32 mpls_label_count, bool log, bool last,
-+				   u32 depth)
- {
- 	int start, err;
- 	u32 exec;
-@@ -2694,7 +2701,8 @@ static int validate_and_copy_clone(struct net *net,
- 		return err;
- 
- 	err = __ovs_nla_copy_actions(net, attr, key, sfa,
--				     eth_type, vlan_tci, mpls_label_count, log);
-+				     eth_type, vlan_tci, mpls_label_count, log,
-+				     depth + 1);
- 	if (err)
- 		return err;
- 
-@@ -3063,7 +3071,7 @@ static int validate_and_copy_check_pkt_len(struct net *net,
- 					   struct sw_flow_actions **sfa,
- 					   __be16 eth_type, __be16 vlan_tci,
- 					   u32 mpls_label_count,
--					   bool log, bool last)
-+					   bool log, bool last, u32 depth)
- {
- 	const struct nlattr *acts_if_greater, *acts_if_lesser_eq;
- 	struct nlattr *a[OVS_CHECK_PKT_LEN_ATTR_MAX + 1];
-@@ -3111,7 +3119,8 @@ static int validate_and_copy_check_pkt_len(struct net *net,
- 		return nested_acts_start;
- 
- 	err = __ovs_nla_copy_actions(net, acts_if_lesser_eq, key, sfa,
--				     eth_type, vlan_tci, mpls_label_count, log);
-+				     eth_type, vlan_tci, mpls_label_count, log,
-+				     depth + 1);
- 
- 	if (err)
- 		return err;
-@@ -3124,7 +3133,8 @@ static int validate_and_copy_check_pkt_len(struct net *net,
- 		return nested_acts_start;
- 
- 	err = __ovs_nla_copy_actions(net, acts_if_greater, key, sfa,
--				     eth_type, vlan_tci, mpls_label_count, log);
-+				     eth_type, vlan_tci, mpls_label_count, log,
-+				     depth + 1);
- 
- 	if (err)
- 		return err;
-@@ -3152,12 +3162,16 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 				  const struct sw_flow_key *key,
- 				  struct sw_flow_actions **sfa,
- 				  __be16 eth_type, __be16 vlan_tci,
--				  u32 mpls_label_count, bool log)
-+				  u32 mpls_label_count, bool log,
-+				  u32 depth)
- {
- 	u8 mac_proto = ovs_key_mac_proto(key);
- 	const struct nlattr *a;
- 	int rem, err;
- 
-+	if (depth > OVS_COPY_ACTIONS_MAX_DEPTH)
-+		return -EOVERFLOW;
++			if (!port)
++				continue;
 +
- 	nla_for_each_nested(a, attr, rem) {
- 		/* Expected argument lengths, (u32)-1 for variable length. */
- 		static const u32 action_lens[OVS_ACTION_ATTR_MAX + 1] = {
-@@ -3355,7 +3369,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 			err = validate_and_copy_sample(net, a, key, sfa,
- 						       eth_type, vlan_tci,
- 						       mpls_label_count,
--						       log, last);
-+						       log, last, depth);
- 			if (err)
- 				return err;
- 			skip_copy = true;
-@@ -3426,7 +3440,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 			err = validate_and_copy_clone(net, a, key, sfa,
- 						      eth_type, vlan_tci,
- 						      mpls_label_count,
--						      log, last);
-+						      log, last, depth);
- 			if (err)
- 				return err;
- 			skip_copy = true;
-@@ -3440,7 +3454,8 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 							      eth_type,
- 							      vlan_tci,
- 							      mpls_label_count,
--							      log, last);
-+							      log, last,
-+							      depth);
- 			if (err)
- 				return err;
- 			skip_copy = true;
-@@ -3450,7 +3465,8 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 		case OVS_ACTION_ATTR_DEC_TTL:
- 			err = validate_and_copy_dec_ttl(net, a, key, sfa,
- 							eth_type, vlan_tci,
--							mpls_label_count, log);
-+							mpls_label_count, log,
-+							depth);
- 			if (err)
- 				return err;
- 			skip_copy = true;
-@@ -3495,7 +3511,8 @@ int ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 
- 	(*sfa)->orig_len = nla_len(attr);
- 	err = __ovs_nla_copy_actions(net, attr, key, sfa, key->eth.type,
--				     key->eth.vlan.tci, mpls_label_count, log);
-+				     key->eth.vlan.tci, mpls_label_count, log,
-+				     0);
- 	if (err)
- 		ovs_nla_free_flow_actions(*sfa);
- 
+ 			lan_wr(ANA_PGID_PGID_SET(bond_mask),
+ 			       lan966x, ANA_PGID(p));
+ 			if (port->lag_tx_active)
 -- 
 2.43.0
 
