@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C58414A4D2;
-	Tue, 20 Feb 2024 21:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC3414A4E6;
+	Tue, 20 Feb 2024 21:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464638; cv=none; b=a0TRUSYJXuD0JhtaJqk8Qy2qSNHU/1B94/6BdMZKgJCX4etBRk+RAyYm9lr4J1UwoXSyGT5sf0i1Mprx85BrGtLSXr8x0mVxO/kwbk3enOoPUPwtOKWRbwMLm3m0bjDbCrtvO9nkYAcsBYZ4WchPCzqAebYIbwwtLyJ2cmIKxrM=
+	t=1708464641; cv=none; b=RleGX1oERCLSF8dR58/zMPH8WvA3+K1GbuILqDLfqKL7JVFlFZDzzvF+WJrxNB8hBjFeTWc3RP4o391ghb2mx+ok+xJxFvEPP3eEeE/jgyX0d7d5h3gO01bWSPNq9QLpTxbtUBHqlYZuO4t2A8s0RmACaDZfHKuafDamo8UCzz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464638; c=relaxed/simple;
-	bh=r3oJjUBdTzGPHKTiNybDHQijBlWBgbU9E6xVyqhVh48=;
+	s=arc-20240116; t=1708464641; c=relaxed/simple;
+	bh=kv9Dly8oaJMWeEapV3csJVrhHfznvYmLV1k9GvamQ4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8i6ETvpg8OObN/wZCZR3u0Wv40+C1sv1mIYkR9uuH1Si7xALLC44hrKP3hE8YDP2jTTLb5mTCl85t4tjzAj78ijj1fkrYlrDnLfE81c4rMQMpd/rf9QE8/PZzi/wI2D/L7bd19g39W2RQTBvh4/3ttsSarwqMYScZdG5fh1VZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOxKPGJP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxZnIZIVsWyE2EA4EQGal6CGEw87WoMPqWXAWpxoJW0JFtCWmMAHjhW2ynznEyUKFA+01t/Uf9/bu+i7bIzM7lrLXvGK5l8rB706j3WFMlkBR9JIrDjUdshtILEQZ6mBR2h0UlIvdChFt5Wdz+OdjOyUiBK74eopX5ye3VZVEfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OL4mKMlS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOxKPGJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5C5C433C7;
-	Tue, 20 Feb 2024 21:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OL4mKMlS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23128C433C7;
+	Tue, 20 Feb 2024 21:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464638;
-	bh=r3oJjUBdTzGPHKTiNybDHQijBlWBgbU9E6xVyqhVh48=;
+	s=korg; t=1708464641;
+	bh=kv9Dly8oaJMWeEapV3csJVrhHfznvYmLV1k9GvamQ4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOxKPGJP/YEezFwAGQIwo+W3L92u4TP61LFj1WMVwWEhR3K4H3YsvFHX1HSfxBYYu
-	 YIKquFwRXWvBIEDgAPdIljiaeisHg/BPUEYNk4L/PbOUCMgM3CfSAmixZbeMJEql7b
-	 G4lC0YFWH0MGK9tLhdUMGlx5hbb4OQI0jbg4uJDg=
+	b=OL4mKMlSo14jiwFyuPqr4pynzjDeB6hUA6dkJ9n+dKgkgXKy3hG3kMRS6QPWeBljQ
+	 Qdc4OauzT1WJJw0G+FMYPBU5mU0ytS4Gk5lmXRcOs/QIFhqviQ+D76+gpp2rw1SGz5
+	 SPWNANtrQgsbzgQ9v0I7I7EqlungA8+a+8XNpnrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>
-Subject: [PATCH 6.7 088/309] usb: ulpi: Fix debugfs directory leak
-Date: Tue, 20 Feb 2024 21:54:07 +0100
-Message-ID: <20240220205635.955514837@linuxfoundation.org>
+	Ivan Vecera <ivecera@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.7 062/309] i40e: Fix waiting for queues of all VSIs to be disabled
+Date: Tue, 20 Feb 2024 21:53:41 +0100
+Message-ID: <20240220205635.161301960@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -49,35 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-commit 3caf2b2ad7334ef35f55b95f3e1b138c6f77b368 upstream.
+[ Upstream commit c73729b64bb692186da080602cd13612783f52ac ]
 
-The ULPI per-device debugfs root is named after the ulpi device's
-parent, but ulpi_unregister_interface tries to remove a debugfs
-directory named after the ulpi device itself. This results in the
-directory sticking around and preventing subsequent (deferred) probes
-from succeeding. Change the directory name to match the ulpi device.
+The function i40e_pf_wait_queues_disabled() iterates all PF's VSIs
+up to 'pf->hw.func_caps.num_vsis' but this is incorrect because
+the real number of VSIs can be up to 'pf->num_alloc_vsi' that
+can be higher. Fix this loop.
 
-Fixes: bd0a0a024f2a ("usb: ulpi: Add debugfs support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Link: https://lore.kernel.org/r/20240126223800.2864613-1-sean.anderson@seco.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 69129dc39fac ("i40e: Modify Tx disable wait flow in case of DCB reconfiguration")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/common/ulpi.c |    2 +-
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -301,7 +301,7 @@ static int ulpi_register(struct device *
- 		return ret;
- 	}
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 2bd7b29fb251..d9716bcec81b 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -5361,7 +5361,7 @@ static int i40e_pf_wait_queues_disabled(struct i40e_pf *pf)
+ {
+ 	int v, ret = 0;
  
--	root = debugfs_create_dir(dev_name(dev), ulpi_root);
-+	root = debugfs_create_dir(dev_name(&ulpi->dev), ulpi_root);
- 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
- 
- 	dev_dbg(&ulpi->dev, "registered ULPI PHY: vendor %04x, product %04x\n",
+-	for (v = 0; v < pf->hw.func_caps.num_vsis; v++) {
++	for (v = 0; v < pf->num_alloc_vsi; v++) {
+ 		if (pf->vsi[v]) {
+ 			ret = i40e_vsi_wait_queues_disabled(pf->vsi[v]);
+ 			if (ret)
+-- 
+2.43.0
+
 
 
