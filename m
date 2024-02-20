@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DD4151CD8;
-	Tue, 20 Feb 2024 21:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD7514A4E6;
+	Tue, 20 Feb 2024 21:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464059; cv=none; b=nrOrGSb/XxtazRKPPmY9+T4sQMpj+XOI+XU9NZftbu+wb0MJWxt7oIng/z58/fpwlbY4NESKM1UdH5ra4aUh+YHTglLSFvE3+KfzbunhYk7HJXlxsjLLI4EUP9IGYRN/PjCgYih0qqFLFxVfEkKYP15NvFLMuFiTj/gkbv/BPfM=
+	t=1708464062; cv=none; b=OoXJO7lRXvljwxZ9ojBEdLDiuOCMc0PXu/ZvvFBrmHdbTG7MLjNA9WmLXDzN181OKIKk/hFU/rdrhkin75aq0N2TN0m9b+ZxA88HqsCRkGhcIeNkFY+d8Mirf50ONN01+8twyOvbqCmVXDCOpi1y1y/mJNvhlIz42sjHfE06VlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464059; c=relaxed/simple;
-	bh=a2tJG52ka1r5eQWBl2rSDp8L/ryFWqib2KiUiZ38ou8=;
+	s=arc-20240116; t=1708464062; c=relaxed/simple;
+	bh=oEV0x9kWUkporNzPDB1gQyuS3bBcclo/jCKSG8tWr9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyWkHNxGqjO0dApLU7Rm7yvc0WAZmsMd1A7MUzhWOBxmurCPOQVY77HDAWe4+V0j3lrEhtZ2c5IssO+sc06omZ8IDkhluoNB0txAvPsOlFypYhb2f9cYwxsPKIOExTjp19QRMFvgAcMXpqjujb10vBfH+IHjfj4iuzQhVZ43+Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gF4/5PAi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EHMqDB26et5YhxQ79sTplfQwNGKqeTaGV0+4tAa9vpmoGP5n0Azs5zXl30oVSwInuTN5e91FUqqSM1j01dQEeJObQCwCv9P+OlTC0eXGxub6Wv3A0SI9i0SdCD5/8I1RuN8IC9kMapd4s3B0nHPV3tOjoL/9nvowgCXxAGnKiQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9Gk4xKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gF4/5PAi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDFAC433C7;
-	Tue, 20 Feb 2024 21:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9Gk4xKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597BDC433F1;
+	Tue, 20 Feb 2024 21:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464058;
-	bh=a2tJG52ka1r5eQWBl2rSDp8L/ryFWqib2KiUiZ38ou8=;
+	s=korg; t=1708464061;
+	bh=oEV0x9kWUkporNzPDB1gQyuS3bBcclo/jCKSG8tWr9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gF4/5PAirhOa7EaFxJYHZ2czj9fLLlNr5FkZBddOGI6QQvbyX/SE12QQ+WexEg+FW
-	 DSrg4dc6DIhwbz+T93lRwfaD/y3qJB6pxpIVliB2HnF4N5ij6FAR5xbgkw6ysRqpFJ
-	 EnH23pKFSVfXG//A/TYUZ4Y+SuNdLdF924Yg6gfU=
+	b=f9Gk4xKAJsuaQmCMD3niYCkE618ky+ZR+jgotBMB4mEoBNbmMOSIN+DuQWHwC7iV8
+	 CLrldJkcRAXOEqZvRSXxrmgQxdqev1InAhROg1sOnq2CGMa4aECwPZoaanW14cAgI6
+	 mbaz2byP+cIr5vDw5hfR612jRhzkB+trOQR1C240=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 238/331] hv_netvsc: Register VF in netvsc_probe if NET_DEVICE_REGISTER missed
-Date: Tue, 20 Feb 2024 21:55:54 +0100
-Message-ID: <20240220205645.257664460@linuxfoundation.org>
+	Kunkun Jiang <jiangkunkun@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.6 212/331] irqchip/gic-v3-its: Fix GICv4.1 VPE affinity update
+Date: Tue, 20 Feb 2024 21:55:28 +0100
+Message-ID: <20240220205644.376811084@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,179 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 9cae43da9867412f8bd09aee5c8a8dc5e8dc3dc2 upstream.
+commit af9acbfc2c4b72c378d0b9a2ee023ed01055d3e2 upstream.
 
-If hv_netvsc driver is unloaded and reloaded, the NET_DEVICE_REGISTER
-handler cannot perform VF register successfully as the register call
-is received before netvsc_probe is finished. This is because we
-register register_netdevice_notifier() very early( even before
-vmbus_driver_register()).
-To fix this, we try to register each such matching VF( if it is visible
-as a netdevice) at the end of netvsc_probe.
+When updating the affinity of a VPE, the VMOVP command is currently skipped
+if the two CPUs are part of the same VPE affinity.
 
+But this is wrong, as the doorbell corresponding to this VPE is still
+delivered on the 'old' CPU, which screws up the balancing.  Furthermore,
+offlining that 'old' CPU results in doorbell interrupts generated for this
+VPE being discarded.
+
+The harsh reality is that VMOVP cannot be elided when a set_affinity()
+request occurs. It needs to be obeyed, and if an optimisation is to be
+made, it is at the point where the affinity change request is made (such as
+in KVM).
+
+Drop the VMOVP elision altogether, and only use the vpe_table_mask
+to try and stay within the same ITS affinity group if at all possible.
+
+Fixes: dd3f050a216e (irqchip/gic-v4.1: Implement the v4.1 flavour of VMOVP)
+Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Fixes: 85520856466e ("hv_netvsc: Fix race of register_netdevice_notifier and VF register")
-Suggested-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20240213101206.2137483-4-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |   82 ++++++++++++++++++++++++++++++----------
- 1 file changed, 62 insertions(+), 20 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -42,6 +42,10 @@
- #define LINKCHANGE_INT (2 * HZ)
- #define VF_TAKEOVER_INT (HZ / 10)
- 
-+/* Macros to define the context of vf registration */
-+#define VF_REG_IN_PROBE		1
-+#define VF_REG_IN_NOTIFIER	2
-+
- static unsigned int ring_size __ro_after_init = 128;
- module_param(ring_size, uint, 0444);
- MODULE_PARM_DESC(ring_size, "Ring buffer size (# of 4K pages)");
-@@ -2183,7 +2187,7 @@ static rx_handler_result_t netvsc_vf_han
- }
- 
- static int netvsc_vf_join(struct net_device *vf_netdev,
--			  struct net_device *ndev)
-+			  struct net_device *ndev, int context)
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3826,8 +3826,9 @@ static int its_vpe_set_affinity(struct i
+ 				bool force)
  {
- 	struct net_device_context *ndev_ctx = netdev_priv(ndev);
- 	int ret;
-@@ -2206,7 +2210,11 @@ static int netvsc_vf_join(struct net_dev
- 		goto upper_link_failed;
- 	}
+ 	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
+-	int from, cpu = cpumask_first(mask_val);
++	struct cpumask common, *table_mask;
+ 	unsigned long flags;
++	int from, cpu;
  
--	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
-+	/* If this registration is called from probe context vf_takeover
-+	 * is taken care of later in probe itself.
-+	 */
-+	if (context == VF_REG_IN_NOTIFIER)
-+		schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
- 
- 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
- 
-@@ -2344,7 +2352,7 @@ static int netvsc_prepare_bonding(struct
- 	return NOTIFY_DONE;
- }
- 
--static int netvsc_register_vf(struct net_device *vf_netdev)
-+static int netvsc_register_vf(struct net_device *vf_netdev, int context)
- {
- 	struct net_device_context *net_device_ctx;
- 	struct netvsc_device *netvsc_dev;
-@@ -2384,7 +2392,7 @@ static int netvsc_register_vf(struct net
- 
- 	netdev_info(ndev, "VF registering: %s\n", vf_netdev->name);
- 
--	if (netvsc_vf_join(vf_netdev, ndev) != 0)
-+	if (netvsc_vf_join(vf_netdev, ndev, context) != 0)
- 		return NOTIFY_DONE;
- 
- 	dev_hold(vf_netdev);
-@@ -2482,10 +2490,31 @@ static int netvsc_unregister_vf(struct n
- 	return NOTIFY_OK;
- }
- 
-+static int check_dev_is_matching_vf(struct net_device *event_ndev)
-+{
-+	/* Skip NetVSC interfaces */
-+	if (event_ndev->netdev_ops == &device_ops)
-+		return -ENODEV;
-+
-+	/* Avoid non-Ethernet type devices */
-+	if (event_ndev->type != ARPHRD_ETHER)
-+		return -ENODEV;
-+
-+	/* Avoid Vlan dev with same MAC registering as VF */
-+	if (is_vlan_dev(event_ndev))
-+		return -ENODEV;
-+
-+	/* Avoid Bonding master dev with same MAC registering as VF */
-+	if (netif_is_bond_master(event_ndev))
-+		return -ENODEV;
-+
-+	return 0;
-+}
-+
- static int netvsc_probe(struct hv_device *dev,
- 			const struct hv_vmbus_device_id *dev_id)
- {
--	struct net_device *net = NULL;
-+	struct net_device *net = NULL, *vf_netdev;
- 	struct net_device_context *net_device_ctx;
- 	struct netvsc_device_info *device_info = NULL;
- 	struct netvsc_device *nvdev;
-@@ -2597,6 +2626,30 @@ static int netvsc_probe(struct hv_device
- 	}
- 
- 	list_add(&net_device_ctx->list, &netvsc_dev_list);
-+
-+	/* When the hv_netvsc driver is unloaded and reloaded, the
-+	 * NET_DEVICE_REGISTER for the vf device is replayed before probe
-+	 * is complete. This is because register_netdevice_notifier() gets
-+	 * registered before vmbus_driver_register() so that callback func
-+	 * is set before probe and we don't miss events like NETDEV_POST_INIT
-+	 * So, in this section we try to register the matching vf device that
-+	 * is present as a netdevice, knowing that its register call is not
-+	 * processed in the netvsc_netdev_notifier(as probing is progress and
-+	 * get_netvsc_byslot fails).
-+	 */
-+	for_each_netdev(dev_net(net), vf_netdev) {
-+		ret = check_dev_is_matching_vf(vf_netdev);
-+		if (ret != 0)
-+			continue;
-+
-+		if (net != get_netvsc_byslot(vf_netdev))
-+			continue;
-+
-+		netvsc_prepare_bonding(vf_netdev);
-+		netvsc_register_vf(vf_netdev, VF_REG_IN_PROBE);
-+		__netvsc_vf_setup(net, vf_netdev);
-+		break;
-+	}
- 	rtnl_unlock();
- 
- 	netvsc_devinfo_put(device_info);
-@@ -2752,28 +2805,17 @@ static int netvsc_netdev_event(struct no
- 			       unsigned long event, void *ptr)
- {
- 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
-+	int ret = 0;
- 
--	/* Skip our own events */
--	if (event_dev->netdev_ops == &device_ops)
--		return NOTIFY_DONE;
+ 	/*
+ 	 * Changing affinity is mega expensive, so let's be as lazy as
+@@ -3843,19 +3844,22 @@ static int its_vpe_set_affinity(struct i
+ 	 * taken on any vLPI handling path that evaluates vpe->col_idx.
+ 	 */
+ 	from = vpe_to_cpuid_lock(vpe, &flags);
+-	if (from == cpu)
+-		goto out;
 -
--	/* Avoid non-Ethernet type devices */
--	if (event_dev->type != ARPHRD_ETHER)
--		return NOTIFY_DONE;
--
--	/* Avoid Vlan dev with same MAC registering as VF */
--	if (is_vlan_dev(event_dev))
--		return NOTIFY_DONE;
--
--	/* Avoid Bonding master dev with same MAC registering as VF */
--	if (netif_is_bond_master(event_dev))
-+	ret = check_dev_is_matching_vf(event_dev);
-+	if (ret != 0)
- 		return NOTIFY_DONE;
+-	vpe->col_idx = cpu;
++	table_mask = gic_data_rdist_cpu(from)->vpe_table_mask;
  
- 	switch (event) {
- 	case NETDEV_POST_INIT:
- 		return netvsc_prepare_bonding(event_dev);
- 	case NETDEV_REGISTER:
--		return netvsc_register_vf(event_dev);
-+		return netvsc_register_vf(event_dev, VF_REG_IN_NOTIFIER);
- 	case NETDEV_UNREGISTER:
- 		return netvsc_unregister_vf(event_dev);
- 	case NETDEV_UP:
+ 	/*
+-	 * GICv4.1 allows us to skip VMOVP if moving to a cpu whose RD
+-	 * is sharing its VPE table with the current one.
++	 * If we are offered another CPU in the same GICv4.1 ITS
++	 * affinity, pick this one. Otherwise, any CPU will do.
+ 	 */
+-	if (gic_data_rdist_cpu(cpu)->vpe_table_mask &&
+-	    cpumask_test_cpu(from, gic_data_rdist_cpu(cpu)->vpe_table_mask))
++	if (table_mask && cpumask_and(&common, mask_val, table_mask))
++		cpu = cpumask_test_cpu(from, &common) ? from : cpumask_first(&common);
++	else
++		cpu = cpumask_first(mask_val);
++
++	if (from == cpu)
+ 		goto out;
+ 
++	vpe->col_idx = cpu;
++
+ 	its_send_vmovp(vpe);
+ 	its_vpe_db_proxy_move(vpe, from, cpu);
+ 
 
 
