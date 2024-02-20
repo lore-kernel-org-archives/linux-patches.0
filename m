@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE1C446C9;
-	Tue, 20 Feb 2024 21:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3173F446C9;
+	Tue, 20 Feb 2024 21:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465038; cv=none; b=ML6CKK25ZzTPNGJ/PUC7uC0qx75YKXh+p9ORzM654y2MA9fMw/OkpVrYALhPVuCEHPsZx5hfQTWMeRbv8p84PT3FDV5chhWBirjxYjMlgnI5z24kEQFaMDtM/+puem+Lnl5xOhkzrCpVo4BvTSAQyG10ZUIVYJOASMuIkShjyaY=
+	t=1708465041; cv=none; b=qetU23FNe16TOJK6W3Bf9gk9cmcaLic/fsTSDxxdFLGx8WCmhaVaCLXWMUj0lq2LgexX6WZRVq7jWtz9Yr4Jk6meyXE+BFayXaFHsmCiI8SPec+lZgRv4PfY9sHKLAVUaIrRowjiWX6sMBzYJVPg9uKjwfR+rUhYp5+OkmiSCyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465038; c=relaxed/simple;
-	bh=FYa3tFTEYjn15NvlaLvIbyvYLsXWolBBa4A4AfXY8+A=;
+	s=arc-20240116; t=1708465041; c=relaxed/simple;
+	bh=UheyVkCCLsDTQXs2hM12vBxuaKDuupvTLa64lXQYkOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5ge1q36DDJtGj1nljCPwUJ1bWHbM252qS09dQ9J+4s5I9nNPHVY1N4OGFvycdvgSmxoRe6PVOjB4Dp1i9QTET5dFuoT6U2qVhMFpgyWxgh4wKVsJB6pbKaFQIoqEyEuQ9F5b1YHn6wJgZdOhbeLe/wrZ3oUSn6qlwRTGnn5o28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTMbyPw8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyRWreuoZ+r8OOqLqXJZ2LryHW0m+Eu/WIVzOPT/u6f8i8l7TOnzR0U3fs8fJkstpX3Nsh1DAYzZv9j4uekdgce3kV9Nyze807XzIVq5okJCnRB+uS43+FqP39fRYDFVc52de32n9Zwll2eyrvn1y7asxZYqVlav8iUts8EwJfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpemyf4O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTMbyPw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966E9C433F1;
-	Tue, 20 Feb 2024 21:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpemyf4O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7715C433C7;
+	Tue, 20 Feb 2024 21:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465038;
-	bh=FYa3tFTEYjn15NvlaLvIbyvYLsXWolBBa4A4AfXY8+A=;
+	s=korg; t=1708465041;
+	bh=UheyVkCCLsDTQXs2hM12vBxuaKDuupvTLa64lXQYkOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTMbyPw8jABul/k7z935WK44ECoyPmKkQdh+387lW3NRL2ylpU9wkEkKMf3pb7eg8
-	 y1jc9grEG4sgwoXONMbeYHZRQ756h0dJFf85HngTIR+TIdRoR67OAz8XACGDG9N01r
-	 +Ex4e8E2snnPOzuFunGB7bvN+sA81wryZrAX7hL4=
+	b=wpemyf4OElofS3bgOdfq0p0RUZarZl5+VYQKJNRAhrsOiA0pS0lEzqCD3CyvCTmuI
+	 ZQTdU71lwbV35gOOeswRLdZU0yc8pRY2RLgX2QK0EzNO0RK1RRjjcvlan33KVVa1kL
+	 bvkVFOAUVWYI3jt4HEDid8NCC2nnbjSPjItj9Sqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.7 216/309] ring-buffer: Clean ring_buffer_poll_wait() error return
-Date: Tue, 20 Feb 2024 21:56:15 +0100
-Message-ID: <20240220205639.927475313@linuxfoundation.org>
+	Tim Menninger <tmenninger@purestorage.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.7 217/309] net: dsa: mv88e6xxx: Fix failed probe due to unsupported C45 reads
+Date: Tue, 20 Feb 2024 21:56:16 +0100
+Message-ID: <20240220205639.955622178@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,41 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Andrew Lunn <andrew@lunn.ch>
 
-commit 66bbea9ed6446b8471d365a22734dc00556c4785 upstream.
+commit 585b40e25dc9ff3d2b03d1495150540849009e5b upstream.
 
-The return type for ring_buffer_poll_wait() is __poll_t. This is behind
-the scenes an unsigned where we can set event bits. In case of a
-non-allocated CPU, we do return instead -EINVAL (0xffffffea). Lucky us,
-this ends up setting few error bits (EPOLLERR | EPOLLHUP | EPOLLNVAL), so
-user-space at least is aware something went wrong.
+Not all mv88e6xxx device support C45 read/write operations. Those
+which do not return -EOPNOTSUPP. However, when phylib scans the bus,
+it considers this fatal, and the probe of the MDIO bus fails, which in
+term causes the mv88e6xxx probe as a whole to fail.
 
-Nonetheless, this is an incorrect code. Replace that -EINVAL with a
-proper EPOLLERR to clean that output. As this doesn't change the
-behaviour, there's no need to treat this change as a bug fix.
+When there is no device on the bus for a given address, the pull up
+resistor on the data line results in the read returning 0xffff. The
+phylib core code understands this when scanning for devices on the
+bus. C45 allows multiple devices to be supported at one address, so
+phylib will perform a few reads at each address, so although thought
+not the most efficient solution, it is a way to avoid fatal
+errors. Make use of this as a minimal fix for stable to fix the
+probing problems.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240131140955.3322792-1-vdonnefort@google.com
+Follow up patches will rework how C45 operates to make it similar to
+C22 which considers -ENODEV as a none-fatal, and swap mv88e6xxx to
+using this.
 
 Cc: stable@vger.kernel.org
-Fixes: 6721cb6002262 ("ring-buffer: Do not poll non allocated cpu buffers")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 743a19e38d02 ("net: dsa: mv88e6xxx: Separate C22 and C45 transactions")
+Reported-by: Tim Menninger <tmenninger@purestorage.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240129224948.1531452-1-andrew@lunn.ch
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
+ drivers/net/dsa/mv88e6xxx/chip.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1091,7 +1091,7 @@ __poll_t ring_buffer_poll_wait(struct tr
- 		full = 0;
- 	} else {
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
--			return -EINVAL;
-+			return EPOLLERR;
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3545,7 +3545,7 @@ static int mv88e6xxx_mdio_read_c45(struc
+ 	int err;
  
- 		cpu_buffer = buffer->buffers[cpu];
- 		work = &cpu_buffer->irq_work;
+ 	if (!chip->info->ops->phy_read_c45)
+-		return -EOPNOTSUPP;
++		return 0xffff;
+ 
+ 	mv88e6xxx_reg_lock(chip);
+ 	err = chip->info->ops->phy_read_c45(chip, bus, phy, devad, reg, &val);
 
 
