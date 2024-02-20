@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748AD446C9;
-	Tue, 20 Feb 2024 21:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E1B446C9;
+	Tue, 20 Feb 2024 21:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465082; cv=none; b=fOT7J/GQ3p5Zd21BmNgbJTPDLYKxzEwwGzdtYvGh/Td5SvjmCKg/p/ArAx6WBRBOtg56pPFjvgCQgEkFIytUkISDEcYwGDIUl32w+hTNg6u/Gfhg/lJpc0ARladjI6HHP2l0xKaI6pltDTTVBsRRjaGh4/9RU6IaSsCN7Lg9Ng8=
+	t=1708465085; cv=none; b=mnKH+u7OPFmGFS+Z/8yNmxxQZlt3dG6aR2K6VrP+zJQlhrEvu8sM9KZNIBLubI0vAH512ejgyCIhOjSynM9WFEgKTwmKn9hFk2Bt9DixxQsM5iOaVFTnrgIRCda5hqJ3PPoWTL7XWeOCOlbBp92THJfR2SqArjHdMhbUghDzFFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465082; c=relaxed/simple;
-	bh=aUqR0GQniyR9R+yUA9ZogmAM7BUpfTZ2wJaYwh2us0I=;
+	s=arc-20240116; t=1708465085; c=relaxed/simple;
+	bh=1QJU8iREy5eHm9ydU3ntJemUmP/qmJ/hP9mGfO3ueXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u5P2eD10zeD/WdlBXcZO6qkP/UkgPYyu0G5bzp02rld/iGfJdppL0T6JeA14IlMG/8ihzXaqx32qdaGJMEBlh9N5TlS794jfG7D6If/59NDBb2MPEqx0E4hzB6fY15fpGTxMNg/2gw5vUtSsiKNbRszNpL/byidJvih9t7A4Wds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReDPLocw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FIWy/atIPYm2kcHzdD2kmICzjwXrAdluk/y5LKYkPaR0heob4OtAny3dvH52S/2CdAFq1GCBH7PKN+eMH7ON2/HmDI+5D2L/cz8geK3eEuQDL+Y42vdvyX3794X9rFzVP7ReDbLsM+D5kTm1yEaGbp+3SiZ7C5gLupSDAM6PfQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3XQKhpw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReDPLocw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6912C433C7;
-	Tue, 20 Feb 2024 21:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3XQKhpw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE00C433F1;
+	Tue, 20 Feb 2024 21:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465082;
-	bh=aUqR0GQniyR9R+yUA9ZogmAM7BUpfTZ2wJaYwh2us0I=;
+	s=korg; t=1708465085;
+	bh=1QJU8iREy5eHm9ydU3ntJemUmP/qmJ/hP9mGfO3ueXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ReDPLocw2obKOJWA+luGSFDy2h9v6zZgs25snxKpoXxIJSqXKUMX1lO2k4aZEJoVm
-	 TDtEURdAbkBNkk0/mMiVxxJStdn7/NINg5a2X/6klD0ccExVKoVfYTvhBx+8Y3pcne
-	 wzf19uHsNg3GtzmHNk2wj+bQuGC2Jp9T4/59YTlk=
+	b=s3XQKhpwj+utx8/Hf5fPz3XzrkoHQFCDTGOFHmEV4nLnszJlolvSOchLe38qOeN4S
+	 llRbx7j0O5H4b4ywKjy/nii6d2566w6/SRK0J8u0UDO12Pd5d0apROzCMvz/m9a7nx
+	 EluOsfPx8Tv8U+6d1HnMjJdtJerGqICXW5etjHCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.7 223/309] serial: max310x: fail probe if clock crystal is unstable
-Date: Tue, 20 Feb 2024 21:56:22 +0100
-Message-ID: <20240220205640.138526392@linuxfoundation.org>
+	Konstantin Bogomolov <bogomolov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrei Vagin <avagin@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.7 232/309] x86/fpu: Stop relying on userspace for info to fault in xsave buffer
+Date: Tue, 20 Feb 2024 21:56:31 +0100
+Message-ID: <20240220205640.417769088@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -44,73 +46,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Andrei Vagin <avagin@google.com>
 
-commit 8afa6c6decea37e7cb473d2c60473f37f46cea35 upstream.
+commit d877550eaf2dc9090d782864c96939397a3c6835 upstream.
 
-A stable clock is really required in order to use this UART, so log an
-error message and bail out if the chip reports that the clock is not
-stable.
+Before this change, the expected size of the user space buffer was
+taken from fx_sw->xstate_size. fx_sw->xstate_size can be changed
+from user-space, so it is possible construct a sigreturn frame where:
 
-Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
-Cc: stable@vger.kernel.org
-Suggested-by: Jan Kundrát <jan.kundrat@cesnet.cz>
-Link: https://www.spinics.net/lists/linux-serial/msg35773.html
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240116213001.3691629-4-hugo@hugovil.com
+ * fx_sw->xstate_size is smaller than the size required by valid bits in
+   fx_sw->xfeatures.
+ * user-space unmaps parts of the sigrame fpu buffer so that not all of
+   the buffer required by xrstor is accessible.
+
+In this case, xrstor tries to restore and accesses the unmapped area
+which results in a fault. But fault_in_readable succeeds because buf +
+fx_sw->xstate_size is within the still mapped area, so it goes back and
+tries xrstor again. It will spin in this loop forever.
+
+Instead, fault in the maximum size which can be touched by XRSTOR (taken
+from fpstate->user_size).
+
+[ dhansen: tweak subject / changelog ]
+
+Fixes: fcb3635f5018 ("x86/fpu/signal: Handle #PF in the direct restore path")
+Reported-by: Konstantin Bogomolov <bogomolov@google.com>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240130063603.3392627-1-avagin%40google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/x86/kernel/fpu/signal.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -587,7 +587,7 @@ static int max310x_update_best_err(unsig
- 	return 1;
- }
- 
--static u32 max310x_set_ref_clk(struct device *dev, struct max310x_port *s,
-+static s32 max310x_set_ref_clk(struct device *dev, struct max310x_port *s,
- 			       unsigned long freq, bool xtal)
+--- a/arch/x86/kernel/fpu/signal.c
++++ b/arch/x86/kernel/fpu/signal.c
+@@ -274,12 +274,13 @@ static int __restore_fpregs_from_user(vo
+  * Attempt to restore the FPU registers directly from user memory.
+  * Pagefaults are handled and any errors returned are fatal.
+  */
+-static bool restore_fpregs_from_user(void __user *buf, u64 xrestore,
+-				     bool fx_only, unsigned int size)
++static bool restore_fpregs_from_user(void __user *buf, u64 xrestore, bool fx_only)
  {
- 	unsigned int div, clksrc, pllcfg = 0;
-@@ -657,7 +657,8 @@ static u32 max310x_set_ref_clk(struct de
- 		} while (!stable && (++try < MAX310X_XTAL_WAIT_RETRIES));
+ 	struct fpu *fpu = &current->thread.fpu;
+ 	int ret;
  
- 		if (!stable)
--			dev_warn(dev, "clock is not stable yet\n");
-+			return dev_err_probe(dev, -EAGAIN,
-+					     "clock is not stable\n");
++	/* Restore enabled features only. */
++	xrestore &= fpu->fpstate->user_xfeatures;
+ retry:
+ 	fpregs_lock();
+ 	/* Ensure that XFD is up to date */
+@@ -309,7 +310,7 @@ retry:
+ 		if (ret != X86_TRAP_PF)
+ 			return false;
+ 
+-		if (!fault_in_readable(buf, size))
++		if (!fault_in_readable(buf, fpu->fpstate->user_size))
+ 			goto retry;
+ 		return false;
+ 	}
+@@ -339,7 +340,6 @@ static bool __fpu_restore_sig(void __use
+ 	struct user_i387_ia32_struct env;
+ 	bool success, fx_only = false;
+ 	union fpregs_state *fpregs;
+-	unsigned int state_size;
+ 	u64 user_xfeatures = 0;
+ 
+ 	if (use_xsave()) {
+@@ -349,17 +349,14 @@ static bool __fpu_restore_sig(void __use
+ 			return false;
+ 
+ 		fx_only = !fx_sw_user.magic1;
+-		state_size = fx_sw_user.xstate_size;
+ 		user_xfeatures = fx_sw_user.xfeatures;
+ 	} else {
+ 		user_xfeatures = XFEATURE_MASK_FPSSE;
+-		state_size = fpu->fpstate->user_size;
  	}
  
- 	return bestfreq;
-@@ -1282,7 +1283,7 @@ static int max310x_probe(struct device *
- {
- 	int i, ret, fmin, fmax, freq;
- 	struct max310x_port *s;
--	u32 uartclk = 0;
-+	s32 uartclk = 0;
- 	bool xtal;
- 
- 	for (i = 0; i < devtype->nr; i++)
-@@ -1360,6 +1361,11 @@ static int max310x_probe(struct device *
+ 	if (likely(!ia32_fxstate)) {
+ 		/* Restore the FPU registers directly from user memory. */
+-		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only,
+-						state_size);
++		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only);
  	}
  
- 	uartclk = max310x_set_ref_clk(dev, s, freq, xtal);
-+	if (uartclk < 0) {
-+		ret = uartclk;
-+		goto out_uart;
-+	}
-+
- 	dev_dbg(dev, "Reference clock set to %i Hz\n", uartclk);
- 
- 	for (i = 0; i < devtype->nr; i++) {
+ 	/*
 
 
