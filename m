@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D0F151CD0;
-	Tue, 20 Feb 2024 21:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608AC133987;
+	Tue, 20 Feb 2024 21:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463154; cv=none; b=oXYr8HwX0po48K3UuBkvYEpvishsQFfku68snfMK2btUdJxngkePAcHqL3/mU9tq1qTN5vMeWQ9hwLLv6PRuNEOFyYqDQ+bruvwTQciSnTR922L9eGjS18Nex+GSFpDPfzj3qYQKFalbPvMLOi8NDBv0GffvfvfiYPa+HLLHId8=
+	t=1708463157; cv=none; b=gJrCpIXtFQk6rdIDgzfqZtWef6605QcjUQcNhWGgtgwkTQQnVnQ3mKwaXDhULV7lLSGEL5YB+kV5k5OepJMGAmoxFB2TOWWNrd88fedvfSTRCD4aGwO5bgTzM2EfC1Vt5Mz5jHLLbb7yjkSwwouAjnoKu02cM77Uy6/iLI6EZw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463154; c=relaxed/simple;
-	bh=kBBk7IWp6eKTFnt1xCpYqUCS/udjQWisW7dGwYTCXec=;
+	s=arc-20240116; t=1708463157; c=relaxed/simple;
+	bh=RSbu9ynEBrDRGNjCm/0ZwNlq2NZyt0sIKkaR1ANgtbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGHBmE6etXcISrB8d9Xr75Okk5XY8Z21stR1y7Y1/616hEJ0UdTf1yImKq/ZKxZEWnm/fFCSP/NqucRZOrMpFhhbVqJ9UVWcP8ceWIH6YWNTKYpPRaX8GE79iplP9hX9aJqm97/3tSFJhLMDRD5KylyK4Z9wuGdV/qTMqiBJC8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDrkK0Yu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1raAt6B46c6Ym60g+s2C8dCoIgyIQquQZPSU/5Y0vvTMxTyKnUed1ml7ahjx3r47J0/VDuM9tiNM+YB1KJq5l0bh2FHKmCBRcUNOYCbvJdSF+Cx0UBo/GA2na1/v4ngKreKhWYyLXMgvczNRE73oOVBio1trmo3I4/9/o6J140=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGq8lBFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDrkK0Yu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89509C433F1;
-	Tue, 20 Feb 2024 21:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGq8lBFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8A9C433C7;
+	Tue, 20 Feb 2024 21:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463154;
-	bh=kBBk7IWp6eKTFnt1xCpYqUCS/udjQWisW7dGwYTCXec=;
+	s=korg; t=1708463156;
+	bh=RSbu9ynEBrDRGNjCm/0ZwNlq2NZyt0sIKkaR1ANgtbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDrkK0Yum6lrFmrGAFZDfzerdoEpLaW4n0De61in71G/MLIlW0HRm7pwIfxfirPZW
-	 FQ9vQDuIlToeE4/pb3BBBSMTPXg+Yb85W1kdEJwEKeCiizX2pslQo8RFl8IMhdpt03
-	 aPqsKrsKysC/rbnwk6oHFao8gjhlNizGd6+6EA7I=
+	b=zGq8lBFpRuYfx/p3VlsOAvuj+IwVl+X8oRYoxbvjjxfLnq9FROYzQWpyP1nM3ftiW
+	 rDY5CdapXjFYyjXMBUZh5AzQ1hceSrpGLHnt+3awlSuJWTbWKQd2MHAMggXAKBQfCh
+	 cir4eagVpZJN6yIeYKVmV2JdBkds2GyxdVieB8Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 135/197] nilfs2: fix data corruption in dsync block recovery for small block sizes
-Date: Tue, 20 Feb 2024 21:51:34 +0100
-Message-ID: <20240220204845.111486478@linuxfoundation.org>
+	Sinthu Raja <sinthu.raja@ti.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 153/197] net: ethernet: ti: cpsw: enable mac_managed_pm to fix mdio
+Date: Tue, 20 Feb 2024 21:51:52 +0100
+Message-ID: <20240220204845.654277940@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,61 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Sinthu Raja <sinthu.raja@ti.com>
 
-commit 67b8bcbaed4777871bb0dcc888fb02a614a98ab1 upstream.
+commit bc4ce46b1e3d1da4309405cd4afc7c0fcddd0b90 upstream.
 
-The helper function nilfs_recovery_copy_block() of
-nilfs_recovery_dsync_blocks(), which recovers data from logs created by
-data sync writes during a mount after an unclean shutdown, incorrectly
-calculates the on-page offset when copying repair data to the file's page
-cache.  In environments where the block size is smaller than the page
-size, this flaw can cause data corruption and leak uninitialized memory
-bytes during the recovery process.
+The below commit  introduced a WARN when phy state is not in the states:
+PHY_HALTED, PHY_READY and PHY_UP.
+commit 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
 
-Fix these issues by correcting this byte offset calculation on the page.
+When cpsw resumes, there have port in PHY_NOLINK state, so the below
+warning comes out. Set mac_managed_pm be true to tell mdio that the phy
+resume/suspend is managed by the mac, to fix the following warning:
 
-Link: https://lkml.kernel.org/r/20240124121936.10575-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+WARNING: CPU: 0 PID: 965 at drivers/net/phy/phy_device.c:326 mdio_bus_phy_resume+0x140/0x144
+CPU: 0 PID: 965 Comm: sh Tainted: G           O       6.1.46-g247b2535b2 #1
+Hardware name: Generic AM33XX (Flattened Device Tree)
+ unwind_backtrace from show_stack+0x18/0x1c
+ show_stack from dump_stack_lvl+0x24/0x2c
+ dump_stack_lvl from __warn+0x84/0x15c
+ __warn from warn_slowpath_fmt+0x1a8/0x1c8
+ warn_slowpath_fmt from mdio_bus_phy_resume+0x140/0x144
+ mdio_bus_phy_resume from dpm_run_callback+0x3c/0x140
+ dpm_run_callback from device_resume+0xb8/0x2b8
+ device_resume from dpm_resume+0x144/0x314
+ dpm_resume from dpm_resume_end+0x14/0x20
+ dpm_resume_end from suspend_devices_and_enter+0xd0/0x924
+ suspend_devices_and_enter from pm_suspend+0x2e0/0x33c
+ pm_suspend from state_store+0x74/0xd0
+ state_store from kernfs_fop_write_iter+0x104/0x1ec
+ kernfs_fop_write_iter from vfs_write+0x1b8/0x358
+ vfs_write from ksys_write+0x78/0xf8
+ ksys_write from ret_fast_syscall+0x0/0x54
+Exception stack(0xe094dfa8 to 0xe094dff0)
+dfa0:                   00000004 005c3fb8 00000001 005c3fb8 00000004 00000001
+dfc0: 00000004 005c3fb8 b6f6bba0 00000004 00000004 0059edb8 00000000 00000000
+dfe0: 00000004 bed918f0 b6f09bd3 b6e89a66
+
+Cc: <stable@vger.kernel.org> # v6.0+
+Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
+Fixes: fba863b81604 ("net: phy: make PHY PM ops a no-op if MAC driver manages PHY PM")
+Signed-off-by: Sinthu Raja <sinthu.raja@ti.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/recovery.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/ti/cpsw.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -472,9 +472,10 @@ static int nilfs_prepare_segment_for_rec
- 
- static int nilfs_recovery_copy_block(struct the_nilfs *nilfs,
- 				     struct nilfs_recovery_block *rb,
--				     struct page *page)
-+				     loff_t pos, struct page *page)
- {
- 	struct buffer_head *bh_org;
-+	size_t from = pos & ~PAGE_MASK;
- 	void *kaddr;
- 
- 	bh_org = __bread(nilfs->ns_bdev, rb->blocknr, nilfs->ns_blocksize);
-@@ -482,7 +483,7 @@ static int nilfs_recovery_copy_block(str
- 		return -EIO;
- 
- 	kaddr = kmap_atomic(page);
--	memcpy(kaddr + bh_offset(bh_org), bh_org->b_data, bh_org->b_size);
-+	memcpy(kaddr + from, bh_org->b_data, bh_org->b_size);
- 	kunmap_atomic(kaddr);
- 	brelse(bh_org);
- 	return 0;
-@@ -521,7 +522,7 @@ static int nilfs_recover_dsync_blocks(st
- 			goto failed_inode;
+--- a/drivers/net/ethernet/ti/cpsw.c
++++ b/drivers/net/ethernet/ti/cpsw.c
+@@ -631,6 +631,8 @@ static void cpsw_slave_open(struct cpsw_
  		}
+ 	}
  
--		err = nilfs_recovery_copy_block(nilfs, rb, page);
-+		err = nilfs_recovery_copy_block(nilfs, rb, pos, page);
- 		if (unlikely(err))
- 			goto failed_page;
++	phy->mac_managed_pm = true;
++
+ 	slave->phy = phy;
  
+ 	phy_attached_info(slave->phy);
 
 
