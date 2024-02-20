@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E83151CCC;
-	Tue, 20 Feb 2024 21:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CF5151CE5;
+	Tue, 20 Feb 2024 21:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463692; cv=none; b=usxyitDswKHfjKhs7mKZFYg/QXX6+TkLaN/yErv3EKPvdzpdDutJSM9IGsbUDl2FVPo87TG6NzoXr47jnhgosKfQlaHLTCc2z+ghoIHrWYKWU1TDWwru1jnDM+OrjuZS9DLRqCzBJewUy65zsp8qzTU1zH/nDMzJ6DTGv51mRo8=
+	t=1708463695; cv=none; b=Q8rASw07GlNDj1ZtZ4UL5XRbiKr8p7Cx9lVnxZcLuOmseng463m55dMUhAY3uFKIcejzrQe4/2JZf+0/56KSrfz9vPTl1ANZeDXF9GxxX5Z7/B063gaRC/u2TgHYQ3yZNZXdvY81Q+yr3NDnlCeyHh/RmmsBiTl/7Tb7lUxLfI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463692; c=relaxed/simple;
-	bh=WC4X+rHQId93xI6aE4+OFVnERxIJcVTqZW4uB0yuw44=;
+	s=arc-20240116; t=1708463695; c=relaxed/simple;
+	bh=MCuQHp4LLVCk6CpzIG00cSenUeUAKT0qhfnCIjKpYT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLVRmEfGUPpPsZFj/WfcjrqrZgCie0JsHvUrUmRZAm0ycdS+UrzlgIcjNVIGyCNE/SRKxy5EA4krYtsQs8JsgrWifcs9tqdIGCmWyAoxd/fE9LJqp5MQgCGZrYcmN2ndbuxe+ormRKx1mKdyO2c6LF5hUA1mERT5kxlz/V67ToU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYbDdC23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ul88MfcycRxnVto7aUlKhz4XOPpiV+ub74gWEKPI2MvK9vz57cXnFmVOT7olbSDWgn283dqppN1wUonWnw82fJxh2iRU88YbRV6pIjGVnl1qLm9Hh2QuiLIQCV5FQgNxktPGizfJM42uunjs2HTSzvSqj1V12rFKYd3AAlwvGhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epZpEczK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYbDdC23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435B3C433C7;
-	Tue, 20 Feb 2024 21:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epZpEczK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F0EC433F1;
+	Tue, 20 Feb 2024 21:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463691;
-	bh=WC4X+rHQId93xI6aE4+OFVnERxIJcVTqZW4uB0yuw44=;
+	s=korg; t=1708463695;
+	bh=MCuQHp4LLVCk6CpzIG00cSenUeUAKT0qhfnCIjKpYT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYbDdC23jf4HXU/J1x/Uwb0msO4QJocKrwgMrOOSVbCJ3vNvOXvlfxa5UTWVXsWkq
-	 w7RRwvyv2catIa8+lCttiCm/wI/DeY7G5Z0kDG3PX7iC982o37wtTq7RUt+jp9MU9v
-	 dkcOeDMeKPXjrrzkePOQL2G/L3K5q+ZDeesxak9k=
+	b=epZpEczKdTsPTYn0ccohOQ6fFselMkigTz5RTtU5FX42go0xcAtx6cnPQa9CbexLf
+	 nERqdB+a0QzNnMTAAUcf9cRih2zXygag8/YqR0QDz0X/lwa27Sgu4e0zitgnDcsECJ
+	 kFBUQ6nM5RtO/4XChFNjx5/X3ULazZo7HBDhRyNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c53d4d3ddb327e80bc51@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 115/331] mptcp: really cope with fastopen race
-Date: Tue, 20 Feb 2024 21:53:51 +0100
-Message-ID: <20240220205641.232031978@linuxfoundation.org>
+	David McFarland <corngood@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 124/331] drm/amd: Dont init MEC2 firmware when it fails to load
+Date: Tue, 20 Feb 2024 21:54:00 +0100
+Message-ID: <20240220205641.493771336@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -53,45 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: David McFarland <corngood@gmail.com>
 
-commit 337cebbd850f94147cee05252778f8f78b8c337f upstream.
+commit 8ef85a0ce24a6d9322dfa2a67477e473c3619b4f upstream.
 
-Fastopen and PM-trigger subflow shutdown can race, as reported by
-syzkaller.
+The same calls are made directly above, but conditional on the firmware
+loading and validating successfully.
 
-In my first attempt to close such race, I missed the fact that
-the subflow status can change again before the subflow_state_change
-callback is invoked.
-
-Address the issue additionally copying with all the states directly
-reachable from TCP_FIN_WAIT1.
-
-Fixes: 1e777f39b4d7 ("mptcp: add MSG_FASTOPEN sendmsg flag support")
-Fixes: 4fd19a307016 ("mptcp: fix inconsistent state on fastopen race")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+c53d4d3ddb327e80bc51@syzkaller.appspotmail.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/458
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9931b67690cf ("drm/amd: Load GFX10 microcode during early_init")
+Signed-off-by: David McFarland <corngood@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1104,7 +1104,8 @@ static inline bool subflow_simultaneous_
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -4020,8 +4020,6 @@ static int gfx_v10_0_init_microcode(stru
+ 		err = 0;
+ 		adev->gfx.mec2_fw = NULL;
+ 	}
+-	amdgpu_gfx_cp_init_microcode(adev, AMDGPU_UCODE_ID_CP_MEC2);
+-	amdgpu_gfx_cp_init_microcode(adev, AMDGPU_UCODE_ID_CP_MEC2_JT);
  
--	return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_FIN_WAIT1) &&
-+	return (1 << sk->sk_state) &
-+	       (TCPF_ESTABLISHED | TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 | TCPF_CLOSING) &&
- 	       is_active_ssk(subflow) &&
- 	       !subflow->conn_finished;
- }
+ 	gfx_v10_0_check_fw_write_wait(adev);
+ out:
 
 
