@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B53F612D7;
-	Tue, 20 Feb 2024 21:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694C9612D7;
+	Tue, 20 Feb 2024 21:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463571; cv=none; b=AfTr+ldxtGalrYJ9CdWDeKxy3XpMT2MelKz9UBafc3MqtNBWnM1e2eKrRuqgSryPPFOYiXGEk27Ya8mPjuPZcsjV01HMhJ6bFK2tWlHrKMJbk9uk3A4QREbOPrnUiwrt6L0z8TzPFjzTQv8pBzJi8HeYixbt2kVCFmAcE7ebyNE=
+	t=1708463574; cv=none; b=b+hfAzYPD067zfZ9Uk3y8taM7/5ZzHYlRRlRUmpgHaQP9RwHU8ZnccGVQ1wAzDv4d8/0ty89ypWx6BIvNuGTJ5ntuoxLqchu6ivmWhV8UPNZJo4CMvLHJe09gyryktCoOovUfQX8peUyKMoHk1HXZDPjwVYUZJt8vWq/5WzgEjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463571; c=relaxed/simple;
-	bh=wY2EEy8Jegerr84D9L99pggT9XypAIasFisNCoZKDTc=;
+	s=arc-20240116; t=1708463574; c=relaxed/simple;
+	bh=m+4ngGtWX9mcstZb311BplOQT7jhHoqybsVns+TLf3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6orXiSX4duKpevoPQm9PQyQ61qglpEpgfpRFMfKtSKJKblZ2Bb0GZ29CFoBP3jJ9FXqFFgFEfUvnZTiL+xf0Cg66lbX5kTH2ZLEaZ2xpFilBIlF269G5es4lmnMNLIKiz1s2a4ZNoPuPqDti/Wl4Y3iAEIYgN4mFF6ZMy0pHWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOYFX0gV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=up5HN03Boe17JNmUoWn/wMA081rZYT3lhmZOUYLctM5FpP55neuoSpFXvG15WB4VKN32HpbcXxSvnUWGTsb+JyLgtEcA9r/tLWlhj5GyGiJfciUJ0Ubxxuyos+tMjq+h1h2UZCD9eVGh4rJLDQsDs3pWAZgs6sRxYiruzpN4akU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IoB8xfZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOYFX0gV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EB1C433C7;
-	Tue, 20 Feb 2024 21:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IoB8xfZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63E7FC433C7;
+	Tue, 20 Feb 2024 21:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463570;
-	bh=wY2EEy8Jegerr84D9L99pggT9XypAIasFisNCoZKDTc=;
+	s=korg; t=1708463573;
+	bh=m+4ngGtWX9mcstZb311BplOQT7jhHoqybsVns+TLf3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOYFX0gV353KQmSLMc6HBrU5DsxVQjnNsO1fV/+McVm9Eh0r4IHNFDn38drCurYaJ
-	 VLllN/FGqlixllGxJDEnO96pArrCUC4kCKqI1DIV+gl9iStLx7IyHsTkxLJiea05pj
-	 l/UIyF1bWoGhNUY7aCYkGpieCJUkvOckV9cWZT2E=
+	b=IoB8xfZKuiZJgnMMiLxE1hQQxe0URjRF6gNCCKLrKojwPeRKIG52PpQBVYvZUwc8D
+	 BcxVn9iAg+0+ljd5JuFIanuWdhnnx96B3x4A3BqsITZ5WMXzfglq+FwtY1g9+Hbnoa
+	 5B//XoZP9WhK8tAfBegvyzDfZ3ai8V12VlmQuI3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 056/331] selftests/mm: ksm_tests should only MADV_HUGEPAGE valid memory
-Date: Tue, 20 Feb 2024 21:52:52 +0100
-Message-ID: <20240220205639.353085118@linuxfoundation.org>
+Subject: [PATCH 6.6 057/331] scs: add CONFIG_MMU dependency for vfree_atomic()
+Date: Tue, 20 Feb 2024 21:52:53 +0100
+Message-ID: <20240220205639.382014817@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,42 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit d021b442cf312664811783e92b3d5e4548e92a53 upstream.
+commit 6f9dc684cae638dda0570154509884ee78d0f75c upstream.
 
-ksm_tests was previously mmapping a region of memory, aligning the
-returned pointer to a PMD boundary, then setting MADV_HUGEPAGE, but was
-setting it past the end of the mmapped area due to not taking the pointer
-alignment into consideration.  Fix this behaviour.
+The shadow call stack implementation fails to build without CONFIG_MMU:
 
-Up until commit efa7df3e3bb5 ("mm: align larger anonymous mappings on THP
-boundaries"), this buggy behavior was (usually) masked because the
-alignment difference was always less than PMD-size.  But since the
-mentioned commit, `ksm_tests -H -s 100` started failing.
+  ld.lld: error: undefined symbol: vfree_atomic
+  >>> referenced by scs.c
+  >>>               kernel/scs.o:(scs_free) in archive vmlinux.a
 
-Link: https://lkml.kernel.org/r/20240122120554.3108022-1-ryan.roberts@arm.com
-Fixes: 325254899684 ("selftests: vm: add KSM huge pages merging time test")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>
+Link: https://lkml.kernel.org/r/20240122175204.2371009-1-samuel.holland@sifive.com
+Fixes: a2abe7cbd8fe ("scs: switch to vmapped shadow stacks")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Cc: Will Deacon <will@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/ksm_tests.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/mm/ksm_tests.c
-+++ b/tools/testing/selftests/mm/ksm_tests.c
-@@ -566,7 +566,7 @@ static int ksm_merge_hugepages_time(int
- 	if (map_ptr_orig == MAP_FAILED)
- 		err(2, "initial mmap");
- 
--	if (madvise(map_ptr, len + HPAGE_SIZE, MADV_HUGEPAGE))
-+	if (madvise(map_ptr, len, MADV_HUGEPAGE))
- 		err(2, "MADV_HUGEPAGE");
- 
- 	pagemap_fd = open("/proc/self/pagemap", O_RDONLY);
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -681,6 +681,7 @@ config SHADOW_CALL_STACK
+ 	bool "Shadow Call Stack"
+ 	depends on ARCH_SUPPORTS_SHADOW_CALL_STACK
+ 	depends on DYNAMIC_FTRACE_WITH_ARGS || DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
++	depends on MMU
+ 	help
+ 	  This option enables the compiler's Shadow Call Stack, which
+ 	  uses a shadow stack to protect function return addresses from
 
 
