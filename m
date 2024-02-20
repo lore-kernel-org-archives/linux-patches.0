@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1846D2DF9F;
-	Tue, 20 Feb 2024 21:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403F62DF9F;
+	Tue, 20 Feb 2024 21:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465284; cv=none; b=DzaLYt4MP921UgGe6d+fspZ4AXRHZjonzWmiBog/WemAxXRnqNrFP8SdOekc6lZQUCIJYnnLIODvUnbK8wnrfkpQUWD3Mx8vzJ5mR3994it4feASzKjyaUe8LwhjqN3v5SaWYVVlN11fUedYYkRtc6QTj/cW7JUDDn0TCkbE+oU=
+	t=1708465287; cv=none; b=f83btxRE//vA14pVA1mUkiAL4lAh4DDuZKPfNB5NF6mMICYxbkH+xbea7macHdz1s0Ch5l+nvIopLSBnedFYfVrlVzMBs3upWT+WGpiT4Cp0ds32B9Ju2H9aPyuhFMUFzamxOL0crEz1bpsPYcrkSNQoaS2Acw89mj6eikrYKeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465284; c=relaxed/simple;
-	bh=M8CM6+UnA5LtyeR2iiccl1C7YDAMucRaUV+x2qgGtt4=;
+	s=arc-20240116; t=1708465287; c=relaxed/simple;
+	bh=bSX6c4xsQBLnCDY30ScnyqC78DT6rnG62AHcdEYwNLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiyXHx0o8v4Kb+kE/QMPfInPrJtaIVmMWW7iNrTNhrVV4xebWKUNYMd6H4bGxtrDXG0fNYNIJ6mRgr/KPVuMcbjvUZJRriAYqjBg4S2HJJsbWUVWbuMgLRgq99qoYRg3Fk31KDeZlT1LBhbIkFPWuCIPg0Co2dY35hMhbd96KWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FisTbTks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQJJ82bwyvuQnAmIF5Py1sEtK78/vngoUQ7VY8PAGiLX/JxNJ8dX54s6C0sqlbcjNIDa7OeAvTLSNoXFkcuraPqtIQb4i71qM53eeLVADcqWG35n9VLfdZYix34rGr0HwhUOY/4aCiFXHz8iCIs2eZRHgBPMKuF/Ma8+iVmQ60s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8x06RPg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FisTbTks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EE3C433F1;
-	Tue, 20 Feb 2024 21:41:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8x06RPg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B3AC433F1;
+	Tue, 20 Feb 2024 21:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465284;
-	bh=M8CM6+UnA5LtyeR2iiccl1C7YDAMucRaUV+x2qgGtt4=;
+	s=korg; t=1708465287;
+	bh=bSX6c4xsQBLnCDY30ScnyqC78DT6rnG62AHcdEYwNLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FisTbTksuZazqLqhrBBXA2Ixz0a9BS0mm/sawxVRZjbwU6ikXGLjo/Ra7NpcuIwdU
-	 TcJoAubHG5DeHQDJsvEh5PM87+JefsTDbtdimp+Wx/MdcvPOdGybPIEnnfRhCp1/RJ
-	 p/ZRAVpvzfHLc5u7k4HKM8XO+fmADn0via5e6QeI=
+	b=z8x06RPg8SDOetQpf3puz/r9q2xl2o8dbnOWd49wZPQwQwWSJqm+RNhL/XpnnPCaB
+	 8sYFPXePcjarbXWeqHxV1USa/7Ev6Px+nvOT6Lg8bp+E+6oZmet3sZ31jaBQR5vwFL
+	 2gPLtLpNRQZWX7694GR1lz2xV9x/DQJTxWdpNvaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishabh Dave <ridave@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.7 287/309] ceph: prevent use-after-free in encode_cap_msg()
-Date: Tue, 20 Feb 2024 21:57:26 +0100
-Message-ID: <20240220205642.094166865@linuxfoundation.org>
+	Maxime Jayat <maxime.jayat@mobile-devices.fr>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.7 296/309] can: netlink: Fix TDCO calculation using the old data bittiming
+Date: Tue, 20 Feb 2024 21:57:35 +0100
+Message-ID: <20240220205642.353225530@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,53 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishabh Dave <ridave@redhat.com>
+From: Maxime Jayat <maxime.jayat@mobile-devices.fr>
 
-commit cda4672da1c26835dcbd7aec2bfed954eda9b5ef upstream.
+commit 2aa0a5e65eae27dbd96faca92c84ecbf6f492d42 upstream.
 
-In fs/ceph/caps.c, in encode_cap_msg(), "use after free" error was
-caught by KASAN at this line - 'ceph_buffer_get(arg->xattr_buf);'. This
-implies before the refcount could be increment here, it was freed.
+The TDCO calculation was done using the currently applied data bittiming,
+instead of the newly computed data bittiming, which means that the TDCO
+had an invalid value unless setting the same data bittiming twice.
 
-In same file, in "handle_cap_grant()" refcount is decremented by this
-line - 'ceph_buffer_put(ci->i_xattrs.blob);'. It appears that a race
-occurred and resource was freed by the latter line before the former
-line could increment it.
-
-encode_cap_msg() is called by __send_cap() and __send_cap() is called by
-ceph_check_caps() after calling __prep_cap(). __prep_cap() is where
-arg->xattr_buf is assigned to ci->i_xattrs.blob. This is the spot where
-the refcount must be increased to prevent "use after free" error.
-
+Fixes: d99755f71a80 ("can: netlink: add interface for CAN-FD Transmitter Delay Compensation (TDC)")
+Signed-off-by: Maxime Jayat <maxime.jayat@mobile-devices.fr>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/all/40579c18-63c0-43a4-8d4c-f3a6c1c0b417@munic.io
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/59259
-Signed-off-by: Rishabh Dave <ridave@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/dev/netlink.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1452,7 +1452,7 @@ static void __prep_cap(struct cap_msg_ar
- 	if (flushing & CEPH_CAP_XATTR_EXCL) {
- 		arg->old_xattr_buf = __ceph_build_xattrs_blob(ci);
- 		arg->xattr_version = ci->i_xattrs.version;
--		arg->xattr_buf = ci->i_xattrs.blob;
-+		arg->xattr_buf = ceph_buffer_get(ci->i_xattrs.blob);
- 	} else {
- 		arg->xattr_buf = NULL;
- 		arg->old_xattr_buf = NULL;
-@@ -1553,6 +1553,7 @@ static void __send_cap(struct cap_msg_ar
- 	encode_cap_msg(msg, arg);
- 	ceph_con_send(&arg->session->s_con, msg);
- 	ceph_buffer_put(arg->old_xattr_buf);
-+	ceph_buffer_put(arg->xattr_buf);
- 	if (arg->wake)
- 		wake_up_all(&ci->i_cap_wq);
- }
+--- a/drivers/net/can/dev/netlink.c
++++ b/drivers/net/can/dev/netlink.c
+@@ -346,7 +346,7 @@ static int can_changelink(struct net_dev
+ 			/* Neither of TDC parameters nor TDC flags are
+ 			 * provided: do calculation
+ 			 */
+-			can_calc_tdco(&priv->tdc, priv->tdc_const, &priv->data_bittiming,
++			can_calc_tdco(&priv->tdc, priv->tdc_const, &dbt,
+ 				      &priv->ctrlmode, priv->ctrlmode_supported);
+ 		} /* else: both CAN_CTRLMODE_TDC_{AUTO,MANUAL} are explicitly
+ 		   * turned off. TDC is disabled: do nothing
 
 
