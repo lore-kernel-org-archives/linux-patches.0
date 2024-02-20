@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0812DF9F;
-	Tue, 20 Feb 2024 21:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BDC2DF9F;
+	Tue, 20 Feb 2024 21:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465278; cv=none; b=bmElqsQPQQRtw7NwY9cf96zZHHUhGvzsMdcDuTVKc4nD3RtiBsruvZYemukAsgA7n+THh9Lv5ZnfxfVVyYeMAehv54Ft7VWHdOb2WxPU48tpUwpwQb8+58g28+N2JJ5Yc/IVRc97OQaYWEL1iqYKPlNupUBEa5zRrAa4XxEtxno=
+	t=1708465281; cv=none; b=r98JTc+7CjJ7WQe8OkkOhfAUBfUVgfcs47TMamRQU/ONGXVETJwAC9zwAesbxhTSF0WDMKwU+6jkwlkGmEnRiJ9/xeAkv2vFjmQVjo51A+zfk26qX55nRuDbLLHSYpJld4auFY63I5aBJG9AC9SfH372FscIt/1F+IkTskp/Rxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465278; c=relaxed/simple;
-	bh=UJwPlMu71y7JHlxiEyH4z7kI7bKmuCEgLGxaZFb8zV8=;
+	s=arc-20240116; t=1708465281; c=relaxed/simple;
+	bh=1g4LJKWg380MFQVmR7uXcSthdALF9l3OsdMGwseqfMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ykt+88YlPYIqmWOEUAOI3v+bhFLOqZCMBxlV3VrK/0mwXKJcq7uds8AHj6VdPXGrQrinyHlyMJ2dvrxEvJHfmmFQ3uW2OJ1FEKIEB6geO6LGMtFkOxDRXjTOHQJUYsXE7CR50OiR9Ol2e29AJnYwnsXclCD1ZJLFagINaRT3pTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=geRncnn1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KKX1KrHSlCrkmKkiqS+jJGlJqq/km1PSWcYz5KHW1DaysflogeNO9oxGBneH/EEcNKXr5CQ5pzNUaygH/KZOV8wdXf0ghOyEEHH/g7Zsb54lczx7QkRCoIuHCivBEZ2rTKiuNv5Jkfzp6ip8k7z/yfPoh+8WPnXqiocNsLPtu08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MD2C14i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="geRncnn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A9CC433C7;
-	Tue, 20 Feb 2024 21:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MD2C14i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775DCC433C7;
+	Tue, 20 Feb 2024 21:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465277;
-	bh=UJwPlMu71y7JHlxiEyH4z7kI7bKmuCEgLGxaZFb8zV8=;
+	s=korg; t=1708465280;
+	bh=1g4LJKWg380MFQVmR7uXcSthdALF9l3OsdMGwseqfMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=geRncnn1kOqeqhV5THv2OrbZM8CUB4tRlQY9SqoPJHWW0zNZKueAb/OQFvzlI5BF2
-	 tU6ajQpmLJcKTJP4Bk6zhoCOVU+tYTkQZ/K8dL3JP9s7PUt1bka7P7Nd7V7Yz0YywA
-	 7N1SHbKx0TsxkJU1j5qtt5PorDxzy1FT2Dse3aVU=
+	b=0MD2C14ikd3dCOVkz8BnRPntQ61RdEIf2fYCl2G0jOW4FjVEHSH+VKiyEl0Kh1poY
+	 O+m/aBTIHL75PCezuLkcCCDfP7Sk3YbN8ZyYyokHJSyyzQ4QroU6d7p7ScP9gC9BFB
+	 bbEcdF3zHsTmhu72hNhIAJEfFwmUojglbthJep6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>
-Subject: [PATCH 6.7 263/309] zonefs: Improve error handling
-Date: Tue, 20 Feb 2024 21:57:02 +0100
-Message-ID: <20240220205641.386372890@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.7 254/309] PCI: dwc: Fix a 64bit bug in dw_pcie_ep_raise_msix_irq()
+Date: Tue, 20 Feb 2024 21:56:53 +0100
+Message-ID: <20240220205641.113048343@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -46,258 +47,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 14db5f64a971fce3d8ea35de4dfc7f443a3efb92 upstream.
+commit b5d1b4b46f856da1473c7ba9a5cdfcb55c9b2478 upstream.
 
-Write error handling is racy and can sometime lead to the error recovery
-path wrongly changing the inode size of a sequential zone file to an
-incorrect value  which results in garbage data being readable at the end
-of a file. There are 2 problems:
+The "msg_addr" variable is u64.  However, the "aligned_offset" is an
+unsigned int.  This means that when the code does:
 
-1) zonefs_file_dio_write() updates a zone file write pointer offset
-   after issuing a direct IO with iomap_dio_rw(). This update is done
-   only if the IO succeed for synchronous direct writes. However, for
-   asynchronous direct writes, the update is done without waiting for
-   the IO completion so that the next asynchronous IO can be
-   immediately issued. However, if an asynchronous IO completes with a
-   failure right before the i_truncate_mutex lock protecting the update,
-   the update may change the value of the inode write pointer offset
-   that was corrected by the error path (zonefs_io_error() function).
+  msg_addr &= ~aligned_offset;
 
-2) zonefs_io_error() is called when a read or write error occurs. This
-   function executes a report zone operation using the callback function
-   zonefs_io_error_cb(), which does all the error recovery handling
-   based on the current zone condition, write pointer position and
-   according to the mount options being used. However, depending on the
-   zoned device being used, a report zone callback may be executed in a
-   context that is different from the context of __zonefs_io_error(). As
-   a result, zonefs_io_error_cb() may be executed without the inode
-   truncate mutex lock held, which can lead to invalid error processing.
+it will unintentionally zero out the high 32 bits.  Use ALIGN_DOWN() to do
+the alignment instead.
 
-Fix both problems as follows:
-- Problem 1: Perform the inode write pointer offset update before a
-  direct write is issued with iomap_dio_rw(). This is safe to do as
-  partial direct writes are not supported (IOMAP_DIO_PARTIAL is not
-  set) and any failed IO will trigger the execution of zonefs_io_error()
-  which will correct the inode write pointer offset to reflect the
-  current state of the one on the device.
-- Problem 2: Change zonefs_io_error_cb() into zonefs_handle_io_error()
-  and call this function directly from __zonefs_io_error() after
-  obtaining the zone information using blkdev_report_zones() with a
-  simple callback function that copies to a local stack variable the
-  struct blk_zone obtained from the device. This ensures that error
-  handling is performed holding the inode truncate mutex.
-  This change also simplifies error handling for conventional zone files
-  by bypassing the execution of report zones entirely. This is safe to
-  do because the condition of conventional zones cannot be read-only or
-  offline and conventional zone files are always fully mapped with a
-  constant file size.
-
-Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Fixes: 8dcc1a9d90c1 ("fs: New zonefs file system")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Fixes: 2217fffcd63f ("PCI: dwc: endpoint: Fix dw_pcie_ep_raise_msix_irq() alignment support")
+Link: https://lore.kernel.org/r/af59c7ad-ab93-40f7-ad4a-7ac0b14d37f5@moroto.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/zonefs/file.c  |   42 +++++++++++++++++++++------------
- fs/zonefs/super.c |   68 ++++++++++++++++++++++++++++++------------------------
- 2 files changed, 66 insertions(+), 44 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/zonefs/file.c
-+++ b/fs/zonefs/file.c
-@@ -348,7 +348,12 @@ static int zonefs_file_write_dio_end_io(
- 	struct zonefs_inode_info *zi = ZONEFS_I(inode);
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -6,6 +6,7 @@
+  * Author: Kishon Vijay Abraham I <kishon@ti.com>
+  */
  
- 	if (error) {
--		zonefs_io_error(inode, true);
-+		/*
-+		 * For Sync IOs, error recovery is called from
-+		 * zonefs_file_dio_write().
-+		 */
-+		if (!is_sync_kiocb(iocb))
-+			zonefs_io_error(inode, true);
- 		return error;
++#include <linux/align.h>
+ #include <linux/bitfield.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+@@ -615,7 +616,7 @@ int dw_pcie_ep_raise_msix_irq(struct dw_
  	}
  
-@@ -491,6 +496,14 @@ static ssize_t zonefs_file_dio_write(str
- 			ret = -EINVAL;
- 			goto inode_unlock;
- 		}
-+		/*
-+		 * Advance the zone write pointer offset. This assumes that the
-+		 * IO will succeed, which is OK to do because we do not allow
-+		 * partial writes (IOMAP_DIO_PARTIAL is not set) and if the IO
-+		 * fails, the error path will correct the write pointer offset.
-+		 */
-+		z->z_wpoffset += count;
-+		zonefs_inode_account_active(inode);
- 		mutex_unlock(&zi->i_truncate_mutex);
- 	}
- 
-@@ -504,20 +517,19 @@ static ssize_t zonefs_file_dio_write(str
- 	if (ret == -ENOTBLK)
- 		ret = -EBUSY;
- 
--	if (zonefs_zone_is_seq(z) &&
--	    (ret > 0 || ret == -EIOCBQUEUED)) {
--		if (ret > 0)
--			count = ret;
--
--		/*
--		 * Update the zone write pointer offset assuming the write
--		 * operation succeeded. If it did not, the error recovery path
--		 * will correct it. Also do active seq file accounting.
--		 */
--		mutex_lock(&zi->i_truncate_mutex);
--		z->z_wpoffset += count;
--		zonefs_inode_account_active(inode);
--		mutex_unlock(&zi->i_truncate_mutex);
-+	/*
-+	 * For a failed IO or partial completion, trigger error recovery
-+	 * to update the zone write pointer offset to a correct value.
-+	 * For asynchronous IOs, zonefs_file_write_dio_end_io() may already
-+	 * have executed error recovery if the IO already completed when we
-+	 * reach here. However, we cannot know that and execute error recovery
-+	 * again (that will not change anything).
-+	 */
-+	if (zonefs_zone_is_seq(z)) {
-+		if (ret > 0 && ret != count)
-+			ret = -EIO;
-+		if (ret < 0 && ret != -EIOCBQUEUED)
-+			zonefs_io_error(inode, true);
- 	}
- 
- inode_unlock:
---- a/fs/zonefs/super.c
-+++ b/fs/zonefs/super.c
-@@ -246,16 +246,18 @@ static void zonefs_inode_update_mode(str
- 	z->z_mode = inode->i_mode;
- }
- 
--struct zonefs_ioerr_data {
--	struct inode	*inode;
--	bool		write;
--};
--
- static int zonefs_io_error_cb(struct blk_zone *zone, unsigned int idx,
- 			      void *data)
- {
--	struct zonefs_ioerr_data *err = data;
--	struct inode *inode = err->inode;
-+	struct blk_zone *z = data;
-+
-+	*z = *zone;
-+	return 0;
-+}
-+
-+static void zonefs_handle_io_error(struct inode *inode, struct blk_zone *zone,
-+				   bool write)
-+{
- 	struct zonefs_zone *z = zonefs_inode_zone(inode);
- 	struct super_block *sb = inode->i_sb;
- 	struct zonefs_sb_info *sbi = ZONEFS_SB(sb);
-@@ -270,8 +272,8 @@ static int zonefs_io_error_cb(struct blk
- 	data_size = zonefs_check_zone_condition(sb, z, zone);
- 	isize = i_size_read(inode);
- 	if (!(z->z_flags & (ZONEFS_ZONE_READONLY | ZONEFS_ZONE_OFFLINE)) &&
--	    !err->write && isize == data_size)
--		return 0;
-+	    !write && isize == data_size)
-+		return;
- 
- 	/*
- 	 * At this point, we detected either a bad zone or an inconsistency
-@@ -292,7 +294,7 @@ static int zonefs_io_error_cb(struct blk
- 	 * In all cases, warn about inode size inconsistency and handle the
- 	 * IO error according to the zone condition and to the mount options.
- 	 */
--	if (zonefs_zone_is_seq(z) && isize != data_size)
-+	if (isize != data_size)
- 		zonefs_warn(sb,
- 			    "inode %lu: invalid size %lld (should be %lld)\n",
- 			    inode->i_ino, isize, data_size);
-@@ -352,8 +354,6 @@ static int zonefs_io_error_cb(struct blk
- 	zonefs_i_size_write(inode, data_size);
- 	z->z_wpoffset = data_size;
- 	zonefs_inode_account_active(inode);
--
--	return 0;
- }
- 
- /*
-@@ -367,23 +367,25 @@ void __zonefs_io_error(struct inode *ino
- {
- 	struct zonefs_zone *z = zonefs_inode_zone(inode);
- 	struct super_block *sb = inode->i_sb;
--	struct zonefs_sb_info *sbi = ZONEFS_SB(sb);
- 	unsigned int noio_flag;
--	unsigned int nr_zones = 1;
--	struct zonefs_ioerr_data err = {
--		.inode = inode,
--		.write = write,
--	};
-+	struct blk_zone zone;
- 	int ret;
- 
- 	/*
--	 * The only files that have more than one zone are conventional zone
--	 * files with aggregated conventional zones, for which the inode zone
--	 * size is always larger than the device zone size.
--	 */
--	if (z->z_size > bdev_zone_sectors(sb->s_bdev))
--		nr_zones = z->z_size >>
--			(sbi->s_zone_sectors_shift + SECTOR_SHIFT);
-+	 * Conventional zone have no write pointer and cannot become read-only
-+	 * or offline. So simply fake a report for a single or aggregated zone
-+	 * and let zonefs_handle_io_error() correct the zone inode information
-+	 * according to the mount options.
-+	 */
-+	if (!zonefs_zone_is_seq(z)) {
-+		zone.start = z->z_sector;
-+		zone.len = z->z_size >> SECTOR_SHIFT;
-+		zone.wp = zone.start + zone.len;
-+		zone.type = BLK_ZONE_TYPE_CONVENTIONAL;
-+		zone.cond = BLK_ZONE_COND_NOT_WP;
-+		zone.capacity = zone.len;
-+		goto handle_io_error;
-+	}
- 
- 	/*
- 	 * Memory allocations in blkdev_report_zones() can trigger a memory
-@@ -394,12 +396,20 @@ void __zonefs_io_error(struct inode *ino
- 	 * the GFP_NOIO context avoids both problems.
- 	 */
- 	noio_flag = memalloc_noio_save();
--	ret = blkdev_report_zones(sb->s_bdev, z->z_sector, nr_zones,
--				  zonefs_io_error_cb, &err);
--	if (ret != nr_zones)
-+	ret = blkdev_report_zones(sb->s_bdev, z->z_sector, 1,
-+				  zonefs_io_error_cb, &zone);
-+	memalloc_noio_restore(noio_flag);
-+
-+	if (ret != 1) {
- 		zonefs_err(sb, "Get inode %lu zone information failed %d\n",
- 			   inode->i_ino, ret);
--	memalloc_noio_restore(noio_flag);
-+		zonefs_warn(sb, "remounting filesystem read-only\n");
-+		sb->s_flags |= SB_RDONLY;
-+		return;
-+	}
-+
-+handle_io_error:
-+	zonefs_handle_io_error(inode, &zone, write);
- }
- 
- static struct kmem_cache *zonefs_inode_cachep;
+ 	aligned_offset = msg_addr & (epc->mem->window.page_size - 1);
+-	msg_addr &= ~aligned_offset;
++	msg_addr = ALIGN_DOWN(msg_addr, epc->mem->window.page_size);
+ 	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+ 				  epc->mem->window.page_size);
+ 	if (ret)
 
 
