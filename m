@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE1214C585;
-	Tue, 20 Feb 2024 20:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84FC14C585;
+	Tue, 20 Feb 2024 20:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462701; cv=none; b=cZGIxpzAuldkQx9+wDfje2vu0BloY6BcQCinyaiKVXQmMWUNN4lvjm2biyMHWJVVJ1FvUgQDqyufPBKwC6Qv/0cn1KCQLy52LKii2LgVxrQLDkQOw+cBDWGHqnrMfSsjRUY7RMOXnLyPaCiRGmr2Mj+yh+9TnpUaATMRTE6mzxE=
+	t=1708462704; cv=none; b=sg5IPuejA8EEQbHCSw+StCaEqEuJXFM9ggKd8ClRqnkvpW2PmLtLxxe6joQ0emUgr6gKPEZaxyCDO8fb2ohVTA3F896LgjqLXXVcRhWRBD0iDo0q79fk3ckvd/qd2hV6hKrjZ9B5Ojlt+QysCGvoM9Afr4jumTU0WIfC2LKzZVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462701; c=relaxed/simple;
-	bh=+Jf0yG0Rq1RE4FNI78Y38ddR0mq/cnhIY/WzCQ8wmLc=;
+	s=arc-20240116; t=1708462704; c=relaxed/simple;
+	bh=98RKdkAekN7G9NcnGUWPLlxSbbaUlV0uKpwolJZsHBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NicCVLroMkfDTvBwAHQ4PGMhw/dVsPQv9iaBg+OzKyaemRcgqtTlwk5+juKsBDpFdZBJT/jY6i1Yl6eO+YGQkqGAttFrZFaw8GoWOclZBxn9an8dX926FdUfao2fA7k6IXeo9AKWkoLFWpD8dD+zxa6qDu1sCsbobZEvyg5xvH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ByOz4Kv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n/uMZvA88hvQsl90rGnYYPnYkuTv9Xu7QbnrxjDLE875zKGLl5LHvGnDwpDydd4TP0jS56vJe74uSc7bfkj4pEvtGYo3Ps99elE4Eex+bVexp3CjXmlqtZAHJmHJ4FaJyqgIpBX1B+zX5qcHgjzjD2JqbDyyADX7dqACVa4t8Nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmdlcpxd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ByOz4Kv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C4CC433C7;
-	Tue, 20 Feb 2024 20:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmdlcpxd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5C3C43390;
+	Tue, 20 Feb 2024 20:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462700;
-	bh=+Jf0yG0Rq1RE4FNI78Y38ddR0mq/cnhIY/WzCQ8wmLc=;
+	s=korg; t=1708462703;
+	bh=98RKdkAekN7G9NcnGUWPLlxSbbaUlV0uKpwolJZsHBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ByOz4Kv268V0qb7KhRIBewnATADpHMF9NxBI/1x+bHZroVefVREHZZxxhrnDCaClG
-	 dglrugE4vzth6NCJf2S/He50yeC7xg/zCd301kmScVedLf1D2pIpD6b/DmpM6EenPy
-	 syN5jQFtFfB6SkMV7s+pdvjUSZdHt2hMA874AFAM=
+	b=kmdlcpxdcNj5Edu0f7t4AuCZt8+M/b+iDHm/TGT2eTqMDPK7dRt3OLsQci0D7lJcs
+	 5tESUdkMT742BfhykhYoTT0RIGJnaY397z/RjSaqhxVdzHC7kfnkw3PC2igO1MjRA9
+	 PpZwwVT/3AeZE8NwB+Wz0+/QgtjfV6T+8yObnfEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Jelinek <jakub@redhat.com>,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Andrew Pinski <quic_apinski@quicinc.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 002/197] update workarounds for gcc "asm goto" issue
-Date: Tue, 20 Feb 2024 21:49:21 +0100
-Message-ID: <20240220204841.150402838@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 003/197] btrfs: add and use helper to check if block group is used
+Date: Tue, 20 Feb 2024 21:49:22 +0100
+Message-ID: <20240220204841.179851346@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -54,118 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 68fb3ca0e408e00db1c3f8fccdfa19e274c033be upstream.
+commit 1693d5442c458ae8d5b0d58463b873cd879569ed upstream.
 
-In commit 4356e9f841f7 ("work around gcc bugs with 'asm goto' with
-outputs") I did the gcc workaround unconditionally, because the cause of
-the bad code generation wasn't entirely clear.
+Add a helper function to determine if a block group is being used and make
+use of it at btrfs_delete_unused_bgs(). This helper will also be used in
+future code changes.
 
-In the meantime, Jakub Jelinek debugged the issue, and has come up with
-a fix in gcc [2], which also got backported to the still maintained
-branches of gcc-11, gcc-12 and gcc-13.
-
-Note that while the fix technically wasn't in the original gcc-14
-branch, Jakub says:
-
- "while it is true that no GCC 14 snapshots until today (or whenever the
-  fix will be committed) have the fix, for GCC trunk it is up to the
-  distros to use the latest snapshot if they use it at all and would
-  allow better testing of the kernel code without the workaround, so
-  that if there are other issues they won't be discovered years later.
-  Most userland code doesn't actually use asm goto with outputs..."
-
-so we will consider gcc-14 to be fixed - if somebody is using gcc
-snapshots of the gcc-14 before the fix, they should upgrade.
-
-Note that while the bug goes back to gcc-11, in practice other gcc
-changes seem to have effectively hidden it since gcc-12.1 as per a
-bisect by Jakub.  So even a gcc-14 snapshot without the fix likely
-doesn't show actual problems.
-
-Also, make the default 'asm_goto_output()' macro mark the asm as
-volatile by hand, because of an unrelated gcc issue [1] where it doesn't
-match the documented behavior ("asm goto is always volatile").
-
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103979 [1]
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113921 [2]
-Link: https://lore.kernel.org/all/20240208220604.140859-1-seanjc@google.com/
-Requested-by: Jakub Jelinek <jakub@redhat.com>
-Cc: Uros Bizjak <ubizjak@gmail.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Andrew Pinski <quic_apinski@quicinc.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compiler-gcc.h   |    7 ++++---
- include/linux/compiler_types.h |    9 ++++++++-
- init/Kconfig                   |    9 +++++++++
- 3 files changed, 21 insertions(+), 4 deletions(-)
+ fs/btrfs/block-group.c |    3 +--
+ fs/btrfs/block-group.h |    7 +++++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/include/linux/compiler-gcc.h
-+++ b/include/linux/compiler-gcc.h
-@@ -69,10 +69,9 @@
- /*
-  * GCC 'asm goto' with outputs miscompiles certain code sequences:
-  *
-- *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110420
-- *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110422
-+ *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113921
-  *
-- * Work it around via the same compiler barrier quirk that we used
-+ * Work around it via the same compiler barrier quirk that we used
-  * to use for the old 'asm goto' workaround.
-  *
-  * Also, always mark such 'asm goto' statements as volatile: all
-@@ -82,8 +81,10 @@
-  *
-  *    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=98619
-  */
-+#ifdef CONFIG_GCC_ASM_GOTO_OUTPUT_WORKAROUND
- #define asm_goto_output(x...) \
- 	do { asm volatile goto(x); asm (""); } while (0)
-+#endif
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1375,8 +1375,7 @@ void btrfs_delete_unused_bgs(struct btrf
+ 		}
  
- #if defined(CONFIG_ARCH_USE_BUILTIN_BSWAP)
- #define __HAVE_BUILTIN_BSWAP32__
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -284,8 +284,15 @@ struct ftrace_likely_data {
- # define __realloc_size(x, ...)
- #endif
+ 		spin_lock(&block_group->lock);
+-		if (block_group->reserved || block_group->pinned ||
+-		    block_group->used || block_group->ro ||
++		if (btrfs_is_block_group_used(block_group) || block_group->ro ||
+ 		    list_is_singular(&block_group->list)) {
+ 			/*
+ 			 * We want to bail if we made new allocations or have
+--- a/fs/btrfs/block-group.h
++++ b/fs/btrfs/block-group.h
+@@ -241,6 +241,13 @@ static inline u64 btrfs_block_group_end(
+ 	return (block_group->start + block_group->length);
+ }
  
-+/*
-+ * Some versions of gcc do not mark 'asm goto' volatile:
-+ *
-+ *  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103979
-+ *
-+ * We do it here by hand, because it doesn't hurt.
-+ */
- #ifndef asm_goto_output
--#define asm_goto_output(x...) asm goto(x)
-+#define asm_goto_output(x...) asm volatile goto(x)
- #endif
- 
- #ifdef CONFIG_CC_HAS_ASM_INLINE
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -89,6 +89,15 @@ config CC_HAS_ASM_GOTO_TIED_OUTPUT
- 	# Detect buggy gcc and clang, fixed in gcc-11 clang-14.
- 	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
- 
-+config GCC_ASM_GOTO_OUTPUT_WORKAROUND
-+	bool
-+	depends on CC_IS_GCC && CC_HAS_ASM_GOTO_OUTPUT
-+	# Fixed in GCC 14, 13.3, 12.4 and 11.5
-+	# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113921
-+	default y if GCC_VERSION < 110500
-+	default y if GCC_VERSION >= 120000 && GCC_VERSION < 120400
-+	default y if GCC_VERSION >= 130000 && GCC_VERSION < 130300
++static inline bool btrfs_is_block_group_used(const struct btrfs_block_group *bg)
++{
++	lockdep_assert_held(&bg->lock);
 +
- config TOOLS_SUPPORT_RELR
- 	def_bool $(success,env "CC=$(CC)" "LD=$(LD)" "NM=$(NM)" "OBJCOPY=$(OBJCOPY)" $(srctree)/scripts/tools-support-relr.sh)
- 
++	return (bg->used > 0 || bg->reserved > 0 || bg->pinned > 0);
++}
++
+ static inline bool btrfs_is_block_group_data_only(
+ 					struct btrfs_block_group *block_group)
+ {
 
 
