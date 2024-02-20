@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B341151CED;
-	Tue, 20 Feb 2024 21:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F1A151CEC;
+	Tue, 20 Feb 2024 21:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463396; cv=none; b=fmyDYiCtur1TxKzxK0JCQEd9q24RmXglz9Ce7RNYKroDaRATElUoI0t0+NKnxL+F5wW5RnShwC1sLsSIAoaBw6nUYoBg1U5F6Lvmul4R27ynvzXPOtMe2v61H4e813GxqHJRvLAaF4jeBtTQX3edA3eon2qgrfZenDdQG11Fgbg=
+	t=1708463399; cv=none; b=aj2F/+cK5U7oPsTw49ZzDNDNepoLdivoVRoJSNAh9ICCttlazxamRle89Fy+3nGk6KzNgB+ebvz8UHwE+QT2yltNGgD4CKe5EM9NL3p9QZCGLaoTdtqk4V+K5VwVtlEqAr0/pFHZI9Y9zQYNE4f3u5qk7JK7qucN+jFPsFDohbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463396; c=relaxed/simple;
-	bh=O1udH8h27BedeQ8P2CVqEBGsb+hCVrrSMQJn8jtmmiE=;
+	s=arc-20240116; t=1708463399; c=relaxed/simple;
+	bh=oigOUb3Ck98+ypeMqofQNLsMTcFB56YIdi+V8rat4Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZS4yGyDwxzdFVArLeRK/aiKtp3fzkU+jNki6GXy9StZRaNN3H9Jl6+Ge3AGdntr4Umb3btcyo+OZc61dZ8BfxCRWJpecnnWtIDUR0eTKb8tiuZXVDdnAxpNtzRt+zABAx58ZeAh7uIyXCodQkfafasW+uymqueHyPaTLSBiPF9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZkpiir9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fvLblohrlSmUHOrLWoboJlMvMGI2F8a2t3bUE7pykNeexWU9wAes6DW5UPgSsbjUTKNzWJbxPxl7Cp4w7ECW9176B2kYoGlc0Ccry98vWGnZSZMD0ELQVtNNbkOoJSxLzj0o9xVCYgMl4BLpwgFW6hCNDUpu8sZGbdVIGr1CHsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLHMVGUX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZkpiir9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A537C433F1;
-	Tue, 20 Feb 2024 21:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLHMVGUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE1FC43390;
+	Tue, 20 Feb 2024 21:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463395;
-	bh=O1udH8h27BedeQ8P2CVqEBGsb+hCVrrSMQJn8jtmmiE=;
+	s=korg; t=1708463399;
+	bh=oigOUb3Ck98+ypeMqofQNLsMTcFB56YIdi+V8rat4Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZkpiir9Jbjx2nKAgFUwTt1MJXNdSRA1gwTVot2osv1Tyc0FqZxCLfOd59wgNdLAf
-	 o7nlP6C/JB4uNoexQ0EYBg1p/tlz9q5Yos7dABeEuXxRmmf3xQciCOOobBdEpJnUFB
-	 4/w2vPjokjhUlYXG/oKrXEss1wQsU4MvGEeEmXUs=
+	b=lLHMVGUXpZHMM6JkM4TveOTobwMaVo2OOr271eRkGxnKGzS3D7BhzRJ5pCU2b9y24
+	 X0AFcrg60pqXIS9XqSq1qoTlO0qm9eikxuyG0z18S3iNPcdvBWVi8Vpr3GH5j4dlJ0
+	 oz2NfQUyYDyYBUNvvQkv5aIyURhZRDE2nZpQS/Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/331] selftests: net: Fix bridge backup port test flakiness
-Date: Tue, 20 Feb 2024 21:52:27 +0100
-Message-ID: <20240220205638.568521586@linuxfoundation.org>
+Subject: [PATCH 6.6 032/331] selftests: forwarding: Fix layer 2 miss test flakiness
+Date: Tue, 20 Feb 2024 21:52:28 +0100
+Message-ID: <20240220205638.601770245@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -56,158 +55,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 38ee0cb2a2e2ade077442085638eb181b0562971 ]
+[ Upstream commit 93590849a05edffaefa11695fab98f621259ded2 ]
 
-The test toggles the carrier of a bridge port in order to test the
-bridge backup port feature.
+After enabling a multicast querier on the bridge (like the test is
+doing), the bridge will wait for the Max Response Delay before starting
+to forward according to its MDB in order to let Membership Reports
+enough time to be received and processed.
 
-Due to the linkwatch delayed work the carrier change is not always
-reflected fast enough to the bridge driver and packets are not forwarded
-as the test expects, resulting in failures [1].
+Currently, the test is waiting for exactly the default Max Response
+Delay (10 seconds) which is racy and leads to failures [1].
 
-Fix by busy waiting on the bridge port state until it changes to the
-desired state following the carrier change.
+Fix by reducing the Max Response Delay to 1 second.
 
 [1]
- # Backup port
- # -----------
  [...]
- # TEST: swp1 carrier off                                              [ OK ]
- # TEST: No forwarding out of swp1                                     [FAIL]
- [  641.995910] br0: port 1(swp1) entered disabled state
- # TEST: No forwarding out of vx0                                      [ OK ]
+ # TEST: L2 miss - Multicast (IPv4)                                    [FAIL]
+ # Unregistered multicast filter was hit after adding MDB entry
 
-Fixes: b408453053fb ("selftests: net: Add bridge backup port and backup nexthop ID test")
+Fixes: 8c33266ae26a ("selftests: forwarding: Add layer 2 miss test cases")
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
 Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240208123110.1063930-1-idosch@nvidia.com
+Link: https://lore.kernel.org/r/20240208155529.1199729-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/test_bridge_backup_port.sh  | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ .../testing/selftests/net/forwarding/tc_flower_l2_miss.sh | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/test_bridge_backup_port.sh b/tools/testing/selftests/net/test_bridge_backup_port.sh
-index 70a7d87ba2d2..1b3f89e2b86e 100755
---- a/tools/testing/selftests/net/test_bridge_backup_port.sh
-+++ b/tools/testing/selftests/net/test_bridge_backup_port.sh
-@@ -124,6 +124,16 @@ tc_check_packets()
- 	[[ $pkts == $count ]]
+diff --git a/tools/testing/selftests/net/forwarding/tc_flower_l2_miss.sh b/tools/testing/selftests/net/forwarding/tc_flower_l2_miss.sh
+index 20a7cb7222b8..c2420bb72c12 100755
+--- a/tools/testing/selftests/net/forwarding/tc_flower_l2_miss.sh
++++ b/tools/testing/selftests/net/forwarding/tc_flower_l2_miss.sh
+@@ -209,14 +209,17 @@ test_l2_miss_multicast()
+ 	# both registered and unregistered multicast traffic.
+ 	bridge link set dev $swp2 mcast_router 2
+ 
++	# Set the Max Response Delay to 100 centiseconds (1 second) so that the
++	# bridge will start forwarding according to its MDB soon after a
++	# multicast querier is enabled.
++	ip link set dev br1 type bridge mcast_query_response_interval 100
++
+ 	# Forwarding according to MDB entries only takes place when the bridge
+ 	# detects that there is a valid querier in the network. Set the bridge
+ 	# as the querier and assign it a valid IPv6 link-local address to be
+ 	# used as the source address for MLD queries.
+ 	ip link set dev br1 type bridge mcast_querier 1
+ 	ip -6 address add fe80::1/64 nodad dev br1
+-	# Wait the default Query Response Interval (10 seconds) for the bridge
+-	# to determine that there are no other queriers in the network.
+ 	sleep 10
+ 
+ 	test_l2_miss_multicast_ipv4
+@@ -224,6 +227,7 @@ test_l2_miss_multicast()
+ 
+ 	ip -6 address del fe80::1/64 dev br1
+ 	ip link set dev br1 type bridge mcast_querier 0
++	ip link set dev br1 type bridge mcast_query_response_interval 1000
+ 	bridge link set dev $swp2 mcast_router 1
  }
  
-+bridge_link_check()
-+{
-+	local ns=$1; shift
-+	local dev=$1; shift
-+	local state=$1; shift
-+
-+	bridge -n $ns -d -j link show dev $dev | \
-+		jq -e ".[][\"state\"] == \"$state\"" &> /dev/null
-+}
-+
- ################################################################################
- # Setup
- 
-@@ -259,6 +269,7 @@ backup_port()
- 	log_test $? 0 "No forwarding out of vx0"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	log_test $? 0 "swp1 carrier off"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -268,6 +279,7 @@ backup_port()
- 	log_test $? 0 "No forwarding out of vx0"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
- 	log_test $? 0 "swp1 carrier on"
- 
- 	# Configure vx0 as the backup port of swp1 and check that packets are
-@@ -284,6 +296,7 @@ backup_port()
- 	log_test $? 0 "No forwarding out of vx0"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	log_test $? 0 "swp1 carrier off"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -293,6 +306,7 @@ backup_port()
- 	log_test $? 0 "Forwarding out of vx0"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
- 	log_test $? 0 "swp1 carrier on"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -314,6 +328,7 @@ backup_port()
- 	log_test $? 0 "No forwarding out of vx0"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	log_test $? 0 "swp1 carrier off"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -369,6 +384,7 @@ backup_nhid()
- 	log_test $? 0 "No forwarding out of vx0"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	log_test $? 0 "swp1 carrier off"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -382,6 +398,7 @@ backup_nhid()
- 	log_test $? 0 "Forwarding using VXLAN FDB entry"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
- 	log_test $? 0 "swp1 carrier on"
- 
- 	# Configure nexthop ID 10 as the backup nexthop ID of swp1 and check
-@@ -398,6 +415,7 @@ backup_nhid()
- 	log_test $? 0 "No forwarding out of vx0"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	log_test $? 0 "swp1 carrier off"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -411,6 +429,7 @@ backup_nhid()
- 	log_test $? 0 "No forwarding using VXLAN FDB entry"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
- 	log_test $? 0 "swp1 carrier on"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -441,6 +460,7 @@ backup_nhid()
- 	log_test $? 0 "No forwarding using VXLAN FDB entry"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	log_test $? 0 "swp1 carrier off"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -497,6 +517,7 @@ backup_nhid_invalid()
- 	log_test $? 0 "Valid nexthop as backup nexthop"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	log_test $? 0 "swp1 carrier off"
- 
- 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
-@@ -604,7 +625,9 @@ backup_nhid_ping()
- 	run_cmd "bridge -n $sw2 link set dev swp1 backup_nhid 10"
- 
- 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
- 	run_cmd "ip -n $sw2 link set dev swp1 carrier off"
-+	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw2 swp1 disabled
- 
- 	run_cmd "ip netns exec $sw1 ping -i 0.1 -c 10 -w $PING_TIMEOUT 192.0.2.66"
- 	log_test $? 0 "Ping with backup nexthop ID"
 -- 
 2.43.0
 
