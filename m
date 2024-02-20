@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628BA14A4E6;
-	Tue, 20 Feb 2024 21:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC1114A4E6;
+	Tue, 20 Feb 2024 21:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464616; cv=none; b=MGHcGDtIGkRN130lzUHpa/LVKN31Tm8F9TMsJxfndCVN9aj/Swu3ttvgZjSeCyGVB/rQEtXivPnNsTR4YCEo5HHbHVOYrQII/gRVdLjdag40frW529kcJlA/7cV3Zvp/t+ICuN7qjDJnIQwOZh+7GTFOGM/R1q3XXymerA4XNUE=
+	t=1708464619; cv=none; b=LypWRV6H3LB7KaiCAkYZRKZK8iCj6aNEBl6acufdVxKsnXlmARnSpr9I9sfdcRYQaBpZuUqAsfLzz73iFkGVlS2UPEcsWww/psjpFAKKLZk0BPAL8Yka0d0y7xrEQXVC70wUHiNS28xG9IDtRLcNAlrnx3dK760TRoJ/Gl+KDeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464616; c=relaxed/simple;
-	bh=xj/e13JyYJ/eE7+FwTIsvpf9QMKEhW/2j2y3fHiWY6s=;
+	s=arc-20240116; t=1708464619; c=relaxed/simple;
+	bh=NERTYbzESyi+a/2f7FC93zj0JG3p9bB5stCWSUMadr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NhB30k3CbGWJ8qL5UZfOlNLQWizvIJkIJoRS0M+pCGz7pzlexzkh0v1j5NJgv4SkBugxBZgEv8DoNqwdRxxWA6ZtNLXUkRWDrIR3EYssjORHh8FQ5oHa8H8dR/9L7b3obasoxiypsRRmEiNrZagz0UdbRaqyA8qHplVTCU/2V00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5csE8p8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bk+QKrx9qd6aSPsGnpWv2tLUxFZNJOKMLyN6aqov41sU5hZ9wdjWszr68ZLc7R7spqbeXuk5IF3mE0JpFK29qx3mS218xHHpE+v49Ul+gbAEThJ9hb5yUU482eWvQvsWJ/5s4bQ2LpRCcxpCJj97HovbSbc7Av/3NNFYNOEZdl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaYKb+jq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5csE8p8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFFDBC433C7;
-	Tue, 20 Feb 2024 21:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaYKb+jq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079B3C433C7;
+	Tue, 20 Feb 2024 21:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464616;
-	bh=xj/e13JyYJ/eE7+FwTIsvpf9QMKEhW/2j2y3fHiWY6s=;
+	s=korg; t=1708464619;
+	bh=NERTYbzESyi+a/2f7FC93zj0JG3p9bB5stCWSUMadr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5csE8p8EYzuHS8Hp2UBrp9jgEuVEFzt5G5KcyNDj0hpfGQK7QRAeluTXS3sO0Qwi
-	 EMtmK5Axcw5Q3JxYI5WKrlN6YdPYb6Oq999pdqDrTiBMTCGH3ZhqDoOmssLw9yJVWQ
-	 a+ZsyUCF7uMPqEZ9DYUnI8Xk8kVoIa5dRmm4tw90=
+	b=XaYKb+jqsqwH2sAEsaCuZFoGZcODRMPzchPp4fB9sNn2yZg0XIvreXAQPuVrsYWXm
+	 sJjMYYDRw/UbMVKklLfb2Lpj3xCuUiJExmVZE6syci0JeA2+VscrgjJEBSzs8jykHX
+	 iwgD6YmckOlXm47SRLCSU4jpxkrGCfoei55Nne9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.7 081/309] HID: bpf: remove double fdget()
-Date: Tue, 20 Feb 2024 21:54:00 +0100
-Message-ID: <20240220205635.730737898@linuxfoundation.org>
+Subject: [PATCH 6.7 082/309] HID: bpf: actually free hdev memory after attaching a HID-BPF program
+Date: Tue, 20 Feb 2024 21:54:01 +0100
+Message-ID: <20240220205635.759526049@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,198 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Tissoires <bentiss@kernel.org>
 
-commit 7cdd2108903a4e369eb37579830afc12a6877ec2 upstream.
+commit 89be8aa5b0ecb3b729c7bcff64bb2af7921fec63 upstream.
 
-When the kfunc hid_bpf_attach_prog() is called, we called twice fdget():
-one for fetching the type of the bpf program, and one for actually
-attaching the program to the device.
+Turns out that I got my reference counts wrong and each successful
+bus_find_device() actually calls get_device(), and we need to manually
+call put_device().
 
-The problem is that between those two calls, we have no guarantees that
-the prog_fd is still the same file descriptor for the given program.
+Ensure each bus_find_device() gets a matching put_device() when releasing
+the bpf programs and fix all the error paths.
 
-Solve this by calling bpf_prog_get() earlier, and use this to fetch the
-program type.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/bpf/CAO-hwJJ8vh8JD3-P43L-_CLNmPx0hWj44aom0O838vfP4=_1CA@mail.gmail.com/T/#t
 Cc: <stable@vger.kernel.org>
 Fixes: f5c27da4e3c8 ("HID: initial BPF implementation")
-Link: https://lore.kernel.org/r/20240124-b4-hid-bpf-fixes-v2-1-052520b1e5e6@kernel.org
+Link: https://lore.kernel.org/r/20240124-b4-hid-bpf-fixes-v2-2-052520b1e5e6@kernel.org
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/bpf/hid_bpf_dispatch.c  |   66 ++++++++++++++++++++++++------------
- drivers/hid/bpf/hid_bpf_dispatch.h  |    4 +-
- drivers/hid/bpf/hid_bpf_jmp_table.c |   20 +---------
- 3 files changed, 49 insertions(+), 41 deletions(-)
+ drivers/hid/bpf/hid_bpf_dispatch.c  |   29 +++++++++++++++++++++++------
+ drivers/hid/bpf/hid_bpf_jmp_table.c |   20 +++++++++++++++++---
+ 2 files changed, 40 insertions(+), 9 deletions(-)
 
 --- a/drivers/hid/bpf/hid_bpf_dispatch.c
 +++ b/drivers/hid/bpf/hid_bpf_dispatch.c
-@@ -241,6 +241,39 @@ int hid_bpf_reconnect(struct hid_device
- 	return 0;
- }
- 
-+static int do_hid_bpf_attach_prog(struct hid_device *hdev, int prog_fd, struct bpf_prog *prog,
-+				  __u32 flags)
-+{
-+	int fd, err, prog_type;
-+
-+	prog_type = hid_bpf_get_prog_attach_type(prog);
-+	if (prog_type < 0)
-+		return prog_type;
-+
-+	if (prog_type >= HID_BPF_PROG_TYPE_MAX)
-+		return -EINVAL;
-+
-+	if (prog_type == HID_BPF_PROG_TYPE_DEVICE_EVENT) {
-+		err = hid_bpf_allocate_event_data(hdev);
-+		if (err)
-+			return err;
-+	}
-+
-+	fd = __hid_bpf_attach_prog(hdev, prog_type, prog_fd, prog, flags);
-+	if (fd < 0)
-+		return fd;
-+
-+	if (prog_type == HID_BPF_PROG_TYPE_RDESC_FIXUP) {
-+		err = hid_bpf_reconnect(hdev);
-+		if (err) {
-+			close_fd(fd);
-+			return err;
-+		}
-+	}
-+
-+	return fd;
-+}
-+
- /**
-  * hid_bpf_attach_prog - Attach the given @prog_fd to the given HID device
-  *
-@@ -257,18 +290,13 @@ noinline int
- hid_bpf_attach_prog(unsigned int hid_id, int prog_fd, __u32 flags)
- {
+@@ -292,7 +292,7 @@ hid_bpf_attach_prog(unsigned int hid_id,
  	struct hid_device *hdev;
-+	struct bpf_prog *prog;
+ 	struct bpf_prog *prog;
  	struct device *dev;
--	int fd, err, prog_type = hid_bpf_get_prog_attach_type(prog_fd);
-+	int fd;
+-	int fd;
++	int err, fd;
  
  	if (!hid_bpf_ops)
  		return -EINVAL;
+@@ -311,14 +311,24 @@ hid_bpf_attach_prog(unsigned int hid_id,
+ 	 * on errors or when it'll be detached
+ 	 */
+ 	prog = bpf_prog_get(prog_fd);
+-	if (IS_ERR(prog))
+-		return PTR_ERR(prog);
++	if (IS_ERR(prog)) {
++		err = PTR_ERR(prog);
++		goto out_dev_put;
++	}
  
--	if (prog_type < 0)
--		return prog_type;
--
--	if (prog_type >= HID_BPF_PROG_TYPE_MAX)
--		return -EINVAL;
--
- 	if ((flags & ~HID_BPF_FLAG_MASK))
- 		return -EINVAL;
- 
-@@ -278,23 +306,17 @@ hid_bpf_attach_prog(unsigned int hid_id,
- 
- 	hdev = to_hid_device(dev);
- 
--	if (prog_type == HID_BPF_PROG_TYPE_DEVICE_EVENT) {
--		err = hid_bpf_allocate_event_data(hdev);
--		if (err)
--			return err;
--	}
-+	/*
-+	 * take a ref on the prog itself, it will be released
-+	 * on errors or when it'll be detached
-+	 */
-+	prog = bpf_prog_get(prog_fd);
-+	if (IS_ERR(prog))
-+		return PTR_ERR(prog);
- 
--	fd = __hid_bpf_attach_prog(hdev, prog_type, prog_fd, flags);
-+	fd = do_hid_bpf_attach_prog(hdev, prog_fd, prog, flags);
- 	if (fd < 0)
--		return fd;
--
--	if (prog_type == HID_BPF_PROG_TYPE_RDESC_FIXUP) {
--		err = hid_bpf_reconnect(hdev);
--		if (err) {
--			close_fd(fd);
--			return err;
--		}
--	}
-+		bpf_prog_put(prog);
+ 	fd = do_hid_bpf_attach_prog(hdev, prog_fd, prog, flags);
+-	if (fd < 0)
+-		bpf_prog_put(prog);
++	if (fd < 0) {
++		err = fd;
++		goto out_prog_put;
++	}
  
  	return fd;
++
++ out_prog_put:
++	bpf_prog_put(prog);
++ out_dev_put:
++	put_device(dev);
++	return err;
  }
---- a/drivers/hid/bpf/hid_bpf_dispatch.h
-+++ b/drivers/hid/bpf/hid_bpf_dispatch.h
-@@ -12,9 +12,9 @@ struct hid_bpf_ctx_kern {
  
- int hid_bpf_preload_skel(void);
- void hid_bpf_free_links_and_skel(void);
--int hid_bpf_get_prog_attach_type(int prog_fd);
-+int hid_bpf_get_prog_attach_type(struct bpf_prog *prog);
- int __hid_bpf_attach_prog(struct hid_device *hdev, enum hid_bpf_prog_type prog_type, int prog_fd,
--			  __u32 flags);
-+			  struct bpf_prog *prog, __u32 flags);
- void __hid_bpf_destroy_device(struct hid_device *hdev);
- int hid_bpf_prog_run(struct hid_device *hdev, enum hid_bpf_prog_type type,
- 		     struct hid_bpf_ctx_kern *ctx_kern);
+ /**
+@@ -345,8 +355,10 @@ hid_bpf_allocate_context(unsigned int hi
+ 	hdev = to_hid_device(dev);
+ 
+ 	ctx_kern = kzalloc(sizeof(*ctx_kern), GFP_KERNEL);
+-	if (!ctx_kern)
++	if (!ctx_kern) {
++		put_device(dev);
+ 		return NULL;
++	}
+ 
+ 	ctx_kern->ctx.hid = hdev;
+ 
+@@ -363,10 +375,15 @@ noinline void
+ hid_bpf_release_context(struct hid_bpf_ctx *ctx)
+ {
+ 	struct hid_bpf_ctx_kern *ctx_kern;
++	struct hid_device *hid;
+ 
+ 	ctx_kern = container_of(ctx, struct hid_bpf_ctx_kern, ctx);
++	hid = (struct hid_device *)ctx_kern->ctx.hid; /* ignore const */
+ 
+ 	kfree(ctx_kern);
++
++	/* get_device() is called by bus_find_device() */
++	put_device(&hid->dev);
+ }
+ 
+ /**
 --- a/drivers/hid/bpf/hid_bpf_jmp_table.c
 +++ b/drivers/hid/bpf/hid_bpf_jmp_table.c
-@@ -333,15 +333,10 @@ static int hid_bpf_insert_prog(int prog_
- 	return err;
- }
- 
--int hid_bpf_get_prog_attach_type(int prog_fd)
-+int hid_bpf_get_prog_attach_type(struct bpf_prog *prog)
+@@ -196,6 +196,7 @@ static void __hid_bpf_do_release_prog(in
+ static void hid_bpf_release_progs(struct work_struct *work)
  {
--	struct bpf_prog *prog = NULL;
--	int i;
- 	int prog_type = HID_BPF_PROG_TYPE_UNDEF;
--
--	prog = bpf_prog_get(prog_fd);
--	if (IS_ERR(prog))
--		return PTR_ERR(prog);
-+	int i;
+ 	int i, j, n, map_fd = -1;
++	bool hdev_destroyed;
  
- 	for (i = 0; i < HID_BPF_PROG_TYPE_MAX; i++) {
- 		if (hid_bpf_btf_ids[i] == prog->aux->attach_btf_id) {
-@@ -350,8 +345,6 @@ int hid_bpf_get_prog_attach_type(int pro
+ 	if (!jmp_table.map)
+ 		return;
+@@ -220,6 +221,12 @@ static void hid_bpf_release_progs(struct
+ 		if (entry->hdev) {
+ 			hdev = entry->hdev;
+ 			type = entry->type;
++			/*
++			 * hdev is still valid, even if we are called after hid_destroy_device():
++			 * when hid_bpf_attach() gets called, it takes a ref on the dev through
++			 * bus_find_device()
++			 */
++			hdev_destroyed = hdev->bpf.destroyed;
+ 
+ 			hid_bpf_populate_hdev(hdev, type);
+ 
+@@ -232,12 +239,19 @@ static void hid_bpf_release_progs(struct
+ 				if (test_bit(next->idx, jmp_table.enabled))
+ 					continue;
+ 
+-				if (next->hdev == hdev && next->type == type)
++				if (next->hdev == hdev && next->type == type) {
++					/*
++					 * clear the hdev reference and decrement the device ref
++					 * that was taken during bus_find_device() while calling
++					 * hid_bpf_attach()
++					 */
+ 					next->hdev = NULL;
++					put_device(&hdev->dev);
++				}
+ 			}
+ 
+-			/* if type was rdesc fixup, reconnect device */
+-			if (type == HID_BPF_PROG_TYPE_RDESC_FIXUP)
++			/* if type was rdesc fixup and the device is not gone, reconnect device */
++			if (type == HID_BPF_PROG_TYPE_RDESC_FIXUP && !hdev_destroyed)
+ 				hid_bpf_reconnect(hdev);
  		}
  	}
- 
--	bpf_prog_put(prog);
--
- 	return prog_type;
- }
- 
-@@ -388,19 +381,13 @@ static const struct bpf_link_ops hid_bpf
- /* called from syscall */
- noinline int
- __hid_bpf_attach_prog(struct hid_device *hdev, enum hid_bpf_prog_type prog_type,
--		      int prog_fd, __u32 flags)
-+		      int prog_fd, struct bpf_prog *prog, __u32 flags)
- {
- 	struct bpf_link_primer link_primer;
- 	struct hid_bpf_link *link;
--	struct bpf_prog *prog = NULL;
- 	struct hid_bpf_prog_entry *prog_entry;
- 	int cnt, err = -EINVAL, prog_table_idx = -1;
- 
--	/* take a ref on the prog itself */
--	prog = bpf_prog_get(prog_fd);
--	if (IS_ERR(prog))
--		return PTR_ERR(prog);
--
- 	mutex_lock(&hid_bpf_attach_lock);
- 
- 	link = kzalloc(sizeof(*link), GFP_USER);
-@@ -467,7 +454,6 @@ __hid_bpf_attach_prog(struct hid_device
-  err_unlock:
- 	mutex_unlock(&hid_bpf_attach_lock);
- 
--	bpf_prog_put(prog);
- 	kfree(link);
- 
- 	return err;
 
 
