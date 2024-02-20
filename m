@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FAF0151CEC;
-	Tue, 20 Feb 2024 21:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51455151CD0;
+	Tue, 20 Feb 2024 21:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463091; cv=none; b=bl2dHFdeSzi8qUOFbefJzsBPNGnktwPfsbW+GqkX/AesNtIHx64JBe9gkzNL46I+T35+39e2rpLCVb9srCHYOFQzv3/0vZwJwXi0+48NFkR3XCv7iTwcnudb7Y48Ra4eGvNXcvC1CVNzNy7++DSIDjkLvyx4n/zfGh499dICSG4=
+	t=1708463094; cv=none; b=cHIF9+1/qkL7Wyp74sb0cztKWqzL50ommOlBLwNUg0/80Pd+HWGT8BeE+CxKE1zq4lq1mJw6W3NiGcZu7+l3zMmPn6uNdj5Q4iMASEMn1vYsT3D6BGAeqDDem64D3F14uUwC/0RBtPZ0Ul7XFPOUSXzdm3QJCdYS88o+fF0jmk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463091; c=relaxed/simple;
-	bh=fjUSWk8rRjAV2trajawa2A7nyf9FG7qpsEkChGEAJ2U=;
+	s=arc-20240116; t=1708463094; c=relaxed/simple;
+	bh=cL2S7uccxT9awrwAvBsx9wFsWAK5TjMpv3a7Z85zxEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDwbLXt5JYVV7RL+6SyyVD/H0Eh0X5cf4I29g7FbyJt6eZoPO5ZNBgc6S/vJWCmM13TgcQTkPnhfJpM5aY7Ir8/4cYgkVSAPDEri+O1V9L5Gc9LYKlSasaenTBddapQ8lrKRKor1xN5CvG62ON32jEycdXTLsk7WEdWQhvQrAbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwxkDHy0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vz7hHr75VQJmntX5Ya3u5NVdwLjKpUQr+m1uDd4IPe6q2eCMMh5I9lTtsjkFyXN/Neb78O0Ho5SUc2uMsJri7qe8R7z+10f+NPe1LNhAjwnJUe/fz6+kOlYVHLf8qR9DbJhSZqoa4fSMLeiq+/cT21pU5BDSqcmjf1JBW1l2eVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewPRp9gs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwxkDHy0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2793C433C7;
-	Tue, 20 Feb 2024 21:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewPRp9gs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD638C433C7;
+	Tue, 20 Feb 2024 21:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463091;
-	bh=fjUSWk8rRjAV2trajawa2A7nyf9FG7qpsEkChGEAJ2U=;
+	s=korg; t=1708463094;
+	bh=cL2S7uccxT9awrwAvBsx9wFsWAK5TjMpv3a7Z85zxEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwxkDHy0jvS+3AQfRXAQAVD3n6P7VG1SbHx7wlPyQPkdS8SnlfWazLrSXFhw87qJ0
-	 BLYK1UTrgXIHXOZIu1fdqn4aB45NhF1vUEla8Zh+FeXBvHQ8p9WkUkNapDg1D151Tc
-	 /zuWLaoeciNF8S/MNu991R0AHTr3I0pIIg0zWMi4=
+	b=ewPRp9gsVJyww2uhqDcCYhQa95gkh1fF8/bi9WR3Bta9Ab1aucitv+IJb6DnIlmuQ
+	 xGWB3CX5CHu+y303Qsab/q40g9sk21r7lpXeS9cvqE5z27H1rDIfKjg9XDUKTTpBI0
+	 EVHg5IGbHEAZqMLk115YFXYYS1Szbyyz4fuMLCyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 131/197] io_uring/net: fix multishot accept overflow handling
-Date: Tue, 20 Feb 2024 21:51:30 +0100
-Message-ID: <20240220204844.995847849@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 132/197] mmc: slot-gpio: Allow non-sleeping GPIO ro
+Date: Tue, 20 Feb 2024 21:51:31 +0100
+Message-ID: <20240220204845.025051338@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -49,53 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit a37ee9e117ef73bbc2f5c0b31911afd52d229861 upstream.
+commit cc9432c4fb159a3913e0ce3173b8218cd5bad2e0 upstream.
 
-If we hit CQ ring overflow when attempting to post a multishot accept
-completion, we don't properly save the result or return code. This
-results in losing the accepted fd value.
+This change uses the appropriate _cansleep or non-sleeping API for
+reading GPIO read-only state. This allows users with GPIOs that
+never sleepbeing called in atomic context.
 
-Instead, we return the result from the poll operation that triggered
-the accept retry. This is generally POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND
-which is 0xc3, or 195, which looks like a valid file descriptor, but it
-really has no connection to that.
+Implement the same mechanism as in commit 52af318c93e97 ("mmc: Allow
+non-sleeping GPIO cd").
 
-Handle this like we do for other multishot completions - assign the
-result, and return IOU_STOP_MULTISHOT to cancel any further completions
-from this request when overflow is hit. This preserves the result, as we
-should, and tells the application that the request needs to be re-armed.
-
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Cc: stable@vger.kernel.org
-Fixes: 515e26961295 ("io_uring: revert "io_uring fix multishot accept ordering"")
-Link: https://github.com/axboe/liburing/issues/1062
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/r/20240206083912.2543142-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/mmc/core/slot-gpio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -1326,7 +1326,7 @@ retry:
- 			 * has already been done
- 			 */
- 			if (issue_flags & IO_URING_F_MULTISHOT)
--				ret = IOU_ISSUE_SKIP_COMPLETE;
-+				return IOU_ISSUE_SKIP_COMPLETE;
- 			return ret;
- 		}
- 		if (ret == -ERESTARTSYS)
-@@ -1350,7 +1350,8 @@ retry:
- 	if (io_post_aux_cqe(ctx, req->cqe.user_data, ret, IORING_CQE_F_MORE, false))
- 		goto retry;
+--- a/drivers/mmc/core/slot-gpio.c
++++ b/drivers/mmc/core/slot-gpio.c
+@@ -62,11 +62,15 @@ int mmc_gpio_alloc(struct mmc_host *host
+ int mmc_gpio_get_ro(struct mmc_host *host)
+ {
+ 	struct mmc_gpio *ctx = host->slot.handler_priv;
++	int cansleep;
  
--	return -ECANCELED;
-+	io_req_set_res(req, ret, 0);
-+	return IOU_STOP_MULTISHOT;
+ 	if (!ctx || !ctx->ro_gpio)
+ 		return -ENOSYS;
+ 
+-	return gpiod_get_value_cansleep(ctx->ro_gpio);
++	cansleep = gpiod_cansleep(ctx->ro_gpio);
++	return cansleep ?
++		gpiod_get_value_cansleep(ctx->ro_gpio) :
++		gpiod_get_value(ctx->ro_gpio);
  }
+ EXPORT_SYMBOL(mmc_gpio_get_ro);
  
- int io_socket_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
 
 
