@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DEC14F9C8;
-	Tue, 20 Feb 2024 21:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D383014F9C8;
+	Tue, 20 Feb 2024 21:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462984; cv=none; b=odaPtd7yFmCdK/qn1AvAOxXNE6k3tjy/OmhEiyxA4RHqBimKTtbaQwUD4UUe5eANMjHKFI/Udh6OHjjmEft3gF7hIQp6NUklE23gWUBFdAiHPIR/WkAl8ng2kdTL93odp0nuTCArAAk68Hy0aRA2xInPcYxabS6d4xZwuFxgQJc=
+	t=1708462987; cv=none; b=SNEw7+5J1hn6CRfnh+jX8Kcoy572B7MvUrXVrUiyMeBzIxnyWRyxN7yyziURec7/T0es5KtXY4BWGw/5vlYFGBGvfvlOwzvLy0++OBBNoeF5lQMv1Uk0lIEZPUST3XBNFWliCnwlx/CkI5032kbSbXPLJ4hsCYPU3sU739YhMKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462984; c=relaxed/simple;
-	bh=R30G304cvSxKGLcOLKRDssqmkPq5mlvvwyPZCUVHLiI=;
+	s=arc-20240116; t=1708462987; c=relaxed/simple;
+	bh=rLyq0pRxQQyegewTi6Fs00jjVpd4fPBxUZCil7nKL34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9BrnBHUrchPkGXQlvNOgOtaqY3z0Vwsbu1zqvAODQrHjmO0bo+NMBSrjr6i2CdAH6z/+9XToo1Uqav+2VkC5BrcCusbeTDQ7dpwuz4pz+bYKJ7+QGZ02pGXJ6P7aR9jJ34akMy6JjG6IFvrT8AILEQ69P/99cMVd+soLV8y468=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Avq56qBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vC43ghaVGUyixeA5WNfRD5WWdU/SKBNhL1L0ehYL8IF+E+PD4Z5LFqkqf2k0OfWX2zQXtDbvOoIAfhXEbfGpFWKeJElQTQPac+8GYkQqGwQ551AL9ofo+IgTC5AhGUapKQ/zxo4WWMmpWqQcef7zqAq98giCVTnj4OH8OECppiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b80YEPLK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Avq56qBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15DEBC433C7;
-	Tue, 20 Feb 2024 21:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b80YEPLK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42193C433C7;
+	Tue, 20 Feb 2024 21:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462984;
-	bh=R30G304cvSxKGLcOLKRDssqmkPq5mlvvwyPZCUVHLiI=;
+	s=korg; t=1708462987;
+	bh=rLyq0pRxQQyegewTi6Fs00jjVpd4fPBxUZCil7nKL34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Avq56qBzTf1ADN6rM1Lo4FSrm4Dc5f+Gg63/MjgklX+eGyC/nS4sMlyTQWEpSHPlX
-	 ROISyerGI/OpGHHgZ18Tm8sk/UZGXMYUEhUb+94+j59hnTKPbBT4O7EJeP87x3ZFFt
-	 dI6lI4FNAQ+0IM6IZUan9j+HGp/N2zovXw7hKUcE=
+	b=b80YEPLK/Zv2BM23lk+eU6pnNLEx1ZVW8l19/ZeJzypS/qtFLW8KfSHeTLEvV7CNz
+	 4QzpQhdQ/1PoeTNY1IhuNJL5YnT0yxovDW97ITpCzkY3NOg8UvHdXEHkWbABbt67oT
+	 oP1xwhxg4bHUJyi9cy8JS5Ek3quNoZf+qz0HjiKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 071/197] selftests: mptcp: increase timeout to 30 min
-Date: Tue, 20 Feb 2024 21:50:30 +0100
-Message-ID: <20240220204843.205024977@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	xingwei lee <xrivendell7@gmail.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 098/197] ext4: fix double-free of blocks due to wrong extents moved_len
+Date: Tue, 20 Feb 2024 21:50:57 +0100
+Message-ID: <20240220204844.016054103@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,43 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 4d4dfb2019d7010efb65926d9d1c1793f9a367c6 upstream.
+commit 55583e899a5357308274601364741a83e78d6ac4 upstream.
 
-On very slow environments -- e.g. when QEmu is used without KVM --,
-mptcp_join.sh selftest can take a bit more than 20 minutes. Bump the
-default timeout by 50% as it seems normal to take that long on some
-environments.
+In ext4_move_extents(), moved_len is only updated when all moves are
+successfully executed, and only discards orig_inode and donor_inode
+preallocations when moved_len is not zero. When the loop fails to exit
+after successfully moving some extents, moved_len is not updated and
+remains at 0, so it does not discard the preallocations.
 
-When a debug kernel config is used, this selftest will take even longer,
-but that's certainly not a common test env to consider for the timeout.
+If the moved extents overlap with the preallocated extents, the
+overlapped extents are freed twice in ext4_mb_release_inode_pa() and
+ext4_process_freed_data() (as described in commit 94d7c16cbbbd ("ext4:
+Fix double-free of blocks with EXT4_IOC_MOVE_EXT")), and bb_free is
+incremented twice. Hence when trim is executed, a zero-division bug is
+triggered in mb_update_avg_fragment_size() because bb_free is not zero
+and bb_fragments is zero.
 
-The Fixes tag that has been picked here is there simply to help having
-this patch backported to older stable versions. It is difficult to point
-to the exact commit that made some env reaching the timeout from time to
-time.
+Therefore, update move_len after each extent move to avoid the issue.
 
-Fixes: d17b968b9876 ("selftests: mptcp: increase timeout to 20 minutes")
-Cc: stable@vger.kernel.org
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-5-4c1c11e571ff@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Closes: https://lore.kernel.org/r/CAO4mrferzqBUnCag8R3m2zf897ts9UEuhjFQGPtODT92rYyR2Q@mail.gmail.com
+Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
+CC:  <stable@vger.kernel.org> # 3.18
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-2-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/settings | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/move_extent.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/settings b/tools/testing/selftests/net/mptcp/settings
-index 79b65bdf05db..abc5648b59ab 100644
---- a/tools/testing/selftests/net/mptcp/settings
-+++ b/tools/testing/selftests/net/mptcp/settings
-@@ -1 +1 @@
--timeout=1200
-+timeout=1800
--- 
-2.43.2
-
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -621,6 +621,7 @@ ext4_move_extents(struct file *o_filp, s
+ 		goto out;
+ 	o_end = o_start + len;
+ 
++	*moved_len = 0;
+ 	while (o_start < o_end) {
+ 		struct ext4_extent *ex;
+ 		ext4_lblk_t cur_blk, next_blk;
+@@ -675,7 +676,7 @@ ext4_move_extents(struct file *o_filp, s
+ 		 */
+ 		ext4_double_up_write_data_sem(orig_inode, donor_inode);
+ 		/* Swap original branches with new branches */
+-		move_extent_per_page(o_filp, donor_inode,
++		*moved_len += move_extent_per_page(o_filp, donor_inode,
+ 				     orig_page_index, donor_page_index,
+ 				     offset_in_page, cur_len,
+ 				     unwritten, &ret);
+@@ -685,9 +686,6 @@ ext4_move_extents(struct file *o_filp, s
+ 		o_start += cur_len;
+ 		d_start += cur_len;
+ 	}
+-	*moved_len = o_start - orig_blk;
+-	if (*moved_len > len)
+-		*moved_len = len;
+ 
+ out:
+ 	if (*moved_len) {
 
 
