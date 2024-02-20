@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481B1151CCD;
-	Tue, 20 Feb 2024 21:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412FB151CCC;
+	Tue, 20 Feb 2024 21:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464976; cv=none; b=uTEph0j7EIN13o8SyQ2Q8GgHHIWttJgt1KIA6BloRH3UzvRYGInUGDE1kykbWILanoxFN8fn8J3+SbHJ0di7MZna7e9KM98vq6w4Q9A8pmxj8kqKYPuZUL3g1IUJgEaP/chcUSdnuqk6yBM4u3P88hDGmAecXoVIDESPY2BFJIY=
+	t=1708464979; cv=none; b=rOJNxoie6AL3s3LTd/kbcfX6NwMRioGQaqMgdp+ir3+FscWXhVhh2nnA454ec25iOv8XS82apuV67HgL6OGZlbQOXmfB5Ut05N6cCiln6K9TYBOFHrimiVL68yBkdTW+JvNfFut5yjuR45Ups2o+zDJ+x7Djz4HFWy/opW7uI+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464976; c=relaxed/simple;
-	bh=ps/OCqGPomAvtZ3ZVdVsgcGcLGMp5zbFJ/eWVVo3Zw4=;
+	s=arc-20240116; t=1708464979; c=relaxed/simple;
+	bh=xnFE1rDL5sFjN0oEXsKyoYcN0s9MQcPSFCveAJrC4XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fwnXPhzaaBds0AGmRxzT8/9dj+7nRGc5POu78CZNKhfgQ0mqV9ZCUGWgIHJ+urpiuQAK5BqZ7qfWCYqsdTXy5WV/0+CuiurlXEOq28mkmNPQFw5NU0GRoWq2XtXzzElV3FAx/JKmi/QnebQVy2AUMA5cNrR6EBg90S8DUeKgQfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5hsBC+x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HdPcLdHn+6ruol/lqX89QDfNWgyJCTapVkhrBCeIrf6OqdPxm/OH1irmHZ4emtILvhUyJVSxgLCuBTUZe8uvb6JtAYLBzQN6rwkHoGmQkIUVFnLgBVUqMXeqCrC+WmSNLh6GnhGgXXSVGcZYc1YPG7DDAK4hGkI+KyLtCp59eVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgXDTC0p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5hsBC+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81A8C433F1;
-	Tue, 20 Feb 2024 21:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgXDTC0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA91BC433F1;
+	Tue, 20 Feb 2024 21:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464976;
-	bh=ps/OCqGPomAvtZ3ZVdVsgcGcLGMp5zbFJ/eWVVo3Zw4=;
+	s=korg; t=1708464979;
+	bh=xnFE1rDL5sFjN0oEXsKyoYcN0s9MQcPSFCveAJrC4XA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5hsBC+xg1xIpfiqw/4PnqfMJN965d8PLZQX3zsT47l4a5Mc21ObdrPW8VIGqvrco
-	 rDyygHbqb8d6CzRKJo3daFxjwVzJMoz3BccG/cgVTS8ObpbS+ulrDBsyhbH4j4w2lm
-	 Dzrls6idoy8OYK7mVTQb9XY9YAVxCxhsxB/UoZ2w=
+	b=VgXDTC0pTNKUO+Ex6iR5l0x2z7TMj2iSatkvgS0N82Nz7z7pvC4W/A47zLdQvzo0g
+	 13ksJROja2GZnaS+iqvXyKPhLDLAEKnwHUub62KnsIucZfiGQobCNacF0Y4Ms2S9CP
+	 pGDNYcmf/vQUlCARX1WShHK9kJKRkxlw5tPgsqBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
-	Martijn Coenen <maco@android.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Steven Moreland <smoreland@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.7 157/309] binder: signal epoll threads of self-work
-Date: Tue, 20 Feb 2024 21:55:16 +0100
-Message-ID: <20240220205638.070801548@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@ZenIV.linux.org.uk>,
+	Ajay Kaher <ajay.kaher@broadcom.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.7 190/309] eventfs: Initialize the tracefs inode properly
+Date: Tue, 20 Feb 2024 21:55:49 +0100
+Message-ID: <20240220205639.109418964@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -47,59 +51,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 97830f3c3088638ff90b20dfba2eb4d487bf14d7 upstream.
+commit 4fa4b010b83fb2f837b5ef79e38072a79e96e4f1 upstream.
 
-In (e)poll mode, threads often depend on I/O events to determine when
-data is ready for consumption. Within binder, a thread may initiate a
-command via BINDER_WRITE_READ without a read buffer and then make use
-of epoll_wait() or similar to consume any responses afterwards.
+The tracefs-specific fields in the inode were not initialized before the
+inode was exposed to others through the dentry with 'd_instantiate()'.
 
-It is then crucial that epoll threads are signaled via wakeup when they
-queue their own work. Otherwise, they risk waiting indefinitely for an
-event leaving their work unhandled. What is worse, subsequent commands
-won't trigger a wakeup either as the thread has pending work.
+Move the field initializations up to before the d_instantiate.
 
-Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
-Cc: Arve Hjønnevåg <arve@android.com>
-Cc: Martijn Coenen <maco@android.com>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Steven Moreland <smoreland@google.com>
-Cc: stable@vger.kernel.org # v4.19+
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20240131215347.1808751-1-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-trace-kernel/20240131185512.478449628@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Al Viro <viro@ZenIV.linux.org.uk>
+Cc: Ajay Kaher <ajay.kaher@broadcom.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5790b1fb3d672 ("eventfs: Remove eventfs_file and just use eventfs_inode")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202401291043.e62e89dc-oliver.sang@intel.com
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/tracefs/event_inode.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -478,6 +478,16 @@ binder_enqueue_thread_work_ilocked(struc
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -370,6 +370,8 @@ static struct dentry *create_dir(struct
+ 
+ 	ti = get_tracefs(inode);
+ 	ti->flags |= TRACEFS_EVENT_INODE;
++	/* Only directories have ti->private set to an ei, not files */
++	ti->private = ei;
+ 
+ 	inc_nlink(inode);
+ 	d_instantiate(dentry, inode);
+@@ -515,7 +517,6 @@ create_file_dentry(struct eventfs_inode
+ static void eventfs_post_create_dir(struct eventfs_inode *ei)
  {
- 	WARN_ON(!list_empty(&thread->waiting_thread_node));
- 	binder_enqueue_work_ilocked(work, &thread->todo);
-+
-+	/* (e)poll-based threads require an explicit wakeup signal when
-+	 * queuing their own work; they rely on these events to consume
-+	 * messages without I/O block. Without it, threads risk waiting
-+	 * indefinitely without handling the work.
-+	 */
-+	if (thread->looper & BINDER_LOOPER_STATE_POLL &&
-+	    thread->pid == current->pid && !thread->process_todo)
-+		wake_up_interruptible_sync(&thread->wait);
-+
- 	thread->process_todo = true;
+ 	struct eventfs_inode *ei_child;
+-	struct tracefs_inode *ti;
+ 
+ 	lockdep_assert_held(&eventfs_mutex);
+ 
+@@ -525,9 +526,6 @@ static void eventfs_post_create_dir(stru
+ 				 srcu_read_lock_held(&eventfs_srcu)) {
+ 		ei_child->d_parent = ei->dentry;
+ 	}
+-
+-	ti = get_tracefs(ei->dentry->d_inode);
+-	ti->private = ei;
  }
  
+ /**
 
 
