@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84CB14AD12;
-	Tue, 20 Feb 2024 21:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3FE14AD12;
+	Tue, 20 Feb 2024 21:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463338; cv=none; b=CEMo+JUe83zTIvApombvnbz5PAFEKtFN2AkxoRu53RaJv4c8U615TfqQKC5EgKdBGEwlDmfd0eI7tptzMdsR000REalc8C0uzeRyq2MLQhjcTw9op0AVDNA3Zeo5W5BHuKiNcpCK4Ma9I0yhf3g35hn6uTKLyFTE9uKTD821Jng=
+	t=1708463341; cv=none; b=AERO83WUpYN3sKt+2+bpsMMRx4pNEWEL9qfs/YLz8vJ/LpHUjUhnP8pmlj1YHt/5T57HMZLf5sWcIyexw5U3nZkbo62xtjhCehUvxcIitqjnZ9sauxYBIu4AToHxDGOl+8GUQz91nz5mLvmiphb5cBfLJ5lOiAcT06sJLefRt/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463338; c=relaxed/simple;
-	bh=8HLrRrzxGwQTpBdS23T/IrdidicrdWe6+0M73qQQ5LY=;
+	s=arc-20240116; t=1708463341; c=relaxed/simple;
+	bh=7b2LDCpUhG0FeIg0CxaOktk5HFOljrrqArl4+gRMXos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Le1OQbAH7lbq3X+1WvQsTbDoY3f9ohlrbIsiozx1Hm9rzUk68sYnOrlSsb+4h08UjMDqMCYnMRwBGr4UTP2Dm4Px4FfQJYuKBBqK0ADP6lf5DqXa0onFXGykEqmJHHkcaLcm0sgmRHWY5LLqbtlpqfeVCjK3zWhl1CxjYsmUB+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXTcNK2x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CzQoJ//x8eNmiOeSVIATodw0oLzmKagnKCax0q+UHq9OnunBxZYx/ty5XL17dp+dz3N4ohT+2s6E1BdgHJgBFyqnfKs6NporACVE+prZE7Bx7Zjy0B9WM3piABxB+3j4iwMKu1DK/akWVJlkcnfNQ1Zp9kj02orIelLw9lJba/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOfLfmQR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXTcNK2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7492AC433C7;
-	Tue, 20 Feb 2024 21:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOfLfmQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8726DC433F1;
+	Tue, 20 Feb 2024 21:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463337;
-	bh=8HLrRrzxGwQTpBdS23T/IrdidicrdWe6+0M73qQQ5LY=;
+	s=korg; t=1708463341;
+	bh=7b2LDCpUhG0FeIg0CxaOktk5HFOljrrqArl4+gRMXos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EXTcNK2xz2fscptOrxh1APD9/wxsWBDlDUVcxo3bdD8Q0XLMFbVVCFUCaYE5tntRi
-	 Tkf3gY2QTa4imIOzgm2ydYXMRBAbLxQNIykzTZrboV+gD+A/bNxjS+0YLrb1YhxU++
-	 a8kgJZW7ZltXsLUAPfDcefPSgSKHQ5HiE2uJPEAw=
+	b=IOfLfmQRMbwoPg3udDUqBjmb5zNgZmsZf2yppMv6zXbftrYVKwyfor8CKI8oC8ZG2
+	 qCPm9fizKKB3o5uwswYdHWeHjdghZ4glkXDNPqqWDGWLjVhlWSpx2HGoAgPwGNizcT
+	 ULCdJjGwD3YIeJRDqHTDlvgBvAgL6FAhAP8GEHD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hu Yadi <hu.yadi@h3c.com>,
-	Jiao <jiaoxupo@h3c.com>,
-	Berlin <berlin@h3c.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/331] selftests/landlock: Fix fs_test build with old libc
-Date: Tue, 20 Feb 2024 21:52:09 +0100
-Message-ID: <20240220205638.001582437@linuxfoundation.org>
+Subject: [PATCH 6.6 014/331] KVM: selftests: Delete superfluous, unused "stage" variable in AMX test
+Date: Tue, 20 Feb 2024 21:52:10 +0100
+Message-ID: <20240220205638.031119383@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -47,66 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hu Yadi <hu.yadi@h3c.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 40b7835e74e0383be308d528c5e0e41b3bf72ade ]
+[ Upstream commit 46fee9e38995af9ae16a8cc7d05031486d44cf35 ]
 
-One issue comes up while building selftest/landlock/fs_test on my side
-(gcc 7.3/glibc-2.28/kernel-4.19).
+Delete the AMX's tests "stage" counter, as the counter is no longer used,
+which makes clang unhappy:
 
-gcc -Wall -O2 -isystem   fs_test.c -lcap -o selftests/landlock/fs_test
-fs_test.c:4575:9: error: initializer element is not constant
-  .mnt = mnt_tmp,
-         ^~~~~~~
+  x86_64/amx_test.c:224:6: error: variable 'stage' set but not used
+          int stage, ret;
+              ^
+  1 error generated.
 
-Signed-off-by: Hu Yadi <hu.yadi@h3c.com>
-Suggested-by: Jiao <jiaoxupo@h3c.com>
-Reviewed-by: Berlin <berlin@h3c.com>
-Link: https://lore.kernel.org/r/20240124022908.42100-1-hu.yadi@h3c.com
-Fixes: 04f9070e99a4 ("selftests/landlock: Add tests for pseudo filesystems")
-[mic: Factor out mount's data string and make mnt_tmp static]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Note, "stage" was never really used, it just happened to be dumped out by
+a (failed) assertion on run->exit_reason, i.e. the AMX test has no concept
+of stages, the code was likely copy+pasted from a different test.
+
+Fixes: c96f57b08012 ("KVM: selftests: Make vCPU exit reason test assertion common")
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Link: https://lore.kernel.org/r/20240109220302.399296-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/fs_test.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ tools/testing/selftests/kvm/x86_64/amx_test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
-index 251594306d40..720bafa0f87b 100644
---- a/tools/testing/selftests/landlock/fs_test.c
-+++ b/tools/testing/selftests/landlock/fs_test.c
-@@ -241,9 +241,11 @@ struct mnt_opt {
- 	const char *const data;
- };
+diff --git a/tools/testing/selftests/kvm/x86_64/amx_test.c b/tools/testing/selftests/kvm/x86_64/amx_test.c
+index 11329e5ff945..309ee5c72b46 100644
+--- a/tools/testing/selftests/kvm/x86_64/amx_test.c
++++ b/tools/testing/selftests/kvm/x86_64/amx_test.c
+@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
+ 	vm_vaddr_t amx_cfg, tiledata, xstate;
+ 	struct ucall uc;
+ 	u32 amx_offset;
+-	int stage, ret;
++	int ret;
  
--const struct mnt_opt mnt_tmp = {
-+#define MNT_TMP_DATA "size=4m,mode=700"
-+
-+static const struct mnt_opt mnt_tmp = {
- 	.type = "tmpfs",
--	.data = "size=4m,mode=700",
-+	.data = MNT_TMP_DATA,
- };
+ 	/*
+ 	 * Note, all off-by-default features must be enabled before anything
+@@ -263,7 +263,7 @@ int main(int argc, char *argv[])
+ 	memset(addr_gva2hva(vm, xstate), 0, PAGE_SIZE * DIV_ROUND_UP(XSAVE_SIZE, PAGE_SIZE));
+ 	vcpu_args_set(vcpu, 3, amx_cfg, tiledata, xstate);
  
- static int mount_opt(const struct mnt_opt *const mnt, const char *const target)
-@@ -4523,7 +4525,10 @@ FIXTURE_VARIANT(layout3_fs)
- /* clang-format off */
- FIXTURE_VARIANT_ADD(layout3_fs, tmpfs) {
- 	/* clang-format on */
--	.mnt = mnt_tmp,
-+	.mnt = {
-+		.type = "tmpfs",
-+		.data = MNT_TMP_DATA,
-+	},
- 	.file_path = file1_s1d1,
- };
+-	for (stage = 1; ; stage++) {
++	for (;;) {
+ 		vcpu_run(vcpu);
+ 		TEST_ASSERT_KVM_EXIT_REASON(vcpu, KVM_EXIT_IO);
  
 -- 
 2.43.0
