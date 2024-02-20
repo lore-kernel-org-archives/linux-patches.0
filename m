@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202002DF9F;
-	Tue, 20 Feb 2024 21:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE5C1509B1;
+	Tue, 20 Feb 2024 21:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464210; cv=none; b=SJFmIRItrT/DtuAjy9qg7UneFoBaAUuzLbCbZCrQF6mrEfyrG33xnI+jR3Av1iAHOEUrBDNAC7PH6e9ZHFTSQ2L72U9/bP5cl0eY1PyIzOOraf7x3qrlm+j1ucqMWsQjqrvCkeSpLZS9opUNxljwV6PuNpep85W2s5CkwyVwTB4=
+	t=1708464213; cv=none; b=SOamEJ8CxkuOT2suN8GtXOZ3hnEFqdXvAhMsq1mRd2WBq/7fV5n3QLu3iwoDVWrD2fSS6+M76OmD5uu8T1q9th++MTTtuSMtcvS3SZkla9ScMJMWZ+Pmq3m9gvEqyb81QfUwzsyLcHlXFa/us9gdE3akEZNVhXqc/dssCpRbEFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464210; c=relaxed/simple;
-	bh=mcJ/FuwyIno3oVxQql+450MGuNKDSpHWOBcr47a91Lw=;
+	s=arc-20240116; t=1708464213; c=relaxed/simple;
+	bh=Ua4HbbEq4bT47c7ouwJ3UI0Q5GxLgUW/fUtXDpV+YHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FO9TYlx8SDe5Z13LJv07ga4OpKIHQ07c5ED1Re9Lsz2eqdbtmGp1H8EU/GWx/WmMeyz7W4FxMw+pN2eZwA9YryWmuTXEchnAcyV2/gNfbyH/7qiijUqRAG9cfvggfEfgXfnyzDdoEQaX9EWRZ3KMDUs1oferAj2dYFddChZQWCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4kbsvWv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHaPUqXfk6eeD+Zt8Yf6qj1gkQAFCrGsqDcSqnNgy+69CeyDkaB2jn5rDyEwOoX/FoWgorABVvbn3sgQYACoSwB4gjBHvVpcY6gpTi44F4anGHUCjjpj4OFF3LBCOUIthXBGf1sLoazalBCFZgLJ/9dGWr3CAsJpYicCmGJBHpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b89LySNn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4kbsvWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92ED2C433F1;
-	Tue, 20 Feb 2024 21:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b89LySNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2932C433C7;
+	Tue, 20 Feb 2024 21:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464210;
-	bh=mcJ/FuwyIno3oVxQql+450MGuNKDSpHWOBcr47a91Lw=;
+	s=korg; t=1708464213;
+	bh=Ua4HbbEq4bT47c7ouwJ3UI0Q5GxLgUW/fUtXDpV+YHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4kbsvWvjqk9G02qIf05znN6QtH7ivUnycou9NCbxxu1TTuPMsiV+eqvelvmpNH6e
-	 AAEHpFBlT3I8mNNotzSZXJQjL51wpKXvm1/C+U4vF8LYoI+WC8NYwZhziR8vCUltwa
-	 MJi+ZDH2RLHTVL+jVNrM3o4SoLiQWeEfnwy8uu5c=
+	b=b89LySNnYf4gx/Vs1M1FvLbOuDk6hH2K6yePO+YchuCSQy7WyBPXtioSoBBBXOWWS
+	 u0sq7YVYyf85HZGvZdwVpK2FQR0KANfpD1OXDvfUVCD8fl0n9D33O9cws74LHXtrgD
+	 yLPg/NcbfqOx9YzKu/LI1kWJuzkjTcA+xq0W7EQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 286/331] eventfs: Make sure that parent->d_inode is locked in creating files/dirs
-Date: Tue, 20 Feb 2024 21:56:42 +0100
-Message-ID: <20240220205646.968906653@linuxfoundation.org>
+Subject: [PATCH 6.6 287/331] eventfs: Fix events beyond NAME_MAX blocking tasks
+Date: Tue, 20 Feb 2024 21:56:43 +0100
+Message-ID: <20240220205647.005175240@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -53,20 +50,24 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
+From: Beau Belgrave <beaub@linux.microsoft.com>
 
-commit f49f950c217bfb40f11662bab39cb388d41e4cfb upstream.
+commit 5eaf7f0589c0d88178f0fbeebe0e0b7108258707 upstream.
 
-Since the locking of the parent->d_inode has been moved outside the
-creation of the files and directories (as it use to be locked via a
-conditional), add a WARN_ON_ONCE() to the case that it's not locked.
+Eventfs uses simple_lookup(), however, it will fail if the name of the
+entry is beyond NAME_MAX length. When this error is encountered, eventfs
+still tries to create dentries instead of skipping the dentry creation.
+When the dentry is attempted to be created in this state d_wait_lookup()
+will loop forever, waiting for the lookup to be removed.
 
-Link: https://lkml.kernel.org/r/20231121231112.853962542@goodmis.org
+Fix eventfs to return the error in simple_lookup() back to the caller
+instead of continuing to try to create the dentry.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://lore.kernel.org/linux-trace-kernel/20231210213534.497-1-beaub@linux.microsoft.com
+
+Fixes: 63940449555e ("eventfs: Implement eventfs lookup, read, open functions")
+Link: https://lore.kernel.org/linux-trace-kernel/20231208183601.GA46-beaub@linux.microsoft.com/
+Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -75,23 +76,23 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/tracefs/event_inode.c
 +++ b/fs/tracefs/event_inode.c
-@@ -327,6 +327,8 @@ create_file_dentry(struct eventfs_inode
- 	struct dentry **e_dentry = &ei->d_children[idx];
- 	struct dentry *dentry;
- 
-+	WARN_ON_ONCE(!inode_is_locked(parent->d_inode));
-+
- 	mutex_lock(&eventfs_mutex);
- 	if (ei->is_freed) {
- 		mutex_unlock(&eventfs_mutex);
-@@ -430,6 +432,8 @@ create_dir_dentry(struct eventfs_inode *
- {
- 	struct dentry *dentry = NULL;
- 
-+	WARN_ON_ONCE(!inode_is_locked(parent->d_inode));
-+
- 	mutex_lock(&eventfs_mutex);
- 	if (pei->is_freed || ei->is_freed) {
- 		mutex_unlock(&eventfs_mutex);
+@@ -546,6 +546,8 @@ static struct dentry *eventfs_root_looku
+ 		if (strcmp(ei_child->name, name) != 0)
+ 			continue;
+ 		ret = simple_lookup(dir, dentry, flags);
++		if (IS_ERR(ret))
++			goto out;
+ 		create_dir_dentry(ei, ei_child, ei_dentry, true);
+ 		created = true;
+ 		break;
+@@ -568,6 +570,8 @@ static struct dentry *eventfs_root_looku
+ 			if (r <= 0)
+ 				continue;
+ 			ret = simple_lookup(dir, dentry, flags);
++			if (IS_ERR(ret))
++				goto out;
+ 			create_file_dentry(ei, i, ei_dentry, name, mode, cdata,
+ 					   fops, true);
+ 			break;
 
 
