@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F96714A4E2;
-	Tue, 20 Feb 2024 20:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8061714A4E2;
+	Tue, 20 Feb 2024 20:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462743; cv=none; b=Y0mqfhRgviIfSiiHh1cqTTRGfzc6CsO/EYa7RIph300QKDFwmfUWONv684Bo1tjzhiANVKdvQxaHO1xr4214mxWeVphFnsF0ZrdUXWrWrDYlUdlgfzujQAAQg7jB1F5p/9tnnUJeZpIzB5Oo5vWcwh0dJCBADkiuc/SYMvNZWPc=
+	t=1708462746; cv=none; b=WfWk7v90KMhCdvvSOeo1ENCj5ZCXctZxDGA3NgJU5nq6/s+WP8nw8zY3VcvOIQWjYqFw7AezCnP8BZS8fTqTKKTeullaknmucBbjiqgpR+cCCFnjcYY+LHE9tWx9v9a+TIf9z6d8gkSBEnQ4FSiI1Vsbt8Rw7OL417vBmk2xqX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462743; c=relaxed/simple;
-	bh=OOA2/PfgVRi08CO1UMr/y2Z8zbv/r+9hBu/YU7CsPZI=;
+	s=arc-20240116; t=1708462746; c=relaxed/simple;
+	bh=k0GN2iUppvciDT0IcmTD/GnMEHv+5hlC1muOdZJo76Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fil8U5bYe+q4JLfL0u88A2b5WeEryOBv52LKMkJM6CdMyCckGvMf4F0+L0ielSJACuEW5AL7ZtSNSEHNURCnNt7N9jmQKV0j7eOb/hG3RvVDCJ+3TpBsEtV/YHZZdP8Uk5Uy2urNOVIo4HK62fmX0/a7nowTEdnv2OTpvPeVrCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tXtIAEhE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfEvmmza1kjtiwZpKiojxuVAtuthqhrP/aXdUY+Y8vG/DpGw4cfmJ6NLZrbHA4TS2vgTzHR1myWY8VdIttUAnftvbA9gbfoUpms9FiehT4qdnV7lqc6FbwCtEgyVT0OKHW/3J1KRxQajdsiWqOUzJcAbz40WIE1KCIrVn4vIiwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKc3hmYW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tXtIAEhE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C75C433C7;
-	Tue, 20 Feb 2024 20:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKc3hmYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FE1C433C7;
+	Tue, 20 Feb 2024 20:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462742;
-	bh=OOA2/PfgVRi08CO1UMr/y2Z8zbv/r+9hBu/YU7CsPZI=;
+	s=korg; t=1708462746;
+	bh=k0GN2iUppvciDT0IcmTD/GnMEHv+5hlC1muOdZJo76Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXtIAEhEbIiyFXO/j1dnwHJCcjQgEFFFQH1WMuUTSKCUabfFiwFnxQaNnyJ6LzqNT
-	 LXkxtE49jxnOUrzlhxdIUWXm8f+n4aXbdWT/OmOO4FmBrwQG/AlSVOZoXqI9jQnhAw
-	 SmnOY2zbA5YhijJXK5/6Xdj+LV/yPlcJuIk8y5Ss=
+	b=RKc3hmYWWk235f4A6Xr+lEYFnr6lMUvT701XPLdqUCZtb9otr/D7OnFdFc32t0cZf
+	 gP8qm80YvrbPEzo3ZNqPyZEAVk2WtY4FaSAZ9uRWP6F5bXZ3Oz11SebZHWLKxqy3h6
+	 //WPC4p7EWyuLEbhTXJOI0jxzzml8xuDVoGKce7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/197] net: tls: factor out tls_*crypt_async_wait()
-Date: Tue, 20 Feb 2024 21:49:42 +0100
-Message-ID: <20240220204841.774066836@linuxfoundation.org>
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 006/197] btrfs: do not ASSERT() if the newly created subvolume already got read
+Date: Tue, 20 Feb 2024 21:49:25 +0100
+Message-ID: <20240220204841.267981314@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -53,189 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit c57ca512f3b68ddcd62bda9cc24a8f5584ab01b1 ]
+commit e03ee2fe873eb68c1f9ba5112fee70303ebf9dfb upstream.
 
-Factor out waiting for async encrypt and decrypt to finish.
-There are already multiple copies and a subsequent fix will
-need more. No functional changes.
+[BUG]
+There is a syzbot crash, triggered by the ASSERT() during subvolume
+creation:
 
-Note that crypto_wait_req() returns wait->err
+ assertion failed: !anon_dev, in fs/btrfs/disk-io.c:1319
+ ------------[ cut here ]------------
+ kernel BUG at fs/btrfs/disk-io.c:1319!
+ invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+ RIP: 0010:btrfs_get_root_ref.part.0+0x9aa/0xa60
+  <TASK>
+  btrfs_get_new_fs_root+0xd3/0xf0
+  create_subvol+0xd02/0x1650
+  btrfs_mksubvol+0xe95/0x12b0
+  __btrfs_ioctl_snap_create+0x2f9/0x4f0
+  btrfs_ioctl_snap_create+0x16b/0x200
+  btrfs_ioctl+0x35f0/0x5cf0
+  __x64_sys_ioctl+0x19d/0x210
+  do_syscall_64+0x3f/0xe0
+  entry_SYSCALL_64_after_hwframe+0x63/0x6b
+ ---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: aec7961916f3 ("tls: fix race between async notify and socket close")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[CAUSE]
+During create_subvol(), after inserting root item for the newly created
+subvolume, we would trigger btrfs_get_new_fs_root() to get the
+btrfs_root of that subvolume.
+
+The idea here is, we have preallocated an anonymous device number for
+the subvolume, thus we can assign it to the new subvolume.
+
+But there is really nothing preventing things like backref walk to read
+the new subvolume.
+If that happens before we call btrfs_get_new_fs_root(), the subvolume
+would be read out, with a new anonymous device number assigned already.
+
+In that case, we would trigger ASSERT(), as we really expect no one to
+read out that subvolume (which is not yet accessible from the fs).
+But things like backref walk is still possible to trigger the read on
+the subvolume.
+
+Thus our assumption on the ASSERT() is not correct in the first place.
+
+[FIX]
+Fix it by removing the ASSERT(), and just free the @anon_dev, reset it
+to 0, and continue.
+
+If the subvolume tree is read out by something else, it should have
+already get a new anon_dev assigned thus we only need to free the
+preallocated one.
+
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Fixes: 2dfb1e43f57d ("btrfs: preallocate anon block device at first phase of snapshot creation")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_sw.c | 96 +++++++++++++++++++++++-------------------------
- 1 file changed, 45 insertions(+), 51 deletions(-)
+ fs/btrfs/disk-io.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 47ae429e50e3..b146be099a3f 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -229,6 +229,20 @@ static void tls_decrypt_done(crypto_completion_data_t *data, int err)
- 	spin_unlock_bh(&ctx->decrypt_compl_lock);
- }
- 
-+static int tls_decrypt_async_wait(struct tls_sw_context_rx *ctx)
-+{
-+	int pending;
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -1662,8 +1662,17 @@ static struct btrfs_root *btrfs_get_root
+ again:
+ 	root = btrfs_lookup_fs_root(fs_info, objectid);
+ 	if (root) {
+-		/* Shouldn't get preallocated anon_dev for cached roots */
+-		ASSERT(!anon_dev);
++		/*
++		 * Some other caller may have read out the newly inserted
++		 * subvolume already (for things like backref walk etc).  Not
++		 * that common but still possible.  In that case, we just need
++		 * to free the anon_dev.
++		 */
++		if (unlikely(anon_dev)) {
++			free_anon_bdev(anon_dev);
++			anon_dev = 0;
++		}
 +
-+	spin_lock_bh(&ctx->decrypt_compl_lock);
-+	reinit_completion(&ctx->async_wait.completion);
-+	pending = atomic_read(&ctx->decrypt_pending);
-+	spin_unlock_bh(&ctx->decrypt_compl_lock);
-+	if (pending)
-+		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
-+
-+	return ctx->async_wait.err;
-+}
-+
- static int tls_do_decryption(struct sock *sk,
- 			     struct scatterlist *sgin,
- 			     struct scatterlist *sgout,
-@@ -496,6 +510,28 @@ static void tls_encrypt_done(crypto_completion_data_t *data, int err)
- 		schedule_delayed_work(&ctx->tx_work.work, 1);
- }
- 
-+static int tls_encrypt_async_wait(struct tls_sw_context_tx *ctx)
-+{
-+	int pending;
-+
-+	spin_lock_bh(&ctx->encrypt_compl_lock);
-+	ctx->async_notify = true;
-+
-+	pending = atomic_read(&ctx->encrypt_pending);
-+	spin_unlock_bh(&ctx->encrypt_compl_lock);
-+	if (pending)
-+		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
-+	else
-+		reinit_completion(&ctx->async_wait.completion);
-+
-+	/* There can be no concurrent accesses, since we have no
-+	 * pending encrypt operations
-+	 */
-+	WRITE_ONCE(ctx->async_notify, false);
-+
-+	return ctx->async_wait.err;
-+}
-+
- static int tls_do_encryption(struct sock *sk,
- 			     struct tls_context *tls_ctx,
- 			     struct tls_sw_context_tx *ctx,
-@@ -953,7 +989,6 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 	int num_zc = 0;
- 	int orig_size;
- 	int ret = 0;
--	int pending;
- 
- 	if (msg->msg_flags & ~(MSG_MORE | MSG_DONTWAIT | MSG_NOSIGNAL |
- 			       MSG_CMSG_COMPAT))
-@@ -1122,24 +1157,12 @@ int tls_sw_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- 	if (!num_async) {
- 		goto send_end;
- 	} else if (num_zc) {
--		/* Wait for pending encryptions to get completed */
--		spin_lock_bh(&ctx->encrypt_compl_lock);
--		ctx->async_notify = true;
--
--		pending = atomic_read(&ctx->encrypt_pending);
--		spin_unlock_bh(&ctx->encrypt_compl_lock);
--		if (pending)
--			crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
--		else
--			reinit_completion(&ctx->async_wait.completion);
--
--		/* There can be no concurrent accesses, since we have no
--		 * pending encrypt operations
--		 */
--		WRITE_ONCE(ctx->async_notify, false);
-+		int err;
- 
--		if (ctx->async_wait.err) {
--			ret = ctx->async_wait.err;
-+		/* Wait for pending encryptions to get completed */
-+		err = tls_encrypt_async_wait(ctx);
-+		if (err) {
-+			ret = err;
- 			copied = 0;
- 		}
- 	}
-@@ -1171,7 +1194,6 @@ void tls_sw_splice_eof(struct socket *sock)
- 	ssize_t copied = 0;
- 	bool retrying = false;
- 	int ret = 0;
--	int pending;
- 
- 	if (!ctx->open_rec)
- 		return;
-@@ -1203,22 +1225,7 @@ void tls_sw_splice_eof(struct socket *sock)
- 	}
- 
- 	/* Wait for pending encryptions to get completed */
--	spin_lock_bh(&ctx->encrypt_compl_lock);
--	ctx->async_notify = true;
--
--	pending = atomic_read(&ctx->encrypt_pending);
--	spin_unlock_bh(&ctx->encrypt_compl_lock);
--	if (pending)
--		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
--	else
--		reinit_completion(&ctx->async_wait.completion);
--
--	/* There can be no concurrent accesses, since we have no pending
--	 * encrypt operations
--	 */
--	WRITE_ONCE(ctx->async_notify, false);
--
--	if (ctx->async_wait.err)
-+	if (tls_encrypt_async_wait(ctx))
- 		goto unlock;
- 
- 	/* Transmit if any encryptions have completed */
-@@ -2197,16 +2204,10 @@ int tls_sw_recvmsg(struct sock *sk,
- 
- recv_end:
- 	if (async) {
--		int ret, pending;
-+		int ret;
- 
- 		/* Wait for all previously submitted records to be decrypted */
--		spin_lock_bh(&ctx->decrypt_compl_lock);
--		reinit_completion(&ctx->async_wait.completion);
--		pending = atomic_read(&ctx->decrypt_pending);
--		spin_unlock_bh(&ctx->decrypt_compl_lock);
--		ret = 0;
--		if (pending)
--			ret = crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
-+		ret = tls_decrypt_async_wait(ctx);
- 		__skb_queue_purge(&ctx->async_hold);
- 
- 		if (ret) {
-@@ -2425,16 +2426,9 @@ void tls_sw_release_resources_tx(struct sock *sk)
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct tls_sw_context_tx *ctx = tls_sw_ctx_tx(tls_ctx);
- 	struct tls_rec *rec, *tmp;
--	int pending;
- 
- 	/* Wait for any pending async encryptions to complete */
--	spin_lock_bh(&ctx->encrypt_compl_lock);
--	ctx->async_notify = true;
--	pending = atomic_read(&ctx->encrypt_pending);
--	spin_unlock_bh(&ctx->encrypt_compl_lock);
--
--	if (pending)
--		crypto_wait_req(-EINPROGRESS, &ctx->async_wait);
-+	tls_encrypt_async_wait(ctx);
- 
- 	tls_tx_records(sk, -1);
- 
--- 
-2.43.0
-
+ 		if (check_ref && btrfs_root_refs(&root->root_item) == 0) {
+ 			btrfs_put_root(root);
+ 			return ERR_PTR(-ENOENT);
 
 
