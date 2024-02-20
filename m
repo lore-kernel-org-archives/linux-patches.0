@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D481612D7;
-	Tue, 20 Feb 2024 21:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CD1612D7;
+	Tue, 20 Feb 2024 21:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463586; cv=none; b=giOyWGgcSJ0DRNMTtDzk2iTpMmdNsRs2stZeYpBanJaEj90UuoeX2XUAzOxrkq1jhGiq8H/2WpjKZSbngmkHciZcGtyaIKcx6y6HT1uDmUU4Sn9TF+HpMf4fuSuQjpzQyjlgkTQT57e385YC0d0H2Zg0wqF+N6ONCJ75mZVBJs8=
+	t=1708463589; cv=none; b=HuPpXaOHIitI5onyKxhh9PI77HrQjB7TRQn/FMwn/3sQi7fRQcghm//JS4C5+ZkJQCgJHf/uN1C5fDsw+MQNnfZRXjMCxiXUJI0F1fkrwaORZ+W094TLtYufPnOVI2hwJKvmwmzScGbLJ9wgNQ4Dqe3vL2czBDV27tYNQoXfV+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463586; c=relaxed/simple;
-	bh=WNXqU5FbTuHGV4jQw/RxlIw/Ta/00NncZoQd+W11WVM=;
+	s=arc-20240116; t=1708463589; c=relaxed/simple;
+	bh=LU1CjDZ9J0YcXfutNg35a6BX1VVW32Khv9vuvh8uy60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pA1YK46OP6Pre9B7qusy3Md8u4ilTJA7z1ZhQGgz1OmYwcyk8UQkJbha8ghIrmDFF+kOGivSyTTKKMjYMuil/LY6tED5hK6uCdd5kSuPMTeX3ZAoxnm2rFhX3IZI/ilIzQSiRnAyShMADyxpaLa7upNZM+xS3XLz2Sucty7l+nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xdL59xav; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4qDHO6pgr9DVxsJg5RLnR1IKjG6TmJCGtsmulEjsY8edhd3JFqXWxtX0ZkUO3I8u2TbmOl5lQTeiMohZCiyIwTEDu9XPorBIcw1wRsw8nqaYIgtpdwRUll+Zqy9JTqOiQX9aQfhY2e1lR6dKd3zJqDs+nmPcuKWMqtaHHoBlUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMHx+iw/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xdL59xav"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFB6C433F1;
-	Tue, 20 Feb 2024 21:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMHx+iw/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4567BC433C7;
+	Tue, 20 Feb 2024 21:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463586;
-	bh=WNXqU5FbTuHGV4jQw/RxlIw/Ta/00NncZoQd+W11WVM=;
+	s=korg; t=1708463589;
+	bh=LU1CjDZ9J0YcXfutNg35a6BX1VVW32Khv9vuvh8uy60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xdL59xavqhYEAXkVxZaOM7I5t2Nej+GmEYPw6aPgfrZuU1w8OgPbIuXJ00hwQy+kq
-	 eSjYjCQTP0AKfj4lrVwFmphEBDeRBURBPKxLM9NNJm8XPhymyjkst2LDkYJ5hMgdou
-	 By9Rye+veP5LBJ36X+k4MlpJE3RNKRDcDDbjncG4=
+	b=WMHx+iw/OwoxwWKECi7rq2Jk2pAaLx9FG1CjNgqsPHQX1K1mnArQIugjuF5qQzanM
+	 4d9MdLHaPEhJFZv0fVWU4iOYQNLoFCnUYAuHkDHa5P1LknoBy7IniJJgmOjcOYYmiD
+	 3XgKMPbqzaqtQz7dCLtsqNZ4pQ/HSGkaujeXL0X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zach OKeefe <zokeefe@google.com>,
-	Maxim Patlasov <MPatlasov@parallels.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 061/331] mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again
-Date: Tue, 20 Feb 2024 21:52:57 +0100
-Message-ID: <20240220205639.510445939@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 052/331] mm/memory: Use exception ip to search exception tables
+Date: Tue, 20 Feb 2024 21:52:48 +0100
+Message-ID: <20240220205639.228235192@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,46 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zach O'Keefe <zokeefe@google.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 9319b647902cbd5cc884ac08a8a6d54ce111fc78 upstream.
+[ Upstream commit 8fa5070833886268e4fb646daaca99f725b378e9 ]
 
-(struct dirty_throttle_control *)->thresh is an unsigned long, but is
-passed as the u32 divisor argument to div_u64().  On architectures where
-unsigned long is 64 bytes, the argument will be implicitly truncated.
+On architectures with delay slot, instruction_pointer() may differ
+from where exception was triggered.
 
-Use div64_u64() instead of div_u64() so that the value used in the "is
-this a safe division" check is the same as the divisor.
+Use exception_ip we just introduced to search exception tables to
+get rid of the problem.
 
-Also, remove redundant cast of the numerator to u64, as that should happen
-implicitly.
-
-This would be difficult to exploit in memcg domain, given the ratio-based
-arithmetic domain_drity_limits() uses, but is much easier in global
-writeback domain with a BDI_CAP_STRICTLIMIT-backing device, using e.g.
-vm.dirty_bytes=(1<<32)*PAGE_SIZE so that dtc->thresh == (1<<32)
-
-Link: https://lkml.kernel.org/r/20240118181954.1415197-1-zokeefe@google.com
-Fixes: f6789593d5ce ("mm/page-writeback.c: fix divide by zero in bdi_dirty_limits()")
-Signed-off-by: Zach O'Keefe <zokeefe@google.com>
-Cc: Maxim Patlasov <MPatlasov@parallels.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4bce37a68ff8 ("mips/mm: Convert to using lock_mm_and_find_vma()")
+Reported-by: Xi Ruoyao <xry111@xry111.site>
+Link: https://lore.kernel.org/r/75e9fd7b08562ad9b456a5bdaacb7cc220311cc9.camel@xry111.site/
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page-writeback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memory.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -1638,7 +1638,7 @@ static inline void wb_dirty_limits(struc
- 	 */
- 	dtc->wb_thresh = __wb_calc_thresh(dtc);
- 	dtc->wb_bg_thresh = dtc->thresh ?
--		div_u64((u64)dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
-+		div64_u64(dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
+diff --git a/mm/memory.c b/mm/memory.c
+index dccf9203dd53..b3be18f1f120 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -5315,7 +5315,7 @@ static inline bool get_mmap_lock_carefully(struct mm_struct *mm, struct pt_regs
+ 		return true;
  
- 	/*
- 	 * In order to avoid the stacked BDI deadlock we need
+ 	if (regs && !user_mode(regs)) {
+-		unsigned long ip = instruction_pointer(regs);
++		unsigned long ip = exception_ip(regs);
+ 		if (!search_exception_tables(ip))
+ 			return false;
+ 	}
+@@ -5340,7 +5340,7 @@ static inline bool upgrade_mmap_lock_carefully(struct mm_struct *mm, struct pt_r
+ {
+ 	mmap_read_unlock(mm);
+ 	if (regs && !user_mode(regs)) {
+-		unsigned long ip = instruction_pointer(regs);
++		unsigned long ip = exception_ip(regs);
+ 		if (!search_exception_tables(ip))
+ 			return false;
+ 	}
+-- 
+2.43.0
+
 
 
