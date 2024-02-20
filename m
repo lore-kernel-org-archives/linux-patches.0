@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FD71509BC;
-	Tue, 20 Feb 2024 21:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C2A14F9DA;
+	Tue, 20 Feb 2024 21:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462946; cv=none; b=Y3q5DPZMae3nlmCh3iNXilXnzZdfWJmV1eGvM+aGIFU/gVO/EJ3L7elwIkm0oF529Xhml5b0sHsPcE3ADpT/I7aDIKE87C6hbSzt4scnLm1L9jVFikCvv37s85bYFFXG3+XsW9SZSvJnahGJFhEYUEjT3zBWgaShzUZ6PXkIbFE=
+	t=1708462949; cv=none; b=VblY3W02xt89uUwo7ESpQ8PaQmi+Xm75Iwa0lD2UgHZTx8Tuuv54LbXSGHzqR4XjUUXzgBox1aT7vUshEGOTQscb5fwxIROzUp6FU7wZhHhrAykXZrmu0HXu9hxyRbx2QCAYofzORQLX7/jvz9FypfOZ5dv+rb5JP2yLu2jGVjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462946; c=relaxed/simple;
-	bh=rVh3TNGSlpHw1jTGuHp+39hKqMdO3JUhNdN2I6Rvx9g=;
+	s=arc-20240116; t=1708462949; c=relaxed/simple;
+	bh=Jh0xuAgkkwKcEVjw2KB7wGSSBnuoM/AimcLlNCY5II4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nFJcEURssuTF9gesPgdJ+402e+4qDfggHBuhfqNOYE3ZIJZWLJ+LTdRC7Sth0P1aB3ECvRtuXDtvz2V2sd1jTOluB/G/t9lEn3LXiz7A5bukbI2lKkXSdqnPxL6WXAsmjL4brq2/cRLUzpALQnKae5YpiKXWC+v2dzh9D27E2AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9AzFs7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G98Gc2E3Tfg7FIwPVvCg1eED0BnAIVIkjxMSzHceFXVQOuVXQgjywFARUCYGKW9t7wfXETHhOmgJykioAmP9yFDWyDr+BB1pYiO/CXjxfzkMIqXunJ+YT2B1mF8jpw6izzhWTkjycj0HmZDD5AuYdv1ldNupoN9w8xToFdX4mJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtLXPbg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9AzFs7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB5B9C433C7;
-	Tue, 20 Feb 2024 21:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtLXPbg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D662BC433C7;
+	Tue, 20 Feb 2024 21:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462946;
-	bh=rVh3TNGSlpHw1jTGuHp+39hKqMdO3JUhNdN2I6Rvx9g=;
+	s=korg; t=1708462949;
+	bh=Jh0xuAgkkwKcEVjw2KB7wGSSBnuoM/AimcLlNCY5II4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9AzFs7q/Gobzk/uOlW5fp/Qwq1k+i/zKSCES6eZ8wQiLsAVdajS6ttpWmGESAiq1
-	 5RkpYMpC3zUNY1QAM51bh5rUExNsyoUcSNUWr9fExb7Vhl9mWofyR04zDAqtrAfZGP
-	 VEKISjkqhPP/ki4gGc34A9qlXRfiWqr9e437c030=
+	b=GtLXPbg0Qy9QpRRcPtmCQAI8Eip65ptCYCubghyqowcBud3OAmUi6uNcmnPIHW9ep
+	 qyTaWDSM3pCsbXJ4fR4Kh5ma0QTGUpcZqZZX6/rcHTq4WRxQwpzFBxy2PCZ+bz1gLv
+	 9d0C26cSsYjvSNBO40eRRdzQFC0iEndLNM2MmRlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.1 087/197] modpost: Dont let "driver"s reference .exit.*
-Date: Tue, 20 Feb 2024 21:50:46 +0100
-Message-ID: <20240220204843.691168735@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 070/197] selftests: mptcp: add missing kconfig for NF Mangle
+Date: Tue, 20 Feb 2024 21:50:29 +0100
+Message-ID: <20240220204843.175560228@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -45,65 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Uwe Kleine-König" <u.kleine-koenig@pengutronix.de>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit f177cd0c15fcc7bdbb68d8d1a3166dead95314c8 upstream.
+commit 2d41f10fa497182df9012d3e95d9cea24eb42e61 upstream.
 
-Drivers must not reference functions marked with __exit as these likely
-are not available when the code is built-in.
+Since the commit mentioned below, 'mptcp_join' selftests is using
+IPTables to add rules to the Mangle table, only in IPv4.
 
-There are few creative offenders uncovered for example in ARCH=amd64
-allmodconfig builds. So only trigger the section mismatch warning for
-W=1 builds.
+This KConfig is usually enabled by default in many defconfig, but we
+recently noticed that some CI were running our selftests without them
+enabled.
 
-The dual rule that drivers must not reference .init.* is implemented
-since commit 0db252452378 ("modpost: don't allow *driver to reference
-.init.*") which however missed that .exit.* should be handled in the
-same way.
-
-Thanks to Masahiro Yamada and Arnd Bergmann who gave valuable hints to
-find this improvement.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Stable-dep-of: 846cfbeed09b ("um: Fix adding '-no-pie' for clang")
+Fixes: b6e074e171bc ("selftests: mptcp: add infinite map testcase")
+Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-4-4c1c11e571ff@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/mod/modpost.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/config |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1087,9 +1087,20 @@ static int secref_whitelist(const struct
- 				    "*_console")))
- 		return 0;
- 
--	/* symbols in data sections that may refer to meminit/exit sections */
-+	/* symbols in data sections that may refer to meminit sections */
- 	if (match(fromsec, PATTERNS(DATA_SECTIONS)) &&
--	    match(tosec, PATTERNS(ALL_XXXINIT_SECTIONS, ALL_EXIT_SECTIONS)) &&
-+	    match(tosec, PATTERNS(ALL_XXXINIT_SECTIONS, ALL_XXXEXIT_SECTIONS)) &&
-+	    match(fromsym, PATTERNS("*driver")))
-+		return 0;
-+
-+	/*
-+	 * symbols in data sections must not refer to .exit.*, but there are
-+	 * quite a few offenders, so hide these unless for W=1 builds until
-+	 * these are fixed.
-+	 */
-+	if (!extra_warn &&
-+	    match(fromsec, PATTERNS(DATA_SECTIONS)) &&
-+	    match(tosec, PATTERNS(EXIT_SECTIONS)) &&
- 	    match(fromsym, PATTERNS("*driver")))
- 		return 0;
- 
+--- a/tools/testing/selftests/net/mptcp/config
++++ b/tools/testing/selftests/net/mptcp/config
+@@ -23,6 +23,7 @@ CONFIG_NFT_SOCKET=m
+ CONFIG_IP_ADVANCED_ROUTER=y
+ CONFIG_IP_MULTIPLE_TABLES=y
+ CONFIG_IP_NF_FILTER=m
++CONFIG_IP_NF_MANGLE=m
+ CONFIG_IP_NF_TARGET_REJECT=m
+ CONFIG_IPV6_MULTIPLE_TABLES=y
+ CONFIG_IP6_NF_FILTER=m
 
 
