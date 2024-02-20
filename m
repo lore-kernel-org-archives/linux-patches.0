@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CF4151CD8;
-	Tue, 20 Feb 2024 21:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37661509BF;
+	Tue, 20 Feb 2024 21:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463761; cv=none; b=L/wWQB/5vvNo2gCf8FX2VmAsXc2lMlQz0sIkqpCvFPkC8O/0zs6aIj2u4ivggCrbK9/PMXoHWo0dywfmx+hVhfE9oqR9vpkm2wkJPORZ+AmWkNG9KceJjMh6cegNodtKEvjr3x7g63YY8mTiYVnhQAMahkhV9wn7FOTaZpggziI=
+	t=1708463765; cv=none; b=RJpmjeGMh4cjuRjXgslRIfKq3n19poO3LRafTE3HeC7RjkBcqeI+vyn7GOQQziERL8KhccsUNxfFwu4qyYx/818JcvnlvwtzwE1OArm4pVC00ZegeYHOzJgwCB63rGnHjV5h+NHgKI7p01KfkDk2XDPTk/FTKqG8VqKFxEr3fN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463761; c=relaxed/simple;
-	bh=Lt/hMWPs1By0QrTyKCuf4O+oSKeTJ7wLqYAaf039Spk=;
+	s=arc-20240116; t=1708463765; c=relaxed/simple;
+	bh=HXCHAWJuXJ22WnlTAydPXPEp03QrjyCZM7vfVHRsUu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eBhYHb3+biYdAkD+jtCntHCE9/dA76nzkcjYhDySoOZk4eDGQC+fbRiYEmJaEVD0csEadgHehAHfifkhM06sOFTaPI+oqXLIwVbPlJ0BJJyD10vvZEdNSESDMt2kp2aFSNMcG5QbCNbFtE7QgEQHy7BsGwiLLQ/ympLc9jdDIU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpzNqiqg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ruAJGnE5yV/wMbMkk6n7Dy3HX2aKmEYYaQplpHarR8CJkmq7YOjk2w8e/KAkMHhGjX+mljhZ2Fph3iapa8bCGf/LUQMqRtEmADf9Bf+il/zNSPIimDEMd/JKp9gcf5Xfr2YeZFjTZtn8zeDGT7NWlD6RJInBBQ0Jz0WdsG+Affg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkYcEdLP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpzNqiqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADBBC433F1;
-	Tue, 20 Feb 2024 21:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkYcEdLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C95C433C7;
+	Tue, 20 Feb 2024 21:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463761;
-	bh=Lt/hMWPs1By0QrTyKCuf4O+oSKeTJ7wLqYAaf039Spk=;
+	s=korg; t=1708463765;
+	bh=HXCHAWJuXJ22WnlTAydPXPEp03QrjyCZM7vfVHRsUu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpzNqiqgobYC9hpOPgP5xKxuD17LoZZw2ESTGvTM1FclVwGbOFDC4pNkx+p/mw5oe
-	 IZLsCNtJSwLTBqN+fCom+Uc5wpxlmO5hYk8FryCdv0se+2rFtE20UU54eb71KtPvxc
-	 60OQSMGpFImgkIi9vj4q+OCkRJtXmPyGPIh9x/gE=
+	b=BkYcEdLPMPV7jm3/anuwgIpW2xiXOEBvZWuE7d7CfJXyKYXtkiP55VJO4aF37RApw
+	 SgfATmgIFXujI1hrx2oDtG034LFHDaVn31bpOBdhy2LdnoFF9IjeqkYAQayCNw0mxF
+	 xcgYlxBpqXtOO5DBAg/yPrkyRAHM6VCDGG6IJHpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Rudenko <mike.rudenko@gmail.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 6.6 117/331] media: Revert "media: rkisp1: Drop IRQF_SHARED"
-Date: Tue, 20 Feb 2024 21:53:53 +0100
-Message-ID: <20240220205641.293818721@linuxfoundation.org>
+	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
+	Martijn Coenen <maco@android.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Steven Moreland <smoreland@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.6 144/331] binder: signal epoll threads of self-work
+Date: Tue, 20 Feb 2024 21:54:20 +0100
+Message-ID: <20240220205642.072532865@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -46,44 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit a107d643b2a3382e0a2d2c4ef08bf8c6bff4561d upstream.
+commit 97830f3c3088638ff90b20dfba2eb4d487bf14d7 upstream.
 
-This reverts commit 85d2a31fe4d9be1555f621ead7a520d8791e0f74.
+In (e)poll mode, threads often depend on I/O events to determine when
+data is ready for consumption. Within binder, a thread may initiate a
+command via BINDER_WRITE_READ without a read buffer and then make use
+of epoll_wait() or similar to consume any responses afterwards.
 
-The rkisp1 does share interrupt lines on some platforms, after all. Thus
-we need to revert this, and implement a fix for the rkisp1 shared irq
-handling in a follow-up patch.
+It is then crucial that epoll threads are signaled via wakeup when they
+queue their own work. Otherwise, they risk waiting indefinitely for an
+event leaving their work unhandled. What is worse, subsequent commands
+won't trigger a wakeup either as the thread has pending work.
 
-Closes: https://lore.kernel.org/all/87o7eo8vym.fsf@gmail.com/
-Link: https://lore.kernel.org/r/20231218-rkisp-shirq-fix-v1-1-173007628248@ideasonboard.com
-
-Reported-by: Mikhail Rudenko <mike.rudenko@gmail.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
+Cc: Arve Hjønnevåg <arve@android.com>
+Cc: Martijn Coenen <maco@android.com>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Cc: Steven Moreland <smoreland@google.com>
+Cc: stable@vger.kernel.org # v4.19+
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Link: https://lore.kernel.org/r/20240131215347.1808751-1-cmllamas@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-+++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
-@@ -559,7 +559,7 @@ static int rkisp1_probe(struct platform_
- 				rkisp1->irqs[il] = irq;
- 		}
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -478,6 +478,16 @@ binder_enqueue_thread_work_ilocked(struc
+ {
+ 	WARN_ON(!list_empty(&thread->waiting_thread_node));
+ 	binder_enqueue_work_ilocked(work, &thread->todo);
++
++	/* (e)poll-based threads require an explicit wakeup signal when
++	 * queuing their own work; they rely on these events to consume
++	 * messages without I/O block. Without it, threads risk waiting
++	 * indefinitely without handling the work.
++	 */
++	if (thread->looper & BINDER_LOOPER_STATE_POLL &&
++	    thread->pid == current->pid && !thread->process_todo)
++		wake_up_interruptible_sync(&thread->wait);
++
+ 	thread->process_todo = true;
+ }
  
--		ret = devm_request_irq(dev, irq, info->isrs[i].isr, 0,
-+		ret = devm_request_irq(dev, irq, info->isrs[i].isr, IRQF_SHARED,
- 				       dev_driver_string(dev), dev);
- 		if (ret) {
- 			dev_err(dev, "request irq failed: %d\n", ret);
 
 
