@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412FB151CCC;
-	Tue, 20 Feb 2024 21:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B136151CCC;
+	Tue, 20 Feb 2024 21:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464979; cv=none; b=rOJNxoie6AL3s3LTd/kbcfX6NwMRioGQaqMgdp+ir3+FscWXhVhh2nnA454ec25iOv8XS82apuV67HgL6OGZlbQOXmfB5Ut05N6cCiln6K9TYBOFHrimiVL68yBkdTW+JvNfFut5yjuR45Ups2o+zDJ+x7Djz4HFWy/opW7uI+I=
+	t=1708464982; cv=none; b=XJDHFHX/FXoITbzHLLChSTMvrpEgGwOOnsAz0jfW1nnzBRd3JxXL4jPfrG8INGNfkwsB/rtvAdkcB2M8OZBV7PCU7TGasmskhylQCGD464O+Uybltys3eodO6F6eLeIO4q1BlwnbjWj/bP1MKupm/6wlBzemDOTUXnNrB8Cmg9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464979; c=relaxed/simple;
-	bh=xnFE1rDL5sFjN0oEXsKyoYcN0s9MQcPSFCveAJrC4XA=;
+	s=arc-20240116; t=1708464982; c=relaxed/simple;
+	bh=wOUZ/MS+j43zbpTOXwSAjCHriJQ8M3VZ5hEQYPAT+D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdPcLdHn+6ruol/lqX89QDfNWgyJCTapVkhrBCeIrf6OqdPxm/OH1irmHZ4emtILvhUyJVSxgLCuBTUZe8uvb6JtAYLBzQN6rwkHoGmQkIUVFnLgBVUqMXeqCrC+WmSNLh6GnhGgXXSVGcZYc1YPG7DDAK4hGkI+KyLtCp59eVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VgXDTC0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTWFrdRa6bJLAsgLR5wz2AcAL7iMRN+6B+HLxE/wsZO2wk6nkaJDzGpBfcbh+izZQa6FHmF967g29Qmd+XUbQ8vWGXqTcvLO4ByyBqY5/kd5GtGYu9JT7iqG7+PFsVXGZBMtBq0puYs8R0RTHeYUCV+p+hS8nNCQmnpKbWnBVko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhKsd320; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VgXDTC0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA91BC433F1;
-	Tue, 20 Feb 2024 21:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhKsd320"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC659C433F1;
+	Tue, 20 Feb 2024 21:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464979;
-	bh=xnFE1rDL5sFjN0oEXsKyoYcN0s9MQcPSFCveAJrC4XA=;
+	s=korg; t=1708464982;
+	bh=wOUZ/MS+j43zbpTOXwSAjCHriJQ8M3VZ5hEQYPAT+D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgXDTC0pTNKUO+Ex6iR5l0x2z7TMj2iSatkvgS0N82Nz7z7pvC4W/A47zLdQvzo0g
-	 13ksJROja2GZnaS+iqvXyKPhLDLAEKnwHUub62KnsIucZfiGQobCNacF0Y4Ms2S9CP
-	 pGDNYcmf/vQUlCARX1WShHK9kJKRkxlw5tPgsqBg=
+	b=RhKsd320wvqyFAaRFy00CmKq3rJMT0f94KA/D/fMalL5rf/dZl4qK4ohNYWEtji73
+	 sjQrTMQk12/s6OgyAFevFrgzkqoDMiUwE3jSzeL5n4Rbjsi5EbyJzkqGPxuVpR7OFs
+	 4G+5+DnIzP4XF0rI+FDlwSvtcFf6k3FZ0htMvES8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Al Viro <viro@ZenIV.linux.org.uk>,
 	Ajay Kaher <ajay.kaher@broadcom.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.7 190/309] eventfs: Initialize the tracefs inode properly
-Date: Tue, 20 Feb 2024 21:55:49 +0100
-Message-ID: <20240220205639.109418964@linuxfoundation.org>
+Subject: [PATCH 6.7 199/309] eventfs: Keep all directory links at 1
+Date: Tue, 20 Feb 2024 21:55:58 +0100
+Message-ID: <20240220205639.409923645@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -57,63 +57,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 4fa4b010b83fb2f837b5ef79e38072a79e96e4f1 upstream.
+commit ca185770db914869ff9fe773bac5e0e5e4165b83 upstream.
 
-The tracefs-specific fields in the inode were not initialized before the
-inode was exposed to others through the dentry with 'd_instantiate()'.
+The directory link count in eventfs was somewhat bogus. It was only being
+updated when a directory child was being looked up and not on creation.
 
-Move the field initializations up to before the d_instantiate.
+One solution would be to update in get_attr() the link count by iterating
+the ei->children list and then adding 2. But that could slow down simple
+stat() calls, especially if it's done on all directories in eventfs.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240131185512.478449628@goodmis.org
+Another solution would be to add a parent pointer to the eventfs_inode
+and keep track of the number of sub directories it has on creation. But
+this adds overhead for something not really worthwhile.
+
+The solution decided upon is to keep all directory links in eventfs as 1.
+This tells user space not to rely on the hard links of directories. Which
+in this case it shouldn't.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240201002719.GS2087318@ZenIV/
+Link: https://lore.kernel.org/linux-trace-kernel/20240201161617.339968298@goodmis.org
 
 Cc: stable@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Christian Brauner <brauner@kernel.org>
 Cc: Al Viro <viro@ZenIV.linux.org.uk>
 Cc: Ajay Kaher <ajay.kaher@broadcom.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Fixes: 5790b1fb3d672 ("eventfs: Remove eventfs_file and just use eventfs_inode")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202401291043.e62e89dc-oliver.sang@intel.com
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: c1504e510238 ("eventfs: Implement eventfs dir creation functions")
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/tracefs/event_inode.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 --- a/fs/tracefs/event_inode.c
 +++ b/fs/tracefs/event_inode.c
-@@ -370,6 +370,8 @@ static struct dentry *create_dir(struct
+@@ -404,9 +404,7 @@ static struct dentry *lookup_dir_entry(s
  
- 	ti = get_tracefs(inode);
- 	ti->flags |= TRACEFS_EVENT_INODE;
-+	/* Only directories have ti->private set to an ei, not files */
-+	ti->private = ei;
+ 	dentry->d_fsdata = get_ei(ei);
  
- 	inc_nlink(inode);
- 	d_instantiate(dentry, inode);
-@@ -515,7 +517,6 @@ create_file_dentry(struct eventfs_inode
- static void eventfs_post_create_dir(struct eventfs_inode *ei)
- {
- 	struct eventfs_inode *ei_child;
--	struct tracefs_inode *ti;
- 
- 	lockdep_assert_held(&eventfs_mutex);
- 
-@@ -525,9 +526,6 @@ static void eventfs_post_create_dir(stru
- 				 srcu_read_lock_held(&eventfs_srcu)) {
- 		ei_child->d_parent = ei->dentry;
- 	}
--
--	ti = get_tracefs(ei->dentry->d_inode);
--	ti->private = ei;
+-	inc_nlink(inode);
+ 	d_add(dentry, inode);
+-	inc_nlink(dentry->d_parent->d_inode);
+ 	return NULL;
  }
  
- /**
+@@ -769,9 +767,17 @@ struct eventfs_inode *eventfs_create_eve
+ 
+ 	dentry->d_fsdata = get_ei(ei);
+ 
+-	/* directory inodes start off with i_nlink == 2 (for "." entry) */
+-	inc_nlink(inode);
++	/*
++	 * Keep all eventfs directories with i_nlink == 1.
++	 * Due to the dynamic nature of the dentry creations and not
++	 * wanting to add a pointer to the parent eventfs_inode in the
++	 * eventfs_inode structure, keeping the i_nlink in sync with the
++	 * number of directories would cause too much complexity for
++	 * something not worth much. Keeping directory links at 1
++	 * tells userspace not to trust the link number.
++	 */
+ 	d_instantiate(dentry, inode);
++	/* The dentry of the "events" parent does keep track though */
+ 	inc_nlink(dentry->d_parent->d_inode);
+ 	fsnotify_mkdir(dentry->d_parent->d_inode, dentry);
+ 	tracefs_end_creating(dentry);
 
 
