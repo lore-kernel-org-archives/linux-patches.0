@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5BE14F9C8;
-	Tue, 20 Feb 2024 21:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938CF151CC4;
+	Tue, 20 Feb 2024 21:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463063; cv=none; b=mTwnmT5yMOi+x9VNtqMpgo4Da0kFDG5aNEt3apS5KGYJhJrs6dzyq+JVxbuCiDpl4b2/TAsHPJg+NzI4V71PaHAU4McH8yglicw0Mq5CUCf2fbR4JaxD9/bEge+rHbWnGXWErGqAz7+zeWRiGGe9H3+Hr4BRCVhheeLcze6Q0Cw=
+	t=1708463066; cv=none; b=Qy0MBFbgbAjpCatGy+iEgqsYeUF4vogF/ddcHpjigHaPHUyt9ro9a1L2u8AYoH4zHWqWdvVXdspCscdeeAFGOuGrQgwlDp+qkfm+z+BelKV/BfZF93sUq27SQ633UTx8Ds8LlsDsih0WoAlrtePhAxgmLbLL2c3AM7M8HLH0MJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463063; c=relaxed/simple;
-	bh=A3a4eKZCnxR9/r8KgskzgCeRPjs0awCHZSBdNesz+oI=;
+	s=arc-20240116; t=1708463066; c=relaxed/simple;
+	bh=cbdrTMhmE3OjLOG3pqycnqDkEMJmWhs6fm7nTTC4QDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxdLksjBYT72gA5/1ur44Y7xwjidvsH126T0EuJwQM+AfGKFcUEUT479tv0S6oOjjwuwH8yHef85TWJApMK51wQBDnCbTpnaikNmkECfIzJnSKee5hFwITXzXRQt4Gd1oygVCRAlHty3tDtn++nmctu9TLVEs2DAgCzo801wraA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3uXwaPQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QlAu/JaKqmcXlD1QBCgSwzWeefv17O6COnTgB9/59PgBoU2fjJ/pcmKOmOe1jzT8ZHAU6GiP+nf0A+Zv1FL6HfBWkkOXuUQ4s588xtFil9i+/Y7ALbjQ+lNVYr6v2jt1130m75QtntDp0Ra7aV6vxWRPgCSQNYLQZh4kUfEAf7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZF4rYCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3uXwaPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C0BC433F1;
-	Tue, 20 Feb 2024 21:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZF4rYCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A24C43390;
+	Tue, 20 Feb 2024 21:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463063;
-	bh=A3a4eKZCnxR9/r8KgskzgCeRPjs0awCHZSBdNesz+oI=;
+	s=korg; t=1708463066;
+	bh=cbdrTMhmE3OjLOG3pqycnqDkEMJmWhs6fm7nTTC4QDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3uXwaPQsO2BQ5NNAjpFK4qmEP28n0Tn+fZ2qeJOjYpvZWb7x6a2PGMveFP+diWRp
-	 d0unmhTbpHva1fAaMTxJcImOAg2D9kvO6xCaKEdzuscNoSzL1BMcDKF/nGeAeuzGSa
-	 JXCuV0pTIX5vby8lZ0BznpV5eWtWWU7wCg6tfckQ=
+	b=OZF4rYCZPLpH39DMpm8BIvUfyMlwM+hx9VzvFfbAANW7aVoVAk8Rn6oIlSDneEsFv
+	 yCUIZ1eEp+n/C/LSiRjmNWE/HCzEYrAKslp1whOypyUjXQ0upyJsxT0Fn/lp8uUn2E
+	 TQXVtP6JO5OwmNF4HaLIuUZ/Ek4BxsLqUJIMqX9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.1 123/197] serial: max310x: prevent infinite while() loop in port startup
-Date: Tue, 20 Feb 2024 21:51:22 +0100
-Message-ID: <20240220204844.754984384@linuxfoundation.org>
+	"Nysal Jan K.A" <nysal@linux.ibm.com>,
+	Naveen N Rao <naveen@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.1 124/197] powerpc/64: Set task pt_regs->link to the LR value on scv entry
+Date: Tue, 20 Feb 2024 21:51:23 +0100
+Message-ID: <20240220204844.784850701@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -49,70 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Naveen N Rao <naveen@kernel.org>
 
-commit b35f8dbbce818b02c730dc85133dc7754266e084 upstream.
+commit aad98efd0b121f63a2e1c221dcb4d4850128c697 upstream.
 
-If there is a problem after resetting a port, the do/while() loop that
-checks the default value of DIVLSB register may run forever and spam the
-I2C bus.
+Nysal reported that userspace backtraces are missing in offcputime bcc
+tool. As an example:
+    $ sudo ./bcc/tools/offcputime.py -uU
+    Tracing off-CPU time (us) of user threads by user stack... Hit Ctrl-C to end.
 
-Add a delay before each read of DIVLSB, and a maximum number of tries to
-prevent that situation from happening.
+    ^C
+	write
+	-                python (9107)
+	    8
 
-Also fail probe if port reset is unsuccessful.
+	write
+	-                sudo (9105)
+	    9
 
-Fixes: 10d8b34a4217 ("serial: max310x: Driver rework")
+	mmap
+	-                python (9107)
+	    16
+
+	clock_nanosleep
+	-                multipathd (697)
+	    3001604
+
+The offcputime bcc tool attaches a bpf program to a kprobe on
+finish_task_switch(), which is usually hit on a syscall from userspace.
+With the switch to system call vectored, we started setting
+pt_regs->link to zero. This is because system call vectored behaves like
+a function call with LR pointing to the system call return address, and
+with no modification to SRR0/SRR1. The LR value does indicate our next
+instruction, so it is being saved as pt_regs->nip, and pt_regs->link is
+being set to zero. This is not a problem by itself, but BPF uses perf
+callchain infrastructure for capturing stack traces, and that stores LR
+as the second entry in the stack trace. perf has code to cope with the
+second entry being zero, and skips over it. However, generic userspace
+unwinders assume that a zero entry indicates end of the stack trace,
+resulting in a truncated userspace stack trace.
+
+Rather than fixing all userspace unwinders to ignore/skip past the
+second entry, store the real LR value in pt_regs->link so that there
+continues to be a valid, though duplicate entry in the stack trace.
+
+With this change:
+    $ sudo ./bcc/tools/offcputime.py -uU
+    Tracing off-CPU time (us) of user threads by user stack... Hit Ctrl-C to end.
+
+    ^C
+	write
+	write
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	PyObject_VectorcallMethod
+	[unknown]
+	[unknown]
+	PyObject_CallOneArg
+	PyFile_WriteObject
+	PyFile_WriteString
+	[unknown]
+	[unknown]
+	PyObject_Vectorcall
+	_PyEval_EvalFrameDefault
+	PyEval_EvalCode
+	[unknown]
+	[unknown]
+	[unknown]
+	_PyRun_SimpleFileObject
+	_PyRun_AnyFileObject
+	Py_RunMain
+	[unknown]
+	Py_BytesMain
+	[unknown]
+	__libc_start_main
+	-                python (1293)
+	    7
+
+	write
+	write
+	[unknown]
+	sudo_ev_loop_v1
+	sudo_ev_dispatch_v1
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	__libc_start_main
+	-                sudo (1291)
+	    7
+
+	syscall
+	syscall
+	bpf_open_perf_buffer_opts
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	_PyObject_MakeTpCall
+	PyObject_Vectorcall
+	_PyEval_EvalFrameDefault
+	PyEval_EvalCode
+	[unknown]
+	[unknown]
+	[unknown]
+	_PyRun_SimpleFileObject
+	_PyRun_AnyFileObject
+	Py_RunMain
+	[unknown]
+	Py_BytesMain
+	[unknown]
+	__libc_start_main
+	-                python (1293)
+	    11
+
+	clock_nanosleep
+	clock_nanosleep
+	nanosleep
+	sleep
+	[unknown]
+	[unknown]
+	__clone
+	-                multipathd (698)
+	    3001661
+
+Fixes: 7fa95f9adaee ("powerpc/64s: system call support for scv/rfscv instructions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240116213001.3691629-5-hugo@hugovil.com
+Reported-by: "Nysal Jan K.A" <nysal@linux.ibm.com>
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240202154316.395276-1-naveen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/interrupt_64.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -237,6 +237,10 @@
- #define MAX310x_REV_MASK		(0xf8)
- #define MAX310X_WRITE_BIT		0x80
+--- a/arch/powerpc/kernel/interrupt_64.S
++++ b/arch/powerpc/kernel/interrupt_64.S
+@@ -52,7 +52,8 @@ _ASM_NOKPROBE_SYMBOL(system_call_vectore
+ 	mr	r10,r1
+ 	ld	r1,PACAKSAVE(r13)
+ 	std	r10,0(r1)
+-	std	r11,_NIP(r1)
++	std	r11,_LINK(r1)
++	std	r11,_NIP(r1)	/* Saved LR is also the next instruction */
+ 	std	r12,_MSR(r1)
+ 	std	r0,GPR0(r1)
+ 	std	r10,GPR1(r1)
+@@ -70,7 +71,6 @@ _ASM_NOKPROBE_SYMBOL(system_call_vectore
+ 	std	r9,GPR13(r1)
+ 	SAVE_NVGPRS(r1)
+ 	std	r11,_XER(r1)
+-	std	r11,_LINK(r1)
+ 	std	r11,_CTR(r1)
  
-+/* Port startup definitions */
-+#define MAX310X_PORT_STARTUP_WAIT_RETRIES	20 /* Number of retries */
-+#define MAX310X_PORT_STARTUP_WAIT_DELAY_MS	10 /* Delay between retries */
-+
- /* Crystal-related definitions */
- #define MAX310X_XTAL_WAIT_RETRIES	20 /* Number of retries */
- #define MAX310X_XTAL_WAIT_DELAY_MS	10 /* Delay between retries */
-@@ -1349,6 +1353,9 @@ static int max310x_probe(struct device *
- 		goto out_clk;
- 
- 	for (i = 0; i < devtype->nr; i++) {
-+		bool started = false;
-+		unsigned int try = 0, val = 0;
-+
- 		/* Reset port */
- 		regmap_write(regmaps[i], MAX310X_MODE2_REG,
- 			     MAX310X_MODE2_RST_BIT);
-@@ -1357,8 +1364,17 @@ static int max310x_probe(struct device *
- 
- 		/* Wait for port startup */
- 		do {
--			regmap_read(regmaps[i], MAX310X_BRGDIVLSB_REG, &ret);
--		} while (ret != 0x01);
-+			msleep(MAX310X_PORT_STARTUP_WAIT_DELAY_MS);
-+			regmap_read(regmaps[i], MAX310X_BRGDIVLSB_REG, &val);
-+
-+			if (val == 0x01)
-+				started = true;
-+		} while (!started && (++try < MAX310X_PORT_STARTUP_WAIT_RETRIES));
-+
-+		if (!started) {
-+			ret = dev_err_probe(dev, -EAGAIN, "port reset failed\n");
-+			goto out_uart;
-+		}
- 
- 		regmap_write(regmaps[i], MAX310X_MODE1_REG, devtype->mode1);
- 	}
+ 	li	r11,\trapnr
 
 
