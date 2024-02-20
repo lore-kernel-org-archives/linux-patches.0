@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A3614F9DA;
-	Tue, 20 Feb 2024 21:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7242314A4E2;
+	Tue, 20 Feb 2024 21:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463003; cv=none; b=aGlmagwoWinYYI1GhvlDnrwtM5zGfyuRWVlbiUv2/OWjSHRSY2wjTEvDzFCCwQ6GYlYHQ4KJX1xsrB/hVZx2qKS6aAfBvg/z8bAPFihn3Kqcbn8y4HpmmHeYfnlgk6MbHuL/auOrNLwCtnaDMGJmuXbrhqqETc/m+uK0yBEx1Ew=
+	t=1708463006; cv=none; b=HAs8IK3dg96meYP2DBR0lSKinvglZ7PuHez7seShHcgW+4tt6o+l9uQjoQEdMWqHvGxHFKoAopUMolbXPuvmJBqRWvOA+hgc6bUDMy1LTINnKqAhv7RehfUjaPKDPAeVN7Ho3b2ME7a8xNz8YrdSWVLmNkIEx23mchNohyTzOu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463003; c=relaxed/simple;
-	bh=ASNGwt6pQ1RdASretdKUfruVxOJlirAbpyUizWmxo5s=;
+	s=arc-20240116; t=1708463006; c=relaxed/simple;
+	bh=JbHDzirPO2ZLzPJg1oQHVG5R7OmL/2Ou+SafW2S2uTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZVFEO56E3yHQO04EZp93BSS4Xoib9XZqGhIW1ukr4zT24sCOy96p/JTvKIOiQU12b+melP3/RqlkiVwsr4Cq+cD1C+BSxFcqjZcSOyxK2+ed0NNlpiAVmThCYsnzsG0ooFp2lEr7XfM+cwKH2eK0Ehcrs0+xb67mc0xYWTbAbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhkpe9uI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SJ5RcQC2mnm4Mjs7ddD4Mr9CCYY5Ogp9z3Sh7FpqEm6LjGO2gdGXredKS7xifERVbugNpaEEiRXqno1f9zPT4VYwRvT1VRdCQ+6ibVIZNKUot8RpAXk+hib7Me72bEIpXHQC2ZgwbYRBIdrlkeKBrvBl79xFrYAYWJ5Pu3WzgdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ek3l9Ebf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhkpe9uI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F169C433C7;
-	Tue, 20 Feb 2024 21:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek3l9Ebf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A260FC433F1;
+	Tue, 20 Feb 2024 21:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463003;
-	bh=ASNGwt6pQ1RdASretdKUfruVxOJlirAbpyUizWmxo5s=;
+	s=korg; t=1708463006;
+	bh=JbHDzirPO2ZLzPJg1oQHVG5R7OmL/2Ou+SafW2S2uTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhkpe9uIHLWsg9hbll8iOVc6ZTHbdmWSA2nYaJKDG4dUpa4jlh7Zkt4+HDU4vHx5y
-	 fkjb33AmXNRCR/zyjUG56hbFRNQ+meYbjv92SrnIH+DaOR6/5W2gmyoY2H/pImMbMr
-	 NF2i4fkPG1Ia7mN8U3OAwcXwI48rjoUK9R5o35ZE=
+	b=ek3l9Ebfd/yYf88OAdoEWXhWvgx3Z0gvjGAEoVZStq3aFcyKlXqxvRCuQ/eQVBkX+
+	 RNXi0nPg7/px83oaTNFY13g29fqUf5Iwo2mfcHbL2awfvfYLfgWYE8KNVi4hsE9+WK
+	 bb3kRaSPItDuRhAh3kEcgezvyEM35nNl3IVKvVV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Duncan <lduncan@suse.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 075/197] scsi: Revert "scsi: fcoe: Fix potential deadlock on &fip->ctlr_lock"
-Date: Tue, 20 Feb 2024 21:50:34 +0100
-Message-ID: <20240220204843.322992450@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 076/197] Revert "drm/amd: flush any delayed gfxoff on suspend entry"
+Date: Tue, 20 Feb 2024 21:50:35 +0100
+Message-ID: <20240220204843.353391084@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,113 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Duncan <lduncan@suse.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 977fe773dcc7098d8eaf4ee6382cb51e13e784cb upstream.
+commit 916361685319098f696b798ef1560f69ed96e934 upstream.
 
-This reverts commit 1a1975551943f681772720f639ff42fbaa746212.
+commit ab4750332dbe ("drm/amdgpu/sdma5.2: add begin/end_use ring
+callbacks") caused GFXOFF control to be used more heavily and the
+codepath that was removed from commit 0dee72639533 ("drm/amd: flush any
+delayed gfxoff on suspend entry") now can be exercised at suspend again.
 
-This commit causes interrupts to be lost for FCoE devices, since it changed
-sping locks from "bh" to "irqsave".
+Users report that by using GNOME to suspend the lockscreen trigger will
+cause SDMA traffic and the system can deadlock.
 
-Instead, a work queue should be used, and will be addressed in a separate
-commit.
+This reverts commit 0dee726395333fea833eaaf838bc80962df886c8.
 
-Fixes: 1a1975551943 ("scsi: fcoe: Fix potential deadlock on &fip->ctlr_lock")
-Signed-off-by: Lee Duncan <lduncan@suse.com>
-Link: https://lore.kernel.org/r/c578cdcd46b60470535c4c4a953e6a1feca0dffd.1707500786.git.lduncan@suse.com
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: ab4750332dbe ("drm/amdgpu/sdma5.2: add begin/end_use ring callbacks")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/fcoe/fcoe_ctlr.c |   20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    1 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c    |    9 ++++++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/fcoe/fcoe_ctlr.c
-+++ b/drivers/scsi/fcoe/fcoe_ctlr.c
-@@ -319,17 +319,16 @@ static void fcoe_ctlr_announce(struct fc
- {
- 	struct fcoe_fcf *sel;
- 	struct fcoe_fcf *fcf;
--	unsigned long flags;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4203,7 +4203,6 @@ int amdgpu_device_suspend(struct drm_dev
+ 		drm_fb_helper_set_suspend_unlocked(adev_to_drm(adev)->fb_helper, true);
  
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_irqsave(&fip->ctlr_lock, flags);
-+	spin_lock_bh(&fip->ctlr_lock);
+ 	cancel_delayed_work_sync(&adev->delayed_init_work);
+-	flush_delayed_work(&adev->gfx.gfx_off_delay_work);
  
- 	kfree_skb(fip->flogi_req);
- 	fip->flogi_req = NULL;
- 	list_for_each_entry(fcf, &fip->fcfs, list)
- 		fcf->flogi_sent = 0;
+ 	amdgpu_ras_suspend(adev);
  
--	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
-+	spin_unlock_bh(&fip->ctlr_lock);
- 	sel = fip->sel_fcf;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -585,8 +585,15 @@ void amdgpu_gfx_off_ctrl(struct amdgpu_d
  
- 	if (sel && ether_addr_equal(sel->fcf_mac, fip->dest_addr))
-@@ -700,7 +699,6 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr
- {
- 	struct fc_frame *fp;
- 	struct fc_frame_header *fh;
--	unsigned long flags;
- 	u16 old_xid;
- 	u8 op;
- 	u8 mac[ETH_ALEN];
-@@ -734,11 +732,11 @@ int fcoe_ctlr_els_send(struct fcoe_ctlr
- 		op = FIP_DT_FLOGI;
- 		if (fip->mode == FIP_MODE_VN2VN)
- 			break;
--		spin_lock_irqsave(&fip->ctlr_lock, flags);
-+		spin_lock_bh(&fip->ctlr_lock);
- 		kfree_skb(fip->flogi_req);
- 		fip->flogi_req = skb;
- 		fip->flogi_req_send = 1;
--		spin_unlock_irqrestore(&fip->ctlr_lock, flags);
-+		spin_unlock_bh(&fip->ctlr_lock);
- 		schedule_work(&fip->timer_work);
- 		return -EINPROGRESS;
- 	case ELS_FDISC:
-@@ -1707,11 +1705,10 @@ static int fcoe_ctlr_flogi_send_locked(s
- static int fcoe_ctlr_flogi_retry(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
--	unsigned long flags;
- 	int error;
- 
- 	mutex_lock(&fip->ctlr_mutex);
--	spin_lock_irqsave(&fip->ctlr_lock, flags);
-+	spin_lock_bh(&fip->ctlr_lock);
- 	LIBFCOE_FIP_DBG(fip, "re-sending FLOGI - reselect\n");
- 	fcf = fcoe_ctlr_select(fip);
- 	if (!fcf || fcf->flogi_sent) {
-@@ -1722,7 +1719,7 @@ static int fcoe_ctlr_flogi_retry(struct
- 		fcoe_ctlr_solicit(fip, NULL);
- 		error = fcoe_ctlr_flogi_send_locked(fip);
- 	}
--	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
-+	spin_unlock_bh(&fip->ctlr_lock);
- 	mutex_unlock(&fip->ctlr_mutex);
- 	return error;
- }
-@@ -1739,9 +1736,8 @@ static int fcoe_ctlr_flogi_retry(struct
- static void fcoe_ctlr_flogi_send(struct fcoe_ctlr *fip)
- {
- 	struct fcoe_fcf *fcf;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&fip->ctlr_lock, flags);
-+	spin_lock_bh(&fip->ctlr_lock);
- 	fcf = fip->sel_fcf;
- 	if (!fcf || !fip->flogi_req_send)
- 		goto unlock;
-@@ -1768,7 +1764,7 @@ static void fcoe_ctlr_flogi_send(struct
- 	} else /* XXX */
- 		LIBFCOE_FIP_DBG(fip, "No FCF selected - defer send\n");
- unlock:
--	spin_unlock_irqrestore(&fip->ctlr_lock, flags);
-+	spin_unlock_bh(&fip->ctlr_lock);
- }
- 
- /**
+ 		if (adev->gfx.gfx_off_req_count == 0 &&
+ 		    !adev->gfx.gfx_off_state) {
+-			schedule_delayed_work(&adev->gfx.gfx_off_delay_work,
++			/* If going to s2idle, no need to wait */
++			if (adev->in_s0ix) {
++				if (!amdgpu_dpm_set_powergating_by_smu(adev,
++						AMD_IP_BLOCK_TYPE_GFX, true))
++					adev->gfx.gfx_off_state = true;
++			} else {
++				schedule_delayed_work(&adev->gfx.gfx_off_delay_work,
+ 					      delay);
++			}
+ 		}
+ 	} else {
+ 		if (adev->gfx.gfx_off_req_count == 0) {
 
 
