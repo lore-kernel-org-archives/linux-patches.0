@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813B914F9C8;
-	Tue, 20 Feb 2024 21:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D40614A4E6;
+	Tue, 20 Feb 2024 21:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464411; cv=none; b=uhm8GgTfsMNTMqvW8Wb5Dl/9WqkcxDX5+6CnA1pMuwbHUPrnEVv/vek1K17N896n+zeE6crO1tss/xGJXr6DEikKhYGR/4KvJGnm3eChNGdvkmi1DH5Qbw9A7YztfX2d75iHBCRM/CID3OHGHCbxjXVOP7LRxRO2d2eT+g+whdM=
+	t=1708464414; cv=none; b=nsfBhFcJvIrGrl7saGwY7kyDSN7zalpfSPeReVo4DU1iTdhSnPsWQ+nW6wjfPEMIHcrdlSy8rruyORDUomdTfMqUEqSBXnVwYVyH8VJ4OYdrwIZj30deISj3GhmoLZC6KKuL9ctircjZVEooLbhb6tAM8emKYs+yY8VTtzjqslU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464411; c=relaxed/simple;
-	bh=iuIMTSktW5AZffAcaZblpyZL9x8zFXvaSccJ0JdonY4=;
+	s=arc-20240116; t=1708464414; c=relaxed/simple;
+	bh=qZB1WY9/GiOnpRpFJiC3No44lIzZoovOzxkvERzS31g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VUFVM9aN6PFY7rc9mans8/OMPG0yPdiUEKTD6yYqz4QNQ8APzbSOuyrK1L6gzAtFYfkxpwEq7rViIXPhzkliOEAISI/qhDUFdoQwE+78VJjn/to74u7L4ijwfft8wOEyCYDQWtxqHUnfKxQ0bVrDCbOhcHi959+nSurXp49mPjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eej3Tegd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dGaFv7OlVSVkE3svf5V0YfBn9TGe5Ft7QaIatW5GU+O87iMDct4yXwhOrCogEF54vgjEdzP70AIP1rm4s422oV0UuIaaiD2F7y7bBf8o3qfXVnXdJspFeNiLbX2nxS/a4I/PuNTvmW060OnkgxJwz6pWcH5COfoV5r7h35R3YgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0eaxnuu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eej3Tegd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B18C433F1;
-	Tue, 20 Feb 2024 21:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0eaxnuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8220C433F1;
+	Tue, 20 Feb 2024 21:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464411;
-	bh=iuIMTSktW5AZffAcaZblpyZL9x8zFXvaSccJ0JdonY4=;
+	s=korg; t=1708464414;
+	bh=qZB1WY9/GiOnpRpFJiC3No44lIzZoovOzxkvERzS31g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eej3TegdR/8KjwzrYqIwyd4/I2L+FshEV7qsSFZWaz6znj9su9qqKi+Sj9nhZmPlf
-	 HBw/AIfWPryvng2OsRybMXZYuzjFWv9yo+rZMrd+FWugoiyBos/mUoFZ9VkQWz5qmY
-	 lsKC9Gzq60wt/3B1br18SS+TtWx2ZMNO5G8BX73Y=
+	b=z0eaxnuu9nvVgRfI53V9eArYW2nC253XIvEMYTgsDchfs/FYKTvre3KJUA6tF1IyW
+	 rZ/2SU5gPOCfnzsYj3GJGOhKoOtzdNgp2tp8/SQ8BW1+BODhvz/ZV9syrO+mEBztY7
+	 HaA/j3FfaPVFCFDXrCpJ8kEj7zUy/Ga19dHQ4nOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Rob Herring <robh@kernel.org>,
+	Hu Yadi <hu.yadi@h3c.com>,
+	Jiao <jiaoxupo@h3c.com>,
+	Berlin <berlin@h3c.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 017/309] kselftest: dt: Stop relying on dirname to improve performance
-Date: Tue, 20 Feb 2024 21:52:56 +0100
-Message-ID: <20240220205633.701678922@linuxfoundation.org>
+Subject: [PATCH 6.7 018/309] selftests/landlock: Fix net_test build with old libc
+Date: Tue, 20 Feb 2024 21:52:57 +0100
+Message-ID: <20240220205633.740983970@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -53,68 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Hu Yadi <hu.yadi@h3c.com>
 
-[ Upstream commit 6154fb9c2134f8d9534b2de10491aa3a22f3c9ff ]
+[ Upstream commit 116099ed345c932a8ae4a0d884a8f6cc54fd5fed ]
 
-When walking directory trees, instead of looking for specific files and
-running dirname to get the parent folder, traverse all folders and
-ignore the ones not containing the desired files. This avoids the need
-to call dirname inside the loop, which drastically decreases run time:
-Running locally on a mt8192-asurada-spherion, which reports 160 test
-cases, has gone from 5.5s to 2.9s, while running remotely with an
-nfsroot has gone from 13.5s to 5.5s.
+One issue comes up while building selftest/landlock/net_test on my side
+(gcc 7.3/glibc-2.28/kernel-4.19).
 
-This change has a side-effect, which is that the root DT node now
-also shows in the output, even though it isn't expected to bind to a
-driver. However there shouldn't be a matching driver for the board
-compatible, so the end result will be just an extra skipped test:
+net_test.c: In function ‘set_service’:
+net_test.c:91:45: warning: implicit declaration of function ‘gettid’; [-Wimplicit-function-declaration]
+    "_selftests-landlock-net-tid%d-index%d", gettid(),
+                                             ^~~~~~
+                                             getgid
+net_test.c:(.text+0x4e0): undefined reference to `gettid'
 
-ok 1 / # SKIP
-
-Reported-by: Mark Brown <broonie@kernel.org>
-Closes: https://lore.kernel.org/all/310391e8-fdf2-4c2f-a680-7744eb685177@sirena.org.uk
-Fixes: 14571ab1ad21 ("kselftest: Add new test for detecting unprobed Devicetree devices")
-Tested-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/r/20240122-dt-kselftest-dirname-perf-fix-v2-1-f1630532fd38@collabora.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Hu Yadi <hu.yadi@h3c.com>
+Suggested-by: Jiao <jiaoxupo@h3c.com>
+Reviewed-by: Berlin <berlin@h3c.com>
+Fixes: a549d055a22e ("selftests/landlock: Add network tests")
+Link: https://lore.kernel.org/r/20240123062621.25082-1-hu.yadi@h3c.com
+[mic: Cosmetic fixes]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/dt/test_unprobed_devices.sh | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ tools/testing/selftests/landlock/net_test.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/dt/test_unprobed_devices.sh b/tools/testing/selftests/dt/test_unprobed_devices.sh
-index b07af2a4c4de..7fae90293a9d 100755
---- a/tools/testing/selftests/dt/test_unprobed_devices.sh
-+++ b/tools/testing/selftests/dt/test_unprobed_devices.sh
-@@ -33,8 +33,8 @@ if [[ ! -d "${PDT}" ]]; then
- fi
+diff --git a/tools/testing/selftests/landlock/net_test.c b/tools/testing/selftests/landlock/net_test.c
+index 929e21c4db05..e07267acbc9a 100644
+--- a/tools/testing/selftests/landlock/net_test.c
++++ b/tools/testing/selftests/landlock/net_test.c
+@@ -17,6 +17,7 @@
+ #include <string.h>
+ #include <sys/prctl.h>
+ #include <sys/socket.h>
++#include <sys/syscall.h>
+ #include <sys/un.h>
  
- nodes_compatible=$(
--	for node_compat in $(find ${PDT} -name compatible); do
--		node=$(dirname "${node_compat}")
-+	for node in $(find ${PDT} -type d); do
-+		[ ! -f "${node}"/compatible ] && continue
- 		# Check if node is available
- 		if [[ -e "${node}"/status ]]; then
- 			status=$(tr -d '\000' < "${node}"/status)
-@@ -46,10 +46,11 @@ nodes_compatible=$(
+ #include "common.h"
+@@ -54,6 +55,11 @@ struct service_fixture {
+ 	};
+ };
  
- nodes_dev_bound=$(
- 	IFS=$'\n'
--	for uevent in $(find /sys/devices -name uevent); do
--		if [[ -d "$(dirname "${uevent}")"/driver ]]; then
--			grep '^OF_FULLNAME=' "${uevent}" | sed -e 's|OF_FULLNAME=||'
--		fi
-+	for dev_dir in $(find /sys/devices -type d); do
-+		[ ! -f "${dev_dir}"/uevent ] && continue
-+		[ ! -d "${dev_dir}"/driver ] && continue
++static pid_t sys_gettid(void)
++{
++	return syscall(__NR_gettid);
++}
 +
-+		grep '^OF_FULLNAME=' "${dev_dir}"/uevent | sed -e 's|OF_FULLNAME=||'
- 	done
- 	)
- 
+ static int set_service(struct service_fixture *const srv,
+ 		       const struct protocol_variant prot,
+ 		       const unsigned short index)
+@@ -88,7 +94,7 @@ static int set_service(struct service_fixture *const srv,
+ 	case AF_UNIX:
+ 		srv->unix_addr.sun_family = prot.domain;
+ 		sprintf(srv->unix_addr.sun_path,
+-			"_selftests-landlock-net-tid%d-index%d", gettid(),
++			"_selftests-landlock-net-tid%d-index%d", sys_gettid(),
+ 			index);
+ 		srv->unix_addr_len = SUN_LEN(&srv->unix_addr);
+ 		srv->unix_addr.sun_path[0] = '\0';
 -- 
 2.43.0
 
