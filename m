@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2E314F9DA;
-	Tue, 20 Feb 2024 20:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C6A151CCB;
+	Tue, 20 Feb 2024 20:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462719; cv=none; b=bBqxyy8TRxRRTY8B5ayYpm6ZJ9qWQxVAqyQnta1lO5NtShFw5AtHbCwtojpi6zrhWmLtn+HPd0YUkcDzmqlJ5hWmSeN5VFkW1pWbE6UgPbk9W6ayj0vbL6/gJGOmzunWbKR4ZPCYUWWWMmirOJfDxvo1fB4ZhHkgq/rgDzfBH44=
+	t=1708462723; cv=none; b=eh/cxN9S9nuL0RrKm89ZVHFFblH6U7FA7nrusbSLAewTQ486hEn3vuNiypYY1hiFt/+J7XXjUWoYCq2S7RqhttTL4OQ7x8pUx83xxrZ0mjO5I/onE9PbBX9LktwPkE+P06W9Vqq6PHxBf3x9mJhtQERnDHLrCk/BmIwH2ezSjCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462719; c=relaxed/simple;
-	bh=T924ZyKAWI7LSZydzgMbq5eHF0oWR3Ac/p4YIxp67PU=;
+	s=arc-20240116; t=1708462723; c=relaxed/simple;
+	bh=EkVsbOMRstslca3lEnOFXX7bGxnI+Yr91DUG78J8WLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDiF6L4hgFnuAUr5k9dqLeSYgBkBVlPEmiROreBmO4lDw47DA/JNmrm1FyCp+q9v7rUBIpyFC5oZfsbL5Xr+nAnhYXKEWysroiZufc051f5g9sCCNuWjoJ7H+kHGRVFLlcQHW1W4CnWjX4GVm4SyclSGaRKGsnVc1kTkD7Yg3H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeFYMmDR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KKOjAu4MrQmpu6PPKz1bv+xB5dX6gIuik1ZRkjkdtfEZpfDpxNmApPac+NFFq9HZqqvoHyckVVdAdYyRjuKfGal/M9Ijff/qTFhS2/kXR+5QaJZwdaBNinyVkvp/BbzPDbepD/oXHlr8kPQza/zqPN2nj0g/AzbqaNzZgmrMZ4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDX7vGZZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeFYMmDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE767C433F1;
-	Tue, 20 Feb 2024 20:58:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDX7vGZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F9DC433C7;
+	Tue, 20 Feb 2024 20:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462719;
-	bh=T924ZyKAWI7LSZydzgMbq5eHF0oWR3Ac/p4YIxp67PU=;
+	s=korg; t=1708462722;
+	bh=EkVsbOMRstslca3lEnOFXX7bGxnI+Yr91DUG78J8WLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NeFYMmDRXi/vAiWjysqBuNmibnrTS6Uzh0SBBrsJY1x0al2aajzSmU360fkWPGprw
-	 TKs1qPtB6zdRszgLygZKlxujj9FOM/UFIwIpYFa9CpuRLyBuQplOj+Pvq/ciug897T
-	 cCduTledMAacV9WXj8zHZgoregyV92ut2o2X6mH4=
+	b=HDX7vGZZR0aVFvtyZeMzO8wif5g0G8mn4sscVf1PJBNuAO/uSmf1dHohszkyCyzXn
+	 siXtOkgXpaDCsV9+xGo20mMn1s4yA67Y5hW6Qdmo2SSQ1Z5lpsi8i6tCP4cW/p57Co
+	 9hF/IuVkAwMiXWOQggx4kTPHYU5MpdVk9W4oWBxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/197] wifi: iwlwifi: Fix some error codes
-Date: Tue, 20 Feb 2024 21:49:35 +0100
-Message-ID: <20240220204841.568582141@linuxfoundation.org>
+Subject: [PATCH 6.1 017/197] wifi: iwlwifi: uninitialized variable in iwl_acpi_get_ppag_table()
+Date: Tue, 20 Feb 2024 21:49:36 +0100
+Message-ID: <20240220204841.597906790@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -53,79 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit c6ebb5b67641994de8bc486b33457fe0b681d6fe ]
+[ Upstream commit 65c6ee90455053cfd3067c17aaa4a42b0c766543 ]
 
-This saves the error as PTR_ERR(wifi_pkg).  The problem is that
-"wifi_pkg" is a valid pointer, not an error pointer.  Set the error code
-to -EINVAL instead.
+This is an error path and Smatch complains that "tbl_rev" is uninitialized
+on this path.  All the other functions follow this same patter where they
+set the error code and goto out_free so that's probably what was intended
+here as well.
 
-Fixes: 2a8084147bff ("iwlwifi: acpi: support reading and storing WRDS revision 1 and 2")
+Fixes: e8e10a37c51c ("iwlwifi: acpi: move ppag code from mvm to fw/acpi")
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://msgid.link/9620bb77-2d7c-4d76-b255-ad824ebf8e35@moroto.mountain
+Link: https://msgid.link/09900c01-6540-4a32-9451-563da0029cb6@moroto.mountain
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index 585e8cd2d332..bdb8464cd432 100644
+index bdb8464cd432..f5fcc547de39 100644
 --- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
 +++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -576,7 +576,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 2) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
+@@ -1044,6 +1044,9 @@ int iwl_acpi_get_ppag_table(struct iwl_fw_runtime *fwrt)
+ 		goto read_table;
+ 	}
  
-@@ -592,7 +592,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 1) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
-@@ -608,7 +608,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 0) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
-@@ -665,7 +665,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 2) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
-@@ -681,7 +681,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 1) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
-@@ -697,7 +697,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 0) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
++	ret = PTR_ERR(wifi_pkg);
++	goto out_free;
++
+ read_table:
+ 	fwrt->ppag_ver = tbl_rev;
+ 	flags = &wifi_pkg->package.elements[1];
 -- 
 2.43.0
 
