@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD4514F9C8;
-	Tue, 20 Feb 2024 21:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E0514F9DA;
+	Tue, 20 Feb 2024 21:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464289; cv=none; b=hHJsg2zjj4vCMGisWt15oTx5VmDshau1sGC/HV524poyd6OcVvyqneR+uzYd3K6jQ3t5x/uwJGxkIwMM1O7lnlzp/sp6WQv8RjZytFRiNVcPFhy4sg2XgZyo386SUe86QZg6rEtNnJUftSXOOElyMi6PMcDCCHGYXLTq9TExJ4Q=
+	t=1708464292; cv=none; b=G5L8u+jZ2dOx8sMzjiwv1t2LkyIyGl4O9md6to9kD3/OdJJ3Jdc/bJTOFly6j+B7TkDeqekliotv02RQ2ZgwNKanN1WJeU2uMh+9Rjm1cNnYgthfps+VsMx+CQEMrmXVezE7iT8mD9JkT2yUIRaQESdjMP5ByIQXUF6lzu/Z5yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464289; c=relaxed/simple;
-	bh=EVvcKmQ5uq/VUW8Qo+aS6VpmnPfRwzOaH0PXSXNvSYg=;
+	s=arc-20240116; t=1708464292; c=relaxed/simple;
+	bh=JrhxLuRwM5/GWRHF5JOp0tf8BllDagVmc+eMX78YSqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nuFghYLGW4r1+rr8n98bKFn2Lo9S/f6fwiD0QBgWMNgu4TyMW8+NveMj4AZD/4EpNlxL5E2E0KW/A2AFzE7230PdILYD7M5xUGOz8fbfkRPvqYjne+ECkH44BRnTmXGFf3sbG6sSG4PjH5o8bw0/N+MlzZpRQhQ5Q8/klZe0WW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bpx9dKdU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TWSS1++R0Tj5yWVckoDP1IM1AZPD7p8+zzkRpMGGVp8M/YZ0ChIQQpIg134rMLyIwLxglapKSjwNTgRruDWE5Wftqi0ueYymAgL4KLEHuTwNCk4nD9tWquZOyTs+EIgMPae2crU6050Tavw1RR2eQHXOtXlzd8oCMiByz0JLwXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3ZSHD8H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bpx9dKdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E200C433F1;
-	Tue, 20 Feb 2024 21:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3ZSHD8H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B61C433C7;
+	Tue, 20 Feb 2024 21:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464289;
-	bh=EVvcKmQ5uq/VUW8Qo+aS6VpmnPfRwzOaH0PXSXNvSYg=;
+	s=korg; t=1708464292;
+	bh=JrhxLuRwM5/GWRHF5JOp0tf8BllDagVmc+eMX78YSqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bpx9dKdU7BMaSuZLNM+lEWwwGTF8QRjJnONPzx4p7euUV8S2ky5JiSbjhSUgtX6TM
-	 /OkUhCTMRlQUzGwe8qJi7FU4dVJgpcpgKEhIaw/GxPTXXLtjpo2vFWtkfSPHgMLdyN
-	 zFL8CYyIb8wYpxrevPMqYYRxy73T5w9+49UCI2+g=
+	b=U3ZSHD8HlHy3JOHDW4eOfT2QM7BcO4KnLGPpWmJ0+JrMSvUGc4kbo7ik94DtuT7qH
+	 GXBqOyOqc229pi0GmH5NSs0hsaje5JtD5MzzlcNDsj1OyT8UkxKDAz1ZoD8Jnk+OEr
+	 vKSxIIX/+tEkrvoPD+sdlYRHmVR/4UuLcirEDG3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Linus Torvalds <torvalds@linux-foundation.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@ZenIV.linux.org.uk>,
+	Ajay Kaher <ajay.kaher@broadcom.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 303/331] tracefs: remove stale update_gid code
-Date: Tue, 20 Feb 2024 21:56:59 +0100
-Message-ID: <20240220205647.636434942@linuxfoundation.org>
+Subject: [PATCH 6.6 312/331] eventfs: Restructure eventfs_inode structure to be more condensed
+Date: Tue, 20 Feb 2024 21:57:08 +0100
+Message-ID: <20240220205647.997228454@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,80 +56,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 29142dc92c37d3259a33aef15b03e6ee25b0d188 upstream.
+commit 264424dfdd5cbd92bc5b5ddf93944929fc877fac upstream.
 
-The 'eventfs_update_gid()' function is no longer called, so remove it
-(and the helper function it uses).
+Some of the eventfs_inode structure has holes in it. Rework the structure
+to be a bit more condensed, and also remove the no longer used llist
+field.
 
-Link: https://lore.kernel.org/all/CAHk-=wj+DsZZ=2iTUkJ-Nojs9fjYMvPs1NuoM3yK7aTDtJfPYQ@mail.gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20240201161617.002321438@goodmis.org
 
-Fixes: 8186fff7ab64 ("tracefs/eventfs: Use root and instance inodes as default ownership")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Al Viro <viro@ZenIV.linux.org.uk>
+Cc: Ajay Kaher <ajay.kaher@broadcom.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |   38 --------------------------------------
- fs/tracefs/internal.h    |    1 -
- 2 files changed, 39 deletions(-)
+ fs/tracefs/internal.h |   27 ++++++++++++---------------
+ 1 file changed, 12 insertions(+), 15 deletions(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -281,44 +281,6 @@ static void update_inode_attr(struct den
- 		inode->i_gid = attr->gid;
- }
- 
--static void update_gid(struct eventfs_inode *ei, kgid_t gid, int level)
--{
--	struct eventfs_inode *ei_child;
--
--	/* at most we have events/system/event */
--	if (WARN_ON_ONCE(level > 3))
--		return;
--
--	ei->attr.gid = gid;
--
--	if (ei->entry_attrs) {
--		for (int i = 0; i < ei->nr_entries; i++) {
--			ei->entry_attrs[i].gid = gid;
--		}
--	}
--
--	/*
--	 * Only eventfs_inode with dentries are updated, make sure
--	 * all eventfs_inodes are updated. If one of the children
--	 * do not have a dentry, this function must traverse it.
--	 */
--	list_for_each_entry_srcu(ei_child, &ei->children, list,
--				 srcu_read_lock_held(&eventfs_srcu)) {
--		if (!ei_child->dentry)
--			update_gid(ei_child, gid, level + 1);
--	}
--}
--
--void eventfs_update_gid(struct dentry *dentry, kgid_t gid)
--{
--	struct eventfs_inode *ei = dentry->d_fsdata;
--	int idx;
--
--	idx = srcu_read_lock(&eventfs_srcu);
--	update_gid(ei, gid, 0);
--	srcu_read_unlock(&eventfs_srcu, idx);
--}
--
- /**
-  * create_file - create a file in the tracefs filesystem
-  * @name: the name of the file to create.
 --- a/fs/tracefs/internal.h
 +++ b/fs/tracefs/internal.h
-@@ -82,7 +82,6 @@ struct inode *tracefs_get_inode(struct s
- struct dentry *eventfs_start_creating(const char *name, struct dentry *parent);
- struct dentry *eventfs_failed_creating(struct dentry *dentry);
- struct dentry *eventfs_end_creating(struct dentry *dentry);
--void eventfs_update_gid(struct dentry *dentry, kgid_t gid);
- void eventfs_set_ei_status_free(struct tracefs_inode *ti, struct dentry *dentry);
+@@ -32,40 +32,37 @@ struct eventfs_attr {
+ /*
+  * struct eventfs_inode - hold the properties of the eventfs directories.
+  * @list:	link list into the parent directory
++ * @rcu:	Union with @list for freeing
++ * @children:	link list into the child eventfs_inode
+  * @entries:	the array of entries representing the files in the directory
+  * @name:	the name of the directory to create
+- * @children:	link list into the child eventfs_inode
+  * @events_dir: the dentry of the events directory
+  * @entry_attrs: Saved mode and ownership of the @d_children
+- * @attr:	Saved mode and ownership of eventfs_inode itself
+  * @data:	The private data to pass to the callbacks
++ * @attr:	Saved mode and ownership of eventfs_inode itself
+  * @is_freed:	Flag set if the eventfs is on its way to be freed
+  *                Note if is_freed is set, then dentry is corrupted.
++ * @is_events:	Flag set for only the top level "events" directory
+  * @nr_entries: The number of items in @entries
++ * @ino:	The saved inode number
+  */
+ struct eventfs_inode {
+-	struct kref			kref;
+-	struct list_head		list;
++	union {
++		struct list_head	list;
++		struct rcu_head		rcu;
++	};
++	struct list_head		children;
+ 	const struct eventfs_entry	*entries;
+ 	const char			*name;
+-	struct list_head		children;
+ 	struct dentry			*events_dir;
+ 	struct eventfs_attr		*entry_attrs;
+-	struct eventfs_attr		attr;
+ 	void				*data;
++	struct eventfs_attr		attr;
++	struct kref			kref;
+ 	unsigned int			is_freed:1;
+ 	unsigned int			is_events:1;
+ 	unsigned int			nr_entries:30;
+ 	unsigned int			ino;
+-	/*
+-	 * Union - used for deletion
+-	 * @llist:	for calling dput() if needed after RCU
+-	 * @rcu:	eventfs_inode to delete in RCU
+-	 */
+-	union {
+-		struct llist_node	llist;
+-		struct rcu_head		rcu;
+-	};
+ };
  
- #endif /* _TRACEFS_INTERNAL_H */
+ static inline struct tracefs_inode *get_tracefs(const struct inode *inode)
 
 
