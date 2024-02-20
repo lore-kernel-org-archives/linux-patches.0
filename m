@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A97446C9;
-	Tue, 20 Feb 2024 21:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AE4446C9;
+	Tue, 20 Feb 2024 21:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465101; cv=none; b=XTxrH5/yAHjJKQw8g57hDW36DuovYrnrnnnisNYjEFFXW9RrPKmU/avpdqxhtLcpCqI72g5iIMISzw4zhrCMyuEBcoWsyTT2O8y9udIDsFu+owR/fnwNzjsVBDUExBvdn8CEorKcMhH2sCjMHs5NoeFDxAQNN6pF+XBpkocX0n8=
+	t=1708465104; cv=none; b=jW8n5urhtwQicN4yXGI5jb9ARG28iLIkQvjkabBiL+ZYFPlYqmNig8JQEEKlXTTmOxQ8IYGl8FOBOBCjw7eWjJzqiVvbUgKfIXD6cU4zeKuucGDdZGNwak422/+mM0U31MmEM2e6lN5vzecPdMXjFXQoUrmzO+C7x56fWtcKBfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465101; c=relaxed/simple;
-	bh=P69w97O0XKbNX6naWG7FuKeEpYKuk3aqcOBqVO9gwYE=;
+	s=arc-20240116; t=1708465104; c=relaxed/simple;
+	bh=5K5kIEWzFpmI40Wbl19bPlDHjmkeuDjtSsng6IXC86I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOD0ScSqAnZrxaCbBwx9VEnnBYN9DgDtprbprcRWTSOakQS8YdnOlE7j3M27mAANsTIkItYJW98riSbnbkE5WjHwXrqzNl9qxx5hot4UcJh6Wtb6Y9wMYy1nj2v5evLRis7A9Cm3plwaV/rzSmSwddsSVPGnEkeKf5QZ1P8eBEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/4fAdeh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jHM9PA8A7/gwRdCmGqm098Yep75kYrL8yhHFr03Y9PgEab/mokj+dmS+eDdD0cO9ln9wSPdHqvbIpJNVtECq9NpJJ4vYYbVM3Sjg1yFSiympMtzQAxS/xXi5SW0Pd8wuvycFSE1jRAOowGFXbLf1B0ilSWazcc0g5vFQpJQtO/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfSsDNo1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/4fAdeh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1804C433C7;
-	Tue, 20 Feb 2024 21:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfSsDNo1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB27C433C7;
+	Tue, 20 Feb 2024 21:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465101;
-	bh=P69w97O0XKbNX6naWG7FuKeEpYKuk3aqcOBqVO9gwYE=;
+	s=korg; t=1708465104;
+	bh=5K5kIEWzFpmI40Wbl19bPlDHjmkeuDjtSsng6IXC86I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/4fAdehDlGJ2G+JCiRjbNtsBY1jrNJke+4fFeA0pUZZ/IPW3fxM9Nhqii8jxgLkB
-	 DWnGD+KOLsQMk9xwVGoQEha0nGKRgEQ5H1fltqNgR858Lxgj2RgYG/pVIHDLRihNOg
-	 yLl8bNnH7vmBMw+sJGkG+YEpZV9niOg2RtFzXZKA=
+	b=lfSsDNo185F39KqgmjJYNHe/ZMH+txx5KbQoW9eHuI6ddru7ATgYJxpjNWm3Yunoe
+	 UQEL8w56tIZLo4aOyCA73CVTx4/wN8aBZGje5Qccwu2cJOP/xBHYSheziQQU5WiuN2
+	 JPRwKSnCY7QRjEiLO5p5mL/pP8HLy0Sx3MNuT5qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.7 237/309] mmc: slot-gpio: Allow non-sleeping GPIO ro
-Date: Tue, 20 Feb 2024 21:56:36 +0100
-Message-ID: <20240220205640.580438052@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.7 238/309] gpiolib: add gpio_device_get_base() stub for !GPIOLIB
+Date: Tue, 20 Feb 2024 21:56:37 +0100
+Message-ID: <20240220205640.608737466@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,44 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit cc9432c4fb159a3913e0ce3173b8218cd5bad2e0 upstream.
+commit ebe0c15b135b1e4092c25b95d89e9a5899467499 upstream.
 
-This change uses the appropriate _cansleep or non-sleeping API for
-reading GPIO read-only state. This allows users with GPIOs that
-never sleepbeing called in atomic context.
+Add empty stub of gpio_device_get_base() when GPIOLIB is not enabled.
 
-Implement the same mechanism as in commit 52af318c93e97 ("mmc: Allow
-non-sleeping GPIO cd").
-
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240206083912.2543142-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 8c85a102fc4e ("gpiolib: provide gpio_device_get_base()")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/slot-gpio.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/linux/gpio/driver.h |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/mmc/core/slot-gpio.c
-+++ b/drivers/mmc/core/slot-gpio.c
-@@ -75,11 +75,15 @@ EXPORT_SYMBOL(mmc_gpio_set_cd_irq);
- int mmc_gpio_get_ro(struct mmc_host *host)
- {
- 	struct mmc_gpio *ctx = host->slot.handler_priv;
-+	int cansleep;
- 
- 	if (!ctx || !ctx->ro_gpio)
- 		return -ENOSYS;
- 
--	return gpiod_get_value_cansleep(ctx->ro_gpio);
-+	cansleep = gpiod_cansleep(ctx->ro_gpio);
-+	return cansleep ?
-+		gpiod_get_value_cansleep(ctx->ro_gpio) :
-+		gpiod_get_value(ctx->ro_gpio);
+--- a/include/linux/gpio/driver.h
++++ b/include/linux/gpio/driver.h
+@@ -800,6 +800,12 @@ static inline struct gpio_chip *gpiod_to
+ 	return ERR_PTR(-ENODEV);
  }
- EXPORT_SYMBOL(mmc_gpio_get_ro);
  
++static inline int gpio_device_get_base(struct gpio_device *gdev)
++{
++	WARN_ON(1);
++	return -ENODEV;
++}
++
+ static inline int gpiochip_lock_as_irq(struct gpio_chip *gc,
+ 				       unsigned int offset)
+ {
 
 
