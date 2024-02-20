@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605CE14A4E6;
-	Tue, 20 Feb 2024 21:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483A114A4E6;
+	Tue, 20 Feb 2024 21:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464308; cv=none; b=lrntNcru8DhUJslRmbWCgIijET8AlDMIMWTBQPo2OBcGvUy7j8UacNVRXMSZWEUy9txkBXP8DmycR+OMS7UeFNwnWEXpc2SLgawXiEtcP546kOvN5g1GHFiqqtTJ9UBaftgwkqdjWxJS6NRacvsUB+nngKLfP3Heywx8ntA2PdY=
+	t=1708464311; cv=none; b=AjY4nAsnoVKWfXkmBny2ynShKFIm4I/2YiGb/QBW3LUY1i8lbCxHTIAsF3rgVicvePhz5HYKG2LDziS7AwVhC7G7SAdYSErw74DVV72cWWsGn+QJBwyM4iBxmUOVk/vutqvG8FFiVKZHfbzcikylNM6CFrFtnm9bN7G3GjwLFRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464308; c=relaxed/simple;
-	bh=WRDksiKt9x9sCl1txKagCjOoucbIApvh75dw4QGv0Ds=;
+	s=arc-20240116; t=1708464311; c=relaxed/simple;
+	bh=N0wGQ+hUoPg3hDPvePFDE1nZh5GSQG+ulI2Yw6oROjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRUowFrz4v3zYfS8Eod8fdYAOnp5pCh/CNqX5TZwVoUsAIRTdp7986q4Iw3wTSQrGYjZbB7IyRnfnyJM1scWnfDq0Phaag2TcSz3osbokugSEEfJHfuCEFCTGnnvVE///V/PPis9gTG5mkMpAOAQ458XYgycxYTRpXA1hsGgV0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qr2JRT+1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fRZsMjIZlIqvrM3e5oyCH+TqSzS9imusv3/mvr19O9uBKHI+b01rEpXsbMVoPoHkpPDgmso8GFn9vXb2En9zFuKvIjDB27DRLUbKzu4qadnMtNT47b0gistKYSPeOXR3pk/b5aYgnX314V9CYf7HYToCggGnTShVSXzilxB8MzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLtmbICN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qr2JRT+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C9EC433F1;
-	Tue, 20 Feb 2024 21:25:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLtmbICN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA93C433C7;
+	Tue, 20 Feb 2024 21:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464308;
-	bh=WRDksiKt9x9sCl1txKagCjOoucbIApvh75dw4QGv0Ds=;
+	s=korg; t=1708464311;
+	bh=N0wGQ+hUoPg3hDPvePFDE1nZh5GSQG+ulI2Yw6oROjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qr2JRT+1a35UvJGKFjz83Xrb5Rzgluo3i9Hsbvodgj/we/BO4Ou8O0oovU4FfLrlp
-	 ls0IDcLESEMTyvu/FIxiPRDfMnnKIzILxmgRDExvgpMMefhdIIwYdFX1gs4u9sMwBJ
-	 +O1y54vddgIy25GRC4/El2qQiM5kT4W4RzhMlR9g=
+	b=sLtmbICNA3qHUJ9+DIsCHb2LMutcnegoKr1+0NN+rqBD2ANykFGD5tsEOqgwkyxBq
+	 4UfUBVGk0CtJMxgUG1/o8N31TCNOdx1UQ4zi18xo0J0NDpHdu7Js0HkNXG94TKkrNM
+	 0N/RYg7rLTvqRCxzvmBQeIl4ES69ztIojNVEPU2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.6 317/331] x86/efi: Disregard setup header of loaded image
-Date: Tue, 20 Feb 2024 21:57:13 +0100
-Message-ID: <20240220205648.176674276@linuxfoundation.org>
+Subject: [PATCH 6.6 318/331] x86/efi: Drop alignment flags from PE section headers
+Date: Tue, 20 Feb 2024 21:57:14 +0100
+Message-ID: <20240220205648.214789171@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,108 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 7e50262229faad0c7b8c54477cd1c883f31cc4a7 upstream.
+commit bfab35f552ab3dd6d017165bf9de1d1d20f198cc upstream.
 
-The native EFI entrypoint does not take a struct boot_params from the
-loader, but instead, it constructs one from scratch, using the setup
-header data placed at the start of the image.
-
-This setup header is placed in a way that permits legacy loaders to
-manipulate the contents (i.e., to pass the kernel command line or the
-address and size of an initial ramdisk), but EFI boot does not use it in
-that way - it only copies the contents that were placed there at build
-time, but EFI loaders will not (and should not) manipulate the setup
-header to configure the boot. (Commit 63bf28ceb3ebbe76 "efi: x86: Wipe
-setup_data on pure EFI boot" deals with some of the fallout of using
-setup_data in a way that breaks EFI boot.)
-
-Given that none of the non-zero values that are copied from the setup
-header into the EFI stub's struct boot_params are relevant to the boot
-now that the EFI stub no longer enters via the legacy decompressor, the
-copy can be omitted altogether.
+The section header flags for alignment are documented in the PE/COFF
+spec as being applicable to PE object files only, not to PE executables
+such as the Linux bzImage, so let's drop them from the PE header.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230912090051.4014114-19-ardb@google.com
+Link: https://lore.kernel.org/r/20230912090051.4014114-20-ardb@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/x86-stub.c |   46 ++++----------------------------
- 1 file changed, 6 insertions(+), 40 deletions(-)
+ arch/x86/boot/header.S |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/drivers/firmware/efi/libstub/x86-stub.c
-+++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -458,9 +458,8 @@ void __noreturn efi_stub_entry(efi_handl
- efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 				   efi_system_table_t *sys_table_arg)
- {
--	struct boot_params *boot_params;
--	struct setup_header *hdr;
--	void *image_base;
-+	static struct boot_params boot_params __page_aligned_bss;
-+	struct setup_header *hdr = &boot_params.hdr;
- 	efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
- 	int options_size = 0;
- 	efi_status_t status;
-@@ -478,30 +477,9 @@ efi_status_t __efiapi efi_pe_entry(efi_h
- 		efi_exit(handle, status);
- 	}
+--- a/arch/x86/boot/header.S
++++ b/arch/x86/boot/header.S
+@@ -209,8 +209,7 @@ section_table:
+ 	.word	0				# NumberOfLineNumbers
+ 	.long	IMAGE_SCN_CNT_CODE		| \
+ 		IMAGE_SCN_MEM_READ		| \
+-		IMAGE_SCN_MEM_EXECUTE		| \
+-		IMAGE_SCN_ALIGN_16BYTES		# Characteristics
++		IMAGE_SCN_MEM_EXECUTE		# Characteristics
  
--	image_base = efi_table_attr(image, image_base);
--
--	status = efi_allocate_pages(sizeof(struct boot_params),
--				    (unsigned long *)&boot_params, ULONG_MAX);
--	if (status != EFI_SUCCESS) {
--		efi_err("Failed to allocate lowmem for boot params\n");
--		efi_exit(handle, status);
--	}
--
--	memset(boot_params, 0x0, sizeof(struct boot_params));
--
--	hdr = &boot_params->hdr;
--
--	/* Copy the setup header from the second sector to boot_params */
--	memcpy(&hdr->jump, image_base + 512,
--	       sizeof(struct setup_header) - offsetof(struct setup_header, jump));
--
--	/*
--	 * Fill out some of the header fields ourselves because the
--	 * EFI firmware loader doesn't load the first sector.
--	 */
-+	/* Assign the setup_header fields that the kernel actually cares about */
- 	hdr->root_flags	= 1;
- 	hdr->vid_mode	= 0xffff;
--	hdr->boot_flag	= 0xAA55;
+ 	#
+ 	# The EFI application loader requires a relocation section
+@@ -230,8 +229,7 @@ section_table:
+ 	.word	0				# NumberOfLineNumbers
+ 	.long	IMAGE_SCN_CNT_INITIALIZED_DATA	| \
+ 		IMAGE_SCN_MEM_READ		| \
+-		IMAGE_SCN_MEM_DISCARDABLE	| \
+-		IMAGE_SCN_ALIGN_1BYTES		# Characteristics
++		IMAGE_SCN_MEM_DISCARDABLE	# Characteristics
  
- 	hdr->type_of_loader = 0x21;
+ #ifdef CONFIG_EFI_MIXED
+ 	#
+@@ -249,8 +247,7 @@ section_table:
+ 	.word	0				# NumberOfLineNumbers
+ 	.long	IMAGE_SCN_CNT_INITIALIZED_DATA	| \
+ 		IMAGE_SCN_MEM_READ		| \
+-		IMAGE_SCN_MEM_DISCARDABLE	| \
+-		IMAGE_SCN_ALIGN_1BYTES		# Characteristics
++		IMAGE_SCN_MEM_DISCARDABLE	# Characteristics
+ #endif
  
-@@ -510,25 +488,13 @@ efi_status_t __efiapi efi_pe_entry(efi_h
- 	if (!cmdline_ptr)
- 		goto fail;
+ 	#
+@@ -271,8 +268,7 @@ section_table:
+ 	.word	0				# NumberOfLineNumbers
+ 	.long	IMAGE_SCN_CNT_CODE		| \
+ 		IMAGE_SCN_MEM_READ		| \
+-		IMAGE_SCN_MEM_EXECUTE		| \
+-		IMAGE_SCN_ALIGN_16BYTES		# Characteristics
++		IMAGE_SCN_MEM_EXECUTE		# Characteristics
  
--	efi_set_u64_split((unsigned long)cmdline_ptr,
--			  &hdr->cmd_line_ptr, &boot_params->ext_cmd_line_ptr);
--
--	hdr->ramdisk_image = 0;
--	hdr->ramdisk_size = 0;
-+	efi_set_u64_split((unsigned long)cmdline_ptr, &hdr->cmd_line_ptr,
-+			  &boot_params.ext_cmd_line_ptr);
- 
--	/*
--	 * Disregard any setup data that was provided by the bootloader:
--	 * setup_data could be pointing anywhere, and we have no way of
--	 * authenticating or validating the payload.
--	 */
--	hdr->setup_data = 0;
--
--	efi_stub_entry(handle, sys_table_arg, boot_params);
-+	efi_stub_entry(handle, sys_table_arg, &boot_params);
- 	/* not reached */
- 
- fail:
--	efi_free(sizeof(struct boot_params), (unsigned long)boot_params);
--
- 	efi_exit(handle, status);
- }
- 
+ 	.set	section_count, (. - section_table) / 40
+ #endif /* CONFIG_EFI_STUB */
 
 
