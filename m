@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFF8151CD9;
-	Tue, 20 Feb 2024 21:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A8B151CC9;
+	Tue, 20 Feb 2024 21:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462807; cv=none; b=BEIPA7n/hYPBpanNqH8b5C3sixLrWmFIX94KeG7kBu0T6pEMQBF/swp9Vh21T/MK5mWRvaqKJQc9hxOnMmhLjJ/smdq47XVhPRg5GjQaVH/ExjJA1z516KLVcUhn2nzskkyG6h3nGNtH5etK6GIj9ua+TO9lIcq2Teh+a3kRluo=
+	t=1708462810; cv=none; b=bMGwzik/2W/rJAil/OIgLfC+Q73Ma3wbUvSk4skB0isDzGWfLfVK3wKS+jIi1+YtBuuUor3WaJkdStmxHIjNWkJbptNKKSzZUHwLs3ReJxI+PnszxllGMiISq1lJnumTeYNeIlC433E0KUinwALdFQCtl8kYe1a3hxFQZK/3QNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462807; c=relaxed/simple;
-	bh=qVgZ22OH3GDTZVFJLtNiid5J+sLeqZjCAKDKmAHB9Mg=;
+	s=arc-20240116; t=1708462810; c=relaxed/simple;
+	bh=FpE7RYsz6s3hoMZkl/Ef93Xd5hk/QOKGvn4SMfptqP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rshmErG+nASZDBF+cqXF0OOvC7kazZ7tL7R7ik7056/JNZuq4E50NT91qPolS4Y1/dktyB1i5QTOqB9bhDG/XOPv+P0xY/fBpZW7EkJnsrnaRP20mT+um8E5TJqEcIr0hrR+I71ISxXJSpEbPaTFnpsMpSGN1/zV6ho/gDodrbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vftdr6Iy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yv4NsFU5dVy8ovjRehWORzy1vH5sWo1euoH9U1NVgbBf+LMnFbT9rZWom8dK4EEBY/fuvF2/eSHTmzQO7biUnFkJXFCIq0PkHNDwpkitPxW3u3b0+H4WSlD/VeHNE510P8uUXs2TgfdWpC78PWKr8mzbV6ansHNBKkj1wlTfe44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjb14n0F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vftdr6Iy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF6AC43390;
-	Tue, 20 Feb 2024 21:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjb14n0F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E3CC433C7;
+	Tue, 20 Feb 2024 21:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462806;
-	bh=qVgZ22OH3GDTZVFJLtNiid5J+sLeqZjCAKDKmAHB9Mg=;
+	s=korg; t=1708462810;
+	bh=FpE7RYsz6s3hoMZkl/Ef93Xd5hk/QOKGvn4SMfptqP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vftdr6IySIAvUzscagttNerTGa3Ut37xJVXKsV2UIbnL4PvP4QRu/YTIDQG/QuiGc
-	 jzFjegUaHwuk6DVW2mW3I9Jsxg56ZW6hVouzE0hGFf/Q8jXJ7eL1nwDHafMa+1KOGg
-	 dIKG83nm/cJGn6F1BNg4nMattiOw//u+NxVQptuQ=
+	b=gjb14n0FfV+jnuzvvZHLJkYzA8AXGzCOfjUfvqMUrza0f+7zaMEv0TH/g7dYiFWkH
+	 JLRfH+i9thrz0Iy+HbxDOtNf6uqwyV/L1qo8vkn7JTfIStfwO/B+bUN1DVqNH40X4A
+	 feE+4XR5X3F8pOF2gzBzQaJxDtb5jZQKO1MY0Pfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Rob Herring <robh@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/197] of: unittest: Fix compile in the non-dynamic case
-Date: Tue, 20 Feb 2024 21:49:32 +0100
-Message-ID: <20240220204841.481475829@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 004/197] btrfs: do not delete unused block group if it may be used soon
+Date: Tue, 20 Feb 2024 21:49:23 +0100
+Message-ID: <20240220204841.208765847@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,68 +53,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 607aad1e4356c210dbef9022955a3089377909b2 ]
+commit f4a9f219411f318ae60d6ff7f129082a75686c6c upstream.
 
-If CONFIG_OF_KOBJ is not set, a device_node does not contain a
-kobj and attempts to access the embedded kobj via kref_read break
-the compile.
+Before deleting a block group that is in the list of unused block groups
+(fs_info->unused_bgs), we check if the block group became used before
+deleting it, as extents from it may have been allocated after it was added
+to the list.
 
-Replace affected kref_read calls with a macro that reads the
-refcount if it exists and returns 1 if there is no embedded kobj.
+However even if the block group was not yet used, there may be tasks that
+have only reserved space and have not yet allocated extents, and they
+might be relying on the availability of the unused block group in order
+to allocate extents. The reservation works first by increasing the
+"bytes_may_use" field of the corresponding space_info object (which may
+first require flushing delayed items, allocating a new block group, etc),
+and only later a task does the actual allocation of extents.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401291740.VP219WIz-lkp@intel.com/
-Fixes: 4dde83569832 ("of: Fix double free in of_parse_phandle_with_args_map")
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Link: https://lore.kernel.org/r/20240129192556.403271-1-lk@c--e.de
-Signed-off-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For metadata we usually don't end up using all reserved space, as we are
+pessimistic and typically account for the worst cases (need to COW every
+single node in a path of a tree at maximum possible height, etc). For
+data we usually reserve the exact amount of space we're going to allocate
+later, except when using compression where we always reserve space based
+on the uncompressed size, as compression is only triggered when writeback
+starts so we don't know in advance how much space we'll actually need, or
+if the data is compressible.
+
+So don't delete an unused block group if the total size of its space_info
+object minus the block group's size is less then the sum of used space and
+space that may be used (space_info->bytes_may_use), as that means we have
+tasks that reserved space and may need to allocate extents from the block
+group. In this case, besides skipping the deletion, re-add the block group
+to the list of unused block groups so that it may be reconsidered later,
+in case the tasks that reserved space end up not needing to allocate
+extents from it.
+
+Allowing the deletion of the block group while we have reserved space, can
+result in tasks failing to allocate metadata extents (-ENOSPC) while under
+a transaction handle, resulting in a transaction abort, or failure during
+writeback for the case of data extents.
+
+CC: stable@vger.kernel.org # 6.0+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/unittest.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/btrfs/block-group.c |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index e541a8960f1d..ce1386074e66 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -49,6 +49,12 @@ static struct unittest_results {
- 	failed; \
- })
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1318,6 +1318,7 @@ out:
+  */
+ void btrfs_delete_unused_bgs(struct btrfs_fs_info *fs_info)
+ {
++	LIST_HEAD(retry_list);
+ 	struct btrfs_block_group *block_group;
+ 	struct btrfs_space_info *space_info;
+ 	struct btrfs_trans_handle *trans;
+@@ -1339,6 +1340,7 @@ void btrfs_delete_unused_bgs(struct btrf
  
-+#ifdef CONFIG_OF_KOBJ
-+#define OF_KREF_READ(NODE) kref_read(&(NODE)->kobj.kref)
-+#else
-+#define OF_KREF_READ(NODE) 1
-+#endif
-+
- /*
-  * Expected message may have a message level other than KERN_INFO.
-  * Print the expected message only if the current loglevel will allow
-@@ -562,7 +568,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
- 			pr_err("missing testcase data\n");
- 			return;
+ 	spin_lock(&fs_info->unused_bgs_lock);
+ 	while (!list_empty(&fs_info->unused_bgs)) {
++		u64 used;
+ 		int trimming;
+ 
+ 		block_group = list_first_entry(&fs_info->unused_bgs,
+@@ -1374,6 +1376,7 @@ void btrfs_delete_unused_bgs(struct btrf
+ 			goto next;
  		}
--		prefs[i] = kref_read(&p[i]->kobj.kref);
-+		prefs[i] = OF_KREF_READ(p[i]);
- 	}
  
- 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
-@@ -685,9 +691,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
- 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
++		spin_lock(&space_info->lock);
+ 		spin_lock(&block_group->lock);
+ 		if (btrfs_is_block_group_used(block_group) || block_group->ro ||
+ 		    list_is_singular(&block_group->list)) {
+@@ -1385,10 +1388,49 @@ void btrfs_delete_unused_bgs(struct btrf
+ 			 */
+ 			trace_btrfs_skip_unused_block_group(block_group);
+ 			spin_unlock(&block_group->lock);
++			spin_unlock(&space_info->lock);
+ 			up_write(&space_info->groups_sem);
+ 			goto next;
+ 		}
++
++		/*
++		 * The block group may be unused but there may be space reserved
++		 * accounting with the existence of that block group, that is,
++		 * space_info->bytes_may_use was incremented by a task but no
++		 * space was yet allocated from the block group by the task.
++		 * That space may or may not be allocated, as we are generally
++		 * pessimistic about space reservation for metadata as well as
++		 * for data when using compression (as we reserve space based on
++		 * the worst case, when data can't be compressed, and before
++		 * actually attempting compression, before starting writeback).
++		 *
++		 * So check if the total space of the space_info minus the size
++		 * of this block group is less than the used space of the
++		 * space_info - if that's the case, then it means we have tasks
++		 * that might be relying on the block group in order to allocate
++		 * extents, and add back the block group to the unused list when
++		 * we finish, so that we retry later in case no tasks ended up
++		 * needing to allocate extents from the block group.
++		 */
++		used = btrfs_space_info_used(space_info, true);
++		if (space_info->total_bytes - block_group->length < used) {
++			/*
++			 * Add a reference for the list, compensate for the ref
++			 * drop under the "next" label for the
++			 * fs_info->unused_bgs list.
++			 */
++			btrfs_get_block_group(block_group);
++			list_add_tail(&block_group->bg_list, &retry_list);
++
++			trace_btrfs_skip_unused_block_group(block_group);
++			spin_unlock(&block_group->lock);
++			spin_unlock(&space_info->lock);
++			up_write(&space_info->groups_sem);
++			goto next;
++		}
++
+ 		spin_unlock(&block_group->lock);
++		spin_unlock(&space_info->lock);
  
- 	for (i = 0; i < ARRAY_SIZE(p); ++i) {
--		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
-+		unittest(prefs[i] == OF_KREF_READ(p[i]),
- 			 "provider%d: expected:%d got:%d\n",
--			 i, prefs[i], kref_read(&p[i]->kobj.kref));
-+			 i, prefs[i], OF_KREF_READ(p[i]));
- 		of_node_put(p[i]);
+ 		/* We don't want to force the issue, only flip if it's ok. */
+ 		ret = inc_block_group_ro(block_group, 0);
+@@ -1512,12 +1554,16 @@ next:
+ 		btrfs_put_block_group(block_group);
+ 		spin_lock(&fs_info->unused_bgs_lock);
  	}
- }
--- 
-2.43.0
-
++	list_splice_tail(&retry_list, &fs_info->unused_bgs);
+ 	spin_unlock(&fs_info->unused_bgs_lock);
+ 	mutex_unlock(&fs_info->reclaim_bgs_lock);
+ 	return;
+ 
+ flip_async:
+ 	btrfs_end_transaction(trans);
++	spin_lock(&fs_info->unused_bgs_lock);
++	list_splice_tail(&retry_list, &fs_info->unused_bgs);
++	spin_unlock(&fs_info->unused_bgs_lock);
+ 	mutex_unlock(&fs_info->reclaim_bgs_lock);
+ 	btrfs_put_block_group(block_group);
+ 	btrfs_discard_punt_unused_bgs_list(fs_info);
 
 
