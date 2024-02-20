@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB02151CD8;
-	Tue, 20 Feb 2024 21:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D29152DF3;
+	Tue, 20 Feb 2024 21:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463419; cv=none; b=dj3oqP+PNK8m90NdaxNJZml0lxIqMr1Za91SG2FYrpqNUDlpIv7FVqIEvnHstYT70+jQg66sAnEt8UiRlOuU1BbT4AdUTo60/4w8zm1CNKaa1qoKNzYJ2ia2YJhhpe48ztCfTTa1UOg+e15ZM0/ido618OW8uvGHitynSjBarEY=
+	t=1708463422; cv=none; b=j+LVqHA1mf8OQlH6TgLIZ0Om2C4L2BqEbFki40G6+1DcIHkz34mCnNKhjsk1zcnjT+318VFdJSqq2ZjsiUIfPPuZIl69VewF1Bz4ha8AmKTyFpT1bbMTupodxTXVqZA0v7gEoaLYFZbaPiYgjOcp+Y2A1eOciCdF53gRm7gJvVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463419; c=relaxed/simple;
-	bh=Mx14k+vfClSWlh6S+NrvOYfBDIpD2rzpcQQpGU+Wazw=;
+	s=arc-20240116; t=1708463422; c=relaxed/simple;
+	bh=2Kja8Ln0AzThNsDG/YRbs9dWEYcnPXC8buDHRMwax/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3opr6nLd8Tp6GjCYoFtIz4swWLoXQ0FrPV/0Gj738k8GXvC+paslAqecShP05okyQuHPudBbdxpM5QzpRwpXYreibkpOZGrJekpz6oXc7ukkuMS18FT8EkZb2Sv1Q8VGVskRpaq3PYPh/VZroscCmfFr3ElAF4HE/VkPijVZQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4BZbNkp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHqKVaO3O5DHo/mFJPmTa8vG5hm43ySzsXQudcA2ZITIzdZRHEO1V1LhN/xrfHpOOzaAilmqcaaKnnib5eNT0j1IChut3SeiJZTsdBmeZ+Flor+QwB/x7bxe2ygiJq5cAmud6g0gRyb7/v9+peQjkjI+TAwG89XS0mwbkNo/ErY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0WwWLAfJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4BZbNkp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91E1C433C7;
-	Tue, 20 Feb 2024 21:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0WwWLAfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A3AC433F1;
+	Tue, 20 Feb 2024 21:10:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463418;
-	bh=Mx14k+vfClSWlh6S+NrvOYfBDIpD2rzpcQQpGU+Wazw=;
+	s=korg; t=1708463421;
+	bh=2Kja8Ln0AzThNsDG/YRbs9dWEYcnPXC8buDHRMwax/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4BZbNkpQP/Cq2I3VxEnIe5mshxYaWAmXlGunV4RfNzdOZhpm9Pkhpu8Pv4Uk7sk7
-	 yo6OkTyvH5Z1O5BvmqYOKJPqjNfzu1Ass4RZWZHJw9bYXJhSVwfn7cago1TAFsokby
-	 CqdfL0c2hsHrge9lvWU0ORbSiYCnDmHgq3Z9HS+Q=
+	b=0WwWLAfJeGmwv7hOBEra4uWlWcycjzSnXxLpTlGk6g0AiH641m3F8TL+cx5CtqhoJ
+	 kU39MigQWOLTf/IrSnfab5RE9YcldyK1IQvUU1305uJGPn9Ilw1U85BPxA0M6CjJ4/
+	 EfHp/ciGiTjCyKj7Bz/jYVYMJ9RwYrwLdanDO6Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/331] lan966x: Fix crash when adding interface under a lag
-Date: Tue, 20 Feb 2024 21:52:34 +0100
-Message-ID: <20240220205638.805306128@linuxfoundation.org>
+Subject: [PATCH 6.6 039/331] tls: extract context alloc/initialization out of tls_set_sw_offload
+Date: Tue, 20 Feb 2024 21:52:35 +0100
+Message-ID: <20240220205638.834672115@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -53,65 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 15faa1f67ab405d47789d4702f587ec7df7ef03e ]
+[ Upstream commit 615580cbc99af0da2d1c7226fab43a3d5003eb97 ]
 
-There is a crash when adding one of the lan966x interfaces under a lag
-interface. The issue can be reproduced like this:
-ip link add name bond0 type bond miimon 100 mode balance-xor
-ip link set dev eth0 master bond0
+Simplify tls_set_sw_offload a bit.
 
-The reason is because when adding a interface under the lag it would go
-through all the ports and try to figure out which other ports are under
-that lag interface. And the issue is that lan966x can have ports that are
-NULL pointer as they are not probed. So then iterating over these ports
-it would just crash as they are NULL pointers.
-The fix consists in actually checking for NULL pointers before accessing
-something from the ports. Like we do in other places.
-
-Fixes: cabc9d49333d ("net: lan966x: Add lag support for lan966x")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240206123054.3052966-1-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: aec7961916f3 ("tls: fix race between async notify and socket close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_lag.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c | 86 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 51 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c b/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c
-index 41fa2523d91d..5f2cd9a8cf8f 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_lag.c
-@@ -37,19 +37,24 @@ static void lan966x_lag_set_aggr_pgids(struct lan966x *lan966x)
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index dba523cdc73d..3c176776e912 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2597,6 +2597,48 @@ void tls_update_rx_zc_capable(struct tls_context *tls_ctx)
+ 		tls_ctx->prot_info.version != TLS_1_3_VERSION;
+ }
  
- 	/* Now, set PGIDs for each active LAG */
- 	for (lag = 0; lag < lan966x->num_phys_ports; ++lag) {
--		struct net_device *bond = lan966x->ports[lag]->bond;
-+		struct lan966x_port *port = lan966x->ports[lag];
- 		int num_active_ports = 0;
-+		struct net_device *bond;
- 		unsigned long bond_mask;
- 		u8 aggr_idx[16];
- 
--		if (!bond || (visited & BIT(lag)))
-+		if (!port || !port->bond || (visited & BIT(lag)))
- 			continue;
- 
-+		bond = port->bond;
- 		bond_mask = lan966x_lag_get_mask(lan966x, bond);
- 
- 		for_each_set_bit(p, &bond_mask, lan966x->num_phys_ports) {
- 			struct lan966x_port *port = lan966x->ports[p];
- 
-+			if (!port)
-+				continue;
++static struct tls_sw_context_tx *init_ctx_tx(struct tls_context *ctx, struct sock *sk)
++{
++	struct tls_sw_context_tx *sw_ctx_tx;
 +
- 			lan_wr(ANA_PGID_PGID_SET(bond_mask),
- 			       lan966x, ANA_PGID(p));
- 			if (port->lag_tx_active)
++	if (!ctx->priv_ctx_tx) {
++		sw_ctx_tx = kzalloc(sizeof(*sw_ctx_tx), GFP_KERNEL);
++		if (!sw_ctx_tx)
++			return NULL;
++	} else {
++		sw_ctx_tx = ctx->priv_ctx_tx;
++	}
++
++	crypto_init_wait(&sw_ctx_tx->async_wait);
++	spin_lock_init(&sw_ctx_tx->encrypt_compl_lock);
++	INIT_LIST_HEAD(&sw_ctx_tx->tx_list);
++	INIT_DELAYED_WORK(&sw_ctx_tx->tx_work.work, tx_work_handler);
++	sw_ctx_tx->tx_work.sk = sk;
++
++	return sw_ctx_tx;
++}
++
++static struct tls_sw_context_rx *init_ctx_rx(struct tls_context *ctx)
++{
++	struct tls_sw_context_rx *sw_ctx_rx;
++
++	if (!ctx->priv_ctx_rx) {
++		sw_ctx_rx = kzalloc(sizeof(*sw_ctx_rx), GFP_KERNEL);
++		if (!sw_ctx_rx)
++			return NULL;
++	} else {
++		sw_ctx_rx = ctx->priv_ctx_rx;
++	}
++
++	crypto_init_wait(&sw_ctx_rx->async_wait);
++	spin_lock_init(&sw_ctx_rx->decrypt_compl_lock);
++	init_waitqueue_head(&sw_ctx_rx->wq);
++	skb_queue_head_init(&sw_ctx_rx->rx_list);
++	skb_queue_head_init(&sw_ctx_rx->async_hold);
++
++	return sw_ctx_rx;
++}
++
+ int tls_set_sw_offload(struct sock *sk, struct tls_context *ctx, int tx)
+ {
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
+@@ -2618,48 +2660,22 @@ int tls_set_sw_offload(struct sock *sk, struct tls_context *ctx, int tx)
+ 	}
+ 
+ 	if (tx) {
+-		if (!ctx->priv_ctx_tx) {
+-			sw_ctx_tx = kzalloc(sizeof(*sw_ctx_tx), GFP_KERNEL);
+-			if (!sw_ctx_tx) {
+-				rc = -ENOMEM;
+-				goto out;
+-			}
+-			ctx->priv_ctx_tx = sw_ctx_tx;
+-		} else {
+-			sw_ctx_tx =
+-				(struct tls_sw_context_tx *)ctx->priv_ctx_tx;
+-		}
+-	} else {
+-		if (!ctx->priv_ctx_rx) {
+-			sw_ctx_rx = kzalloc(sizeof(*sw_ctx_rx), GFP_KERNEL);
+-			if (!sw_ctx_rx) {
+-				rc = -ENOMEM;
+-				goto out;
+-			}
+-			ctx->priv_ctx_rx = sw_ctx_rx;
+-		} else {
+-			sw_ctx_rx =
+-				(struct tls_sw_context_rx *)ctx->priv_ctx_rx;
+-		}
+-	}
++		ctx->priv_ctx_tx = init_ctx_tx(ctx, sk);
++		if (!ctx->priv_ctx_tx)
++			return -ENOMEM;
+ 
+-	if (tx) {
+-		crypto_init_wait(&sw_ctx_tx->async_wait);
+-		spin_lock_init(&sw_ctx_tx->encrypt_compl_lock);
++		sw_ctx_tx = ctx->priv_ctx_tx;
+ 		crypto_info = &ctx->crypto_send.info;
+ 		cctx = &ctx->tx;
+ 		aead = &sw_ctx_tx->aead_send;
+-		INIT_LIST_HEAD(&sw_ctx_tx->tx_list);
+-		INIT_DELAYED_WORK(&sw_ctx_tx->tx_work.work, tx_work_handler);
+-		sw_ctx_tx->tx_work.sk = sk;
+ 	} else {
+-		crypto_init_wait(&sw_ctx_rx->async_wait);
+-		spin_lock_init(&sw_ctx_rx->decrypt_compl_lock);
+-		init_waitqueue_head(&sw_ctx_rx->wq);
++		ctx->priv_ctx_rx = init_ctx_rx(ctx);
++		if (!ctx->priv_ctx_rx)
++			return -ENOMEM;
++
++		sw_ctx_rx = ctx->priv_ctx_rx;
+ 		crypto_info = &ctx->crypto_recv.info;
+ 		cctx = &ctx->rx;
+-		skb_queue_head_init(&sw_ctx_rx->rx_list);
+-		skb_queue_head_init(&sw_ctx_rx->async_hold);
+ 		aead = &sw_ctx_rx->aead_recv;
+ 	}
+ 
 -- 
 2.43.0
 
