@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9112114A4E6;
-	Tue, 20 Feb 2024 21:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980B114A4E6;
+	Tue, 20 Feb 2024 21:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463995; cv=none; b=ng2XgvPtmdqiGsMOefGjTqjex7r80D74jbMulp6aRDh+QgDNn8EjiXf8CoS37dV05kJZw+SczswLAFqPbeQqFL8Z944bdRdFe+k36P4JhonDn41Ckwaokj2HR8zfhDEhYWY8h6lQs9qqHaIqZ7il1qplfsxz3p1gWptyVnug/wg=
+	t=1708463998; cv=none; b=qZiIVONbpLcEA0rvWXdvZi7mtDrrqgGcOgzsi8cqEvWzuXj8jn8OKAK+9q0y1TFEVbg4DdVCOIdNcs68xB5NFZQm7eshGZRtQ0JsaACr5KwTfgjrs4fPQ/8P0N9yIGDAwS3zAPkai1Yi1JbNnek6nERIaVyHNxwsEvA+cVFNxXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463995; c=relaxed/simple;
-	bh=5PsApUwjSD+1tVzqkM8JNYNh1cGChn6U5blNyOrjkRM=;
+	s=arc-20240116; t=1708463998; c=relaxed/simple;
+	bh=oRJyh513fsdxzCPircqpXTqRPzy7cHZOJL2LOBRUUnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJI8WWK//KrdXj6KVSoVXTXccKye0RKYvYU3QLile7lHmEnXou6uTEFBUczpYpt0e8xYnuVI1RTFoM/g2tG5ycyexoQTldCceUzH7t+c1R4J2T9kw1caY2YL6NXSSwmlrgEU/htBxp/PFNzJjNOgFBgK/yv/+v1axBO901WvQEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmhaZmoR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lz57266Kz1FUnJTbO/OWue45GYq0W2u25wQpS5lJ2Kik4yXYp25OeyQSekHUR4kFcudHZwlflvI10pHrzN+1QGG4cbQv5moT5akTMqc6IbGx13g7vwcvelCFTYKAW5fnsvTCI3sOPKcwGfJQtnvfIkpcrm3aorzcdDrxBoYkdyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emo0YnwP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmhaZmoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2ABAC433C7;
-	Tue, 20 Feb 2024 21:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emo0YnwP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100EEC433F1;
+	Tue, 20 Feb 2024 21:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463995;
-	bh=5PsApUwjSD+1tVzqkM8JNYNh1cGChn6U5blNyOrjkRM=;
+	s=korg; t=1708463998;
+	bh=oRJyh513fsdxzCPircqpXTqRPzy7cHZOJL2LOBRUUnA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmhaZmoRqdIvgQAjYGQ6U5UVD6vJzwl5YT1tsrv4N3zJe5nhmzBouxyaEGDC1iwtX
-	 RXKcznKcOPWoNy59YpXXBJmx1O0ExCs5z7+mpUT+apg0zZj79N3GKCL2pc4/UbbH3F
-	 tQn59Z8KWPZhbGP0Jqab6hd6nCeunLOuZfWdHehM=
+	b=emo0YnwPmnRkVxMddpmCKI2sPsAyU3OR2ShM8xdCwV8e0qe4pbBdKYH8NG5ssKYFx
+	 YoNPddnrc6abxzxD0DSb1Pi7WRLjTbtOzHPZyzu7LV3PFooR+51XhoCMBT5DJRB8HS
+	 odxkyMdIhIwA41OypfdSBf3D6RSfLz5EKYdCv4Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 219/331] arm64/signal: Dont assume that TIF_SVE means we saved SVE state
-Date: Tue, 20 Feb 2024 21:55:35 +0100
-Message-ID: <20240220205644.619961877@linuxfoundation.org>
+Subject: [PATCH 6.6 220/331] arm64: Subscribe Microsoft Azure Cobalt 100 to ARM Neoverse N2 errata
+Date: Tue, 20 Feb 2024 21:55:36 +0100
+Message-ID: <20240220205644.648928546@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,58 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
 
-commit 61da7c8e2a602f66be578cbbcebe8638c10e0f48 upstream.
+commit fb091ff394792c018527b3211bbdfae93ea4ac02 upstream.
 
-When we are in a syscall we will only save the FPSIMD subset even though
-the task still has access to the full register set, and on context switch
-we will only remove TIF_SVE when loading the register state. This means
-that the signal handling code should not assume that TIF_SVE means that
-the register state is stored in SVE format, it should instead check the
-format that was recorded during save.
+Add the MIDR value of Microsoft Azure Cobalt 100, which is a Microsoft
+implemented CPU based on r0p0 of the ARM Neoverse N2 CPU, and therefore
+suffers from all the same errata.
 
-Fixes: 8c845e273104 ("arm64/sve: Leave SVE enabled on syscall if we don't context switch")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240130-arm64-sve-signal-regs-v2-1-9fc6f9502782@kernel.org
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240214175522.2457857-1-eahariha@linux.microsoft.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c |    2 +-
- arch/arm64/kernel/signal.c |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ Documentation/arch/arm64/silicon-errata.rst |    7 +++++++
+ arch/arm64/include/asm/cputype.h            |    4 ++++
+ arch/arm64/kernel/cpu_errata.c              |    3 +++
+ 3 files changed, 14 insertions(+)
 
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1686,7 +1686,7 @@ void fpsimd_preserve_current_state(void)
- void fpsimd_signal_preserve_current_state(void)
- {
- 	fpsimd_preserve_current_state();
--	if (test_thread_flag(TIF_SVE))
-+	if (current->thread.fp_type == FP_STATE_SVE)
- 		sve_to_fpsimd(current);
- }
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -235,3 +235,10 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ASR            | ASR8601         | #8601001        | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+++----------------+-----------------+-----------------+-----------------------------+
++| Microsoft      | Azure Cobalt 100| #2139208        | ARM64_ERRATUM_2139208       |
+++----------------+-----------------+-----------------+-----------------------------+
++| Microsoft      | Azure Cobalt 100| #2067961        | ARM64_ERRATUM_2067961       |
+++----------------+-----------------+-----------------+-----------------------------+
++| Microsoft      | Azure Cobalt 100| #2253138        | ARM64_ERRATUM_2253138       |
+++----------------+-----------------+-----------------+-----------------------------+
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -61,6 +61,7 @@
+ #define ARM_CPU_IMP_HISI		0x48
+ #define ARM_CPU_IMP_APPLE		0x61
+ #define ARM_CPU_IMP_AMPERE		0xC0
++#define ARM_CPU_IMP_MICROSOFT		0x6D
  
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -242,7 +242,7 @@ static int preserve_sve_context(struct s
- 		vl = task_get_sme_vl(current);
- 		vq = sve_vq_from_vl(vl);
- 		flags |= SVE_SIG_FLAG_SM;
--	} else if (test_thread_flag(TIF_SVE)) {
-+	} else if (current->thread.fp_type == FP_STATE_SVE) {
- 		vq = sve_vq_from_vl(vl);
- 	}
+ #define ARM_CPU_PART_AEM_V8		0xD0F
+ #define ARM_CPU_PART_FOUNDATION		0xD00
+@@ -135,6 +136,8 @@
  
-@@ -878,7 +878,7 @@ static int setup_sigframe_layout(struct
- 	if (system_supports_sve() || system_supports_sme()) {
- 		unsigned int vq = 0;
+ #define AMPERE_CPU_PART_AMPERE1		0xAC3
  
--		if (add_all || test_thread_flag(TIF_SVE) ||
-+		if (add_all || current->thread.fp_type == FP_STATE_SVE ||
- 		    thread_sm_enabled(&current->thread)) {
- 			int vl = max(sve_max_vl(), sme_max_vl());
++#define MICROSOFT_CPU_PART_AZURE_COBALT_100	0xD49 /* Based on r0p0 of ARM Neoverse N2 */
++
+ #define MIDR_CORTEX_A53 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A53)
+ #define MIDR_CORTEX_A57 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A57)
+ #define MIDR_CORTEX_A72 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A72)
+@@ -193,6 +196,7 @@
+ #define MIDR_APPLE_M2_BLIZZARD_MAX MIDR_CPU_MODEL(ARM_CPU_IMP_APPLE, APPLE_CPU_PART_M2_BLIZZARD_MAX)
+ #define MIDR_APPLE_M2_AVALANCHE_MAX MIDR_CPU_MODEL(ARM_CPU_IMP_APPLE, APPLE_CPU_PART_M2_AVALANCHE_MAX)
+ #define MIDR_AMPERE1 MIDR_CPU_MODEL(ARM_CPU_IMP_AMPERE, AMPERE_CPU_PART_AMPERE1)
++#define MIDR_MICROSOFT_AZURE_COBALT_100 MIDR_CPU_MODEL(ARM_CPU_IMP_MICROSOFT, MICROSOFT_CPU_PART_AZURE_COBALT_100)
  
+ /* Fujitsu Erratum 010001 affects A64FX 1.0 and 1.1, (v0r0 and v1r0) */
+ #define MIDR_FUJITSU_ERRATUM_010001		MIDR_FUJITSU_A64FX
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -390,6 +390,7 @@ static const struct midr_range erratum_1
+ static const struct midr_range trbe_overwrite_fill_mode_cpus[] = {
+ #ifdef CONFIG_ARM64_ERRATUM_2139208
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
++	MIDR_ALL_VERSIONS(MIDR_MICROSOFT_AZURE_COBALT_100),
+ #endif
+ #ifdef CONFIG_ARM64_ERRATUM_2119858
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+@@ -403,6 +404,7 @@ static const struct midr_range trbe_over
+ static const struct midr_range tsb_flush_fail_cpus[] = {
+ #ifdef CONFIG_ARM64_ERRATUM_2067961
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
++	MIDR_ALL_VERSIONS(MIDR_MICROSOFT_AZURE_COBALT_100),
+ #endif
+ #ifdef CONFIG_ARM64_ERRATUM_2054223
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
+@@ -415,6 +417,7 @@ static const struct midr_range tsb_flush
+ static struct midr_range trbe_write_out_of_range_cpus[] = {
+ #ifdef CONFIG_ARM64_ERRATUM_2253138
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
++	MIDR_ALL_VERSIONS(MIDR_MICROSOFT_AZURE_COBALT_100),
+ #endif
+ #ifdef CONFIG_ARM64_ERRATUM_2224489
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
 
 
