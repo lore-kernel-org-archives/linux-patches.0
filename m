@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E661509BF;
-	Tue, 20 Feb 2024 20:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3B3151CD2;
+	Tue, 20 Feb 2024 20:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462713; cv=none; b=fv5LNy1ZgumThSP7ZLbes1TK20Xgl7v9xKOMK+HPYAXGxf2tNH1jT2P7QvbsFuLmXHHnDExHyeKKUrEN5pnNZBwCB6cwDJpLsNh+UuaH7/WaQY8fpb+dbEeWoQK35fj3htkvEkmW+bbG1Y7tFOLD1n8YKeh9ZyTtSriEsOCiKJQ=
+	t=1708462716; cv=none; b=hw2PzrPm6ZPRUrvCO0vB0HElnth26IpUkasksR2KXWY+Lr6jdnZuSdygsbLkZc04PQBjH8VNrCxkpDm5UP5na+y31EVTEHs4rllImDcTs77mab/nvgYPnO73FqcxdnV8AFv/jULrfdxpx8k4RnbBb7qa4Ok2tDV4Buqx4T/nyEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462713; c=relaxed/simple;
-	bh=VO9/qavqVHWMPxCBAAgtvth/e5sR9/t9dvsvHmh7lfk=;
+	s=arc-20240116; t=1708462716; c=relaxed/simple;
+	bh=FZLV0axGTja0a6c6JeRzsRlD+e2EfqMD5rdrVvaPk0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEIMJ1XlWpSDQONBubGSdNVMlrRWVtsicIcrab+z9BL+HLqza1koV7l85Pq4oqAFbvF40q31iDcIRFdbKhN8G7EOA8g8ARiykb2mSQa8mXWi3hQSTCet+wq6d9ql/xEX8QlTaNcyog8UCJjlh6dYNyAkfEWMxQ+c0s1XA7Mousg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3nzetEt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O038LKQYJ+uoaxhp4jFyz6ZqWc6Y6IEL13CI+1y64QXra/rYvTF+UC2fGgzj199maKv6APtEQtCmEX4PTAI+1/w76BQMtRWPlHeBfH1aoEfYOMnTRHlLxGUm8jSblg0EVYggdqMJQA0Gfvk9aOJjuFYbGHIaEF+nUCWCUWKZT8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGLSUekn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3nzetEt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE55C433C7;
-	Tue, 20 Feb 2024 20:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGLSUekn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92221C433C7;
+	Tue, 20 Feb 2024 20:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462712;
-	bh=VO9/qavqVHWMPxCBAAgtvth/e5sR9/t9dvsvHmh7lfk=;
+	s=korg; t=1708462716;
+	bh=FZLV0axGTja0a6c6JeRzsRlD+e2EfqMD5rdrVvaPk0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3nzetEtkjeYATZ67pua66vBvq/dTRZ7C2UySSBQGRHg4JkqlvHnQdjwGNGOEserV
-	 4hRCj6L77OQEyL9duMP/ms4xtF0FLliyDkukKJMfSp+cBpbufpQRPhIzoeyA+gVNyQ
-	 dFGRtLWZj0kzB8PLxzk1eBKzIKvNv4OctN5TY0+Q=
+	b=CGLSUeknAsMSMkpeQFjv1yJ0i58kvt0MVgj94Pe60Sw6h8C64CrY91A89tl17k4Ml
+	 XN01XmS75dNA7u71OsLZx2/LWb9MLU0MxJ5zAv/ScgS79su5gWpUsdeecFaAzRwXS+
+	 A0k+qFZE9d8oZ79X1TZLK2saWyUz1AZo8t4w81xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Shan <gshan@redhat.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Shaoqin Huang <shahuang@redhat.com>,
+	Peter Xu <peterx@redhat.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/197] KVM: selftests: Clear dirty ring states between two modes in dirty_log_test
-Date: Tue, 20 Feb 2024 21:49:33 +0100
-Message-ID: <20240220204841.511386546@linuxfoundation.org>
+Subject: [PATCH 6.1 015/197] KVM: selftests: Fix a semaphore imbalance in the dirty ring logging test
+Date: Tue, 20 Feb 2024 21:49:34 +0100
+Message-ID: <20240220204841.539330841@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,167 +52,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gavin Shan <gshan@redhat.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 7167190ddb863bd061c0c6b61f4cec94184b40da ]
+[ Upstream commit ba58f873cdeec30b6da48e28dd5782c5a3e1371b ]
 
-There are two states, which need to be cleared before next mode
-is executed. Otherwise, we will hit failure as the following messages
-indicate.
+When finishing the final iteration of dirty_log_test testcase, set
+host_quit _before_ the final "continue" so that the vCPU worker doesn't
+run an extra iteration, and delete the hack-a-fix of an extra "continue"
+from the dirty ring testcase.  This fixes a bug where the extra post to
+sem_vcpu_cont may not be consumed, which results in failures in subsequent
+runs of the testcases.  The bug likely was missed during development as
+x86 supports only a single "guest mode", i.e. there aren't any subsequent
+testcases after the dirty ring test, because for_each_guest_mode() only
+runs a single iteration.
 
-- The variable 'dirty_ring_vcpu_ring_full' shared by main and vcpu
-  thread. It's indicating if the vcpu exit due to full ring buffer.
-  The value can be carried from previous mode (VM_MODE_P40V48_4K) to
-  current one (VM_MODE_P40V48_64K) when VM_MODE_P40V48_16K isn't
-  supported.
+For the regular dirty log testcases, letting the vCPU run one extra
+iteration is a non-issue as the vCPU worker waits on sem_vcpu_cont if and
+only if the worker is explicitly told to stop (vcpu_sync_stop_requested).
+But for the dirty ring test, which needs to periodically stop the vCPU to
+reap the dirty ring, letting the vCPU resume the guest _after_ the last
+iteration means the vCPU will get stuck without an extra "continue".
 
-- The current ring buffer index needs to be reset before next mode
-  (VM_MODE_P40V48_64K) is executed. Otherwise, the stale value is
-  carried from previous mode (VM_MODE_P40V48_4K).
+However, blindly firing off an post to sem_vcpu_cont isn't guaranteed to
+be consumed, e.g. if the vCPU worker sees host_quit==true before resuming
+the guest.  This results in a dangling sem_vcpu_cont, which leads to
+subsequent iterations getting out of sync, as the vCPU worker will
+continue on before the main task is ready for it to resume the guest,
+leading to a variety of asserts, e.g.
 
-  # ./dirty_log_test -M dirty-ring
-  Setting log mode to: 'dirty-ring'
-  Test iterations: 32, interval: 10 (ms)
-  Testing guest mode: PA-bits:40,  VA-bits:48,  4K pages
-  guest physical test memory offset: 0xffbfffc000
-    :
-  Dirtied 995328 pages
-  Total bits checked: dirty (1012434), clear (7114123), track_next (966700)
-  Testing guest mode: PA-bits:40,  VA-bits:48, 64K pages
-  guest physical test memory offset: 0xffbffc0000
-  vcpu stops because vcpu is kicked out...
-  vcpu continues now.
-  Notifying vcpu to continue
-  Iteration 1 collected 0 pages
-  vcpu stops because dirty ring is full...
-  vcpu continues now.
-  vcpu stops because dirty ring is full...
-  vcpu continues now.
-  vcpu stops because dirty ring is full...
   ==== Test Assertion Failure ====
-  dirty_log_test.c:369: cleared == count
-  pid=10541 tid=10541 errno=22 - Invalid argument
-     1	0x0000000000403087: dirty_ring_collect_dirty_pages at dirty_log_test.c:369
-     2	0x0000000000402a0b: log_mode_collect_dirty_pages at dirty_log_test.c:492
-     3	 (inlined by) run_test at dirty_log_test.c:795
-     4	 (inlined by) run_test at dirty_log_test.c:705
-     5	0x0000000000403a37: for_each_guest_mode at guest_modes.c:100
-     6	0x0000000000401ccf: main at dirty_log_test.c:938
-     7	0x0000ffff9ecd279b: ?? ??:0
-     8	0x0000ffff9ecd286b: ?? ??:0
-     9	0x0000000000401def: _start at ??:?
-  Reset dirty pages (0) mismatch with collected (35566)
+  dirty_log_test.c:384: dirty_ring_vcpu_ring_full
+  pid=14854 tid=14854 errno=22 - Invalid argument
+     1  0x00000000004033eb: dirty_ring_collect_dirty_pages at dirty_log_test.c:384
+     2  0x0000000000402d27: log_mode_collect_dirty_pages at dirty_log_test.c:505
+     3   (inlined by) run_test at dirty_log_test.c:802
+     4  0x0000000000403dc7: for_each_guest_mode at guest_modes.c:100
+     5  0x0000000000401dff: main at dirty_log_test.c:941 (discriminator 3)
+     6  0x0000ffff9be173c7: ?? ??:0
+     7  0x0000ffff9be1749f: ?? ??:0
+     8  0x000000000040206f: _start at ??:?
+  Didn't continue vcpu even without ring full
 
-Fix the issues by clearing 'dirty_ring_vcpu_ring_full' and the ring
-buffer index before next new mode is to be executed.
+Alternatively, the test could simply reset the semaphores before each
+testcase, but papering over hacks with more hacks usually ends in tears.
 
-Signed-off-by: Gavin Shan <gshan@redhat.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221110104914.31280-7-gshan@redhat.com
-Stable-dep-of: ba58f873cdee ("KVM: selftests: Fix a semaphore imbalance in the dirty ring logging test")
+Reported-by: Shaoqin Huang <shahuang@redhat.com>
+Fixes: 84292e565951 ("KVM: selftests: Add dirty ring buffer test")
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Link: https://lore.kernel.org/r/20240202231831.354848-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kvm/dirty_log_test.c | 27 ++++++++++++--------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ tools/testing/selftests/kvm/dirty_log_test.c | 50 +++++++++++---------
+ 1 file changed, 27 insertions(+), 23 deletions(-)
 
 diff --git a/tools/testing/selftests/kvm/dirty_log_test.c b/tools/testing/selftests/kvm/dirty_log_test.c
-index b5234d6efbe1..8758c10ec850 100644
+index 8758c10ec850..ec40a33c29fd 100644
 --- a/tools/testing/selftests/kvm/dirty_log_test.c
 +++ b/tools/testing/selftests/kvm/dirty_log_test.c
-@@ -226,13 +226,15 @@ static void clear_log_create_vm_done(struct kvm_vm *vm)
- }
- 
- static void dirty_log_collect_dirty_pages(struct kvm_vcpu *vcpu, int slot,
--					  void *bitmap, uint32_t num_pages)
-+					  void *bitmap, uint32_t num_pages,
-+					  uint32_t *unused)
- {
- 	kvm_vm_get_dirty_log(vcpu->vm, slot, bitmap);
- }
- 
- static void clear_log_collect_dirty_pages(struct kvm_vcpu *vcpu, int slot,
--					  void *bitmap, uint32_t num_pages)
-+					  void *bitmap, uint32_t num_pages,
-+					  uint32_t *unused)
- {
- 	kvm_vm_get_dirty_log(vcpu->vm, slot, bitmap);
- 	kvm_vm_clear_dirty_log(vcpu->vm, slot, bitmap, 0, num_pages);
-@@ -329,10 +331,9 @@ static void dirty_ring_continue_vcpu(void)
- }
- 
- static void dirty_ring_collect_dirty_pages(struct kvm_vcpu *vcpu, int slot,
--					   void *bitmap, uint32_t num_pages)
-+					   void *bitmap, uint32_t num_pages,
-+					   uint32_t *ring_buf_idx)
- {
--	/* We only have one vcpu */
--	static uint32_t fetch_index = 0;
- 	uint32_t count = 0, cleared;
- 	bool continued_vcpu = false;
- 
-@@ -349,7 +350,8 @@ static void dirty_ring_collect_dirty_pages(struct kvm_vcpu *vcpu, int slot,
- 
- 	/* Only have one vcpu */
- 	count = dirty_ring_collect_one(vcpu_map_dirty_ring(vcpu),
--				       slot, bitmap, num_pages, &fetch_index);
-+				       slot, bitmap, num_pages,
-+				       ring_buf_idx);
+@@ -355,7 +355,10 @@ static void dirty_ring_collect_dirty_pages(struct kvm_vcpu *vcpu, int slot,
  
  	cleared = kvm_vm_reset_dirty_ring(vcpu->vm);
  
-@@ -406,7 +408,8 @@ struct log_mode {
- 	void (*create_vm_done)(struct kvm_vm *vm);
- 	/* Hook to collect the dirty pages into the bitmap provided */
- 	void (*collect_dirty_pages) (struct kvm_vcpu *vcpu, int slot,
--				     void *bitmap, uint32_t num_pages);
-+				     void *bitmap, uint32_t num_pages,
-+				     uint32_t *ring_buf_idx);
+-	/* Cleared pages should be the same as collected */
++	/*
++	 * Cleared pages should be the same as collected, as KVM is supposed to
++	 * clear only the entries that have been harvested.
++	 */
+ 	TEST_ASSERT(cleared == count, "Reset dirty pages (%u) mismatch "
+ 		    "with collected (%u)", cleared, count);
+ 
+@@ -394,12 +397,6 @@ static void dirty_ring_after_vcpu_run(struct kvm_vcpu *vcpu, int ret, int err)
+ 	}
+ }
+ 
+-static void dirty_ring_before_vcpu_join(void)
+-{
+-	/* Kick another round of vcpu just to make sure it will quit */
+-	sem_post(&sem_vcpu_cont);
+-}
+-
+ struct log_mode {
+ 	const char *name;
+ 	/* Return true if this mode is supported, otherwise false */
+@@ -412,7 +409,6 @@ struct log_mode {
+ 				     uint32_t *ring_buf_idx);
  	/* Hook to call when after each vcpu run */
  	void (*after_vcpu_run)(struct kvm_vcpu *vcpu, int ret, int err);
- 	void (*before_vcpu_join) (void);
-@@ -471,13 +474,14 @@ static void log_mode_create_vm_done(struct kvm_vm *vm)
+-	void (*before_vcpu_join) (void);
+ } log_modes[LOG_MODE_NUM] = {
+ 	{
+ 		.name = "dirty-log",
+@@ -431,7 +427,6 @@ struct log_mode {
+ 		.supported = dirty_ring_supported,
+ 		.create_vm_done = dirty_ring_create_vm_done,
+ 		.collect_dirty_pages = dirty_ring_collect_dirty_pages,
+-		.before_vcpu_join = dirty_ring_before_vcpu_join,
+ 		.after_vcpu_run = dirty_ring_after_vcpu_run,
+ 	},
+ };
+@@ -492,14 +487,6 @@ static void log_mode_after_vcpu_run(struct kvm_vcpu *vcpu, int ret, int err)
+ 		mode->after_vcpu_run(vcpu, ret, err);
  }
  
- static void log_mode_collect_dirty_pages(struct kvm_vcpu *vcpu, int slot,
--					 void *bitmap, uint32_t num_pages)
-+					 void *bitmap, uint32_t num_pages,
-+					 uint32_t *ring_buf_idx)
+-static void log_mode_before_vcpu_join(void)
+-{
+-	struct log_mode *mode = &log_modes[host_log_mode];
+-
+-	if (mode->before_vcpu_join)
+-		mode->before_vcpu_join();
+-}
+-
+ static void generate_random_array(uint64_t *guest_array, uint64_t size)
  {
- 	struct log_mode *mode = &log_modes[host_log_mode];
- 
- 	TEST_ASSERT(mode->collect_dirty_pages != NULL,
- 		    "collect_dirty_pages() is required for any log mode!");
--	mode->collect_dirty_pages(vcpu, slot, bitmap, num_pages);
-+	mode->collect_dirty_pages(vcpu, slot, bitmap, num_pages, ring_buf_idx);
- }
- 
- static void log_mode_after_vcpu_run(struct kvm_vcpu *vcpu, int ret, int err)
-@@ -696,6 +700,7 @@ static void run_test(enum vm_guest_mode mode, void *arg)
- 	struct kvm_vcpu *vcpu;
+ 	uint64_t i;
+@@ -701,6 +688,7 @@ static void run_test(enum vm_guest_mode mode, void *arg)
  	struct kvm_vm *vm;
  	unsigned long *bmap;
-+	uint32_t ring_buf_idx = 0;
+ 	uint32_t ring_buf_idx = 0;
++	int sem_val;
  
  	if (!log_mode_supported()) {
  		print_skip("Log mode '%s' not supported",
-@@ -771,6 +776,7 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+@@ -772,12 +760,22 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+ 	/* Start the iterations */
+ 	iteration = 1;
+ 	sync_global_to_guest(vm, iteration);
+-	host_quit = false;
++	WRITE_ONCE(host_quit, false);
  	host_dirty_count = 0;
  	host_clear_count = 0;
  	host_track_next_count = 0;
-+	WRITE_ONCE(dirty_ring_vcpu_ring_full, false);
+ 	WRITE_ONCE(dirty_ring_vcpu_ring_full, false);
  
++	/*
++	 * Ensure the previous iteration didn't leave a dangling semaphore, i.e.
++	 * that the main task and vCPU worker were synchronized and completed
++	 * verification of all iterations.
++	 */
++	sem_getvalue(&sem_vcpu_stop, &sem_val);
++	TEST_ASSERT_EQ(sem_val, 0);
++	sem_getvalue(&sem_vcpu_cont, &sem_val);
++	TEST_ASSERT_EQ(sem_val, 0);
++
  	pthread_create(&vcpu_thread, NULL, vcpu_worker, vcpu);
  
-@@ -778,7 +784,8 @@ static void run_test(enum vm_guest_mode mode, void *arg)
- 		/* Give the vcpu thread some time to dirty some pages */
- 		usleep(p->interval * 1000);
- 		log_mode_collect_dirty_pages(vcpu, TEST_MEM_SLOT_INDEX,
--					     bmap, host_num_pages);
-+					     bmap, host_num_pages,
-+					     &ring_buf_idx);
+ 	while (iteration < p->iterations) {
+@@ -803,15 +801,21 @@ static void run_test(enum vm_guest_mode mode, void *arg)
+ 		assert(host_log_mode == LOG_MODE_DIRTY_RING ||
+ 		       atomic_read(&vcpu_sync_stop_requested) == false);
+ 		vm_dirty_log_verify(mode, bmap);
+-		sem_post(&sem_vcpu_cont);
  
- 		/*
- 		 * See vcpu_sync_stop_requested definition for details on why
+-		iteration++;
++		/*
++		 * Set host_quit before sem_vcpu_cont in the final iteration to
++		 * ensure that the vCPU worker doesn't resume the guest.  As
++		 * above, the dirty ring test may stop and wait even when not
++		 * explicitly request to do so, i.e. would hang waiting for a
++		 * "continue" if it's allowed to resume the guest.
++		 */
++		if (++iteration == p->iterations)
++			WRITE_ONCE(host_quit, true);
++
++		sem_post(&sem_vcpu_cont);
+ 		sync_global_to_guest(vm, iteration);
+ 	}
+ 
+-	/* Tell the vcpu thread to quit */
+-	host_quit = true;
+-	log_mode_before_vcpu_join();
+ 	pthread_join(vcpu_thread, NULL);
+ 
+ 	pr_info("Total bits checked: dirty (%"PRIu64"), clear (%"PRIu64"), "
 -- 
 2.43.0
 
