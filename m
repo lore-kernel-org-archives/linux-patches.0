@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14664151CCC;
-	Tue, 20 Feb 2024 21:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA462DF9F;
+	Tue, 20 Feb 2024 21:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464913; cv=none; b=hWPJtvz4heWt9bJ3PFOq4XfHbCwa7LP3e5IDRILd3Cq8sc8IaZKdm+1z9lZvETRXHWVc/gyMJd04PBbXvDkeZgL0IkxkB93iJpyhqmPBU9NJqNSBjGE1oGonCfPgb12XEQ6aVeVMfXb82XxFLt/7fjmGXrYLgcEZLjRk8jZS0ac=
+	t=1708464916; cv=none; b=QoVnJBEL7IpQPTtgFohwY54CF3u7zZ97DADyNY4R9P7A/jjUIbYfbNnlIvn9tVkErtEKPV6JTXeTaUiJ8XRMgwkiZ5XDrJSWY2ePDwD14+c6a7UyOlE4brtstZV6bCsR7Pg5445Hk3uY72rLVffkBhVUAos2d283IYfiEavxoSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464913; c=relaxed/simple;
-	bh=gjVvIM056Yzhh/sprcngxjU57s0gL2mYOo3YtpaQj4U=;
+	s=arc-20240116; t=1708464916; c=relaxed/simple;
+	bh=qIc+apUYueI3Gen5swJuPx0NKJoWgR9Fk/jjAkuHGHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JO9LSpvlVAW5HS0tNvbKXA5brbXZ35THDf4bIJvsfXei2/y5CxOuCg9GJEh+e3qCI1EpHVeBOzfEb9MPIUjVg7K3W4XPEk+4mRpX183GVT6a5N3KZL9WRbikc28EpP6y2OQbQyqWw9UD9C8KoMpJ8HDEGVTVtkMX91Ufv1F3sEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D77drdcz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E40iKWV1Hc7N0WmxnuR/kulYB+nz1102Fl2zCy0L8y7huUvqY/Hs8wX5cs15KL7atmk97pXGrW5my6w6itq0tEHCsAkmOVNOwUHmNCUUPve1w0HvnzbHVcAxgT2nuvxHvfI0HGm2m6i7vCT12P+BwfR+zfUXu/5Cq1Id4p+SyjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdr8fwUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D77drdcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9319EC433F1;
-	Tue, 20 Feb 2024 21:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdr8fwUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859D3C433F1;
+	Tue, 20 Feb 2024 21:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464912;
-	bh=gjVvIM056Yzhh/sprcngxjU57s0gL2mYOo3YtpaQj4U=;
+	s=korg; t=1708464915;
+	bh=qIc+apUYueI3Gen5swJuPx0NKJoWgR9Fk/jjAkuHGHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D77drdczQJAiK5IxEJIDslqzY0lnM+/FAN6v+z06hQR0WlA//839GCPQdJIpHbAcQ
-	 xtJ9vqP6igcT5tyhrHj2v9vFqiP5gnOsNe3jKP85GM3cH2TyhNc+yb4wXWTA59p8dz
-	 gl28Q777wo23BRuXHdXNmvwuFVExwNoqj3h5cMXQ=
+	b=wdr8fwUWF3sP7FH4iO2cP6/vIU5rEjrtSY5X1zMqihOTMBc3cMzu9idDDyFK0/LA9
+	 mWbhaFBIziuix9QHvIRQK3UdF1l4oLPlI1kNT2LEfo5SnDntOcqI6sG7wHEBEsWCir
+	 YTpIaf2uklFLytHkn4RhVtK+4vjs7x/rX7JGeO9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	xingwei lee <xrivendell7@gmail.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.7 159/309] ext4: fix double-free of blocks due to wrong extents moved_len
-Date: Tue, 20 Feb 2024 21:55:18 +0100
-Message-ID: <20240220205638.139859610@linuxfoundation.org>
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.7 177/309] pmdomain: mediatek: fix race conditions with genpd
+Date: Tue, 20 Feb 2024 21:55:36 +0100
+Message-ID: <20240220205638.690757821@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -53,68 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-commit 55583e899a5357308274601364741a83e78d6ac4 upstream.
+commit c41336f4d69057cbf88fed47951379b384540df5 upstream.
 
-In ext4_move_extents(), moved_len is only updated when all moves are
-successfully executed, and only discards orig_inode and donor_inode
-preallocations when moved_len is not zero. When the loop fails to exit
-after successfully moving some extents, moved_len is not updated and
-remains at 0, so it does not discard the preallocations.
+If the power domains are registered first with genpd and *after that*
+the driver attempts to power them on in the probe sequence, then it is
+possible that a race condition occurs if genpd tries to power them on
+in the same time.
+The same is valid for powering them off before unregistering them
+from genpd.
+Attempt to fix race conditions by first removing the domains from genpd
+and *after that* powering down domains.
+Also first power up the domains and *after that* register them
+to genpd.
 
-If the moved extents overlap with the preallocated extents, the
-overlapped extents are freed twice in ext4_mb_release_inode_pa() and
-ext4_process_freed_data() (as described in commit 94d7c16cbbbd ("ext4:
-Fix double-free of blocks with EXT4_IOC_MOVE_EXT")), and bb_free is
-incremented twice. Hence when trim is executed, a zero-division bug is
-triggered in mb_update_avg_fragment_size() because bb_free is not zero
-and bb_fragments is zero.
-
-Therefore, update move_len after each extent move to avoid the issue.
-
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Closes: https://lore.kernel.org/r/CAO4mrferzqBUnCag8R3m2zf897ts9UEuhjFQGPtODT92rYyR2Q@mail.gmail.com
-Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
-CC:  <stable@vger.kernel.org> # 3.18
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231225133615.78993-1-eugen.hristev@collabora.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/move_extent.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/pmdomain/mediatek/mtk-pm-domains.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/fs/ext4/move_extent.c
-+++ b/fs/ext4/move_extent.c
-@@ -618,6 +618,7 @@ ext4_move_extents(struct file *o_filp, s
- 		goto out;
- 	o_end = o_start + len;
+--- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
++++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
+@@ -561,6 +561,11 @@ static int scpsys_add_subdomain(struct s
+ 			goto err_put_node;
+ 		}
  
-+	*moved_len = 0;
- 	while (o_start < o_end) {
- 		struct ext4_extent *ex;
- 		ext4_lblk_t cur_blk, next_blk;
-@@ -672,7 +673,7 @@ ext4_move_extents(struct file *o_filp, s
- 		 */
- 		ext4_double_up_write_data_sem(orig_inode, donor_inode);
- 		/* Swap original branches with new branches */
--		move_extent_per_page(o_filp, donor_inode,
-+		*moved_len += move_extent_per_page(o_filp, donor_inode,
- 				     orig_page_index, donor_page_index,
- 				     offset_in_page, cur_len,
- 				     unwritten, &ret);
-@@ -682,9 +683,6 @@ ext4_move_extents(struct file *o_filp, s
- 		o_start += cur_len;
- 		d_start += cur_len;
++		/* recursive call to add all subdomains */
++		ret = scpsys_add_subdomain(scpsys, child);
++		if (ret)
++			goto err_put_node;
++
+ 		ret = pm_genpd_add_subdomain(parent_pd, child_pd);
+ 		if (ret) {
+ 			dev_err(scpsys->dev, "failed to add %s subdomain to parent %s\n",
+@@ -570,11 +575,6 @@ static int scpsys_add_subdomain(struct s
+ 			dev_dbg(scpsys->dev, "%s add subdomain: %s\n", parent_pd->name,
+ 				child_pd->name);
+ 		}
+-
+-		/* recursive call to add all subdomains */
+-		ret = scpsys_add_subdomain(scpsys, child);
+-		if (ret)
+-			goto err_put_node;
  	}
--	*moved_len = o_start - orig_blk;
--	if (*moved_len > len)
--		*moved_len = len;
  
- out:
- 	if (*moved_len) {
+ 	return 0;
+@@ -588,9 +588,6 @@ static void scpsys_remove_one_domain(str
+ {
+ 	int ret;
+ 
+-	if (scpsys_domain_is_on(pd))
+-		scpsys_power_off(&pd->genpd);
+-
+ 	/*
+ 	 * We're in the error cleanup already, so we only complain,
+ 	 * but won't emit another error on top of the original one.
+@@ -600,6 +597,8 @@ static void scpsys_remove_one_domain(str
+ 		dev_err(pd->scpsys->dev,
+ 			"failed to remove domain '%s' : %d - state may be inconsistent\n",
+ 			pd->genpd.name, ret);
++	if (scpsys_domain_is_on(pd))
++		scpsys_power_off(&pd->genpd);
+ 
+ 	clk_bulk_put(pd->num_clks, pd->clks);
+ 	clk_bulk_put(pd->num_subsys_clks, pd->subsys_clks);
 
 
