@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D41C14A4D2;
-	Tue, 20 Feb 2024 21:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CF714A4D2;
+	Tue, 20 Feb 2024 21:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464696; cv=none; b=YsTpiegzTpfkJh+JBkFb4A1MuhZsNJo6v916OhsfcxBozzLGQ4xi0e9xSJYdyyH6yeR97GixrdIRP/ZtzRHxDGFE6lNjiKJJEg5ZqvxldaG72dojzDx6OZWsZ8hBIMrY3zVW1QQpYfrpjkm0rbuoWSnmR8XLhTxeEOhP8YS/220=
+	t=1708464699; cv=none; b=YIrHPYXVu4H9y/RD6EK/wPkfLqsnS7qwOyeyYr4SyI36id9LrcQ4LMrBjj+/xnFzpmAZ+/GpUiEWmh498AIE2Hur6Ah0/j959JHueC/Ymd4xL8W8yybgKI10ypE6T4gSIcMIDDcCQCFYM87oGOge4RiapJx+f+zAeIB1eLWNZWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464696; c=relaxed/simple;
-	bh=vyrSEROG5t7LG/g4GhNfeY8yODIJtpbu8j3pu4056PQ=;
+	s=arc-20240116; t=1708464699; c=relaxed/simple;
+	bh=DGEz/SGG9dkBe00dTYmzsL1JYAPvdndc0L4SmBa/95Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rb8oBJxA6nDEE8zpBOWNcEK496/T9fXN1ZYthy5Ut+F1qfm9sLO+B6xt6wF+CDhJn/EZZcrBZ0MLeemfJjiPQawhnjY1DfgDzNkkvPj2f7tfVnXGgjQOyPctimWwD/ozRnE1tIMCUzSxGElqyNeoLGeIP1ZD4Jei3IiGTa7OH/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wb4rS3rT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LPqVPtRn2haqHKo1dyRYquYlrWgCWmf07Y7bgjbQoaP2g+CIphXU6ZUH0+5SSXwLIn06NrJeAqVkZY6qiciIvaof/Y0RmyOzJS9mqCCo94Vn795uYLVpdsrkiT91QoXmRYnzasLWGolkQVX+RsMNQxdKwE+0qCggCAykvM8bErY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFf6QaE7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wb4rS3rT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E46C433C7;
-	Tue, 20 Feb 2024 21:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFf6QaE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3BFC433F1;
+	Tue, 20 Feb 2024 21:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464696;
-	bh=vyrSEROG5t7LG/g4GhNfeY8yODIJtpbu8j3pu4056PQ=;
+	s=korg; t=1708464699;
+	bh=DGEz/SGG9dkBe00dTYmzsL1JYAPvdndc0L4SmBa/95Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wb4rS3rTwANlJ4DmrqfR7hiFkoePsLwui1QtLfLkrRtc+dC0gtBtDg3+KcaAwYYti
-	 Qmtif/QfMcorfGvzTTsn4BOcD6am24hmvrzRRlltvNxaunDY0i7cUDFKpWY/64/ZGe
-	 jFJV7fWxuCzf5yyBELNHlG84inGnlA2JtyKFD1hI=
+	b=yFf6QaE7wcOOLB0XigQEpkAWUoREli8Js3GN3gVqphBMATaXYWZyLmpQe95WRwhhB
+	 DyuNrOeI8m4ytuXGuk8L5IcDs+Nf9i+x9Ufz7EGs4+F8jx9giXfnLT2nHbzh283NiN
+	 KkWp3S5XOgCTbq5S4ycMgtwm9dPYXtLuhJf5GXAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
+	Marc Zyngier <maz@kernel.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 108/309] irqchip/loongson-eiointc: Use correct struct type in eiointc_domain_alloc()
-Date: Tue, 20 Feb 2024 21:54:27 +0100
-Message-ID: <20240220205636.569228826@linuxfoundation.org>
+Subject: [PATCH 6.7 109/309] irqchip/gic-v3-its: Handle non-coherent GICv4 redistributors
+Date: Tue, 20 Feb 2024 21:54:28 +0100
+Message-ID: <20240220205636.602971303@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,43 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit f1c2765c6afcd1f71f76ed8c9bf94acedab4cecb ]
+[ Upstream commit 846297e11e8ae428f8b00156a0cfe2db58100702 ]
 
-eiointc_domain_alloc() uses struct eiointc, which is not defined, for a
-pointer. Older compilers treat that as a forward declaration and due to
-assignment of a void pointer there is no warning emitted. As the variable
-is then handed in as a void pointer argument to irq_domain_set_info() the
-code is functional.
+Although the GICv3 code base has gained some handling of systems failing to
+handle the shareability attributes, the GICv4 side of things has been
+firmly ignored.
 
-Use struct eiointc_priv instead.
+This is unfortunate, as the new recent addition of the "dma-noncoherent" is
+supposed to apply to all of the GICR tables, and not just the ones that are
+common to v3 and v4.
 
-[ tglx: Rewrote changelog ]
+Add some checks to handle the VPROPBASE/VPENDBASE shareability and
+cacheability attributes in the same way we deal with the other GICR_BASE
+registers, wrapping the flag check in a helper for improved readability.
 
-Fixes: dd281e1a1a93 ("irqchip: Add Loongson Extended I/O interrupt controller support")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Note that this has been found by inspection only, as I don't have access to
+HW that suffers from this particular issue.
+
+Fixes: 3a0fff0fb6a3 ("irqchip/gic-v3: Enable non-coherent redistributors/ITSes DT probing")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
-Link: https://lore.kernel.org/r/20240130082722.2912576-2-maobibo@loongson.cn
+Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Link: https://lore.kernel.org/r/20240213101206.2137483-2-maz@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-loongson-eiointc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 37 +++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
-index 1623cd779175..b3736bdd4b9f 100644
---- a/drivers/irqchip/irq-loongson-eiointc.c
-+++ b/drivers/irqchip/irq-loongson-eiointc.c
-@@ -241,7 +241,7 @@ static int eiointc_domain_alloc(struct irq_domain *domain, unsigned int virq,
- 	int ret;
- 	unsigned int i, type;
- 	unsigned long hwirq = 0;
--	struct eiointc *priv = domain->host_data;
-+	struct eiointc_priv *priv = domain->host_data;
+diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
+index 9a7a74239eab..bdc2c8330479 100644
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -207,6 +207,11 @@ static bool require_its_list_vmovp(struct its_vm *vm, struct its_node *its)
+ 	return (gic_rdists->has_rvpeid || vm->vlpi_count[its->list_nr]);
+ }
  
- 	ret = irq_domain_translate_onecell(domain, arg, &hwirq, &type);
- 	if (ret)
++static bool rdists_support_shareable(void)
++{
++	return !(gic_rdists->flags & RDIST_FLAGS_FORCE_NON_SHAREABLE);
++}
++
+ static u16 get_its_list(struct its_vm *vm)
+ {
+ 	struct its_node *its;
+@@ -2710,10 +2715,12 @@ static u64 inherit_vpe_l1_table_from_its(void)
+ 			break;
+ 		}
+ 		val |= FIELD_PREP(GICR_VPROPBASER_4_1_ADDR, addr >> 12);
+-		val |= FIELD_PREP(GICR_VPROPBASER_SHAREABILITY_MASK,
+-				  FIELD_GET(GITS_BASER_SHAREABILITY_MASK, baser));
+-		val |= FIELD_PREP(GICR_VPROPBASER_INNER_CACHEABILITY_MASK,
+-				  FIELD_GET(GITS_BASER_INNER_CACHEABILITY_MASK, baser));
++		if (rdists_support_shareable()) {
++			val |= FIELD_PREP(GICR_VPROPBASER_SHAREABILITY_MASK,
++					  FIELD_GET(GITS_BASER_SHAREABILITY_MASK, baser));
++			val |= FIELD_PREP(GICR_VPROPBASER_INNER_CACHEABILITY_MASK,
++					  FIELD_GET(GITS_BASER_INNER_CACHEABILITY_MASK, baser));
++		}
+ 		val |= FIELD_PREP(GICR_VPROPBASER_4_1_SIZE, GITS_BASER_NR_PAGES(baser) - 1);
+ 
+ 		return val;
+@@ -2936,8 +2943,10 @@ static int allocate_vpe_l1_table(void)
+ 	WARN_ON(!IS_ALIGNED(pa, psz));
+ 
+ 	val |= FIELD_PREP(GICR_VPROPBASER_4_1_ADDR, pa >> 12);
+-	val |= GICR_VPROPBASER_RaWb;
+-	val |= GICR_VPROPBASER_InnerShareable;
++	if (rdists_support_shareable()) {
++		val |= GICR_VPROPBASER_RaWb;
++		val |= GICR_VPROPBASER_InnerShareable;
++	}
+ 	val |= GICR_VPROPBASER_4_1_Z;
+ 	val |= GICR_VPROPBASER_4_1_VALID;
+ 
+@@ -3126,7 +3135,7 @@ static void its_cpu_init_lpis(void)
+ 	gicr_write_propbaser(val, rbase + GICR_PROPBASER);
+ 	tmp = gicr_read_propbaser(rbase + GICR_PROPBASER);
+ 
+-	if (gic_rdists->flags & RDIST_FLAGS_FORCE_NON_SHAREABLE)
++	if (!rdists_support_shareable())
+ 		tmp &= ~GICR_PROPBASER_SHAREABILITY_MASK;
+ 
+ 	if ((tmp ^ val) & GICR_PROPBASER_SHAREABILITY_MASK) {
+@@ -3153,7 +3162,7 @@ static void its_cpu_init_lpis(void)
+ 	gicr_write_pendbaser(val, rbase + GICR_PENDBASER);
+ 	tmp = gicr_read_pendbaser(rbase + GICR_PENDBASER);
+ 
+-	if (gic_rdists->flags & RDIST_FLAGS_FORCE_NON_SHAREABLE)
++	if (!rdists_support_shareable())
+ 		tmp &= ~GICR_PENDBASER_SHAREABILITY_MASK;
+ 
+ 	if (!(tmp & GICR_PENDBASER_SHAREABILITY_MASK)) {
+@@ -3880,14 +3889,18 @@ static void its_vpe_schedule(struct its_vpe *vpe)
+ 	val  = virt_to_phys(page_address(vpe->its_vm->vprop_page)) &
+ 		GENMASK_ULL(51, 12);
+ 	val |= (LPI_NRBITS - 1) & GICR_VPROPBASER_IDBITS_MASK;
+-	val |= GICR_VPROPBASER_RaWb;
+-	val |= GICR_VPROPBASER_InnerShareable;
++	if (rdists_support_shareable()) {
++		val |= GICR_VPROPBASER_RaWb;
++		val |= GICR_VPROPBASER_InnerShareable;
++	}
+ 	gicr_write_vpropbaser(val, vlpi_base + GICR_VPROPBASER);
+ 
+ 	val  = virt_to_phys(page_address(vpe->vpt_page)) &
+ 		GENMASK_ULL(51, 16);
+-	val |= GICR_VPENDBASER_RaWaWb;
+-	val |= GICR_VPENDBASER_InnerShareable;
++	if (rdists_support_shareable()) {
++		val |= GICR_VPENDBASER_RaWaWb;
++		val |= GICR_VPENDBASER_InnerShareable;
++	}
+ 	/*
+ 	 * There is no good way of finding out if the pending table is
+ 	 * empty as we can race against the doorbell interrupt very
 -- 
 2.43.0
 
