@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9493C1509BF;
-	Tue, 20 Feb 2024 21:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98061509BF;
+	Tue, 20 Feb 2024 21:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462968; cv=none; b=WkPlLFrXrEae+9nekA1TYFA4yd3Z4kE0Ota7KKW0mD/gJ3VW6+VfoSazrVq9pD2RcsHxSxbK8c/xMpAPQkvFPuX+dTuJ9AWtMt0kdnmrxEJNlc1W8SdK7NlLJYSCM7znMSeTPVKg/MYWiu90SvIhV+PXKF5P12o5nIGIgUA3xLY=
+	t=1708462971; cv=none; b=K3sWSrvVo5EOGTxC2d9mitztiTI8kGv/6ZKgaGONiU2VTjm6fyjaONft8dTAtLIdfswIhDJZ532at9j/wPnGHRFl/AX0/L5U06Nxu1wq/P6y6SW/rg3YKpdYvcME2wEUP0kkIeuqPUx7SyxSgXeBbnAXHeTOu1Upx+drGgRQzow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462968; c=relaxed/simple;
-	bh=ji8/C1G8nuF0pWGNlrLWgbX8KugLnv8pDU79I8iOq8U=;
+	s=arc-20240116; t=1708462971; c=relaxed/simple;
+	bh=IadwbtgQanTooLTGF6wblOKrQ7xQehd5xr22mUtZX1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVU5cCjktVU8tmAu6yRdlWycGJAA9ek5O4UXsUfMyTwQ/sH5D74Iqn6g0sFR2jWGtbxuj77Qs46lhKGHNy0s9Ye4xp26pmdejaiSGZWTD/CvAy/Fsa/7c+g/QaDZ8Ms9LihDgsx2wcY09WgYw65sv+XPnAOZaZCMyp3oUDtyOgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iITBoiS6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N0LmAcy0AUstwN53wTyowEWtRiXmbf/t+JLU2sMuqk1cypp5+ZoTsDj5VMSymaZc+qwUGs0DcTFHSfJc8xCCxk7eAlPa5Vf/+NwgIveaudpUOzFYv+8szO/+nkxAFC3GsGN/31CuavFkLOl5H7M2CTMPWIbPOm9AkDgGzAfv6po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cer5i1Hi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iITBoiS6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03286C433C7;
-	Tue, 20 Feb 2024 21:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cer5i1Hi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49406C433C7;
+	Tue, 20 Feb 2024 21:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462968;
-	bh=ji8/C1G8nuF0pWGNlrLWgbX8KugLnv8pDU79I8iOq8U=;
+	s=korg; t=1708462971;
+	bh=IadwbtgQanTooLTGF6wblOKrQ7xQehd5xr22mUtZX1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iITBoiS6ypOd2TXkT2DUuySOhj5D02FCk+EVgFjQRo7fMKFJa7KawqN+j33sMnQ7T
-	 2kw1vJd4ejSLqk3f7iw9sARdRninY04QsDcGAEUm1cDH2qSkN1pVpkxR1apVeVVgth
-	 jsD9K+mKZYwT+l8ukVX+r0Aed8rZ8sDoiUacM7K0=
+	b=Cer5i1Hi7Z97q1OkPDIub//JsU5v7lnW1VCFzzisqupqagxrCvQV1AmPW8c6qpg7h
+	 VZD9oxDYdh9sAeClHp4EVWFczke85al0kwZQLfKZWH1Y13hjO01hpUR0hWpvI7Fhmw
+	 wHhRnwj3s0tV2x/wCPxRMhZSZ8HBysboBO1TCT5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 093/197] ASoC: codecs: wcd938x: handle deferred probe
-Date: Tue, 20 Feb 2024 21:50:52 +0100
-Message-ID: <20240220204843.869394429@linuxfoundation.org>
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 094/197] ALSA: hda/cs8409: Suppress vmaster control for Dolphin models
+Date: Tue, 20 Feb 2024 21:50:53 +0100
+Message-ID: <20240220204843.898873957@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,37 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-commit 086df711d9b886194481b4fbe525eb43e9ae7403 upstream.
+commit a2ed0a44d637ef9deca595054c206da7d6cbdcbc upstream.
 
-WCD938x sound codec driver ignores return status of getting regulators
-and returns EINVAL instead of EPROBE_DEFER.  If regulator provider
-probes after the codec, system is left without probed audio:
+Customer has reported an issue with specific desktop platform
+where two CS42L42 codecs are connected to CS8409 HDA bridge.
+If "Master Volume Control" is created then on Ubuntu OS UCM
+left/right balance slider in UI audio settings has no effect.
+This patch will fix this issue for a target paltform.
 
-  wcd938x_codec audio-codec: wcd938x_probe: Fail to obtain platform data
-  wcd938x_codec: probe of audio-codec failed with error -22
-
-Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://msgid.link/r/20240117151208.1219755-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 20e507724113 ("ALSA: hda/cs8409: Add support for dolphin")
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240122184710.5802-1-vitalyr@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_cs8409.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -3588,7 +3588,7 @@ static int wcd938x_probe(struct platform
- 	ret = wcd938x_populate_dt_data(wcd938x, dev);
- 	if (ret) {
- 		dev_err(dev, "%s: Fail to obtain platform data\n", __func__);
--		return -EINVAL;
-+		return ret;
- 	}
+--- a/sound/pci/hda/patch_cs8409.c
++++ b/sound/pci/hda/patch_cs8409.c
+@@ -1371,6 +1371,7 @@ void dolphin_fixups(struct hda_codec *co
+ 		spec->scodecs[CS8409_CODEC1] = &dolphin_cs42l42_1;
+ 		spec->scodecs[CS8409_CODEC1]->codec = codec;
+ 		spec->num_scodecs = 2;
++		spec->gen.suppress_vmaster = 1;
  
- 	ret = wcd938x_add_slave_components(wcd938x, dev, &match);
+ 		codec->patch_ops = cs8409_dolphin_patch_ops;
+ 
 
 
