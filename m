@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909F8151CED;
-	Tue, 20 Feb 2024 21:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FB7151CDC;
+	Tue, 20 Feb 2024 21:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465330; cv=none; b=QJOxWCe1yselBxFujjmPkJt5na6OGCwLWuvD4EluHQaVGmrs/U85kmVZrL+6C89Nnbss8UjIf8lSBlrHAXw31bwbO14pouRfdmVL8nrJ6xNjjjdAL8NnbSCIi4csx6Ae/3eBcCfSxzuz3vtLXFYrZWNzYqWDLoX+e2Yes7lGf9g=
+	t=1708465333; cv=none; b=Zj59fNa+O8jYmdTnzZSaYZRSh4nQeDHRd3ncBiSTXwNG5UJQ4q9rGFnEFVs/62Ef8M9r8MBFk19u9ahfU1x+WwSuiskeDqgi8jGh0mApP212IZ50uttdWkfBLqQuz/XUKmBX1swNhjVVyUg0mGQUcq/UbLPdOZxB6QMAyMfFfbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465330; c=relaxed/simple;
-	bh=IyrkN4z7daQYV095EC64rBWUYcRRhXsrxLusFKGrtFo=;
+	s=arc-20240116; t=1708465333; c=relaxed/simple;
+	bh=M2tB6csEdpVv7xUAVElVt+hJLfOmM8cXKkoAI5mu7Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrpIjwqtu2cNzu9lEzmbCRVZwgs3N29Kh3cYxrOqepl/hqVS6Q+56HuDYTDotHSefvi6cNtJYhZZ5EmovP+4iBLdYOeBDEe7wj96p03Ni3bw53wemqNRE+cvt+GJ6kLc4N9nkzHv1RtaQAbZkwV+cMg9zXR4w4owXIaRyzz1k9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBN4u1op; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGEDkJ64WcL+rwyGf5mliLwP6QDF1n/7i0niqjwTVzjH3Ygj4bGIBa3WMg2IFEeqRoyddHDOmQx5t30HWMesSZe/uwwSlS0Ia/a7WRN2B3cIq6eOOi/hUQ+laC2tETk06uxoueeHs8RioTTBlbmVMh4KjccMtYOlGL2xInGXl9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eo2McBJa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBN4u1op"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034B1C433F1;
-	Tue, 20 Feb 2024 21:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eo2McBJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11679C433C7;
+	Tue, 20 Feb 2024 21:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465330;
-	bh=IyrkN4z7daQYV095EC64rBWUYcRRhXsrxLusFKGrtFo=;
+	s=korg; t=1708465333;
+	bh=M2tB6csEdpVv7xUAVElVt+hJLfOmM8cXKkoAI5mu7Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBN4u1opyaA59I++kYJfIvq+MyzElVRfC2ayMu1gkp2g95nsShrfN6pMSaY/ntm76
-	 9O1q/GA5baKLyJzM68F2fjhXT3hN3EN39N8sWhn3ZL+5iZolGc2Ndr7nEyMPfnAJCZ
-	 H8hx27mNDG2Tf2wAZ7ahV4PQN9b2vR+6Mjh3rSps=
+	b=Eo2McBJarXPVAqUVO0rugWnopdmtLA05/dW5Jyt5JUC3PNe8CepT+bW179avNTwVD
+	 S/O8StBT4AzxcT2yflhFQEMtBLy/Cu8JZJxCb4V4pYO9nKtySgfofaRIJBOVRnkyKb
+	 mIdPjLdY3ZxIpN5AoKWghJ5OPa7tGHNG4UiiCoHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.7 309/309] nfsd: dont take fi_lock in nfsd_break_deleg_cb()
-Date: Tue, 20 Feb 2024 21:57:48 +0100
-Message-ID: <20240220205642.773771304@linuxfoundation.org>
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 289/309] fs,hugetlb: fix NULL pointer dereference in hugetlbs_fill_super
+Date: Tue, 20 Feb 2024 21:57:28 +0100
+Message-ID: <20240220205642.151417459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -45,98 +46,189 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Oscar Salvador <osalvador@suse.de>
 
-commit 5ea9a7c5fe4149f165f0e3b624fe08df02b6c301 upstream.
+commit 79d72c68c58784a3e1cd2378669d51bfd0cb7498 upstream.
 
-A recent change to check_for_locks() changed it to take ->flc_lock while
-holding ->fi_lock.  This creates a lock inversion (reported by lockdep)
-because there is a case where ->fi_lock is taken while holding
-->flc_lock.
+When configuring a hugetlb filesystem via the fsconfig() syscall, there is
+a possible NULL dereference in hugetlbfs_fill_super() caused by assigning
+NULL to ctx->hstate in hugetlbfs_parse_param() when the requested pagesize
+is non valid.
 
-->flc_lock is held across ->fl_lmops callbacks, and
-nfsd_break_deleg_cb() is one of those and does take ->fi_lock.  However
-it doesn't need to.
+E.g: Taking the following steps:
 
-Prior to v4.17-rc1~110^2~22 ("nfsd: create a separate lease for each
-delegation") nfsd_break_deleg_cb() would walk the ->fi_delegations list
-and so needed the lock.  Since then it doesn't walk the list and doesn't
-need the lock.
+     fd =3D fsopen("hugetlbfs", FSOPEN_CLOEXEC);
+     fsconfig(fd, FSCONFIG_SET_STRING, "pagesize", "1024", 0);
+     fsconfig(fd, FSCONFIG_CMD_CREATE, NULL, NULL, 0);
 
-Two actions are performed under the lock.  One is to call
-nfsd_break_one_deleg which calls nfsd4_run_cb().  These doesn't act on
-the nfs4_file at all, so don't need the lock.
+Given that the requested "pagesize" is invalid, ctxt->hstate will be replac=
+ed
+with NULL, losing its previous value, and we will print an error:
 
-The other is to set ->fi_had_conflict which is in the nfs4_file.
-This field is only ever set here (except when initialised to false)
-so there is no possible problem will multiple threads racing when
-setting it.
+ ...
+ ...
+ case Opt_pagesize:
+ ps =3D memparse(param->string, &rest);
+ ctx->hstate =3D h;
+ if (!ctx->hstate) {
+         pr_err("Unsupported page size %lu MB\n", ps / SZ_1M);
+         return -EINVAL;
+ }
+ return 0;
+ ...
+ ...
 
-The field is tested twice in nfs4_set_delegation().  The first test does
-not hold a lock and is documented as an opportunistic optimisation, so
-it doesn't impose any need to hold ->fi_lock while setting
-->fi_had_conflict.
+This is a problem because later on, we will dereference ctxt->hstate in
+hugetlbfs_fill_super()
 
-The second test in nfs4_set_delegation() *is* make under ->fi_lock, so
-removing the locking when ->fi_had_conflict is set could make a change.
-The change could only be interesting if ->fi_had_conflict tested as
-false even though nfsd_break_one_deleg() ran before ->fi_lock was
-unlocked.  i.e. while hash_delegation_locked() was running.
-As hash_delegation_lock() doesn't interact in any way with nfs4_run_cb()
-there can be no importance to this interaction.
+ ...
+ ...
+ sb->s_blocksize =3D huge_page_size(ctx->hstate);
+ ...
+ ...
 
-So this patch removes the locking from nfsd_break_one_deleg() and moves
-the final test on ->fi_had_conflict out of the locked region to make it
-clear that locking isn't important to the test.  It is still tested
-*after* vfs_setlease() has succeeded.  This might be significant and as
-vfs_setlease() takes ->flc_lock, and nfsd_break_one_deleg() is called
-under ->flc_lock this "after" is a true ordering provided by a spinlock.
+Causing below Oops.
 
-Fixes: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fix this by replacing cxt->hstate value only when then pagesize is known
+to be valid.
+
+ kernel: hugetlbfs: Unsupported page size 0 MB
+ kernel: BUG: kernel NULL pointer dereference, address: 0000000000000028
+ kernel: #PF: supervisor read access in kernel mode
+ kernel: #PF: error_code(0x0000) - not-present page
+ kernel: PGD 800000010f66c067 P4D 800000010f66c067 PUD 1b22f8067 PMD 0
+ kernel: Oops: 0000 [#1] PREEMPT SMP PTI
+ kernel: CPU: 4 PID: 5659 Comm: syscall Tainted: G            E      6.8.0-=
+rc2-default+ #22 5a47c3fef76212addcc6eb71344aabc35190ae8f
+ kernel: Hardware name: Intel Corp. GROVEPORT/GROVEPORT, BIOS GVPRCRB1.86B.=
+0016.D04.1705030402 05/03/2017
+ kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
+ kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
+00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
+8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
+ kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
+ kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
+ kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
+ kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
+ kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
+ kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
+ kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
+0000000000
+ kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
+ kernel: Call Trace:
+ kernel:  <TASK>
+ kernel:  ? __die_body+0x1a/0x60
+ kernel:  ? page_fault_oops+0x16f/0x4a0
+ kernel:  ? search_bpf_extables+0x65/0x70
+ kernel:  ? fixup_exception+0x22/0x310
+ kernel:  ? exc_page_fault+0x69/0x150
+ kernel:  ? asm_exc_page_fault+0x22/0x30
+ kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
+ kernel:  ? hugetlbfs_fill_super+0xb4/0x1a0
+ kernel:  ? hugetlbfs_fill_super+0x28/0x1a0
+ kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
+ kernel:  vfs_get_super+0x40/0xa0
+ kernel:  ? __pfx_bpf_lsm_capable+0x10/0x10
+ kernel:  vfs_get_tree+0x25/0xd0
+ kernel:  vfs_cmd_create+0x64/0xe0
+ kernel:  __x64_sys_fsconfig+0x395/0x410
+ kernel:  do_syscall_64+0x80/0x160
+ kernel:  ? syscall_exit_to_user_mode+0x82/0x240
+ kernel:  ? do_syscall_64+0x8d/0x160
+ kernel:  ? syscall_exit_to_user_mode+0x82/0x240
+ kernel:  ? do_syscall_64+0x8d/0x160
+ kernel:  ? exc_page_fault+0x69/0x150
+ kernel:  entry_SYSCALL_64_after_hwframe+0x6e/0x76
+ kernel: RIP: 0033:0x7ffbc0cb87c9
+ kernel: Code: 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 66 90 48 89 f8 =
+48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 0=
+1 f0 ff ff 73 01 c3 48 8b 0d 97 96 0d 00 f7 d8 64 89 01 48
+ kernel: RSP: 002b:00007ffc29d2f388 EFLAGS: 00000206 ORIG_RAX: 000000000000=
+01af
+ kernel: RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffbc0cb87c9
+ kernel: RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
+ kernel: RBP: 00007ffc29d2f3b0 R08: 0000000000000000 R09: 0000000000000000
+ kernel: R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
+ kernel: R13: 00007ffc29d2f4c0 R14: 0000000000000000 R15: 0000000000000000
+ kernel:  </TASK>
+ kernel: Modules linked in: rpcsec_gss_krb5(E) auth_rpcgss(E) nfsv4(E) dns_=
+resolver(E) nfs(E) lockd(E) grace(E) sunrpc(E) netfs(E) af_packet(E) bridge=
+(E) stp(E) llc(E) iscsi_ibft(E) iscsi_boot_sysfs(E) intel_rapl_msr(E) intel=
+_rapl_common(E) iTCO_wdt(E) intel_pmc_bxt(E) sb_edac(E) iTCO_vendor_support=
+(E) x86_pkg_temp_thermal(E) intel_powerclamp(E) coretemp(E) kvm_intel(E) rf=
+kill(E) ipmi_ssif(E) kvm(E) acpi_ipmi(E) irqbypass(E) pcspkr(E) igb(E) ipmi=
+_si(E) mei_me(E) i2c_i801(E) joydev(E) intel_pch_thermal(E) i2c_smbus(E) dc=
+a(E) lpc_ich(E) mei(E) ipmi_devintf(E) ipmi_msghandler(E) acpi_pad(E) tiny_=
+power_button(E) button(E) fuse(E) efi_pstore(E) configfs(E) ip_tables(E) x_=
+tables(E) ext4(E) mbcache(E) jbd2(E) hid_generic(E) usbhid(E) sd_mod(E) t10=
+_pi(E) crct10dif_pclmul(E) crc32_pclmul(E) crc32c_intel(E) polyval_clmulni(=
+E) ahci(E) xhci_pci(E) polyval_generic(E) gf128mul(E) ghash_clmulni_intel(E=
+) sha512_ssse3(E) sha256_ssse3(E) xhci_pci_renesas(E) libahci(E) ehci_pci(E=
+) sha1_ssse3(E) xhci_hcd(E) ehci_hcd(E) libata(E)
+ kernel:  mgag200(E) i2c_algo_bit(E) usbcore(E) wmi(E) sg(E) dm_multipath(E=
+) dm_mod(E) scsi_dh_rdac(E) scsi_dh_emc(E) scsi_dh_alua(E) scsi_mod(E) scsi=
+_common(E) aesni_intel(E) crypto_simd(E) cryptd(E)
+ kernel: Unloaded tainted modules: acpi_cpufreq(E):1 fjes(E):1
+ kernel: CR2: 0000000000000028
+ kernel: ---[ end trace 0000000000000000 ]---
+ kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
+ kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
+00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
+8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
+ kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
+ kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
+ kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
+ kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
+ kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
+ kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
+ kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
+0000000000
+ kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
+
+Link: https://lkml.kernel.org/r/20240130210418.3771-1-osalvador@suse.de
+Fixes: 32021982a324 ("hugetlbfs: Convert to fs_context")
+Signed-off-by: Michal Hocko <mhocko@suse.com>
+Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fs/hugetlbfs/inode.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -4945,10 +4945,8 @@ nfsd_break_deleg_cb(struct file_lock *fl
- 	 */
- 	fl->fl_break_time = 0;
- 
--	spin_lock(&fp->fi_lock);
- 	fp->fi_had_conflict = true;
- 	nfsd_break_one_deleg(dp);
--	spin_unlock(&fp->fi_lock);
- 	return false;
- }
- 
-@@ -5557,12 +5555,13 @@ nfs4_set_delegation(struct nfsd4_open *o
- 	if (status)
- 		goto out_unlock;
- 
-+	status = -EAGAIN;
-+	if (fp->fi_had_conflict)
-+		goto out_unlock;
-+
- 	spin_lock(&state_lock);
- 	spin_lock(&fp->fi_lock);
--	if (fp->fi_had_conflict)
--		status = -EAGAIN;
--	else
--		status = hash_delegation_locked(dp, fp);
-+	status = hash_delegation_locked(dp, fp);
- 	spin_unlock(&fp->fi_lock);
- 	spin_unlock(&state_lock);
- 
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -1354,6 +1354,7 @@ static int hugetlbfs_parse_param(struct
+ {
+ 	struct hugetlbfs_fs_context *ctx =3D fc->fs_private;
+ 	struct fs_parse_result result;
++	struct hstate *h;
+ 	char *rest;
+ 	unsigned long ps;
+ 	int opt;
+@@ -1398,11 +1399,12 @@ static int hugetlbfs_parse_param(struct
+=20
+ 	case Opt_pagesize:
+ 		ps =3D memparse(param->string, &rest);
+-		ctx->hstate =3D size_to_hstate(ps);
+-		if (!ctx->hstate) {
++		h =3D size_to_hstate(ps);
++		if (!h) {
+ 			pr_err("Unsupported page size %lu MB\n", ps / SZ_1M);
+ 			return -EINVAL;
+ 		}
++		ctx->hstate =3D h;
+ 		return 0;
+=20
+ 	case Opt_min_size:
 
 
