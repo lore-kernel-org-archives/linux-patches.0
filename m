@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C96E76C9C;
-	Tue, 20 Feb 2024 21:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1D2612D7;
+	Tue, 20 Feb 2024 21:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463467; cv=none; b=tbQ2hpEXTJ8jrhD1sSFpSVIRbZVkuq6aZC/ylf5sogqst+nugPSyqUTPDQA3VnoUYlu/WfAqfyPgCw0bQ0BBRUP9xqWpY5al9IRq5NR1pbkn2mgboKhmDv/peM1pt1tS6GJgabQUWAXsw/J5ANnWzvwrM3Phc15sVi0XlGGgWZs=
+	t=1708463470; cv=none; b=aPp//PsEaNnSM1BbRoHvoQm9AL7ldaO2syGTSNJQCGbNJuMDSIkz5VYvZpcirHKVH/C1UjJLCRA3N8zHkhWu7/NN6kZY96NubQ1Iz66JIJ2d+JZn5w+utWhMc5XDmhBFjWNrPGG0TIJ6cBxlUmPL0Ww2tmNPr8z0HjuWPZLkOKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463467; c=relaxed/simple;
-	bh=kCjWIY3mh00uSZ2e/Y5Mq+0XyrFlSSu8kLW0qAcIucM=;
+	s=arc-20240116; t=1708463470; c=relaxed/simple;
+	bh=EzghjXfjNAaEV+ezgoYqXjZvn4nprKm+/9RPdNWsuAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GwG3Wd0IZpXT5m3YNcbmHX3RuiNKy5Xaw0RmOFrJuttbhorCSaJTWjIO8MVnrzHPo9Wblh0Y+UJTMgOWsHht6CsTZ+hQHJr9hPtdCWKnHPnXJ4/9BBTqsOm73zrKjk7V3xv7jolvrbOSQ1HBysRKhJadaSka4tNH6v9wG1LSj+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAstRjon; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eq7W2XvSN394Kh62Q6iFZO2ucYxFpe76yCataYR24CQFRHhuO2l+XlV8IC30Cs63b9l3vNbiWAT7UjXCll43ZxVEIP5nRvyCwEQVJFRqEryosXBdvVbvy65nzzieHnWcdjf40JnTPd0BhoaCtQaJ13a2YPpWJh+jvozrrxAF984=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pATganJc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAstRjon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E39CC433C7;
-	Tue, 20 Feb 2024 21:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pATganJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB094C433C7;
+	Tue, 20 Feb 2024 21:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463466;
-	bh=kCjWIY3mh00uSZ2e/Y5Mq+0XyrFlSSu8kLW0qAcIucM=;
+	s=korg; t=1708463470;
+	bh=EzghjXfjNAaEV+ezgoYqXjZvn4nprKm+/9RPdNWsuAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAstRjon64LQn3hAypZgbsWGbnF/F8H0mr5EoOko7rX2lmyuAC83DaAjCkj3NbJnv
-	 39S9zy5kXoixOKZtS0gO8w7UMfLXAA1hitGiVGS1MAwjwssIl6+n737M/eCvgmmEFZ
-	 lORcJ05L9bs2jZ4eGySFjiqWCsx9M1cEa3gJlP4w=
+	b=pATganJco+Jg6QIDQ9R0WU8iCw5jUqkCamZq8hkVS+bzL/pDdBKzVkQ2v+5OgGnAu
+	 C4VNue+l63OHsCRAfgP8RvtYJbICsRSXdJSMQU/HKb1STOEXJHc7Gez9mVlXlWDobd
+	 v/etv4eBFm1D9701jIj0rB8Bmg2fJYgmL9QvdKI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Parav Pandit <parav@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/331] ptrace: Introduce exception_ip arch hook
-Date: Tue, 20 Feb 2024 21:52:47 +0100
-Message-ID: <20240220205639.199752579@linuxfoundation.org>
+Subject: [PATCH 6.6 025/331] devlink: Fix command annotation documentation
+Date: Tue, 20 Feb 2024 21:52:21 +0100
+Message-ID: <20240220205638.382509382@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,81 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit 11ba1728be3edb6928791f4c622f154ebe228ae6 ]
+[ Upstream commit 4ab18af47a2c2a80ac11674122935700caf80cc6 ]
 
-On architectures with delay slot, architecture level instruction
-pointer (or program counter) in pt_regs may differ from where
-exception was triggered.
+Command example string is not read as command.
+Fix command annotation.
 
-Introduce exception_ip hook to invoke architecture code and determine
-actual instruction pointer to the exception.
-
-Link: https://lore.kernel.org/lkml/00d1b813-c55f-4365-8d81-d70258e10b16@app.fastmail.com/
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Stable-dep-of: 8fa507083388 ("mm/memory: Use exception ip to search exception tables")
+Fixes: a8ce7b26a51e ("devlink: Expose port function commands to control migratable")
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240206161717.466653-1-parav@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/include/asm/ptrace.h | 2 ++
- arch/mips/kernel/ptrace.c      | 7 +++++++
- include/linux/ptrace.h         | 4 ++++
- 3 files changed, 13 insertions(+)
+ Documentation/networking/devlink/devlink-port.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
-index daf3cf244ea9..701a233583c2 100644
---- a/arch/mips/include/asm/ptrace.h
-+++ b/arch/mips/include/asm/ptrace.h
-@@ -154,6 +154,8 @@ static inline long regs_return_value(struct pt_regs *regs)
- }
+diff --git a/Documentation/networking/devlink/devlink-port.rst b/Documentation/networking/devlink/devlink-port.rst
+index e33ad2401ad7..562f46b41274 100644
+--- a/Documentation/networking/devlink/devlink-port.rst
++++ b/Documentation/networking/devlink/devlink-port.rst
+@@ -126,7 +126,7 @@ Users may also set the RoCE capability of the function using
+ `devlink port function set roce` command.
  
- #define instruction_pointer(regs) ((regs)->cp0_epc)
-+extern unsigned long exception_ip(struct pt_regs *regs);
-+#define exception_ip(regs) exception_ip(regs)
- #define profile_pc(regs) instruction_pointer(regs)
+ Users may also set the function as migratable using
+-'devlink port function set migratable' command.
++`devlink port function set migratable` command.
  
- extern asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall);
-diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
-index d9df543f7e2c..59288c13b581 100644
---- a/arch/mips/kernel/ptrace.c
-+++ b/arch/mips/kernel/ptrace.c
-@@ -31,6 +31,7 @@
- #include <linux/seccomp.h>
- #include <linux/ftrace.h>
- 
-+#include <asm/branch.h>
- #include <asm/byteorder.h>
- #include <asm/cpu.h>
- #include <asm/cpu-info.h>
-@@ -48,6 +49,12 @@
- #define CREATE_TRACE_POINTS
- #include <trace/events/syscalls.h>
- 
-+unsigned long exception_ip(struct pt_regs *regs)
-+{
-+	return exception_epc(regs);
-+}
-+EXPORT_SYMBOL(exception_ip);
-+
- /*
-  * Called by kernel/ptrace.c when detaching..
-  *
-diff --git a/include/linux/ptrace.h b/include/linux/ptrace.h
-index eaaef3ffec22..90507d4afcd6 100644
---- a/include/linux/ptrace.h
-+++ b/include/linux/ptrace.h
-@@ -393,6 +393,10 @@ static inline void user_single_step_report(struct pt_regs *regs)
- #define current_user_stack_pointer() user_stack_pointer(current_pt_regs())
- #endif
- 
-+#ifndef exception_ip
-+#define exception_ip(x) instruction_pointer(x)
-+#endif
-+
- extern int task_current_syscall(struct task_struct *target, struct syscall_info *info);
- 
- extern void sigaction_compat_abi(struct k_sigaction *act, struct k_sigaction *oact);
+ Users may also set the IPsec crypto capability of the function using
+ `devlink port function set ipsec_crypto` command.
 -- 
 2.43.0
 
