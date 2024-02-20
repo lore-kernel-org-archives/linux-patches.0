@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E821E14A4E6;
-	Tue, 20 Feb 2024 21:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F1314A4E6;
+	Tue, 20 Feb 2024 21:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464557; cv=none; b=RVVuH6j8g5nQOWmhASsk2Qjp4iKzqPVTsgFE0E4V1ASHtuYmz9WHH8ikzVGXzHLXPz7L9CCA8yXNZs3S76Z0XlEkF+N5lKF1kLqdlVuSiVoXNjwoCy/bqJPsryMNeN6XieA0Be1Y4tJhHLkaUE6Y+D6yVFFSqKwD627f1RQPluM=
+	t=1708464560; cv=none; b=f9yFEzXr3ohYckUKvTGZh1uNCxk8TkjUqqVErxCMiSut8Cyu4fpQB4+fwjHMt4+YXZLVPbHt6wqD12qIPwAm4LrwLTHfI5VO1USYPmdOa8tLXKsoFmRNZueKIi2qSKhb53I9vB42Lw6unXDrCFhn59/XirP90sDUd2tuS2iWTzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464557; c=relaxed/simple;
-	bh=vu8faUZrrO7/twjm5JXPOXZAKiPC7FhaKTyEGIDhaeU=;
+	s=arc-20240116; t=1708464560; c=relaxed/simple;
+	bh=+6X07XVPvYwZrv7tS/bI54SafW+8f4IWAJvoY0iv57I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCGkU2biz9iNto5Sn4+kCgrS2nTUUqmpRqqYuFGvv8y4BTS6caDlG4xuCzlZTCx9jXm1gaNKYpztTwS9h4To/PakUkU0iTX4U8HV1Oi7U+PiuwgMGN1x14+LjXFnf5/QdlpSQ8bol6cY1ZJnuj7vJIEnAhBIcN5pX/4qxulF/Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGAAIo74; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cVp9FOF0msCX0zi3Pn6eUo9TTcIzNc1MRWU51wPDoBIJSQy07mV08ocMfaxb4e4YSJ2LX3QiwLGiWWqe9bW+hxY7zfxrcdBqAvMjfheJf1D8rzZfMHR5j3h53PX2RKNSLAm/JZGNiHRYoTxR9Lvzy+AClK8QTK2gp2SnZvNTfYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qX5MLj/h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGAAIo74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D09C433C7;
-	Tue, 20 Feb 2024 21:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qX5MLj/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823D9C433F1;
+	Tue, 20 Feb 2024 21:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464556;
-	bh=vu8faUZrrO7/twjm5JXPOXZAKiPC7FhaKTyEGIDhaeU=;
+	s=korg; t=1708464560;
+	bh=+6X07XVPvYwZrv7tS/bI54SafW+8f4IWAJvoY0iv57I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGAAIo74Pd8Gl92Qq0lWfb9UDqzYeldcZXvCKXxiaBidy5Pw/O9VdLuzgc7VCIk+1
-	 MHDrj/fmlzO+4WB0Xyl7KWRN8HLSA6cM5HTgakrYPyf6X8fAvXmZNCEqrM6hP2ap1G
-	 EOScpCxY34Evea0phYdDy6IqulDad3ONFWoJiO5Q=
+	b=qX5MLj/hLyCq3Cz5u3lEsRSjJQVHwwukdaXGWKumYnt74tsvpGWpFrFsA5At5Qwnv
+	 L40X6vbNQbtPXXPPf8gfeeWG8QwZHvEJgV2ua7O7vVVUNdkeWIOWyFMcJoKoZ3Mxj1
+	 d5vHA7+C9AAFa1I733H5gLynWLYyyO95OOi/Cq1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hannes Reinecke <hare@suse.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 031/309] net/mlx5: DPLL, Fix possible use after free after delayed work timer triggers
-Date: Tue, 20 Feb 2024 21:53:10 +0100
-Message-ID: <20240220205634.158343021@linuxfoundation.org>
+Subject: [PATCH 6.7 032/309] net/handshake: Fix handshake_req_destroy_test1
+Date: Tue, 20 Feb 2024 21:53:11 +0100
+Message-ID: <20240220205634.188033897@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,167 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit aa1eec2f546f2afa8c98ec41e5d8ee488165d685 ]
+[ Upstream commit 4e1d71cabb19ec2586827adfc60d68689c68c194 ]
 
-I managed to hit following use after free warning recently:
+Recently, handshake_req_destroy_test1 started failing:
 
-[ 2169.711665] ==================================================================
-[ 2169.714009] BUG: KASAN: slab-use-after-free in __run_timers.part.0+0x179/0x4c0
-[ 2169.716293] Write of size 8 at addr ffff88812b326a70 by task swapper/4/0
+Expected handshake_req_destroy_test == req, but
+    handshake_req_destroy_test == 0000000000000000
+    req == 0000000060f99b40
+not ok 11 req_destroy works
 
-[ 2169.719022] CPU: 4 PID: 0 Comm: swapper/4 Not tainted 6.8.0-rc2jiri+ #2
-[ 2169.720974] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-[ 2169.722457] Call Trace:
-[ 2169.722756]  <IRQ>
-[ 2169.723024]  dump_stack_lvl+0x58/0xb0
-[ 2169.723417]  print_report+0xc5/0x630
-[ 2169.723807]  ? __virt_addr_valid+0x126/0x2b0
-[ 2169.724268]  kasan_report+0xbe/0xf0
-[ 2169.724667]  ? __run_timers.part.0+0x179/0x4c0
-[ 2169.725116]  ? __run_timers.part.0+0x179/0x4c0
-[ 2169.725570]  __run_timers.part.0+0x179/0x4c0
-[ 2169.726003]  ? call_timer_fn+0x320/0x320
-[ 2169.726404]  ? lock_downgrade+0x3a0/0x3a0
-[ 2169.726820]  ? kvm_clock_get_cycles+0x14/0x20
-[ 2169.727257]  ? ktime_get+0x92/0x150
-[ 2169.727630]  ? lapic_next_deadline+0x35/0x60
-[ 2169.728069]  run_timer_softirq+0x40/0x80
-[ 2169.728475]  __do_softirq+0x1a1/0x509
-[ 2169.728866]  irq_exit_rcu+0x95/0xc0
-[ 2169.729241]  sysvec_apic_timer_interrupt+0x6b/0x80
-[ 2169.729718]  </IRQ>
-[ 2169.729993]  <TASK>
-[ 2169.730259]  asm_sysvec_apic_timer_interrupt+0x16/0x20
-[ 2169.730755] RIP: 0010:default_idle+0x13/0x20
-[ 2169.731190] Code: c0 08 00 00 00 4d 29 c8 4c 01 c7 4c 29 c2 e9 72 ff ff ff cc cc cc cc 8b 05 9a 7f 1f 02 85 c0 7e 07 0f 00 2d cf 69 43 00 fb f4 <fa> c3 66 66 2e 0f 1f 84 00 00 00 00 00 65 48 8b 04 25 c0 93 04 00
-[ 2169.732759] RSP: 0018:ffff888100dbfe10 EFLAGS: 00000242
-[ 2169.733264] RAX: 0000000000000001 RBX: ffff888100d9c200 RCX: ffffffff8241bd62
-[ 2169.733925] RDX: ffffed109a848b15 RSI: 0000000000000004 RDI: ffffffff8127ac55
-[ 2169.734566] RBP: 0000000000000004 R08: 0000000000000000 R09: ffffed109a848b14
-[ 2169.735200] R10: ffff8884d42458a3 R11: 000000000000ba7e R12: ffffffff83d7d3a0
-[ 2169.735835] R13: 1ffff110201b7fc6 R14: 0000000000000000 R15: ffff888100d9c200
-[ 2169.736478]  ? ct_kernel_exit.constprop.0+0xa2/0xc0
-[ 2169.736954]  ? do_idle+0x285/0x290
-[ 2169.737323]  default_idle_call+0x63/0x90
-[ 2169.737730]  do_idle+0x285/0x290
-[ 2169.738089]  ? arch_cpu_idle_exit+0x30/0x30
-[ 2169.738511]  ? mark_held_locks+0x1a/0x80
-[ 2169.738917]  ? lockdep_hardirqs_on_prepare+0x12e/0x200
-[ 2169.739417]  cpu_startup_entry+0x30/0x40
-[ 2169.739825]  start_secondary+0x19a/0x1c0
-[ 2169.740229]  ? set_cpu_sibling_map+0xbd0/0xbd0
-[ 2169.740673]  secondary_startup_64_no_verify+0x15d/0x16b
-[ 2169.741179]  </TASK>
+This is because "sock_release(sock)" was replaced with "fput(filp)"
+to address a memory leak. Note that sock_release() is synchronous
+but fput() usually delays the final close and clean-up.
 
-[ 2169.741686] Allocated by task 1098:
-[ 2169.742058]  kasan_save_stack+0x1c/0x40
-[ 2169.742456]  kasan_save_track+0x10/0x30
-[ 2169.742852]  __kasan_kmalloc+0x83/0x90
-[ 2169.743246]  mlx5_dpll_probe+0xf5/0x3c0 [mlx5_dpll]
-[ 2169.743730]  auxiliary_bus_probe+0x62/0xb0
-[ 2169.744148]  really_probe+0x127/0x590
-[ 2169.744534]  __driver_probe_device+0xd2/0x200
-[ 2169.744973]  device_driver_attach+0x6b/0xf0
-[ 2169.745402]  bind_store+0x90/0xe0
-[ 2169.745761]  kernfs_fop_write_iter+0x1df/0x2a0
-[ 2169.746210]  vfs_write+0x41f/0x790
-[ 2169.746579]  ksys_write+0xc7/0x160
-[ 2169.746947]  do_syscall_64+0x6f/0x140
-[ 2169.747333]  entry_SYSCALL_64_after_hwframe+0x46/0x4e
+The delay is not consequential in the other cases that were changed
+but handshake_req_destroy_test1 is testing that handshake_req_cancel()
+followed by closing the file actually does call the ->hp_destroy
+method. Thus the PTR_EQ test at the end has to be sure that the
+final close is complete before it checks the pointer.
 
-[ 2169.748049] Freed by task 1220:
-[ 2169.748393]  kasan_save_stack+0x1c/0x40
-[ 2169.748789]  kasan_save_track+0x10/0x30
-[ 2169.749188]  kasan_save_free_info+0x3b/0x50
-[ 2169.749621]  poison_slab_object+0x106/0x180
-[ 2169.750044]  __kasan_slab_free+0x14/0x50
-[ 2169.750451]  kfree+0x118/0x330
-[ 2169.750792]  mlx5_dpll_remove+0xf5/0x110 [mlx5_dpll]
-[ 2169.751271]  auxiliary_bus_remove+0x2e/0x40
-[ 2169.751694]  device_release_driver_internal+0x24b/0x2e0
-[ 2169.752191]  unbind_store+0xa6/0xb0
-[ 2169.752563]  kernfs_fop_write_iter+0x1df/0x2a0
-[ 2169.753004]  vfs_write+0x41f/0x790
-[ 2169.753381]  ksys_write+0xc7/0x160
-[ 2169.753750]  do_syscall_64+0x6f/0x140
-[ 2169.754132]  entry_SYSCALL_64_after_hwframe+0x46/0x4e
+We cannot use a completion here because if ->hp_destroy is never
+called (ie, there is an API bug) then the test will hang.
 
-[ 2169.754847] Last potentially related work creation:
-[ 2169.755315]  kasan_save_stack+0x1c/0x40
-[ 2169.755709]  __kasan_record_aux_stack+0x9b/0xf0
-[ 2169.756165]  __queue_work+0x382/0x8f0
-[ 2169.756552]  call_timer_fn+0x126/0x320
-[ 2169.756941]  __run_timers.part.0+0x2ea/0x4c0
-[ 2169.757376]  run_timer_softirq+0x40/0x80
-[ 2169.757782]  __do_softirq+0x1a1/0x509
-
-[ 2169.758387] Second to last potentially related work creation:
-[ 2169.758924]  kasan_save_stack+0x1c/0x40
-[ 2169.759322]  __kasan_record_aux_stack+0x9b/0xf0
-[ 2169.759773]  __queue_work+0x382/0x8f0
-[ 2169.760156]  call_timer_fn+0x126/0x320
-[ 2169.760550]  __run_timers.part.0+0x2ea/0x4c0
-[ 2169.760978]  run_timer_softirq+0x40/0x80
-[ 2169.761381]  __do_softirq+0x1a1/0x509
-
-[ 2169.761998] The buggy address belongs to the object at ffff88812b326a00
-                which belongs to the cache kmalloc-256 of size 256
-[ 2169.763061] The buggy address is located 112 bytes inside of
-                freed 256-byte region [ffff88812b326a00, ffff88812b326b00)
-
-[ 2169.764346] The buggy address belongs to the physical page:
-[ 2169.764866] page:000000000f2b1e89 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x12b324
-[ 2169.765731] head:000000000f2b1e89 order:2 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-[ 2169.766484] anon flags: 0x200000000000840(slab|head|node=0|zone=2)
-[ 2169.767048] page_type: 0xffffffff()
-[ 2169.767422] raw: 0200000000000840 ffff888100042b40 0000000000000000 dead000000000001
-[ 2169.768183] raw: 0000000000000000 0000000000200020 00000001ffffffff 0000000000000000
-[ 2169.768899] page dumped because: kasan: bad access detected
-
-[ 2169.769649] Memory state around the buggy address:
-[ 2169.770116]  ffff88812b326900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2169.770805]  ffff88812b326980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2169.771485] >ffff88812b326a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[ 2169.772173]                                                              ^
-[ 2169.772787]  ffff88812b326a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[ 2169.773477]  ffff88812b326b00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[ 2169.774160] ==================================================================
-[ 2169.774845] ==================================================================
-
-I didn't manage to reproduce it. Though the issue seems to be obvious.
-There is a chance that the mlx5_dpll_remove() calls
-cancel_delayed_work() when the work runs and manages to re-arm itself.
-In that case, after delay timer triggers next attempt to queue it,
-it works with freed memory.
-
-Fix this by using cancel_delayed_work_sync() instead which makes sure
-that work is done when it returns.
-
-Fixes: 496fd0a26bbf ("mlx5: Implement SyncE support using DPLL infrastructure")
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240206164328.360313-1-jiri@resnulli.us
+Reported by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/netdev/ZcKDd1to4MPANCrn@tissot.1015granger.net/T/#mac5c6299f86799f1c71776f3a07f9c566c7c3c40
+Fixes: 4a0f07d71b04 ("net/handshake: Fix memory leak in __sock_create() and sock_alloc_file()")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Link: https://lore.kernel.org/r/170724699027.91401.7839730697326806733.stgit@oracle-102.nfsv4bat.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/dpll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/handshake/handshake-test.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-index 2cd81bb32c66..8ce5c8bcda1c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-@@ -374,7 +374,7 @@ static void mlx5_dpll_remove(struct auxiliary_device *adev)
- 	struct mlx5_dpll *mdpll = auxiliary_get_drvdata(adev);
- 	struct mlx5_core_dev *mdev = mdpll->mdev;
+diff --git a/net/handshake/handshake-test.c b/net/handshake/handshake-test.c
+index 16ed7bfd29e4..34fd1d9b2db8 100644
+--- a/net/handshake/handshake-test.c
++++ b/net/handshake/handshake-test.c
+@@ -471,7 +471,10 @@ static void handshake_req_destroy_test1(struct kunit *test)
+ 	handshake_req_cancel(sock->sk);
  
--	cancel_delayed_work(&mdpll->work);
-+	cancel_delayed_work_sync(&mdpll->work);
- 	mlx5_dpll_mdev_netdev_untrack(mdpll, mdev);
- 	destroy_workqueue(mdpll->wq);
- 	dpll_pin_unregister(mdpll->dpll, mdpll->dpll_pin,
+ 	/* Act */
+-	fput(filp);
++	/* Ensure the close/release/put process has run to
++	 * completion before checking the result.
++	 */
++	__fput_sync(filp);
+ 
+ 	/* Assert */
+ 	KUNIT_EXPECT_PTR_EQ(test, handshake_req_destroy_test, req);
 -- 
 2.43.0
 
