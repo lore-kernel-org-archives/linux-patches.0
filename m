@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778D0612D7;
-	Tue, 20 Feb 2024 21:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9C3612D7;
+	Tue, 20 Feb 2024 21:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463501; cv=none; b=TsEc9gi77Q9AB0qXnCL41k2PRlbSRcWFt/1hOoBNVB1+1piIJ1cb2glwZBLu6jaYOJCjTNXVuQAqvAWCFtiY9BGcpUrN021VgIKBmCL+6QPadqc4ZXOFGTL8QphPbbAJSb1/pc+M7BXX/TXWJQryAvRuxoD5v9h56OcsAEEmC5A=
+	t=1708463504; cv=none; b=Zn9Y4pdtmzHUnloeq0Cug4fq1CJD8XxblYDXe9SpFCEDhQRsCLKcPXmX0mGgn9vwcb80p9eG6nwSHwT6bb3k5vuSQfYzhW8wlCRAHJPLRvHlbxlgnzzoCwNrmdwNiI8tTCwKrpM7McQsbLOwY/nXFHFSAS2JljejVFPKzryxVjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463501; c=relaxed/simple;
-	bh=wxPOCCz22+O+OQtkVW/dv9u9vHzZUucRlDbgjEvS+kE=;
+	s=arc-20240116; t=1708463504; c=relaxed/simple;
+	bh=E16un5ktJlW9WY9BgEu13ZEcBhmtZ7SE1g41/Vklluo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ieqnm2tHeFg4vyjz/eEjPBUK+0SBqV2PsY37HlkpqucdAB9Rut0dIXZSNy73h8Re/qpKvhXZlou09SgbsibeBdCvKCPl7e/LxHqV/plaeAQ3Lhi8V+69zHxoW24JulRkgwFYwRFLsrg8aPWpg8vy7/n8JwxRGd+NVaqu0LjNEek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lA5UG2je; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwvxhaYN0xgO8ltDppPnz9ryVwL3Np5c3lz+6PwWkVbDgy7N+FKxHBdHF4Dum/w10pDcSG7AHg1LLylL5a0rCXfUnToD+BUs6pfVQgQrHI2pgLhO5gAlquBm6i9lvkv4SPwmzRmPr54PBG+Gx7p/DRmgjq1JTIU4v+yefj6uIUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2i5b+h0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lA5UG2je"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B611FC433F1;
-	Tue, 20 Feb 2024 21:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2i5b+h0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCBBC433C7;
+	Tue, 20 Feb 2024 21:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463501;
-	bh=wxPOCCz22+O+OQtkVW/dv9u9vHzZUucRlDbgjEvS+kE=;
+	s=korg; t=1708463504;
+	bh=E16un5ktJlW9WY9BgEu13ZEcBhmtZ7SE1g41/Vklluo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lA5UG2jeunhna0YEjTFwt/AqzCpw55NtaYKiiZhxqrlbHdXF5DuXoQag0xIUhFXOk
-	 BYG5xLATN+121sgtrNc9ugOMJ24/1OOaBcULP8OQAkoZbnT78yAsliR9SSWimEXgnm
-	 BQZjgsOQ/FvacOQdK8KNLfjqezVCDMUzm7ZGEBG0=
+	b=D2i5b+h0+9nXIDyVtXoDeUSXVaiVAyvqCEitF/SfWif9FbifPj9lm4epWlZPv9d1C
+	 6wgEVQ+bSGjvDBsOiR74ygccPdOMAf1GtDkGf/0ZhUDj3JhR0FilNdlhvcAa3Pr6MA
+	 yj1s+iB1C/0cxW9WXAlZd35DEVWFrIOCQ3CotlKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Pache <npache@redhat.com>,
-	Donet Tom <donettom@linux.vnet.ibm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Christophe Leroy <christophe.leroy@c-s.fr>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 063/331] selftests: mm: fix map_hugetlb failure on 64K page size systems
-Date: Tue, 20 Feb 2024 21:52:59 +0100
-Message-ID: <20240220205639.567760062@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 064/331] scsi: storvsc: Fix ring buffer size calculation
+Date: Tue, 20 Feb 2024 21:53:00 +0100
+Message-ID: <20240220205639.596299925@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -54,56 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nico Pache <npache@redhat.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-commit 91b80cc5b39f00399e8e2d17527cad2c7fa535e2 upstream.
+commit f4469f3858352ad1197434557150b1f7086762a0 upstream.
 
-On systems with 64k page size and 512M huge page sizes, the allocation and
-test succeeds but errors out at the munmap.  As the comment states, munmap
-will failure if its not HUGEPAGE aligned.  This is due to the length of
-the mapping being 1/2 the size of the hugepage causing the munmap to not
-be hugepage aligned.  Fix this by making the mapping length the full
-hugepage if the hugepage is larger than the length of the mapping.
+Current code uses the specified ring buffer size (either the default of 128
+Kbytes or a module parameter specified value) to encompass the one page
+ring buffer header plus the actual ring itself.  When the page size is 4K,
+carving off one page for the header isn't significant.  But when the page
+size is 64K on ARM64, only half of the default 128 Kbytes is left for the
+actual ring.  While this doesn't break anything, the smaller ring size
+could be a performance bottleneck.
 
-Link: https://lkml.kernel.org/r/20240119131429.172448-1-npache@redhat.com
-Signed-off-by: Nico Pache <npache@redhat.com>
-Cc: Donet Tom <donettom@linux.vnet.ibm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Christophe Leroy <christophe.leroy@c-s.fr>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix this by applying the VMBUS_RING_SIZE macro to the specified ring buffer
+size.  This macro adds a page for the header, and rounds up the size to a
+page boundary, using the page size for which the kernel is built.  Use this
+new size for subsequent ring buffer calculations.  For example, on ARM64
+with 64K page size and the default ring size, this results in the actual
+ring being 128 Kbytes, which is intended.
+
+Cc: stable@vger.kernel.org # 5.15.x
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/20240122170956.496436-1-mhklinux@outlook.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/map_hugetlb.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/scsi/storvsc_drv.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/tools/testing/selftests/mm/map_hugetlb.c
-+++ b/tools/testing/selftests/mm/map_hugetlb.c
-@@ -15,6 +15,7 @@
- #include <unistd.h>
- #include <sys/mman.h>
- #include <fcntl.h>
-+#include "vm_util.h"
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -330,6 +330,7 @@ enum storvsc_request_type {
+  */
  
- #define LENGTH (256UL*1024*1024)
- #define PROTECTION (PROT_READ | PROT_WRITE)
-@@ -58,10 +59,16 @@ int main(int argc, char **argv)
+ static int storvsc_ringbuffer_size = (128 * 1024);
++static int aligned_ringbuffer_size;
+ static u32 max_outstanding_req_per_channel;
+ static int storvsc_change_queue_depth(struct scsi_device *sdev, int queue_depth);
+ 
+@@ -687,8 +688,8 @@ static void handle_sc_creation(struct vm
+ 	new_sc->next_request_id_callback = storvsc_next_request_id;
+ 
+ 	ret = vmbus_open(new_sc,
+-			 storvsc_ringbuffer_size,
+-			 storvsc_ringbuffer_size,
++			 aligned_ringbuffer_size,
++			 aligned_ringbuffer_size,
+ 			 (void *)&props,
+ 			 sizeof(struct vmstorage_channel_properties),
+ 			 storvsc_on_channel_callback, new_sc);
+@@ -1973,7 +1974,7 @@ static int storvsc_probe(struct hv_devic
+ 	dma_set_min_align_mask(&device->device, HV_HYP_PAGE_SIZE - 1);
+ 
+ 	stor_device->port_number = host->host_no;
+-	ret = storvsc_connect_to_vsp(device, storvsc_ringbuffer_size, is_fc);
++	ret = storvsc_connect_to_vsp(device, aligned_ringbuffer_size, is_fc);
+ 	if (ret)
+ 		goto err_out1;
+ 
+@@ -2164,7 +2165,7 @@ static int storvsc_resume(struct hv_devi
  {
- 	void *addr;
  	int ret;
-+	size_t hugepage_size;
- 	size_t length = LENGTH;
- 	int flags = FLAGS;
- 	int shift = 0;
  
-+	hugepage_size = default_huge_page_size();
-+	/* munmap with fail if the length is not page aligned */
-+	if (hugepage_size > length)
-+		length = hugepage_size;
-+
- 	if (argc > 1)
- 		length = atol(argv[1]) << 20;
- 	if (argc > 2) {
+-	ret = storvsc_connect_to_vsp(hv_dev, storvsc_ringbuffer_size,
++	ret = storvsc_connect_to_vsp(hv_dev, aligned_ringbuffer_size,
+ 				     hv_dev_is_fc(hv_dev));
+ 	return ret;
+ }
+@@ -2198,8 +2199,9 @@ static int __init storvsc_drv_init(void)
+ 	 * the ring buffer indices) by the max request size (which is
+ 	 * vmbus_channel_packet_multipage_buffer + struct vstor_packet + u64)
+ 	 */
++	aligned_ringbuffer_size = VMBUS_RING_SIZE(storvsc_ringbuffer_size);
+ 	max_outstanding_req_per_channel =
+-		((storvsc_ringbuffer_size - PAGE_SIZE) /
++		((aligned_ringbuffer_size - PAGE_SIZE) /
+ 		ALIGN(MAX_MULTIPAGE_BUFFER_PACKET +
+ 		sizeof(struct vstor_packet) + sizeof(u64),
+ 		sizeof(u64)));
 
 
