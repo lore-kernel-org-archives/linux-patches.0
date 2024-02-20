@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E0514F9DA;
-	Tue, 20 Feb 2024 21:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803AB14F9DA;
+	Tue, 20 Feb 2024 21:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464292; cv=none; b=G5L8u+jZ2dOx8sMzjiwv1t2LkyIyGl4O9md6to9kD3/OdJJ3Jdc/bJTOFly6j+B7TkDeqekliotv02RQ2ZgwNKanN1WJeU2uMh+9Rjm1cNnYgthfps+VsMx+CQEMrmXVezE7iT8mD9JkT2yUIRaQESdjMP5ByIQXUF6lzu/Z5yY=
+	t=1708464295; cv=none; b=DpCaC+T6VFZ6VHIQTJtGceUWuRkqeqaMvwakSRpD0zfnqaSWiGQGq6FlIGdUrpB7wp46VTqJ/pxZ8e13Ie0uIIwT5AxDEpOJQh4XMtXNpV2hSnzhLaMBF4nd8GkcY6codPd8iWLFswYhGk2MUrRwZSoRAM3cLPd6Hc7Qol3q330=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464292; c=relaxed/simple;
-	bh=JrhxLuRwM5/GWRHF5JOp0tf8BllDagVmc+eMX78YSqw=;
+	s=arc-20240116; t=1708464295; c=relaxed/simple;
+	bh=l0T+lY4ulc4x7nPSqTq7GiV0roy+PCaZm3+HYBUCOxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWSS1++R0Tj5yWVckoDP1IM1AZPD7p8+zzkRpMGGVp8M/YZ0ChIQQpIg134rMLyIwLxglapKSjwNTgRruDWE5Wftqi0ueYymAgL4KLEHuTwNCk4nD9tWquZOyTs+EIgMPae2crU6050Tavw1RR2eQHXOtXlzd8oCMiByz0JLwXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3ZSHD8H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HZHL/GJQXKy7ps+83R7wDtjwmHwYJxLZYnUkSmkPGWCl+oe6zCRgzPwsBTBsH1XxrlEm8bTgHOYA6BgDkUc2ZQuSJVrltNd6imS3yXwnbooOG+V1y6v5ebqDaY+UghEtJDv3RJgT/madu+B7MAszcMSE9qVEcGxgBOV5wczYQ2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Btfveso7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3ZSHD8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B61C433C7;
-	Tue, 20 Feb 2024 21:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Btfveso7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E35A9C433C7;
+	Tue, 20 Feb 2024 21:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464292;
-	bh=JrhxLuRwM5/GWRHF5JOp0tf8BllDagVmc+eMX78YSqw=;
+	s=korg; t=1708464295;
+	bh=l0T+lY4ulc4x7nPSqTq7GiV0roy+PCaZm3+HYBUCOxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3ZSHD8HlHy3JOHDW4eOfT2QM7BcO4KnLGPpWmJ0+JrMSvUGc4kbo7ik94DtuT7qH
-	 GXBqOyOqc229pi0GmH5NSs0hsaje5JtD5MzzlcNDsj1OyT8UkxKDAz1ZoD8Jnk+OEr
-	 vKSxIIX/+tEkrvoPD+sdlYRHmVR/4UuLcirEDG3Q=
+	b=Btfveso7/KKVsVbcG2an+HWBA7caoDrNuNPhn2a6vp4kqYsf0kmkXP3uW7KCoG924
+	 GJETE6XDQ19BOtliREfUOs41fnlwGqdMDlVqNOAa9J2dVR+nJ9k/ztHgSztYc9Jf5Z
+	 M0D4PsRNxyrb9m2thKT3572X8BPMlCBLygyDMlZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,10 +34,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Al Viro <viro@ZenIV.linux.org.uk>,
 	Ajay Kaher <ajay.kaher@broadcom.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 312/331] eventfs: Restructure eventfs_inode structure to be more condensed
-Date: Tue, 20 Feb 2024 21:57:08 +0100
-Message-ID: <20240220205647.997228454@linuxfoundation.org>
+Subject: [PATCH 6.6 313/331] eventfs: Remove fsnotify*() functions from lookup()
+Date: Tue, 20 Feb 2024 21:57:09 +0100
+Message-ID: <20240220205648.036774059@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -58,14 +59,16 @@ Content-Transfer-Encoding: 8bit
 
 From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 264424dfdd5cbd92bc5b5ddf93944929fc877fac upstream.
+commit 12d823b31fadf47c8f36ecada7abac5f903cac33 upstream.
 
-Some of the eventfs_inode structure has holes in it. Rework the structure
-to be a bit more condensed, and also remove the no longer used llist
-field.
+The dentries and inodes are created when referenced in the lookup code.
+There's no reason to call fsnotify_*() functions when they are created by
+a reference. It doesn't make any sense.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240201161617.002321438@goodmis.org
+Link: https://lore.kernel.org/linux-trace-kernel/20240201002719.GS2087318@ZenIV/
+Link: https://lore.kernel.org/linux-trace-kernel/20240201161617.166973329@goodmis.org
 
+Cc: stable@vger.kernel.org
 Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
@@ -73,66 +76,31 @@ Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Christian Brauner <brauner@kernel.org>
 Cc: Al Viro <viro@ZenIV.linux.org.uk>
 Cc: Ajay Kaher <ajay.kaher@broadcom.com>
+Fixes: a376007917776 ("eventfs: Implement functions to create files and dirs when accessed");
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/internal.h |   27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ fs/tracefs/event_inode.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/tracefs/internal.h
-+++ b/fs/tracefs/internal.h
-@@ -32,40 +32,37 @@ struct eventfs_attr {
- /*
-  * struct eventfs_inode - hold the properties of the eventfs directories.
-  * @list:	link list into the parent directory
-+ * @rcu:	Union with @list for freeing
-+ * @children:	link list into the child eventfs_inode
-  * @entries:	the array of entries representing the files in the directory
-  * @name:	the name of the directory to create
-- * @children:	link list into the child eventfs_inode
-  * @events_dir: the dentry of the events directory
-  * @entry_attrs: Saved mode and ownership of the @d_children
-- * @attr:	Saved mode and ownership of eventfs_inode itself
-  * @data:	The private data to pass to the callbacks
-+ * @attr:	Saved mode and ownership of eventfs_inode itself
-  * @is_freed:	Flag set if the eventfs is on its way to be freed
-  *                Note if is_freed is set, then dentry is corrupted.
-+ * @is_events:	Flag set for only the top level "events" directory
-  * @nr_entries: The number of items in @entries
-+ * @ino:	The saved inode number
-  */
- struct eventfs_inode {
--	struct kref			kref;
--	struct list_head		list;
-+	union {
-+		struct list_head	list;
-+		struct rcu_head		rcu;
-+	};
-+	struct list_head		children;
- 	const struct eventfs_entry	*entries;
- 	const char			*name;
--	struct list_head		children;
- 	struct dentry			*events_dir;
- 	struct eventfs_attr		*entry_attrs;
--	struct eventfs_attr		attr;
- 	void				*data;
-+	struct eventfs_attr		attr;
-+	struct kref			kref;
- 	unsigned int			is_freed:1;
- 	unsigned int			is_events:1;
- 	unsigned int			nr_entries:30;
- 	unsigned int			ino;
--	/*
--	 * Union - used for deletion
--	 * @llist:	for calling dput() if needed after RCU
--	 * @rcu:	eventfs_inode to delete in RCU
--	 */
--	union {
--		struct llist_node	llist;
--		struct rcu_head		rcu;
--	};
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -366,7 +366,6 @@ static struct dentry *lookup_file(struct
+ 	dentry->d_fsdata = get_ei(parent_ei);
+ 
+ 	d_add(dentry, inode);
+-	fsnotify_create(dentry->d_parent->d_inode, dentry);
+ 	return NULL;
  };
  
- static inline struct tracefs_inode *get_tracefs(const struct inode *inode)
+@@ -408,7 +407,6 @@ static struct dentry *lookup_dir_entry(s
+ 	inc_nlink(inode);
+ 	d_add(dentry, inode);
+ 	inc_nlink(dentry->d_parent->d_inode);
+-	fsnotify_mkdir(dentry->d_parent->d_inode, dentry);
+ 	return NULL;
+ }
+ 
 
 
