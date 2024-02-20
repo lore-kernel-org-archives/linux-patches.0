@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39508151CDC;
-	Tue, 20 Feb 2024 21:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6598314AD12;
+	Tue, 20 Feb 2024 21:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463110; cv=none; b=JopU+tfKImP/umflW4kTbrV/ICdtpzXfoEwvEnqvQrHHSxxlIUpgA6LDpscn1NItsp/eePH+0Pl5KZlTypET2MFvDpEVITkvSemGWL4hmPham8nfjBRYljzBB2UZZFf5Vskg25gWMEtnDp+foL6yRJ7aZme1mZNddlhejJ36rfY=
+	t=1708463113; cv=none; b=jpgkfwFl8E0g916CSii6AF2lB2SMl1v5jQFuVUyjmVPiBTwRb50MrbUB2lkwpy/xvAr6pKUVPEEHxiszRXS2H5sl4RjB3UPbySQzYPGqTPwoF9LPGA2VVutTOE2zY96RJll6tYE3U1hAiOOBTHdd54gEbDQLx0GjZFXkGA4aHT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463110; c=relaxed/simple;
-	bh=WwaN0wuruvLTBbUzTx3YtyzxLT4fLkzCVR6KRXwVu5M=;
+	s=arc-20240116; t=1708463113; c=relaxed/simple;
+	bh=WN/Y2hoCRBymcMuCvjJJvTETlYgblTiIQimjaEyckrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qLkXo7rvXInLjSSgr+HwKSBg5RJX0cMv7diUwKN3Uy88Xm72dlWu1EK6+fMag3VUJh1T4MbvQnYZCgOAvV4t/d4w8Y9GVJbgEEx+O3FrQH0Sqgh5MfJPU1nr40FJpp1CGwwFzqgLnDTIXW2CWJvmi4XO9WJByNGe4LC5sj3SfQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12Ihv95s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cto/9z8B9dj6MGcEOLWVjXpLhK8ysJiuiImVqLfoaZ8/37NKvDtGuNpnByqydct1lo7LXWuv7nEXIiyG7mXnxM0vCwvoKyrbRyaFZDy1MgXZ0FoiUJAtVGd0V3BlMix/5tiCyYOIPgBC6OuT7am9kJgFT12/i8M0J+o44ffORlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s13/fZ4F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12Ihv95s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC94C433F1;
-	Tue, 20 Feb 2024 21:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s13/fZ4F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E742C433F1;
+	Tue, 20 Feb 2024 21:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463110;
-	bh=WwaN0wuruvLTBbUzTx3YtyzxLT4fLkzCVR6KRXwVu5M=;
+	s=korg; t=1708463113;
+	bh=WN/Y2hoCRBymcMuCvjJJvTETlYgblTiIQimjaEyckrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=12Ihv95sX0z7E1qYF/gqDqaRRxST4rY1d1ICAjNyRFe1fPB4frtZod3m+5tChCW7X
-	 740UzrLuKGp7EefLH2AJpt3Zs1gnDro87w+Rt0k7xjxA5mIQRKek4pqPOHYQZU+mWh
-	 IwQYsE1U1snq60JyT6Kp45zdx/pKJOQm2uxVp4eg=
+	b=s13/fZ4FwukFJD5DSPU+YyEWttArRDTlJLi35XWZ3agRjL9XS+9N3mf/gI/uGnVHf
+	 gIewebL/g7WxHPVn4Hx1DFKE0qRbuooHBHhcsdcg0e0VOiK6shAWsGtrQa6EzGqwRn
+	 K2UDTjgSc5PTzeBRCNufgcY6c5/RGGalh5FATVmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Andrea Merello <andrea.merello@iit.it>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	linux-iio@vger.kernel.org,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 108/197] iio: imu: bno055: serdev requires REGMAP
-Date: Tue, 20 Feb 2024 21:51:07 +0100
-Message-ID: <20240220204844.313708902@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.1 109/197] media: rc: bpf attach/detach requires write permission
+Date: Tue, 20 Feb 2024 21:51:08 +0100
+Message-ID: <20240220204844.343817657@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -55,58 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Sean Young <sean@mess.org>
 
-commit 35ec2d03b282a939949090bd8c39eb37a5856721 upstream.
+commit 6a9d552483d50953320b9d3b57abdee8d436f23f upstream.
 
-There are a ton of build errors when REGMAP is not set, so select
-REGMAP to fix all of them.
+Note that bpf attach/detach also requires CAP_NET_ADMIN.
 
-Examples (not all of them):
-
-../drivers/iio/imu/bno055/bno055_ser_core.c:495:15: error: variable 'bno055_ser_regmap_bus' has initializer but incomplete type
-  495 | static struct regmap_bus bno055_ser_regmap_bus = {
-../drivers/iio/imu/bno055/bno055_ser_core.c:496:10: error: 'struct regmap_bus' has no member named 'write'
-  496 |         .write = bno055_ser_write_reg,
-../drivers/iio/imu/bno055/bno055_ser_core.c:497:10: error: 'struct regmap_bus' has no member named 'read'
-  497 |         .read = bno055_ser_read_reg,
-../drivers/iio/imu/bno055/bno055_ser_core.c: In function 'bno055_ser_probe':
-../drivers/iio/imu/bno055/bno055_ser_core.c:532:18: error: implicit declaration of function 'devm_regmap_init'; did you mean 'vmem_map_init'? [-Werror=implicit-function-declaration]
-  532 |         regmap = devm_regmap_init(&serdev->dev, &bno055_ser_regmap_bus,
-../drivers/iio/imu/bno055/bno055_ser_core.c:532:16: warning: assignment to 'struct regmap *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-  532 |         regmap = devm_regmap_init(&serdev->dev, &bno055_ser_regmap_bus,
-../drivers/iio/imu/bno055/bno055_ser_core.c: At top level:
-../drivers/iio/imu/bno055/bno055_ser_core.c:495:26: error: storage size of 'bno055_ser_regmap_bus' isn't known
-  495 | static struct regmap_bus bno055_ser_regmap_bus = {
-
-Fixes: 2eef5a9cc643 ("iio: imu: add BNO055 serdev driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Andrea Merello <andrea.merello@iit.it>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: linux-iio@vger.kernel.org
-Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240110185611.19723-1-rdunlap@infradead.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/bno055/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/rc/bpf-lirc.c     |    6 +++---
+ drivers/media/rc/lirc_dev.c     |    5 ++++-
+ drivers/media/rc/rc-core-priv.h |    2 +-
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iio/imu/bno055/Kconfig b/drivers/iio/imu/bno055/Kconfig
-index 83e53acfbe88..c7f5866a177d 100644
---- a/drivers/iio/imu/bno055/Kconfig
-+++ b/drivers/iio/imu/bno055/Kconfig
-@@ -8,6 +8,7 @@ config BOSCH_BNO055
- config BOSCH_BNO055_SERIAL
- 	tristate "Bosch BNO055 attached via UART"
- 	depends on SERIAL_DEV_BUS
-+	select REGMAP
- 	select BOSCH_BNO055
- 	help
- 	  Enable this to support Bosch BNO055 IMUs attached via UART.
--- 
-2.43.2
-
+--- a/drivers/media/rc/bpf-lirc.c
++++ b/drivers/media/rc/bpf-lirc.c
+@@ -253,7 +253,7 @@ int lirc_prog_attach(const union bpf_att
+ 	if (attr->attach_flags)
+ 		return -EINVAL;
+ 
+-	rcdev = rc_dev_get_from_fd(attr->target_fd);
++	rcdev = rc_dev_get_from_fd(attr->target_fd, true);
+ 	if (IS_ERR(rcdev))
+ 		return PTR_ERR(rcdev);
+ 
+@@ -278,7 +278,7 @@ int lirc_prog_detach(const union bpf_att
+ 	if (IS_ERR(prog))
+ 		return PTR_ERR(prog);
+ 
+-	rcdev = rc_dev_get_from_fd(attr->target_fd);
++	rcdev = rc_dev_get_from_fd(attr->target_fd, true);
+ 	if (IS_ERR(rcdev)) {
+ 		bpf_prog_put(prog);
+ 		return PTR_ERR(rcdev);
+@@ -303,7 +303,7 @@ int lirc_prog_query(const union bpf_attr
+ 	if (attr->query.query_flags)
+ 		return -EINVAL;
+ 
+-	rcdev = rc_dev_get_from_fd(attr->query.target_fd);
++	rcdev = rc_dev_get_from_fd(attr->query.target_fd, false);
+ 	if (IS_ERR(rcdev))
+ 		return PTR_ERR(rcdev);
+ 
+--- a/drivers/media/rc/lirc_dev.c
++++ b/drivers/media/rc/lirc_dev.c
+@@ -814,7 +814,7 @@ void __exit lirc_dev_exit(void)
+ 	unregister_chrdev_region(lirc_base_dev, RC_DEV_MAX);
+ }
+ 
+-struct rc_dev *rc_dev_get_from_fd(int fd)
++struct rc_dev *rc_dev_get_from_fd(int fd, bool write)
+ {
+ 	struct fd f = fdget(fd);
+ 	struct lirc_fh *fh;
+@@ -828,6 +828,9 @@ struct rc_dev *rc_dev_get_from_fd(int fd
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
++	if (write && !(f.file->f_mode & FMODE_WRITE))
++		return ERR_PTR(-EPERM);
++
+ 	fh = f.file->private_data;
+ 	dev = fh->rc;
+ 
+--- a/drivers/media/rc/rc-core-priv.h
++++ b/drivers/media/rc/rc-core-priv.h
+@@ -325,7 +325,7 @@ void lirc_raw_event(struct rc_dev *dev,
+ void lirc_scancode_event(struct rc_dev *dev, struct lirc_scancode *lsc);
+ int lirc_register(struct rc_dev *dev);
+ void lirc_unregister(struct rc_dev *dev);
+-struct rc_dev *rc_dev_get_from_fd(int fd);
++struct rc_dev *rc_dev_get_from_fd(int fd, bool write);
+ #else
+ static inline int lirc_dev_init(void) { return 0; }
+ static inline void lirc_dev_exit(void) {}
 
 
