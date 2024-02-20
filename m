@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177361509BF;
-	Tue, 20 Feb 2024 21:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E8D151CD2;
+	Tue, 20 Feb 2024 21:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462823; cv=none; b=auF/tEhgFDsoBZNL2G9hsvNAGyWXvYGkrqp5AoYwBU7ceDqESEfcx0k+JBKPw/GE9hxPqG6ozeyqr/VOkZpRF4QFsfLuKI8Z8bT/yxsC2onTvsRaEseLI9NQJUxcHj8BCrm6FcEo/8ljRaZx95W7QVHr1Wo81rDEcel6tqQKu9k=
+	t=1708462826; cv=none; b=b0KuDnnX5PdjIRg57cDAmqHPsijbQ2np9PsP+1cwkD/I0xX2CAlP/t7PMFbZrqYyA3Q6l1nK95rLDztPcnd09vM27aJKMJwm0wAYIOaVMQbKGxpL/LgyYL5SU7VOqOhTnS60Yq4mUU67R4pQ2TSBqzIfNBfAYYoavdG9W9fm+eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462823; c=relaxed/simple;
-	bh=DXne/qZ7yATbzlUnbwZ2k4AvpnqoELGMqaLMbby/LG4=;
+	s=arc-20240116; t=1708462826; c=relaxed/simple;
+	bh=EhqBVLb55wHU4Ji7bm8iewQK/bUacepUBvJDMf/AKCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pphXrQxw6VuPuy+PeS3hZJRRRmt8pf4GhUbLlFgVPpxQO0BabiASfu5IFpK/1HDxmTX5iTbkeErsSODQTVDMUM83M7LqIQX1FgURShFK+e//iPAKCRCY4/srzihMGkMqpij4g6I8oyZAvmIEeyjJzfqDfjALtt8fkOFcT3h/Kmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXxQWBf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CCwluxA2rIGWiA3VGJG9yIzjnO/6NSLyQra9/wG5hObnJLgNqUnrxLahaJyJP84bmT7uq9Cy/QDE5vRzT64GnVgVtQtrBz/+Xp1UJn1Y1/z5RlmG/yRv9qRDxhaphD40l185Uejcv+ZUlS3LlK8kTUpTEbOuQ26EY8HY6v68gok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mPE1Ahc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXxQWBf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB51C43390;
-	Tue, 20 Feb 2024 21:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mPE1Ahc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8DCC43390;
+	Tue, 20 Feb 2024 21:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462823;
-	bh=DXne/qZ7yATbzlUnbwZ2k4AvpnqoELGMqaLMbby/LG4=;
+	s=korg; t=1708462826;
+	bh=EhqBVLb55wHU4Ji7bm8iewQK/bUacepUBvJDMf/AKCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXxQWBf+9A3vdXzDLHEdP06uE9uN5MvcAXVmqcPEB12qYTovndpjCmEfzYuD8zKmA
-	 2JfQOl90VMx1g8O7M+1VGklAj4vzzaUD8Jwi8Y7Fa1jsMSEL+LirM9wdFidXW1j7Z5
-	 hGJEEnBdzmAInQiTyuw7yJnX9LHsow6KfqnxZvRs=
+	b=2mPE1AhcJlL65gPIXzTf2bTSyW2hI2cE7pMgz60wPB7gnANaQHjkgEQA53EV/74Nt
+	 1vJ4bC+ddeVPGGzEPBrwoaFXfu0rqCpNWvOm+POeVyNhSZ7wXoyKd27TQwy3bfy6dy
+	 dkltITTGOs9n4noCkCRl1iQ09khrS75/FML5BFug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 048/197] usb: ucsi: Add missing ppm_lock
-Date: Tue, 20 Feb 2024 21:50:07 +0100
-Message-ID: <20240220204842.520585866@linuxfoundation.org>
+	Sean Anderson <sean.anderson@seco.com>
+Subject: [PATCH 6.1 049/197] usb: ulpi: Fix debugfs directory leak
+Date: Tue, 20 Feb 2024 21:50:08 +0100
+Message-ID: <20240220204842.549279718@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,42 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Sean Anderson <sean.anderson@seco.com>
 
-commit c9aed03a0a683fd1600ea92f2ad32232d4736272 upstream.
+commit 3caf2b2ad7334ef35f55b95f3e1b138c6f77b368 upstream.
 
-Calling ->sync_write must be done while holding the PPM lock as
-the mailbox logic does not support concurrent commands.
+The ULPI per-device debugfs root is named after the ulpi device's
+parent, but ulpi_unregister_interface tries to remove a debugfs
+directory named after the ulpi device itself. This results in the
+directory sticking around and preventing subsequent (deferred) probes
+from succeeding. Change the directory name to match the ulpi device.
 
-At least since the addition of partner task this means that
-ucsi_acknowledge_connector_change should be called with the
-PPM lock held as it calls ->sync_write.
-
-Thus protect the only call to ucsi_acknowledge_connector_change
-with the PPM. All other calls to ->sync_write already happen
-under the PPM lock.
-
-Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
+Fixes: bd0a0a024f2a ("usb: ulpi: Add debugfs support")
 Cc: stable@vger.kernel.org
-Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240121204123.275441-2-lk@c--e.de
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Link: https://lore.kernel.org/r/20240126223800.2864613-1-sean.anderson@seco.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/common/ulpi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -831,7 +831,9 @@ static void ucsi_handle_connector_change
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -301,7 +301,7 @@ static int ulpi_register(struct device *
+ 		return ret;
+ 	}
  
- 	clear_bit(EVENT_PENDING, &con->ucsi->flags);
+-	root = debugfs_create_dir(dev_name(dev), ulpi_root);
++	root = debugfs_create_dir(dev_name(&ulpi->dev), ulpi_root);
+ 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
  
-+	mutex_lock(&ucsi->ppm_lock);
- 	ret = ucsi_acknowledge_connector_change(ucsi);
-+	mutex_unlock(&ucsi->ppm_lock);
- 	if (ret)
- 		dev_err(ucsi->dev, "%s: ACK failed (%d)", __func__, ret);
- 
+ 	dev_dbg(&ulpi->dev, "registered ULPI PHY: vendor %04x, product %04x\n",
 
 
