@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86EF14F9C8;
-	Tue, 20 Feb 2024 21:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6B21509BF;
+	Tue, 20 Feb 2024 21:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463069; cv=none; b=F5ohSMqYErzWNsEDHcKh/8MYueKXU6XnJkfBTRMgyN65oWvp1KnAph17o8G3Sd7a0ZGRU6IPjKlXxVv37/pRDniTVrWe8YH6LibT4ytUZHB3X5AACn9xvdWSBHbDB43cdZbOTwpG9z7Y2NZ0Y0wQRjjHMpMOarRQM4CZsuV8lU4=
+	t=1708463072; cv=none; b=aDlsF6ZfAflK/jo6ja3Unkf3RWSoK+zEZXx/R6YdWo+LjCFPGGRnboEF8FEb0yK9znxuxitm+aNLKs4qn6OhkMI9QEGm9REaxrGgGaHd7fT12MC+jiKTy3WHDcFTDdB1VpXp52RcPSlSF/d5ikllHOlZHqPuXVJIt7si9RJpkKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463069; c=relaxed/simple;
-	bh=YQc+0ErxYSoUX+A6E/zgi31fDVBjpgNb1jnKbd2zqnY=;
+	s=arc-20240116; t=1708463072; c=relaxed/simple;
+	bh=9Gi6tddfhUQBb9S5XEBFQJ53N8YW+TuQBWH+zFcxJhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7LSbgE4AU+lkdru02YBMwUxy52EajzqvdFs/mlGcVlPQ3ePUsVSogcFVZ5Mvng3cte0eT1EceiJUdZe+eOa9eV/IA3rTs7yOXF0irRVr3WCu+O9CJgcjQKC1EEA9sKrkLfGa7PaMgeX+Qj7g4rZ3lxEfvws7YW90BBfc2D3QVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRlgZAQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hWeySsJQKA54X/+0wkYKJzXa5/dyifx6/4m5I5aGCW6ULIBf2mCeZmL38a5w+n5npTV24RbPUw9JKUUbGq+c1D1TidP7mGT8uVOVtYk2qWXar4pW2OQlI/GCR/OmqXZayCO0r3c4qQB21iYjhNk/PkxL2ngRNTanD03xWkQ4la8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyXkkkrL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRlgZAQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1407EC433C7;
-	Tue, 20 Feb 2024 21:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyXkkkrL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B25FC433F1;
+	Tue, 20 Feb 2024 21:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463069;
-	bh=YQc+0ErxYSoUX+A6E/zgi31fDVBjpgNb1jnKbd2zqnY=;
+	s=korg; t=1708463072;
+	bh=9Gi6tddfhUQBb9S5XEBFQJ53N8YW+TuQBWH+zFcxJhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRlgZAQYxCL4EaGyKqa+Z9CX2N9runEAUHDbaW1tQjcefoxT9EbRRKa4vnePJdLm1
-	 UBSugrRjodGctnpq2goJTXhPwmJJ0ePRivmdIQCj+T3iw2ywH3k4FcRtazycwsxt2m
-	 CLXdQW6MOxxMdPC8tPstdsMUY8CjPI9uWzKmW6CU=
+	b=kyXkkkrLKelzZ3MpgvW6ahfAzWfB+bS0/RIy0aOI0NM7elfDCtlGVEIPsFJbbNebl
+	 Pq3DKY7jcPj/NYGwm+8TVYb6DgXQQwTBjjel7WWS7yJcNKin5fDpf96GTbSpJJpBxx
+	 Gdu2NjjTJ5BfDxw4IcJ88sYKslFgs6CnL6ud3gkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Engraf <david.engraf@sysgo.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Srikar Dronamraju <srikar@linux.vnet.ibm.com>,
 	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 125/197] powerpc/cputable: Add missing PPC_FEATURE_BOOKE on PPC64 Book-E
-Date: Tue, 20 Feb 2024 21:51:24 +0100
-Message-ID: <20240220204844.814522539@linuxfoundation.org>
+Subject: [PATCH 6.1 126/197] powerpc/pseries: fix accuracy of stolen time
+Date: Tue, 20 Feb 2024 21:51:25 +0100
+Message-ID: <20240220204844.844226336@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,42 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Engraf <david.engraf@sysgo.com>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-commit eb6d871f4ba49ac8d0537e051fe983a3a4027f61 upstream.
+commit cbecc9fcbbec60136b0180ba0609c829afed5c81 upstream.
 
-Commit e320a76db4b0 ("powerpc/cputable: Split cpu_specs[] out of
-cputable.h") moved the cpu_specs to separate header files. Previously
-PPC_FEATURE_BOOKE was enabled by CONFIG_PPC_BOOK3E_64. The definition in
-cpu_specs_e500mc.h for PPC64 no longer enables PPC_FEATURE_BOOKE.
+powerVM hypervisor updates the VPA fields with stolen time data.
+It currently reports enqueue_dispatch_tb and ready_enqueue_tb for
+this purpose. In linux these two fields are used to report the stolen time.
 
-This breaks user space reading the ELF hwcaps and expect
-PPC_FEATURE_BOOKE. Debugging an application with gdb is no longer
-working on e5500/e6500 because the 64-bit detection relies on
-PPC_FEATURE_BOOKE for Book-E.
+The VPA fields are updated at the TB frequency. On powerPC its mostly
+set at 512Mhz. Hence this needs a conversion to ns when reporting it
+back as rest of the kernel timings are in ns. This conversion is already
+handled in tb_to_ns function. So use that function to report accurate
+stolen time.
 
-Fixes: e320a76db4b0 ("powerpc/cputable: Split cpu_specs[] out of cputable.h")
+Observed this issue and used an Capped Shared Processor LPAR(SPLPAR) to
+simplify the experiments. In all these cases, 100% VP Load is run using
+stress-ng workload. Values of stolen time is in percentages as reported
+by mpstat. With the patch values are close to expected.
+
+		6.8.rc1		+Patch
+12EC/12VP	   0.0		   0.0
+12EC/24VP	  25.7		  50.2
+12EC/36VP	  37.3		  69.2
+12EC/48VP	  38.5		  78.3
+
+Fixes: 0e8a63132800 ("powerpc/pseries: Implement CONFIG_PARAVIRT_TIME_ACCOUNTING")
 Cc: stable@vger.kernel.org # v6.1+
-Signed-off-by: David Engraf <david.engraf@sysgo.com>
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Srikar Dronamraju <srikar@linux.vnet.ibm.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240207092758.1058893-1-david.engraf@sysgo.com
+Link: https://msgid.link/20240213052635.231597-1-sshegde@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/cpu_specs_e500mc.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/lpar.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/cpu_specs_e500mc.h
-+++ b/arch/powerpc/kernel/cpu_specs_e500mc.h
-@@ -8,7 +8,8 @@
+--- a/arch/powerpc/platforms/pseries/lpar.c
++++ b/arch/powerpc/platforms/pseries/lpar.c
+@@ -660,8 +660,12 @@ u64 pseries_paravirt_steal_clock(int cpu
+ {
+ 	struct lppaca *lppaca = &lppaca_of(cpu);
  
- #ifdef CONFIG_PPC64
- #define COMMON_USER_BOOKE	(PPC_FEATURE_32 | PPC_FEATURE_HAS_MMU | \
--				 PPC_FEATURE_HAS_FPU | PPC_FEATURE_64)
-+				 PPC_FEATURE_HAS_FPU | PPC_FEATURE_64 | \
-+				 PPC_FEATURE_BOOKE)
- #else
- #define COMMON_USER_BOOKE	(PPC_FEATURE_32 | PPC_FEATURE_HAS_MMU | \
- 				 PPC_FEATURE_BOOKE)
+-	return be64_to_cpu(READ_ONCE(lppaca->enqueue_dispatch_tb)) +
+-		be64_to_cpu(READ_ONCE(lppaca->ready_enqueue_tb));
++	/*
++	 * VPA steal time counters are reported at TB frequency. Hence do a
++	 * conversion to ns before returning
++	 */
++	return tb_to_ns(be64_to_cpu(READ_ONCE(lppaca->enqueue_dispatch_tb)) +
++			be64_to_cpu(READ_ONCE(lppaca->ready_enqueue_tb)));
+ }
+ #endif
+ 
 
 
