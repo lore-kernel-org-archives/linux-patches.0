@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D51446C9;
-	Tue, 20 Feb 2024 21:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BBC446C9;
+	Tue, 20 Feb 2024 21:32:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464768; cv=none; b=CHYAJcrnxS52J66YeIGLTONK4dEYHZDPnfAohvHh+zZZji/4n8M6du156UUQ+Mokfq3HC6tt+isaxWxUmL72BuqiJ2yn27hudanEnUQxUJVxie/YrXpgzozF7yPt1EazHscpzzXM+Fs+Bifxo3Luwa59f2Tf5sLU70EltFNgS4Q=
+	t=1708464771; cv=none; b=k5HI72027FmBfevgpYvZmECvqvHIaT3sv6ncwM7QxLxkipZJaaXo0xnLOUSx56SkU9hp+GMi+fiJ2N+YGXAnnEyJ458u3+TIvRhumEDSoL0ohYYO388oQnQg30UajzTykisZWMhwZHTLSK+qCOWfcXNJiBqFDY2K5vBjXcg7FXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464768; c=relaxed/simple;
-	bh=S/hWyW67xJ1ZKreq58ceLu+nx0vbF30js0dFPiD/9fg=;
+	s=arc-20240116; t=1708464771; c=relaxed/simple;
+	bh=G1QdMosRq0iECQIkbXhrmsbMxVQIZc7AD+HZFwVQMiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yy7I99yWMp+EN7eofKLz7N9kTkZlK2hpw600AxljCarwKj5BaUc4IJ3yXMXF0xhrJjzYGA63Ot1h2I6V0vkV2pApURYan/h2D8UBL/DshV07tbLQi0CCdvWKdPNyhEB9hK+m5lWAWCdAta1K1cG45pMYvnSmiHA3s4tMzJIQV/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brnaxwfW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=abMh9Silk1f6eFcjmvsipo+OH2VidKroxxySn91e49vnhWIWYb8AXhGvwxW09/GPHk4uevcVj65zaEp46pIeT74dui1dYRtexDImYfWXjpPvYTQp1SHURCtrs3eZbeH8vjWzQVN5r6mN5gdFXCMSRuLyCiNMF3c8w+6YYIWXaAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+UC876N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brnaxwfW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D206C433F1;
-	Tue, 20 Feb 2024 21:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+UC876N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A637CC433C7;
+	Tue, 20 Feb 2024 21:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464768;
-	bh=S/hWyW67xJ1ZKreq58ceLu+nx0vbF30js0dFPiD/9fg=;
+	s=korg; t=1708464771;
+	bh=G1QdMosRq0iECQIkbXhrmsbMxVQIZc7AD+HZFwVQMiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=brnaxwfWxYKuRm966TmNupjm8Cb4YAd1ReI08mPp9tko/QUfx5I2fGQaBJLFNC2qS
-	 JTzZxH2pzTwFkmR+mTmWDd5zML49Z2ISxhSjIuyI3XpcIBnxO2qaAliIhpbX79jt76
-	 3u5ZHB1rJydDFtsRbPkyqFZU1eKrpJrOPgUqXFoY=
+	b=Q+UC876NKvZzZ3wSKRpQjxFe9olplf1YrSgZ37v6RFOjKy9oNLCY75V4DJOZZYRRH
+	 r/uOuveDERowuqrPKs+lx/vs39jlObqx7Uxc2f2Pg/14OWsvkmhLQQt+kkSrxqW5iI
+	 aOKW9/1/Uwk705sumMaFIi1xpbh4ufLKBV8tlf0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangfeng Xiao <xiaojiangfeng@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 101/309] powerpc/kasan: Fix addr error caused by page alignment
-Date: Tue, 20 Feb 2024 21:54:20 +0100
-Message-ID: <20240220205636.340668646@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.7 092/309] usb: chipidea: core: handle power lost in workqueue
+Date: Tue, 20 Feb 2024 21:54:11 +0100
+Message-ID: <20240220205636.079961446@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,63 +49,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 4a7aee96200ad281a5cc4cf5c7a2e2a49d2b97b0 ]
+commit cc509b6a47e7c8998d9e41c273191299d5d9d631 upstream.
 
-In kasan_init_region, when k_start is not page aligned, at the begin of
-for loop, k_cur = k_start & PAGE_MASK is less than k_start, and then
-`va = block + k_cur - k_start` is less than block, the addr va is invalid,
-because the memory address space from va to block is not alloced by
-memblock_alloc, which will not be reserved by memblock_reserve later, it
-will be used by other places.
+When power is recycled in usb controller during system power management,
+the controller will recognize it and switch role if role has been changed
+during power lost. In current design, it will be completed in resume()
+function. However, this may bring issues since usb class devices have
+their pm operations too and these device's resume() functions are still
+not being called at this point. When usb controller recognized host role
+should be stopped, these usb class devices will be removed at this point.
+But these usb class devices can't be removed in some cases, such as scsi
+devices. Since scsi driver may sync data to U-disk, however it will block
+there because scsi drvier can only handle pm request when is in suspended
+state. Therefore, there may exist a dependency between ci_resume() and usb
+class device's resume(). To break this potential dependency, we need to
+handle power lost work in a workqueue.
 
-As a result, memory overwriting occurs.
-
-for example:
-int __init __weak kasan_init_region(void *start, size_t size)
-{
-[...]
-	/* if say block(dcd97000) k_start(feef7400) k_end(feeff3fe) */
-	block = memblock_alloc(k_end - k_start, PAGE_SIZE);
-	[...]
-	for (k_cur = k_start & PAGE_MASK; k_cur < k_end; k_cur += PAGE_SIZE) {
-		/* at the begin of for loop
-		 * block(dcd97000) va(dcd96c00) k_cur(feef7000) k_start(feef7400)
-		 * va(dcd96c00) is less than block(dcd97000), va is invalid
-		 */
-		void *va = block + k_cur - k_start;
-		[...]
-	}
-[...]
-}
-
-Therefore, page alignment is performed on k_start before
-memblock_alloc() to ensure the validity of the VA address.
-
-Fixes: 663c0c9496a6 ("powerpc/kasan: Fix shadow area set up for modules.")
-Signed-off-by: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/1705974359-43790-1-git-send-email-xiaojiangfeng@huawei.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 74494b33211d ("usb: chipidea: core: add controller resume support when controller is powered off")
+cc: stable@vger.kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://lore.kernel.org/r/20240119123537.3614838-1-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/mm/kasan/init_32.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/chipidea/ci.h   |    2 ++
+ drivers/usb/chipidea/core.c |   44 ++++++++++++++++++++++++--------------------
+ 2 files changed, 26 insertions(+), 20 deletions(-)
 
-diff --git a/arch/powerpc/mm/kasan/init_32.c b/arch/powerpc/mm/kasan/init_32.c
-index a70828a6d935..aa9aa11927b2 100644
---- a/arch/powerpc/mm/kasan/init_32.c
-+++ b/arch/powerpc/mm/kasan/init_32.c
-@@ -64,6 +64,7 @@ int __init __weak kasan_init_region(void *start, size_t size)
- 	if (ret)
- 		return ret;
+--- a/drivers/usb/chipidea/ci.h
++++ b/drivers/usb/chipidea/ci.h
+@@ -176,6 +176,7 @@ struct hw_bank {
+  * @enabled_otg_timer_bits: bits of enabled otg timers
+  * @next_otg_timer: next nearest enabled timer to be expired
+  * @work: work for role changing
++ * @power_lost_work: work for power lost handling
+  * @wq: workqueue thread
+  * @qh_pool: allocation pool for queue heads
+  * @td_pool: allocation pool for transfer descriptors
+@@ -226,6 +227,7 @@ struct ci_hdrc {
+ 	enum otg_fsm_timer		next_otg_timer;
+ 	struct usb_role_switch		*role_switch;
+ 	struct work_struct		work;
++	struct work_struct		power_lost_work;
+ 	struct workqueue_struct		*wq;
  
-+	k_start = k_start & PAGE_MASK;
- 	block = memblock_alloc(k_end - k_start, PAGE_SIZE);
- 	if (!block)
- 		return -ENOMEM;
--- 
-2.43.0
-
+ 	struct dma_pool			*qh_pool;
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -856,6 +856,27 @@ static int ci_extcon_register(struct ci_
+ 	return 0;
+ }
+ 
++static void ci_power_lost_work(struct work_struct *work)
++{
++	struct ci_hdrc *ci = container_of(work, struct ci_hdrc, power_lost_work);
++	enum ci_role role;
++
++	disable_irq_nosync(ci->irq);
++	pm_runtime_get_sync(ci->dev);
++	if (!ci_otg_is_fsm_mode(ci)) {
++		role = ci_get_role(ci);
++
++		if (ci->role != role) {
++			ci_handle_id_switch(ci);
++		} else if (role == CI_ROLE_GADGET) {
++			if (ci->is_otg && hw_read_otgsc(ci, OTGSC_BSV))
++				usb_gadget_vbus_connect(&ci->gadget);
++		}
++	}
++	pm_runtime_put_sync(ci->dev);
++	enable_irq(ci->irq);
++}
++
+ static DEFINE_IDA(ci_ida);
+ 
+ struct platform_device *ci_hdrc_add_device(struct device *dev,
+@@ -1045,6 +1066,8 @@ static int ci_hdrc_probe(struct platform
+ 
+ 	spin_lock_init(&ci->lock);
+ 	mutex_init(&ci->mutex);
++	INIT_WORK(&ci->power_lost_work, ci_power_lost_work);
++
+ 	ci->dev = dev;
+ 	ci->platdata = dev_get_platdata(dev);
+ 	ci->imx28_write_fix = !!(ci->platdata->flags &
+@@ -1396,25 +1419,6 @@ static int ci_suspend(struct device *dev
+ 	return 0;
+ }
+ 
+-static void ci_handle_power_lost(struct ci_hdrc *ci)
+-{
+-	enum ci_role role;
+-
+-	disable_irq_nosync(ci->irq);
+-	if (!ci_otg_is_fsm_mode(ci)) {
+-		role = ci_get_role(ci);
+-
+-		if (ci->role != role) {
+-			ci_handle_id_switch(ci);
+-		} else if (role == CI_ROLE_GADGET) {
+-			if (ci->is_otg && hw_read_otgsc(ci, OTGSC_BSV))
+-				usb_gadget_vbus_connect(&ci->gadget);
+-		}
+-	}
+-
+-	enable_irq(ci->irq);
+-}
+-
+ static int ci_resume(struct device *dev)
+ {
+ 	struct ci_hdrc *ci = dev_get_drvdata(dev);
+@@ -1446,7 +1450,7 @@ static int ci_resume(struct device *dev)
+ 		ci_role(ci)->resume(ci, power_lost);
+ 
+ 	if (power_lost)
+-		ci_handle_power_lost(ci);
++		queue_work(system_freezable_wq, &ci->power_lost_work);
+ 
+ 	if (ci->supports_runtime_pm) {
+ 		pm_runtime_disable(dev);
 
 
