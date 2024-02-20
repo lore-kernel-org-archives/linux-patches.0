@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D558C14AD12;
-	Tue, 20 Feb 2024 21:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84CB14AD12;
+	Tue, 20 Feb 2024 21:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463334; cv=none; b=SC6mNHWZ8mKCxUEY7PUcQIxKNDTedNniHaYPShFj+ynfGdzCvx9hMhKN+uiI8EthjextsrM1N0PgGUxmhwaRD79YR9YCafNhpWsX+qy58Fi8EnDqWvh1jgQYXyo3ytehKFnpuK3scIqG18/skGTTJPRrTmRhVuDPLJcUwslKmDM=
+	t=1708463338; cv=none; b=CEMo+JUe83zTIvApombvnbz5PAFEKtFN2AkxoRu53RaJv4c8U615TfqQKC5EgKdBGEwlDmfd0eI7tptzMdsR000REalc8C0uzeRyq2MLQhjcTw9op0AVDNA3Zeo5W5BHuKiNcpCK4Ma9I0yhf3g35hn6uTKLyFTE9uKTD821Jng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463334; c=relaxed/simple;
-	bh=/V/ymhNAGcCLAcZAHRqeMCSqF0jobcvMX5Hqx+YnhBg=;
+	s=arc-20240116; t=1708463338; c=relaxed/simple;
+	bh=8HLrRrzxGwQTpBdS23T/IrdidicrdWe6+0M73qQQ5LY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tFxqO2AMs/tE5hn5BtH9Tt3YB/IFqb8i+pTKbEQeEVAOYgzcU0kjsrMWufyv6WoV/bHG0C6TqPjEiLsI2v/vTBxkiBZ1cfi3fTG/6AkMKC4zFk6VM8oBsHmQ8hOHbJuwyCMUlLH8YJgoUWETtv3Ba7PzmSiNm5252dZqsc1eGHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjWI/XCf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Le1OQbAH7lbq3X+1WvQsTbDoY3f9ohlrbIsiozx1Hm9rzUk68sYnOrlSsb+4h08UjMDqMCYnMRwBGr4UTP2Dm4Px4FfQJYuKBBqK0ADP6lf5DqXa0onFXGykEqmJHHkcaLcm0sgmRHWY5LLqbtlpqfeVCjK3zWhl1CxjYsmUB+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXTcNK2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjWI/XCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6F0C433F1;
-	Tue, 20 Feb 2024 21:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXTcNK2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7492AC433C7;
+	Tue, 20 Feb 2024 21:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463334;
-	bh=/V/ymhNAGcCLAcZAHRqeMCSqF0jobcvMX5Hqx+YnhBg=;
+	s=korg; t=1708463337;
+	bh=8HLrRrzxGwQTpBdS23T/IrdidicrdWe6+0M73qQQ5LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MjWI/XCfvS5xIOHU0ZA3h9RAi+mPCZKKKGYpqVesoSEeupgzCqtnFIwG67wHcZyMy
-	 Uk4Gdx6tq4eh5GRG3tB7R+FTJIXKhFLV5i0bhhmEQuHu2+RwM7OQRequvWSMVtxNFE
-	 k3OOy0O36sE1XaL6qMC8Xo+tTg1pQqjtkZfGLcAM=
+	b=EXTcNK2xz2fscptOrxh1APD9/wxsWBDlDUVcxo3bdD8Q0XLMFbVVCFUCaYE5tntRi
+	 Tkf3gY2QTa4imIOzgm2ydYXMRBAbLxQNIykzTZrboV+gD+A/bNxjS+0YLrb1YhxU++
+	 a8kgJZW7ZltXsLUAPfDcefPSgSKHQ5HiE2uJPEAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.6 012/331] driver core: Fix device_link_flag_is_sync_state_only()
-Date: Tue, 20 Feb 2024 21:52:08 +0100
-Message-ID: <20240220205637.973632480@linuxfoundation.org>
+	Hu Yadi <hu.yadi@h3c.com>,
+	Jiao <jiaoxupo@h3c.com>,
+	Berlin <berlin@h3c.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 013/331] selftests/landlock: Fix fs_test build with old libc
+Date: Tue, 20 Feb 2024 21:52:09 +0100
+Message-ID: <20240220205638.001582437@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -44,49 +47,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Hu Yadi <hu.yadi@h3c.com>
 
-commit 7fddac12c38237252431d5b8af7b6d5771b6d125 upstream.
+[ Upstream commit 40b7835e74e0383be308d528c5e0e41b3bf72ade ]
 
-device_link_flag_is_sync_state_only() correctly returns true on the flags
-of an existing device link that only implements sync_state() functionality.
-However, it incorrectly and confusingly returns false if it's called with
-DL_FLAG_SYNC_STATE_ONLY.
+One issue comes up while building selftest/landlock/fs_test on my side
+(gcc 7.3/glibc-2.28/kernel-4.19).
 
-This bug doesn't manifest in any of the existing calls to this function,
-but fix this confusing behavior to avoid future bugs.
+gcc -Wall -O2 -isystem   fs_test.c -lcap -o selftests/landlock/fs_test
+fs_test.c:4575:9: error: initializer element is not constant
+  .mnt = mnt_tmp,
+         ^~~~~~~
 
-Fixes: 67cad5c67019 ("driver core: fw_devlink: Add DL_FLAG_CYCLE support to device links")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20240202095636.868578-2-saravanak@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hu Yadi <hu.yadi@h3c.com>
+Suggested-by: Jiao <jiaoxupo@h3c.com>
+Reviewed-by: Berlin <berlin@h3c.com>
+Link: https://lore.kernel.org/r/20240124022908.42100-1-hu.yadi@h3c.com
+Fixes: 04f9070e99a4 ("selftests/landlock: Add tests for pseudo filesystems")
+[mic: Factor out mount's data string and make mnt_tmp static]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/testing/selftests/landlock/fs_test.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -283,10 +283,12 @@ static bool device_is_ancestor(struct de
- 	return false;
- }
+diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
+index 251594306d40..720bafa0f87b 100644
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -241,9 +241,11 @@ struct mnt_opt {
+ 	const char *const data;
+ };
  
-+#define DL_MARKER_FLAGS		(DL_FLAG_INFERRED | \
-+				 DL_FLAG_CYCLE | \
-+				 DL_FLAG_MANAGED)
- static inline bool device_link_flag_is_sync_state_only(u32 flags)
- {
--	return (flags & ~(DL_FLAG_INFERRED | DL_FLAG_CYCLE)) ==
--		(DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED);
-+	return (flags & ~DL_MARKER_FLAGS) == DL_FLAG_SYNC_STATE_ONLY;
- }
+-const struct mnt_opt mnt_tmp = {
++#define MNT_TMP_DATA "size=4m,mode=700"
++
++static const struct mnt_opt mnt_tmp = {
+ 	.type = "tmpfs",
+-	.data = "size=4m,mode=700",
++	.data = MNT_TMP_DATA,
+ };
  
- /**
+ static int mount_opt(const struct mnt_opt *const mnt, const char *const target)
+@@ -4523,7 +4525,10 @@ FIXTURE_VARIANT(layout3_fs)
+ /* clang-format off */
+ FIXTURE_VARIANT_ADD(layout3_fs, tmpfs) {
+ 	/* clang-format on */
+-	.mnt = mnt_tmp,
++	.mnt = {
++		.type = "tmpfs",
++		.data = MNT_TMP_DATA,
++	},
+ 	.file_path = file1_s1d1,
+ };
+ 
+-- 
+2.43.0
+
 
 
