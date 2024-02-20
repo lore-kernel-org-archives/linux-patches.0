@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA462DF9F;
-	Tue, 20 Feb 2024 21:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9599B2DF9F;
+	Tue, 20 Feb 2024 21:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464916; cv=none; b=QoVnJBEL7IpQPTtgFohwY54CF3u7zZ97DADyNY4R9P7A/jjUIbYfbNnlIvn9tVkErtEKPV6JTXeTaUiJ8XRMgwkiZ5XDrJSWY2ePDwD14+c6a7UyOlE4brtstZV6bCsR7Pg5445Hk3uY72rLVffkBhVUAos2d283IYfiEavxoSM=
+	t=1708464919; cv=none; b=ihZKQO6bj2+Qmr++49BmS01meoU3pEfA/O+ODCOvP2vZ3T26pdU2x72ayO4rJm7kYfJyAcJa0ibloW0TnSlnKsANEUiE+qAJ2A3lEe4gikYlYruzb0YrTbkxuVeZSb+NTnF9mIG6lMkp0bspVV1TJOJiJpUMXCwBc/jmszf9Gf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464916; c=relaxed/simple;
-	bh=qIc+apUYueI3Gen5swJuPx0NKJoWgR9Fk/jjAkuHGHY=;
+	s=arc-20240116; t=1708464919; c=relaxed/simple;
+	bh=cp3gD1oPp+Ex/TIBQ2phGcIS+yvIKDrALSTjGNjb1ZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E40iKWV1Hc7N0WmxnuR/kulYB+nz1102Fl2zCy0L8y7huUvqY/Hs8wX5cs15KL7atmk97pXGrW5my6w6itq0tEHCsAkmOVNOwUHmNCUUPve1w0HvnzbHVcAxgT2nuvxHvfI0HGm2m6i7vCT12P+BwfR+zfUXu/5Cq1Id4p+SyjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdr8fwUW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8OxaNJBX6jnhIBBPPNW2ngm2w0y8wJMrRF1obpRPp33k7lcToJm8eIckGdxW5hCHtMJ3IJlUR+NokczzRFbb24sUvXEjjZbCeBEj8xd5DgTRzEvtFssnoFYiDOnPwXSVUj9Z1+fHKb9OzjPHe5dAENEYGBd/0aZbzNnq2MuCF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LENY/B3s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdr8fwUW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859D3C433F1;
-	Tue, 20 Feb 2024 21:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LENY/B3s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8725EC433C7;
+	Tue, 20 Feb 2024 21:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464915;
-	bh=qIc+apUYueI3Gen5swJuPx0NKJoWgR9Fk/jjAkuHGHY=;
+	s=korg; t=1708464919;
+	bh=cp3gD1oPp+Ex/TIBQ2phGcIS+yvIKDrALSTjGNjb1ZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdr8fwUWF3sP7FH4iO2cP6/vIU5rEjrtSY5X1zMqihOTMBc3cMzu9idDDyFK0/LA9
-	 mWbhaFBIziuix9QHvIRQK3UdF1l4oLPlI1kNT2LEfo5SnDntOcqI6sG7wHEBEsWCir
-	 YTpIaf2uklFLytHkn4RhVtK+4vjs7x/rX7JGeO9Y=
+	b=LENY/B3sGYtolkiEm4OTF+QG9fNMNgdBhIyRCkvy5DCNaDfa0YwACWuxMmdtEjxgL
+	 3gMj5N3uSGS+PUsIsipAthzkhzElL8UGij3qNo9zHA2R3mpzP4MRx976kZMpLJDTtD
+	 M1/P+K9PP0ienPC08jtsricbzR7XekZlvQgtC2rE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <eugen.hristev@collabora.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.7 177/309] pmdomain: mediatek: fix race conditions with genpd
-Date: Tue, 20 Feb 2024 21:55:36 +0100
-Message-ID: <20240220205638.690757821@linuxfoundation.org>
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.7 178/309] media: rc: bpf attach/detach requires write permission
+Date: Tue, 20 Feb 2024 21:55:37 +0100
+Message-ID: <20240220205638.723276226@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,75 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugen Hristev <eugen.hristev@collabora.com>
+From: Sean Young <sean@mess.org>
 
-commit c41336f4d69057cbf88fed47951379b384540df5 upstream.
+commit 6a9d552483d50953320b9d3b57abdee8d436f23f upstream.
 
-If the power domains are registered first with genpd and *after that*
-the driver attempts to power them on in the probe sequence, then it is
-possible that a race condition occurs if genpd tries to power them on
-in the same time.
-The same is valid for powering them off before unregistering them
-from genpd.
-Attempt to fix race conditions by first removing the domains from genpd
-and *after that* powering down domains.
-Also first power up the domains and *after that* register them
-to genpd.
+Note that bpf attach/detach also requires CAP_NET_ADMIN.
 
-Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
-Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231225133615.78993-1-eugen.hristev@collabora.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/mediatek/mtk-pm-domains.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/media/rc/bpf-lirc.c     |    6 +++---
+ drivers/media/rc/lirc_dev.c     |    5 ++++-
+ drivers/media/rc/rc-core-priv.h |    2 +-
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
-+++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
-@@ -561,6 +561,11 @@ static int scpsys_add_subdomain(struct s
- 			goto err_put_node;
- 		}
+--- a/drivers/media/rc/bpf-lirc.c
++++ b/drivers/media/rc/bpf-lirc.c
+@@ -253,7 +253,7 @@ int lirc_prog_attach(const union bpf_att
+ 	if (attr->attach_flags)
+ 		return -EINVAL;
  
-+		/* recursive call to add all subdomains */
-+		ret = scpsys_add_subdomain(scpsys, child);
-+		if (ret)
-+			goto err_put_node;
-+
- 		ret = pm_genpd_add_subdomain(parent_pd, child_pd);
- 		if (ret) {
- 			dev_err(scpsys->dev, "failed to add %s subdomain to parent %s\n",
-@@ -570,11 +575,6 @@ static int scpsys_add_subdomain(struct s
- 			dev_dbg(scpsys->dev, "%s add subdomain: %s\n", parent_pd->name,
- 				child_pd->name);
- 		}
--
--		/* recursive call to add all subdomains */
--		ret = scpsys_add_subdomain(scpsys, child);
--		if (ret)
--			goto err_put_node;
+-	rcdev = rc_dev_get_from_fd(attr->target_fd);
++	rcdev = rc_dev_get_from_fd(attr->target_fd, true);
+ 	if (IS_ERR(rcdev))
+ 		return PTR_ERR(rcdev);
+ 
+@@ -278,7 +278,7 @@ int lirc_prog_detach(const union bpf_att
+ 	if (IS_ERR(prog))
+ 		return PTR_ERR(prog);
+ 
+-	rcdev = rc_dev_get_from_fd(attr->target_fd);
++	rcdev = rc_dev_get_from_fd(attr->target_fd, true);
+ 	if (IS_ERR(rcdev)) {
+ 		bpf_prog_put(prog);
+ 		return PTR_ERR(rcdev);
+@@ -303,7 +303,7 @@ int lirc_prog_query(const union bpf_attr
+ 	if (attr->query.query_flags)
+ 		return -EINVAL;
+ 
+-	rcdev = rc_dev_get_from_fd(attr->query.target_fd);
++	rcdev = rc_dev_get_from_fd(attr->query.target_fd, false);
+ 	if (IS_ERR(rcdev))
+ 		return PTR_ERR(rcdev);
+ 
+--- a/drivers/media/rc/lirc_dev.c
++++ b/drivers/media/rc/lirc_dev.c
+@@ -814,7 +814,7 @@ void __exit lirc_dev_exit(void)
+ 	unregister_chrdev_region(lirc_base_dev, RC_DEV_MAX);
+ }
+ 
+-struct rc_dev *rc_dev_get_from_fd(int fd)
++struct rc_dev *rc_dev_get_from_fd(int fd, bool write)
+ {
+ 	struct fd f = fdget(fd);
+ 	struct lirc_fh *fh;
+@@ -828,6 +828,9 @@ struct rc_dev *rc_dev_get_from_fd(int fd
+ 		return ERR_PTR(-EINVAL);
  	}
  
- 	return 0;
-@@ -588,9 +588,6 @@ static void scpsys_remove_one_domain(str
- {
- 	int ret;
++	if (write && !(f.file->f_mode & FMODE_WRITE))
++		return ERR_PTR(-EPERM);
++
+ 	fh = f.file->private_data;
+ 	dev = fh->rc;
  
--	if (scpsys_domain_is_on(pd))
--		scpsys_power_off(&pd->genpd);
--
- 	/*
- 	 * We're in the error cleanup already, so we only complain,
- 	 * but won't emit another error on top of the original one.
-@@ -600,6 +597,8 @@ static void scpsys_remove_one_domain(str
- 		dev_err(pd->scpsys->dev,
- 			"failed to remove domain '%s' : %d - state may be inconsistent\n",
- 			pd->genpd.name, ret);
-+	if (scpsys_domain_is_on(pd))
-+		scpsys_power_off(&pd->genpd);
- 
- 	clk_bulk_put(pd->num_clks, pd->clks);
- 	clk_bulk_put(pd->num_subsys_clks, pd->subsys_clks);
+--- a/drivers/media/rc/rc-core-priv.h
++++ b/drivers/media/rc/rc-core-priv.h
+@@ -325,7 +325,7 @@ void lirc_raw_event(struct rc_dev *dev,
+ void lirc_scancode_event(struct rc_dev *dev, struct lirc_scancode *lsc);
+ int lirc_register(struct rc_dev *dev);
+ void lirc_unregister(struct rc_dev *dev);
+-struct rc_dev *rc_dev_get_from_fd(int fd);
++struct rc_dev *rc_dev_get_from_fd(int fd, bool write);
+ #else
+ static inline int lirc_dev_init(void) { return 0; }
+ static inline void lirc_dev_exit(void) {}
 
 
