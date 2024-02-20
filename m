@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDE114AD15;
-	Tue, 20 Feb 2024 21:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC854151CD6;
+	Tue, 20 Feb 2024 21:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463672; cv=none; b=h/c3i9ulIkB271spG2mh1klTk2QiV5YhFk6oLbGdiRDPolCCG3/10POJV2dCXcdL7qFHoMfFU93LSwOPto1AxcK5pxam96FzV80gLLjMtRbGT+p2tFKcDt9s8jktLDfLNoFGJitP3x8kOZc4iTShkAMYu9wYaC9VmWmiTckZAIc=
+	t=1708463675; cv=none; b=ZBpsqspchrxSvJU5++7oyMPi08Kqm3YQCpEvQy3Frd++9Ez/iU6Mnm1HvzBDz1Bi59L4C3vvaS5oAURK/xd+7LNbDVyoW4CVKfSkaWyJ6KlbdyIg6k0HgnU7LySuROLZm6hQBFto4mwqOaqovZk1c6irc86LsrEKuvXImhyJk6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463672; c=relaxed/simple;
-	bh=2PRZuZPUOvEhhILWuCrRF6gUiArF7CU7T71AGEl8rxE=;
+	s=arc-20240116; t=1708463675; c=relaxed/simple;
+	bh=JL+djesjcFK5R/Sy1bnc9ulalB4HmCBzZ93lVWSewZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4zfJKMFy5sqVZacc1SwvF3Qe7inVNyBofSVmSfaBslKxrrRVrQnftn5AIhADSgHBJ6T5HnlEDMi0SL6WMX+at1PpBv0pQw7hz3ivA7h3+QYOgr2VgtA21RjZ17Be328X0EY/xl66raK18CakJ8VxEX+sUd82o1ehcbU3zOVZkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcCJXBcE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2tixeUFif4XRtfb9aI1so/BU1jXYpDDOU3kKMrtNETcLEsRutPWdENvxeJ6jIlluEKjeJbb2wOwQbAJUcgmOhBpxLIDfNqWzSlpXaNmgUGx2tDs+ClbyTgRWNCF/V0HVJ2+onh/s5YgRZMxD6ASgqIKH31AfFLmzZQQfgrkkrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2a8gJsSK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcCJXBcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B1AC433F1;
-	Tue, 20 Feb 2024 21:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2a8gJsSK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F3FC433F1;
+	Tue, 20 Feb 2024 21:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463672;
-	bh=2PRZuZPUOvEhhILWuCrRF6gUiArF7CU7T71AGEl8rxE=;
+	s=korg; t=1708463675;
+	bh=JL+djesjcFK5R/Sy1bnc9ulalB4HmCBzZ93lVWSewZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcCJXBcERfRaQqjo7ZAj+pZiwq+D+XWiMG+R5a34RgEY9fBvjq1o3wldG+EO0mQCY
-	 2fQ7zv6N6zRJBbEt/mtlIjDD7Z3RWb9WkBrB200Iz1qn3bnJ7Ml7wfH+ReAnVgOibT
-	 YQHescqBr3/27m29BnrELraDxSed7gJIX+MvOpn4=
+	b=2a8gJsSKEoaZ2LycUwZJZF3HUd0C+JK5cFNt3NXSLXEgVHmmgyxFtKKbS3m+1AWFP
+	 b5CWK5j3oqQVMoEK1xm8mr5WJNAB3W1r4RDpS8FcEGVmpB4WTsVw8YpmWMPebqhkXb
+	 pIF8YIWGUkRGJY9FHt0qa4rNUYmTJMnH7tLg1ydY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Saravana Kannan <saravanak@google.com>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/331] driver core: fw_devlink: Improve detection of overlapping cycles
-Date: Tue, 20 Feb 2024 21:53:24 +0100
-Message-ID: <20240220205640.355998217@linuxfoundation.org>
+Subject: [PATCH 6.6 089/331] powerpc/pseries/iommu: Fix iommu initialisation during DLPAR add
+Date: Tue, 20 Feb 2024 21:53:25 +0100
+Message-ID: <20240220205640.384413359@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,100 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit 6442d79d880cf7a2fff18779265d657fef0cce4c ]
+[ Upstream commit ed8b94f6e0acd652ce69bd69d678a0c769172df8 ]
 
-fw_devlink can detect most overlapping/intersecting cycles. However it was
-missing a few corner cases because of an incorrect optimization logic that
-tries to avoid repeating cycle detection for devices that are already
-marked as part of a cycle.
+When a PCI device is dynamically added, the kernel oopses with a NULL
+pointer dereference:
 
-Here's an example provided by Xu Yang (edited for clarity):
+  BUG: Kernel NULL pointer dereference on read at 0x00000030
+  Faulting instruction address: 0xc0000000006bbe5c
+  Oops: Kernel access of bad area, sig: 11 [#1]
+  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
+  Modules linked in: rpadlpar_io rpaphp rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs xsk_diag bonding nft_compat nf_tables nfnetlink rfkill binfmt_misc dm_multipath rpcrdma sunrpc rdma_ucm ib_srpt ib_isert iscsi_target_mod target_core_mod ib_umad ib_iser libiscsi scsi_transport_iscsi ib_ipoib rdma_cm iw_cm ib_cm mlx5_ib ib_uverbs ib_core pseries_rng drm drm_panel_orientation_quirks xfs libcrc32c mlx5_core mlxfw sd_mod t10_pi sg tls ibmvscsi ibmveth scsi_transport_srp vmx_crypto pseries_wdt psample dm_mirror dm_region_hash dm_log dm_mod fuse
+  CPU: 17 PID: 2685 Comm: drmgr Not tainted 6.7.0-203405+ #66
+  Hardware name: IBM,9080-HEX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_008) hv:phyp pSeries
+  NIP:  c0000000006bbe5c LR: c000000000a13e68 CTR: c0000000000579f8
+  REGS: c00000009924f240 TRAP: 0300   Not tainted  (6.7.0-203405+)
+  MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002220  XER: 20040006
+  CFAR: c000000000a13e64 DAR: 0000000000000030 DSISR: 40000000 IRQMASK: 0
+  ...
+  NIP sysfs_add_link_to_group+0x34/0x94
+  LR  iommu_device_link+0x5c/0x118
+  Call Trace:
+   iommu_init_device+0x26c/0x318 (unreliable)
+   iommu_device_link+0x5c/0x118
+   iommu_init_device+0xa8/0x318
+   iommu_probe_device+0xc0/0x134
+   iommu_bus_notifier+0x44/0x104
+   notifier_call_chain+0xb8/0x19c
+   blocking_notifier_call_chain+0x64/0x98
+   bus_notify+0x50/0x7c
+   device_add+0x640/0x918
+   pci_device_add+0x23c/0x298
+   of_create_pci_dev+0x400/0x884
+   of_scan_pci_dev+0x124/0x1b0
+   __of_scan_bus+0x78/0x18c
+   pcibios_scan_phb+0x2a4/0x3b0
+   init_phb_dynamic+0xb8/0x110
+   dlpar_add_slot+0x170/0x3b8 [rpadlpar_io]
+   add_slot_store.part.0+0xb4/0x130 [rpadlpar_io]
+   kobj_attr_store+0x2c/0x48
+   sysfs_kf_write+0x64/0x78
+   kernfs_fop_write_iter+0x1b0/0x290
+   vfs_write+0x350/0x4a0
+   ksys_write+0x84/0x140
+   system_call_exception+0x124/0x330
+   system_call_vectored_common+0x15c/0x2ec
 
-                    usb
-                  +-----+
-   tcpc           |     |
-  +-----+         |  +--|
-  |     |----------->|EP|
-  |--+  |         |  +--|
-  |EP|<-----------|     |
-  |--+  |         |  B  |
-  |     |         +-----+
-  |  A  |            |
-  +-----+            |
-     ^     +-----+   |
-     |     |     |   |
-     +-----|  C  |<--+
-           |     |
-           +-----+
-           usb-phy
+Commit a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities
+and allow blocking domains") broke DLPAR add of PCI devices.
 
-Node A (tcpc) will be populated as device 1-0050.
-Node B (usb) will be populated as device 38100000.usb.
-Node C (usb-phy) will be populated as device 381f0040.usb-phy.
+The above added iommu_device structure to pci_controller. During
+system boot, PCI devices are discovered and this newly added iommu_device
+structure is initialized by a call to iommu_device_register().
 
-The description below uses the notation:
-consumer --> supplier
-child ==> parent
+During DLPAR add of a PCI device, a new pci_controller structure is
+allocated but there are no calls made to iommu_device_register()
+interface.
 
-1. Node C is populated as device C. No cycles detected because cycle
-   detection is only run when a fwnode link is converted to a device link.
+Fix is to register the iommu device during DLPAR add as well.
 
-2. Node B is populated as device B. As we convert B --> C into a device
-   link we run cycle detection and find and mark the device link/fwnode
-   link cycle:
-   C--> A --> B.EP ==> B --> C
-
-3. Node A is populated as device A. As we convert C --> A into a device
-   link, we see it's already part of a cycle (from step 2) and don't run
-   cycle detection. Thus we miss detecting the cycle:
-   A --> B.EP ==> B --> A.EP ==> A
-
-Looking at it another way, A depends on B in one way:
-A --> B.EP ==> B
-
-But B depends on A in two ways and we only detect the first:
-B --> C --> A
-B --> A.EP ==> A
-
-To detect both of these, we remove the incorrect optimization attempt in
-step 3 and run cycle detection even if the fwnode link from which the
-device link is being created has already been marked as part of a cycle.
-
-Reported-by: Xu Yang <xu.yang_2@nxp.com>
-Closes: https://lore.kernel.org/lkml/DU2PR04MB8822693748725F85DC0CB86C8C792@DU2PR04MB8822.eurprd04.prod.outlook.com/
-Fixes: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20240202095636.868578-3-saravanak@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities and allow blocking domains")
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+[mpe: Trim oops and tweak some change log wording]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240122222407.39603-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/ppc-pci.h         |  3 +++
+ arch/powerpc/kernel/iommu.c                | 21 ++++++++++++++++-----
+ arch/powerpc/platforms/pseries/pci_dlpar.c |  4 ++++
+ 3 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index a81bc8844a8f..2cc0ab854168 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -2059,9 +2059,14 @@ static int fw_devlink_create_devlink(struct device *con,
+diff --git a/arch/powerpc/include/asm/ppc-pci.h b/arch/powerpc/include/asm/ppc-pci.h
+index d9fcff575027..e500a7b9d1b5 100644
+--- a/arch/powerpc/include/asm/ppc-pci.h
++++ b/arch/powerpc/include/asm/ppc-pci.h
+@@ -29,6 +29,9 @@ void *pci_traverse_device_nodes(struct device_node *start,
+ 				void *(*fn)(struct device_node *, void *),
+ 				void *data);
+ extern void pci_devs_phb_init_dynamic(struct pci_controller *phb);
++extern void ppc_iommu_register_device(struct pci_controller *phb);
++extern void ppc_iommu_unregister_device(struct pci_controller *phb);
++
  
- 	/*
- 	 * SYNC_STATE_ONLY device links don't block probing and supports cycles.
--	 * So cycle detection isn't necessary and shouldn't be done.
-+	 * So, one might expect that cycle detection isn't necessary for them.
-+	 * However, if the device link was marked as SYNC_STATE_ONLY because
-+	 * it's part of a cycle, then we still need to do cycle detection. This
-+	 * is because the consumer and supplier might be part of multiple cycles
-+	 * and we need to detect all those cycles.
- 	 */
--	if (!(flags & DL_FLAG_SYNC_STATE_ONLY)) {
-+	if (!device_link_flag_is_sync_state_only(flags) ||
-+	    flags & DL_FLAG_CYCLE) {
- 		device_links_write_lock();
- 		if (__fw_devlink_relax_cycles(con, sup_handle)) {
- 			__fwnode_link_cycle(link);
+ /* From rtas_pci.h */
+ extern void init_pci_config_tokens (void);
+diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
+index 14251bc5219e..7e23cc03c06c 100644
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -1393,6 +1393,21 @@ static const struct attribute_group *spapr_tce_iommu_groups[] = {
+ 	NULL,
+ };
+ 
++void ppc_iommu_register_device(struct pci_controller *phb)
++{
++	iommu_device_sysfs_add(&phb->iommu, phb->parent,
++				spapr_tce_iommu_groups, "iommu-phb%04x",
++				phb->global_number);
++	iommu_device_register(&phb->iommu, &spapr_tce_iommu_ops,
++				phb->parent);
++}
++
++void ppc_iommu_unregister_device(struct pci_controller *phb)
++{
++	iommu_device_unregister(&phb->iommu);
++	iommu_device_sysfs_remove(&phb->iommu);
++}
++
+ /*
+  * This registers IOMMU devices of PHBs. This needs to happen
+  * after core_initcall(iommu_init) + postcore_initcall(pci_driver_init) and
+@@ -1403,11 +1418,7 @@ static int __init spapr_tce_setup_phb_iommus_initcall(void)
+ 	struct pci_controller *hose;
+ 
+ 	list_for_each_entry(hose, &hose_list, list_node) {
+-		iommu_device_sysfs_add(&hose->iommu, hose->parent,
+-				       spapr_tce_iommu_groups, "iommu-phb%04x",
+-				       hose->global_number);
+-		iommu_device_register(&hose->iommu, &spapr_tce_iommu_ops,
+-				      hose->parent);
++		ppc_iommu_register_device(hose);
+ 	}
+ 	return 0;
+ }
+diff --git a/arch/powerpc/platforms/pseries/pci_dlpar.c b/arch/powerpc/platforms/pseries/pci_dlpar.c
+index 4ba824568119..4448386268d9 100644
+--- a/arch/powerpc/platforms/pseries/pci_dlpar.c
++++ b/arch/powerpc/platforms/pseries/pci_dlpar.c
+@@ -35,6 +35,8 @@ struct pci_controller *init_phb_dynamic(struct device_node *dn)
+ 
+ 	pseries_msi_allocate_domains(phb);
+ 
++	ppc_iommu_register_device(phb);
++
+ 	/* Create EEH devices for the PHB */
+ 	eeh_phb_pe_create(phb);
+ 
+@@ -76,6 +78,8 @@ int remove_phb_dynamic(struct pci_controller *phb)
+ 		}
+ 	}
+ 
++	ppc_iommu_unregister_device(phb);
++
+ 	pseries_msi_free_domains(phb);
+ 
+ 	/* Keep a reference so phb isn't freed yet */
 -- 
 2.43.0
 
