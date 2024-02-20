@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E487F151CD8;
-	Tue, 20 Feb 2024 21:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F55376C9C;
+	Tue, 20 Feb 2024 21:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463755; cv=none; b=IyVe9MpjT4YzoUwvtkphpn75xk66C8vMYYUCHh2hEU2maYvAnegqzJYCauX+88mo+RtD18IwAurwrQ7ELnsGSyl06bVx2VD5i+eH2Tt43r5K5OpPiWbg8q0i7gHoul+QeCP75QERkES89+iUEZ9AN4c3NYpSVNNplZOXsv2+XmI=
+	t=1708463758; cv=none; b=jyS51wsQFukluOvF8KFA+yBAdbZTFNupTHeY9/1GWUq5xvvszdFXRdovZWsGFIdvsQxJjBvefjLIKb2TrpsIzlsBgb0vgfxsQo3RWtzCX77QJRoCFZgjcXvACH4cF/w8qGll16uQ6qWwDjBRIbuxT+4hHJMCWKEs14HYUDsHfDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463755; c=relaxed/simple;
-	bh=B8bOa+pNkDaKA+Nq/efC7uw6C1moL/3oAa9Ux3vHf8s=;
+	s=arc-20240116; t=1708463758; c=relaxed/simple;
+	bh=DXcDd0QMrK2tpe1WzA+Bau22BA6769TdPn1zSwSBVzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OvmxTvsbDbnd9TVqPvp8n+qbipuGXvAfVx+b6ROR/W6R6o1LpUSOFJsSFpObrIKwlDAfeGQX/N5e5ktGipiAU57qy2O7g3j3ud0F0pJEsAxEZhds8E39MqM8sCq/X4GHJFipkgKYoSxjRBwTfL8WK2YFwPr7Yi36en5i8/oWzsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swqvFiEc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmu2h8i4MXXZSJSs7klk9x+ACmVY4saNyYa2ycDNetmM5ut7gSLYvniES38JYrblyajERR37Gk97AecNUYAUbQ0Mp8pMRByLbSZc9VdNH1mCtAK+OfivpXhg4tR0R8mV5+C/C+f45BhNICOjWDsc+02IJ6gezB4g5WxSGWPQLl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=riR1u9N+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swqvFiEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC94C433F1;
-	Tue, 20 Feb 2024 21:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="riR1u9N+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F2BC433F1;
+	Tue, 20 Feb 2024 21:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463754;
-	bh=B8bOa+pNkDaKA+Nq/efC7uw6C1moL/3oAa9Ux3vHf8s=;
+	s=korg; t=1708463758;
+	bh=DXcDd0QMrK2tpe1WzA+Bau22BA6769TdPn1zSwSBVzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swqvFiEcfyWjXtNhZfhtZ+6wrkUL3mx6kmhZgeZvwX/jkj6oqHTSYkOn4g4oWS3GM
-	 OUYimbpxpaoJ0De1rFDVmFjX2D3DwKbraxO3U+bYDZmLJhqnD84PFB98PGCRQLc9Tk
-	 StLJ7UfSJh5k67ZVbfC+sdtqgoe6Gj5W+UXAm73A=
+	b=riR1u9N+A16OeqnBUk6x/vOgDiQ+ZFeTSdaL5UCF7ftLmiVvU2AZLW6TfL71lQ4c6
+	 zBk3ULkZWZr+MuzuBpO2/DfkzA/toH5jpbRaKLTSCU2dlNzw1A8ybwP8gUt8xCrYpq
+	 Eb9VpvGELgL/V3m6OCi6GY/R5vWJbnbI9DjqAyM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Andy Chi <andy.chi@canonical.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 142/331] ALSA: hda/cs8409: Suppress vmaster control for Dolphin models
-Date: Tue, 20 Feb 2024 21:54:18 +0100
-Message-ID: <20240220205642.015506071@linuxfoundation.org>
+Subject: [PATCH 6.6 143/331] ALSA: hda/realtek: fix mute/micmute LEDs for HP ZBook Power
+Date: Tue, 20 Feb 2024 21:54:19 +0100
+Message-ID: <20240220205642.044179332@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,35 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+From: Andy Chi <andy.chi@canonical.com>
 
-commit a2ed0a44d637ef9deca595054c206da7d6cbdcbc upstream.
+commit 1513664f340289cf10402753110f3cff12a738aa upstream.
 
-Customer has reported an issue with specific desktop platform
-where two CS42L42 codecs are connected to CS8409 HDA bridge.
-If "Master Volume Control" is created then on Ubuntu OS UCM
-left/right balance slider in UI audio settings has no effect.
-This patch will fix this issue for a target paltform.
+The HP ZBook Power using ALC236 codec which using 0x02 to
+control mute LED and 0x01 to control micmute LED.
+Therefore, add a quirk to make it works.
 
-Fixes: 20e507724113 ("ALSA: hda/cs8409: Add support for dolphin")
-Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Signed-off-by: Andy Chi <andy.chi@canonical.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240122184710.5802-1-vitalyr@opensource.cirrus.com
+Link: https://lore.kernel.org/r/20240122074826.1020964-1-andy.chi@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_cs8409.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/hda/patch_cs8409.c
-+++ b/sound/pci/hda/patch_cs8409.c
-@@ -1371,6 +1371,7 @@ void dolphin_fixups(struct hda_codec *co
- 		spec->scodecs[CS8409_CODEC1] = &dolphin_cs42l42_1;
- 		spec->scodecs[CS8409_CODEC1]->codec = codec;
- 		spec->num_scodecs = 2;
-+		spec->gen.suppress_vmaster = 1;
- 
- 		codec->patch_ops = cs8409_dolphin_patch_ops;
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9857,6 +9857,8 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8c72, "HP EliteBook 865 G11", ALC287_FIXUP_CS35L41_I2C_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8c97, "HP ZBook", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
++	SND_PCI_QUIRK(0x103c, 0x8ca1, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8ca2, "HP ZBook Power", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ca7, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8cf5, "HP ZBook Studio 16", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
 
 
