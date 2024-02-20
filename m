@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7041F612D7;
-	Tue, 20 Feb 2024 21:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E434612D7;
+	Tue, 20 Feb 2024 21:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463862; cv=none; b=g0CHHZhkShUXYmhVFJMjs0moJa6g+sFXzpi2Cin3EZJSxXErmvtd95MjFyRvMNA5YLHCaQb22VJ7IfEypwqJsNakC3mo3r8tFV3ObLlLCL3NxP9exTUy6Gjw5xnsS2MhCnsHfn0/Z88jkki6yBJxAxYG8UK8gNKxykIFNtqZmAA=
+	t=1708463865; cv=none; b=MzG6crjO01EVpVQd0VkXQKw2YJWOw4Jjz+HQw7/2lgncoLrWC1ytYJGlbCI2yI8E4NKnR2087BhXa+ZcLzjRpxxNlEbGfG2d06cmZ6dEvBgmPnTrlYuJbgt7I8UXvqrGxr8S+Ql+YrUxN4XFHwdqJ2gB5GN1BjcMDhY3kXyjPKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463862; c=relaxed/simple;
-	bh=7AEfsDIpdFr7DZHNr1yK9KoNW35DyJMwuu1lzDrHkqM=;
+	s=arc-20240116; t=1708463865; c=relaxed/simple;
+	bh=sNCv/W/mR0K20h1YhMGve28ki9LmfFJ5ZyJa7x/t6Bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UN1hnlmbOEYEgCV6j0cjpN3MNlE8fTlZCSsbmVmwAGVjBVVWcbtz99HJBm+tCwltUxKKhTf8QoqWHCxDOokjVNIJFvVvuh46aRvAKt01+/Ufd1UOPfjo9OJfrR5Nup9UNFr3RUy670Os8W9yqmfbPPelPGaarPUBOL6pzzLDT5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkS4UXzF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nr9ua6+TzwYQJ+YYyj4YOQK6yasuVNesoTAtlq5vg+AqLmDHuV7hKXMXOiLfLTIkKG8cl2cA7WbEoT1x6RXX9Ef7c2oydgFl3Lzyyv7py9d37htHYSUiYF3ZD2O1MW/zvViugP7zR9TJkRGzR7icnUBrUgIUsEOJKu8rD5SxTFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLd/sXMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkS4UXzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5945C433C7;
-	Tue, 20 Feb 2024 21:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLd/sXMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C18CC433C7;
+	Tue, 20 Feb 2024 21:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463862;
-	bh=7AEfsDIpdFr7DZHNr1yK9KoNW35DyJMwuu1lzDrHkqM=;
+	s=korg; t=1708463865;
+	bh=sNCv/W/mR0K20h1YhMGve28ki9LmfFJ5ZyJa7x/t6Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkS4UXzFHL3E3IQAd6i+YxljKKwkjgthMeDaYaUU9Gzc6RSW9JVCasBDzu+LDNkiT
-	 iuaBn0qA1ALtMn9lWN0PrgHfktDorsbgAP2CPpkzhPAlVU1aQTY+2m9nR6oKQkHg4w
-	 X0LsrSzcklj6X4G4CEDrsFWMfV+WefG9WKkRsO7o=
+	b=rLd/sXMwlm/pftse9mnp/dqSXZsquYF8ptfqRJBg256AAQ2lcGvxhm98k3sx7Dv04
+	 Pk8ZJ/NIqyjf9wgoHeWtXFJ42L6u8deiYsynDI3mBGS4gpMVI/OTwlcVa36qf+sGIu
+	 acXgfbdFMAkZqUNk4HwoSL2mVwSfhrBcwBm6XAQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Mete Durlu <meted@linux.ibm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 149/331] tracing: Fix wasted memory in saved_cmdlines logic
-Date: Tue, 20 Feb 2024 21:54:25 +0100
-Message-ID: <20240220205642.229325928@linuxfoundation.org>
+	Tim Menninger <tmenninger@purestorage.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 176/331] net: dsa: mv88e6xxx: Fix failed probe due to unsupported C45 reads
+Date: Tue, 20 Feb 2024 21:54:52 +0100
+Message-ID: <20240220205643.042300352@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -54,181 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Andrew Lunn <andrew@lunn.ch>
 
-commit 44dc5c41b5b1267d4dd037d26afc0c4d3a568acb upstream.
+commit 585b40e25dc9ff3d2b03d1495150540849009e5b upstream.
 
-While looking at improving the saved_cmdlines cache I found a huge amount
-of wasted memory that should be used for the cmdlines.
+Not all mv88e6xxx device support C45 read/write operations. Those
+which do not return -EOPNOTSUPP. However, when phylib scans the bus,
+it considers this fatal, and the probe of the MDIO bus fails, which in
+term causes the mv88e6xxx probe as a whole to fail.
 
-The tracing data saves pids during the trace. At sched switch, if a trace
-occurred, it will save the comm of the task that did the trace. This is
-saved in a "cache" that maps pids to comms and exposed to user space via
-the /sys/kernel/tracing/saved_cmdlines file. Currently it only caches by
-default 128 comms.
+When there is no device on the bus for a given address, the pull up
+resistor on the data line results in the read returning 0xffff. The
+phylib core code understands this when scanning for devices on the
+bus. C45 allows multiple devices to be supported at one address, so
+phylib will perform a few reads at each address, so although thought
+not the most efficient solution, it is a way to avoid fatal
+errors. Make use of this as a minimal fix for stable to fix the
+probing problems.
 
-The structure that uses this creates an array to store the pids using
-PID_MAX_DEFAULT (which is usually set to 32768). This causes the structure
-to be of the size of 131104 bytes on 64 bit machines.
-
-In hex: 131104 = 0x20020, and since the kernel allocates generic memory in
-powers of two, the kernel would allocate 0x40000 or 262144 bytes to store
-this structure. That leaves 131040 bytes of wasted space.
-
-Worse, the structure points to an allocated array to store the comm names,
-which is 16 bytes times the amount of names to save (currently 128), which
-is 2048 bytes. Instead of allocating a separate array, make the structure
-end with a variable length string and use the extra space for that.
-
-This is similar to a recommendation that Linus had made about eventfs_inode names:
-
-  https://lore.kernel.org/all/20240130190355.11486-5-torvalds@linux-foundation.org/
-
-Instead of allocating a separate string array to hold the saved comms,
-have the structure end with: char saved_cmdlines[]; and round up to the
-next power of two over sizeof(struct saved_cmdline_buffers) + num_cmdlines * TASK_COMM_LEN
-It will use this extra space for the saved_cmdline portion.
-
-Now, instead of saving only 128 comms by default, by using this wasted
-space at the end of the structure it can save over 8000 comms and even
-saves space by removing the need for allocating the other array.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240209063622.1f7b6d5f@rorschach.local.home
+Follow up patches will rework how C45 operates to make it similar to
+C22 which considers -ENODEV as a none-fatal, and swap mv88e6xxx to
+using this.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Cc: Sven Schnelle <svens@linux.ibm.com>
-Cc: Mete Durlu <meted@linux.ibm.com>
-Fixes: 939c7a4f04fcd ("tracing: Introduce saved_cmdlines_size file")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 743a19e38d02 ("net: dsa: mv88e6xxx: Separate C22 and C45 transactions")
+Reported-by: Tim Menninger <tmenninger@purestorage.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20240129224948.1531452-1-andrew@lunn.ch
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   75 +++++++++++++++++++++++++--------------------------
- 1 file changed, 37 insertions(+), 38 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -2311,7 +2311,7 @@ struct saved_cmdlines_buffer {
- 	unsigned *map_cmdline_to_pid;
- 	unsigned cmdline_num;
- 	int cmdline_idx;
--	char *saved_cmdlines;
-+	char saved_cmdlines[];
- };
- static struct saved_cmdlines_buffer *savedcmd;
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3545,7 +3545,7 @@ static int mv88e6xxx_mdio_read_c45(struc
+ 	int err;
  
-@@ -2325,47 +2325,58 @@ static inline void set_cmdline(int idx,
- 	strncpy(get_saved_cmdlines(idx), cmdline, TASK_COMM_LEN);
- }
+ 	if (!chip->info->ops->phy_read_c45)
+-		return -EOPNOTSUPP;
++		return 0xffff;
  
--static int allocate_cmdlines_buffer(unsigned int val,
--				    struct saved_cmdlines_buffer *s)
-+static void free_saved_cmdlines_buffer(struct saved_cmdlines_buffer *s)
- {
-+	int order = get_order(sizeof(*s) + s->cmdline_num * TASK_COMM_LEN);
-+
-+	kfree(s->map_cmdline_to_pid);
-+	free_pages((unsigned long)s, order);
-+}
-+
-+static struct saved_cmdlines_buffer *allocate_cmdlines_buffer(unsigned int val)
-+{
-+	struct saved_cmdlines_buffer *s;
-+	struct page *page;
-+	int orig_size, size;
-+	int order;
-+
-+	/* Figure out how much is needed to hold the given number of cmdlines */
-+	orig_size = sizeof(*s) + val * TASK_COMM_LEN;
-+	order = get_order(orig_size);
-+	size = 1 << (order + PAGE_SHIFT);
-+	page = alloc_pages(GFP_KERNEL, order);
-+	if (!page)
-+		return NULL;
-+
-+	s = page_address(page);
-+	memset(s, 0, sizeof(*s));
-+
-+	/* Round up to actual allocation */
-+	val = (size - sizeof(*s)) / TASK_COMM_LEN;
-+	s->cmdline_num = val;
-+
- 	s->map_cmdline_to_pid = kmalloc_array(val,
- 					      sizeof(*s->map_cmdline_to_pid),
- 					      GFP_KERNEL);
--	if (!s->map_cmdline_to_pid)
--		return -ENOMEM;
--
--	s->saved_cmdlines = kmalloc_array(TASK_COMM_LEN, val, GFP_KERNEL);
--	if (!s->saved_cmdlines) {
--		kfree(s->map_cmdline_to_pid);
--		return -ENOMEM;
-+	if (!s->map_cmdline_to_pid) {
-+		free_saved_cmdlines_buffer(s);
-+		return NULL;
- 	}
- 
- 	s->cmdline_idx = 0;
--	s->cmdline_num = val;
- 	memset(&s->map_pid_to_cmdline, NO_CMDLINE_MAP,
- 	       sizeof(s->map_pid_to_cmdline));
- 	memset(s->map_cmdline_to_pid, NO_CMDLINE_MAP,
- 	       val * sizeof(*s->map_cmdline_to_pid));
- 
--	return 0;
-+	return s;
- }
- 
- static int trace_create_savedcmd(void)
- {
--	int ret;
--
--	savedcmd = kmalloc(sizeof(*savedcmd), GFP_KERNEL);
--	if (!savedcmd)
--		return -ENOMEM;
-+	savedcmd = allocate_cmdlines_buffer(SAVED_CMDLINES_DEFAULT);
- 
--	ret = allocate_cmdlines_buffer(SAVED_CMDLINES_DEFAULT, savedcmd);
--	if (ret < 0) {
--		kfree(savedcmd);
--		savedcmd = NULL;
--		return -ENOMEM;
--	}
--
--	return 0;
-+	return savedcmd ? 0 : -ENOMEM;
- }
- 
- int is_tracing_stopped(void)
-@@ -6056,26 +6067,14 @@ tracing_saved_cmdlines_size_read(struct
- 	return simple_read_from_buffer(ubuf, cnt, ppos, buf, r);
- }
- 
--static void free_saved_cmdlines_buffer(struct saved_cmdlines_buffer *s)
--{
--	kfree(s->saved_cmdlines);
--	kfree(s->map_cmdline_to_pid);
--	kfree(s);
--}
--
- static int tracing_resize_saved_cmdlines(unsigned int val)
- {
- 	struct saved_cmdlines_buffer *s, *savedcmd_temp;
- 
--	s = kmalloc(sizeof(*s), GFP_KERNEL);
-+	s = allocate_cmdlines_buffer(val);
- 	if (!s)
- 		return -ENOMEM;
- 
--	if (allocate_cmdlines_buffer(val, s) < 0) {
--		kfree(s);
--		return -ENOMEM;
--	}
--
- 	preempt_disable();
- 	arch_spin_lock(&trace_cmdline_lock);
- 	savedcmd_temp = savedcmd;
+ 	mv88e6xxx_reg_lock(chip);
+ 	err = chip->info->ops->phy_read_c45(chip, bus, phy, devad, reg, &val);
 
 
