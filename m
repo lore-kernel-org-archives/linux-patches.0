@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E434612D7;
-	Tue, 20 Feb 2024 21:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE71A612D7;
+	Tue, 20 Feb 2024 21:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463865; cv=none; b=MzG6crjO01EVpVQd0VkXQKw2YJWOw4Jjz+HQw7/2lgncoLrWC1ytYJGlbCI2yI8E4NKnR2087BhXa+ZcLzjRpxxNlEbGfG2d06cmZ6dEvBgmPnTrlYuJbgt7I8UXvqrGxr8S+Ql+YrUxN4XFHwdqJ2gB5GN1BjcMDhY3kXyjPKk=
+	t=1708463868; cv=none; b=DqZ/MoKGFWHfPOUUR8QBvqCWNEJ+7Y4LfXsFfBmjr+9ArIBBPAw3kOEyJU5eR5Ux75WjZF3ZgHK9qYvEhyKkEtPGzU+rYJVpkhws/kfMtwcu5WkO2nOF/RRMspxAiqrxM1EE4sZHF50K73XhzdbKTuaPLYVqNvxcrvCntWXisws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463865; c=relaxed/simple;
-	bh=sNCv/W/mR0K20h1YhMGve28ki9LmfFJ5ZyJa7x/t6Bw=;
+	s=arc-20240116; t=1708463868; c=relaxed/simple;
+	bh=MOgZcc9hXpRFsc6kxkf01iMRx4PSJ+qp/wslJ6m0RRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nr9ua6+TzwYQJ+YYyj4YOQK6yasuVNesoTAtlq5vg+AqLmDHuV7hKXMXOiLfLTIkKG8cl2cA7WbEoT1x6RXX9Ef7c2oydgFl3Lzyyv7py9d37htHYSUiYF3ZD2O1MW/zvViugP7zR9TJkRGzR7icnUBrUgIUsEOJKu8rD5SxTFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLd/sXMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F5RxhjfaZoldLGkYfizPnp+2NRPYRJRwFi2LmnCLQ4cCdPgtLJUdDh3eXtMMJCdh38BRHM6A4QCATzOMG1cUYopmHBJ/0GkKYTrpdoQJ4CsLO16ONI4LTX7WrJXble1zHh1qf1466WBD4U7naBBvBW62DUxZj9hfh0iCCSKo8hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4pQpXQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLd/sXMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C18CC433C7;
-	Tue, 20 Feb 2024 21:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4pQpXQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E574C433F1;
+	Tue, 20 Feb 2024 21:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463865;
-	bh=sNCv/W/mR0K20h1YhMGve28ki9LmfFJ5ZyJa7x/t6Bw=;
+	s=korg; t=1708463868;
+	bh=MOgZcc9hXpRFsc6kxkf01iMRx4PSJ+qp/wslJ6m0RRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLd/sXMwlm/pftse9mnp/dqSXZsquYF8ptfqRJBg256AAQ2lcGvxhm98k3sx7Dv04
-	 Pk8ZJ/NIqyjf9wgoHeWtXFJ42L6u8deiYsynDI3mBGS4gpMVI/OTwlcVa36qf+sGIu
-	 acXgfbdFMAkZqUNk4HwoSL2mVwSfhrBcwBm6XAQI=
+	b=B4pQpXQLGdVyajkknkalKCKqUjJmiN2iEgip/b4jAOXCfS/bq6geYHrb+pr73ozVr
+	 GTIJVVsnjvHvipFOCa1dTv5ghGCyfReAyXrroEM9mZlC0wUw7jI6tiZxyi37B3Q2TM
+	 2QhTpyukKAVmgOQLgxfOV45vg0APDoVZjkn4nVc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Menninger <tmenninger@purestorage.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 176/331] net: dsa: mv88e6xxx: Fix failed probe due to unsupported C45 reads
-Date: Tue, 20 Feb 2024 21:54:52 +0100
-Message-ID: <20240220205643.042300352@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Thorsten Blum <thorsten.blum@toblux.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 150/331] tracing/synthetic: Fix trace_string() return value
+Date: Tue, 20 Feb 2024 21:54:26 +0100
+Message-ID: <20240220205642.258357367@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,49 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Thorsten Blum <thorsten.blum@toblux.com>
 
-commit 585b40e25dc9ff3d2b03d1495150540849009e5b upstream.
+commit 9b6326354cf9a41521b79287da3bfab022ae0b6d upstream.
 
-Not all mv88e6xxx device support C45 read/write operations. Those
-which do not return -EOPNOTSUPP. However, when phylib scans the bus,
-it considers this fatal, and the probe of the MDIO bus fails, which in
-term causes the mv88e6xxx probe as a whole to fail.
+Fix trace_string() by assigning the string length to the return variable
+which got lost in commit ddeea494a16f ("tracing/synthetic: Use union
+instead of casts") and caused trace_string() to always return 0.
 
-When there is no device on the bus for a given address, the pull up
-resistor on the data line results in the read returning 0xffff. The
-phylib core code understands this when scanning for devices on the
-bus. C45 allows multiple devices to be supported at one address, so
-phylib will perform a few reads at each address, so although thought
-not the most efficient solution, it is a way to avoid fatal
-errors. Make use of this as a minimal fix for stable to fix the
-probing problems.
-
-Follow up patches will rework how C45 operates to make it similar to
-C22 which considers -ENODEV as a none-fatal, and swap mv88e6xxx to
-using this.
+Link: https://lore.kernel.org/linux-trace-kernel/20240214220555.711598-1-thorsten.blum@toblux.com
 
 Cc: stable@vger.kernel.org
-Fixes: 743a19e38d02 ("net: dsa: mv88e6xxx: Separate C22 and C45 transactions")
-Reported-by: Tim Menninger <tmenninger@purestorage.com>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240129224948.1531452-1-andrew@lunn.ch
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: ddeea494a16f ("tracing/synthetic: Use union instead of casts")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_synth.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3545,7 +3545,7 @@ static int mv88e6xxx_mdio_read_c45(struc
- 	int err;
+diff --git a/kernel/trace/trace_events_synth.c b/kernel/trace/trace_events_synth.c
+index e7af286af4f1..c82b401a294d 100644
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -441,8 +441,9 @@ static unsigned int trace_string(struct synth_trace_event *entry,
+ 	if (is_dynamic) {
+ 		union trace_synth_field *data = &entry->fields[*n_u64];
  
- 	if (!chip->info->ops->phy_read_c45)
--		return -EOPNOTSUPP;
-+		return 0xffff;
++		len = fetch_store_strlen((unsigned long)str_val);
+ 		data->as_dynamic.offset = struct_size(entry, fields, event->n_u64) + data_size;
+-		data->as_dynamic.len = fetch_store_strlen((unsigned long)str_val);
++		data->as_dynamic.len = len;
  
- 	mv88e6xxx_reg_lock(chip);
- 	err = chip->info->ops->phy_read_c45(chip, bus, phy, devad, reg, &val);
+ 		ret = fetch_store_string((unsigned long)str_val, &entry->fields[*n_u64], entry);
+ 
+-- 
+2.43.2
+
 
 
