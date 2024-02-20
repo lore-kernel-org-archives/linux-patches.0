@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC168446C9;
-	Tue, 20 Feb 2024 21:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE6114F9C8;
+	Tue, 20 Feb 2024 21:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465053; cv=none; b=p5/8vuirr7vM1GFQjnqgvTTlKDK4DKeZjra7VwhCtuhQ8w7COBRJhbL38wmUKKCBc27JgW1g7rEnXejKt91Ne/3uS2iFDqce/W1jyo5DR4MlxbFglRULdsf+KwrKiu6WPr50F05Epzlrh3LnpD4crtIfIsNVa/XqyV+FTRJPn7s=
+	t=1708465057; cv=none; b=dr5aO8+pvc/vrgmpbF/dEysoGK8SkipTwEsfXwnKITf6YmmOiZlVKLf0chZeJQPKZZ7sRKByFEeIUNGxYcq1UOu6A1CtsKb5wwEkdXoBg75UD2GAfKla5lcdCR03Uls9qoiSjIsd1eGSDmR1LeuNWSb/DeA5KDytuhBpFPsVIbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465053; c=relaxed/simple;
-	bh=s3OjQNZaxooQAf3uAajXY8/xdUNb7MHgK3CjzSc0Ahc=;
+	s=arc-20240116; t=1708465057; c=relaxed/simple;
+	bh=cuy74OWAHtOnyEeLllKXFl+fhlr45HHWI6bNYkU4MNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZyMO14+VzCgb6lnJH6jHBKEj0MhEaT99ssQPU6e1djEoUvuvLe9w3MKuIIthDGWXtkZgGlCBlszQ/Z+nYk+T+AFALzxFILmGFk8hJWHZjoA1qFrJmm7oQVkKUpa76kxx8LOiLv6cuPYJ22vjD0avCT+cmUfnW50NJycaHAT8oms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R47n4Knk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=diCsRSA+YxMUPgxMGonJiOijV42fdcARyLO3MiGn+8K5l1XEkd5TMdGQ4MPEC3xGp9ta7c3hxmkhyLI13+Yw7o2vrpW87hVLxKjDyf55Q5SW8pxz4DtEavPctzij9wnqcg2q49JWiyLVFobnYy0Y0TSvTMAunpHMdIutn8euCZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUMRo/2N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R47n4Knk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B502C433F1;
-	Tue, 20 Feb 2024 21:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUMRo/2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2FDC433C7;
+	Tue, 20 Feb 2024 21:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465053;
-	bh=s3OjQNZaxooQAf3uAajXY8/xdUNb7MHgK3CjzSc0Ahc=;
+	s=korg; t=1708465056;
+	bh=cuy74OWAHtOnyEeLllKXFl+fhlr45HHWI6bNYkU4MNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R47n4Knkt7rm7XjAQOF0dbGSRxTihehLcbdySWAyVCSqS2oZLkCRCHpR85KzBSh60
-	 NdhXepKAGp3t0BslboKhQaIUwxlfUEEk2QmNg/MVJBZMTkYhMruTSQ3hZpBqVQs0Ib
-	 V19d8KmlhnuC9tLd4mDauY0ENGdVByfVPaJGBYlQ=
+	b=YUMRo/2NsTdiY6J2eH93XfTfB4425aWutohNE/7rYYN9PS/SOZcRrg9TNP8cu3ryX
+	 JAO3YdqdYLosVAYFKe98X2zyvLJxyWrblgIAXb6X9SER8pNe+uBLtiOcIglLqCkIEP
+	 vLDZMdF6JluhCe1LaNpI54CSIBISB5TIlAP50V4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>
-Subject: [PATCH 6.7 220/309] serial: core: Fix atomicity violation in uart_tiocmget
-Date: Tue, 20 Feb 2024 21:56:19 +0100
-Message-ID: <20240220205640.043786638@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.7 221/309] serial: max310x: set default value when reading clock ready bit
+Date: Tue, 20 Feb 2024 21:56:20 +0100
+Message-ID: <20240220205640.072098092@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -49,73 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 30926783a46841c2d1bbf3f74067ba85d304fd0d upstream.
+commit 0419373333c2f2024966d36261fd82a453281e80 upstream.
 
-In uart_tiocmget():
-    result = uport->mctrl;
-    uart_port_lock_irq(uport);
-    result |= uport->ops->get_mctrl(uport);
-    uart_port_unlock_irq(uport);
-    ...
-    return result;
+If regmap_read() returns a non-zero value, the 'val' variable can be left
+uninitialized.
 
-In uart_update_mctrl():
-    uart_port_lock_irqsave(port, &flags);
-    ...
-    port->mctrl = (old & ~clear) | set;
-    ...
-    port->ops->set_mctrl(port, port->mctrl);
-    ...
-    uart_port_unlock_irqrestore(port, flags);
+Clear it before calling regmap_read() to make sure we properly detect
+the clock ready bit.
 
-An atomicity violation is identified due to the concurrent execution of
-uart_tiocmget() and uart_update_mctrl(). After assigning
-result = uport->mctrl, the mctrl value may change in uart_update_mctrl(),
-leading to a mismatch between the value returned by
-uport->ops->get_mctrl(uport) and the mctrl value previously read.
-This can result in uart_tiocmget() returning an incorrect value.
-
-This possible bug is found by an experimental static analysis tool
-developed by our team, BassCheck[1]. This tool analyzes the locking APIs
-to extract function pairs that can be concurrently executed, and then
-analyzes the instructions in the paired functions to identify possible
-concurrency bugs including data races and atomicity violations. The above
-possible bug is reported when our tool analyzes the source code of
-Linux 5.17.
-
-To address this issue, it is suggested to move the line
-result = uport->mctrl inside the uart_port_lock block to ensure atomicity
-and prevent the mctrl value from being altered during the execution of
-uart_tiocmget(). With this patch applied, our tool no longer reports the
-bug, with the kernel configuration allyesconfig for x86_64. Due to the
-absence of the requisite hardware, we are unable to conduct runtime
-testing of the patch. Therefore, our verification is solely based on code
-logic analysis.
-
-[1] https://sites.google.com/view/basscheck/
-
-Fixes: c5f4644e6c8b ("[PATCH] Serial: Adjust serial locking")
+Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Link: https://lore.kernel.org/r/20240112113624.17048-1-2045gemini@gmail.com
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240116213001.3691629-2-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    2 +-
+ drivers/tty/serial/max310x.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -1085,8 +1085,8 @@ static int uart_tiocmget(struct tty_stru
- 		goto out;
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -641,7 +641,7 @@ static u32 max310x_set_ref_clk(struct de
  
- 	if (!tty_io_error(tty)) {
--		result = uport->mctrl;
- 		uart_port_lock_irq(uport);
-+		result = uport->mctrl;
- 		result |= uport->ops->get_mctrl(uport);
- 		uart_port_unlock_irq(uport);
- 	}
+ 	/* Wait for crystal */
+ 	if (xtal) {
+-		unsigned int val;
++		unsigned int val = 0;
+ 		msleep(10);
+ 		regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
+ 		if (!(val & MAX310X_STS_CLKREADY_BIT)) {
 
 
