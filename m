@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE464151CDD;
-	Tue, 20 Feb 2024 21:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258C1151CDD;
+	Tue, 20 Feb 2024 21:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463082; cv=none; b=F2duqrerOT9IX57kgn17Z9sEk9qeMcT1hG+gHsrToLyXuRIRh7MyzfNsrdPT67OuVIB/00n46WUyHZfB3yfQPBeguakgrjttzOD2MXSX54617Twfuh0Hvu8HCxUD1a5vI5lF16TiPEyYRPToWspjEn3Kao7pdBlK9qZzZS418z0=
+	t=1708463085; cv=none; b=F4mQyrDUw3iHRLIuH2X3JirDB7omJbnze4BvwMyX3JxWKlPDZp0OL1zqglaEZfexXMDzljj7PabfhlMos0fB/t5brijxcP4gWXQjgbKoZRHUumNKpeYXuVVIHgGiOxjDbr0JI5ThlcvGxYNUqlGuZWDwsf5cYF282jya9pE57R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463082; c=relaxed/simple;
-	bh=clyBH0icWTkTKJc5jUCFnyN0OBl6CdPGVEjdswt6fxc=;
+	s=arc-20240116; t=1708463085; c=relaxed/simple;
+	bh=Th2y/2gnK8/j1D84DdIcQO7CZ19hMqosc3aupLPgb44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6yi/hOxPsPv3zMWsWalbmwwfFg0/Mjbq1XX7zai84kSyzjZ7VLAdjJkwASg791/9cR55qeNW9VqnEmD+9YzDLPfyfdeccQaxEY5rjP+DXWPGit1W6AGmROAflTIb3oDCIAvB2J/RoHVyMx6ks6n12S2Jleum59yQD4HhaEhXpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+h7nt+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uMKW98tDYLP4X2eRp5ep4Al2XaYyHdZBij8EpCNnBUlpvwvyyf3eDlYiru+s8CMUQrMNV7Fb920WWqvdyuNIAP7b1qhmf4BrE4ZhSGCq5VBG4sz8SF+gCyKCEcEEJY5XkZmnkyg9YrA1p5lpXIRwiCWpQF6bQaHACwvwCx64O5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zfqi8Zu3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+h7nt+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFF8C433F1;
-	Tue, 20 Feb 2024 21:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zfqi8Zu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8545DC433F1;
+	Tue, 20 Feb 2024 21:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463081;
-	bh=clyBH0icWTkTKJc5jUCFnyN0OBl6CdPGVEjdswt6fxc=;
+	s=korg; t=1708463085;
+	bh=Th2y/2gnK8/j1D84DdIcQO7CZ19hMqosc3aupLPgb44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+h7nt+o3C9vDhm142tqn5vH036R6kzZAiMH77GfD0gPelgnr6L8b7VCqytXt2lJK
-	 6S3i/lgtU0xSjfJcPhgtGwPBK+/lUJHcht8g6qWnUO0QiW2vKlzilG7UKOmLXFHPRk
-	 FvGxnwIAUVdAdMonV7RvLp21qUXYyc4nSvorJQJw=
+	b=Zfqi8Zu3ZIBLI0iFDBb2Fx+y12qmLMCKVcXAAUdsoXrFTEGll1qaeGfKO6WuuygcA
+	 G+vrRWrv0V3EGDWKkOa8B+ylWRQ+SvjLTAktTNuQGa3yaGjcG5j17TZr01pUvFIKoD
+	 fh1x406fahXN28IHvBlbqQ4AXdU4g18s0XEjRp+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingwei Zhang <mizhang@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 129/197] KVM: x86/pmu: Fix type length error when reading pmu->fixed_ctr_ctrl
-Date: Tue, 20 Feb 2024 21:51:28 +0100
-Message-ID: <20240220204844.933540146@linuxfoundation.org>
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 103/197] iio: core: fix memleak in iio_device_register_sysfs
+Date: Tue, 20 Feb 2024 21:51:02 +0100
+Message-ID: <20240220204844.166123682@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingwei Zhang <mizhang@google.com>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-commit 05519c86d6997cfb9bb6c82ce1595d1015b718dc upstream.
+commit 95a0d596bbd0552a78e13ced43f2be1038883c81 upstream.
 
-Use a u64 instead of a u8 when taking a snapshot of pmu->fixed_ctr_ctrl
-when reprogramming fixed counters, as truncating the value results in KVM
-thinking fixed counter 2 is already disabled (the bug also affects fixed
-counters 3+, but KVM doesn't yet support those).  As a result, if the
-guest disables fixed counter 2, KVM will get a false negative and fail to
-reprogram/disable emulation of the counter, which can leads to incorrect
-counts and spurious PMIs in the guest.
+When iio_device_register_sysfs_group() fails, we should
+free iio_dev_opaque->chan_attr_group.attrs to prevent
+potential memleak.
 
-Fixes: 76d287b2342e ("KVM: x86/pmu: Drop "u8 ctrl, int idx" for reprogram_fixed_counter()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mingwei Zhang <mizhang@google.com>
-Link: https://lore.kernel.org/r/20240123221220.3911317-1-mizhang@google.com
-[sean: rewrite changelog to call out the effects of the bug]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 32f171724e5c ("iio: core: rework iio device group creation")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Link: https://lore.kernel.org/r/20231208073119.29283-1-dinghao.liu@zju.edu.cn
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/pmu_intel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/industrialio-core.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/pmu_intel.c
-+++ b/arch/x86/kvm/vmx/pmu_intel.c
-@@ -38,7 +38,7 @@ static int fixed_pmc_events[] = {1, 0, 7
- static void reprogram_fixed_counters(struct kvm_pmu *pmu, u64 data)
- {
- 	struct kvm_pmc *pmc;
--	u8 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
-+	u64 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
- 	int i;
+--- a/drivers/iio/industrialio-core.c
++++ b/drivers/iio/industrialio-core.c
+@@ -1601,10 +1601,13 @@ static int iio_device_register_sysfs(str
+ 	ret = iio_device_register_sysfs_group(indio_dev,
+ 					      &iio_dev_opaque->chan_attr_group);
+ 	if (ret)
+-		goto error_clear_attrs;
++		goto error_free_chan_attrs;
  
- 	pmu->fixed_ctr_ctrl = data;
+ 	return 0;
+ 
++error_free_chan_attrs:
++	kfree(iio_dev_opaque->chan_attr_group.attrs);
++	iio_dev_opaque->chan_attr_group.attrs = NULL;
+ error_clear_attrs:
+ 	iio_free_chan_devattr_list(&iio_dev_opaque->channel_attr_list);
+ 
 
 
