@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AB9152DFC;
-	Tue, 20 Feb 2024 21:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB90152E06;
+	Tue, 20 Feb 2024 21:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464471; cv=none; b=hWV/4Phzg/Ls9EStY/ooc6snm70F1/DHBkRMcNKuMLLvfwf5wDSw/V8dUYx5EsQrP9k7DnaDgxOmcCsE62GxVro+5zthh+H/Xpxnvb4Bzj4KNsCimMGVcPoeZYduJnFaoP+LPe+ZDFmHcsZSaSrvj3f00mpiTpAm3+Y2pWMj0s4=
+	t=1708464474; cv=none; b=CSP0MHftyQv7/ozwE3O2KBrlGxQmbEPVy/B+K4xOmwzN82HGkpotdcI71yl4HzfZLtIFF46TGm9gEL0fvmmOaq2MgGtKKfeDVACYXcw/J/mvNt54t6DmEaw8T0w3CFBs+yiLX6ieZxeA3nmCeOAnJZKdwpF+czLqUQ6ir5Wl/jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464471; c=relaxed/simple;
-	bh=0RLHtaeJVOiCcGdbVZ3LS9CYh88Q5Fpu4ufSnPs3Vu8=;
+	s=arc-20240116; t=1708464474; c=relaxed/simple;
+	bh=HzihEej5vWTdwXh4PEP2TxrhWY1q3Xi28obrYOTbHoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEjBxCnsSjHQBuVE8UkWCHhM0IM1jbo67T8kFapjYaplVxGvOaITpWHeGRMmBvaQ9eb7f6ThA0LVo6S0gN+4bNqreGwJmP/aVwdxEjBhQYWNTMHMGVcYuzmbwxMKpl8ATl8E3yMnZoi9dsy6H9Jk5DVAxnwJLXK0x+PSTRknHK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPJRvFs9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FX3blcVFzqQVdCWzAmfCodRX9j/yoTuiQAHCpD/PqKpCTO14m9ezvacYGvGNCVZMB0BGBN0/g10zDj6llAkCnOZCUKY+LIx6pe3S+Eb7Ks1oo6SsmmCzYi7HAnK/PWNgOjz4ZayzgH7Cf0UKuGe9jmpiRy2OVd5MVwm4CBuPb5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bArGT9Da; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPJRvFs9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EDFC433F1;
-	Tue, 20 Feb 2024 21:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bArGT9Da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07ADAC43399;
+	Tue, 20 Feb 2024 21:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464471;
-	bh=0RLHtaeJVOiCcGdbVZ3LS9CYh88Q5Fpu4ufSnPs3Vu8=;
+	s=korg; t=1708464474;
+	bh=HzihEej5vWTdwXh4PEP2TxrhWY1q3Xi28obrYOTbHoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPJRvFs9WzIIse0bNx6ERgVTxSAFESpZjVuptlgKw4cYZpC3JdOhSBfnjROS4/Egp
-	 3CcoYaHJmaYMQTERuba4j6szSoktihQdpfQjVaiW7ljo5ZwQGgZ0BRay4QsUnh2FFa
-	 abhX8O/NvFXx2KXgEEFpeXzZFkVHBx6Q7TR8Kdw8=
+	b=bArGT9Da7LcybOGBo0xdY/M782MmNnGZybgCg5NNxVas7OJXVTA3Fld15ubpS/+CA
+	 7Pcb+LZQVJVBk7r6Y0Y1h9kKlN6qUfYGNe6sJdrblD4UkLSYEu//SLhetlEk1qoQ3S
+	 nZDtqUaGq5T4F+5CsHXeruKxVMyYaffet74wE45E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	Rob Herring <robh@kernel.org>,
+	Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 036/309] of: property: Improve finding the supplier of a remote-endpoint property
-Date: Tue, 20 Feb 2024 21:53:15 +0100
-Message-ID: <20240220205634.315174018@linuxfoundation.org>
+Subject: [PATCH 6.7 037/309] ALSA: hda/cs35l56: select intended config FW_CS_DSP
+Date: Tue, 20 Feb 2024 21:53:16 +0100
+Message-ID: <20240220205634.345914077@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,55 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Lukas Bulwahn <lukas.bulwahn@gmail.com>
 
-[ Upstream commit 782bfd03c3ae2c0e6e01b661b8e18f1de50357be ]
+[ Upstream commit e5aa6d51a2ef8c7ef7e3fe76bebe530fb68e7f08 ]
 
-After commit 4a032827daa8 ("of: property: Simplify of_link_to_phandle()"),
-remote-endpoint properties created a fwnode link from the consumer device
-to the supplier endpoint. This is a tiny bit inefficient (not buggy) when
-trying to create device links or detecting cycles. So, improve this the
-same way we improved finding the consumer of a remote-endpoint property.
+Commit 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic
+CS35L56 amplifier") adds configs SND_HDA_SCODEC_CS35L56_{I2C,SPI},
+which selects the non-existing config CS_DSP. Note the renaming in
+commit d7cfdf17cb9d ("firmware: cs_dsp: Rename KConfig symbol CS_DSP ->
+FW_CS_DSP"), though.
 
-Fixes: 4a032827daa8 ("of: property: Simplify of_link_to_phandle()")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Link: https://lore.kernel.org/r/20240207011803.2637531-3-saravanak@google.com
-Signed-off-by: Rob Herring <robh@kernel.org>
+Select the intended config FW_CS_DSP.
+
+This broken select command probably was not noticed as the configs also
+select SND_HDA_CS_DSP_CONTROLS and this then selects FW_CS_DSP. So, the
+select FW_CS_DSP could actually be dropped, but we will keep this
+redundancy in place as the author originally also intended to have this
+redundancy of selects in place.
+
+Fixes: 73cfbfa9caea ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20240209082044.3981-1-lukas.bulwahn@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/property.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ sound/pci/hda/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index 41c3da8a54b6..aacedfdfedc6 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -1231,7 +1231,6 @@ DEFINE_SIMPLE_PROP(pinctrl5, "pinctrl-5", NULL)
- DEFINE_SIMPLE_PROP(pinctrl6, "pinctrl-6", NULL)
- DEFINE_SIMPLE_PROP(pinctrl7, "pinctrl-7", NULL)
- DEFINE_SIMPLE_PROP(pinctrl8, "pinctrl-8", NULL)
--DEFINE_SIMPLE_PROP(remote_endpoint, "remote-endpoint", NULL)
- DEFINE_SIMPLE_PROP(pwms, "pwms", "#pwm-cells")
- DEFINE_SIMPLE_PROP(resets, "resets", "#reset-cells")
- DEFINE_SIMPLE_PROP(leds, "leds", NULL)
-@@ -1297,6 +1296,17 @@ static struct device_node *parse_interrupts(struct device_node *np,
- 	return of_irq_parse_one(np, index, &sup_args) ? NULL : sup_args.np;
- }
- 
-+static struct device_node *parse_remote_endpoint(struct device_node *np,
-+						 const char *prop_name,
-+						 int index)
-+{
-+	/* Return NULL for index > 0 to signify end of remote-endpoints. */
-+	if (!index || strcmp(prop_name, "remote-endpoint"))
-+		return NULL;
-+
-+	return of_graph_get_remote_port_parent(np);
-+}
-+
- static const struct supplier_bindings of_supplier_bindings[] = {
- 	{ .parse_prop = parse_clocks, },
- 	{ .parse_prop = parse_interconnects, },
+diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
+index 21a90b3c4cc7..8e0ff70fb610 100644
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -156,7 +156,7 @@ config SND_HDA_SCODEC_CS35L56_I2C
+ 	depends on I2C
+ 	depends on ACPI || COMPILE_TEST
+ 	depends on SND_SOC
+-	select CS_DSP
++	select FW_CS_DSP
+ 	select SND_HDA_GENERIC
+ 	select SND_SOC_CS35L56_SHARED
+ 	select SND_HDA_SCODEC_CS35L56
+@@ -171,7 +171,7 @@ config SND_HDA_SCODEC_CS35L56_SPI
+ 	depends on SPI_MASTER
+ 	depends on ACPI || COMPILE_TEST
+ 	depends on SND_SOC
+-	select CS_DSP
++	select FW_CS_DSP
+ 	select SND_HDA_GENERIC
+ 	select SND_SOC_CS35L56_SHARED
+ 	select SND_HDA_SCODEC_CS35L56
 -- 
 2.43.0
 
