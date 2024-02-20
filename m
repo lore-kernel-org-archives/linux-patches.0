@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAC314A4E6;
-	Tue, 20 Feb 2024 21:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D5614A4E6;
+	Tue, 20 Feb 2024 21:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464572; cv=none; b=dk3V0Se/Iewzk953hRj5LumlW7Pr+4btEEFdkEoV5oVxwHPR2dxb/YDsix5tzdDChpJtkSCY9TgOGm9VdR9pc0j91lAJ2CGxAkZ51mpXLV9qSMhJ9y6Xk2QiGUKIiEBNhgX1RqK4we6T6Pc/57Nm1zR0CDMxVcW+pAVHiG3+lw0=
+	t=1708464575; cv=none; b=fKbj0+wUDc6cAGAGWvrETSNdN+8FYcotIaA5gi5MqpU7TUAuXfRjl0vgpCJuzXcTOnpUOQBtoTBjsrqQqE9Qoh7q9PagpuNcW9CiZmIgqes7mufLSx0lqyF+ZiUHk+97e9FUYaCudClc0+CRyTm1TKAlN1JBI3UyaBcDjUotnkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464572; c=relaxed/simple;
-	bh=Utarpf+uy9noqZJ3UVosVulBLLZeYso2TezqF11FBeg=;
+	s=arc-20240116; t=1708464575; c=relaxed/simple;
+	bh=TguUUsSJgZ4W4YoJtfLSE+kZi6o3/cTg4oY1CgMzj9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWrTBJjGEFPtJnhSgdhOhA/mPxo/nOXYb8FadZjJTSagDRk15CCEw+JMJvUUDpZmi+DZZcTJ42lcP0lFHaqJWFDe62AIKTaFjiGHuvtfcbBzxFmNSunYFC30CWumbJWnjsfL4TRn9r8y4Vl7Hy65UGHjvG60+51v+ZAl+zRdw/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSou6wVz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tqUxIfT3yawLL/BDKI+MAqOrk0o8kQh5QzX8rW72AxiSzApZYmvB7lb45e1yne+GCN2CSlCgXKRnjpoQ+i+IoXuJ578pNDt8Wg8cHsoqo5D3h1DdjZopqhRzgMJETP+8MOwAzsGyI8E47meuMGJ26Z5911f9QHd+uoe2uTM715Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eb78KcAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSou6wVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FEEC433C7;
-	Tue, 20 Feb 2024 21:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eb78KcAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173BCC433F1;
+	Tue, 20 Feb 2024 21:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464572;
-	bh=Utarpf+uy9noqZJ3UVosVulBLLZeYso2TezqF11FBeg=;
+	s=korg; t=1708464575;
+	bh=TguUUsSJgZ4W4YoJtfLSE+kZi6o3/cTg4oY1CgMzj9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MSou6wVzcc/f401aZn2N27wHO8ayvxIRGK8BnhO3ielmlZnjoFyXcK+TKADJstJ6Z
-	 zU28FdsVxDWL7tRxGCSjRj1fVkclQyLvSO4iox/SU6kEgWX0POmtHjZgscBoa9CWRx
-	 AbvSxLM7YLw65NZsCyAlzySKT3Y2cpJ/RYWxY5eg=
+	b=Eb78KcAdtXPO2fOJ2337/pxE4M0/1gmCxJ3e/vkr2onNMfYTi+1Zc4aXpGRaZVtMn
+	 Z/ykYD7dUcEtDsbCsWAALHJflD0/Kna9IikW6yOxsPdPfFLTWXKF0uuIuAilLbzmwc
+	 58cFVRpLfpLP4YmhyX23wKH500bgmcGu7guuH8ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 060/309] mm/memory: Use exception ip to search exception tables
-Date: Tue, 20 Feb 2024 21:53:39 +0100
-Message-ID: <20240220205635.103258941@linuxfoundation.org>
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Shuah Khan <shuah@kernel.org>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 069/309] selftests/mm: switch to bash from sh
+Date: Tue, 20 Feb 2024 21:53:48 +0100
+Message-ID: <20240220205635.368039342@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -53,51 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit 8fa5070833886268e4fb646daaca99f725b378e9 ]
+commit bc29036e1da1cf66e5f8312649aeec2d51ea3d86 upstream.
 
-On architectures with delay slot, instruction_pointer() may differ
-from where exception was triggered.
+Running charge_reserved_hugetlb.sh generates errors if sh is set to
+dash:
 
-Use exception_ip we just introduced to search exception tables to
-get rid of the problem.
+./charge_reserved_hugetlb.sh: 9: [[: not found
+./charge_reserved_hugetlb.sh: 19: [[: not found
+./charge_reserved_hugetlb.sh: 27: [[: not found
+./charge_reserved_hugetlb.sh: 37: [[: not found
+./charge_reserved_hugetlb.sh: 45: Syntax error: "(" unexpected
 
-Fixes: 4bce37a68ff8 ("mips/mm: Convert to using lock_mm_and_find_vma()")
-Reported-by: Xi Ruoyao <xry111@xry111.site>
-Link: https://lore.kernel.org/r/75e9fd7b08562ad9b456a5bdaacb7cc220311cc9.camel@xry111.site/
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Switch to using /bin/bash instead of /bin/sh.  Make the switch for
+write_hugetlb_memory.sh as well which is called from
+charge_reserved_hugetlb.sh.
+
+Link: https://lkml.kernel.org/r/20240116090455.3407378-1-usama.anjum@collabora.com
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: David Laight <David.Laight@ACULAB.COM>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/mm/charge_reserved_hugetlb.sh |    2 +-
+ tools/testing/selftests/mm/write_hugetlb_memory.sh    |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 6e0712d06cd4..f941489d6041 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -5373,7 +5373,7 @@ static inline bool get_mmap_lock_carefully(struct mm_struct *mm, struct pt_regs
- 		return true;
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
  
- 	if (regs && !user_mode(regs)) {
--		unsigned long ip = instruction_pointer(regs);
-+		unsigned long ip = exception_ip(regs);
- 		if (!search_exception_tables(ip))
- 			return false;
- 	}
-@@ -5398,7 +5398,7 @@ static inline bool upgrade_mmap_lock_carefully(struct mm_struct *mm, struct pt_r
- {
- 	mmap_read_unlock(mm);
- 	if (regs && !user_mode(regs)) {
--		unsigned long ip = instruction_pointer(regs);
-+		unsigned long ip = exception_ip(regs);
- 		if (!search_exception_tables(ip))
- 			return false;
- 	}
--- 
-2.43.0
-
+ # Kselftest framework requirement - SKIP code is 4.
+--- a/tools/testing/selftests/mm/write_hugetlb_memory.sh
++++ b/tools/testing/selftests/mm/write_hugetlb_memory.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ set -e
 
 
