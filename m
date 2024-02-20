@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF0C152DFF;
-	Tue, 20 Feb 2024 21:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9BB151CF3;
+	Tue, 20 Feb 2024 21:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464020; cv=none; b=hT2cw0IC5acwUJWNMWzg0XNTxblaA7Zrc6IENtm0rYyJBtPVAJmKDAeByVZw7USig8+6tFh8oQZZXQopcwT5EbPV/d/0XFcKG3efTWE0QlRfF+nyZCqOyfSNY7EutDtwmsL+v3NgcX8tcNGybboBgRtmH9EhjI8yW/S1Qu7IYUw=
+	t=1708464024; cv=none; b=nKCXhQTsi8JuHQYx7n1PaHxSjUqn+kRBk49iYn8h8ZW409ypmUhq4SR4w3tOuf2P2D6LRfEs0Md4Ok+F5Dtbc55Np+oQ6fWUdIcI9UH1hczR8eQTwLzwBs/waqLhQA+WqWQNYRKdRbn+I7facoV6IUQvptIV2eCPSkYIl2wKYeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464020; c=relaxed/simple;
-	bh=6WKK5mwIK1ej5RdzZA7+EzqwLM/61jNKz05bTQ2N66c=;
+	s=arc-20240116; t=1708464024; c=relaxed/simple;
+	bh=jFOgIOiXeoZOkk5c55rDOCKq1JSRrt/ofjFjl5hCFnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAFpcL2Qyzavyxpnc09RocbhXD3s+yHL1uC/KDtHQjRQCKv1Aw8zXyggnGoFkeB6sEJ7EC7/Fn4L+ViNGFHN/4eBQOaxGhRrYF3rccHsPUortCap1WaT9HEb44JpAZhxfLxqbf47ZuNOLII9mYJaj2i4foPCZ9nFVnKX6FwufGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQrQXGZl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJp7pCnEfIYT1yWtJo9VhLH0kqgtGTYgDFc0Sfa2F4DXDuBWBW6iUwgfYoHzEqH67FUMdA5Ty7sJ5VAkEqwZC31h3cMhI6ohHpruHFcBWgdbgI3BGWOwkJ2VzL2Z737pv3a0MmKE1wwLXmZlxHd/gNmI/8CTPNXFUykMkyGcfzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9bjpAXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQrQXGZl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C637C433F1;
-	Tue, 20 Feb 2024 21:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9bjpAXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67F9C433F1;
+	Tue, 20 Feb 2024 21:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464020;
-	bh=6WKK5mwIK1ej5RdzZA7+EzqwLM/61jNKz05bTQ2N66c=;
+	s=korg; t=1708464023;
+	bh=jFOgIOiXeoZOkk5c55rDOCKq1JSRrt/ofjFjl5hCFnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQrQXGZlcuHKMoMBK5vZ8N0TFiSOM6SESe8yWBSEH9acsSkH7FmhxaXCdCmC+d1eh
-	 KsEfBIZ9hiYcBnA9ZEGEkHrDRV/r+ec88JCauJ9vUmkfgb5Y1S6DfJCzfe5ZMDozC9
-	 ktGojD2cR5HKt/q2bvulClR+anrIQBjI3qYzzljU=
+	b=G9bjpAXBgtLxJJW6gYcKtN2TKJ/atHxTC+cVM42OQokH4WDvgnf7lVVyKER1R3MAk
+	 g/Rul30knH4IGEpNAHIK7C9mplVPib8dDoLGS6gHMiVvkv2eBS3bK7/dEM2ygws93y
+	 sgvi3nkp2bsPLqeMitSqXYzavt9iQ2DshKxndTn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	limingming3 <limingming3@lixiang.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Donald Zickus <dzickus@redhat.com>,
 	Daniel Bristot de Oliveira <bristot@kernel.org>
-Subject: [PATCH 6.6 227/331] tools/rtla: Replace setting prio with nice for SCHED_OTHER
-Date: Tue, 20 Feb 2024 21:55:43 +0100
-Message-ID: <20240220205644.899688625@linuxfoundation.org>
+Subject: [PATCH 6.6 228/331] tools/rtla: Fix clang warning about mount_point var size
+Date: Tue, 20 Feb 2024 21:55:44 +0100
+Message-ID: <20240220205644.928528895@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,55 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: limingming3 <limingming890315@gmail.com>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit 14f08c976ffe0d2117c6199c32663df1cbc45c65 upstream.
+commit 30369084ac6e27479a347899e74f523e6ca29b89 upstream.
 
-Since the sched_priority for SCHED_OTHER is always 0, it makes no
-sence to set it.
-Setting nice for SCHED_OTHER seems more meaningful.
+clang is reporting this warning:
 
-Link: https://lkml.kernel.org/r/20240207065142.1753909-1-limingming3@lixiang.com
+$ make HOSTCC=clang CC=clang LLVM_IAS=1
+[...]
+clang -O -g -DVERSION=\"6.8.0-rc3\" -flto=auto -fexceptions
+	-fstack-protector-strong -fasynchronous-unwind-tables
+	-fstack-clash-protection  -Wall -Werror=format-security
+	-Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
+	$(pkg-config --cflags libtracefs)    -c -o src/utils.o src/utils.c
+
+src/utils.c:548:66: warning: 'fscanf' may overflow; destination buffer in argument 3 has size 1024, but the corresponding specifier may require size 1025 [-Wfortify-source]
+  548 |         while (fscanf(fp, "%*s %" STR(MAX_PATH) "s %99s %*s %*d %*d\n", mount_point, type) == 2) {
+      |                                                                         ^
+
+Increase mount_point variable size to MAX_PATH+1 to avoid the overflow.
+
+Link: https://lkml.kernel.org/r/1b46712e93a2f4153909514a36016959dcc4021c.1707217097.git.bristot@kernel.org
 
 Cc: stable@vger.kernel.org
-Fixes: b1696371d865 ("rtla: Helper functions for rtla")
-Signed-off-by: limingming3 <limingming3@lixiang.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Donald Zickus <dzickus@redhat.com>
+Fixes: a957cbc02531 ("rtla: Add -C cgroup support")
 Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/rtla/src/utils.c |    6 +++---
- tools/tracing/rtla/src/utils.h |    2 ++
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ tools/tracing/rtla/src/utils.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/tools/tracing/rtla/src/utils.c
 +++ b/tools/tracing/rtla/src/utils.c
-@@ -473,13 +473,13 @@ int parse_prio(char *arg, struct sched_a
- 		if (prio == INVALID_VAL)
- 			return -1;
- 
--		if (prio < sched_get_priority_min(SCHED_OTHER))
-+		if (prio < MIN_NICE)
- 			return -1;
--		if (prio > sched_get_priority_max(SCHED_OTHER))
-+		if (prio > MAX_NICE)
- 			return -1;
- 
- 		sched_param->sched_policy   = SCHED_OTHER;
--		sched_param->sched_priority = prio;
-+		sched_param->sched_nice = prio;
- 		break;
- 	default:
- 		return -1;
---- a/tools/tracing/rtla/src/utils.h
-+++ b/tools/tracing/rtla/src/utils.h
-@@ -9,6 +9,8 @@
+@@ -530,7 +530,7 @@ int set_cpu_dma_latency(int32_t latency)
   */
- #define BUFF_U64_STR_SIZE	24
- #define MAX_PATH		1024
-+#define MAX_NICE		20
-+#define MIN_NICE		-19
- 
- #define container_of(ptr, type, member)({			\
- 	const typeof(((type *)0)->member) *__mptr = (ptr);	\
+ static const int find_mount(const char *fs, char *mp, int sizeof_mp)
+ {
+-	char mount_point[MAX_PATH];
++	char mount_point[MAX_PATH+1];
+ 	char type[100];
+ 	int found = 0;
+ 	FILE *fp;
 
 
