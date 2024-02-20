@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AFC76C9C;
-	Tue, 20 Feb 2024 21:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA2276C9C;
+	Tue, 20 Feb 2024 21:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463682; cv=none; b=GogyDY746RDl1oHIZrRfq+AZmW//GRCMAMt/pUlBmGg/1ARFnYwbscRY06rGLejYOmqaTBvxZdhbAg1tzCKCjBLsxvpJ7J4gmy8ljeaJYR0wKXKR5xtVk3w+n5qoCNSIyWK9Qa/0A2a2fgPBo9v4xWIMOrZWZIjNoNIm3Nc+xEo=
+	t=1708463685; cv=none; b=T8sPP373YBUnzIHokK2ckoda1xkUl/LfX/QRkBGhuMgBxo+IEhB43Q0k6D721rM5w0Tm7gVST7jjQk4PbpJNAN21Omtj3mQJ66saWrG0ScSEZBHbOx3eLAOi54RLlU0B3YFgptjb+1lAk7K40tEJNK6Qded1CI2ZTlbzFgbVLcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463682; c=relaxed/simple;
-	bh=QIR/1qXofAQ2LnMOMSLOTAZmznXwuuRoCE4wEqSWCH8=;
+	s=arc-20240116; t=1708463685; c=relaxed/simple;
+	bh=QOeoZs1MW9HzUymSFi+a3ZeKX4hC2+TLa9g6TkyBZ+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eECu2szxXzkMueHrDOkTMyg/x4h03Ik3S8e8j3fVr/Iqmk1oyr3cutuN/bTriholmwSL8290wkTDIADQWzeeEDxMnKiDFRaaEcIXnuUsizuJhijyWFeA07M5ONjalYbV7SMlkPBtGjn2L5+CkZOXqWsojhrU7rIURO3A9H451m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3gY+Us4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n9V0c5TkPum6QG+7BN2w6VY2lw8LZPkbI0jgmjQXWBhHDyzuhMQOqrWzsY7knevCWW5snnr1uLqcmLVZS4WXkz/xyXBYEgvAtJg/TU1dODhtKfKKWroWpOIT/VbyjdCxqqkfPUoInTvnbiaJ6PEcF0/SjyuHosKFHpvCa1icEC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ5KP+9Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3gY+Us4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA68C433C7;
-	Tue, 20 Feb 2024 21:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ5KP+9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF488C433C7;
+	Tue, 20 Feb 2024 21:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463682;
-	bh=QIR/1qXofAQ2LnMOMSLOTAZmznXwuuRoCE4wEqSWCH8=;
+	s=korg; t=1708463685;
+	bh=QOeoZs1MW9HzUymSFi+a3ZeKX4hC2+TLa9g6TkyBZ+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3gY+Us4nkHDjqCZfcsGJHxKmQvW8MTuvHiT+wsqRFoFNsgsOkDz+OHWXHrBso0gl
-	 VMuS/r/fMQA6rtagJfh8U8Vo2Qifo1qmi8HJI8ow7c/XUrCkIo068ojjYr1+Nuyx82
-	 IEa1rF8VJ9gWNIBy+SqXSCGfkObDYad7wW8aXO4A=
+	b=XZ5KP+9Q0fFd/lTMiEnHw5U9pXjhJwfYvGooob35Bh8TuqyyMJp67KIRyZJ/AKZMl
+	 7CQn+Uu7bUDrD//7UPKnci0x1/JBrttOklv3MXmYa2UjUt44qfTkGfYIzOZ/I+SHx6
+	 6GvTy1dZ0sJq0SDOHpVjFfXqiXeGoNJEvxSaWKAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangfeng Xiao <xiaojiangfeng@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	kernel test robot <oliver.sang@intel.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/331] powerpc/kasan: Fix addr error caused by page alignment
-Date: Tue, 20 Feb 2024 21:53:27 +0100
-Message-ID: <20240220205640.441030787@linuxfoundation.org>
+Subject: [PATCH 6.6 092/331] Revert "kobject: Remove redundant checks for whether ktype is NULL"
+Date: Tue, 20 Feb 2024 21:53:28 +0100
+Message-ID: <20240220205640.474362096@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,61 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 4a7aee96200ad281a5cc4cf5c7a2e2a49d2b97b0 ]
+[ Upstream commit 3ca8fbabcceb8bfe44f7f50640092fd8f1de375c ]
 
-In kasan_init_region, when k_start is not page aligned, at the begin of
-for loop, k_cur = k_start & PAGE_MASK is less than k_start, and then
-`va = block + k_cur - k_start` is less than block, the addr va is invalid,
-because the memory address space from va to block is not alloced by
-memblock_alloc, which will not be reserved by memblock_reserve later, it
-will be used by other places.
+This reverts commit 1b28cb81dab7c1eedc6034206f4e8d644046ad31.
 
-As a result, memory overwriting occurs.
+It is reported to cause problems, so revert it for now until the root
+cause can be found.
 
-for example:
-int __init __weak kasan_init_region(void *start, size_t size)
-{
-[...]
-	/* if say block(dcd97000) k_start(feef7400) k_end(feeff3fe) */
-	block = memblock_alloc(k_end - k_start, PAGE_SIZE);
-	[...]
-	for (k_cur = k_start & PAGE_MASK; k_cur < k_end; k_cur += PAGE_SIZE) {
-		/* at the begin of for loop
-		 * block(dcd97000) va(dcd96c00) k_cur(feef7000) k_start(feef7400)
-		 * va(dcd96c00) is less than block(dcd97000), va is invalid
-		 */
-		void *va = block + k_cur - k_start;
-		[...]
-	}
-[...]
-}
-
-Therefore, page alignment is performed on k_start before
-memblock_alloc() to ensure the validity of the VA address.
-
-Fixes: 663c0c9496a6 ("powerpc/kasan: Fix shadow area set up for modules.")
-Signed-off-by: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/1705974359-43790-1-git-send-email-xiaojiangfeng@huawei.com
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Fixes: 1b28cb81dab7 ("kobject: Remove redundant checks for whether ktype is NULL")
+Cc: Zhen Lei <thunder.leizhen@huawei.com>
+Closes: https://lore.kernel.org/oe-lkp/202402071403.e302e33a-oliver.sang@intel.com
+Link: https://lore.kernel.org/r/2024020849-consensus-length-6264@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/kasan/init_32.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/kobject.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/arch/powerpc/mm/kasan/init_32.c b/arch/powerpc/mm/kasan/init_32.c
-index a70828a6d935..aa9aa11927b2 100644
---- a/arch/powerpc/mm/kasan/init_32.c
-+++ b/arch/powerpc/mm/kasan/init_32.c
-@@ -64,6 +64,7 @@ int __init __weak kasan_init_region(void *start, size_t size)
- 	if (ret)
- 		return ret;
+diff --git a/lib/kobject.c b/lib/kobject.c
+index 59dbcbdb1c91..72fa20f405f1 100644
+--- a/lib/kobject.c
++++ b/lib/kobject.c
+@@ -74,10 +74,12 @@ static int create_dir(struct kobject *kobj)
+ 	if (error)
+ 		return error;
  
-+	k_start = k_start & PAGE_MASK;
- 	block = memblock_alloc(k_end - k_start, PAGE_SIZE);
- 	if (!block)
- 		return -ENOMEM;
+-	error = sysfs_create_groups(kobj, ktype->default_groups);
+-	if (error) {
+-		sysfs_remove_dir(kobj);
+-		return error;
++	if (ktype) {
++		error = sysfs_create_groups(kobj, ktype->default_groups);
++		if (error) {
++			sysfs_remove_dir(kobj);
++			return error;
++		}
+ 	}
+ 
+ 	/*
+@@ -589,7 +591,8 @@ static void __kobject_del(struct kobject *kobj)
+ 	sd = kobj->sd;
+ 	ktype = get_ktype(kobj);
+ 
+-	sysfs_remove_groups(kobj, ktype->default_groups);
++	if (ktype)
++		sysfs_remove_groups(kobj, ktype->default_groups);
+ 
+ 	/* send "remove" if the caller did not do it but sent "add" */
+ 	if (kobj->state_add_uevent_sent && !kobj->state_remove_uevent_sent) {
+@@ -666,6 +669,10 @@ static void kobject_cleanup(struct kobject *kobj)
+ 	pr_debug("'%s' (%p): %s, parent %p\n",
+ 		 kobject_name(kobj), kobj, __func__, kobj->parent);
+ 
++	if (t && !t->release)
++		pr_debug("'%s' (%p): does not have a release() function, it is broken and must be fixed. See Documentation/core-api/kobject.rst.\n",
++			 kobject_name(kobj), kobj);
++
+ 	/* remove from sysfs if the caller did not do it */
+ 	if (kobj->state_in_sysfs) {
+ 		pr_debug("'%s' (%p): auto cleanup kobject_del\n",
+@@ -676,13 +683,10 @@ static void kobject_cleanup(struct kobject *kobj)
+ 		parent = NULL;
+ 	}
+ 
+-	if (t->release) {
++	if (t && t->release) {
+ 		pr_debug("'%s' (%p): calling ktype release\n",
+ 			 kobject_name(kobj), kobj);
+ 		t->release(kobj);
+-	} else {
+-		pr_debug("'%s' (%p): does not have a release() function, it is broken and must be fixed. See Documentation/core-api/kobject.rst.\n",
+-			 kobject_name(kobj), kobj);
+ 	}
+ 
+ 	/* free name if we allocated it */
+@@ -1056,7 +1060,7 @@ const struct kobj_ns_type_operations *kobj_child_ns_ops(const struct kobject *pa
+ {
+ 	const struct kobj_ns_type_operations *ops = NULL;
+ 
+-	if (parent && parent->ktype->child_ns_type)
++	if (parent && parent->ktype && parent->ktype->child_ns_type)
+ 		ops = parent->ktype->child_ns_type(parent);
+ 
+ 	return ops;
 -- 
 2.43.0
 
