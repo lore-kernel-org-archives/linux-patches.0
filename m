@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426ED612D7;
-	Tue, 20 Feb 2024 21:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1DB612D7;
+	Tue, 20 Feb 2024 21:13:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463577; cv=none; b=mUTIqQrBDov7S3b9E4+ehY1MqOL2N3vzJfe4xLVA6R+HV4a0zdzjIC/A9ta8oe6o7Xef+JjruYc5IEeRU3SHSTHQRY2BFDsFUpXjsG2uOIy/3q5Qur6hH7d5BZr/RgaRcTuiWEyP8rO1o977yVmojxZht7JRAQ4qo5fxtwOAUTM=
+	t=1708463580; cv=none; b=BF/OQEMwkonY9P3rY4SIp9UIxxiOowgiz0ejjLWZ6ac1xfjuZAmvsXHCLlIe4EoYIi5vVCFhSsZUMO38H4pPF/q9VyVGVJuZZsCTCqjIl32e35to1MIsDKXc1aDf2xklH/blBYfnoJEFCqpymLQn8hWH3vnC6X4uSjAOfjeI8zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463577; c=relaxed/simple;
-	bh=9rlQKsCwH/NIzURY1j0dHlFWwhDYvH51Tj1nLIcUqhg=;
+	s=arc-20240116; t=1708463580; c=relaxed/simple;
+	bh=Gf+PXDv/glCN2r6YuCThsHY5oQTQvwnWlGxQFmYII0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWqSi7Mgp3/fieUyUVncGcxH/ahmGblbVFFBLfzsEgOOD0X3cTRYqNT2irAwp43UBqBo5Qhn7GXRyyHFtwm3kIljk8WCjYZ1Pcs+vjLVaEY4jaaU3Td+ZESiO2/Uy7+j0R63R7L/8QTLWBPIQuTmYv5hGijasw8SOgmzM5+6iAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcBP0M0r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E4X1vWRRA70rLXS/qnrmxK+aIWl52N9Y4kskP5v51xiSxj4CiUP7haZmnD4+WPRpN4x7RRfM0Y2OCxB6VNklqjInW5JRLpkApzIiFvoQHRGEnCfuojktsEW/trKdP6sK72YNJnA046sAy951Ewvnh0Oz/zxDn+gxsrGVfDsQR/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQTakN6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcBP0M0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77A0C433C7;
-	Tue, 20 Feb 2024 21:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQTakN6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37E6C433C7;
+	Tue, 20 Feb 2024 21:12:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463577;
-	bh=9rlQKsCwH/NIzURY1j0dHlFWwhDYvH51Tj1nLIcUqhg=;
+	s=korg; t=1708463580;
+	bh=Gf+PXDv/glCN2r6YuCThsHY5oQTQvwnWlGxQFmYII0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcBP0M0rPETQXDi0N+eGdY0G01QvW3Hp9Y5Qx1DtVA36cFxQzd1Qg+hKVra+8cWFL
-	 TLymXdhtIDmXXiXUHjfHUSTPDpintW3fQwOTJ/FOJLZSr53DxkUymTnV+Xy0ApAxrK
-	 aOjr8uFzbe1lLCoPuWkGsCJgs1oIBfdQjbo3bzFE=
+	b=aQTakN6+IrrXN1vQTVtt7jqmjOLUidxJTzVQ6QMu5DXXVYWHw7lgEJBtswZe/T5+d
+	 iO1DdizyLgYvhE9EMxmpAhoreCk1BC49BSYeIWfuaG2OAO/TSe7u95xgZUPmb53ao1
+	 8UvAY8CrZ4eL9ex87atDN4zMt7hvXRIj71KPrQow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 058/331] tracing/trigger: Fix to return error if failed to alloc snapshot
-Date: Tue, 20 Feb 2024 21:52:54 +0100
-Message-ID: <20240220205639.415802874@linuxfoundation.org>
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Shuah Khan <shuah@kernel.org>,
+	David Laight <David.Laight@ACULAB.COM>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 059/331] selftests/mm: switch to bash from sh
+Date: Tue, 20 Feb 2024 21:52:55 +0100
+Message-ID: <20240220205639.454006459@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,40 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
+commit bc29036e1da1cf66e5f8312649aeec2d51ea3d86 upstream.
 
-Fix register_snapshot_trigger() to return error code if it failed to
-allocate a snapshot instead of 0 (success). Unless that, it will register
-snapshot trigger without an error.
+Running charge_reserved_hugetlb.sh generates errors if sh is set to
+dash:
 
-Link: https://lore.kernel.org/linux-trace-kernel/170622977792.270660.2789298642759362200.stgit@devnote2
+./charge_reserved_hugetlb.sh: 9: [[: not found
+./charge_reserved_hugetlb.sh: 19: [[: not found
+./charge_reserved_hugetlb.sh: 27: [[: not found
+./charge_reserved_hugetlb.sh: 37: [[: not found
+./charge_reserved_hugetlb.sh: 45: Syntax error: "(" unexpected
 
-Fixes: 0bbe7f719985 ("tracing: Fix the race between registering 'snapshot' event trigger and triggering 'snapshot' operation")
-Cc: stable@vger.kernel.org
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Switch to using /bin/bash instead of /bin/sh.  Make the switch for
+write_hugetlb_memory.sh as well which is called from
+charge_reserved_hugetlb.sh.
+
+Link: https://lkml.kernel.org/r/20240116090455.3407378-1-usama.anjum@collabora.com
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: David Laight <David.Laight@ACULAB.COM>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_trigger.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/testing/selftests/mm/charge_reserved_hugetlb.sh |    2 +-
+ tools/testing/selftests/mm/write_hugetlb_memory.sh    |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -1470,8 +1470,10 @@ register_snapshot_trigger(char *glob,
- 			  struct event_trigger_data *data,
- 			  struct trace_event_file *file)
- {
--	if (tracing_alloc_snapshot_instance(file->tr) != 0)
--		return 0;
-+	int ret = tracing_alloc_snapshot_instance(file->tr);
-+
-+	if (ret < 0)
-+		return ret;
+--- a/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
++++ b/tools/testing/selftests/mm/charge_reserved_hugetlb.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
  
- 	return register_trigger(glob, data, file);
- }
+ # Kselftest framework requirement - SKIP code is 4.
+--- a/tools/testing/selftests/mm/write_hugetlb_memory.sh
++++ b/tools/testing/selftests/mm/write_hugetlb_memory.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ set -e
 
 
