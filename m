@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D127914A4D2;
-	Tue, 20 Feb 2024 21:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13809151CEA;
+	Tue, 20 Feb 2024 21:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464890; cv=none; b=S7EHbt5O8u0hckIr7OlK9GSZOE4JbdybzD5WBF+xpR6b3QQsVPSXMCuq7g0PbKnArE15M/GQV1Q3ilWnsO6jyxmlbe5BaOlQj4NwgnC6qLCfyUq4Gb4xcY73GltJyTeGc9+DrRPQdSNmK9mcDoEPEuPO0eNHs/Pq9Ib3R8DqKL0=
+	t=1708464894; cv=none; b=NfXBpFdGRdh0OyCnQeceV9AHSIbx4yN9uNzNfU/rKw+i4Cl2K1utqV3QJYYjZXgYF69/zWPFouv8cHD83Z8QOlcTOpyY8gqA9TKtIFeJ3DV4wM6aAzma90uaYMj/xWi7XDFFk5UsJVNRWjJD9nuuueSJ/PHoCwvtNIVqiOlnI8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464890; c=relaxed/simple;
-	bh=6u4AwPqcukhubcL3mA9sMqNG6PDszuIiropBbY4MoZ0=;
+	s=arc-20240116; t=1708464894; c=relaxed/simple;
+	bh=9efFdhyQoYQ8EO8yR3EGBO/sV6f26UoMEbF0i1B2/Xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qiBlSClXByUwuc+oZSCOYFP/wWs1ygJujliYwG661MluEZPuv8e4zg7IIVq3UPSgFVmDdKav9L5x+oJqbFQqDpO5SiSPTj7LbK/Jj1G7vSB8xoHxrhaoo2i/KBb3XorGBxv41b950R0ybf37E4YZy1JZL4j7v3nstzVUU82zSgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aiJ9PgDr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E9o56NXJajHC5clx9cvujQaXbv90pJywGmQPe2DAaQQwvP0OzSVjt7JXgsIMAZeKWAd+Ftjf116Bhb/CZyJCx3BZCaD3p4XsW2197OWX18pQOZUFghRy1sZu6qfEezTXWNH7giKfSFUOdy9Q2Tjogcaj2ygpGsMJ7q6XjffJFqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUNhy+To; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aiJ9PgDr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E49C433C7;
-	Tue, 20 Feb 2024 21:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUNhy+To"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89688C433F1;
+	Tue, 20 Feb 2024 21:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464890;
-	bh=6u4AwPqcukhubcL3mA9sMqNG6PDszuIiropBbY4MoZ0=;
+	s=korg; t=1708464893;
+	bh=9efFdhyQoYQ8EO8yR3EGBO/sV6f26UoMEbF0i1B2/Xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aiJ9PgDrFtQX9EP2AIRT5ZTzbNcl2cRdCcR1YqvmvpITC5jdQRIt6sXfcRNUQSQ0r
-	 GAWKHfYCYEBHFx1qEY2zDjvdVYfmxl/sbrQYtqO1AxS+HZgfT4ArC26JLIzmNW6MPu
-	 GvIJpu/APPsyLTMtl8CBK/mwLbfuGT0BH5xqfyUE=
+	b=yUNhy+Toh3JqHnkrVbYSf0xNU1Uh9Rj+h0yVndcsK8NUPMPhogLyZ+uDyS2AyXsOd
+	 6kORB/Vz6wiRwKtU0J7GkuUm7uBQMyqlGnY4dHM6JA6FvdDBYlRBBGFPj87TlX7y6N
+	 CzOHc1WJkCZa2T6iyHx0GGo4+widkU/pNKZpyDLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.7 170/309] iio: core: fix memleak in iio_device_register_sysfs
-Date: Tue, 20 Feb 2024 21:55:29 +0100
-Message-ID: <20240220205638.466989928@linuxfoundation.org>
+Subject: [PATCH 6.7 171/309] iio: commom: st_sensors: ensure proper DMA alignment
+Date: Tue, 20 Feb 2024 21:55:30 +0100
+Message-ID: <20240220205638.496043837@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,40 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinghao Liu <dinghao.liu@zju.edu.cn>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit 95a0d596bbd0552a78e13ced43f2be1038883c81 upstream.
+commit 862cf85fef85becc55a173387527adb4f076fab0 upstream.
 
-When iio_device_register_sysfs_group() fails, we should
-free iio_dev_opaque->chan_attr_group.attrs to prevent
-potential memleak.
+Aligning the buffer to the L1 cache is not sufficient in some platforms
+as they might have larger cacheline sizes for caches after L1 and thus,
+we can't guarantee DMA safety.
 
-Fixes: 32f171724e5c ("iio: core: rework iio device group creation")
-Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
-Link: https://lore.kernel.org/r/20231208073119.29283-1-dinghao.liu@zju.edu.cn
+That was the whole reason to introduce IIO_DMA_MINALIGN in [1]. Do the same
+for st_sensors common buffer.
+
+While at it, moved the odr_lock before buffer_data as we definitely
+don't want any other data to share a cacheline with the buffer.
+
+[1]: https://lore.kernel.org/linux-iio/20220508175712.647246-2-jic23@kernel.org/
+
+Fixes: e031d5f558f1 ("iio:st_sensors: remove buffer allocation at each buffer enable")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240131-dev_dma_safety_stm-v2-1-580c07fae51b@analog.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-core.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/iio/common/st_sensors.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/industrialio-core.c
-+++ b/drivers/iio/industrialio-core.c
-@@ -1581,10 +1581,13 @@ static int iio_device_register_sysfs(str
- 	ret = iio_device_register_sysfs_group(indio_dev,
- 					      &iio_dev_opaque->chan_attr_group);
- 	if (ret)
--		goto error_clear_attrs;
-+		goto error_free_chan_attrs;
+--- a/include/linux/iio/common/st_sensors.h
++++ b/include/linux/iio/common/st_sensors.h
+@@ -258,9 +258,9 @@ struct st_sensor_data {
+ 	bool hw_irq_trigger;
+ 	s64 hw_timestamp;
  
- 	return 0;
+-	char buffer_data[ST_SENSORS_MAX_BUFFER_SIZE] ____cacheline_aligned;
+-
+ 	struct mutex odr_lock;
++
++	char buffer_data[ST_SENSORS_MAX_BUFFER_SIZE] __aligned(IIO_DMA_MINALIGN);
+ };
  
-+error_free_chan_attrs:
-+	kfree(iio_dev_opaque->chan_attr_group.attrs);
-+	iio_dev_opaque->chan_attr_group.attrs = NULL;
- error_clear_attrs:
- 	iio_free_chan_devattr_list(&iio_dev_opaque->channel_attr_list);
- 
+ #ifdef CONFIG_IIO_BUFFER
 
 
