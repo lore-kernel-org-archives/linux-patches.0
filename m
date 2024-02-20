@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF68314A4E6;
-	Tue, 20 Feb 2024 21:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B3D14A4E6;
+	Tue, 20 Feb 2024 21:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464435; cv=none; b=r+r2WR2yZd29Ow7gNV2INbZiPnuhLL0uoFjb1VrNfd0Mr01FgSeAGhFOrZwfsdeT3beNVS8IJ5z+62NPhG0ZVV6BDDZofpjnsn36aUrfPLIRe0JRTt+7IzWM4PWeeXFJZifP1NM92YLHyJRXb8RBmiTfvbfA2+H2x8D2RV6FIJQ=
+	t=1708464439; cv=none; b=YjAudoe7PknSw87Gf+nEIUucfDsVTiQVw7HZTPIcHnvsumqyPQA0r8YgUJZKemsdFdVrpweLZ91CkIhC1SidKW1H172slt1oqAxq7+XZGapfqMgnYeKEiZFjPT/nvbfLpFUWeKZCCbm50/+JgshnYW9c6nYu9ZnBM8VnTB46/po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464435; c=relaxed/simple;
-	bh=vzFgPa69uBZXqkBqbQq7/0htOqh+4wnUIHqMZ0OdOPU=;
+	s=arc-20240116; t=1708464439; c=relaxed/simple;
+	bh=ANIGfpzaxdszfuXW+ArOG/6q1SGWB9EV9gGBhSLRde4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FjLqHsnD5qRKSmpSEIgmwQqxatn5BkhnKIpD0++2ePdOA9HS4iUU19goV6wetsjTRLb0qjuTNWwBjjNXp90OlUpbkOFgjmeh4B/w+UTY7iAHfkeHiw36EYcp+h3RIdCQExVcUA0r6x4aZSePlvsd2xA+nuOW9YUZpj3hRopi80M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqS6lzue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KlAccNkaB57FhgZoyzKamXxJziLQTE8Cg30BQOVfyuNYjK3ulRmCLS+WCOwO8BEV2ZR/b6cLy6ecl/s3dTg1rtv17ske/5Ai/czaXTXL6UsxMvPYRonUoTVQFs3DuxE55Ze9gquYG4HYM8cHkfsVrGxyc/BF2H43Qa4s6P3fE44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W63erX3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqS6lzue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F0AC433F1;
-	Tue, 20 Feb 2024 21:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W63erX3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE436C433C7;
+	Tue, 20 Feb 2024 21:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464435;
-	bh=vzFgPa69uBZXqkBqbQq7/0htOqh+4wnUIHqMZ0OdOPU=;
+	s=korg; t=1708464439;
+	bh=ANIGfpzaxdszfuXW+ArOG/6q1SGWB9EV9gGBhSLRde4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqS6lzue7fhrUR+p4fxdzfTxt6Deo5X1YB82WnVOidytYQIrtLXNYBGfq2FOTRxNJ
-	 CGATHZQFl7ynZRNqmhpY6Hc4LI04/2cOY7PHhlj/BCekWwiCeogYo2FiJ9vp8IGZHM
-	 o2DV4ZAZrJ7SPFh7Xz7/Lfi07p19J9XAl5oBunKw=
+	b=W63erX3XEm40zbfpaHTA4zCoXfyzWgKNrjaaDjtiDTNQcwHUl+7mWIzyMU7TevMX1
+	 FYy7EpduvLsXVGmbiD4FW9IYcFu4nBfQnFhOsZ6mfg8aszhe4QU9zSE43ZH9OF0zKc
+	 Q8gc6UV2unXFBAhXpyBfdqHq1csAjxLPExYM6vhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 024/309] spi: imx: fix the burst length at DMA mode and CPU mode
-Date: Tue, 20 Feb 2024 21:53:03 +0100
-Message-ID: <20240220205633.935793097@linuxfoundation.org>
+	Yang Shi <yang@os.amperecomputing.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Christopher Lameter <cl@linux.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 003/309] mm: huge_memory: dont force huge page alignment on 32 bit
+Date: Tue, 20 Feb 2024 21:52:42 +0100
+Message-ID: <20240220205633.217454471@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,62 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Yang Shi <yang@os.amperecomputing.com>
 
-[ Upstream commit c712c05e46c8ce550842951e9e2606e24dbf0475 ]
+commit 4ef9ad19e17676b9ef071309bc62020e2373705d upstream.
 
-For DMA mode, the bus width of the DMA is equal to the size of data
-word, so burst length should be configured as bits per word.
+commit efa7df3e3bb5 ("mm: align larger anonymous mappings on THP
+boundaries") caused two issues [1] [2] reported on 32 bit system or compat
+userspace.
 
-For CPU mode, because of the spi transfer len is in byte, so calculate
-the total number of words according to spi transfer len and bits per
-word, burst length should be configured as total data bits.
+It doesn't make too much sense to force huge page alignment on 32 bit
+system due to the constrained virtual address space.
 
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Clark Wang <xiaoning.wang@nxp.com>
-Fixes: e9b220aeacf1 ("spi: spi-imx: correctly configure burst length when using dma")
-Fixes: 5f66db08cbd3 ("spi: imx: Take in account bits per word instead of assuming 8-bits")
-Link: https://lore.kernel.org/r/20240204091912.36488-1-carlos.song@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1] https://lore.kernel.org/linux-mm/d0a136a0-4a31-46bc-adf4-2db109a61672@kernel.org/
+[2] https://lore.kernel.org/linux-mm/CAJuCfpHXLdQy1a2B6xN2d7quTYwg2OoZseYPZTRpU0eHHKD-sQ@mail.gmail.com/
+
+Link: https://lkml.kernel.org/r/20240118180505.2914778-1-shy828301@gmail.com
+Fixes: efa7df3e3bb5 ("mm: align larger anonymous mappings on THP boundaries")
+Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Reported-by: Suren Baghdasaryan <surenb@google.com>
+Tested-by: Jiri Slaby <jirislaby@kernel.org>
+Tested-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Christopher Lameter <cl@linux.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-imx.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ mm/huge_memory.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 272bc871a848..e2d3e3ec1378 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -2,6 +2,7 @@
- // Copyright 2004-2007 Freescale Semiconductor, Inc. All Rights Reserved.
- // Copyright (C) 2008 Juergen Beisert
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -37,6 +37,7 @@
+ #include <linux/page_owner.h>
+ #include <linux/sched/sysctl.h>
+ #include <linux/memory-tiers.h>
++#include <linux/compat.h>
  
-+#include <linux/bits.h>
- #include <linux/clk.h>
- #include <linux/completion.h>
- #include <linux/delay.h>
-@@ -660,15 +661,15 @@ static int mx51_ecspi_prepare_transfer(struct spi_imx_data *spi_imx,
- 			<< MX51_ECSPI_CTRL_BL_OFFSET;
- 	else {
- 		if (spi_imx->usedma) {
--			ctrl |= (spi_imx->bits_per_word *
--				spi_imx_bytes_per_word(spi_imx->bits_per_word) - 1)
-+			ctrl |= (spi_imx->bits_per_word - 1)
- 				<< MX51_ECSPI_CTRL_BL_OFFSET;
- 		} else {
- 			if (spi_imx->count >= MX51_ECSPI_CTRL_MAX_BURST)
--				ctrl |= (MX51_ECSPI_CTRL_MAX_BURST - 1)
-+				ctrl |= (MX51_ECSPI_CTRL_MAX_BURST * BITS_PER_BYTE - 1)
- 						<< MX51_ECSPI_CTRL_BL_OFFSET;
- 			else
--				ctrl |= (spi_imx->count * spi_imx->bits_per_word - 1)
-+				ctrl |= spi_imx->count / DIV_ROUND_UP(spi_imx->bits_per_word,
-+						BITS_PER_BYTE) * spi_imx->bits_per_word
- 						<< MX51_ECSPI_CTRL_BL_OFFSET;
- 		}
- 	}
--- 
-2.43.0
-
+ #include <asm/tlb.h>
+ #include <asm/pgalloc.h>
+@@ -634,6 +635,9 @@ static unsigned long __thp_get_unmapped_
+ 	loff_t off_align = round_up(off, size);
+ 	unsigned long len_pad, ret;
+ 
++	if (IS_ENABLED(CONFIG_32BIT) || in_compat_syscall())
++		return 0;
++
+ 	if (off_end <= off_align || (off_end - off_align) < size)
+ 		return 0;
+ 
 
 
