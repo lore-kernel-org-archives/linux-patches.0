@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6921D14AD15;
-	Tue, 20 Feb 2024 21:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A42514C585;
+	Tue, 20 Feb 2024 21:08:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463293; cv=none; b=Pk9R8Jo4yVzjtqoFAFrGIrgmOv+OFIOWDYNwxTjKGz/Mbgfi0wRt+5pCgCG1Yf79zZlHLAR1jdcBfxefi9NxtT9ZWAW/y8JSLe+9LtllGg+Q4k+Zbt2THt5WzDxbJq2z+dQ2ziOzKhfWnTbXQEuDemsHnAkMv0RZFHawbBKcCX8=
+	t=1708463296; cv=none; b=O6+LuMp8WueGdB2A+zaUlTvp7asbWWj+XPkNlccyshcmyMfckVrIQKHb4MO3AwJ23lMH8WQt2PwMW/8ao2FANkguld55nTXre0WpZVOS34tYdLSFJpWNIphhaFtZXspJ93lEszGRcG0FAZg42/HVyXORMTtLeCzr/x3zoJ/jNHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463293; c=relaxed/simple;
-	bh=CXMLcyQ1/qU0iN1SjesfNj7eWz4l2dz9zLT2t3Tz4TM=;
+	s=arc-20240116; t=1708463296; c=relaxed/simple;
+	bh=igqhnclU9RrDHIB7u5zPWvRxp04scWsC1J6TKbyAvAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUS3Brpn+YszbaYBoEWQJh+e6dIt6dQLyhtPuty9k4z76doma0hJMvn2evjB4/1pa6E74l0sTT+eIPvONq7muMWaAwKs2S7LYrciAm3eD1z5D9Kdp/pEr2+bb2oKl4gLGuZF+Nm5qK+3728pbO5kQALvtrRK5ycl+s33bScgyWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vq8zXO0L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W/Mb09zrv+nLlhTqRApSjExuiKRIKiBC7MIXjNvti7QeQuCDQ8RCzuLPMbsAwfKW/5y7NOhIacMuru8SejzgFMdf+XfMGK8Ytx45CgoCCKympU9yVOkPzR3OOaiOTCtcNdeGigwROZGtltMaRz+eBCMwduBoK4t3CotqxCbkLPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5L1avWG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vq8zXO0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA7ABC433F1;
-	Tue, 20 Feb 2024 21:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5L1avWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01265C433F1;
+	Tue, 20 Feb 2024 21:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463293;
-	bh=CXMLcyQ1/qU0iN1SjesfNj7eWz4l2dz9zLT2t3Tz4TM=;
+	s=korg; t=1708463296;
+	bh=igqhnclU9RrDHIB7u5zPWvRxp04scWsC1J6TKbyAvAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vq8zXO0LnPJ/cGNDjp2rRrNzEReer/xa6JVhWjb8Eh9NEa5zcWvqFFl9jeNO81n8h
-	 uTlIX5ucRj7+U5Ig1kplxRT+T+hrljgM0D5ntGsBrl8MIHreV7yKEZSF2ixtrtIa3W
-	 gn8MOi4Rx0osyaHzvqC0VA66YSE+8CILaiRN4Bds=
+	b=d5L1avWGAwdpq+mmhowEIlMoyKqUATt1I0FaHEyK3Sh+SOAV163RCX1N8EkGZRGHU
+	 7IB3u3Z5nzKnw0+nkEQw4taEPiD57TY8R0N51j9yFm/Dz85gi7Y2pWem324n50D88x
+	 HLBDAP7Q0w1eW2If/haOXwikNFqJIJf6fLdBbH5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.1 195/197] bpf: Do cleanup in bpf_bprintf_cleanup only when needed
-Date: Tue, 20 Feb 2024 21:52:34 +0100
-Message-ID: <20240220204846.914755458@linuxfoundation.org>
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.1 168/197] xfrm: Silence warnings triggerable by bad packets
+Date: Tue, 20 Feb 2024 21:52:07 +0100
+Message-ID: <20240220204846.099230835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -46,127 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit f19a4050455aad847fb93f18dc1fe502eb60f989 upstream.
+commit 57010b8ece2821a1fdfdba2197d14a022f3769db upstream.
 
-Currently we always cleanup/decrement bpf_bprintf_nest_level variable
-in bpf_bprintf_cleanup if it's > 0.
+After the elimination of inner modes, a couple of warnings that
+were previously unreachable can now be triggered by malformed
+inbound packets.
 
-There's possible scenario where this could cause a problem, when
-bpf_bprintf_prepare does not get bin_args buffer (because num_args is 0)
-and following bpf_bprintf_cleanup call decrements bpf_bprintf_nest_level
-variable, like:
+Fix this by:
 
-  in task context:
-    bpf_bprintf_prepare(num_args != 0) increments 'bpf_bprintf_nest_level = 1'
-    -> first irq :
-       bpf_bprintf_prepare(num_args == 0)
-       bpf_bprintf_cleanup decrements 'bpf_bprintf_nest_level = 0'
-    -> second irq:
-       bpf_bprintf_prepare(num_args != 0) bpf_bprintf_nest_level = 1
-       gets same buffer as task context above
+1. Moving the setting of skb->protocol into the decap functions.
+2. Returning -EINVAL when unexpected protocol is seen.
 
-Adding check to bpf_bprintf_cleanup and doing the real cleanup only if we
-got bin_args data in the first place.
-
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221215214430.1336195-3-jolsa@kernel.org
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reported-by: Maciej Żenczykowski<maze@google.com>
+Fixes: 5f24f41e8ea6 ("xfrm: Remove inner/outer modes from input path")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Maciej Żenczykowski <maze@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h      |    2 +-
- kernel/bpf/helpers.c     |   16 +++++++++-------
- kernel/trace/bpf_trace.c |    6 +++---
- 3 files changed, 13 insertions(+), 11 deletions(-)
+ net/xfrm/xfrm_input.c |   22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -2747,7 +2747,7 @@ struct bpf_bprintf_data {
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -180,6 +180,8 @@ static int xfrm4_remove_beet_encap(struc
+ 	int optlen = 0;
+ 	int err = -EINVAL;
  
- int bpf_bprintf_prepare(char *fmt, u32 fmt_size, const u64 *raw_args,
- 			u32 num_args, struct bpf_bprintf_data *data);
--void bpf_bprintf_cleanup(void);
-+void bpf_bprintf_cleanup(struct bpf_bprintf_data *data);
- 
- /* the implementation of the opaque uapi struct bpf_dynptr */
- struct bpf_dynptr_kern {
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -781,12 +781,14 @@ static int try_get_fmt_tmp_buf(char **tm
- 	return 0;
- }
- 
--void bpf_bprintf_cleanup(void)
-+void bpf_bprintf_cleanup(struct bpf_bprintf_data *data)
++	skb->protocol = htons(ETH_P_IP);
++
+ 	if (unlikely(XFRM_MODE_SKB_CB(skb)->protocol == IPPROTO_BEETPH)) {
+ 		struct ip_beet_phdr *ph;
+ 		int phlen;
+@@ -232,6 +234,8 @@ static int xfrm4_remove_tunnel_encap(str
  {
--	if (this_cpu_read(bpf_bprintf_nest_level)) {
--		this_cpu_dec(bpf_bprintf_nest_level);
--		preempt_enable();
--	}
-+	if (!data->bin_args)
-+		return;
-+	if (WARN_ON_ONCE(this_cpu_read(bpf_bprintf_nest_level) == 0))
-+		return;
-+	this_cpu_dec(bpf_bprintf_nest_level);
-+	preempt_enable();
- }
+ 	int err = -EINVAL;
  
- /*
-@@ -1018,7 +1020,7 @@ nocopy_fmt:
- 	err = 0;
- out:
++	skb->protocol = htons(ETH_P_IP);
++
+ 	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
+ 		goto out;
+ 
+@@ -267,6 +271,8 @@ static int xfrm6_remove_tunnel_encap(str
+ {
+ 	int err = -EINVAL;
+ 
++	skb->protocol = htons(ETH_P_IPV6);
++
+ 	if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
+ 		goto out;
+ 
+@@ -296,6 +302,8 @@ static int xfrm6_remove_beet_encap(struc
+ 	int size = sizeof(struct ipv6hdr);
+ 	int err;
+ 
++	skb->protocol = htons(ETH_P_IPV6);
++
+ 	err = skb_cow_head(skb, size + skb->mac_len);
  	if (err)
--		bpf_bprintf_cleanup();
-+		bpf_bprintf_cleanup(data);
- 	return err;
+ 		goto out;
+@@ -346,6 +354,7 @@ xfrm_inner_mode_encap_remove(struct xfrm
+ 			return xfrm6_remove_tunnel_encap(x, skb);
+ 		break;
+ 		}
++		return -EINVAL;
+ 	}
+ 
+ 	WARN_ON_ONCE(1);
+@@ -366,19 +375,6 @@ static int xfrm_prepare_input(struct xfr
+ 		return -EAFNOSUPPORT;
+ 	}
+ 
+-	switch (XFRM_MODE_SKB_CB(skb)->protocol) {
+-	case IPPROTO_IPIP:
+-	case IPPROTO_BEETPH:
+-		skb->protocol = htons(ETH_P_IP);
+-		break;
+-	case IPPROTO_IPV6:
+-		skb->protocol = htons(ETH_P_IPV6);
+-		break;
+-	default:
+-		WARN_ON_ONCE(1);
+-		break;
+-	}
+-
+ 	return xfrm_inner_mode_encap_remove(x, skb);
  }
  
-@@ -1044,7 +1046,7 @@ BPF_CALL_5(bpf_snprintf, char *, str, u3
- 
- 	err = bstr_printf(str, str_size, fmt, data.bin_args);
- 
--	bpf_bprintf_cleanup();
-+	bpf_bprintf_cleanup(&data);
- 
- 	return err + 1;
- }
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -395,7 +395,7 @@ BPF_CALL_5(bpf_trace_printk, char *, fmt
- 	trace_bpf_trace_printk(buf);
- 	raw_spin_unlock_irqrestore(&trace_printk_lock, flags);
- 
--	bpf_bprintf_cleanup();
-+	bpf_bprintf_cleanup(&data);
- 
- 	return ret;
- }
-@@ -453,7 +453,7 @@ BPF_CALL_4(bpf_trace_vprintk, char *, fm
- 	trace_bpf_trace_printk(buf);
- 	raw_spin_unlock_irqrestore(&trace_printk_lock, flags);
- 
--	bpf_bprintf_cleanup();
-+	bpf_bprintf_cleanup(&data);
- 
- 	return ret;
- }
-@@ -493,7 +493,7 @@ BPF_CALL_5(bpf_seq_printf, struct seq_fi
- 
- 	seq_bprintf(m, fmt, data.bin_args);
- 
--	bpf_bprintf_cleanup();
-+	bpf_bprintf_cleanup(&data);
- 
- 	return seq_has_overflowed(m) ? -EOVERFLOW : 0;
- }
 
 
