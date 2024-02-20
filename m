@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211A41509AC;
-	Tue, 20 Feb 2024 21:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952EB152DE0;
+	Tue, 20 Feb 2024 21:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464091; cv=none; b=omLdjVwitxjjcMMX/+I57s4qmLg2mBEEwohMlJeBjjdqV1CKuY5VNxgSY8MkbTCvY0wBT44R9IJC6/bEcinSlvDQygKk/AmzTu1+ylk86fOwlLNiqsl33ZbjvXT0IfRHvO37OiuqhLZHl5gulB4vFDTMrnkG9tQU0IJX+SX7xlk=
+	t=1708464094; cv=none; b=W2oix8R8tAjAxeIUF/RJp3M/3i6nmJIoga55eKRefvtGV+u9QoKMHeLPtWtqW1nXGmyiFIosYL4Cu/gPjXTMHT5Ns/4B0Lx9D4boDkMkpIbfL9zbrDy2I75Q4sAayMzmxZRJSjlZmaga9bnRx1BEsFMA2CqNRVYPBnkW1+JWRms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464091; c=relaxed/simple;
-	bh=wjqhyiOX/5i6wGpJkHJoRP6TXuuy77qt55w7QDuzO18=;
+	s=arc-20240116; t=1708464094; c=relaxed/simple;
+	bh=Je3p7mVddS6eShJQtm69I1uAZdB37jx6OLX3FFjGZtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N8w6lv/vsK/UeDlIHSCW+VFfO3Yq88dvRSIcQiwJtW7AiXjg+0LAC+N9BrNysMiqizPspBoniZHK9efw//pz36vW5gIsm4hY3WZbGjBoXTEmpYF/X0LpJyuNFCkB1SjfRxxSy3dQcVeAA1Kzz0so0Xux2URvBzGj+oyxHdIKiNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pG4RpRC7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J/QytAN/twNNEhvNPA8rjAoLvcrC5Hf093OVpK2Uzpp2resSRJLPsuHPxBrybqEDtf7tIPMFXZGvh7Sl1ADT+G4Ihka0wanfM5zD/nIs2IwRtS+MkSOZsuzr4OShx9WcwkcLfdB/eHsdiOrzpbTq9ZxIGx2KO/dYqs+adgUgV8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OWwCwxZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pG4RpRC7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622A5C433F1;
-	Tue, 20 Feb 2024 21:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OWwCwxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115BCC433F1;
+	Tue, 20 Feb 2024 21:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464091;
-	bh=wjqhyiOX/5i6wGpJkHJoRP6TXuuy77qt55w7QDuzO18=;
+	s=korg; t=1708464094;
+	bh=Je3p7mVddS6eShJQtm69I1uAZdB37jx6OLX3FFjGZtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pG4RpRC7bOG9UpXEowZKozQS1TdimkL03UQ0DfRvBOVv7cKPnN4hTdBcU87UW1gOY
-	 bgxO1vOjAN64LZIHt1Vxg1wOMTBCwnyTjjAjQB9r8zDTYDve9YaTN0o/eKpOxziHA2
-	 r9iAig6OGvtf4NmUQeasm+E0LKIpztcFZy8dJ8LY=
+	b=0OWwCwxZPePSqGPuk2WOJgdym1K/wP2vSpFYz4yW7Nbl+JY0Y1xf54Qs/Jady8ZP5
+	 3SIJJgDyTp4aoJnmF2U16/Ay9IHg1rzd/ismTMVO5j2ZSDSRZ9WnEtNKEnIyWcEzr/
+	 sIfThytiNhm9Zs/FJHjyo5u0aeH69x3wZp0EvV8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prakash Sangappa <prakash.sangappa@oracle.com>,
-	Muchun Song <muchun.song@linux.dev>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Dylan Hatch <dylanbhatch@google.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 241/331] mm: hugetlb pages should not be reserved by shmat() if SHM_NORESERVE
-Date: Tue, 20 Feb 2024 21:55:57 +0100
-Message-ID: <20240220205645.362019356@linuxfoundation.org>
+Subject: [PATCH 6.6 250/331] fs/proc: do_task_stat: move thread_group_cputime_adjusted() outside of lock_task_sighand()
+Date: Tue, 20 Feb 2024 21:56:06 +0100
+Message-ID: <20240220205645.690069437@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,103 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prakash Sangappa <prakash.sangappa@oracle.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit e656c7a9e59607d1672d85ffa9a89031876ffe67 upstream.
+commit 60f92acb60a989b14e4b744501a0df0f82ef30a3 upstream.
 
-For shared memory of type SHM_HUGETLB, hugetlb pages are reserved in
-shmget() call.  If SHM_NORESERVE flags is specified then the hugetlb pages
-are not reserved.  However when the shared memory is attached with the
-shmat() call the hugetlb pages are getting reserved incorrectly for
-SHM_HUGETLB shared memory created with SHM_NORESERVE which is a bug.
+Patch series "fs/proc: do_task_stat: use sig->stats_".
 
--------------------------------
-Following test shows the issue.
+do_task_stat() has the same problem as getrusage() had before "getrusage:
+use sig->stats_lock rather than lock_task_sighand()": a hard lockup.  If
+NR_CPUS threads call lock_task_sighand() at the same time and the process
+has NR_THREADS, spin_lock_irq will spin with irqs disabled O(NR_CPUS *
+NR_THREADS) time.
 
-$cat shmhtb.c
 
-int main()
-{
-	int shmflags = 0660 | IPC_CREAT | SHM_HUGETLB | SHM_NORESERVE;
-	int shmid;
+This patch (of 3):
 
-	shmid = shmget(SKEY, SHMSZ, shmflags);
-	if (shmid < 0)
-	{
-		printf("shmat: shmget() failed, %d\n", errno);
-		return 1;
-	}
-	printf("After shmget()\n");
-	system("cat /proc/meminfo | grep -i hugepages_");
+thread_group_cputime() does its own locking, we can safely shift
+thread_group_cputime_adjusted() which does another for_each_thread loop
+outside of ->siglock protected section.
 
-	shmat(shmid, NULL, 0);
-	printf("\nAfter shmat()\n");
-	system("cat /proc/meminfo | grep -i hugepages_");
+Not only this removes for_each_thread() from the critical section with
+irqs disabled, this removes another case when stats_lock is taken with
+siglock held.  We want to remove this dependency, then we can change the
+users of stats_lock to not disable irqs.
 
-	shmctl(shmid, IPC_RMID, NULL);
-	return 0;
-}
-
- #sysctl -w vm.nr_hugepages=20
- #./shmhtb
-
-After shmget()
-HugePages_Total:      20
-HugePages_Free:       20
-HugePages_Rsvd:        0
-HugePages_Surp:        0
-
-After shmat()
-HugePages_Total:      20
-HugePages_Free:       20
-HugePages_Rsvd:        5 <--
-HugePages_Surp:        0
---------------------------------
-
-Fix is to ensure that hugetlb pages are not reserved for SHM_HUGETLB shared
-memory in the shmat() call.
-
-Link: https://lkml.kernel.org/r/1706040282-12388-1-git-send-email-prakash.sangappa@oracle.com
-Signed-off-by: Prakash Sangappa <prakash.sangappa@oracle.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
+Link: https://lkml.kernel.org/r/20240123153313.GA21832@redhat.com
+Link: https://lkml.kernel.org/r/20240123153355.GA21854@redhat.com
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Dylan Hatch <dylanbhatch@google.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hugetlbfs/inode.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/proc/array.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -123,6 +123,7 @@ static int hugetlbfs_file_mmap(struct fi
- 	loff_t len, vma_len;
- 	int ret;
- 	struct hstate *h = hstate_file(file);
-+	vm_flags_t vm_flags;
+--- a/fs/proc/array.c
++++ b/fs/proc/array.c
+@@ -511,7 +511,7 @@ static int do_task_stat(struct seq_file
  
- 	/*
- 	 * vma address alignment (but not the pgoff alignment) has
-@@ -164,10 +165,20 @@ static int hugetlbfs_file_mmap(struct fi
- 	file_accessed(file);
+ 	sigemptyset(&sigign);
+ 	sigemptyset(&sigcatch);
+-	cutime = cstime = utime = stime = 0;
++	cutime = cstime = 0;
+ 	cgtime = gtime = 0;
  
- 	ret = -ENOMEM;
+ 	if (lock_task_sighand(task, &flags)) {
+@@ -545,7 +545,6 @@ static int do_task_stat(struct seq_file
+ 
+ 			min_flt += sig->min_flt;
+ 			maj_flt += sig->maj_flt;
+-			thread_group_cputime_adjusted(task, &utime, &stime);
+ 			gtime += sig->gtime;
+ 
+ 			if (sig->flags & (SIGNAL_GROUP_EXIT | SIGNAL_STOP_STOPPED))
+@@ -561,10 +560,13 @@ static int do_task_stat(struct seq_file
+ 
+ 	if (permitted && (!whole || num_threads < 2))
+ 		wchan = !task_is_running(task);
+-	if (!whole) {
 +
-+	vm_flags = vma->vm_flags;
-+	/*
-+	 * for SHM_HUGETLB, the pages are reserved in the shmget() call so skip
-+	 * reserving here. Note: only for SHM hugetlbfs file, the inode
-+	 * flag S_PRIVATE is set.
-+	 */
-+	if (inode->i_flags & S_PRIVATE)
-+		vm_flags |= VM_NORESERVE;
-+
- 	if (!hugetlb_reserve_pages(inode,
- 				vma->vm_pgoff >> huge_page_order(h),
- 				len >> huge_page_shift(h), vma,
--				vma->vm_flags))
-+				vm_flags))
- 		goto out;
++	if (whole) {
++		thread_group_cputime_adjusted(task, &utime, &stime);
++	} else {
++		task_cputime_adjusted(task, &utime, &stime);
+ 		min_flt = task->min_flt;
+ 		maj_flt = task->maj_flt;
+-		task_cputime_adjusted(task, &utime, &stime);
+ 		gtime = task_gtime(task);
+ 	}
  
- 	ret = 0;
 
 
