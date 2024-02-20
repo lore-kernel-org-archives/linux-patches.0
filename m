@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F131D14A4D2;
-	Tue, 20 Feb 2024 21:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D130014A4D2;
+	Tue, 20 Feb 2024 21:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464669; cv=none; b=ZWvEWn3ekue/C+jLwuGBouurf4Xb0o+Pe9SJsICM6/y6XuFIJH8VR2ttqkO9StGQVGvDLbOR5wTM6ifGOagIX4bgE2mHbjDOgDJJV6tb+DSm6DwpXEiOdv0GYwWcAUcRWhixzqp7p7YDCsyqic9efWME0hIIC3HSRaLSHVa4CzQ=
+	t=1708464671; cv=none; b=SLRRzh5Ia3mny+6DADQCdNzJKNT988F4OO5/3hxGUdqC35hl/hAgT7cUOXdRfCKVDctKuJon3fSc7ZETlXGtoy7rjB5bddH/DhTpV6R+htuwLBGZjXHK70pS2Y5VHvtfINsDDn0BMerBjUzq4UwlnT/8aOfHWwo/df41pOBuRJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464669; c=relaxed/simple;
-	bh=ThIChC1wUEhqrxuUZij5up7oeN6PLivza1xdVWMH4I4=;
+	s=arc-20240116; t=1708464671; c=relaxed/simple;
+	bh=szW7cMHZrNebYsmUQ1FKdlOXf88QYo5FovpnF/ljHY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7ByPOY/BePDYMYWc4OJEfn8AI8g+FwnXc0Rfa4bihQcKHWYWz44SQ3sxZYCMcDSfr5TTJmhWETY0lPPxWFPneq8VhKkuWPlOOCgq/aUC4oF+muJBodIQ9s5c9hHyny4SXWK2qfdje0Hsc+ORbB4S4jiJ7O5bOfycwWXP/cHh+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdbRmpZo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iom3Bda4TfN03T2UcZFtrsyhLlBt8N17ZGpMI2jkbEBq5mgs7ZED+0YSRW4WmC+ajAcSzhgUd9I6ayVqtedmy63Z4HiWMcfjm+ri3xVLn7YLd9D49WQvQd/LYCVzzlDeCtFlJGzGcKActGEaItoy/g9cQXGRR/VTquo+Ii7fdTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRCER3NL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdbRmpZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7736EC433F1;
-	Tue, 20 Feb 2024 21:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRCER3NL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E38AC433F1;
+	Tue, 20 Feb 2024 21:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464668;
-	bh=ThIChC1wUEhqrxuUZij5up7oeN6PLivza1xdVWMH4I4=;
+	s=korg; t=1708464671;
+	bh=szW7cMHZrNebYsmUQ1FKdlOXf88QYo5FovpnF/ljHY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdbRmpZoftH46l8XAEVyuC0K1Dw1L8SUROz0IAdWeBuNyNNn1WrDnPNmE0rErnoRI
-	 i8L8hP/2nYjI0KSJcMvP/Po/qya/pnVqtuamtL/szXV1j0zisVRm8DnukNm46NPwQO
-	 nmHCQ9sUJ5teVofuVduTLi0RatN6bo3pUrrfnZSs=
+	b=vRCER3NLE2yev8HFBtueGeQOmreCV56QDtPy3Ba2oslfP4R/z9z91MUEqTBtEF9f4
+	 KF5JW/9cfjQQiNRgiy6mTFANgiUJO/3yRuNb9rztBRvdPsP69sdGPApcA981Njcwap
+	 WOo2OJnopaHjqP9H9FzZYzPgTuZMbUxwYlUBVmxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	James Houghton <jthoughton@google.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Naoya Horiguchi <naoya.horiguchi@nec.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 068/309] fs/hugetlbfs/inode.c: mm/memory-failure.c: fix hugetlbfs hwpoison handling
-Date: Tue, 20 Feb 2024 21:53:47 +0100
-Message-ID: <20240220205635.337345525@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 059/309] ptrace: Introduce exception_ip arch hook
+Date: Tue, 20 Feb 2024 21:53:38 +0100
+Message-ID: <20240220205635.069190996@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -57,66 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 19d3e221807772f8443e565234a6fdc5a2b09d26 upstream.
+[ Upstream commit 11ba1728be3edb6928791f4c622f154ebe228ae6 ]
 
-has_extra_refcount() makes the assumption that the page cache adds a ref
-count of 1 and subtracts this in the extra_pins case.  Commit a08c7193e4f1
-(mm/filemap: remove hugetlb special casing in filemap.c) modifies
-__filemap_add_folio() by calling folio_ref_add(folio, nr); for all cases
-(including hugtetlb) where nr is the number of pages in the folio.  We
-should adjust the number of references coming from the page cache by
-subtracing the number of pages rather than 1.
+On architectures with delay slot, architecture level instruction
+pointer (or program counter) in pt_regs may differ from where
+exception was triggered.
 
-In hugetlbfs_read_iter(), folio_test_has_hwpoisoned() is testing the wrong
-flag as, in the hugetlb case, memory-failure code calls
-folio_test_set_hwpoison() to indicate poison.  folio_test_hwpoison() is
-the correct function to test for that flag.
+Introduce exception_ip hook to invoke architecture code and determine
+actual instruction pointer to the exception.
 
-After these fixes, the hugetlb hwpoison read selftest passes all cases.
-
-Link: https://lkml.kernel.org/r/20240112180840.367006-1-sidhartha.kumar@oracle.com
-Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
-Signed-off-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
-Closes: https://lore.kernel.org/linux-mm/20230713001833.3778937-1-jiaqiyan@google.com/T/#m8e1469119e5b831bbd05d495f96b842e4a1c5519
-Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Naoya Horiguchi <naoya.horiguchi@nec.com>
-Cc: <stable@vger.kernel.org>	[6.7+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/lkml/00d1b813-c55f-4365-8d81-d70258e10b16@app.fastmail.com/
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: 8fa507083388 ("mm/memory: Use exception ip to search exception tables")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hugetlbfs/inode.c |    2 +-
- mm/memory-failure.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/include/asm/ptrace.h | 2 ++
+ arch/mips/kernel/ptrace.c      | 7 +++++++
+ include/linux/ptrace.h         | 4 ++++
+ 3 files changed, 13 insertions(+)
 
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -340,7 +340,7 @@ static ssize_t hugetlbfs_read_iter(struc
- 		} else {
- 			folio_unlock(folio);
+diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
+index daf3cf244ea9..701a233583c2 100644
+--- a/arch/mips/include/asm/ptrace.h
++++ b/arch/mips/include/asm/ptrace.h
+@@ -154,6 +154,8 @@ static inline long regs_return_value(struct pt_regs *regs)
+ }
  
--			if (!folio_test_has_hwpoisoned(folio))
-+			if (!folio_test_hwpoison(folio))
- 				want = nr;
- 			else {
- 				/*
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -976,7 +976,7 @@ static bool has_extra_refcount(struct pa
- 	int count = page_count(p) - 1;
+ #define instruction_pointer(regs) ((regs)->cp0_epc)
++extern unsigned long exception_ip(struct pt_regs *regs);
++#define exception_ip(regs) exception_ip(regs)
+ #define profile_pc(regs) instruction_pointer(regs)
  
- 	if (extra_pins)
--		count -= 1;
-+		count -= folio_nr_pages(page_folio(p));
+ extern asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall);
+diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
+index d9df543f7e2c..59288c13b581 100644
+--- a/arch/mips/kernel/ptrace.c
++++ b/arch/mips/kernel/ptrace.c
+@@ -31,6 +31,7 @@
+ #include <linux/seccomp.h>
+ #include <linux/ftrace.h>
  
- 	if (count > 0) {
- 		pr_err("%#lx: %s still referenced by %d users\n",
++#include <asm/branch.h>
+ #include <asm/byteorder.h>
+ #include <asm/cpu.h>
+ #include <asm/cpu-info.h>
+@@ -48,6 +49,12 @@
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/syscalls.h>
+ 
++unsigned long exception_ip(struct pt_regs *regs)
++{
++	return exception_epc(regs);
++}
++EXPORT_SYMBOL(exception_ip);
++
+ /*
+  * Called by kernel/ptrace.c when detaching..
+  *
+diff --git a/include/linux/ptrace.h b/include/linux/ptrace.h
+index eaaef3ffec22..90507d4afcd6 100644
+--- a/include/linux/ptrace.h
++++ b/include/linux/ptrace.h
+@@ -393,6 +393,10 @@ static inline void user_single_step_report(struct pt_regs *regs)
+ #define current_user_stack_pointer() user_stack_pointer(current_pt_regs())
+ #endif
+ 
++#ifndef exception_ip
++#define exception_ip(x) instruction_pointer(x)
++#endif
++
+ extern int task_current_syscall(struct task_struct *target, struct syscall_info *info);
+ 
+ extern void sigaction_compat_abi(struct k_sigaction *act, struct k_sigaction *oact);
+-- 
+2.43.0
+
 
 
