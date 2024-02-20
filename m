@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2623A1534E8;
-	Tue, 20 Feb 2024 21:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE9F151CF3;
+	Tue, 20 Feb 2024 21:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463038; cv=none; b=kTED4yzV8A82FsdA8EBwRbHbXV+9X/qM0tkLdOVYlLJJvtyh+Xd22pFw9oQ2EJa71BNA097fgGTrkVbbvlK17ef9oy+UWwo/yZqmL6wPyYQazWQDzKh41BxqOrSWyS5mmIVcG6j8VlE+XYOv5rErClNZU9GcsRE4+cbFXHtk8H8=
+	t=1708463041; cv=none; b=HHb9o4EaG1Xs6E4z3x70zwxKkVa9n/un3EUayX2PZn+YFX1EhdQ6dvRplvPdXNAW/Suz3+lG3qkcwjIzaOS6TDOGahvGo1XitTtVT64imuxCMD5Oj6w8sguixjFGSK8Bbp2K9Bc19SAlb+KEEE8g46W6eaj0tQCBZMS1t/6MFZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463038; c=relaxed/simple;
-	bh=uLV712bOuFzjYCFfy9HNNq5H6JGq2k7QgAPFKIC3klo=;
+	s=arc-20240116; t=1708463041; c=relaxed/simple;
+	bh=aL9lvEpTs/cHOoCMvAsDsveaCrlSv+m06dQ7Ikovqb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQQycOXsZN247yvzRmkNNxIqeDOy8MfIwWoyRtbFpllMgysq9dEyNu5qLjIqXk7KDsp8c645QGWVgnsvVlB29hkqPt1z7tR7/f5WwrKHfNzf2ZRNeilzqPUkYEY5Uf2M5C2ouwFPGuSwd7GAGTP5KYv+f4tIZJsIhYBH/2RXdy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAWOVr9K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=olYuYFC+GXo8P8Ce233j+t2VLgAdOOlzUFibMJKqF0jqAOTnp93tUVsO/7PNAYBBYGsTbtz7+d1dUCqaZsUdx9Skk5CfwBsHIjhoSnMB9IV5Qeei80Y4X3XYyrz/YDsNpOA3NMol6DwHABLIq86NzUR+6/UMbl74TlvlvIsUuKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0jwhoLZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAWOVr9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A9FC433C7;
-	Tue, 20 Feb 2024 21:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0jwhoLZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD56C433C7;
+	Tue, 20 Feb 2024 21:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463038;
-	bh=uLV712bOuFzjYCFfy9HNNq5H6JGq2k7QgAPFKIC3klo=;
+	s=korg; t=1708463041;
+	bh=aL9lvEpTs/cHOoCMvAsDsveaCrlSv+m06dQ7Ikovqb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAWOVr9KsK4iQQtaViZm3vs/sHAaFxTvHnx4h+6rd5Pk3JjV9dHJ9nkti2rCaIYwE
-	 IwdSmoCRI7EJtKwIA76qQtvNholdGwgE8d94Fjbu4sS0nR5uv7OdkJYUuvC9ZR01rr
-	 HjKCDlbGa7A2A5vp5R8+2iJFf6/nD/onNGy5aBGc=
+	b=X0jwhoLZKkkA0A0EOsWwHf7gSoOZFhR/3M8XIRlwJSweGCpPxLrRj7/UAjvBjL9ma
+	 5Kwzt604Ef3bOLTSKQwZf+yY2L0VOMpa5DWO7MxUNZ3oD/SXIBsYAQSm3sUzQlI6Zo
+	 xBBcdI4hln0CnI7xUr/7p2VH7tuOaWdILh0HU6Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 116/197] drm/amd/display: Preserve original aspect ratio in create stream
-Date: Tue, 20 Feb 2024 21:51:15 +0100
-Message-ID: <20240220204844.546614856@linuxfoundation.org>
+	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 117/197] hv_netvsc: Fix race condition between netvsc_probe and netvsc_remove
+Date: Tue, 20 Feb 2024 21:51:16 +0100
+Message-ID: <20240220204844.577536579@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -53,43 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Chung <chiahsuan.chung@amd.com>
+From: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
 
-commit deb110292180cd501f6fde2a0178d65fcbcabb0c upstream.
+commit e0526ec5360a48ad3ab2e26e802b0532302a7e11 upstream.
 
-[Why]
-The original picture aspect ratio in mode struct may have chance be
-overwritten with wrong aspect ratio data in create_stream_for_sink().
-It will create a different VIC output and cause HDMI compliance test
-failed.
+In commit ac5047671758 ("hv_netvsc: Disable NAPI before closing the
+VMBus channel"), napi_disable was getting called for all channels,
+including all subchannels without confirming if they are enabled or not.
 
-[How]
-Preserve the original picture aspect ratio data during create the
-stream.
+This caused hv_netvsc getting hung at napi_disable, when netvsc_probe()
+has finished running but nvdev->subchan_work has not started yet.
+netvsc_subchan_work() -> rndis_set_subchannel() has not created the
+sub-channels and because of that netvsc_sc_open() is not running.
+netvsc_remove() calls cancel_work_sync(&nvdev->subchan_work), for which
+netvsc_subchan_work did not run.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+netif_napi_add() sets the bit NAPI_STATE_SCHED because it ensures NAPI
+cannot be scheduled. Then netvsc_sc_open() -> napi_enable will clear the
+NAPIF_STATE_SCHED bit, so it can be scheduled. napi_disable() does the
+opposite.
+
+Now during netvsc_device_remove(), when napi_disable is called for those
+subchannels, napi_disable gets stuck on infinite msleep.
+
+This fix addresses this problem by ensuring that napi_disable() is not
+getting called for non-enabled NAPI struct.
+But netif_napi_del() is still necessary for these non-enabled NAPI struct
+for cleanup purpose.
+
+Call trace:
+[  654.559417] task:modprobe        state:D stack:    0 pid: 2321 ppid:  1091 flags:0x00004002
+[  654.568030] Call Trace:
+[  654.571221]  <TASK>
+[  654.573790]  __schedule+0x2d6/0x960
+[  654.577733]  schedule+0x69/0xf0
+[  654.581214]  schedule_timeout+0x87/0x140
+[  654.585463]  ? __bpf_trace_tick_stop+0x20/0x20
+[  654.590291]  msleep+0x2d/0x40
+[  654.593625]  napi_disable+0x2b/0x80
+[  654.597437]  netvsc_device_remove+0x8a/0x1f0 [hv_netvsc]
+[  654.603935]  rndis_filter_device_remove+0x194/0x1c0 [hv_netvsc]
+[  654.611101]  ? do_wait_intr+0xb0/0xb0
+[  654.615753]  netvsc_remove+0x7c/0x120 [hv_netvsc]
+[  654.621675]  vmbus_remove+0x27/0x40 [hv_vmbus]
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: ac5047671758 ("hv_netvsc: Disable NAPI before closing the VMBus channel")
+Signed-off-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/1706686551-28510-1-git-send-email-schakrabarti@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/hyperv/netvsc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6001,7 +6001,9 @@ create_stream_for_sink(struct amdgpu_dm_
- 		if (recalculate_timing) {
- 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
- 			drm_mode_copy(&saved_mode, &mode);
-+			saved_mode.picture_aspect_ratio = mode.picture_aspect_ratio;
- 			drm_mode_copy(&mode, freesync_mode);
-+			mode.picture_aspect_ratio = saved_mode.picture_aspect_ratio;
- 		} else {
- 			decide_crtc_timing_for_drm_display_mode(
- 					&mode, preferred_mode, scale);
+--- a/drivers/net/hyperv/netvsc.c
++++ b/drivers/net/hyperv/netvsc.c
+@@ -740,7 +740,10 @@ void netvsc_device_remove(struct hv_devi
+ 	/* Disable NAPI and disassociate its context from the device. */
+ 	for (i = 0; i < net_device->num_chn; i++) {
+ 		/* See also vmbus_reset_channel_cb(). */
+-		napi_disable(&net_device->chan_table[i].napi);
++		/* only disable enabled NAPI channel */
++		if (i < ndev->real_num_rx_queues)
++			napi_disable(&net_device->chan_table[i].napi);
++
+ 		netif_napi_del(&net_device->chan_table[i].napi);
+ 	}
+ 
 
 
