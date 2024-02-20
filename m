@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252FD446C9;
-	Tue, 20 Feb 2024 21:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FEB446C9;
+	Tue, 20 Feb 2024 21:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464808; cv=none; b=QHD2IBTxLntORRyCklnRFBLfIfKcCM7IkQl8IZTwfeOJuDAkiWBJVDvA/z/lk495JSgCeld7MSb5QIqIqZOoXhnUZ02/H6dOAIiYVDhhDNQDG8FX+fq0mzitjksDvxvkMsT2OSybbEskjm3PKDXo6Bfk16V/R0yrhfRFXU6aWR8=
+	t=1708464811; cv=none; b=EMCxs6RWCcplJ9/AwrNpH8vQch/An/qDdDYvSj0/trObSas74jOvkNQqRLtvVEzK09WEPF59tzrhNCoiQC53qEOcxtBKcQaGxFGkimT9gNeIiko4syasM2sXD81aoZMw2IhE6jEmXUG81qgJkGXsw834hsZbkiJYVf2xdPV/M/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464808; c=relaxed/simple;
-	bh=qtQddbWrt94ZSeSRRzJhhOO8cnjd2UFPHnMp5YodOVQ=;
+	s=arc-20240116; t=1708464811; c=relaxed/simple;
+	bh=ci14LgtGFxmJAGwRxPjgDf/dA2wrLTG3IRo4LmJ1coI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qIOaUOZTrZ6kWGyZV88yZAZuWQo7bnl4IQjfSJ3YClrYCGR1D6Ew/XrpC0byO9OGVUG34Mq5Oghygto4JQgDCoTpSBntyzrjctbKvbH2XzdHpbsEYNDiNxTEz2JsgKij0c1tVYngGoZTo5n49tsp+qzh564SWNmYlMug2e2WjSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dr0Ya1Yr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MG2J1BEldZraPIsldVBDlHx3ZSkhsehzEWNI1OTfMnoQ2q0v8dCaVpOB+YKS2vswfT6pvrPPMO8UkgUil6SdVXmxYJURkkyuasUVUpjSF6ojP1lq6i2MlnHWhn61zCcHWX65HnGuR6ditb5WgcwZ5JEcSeMP6JfUG5OfkOvLgJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=de60NzGt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dr0Ya1Yr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A77C433F1;
-	Tue, 20 Feb 2024 21:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="de60NzGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B19C433F1;
+	Tue, 20 Feb 2024 21:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464808;
-	bh=qtQddbWrt94ZSeSRRzJhhOO8cnjd2UFPHnMp5YodOVQ=;
+	s=korg; t=1708464811;
+	bh=ci14LgtGFxmJAGwRxPjgDf/dA2wrLTG3IRo4LmJ1coI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dr0Ya1Yrov82UlEm15o5rlTB1g4kq97aA7WGw5Pus+vjhum62yrg7cyM16PYsgqFd
-	 q0DEARU7tMId9ljbtZ08IAZ+pfp+3d25xlIcmedSGnf7AZkFNFJt90nnsLWMYEG9id
-	 vRoZaAQK4z5jEX3WFQZhh5/72BUONWmciY+XSAOk=
+	b=de60NzGtdrnwBx2e65hDZ2s12a1slM4jixT5c8wmVXGzj76ga1jbPCpRYQH/98QmZ
+	 g5PU9FL1hswH204Eu5Ol6rBQHuySGzNGnxWyQZtH0sbLyp5ygPB/Kdo0PARgiqFBjZ
+	 /x5CG/mtzx93SpRiIXLVHO4roVRewgxb8Aekzn4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c53d4d3ddb327e80bc51@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	syzbot+6b7c68d9c21e4ee4251b@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.7 126/309] mptcp: really cope with fastopen race
-Date: Tue, 20 Feb 2024 21:54:45 +0100
-Message-ID: <20240220205637.103416125@linuxfoundation.org>
+Subject: [PATCH 6.7 144/309] nfc: nci: free rx_data_reassembly skb on NCI device cleanup
+Date: Tue, 20 Feb 2024 21:55:03 +0100
+Message-ID: <20240220205637.672845930@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -53,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 337cebbd850f94147cee05252778f8f78b8c337f upstream.
+commit bfb007aebe6bff451f7f3a4be19f4f286d0d5d9c upstream.
 
-Fastopen and PM-trigger subflow shutdown can race, as reported by
-syzkaller.
+rx_data_reassembly skb is stored during NCI data exchange for processing
+fragmented packets. It is dropped only when the last fragment is processed
+or when an NTF packet with NCI_OP_RF_DEACTIVATE_NTF opcode is received.
+However, the NCI device may be deallocated before that which leads to skb
+leak.
 
-In my first attempt to close such race, I missed the fact that
-the subflow status can change again before the subflow_state_change
-callback is invoked.
+As by design the rx_data_reassembly skb is bound to the NCI device and
+nothing prevents the device to be freed before the skb is processed in
+some way and cleaned, free it on the NCI device cleanup.
 
-Address the issue additionally copying with all the states directly
-reachable from TCP_FIN_WAIT1.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 1e777f39b4d7 ("mptcp: add MSG_FASTOPEN sendmsg flag support")
-Fixes: 4fd19a307016 ("mptcp: fix inconsistent state on fastopen race")
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+c53d4d3ddb327e80bc51@syzkaller.appspotmail.com
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/458
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reported-by: syzbot+6b7c68d9c21e4ee4251b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/000000000000f43987060043da7b@google.com/
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/nfc/nci/core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -1118,7 +1118,8 @@ static inline bool subflow_simultaneous_
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1208,6 +1208,10 @@ void nci_free_device(struct nci_dev *nde
  {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
- 
--	return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_FIN_WAIT1) &&
-+	return (1 << sk->sk_state) &
-+	       (TCPF_ESTABLISHED | TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 | TCPF_CLOSING) &&
- 	       is_active_ssk(subflow) &&
- 	       !subflow->conn_finished;
+ 	nfc_free_device(ndev->nfc_dev);
+ 	nci_hci_deallocate(ndev);
++
++	/* drop partial rx data packet if present */
++	if (ndev->rx_data_reassembly)
++		kfree_skb(ndev->rx_data_reassembly);
+ 	kfree(ndev);
  }
+ EXPORT_SYMBOL(nci_free_device);
 
 
