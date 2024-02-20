@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD711509BC;
-	Tue, 20 Feb 2024 21:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B031509AC;
+	Tue, 20 Feb 2024 21:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463634; cv=none; b=mODXzxfdcKsAkSf1nJnEU+9w/gXU3KKelKhWkTxqP2/LOqret/1n0yjwGR0FYgiwpBoPf36lyEcCjFlRhPRnnowEy604JaTtDtydEE2mvhQp4ocR9CFou6j3zoO6zELfak2p6f200HTqN5J76pxyvRx6CGl4mxhzbNooAUW4edM=
+	t=1708463637; cv=none; b=meAzGdH8Q6mtJgvU3HAQpe10cthXh/lN3HvbWTbZ1rw/+QrrCpoWPzZeF0pQtxmzcJv9hnKxoH9PLQ02YZOrpMo5QYStp5yRQ/o3QgnYMkbUK+ruEiLHXFQLQ9O4uRxGM18P2OrxCnlwXpZKnyLz1r76N8b3o2oCIMpjpxCTcg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463634; c=relaxed/simple;
-	bh=Wd/1WhjFpQtO3GsgCkYw207kQYhDGrbM7nOi8hiiMnQ=;
+	s=arc-20240116; t=1708463637; c=relaxed/simple;
+	bh=pHg+fo5y5ooLBlTxWCIVBaFNihGdfJvrTp9q2QWXLyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sSBuY4HE30zuF/zKW7kFE5bwA5lCrWJf73CDv7WLqPIDJVEvnwT7/+R69/rd5vwvtdGdxSqoJzMH0UtKjjikm+t00UVuztaCpzLVUMykkHXTAuNZljiajB1P4ReAl+RLFcR6H8XCsJGiQzk4vo2eyTNsFUuOtMhtl9cbb1uNeYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTbWZAx/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6+7Q0Igm/QbumN7HcmAjVuLk6fHkmGeTCamLzax6yfo48Pc+aPTCnZu9yqBDrRJCBiQ4nIAG0gDRO3bvBie5N1dJdlpLtqiHxhxUxhNDB7esgTGTg0r3YSEB3+994NIU1vZUu5a/j8Lv+BQf8peVDOzcCK03c7ZE1wYlcaKgVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CB4HAr4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTbWZAx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1624C433F1;
-	Tue, 20 Feb 2024 21:13:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CB4HAr4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91E3C433C7;
+	Tue, 20 Feb 2024 21:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463634;
-	bh=Wd/1WhjFpQtO3GsgCkYw207kQYhDGrbM7nOi8hiiMnQ=;
+	s=korg; t=1708463637;
+	bh=pHg+fo5y5ooLBlTxWCIVBaFNihGdfJvrTp9q2QWXLyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTbWZAx/cuAYeDjqlqh/Qk25njuUsrURLEYUIlGiYYEFwBr+PKAA5hTFXcq48WZVz
-	 Wpa2A1KgXlEz4F0p6T5wW4hYILrRrkm/yty5ZKuDFKxms1WTOQ3wVTQ8iGJwRvw/Gh
-	 1yO10o1G1ymaznwjt5RVUfAmWHPiokhDH224v3FQ=
+	b=1CB4HAr4k3m8HTQ5Tqvx8KzDonkw9V7POt+KxpDwkoeccArCZr7ak/J90Q6ZHku2T
+	 6/mrVxHXEcbehAiqt9qDq4zjKJCZv46I4NnH/QNAzU4yxy6JcIT/neEOUf5u5iftAn
+	 hx/JNWDKPNST3vR8wBTdNsiLEfeALXY8u8qP/vWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/331] kallsyms: ignore ARMv4 thunks along with others
-Date: Tue, 20 Feb 2024 21:53:40 +0100
-Message-ID: <20240220205640.860230015@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 105/331] mptcp: fix data re-injection from stale subflow
+Date: Tue, 20 Feb 2024 21:53:41 +0100
+Message-ID: <20240220205640.889553922@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,58 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit a951884d82886d8453d489f84f20ac168d062b38 ]
+commit b6c620dc43ccb4e802894e54b651cf81495e9598 upstream.
 
-lld is now able to build ARMv4 and ARMv4T kernels, which means it can
-generate thunks for those (__ARMv4PILongThunk_*, __ARMv4PILongBXThunk_*)
-that can interfere with kallsyms table generation since they do not get
-ignore like the corresponding ARMv5+ ones are:
+When the MPTCP PM detects that a subflow is stale, all the packet
+scheduler must re-inject all the mptcp-level unacked data. To avoid
+acquiring unneeded locks, it first try to check if any unacked data
+is present at all in the RTX queue, but such check is currently
+broken, as it uses TCP-specific helper on an MPTCP socket.
 
-Inconsistent kallsyms data
-Try "make KALLSYMS_EXTRA_PASS=1" as a workaround
+Funnily enough fuzzers and static checkers are happy, as the accessed
+memory still belongs to the mptcp_sock struct, and even from a
+functional perspective the recovery completed successfully, as
+the short-cut test always failed.
 
-Replace the hardcoded list of thunk symbols with a more general regex that
-covers this one along with future symbols that follow the same pattern.
+A recent unrelated TCP change - commit d5fed5addb2b ("tcp: reorganize
+tcp_sock fast path variables") - exposed the issue, as the tcp field
+reorganization makes the mptcp code always skip the re-inection.
 
-Fixes: 5eb6e280432d ("ARM: 9289/1: Allow pre-ARMv5 builds with ld.lld 16.0.0 and newer")
-Fixes: efe6e3068067 ("kallsyms: fix nonconverging kallsyms table with lld")
-Suggested-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix the issue dropping the bogus call: we are on a slow path, the early
+optimization proved once again to be evil.
+
+Fixes: 1e1d9d6f119c ("mptcp: handle pending data on closed subflow")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/468
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-1-4c1c11e571ff@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/mksysmap | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ net/mptcp/protocol.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/scripts/mksysmap b/scripts/mksysmap
-index 9ba1c9da0a40..57ff5656d566 100755
---- a/scripts/mksysmap
-+++ b/scripts/mksysmap
-@@ -48,17 +48,8 @@ ${NM} -n ${1} | sed >${2} -e "
- / __kvm_nvhe_\\$/d
- / __kvm_nvhe_\.L/d
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2318,9 +2318,6 @@ bool __mptcp_retransmit_pending_data(str
+ 	if (__mptcp_check_fallback(msk))
+ 		return false;
  
--# arm64 lld
--/ __AArch64ADRPThunk_/d
+-	if (tcp_rtx_and_write_queues_empty(sk))
+-		return false;
 -
--# arm lld
--/ __ARMV5PILongThunk_/d
--/ __ARMV7PILongThunk_/d
--/ __ThumbV7PILongThunk_/d
--
--# mips lld
--/ __LA25Thunk_/d
--/ __microLA25Thunk_/d
-+# lld arm/aarch64/mips thunks
-+/ __[[:alnum:]]*Thunk_/d
- 
- # CFI type identifiers
- / __kcfi_typeid_/d
--- 
-2.43.0
-
+ 	/* the closing socket has some data untransmitted and/or unacked:
+ 	 * some data in the mptcp rtx queue has not really xmitted yet.
+ 	 * keep it simple and re-inject the whole mptcp level rtx queue
 
 
