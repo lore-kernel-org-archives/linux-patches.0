@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D130014A4D2;
-	Tue, 20 Feb 2024 21:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BB8151CCC;
+	Tue, 20 Feb 2024 21:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464671; cv=none; b=SLRRzh5Ia3mny+6DADQCdNzJKNT988F4OO5/3hxGUdqC35hl/hAgT7cUOXdRfCKVDctKuJon3fSc7ZETlXGtoy7rjB5bddH/DhTpV6R+htuwLBGZjXHK70pS2Y5VHvtfINsDDn0BMerBjUzq4UwlnT/8aOfHWwo/df41pOBuRJ4=
+	t=1708464675; cv=none; b=QG0X0sXMzdHXwfO+nf6cYlZ0g2jQUTqwU11yqPYbymc9VGudW2FEbXT3Jqg/NH/nPbupGGc21biG8CLpZafnAgcn1OtoaAHYERB8R0Nxd/Xm2wDwctCfjor2MhRFjJHOHqHVX+vBjFQoegrBkrGEwtOjt0FI7Wbx26KhFi/tjhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464671; c=relaxed/simple;
-	bh=szW7cMHZrNebYsmUQ1FKdlOXf88QYo5FovpnF/ljHY0=;
+	s=arc-20240116; t=1708464675; c=relaxed/simple;
+	bh=SCVOiDjlGRWw/vDT1PUBki3b059dJWxIhLx+cvQ4JQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iom3Bda4TfN03T2UcZFtrsyhLlBt8N17ZGpMI2jkbEBq5mgs7ZED+0YSRW4WmC+ajAcSzhgUd9I6ayVqtedmy63Z4HiWMcfjm+ri3xVLn7YLd9D49WQvQd/LYCVzzlDeCtFlJGzGcKActGEaItoy/g9cQXGRR/VTquo+Ii7fdTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRCER3NL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxn1uHwm8vxhaLJY1+c+6CbA5jHeoqh3E9xOGlb4lW4EkFXVvKqEXmwWOqucd96Rj2fSQBn8GxErt6/mJ+bE0CY/BA9qggJHKX8fZ64wqZcPO0GUgFi7WH67hwW54x9g3U1V34/WfIb9ZPGQUkCM+GPpG3cKHpQ2Y9qHGJRt/ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYHah9NQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRCER3NL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E38AC433F1;
-	Tue, 20 Feb 2024 21:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYHah9NQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69275C433F1;
+	Tue, 20 Feb 2024 21:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464671;
-	bh=szW7cMHZrNebYsmUQ1FKdlOXf88QYo5FovpnF/ljHY0=;
+	s=korg; t=1708464674;
+	bh=SCVOiDjlGRWw/vDT1PUBki3b059dJWxIhLx+cvQ4JQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRCER3NLE2yev8HFBtueGeQOmreCV56QDtPy3Ba2oslfP4R/z9z91MUEqTBtEF9f4
-	 KF5JW/9cfjQQiNRgiy6mTFANgiUJO/3yRuNb9rztBRvdPsP69sdGPApcA981Njcwap
-	 WOo2OJnopaHjqP9H9FzZYzPgTuZMbUxwYlUBVmxI=
+	b=xYHah9NQINBjWaLKvUOwCK6bo/ISeqsRMe9YM55ChWLEbJYgXC14THuyh+pt2jxmS
+	 KwdMbmpMTa8ANuT9SWCwt1YguoZgK99YbqbIo2Ew9FGCO/IdcMgFcoEBD6Btpgn+/J
+	 skMZ9NVDZOZofExDzfBees73jFRDFWwqS1iECrDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 059/309] ptrace: Introduce exception_ip arch hook
-Date: Tue, 20 Feb 2024 21:53:38 +0100
-Message-ID: <20240220205635.069190996@linuxfoundation.org>
+	Udipto Goswami <quic_ugoswami@quicinc.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.7 093/309] usb: core: Prevent null pointer dereference in update_port_device_state
+Date: Tue, 20 Feb 2024 21:54:12 +0100
+Message-ID: <20240220205636.108467219@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,83 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Udipto Goswami <quic_ugoswami@quicinc.com>
 
-[ Upstream commit 11ba1728be3edb6928791f4c622f154ebe228ae6 ]
+commit 12783c0b9e2c7915a50d5ec829630ff2da50472c upstream.
 
-On architectures with delay slot, architecture level instruction
-pointer (or program counter) in pt_regs may differ from where
-exception was triggered.
+Currently, the function update_port_device_state gets the usb_hub from
+udev->parent by calling usb_hub_to_struct_hub.
+However, in case the actconfig or the maxchild is 0, the usb_hub would
+be NULL and upon further accessing to get port_dev would result in null
+pointer dereference.
 
-Introduce exception_ip hook to invoke architecture code and determine
-actual instruction pointer to the exception.
+Fix this by introducing an if check after the usb_hub is populated.
 
-Link: https://lore.kernel.org/lkml/00d1b813-c55f-4365-8d81-d70258e10b16@app.fastmail.com/
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Stable-dep-of: 8fa507083388 ("mm/memory: Use exception ip to search exception tables")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 83cb2604f641 ("usb: core: add sysfs entry for usb device state")
+Cc: stable@vger.kernel.org
+Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20240110095814.7626-1-quic_ugoswami@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/ptrace.h | 2 ++
- arch/mips/kernel/ptrace.c      | 7 +++++++
- include/linux/ptrace.h         | 4 ++++
- 3 files changed, 13 insertions(+)
+ drivers/usb/core/hub.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
-index daf3cf244ea9..701a233583c2 100644
---- a/arch/mips/include/asm/ptrace.h
-+++ b/arch/mips/include/asm/ptrace.h
-@@ -154,6 +154,8 @@ static inline long regs_return_value(struct pt_regs *regs)
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2047,9 +2047,19 @@ static void update_port_device_state(str
+ 
+ 	if (udev->parent) {
+ 		hub = usb_hub_to_struct_hub(udev->parent);
+-		port_dev = hub->ports[udev->portnum - 1];
+-		WRITE_ONCE(port_dev->state, udev->state);
+-		sysfs_notify_dirent(port_dev->state_kn);
++
++		/*
++		 * The Link Layer Validation System Driver (lvstest)
++		 * has a test step to unbind the hub before running the
++		 * rest of the procedure. This triggers hub_disconnect
++		 * which will set the hub's maxchild to 0, further
++		 * resulting in usb_hub_to_struct_hub returning NULL.
++		 */
++		if (hub) {
++			port_dev = hub->ports[udev->portnum - 1];
++			WRITE_ONCE(port_dev->state, udev->state);
++			sysfs_notify_dirent(port_dev->state_kn);
++		}
+ 	}
  }
  
- #define instruction_pointer(regs) ((regs)->cp0_epc)
-+extern unsigned long exception_ip(struct pt_regs *regs);
-+#define exception_ip(regs) exception_ip(regs)
- #define profile_pc(regs) instruction_pointer(regs)
- 
- extern asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall);
-diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
-index d9df543f7e2c..59288c13b581 100644
---- a/arch/mips/kernel/ptrace.c
-+++ b/arch/mips/kernel/ptrace.c
-@@ -31,6 +31,7 @@
- #include <linux/seccomp.h>
- #include <linux/ftrace.h>
- 
-+#include <asm/branch.h>
- #include <asm/byteorder.h>
- #include <asm/cpu.h>
- #include <asm/cpu-info.h>
-@@ -48,6 +49,12 @@
- #define CREATE_TRACE_POINTS
- #include <trace/events/syscalls.h>
- 
-+unsigned long exception_ip(struct pt_regs *regs)
-+{
-+	return exception_epc(regs);
-+}
-+EXPORT_SYMBOL(exception_ip);
-+
- /*
-  * Called by kernel/ptrace.c when detaching..
-  *
-diff --git a/include/linux/ptrace.h b/include/linux/ptrace.h
-index eaaef3ffec22..90507d4afcd6 100644
---- a/include/linux/ptrace.h
-+++ b/include/linux/ptrace.h
-@@ -393,6 +393,10 @@ static inline void user_single_step_report(struct pt_regs *regs)
- #define current_user_stack_pointer() user_stack_pointer(current_pt_regs())
- #endif
- 
-+#ifndef exception_ip
-+#define exception_ip(x) instruction_pointer(x)
-+#endif
-+
- extern int task_current_syscall(struct task_struct *target, struct syscall_info *info);
- 
- extern void sigaction_compat_abi(struct k_sigaction *act, struct k_sigaction *oact);
--- 
-2.43.0
-
 
 
