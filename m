@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20AC14F9C8;
-	Tue, 20 Feb 2024 21:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD00314F9C8;
+	Tue, 20 Feb 2024 21:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462991; cv=none; b=gguSxro+IxtcbyAA+1qeYF7BBOhgBfGjkjQEv/HbIHao9TihqgroWHqF1WG5xHgi37QR28oXsn7VAW/1fi8AxOS224iEDWJWWCHr9c0g6ZtQU0wf2N2x7IA7F1w8KXtI3JVkWmDfw58Z6ppKKfCA7EFlzFEy2XU1c9sfvCJhbrY=
+	t=1708462994; cv=none; b=cD8fWrGvlRkLz/w0mu2sko5u9WlLyytxAQ3CCciSYi3HwPugktON1XvDqt9owIUTOCw3K8rwpfBdWcHWffZH0My774bG/5Dew+PYLsQ2UJIyqM6DA7d535TTHBfTe6fIv+rWLgB2vjakyaLN13ORfjJsOBHllFAFPBmKsOL9/+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462991; c=relaxed/simple;
-	bh=6DshoUcMWnTOOG96+c6rk7GLGNfKgVlIWHXkg2vHR48=;
+	s=arc-20240116; t=1708462994; c=relaxed/simple;
+	bh=lMYqUAU0H8s5Upai86W7/h4o1qfUzQMIpoQiFBArtV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IyJYzSy3RwbB2yrTv6s+yvCKPb2+BgD2d7sxT9++TIIWtGUtw6hXWWzgPzKADTYNAKK2yN6pdw2UQ9MrBRsGkaCa34nQCisTOFXmbWIIcmEK9/rnKzlqonowCmAEaLFOiUNvPbsgzVSPl09ALoB5ZbZ5EHvQLJl5ma8ciIPxI9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaTUbRFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cPwrydyh99/ZuWKubBifyicJLrizoltnMzoRyglPB1RYPt/LX2QhZibKyJV7h8UfS09hQzG1DFyV4cpH3HOKIpnQBFVa5cS5ZWx+2V/6Cul0x1YQOfoGcWY2qaBt1xyO6UVryJGDwbDpAW43hVSTCCDX5QvvP7E+ikWnYaVr6rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwZKzgyz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaTUbRFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C295C433F1;
-	Tue, 20 Feb 2024 21:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwZKzgyz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FB4C433F1;
+	Tue, 20 Feb 2024 21:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462990;
-	bh=6DshoUcMWnTOOG96+c6rk7GLGNfKgVlIWHXkg2vHR48=;
+	s=korg; t=1708462993;
+	bh=lMYqUAU0H8s5Upai86W7/h4o1qfUzQMIpoQiFBArtV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaTUbRFfMp0ETaf6u6EPZ5xj/ys2L+50x7WKR6IFGML84MM20gsr3TccBnC+C0LqI
-	 mbGoymnOeOFTYe6cZ0KyGLYa7hNuP4pBnSyMQE9hq8vT2EsO2ESAVk2EiQasZjEQg7
-	 yqoxi8ig66wCYO7paol0g7ITEq2l2Y1Te7Y7ldWk=
+	b=lwZKzgyzHN5lD692JeS2o4qEixN8YEQTBFLfRrU3f0ZL650gEVt/75TXrxtVVBmAy
+	 bABlxaxkRlIN1l89dIA4WU/967EVyMboDONJb+KZx52qQGVdhmMKiH61fXNflLZxHI
+	 VNbr6DxVH4WVSdk/KaBKAnjOYq3Q2s3Ul9Dza5F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 099/197] ext4: avoid bb_free and bb_fragments inconsistency in mb_free_blocks()
-Date: Tue, 20 Feb 2024 21:50:58 +0100
-Message-ID: <20240220204844.046968316@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 072/197] mptcp: drop the push_pending field
+Date: Tue, 20 Feb 2024 21:50:31 +0100
+Message-ID: <20240220204843.235269672@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,101 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 2331fd4a49864e1571b4f50aa3aa1536ed6220d0 upstream.
+commit bdd70eb68913c960acb895b00a8c62eb64715b1f upstream.
 
-After updating bb_free in mb_free_blocks, it is possible to return without
-updating bb_fragments because the block being freed is found to have
-already been freed, which leads to inconsistency between bb_free and
-bb_fragments.
+Such field is there to avoid acquiring the data lock in a few spots,
+but it adds complexity to the already non trivial locking schema.
 
-Since the group may be unlocked in ext4_grp_locked_error(), this can lead
-to problems such as dividing by zero when calculating the average fragment
-length. Hence move the update of bb_free to after the block double-free
-check guarantees that the corresponding statistics are updated only after
-the core block bitmap is modified.
+All the relevant call sites (mptcp-level re-injection, set socket
+options), are slow-path, drop such field in favor of 'cb_flags', adding
+the relevant locking.
 
-Fixes: eabe0444df90 ("ext4: speed-up releasing blocks on commit")
-CC:  <stable@vger.kernel.org> # 3.10
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-5-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This patch could be seen as an improvement, instead of a fix. But it
+simplifies the next patch. The 'Fixes' tag has been added to help having
+this series backported to stable.
+
+Fixes: e9d09baca676 ("mptcp: avoid atomic bit manipulation when possible")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ net/mptcp/protocol.c |   12 ++++++------
+ net/mptcp/protocol.h |    1 -
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1785,11 +1785,6 @@ static void mb_free_blocks(struct inode
- 	mb_check_buddy(e4b);
- 	mb_free_blocks_double(inode, e4b, first, count);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1582,8 +1582,11 @@ static void mptcp_update_post_push(struc
  
--	this_cpu_inc(discard_pa_seq);
--	e4b->bd_info->bb_free += count;
--	if (first < e4b->bd_info->bb_first_free)
--		e4b->bd_info->bb_first_free = first;
--
- 	/* access memory sequentially: check left neighbour,
- 	 * clear range and then check right neighbour
- 	 */
-@@ -1803,23 +1798,31 @@ static void mb_free_blocks(struct inode
- 		struct ext4_sb_info *sbi = EXT4_SB(sb);
- 		ext4_fsblk_t blocknr;
- 
-+		/*
-+		 * Fastcommit replay can free already freed blocks which
-+		 * corrupts allocation info. Regenerate it.
-+		 */
-+		if (sbi->s_mount_state & EXT4_FC_REPLAY) {
-+			mb_regenerate_buddy(e4b);
-+			goto check;
-+		}
-+
- 		blocknr = ext4_group_first_block_no(sb, e4b->bd_group);
- 		blocknr += EXT4_C2B(sbi, block);
--		if (!(sbi->s_mount_state & EXT4_FC_REPLAY)) {
--			ext4_grp_locked_error(sb, e4b->bd_group,
--					      inode ? inode->i_ino : 0,
--					      blocknr,
--					      "freeing already freed block (bit %u); block bitmap corrupt.",
--					      block);
--			ext4_mark_group_bitmap_corrupted(
--				sb, e4b->bd_group,
-+		ext4_grp_locked_error(sb, e4b->bd_group,
-+				      inode ? inode->i_ino : 0, blocknr,
-+				      "freeing already freed block (bit %u); block bitmap corrupt.",
-+				      block);
-+		ext4_mark_group_bitmap_corrupted(sb, e4b->bd_group,
- 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
--		} else {
--			mb_regenerate_buddy(e4b);
--		}
--		goto done;
-+		return;
- 	}
- 
-+	this_cpu_inc(discard_pa_seq);
-+	e4b->bd_info->bb_free += count;
-+	if (first < e4b->bd_info->bb_first_free)
-+		e4b->bd_info->bb_first_free = first;
-+
- 	/* let's maintain fragments counter */
- 	if (left_is_free && right_is_free)
- 		e4b->bd_info->bb_fragments--;
-@@ -1844,9 +1847,9 @@ static void mb_free_blocks(struct inode
- 	if (first <= last)
- 		mb_buddy_mark_free(e4b, first >> 1, last >> 1);
- 
--done:
- 	mb_set_largest_free_order(sb, e4b->bd_info);
- 	mb_update_avg_fragment_size(sb, e4b->bd_info);
-+check:
- 	mb_check_buddy(e4b);
+ void mptcp_check_and_set_pending(struct sock *sk)
+ {
+-	if (mptcp_send_head(sk))
+-		mptcp_sk(sk)->push_pending |= BIT(MPTCP_PUSH_PENDING);
++	if (mptcp_send_head(sk)) {
++		mptcp_data_lock(sk);
++		mptcp_sk(sk)->cb_flags |= BIT(MPTCP_PUSH_PENDING);
++		mptcp_data_unlock(sk);
++	}
  }
  
+ void __mptcp_push_pending(struct sock *sk, unsigned int flags)
+@@ -3140,7 +3143,6 @@ static int mptcp_disconnect(struct sock
+ 	msk->last_snd = NULL;
+ 	WRITE_ONCE(msk->flags, 0);
+ 	msk->cb_flags = 0;
+-	msk->push_pending = 0;
+ 	msk->recovery = false;
+ 	msk->can_ack = false;
+ 	msk->fully_established = false;
+@@ -3384,8 +3386,7 @@ static void mptcp_release_cb(struct sock
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+ 	for (;;) {
+-		unsigned long flags = (msk->cb_flags & MPTCP_FLAGS_PROCESS_CTX_NEED) |
+-				      msk->push_pending;
++		unsigned long flags = (msk->cb_flags & MPTCP_FLAGS_PROCESS_CTX_NEED);
+ 		struct list_head join_list;
+ 
+ 		if (!flags)
+@@ -3401,7 +3402,6 @@ static void mptcp_release_cb(struct sock
+ 		 *    datapath acquires the msk socket spinlock while helding
+ 		 *    the subflow socket lock
+ 		 */
+-		msk->push_pending = 0;
+ 		msk->cb_flags &= ~flags;
+ 		spin_unlock_bh(&sk->sk_lock.slock);
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -272,7 +272,6 @@ struct mptcp_sock {
+ 	int		rmem_released;
+ 	unsigned long	flags;
+ 	unsigned long	cb_flags;
+-	unsigned long	push_pending;
+ 	bool		recovery;		/* closing subflow write queue reinjected */
+ 	bool		can_ack;
+ 	bool		fully_established;
 
 
