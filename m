@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3704C1509AE;
-	Tue, 20 Feb 2024 20:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2328E151CD8;
+	Tue, 20 Feb 2024 20:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462788; cv=none; b=CZOtc+mrikRVSqNrxm8jICwd3EmdOhE4+LD7IC5FMKA2On3T7pwPpf/12QsuW70Cr7pOnB5qS55vYvAQFR9iTpM7c7MQb8K809vy4rlqU0hyw3vY97IrQ5imhYepjEXDStrqW9Uo5K33P4i6kSYnu3LRPaDk76UPvj1UkVW7cV0=
+	t=1708462791; cv=none; b=kRGegKqm9/gmg8aUOLrtT1ag4wtkJhf8p3OcumxLogfRnvBq1bAbUigUMLbepmZio3G0n0CYmvGSKBGDLjXSCsVIApgIm8B4k4NUId5BYkvIa2n94mVL5IygClrgdjisL+swM0pVgKt511cp59sc9OeHG9occn0fEJyeY8YvxHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462788; c=relaxed/simple;
-	bh=VkVROCqU1nfvBO+vdJGsqcQBmKGLg8Pi8uiXEZt2npU=;
+	s=arc-20240116; t=1708462791; c=relaxed/simple;
+	bh=1+MV5JjB6yy6dOmB3joPeMZDf0EwjsABW1w15z57zHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4FtpCamId8HFDJtNGzHsJOBgda7LzZbKxyXoOU+GHEF/dr6ivDmQKSB+7/2pSOMqo/8ZhDq/ePjUh9Ia36pqvPpfP7LVT2wHQsklOWmdKLyVjhqH0aTYdGYi7uKbrayan96tjt67LBINT+xUK7oPD3M7knymf1ntokwXGXWY8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1369Poi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYTkQ4oiGurtPkFcD9ug2QpDhKIgEVWoJBGXSS7DmSsc1kkrXg1nmc/K+4ps1tTicDzeN6xLhmhgi5tIiBALOv4chvzSnlKtyDFwq7KVdmhJJkSa2l5NWDWzCEV/t2IAZRPmdUYae9etmb2NlrKi1CqWjthJzQcHDUPg8DgFnvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDq9kV6q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1369Poi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E88C433F1;
-	Tue, 20 Feb 2024 20:59:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDq9kV6q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AAFC433C7;
+	Tue, 20 Feb 2024 20:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462787;
-	bh=VkVROCqU1nfvBO+vdJGsqcQBmKGLg8Pi8uiXEZt2npU=;
+	s=korg; t=1708462791;
+	bh=1+MV5JjB6yy6dOmB3joPeMZDf0EwjsABW1w15z57zHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1369PoimEV7fDy6W0Swj0fHiIaTVyBQdJYPGk6HoA+2ampXrM5N/5BwFom2IS9bX
-	 zPNyexhvrsB0cXD/pwhMOiVjYj3I0PgWnkQEivPC+6qIUj0stqRVWwZVdsD7+Uf5mr
-	 PuwH9QNBikQTAfAAANALamuH+HSPR7FnzcW4bz+s=
+	b=JDq9kV6qN9fbBcj6jH7/rdWnYmLItqNicTnMJQzKF3axoHwuMCNTAZN1ZaGiDAjZM
+	 fk4+vRkUcb0CdreeBM5ipEMMoWqaNJcVQDap+7UAnWPH6A4rgfikVb+554K4HUypTP
+	 vEhKGvhXIrDziXhYQJCB8Ql81JSNEP0cUcoB/7Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 035/197] tracing/trigger: Fix to return error if failed to alloc snapshot
-Date: Tue, 20 Feb 2024 21:49:54 +0100
-Message-ID: <20240220204842.129892253@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 008/197] btrfs: send: return EOPNOTSUPP on unknown flags
+Date: Tue, 20 Feb 2024 21:49:27 +0100
+Message-ID: <20240220204841.329982920@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,40 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: David Sterba <dsterba@suse.com>
 
-commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
+commit f884a9f9e59206a2d41f265e7e403f080d10b493 upstream.
 
-Fix register_snapshot_trigger() to return error code if it failed to
-allocate a snapshot instead of 0 (success). Unless that, it will register
-snapshot trigger without an error.
+When some ioctl flags are checked we return EOPNOTSUPP, like for
+BTRFS_SCRUB_SUPPORTED_FLAGS, BTRFS_SUBVOL_CREATE_ARGS_MASK or fallocate
+modes. The EINVAL is supposed to be for a supported but invalid
+values or combination of options. Fix that when checking send flags so
+it's consistent with the rest.
 
-Link: https://lore.kernel.org/linux-trace-kernel/170622977792.270660.2789298642759362200.stgit@devnote2
-
-Fixes: 0bbe7f719985 ("tracing: Fix the race between registering 'snapshot' event trigger and triggering 'snapshot' operation")
-Cc: stable@vger.kernel.org
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+CC: stable@vger.kernel.org # 4.14+
+Link: https://lore.kernel.org/linux-btrfs/CAL3q7H5rryOLzp3EKq8RTbjMHMHeaJubfpsVLF6H4qJnKCUR1w@mail.gmail.com/
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_trigger.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/btrfs/send.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -1455,8 +1455,10 @@ register_snapshot_trigger(char *glob,
- 			  struct event_trigger_data *data,
- 			  struct trace_event_file *file)
- {
--	if (tracing_alloc_snapshot_instance(file->tr) != 0)
--		return 0;
-+	int ret = tracing_alloc_snapshot_instance(file->tr);
-+
-+	if (ret < 0)
-+		return ret;
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -7852,7 +7852,7 @@ long btrfs_ioctl_send(struct inode *inod
+ 	}
  
- 	return register_trigger(glob, data, file);
- }
+ 	if (arg->flags & ~BTRFS_SEND_FLAG_MASK) {
+-		ret = -EINVAL;
++		ret = -EOPNOTSUPP;
+ 		goto out;
+ 	}
+ 
 
 
