@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ECA151CE1;
-	Tue, 20 Feb 2024 21:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748D6151CD6;
+	Tue, 20 Feb 2024 21:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464519; cv=none; b=pBFWmgnk+NVt181QykUTjo8ZdhHZN9CPx3czusuosHWhlBXOgQw3uSLxcSXNBZCJ6WxbO6PzzlfSI9GMLsxNIdC7plG/vfnd0SPtZuHaum/AmDtejW44WaU8FcVV6GWu+jgtzCIkgMT/+TW4/Y1csRUGxboNkqO6b71voO3OtV8=
+	t=1708464522; cv=none; b=CRCEyeObmCgALB1Di35xFdlygjE2ev1mwworcTkUsbkgI5hI9zbstNGi7fLur2J2YPP+TlZGejoMwHg47z49TiOjQQuKCVhDNoE8N2eZhpm5BsPe38xSrNLelZ16jgkpSA7kXLVQcV64K61Mr0yWEtU2Ce1ynUosQvLGOHzXCos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464519; c=relaxed/simple;
-	bh=jbLuwnkkQX2+3Po7WlUCDtomTvV1xGmQWASflhqmoDw=;
+	s=arc-20240116; t=1708464522; c=relaxed/simple;
+	bh=1maPodn/n0Yb56l/tPG4Y9FBwOozcUKSZpX+QPN3/6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNJX2rt53ZDIjkua0k549gNhOQlPCVzztFKiopjBxJxtUVy4vSSz0KQb6N/Em7p7acLok93vtj59ZQ0RFWVsqBJWVzXYsK0w3yRpvcBJoawgozbzanxDImigaBDIIw12gWupla2S1Vo5LnvJtqS8ZM7SZ+rkQb8Ny3MkJid2zEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoVabUBI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0kjnT4DnTmPDZqfWJC1a0kj7MxXkj5XE2w+dOkP8mvyKnhbb5Dx4MEEyAy9ja1tR7j9JWGLpVqITF374O6YIDH8ivj2F4XzhWUdLfXUooaWQ0MvSUc2o39/C7TVPQr+u9XKxnnbhhFnOSgDMTkIqXiVeRWsPEAxi7yiZjAtGpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fv5fex0k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoVabUBI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BE0C433F1;
-	Tue, 20 Feb 2024 21:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fv5fex0k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D05C433C7;
+	Tue, 20 Feb 2024 21:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464519;
-	bh=jbLuwnkkQX2+3Po7WlUCDtomTvV1xGmQWASflhqmoDw=;
+	s=korg; t=1708464522;
+	bh=1maPodn/n0Yb56l/tPG4Y9FBwOozcUKSZpX+QPN3/6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CoVabUBIihN2kZGBhAw5sxoyDJe+RReON+LuSTEvxe5XC8TG7xYRA8yLNLIfiNFB+
-	 KsTXbJOad+tNhzh8qreBPfX/CChR9FwcjSKC4P9vO60mRg7aE2QLziaicMnz+rWNqC
-	 nTkZhPFrjtlIqAYROR3vRAEgYHypOGydv5+++SZM=
+	b=fv5fex0k6cwVhb1rkr5HWt6NTP7kKyxHqUHGWO+KEWRN6ZDRyd6xC8VBZK7m2A+2V
+	 8gtdh/pGfkATEOICxb/wlPwH2ecwiPc8YF8xr/f++++H3fvKXnD9CGjutBewP9tdw3
+	 rSA7/lq3oU/+u6lHT3QwY9UoKPsq56sl5zsU4FAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 050/309] net: tls: handle backlogging of crypto requests
-Date: Tue, 20 Feb 2024 21:53:29 +0100
-Message-ID: <20240220205634.758542829@linuxfoundation.org>
+Subject: [PATCH 6.7 051/309] net: tls: fix use-after-free with partial reads and async decrypt
+Date: Tue, 20 Feb 2024 21:53:30 +0100
+Message-ID: <20240220205634.790940817@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -53,91 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 8590541473188741055d27b955db0777569438e3 ]
+[ Upstream commit 32b55c5ff9103b8508c1e04bfa5a08c64e7a925f ]
 
-Since we're setting the CRYPTO_TFM_REQ_MAY_BACKLOG flag on our
-requests to the crypto API, crypto_aead_{encrypt,decrypt} can return
- -EBUSY instead of -EINPROGRESS in valid situations. For example, when
-the cryptd queue for AESNI is full (easy to trigger with an
-artificially low cryptd.cryptd_max_cpu_qlen), requests will be enqueued
-to the backlog but still processed. In that case, the async callback
-will also be called twice: first with err == -EINPROGRESS, which it
-seems we can just ignore, then with err == 0.
+tls_decrypt_sg doesn't take a reference on the pages from clear_skb,
+so the put_page() in tls_decrypt_done releases them, and we trigger
+a use-after-free in process_rx_list when we try to read from the
+partially-read skb.
 
-Compared to Sabrina's original patch this version uses the new
-tls_*crypt_async_wait() helpers and converts the EBUSY to
-EINPROGRESS to avoid having to modify all the error handling
-paths. The handling is identical.
-
-Fixes: a54667f6728c ("tls: Add support for encryption using async offload accelerator")
-Fixes: 94524d8fc965 ("net/tls: Add support for async decryption of tls records")
-Co-developed-by: Sabrina Dubroca <sd@queasysnail.net>
+Fixes: fd31f3996af2 ("tls: rx: decrypt into a fresh skb")
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/netdev/9681d1febfec295449a62300938ed2ae66983f28.1694018970.git.sd@queasysnail.net/
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ net/tls/tls_sw.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 9374a61cef00..63bef5666e36 100644
+index 63bef5666e36..a6eff21ade23 100644
 --- a/net/tls/tls_sw.c
 +++ b/net/tls/tls_sw.c
-@@ -196,6 +196,17 @@ static void tls_decrypt_done(void *data, int err)
- 	struct sock *sk;
- 	int aead_size;
+@@ -63,6 +63,7 @@ struct tls_decrypt_ctx {
+ 	u8 iv[TLS_MAX_IV_SIZE];
+ 	u8 aad[TLS_MAX_AAD_SIZE];
+ 	u8 tail;
++	bool free_sgout;
+ 	struct scatterlist sg[];
+ };
  
-+	/* If requests get too backlogged crypto API returns -EBUSY and calls
-+	 * ->complete(-EINPROGRESS) immediately followed by ->complete(0)
-+	 * to make waiting for backlog to flush with crypto_wait_req() easier.
-+	 * First wait converts -EBUSY -> -EINPROGRESS, and the second one
-+	 * -EINPROGRESS -> 0.
-+	 * We have a single struct crypto_async_request per direction, this
-+	 * scheme doesn't help us, so just ignore the first ->complete().
-+	 */
-+	if (err == -EINPROGRESS)
-+		return;
-+
- 	aead_size = sizeof(*aead_req) + crypto_aead_reqsize(aead);
- 	aead_size = ALIGN(aead_size, __alignof__(*dctx));
- 	dctx = (void *)((u8 *)aead_req + aead_size);
-@@ -269,6 +280,10 @@ static int tls_do_decryption(struct sock *sk,
+@@ -187,7 +188,6 @@ static void tls_decrypt_done(void *data, int err)
+ 	struct aead_request *aead_req = data;
+ 	struct crypto_aead *aead = crypto_aead_reqtfm(aead_req);
+ 	struct scatterlist *sgout = aead_req->dst;
+-	struct scatterlist *sgin = aead_req->src;
+ 	struct tls_sw_context_rx *ctx;
+ 	struct tls_decrypt_ctx *dctx;
+ 	struct tls_context *tls_ctx;
+@@ -224,7 +224,7 @@ static void tls_decrypt_done(void *data, int err)
  	}
  
- 	ret = crypto_aead_decrypt(aead_req);
-+	if (ret == -EBUSY) {
-+		ret = tls_decrypt_async_wait(ctx);
-+		ret = ret ?: -EINPROGRESS;
-+	}
- 	if (ret == -EINPROGRESS) {
- 		if (darg->async)
- 			return 0;
-@@ -449,6 +464,9 @@ static void tls_encrypt_done(void *data, int err)
- 	struct sk_msg *msg_en;
- 	struct sock *sk;
+ 	/* Free the destination pages if skb was not decrypted inplace */
+-	if (sgout != sgin) {
++	if (dctx->free_sgout) {
+ 		/* Skip the first S/G entry as it points to AAD */
+ 		for_each_sg(sg_next(sgout), sg, UINT_MAX, pages) {
+ 			if (!sg)
+@@ -1583,6 +1583,7 @@ static int tls_decrypt_sg(struct sock *sk, struct iov_iter *out_iov,
+ 	} else if (out_sg) {
+ 		memcpy(sgout, out_sg, n_sgout * sizeof(*sgout));
+ 	}
++	dctx->free_sgout = !!pages;
  
-+	if (err == -EINPROGRESS) /* see the comment in tls_decrypt_done() */
-+		return;
-+
- 	msg_en = &rec->msg_encrypted;
- 
- 	sk = rec->sk;
-@@ -553,6 +571,10 @@ static int tls_do_encryption(struct sock *sk,
- 	atomic_inc(&ctx->encrypt_pending);
- 
- 	rc = crypto_aead_encrypt(aead_req);
-+	if (rc == -EBUSY) {
-+		rc = tls_encrypt_async_wait(ctx);
-+		rc = rc ?: -EINPROGRESS;
-+	}
- 	if (!rc || rc != -EINPROGRESS) {
- 		atomic_dec(&ctx->encrypt_pending);
- 		sge->offset -= prot->prepend_size;
+ 	/* Prepare and submit AEAD request */
+ 	err = tls_do_decryption(sk, sgin, sgout, dctx->iv,
 -- 
 2.43.0
 
