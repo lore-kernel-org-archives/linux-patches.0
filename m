@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEB514F9CE;
-	Tue, 20 Feb 2024 21:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF6414A4E6;
+	Tue, 20 Feb 2024 21:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464323; cv=none; b=JR+rP2+wkMj+VnAefUPzmwUcGzwUgqX2naotHT8ildbFaR1EXsWadvs9njEQh1o7SxvYyp+PL33sc/OvsIYtTJLQxu7hnJUg39bpySjc/XmFZ/x2MKA1JRbThbALOP0BdZ886UbT9tmzmfQ65IEP3/j19BFi3O/WES+LmWFS0xQ=
+	t=1708464327; cv=none; b=pizJfXNSGqcoDj/cKmjR8oySsNi8a89p4eydG7NO8SCrmhA1PeJa2jJ4ln5b4+tR1zyTIUE0IR95aIc5ly5x3+ltpVFTIEdbS7mafK/nP8S/S3YVAHnRH6UuDJe41PGcHY20Ewd3b9B/GsEG3Op7v/LWArzirh8C5TZlkQAeI9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464323; c=relaxed/simple;
-	bh=u2+NXNRVbQoGk57FtB085oAE22bAo+A635ag+NJ4HB8=;
+	s=arc-20240116; t=1708464327; c=relaxed/simple;
+	bh=qtj4be/Xp8sIvHyEONNYgOHaTQvTnbvPAz0AEbLopkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oAFWXpPUQDv0975MFr2fmzpNzb18ikpUdoJBAajJT7/nV5IVY7MAnSXCU2cxsWN1Yzc4OCGcbjYvvhimKyV4qftQfCFzwp5iOrOD+N9oGoM1Tl3Et8oAEQupZkxorx7UfvombJJw8b6QaGnvQ/7egLu55JgeP+TTaEs9+sqaM58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wD4YqUXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s0cMqoyrMLXamc8qmBSi0jozNvgNVXMYdMnNd6Bh8pIeFO+QFwTPxPKwcNWvIsgoSeKIS3RFGSA+hAhLqTh5YilqnGxhGh6ULWT6f8a827teJZr6U1FaoMWnYew3bCbj3MrpE5R4obSXYZhrJdiUNUAij3AiV4UJfY6BCp9vKf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agw9fVXZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wD4YqUXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C01C433C7;
-	Tue, 20 Feb 2024 21:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agw9fVXZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0DCC433F1;
+	Tue, 20 Feb 2024 21:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464323;
-	bh=u2+NXNRVbQoGk57FtB085oAE22bAo+A635ag+NJ4HB8=;
+	s=korg; t=1708464326;
+	bh=qtj4be/Xp8sIvHyEONNYgOHaTQvTnbvPAz0AEbLopkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wD4YqUXq6U30WyfCmGSSC8z99fARETV5iscLZTuqYOQM/cmWyz6dTZOggepDd1PZy
-	 TdNpVl7bIq57ywTbD8MvyqEqGwv25tdEDLoov63v/8HAuEp1wJUDRcZn1E+CwhvHL0
-	 /PRYQHrjPdhX1ZACRuBor0RjlncY7hdcGZHTFMtI=
+	b=agw9fVXZaTV8KRF2euc2CwZkEQWE53jhBdGn328/J8a0rq1GmqqAWZc1gRdoUNBqQ
+	 VM/6rdjw5p7axy9LENrt9bFUNd/DlloqM8NOyzqjdnXQtHea/hun5x1BsbMOsp5rzr
+	 ZBo4nAwA05nh5S4/BQfjSZ4a0HFTzi5irYfQTnnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Al Viro <viro@ZenIV.linux.org.uk>,
-	Ajay Kaher <ajay.kaher@broadcom.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 304/331] tracefs: Zero out the tracefs_inode when allocating it
-Date: Tue, 20 Feb 2024 21:57:00 +0100
-Message-ID: <20240220205647.679693492@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.6 322/331] x86/boot: Drop references to startup_64
+Date: Tue, 20 Feb 2024 21:57:18 +0100
+Message-ID: <20240220205648.343348537@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -57,77 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit d81786f53aec14fd4d56263145a0635afbc64617 upstream.
+commit b618d31f112bea3d2daea19190d63e567f32a4db upstream.
 
-eventfs uses the tracefs_inode and assumes that it's already initialized
-to zero. That is, it doesn't set fields to zero (like ti->private) after
-getting its tracefs_inode. This causes bugs due to stale values.
+The x86 boot image generation tool assign a default value to startup_64
+and subsequently parses the actual value from zoffset.h but it never
+actually uses the value anywhere. So remove this code.
 
-Just initialize the entire structure to zero on allocation so there isn't
-any more surprises.
+This change has no impact on the resulting bzImage binary.
 
-This is a partial fix to access to ti->private. The assignment still needs
-to be made before the dentry is instantiated.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240131185512.315825944@goodmis.org
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Al Viro <viro@ZenIV.linux.org.uk>
-Cc: Ajay Kaher <ajay.kaher@broadcom.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Fixes: 5790b1fb3d672 ("eventfs: Remove eventfs_file and just use eventfs_inode")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202401291043.e62e89dc-oliver.sang@intel.com
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230912090051.4014114-25-ardb@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/inode.c    |    6 ++++--
- fs/tracefs/internal.h |    3 ++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ arch/x86/boot/Makefile      |    2 +-
+ arch/x86/boot/tools/build.c |    3 ---
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
---- a/fs/tracefs/inode.c
-+++ b/fs/tracefs/inode.c
-@@ -38,8 +38,6 @@ static struct inode *tracefs_alloc_inode
- 	if (!ti)
- 		return NULL;
+--- a/arch/x86/boot/Makefile
++++ b/arch/x86/boot/Makefile
+@@ -89,7 +89,7 @@ $(obj)/vmlinux.bin: $(obj)/compressed/vm
  
--	ti->flags = 0;
--
- 	return &ti->vfs_inode;
+ SETUP_OBJS = $(addprefix $(obj)/,$(setup-y))
+ 
+-sed-zoffset := -e 's/^\([0-9a-fA-F]*\) [a-zA-Z] \(startup_32\|startup_64\|efi32_stub_entry\|efi64_stub_entry\|efi_pe_entry\|efi32_pe_entry\|input_data\|kernel_info\|_end\|_ehead\|_text\|z_.*\)$$/\#define ZO_\2 0x\1/p'
++sed-zoffset := -e 's/^\([0-9a-fA-F]*\) [a-zA-Z] \(startup_32\|efi32_stub_entry\|efi64_stub_entry\|efi_pe_entry\|efi32_pe_entry\|input_data\|kernel_info\|_end\|_ehead\|_text\|z_.*\)$$/\#define ZO_\2 0x\1/p'
+ 
+ quiet_cmd_zoffset = ZOFFSET $@
+       cmd_zoffset = $(NM) $< | sed -n $(sed-zoffset) > $@
+--- a/arch/x86/boot/tools/build.c
++++ b/arch/x86/boot/tools/build.c
+@@ -60,7 +60,6 @@ static unsigned long efi64_stub_entry;
+ static unsigned long efi_pe_entry;
+ static unsigned long efi32_pe_entry;
+ static unsigned long kernel_info;
+-static unsigned long startup_64;
+ static unsigned long _end;
+ 
+ /*----------------------------------------------------------------------*/
+@@ -264,7 +263,6 @@ static void efi_stub_defaults(void)
+ 	efi_pe_entry = 0x10;
+ #else
+ 	efi_pe_entry = 0x210;
+-	startup_64 = 0x200;
+ #endif
  }
  
-@@ -779,7 +777,11 @@ static void init_once(void *foo)
- {
- 	struct tracefs_inode *ti = (struct tracefs_inode *) foo;
+@@ -340,7 +338,6 @@ static void parse_zoffset(char *fname)
+ 		PARSE_ZOFS(p, efi_pe_entry);
+ 		PARSE_ZOFS(p, efi32_pe_entry);
+ 		PARSE_ZOFS(p, kernel_info);
+-		PARSE_ZOFS(p, startup_64);
+ 		PARSE_ZOFS(p, _end);
  
-+	/* inode_init_once() calls memset() on the vfs_inode portion */
- 	inode_init_once(&ti->vfs_inode);
-+
-+	/* Zero out the rest */
-+	memset_after(ti, 0, vfs_inode);
- }
- 
- static int __init tracefs_init(void)
---- a/fs/tracefs/internal.h
-+++ b/fs/tracefs/internal.h
-@@ -11,9 +11,10 @@ enum {
- };
- 
- struct tracefs_inode {
-+	struct inode            vfs_inode;
-+	/* The below gets initialized with memset_after(ti, 0, vfs_inode) */
- 	unsigned long           flags;
- 	void                    *private;
--	struct inode            vfs_inode;
- };
- 
- /*
+ 		p = strchr(p, '\n');
 
 
