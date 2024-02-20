@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5821A14F9C8;
-	Tue, 20 Feb 2024 21:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF2914F9C8;
+	Tue, 20 Feb 2024 21:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465007; cv=none; b=HxtsTUitZiHv9nnfptKNyezO5bRrFTy8kCwSnGExs6lK+9/DmhBEIQryWyRvt6Ma5amEhCM8bcZyOUNIOmjoG/4XsKchTxkhOOta8wuf4eQdvYoCotOtzj0M9lyU/a3SuSWVQN/Yh3cV47byX0mqaL/2YJzJQ+SKjSjd3xkLsjg=
+	t=1708465010; cv=none; b=iRFBHrgcqVukSXWdZcJPbKJ2rebxvMrPnzQglRGFKTANgjWc9mZ6BpoyzEZrzqCayJfsPLhPYJiXXgugauKoNBiJVozaLodXYAWrthR2Uamu2TtRQza/KvzFLoALVlKVkXnvd6Xib4Lo9TQCUxzqVkx7yXVbIJXmq2cLbiHiyyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465007; c=relaxed/simple;
-	bh=3+F91Ou1iSjZ/EbrPY4SrMyEXFG6QGzJ65/srlQ3eYo=;
+	s=arc-20240116; t=1708465010; c=relaxed/simple;
+	bh=2X+SggTiJ5RDirAcvMJ9F+D+PzeYpIIwUYBsliiYyWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EL9mmZciWB06DgfJiqEAl2g5zOKUqcqOuNw+xJ52zQ+EdaUdcED2Y6VZ2RQw1cUy/OwW6JA46+undl9nMNqDPm/g/HTGTCctzC/hk9+gehdLQU+xz2C46KIPpd+UR5tTGJQPswTRQRjlfNEeffwNHyIKbawPWsxqOsCmoj+fcyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGo7rVAS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pMeZp9d6t4FVZ1yN5l3s9BbKoqnBM2tkLHeOcEpjScH6XPsKnglJrfr22ApI203SAz3/R3dpv2xsnryqzMgaCocGuRKNaQCnU4g6wqBpwffsbPjiN44AlPOi3OP8EEXYV5shLiz1TGAdpazpZxbOYDQLPK3ctK4cBheinQR29Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhK9Ulhe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGo7rVAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB684C433C7;
-	Tue, 20 Feb 2024 21:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhK9Ulhe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C736CC433F1;
+	Tue, 20 Feb 2024 21:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465007;
-	bh=3+F91Ou1iSjZ/EbrPY4SrMyEXFG6QGzJ65/srlQ3eYo=;
+	s=korg; t=1708465010;
+	bh=2X+SggTiJ5RDirAcvMJ9F+D+PzeYpIIwUYBsliiYyWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGo7rVASCcKKjTn6HFApJwMb66COUZ+8rGUkomb1uLm54g23rWOlhdyiCtCV6UJ5A
-	 lL/vd57/cPkwa/7vsh65fozq6b1qSWRGdzUfutT9Kqisnizzl4AftDAzQr54gZn3rC
-	 XknUTt+p/s0MTk6YBFmBLJRFkjnuMtp8uxwvVmRY=
+	b=HhK9UlheuqyUbRgY2dKO9uh9OabsAR1csb3g32gH3CI0G8JiVuqyLIgk0FlTAGV8y
+	 fMP1IwepoZCHwkAOWjp+xFcOdLp+5xx81M87EHpZ/tMS74bzzCc91QF+RvBLJgpXfm
+	 21t4yzTpIn5Rh5H/xHt40Z8p2oA5+3L5l4HFMmtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.7 207/309] drm/i915/dp: Limit SST link rate to <=8.1Gbps
-Date: Tue, 20 Feb 2024 21:56:06 +0100
-Message-ID: <20240220205639.663588010@linuxfoundation.org>
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.7 208/309] drm/prime: Support page array >= 4GB
+Date: Tue, 20 Feb 2024 21:56:07 +0100
+Message-ID: <20240220205639.692219081@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,36 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-commit ad26d56d080780bbfcc1696ca0c0cce3e2124ef6 upstream.
+commit b671cd3d456315f63171a670769356a196cf7fd0 upstream.
 
-Limit the link rate to HBR3 or below (<=8.1Gbps) in SST mode.
-UHBR (10Gbps+) link rates require 128b/132b channel encoding
-which we have not yet hooked up into the SST/no-sideband codepaths.
+Without unsigned long typecast, the size is passed in as zero if page
+array size >= 4GB, nr_pages >= 0x100000, then sg list converted will
+have the first and the last chunk lost.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240208154552.14545-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 6061811d72e14f41f71b6a025510920b187bfcca)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+CC: stable@vger.kernel.org
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230821200201.24685-1-Philip.Yang@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/drm_prime.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -2275,6 +2275,9 @@ intel_dp_compute_config_limits(struct in
- 	limits->min_rate = intel_dp_common_rate(intel_dp, 0);
- 	limits->max_rate = intel_dp_max_link_rate(intel_dp);
- 
-+	/* FIXME 128b/132b SST support missing */
-+	limits->max_rate = min(limits->max_rate, 810000);
-+
- 	limits->min_lane_count = 1;
- 	limits->max_lane_count = intel_dp_max_lane_count(intel_dp);
- 
+--- a/drivers/gpu/drm/drm_prime.c
++++ b/drivers/gpu/drm/drm_prime.c
+@@ -820,7 +820,7 @@ struct sg_table *drm_prime_pages_to_sg(s
+ 	if (max_segment == 0)
+ 		max_segment = UINT_MAX;
+ 	err = sg_alloc_table_from_pages_segment(sg, pages, nr_pages, 0,
+-						nr_pages << PAGE_SHIFT,
++						(unsigned long)nr_pages << PAGE_SHIFT,
+ 						max_segment, GFP_KERNEL);
+ 	if (err) {
+ 		kfree(sg);
 
 
