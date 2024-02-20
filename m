@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C280914F9DA;
-	Tue, 20 Feb 2024 21:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9493C1509BF;
+	Tue, 20 Feb 2024 21:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462965; cv=none; b=cKncw40G74KrE5l4/8S9vx+yAjon9HZU9HbOcbTs0qN9kCM0X9DkQ+kxg4kiJ1329LsaOTiYGfXH0CxrHqDVWtbgECCr4ic5Obi2EjbWSik8kY5DKxWVLP4Xlo23sKWGrce1z2sp9e6wdZ0uaCoZer3nddSMWQR+H9XXopY0qSo=
+	t=1708462968; cv=none; b=WkPlLFrXrEae+9nekA1TYFA4yd3Z4kE0Ota7KKW0mD/gJ3VW6+VfoSazrVq9pD2RcsHxSxbK8c/xMpAPQkvFPuX+dTuJ9AWtMt0kdnmrxEJNlc1W8SdK7NlLJYSCM7znMSeTPVKg/MYWiu90SvIhV+PXKF5P12o5nIGIgUA3xLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462965; c=relaxed/simple;
-	bh=PbymZf3Uu9HsYKz+LYLiylyv+F7EXs8XEQ3+QvOSWcM=;
+	s=arc-20240116; t=1708462968; c=relaxed/simple;
+	bh=ji8/C1G8nuF0pWGNlrLWgbX8KugLnv8pDU79I8iOq8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DzYrtD+3Ud33lm0enMNLZ3KFFqyPkV95n5vZV/UW/GKISs/stfk0FkfeC06foPVNHJbvmlcfxr+/6qVyLcbTaqdWz/milDgA+VLdBTmSyyxlT3gx2DAxu35z2q/Mw24CLMXr4MgXaKpSSiT45/fa+U2rcDKSE0W2EqS9MlMqy1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CM2kEAom; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVU5cCjktVU8tmAu6yRdlWycGJAA9ek5O4UXsUfMyTwQ/sH5D74Iqn6g0sFR2jWGtbxuj77Qs46lhKGHNy0s9Ye4xp26pmdejaiSGZWTD/CvAy/Fsa/7c+g/QaDZ8Ms9LihDgsx2wcY09WgYw65sv+XPnAOZaZCMyp3oUDtyOgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iITBoiS6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CM2kEAom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC32C433C7;
-	Tue, 20 Feb 2024 21:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iITBoiS6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03286C433C7;
+	Tue, 20 Feb 2024 21:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462965;
-	bh=PbymZf3Uu9HsYKz+LYLiylyv+F7EXs8XEQ3+QvOSWcM=;
+	s=korg; t=1708462968;
+	bh=ji8/C1G8nuF0pWGNlrLWgbX8KugLnv8pDU79I8iOq8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CM2kEAomHSqKNVh9lmb8ehtFhWQXUz3D9xhlU1dfKkiJTKMaVj2sg8pxoYYxvDRlD
-	 Q3WBwfyCtzLB7fLYrutMDbfucU7fnvMJF8zaODtshls32Gw5u2JMkHhsSLgwM3+zZR
-	 R1ZhwtBrYUGpyn+KAxmJdAeLANrVd63qqtnLielo=
+	b=iITBoiS6ypOd2TXkT2DUuySOhj5D02FCk+EVgFjQRo7fMKFJa7KawqN+j33sMnQ7T
+	 2kw1vJd4ejSLqk3f7iw9sARdRninY04QsDcGAEUm1cDH2qSkN1pVpkxR1apVeVVgth
+	 jsD9K+mKZYwT+l8ukVX+r0Aed8rZ8sDoiUacM7K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 092/197] ALSA: hda/realtek: Enable headset mic on Vaio VJFE-ADL
-Date: Tue, 20 Feb 2024 21:50:51 +0100
-Message-ID: <20240220204843.839491912@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 093/197] ASoC: codecs: wcd938x: handle deferred probe
+Date: Tue, 20 Feb 2024 21:50:52 +0100
+Message-ID: <20240220204843.869394429@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,31 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit c7de2d9bb68a5fc71c25ff96705a80a76c8436eb upstream.
+commit 086df711d9b886194481b4fbe525eb43e9ae7403 upstream.
 
-Vaio VJFE-ADL is equipped with ALC269VC, and it needs
-ALC298_FIXUP_SPK_VOLUME quirk to make its headset mic work.
+WCD938x sound codec driver ignores return status of getting regulators
+and returns EINVAL instead of EPROBE_DEFER.  If regulator provider
+probes after the codec, system is left without probed audio:
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240201122114.30080-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  wcd938x_codec audio-codec: wcd938x_probe: Fail to obtain platform data
+  wcd938x_codec: probe of audio-codec failed with error -22
+
+Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://msgid.link/r/20240117151208.1219755-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wcd938x.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10053,6 +10053,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
-+	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -3588,7 +3588,7 @@ static int wcd938x_probe(struct platform
+ 	ret = wcd938x_populate_dt_data(wcd938x, dev);
+ 	if (ret) {
+ 		dev_err(dev, "%s: Fail to obtain platform data\n", __func__);
+-		return -EINVAL;
++		return ret;
+ 	}
+ 
+ 	ret = wcd938x_add_slave_components(wcd938x, dev, &match);
 
 
