@@ -1,36 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE6114F9C8;
-	Tue, 20 Feb 2024 21:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B50446C9;
+	Tue, 20 Feb 2024 21:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465057; cv=none; b=dr5aO8+pvc/vrgmpbF/dEysoGK8SkipTwEsfXwnKITf6YmmOiZlVKLf0chZeJQPKZZ7sRKByFEeIUNGxYcq1UOu6A1CtsKb5wwEkdXoBg75UD2GAfKla5lcdCR03Uls9qoiSjIsd1eGSDmR1LeuNWSb/DeA5KDytuhBpFPsVIbI=
+	t=1708465060; cv=none; b=cTItrkVaGD3L/OW5wrpd7TEu0IkeFjJ+C8G8RYNE93fA6Qzc2wWiBCnMaRp6K1jwpk90Gm1feaMb0CQBZ4sOogcnnVzq7rkVs55nRMBcrdtbQA+RRzdtrXxiK1MvJBpPnRHsGdRh7n3uoZFGzVA4JjeAlzGvRPNWrSvmBgZ5DRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465057; c=relaxed/simple;
-	bh=cuy74OWAHtOnyEeLllKXFl+fhlr45HHWI6bNYkU4MNY=;
+	s=arc-20240116; t=1708465060; c=relaxed/simple;
+	bh=wQ6hApG7mGsgMm1Q2CBXd3lVkKireL4sxt7KuCxREWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=diCsRSA+YxMUPgxMGonJiOijV42fdcARyLO3MiGn+8K5l1XEkd5TMdGQ4MPEC3xGp9ta7c3hxmkhyLI13+Yw7o2vrpW87hVLxKjDyf55Q5SW8pxz4DtEavPctzij9wnqcg2q49JWiyLVFobnYy0Y0TSvTMAunpHMdIutn8euCZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUMRo/2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M5nnJLaQChVlwrbsZswPUF05pCk9kzZIl9LGt6HDvXFHhwQc6CZnAAZ4qJN4DKitQUJrV9d4o4/8krr23HH5Coh5KeNagpkvmmDFT5VRCDUsNB/tLqvWIp7WNL0Klsvju54lAq3CNGad68VrCzRPuupQe4kcfSPJXDAXzgvkF8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0suJJ3V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUMRo/2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2FDC433C7;
-	Tue, 20 Feb 2024 21:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0suJJ3V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887AAC433F1;
+	Tue, 20 Feb 2024 21:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465056;
-	bh=cuy74OWAHtOnyEeLllKXFl+fhlr45HHWI6bNYkU4MNY=;
+	s=korg; t=1708465060;
+	bh=wQ6hApG7mGsgMm1Q2CBXd3lVkKireL4sxt7KuCxREWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUMRo/2NsTdiY6J2eH93XfTfB4425aWutohNE/7rYYN9PS/SOZcRrg9TNP8cu3ryX
-	 JAO3YdqdYLosVAYFKe98X2zyvLJxyWrblgIAXb6X9SER8pNe+uBLtiOcIglLqCkIEP
-	 vLDZMdF6JluhCe1LaNpI54CSIBISB5TIlAP50V4U=
+	b=f0suJJ3VemtKgX9CyRAGs/F3E1VnofAIAJ9wBA/02O00YnhkdKKd6jfQbBcUaMXfx
+	 cCwUq6My2Clq2McZLgzYXDfueMNRKq/KFf8OTe/xgfR8f59hM208aGI833NMRUhgXv
+	 TmYadi9QjUfIwRkiS0i2RP0wio+Wtby7zfL+qg6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.7 221/309] serial: max310x: set default value when reading clock ready bit
-Date: Tue, 20 Feb 2024 21:56:20 +0100
-Message-ID: <20240220205640.072098092@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@ZenIV.linux.org.uk>,
+	Ajay Kaher <ajay.kaher@broadcom.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.7 193/309] eventfs: Remove unused d_parent pointer field
+Date: Tue, 20 Feb 2024 21:55:52 +0100
+Message-ID: <20240220205639.204087859@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -49,35 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 0419373333c2f2024966d36261fd82a453281e80 upstream.
+commit 408600be78cdb8c650a97ecc7ff411cb216811b5 upstream.
 
-If regmap_read() returns a non-zero value, the 'val' variable can be left
-uninitialized.
+It's never used
 
-Clear it before calling regmap_read() to make sure we properly detect
-the clock ready bit.
+Link: https://lore.kernel.org/linux-trace-kernel/202401291043.e62e89dc-oliver.sang@intel.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20240131185512.961772428@goodmis.org
 
-Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240116213001.3691629-2-hugo@hugovil.com
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Al Viro <viro@ZenIV.linux.org.uk>
+Cc: Ajay Kaher <ajay.kaher@broadcom.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c1504e510238 ("eventfs: Implement eventfs dir creation functions")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/tracefs/event_inode.c |    4 +---
+ fs/tracefs/internal.h    |    2 --
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -641,7 +641,7 @@ static u32 max310x_set_ref_clk(struct de
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -680,10 +680,8 @@ struct eventfs_inode *eventfs_create_dir
+ 	INIT_LIST_HEAD(&ei->list);
  
- 	/* Wait for crystal */
- 	if (xtal) {
--		unsigned int val;
-+		unsigned int val = 0;
- 		msleep(10);
- 		regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
- 		if (!(val & MAX310X_STS_CLKREADY_BIT)) {
+ 	mutex_lock(&eventfs_mutex);
+-	if (!parent->is_freed) {
++	if (!parent->is_freed)
+ 		list_add_tail(&ei->list, &parent->children);
+-		ei->d_parent = parent->dentry;
+-	}
+ 	mutex_unlock(&eventfs_mutex);
+ 
+ 	/* Was the parent freed? */
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -36,7 +36,6 @@ struct eventfs_attr {
+  * @name:	the name of the directory to create
+  * @children:	link list into the child eventfs_inode
+  * @dentry:     the dentry of the directory
+- * @d_parent:   pointer to the parent's dentry
+  * @d_children: The array of dentries to represent the files when created
+  * @entry_attrs: Saved mode and ownership of the @d_children
+  * @attr:	Saved mode and ownership of eventfs_inode itself
+@@ -51,7 +50,6 @@ struct eventfs_inode {
+ 	const char			*name;
+ 	struct list_head		children;
+ 	struct dentry			*dentry; /* Check is_freed to access */
+-	struct dentry			*d_parent;
+ 	struct dentry			**d_children;
+ 	struct eventfs_attr		*entry_attrs;
+ 	struct eventfs_attr		attr;
 
 
