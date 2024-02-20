@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE80151CC8;
-	Tue, 20 Feb 2024 20:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5183151CD0;
+	Tue, 20 Feb 2024 20:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462781; cv=none; b=LN+U16hQPizSIPTzZxxTnau1yjbC0VTiRQxYzvEKaeBtPjnJQkejcxDxkJGJPhrb175G7vZ3A7A+svLalDfDL5gZIYZytert/K2FhhbxRSi6biYk4GJdHqhFC1Rw41qPm9viIra+9GA3MCVg2cOUccssbfISqguDtDYIyiFqQVk=
+	t=1708462785; cv=none; b=aV+VgFRhE5ZIC7g40Vp5j9WMGz3uOSJa6LpGobrU1tGVl1iBqv2pOesnEYARZSVzO/5gw//+E+bU7NQLu5hryGZRX1bPSTP8w4G+D+znLT7XFoXxI+TSj2kP6ob6/bM29CIXZR9WLj7/6q70FQW3Uu3fh8FRRJMBPbObkveptGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462781; c=relaxed/simple;
-	bh=+fIDn93U6cj0Hxk8cK4jTnm7r81solQAYps6IM/hv5I=;
+	s=arc-20240116; t=1708462785; c=relaxed/simple;
+	bh=74lC50DPYRGJOQJfK5t8c5SbkjIl76+4GKU03NveRYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WbrYPh8jD7LySt+zDaom3EW6PzCFZaa4qz1m7LwmEfM7yz8Pf0+ScoR15PZy29++DwxzfN9gxlRixo7ldEqXq3PDhZxHjIGVvhaKFBqvTyKtSb4lgCuayMzKFZvw+BSaBFuERT/NQLyEltVRBHYFHg2SRRTKC8sZpOmWZbMHj5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7aE378W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DSkfPkXpdEa5EPaWwY9axlKWD/OIUa28fRQ5+t5csgd2BDbWmvglcpMW24apoy8VV0l2WO6oZTKE7ZnXMrqJddr7kOL3NKC24802+iZcYEV+rrLl7B2ZpWj21opilfkeEqqKhxZmfGJjCsAr6TyeyfW1KNzPn8r+0hegHd+fYIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kpie/LUJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7aE378W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97BBC43143;
-	Tue, 20 Feb 2024 20:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kpie/LUJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33089C43609;
+	Tue, 20 Feb 2024 20:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462781;
-	bh=+fIDn93U6cj0Hxk8cK4jTnm7r81solQAYps6IM/hv5I=;
+	s=korg; t=1708462784;
+	bh=74lC50DPYRGJOQJfK5t8c5SbkjIl76+4GKU03NveRYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H7aE378WxPzwexeairDOS8vTDDm3qArZ6KX8Xv2LB0IVwDkuVbvfmAjUjoIz+DMDp
-	 r/3hrOb/fRNwRnUg34MfruCSpFZJE56uT5YWT7IJquX9g267uST3u8lojQV+khSVKH
-	 KkZ8Qu/qI2kX8cMDmQTb5TSHjqhaGDPvw5sxMX08=
+	b=Kpie/LUJrQCjFORAtm/jcZHSNQBSm6ThNEh9YsXNEteeW4njOnW5wzcXugMxhKtHM
+	 Jw5iRHS+B6cQrHzzAm4A2T7L/Ix1JvJn7Wt61tILM1ACUkQ/aTbjozUrMU1ggO0Vhd
+	 EYmcy/04Isjm9DWw3adcN1rBdecwdpmEnqkWRCe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 007/197] btrfs: forbid deleting live subvol qgroup
-Date: Tue, 20 Feb 2024 21:49:26 +0100
-Message-ID: <20240220204841.298606159@linuxfoundation.org>
+	Samuel Holland <samuel.holland@sifive.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 034/197] scs: add CONFIG_MMU dependency for vfree_atomic()
+Date: Tue, 20 Feb 2024 21:49:53 +0100
+Message-ID: <20240220204842.101083922@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,54 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit a8df35619948bd8363d330c20a90c9a7fbff28c0 upstream.
+commit 6f9dc684cae638dda0570154509884ee78d0f75c upstream.
 
-If a subvolume still exists, forbid deleting its qgroup 0/subvolid.
-This behavior generally leads to incorrect behavior in squotas and
-doesn't have a legitimate purpose.
+The shadow call stack implementation fails to build without CONFIG_MMU:
 
-Fixes: cecbb533b5fc ("btrfs: record simple quota deltas in delayed refs")
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  ld.lld: error: undefined symbol: vfree_atomic
+  >>> referenced by scs.c
+  >>>               kernel/scs.o:(scs_free) in archive vmlinux.a
+
+Link: https://lkml.kernel.org/r/20240122175204.2371009-1-samuel.holland@sifive.com
+Fixes: a2abe7cbd8fe ("scs: switch to vmapped shadow stacks")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1635,6 +1635,15 @@ out:
- 	return ret;
- }
- 
-+static bool qgroup_has_usage(struct btrfs_qgroup *qgroup)
-+{
-+	return (qgroup->rfer > 0 || qgroup->rfer_cmpr > 0 ||
-+		qgroup->excl > 0 || qgroup->excl_cmpr > 0 ||
-+		qgroup->rsv.values[BTRFS_QGROUP_RSV_DATA] > 0 ||
-+		qgroup->rsv.values[BTRFS_QGROUP_RSV_META_PREALLOC] > 0 ||
-+		qgroup->rsv.values[BTRFS_QGROUP_RSV_META_PERTRANS] > 0);
-+}
-+
- int btrfs_remove_qgroup(struct btrfs_trans_handle *trans, u64 qgroupid)
- {
- 	struct btrfs_fs_info *fs_info = trans->fs_info;
-@@ -1654,6 +1663,11 @@ int btrfs_remove_qgroup(struct btrfs_tra
- 		goto out;
- 	}
- 
-+	if (is_fstree(qgroupid) && qgroup_has_usage(qgroup)) {
-+		ret = -EBUSY;
-+		goto out;
-+	}
-+
- 	/* Check if there are no children of this qgroup */
- 	if (!list_empty(&qgroup->members)) {
- 		ret = -EBUSY;
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -642,6 +642,7 @@ config SHADOW_CALL_STACK
+ 	bool "Shadow Call Stack"
+ 	depends on ARCH_SUPPORTS_SHADOW_CALL_STACK
+ 	depends on DYNAMIC_FTRACE_WITH_ARGS || DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
++	depends on MMU
+ 	help
+ 	  This option enables the compiler's Shadow Call Stack, which
+ 	  uses a shadow stack to protect function return addresses from
 
 
