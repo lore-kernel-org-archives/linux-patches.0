@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22F4446C9;
-	Tue, 20 Feb 2024 21:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FDF446C9;
+	Tue, 20 Feb 2024 21:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464790; cv=none; b=QI0NRpnbbHYKhbqxi7Dg8D3vK8/lCXVpyNQXix9WEZHpcC+c/NqTZMqlDt8k51tBlkwtKdX9HbuBEkPM6wV2dic9/EXDVf7NhnI/62tp6XVvyq4T/GlonaGKzHG6HCgOTfhI4S1ZnPc+dL5EB5maWXtTl9G8rhNDAfK/saOHFnY=
+	t=1708464792; cv=none; b=PtzSXbd7oXUAEpx2uA0+FGik/UrMuo3KZMjgJeFWsm19GUtaBBxwdvZRhQRZd7aybACFOshipZttlB7ccgUHKyN0XB/JskxEIH2ctuHBbaJEjt7Vrk/HWEexz5FhnDACRwe6Buy13WIBU8OmwYTLEFRtztHC9M0PrV9saPMS+28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464790; c=relaxed/simple;
-	bh=BDN50w5vj4HVCgcF/yjLIPODWo0ILq4JLriI5nl6rHY=;
+	s=arc-20240116; t=1708464792; c=relaxed/simple;
+	bh=dPxiKnY47IWtWfg1Op1c1a46M0gPGe9DzOWK8HF5640=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQ2qGz1sYtTPw7gH7TdpUHOYbGqfOXfGMElj3+OjYV4Zw7vBe7ESPjWq67kJhQbKna3eKBeeLc9kgR1wqcxd08fKNQxb5uTrcFCqLzGBo8EJraOKuwk2RkuSbnBv8KSF3lP/Ui4k/3hoD9lNLTbR5Emd9XaWCd4U2odEji7tohQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXVI8+yS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VrAMrx8Te8Pa/eofDZ7M/79Bz/rjUd0q/FTxWVycgp0eiYM0cWmaYCu4N8AZsf3Ls3DJd9zwS4oB+h5hm0BzHRhHSBZOLXzK1M9mm5mLeJn81xvI+wu/TUe7FlalsPX6QhYIIiYIiU+VF3afM84ZQHHFQS1Ncibw/SrFL+i4ljM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02w+gIax; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXVI8+yS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1FAC433C7;
-	Tue, 20 Feb 2024 21:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02w+gIax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6100CC433F1;
+	Tue, 20 Feb 2024 21:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464789;
-	bh=BDN50w5vj4HVCgcF/yjLIPODWo0ILq4JLriI5nl6rHY=;
+	s=korg; t=1708464792;
+	bh=dPxiKnY47IWtWfg1Op1c1a46M0gPGe9DzOWK8HF5640=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXVI8+yS+cFX/Nm2gLZ5ofjTsRF6XifLwG0i8mH5gRXA9VfswgpE/Eq5+O1M7Ib/+
-	 gpFubZ5p1qCu0pHFXgcvUJwR9x9Qsg2Icw877tekGTddP4cEAiz9ENhauVfs1ee0P8
-	 bVqGg92dVmXK5vZDSy5CEXNIqzKna0Ish7QKwVZM=
+	b=02w+gIax0gy/gjipLE2xSP9ia09O12HCVBW5ntnFVmdf7zcp9lu2cFezjOD3O9qYV
+	 44cmHMGXb9baafGs+2BuXE0agp2qTUhFoatSvvHGA5N2p+AcHy/X46hF1zMW2GxRCJ
+	 UZP3hiTPQVMIxxl3ny5J8teNlUGizFVj9w0YpEQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.7 138/309] drm/amd/display: Fix dcn35 8k30 Underflow/Corruption Issue
-Date: Tue, 20 Feb 2024 21:54:57 +0100
-Message-ID: <20240220205637.459670873@linuxfoundation.org>
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.7 139/309] lsm: fix default return value of the socket_getpeersec_*() hooks
+Date: Tue, 20 Feb 2024 21:54:58 +0100
+Message-ID: <20240220205637.489254118@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -54,97 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <jerry.zuo@amd.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-commit faf51b201bc42adf500945732abb6220c707d6f3 upstream.
+commit 5a287d3d2b9de2b3e747132c615599907ba5c3c1 upstream.
 
-[why]
-odm calculation is missing for pipe split policy determination
-and cause Underflow/Corruption issue.
+For these hooks the true "neutral" value is -EOPNOTSUPP, which is
+currently what is returned when no LSM provides this hook and what LSMs
+return when there is no security context set on the socket. Correct the
+value in <linux/lsm_hooks.h> and adjust the dispatch functions in
+security/security.c to avoid issues when the BPF LSM is enabled.
 
-[how]
-Add the odm calculation.
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 98e828a0650f ("security: Refactor declaration of LSM hooks")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+[PM: subject line tweak]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c |   27 +++-------
- drivers/gpu/drm/amd/display/dc/inc/core_types.h               |    2 
- 2 files changed, 12 insertions(+), 17 deletions(-)
+ include/linux/lsm_hook_defs.h |    4 ++--
+ security/security.c           |   31 +++++++++++++++++++++++++++----
+ 2 files changed, 29 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml2_translation_helper.c
-@@ -791,35 +791,28 @@ static void populate_dml_surface_cfg_fro
- 	}
- }
- 
--/*TODO no support for mpc combine, need rework - should calculate scaling params based on plane+stream*/
--static struct scaler_data get_scaler_data_for_plane(const struct dc_plane_state *in, const struct dc_state *context)
-+static struct scaler_data get_scaler_data_for_plane(const struct dc_plane_state *in, struct dc_state *context)
+--- a/include/linux/lsm_hook_defs.h
++++ b/include/linux/lsm_hook_defs.h
+@@ -311,9 +311,9 @@ LSM_HOOK(int, 0, socket_getsockopt, stru
+ LSM_HOOK(int, 0, socket_setsockopt, struct socket *sock, int level, int optname)
+ LSM_HOOK(int, 0, socket_shutdown, struct socket *sock, int how)
+ LSM_HOOK(int, 0, socket_sock_rcv_skb, struct sock *sk, struct sk_buff *skb)
+-LSM_HOOK(int, 0, socket_getpeersec_stream, struct socket *sock,
++LSM_HOOK(int, -ENOPROTOOPT, socket_getpeersec_stream, struct socket *sock,
+ 	 sockptr_t optval, sockptr_t optlen, unsigned int len)
+-LSM_HOOK(int, 0, socket_getpeersec_dgram, struct socket *sock,
++LSM_HOOK(int, -ENOPROTOOPT, socket_getpeersec_dgram, struct socket *sock,
+ 	 struct sk_buff *skb, u32 *secid)
+ LSM_HOOK(int, 0, sk_alloc_security, struct sock *sk, int family, gfp_t priority)
+ LSM_HOOK(void, LSM_RET_VOID, sk_free_security, struct sock *sk)
+--- a/security/security.c
++++ b/security/security.c
+@@ -4387,8 +4387,20 @@ EXPORT_SYMBOL(security_sock_rcv_skb);
+ int security_socket_getpeersec_stream(struct socket *sock, sockptr_t optval,
+ 				      sockptr_t optlen, unsigned int len)
  {
- 	int i;
--	struct scaler_data data = { 0 };
-+	struct pipe_ctx *temp_pipe = &context->res_ctx.temp_pipe;
+-	return call_int_hook(socket_getpeersec_stream, -ENOPROTOOPT, sock,
+-			     optval, optlen, len);
++	struct security_hook_list *hp;
++	int rc;
 +
-+	memset(temp_pipe, 0, sizeof(struct pipe_ctx));
- 
- 	for (i = 0; i < MAX_PIPES; i++)	{
- 		const struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[i];
- 
- 		if (pipe->plane_state == in && !pipe->prev_odm_pipe) {
--			const struct pipe_ctx *next_pipe = pipe->next_odm_pipe;
-+			temp_pipe->stream = pipe->stream;
-+			temp_pipe->plane_state = pipe->plane_state;
-+			temp_pipe->plane_res.scl_data.taps = pipe->plane_res.scl_data.taps;
- 
--			data = context->res_ctx.pipe_ctx[i].plane_res.scl_data;
--			while (next_pipe) {
--				data.h_active += next_pipe->plane_res.scl_data.h_active;
--				data.recout.width += next_pipe->plane_res.scl_data.recout.width;
--				if (in->rotation == ROTATION_ANGLE_0 || in->rotation == ROTATION_ANGLE_180) {
--					data.viewport.width += next_pipe->plane_res.scl_data.viewport.width;
--				} else {
--					data.viewport.height += next_pipe->plane_res.scl_data.viewport.height;
--				}
--				next_pipe = next_pipe->next_odm_pipe;
--			}
-+			resource_build_scaling_params(temp_pipe);
- 			break;
- 		}
- 	}
- 
- 	ASSERT(i < MAX_PIPES);
--	return data;
-+	return temp_pipe->plane_res.scl_data;
++	/*
++	 * Only one module will provide a security context.
++	 */
++	hlist_for_each_entry(hp, &security_hook_heads.socket_getpeersec_stream,
++			     list) {
++		rc = hp->hook.socket_getpeersec_stream(sock, optval, optlen,
++						       len);
++		if (rc != LSM_RET_DEFAULT(socket_getpeersec_stream))
++			return rc;
++	}
++	return LSM_RET_DEFAULT(socket_getpeersec_stream);
  }
  
- static void populate_dummy_dml_plane_cfg(struct dml_plane_cfg_st *out, unsigned int location, const struct dc_stream_state *in)
-@@ -864,7 +857,7 @@ static void populate_dummy_dml_plane_cfg
- 	out->ScalerEnabled[location] = false;
- }
- 
--static void populate_dml_plane_cfg_from_plane_state(struct dml_plane_cfg_st *out, unsigned int location, const struct dc_plane_state *in, const struct dc_state *context)
-+static void populate_dml_plane_cfg_from_plane_state(struct dml_plane_cfg_st *out, unsigned int location, const struct dc_plane_state *in, struct dc_state *context)
+ /**
+@@ -4408,8 +4420,19 @@ int security_socket_getpeersec_stream(st
+ int security_socket_getpeersec_dgram(struct socket *sock,
+ 				     struct sk_buff *skb, u32 *secid)
  {
- 	const struct scaler_data scaler_data = get_scaler_data_for_plane(in, context);
+-	return call_int_hook(socket_getpeersec_dgram, -ENOPROTOOPT, sock,
+-			     skb, secid);
++	struct security_hook_list *hp;
++	int rc;
++
++	/*
++	 * Only one module will provide a security context.
++	 */
++	hlist_for_each_entry(hp, &security_hook_heads.socket_getpeersec_dgram,
++			     list) {
++		rc = hp->hook.socket_getpeersec_dgram(sock, skb, secid);
++		if (rc != LSM_RET_DEFAULT(socket_getpeersec_dgram))
++			return rc;
++	}
++	return LSM_RET_DEFAULT(socket_getpeersec_dgram);
+ }
+ EXPORT_SYMBOL(security_socket_getpeersec_dgram);
  
---- a/drivers/gpu/drm/amd/display/dc/inc/core_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/inc/core_types.h
-@@ -462,6 +462,8 @@ struct resource_context {
- 	unsigned int hpo_dp_link_enc_to_link_idx[MAX_HPO_DP2_LINK_ENCODERS];
- 	int hpo_dp_link_enc_ref_cnts[MAX_HPO_DP2_LINK_ENCODERS];
- 	bool is_mpc_3dlut_acquired[MAX_PIPES];
-+	/* solely used for build scalar data in dml2 */
-+	struct pipe_ctx temp_pipe;
- };
- 
- struct dce_bw_output {
 
 
