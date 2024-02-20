@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4371F14F9DA;
-	Tue, 20 Feb 2024 21:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C5814F9DA;
+	Tue, 20 Feb 2024 21:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462920; cv=none; b=YtsARKg//rhUaK6g9hNfn9SZyIeTWiM2Ij/qihvaWFI/BM1/bwLcX+wmcN4Sg+Cy6TCzm8zE88v2HvKimDLZ413Q/iJZ9m7dF6WuK0AcM9hYIIA1VBIJBnrjcfgEnXCHpf0SzDdnCOktG5qPv0wTyo16+H0UYug8ut4y5x1WP1k=
+	t=1708462923; cv=none; b=TKUg3WHPEfKsubG2h9oZ2bUiezTtiCD7fAWX7U6jXHnPOCs3B8zb80ucoKDx50yEVFBNTTWaPtSsJb8ZAchVV/w/5NNWd5LqZo7tP1YN/D7LkYtFNhx2PCPRnYWfY9Tsa8H4ronmmtexgfXrx38kUxSbklLt/vV6HUkU/fN5O10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462920; c=relaxed/simple;
-	bh=qbiqHUSPjE8IsFFPy8vQN/fZ7UqzWHsEBirI07rma+Q=;
+	s=arc-20240116; t=1708462923; c=relaxed/simple;
+	bh=HgkOguFblR3DL4z09+1stln84etR7VLWpoILfKWlbEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c05CruWqGUgrIlp0BP8Iyy5WV60Ip6ceeaTD85gI+B+9vmladNmxADCuWt8pxVRVSGvK96za8eY+e4jQsJ31o4C0kN1s4k0umjb4M4mL4pbHyQS0vs1LEPBQEHpfLySDGtn/h5uYZC+w0onID7UNiGqFeL7O64tEBonVOF56ZY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkJ81ZSe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OlKKvanTnHFj7Oiej0vZPrggMeLl8Y+xg+E8TbsntyG0ofnyapiTvEfFL6oaC8R8BqRzdLHctRRY0plPdmWfo8YTP9+PZXLyRs4onPxSsoDckvd/rd3KkSJlQ4mikHRxS7yfep3XDWRZig0Hc/UQqt8wwh+4MPSOFb1SWmMcb94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myh8LLWO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkJ81ZSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6427C433F1;
-	Tue, 20 Feb 2024 21:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myh8LLWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC65C433F1;
+	Tue, 20 Feb 2024 21:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462920;
-	bh=qbiqHUSPjE8IsFFPy8vQN/fZ7UqzWHsEBirI07rma+Q=;
+	s=korg; t=1708462923;
+	bh=HgkOguFblR3DL4z09+1stln84etR7VLWpoILfKWlbEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkJ81ZSe4WD+0PF/ZdJXBOKTfzvZ5JqxJFwErykoXs8DYL3y5ix2WhLSR4jvgxgqb
-	 cfFdFjNd7buhttJWTtkYWJfmIe4po7GVLQBVW4j6xhlwHhk8hfdEzXVoGgkVo/NDRG
-	 sc3SEpfjindV3InWl6yUfDvjuLKIb1BYb6/bRTuk=
+	b=myh8LLWOepJPfnYixEqqOpWRuoEgRbOvdr31pcaYWWrwBYSmhqRvqpQQs1kCIuDwB
+	 aK8Eo0PRaCgK73ZC65oyPC8gOMdX51zqoun9vH0h9s2jheEGeA6cv9XzFKwJIguR6A
+	 3I2MKPrt80pevwPjBfYbPV4TYGrwljMxT0TKUqlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 6.1 079/197] firewire: core: correct documentation of fw_csr_string() kernel API
-Date: Tue, 20 Feb 2024 21:50:38 +0100
-Message-ID: <20240220204843.450877215@linuxfoundation.org>
+	=?UTF-8?q?Jos=C3=A9=20Relvas?= <josemonsantorelvas@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 080/197] ALSA: hda/realtek: Apply headset jack quirk for non-bass alc287 thinkpads
+Date: Tue, 20 Feb 2024 21:50:39 +0100
+Message-ID: <20240220204843.480656282@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -43,45 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: José Relvas <josemonsantorelvas@gmail.com>
 
-commit 5f9ab17394f831cb7986ec50900fa37507a127f1 upstream.
+commit 2468e8922d2f6da81a6192b73023eff67e3fefdd upstream.
 
-Against its current description, the kernel API can accepts all types of
-directory entries.
+There currently exists two thinkpad headset jack fixups:
+ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK
+ALC285_FIXUP_THINKPAD_HEADSET_JACK
 
-This commit corrects the documentation.
+The latter is applied to alc285 and alc287 thinkpads which contain
+bass speakers.
+However, the former was only being applied to alc285 thinkpads,
+leaving non-bass alc287 thinkpads with no headset button controls.
+This patch fixes that by adding ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK
+to the alc287 chains, allowing the detection of headset buttons.
 
-Cc: stable@vger.kernel.org
-Fixes: 3c2c58cb33b3 ("firewire: core: fw_csr_string addendum")
-Link: https://lore.kernel.org/r/20240130100409.30128-2-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: José Relvas <josemonsantorelvas@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240131113407.34698-3-josemonsantorelvas@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/core-device.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/firewire/core-device.c
-+++ b/drivers/firewire/core-device.c
-@@ -100,10 +100,9 @@ static int textual_leaf_to_string(const
-  * @buf:	where to put the string
-  * @size:	size of @buf, in bytes
-  *
-- * The string is taken from a minimal ASCII text descriptor leaf after
-- * the immediate entry with @key.  The string is zero-terminated.
-- * An overlong string is silently truncated such that it and the
-- * zero byte fit into @size.
-+ * The string is taken from a minimal ASCII text descriptor leaf just after the entry with the
-+ * @key. The string is zero-terminated. An overlong string is silently truncated such that it
-+ * and the zero byte fit into @size.
-  *
-  * Returns strlen(buf) or a negative error code.
-  */
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9377,7 +9377,7 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cs35l41_fixup_i2c_two,
+ 		.chained = true,
+-		.chain_id = ALC269_FIXUP_THINKPAD_ACPI,
++		.chain_id = ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK,
+ 	},
+ 	[ALC245_FIXUP_HP_MUTE_LED_COEFBIT] = {
+ 		.type = HDA_FIXUP_FUNC,
+@@ -9392,6 +9392,8 @@ static const struct hda_fixup alc269_fix
+ 	[ALC287_FIXUP_THINKPAD_I2S_SPK] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc287_fixup_bind_dacs,
++		.chained = true,
++		.chain_id = ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK,
+ 	},
+ 	[ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD] = {
+ 		.type = HDA_FIXUP_FUNC,
 
 
