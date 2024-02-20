@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0923151CFF;
-	Tue, 20 Feb 2024 21:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AFC151CDC;
+	Tue, 20 Feb 2024 21:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465113; cv=none; b=tEIozFNN6TGBLLsJirUIFBmv/lJKjik3+pX32yBYyFB+yDtehBmXzCFJ/TSnkGU5LLI7QfMC5YZvGn1Mtcv6eCt0Ux9A9bwgFTuW1ssTjA6nq8gZ1TRbtEqgx3xCWD3UPxlcCM5Ai1oJCYRAh5UKi6JSnVvB0p+7EEZnWVQAjdA=
+	t=1708465117; cv=none; b=fD5YTIKNZ6qQLZX2F1yGq+2n0L2+AYhfigMePpsAFF4EMvyUR8eCkDip8JUFN5SPXg/+X9tAp9+9qx8kHZBQQQ0TszCZPJjuEQpQIiKwbaJu0hMC4Dd/WT+0lnWtw9tMyMaDMpJ7g1nCMsyoLeliJDs0zE56LPibdZUTmzBw98o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465113; c=relaxed/simple;
-	bh=UIv+i5L7zkHUGcvLUPwrOGQYjwOXByTXbVeXeLUFE6A=;
+	s=arc-20240116; t=1708465117; c=relaxed/simple;
+	bh=wwyg8qD+K7IfnslEZZuDR4lAR2Fw0/0B6pp5rZoz3UE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/hXNLDajCBlialU5GDSyn60n3ijw3akqaT3SsNd69bmfZs+EJZVCad9Ka2xccuY3rsSOhNw88d4k35fYijfb5M9ICjpFxZTd10D1iuCZi/p18N1zHD/cTbz/vaJUUr5MXcYbVgxpF1QOeXH2gxrii90uAbXcjM1z+wMNjmFO7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2xrha5W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H6kBoEE/ByUr2jwmSTh/JAFFozp5yo+Uo/TxZnwszoHV2wecPnH+vwpTmukb8XK42cP+IY4YHpNgOqACXutHvyYGqlygnZTKW+WEHP2EABKzDdnW4OprsyAVNXReRoyeYH1ZFLE4aK1NRgKSqf0QD8D4LfCCltyr0BPe0+njRZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lT0WgZ5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2xrha5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AB3C433C7;
-	Tue, 20 Feb 2024 21:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lT0WgZ5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB89C433F1;
+	Tue, 20 Feb 2024 21:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465113;
-	bh=UIv+i5L7zkHUGcvLUPwrOGQYjwOXByTXbVeXeLUFE6A=;
+	s=korg; t=1708465116;
+	bh=wwyg8qD+K7IfnslEZZuDR4lAR2Fw0/0B6pp5rZoz3UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2xrha5WkUBTY09UoQzrYc8cT1SE7HOaAX8MbVgmwAVTLCa+KgytT28Apthc8gBem
-	 n4jIE9xRxX3mvVx9adIqh73rGoL7xBbRoYBuJ0lzxvLNsjAxdDaXeLpSBlSDIVu3Jh
-	 6ox6IIuV2bnaEXrtfkdv9KBF4jKCjiXEvyVWpbwk=
+	b=lT0WgZ5xkuLJQy0KLqnhteWKZtPCcUnD55OOaVnLNb/ByiDasNJQWwf+HaeqUlGCy
+	 9tx2Ij/qKD9gfTu/HebraBJzaYA7PDw2NO5bfinOMh7ABFUoBei+WvmVU/cc4x+VgH
+	 0LR/Tg0wHztsnyLHJ6i2R3CCEE7X5XNEMMD5cS9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bo liu <bo.liu@senarytech.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.7 241/309] ALSA: hda/conexant: Add quirk for SWS JS201D
-Date: Tue, 20 Feb 2024 21:56:40 +0100
-Message-ID: <20240220205640.706922886@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 6.7 224/309] serial: max310x: prevent infinite while() loop in port startup
+Date: Tue, 20 Feb 2024 21:56:23 +0100
+Message-ID: <20240220205640.166971715@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,76 +49,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bo liu <bo.liu@senarytech.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 4639c5021029d49fd2f97fa8d74731f167f98919 upstream.
+commit b35f8dbbce818b02c730dc85133dc7754266e084 upstream.
 
-The SWS JS201D need a different pinconfig from windows driver.
-Add a quirk to use a specific pinconfig to SWS JS201D.
+If there is a problem after resetting a port, the do/while() loop that
+checks the default value of DIVLSB register may run forever and spam the
+I2C bus.
 
-Signed-off-by: bo liu <bo.liu@senarytech.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240205013802.51907-1-bo.liu@senarytech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add a delay before each read of DIVLSB, and a maximum number of tries to
+prevent that situation from happening.
+
+Also fail probe if port reset is unsuccessful.
+
+Fixes: 10d8b34a4217 ("serial: max310x: Driver rework")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240116213001.3691629-5-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/tty/serial/max310x.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -344,6 +344,7 @@ enum {
- 	CXT_FIXUP_HP_ZBOOK_MUTE_LED,
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
-+	CXT_PINCFG_SWS_JS201D,
- };
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -237,6 +237,10 @@
+ #define MAX310x_REV_MASK		(0xf8)
+ #define MAX310X_WRITE_BIT		0x80
  
- /* for hda_fixup_thinkpad_acpi() */
-@@ -841,6 +842,17 @@ static const struct hda_pintbl cxt_pincf
- 	{}
- };
- 
-+/* SuoWoSi/South-holding JS201D with sn6140 */
-+static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
-+	{ 0x16, 0x03211040 }, /* hp out */
-+	{ 0x17, 0x91170110 }, /* SPK/Class_D */
-+	{ 0x18, 0x95a70130 }, /* Internal mic */
-+	{ 0x19, 0x03a11020 }, /* Headset Mic */
-+	{ 0x1a, 0x40f001f0 }, /* Not used */
-+	{ 0x21, 0x40f001f0 }, /* Not used */
-+	{}
-+};
++/* Port startup definitions */
++#define MAX310X_PORT_STARTUP_WAIT_RETRIES	20 /* Number of retries */
++#define MAX310X_PORT_STARTUP_WAIT_DELAY_MS	10 /* Delay between retries */
 +
- static const struct hda_fixup cxt_fixups[] = {
- 	[CXT_PINCFG_LENOVO_X200] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -996,6 +1008,10 @@ static const struct hda_fixup cxt_fixups
- 		.chained = true,
- 		.chain_id = CXT_FIXUP_HEADSET_MIC,
- 	},
-+	[CXT_PINCFG_SWS_JS201D] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = cxt_pincfg_sws_js201d,
-+	},
- };
+ /* Crystal-related definitions */
+ #define MAX310X_XTAL_WAIT_RETRIES	20 /* Number of retries */
+ #define MAX310X_XTAL_WAIT_DELAY_MS	10 /* Delay between retries */
+@@ -1346,6 +1350,9 @@ static int max310x_probe(struct device *
+ 		goto out_clk;
  
- static const struct snd_pci_quirk cxt5045_fixups[] = {
-@@ -1069,6 +1085,7 @@ static const struct snd_pci_quirk cxt506
- 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
-+	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
- 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
- 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
-@@ -1109,6 +1126,7 @@ static const struct hda_model_fixup cxt5
- 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
- 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
- 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
-+	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
- 	{}
- };
+ 	for (i = 0; i < devtype->nr; i++) {
++		bool started = false;
++		unsigned int try = 0, val = 0;
++
+ 		/* Reset port */
+ 		regmap_write(regmaps[i], MAX310X_MODE2_REG,
+ 			     MAX310X_MODE2_RST_BIT);
+@@ -1354,8 +1361,17 @@ static int max310x_probe(struct device *
  
+ 		/* Wait for port startup */
+ 		do {
+-			regmap_read(regmaps[i], MAX310X_BRGDIVLSB_REG, &ret);
+-		} while (ret != 0x01);
++			msleep(MAX310X_PORT_STARTUP_WAIT_DELAY_MS);
++			regmap_read(regmaps[i], MAX310X_BRGDIVLSB_REG, &val);
++
++			if (val == 0x01)
++				started = true;
++		} while (!started && (++try < MAX310X_PORT_STARTUP_WAIT_RETRIES));
++
++		if (!started) {
++			ret = dev_err_probe(dev, -EAGAIN, "port reset failed\n");
++			goto out_uart;
++		}
+ 
+ 		regmap_write(regmaps[i], MAX310X_MODE1_REG, devtype->mode1);
+ 	}
 
 
