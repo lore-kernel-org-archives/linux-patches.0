@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823902DF9F;
-	Tue, 20 Feb 2024 21:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACF2152E0D;
+	Tue, 20 Feb 2024 21:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465353; cv=none; b=ZA1Gi59tbWouSkKqYHMDrIo4fNF1b+naeV13CXKjy4ZY38dHqQ13JbHEcIq9hOpMyUlT0fW3vE0QYHx3KGcy/AGE95hcohqmltvy140tQoypRjzrN0t/WcxmzBH6f83XLWB2f86nCdi0IhOQy/QoM+2WKewHVDeePWlkPfZgKFQ=
+	t=1708465356; cv=none; b=Qi9DtSDE6VSPUCiXgyXRV/Am+croSJboQb+J4m99cRGxeJBeFGYBExGtiOcJDVGBe39DdTBoauSRKk22RnD/joWPF4CkQR+GrL7YE+/SIXvNw920hhbkSikQ9oR1h+3lBOghYDxwvfMUJPp7l72mpdwEPPTeB2uCXVpBDvgQhAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465353; c=relaxed/simple;
-	bh=msIPR/Z3SWIxrsobv1Em87G8BuGvO3sIbVQFkyU/Cgw=;
+	s=arc-20240116; t=1708465356; c=relaxed/simple;
+	bh=yNyXT7jTsMw1HKrE8NCDZmE/cbVxqoYx9Db697j87ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmG7AbcmU/9Cu+RFOt32MvAt0+/W/BtfcN8RFYWEuMIxGOQiWJgHbq198Tc+S9D7b/nmrXBQQq2qvo/oSb1PLG2Vb4cQ8Yhj9plABuVSWgybbZmbDm8WTYlVy4aD2hFpvhmLPxyOM1VqOSsgLrqIm+ukjW5KBu3mc57/nngDAFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vgd7JovV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ikFFObs/4BTiTZYdyw1SzlprM6UFi02049qwEJ+pGl5RPra1FPou/DkW7jQp289GbOi4wBUbVVqDYwFA347RJOiY+JY0AjqpTzG83T7cfZlf7iXyZ69jg7qAuviVTAj1JsNI0UEQaZekr/hhowZwcJHhkPu2CucIiWM/GC3+a7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmAWrlGz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vgd7JovV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7595C43399;
-	Tue, 20 Feb 2024 21:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmAWrlGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A8FC43390;
+	Tue, 20 Feb 2024 21:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465353;
-	bh=msIPR/Z3SWIxrsobv1Em87G8BuGvO3sIbVQFkyU/Cgw=;
+	s=korg; t=1708465356;
+	bh=yNyXT7jTsMw1HKrE8NCDZmE/cbVxqoYx9Db697j87ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vgd7JovV9YqDwdWTy65ocQaHDqvGlKTytBAisnu6RQ1h+xOT1jcqxo9uTKauRt+PJ
-	 oj7EjV1Z5YU93uNiqmc6/FnJUBC+mhBZVt3koIjs/N2E79GllEcrvg1ZihD6zyFTSO
-	 Cqhgeq0Th0s+mbAM9789h8k0yqFmykbxUpc7eYww=
+	b=dmAWrlGzBZOB/hWC6lg4pBp3N57/ru/wghaj8cDAf9gXfa5catEJw+J1k7LUxsQsa
+	 clo97mIeSJLmiGqM1HH2uFgyuM/bgbaqKOfGfQ1JSv8J5b7VPFpQwrWjVzsUVWitDY
+	 R6816UWirLlHKp6sTc9PemBxMT+wdJVtzqtukWXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Juergen Gross <jgross@suse.com>,
-	Andrew Panyakin <apanyaki@amazon.com>
-Subject: [PATCH 6.7 295/309] xen/events: close evtchn after mapping cleanup
-Date: Tue, 20 Feb 2024 21:57:34 +0100
-Message-ID: <20240220205642.324820197@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.7 286/309] hv_netvsc: Register VF in netvsc_probe if NET_DEVICE_REGISTER missed
+Date: Tue, 20 Feb 2024 21:57:25 +0100
+Message-ID: <20240220205642.065443464@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,166 +52,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Heyne <mheyne@amazon.de>
+From: Shradha Gupta <shradhagupta@linux.microsoft.com>
 
-commit fa765c4b4aed2d64266b694520ecb025c862c5a9 upstream.
+commit 9cae43da9867412f8bd09aee5c8a8dc5e8dc3dc2 upstream.
 
-shutdown_pirq and startup_pirq are not taking the
-irq_mapping_update_lock because they can't due to lock inversion. Both
-are called with the irq_desc->lock being taking. The lock order,
-however, is first irq_mapping_update_lock and then irq_desc->lock.
+If hv_netvsc driver is unloaded and reloaded, the NET_DEVICE_REGISTER
+handler cannot perform VF register successfully as the register call
+is received before netvsc_probe is finished. This is because we
+register register_netdevice_notifier() very early( even before
+vmbus_driver_register()).
+To fix this, we try to register each such matching VF( if it is visible
+as a netdevice) at the end of netvsc_probe.
 
-This opens multiple races:
-- shutdown_pirq can be interrupted by a function that allocates an event
-  channel:
-
-  CPU0                        CPU1
-  shutdown_pirq {
-    xen_evtchn_close(e)
-                              __startup_pirq {
-                                EVTCHNOP_bind_pirq
-                                  -> returns just freed evtchn e
-                                set_evtchn_to_irq(e, irq)
-                              }
-    xen_irq_info_cleanup() {
-      set_evtchn_to_irq(e, -1)
-    }
-  }
-
-  Assume here event channel e refers here to the same event channel
-  number.
-  After this race the evtchn_to_irq mapping for e is invalid (-1).
-
-- __startup_pirq races with __unbind_from_irq in a similar way. Because
-  __startup_pirq doesn't take irq_mapping_update_lock it can grab the
-  evtchn that __unbind_from_irq is currently freeing and cleaning up. In
-  this case even though the event channel is allocated, its mapping can
-  be unset in evtchn_to_irq.
-
-The fix is to first cleanup the mappings and then close the event
-channel. In this way, when an event channel gets allocated it's
-potential previous evtchn_to_irq mappings are guaranteed to be unset already.
-This is also the reverse order of the allocation where first the event
-channel is allocated and then the mappings are setup.
-
-On a 5.10 kernel prior to commit 3fcdaf3d7634 ("xen/events: modify internal
-[un]bind interfaces"), we hit a BUG like the following during probing of NVMe
-devices. The issue is that during nvme_setup_io_queues, pci_free_irq
-is called for every device which results in a call to shutdown_pirq.
-With many nvme devices it's therefore likely to hit this race during
-boot because there will be multiple calls to shutdown_pirq and
-startup_pirq are running potentially in parallel.
-
-  ------------[ cut here ]------------
-  blkfront: xvda: barrier or flush: disabled; persistent grants: enabled; indirect descriptors: enabled; bounce buffer: enabled
-  kernel BUG at drivers/xen/events/events_base.c:499!
-  invalid opcode: 0000 [#1] SMP PTI
-  CPU: 44 PID: 375 Comm: kworker/u257:23 Not tainted 5.10.201-191.748.amzn2.x86_64 #1
-  Hardware name: Xen HVM domU, BIOS 4.11.amazon 08/24/2006
-  Workqueue: nvme-reset-wq nvme_reset_work
-  RIP: 0010:bind_evtchn_to_cpu+0xdf/0xf0
-  Code: 5d 41 5e c3 cc cc cc cc 44 89 f7 e8 2b 55 ad ff 49 89 c5 48 85 c0 0f 84 64 ff ff ff 4c 8b 68 30 41 83 fe ff 0f 85 60 ff ff ff <0f> 0b 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 0f 1f 44 00 00
-  RSP: 0000:ffffc9000d533b08 EFLAGS: 00010046
-  RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000006
-  RDX: 0000000000000028 RSI: 00000000ffffffff RDI: 00000000ffffffff
-  RBP: ffff888107419680 R08: 0000000000000000 R09: ffffffff82d72b00
-  R10: 0000000000000000 R11: 0000000000000000 R12: 00000000000001ed
-  R13: 0000000000000000 R14: 00000000ffffffff R15: 0000000000000002
-  FS:  0000000000000000(0000) GS:ffff88bc8b500000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000000 CR3: 0000000002610001 CR4: 00000000001706e0
-  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  Call Trace:
-   ? show_trace_log_lvl+0x1c1/0x2d9
-   ? show_trace_log_lvl+0x1c1/0x2d9
-   ? set_affinity_irq+0xdc/0x1c0
-   ? __die_body.cold+0x8/0xd
-   ? die+0x2b/0x50
-   ? do_trap+0x90/0x110
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? do_error_trap+0x65/0x80
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? exc_invalid_op+0x4e/0x70
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? asm_exc_invalid_op+0x12/0x20
-   ? bind_evtchn_to_cpu+0xdf/0xf0
-   ? bind_evtchn_to_cpu+0xc5/0xf0
-   set_affinity_irq+0xdc/0x1c0
-   irq_do_set_affinity+0x1d7/0x1f0
-   irq_setup_affinity+0xd6/0x1a0
-   irq_startup+0x8a/0xf0
-   __setup_irq+0x639/0x6d0
-   ? nvme_suspend+0x150/0x150
-   request_threaded_irq+0x10c/0x180
-   ? nvme_suspend+0x150/0x150
-   pci_request_irq+0xa8/0xf0
-   ? __blk_mq_free_request+0x74/0xa0
-   queue_request_irq+0x6f/0x80
-   nvme_create_queue+0x1af/0x200
-   nvme_create_io_queues+0xbd/0xf0
-   nvme_setup_io_queues+0x246/0x320
-   ? nvme_irq_check+0x30/0x30
-   nvme_reset_work+0x1c8/0x400
-   process_one_work+0x1b0/0x350
-   worker_thread+0x49/0x310
-   ? process_one_work+0x350/0x350
-   kthread+0x11b/0x140
-   ? __kthread_bind_mask+0x60/0x60
-   ret_from_fork+0x22/0x30
-  Modules linked in:
-  ---[ end trace a11715de1eee1873 ]---
-
-Fixes: d46a78b05c0e ("xen: implement pirq type event channels")
 Cc: stable@vger.kernel.org
-Co-debugged-by: Andrew Panyakin <apanyaki@amazon.com>
-Signed-off-by: Maximilian Heyne <mheyne@amazon.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20240124163130.31324-1-mheyne@amazon.de
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: 85520856466e ("hv_netvsc: Fix race of register_netdevice_notifier and VF register")
+Suggested-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/events/events_base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/hyperv/netvsc_drv.c |   82 ++++++++++++++++++++++++++++++----------
+ 1 file changed, 62 insertions(+), 20 deletions(-)
 
---- a/drivers/xen/events/events_base.c
-+++ b/drivers/xen/events/events_base.c
-@@ -923,8 +923,8 @@ static void shutdown_pirq(struct irq_dat
- 		return;
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -42,6 +42,10 @@
+ #define LINKCHANGE_INT (2 * HZ)
+ #define VF_TAKEOVER_INT (HZ / 10)
  
- 	do_mask(info, EVT_MASK_REASON_EXPLICIT);
--	xen_evtchn_close(evtchn);
- 	xen_irq_info_cleanup(info);
-+	xen_evtchn_close(evtchn);
++/* Macros to define the context of vf registration */
++#define VF_REG_IN_PROBE		1
++#define VF_REG_IN_NOTIFIER	2
++
+ static unsigned int ring_size __ro_after_init = 128;
+ module_param(ring_size, uint, 0444);
+ MODULE_PARM_DESC(ring_size, "Ring buffer size (# of 4K pages)");
+@@ -2183,7 +2187,7 @@ static rx_handler_result_t netvsc_vf_han
  }
  
- static void enable_pirq(struct irq_data *data)
-@@ -956,6 +956,7 @@ EXPORT_SYMBOL_GPL(xen_irq_from_gsi);
- static void __unbind_from_irq(struct irq_info *info, unsigned int irq)
+ static int netvsc_vf_join(struct net_device *vf_netdev,
+-			  struct net_device *ndev)
++			  struct net_device *ndev, int context)
  {
- 	evtchn_port_t evtchn;
-+	bool close_evtchn = false;
- 
- 	if (!info) {
- 		xen_irq_free_desc(irq);
-@@ -975,7 +976,7 @@ static void __unbind_from_irq(struct irq
- 		struct xenbus_device *dev;
- 
- 		if (!info->is_static)
--			xen_evtchn_close(evtchn);
-+			close_evtchn = true;
- 
- 		switch (info->type) {
- 		case IRQT_VIRQ:
-@@ -995,6 +996,9 @@ static void __unbind_from_irq(struct irq
- 		}
- 
- 		xen_irq_info_cleanup(info);
-+
-+		if (close_evtchn)
-+			xen_evtchn_close(evtchn);
+ 	struct net_device_context *ndev_ctx = netdev_priv(ndev);
+ 	int ret;
+@@ -2206,7 +2210,11 @@ static int netvsc_vf_join(struct net_dev
+ 		goto upper_link_failed;
  	}
  
- 	xen_free_irq(info);
+-	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
++	/* If this registration is called from probe context vf_takeover
++	 * is taken care of later in probe itself.
++	 */
++	if (context == VF_REG_IN_NOTIFIER)
++		schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
+ 
+ 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
+ 
+@@ -2344,7 +2352,7 @@ static int netvsc_prepare_bonding(struct
+ 	return NOTIFY_DONE;
+ }
+ 
+-static int netvsc_register_vf(struct net_device *vf_netdev)
++static int netvsc_register_vf(struct net_device *vf_netdev, int context)
+ {
+ 	struct net_device_context *net_device_ctx;
+ 	struct netvsc_device *netvsc_dev;
+@@ -2384,7 +2392,7 @@ static int netvsc_register_vf(struct net
+ 
+ 	netdev_info(ndev, "VF registering: %s\n", vf_netdev->name);
+ 
+-	if (netvsc_vf_join(vf_netdev, ndev) != 0)
++	if (netvsc_vf_join(vf_netdev, ndev, context) != 0)
+ 		return NOTIFY_DONE;
+ 
+ 	dev_hold(vf_netdev);
+@@ -2482,10 +2490,31 @@ static int netvsc_unregister_vf(struct n
+ 	return NOTIFY_OK;
+ }
+ 
++static int check_dev_is_matching_vf(struct net_device *event_ndev)
++{
++	/* Skip NetVSC interfaces */
++	if (event_ndev->netdev_ops == &device_ops)
++		return -ENODEV;
++
++	/* Avoid non-Ethernet type devices */
++	if (event_ndev->type != ARPHRD_ETHER)
++		return -ENODEV;
++
++	/* Avoid Vlan dev with same MAC registering as VF */
++	if (is_vlan_dev(event_ndev))
++		return -ENODEV;
++
++	/* Avoid Bonding master dev with same MAC registering as VF */
++	if (netif_is_bond_master(event_ndev))
++		return -ENODEV;
++
++	return 0;
++}
++
+ static int netvsc_probe(struct hv_device *dev,
+ 			const struct hv_vmbus_device_id *dev_id)
+ {
+-	struct net_device *net = NULL;
++	struct net_device *net = NULL, *vf_netdev;
+ 	struct net_device_context *net_device_ctx;
+ 	struct netvsc_device_info *device_info = NULL;
+ 	struct netvsc_device *nvdev;
+@@ -2597,6 +2626,30 @@ static int netvsc_probe(struct hv_device
+ 	}
+ 
+ 	list_add(&net_device_ctx->list, &netvsc_dev_list);
++
++	/* When the hv_netvsc driver is unloaded and reloaded, the
++	 * NET_DEVICE_REGISTER for the vf device is replayed before probe
++	 * is complete. This is because register_netdevice_notifier() gets
++	 * registered before vmbus_driver_register() so that callback func
++	 * is set before probe and we don't miss events like NETDEV_POST_INIT
++	 * So, in this section we try to register the matching vf device that
++	 * is present as a netdevice, knowing that its register call is not
++	 * processed in the netvsc_netdev_notifier(as probing is progress and
++	 * get_netvsc_byslot fails).
++	 */
++	for_each_netdev(dev_net(net), vf_netdev) {
++		ret = check_dev_is_matching_vf(vf_netdev);
++		if (ret != 0)
++			continue;
++
++		if (net != get_netvsc_byslot(vf_netdev))
++			continue;
++
++		netvsc_prepare_bonding(vf_netdev);
++		netvsc_register_vf(vf_netdev, VF_REG_IN_PROBE);
++		__netvsc_vf_setup(net, vf_netdev);
++		break;
++	}
+ 	rtnl_unlock();
+ 
+ 	netvsc_devinfo_put(device_info);
+@@ -2752,28 +2805,17 @@ static int netvsc_netdev_event(struct no
+ 			       unsigned long event, void *ptr)
+ {
+ 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
++	int ret = 0;
+ 
+-	/* Skip our own events */
+-	if (event_dev->netdev_ops == &device_ops)
+-		return NOTIFY_DONE;
+-
+-	/* Avoid non-Ethernet type devices */
+-	if (event_dev->type != ARPHRD_ETHER)
+-		return NOTIFY_DONE;
+-
+-	/* Avoid Vlan dev with same MAC registering as VF */
+-	if (is_vlan_dev(event_dev))
+-		return NOTIFY_DONE;
+-
+-	/* Avoid Bonding master dev with same MAC registering as VF */
+-	if (netif_is_bond_master(event_dev))
++	ret = check_dev_is_matching_vf(event_dev);
++	if (ret != 0)
+ 		return NOTIFY_DONE;
+ 
+ 	switch (event) {
+ 	case NETDEV_POST_INIT:
+ 		return netvsc_prepare_bonding(event_dev);
+ 	case NETDEV_REGISTER:
+-		return netvsc_register_vf(event_dev);
++		return netvsc_register_vf(event_dev, VF_REG_IN_NOTIFIER);
+ 	case NETDEV_UNREGISTER:
+ 		return netvsc_unregister_vf(event_dev);
+ 	case NETDEV_UP:
 
 
