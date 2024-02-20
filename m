@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7E214F9C8;
-	Tue, 20 Feb 2024 21:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A989446C9;
+	Tue, 20 Feb 2024 21:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465076; cv=none; b=aN77pjfkBZehA9CjIZFZdM5Aq35RFs9lLd2bZxYoDYeFW9HDMGdh7ebC99x/16cycbjOu9gPmOkaCgTDqtKkdyuvLMOeacaigzX5rK3hnN/CzVmEyFD2A/lZIewmfflf2HxnbMw/hdSnA2bKyfuJWhC0gHwR7tgprWsXxYrENbo=
+	t=1708465079; cv=none; b=oIPXYD75uQjjZlJg7CYwU1+s9jFwUoW6/zZG0rxc0qxKb5t0cJC7bw69w82hjlBgUHuvl92vY+0P4UJhLTWQsmQ+emKZXVgv7aICAPQHrcd5qU+cJ0b3LvhqesvZBxqmSD9zTvZIN4C68uIwcWNan+J4ypAhcEUEo4NQfxlIMKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465076; c=relaxed/simple;
-	bh=9fjxhADOWULJ+PFIekKlJoDYDF6uTK0GbjbOM93lhEU=;
+	s=arc-20240116; t=1708465079; c=relaxed/simple;
+	bh=W7if0nXnOl/5NOnh++qKE81RTV7T9Vf2GWJP/VvShk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omJOI6IpeEcLU2KuWj/Y88PbptbkWVuaQKIgkLeYWPeoGd1I2M8oc5Xqbx968XjUmqCOzLA3tkAkmLARIKmEZhk9U+RL1+iceJUz8bKR+s3b+h3N2L6+J+y6lPd1Zb1SIfFPlswsR1SprgHtKWVKqMHrGl/+VOp32lQjZ1g0Z9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpmrAbGX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/FieWBT102G+Obu6DW7YYm2ZLhnyaiA9B9SpR0Likl400bI83/i84KASUijajeYq4JExUmvLP6aabciRNuAQ1/Vvrc2VF/ULwOBMvkLJIDX0LaZgl/ZylM36xJuAhjEQpwuQTNWIAsOLheos4XeIKa88dnMUTiJfXVP9wnRJMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jenzZK4j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpmrAbGX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824B9C433F1;
-	Tue, 20 Feb 2024 21:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jenzZK4j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5A7C433C7;
+	Tue, 20 Feb 2024 21:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465076;
-	bh=9fjxhADOWULJ+PFIekKlJoDYDF6uTK0GbjbOM93lhEU=;
+	s=korg; t=1708465079;
+	bh=W7if0nXnOl/5NOnh++qKE81RTV7T9Vf2GWJP/VvShk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hpmrAbGX9KUg4Rgahu/DpAPrW59sXF/AQZd6Wu+5ltO32vOoADvxjwjWUZxKpdjTF
-	 q1IOfljtkFynCv9HMEWZheWf/HuAbNXZZy0weV0Eho481DimognZz7DKnqd8yHM88o
-	 AAx+rUqmceG3StB+eAyZlv8Nr3uiCfeZa0YVkuUM=
+	b=jenzZK4jViJkCSMNSsMkxrVlfX8Q7VRKAouXmqZ2lvUJzH8V9jykbTP7me8chNQ/C
+	 IjxrfN7vI2rz/fIIV9UeesGByCLQ+KvNtvD1NbE+3ivFBPukugkEHb9aHvH+sN8u/T
+	 MyZWsmlYpJjRWO4sQB9RsxxrA74YMeSlkE9fZ5zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
 	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Al Viro <viro@ZenIV.linux.org.uk>,
 	Ajay Kaher <ajay.kaher@broadcom.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	kernel test robot <oliver.sang@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.7 198/309] eventfs: Remove fsnotify*() functions from lookup()
-Date: Tue, 20 Feb 2024 21:55:57 +0100
-Message-ID: <20240220205639.380093301@linuxfoundation.org>
+Subject: [PATCH 6.7 189/309] tracefs: Zero out the tracefs_inode when allocating it
+Date: Tue, 20 Feb 2024 21:55:48 +0100
+Message-ID: <20240220205639.069420681@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -59,48 +59,75 @@ Content-Transfer-Encoding: 8bit
 
 From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 12d823b31fadf47c8f36ecada7abac5f903cac33 upstream.
+commit d81786f53aec14fd4d56263145a0635afbc64617 upstream.
 
-The dentries and inodes are created when referenced in the lookup code.
-There's no reason to call fsnotify_*() functions when they are created by
-a reference. It doesn't make any sense.
+eventfs uses the tracefs_inode and assumes that it's already initialized
+to zero. That is, it doesn't set fields to zero (like ti->private) after
+getting its tracefs_inode. This causes bugs due to stale values.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240201002719.GS2087318@ZenIV/
-Link: https://lore.kernel.org/linux-trace-kernel/20240201161617.166973329@goodmis.org
+Just initialize the entire structure to zero on allocation so there isn't
+any more surprises.
+
+This is a partial fix to access to ti->private. The assignment still needs
+to be made before the dentry is instantiated.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240131185512.315825944@goodmis.org
 
 Cc: stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Cc: Christian Brauner <brauner@kernel.org>
 Cc: Al Viro <viro@ZenIV.linux.org.uk>
 Cc: Ajay Kaher <ajay.kaher@broadcom.com>
-Fixes: a376007917776 ("eventfs: Implement functions to create files and dirs when accessed");
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5790b1fb3d672 ("eventfs: Remove eventfs_file and just use eventfs_inode")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202401291043.e62e89dc-oliver.sang@intel.com
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    2 --
- 1 file changed, 2 deletions(-)
+ fs/tracefs/inode.c    |    6 ++++--
+ fs/tracefs/internal.h |    3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -366,7 +366,6 @@ static struct dentry *lookup_file(struct
- 	dentry->d_fsdata = get_ei(parent_ei);
+--- a/fs/tracefs/inode.c
++++ b/fs/tracefs/inode.c
+@@ -38,8 +38,6 @@ static struct inode *tracefs_alloc_inode
+ 	if (!ti)
+ 		return NULL;
  
- 	d_add(dentry, inode);
--	fsnotify_create(dentry->d_parent->d_inode, dentry);
- 	return NULL;
- };
- 
-@@ -408,7 +407,6 @@ static struct dentry *lookup_dir_entry(s
- 	inc_nlink(inode);
- 	d_add(dentry, inode);
- 	inc_nlink(dentry->d_parent->d_inode);
--	fsnotify_mkdir(dentry->d_parent->d_inode, dentry);
- 	return NULL;
+-	ti->flags = 0;
+-
+ 	return &ti->vfs_inode;
  }
  
+@@ -779,7 +777,11 @@ static void init_once(void *foo)
+ {
+ 	struct tracefs_inode *ti = (struct tracefs_inode *) foo;
+ 
++	/* inode_init_once() calls memset() on the vfs_inode portion */
+ 	inode_init_once(&ti->vfs_inode);
++
++	/* Zero out the rest */
++	memset_after(ti, 0, vfs_inode);
+ }
+ 
+ static int __init tracefs_init(void)
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -11,9 +11,10 @@ enum {
+ };
+ 
+ struct tracefs_inode {
++	struct inode            vfs_inode;
++	/* The below gets initialized with memset_after(ti, 0, vfs_inode) */
+ 	unsigned long           flags;
+ 	void                    *private;
+-	struct inode            vfs_inode;
+ };
+ 
+ /*
 
 
