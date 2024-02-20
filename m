@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D232414AD15;
-	Tue, 20 Feb 2024 21:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F9B14AD15;
+	Tue, 20 Feb 2024 21:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463283; cv=none; b=pzW/Z20XK3LcysFbpAdC4ak93XuTwR0tMtiZbBp2s4CRMv+bHWddg9ORx2ixbz4JvpDtlEmb96jc1WskzdUWv5YvDoWF6HkktisuypSkArVhEfetvd38MO5i33PybpaITfgvy8iRQzpXZ18HuhKWHy7NpMVvv54d1rOfHfiR0QE=
+	t=1708463287; cv=none; b=mA2uSr7jUlRTD9pJNVblKRHYy33KoH+2s7iVSzgVVmCGUkdQmfFJj7QgkJTJBFR2Srnr6R4czMsmR/PQC5NqGMSvjUtXKWdMGjRPjjfF93svTNKaw2WrhMnrHKtNidyuM8E9N+4vgujiahc29nBy5kevSiJNDpihOIVxkpVpZ9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463283; c=relaxed/simple;
-	bh=Vrp6a65B+ek3dn/R05vNshr6BCsuaiRLCEPHWxKZg3E=;
+	s=arc-20240116; t=1708463287; c=relaxed/simple;
+	bh=daPKbMhaGqnwPC+Rg3mROiv26YQyqZCNfsDXzjdd0pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfNjYp/Yc3Z84ZjmcM1OasoOwMuSsua7zzRuHBYpfOJ6R1Y59YQ2zBBBandAz4m3mNsrJmh7khJcWQWekSPfbMn0D55XrP7VhGkneobsAnJ/deXWRRCRe2SENOOolxXRnjOu+5/KBsBTZVlhXEYEuxL8wGKZDsBD6MjxsHcIdRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGOSdkrM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EIazGQXD794n0v8Rnd9OnT7mRipupf5/LwAcMKBLUv7tOP4gHL/h/oe5pFdlpHiPXcRzCA1xIiPRahEdqWlP3ZdwORF727LmtFMFvAQR05M614RNWTJI/TM0eVSdqhVqd32Bhlc60y3EH0jryjwsm+OjBY74nxZdHLmx5byVA5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFA7jgEw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGOSdkrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9A1C433F1;
-	Tue, 20 Feb 2024 21:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFA7jgEw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4D0C433C7;
+	Tue, 20 Feb 2024 21:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463283;
-	bh=Vrp6a65B+ek3dn/R05vNshr6BCsuaiRLCEPHWxKZg3E=;
+	s=korg; t=1708463287;
+	bh=daPKbMhaGqnwPC+Rg3mROiv26YQyqZCNfsDXzjdd0pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGOSdkrMIvigsT/YXSnxTwxT+TA4CuF9rl4R24RYfTQWYwEDFmU1sj3il9OFaXXqY
-	 mieh/Y4xp+6fErqMOndLIbq8l0cVH+NeOVkRGth4Jus/kKLhJddQ/n3budPOiZNCoA
-	 JHLU3cHGGQpPA+RO1ycHdG7KNmvOoN/HsRQRKzDY=
+	b=WFA7jgEwLGNYG7TRLIIqDLs3bsva0as9GZl9YuTbGQ9/VoXpr1shHW+JR+uEdtkkf
+	 tRzXaXrAz9SRQpao2gZt7aHzPHFZ8KE+Y946jelBgYCtgRaR3Zc0unzARb363SXp+p
+	 GoJ5LY8KElxR3ucXP7VYnxSr8ncoJ92nimAsXzvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 193/197] net: prevent mss overflow in skb_segment()
-Date: Tue, 20 Feb 2024 21:52:32 +0100
-Message-ID: <20240220204846.856774520@linuxfoundation.org>
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 167/197] xfrm: Use xfrm_state selector for BEET input
+Date: Tue, 20 Feb 2024 21:52:06 +0100
+Message-ID: <20240220204846.070565693@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,112 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 23d05d563b7e7b0314e65c8e882bc27eac2da8e7 upstream.
+commit 842665a9008a53ff13ac22a4e4b8ae2f10e92aca upstream.
 
-Once again syzbot is able to crash the kernel in skb_segment() [1]
+For BEET the inner address and therefore family is stored in the
+xfrm_state selector.  Use that when decapsulating an input packet
+instead of incorrectly relying on a non-existent tunnel protocol.
 
-GSO_BY_FRAGS is a forbidden value, but unfortunately the following
-computation in skb_segment() can reach it quite easily :
-
-	mss = mss * partial_segs;
-
-65535 = 3 * 5 * 17 * 257, so many initial values of mss can lead to
-a bad final result.
-
-Make sure to limit segmentation so that the new mss value is smaller
-than GSO_BY_FRAGS.
-
-[1]
-
-general protection fault, probably for non-canonical address 0xdffffc000000000e: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 1 PID: 5079 Comm: syz-executor993 Not tainted 6.7.0-rc4-syzkaller-00141-g1ae4cd3cbdd0 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
-RIP: 0010:skb_segment+0x181d/0x3f30 net/core/skbuff.c:4551
-Code: 83 e3 02 e9 fb ed ff ff e8 90 68 1c f9 48 8b 84 24 f8 00 00 00 48 8d 78 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 08 3c 03 0f 8e 8a 21 00 00 48 8b 84 24 f8 00
-RSP: 0018:ffffc900043473d0 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000010046 RCX: ffffffff886b1597
-RDX: 000000000000000e RSI: ffffffff886b2520 RDI: 0000000000000070
-RBP: ffffc90004347578 R08: 0000000000000005 R09: 000000000000ffff
-R10: 000000000000ffff R11: 0000000000000002 R12: ffff888063202ac0
-R13: 0000000000010000 R14: 000000000000ffff R15: 0000000000000046
-FS: 0000555556e7e380(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020010000 CR3: 0000000027ee2000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-udp6_ufo_fragment+0xa0e/0xd00 net/ipv6/udp_offload.c:109
-ipv6_gso_segment+0x534/0x17e0 net/ipv6/ip6_offload.c:120
-skb_mac_gso_segment+0x290/0x610 net/core/gso.c:53
-__skb_gso_segment+0x339/0x710 net/core/gso.c:124
-skb_gso_segment include/net/gso.h:83 [inline]
-validate_xmit_skb+0x36c/0xeb0 net/core/dev.c:3626
-__dev_queue_xmit+0x6f3/0x3d60 net/core/dev.c:4338
-dev_queue_xmit include/linux/netdevice.h:3134 [inline]
-packet_xmit+0x257/0x380 net/packet/af_packet.c:276
-packet_snd net/packet/af_packet.c:3087 [inline]
-packet_sendmsg+0x24c6/0x5220 net/packet/af_packet.c:3119
-sock_sendmsg_nosec net/socket.c:730 [inline]
-__sock_sendmsg+0xd5/0x180 net/socket.c:745
-__sys_sendto+0x255/0x340 net/socket.c:2190
-__do_sys_sendto net/socket.c:2202 [inline]
-__se_sys_sendto net/socket.c:2198 [inline]
-__x64_sys_sendto+0xe0/0x1b0 net/socket.c:2198
-do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe+0x63/0x6b
-RIP: 0033:0x7f8692032aa9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 d1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fff8d685418 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f8692032aa9
-RDX: 0000000000010048 RSI: 00000000200000c0 RDI: 0000000000000003
-RBP: 00000000000f4240 R08: 0000000020000540 R09: 0000000000000014
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007fff8d685480
-R13: 0000000000000001 R14: 00007fff8d685480 R15: 0000000000000003
-</TASK>
-Modules linked in:
----[ end trace 0000000000000000 ]---
-RIP: 0010:skb_segment+0x181d/0x3f30 net/core/skbuff.c:4551
-Code: 83 e3 02 e9 fb ed ff ff e8 90 68 1c f9 48 8b 84 24 f8 00 00 00 48 8d 78 70 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <0f> b6 04 02 84 c0 74 08 3c 03 0f 8e 8a 21 00 00 48 8b 84 24 f8 00
-RSP: 0018:ffffc900043473d0 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000010046 RCX: ffffffff886b1597
-RDX: 000000000000000e RSI: ffffffff886b2520 RDI: 0000000000000070
-RBP: ffffc90004347578 R08: 0000000000000005 R09: 000000000000ffff
-R10: 000000000000ffff R11: 0000000000000002 R12: ffff888063202ac0
-R13: 0000000000010000 R14: 000000000000ffff R15: 0000000000000046
-FS: 0000555556e7e380(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020010000 CR3: 0000000027ee2000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-
-Fixes: 3953c46c3ac7 ("sk_buff: allow segmenting based on frag sizes")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20231212164621.4131800-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5f24f41e8ea6 ("xfrm: Remove inner/outer modes from input path")
+Reported-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_input.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4213,8 +4213,9 @@ struct sk_buff *skb_segment(struct sk_bu
- 		/* GSO partial only requires that we trim off any excess that
- 		 * doesn't fit into an MSS sized block, so take care of that
- 		 * now.
-+		 * Cap len to not accidentally hit GSO_BY_FRAGS.
- 		 */
--		partial_segs = len / mss;
-+		partial_segs = min(len, GSO_BY_FRAGS - 1U) / mss;
- 		if (partial_segs > 1)
- 			mss *= partial_segs;
- 		else
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -331,11 +331,10 @@ xfrm_inner_mode_encap_remove(struct xfrm
+ {
+ 	switch (x->props.mode) {
+ 	case XFRM_MODE_BEET:
+-		switch (XFRM_MODE_SKB_CB(skb)->protocol) {
+-		case IPPROTO_IPIP:
+-		case IPPROTO_BEETPH:
++		switch (x->sel.family) {
++		case AF_INET:
+ 			return xfrm4_remove_beet_encap(x, skb);
+-		case IPPROTO_IPV6:
++		case AF_INET6:
+ 			return xfrm6_remove_beet_encap(x, skb);
+ 		}
+ 		break;
 
 
