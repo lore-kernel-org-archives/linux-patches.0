@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEF21509A5;
-	Tue, 20 Feb 2024 21:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B341151CED;
+	Tue, 20 Feb 2024 21:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463392; cv=none; b=nHjTWp1E6XobRXn7XIpOTgu01TW9NaALgR51SVxfRVCzCNfFcu8FN46+Vgs2gHVhBX9mPunqsMqsr64zcLSyBtltryp0lX26psDC3YGZmSwHNBYRmBndAjzXP5evat4/FJ7X1jAC06c0rJQh0GP2nOMKdMd38Q6jFp7+E93iVDs=
+	t=1708463396; cv=none; b=fmyDYiCtur1TxKzxK0JCQEd9q24RmXglz9Ce7RNYKroDaRATElUoI0t0+NKnxL+F5wW5RnShwC1sLsSIAoaBw6nUYoBg1U5F6Lvmul4R27ynvzXPOtMe2v61H4e813GxqHJRvLAaF4jeBtTQX3edA3eon2qgrfZenDdQG11Fgbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463392; c=relaxed/simple;
-	bh=hHyplAoI7TsPjYld/AaziVSdydDi4VfrNnF4IYGiHMY=;
+	s=arc-20240116; t=1708463396; c=relaxed/simple;
+	bh=O1udH8h27BedeQ8P2CVqEBGsb+hCVrrSMQJn8jtmmiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YPNo0Kw/1465iwoLDElMmOTn+FLHPZYck/JvJUq7Dtq8LfbypWXk/YFHz6ChoewEgTkYvvVNkoQ5tl36c6ipGqt6sAayyh8H8JD6M+UsXplji0N8eGhfjujSn0d7vQYFXea7KCfC2CrGNRpMo3+cle2jCqM0qKcyEWr2NaoySqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hU/diUTY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZS4yGyDwxzdFVArLeRK/aiKtp3fzkU+jNki6GXy9StZRaNN3H9Jl6+Ge3AGdntr4Umb3btcyo+OZc61dZ8BfxCRWJpecnnWtIDUR0eTKb8tiuZXVDdnAxpNtzRt+zABAx58ZeAh7uIyXCodQkfafasW+uymqueHyPaTLSBiPF9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZkpiir9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hU/diUTY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F52C433C7;
-	Tue, 20 Feb 2024 21:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZkpiir9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A537C433F1;
+	Tue, 20 Feb 2024 21:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463392;
-	bh=hHyplAoI7TsPjYld/AaziVSdydDi4VfrNnF4IYGiHMY=;
+	s=korg; t=1708463395;
+	bh=O1udH8h27BedeQ8P2CVqEBGsb+hCVrrSMQJn8jtmmiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hU/diUTYBhkuAl5eN9X1LoSpj2Iib9/az+Pk9yiCgdfOp4xVvB9J9KOO8VHSFH1zG
-	 BytvpljVgXu+D8IQapcqOOdEfzrcX9YqglnVTRjU0fA0r5/WDTwULu3uSFjif9FCmP
-	 HrDizh5ztgVDHK+ECJtthEUsIskEsMpew5Bdbar4=
+	b=GZkpiir9Jbjx2nKAgFUwTt1MJXNdSRA1gwTVot2osv1Tyc0FqZxCLfOd59wgNdLAf
+	 o7nlP6C/JB4uNoexQ0EYBg1p/tlz9q5Yos7dABeEuXxRmmf3xQciCOOobBdEpJnUFB
+	 4/w2vPjokjhUlYXG/oKrXEss1wQsU4MvGEeEmXUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/331] ASoC: SOF: ipc3-topology: Fix pipeline tear down logic
-Date: Tue, 20 Feb 2024 21:52:18 +0100
-Message-ID: <20240220205638.286673635@linuxfoundation.org>
+Subject: [PATCH 6.6 031/331] selftests: net: Fix bridge backup port test flakiness
+Date: Tue, 20 Feb 2024 21:52:27 +0100
+Message-ID: <20240220205638.568521586@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -47,126 +48,166 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit d7332c4a4f1a7d16f054c6357fb65c597b6a86a7 ]
+[ Upstream commit 38ee0cb2a2e2ade077442085638eb181b0562971 ]
 
-With the change in the widget free logic to power down the cores only
-when the scheduler widgets are freed, we need to ensure that the
-scheduler widget is freed only after all the widgets associated with the
-scheduler are freed. This is to ensure that the secondary core that the
-scheduler is scheduled to run on is kept powered on until all widgets
-that need them are in use. While this works well for dynamic pipelines,
-in the case of static pipelines the current logic does not take this into
-account and frees all widgets in the order they occur in the
-widget_list. So, modify this to ensure that the scheduler widgets are freed
-only after all other types of widgets in the widget_list are freed.
+The test toggles the carrier of a bridge port in order to test the
+bridge backup port feature.
 
-Link: https://github.com/thesofproject/linux/issues/4807
-Fixes: 31ed8da1c8e5 ("ASoC: SOF: sof-audio: Modify logic for enabling/disabling topology cores")
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20240208133432.1688-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Due to the linkwatch delayed work the carrier change is not always
+reflected fast enough to the bridge driver and packets are not forwarded
+as the test expects, resulting in failures [1].
+
+Fix by busy waiting on the bridge port state until it changes to the
+desired state following the carrier change.
+
+[1]
+ # Backup port
+ # -----------
+ [...]
+ # TEST: swp1 carrier off                                              [ OK ]
+ # TEST: No forwarding out of swp1                                     [FAIL]
+ [  641.995910] br0: port 1(swp1) entered disabled state
+ # TEST: No forwarding out of vx0                                      [ OK ]
+
+Fixes: b408453053fb ("selftests: net: Add bridge backup port and backup nexthop ID test")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20240208123110.1063930-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/ipc3-topology.c | 55 ++++++++++++++++++++++++++---------
- 1 file changed, 41 insertions(+), 14 deletions(-)
+ .../selftests/net/test_bridge_backup_port.sh  | 23 +++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/sound/soc/sof/ipc3-topology.c b/sound/soc/sof/ipc3-topology.c
-index 2c7a5e7a364c..d96555438c6b 100644
---- a/sound/soc/sof/ipc3-topology.c
-+++ b/sound/soc/sof/ipc3-topology.c
-@@ -2309,27 +2309,16 @@ static int sof_tear_down_left_over_pipelines(struct snd_sof_dev *sdev)
- 	return 0;
+diff --git a/tools/testing/selftests/net/test_bridge_backup_port.sh b/tools/testing/selftests/net/test_bridge_backup_port.sh
+index 70a7d87ba2d2..1b3f89e2b86e 100755
+--- a/tools/testing/selftests/net/test_bridge_backup_port.sh
++++ b/tools/testing/selftests/net/test_bridge_backup_port.sh
+@@ -124,6 +124,16 @@ tc_check_packets()
+ 	[[ $pkts == $count ]]
  }
  
--/*
-- * For older firmware, this function doesn't free widgets for static pipelines during suspend.
-- * It only resets use_count for all widgets.
-- */
--static int sof_ipc3_tear_down_all_pipelines(struct snd_sof_dev *sdev, bool verify)
-+static int sof_ipc3_free_widgets_in_list(struct snd_sof_dev *sdev, bool include_scheduler,
-+					 bool *dyn_widgets, bool verify)
- {
- 	struct sof_ipc_fw_version *v = &sdev->fw_ready.version;
- 	struct snd_sof_widget *swidget;
--	struct snd_sof_route *sroute;
--	bool dyn_widgets = false;
- 	int ret;
- 
--	/*
--	 * This function is called during suspend and for one-time topology verification during
--	 * first boot. In both cases, there is no need to protect swidget->use_count and
--	 * sroute->setup because during suspend all running streams are suspended and during
--	 * topology loading the sound card unavailable to open PCMs.
--	 */
- 	list_for_each_entry(swidget, &sdev->widget_list, list) {
- 		if (swidget->dynamic_pipeline_widget) {
--			dyn_widgets = true;
-+			*dyn_widgets = true;
- 			continue;
- 		}
- 
-@@ -2344,11 +2333,49 @@ static int sof_ipc3_tear_down_all_pipelines(struct snd_sof_dev *sdev, bool verif
- 			continue;
- 		}
- 
-+		if (include_scheduler && swidget->id != snd_soc_dapm_scheduler)
-+			continue;
++bridge_link_check()
++{
++	local ns=$1; shift
++	local dev=$1; shift
++	local state=$1; shift
 +
-+		if (!include_scheduler && swidget->id == snd_soc_dapm_scheduler)
-+			continue;
-+
- 		ret = sof_widget_free(sdev, swidget);
- 		if (ret < 0)
- 			return ret;
- 	}
- 
-+	return 0;
++	bridge -n $ns -d -j link show dev $dev | \
++		jq -e ".[][\"state\"] == \"$state\"" &> /dev/null
 +}
 +
-+/*
-+ * For older firmware, this function doesn't free widgets for static pipelines during suspend.
-+ * It only resets use_count for all widgets.
-+ */
-+static int sof_ipc3_tear_down_all_pipelines(struct snd_sof_dev *sdev, bool verify)
-+{
-+	struct sof_ipc_fw_version *v = &sdev->fw_ready.version;
-+	struct snd_sof_widget *swidget;
-+	struct snd_sof_route *sroute;
-+	bool dyn_widgets = false;
-+	int ret;
-+
-+	/*
-+	 * This function is called during suspend and for one-time topology verification during
-+	 * first boot. In both cases, there is no need to protect swidget->use_count and
-+	 * sroute->setup because during suspend all running streams are suspended and during
-+	 * topology loading the sound card unavailable to open PCMs. Do not free the scheduler
-+	 * widgets yet so that the secondary cores do not get powered down before all the widgets
-+	 * associated with the scheduler are freed.
-+	 */
-+	ret = sof_ipc3_free_widgets_in_list(sdev, false, &dyn_widgets, verify);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* free all the scheduler widgets now */
-+	ret = sof_ipc3_free_widgets_in_list(sdev, true, &dyn_widgets, verify);
-+	if (ret < 0)
-+		return ret;
-+
- 	/*
- 	 * Tear down all pipelines associated with PCMs that did not get suspended
- 	 * and unset the prepare flag so that they can be set up again during resume.
+ ################################################################################
+ # Setup
+ 
+@@ -259,6 +269,7 @@ backup_port()
+ 	log_test $? 0 "No forwarding out of vx0"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	log_test $? 0 "swp1 carrier off"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -268,6 +279,7 @@ backup_port()
+ 	log_test $? 0 "No forwarding out of vx0"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
+ 	log_test $? 0 "swp1 carrier on"
+ 
+ 	# Configure vx0 as the backup port of swp1 and check that packets are
+@@ -284,6 +296,7 @@ backup_port()
+ 	log_test $? 0 "No forwarding out of vx0"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	log_test $? 0 "swp1 carrier off"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -293,6 +306,7 @@ backup_port()
+ 	log_test $? 0 "Forwarding out of vx0"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
+ 	log_test $? 0 "swp1 carrier on"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -314,6 +328,7 @@ backup_port()
+ 	log_test $? 0 "No forwarding out of vx0"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	log_test $? 0 "swp1 carrier off"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -369,6 +384,7 @@ backup_nhid()
+ 	log_test $? 0 "No forwarding out of vx0"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	log_test $? 0 "swp1 carrier off"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -382,6 +398,7 @@ backup_nhid()
+ 	log_test $? 0 "Forwarding using VXLAN FDB entry"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
+ 	log_test $? 0 "swp1 carrier on"
+ 
+ 	# Configure nexthop ID 10 as the backup nexthop ID of swp1 and check
+@@ -398,6 +415,7 @@ backup_nhid()
+ 	log_test $? 0 "No forwarding out of vx0"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	log_test $? 0 "swp1 carrier off"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -411,6 +429,7 @@ backup_nhid()
+ 	log_test $? 0 "No forwarding using VXLAN FDB entry"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier on"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 forwarding
+ 	log_test $? 0 "swp1 carrier on"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -441,6 +460,7 @@ backup_nhid()
+ 	log_test $? 0 "No forwarding using VXLAN FDB entry"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	log_test $? 0 "swp1 carrier off"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -497,6 +517,7 @@ backup_nhid_invalid()
+ 	log_test $? 0 "Valid nexthop as backup nexthop"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	log_test $? 0 "swp1 carrier off"
+ 
+ 	run_cmd "ip netns exec $sw1 mausezahn br0.10 -a $smac -b $dmac -A 198.51.100.1 -B 198.51.100.2 -t ip -p 100 -q -c 1"
+@@ -604,7 +625,9 @@ backup_nhid_ping()
+ 	run_cmd "bridge -n $sw2 link set dev swp1 backup_nhid 10"
+ 
+ 	run_cmd "ip -n $sw1 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw1 swp1 disabled
+ 	run_cmd "ip -n $sw2 link set dev swp1 carrier off"
++	busywait $BUSYWAIT_TIMEOUT bridge_link_check $sw2 swp1 disabled
+ 
+ 	run_cmd "ip netns exec $sw1 ping -i 0.1 -c 10 -w $PING_TIMEOUT 192.0.2.66"
+ 	log_test $? 0 "Ping with backup nexthop ID"
 -- 
 2.43.0
 
