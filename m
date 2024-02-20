@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6109C612D7;
-	Tue, 20 Feb 2024 21:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D084612D7;
+	Tue, 20 Feb 2024 21:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465224; cv=none; b=kl0H0bclhjRhAUW+YXjPd2UW7O/RjpgQAR416+INsZh81fScXTGJ4byCn2W40D0hJjLzZdv9fu6mw2acgMFv3ZzJ0YwUQT6qfiaWD663SkFJHxcn6hXTYZC+3iCibeA9oC+FHEO5z16O5F2sI8lTGrh5o+3leQW/nXR1tg6+1Bo=
+	t=1708465227; cv=none; b=l61azpdvinbgIAtHQ7D9TASTGOaRhJk6BkKxrM3ngtc110mDbvyT6lHaR2oII9OZvZbzWBOuX41eGZ0xNFeTKSt+7Qla4FRghpr7zq+NQNoGFG3+43bNHe2f6f6uNRjYU56sEzSrRRQ8Gx9B1z9EHjkct2sTn1uHH/Pqm8rXrSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465224; c=relaxed/simple;
-	bh=rd8yQ7wnmfvmb6yA1wdmyzKvUG8/JPwkLSVyyel92hI=;
+	s=arc-20240116; t=1708465227; c=relaxed/simple;
+	bh=eEXrEmb6MGlyxmk4MOOpaaMb1ol5UQmNrrbKXWEq1YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYUYEMRRab8iHkeeufWegspUv7vtN/dqozCXr/bVXkTZ6GXuynAhvOwDxp/HR4f9LU4kj/j1TD3XhFNQblRijOJOZ+3ksyJOf7xSxhlA96VlnnYCtw0YW4cp5MW7Y3QMRBzVEV9Ls/kCAESOZoS8fOKDROg8aZ9x8zX8YDwQTFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulFSXda4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s95QRZaQC/p2JujE6VniLJyTGeu3jvYGAWECNVY7KC+2roFZo7qDSaaiE8iD/yiCBgwPJclInt0Beufj+000M4j166NVNC3qMkDGGz7goPId3pjepDgy3wpdrTxavHJ25z5ZOUpPP8B6Sn6rE5Hy3YvEjoOnd+g1N1hm/HwVdPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12hKZdSh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulFSXda4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4FB7C433F1;
-	Tue, 20 Feb 2024 21:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12hKZdSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0325C433C7;
+	Tue, 20 Feb 2024 21:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465224;
-	bh=rd8yQ7wnmfvmb6yA1wdmyzKvUG8/JPwkLSVyyel92hI=;
+	s=korg; t=1708465227;
+	bh=eEXrEmb6MGlyxmk4MOOpaaMb1ol5UQmNrrbKXWEq1YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ulFSXda41+VNrGEZtMweGOyYUzDneR9fFai7P4dwVGxGBPSQjQHFA9Jy0JnJzmHRB
-	 8fH7zrUYqp0M6E0vYt0TqwDkAz/0Y/e1jopCryJKqzrrW3l8c0UFnVitvvP+faTdks
-	 mgQjTB9aeiFBuRbsHJk0afm1//uECrqyHFNYOyU8=
+	b=12hKZdShyhkZNeGEWLIkt/ghWf/EjiZ15yKpkP2iecUJb7NuYhNl+lq2ASAJmFmYt
+	 AGxRqwFrVTc8S7roemrVIWfwVIj9lfkVNJoDJGch6fVMo9TlWsGm57UXyVJ2zTGmB5
+	 D4gaUHb4AcOGiXNGnladxeVsEtpGmTqNd8sAYDCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Kacur <jkacur@redhat.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Donald Zickus <dzickus@redhat.com>,
 	Daniel Bristot de Oliveira <bristot@kernel.org>
-Subject: [PATCH 6.7 275/309] tools/rtla: Exit with EXIT_SUCCESS when help is invoked
-Date: Tue, 20 Feb 2024 21:57:14 +0100
-Message-ID: <20240220205641.730965462@linuxfoundation.org>
+Subject: [PATCH 6.7 276/309] tools/rtla: Fix uninitialized bucket/data->bucket_size warning
+Date: Tue, 20 Feb 2024 21:57:15 +0100
+Message-ID: <20240220205641.759093747@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,90 +55,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Kacur <jkacur@redhat.com>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit b5f319360371087d52070d8f3fc7789e80ce69a6 upstream.
+commit 64dc40f7523369912d7adb22c8cb655f71610505 upstream.
 
-Fix rtla so that the following commands exit with 0 when help is invoked
+When compiling rtla with clang, I am getting the following warnings:
 
-rtla osnoise top -h
-rtla osnoise hist -h
-rtla timerlat top -h
-rtla timerlat hist -h
+$ make HOSTCC=clang CC=clang LLVM_IAS=1
 
-Link: https://lore.kernel.org/linux-trace-devel/20240203001607.69703-1-jkacur@redhat.com
+[..]
+clang -O -g -DVERSION=\"6.8.0-rc3\" -flto=auto -fexceptions
+	-fstack-protector-strong -fasynchronous-unwind-tables
+	-fstack-clash-protection  -Wall -Werror=format-security
+	-Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
+	$(pkg-config --cflags libtracefs)
+	-c -o src/osnoise_hist.o src/osnoise_hist.c
+src/osnoise_hist.c:138:6: warning: variable 'bucket' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+  138 |         if (data->bucket_size)
+      |             ^~~~~~~~~~~~~~~~~
+src/osnoise_hist.c:149:6: note: uninitialized use occurs here
+  149 |         if (bucket < entries)
+      |             ^~~~~~
+src/osnoise_hist.c:138:2: note: remove the 'if' if its condition is always true
+  138 |         if (data->bucket_size)
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+  139 |                 bucket = duration / data->bucket_size;
+src/osnoise_hist.c:132:12: note: initialize the variable 'bucket' to silence this warning
+  132 |         int bucket;
+      |                   ^
+      |                    = 0
+1 warning generated.
+
+[...]
+
+clang -O -g -DVERSION=\"6.8.0-rc3\" -flto=auto -fexceptions
+	-fstack-protector-strong -fasynchronous-unwind-tables
+	-fstack-clash-protection  -Wall -Werror=format-security
+	-Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
+	$(pkg-config --cflags libtracefs)
+	-c -o src/timerlat_hist.o src/timerlat_hist.c
+src/timerlat_hist.c:181:6: warning: variable 'bucket' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+  181 |         if (data->bucket_size)
+      |             ^~~~~~~~~~~~~~~~~
+src/timerlat_hist.c:204:6: note: uninitialized use occurs here
+  204 |         if (bucket < entries)
+      |             ^~~~~~
+src/timerlat_hist.c:181:2: note: remove the 'if' if its condition is always true
+  181 |         if (data->bucket_size)
+      |         ^~~~~~~~~~~~~~~~~~~~~~
+  182 |                 bucket = latency / data->bucket_size;
+src/timerlat_hist.c:175:12: note: initialize the variable 'bucket' to silence this warning
+  175 |         int bucket;
+      |                   ^
+      |                    = 0
+1 warning generated.
+
+This is a legit warning, but data->bucket_size is always > 0 (see
+timerlat_hist_parse_args()), so the if is not necessary.
+
+Remove the unneeded if (data->bucket_size) to avoid the warning.
+
+Link: https://lkml.kernel.org/r/6e1b1665cd99042ae705b3e0fc410858c4c42346.1707217097.git.bristot@kernel.org
 
 Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Donald Zickus <dzickus@redhat.com>
 Fixes: 1eeb6328e8b3 ("rtla/timerlat: Add timerlat hist mode")
-Signed-off-by: John Kacur <jkacur@redhat.com>
+Fixes: 829a6c0b5698 ("rtla/osnoise: Add the hist mode")
 Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/rtla/src/osnoise_hist.c  |    6 +++++-
- tools/tracing/rtla/src/osnoise_top.c   |    6 +++++-
- tools/tracing/rtla/src/timerlat_hist.c |    6 +++++-
- tools/tracing/rtla/src/timerlat_top.c  |    6 +++++-
- 4 files changed, 20 insertions(+), 4 deletions(-)
+ tools/tracing/rtla/src/osnoise_hist.c  |    3 +--
+ tools/tracing/rtla/src/timerlat_hist.c |    3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
 --- a/tools/tracing/rtla/src/osnoise_hist.c
 +++ b/tools/tracing/rtla/src/osnoise_hist.c
-@@ -480,7 +480,11 @@ static void osnoise_hist_usage(char *usa
+@@ -135,8 +135,7 @@ static void osnoise_hist_update_multiple
+ 	if (params->output_divisor)
+ 		duration = duration / params->output_divisor;
  
- 	for (i = 0; msg[i]; i++)
- 		fprintf(stderr, "%s\n", msg[i]);
--	exit(1);
-+
-+	if (usage)
-+		exit(EXIT_FAILURE);
-+
-+	exit(EXIT_SUCCESS);
- }
+-	if (data->bucket_size)
+-		bucket = duration / data->bucket_size;
++	bucket = duration / data->bucket_size;
  
- /*
---- a/tools/tracing/rtla/src/osnoise_top.c
-+++ b/tools/tracing/rtla/src/osnoise_top.c
-@@ -331,7 +331,11 @@ static void osnoise_top_usage(struct osn
+ 	total_duration = duration * count;
  
- 	for (i = 0; msg[i]; i++)
- 		fprintf(stderr, "%s\n", msg[i]);
--	exit(1);
-+
-+	if (usage)
-+		exit(EXIT_FAILURE);
-+
-+	exit(EXIT_SUCCESS);
- }
- 
- /*
 --- a/tools/tracing/rtla/src/timerlat_hist.c
 +++ b/tools/tracing/rtla/src/timerlat_hist.c
-@@ -546,7 +546,11 @@ static void timerlat_hist_usage(char *us
+@@ -178,8 +178,7 @@ timerlat_hist_update(struct osnoise_tool
+ 	if (params->output_divisor)
+ 		latency = latency / params->output_divisor;
  
- 	for (i = 0; msg[i]; i++)
- 		fprintf(stderr, "%s\n", msg[i]);
--	exit(1);
-+
-+	if (usage)
-+		exit(EXIT_FAILURE);
-+
-+	exit(EXIT_SUCCESS);
- }
+-	if (data->bucket_size)
+-		bucket = latency / data->bucket_size;
++	bucket = latency / data->bucket_size;
  
- /*
---- a/tools/tracing/rtla/src/timerlat_top.c
-+++ b/tools/tracing/rtla/src/timerlat_top.c
-@@ -375,7 +375,11 @@ static void timerlat_top_usage(char *usa
- 
- 	for (i = 0; msg[i]; i++)
- 		fprintf(stderr, "%s\n", msg[i]);
--	exit(1);
-+
-+	if (usage)
-+		exit(EXIT_FAILURE);
-+
-+	exit(EXIT_SUCCESS);
- }
- 
- /*
+ 	if (!context) {
+ 		hist = data->hist[cpu].irq;
 
 
