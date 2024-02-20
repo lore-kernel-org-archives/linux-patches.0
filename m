@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EEA76C9C;
-	Tue, 20 Feb 2024 21:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE71076C9C;
+	Tue, 20 Feb 2024 21:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463447; cv=none; b=oKNIx4UpzR6BOB2gZOlQojnYdGyewLHSdr+WkkbxvnO5tuA+eWPmViBtxiAYW31dFkpBUJAQ9VO8Q4m+I32llzE0mSvcjZ3zPYOgvVlbGBuczQCfVY9Y7MMoBj8uj7hm4nnjnSsvh9TxCCytOnXCBtRm7pGmtHQRVG6toMQWSYg=
+	t=1708463450; cv=none; b=be8LrqwD9x5aDGKadWggH3MfG9dPqjVL2X3BLXnz4pYlG89dVs2ufsJELH1r8WLjTrK4dyQmZV914bTFGRhh7/rLFlcnq5bmrburhfUqWzqn2gtIQZWKiM4qYiP7HPOxIONK4FhDgqZFEtXnFBnuZTlKItmNe85plbHOqyYTe/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463447; c=relaxed/simple;
-	bh=VWvrR1slrzNDnQixeRfq8WKztzgOjtuCMr4xvz5fpHY=;
+	s=arc-20240116; t=1708463450; c=relaxed/simple;
+	bh=iWOiZyHWS/MgVqxzbzF7ASgOG0AftG4R2axkZw4JFGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZwCjH9xh9pIntOmhpA75EuwRDxoVmidMj65yydV7RVnRVcMbH6LUGAWwk7eZUDUGn7W69t4WFSirsrWwLroXAAHONMMeZqLPMUJmKqL3Jr+yF5M6xdAX1mpPQOiwAcrGdZPZWSLx50Xo01Fp0TXGtMlF38bDPcHFfp/YybPHWus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lTr3KXk2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N5+DvISVUIcix6syMKA5zl9Nk9DBmpJdCTeNYd4AlfMhuyLmUjIu1AAWckjix/abRD0YI9kpYrUvLIOs3UNI/E/mohvSfX+CtsIGL6gqlzvC7jzg73BvElpe4yZ/IeftvFi6MvGTRaykuTCveFY6/A+pq1WdQy+p6VxzzUCYa80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gy5CwMoS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lTr3KXk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63CBC433C7;
-	Tue, 20 Feb 2024 21:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gy5CwMoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C99FC433F1;
+	Tue, 20 Feb 2024 21:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463447;
-	bh=VWvrR1slrzNDnQixeRfq8WKztzgOjtuCMr4xvz5fpHY=;
+	s=korg; t=1708463450;
+	bh=iWOiZyHWS/MgVqxzbzF7ASgOG0AftG4R2axkZw4JFGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lTr3KXk2DUx7BTA/LFD1mpgLpugbmTOusRxAVuJ9fMb1agYEKuEc++mgJMx/NdeyX
-	 K47gBBIi+oOD7uHP35OcOkKnQkMVk3fQhWn+nPapETy4J0TqbCnODMeZ2bgIYlouev
-	 KOBD0YKkSPV8PuGI8L1IsVEkTCkClbojnRhvvNhk=
+	b=gy5CwMoSnGSZNgoKnPHTixKrZet7YTGzs01/F6AmCSKq8EjbeisylILdZ48zL2XCa
+	 hiWpgfsCxdcqien/UkO90iic848kC+MpfVGAUgGY9E+FIeipi/WZIP3o8IVB6/9qFQ
+	 5TisFUEcLU6iwn81xwO+Tlha2t9csOPVscWaJLBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/331] spi: ppc4xx: Drop write-only variable
-Date: Tue, 20 Feb 2024 21:52:42 +0100
-Message-ID: <20240220205639.051359406@linuxfoundation.org>
+Subject: [PATCH 6.6 047/331] ASoC: rt5645: Fix deadlock in rt5645_jack_detect_work()
+Date: Tue, 20 Feb 2024 21:52:43 +0100
+Message-ID: <20240220205639.080646203@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -45,57 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Alexey Khoroshilov <khoroshilov@ispras.ru>
 
-[ Upstream commit b3aa619a8b4706f35cb62f780c14e68796b37f3f ]
+[ Upstream commit 6ef5d5b92f7117b324efaac72b3db27ae8bb3082 ]
 
-Since commit 24778be20f87 ("spi: convert drivers to use
-bits_per_word_mask") the bits_per_word variable is only written to. The
-check that was there before isn't needed any more as the spi core
-ensures that only 8 bit transfers are used, so the variable can go away
-together with all assignments to it.
+There is a path in rt5645_jack_detect_work(), where rt5645->jd_mutex
+is left locked forever. That may lead to deadlock
+when rt5645_jack_detect_work() is called for the second time.
 
-Fixes: 24778be20f87 ("spi: convert drivers to use bits_per_word_mask")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20240210164006.208149-8-u.kleine-koenig@pengutronix.de
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: cdba4301adda ("ASoC: rt5650: add mutex to avoid the jack detection failure")
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Link: https://lore.kernel.org/r/1707645514-21196-1-git-send-email-khoroshilov@ispras.ru
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ppc4xx.c | 5 -----
- 1 file changed, 5 deletions(-)
+ sound/soc/codecs/rt5645.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-ppc4xx.c b/drivers/spi/spi-ppc4xx.c
-index 03aab661be9d..e982d3189fdc 100644
---- a/drivers/spi/spi-ppc4xx.c
-+++ b/drivers/spi/spi-ppc4xx.c
-@@ -166,10 +166,8 @@ static int spi_ppc4xx_setupxfer(struct spi_device *spi, struct spi_transfer *t)
- 	int scr;
- 	u8 cdm = 0;
- 	u32 speed;
--	u8 bits_per_word;
- 
- 	/* Start with the generic configuration for this device. */
--	bits_per_word = spi->bits_per_word;
- 	speed = spi->max_speed_hz;
- 
- 	/*
-@@ -177,9 +175,6 @@ static int spi_ppc4xx_setupxfer(struct spi_device *spi, struct spi_transfer *t)
- 	 * the transfer to overwrite the generic configuration with zeros.
- 	 */
- 	if (t) {
--		if (t->bits_per_word)
--			bits_per_word = t->bits_per_word;
--
- 		if (t->speed_hz)
- 			speed = min(t->speed_hz, spi->max_speed_hz);
- 	}
+diff --git a/sound/soc/codecs/rt5645.c b/sound/soc/codecs/rt5645.c
+index edcb85bd8ea7..ea08b7cfc31d 100644
+--- a/sound/soc/codecs/rt5645.c
++++ b/sound/soc/codecs/rt5645.c
+@@ -3314,6 +3314,7 @@ static void rt5645_jack_detect_work(struct work_struct *work)
+ 				    report, SND_JACK_HEADPHONE);
+ 		snd_soc_jack_report(rt5645->mic_jack,
+ 				    report, SND_JACK_MICROPHONE);
++		mutex_unlock(&rt5645->jd_mutex);
+ 		return;
+ 	case 4:
+ 		val = snd_soc_component_read(rt5645->component, RT5645_A_JD_CTRL1) & 0x0020;
 -- 
 2.43.0
 
