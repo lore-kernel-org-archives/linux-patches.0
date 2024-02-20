@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD99B152DF4;
-	Tue, 20 Feb 2024 21:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BF114F9DA;
+	Tue, 20 Feb 2024 21:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465157; cv=none; b=PSFip0SKxK2js5Nfe0aFxwzCxqFkGESawtHoOtGHyUvcTapOk3p3Azcl4LI/XRwUdnUIebeGrSzRO0Z77BqxU69IpBbDhDQ86ulHe1YYb/nvMqbx8YEb/Hxqv7EeLTSXaR2QVkZPRiunOIHB4QgdNscsw0v4aw2h34R7mV03bLc=
+	t=1708465161; cv=none; b=osTm80cCmuFEkQId3X/MLFNYU4CNto33xG7j9tE+HfhUPJqK03mmHL+s9ZVASkjzXzReGeQ67GltTSBUr81JX/YwyzFIhv0qEG74ihRx/wHR4gj/92gN28er8v9gtUgkczz0XiEiZgMKhT/ENsUB8snpI4CK0NjQ6TfpvXZSJ04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465157; c=relaxed/simple;
-	bh=yUx0B+EyJTpurDIS3NjvAL13wjl4/u6u8vYroWyinqI=;
+	s=arc-20240116; t=1708465161; c=relaxed/simple;
+	bh=k47dbgkGM4ZPoYkYYzNtrYGcjKCp3G99yc2ZzZmfy8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3774VlR18MjIwKurHI7IE2Ty45+44Flks0AIRQIEVZexHw4jVN7yTy+BYHyoqBduIRarsz3bsVg4eGzGzoSRG3f/BrQALzJJdQupZYKjCNySRmSmLiDQh1Yxei9i7dHg/e3BBugeBD7kqa/mnr9nFTTuXdA+Zrmi7aWjjeXZ88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsUUNtRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/PLQKOQqKQwpyhDiEj01D7pFhvelFcrgPNP/zTf689QTQ04e6hQXVQjxmM90MJL6XNOttdlx7JOxjSUtStbfU1stpwrNNgIPVTAcUf2YSRfflIg2+qU5AtapIoZW7HpamTCokC9LF68zZ67htjPkwIKEdweMvPu05jXBfvGk0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7Qz+2fp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsUUNtRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD5C433F1;
-	Tue, 20 Feb 2024 21:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7Qz+2fp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68748C433F1;
+	Tue, 20 Feb 2024 21:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465157;
-	bh=yUx0B+EyJTpurDIS3NjvAL13wjl4/u6u8vYroWyinqI=;
+	s=korg; t=1708465160;
+	bh=k47dbgkGM4ZPoYkYYzNtrYGcjKCp3G99yc2ZzZmfy8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FsUUNtRWNb5GgimmcVFZZQ30IFahA04EDcFGOl+yaROwG1OF3CtnEtqYmWzEboFym
-	 IR8ElpqEj7RXYHj758vKzCdKf/OYubsX1eKl0X5PLOpjg7UQSbA1jc8hj6g2NZ4igB
-	 F2FC+HMRZr7BzwMG5XoA7UR9thohEcdkaC491/4I=
+	b=r7Qz+2fp4U/eUcjLR++WfOXpvx96MHdwV7L8Nd052Cw04oYLNsD6msog4zuMD+C41
+	 JYbXDg+rVAH7AyBQLzCQ3Nip3y19EbJ3SixtysBKFhCDNGgaCu0IkDN0mcCM+9PMKG
+	 cUPErtWdqMc8woDmYhvpPMQw9G+o9MsxNCrTU6K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.7 253/309] wifi: iwlwifi: mvm: fix a crash when we run out of stations
-Date: Tue, 20 Feb 2024 21:56:52 +0100
-Message-ID: <20240220205641.083597578@linuxfoundation.org>
+	"Nysal Jan K.A" <nysal@linux.ibm.com>,
+	Naveen N Rao <naveen@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.7 226/309] powerpc/64: Set task pt_regs->link to the LR value on scv entry
+Date: Tue, 20 Feb 2024 21:56:25 +0100
+Message-ID: <20240220205640.225148512@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,59 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Naveen N Rao <naveen@kernel.org>
 
-commit b7198383ef2debe748118996f627452281cf27d7 upstream.
+commit aad98efd0b121f63a2e1c221dcb4d4850128c697 upstream.
 
-A DoS tool that injects loads of authentication frames made our AP
-crash. The iwl_mvm_is_dup() function couldn't find the per-queue
-dup_data which was not allocated.
+Nysal reported that userspace backtraces are missing in offcputime bcc
+tool. As an example:
+    $ sudo ./bcc/tools/offcputime.py -uU
+    Tracing off-CPU time (us) of user threads by user stack... Hit Ctrl-C to end.
 
-The root cause for that is that we ran out of stations in the firmware
-and we didn't really add the station to the firmware, yet we didn't
-return an error to mac80211.
-Mac80211 was thinking that we have the station and because of that,
-sta_info::uploaded was set to 1. This allowed
-ieee80211_find_sta_by_ifaddr() to return a valid station object, but
-that ieee80211_sta didn't have any iwl_mvm_sta object initialized and
-that caused the crash mentioned earlier when we got Rx on that station.
+    ^C
+	write
+	-                python (9107)
+	    8
 
+	write
+	-                sudo (9105)
+	    9
+
+	mmap
+	-                python (9107)
+	    16
+
+	clock_nanosleep
+	-                multipathd (697)
+	    3001604
+
+The offcputime bcc tool attaches a bpf program to a kprobe on
+finish_task_switch(), which is usually hit on a syscall from userspace.
+With the switch to system call vectored, we started setting
+pt_regs->link to zero. This is because system call vectored behaves like
+a function call with LR pointing to the system call return address, and
+with no modification to SRR0/SRR1. The LR value does indicate our next
+instruction, so it is being saved as pt_regs->nip, and pt_regs->link is
+being set to zero. This is not a problem by itself, but BPF uses perf
+callchain infrastructure for capturing stack traces, and that stores LR
+as the second entry in the stack trace. perf has code to cope with the
+second entry being zero, and skips over it. However, generic userspace
+unwinders assume that a zero entry indicates end of the stack trace,
+resulting in a truncated userspace stack trace.
+
+Rather than fixing all userspace unwinders to ignore/skip past the
+second entry, store the real LR value in pt_regs->link so that there
+continues to be a valid, though duplicate entry in the stack trace.
+
+With this change:
+    $ sudo ./bcc/tools/offcputime.py -uU
+    Tracing off-CPU time (us) of user threads by user stack... Hit Ctrl-C to end.
+
+    ^C
+	write
+	write
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	PyObject_VectorcallMethod
+	[unknown]
+	[unknown]
+	PyObject_CallOneArg
+	PyFile_WriteObject
+	PyFile_WriteString
+	[unknown]
+	[unknown]
+	PyObject_Vectorcall
+	_PyEval_EvalFrameDefault
+	PyEval_EvalCode
+	[unknown]
+	[unknown]
+	[unknown]
+	_PyRun_SimpleFileObject
+	_PyRun_AnyFileObject
+	Py_RunMain
+	[unknown]
+	Py_BytesMain
+	[unknown]
+	__libc_start_main
+	-                python (1293)
+	    7
+
+	write
+	write
+	[unknown]
+	sudo_ev_loop_v1
+	sudo_ev_dispatch_v1
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	__libc_start_main
+	-                sudo (1291)
+	    7
+
+	syscall
+	syscall
+	bpf_open_perf_buffer_opts
+	[unknown]
+	[unknown]
+	[unknown]
+	[unknown]
+	_PyObject_MakeTpCall
+	PyObject_Vectorcall
+	_PyEval_EvalFrameDefault
+	PyEval_EvalCode
+	[unknown]
+	[unknown]
+	[unknown]
+	_PyRun_SimpleFileObject
+	_PyRun_AnyFileObject
+	Py_RunMain
+	[unknown]
+	Py_BytesMain
+	[unknown]
+	__libc_start_main
+	-                python (1293)
+	    11
+
+	clock_nanosleep
+	clock_nanosleep
+	nanosleep
+	sleep
+	[unknown]
+	[unknown]
+	__clone
+	-                multipathd (698)
+	    3001661
+
+Fixes: 7fa95f9adaee ("powerpc/64s: system call support for scv/rfscv instructions")
 Cc: stable@vger.kernel.org
-Fixes: 57974a55d995 ("wifi: iwlwifi: mvm: refactor iwl_mvm_mac_sta_state_common()")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240206175739.1f76c44b2486.I6a00955e2842f15f0a089db2f834adb9d10fbe35@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: "Nysal Jan K.A" <nysal@linux.ibm.com>
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240202154316.395276-1-naveen@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |    3 +++
- drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c     |    4 ++++
- 2 files changed, 7 insertions(+)
+ arch/powerpc/kernel/interrupt_64.S |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -3673,6 +3673,9 @@ iwl_mvm_sta_state_notexist_to_none(struc
- 					   NL80211_TDLS_SETUP);
- 	}
+--- a/arch/powerpc/kernel/interrupt_64.S
++++ b/arch/powerpc/kernel/interrupt_64.S
+@@ -52,7 +52,8 @@ _ASM_NOKPROBE_SYMBOL(system_call_vectore
+ 	mr	r10,r1
+ 	ld	r1,PACAKSAVE(r13)
+ 	std	r10,0(r1)
+-	std	r11,_NIP(r1)
++	std	r11,_LINK(r1)
++	std	r11,_NIP(r1)	/* Saved LR is also the next instruction */
+ 	std	r12,_MSR(r1)
+ 	std	r0,GPR0(r1)
+ 	std	r10,GPR1(r1)
+@@ -70,7 +71,6 @@ _ASM_NOKPROBE_SYMBOL(system_call_vectore
+ 	std	r9,GPR13(r1)
+ 	SAVE_NVGPRS(r1)
+ 	std	r11,_XER(r1)
+-	std	r11,_LINK(r1)
+ 	std	r11,_CTR(r1)
  
-+	if (ret)
-+		return ret;
-+
- 	for_each_sta_active_link(vif, sta, link_sta, i)
- 		link_sta->agg.max_rc_amsdu_len = 1;
- 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-@@ -505,6 +505,10 @@ static bool iwl_mvm_is_dup(struct ieee80
- 		return false;
- 
- 	mvm_sta = iwl_mvm_sta_from_mac80211(sta);
-+
-+	if (WARN_ON_ONCE(!mvm_sta->dup_data))
-+		return false;
-+
- 	dup_data = &mvm_sta->dup_data[queue];
- 
- 	/*
+ 	li	r11,\trapnr
 
 
