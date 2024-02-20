@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6476B14F9DA;
-	Tue, 20 Feb 2024 21:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA821509AE;
+	Tue, 20 Feb 2024 21:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462904; cv=none; b=R0seXWWGJ39MOfavX6p11sATzClulQaVynu4quzaHGN7OwnfBl1loz/b326/jz5qNXj49/QfbiBxh5l5oWwXrSimPRQYfNZY099YrOa7B39O/S8Bac1FagfSpnOYz2oTO6sYyC5cI/qx1tAAWc5+ub3WOCOZlc9hT6lVCkDx4p4=
+	t=1708462907; cv=none; b=Zx1II02S8KVLdhqi/7CgCdFsrJo7gmqPlv/e7eKFcMkhcDUqfTeLJ7kzvgqdigBhA3q9znSx6yPV78NcpuCHHQd8j6fCUsWCCa/m7ty0l23HVGgNEErLsHeMhPsFuDcZEmzFywBj0Era+aWnXnwMnTrVK/MTTM8VyBFiNJBKgXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462904; c=relaxed/simple;
-	bh=Mqv/jVvRistz+SGsBVzQSvy7Lu3yr+2V25TVirawzu0=;
+	s=arc-20240116; t=1708462907; c=relaxed/simple;
+	bh=z7VBpX8v5qwHHZVtOPMryUTB7KS123aEEHq3MKU6fsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzN70XU/nzg3jap3lP48+50qZahHlNMAuI96AVhMrta2F+Btq7wyl0Ai2Pn+cJNztW0AwC8f1q7xDioWWHIsvlZ0/AnjF2j3hmxQhpMp0ycIBhfryinP05dmaEV+PfRfXWXs//PBAkVVwJiIC5b4K+BYLma2NayKHJXpidLQ+9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4M5LXf3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PU44N7P540sLPvITdX3zP2XMpQmUYDWyQZqzx4duDkeU+HQpwSHUlBsl+wjWkGy3I0QlxySAu4fUr/KetlsA5g7ewUZwUuBPfMZtsrePVi4C4PGJaFLF/g479DC1lOWScywuf7EyXZamQPxMqAE04BxkjjqivR0ohtWW5jHP3L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7JvYHRJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4M5LXf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C518EC433F1;
-	Tue, 20 Feb 2024 21:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7JvYHRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F101FC433C7;
+	Tue, 20 Feb 2024 21:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462904;
-	bh=Mqv/jVvRistz+SGsBVzQSvy7Lu3yr+2V25TVirawzu0=;
+	s=korg; t=1708462907;
+	bh=z7VBpX8v5qwHHZVtOPMryUTB7KS123aEEHq3MKU6fsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4M5LXf3iYobB6XiPkyDAYhf2eTAW08PEP8WDt3EGE4rVIL7t3v8zIEhqsV4L3k9t
-	 bUUQTgwuLyRZ2umfsOCP/QLMZBGpsuN5FVJvCg5B1bsnPJPjR3lyo3B9YPL4W2MOJ4
-	 G5ei+Kyz/h912gD44zP9Kdxqx2v6qcTcSfsKpKPs=
+	b=O7JvYHRJLYBU0cjHILHCmkkBpt6+AFeZhGGG7jbGZ7/oixxk+FfJSzvtWG9ksTDFH
+	 RMqcA9i6ZoxxRFMt+i78Q8wFLSUcKPQVggT1PXCXwiHFeXIPyXCUEt/QhGDR3aSbG1
+	 J0MRbIVBzlXXpXrLjQxX48F+GDJMBJ/wS13GANX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 044/197] HID: i2c-hid-of: fix NULL-deref on failed power up
-Date: Tue, 20 Feb 2024 21:50:03 +0100
-Message-ID: <20240220204842.399052607@linuxfoundation.org>
+Subject: [PATCH 6.1 045/197] HID: wacom: generic: Avoid reporting a serial of 0 to userspace
+Date: Tue, 20 Feb 2024 21:50:04 +0100
+Message-ID: <20240220204842.429241572@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,34 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
 
-commit 00aab7dcb2267f2aef59447602f34501efe1a07f upstream.
+commit ab41a31dd5e2681803642b6d08590b61867840ec upstream.
 
-A while back the I2C HID implementation was split in an ACPI and OF
-part, but the new OF driver never initialises the client pointer which
-is dereferenced on power-up failures.
+The xf86-input-wacom driver does not treat '0' as a valid serial
+number and will drop any input report which contains an
+MSC_SERIAL = 0 event. The kernel driver already takes care to
+avoid sending any MSC_SERIAL event if the value of serial[0] == 0
+(which is the case for devices that don't actually report a
+serial number), but this is not quite sufficient.
+Only the lower 32 bits of the serial get reported to userspace,
+so if this portion of the serial is zero then there can still
+be problems.
 
-Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
-Cc: stable@vger.kernel.org      # 5.12
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+This commit allows the driver to report either the lower 32 bits
+if they are non-zero or the upper 32 bits otherwise.
+
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
+Fixes: f85c9dc678a5 ("HID: wacom: generic: Support tool ID and additional tool types")
+CC: stable@vger.kernel.org # v4.10
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-of.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/wacom_wac.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/i2c-hid/i2c-hid-of.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-of.c
-@@ -80,6 +80,7 @@ static int i2c_hid_of_probe(struct i2c_c
- 	if (!ihid_of)
- 		return -ENOMEM;
- 
-+	ihid_of->client = client;
- 	ihid_of->ops.power_up = i2c_hid_of_power_up;
- 	ihid_of->ops.power_down = i2c_hid_of_power_down;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -2571,7 +2571,14 @@ static void wacom_wac_pen_report(struct
+ 				wacom_wac->hid_data.tipswitch);
+ 		input_report_key(input, wacom_wac->tool[0], sense);
+ 		if (wacom_wac->serial[0]) {
+-			input_event(input, EV_MSC, MSC_SERIAL, wacom_wac->serial[0]);
++			/*
++			 * xf86-input-wacom does not accept a serial number
++			 * of '0'. Report the low 32 bits if possible, but
++			 * if they are zero, report the upper ones instead.
++			 */
++			__u32 serial_lo = wacom_wac->serial[0] & 0xFFFFFFFFu;
++			__u32 serial_hi = wacom_wac->serial[0] >> 32;
++			input_event(input, EV_MSC, MSC_SERIAL, (int)(serial_lo ? serial_lo : serial_hi));
+ 			input_report_abs(input, ABS_MISC, sense ? id : 0);
+ 		}
  
 
 
