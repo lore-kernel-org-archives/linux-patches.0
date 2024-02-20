@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC1114A4E6;
-	Tue, 20 Feb 2024 21:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB7614A4D2;
+	Tue, 20 Feb 2024 21:30:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464619; cv=none; b=LypWRV6H3LB7KaiCAkYZRKZK8iCj6aNEBl6acufdVxKsnXlmARnSpr9I9sfdcRYQaBpZuUqAsfLzz73iFkGVlS2UPEcsWww/psjpFAKKLZk0BPAL8Yka0d0y7xrEQXVC70wUHiNS28xG9IDtRLcNAlrnx3dK760TRoJ/Gl+KDeE=
+	t=1708464622; cv=none; b=eKeKTslKnOasjKYeCx8ztNlCsMWMIQfe+KMdsXFS/kRd0MF4Tp5+7UJdstVD/Frmc6NU/lGhb3XXAkuNy6PL0uYgQbCiWj19zLsqBwVxsxmUgz8q9ApLIM7+D/jL0tPWTRg2ttTSHu5sMRGLlMzbCM3kDrrByyl5Ksw/dXhiVsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464619; c=relaxed/simple;
-	bh=NERTYbzESyi+a/2f7FC93zj0JG3p9bB5stCWSUMadr4=;
+	s=arc-20240116; t=1708464622; c=relaxed/simple;
+	bh=V4zkgwg0DB0L529IYPfTWNMFqlDS+3m6tG59uED/DQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bk+QKrx9qd6aSPsGnpWv2tLUxFZNJOKMLyN6aqov41sU5hZ9wdjWszr68ZLc7R7spqbeXuk5IF3mE0JpFK29qx3mS218xHHpE+v49Ul+gbAEThJ9hb5yUU482eWvQvsWJ/5s4bQ2LpRCcxpCJj97HovbSbc7Av/3NNFYNOEZdl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaYKb+jq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dhVuUx07Q1R0dLDaIUhu67R1MSFoDTJ4K5psdTMx/4pkEBzWsGgc3D8W8uZmmLJxqoLK+f+5RO5RkhQLlMRQOMk0z5/KVEiNJDO41xgVKDbvoLaR//fOHReFE6Ozw9Dl1N1HwvCUcSVJL0rJXfvTjmBFVOLdLz3GXVdNXEGfFtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HOqEZo4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaYKb+jq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079B3C433C7;
-	Tue, 20 Feb 2024 21:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HOqEZo4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32323C433F1;
+	Tue, 20 Feb 2024 21:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464619;
-	bh=NERTYbzESyi+a/2f7FC93zj0JG3p9bB5stCWSUMadr4=;
+	s=korg; t=1708464622;
+	bh=V4zkgwg0DB0L529IYPfTWNMFqlDS+3m6tG59uED/DQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaYKb+jqsqwH2sAEsaCuZFoGZcODRMPzchPp4fB9sNn2yZg0XIvreXAQPuVrsYWXm
-	 sJjMYYDRw/UbMVKklLfb2Lpj3xCuUiJExmVZE6syci0JeA2+VscrgjJEBSzs8jykHX
-	 iwgD6YmckOlXm47SRLCSU4jpxkrGCfoei55Nne9M=
+	b=HOqEZo4NVP+DfhTSmJubjSO511yCpYPG7dHLc0b04srAhdhV20I10/7EkGENdEabT
+	 kF8V7DQHG4fQRYWA5GpfxBXcjNNa5EaPqutMO3ZUjBLfDVgv7cUHtAZqzIDPPTN2AZ
+	 bx8QH8z/YgydpZLNF9qK+/rOiPuKpfqlLqs9s7PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.7 082/309] HID: bpf: actually free hdev memory after attaching a HID-BPF program
-Date: Tue, 20 Feb 2024 21:54:01 +0100
-Message-ID: <20240220205635.759526049@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.7 083/309] HID: i2c-hid-of: fix NULL-deref on failed power up
+Date: Tue, 20 Feb 2024 21:54:02 +0100
+Message-ID: <20240220205635.789454553@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -49,140 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 89be8aa5b0ecb3b729c7bcff64bb2af7921fec63 upstream.
+commit 00aab7dcb2267f2aef59447602f34501efe1a07f upstream.
 
-Turns out that I got my reference counts wrong and each successful
-bus_find_device() actually calls get_device(), and we need to manually
-call put_device().
+A while back the I2C HID implementation was split in an ACPI and OF
+part, but the new OF driver never initialises the client pointer which
+is dereferenced on power-up failures.
 
-Ensure each bus_find_device() gets a matching put_device() when releasing
-the bpf programs and fix all the error paths.
-
-Cc: <stable@vger.kernel.org>
-Fixes: f5c27da4e3c8 ("HID: initial BPF implementation")
-Link: https://lore.kernel.org/r/20240124-b4-hid-bpf-fixes-v2-2-052520b1e5e6@kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
+Cc: stable@vger.kernel.org      # 5.12
+Cc: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/bpf/hid_bpf_dispatch.c  |   29 +++++++++++++++++++++++------
- drivers/hid/bpf/hid_bpf_jmp_table.c |   20 +++++++++++++++++---
- 2 files changed, 40 insertions(+), 9 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-of.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hid/bpf/hid_bpf_dispatch.c
-+++ b/drivers/hid/bpf/hid_bpf_dispatch.c
-@@ -292,7 +292,7 @@ hid_bpf_attach_prog(unsigned int hid_id,
- 	struct hid_device *hdev;
- 	struct bpf_prog *prog;
- 	struct device *dev;
--	int fd;
-+	int err, fd;
+--- a/drivers/hid/i2c-hid/i2c-hid-of.c
++++ b/drivers/hid/i2c-hid/i2c-hid-of.c
+@@ -87,6 +87,7 @@ static int i2c_hid_of_probe(struct i2c_c
+ 	if (!ihid_of)
+ 		return -ENOMEM;
  
- 	if (!hid_bpf_ops)
- 		return -EINVAL;
-@@ -311,14 +311,24 @@ hid_bpf_attach_prog(unsigned int hid_id,
- 	 * on errors or when it'll be detached
- 	 */
- 	prog = bpf_prog_get(prog_fd);
--	if (IS_ERR(prog))
--		return PTR_ERR(prog);
-+	if (IS_ERR(prog)) {
-+		err = PTR_ERR(prog);
-+		goto out_dev_put;
-+	}
++	ihid_of->client = client;
+ 	ihid_of->ops.power_up = i2c_hid_of_power_up;
+ 	ihid_of->ops.power_down = i2c_hid_of_power_down;
  
- 	fd = do_hid_bpf_attach_prog(hdev, prog_fd, prog, flags);
--	if (fd < 0)
--		bpf_prog_put(prog);
-+	if (fd < 0) {
-+		err = fd;
-+		goto out_prog_put;
-+	}
- 
- 	return fd;
-+
-+ out_prog_put:
-+	bpf_prog_put(prog);
-+ out_dev_put:
-+	put_device(dev);
-+	return err;
- }
- 
- /**
-@@ -345,8 +355,10 @@ hid_bpf_allocate_context(unsigned int hi
- 	hdev = to_hid_device(dev);
- 
- 	ctx_kern = kzalloc(sizeof(*ctx_kern), GFP_KERNEL);
--	if (!ctx_kern)
-+	if (!ctx_kern) {
-+		put_device(dev);
- 		return NULL;
-+	}
- 
- 	ctx_kern->ctx.hid = hdev;
- 
-@@ -363,10 +375,15 @@ noinline void
- hid_bpf_release_context(struct hid_bpf_ctx *ctx)
- {
- 	struct hid_bpf_ctx_kern *ctx_kern;
-+	struct hid_device *hid;
- 
- 	ctx_kern = container_of(ctx, struct hid_bpf_ctx_kern, ctx);
-+	hid = (struct hid_device *)ctx_kern->ctx.hid; /* ignore const */
- 
- 	kfree(ctx_kern);
-+
-+	/* get_device() is called by bus_find_device() */
-+	put_device(&hid->dev);
- }
- 
- /**
---- a/drivers/hid/bpf/hid_bpf_jmp_table.c
-+++ b/drivers/hid/bpf/hid_bpf_jmp_table.c
-@@ -196,6 +196,7 @@ static void __hid_bpf_do_release_prog(in
- static void hid_bpf_release_progs(struct work_struct *work)
- {
- 	int i, j, n, map_fd = -1;
-+	bool hdev_destroyed;
- 
- 	if (!jmp_table.map)
- 		return;
-@@ -220,6 +221,12 @@ static void hid_bpf_release_progs(struct
- 		if (entry->hdev) {
- 			hdev = entry->hdev;
- 			type = entry->type;
-+			/*
-+			 * hdev is still valid, even if we are called after hid_destroy_device():
-+			 * when hid_bpf_attach() gets called, it takes a ref on the dev through
-+			 * bus_find_device()
-+			 */
-+			hdev_destroyed = hdev->bpf.destroyed;
- 
- 			hid_bpf_populate_hdev(hdev, type);
- 
-@@ -232,12 +239,19 @@ static void hid_bpf_release_progs(struct
- 				if (test_bit(next->idx, jmp_table.enabled))
- 					continue;
- 
--				if (next->hdev == hdev && next->type == type)
-+				if (next->hdev == hdev && next->type == type) {
-+					/*
-+					 * clear the hdev reference and decrement the device ref
-+					 * that was taken during bus_find_device() while calling
-+					 * hid_bpf_attach()
-+					 */
- 					next->hdev = NULL;
-+					put_device(&hdev->dev);
-+				}
- 			}
- 
--			/* if type was rdesc fixup, reconnect device */
--			if (type == HID_BPF_PROG_TYPE_RDESC_FIXUP)
-+			/* if type was rdesc fixup and the device is not gone, reconnect device */
-+			if (type == HID_BPF_PROG_TYPE_RDESC_FIXUP && !hdev_destroyed)
- 				hid_bpf_reconnect(hdev);
- 		}
- 	}
 
 
