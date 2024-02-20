@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBB3612D7;
-	Tue, 20 Feb 2024 21:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593BC612D7;
+	Tue, 20 Feb 2024 21:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465202; cv=none; b=iPT4XHI5gCZ9xe0ebxwkV7UTfe8tZH15uAuqGDWm8/3MpkWbyzsHTmaIlsMv1POLpQ9ZnQBlZA+J15lkGFo1dV5nR5eOaLIT4+1PBANDrUYuz+j83sIukZcNEoIZUYCYeETRY4YLTHLdlQfRlMDo88DKmzhxWtu2zKHGjifh7/w=
+	t=1708465205; cv=none; b=bTwMMDIiXXumvjWkCozX7Kz/A5wRAixzAgDuugV63BkWR0EQwH2eMmBz+ZXeZ+ni9RWR24YEgnMNwAHHKx8NoZMwl15p97GDrFTl36EWFGUigSdWsyrTZ3MqqSCJ/U+JqVUh/RMtMdWavOCOlG+LjmZm9l1LvVK2og4PTog5CZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465202; c=relaxed/simple;
-	bh=crtkNcit4fmCawRauSrupCG/3T0uxhC4Sp/qjSuWW40=;
+	s=arc-20240116; t=1708465205; c=relaxed/simple;
+	bh=WoSEjZ/zdWqmp25KCMyA4B7g/S/bD4L371gUM2mjceI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtKG9Q3TBoQDIY1thdG1vMdzJPFWr6Rrua6mBrFYok5dUBMDxVbSMSK/Ao1WrXvxHyaIVdyr0lHwNYehQ1SSKvMRCA3wvmF7miHDwkoVtqV4GOyj29wt/o2mupDpx5ub2odfIu3/QAivf5lezst6DRJknLe3esbm8F859N2Tm3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5aiSuSE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zzb+3kYXWnmj8emKWgIJsOcXnpiAmOoWfgbnhm/3krTGNPP6dSAlBZxM+WmBOhyruPQubUpnQKS4lnlaUK0y9R63SYGHwuQPYlulnaHOHEIyjW+jk7XU0yMJFcxaFLdLWMubgLjGbchSB1rVokZUd5Ci2BCkOu7IrVJ4Z4qP84k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qimRxR2y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5aiSuSE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77647C433C7;
-	Tue, 20 Feb 2024 21:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qimRxR2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA75BC433F1;
+	Tue, 20 Feb 2024 21:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465201;
-	bh=crtkNcit4fmCawRauSrupCG/3T0uxhC4Sp/qjSuWW40=;
+	s=korg; t=1708465205;
+	bh=WoSEjZ/zdWqmp25KCMyA4B7g/S/bD4L371gUM2mjceI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5aiSuSEQgL52HnTli2is2eOfe9pMVg1sG6LfNIaLy5kZ0GMHjbvZ2jsyptE2/MVj
-	 +g53k4QE2m84NJRX0CZpfE4nsL8dOxDwNj6fZgjEJsqgBz/W9PXpA3moNgUIV8KuJn
-	 lBTS83q92HBEBLmAYmWPM1PvFmdjZNdm1Y0od2Xo=
+	b=qimRxR2ykz7pgO+kg6CVkv+jJXpHdPVsmdKTqMcpBy8HNobeq71NxR8Xhzl/N8iD+
+	 Te0sMMDPW+eRXT7okqbVtvM6ILV8uiGTViYv/DzuNzsT6FLsxKTuYsAjQtC4LFDDyO
+	 nIpVX39p3z3JngVsVylNrMPqLqSSRyY+4K9ket1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Petrov <stanislav.i.petrov@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.7 269/309] ASoC: amd: yc: Add DMI quirk for Lenovo Ideapad Pro 5 16ARP8
-Date: Tue, 20 Feb 2024 21:57:08 +0100
-Message-ID: <20240220205641.560028057@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Donald Zickus <dzickus@redhat.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>
+Subject: [PATCH 6.7 270/309] tools/rv: Fix curr_reactor uninitialized variable
+Date: Tue, 20 Feb 2024 21:57:09 +0100
+Message-ID: <20240220205641.588504779@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,39 +55,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit 610010737f74482a61896596a0116876ecf9e65c upstream.
+commit 61ec586bc0815959d3314cf7ce242529c977b357 upstream.
 
-The laptop requires a quirk ID to enable its internal microphone. Add
-it to the DMI quirk table.
+clang is reporting:
 
-Reported-by: Stanislav Petrov <stanislav.i.petrov@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=216925
+$ make HOSTCC=clang CC=clang LLVM_IAS=1
+
+clang -O -g -DVERSION=\"6.8.0-rc3\" -flto=auto -fexceptions
+	-fstack-protector-strong -fasynchronous-unwind-tables
+	-fstack-clash-protection  -Wall -Werror=format-security
+	-Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
+	$(pkg-config --cflags libtracefs)  -I include
+	-c -o src/in_kernel.o src/in_kernel.c
+[...]
+
+src/in_kernel.c:227:6: warning: variable 'curr_reactor' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+  227 |         if (!end)
+      |             ^~~~
+src/in_kernel.c:242:9: note: uninitialized use occurs here
+  242 |         return curr_reactor;
+      |                ^~~~~~~~~~~~
+src/in_kernel.c:227:2: note: remove the 'if' if its condition is always false
+  227 |         if (!end)
+      |         ^~~~~~~~~
+  228 |                 goto out_free;
+      |                 ~~~~~~~~~~~~~
+src/in_kernel.c:221:6: warning: variable 'curr_reactor' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+  221 |         if (!start)
+      |             ^~~~~~
+src/in_kernel.c:242:9: note: uninitialized use occurs here
+  242 |         return curr_reactor;
+      |                ^~~~~~~~~~~~
+src/in_kernel.c:221:2: note: remove the 'if' if its condition is always false
+  221 |         if (!start)
+      |         ^~~~~~~~~~~
+  222 |                 goto out_free;
+      |                 ~~~~~~~~~~~~~
+src/in_kernel.c:215:20: note: initialize the variable 'curr_reactor' to silence this warning
+  215 |         char *curr_reactor;
+      |                           ^
+      |                            = NULL
+2 warnings generated.
+
+Which is correct. Setting curr_reactor to NULL avoids the problem.
+
+Link: https://lkml.kernel.org/r/3a35551149e5ee0cb0950035afcb8082c3b5d05b.1707217097.git.bristot@kernel.org
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20240205214853.2689-1-mario.limonciello@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Donald Zickus <dzickus@redhat.com>
+Fixes: 6d60f89691fc ("tools/rv: Add in-kernel monitor interface")
+Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/verification/rv/src/in_kernel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -251,6 +251,13 @@ static const struct dmi_system_id yc_acp
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
- 		}
+--- a/tools/verification/rv/src/in_kernel.c
++++ b/tools/verification/rv/src/in_kernel.c
+@@ -210,9 +210,9 @@ static char *ikm_read_reactor(char *moni
+ static char *ikm_get_current_reactor(char *monitor_name)
+ {
+ 	char *reactors = ikm_read_reactor(monitor_name);
++	char *curr_reactor = NULL;
+ 	char *start;
+ 	char *end;
+-	char *curr_reactor;
+ 
+ 	if (!reactors)
+ 		return NULL;
 
 
