@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073B1612D7;
-	Tue, 20 Feb 2024 21:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162FC612D7;
+	Tue, 20 Feb 2024 21:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463925; cv=none; b=VF1L+nMGxzmny71Kl7TvmKYIBKS+HdUXe28YYSBj8cJ0RyGruay0Y8GMxmr8T1VVAVeppgnt6gFdAY4wPCvIlflmLuW7rB/jz2qHUf0eyxCFPqrZMZIdwHe40oUd8bsX6Q04Qr9Zi0BvQpwWOJF2W3M4pyftMdJVDfg1yodpSfk=
+	t=1708463928; cv=none; b=FHxtxlF/ax166g+ktNaXcD83QF7NzoR537AApC4uwkV/8rwrluyZp5hmJa6kiSDc94hOoboD5NzMN8JI1dhPe8nCTtxVLqAaJlzxIRAb8c6Milk3xW72RfeHcbGPuU+qH+vOTJDWIlNZ+zH4QQJdCt2U4ycOHQXg1lQhWHNMKWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463925; c=relaxed/simple;
-	bh=hj7SjW58BUWknqXeMP8iuCidxQkrtumIc8izjLITRP8=;
+	s=arc-20240116; t=1708463928; c=relaxed/simple;
+	bh=oKj09dLa5c2+RtSzFVe1ssQVW4aDbY3bmB4xwAs7A9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzLd8gO7tO84Io6JpRE1ojLnXEOa2SD0nmn5LD7z5CFTWuNRUtsRICaRDnHhyHVrAwl8RSMnS1MUICAA4egLhRK3fPjZ+MgZ9SOeNpLFXV68Q20qqrtVelSsnFDmuWEWvI6GqnAXiwATl5zIivD7gT+wE9NIlvmE6QadxRoU0zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxNKARsv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IgBpUMiQIkaJEqLmS2vJ4rub1chULnbNjcxZy+lZ5Wh/6cClXvYHuzvfFAm6ZkVpLqLWsOou7w1jRxdy84lURArLM7aS6mcsr4scFgUZPPF+7UwReCFmIJpnrGG5yAi19yr1CdVLjJKGJyfmeyGiZ5FEjZ6YOjWh2KOrUADtolw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6105Od0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxNKARsv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C435C43394;
-	Tue, 20 Feb 2024 21:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6105Od0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93423C43330;
+	Tue, 20 Feb 2024 21:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463924;
-	bh=hj7SjW58BUWknqXeMP8iuCidxQkrtumIc8izjLITRP8=;
+	s=korg; t=1708463928;
+	bh=oKj09dLa5c2+RtSzFVe1ssQVW4aDbY3bmB4xwAs7A9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxNKARsvCCDPByXpT5vGK8DqmabHbqF7y8YH8SLjIbf2W3n6Sq5IHZA9Fvs736kcr
-	 iB+A0zNyJm/2+0wyF6nSwBisbMAOF7fdEYHoYRMAhYQaVLwSGFuF8Wa6O10DzH4W14
-	 QkD+vlsjLxwO7wv296c5vzDABy2Q9q0SkA99XNQs=
+	b=B6105Od0WAFLygaCkiynToZF/hM0C0cs7N5pLMHX77ZtbpXdrJCfKOhkl2O6YARpI
+	 2zBhFGnI7on6SiSJ3nqS78EWnQHnzkzBTHFORGKgBZPvg5M5oWgXtd7K1KS/Q8q1V9
+	 wS1En5jrk+xSJPk1E0Mgk31nO9/jYgdThRPBZK60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.6 179/331] serial: max310x: set default value when reading clock ready bit
-Date: Tue, 20 Feb 2024 21:54:55 +0100
-Message-ID: <20240220205643.136516868@linuxfoundation.org>
+	bo liu <bo.liu@senarytech.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 197/331] ALSA: hda/conexant: Add quirk for SWS JS201D
+Date: Tue, 20 Feb 2024 21:55:13 +0100
+Message-ID: <20240220205643.814128668@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -49,35 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: bo liu <bo.liu@senarytech.com>
 
-commit 0419373333c2f2024966d36261fd82a453281e80 upstream.
+commit 4639c5021029d49fd2f97fa8d74731f167f98919 upstream.
 
-If regmap_read() returns a non-zero value, the 'val' variable can be left
-uninitialized.
+The SWS JS201D need a different pinconfig from windows driver.
+Add a quirk to use a specific pinconfig to SWS JS201D.
 
-Clear it before calling regmap_read() to make sure we properly detect
-the clock ready bit.
-
-Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240116213001.3691629-2-hugo@hugovil.com
+Signed-off-by: bo liu <bo.liu@senarytech.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240205013802.51907-1-bo.liu@senarytech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_conexant.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -641,7 +641,7 @@ static u32 max310x_set_ref_clk(struct de
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -344,6 +344,7 @@ enum {
+ 	CXT_FIXUP_HP_ZBOOK_MUTE_LED,
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
++	CXT_PINCFG_SWS_JS201D,
+ };
  
- 	/* Wait for crystal */
- 	if (xtal) {
--		unsigned int val;
-+		unsigned int val = 0;
- 		msleep(10);
- 		regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
- 		if (!(val & MAX310X_STS_CLKREADY_BIT)) {
+ /* for hda_fixup_thinkpad_acpi() */
+@@ -841,6 +842,17 @@ static const struct hda_pintbl cxt_pincf
+ 	{}
+ };
+ 
++/* SuoWoSi/South-holding JS201D with sn6140 */
++static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
++	{ 0x16, 0x03211040 }, /* hp out */
++	{ 0x17, 0x91170110 }, /* SPK/Class_D */
++	{ 0x18, 0x95a70130 }, /* Internal mic */
++	{ 0x19, 0x03a11020 }, /* Headset Mic */
++	{ 0x1a, 0x40f001f0 }, /* Not used */
++	{ 0x21, 0x40f001f0 }, /* Not used */
++	{}
++};
++
+ static const struct hda_fixup cxt_fixups[] = {
+ 	[CXT_PINCFG_LENOVO_X200] = {
+ 		.type = HDA_FIXUP_PINS,
+@@ -996,6 +1008,10 @@ static const struct hda_fixup cxt_fixups
+ 		.chained = true,
+ 		.chain_id = CXT_FIXUP_HEADSET_MIC,
+ 	},
++	[CXT_PINCFG_SWS_JS201D] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_sws_js201d,
++	},
+ };
+ 
+ static const struct snd_pci_quirk cxt5045_fixups[] = {
+@@ -1069,6 +1085,7 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
++	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
+ 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
+ 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
+@@ -1109,6 +1126,7 @@ static const struct hda_model_fixup cxt5
+ 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
+ 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
+ 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
++	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
+ 	{}
+ };
+ 
 
 
