@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAB1151CF0;
-	Tue, 20 Feb 2024 21:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A246C151CCD;
+	Tue, 20 Feb 2024 21:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465180; cv=none; b=Va9IOXEk6DO6jl+MLK0BVYIGzg3fld7qXT5XciIfsUy7E4tnqTrkCLteAndH7FfEm0AXLBqOqtx0tnHGUduBiMqaLrh9v8cjApVsvSagsPK6SUaZ3hfWcsgRcNIfHHMI4GN3Cdi+zzLN/iDmNz1z3Ge8RbtCSRpTlOM7CdRFnvI=
+	t=1708465183; cv=none; b=SDx9FjuZl3U1Ax5LfdBvFW0yHDsmEDc3YdpUx8f6N7GmWWmZ83Z9etlOh29XA/GQlVwxJCvcJQvyRoYrt83CNlc1kEZ4ANkm+elmT2A0MYuGJrBUsaF+ZS6x2cX76i1CIYM8H2RtMDK5oTz4ly+pH17DAbhT++slFxy8dd7hGow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465180; c=relaxed/simple;
-	bh=9XHe/JqiYehAhhprC7ZuqEH+9Ye+PGdgugmJA7ucGVE=;
+	s=arc-20240116; t=1708465183; c=relaxed/simple;
+	bh=uvC3dGDYoDgGYeMbwRcudvbfhXo8dgE1X64ZSo6bw1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j6+r07j1z3eX17t8VDNwvoAL8Eks6gT9w9NS9gb0xTAGi7U5j6isOhf/zCG4Sj1j7kp9RIvExXdw40TAAC0KD9HOi9i4IOuKnr8prVRmMIZmnI4OfALR6jJGREnz5FHhQETZ/UEPJ4Thru2LAKUow4Qb83H3+sHTUb5U40tZ1qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXZ39E62; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=clq7HuEgd6mJx3jVe0qzSfHN1wu6UIyPo+wxmRO0sDCKiWs/alG9P78yW1jeOl9Yt9d/Ed/9gVvLb78Yep+CqzVXOC23QA1StG2a1n4/OiEZuY1u+7YVu+KcljoEVctKugFIdxYFjoqfvzQxgJMTYp7Ef8a6zLMkBXCjEazqSfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIkRr3S3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXZ39E62"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FFBC433C7;
-	Tue, 20 Feb 2024 21:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIkRr3S3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2685AC43394;
+	Tue, 20 Feb 2024 21:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465180;
-	bh=9XHe/JqiYehAhhprC7ZuqEH+9Ye+PGdgugmJA7ucGVE=;
+	s=korg; t=1708465183;
+	bh=uvC3dGDYoDgGYeMbwRcudvbfhXo8dgE1X64ZSo6bw1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXZ39E62nYFJ51VS5MYN3IIoQEtnUbaDKl6caVAHD1xCATo2ZJeyhTWHSatOO0drq
-	 oO8lmTrxs/7Lz/tDyfVyhYe7P8vLgsvN8uau8UfwB/Qq5oPtprGfXWpGHrNY3F+WwG
-	 FbtKZBLneV01V6R8GH9Dd1d0yldCPmhQKCFEGssk=
+	b=sIkRr3S3YKQ127hgSHK+rSqNukx0lcpxJeHi0E2lJ54EuJeAUCZZaKgNlkiITEdTg
+	 tz2dvv0sVAWPQUlEP4+JW+rkJlXzrW7aP1hU8jxHdA5OdK7KbPOH2PXKiHlxMqcMzf
+	 3YY6zuz6I1N1sIQAX+uvPkAeee7FJbIaiZtwZ2G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.7 222/309] serial: max310x: improve crystal stable clock detection
-Date: Tue, 20 Feb 2024 21:56:21 +0100
-Message-ID: <20240220205640.104118050@linuxfoundation.org>
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.7 255/309] irqchip/irq-brcmstb-l2: Add write memory barrier before exit
+Date: Tue, 20 Feb 2024 21:56:54 +0100
+Message-ID: <20240220205641.141436146@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -44,86 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Doug Berger <opendmb@gmail.com>
 
-commit 93cd256ab224c2519e7c4e5f58bb4f1ac2bf0965 upstream.
+commit b0344d6854d25a8b3b901c778b1728885dd99007 upstream.
 
-Some people are seeing a warning similar to this when using a crystal:
+It was observed on Broadcom devices that use GIC v3 architecture L1
+interrupt controllers as the parent of brcmstb-l2 interrupt controllers
+that the deactivation of the parent interrupt could happen before the
+brcmstb-l2 deasserted its output. This would lead the GIC to reactivate the
+interrupt only to find that no L2 interrupt was pending. The result was a
+spurious interrupt invoking handle_bad_irq() with its associated
+messaging. While this did not create a functional problem it is a waste of
+cycles.
 
-    max310x 11-006c: clock is not stable yet
+The hazard exists because the memory mapped bus writes to the brcmstb-l2
+registers are buffered and the GIC v3 architecture uses a very efficient
+system register write to deactivate the interrupt.
 
-The datasheet doesn't mention the maximum time to wait for the clock to be
-stable when using a crystal, and it seems that the 10ms delay in the driver
-is not always sufficient.
+Add a write memory barrier prior to invoking chained_irq_exit() to
+introduce a dsb(st) on those systems to ensure the system register write
+cannot be executed until the memory mapped writes are visible to the
+system.
 
-Jan Kundrát reported that it took three tries (each separated by 10ms) to
-get a stable clock.
+[ florian: Added Fixes tag ]
 
-Modify behavior to check stable clock ready bit multiple times (20), and
-waiting 10ms between each try.
-
-Note: the first draft of the driver originally used a 50ms delay, without
-checking the clock stable bit.
-Then a loop with 1000 retries was implemented, each time reading the clock
-stable bit.
-
-Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
+Fixes: 7f646e92766e ("irqchip: brcmstb-l2: Add Broadcom Set Top Box  Level-2 interrupt controller")
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Suggested-by: Jan Kundrát <jan.kundrat@cesnet.cz>
-Link: https://www.spinics.net/lists/linux-serial/msg35773.html
-Link: https://lore.kernel.org/all/20240110174015.6f20195fde08e5c9e64e5675@hugovil.com/raw
-Link: https://github.com/boundarydevices/linux/commit/e5dfe3e4a751392515d78051973190301a37ca9a
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240116213001.3691629-3-hugo@hugovil.com
+Link: https://lore.kernel.org/r/20240210012449.3009125-1-florian.fainelli@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/irqchip/irq-brcmstb-l2.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -237,6 +237,10 @@
- #define MAX310x_REV_MASK		(0xf8)
- #define MAX310X_WRITE_BIT		0x80
+--- a/drivers/irqchip/irq-brcmstb-l2.c
++++ b/drivers/irqchip/irq-brcmstb-l2.c
+@@ -2,7 +2,7 @@
+ /*
+  * Generic Broadcom Set Top Box Level 2 Interrupt controller driver
+  *
+- * Copyright (C) 2014-2017 Broadcom
++ * Copyright (C) 2014-2024 Broadcom
+  */
  
-+/* Crystal-related definitions */
-+#define MAX310X_XTAL_WAIT_RETRIES	20 /* Number of retries */
-+#define MAX310X_XTAL_WAIT_DELAY_MS	10 /* Delay between retries */
+ #define pr_fmt(fmt)	KBUILD_MODNAME	": " fmt
+@@ -112,6 +112,9 @@ static void brcmstb_l2_intc_irq_handle(s
+ 		generic_handle_domain_irq(b->domain, irq);
+ 	} while (status);
+ out:
++	/* Don't ack parent before all device writes are done */
++	wmb();
 +
- /* MAX3107 specific */
- #define MAX3107_REV_ID			(0xa0)
+ 	chained_irq_exit(chip, desc);
+ }
  
-@@ -641,12 +645,19 @@ static u32 max310x_set_ref_clk(struct de
- 
- 	/* Wait for crystal */
- 	if (xtal) {
--		unsigned int val = 0;
--		msleep(10);
--		regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
--		if (!(val & MAX310X_STS_CLKREADY_BIT)) {
-+		bool stable = false;
-+		unsigned int try = 0, val = 0;
-+
-+		do {
-+			msleep(MAX310X_XTAL_WAIT_DELAY_MS);
-+			regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
-+
-+			if (val & MAX310X_STS_CLKREADY_BIT)
-+				stable = true;
-+		} while (!stable && (++try < MAX310X_XTAL_WAIT_RETRIES));
-+
-+		if (!stable)
- 			dev_warn(dev, "clock is not stable yet\n");
--		}
- 	}
- 
- 	return bestfreq;
 
 
