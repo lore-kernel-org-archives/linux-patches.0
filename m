@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CF714A4D2;
-	Tue, 20 Feb 2024 21:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7265E14A4D2;
+	Tue, 20 Feb 2024 21:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464699; cv=none; b=YIrHPYXVu4H9y/RD6EK/wPkfLqsnS7qwOyeyYr4SyI36id9LrcQ4LMrBjj+/xnFzpmAZ+/GpUiEWmh498AIE2Hur6Ah0/j959JHueC/Ymd4xL8W8yybgKI10ypE6T4gSIcMIDDcCQCFYM87oGOge4RiapJx+f+zAeIB1eLWNZWs=
+	t=1708464702; cv=none; b=CXnYPAoOrjXwe5MjEYk+vLCJ262kgCWJV2a4mHhBMetZ/EwyULYzHszxomcqz2ILT+MuUI48lwnydnL8xX+YkKkC0nFINw2WlrhiIO0mCCVHMtjLZ4lngZQFfWjxwz1/A8pycPKqp1zWdUxQ0W97DXcMY7b4QlS/6p7j0/JgU8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464699; c=relaxed/simple;
-	bh=DGEz/SGG9dkBe00dTYmzsL1JYAPvdndc0L4SmBa/95Q=;
+	s=arc-20240116; t=1708464702; c=relaxed/simple;
+	bh=phzSDeuGiN1Uc6I1Iq7Jh6aVjgsAKLKuzeuEc0y5la4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPqVPtRn2haqHKo1dyRYquYlrWgCWmf07Y7bgjbQoaP2g+CIphXU6ZUH0+5SSXwLIn06NrJeAqVkZY6qiciIvaof/Y0RmyOzJS9mqCCo94Vn795uYLVpdsrkiT91QoXmRYnzasLWGolkQVX+RsMNQxdKwE+0qCggCAykvM8bErY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFf6QaE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IVuzReDetwS8uv6BjsKlHOd5V10GtvG7gjeXxlLE2vQBhZjthgnAkdzIlx65IhGNJJX7AVmTtzqXQgUj6maN+/o8Kjv013nK4v5OdkcLk2u+sk+U7JzvJ6KsXIPDfNZAVOMTg2BO/M3wVemydGhQ6EAk9trkELcAYONMicFuZOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HynQZzAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFf6QaE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3BFC433F1;
-	Tue, 20 Feb 2024 21:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HynQZzAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D3EC43390;
+	Tue, 20 Feb 2024 21:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464699;
-	bh=DGEz/SGG9dkBe00dTYmzsL1JYAPvdndc0L4SmBa/95Q=;
+	s=korg; t=1708464702;
+	bh=phzSDeuGiN1Uc6I1Iq7Jh6aVjgsAKLKuzeuEc0y5la4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yFf6QaE7wcOOLB0XigQEpkAWUoREli8Js3GN3gVqphBMATaXYWZyLmpQe95WRwhhB
-	 DyuNrOeI8m4ytuXGuk8L5IcDs+Nf9i+x9Ufz7EGs4+F8jx9giXfnLT2nHbzh283NiN
-	 KkWp3S5XOgCTbq5S4ycMgtwm9dPYXtLuhJf5GXAA=
+	b=HynQZzAd8HCYRHtfGbtsQBh+sq4K3XwOIpmqzHl4wcMaaEhNjDMzUUIwvftexz/uu
+	 ekWe9QxkKN8+1jrDPR67/QGcb7m83zp6OjZ22ZwzUDB2O2kpvd6EMOzKNb3oUd1prS
+	 3qlCGNiPt4TDurlvnUKH6L15rQ2ae9PrkjY2UIWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Spoorthy <spoorthy@linux.ibm.com>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 109/309] irqchip/gic-v3-its: Handle non-coherent GICv4 redistributors
-Date: Tue, 20 Feb 2024 21:54:28 +0100
-Message-ID: <20240220205636.602971303@linuxfoundation.org>
+Subject: [PATCH 6.7 110/309] powerpc/kasan: Limit KASAN thread size increase to 32KB
+Date: Tue, 20 Feb 2024 21:54:29 +0100
+Message-ID: <20240220205636.636857919@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,122 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 846297e11e8ae428f8b00156a0cfe2db58100702 ]
+[ Upstream commit f1acb109505d983779bbb7e20a1ee6244d2b5736 ]
 
-Although the GICv3 code base has gained some handling of systems failing to
-handle the shareability attributes, the GICv4 side of things has been
-firmly ignored.
+KASAN is seen to increase stack usage, to the point that it was reported
+to lead to stack overflow on some 32-bit machines (see link).
 
-This is unfortunate, as the new recent addition of the "dma-noncoherent" is
-supposed to apply to all of the GICR tables, and not just the ones that are
-common to v3 and v4.
+To avoid overflows the stack size was doubled for KASAN builds in
+commit 3e8635fb2e07 ("powerpc/kasan: Force thread size increase with
+KASAN").
 
-Add some checks to handle the VPROPBASE/VPENDBASE shareability and
-cacheability attributes in the same way we deal with the other GICR_BASE
-registers, wrapping the flag check in a helper for improved readability.
+However with a 32KB stack size to begin with, the doubling leads to a
+64KB stack, which causes build errors:
+  arch/powerpc/kernel/switch.S:249: Error: operand out of range (0x000000000000fe50 is not between 0xffffffffffff8000 and 0x0000000000007fff)
 
-Note that this has been found by inspection only, as I don't have access to
-HW that suffers from this particular issue.
+Although the asm could be reworked, in practice a 32KB stack seems
+sufficient even for KASAN builds - the additional usage seems to be in
+the 2-3KB range for a 64-bit KASAN build.
 
-Fixes: 3a0fff0fb6a3 ("irqchip/gic-v3: Enable non-coherent redistributors/ITSes DT probing")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Link: https://lore.kernel.org/r/20240213101206.2137483-2-maz@kernel.org
+So only increase the stack for KASAN if the stack size is < 32KB.
+
+Fixes: 18f14afe2816 ("powerpc/64s: Increase default stack size to 32KB")
+Reported-by: Spoorthy <spoorthy@linux.ibm.com>
+Reported-by: Benjamin Gray <bgray@linux.ibm.com>
+Reviewed-by: Benjamin Gray <bgray@linux.ibm.com>
+Link: https://lore.kernel.org/linuxppc-dev/bug-207129-206035@https.bugzilla.kernel.org%2F/
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240212064244.3924505-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 37 +++++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 12 deletions(-)
+ arch/powerpc/include/asm/thread_info.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 9a7a74239eab..bdc2c8330479 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -207,6 +207,11 @@ static bool require_its_list_vmovp(struct its_vm *vm, struct its_node *its)
- 	return (gic_rdists->has_rvpeid || vm->vlpi_count[its->list_nr]);
- }
+diff --git a/arch/powerpc/include/asm/thread_info.h b/arch/powerpc/include/asm/thread_info.h
+index bf5dde1a4114..15c5691dd218 100644
+--- a/arch/powerpc/include/asm/thread_info.h
++++ b/arch/powerpc/include/asm/thread_info.h
+@@ -14,7 +14,7 @@
  
-+static bool rdists_support_shareable(void)
-+{
-+	return !(gic_rdists->flags & RDIST_FLAGS_FORCE_NON_SHAREABLE);
-+}
-+
- static u16 get_its_list(struct its_vm *vm)
- {
- 	struct its_node *its;
-@@ -2710,10 +2715,12 @@ static u64 inherit_vpe_l1_table_from_its(void)
- 			break;
- 		}
- 		val |= FIELD_PREP(GICR_VPROPBASER_4_1_ADDR, addr >> 12);
--		val |= FIELD_PREP(GICR_VPROPBASER_SHAREABILITY_MASK,
--				  FIELD_GET(GITS_BASER_SHAREABILITY_MASK, baser));
--		val |= FIELD_PREP(GICR_VPROPBASER_INNER_CACHEABILITY_MASK,
--				  FIELD_GET(GITS_BASER_INNER_CACHEABILITY_MASK, baser));
-+		if (rdists_support_shareable()) {
-+			val |= FIELD_PREP(GICR_VPROPBASER_SHAREABILITY_MASK,
-+					  FIELD_GET(GITS_BASER_SHAREABILITY_MASK, baser));
-+			val |= FIELD_PREP(GICR_VPROPBASER_INNER_CACHEABILITY_MASK,
-+					  FIELD_GET(GITS_BASER_INNER_CACHEABILITY_MASK, baser));
-+		}
- 		val |= FIELD_PREP(GICR_VPROPBASER_4_1_SIZE, GITS_BASER_NR_PAGES(baser) - 1);
+ #ifdef __KERNEL__
  
- 		return val;
-@@ -2936,8 +2943,10 @@ static int allocate_vpe_l1_table(void)
- 	WARN_ON(!IS_ALIGNED(pa, psz));
- 
- 	val |= FIELD_PREP(GICR_VPROPBASER_4_1_ADDR, pa >> 12);
--	val |= GICR_VPROPBASER_RaWb;
--	val |= GICR_VPROPBASER_InnerShareable;
-+	if (rdists_support_shareable()) {
-+		val |= GICR_VPROPBASER_RaWb;
-+		val |= GICR_VPROPBASER_InnerShareable;
-+	}
- 	val |= GICR_VPROPBASER_4_1_Z;
- 	val |= GICR_VPROPBASER_4_1_VALID;
- 
-@@ -3126,7 +3135,7 @@ static void its_cpu_init_lpis(void)
- 	gicr_write_propbaser(val, rbase + GICR_PROPBASER);
- 	tmp = gicr_read_propbaser(rbase + GICR_PROPBASER);
- 
--	if (gic_rdists->flags & RDIST_FLAGS_FORCE_NON_SHAREABLE)
-+	if (!rdists_support_shareable())
- 		tmp &= ~GICR_PROPBASER_SHAREABILITY_MASK;
- 
- 	if ((tmp ^ val) & GICR_PROPBASER_SHAREABILITY_MASK) {
-@@ -3153,7 +3162,7 @@ static void its_cpu_init_lpis(void)
- 	gicr_write_pendbaser(val, rbase + GICR_PENDBASER);
- 	tmp = gicr_read_pendbaser(rbase + GICR_PENDBASER);
- 
--	if (gic_rdists->flags & RDIST_FLAGS_FORCE_NON_SHAREABLE)
-+	if (!rdists_support_shareable())
- 		tmp &= ~GICR_PENDBASER_SHAREABILITY_MASK;
- 
- 	if (!(tmp & GICR_PENDBASER_SHAREABILITY_MASK)) {
-@@ -3880,14 +3889,18 @@ static void its_vpe_schedule(struct its_vpe *vpe)
- 	val  = virt_to_phys(page_address(vpe->its_vm->vprop_page)) &
- 		GENMASK_ULL(51, 12);
- 	val |= (LPI_NRBITS - 1) & GICR_VPROPBASER_IDBITS_MASK;
--	val |= GICR_VPROPBASER_RaWb;
--	val |= GICR_VPROPBASER_InnerShareable;
-+	if (rdists_support_shareable()) {
-+		val |= GICR_VPROPBASER_RaWb;
-+		val |= GICR_VPROPBASER_InnerShareable;
-+	}
- 	gicr_write_vpropbaser(val, vlpi_base + GICR_VPROPBASER);
- 
- 	val  = virt_to_phys(page_address(vpe->vpt_page)) &
- 		GENMASK_ULL(51, 16);
--	val |= GICR_VPENDBASER_RaWaWb;
--	val |= GICR_VPENDBASER_InnerShareable;
-+	if (rdists_support_shareable()) {
-+		val |= GICR_VPENDBASER_RaWaWb;
-+		val |= GICR_VPENDBASER_InnerShareable;
-+	}
- 	/*
- 	 * There is no good way of finding out if the pending table is
- 	 * empty as we can race against the doorbell interrupt very
+-#ifdef CONFIG_KASAN
++#if defined(CONFIG_KASAN) && CONFIG_THREAD_SHIFT < 15
+ #define MIN_THREAD_SHIFT	(CONFIG_THREAD_SHIFT + 1)
+ #else
+ #define MIN_THREAD_SHIFT	CONFIG_THREAD_SHIFT
 -- 
 2.43.0
 
