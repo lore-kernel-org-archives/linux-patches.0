@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997D014A4E6;
-	Tue, 20 Feb 2024 21:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D6814A4E6;
+	Tue, 20 Feb 2024 21:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464423; cv=none; b=A/9KO6ZflTg2eNxemmUGl5qbXDmwlXO56+8CDNAhjJIOyhVK27mA3/DHhcgIT92T06Q9Z9yobcz5Dd6JvgSzYfMhwtfIsdxvaxKozGofVysbq3Q3rnbN34Dv+eVzzu1NwKY6E5miHhIQZF9Kxa3BWuglPWetYjGsnnZvCPOR9v8=
+	t=1708464426; cv=none; b=uq51tsB8Xm27Plg7COawO39B66MbeNXH3qYCzXXxlyDz7PZAO/xLJWGj3V5qG+2iUCm92BgEHA6MXCYqoL04C/TEcXZFBjHCF4vv/+jezzhkbCfjJSl/RyXr/v1L2EXX1Suh0nOjMH1upOY9FoENzCAetGJgjvDO8usJh9qG/k8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464423; c=relaxed/simple;
-	bh=gwb/3TEoin7bbCeiW2+G0EInn+/dB9wsRekf9GC4o5g=;
+	s=arc-20240116; t=1708464426; c=relaxed/simple;
+	bh=6uFiHGqZxGywwR+I2sb/vfiV2RG9DO5s2JsQWfILvt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbX38o5OnmnaZisE2jdMzygzpKqPlQXcah1cMfI/rQBlZogHYQ2rqvYj+Gr74Ft7M3/d4Lr1cc3lojq49qxv4vLU5649kwcyj/1Ym6kMrH54ToZrYgxu1z0GQ6/CPO137XR59uGrcEHTjn/hXcgGvSyZCwtKWRLfimZjor0Hmbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mazhhzbR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IH5WpONYVq6IDKCVHRnlESGohsGiTKrVf9RpL2ovWTENdOndjn9hVyQjgnUimV8otfP8HpV7zjH+wbz//rVcdi2hoDh0Ms23LyjSRJWcqYHUxPMIsZ+KfXK+TY3//QUxz9ZZJbsnk8gEEToh8hKwHS7s+cc7PyvxMKIEEXud5r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEAuREgQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mazhhzbR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07344C433F1;
-	Tue, 20 Feb 2024 21:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEAuREgQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BD7C43390;
+	Tue, 20 Feb 2024 21:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464423;
-	bh=gwb/3TEoin7bbCeiW2+G0EInn+/dB9wsRekf9GC4o5g=;
+	s=korg; t=1708464426;
+	bh=6uFiHGqZxGywwR+I2sb/vfiV2RG9DO5s2JsQWfILvt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mazhhzbRe/tm5Igs5BcKceh9qxv86zy1JqvXyaRvBzV5OMgulQ9/P7cD/db+7FpZK
-	 tq6fqslIqwvDHhfJljz2hMnxJrlDTLSCaYrQihT4sAMpTNyUfTGCCpFKVz93cN30RK
-	 +T8DhAIXrm5F6/YKEWqoX0HOsT7nz4UkZ8cdaA7U=
+	b=mEAuREgQ9eKsmX4bo5lmJEjJdjG2HPHa6Y/BsIQwHTPi2Jjan6wFXjTHXBwyCuKwc
+	 7DU9iu0lBwvIcOxwVPzoSnaiDg8qLi9x3bDEr0Z/9tfPEAZnT+O7x4R3kvvJniS7hu
+	 o4Nugbavn83uHsfVFHOPO59jWINwFv6lnZoCbgfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Rob Herring <robh@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 020/309] of: unittest: Fix compile in the non-dynamic case
-Date: Tue, 20 Feb 2024 21:52:59 +0100
-Message-ID: <20240220205633.808679583@linuxfoundation.org>
+Subject: [PATCH 6.7 021/309] drm/msm/gem: Fix double resv lock aquire
+Date: Tue, 20 Feb 2024 21:53:00 +0100
+Message-ID: <20240220205633.842184723@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -46,72 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 607aad1e4356c210dbef9022955a3089377909b2 ]
+[ Upstream commit 03facb39d6c6433a78d0f79c7a146b1e6a61943e ]
 
-If CONFIG_OF_KOBJ is not set, a device_node does not contain a
-kobj and attempts to access the embedded kobj via kref_read break
-the compile.
+Since commit 79e2cf2e7a19 ("drm/gem: Take reservation lock for vmap/vunmap
+operations"), the resv lock is already held in the prime vmap path, so
+don't try to grab it again.
 
-Replace affected kref_read calls with a macro that reads the
-refcount if it exists and returns 1 if there is no embedded kobj.
+v2: This applies to vunmap path as well
+v3: Fix fixes commit
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401291740.VP219WIz-lkp@intel.com/
-Fixes: 4dde83569832 ("of: Fix double free in of_parse_phandle_with_args_map")
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Link: https://lore.kernel.org/r/20240129192556.403271-1-lk@c--e.de
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: 79e2cf2e7a19 ("drm/gem: Take reservation lock for vmap/vunmap operations")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Acked-by: Christian König <christian.koenig@amd.com>
+Patchwork: https://patchwork.freedesktop.org/patch/576642/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_prime.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index cfd60e35a899..d7593bde2d02 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -50,6 +50,12 @@ static struct unittest_results {
- 	failed; \
- })
+diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c b/drivers/gpu/drm/msm/msm_gem_prime.c
+index 5f68e31a3e4e..0915f3b68752 100644
+--- a/drivers/gpu/drm/msm/msm_gem_prime.c
++++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+@@ -26,7 +26,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
+ {
+ 	void *vaddr;
  
-+#ifdef CONFIG_OF_KOBJ
-+#define OF_KREF_READ(NODE) kref_read(&(NODE)->kobj.kref)
-+#else
-+#define OF_KREF_READ(NODE) 1
-+#endif
-+
- /*
-  * Expected message may have a message level other than KERN_INFO.
-  * Print the expected message only if the current loglevel will allow
-@@ -570,7 +576,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
- 			pr_err("missing testcase data\n");
- 			return;
- 		}
--		prefs[i] = kref_read(&p[i]->kobj.kref);
-+		prefs[i] = OF_KREF_READ(p[i]);
- 	}
+-	vaddr = msm_gem_get_vaddr(obj);
++	vaddr = msm_gem_get_vaddr_locked(obj);
+ 	if (IS_ERR(vaddr))
+ 		return PTR_ERR(vaddr);
+ 	iosys_map_set_vaddr(map, vaddr);
+@@ -36,7 +36,7 @@ int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map *map)
  
- 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
-@@ -693,9 +699,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
- 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
- 
- 	for (i = 0; i < ARRAY_SIZE(p); ++i) {
--		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
-+		unittest(prefs[i] == OF_KREF_READ(p[i]),
- 			 "provider%d: expected:%d got:%d\n",
--			 i, prefs[i], kref_read(&p[i]->kobj.kref));
-+			 i, prefs[i], OF_KREF_READ(p[i]));
- 		of_node_put(p[i]);
- 	}
+ void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct iosys_map *map)
+ {
+-	msm_gem_put_vaddr(obj);
++	msm_gem_put_vaddr_locked(obj);
  }
+ 
+ struct drm_gem_object *msm_gem_prime_import_sg_table(struct drm_device *dev,
 -- 
 2.43.0
 
