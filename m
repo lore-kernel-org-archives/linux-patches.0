@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371EA151CDC;
-	Tue, 20 Feb 2024 21:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC31C14AD15;
+	Tue, 20 Feb 2024 21:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463749; cv=none; b=hK26LxcO5LVis+Ci1SJnipPJzx4DRMTTaHCgLuVO03t5LZo0Yn6BSCoL3uceloQRJiRU+LNqVeEDrvrI9YKRLjoSe0/L3YczRNABNp5CEe3+28hWrPYrS1q9tQf0JyQHGeucRyxi+5uhPu+PrJKkYTaslqybcyEDIytaHbjP17A=
+	t=1708463752; cv=none; b=n1ItFmWBQbDqiBiKOrnqafJyUqOxfzpSwc3r4K9HrVYcJPz+y33tmb6Z3+WSYZ8fYtiiSykRVYSs6rmhYJZ/tM9+koJ2o0/pV9UBgJd0AKGmB2rv5t2u4BXBPVVIqk6RNilSLImspoKZRvSdas5jWQobNG17U78L3rsVe1zrhjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463749; c=relaxed/simple;
-	bh=335VZ7XZ2dXS3C5qqaynmq0JXa/+S5qftWxoUVnAUQA=;
+	s=arc-20240116; t=1708463752; c=relaxed/simple;
+	bh=GB0OjvEK8idggcx+mDV7AkHiIVglq1dag3Q7HOhie7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRXfBETgqyk+IrdJMcdvCDwWgmNAl8gXqj/VA56H84qgORd0O5jpc0YhIVzfvhipcvzvw/i7tnU5wBXEfx7KWfawvmOX4jb3HdjpuVFtJpaFPwFzLGhX0nyuooVkf2Ijx5IolMmqGA0Pabkbyhg+MPwUa/1lEr0JhRegkXqkjb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzkYeI07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+QUNGnBwnABm43cWXZZ4rUgN3SNbf1HZTxLfUdJdaNWS4Q6iOHaCAFAqg1UrE8D46mdK+5AthR8+MhIzKnCVSsjbCN/oR7sOgPr2fOcFtO9gpYLlF5Jq0CnHJ7j06CPvE2yBcJm6+2I/mX+VolhX0jZ8yu5YNfhLbjm76uU2Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uScMLxRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzkYeI07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCD5C433C7;
-	Tue, 20 Feb 2024 21:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uScMLxRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D82C433F1;
+	Tue, 20 Feb 2024 21:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463748;
-	bh=335VZ7XZ2dXS3C5qqaynmq0JXa/+S5qftWxoUVnAUQA=;
+	s=korg; t=1708463751;
+	bh=GB0OjvEK8idggcx+mDV7AkHiIVglq1dag3Q7HOhie7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzkYeI07Ie/gzGCllF7T/G+lE9LMhPlwQYn9sTMhz5Amd1CmOtlVt9SbUaEbAsX0S
-	 wenX9vNOnTI0asHy95iWw9KC32CfsjKogd2ucW+M5sJFlSo0cMDs8EPmxzw1sKu1Qd
-	 9oNJ2QY4pPIDvGXYg5TvztzhzXQ1QxTtky7mocgg=
+	b=uScMLxRW87GWQOmtjczvGbIJZUOw7xakQD1ri8E6Wb4lz56bzJdkqEsNnHN/Fattp
+	 iu9NuMlx0Dd8VDOkazSshDdXrpXG+g3LrofeDUcxfeDdQBSAqdwB6M2wc732TzGNal
+	 fbO3rgf5PJsRltxz0N2EK1Nrk6bC6dSghdJObjQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 140/331] ALSA: hda/realtek - Add speaker pin verbtable for Dell dual speaker platform
-Date: Tue, 20 Feb 2024 21:54:16 +0100
-Message-ID: <20240220205641.958678715@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 141/331] ASoC: codecs: wcd938x: handle deferred probe
+Date: Tue, 20 Feb 2024 21:54:17 +0100
+Message-ID: <20240220205641.987232427@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,53 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit fcfc9f711d1e2fc7876ac12b1b16c509404b9625 upstream.
+commit 086df711d9b886194481b4fbe525eb43e9ae7403 upstream.
 
-SSID 0x0c0d platform. It can't mute speaker when HP plugged.
-This patch add quirk to fill speaker pin verbtable.
-And disable speaker passthrough.
+WCD938x sound codec driver ignores return status of getting regulators
+and returns EINVAL instead of EPROBE_DEFER.  If regulator provider
+probes after the codec, system is left without probed audio:
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/38b82976a875451d833d514cee34ff6a@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  wcd938x_codec audio-codec: wcd938x_probe: Fail to obtain platform data
+  wcd938x_codec: probe of audio-codec failed with error -22
+
+Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://msgid.link/r/20240117151208.1219755-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wcd938x.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -438,6 +438,10 @@ static void alc_fill_eapd_coef(struct hd
- 		alc_update_coef_idx(codec, 0x67, 0xf000, 0x3000);
- 		fallthrough;
- 	case 0x10ec0215:
-+	case 0x10ec0285:
-+	case 0x10ec0289:
-+		alc_update_coef_idx(codec, 0x36, 1<<13, 0);
-+		fallthrough;
- 	case 0x10ec0230:
- 	case 0x10ec0233:
- 	case 0x10ec0235:
-@@ -451,9 +455,7 @@ static void alc_fill_eapd_coef(struct hd
- 	case 0x10ec0283:
- 	case 0x10ec0286:
- 	case 0x10ec0288:
--	case 0x10ec0285:
- 	case 0x10ec0298:
--	case 0x10ec0289:
- 	case 0x10ec0300:
- 		alc_update_coef_idx(codec, 0x10, 1<<9, 0);
- 		break;
-@@ -9629,6 +9631,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1028, 0x0b71, "Dell Inspiron 16 Plus 7620", ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS),
- 	SND_PCI_QUIRK(0x1028, 0x0beb, "Dell XPS 15 9530 (2023)", ALC289_FIXUP_DELL_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1028, 0x0c03, "Dell Precision 5340", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1028, 0x0c0d, "Dell Oasis", ALC289_FIXUP_RTK_AMP_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1028, 0x0c19, "Dell Precision 3340", ALC236_FIXUP_DELL_DUAL_CODECS),
- 	SND_PCI_QUIRK(0x1028, 0x0c1a, "Dell Precision 3340", ALC236_FIXUP_DELL_DUAL_CODECS),
- 	SND_PCI_QUIRK(0x1028, 0x0c1b, "Dell Precision 3440", ALC236_FIXUP_DELL_DUAL_CODECS),
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -3589,7 +3589,7 @@ static int wcd938x_probe(struct platform
+ 	ret = wcd938x_populate_dt_data(wcd938x, dev);
+ 	if (ret) {
+ 		dev_err(dev, "%s: Fail to obtain platform data\n", __func__);
+-		return -EINVAL;
++		return ret;
+ 	}
+ 
+ 	ret = wcd938x_add_slave_components(wcd938x, dev, &match);
 
 
