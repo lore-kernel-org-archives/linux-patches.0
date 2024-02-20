@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A246C151CCD;
-	Tue, 20 Feb 2024 21:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD4C151CCD;
+	Tue, 20 Feb 2024 21:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465183; cv=none; b=SDx9FjuZl3U1Ax5LfdBvFW0yHDsmEDc3YdpUx8f6N7GmWWmZ83Z9etlOh29XA/GQlVwxJCvcJQvyRoYrt83CNlc1kEZ4ANkm+elmT2A0MYuGJrBUsaF+ZS6x2cX76i1CIYM8H2RtMDK5oTz4ly+pH17DAbhT++slFxy8dd7hGow=
+	t=1708465186; cv=none; b=cGl8jI2rMmsn6TsfxZhi8bcy5LR5kFDfOWyzxhPXG0oESpyZ3FAqONgPNzEFzrVVmBqJo2qduZkOpsdwTDMLXQaAIXU8yFG/8r+dPGVF+xf5ke40amblrDyBi8gaB+HFe0snYvoKVTCVtcRIEvJoq3OZoZIzwLyOYqrEkJXppZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465183; c=relaxed/simple;
-	bh=uvC3dGDYoDgGYeMbwRcudvbfhXo8dgE1X64ZSo6bw1Q=;
+	s=arc-20240116; t=1708465186; c=relaxed/simple;
+	bh=8KQex3E8Vr9VNvqdgG0fx6MsMxtijDAsMY2gvlo5abY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clq7HuEgd6mJx3jVe0qzSfHN1wu6UIyPo+wxmRO0sDCKiWs/alG9P78yW1jeOl9Yt9d/Ed/9gVvLb78Yep+CqzVXOC23QA1StG2a1n4/OiEZuY1u+7YVu+KcljoEVctKugFIdxYFjoqfvzQxgJMTYp7Ef8a6zLMkBXCjEazqSfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sIkRr3S3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fStmpTbaplVdFpXg1P5bEDdTjSR18MPriuTuTi/2DujUgt/f2IxRckNnrJD1T2jzMQ3Sjz9naGhpdYfK0loVMh9p+ap1kZ2F/l+2eOiCJ+Fd1mNjuxwujqHG2VVsPiTZa0GMM/iQnLvQ1GTytMyTxBhlWmEgtKmffx6zwmltQ8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rob83Coq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sIkRr3S3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2685AC43394;
-	Tue, 20 Feb 2024 21:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rob83Coq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E8BC433F1;
+	Tue, 20 Feb 2024 21:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465183;
-	bh=uvC3dGDYoDgGYeMbwRcudvbfhXo8dgE1X64ZSo6bw1Q=;
+	s=korg; t=1708465186;
+	bh=8KQex3E8Vr9VNvqdgG0fx6MsMxtijDAsMY2gvlo5abY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIkRr3S3YKQ127hgSHK+rSqNukx0lcpxJeHi0E2lJ54EuJeAUCZZaKgNlkiITEdTg
-	 tz2dvv0sVAWPQUlEP4+JW+rkJlXzrW7aP1hU8jxHdA5OdK7KbPOH2PXKiHlxMqcMzf
-	 3YY6zuz6I1N1sIQAX+uvPkAeee7FJbIaiZtwZ2G4=
+	b=Rob83CoqeMqegNa8CntzM9jgG9A8kArgdj0QAFfFGwq7ELlPYpja5nEYYsYxdrzwk
+	 yV/qQJbKD9t3/Ho6N2u46CirywPs3rNKLOdOImS32W9Gyz+sP8fOS9VxqYz4LcdeSi
+	 YfsI7c6kHEd3Nn3R2wp2878tzvvwAfoZkdNkzZCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.7 255/309] irqchip/irq-brcmstb-l2: Add write memory barrier before exit
-Date: Tue, 20 Feb 2024 21:56:54 +0100
-Message-ID: <20240220205641.141436146@linuxfoundation.org>
+	Fred Ai <fred.ai@bayhubtech.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.7 264/309] mmc: sdhci-pci-o2micro: Fix a warm reboot issue that disk cant be detected by BIOS
+Date: Tue, 20 Feb 2024 21:57:03 +0100
+Message-ID: <20240220205641.415482248@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,63 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doug Berger <opendmb@gmail.com>
+From: Fred Ai <fred.ai@bayhubtech.com>
 
-commit b0344d6854d25a8b3b901c778b1728885dd99007 upstream.
+commit 58aeb5623c2ebdadefe6352b14f8076a7073fea0 upstream.
 
-It was observed on Broadcom devices that use GIC v3 architecture L1
-interrupt controllers as the parent of brcmstb-l2 interrupt controllers
-that the deactivation of the parent interrupt could happen before the
-brcmstb-l2 deasserted its output. This would lead the GIC to reactivate the
-interrupt only to find that no L2 interrupt was pending. The result was a
-spurious interrupt invoking handle_bad_irq() with its associated
-messaging. While this did not create a functional problem it is a waste of
-cycles.
+Driver shall switch clock source from DLL clock to
+OPE clock when power off card to ensure that card
+can be identified with OPE clock by BIOS.
 
-The hazard exists because the memory mapped bus writes to the brcmstb-l2
-registers are buffered and the GIC v3 architecture uses a very efficient
-system register write to deactivate the interrupt.
-
-Add a write memory barrier prior to invoking chained_irq_exit() to
-introduce a dsb(st) on those systems to ensure the system register write
-cannot be executed until the memory mapped writes are visible to the
-system.
-
-[ florian: Added Fixes tag ]
-
-Fixes: 7f646e92766e ("irqchip: brcmstb-l2: Add Broadcom Set Top Box  Level-2 interrupt controller")
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Fred Ai <fred.ai@bayhubtech.com>
+Fixes:4be33cf18703 ("mmc: sdhci-pci-o2micro: Improve card input timing at SDR104/HS200 mode")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240210012449.3009125-1-florian.fainelli@broadcom.com
+Link: https://lore.kernel.org/r/20240203102908.4683-1-fredaibayhubtech@126.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-brcmstb-l2.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-o2micro.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/drivers/irqchip/irq-brcmstb-l2.c
-+++ b/drivers/irqchip/irq-brcmstb-l2.c
-@@ -2,7 +2,7 @@
- /*
-  * Generic Broadcom Set Top Box Level 2 Interrupt controller driver
-  *
-- * Copyright (C) 2014-2017 Broadcom
-+ * Copyright (C) 2014-2024 Broadcom
-  */
- 
- #define pr_fmt(fmt)	KBUILD_MODNAME	": " fmt
-@@ -112,6 +112,9 @@ static void brcmstb_l2_intc_irq_handle(s
- 		generic_handle_domain_irq(b->domain, irq);
- 	} while (status);
- out:
-+	/* Don't ack parent before all device writes are done */
-+	wmb();
-+
- 	chained_irq_exit(chip, desc);
+--- a/drivers/mmc/host/sdhci-pci-o2micro.c
++++ b/drivers/mmc/host/sdhci-pci-o2micro.c
+@@ -693,6 +693,35 @@ static int sdhci_pci_o2_init_sd_express(
+ 	return 0;
  }
  
++static void sdhci_pci_o2_set_power(struct sdhci_host *host, unsigned char mode,  unsigned short vdd)
++{
++	struct sdhci_pci_chip *chip;
++	struct sdhci_pci_slot *slot = sdhci_priv(host);
++	u32 scratch_32 = 0;
++	u8 scratch_8 = 0;
++
++	chip = slot->chip;
++
++	if (mode == MMC_POWER_OFF) {
++		/* UnLock WP */
++		pci_read_config_byte(chip->pdev, O2_SD_LOCK_WP, &scratch_8);
++		scratch_8 &= 0x7f;
++		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch_8);
++
++		/* Set PCR 0x354[16] to switch Clock Source back to OPE Clock */
++		pci_read_config_dword(chip->pdev, O2_SD_OUTPUT_CLK_SOURCE_SWITCH, &scratch_32);
++		scratch_32 &= ~(O2_SD_SEL_DLL);
++		pci_write_config_dword(chip->pdev, O2_SD_OUTPUT_CLK_SOURCE_SWITCH, scratch_32);
++
++		/* Lock WP */
++		pci_read_config_byte(chip->pdev, O2_SD_LOCK_WP, &scratch_8);
++		scratch_8 |= 0x80;
++		pci_write_config_byte(chip->pdev, O2_SD_LOCK_WP, scratch_8);
++	}
++
++	sdhci_set_power(host, mode, vdd);
++}
++
+ static int sdhci_pci_o2_probe_slot(struct sdhci_pci_slot *slot)
+ {
+ 	struct sdhci_pci_chip *chip;
+@@ -1051,6 +1080,7 @@ static const struct sdhci_ops sdhci_pci_
+ 	.set_bus_width = sdhci_set_bus_width,
+ 	.reset = sdhci_reset,
+ 	.set_uhs_signaling = sdhci_set_uhs_signaling,
++	.set_power = sdhci_pci_o2_set_power,
+ };
+ 
+ const struct sdhci_pci_fixes sdhci_o2 = {
 
 
