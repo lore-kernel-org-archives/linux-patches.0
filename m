@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3701612D7;
-	Tue, 20 Feb 2024 21:11:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80480612D7;
+	Tue, 20 Feb 2024 21:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463491; cv=none; b=AHVBH2XtADokFieZJnULbdFCWESVTksSlPM1B7qZRc2O1Yakd9nF8ADaajTyvbaQ93exw7jR8CkyxvQo4NXsdsusiCVvOk5ca46uq+c2/+ifMCUxIpp/Sg4ol548N1oSsgo7qw9elYOQ+NqFA+PG+bYcH70kcjZz0pNx1OAKylE=
+	t=1708463495; cv=none; b=YX/1KtnW8ujBhHsBocxrkmI8vgsH6eKAS0U11uHf2bdlQSf0w08Sn2EK6ia2IjNhpM9XGlT85xfrMjq5B0KWuxydu2VepRBTJHmeDVUi49g8Mbu0IAy71A8idJ2kazO0F1drV0CMKlOl7H2M37JLXcLuleQPtfG2IwpeAOLXHFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463491; c=relaxed/simple;
-	bh=fRnd8t/FjAlMSRiX/b44SGkR2IDMo4350luXtwhjPkY=;
+	s=arc-20240116; t=1708463495; c=relaxed/simple;
+	bh=6iqK4GS5F32T6VTpn6xCi2UoxtPlBJ1SgWDMUgROzVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rM1dp9xhfSXPWXNJ2lOHVnQBGDZu9Lf1/AStsQULvF7/KMLhPmZHoSBQNIkPx1COSCB/8IBMBzQIzwbJjnTiDkaeCeXNowJnG0an+jMAz/nfeWLOAOvJbxjFTxMC1NwJivRL8pE79KGqcXEbD9+updGMKZFbaBbp+T+ATi4OukM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDPJBzX7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOAzvd2/dfM3g/TDfnBLtT6v9hoCdqkLNRaMU+dGGoTHp8Qhve9aG/9uPakxEHjbEMWYV5fTEJqrkisTNZm6ubuc7eozLVuDLiNhws3ofSVsy4v6cgj1oQUy1S9KhpU5HbsvcLAYxUAPs23yEP7xBYYKZ1NLpFh8lsWp3B9S47A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWJ2Icqg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDPJBzX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14EB2C433F1;
-	Tue, 20 Feb 2024 21:11:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWJ2Icqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F97C43390;
+	Tue, 20 Feb 2024 21:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463491;
-	bh=fRnd8t/FjAlMSRiX/b44SGkR2IDMo4350luXtwhjPkY=;
+	s=korg; t=1708463495;
+	bh=6iqK4GS5F32T6VTpn6xCi2UoxtPlBJ1SgWDMUgROzVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDPJBzX708uEBkE+3pUyE7ZzpkYW4ThEGwfEbvvFYDioFIQg0CpL6pUV3svLOfloo
-	 kkurUiemcrNK0VJ95AGvtuVcMEYs8YfByMJMjsW0mztWGXeAu2sCENAaZeoxkUqFxP
-	 iBae5OZloc8SSHUHh0MR3PLsEcdsLH6omwce3P6A=
+	b=xWJ2IcqgYgnVGgBD7tIUU8lE0U/rUjjdpJZwwAMk7xrMq2hkKBcdQHC1hUk8glZ3C
+	 FvNwtszgU0T/gG50en9pgzIDFElocbHOlMsYjpPYVQKG7Zy14Xyua4UwbxNQ1eaAXj
+	 A7POjiV1G4Gq4cdWv5bEABfDrxZF38eVElh9G9xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/331] wifi: iwlwifi: uninitialized variable in iwl_acpi_get_ppag_table()
-Date: Tue, 20 Feb 2024 21:52:17 +0100
-Message-ID: <20240220205638.258327931@linuxfoundation.org>
+Subject: [PATCH 6.6 053/331] i40e: Do not allow untrusted VF to remove administratively set MAC
+Date: Tue, 20 Feb 2024 21:52:49 +0100
+Message-ID: <20240220205639.258812271@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,38 +54,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 65c6ee90455053cfd3067c17aaa4a42b0c766543 ]
+[ Upstream commit 73d9629e1c8c1982f13688c4d1019c3994647ccc ]
 
-This is an error path and Smatch complains that "tbl_rev" is uninitialized
-on this path.  All the other functions follow this same patter where they
-set the error code and goto out_free so that's probably what was intended
-here as well.
+Currently when PF administratively sets VF's MAC address and the VF
+is put down (VF tries to delete all MACs) then the MAC is removed
+from MAC filters and primary VF MAC is zeroed.
 
-Fixes: e8e10a37c51c ("iwlwifi: acpi: move ppag code from mvm to fw/acpi")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://msgid.link/09900c01-6540-4a32-9451-563da0029cb6@moroto.mountain
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Do not allow untrusted VF to remove primary MAC when it was set
+administratively by PF.
+
+Reproducer:
+1) Create VF
+2) Set VF interface up
+3) Administratively set the VF's MAC
+4) Put VF interface down
+
+[root@host ~]# echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
+[root@host ~]# ip link set enp2s0f0v0 up
+[root@host ~]# ip link set enp2s0f0 vf 0 mac fe:6c:b5:da:c7:7d
+[root@host ~]# ip link show enp2s0f0
+23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
+    vf 0     link/ether fe:6c:b5:da:c7:7d brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
+[root@host ~]# ip link set enp2s0f0v0 down
+[root@host ~]# ip link show enp2s0f0
+23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
+    vf 0     link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
+
+Fixes: 700bbf6c1f9e ("i40e: allow VF to remove any MAC filter")
+Fixes: ceb29474bbbc ("i40e: Add support for VF to specify its primary MAC address")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20240208180335.1844996-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 38 ++++++++++++++++---
+ 1 file changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index 6f1919234f3f..359397a61715 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -1088,6 +1088,9 @@ int iwl_acpi_get_ppag_table(struct iwl_fw_runtime *fwrt)
- 		goto read_table;
- 	}
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index cc4c53470db2..082c09920999 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -2848,6 +2848,24 @@ static int i40e_vc_get_stats_msg(struct i40e_vf *vf, u8 *msg)
+ 				      (u8 *)&stats, sizeof(stats));
+ }
  
-+	ret = PTR_ERR(wifi_pkg);
-+	goto out_free;
++/**
++ * i40e_can_vf_change_mac
++ * @vf: pointer to the VF info
++ *
++ * Return true if the VF is allowed to change its MAC filters, false otherwise
++ */
++static bool i40e_can_vf_change_mac(struct i40e_vf *vf)
++{
++	/* If the VF MAC address has been set administratively (via the
++	 * ndo_set_vf_mac command), then deny permission to the VF to
++	 * add/delete unicast MAC addresses, unless the VF is trusted
++	 */
++	if (vf->pf_set_mac && !vf->trusted)
++		return false;
 +
- read_table:
- 	fwrt->ppag_ver = tbl_rev;
- 	flags = &wifi_pkg->package.elements[1];
++	return true;
++}
++
+ #define I40E_MAX_MACVLAN_PER_HW 3072
+ #define I40E_MAX_MACVLAN_PER_PF(num_ports) (I40E_MAX_MACVLAN_PER_HW /	\
+ 	(num_ports))
+@@ -2907,8 +2925,8 @@ static inline int i40e_check_vf_permission(struct i40e_vf *vf,
+ 		 * The VF may request to set the MAC address filter already
+ 		 * assigned to it so do not return an error in that case.
+ 		 */
+-		if (!test_bit(I40E_VIRTCHNL_VF_CAP_PRIVILEGE, &vf->vf_caps) &&
+-		    !is_multicast_ether_addr(addr) && vf->pf_set_mac &&
++		if (!i40e_can_vf_change_mac(vf) &&
++		    !is_multicast_ether_addr(addr) &&
+ 		    !ether_addr_equal(addr, vf->default_lan_addr.addr)) {
+ 			dev_err(&pf->pdev->dev,
+ 				"VF attempting to override administratively set MAC address, bring down and up the VF interface to resume normal operation\n");
+@@ -3114,19 +3132,29 @@ static int i40e_vc_del_mac_addr_msg(struct i40e_vf *vf, u8 *msg)
+ 			ret = -EINVAL;
+ 			goto error_param;
+ 		}
+-		if (ether_addr_equal(al->list[i].addr, vf->default_lan_addr.addr))
+-			was_unimac_deleted = true;
+ 	}
+ 	vsi = pf->vsi[vf->lan_vsi_idx];
+ 
+ 	spin_lock_bh(&vsi->mac_filter_hash_lock);
+ 	/* delete addresses from the list */
+-	for (i = 0; i < al->num_elements; i++)
++	for (i = 0; i < al->num_elements; i++) {
++		const u8 *addr = al->list[i].addr;
++
++		/* Allow to delete VF primary MAC only if it was not set
++		 * administratively by PF or if VF is trusted.
++		 */
++		if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
++		    i40e_can_vf_change_mac(vf))
++			was_unimac_deleted = true;
++		else
++			continue;
++
+ 		if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
+ 			ret = -EINVAL;
+ 			spin_unlock_bh(&vsi->mac_filter_hash_lock);
+ 			goto error_param;
+ 		}
++	}
+ 
+ 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
+ 
 -- 
 2.43.0
 
