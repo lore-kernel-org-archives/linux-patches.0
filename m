@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7FC612D7;
-	Tue, 20 Feb 2024 21:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D40612D7;
+	Tue, 20 Feb 2024 21:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463959; cv=none; b=os+XNmkzc2fnvcjdBK2VSt9rgaWJoO3J75xSTcJ29VfhPvyeqJUO7OytoAYm7TU0iq/9b/6Jl2pEWv7yZdUFY27JvXNsUhEP8h9vCq8J8u60RbkCuhLf7NmfQO6r4VbvUnLNTWte8cd7sMQJpYvaYO06dRCaRVSo4dIuHHc0Rfw=
+	t=1708463962; cv=none; b=RRfa3VuKvLp47GqRg4SdCGW/9UPj2Ej429HX4NXdPwEnMiSknllUUeRegbbR81fmLYHnDvxLlgdbybV5WkS55gmggYHanhnpQLbXOQVP6r+FMf2MmlcYNEc26bom20xKYKJAr7mszm3BpEU73GLVwsHjcs2LcsI4Hpl4FrjcvN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463959; c=relaxed/simple;
-	bh=h10FjmCkymlvyP5Gkv2wuXjINqdiL1e1/dXo5p5VC7M=;
+	s=arc-20240116; t=1708463962; c=relaxed/simple;
+	bh=tgPTSnh/qb/hRJcRO9UPhGiAT0Gh0uMXBy43QX1aESw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PEOsmST42EZ4iPNOKh8SK4yGLDEPmNCJ4rzlzl5WHZ93pG1Y6ObJqJMqU0nwiL3nw7ZKBcH/BPbHftRdNheVhWKwWxYeiXh+RXdNuB8+GBLvjDHyuFwCDfKzoyEyDwt4g/b1lGoGtidB7ZG1SAmxWSOlI0u8eexvg6wt9Yheing=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQveWb10; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBF/TTXeoxO+QidhnX3yyBDeU/4ICdc2Zk6zf/o11Mjw4EilVCy1ieCTULL/YSl66/Oi48430GOHwYpSy1vAU3UphXq9Gl58J9MZNpYja2uhDvO2560lPErEm/RabZIcTH08KaIDThcHze1dsYRF3+/Hj0g29GQLQXsJgCv9wYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chk5SqJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQveWb10"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF86CC433C7;
-	Tue, 20 Feb 2024 21:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chk5SqJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0547EC433F1;
+	Tue, 20 Feb 2024 21:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463959;
-	bh=h10FjmCkymlvyP5Gkv2wuXjINqdiL1e1/dXo5p5VC7M=;
+	s=korg; t=1708463962;
+	bh=tgPTSnh/qb/hRJcRO9UPhGiAT0Gh0uMXBy43QX1aESw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQveWb101rdgmP2Z/bE1qF6Toa9sm9gN3+UJ0qcRWykILK8MydFv3cJm9SbjvUMNp
-	 fY+twquvJX2ZqAwjXwpWgizsRntHApn3CzKE04s1BosiiZs78dMsGrAY3ladjZ0stB
-	 ChD+K/U8mViPnqZSePOgMFqhDunlAJvtsVKyi6rc=
+	b=chk5SqJ9ZlkZnWB3z0r1OrbFo9OkFt1qe6aLqtLueN72FqgQ6kBd/IbBmsR3Bp0E6
+	 n34UX8pkz2C32QHfca7nd1Q2F4QzbOt0b4JP8kKbI2LeB8hkjujCY7stZo9XJJQhfo
+	 Kt53PC9Nv7bKgeLLZGaf5Lvblxq/7bBSzQp6pNGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 6.6 180/331] serial: max310x: improve crystal stable clock detection
-Date: Tue, 20 Feb 2024 21:54:56 +0100
-Message-ID: <20240220205643.177949092@linuxfoundation.org>
+	Jouni Malinen <j@w1.fi>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 207/331] wifi: cfg80211: fix wiphy delayed work queueing
+Date: Tue, 20 Feb 2024 21:55:23 +0100
+Message-ID: <20240220205644.203750556@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -44,86 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 93cd256ab224c2519e7c4e5f58bb4f1ac2bf0965 upstream.
+commit b743287d7a0007493f5cada34ed2085d475050b4 upstream.
 
-Some people are seeing a warning similar to this when using a crystal:
+When a wiphy work is queued with timer, and then again
+without a delay, it's started immediately but *also*
+started again after the timer expires. This can lead,
+for example, to warnings in mac80211's offchannel code
+as reported by Jouni. Running the same work twice isn't
+expected, of course. Fix this by deleting the timer at
+this point, when queuing immediately due to delay=0.
 
-    max310x 11-006c: clock is not stable yet
-
-The datasheet doesn't mention the maximum time to wait for the clock to be
-stable when using a crystal, and it seems that the 10ms delay in the driver
-is not always sufficient.
-
-Jan Kundrát reported that it took three tries (each separated by 10ms) to
-get a stable clock.
-
-Modify behavior to check stable clock ready bit multiple times (20), and
-waiting 10ms between each try.
-
-Note: the first draft of the driver originally used a 50ms delay, without
-checking the clock stable bit.
-Then a loop with 1000 retries was implemented, each time reading the clock
-stable bit.
-
-Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
 Cc: stable@vger.kernel.org
-Suggested-by: Jan Kundrát <jan.kundrat@cesnet.cz>
-Link: https://www.spinics.net/lists/linux-serial/msg35773.html
-Link: https://lore.kernel.org/all/20240110174015.6f20195fde08e5c9e64e5675@hugovil.com/raw
-Link: https://github.com/boundarydevices/linux/commit/e5dfe3e4a751392515d78051973190301a37ca9a
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240116213001.3691629-3-hugo@hugovil.com
+Reported-by: Jouni Malinen <j@w1.fi>
+Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
+Link: https://msgid.link/20240125095108.2feb0eaaa446.I4617f3210ed0e7f252290d5970dac6a876aa595b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ net/wireless/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -237,6 +237,10 @@
- #define MAX310x_REV_MASK		(0xf8)
- #define MAX310X_WRITE_BIT		0x80
- 
-+/* Crystal-related definitions */
-+#define MAX310X_XTAL_WAIT_RETRIES	20 /* Number of retries */
-+#define MAX310X_XTAL_WAIT_DELAY_MS	10 /* Delay between retries */
-+
- /* MAX3107 specific */
- #define MAX3107_REV_ID			(0xa0)
- 
-@@ -641,12 +645,19 @@ static u32 max310x_set_ref_clk(struct de
- 
- 	/* Wait for crystal */
- 	if (xtal) {
--		unsigned int val = 0;
--		msleep(10);
--		regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
--		if (!(val & MAX310X_STS_CLKREADY_BIT)) {
-+		bool stable = false;
-+		unsigned int try = 0, val = 0;
-+
-+		do {
-+			msleep(MAX310X_XTAL_WAIT_DELAY_MS);
-+			regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
-+
-+			if (val & MAX310X_STS_CLKREADY_BIT)
-+				stable = true;
-+		} while (!stable && (++try < MAX310X_XTAL_WAIT_RETRIES));
-+
-+		if (!stable)
- 			dev_warn(dev, "clock is not stable yet\n");
--		}
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1675,6 +1675,7 @@ void wiphy_delayed_work_queue(struct wip
+ 			      unsigned long delay)
+ {
+ 	if (!delay) {
++		del_timer(&dwork->timer);
+ 		wiphy_work_queue(wiphy, &dwork->work);
+ 		return;
  	}
- 
- 	return bestfreq;
 
 
