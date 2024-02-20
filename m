@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5286F446C9;
-	Tue, 20 Feb 2024 21:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E00446C9;
+	Tue, 20 Feb 2024 21:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464752; cv=none; b=VB8pZtEev/WPm46/Gi/Y4PalvSGxDKDBjDOVAyPkASFylwXIGL+sfxkeaS2fQyhGjNEfq/Fxc104EoYTqy9LloyABveNvaShB7gexN3Do61poTyfU2n5abpd0QxuIlvZujWrTHUG9FwdLipMIho1wpWykHuxaJyo561KWGL9dwM=
+	t=1708464755; cv=none; b=sp04Te6KQXQOQra9Ww4H7t8qKN7ty3FX2akD6gkphg1NDCFYDTFK3YZnPLXvgKdSbaiorECmem7FWMwedHwo43zbhPfJb7zpsyb8FTyOKqfDibeOd3OWEqopiTz3mKzXPoraymsNMek8LUkik96r2hM7fRWK+tdSVhWVs39rrqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464752; c=relaxed/simple;
-	bh=0P+94enaeX/iVczTClIv1G0uJt1HT6J0ePcQ8EUIsgA=;
+	s=arc-20240116; t=1708464755; c=relaxed/simple;
+	bh=ptarE3S9pjht4yh2+dLm8Fma5yyh+u525ZRLB/qIflg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKxNiJyKGNN+kW5jmg0zHz6HUbkO7aC/7MRtJGJ5rycGvTWbdCfhxZ2MWJZBSFnwIWVPvdJNRnBW7O3qw11/kHpUGen+QmZoxMdrEFOyVQfOd1Y8LvosLqom5DD0ZgenMHKp5GpGrOElipU1Is8ph2KzEjcNUdga8y3qaRFqDVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkijK/Sq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZj6gVv4vygEW72f3xeBhRdEnIRTRAjIHPJknj0ATYPxOs8hXf0aYEZybwNsn62NxEAnn1NwGLmB0SUvgWiNiQGTzMF5M5pjH+PGCUdE2OHtxlHR2X38ASE93+6kcQz8D9wfrR9JpRh810y5DeEVzWs8TueDmI9vtkbRNVM51s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxgNpHac; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkijK/Sq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D404EC433C7;
-	Tue, 20 Feb 2024 21:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxgNpHac"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C02C433C7;
+	Tue, 20 Feb 2024 21:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464752;
-	bh=0P+94enaeX/iVczTClIv1G0uJt1HT6J0ePcQ8EUIsgA=;
+	s=korg; t=1708464755;
+	bh=ptarE3S9pjht4yh2+dLm8Fma5yyh+u525ZRLB/qIflg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SkijK/SqboFmEYtUnRmYSEZqO3aMz7vMNqmycN/OFehY4pvoFm+GvZ4KI0qm6HPLv
-	 +NlzvgUK7gGBOy9sDN+Aoa8L3sNvTgiz21JWWzoyPuggTQudC5xqIJ8vnoR+LXV5aD
-	 9d8hP2FH7hBiBVjPFKSl73PVwKk7h2UMTVxI2vLA=
+	b=OxgNpHacjijtzgjgdcQ6ISvKsGaraBiGpqHnAf1KWtGGVZm8IaYb9GNuswv6+J1eW
+	 nGqrZOFNmYQwaSqUmVJFqK1jaer0E7dEGK6q7ywA0eH5i1L/xDU6MeishSqtS5F8Kz
+	 YANFdmNi2/morePRBi8nVBuB7j+qk8Za8Yl8Tgz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 096/309] interconnect: qcom: sm8550: Enable sync_state
-Date: Tue, 20 Feb 2024 21:54:15 +0100
-Message-ID: <20240220205636.193895040@linuxfoundation.org>
+Subject: [PATCH 6.7 097/309] media: ir_toy: fix a memleak in irtoy_tx
+Date: Tue, 20 Feb 2024 21:54:16 +0100
+Message-ID: <20240220205636.223653004@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,34 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit 24406f6794aa631516241deb9e19de333d6a0600 ]
+[ Upstream commit dc9ceb90c4b42c6e5c6757df1d6257110433788e ]
 
-To ensure the interconnect votes are actually meaningful and in order to
-prevent holding all buses at FMAX, introduce the sync state callback.
+When irtoy_command fails, buf should be freed since it is allocated by
+irtoy_tx, or there is a memleak.
 
-Fixes: e6f0d6a30f73 ("interconnect: qcom: Add SM8550 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20231218-topic-8550_fixes-v1-2-ce1272d77540@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 4114978dcd24 ("media: ir_toy: prevent device from hanging during transmit")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/sm8550.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/rc/ir_toy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/interconnect/qcom/sm8550.c b/drivers/interconnect/qcom/sm8550.c
-index 629faa4c9aae..fc22cecf650f 100644
---- a/drivers/interconnect/qcom/sm8550.c
-+++ b/drivers/interconnect/qcom/sm8550.c
-@@ -2223,6 +2223,7 @@ static struct platform_driver qnoc_driver = {
- 	.driver = {
- 		.name = "qnoc-sm8550",
- 		.of_match_table = qnoc_of_match,
-+		.sync_state = icc_sync_state,
- 	},
- };
+diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
+index 196806709259..69e630d85262 100644
+--- a/drivers/media/rc/ir_toy.c
++++ b/drivers/media/rc/ir_toy.c
+@@ -332,6 +332,7 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
+ 			    sizeof(COMMAND_SMODE_EXIT), STATE_COMMAND_NO_RESP);
+ 	if (err) {
+ 		dev_err(irtoy->dev, "exit sample mode: %d\n", err);
++		kfree(buf);
+ 		return err;
+ 	}
+ 
+@@ -339,6 +340,7 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
+ 			    sizeof(COMMAND_SMODE_ENTER), STATE_COMMAND);
+ 	if (err) {
+ 		dev_err(irtoy->dev, "enter sample mode: %d\n", err);
++		kfree(buf);
+ 		return err;
+ 	}
  
 -- 
 2.43.0
