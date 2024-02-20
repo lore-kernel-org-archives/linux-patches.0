@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158272DF9F;
-	Tue, 20 Feb 2024 21:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011EE2DF9F;
+	Tue, 20 Feb 2024 21:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464153; cv=none; b=Z47XOOOCXbBJUdxJmneigRH0FDzdC9Ol8bgmQJ7Er8ORadrmH1BhKXwn9t4EvCRGzXa+1Y73aPY7bhrciZ2qe/b/7U8YnYEcl6xYCXtguwksoXIndoZ+vGvA9x2KCxLYy7B5jJ3JAsooCCFK5lbw9n5z9ZrWoVvEUq0ZtobDgIA=
+	t=1708464157; cv=none; b=RSyLfZdCVnO6+kOv0KRD9W4XTCujALns29IPiyIEc/Im4y35c/SWZ9dFzQRqloydwWO0+0YxCzCL5PKWx7QoDCohg8yCAsCPvECbrI3sa+/ZR4csL0mZ0Ovm4B5jCC4UsNfEpj0jwoeGmz1roiej3MDKQ3+vWDyAYeImdPE+i7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464153; c=relaxed/simple;
-	bh=uda1AIHKIo+fjayH1DWX1MQyTQm2rEY4cIB0uXDqato=;
+	s=arc-20240116; t=1708464157; c=relaxed/simple;
+	bh=+9LsiRdY5LYP8kLZchlD4hB3ycK6eiASZHELVujtfFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nbp6HcGa3sJnsfk1s/Rf2BtmTmnhHr3+Sr5ecjG59+Sc6LHHG/uYGdbuhB/jnpwIQJHcItj9f68p2GINLjtehl28Uu8Ztnu03aJc9Gvh5ctt7PoULP4ah6uCoW80nqvwXpFC0z4s9G2IMFEnwzNEo9gDx2aDZuU24CnnDAUB1os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iyNL3VW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eMSPU3g5DRbmRkiZFwbORresbbcj9AjBbUOd0fCyVVR6dVMkET2QWplz7/CHkHt/X0oOztoP/bodhoZolvUDqcgRqR21mPv/brcCaQKuj1PHb8ukL8tQOflMNLaBq+F3ovNtsCdd+n+f8HZB/kVbXBUfuxf2AMhnYGHY4EBFiwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDXPsXR+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iyNL3VW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA5BC433C7;
-	Tue, 20 Feb 2024 21:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDXPsXR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FE7C433C7;
+	Tue, 20 Feb 2024 21:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464152;
-	bh=uda1AIHKIo+fjayH1DWX1MQyTQm2rEY4cIB0uXDqato=;
+	s=korg; t=1708464156;
+	bh=+9LsiRdY5LYP8kLZchlD4hB3ycK6eiASZHELVujtfFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1iyNL3VWP3eAc2VgjDLq5mFuKN7wx4n7ur79rClr/kSkrFV/UqYtD9baUSEctIAVT
-	 g+3pbPNkm7A80ZmaQSY+bZIpWyOQiME8PVs1Kplb0w8EfR5w6feviUFuBBtVTU7EF3
-	 v2751+wJSXIeP1vPrKsTEB5oBQv71ITfhzXkQ+Eo=
+	b=hDXPsXR+jatJfA1OUM7nrufuekktN18l1+tf/kE80nGH7oPPe8KkF7yREX+COzL3d
+	 6CV0SpLN+07MtLuW6GjbpEXf6z7aoBHUWIsHb9ZWst2rXLlxgK4VWSdI1apiI9IQOL
+	 Q7V33HcUxM9ZsZqBtgAvwrGrHGtBvq+ycwh2QL10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Julia Lawall <julia.lawall@inria.fr>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Jiapeng Chong <jiapeng.chong@linux.alibaba.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 267/331] eventfs: Fix failure path in eventfs_create_events_dir()
-Date: Tue, 20 Feb 2024 21:56:23 +0100
-Message-ID: <20240220205646.277218449@linuxfoundation.org>
+Subject: [PATCH 6.6 268/331] tracefs/eventfs: Modify mismatched function name
+Date: Tue, 20 Feb 2024 21:56:24 +0100
+Message-ID: <20240220205646.307149521@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,45 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
+From: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 
-commit 7e8ad67c9b5c11e990c320ed7e7563f2301672a7 upstream.
+commit 64bf2f685c795e75dd855761c75a193ee5998731 upstream.
 
-The failure path of allocating ei goes to a path that dereferences ei.
-Add another label that skips over the ei dereferences to do the rest of
-the clean up.
+No functional modification involved.
 
-Link: https://lore.kernel.org/all/70e7bace-561c-95f-1117-706c2c220bc@inria.fr/
-Link: https://lore.kernel.org/linux-trace-kernel/20231019204132.6662fef0@gandalf.local.home
+fs/tracefs/event_inode.c:864: warning: expecting prototype for eventfs_remove(). Prototype was for eventfs_remove_dir() instead.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Fixes: 5790b1fb3d67 ("eventfs: Remove eventfs_file and just use eventfs_inode")
-Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Link: https://lore.kernel.org/linux-trace-kernel/20231019031353.73846-1-jiapeng.chong@linux.alibaba.com
+
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=6939
+Signed-off-by: Jiapeng Chong <jiapeng.chong@linux.alibaba.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/tracefs/event_inode.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/fs/tracefs/event_inode.c
 +++ b/fs/tracefs/event_inode.c
-@@ -735,7 +735,7 @@ struct eventfs_inode *eventfs_create_eve
- 
- 	ei = kzalloc(sizeof(*ei), GFP_KERNEL);
- 	if (!ei)
--		goto fail;
-+		goto fail_ei;
- 
- 	inode = tracefs_get_inode(dentry->d_sb);
- 	if (unlikely(!inode))
-@@ -781,6 +781,7 @@ struct eventfs_inode *eventfs_create_eve
-  fail:
- 	kfree(ei->d_children);
- 	kfree(ei);
-+ fail_ei:
- 	tracefs_failed_creating(dentry);
- 	return ERR_PTR(-ENOMEM);
+@@ -856,7 +856,7 @@ static void unhook_dentry(struct dentry
+ 	}
  }
+ /**
+- * eventfs_remove - remove eventfs dir or file from list
++ * eventfs_remove_dir - remove eventfs dir or file from list
+  * @ei: eventfs_inode to be removed.
+  *
+  * This function acquire the eventfs_mutex lock and call eventfs_remove_rec()
 
 
