@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F0C14F9DA;
-	Tue, 20 Feb 2024 21:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4371F14F9DA;
+	Tue, 20 Feb 2024 21:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462917; cv=none; b=KsKbwckbIykASeEHgurdqy5eIH2RPUa+diVDOKdyw4+D8LnesrL7g/j8SLyBVPYcMdt+QK1n58E9sEt2HQMPLStCucM0H4GyFX53e2nIFa3Aseue3EYdbm+MmQ6LeAHrwUqBT3u9M8ENe12ssL7dkH3VOkH1CywY4od3sZ+jQzo=
+	t=1708462920; cv=none; b=YtsARKg//rhUaK6g9hNfn9SZyIeTWiM2Ij/qihvaWFI/BM1/bwLcX+wmcN4Sg+Cy6TCzm8zE88v2HvKimDLZ413Q/iJZ9m7dF6WuK0AcM9hYIIA1VBIJBnrjcfgEnXCHpf0SzDdnCOktG5qPv0wTyo16+H0UYug8ut4y5x1WP1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462917; c=relaxed/simple;
-	bh=m0qa78mr00hkzX7Ga+PuAyWN6UOuowEdJf8lrEzTmZ0=;
+	s=arc-20240116; t=1708462920; c=relaxed/simple;
+	bh=qbiqHUSPjE8IsFFPy8vQN/fZ7UqzWHsEBirI07rma+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7VMLfku4e3ItUlicUYwqAOAO8L0Qua62KBuG8uRwK4X/3uYVf454UU6dNerV2kooVCcZLCWpuIzmNCCazsFBgKT+6OhcAIAhNi6zpytBmMkTcvhra0Q/6IWpbB6xLmPKGooBPIcQ0KU3E7dB8JIsML9JVBMeqGVfMv048tFgys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFIWDZM+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c05CruWqGUgrIlp0BP8Iyy5WV60Ip6ceeaTD85gI+B+9vmladNmxADCuWt8pxVRVSGvK96za8eY+e4jQsJ31o4C0kN1s4k0umjb4M4mL4pbHyQS0vs1LEPBQEHpfLySDGtn/h5uYZC+w0onID7UNiGqFeL7O64tEBonVOF56ZY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkJ81ZSe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFIWDZM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96529C433F1;
-	Tue, 20 Feb 2024 21:01:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkJ81ZSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6427C433F1;
+	Tue, 20 Feb 2024 21:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462917;
-	bh=m0qa78mr00hkzX7Ga+PuAyWN6UOuowEdJf8lrEzTmZ0=;
+	s=korg; t=1708462920;
+	bh=qbiqHUSPjE8IsFFPy8vQN/fZ7UqzWHsEBirI07rma+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFIWDZM+A1pkTonEgd3hq7w3PjC61vmQHEfLWWVEndpw9Zt+CBVtARZ1vXRj67nW0
-	 7CIxYbBcUvp+NvbpWZQUilP9uy1jRjOkGi4ILDSBc2Cs16MT/9t/jG+f6U2knYzJDU
-	 UWaDzS3RXfg8tRd8eJ8aoYlwK+XbYAYTEsGl7+dk=
+	b=RkJ81ZSe4WD+0PF/ZdJXBOKTfzvZ5JqxJFwErykoXs8DYL3y5ix2WhLSR4jvgxgqb
+	 cfFdFjNd7buhttJWTtkYWJfmIe4po7GVLQBVW4j6xhlwHhk8hfdEzXVoGgkVo/NDRG
+	 sc3SEpfjindV3InWl6yUfDvjuLKIb1BYb6/bRTuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 078/197] lsm: fix the logic in security_inode_getsecctx()
-Date: Tue, 20 Feb 2024 21:50:37 +0100
-Message-ID: <20240220204843.414506813@linuxfoundation.org>
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Subject: [PATCH 6.1 079/197] firewire: core: correct documentation of fw_csr_string() kernel API
+Date: Tue, 20 Feb 2024 21:50:38 +0100
+Message-ID: <20240220204843.450877215@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,60 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-commit 99b817c173cd213671daecd25ca27f56b0c7c4ec upstream.
+commit 5f9ab17394f831cb7986ec50900fa37507a127f1 upstream.
 
-The inode_getsecctx LSM hook has previously been corrected to have
--EOPNOTSUPP instead of 0 as the default return value to fix BPF LSM
-behavior. However, the call_int_hook()-generated loop in
-security_inode_getsecctx() was left treating 0 as the neutral value, so
-after an LSM returns 0, the loop continues to try other LSMs, and if one
-of them returns a non-zero value, the function immediately returns with
-said value. So in a situation where SELinux and the BPF LSMs registered
-this hook, -EOPNOTSUPP would be incorrectly returned whenever SELinux
-returned 0.
+Against its current description, the kernel API can accepts all types of
+directory entries.
 
-Fix this by open-coding the call_int_hook() loop and making it use the
-correct LSM_RET_DEFAULT() value as the neutral one, similar to what
-other hooks do.
+This commit corrects the documentation.
 
 Cc: stable@vger.kernel.org
-Reported-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Link: https://lore.kernel.org/selinux/CAEjxPJ4ev-pasUwGx48fDhnmjBnq_Wh90jYPwRQRAqXxmOKD4Q@mail.gmail.com/
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2257983
-Fixes: b36995b8609a ("lsm: fix default return value for inode_getsecctx")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Casey Schaufler <casey@schaufler-ca.com>
-[PM: subject line tweak]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 3c2c58cb33b3 ("firewire: core: fw_csr_string addendum")
+Link: https://lore.kernel.org/r/20240130100409.30128-2-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/security.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/firewire/core-device.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/security/security.c
-+++ b/security/security.c
-@@ -2186,7 +2186,19 @@ EXPORT_SYMBOL(security_inode_setsecctx);
- 
- int security_inode_getsecctx(struct inode *inode, void **ctx, u32 *ctxlen)
- {
--	return call_int_hook(inode_getsecctx, -EOPNOTSUPP, inode, ctx, ctxlen);
-+	struct security_hook_list *hp;
-+	int rc;
-+
-+	/*
-+	 * Only one module will provide a security context.
-+	 */
-+	hlist_for_each_entry(hp, &security_hook_heads.inode_getsecctx, list) {
-+		rc = hp->hook.inode_getsecctx(inode, ctx, ctxlen);
-+		if (rc != LSM_RET_DEFAULT(inode_getsecctx))
-+			return rc;
-+	}
-+
-+	return LSM_RET_DEFAULT(inode_getsecctx);
- }
- EXPORT_SYMBOL(security_inode_getsecctx);
- 
+--- a/drivers/firewire/core-device.c
++++ b/drivers/firewire/core-device.c
+@@ -100,10 +100,9 @@ static int textual_leaf_to_string(const
+  * @buf:	where to put the string
+  * @size:	size of @buf, in bytes
+  *
+- * The string is taken from a minimal ASCII text descriptor leaf after
+- * the immediate entry with @key.  The string is zero-terminated.
+- * An overlong string is silently truncated such that it and the
+- * zero byte fit into @size.
++ * The string is taken from a minimal ASCII text descriptor leaf just after the entry with the
++ * @key. The string is zero-terminated. An overlong string is silently truncated such that it
++ * and the zero byte fit into @size.
+  *
+  * Returns strlen(buf) or a negative error code.
+  */
 
 
