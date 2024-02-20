@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE7D14F9DA;
-	Tue, 20 Feb 2024 21:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B309C151CCC;
+	Tue, 20 Feb 2024 21:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465151; cv=none; b=JCIRHnYBrjBNPrs5OKqLUKsM7kg1ThCweqxDqrn6za/RK7pngmODrnHRRUbEotI4o8jKyQKwd3MYz2JG73RqQPwD0l1FJk08/Y2i9fx2rYLHUvjZfv/HMiP4H/XAcKj3QCnIarZeh8ojo3mrxjLJPCfns3mUybzskJOjIwmTVFY=
+	t=1708465154; cv=none; b=CipeiKOL00zOMtIViJDTNIoyuqYun20ZqNs9Mtce23i54/mFBdZ/7jDrVoDbKejdoKDdvSWiUvIAlD4nQqp9LgwNDBHSh+N2+MegSbR3TOCFTsYeoWgG1tjSmYjJPkEg4K67VwcKnNJc6D4ifSL2wv0S5PWsPBhjDun6hTASZec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465151; c=relaxed/simple;
-	bh=uoVoGdTMiLU7d/dUyzC4KjAHgBwjABwnXfifONscHn8=;
+	s=arc-20240116; t=1708465154; c=relaxed/simple;
+	bh=H5h437pAjYZaJmXkBgXsk8DRuz+/XWGavXaL2uNB9dE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDMJ5F9iJv4TNn9B7thybv/tlOjkkl/ynF4siKPCJB7v6NJyAtnHxbX0t6QfxOUiWp+I9z0IeogH8EAYcaG0nr/7rEVBFGWqUlKWyY+IY04O1x5LMEtRGZ7WPmMoYF2FcEB0OV7hNsg4MhyyjJn8X0uZ0RAvidWeUonK8uqAODU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4JhtTQt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=An6DzCcl5FASitWJZtrbS67LVxOdQfCjDpOAmwUvXHAdbehUfm+S09+6DgxQIgncqdMmn9bGGytQP1UPzEnoy5brxBn7iWb5pIaLE7PU53V9KKFqDYwS5+ymRmkK6LWzPbn3WcLt9LznzZb4CgGfm86bZTmcwq5zqp9LkNtvDLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMWJ5Fre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4JhtTQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0ACC433C7;
-	Tue, 20 Feb 2024 21:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMWJ5Fre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BF4C433F1;
+	Tue, 20 Feb 2024 21:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465151;
-	bh=uoVoGdTMiLU7d/dUyzC4KjAHgBwjABwnXfifONscHn8=;
+	s=korg; t=1708465154;
+	bh=H5h437pAjYZaJmXkBgXsk8DRuz+/XWGavXaL2uNB9dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q4JhtTQtJXHgRwYRir5Z5qTpflV4IWlHl/OFKv4jtjrads13AhXnxngKBrkukqpP4
-	 zoyQTPLSaEKXZQlCmGPC8tHNkWANFXmx5jo7zGwFKoWKocRzE6nxVzIZwLkB44ro7i
-	 dArLgWNsM96XqAgKeHNNfSZemu1HjiFkVZL81YLE=
+	b=oMWJ5Fre8BgkUeKW17eqaJ0EgbXh9fPDaIoc8LHwfS/WuQJ47CEtrgePNi8icEtZr
+	 8X+ZOfZvOlmwTYR0MvPuhewjFRyR9OPn9SZPcU83g9aT7fJ9S3kqTqCG65OsE9yehc
+	 PjYNpXkBicOhcj4XALNksUoaHiwHcooeieW+kmvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florent Revest <revest@chromium.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.7 225/309] ftrace: Fix DIRECT_CALLS to use SAVE_REGS by default
-Date: Tue, 20 Feb 2024 21:56:24 +0100
-Message-ID: <20240220205640.195170739@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.7 252/309] wifi: mac80211: reload info pointer in ieee80211_tx_dequeue()
+Date: Tue, 20 Feb 2024 21:56:51 +0100
+Message-ID: <20240220205641.052020987@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -53,95 +49,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit a8b9cf62ade1bf17261a979fc97e40c2d7842353 upstream.
+commit c98d8836b817d11fdff4ca7749cbbe04ff7f0c64 upstream.
 
-The commit 60c8971899f3 ("ftrace: Make DIRECT_CALLS work WITH_ARGS
-and !WITH_REGS") changed DIRECT_CALLS to use SAVE_ARGS when there
-are multiple ftrace_ops at the same function, but since the x86 only
-support to jump to direct_call from ftrace_regs_caller, when we set
-the function tracer on the same target function on x86, ftrace-direct
-does not work as below (this actually works on arm64.)
+This pointer can change here since the SKB can change, so we
+actually later open-coded IEEE80211_SKB_CB() again. Reload
+the pointer where needed, so the monitor-mode case using it
+gets fixed, and then use info-> later as well.
 
-At first, insmod ftrace-direct.ko to put a direct_call on
-'wake_up_process()'.
-
- # insmod kernel/samples/ftrace/ftrace-direct.ko
- # less trace
-...
-          <idle>-0       [006] ..s1.   564.686958: my_direct_func: waking up rcu_preempt-17
-          <idle>-0       [007] ..s1.   564.687836: my_direct_func: waking up kcompactd0-63
-          <idle>-0       [006] ..s1.   564.690926: my_direct_func: waking up rcu_preempt-17
-          <idle>-0       [006] ..s1.   564.696872: my_direct_func: waking up rcu_preempt-17
-          <idle>-0       [007] ..s1.   565.191982: my_direct_func: waking up kcompactd0-63
-
-Setup a function filter to the 'wake_up_process' too, and enable it.
-
- # cd /sys/kernel/tracing/
- # echo wake_up_process > set_ftrace_filter
- # echo function > current_tracer
- # less trace
-...
-          <idle>-0       [006] ..s3.   686.180972: wake_up_process <-call_timer_fn
-          <idle>-0       [006] ..s3.   686.186919: wake_up_process <-call_timer_fn
-          <idle>-0       [002] ..s3.   686.264049: wake_up_process <-call_timer_fn
-          <idle>-0       [002] d.h6.   686.515216: wake_up_process <-kick_pool
-          <idle>-0       [002] d.h6.   686.691386: wake_up_process <-kick_pool
-
-Then, only function tracer is shown on x86.
-But if you enable 'kprobe on ftrace' event (which uses SAVE_REGS flag)
-on the same function, it is shown again.
-
- # echo 'p wake_up_process' >> dynamic_events
- # echo 1 > events/kprobes/p_wake_up_process_0/enable
- # echo > trace
- # less trace
-...
-          <idle>-0       [006] ..s2.  2710.345919: p_wake_up_process_0: (wake_up_process+0x4/0x20)
-          <idle>-0       [006] ..s3.  2710.345923: wake_up_process <-call_timer_fn
-          <idle>-0       [006] ..s1.  2710.345928: my_direct_func: waking up rcu_preempt-17
-          <idle>-0       [006] ..s2.  2710.349931: p_wake_up_process_0: (wake_up_process+0x4/0x20)
-          <idle>-0       [006] ..s3.  2710.349934: wake_up_process <-call_timer_fn
-          <idle>-0       [006] ..s1.  2710.349937: my_direct_func: waking up rcu_preempt-17
-
-To fix this issue, use SAVE_REGS flag for multiple ftrace_ops flag of
-direct_call by default.
-
-Link: https://lore.kernel.org/linux-trace-kernel/170484558617.178953.1590516949390270842.stgit@devnote2
-
-Fixes: 60c8971899f3 ("ftrace: Make DIRECT_CALLS work WITH_ARGS and !WITH_REGS")
 Cc: stable@vger.kernel.org
-Cc: Florent Revest <revest@chromium.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Tested-by: Mark Rutland <mark.rutland@arm.com> [arm64]
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 531682159092 ("mac80211: fix VLAN handling with TXQs")
+Link: https://msgid.link/20240131164910.b54c28d583bc.I29450cec84ea6773cff5d9c16ff92b836c331471@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/mac80211/tx.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -5325,7 +5325,17 @@ static LIST_HEAD(ftrace_direct_funcs);
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -5,7 +5,7 @@
+  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
+  * Copyright 2007	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2024 Intel Corporation
+  *
+  * Transmit and frame generation functions.
+  */
+@@ -3927,6 +3927,7 @@ begin:
+ 			goto begin;
  
- static int register_ftrace_function_nolock(struct ftrace_ops *ops);
+ 		skb = __skb_dequeue(&tx.skbs);
++		info = IEEE80211_SKB_CB(skb);
  
-+/*
-+ * If there are multiple ftrace_ops, use SAVE_REGS by default, so that direct
-+ * call will be jumped from ftrace_regs_caller. Only if the architecture does
-+ * not support ftrace_regs_caller but direct_call, use SAVE_ARGS so that it
-+ * jumps from ftrace_caller for multiple ftrace_ops.
-+ */
-+#ifndef HAVE_DYNAMIC_FTRACE_WITH_REGS
- #define MULTI_FLAGS (FTRACE_OPS_FL_DIRECT | FTRACE_OPS_FL_SAVE_ARGS)
-+#else
-+#define MULTI_FLAGS (FTRACE_OPS_FL_DIRECT | FTRACE_OPS_FL_SAVE_REGS)
-+#endif
+ 		if (!skb_queue_empty(&tx.skbs)) {
+ 			spin_lock_bh(&fq->lock);
+@@ -3971,7 +3972,7 @@ begin:
+ 	}
  
- static int check_direct_multi(struct ftrace_ops *ops)
- {
+ encap_out:
+-	IEEE80211_SKB_CB(skb)->control.vif = vif;
++	info->control.vif = vif;
+ 
+ 	if (tx.sta &&
+ 	    wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL)) {
 
 
