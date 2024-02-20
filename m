@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174B3151CCC;
-	Tue, 20 Feb 2024 21:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269781509B1;
+	Tue, 20 Feb 2024 21:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464226; cv=none; b=l2RjRxxCb1V4Nw6OUeyQZCkLMHumP5XSAr1W7CPLsVu+nuAf5SGmKp0XCWrUOgYvYMNscAtV/y5CkJz4SJ9ybdUGUTjQV+7X6stdeDEVaQ/53scFJgD8n6ZB72mEg1IxPtM1XxM7n/jd+m6pex1mhjSiDX45jH0QOB1XCWWXU88=
+	t=1708464229; cv=none; b=TgnVrVHnBiPnAtZG4hb4ceZfelub4axsiVM7uRE5LMa5hLTLgbVgazOlUpaRkma3y4tq/mudsrcbuhjhPNqGH/wYIq+TKkscOwA7Y4WL0NCfHhkKWO/CNJgYFwxt4Ci8nYGtFLtywZ1ep1PyTB3pSLky015zWaaL/afWvWogHKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464226; c=relaxed/simple;
-	bh=w5FEBq31rPmf4f/4v/eZgcAIijib+aUnU7Ra8I80AuA=;
+	s=arc-20240116; t=1708464229; c=relaxed/simple;
+	bh=/VH+qZG+Wub3dIiC8lXhohAxzpiEU9HIw55A4HX8HCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xo4+YFmA3oJH2A1rYbtBobZ/fF4uIzURUfexJbPhOLQeg+k7g+eI2njXSy+rAfS1n/SURzWwDNAmQUBPL587KwC+jTJkoF3jxkuGpeG3G6uEyNhVNN43ta3vUSRRwiCcHsBsHp0xRL+ZM2iUoMZZIB29imEGlFwbycpypa+X67M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1s88Y/tL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jSEWI4DQanKPOYXakpZQ/or7kjguLFR3XhEzH3wtQ/iEFRc3OGC1ot9VEhf3Yurku5rxNp+iSGdN0aDrzE/hxxoTfgvp7Deuu3ezUs767rsSIyxkHcqhQGyHR9E4TdsOeMZ4UIAS3lOvKcJbNF+4Y/VF6xKiATebUW8dwJ8/kmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRmcPjev; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1s88Y/tL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A1EC43390;
-	Tue, 20 Feb 2024 21:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRmcPjev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4940C43390;
+	Tue, 20 Feb 2024 21:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464226;
-	bh=w5FEBq31rPmf4f/4v/eZgcAIijib+aUnU7Ra8I80AuA=;
+	s=korg; t=1708464229;
+	bh=/VH+qZG+Wub3dIiC8lXhohAxzpiEU9HIw55A4HX8HCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1s88Y/tLh+99Pfmk9ztuU9Xe5wa23A+3enXQhd/707/QNIORbyIMlTxEsWgdl+zB3
-	 YYHAyj1YfSQd0gT7ecRvLX1xjr4pd0inlxCuvwbIYjpFQkroyqH9eknClNeeqcWlb8
-	 re3yWxIPWZgym0yivIes7dydKmzvG3FeSkxXUGzs=
+	b=XRmcPjevvDjGp0wsTe0mnQKlJOA7j+k2NE1bjKCLn7LpaYyf4V8cZOPoVoufGwRu5
+	 U8eG3eXEgyt77iw6oUpHSupC0dsVHWqItyZ0X4EQZ5D44Rj7ljJocsvi925KielfL0
+	 F8zXJGCIXihcvHc08ESFn7oAPdfr3vYV0gPzY6cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Ajay Kaher <akaher@vmware.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 273/331] eventfs: Remove "is_freed" union with rcu head
-Date: Tue, 20 Feb 2024 21:56:29 +0100
-Message-ID: <20240220205646.464262659@linuxfoundation.org>
+Subject: [PATCH 6.6 291/331] eventfs: Fix bitwise fields for "is_events"
+Date: Tue, 20 Feb 2024 21:56:47 +0100
+Message-ID: <20240220205647.155931353@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -55,68 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit f2f496370afcbc5227d7002da28c74b91fed12ff upstream.
+commit fd56cd5f6d76e93356d9520cf9dabffe1e3d1aa0 upstream.
 
-The eventfs_inode->is_freed was a union with the rcu_head with the
-assumption that when it was on the srcu list the head would contain a
-pointer which would make "is_freed" true. But that was a wrong assumption
-as the rcu head is a single link list where the last element is NULL.
+A flag was needed to denote which eventfs_inode was the "events"
+directory, so a bit was taken from the "nr_entries" field, as there's not
+that many entries, and 2^30 is plenty. But the bit number for nr_entries
+was not updated to reflect the bit taken from it, which would add an
+unnecessary integer to the structure.
 
-Instead, split the nr_entries integer so that "is_freed" is one bit and
-the nr_entries is the next 31 bits. As there shouldn't be more than 10
-(currently there's at most 5 to 7 depending on the config), this should
-not be a problem.
-
-Link: https://lkml.kernel.org/r/20231101172649.049758712@goodmis.org
+Link: https://lore.kernel.org/linux-trace-kernel/20240102151832.7ca87275@gandalf.local.home
 
 Cc: stable@vger.kernel.org
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Ajay Kaher <akaher@vmware.com>
-Fixes: 63940449555e7 ("eventfs: Implement eventfs lookup, read, open functions")
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: 7e8358edf503e ("eventfs: Fix file and directory uid and gid ownership")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    2 ++
- fs/tracefs/internal.h    |    6 +++---
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ fs/tracefs/internal.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/tracefs/event_inode.c
-+++ b/fs/tracefs/event_inode.c
-@@ -824,6 +824,8 @@ static void eventfs_remove_rec(struct ev
- 		eventfs_remove_rec(ei_child, head, level + 1);
- 	}
- 
-+	ei->is_freed = 1;
-+
- 	list_del_rcu(&ei->list);
- 	list_add_tail(&ei->del_list, head);
- }
 --- a/fs/tracefs/internal.h
 +++ b/fs/tracefs/internal.h
-@@ -23,6 +23,7 @@ struct tracefs_inode {
-  * @d_parent:   pointer to the parent's dentry
-  * @d_children: The array of dentries to represent the files when created
-  * @data:	The private data to pass to the callbacks
-+ * @is_freed:	Flag set if the eventfs is on its way to be freed
-  * @nr_entries: The number of items in @entries
-  */
- struct eventfs_inode {
-@@ -38,14 +39,13 @@ struct eventfs_inode {
- 	 * Union - used for deletion
- 	 * @del_list:	list of eventfs_inode to delete
- 	 * @rcu:	eventfs_inode to delete in RCU
--	 * @is_freed:	node is freed if one of the above is set
- 	 */
- 	union {
- 		struct list_head	del_list;
- 		struct rcu_head		rcu;
--		unsigned long		is_freed;
+@@ -63,7 +63,7 @@ struct eventfs_inode {
  	};
--	int				nr_entries;
-+	unsigned int			is_freed:1;
-+	unsigned int			nr_entries:31;
+ 	unsigned int			is_freed:1;
+ 	unsigned int			is_events:1;
+-	unsigned int			nr_entries:31;
++	unsigned int			nr_entries:30;
  };
  
  static inline struct tracefs_inode *get_tracefs(const struct inode *inode)
