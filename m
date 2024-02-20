@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9773514AD12;
-	Tue, 20 Feb 2024 21:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A39214AD12;
+	Tue, 20 Feb 2024 21:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463552; cv=none; b=GZNW22zGTPjUyTHkle16AS0Xvk6b4FPOQ/ojqprdz1ObmWf0EavCst85Zn6YJSKzBx4HNy4wsJsYHhHzzLFN/tZIIBA6S35Xjepl1Ax7q6coy2EGWwRKNUIpNLmkEtR60vYGXUtAaHyij1rpjiPxIoZZSJ0+hALkewaYgNnnC8Q=
+	t=1708463555; cv=none; b=WL3leNg5K7lgdrD3uXBszNmRkuG4EDdfHWh69njKXSQmYJYe1vU1JQx4rft02BVoy8cXAZjlzI4lp+JYtiuP7mCWm374nuscJeQ0DBXZunLxdSJ9XzT8L8uakaE6pyKeEBAMECCinRL6UgbCxP2nKHoF8LHaXLTWvD3alykyK1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463552; c=relaxed/simple;
-	bh=uoSvSWiDzoJF2zXlTmWejboKYUcXYiHEOZ7ZSNd70dE=;
+	s=arc-20240116; t=1708463555; c=relaxed/simple;
+	bh=9HYqaTWl9aL4ZGn+qB1eOCv2oeQ53xcAtcjK+ieQHDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZHgi3gBxJf7PgQMaT8Gm3Wl6dYnCv7qQL4+CBtJPEQv9SRCIE0h2pFX9Ux4MBe41L5a2i00cTk/Ey1bVy4b4jxgD/Kw9RlhgWDG2A3XsGw3j325TcpGckWXlyKz3qbK0JPn/daVnxfNu2QXb5aKfrBYG/Xb4OeCsR/DpnaftkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnupGEae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UOlcwbGwIYYFVsA9AugLkoixwgtXY4MGHzcemfFlyK/GI//tmVPDT9CvmvmWA8dLs08C1o91b+7pbQ2wOB82EKnCzo61QvlpIIro9aWYZ0d2TcBZ5Kf9m5VcWxehr5Vcg9lUe43zyRsqcDJOHN8zTIpquRLYyxusJeQqW/HLS5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjRez151; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnupGEae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D6AC433F1;
-	Tue, 20 Feb 2024 21:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjRez151"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC33EC433F1;
+	Tue, 20 Feb 2024 21:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463552;
-	bh=uoSvSWiDzoJF2zXlTmWejboKYUcXYiHEOZ7ZSNd70dE=;
+	s=korg; t=1708463555;
+	bh=9HYqaTWl9aL4ZGn+qB1eOCv2oeQ53xcAtcjK+ieQHDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnupGEaevcCHs4k9Kp/419cXD6FGigMM6yYRGVevqnqxNhDpNB9cKKlGYTftr7Rap
-	 zRpXxh1I9MCTwG5y4K8Idm/Ay4+LoMYiu4QsVV1CecvSRo0/o7v1TuJwFHdy05LGwY
-	 0Z5jwkgn4x5F4ATW+XOfvsM7+///qlf6uttcmgQQ=
+	b=qjRez151dvWmtzV6ZcFvQ5trstMVk5Yv0TBWCXSe1hkABTatCt9V7MrdJYzrfemzl
+	 L2DO+MNmK7V57y19MCCUQ/ISnF+bU+n7JEosKLqHoyNEvtgGA0a1NcgEz5IkBp2sbl
+	 LsZzdio2pQXlESx8zlAEnH9MTfXFS1bvpf4UkBTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>
-Subject: [PATCH 6.6 078/331] usb: ulpi: Fix debugfs directory leak
-Date: Tue, 20 Feb 2024 21:53:14 +0100
-Message-ID: <20240220205640.032023939@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 079/331] usb: ucsi_acpi: Fix command completion handling
+Date: Tue, 20 Feb 2024 21:53:15 +0100
+Message-ID: <20240220205640.061030798@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -49,35 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 3caf2b2ad7334ef35f55b95f3e1b138c6f77b368 upstream.
+commit 2840143e393a4ddc1caab4372969ea337371168c upstream.
 
-The ULPI per-device debugfs root is named after the ulpi device's
-parent, but ulpi_unregister_interface tries to remove a debugfs
-directory named after the ulpi device itself. This results in the
-directory sticking around and preventing subsequent (deferred) probes
-from succeeding. Change the directory name to match the ulpi device.
+In case of a spurious or otherwise delayed notification it is
+possible that CCI still reports the previous completion. The
+UCSI spec is aware of this and provides two completion bits in
+CCI, one for normal commands and one for acks. As acks and commands
+alternate the notification handler can determine if the completion
+bit is from the current command.
 
-Fixes: bd0a0a024f2a ("usb: ulpi: Add debugfs support")
+The initial UCSI code correctly handled this but the distinction
+between the two completion bits was lost with the introduction of
+the new API.
+
+To fix this revive the ACK_PENDING bit for ucsi_acpi and only complete
+commands if the completion bit matches.
+
+Fixes: f56de278e8ec ("usb: typec: ucsi: acpi: Move to the new API")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Link: https://lore.kernel.org/r/20240126223800.2864613-1-sean.anderson@seco.com
+Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240121204123.275441-3-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/common/ulpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -301,7 +301,7 @@ static int ulpi_register(struct device *
- 		return ret;
- 	}
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -73,9 +73,13 @@ static int ucsi_acpi_sync_write(struct u
+ 				const void *val, size_t val_len)
+ {
+ 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
+ 	int ret;
  
--	root = debugfs_create_dir(dev_name(dev), ulpi_root);
-+	root = debugfs_create_dir(dev_name(&ulpi->dev), ulpi_root);
- 	debugfs_create_file("regs", 0444, root, ulpi, &ulpi_regs_fops);
+-	set_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		set_bit(ACK_PENDING, &ua->flags);
++	else
++		set_bit(COMMAND_PENDING, &ua->flags);
  
- 	dev_dbg(&ulpi->dev, "registered ULPI PHY: vendor %04x, product %04x\n",
+ 	ret = ucsi_acpi_async_write(ucsi, offset, val, val_len);
+ 	if (ret)
+@@ -85,7 +89,10 @@ static int ucsi_acpi_sync_write(struct u
+ 		ret = -ETIMEDOUT;
+ 
+ out_clear_bit:
+-	clear_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		clear_bit(ACK_PENDING, &ua->flags);
++	else
++		clear_bit(COMMAND_PENDING, &ua->flags);
+ 
+ 	return ret;
+ }
+@@ -142,8 +149,10 @@ static void ucsi_acpi_notify(acpi_handle
+ 	if (UCSI_CCI_CONNECTOR(cci))
+ 		ucsi_connector_change(ua->ucsi, UCSI_CCI_CONNECTOR(cci));
+ 
+-	if (test_bit(COMMAND_PENDING, &ua->flags) &&
+-	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
++	if (cci & UCSI_CCI_ACK_COMPLETE && test_bit(ACK_PENDING, &ua->flags))
++		complete(&ua->complete);
++	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
++	    test_bit(COMMAND_PENDING, &ua->flags))
+ 		complete(&ua->complete);
+ }
+ 
 
 
