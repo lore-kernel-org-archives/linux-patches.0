@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC854151CD6;
-	Tue, 20 Feb 2024 21:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EF0151CFB;
+	Tue, 20 Feb 2024 21:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463675; cv=none; b=ZBpsqspchrxSvJU5++7oyMPi08Kqm3YQCpEvQy3Frd++9Ez/iU6Mnm1HvzBDz1Bi59L4C3vvaS5oAURK/xd+7LNbDVyoW4CVKfSkaWyJ6KlbdyIg6k0HgnU7LySuROLZm6hQBFto4mwqOaqovZk1c6irc86LsrEKuvXImhyJk6s=
+	t=1708463679; cv=none; b=a2aj2Q9fj2GsJzTZJGfzqTVIKONJbj7jIlQ8VETA2Y9f0b+SoGA+oHGPwD/8+lwPf4AJdNP05/4+5+5BLzBhcRa3SeBcHD9nXKdWeRcZYqocGhGkFGvFqXG9yugBZ/UFi5n5mSkBWUp2l8szc5QA8lHQNjl3A4UvxmARR5aqTq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463675; c=relaxed/simple;
-	bh=JL+djesjcFK5R/Sy1bnc9ulalB4HmCBzZ93lVWSewZY=;
+	s=arc-20240116; t=1708463679; c=relaxed/simple;
+	bh=lkPZjqMxzH3IAL3zHBydF6otLYytUT4RxjhvVTFS+gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N2tixeUFif4XRtfb9aI1so/BU1jXYpDDOU3kKMrtNETcLEsRutPWdENvxeJ6jIlluEKjeJbb2wOwQbAJUcgmOhBpxLIDfNqWzSlpXaNmgUGx2tDs+ClbyTgRWNCF/V0HVJ2+onh/s5YgRZMxD6ASgqIKH31AfFLmzZQQfgrkkrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2a8gJsSK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E7LHsPBJCRCo475WOhV294p7fHG1scg4w8GibLYzYKpCjHwLdxFCtG4WlrKLl6LXxNjTA4XeyEBN88HKZZPUH8H3dAl0KgO4m9xOmxOJUn5rpo78wufuH7Fn9IrlYNdhUyAv72ayBvRMGbA1jESzUucxcWLh3sFj/Gr3FX1g22M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQV4/yKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2a8gJsSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F3FC433F1;
-	Tue, 20 Feb 2024 21:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQV4/yKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753D1C433F1;
+	Tue, 20 Feb 2024 21:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463675;
-	bh=JL+djesjcFK5R/Sy1bnc9ulalB4HmCBzZ93lVWSewZY=;
+	s=korg; t=1708463678;
+	bh=lkPZjqMxzH3IAL3zHBydF6otLYytUT4RxjhvVTFS+gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2a8gJsSKEoaZ2LycUwZJZF3HUd0C+JK5cFNt3NXSLXEgVHmmgyxFtKKbS3m+1AWFP
-	 b5CWK5j3oqQVMoEK1xm8mr5WJNAB3W1r4RDpS8FcEGVmpB4WTsVw8YpmWMPebqhkXb
-	 pIF8YIWGUkRGJY9FHt0qa4rNUYmTJMnH7tLg1ydY=
+	b=oQV4/yKeWMEgVmanpodQHFEQEnh6ncuZnOI+OZ2Lglj8XYr5LWevaVlm587L5TP3e
+	 ObILzqmu6hoNoeH7DpMMSTRh8BOLLvGvuMfGKEmugb5HhD6vDVWaw4aU59XYh5nQR/
+	 DCIbEw3cg2ay65ZUimuWO6SIpTrZAjXUzgDYcEPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.ibm.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/331] powerpc/pseries/iommu: Fix iommu initialisation during DLPAR add
-Date: Tue, 20 Feb 2024 21:53:25 +0100
-Message-ID: <20240220205640.384413359@linuxfoundation.org>
+Subject: [PATCH 6.6 090/331] powerpc/6xx: set High BAT Enable flag on G2_LE cores
+Date: Tue, 20 Feb 2024 21:53:26 +0100
+Message-ID: <20240220205640.412408376@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,153 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.ibm.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit ed8b94f6e0acd652ce69bd69d678a0c769172df8 ]
+[ Upstream commit a038a3ff8c6582404834852c043dadc73a5b68b4 ]
 
-When a PCI device is dynamically added, the kernel oopses with a NULL
-pointer dereference:
+MMU_FTR_USE_HIGH_BATS is set for G2_LE cores and derivatives like e300cX,
+but the high BATs need to be enabled in HID2 to work. Add register
+definitions and add the needed setup to __setup_cpu_603.
 
-  BUG: Kernel NULL pointer dereference on read at 0x00000030
-  Faulting instruction address: 0xc0000000006bbe5c
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in: rpadlpar_io rpaphp rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs xsk_diag bonding nft_compat nf_tables nfnetlink rfkill binfmt_misc dm_multipath rpcrdma sunrpc rdma_ucm ib_srpt ib_isert iscsi_target_mod target_core_mod ib_umad ib_iser libiscsi scsi_transport_iscsi ib_ipoib rdma_cm iw_cm ib_cm mlx5_ib ib_uverbs ib_core pseries_rng drm drm_panel_orientation_quirks xfs libcrc32c mlx5_core mlxfw sd_mod t10_pi sg tls ibmvscsi ibmveth scsi_transport_srp vmx_crypto pseries_wdt psample dm_mirror dm_region_hash dm_log dm_mod fuse
-  CPU: 17 PID: 2685 Comm: drmgr Not tainted 6.7.0-203405+ #66
-  Hardware name: IBM,9080-HEX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_008) hv:phyp pSeries
-  NIP:  c0000000006bbe5c LR: c000000000a13e68 CTR: c0000000000579f8
-  REGS: c00000009924f240 TRAP: 0300   Not tainted  (6.7.0-203405+)
-  MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002220  XER: 20040006
-  CFAR: c000000000a13e64 DAR: 0000000000000030 DSISR: 40000000 IRQMASK: 0
-  ...
-  NIP sysfs_add_link_to_group+0x34/0x94
-  LR  iommu_device_link+0x5c/0x118
-  Call Trace:
-   iommu_init_device+0x26c/0x318 (unreliable)
-   iommu_device_link+0x5c/0x118
-   iommu_init_device+0xa8/0x318
-   iommu_probe_device+0xc0/0x134
-   iommu_bus_notifier+0x44/0x104
-   notifier_call_chain+0xb8/0x19c
-   blocking_notifier_call_chain+0x64/0x98
-   bus_notify+0x50/0x7c
-   device_add+0x640/0x918
-   pci_device_add+0x23c/0x298
-   of_create_pci_dev+0x400/0x884
-   of_scan_pci_dev+0x124/0x1b0
-   __of_scan_bus+0x78/0x18c
-   pcibios_scan_phb+0x2a4/0x3b0
-   init_phb_dynamic+0xb8/0x110
-   dlpar_add_slot+0x170/0x3b8 [rpadlpar_io]
-   add_slot_store.part.0+0xb4/0x130 [rpadlpar_io]
-   kobj_attr_store+0x2c/0x48
-   sysfs_kf_write+0x64/0x78
-   kernfs_fop_write_iter+0x1b0/0x290
-   vfs_write+0x350/0x4a0
-   ksys_write+0x84/0x140
-   system_call_exception+0x124/0x330
-   system_call_vectored_common+0x15c/0x2ec
+This fixes boot on CPUs like the MPC5200B with STRICT_KERNEL_RWX enabled
+on systems where the flag has not been set by the bootloader already.
 
-Commit a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities
-and allow blocking domains") broke DLPAR add of PCI devices.
-
-The above added iommu_device structure to pci_controller. During
-system boot, PCI devices are discovered and this newly added iommu_device
-structure is initialized by a call to iommu_device_register().
-
-During DLPAR add of a PCI device, a new pci_controller structure is
-allocated but there are no calls made to iommu_device_register()
-interface.
-
-Fix is to register the iommu device during DLPAR add as well.
-
-Fixes: a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities and allow blocking domains")
-Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-[mpe: Trim oops and tweak some change log wording]
+Fixes: e4d6654ebe6e ("powerpc/mm/32s: rework mmu_mapin_ram()")
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240122222407.39603-1-gbatra@linux.ibm.com
+Link: https://msgid.link/20240124103838.43675-1-matthias.schiffer@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/ppc-pci.h         |  3 +++
- arch/powerpc/kernel/iommu.c                | 21 ++++++++++++++++-----
- arch/powerpc/platforms/pseries/pci_dlpar.c |  4 ++++
- 3 files changed, 23 insertions(+), 5 deletions(-)
+ arch/powerpc/include/asm/reg.h      |  2 ++
+ arch/powerpc/kernel/cpu_setup_6xx.S | 20 +++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/ppc-pci.h b/arch/powerpc/include/asm/ppc-pci.h
-index d9fcff575027..e500a7b9d1b5 100644
---- a/arch/powerpc/include/asm/ppc-pci.h
-+++ b/arch/powerpc/include/asm/ppc-pci.h
-@@ -29,6 +29,9 @@ void *pci_traverse_device_nodes(struct device_node *start,
- 				void *(*fn)(struct device_node *, void *),
- 				void *data);
- extern void pci_devs_phb_init_dynamic(struct pci_controller *phb);
-+extern void ppc_iommu_register_device(struct pci_controller *phb);
-+extern void ppc_iommu_unregister_device(struct pci_controller *phb);
+diff --git a/arch/powerpc/include/asm/reg.h b/arch/powerpc/include/asm/reg.h
+index 4ae4ab9090a2..ade5f094dbd2 100644
+--- a/arch/powerpc/include/asm/reg.h
++++ b/arch/powerpc/include/asm/reg.h
+@@ -617,6 +617,8 @@
+ #endif
+ #define SPRN_HID2	0x3F8		/* Hardware Implementation Register 2 */
+ #define SPRN_HID2_GEKKO	0x398		/* Gekko HID2 Register */
++#define SPRN_HID2_G2_LE	0x3F3		/* G2_LE HID2 Register */
++#define  HID2_G2_LE_HBE	(1<<18)		/* High BAT Enable (G2_LE) */
+ #define SPRN_IABR	0x3F2	/* Instruction Address Breakpoint Register */
+ #define SPRN_IABR2	0x3FA		/* 83xx */
+ #define SPRN_IBCR	0x135		/* 83xx Insn Breakpoint Control Reg */
+diff --git a/arch/powerpc/kernel/cpu_setup_6xx.S b/arch/powerpc/kernel/cpu_setup_6xx.S
+index f29ce3dd6140..bfd3f442e5eb 100644
+--- a/arch/powerpc/kernel/cpu_setup_6xx.S
++++ b/arch/powerpc/kernel/cpu_setup_6xx.S
+@@ -26,6 +26,15 @@ BEGIN_FTR_SECTION
+ 	bl	__init_fpu_registers
+ END_FTR_SECTION_IFCLR(CPU_FTR_FPU_UNAVAILABLE)
+ 	bl	setup_common_caches
 +
- 
- /* From rtas_pci.h */
- extern void init_pci_config_tokens (void);
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index 14251bc5219e..7e23cc03c06c 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -1393,6 +1393,21 @@ static const struct attribute_group *spapr_tce_iommu_groups[] = {
- 	NULL,
- };
- 
-+void ppc_iommu_register_device(struct pci_controller *phb)
-+{
-+	iommu_device_sysfs_add(&phb->iommu, phb->parent,
-+				spapr_tce_iommu_groups, "iommu-phb%04x",
-+				phb->global_number);
-+	iommu_device_register(&phb->iommu, &spapr_tce_iommu_ops,
-+				phb->parent);
-+}
++	/*
++	 * This assumes that all cores using __setup_cpu_603 with
++	 * MMU_FTR_USE_HIGH_BATS are G2_LE compatible
++	 */
++BEGIN_MMU_FTR_SECTION
++	bl      setup_g2_le_hid2
++END_MMU_FTR_SECTION_IFSET(MMU_FTR_USE_HIGH_BATS)
 +
-+void ppc_iommu_unregister_device(struct pci_controller *phb)
-+{
-+	iommu_device_unregister(&phb->iommu);
-+	iommu_device_sysfs_remove(&phb->iommu);
-+}
+ 	mtlr	r5
+ 	blr
+ _GLOBAL(__setup_cpu_604)
+@@ -115,6 +124,16 @@ SYM_FUNC_START_LOCAL(setup_604_hid0)
+ 	blr
+ SYM_FUNC_END(setup_604_hid0)
+ 
++/* Enable high BATs for G2_LE and derivatives like e300cX */
++SYM_FUNC_START_LOCAL(setup_g2_le_hid2)
++	mfspr	r11,SPRN_HID2_G2_LE
++	oris	r11,r11,HID2_G2_LE_HBE@h
++	mtspr	SPRN_HID2_G2_LE,r11
++	sync
++	isync
++	blr
++SYM_FUNC_END(setup_g2_le_hid2)
 +
- /*
-  * This registers IOMMU devices of PHBs. This needs to happen
-  * after core_initcall(iommu_init) + postcore_initcall(pci_driver_init) and
-@@ -1403,11 +1418,7 @@ static int __init spapr_tce_setup_phb_iommus_initcall(void)
- 	struct pci_controller *hose;
- 
- 	list_for_each_entry(hose, &hose_list, list_node) {
--		iommu_device_sysfs_add(&hose->iommu, hose->parent,
--				       spapr_tce_iommu_groups, "iommu-phb%04x",
--				       hose->global_number);
--		iommu_device_register(&hose->iommu, &spapr_tce_iommu_ops,
--				      hose->parent);
-+		ppc_iommu_register_device(hose);
- 	}
- 	return 0;
- }
-diff --git a/arch/powerpc/platforms/pseries/pci_dlpar.c b/arch/powerpc/platforms/pseries/pci_dlpar.c
-index 4ba824568119..4448386268d9 100644
---- a/arch/powerpc/platforms/pseries/pci_dlpar.c
-+++ b/arch/powerpc/platforms/pseries/pci_dlpar.c
-@@ -35,6 +35,8 @@ struct pci_controller *init_phb_dynamic(struct device_node *dn)
- 
- 	pseries_msi_allocate_domains(phb);
- 
-+	ppc_iommu_register_device(phb);
-+
- 	/* Create EEH devices for the PHB */
- 	eeh_phb_pe_create(phb);
- 
-@@ -76,6 +78,8 @@ int remove_phb_dynamic(struct pci_controller *phb)
- 		}
- 	}
- 
-+	ppc_iommu_unregister_device(phb);
-+
- 	pseries_msi_free_domains(phb);
- 
- 	/* Keep a reference so phb isn't freed yet */
+ /* 7400 <= rev 2.7 and 7410 rev = 1.0 suffer from some
+  * erratas we work around here.
+  * Moto MPC710CE.pdf describes them, those are errata
+@@ -495,4 +514,3 @@ _GLOBAL(__restore_cpu_setup)
+ 	mtcr	r7
+ 	blr
+ _ASM_NOKPROBE_SYMBOL(__restore_cpu_setup)
+-
 -- 
 2.43.0
 
