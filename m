@@ -1,62 +1,93 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1438151CD6;
-	Tue, 20 Feb 2024 21:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444541509BC;
+	Tue, 20 Feb 2024 21:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464659; cv=none; b=smp5v3bqO3TSDeWU/4C8e8125V5y4J7hqYOtkbuEK9ImMkxw8BIXfWcLO0p1k0JypCxD6SUlLYLPJJl2LALr4pyNr4L8iXXC1m/DHIkhhu5R2Xk//ek96mMrXno0y2Rg8wK04Qc9khXccGojtQLbmOvGVSeixuz2976aRhbSgPQ=
+	t=1708464660; cv=none; b=Ze/+ptTL0yMFw+C4LHNzFfGDVJ9zTA+pEZfrvBA8N/ozBeWpJeYHdaDJcMe3vI6QAaROfE5dTSpknHCzjpRG6aTVHjhEXTHu5r0CQryrWORzsauI5qD4/PbLpuME7fH1DQtJI5lnmW3Q0OGoqeDrchehkBc2GaciJr2JHsk6v6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464659; c=relaxed/simple;
-	bh=nPt+h9WIbsSXk5BTCCmXvq3Gq3dxggzRZBMCwBitFvU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WhjDDagrgk6K0K5IhiR8mcRr3ldwnfJihuhp4pxmKueUJtpNtfrE4V2mcOv9zAc+oSs7gOwI7tbnEdcRD56pPnebAVbGC3j54yEC72yNTDRRhe0Eq7y+EJSlwdAtUfWqTGELhVLIO2r1/+E2Izp6GOcPwmQhitrfSfYLRsb+0Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=juHQSZ3y; arc=none smtp.client-ip=90.155.50.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1708464660; c=relaxed/simple;
+	bh=wC2Kh5cnoQWNwit2YU3AcAWJlZyolFjvpX4n24FW3jE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Dv/R+BtmYlynUmy4o6as7eI1L1MrZiaTS6pbjGKx7NuWYTZONR4WNqAwU43nFaFlVFen861X+ads5WDqxwtuXRg3axcAsm+Zi0yeLl6AVcnl8wOXCj97ynQ47l7IgnSCshx0d+zeUOZRv5EEFYr5xj22IPPAFeVkHoFMM9pDMs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Yg+Ml63; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="juHQSZ3y"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=6cmqe5fdIWgo+nZk695FfE78Ci8VBBaR9MvGJF1KEbk=; b=juHQSZ3yTAJMsE/0dQZWj4Xwtz
-	e3tjGQabCffXKdak9b5ebvltP8aJgfNYmv4F8IyWOw5lrDo1OI+7sumvVvxizQTCR+1DqSlbh6zSi
-	NLKeDXlvnkLgYk4bUEs0IDWNZ66dzQq1R0Skfmk7RQh7Op789noyHYgXDa/U/jYRfWgfXebD9DYs4
-	4Bb05/oaSSqe23PpWYUMWQhafAqpWQBKZbHtBAzxYYxHFCxUlmVGi1rV+pFgWSlRocDCBoV8kHU0L
-	VmvxgEEH/Z883v/XLx+tqsEzZx3YPjil9RVw/td73bYt6GzfzT5+5NKrIfSgO3Jtwg6Ay0ONFfN9C
-	5YvqLjnw==;
-Received: from willy by casper.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rcXhX-0000000GcKj-0bng;
-	Tue, 20 Feb 2024 21:30:55 +0000
-Date: Tue, 20 Feb 2024 21:30:55 +0000
-From: Matthew Wilcox <willy@infradead.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>, Guo Xuenan <guoxuenan@huawei.com>,
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Yg+Ml63"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62ABC433C7;
+	Tue, 20 Feb 2024 21:30:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1708464660;
+	bh=wC2Kh5cnoQWNwit2YU3AcAWJlZyolFjvpX4n24FW3jE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=0Yg+Ml639TMg4B1b1kfV2vmlhArnTYTXMvNn2mlDouGvvSL41HKn2ukd/Vq4t5qc1
+	 ut0JtivEF/J8R/sOtYm1SdR5NpjQ8B/9r44PVEwC41cuROMBcsBZfFeu1t3fVZL9Bw
+	 kIAgID0Uo5YKW+S825g1pgADnlK9BPa2U6GYfM8M=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.7 070/309] readahead: avoid multiple marked readahead
- pages
-Message-ID: <ZdUaD07Xb2qvH_PA@casper.infradead.org>
+Subject: [PATCH 6.7 065/309] selftests/mm: ksm_tests should only MADV_HUGEPAGE valid memory
+Date: Tue, 20 Feb 2024 21:53:44 +0100
+Message-ID: <20240220205635.250030237@linuxfoundation.org>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
- <20240220205635.396911933@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240220205635.396911933@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 20, 2024 at 09:53:49PM +0100, Greg Kroah-Hartman wrote:
-> 6.7-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Jan Kara <jack@suse.cz>
-> 
-> commit ab4443fe3ca6298663a55c4a70efc6c3ce913ca6 upstream.
+6.7-stable review patch.  If anyone has any objections, please let me know.
 
-ibid
+------------------
+
+From: Ryan Roberts <ryan.roberts@arm.com>
+
+commit d021b442cf312664811783e92b3d5e4548e92a53 upstream.
+
+ksm_tests was previously mmapping a region of memory, aligning the
+returned pointer to a PMD boundary, then setting MADV_HUGEPAGE, but was
+setting it past the end of the mmapped area due to not taking the pointer
+alignment into consideration.  Fix this behaviour.
+
+Up until commit efa7df3e3bb5 ("mm: align larger anonymous mappings on THP
+boundaries"), this buggy behavior was (usually) masked because the
+alignment difference was always less than PMD-size.  But since the
+mentioned commit, `ksm_tests -H -s 100` started failing.
+
+Link: https://lkml.kernel.org/r/20240122120554.3108022-1-ryan.roberts@arm.com
+Fixes: 325254899684 ("selftests: vm: add KSM huge pages merging time test")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ tools/testing/selftests/mm/ksm_tests.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/tools/testing/selftests/mm/ksm_tests.c
++++ b/tools/testing/selftests/mm/ksm_tests.c
+@@ -566,7 +566,7 @@ static int ksm_merge_hugepages_time(int
+ 	if (map_ptr_orig == MAP_FAILED)
+ 		err(2, "initial mmap");
+ 
+-	if (madvise(map_ptr, len + HPAGE_SIZE, MADV_HUGEPAGE))
++	if (madvise(map_ptr, len, MADV_HUGEPAGE))
+ 		err(2, "MADV_HUGEPAGE");
+ 
+ 	pagemap_fd = open("/proc/self/pagemap", O_RDONLY);
+
+
