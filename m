@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CEF1151CEF;
-	Tue, 20 Feb 2024 21:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A63151CD6;
+	Tue, 20 Feb 2024 21:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464011; cv=none; b=MmiXC8/dBztoOK4L6VjhqKhmDit8/fJk3lEYpRvkFJ2cGBSuJjQ/0FSy/PNGo6fPp5Y/BAM2AdHKJ9w3IKVi+OoomgugtiP/T/DWFPdZXyCQYcwIVHTDSnUD1EFGa3FrH30kKS2GVgnEraSY3l94VvBw7ylafEN/5f6S4dCvjOg=
+	t=1708464014; cv=none; b=dsdPg3iq89YpVbdhio+2UaMBAKdSMmD+qui+VjQUChtWn9FI0LPAu2KRLttLIAdV4/IjjxzI/4umUNjJmOjC3FuwFmWkZkedb8+qUMDtVRAbP2uvppXr1rHhSnjxCLNI2a/YnCOS2OSyNrNEqsjiqf80Ou2MLar3aF1F17xHprY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464011; c=relaxed/simple;
-	bh=7E2GcgfiXiwBlA1ZtzCjif4AeJkwLU1zxSgjLI9uEt8=;
+	s=arc-20240116; t=1708464014; c=relaxed/simple;
+	bh=V3s7D5EeHbCboAKDkGSb5nwb48axuLtYD9iHvMbifUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBWQMYTT3ELGHfLmkY4wXiG/7x9/Jl2U59vLiBmfpG+VU9mXzbYAY/71nit5EE5jjnn69KBzjIXtE3lmTyf+1qTNPgs6oOzhNjHu2wFJYMlX8l+yTKGCFFHeVf+VMGQ69U1E44mR/08FJ2V2T66Oiv42C3ThX9aDOPI8vo4RAY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrP25U4y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Obv5Aolj3tSqinZhwKoRwS97N9KaI4h9nNb/vC1Wdmp8cLorYk1FTqfQPRCnjnoI8HmFgx4fWnzO0l7I1lZyETO1hoz7i8GtXWbzpJbna/3/hoO4ZzW16X7gYejro1OaC+LTGkCubXOoS75+hrx5fCATExYXGi3ho0nJ29jeEgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4sZQbBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrP25U4y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC21C433F1;
-	Tue, 20 Feb 2024 21:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4sZQbBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A577C433F1;
+	Tue, 20 Feb 2024 21:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464011;
-	bh=7E2GcgfiXiwBlA1ZtzCjif4AeJkwLU1zxSgjLI9uEt8=;
+	s=korg; t=1708464014;
+	bh=V3s7D5EeHbCboAKDkGSb5nwb48axuLtYD9iHvMbifUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrP25U4y344YpUdwElMiagPNBdduitWoeiTR+VAyeF3D3A6BZT2oyxmmedQ64NuEz
-	 Um6EoPT31/sq1fw+WJxCqgRYV80EY8lk/lk8PvhGS14YDRGOCuMDqy+4LSz2ON/3RN
-	 RRIWB++khT7GnmRfGtnmGEKLHKE7LSipBjWGtj3k=
+	b=U4sZQbBx3zu75NSnImtHd9VRVGtmje7PYfUCABZXuHHNzYnwevRUsqAs1Otcu8QCB
+	 23BgO5dV9PMKTdXxuJVxUV3oMZXvkKGhSL/rkaldgOO30tiofWAAcroONVEdgEhFMq
+	 KhbByvzAxb1iYu2Xqri0vktObd+91Zv/Cj+jyU9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Justin Stitt <justinstitt@google.com>,
 	Donald Zickus <dzickus@redhat.com>,
 	Daniel Bristot de Oliveira <bristot@kernel.org>
-Subject: [PATCH 6.6 224/331] tools/rv: Fix curr_reactor uninitialized variable
-Date: Tue, 20 Feb 2024 21:55:40 +0100
-Message-ID: <20240220205644.787301176@linuxfoundation.org>
+Subject: [PATCH 6.6 225/331] tools/rv: Fix Makefile compiler options for clang
+Date: Tue, 20 Feb 2024 21:55:41 +0100
+Message-ID: <20240220205644.823574474@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -57,51 +57,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit 61ec586bc0815959d3314cf7ce242529c977b357 upstream.
+commit f9b2c87105c989a7b259c6da87673ada96dce2f8 upstream.
 
-clang is reporting:
+The following errors are showing up when compiling rv with clang:
 
-$ make HOSTCC=clang CC=clang LLVM_IAS=1
+ $ make HOSTCC=clang CC=clang LLVM_IAS=1
+ [...]
+  clang -O -g -DVERSION=\"6.8.0-rc1\" -flto=auto -ffat-lto-objects
+  -fexceptions -fstack-protector-strong -fasynchronous-unwind-tables
+  -fstack-clash-protection  -Wall -Werror=format-security
+  -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
+  -Wno-maybe-uninitialized $(pkg-config --cflags libtracefs)
+  -I include   -c -o src/utils.o src/utils.c
+  clang: warning: optimization flag '-ffat-lto-objects' is not supported [-Wignored-optimization-argument]
+  warning: unknown warning option '-Wno-maybe-uninitialized'; did you mean '-Wno-uninitialized'? [-Wunknown-warning-option]
+  1 warning generated.
 
-clang -O -g -DVERSION=\"6.8.0-rc3\" -flto=auto -fexceptions
-	-fstack-protector-strong -fasynchronous-unwind-tables
-	-fstack-clash-protection  -Wall -Werror=format-security
-	-Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS
-	$(pkg-config --cflags libtracefs)  -I include
-	-c -o src/in_kernel.o src/in_kernel.c
-[...]
+  clang -o rv -ggdb  src/in_kernel.o src/rv.o src/trace.o src/utils.o $(pkg-config --libs libtracefs)
+  src/in_kernel.o: file not recognized: file format not recognized
+  clang: error: linker command failed with exit code 1 (use -v to see invocation)
+  make: *** [Makefile:110: rv] Error 1
 
-src/in_kernel.c:227:6: warning: variable 'curr_reactor' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
-  227 |         if (!end)
-      |             ^~~~
-src/in_kernel.c:242:9: note: uninitialized use occurs here
-  242 |         return curr_reactor;
-      |                ^~~~~~~~~~~~
-src/in_kernel.c:227:2: note: remove the 'if' if its condition is always false
-  227 |         if (!end)
-      |         ^~~~~~~~~
-  228 |                 goto out_free;
-      |                 ~~~~~~~~~~~~~
-src/in_kernel.c:221:6: warning: variable 'curr_reactor' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
-  221 |         if (!start)
-      |             ^~~~~~
-src/in_kernel.c:242:9: note: uninitialized use occurs here
-  242 |         return curr_reactor;
-      |                ^~~~~~~~~~~~
-src/in_kernel.c:221:2: note: remove the 'if' if its condition is always false
-  221 |         if (!start)
-      |         ^~~~~~~~~~~
-  222 |                 goto out_free;
-      |                 ~~~~~~~~~~~~~
-src/in_kernel.c:215:20: note: initialize the variable 'curr_reactor' to silence this warning
-  215 |         char *curr_reactor;
-      |                           ^
-      |                            = NULL
-2 warnings generated.
+Solve these issues by:
+  - removing -ffat-lto-objects and -Wno-maybe-uninitialized if using clang
+  - informing the linker about -flto=auto
 
-Which is correct. Setting curr_reactor to NULL avoids the problem.
-
-Link: https://lkml.kernel.org/r/3a35551149e5ee0cb0950035afcb8082c3b5d05b.1707217097.git.bristot@kernel.org
+Link: https://lkml.kernel.org/r/ed94a8ddc2ca8c8ef663cfb7ae9dd196c4a66b33.1707217097.git.bristot@kernel.org
 
 Cc: stable@vger.kernel.org
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
@@ -109,26 +90,37 @@ Cc: Nathan Chancellor <nathan@kernel.org>
 Cc: Nick Desaulniers <ndesaulniers@google.com>
 Cc: Bill Wendling <morbo@google.com>
 Cc: Justin Stitt <justinstitt@google.com>
-Cc: Donald Zickus <dzickus@redhat.com>
-Fixes: 6d60f89691fc ("tools/rv: Add in-kernel monitor interface")
+Fixes: 4bc4b131d44c ("rv: Add rv tool")
+Suggested-by: Donald Zickus <dzickus@redhat.com>
 Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/verification/rv/src/in_kernel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/verification/rv/Makefile | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/tools/verification/rv/src/in_kernel.c
-+++ b/tools/verification/rv/src/in_kernel.c
-@@ -210,9 +210,9 @@ static char *ikm_read_reactor(char *moni
- static char *ikm_get_current_reactor(char *monitor_name)
- {
- 	char *reactors = ikm_read_reactor(monitor_name);
-+	char *curr_reactor = NULL;
- 	char *start;
- 	char *end;
--	char *curr_reactor;
+diff --git a/tools/verification/rv/Makefile b/tools/verification/rv/Makefile
+index 3d0f3888a58c..485f8aeddbe0 100644
+--- a/tools/verification/rv/Makefile
++++ b/tools/verification/rv/Makefile
+@@ -28,10 +28,15 @@ FOPTS	:=	-flto=auto -ffat-lto-objects -fexceptions -fstack-protector-strong \
+ 		-fasynchronous-unwind-tables -fstack-clash-protection
+ WOPTS	:= 	-Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -Wno-maybe-uninitialized
  
- 	if (!reactors)
- 		return NULL;
++ifeq ($(CC),clang)
++  FOPTS := $(filter-out -ffat-lto-objects, $(FOPTS))
++  WOPTS := $(filter-out -Wno-maybe-uninitialized, $(WOPTS))
++endif
++
+ TRACEFS_HEADERS	:= $$($(PKG_CONFIG) --cflags libtracefs)
+ 
+ CFLAGS	:=	-O -g -DVERSION=\"$(VERSION)\" $(FOPTS) $(MOPTS) $(WOPTS) $(TRACEFS_HEADERS) $(EXTRA_CFLAGS) -I include
+-LDFLAGS	:=	-ggdb $(EXTRA_LDFLAGS)
++LDFLAGS	:=	-flto=auto -ggdb $(EXTRA_LDFLAGS)
+ LIBS	:=	$$($(PKG_CONFIG) --libs libtracefs)
+ 
+ SRC	:=	$(wildcard src/*.c)
+-- 
+2.43.2
+
 
 
