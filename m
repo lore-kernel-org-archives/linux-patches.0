@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CC114F9C8;
-	Tue, 20 Feb 2024 21:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A5214AD12;
+	Tue, 20 Feb 2024 21:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463213; cv=none; b=EVF3jrJKBX0lSeUyffEdiZ8eiVEwX/2gw0SDYtWhoJgusaRSTQkA5NzdrBPeVqTvrGyIqCeMwpX6A3SKJl1qLPR/FZ1pm1R5RpbW6xTJMCB92GWvxCjU1ASD7RiWQgSOvFDnoqj4Wee6yIoNVNGo9ggbgpB6+/bJtRk1pMiME7o=
+	t=1708463216; cv=none; b=C2KIMR772zf+Rpm/KIjnfJSX5Jyo9R6pIKptwnEtCehvCpo/69KKTPNEoWje3hPa34OoUihygN2cYewSZB6SUdOKUY243RsXVhmrTgWTMnXKUbzclIXXH8LWQYTaLKYIb0w7QelzHyCsjvUTswCS4ydTB2cfM0T11qum1O8gulo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463213; c=relaxed/simple;
-	bh=KTSJLZ+6V5YTFUZg8to+pJTwliWA7Hx5mRPtiRx+H08=;
+	s=arc-20240116; t=1708463216; c=relaxed/simple;
+	bh=oDNAvLTjwNk9Hf/hpkYkMp1v/3aem9baf4Jnd3TeqJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/zgfzQqNjIR1J/L3MN/iW3aUPcVQpY2TBo5/qHFBetZNapeooHGhT7QCNMRuHlD2qM37ZgJ0By85A4Zzt/iSeekDfOaZ32mmlERgpZKuGeqnBM/iIrVgMGIpO5t7xFdjMgkumciz/5ASleuGy6yaBtGxXxlsC2Ki7K55vGv93A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRpxduk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KyPfY1qgI0DScd4QOkzwCuud9ShIlqp1dTiSwIh8UbCMyhh3m6Nwyo4inAVuYqjk79L6NvGkq9AXM9RaQWaW4oCdZ8Rwn0bvcz4gAD8KYjtlTfLfCgU4g486Ei3OW+qMlLFK3yxWn6YomxmETpuogQTAha7ltG+fzgl4GrVypbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWHRdFHF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRpxduk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27188C433F1;
-	Tue, 20 Feb 2024 21:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWHRdFHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FF6C433C7;
+	Tue, 20 Feb 2024 21:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463213;
-	bh=KTSJLZ+6V5YTFUZg8to+pJTwliWA7Hx5mRPtiRx+H08=;
+	s=korg; t=1708463216;
+	bh=oDNAvLTjwNk9Hf/hpkYkMp1v/3aem9baf4Jnd3TeqJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RRpxduk5criNXrxJxV19i+Wtva/jkRWAX/gN+Qp52RcTV/csgSnNHTpc5mrxqTqX4
-	 sG9OLxzVoOMeFnhCTkqBJgQpzmE+J4mGP3B4zvuAfuiq3OW302KOJeOfkB7ORIBqsM
-	 Wm30nMQ9VJwGXXk6lnjCkqBTaEeqeBj9WSlH9AvI=
+	b=lWHRdFHF+wnJ7Ncl2Ft5AokSQZRNjwsGySItiPovKnm0oDwzyynHtCQrMqXZWO4wn
+	 OXUumtQFc20qXPGxKB7dlaIkQXzTdQilec/N1mvedmmWzQrUtyfGiL6+04rnjVU55O
+	 YLDb/gkcbViYuFp1yytSE9xxcGRv919Mn7+zZop0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eniac Zhang <eniac-xw.zhang@hp.com>,
-	Alexandru Gagniuc <alexandru.gagniuc@hp.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 133/197] ALSA: hda/realtek: fix mute/micmute LED For HP mt645
-Date: Tue, 20 Feb 2024 21:51:32 +0100
-Message-ID: <20240220204845.053678699@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Dylan Hatch <dylanbhatch@google.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 165/197] fs/proc: do_task_stat: move thread_group_cputime_adjusted() outside of lock_task_sighand()
+Date: Tue, 20 Feb 2024 21:52:04 +0100
+Message-ID: <20240220204846.011444200@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,44 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eniac Zhang <eniac-xw.zhang@hp.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit 32f03f4002c5df837fb920eb23fcd2f4af9b0b23 upstream.
+commit 60f92acb60a989b14e4b744501a0df0f82ef30a3 upstream.
 
-The HP mt645 G7 Thin Client uses an ALC236 codec and needs the
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to make the mute and
-micmute LEDs work.
+Patch series "fs/proc: do_task_stat: use sig->stats_".
 
-There are two variants of the USB-C PD chip on this device. Each uses
-a different BIOS and board ID, hence the two entries.
+do_task_stat() has the same problem as getrusage() had before "getrusage:
+use sig->stats_lock rather than lock_task_sighand()": a hard lockup.  If
+NR_CPUS threads call lock_task_sighand() at the same time and the process
+has NR_THREADS, spin_lock_irq will spin with irqs disabled O(NR_CPUS *
+NR_THREADS) time.
 
-Signed-off-by: Eniac Zhang <eniac-xw.zhang@hp.com>
-Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
+
+This patch (of 3):
+
+thread_group_cputime() does its own locking, we can safely shift
+thread_group_cputime_adjusted() which does another for_each_thread loop
+outside of ->siglock protected section.
+
+Not only this removes for_each_thread() from the critical section with
+irqs disabled, this removes another case when stats_lock is taken with
+siglock held.  We want to remove this dependency, then we can change the
+users of stats_lock to not disable irqs.
+
+Link: https://lkml.kernel.org/r/20240123153313.GA21832@redhat.com
+Link: https://lkml.kernel.org/r/20240123153355.GA21854@redhat.com
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Dylan Hatch <dylanbhatch@google.com>
+Cc: Eric W. Biederman <ebiederm@xmission.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240215154922.778394-1-alexandru.gagniuc@hp.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/proc/array.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9690,6 +9690,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ad1, "HP EliteBook 840 14 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ad2, "HP EliteBook 860 16 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b0f, "HP Elite mt645 G7 Mobile Thin Client U81", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b2f, "HP 255 15.6 inch G10 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8b42, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b43, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-@@ -9697,6 +9698,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8b45, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b46, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b47, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b59, "HP Elite mt645 G7 Mobile Thin Client U89", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b63, "HP Elite Dragonfly 13.5 inch G4", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+--- a/fs/proc/array.c
++++ b/fs/proc/array.c
+@@ -501,7 +501,7 @@ static int do_task_stat(struct seq_file
+ 
+ 	sigemptyset(&sigign);
+ 	sigemptyset(&sigcatch);
+-	cutime = cstime = utime = stime = 0;
++	cutime = cstime = 0;
+ 	cgtime = gtime = 0;
+ 
+ 	if (lock_task_sighand(task, &flags)) {
+@@ -535,7 +535,6 @@ static int do_task_stat(struct seq_file
+ 
+ 			min_flt += sig->min_flt;
+ 			maj_flt += sig->maj_flt;
+-			thread_group_cputime_adjusted(task, &utime, &stime);
+ 			gtime += sig->gtime;
+ 
+ 			if (sig->flags & (SIGNAL_GROUP_EXIT | SIGNAL_STOP_STOPPED))
+@@ -551,10 +550,13 @@ static int do_task_stat(struct seq_file
+ 
+ 	if (permitted && (!whole || num_threads < 2))
+ 		wchan = !task_is_running(task);
+-	if (!whole) {
++
++	if (whole) {
++		thread_group_cputime_adjusted(task, &utime, &stime);
++	} else {
++		task_cputime_adjusted(task, &utime, &stime);
+ 		min_flt = task->min_flt;
+ 		maj_flt = task->maj_flt;
+-		task_cputime_adjusted(task, &utime, &stime);
+ 		gtime = task_gtime(task);
+ 	}
+ 
 
 
