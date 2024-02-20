@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B71152DF9;
-	Tue, 20 Feb 2024 21:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB70E151CD8;
+	Tue, 20 Feb 2024 21:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463410; cv=none; b=k7lNciXxEkvpSqzLfLtGIK4t+OK/4UptJwqwNaSykZ9L+DhBl7j/UekC920TH03HMIIs9x3zNtMVm/MPIDtegmNbFnfsymUXFHT8Nm8igwB47xNdw6zgXPyIU8GRlTLXb+MoEADlViCSST+fNW1WnYBACqKB7ME3ER9ymVGHrBM=
+	t=1708463413; cv=none; b=lG3+mV5EI93O0TMmwCiDf+9UpprIl+KR0I41g1MNSwM/jtFKtP9cEQWQBEDYWK4C7+WGBGPav1rHreSOiumG/cyVEjURkHHZHboXYpDf9mX78LcCztAGMr8vkkPoTaNuijAcI9Lei+67e9Yj+U9/bSwcwhh5DpJh9mMIB6hvT9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463410; c=relaxed/simple;
-	bh=Fm5nyNiQhAHEoqroFUFCfugFa6IubF/aLZ0+sIskEdQ=;
+	s=arc-20240116; t=1708463413; c=relaxed/simple;
+	bh=ufmgJoUCVToXjHV6Sf1OJe70CcekDrnD+7Xp8XXdQtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCrkn1FB+fwjSUeGNcrFx7EAn7AYUXljLyfpPvKbMSrciZeo4ZP7U3rL5fPkIMMVZc82ZPHtsrW6m2PDXC7/tQ3khZAKjBsqPq6qvyw+4WUM524sBhMubXrnuUynrL6Fbt1mgtKm/0m4C5lkKALz2iKiZtrGVmE2DQBE9Z3/VaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERwy2sjG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+3l18oC66dkaHLpTGwmVXw40weaReB2bgNXDHbzFva6/++NqcmMDHhKVpshvvhbTJYMrLGpHePMiNYr+hvQ9hHIACv8PcNNiTPNVpYTtbyrfPFyHvI1UKIL+93xMsDnsrOx35FSLj7ia8jmJWISXi/r+UYyqpWTcqg9bBW2FgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmmOfviV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERwy2sjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2237AC433F1;
-	Tue, 20 Feb 2024 21:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmmOfviV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FEFC433C7;
+	Tue, 20 Feb 2024 21:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463408;
-	bh=Fm5nyNiQhAHEoqroFUFCfugFa6IubF/aLZ0+sIskEdQ=;
+	s=korg; t=1708463411;
+	bh=ufmgJoUCVToXjHV6Sf1OJe70CcekDrnD+7Xp8XXdQtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERwy2sjGYXXNg2sKX+1d/Dr8XMlijlWqtJHgUNY1HkV7EsmSmnzt4rnsCFpZi4dxo
-	 IXlCM+AXZWUpT3rsTU8E0dJpuZjvNphhO/F2jhmDWyusVr1rajG0VwphfBYP+VmvJX
-	 VCj+/2rx2/5TfI3Q3fM7ceY6L2WY0a237gEzeues=
+	b=vmmOfviV23KNCjg2sUAo9CWD5l2ZajbqwwYLYZYyVjk2Nt1w3WGz6etADoQZtH8w9
+	 p++XKp4G5N+9WPDx7HDzRnrx74/KLZbMKoZqUIjBMSkI7lk1iDp49XwmxtLMI+BGLh
+	 nCsANuxfXvewU94n+clTH8kkEFjfaX5YK26Cd/bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/331] selftests: forwarding: Suppress grep warnings
-Date: Tue, 20 Feb 2024 21:52:31 +0100
-Message-ID: <20240220205638.699618769@linuxfoundation.org>
+Subject: [PATCH 6.6 036/331] selftests: forwarding: Fix bridge locked port test flakiness
+Date: Tue, 20 Feb 2024 21:52:32 +0100
+Message-ID: <20240220205638.737175919@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -55,68 +55,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit dd6b34589441f2ad4698dd88a664811550148b41 ]
+[ Upstream commit f97f1fcc96908c97a240ff6cb4474e155abfa0d7 ]
 
-Suppress the following grep warnings:
+The redirection test case fails in the netdev CI on debug kernels
+because an FDB entry is learned despite the presence of a tc filter that
+redirects incoming traffic [1].
 
+I am unable to reproduce the failure locally, but I can see how it can
+happen given that learning is first enabled and only then the ingress tc
+filter is configured. On debug kernels the time window between these two
+operations is longer compared to regular kernels, allowing random
+packets to be transmitted and trigger learning.
+
+Fix by reversing the order and configure the ingress tc filter before
+enabling learning.
+
+[1]
 [...]
-INFO: # Port group entries configuration tests - (*, G)
-TEST: Common port group entries configuration tests (IPv4 (*, G))   [ OK ]
-TEST: Common port group entries configuration tests (IPv6 (*, G))   [ OK ]
-grep: warning: stray \ before /
-grep: warning: stray \ before /
-grep: warning: stray \ before /
-TEST: IPv4 (*, G) port group entries configuration tests            [ OK ]
-grep: warning: stray \ before /
-grep: warning: stray \ before /
-grep: warning: stray \ before /
-TEST: IPv6 (*, G) port group entries configuration tests            [ OK ]
-[...]
+ # TEST: Locked port MAB redirect                                      [FAIL]
+ # Locked entry created for redirected traffic
 
-They do not fail the test, but do clutter the output.
-
-Fixes: b6d00da08610 ("selftests: forwarding: Add bridge MDB test")
+Fixes: 38c43a1ce758 ("selftests: forwarding: Add test case for traffic redirection from a locked port")
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
 Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240208155529.1199729-4-idosch@nvidia.com
+Link: https://lore.kernel.org/r/20240208155529.1199729-5-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/bridge_mdb.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/forwarding/bridge_locked_port.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/bridge_mdb.sh b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-index ebeb43f6606c..a3678dfe5848 100755
---- a/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-+++ b/tools/testing/selftests/net/forwarding/bridge_mdb.sh
-@@ -329,7 +329,7 @@ __cfg_test_port_ip_star_g()
+diff --git a/tools/testing/selftests/net/forwarding/bridge_locked_port.sh b/tools/testing/selftests/net/forwarding/bridge_locked_port.sh
+index 9af9f6964808..c62331b2e006 100755
+--- a/tools/testing/selftests/net/forwarding/bridge_locked_port.sh
++++ b/tools/testing/selftests/net/forwarding/bridge_locked_port.sh
+@@ -327,10 +327,10 @@ locked_port_mab_redirect()
+ 	RET=0
+ 	check_port_mab_support || return 0
  
- 	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q " 0.00"
- 	check_err $? "(*, G) \"permanent\" entry has a pending group timer"
--	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q "\/0.00"
-+	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q "/0.00"
- 	check_err $? "\"permanent\" source entry has a pending source timer"
+-	bridge link set dev $swp1 learning on locked on mab on
+ 	tc qdisc add dev $swp1 clsact
+ 	tc filter add dev $swp1 ingress protocol all pref 1 handle 101 flower \
+ 		action mirred egress redirect dev $swp2
++	bridge link set dev $swp1 learning on locked on mab on
  
- 	bridge mdb del dev br0 port $swp1 grp $grp vid 10
-@@ -346,7 +346,7 @@ __cfg_test_port_ip_star_g()
+ 	ping_do $h1 192.0.2.2
+ 	check_err $? "Ping did not work with redirection"
+@@ -349,8 +349,8 @@ locked_port_mab_redirect()
+ 	check_err $? "Locked entry not created after deleting filter"
  
- 	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q " 0.00"
- 	check_fail $? "(*, G) EXCLUDE entry does not have a pending group timer"
--	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q "\/0.00"
-+	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q "/0.00"
- 	check_err $? "\"blocked\" source entry has a pending source timer"
+ 	bridge fdb del `mac_get $h1` vlan 1 dev $swp1 master
+-	tc qdisc del dev $swp1 clsact
+ 	bridge link set dev $swp1 learning off locked off mab off
++	tc qdisc del dev $swp1 clsact
  
- 	bridge mdb del dev br0 port $swp1 grp $grp vid 10
-@@ -363,7 +363,7 @@ __cfg_test_port_ip_star_g()
- 
- 	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q " 0.00"
- 	check_err $? "(*, G) INCLUDE entry has a pending group timer"
--	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q "\/0.00"
-+	bridge -d -s mdb get dev br0 grp $grp vid 10 | grep -q "/0.00"
- 	check_fail $? "Source entry does not have a pending source timer"
- 
- 	bridge mdb del dev br0 port $swp1 grp $grp vid 10
+ 	log_test "Locked port MAB redirect"
+ }
 -- 
 2.43.0
 
