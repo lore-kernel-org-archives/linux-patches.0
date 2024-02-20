@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4127152DE8;
-	Tue, 20 Feb 2024 21:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD103151CEB;
+	Tue, 20 Feb 2024 21:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464544; cv=none; b=Z3Ecm37EwrrwoALCYW1YCmZMObvIzZGZBZ7JbGMsQ3M/9arKyr8RkyBNbZe5AUBwZ/Yz6bYIhjJ58ekht16ZYSzXgRWdnDvvKcU4ngohdKcPE7PzMbyA0G1nwVMs+G4qbtV3r2EOhfHXeK/hRJYhcJ7Yxok4WXNA4IlE8TWz1oA=
+	t=1708464547; cv=none; b=Xk4PT8fro+jnU2thc0f5q/UjNhF09N9NO91CLJ28qC6HqYLIJxljT5CujUYDYw8jkuGcHUZb5UIesrSNafs31jGTRTR2I8wUrCAlCdSvz3Up+RgpCynsurs5U3lxbL2uY0IKe84q0nK9zquCZ6fSEjCVjQB8rV2Y7MNgZDC7XZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464544; c=relaxed/simple;
-	bh=pJjeckggueP3kLDdf6wt7Wb3IUt1wML8GR4P/S1UvXo=;
+	s=arc-20240116; t=1708464547; c=relaxed/simple;
+	bh=7kCjagViAHGuv4Bi7oLLaM69uzV57RDzwK/WQxixSPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRGTOUiu/SyJ2Glf5SJ7L8dNeWy776PKvDnw10cBH/ox5aIh7DBn2v0nG+knLivFCWeFiyJxvw7KRE1XHuYrETjRGzvAJjkURbci52r3DZexWiDTwbug4GK92lD2dk7ZcEdxSLEe84SLDS7gQLnlxDcLYn48hF1rfXyfWHwSd5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdR6J6KJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D65WZLGQeQkIidE01DFe0B32+IyeNYSlg7Hoi8Zz2lC5T6CEDKGLg6UAc+N/03XOfXzLQCFtR5CjSJ+kJB4pP8eWWMHAorDqizn5C4Ewraa1uiekNCrINFS92yHPzQvES/3CYkHurPFcuzpGzYEoJz72U7p2j6j/twoht3EWahE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpYAxVab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdR6J6KJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CA9C433C7;
-	Tue, 20 Feb 2024 21:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpYAxVab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220B1C433F1;
+	Tue, 20 Feb 2024 21:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464544;
-	bh=pJjeckggueP3kLDdf6wt7Wb3IUt1wML8GR4P/S1UvXo=;
+	s=korg; t=1708464547;
+	bh=7kCjagViAHGuv4Bi7oLLaM69uzV57RDzwK/WQxixSPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdR6J6KJwhnMUqphtU2+WR9FD6zvBO6xymwj9yR7KeGL/PP9Sv05yC6k6Ve+BTULU
-	 bkvDvAoyZhUrY8CrosDhvbqNOtLp79b8BjmODpRVv8c2aVXLHLS+cd7HI3NLudLWWr
-	 gUuMOd4q4zLhnThBJzshqVw/gE8fWesslyrf40MI=
+	b=CpYAxVabgJ1sTqIaIryaa2C8Iu2Q2ClD10dHkop7QfKNu7Gdjz+EpwaYDh+DHqLwz
+	 4lq8krFpgJGbYableXQtolZC3kKLfhbSUjOi1KBSUGWpk2dasAbHHlyPan0pg3FzAO
+	 3/85CTKWfdAFlGkAgy6mGy4n+y2kfQ6Co/xLzNXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 057/309] nouveau/svm: fix kvcalloc() argument order
-Date: Tue, 20 Feb 2024 21:53:36 +0100
-Message-ID: <20240220205635.000882377@linuxfoundation.org>
+Subject: [PATCH 6.7 058/309] MIPS: Add memory clobber to csum_ipv6_magic() inline assembler
+Date: Tue, 20 Feb 2024 21:53:37 +0100
+Message-ID: <20240220205635.030320014@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,44 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 2c80a2b715df75881359d07dbaacff8ad411f40e ]
+[ Upstream commit d55347bfe4e66dce2e1e7501e5492f4af3e315f8 ]
 
-The conversion to kvcalloc() mixed up the object size and count
-arguments, causing a warning:
+After 'lib: checksum: Use aligned accesses for ip_fast_csum and
+csum_ipv6_magic tests' was applied, the test_csum_ipv6_magic unit test
+started failing for all mips platforms, both little and bit endian.
+Oddly enough, adding debug code into test_csum_ipv6_magic() made the
+problem disappear.
 
-drivers/gpu/drm/nouveau/nouveau_svm.c: In function 'nouveau_svm_fault_buffer_ctor':
-drivers/gpu/drm/nouveau/nouveau_svm.c:1010:40: error: 'kvcalloc' sizes specified with 'sizeof' in the earlier argument and not in the later argument [-Werror=calloc-transposed-args]
- 1010 |         buffer->fault = kvcalloc(sizeof(*buffer->fault), buffer->entries, GFP_KERNEL);
-      |                                        ^
-drivers/gpu/drm/nouveau/nouveau_svm.c:1010:40: note: earlier argument should specify number of elements, later size of each element
+The gcc manual says:
 
-The behavior is still correct aside from the warning, but fixing it avoids
-the warnings and can help the compiler track the individual objects better.
+"The "memory" clobber tells the compiler that the assembly code performs
+ memory reads or writes to items other than those listed in the input
+ and output operands (for example, accessing the memory pointed to by one
+ of the input parameters)
+"
 
-Fixes: 71e4bbca070e ("nouveau/svm: Use kvcalloc() instead of kvzalloc()")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240212112230.1117284-1-arnd@kernel.org
+This is definitely the case for csum_ipv6_magic(). Indeed, adding the
+'memory' clobber fixes the problem.
+
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_svm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/include/asm/checksum.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
-index cc03e0c22ff3..5e4565c5011a 100644
---- a/drivers/gpu/drm/nouveau/nouveau_svm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
-@@ -1011,7 +1011,7 @@ nouveau_svm_fault_buffer_ctor(struct nouveau_svm *svm, s32 oclass, int id)
- 	if (ret)
- 		return ret;
+diff --git a/arch/mips/include/asm/checksum.h b/arch/mips/include/asm/checksum.h
+index 4044eaf989ac..0921ddda11a4 100644
+--- a/arch/mips/include/asm/checksum.h
++++ b/arch/mips/include/asm/checksum.h
+@@ -241,7 +241,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+ 	"	.set	pop"
+ 	: "=&r" (sum), "=&r" (tmp)
+ 	: "r" (saddr), "r" (daddr),
+-	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum));
++	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum)
++	: "memory");
  
--	buffer->fault = kvcalloc(sizeof(*buffer->fault), buffer->entries, GFP_KERNEL);
-+	buffer->fault = kvcalloc(buffer->entries, sizeof(*buffer->fault), GFP_KERNEL);
- 	if (!buffer->fault)
- 		return -ENOMEM;
- 
+ 	return csum_fold(sum);
+ }
 -- 
 2.43.0
 
