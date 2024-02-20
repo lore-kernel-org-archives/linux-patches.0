@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5011C151CDC;
-	Tue, 20 Feb 2024 21:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485A62DF9F;
+	Tue, 20 Feb 2024 21:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464048; cv=none; b=ppF/gQco9aah35oBTLjJQc+vVGjjD/g5VNnaEyz3jJZNgtT9bnSfUj6oslqB+B0pJJpQc7auKt0KwRLwyIp8Kyq2ow6sAd2U/rOc1Nghd1FUP9A4z3GsUZ78ff+MZtT/Xg3GHJEC+ai5u81z9wSt+5x4H30Mj12hFCHjHeXmmzk=
+	t=1708464051; cv=none; b=IFtH6Du9uwZqF2vCM+lWwUyXJgYi3uMRzxz+pwO30+9AjI3mKzuFhoML1w7gmw0h1BGLfynEk+DhemzdUBzt3/YgGPOmMhmGMNnGEe3tKKMYHKMc0oSdXL+J1v9gbScqh2J1V1/aRW8YqpDhlhFnlzkOvi2dQQKB5NzH4BkC7TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464048; c=relaxed/simple;
-	bh=rF7w6E4Q8X8vO/ULxaCYJDdTIGqBUDzu1RBO+vcQGuw=;
+	s=arc-20240116; t=1708464051; c=relaxed/simple;
+	bh=zvLh9yjzXYW4Th7Mgvc1nyzh1rUFlL9KizjdRwUOZbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F216Y2q25u34bMaywEt28xMZjZJUpqd5Mk89v6NX4dNSnd5pAj1fIEE1CrdlPBJAXonAirYzvqH9syrkGO4tg+meQ1rcqYepJ4rxpvK/nPjj2xrWP/hs+2pSDQDRBXzwJaiAQKVBl3iHTWjqopCwIdxRD4is/qm92xZFXMSE0wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVt5aGK/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AWZLI1rhZ54oo/8Vk8RACaKA7UmbrLOcrq4yU0IALnzq0A8o8lGyU/G/3mSYEJEqgLX0ItFqVwaQl/TfcJzqbEp8r3F0OxTPqhc0zENrf5rErytCVugioDucWsns/SlaRTkIV8WrLmghLISafgc0FVd2JHBBmXOrhidMHCOivgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjBQ3vns; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVt5aGK/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F23C433F1;
-	Tue, 20 Feb 2024 21:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjBQ3vns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC05CC433F1;
+	Tue, 20 Feb 2024 21:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464048;
-	bh=rF7w6E4Q8X8vO/ULxaCYJDdTIGqBUDzu1RBO+vcQGuw=;
+	s=korg; t=1708464051;
+	bh=zvLh9yjzXYW4Th7Mgvc1nyzh1rUFlL9KizjdRwUOZbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FVt5aGK/8Io3VJv0UbLmn7BG4A+8djtjO6QVulTeBuOpad4BaDtkZnlvWMas7JmGF
-	 mCsUmZXwESOOpO4NclCLrj76Ed5f4GMeTrL517VuxT4YYYp/hBdMtztxvwjXNcmGUI
-	 ui8zzx16lsVKXQ8rsl9hCAU32mLPSUcgZtxJLSNc=
+	b=fjBQ3vnsHI6GKthFznRcspg5T5cigGtYaW6rV8hXivyrcvDB83bEOGha/52fwDBel
+	 JKN859Pgavwbwt+K8b4dVZMbRsF9p+mi9YgEqI6256t+aaHiHs/3zgFSve82XaLP79
+	 PVTwhZoy+d1rZGwravbL/vHCAJ7ykB9sgcRXfiak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinthu Raja <sinthu.raja@ti.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 235/331] net: ethernet: ti: cpsw_new: enable mac_managed_pm to fix mdio
-Date: Tue, 20 Feb 2024 21:55:51 +0100
-Message-ID: <20240220205645.171470188@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 236/331] pmdomain: renesas: r8a77980-sysc: CR7 must be always on
+Date: Tue, 20 Feb 2024 21:55:52 +0100
+Message-ID: <20240220205645.200187669@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -44,69 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sinthu Raja <sinthu.raja@ti.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 9def04e759caa5a3d741891037ae99f81e2fff01 upstream.
+commit f0e4a1356466ec1858ae8e5c70bea2ce5e55008b upstream.
 
-The below commit  introduced a WARN when phy state is not in the states:
-PHY_HALTED, PHY_READY and PHY_UP.
-commit 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
+The power domain containing the Cortex-R7 CPU core on the R-Car V3H SoC
+must always be in power-on state, unlike on other SoCs in the R-Car Gen3
+family.  See Table 9.4 "Power domains" in the R-Car Series, 3rd
+Generation Hardware User’s Manual Rev.1.00 and later.
 
-When cpsw_new resumes, there have port in PHY_NOLINK state, so the below
-warning comes out. Set mac_managed_pm be true to tell mdio that the phy
-resume/suspend is managed by the mac, to fix the following warning:
+Fix this by marking the domain as a CPU domain without control
+registers, so the driver will not touch it.
 
-WARNING: CPU: 0 PID: 965 at drivers/net/phy/phy_device.c:326 mdio_bus_phy_resume+0x140/0x144
-CPU: 0 PID: 965 Comm: sh Tainted: G           O       6.1.46-g247b2535b2 #1
-Hardware name: Generic AM33XX (Flattened Device Tree)
- unwind_backtrace from show_stack+0x18/0x1c
- show_stack from dump_stack_lvl+0x24/0x2c
- dump_stack_lvl from __warn+0x84/0x15c
- __warn from warn_slowpath_fmt+0x1a8/0x1c8
- warn_slowpath_fmt from mdio_bus_phy_resume+0x140/0x144
- mdio_bus_phy_resume from dpm_run_callback+0x3c/0x140
- dpm_run_callback from device_resume+0xb8/0x2b8
- device_resume from dpm_resume+0x144/0x314
- dpm_resume from dpm_resume_end+0x14/0x20
- dpm_resume_end from suspend_devices_and_enter+0xd0/0x924
- suspend_devices_and_enter from pm_suspend+0x2e0/0x33c
- pm_suspend from state_store+0x74/0xd0
- state_store from kernfs_fop_write_iter+0x104/0x1ec
- kernfs_fop_write_iter from vfs_write+0x1b8/0x358
- vfs_write from ksys_write+0x78/0xf8
- ksys_write from ret_fast_syscall+0x0/0x54
-Exception stack(0xe094dfa8 to 0xe094dff0)
-dfa0:                   00000004 005c3fb8 00000001 005c3fb8 00000004 00000001
-dfc0: 00000004 005c3fb8 b6f6bba0 00000004 00000004 0059edb8 00000000 00000000
-dfe0: 00000004 bed918f0 b6f09bd3 b6e89a66
-
-Cc: <stable@vger.kernel.org> # v6.0+
-Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
-Fixes: fba863b81604 ("net: phy: make PHY PM ops a no-op if MAC driver manages PHY PM")
-Signed-off-by: Sinthu Raja <sinthu.raja@ti.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 41d6d8bd8ae9 ("soc: renesas: rcar-sysc: add R8A77980 support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/fdad9a86132d53ecddf72b734dac406915c4edc0.1705076735.git.geert+renesas@glider.be
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pmdomain/renesas/r8a77980-sysc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -773,6 +773,9 @@ static void cpsw_slave_open(struct cpsw_
- 			slave->slave_num);
- 		return;
- 	}
-+
-+	phy->mac_managed_pm = true;
-+
- 	slave->phy = phy;
- 
- 	phy_attached_info(slave->phy);
+--- a/drivers/pmdomain/renesas/r8a77980-sysc.c
++++ b/drivers/pmdomain/renesas/r8a77980-sysc.c
+@@ -25,7 +25,8 @@ static const struct rcar_sysc_area r8a77
+ 	  PD_CPU_NOCR },
+ 	{ "ca53-cpu3",	0x200, 3, R8A77980_PD_CA53_CPU3, R8A77980_PD_CA53_SCU,
+ 	  PD_CPU_NOCR },
+-	{ "cr7",	0x240, 0, R8A77980_PD_CR7,	R8A77980_PD_ALWAYS_ON },
++	{ "cr7",	0x240, 0, R8A77980_PD_CR7,	R8A77980_PD_ALWAYS_ON,
++	  PD_CPU_NOCR },
+ 	{ "a3ir",	0x180, 0, R8A77980_PD_A3IR,	R8A77980_PD_ALWAYS_ON },
+ 	{ "a2ir0",	0x400, 0, R8A77980_PD_A2IR0,	R8A77980_PD_A3IR },
+ 	{ "a2ir1",	0x400, 1, R8A77980_PD_A2IR1,	R8A77980_PD_A3IR },
 
 
