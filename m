@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6859E1509AC;
-	Tue, 20 Feb 2024 21:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9073F612D7;
+	Tue, 20 Feb 2024 21:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463834; cv=none; b=TMR8SQCWZh0l+qZDJ9dBc6+In4ph3dUFOsjCM/m5dPJRbUPTIVFWnW+BpmYJq3O+jsREEjZt845bN5Ta0YVtT7T6xUIm4YNOZDePkUqbC+yYity5eBYeVaJLIyCdRkFT+Eaf2BxTJ3xsDMOzYqa8/5vsBmU2Z0rKEK9IOsxYVNk=
+	t=1708463837; cv=none; b=CbS03dvUGogjzC5Gn/2uKdw43EDnTZTVryvWfkAO+ynZPF4sSCerJeFT8+gWr6iajAGZ5N+tr9Gjet7i261fgw/++aSe9H2X/+Qry5flkk++4yj8nE2Hs7aW9P7LxFyOtV5Tjh1o7w8vsJOpTdxIWKNRels9xgUnQL30prfFSCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463834; c=relaxed/simple;
-	bh=WFY5ZBnW0Z8aCZllshKZm2lfSclSTyNBdRcQKjwADRg=;
+	s=arc-20240116; t=1708463837; c=relaxed/simple;
+	bh=Ec5EhI7oJC1nTHnscBGlXdJT+dumccuIhUAzy05nuno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eo9R3wyx5TzqVxtnLjA/bysspeMCgXi7K4a5TSKSpOOjWsZV+OuuLoSRaDtg3msMT3r6+JJ89aZpvZOeyO+DeQyoAHBRrQe/nhR354e0LHA3M8zAGRoxOU4FLr3uI0SYC+uPQyGZIwRzh3MKbcuHql3224ycvnv4y3vbxW59b6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUrUK92a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEAMRy8Q9GRJ9doHWJDTi7GLBbugkfizMAE8/O3rwaacfQOY5MtT3O9XLr7w7sU4XSXazhRdA51bKuhTKIIq7mCgdJdV0GVe3B7If04V3TgYqP6Ldmm9+/CsnRaIOIejqO+ZO3PnrRfzAn9fGWxfH/YaWcK46Ka3YaFM0AQmCrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F03ZD1Gk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUrUK92a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBF3C433F1;
-	Tue, 20 Feb 2024 21:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F03ZD1Gk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40E6C433C7;
+	Tue, 20 Feb 2024 21:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463834;
-	bh=WFY5ZBnW0Z8aCZllshKZm2lfSclSTyNBdRcQKjwADRg=;
+	s=korg; t=1708463837;
+	bh=Ec5EhI7oJC1nTHnscBGlXdJT+dumccuIhUAzy05nuno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUrUK92aNcWd/U1JQcCG+zdK8iF3Cn/ik66fmMR8Mtic0giHKDkJH46DRHmWbFQ+L
-	 Ld3Adc4NmtY8+RndtM5eSaV8dz5i16LP9pDTRqtNCAt1xiAGcjoDlqkirYV32aC+lX
-	 +mVirFht5C6RyRLSSKrW8/di28hV9MVNCnYrvWXs=
+	b=F03ZD1GkzaWjRnPMeKJmVmtWNkzjMBERJ+cGMyJENxpF0y+e6qITbMMUDC3jVYim3
+	 Ja+tmdTLUWtj8S1R+wjo/nKtFo3ocJEKoThFgcsJWZ2ztZv7IAonJiudo9HeSSAhT3
+	 cPeQM+tnBvwy5nWd57nlAKWKZVV7+EK79J0IYpc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 6.6 167/331] drm/msm: Wire up tlb ops
-Date: Tue, 20 Feb 2024 21:54:43 +0100
-Message-ID: <20240220205642.772065026@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Zhikai Zhai <zhikai.zhai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.6 168/331] drm/amd/display: Add align done check
+Date: Tue, 20 Feb 2024 21:54:44 +0100
+Message-ID: <20240220205642.800966255@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,103 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Zhikai Zhai <zhikai.zhai@amd.com>
 
-commit 8c7bfd8262319fd3f127a5380f593ea76f1b88a2 upstream.
+commit 94b38b895dec8c0ef093140a141e191b60ff614c upstream.
 
-The brute force iommu_flush_iotlb_all() was good enough for unmap, but
-in some cases a map operation could require removing a table pte entry
-to replace with a block entry.  This also requires tlb invalidation.
-Missing this was resulting an obscure iova fault on what should be a
-valid buffer address.
+[WHY]
+We Double-check link status if training successful,
+but miss the lane align status.
 
-Thanks to Robin Murphy for helping me understand the cause of the fault.
+[HOW]
+Add the lane align status check
 
-Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: b145c6e65eb0 ("drm/msm: Add support to create a local pagetable")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/578117/
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Zhikai Zhai <zhikai.zhai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_iommu.c |   32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -21,6 +21,8 @@ struct msm_iommu_pagetable {
- 	struct msm_mmu base;
- 	struct msm_mmu *parent;
- 	struct io_pgtable_ops *pgtbl_ops;
-+	const struct iommu_flush_ops *tlb;
-+	struct device *iommu_dev;
- 	unsigned long pgsize_bitmap;	/* Bitmap of page sizes in use */
- 	phys_addr_t ttbr;
- 	u32 asid;
-@@ -201,11 +203,33 @@ static const struct msm_mmu_funcs pageta
- 
- static void msm_iommu_tlb_flush_all(void *cookie)
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training.c
+@@ -517,6 +517,7 @@ enum link_training_result dp_check_link_
  {
-+	struct msm_iommu_pagetable *pagetable = cookie;
-+	struct adreno_smmu_priv *adreno_smmu;
-+
-+	if (!pm_runtime_get_if_in_use(pagetable->iommu_dev))
-+		return;
-+
-+	adreno_smmu = dev_get_drvdata(pagetable->parent->dev);
-+
-+	pagetable->tlb->tlb_flush_all((void *)adreno_smmu->cookie);
-+
-+	pm_runtime_put_autosuspend(pagetable->iommu_dev);
- }
+ 	enum link_training_result status = LINK_TRAINING_SUCCESS;
+ 	union lane_status lane_status;
++	union lane_align_status_updated dpcd_lane_status_updated;
+ 	uint8_t dpcd_buf[6] = {0};
+ 	uint32_t lane;
  
- static void msm_iommu_tlb_flush_walk(unsigned long iova, size_t size,
- 		size_t granule, void *cookie)
- {
-+	struct msm_iommu_pagetable *pagetable = cookie;
-+	struct adreno_smmu_priv *adreno_smmu;
-+
-+	if (!pm_runtime_get_if_in_use(pagetable->iommu_dev))
-+		return;
-+
-+	adreno_smmu = dev_get_drvdata(pagetable->parent->dev);
-+
-+	pagetable->tlb->tlb_flush_walk(iova, size, granule, (void *)adreno_smmu->cookie);
-+
-+	pm_runtime_put_autosuspend(pagetable->iommu_dev);
- }
+@@ -532,10 +533,12 @@ enum link_training_result dp_check_link_
+ 		 * check lanes status
+ 		 */
+ 		lane_status.raw = dp_get_nibble_at_index(&dpcd_buf[2], lane);
++		dpcd_lane_status_updated.raw = dpcd_buf[4];
  
- static void msm_iommu_tlb_add_page(struct iommu_iotlb_gather *gather,
-@@ -213,7 +237,7 @@ static void msm_iommu_tlb_add_page(struc
- {
- }
- 
--static const struct iommu_flush_ops null_tlb_ops = {
-+static const struct iommu_flush_ops tlb_ops = {
- 	.tlb_flush_all = msm_iommu_tlb_flush_all,
- 	.tlb_flush_walk = msm_iommu_tlb_flush_walk,
- 	.tlb_add_page = msm_iommu_tlb_add_page,
-@@ -254,10 +278,10 @@ struct msm_mmu *msm_iommu_pagetable_crea
- 
- 	/* The incoming cfg will have the TTBR1 quirk enabled */
- 	ttbr0_cfg.quirks &= ~IO_PGTABLE_QUIRK_ARM_TTBR1;
--	ttbr0_cfg.tlb = &null_tlb_ops;
-+	ttbr0_cfg.tlb = &tlb_ops;
- 
- 	pagetable->pgtbl_ops = alloc_io_pgtable_ops(ARM_64_LPAE_S1,
--		&ttbr0_cfg, iommu->domain);
-+		&ttbr0_cfg, pagetable);
- 
- 	if (!pagetable->pgtbl_ops) {
- 		kfree(pagetable);
-@@ -279,6 +303,8 @@ struct msm_mmu *msm_iommu_pagetable_crea
- 
- 	/* Needed later for TLB flush */
- 	pagetable->parent = parent;
-+	pagetable->tlb = ttbr1_cfg->tlb;
-+	pagetable->iommu_dev = ttbr1_cfg->iommu_dev;
- 	pagetable->pgsize_bitmap = ttbr0_cfg.pgsize_bitmap;
- 	pagetable->ttbr = ttbr0_cfg.arm_lpae_s1_cfg.ttbr;
- 
+ 		if (!lane_status.bits.CHANNEL_EQ_DONE_0 ||
+ 			!lane_status.bits.CR_DONE_0 ||
+-			!lane_status.bits.SYMBOL_LOCKED_0) {
++			!lane_status.bits.SYMBOL_LOCKED_0 ||
++			!dp_is_interlane_aligned(dpcd_lane_status_updated)) {
+ 			/* if one of the channel equalization, clock
+ 			 * recovery or symbol lock is dropped
+ 			 * consider it as (link has been
 
 
