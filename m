@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BE81509AC;
-	Tue, 20 Feb 2024 21:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FED151CF3;
+	Tue, 20 Feb 2024 21:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465132; cv=none; b=oe0W6AHNYzqAs2xJk4L3mg3IOQXrS8KFQKmLBhzLJuRmdcHrXPLp0mPLfiS5P9+kX6KqUcOwYU8MzjwGbO1xrrcWzDpMKvfLCczDKPhD6JkyAtpQbfDMeoZ3YoMf+rxOTBU3+PXCadfPmSq7H6lMvPR1LOZ2+gX3lJFs0bFY1rA=
+	t=1708465136; cv=none; b=Ha7hatQeC2UhAipl18lp14TB83N5/8aKIOKYhS4PGdlbQmhFpnktBiLu7dW4ldsv/kQe5WkhTIB4cjF0YPCaDRQJlyOVMXXiYAuxb82BIs6aqXYlkEfShnSFa3SwDQLYmlqRRKbujLGzmHsP83oqp2zttT91S6AYstwnTuvCYkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465132; c=relaxed/simple;
-	bh=UER6QKED5RtPkYLiYLyjdG5gzs4QGX6SS8f6NHIFuJQ=;
+	s=arc-20240116; t=1708465136; c=relaxed/simple;
+	bh=81p8J9ad0H3T30CPNB0ix2F/nCL2V9VR9mH0BbmGBR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iu7LXJYN3b06hsRzyyJhbED2U+rEzhp1E7kktTjnAtLv+7o0HlV02yGr/d/2qe/TB1fP/p/xUiOE+aSN6durCwiWXml8fz6seQAXKaNrbHFatYZ/dZMdFbm7D7UtUki7jpYzJkZJInWNeAoAySzPNXxZNEXLiUCpzQUuVc2K8+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RG4Z5Ify; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q7gSWeOOPi2AZgTnRUHaLzWm9EABjeDKP2GbRt+s7glFJ3l0CBvng7Kv4hQQkbvu+cysq2qc2H8dDTP4cYvM2mavQwQ2CkUa5OUqJKt3p42XnGRahRaqQbYeOcnj2wAMdSEOnVcqGBe93m9A/T8zjBpBDRvnGFQZctiFkk0GMCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXFkXn/9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RG4Z5Ify"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59756C433F1;
-	Tue, 20 Feb 2024 21:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXFkXn/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2EEC433C7;
+	Tue, 20 Feb 2024 21:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465132;
-	bh=UER6QKED5RtPkYLiYLyjdG5gzs4QGX6SS8f6NHIFuJQ=;
+	s=korg; t=1708465135;
+	bh=81p8J9ad0H3T30CPNB0ix2F/nCL2V9VR9mH0BbmGBR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RG4Z5IfyN9gu+dQe4Ijk1dS3QQML3kk+3o4MJwKj7FgOzebntnooQpl8/Obdg/cfb
-	 2qc5ikPPvIc/R8fRq2BLsPo2uoDLgKJBiMsxg/t1Ovl8531hdX1v7s4teZdfgKygTn
-	 GiFoppLOfb04mi3KaRZjJd7QDZpMBXxa3yYcdt9g=
+	b=pXFkXn/9AekK0rJ7ujKP5ePmrdR9cu8aMtEFROxq8/3HiryCfKqrfC3hGWQSHXy/R
+	 6SMwkZqSqTg2Pn2r5ZWeVSj52gLALye5EuBvduKTqTRdwPxyyibvBaySFIqddrH47r
+	 wtYEbbWQm8CG9whlmyS1LOIRAiVFK11gPYtB/fMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	xingwei lee <xrivendell7@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	syzbot+3266db0c26d1fbbe3abb@syzkaller.appspotmail.com
-Subject: [PATCH 6.7 246/309] crypto: algif_hash - Remove bogus SGL free on zero-length error path
-Date: Tue, 20 Feb 2024 21:56:45 +0100
-Message-ID: <20240220205640.860635622@linuxfoundation.org>
+	Daniel Basilio <daniel.basilio@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.7 247/309] nfp: use correct macro for LengthSelect in BAR config
+Date: Tue, 20 Feb 2024 21:56:46 +0100
+Message-ID: <20240220205640.898464120@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,52 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Daniel Basilio <daniel.basilio@corigine.com>
 
-commit 24c890dd712f6345e382256cae8c97abb0406b70 upstream.
+commit b3d4f7f2288901ed2392695919b3c0e24c1b4084 upstream.
 
-When a zero-length message is hashed by algif_hash, and an error
-is triggered, it tries to free an SG list that was never allocated
-in the first place.  Fix this by not freeing the SG list on the
-zero-length error path.
+The 1st and 2nd expansion BAR configuration registers are configured,
+when the driver starts up, in variables 'barcfg_msix_general' and
+'barcfg_msix_xpb', respectively. The 'LengthSelect' field is ORed in
+from bit 0, which is incorrect. The 'LengthSelect' field should
+start from bit 27.
 
-Reported-by: Shigeru Yoshida <syoshida@redhat.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Fixes: b6d972f68983 ("crypto: af_alg/hash: Fix recvmsg() after sendmsg(MSG_MORE)")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reported-by: syzbot+3266db0c26d1fbbe3abb@syzkaller.appspotmail.com
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This has largely gone un-noticed because
+NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT happens to be 0.
+
+Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
+Cc: stable@vger.kernel.org # 4.11+
+Signed-off-by: Daniel Basilio <daniel.basilio@corigine.com>
+Signed-off-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/algif_hash.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/crypto/algif_hash.c
-+++ b/crypto/algif_hash.c
-@@ -91,13 +91,13 @@ static int hash_sendmsg(struct socket *s
- 		if (!(msg->msg_flags & MSG_MORE)) {
- 			err = hash_alloc_result(sk, ctx);
- 			if (err)
--				goto unlock_free;
-+				goto unlock_free_result;
- 			ahash_request_set_crypt(&ctx->req, NULL,
- 						ctx->result, 0);
- 			err = crypto_wait_req(crypto_ahash_final(&ctx->req),
- 					      &ctx->wait);
- 			if (err)
--				goto unlock_free;
-+				goto unlock_free_result;
- 		}
- 		goto done_more;
- 	}
-@@ -170,6 +170,7 @@ unlock:
- 
- unlock_free:
- 	af_alg_free_sg(&ctx->sgl);
-+unlock_free_result:
- 	hash_free_result(sk, ctx);
- 	ctx->more = false;
- 	goto unlock;
+--- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
++++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
+@@ -537,11 +537,13 @@ static int enable_bars(struct nfp6000_pc
+ 	const u32 barcfg_msix_general =
+ 		NFP_PCIE_BAR_PCIE2CPP_MapType(
+ 			NFP_PCIE_BAR_PCIE2CPP_MapType_GENERAL) |
+-		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT;
++		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
++			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT);
+ 	const u32 barcfg_msix_xpb =
+ 		NFP_PCIE_BAR_PCIE2CPP_MapType(
+ 			NFP_PCIE_BAR_PCIE2CPP_MapType_BULK) |
+-		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT |
++		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
++			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT) |
+ 		NFP_PCIE_BAR_PCIE2CPP_Target_BaseAddress(
+ 			NFP_CPP_TARGET_ISLAND_XPB);
+ 	const u32 barcfg_explicit[4] = {
 
 
