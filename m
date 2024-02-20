@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20314133987;
-	Tue, 20 Feb 2024 21:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1FE151CF0;
+	Tue, 20 Feb 2024 21:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463132; cv=none; b=ghktSWVzdN/Sqjd5/wmrrEkuEdM2SfCf3p8M/9NQ3R8o4qP4skY4eoASM5/ntmil3gc7ODaduikraTFdKHjUzCVrDfZgQVPr+DH1DHEW6Bsw7vEswnzReyOBRgIGrqm0+UQDJzymxbyBcRa/I2r5b9OluiPRVBb9nd7FfydJLMk=
+	t=1708463135; cv=none; b=mJrErMljlNar8cMznPYeHFPP07X8fsFxrq1qFRF3oUZePk4SN1glyM/AVu/faJfQhNwq1FPKj6tE3D1J31vAP7WwhngcqLZZ5vKcgk3BROzyTYpdzlCj4DB3jirNZxjM6qtsblSHiACYPY5rt0TtA82lL7FJ3b5NMKSh67b+f/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463132; c=relaxed/simple;
-	bh=nHOUZHrfpj8diZFGW75Y+W3B0lV3M9/wJI553gPKA0U=;
+	s=arc-20240116; t=1708463135; c=relaxed/simple;
+	bh=2Jxjih0W4Nk0yYSLfcWdTSvetdedjXI5jyZ3LeTwqBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fLCfHJz9l4spQrjHE1A7mXSflReDlNqaLnDf9QIak03tSoAnYLZg7jpslia3zZGdAG/q1AaVtF5SHjMXvb0oZHI60G3aSYrbWVfLeN/nAhY0NocECSKty/MwcmQ6K2iu4AnASogagi32lP2fA5rD76q2o33/G0oK4phxmpqtI9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaa7UJbl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WPY+nvMEk1/dXAyqorVHDb06KolRIR20mJIjlZ5e2ifhZllzCj3ax4hUZP1INM8wAUKfhb81nL27ntN5OWg6gIc9yaH0JsEtWv71Wqesy/6jU7RmZgp7IUlUaX4poIPBT/eF2XHKBKaD8DHiobHPueCLjH1hsOvdJvjpi26Ei6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTDNnciz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaa7UJbl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BDAC433C7;
-	Tue, 20 Feb 2024 21:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTDNnciz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EFBC433C7;
+	Tue, 20 Feb 2024 21:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463132;
-	bh=nHOUZHrfpj8diZFGW75Y+W3B0lV3M9/wJI553gPKA0U=;
+	s=korg; t=1708463135;
+	bh=2Jxjih0W4Nk0yYSLfcWdTSvetdedjXI5jyZ3LeTwqBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gaa7UJbllQyBP9ep3qtNnq4qScPlBGM2QeGLqHLlH2mYK4+YsC7+cSV2P8zRV3Z2V
-	 6dvvKOjfzG8VsUSCU33C2CYnHcO4Vd2Ldmd41LmICvaO/aU0wR9NtPQsr1SKkmms5K
-	 cu1kRHbrk20VrIOo0ofhYHwiOv9n6rmsxTK1x8t4=
+	b=kTDNncizkWrKtAjwIYGBarwwhpyb7z+bYLWZsq4XWHE2Vfbo3jLSGgt/Fzf75SdJV
+	 YZaPGlk86H8YH8Ps1eiiFYnk3d9WR3ACzjsXk8zTX7FSJSocfuf0Mxe88FjOeUBkaY
+	 fTah4K9k6DNUuC6g7VSZ3xMDpjdVFTfMYZlJghZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Petrov <stanislav.i.petrov@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 146/197] ASoC: amd: yc: Add DMI quirk for Lenovo Ideapad Pro 5 16ARP8
-Date: Tue, 20 Feb 2024 21:51:45 +0100
-Message-ID: <20240220204845.435867432@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Donald Zickus <dzickus@redhat.com>,
+	Daniel Bristot de Oliveira <bristot@kernel.org>
+Subject: [PATCH 6.1 147/197] tools/rtla: Remove unused sched_getattr() function
+Date: Tue, 20 Feb 2024 21:51:46 +0100
+Message-ID: <20240220204845.464988042@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,39 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Daniel Bristot de Oliveira <bristot@kernel.org>
 
-commit 610010737f74482a61896596a0116876ecf9e65c upstream.
+commit 084ce16df0f060efd371092a09a7ae74a536dc11 upstream.
 
-The laptop requires a quirk ID to enable its internal microphone. Add
-it to the DMI quirk table.
+Clang is reporting:
 
-Reported-by: Stanislav Petrov <stanislav.i.petrov@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=216925
+$ make HOSTCC=clang CC=clang LLVM_IAS=1
+[...]
+clang -O -g -DVERSION=\"6.8.0-rc3\" -flto=auto -fexceptions -fstack-protector-strong -fasynchronous-unwind-tables -fstack-clash-protection  -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS $(pkg-config --cflags libtracefs)    -c -o src/utils.o src/utils.c
+src/utils.c:241:19: warning: unused function 'sched_getattr' [-Wunused-function]
+  241 | static inline int sched_getattr(pid_t pid, struct sched_attr *attr,
+      |                   ^~~~~~~~~~~~~
+1 warning generated.
+
+Which is correct, so remove the unused function.
+
+Link: https://lkml.kernel.org/r/eaed7ba122c4ae88ce71277c824ef41cbf789385.1707217097.git.bristot@kernel.org
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20240205214853.2689-1-mario.limonciello@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Donald Zickus <dzickus@redhat.com>
+Fixes: b1696371d865 ("rtla: Helper functions for rtla")
+Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/tracing/rtla/src/utils.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -245,6 +245,13 @@ static const struct dmi_system_id yc_acp
- 		.driver_data = &acp6x_card,
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
-+		}
-+	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "82UG"),
- 		}
- 	},
+--- a/tools/tracing/rtla/src/utils.c
++++ b/tools/tracing/rtla/src/utils.c
+@@ -243,12 +243,6 @@ static inline int sched_setattr(pid_t pi
+ 	return syscall(__NR_sched_setattr, pid, attr, flags);
+ }
+ 
+-static inline int sched_getattr(pid_t pid, struct sched_attr *attr,
+-				unsigned int size, unsigned int flags)
+-{
+-	return syscall(__NR_sched_getattr, pid, attr, size, flags);
+-}
+-
+ int __set_sched_attr(int pid, struct sched_attr *attr)
+ {
+ 	int flags = 0;
 
 
