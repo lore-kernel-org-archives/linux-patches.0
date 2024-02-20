@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AA52DF9F;
-	Tue, 20 Feb 2024 21:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4BA2DF9F;
+	Tue, 20 Feb 2024 21:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464191; cv=none; b=kjLkUH32+UfUMrkq0F9QYEtcL5212OW+igRv7qHMhBHYYREKSlmn1H3Fn5k7lTU5RZXyUPaFmCIPPc1Hu5Fz+zr1X0rcMe3onxMComt+S23zcNw8MG07U3o0sVVnS95x4FvJ5WOvERKou071fSDGqAtlBnIrH+l1pNEHjEpAMn4=
+	t=1708464194; cv=none; b=TtySYTOc8xo1Z2OJDOAwDnPvniEH6+J7dcUX1vBo+tIdjvFZitIfQOcWdDvYz3Ob7NO+hsuYvkztmp8e0e5kKT6P+Y03gVOGw+bSN/AqPz6Z6jyF4EwLYjdJlWLjaH2H6PjY37h4fPD++50sjdLjHErbMaYVdiSPdQbImCkNFUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464191; c=relaxed/simple;
-	bh=SPy5WVlY37WOhhL748uMy9ubr34yOH/n1BcVjtXzM34=;
+	s=arc-20240116; t=1708464194; c=relaxed/simple;
+	bh=zYaSaEVlG9x04Ev/loNmJ4xP+ZaXXxIDHPDVnrkW5YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWpeT1EIUzz1pU8UwhO8YrpuNzAGI2+04n+QHF8jthaQEd0TifRWFJpmxO6urMcYrGQ624wny8bLsqO3cM2V/bAgmSxQcx+bcPvr9TI8zCTGDpVjHBN2ootKtxd7fZQWBnSuCnoKZ9qECMmOADK8N+3KWPtYhTH9C1HXqY3msVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nExRwAM5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LJL5HdoOq+f7QpwjpzTT35gt+bBwfc4uQ2biP/Bzl1IEY03TVMJhvCEpGddOkK5Ht8lK6xxjYoSfpBJf1B90vENhs3JmpFgofuJuI/JEmjYMUxvOB78Nxm6aow4Qem+bmKZZTKDRJ4eqRux7zd9sfSYn+rUDCLfbreG5xJmoPXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNh4UPup; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nExRwAM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31387C433C7;
-	Tue, 20 Feb 2024 21:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNh4UPup"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4265BC433C7;
+	Tue, 20 Feb 2024 21:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464191;
-	bh=SPy5WVlY37WOhhL748uMy9ubr34yOH/n1BcVjtXzM34=;
+	s=korg; t=1708464194;
+	bh=zYaSaEVlG9x04Ev/loNmJ4xP+ZaXXxIDHPDVnrkW5YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nExRwAM5mIuPMfhTi3ZsLUF4xQ5U64FlAxEhZpN4dFXLmkfQyUfRO4VAkBh7xsgBU
-	 DixDRpalVpmxRWGA3D6SPpb3p0nFlmaE7kt3Y5p7jR/7kiTJlq0AYTM0kKizYfq+Zj
-	 cdZe6LQNlXLnz8uO++gl3eh49aaz3IActp+KmjBk=
+	b=gNh4UPupbyrS68INIzY4+7djawSw377dD9sd1vQ53Rtvzt2c+sazNXhU3UToTBh3R
+	 fc7zjBNZwDsBR4bdLLXGTY8lS600GrwETmmKDF11bT5NqI24QY5VtthKLNZCfRDeOr
+	 cZ9gNVdRQ7sAng9hveIvsbzdfesFWO24+1HcTJkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Mark Rutland <mark.rutland@arm.com>,
-	kernel test robot <lkp@intel.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 272/331] eventfs: Fix kerneldoc of eventfs_remove_rec()
-Date: Tue, 20 Feb 2024 21:56:28 +0100
-Message-ID: <20240220205646.433425913@linuxfoundation.org>
+Subject: [PATCH 6.6 281/331] eventfs: Remove expectation that ei->is_freed means ei->dentry == NULL
+Date: Tue, 20 Feb 2024 21:56:37 +0100
+Message-ID: <20240220205646.765058109@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -54,40 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 9037caa09ed345b35325200f0e4acf5a94ae0a65 upstream.
+commit 88903daecacf03b1e5636e1b5f18bda5b07030fc upstream.
 
-The eventfs_remove_rec() had some missing parameters in the kerneldoc
-comment above it. Also, rephrase the description a bit more to have a bit
-more correct grammar.
+The logic to free the eventfs_inode (ei) use to set is_freed and clear the
+"dentry" field under the eventfs_mutex. But that changed when a race was
+found where the ei->dentry needed to be cleared when the last dput() was
+called on it. But there was still logic that checked if ei->dentry was not
+NULL and is_freed is set, and would warn if it was.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20231030121523.0b2225a7@gandalf.local.home
+But since that situation was changed and the ei->dentry isn't cleared
+until the last dput() is called on it while the ei->is_freed is set, do
+not test for that condition anymore, and change the comments to reflect
+that.
+
+Link: https://lkml.kernel.org/r/20231120235154.265826243@goodmis.org
 
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Fixes: 5790b1fb3d672 ("eventfs: Remove eventfs_file and just use eventfs_inode");
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310052216.4SgqasWo-lkp@intel.com/
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 020010fbfa20 ("eventfs: Delete eventfs_inode when the last dentry is freed")
+Reported-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/tracefs/event_inode.c |   22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
 --- a/fs/tracefs/event_inode.c
 +++ b/fs/tracefs/event_inode.c
-@@ -796,9 +796,11 @@ static void free_ei(struct rcu_head *hea
- /**
-  * eventfs_remove_rec - remove eventfs dir or file from list
-  * @ei: eventfs_inode to be removed.
-+ * @head: the list head to place the deleted @ei and children
-+ * @level: prevent recursion from going more than 3 levels deep.
-  *
-- * This function recursively remove eventfs_inode which
-- * contains info of file or dir.
-+ * This function recursively removes eventfs_inodes which
-+ * contains info of files and/or directories.
+@@ -27,16 +27,16 @@
+ /*
+  * eventfs_mutex protects the eventfs_inode (ei) dentry. Any access
+  * to the ei->dentry must be done under this mutex and after checking
+- * if ei->is_freed is not set. The ei->dentry is released under the
+- * mutex at the same time ei->is_freed is set. If ei->is_freed is set
+- * then the ei->dentry is invalid.
++ * if ei->is_freed is not set. When ei->is_freed is set, the dentry
++ * is on its way to being freed after the last dput() is made on it.
   */
- static void eventfs_remove_rec(struct eventfs_inode *ei, struct list_head *head, int level)
- {
+ static DEFINE_MUTEX(eventfs_mutex);
+ 
+ /*
+  * The eventfs_inode (ei) itself is protected by SRCU. It is released from
+  * its parent's list and will have is_freed set (under eventfs_mutex).
+- * After the SRCU grace period is over, the ei may be freed.
++ * After the SRCU grace period is over and the last dput() is called
++ * the ei is freed.
+  */
+ DEFINE_STATIC_SRCU(eventfs_srcu);
+ 
+@@ -365,12 +365,14 @@ create_file_dentry(struct eventfs_inode
+ 		 * created the dentry for this e_dentry. In which case
+ 		 * use that one.
+ 		 *
+-		 * Note, with the mutex held, the e_dentry cannot have content
+-		 * and the ei->is_freed be true at the same time.
++		 * If ei->is_freed is set, the e_dentry is currently on its
++		 * way to being freed, don't return it. If e_dentry is NULL
++		 * it means it was already freed.
+ 		 */
+-		dentry = *e_dentry;
+-		if (WARN_ON_ONCE(dentry && ei->is_freed))
++		if (ei->is_freed)
+ 			dentry = NULL;
++		else
++			dentry = *e_dentry;
+ 		/* The lookup does not need to up the dentry refcount */
+ 		if (dentry && !lookup)
+ 			dget(dentry);
+@@ -473,8 +475,8 @@ create_dir_dentry(struct eventfs_inode *
+ 		 * created the dentry for this e_dentry. In which case
+ 		 * use that one.
+ 		 *
+-		 * Note, with the mutex held, the e_dentry cannot have content
+-		 * and the ei->is_freed be true at the same time.
++		 * If ei->is_freed is set, the e_dentry is currently on its
++		 * way to being freed.
+ 		 */
+ 		dentry = ei->dentry;
+ 		if (dentry && !lookup)
 
 
