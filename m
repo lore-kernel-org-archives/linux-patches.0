@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EEE91509AC;
-	Tue, 20 Feb 2024 21:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD881509AC;
+	Tue, 20 Feb 2024 21:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463828; cv=none; b=OE4GK5K1SqJs25kyuQP4RbYift4IN0DGUIemvmzfhs37EhV6teku8RBIL9GoSTfckP8Gei8SvC+CkUI3NtFgLqEqmjJu3sMhoBq1xnXA+00TczsKQuFkZl20cLoeNQm5u4byWPJA4DBEyOPRk62N8P6Hk15XSsn5RKCbLPLze6E=
+	t=1708463831; cv=none; b=aWxgUHZOeSJlMQpnkrOmYw3uPqysCC0Ak0U4F5YOE9aZ2D+W6XLcjzVEt7Sp96mzikk184VRRTKKoR6sc9mMoVhcgpTa+QLjKCyo3yYWEka9tS/e3qMWA1o1+R3YVO2HBkfQ5K0xvw92aVb1Z8lsTfv88sQgmetbnRVJMy+sxNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463828; c=relaxed/simple;
-	bh=LGCQAPF2WwPd2R1OHGbm07kTMMMHvgdhocjHmsyKqfw=;
+	s=arc-20240116; t=1708463831; c=relaxed/simple;
+	bh=tg3RJbNy7rBPdcbriuFX5uuzL/EQpDs94VoPCG08oGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hb7w1N+gvPoVVTuTSaYxKavj6n7+E2PuYptcZXydr0SfZjXwhqm9+a04MI4bCmQuTk/PtsvDfdj5ZP/5IWAI5hZe8Ehae4CY5nFc1Q8SYluTEbwWRkm8nBoMYFF0iYnCUBU//KvqG/FKYnnbJusMQ4M8YKGjLl9g3iT1d9LiYy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrwGanHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngv7Qdh8+kbFi1ySrvv4aQq2UeRhuCwG22HQUWQGVC6vAWWl/x74WeqUDP3Cbjz4m3eFgEvFQFMBxt6gwm9Zqksxnp96ps3ngFbC17anJB0dmJv8/ib8xY2oCrfSNmAV1dADtHHUmDvXO8h+WZZ8iOB/rT+2NudJd1OZLxSJKJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H//mtuxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrwGanHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9F0C433F1;
-	Tue, 20 Feb 2024 21:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H//mtuxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB3FC43390;
+	Tue, 20 Feb 2024 21:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463827;
-	bh=LGCQAPF2WwPd2R1OHGbm07kTMMMHvgdhocjHmsyKqfw=;
+	s=korg; t=1708463831;
+	bh=tg3RJbNy7rBPdcbriuFX5uuzL/EQpDs94VoPCG08oGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrwGanHPThymKo/WL1nMPTCNEIhcNFK2JWxdi0qR67c1pcJmEnFFX8qjBEOqCATL0
-	 MO01CKv44qUkhv0G8biMz4VX0FhVwTv/xLEtDLtD5cUZcbfDkPSpFmo90u/6wNXEJm
-	 xNXaWodRYrmFONjQR6cz1Tz3wtXPQvkMZOs0n7Yo=
+	b=H//mtuxEnP+9RptHFnXHQLNKr+ht18WmEbtPBSZl7+ppJTEo/kBQaWzgqyQNSE4Ry
+	 k0S2wJ3mUGyaFOq0aeBU+7AbmO5w+knMRersx0vtRmb0EvjPRCF0duDuJ277fVnNuv
+	 EU5QEmRhySvqstwtDtIngDWydMmj8jpgPaY/g1C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 148/331] tracing/timerlat: Move hrtimer_init to timerlat_fd open()
-Date: Tue, 20 Feb 2024 21:54:24 +0100
-Message-ID: <20240220205642.200669067@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 166/331] ksmbd: free aux buffer if ksmbd_iov_pin_rsp_read fails
+Date: Tue, 20 Feb 2024 21:54:42 +0100
+Message-ID: <20240220205642.743102137@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,128 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Bristot de Oliveira <bristot@kernel.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 1389358bb008e7625942846e9f03554319b7fecc upstream.
+commit 108a020c64434fed4b69762879d78cd24088b4c7 upstream.
 
-Currently, the timerlat's hrtimer is initialized at the first read of
-timerlat_fd, and destroyed at close(). It works, but it causes an error
-if the user program open() and close() the file without reading.
+ksmbd_iov_pin_rsp_read() doesn't free the provided aux buffer if it
+fails. Seems to be the caller's responsibility to clear the buffer in
+error case.
 
-Here's an example:
+Found by Linux Verification Center (linuxtesting.org).
 
- # echo NO_OSNOISE_WORKLOAD > /sys/kernel/debug/tracing/osnoise/options
- # echo timerlat > /sys/kernel/debug/tracing/current_tracer
-
- # cat <<EOF > ./timerlat_load.py
- # !/usr/bin/env python3
-
- timerlat_fd = open("/sys/kernel/tracing/osnoise/per_cpu/cpu0/timerlat_fd", 'r')
- timerlat_fd.close();
- EOF
-
- # ./taskset -c 0 ./timerlat_load.py
-<BOOM>
-
- BUG: kernel NULL pointer dereference, address: 0000000000000010
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 [#1] PREEMPT SMP NOPTI
- CPU: 1 PID: 2673 Comm: python3 Not tainted 6.6.13-200.fc39.x86_64 #1
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-1.fc39 04/01/2014
- RIP: 0010:hrtimer_active+0xd/0x50
- Code: 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 0f 1f 44 00 00 48 8b 57 30 <8b> 42 10 a8 01 74 09 f3 90 8b 42 10 a8 01 75 f7 80 7f 38 00 75 1d
- RSP: 0018:ffffb031009b7e10 EFLAGS: 00010286
- RAX: 000000000002db00 RBX: ffff9118f786db08 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: ffff9117a0e64400 RDI: ffff9118f786db08
- RBP: ffff9118f786db80 R08: ffff9117a0ddd420 R09: ffff9117804d4f70
- R10: 0000000000000000 R11: 0000000000000000 R12: ffff9118f786db08
- R13: ffff91178fdd5e20 R14: ffff9117840978c0 R15: 0000000000000000
- FS:  00007f2ffbab1740(0000) GS:ffff9118f7840000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000010 CR3: 00000001b402e000 CR4: 0000000000750ee0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ? __die+0x23/0x70
-  ? page_fault_oops+0x171/0x4e0
-  ? srso_alias_return_thunk+0x5/0x7f
-  ? avc_has_extended_perms+0x237/0x520
-  ? exc_page_fault+0x7f/0x180
-  ? asm_exc_page_fault+0x26/0x30
-  ? hrtimer_active+0xd/0x50
-  hrtimer_cancel+0x15/0x40
-  timerlat_fd_release+0x48/0xe0
-  __fput+0xf5/0x290
-  __x64_sys_close+0x3d/0x80
-  do_syscall_64+0x60/0x90
-  ? srso_alias_return_thunk+0x5/0x7f
-  ? __x64_sys_ioctl+0x72/0xd0
-  ? srso_alias_return_thunk+0x5/0x7f
-  ? syscall_exit_to_user_mode+0x2b/0x40
-  ? srso_alias_return_thunk+0x5/0x7f
-  ? do_syscall_64+0x6c/0x90
-  ? srso_alias_return_thunk+0x5/0x7f
-  ? exit_to_user_mode_prepare+0x142/0x1f0
-  ? srso_alias_return_thunk+0x5/0x7f
-  ? syscall_exit_to_user_mode+0x2b/0x40
-  ? srso_alias_return_thunk+0x5/0x7f
-  ? do_syscall_64+0x6c/0x90
-  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
- RIP: 0033:0x7f2ffb321594
- Code: 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 80 3d d5 cd 0d 00 00 74 13 b8 03 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 3c c3 0f 1f 00 55 48 89 e5 48 83 ec 10 89 7d
- RSP: 002b:00007ffe8d8eef18 EFLAGS: 00000202 ORIG_RAX: 0000000000000003
- RAX: ffffffffffffffda RBX: 00007f2ffba4e668 RCX: 00007f2ffb321594
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
- RBP: 00007ffe8d8eef40 R08: 0000000000000000 R09: 0000000000000000
- R10: 55c926e3167eae79 R11: 0000000000000202 R12: 0000000000000003
- R13: 00007ffe8d8ef030 R14: 0000000000000000 R15: 00007f2ffba4e668
-  </TASK>
- CR2: 0000000000000010
- ---[ end trace 0000000000000000 ]---
-
-Move hrtimer_init to timerlat_fd open() to avoid this problem.
-
-Link: https://lore.kernel.org/linux-trace-kernel/7324dd3fc0035658c99b825204a66049389c56e3.1706798888.git.bristot@kernel.org
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
 Cc: stable@vger.kernel.org
-Fixes: e88ed227f639 ("tracing/timerlat: Add user-space interface")
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_osnoise.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
-index bd0d01d00fb9..a8e28f9b9271 100644
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -2444,6 +2444,9 @@ static int timerlat_fd_open(struct inode *inode, struct file *file)
- 	tlat = this_cpu_tmr_var();
- 	tlat->count = 0;
- 
-+	hrtimer_init(&tlat->timer, CLOCK_MONOTONIC, HRTIMER_MODE_ABS_PINNED_HARD);
-+	tlat->timer.function = timerlat_irq;
-+
- 	migrate_enable();
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6173,8 +6173,10 @@ static noinline int smb2_read_pipe(struc
+ 		err = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
+ 					     offsetof(struct smb2_read_rsp, Buffer),
+ 					     aux_payload_buf, nbytes);
+-		if (err)
++		if (err) {
++			kvfree(aux_payload_buf);
+ 			goto out;
++		}
+ 		kvfree(rpc_resp);
+ 	} else {
+ 		err = ksmbd_iov_pin_rsp(work, (void *)rsp,
+@@ -6384,8 +6386,10 @@ int smb2_read(struct ksmbd_work *work)
+ 	err = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
+ 				     offsetof(struct smb2_read_rsp, Buffer),
+ 				     aux_payload_buf, nbytes);
+-	if (err)
++	if (err) {
++		kvfree(aux_payload_buf);
+ 		goto out;
++	}
+ 	ksmbd_fd_put(work, fp);
  	return 0;
- };
-@@ -2526,9 +2529,6 @@ timerlat_fd_read(struct file *file, char __user *ubuf, size_t count,
- 		tlat->tracing_thread = false;
- 		tlat->kthread = current;
  
--		hrtimer_init(&tlat->timer, CLOCK_MONOTONIC, HRTIMER_MODE_ABS_PINNED_HARD);
--		tlat->timer.function = timerlat_irq;
--
- 		/* Annotate now to drift new period */
- 		tlat->abs_period = hrtimer_cb_get_time(&tlat->timer);
- 
--- 
-2.43.2
-
 
 
