@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CF5151CE5;
-	Tue, 20 Feb 2024 21:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F8414AD15;
+	Tue, 20 Feb 2024 21:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463695; cv=none; b=Q8rASw07GlNDj1ZtZ4UL5XRbiKr8p7Cx9lVnxZcLuOmseng463m55dMUhAY3uFKIcejzrQe4/2JZf+0/56KSrfz9vPTl1ANZeDXF9GxxX5Z7/B063gaRC/u2TgHYQ3yZNZXdvY81Q+yr3NDnlCeyHh/RmmsBiTl/7Tb7lUxLfI0=
+	t=1708463698; cv=none; b=NMgELB+NUBPTNpmRv4ZVRSTW7BfTMYB7IalD8ZCkSa8/iv0x0uDYqSzPeFbYhaJg3o9aYghpUa/472JoceNUAJ82YPRHWmLXyqEewX/TuTkJhrPgZ1fw3nFGbBPL8jP8qWxRRNSbJd/idOWU8RJBHHpEhiIl4aUpmkIGQtvZpJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463695; c=relaxed/simple;
-	bh=MCuQHp4LLVCk6CpzIG00cSenUeUAKT0qhfnCIjKpYT4=;
+	s=arc-20240116; t=1708463698; c=relaxed/simple;
+	bh=vHxFMDc6IVQ1ZIPZB5ei0MPEQstQjILcuShouq2Lc1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ul88MfcycRxnVto7aUlKhz4XOPpiV+ub74gWEKPI2MvK9vz57cXnFmVOT7olbSDWgn283dqppN1wUonWnw82fJxh2iRU88YbRV6pIjGVnl1qLm9Hh2QuiLIQCV5FQgNxktPGizfJM42uunjs2HTSzvSqj1V12rFKYd3AAlwvGhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=epZpEczK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RTktCpCMVoOW2Usz0uR65IZwWroPQTAiCF0eVwjmJN93970btqaFs88m4Sm8TcBHZDJVas2nqOjr4ZXvEGOVHWyUJDRNCO/ucPBJ9rqQida6JjDa3fbj3EDS6zbYO4lDdc5pNyBQP3X1vlkEnB7ujwVHeWsnB2AsEvfU6qkCArQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n02JWrKj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="epZpEczK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F0EC433F1;
-	Tue, 20 Feb 2024 21:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n02JWrKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEBB1C433C7;
+	Tue, 20 Feb 2024 21:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463695;
-	bh=MCuQHp4LLVCk6CpzIG00cSenUeUAKT0qhfnCIjKpYT4=;
+	s=korg; t=1708463698;
+	bh=vHxFMDc6IVQ1ZIPZB5ei0MPEQstQjILcuShouq2Lc1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=epZpEczKdTsPTYn0ccohOQ6fFselMkigTz5RTtU5FX42go0xcAtx6cnPQa9CbexLf
-	 nERqdB+a0QzNnMTAAUcf9cRih2zXygag8/YqR0QDz0X/lwa27Sgu4e0zitgnDcsECJ
-	 kFBUQ6nM5RtO/4XChFNjx5/X3ULazZo7HBDhRyNk=
+	b=n02JWrKjQ8LIqS6cM7xdjIXbZ3HYIswFOqeKbOWuETbVwfBA5/1CrEQ1OEALq1EE5
+	 mXlZglblFErL0JN9/z6KLxKw0XRMORKD9iPkNLtm7BWTd1vTyFN9Vo3a71vpyPNM+l
+	 eqNIBWXgjavUYPrDqMAmBgm4re7JhvXd1DGDIX9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David McFarland <corngood@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 124/331] drm/amd: Dont init MEC2 firmware when it fails to load
-Date: Tue, 20 Feb 2024 21:54:00 +0100
-Message-ID: <20240220205641.493771336@linuxfoundation.org>
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.6 125/331] lsm: fix default return value of the socket_getpeersec_*() hooks
+Date: Tue, 20 Feb 2024 21:54:01 +0100
+Message-ID: <20240220205641.522237528@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,33 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David McFarland <corngood@gmail.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-commit 8ef85a0ce24a6d9322dfa2a67477e473c3619b4f upstream.
+commit 5a287d3d2b9de2b3e747132c615599907ba5c3c1 upstream.
 
-The same calls are made directly above, but conditional on the firmware
-loading and validating successfully.
+For these hooks the true "neutral" value is -EOPNOTSUPP, which is
+currently what is returned when no LSM provides this hook and what LSMs
+return when there is no security context set on the socket. Correct the
+value in <linux/lsm_hooks.h> and adjust the dispatch functions in
+security/security.c to avoid issues when the BPF LSM is enabled.
 
 Cc: stable@vger.kernel.org
-Fixes: 9931b67690cf ("drm/amd: Load GFX10 microcode during early_init")
-Signed-off-by: David McFarland <corngood@gmail.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 98e828a0650f ("security: Refactor declaration of LSM hooks")
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+[PM: subject line tweak]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c |    2 --
- 1 file changed, 2 deletions(-)
+ include/linux/lsm_hook_defs.h |    4 ++--
+ security/security.c           |   31 +++++++++++++++++++++++++++----
+ 2 files changed, 29 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -4020,8 +4020,6 @@ static int gfx_v10_0_init_microcode(stru
- 		err = 0;
- 		adev->gfx.mec2_fw = NULL;
- 	}
--	amdgpu_gfx_cp_init_microcode(adev, AMDGPU_UCODE_ID_CP_MEC2);
--	amdgpu_gfx_cp_init_microcode(adev, AMDGPU_UCODE_ID_CP_MEC2_JT);
+--- a/include/linux/lsm_hook_defs.h
++++ b/include/linux/lsm_hook_defs.h
+@@ -311,9 +311,9 @@ LSM_HOOK(int, 0, socket_getsockopt, stru
+ LSM_HOOK(int, 0, socket_setsockopt, struct socket *sock, int level, int optname)
+ LSM_HOOK(int, 0, socket_shutdown, struct socket *sock, int how)
+ LSM_HOOK(int, 0, socket_sock_rcv_skb, struct sock *sk, struct sk_buff *skb)
+-LSM_HOOK(int, 0, socket_getpeersec_stream, struct socket *sock,
++LSM_HOOK(int, -ENOPROTOOPT, socket_getpeersec_stream, struct socket *sock,
+ 	 sockptr_t optval, sockptr_t optlen, unsigned int len)
+-LSM_HOOK(int, 0, socket_getpeersec_dgram, struct socket *sock,
++LSM_HOOK(int, -ENOPROTOOPT, socket_getpeersec_dgram, struct socket *sock,
+ 	 struct sk_buff *skb, u32 *secid)
+ LSM_HOOK(int, 0, sk_alloc_security, struct sock *sk, int family, gfp_t priority)
+ LSM_HOOK(void, LSM_RET_VOID, sk_free_security, struct sock *sk)
+--- a/security/security.c
++++ b/security/security.c
+@@ -4387,8 +4387,20 @@ EXPORT_SYMBOL(security_sock_rcv_skb);
+ int security_socket_getpeersec_stream(struct socket *sock, sockptr_t optval,
+ 				      sockptr_t optlen, unsigned int len)
+ {
+-	return call_int_hook(socket_getpeersec_stream, -ENOPROTOOPT, sock,
+-			     optval, optlen, len);
++	struct security_hook_list *hp;
++	int rc;
++
++	/*
++	 * Only one module will provide a security context.
++	 */
++	hlist_for_each_entry(hp, &security_hook_heads.socket_getpeersec_stream,
++			     list) {
++		rc = hp->hook.socket_getpeersec_stream(sock, optval, optlen,
++						       len);
++		if (rc != LSM_RET_DEFAULT(socket_getpeersec_stream))
++			return rc;
++	}
++	return LSM_RET_DEFAULT(socket_getpeersec_stream);
+ }
  
- 	gfx_v10_0_check_fw_write_wait(adev);
- out:
+ /**
+@@ -4408,8 +4420,19 @@ int security_socket_getpeersec_stream(st
+ int security_socket_getpeersec_dgram(struct socket *sock,
+ 				     struct sk_buff *skb, u32 *secid)
+ {
+-	return call_int_hook(socket_getpeersec_dgram, -ENOPROTOOPT, sock,
+-			     skb, secid);
++	struct security_hook_list *hp;
++	int rc;
++
++	/*
++	 * Only one module will provide a security context.
++	 */
++	hlist_for_each_entry(hp, &security_hook_heads.socket_getpeersec_dgram,
++			     list) {
++		rc = hp->hook.socket_getpeersec_dgram(sock, skb, secid);
++		if (rc != LSM_RET_DEFAULT(socket_getpeersec_dgram))
++			return rc;
++	}
++	return LSM_RET_DEFAULT(socket_getpeersec_dgram);
+ }
+ EXPORT_SYMBOL(security_socket_getpeersec_dgram);
+ 
 
 
