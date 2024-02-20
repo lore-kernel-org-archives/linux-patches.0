@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FBE814A4E2;
-	Tue, 20 Feb 2024 21:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B59E14A4E2;
+	Tue, 20 Feb 2024 21:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462851; cv=none; b=UhirgovPcflNOPmgTsXluCXzcdt4Ijzo3/r8XFgv4DsvfdM20oxOTXN1re4fFMZsTAM3867kHRhkIzStRN8z5XMGO59xN448gygXCRVKlHEzXHlan4bnYbXmCI6f9Vc0ou5XI0o2s5uRku0wcDXxHNm5XIjNnXdPoz6Qv1gOQzA=
+	t=1708462854; cv=none; b=h0RWYrHs4o5supkmzH/vsc7X07pt5J+T0XuLwvOJQpp3vDiufwfzm+O59KwES35VPCT/44coeJ374psnBu2+lTHCQt8TGbVPmpuAm3CL5ZQ8qy07jqr5KI/jTtdxBYza08CvGuRqItYKL+JG9lfJr4mf5gY2xZidpPb08xdddPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462851; c=relaxed/simple;
-	bh=W+4zjgLoSeMu2Q0ZZRPiP87e2IDsS27OLY428cd+2Gk=;
+	s=arc-20240116; t=1708462854; c=relaxed/simple;
+	bh=ErR+YrrDfnJ8A1ddpsbi5FiSrXc2AeYA3lJQPUYaTtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUN/PyW0eOW16K6tDmeqFVu10Q2+YwKt5EO7VWJJ2ZV+5JkXlYPQj303YWG72Xlwt5ii85DFxNDC97jWyKCnzGXpQjGU4kprm94ccDzc2sYZ3hTya0sbQIo8yJrfQ57Zy429CGUjHherXkrXC8uLoNaKkRoXSdVpJNLVxu3zPZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovsvoi04; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lGjDVPAh4hmcK2TRncv1w2Cn8e276nca2jeK8i07/F1egGZ3dbym38tzBFnodpJdr+7R+vEVUsm2nbv1sLT7yU8ni/DSxcB5Lvg6eZpdw3H6n02wc6Qhj3M067ibqEy+i2kgvG3DFBv68xJPu5CYuiQzCtummUDXoO5aUje9A0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7r9+UH2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovsvoi04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893EFC43390;
-	Tue, 20 Feb 2024 21:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7r9+UH2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB365C433C7;
+	Tue, 20 Feb 2024 21:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462851;
-	bh=W+4zjgLoSeMu2Q0ZZRPiP87e2IDsS27OLY428cd+2Gk=;
+	s=korg; t=1708462854;
+	bh=ErR+YrrDfnJ8A1ddpsbi5FiSrXc2AeYA3lJQPUYaTtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ovsvoi04a8OoA+fze+L5LtI5ozzs2P2zY5TtkF5EnXocrlJmT/Tk/THSE3nmK65Ck
-	 45nnLyf26DBnnU32cERr2Aj77ozoTg4LQzX8vDLTbmWemBirJx3WzVR3kHzw9gs5xM
-	 0ZjNc5pzFZ76Bjav2kx0gnUCdS5jdl04wBRKIJgI=
+	b=y7r9+UH2y7eIaYqXnLUqxnQ9y3YFVLzY4yJgIgJ1ZL0R3PNNkAZ+onQNIz3GcOtHH
+	 pLO2aQ5/08ITwLZ+BoFapSnCB/bIcf4YA9Vt1Kw14vwMHCUaMQP5k4nHOP6bUVzpT9
+	 7HhagqZfpURPlqdIyjML9eBcmZm4wYPNOWvx7CVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Saravana Kannan <saravanak@google.com>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/197] driver core: fw_devlink: Improve detection of overlapping cycles
-Date: Tue, 20 Feb 2024 21:50:15 +0100
-Message-ID: <20240220204842.756090086@linuxfoundation.org>
+Subject: [PATCH 6.1 057/197] powerpc/6xx: set High BAT Enable flag on G2_LE cores
+Date: Tue, 20 Feb 2024 21:50:16 +0100
+Message-ID: <20240220204842.785276426@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,100 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit 6442d79d880cf7a2fff18779265d657fef0cce4c ]
+[ Upstream commit a038a3ff8c6582404834852c043dadc73a5b68b4 ]
 
-fw_devlink can detect most overlapping/intersecting cycles. However it was
-missing a few corner cases because of an incorrect optimization logic that
-tries to avoid repeating cycle detection for devices that are already
-marked as part of a cycle.
+MMU_FTR_USE_HIGH_BATS is set for G2_LE cores and derivatives like e300cX,
+but the high BATs need to be enabled in HID2 to work. Add register
+definitions and add the needed setup to __setup_cpu_603.
 
-Here's an example provided by Xu Yang (edited for clarity):
+This fixes boot on CPUs like the MPC5200B with STRICT_KERNEL_RWX enabled
+on systems where the flag has not been set by the bootloader already.
 
-                    usb
-                  +-----+
-   tcpc           |     |
-  +-----+         |  +--|
-  |     |----------->|EP|
-  |--+  |         |  +--|
-  |EP|<-----------|     |
-  |--+  |         |  B  |
-  |     |         +-----+
-  |  A  |            |
-  +-----+            |
-     ^     +-----+   |
-     |     |     |   |
-     +-----|  C  |<--+
-           |     |
-           +-----+
-           usb-phy
-
-Node A (tcpc) will be populated as device 1-0050.
-Node B (usb) will be populated as device 38100000.usb.
-Node C (usb-phy) will be populated as device 381f0040.usb-phy.
-
-The description below uses the notation:
-consumer --> supplier
-child ==> parent
-
-1. Node C is populated as device C. No cycles detected because cycle
-   detection is only run when a fwnode link is converted to a device link.
-
-2. Node B is populated as device B. As we convert B --> C into a device
-   link we run cycle detection and find and mark the device link/fwnode
-   link cycle:
-   C--> A --> B.EP ==> B --> C
-
-3. Node A is populated as device A. As we convert C --> A into a device
-   link, we see it's already part of a cycle (from step 2) and don't run
-   cycle detection. Thus we miss detecting the cycle:
-   A --> B.EP ==> B --> A.EP ==> A
-
-Looking at it another way, A depends on B in one way:
-A --> B.EP ==> B
-
-But B depends on A in two ways and we only detect the first:
-B --> C --> A
-B --> A.EP ==> A
-
-To detect both of these, we remove the incorrect optimization attempt in
-step 3 and run cycle detection even if the fwnode link from which the
-device link is being created has already been marked as part of a cycle.
-
-Reported-by: Xu Yang <xu.yang_2@nxp.com>
-Closes: https://lore.kernel.org/lkml/DU2PR04MB8822693748725F85DC0CB86C8C792@DU2PR04MB8822.eurprd04.prod.outlook.com/
-Fixes: 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20240202095636.868578-3-saravanak@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e4d6654ebe6e ("powerpc/mm/32s: rework mmu_mapin_ram()")
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240124103838.43675-1-matthias.schiffer@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/reg.h      |  2 ++
+ arch/powerpc/kernel/cpu_setup_6xx.S | 20 +++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 191590055932..3078f44dc186 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -2056,9 +2056,14 @@ static int fw_devlink_create_devlink(struct device *con,
+diff --git a/arch/powerpc/include/asm/reg.h b/arch/powerpc/include/asm/reg.h
+index 8fda87af2fa5..6c0ab745f0c8 100644
+--- a/arch/powerpc/include/asm/reg.h
++++ b/arch/powerpc/include/asm/reg.h
+@@ -608,6 +608,8 @@
+ #endif
+ #define SPRN_HID2	0x3F8		/* Hardware Implementation Register 2 */
+ #define SPRN_HID2_GEKKO	0x398		/* Gekko HID2 Register */
++#define SPRN_HID2_G2_LE	0x3F3		/* G2_LE HID2 Register */
++#define  HID2_G2_LE_HBE	(1<<18)		/* High BAT Enable (G2_LE) */
+ #define SPRN_IABR	0x3F2	/* Instruction Address Breakpoint Register */
+ #define SPRN_IABR2	0x3FA		/* 83xx */
+ #define SPRN_IBCR	0x135		/* 83xx Insn Breakpoint Control Reg */
+diff --git a/arch/powerpc/kernel/cpu_setup_6xx.S b/arch/powerpc/kernel/cpu_setup_6xx.S
+index f8b5ff64b604..6cbad50c71f6 100644
+--- a/arch/powerpc/kernel/cpu_setup_6xx.S
++++ b/arch/powerpc/kernel/cpu_setup_6xx.S
+@@ -24,6 +24,15 @@ BEGIN_FTR_SECTION
+ 	bl	__init_fpu_registers
+ END_FTR_SECTION_IFCLR(CPU_FTR_FPU_UNAVAILABLE)
+ 	bl	setup_common_caches
++
++	/*
++	 * This assumes that all cores using __setup_cpu_603 with
++	 * MMU_FTR_USE_HIGH_BATS are G2_LE compatible
++	 */
++BEGIN_MMU_FTR_SECTION
++	bl      setup_g2_le_hid2
++END_MMU_FTR_SECTION_IFSET(MMU_FTR_USE_HIGH_BATS)
++
+ 	mtlr	r5
+ 	blr
+ _GLOBAL(__setup_cpu_604)
+@@ -111,6 +120,16 @@ setup_604_hid0:
+ 	isync
+ 	blr
  
- 	/*
- 	 * SYNC_STATE_ONLY device links don't block probing and supports cycles.
--	 * So cycle detection isn't necessary and shouldn't be done.
-+	 * So, one might expect that cycle detection isn't necessary for them.
-+	 * However, if the device link was marked as SYNC_STATE_ONLY because
-+	 * it's part of a cycle, then we still need to do cycle detection. This
-+	 * is because the consumer and supplier might be part of multiple cycles
-+	 * and we need to detect all those cycles.
- 	 */
--	if (!(flags & DL_FLAG_SYNC_STATE_ONLY)) {
-+	if (!device_link_flag_is_sync_state_only(flags) ||
-+	    flags & DL_FLAG_CYCLE) {
- 		device_links_write_lock();
- 		if (__fw_devlink_relax_cycles(con, sup_handle)) {
- 			__fwnode_link_cycle(link);
++/* Enable high BATs for G2_LE and derivatives like e300cX */
++SYM_FUNC_START_LOCAL(setup_g2_le_hid2)
++	mfspr	r11,SPRN_HID2_G2_LE
++	oris	r11,r11,HID2_G2_LE_HBE@h
++	mtspr	SPRN_HID2_G2_LE,r11
++	sync
++	isync
++	blr
++SYM_FUNC_END(setup_g2_le_hid2)
++
+ /* 7400 <= rev 2.7 and 7410 rev = 1.0 suffer from some
+  * erratas we work around here.
+  * Moto MPC710CE.pdf describes them, those are errata
+@@ -485,4 +504,3 @@ _GLOBAL(__restore_cpu_setup)
+ 	mtcr	r7
+ 	blr
+ _ASM_NOKPROBE_SYMBOL(__restore_cpu_setup)
+-
 -- 
 2.43.0
 
