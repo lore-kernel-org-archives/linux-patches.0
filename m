@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0AD76C9C;
-	Tue, 20 Feb 2024 21:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 252AE76C9C;
+	Tue, 20 Feb 2024 21:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463364; cv=none; b=FmiNQ3IwptuagRwi3FCsRTB5QSzryXDqnBRNNP3WV+twSqnVUHSieaWyapVHb5We/P7PVnL+9hXKeaQTQk5Ocqdj9wpcWO+Ys7Oo68i/sFzv4tgMjIjSsM0hCQWASIsF/hD7+mT6VzSJywZwSdbOYeoquCCetIbeQYoEHoRjTps=
+	t=1708463367; cv=none; b=HHF7nilT5gXVMqdLk02b9mi9YAnp7HJG8vt7UDuQyPILsFFBlqTlOaDZVvnSi+GPUfzMRdVdbgalaSPgmyzffiDdEamIeZ9EWnVZNC6YTTTt/R7tppZ6Z5dyNFKMb9h1p9bNUnfQRA4DDnM08roxK8sJQekRH4AN245H00XvuSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463364; c=relaxed/simple;
-	bh=uidsajpnHClLEkAiLNhBa6/fh5KY6fAZSdAAOcKeCE8=;
+	s=arc-20240116; t=1708463367; c=relaxed/simple;
+	bh=/wOzUHMn44dCGfKdgmMMv7gFIVwwokBT1gO8Hx99qDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBVWGsr2baTItdKiVLoc+KuoYYB6YR6A+DV2oX+jotD2kmPU/7nkGxNgw0Wnaw/hXzz+nZ2M2L7KUGgVC7fdTSNIQP2BITpHeR9o/W0FmtdwS90HrnduFoDYAD7MkFv5+z5IlAVC0IZfae4ogw97l/YocxbFSagFNal36WLZW3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5+9mwAT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lLstSwI94iKfQzBqnmw8EZYhr98CRVnG3aAx0sWNnzbXa0vBGsFYYx3+OovROxajMA4SuCIsgxHy+9FareoO3znvC2NREOCTduIjfPUANx4VVfIoLfJdHxJfDCsaiXy7HoyseFN82He4wAkqzVNJ7I9VW3n+rMSNQmBnIm8ahA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9C2SsyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5+9mwAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBC0C433F1;
-	Tue, 20 Feb 2024 21:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9C2SsyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88115C433F1;
+	Tue, 20 Feb 2024 21:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463363;
-	bh=uidsajpnHClLEkAiLNhBa6/fh5KY6fAZSdAAOcKeCE8=;
+	s=korg; t=1708463367;
+	bh=/wOzUHMn44dCGfKdgmMMv7gFIVwwokBT1gO8Hx99qDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5+9mwATUt7WD+no0IwZdit3cfyhr+M4gAZq7q0qkuRrVmglb3vfNBjCwR/QlQRlQ
-	 yWxR2TrJ1AQ5HkMFTy35njrii2TgVnwpWqYchS9bVl0AIa0/h0fF8arJI20owRUTVl
-	 M5qwBaWVbko+NxtLA3SD7MiVzSy4Msya2xt9vnIw=
+	b=S9C2SsyWAfzU/mS22hqSS2v2tPNk1rqu0JXa990qeaSGe9wHLfXU2YYGGZtBZttCW
+	 2+MHQ0YVtLfkOyGYOVGWQ8VcnyhLLIZ5oaayRAjLUMsBOVtDe5VdZWqcgvorbGG5qo
+	 3LgH90nu76v+bk+FP2zILwXB3qKGnRaqzD9jyrAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/331] wifi: iwlwifi: Fix some error codes
-Date: Tue, 20 Feb 2024 21:52:16 +0100
-Message-ID: <20240220205638.223706891@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 003/331] btrfs: add and use helper to check if block group is used
+Date: Tue, 20 Feb 2024 21:51:59 +0100
+Message-ID: <20240220205637.684303220@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,83 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit c6ebb5b67641994de8bc486b33457fe0b681d6fe ]
+commit 1693d5442c458ae8d5b0d58463b873cd879569ed upstream.
 
-This saves the error as PTR_ERR(wifi_pkg).  The problem is that
-"wifi_pkg" is a valid pointer, not an error pointer.  Set the error code
-to -EINVAL instead.
+Add a helper function to determine if a block group is being used and make
+use of it at btrfs_delete_unused_bgs(). This helper will also be used in
+future code changes.
 
-Fixes: 2a8084147bff ("iwlwifi: acpi: support reading and storing WRDS revision 1 and 2")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://msgid.link/9620bb77-2d7c-4d76-b255-ad824ebf8e35@moroto.mountain
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/btrfs/block-group.c |    3 +--
+ fs/btrfs/block-group.h |    7 +++++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-index b26f90e52256..6f1919234f3f 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
-@@ -618,7 +618,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 2) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1524,8 +1524,7 @@ void btrfs_delete_unused_bgs(struct btrf
  		}
  
-@@ -634,7 +634,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 1) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
+ 		spin_lock(&block_group->lock);
+-		if (block_group->reserved || block_group->pinned ||
+-		    block_group->used || block_group->ro ||
++		if (btrfs_is_block_group_used(block_group) || block_group->ro ||
+ 		    list_is_singular(&block_group->list)) {
+ 			/*
+ 			 * We want to bail if we made new allocations or have
+--- a/fs/btrfs/block-group.h
++++ b/fs/btrfs/block-group.h
+@@ -255,6 +255,13 @@ static inline u64 btrfs_block_group_end(
+ 	return (block_group->start + block_group->length);
+ }
  
-@@ -650,7 +650,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 0) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
-@@ -707,7 +707,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 2) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
-@@ -723,7 +723,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 1) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
-@@ -739,7 +739,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
- 					 &tbl_rev);
- 	if (!IS_ERR(wifi_pkg)) {
- 		if (tbl_rev != 0) {
--			ret = PTR_ERR(wifi_pkg);
-+			ret = -EINVAL;
- 			goto out_free;
- 		}
- 
--- 
-2.43.0
-
++static inline bool btrfs_is_block_group_used(const struct btrfs_block_group *bg)
++{
++	lockdep_assert_held(&bg->lock);
++
++	return (bg->used > 0 || bg->reserved > 0 || bg->pinned > 0);
++}
++
+ static inline bool btrfs_is_block_group_data_only(
+ 					struct btrfs_block_group *block_group)
+ {
 
 
