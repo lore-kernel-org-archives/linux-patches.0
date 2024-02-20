@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A62151CF3;
-	Tue, 20 Feb 2024 21:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702AD151CCC;
+	Tue, 20 Feb 2024 21:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465123; cv=none; b=af0Q/eTPIf1bkqjeYEoH6gB3e/jBwsxWS2PyxavnUtuf13IbTnLWkiA5wdJZJhM5znsTnDFDEWronsPWrAOx24hXhi/7HZulvXk3F1YqHsc70MsU+aCloXyWP2Kj/lPC99yR7VMWuXs1BzFYXQ3MHY4zk5vQSjiFrdaCyhJVl7M=
+	t=1708465126; cv=none; b=ILyEGV+d84A43+MypU1KMiPmLrEGLKCTPDkQOdOY4/HjuApJhhZDGfhuy4GyAkUVMXL0/KEt6vNfOpoa1glNInISxeUvN6m7RvphKfZJXepZMM7/DRl+6SIZ5DNsalrL+c6blenClw55TQU+6DwyUiwQ3BL/CujVVKhLFqJ8ZhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465123; c=relaxed/simple;
-	bh=ZVLJ4J2g+RArASlUm01nP79KShqqmRNZt8NOVjxWvvk=;
+	s=arc-20240116; t=1708465126; c=relaxed/simple;
+	bh=/uO8HqjRb7B246HPhW2DBFUHOazlw1apINdenfXUL4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gnoc3IY1ZCe9DoE58Vt23NLLWPsxvYK8DKxPUAF/s7y2u5hG3MttZlaBKox6UCdJs6xs4GEl+YEJ2IGYTmRK/BMwn9u13Rx6AxuVGixMwoNp6nGaAvI7vNuvb/UTQ7aUWuHVZCE1QliClNbc6I7GmORq3m2U6iKNnqrJcd+1pj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9UBbaBu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PdT8ugkseTIGWOhPOSTjotdrZuzLVTI9iXq17iWW1rWtSePxRjXHOfJz7uup8p2TqGWhLPwdHwA1P5uv+9aDRZ8TLWHYeKnztrlV7qGYk18dXaAML2gVL07xIL8lIG8ydkiMgJN3o8UB2ojhoyi5O9GfMAldN3SFeG10CV3psSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PsmrJi99; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9UBbaBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAD6C433F1;
-	Tue, 20 Feb 2024 21:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsmrJi99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C62E5C433F1;
+	Tue, 20 Feb 2024 21:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465123;
-	bh=ZVLJ4J2g+RArASlUm01nP79KShqqmRNZt8NOVjxWvvk=;
+	s=korg; t=1708465126;
+	bh=/uO8HqjRb7B246HPhW2DBFUHOazlw1apINdenfXUL4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9UBbaBuRJTSVybB/piBq51IsUnjW3QttuJ3lBZgkr77KVKvfSjN35SPaBBwi7Qye
-	 X+H/jaVDFouPxCMakHyB4MR/oSDKGRpXWyDTRc/TBNyBqHhUesEaJ6CkWAmOuOkQdj
-	 At6OAULbLXp2LFfSXX5vpTMFHV+I366YRPfuk4FY=
+	b=PsmrJi99x9b+rlkZ2//B4FHd01c6BVv3exErMp13+pTOOAVRH6iwQklLYuVT9t8YV
+	 EskB1PyH72PCdMQnHea1l8DbhWzcWbfRWzjjj+XcgeAAG55yKBtSef0YRSLWzNeThR
+	 GLi5xwm6A/TTVeHXuu+GabZ6s1TQuG3JdwjT4qhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+ee2ae68da3b22d04cd8d@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 243/309] nilfs2: fix data corruption in dsync block recovery for small block sizes
-Date: Tue, 20 Feb 2024 21:56:42 +0100
-Message-ID: <20240220205640.764702016@linuxfoundation.org>
+Subject: [PATCH 6.7 244/309] nilfs2: fix hang in nilfs_lookup_dirty_data_buffers()
+Date: Tue, 20 Feb 2024 21:56:43 +0100
+Message-ID: <20240220205640.792606003@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,59 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 67b8bcbaed4777871bb0dcc888fb02a614a98ab1 upstream.
+commit 38296afe3c6ee07319e01bb249aa4bb47c07b534 upstream.
 
-The helper function nilfs_recovery_copy_block() of
-nilfs_recovery_dsync_blocks(), which recovers data from logs created by
-data sync writes during a mount after an unclean shutdown, incorrectly
-calculates the on-page offset when copying repair data to the file's page
-cache.  In environments where the block size is smaller than the page
-size, this flaw can cause data corruption and leak uninitialized memory
-bytes during the recovery process.
+Syzbot reported a hang issue in migrate_pages_batch() called by mbind()
+and nilfs_lookup_dirty_data_buffers() called in the log writer of nilfs2.
 
-Fix these issues by correcting this byte offset calculation on the page.
+While migrate_pages_batch() locks a folio and waits for the writeback to
+complete, the log writer thread that should bring the writeback to
+completion picks up the folio being written back in
+nilfs_lookup_dirty_data_buffers() that it calls for subsequent log
+creation and was trying to lock the folio.  Thus causing a deadlock.
 
-Link: https://lkml.kernel.org/r/20240124121936.10575-1-konishi.ryusuke@gmail.com
+In the first place, it is unexpected that folios/pages in the middle of
+writeback will be updated and become dirty.  Nilfs2 adds a checksum to
+verify the validity of the log being written and uses it for recovery at
+mount, so data changes during writeback are suppressed.  Since this is
+broken, an unclean shutdown could potentially cause recovery to fail.
+
+Investigation revealed that the root cause is that the wait for writeback
+completion in nilfs_page_mkwrite() is conditional, and if the backing
+device does not require stable writes, data may be modified without
+waiting.
+
+Fix these issues by making nilfs_page_mkwrite() wait for writeback to
+finish regardless of the stable write requirement of the backing device.
+
+Link: https://lkml.kernel.org/r/20240131145657.4209-1-konishi.ryusuke@gmail.com
+Fixes: 1d1d1a767206 ("mm: only enforce stable page writes if the backing device requires it")
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+ee2ae68da3b22d04cd8d@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000047d819061004ad6c@google.com
 Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/recovery.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/nilfs2/file.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/recovery.c
-+++ b/fs/nilfs2/recovery.c
-@@ -472,9 +472,10 @@ static int nilfs_prepare_segment_for_rec
+--- a/fs/nilfs2/file.c
++++ b/fs/nilfs2/file.c
+@@ -105,7 +105,13 @@ static vm_fault_t nilfs_page_mkwrite(str
+ 	nilfs_transaction_commit(inode->i_sb);
  
- static int nilfs_recovery_copy_block(struct the_nilfs *nilfs,
- 				     struct nilfs_recovery_block *rb,
--				     struct page *page)
-+				     loff_t pos, struct page *page)
- {
- 	struct buffer_head *bh_org;
-+	size_t from = pos & ~PAGE_MASK;
- 	void *kaddr;
- 
- 	bh_org = __bread(nilfs->ns_bdev, rb->blocknr, nilfs->ns_blocksize);
-@@ -482,7 +483,7 @@ static int nilfs_recovery_copy_block(str
- 		return -EIO;
- 
- 	kaddr = kmap_atomic(page);
--	memcpy(kaddr + bh_offset(bh_org), bh_org->b_data, bh_org->b_size);
-+	memcpy(kaddr + from, bh_org->b_data, bh_org->b_size);
- 	kunmap_atomic(kaddr);
- 	brelse(bh_org);
- 	return 0;
-@@ -521,7 +522,7 @@ static int nilfs_recover_dsync_blocks(st
- 			goto failed_inode;
- 		}
- 
--		err = nilfs_recovery_copy_block(nilfs, rb, page);
-+		err = nilfs_recovery_copy_block(nilfs, rb, pos, page);
- 		if (unlikely(err))
- 			goto failed_page;
- 
+  mapped:
+-	wait_for_stable_page(page);
++	/*
++	 * Since checksumming including data blocks is performed to determine
++	 * the validity of the log to be written and used for recovery, it is
++	 * necessary to wait for writeback to finish here, regardless of the
++	 * stable write requirement of the backing device.
++	 */
++	wait_on_page_writeback(page);
+  out:
+ 	sb_end_pagefault(inode->i_sb);
+ 	return vmf_fs_error(ret);
 
 
