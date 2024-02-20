@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD0C14F9C8;
-	Tue, 20 Feb 2024 21:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEB514F9CE;
+	Tue, 20 Feb 2024 21:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464320; cv=none; b=hEeZI2wNuaGpekp8RUbSoJslcgycmwzjkjItgnbfpD0bhsYuX/+whbxMKuOzxTTnZXmOm6Zo4edKpm36pyZouOu03Y+5QeEy8ceqja/y1boBpGhuwROoM59+WImh5fj4YQB+CPuMk94WZSRGQyMPCe/KQTyry6FbY57ACE+IpXI=
+	t=1708464323; cv=none; b=JR+rP2+wkMj+VnAefUPzmwUcGzwUgqX2naotHT8ildbFaR1EXsWadvs9njEQh1o7SxvYyp+PL33sc/OvsIYtTJLQxu7hnJUg39bpySjc/XmFZ/x2MKA1JRbThbALOP0BdZ886UbT9tmzmfQ65IEP3/j19BFi3O/WES+LmWFS0xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464320; c=relaxed/simple;
-	bh=mzhKRiKAIDQL7KV2RFZ/j17xjMsyNCCBlTqrnHclKp0=;
+	s=arc-20240116; t=1708464323; c=relaxed/simple;
+	bh=u2+NXNRVbQoGk57FtB085oAE22bAo+A635ag+NJ4HB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WEQJNuiqJ452BO7z+MH4tsrtQ0IVtfcLd5TscYtJcJ8r34htS7Motcfu84PKy05Kt1QSbC/5lJ6lcJb7OQkuBqw/0nakUfvCh7Ars5FBfHAvTbv8kLYRkl/odUQ+khlzzDMaEC83npwuvTpfFyC9fyxKs4wNvp0BqeGn4fVbkA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wm5l5+MO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oAFWXpPUQDv0975MFr2fmzpNzb18ikpUdoJBAajJT7/nV5IVY7MAnSXCU2cxsWN1Yzc4OCGcbjYvvhimKyV4qftQfCFzwp5iOrOD+N9oGoM1Tl3Et8oAEQupZkxorx7UfvombJJw8b6QaGnvQ/7egLu55JgeP+TTaEs9+sqaM58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wD4YqUXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wm5l5+MO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37CF9C433F1;
-	Tue, 20 Feb 2024 21:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wD4YqUXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C01C433C7;
+	Tue, 20 Feb 2024 21:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464320;
-	bh=mzhKRiKAIDQL7KV2RFZ/j17xjMsyNCCBlTqrnHclKp0=;
+	s=korg; t=1708464323;
+	bh=u2+NXNRVbQoGk57FtB085oAE22bAo+A635ag+NJ4HB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wm5l5+MOos1mIuhR0mnBQ+Hr3XgG8JadfjHca/Z71WVkkKtqnBKvV7fweuFgC7Tom
-	 boun6Re067I/0FTytjnlaY8qvvTKSIyGakwbdLEgIeit3VfV1uN5hcHSqwc7Pc2Jl3
-	 FJ7z7zTfubXZcbmB8FV4oaqcciq30HMrOU3IGvYA=
+	b=wD4YqUXq6U30WyfCmGSSC8z99fARETV5iscLZTuqYOQM/cmWyz6dTZOggepDd1PZy
+	 TdNpVl7bIq57ywTbD8MvyqEqGwv25tdEDLoov63v/8HAuEp1wJUDRcZn1E+CwhvHL0
+	 /PRYQHrjPdhX1ZACRuBor0RjlncY7hdcGZHTFMtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.6 321/331] x86/boot: Drop redundant code setting the root device
-Date: Tue, 20 Feb 2024 21:57:17 +0100
-Message-ID: <20240220205648.308398459@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@ZenIV.linux.org.uk>,
+	Ajay Kaher <ajay.kaher@broadcom.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 304/331] tracefs: Zero out the tracefs_inode when allocating it
+Date: Tue, 20 Feb 2024 21:57:00 +0100
+Message-ID: <20240220205647.679693492@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,60 +57,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 7448e8e5d15a3c4df649bf6d6d460f78396f7e1e upstream.
+commit d81786f53aec14fd4d56263145a0635afbc64617 upstream.
 
-The root device defaults to 0,0 and is no longer configurable at build
-time [0], so there is no need for the build tool to ever write to this
-field.
+eventfs uses the tracefs_inode and assumes that it's already initialized
+to zero. That is, it doesn't set fields to zero (like ti->private) after
+getting its tracefs_inode. This causes bugs due to stale values.
 
-[0] 079f85e624189292 ("x86, build: Do not set the root_dev field in bzImage")
+Just initialize the entire structure to zero on allocation so there isn't
+any more surprises.
 
-This change has no impact on the resulting bzImage binary.
+This is a partial fix to access to ti->private. The assignment still needs
+to be made before the dentry is instantiated.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20230912090051.4014114-23-ardb@google.com
+Link: https://lore.kernel.org/linux-trace-kernel/20240131185512.315825944@goodmis.org
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Al Viro <viro@ZenIV.linux.org.uk>
+Cc: Ajay Kaher <ajay.kaher@broadcom.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5790b1fb3d672 ("eventfs: Remove eventfs_file and just use eventfs_inode")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202401291043.e62e89dc-oliver.sang@intel.com
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/header.S      |    2 +-
- arch/x86/boot/tools/build.c |    7 -------
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ fs/tracefs/inode.c    |    6 ++++--
+ fs/tracefs/internal.h |    3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/x86/boot/header.S
-+++ b/arch/x86/boot/header.S
-@@ -236,7 +236,7 @@ root_flags:	.word ROOT_RDONLY
- syssize:	.long 0			/* Filled in by build.c */
- ram_size:	.word 0			/* Obsolete */
- vid_mode:	.word SVGA_MODE
--root_dev:	.word 0			/* Filled in by build.c */
-+root_dev:	.word 0			/* Default to major/minor 0/0 */
- boot_flag:	.word 0xAA55
+--- a/fs/tracefs/inode.c
++++ b/fs/tracefs/inode.c
+@@ -38,8 +38,6 @@ static struct inode *tracefs_alloc_inode
+ 	if (!ti)
+ 		return NULL;
  
- 	# offset 512, entry point
---- a/arch/x86/boot/tools/build.c
-+++ b/arch/x86/boot/tools/build.c
-@@ -40,10 +40,6 @@ typedef unsigned char  u8;
- typedef unsigned short u16;
- typedef unsigned int   u32;
- 
--#define DEFAULT_MAJOR_ROOT 0
--#define DEFAULT_MINOR_ROOT 0
--#define DEFAULT_ROOT_DEV (DEFAULT_MAJOR_ROOT << 8 | DEFAULT_MINOR_ROOT)
+-	ti->flags = 0;
 -
- /* Minimal number of setup sectors */
- #define SETUP_SECT_MIN 5
- #define SETUP_SECT_MAX 64
-@@ -399,9 +395,6 @@ int main(int argc, char ** argv)
+ 	return &ti->vfs_inode;
+ }
  
- 	update_pecoff_setup_and_reloc(i);
+@@ -779,7 +777,11 @@ static void init_once(void *foo)
+ {
+ 	struct tracefs_inode *ti = (struct tracefs_inode *) foo;
  
--	/* Set the default root device */
--	put_unaligned_le16(DEFAULT_ROOT_DEV, &buf[508]);
--
- 	/* Open and stat the kernel file */
- 	fd = open(argv[2], O_RDONLY);
- 	if (fd < 0)
++	/* inode_init_once() calls memset() on the vfs_inode portion */
+ 	inode_init_once(&ti->vfs_inode);
++
++	/* Zero out the rest */
++	memset_after(ti, 0, vfs_inode);
+ }
+ 
+ static int __init tracefs_init(void)
+--- a/fs/tracefs/internal.h
++++ b/fs/tracefs/internal.h
+@@ -11,9 +11,10 @@ enum {
+ };
+ 
+ struct tracefs_inode {
++	struct inode            vfs_inode;
++	/* The below gets initialized with memset_after(ti, 0, vfs_inode) */
+ 	unsigned long           flags;
+ 	void                    *private;
+-	struct inode            vfs_inode;
+ };
+ 
+ /*
 
 
