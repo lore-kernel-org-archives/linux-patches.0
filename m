@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0303414A4E2;
-	Tue, 20 Feb 2024 21:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF5914A4E2;
+	Tue, 20 Feb 2024 21:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462845; cv=none; b=YIRk7nE8kLdIYbd0gINHMRA4Oqoa89g0roM3JjdaQpqJ3gFR7o+jVQD+9Z+NvczVzN3xsoTEDYhrkZenoboAYEh0/SJzpg+UIm+Z5ESJuljxscAR+DCtwffNyh06uX42fuWfOtp67hTwyjzyT2pZZS/vr+qZjJsiW6uvZsPIEwY=
+	t=1708462847; cv=none; b=miRAphN7nVe09owj8Eu+k2UI3bVVCeCoWjUqJl5qaQXEpkNiMsVSiU1Rvrnfv6TIfdPNBhDqF1Knlu3WJg43xPhQ/70DlUoJGCSrKPEj+5RSBHgEmFMZ5FDr8hkYKe4y5mXDPXbb8jYz9FiShZ0kjXTbWwig51A38BkwuOX8xmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462845; c=relaxed/simple;
-	bh=hFR6YMlfEBpfGYhCCg1y6DUL3Hun4WHaxaOPHH2NsK8=;
+	s=arc-20240116; t=1708462847; c=relaxed/simple;
+	bh=WGzx5sh/nkygiVerqK+CFpEdaAlzXE8iEcgz+CGt9uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqbjgoOOhb2mQ+6QPTPoabXfo/PHOZ2kZJSPqAfrBVOq1R6KbkAk3TTv+4kRn5JGTPBO7qJ9CFHdCC5dBJjfQ9IzAioy+8HtwAlyKOVtfGJ3BEmzdswPXBzO46ttpYQo6+P35XEY7sZuObpcfIaWs7igJe12Ia9k3qhuJdsraPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IodKtvgB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q49+vKET9Kazv/AA84lMMvH5SE+kE6t1qyd3NEVXWCkGYASnmXHoa+1y0w4n+oxPaAOso9f0pbTSR34NvgVNVfohUFUizynPoCeByvVBSWJek91UaflpnfwhLbRQztee/XUZbkAJvRw4i0onvSx3JcjWT1p7VPn0ytRebLD0Cps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxD2SnaC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IodKtvgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6D5C433F1;
-	Tue, 20 Feb 2024 21:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxD2SnaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FBEC433F1;
+	Tue, 20 Feb 2024 21:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462844;
-	bh=hFR6YMlfEBpfGYhCCg1y6DUL3Hun4WHaxaOPHH2NsK8=;
+	s=korg; t=1708462847;
+	bh=WGzx5sh/nkygiVerqK+CFpEdaAlzXE8iEcgz+CGt9uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IodKtvgBWLYl+OfrjJcQVOL0JksQmVnnrKKCMRTQvE7rGSU+iUCTCqyPaT5lvH6os
-	 7ZvjUWPRKouFyH6OItaq7j5/9Z7FT8tBssU37w9ZrorNIhd2F+6c8tCsQ3h0bm+8Qb
-	 E3TacqjO6j7nY9DO1g7KapveuZ/psgcvL+upnpRc=
+	b=cxD2SnaClkhmGXmxb5D9ds56XDdD34S1k3rNoMsrriYHVvAO5TaS9XzqrEiKn1/Xb
+	 MOsriS+ClDvsfaMyYBrlfQp94SmuyxBiX7onFtglb6S09L9VK7Q2xcW8w4ZkPTtDRQ
+	 wsc4TzztIRqNXurjduTlDtqhUdjn3E+Au75hjeNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/197] media: ir_toy: fix a memleak in irtoy_tx
-Date: Tue, 20 Feb 2024 21:50:14 +0100
-Message-ID: <20240220204842.726425738@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 038/197] scsi: storvsc: Fix ring buffer size calculation
+Date: Tue, 20 Feb 2024 21:49:57 +0100
+Message-ID: <20240220204842.218785937@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,44 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit dc9ceb90c4b42c6e5c6757df1d6257110433788e ]
+commit f4469f3858352ad1197434557150b1f7086762a0 upstream.
 
-When irtoy_command fails, buf should be freed since it is allocated by
-irtoy_tx, or there is a memleak.
+Current code uses the specified ring buffer size (either the default of 128
+Kbytes or a module parameter specified value) to encompass the one page
+ring buffer header plus the actual ring itself.  When the page size is 4K,
+carving off one page for the header isn't significant.  But when the page
+size is 64K on ARM64, only half of the default 128 Kbytes is left for the
+actual ring.  While this doesn't break anything, the smaller ring size
+could be a performance bottleneck.
 
-Fixes: 4114978dcd24 ("media: ir_toy: prevent device from hanging during transmit")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by applying the VMBUS_RING_SIZE macro to the specified ring buffer
+size.  This macro adds a page for the header, and rounds up the size to a
+page boundary, using the page size for which the kernel is built.  Use this
+new size for subsequent ring buffer calculations.  For example, on ARM64
+with 64K page size and the default ring size, this results in the actual
+ring being 128 Kbytes, which is intended.
+
+Cc: stable@vger.kernel.org # 5.15.x
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/20240122170956.496436-1-mhklinux@outlook.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/ir_toy.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/storvsc_drv.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
-index 196806709259..69e630d85262 100644
---- a/drivers/media/rc/ir_toy.c
-+++ b/drivers/media/rc/ir_toy.c
-@@ -332,6 +332,7 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
- 			    sizeof(COMMAND_SMODE_EXIT), STATE_COMMAND_NO_RESP);
- 	if (err) {
- 		dev_err(irtoy->dev, "exit sample mode: %d\n", err);
-+		kfree(buf);
- 		return err;
- 	}
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -326,6 +326,7 @@ enum storvsc_request_type {
+  */
  
-@@ -339,6 +340,7 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
- 			    sizeof(COMMAND_SMODE_ENTER), STATE_COMMAND);
- 	if (err) {
- 		dev_err(irtoy->dev, "enter sample mode: %d\n", err);
-+		kfree(buf);
- 		return err;
- 	}
+ static int storvsc_ringbuffer_size = (128 * 1024);
++static int aligned_ringbuffer_size;
+ static u32 max_outstanding_req_per_channel;
+ static int storvsc_change_queue_depth(struct scsi_device *sdev, int queue_depth);
  
--- 
-2.43.0
-
+@@ -683,8 +684,8 @@ static void handle_sc_creation(struct vm
+ 	new_sc->next_request_id_callback = storvsc_next_request_id;
+ 
+ 	ret = vmbus_open(new_sc,
+-			 storvsc_ringbuffer_size,
+-			 storvsc_ringbuffer_size,
++			 aligned_ringbuffer_size,
++			 aligned_ringbuffer_size,
+ 			 (void *)&props,
+ 			 sizeof(struct vmstorage_channel_properties),
+ 			 storvsc_on_channel_callback, new_sc);
+@@ -1964,7 +1965,7 @@ static int storvsc_probe(struct hv_devic
+ 	dma_set_min_align_mask(&device->device, HV_HYP_PAGE_SIZE - 1);
+ 
+ 	stor_device->port_number = host->host_no;
+-	ret = storvsc_connect_to_vsp(device, storvsc_ringbuffer_size, is_fc);
++	ret = storvsc_connect_to_vsp(device, aligned_ringbuffer_size, is_fc);
+ 	if (ret)
+ 		goto err_out1;
+ 
+@@ -2157,7 +2158,7 @@ static int storvsc_resume(struct hv_devi
+ {
+ 	int ret;
+ 
+-	ret = storvsc_connect_to_vsp(hv_dev, storvsc_ringbuffer_size,
++	ret = storvsc_connect_to_vsp(hv_dev, aligned_ringbuffer_size,
+ 				     hv_dev_is_fc(hv_dev));
+ 	return ret;
+ }
+@@ -2191,8 +2192,9 @@ static int __init storvsc_drv_init(void)
+ 	 * the ring buffer indices) by the max request size (which is
+ 	 * vmbus_channel_packet_multipage_buffer + struct vstor_packet + u64)
+ 	 */
++	aligned_ringbuffer_size = VMBUS_RING_SIZE(storvsc_ringbuffer_size);
+ 	max_outstanding_req_per_channel =
+-		((storvsc_ringbuffer_size - PAGE_SIZE) /
++		((aligned_ringbuffer_size - PAGE_SIZE) /
+ 		ALIGN(MAX_MULTIPAGE_BUFFER_PACKET +
+ 		sizeof(struct vstor_packet) + sizeof(u64),
+ 		sizeof(u64)));
 
 
