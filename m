@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82574151CD8;
-	Tue, 20 Feb 2024 21:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30235151CED;
+	Tue, 20 Feb 2024 21:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463781; cv=none; b=p99D+JF/LfNHZp5kLqB7kPQFFu/cYxI8tugsJAuafqX3Bo3jhEuR7iSS9/kpGgbMiQ2c6CNR4lzU51No4BnMlCUwZDlXJen8M0jfDHKsXbolJYvLUxclzn810oKJTw+08ewL9CI5N4O3PQnskROpyhzgQ0C+NvDrHIinIdSvJTU=
+	t=1708463784; cv=none; b=LBjrojfAh527QO+dBzfE9E6TlHhOt1KRxEmWH3BAZFRPWoOMlDA2FfdNuK35WwpcQ2/x+JiGEcODce5AcLpx+QoMxcCu155ciPx+Adj3LxdL5WzsUOcxZ+jtyMUidzvAWklkEeJhwwhwkF6TZD89wGpJBCORWwd0POM28Foif74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463781; c=relaxed/simple;
-	bh=Zz1HhAQQsaN9xefVCj0ZUMWwzkJfXIffNxyqQsE8C90=;
+	s=arc-20240116; t=1708463784; c=relaxed/simple;
+	bh=hkoJW2chKhDjtol2L55aT7UZF+IWk4VIzfN3suAxsJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVG0wHacGMo7Rn0K7ZqD/jcdykqFTgEoRciT/V5XZa6o6wvvFAmzqTGXsTODZf0mT1WrcD36yoaFUuSeMDISZC0uCvqPXY5/09WRUjMBotoFd3HXq2E3/kTSyoJXcQDarCFhi6kqhwVZFwzPEVhBAmZaciGDcY/OVEsYz/7f5cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVgvrjs4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3JX6se7XjtlaCyQ333h7vZdJjDhnCHK/YlrVKr/JABDFRvu/KbhdZkgd2hnvViIK2VV+XRGuBbkmdXS6ut2F/HxX10Skzef/fA3gvGg45F4+x0nTlTJJrwDTb5ovRzYs3/7391VgHLbaRUNdofYpNzEUEN7Y2vK986AMSFPxQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlbsQMSz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVgvrjs4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E05C433C7;
-	Tue, 20 Feb 2024 21:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlbsQMSz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE57C433F1;
+	Tue, 20 Feb 2024 21:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463781;
-	bh=Zz1HhAQQsaN9xefVCj0ZUMWwzkJfXIffNxyqQsE8C90=;
+	s=korg; t=1708463784;
+	bh=hkoJW2chKhDjtol2L55aT7UZF+IWk4VIzfN3suAxsJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVgvrjs46mHpy6MZCRVXoVoZ8FZ1uy95liaRBzdEtlSa2aMloZrWmdyy7Uy9+MViO
-	 DnRAhwV7Kqs+UTI+2LyaW/ELuXQINwySMenqJWa+zsTuS0715a/bfSShk9QlbRya2e
-	 2MQJackW+IEmKXMuv/ZNEIajctVeTn/9rDG2lHxI=
+	b=UlbsQMSzURFR60Iiu3V6T2EI6988/T2hLuuXZphGrfdW5m/kzpgl+imDYy7cf2kIe
+	 G55hUDjYUKm74yTAWp/XAPFBVYebU7sNA/15dfhzQxzZfcZiv9SlTgzvrosd9b6k7N
+	 5VyOETvDDkQUGo0nDiyuOOadneX73FmdillDdr20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Keqi Wang <wangkeqi_chris@163.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 121/331] connector/cn_proc: revert "connector: Fix proc_event_num_listeners count not cleared"
-Date: Tue, 20 Feb 2024 21:53:57 +0100
-Message-ID: <20240220205641.408311658@linuxfoundation.org>
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Sebastian Ott <sebott@redhat.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.6 122/331] drm/virtio: Set segment size for virtio_gpu device
+Date: Tue, 20 Feb 2024 21:53:58 +0100
+Message-ID: <20240220205641.436610282@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keqi Wang <wangkeqi_chris@163.com>
+From: Sebastian Ott <sebott@redhat.com>
 
-commit 8929f95b2b587791a7dcd04cc91520194a76d3a6 upstream.
+commit 9c64e749cebd9c2d3d55261530a98bcccb83b950 upstream.
 
-This reverts commit c46bfba1337d ("connector: Fix proc_event_num_listeners
-count not cleared").
+Set the segment size of the virtio_gpu device to the value
+used by the drm helpers when allocating sg lists to fix the
+following complaint from DMA_API debug code:
 
-It is not accurate to reset proc_event_num_listeners according to
-cn_netlink_send_mult() return value -ESRCH.
+DMA-API: virtio-pci 0000:07:00.0: mapping sg segment longer than
+device claims to support [len=262144] [max=65536]
 
-In the case of stress-ng netlink-proc, -ESRCH will always be returned,
-because netlink_broadcast_filtered will return -ESRCH,
-which may cause stress-ng netlink-proc performance degradation.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202401112259.b23a1567-oliver.sang@intel.com
-Fixes: c46bfba1337d ("connector: Fix proc_event_num_listeners count not cleared")
-Signed-off-by: Keqi Wang <wangkeqi_chris@163.com>
-Link: https://lore.kernel.org/r/20240209091659.68723-1-wangkeqi_chris@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/7258a4cc-da16-5c34-a042-2a23ee396d56@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/connector/cn_proc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/connector/cn_proc.c
-+++ b/drivers/connector/cn_proc.c
-@@ -108,9 +108,8 @@ static inline void send_msg(struct cn_ms
- 		filter_data[1] = 0;
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.c
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+@@ -94,6 +94,7 @@ static int virtio_gpu_probe(struct virti
+ 			goto err_free;
  	}
  
--	if (cn_netlink_send_mult(msg, msg->len, 0, CN_IDX_PROC, GFP_NOWAIT,
--			     cn_filter, (void *)filter_data) == -ESRCH)
--		atomic_set(&proc_event_num_listeners, 0);
-+	cn_netlink_send_mult(msg, msg->len, 0, CN_IDX_PROC, GFP_NOWAIT,
-+			     cn_filter, (void *)filter_data);
- 
- 	local_unlock(&local_event.lock);
- }
++	dma_set_max_seg_size(dev->dev, dma_max_mapping_size(dev->dev) ?: UINT_MAX);
+ 	ret = virtio_gpu_init(vdev, dev);
+ 	if (ret)
+ 		goto err_free;
 
 
