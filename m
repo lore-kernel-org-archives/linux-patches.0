@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF471612D7;
-	Tue, 20 Feb 2024 21:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40B3612D7;
+	Tue, 20 Feb 2024 21:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463840; cv=none; b=MhMWaaTTzADakto+J7EYewOc/v9V4ssSPWf1LMdMiLt84j31z0o2l7gOLxKGmQqxxlMqM4wV1R6FaE5AtsV7hfqKbs8b8JBSNVlpOIui5aQ87Fc01I18/sVLzyWTmCcaAPWUMiDP46/dYC+jv0Vr9l+n/gDNwFl3L5CKCm09s6I=
+	t=1708463844; cv=none; b=apSqNFNcWUyRzpAxkYXjWXUr2jldJFpfrw0yyGcxmj6xa+rrx+kvK+1arLhF8APAUqMtheUo6cvuKLiEnrLHz3dg2v+g8nLCn/4/9XVdRKxM0rGA+32+0a2P79vjpA/XxewFIl6C4k8fMTqqP9LEeAIirLAFiTSglkQQ2KNIMOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463840; c=relaxed/simple;
-	bh=VPXLMb8pq2ap+hdoELr0NUhBxkRt9MqIUof6RDp9J5U=;
+	s=arc-20240116; t=1708463844; c=relaxed/simple;
+	bh=G+z8Drw4Bw9RJJSmOIFn+glbmIWSpIRL+4nD3t20jeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WYCj9wIZZHj4s8c1QGTPcKdtMZ5Uak/xUKxFk3wx8wr/3A1dLps1DehblIhPwfPuLQDYr+0DRzYKGQ2+O8liXJqvBSFmSHWvHN6ItUQyML3z+IcTu3CLhPjqCVIBn2wN9jkNXJorTFMxxhyY5cs0s6Vw1narPPliv+QoDifhvOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fLf71k+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sZERx7kh5Hu0Y0qqtjw0QYXVsgcvzxz/1T4KYbDrQgLIclWf3g53/nlaulF8o/x/I8+sWBBzh6pUYQM2HclwW65X3dXRBFDCuv1uDpkWg76UgJ92gEOcNraiLoRksU8EWFiBcGNyDcYF8nThyXyDyfTXhTn74KwXXdXg61HXwzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWuSbYwd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fLf71k+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EBBC433C7;
-	Tue, 20 Feb 2024 21:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWuSbYwd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52505C433F1;
+	Tue, 20 Feb 2024 21:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463840;
-	bh=VPXLMb8pq2ap+hdoELr0NUhBxkRt9MqIUof6RDp9J5U=;
+	s=korg; t=1708463843;
+	bh=G+z8Drw4Bw9RJJSmOIFn+glbmIWSpIRL+4nD3t20jeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fLf71k+830BNiUj+08XJZP+cPochX41a1VGyQ1QiNKKxrllF5jXvdSb6YnqaALEk
-	 AXY31+nhTNEdJgy9lGIIqu3w/2DwyZWRaJzswuvzBWYloAcZ+5oucmfMlJJz8tTNXf
-	 eYvOSer7HFZ5l2iwO81z6DD8xKxol/EFgwxUPL0g=
+	b=VWuSbYwdccR2VIWps+2duJlsZsUGyTGAJWCwjPRvunT5elMegu6+NVHvRoVDO7aLi
+	 ZBsRck0QD30HMBs0W+UdJW7SGSKTlHWimLqty+r4+VPdSA5QiPgRyCWjdmPhS5Egrh
+	 JO95xNKkI4tYNipnNQkedbG5gnWqQ9/KW9TPyg/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.6 169/331] drm/prime: Support page array >= 4GB
-Date: Tue, 20 Feb 2024 21:54:45 +0100
-Message-ID: <20240220205642.829090480@linuxfoundation.org>
+	Thong <thong.thai@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 170/331] drm/amdgpu/soc21: update VCN 4 max HEVC encoding resolution
+Date: Tue, 20 Feb 2024 21:54:46 +0100
+Message-ID: <20240220205642.859767948@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -45,42 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: Thong <thong.thai@amd.com>
 
-commit b671cd3d456315f63171a670769356a196cf7fd0 upstream.
+commit 2f542421a47e8246e9b7d2c6508fe3a6e6c63078 upstream.
 
-Without unsigned long typecast, the size is passed in as zero if page
-array size >= 4GB, nr_pages >= 0x100000, then sg list converted will
-have the first and the last chunk lost.
+Update the maximum resolution reported for HEVC encoding on VCN 4
+devices to reflect its 8K encoding capability.
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Acked-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-CC: stable@vger.kernel.org
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230821200201.24685-1-Philip.Yang@amd.com
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3159
+Signed-off-by: Thong <thong.thai@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_prime.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/soc21.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/drm_prime.c
-+++ b/drivers/gpu/drm/drm_prime.c
-@@ -820,7 +820,7 @@ struct sg_table *drm_prime_pages_to_sg(s
- 	if (max_segment == 0)
- 		max_segment = UINT_MAX;
- 	err = sg_alloc_table_from_pages_segment(sg, pages, nr_pages, 0,
--						nr_pages << PAGE_SHIFT,
-+						(unsigned long)nr_pages << PAGE_SHIFT,
- 						max_segment, GFP_KERNEL);
- 	if (err) {
- 		kfree(sg);
+--- a/drivers/gpu/drm/amd/amdgpu/soc21.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
+@@ -50,13 +50,13 @@ static const struct amd_ip_funcs soc21_c
+ /* SOC21 */
+ static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_encode_array_vcn0[] = {
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_AV1, 8192, 4352, 0)},
+ };
+ 
+ static const struct amdgpu_video_codec_info vcn_4_0_0_video_codecs_encode_array_vcn1[] = {
+ 	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_MPEG4_AVC, 4096, 2304, 0)},
+-	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 4096, 2304, 0)},
++	{codec_info_build(AMDGPU_INFO_VIDEO_CAPS_CODEC_IDX_HEVC, 8192, 4352, 0)},
+ };
+ 
+ static const struct amdgpu_video_codecs vcn_4_0_0_video_codecs_encode_vcn0 = {
 
 
