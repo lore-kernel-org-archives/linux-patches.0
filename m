@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5E1446C9;
-	Tue, 20 Feb 2024 21:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3141509BC;
+	Tue, 20 Feb 2024 21:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464774; cv=none; b=qL/F/9v7OzKTal+REobw6uHkb0VvcUGUN8scRI1xO4EPRzDzNqC9XS9bVoSTmE/JLW+EKbwDYXvR+nPoLMx70uxwx+sTuTnDw8hEIDsefVTqFwlrE6Czn4X7wDq6ZZ+ijl1bqkSVOattDK8xJuZW0Dmavhoe1Ato4v8m+xLi7+I=
+	t=1708464777; cv=none; b=GggpOk6I6C9P4fsgDLxsH7UHxEfiu3KcXIODsWJHphBA731En0K1IDKdFJdcMkeHALB/BTL0b2+WuGPb/gVyBY9NixIb5+SXQzDc+0MtopfrTw0rGZjtIsYdBRidbqB7Gl8wRVYOwSa6jIYXdJbYuMQUA+j0CRGJ/Y0W8h2851I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464774; c=relaxed/simple;
-	bh=Hg3Qy0dOIHrTi4uSKKYv5afAMJPMAEgiByiXF5J6Y4Q=;
+	s=arc-20240116; t=1708464777; c=relaxed/simple;
+	bh=QM3qE/cRLtwWse3Lj3dGiWoMenGnW5AlitFLXrqbRNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fYp0rFPOzcpksZchRY/hN+zWcdaWhniXc3ndpoLkuafaJ3SRrPPCQVVmxeBN45WXY605QcDnkrMOSGGimWMW/UOxIB1Q2IfEsIEsW6QK/6i1rnX0CqFpB3lZq12rVfEbz3O9899IyyW9/3NTdJkFM3atb5Kzr73UurIfuvbbXdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=on+ueFQo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTgFpEribttqdVV83fo35tlIaLkpYvloHhlSTLQG6PihZncvjo2F6rDjd2QvXqN8biTSGiJDrGcogYkBiiAonBqwV+Ennw4NWb1GOj1qI2P4/3yXmd+YGr1OoRMegGqIH3lp+p0lxUdBIvvPAr0eKIRP7iiZEZBWt3sLJymdtK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/jfLev9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="on+ueFQo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1485C433C7;
-	Tue, 20 Feb 2024 21:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/jfLev9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FB4C433F1;
+	Tue, 20 Feb 2024 21:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464774;
-	bh=Hg3Qy0dOIHrTi4uSKKYv5afAMJPMAEgiByiXF5J6Y4Q=;
+	s=korg; t=1708464777;
+	bh=QM3qE/cRLtwWse3Lj3dGiWoMenGnW5AlitFLXrqbRNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=on+ueFQoKWNUid8dY8zG6IIPOQLQ1oKqAupZBquigotiGrYPDwvXtIRg8zjau2Kxj
-	 b7epBmJLp0wazRwGZfvx5pD+YwjbRhtw4GwK1sZHCzIKPor0+nUv5CcpBzoTbEB45b
-	 /Tb5vpm/b0l1kvu53QvjuZEiTHTZpNcoq02oK6E0=
+	b=D/jfLev9/e/HLSPDjpJK7UaWarvuDNMi8C7V4pa5P6qdrLNmY1QDJ3hJ4YPTlw6sj
+	 V0IKSeRIRUDqmAnw5yGnK3xnxbuZitxg2Vf5e5+dCfdxGvXD4PDLd3XmP9I0reLX00
+	 Ms6BClHi8FxsjAuOFX2Y3yS+Kq26qsROamWoVQ7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang.tang@linux.dev>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.7 125/309] mptcp: check addrs list in userspace_pm_get_local_id
-Date: Tue, 20 Feb 2024 21:54:44 +0100
-Message-ID: <20240220205637.073373863@linuxfoundation.org>
+	Zhenyu Zhang <zhenyzha@redhat.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Sebastian Ott <sebott@redhat.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.7 134/309] drm/virtio: Set segment size for virtio_gpu device
+Date: Tue, 20 Feb 2024 21:54:53 +0100
+Message-ID: <20240220205637.334502108@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,50 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang@kernel.org>
+From: Sebastian Ott <sebott@redhat.com>
 
-commit f012d796a6de662692159c539689e47e662853a8 upstream.
+commit 9c64e749cebd9c2d3d55261530a98bcccb83b950 upstream.
 
-Before adding a new entry in mptcp_userspace_pm_get_local_id(), it's
-better to check whether this address is already in userspace pm local
-address list. If it's in the list, no need to add a new entry, just
-return it's address ID and use this address.
+Set the segment size of the virtio_gpu device to the value
+used by the drm helpers when allocating sg lists to fix the
+following complaint from DMA_API debug code:
 
-Fixes: 8b20137012d9 ("mptcp: read attributes of addr entries managed by userspace PMs")
+DMA-API: virtio-pci 0000:07:00.0: mapping sg segment longer than
+device claims to support [len=262144] [max=65536]
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <geliang.tang@linux.dev>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Tested-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/7258a4cc-da16-5c34-a042-2a23ee396d56@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/virtio/virtgpu_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -130,10 +130,21 @@ int mptcp_userspace_pm_get_flags_and_ifi
- int mptcp_userspace_pm_get_local_id(struct mptcp_sock *msk,
- 				    struct mptcp_addr_info *skc)
- {
--	struct mptcp_pm_addr_entry new_entry;
-+	struct mptcp_pm_addr_entry *entry = NULL, *e, new_entry;
- 	__be16 msk_sport =  ((struct inet_sock *)
- 			     inet_sk((struct sock *)msk))->inet_sport;
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.c
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+@@ -94,6 +94,7 @@ static int virtio_gpu_probe(struct virti
+ 			goto err_free;
+ 	}
  
-+	spin_lock_bh(&msk->pm.lock);
-+	list_for_each_entry(e, &msk->pm.userspace_pm_local_addr_list, list) {
-+		if (mptcp_addresses_equal(&e->addr, skc, false)) {
-+			entry = e;
-+			break;
-+		}
-+	}
-+	spin_unlock_bh(&msk->pm.lock);
-+	if (entry)
-+		return entry->addr.id;
-+
- 	memset(&new_entry, 0, sizeof(struct mptcp_pm_addr_entry));
- 	new_entry.addr = *skc;
- 	new_entry.addr.id = 0;
++	dma_set_max_seg_size(dev->dev, dma_max_mapping_size(dev->dev) ?: UINT_MAX);
+ 	ret = virtio_gpu_init(vdev, dev);
+ 	if (ret)
+ 		goto err_free;
 
 
