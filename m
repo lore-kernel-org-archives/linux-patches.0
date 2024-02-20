@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881612DF9F;
-	Tue, 20 Feb 2024 21:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A2C2DF9F;
+	Tue, 20 Feb 2024 21:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464948; cv=none; b=cPGBXn1VmXe5buo8DpSnfyoLP40c0NjA4+xOEigC5xQXUSjaLNlp3gHI9mWLoLMZG67HsvgZ5vfUHbNnS3VuiVywEtRlu38bztbJsDwHrgGi2N8rouUhwFCMJxAu8I2a8zzPbNxpuWvnsGBD1uTuI7mHx84OwtHz/ZcbFH4gFw8=
+	t=1708464951; cv=none; b=KShotPg+67ZK71+GDQAsWtrFO1/fezDuSaqcnxTTjzc6Ajkz8vo4AwLhh9YpK1gGlfcKsRIcX3wF2+uTf/BAHRcuu/Rn32V6/iDDBJRmyH30tJbkzf+0LMgKFgjrukzULz3SE5MbDCB105BbVMo0EJV29nl440GORwKJfClMzZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464948; c=relaxed/simple;
-	bh=jsZ5IOqxbSZg7MwWk+va8Fo45PpE9uI5k46szS2f1m4=;
+	s=arc-20240116; t=1708464951; c=relaxed/simple;
+	bh=+wgeC6gxUne5iIsZrHBLIzco0LQLai8B363XM+FhUI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PF8xk3+ayhtRhFhZA0TQkVR4R84re7DUmQsXp7syLc4Rj/GyrBo7cVymzalGXFBmebRvC9JayUVfbShl3DNMHdEkMcmVC3bbAwQotjHOv7HFRUXJ3iGnWEmOuI5IwVnjyoKlHx3120uETGQIC9+ww9lS3HQ6sr5ijz6GaQb13Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0fr9BlX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XEsOL3c/5h8wWJ7Z8xYkoi3Ef0zc2qKoreHDnpweigtZSx1S6vgoFWyGTEAnTR+slFwLUyotqgA7eXOgFJDxmfsyyhmeC1XNrakwNFaJ/JyORakpYfaxc46tlGAMEEVgkyi67Oe7vikgT1efo4ISQ+BvxaaWDMabZRqoZAWxCbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKeDgbGD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0fr9BlX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F248C433C7;
-	Tue, 20 Feb 2024 21:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKeDgbGD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C355C433C7;
+	Tue, 20 Feb 2024 21:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464948;
-	bh=jsZ5IOqxbSZg7MwWk+va8Fo45PpE9uI5k46szS2f1m4=;
+	s=korg; t=1708464951;
+	bh=+wgeC6gxUne5iIsZrHBLIzco0LQLai8B363XM+FhUI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0fr9BlX8IKnSEX6pXHXDduJx+kTRnVSULp/2zDYEKKShornJU4S+H+P2KFQPS2uK
-	 kNcuvpHdllkE3mUaZrDkX38XSyRvOU2bWi3OpyQ3EpFV89zSm7tk9pFgnH8c6RYlIW
-	 qUJRYdk59JC7QYWt6N0blc0gzQo1htq4zVfdHIZk=
+	b=PKeDgbGDyGXo3FeRAJA3uVQJ4rN6IjHcsKdPRyYTyXoqKB1ze2DjRfTOfr5+/Hchf
+	 lyTpNpGkjW1kD2uvHEi3kjwiJhvFIein4DFTmlai1BlJC6bcHUCtqpkkudoi4/Y2JQ
+	 wUZFSpxzW4+W0S3WiS61K8XuxPvLHQdhuGxQgvEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.7 160/309] ext4: avoid bb_free and bb_fragments inconsistency in mb_free_blocks()
-Date: Tue, 20 Feb 2024 21:55:19 +0100
-Message-ID: <20240220205638.173230930@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Erick Archer <erick.archer@gmx.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.7 187/309] eventfs: Use kcalloc() instead of kzalloc()
+Date: Tue, 20 Feb 2024 21:55:46 +0100
+Message-ID: <20240220205639.005826212@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,101 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Erick Archer <erick.archer@gmx.com>
 
-commit 2331fd4a49864e1571b4f50aa3aa1536ed6220d0 upstream.
+commit 1057066009c4325bb1d8430c9274894d0860e7c3 upstream.
 
-After updating bb_free in mb_free_blocks, it is possible to return without
-updating bb_fragments because the block being freed is found to have
-already been freed, which leads to inconsistency between bb_free and
-bb_fragments.
+As noted in the "Deprecated Interfaces, Language Features, Attributes,
+and Conventions" documentation [1], size calculations (especially
+multiplication) should not be performed in memory allocator (or similar)
+function arguments due to the risk of them overflowing. This could lead
+to values wrapping around and a smaller allocation being made than the
+caller was expecting. Using those allocations could lead to linear
+overflows of heap memory and other misbehaviors.
 
-Since the group may be unlocked in ext4_grp_locked_error(), this can lead
-to problems such as dividing by zero when calculating the average fragment
-length. Hence move the update of bb_free to after the block double-free
-check guarantees that the corresponding statistics are updated only after
-the core block bitmap is modified.
+So, use the purpose specific kcalloc() function instead of the argument
+size * count in the kzalloc() function.
 
-Fixes: eabe0444df90 ("ext4: speed-up releasing blocks on commit")
-CC:  <stable@vger.kernel.org> # 3.10
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-5-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+[1] https://www.kernel.org/doc/html/next/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240115181658.4562-1-erick.archer@gmx.com
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Link: https://github.com/KSPP/linux/issues/162
+Signed-off-by: Erick Archer <erick.archer@gmx.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ fs/tracefs/event_inode.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1910,11 +1910,6 @@ static void mb_free_blocks(struct inode
- 	mb_check_buddy(e4b);
- 	mb_free_blocks_double(inode, e4b, first, count);
- 
--	this_cpu_inc(discard_pa_seq);
--	e4b->bd_info->bb_free += count;
--	if (first < e4b->bd_info->bb_first_free)
--		e4b->bd_info->bb_first_free = first;
--
- 	/* access memory sequentially: check left neighbour,
- 	 * clear range and then check right neighbour
- 	 */
-@@ -1928,23 +1923,31 @@ static void mb_free_blocks(struct inode
- 		struct ext4_sb_info *sbi = EXT4_SB(sb);
- 		ext4_fsblk_t blocknr;
- 
-+		/*
-+		 * Fastcommit replay can free already freed blocks which
-+		 * corrupts allocation info. Regenerate it.
-+		 */
-+		if (sbi->s_mount_state & EXT4_FC_REPLAY) {
-+			mb_regenerate_buddy(e4b);
-+			goto check;
-+		}
-+
- 		blocknr = ext4_group_first_block_no(sb, e4b->bd_group);
- 		blocknr += EXT4_C2B(sbi, block);
--		if (!(sbi->s_mount_state & EXT4_FC_REPLAY)) {
--			ext4_grp_locked_error(sb, e4b->bd_group,
--					      inode ? inode->i_ino : 0,
--					      blocknr,
--					      "freeing already freed block (bit %u); block bitmap corrupt.",
--					      block);
--			ext4_mark_group_bitmap_corrupted(
--				sb, e4b->bd_group,
-+		ext4_grp_locked_error(sb, e4b->bd_group,
-+				      inode ? inode->i_ino : 0, blocknr,
-+				      "freeing already freed block (bit %u); block bitmap corrupt.",
-+				      block);
-+		ext4_mark_group_bitmap_corrupted(sb, e4b->bd_group,
- 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
--		} else {
--			mb_regenerate_buddy(e4b);
--		}
--		goto done;
-+		return;
+--- a/fs/tracefs/event_inode.c
++++ b/fs/tracefs/event_inode.c
+@@ -97,7 +97,7 @@ static int eventfs_set_attr(struct mnt_i
+ 	/* Preallocate the children mode array if necessary */
+ 	if (!(dentry->d_inode->i_mode & S_IFDIR)) {
+ 		if (!ei->entry_attrs) {
+-			ei->entry_attrs = kzalloc(sizeof(*ei->entry_attrs) * ei->nr_entries,
++			ei->entry_attrs = kcalloc(ei->nr_entries, sizeof(*ei->entry_attrs),
+ 						  GFP_NOFS);
+ 			if (!ei->entry_attrs) {
+ 				ret = -ENOMEM;
+@@ -836,7 +836,7 @@ struct eventfs_inode *eventfs_create_dir
  	}
  
-+	this_cpu_inc(discard_pa_seq);
-+	e4b->bd_info->bb_free += count;
-+	if (first < e4b->bd_info->bb_first_free)
-+		e4b->bd_info->bb_first_free = first;
-+
- 	/* let's maintain fragments counter */
- 	if (left_is_free && right_is_free)
- 		e4b->bd_info->bb_fragments--;
-@@ -1969,9 +1972,9 @@ static void mb_free_blocks(struct inode
- 	if (first <= last)
- 		mb_buddy_mark_free(e4b, first >> 1, last >> 1);
+ 	if (size) {
+-		ei->d_children = kzalloc(sizeof(*ei->d_children) * size, GFP_KERNEL);
++		ei->d_children = kcalloc(size, sizeof(*ei->d_children), GFP_KERNEL);
+ 		if (!ei->d_children) {
+ 			kfree_const(ei->name);
+ 			kfree(ei);
+@@ -903,7 +903,7 @@ struct eventfs_inode *eventfs_create_eve
+ 		goto fail;
  
--done:
- 	mb_set_largest_free_order(sb, e4b->bd_info);
- 	mb_update_avg_fragment_size(sb, e4b->bd_info);
-+check:
- 	mb_check_buddy(e4b);
- }
- 
+ 	if (size) {
+-		ei->d_children = kzalloc(sizeof(*ei->d_children) * size, GFP_KERNEL);
++		ei->d_children = kcalloc(size, sizeof(*ei->d_children), GFP_KERNEL);
+ 		if (!ei->d_children)
+ 			goto fail;
+ 	}
 
 
