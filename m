@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8168612D7;
-	Tue, 20 Feb 2024 21:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3BA612D7;
+	Tue, 20 Feb 2024 21:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463530; cv=none; b=W3Q/xi2v2brzXfoYEkAw9RYkYaMTxWkigmnAaIodrY7GlJagbLE/DndJGGQdL/mzey0T4qbwAMF2LQE7uwy7DTG2tVkzMQ+O0LkTJQMxR4KKTgWZaOrKvsLR75pG58BNDoM0hVUYpprtt++IYxhz6wSOprTiC0Y8I7WHdr/mOic=
+	t=1708463533; cv=none; b=GIoO0W0WmUxqaDKAXibeAWJISPUa9EGYhJfEa+/dFjFoKaENEPRaEWbyQDhF4d4bNcfeHQPu4pa56c7S56OGKIQcnFGuNRE3grbD+BE4inJD3xTqpJI7e32eHB9vadet0/8LyrzYjRa9IpG+Miy0xw9345P/eby2FzijrC0N4aQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463530; c=relaxed/simple;
-	bh=1mjzOXpxe694iedR063Nen99IAxmDtqoTWt0ydiRwM0=;
+	s=arc-20240116; t=1708463533; c=relaxed/simple;
+	bh=kHerM26IBtqDavTCh3Mj7qG+pzOYDx5FrjSwWG0JX/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ow0/5jLeBamYzEsrt4O6EscXzfLZNuuhh9wjJX6ScAe6Xr7Z9AMCFxNrAxE+/k7Nr1OlpFgRvIn2TBsD/IyDjZM3xWQGK5bgGJWpN+f2nrTRttKRMGJ6lJS8OznF7Jru8rXPha0182BYoKudPnVIIrdv1Ru8Jnek19g073hRy/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDnPvKqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nl0/4N3NQgEvo1p0REgdJm0J8AGh64NSKd4+gJYr7EVhiYiX6NBIZen0iGSJnFycdjiLVQknX/Y6GM3rPE4kcmy4KocqwI58M8Pm1z+osroWQO0aJg2vRVSiGRJC1xb4nNyo4H8CPH7+yTEJp3T/me5EF/foDPvYs6wa0JGkqAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcGA7VUF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDnPvKqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746ECC433C7;
-	Tue, 20 Feb 2024 21:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcGA7VUF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BA8C433F1;
+	Tue, 20 Feb 2024 21:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463529;
-	bh=1mjzOXpxe694iedR063Nen99IAxmDtqoTWt0ydiRwM0=;
+	s=korg; t=1708463533;
+	bh=kHerM26IBtqDavTCh3Mj7qG+pzOYDx5FrjSwWG0JX/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDnPvKqVQ3KYtAWGdFsnruXpT8o0vN7D9sC8yGjmpuvGY12qtgzGFv8YPweGA8/5K
-	 40adoljLkL5bglTZACt0tp+2vX0qWYR3AS0ldzo3wEIbGLb3vQVuhu7g+8bHeIwK7n
-	 jOfn5rdsmuxJdc/4VmDrS6+A5Ukdk8Lv/QxmFab4=
+	b=bcGA7VUF1Q5IS5GIrWALDfyfdbdgviGjYr6OI1Jdhj3rzfrgYxl+oOAF2kH8qK2Ye
+	 o+pGbOMkzwrj7Byk0NqgPF9+K+f3S4LLKoP7bK4retmwC2IWmJGJmkCHZoqkoGIwRy
+	 VmLZKFJ91vHGWHNU0GErB14rI9PFmedmbmJZWFLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 054/331] i40e: Fix waiting for queues of all VSIs to be disabled
-Date: Tue, 20 Feb 2024 21:52:50 +0100
-Message-ID: <20240220205639.287278003@linuxfoundation.org>
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.6 072/331] HID: bpf: actually free hdev memory after attaching a HID-BPF program
+Date: Tue, 20 Feb 2024 21:53:08 +0100
+Message-ID: <20240220205639.832787929@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -54,41 +49,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit c73729b64bb692186da080602cd13612783f52ac ]
+commit 89be8aa5b0ecb3b729c7bcff64bb2af7921fec63 upstream.
 
-The function i40e_pf_wait_queues_disabled() iterates all PF's VSIs
-up to 'pf->hw.func_caps.num_vsis' but this is incorrect because
-the real number of VSIs can be up to 'pf->num_alloc_vsi' that
-can be higher. Fix this loop.
+Turns out that I got my reference counts wrong and each successful
+bus_find_device() actually calls get_device(), and we need to manually
+call put_device().
 
-Fixes: 69129dc39fac ("i40e: Modify Tx disable wait flow in case of DCB reconfiguration")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Ensure each bus_find_device() gets a matching put_device() when releasing
+the bpf programs and fix all the error paths.
+
+Cc: <stable@vger.kernel.org>
+Fixes: f5c27da4e3c8 ("HID: initial BPF implementation")
+Link: https://lore.kernel.org/r/20240124-b4-hid-bpf-fixes-v2-2-052520b1e5e6@kernel.org
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/bpf/hid_bpf_dispatch.c  |   29 +++++++++++++++++++++++------
+ drivers/hid/bpf/hid_bpf_jmp_table.c |   20 +++++++++++++++++---
+ 2 files changed, 40 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index aad39ebff4ab..9d37c0374c75 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -5351,7 +5351,7 @@ static int i40e_pf_wait_queues_disabled(struct i40e_pf *pf)
- {
- 	int v, ret = 0;
+--- a/drivers/hid/bpf/hid_bpf_dispatch.c
++++ b/drivers/hid/bpf/hid_bpf_dispatch.c
+@@ -292,7 +292,7 @@ hid_bpf_attach_prog(unsigned int hid_id,
+ 	struct hid_device *hdev;
+ 	struct bpf_prog *prog;
+ 	struct device *dev;
+-	int fd;
++	int err, fd;
  
--	for (v = 0; v < pf->hw.func_caps.num_vsis; v++) {
-+	for (v = 0; v < pf->num_alloc_vsi; v++) {
- 		if (pf->vsi[v]) {
- 			ret = i40e_vsi_wait_queues_disabled(pf->vsi[v]);
- 			if (ret)
--- 
-2.43.0
-
+ 	if (!hid_bpf_ops)
+ 		return -EINVAL;
+@@ -311,14 +311,24 @@ hid_bpf_attach_prog(unsigned int hid_id,
+ 	 * on errors or when it'll be detached
+ 	 */
+ 	prog = bpf_prog_get(prog_fd);
+-	if (IS_ERR(prog))
+-		return PTR_ERR(prog);
++	if (IS_ERR(prog)) {
++		err = PTR_ERR(prog);
++		goto out_dev_put;
++	}
+ 
+ 	fd = do_hid_bpf_attach_prog(hdev, prog_fd, prog, flags);
+-	if (fd < 0)
+-		bpf_prog_put(prog);
++	if (fd < 0) {
++		err = fd;
++		goto out_prog_put;
++	}
+ 
+ 	return fd;
++
++ out_prog_put:
++	bpf_prog_put(prog);
++ out_dev_put:
++	put_device(dev);
++	return err;
+ }
+ 
+ /**
+@@ -345,8 +355,10 @@ hid_bpf_allocate_context(unsigned int hi
+ 	hdev = to_hid_device(dev);
+ 
+ 	ctx_kern = kzalloc(sizeof(*ctx_kern), GFP_KERNEL);
+-	if (!ctx_kern)
++	if (!ctx_kern) {
++		put_device(dev);
+ 		return NULL;
++	}
+ 
+ 	ctx_kern->ctx.hid = hdev;
+ 
+@@ -363,10 +375,15 @@ noinline void
+ hid_bpf_release_context(struct hid_bpf_ctx *ctx)
+ {
+ 	struct hid_bpf_ctx_kern *ctx_kern;
++	struct hid_device *hid;
+ 
+ 	ctx_kern = container_of(ctx, struct hid_bpf_ctx_kern, ctx);
++	hid = (struct hid_device *)ctx_kern->ctx.hid; /* ignore const */
+ 
+ 	kfree(ctx_kern);
++
++	/* get_device() is called by bus_find_device() */
++	put_device(&hid->dev);
+ }
+ 
+ /**
+--- a/drivers/hid/bpf/hid_bpf_jmp_table.c
++++ b/drivers/hid/bpf/hid_bpf_jmp_table.c
+@@ -196,6 +196,7 @@ static void __hid_bpf_do_release_prog(in
+ static void hid_bpf_release_progs(struct work_struct *work)
+ {
+ 	int i, j, n, map_fd = -1;
++	bool hdev_destroyed;
+ 
+ 	if (!jmp_table.map)
+ 		return;
+@@ -220,6 +221,12 @@ static void hid_bpf_release_progs(struct
+ 		if (entry->hdev) {
+ 			hdev = entry->hdev;
+ 			type = entry->type;
++			/*
++			 * hdev is still valid, even if we are called after hid_destroy_device():
++			 * when hid_bpf_attach() gets called, it takes a ref on the dev through
++			 * bus_find_device()
++			 */
++			hdev_destroyed = hdev->bpf.destroyed;
+ 
+ 			hid_bpf_populate_hdev(hdev, type);
+ 
+@@ -232,12 +239,19 @@ static void hid_bpf_release_progs(struct
+ 				if (test_bit(next->idx, jmp_table.enabled))
+ 					continue;
+ 
+-				if (next->hdev == hdev && next->type == type)
++				if (next->hdev == hdev && next->type == type) {
++					/*
++					 * clear the hdev reference and decrement the device ref
++					 * that was taken during bus_find_device() while calling
++					 * hid_bpf_attach()
++					 */
+ 					next->hdev = NULL;
++					put_device(&hdev->dev);
++				}
+ 			}
+ 
+-			/* if type was rdesc fixup, reconnect device */
+-			if (type == HID_BPF_PROG_TYPE_RDESC_FIXUP)
++			/* if type was rdesc fixup and the device is not gone, reconnect device */
++			if (type == HID_BPF_PROG_TYPE_RDESC_FIXUP && !hdev_destroyed)
+ 				hid_bpf_reconnect(hdev);
+ 		}
+ 	}
 
 
