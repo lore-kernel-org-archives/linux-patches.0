@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1D71509AC;
-	Tue, 20 Feb 2024 21:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EF876C9C;
+	Tue, 20 Feb 2024 21:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463816; cv=none; b=sipWzOkdL1S6umZfEGN9U7jkF3y52iS4uUhZgDPqE7xvD1E53RLK5TvtH3KufkdF86npUWpnzpp+e5iHbrIaRFF1PvD/md6GCHouCELjw1RG+j36+y8uOEKSYqeyJJOlIzyEi0WQpxxBPxXCUcZTGBuduLVFkbIgxdpOB8rIlxk=
+	t=1708463819; cv=none; b=PJcYyaXRU5MXD8iTvw2tzY0pE9i4hZ6naPx6IWm8EKCLSmTW4qKaaHPu8++UPr2BFrK+WhX8YE5Jhw0x8IedQO8ET1xwY94Oyi1HyQKioHLiFunLFrfc+hy3b3HhPRBr+8XHPzOgRjSQfzu9/aN2stGVTj1I9XsTBsFbPicw/lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463816; c=relaxed/simple;
-	bh=GT4yKaQUDdwTFodER7dhkAYc76DxxoAvSkjAMjn63YM=;
+	s=arc-20240116; t=1708463819; c=relaxed/simple;
+	bh=TSeh8t0g39A3ruNDsLl52ZgE4l5PdojhK++dwXF8+wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIAU6RWQMnP3RB9Yr/g3wXvXQtSWe/8U8UyHLxY/vIdH0boTK4K3JXhRN9Kjzlrdz/jy1vymdhyUoqljOpA7FtZjQhVYigTspDMoZbSvflE5na30FrNqO8MhCiYg7TS855Sl6XqiEc6fm+mNx3B/rZEvSijhbRTwJ/29qeOCtcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07/0K4l0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rUFPtjz2rznTM7twQPhxYVJgOWkHkUHSYrY86ty27PsJPEbGQTMR7wO2oB4u4/qmBGMx2rAgONF4Et+Jwc9y1ZbPnc+gTExlUwqosifukoxPOS3DXsX+1Difp59Ns0dqY8po1+p9vuwXXrwh0HatAnqZeaIRlkKLVroqUedICzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2lDUzIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07/0K4l0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA32C43390;
-	Tue, 20 Feb 2024 21:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2lDUzIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776CAC433C7;
+	Tue, 20 Feb 2024 21:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463816;
-	bh=GT4yKaQUDdwTFodER7dhkAYc76DxxoAvSkjAMjn63YM=;
+	s=korg; t=1708463818;
+	bh=TSeh8t0g39A3ruNDsLl52ZgE4l5PdojhK++dwXF8+wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07/0K4l00+QphIEamW0ic5IgRslqRdK1ExqaIAQxPLT8sh2NoyA4wkX5h5fYpIdgj
-	 T8r3pvTfuBnGzOEbobY9Pmx9i01frmmkfxhoxNs114IW4JhKzkPnDpQRy75dkOCHbY
-	 TPn8jgQgHndxvonufaIsu6mXh1Udq8+7tE/IaVXs=
+	b=J2lDUzIo8po33ze1iIPZlFN9fmoj6MsljAfNTDhoZINAfZiosAcYXTP39/Hq5Mbxo
+	 nTWyCtCccCwjOz3bDztUeBLE9lO2MedEhD+sQ5cSmLVlNZFYR4TOMrMV32905VbYt1
+	 QDbUKVLh+o3RqaCj9BkBnDC3uifhdnGbvJY2QEfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Andrea Merello <andrea.merello@iit.it>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	linux-iio@vger.kernel.org,
+	Sam Protsenko <semen.protsenko@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 162/331] iio: imu: bno055: serdev requires REGMAP
-Date: Tue, 20 Feb 2024 21:54:38 +0100
-Message-ID: <20240220205642.628824728@linuxfoundation.org>
+Subject: [PATCH 6.6 163/331] iio: pressure: bmp280: Add missing bmp085 to SPI id table
+Date: Tue, 20 Feb 2024 21:54:39 +0100
+Message-ID: <20240220205642.657798758@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -55,53 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Sam Protsenko <semen.protsenko@linaro.org>
 
-commit 35ec2d03b282a939949090bd8c39eb37a5856721 upstream.
+commit b67f3e653e305abf1471934d7b9fdb9ad2df3eef upstream.
 
-There are a ton of build errors when REGMAP is not set, so select
-REGMAP to fix all of them.
+"bmp085" is missing in bmp280_spi_id[] table, which leads to the next
+warning in dmesg:
 
-Examples (not all of them):
+    SPI driver bmp280 has no spi_device_id for bosch,bmp085
 
-../drivers/iio/imu/bno055/bno055_ser_core.c:495:15: error: variable 'bno055_ser_regmap_bus' has initializer but incomplete type
-  495 | static struct regmap_bus bno055_ser_regmap_bus = {
-../drivers/iio/imu/bno055/bno055_ser_core.c:496:10: error: 'struct regmap_bus' has no member named 'write'
-  496 |         .write = bno055_ser_write_reg,
-../drivers/iio/imu/bno055/bno055_ser_core.c:497:10: error: 'struct regmap_bus' has no member named 'read'
-  497 |         .read = bno055_ser_read_reg,
-../drivers/iio/imu/bno055/bno055_ser_core.c: In function 'bno055_ser_probe':
-../drivers/iio/imu/bno055/bno055_ser_core.c:532:18: error: implicit declaration of function 'devm_regmap_init'; did you mean 'vmem_map_init'? [-Werror=implicit-function-declaration]
-  532 |         regmap = devm_regmap_init(&serdev->dev, &bno055_ser_regmap_bus,
-../drivers/iio/imu/bno055/bno055_ser_core.c:532:16: warning: assignment to 'struct regmap *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
-  532 |         regmap = devm_regmap_init(&serdev->dev, &bno055_ser_regmap_bus,
-../drivers/iio/imu/bno055/bno055_ser_core.c: At top level:
-../drivers/iio/imu/bno055/bno055_ser_core.c:495:26: error: storage size of 'bno055_ser_regmap_bus' isn't known
-  495 | static struct regmap_bus bno055_ser_regmap_bus = {
+Add "bmp085" to bmp280_spi_id[] by mimicking its existing description in
+bmp280_of_spi_match[] table to fix the above warning.
 
-Fixes: 2eef5a9cc643 ("iio: imu: add BNO055 serdev driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Andrea Merello <andrea.merello@iit.it>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: linux-iio@vger.kernel.org
+Signed-off-by: Sam Protsenko <semen.protsenko@linaro.org>
+Fixes: b26b4e91700f ("iio: pressure: bmp280: add SPI interface driver")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240110185611.19723-1-rdunlap@infradead.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/bno055/Kconfig |    1 +
+ drivers/iio/pressure/bmp280-spi.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/iio/imu/bno055/Kconfig
-+++ b/drivers/iio/imu/bno055/Kconfig
-@@ -8,6 +8,7 @@ config BOSCH_BNO055
- config BOSCH_BNO055_SERIAL
- 	tristate "Bosch BNO055 attached via UART"
- 	depends on SERIAL_DEV_BUS
-+	select REGMAP
- 	select BOSCH_BNO055
- 	help
- 	  Enable this to support Bosch BNO055 IMUs attached via UART.
+--- a/drivers/iio/pressure/bmp280-spi.c
++++ b/drivers/iio/pressure/bmp280-spi.c
+@@ -91,6 +91,7 @@ static const struct of_device_id bmp280_
+ MODULE_DEVICE_TABLE(of, bmp280_of_spi_match);
+ 
+ static const struct spi_device_id bmp280_spi_id[] = {
++	{ "bmp085", (kernel_ulong_t)&bmp180_chip_info },
+ 	{ "bmp180", (kernel_ulong_t)&bmp180_chip_info },
+ 	{ "bmp181", (kernel_ulong_t)&bmp180_chip_info },
+ 	{ "bmp280", (kernel_ulong_t)&bmp280_chip_info },
 
 
