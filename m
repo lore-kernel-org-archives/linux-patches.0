@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15B814F9DA;
-	Tue, 20 Feb 2024 21:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A0514A4E6;
+	Tue, 20 Feb 2024 21:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464387; cv=none; b=bWGJEC5NS7ICCsWLOUAUutChmgt7yDCi003GOtrukt2188+w+c+Mxeuza2xGR1Mgb4NMWEq6NbLsW+bXQqCzpEgayKxvgP9uePBpLAr6pEdIV58kVIiUMUzh9G6Y7CtBN8N6J1/UC4cehFM0brpmmvks5Cu/JwNCWFIs0udLSLc=
+	t=1708464390; cv=none; b=GESfLEyw20g1pJ7F62v6gcRLf/hfXG8Fe9RKQW1BwmQsr/Po+oz9a3L0/3mLpx1F9LT9SlWzg7KazKgsZ074l5ZeOWdaf7TmUzPWehYvX5EueX5gOtCfzhVXBOboeb1GIF/4LF45AHJF58TKhOmc9Gs3EcDuLraWaob7RLAykzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464387; c=relaxed/simple;
-	bh=t6jHzRBgAHuh2VVVm++k5fmtf6C57L8bBbKn1J3lRWY=;
+	s=arc-20240116; t=1708464390; c=relaxed/simple;
+	bh=MDkRv3hydYMdvMogZ6of5bd9/JYi8D+TlIWiHjbof+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYayP20Www9aqsyGJs3mjEOF8s+rWITxvbZDZ1sy7XvJIhOqyJy+GFN9N/15tVFYFDUQ6STHiJhxWFJIeQVKD3jcXbwPiQ88frw5W5B6HSbLzVd8S60LcI1KznKVBxV4HsmC7a3yhiJT3Z5PEB6Dg8GyqXmVxGFdJaSlCv6MoPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCfSyLc0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cWXeMxXHSwBgmliv/yx38ns3tONuyuz4kDZvSmvFe3MQdbYZ8JaLCM/b4krn0LKvnVm44u4GGM0Pvd3d9wol5ijY1uC7+xDw1OTZgl5aU+uzSzfxpBOhRqsPlteDMPqPI5pOcDbX9LDOI/r9jx8goWyQMvnuex0DEAPFntzH148=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0fzn4/8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCfSyLc0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2992BC433C7;
-	Tue, 20 Feb 2024 21:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0fzn4/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF0DC433C7;
+	Tue, 20 Feb 2024 21:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464386;
-	bh=t6jHzRBgAHuh2VVVm++k5fmtf6C57L8bBbKn1J3lRWY=;
+	s=korg; t=1708464389;
+	bh=MDkRv3hydYMdvMogZ6of5bd9/JYi8D+TlIWiHjbof+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tCfSyLc097i/ex6LxXd8EIShWA98L9QKgp2iLJUeLRfl+mrstsGiZp2bVsu2kNCNf
-	 XhfwztfocSdL40lFi4z/QPi6ylsbYsoCwJ0Puh4XuVYpInDsS6PM/8mtskyw/J9Y5N
-	 aNR23cuNTU0ZiZ+D39Zgogs59Pa4LoC7NKrergi0=
+	b=P0fzn4/8BRbgIrqyFabyN7tNoWuvs63vX3n6FZK9vcmCsQFJhBrIuThT5NSOvE8uk
+	 YZYxZSrdXXuVZIhSds1xVxBoFaAZgm9sGJqLmxGEgRcH0jGVoo6qwtbnfxMVDOvmjA
+	 8ZtPxZ47/RAEcCHDIorQwcG2k+cPJSkHKCSKHTIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Jakub Jelinek <jakub@redhat.com>,
-	Andrew Pinski <quic_apinski@quicinc.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.7 001/309] work around gcc bugs with asm goto with outputs
-Date: Tue, 20 Feb 2024 21:52:40 +0100
-Message-ID: <20240220205633.151688154@linuxfoundation.org>
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.7 010/309] btrfs: do not ASSERT() if the newly created subvolume already got read
+Date: Tue, 20 Feb 2024 21:52:49 +0100
+Message-ID: <20240220205633.456789730@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -54,773 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 4356e9f841f7fbb945521cef3577ba394c65f3fc upstream.
+commit e03ee2fe873eb68c1f9ba5112fee70303ebf9dfb upstream.
 
-We've had issues with gcc and 'asm goto' before, and we created a
-'asm_volatile_goto()' macro for that in the past: see commits
-3f0116c3238a ("compiler/gcc4: Add quirk for 'asm goto' miscompilation
-bug") and a9f180345f53 ("compiler/gcc4: Make quirk for
-asm_volatile_goto() unconditional").
+[BUG]
+There is a syzbot crash, triggered by the ASSERT() during subvolume
+creation:
 
-Then, much later, we ended up removing the workaround in commit
-43c249ea0b1e ("compiler-gcc.h: remove ancient workaround for gcc PR
-58670") because we no longer supported building the kernel with the
-affected gcc versions, but we left the macro uses around.
+ assertion failed: !anon_dev, in fs/btrfs/disk-io.c:1319
+ ------------[ cut here ]------------
+ kernel BUG at fs/btrfs/disk-io.c:1319!
+ invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+ RIP: 0010:btrfs_get_root_ref.part.0+0x9aa/0xa60
+  <TASK>
+  btrfs_get_new_fs_root+0xd3/0xf0
+  create_subvol+0xd02/0x1650
+  btrfs_mksubvol+0xe95/0x12b0
+  __btrfs_ioctl_snap_create+0x2f9/0x4f0
+  btrfs_ioctl_snap_create+0x16b/0x200
+  btrfs_ioctl+0x35f0/0x5cf0
+  __x64_sys_ioctl+0x19d/0x210
+  do_syscall_64+0x3f/0xe0
+  entry_SYSCALL_64_after_hwframe+0x63/0x6b
+ ---[ end trace 0000000000000000 ]---
 
-Now, Sean Christopherson reports a new version of a very similar
-problem, which is fixed by re-applying that ancient workaround.  But the
-problem in question is limited to only the 'asm goto with outputs'
-cases, so instead of re-introducing the old workaround as-is, let's
-rename and limit the workaround to just that much less common case.
+[CAUSE]
+During create_subvol(), after inserting root item for the newly created
+subvolume, we would trigger btrfs_get_new_fs_root() to get the
+btrfs_root of that subvolume.
 
-It looks like there are at least two separate issues that all hit in
-this area:
+The idea here is, we have preallocated an anonymous device number for
+the subvolume, thus we can assign it to the new subvolume.
 
- (a) some versions of gcc don't mark the asm goto as 'volatile' when it
-     has outputs:
+But there is really nothing preventing things like backref walk to read
+the new subvolume.
+If that happens before we call btrfs_get_new_fs_root(), the subvolume
+would be read out, with a new anonymous device number assigned already.
 
-        https://gcc.gnu.org/bugzilla/show_bug.cgi?id=98619
-        https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110420
+In that case, we would trigger ASSERT(), as we really expect no one to
+read out that subvolume (which is not yet accessible from the fs).
+But things like backref walk is still possible to trigger the read on
+the subvolume.
 
-     which is easy to work around by just adding the 'volatile' by hand.
+Thus our assumption on the ASSERT() is not correct in the first place.
 
- (b) Internal compiler errors:
+[FIX]
+Fix it by removing the ASSERT(), and just free the @anon_dev, reset it
+to 0, and continue.
 
-        https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110422
+If the subvolume tree is read out by something else, it should have
+already get a new anon_dev assigned thus we only need to free the
+preallocated one.
 
-     which are worked around by adding the extra empty 'asm' as a
-     barrier, as in the original workaround.
-
-but the problem Sean sees may be a third thing since it involves bad
-code generation (not an ICE) even with the manually added 'volatile'.
-
-but the same old workaround works for this case, even if this feels a
-bit like voodoo programming and may only be hiding the issue.
-
-Reported-and-tested-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/all/20240208220604.140859-1-seanjc@google.com/
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Uros Bizjak <ubizjak@gmail.com>
-Cc: Jakub Jelinek <jakub@redhat.com>
-Cc: Andrew Pinski <quic_apinski@quicinc.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Fixes: 2dfb1e43f57d ("btrfs: preallocate anon block device at first phase of snapshot creation")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arc/include/asm/jump_label.h           |    4 ++--
- arch/arm/include/asm/jump_label.h           |    4 ++--
- arch/arm64/include/asm/alternative-macros.h |    4 ++--
- arch/arm64/include/asm/jump_label.h         |    4 ++--
- arch/csky/include/asm/jump_label.h          |    4 ++--
- arch/loongarch/include/asm/jump_label.h     |    4 ++--
- arch/mips/include/asm/jump_label.h          |    4 ++--
- arch/parisc/include/asm/jump_label.h        |    4 ++--
- arch/powerpc/include/asm/jump_label.h       |    4 ++--
- arch/powerpc/include/asm/uaccess.h          |   12 ++++++------
- arch/powerpc/kernel/irq_64.c                |    2 +-
- arch/riscv/include/asm/bitops.h             |    8 ++++----
- arch/riscv/include/asm/cpufeature.h         |    4 ++--
- arch/riscv/include/asm/jump_label.h         |    4 ++--
- arch/s390/include/asm/jump_label.h          |    4 ++--
- arch/sparc/include/asm/jump_label.h         |    4 ++--
- arch/um/include/asm/cpufeature.h            |    2 +-
- arch/x86/include/asm/cpufeature.h           |    2 +-
- arch/x86/include/asm/jump_label.h           |    6 +++---
- arch/x86/include/asm/rmwcc.h                |    2 +-
- arch/x86/include/asm/special_insns.h        |    2 +-
- arch/x86/include/asm/uaccess.h              |   10 +++++-----
- arch/x86/kvm/svm/svm_ops.h                  |    6 +++---
- arch/x86/kvm/vmx/vmx.c                      |    4 ++--
- arch/x86/kvm/vmx/vmx_ops.h                  |    6 +++---
- arch/xtensa/include/asm/jump_label.h        |    4 ++--
- include/linux/compiler-gcc.h                |   19 +++++++++++++++++++
- include/linux/compiler_types.h              |    4 ++--
- net/netfilter/nft_set_pipapo_avx2.c         |    2 +-
- samples/bpf/asm_goto_workaround.h           |    8 ++++----
- tools/arch/x86/include/asm/rmwcc.h          |    2 +-
- tools/include/linux/compiler_types.h        |    4 ++--
- 32 files changed, 88 insertions(+), 69 deletions(-)
+ fs/btrfs/disk-io.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/arch/arc/include/asm/jump_label.h
-+++ b/arch/arc/include/asm/jump_label.h
-@@ -31,7 +31,7 @@
- static __always_inline bool arch_static_branch(struct static_key *key,
- 					       bool branch)
- {
--	asm_volatile_goto(".balign "__stringify(JUMP_LABEL_NOP_SIZE)"	\n"
-+	asm goto(".balign "__stringify(JUMP_LABEL_NOP_SIZE)"		\n"
- 		 "1:							\n"
- 		 "nop							\n"
- 		 ".pushsection __jump_table, \"aw\"			\n"
-@@ -47,7 +47,7 @@ l_yes:
- static __always_inline bool arch_static_branch_jump(struct static_key *key,
- 						    bool branch)
- {
--	asm_volatile_goto(".balign "__stringify(JUMP_LABEL_NOP_SIZE)"	\n"
-+	asm goto(".balign "__stringify(JUMP_LABEL_NOP_SIZE)"		\n"
- 		 "1:							\n"
- 		 "b %l[l_yes]						\n"
- 		 ".pushsection __jump_table, \"aw\"			\n"
---- a/arch/arm/include/asm/jump_label.h
-+++ b/arch/arm/include/asm/jump_label.h
-@@ -11,7 +11,7 @@
- 
- static __always_inline bool arch_static_branch(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 WASM(nop) "\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
- 		 ".word 1b, %l[l_yes], %c0\n\t"
-@@ -25,7 +25,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 WASM(b) " %l[l_yes]\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
- 		 ".word 1b, %l[l_yes], %c0\n\t"
---- a/arch/arm64/include/asm/alternative-macros.h
-+++ b/arch/arm64/include/asm/alternative-macros.h
-@@ -229,7 +229,7 @@ alternative_has_cap_likely(const unsigne
- 	if (!cpucap_is_possible(cpucap))
- 		return false;
- 
--	asm_volatile_goto(
-+	asm goto(
- 	ALTERNATIVE_CB("b	%l[l_no]", %[cpucap], alt_cb_patch_nops)
- 	:
- 	: [cpucap] "i" (cpucap)
-@@ -247,7 +247,7 @@ alternative_has_cap_unlikely(const unsig
- 	if (!cpucap_is_possible(cpucap))
- 		return false;
- 
--	asm_volatile_goto(
-+	asm goto(
- 	ALTERNATIVE("nop", "b	%l[l_yes]", %[cpucap])
- 	:
- 	: [cpucap] "i" (cpucap)
---- a/arch/arm64/include/asm/jump_label.h
-+++ b/arch/arm64/include/asm/jump_label.h
-@@ -18,7 +18,7 @@
- static __always_inline bool arch_static_branch(struct static_key * const key,
- 					       const bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"1:	nop					\n\t"
- 		 "	.pushsection	__jump_table, \"aw\"	\n\t"
- 		 "	.align		3			\n\t"
-@@ -35,7 +35,7 @@ l_yes:
- static __always_inline bool arch_static_branch_jump(struct static_key * const key,
- 						    const bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"1:	b		%l[l_yes]		\n\t"
- 		 "	.pushsection	__jump_table, \"aw\"	\n\t"
- 		 "	.align		3			\n\t"
---- a/arch/csky/include/asm/jump_label.h
-+++ b/arch/csky/include/asm/jump_label.h
-@@ -12,7 +12,7 @@
- static __always_inline bool arch_static_branch(struct static_key *key,
- 					       bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"1:	nop32					\n"
- 		"	.pushsection	__jump_table, \"aw\"	\n"
- 		"	.align		2			\n"
-@@ -29,7 +29,7 @@ label:
- static __always_inline bool arch_static_branch_jump(struct static_key *key,
- 						    bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"1:	bsr32		%l[label]		\n"
- 		"	.pushsection	__jump_table, \"aw\"	\n"
- 		"	.align		2			\n"
---- a/arch/loongarch/include/asm/jump_label.h
-+++ b/arch/loongarch/include/asm/jump_label.h
-@@ -22,7 +22,7 @@
- 
- static __always_inline bool arch_static_branch(struct static_key * const key, const bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"1:	nop			\n\t"
- 		JUMP_TABLE_ENTRY
- 		:  :  "i"(&((char *)key)[branch]) :  : l_yes);
-@@ -35,7 +35,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key * const key, const bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"1:	b	%l[l_yes]	\n\t"
- 		JUMP_TABLE_ENTRY
- 		:  :  "i"(&((char *)key)[branch]) :  : l_yes);
---- a/arch/mips/include/asm/jump_label.h
-+++ b/arch/mips/include/asm/jump_label.h
-@@ -36,7 +36,7 @@
- 
- static __always_inline bool arch_static_branch(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\t" B_INSN " 2f\n\t"
-+	asm goto("1:\t" B_INSN " 2f\n\t"
- 		"2:\t.insn\n\t"
- 		".pushsection __jump_table,  \"aw\"\n\t"
- 		WORD_INSN " 1b, %l[l_yes], %0\n\t"
-@@ -50,7 +50,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\t" J_INSN " %l[l_yes]\n\t"
-+	asm goto("1:\t" J_INSN " %l[l_yes]\n\t"
- 		".pushsection __jump_table,  \"aw\"\n\t"
- 		WORD_INSN " 1b, %l[l_yes], %0\n\t"
- 		".popsection\n\t"
---- a/arch/parisc/include/asm/jump_label.h
-+++ b/arch/parisc/include/asm/jump_label.h
-@@ -12,7 +12,7 @@
- 
- static __always_inline bool arch_static_branch(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 "nop\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
- 		 ".align %1\n\t"
-@@ -29,7 +29,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 "b,n %l[l_yes]\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
- 		 ".align %1\n\t"
---- a/arch/powerpc/include/asm/jump_label.h
-+++ b/arch/powerpc/include/asm/jump_label.h
-@@ -17,7 +17,7 @@
- 
- static __always_inline bool arch_static_branch(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 "nop # arch_static_branch\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
- 		 ".long 1b - ., %l[l_yes] - .\n\t"
-@@ -32,7 +32,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 "b %l[l_yes] # arch_static_branch_jump\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
- 		 ".long 1b - ., %l[l_yes] - .\n\t"
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -74,7 +74,7 @@ __pu_failed:							\
- /* -mprefixed can generate offsets beyond range, fall back hack */
- #ifdef CONFIG_PPC_KERNEL_PREFIXED
- #define __put_user_asm_goto(x, addr, label, op)			\
--	asm_volatile_goto(					\
-+	asm goto(					\
- 		"1:	" op " %0,0(%1)	# put_user\n"		\
- 		EX_TABLE(1b, %l2)				\
- 		:						\
-@@ -83,7 +83,7 @@ __pu_failed:							\
- 		: label)
- #else
- #define __put_user_asm_goto(x, addr, label, op)			\
--	asm_volatile_goto(					\
-+	asm goto(					\
- 		"1:	" op "%U1%X1 %0,%1	# put_user\n"	\
- 		EX_TABLE(1b, %l2)				\
- 		:						\
-@@ -97,7 +97,7 @@ __pu_failed:							\
- 	__put_user_asm_goto(x, ptr, label, "std")
- #else /* __powerpc64__ */
- #define __put_user_asm2_goto(x, addr, label)			\
--	asm_volatile_goto(					\
-+	asm goto(					\
- 		"1:	stw%X1 %0, %1\n"			\
- 		"2:	stw%X1 %L0, %L1\n"			\
- 		EX_TABLE(1b, %l2)				\
-@@ -146,7 +146,7 @@ do {								\
- /* -mprefixed can generate offsets beyond range, fall back hack */
- #ifdef CONFIG_PPC_KERNEL_PREFIXED
- #define __get_user_asm_goto(x, addr, label, op)			\
--	asm_volatile_goto(					\
-+	asm_goto_output(					\
- 		"1:	"op" %0,0(%1)	# get_user\n"		\
- 		EX_TABLE(1b, %l2)				\
- 		: "=r" (x)					\
-@@ -155,7 +155,7 @@ do {								\
- 		: label)
- #else
- #define __get_user_asm_goto(x, addr, label, op)			\
--	asm_volatile_goto(					\
-+	asm_goto_output(					\
- 		"1:	"op"%U1%X1 %0, %1	# get_user\n"	\
- 		EX_TABLE(1b, %l2)				\
- 		: "=r" (x)					\
-@@ -169,7 +169,7 @@ do {								\
- 	__get_user_asm_goto(x, addr, label, "ld")
- #else /* __powerpc64__ */
- #define __get_user_asm2_goto(x, addr, label)			\
--	asm_volatile_goto(					\
-+	asm_goto_output(					\
- 		"1:	lwz%X1 %0, %1\n"			\
- 		"2:	lwz%X1 %L0, %L1\n"			\
- 		EX_TABLE(1b, %l2)				\
---- a/arch/powerpc/kernel/irq_64.c
-+++ b/arch/powerpc/kernel/irq_64.c
-@@ -230,7 +230,7 @@ again:
- 	 * This allows interrupts to be unmasked without hard disabling, and
- 	 * also without new hard interrupts coming in ahead of pending ones.
- 	 */
--	asm_volatile_goto(
-+	asm goto(
- "1:					\n"
- "		lbz	9,%0(13)	\n"
- "		cmpwi	9,0		\n"
---- a/arch/riscv/include/asm/bitops.h
-+++ b/arch/riscv/include/asm/bitops.h
-@@ -39,7 +39,7 @@ static __always_inline unsigned long var
- {
- 	int num;
- 
--	asm_volatile_goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
-+	asm goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
- 				      RISCV_ISA_EXT_ZBB, 1)
- 			  : : : : legacy);
- 
-@@ -95,7 +95,7 @@ static __always_inline unsigned long var
- {
- 	int num;
- 
--	asm_volatile_goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
-+	asm goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
- 				      RISCV_ISA_EXT_ZBB, 1)
- 			  : : : : legacy);
- 
-@@ -154,7 +154,7 @@ static __always_inline int variable_ffs(
- 	if (!x)
- 		return 0;
- 
--	asm_volatile_goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
-+	asm goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
- 				      RISCV_ISA_EXT_ZBB, 1)
- 			  : : : : legacy);
- 
-@@ -209,7 +209,7 @@ static __always_inline int variable_fls(
- 	if (!x)
- 		return 0;
- 
--	asm_volatile_goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
-+	asm goto(ALTERNATIVE("j %l[legacy]", "nop", 0,
- 				      RISCV_ISA_EXT_ZBB, 1)
- 			  : : : : legacy);
- 
---- a/arch/riscv/include/asm/cpufeature.h
-+++ b/arch/riscv/include/asm/cpufeature.h
-@@ -78,7 +78,7 @@ riscv_has_extension_likely(const unsigne
- 			   "ext must be < RISCV_ISA_EXT_MAX");
- 
- 	if (IS_ENABLED(CONFIG_RISCV_ALTERNATIVE)) {
--		asm_volatile_goto(
-+		asm goto(
- 		ALTERNATIVE("j	%l[l_no]", "nop", 0, %[ext], 1)
- 		:
- 		: [ext] "i" (ext)
-@@ -101,7 +101,7 @@ riscv_has_extension_unlikely(const unsig
- 			   "ext must be < RISCV_ISA_EXT_MAX");
- 
- 	if (IS_ENABLED(CONFIG_RISCV_ALTERNATIVE)) {
--		asm_volatile_goto(
-+		asm goto(
- 		ALTERNATIVE("nop", "j	%l[l_yes]", 0, %[ext], 1)
- 		:
- 		: [ext] "i" (ext)
---- a/arch/riscv/include/asm/jump_label.h
-+++ b/arch/riscv/include/asm/jump_label.h
-@@ -17,7 +17,7 @@
- static __always_inline bool arch_static_branch(struct static_key * const key,
- 					       const bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"	.align		2			\n\t"
- 		"	.option push				\n\t"
- 		"	.option norelax				\n\t"
-@@ -39,7 +39,7 @@ label:
- static __always_inline bool arch_static_branch_jump(struct static_key * const key,
- 						    const bool branch)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		"	.align		2			\n\t"
- 		"	.option push				\n\t"
- 		"	.option norelax				\n\t"
---- a/arch/s390/include/asm/jump_label.h
-+++ b/arch/s390/include/asm/jump_label.h
-@@ -25,7 +25,7 @@
-  */
- static __always_inline bool arch_static_branch(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("0:	brcl 0,%l[label]\n"
-+	asm goto("0:	brcl 0,%l[label]\n"
- 			  ".pushsection __jump_table,\"aw\"\n"
- 			  ".balign	8\n"
- 			  ".long	0b-.,%l[label]-.\n"
-@@ -39,7 +39,7 @@ label:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("0:	brcl 15,%l[label]\n"
-+	asm goto("0:	brcl 15,%l[label]\n"
- 			  ".pushsection __jump_table,\"aw\"\n"
- 			  ".balign	8\n"
- 			  ".long	0b-.,%l[label]-.\n"
---- a/arch/sparc/include/asm/jump_label.h
-+++ b/arch/sparc/include/asm/jump_label.h
-@@ -10,7 +10,7 @@
- 
- static __always_inline bool arch_static_branch(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 "nop\n\t"
- 		 "nop\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
-@@ -26,7 +26,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 		 "b %l[l_yes]\n\t"
- 		 "nop\n\t"
- 		 ".pushsection __jump_table,  \"aw\"\n\t"
---- a/arch/um/include/asm/cpufeature.h
-+++ b/arch/um/include/asm/cpufeature.h
-@@ -75,7 +75,7 @@ extern void setup_clear_cpu_cap(unsigned
-  */
- static __always_inline bool _static_cpu_has(u16 bit)
- {
--	asm_volatile_goto("1: jmp 6f\n"
-+	asm goto("1: jmp 6f\n"
- 		 "2:\n"
- 		 ".skip -(((5f-4f) - (2b-1b)) > 0) * "
- 			 "((5f-4f) - (2b-1b)),0x90\n"
---- a/arch/x86/include/asm/cpufeature.h
-+++ b/arch/x86/include/asm/cpufeature.h
-@@ -168,7 +168,7 @@ extern void clear_cpu_cap(struct cpuinfo
-  */
- static __always_inline bool _static_cpu_has(u16 bit)
- {
--	asm_volatile_goto(
-+	asm goto(
- 		ALTERNATIVE_TERNARY("jmp 6f", %P[feature], "", "jmp %l[t_no]")
- 		".pushsection .altinstr_aux,\"ax\"\n"
- 		"6:\n"
---- a/arch/x86/include/asm/jump_label.h
-+++ b/arch/x86/include/asm/jump_label.h
-@@ -24,7 +24,7 @@
- 
- static __always_inline bool arch_static_branch(struct static_key *key, bool branch)
- {
--	asm_volatile_goto("1:"
-+	asm goto("1:"
- 		"jmp %l[l_yes] # objtool NOPs this \n\t"
- 		JUMP_TABLE_ENTRY
- 		: :  "i" (key), "i" (2 | branch) : : l_yes);
-@@ -38,7 +38,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch(struct static_key * const key, const bool branch)
- {
--	asm_volatile_goto("1:"
-+	asm goto("1:"
- 		".byte " __stringify(BYTES_NOP5) "\n\t"
- 		JUMP_TABLE_ENTRY
- 		: :  "i" (key), "i" (branch) : : l_yes);
-@@ -52,7 +52,7 @@ l_yes:
- 
- static __always_inline bool arch_static_branch_jump(struct static_key * const key, const bool branch)
- {
--	asm_volatile_goto("1:"
-+	asm goto("1:"
- 		"jmp %l[l_yes]\n\t"
- 		JUMP_TABLE_ENTRY
- 		: :  "i" (key), "i" (branch) : : l_yes);
---- a/arch/x86/include/asm/rmwcc.h
-+++ b/arch/x86/include/asm/rmwcc.h
-@@ -13,7 +13,7 @@
- #define __GEN_RMWcc(fullop, _var, cc, clobbers, ...)			\
- ({									\
- 	bool c = false;							\
--	asm_volatile_goto (fullop "; j" #cc " %l[cc_label]"		\
-+	asm goto (fullop "; j" #cc " %l[cc_label]"		\
- 			: : [var] "m" (_var), ## __VA_ARGS__		\
- 			: clobbers : cc_label);				\
- 	if (0) {							\
---- a/arch/x86/include/asm/special_insns.h
-+++ b/arch/x86/include/asm/special_insns.h
-@@ -205,7 +205,7 @@ static inline void clwb(volatile void *_
- #ifdef CONFIG_X86_USER_SHADOW_STACK
- static inline int write_user_shstk_64(u64 __user *addr, u64 val)
- {
--	asm_volatile_goto("1: wrussq %[val], (%[addr])\n"
-+	asm goto("1: wrussq %[val], (%[addr])\n"
- 			  _ASM_EXTABLE(1b, %l[fail])
- 			  :: [addr] "r" (addr), [val] "r" (val)
- 			  :: fail);
---- a/arch/x86/include/asm/uaccess.h
-+++ b/arch/x86/include/asm/uaccess.h
-@@ -133,7 +133,7 @@ extern int __get_user_bad(void);
- 
- #ifdef CONFIG_X86_32
- #define __put_user_goto_u64(x, addr, label)			\
--	asm_volatile_goto("\n"					\
-+	asm goto("\n"					\
- 		     "1:	movl %%eax,0(%1)\n"		\
- 		     "2:	movl %%edx,4(%1)\n"		\
- 		     _ASM_EXTABLE_UA(1b, %l2)			\
-@@ -295,7 +295,7 @@ do {									\
- } while (0)
- 
- #define __get_user_asm(x, addr, itype, ltype, label)			\
--	asm_volatile_goto("\n"						\
-+	asm_goto_output("\n"						\
- 		     "1:	mov"itype" %[umem],%[output]\n"		\
- 		     _ASM_EXTABLE_UA(1b, %l2)				\
- 		     : [output] ltype(x)				\
-@@ -375,7 +375,7 @@ do {									\
- 	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
- 	__typeof__(*(_ptr)) __old = *_old;				\
- 	__typeof__(*(_ptr)) __new = (_new);				\
--	asm_volatile_goto("\n"						\
-+	asm_goto_output("\n"						\
- 		     "1: " LOCK_PREFIX "cmpxchg"itype" %[new], %[ptr]\n"\
- 		     _ASM_EXTABLE_UA(1b, %l[label])			\
- 		     : CC_OUT(z) (success),				\
-@@ -394,7 +394,7 @@ do {									\
- 	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
- 	__typeof__(*(_ptr)) __old = *_old;				\
- 	__typeof__(*(_ptr)) __new = (_new);				\
--	asm_volatile_goto("\n"						\
-+	asm_goto_output("\n"						\
- 		     "1: " LOCK_PREFIX "cmpxchg8b %[ptr]\n"		\
- 		     _ASM_EXTABLE_UA(1b, %l[label])			\
- 		     : CC_OUT(z) (success),				\
-@@ -477,7 +477,7 @@ struct __large_struct { unsigned long bu
-  * aliasing issues.
-  */
- #define __put_user_goto(x, addr, itype, ltype, label)			\
--	asm_volatile_goto("\n"						\
-+	asm goto("\n"							\
- 		"1:	mov"itype" %0,%1\n"				\
- 		_ASM_EXTABLE_UA(1b, %l2)				\
- 		: : ltype(x), "m" (__m(addr))				\
---- a/arch/x86/kvm/svm/svm_ops.h
-+++ b/arch/x86/kvm/svm/svm_ops.h
-@@ -8,7 +8,7 @@
- 
- #define svm_asm(insn, clobber...)				\
- do {								\
--	asm_volatile_goto("1: " __stringify(insn) "\n\t"	\
-+	asm goto("1: " __stringify(insn) "\n\t"	\
- 			  _ASM_EXTABLE(1b, %l[fault])		\
- 			  ::: clobber : fault);			\
- 	return;							\
-@@ -18,7 +18,7 @@ fault:								\
- 
- #define svm_asm1(insn, op1, clobber...)				\
- do {								\
--	asm_volatile_goto("1: "  __stringify(insn) " %0\n\t"	\
-+	asm goto("1: "  __stringify(insn) " %0\n\t"	\
- 			  _ASM_EXTABLE(1b, %l[fault])		\
- 			  :: op1 : clobber : fault);		\
- 	return;							\
-@@ -28,7 +28,7 @@ fault:								\
- 
- #define svm_asm2(insn, op1, op2, clobber...)				\
- do {									\
--	asm_volatile_goto("1: "  __stringify(insn) " %1, %0\n\t"	\
-+	asm goto("1: "  __stringify(insn) " %1, %0\n\t"	\
- 			  _ASM_EXTABLE(1b, %l[fault])			\
- 			  :: op1, op2 : clobber : fault);		\
- 	return;								\
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -745,7 +745,7 @@ static int vmx_set_guest_uret_msr(struct
-  */
- static int kvm_cpu_vmxoff(void)
- {
--	asm_volatile_goto("1: vmxoff\n\t"
-+	asm goto("1: vmxoff\n\t"
- 			  _ASM_EXTABLE(1b, %l[fault])
- 			  ::: "cc", "memory" : fault);
- 
-@@ -2789,7 +2789,7 @@ static int kvm_cpu_vmxon(u64 vmxon_point
- 
- 	cr4_set_bits(X86_CR4_VMXE);
- 
--	asm_volatile_goto("1: vmxon %[vmxon_pointer]\n\t"
-+	asm goto("1: vmxon %[vmxon_pointer]\n\t"
- 			  _ASM_EXTABLE(1b, %l[fault])
- 			  : : [vmxon_pointer] "m"(vmxon_pointer)
- 			  : : fault);
---- a/arch/x86/kvm/vmx/vmx_ops.h
-+++ b/arch/x86/kvm/vmx/vmx_ops.h
-@@ -94,7 +94,7 @@ static __always_inline unsigned long __v
- 
- #ifdef CONFIG_CC_HAS_ASM_GOTO_OUTPUT
- 
--	asm_volatile_goto("1: vmread %[field], %[output]\n\t"
-+	asm_goto_output("1: vmread %[field], %[output]\n\t"
- 			  "jna %l[do_fail]\n\t"
- 
- 			  _ASM_EXTABLE(1b, %l[do_exception])
-@@ -188,7 +188,7 @@ static __always_inline unsigned long vmc
- 
- #define vmx_asm1(insn, op1, error_args...)				\
- do {									\
--	asm_volatile_goto("1: " __stringify(insn) " %0\n\t"		\
-+	asm goto("1: " __stringify(insn) " %0\n\t"			\
- 			  ".byte 0x2e\n\t" /* branch not taken hint */	\
- 			  "jna %l[error]\n\t"				\
- 			  _ASM_EXTABLE(1b, %l[fault])			\
-@@ -205,7 +205,7 @@ fault:									\
- 
- #define vmx_asm2(insn, op1, op2, error_args...)				\
- do {									\
--	asm_volatile_goto("1: "  __stringify(insn) " %1, %0\n\t"	\
-+	asm goto("1: "  __stringify(insn) " %1, %0\n\t"			\
- 			  ".byte 0x2e\n\t" /* branch not taken hint */	\
- 			  "jna %l[error]\n\t"				\
- 			  _ASM_EXTABLE(1b, %l[fault])			\
---- a/arch/xtensa/include/asm/jump_label.h
-+++ b/arch/xtensa/include/asm/jump_label.h
-@@ -13,7 +13,7 @@
- static __always_inline bool arch_static_branch(struct static_key *key,
- 					       bool branch)
- {
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 			  "_nop\n\t"
- 			  ".pushsection __jump_table,  \"aw\"\n\t"
- 			  ".word 1b, %l[l_yes], %c0\n\t"
-@@ -38,7 +38,7 @@ static __always_inline bool arch_static_
- 	 * make it reachable and wrap both into a no-transform block
- 	 * to avoid any assembler interference with this.
- 	 */
--	asm_volatile_goto("1:\n\t"
-+	asm goto("1:\n\t"
- 			  ".begin no-transform\n\t"
- 			  "_j %l[l_yes]\n\t"
- 			  "2:\n\t"
---- a/include/linux/compiler-gcc.h
-+++ b/include/linux/compiler-gcc.h
-@@ -64,6 +64,25 @@
- 		__builtin_unreachable();	\
- 	} while (0)
- 
-+/*
-+ * GCC 'asm goto' with outputs miscompiles certain code sequences:
-+ *
-+ *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110420
-+ *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110422
-+ *
-+ * Work it around via the same compiler barrier quirk that we used
-+ * to use for the old 'asm goto' workaround.
-+ *
-+ * Also, always mark such 'asm goto' statements as volatile: all
-+ * asm goto statements are supposed to be volatile as per the
-+ * documentation, but some versions of gcc didn't actually do
-+ * that for asms with outputs:
-+ *
-+ *    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=98619
-+ */
-+#define asm_goto_output(x...) \
-+	do { asm volatile goto(x); asm (""); } while (0)
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -1315,8 +1315,17 @@ static struct btrfs_root *btrfs_get_root
+ again:
+ 	root = btrfs_lookup_fs_root(fs_info, objectid);
+ 	if (root) {
+-		/* Shouldn't get preallocated anon_dev for cached roots */
+-		ASSERT(!anon_dev);
++		/*
++		 * Some other caller may have read out the newly inserted
++		 * subvolume already (for things like backref walk etc).  Not
++		 * that common but still possible.  In that case, we just need
++		 * to free the anon_dev.
++		 */
++		if (unlikely(anon_dev)) {
++			free_anon_bdev(anon_dev);
++			anon_dev = 0;
++		}
 +
- #if defined(CONFIG_ARCH_USE_BUILTIN_BSWAP)
- #define __HAVE_BUILTIN_BSWAP32__
- #define __HAVE_BUILTIN_BSWAP64__
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -362,8 +362,8 @@ struct ftrace_likely_data {
- #define __member_size(p)	__builtin_object_size(p, 1)
- #endif
- 
--#ifndef asm_volatile_goto
--#define asm_volatile_goto(x...) asm goto(x)
-+#ifndef asm_goto_output
-+#define asm_goto_output(x...) asm goto(x)
- #endif
- 
- #ifdef CONFIG_CC_HAS_ASM_INLINE
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -57,7 +57,7 @@
- 
- /* Jump to label if @reg is zero */
- #define NFT_PIPAPO_AVX2_NOMATCH_GOTO(reg, label)			\
--	asm_volatile_goto("vptest %%ymm" #reg ", %%ymm" #reg ";"	\
-+	asm goto("vptest %%ymm" #reg ", %%ymm" #reg ";"	\
- 			  "je %l[" #label "]" : : : : label)
- 
- /* Store 256 bits from YMM register into memory. Contrary to bucket load
---- a/samples/bpf/asm_goto_workaround.h
-+++ b/samples/bpf/asm_goto_workaround.h
-@@ -4,14 +4,14 @@
- #define __ASM_GOTO_WORKAROUND_H
- 
- /*
-- * This will bring in asm_volatile_goto and asm_inline macro definitions
-+ * This will bring in asm_goto_output and asm_inline macro definitions
-  * if enabled by compiler and config options.
-  */
- #include <linux/types.h>
- 
--#ifdef asm_volatile_goto
--#undef asm_volatile_goto
--#define asm_volatile_goto(x...) asm volatile("invalid use of asm_volatile_goto")
-+#ifdef asm_goto_output
-+#undef asm_goto_output
-+#define asm_goto_output(x...) asm volatile("invalid use of asm_goto_output")
- #endif
- 
- /*
---- a/tools/arch/x86/include/asm/rmwcc.h
-+++ b/tools/arch/x86/include/asm/rmwcc.h
-@@ -4,7 +4,7 @@
- 
- #define __GEN_RMWcc(fullop, var, cc, ...)				\
- do {									\
--	asm_volatile_goto (fullop "; j" cc " %l[cc_label]"		\
-+	asm goto (fullop "; j" cc " %l[cc_label]"		\
- 			: : "m" (var), ## __VA_ARGS__ 			\
- 			: "memory" : cc_label);				\
- 	return 0;							\
---- a/tools/include/linux/compiler_types.h
-+++ b/tools/include/linux/compiler_types.h
-@@ -36,8 +36,8 @@
- #include <linux/compiler-gcc.h>
- #endif
- 
--#ifndef asm_volatile_goto
--#define asm_volatile_goto(x...) asm goto(x)
-+#ifndef asm_goto_output
-+#define asm_goto_output(x...) asm goto(x)
- #endif
- 
- #endif /* __LINUX_COMPILER_TYPES_H */
+ 		if (check_ref && btrfs_root_refs(&root->root_item) == 0) {
+ 			btrfs_put_root(root);
+ 			return ERR_PTR(-ENOENT);
 
 
