@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8456C1509BC;
-	Tue, 20 Feb 2024 21:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B6514A4E6;
+	Tue, 20 Feb 2024 21:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464705; cv=none; b=AP8MRmSLLJ0Ui60uBJpkSEbkBScqFZz9hxA9cfgWp/MC1g+zLYPz8QXCH2jittjZDE8NA1DtzzC5LDBk2UB21BpqLkbpFAFcxOhS5izvsvDX2XsPxRV4dZ5SpJaT1ZqXuuwH/ENUgE+Q8MEn5g4V0Fjbj1aPUSAeTdecAsu+acA=
+	t=1708464708; cv=none; b=qK7cqcopfTwhC7gDb9vA5OPV36jqjBQrWIGlrnWmBzzV+Bfsn5UxwM175rFs22LPTu/OevHEbyzpPgBYt+GZa/u7U73sj1o6x2g3+vRcoDnx8evKtifuRwFodpYSvFmNKPKxdHg26fyskfK0zoGTi3ItisPlLPsxhEh6rw9advE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464705; c=relaxed/simple;
-	bh=xcL9f0hMFHa2rruGsnehYS6fUAQ4npjQ7dlZft1MMyQ=;
+	s=arc-20240116; t=1708464708; c=relaxed/simple;
+	bh=mFywHBIk/SAD/Ve2PEya7wQOmdGaT2EI1dRtFEOFPMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQt2ZiLL1lwDUOhUtOKhTq/GzOMc6QOXp2xPeWJyJsWoEhqH9/3dhrW8M2vZ6NAMTg3QMMYdfR1HWxMuurFzAa2nY0adqAO/S7OvwW+WJc2UbSKeLVLvlx5ucq9oiwxhBylRQZ399ilBbN08tgsnqe60H83a5jHk8UlYRWZuLtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfSJDylX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uq2Zi5O9A9HK11XFFMYdGpDM7CqrmSypKG+YEsNBAGMaIy6Pin0lrEMiZfnKAiKDwk36ADTurRypYvbpASUA7eYG3VHrKtP4ep3fJg6MoSacZwV64/dsIiPiOlAErulsTk4ZlIrGB/VjC8kNc5WjuGfChpQ3HeqizqINHnlAM74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RY+izOIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfSJDylX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3644C433F1;
-	Tue, 20 Feb 2024 21:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RY+izOIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0805BC433C7;
+	Tue, 20 Feb 2024 21:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464705;
-	bh=xcL9f0hMFHa2rruGsnehYS6fUAQ4npjQ7dlZft1MMyQ=;
+	s=korg; t=1708464708;
+	bh=mFywHBIk/SAD/Ve2PEya7wQOmdGaT2EI1dRtFEOFPMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfSJDylX77lQmpeETY3k6fUzeDExzg6zRAsZ4r+5RzxBQ4RmhJrYWw250lU2D9o1K
-	 1mUx11PexMqU50V7ZKUZeQ7d/tyKBbE/ofB9X59CTkGo5WqKmTViLjD/HbOdkUgt/H
-	 Vwi084fj8145ZSMQMyDLp2JJLGq14xvG7scbQkwQ=
+	b=RY+izOIbBXa0XBHR7eGaioICs8XjKfFBXc/9IU0UVKASRVLaXWNll6uhaFOOAyLBR
+	 4PQBY7mEOSJ/CHsy7g0opYprvnXZrq4MYxR0rB1tZwwbH+2I8xsdSHqvV1aTP005W1
+	 gZDXq2PL8L+NxNk3dPyBn/E0InssKtRGQZdvpuIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 111/309] powerpc/iommu: Fix the missing iommu_group_put() during platform domain attach
-Date: Tue, 20 Feb 2024 21:54:30 +0100
-Message-ID: <20240220205636.665848358@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 6.7 094/309] usb: dwc3: gadget: Fix NULL pointer dereference in dwc3_gadget_suspend
+Date: Tue, 20 Feb 2024 21:54:13 +0100
+Message-ID: <20240220205636.137251571@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -53,72 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-[ Upstream commit 0846dd77c8349ec92ca0079c9c71d130f34cb192 ]
+commit 61a348857e869432e6a920ad8ea9132e8d44c316 upstream.
 
-The function spapr_tce_platform_iommu_attach_dev() is missing to call
-iommu_group_put() when the domain is already set. This refcount leak
-shows up with BUG_ON() during DLPAR remove operation as:
+In current scenario if Plug-out and Plug-In performed continuously
+there could be a chance while checking for dwc->gadget_driver in
+dwc3_gadget_suspend, a NULL pointer dereference may occur.
 
-  KernelBug: Kernel bug in state 'None': kernel BUG at arch/powerpc/platforms/pseries/iommu.c:100!
-  Oops: Exception in kernel mode, sig: 5 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=8192 NUMA pSeries
-  <snip>
-  Hardware name: IBM,9080-HEX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_016) hv:phyp pSeries
-  NIP:  c0000000000ff4d4 LR: c0000000000ff4cc CTR: 0000000000000000
-  REGS: c0000013aed5f840 TRAP: 0700   Tainted: G          I         (6.8.0-rc3-autotest-g99bd3cb0d12e)
-  MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 44002402  XER: 20040000
-  CFAR: c000000000a0d170 IRQMASK: 0
-  ...
-  NIP iommu_reconfig_notifier+0x94/0x200
-  LR  iommu_reconfig_notifier+0x8c/0x200
-  Call Trace:
-    iommu_reconfig_notifier+0x8c/0x200 (unreliable)
-    notifier_call_chain+0xb8/0x19c
-    blocking_notifier_call_chain+0x64/0x98
-    of_reconfig_notify+0x44/0xdc
-    of_detach_node+0x78/0xb0
-    ofdt_write.part.0+0x86c/0xbb8
-    proc_reg_write+0xf4/0x150
-    vfs_write+0xf8/0x488
-    ksys_write+0x84/0x140
-    system_call_exception+0x138/0x330
-    system_call_vectored_common+0x15c/0x2ec
+Call Stack:
 
-The patch adds the missing iommu_group_put() call.
+	CPU1:                           CPU2:
+	gadget_unbind_driver            dwc3_suspend_common
+	dwc3_gadget_stop                dwc3_gadget_suspend
+                                        dwc3_disconnect_gadget
 
-Fixes: a8ca9fc9134c ("powerpc/iommu: Do not do platform domain attach atctions after probe")
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>
-Closes: https://lore.kernel.org/all/274e0d2b-b5cc-475e-94e6-8427e88e271d@linux.vnet.ibm.com/
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.vnet.ibm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/170784021983.6249.10039296655906636112.stgit@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CPU1 basically clears the variable and CPU2 checks the variable.
+Consider CPU1 is running and right before gadget_driver is cleared
+and in parallel CPU2 executes dwc3_gadget_suspend where it finds
+dwc->gadget_driver which is not NULL and resumes execution and then
+CPU1 completes execution. CPU2 executes dwc3_disconnect_gadget where
+it checks dwc->gadget_driver is already NULL because of which the
+NULL pointer deference occur.
+
+Cc: stable@vger.kernel.org
+Fixes: 9772b47a4c29 ("usb: dwc3: gadget: Fix suspend/resume during device mode")
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20240119094825.26530-1-quic_uaggarwa@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/iommu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index c6f62e130d55..4393d447cb56 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -1290,8 +1290,10 @@ spapr_tce_platform_iommu_attach_dev(struct iommu_domain *platform_domain,
- 	int ret = -EINVAL;
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4703,15 +4703,13 @@ int dwc3_gadget_suspend(struct dwc3 *dwc
+ 	unsigned long flags;
+ 	int ret;
  
- 	/* At first attach the ownership is already set */
--	if (!domain)
-+	if (!domain) {
-+		iommu_group_put(grp);
- 		return 0;
-+	}
+-	if (!dwc->gadget_driver)
+-		return 0;
+-
+ 	ret = dwc3_gadget_soft_disconnect(dwc);
+ 	if (ret)
+ 		goto err;
  
- 	if (!grp)
- 		return -ENODEV;
--- 
-2.43.0
-
+ 	spin_lock_irqsave(&dwc->lock, flags);
+-	dwc3_disconnect_gadget(dwc);
++	if (dwc->gadget_driver)
++		dwc3_disconnect_gadget(dwc);
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+ 	return 0;
 
 
