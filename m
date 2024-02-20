@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D0A14A4E6;
-	Tue, 20 Feb 2024 21:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3C614A4E6;
+	Tue, 20 Feb 2024 21:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464687; cv=none; b=YJVsdGQ1VxYuDksvr16v5XB1h7NkuQd+om3Nt6qLgXOIqUuK5H/38dqe8f6J1Hs9IXpWJJW50F7E9RQl1LhkkpaPxc41GCpUdaDuQmT3l7V7j63ODcLjwRdVjVruzoPEWiLNqufUclpKaNg/LP25URMJytr3kOkX/Wc5Xec4oaQ=
+	t=1708464690; cv=none; b=Pqb/LrihUmjiCf2vQIug799+rauSrqLwbiOrqzAymx2njjbmsGeqkNyX6VaSEKwHOHz0I6MHoY8h3vGQIqIJABAfEL9AL0cAIz8IkghpfGUnJDzuB5MHvF6rhvC6wet34F6+Cer+eL24K3FX+Y5huYUq62gpTta2NZyfS/MFIlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464687; c=relaxed/simple;
-	bh=vzaykpN1cIHOHMtspXHqTR69JlqTzf3I79gBrgHs6sY=;
+	s=arc-20240116; t=1708464690; c=relaxed/simple;
+	bh=u60FYOrTpNTefYjE2uguqjOHwgHSi4FUuyzikXQwN+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pj0kH0fY7FVdOE2fSva4RcG8+wAVU1lEW17wijyShyx+c4XB4AnQKUBzwOVcXC491MY2Rq57+rVH3Uvk/5vlUKva6GEGBnk52Pp+sR7BJln2uEM8JxdkrSW5MSvRVqNVBQ9GONmyHoGWOoUq+u8iZ1Wh7F+F5jIBda8vbJx2NZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n72bKB+d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aDUfz/feA/EsofEqMwKcATJPWV8NBz1RNuh3PtyL8Dit0U3cCEqEVP5CS9HUs+xiHvaofZQNHuT6JJGldbAGIlVVBE/n1je2wMc40PuaRwLHyCWL8GIYiPGNKLisWm/F2Rv/CuVPiQz/nC+vEULv+Ji/PLWKzR8EGMCCzVjDlwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDHuN6Qw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n72bKB+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64651C433C7;
-	Tue, 20 Feb 2024 21:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDHuN6Qw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D400C433F1;
+	Tue, 20 Feb 2024 21:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464686;
-	bh=vzaykpN1cIHOHMtspXHqTR69JlqTzf3I79gBrgHs6sY=;
+	s=korg; t=1708464690;
+	bh=u60FYOrTpNTefYjE2uguqjOHwgHSi4FUuyzikXQwN+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n72bKB+dKdw1q/AcZyH/+PpnOJxUyc0ycluN7uYEZ7jPKgDycemUNdwYVp8KrUq+5
-	 2hmS6KCVQF6/bAZt4XaKeqoJAeDNsXSuFFlSJtplUYz+CEyDUIj+mcOtdAimKf0M/e
-	 EZF4Qpjx4adFZ5zMImKq613tGk8kFHZG6gqzBe24=
+	b=sDHuN6QwL+vJKtGvMnwmwNZITxp+94T645+YAqQnvAuiMrZWYpfvzIGst+gxoqGM2
+	 xRSe7eybSYF0b8oyY8XQQTJoP1AFl5H5vS3XUc+E4uXEWmxsyb5IYj+s4s78s1bcsf
+	 4f4STUURm3CMjL4gASTH8/J68rDxUMF1eJn2zKxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 105/309] iio: adc: ad4130: only set GPIO_CTRL if pin is unused
-Date: Tue, 20 Feb 2024 21:54:24 +0100
-Message-ID: <20240220205636.478837571@linuxfoundation.org>
+Subject: [PATCH 6.7 106/309] cifs: fix underflow in parse_server_interfaces()
+Date: Tue, 20 Feb 2024 21:54:25 +0100
+Message-ID: <20240220205636.509004352@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,51 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 78367c32bebfe833cd30c855755d863a4ff3fdee ]
+[ Upstream commit cffe487026be13eaf37ea28b783d9638ab147204 ]
 
-Currently, GPIO_CTRL bits are set even if the pins are used for
-measurements.
+In this loop, we step through the buffer and after each item we check
+if the size_left is greater than the minimum size we need.  However,
+the problem is that "bytes_left" is type ssize_t while sizeof() is type
+size_t.  That means that because of type promotion, the comparison is
+done as an unsigned and if we have negative bytes left the loop
+continues instead of ending.
 
-GPIO_CTRL bits should only be set if the pin is not used for
-other functionality.
-
-Fix this by only setting the GPIO_CTRL bits if the pin has no
-other function.
-
-Fixes: 62094060cf3a ("iio: adc: ad4130: add AD4130 driver")
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240207132007.253768-2-demonsingur@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: fe856be475f7 ("CIFS: parse and store info on iface queries")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad4130.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/smb/client/smb2ops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/ad4130.c b/drivers/iio/adc/ad4130.c
-index 9daeac16499b..62490424b6ae 100644
---- a/drivers/iio/adc/ad4130.c
-+++ b/drivers/iio/adc/ad4130.c
-@@ -1891,10 +1891,14 @@ static int ad4130_setup(struct iio_dev *indio_dev)
- 		return ret;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index beb81fa00cff..ba734395b036 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -619,7 +619,7 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 		goto out;
+ 	}
  
- 	/*
--	 * Configure all GPIOs for output. If configured, the interrupt function
--	 * of P2 takes priority over the GPIO out function.
-+	 * Configure unused GPIOs for output. If configured, the interrupt
-+	 * function of P2 takes priority over the GPIO out function.
- 	 */
--	val =  AD4130_IO_CONTROL_GPIO_CTRL_MASK;
-+	val = 0;
-+	for (i = 0; i < AD4130_MAX_GPIOS; i++)
-+		if (st->pins_fn[i + AD4130_AIN2_P1] == AD4130_PIN_FN_NONE)
-+			val |= FIELD_PREP(AD4130_IO_CONTROL_GPIO_CTRL_MASK, BIT(i));
-+
- 	val |= FIELD_PREP(AD4130_IO_CONTROL_INT_PIN_SEL_MASK, st->int_pin_sel);
- 
- 	ret = regmap_write(st->regmap, AD4130_IO_CONTROL_REG, val);
+-	while (bytes_left >= sizeof(*p)) {
++	while (bytes_left >= (ssize_t)sizeof(*p)) {
+ 		memset(&tmp_iface, 0, sizeof(tmp_iface));
+ 		tmp_iface.speed = le64_to_cpu(p->LinkSpeed);
+ 		tmp_iface.rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
 -- 
 2.43.0
 
