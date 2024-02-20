@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8D614A4D2;
-	Tue, 20 Feb 2024 21:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F131D14A4D2;
+	Tue, 20 Feb 2024 21:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464666; cv=none; b=H5iHiEzzCOAYkB6djbPHvGK4h44evIgepmJKpFxEj5IJGV9J+ukYS+Y6lUeH3xCgRVtlQHgKDM4U7LH1OhcRpILuZ9ITLyVFK7ocictkDh7hEZugfVFg7e5F7rMNatrEStkLTzabf1ypU1GZLmH6pcxvViBnPP8SvWTl2Eb0XDY=
+	t=1708464669; cv=none; b=ZWvEWn3ekue/C+jLwuGBouurf4Xb0o+Pe9SJsICM6/y6XuFIJH8VR2ttqkO9StGQVGvDLbOR5wTM6ifGOagIX4bgE2mHbjDOgDJJV6tb+DSm6DwpXEiOdv0GYwWcAUcRWhixzqp7p7YDCsyqic9efWME0hIIC3HSRaLSHVa4CzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464666; c=relaxed/simple;
-	bh=7lyZoq3SGNBGAfYnKCQcNo7o8bQuFXV04mv5uSTpOeg=;
+	s=arc-20240116; t=1708464669; c=relaxed/simple;
+	bh=ThIChC1wUEhqrxuUZij5up7oeN6PLivza1xdVWMH4I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKbIv/mR4rd2B66Kp9qVULTiQ9aH3tKySqsXTkyaUwivAj3EAckUjM6/w8bK4G5tvq4uYYYC1vA+Umj270gZs5RaflM/QFfWvkvHBv8YYFWMwq9LdYb8LpenrvOr7zK2pamL5drSMQKQB82pMTN9xsQjYeazkA81bGYVeQSN4sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgZ97n4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7ByPOY/BePDYMYWc4OJEfn8AI8g+FwnXc0Rfa4bihQcKHWYWz44SQ3sxZYCMcDSfr5TTJmhWETY0lPPxWFPneq8VhKkuWPlOOCgq/aUC4oF+muJBodIQ9s5c9hHyny4SXWK2qfdje0Hsc+ORbB4S4jiJ7O5bOfycwWXP/cHh+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdbRmpZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgZ97n4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F86AC433C7;
-	Tue, 20 Feb 2024 21:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdbRmpZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7736EC433F1;
+	Tue, 20 Feb 2024 21:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464666;
-	bh=7lyZoq3SGNBGAfYnKCQcNo7o8bQuFXV04mv5uSTpOeg=;
+	s=korg; t=1708464668;
+	bh=ThIChC1wUEhqrxuUZij5up7oeN6PLivza1xdVWMH4I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgZ97n4tl2Bdr1WSfHsgB5Ubq20XhUVGhucJpiF06A8CRQH9wukmeDoJPaKT6A3Yx
-	 vD0nWFt5RUElGlZbkahlD2Y0tMLTuhmE6z4FN4sSMAjMYii9jhJMzJr0v1wy3ba39Z
-	 BJEJ61Q2M28ObMA6dx1f9WSVPT6m3INjTfJobVuw=
+	b=bdbRmpZoftH46l8XAEVyuC0K1Dw1L8SUROz0IAdWeBuNyNNn1WrDnPNmE0rErnoRI
+	 i8L8hP/2nYjI0KSJcMvP/Po/qya/pnVqtuamtL/szXV1j0zisVRm8DnukNm46NPwQO
+	 nmHCQ9sUJ5teVofuVduTLi0RatN6bo3pUrrfnZSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.7 067/309] tracing/trigger: Fix to return error if failed to alloc snapshot
-Date: Tue, 20 Feb 2024 21:53:46 +0100
-Message-ID: <20240220205635.308464683@linuxfoundation.org>
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	James Houghton <jthoughton@google.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.7 068/309] fs/hugetlbfs/inode.c: mm/memory-failure.c: fix hugetlbfs hwpoison handling
+Date: Tue, 20 Feb 2024 21:53:47 +0100
+Message-ID: <20240220205635.337345525@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,40 +57,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Sidhartha Kumar <sidhartha.kumar@oracle.com>
 
-commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
+commit 19d3e221807772f8443e565234a6fdc5a2b09d26 upstream.
 
-Fix register_snapshot_trigger() to return error code if it failed to
-allocate a snapshot instead of 0 (success). Unless that, it will register
-snapshot trigger without an error.
+has_extra_refcount() makes the assumption that the page cache adds a ref
+count of 1 and subtracts this in the extra_pins case.  Commit a08c7193e4f1
+(mm/filemap: remove hugetlb special casing in filemap.c) modifies
+__filemap_add_folio() by calling folio_ref_add(folio, nr); for all cases
+(including hugtetlb) where nr is the number of pages in the folio.  We
+should adjust the number of references coming from the page cache by
+subtracing the number of pages rather than 1.
 
-Link: https://lore.kernel.org/linux-trace-kernel/170622977792.270660.2789298642759362200.stgit@devnote2
+In hugetlbfs_read_iter(), folio_test_has_hwpoisoned() is testing the wrong
+flag as, in the hugetlb case, memory-failure code calls
+folio_test_set_hwpoison() to indicate poison.  folio_test_hwpoison() is
+the correct function to test for that flag.
 
-Fixes: 0bbe7f719985 ("tracing: Fix the race between registering 'snapshot' event trigger and triggering 'snapshot' operation")
-Cc: stable@vger.kernel.org
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+After these fixes, the hugetlb hwpoison read selftest passes all cases.
+
+Link: https://lkml.kernel.org/r/20240112180840.367006-1-sidhartha.kumar@oracle.com
+Fixes: a08c7193e4f1 ("mm/filemap: remove hugetlb special casing in filemap.c")
+Signed-off-by: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Closes: https://lore.kernel.org/linux-mm/20230713001833.3778937-1-jiaqiyan@google.com/T/#m8e1469119e5b831bbd05d495f96b842e4a1c5519
+Reported-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Acked-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Jiaqi Yan <jiaqiyan@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: <stable@vger.kernel.org>	[6.7+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_trigger.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/hugetlbfs/inode.c |    2 +-
+ mm/memory-failure.c  |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -1470,8 +1470,10 @@ register_snapshot_trigger(char *glob,
- 			  struct event_trigger_data *data,
- 			  struct trace_event_file *file)
- {
--	if (tracing_alloc_snapshot_instance(file->tr) != 0)
--		return 0;
-+	int ret = tracing_alloc_snapshot_instance(file->tr);
-+
-+	if (ret < 0)
-+		return ret;
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -340,7 +340,7 @@ static ssize_t hugetlbfs_read_iter(struc
+ 		} else {
+ 			folio_unlock(folio);
  
- 	return register_trigger(glob, data, file);
- }
+-			if (!folio_test_has_hwpoisoned(folio))
++			if (!folio_test_hwpoison(folio))
+ 				want = nr;
+ 			else {
+ 				/*
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -976,7 +976,7 @@ static bool has_extra_refcount(struct pa
+ 	int count = page_count(p) - 1;
+ 
+ 	if (extra_pins)
+-		count -= 1;
++		count -= folio_nr_pages(page_folio(p));
+ 
+ 	if (count > 0) {
+ 		pr_err("%#lx: %s still referenced by %d users\n",
 
 
