@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A8D446C9;
-	Tue, 20 Feb 2024 21:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9149A14F9C8;
+	Tue, 20 Feb 2024 21:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464862; cv=none; b=DJoNqMH9oPdiKxQ9MXJ3PAJgWuI8C88VDAuWyawuAbzGuF1VLRKVryOD6h59k/WGA7wyTXdoBYRthPyJWXTyfAd9/zyDAVZLFetuvR9RHlYCSP0iuiCoRD3/g72nVFLGT3DnyRSkHNzQJch2zmW9CeA8qCpFuyyPBH2Ux+j8Z8E=
+	t=1708464865; cv=none; b=MofyoMitVbts11DKQl0g/XsYjjMalKKA3YwEmi3GHTCsjibJ4gGzRCpnBduJXLd0XdtYJelJU4/HcCRUi0X6vTaYiTa05NQUc3PqWr3FITuthXQNI8vniUg+Jwo7YYHIciuEjKKw9g1CtDoJdXQebvJcAQr5uQJWxnIsqzi73iY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464862; c=relaxed/simple;
-	bh=YQtBIU3IRjET6EfOKDht0iiBrqgzIvnqabh6e2uJaFU=;
+	s=arc-20240116; t=1708464865; c=relaxed/simple;
+	bh=id+9RHehqOrebtxxQ5TqbbmiC7Xi3/Z54HdfwsLnEMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KeNlztSne8Vr85gljV2QthOUgO1ohkHGMlCGCcTMJMueKWSC2NPMpguk0uQThx5neLO0XWtMXPY/79bNsf6ISC/UGnCly0dG/axjhz8s2H5RAx9LwS6vVeJasy+9GVdmBwpD6ZGcAABI4do7IAO5YWK1mvqR29FP7esnDwPo0fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoVIr4tj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WiRg8niUcnWUipTnnqclEPFr07RWMfqn7gr2ZmiiaH4HtPlzNlB7WEvEvHevSCMnc9WL/QfqqGavhgt9huiABRD67VGWrGCKOupUvqT7i2f4yJNiNziY5iqhNI2HgY52o2ukv65uZ94WHHL1G+gsIho5QibxPTBnivtzspCY7zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rei9jdh1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoVIr4tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9464C433C7;
-	Tue, 20 Feb 2024 21:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rei9jdh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F26E5C433F1;
+	Tue, 20 Feb 2024 21:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464862;
-	bh=YQtBIU3IRjET6EfOKDht0iiBrqgzIvnqabh6e2uJaFU=;
+	s=korg; t=1708464865;
+	bh=id+9RHehqOrebtxxQ5TqbbmiC7Xi3/Z54HdfwsLnEMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FoVIr4tj/6OcGUS8DnNa8RVECJJ1O/geZvc/8nxYA1YXgbCB2iM0zlHQcXDmaERj3
-	 gcpguU1PvMVPJt8ppRYvTbCe0NCzkAJI4l82dRGqNzVx+gN7tbsQS4dJX45uIHv1Vi
-	 k753RdUfyyB4raCYL2QPNnmtJxybVmdUDkDTpGAk=
+	b=Rei9jdh1TBuGEk6vlZH/ks0MxHETBj3zruOsZxGrBdOAlXZPf7M9OjxwpiUkBisDY
+	 0qCXezQEhPgopY3D2W10ozJKZ51CGJE2xd6kM7LYIEpq9+buAf+B/BrcKhMJSZVL7G
+	 18jvufKHIoLjLONukffRNHn8Yit9Zx5162Fld5cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.7 130/309] Revert "drm/amd: flush any delayed gfxoff on suspend entry"
-Date: Tue, 20 Feb 2024 21:54:49 +0100
-Message-ID: <20240220205637.219106336@linuxfoundation.org>
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.7 131/309] Revert "drm/msm/gpu: Push gpu lock down past runpm"
+Date: Tue, 20 Feb 2024 21:54:50 +0100
+Message-ID: <20240220205637.248153675@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -50,58 +49,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Rob Clark <robdclark@chromium.org>
 
-commit 916361685319098f696b798ef1560f69ed96e934 upstream.
+commit 917e9b7c2350e3e53162fcf5035e5f2d68e2cbed upstream.
 
-commit ab4750332dbe ("drm/amdgpu/sdma5.2: add begin/end_use ring
-callbacks") caused GFXOFF control to be used more heavily and the
-codepath that was removed from commit 0dee72639533 ("drm/amd: flush any
-delayed gfxoff on suspend entry") now can be exercised at suspend again.
+This reverts commit abe2023b4cea192ab266b351fd38dc9dbd846df0.
 
-Users report that by using GNOME to suspend the lockscreen trigger will
-cause SDMA traffic and the system can deadlock.
+Changing the locking order means that scheduler/msm_job_run() can race
+with the recovery kthread worker, with the result that the GPU gets an
+extra runpm get when we are trying to power it off.  Leaving the GPU in
+an unrecovered state.
 
-This reverts commit 0dee726395333fea833eaaf838bc80962df886c8.
+I'll need to come up with a different scheme for appeasing lockdep.
 
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Fixes: ab4750332dbe ("drm/amdgpu/sdma5.2: add begin/end_use ring callbacks")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/573835/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    1 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c    |    9 ++++++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_gpu.c        |   11 +++++------
+ drivers/gpu/drm/msm/msm_ringbuffer.c |    7 +++++--
+ 2 files changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4496,7 +4496,6 @@ int amdgpu_device_suspend(struct drm_dev
- 		drm_fb_helper_set_suspend_unlocked(adev_to_drm(adev)->fb_helper, true);
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -749,12 +749,14 @@ void msm_gpu_submit(struct msm_gpu *gpu,
+ 	struct msm_ringbuffer *ring = submit->ring;
+ 	unsigned long flags;
  
- 	cancel_delayed_work_sync(&adev->delayed_init_work);
--	flush_delayed_work(&adev->gfx.gfx_off_delay_work);
+-	pm_runtime_get_sync(&gpu->pdev->dev);
++	WARN_ON(!mutex_is_locked(&gpu->lock));
  
- 	amdgpu_ras_suspend(adev);
+-	mutex_lock(&gpu->lock);
++	pm_runtime_get_sync(&gpu->pdev->dev);
  
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -723,8 +723,15 @@ void amdgpu_gfx_off_ctrl(struct amdgpu_d
+ 	msm_gpu_hw_init(gpu);
  
- 		if (adev->gfx.gfx_off_req_count == 0 &&
- 		    !adev->gfx.gfx_off_state) {
--			schedule_delayed_work(&adev->gfx.gfx_off_delay_work,
-+			/* If going to s2idle, no need to wait */
-+			if (adev->in_s0ix) {
-+				if (!amdgpu_dpm_set_powergating_by_smu(adev,
-+						AMD_IP_BLOCK_TYPE_GFX, true))
-+					adev->gfx.gfx_off_state = true;
-+			} else {
-+				schedule_delayed_work(&adev->gfx.gfx_off_delay_work,
- 					      delay);
-+			}
- 		}
- 	} else {
- 		if (adev->gfx.gfx_off_req_count == 0) {
++	submit->seqno = submit->hw_fence->seqno;
++
+ 	update_sw_cntrs(gpu);
+ 
+ 	/*
+@@ -779,11 +781,8 @@ void msm_gpu_submit(struct msm_gpu *gpu,
+ 	gpu->funcs->submit(gpu, submit);
+ 	gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
+ 
+-	hangcheck_timer_reset(gpu);
+-
+-	mutex_unlock(&gpu->lock);
+-
+ 	pm_runtime_put(&gpu->pdev->dev);
++	hangcheck_timer_reset(gpu);
+ }
+ 
+ /*
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.c
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+@@ -21,8 +21,6 @@ static struct dma_fence *msm_job_run(str
+ 
+ 	msm_fence_init(submit->hw_fence, fctx);
+ 
+-	submit->seqno = submit->hw_fence->seqno;
+-
+ 	mutex_lock(&priv->lru.lock);
+ 
+ 	for (i = 0; i < submit->nr_bos; i++) {
+@@ -34,8 +32,13 @@ static struct dma_fence *msm_job_run(str
+ 
+ 	mutex_unlock(&priv->lru.lock);
+ 
++	/* TODO move submit path over to using a per-ring lock.. */
++	mutex_lock(&gpu->lock);
++
+ 	msm_gpu_submit(gpu, submit);
+ 
++	mutex_unlock(&gpu->lock);
++
+ 	return dma_fence_get(submit->hw_fence);
+ }
+ 
 
 
