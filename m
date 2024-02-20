@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC3414A4E6;
-	Tue, 20 Feb 2024 21:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9F714A4D2;
+	Tue, 20 Feb 2024 21:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464641; cv=none; b=RleGX1oERCLSF8dR58/zMPH8WvA3+K1GbuILqDLfqKL7JVFlFZDzzvF+WJrxNB8hBjFeTWc3RP4o391ghb2mx+ok+xJxFvEPP3eEeE/jgyX0d7d5h3gO01bWSPNq9QLpTxbtUBHqlYZuO4t2A8s0RmACaDZfHKuafDamo8UCzz0=
+	t=1708464645; cv=none; b=jhczHh8sMZqGxmwZwZ+OHf5JzeTufJbGUCsWisOBsVSGUZte/kCJMXigsAZZBlwEgbDGAV0etjEQt6TpBdFHvE4v66CgMHdktppCwM2l+S2UtWfldX0P7tdpKYunzREyCO+sYqMMqIZHcLq0ha30MWNPxsfTrQm/hV1WCXHCU9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464641; c=relaxed/simple;
-	bh=kv9Dly8oaJMWeEapV3csJVrhHfznvYmLV1k9GvamQ4I=;
+	s=arc-20240116; t=1708464645; c=relaxed/simple;
+	bh=uZr6bc5SFrfuId49MItkIlCZsa9iQkZ5ZPA8LfS6BBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxZnIZIVsWyE2EA4EQGal6CGEw87WoMPqWXAWpxoJW0JFtCWmMAHjhW2ynznEyUKFA+01t/Uf9/bu+i7bIzM7lrLXvGK5l8rB706j3WFMlkBR9JIrDjUdshtILEQZ6mBR2h0UlIvdChFt5Wdz+OdjOyUiBK74eopX5ye3VZVEfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OL4mKMlS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e+M/O9jxUdWsD6t214yFkTKmHxJMmqkLWT/7Zfpw/0dwr0tQRbWBOz8nfV+IsxecIxev24r152O2EWAHJTRgc6aFKNjyzskgIVZbnnhxqBlp0A4OlDOt4uhxdqjpWrSR9OY5StciCTtsDoqLUZ5xHt6DOuJ4VsRJ3n6pD8w8+IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIysBz+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OL4mKMlS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23128C433C7;
-	Tue, 20 Feb 2024 21:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIysBz+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2B0C433C7;
+	Tue, 20 Feb 2024 21:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464641;
-	bh=kv9Dly8oaJMWeEapV3csJVrhHfznvYmLV1k9GvamQ4I=;
+	s=korg; t=1708464644;
+	bh=uZr6bc5SFrfuId49MItkIlCZsa9iQkZ5ZPA8LfS6BBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OL4mKMlSo14jiwFyuPqr4pynzjDeB6hUA6dkJ9n+dKgkgXKy3hG3kMRS6QPWeBljQ
-	 Qdc4OauzT1WJJw0G+FMYPBU5mU0ytS4Gk5lmXRcOs/QIFhqviQ+D76+gpp2rw1SGz5
-	 SPWNANtrQgsbzgQ9v0I7I7EqlungA8+a+8XNpnrg=
+	b=MIysBz+D+Jt28QoNXZRpdtjwf7SeZ7Px+4gbaPPd//A32GY32uBjmnx1xNso+KwKH
+	 O8ki01B26nbR+w7nEMxxuItToorCwqNWOimq67qLbJNOph10Mdiu91VL7pMkr6adal
+	 ESoo81PHgbLzAokMERsPrCduyA0hfc36e7RldRTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.7 062/309] i40e: Fix waiting for queues of all VSIs to be disabled
-Date: Tue, 20 Feb 2024 21:53:41 +0100
-Message-ID: <20240220205635.161301960@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.7 089/309] usb: ucsi_acpi: Fix command completion handling
+Date: Tue, 20 Feb 2024 21:54:08 +0100
+Message-ID: <20240220205635.984247488@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -54,41 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-[ Upstream commit c73729b64bb692186da080602cd13612783f52ac ]
+commit 2840143e393a4ddc1caab4372969ea337371168c upstream.
 
-The function i40e_pf_wait_queues_disabled() iterates all PF's VSIs
-up to 'pf->hw.func_caps.num_vsis' but this is incorrect because
-the real number of VSIs can be up to 'pf->num_alloc_vsi' that
-can be higher. Fix this loop.
+In case of a spurious or otherwise delayed notification it is
+possible that CCI still reports the previous completion. The
+UCSI spec is aware of this and provides two completion bits in
+CCI, one for normal commands and one for acks. As acks and commands
+alternate the notification handler can determine if the completion
+bit is from the current command.
 
-Fixes: 69129dc39fac ("i40e: Modify Tx disable wait flow in case of DCB reconfiguration")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The initial UCSI code correctly handled this but the distinction
+between the two completion bits was lost with the introduction of
+the new API.
+
+To fix this revive the ACK_PENDING bit for ucsi_acpi and only complete
+commands if the completion bit matches.
+
+Fixes: f56de278e8ec ("usb: typec: ucsi: acpi: Move to the new API")
+Cc: stable@vger.kernel.org
+Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240121204123.275441-3-lk@c--e.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 2bd7b29fb251..d9716bcec81b 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -5361,7 +5361,7 @@ static int i40e_pf_wait_queues_disabled(struct i40e_pf *pf)
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -73,9 +73,13 @@ static int ucsi_acpi_sync_write(struct u
+ 				const void *val, size_t val_len)
  {
- 	int v, ret = 0;
+ 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
+ 	int ret;
  
--	for (v = 0; v < pf->hw.func_caps.num_vsis; v++) {
-+	for (v = 0; v < pf->num_alloc_vsi; v++) {
- 		if (pf->vsi[v]) {
- 			ret = i40e_vsi_wait_queues_disabled(pf->vsi[v]);
- 			if (ret)
--- 
-2.43.0
-
+-	set_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		set_bit(ACK_PENDING, &ua->flags);
++	else
++		set_bit(COMMAND_PENDING, &ua->flags);
+ 
+ 	ret = ucsi_acpi_async_write(ucsi, offset, val, val_len);
+ 	if (ret)
+@@ -85,7 +89,10 @@ static int ucsi_acpi_sync_write(struct u
+ 		ret = -ETIMEDOUT;
+ 
+ out_clear_bit:
+-	clear_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		clear_bit(ACK_PENDING, &ua->flags);
++	else
++		clear_bit(COMMAND_PENDING, &ua->flags);
+ 
+ 	return ret;
+ }
+@@ -142,8 +149,10 @@ static void ucsi_acpi_notify(acpi_handle
+ 	if (UCSI_CCI_CONNECTOR(cci))
+ 		ucsi_connector_change(ua->ucsi, UCSI_CCI_CONNECTOR(cci));
+ 
+-	if (test_bit(COMMAND_PENDING, &ua->flags) &&
+-	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
++	if (cci & UCSI_CCI_ACK_COMPLETE && test_bit(ACK_PENDING, &ua->flags))
++		complete(&ua->complete);
++	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
++	    test_bit(COMMAND_PENDING, &ua->flags))
+ 		complete(&ua->complete);
+ }
+ 
 
 
