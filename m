@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625D5133987;
-	Tue, 20 Feb 2024 21:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64DA612D7;
+	Tue, 20 Feb 2024 21:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463517; cv=none; b=O+k3AqMBN7fS+dlYcSGo2fffOYP9sGN+13pMnBGePApvU3t/Vel+ph/adMT8kG5ujBrcHtXDQLn8qNNERXFx1+YB2sljrgfl88C6vUGYEkJp56/ScHEqlxCBD6+0sGqwEu2MJdEfZAUT069C4T5HGcxIfJiimn2gj4CHibNx+1k=
+	t=1708463520; cv=none; b=bUuLO7n0uIeJQQvUOOAAYVWtSGzoOCqpHmT9G+L6pTShmdomKvKT4RfMrU11XT1i9JzSfiyjPPN+OTD6+xAfWOo1b95dkdvVgB5QjAcfgQd9lV5Bvh830KQ2AH6ctaRFp27X7QZ6txo+lneeTJ8vrZStkD7HCtXC8cZLvDajB0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463517; c=relaxed/simple;
-	bh=njQ3FGvZdEVcGhzMV7k92pjfegfHM0UZ7htKeFcmtlU=;
+	s=arc-20240116; t=1708463520; c=relaxed/simple;
+	bh=Upnt1BVeyqXEQ118klnVOu7BPxraK1W2HWag2zqoBBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0EUnb6Y/nxr2KqnHbEU1HYf6RkQPTVLhbl7E5/gi6BZuOyxAidj48hTnNhQgNPOSjh1bt5gHMgaxyY1Fa2CH65OxABzU5hedMJW8CFDuD1yXUbLeEBehJfwny41+pvljzeZSPCrZclctKzWvRQ8ig1RetyNqD5wZ9BRbBbH48w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeMm+Q65; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cGjrffzHN+oYun+4jG2/bG2l7ze8apzCZC/lU12ITW74NIg4jvl1Pwi3QLu022AcDRiWIVwAFvyrJ/Z8K/01eFvq4XVvqKcTAHaWggpFzwWSTy06gFaL91Q3fbxZf55UpoFTJKP4/M+mn3MYUBJ4DUEhYyFVJMO8nW9pAhFcW8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ki8qeZcV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeMm+Q65"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1404C433F1;
-	Tue, 20 Feb 2024 21:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ki8qeZcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9805C433F1;
+	Tue, 20 Feb 2024 21:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463517;
-	bh=njQ3FGvZdEVcGhzMV7k92pjfegfHM0UZ7htKeFcmtlU=;
+	s=korg; t=1708463520;
+	bh=Upnt1BVeyqXEQ118klnVOu7BPxraK1W2HWag2zqoBBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeMm+Q65RimH1moICfjqdrqGGxKpi8Wip9xR7xmT1Ji0g34MDfMp053xtYqw89IhG
-	 5NsGPjyLVlsBCf1sTTZfdj061uufQ2leaynEnJoCZE/sHEokY7zUyQijZlZ6yRF7mL
-	 KHcdxzKAxfue9AaeRieY9BRB6MKENmqZZQ0LFq54=
+	b=ki8qeZcVoMjTsb8sxx3XiaXugrG8fcIUdbak32LXANpgmMYkIiYfusBSnZWz0lYFv
+	 7+nH60QRz+5t+s2yDxuvIR2ieb4T5wwUekr5gCuyC5ZsC0pjAbTi7XB0QE8jXs3vs6
+	 9shG06IJre2faM0ITLwbuLFN4PNi8gncwyD71IO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 068/331] parisc: Prevent hung tasks when printing inventory on serial console
-Date: Tue, 20 Feb 2024 21:53:04 +0100
-Message-ID: <20240220205639.718345440@linuxfoundation.org>
+	David Senoner <seda18@rolmail.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 069/331] ALSA: hda/realtek: Fix the external mic not being recognised for Acer Swift 1 SF114-32
+Date: Tue, 20 Feb 2024 21:53:05 +0100
+Message-ID: <20240220205639.747705697@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -49,32 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: David Senoner <seda18@rolmail.net>
 
-commit c8708d758e715c3824a73bf0cda97292b52be44d upstream.
+commit efb56d84dd9c3de3c99fc396abb57c6d330038b5 upstream.
 
-Printing the inventory on a serial console can be quite slow and thus may
-trigger the hung task detector (CONFIG_DETECT_HUNG_TASK=y) and possibly
-reboot the machine. Adding a cond_resched() prevents this.
+If you connect an external headset/microphone to the 3.5mm jack on the
+Acer Swift 1 SF114-32 it does not recognize the microphone. This fixes
+that and gives the user the ability to choose between internal and
+headset mic.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v6.0+
+Signed-off-by: David Senoner <seda18@rolmail.net>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240126155626.2304465-1-seda18@rolmail.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/drivers.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/parisc/kernel/drivers.c
-+++ b/arch/parisc/kernel/drivers.c
-@@ -1004,6 +1004,9 @@ static __init int qemu_print_iodc_data(s
- 
- 	pr_info("\n");
- 
-+	/* Prevent hung task messages when printing on serial console */
-+	cond_resched();
-+
- 	pr_info("#define HPA_%08lx_DESCRIPTION \"%s\"\n",
- 		hpa, parisc_hardware_description(&dev->id));
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9549,6 +9549,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1025, 0x1247, "Acer vCopperbox", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1025, 0x1248, "Acer Veriton N4660G", ALC269VC_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1269, "Acer SWIFT SF314-54", ALC256_FIXUP_ACER_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1025, 0x126a, "Acer Swift SF114-32", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x128f, "Acer Veriton Z6860G", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1290, "Acer Veriton Z4860G", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1291, "Acer Veriton Z4660G", ALC286_FIXUP_ACER_AIO_HEADSET_MIC),
 
 
