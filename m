@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6511509AE;
-	Tue, 20 Feb 2024 21:01:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC731509BC;
+	Tue, 20 Feb 2024 21:01:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462882; cv=none; b=qY0S1UvYix2ZaxjhW0lkJpEdVhs+alf2uyPJJFHmVgi5pcHl/Z5/cR7PZOW64ioIZwlxvSM0fs/1zTObzZPLhJMOHDdPOo7YNsmOxmyKBDZtsA/jTamHgAKjtD3X992fNBJrVWv2wUrKQFJCvFNndpzSUCYemNgAL9tpkS1eplI=
+	t=1708462885; cv=none; b=Tasj/UGhrCrVX+ZvVtRKnnJrwBvz/g/+Wy/biTppPKAR8xkHQu4agmUTD0yl1wL0/HiDZQZmhDesq3vUlVJFaCNOg1uGvHOXSFhjWAii0EZftdn6+j1roU/IWuqLC3BZauwZJtt5bteNyCHOw8rwg0JCrh8H1kWU1g4cxROERZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462882; c=relaxed/simple;
-	bh=w8mU+z8oMjQTddqEpr1OmXDsFLqXlS91abmp/JyNmbo=;
+	s=arc-20240116; t=1708462885; c=relaxed/simple;
+	bh=YntAsEXlLNHzArhJ/C/0d5AiLNs4fOon+9xTdcoDwMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LC7o6Sqz3/gFpfisUXUJz/VgwtbHCoFbmFJfE3q+ryqq1XImzA9rSxzmFHmXJihuF/7XWuqUQ5kcb9TcSDtvR4qi+e9UgdRnvMIwrwHuYaRikvuTxCIfUNg8aDiX1dhUcp61wUV7ssTvnoknGVFBFmKHRLE6CFkLHuqu2DX83z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qje/Qa9x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+taNEhdRB0gZ8brFRqpYW4pciLXDjCRD8jNHz4Emw5yIH3x8D4cb2kNTMRY8s8FW4TbzX8eOpLqvaMsCfGI3ThghqY0k7VI3MEAufYFkpz03lDp25AKf9Cel6J/1LFwe1yFB7LnPvCMU0lcgOuPjnIpulsgtdy3rj1gx87+2M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgyyTEck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qje/Qa9x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451D2C433C7;
-	Tue, 20 Feb 2024 21:01:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgyyTEck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC5EC433F1;
+	Tue, 20 Feb 2024 21:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462881;
-	bh=w8mU+z8oMjQTddqEpr1OmXDsFLqXlS91abmp/JyNmbo=;
+	s=korg; t=1708462884;
+	bh=YntAsEXlLNHzArhJ/C/0d5AiLNs4fOon+9xTdcoDwMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qje/Qa9xXexD4y1LB3dDFD1qw42uEVWbUbl8AN6wlw2zQ5TJWwBoxAbSwfzkIQpHr
-	 RdDZDHUzjZp0eMwSioz6CE/to16pLAazgLLILH9gjAabIPHGoiRJCoAO1+wpUSc+J/
-	 OXP+SbX2NMwFi5Kx1ZXtkoHYMaG6+W2l3Jg/tT70=
+	b=OgyyTEckLVfnjtgGuxboXZsG5P8BEykTvG5OzMTnxQZtxl+BhPkOWpp56O4OY2ZKL
+	 nCNbwVLxQ5yd8bFNdC4WDVrQXuiCurJDLsBOR7HTbcb2+EG1jxlL/LkpgA4BU+QgB9
+	 cZU99k4cSBplruPGIQp3RjY5yL87eLjqMP4gUhCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 039/197] dm-crypt, dm-verity: disable tasklets
-Date: Tue, 20 Feb 2024 21:49:58 +0100
-Message-ID: <20240220204842.249151062@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Christoph Paasch <cpaasch@apple.com>
+Subject: [PATCH 6.1 066/197] mptcp: get rid of msk->subflow
+Date: Tue, 20 Feb 2024 21:50:25 +0100
+Message-ID: <20240220204843.056343381@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,182 +51,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 0a9bab391e336489169b95cb0d4553d921302189 upstream.
+commit 39880bd808ad2ddfb9b7fee129568c3b814f0609 upstream.
 
-Tasklets have an inherent problem with memory corruption. The function
-tasklet_action_common calls tasklet_trylock, then it calls the tasklet
-callback and then it calls tasklet_unlock. If the tasklet callback frees
-the structure that contains the tasklet or if it calls some code that may
-free it, tasklet_unlock will write into free memory.
+This is a partial backport of the upstram commit 39880bd808ad ("mptcp:
+get rid of msk->subflow"). It's partial to avoid a long a complex
+dependency chain not suitable for stable.
 
-The commits 8e14f610159d and d9a02e016aaf try to fix it for dm-crypt, but
-it is not a sufficient fix and the data corruption can still happen [1].
-There is no fix for dm-verity and dm-verity will write into free memory
-with every tasklet-processed bio.
+The only bit remaning from the original commit is the introduction of a
+new field avoid a race at close time causing an UaF:
 
-There will be atomic workqueues implemented in the kernel 6.9 [2]. They
-will have better interface and they will not suffer from the memory
-corruption problem.
+BUG: KASAN: use-after-free in mptcp_subflow_queue_clean+0x2c9/0x390 include/net/mptcp.h:104
+Read of size 1 at addr ffff88803bf72884 by task syz-executor.6/23092
 
-But we need something that stops the memory corruption now and that can be
-backported to the stable kernels. So, I'm proposing this commit that
-disables tasklets in both dm-crypt and dm-verity. This commit doesn't
-remove the tasklet support, because the tasklet code will be reused when
-atomic workqueues will be implemented.
+CPU: 0 PID: 23092 Comm: syz-executor.6 Not tainted 6.1.65-gc6114c845984 #50
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x125/0x18f lib/dump_stack.c:106
+ print_report+0x163/0x4f0 mm/kasan/report.c:284
+ kasan_report+0xc4/0x100 mm/kasan/report.c:495
+ mptcp_subflow_queue_clean+0x2c9/0x390 include/net/mptcp.h:104
+ mptcp_check_listen_stop+0x190/0x2a0 net/mptcp/protocol.c:3009
+ __mptcp_close+0x9a/0x970 net/mptcp/protocol.c:3024
+ mptcp_close+0x2a/0x130 net/mptcp/protocol.c:3089
+ inet_release+0x13d/0x190 net/ipv4/af_inet.c:429
+ sock_close+0xcf/0x230 net/socket.c:652
+ __fput+0x3a2/0x870 fs/file_table.c:320
+ task_work_run+0x24e/0x300 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop+0xa4/0xc0 kernel/entry/common.c:171
+ exit_to_user_mode_prepare+0x51/0x90 kernel/entry/common.c:204
+ syscall_exit_to_user_mode+0x26/0x140 kernel/entry/common.c:286
+ do_syscall_64+0x53/0xa0 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x64/0xce
+RIP: 0033:0x41d791
+Code: 75 14 b8 03 00 00 00 0f 05 48 3d 01 f0 ff ff 0f 83 74 2a 00 00 c3 48 83 ec 08 e8 9a fc ff ff 48 89 04 24 b8 03 00 00 00 0f 05 <48> 8b 3c 24 48 89 c2 e8 e3 fc ff ff 48 89 d0 48 83 c4 08 48 3d 01
+RSP: 002b:00000000008bfb90 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
+RAX: 0000000000000000 RBX: 0000000000000004 RCX: 000000000041d791
+RDX: 0000001b33920000 RSI: ffffffff8139adff RDI: 0000000000000003
+RBP: 000000000079d980 R08: 0000001b33d20000 R09: 0000000000000951
+R10: 000000008139a955 R11: 0000000000000293 R12: 00000000000c739b
+R13: 000000000079bf8c R14: 00007fa301053000 R15: 00000000000c705a
+ </TASK>
 
-[1] https://lore.kernel.org/all/d390d7ee-f142-44d3-822a-87949e14608b@suse.de/T/
-[2] https://lore.kernel.org/lkml/20240130091300.2968534-1-tj@kernel.org/
+Allocated by task 22528:
+ kasan_save_stack mm/kasan/common.c:45 [inline]
+ kasan_set_track+0x40/0x70 mm/kasan/common.c:52
+ ____kasan_kmalloc mm/kasan/common.c:374 [inline]
+ __kasan_kmalloc+0xa0/0xb0 mm/kasan/common.c:383
+ kasan_kmalloc include/linux/kasan.h:211 [inline]
+ __do_kmalloc_node mm/slab_common.c:955 [inline]
+ __kmalloc+0xaa/0x1c0 mm/slab_common.c:968
+ kmalloc include/linux/slab.h:558 [inline]
+ sk_prot_alloc+0xac/0x200 net/core/sock.c:2038
+ sk_clone_lock+0x56/0x1090 net/core/sock.c:2236
+ inet_csk_clone_lock+0x26/0x420 net/ipv4/inet_connection_sock.c:1141
+ tcp_create_openreq_child+0x30/0x1910 net/ipv4/tcp_minisocks.c:474
+ tcp_v6_syn_recv_sock+0x413/0x1a90 net/ipv6/tcp_ipv6.c:1283
+ subflow_syn_recv_sock+0x621/0x1300 net/mptcp/subflow.c:730
+ tcp_get_cookie_sock+0xf0/0x5f0 net/ipv4/syncookies.c:201
+ cookie_v6_check+0x130f/0x1c50 net/ipv6/syncookies.c:261
+ tcp_v6_do_rcv+0x7e0/0x12b0 net/ipv6/tcp_ipv6.c:1147
+ tcp_v6_rcv+0x2494/0x2f50 net/ipv6/tcp_ipv6.c:1743
+ ip6_protocol_deliver_rcu+0xba3/0x1620 net/ipv6/ip6_input.c:438
+ ip6_input+0x1bc/0x470 net/ipv6/ip6_input.c:483
+ ipv6_rcv+0xef/0x2c0 include/linux/netfilter.h:302
+ __netif_receive_skb+0x1ea/0x6a0 net/core/dev.c:5525
+ process_backlog+0x353/0x660 net/core/dev.c:5967
+ __napi_poll+0xc6/0x5a0 net/core/dev.c:6534
+ net_rx_action+0x652/0xea0 net/core/dev.c:6601
+ __do_softirq+0x176/0x525 kernel/softirq.c:571
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: 39d42fa96ba1b ("dm crypt: add flags to optionally bypass kcryptd workqueues")
-Fixes: 5721d4e5a9cdb ("dm verity: Add optional "try_verify_in_tasklet" feature")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Freed by task 23093:
+ kasan_save_stack mm/kasan/common.c:45 [inline]
+ kasan_set_track+0x40/0x70 mm/kasan/common.c:52
+ kasan_save_free_info+0x2b/0x50 mm/kasan/generic.c:516
+ ____kasan_slab_free+0x13a/0x1b0 mm/kasan/common.c:236
+ kasan_slab_free include/linux/kasan.h:177 [inline]
+ slab_free_hook mm/slub.c:1724 [inline]
+ slab_free_freelist_hook mm/slub.c:1750 [inline]
+ slab_free mm/slub.c:3661 [inline]
+ __kmem_cache_free+0x1eb/0x340 mm/slub.c:3674
+ sk_prot_free net/core/sock.c:2074 [inline]
+ __sk_destruct+0x4ad/0x620 net/core/sock.c:2160
+ tcp_v6_rcv+0x269c/0x2f50 net/ipv6/tcp_ipv6.c:1761
+ ip6_protocol_deliver_rcu+0xba3/0x1620 net/ipv6/ip6_input.c:438
+ ip6_input+0x1bc/0x470 net/ipv6/ip6_input.c:483
+ ipv6_rcv+0xef/0x2c0 include/linux/netfilter.h:302
+ __netif_receive_skb+0x1ea/0x6a0 net/core/dev.c:5525
+ process_backlog+0x353/0x660 net/core/dev.c:5967
+ __napi_poll+0xc6/0x5a0 net/core/dev.c:6534
+ net_rx_action+0x652/0xea0 net/core/dev.c:6601
+ __do_softirq+0x176/0x525 kernel/softirq.c:571
+
+The buggy address belongs to the object at ffff88803bf72000
+ which belongs to the cache kmalloc-4k of size 4096
+The buggy address is located 2180 bytes inside of
+ 4096-byte region [ffff88803bf72000, ffff88803bf73000)
+
+The buggy address belongs to the physical page:
+page:00000000a72e4e51 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x3bf70
+head:00000000a72e4e51 order:3 compound_mapcount:0 compound_pincount:0
+flags: 0x100000000010200(slab|head|node=0|zone=1)
+raw: 0100000000010200 ffffea0000a0ea00 dead000000000002 ffff888100042140
+raw: 0000000000000000 0000000000040004 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff88803bf72780: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88803bf72800: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff88803bf72880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                   ^
+ ffff88803bf72900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff88803bf72980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Prevent the MPTCP worker from freeing the first subflow for unaccepted
+socket when such sockets transition to TCP_CLOSE state, and let that
+happen at accept() or listener close() time.
+
+Fixes: b6985b9b8295 ("mptcp: use the workqueue to destroy unaccepted sockets")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Tested-by: Christoph Paasch <cpaasch@apple.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c         |   37 ++-----------------------------------
- drivers/md/dm-verity-target.c |   26 ++------------------------
- drivers/md/dm-verity.h        |    1 -
- 3 files changed, 4 insertions(+), 60 deletions(-)
+ net/mptcp/protocol.c |    9 ++++-----
+ net/mptcp/protocol.h |    3 ++-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -72,10 +72,8 @@ struct dm_crypt_io {
- 	struct bio *base_bio;
- 	u8 *integrity_metadata;
- 	bool integrity_metadata_from_pool:1;
--	bool in_tasklet:1;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2422,7 +2422,7 @@ static void __mptcp_close_ssk(struct soc
+ 		goto out_release;
+ 	}
  
- 	struct work_struct work;
--	struct tasklet_struct tasklet;
+-	dispose_it = !msk->subflow || ssk != msk->subflow->sk;
++	dispose_it = msk->free_first || ssk != msk->first;
+ 	if (dispose_it)
+ 		list_del(&subflow->node);
  
- 	struct convert_context ctx;
+@@ -2440,7 +2440,6 @@ static void __mptcp_close_ssk(struct soc
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+ 		__mptcp_subflow_disconnect(ssk, subflow, flags);
+-		msk->subflow->state = SS_UNCONNECTED;
+ 		release_sock(ssk);
  
-@@ -1729,7 +1727,6 @@ static void crypt_io_init(struct dm_cryp
- 	io->ctx.r.req = NULL;
- 	io->integrity_metadata = NULL;
- 	io->integrity_metadata_from_pool = false;
--	io->in_tasklet = false;
- 	atomic_set(&io->io_pending, 0);
- }
+ 		goto out;
+@@ -3341,10 +3340,10 @@ static void mptcp_destroy(struct sock *s
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
  
-@@ -1738,12 +1735,6 @@ static void crypt_inc_pending(struct dm_
- 	atomic_inc(&io->io_pending);
- }
- 
--static void kcryptd_io_bio_endio(struct work_struct *work)
--{
--	struct dm_crypt_io *io = container_of(work, struct dm_crypt_io, work);
--	bio_endio(io->base_bio);
--}
--
- /*
-  * One of the bios was finished. Check for completion of
-  * the whole request and correctly clean up the buffer.
-@@ -1767,20 +1758,6 @@ static void crypt_dec_pending(struct dm_
- 
- 	base_bio->bi_status = error;
- 
--	/*
--	 * If we are running this function from our tasklet,
--	 * we can't call bio_endio() here, because it will call
--	 * clone_endio() from dm.c, which in turn will
--	 * free the current struct dm_crypt_io structure with
--	 * our tasklet. In this case we need to delay bio_endio()
--	 * execution to after the tasklet is done and dequeued.
+-	/* clears msk->subflow, allowing the following to close
+-	 * even the initial subflow
 -	 */
--	if (io->in_tasklet) {
--		INIT_WORK(&io->work, kcryptd_io_bio_endio);
--		queue_work(cc->io_queue, &io->work);
--		return;
--	}
--
- 	bio_endio(base_bio);
+ 	mptcp_dispose_initial_subflow(msk);
++
++	/* allow the following to close even the initial subflow */
++	msk->free_first = 1;
+ 	mptcp_destroy_common(msk, 0);
+ 	sk_sockets_allocated_dec(sk);
  }
- 
-@@ -2213,11 +2190,6 @@ static void kcryptd_crypt(struct work_st
- 		kcryptd_crypt_write_convert(io);
- }
- 
--static void kcryptd_crypt_tasklet(unsigned long work)
--{
--	kcryptd_crypt((struct work_struct *)work);
--}
--
- static void kcryptd_queue_crypt(struct dm_crypt_io *io)
- {
- 	struct crypt_config *cc = io->cc;
-@@ -2229,15 +2201,10 @@ static void kcryptd_queue_crypt(struct d
- 		 * irqs_disabled(): the kernel may run some IO completion from the idle thread, but
- 		 * it is being executed with irqs disabled.
- 		 */
--		if (in_hardirq() || irqs_disabled()) {
--			io->in_tasklet = true;
--			tasklet_init(&io->tasklet, kcryptd_crypt_tasklet, (unsigned long)&io->work);
--			tasklet_schedule(&io->tasklet);
-+		if (!(in_hardirq() || irqs_disabled())) {
-+			kcryptd_crypt(&io->work);
- 			return;
- 		}
--
--		kcryptd_crypt(&io->work);
--		return;
- 	}
- 
- 	INIT_WORK(&io->work, kcryptd_crypt);
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -634,23 +634,6 @@ static void verity_work(struct work_stru
- 	verity_finish_io(io, errno_to_blk_status(verity_verify_io(io)));
- }
- 
--static void verity_tasklet(unsigned long data)
--{
--	struct dm_verity_io *io = (struct dm_verity_io *)data;
--	int err;
--
--	io->in_tasklet = true;
--	err = verity_verify_io(io);
--	if (err == -EAGAIN || err == -ENOMEM) {
--		/* fallback to retrying with work-queue */
--		INIT_WORK(&io->work, verity_work);
--		queue_work(io->v->verify_wq, &io->work);
--		return;
--	}
--
--	verity_finish_io(io, errno_to_blk_status(err));
--}
--
- static void verity_end_io(struct bio *bio)
- {
- 	struct dm_verity_io *io = bio->bi_private;
-@@ -663,13 +646,8 @@ static void verity_end_io(struct bio *bi
- 		return;
- 	}
- 
--	if (static_branch_unlikely(&use_tasklet_enabled) && io->v->use_tasklet) {
--		tasklet_init(&io->tasklet, verity_tasklet, (unsigned long)io);
--		tasklet_schedule(&io->tasklet);
--	} else {
--		INIT_WORK(&io->work, verity_work);
--		queue_work(io->v->verify_wq, &io->work);
--	}
-+	INIT_WORK(&io->work, verity_work);
-+	queue_work(io->v->verify_wq, &io->work);
- }
- 
- /*
---- a/drivers/md/dm-verity.h
-+++ b/drivers/md/dm-verity.h
-@@ -83,7 +83,6 @@ struct dm_verity_io {
- 	struct bvec_iter iter;
- 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -287,7 +287,8 @@ struct mptcp_sock {
+ 			cork:1,
+ 			nodelay:1,
+ 			fastopening:1,
+-			in_accept_queue:1;
++			in_accept_queue:1,
++			free_first:1;
  	struct work_struct work;
--	struct tasklet_struct tasklet;
- 
- 	/*
- 	 * Three variably-size fields follow this struct:
+ 	struct sk_buff  *ooo_last_skb;
+ 	struct rb_root  out_of_order_queue;
 
 
