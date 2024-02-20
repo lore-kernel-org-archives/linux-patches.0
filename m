@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB9E14AD12;
-	Tue, 20 Feb 2024 21:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE09414AD12;
+	Tue, 20 Feb 2024 21:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463344; cv=none; b=erHAkX2ubSUQp8mtXMNU38Jih/RNiSJAgFnNMYV1k7c9itJx8LWBZZKn8IZ0D3IwaYxl/Iv7GXC722MKMp/vC8xEhW2bLBh3kLQPPPR12SOxZMISlTCXVECpFCVyxEwrrzlPY+FAqXLC/CjfnYXVLAytFdgO4Di4n0sPrwvhbGk=
+	t=1708463348; cv=none; b=MB2CExW7I43uZ8G2V64KBE9lwX2rIL8ogEmDERtqWIUf7klzh9uV3Vm3W0tjVj5mzyMWsCm5rcLUGc5Gv6fJU0Rl/IiFxCGm66jCzyxPf2g7zBWuFy6nNVDKVeuKJMsHQKudSvxhJAu/vTLPg05dHTKSFckEllL9rBQbENuqofE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463344; c=relaxed/simple;
-	bh=H7UVuALMMvza4udjflVKC888AZPb79K+ypjlKdLqsd0=;
+	s=arc-20240116; t=1708463348; c=relaxed/simple;
+	bh=EUON+XYnCKsHXj9UrBo519PiuL7BLHEKCFlp3rB5spw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0sLnVpYzPbT0LjJRta8vvsEme1Yg3Jt/BQvDVmfFKSSfnp3+R1IbC4+wP//GsYObNA1s5p8kamnjWEk5RkPC72j8dZdVekdYIlRsRGiFFYOsEYFnrYHw1jU+62GKMAcK/5f+DLhXfNMZ3XXKQXwkkVPDoV9GWtiHaWT5O57G9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wQrP8fv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gS8HANFLzTYFdmnoNbSLSk8B8IECt/47JEa8Ii5Iqh6rEcH/1qn5iDWvoNOHwGYN+CpPqY1ySVDTI1X9wb4LPcW1sAGKbb9AQPx45ESOZU8fL1aZ9q4It9z7/IJvYI373ZgQ0HkH9QZTFqqfnvsQfklOU7ONvYRf4zw2UL9iA5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJmHOdAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wQrP8fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071A8C433F1;
-	Tue, 20 Feb 2024 21:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJmHOdAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AB1C433C7;
+	Tue, 20 Feb 2024 21:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463344;
-	bh=H7UVuALMMvza4udjflVKC888AZPb79K+ypjlKdLqsd0=;
+	s=korg; t=1708463347;
+	bh=EUON+XYnCKsHXj9UrBo519PiuL7BLHEKCFlp3rB5spw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wQrP8fv0U5kTw3Hb+9fpIW7PjZzLQzU4fhBjrdewcQxk+lph1neAiJUcwlpzWMAK
-	 528l0cOt1Rn1o72xj0qRiQ81jfQ6MrNvfCJ95+IdDO9P3gJPDBW560bhL9yC6CHVGk
-	 sqyhilQNEWwK2auo6n2nGalN88UBayOwk6qxP6hY=
+	b=tJmHOdAE784vQQ+LJW7lBFGu5lq6rztbb23t+nJmdcTdeGJ9FifcPp/KeXYyDXBoP
+	 Rxa/lKxGgChKqvG5SyS1bHUwMWjX2wJYFjI0pxy9t8A/iKUlg5F9rEJ834/7tzQbeG
+	 6lAkS6pcO56C4ArXLB9pqBCZTl0Iv4uP3GaNC9V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
+	kernel test robot <lkp@intel.com>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/331] KVM: selftests: Avoid infinite loop in hyperv_features when invtsc is missing
-Date: Tue, 20 Feb 2024 21:52:11 +0100
-Message-ID: <20240220205638.065692134@linuxfoundation.org>
+Subject: [PATCH 6.6 016/331] of: unittest: Fix compile in the non-dynamic case
+Date: Tue, 20 Feb 2024 21:52:12 +0100
+Message-ID: <20240220205638.094902142@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,73 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-[ Upstream commit 8ad4855273488c9bd5320b3fee80f66f0023f326 ]
+[ Upstream commit 607aad1e4356c210dbef9022955a3089377909b2 ]
 
-When X86_FEATURE_INVTSC is missing, guest_test_msrs_access() was supposed
-to skip testing dependent Hyper-V invariant TSC feature. Unfortunately,
-'continue' does not lead to that as stage is not incremented. Moreover,
-'vm' allocated with vm_create_with_one_vcpu() is not freed and the test
-runs out of available file descriptors very quickly.
+If CONFIG_OF_KOBJ is not set, a device_node does not contain a
+kobj and attempts to access the embedded kobj via kref_read break
+the compile.
 
-Fixes: bd827bd77537 ("KVM: selftests: Test Hyper-V invariant TSC control")
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://lore.kernel.org/r/20240129085847.2674082-1-vkuznets@redhat.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Replace affected kref_read calls with a macro that reads the
+refcount if it exists and returns 1 if there is no embedded kobj.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202401291740.VP219WIz-lkp@intel.com/
+Fixes: 4dde83569832 ("of: Fix double free in of_parse_phandle_with_args_map")
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://lore.kernel.org/r/20240129192556.403271-1-lk@c--e.de
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kvm/x86_64/hyperv_features.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/of/unittest.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/kvm/x86_64/hyperv_features.c b/tools/testing/selftests/kvm/x86_64/hyperv_features.c
-index 9f28aa276c4e..a726831b8024 100644
---- a/tools/testing/selftests/kvm/x86_64/hyperv_features.c
-+++ b/tools/testing/selftests/kvm/x86_64/hyperv_features.c
-@@ -454,7 +454,7 @@ static void guest_test_msrs_access(void)
- 		case 44:
- 			/* MSR is not available when CPUID feature bit is unset */
- 			if (!has_invtsc)
--				continue;
-+				goto next_stage;
- 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
- 			msr->write = false;
- 			msr->fault_expected = true;
-@@ -462,7 +462,7 @@ static void guest_test_msrs_access(void)
- 		case 45:
- 			/* MSR is vailable when CPUID feature bit is set */
- 			if (!has_invtsc)
--				continue;
-+				goto next_stage;
- 			vcpu_set_cpuid_feature(vcpu, HV_ACCESS_TSC_INVARIANT);
- 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
- 			msr->write = false;
-@@ -471,7 +471,7 @@ static void guest_test_msrs_access(void)
- 		case 46:
- 			/* Writing bits other than 0 is forbidden */
- 			if (!has_invtsc)
--				continue;
-+				goto next_stage;
- 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
- 			msr->write = true;
- 			msr->write_val = 0xdeadbeef;
-@@ -480,7 +480,7 @@ static void guest_test_msrs_access(void)
- 		case 47:
- 			/* Setting bit 0 enables the feature */
- 			if (!has_invtsc)
--				continue;
-+				goto next_stage;
- 			msr->idx = HV_X64_MSR_TSC_INVARIANT_CONTROL;
- 			msr->write = true;
- 			msr->write_val = 1;
-@@ -513,6 +513,7 @@ static void guest_test_msrs_access(void)
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index f278def7ef03..4f58345b5c68 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -50,6 +50,12 @@ static struct unittest_results {
+ 	failed; \
+ })
+ 
++#ifdef CONFIG_OF_KOBJ
++#define OF_KREF_READ(NODE) kref_read(&(NODE)->kobj.kref)
++#else
++#define OF_KREF_READ(NODE) 1
++#endif
++
+ /*
+  * Expected message may have a message level other than KERN_INFO.
+  * Print the expected message only if the current loglevel will allow
+@@ -570,7 +576,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 			pr_err("missing testcase data\n");
  			return;
  		}
- 
-+next_stage:
- 		stage++;
- 		kvm_vm_free(vm);
+-		prefs[i] = kref_read(&p[i]->kobj.kref);
++		prefs[i] = OF_KREF_READ(p[i]);
  	}
+ 
+ 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
+@@ -693,9 +699,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(p); ++i) {
+-		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
++		unittest(prefs[i] == OF_KREF_READ(p[i]),
+ 			 "provider%d: expected:%d got:%d\n",
+-			 i, prefs[i], kref_read(&p[i]->kobj.kref));
++			 i, prefs[i], OF_KREF_READ(p[i]));
+ 		of_node_put(p[i]);
+ 	}
+ }
 -- 
 2.43.0
 
