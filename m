@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985AE2DF9F;
-	Tue, 20 Feb 2024 21:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC512DF9F;
+	Tue, 20 Feb 2024 21:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465293; cv=none; b=Mel8p6RfbHj3n/0EEdpkWKm/y6FOwuub+AwHy4wSk8Dv2AAaS+x9wndTMHKgrbNDuhLWm3/IPWXfnsfkGl+oE4UiyILo94y/8op69mZpBEO8oTbK8LU0nEsLn3aMvHhQlzNuyehQXsPgHWRvJj203yPdXOU4mkqBi0cX0TX3o9k=
+	t=1708465296; cv=none; b=nhhQoFjVm6L4i/pnyJQ+mDj8F6KZyTiETjLSGgRwnAvxSk87aVBRA+pQkQRGBPSz7ib+YSr3YeEP4siHhwCRo0aCJIAFDhfeauArAwXDk0c/49u4DEtQxqcwSnJyVMvD95Crsn0bJHSZPMnX0PvulaKcg10veZ5yOCP13emWKaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465293; c=relaxed/simple;
-	bh=JD5BA4SkG6lK0oFyrj2A1Dn6h3Koqqq6pmhwdJ0e6WU=;
+	s=arc-20240116; t=1708465296; c=relaxed/simple;
+	bh=dNBMnyU7QSBvJXRLznPluatkB9cC9iP9fwxgKy6ZCnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0ru1lYSs/h1Iq5qzjFxVHE0dfLWpw0e8oqpZIIV6G8h3dSENrlbXYcbE7FeYrLQPbcFO9d0wlTO3fyvEtDci2mkO5Evugn6h/i7aUxZ1wSDzH5Lw0XKnogWawQyH8E32rhNxJ8Bawk7ITvXDj4fWLma3KryvKqMoCRPqROXflw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdSG7txi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHGN16UhpyMmawugZTqTumvLVaxL3xwTJ0WDl5D2iBeJA2s6hvOwG/LCSLFSMuYI0qEOIgl9NTTBxDEA7AmHDrUOOWPhqrqKvbexB2e92ubpCwaWQucGD0oC8TiJ3j4NkKiiRwE8RJ3U2Pl/wZikH6QNOianwfPmjI3RaTBorfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWoUJ+cH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdSG7txi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072DCC433C7;
-	Tue, 20 Feb 2024 21:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWoUJ+cH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD91C433F1;
+	Tue, 20 Feb 2024 21:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465293;
-	bh=JD5BA4SkG6lK0oFyrj2A1Dn6h3Koqqq6pmhwdJ0e6WU=;
+	s=korg; t=1708465296;
+	bh=dNBMnyU7QSBvJXRLznPluatkB9cC9iP9fwxgKy6ZCnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdSG7txi7cFs7KTOlCve5NHZujHOBjq6HTL+Qd5o2zmlTj09N6avtftKxzujIqupe
-	 72+Tlc1WJFZ9ojlsGFg9BYDo7p2iaWuHhtUghsCe114gewuALUlQXh0k/VTFFXnJl5
-	 mGAswlbdcTh+TfVS+gGCHmkKOUby6BAl32cdmk6w=
+	b=WWoUJ+cHFiQ0QH1zCFEJ7pS15yDNk1kbBwbvUlgMejCQhpjuDuYEH9jDCn1wYqvjw
+	 FuRJKKEPjHUAFNKn0M154ztswZh+rHW/9vOKgmku7ti0hztDNsDVhoN82eInZsyXki
+	 57jGWVcc2tSO6v6wKtbWoOiWxr9N8y3rdBknfAMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sili Luo <rootlab@huawei.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.7 298/309] can: j1939: Fix UAF in j1939_sk_match_filter during setsockopt(SO_J1939_FILTER)
-Date: Tue, 20 Feb 2024 21:57:37 +0100
-Message-ID: <20240220205642.415848156@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.7 299/309] pmdomain: core: Move the unused cleanup to a _sync initcall
+Date: Tue, 20 Feb 2024 21:57:38 +0100
+Message-ID: <20240220205642.448406469@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,194 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit efe7cf828039aedb297c1f9920b638fffee6aabc upstream.
+commit 741ba0134fa7822fcf4e4a0a537a5c4cfd706b20 upstream.
 
-Lock jsk->sk to prevent UAF when setsockopt(..., SO_J1939_FILTER, ...)
-modifies jsk->filters while receiving packets.
+The unused clock cleanup uses the _sync initcall to give all users at
+earlier initcalls time to probe. Do the same to avoid leaving some PDs
+dangling at "on" (which actually happened on qcom!).
 
-Following trace was seen on affected system:
- ==================================================================
- BUG: KASAN: slab-use-after-free in j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
- Read of size 4 at addr ffff888012144014 by task j1939/350
-
- CPU: 0 PID: 350 Comm: j1939 Tainted: G        W  OE      6.5.0-rc5 #1
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- Call Trace:
-  print_report+0xd3/0x620
-  ? kasan_complete_mode_report_info+0x7d/0x200
-  ? j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
-  kasan_report+0xc2/0x100
-  ? j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
-  __asan_load4+0x84/0xb0
-  j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
-  j1939_sk_recv+0x20b/0x320 [can_j1939]
-  ? __kasan_check_write+0x18/0x20
-  ? __pfx_j1939_sk_recv+0x10/0x10 [can_j1939]
-  ? j1939_simple_recv+0x69/0x280 [can_j1939]
-  ? j1939_ac_recv+0x5e/0x310 [can_j1939]
-  j1939_can_recv+0x43f/0x580 [can_j1939]
-  ? __pfx_j1939_can_recv+0x10/0x10 [can_j1939]
-  ? raw_rcv+0x42/0x3c0 [can_raw]
-  ? __pfx_j1939_can_recv+0x10/0x10 [can_j1939]
-  can_rcv_filter+0x11f/0x350 [can]
-  can_receive+0x12f/0x190 [can]
-  ? __pfx_can_rcv+0x10/0x10 [can]
-  can_rcv+0xdd/0x130 [can]
-  ? __pfx_can_rcv+0x10/0x10 [can]
-  __netif_receive_skb_one_core+0x13d/0x150
-  ? __pfx___netif_receive_skb_one_core+0x10/0x10
-  ? __kasan_check_write+0x18/0x20
-  ? _raw_spin_lock_irq+0x8c/0xe0
-  __netif_receive_skb+0x23/0xb0
-  process_backlog+0x107/0x260
-  __napi_poll+0x69/0x310
-  net_rx_action+0x2a1/0x580
-  ? __pfx_net_rx_action+0x10/0x10
-  ? __pfx__raw_spin_lock+0x10/0x10
-  ? handle_irq_event+0x7d/0xa0
-  __do_softirq+0xf3/0x3f8
-  do_softirq+0x53/0x80
-  </IRQ>
-  <TASK>
-  __local_bh_enable_ip+0x6e/0x70
-  netif_rx+0x16b/0x180
-  can_send+0x32b/0x520 [can]
-  ? __pfx_can_send+0x10/0x10 [can]
-  ? __check_object_size+0x299/0x410
-  raw_sendmsg+0x572/0x6d0 [can_raw]
-  ? __pfx_raw_sendmsg+0x10/0x10 [can_raw]
-  ? apparmor_socket_sendmsg+0x2f/0x40
-  ? __pfx_raw_sendmsg+0x10/0x10 [can_raw]
-  sock_sendmsg+0xef/0x100
-  sock_write_iter+0x162/0x220
-  ? __pfx_sock_write_iter+0x10/0x10
-  ? __rtnl_unlock+0x47/0x80
-  ? security_file_permission+0x54/0x320
-  vfs_write+0x6ba/0x750
-  ? __pfx_vfs_write+0x10/0x10
-  ? __fget_light+0x1ca/0x1f0
-  ? __rcu_read_unlock+0x5b/0x280
-  ksys_write+0x143/0x170
-  ? __pfx_ksys_write+0x10/0x10
-  ? __kasan_check_read+0x15/0x20
-  ? fpregs_assert_state_consistent+0x62/0x70
-  __x64_sys_write+0x47/0x60
-  do_syscall_64+0x60/0x90
-  ? do_syscall_64+0x6d/0x90
-  ? irqentry_exit+0x3f/0x50
-  ? exc_page_fault+0x79/0xf0
-  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
- Allocated by task 348:
-  kasan_save_stack+0x2a/0x50
-  kasan_set_track+0x29/0x40
-  kasan_save_alloc_info+0x1f/0x30
-  __kasan_kmalloc+0xb5/0xc0
-  __kmalloc_node_track_caller+0x67/0x160
-  j1939_sk_setsockopt+0x284/0x450 [can_j1939]
-  __sys_setsockopt+0x15c/0x2f0
-  __x64_sys_setsockopt+0x6b/0x80
-  do_syscall_64+0x60/0x90
-  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
- Freed by task 349:
-  kasan_save_stack+0x2a/0x50
-  kasan_set_track+0x29/0x40
-  kasan_save_free_info+0x2f/0x50
-  __kasan_slab_free+0x12e/0x1c0
-  __kmem_cache_free+0x1b9/0x380
-  kfree+0x7a/0x120
-  j1939_sk_setsockopt+0x3b2/0x450 [can_j1939]
-  __sys_setsockopt+0x15c/0x2f0
-  __x64_sys_setsockopt+0x6b/0x80
-  do_syscall_64+0x60/0x90
-  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Fixes: 9d71dd0c70099 ("can: add support of SAE J1939 protocol")
-Reported-by: Sili Luo <rootlab@huawei.com>
-Suggested-by: Sili Luo <rootlab@huawei.com>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Fixes: 2fe71dcdfd10 ("PM / domains: Add late_initcall to disable unused PM domains")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/all/20231020133814.383996-1-o.rempel@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/r/20231227-topic-pmdomain_sync_cleanup-v1-1-5f36769d538b@linaro.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/j1939-priv.h |    1 +
- net/can/j1939/socket.c     |   22 ++++++++++++++++++----
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ drivers/base/power/domain.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/can/j1939/j1939-priv.h
-+++ b/net/can/j1939/j1939-priv.h
-@@ -301,6 +301,7 @@ struct j1939_sock {
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -1111,7 +1111,7 @@ static int __init genpd_power_off_unused
  
- 	int ifindex;
- 	struct j1939_addr addr;
-+	spinlock_t filters_lock;
- 	struct j1939_filter *filters;
- 	int nfilters;
- 	pgn_t pgn_rx_filter;
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -262,12 +262,17 @@ static bool j1939_sk_match_dst(struct j1
- static bool j1939_sk_match_filter(struct j1939_sock *jsk,
- 				  const struct j1939_sk_buff_cb *skcb)
- {
--	const struct j1939_filter *f = jsk->filters;
--	int nfilter = jsk->nfilters;
-+	const struct j1939_filter *f;
-+	int nfilter;
-+
-+	spin_lock_bh(&jsk->filters_lock);
-+
-+	f = jsk->filters;
-+	nfilter = jsk->nfilters;
- 
- 	if (!nfilter)
- 		/* receive all when no filters are assigned */
--		return true;
-+		goto filter_match_found;
- 
- 	for (; nfilter; ++f, --nfilter) {
- 		if ((skcb->addr.pgn & f->pgn_mask) != f->pgn)
-@@ -276,9 +281,15 @@ static bool j1939_sk_match_filter(struct
- 			continue;
- 		if ((skcb->addr.src_name & f->name_mask) != f->name)
- 			continue;
--		return true;
-+		goto filter_match_found;
- 	}
-+
-+	spin_unlock_bh(&jsk->filters_lock);
- 	return false;
-+
-+filter_match_found:
-+	spin_unlock_bh(&jsk->filters_lock);
-+	return true;
+ 	return 0;
  }
+-late_initcall(genpd_power_off_unused);
++late_initcall_sync(genpd_power_off_unused);
  
- static bool j1939_sk_recv_match_one(struct j1939_sock *jsk,
-@@ -401,6 +412,7 @@ static int j1939_sk_init(struct sock *sk
- 	atomic_set(&jsk->skb_pending, 0);
- 	spin_lock_init(&jsk->sk_session_queue_lock);
- 	INIT_LIST_HEAD(&jsk->sk_session_queue);
-+	spin_lock_init(&jsk->filters_lock);
+ #ifdef CONFIG_PM_SLEEP
  
- 	/* j1939_sk_sock_destruct() depends on SOCK_RCU_FREE flag */
- 	sock_set_flag(sk, SOCK_RCU_FREE);
-@@ -703,9 +715,11 @@ static int j1939_sk_setsockopt(struct so
- 		}
- 
- 		lock_sock(&jsk->sk);
-+		spin_lock_bh(&jsk->filters_lock);
- 		ofilters = jsk->filters;
- 		jsk->filters = filters;
- 		jsk->nfilters = count;
-+		spin_unlock_bh(&jsk->filters_lock);
- 		release_sock(&jsk->sk);
- 		kfree(ofilters);
- 		return 0;
 
 
