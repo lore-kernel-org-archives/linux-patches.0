@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F83A14F9DA;
-	Tue, 20 Feb 2024 21:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E1614F9DA;
+	Tue, 20 Feb 2024 21:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465145; cv=none; b=UqugWVelFrq4gsOtYCEFgMIDc6UjidBbdFqxyT5Kx8nxQJvZ6g+Z6tOC+8/Ki3kjt9Rwhbif3xfNuabRqCYbwo9A2i4fd37eEFeH87XZUp53ABLDmvc7iXdN0K+RU/JHeELnTBvEV41Gwque2QPcsw+2W66/w9HUkIf8ytgTL1g=
+	t=1708465148; cv=none; b=fY/Gf/Ipkz3LJNCuewz+4VTtzQ9KTkgy/fBZOM1EGsR+UqsFz0vVzqOxLoY999Lng9whR2JfIYLWxe4AF1U95myM/DKZ96CJjNgjVVkzQekWNeHGdLexIK0Wojj10dIlz659ASVQnqkTFKJZNoXWN0I/9wY3FG3ghU5bNA088oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465145; c=relaxed/simple;
-	bh=fV+WJdfqWkB9ai/tHVu/A002IjuX+/PG1FNPfDXPDmY=;
+	s=arc-20240116; t=1708465148; c=relaxed/simple;
+	bh=VG05iOsIOttXd8xEwkSUcamU8bjfepln6wFRzkpqdiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kearbzrh6ymbJ7LGYdBGN1kCllkRFXmPIh0XlSBxPrZSYVRoFq7uMdPX2DYQaoizxNGeez7M965UCStgb+R5b/SRv9oNKCD9A2agAwN8okGkv4fi1BGfvMDfLYlwnJdZ9JH0UaPcHNPbObbf9u33UWZ1e1W6exUXmrEqoe7mPbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJAy0TsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FpgyugO8N0Lp2zwnFDGPDXl+81xe+AkZjOqPl+q0Z4TbBBZSirew0fT8K0YUo+mqgkYLevamqHEEEEPiBsM5ZBkLeh7NvwptKTEXWu6LlJM2xiohYjuIFW5XSssNjJjJG1mlZtxeLg7ymv0RyrV42N+DU82gBh8xJqoQjGo4720=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvCWAUrO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJAy0TsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D8BC433C7;
-	Tue, 20 Feb 2024 21:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvCWAUrO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213A0C433F1;
+	Tue, 20 Feb 2024 21:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465145;
-	bh=fV+WJdfqWkB9ai/tHVu/A002IjuX+/PG1FNPfDXPDmY=;
+	s=korg; t=1708465148;
+	bh=VG05iOsIOttXd8xEwkSUcamU8bjfepln6wFRzkpqdiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJAy0TsT5l0qEyPvu85U5S/BCVXwdNs0VegTXMFbfX/3kWkLmS+g6GQGmhxQf4PPZ
-	 OjFinUvD4UY+w5AjaYxMUtzVosa1UwRrF8/BJh9gBC3eoqcH8mhAx3agaVdAnm+Z2q
-	 BS43ic7UacKYqvGx/Vmsf8hsmyyhZfRZSz6e/tBg=
+	b=HvCWAUrOgd6oZ3PN6dDYAU7dGLSyhlt/WrXBQ8Sx/G+KED+LWZjAioVb2eBPe5yhI
+	 WAWCtgYyZSKM16Pwyp2rvfWcpGa0b/MxS6sJbKis3sFJjDfw6s3BwO3epBw29rR72J
+	 ZrtsXdUtgNM4iRm9cKYncQe6mK9hHsj1Djim6S4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guy Kaplan <guy.kaplan@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.7 250/309] wifi: iwlwifi: fix double-free bug
-Date: Tue, 20 Feb 2024 21:56:49 +0100
-Message-ID: <20240220205640.994869742@linuxfoundation.org>
+	Jouni Malinen <j@w1.fi>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.7 251/309] wifi: cfg80211: fix wiphy delayed work queueing
+Date: Tue, 20 Feb 2024 21:56:50 +0100
+Message-ID: <20240220205641.022971418@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -54,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-commit 353d321f63f7dbfc9ef58498cc732c9fe886a596 upstream.
+commit b743287d7a0007493f5cada34ed2085d475050b4 upstream.
 
-The storage for the TLV PC register data wasn't done like all
-the other storage in the drv->fw area, which is cleared at the
-end of deallocation. Therefore, the freeing must also be done
-differently, explicitly NULL'ing it out after the free, since
-otherwise there's a nasty double-free bug here if a file fails
-to load after this has been parsed, and we get another free
-later (e.g. because no other file exists.) Fix that by adding
-the missing NULL assignment.
+When a wiphy work is queued with timer, and then again
+without a delay, it's started immediately but *also*
+started again after the timer expires. This can lead,
+for example, to warnings in mac80211's offchannel code
+as reported by Jouni. Running the same work twice isn't
+expected, of course. Fix this by deleting the timer at
+this point, when queuing immediately due to delay=0.
 
 Cc: stable@vger.kernel.org
-Fixes: 5e31b3df86ec ("wifi: iwlwifi: dbg: print pc register data once fw dump occurred")
-Reported-by: Guy Kaplan <guy.kaplan@intel.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240123200528.675f3c24ec0d.I6ab4015cd78d82dd95471f840629972ef0331de3@changeid
+Reported-by: Jouni Malinen <j@w1.fi>
+Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
+Link: https://msgid.link/20240125095108.2feb0eaaa446.I4617f3210ed0e7f252290d5970dac6a876aa595b@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -128,6 +128,7 @@ static void iwl_dealloc_ucode(struct iwl
- 	kfree(drv->fw.ucode_capa.cmd_versions);
- 	kfree(drv->fw.phy_integration_ver);
- 	kfree(drv->trans->dbg.pc_data);
-+	drv->trans->dbg.pc_data = NULL;
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -5,7 +5,7 @@
+  * Copyright 2006-2010		Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+  * Copyright 2015-2017	Intel Deutschland GmbH
+- * Copyright (C) 2018-2023 Intel Corporation
++ * Copyright (C) 2018-2024 Intel Corporation
+  */
  
- 	for (i = 0; i < IWL_UCODE_TYPE_MAX; i++)
- 		iwl_free_fw_img(drv, drv->fw.img + i);
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+@@ -1661,6 +1661,7 @@ void wiphy_delayed_work_queue(struct wip
+ 			      unsigned long delay)
+ {
+ 	if (!delay) {
++		del_timer(&dwork->timer);
+ 		wiphy_work_queue(wiphy, &dwork->work);
+ 		return;
+ 	}
 
 
