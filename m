@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3496612D7;
-	Tue, 20 Feb 2024 21:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34DB612D7;
+	Tue, 20 Feb 2024 21:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465230; cv=none; b=lKqM8lIFd4l6Pduk4/+3bc9fTmLRHJxiQFwfbsl7KG+w/7r1KibDEDSmp/kZSgNXZndn9kWxxUHdtGrXW3REqBUjEV+qqKVMui9kVeum5x8+BgYA9MSTggE68QrNr08wx8BfLKFYby2usj2hth4el9W9fHtyL5unOz/bUZR5z2g=
+	t=1708465234; cv=none; b=j3AGhaH1eWD2IEFCcbsCADTJ3oPqUZRTrm0nwW72kZ2BJxKixK1tPlKdKhPlEEfibk0lGSpMbDwvsn/f0UsidZqY4qsDJynaDIaFuqa2zdY+EW/DecrG84+pJn/VolO3qfg3FGGT7cQfzHIBEXYx3RbcS2TTyH3uEFcBxcRJS/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465230; c=relaxed/simple;
-	bh=IVjcthMK0DiLPZ2PZZG+Rc6Dl+rq7tOisruH/fHrYUU=;
+	s=arc-20240116; t=1708465234; c=relaxed/simple;
+	bh=OmVqubZoclkRKpx/De1n7JtzAPYDknkbXDxVSI3w0iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZUDHpuZa0lHAs4iubEurS/t+xXd771mSg1PYp5azZuXgQeHLnhEr1quiP5N9Tm90dsdXxjKezH1mS5k75uP6VjEUwJP9G8ZQk06KZZLNrbgO1AehFzQUu6FyQQ6FUSaukA1vt/bS/oUY0450aU5i/uHOLuMDi0rZD4OUSrKJ0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvUQ4aof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IVzo5aEXQy88n1oMEqm8FnHw4sEA5vwDk5JpnyHo5ABz0WbjinebX8LypYjAZcHuGPrdE0EXdFNc1dTmHv3+AbLdLCzDdRZeiMdCg3l2iPiHu3e+SXX0NEi7xDr0sS0D/P0GsiaFABbXlVwSpXtIT7wGA8LxZlfvFPWN11gRWa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8T5em4i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvUQ4aof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2758FC433F1;
-	Tue, 20 Feb 2024 21:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8T5em4i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50CF5C433C7;
+	Tue, 20 Feb 2024 21:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465230;
-	bh=IVjcthMK0DiLPZ2PZZG+Rc6Dl+rq7tOisruH/fHrYUU=;
+	s=korg; t=1708465233;
+	bh=OmVqubZoclkRKpx/De1n7JtzAPYDknkbXDxVSI3w0iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvUQ4aofH2/zmtZv1r8pD1jzKzSLeYuKLutXFKyefOf+xe7muRI8Ynw7WEvYgUtOB
-	 WVSDkVoo7rV2XM4AedZCWuMo70I3+5vJG07jo3K2wXlqpgzR33JjtS4AnBnelsSWoa
-	 jU7Vho5EARfXL4NiVrfo1uuCmZGV/WrfwSU+HUhM=
+	b=G8T5em4i8JC7NnDrhjPHa+Uyu+uNZa8VlDUgoalzYo+X2ZtGXK07uhynSLIMKl67l
+	 hc+U9004IqRUQUldr7u0lSkhxv4XERLl1vDIkp6tDPVzHFCSLUYi084ZbDZ0e/MAo6
+	 YZfR8ZgwseFTLUORv1pxM3elm9tZDYI2LiAV5144=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Donald Zickus <dzickus@redhat.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>
-Subject: [PATCH 6.7 277/309] tools/rtla: Fix Makefile compiler options for clang
-Date: Tue, 20 Feb 2024 21:57:16 +0100
-Message-ID: <20240220205641.787437751@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Karel Zak <kzak@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.7 278/309] fs: relax mount_setattr() permission checks
+Date: Tue, 20 Feb 2024 21:57:17 +0100
+Message-ID: <20240220205641.817188955@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -55,72 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Bristot de Oliveira <bristot@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit bc4cbc9d260ba8358ca63662919f4bb223cb603b upstream.
+commit 46f5ab762d048dad224436978315cbc2fa79c630 upstream.
 
-The following errors are showing up when compiling rtla with clang:
+When we added mount_setattr() I added additional checks compared to the
+legacy do_reconfigure_mnt() and do_change_type() helpers used by regular
+mount(2). If that mount had a parent then verify that the caller and the
+mount namespace the mount is attached to match and if not make sure that
+it's an anonymous mount.
 
- $ make HOSTCC=clang CC=clang LLVM_IAS=1
- [...]
+The real rootfs falls into neither category. It is neither an anoymous
+mount because it is obviously attached to the initial mount namespace
+but it also obviously doesn't have a parent mount. So that means legacy
+mount(2) allows changing mount properties on the real rootfs but
+mount_setattr(2) blocks this. I never thought much about this but of
+course someone on this planet of earth changes properties on the real
+rootfs as can be seen in [1].
 
-  clang -O -g -DVERSION=\"6.8.0-rc1\" -flto=auto -ffat-lto-objects
-	-fexceptions -fstack-protector-strong
-	-fasynchronous-unwind-tables -fstack-clash-protection  -Wall
-	-Werror=format-security -Wp,-D_FORTIFY_SOURCE=2
-	-Wp,-D_GLIBCXX_ASSERTIONS -Wno-maybe-uninitialized
-	$(pkg-config --cflags libtracefs)    -c -o src/utils.o src/utils.c
+Since util-linux finally switched to the new mount api in 2.39 not so
+long ago it also relies on mount_setattr() and that surfaced this issue
+when Fedora 39 finally switched to it. Fix this.
 
-  clang: warning: optimization flag '-ffat-lto-objects' is not supported [-Wignored-optimization-argument]
-  warning: unknown warning option '-Wno-maybe-uninitialized'; did you mean '-Wno-uninitialized'? [-Wunknown-warning-option]
-  1 warning generated.
-
-  clang -o rtla -ggdb  src/osnoise.o src/osnoise_hist.o src/osnoise_top.o
-  src/rtla.o src/timerlat_aa.o src/timerlat.o src/timerlat_hist.o
-  src/timerlat_top.o src/timerlat_u.o src/trace.o src/utils.o $(pkg-config --libs libtracefs)
-
-  src/osnoise.o: file not recognized: file format not recognized
-  clang: error: linker command failed with exit code 1 (use -v to see invocation)
-  make: *** [Makefile:110: rtla] Error 1
-
-Solve these issues by:
-  - removing -ffat-lto-objects and -Wno-maybe-uninitialized if using clang
-  - informing the linker about -flto=auto
-
-Link: https://lore.kernel.org/linux-trace-kernel/567ac1b94effc228ce9a0225b9df7232a9b35b55.1707217097.git.bristot@kernel.org
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Fixes: 1a7b22ab15eb ("tools/rtla: Build with EXTRA_{C,LD}FLAGS")
-Suggested-by: Donald Zickus <dzickus@redhat.com>
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2256843
+Link: https://lore.kernel.org/r/20240206-vfs-mount-rootfs-v1-1-19b335eee133@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reported-by: Karel Zak <kzak@redhat.com>
+Cc: stable@vger.kernel.org # v5.12+
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/rtla/Makefile |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/namespace.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/tools/tracing/rtla/Makefile
-+++ b/tools/tracing/rtla/Makefile
-@@ -28,10 +28,15 @@ FOPTS	:=	-flto=auto -ffat-lto-objects -f
- 		-fasynchronous-unwind-tables -fstack-clash-protection
- WOPTS	:= 	-Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -Wno-maybe-uninitialized
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -4472,10 +4472,15 @@ static int do_mount_setattr(struct path
+ 	/*
+ 	 * If this is an attached mount make sure it's located in the callers
+ 	 * mount namespace. If it's not don't let the caller interact with it.
+-	 * If this is a detached mount make sure it has an anonymous mount
+-	 * namespace attached to it, i.e. we've created it via OPEN_TREE_CLONE.
++	 *
++	 * If this mount doesn't have a parent it's most often simply a
++	 * detached mount with an anonymous mount namespace. IOW, something
++	 * that's simply not attached yet. But there are apparently also users
++	 * that do change mount properties on the rootfs itself. That obviously
++	 * neither has a parent nor is it a detached mount so we cannot
++	 * unconditionally check for detached mounts.
+ 	 */
+-	if (!(mnt_has_parent(mnt) ? check_mnt(mnt) : is_anon_ns(mnt->mnt_ns)))
++	if ((mnt_has_parent(mnt) || !is_anon_ns(mnt->mnt_ns)) && !check_mnt(mnt))
+ 		goto out;
  
-+ifeq ($(CC),clang)
-+  FOPTS := $(filter-out -ffat-lto-objects, $(FOPTS))
-+  WOPTS := $(filter-out -Wno-maybe-uninitialized, $(WOPTS))
-+endif
-+
- TRACEFS_HEADERS	:= $$($(PKG_CONFIG) --cflags libtracefs)
- 
- CFLAGS	:=	-O -g -DVERSION=\"$(VERSION)\" $(FOPTS) $(MOPTS) $(WOPTS) $(TRACEFS_HEADERS) $(EXTRA_CFLAGS)
--LDFLAGS	:=	-ggdb $(EXTRA_LDFLAGS)
-+LDFLAGS	:=	-flto=auto -ggdb $(EXTRA_LDFLAGS)
- LIBS	:=	$$($(PKG_CONFIG) --libs libtracefs)
- 
- SRC	:=	$(wildcard src/*.c)
+ 	/*
 
 
