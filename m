@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2A7151CFA;
-	Tue, 20 Feb 2024 21:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909F8151CED;
+	Tue, 20 Feb 2024 21:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465327; cv=none; b=EbuFb4SM/T4gpF4ZpEMNLMsin3vzvVlOvtaF+XHnqvHIbWlsFt7j11B1PGJr0mbooaTi+FQedcIP/8S9C2uvYOnwn2ZteegMMbO4N4L27SFg9wVwK6ouf9UHxSEwAbhlKvDoYQqls6ADCqqOagTSbUF1Gd9Pxitpk1YAgf3zMbs=
+	t=1708465330; cv=none; b=QJOxWCe1yselBxFujjmPkJt5na6OGCwLWuvD4EluHQaVGmrs/U85kmVZrL+6C89Nnbss8UjIf8lSBlrHAXw31bwbO14pouRfdmVL8nrJ6xNjjjdAL8NnbSCIi4csx6Ae/3eBcCfSxzuz3vtLXFYrZWNzYqWDLoX+e2Yes7lGf9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465327; c=relaxed/simple;
-	bh=CIqnrB2wQxkRrgzPOLyf7r7fZ/1LU6A8aH4IM6aODUw=;
+	s=arc-20240116; t=1708465330; c=relaxed/simple;
+	bh=IyrkN4z7daQYV095EC64rBWUYcRRhXsrxLusFKGrtFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mU9qKHPOIKCu9TFL4kuo7jqXEERQnBggLmWI3viyOWPxCR2BgZbmRs5pD7MxKYPg55yLDZxcz9/HxTiOliowc34qLA6fIS+7NjOaXXGE3Bbh0Np4no7UZuF4dg15mLOO46GAbImP5k/sF9SdTTDb2x6rEmsW1ly9DZ6zizzZkF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G61ycAha; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SrpIjwqtu2cNzu9lEzmbCRVZwgs3N29Kh3cYxrOqepl/hqVS6Q+56HuDYTDotHSefvi6cNtJYhZZ5EmovP+4iBLdYOeBDEe7wj96p03Ni3bw53wemqNRE+cvt+GJ6kLc4N9nkzHv1RtaQAbZkwV+cMg9zXR4w4owXIaRyzz1k9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBN4u1op; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G61ycAha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E387BC433F1;
-	Tue, 20 Feb 2024 21:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBN4u1op"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034B1C433F1;
+	Tue, 20 Feb 2024 21:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465327;
-	bh=CIqnrB2wQxkRrgzPOLyf7r7fZ/1LU6A8aH4IM6aODUw=;
+	s=korg; t=1708465330;
+	bh=IyrkN4z7daQYV095EC64rBWUYcRRhXsrxLusFKGrtFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G61ycAhaY0nkT5XrLD0hWZwX4f/TDwZf2h8KA/dsx/6nAVptAiZ/uzvCSxigQjwRV
-	 xt+cmwzMgufc/4OYHf5XzgS4/o0hr56ejdRQ51TswnsKeoTjlNF1f48gPNBVEQ8r55
-	 y5tqLRbsdRbVfAflnzrRzPH4+8Tq31XbLPjmgvCc=
+	b=MBN4u1opyaA59I++kYJfIvq+MyzElVRfC2ayMu1gkp2g95nsShrfN6pMSaY/ntm76
+	 9O1q/GA5baKLyJzM68F2fjhXT3hN3EN39N8sWhn3ZL+5iZolGc2Ndr7nEyMPfnAJCZ
+	 H8hx27mNDG2Tf2wAZ7ahV4PQN9b2vR+6Mjh3rSps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+52bbc0ad036f6f0d4a25@syzkaller.appspotmail.com,
-	Brad Spengler <spender@grsecurity.net>,
-	=?UTF-8?q?=D0=A1=D1=82=D0=B0=D1=81=20=D0=9D=D0=B8=D1=87=D0=B8=D0=BF=D0=BE=D1=80=D0=BE=D0=B2=D0=B8=D1=87?= <stasn77@gmail.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.7 308/309] netfilter: ipset: Missing gc cancellations fixed
-Date: Tue, 20 Feb 2024 21:57:47 +0100
-Message-ID: <20240220205642.744057680@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.7 309/309] nfsd: dont take fi_lock in nfsd_break_deleg_cb()
+Date: Tue, 20 Feb 2024 21:57:48 +0100
+Message-ID: <20240220205642.773771304@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -47,76 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jozsef Kadlecsik <kadlec@netfilter.org>
+From: NeilBrown <neilb@suse.de>
 
-commit 27c5a095e2518975e20a10102908ae8231699879 upstream.
+commit 5ea9a7c5fe4149f165f0e3b624fe08df02b6c301 upstream.
 
-The patch fdb8e12cc2cc ("netfilter: ipset: fix performance regression
-in swap operation") missed to add the calls to gc cancellations
-at the error path of create operations and at module unload. Also,
-because the half of the destroy operations now executed by a
-function registered by call_rcu(), neither NFNL_SUBSYS_IPSET mutex
-or rcu read lock is held and therefore the checking of them results
-false warnings.
+A recent change to check_for_locks() changed it to take ->flc_lock while
+holding ->fi_lock.  This creates a lock inversion (reported by lockdep)
+because there is a case where ->fi_lock is taken while holding
+->flc_lock.
 
-Fixes: 97f7cf1cd80e ("netfilter: ipset: fix performance regression in swap operation")
-Reported-by: syzbot+52bbc0ad036f6f0d4a25@syzkaller.appspotmail.com
-Reported-by: Brad Spengler <spender@grsecurity.net>
-Reported-by: Стас Ничипорович <stasn77@gmail.com>
-Tested-by: Brad Spengler <spender@grsecurity.net>
-Tested-by: Стас Ничипорович <stasn77@gmail.com>
-Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+->flc_lock is held across ->fl_lmops callbacks, and
+nfsd_break_deleg_cb() is one of those and does take ->fi_lock.  However
+it doesn't need to.
+
+Prior to v4.17-rc1~110^2~22 ("nfsd: create a separate lease for each
+delegation") nfsd_break_deleg_cb() would walk the ->fi_delegations list
+and so needed the lock.  Since then it doesn't walk the list and doesn't
+need the lock.
+
+Two actions are performed under the lock.  One is to call
+nfsd_break_one_deleg which calls nfsd4_run_cb().  These doesn't act on
+the nfs4_file at all, so don't need the lock.
+
+The other is to set ->fi_had_conflict which is in the nfs4_file.
+This field is only ever set here (except when initialised to false)
+so there is no possible problem will multiple threads racing when
+setting it.
+
+The field is tested twice in nfs4_set_delegation().  The first test does
+not hold a lock and is documented as an opportunistic optimisation, so
+it doesn't impose any need to hold ->fi_lock while setting
+->fi_had_conflict.
+
+The second test in nfs4_set_delegation() *is* make under ->fi_lock, so
+removing the locking when ->fi_had_conflict is set could make a change.
+The change could only be interesting if ->fi_had_conflict tested as
+false even though nfsd_break_one_deleg() ran before ->fi_lock was
+unlocked.  i.e. while hash_delegation_locked() was running.
+As hash_delegation_lock() doesn't interact in any way with nfs4_run_cb()
+there can be no importance to this interaction.
+
+So this patch removes the locking from nfsd_break_one_deleg() and moves
+the final test on ->fi_had_conflict out of the locked region to make it
+clear that locking isn't important to the test.  It is still tested
+*after* vfs_setlease() has succeeded.  This might be significant and as
+vfs_setlease() takes ->flc_lock, and nfsd_break_one_deleg() is called
+under ->flc_lock this "after" is a true ordering provided by a spinlock.
+
+Fixes: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_core.c     |    2 ++
- net/netfilter/ipset/ip_set_hash_gen.h |    4 ++--
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -1154,6 +1154,7 @@ static int ip_set_create(struct sk_buff
- 	return ret;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -4945,10 +4945,8 @@ nfsd_break_deleg_cb(struct file_lock *fl
+ 	 */
+ 	fl->fl_break_time = 0;
  
- cleanup:
-+	set->variant->cancel_gc(set);
- 	set->variant->destroy(set);
- put_out:
- 	module_put(set->type->me);
-@@ -2378,6 +2379,7 @@ ip_set_net_exit(struct net *net)
- 		set = ip_set(inst, i);
- 		if (set) {
- 			ip_set(inst, i) = NULL;
-+			set->variant->cancel_gc(set);
- 			ip_set_destroy_set(set);
- 		}
- 	}
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -431,7 +431,7 @@ mtype_ahash_destroy(struct ip_set *set,
- 	u32 i;
+-	spin_lock(&fp->fi_lock);
+ 	fp->fi_had_conflict = true;
+ 	nfsd_break_one_deleg(dp);
+-	spin_unlock(&fp->fi_lock);
+ 	return false;
+ }
  
- 	for (i = 0; i < jhash_size(t->htable_bits); i++) {
--		n = __ipset_dereference(hbucket(t, i));
-+		n = (__force struct hbucket *)hbucket(t, i);
- 		if (!n)
- 			continue;
- 		if (set->extensions & IPSET_EXT_DESTROY && ext_destroy)
-@@ -451,7 +451,7 @@ mtype_destroy(struct ip_set *set)
- 	struct htype *h = set->data;
- 	struct list_head *l, *lt;
+@@ -5557,12 +5555,13 @@ nfs4_set_delegation(struct nfsd4_open *o
+ 	if (status)
+ 		goto out_unlock;
  
--	mtype_ahash_destroy(set, ipset_dereference_nfnl(h->table), true);
-+	mtype_ahash_destroy(set, (__force struct htable *)h->table, true);
- 	list_for_each_safe(l, lt, &h->ad) {
- 		list_del(l);
- 		kfree(l);
++	status = -EAGAIN;
++	if (fp->fi_had_conflict)
++		goto out_unlock;
++
+ 	spin_lock(&state_lock);
+ 	spin_lock(&fp->fi_lock);
+-	if (fp->fi_had_conflict)
+-		status = -EAGAIN;
+-	else
+-		status = hash_delegation_locked(dp, fp);
++	status = hash_delegation_locked(dp, fp);
+ 	spin_unlock(&fp->fi_lock);
+ 	spin_unlock(&state_lock);
+ 
 
 
