@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB14E446C9;
-	Tue, 20 Feb 2024 21:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0923151CFF;
+	Tue, 20 Feb 2024 21:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465110; cv=none; b=WM8kDpqeDd7Cv5cAGWMbfbnFM4AMymhmts6y51n3XIK+tvDXCTPqH2sZZjjqciRw1I3++P947Y9mpxuUQwe9of16Og4D1B1nzf/QFUAxHoIP+tPc46vNJsLvJaI33KBqE3svQg2zG5L6ItnGqZ7uXARMJyulqcBxZ6/6Xe7S1hE=
+	t=1708465113; cv=none; b=tEIozFNN6TGBLLsJirUIFBmv/lJKjik3+pX32yBYyFB+yDtehBmXzCFJ/TSnkGU5LLI7QfMC5YZvGn1Mtcv6eCt0Ux9A9bwgFTuW1ssTjA6nq8gZ1TRbtEqgx3xCWD3UPxlcCM5Ai1oJCYRAh5UKi6JSnVvB0p+7EEZnWVQAjdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465110; c=relaxed/simple;
-	bh=+Uf30tVyf/gsL7j/tu3B6tDSozJtv3UzH7E+aVNxgwk=;
+	s=arc-20240116; t=1708465113; c=relaxed/simple;
+	bh=UIv+i5L7zkHUGcvLUPwrOGQYjwOXByTXbVeXeLUFE6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ig++KFskX9CQW//C5ghK21/zpRCaf84mUyf7s1YnpQb8bwhPHb6FCVmiSAezyiKrOJe6wXO7BR9fk2orJyf2p9PKUl7uxsMydsMCoJybwRcP4MBoCEnA/jB8hIyT8UdElydaoiELTq+NYAZYpW56R4cwWsVzbUuHgXhJmCJJ/Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxGr7mTI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l/hXNLDajCBlialU5GDSyn60n3ijw3akqaT3SsNd69bmfZs+EJZVCad9Ka2xccuY3rsSOhNw88d4k35fYijfb5M9ICjpFxZTd10D1iuCZi/p18N1zHD/cTbz/vaJUUr5MXcYbVgxpF1QOeXH2gxrii90uAbXcjM1z+wMNjmFO7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2xrha5W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxGr7mTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22796C433F1;
-	Tue, 20 Feb 2024 21:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2xrha5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AB3C433C7;
+	Tue, 20 Feb 2024 21:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465110;
-	bh=+Uf30tVyf/gsL7j/tu3B6tDSozJtv3UzH7E+aVNxgwk=;
+	s=korg; t=1708465113;
+	bh=UIv+i5L7zkHUGcvLUPwrOGQYjwOXByTXbVeXeLUFE6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxGr7mTIWUzKe3kKcDjGZG/g0ZGXDWcaIsRyaSG5z1nS7EsRumeOZTE4L4yAtOxtf
-	 zh5G3zK6pmYCgRNYRtsmBBP3sYIpRACqeor+80PrUlmllKixk5+lwlIhKt7bfNVPCA
-	 bqQljexlc16WV/7CiMJrmB7qOrddixFbKQTQtheQ=
+	b=e2xrha5WkUBTY09UoQzrYc8cT1SE7HOaAX8MbVgmwAVTLCa+KgytT28Apthc8gBem
+	 n4jIE9xRxX3mvVx9adIqh73rGoL7xBbRoYBuJ0lzxvLNsjAxdDaXeLpSBlSDIVu3Jh
+	 6ox6IIuV2bnaEXrtfkdv9KBF4jKCjiXEvyVWpbwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eniac Zhang <eniac-xw.zhang@hp.com>,
-	Alexandru Gagniuc <alexandru.gagniuc@hp.com>,
+	bo liu <bo.liu@senarytech.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.7 240/309] ALSA: hda/realtek: fix mute/micmute LED For HP mt645
-Date: Tue, 20 Feb 2024 21:56:39 +0100
-Message-ID: <20240220205640.677269521@linuxfoundation.org>
+Subject: [PATCH 6.7 241/309] ALSA: hda/conexant: Add quirk for SWS JS201D
+Date: Tue, 20 Feb 2024 21:56:40 +0100
+Message-ID: <20240220205640.706922886@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,44 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eniac Zhang <eniac-xw.zhang@hp.com>
+From: bo liu <bo.liu@senarytech.com>
 
-commit 32f03f4002c5df837fb920eb23fcd2f4af9b0b23 upstream.
+commit 4639c5021029d49fd2f97fa8d74731f167f98919 upstream.
 
-The HP mt645 G7 Thin Client uses an ALC236 codec and needs the
-ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF quirk to make the mute and
-micmute LEDs work.
+The SWS JS201D need a different pinconfig from windows driver.
+Add a quirk to use a specific pinconfig to SWS JS201D.
 
-There are two variants of the USB-C PD chip on this device. Each uses
-a different BIOS and board ID, hence the two entries.
-
-Signed-off-by: Eniac Zhang <eniac-xw.zhang@hp.com>
-Signed-off-by: Alexandru Gagniuc <alexandru.gagniuc@hp.com>
+Signed-off-by: bo liu <bo.liu@senarytech.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240215154922.778394-1-alexandru.gagniuc@hp.com
+Link: https://lore.kernel.org/r/20240205013802.51907-1-bo.liu@senarytech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_conexant.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9915,6 +9915,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ad1, "HP EliteBook 840 14 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ad2, "HP EliteBook 860 16 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b0f, "HP Elite mt645 G7 Mobile Thin Client U81", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b2f, "HP 255 15.6 inch G10 Notebook PC", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x8b42, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b43, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-@@ -9922,6 +9923,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8b45, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b46, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b47, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8b59, "HP Elite mt645 G7 Mobile Thin Client U89", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b63, "HP Elite Dragonfly 13.5 inch G4", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -344,6 +344,7 @@ enum {
+ 	CXT_FIXUP_HP_ZBOOK_MUTE_LED,
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
++	CXT_PINCFG_SWS_JS201D,
+ };
+ 
+ /* for hda_fixup_thinkpad_acpi() */
+@@ -841,6 +842,17 @@ static const struct hda_pintbl cxt_pincf
+ 	{}
+ };
+ 
++/* SuoWoSi/South-holding JS201D with sn6140 */
++static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
++	{ 0x16, 0x03211040 }, /* hp out */
++	{ 0x17, 0x91170110 }, /* SPK/Class_D */
++	{ 0x18, 0x95a70130 }, /* Internal mic */
++	{ 0x19, 0x03a11020 }, /* Headset Mic */
++	{ 0x1a, 0x40f001f0 }, /* Not used */
++	{ 0x21, 0x40f001f0 }, /* Not used */
++	{}
++};
++
+ static const struct hda_fixup cxt_fixups[] = {
+ 	[CXT_PINCFG_LENOVO_X200] = {
+ 		.type = HDA_FIXUP_PINS,
+@@ -996,6 +1008,10 @@ static const struct hda_fixup cxt_fixups
+ 		.chained = true,
+ 		.chain_id = CXT_FIXUP_HEADSET_MIC,
+ 	},
++	[CXT_PINCFG_SWS_JS201D] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_sws_js201d,
++	},
+ };
+ 
+ static const struct snd_pci_quirk cxt5045_fixups[] = {
+@@ -1069,6 +1085,7 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
++	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
+ 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
+ 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
+@@ -1109,6 +1126,7 @@ static const struct hda_model_fixup cxt5
+ 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
+ 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
+ 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
++	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
+ 	{}
+ };
+ 
 
 
