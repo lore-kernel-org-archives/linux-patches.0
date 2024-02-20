@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CDB150995;
-	Tue, 20 Feb 2024 21:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AD81509BF;
+	Tue, 20 Feb 2024 21:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463075; cv=none; b=PtadD/ry2Dd9g2gZvDpS34L9k6fCcUKFRiLg7GAd9NM4kc2GLnxhOXUc0oMv+w5phT0fVcDqR+waYCSU4JN0YLAdDJS/RjnwdUqSbyTeT19qXh3QCokGLRadcVgJXyRMRhr1Hz4PJtArmd1J0gbajr3v8wgWD0iZGT3OseKy7XM=
+	t=1708463078; cv=none; b=tnD79cqhfaiJCLZZZrepIOmx8ZajpsuE4/FjrD7EbkfksQPOXInHmjm0LgsiZLsob7kRv7KDuGPbNLD7ct0B3torwikjLHHRfhz2wemTYdCC0LUqROEoLwDhw7TRPc3PS8axGKzXNRqh6VhNT+TUKzEAqLVRblbuomIB8fgXRn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463075; c=relaxed/simple;
-	bh=XYfHwSbLCXzv4aEz1h58CBU1ZCqooezmTdbBG+LsKkA=;
+	s=arc-20240116; t=1708463078; c=relaxed/simple;
+	bh=jwG5V5fpSTbN5cNHPKq5YGWeiM6DwhMLar/boVT82EY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmHrBmTznyf9aNOte9VVyfXIKTwRp1/bMFfSUUxuI0x50QyG/r5VFYZKFpExTqQacWnVVOnXfx66YkYKqMZHQwNT+oPyjAinMD1oZEn298xWVmz9EOI2rqBpe6y+/BD1jd9Gd3xDNPEf6nj4A97PNt5pkkHEHYghIiI7mFGMGfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wq9CW92V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P4W40JipNxYWIdF5s9XQVBv8B+2uVoHUow4/E0a6o7bKa+51h5doJNxRdUuTQeZPSZeY7nwnF1yp4attrMpRV4Uujb1zvvW8nM16lzOCmm/NYb088k4r/dpYzGRG/pH5rSHzvx61Vij8hKfzpe1LaU/j52WP3Nt028JjkfdUEEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV1zOfEc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wq9CW92V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3160BC433C7;
-	Tue, 20 Feb 2024 21:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV1zOfEc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3184BC433C7;
+	Tue, 20 Feb 2024 21:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463075;
-	bh=XYfHwSbLCXzv4aEz1h58CBU1ZCqooezmTdbBG+LsKkA=;
+	s=korg; t=1708463078;
+	bh=jwG5V5fpSTbN5cNHPKq5YGWeiM6DwhMLar/boVT82EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wq9CW92VIBQhRQ2N2n643juZ3Ffq/rxmczeUy9N1/AzhtH31rbZfFTxt8wFRbrcES
-	 XTPObBgcvOsp2CPeGkVVwm4d6i5DcpRcyq2lK9E9WknIyapwLgF7vaMpg/ZrD8Ft2i
-	 kjwpbMVExeUY1tJf2vidmhxg5h3004Y0K6efJrpM=
+	b=CV1zOfEcjaOEfownOwjmuEJSJxaIowuJwDlhyIPdltSIPMLVd6EQmQLwYZdAc3jL+
+	 O3mvokKMM0Yd4mVVCNK06ArK9tTaatNmAy69uLg/BMEFTRnZEnKh2i3kZceVtAeUNd
+	 Zpw8nbRZT/FhxJGe1am4dZWJANCS6LUuy93UEKt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksander Mazur <deweloper@wp.pl>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 127/197] x86/Kconfig: Transmeta Crusoe is CPU family 5, not 6
-Date: Tue, 20 Feb 2024 21:51:26 +0100
-Message-ID: <20240220204844.874274481@linuxfoundation.org>
+	Konstantin Bogomolov <bogomolov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrei Vagin <avagin@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.1 128/197] x86/fpu: Stop relying on userspace for info to fault in xsave buffer
+Date: Tue, 20 Feb 2024 21:51:27 +0100
+Message-ID: <20240220204844.903734620@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,43 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksander Mazur <deweloper@wp.pl>
+From: Andrei Vagin <avagin@google.com>
 
-commit f6a1892585cd19e63c4ef2334e26cd536d5b678d upstream.
+commit d877550eaf2dc9090d782864c96939397a3c6835 upstream.
 
-The kernel built with MCRUSOE is unbootable on Transmeta Crusoe.  It shows
-the following error message:
+Before this change, the expected size of the user space buffer was
+taken from fx_sw->xstate_size. fx_sw->xstate_size can be changed
+from user-space, so it is possible construct a sigreturn frame where:
 
-  This kernel requires an i686 CPU, but only detected an i586 CPU.
-  Unable to boot - please use a kernel appropriate for your CPU.
+ * fx_sw->xstate_size is smaller than the size required by valid bits in
+   fx_sw->xfeatures.
+ * user-space unmaps parts of the sigrame fpu buffer so that not all of
+   the buffer required by xrstor is accessible.
 
-Remove MCRUSOE from the condition introduced in commit in Fixes, effectively
-changing X86_MINIMUM_CPU_FAMILY back to 5 on that machine, which matches the
-CPU family given by CPUID.
+In this case, xrstor tries to restore and accesses the unmapped area
+which results in a fault. But fault_in_readable succeeds because buf +
+fx_sw->xstate_size is within the still mapped area, so it goes back and
+tries xrstor again. It will spin in this loop forever.
 
-  [ bp: Massage commit message. ]
+Instead, fault in the maximum size which can be touched by XRSTOR (taken
+from fpstate->user_size).
 
-Fixes: 25d76ac88821 ("x86/Kconfig: Explicitly enumerate i686-class CPUs in Kconfig")
-Signed-off-by: Aleksander Mazur <deweloper@wp.pl>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: H. Peter Anvin <hpa@zytor.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240123134309.1117782-1-deweloper@wp.pl
+[ dhansen: tweak subject / changelog ]
+
+Fixes: fcb3635f5018 ("x86/fpu/signal: Handle #PF in the direct restore path")
+Reported-by: Konstantin Bogomolov <bogomolov@google.com>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240130063603.3392627-1-avagin%40google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig.cpu |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/fpu/signal.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/arch/x86/Kconfig.cpu
-+++ b/arch/x86/Kconfig.cpu
-@@ -375,7 +375,7 @@ config X86_CMOV
- config X86_MINIMUM_CPU_FAMILY
- 	int
- 	default "64" if X86_64
--	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCRUSOE || MCORE2 || MK7 || MK8)
-+	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCORE2 || MK7 || MK8)
- 	default "5" if X86_32 && X86_CMPXCHG64
- 	default "4"
+--- a/arch/x86/kernel/fpu/signal.c
++++ b/arch/x86/kernel/fpu/signal.c
+@@ -274,12 +274,13 @@ static int __restore_fpregs_from_user(vo
+  * Attempt to restore the FPU registers directly from user memory.
+  * Pagefaults are handled and any errors returned are fatal.
+  */
+-static bool restore_fpregs_from_user(void __user *buf, u64 xrestore,
+-				     bool fx_only, unsigned int size)
++static bool restore_fpregs_from_user(void __user *buf, u64 xrestore, bool fx_only)
+ {
+ 	struct fpu *fpu = &current->thread.fpu;
+ 	int ret;
  
++	/* Restore enabled features only. */
++	xrestore &= fpu->fpstate->user_xfeatures;
+ retry:
+ 	fpregs_lock();
+ 	/* Ensure that XFD is up to date */
+@@ -309,7 +310,7 @@ retry:
+ 		if (ret != X86_TRAP_PF)
+ 			return false;
+ 
+-		if (!fault_in_readable(buf, size))
++		if (!fault_in_readable(buf, fpu->fpstate->user_size))
+ 			goto retry;
+ 		return false;
+ 	}
+@@ -339,7 +340,6 @@ static bool __fpu_restore_sig(void __use
+ 	struct user_i387_ia32_struct env;
+ 	bool success, fx_only = false;
+ 	union fpregs_state *fpregs;
+-	unsigned int state_size;
+ 	u64 user_xfeatures = 0;
+ 
+ 	if (use_xsave()) {
+@@ -349,17 +349,14 @@ static bool __fpu_restore_sig(void __use
+ 			return false;
+ 
+ 		fx_only = !fx_sw_user.magic1;
+-		state_size = fx_sw_user.xstate_size;
+ 		user_xfeatures = fx_sw_user.xfeatures;
+ 	} else {
+ 		user_xfeatures = XFEATURE_MASK_FPSSE;
+-		state_size = fpu->fpstate->user_size;
+ 	}
+ 
+ 	if (likely(!ia32_fxstate)) {
+ 		/* Restore the FPU registers directly from user memory. */
+-		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only,
+-						state_size);
++		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only);
+ 	}
+ 
+ 	/*
 
 
