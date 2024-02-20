@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D383014F9C8;
-	Tue, 20 Feb 2024 21:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20AC14F9C8;
+	Tue, 20 Feb 2024 21:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462987; cv=none; b=SNEw7+5J1hn6CRfnh+jX8Kcoy572B7MvUrXVrUiyMeBzIxnyWRyxN7yyziURec7/T0es5KtXY4BWGw/5vlYFGBGvfvlOwzvLy0++OBBNoeF5lQMv1Uk0lIEZPUST3XBNFWliCnwlx/CkI5032kbSbXPLJ4hsCYPU3sU739YhMKM=
+	t=1708462991; cv=none; b=gguSxro+IxtcbyAA+1qeYF7BBOhgBfGjkjQEv/HbIHao9TihqgroWHqF1WG5xHgi37QR28oXsn7VAW/1fi8AxOS224iEDWJWWCHr9c0g6ZtQU0wf2N2x7IA7F1w8KXtI3JVkWmDfw58Z6ppKKfCA7EFlzFEy2XU1c9sfvCJhbrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462987; c=relaxed/simple;
-	bh=rLyq0pRxQQyegewTi6Fs00jjVpd4fPBxUZCil7nKL34=;
+	s=arc-20240116; t=1708462991; c=relaxed/simple;
+	bh=6DshoUcMWnTOOG96+c6rk7GLGNfKgVlIWHXkg2vHR48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vC43ghaVGUyixeA5WNfRD5WWdU/SKBNhL1L0ehYL8IF+E+PD4Z5LFqkqf2k0OfWX2zQXtDbvOoIAfhXEbfGpFWKeJElQTQPac+8GYkQqGwQ551AL9ofo+IgTC5AhGUapKQ/zxo4WWMmpWqQcef7zqAq98giCVTnj4OH8OECppiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b80YEPLK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IyJYzSy3RwbB2yrTv6s+yvCKPb2+BgD2d7sxT9++TIIWtGUtw6hXWWzgPzKADTYNAKK2yN6pdw2UQ9MrBRsGkaCa34nQCisTOFXmbWIIcmEK9/rnKzlqonowCmAEaLFOiUNvPbsgzVSPl09ALoB5ZbZ5EHvQLJl5ma8ciIPxI9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaTUbRFf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b80YEPLK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42193C433C7;
-	Tue, 20 Feb 2024 21:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaTUbRFf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C295C433F1;
+	Tue, 20 Feb 2024 21:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462987;
-	bh=rLyq0pRxQQyegewTi6Fs00jjVpd4fPBxUZCil7nKL34=;
+	s=korg; t=1708462990;
+	bh=6DshoUcMWnTOOG96+c6rk7GLGNfKgVlIWHXkg2vHR48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b80YEPLK/Zv2BM23lk+eU6pnNLEx1ZVW8l19/ZeJzypS/qtFLW8KfSHeTLEvV7CNz
-	 4QzpQhdQ/1PoeTNY1IhuNJL5YnT0yxovDW97ITpCzkY3NOg8UvHdXEHkWbABbt67oT
-	 oP1xwhxg4bHUJyi9cy8JS5Ek3quNoZf+qz0HjiKk=
+	b=kaTUbRFfMp0ETaf6u6EPZ5xj/ys2L+50x7WKR6IFGML84MM20gsr3TccBnC+C0LqI
+	 mbGoymnOeOFTYe6cZ0KyGLYa7hNuP4pBnSyMQE9hq8vT2EsO2ESAVk2EiQasZjEQg7
+	 yqoxi8ig66wCYO7paol0g7ITEq2l2Y1Te7Y7ldWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	xingwei lee <xrivendell7@gmail.com>,
-	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun1@huawei.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 098/197] ext4: fix double-free of blocks due to wrong extents moved_len
-Date: Tue, 20 Feb 2024 21:50:57 +0100
-Message-ID: <20240220204844.016054103@linuxfoundation.org>
+Subject: [PATCH 6.1 099/197] ext4: avoid bb_free and bb_fragments inconsistency in mb_free_blocks()
+Date: Tue, 20 Feb 2024 21:50:58 +0100
+Message-ID: <20240220204844.046968316@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -55,66 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-commit 55583e899a5357308274601364741a83e78d6ac4 upstream.
+commit 2331fd4a49864e1571b4f50aa3aa1536ed6220d0 upstream.
 
-In ext4_move_extents(), moved_len is only updated when all moves are
-successfully executed, and only discards orig_inode and donor_inode
-preallocations when moved_len is not zero. When the loop fails to exit
-after successfully moving some extents, moved_len is not updated and
-remains at 0, so it does not discard the preallocations.
+After updating bb_free in mb_free_blocks, it is possible to return without
+updating bb_fragments because the block being freed is found to have
+already been freed, which leads to inconsistency between bb_free and
+bb_fragments.
 
-If the moved extents overlap with the preallocated extents, the
-overlapped extents are freed twice in ext4_mb_release_inode_pa() and
-ext4_process_freed_data() (as described in commit 94d7c16cbbbd ("ext4:
-Fix double-free of blocks with EXT4_IOC_MOVE_EXT")), and bb_free is
-incremented twice. Hence when trim is executed, a zero-division bug is
-triggered in mb_update_avg_fragment_size() because bb_free is not zero
-and bb_fragments is zero.
+Since the group may be unlocked in ext4_grp_locked_error(), this can lead
+to problems such as dividing by zero when calculating the average fragment
+length. Hence move the update of bb_free to after the block double-free
+check guarantees that the corresponding statistics are updated only after
+the core block bitmap is modified.
 
-Therefore, update move_len after each extent move to avoid the issue.
-
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Closes: https://lore.kernel.org/r/CAO4mrferzqBUnCag8R3m2zf897ts9UEuhjFQGPtODT92rYyR2Q@mail.gmail.com
-Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
-CC:  <stable@vger.kernel.org> # 3.18
+Fixes: eabe0444df90 ("ext4: speed-up releasing blocks on commit")
+CC:  <stable@vger.kernel.org> # 3.10
+Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-2-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20240104142040.2835097-5-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/move_extent.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext4/mballoc.c |   39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
 
---- a/fs/ext4/move_extent.c
-+++ b/fs/ext4/move_extent.c
-@@ -621,6 +621,7 @@ ext4_move_extents(struct file *o_filp, s
- 		goto out;
- 	o_end = o_start + len;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -1785,11 +1785,6 @@ static void mb_free_blocks(struct inode
+ 	mb_check_buddy(e4b);
+ 	mb_free_blocks_double(inode, e4b, first, count);
  
-+	*moved_len = 0;
- 	while (o_start < o_end) {
- 		struct ext4_extent *ex;
- 		ext4_lblk_t cur_blk, next_blk;
-@@ -675,7 +676,7 @@ ext4_move_extents(struct file *o_filp, s
- 		 */
- 		ext4_double_up_write_data_sem(orig_inode, donor_inode);
- 		/* Swap original branches with new branches */
--		move_extent_per_page(o_filp, donor_inode,
-+		*moved_len += move_extent_per_page(o_filp, donor_inode,
- 				     orig_page_index, donor_page_index,
- 				     offset_in_page, cur_len,
- 				     unwritten, &ret);
-@@ -685,9 +686,6 @@ ext4_move_extents(struct file *o_filp, s
- 		o_start += cur_len;
- 		d_start += cur_len;
+-	this_cpu_inc(discard_pa_seq);
+-	e4b->bd_info->bb_free += count;
+-	if (first < e4b->bd_info->bb_first_free)
+-		e4b->bd_info->bb_first_free = first;
+-
+ 	/* access memory sequentially: check left neighbour,
+ 	 * clear range and then check right neighbour
+ 	 */
+@@ -1803,23 +1798,31 @@ static void mb_free_blocks(struct inode
+ 		struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 		ext4_fsblk_t blocknr;
+ 
++		/*
++		 * Fastcommit replay can free already freed blocks which
++		 * corrupts allocation info. Regenerate it.
++		 */
++		if (sbi->s_mount_state & EXT4_FC_REPLAY) {
++			mb_regenerate_buddy(e4b);
++			goto check;
++		}
++
+ 		blocknr = ext4_group_first_block_no(sb, e4b->bd_group);
+ 		blocknr += EXT4_C2B(sbi, block);
+-		if (!(sbi->s_mount_state & EXT4_FC_REPLAY)) {
+-			ext4_grp_locked_error(sb, e4b->bd_group,
+-					      inode ? inode->i_ino : 0,
+-					      blocknr,
+-					      "freeing already freed block (bit %u); block bitmap corrupt.",
+-					      block);
+-			ext4_mark_group_bitmap_corrupted(
+-				sb, e4b->bd_group,
++		ext4_grp_locked_error(sb, e4b->bd_group,
++				      inode ? inode->i_ino : 0, blocknr,
++				      "freeing already freed block (bit %u); block bitmap corrupt.",
++				      block);
++		ext4_mark_group_bitmap_corrupted(sb, e4b->bd_group,
+ 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
+-		} else {
+-			mb_regenerate_buddy(e4b);
+-		}
+-		goto done;
++		return;
  	}
--	*moved_len = o_start - orig_blk;
--	if (*moved_len > len)
--		*moved_len = len;
  
- out:
- 	if (*moved_len) {
++	this_cpu_inc(discard_pa_seq);
++	e4b->bd_info->bb_free += count;
++	if (first < e4b->bd_info->bb_first_free)
++		e4b->bd_info->bb_first_free = first;
++
+ 	/* let's maintain fragments counter */
+ 	if (left_is_free && right_is_free)
+ 		e4b->bd_info->bb_fragments--;
+@@ -1844,9 +1847,9 @@ static void mb_free_blocks(struct inode
+ 	if (first <= last)
+ 		mb_buddy_mark_free(e4b, first >> 1, last >> 1);
+ 
+-done:
+ 	mb_set_largest_free_order(sb, e4b->bd_info);
+ 	mb_update_avg_fragment_size(sb, e4b->bd_info);
++check:
+ 	mb_check_buddy(e4b);
+ }
+ 
 
 
