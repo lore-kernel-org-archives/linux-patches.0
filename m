@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D2614A4E6;
-	Tue, 20 Feb 2024 21:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997D014A4E6;
+	Tue, 20 Feb 2024 21:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464420; cv=none; b=UjdKMn03JJwvsy8kLw3j2ILGIIj97tsM6Ll8YcGkCJRmv3AHzHi/otGRij9ZW4I7bUqNgtTHqQZepUwsbU2xPcuRsYjzyi0r1Xyb/3saKOUNjVvuwxZ80PSR1gYKI90tFRuVzMfizHY5hOrXvorwHMY1QcUHmR8AnsTh+XHLy04=
+	t=1708464423; cv=none; b=A/9KO6ZflTg2eNxemmUGl5qbXDmwlXO56+8CDNAhjJIOyhVK27mA3/DHhcgIT92T06Q9Z9yobcz5Dd6JvgSzYfMhwtfIsdxvaxKozGofVysbq3Q3rnbN34Dv+eVzzu1NwKY6E5miHhIQZF9Kxa3BWuglPWetYjGsnnZvCPOR9v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464420; c=relaxed/simple;
-	bh=/zGf6fv+hr1oGxlkTRd/9UJw2rRDtWq3rElwPcNfBWY=;
+	s=arc-20240116; t=1708464423; c=relaxed/simple;
+	bh=gwb/3TEoin7bbCeiW2+G0EInn+/dB9wsRekf9GC4o5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cvzkFfnp1ozeczbtHWIqNTdhBqIajhEoDUaX/x5KxQMdKBrlD08kEQ8Z65BEiTbSVIXvcmLz9qiR6iKT+gMJz6rbZ0VEowdiPwLThKihm8AFxdm4En0KzRqqBqpzde274Atp8kW08pPul352xcb6jr+Bu5PNumsGiYDk4+NGWNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lY3duZcY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tbX38o5OnmnaZisE2jdMzygzpKqPlQXcah1cMfI/rQBlZogHYQ2rqvYj+Gr74Ft7M3/d4Lr1cc3lojq49qxv4vLU5649kwcyj/1Ym6kMrH54ToZrYgxu1z0GQ6/CPO137XR59uGrcEHTjn/hXcgGvSyZCwtKWRLfimZjor0Hmbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mazhhzbR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lY3duZcY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2821C433C7;
-	Tue, 20 Feb 2024 21:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mazhhzbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07344C433F1;
+	Tue, 20 Feb 2024 21:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464420;
-	bh=/zGf6fv+hr1oGxlkTRd/9UJw2rRDtWq3rElwPcNfBWY=;
+	s=korg; t=1708464423;
+	bh=gwb/3TEoin7bbCeiW2+G0EInn+/dB9wsRekf9GC4o5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lY3duZcY38M4fQoivuuNcX4a+tdHnpqGsIAeOtmJjrnFy7fo8fqbWGrmXTGPlCyDt
-	 uqjVIoUgZIpLv2wg8cuIvagoVtHSrEB//5yweEvpZOsCQ28Ax3yt86TC5GY/+8enJr
-	 Jr8jSs1WBQCVwwX4K2AKjQPsMUNnaW38YFWfkvn0=
+	b=mazhhzbRe/tm5Igs5BcKceh9qxv86zy1JqvXyaRvBzV5OMgulQ9/P7cD/db+7FpZK
+	 tq6fqslIqwvDHhfJljz2hMnxJrlDTLSCaYrQihT4sAMpTNyUfTGCCpFKVz93cN30RK
+	 +T8DhAIXrm5F6/YKEWqoX0HOsT7nz4UkZ8cdaA7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Jelinek <jakub@redhat.com>,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Andrew Pinski <quic_apinski@quicinc.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.7 002/309] update workarounds for gcc "asm goto" issue
-Date: Tue, 20 Feb 2024 21:52:41 +0100
-Message-ID: <20240220205633.183123838@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Rob Herring <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 020/309] of: unittest: Fix compile in the non-dynamic case
+Date: Tue, 20 Feb 2024 21:52:59 +0100
+Message-ID: <20240220205633.808679583@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -54,118 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 68fb3ca0e408e00db1c3f8fccdfa19e274c033be upstream.
+[ Upstream commit 607aad1e4356c210dbef9022955a3089377909b2 ]
 
-In commit 4356e9f841f7 ("work around gcc bugs with 'asm goto' with
-outputs") I did the gcc workaround unconditionally, because the cause of
-the bad code generation wasn't entirely clear.
+If CONFIG_OF_KOBJ is not set, a device_node does not contain a
+kobj and attempts to access the embedded kobj via kref_read break
+the compile.
 
-In the meantime, Jakub Jelinek debugged the issue, and has come up with
-a fix in gcc [2], which also got backported to the still maintained
-branches of gcc-11, gcc-12 and gcc-13.
+Replace affected kref_read calls with a macro that reads the
+refcount if it exists and returns 1 if there is no embedded kobj.
 
-Note that while the fix technically wasn't in the original gcc-14
-branch, Jakub says:
-
- "while it is true that no GCC 14 snapshots until today (or whenever the
-  fix will be committed) have the fix, for GCC trunk it is up to the
-  distros to use the latest snapshot if they use it at all and would
-  allow better testing of the kernel code without the workaround, so
-  that if there are other issues they won't be discovered years later.
-  Most userland code doesn't actually use asm goto with outputs..."
-
-so we will consider gcc-14 to be fixed - if somebody is using gcc
-snapshots of the gcc-14 before the fix, they should upgrade.
-
-Note that while the bug goes back to gcc-11, in practice other gcc
-changes seem to have effectively hidden it since gcc-12.1 as per a
-bisect by Jakub.  So even a gcc-14 snapshot without the fix likely
-doesn't show actual problems.
-
-Also, make the default 'asm_goto_output()' macro mark the asm as
-volatile by hand, because of an unrelated gcc issue [1] where it doesn't
-match the documented behavior ("asm goto is always volatile").
-
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103979 [1]
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113921 [2]
-Link: https://lore.kernel.org/all/20240208220604.140859-1-seanjc@google.com/
-Requested-by: Jakub Jelinek <jakub@redhat.com>
-Cc: Uros Bizjak <ubizjak@gmail.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Andrew Pinski <quic_apinski@quicinc.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202401291740.VP219WIz-lkp@intel.com/
+Fixes: 4dde83569832 ("of: Fix double free in of_parse_phandle_with_args_map")
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://lore.kernel.org/r/20240129192556.403271-1-lk@c--e.de
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler-gcc.h   |    7 ++++---
- include/linux/compiler_types.h |    9 ++++++++-
- init/Kconfig                   |    9 +++++++++
- 3 files changed, 21 insertions(+), 4 deletions(-)
+ drivers/of/unittest.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/include/linux/compiler-gcc.h
-+++ b/include/linux/compiler-gcc.h
-@@ -67,10 +67,9 @@
- /*
-  * GCC 'asm goto' with outputs miscompiles certain code sequences:
-  *
-- *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110420
-- *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=110422
-+ *   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113921
-  *
-- * Work it around via the same compiler barrier quirk that we used
-+ * Work around it via the same compiler barrier quirk that we used
-  * to use for the old 'asm goto' workaround.
-  *
-  * Also, always mark such 'asm goto' statements as volatile: all
-@@ -80,8 +79,10 @@
-  *
-  *    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=98619
-  */
-+#ifdef CONFIG_GCC_ASM_GOTO_OUTPUT_WORKAROUND
- #define asm_goto_output(x...) \
- 	do { asm volatile goto(x); asm (""); } while (0)
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index cfd60e35a899..d7593bde2d02 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -50,6 +50,12 @@ static struct unittest_results {
+ 	failed; \
+ })
+ 
++#ifdef CONFIG_OF_KOBJ
++#define OF_KREF_READ(NODE) kref_read(&(NODE)->kobj.kref)
++#else
++#define OF_KREF_READ(NODE) 1
 +#endif
- 
- #if defined(CONFIG_ARCH_USE_BUILTIN_BSWAP)
- #define __HAVE_BUILTIN_BSWAP32__
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -362,8 +362,15 @@ struct ftrace_likely_data {
- #define __member_size(p)	__builtin_object_size(p, 1)
- #endif
- 
-+/*
-+ * Some versions of gcc do not mark 'asm goto' volatile:
-+ *
-+ *  https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103979
-+ *
-+ * We do it here by hand, because it doesn't hurt.
-+ */
- #ifndef asm_goto_output
--#define asm_goto_output(x...) asm goto(x)
-+#define asm_goto_output(x...) asm volatile goto(x)
- #endif
- 
- #ifdef CONFIG_CC_HAS_ASM_INLINE
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -89,6 +89,15 @@ config CC_HAS_ASM_GOTO_TIED_OUTPUT
- 	# Detect buggy gcc and clang, fixed in gcc-11 clang-14.
- 	def_bool $(success,echo 'int foo(int *x) { asm goto (".long (%l[bar]) - .": "+m"(*x) ::: bar); return *x; bar: return 0; }' | $CC -x c - -c -o /dev/null)
- 
-+config GCC_ASM_GOTO_OUTPUT_WORKAROUND
-+	bool
-+	depends on CC_IS_GCC && CC_HAS_ASM_GOTO_OUTPUT
-+	# Fixed in GCC 14, 13.3, 12.4 and 11.5
-+	# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=113921
-+	default y if GCC_VERSION < 110500
-+	default y if GCC_VERSION >= 120000 && GCC_VERSION < 120400
-+	default y if GCC_VERSION >= 130000 && GCC_VERSION < 130300
 +
- config TOOLS_SUPPORT_RELR
- 	def_bool $(success,env "CC=$(CC)" "LD=$(LD)" "NM=$(NM)" "OBJCOPY=$(OBJCOPY)" $(srctree)/scripts/tools-support-relr.sh)
+ /*
+  * Expected message may have a message level other than KERN_INFO.
+  * Print the expected message only if the current loglevel will allow
+@@ -570,7 +576,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 			pr_err("missing testcase data\n");
+ 			return;
+ 		}
+-		prefs[i] = kref_read(&p[i]->kobj.kref);
++		prefs[i] = OF_KREF_READ(p[i]);
+ 	}
  
+ 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
+@@ -693,9 +699,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(p); ++i) {
+-		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
++		unittest(prefs[i] == OF_KREF_READ(p[i]),
+ 			 "provider%d: expected:%d got:%d\n",
+-			 i, prefs[i], kref_read(&p[i]->kobj.kref));
++			 i, prefs[i], OF_KREF_READ(p[i]));
+ 		of_node_put(p[i]);
+ 	}
+ }
+-- 
+2.43.0
+
 
 
