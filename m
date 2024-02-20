@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6761509AC;
-	Tue, 20 Feb 2024 21:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06F6133987;
+	Tue, 20 Feb 2024 21:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463164; cv=none; b=Xf8ekYyse3xOKC2XpJe+0mfuvA4qtFWY0mSf+rNGLvjv2E6+o6EQKd0FNIr+GXtdroN4EMDUHM49JdH4IY91sutmto64JMXnl9PwbESvfkdksEBJLkm63a1HaIBU0d6SCX7UzPpTiIo1uAH832KmymC+naNF0VXg42kIR6KeudA=
+	t=1708463167; cv=none; b=k5FUU5jcx06cCrvdW2QL5xV+RchIMpuwZQJURmVSrZgeABcmxewhchtDb81uO9B8Sg4rFSmTukIGyoMZSjNWdDviJzZ+GDZ/+yGm61/fRv0u7RzmQgj9MWscAHMjH3DMnGAcTcAiVHOibHBnzluJVFYV71EM8EnPSPUG+xgPUgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463164; c=relaxed/simple;
-	bh=sBQW1Ri1hDfvnMWDV+eiTCFBa/5WFN3a2psadJlSmlo=;
+	s=arc-20240116; t=1708463167; c=relaxed/simple;
+	bh=BTOUe2PZDTDNZsv85VBSeHxpLCHqsJOWoi4lzM/OW2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Un3wUzFav+YiSEbbUBWJPqtsxplDT+q/mZlMYdnFcU9YOL8m1zEw1p6AUoqjG682O6LiAvXGv4UAiQDbNwEQNAzO29LRb1zs26cSao9co2wTyG4k6cTRNCeAJDM9v0W3DQ021fQFF9Sn65OnU90hdJ1HYbmIABD1QYA8FFKSdhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jXE3fl1f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NOkGuW0JU0NQB0D/nqbmiFKEJAzcriyXtnJFSpsItNyooqpPs1ti6YlsWfa2mlUmvlyvGWoWaCvIDJMcDEaKEeOGj2X+WIqrijv9JNWeg1fBCXlFasBucWmyi83lQqhxzONJ97PWdxoWAkjkqxWksCwp+LMu8ceOouY878HAgcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8TJYHsT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jXE3fl1f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02269C433F1;
-	Tue, 20 Feb 2024 21:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8TJYHsT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD35C433C7;
+	Tue, 20 Feb 2024 21:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463164;
-	bh=sBQW1Ri1hDfvnMWDV+eiTCFBa/5WFN3a2psadJlSmlo=;
+	s=korg; t=1708463167;
+	bh=BTOUe2PZDTDNZsv85VBSeHxpLCHqsJOWoi4lzM/OW2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXE3fl1fwF00Za0rVs4g3ruUtEIDz3vwRF4w2nPltTzJU5R3OSHa88q4LGcenneZB
-	 S9JMR6DHP1CCTzSUNWKvHHZGeJAThhSAfO5Wgak/lM6jiC1UJoo9ZOv6nnwvjdZZyU
-	 kX6ZxIw1AG+uo7PsoFEN6H/kd1iHQ28E7z0OYH7s=
+	b=Z8TJYHsTV7hXsVYMUYSLh1TPf9ArAntAIRdq/y6tZNVDhURPJfLLKEcRwVWg2TudL
+	 7eN8RzlS7F/MHNFFozJWBkboCOceuJfdwV1nTBo2b7R6Ubz1kfkY3GsiFEbSyNjWGF
+	 ASZ+LvF1/p9BVxQTc5CwMNv6jH2BijXxBm0J4w3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinthu Raja <sinthu.raja@ti.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 155/197] net: ethernet: ti: cpsw_new: enable mac_managed_pm to fix mdio
-Date: Tue, 20 Feb 2024 21:51:54 +0100
-Message-ID: <20240220204845.714288172@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 156/197] hv_netvsc: Register VF in netvsc_probe if NET_DEVICE_REGISTER missed
+Date: Tue, 20 Feb 2024 21:51:55 +0100
+Message-ID: <20240220204845.745008755@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,63 +52,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sinthu Raja <sinthu.raja@ti.com>
+From: Shradha Gupta <shradhagupta@linux.microsoft.com>
 
-commit 9def04e759caa5a3d741891037ae99f81e2fff01 upstream.
+commit 9cae43da9867412f8bd09aee5c8a8dc5e8dc3dc2 upstream.
 
-The below commit  introduced a WARN when phy state is not in the states:
-PHY_HALTED, PHY_READY and PHY_UP.
-commit 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
+If hv_netvsc driver is unloaded and reloaded, the NET_DEVICE_REGISTER
+handler cannot perform VF register successfully as the register call
+is received before netvsc_probe is finished. This is because we
+register register_netdevice_notifier() very early( even before
+vmbus_driver_register()).
+To fix this, we try to register each such matching VF( if it is visible
+as a netdevice) at the end of netvsc_probe.
 
-When cpsw_new resumes, there have port in PHY_NOLINK state, so the below
-warning comes out. Set mac_managed_pm be true to tell mdio that the phy
-resume/suspend is managed by the mac, to fix the following warning:
-
-WARNING: CPU: 0 PID: 965 at drivers/net/phy/phy_device.c:326 mdio_bus_phy_resume+0x140/0x144
-CPU: 0 PID: 965 Comm: sh Tainted: G           O       6.1.46-g247b2535b2 #1
-Hardware name: Generic AM33XX (Flattened Device Tree)
- unwind_backtrace from show_stack+0x18/0x1c
- show_stack from dump_stack_lvl+0x24/0x2c
- dump_stack_lvl from __warn+0x84/0x15c
- __warn from warn_slowpath_fmt+0x1a8/0x1c8
- warn_slowpath_fmt from mdio_bus_phy_resume+0x140/0x144
- mdio_bus_phy_resume from dpm_run_callback+0x3c/0x140
- dpm_run_callback from device_resume+0xb8/0x2b8
- device_resume from dpm_resume+0x144/0x314
- dpm_resume from dpm_resume_end+0x14/0x20
- dpm_resume_end from suspend_devices_and_enter+0xd0/0x924
- suspend_devices_and_enter from pm_suspend+0x2e0/0x33c
- pm_suspend from state_store+0x74/0xd0
- state_store from kernfs_fop_write_iter+0x104/0x1ec
- kernfs_fop_write_iter from vfs_write+0x1b8/0x358
- vfs_write from ksys_write+0x78/0xf8
- ksys_write from ret_fast_syscall+0x0/0x54
-Exception stack(0xe094dfa8 to 0xe094dff0)
-dfa0:                   00000004 005c3fb8 00000001 005c3fb8 00000004 00000001
-dfc0: 00000004 005c3fb8 b6f6bba0 00000004 00000004 0059edb8 00000000 00000000
-dfe0: 00000004 bed918f0 b6f09bd3 b6e89a66
-
-Cc: <stable@vger.kernel.org> # v6.0+
-Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
-Fixes: fba863b81604 ("net: phy: make PHY PM ops a no-op if MAC driver manages PHY PM")
-Signed-off-by: Sinthu Raja <sinthu.raja@ti.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 85520856466e ("hv_netvsc: Fix race of register_netdevice_notifier and VF register")
+Suggested-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/hyperv/netvsc_drv.c |   82 ++++++++++++++++++++++++++++++----------
+ 1 file changed, 62 insertions(+), 20 deletions(-)
 
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -772,6 +772,9 @@ static void cpsw_slave_open(struct cpsw_
- 			slave->slave_num);
- 		return;
- 	}
-+
-+	phy->mac_managed_pm = true;
-+
- 	slave->phy = phy;
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -42,6 +42,10 @@
+ #define LINKCHANGE_INT (2 * HZ)
+ #define VF_TAKEOVER_INT (HZ / 10)
  
- 	phy_attached_info(slave->phy);
++/* Macros to define the context of vf registration */
++#define VF_REG_IN_PROBE		1
++#define VF_REG_IN_NOTIFIER	2
++
+ static unsigned int ring_size __ro_after_init = 128;
+ module_param(ring_size, uint, 0444);
+ MODULE_PARM_DESC(ring_size, "Ring buffer size (# of 4K pages)");
+@@ -2181,7 +2185,7 @@ static rx_handler_result_t netvsc_vf_han
+ }
+ 
+ static int netvsc_vf_join(struct net_device *vf_netdev,
+-			  struct net_device *ndev)
++			  struct net_device *ndev, int context)
+ {
+ 	struct net_device_context *ndev_ctx = netdev_priv(ndev);
+ 	int ret;
+@@ -2204,7 +2208,11 @@ static int netvsc_vf_join(struct net_dev
+ 		goto upper_link_failed;
+ 	}
+ 
+-	schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
++	/* If this registration is called from probe context vf_takeover
++	 * is taken care of later in probe itself.
++	 */
++	if (context == VF_REG_IN_NOTIFIER)
++		schedule_delayed_work(&ndev_ctx->vf_takeover, VF_TAKEOVER_INT);
+ 
+ 	call_netdevice_notifiers(NETDEV_JOIN, vf_netdev);
+ 
+@@ -2342,7 +2350,7 @@ static int netvsc_prepare_bonding(struct
+ 	return NOTIFY_DONE;
+ }
+ 
+-static int netvsc_register_vf(struct net_device *vf_netdev)
++static int netvsc_register_vf(struct net_device *vf_netdev, int context)
+ {
+ 	struct net_device_context *net_device_ctx;
+ 	struct netvsc_device *netvsc_dev;
+@@ -2382,7 +2390,7 @@ static int netvsc_register_vf(struct net
+ 
+ 	netdev_info(ndev, "VF registering: %s\n", vf_netdev->name);
+ 
+-	if (netvsc_vf_join(vf_netdev, ndev) != 0)
++	if (netvsc_vf_join(vf_netdev, ndev, context) != 0)
+ 		return NOTIFY_DONE;
+ 
+ 	dev_hold(vf_netdev);
+@@ -2480,10 +2488,31 @@ static int netvsc_unregister_vf(struct n
+ 	return NOTIFY_OK;
+ }
+ 
++static int check_dev_is_matching_vf(struct net_device *event_ndev)
++{
++	/* Skip NetVSC interfaces */
++	if (event_ndev->netdev_ops == &device_ops)
++		return -ENODEV;
++
++	/* Avoid non-Ethernet type devices */
++	if (event_ndev->type != ARPHRD_ETHER)
++		return -ENODEV;
++
++	/* Avoid Vlan dev with same MAC registering as VF */
++	if (is_vlan_dev(event_ndev))
++		return -ENODEV;
++
++	/* Avoid Bonding master dev with same MAC registering as VF */
++	if (netif_is_bond_master(event_ndev))
++		return -ENODEV;
++
++	return 0;
++}
++
+ static int netvsc_probe(struct hv_device *dev,
+ 			const struct hv_vmbus_device_id *dev_id)
+ {
+-	struct net_device *net = NULL;
++	struct net_device *net = NULL, *vf_netdev;
+ 	struct net_device_context *net_device_ctx;
+ 	struct netvsc_device_info *device_info = NULL;
+ 	struct netvsc_device *nvdev;
+@@ -2592,6 +2621,30 @@ static int netvsc_probe(struct hv_device
+ 	}
+ 
+ 	list_add(&net_device_ctx->list, &netvsc_dev_list);
++
++	/* When the hv_netvsc driver is unloaded and reloaded, the
++	 * NET_DEVICE_REGISTER for the vf device is replayed before probe
++	 * is complete. This is because register_netdevice_notifier() gets
++	 * registered before vmbus_driver_register() so that callback func
++	 * is set before probe and we don't miss events like NETDEV_POST_INIT
++	 * So, in this section we try to register the matching vf device that
++	 * is present as a netdevice, knowing that its register call is not
++	 * processed in the netvsc_netdev_notifier(as probing is progress and
++	 * get_netvsc_byslot fails).
++	 */
++	for_each_netdev(dev_net(net), vf_netdev) {
++		ret = check_dev_is_matching_vf(vf_netdev);
++		if (ret != 0)
++			continue;
++
++		if (net != get_netvsc_byslot(vf_netdev))
++			continue;
++
++		netvsc_prepare_bonding(vf_netdev);
++		netvsc_register_vf(vf_netdev, VF_REG_IN_PROBE);
++		__netvsc_vf_setup(net, vf_netdev);
++		break;
++	}
+ 	rtnl_unlock();
+ 
+ 	netvsc_devinfo_put(device_info);
+@@ -2748,28 +2801,17 @@ static int netvsc_netdev_event(struct no
+ 			       unsigned long event, void *ptr)
+ {
+ 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
++	int ret = 0;
+ 
+-	/* Skip our own events */
+-	if (event_dev->netdev_ops == &device_ops)
+-		return NOTIFY_DONE;
+-
+-	/* Avoid non-Ethernet type devices */
+-	if (event_dev->type != ARPHRD_ETHER)
+-		return NOTIFY_DONE;
+-
+-	/* Avoid Vlan dev with same MAC registering as VF */
+-	if (is_vlan_dev(event_dev))
+-		return NOTIFY_DONE;
+-
+-	/* Avoid Bonding master dev with same MAC registering as VF */
+-	if (netif_is_bond_master(event_dev))
++	ret = check_dev_is_matching_vf(event_dev);
++	if (ret != 0)
+ 		return NOTIFY_DONE;
+ 
+ 	switch (event) {
+ 	case NETDEV_POST_INIT:
+ 		return netvsc_prepare_bonding(event_dev);
+ 	case NETDEV_REGISTER:
+-		return netvsc_register_vf(event_dev);
++		return netvsc_register_vf(event_dev, VF_REG_IN_NOTIFIER);
+ 	case NETDEV_UNREGISTER:
+ 		return netvsc_unregister_vf(event_dev);
+ 	case NETDEV_UP:
 
 
