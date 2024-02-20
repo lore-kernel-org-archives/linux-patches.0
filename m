@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9C3612D7;
-	Tue, 20 Feb 2024 21:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF9E612D7;
+	Tue, 20 Feb 2024 21:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463504; cv=none; b=Zn9Y4pdtmzHUnloeq0Cug4fq1CJD8XxblYDXe9SpFCEDhQRsCLKcPXmX0mGgn9vwcb80p9eG6nwSHwT6bb3k5vuSQfYzhW8wlCRAHJPLRvHlbxlgnzzoCwNrmdwNiI8tTCwKrpM7McQsbLOwY/nXFHFSAS2JljejVFPKzryxVjs=
+	t=1708463507; cv=none; b=aC8JzETsqg/sxCUnTUaXgBNPAqFu95Gk6bMft0ec++VOmmNyDbkwN6xTQShaAGqTPA/+BDoK9AkirLKto6ks90VDo9EpJdwNzPoSC6WW65JDFY8qTZbBWDUZlyBxu/eFEyBjQkzWSjzMtwm0ad2Qt2lL/FQENmF1w7Vha9e8H6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463504; c=relaxed/simple;
-	bh=E16un5ktJlW9WY9BgEu13ZEcBhmtZ7SE1g41/Vklluo=;
+	s=arc-20240116; t=1708463507; c=relaxed/simple;
+	bh=107JA96k3nlnwCLSG8n0fYOtryWjAXE0steNiGEi0ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwvxhaYN0xgO8ltDppPnz9ryVwL3Np5c3lz+6PwWkVbDgy7N+FKxHBdHF4Dum/w10pDcSG7AHg1LLylL5a0rCXfUnToD+BUs6pfVQgQrHI2pgLhO5gAlquBm6i9lvkv4SPwmzRmPr54PBG+Gx7p/DRmgjq1JTIU4v+yefj6uIUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2i5b+h0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKApS3Uy++bz1Qtqj4PoDRPR/0IUJBl32Dr/LwMIzzLXElwprvT2FQJNMXHFToU8mWJqUVwqPHj+HJommYhEtCgoidMNqxwd8a9pjnZMIUHGrSnd0Z15wpX7zLLlBNF498LadQplijkNKxUt9XFL3CyhvMss4EryoizEgSQF6SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmVHwkyQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2i5b+h0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCBBC433C7;
-	Tue, 20 Feb 2024 21:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmVHwkyQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C39C433C7;
+	Tue, 20 Feb 2024 21:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463504;
-	bh=E16un5ktJlW9WY9BgEu13ZEcBhmtZ7SE1g41/Vklluo=;
+	s=korg; t=1708463507;
+	bh=107JA96k3nlnwCLSG8n0fYOtryWjAXE0steNiGEi0ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D2i5b+h0+9nXIDyVtXoDeUSXVaiVAyvqCEitF/SfWif9FbifPj9lm4epWlZPv9d1C
-	 6wgEVQ+bSGjvDBsOiR74ygccPdOMAf1GtDkGf/0ZhUDj3JhR0FilNdlhvcAa3Pr6MA
-	 yj1s+iB1C/0cxW9WXAlZd35DEVWFrIOCQ3CotlKo=
+	b=kmVHwkyQsooukXx7pHS9of3qMdcYafPGKXraRE+7QUF+WRE5/SZSc1zrpmCTF5yTO
+	 skFrkiy9z0ui+u4fXNSVyhGMjy+n9hsgdnTnnLq5kWLirAxloONNY1MNGgheime6oC
+	 uqjKuqFIRP2RuQKdI+D5K+Lh/gprZjtsfvbI9fNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 064/331] scsi: storvsc: Fix ring buffer size calculation
-Date: Tue, 20 Feb 2024 21:53:00 +0100
-Message-ID: <20240220205639.596299925@linuxfoundation.org>
+	linux-stable@vger.kernel.org,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 6.6 065/331] nouveau: offload fence uevents work to workqueue
+Date: Tue, 20 Feb 2024 21:53:01 +0100
+Message-ID: <20240220205639.627304620@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,83 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Dave Airlie <airlied@redhat.com>
 
-commit f4469f3858352ad1197434557150b1f7086762a0 upstream.
+commit 39126abc5e20611579602f03b66627d7cd1422f0 upstream.
 
-Current code uses the specified ring buffer size (either the default of 128
-Kbytes or a module parameter specified value) to encompass the one page
-ring buffer header plus the actual ring itself.  When the page size is 4K,
-carving off one page for the header isn't significant.  But when the page
-size is 64K on ARM64, only half of the default 128 Kbytes is left for the
-actual ring.  While this doesn't break anything, the smaller ring size
-could be a performance bottleneck.
+This should break the deadlock between the fctx lock and the irq lock.
 
-Fix this by applying the VMBUS_RING_SIZE macro to the specified ring buffer
-size.  This macro adds a page for the header, and rounds up the size to a
-page boundary, using the page size for which the kernel is built.  Use this
-new size for subsequent ring buffer calculations.  For example, on ARM64
-with 64K page size and the default ring size, this results in the actual
-ring being 128 Kbytes, which is intended.
+This offloads the processing off the work from the irq into a workqueue.
 
-Cc: stable@vger.kernel.org # 5.15.x
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://lore.kernel.org/r/20240122170956.496436-1-mhklinux@outlook.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: linux-stable@vger.kernel.org
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/576237/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_fence.c |   24 ++++++++++++++++++------
+ drivers/gpu/drm/nouveau/nouveau_fence.h |    1 +
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -330,6 +330,7 @@ enum storvsc_request_type {
-  */
- 
- static int storvsc_ringbuffer_size = (128 * 1024);
-+static int aligned_ringbuffer_size;
- static u32 max_outstanding_req_per_channel;
- static int storvsc_change_queue_depth(struct scsi_device *sdev, int queue_depth);
- 
-@@ -687,8 +688,8 @@ static void handle_sc_creation(struct vm
- 	new_sc->next_request_id_callback = storvsc_next_request_id;
- 
- 	ret = vmbus_open(new_sc,
--			 storvsc_ringbuffer_size,
--			 storvsc_ringbuffer_size,
-+			 aligned_ringbuffer_size,
-+			 aligned_ringbuffer_size,
- 			 (void *)&props,
- 			 sizeof(struct vmstorage_channel_properties),
- 			 storvsc_on_channel_callback, new_sc);
-@@ -1973,7 +1974,7 @@ static int storvsc_probe(struct hv_devic
- 	dma_set_min_align_mask(&device->device, HV_HYP_PAGE_SIZE - 1);
- 
- 	stor_device->port_number = host->host_no;
--	ret = storvsc_connect_to_vsp(device, storvsc_ringbuffer_size, is_fc);
-+	ret = storvsc_connect_to_vsp(device, aligned_ringbuffer_size, is_fc);
- 	if (ret)
- 		goto err_out1;
- 
-@@ -2164,7 +2165,7 @@ static int storvsc_resume(struct hv_devi
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.c
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
+@@ -103,6 +103,7 @@ nouveau_fence_context_kill(struct nouvea
+ void
+ nouveau_fence_context_del(struct nouveau_fence_chan *fctx)
  {
++	cancel_work_sync(&fctx->uevent_work);
+ 	nouveau_fence_context_kill(fctx, 0);
+ 	nvif_event_dtor(&fctx->event);
+ 	fctx->dead = 1;
+@@ -145,12 +146,13 @@ nouveau_fence_update(struct nouveau_chan
+ 	return drop;
+ }
+ 
+-static int
+-nouveau_fence_wait_uevent_handler(struct nvif_event *event, void *repv, u32 repc)
++static void
++nouveau_fence_uevent_work(struct work_struct *work)
+ {
+-	struct nouveau_fence_chan *fctx = container_of(event, typeof(*fctx), event);
++	struct nouveau_fence_chan *fctx = container_of(work, struct nouveau_fence_chan,
++						       uevent_work);
+ 	unsigned long flags;
+-	int ret = NVIF_EVENT_KEEP;
++	int drop = 0;
+ 
+ 	spin_lock_irqsave(&fctx->lock, flags);
+ 	if (!list_empty(&fctx->pending)) {
+@@ -160,11 +162,20 @@ nouveau_fence_wait_uevent_handler(struct
+ 		fence = list_entry(fctx->pending.next, typeof(*fence), head);
+ 		chan = rcu_dereference_protected(fence->channel, lockdep_is_held(&fctx->lock));
+ 		if (nouveau_fence_update(chan, fctx))
+-			ret = NVIF_EVENT_DROP;
++			drop = 1;
+ 	}
++	if (drop)
++		nvif_event_block(&fctx->event);
++
+ 	spin_unlock_irqrestore(&fctx->lock, flags);
++}
+ 
+-	return ret;
++static int
++nouveau_fence_wait_uevent_handler(struct nvif_event *event, void *repv, u32 repc)
++{
++	struct nouveau_fence_chan *fctx = container_of(event, typeof(*fctx), event);
++	schedule_work(&fctx->uevent_work);
++	return NVIF_EVENT_KEEP;
+ }
+ 
+ void
+@@ -178,6 +189,7 @@ nouveau_fence_context_new(struct nouveau
+ 	} args;
  	int ret;
  
--	ret = storvsc_connect_to_vsp(hv_dev, storvsc_ringbuffer_size,
-+	ret = storvsc_connect_to_vsp(hv_dev, aligned_ringbuffer_size,
- 				     hv_dev_is_fc(hv_dev));
- 	return ret;
- }
-@@ -2198,8 +2199,9 @@ static int __init storvsc_drv_init(void)
- 	 * the ring buffer indices) by the max request size (which is
- 	 * vmbus_channel_packet_multipage_buffer + struct vstor_packet + u64)
- 	 */
-+	aligned_ringbuffer_size = VMBUS_RING_SIZE(storvsc_ringbuffer_size);
- 	max_outstanding_req_per_channel =
--		((storvsc_ringbuffer_size - PAGE_SIZE) /
-+		((aligned_ringbuffer_size - PAGE_SIZE) /
- 		ALIGN(MAX_MULTIPAGE_BUFFER_PACKET +
- 		sizeof(struct vstor_packet) + sizeof(u64),
- 		sizeof(u64)));
++	INIT_WORK(&fctx->uevent_work, nouveau_fence_uevent_work);
+ 	INIT_LIST_HEAD(&fctx->flip);
+ 	INIT_LIST_HEAD(&fctx->pending);
+ 	spin_lock_init(&fctx->lock);
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.h
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.h
+@@ -44,6 +44,7 @@ struct nouveau_fence_chan {
+ 	u32 context;
+ 	char name[32];
+ 
++	struct work_struct uevent_work;
+ 	struct nvif_event event;
+ 	int notify_ref, dead, killed;
+ };
 
 
