@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0EB14C585;
-	Tue, 20 Feb 2024 21:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF12614C585;
+	Tue, 20 Feb 2024 21:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463204; cv=none; b=oQMZxoT8i8c7eyQDMN/PzeVPVLvscoXymfayiSbZtLBtTnE+du6zrw5qFf+Tv3qoHq4nXtTP6gxUmuJpFkM2rVOZpdeKYQk8ilVQHgyGJ9CH4/pXQf5641/67qF6DvZZGaQwETSjPJUo4pmE0Q6fld4kULTJmxD6KhVJTkuIFaQ=
+	t=1708463207; cv=none; b=adDxZJZiIgtmAM6m1ZOHfPg3OZJ2xlVr3hU49ip/lC91wnOoc3NDpLHvfOTSQEqLrfZUprhbQOBYVpgxdwu+fqw9JhdkKtCHh6MTb+P7VHXnidsgvBmSIyJdqD/hy1HkRYsNt+gLNOwdw8mocn7S7dnGehxClIYTvLk6yAEbq1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463204; c=relaxed/simple;
-	bh=q9HEL2+61KAw3apAthjOIkh+dSihVo3WyibisEfU+lo=;
+	s=arc-20240116; t=1708463207; c=relaxed/simple;
+	bh=/kqtGka2hw2dES3tYyWmGm7xy8DIQ/a4aRKEwtN3t2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ImkOqxM1WwZU0Hzp/rYH6HoPEN8jvaQlR2Du0i8GhkGfKlrRInEdeAltFftwZaezqoajnU1nZJh6UTwtrnjT/rOYhyzxQHlu8RD612lMapZQ1BW6zuuCnYdE+D1H4mgmZGWlMAyZ85dEwDi/tjwv9z9bMo+ApxNBqjdgaWye37c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzzGldQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bD7zoZBgeBuVV0wEUOaOQpQnSY+/tJ+KD9r1bF1NCcM1dTLijwGlu6nCtZ2VWp2Jd17z1p4mQ/a5d3Fw+St3DiQoJ+OMfzfpYmztbLhCOYTJXXh7qb0QZRjm2kq4zZiR3agJz7HJC/AkkIylx2oxcYBOys0j3v7Oc8oH8NW8gw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vk3zcfsM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzzGldQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45477C433F1;
-	Tue, 20 Feb 2024 21:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vk3zcfsM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F37C433C7;
+	Tue, 20 Feb 2024 21:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463204;
-	bh=q9HEL2+61KAw3apAthjOIkh+dSihVo3WyibisEfU+lo=;
+	s=korg; t=1708463207;
+	bh=/kqtGka2hw2dES3tYyWmGm7xy8DIQ/a4aRKEwtN3t2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzzGldQ+hpzH2tZfdzlIwUy92sExzzd0N2uoe6oOtKX8n0EHHpFk/cn2KZzVG+boC
-	 KcE/iru2ge+WWNSajtqxMuXN//tAf0BDDCF1++fHm3CEP7doDpAhHSnl8jSXC47sTS
-	 oL/SOlY59CbXvdROuMffY/Xyk7NFExlF+pX9Qir0=
+	b=Vk3zcfsM1eEDE2DP77LiJQlyS21wOWmFx19dnnWqI3JveXbKqw8xwQAs7h8HP0Oj6
+	 jDvNUSqpNNFnCbabD+8bpWUFDy+ZmAyq6BC64d2dD66O3Lr7thjWUm6JP9UXSQuCtD
+	 3kw33IrhVJlLXs0z93HD2GAf/Wm/ovQn6+pm5XhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jouni Malinen <j@w1.fi>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 140/197] wifi: cfg80211: fix wiphy delayed work queueing
-Date: Tue, 20 Feb 2024 21:51:39 +0100
-Message-ID: <20240220204845.259511585@linuxfoundation.org>
+Subject: [PATCH 6.1 141/197] wifi: mac80211: reload info pointer in ieee80211_tx_dequeue()
+Date: Tue, 20 Feb 2024 21:51:40 +0100
+Message-ID: <20240220204845.288233005@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,35 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-commit b743287d7a0007493f5cada34ed2085d475050b4 upstream.
+commit c98d8836b817d11fdff4ca7749cbbe04ff7f0c64 upstream.
 
-When a wiphy work is queued with timer, and then again
-without a delay, it's started immediately but *also*
-started again after the timer expires. This can lead,
-for example, to warnings in mac80211's offchannel code
-as reported by Jouni. Running the same work twice isn't
-expected, of course. Fix this by deleting the timer at
-this point, when queuing immediately due to delay=0.
+This pointer can change here since the SKB can change, so we
+actually later open-coded IEEE80211_SKB_CB() again. Reload
+the pointer where needed, so the monitor-mode case using it
+gets fixed, and then use info-> later as well.
 
 Cc: stable@vger.kernel.org
-Reported-by: Jouni Malinen <j@w1.fi>
-Fixes: a3ee4dc84c4e ("wifi: cfg80211: add a work abstraction with special semantics")
-Link: https://msgid.link/20240125095108.2feb0eaaa446.I4617f3210ed0e7f252290d5970dac6a876aa595b@changeid
+Fixes: 531682159092 ("mac80211: fix VLAN handling with TXQs")
+Link: https://msgid.link/20240131164910.b54c28d583bc.I29450cec84ea6773cff5d9c16ff92b836c331471@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/tx.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1671,6 +1671,7 @@ void wiphy_delayed_work_queue(struct wip
- 			      unsigned long delay)
- {
- 	if (!delay) {
-+		del_timer(&dwork->timer);
- 		wiphy_work_queue(wiphy, &dwork->work);
- 		return;
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -5,7 +5,7 @@
+  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
+  * Copyright 2007	Johannes Berg <johannes@sipsolutions.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+- * Copyright (C) 2018-2022 Intel Corporation
++ * Copyright (C) 2018-2024 Intel Corporation
+  *
+  * Transmit and frame generation functions.
+  */
+@@ -3838,6 +3838,7 @@ begin:
+ 			goto begin;
+ 
+ 		skb = __skb_dequeue(&tx.skbs);
++		info = IEEE80211_SKB_CB(skb);
+ 
+ 		if (!skb_queue_empty(&tx.skbs)) {
+ 			spin_lock_bh(&fq->lock);
+@@ -3882,7 +3883,7 @@ begin:
  	}
+ 
+ encap_out:
+-	IEEE80211_SKB_CB(skb)->control.vif = vif;
++	info->control.vif = vif;
+ 
+ 	if (tx.sta &&
+ 	    wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL)) {
 
 
