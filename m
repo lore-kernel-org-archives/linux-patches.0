@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D1D14A4E6;
-	Tue, 20 Feb 2024 21:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355F21509AC;
+	Tue, 20 Feb 2024 21:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464582; cv=none; b=n2EJpIM1lyIXddTG7x1HDPMM1rPA7bm2xGoz22K0d1LkNaWW5jSq/zGRaEfS7+kSUkqor095+8GkllJwpIiJqzpqvqe8TJM3s3IP4VbQS3Z+w0HJypyszhTaY15n1N0CaOwKN6wTD8gS8QEOt86k0LaynM959dWF3FjwhSk2abs=
+	t=1708464585; cv=none; b=gkaEtJ6mSneL6DWxRzbKbXMK3eicHaAxIJD+8btd7z5QnUtXaipKfEJ+6RJRwxgK9QLNj0tSo8cf/jYfducenj87ymS0XVQfhwPBoMZNvjPoJ30nqq69cexpfBVq4pUXMV5pTmipAedmbGZD4XKAlB0VSlO0vQeI2U1oZpgyImc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464582; c=relaxed/simple;
-	bh=H1tDeuMP7Te7UoyqgcSugf5xZuga/iFtv+Ivkll4ZQY=;
+	s=arc-20240116; t=1708464585; c=relaxed/simple;
+	bh=TYFUR2vaCONIwCaamyFv8T9+BiOoO+2ey1zeRqDhIf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1HQXiBiB8EUY9mOWF3d6a597EpC23D22eR4/Ckpaf/YfBhAaf7CBwwoSG5W4OzxpffT3foewAI3p3gaqPIj94gkDvbIRY9FsAtI1Pgr+PZd3xhUNozreVdvxsOyAy1+crcch+SxT9woESXF4IoR7mYUbl7NLGs+ikazaXBZx5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pstMqc+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gS6G3dG1AIcOXEJJ1xVKM0F2D8NdJRFyRQdqwMUInuaIbKSU6zHPUBzqXYk2SnQDrjfUQMJ65TOxmx8Bi3tAahY0GeymFektO72DWI1E/eohY829ZM612WOTXiKRJ9xLPGSmwp8fUoGmR61J6JTHgdBYqYWWfCAMmslgfgqx14E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0Wa3ocz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pstMqc+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8584EC433C7;
-	Tue, 20 Feb 2024 21:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0Wa3ocz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98090C433F1;
+	Tue, 20 Feb 2024 21:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464581;
-	bh=H1tDeuMP7Te7UoyqgcSugf5xZuga/iFtv+Ivkll4ZQY=;
+	s=korg; t=1708464585;
+	bh=TYFUR2vaCONIwCaamyFv8T9+BiOoO+2ey1zeRqDhIf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pstMqc+DapiZDJx8fxocg/flEK43UwaAmsuSwPMK2sF8xwXis2V7Zc+2/6OXZOy+1
-	 ewZoHmV5Njq+dp4AeL+nj14K4THNEsgQsOUocsjdWrDxKkh3JNq24YkES15Vr6imFQ
-	 +/0mOnJjzvSF5RrYfKngbLgaAfJAO61dxUh8efSE=
+	b=u0Wa3oczZ4o8VQ1B71jwxNI8UyEI8QjD8kritm+tc8nzf3v2Jy280W7o1KlqQwzeM
+	 AAg0wYh0cuqz/FViyn1llOSNmbBjmPUYlz+2ogeet6eJ/xq6dmjVzB1jhKDdhW6x1G
+	 dPbRgFhnY6DSYJ/GyDpVzlcvTZtZLKC1pI6mcSzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zach OKeefe <zokeefe@google.com>,
-	Maxim Patlasov <MPatlasov@parallels.com>,
+	Audra Mitchell <audra@redhat.com>,
+	Rafael Aquini <raquini@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Adam Sindelar <adam@wowsignal.io>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 071/309] mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again
-Date: Tue, 20 Feb 2024 21:53:50 +0100
-Message-ID: <20240220205635.430981157@linuxfoundation.org>
+Subject: [PATCH 6.7 072/309] selftests/mm: Update va_high_addr_switch.sh to check CPU for la57 flag
+Date: Tue, 20 Feb 2024 21:53:51 +0100
+Message-ID: <20240220205635.459823249@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -51,46 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zach O'Keefe <zokeefe@google.com>
+From: Audra Mitchell <audra@redhat.com>
 
-commit 9319b647902cbd5cc884ac08a8a6d54ce111fc78 upstream.
+commit 52e63d67b5bb423b33d7a262ac7f8bd375a90145 upstream.
 
-(struct dirty_throttle_control *)->thresh is an unsigned long, but is
-passed as the u32 divisor argument to div_u64().  On architectures where
-unsigned long is 64 bytes, the argument will be implicitly truncated.
+In order for the page table level 5 to be in use, the CPU must have the
+setting enabled in addition to the CONFIG option. Check for the flag to be
+set to avoid false test failures on systems that do not have this cpu flag
+set.
 
-Use div64_u64() instead of div_u64() so that the value used in the "is
-this a safe division" check is the same as the divisor.
+The test does a series of mmap calls including three using the
+MAP_FIXED flag and specifying an address that is 1<<47 or 1<<48.  These
+addresses are only available if you are using level 5 page tables,
+which requires both the CPU to have the capabiltiy (la57 flag) and the
+kernel to be configured.  Currently the test only checks for the kernel
+configuration option, so this test can still report a false positive.
+Here are the three failing lines:
 
-Also, remove redundant cast of the numerator to u64, as that should happen
-implicitly.
+$ ./va_high_addr_switch | grep FAILED
+mmap(ADDR_SWITCH_HINT, 2 * PAGE_SIZE, MAP_FIXED): 0xffffffffffffffff - FAILED
+mmap(HIGH_ADDR, MAP_FIXED): 0xffffffffffffffff - FAILED
+mmap(ADDR_SWITCH_HINT, 2 * PAGE_SIZE, MAP_FIXED): 0xffffffffffffffff - FAILED
 
-This would be difficult to exploit in memcg domain, given the ratio-based
-arithmetic domain_drity_limits() uses, but is much easier in global
-writeback domain with a BDI_CAP_STRICTLIMIT-backing device, using e.g.
-vm.dirty_bytes=(1<<32)*PAGE_SIZE so that dtc->thresh == (1<<32)
+I thought (for about a second) refactoring the test so that these three
+mmap calls will only be run on systems with the level 5 page tables
+available, but the whole point of the test is to check the level 5
+feature...
 
-Link: https://lkml.kernel.org/r/20240118181954.1415197-1-zokeefe@google.com
-Fixes: f6789593d5ce ("mm/page-writeback.c: fix divide by zero in bdi_dirty_limits()")
-Signed-off-by: Zach O'Keefe <zokeefe@google.com>
-Cc: Maxim Patlasov <MPatlasov@parallels.com>
+Link: https://lkml.kernel.org/r/20240119205801.62769-1-audra@redhat.com
+Fixes: 4f2930c6718a ("selftests/vm: only run 128TBswitch with 5-level paging")
+Signed-off-by: Audra Mitchell <audra@redhat.com>
+Cc: Rafael Aquini <raquini@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Adam Sindelar <adam@wowsignal.io>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page-writeback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/mm/va_high_addr_switch.sh |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -1638,7 +1638,7 @@ static inline void wb_dirty_limits(struc
- 	 */
- 	dtc->wb_thresh = __wb_calc_thresh(dtc);
- 	dtc->wb_bg_thresh = dtc->thresh ?
--		div_u64((u64)dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
-+		div64_u64(dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
+--- a/tools/testing/selftests/mm/va_high_addr_switch.sh
++++ b/tools/testing/selftests/mm/va_high_addr_switch.sh
+@@ -29,9 +29,15 @@ check_supported_x86_64()
+ 	# See man 1 gzip under '-f'.
+ 	local pg_table_levels=$(gzip -dcfq "${config}" | grep PGTABLE_LEVELS | cut -d'=' -f 2)
  
- 	/*
- 	 * In order to avoid the stacked BDI deadlock we need
++	local cpu_supports_pl5=$(awk '/^flags/ {if (/la57/) {print 0;}
++		else {print 1}; exit}' /proc/cpuinfo 2>/dev/null)
++
+ 	if [[ "${pg_table_levels}" -lt 5 ]]; then
+ 		echo "$0: PGTABLE_LEVELS=${pg_table_levels}, must be >= 5 to run this test"
+ 		exit $ksft_skip
++	elif [[ "${cpu_supports_pl5}" -ne 0 ]]; then
++		echo "$0: CPU does not have the necessary la57 flag to support page table level 5"
++		exit $ksft_skip
+ 	fi
+ }
+ 
 
 
