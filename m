@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD5814A4E6;
-	Tue, 20 Feb 2024 21:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C8151CE5;
+	Tue, 20 Feb 2024 21:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464005; cv=none; b=ZhUzgPJiPCovWY7gKD0kr28uIILkjkE497SKpFZ1GiG21PnNMUSheXkhk0YFmQTF27THAQ8hPPwHvCiau8iC6EOv90fyEyV06LUdyVTHqviOAreyO+neM09HF15TpO4r68ISBeR0voeE/T004IcVdJaEMSfWl+TUrAIIUgvt+pg=
+	t=1708464008; cv=none; b=fjW09F17dcDejpycyPsdVtj0S9LWf4V21X9NNCiY3uuq8IwiyOr4FIXP4tPxuOBuMZnekLFl0+fm4Om9xQXCRR+0ga6yWxZuWXb7rgay9WggndRigOuoSw7zAI7laRxp5mteTDMFodt+8pKyhviQYMhct9YbMpzoP2Ffv1pNsxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464005; c=relaxed/simple;
-	bh=5vBMINww6tX8LKU5ipD7csU0/elH3Gy40qyqJ3eT3F8=;
+	s=arc-20240116; t=1708464008; c=relaxed/simple;
+	bh=wxS1ZRA3ZiXlwEty0CFpLYvd934106efxjFx5fl0z5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jacyquoh4KALLC5TOq+Gzwtt0hRj0WzoxkkJf6Sm1/+SzeN5tiz/AAwe/pFIWIZwB0hhavZKKq7XvJD3o0Uj6VlZnvKTqEuQ1pNP0JCN9/quEixmEok5k8845uuiVCnMfmQkMrOK5X7S+dEO2OtFPV6z2n9SVdmimSO0p6V/ZkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHJsoZhI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgv37S4QlTRumfHeOvR41vcbUIg70iMuRBoyvMYTzI1nhEiHpIvFFGdz2LqE41do7ps0/rP6g7P3Js4arDmqRv9HufIixJJnxf8duPLXn1jvMzZnBAxDYyxzOU9dgnWPqcXPIokAE+j5VoYPg9C0tJEZEEGyAg1Q5hhEmbyxumw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3vUohCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHJsoZhI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1EEC433F1;
-	Tue, 20 Feb 2024 21:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3vUohCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50735C433C7;
+	Tue, 20 Feb 2024 21:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464004;
-	bh=5vBMINww6tX8LKU5ipD7csU0/elH3Gy40qyqJ3eT3F8=;
+	s=korg; t=1708464007;
+	bh=wxS1ZRA3ZiXlwEty0CFpLYvd934106efxjFx5fl0z5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHJsoZhItqyleYgmetFGfE57TsDeGXlaDHAC0edkHGLoEBxPbNrItM93tKdyYS4YN
-	 9Ai0kmkQl5HulqXXKegmSJBqP48LLM0gFmjxYOYb/eD16Izn5JgLVBF59hVJahVbr0
-	 5xuEV+EWxPEsmCYuGEwedprHNds1oVwQT12zOPAY=
+	b=f3vUohCVmJonzknmu0gQfy1aEUs7PjUQh7xvVLv1SE0wgtAVs6elgpGZM3nJZ1GDq
+	 SEOBCkogtJOfS6oswfb/LIdyOWiQeuVc6FmsbMTtVYzyhxg3+UP8uaCywdq5zbdWfh
+	 sm11FA6GLt99k9nWeFJVSbIRR+tsZH+j5oKWmHLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
+	Stanislav Petrov <stanislav.i.petrov@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 222/331] ASoC: tas2781: add module parameter to tascodec_init()
-Date: Tue, 20 Feb 2024 21:55:38 +0100
-Message-ID: <20240220205644.707989846@linuxfoundation.org>
+Subject: [PATCH 6.6 223/331] ASoC: amd: yc: Add DMI quirk for Lenovo Ideapad Pro 5 16ARP8
+Date: Tue, 20 Feb 2024 21:55:39 +0100
+Message-ID: <20240220205644.740282961@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,84 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 34a1066981a967eab619938e7b35a9be6b4c34e1 upstream.
+commit 610010737f74482a61896596a0116876ecf9e65c upstream.
 
-The tascodec_init() of the snd-soc-tas2781-comlib module is called from
-snd-soc-tas2781-i2c and snd-hda-scodec-tas2781-i2c modules. It calls
-request_firmware_nowait() with parameter THIS_MODULE and a cont/callback
-from the latter modules.
+The laptop requires a quirk ID to enable its internal microphone. Add
+it to the DMI quirk table.
 
-The latter modules can be removed while their callbacks are running,
-resulting in a general protection failure.
-
-Add module parameter to tascodec_init() so request_firmware_nowait() can
-be called with the module of the callback.
-
-Fixes: ef3bcde75d06 ("ASoC: tas2781: Add tas2781 driver")
-CC: stable@vger.kernel.org
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Link: https://lore.kernel.org/r/118dad922cef50525e5aab09badef2fa0eb796e5.1707076603.git.soyer@irl.hu
+Reported-by: Stanislav Petrov <stanislav.i.petrov@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=216925
+Cc: stable@vger.kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20240205214853.2689-1-mario.limonciello@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/sound/tas2781.h           |    1 +
- sound/pci/hda/tas2781_hda_i2c.c   |    2 +-
- sound/soc/codecs/tas2781-comlib.c |    3 ++-
- sound/soc/codecs/tas2781-i2c.c    |    2 +-
- 4 files changed, 5 insertions(+), 3 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/include/sound/tas2781.h
-+++ b/include/sound/tas2781.h
-@@ -135,6 +135,7 @@ struct tasdevice_priv {
- 
- void tas2781_reset(struct tasdevice_priv *tas_dev);
- int tascodec_init(struct tasdevice_priv *tas_priv, void *codec,
-+	struct module *module,
- 	void (*cont)(const struct firmware *fw, void *context));
- struct tasdevice_priv *tasdevice_kzalloc(struct i2c_client *i2c);
- int tasdevice_init(struct tasdevice_priv *tas_priv);
---- a/sound/pci/hda/tas2781_hda_i2c.c
-+++ b/sound/pci/hda/tas2781_hda_i2c.c
-@@ -627,7 +627,7 @@ static int tas2781_hda_bind(struct devic
- 
- 	strscpy(comps->name, dev_name(dev), sizeof(comps->name));
- 
--	ret = tascodec_init(tas_hda->priv, codec, tasdev_fw_ready);
-+	ret = tascodec_init(tas_hda->priv, codec, THIS_MODULE, tasdev_fw_ready);
- 	if (!ret)
- 		comps->playback_hook = tas2781_hda_playback_hook;
- 
---- a/sound/soc/codecs/tas2781-comlib.c
-+++ b/sound/soc/codecs/tas2781-comlib.c
-@@ -267,6 +267,7 @@ void tas2781_reset(struct tasdevice_priv
- EXPORT_SYMBOL_GPL(tas2781_reset);
- 
- int tascodec_init(struct tasdevice_priv *tas_priv, void *codec,
-+	struct module *module,
- 	void (*cont)(const struct firmware *fw, void *context))
- {
- 	int ret = 0;
-@@ -280,7 +281,7 @@ int tascodec_init(struct tasdevice_priv
- 		tas_priv->dev_name, tas_priv->ndev);
- 	crc8_populate_msb(tas_priv->crc8_lkp_tbl, TASDEVICE_CRC8_POLYNOMIAL);
- 	tas_priv->codec = codec;
--	ret = request_firmware_nowait(THIS_MODULE, FW_ACTION_UEVENT,
-+	ret = request_firmware_nowait(module, FW_ACTION_UEVENT,
- 		tas_priv->rca_binaryname, tas_priv->dev, GFP_KERNEL, tas_priv,
- 		cont);
- 	if (ret)
---- a/sound/soc/codecs/tas2781-i2c.c
-+++ b/sound/soc/codecs/tas2781-i2c.c
-@@ -564,7 +564,7 @@ static int tasdevice_codec_probe(struct
- {
- 	struct tasdevice_priv *tas_priv = snd_soc_component_get_drvdata(codec);
- 
--	return tascodec_init(tas_priv, codec, tasdevice_fw_ready);
-+	return tascodec_init(tas_priv, codec, THIS_MODULE, tasdevice_fw_ready);
- }
- 
- static void tasdevice_deinit(void *context)
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -251,6 +251,13 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83AS"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "UM5302TA"),
+ 		}
 
 
