@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCE9151CC8;
-	Tue, 20 Feb 2024 21:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A779D151CC8;
+	Tue, 20 Feb 2024 21:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463625; cv=none; b=NWGMRz4lY8M99dBNFbU5W+n/vPdfaOrp3Xp9V5y04CzjUQPWpXGKSL6AFryd32bAkkc44ZBhR6iDuRetzbjQfzOr7bYv6Aaf8od0yFAAB61P/RLWNSzJ5bJ/CqxEUceJLwWJa2f0lwjCivfvK5Px+jqf8LRl0AeMWQ96Bjqsltk=
+	t=1708463627; cv=none; b=OJpNtz3WJ64EGtFOtHn6jLe6eyjWKOwtB6YeEQvCVMG1AuQaXtTWPxxtIogt/WdC867gjCEqbg4f3F8NDF+V7/A2NFIN7RUffPmxZzL3gRuwTwkVnJlefesAjuojlTKMyfkYqb/HXfXXSfiltKnouBc5jOrCqEKrnNMBIkTSVmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463625; c=relaxed/simple;
-	bh=tQhdOadVr7txc8VFZeBIy/dBggt3IZ/F5G1hzBlav0s=;
+	s=arc-20240116; t=1708463627; c=relaxed/simple;
+	bh=XY6LEUV7518S8UrPaSML6/xpM7LMPGlGwHdLKRR7sEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRPiqNAoJk1MFpDkKkxCTYjo+ItZVPVeQ8sazHYOH3cWyWukcSiHr2MJv/p4GNxo5JPIDY5NRiXpWpxLzROFNKYrYzkYeiqGfvgaOMrFv4aqMZgvbu8kXGPvIP7zSA8nl4my/1dn6I/Zrwh2pKqVku1aNoU+BwdZUpK1lIiv+Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxTycj91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TduUOAW2Kg4Viy1EiD6hGoPryPGiOHPYol9RyBEx9jk4EmQE05Dm2k9/acZnqBrtv8goseGyZmwDvUxMxroNQdKrB0ru+qRvfVNWig8eNnq8neNALSYb9fmi2IVTwiPc/789ijVzaEjTluzRHKF3gqKLDZ9rfOy8m6ee4GyNy38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNRtjaJ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxTycj91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3798C433F1;
-	Tue, 20 Feb 2024 21:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNRtjaJ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B632C433F1;
+	Tue, 20 Feb 2024 21:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463624;
-	bh=tQhdOadVr7txc8VFZeBIy/dBggt3IZ/F5G1hzBlav0s=;
+	s=korg; t=1708463627;
+	bh=XY6LEUV7518S8UrPaSML6/xpM7LMPGlGwHdLKRR7sEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FxTycj91bQqoW7r9MvgNdsVxwb6a9yHku/ZpdWdbOvOoBI8K9Syz5A1BvmIAKISGm
-	 fY7TeEjDsWafVOLjYpwCM3Vk9IGc9c2xwwgoie6H2PyJBV5sUG5ni19tKgERus2jIV
-	 CP4J8QAal7fdo3GwiA47+Yzbql2/m5i927jTUQUg=
+	b=bNRtjaJ3hBLKfa+yxYwW7wLoSpgHeP9VEUKYtj13Cwkzg54zHW4HWmLGctUMAfWT5
+	 z3EFg43WVRfzr4mugRZIZLSTTZQivKMvXYm0p9ICaj6m1W0UNmC0cDRV3Eptn4LcYh
+	 jdMuBF9ICLGy9Cc4fLBfTm5hDzBo5WPCU4eZDDQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.de>,
-	Piotr Zakowski <piotr.zakowski@intel.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/331] i2c: i801: Fix block process call transactions
-Date: Tue, 20 Feb 2024 21:53:38 +0100
-Message-ID: <20240220205640.796969873@linuxfoundation.org>
+Subject: [PATCH 6.6 085/331] interconnect: qcom: sc8180x: Mark CO0 BCM keepalive
+Date: Tue, 20 Feb 2024 21:53:21 +0100
+Message-ID: <20240220205640.261431801@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -53,54 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean Delvare <jdelvare@suse.de>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit c1c9d0f6f7f1dbf29db996bd8e166242843a5f21 ]
+[ Upstream commit 85e985a4f46e462a37f1875cb74ed380e7c0c2e0 ]
 
-According to the Intel datasheets, software must reset the block
-buffer index twice for block process call transactions: once before
-writing the outgoing data to the buffer, and once again before
-reading the incoming data from the buffer.
+The CO0 BCM needs to be up at all times, otherwise some hardware (like
+the UFS controller) loses its connection to the rest of the SoC,
+resulting in a hang of the platform, accompanied by a spectacular
+logspam.
 
-The driver is currently missing the second reset, causing the wrong
-portion of the block buffer to be read.
+Mark it as keepalive to prevent such cases.
 
-Signed-off-by: Jean Delvare <jdelvare@suse.de>
-Reported-by: Piotr Zakowski <piotr.zakowski@intel.com>
-Closes: https://lore.kernel.org/linux-i2c/20240213120553.7b0ab120@endymion.delvare/
-Fixes: 315cd67c9453 ("i2c: i801: Add Block Write-Block Read Process Call support")
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 9c8c6bac1ae8 ("interconnect: qcom: Add SC8180x providers")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231214-topic-sc8180_fixes-v1-1-421904863006@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/interconnect/qcom/sc8180x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index a87e3c15e5fc..f1c82b2016f3 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -500,11 +500,10 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
- 	/* Set block buffer mode */
- 	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
+diff --git a/drivers/interconnect/qcom/sc8180x.c b/drivers/interconnect/qcom/sc8180x.c
+index bdd3471d4ac8..a741badaa966 100644
+--- a/drivers/interconnect/qcom/sc8180x.c
++++ b/drivers/interconnect/qcom/sc8180x.c
+@@ -1372,6 +1372,7 @@ static struct qcom_icc_bcm bcm_mm0 = {
  
--	inb_p(SMBHSTCNT(priv)); /* reset the data buffer index */
--
- 	if (read_write == I2C_SMBUS_WRITE) {
- 		len = data->block[0];
- 		outb_p(len, SMBHSTDAT0(priv));
-+		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
- 		for (i = 0; i < len; i++)
- 			outb_p(data->block[i+1], SMBBLKDAT(priv));
- 	}
-@@ -522,6 +521,7 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
- 		}
- 
- 		data->block[0] = len;
-+		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
- 		for (i = 0; i < len; i++)
- 			data->block[i + 1] = inb_p(SMBBLKDAT(priv));
- 	}
+ static struct qcom_icc_bcm bcm_co0 = {
+ 	.name = "CO0",
++	.keepalive = true,
+ 	.num_nodes = 1,
+ 	.nodes = { &slv_qns_cdsp_mem_noc }
+ };
 -- 
 2.43.0
 
