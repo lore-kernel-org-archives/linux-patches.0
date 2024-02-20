@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80480612D7;
-	Tue, 20 Feb 2024 21:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C75F612D7;
+	Tue, 20 Feb 2024 21:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463495; cv=none; b=YX/1KtnW8ujBhHsBocxrkmI8vgsH6eKAS0U11uHf2bdlQSf0w08Sn2EK6ia2IjNhpM9XGlT85xfrMjq5B0KWuxydu2VepRBTJHmeDVUi49g8Mbu0IAy71A8idJ2kazO0F1drV0CMKlOl7H2M37JLXcLuleQPtfG2IwpeAOLXHFY=
+	t=1708463498; cv=none; b=eNfDCYawOio6xIWpLqJPOh5TcgCoL12/t+8IZYWaPfWTblh7RelvIRwLtZJ8UZKEKaeeQ3frPoizWEabSg98UbZqp0izo7MZAXsVKojhyi/lceotrKfIjJT5s0L6IZRTilFuaZWEswytY2umVaAXeOGh6TLUIyEvCkLY6e7jRCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463495; c=relaxed/simple;
-	bh=6iqK4GS5F32T6VTpn6xCi2UoxtPlBJ1SgWDMUgROzVs=;
+	s=arc-20240116; t=1708463498; c=relaxed/simple;
+	bh=SbunnUPTzgUC8nNvIWpNuL7TkzTTLTTVmmqaIizI/9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOAzvd2/dfM3g/TDfnBLtT6v9hoCdqkLNRaMU+dGGoTHp8Qhve9aG/9uPakxEHjbEMWYV5fTEJqrkisTNZm6ubuc7eozLVuDLiNhws3ofSVsy4v6cgj1oQUy1S9KhpU5HbsvcLAYxUAPs23yEP7xBYYKZ1NLpFh8lsWp3B9S47A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWJ2Icqg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCMtNeH2HM5sbq5+6DKhucfD50gP1e0IDySsyrIf8uoL73eU63oTImlR09SGw7Xw9bwHqFtuLPEEOrcDJBH+2J4PA7ZUz1lJTxTkKvKUzZmsVCWDZFxK8M2+jKMyKAxwuDiso/xhnH1wXUMjzFQFcP7xa5yc2MRnUbJ8BPijmLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zw7u4Jzn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWJ2Icqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F97C43390;
-	Tue, 20 Feb 2024 21:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zw7u4Jzn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A52A3C433F1;
+	Tue, 20 Feb 2024 21:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463495;
-	bh=6iqK4GS5F32T6VTpn6xCi2UoxtPlBJ1SgWDMUgROzVs=;
+	s=korg; t=1708463498;
+	bh=SbunnUPTzgUC8nNvIWpNuL7TkzTTLTTVmmqaIizI/9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xWJ2IcqgYgnVGgBD7tIUU8lE0U/rUjjdpJZwwAMk7xrMq2hkKBcdQHC1hUk8glZ3C
-	 FvNwtszgU0T/gG50en9pgzIDFElocbHOlMsYjpPYVQKG7Zy14Xyua4UwbxNQ1eaAXj
-	 A7POjiV1G4Gq4cdWv5bEABfDrxZF38eVElh9G9xI=
+	b=Zw7u4JznIs5qDtmlSPyEqXsA+OZCHdj00wOm77wBQ3p7EHm8aTWL2do9Qi+ZeyU2q
+	 bu0tLub/Bi1kF2uTZqhK9CN0DoaEWfalz+URR5pQRaGPfgW2vQ/KzjDyx1wqEczXOW
+	 Gv+88ykmkGiX/QCZTFEkJ25HllY9U6z+XYSFs2no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/331] i40e: Do not allow untrusted VF to remove administratively set MAC
-Date: Tue, 20 Feb 2024 21:52:49 +0100
-Message-ID: <20240220205639.258812271@linuxfoundation.org>
+	Audra Mitchell <audra@redhat.com>,
+	Rafael Aquini <raquini@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Adam Sindelar <adam@wowsignal.io>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 062/331] selftests/mm: Update va_high_addr_switch.sh to check CPU for la57 flag
+Date: Tue, 20 Feb 2024 21:52:58 +0100
+Message-ID: <20240220205639.539231689@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -54,124 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Audra Mitchell <audra@redhat.com>
 
-[ Upstream commit 73d9629e1c8c1982f13688c4d1019c3994647ccc ]
+commit 52e63d67b5bb423b33d7a262ac7f8bd375a90145 upstream.
 
-Currently when PF administratively sets VF's MAC address and the VF
-is put down (VF tries to delete all MACs) then the MAC is removed
-from MAC filters and primary VF MAC is zeroed.
+In order for the page table level 5 to be in use, the CPU must have the
+setting enabled in addition to the CONFIG option. Check for the flag to be
+set to avoid false test failures on systems that do not have this cpu flag
+set.
 
-Do not allow untrusted VF to remove primary MAC when it was set
-administratively by PF.
+The test does a series of mmap calls including three using the
+MAP_FIXED flag and specifying an address that is 1<<47 or 1<<48.  These
+addresses are only available if you are using level 5 page tables,
+which requires both the CPU to have the capabiltiy (la57 flag) and the
+kernel to be configured.  Currently the test only checks for the kernel
+configuration option, so this test can still report a false positive.
+Here are the three failing lines:
 
-Reproducer:
-1) Create VF
-2) Set VF interface up
-3) Administratively set the VF's MAC
-4) Put VF interface down
+$ ./va_high_addr_switch | grep FAILED
+mmap(ADDR_SWITCH_HINT, 2 * PAGE_SIZE, MAP_FIXED): 0xffffffffffffffff - FAILED
+mmap(HIGH_ADDR, MAP_FIXED): 0xffffffffffffffff - FAILED
+mmap(ADDR_SWITCH_HINT, 2 * PAGE_SIZE, MAP_FIXED): 0xffffffffffffffff - FAILED
 
-[root@host ~]# echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
-[root@host ~]# ip link set enp2s0f0v0 up
-[root@host ~]# ip link set enp2s0f0 vf 0 mac fe:6c:b5:da:c7:7d
-[root@host ~]# ip link show enp2s0f0
-23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
-    vf 0     link/ether fe:6c:b5:da:c7:7d brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-[root@host ~]# ip link set enp2s0f0v0 down
-[root@host ~]# ip link show enp2s0f0
-23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
-    vf 0     link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
+I thought (for about a second) refactoring the test so that these three
+mmap calls will only be run on systems with the level 5 page tables
+available, but the whole point of the test is to check the level 5
+feature...
 
-Fixes: 700bbf6c1f9e ("i40e: allow VF to remove any MAC filter")
-Fixes: ceb29474bbbc ("i40e: Add support for VF to specify its primary MAC address")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240208180335.1844996-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20240119205801.62769-1-audra@redhat.com
+Fixes: 4f2930c6718a ("selftests/vm: only run 128TBswitch with 5-level paging")
+Signed-off-by: Audra Mitchell <audra@redhat.com>
+Cc: Rafael Aquini <raquini@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Adam Sindelar <adam@wowsignal.io>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 38 ++++++++++++++++---
- 1 file changed, 33 insertions(+), 5 deletions(-)
+ tools/testing/selftests/mm/va_high_addr_switch.sh |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index cc4c53470db2..082c09920999 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2848,6 +2848,24 @@ static int i40e_vc_get_stats_msg(struct i40e_vf *vf, u8 *msg)
- 				      (u8 *)&stats, sizeof(stats));
+--- a/tools/testing/selftests/mm/va_high_addr_switch.sh
++++ b/tools/testing/selftests/mm/va_high_addr_switch.sh
+@@ -29,9 +29,15 @@ check_supported_x86_64()
+ 	# See man 1 gzip under '-f'.
+ 	local pg_table_levels=$(gzip -dcfq "${config}" | grep PGTABLE_LEVELS | cut -d'=' -f 2)
+ 
++	local cpu_supports_pl5=$(awk '/^flags/ {if (/la57/) {print 0;}
++		else {print 1}; exit}' /proc/cpuinfo 2>/dev/null)
++
+ 	if [[ "${pg_table_levels}" -lt 5 ]]; then
+ 		echo "$0: PGTABLE_LEVELS=${pg_table_levels}, must be >= 5 to run this test"
+ 		exit $ksft_skip
++	elif [[ "${cpu_supports_pl5}" -ne 0 ]]; then
++		echo "$0: CPU does not have the necessary la57 flag to support page table level 5"
++		exit $ksft_skip
+ 	fi
  }
  
-+/**
-+ * i40e_can_vf_change_mac
-+ * @vf: pointer to the VF info
-+ *
-+ * Return true if the VF is allowed to change its MAC filters, false otherwise
-+ */
-+static bool i40e_can_vf_change_mac(struct i40e_vf *vf)
-+{
-+	/* If the VF MAC address has been set administratively (via the
-+	 * ndo_set_vf_mac command), then deny permission to the VF to
-+	 * add/delete unicast MAC addresses, unless the VF is trusted
-+	 */
-+	if (vf->pf_set_mac && !vf->trusted)
-+		return false;
-+
-+	return true;
-+}
-+
- #define I40E_MAX_MACVLAN_PER_HW 3072
- #define I40E_MAX_MACVLAN_PER_PF(num_ports) (I40E_MAX_MACVLAN_PER_HW /	\
- 	(num_ports))
-@@ -2907,8 +2925,8 @@ static inline int i40e_check_vf_permission(struct i40e_vf *vf,
- 		 * The VF may request to set the MAC address filter already
- 		 * assigned to it so do not return an error in that case.
- 		 */
--		if (!test_bit(I40E_VIRTCHNL_VF_CAP_PRIVILEGE, &vf->vf_caps) &&
--		    !is_multicast_ether_addr(addr) && vf->pf_set_mac &&
-+		if (!i40e_can_vf_change_mac(vf) &&
-+		    !is_multicast_ether_addr(addr) &&
- 		    !ether_addr_equal(addr, vf->default_lan_addr.addr)) {
- 			dev_err(&pf->pdev->dev,
- 				"VF attempting to override administratively set MAC address, bring down and up the VF interface to resume normal operation\n");
-@@ -3114,19 +3132,29 @@ static int i40e_vc_del_mac_addr_msg(struct i40e_vf *vf, u8 *msg)
- 			ret = -EINVAL;
- 			goto error_param;
- 		}
--		if (ether_addr_equal(al->list[i].addr, vf->default_lan_addr.addr))
--			was_unimac_deleted = true;
- 	}
- 	vsi = pf->vsi[vf->lan_vsi_idx];
- 
- 	spin_lock_bh(&vsi->mac_filter_hash_lock);
- 	/* delete addresses from the list */
--	for (i = 0; i < al->num_elements; i++)
-+	for (i = 0; i < al->num_elements; i++) {
-+		const u8 *addr = al->list[i].addr;
-+
-+		/* Allow to delete VF primary MAC only if it was not set
-+		 * administratively by PF or if VF is trusted.
-+		 */
-+		if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
-+		    i40e_can_vf_change_mac(vf))
-+			was_unimac_deleted = true;
-+		else
-+			continue;
-+
- 		if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
- 			ret = -EINVAL;
- 			spin_unlock_bh(&vsi->mac_filter_hash_lock);
- 			goto error_param;
- 		}
-+	}
- 
- 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
- 
--- 
-2.43.0
-
 
 
