@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C443133987;
-	Tue, 20 Feb 2024 21:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BE3133987;
+	Tue, 20 Feb 2024 21:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463119; cv=none; b=Q2AhwiISBi9Id7ADbUzH6uSm7e2Q0UzEzueDHQLgN17yuYIdmyYL+53eT7efPpC45SLMItO712F9HdlDuO+/Ko24BwYVM1T6+m/V8iki7BNM8NSANhB1PXKeTMoI1Wk1oUnmDKpv3eN5M2eTHa++iOgEMhUbveseUI5lUi7aC9w=
+	t=1708463122; cv=none; b=GfwMBQ/Z0FH4+hQ5i2Zkw3ke0A9k6dtGMA8VWEKLBLRoLYFdZSpykLEVX5WGyAK2L7iGZvtslt1IS9VtFe2bvmnY+LBAmiKhxpPZ7+WnEbP/jeIqnEr9pfeN6s3cOHJkAG0lTyEToomnF6QMR55I/QUqW0orMkBKmAanOcivCJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463119; c=relaxed/simple;
-	bh=t7YAM4s1964nfOC+vY6PSvtfGcViS6NBJ8i77WAQUus=;
+	s=arc-20240116; t=1708463122; c=relaxed/simple;
+	bh=gxTkstNBi6WX9LyxaUMH0SUSfE1oaoAn3e/gPKWjNwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDTdzkjUa6kiaDpMqfQ4ugs8KxyAvP7biqjicFx3qVZZGhteyDy4SvYXt+uRgapM+9TBpwPGGoYj4YTFPGj1AXOrqOG6bTe2I6qr+fx7NCZ+0uTLd1HMFuPEwR7EtT07cmmkUQLR+jM2dI8NhNc/o/mmLKG5pFzOEHP11i4rw7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgz0nmUa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XFMdXvqcwa9khPK/x+h18djDXB1TyfuHoyMqoZW3woKVvmt/s+LHKtxXh2ITet509A5CWz6o3UM4O6BoWpX5IvEdi5PdHQQQxTRBQUKunSI1xYyh4h14u3NrMJVY0idDmLVU4OHldiOFG3I/CRc5DEb00SKy0E3mcgKs4GQG2N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+P0LXVu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgz0nmUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6674C433C7;
-	Tue, 20 Feb 2024 21:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+P0LXVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20565C433C7;
+	Tue, 20 Feb 2024 21:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463119;
-	bh=t7YAM4s1964nfOC+vY6PSvtfGcViS6NBJ8i77WAQUus=;
+	s=korg; t=1708463122;
+	bh=gxTkstNBi6WX9LyxaUMH0SUSfE1oaoAn3e/gPKWjNwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgz0nmUaf/li2cjPOPaSu2ztfXElGSBjZJiH+XulUNqJT3wO4qqE5p/0j5fcF7b9d
-	 NsuUF2Wcz//TxCQVmD+WUyEZaqGPWMdsuGjxXb0YsvEdddpCH2Ozm+AXaLCV/wvfrY
-	 gcfPQD3T4BfNNO2Wb4vq/jXMEV/i78EXvszNoFME=
+	b=q+P0LXVu/USiGH+33MRQu/jw6uPj3qNrD1cuiwybCEqK2J96gfkwFMCTgXapIznBD
+	 J8XghSMRuStWvnHSCiMUKNx7/0Nfmq/GHB3ZxJKj1lsLCaQWwqFmQ/d8jWMI0WqnHO
+	 Bt4+XNGhIVVHSAoPm/IkfgCmeMLGuT+9NEURKhiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bo liu <bo.liu@senarytech.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 134/197] ALSA: hda/conexant: Add quirk for SWS JS201D
-Date: Tue, 20 Feb 2024 21:51:33 +0100
-Message-ID: <20240220204845.082730008@linuxfoundation.org>
+	Kunkun Jiang <jiangkunkun@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 143/197] irqchip/gic-v3-its: Fix GICv4.1 VPE affinity update
+Date: Tue, 20 Feb 2024 21:51:42 +0100
+Message-ID: <20240220204845.348310796@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,76 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bo liu <bo.liu@senarytech.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 4639c5021029d49fd2f97fa8d74731f167f98919 upstream.
+commit af9acbfc2c4b72c378d0b9a2ee023ed01055d3e2 upstream.
 
-The SWS JS201D need a different pinconfig from windows driver.
-Add a quirk to use a specific pinconfig to SWS JS201D.
+When updating the affinity of a VPE, the VMOVP command is currently skipped
+if the two CPUs are part of the same VPE affinity.
 
-Signed-off-by: bo liu <bo.liu@senarytech.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240205013802.51907-1-bo.liu@senarytech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+But this is wrong, as the doorbell corresponding to this VPE is still
+delivered on the 'old' CPU, which screws up the balancing.  Furthermore,
+offlining that 'old' CPU results in doorbell interrupts generated for this
+VPE being discarded.
+
+The harsh reality is that VMOVP cannot be elided when a set_affinity()
+request occurs. It needs to be obeyed, and if an optimisation is to be
+made, it is at the point where the affinity change request is made (such as
+in KVM).
+
+Drop the VMOVP elision altogether, and only use the vpe_table_mask
+to try and stay within the same ITS affinity group if at all possible.
+
+Fixes: dd3f050a216e (irqchip/gic-v4.1: Implement the v4.1 flavour of VMOVP)
+Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240213101206.2137483-4-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/irqchip/irq-gic-v3-its.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -344,6 +344,7 @@ enum {
- 	CXT_FIXUP_HP_ZBOOK_MUTE_LED,
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
-+	CXT_PINCFG_SWS_JS201D,
- };
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3805,8 +3805,9 @@ static int its_vpe_set_affinity(struct i
+ 				bool force)
+ {
+ 	struct its_vpe *vpe = irq_data_get_irq_chip_data(d);
+-	int from, cpu = cpumask_first(mask_val);
++	struct cpumask common, *table_mask;
+ 	unsigned long flags;
++	int from, cpu;
  
- /* for hda_fixup_thinkpad_acpi() */
-@@ -841,6 +842,17 @@ static const struct hda_pintbl cxt_pincf
- 	{}
- };
+ 	/*
+ 	 * Changing affinity is mega expensive, so let's be as lazy as
+@@ -3822,19 +3823,22 @@ static int its_vpe_set_affinity(struct i
+ 	 * taken on any vLPI handling path that evaluates vpe->col_idx.
+ 	 */
+ 	from = vpe_to_cpuid_lock(vpe, &flags);
+-	if (from == cpu)
+-		goto out;
+-
+-	vpe->col_idx = cpu;
++	table_mask = gic_data_rdist_cpu(from)->vpe_table_mask;
  
-+/* SuoWoSi/South-holding JS201D with sn6140 */
-+static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
-+	{ 0x16, 0x03211040 }, /* hp out */
-+	{ 0x17, 0x91170110 }, /* SPK/Class_D */
-+	{ 0x18, 0x95a70130 }, /* Internal mic */
-+	{ 0x19, 0x03a11020 }, /* Headset Mic */
-+	{ 0x1a, 0x40f001f0 }, /* Not used */
-+	{ 0x21, 0x40f001f0 }, /* Not used */
-+	{}
-+};
+ 	/*
+-	 * GICv4.1 allows us to skip VMOVP if moving to a cpu whose RD
+-	 * is sharing its VPE table with the current one.
++	 * If we are offered another CPU in the same GICv4.1 ITS
++	 * affinity, pick this one. Otherwise, any CPU will do.
+ 	 */
+-	if (gic_data_rdist_cpu(cpu)->vpe_table_mask &&
+-	    cpumask_test_cpu(from, gic_data_rdist_cpu(cpu)->vpe_table_mask))
++	if (table_mask && cpumask_and(&common, mask_val, table_mask))
++		cpu = cpumask_test_cpu(from, &common) ? from : cpumask_first(&common);
++	else
++		cpu = cpumask_first(mask_val);
 +
- static const struct hda_fixup cxt_fixups[] = {
- 	[CXT_PINCFG_LENOVO_X200] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -996,6 +1008,10 @@ static const struct hda_fixup cxt_fixups
- 		.chained = true,
- 		.chain_id = CXT_FIXUP_HEADSET_MIC,
- 	},
-+	[CXT_PINCFG_SWS_JS201D] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = cxt_pincfg_sws_js201d,
-+	},
- };
++	if (from == cpu)
+ 		goto out;
  
- static const struct snd_pci_quirk cxt5045_fixups[] = {
-@@ -1069,6 +1085,7 @@ static const struct snd_pci_quirk cxt506
- 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
-+	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
- 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
- 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
-@@ -1109,6 +1126,7 @@ static const struct hda_model_fixup cxt5
- 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
- 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
- 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
-+	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
- 	{}
- };
++	vpe->col_idx = cpu;
++
+ 	its_send_vmovp(vpe);
+ 	its_vpe_db_proxy_move(vpe, from, cpu);
  
 
 
