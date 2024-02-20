@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB67612D7;
-	Tue, 20 Feb 2024 21:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002F3612D7;
+	Tue, 20 Feb 2024 21:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463891; cv=none; b=KlCbsIWTm2n7SSc4fXRPrR5V58CSmBr0JvcsHzlXI+5O2aBYQ5Smqfk16vQfAwBm1QjyAx+wlMR/+QsPyN1MJ7n5SpKBdQrWCDfmw/VbUN2h6hOTeuF7bJUEVSCAttQeAWXAs9AeXzZpNB3GSgAvdu8aeKkdgOuD2MZe/9Pgy/E=
+	t=1708463894; cv=none; b=jQTb4Sa5Ix2f8ejyJ3CFbg2WsDUZrF3+VX2BgiedHSucXk1xK+jyBxRa5TjIZt3OaS6WrEtkMg+6KHtC2uHnLjFdECrxCovMOT0432+CdGffg98TSTJL6cEJ/y17XyXHaa3fJ+KYphdB10+YUci6+xM6r0r5DC+8CWz1zA6cdiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463891; c=relaxed/simple;
-	bh=ueYgEkhhpMyxfxczl/x6vZ4Na8J+k1jk0bj7l+uB/uY=;
+	s=arc-20240116; t=1708463894; c=relaxed/simple;
+	bh=kn9Ib6DQWRVDgrPWbqecCJjCTi3FD8USrlr2BpakodU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGI057uJQUYa6vzNrnLBpGZI/1bvM1i2WomzeefEB5dNn3s+dXbidjCvnkPG/gFIWFFw5eBy/2WUo3Lky2NLHwjNy7V2qfOTSiklhMtgDhBPHwBEHrO65P2e5Y0SskmtlAGAfRkk/E9dghH8Mg/gLwVePq1j8QzGO9VFDA4RrZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUfkdtv0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=abgzDEQuOHTiItHjdPKlqhI8PGVjTPFbpsq94wiqxPvAgpE0Jx/daD5ecuNAgp3vYCu1h7lyM8dzRs9Hd5qnmKlP+SZKSjx1Jp68lK5h/8iRqQHwL9AlL6F04AyX2ov7FnjhJJPmC2mJxjsQkXb5MzaHdwAEOd463Eumy97nOXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuTyxBgR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUfkdtv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CAFC433F1;
-	Tue, 20 Feb 2024 21:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuTyxBgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6487BC433C7;
+	Tue, 20 Feb 2024 21:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463890;
-	bh=ueYgEkhhpMyxfxczl/x6vZ4Na8J+k1jk0bj7l+uB/uY=;
+	s=korg; t=1708463893;
+	bh=kn9Ib6DQWRVDgrPWbqecCJjCTi3FD8USrlr2BpakodU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XUfkdtv06DQvPaVXbn+OpimNoqAHoxYdZkBq0j1vuspcAj9iWScilqMyuqdUHM/I9
-	 G7Yzvh6ye/r3lC3zuoTvo0LZDZG3LcM3XCicdrcxLTRBc/VEzyhmCid60Z6Tr+4a+o
-	 TYMsB+xOnIrgmJiTKqCf9N94bxbErxmMYEKZxBOs=
+	b=CuTyxBgRPaRS3lplRIHm5PqkowcRYxqTdCeV7irL+Usr8M2t+clHnwntBzXIptj18
+	 2dWJ7y1mmoRGnM3aNIfUxK+9aQidxHlofvY3+YEi6Yzn4UCCD+06djJR2UGiooxFfJ
+	 E5BswYrT0csiVVZgySS2Af0BpEvx5GILhx9mFw1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Zhou <hui.zhou@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 178/331] nfp: flower: fix hardware offload for the transfer layer port
-Date: Tue, 20 Feb 2024 21:54:54 +0100
-Message-ID: <20240220205643.106502427@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	stable <stable@kernel.org>,
+	Emil Kronborg <emil.kronborg@protonmail.com>
+Subject: [PATCH 6.6 187/331] serial: core: introduce uart_port_tx_flags()
+Date: Tue, 20 Feb 2024 21:55:03 +0100
+Message-ID: <20240220205643.432506096@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,71 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Zhou <hui.zhou@corigine.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 3a007b8009b5f8af021021b7a590a6da0dc4c6e0 upstream.
+commit 3ee07964d407411fd578a3bc998de44fd64d266a upstream.
 
-The nfp driver will merge the tp source port and tp destination port
-into one dword which the offset must be zero to do hardware offload.
-However, the mangle action for the tp source port and tp destination
-port is separated for tc ct action. Modify the mangle action for the
-FLOW_ACT_MANGLE_HDR_TYPE_TCP and FLOW_ACT_MANGLE_HDR_TYPE_UDP to
-satisfy the nfp driver offload check for the tp port.
+And an enum with a flag: UART_TX_NOSTOP. To NOT call
+__port->ops->stop_tx() when the circular buffer is empty. mxs-uart needs
+this (see the next patch).
 
-The mangle action provides a 4B value for source, and a 4B value for
-the destination, but only 2B of each contains the useful information.
-For offload the 2B of each is combined into a single 4B word. Since the
-incoming mask for the source is '0xFFFF<mask>' the shift-left will
-throw away the 0xFFFF part. When this gets combined together in the
-offload it will clear the destination field. Fix this by setting the
-lower bits back to 0xFFFF, effectively doing a rotate-left operation on
-the mask.
-
-Fixes: 5cee92c6f57a ("nfp: flower: support hw offload for ct nat action")
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Hui Zhou <hui.zhou@corigine.com>
-Signed-off-by: Louis Peens <louis.peens@corigine.com>
-Link: https://lore.kernel.org/r/20240124151909.31603-3-louis.peens@corigine.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: "Jiri Slaby (SUSE)" <jirislaby@kernel.org>
+Cc: stable <stable@kernel.org>
+Tested-by: Emil Kronborg <emil.kronborg@protonmail.com>
+Link: https://lore.kernel.org/r/20240201105557.28043-1-jirislaby@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/netronome/nfp/flower/conntrack.c |   24 ++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ include/linux/serial_core.h |   32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/netronome/nfp/flower/conntrack.c
-+++ b/drivers/net/ethernet/netronome/nfp/flower/conntrack.c
-@@ -1424,10 +1424,30 @@ static void nfp_nft_ct_translate_mangle_
- 		mangle_action->mangle.mask = (__force u32)cpu_to_be32(mangle_action->mangle.mask);
- 		return;
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -748,8 +748,17 @@ struct uart_driver {
  
-+	/* Both struct tcphdr and struct udphdr start with
-+	 *	__be16 source;
-+	 *	__be16 dest;
-+	 * so we can use the same code for both.
-+	 */
- 	case FLOW_ACT_MANGLE_HDR_TYPE_TCP:
- 	case FLOW_ACT_MANGLE_HDR_TYPE_UDP:
--		mangle_action->mangle.val = (__force u16)cpu_to_be16(mangle_action->mangle.val);
--		mangle_action->mangle.mask = (__force u16)cpu_to_be16(mangle_action->mangle.mask);
-+		if (mangle_action->mangle.offset == offsetof(struct tcphdr, source)) {
-+			mangle_action->mangle.val =
-+				(__force u32)cpu_to_be32(mangle_action->mangle.val << 16);
-+			/* The mask of mangle action is inverse mask,
-+			 * so clear the dest tp port with 0xFFFF to
-+			 * instead of rotate-left operation.
-+			 */
-+			mangle_action->mangle.mask =
-+				(__force u32)cpu_to_be32(mangle_action->mangle.mask << 16 | 0xFFFF);
-+		}
-+		if (mangle_action->mangle.offset == offsetof(struct tcphdr, dest)) {
-+			mangle_action->mangle.offset = 0;
-+			mangle_action->mangle.val =
-+				(__force u32)cpu_to_be32(mangle_action->mangle.val);
-+			mangle_action->mangle.mask =
-+				(__force u32)cpu_to_be32(mangle_action->mangle.mask);
-+		}
- 		return;
+ void uart_write_wakeup(struct uart_port *port);
  
- 	default:
+-#define __uart_port_tx(uport, ch, tx_ready, put_char, tx_done, for_test,      \
+-		for_post)						      \
++/**
++ * enum UART_TX_FLAGS -- flags for uart_port_tx_flags()
++ *
++ * @UART_TX_NOSTOP: don't call port->ops->stop_tx() on empty buffer
++ */
++enum UART_TX_FLAGS {
++	UART_TX_NOSTOP = BIT(0),
++};
++
++#define __uart_port_tx(uport, ch, flags, tx_ready, put_char, tx_done,	      \
++		       for_test, for_post)				      \
+ ({									      \
+ 	struct uart_port *__port = (uport);				      \
+ 	struct circ_buf *xmit = &__port->state->xmit;			      \
+@@ -777,7 +786,7 @@ void uart_write_wakeup(struct uart_port
+ 	if (pending < WAKEUP_CHARS) {					      \
+ 		uart_write_wakeup(__port);				      \
+ 									      \
+-		if (pending == 0)					      \
++		if (!((flags) & UART_TX_NOSTOP) && pending == 0)	      \
+ 			__port->ops->stop_tx(__port);			      \
+ 	}								      \
+ 									      \
+@@ -812,7 +821,7 @@ void uart_write_wakeup(struct uart_port
+  */
+ #define uart_port_tx_limited(port, ch, count, tx_ready, put_char, tx_done) ({ \
+ 	unsigned int __count = (count);					      \
+-	__uart_port_tx(port, ch, tx_ready, put_char, tx_done, __count,	      \
++	__uart_port_tx(port, ch, 0, tx_ready, put_char, tx_done, __count,     \
+ 			__count--);					      \
+ })
+ 
+@@ -826,8 +835,21 @@ void uart_write_wakeup(struct uart_port
+  * See uart_port_tx_limited() for more details.
+  */
+ #define uart_port_tx(port, ch, tx_ready, put_char)			\
+-	__uart_port_tx(port, ch, tx_ready, put_char, ({}), true, ({}))
++	__uart_port_tx(port, ch, 0, tx_ready, put_char, ({}), true, ({}))
+ 
++
++/**
++ * uart_port_tx_flags -- transmit helper for uart_port with flags
++ * @port: uart port
++ * @ch: variable to store a character to be written to the HW
++ * @flags: %UART_TX_NOSTOP or similar
++ * @tx_ready: can HW accept more data function
++ * @put_char: function to write a character
++ *
++ * See uart_port_tx_limited() for more details.
++ */
++#define uart_port_tx_flags(port, ch, flags, tx_ready, put_char)		\
++	__uart_port_tx(port, ch, flags, tx_ready, put_char, ({}), true, ({}))
+ /*
+  * Baud rate helpers.
+  */
 
 
