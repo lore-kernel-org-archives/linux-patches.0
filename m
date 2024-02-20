@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B309C151CCC;
-	Tue, 20 Feb 2024 21:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD99B152DF4;
+	Tue, 20 Feb 2024 21:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708465154; cv=none; b=CipeiKOL00zOMtIViJDTNIoyuqYun20ZqNs9Mtce23i54/mFBdZ/7jDrVoDbKejdoKDdvSWiUvIAlD4nQqp9LgwNDBHSh+N2+MegSbR3TOCFTsYeoWgG1tjSmYjJPkEg4K67VwcKnNJc6D4ifSL2wv0S5PWsPBhjDun6hTASZec=
+	t=1708465157; cv=none; b=PSFip0SKxK2js5Nfe0aFxwzCxqFkGESawtHoOtGHyUvcTapOk3p3Azcl4LI/XRwUdnUIebeGrSzRO0Z77BqxU69IpBbDhDQ86ulHe1YYb/nvMqbx8YEb/Hxqv7EeLTSXaR2QVkZPRiunOIHB4QgdNscsw0v4aw2h34R7mV03bLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708465154; c=relaxed/simple;
-	bh=H5h437pAjYZaJmXkBgXsk8DRuz+/XWGavXaL2uNB9dE=;
+	s=arc-20240116; t=1708465157; c=relaxed/simple;
+	bh=yUx0B+EyJTpurDIS3NjvAL13wjl4/u6u8vYroWyinqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=An6DzCcl5FASitWJZtrbS67LVxOdQfCjDpOAmwUvXHAdbehUfm+S09+6DgxQIgncqdMmn9bGGytQP1UPzEnoy5brxBn7iWb5pIaLE7PU53V9KKFqDYwS5+ymRmkK6LWzPbn3WcLt9LznzZb4CgGfm86bZTmcwq5zqp9LkNtvDLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMWJ5Fre; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3774VlR18MjIwKurHI7IE2Ty45+44Flks0AIRQIEVZexHw4jVN7yTy+BYHyoqBduIRarsz3bsVg4eGzGzoSRG3f/BrQALzJJdQupZYKjCNySRmSmLiDQh1Yxei9i7dHg/e3BBugeBD7kqa/mnr9nFTTuXdA+Zrmi7aWjjeXZ88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsUUNtRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMWJ5Fre"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BF4C433F1;
-	Tue, 20 Feb 2024 21:39:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsUUNtRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD5C433F1;
+	Tue, 20 Feb 2024 21:39:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708465154;
-	bh=H5h437pAjYZaJmXkBgXsk8DRuz+/XWGavXaL2uNB9dE=;
+	s=korg; t=1708465157;
+	bh=yUx0B+EyJTpurDIS3NjvAL13wjl4/u6u8vYroWyinqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMWJ5Fre8BgkUeKW17eqaJ0EgbXh9fPDaIoc8LHwfS/WuQJ47CEtrgePNi8icEtZr
-	 8X+ZOfZvOlmwTYR0MvPuhewjFRyR9OPn9SZPcU83g9aT7fJ9S3kqTqCG65OsE9yehc
-	 PjYNpXkBicOhcj4XALNksUoaHiwHcooeieW+kmvg=
+	b=FsUUNtRWNb5GgimmcVFZZQ30IFahA04EDcFGOl+yaROwG1OF3CtnEtqYmWzEboFym
+	 IR8ElpqEj7RXYHj758vKzCdKf/OYubsX1eKl0X5PLOpjg7UQSbA1jc8hj6g2NZ4igB
+	 F2FC+HMRZr7BzwMG5XoA7UR9thohEcdkaC491/4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.7 252/309] wifi: mac80211: reload info pointer in ieee80211_tx_dequeue()
-Date: Tue, 20 Feb 2024 21:56:51 +0100
-Message-ID: <20240220205641.052020987@linuxfoundation.org>
+Subject: [PATCH 6.7 253/309] wifi: iwlwifi: mvm: fix a crash when we run out of stations
+Date: Tue, 20 Feb 2024 21:56:52 +0100
+Message-ID: <20240220205641.083597578@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -49,51 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-commit c98d8836b817d11fdff4ca7749cbbe04ff7f0c64 upstream.
+commit b7198383ef2debe748118996f627452281cf27d7 upstream.
 
-This pointer can change here since the SKB can change, so we
-actually later open-coded IEEE80211_SKB_CB() again. Reload
-the pointer where needed, so the monitor-mode case using it
-gets fixed, and then use info-> later as well.
+A DoS tool that injects loads of authentication frames made our AP
+crash. The iwl_mvm_is_dup() function couldn't find the per-queue
+dup_data which was not allocated.
+
+The root cause for that is that we ran out of stations in the firmware
+and we didn't really add the station to the firmware, yet we didn't
+return an error to mac80211.
+Mac80211 was thinking that we have the station and because of that,
+sta_info::uploaded was set to 1. This allowed
+ieee80211_find_sta_by_ifaddr() to return a valid station object, but
+that ieee80211_sta didn't have any iwl_mvm_sta object initialized and
+that caused the crash mentioned earlier when we got Rx on that station.
 
 Cc: stable@vger.kernel.org
-Fixes: 531682159092 ("mac80211: fix VLAN handling with TXQs")
-Link: https://msgid.link/20240131164910.b54c28d583bc.I29450cec84ea6773cff5d9c16ff92b836c331471@changeid
+Fixes: 57974a55d995 ("wifi: iwlwifi: mvm: refactor iwl_mvm_mac_sta_state_common()")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240206175739.1f76c44b2486.I6a00955e2842f15f0a089db2f834adb9d10fbe35@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |    3 +++
+ drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c     |    4 ++++
+ 2 files changed, 7 insertions(+)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -5,7 +5,7 @@
-  * Copyright 2006-2007	Jiri Benc <jbenc@suse.cz>
-  * Copyright 2007	Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-- * Copyright (C) 2018-2022 Intel Corporation
-+ * Copyright (C) 2018-2024 Intel Corporation
-  *
-  * Transmit and frame generation functions.
-  */
-@@ -3927,6 +3927,7 @@ begin:
- 			goto begin;
- 
- 		skb = __skb_dequeue(&tx.skbs);
-+		info = IEEE80211_SKB_CB(skb);
- 
- 		if (!skb_queue_empty(&tx.skbs)) {
- 			spin_lock_bh(&fq->lock);
-@@ -3971,7 +3972,7 @@ begin:
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -3673,6 +3673,9 @@ iwl_mvm_sta_state_notexist_to_none(struc
+ 					   NL80211_TDLS_SETUP);
  	}
  
- encap_out:
--	IEEE80211_SKB_CB(skb)->control.vif = vif;
-+	info->control.vif = vif;
++	if (ret)
++		return ret;
++
+ 	for_each_sta_active_link(vif, sta, link_sta, i)
+ 		link_sta->agg.max_rc_amsdu_len = 1;
  
- 	if (tx.sta &&
- 	    wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL)) {
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
+@@ -505,6 +505,10 @@ static bool iwl_mvm_is_dup(struct ieee80
+ 		return false;
+ 
+ 	mvm_sta = iwl_mvm_sta_from_mac80211(sta);
++
++	if (WARN_ON_ONCE(!mvm_sta->dup_data))
++		return false;
++
+ 	dup_data = &mvm_sta->dup_data[queue];
+ 
+ 	/*
 
 
