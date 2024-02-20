@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C97E151CC8;
-	Tue, 20 Feb 2024 21:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFF8151CD9;
+	Tue, 20 Feb 2024 21:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462803; cv=none; b=ULU849tAizHVIZZhZrkd7IGIcTrv+LvEzxBGCNQ6d6yqrz01keZmfzeXIn37TDyYQPyiTj52LjYdgbfn0VsPxxUhkQ5e7CzEzbJBDw2zXlX9RGYibvAUXBbWLgT6UA8jWM6MBJzng7GFmUR87yTgo43st5akBDqjCTohYTQG9H0=
+	t=1708462807; cv=none; b=BEIPA7n/hYPBpanNqH8b5C3sixLrWmFIX94KeG7kBu0T6pEMQBF/swp9Vh21T/MK5mWRvaqKJQc9hxOnMmhLjJ/smdq47XVhPRg5GjQaVH/ExjJA1z516KLVcUhn2nzskkyG6h3nGNtH5etK6GIj9ua+TO9lIcq2Teh+a3kRluo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462803; c=relaxed/simple;
-	bh=wKAr7b06lzenJiSnKWAiRe5vTFMT3IrSVOIcQLEyVLM=;
+	s=arc-20240116; t=1708462807; c=relaxed/simple;
+	bh=qVgZ22OH3GDTZVFJLtNiid5J+sLeqZjCAKDKmAHB9Mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgTgreTmrqI3gZqyU/qXiT+3gAVc7Ae2Ojek1zpZyJEJBSjwUdL+AWFsuTeUr5EckGF4Tql+yfOWQgl1kAdkB5t2Cct0n9Rm1v9OhxoOy96HPp/kMkRG4GL6nAwgZDt/4HilLdndWZriTBAt60yKGF9tHmeTBIJfLgSf3Bb8HbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPXSDVKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rshmErG+nASZDBF+cqXF0OOvC7kazZ7tL7R7ik7056/JNZuq4E50NT91qPolS4Y1/dktyB1i5QTOqB9bhDG/XOPv+P0xY/fBpZW7EkJnsrnaRP20mT+um8E5TJqEcIr0hrR+I71ISxXJSpEbPaTFnpsMpSGN1/zV6ho/gDodrbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vftdr6Iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPXSDVKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FC1C433C7;
-	Tue, 20 Feb 2024 21:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vftdr6Iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF6AC43390;
+	Tue, 20 Feb 2024 21:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462803;
-	bh=wKAr7b06lzenJiSnKWAiRe5vTFMT3IrSVOIcQLEyVLM=;
+	s=korg; t=1708462806;
+	bh=qVgZ22OH3GDTZVFJLtNiid5J+sLeqZjCAKDKmAHB9Mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uPXSDVKAXvHcNvflOfAil41Q06SVLN9w7zUxuZ9IDIaV/GHSXBcCjRnYNa+Wl+QaM
-	 /q1/Jx5rqhfAhnMv9czUs6EMFfP2Ggxg8ROagynWOlpNnkUrd1BGnL46vKX56C6bBH
-	 xAumSCx45to1Bk+fGotJ0s0kTaOkmXZBCdBL1MF0=
+	b=Vftdr6IySIAvUzscagttNerTGa3Ut37xJVXKsV2UIbnL4PvP4QRu/YTIDQG/QuiGc
+	 jzFjegUaHwuk6DVW2mW3I9Jsxg56ZW6hVouzE0hGFf/Q8jXJ7eL1nwDHafMa+1KOGg
+	 dIKG83nm/cJGn6F1BNg4nMattiOw//u+NxVQptuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.1 012/197] driver core: Fix device_link_flag_is_sync_state_only()
-Date: Tue, 20 Feb 2024 21:49:31 +0100
-Message-ID: <20240220204841.451519912@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Rob Herring <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 013/197] of: unittest: Fix compile in the non-dynamic case
+Date: Tue, 20 Feb 2024 21:49:32 +0100
+Message-ID: <20240220204841.481475829@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 7fddac12c38237252431d5b8af7b6d5771b6d125 upstream.
+[ Upstream commit 607aad1e4356c210dbef9022955a3089377909b2 ]
 
-device_link_flag_is_sync_state_only() correctly returns true on the flags
-of an existing device link that only implements sync_state() functionality.
-However, it incorrectly and confusingly returns false if it's called with
-DL_FLAG_SYNC_STATE_ONLY.
+If CONFIG_OF_KOBJ is not set, a device_node does not contain a
+kobj and attempts to access the embedded kobj via kref_read break
+the compile.
 
-This bug doesn't manifest in any of the existing calls to this function,
-but fix this confusing behavior to avoid future bugs.
+Replace affected kref_read calls with a macro that reads the
+refcount if it exists and returns 1 if there is no embedded kobj.
 
-Fixes: 67cad5c67019 ("driver core: fw_devlink: Add DL_FLAG_CYCLE support to device links")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20240202095636.868578-2-saravanak@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202401291740.VP219WIz-lkp@intel.com/
+Fixes: 4dde83569832 ("of: Fix double free in of_parse_phandle_with_args_map")
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://lore.kernel.org/r/20240129192556.403271-1-lk@c--e.de
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/of/unittest.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -337,10 +337,12 @@ static bool device_is_ancestor(struct de
- 	return false;
- }
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index e541a8960f1d..ce1386074e66 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -49,6 +49,12 @@ static struct unittest_results {
+ 	failed; \
+ })
  
-+#define DL_MARKER_FLAGS		(DL_FLAG_INFERRED | \
-+				 DL_FLAG_CYCLE | \
-+				 DL_FLAG_MANAGED)
- static inline bool device_link_flag_is_sync_state_only(u32 flags)
- {
--	return (flags & ~(DL_FLAG_INFERRED | DL_FLAG_CYCLE)) ==
--		(DL_FLAG_SYNC_STATE_ONLY | DL_FLAG_MANAGED);
-+	return (flags & ~DL_MARKER_FLAGS) == DL_FLAG_SYNC_STATE_ONLY;
- }
++#ifdef CONFIG_OF_KOBJ
++#define OF_KREF_READ(NODE) kref_read(&(NODE)->kobj.kref)
++#else
++#define OF_KREF_READ(NODE) 1
++#endif
++
+ /*
+  * Expected message may have a message level other than KERN_INFO.
+  * Print the expected message only if the current loglevel will allow
+@@ -562,7 +568,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 			pr_err("missing testcase data\n");
+ 			return;
+ 		}
+-		prefs[i] = kref_read(&p[i]->kobj.kref);
++		prefs[i] = OF_KREF_READ(p[i]);
+ 	}
  
- /**
+ 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
+@@ -685,9 +691,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(p); ++i) {
+-		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
++		unittest(prefs[i] == OF_KREF_READ(p[i]),
+ 			 "provider%d: expected:%d got:%d\n",
+-			 i, prefs[i], kref_read(&p[i]->kobj.kref));
++			 i, prefs[i], OF_KREF_READ(p[i]));
+ 		of_node_put(p[i]);
+ 	}
+ }
+-- 
+2.43.0
+
 
 
