@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2922DF9F;
-	Tue, 20 Feb 2024 21:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19D5151CD6;
+	Tue, 20 Feb 2024 21:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464241; cv=none; b=W482vr5oJVCbk+G24jRZrqGXyF6CN54RbY0eDxNkCd52DUnG6cHGGXeCZTJWPTeZf3DeLk7F8J8Zxv3KUDBSKXnRBd5IskahL2Tl57VdtpfYD5UteJtSV4wAEc7kr4qyCNPst5mfYuJ/Na0diJeHydH8Ht4dEwZFtrcEegJk1GQ=
+	t=1708464245; cv=none; b=O8HwmqlAHR2VX1xJmCeoFtyrMnyTOUn7TPU70v6LfiskfjmNPPBVif/V2ek7DbSz/J0qeSJg51MMEOVguR6MEtI4WVuPOKLDypG7k0dv+hTRh4j0fJPRi7cnkF5emzw0DI+bHkl1Rlty2v3u1eF8RSfDXaTnWOfZhqa2hRexMbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464241; c=relaxed/simple;
-	bh=Vm6DO8sGIBgNJ+dHzQeSaCmPGdGYjWXcNcgk/2NhU48=;
+	s=arc-20240116; t=1708464245; c=relaxed/simple;
+	bh=pS049EuBGhcYHed2eRLgOJQKXYy1T9yJGbE+Ib33BLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYjZgGn9d3+Wykluj+Qeohex/tOMKtzKacNmBUKAUcPswC6Y6dEzkKdTvMrjQ7+gFmkP7rdb77CmV+jzscKYx+piej5zV+7NpLSSNm7FEaCwJcleZWPlATbyVt9kPM03Psp2s6sBjPtprsdTV+qG4vAzvwgv9CcmnLIDQKUymh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9u2N+sJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iBb0y737eKocohXd9PtURvdj55jK+z06OSoaiuhTRXbkmnsYvIeqkr6GL7Bg/RAhhxokYJHVIZw9kyxqpf/KX5N+uJ4anI8xaqinBm0zYo3RsWTO4p8ePiJCKd+xDpQZR4pL+Vm23LLCgouHWk68v0Mt7gSTePjbAgY+sp2pY8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1Gw2tL1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9u2N+sJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5A0C433C7;
-	Tue, 20 Feb 2024 21:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1Gw2tL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDE4C433F1;
+	Tue, 20 Feb 2024 21:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464241;
-	bh=Vm6DO8sGIBgNJ+dHzQeSaCmPGdGYjWXcNcgk/2NhU48=;
+	s=korg; t=1708464244;
+	bh=pS049EuBGhcYHed2eRLgOJQKXYy1T9yJGbE+Ib33BLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9u2N+sJ0y2jSxLUBoiYqiRbCX/9dHI+aAHEUoNY42c0Z28/zNgpzLsiHdZC069JO
-	 y4r0WmTyEbmN5szTfIJ/BJZy/sj689SeKqqaB8tXmoKP/XTlfeH2dioiDw9RZIlMCW
-	 JSVDY7zkJLx7y+xmLSmGD4RB81m8syAPSuEM04kQ=
+	b=B1Gw2tL1AnM2oYW1dKrHOpBRJ+JKPa5rCPKdi2gQPjRnk7lOHSDxxSizOBp+dm8QZ
+	 wmmBxFWPO3yT4Vf4q5WtelS8Zb8MslRWZuzwJLhx+l+MCygFIul8aYmpP7tHzzOeiV
+	 Uo3fjADytt11WVH9zbTNdBfYm0Zv++nkaKG6pmco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,9 +35,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	Christian Brauner <brauner@kernel.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 295/331] eventfs: Have eventfs_iterate() stop immediately if ei->is_freed is set
-Date: Tue, 20 Feb 2024 21:56:51 +0100
-Message-ID: <20240220205647.317532939@linuxfoundation.org>
+Subject: [PATCH 6.6 296/331] eventfs: Do ctx->pos update for all iterations in eventfs_iterate()
+Date: Tue, 20 Feb 2024 21:56:52 +0100
+Message-ID: <20240220205647.356924835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -58,14 +58,113 @@ Content-Transfer-Encoding: 8bit
 
 From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit e109deadb73318cf4a3bd61287d969f705df278f upstream.
+commit 1e4624eb5a0ecaae0d2c4e3019bece119725bb98 upstream.
 
-If ei->is_freed is set in eventfs_iterate(), it means that the directory
-that is being iterated on is in the process of being freed. Just exit the
-loop immediately when that is ever detected, and separate out the return
-of the entry->callback() from ei->is_freed.
+The ctx->pos was only updated when it added an entry, but the "skip to
+current pos" check (c--) happened for every loop regardless of if the
+entry was added or not. This inconsistency caused readdir to be incorrect.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240104220048.016261289@goodmis.org
+It was due to:
+
+	for (i = 0; i < ei->nr_entries; i++) {
+
+		if (c > 0) {
+			c--;
+			continue;
+		}
+
+		mutex_lock(&eventfs_mutex);
+		/* If ei->is_freed then just bail here, nothing more to do */
+		if (ei->is_freed) {
+			mutex_unlock(&eventfs_mutex);
+			goto out;
+		}
+		r = entry->callback(name, &mode, &cdata, &fops);
+		mutex_unlock(&eventfs_mutex);
+
+		[..]
+		ctx->pos++;
+	}
+
+But this can cause the iterator to return a file that was already read.
+That's because of the way the callback() works. Some events may not have
+all files, and the callback can return 0 to tell eventfs to skip the file
+for this directory.
+
+for instance, we have:
+
+ # ls /sys/kernel/tracing/events/ftrace/function
+format  hist  hist_debug  id  inject
+
+and
+
+ # ls /sys/kernel/tracing/events/sched/sched_switch/
+enable  filter  format  hist  hist_debug  id  inject  trigger
+
+Where the function directory is missing "enable", "filter" and
+"trigger". That's because the callback() for events has:
+
+static int event_callback(const char *name, umode_t *mode, void **data,
+			  const struct file_operations **fops)
+{
+	struct trace_event_file *file = *data;
+	struct trace_event_call *call = file->event_call;
+
+[..]
+
+	/*
+	 * Only event directories that can be enabled should have
+	 * triggers or filters, with the exception of the "print"
+	 * event that can have a "trigger" file.
+	 */
+	if (!(call->flags & TRACE_EVENT_FL_IGNORE_ENABLE)) {
+		if (call->class->reg && strcmp(name, "enable") == 0) {
+			*mode = TRACE_MODE_WRITE;
+			*fops = &ftrace_enable_fops;
+			return 1;
+		}
+
+		if (strcmp(name, "filter") == 0) {
+			*mode = TRACE_MODE_WRITE;
+			*fops = &ftrace_event_filter_fops;
+			return 1;
+		}
+	}
+
+	if (!(call->flags & TRACE_EVENT_FL_IGNORE_ENABLE) ||
+	    strcmp(trace_event_name(call), "print") == 0) {
+		if (strcmp(name, "trigger") == 0) {
+			*mode = TRACE_MODE_WRITE;
+			*fops = &event_trigger_fops;
+			return 1;
+		}
+	}
+[..]
+	return 0;
+}
+
+Where the function event has the TRACE_EVENT_FL_IGNORE_ENABLE set.
+
+This means that the entries array elements for "enable", "filter" and
+"trigger" when called on the function event will have the callback return
+0 and not 1, to tell eventfs to skip these files for it.
+
+Because the "skip to current ctx->pos" check happened for all entries, but
+the ctx->pos++ only happened to entries that exist, it would confuse the
+reading of a directory. Which would cause:
+
+ # ls /sys/kernel/tracing/events/ftrace/function/
+format  hist  hist  hist_debug  hist_debug  id  inject  inject
+
+The missing "enable", "filter" and "trigger" caused ls to show "hist",
+"hist_debug" and "inject" twice.
+
+Update the ctx->pos for every iteration to keep its update and the "skip"
+update consistent. This also means that on error, the ctx->pos needs to be
+decremented if it was incremented without adding something.
+
+Link: https://lore.kernel.org/all/20240104150500.38b15a62@gandalf.local.home/
+Link: https://lore.kernel.org/linux-trace-kernel/20240104220048.172295263@goodmis.org
 
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
@@ -75,31 +174,84 @@ Cc: Linus Torvalds <torvalds@linux-foundation.org>
 Cc: Al Viro <viro@zeniv.linux.org.uk>
 Cc: Christian Brauner <brauner@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 493ec81a8fb8e ("eventfs: Stop using dcache_readdir() for getdents()")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/tracefs/event_inode.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/tracefs/event_inode.c |   21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
 --- a/fs/tracefs/event_inode.c
 +++ b/fs/tracefs/event_inode.c
-@@ -788,11 +788,12 @@ static int eventfs_iterate(struct file *
+@@ -760,6 +760,8 @@ static int eventfs_iterate(struct file *
+ 			continue;
+ 		}
+ 
++		ctx->pos++;
++
+ 		if (ei_child->is_freed)
+ 			continue;
+ 
+@@ -767,13 +769,12 @@ static int eventfs_iterate(struct file *
+ 
+ 		dentry = create_dir_dentry(ei, ei_child, ei_dentry);
+ 		if (!dentry)
+-			goto out;
++			goto out_dec;
+ 		ino = dentry->d_inode->i_ino;
+ 		dput(dentry);
+ 
+ 		if (!dir_emit(ctx, name, strlen(name), ino, DT_DIR))
+-			goto out;
+-		ctx->pos++;
++			goto out_dec;
+ 	}
+ 
+ 	for (i = 0; i < ei->nr_entries; i++) {
+@@ -784,6 +785,8 @@ static int eventfs_iterate(struct file *
+ 			continue;
+ 		}
+ 
++		ctx->pos++;
++
+ 		entry = &ei->entries[i];
  		name = entry->name;
  
- 		mutex_lock(&eventfs_mutex);
--		/* If ei->is_freed, then the event itself may be too */
--		if (!ei->is_freed)
--			r = entry->callback(name, &mode, &cdata, &fops);
--		else
--			r = -1;
-+		/* If ei->is_freed then just bail here, nothing more to do */
-+		if (ei->is_freed) {
-+			mutex_unlock(&eventfs_mutex);
-+			goto out;
-+		}
-+		r = entry->callback(name, &mode, &cdata, &fops);
+@@ -791,7 +794,7 @@ static int eventfs_iterate(struct file *
+ 		/* If ei->is_freed then just bail here, nothing more to do */
+ 		if (ei->is_freed) {
+ 			mutex_unlock(&eventfs_mutex);
+-			goto out;
++			goto out_dec;
+ 		}
+ 		r = entry->callback(name, &mode, &cdata, &fops);
  		mutex_unlock(&eventfs_mutex);
- 		if (r <= 0)
- 			continue;
+@@ -800,19 +803,23 @@ static int eventfs_iterate(struct file *
+ 
+ 		dentry = create_file_dentry(ei, i, ei_dentry, name, mode, cdata, fops);
+ 		if (!dentry)
+-			goto out;
++			goto out_dec;
+ 		ino = dentry->d_inode->i_ino;
+ 		dput(dentry);
+ 
+ 		if (!dir_emit(ctx, name, strlen(name), ino, DT_REG))
+-			goto out;
+-		ctx->pos++;
++			goto out_dec;
+ 	}
+ 	ret = 1;
+  out:
+ 	srcu_read_unlock(&eventfs_srcu, idx);
+ 
+ 	return ret;
++
++ out_dec:
++	/* Incremented ctx->pos without adding something, reset it */
++	ctx->pos--;
++	goto out;
+ }
+ 
+ /**
 
 
