@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BEF612D7;
-	Tue, 20 Feb 2024 21:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BB8612D7;
+	Tue, 20 Feb 2024 21:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463608; cv=none; b=U+XDbvoMVL6RK9dfmpT0CHD9hCoeOZlR/Dn3xNVHR/Kg+/YVCxAAGQKc+ewbLnpYpN4InzuSGJRrU/gNf6aJIz3GMSwE1Hb76OPLALsrW9RopiBJb9WqjfY8uvHdWCZjs0ACvxGmYi6Rh/+PnxIj98vkx7Yjsx8kpzyk77IjqCI=
+	t=1708463612; cv=none; b=WzD5z1ZSJY/Q6xAqBhZUTUBgQa+GS+mXPDgBaQ/g1PmThrZDG1SvxY1Uh49U7ln2MPr3uqLf29tblLh9EnDAcILexCW74R0J/TMIZSiRtjT0DzwCiIYI1pre32s5+CyN0s9mE3bhRYqmBhVnwfdJUzqdrxUheSNyxpVMzNjMWP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463608; c=relaxed/simple;
-	bh=LciKp2nG74cPOEGO8ncdx5MYTudj61arCixLoV4H10g=;
+	s=arc-20240116; t=1708463612; c=relaxed/simple;
+	bh=eZhG553ftj3euz2U2UHbTbt0damlFM67rOehkieRh+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMbpNbv51LHCVklAAwsVvVx5Ddv76BC5pCBb8RQb4RNeieAtm0d6QcQPHPVK+FPlyUmrqxT1WdifsUvXMvEyoFgLbTLKyM2SHGzWfkQSnbu1OZbvQTqKF69dERiyKX7BRfPv2dalysN6evere5rBpURvYV7W/to7V5aPQ4R9C6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5asLVdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u7fy7EetyYNM9P+HPZxaJSGxwb+dUeujEXeprP7qI1m1CBMgruBxNPop2MqEmXE8SXf7bo207nvSJLVy5vPA2iclqGAVHoc+9f3OB3LBluqxRGufFAYTqT9Zq987Vam94ebB7FQ8pMqHyQVUNIfnXt9vS+4hewf4SpVQZDcVRNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/GbrBI2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5asLVdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E623C433F1;
-	Tue, 20 Feb 2024 21:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/GbrBI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302B1C433C7;
+	Tue, 20 Feb 2024 21:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463608;
-	bh=LciKp2nG74cPOEGO8ncdx5MYTudj61arCixLoV4H10g=;
+	s=korg; t=1708463611;
+	bh=eZhG553ftj3euz2U2UHbTbt0damlFM67rOehkieRh+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5asLVdk/oz+BhHgFYcp5YHSmMKrnVz8m2KEF/j5AyVNIH0qZU150UVM+bgR1thw0
-	 2iTE987ExVWrpB50O5psaQg/tB/IZzxvCu+He560EM1k4/8x3k+qiD5pwoaxAgOglo
-	 nJd2mrm1JwsLzg6pJNyW4UaKgOgD9LpZmi1AJckg=
+	b=t/GbrBI2DdKGFcO+w5WD9k8cQdXSVciuidprfGCppVJnW3RpWeD2KzG/qNJfx+y2n
+	 0JEOYLjAetntondtqwZzeyXva5HxBkk7ecSj+G/+SUaIjSwY4wA1jx9ZNoSszGe6tx
+	 Jdi1a71nXGRNujA2L5SUC3kdYQHsxIYr4ZvMvXXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bibo Mao <maobibo@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/331] i2c: qcom-geni: Correct I2C TRE sequence
-Date: Tue, 20 Feb 2024 21:53:33 +0100
-Message-ID: <20240220205640.622612020@linuxfoundation.org>
+Subject: [PATCH 6.6 098/331] irqchip/loongson-eiointc: Use correct struct type in eiointc_domain_alloc()
+Date: Tue, 20 Feb 2024 21:53:34 +0100
+Message-ID: <20240220205640.661941698@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -54,94 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-[ Upstream commit 83ef106fa732aea8558253641cd98e8a895604d7 ]
+[ Upstream commit f1c2765c6afcd1f71f76ed8c9bf94acedab4cecb ]
 
-For i2c read operation in GSI mode, we are getting timeout
-due to malformed TRE basically incorrect TRE sequence
-in gpi(drivers/dma/qcom/gpi.c) driver.
+eiointc_domain_alloc() uses struct eiointc, which is not defined, for a
+pointer. Older compilers treat that as a forward declaration and due to
+assignment of a void pointer there is no warning emitted. As the variable
+is then handed in as a void pointer argument to irq_domain_set_info() the
+code is functional.
 
-I2C driver has geni_i2c_gpi(I2C_WRITE) function which generates GO TRE and
-geni_i2c_gpi(I2C_READ)generates DMA TRE. Hence to generate GO TRE before
-DMA TRE, we should move geni_i2c_gpi(I2C_WRITE) before
-geni_i2c_gpi(I2C_READ) inside the I2C GSI mode transfer function
-i.e. geni_i2c_gpi_xfer().
+Use struct eiointc_priv instead.
 
-TRE stands for Transfer Ring Element - which is basically an element with
-size of 4 words. It contains all information like slave address,
-clk divider, dma address value data size etc).
+[ tglx: Rewrote changelog ]
 
-Mainly we have 3 TREs(Config, GO and DMA tre).
-- CONFIG TRE : consists of internal register configuration which is
-               required before start of the transfer.
-- DMA TRE :    contains DDR/Memory address, called as DMA descriptor.
-- GO TRE :     contains Transfer directions, slave ID, Delay flags, Length
-               of the transfer.
-
-I2c driver calls GPI driver API to config each TRE depending on the
-protocol.
-
-For read operation tre sequence will be as below which is not aligned
-to hardware programming guide.
-
-- CONFIG tre
-- DMA tre
-- GO tre
-
-As per Qualcomm's internal Hardware Programming Guide, we should configure
-TREs in below sequence for any RX only transfer.
-
-- CONFIG tre
-- GO tre
-- DMA tre
-
-Fixes: d8703554f4de ("i2c: qcom-geni: Add support for GPI DMA")
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5165-rb5
-Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: dd281e1a1a93 ("irqchip: Add Loongson Extended I/O interrupt controller support")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://lore.kernel.org/r/20240130082722.2912576-2-maobibo@loongson.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/irqchip/irq-loongson-eiointc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 0a9d389df301..5cc32a465f12 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -613,20 +613,20 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+diff --git a/drivers/irqchip/irq-loongson-eiointc.c b/drivers/irqchip/irq-loongson-eiointc.c
+index 1623cd779175..b3736bdd4b9f 100644
+--- a/drivers/irqchip/irq-loongson-eiointc.c
++++ b/drivers/irqchip/irq-loongson-eiointc.c
+@@ -241,7 +241,7 @@ static int eiointc_domain_alloc(struct irq_domain *domain, unsigned int virq,
+ 	int ret;
+ 	unsigned int i, type;
+ 	unsigned long hwirq = 0;
+-	struct eiointc *priv = domain->host_data;
++	struct eiointc_priv *priv = domain->host_data;
  
- 		peripheral.addr = msgs[i].addr;
- 
-+		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-+				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
-+		if (ret)
-+			goto err;
-+
- 		if (msgs[i].flags & I2C_M_RD) {
- 			ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
- 					    &rx_addr, &rx_buf, I2C_READ, gi2c->rx_c);
- 			if (ret)
- 				goto err;
--		}
--
--		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
--				    &tx_addr, &tx_buf, I2C_WRITE, gi2c->tx_c);
--		if (ret)
--			goto err;
- 
--		if (msgs[i].flags & I2C_M_RD)
- 			dma_async_issue_pending(gi2c->rx_c);
-+		}
-+
- 		dma_async_issue_pending(gi2c->tx_c);
- 
- 		timeout = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+ 	ret = irq_domain_translate_onecell(domain, arg, &hwirq, &type);
+ 	if (ret)
 -- 
 2.43.0
 
