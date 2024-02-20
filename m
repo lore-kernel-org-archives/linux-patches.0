@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C6314A4E2;
-	Tue, 20 Feb 2024 21:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F07014F9C8;
+	Tue, 20 Feb 2024 21:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462838; cv=none; b=PJhDgYlC+kMBXBKd61eKQs0hzqXB8S9Kt7nu7j2ArwhWKfHXR0/nagaO3f93TgTcbSlRkSync6ElvKh5+KsjbPeincah3fEIXlhLoquIebYmDbqgZGZ9BaVSHL1bb2ahj5vJBMDOO/0Rui4gy09IUmpie7XofWyWJCUbvhqTClM=
+	t=1708462842; cv=none; b=KNh+Jb0l0FbadbyMwf/jzlt2BsXhvkC0veSZa0AKtWBaPCEAyzhm0zozQYa4f0U9CrrMH5YqDRM8zyU9PCvPv5x6aSGBFW3hsXvLGse9yHH1mLUEZ4a/fIF2PhCzyZTB7eYyRw7LNZvNj6gHgFUMrJK+UWjXrV8FlQ8PyuZTsaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462838; c=relaxed/simple;
-	bh=6aJtE3ASqWDOezjq2eoU0Wb15kHo6U1/FIo8LXZS/Zc=;
+	s=arc-20240116; t=1708462842; c=relaxed/simple;
+	bh=dyoW/6rRe78tG7Fi0oZses4HMWf58q6g6ABOJQKKjUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=af++54vdabPmS2icS4U8Xv0XnlDNbM/PtjAD8vpueTmWcOQO9HRHuil8cQyxmxUprvL76CtCCn0TO39kPb2xv30z1wh+zDcN5J/zutEk2rm8OWLg9gN77vcDbJXNStgMie5u2kBl6NGMKubutnk/QoPN7HQNKUEtlBTwdRYqudE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EL3rEHkI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JgDPwqQOPH3geCIn+1rRomzzXaqZKV8PnYuFSIFi8faGqc+C3m+HIdbt3aMLyEe/Cl4NGURVyHpk1JFbm8KpYBFEbyjZI29CH6dU4g3S7sTZ35+k6hR4YEaz2i5NTgwa79erTAQE5ntH9QTQZQIXvxCrtHjvEqj3df0cnazDlJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trGRxEbB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EL3rEHkI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FACC433F1;
-	Tue, 20 Feb 2024 21:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trGRxEbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF7AC433F1;
+	Tue, 20 Feb 2024 21:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462838;
-	bh=6aJtE3ASqWDOezjq2eoU0Wb15kHo6U1/FIo8LXZS/Zc=;
+	s=korg; t=1708462841;
+	bh=dyoW/6rRe78tG7Fi0oZses4HMWf58q6g6ABOJQKKjUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EL3rEHkInuPELF4Tx6eb9upkIlaJt7/eormdaeivX5I5iFF+WvlY2BzuxRr4hxRpE
-	 StjKCooAjLQuLTBhV33RFz3K+aCZ/SOUvIvgxczDUp5pH+xBWcIMZlQEx78NRePNvv
-	 qqM2/8S9ePduBIcLrM5N1HlHdkHWYvy1tUVoFMR0=
+	b=trGRxEbB+7todVOubSo0tRndQyyw4MDdfge129xvBAwJobssKdRhcHL+UIcyy/0tT
+	 pfUQQJFmRA0K+uxisms/dKuyRRRvMIAHKW/o7BPMnvxIrm0rWgRj7N0PMkPUB9JsSS
+	 ILNnA1aUJfwlpsBYanX5GSB1tzhJCz3+wogAmNs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Subject: [PATCH 6.1 053/197] usb: dwc3: gadget: Fix NULL pointer dereference in dwc3_gadget_suspend
-Date: Tue, 20 Feb 2024 21:50:12 +0100
-Message-ID: <20240220204842.666827054@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 054/197] interconnect: qcom: sc8180x: Mark CO0 BCM keepalive
+Date: Tue, 20 Feb 2024 21:50:13 +0100
+Message-ID: <20240220204842.696446042@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,58 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit 61a348857e869432e6a920ad8ea9132e8d44c316 upstream.
+[ Upstream commit 85e985a4f46e462a37f1875cb74ed380e7c0c2e0 ]
 
-In current scenario if Plug-out and Plug-In performed continuously
-there could be a chance while checking for dwc->gadget_driver in
-dwc3_gadget_suspend, a NULL pointer dereference may occur.
+The CO0 BCM needs to be up at all times, otherwise some hardware (like
+the UFS controller) loses its connection to the rest of the SoC,
+resulting in a hang of the platform, accompanied by a spectacular
+logspam.
 
-Call Stack:
+Mark it as keepalive to prevent such cases.
 
-	CPU1:                           CPU2:
-	gadget_unbind_driver            dwc3_suspend_common
-	dwc3_gadget_stop                dwc3_gadget_suspend
-                                        dwc3_disconnect_gadget
-
-CPU1 basically clears the variable and CPU2 checks the variable.
-Consider CPU1 is running and right before gadget_driver is cleared
-and in parallel CPU2 executes dwc3_gadget_suspend where it finds
-dwc->gadget_driver which is not NULL and resumes execution and then
-CPU1 completes execution. CPU2 executes dwc3_disconnect_gadget where
-it checks dwc->gadget_driver is already NULL because of which the
-NULL pointer deference occur.
-
-Cc: stable@vger.kernel.org
-Fixes: 9772b47a4c29 ("usb: dwc3: gadget: Fix suspend/resume during device mode")
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
-Link: https://lore.kernel.org/r/20240119094825.26530-1-quic_uaggarwa@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9c8c6bac1ae8 ("interconnect: qcom: Add SC8180x providers")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231214-topic-sc8180_fixes-v1-1-421904863006@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/interconnect/qcom/sc8180x.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4583,15 +4583,13 @@ int dwc3_gadget_suspend(struct dwc3 *dwc
- 	unsigned long flags;
- 	int ret;
+diff --git a/drivers/interconnect/qcom/sc8180x.c b/drivers/interconnect/qcom/sc8180x.c
+index 83461e31774e..d9ee193fb18b 100644
+--- a/drivers/interconnect/qcom/sc8180x.c
++++ b/drivers/interconnect/qcom/sc8180x.c
+@@ -1387,6 +1387,7 @@ static struct qcom_icc_bcm bcm_mm0 = {
  
--	if (!dwc->gadget_driver)
--		return 0;
--
- 	ret = dwc3_gadget_soft_disconnect(dwc);
- 	if (ret)
- 		goto err;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
--	dwc3_disconnect_gadget(dwc);
-+	if (dwc->gadget_driver)
-+		dwc3_disconnect_gadget(dwc);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
- 	return 0;
+ static struct qcom_icc_bcm bcm_co0 = {
+ 	.name = "CO0",
++	.keepalive = true,
+ 	.num_nodes = 1,
+ 	.nodes = { &slv_qns_cdsp_mem_noc }
+ };
+-- 
+2.43.0
+
 
 
