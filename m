@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53061509AC;
-	Tue, 20 Feb 2024 21:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3B176C9C;
+	Tue, 20 Feb 2024 21:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463805; cv=none; b=ZvBFFf9NzUQ4Oczw5WdkRDjWKpVXGjuUASjqCOLLnoP4R/V3nCmSUg67+rKFJbm3A85hNZCePA3CgZC80Dp4hPqSiy4yMHhZpBZIZ5uqG+uosNDQUjmnC0IkFEIJk7uc/kerUGHNKeuQ/xIA7YOObDJ+yQoHBY40FKnuYy6E+ts=
+	t=1708463809; cv=none; b=FJ/gKUBuR1cc4YRiG1ogbrEyJ1GQlPwAUcdBx5tFuovrl+2YVlJ+YAJFfZfD0wZdfpALjKAqRHx5UzKuTzz+jVw5/blxHAVkrLxabgBo2G4PK1NHXYplhQZ4exHcXMQ5mn33NB96snvbATfXicyG8yIgZIi/n7haWMBIH27HyPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463805; c=relaxed/simple;
-	bh=NE2bKY2rE4DTotVscZx4KYGyNTw+IgvOpgEFJIlv0DQ=;
+	s=arc-20240116; t=1708463809; c=relaxed/simple;
+	bh=gHzcTrsxzCMXEXUmVf7XhNTFXEk+rM5JGSNpHlGCj2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gOj61THUR4WM/2acd5ts99dpFFXr+D8V5nHjy0pPS1tJWfRbCwL9NcQfjB0IeEKyGu4Iuar9CzSexEunyTUM7c40QZknIQ2X/fcRprWJ9rDU+kUwDKuxxkoawZQQxShsrD4EAJYa0NyMQoJS1epg8KUX6TvUkEnR4/6CS6OIp7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvFOiF8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/nal3Eax9V62SU1cpk1D8cs9a0B3TUATGrrqgDZ6eGzEvlPIrRW7DX8LMDjyxb7kPrNDLQmKq0cLM316/BSB7QhS34QQ+ho8cvemWv4lHVPn4mjoUvRxlpottgGClmym8eNGc3zKYjmUBH/F5c6gPbc6FwPcv505R2XQb9+qfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bzqtY5Jf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvFOiF8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA9EC43394;
-	Tue, 20 Feb 2024 21:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bzqtY5Jf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E738C433C7;
+	Tue, 20 Feb 2024 21:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463805;
-	bh=NE2bKY2rE4DTotVscZx4KYGyNTw+IgvOpgEFJIlv0DQ=;
+	s=korg; t=1708463808;
+	bh=gHzcTrsxzCMXEXUmVf7XhNTFXEk+rM5JGSNpHlGCj2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvFOiF8ZiDqBJLoOqLDxCFljtsxemFVxRsHMj1KTNmyv7ljbrTzPSBplGKHa56kQx
-	 AgKH1ZmcK/gIsKTQxJEbRAtjjGkKh58yLu4c8fiN5kp6MAbrefd9//sPZfoJ3NtvyF
-	 DAIyPEdY2g3CTykpJGYpXt0VZwiz1HOJz6favJ1o=
+	b=bzqtY5JfRtYPfN/k0OPIYEf8z8oGIAHOJ/4GWc27080/GK6CHkvhH0/35JkhZ/5Fl
+	 WUfqQIBpXT4hm3yYl/1ToEPALGIMIP7bB68AqL4yYReCz38VoYSMT9QUUEoVHqwW1z
+	 TunsRWi0SYl8MNJ8peBavnSlW1cr0SxAXYvPgfn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 159/331] iio: accel: bma400: Fix a compilation problem
-Date: Tue, 20 Feb 2024 21:54:35 +0100
-Message-ID: <20240220205642.535710195@linuxfoundation.org>
+Subject: [PATCH 6.6 160/331] iio: adc: ad_sigma_delta: ensure proper DMA alignment
+Date: Tue, 20 Feb 2024 21:54:36 +0100
+Message-ID: <20240220205642.565517897@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit 4cb81840d8f29b66d9d05c6d7f360c9560f7e2f4 upstream.
+commit 59598510be1d49e1cff7fd7593293bb8e1b2398b upstream.
 
-The kernel fails when compiling without `CONFIG_REGMAP_I2C` but with
-`CONFIG_BMA400`.
-```
-ld: drivers/iio/accel/bma400_i2c.o: in function `bma400_i2c_probe':
-bma400_i2c.c:(.text+0x23): undefined reference to `__devm_regmap_init_i2c'
-```
+Aligning the buffer to the L1 cache is not sufficient in some platforms
+as they might have larger cacheline sizes for caches after L1 and thus,
+we can't guarantee DMA safety.
 
-Link: https://download.01.org/0day-ci/archive/20240131/202401311634.FE5CBVwe-lkp@intel.com/config
-Fixes: 465c811f1f20 ("iio: accel: Add driver for the BMA400")
-Fixes: 9bea10642396 ("iio: accel: bma400: add support for bma400 spi")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20240131225246.14169-1-mario.limonciello@amd.com
+That was the whole reason to introduce IIO_DMA_MINALIGN in [1]. Do the same
+for the sigma_delta ADCs.
+
+[1]: https://lore.kernel.org/linux-iio/20220508175712.647246-2-jic23@kernel.org/
+
+Fixes: 0fb6ee8d0b5e ("iio: ad_sigma_delta: Don't put SPI transfer buffer on the stack")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240117-dev_sigma_delta_no_irq_flags-v1-1-db39261592cf@analog.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/Kconfig |    2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/iio/adc/ad_sigma_delta.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/accel/Kconfig
-+++ b/drivers/iio/accel/Kconfig
-@@ -219,10 +219,12 @@ config BMA400
+--- a/include/linux/iio/adc/ad_sigma_delta.h
++++ b/include/linux/iio/adc/ad_sigma_delta.h
+@@ -8,6 +8,8 @@
+ #ifndef __AD_SIGMA_DELTA_H__
+ #define __AD_SIGMA_DELTA_H__
  
- config BMA400_I2C
- 	tristate
-+	select REGMAP_I2C
- 	depends on BMA400
++#include <linux/iio/iio.h>
++
+ enum ad_sigma_delta_mode {
+ 	AD_SD_MODE_CONTINUOUS = 0,
+ 	AD_SD_MODE_SINGLE = 1,
+@@ -99,7 +101,7 @@ struct ad_sigma_delta {
+ 	 * 'rx_buf' is up to 32 bits per sample + 64 bit timestamp,
+ 	 * rounded to 16 bytes to take into account padding.
+ 	 */
+-	uint8_t				tx_buf[4] ____cacheline_aligned;
++	uint8_t				tx_buf[4] __aligned(IIO_DMA_MINALIGN);
+ 	uint8_t				rx_buf[16] __aligned(8);
+ };
  
- config BMA400_SPI
- 	tristate
-+	select REGMAP_SPI
- 	depends on BMA400
- 
- config BMC150_ACCEL
 
 
