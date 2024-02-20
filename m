@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB70E151CD8;
-	Tue, 20 Feb 2024 21:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C57152DE8;
+	Tue, 20 Feb 2024 21:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463413; cv=none; b=lG3+mV5EI93O0TMmwCiDf+9UpprIl+KR0I41g1MNSwM/jtFKtP9cEQWQBEDYWK4C7+WGBGPav1rHreSOiumG/cyVEjURkHHZHboXYpDf9mX78LcCztAGMr8vkkPoTaNuijAcI9Lei+67e9Yj+U9/bSwcwhh5DpJh9mMIB6hvT9o=
+	t=1708463416; cv=none; b=p69/4s4+846eoM8XJaVrC4bmvMfnJvLeVXaYmMbTHv1rBQ4fViyk0uyj6L+lpMGsHMvtwBFXlA62omaNSJj8dGMEE3ZMQSIy3bLaUWLSXa/qYvzLyq/DoFPXzkmft+e6kC/u9AH31TVjLjgPUVhY3BGpq1pZFKWGXnw7HlBj0Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463413; c=relaxed/simple;
-	bh=ufmgJoUCVToXjHV6Sf1OJe70CcekDrnD+7Xp8XXdQtQ=;
+	s=arc-20240116; t=1708463416; c=relaxed/simple;
+	bh=2rEuN7zFtA9vklIpAascVFyO6DPCWVL+pRNuznlpfZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+3l18oC66dkaHLpTGwmVXw40weaReB2bgNXDHbzFva6/++NqcmMDHhKVpshvvhbTJYMrLGpHePMiNYr+hvQ9hHIACv8PcNNiTPNVpYTtbyrfPFyHvI1UKIL+93xMsDnsrOx35FSLj7ia8jmJWISXi/r+UYyqpWTcqg9bBW2FgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmmOfviV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2AiQ57A6XTNcAO6Qv5VoLTWgBKnckSEllHFF03o321E9O4c+4r2eY/XZ7y3gHLhhMwLpGZr5ULp7HXFluHpWQYDEV6HWrAr97BRYNvzh0MGt3K1o8/Jn6HqKXJ8zV1+jWIIczgZVxolOo2mIcZVaRfkeyMV+z3V/MHBuW6mm90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLGALcOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmmOfviV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FEFC433C7;
-	Tue, 20 Feb 2024 21:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLGALcOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCBEC43390;
+	Tue, 20 Feb 2024 21:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463411;
-	bh=ufmgJoUCVToXjHV6Sf1OJe70CcekDrnD+7Xp8XXdQtQ=;
+	s=korg; t=1708463415;
+	bh=2rEuN7zFtA9vklIpAascVFyO6DPCWVL+pRNuznlpfZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vmmOfviV23KNCjg2sUAo9CWD5l2ZajbqwwYLYZYyVjk2Nt1w3WGz6etADoQZtH8w9
-	 p++XKp4G5N+9WPDx7HDzRnrx74/KLZbMKoZqUIjBMSkI7lk1iDp49XwmxtLMI+BGLh
-	 nCsANuxfXvewU94n+clTH8kkEFjfaX5YK26Cd/bA=
+	b=OLGALcOKpqavMk+xeQj9QdUif54LOkAUQ/6V4UWDPwXayNxH+ItDcDDBfK/7Y4P6r
+	 uGv95m9bTdAzWioDDKIRqSirND7xYuw2ey5hfNEJCaCJC+H0QfTUI07VsLj6Kacw0c
+	 Fm39IqbdxTqpO8K804TtpL/nlHGs/a1FylucRnQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/331] selftests: forwarding: Fix bridge locked port test flakiness
-Date: Tue, 20 Feb 2024 21:52:32 +0100
-Message-ID: <20240220205638.737175919@linuxfoundation.org>
+Subject: [PATCH 6.6 037/331] net: openvswitch: limit the number of recursions from action sets
+Date: Tue, 20 Feb 2024 21:52:33 +0100
+Message-ID: <20240220205638.771195994@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -53,65 +52,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Aaron Conole <aconole@redhat.com>
 
-[ Upstream commit f97f1fcc96908c97a240ff6cb4474e155abfa0d7 ]
+[ Upstream commit 6e2f90d31fe09f2b852de25125ca875aabd81367 ]
 
-The redirection test case fails in the netdev CI on debug kernels
-because an FDB entry is learned despite the presence of a tc filter that
-redirects incoming traffic [1].
+The ovs module allows for some actions to recursively contain an action
+list for complex scenarios, such as sampling, checking lengths, etc.
+When these actions are copied into the internal flow table, they are
+evaluated to validate that such actions make sense, and these calls
+happen recursively.
 
-I am unable to reproduce the failure locally, but I can see how it can
-happen given that learning is first enabled and only then the ingress tc
-filter is configured. On debug kernels the time window between these two
-operations is longer compared to regular kernels, allowing random
-packets to be transmitted and trigger learning.
+The ovs-vswitchd userspace won't emit more than 16 recursion levels
+deep.  However, the module has no such limit and will happily accept
+limits larger than 16 levels nested.  Prevent this by tracking the
+number of recursions happening and manually limiting it to 16 levels
+nested.
 
-Fix by reversing the order and configure the ingress tc filter before
-enabling learning.
+The initial implementation of the sample action would track this depth
+and prevent more than 3 levels of recursion, but this was removed to
+support the clone use case, rather than limited at the current userspace
+limit.
 
-[1]
-[...]
- # TEST: Locked port MAB redirect                                      [FAIL]
- # Locked entry created for redirected traffic
-
-Fixes: 38c43a1ce758 ("selftests: forwarding: Add test case for traffic redirection from a locked port")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20240208155529.1199729-5-idosch@nvidia.com
+Fixes: 798c166173ff ("openvswitch: Optimize sample action for the clone use cases")
+Signed-off-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240207132416.1488485-2-aconole@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/bridge_locked_port.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/openvswitch/flow_netlink.c | 49 +++++++++++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/bridge_locked_port.sh b/tools/testing/selftests/net/forwarding/bridge_locked_port.sh
-index 9af9f6964808..c62331b2e006 100755
---- a/tools/testing/selftests/net/forwarding/bridge_locked_port.sh
-+++ b/tools/testing/selftests/net/forwarding/bridge_locked_port.sh
-@@ -327,10 +327,10 @@ locked_port_mab_redirect()
- 	RET=0
- 	check_port_mab_support || return 0
+diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
+index 88965e2068ac..ebc5728aab4e 100644
+--- a/net/openvswitch/flow_netlink.c
++++ b/net/openvswitch/flow_netlink.c
+@@ -48,6 +48,7 @@ struct ovs_len_tbl {
  
--	bridge link set dev $swp1 learning on locked on mab on
- 	tc qdisc add dev $swp1 clsact
- 	tc filter add dev $swp1 ingress protocol all pref 1 handle 101 flower \
- 		action mirred egress redirect dev $swp2
-+	bridge link set dev $swp1 learning on locked on mab on
+ #define OVS_ATTR_NESTED -1
+ #define OVS_ATTR_VARIABLE -2
++#define OVS_COPY_ACTIONS_MAX_DEPTH 16
  
- 	ping_do $h1 192.0.2.2
- 	check_err $? "Ping did not work with redirection"
-@@ -349,8 +349,8 @@ locked_port_mab_redirect()
- 	check_err $? "Locked entry not created after deleting filter"
+ static bool actions_may_change_flow(const struct nlattr *actions)
+ {
+@@ -2545,13 +2546,15 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 				  const struct sw_flow_key *key,
+ 				  struct sw_flow_actions **sfa,
+ 				  __be16 eth_type, __be16 vlan_tci,
+-				  u32 mpls_label_count, bool log);
++				  u32 mpls_label_count, bool log,
++				  u32 depth);
  
- 	bridge fdb del `mac_get $h1` vlan 1 dev $swp1 master
--	tc qdisc del dev $swp1 clsact
- 	bridge link set dev $swp1 learning off locked off mab off
-+	tc qdisc del dev $swp1 clsact
+ static int validate_and_copy_sample(struct net *net, const struct nlattr *attr,
+ 				    const struct sw_flow_key *key,
+ 				    struct sw_flow_actions **sfa,
+ 				    __be16 eth_type, __be16 vlan_tci,
+-				    u32 mpls_label_count, bool log, bool last)
++				    u32 mpls_label_count, bool log, bool last,
++				    u32 depth)
+ {
+ 	const struct nlattr *attrs[OVS_SAMPLE_ATTR_MAX + 1];
+ 	const struct nlattr *probability, *actions;
+@@ -2602,7 +2605,8 @@ static int validate_and_copy_sample(struct net *net, const struct nlattr *attr,
+ 		return err;
  
- 	log_test "Locked port MAB redirect"
- }
+ 	err = __ovs_nla_copy_actions(net, actions, key, sfa,
+-				     eth_type, vlan_tci, mpls_label_count, log);
++				     eth_type, vlan_tci, mpls_label_count, log,
++				     depth + 1);
+ 
+ 	if (err)
+ 		return err;
+@@ -2617,7 +2621,8 @@ static int validate_and_copy_dec_ttl(struct net *net,
+ 				     const struct sw_flow_key *key,
+ 				     struct sw_flow_actions **sfa,
+ 				     __be16 eth_type, __be16 vlan_tci,
+-				     u32 mpls_label_count, bool log)
++				     u32 mpls_label_count, bool log,
++				     u32 depth)
+ {
+ 	const struct nlattr *attrs[OVS_DEC_TTL_ATTR_MAX + 1];
+ 	int start, action_start, err, rem;
+@@ -2660,7 +2665,8 @@ static int validate_and_copy_dec_ttl(struct net *net,
+ 		return action_start;
+ 
+ 	err = __ovs_nla_copy_actions(net, actions, key, sfa, eth_type,
+-				     vlan_tci, mpls_label_count, log);
++				     vlan_tci, mpls_label_count, log,
++				     depth + 1);
+ 	if (err)
+ 		return err;
+ 
+@@ -2674,7 +2680,8 @@ static int validate_and_copy_clone(struct net *net,
+ 				   const struct sw_flow_key *key,
+ 				   struct sw_flow_actions **sfa,
+ 				   __be16 eth_type, __be16 vlan_tci,
+-				   u32 mpls_label_count, bool log, bool last)
++				   u32 mpls_label_count, bool log, bool last,
++				   u32 depth)
+ {
+ 	int start, err;
+ 	u32 exec;
+@@ -2694,7 +2701,8 @@ static int validate_and_copy_clone(struct net *net,
+ 		return err;
+ 
+ 	err = __ovs_nla_copy_actions(net, attr, key, sfa,
+-				     eth_type, vlan_tci, mpls_label_count, log);
++				     eth_type, vlan_tci, mpls_label_count, log,
++				     depth + 1);
+ 	if (err)
+ 		return err;
+ 
+@@ -3063,7 +3071,7 @@ static int validate_and_copy_check_pkt_len(struct net *net,
+ 					   struct sw_flow_actions **sfa,
+ 					   __be16 eth_type, __be16 vlan_tci,
+ 					   u32 mpls_label_count,
+-					   bool log, bool last)
++					   bool log, bool last, u32 depth)
+ {
+ 	const struct nlattr *acts_if_greater, *acts_if_lesser_eq;
+ 	struct nlattr *a[OVS_CHECK_PKT_LEN_ATTR_MAX + 1];
+@@ -3111,7 +3119,8 @@ static int validate_and_copy_check_pkt_len(struct net *net,
+ 		return nested_acts_start;
+ 
+ 	err = __ovs_nla_copy_actions(net, acts_if_lesser_eq, key, sfa,
+-				     eth_type, vlan_tci, mpls_label_count, log);
++				     eth_type, vlan_tci, mpls_label_count, log,
++				     depth + 1);
+ 
+ 	if (err)
+ 		return err;
+@@ -3124,7 +3133,8 @@ static int validate_and_copy_check_pkt_len(struct net *net,
+ 		return nested_acts_start;
+ 
+ 	err = __ovs_nla_copy_actions(net, acts_if_greater, key, sfa,
+-				     eth_type, vlan_tci, mpls_label_count, log);
++				     eth_type, vlan_tci, mpls_label_count, log,
++				     depth + 1);
+ 
+ 	if (err)
+ 		return err;
+@@ -3152,12 +3162,16 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 				  const struct sw_flow_key *key,
+ 				  struct sw_flow_actions **sfa,
+ 				  __be16 eth_type, __be16 vlan_tci,
+-				  u32 mpls_label_count, bool log)
++				  u32 mpls_label_count, bool log,
++				  u32 depth)
+ {
+ 	u8 mac_proto = ovs_key_mac_proto(key);
+ 	const struct nlattr *a;
+ 	int rem, err;
+ 
++	if (depth > OVS_COPY_ACTIONS_MAX_DEPTH)
++		return -EOVERFLOW;
++
+ 	nla_for_each_nested(a, attr, rem) {
+ 		/* Expected argument lengths, (u32)-1 for variable length. */
+ 		static const u32 action_lens[OVS_ACTION_ATTR_MAX + 1] = {
+@@ -3355,7 +3369,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 			err = validate_and_copy_sample(net, a, key, sfa,
+ 						       eth_type, vlan_tci,
+ 						       mpls_label_count,
+-						       log, last);
++						       log, last, depth);
+ 			if (err)
+ 				return err;
+ 			skip_copy = true;
+@@ -3426,7 +3440,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 			err = validate_and_copy_clone(net, a, key, sfa,
+ 						      eth_type, vlan_tci,
+ 						      mpls_label_count,
+-						      log, last);
++						      log, last, depth);
+ 			if (err)
+ 				return err;
+ 			skip_copy = true;
+@@ -3440,7 +3454,8 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 							      eth_type,
+ 							      vlan_tci,
+ 							      mpls_label_count,
+-							      log, last);
++							      log, last,
++							      depth);
+ 			if (err)
+ 				return err;
+ 			skip_copy = true;
+@@ -3450,7 +3465,8 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 		case OVS_ACTION_ATTR_DEC_TTL:
+ 			err = validate_and_copy_dec_ttl(net, a, key, sfa,
+ 							eth_type, vlan_tci,
+-							mpls_label_count, log);
++							mpls_label_count, log,
++							depth);
+ 			if (err)
+ 				return err;
+ 			skip_copy = true;
+@@ -3495,7 +3511,8 @@ int ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
+ 
+ 	(*sfa)->orig_len = nla_len(attr);
+ 	err = __ovs_nla_copy_actions(net, attr, key, sfa, key->eth.type,
+-				     key->eth.vlan.tci, mpls_label_count, log);
++				     key->eth.vlan.tci, mpls_label_count, log,
++				     0);
+ 	if (err)
+ 		ovs_nla_free_flow_actions(*sfa);
+ 
 -- 
 2.43.0
 
