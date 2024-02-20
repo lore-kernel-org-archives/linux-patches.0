@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E55E612D7;
-	Tue, 20 Feb 2024 21:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C96E76C9C;
+	Tue, 20 Feb 2024 21:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463463; cv=none; b=tnOIW0nLqY0Lm4OMqo9Aij9fuh+tuoDxucMma+0sZnbQ8cKfEKl6nvarPE7O8+JEZ1XdKFS1LHLxyW+FKjKx8KP7bfc+MDIZ1Az3Mvn1N77TEw4OKmcyUCcuvsnh0BnqLiEkXq555dMPcO8BBz7rAWn6w4KCk5BVM3mP+mcoXZ8=
+	t=1708463467; cv=none; b=tbQ2hpEXTJ8jrhD1sSFpSVIRbZVkuq6aZC/ylf5sogqst+nugPSyqUTPDQA3VnoUYlu/WfAqfyPgCw0bQ0BBRUP9xqWpY5al9IRq5NR1pbkn2mgboKhmDv/peM1pt1tS6GJgabQUWAXsw/J5ANnWzvwrM3Phc15sVi0XlGGgWZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463463; c=relaxed/simple;
-	bh=VqNeA+VEq9oRBEf2EGX55WKIg3qbCMGqUPwLbJBbXew=;
+	s=arc-20240116; t=1708463467; c=relaxed/simple;
+	bh=kCjWIY3mh00uSZ2e/Y5Mq+0XyrFlSSu8kLW0qAcIucM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BR13gXjNeOD3h5+MrMGqKesaQxJscdKsdEz22a26gF5c5xmg75ioUlCSdOzx3MtBBtOkeOU9FKmVKjlIPm/7HY5tM0lGzioDAaTA7Uysn1xZm1pHTeg4FgTw0kXhKFbVbuPXsdkKG2Um8XJ/n0kx38oenCidEPvCwrAf9L/5TQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShtirRF4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GwG3Wd0IZpXT5m3YNcbmHX3RuiNKy5Xaw0RmOFrJuttbhorCSaJTWjIO8MVnrzHPo9Wblh0Y+UJTMgOWsHht6CsTZ+hQHJr9hPtdCWKnHPnXJ4/9BBTqsOm73zrKjk7V3xv7jolvrbOSQ1HBysRKhJadaSka4tNH6v9wG1LSj+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAstRjon; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShtirRF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D1FC433C7;
-	Tue, 20 Feb 2024 21:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAstRjon"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E39CC433C7;
+	Tue, 20 Feb 2024 21:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463463;
-	bh=VqNeA+VEq9oRBEf2EGX55WKIg3qbCMGqUPwLbJBbXew=;
+	s=korg; t=1708463466;
+	bh=kCjWIY3mh00uSZ2e/Y5Mq+0XyrFlSSu8kLW0qAcIucM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShtirRF40+uzV62G/s9WLOnORyxpv2bcMWwobULKJy3lNovXR0CbqAtkqJDRL6eQt
-	 ZwtJTY2N1piAjY+HZvfcFHBZt4UJ3O0EhFsqi5YuD4y5yNcV0pe2IrvHstmCLY1u7T
-	 OBbfjQ6fAH3j63w8p2ZHEeWlFxlIXHgtVGAQpUBw=
+	b=IAstRjon64LQn3hAypZgbsWGbnF/F8H0mr5EoOko7rX2lmyuAC83DaAjCkj3NbJnv
+	 39S9zy5kXoixOKZtS0gO8w7UMfLXAA1hitGiVGS1MAwjwssIl6+n737M/eCvgmmEFZ
+	 lORcJ05L9bs2jZ4eGySFjiqWCsx9M1cEa3gJlP4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashant Batra <prbatra.mail@gmail.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/331] bonding: do not report NETDEV_XDP_ACT_XSK_ZEROCOPY
-Date: Tue, 20 Feb 2024 21:52:20 +0100
-Message-ID: <20240220205638.352812408@linuxfoundation.org>
+Subject: [PATCH 6.6 051/331] ptrace: Introduce exception_ip arch hook
+Date: Tue, 20 Feb 2024 21:52:47 +0100
+Message-ID: <20240220205639.199752579@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -47,62 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Magnus Karlsson <magnus.karlsson@intel.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit 9b0ed890ac2ae233efd8b27d11aee28a19437bb8 ]
+[ Upstream commit 11ba1728be3edb6928791f4c622f154ebe228ae6 ]
 
-Do not report the XDP capability NETDEV_XDP_ACT_XSK_ZEROCOPY as the
-bonding driver does not support XDP and AF_XDP in zero-copy mode even
-if the real NIC drivers do.
+On architectures with delay slot, architecture level instruction
+pointer (or program counter) in pt_regs may differ from where
+exception was triggered.
 
-Note that the driver used to report everything as supported before a
-device was bonded. Instead of just masking out the zero-copy support
-from this, have the driver report that no XDP feature is supported
-until a real device is bonded. This seems to be more truthful as it is
-the real drivers that decide what XDP features are supported.
+Introduce exception_ip hook to invoke architecture code and determine
+actual instruction pointer to the exception.
 
-Fixes: cb9e6e584d58 ("bonding: add xdp_features support")
-Reported-by: Prashant Batra <prbatra.mail@gmail.com>
-Link: https://lore.kernel.org/all/CAJ8uoz2ieZCopgqTvQ9ZY6xQgTbujmC6XkMTamhp68O-h_-rLg@mail.gmail.com/T/
-Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20240207084737.20890-1-magnus.karlsson@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/lkml/00d1b813-c55f-4365-8d81-d70258e10b16@app.fastmail.com/
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: 8fa507083388 ("mm/memory: Use exception ip to search exception tables")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/mips/include/asm/ptrace.h | 2 ++
+ arch/mips/kernel/ptrace.c      | 7 +++++++
+ include/linux/ptrace.h         | 4 ++++
+ 3 files changed, 13 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 8e6cc0e133b7..6cf7f364704e 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1819,6 +1819,8 @@ void bond_xdp_set_features(struct net_device *bond_dev)
- 	bond_for_each_slave(bond, slave, iter)
- 		val &= slave->dev->xdp_features;
+diff --git a/arch/mips/include/asm/ptrace.h b/arch/mips/include/asm/ptrace.h
+index daf3cf244ea9..701a233583c2 100644
+--- a/arch/mips/include/asm/ptrace.h
++++ b/arch/mips/include/asm/ptrace.h
+@@ -154,6 +154,8 @@ static inline long regs_return_value(struct pt_regs *regs)
+ }
  
-+	val &= ~NETDEV_XDP_ACT_XSK_ZEROCOPY;
+ #define instruction_pointer(regs) ((regs)->cp0_epc)
++extern unsigned long exception_ip(struct pt_regs *regs);
++#define exception_ip(regs) exception_ip(regs)
+ #define profile_pc(regs) instruction_pointer(regs)
+ 
+ extern asmlinkage long syscall_trace_enter(struct pt_regs *regs, long syscall);
+diff --git a/arch/mips/kernel/ptrace.c b/arch/mips/kernel/ptrace.c
+index d9df543f7e2c..59288c13b581 100644
+--- a/arch/mips/kernel/ptrace.c
++++ b/arch/mips/kernel/ptrace.c
+@@ -31,6 +31,7 @@
+ #include <linux/seccomp.h>
+ #include <linux/ftrace.h>
+ 
++#include <asm/branch.h>
+ #include <asm/byteorder.h>
+ #include <asm/cpu.h>
+ #include <asm/cpu-info.h>
+@@ -48,6 +49,12 @@
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/syscalls.h>
+ 
++unsigned long exception_ip(struct pt_regs *regs)
++{
++	return exception_epc(regs);
++}
++EXPORT_SYMBOL(exception_ip);
 +
- 	xdp_set_features_flag(bond_dev, val);
- }
+ /*
+  * Called by kernel/ptrace.c when detaching..
+  *
+diff --git a/include/linux/ptrace.h b/include/linux/ptrace.h
+index eaaef3ffec22..90507d4afcd6 100644
+--- a/include/linux/ptrace.h
++++ b/include/linux/ptrace.h
+@@ -393,6 +393,10 @@ static inline void user_single_step_report(struct pt_regs *regs)
+ #define current_user_stack_pointer() user_stack_pointer(current_pt_regs())
+ #endif
  
-@@ -5934,9 +5936,6 @@ void bond_setup(struct net_device *bond_dev)
- 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP)
- 		bond_dev->features |= BOND_XFRM_FEATURES;
- #endif /* CONFIG_XFRM_OFFLOAD */
--
--	if (bond_xdp_check(bond))
--		bond_dev->xdp_features = NETDEV_XDP_ACT_MASK;
- }
++#ifndef exception_ip
++#define exception_ip(x) instruction_pointer(x)
++#endif
++
+ extern int task_current_syscall(struct task_struct *target, struct syscall_info *info);
  
- /* Destroy a bonding device.
+ extern void sigaction_compat_abi(struct k_sigaction *act, struct k_sigaction *oact);
 -- 
 2.43.0
 
