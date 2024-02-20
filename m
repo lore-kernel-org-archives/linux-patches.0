@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE17F612D7;
-	Tue, 20 Feb 2024 21:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A6B612D7;
+	Tue, 20 Feb 2024 21:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463912; cv=none; b=snax5KOUZ1t+Smxr3rt7NnoSGO13UX0nP1Y8lHy3mM3aPad3vG6A+RgvoqQKmj9ZIe9XOeaubEuUkEIFmisKDD7570NPgfh9tWBzKuUkWT5brFyMm8UBjLt/At7GAeZQdjTQsWHn6E7rHw0CDUJ/u7MtwENMxbwZyJeXyRMbA/8=
+	t=1708463915; cv=none; b=GtOp8wH0K53OI6kl2uyx1fT5taYSssbRlC2GvkODLmLhYFm4HbVnrVTsY6Uj6O8wwNO/TgppP6uACSCK5kXcgyr8QE1VrRz6v/NAgdc6p84k6E4bbmkuDFudZmqOBN9fz8w4VZbDvNJoecyowovqhJ983RoW+cuOVRNlaJe4gi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463912; c=relaxed/simple;
-	bh=e0IzLTEZfX5FVvtJYCzPKbNogEt/u0rbfs5/gL8tX54=;
+	s=arc-20240116; t=1708463915; c=relaxed/simple;
+	bh=Y1db0jUDbH+p5SUMtOp+2nkE+F/EIuXo4wp7LVbSCPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQng8mb8Vu0aA8aHUCkC7gpi3FG9asfPvbbSJVwD5KNf8K2wtl/oPaq/xC1B4HSBTnlVBeha+KIyPnOHtX5UYIf2/ANEWwMjxaSuxrHaCow37ropLy++Z9XoFo9986wUl9x0vZhHyj+757q5N/keGwskvHU8qa+7nwm9lvzgfYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQ46EyqI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ef4F9INUskrW6Niu5HpnvS4Xj4AqywGxNo+Cak9ke9mPmEMvD2J0A3Ab0Tom/+wZNbQmam8RErYv7WTOaeba0qdh8TpUo4cxTuNHCF5J95kPVaMFC89C7p0aSvvTdoT6CaHatBaMEzCkfZucJH8K64YwjVUd5NdHKa9DaROUogo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZcKptJa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQ46EyqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254DAC433F1;
-	Tue, 20 Feb 2024 21:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZcKptJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7FAC433F1;
+	Tue, 20 Feb 2024 21:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463912;
-	bh=e0IzLTEZfX5FVvtJYCzPKbNogEt/u0rbfs5/gL8tX54=;
+	s=korg; t=1708463915;
+	bh=Y1db0jUDbH+p5SUMtOp+2nkE+F/EIuXo4wp7LVbSCPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQ46EyqIc/6EW9Stor+caO9liJ3RvKYOBbmaRZ2NMJQIiPHUMA+396EdsFKbWUxZl
-	 0DK3VyUXWaRxFO8KatXGAf2jERfqB8UxKTeP9rQnfNDWqzfxGxb7izhPK2wt93xD+i
-	 D7nyeMdXAgg+erhm8H03vwAuCr9kyh4naE6WiTWU=
+	b=HZcKptJaqyTxkpVX4bvb93DJeWACNNx5lhro5kE1XwHF1EPkA3D4epbJV2owRaZaq
+	 595RznjV/2SPkKgNwGdQWqMOozfKMUYaN0cNpw3yM7iljSLwjUS10jR0Rai76v5JMu
+	 za+rxqlrgnWLLY9gNm5j0haHAmuugYRCVevmNSH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.6 193/331] x86/mm/ident_map: Use gbpages only where full GB page should be mapped.
-Date: Tue, 20 Feb 2024 21:55:09 +0100
-Message-ID: <20240220205643.652592059@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 194/331] io_uring/net: fix multishot accept overflow handling
+Date: Tue, 20 Feb 2024 21:55:10 +0100
+Message-ID: <20240220205643.691103342@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -50,77 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit d794734c9bbfe22f86686dc2909c25f5ffe1a572 upstream.
+commit a37ee9e117ef73bbc2f5c0b31911afd52d229861 upstream.
 
-When ident_pud_init() uses only gbpages to create identity maps, large
-ranges of addresses not actually requested can be included in the
-resulting table; a 4K request will map a full GB.  On UV systems, this
-ends up including regions that will cause hardware to halt the system
-if accessed (these are marked "reserved" by BIOS).  Even processor
-speculation into these regions is enough to trigger the system halt.
+If we hit CQ ring overflow when attempting to post a multishot accept
+completion, we don't properly save the result or return code. This
+results in losing the accepted fd value.
 
-Only use gbpages when map creation requests include the full GB page
-of space.  Fall back to using smaller 2M pages when only portions of a
-GB page are included in the request.
+Instead, we return the result from the poll operation that triggered
+the accept retry. This is generally POLLIN|POLLPRI|POLLRDNORM|POLLRDBAND
+which is 0xc3, or 195, which looks like a valid file descriptor, but it
+really has no connection to that.
 
-No attempt is made to coalesce mapping requests. If a request requires
-a map entry at the 2M (pmd) level, subsequent mapping requests within
-the same 1G region will also be at the pmd level, even if adjacent or
-overlapping such requests could have been combined to map a full
-gbpage.  Existing usage starts with larger regions and then adds
-smaller regions, so this should not have any great consequence.
+Handle this like we do for other multishot completions - assign the
+result, and return IOU_STOP_MULTISHOT to cancel any further completions
+from this request when overflow is hit. This preserves the result, as we
+should, and tells the application that the request needs to be re-armed.
 
-[ dhansen: fix up comment formatting, simplifty changelog ]
-
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240126164841.170866-1-steve.wahl%40hpe.com
+Fixes: 515e26961295 ("io_uring: revert "io_uring fix multishot accept ordering"")
+Link: https://github.com/axboe/liburing/issues/1062
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ident_map.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ io_uring/net.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/mm/ident_map.c
-+++ b/arch/x86/mm/ident_map.c
-@@ -26,18 +26,31 @@ static int ident_pud_init(struct x86_map
- 	for (; addr < end; addr = next) {
- 		pud_t *pud = pud_page + pud_index(addr);
- 		pmd_t *pmd;
-+		bool use_gbpage;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1372,7 +1372,7 @@ retry:
+ 			 * has already been done
+ 			 */
+ 			if (issue_flags & IO_URING_F_MULTISHOT)
+-				ret = IOU_ISSUE_SKIP_COMPLETE;
++				return IOU_ISSUE_SKIP_COMPLETE;
+ 			return ret;
+ 		}
+ 		if (ret == -ERESTARTSYS)
+@@ -1397,7 +1397,8 @@ retry:
+ 				ret, IORING_CQE_F_MORE))
+ 		goto retry;
  
- 		next = (addr & PUD_MASK) + PUD_SIZE;
- 		if (next > end)
- 			next = end;
+-	return -ECANCELED;
++	io_req_set_res(req, ret, 0);
++	return IOU_STOP_MULTISHOT;
+ }
  
--		if (info->direct_gbpages) {
--			pud_t pudval;
-+		/* if this is already a gbpage, this portion is already mapped */
-+		if (pud_large(*pud))
-+			continue;
-+
-+		/* Is using a gbpage allowed? */
-+		use_gbpage = info->direct_gbpages;
- 
--			if (pud_present(*pud))
--				continue;
-+		/* Don't use gbpage if it maps more than the requested region. */
-+		/* at the begining: */
-+		use_gbpage &= ((addr & ~PUD_MASK) == 0);
-+		/* ... or at the end: */
-+		use_gbpage &= ((next & ~PUD_MASK) == 0);
-+
-+		/* Never overwrite existing mappings */
-+		use_gbpage &= !pud_present(*pud);
-+
-+		if (use_gbpage) {
-+			pud_t pudval;
- 
--			addr &= PUD_MASK;
- 			pudval = __pud((addr - info->offset) | info->page_flag);
- 			set_pud(pud, pudval);
- 			continue;
+ int io_socket_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
 
 
