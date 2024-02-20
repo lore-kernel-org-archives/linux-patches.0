@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7849476C9C;
-	Tue, 20 Feb 2024 21:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6534376C9C;
+	Tue, 20 Feb 2024 21:08:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463306; cv=none; b=GzbuAOit7cox2HVuNAmyuE71RJi8vdkEK3976d3SPVwOVrI/JiYa5GhVp5VaqlEaaPzkNvWk0DMC7SX5RjwgWBn9rNMMAezpruSNKI8TpZS12l2ypS8X4RuEHptX0XrgaJKa5uXAeeowDUvccwhncaxqqIpphbJFybx7d/ziNRw=
+	t=1708463309; cv=none; b=THGi3LaMGo6wBthpNsK86u+GYlouLOSdAiZM1M73HsuQc3M6zjVF12au3v/UjwHZyHQhUXB/tXMIlHFXAyf800LfUlFXl8TVDBWbNBT0NA0t5rcEbKg8ds55qqd1g2PlFleChGLlGVDdJpTCRS+yV6Gn+FfIr1ARDJ6uMPPVXEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463306; c=relaxed/simple;
-	bh=2JOrfx9Jf8GdaH7Jn6XJmJ2bcDWM7vDsqon0BBttjvE=;
+	s=arc-20240116; t=1708463309; c=relaxed/simple;
+	bh=hLVsQCp2saBAMYuDBibZ6mkgZ8iK5QDHyipywwqOzxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdshwM6QBuTwTfCO3Rn8/HnGSsJ3D82xqNA4gyNnPesAc89HTGh/XE9B3gjr8LdHmhxERWdgbNfqCzb6LKAKUMFR1FmQ42ULJAzP9AjhBEZq2ZRCAYxDBnuI/TMtuDJ5Emzxj7GlKuAASCU3rLfPfFQmDLqKfPUQyC/CBeYtcwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lf+MhNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QmjM8YtlobZNtn4GE5KZazKDW+7P/un+DqZBRVxcpwiNBMixtr1QgM/OgPqwbCtUzxd8HmUPhKTPMMKjjPGUHR7c79hMbazTt6uqeNl51K0cAoQ6wb3TwVEc/DDLsv19QGDLfqVDe0gdVB8pRQgsl0ygxKwOJXef5g9ITf02REM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYR44PnQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lf+MhNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D28C433F1;
-	Tue, 20 Feb 2024 21:08:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYR44PnQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42C3C433F1;
+	Tue, 20 Feb 2024 21:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463306;
-	bh=2JOrfx9Jf8GdaH7Jn6XJmJ2bcDWM7vDsqon0BBttjvE=;
+	s=korg; t=1708463309;
+	bh=hLVsQCp2saBAMYuDBibZ6mkgZ8iK5QDHyipywwqOzxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0lf+MhNWhZDpjJ0Jti8gvUl5yq5Z1wme9ewxOCw3L7wcWFdd/yl0BmrIIrTc5qHzv
-	 /rzmOSS4w47EHaVdPRvDmuzlgmmFHnm/7BVOI+q4ikRMgS0mn6v7DongLbvkTfpeUA
-	 mZstK9iqA4fvCXj4N01YLWKS2xg2T8AZFqZaL9t8=
+	b=cYR44PnQCqZmCR929fH4LyGag3eDwqJkjY8TB+n8acPWI0UOTk5qpBAsCheHakrIL
+	 gJ3QhXPrySYHgs3rqFktdMKGBlHbkdwCRHrv4wBKuVOf+Fa7HJOZilqjdGyW8UckcX
+	 fCVf/aDQtKRDjMChAScI67yst4GAdDjT21Tmz46k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Audra Mitchell <audra@redhat.com>,
-	Rafael Aquini <raquini@redhat.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Adam Sindelar <adam@wowsignal.io>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/197] selftests/mm: Update va_high_addr_switch.sh to check CPU for la57 flag
-Date: Tue, 20 Feb 2024 21:52:10 +0100
-Message-ID: <20240220204846.189134750@linuxfoundation.org>
+Subject: [PATCH 6.1 172/197] md: bypass block throttle for superblock update
+Date: Tue, 20 Feb 2024 21:52:11 +0100
+Message-ID: <20240220204846.218720777@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -54,65 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Audra Mitchell <audra@redhat.com>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-[ Upstream commit 52e63d67b5bb423b33d7a262ac7f8bd375a90145 ]
+[ Upstream commit d6e035aad6c09991da1c667fb83419329a3baed8 ]
 
-In order for the page table level 5 to be in use, the CPU must have the
-setting enabled in addition to the CONFIG option. Check for the flag to be
-set to avoid false test failures on systems that do not have this cpu flag
-set.
+commit 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
+introduced a hung bug and will be reverted in next patch, since the issue
+that commit is fixing is due to md superblock write is throttled by wbt,
+to fix it, we can have superblock write bypass block layer throttle.
 
-The test does a series of mmap calls including three using the
-MAP_FIXED flag and specifying an address that is 1<<47 or 1<<48.  These
-addresses are only available if you are using level 5 page tables,
-which requires both the CPU to have the capabiltiy (la57 flag) and the
-kernel to be configured.  Currently the test only checks for the kernel
-configuration option, so this test can still report a false positive.
-Here are the three failing lines:
-
-$ ./va_high_addr_switch | grep FAILED
-mmap(ADDR_SWITCH_HINT, 2 * PAGE_SIZE, MAP_FIXED): 0xffffffffffffffff - FAILED
-mmap(HIGH_ADDR, MAP_FIXED): 0xffffffffffffffff - FAILED
-mmap(ADDR_SWITCH_HINT, 2 * PAGE_SIZE, MAP_FIXED): 0xffffffffffffffff - FAILED
-
-I thought (for about a second) refactoring the test so that these three
-mmap calls will only be run on systems with the level 5 page tables
-available, but the whole point of the test is to check the level 5
-feature...
-
-Link: https://lkml.kernel.org/r/20240119205801.62769-1-audra@redhat.com
-Fixes: 4f2930c6718a ("selftests/vm: only run 128TBswitch with 5-level paging")
-Signed-off-by: Audra Mitchell <audra@redhat.com>
-Cc: Rafael Aquini <raquini@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Adam Sindelar <adam@wowsignal.io>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
+Cc: stable@vger.kernel.org # v5.19+
+Suggested-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231108182216.73611-1-junxiao.bi@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vm/va_128TBswitch.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/md/md.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/va_128TBswitch.sh b/tools/testing/selftests/vm/va_128TBswitch.sh
-index 41580751dc51..231622b3a232 100755
---- a/tools/testing/selftests/vm/va_128TBswitch.sh
-+++ b/tools/testing/selftests/vm/va_128TBswitch.sh
-@@ -29,9 +29,15 @@ check_supported_x86_64()
- 	# See man 1 gzip under '-f'.
- 	local pg_table_levels=$(gzip -dcfq "${config}" | grep PGTABLE_LEVELS | cut -d'=' -f 2)
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 3ccf1920682c..c7efe1522951 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -963,9 +963,10 @@ void md_super_write(struct mddev *mddev, struct md_rdev *rdev,
+ 		return;
  
-+	local cpu_supports_pl5=$(awk '/^flags/ {if (/la57/) {print 0;}
-+		else {print 1}; exit}' /proc/cpuinfo 2>/dev/null)
-+
- 	if [[ "${pg_table_levels}" -lt 5 ]]; then
- 		echo "$0: PGTABLE_LEVELS=${pg_table_levels}, must be >= 5 to run this test"
- 		exit $ksft_skip
-+	elif [[ "${cpu_supports_pl5}" -ne 0 ]]; then
-+		echo "$0: CPU does not have the necessary la57 flag to support page table level 5"
-+		exit $ksft_skip
- 	fi
- }
+ 	bio = bio_alloc_bioset(rdev->meta_bdev ? rdev->meta_bdev : rdev->bdev,
+-			       1,
+-			       REQ_OP_WRITE | REQ_SYNC | REQ_PREFLUSH | REQ_FUA,
+-			       GFP_NOIO, &mddev->sync_set);
++			      1,
++			      REQ_OP_WRITE | REQ_SYNC | REQ_IDLE | REQ_META
++				  | REQ_PREFLUSH | REQ_FUA,
++			      GFP_NOIO, &mddev->sync_set);
+ 
+ 	atomic_inc(&rdev->nr_pending);
  
 -- 
 2.43.0
