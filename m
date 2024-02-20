@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF99F1509BF;
-	Tue, 20 Feb 2024 21:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53061509AC;
+	Tue, 20 Feb 2024 21:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463803; cv=none; b=sMOFsnzmQkaQpjvFQtUwh6tsbAy0BF3qzSpJywT00047sctQbBjGM124VqszJjdqrlYZFwv75AIpLUlkNKsJLYMZu7ClZlaYkMa+zdaq4mlE0p72SadOnEYaBB5R5lUrCH8X50XU/cBBRYiV8riR3F3zBd2AqhcJkflz7IPUk30=
+	t=1708463805; cv=none; b=ZvBFFf9NzUQ4Oczw5WdkRDjWKpVXGjuUASjqCOLLnoP4R/V3nCmSUg67+rKFJbm3A85hNZCePA3CgZC80Dp4hPqSiy4yMHhZpBZIZ5uqG+uosNDQUjmnC0IkFEIJk7uc/kerUGHNKeuQ/xIA7YOObDJ+yQoHBY40FKnuYy6E+ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463803; c=relaxed/simple;
-	bh=hQCjV42zBhaN/ClCeA00KqE58yXFQc/SkGmstEehADk=;
+	s=arc-20240116; t=1708463805; c=relaxed/simple;
+	bh=NE2bKY2rE4DTotVscZx4KYGyNTw+IgvOpgEFJIlv0DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4I7ryGwYrFPhobIQMt1zEKKNRwFS81lpLy192/2R3Z+mM2ly2+b+DH8/sAqFYPSn34w+6Dy3uiEnKvMduZxAYrK0+pR+0Rrlop45kfRs4sJICg05ZdKN289q/dIz1wSLexpQmAoQ64NGZCiItXyuY49jJrwakuP/9C7OUJnvHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWwH92xg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOj61THUR4WM/2acd5ts99dpFFXr+D8V5nHjy0pPS1tJWfRbCwL9NcQfjB0IeEKyGu4Iuar9CzSexEunyTUM7c40QZknIQ2X/fcRprWJ9rDU+kUwDKuxxkoawZQQxShsrD4EAJYa0NyMQoJS1epg8KUX6TvUkEnR4/6CS6OIp7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvFOiF8Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWwH92xg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1391CC433C7;
-	Tue, 20 Feb 2024 21:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvFOiF8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA9EC43394;
+	Tue, 20 Feb 2024 21:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463802;
-	bh=hQCjV42zBhaN/ClCeA00KqE58yXFQc/SkGmstEehADk=;
+	s=korg; t=1708463805;
+	bh=NE2bKY2rE4DTotVscZx4KYGyNTw+IgvOpgEFJIlv0DQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWwH92xgfmimuoqaVYweHXsa2Iot97aZUkhgg3MVHLzEhLJMUkJky9ka83vJPx9OP
-	 vkn8Yooh3+A/XH4OXJC3ni7ipX7wHMGhIawI9ghv4ctiDuA/Jla8nlbDcXPkWrIqaS
-	 nGdJZ2tToGzaVEQ7yf8p7MLhw64q4qfwHbgNu0u0=
+	b=yvFOiF8ZiDqBJLoOqLDxCFljtsxemFVxRsHMj1KTNmyv7ljbrTzPSBplGKHa56kQx
+	 AgKH1ZmcK/gIsKTQxJEbRAtjjGkKh58yLu4c8fiN5kp6MAbrefd9//sPZfoJ3NtvyF
+	 DAIyPEdY2g3CTykpJGYpXt0VZwiz1HOJz6favJ1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 158/331] iio: commom: st_sensors: ensure proper DMA alignment
-Date: Tue, 20 Feb 2024 21:54:34 +0100
-Message-ID: <20240220205642.497485250@linuxfoundation.org>
+Subject: [PATCH 6.6 159/331] iio: accel: bma400: Fix a compilation problem
+Date: Tue, 20 Feb 2024 21:54:35 +0100
+Message-ID: <20240220205642.535710195@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,45 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 862cf85fef85becc55a173387527adb4f076fab0 upstream.
+commit 4cb81840d8f29b66d9d05c6d7f360c9560f7e2f4 upstream.
 
-Aligning the buffer to the L1 cache is not sufficient in some platforms
-as they might have larger cacheline sizes for caches after L1 and thus,
-we can't guarantee DMA safety.
+The kernel fails when compiling without `CONFIG_REGMAP_I2C` but with
+`CONFIG_BMA400`.
+```
+ld: drivers/iio/accel/bma400_i2c.o: in function `bma400_i2c_probe':
+bma400_i2c.c:(.text+0x23): undefined reference to `__devm_regmap_init_i2c'
+```
 
-That was the whole reason to introduce IIO_DMA_MINALIGN in [1]. Do the same
-for st_sensors common buffer.
-
-While at it, moved the odr_lock before buffer_data as we definitely
-don't want any other data to share a cacheline with the buffer.
-
-[1]: https://lore.kernel.org/linux-iio/20220508175712.647246-2-jic23@kernel.org/
-
-Fixes: e031d5f558f1 ("iio:st_sensors: remove buffer allocation at each buffer enable")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://download.01.org/0day-ci/archive/20240131/202401311634.FE5CBVwe-lkp@intel.com/config
+Fixes: 465c811f1f20 ("iio: accel: Add driver for the BMA400")
+Fixes: 9bea10642396 ("iio: accel: bma400: add support for bma400 spi")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20240131225246.14169-1-mario.limonciello@amd.com
 Cc: <Stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240131-dev_dma_safety_stm-v2-1-580c07fae51b@analog.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/iio/common/st_sensors.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/accel/Kconfig |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/iio/common/st_sensors.h
-+++ b/include/linux/iio/common/st_sensors.h
-@@ -258,9 +258,9 @@ struct st_sensor_data {
- 	bool hw_irq_trigger;
- 	s64 hw_timestamp;
+--- a/drivers/iio/accel/Kconfig
++++ b/drivers/iio/accel/Kconfig
+@@ -219,10 +219,12 @@ config BMA400
  
--	char buffer_data[ST_SENSORS_MAX_BUFFER_SIZE] ____cacheline_aligned;
--
- 	struct mutex odr_lock;
-+
-+	char buffer_data[ST_SENSORS_MAX_BUFFER_SIZE] __aligned(IIO_DMA_MINALIGN);
- };
+ config BMA400_I2C
+ 	tristate
++	select REGMAP_I2C
+ 	depends on BMA400
  
- #ifdef CONFIG_IIO_BUFFER
+ config BMA400_SPI
+ 	tristate
++	select REGMAP_SPI
+ 	depends on BMA400
+ 
+ config BMC150_ACCEL
 
 
