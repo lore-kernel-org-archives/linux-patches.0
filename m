@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC9514AD12;
-	Tue, 20 Feb 2024 21:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C556814F9C8;
+	Tue, 20 Feb 2024 21:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463192; cv=none; b=neLvnYdLjGJIFBNuWsxYW3LUopL8Mva7yM4hDra1q+sKUC/LYcKelveGUQc9QDtFX2IXnICVPhDuYl1RGHJEkar1dEt3C9OAGWLtEIv7T/NB1weaUhzM/kdx7+VaSroJ1Or/3vl9iStPcJlbQt4BkVxnMSiTpMNvo10iKjq6Qj0=
+	t=1708463195; cv=none; b=P0NUnBfV3hQm1FIXo4g2d/YWhzoWyXNoSSDVcAUG9wIs/iHikB7law0wzTbYzrEiObQycnF1VgxwT5nr1wTi08YuRgXXnly9/2oUm6CzWxiPaBZSQVSCcGGwIh/Wp4zl4A4TsnWbSGo6Pmqa24x1FJneciR2J/KFaC1omjpDDq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463192; c=relaxed/simple;
-	bh=au1LrFtAQHGV/r8/7vTJv/rPyu8AJms4NgdyuTHuSkw=;
+	s=arc-20240116; t=1708463195; c=relaxed/simple;
+	bh=lAYdASTxUDqRpp7iOOcPYYEz5H/5BYGcwmKtnZ98HX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVpHbMkwiwsTgKbSZcbjrQCwIvFw2rVu2uraKSrZazK+4PIUldNmoRqmERt8m9rhEm0tV2aFIc5Kj3LrDUrvia6SZfJHfF+90X/dKRgwXZchIvtiQjaaS4ANjD2nPG2TlDwvKfJbkBiqXbKzh9P27MoNmjgVEKkuXPVrHPD/XGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UdwaMTzf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNPWVjv9sRls+b6Vm+07BTLT6LgoJMfx6GP/L+ekN60pnU0SV8dhnLA6K3en0lXH9Pn5fHaVGMaEmYAN+y7ugomZrv50HRve3GXgkD8dMs+faJChzWWYwL4yCwYiHGQ9cstBj18DHo7mPTNXCLpxei2BF8p3o88HlOIH6ZskCjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFQTE59r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UdwaMTzf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F4CC433C7;
-	Tue, 20 Feb 2024 21:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFQTE59r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B36DC433F1;
+	Tue, 20 Feb 2024 21:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463192;
-	bh=au1LrFtAQHGV/r8/7vTJv/rPyu8AJms4NgdyuTHuSkw=;
+	s=korg; t=1708463195;
+	bh=lAYdASTxUDqRpp7iOOcPYYEz5H/5BYGcwmKtnZ98HX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UdwaMTzftZh5p0MjL+2NrNYZSh3trLPNt13qgjznsAqgtUZEKOFEJtIXQU46lS+DH
-	 TVVqt4+S6T9pnUwWUmMGS3Dsw7fwGOevPYJvRicSeoZZKne64mgfWGE6JhUDJnXHIZ
-	 i5/tu2I6fK/rCt7fzGYdebXEdGfGv2meMPvYPDt0=
+	b=OFQTE59rxnpWtgQxF9pLOOb0X1VojbDB+94Nj+Yrh7jrjlkxe4m0TVm2XJ1Tv3Ugt
+	 jAfRdqKgBNcU0fBy6sokgJvsBr7TUeI7PZjYBw3B3Cl/B/3LDDOsYezAB2UWiOEjsq
+	 HtikZvbAg88LrXomNJCoa4IxDzJ5osH+kgJuQg4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sili Luo <rootlab@huawei.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 163/197] can: j1939: Fix UAF in j1939_sk_match_filter during setsockopt(SO_J1939_FILTER)
-Date: Tue, 20 Feb 2024 21:52:02 +0100
-Message-ID: <20240220204845.952968263@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Kim Phillips <kim.phillips@amd.com>,
+	Liam Merwick <liam.merwick@oracle.com>,
+	John Allen <john.allen@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 137/197] crypto: ccp - Fix null pointer dereference in __sev_platform_shutdown_locked
+Date: Tue, 20 Feb 2024 21:51:36 +0100
+Message-ID: <20240220204845.170039875@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,194 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Kim Phillips <kim.phillips@amd.com>
 
-commit efe7cf828039aedb297c1f9920b638fffee6aabc upstream.
+commit ccb88e9549e7cfd8bcd511c538f437e20026e983 upstream.
 
-Lock jsk->sk to prevent UAF when setsockopt(..., SO_J1939_FILTER, ...)
-modifies jsk->filters while receiving packets.
+The SEV platform device can be shutdown with a null psp_master,
+e.g., using DEBUG_TEST_DRIVER_REMOVE.  Found using KASAN:
 
-Following trace was seen on affected system:
- ==================================================================
- BUG: KASAN: slab-use-after-free in j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
- Read of size 4 at addr ffff888012144014 by task j1939/350
+[  137.148210] ccp 0000:23:00.1: enabling device (0000 -> 0002)
+[  137.162647] ccp 0000:23:00.1: no command queues available
+[  137.170598] ccp 0000:23:00.1: sev enabled
+[  137.174645] ccp 0000:23:00.1: psp enabled
+[  137.178890] general protection fault, probably for non-canonical address 0xdffffc000000001e: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC KASAN NOPTI
+[  137.182693] KASAN: null-ptr-deref in range [0x00000000000000f0-0x00000000000000f7]
+[  137.182693] CPU: 93 PID: 1 Comm: swapper/0 Not tainted 6.8.0-rc1+ #311
+[  137.182693] RIP: 0010:__sev_platform_shutdown_locked+0x51/0x180
+[  137.182693] Code: 08 80 3c 08 00 0f 85 0e 01 00 00 48 8b 1d 67 b6 01 08 48 b8 00 00 00 00 00 fc ff df 48 8d bb f0 00 00 00 48 89 f9 48 c1 e9 03 <80> 3c 01 00 0f 85 fe 00 00 00 48 8b 9b f0 00 00 00 48 85 db 74 2c
+[  137.182693] RSP: 0018:ffffc900000cf9b0 EFLAGS: 00010216
+[  137.182693] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 000000000000001e
+[  137.182693] RDX: 0000000000000000 RSI: 0000000000000008 RDI: 00000000000000f0
+[  137.182693] RBP: ffffc900000cf9c8 R08: 0000000000000000 R09: fffffbfff58f5a66
+[  137.182693] R10: ffffc900000cf9c8 R11: ffffffffac7ad32f R12: ffff8881e5052c28
+[  137.182693] R13: ffff8881e5052c28 R14: ffff8881758e43e8 R15: ffffffffac64abf8
+[  137.182693] FS:  0000000000000000(0000) GS:ffff889de7000000(0000) knlGS:0000000000000000
+[  137.182693] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  137.182693] CR2: 0000000000000000 CR3: 0000001cf7c7e000 CR4: 0000000000350ef0
+[  137.182693] Call Trace:
+[  137.182693]  <TASK>
+[  137.182693]  ? show_regs+0x6c/0x80
+[  137.182693]  ? __die_body+0x24/0x70
+[  137.182693]  ? die_addr+0x4b/0x80
+[  137.182693]  ? exc_general_protection+0x126/0x230
+[  137.182693]  ? asm_exc_general_protection+0x2b/0x30
+[  137.182693]  ? __sev_platform_shutdown_locked+0x51/0x180
+[  137.182693]  sev_firmware_shutdown.isra.0+0x1e/0x80
+[  137.182693]  sev_dev_destroy+0x49/0x100
+[  137.182693]  psp_dev_destroy+0x47/0xb0
+[  137.182693]  sp_destroy+0xbb/0x240
+[  137.182693]  sp_pci_remove+0x45/0x60
+[  137.182693]  pci_device_remove+0xaa/0x1d0
+[  137.182693]  device_remove+0xc7/0x170
+[  137.182693]  really_probe+0x374/0xbe0
+[  137.182693]  ? srso_return_thunk+0x5/0x5f
+[  137.182693]  __driver_probe_device+0x199/0x460
+[  137.182693]  driver_probe_device+0x4e/0xd0
+[  137.182693]  __driver_attach+0x191/0x3d0
+[  137.182693]  ? __pfx___driver_attach+0x10/0x10
+[  137.182693]  bus_for_each_dev+0x100/0x190
+[  137.182693]  ? __pfx_bus_for_each_dev+0x10/0x10
+[  137.182693]  ? __kasan_check_read+0x15/0x20
+[  137.182693]  ? srso_return_thunk+0x5/0x5f
+[  137.182693]  ? _raw_spin_unlock+0x27/0x50
+[  137.182693]  driver_attach+0x41/0x60
+[  137.182693]  bus_add_driver+0x2a8/0x580
+[  137.182693]  driver_register+0x141/0x480
+[  137.182693]  __pci_register_driver+0x1d6/0x2a0
+[  137.182693]  ? srso_return_thunk+0x5/0x5f
+[  137.182693]  ? esrt_sysfs_init+0x1cd/0x5d0
+[  137.182693]  ? __pfx_sp_mod_init+0x10/0x10
+[  137.182693]  sp_pci_init+0x22/0x30
+[  137.182693]  sp_mod_init+0x14/0x30
+[  137.182693]  ? __pfx_sp_mod_init+0x10/0x10
+[  137.182693]  do_one_initcall+0xd1/0x470
+[  137.182693]  ? __pfx_do_one_initcall+0x10/0x10
+[  137.182693]  ? parameq+0x80/0xf0
+[  137.182693]  ? srso_return_thunk+0x5/0x5f
+[  137.182693]  ? __kmalloc+0x3b0/0x4e0
+[  137.182693]  ? kernel_init_freeable+0x92d/0x1050
+[  137.182693]  ? kasan_populate_vmalloc_pte+0x171/0x190
+[  137.182693]  ? srso_return_thunk+0x5/0x5f
+[  137.182693]  kernel_init_freeable+0xa64/0x1050
+[  137.182693]  ? __pfx_kernel_init+0x10/0x10
+[  137.182693]  kernel_init+0x24/0x160
+[  137.182693]  ? __switch_to_asm+0x3e/0x70
+[  137.182693]  ret_from_fork+0x40/0x80
+[  137.182693]  ? __pfx_kernel_init+0x10/0x10
+[  137.182693]  ret_from_fork_asm+0x1b/0x30
+[  137.182693]  </TASK>
+[  137.182693] Modules linked in:
+[  137.538483] ---[ end trace 0000000000000000 ]---
 
- CPU: 0 PID: 350 Comm: j1939 Tainted: G        W  OE      6.5.0-rc5 #1
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- Call Trace:
-  print_report+0xd3/0x620
-  ? kasan_complete_mode_report_info+0x7d/0x200
-  ? j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
-  kasan_report+0xc2/0x100
-  ? j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
-  __asan_load4+0x84/0xb0
-  j1939_sk_recv_match_one+0x1af/0x2d0 [can_j1939]
-  j1939_sk_recv+0x20b/0x320 [can_j1939]
-  ? __kasan_check_write+0x18/0x20
-  ? __pfx_j1939_sk_recv+0x10/0x10 [can_j1939]
-  ? j1939_simple_recv+0x69/0x280 [can_j1939]
-  ? j1939_ac_recv+0x5e/0x310 [can_j1939]
-  j1939_can_recv+0x43f/0x580 [can_j1939]
-  ? __pfx_j1939_can_recv+0x10/0x10 [can_j1939]
-  ? raw_rcv+0x42/0x3c0 [can_raw]
-  ? __pfx_j1939_can_recv+0x10/0x10 [can_j1939]
-  can_rcv_filter+0x11f/0x350 [can]
-  can_receive+0x12f/0x190 [can]
-  ? __pfx_can_rcv+0x10/0x10 [can]
-  can_rcv+0xdd/0x130 [can]
-  ? __pfx_can_rcv+0x10/0x10 [can]
-  __netif_receive_skb_one_core+0x13d/0x150
-  ? __pfx___netif_receive_skb_one_core+0x10/0x10
-  ? __kasan_check_write+0x18/0x20
-  ? _raw_spin_lock_irq+0x8c/0xe0
-  __netif_receive_skb+0x23/0xb0
-  process_backlog+0x107/0x260
-  __napi_poll+0x69/0x310
-  net_rx_action+0x2a1/0x580
-  ? __pfx_net_rx_action+0x10/0x10
-  ? __pfx__raw_spin_lock+0x10/0x10
-  ? handle_irq_event+0x7d/0xa0
-  __do_softirq+0xf3/0x3f8
-  do_softirq+0x53/0x80
-  </IRQ>
-  <TASK>
-  __local_bh_enable_ip+0x6e/0x70
-  netif_rx+0x16b/0x180
-  can_send+0x32b/0x520 [can]
-  ? __pfx_can_send+0x10/0x10 [can]
-  ? __check_object_size+0x299/0x410
-  raw_sendmsg+0x572/0x6d0 [can_raw]
-  ? __pfx_raw_sendmsg+0x10/0x10 [can_raw]
-  ? apparmor_socket_sendmsg+0x2f/0x40
-  ? __pfx_raw_sendmsg+0x10/0x10 [can_raw]
-  sock_sendmsg+0xef/0x100
-  sock_write_iter+0x162/0x220
-  ? __pfx_sock_write_iter+0x10/0x10
-  ? __rtnl_unlock+0x47/0x80
-  ? security_file_permission+0x54/0x320
-  vfs_write+0x6ba/0x750
-  ? __pfx_vfs_write+0x10/0x10
-  ? __fget_light+0x1ca/0x1f0
-  ? __rcu_read_unlock+0x5b/0x280
-  ksys_write+0x143/0x170
-  ? __pfx_ksys_write+0x10/0x10
-  ? __kasan_check_read+0x15/0x20
-  ? fpregs_assert_state_consistent+0x62/0x70
-  __x64_sys_write+0x47/0x60
-  do_syscall_64+0x60/0x90
-  ? do_syscall_64+0x6d/0x90
-  ? irqentry_exit+0x3f/0x50
-  ? exc_page_fault+0x79/0xf0
-  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
- Allocated by task 348:
-  kasan_save_stack+0x2a/0x50
-  kasan_set_track+0x29/0x40
-  kasan_save_alloc_info+0x1f/0x30
-  __kasan_kmalloc+0xb5/0xc0
-  __kmalloc_node_track_caller+0x67/0x160
-  j1939_sk_setsockopt+0x284/0x450 [can_j1939]
-  __sys_setsockopt+0x15c/0x2f0
-  __x64_sys_setsockopt+0x6b/0x80
-  do_syscall_64+0x60/0x90
-  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
- Freed by task 349:
-  kasan_save_stack+0x2a/0x50
-  kasan_set_track+0x29/0x40
-  kasan_save_free_info+0x2f/0x50
-  __kasan_slab_free+0x12e/0x1c0
-  __kmem_cache_free+0x1b9/0x380
-  kfree+0x7a/0x120
-  j1939_sk_setsockopt+0x3b2/0x450 [can_j1939]
-  __sys_setsockopt+0x15c/0x2f0
-  __x64_sys_setsockopt+0x6b/0x80
-  do_syscall_64+0x60/0x90
-  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Fixes: 9d71dd0c70099 ("can: add support of SAE J1939 protocol")
-Reported-by: Sili Luo <rootlab@huawei.com>
-Suggested-by: Sili Luo <rootlab@huawei.com>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Fixes: 1b05ece0c931 ("crypto: ccp - During shutdown, check SEV data pointer before using")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/all/20231020133814.383996-1-o.rempel@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
+Acked-by: John Allen <john.allen@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/j1939-priv.h |    1 +
- net/can/j1939/socket.c     |   22 ++++++++++++++++++----
- 2 files changed, 19 insertions(+), 4 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/net/can/j1939/j1939-priv.h
-+++ b/net/can/j1939/j1939-priv.h
-@@ -301,6 +301,7 @@ struct j1939_sock {
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -515,10 +515,16 @@ EXPORT_SYMBOL_GPL(sev_platform_init);
  
- 	int ifindex;
- 	struct j1939_addr addr;
-+	spinlock_t filters_lock;
- 	struct j1939_filter *filters;
- 	int nfilters;
- 	pgn_t pgn_rx_filter;
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -262,12 +262,17 @@ static bool j1939_sk_match_dst(struct j1
- static bool j1939_sk_match_filter(struct j1939_sock *jsk,
- 				  const struct j1939_sk_buff_cb *skcb)
+ static int __sev_platform_shutdown_locked(int *error)
  {
--	const struct j1939_filter *f = jsk->filters;
--	int nfilter = jsk->nfilters;
-+	const struct j1939_filter *f;
-+	int nfilter;
+-	struct sev_device *sev = psp_master->sev_data;
++	struct psp_device *psp = psp_master;
++	struct sev_device *sev;
+ 	int ret;
+ 
+-	if (!sev || sev->state == SEV_STATE_UNINIT)
++	if (!psp || !psp->sev_data)
++		return 0;
 +
-+	spin_lock_bh(&jsk->filters_lock);
++	sev = psp->sev_data;
 +
-+	f = jsk->filters;
-+	nfilter = jsk->nfilters;
- 
- 	if (!nfilter)
- 		/* receive all when no filters are assigned */
--		return true;
-+		goto filter_match_found;
- 
- 	for (; nfilter; ++f, --nfilter) {
- 		if ((skcb->addr.pgn & f->pgn_mask) != f->pgn)
-@@ -276,9 +281,15 @@ static bool j1939_sk_match_filter(struct
- 			continue;
- 		if ((skcb->addr.src_name & f->name_mask) != f->name)
- 			continue;
--		return true;
-+		goto filter_match_found;
- 	}
-+
-+	spin_unlock_bh(&jsk->filters_lock);
- 	return false;
-+
-+filter_match_found:
-+	spin_unlock_bh(&jsk->filters_lock);
-+	return true;
- }
- 
- static bool j1939_sk_recv_match_one(struct j1939_sock *jsk,
-@@ -401,6 +412,7 @@ static int j1939_sk_init(struct sock *sk
- 	atomic_set(&jsk->skb_pending, 0);
- 	spin_lock_init(&jsk->sk_session_queue_lock);
- 	INIT_LIST_HEAD(&jsk->sk_session_queue);
-+	spin_lock_init(&jsk->filters_lock);
- 
- 	/* j1939_sk_sock_destruct() depends on SOCK_RCU_FREE flag */
- 	sock_set_flag(sk, SOCK_RCU_FREE);
-@@ -703,9 +715,11 @@ static int j1939_sk_setsockopt(struct so
- 		}
- 
- 		lock_sock(&jsk->sk);
-+		spin_lock_bh(&jsk->filters_lock);
- 		ofilters = jsk->filters;
- 		jsk->filters = filters;
- 		jsk->nfilters = count;
-+		spin_unlock_bh(&jsk->filters_lock);
- 		release_sock(&jsk->sk);
- 		kfree(ofilters);
++	if (sev->state == SEV_STATE_UNINIT)
  		return 0;
+ 
+ 	ret = __sev_do_cmd_locked(SEV_CMD_SHUTDOWN, NULL, error);
 
 
