@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F090614A4E6;
-	Tue, 20 Feb 2024 21:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E821E14A4E6;
+	Tue, 20 Feb 2024 21:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464554; cv=none; b=A3oifos/HMrgTdtqeB6EHJ8obWtzfrwtFknkz+e0E2fwKfj2X4LkdA8rugabkLKZINi9oxVuhzSCE+QTbt4tLbQ/d0tQcSRlqWX4ECUNmdGQU1hmArKlOeZn1oITBv/onRdVksgWnXDxy21c2z1oAUIUE85r4lY9UCnCm3vjO98=
+	t=1708464557; cv=none; b=RVVuH6j8g5nQOWmhASsk2Qjp4iKzqPVTsgFE0E4V1ASHtuYmz9WHH8ikzVGXzHLXPz7L9CCA8yXNZs3S76Z0XlEkF+N5lKF1kLqdlVuSiVoXNjwoCy/bqJPsryMNeN6XieA0Be1Y4tJhHLkaUE6Y+D6yVFFSqKwD627f1RQPluM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464554; c=relaxed/simple;
-	bh=HZ3X7Qel492Q9R/R7BDASir41sgLe0tM2/FukQuR1Q0=;
+	s=arc-20240116; t=1708464557; c=relaxed/simple;
+	bh=vu8faUZrrO7/twjm5JXPOXZAKiPC7FhaKTyEGIDhaeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rI0L7islW/+Cn3bMA2kUM9r/zasWb6PFgZHOVNDDw0CHQpY8Om4KDPokrNp0UAwlEFJCTfMuLpfrvJqPdhqRa9FSb6UG2S1ZSCdA/Ns9BLmqVKB3ZMLqlHU4ilcT/s9clBxfMOso59Nx/SBcFGsatfcBurM19g4SnPyXL0RJWhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLjOyLy3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCGkU2biz9iNto5Sn4+kCgrS2nTUUqmpRqqYuFGvv8y4BTS6caDlG4xuCzlZTCx9jXm1gaNKYpztTwS9h4To/PakUkU0iTX4U8HV1Oi7U+PiuwgMGN1x14+LjXFnf5/QdlpSQ8bol6cY1ZJnuj7vJIEnAhBIcN5pX/4qxulF/Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGAAIo74; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLjOyLy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CA8C433F1;
-	Tue, 20 Feb 2024 21:29:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGAAIo74"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D09C433C7;
+	Tue, 20 Feb 2024 21:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464553;
-	bh=HZ3X7Qel492Q9R/R7BDASir41sgLe0tM2/FukQuR1Q0=;
+	s=korg; t=1708464556;
+	bh=vu8faUZrrO7/twjm5JXPOXZAKiPC7FhaKTyEGIDhaeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLjOyLy35AqjlTqnDo5wnvecnsfADYGQgsTQuAMriPacKMbUEdhFeT7mok85xo7g/
-	 TmGcLEkpO7QVi3/YcmqIE1DLMD0YaZ9CyvJR78awohl/9iVVLZbRXjjWW5Qz8Smlsq
-	 Wm0KKkJeM2E3G7L0y6EOKxfA40/wvBWIrucAR9TU=
+	b=TGAAIo74Pd8Gl92Qq0lWfb9UDqzYeldcZXvCKXxiaBidy5Pw/O9VdLuzgc7VCIk+1
+	 MHDrj/fmlzO+4WB0Xyl7KWRN8HLSA6cM5HTgakrYPyf6X8fAvXmZNCEqrM6hP2ap1G
+	 EOScpCxY34Evea0phYdDy6IqulDad3ONFWoJiO5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiri Pirko <jiri@nvidia.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 030/309] dpll: fix possible deadlock during netlink dump operation
-Date: Tue, 20 Feb 2024 21:53:09 +0100
-Message-ID: <20240220205634.129360261@linuxfoundation.org>
+Subject: [PATCH 6.7 031/309] net/mlx5: DPLL, Fix possible use after free after delayed work timer triggers
+Date: Tue, 20 Feb 2024 21:53:10 +0100
+Message-ID: <20240220205634.158343021@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -54,215 +54,165 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 53c0441dd2c44ee93fddb5473885fd41e4bc2361 ]
+[ Upstream commit aa1eec2f546f2afa8c98ec41e5d8ee488165d685 ]
 
-Recently, I've been hitting following deadlock warning during dpll pin
-dump:
+I managed to hit following use after free warning recently:
 
-[52804.637962] ======================================================
-[52804.638536] WARNING: possible circular locking dependency detected
-[52804.639111] 6.8.0-rc2jiri+ #1 Not tainted
-[52804.639529] ------------------------------------------------------
-[52804.640104] python3/2984 is trying to acquire lock:
-[52804.640581] ffff88810e642678 (nlk_cb_mutex-GENERIC){+.+.}-{3:3}, at: netlink_dump+0xb3/0x780
-[52804.641417]
-               but task is already holding lock:
-[52804.642010] ffffffff83bde4c8 (dpll_lock){+.+.}-{3:3}, at: dpll_lock_dumpit+0x13/0x20
-[52804.642747]
-               which lock already depends on the new lock.
+[ 2169.711665] ==================================================================
+[ 2169.714009] BUG: KASAN: slab-use-after-free in __run_timers.part.0+0x179/0x4c0
+[ 2169.716293] Write of size 8 at addr ffff88812b326a70 by task swapper/4/0
 
-[52804.643551]
-               the existing dependency chain (in reverse order) is:
-[52804.644259]
-               -> #1 (dpll_lock){+.+.}-{3:3}:
-[52804.644836]        lock_acquire+0x174/0x3e0
-[52804.645271]        __mutex_lock+0x119/0x1150
-[52804.645723]        dpll_lock_dumpit+0x13/0x20
-[52804.646169]        genl_start+0x266/0x320
-[52804.646578]        __netlink_dump_start+0x321/0x450
-[52804.647056]        genl_family_rcv_msg_dumpit+0x155/0x1e0
-[52804.647575]        genl_rcv_msg+0x1ed/0x3b0
-[52804.648001]        netlink_rcv_skb+0xdc/0x210
-[52804.648440]        genl_rcv+0x24/0x40
-[52804.648831]        netlink_unicast+0x2f1/0x490
-[52804.649290]        netlink_sendmsg+0x36d/0x660
-[52804.649742]        __sock_sendmsg+0x73/0xc0
-[52804.650165]        __sys_sendto+0x184/0x210
-[52804.650597]        __x64_sys_sendto+0x72/0x80
-[52804.651045]        do_syscall_64+0x6f/0x140
-[52804.651474]        entry_SYSCALL_64_after_hwframe+0x46/0x4e
-[52804.652001]
-               -> #0 (nlk_cb_mutex-GENERIC){+.+.}-{3:3}:
-[52804.652650]        check_prev_add+0x1ae/0x1280
-[52804.653107]        __lock_acquire+0x1ed3/0x29a0
-[52804.653559]        lock_acquire+0x174/0x3e0
-[52804.653984]        __mutex_lock+0x119/0x1150
-[52804.654423]        netlink_dump+0xb3/0x780
-[52804.654845]        __netlink_dump_start+0x389/0x450
-[52804.655321]        genl_family_rcv_msg_dumpit+0x155/0x1e0
-[52804.655842]        genl_rcv_msg+0x1ed/0x3b0
-[52804.656272]        netlink_rcv_skb+0xdc/0x210
-[52804.656721]        genl_rcv+0x24/0x40
-[52804.657119]        netlink_unicast+0x2f1/0x490
-[52804.657570]        netlink_sendmsg+0x36d/0x660
-[52804.658022]        __sock_sendmsg+0x73/0xc0
-[52804.658450]        __sys_sendto+0x184/0x210
-[52804.658877]        __x64_sys_sendto+0x72/0x80
-[52804.659322]        do_syscall_64+0x6f/0x140
-[52804.659752]        entry_SYSCALL_64_after_hwframe+0x46/0x4e
-[52804.660281]
-               other info that might help us debug this:
+[ 2169.719022] CPU: 4 PID: 0 Comm: swapper/4 Not tainted 6.8.0-rc2jiri+ #2
+[ 2169.720974] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+[ 2169.722457] Call Trace:
+[ 2169.722756]  <IRQ>
+[ 2169.723024]  dump_stack_lvl+0x58/0xb0
+[ 2169.723417]  print_report+0xc5/0x630
+[ 2169.723807]  ? __virt_addr_valid+0x126/0x2b0
+[ 2169.724268]  kasan_report+0xbe/0xf0
+[ 2169.724667]  ? __run_timers.part.0+0x179/0x4c0
+[ 2169.725116]  ? __run_timers.part.0+0x179/0x4c0
+[ 2169.725570]  __run_timers.part.0+0x179/0x4c0
+[ 2169.726003]  ? call_timer_fn+0x320/0x320
+[ 2169.726404]  ? lock_downgrade+0x3a0/0x3a0
+[ 2169.726820]  ? kvm_clock_get_cycles+0x14/0x20
+[ 2169.727257]  ? ktime_get+0x92/0x150
+[ 2169.727630]  ? lapic_next_deadline+0x35/0x60
+[ 2169.728069]  run_timer_softirq+0x40/0x80
+[ 2169.728475]  __do_softirq+0x1a1/0x509
+[ 2169.728866]  irq_exit_rcu+0x95/0xc0
+[ 2169.729241]  sysvec_apic_timer_interrupt+0x6b/0x80
+[ 2169.729718]  </IRQ>
+[ 2169.729993]  <TASK>
+[ 2169.730259]  asm_sysvec_apic_timer_interrupt+0x16/0x20
+[ 2169.730755] RIP: 0010:default_idle+0x13/0x20
+[ 2169.731190] Code: c0 08 00 00 00 4d 29 c8 4c 01 c7 4c 29 c2 e9 72 ff ff ff cc cc cc cc 8b 05 9a 7f 1f 02 85 c0 7e 07 0f 00 2d cf 69 43 00 fb f4 <fa> c3 66 66 2e 0f 1f 84 00 00 00 00 00 65 48 8b 04 25 c0 93 04 00
+[ 2169.732759] RSP: 0018:ffff888100dbfe10 EFLAGS: 00000242
+[ 2169.733264] RAX: 0000000000000001 RBX: ffff888100d9c200 RCX: ffffffff8241bd62
+[ 2169.733925] RDX: ffffed109a848b15 RSI: 0000000000000004 RDI: ffffffff8127ac55
+[ 2169.734566] RBP: 0000000000000004 R08: 0000000000000000 R09: ffffed109a848b14
+[ 2169.735200] R10: ffff8884d42458a3 R11: 000000000000ba7e R12: ffffffff83d7d3a0
+[ 2169.735835] R13: 1ffff110201b7fc6 R14: 0000000000000000 R15: ffff888100d9c200
+[ 2169.736478]  ? ct_kernel_exit.constprop.0+0xa2/0xc0
+[ 2169.736954]  ? do_idle+0x285/0x290
+[ 2169.737323]  default_idle_call+0x63/0x90
+[ 2169.737730]  do_idle+0x285/0x290
+[ 2169.738089]  ? arch_cpu_idle_exit+0x30/0x30
+[ 2169.738511]  ? mark_held_locks+0x1a/0x80
+[ 2169.738917]  ? lockdep_hardirqs_on_prepare+0x12e/0x200
+[ 2169.739417]  cpu_startup_entry+0x30/0x40
+[ 2169.739825]  start_secondary+0x19a/0x1c0
+[ 2169.740229]  ? set_cpu_sibling_map+0xbd0/0xbd0
+[ 2169.740673]  secondary_startup_64_no_verify+0x15d/0x16b
+[ 2169.741179]  </TASK>
 
-[52804.661077]  Possible unsafe locking scenario:
+[ 2169.741686] Allocated by task 1098:
+[ 2169.742058]  kasan_save_stack+0x1c/0x40
+[ 2169.742456]  kasan_save_track+0x10/0x30
+[ 2169.742852]  __kasan_kmalloc+0x83/0x90
+[ 2169.743246]  mlx5_dpll_probe+0xf5/0x3c0 [mlx5_dpll]
+[ 2169.743730]  auxiliary_bus_probe+0x62/0xb0
+[ 2169.744148]  really_probe+0x127/0x590
+[ 2169.744534]  __driver_probe_device+0xd2/0x200
+[ 2169.744973]  device_driver_attach+0x6b/0xf0
+[ 2169.745402]  bind_store+0x90/0xe0
+[ 2169.745761]  kernfs_fop_write_iter+0x1df/0x2a0
+[ 2169.746210]  vfs_write+0x41f/0x790
+[ 2169.746579]  ksys_write+0xc7/0x160
+[ 2169.746947]  do_syscall_64+0x6f/0x140
+[ 2169.747333]  entry_SYSCALL_64_after_hwframe+0x46/0x4e
 
-[52804.661671]        CPU0                    CPU1
-[52804.662129]        ----                    ----
-[52804.662577]   lock(dpll_lock);
-[52804.662924]                                lock(nlk_cb_mutex-GENERIC);
-[52804.663538]                                lock(dpll_lock);
-[52804.664073]   lock(nlk_cb_mutex-GENERIC);
-[52804.664490]
+[ 2169.748049] Freed by task 1220:
+[ 2169.748393]  kasan_save_stack+0x1c/0x40
+[ 2169.748789]  kasan_save_track+0x10/0x30
+[ 2169.749188]  kasan_save_free_info+0x3b/0x50
+[ 2169.749621]  poison_slab_object+0x106/0x180
+[ 2169.750044]  __kasan_slab_free+0x14/0x50
+[ 2169.750451]  kfree+0x118/0x330
+[ 2169.750792]  mlx5_dpll_remove+0xf5/0x110 [mlx5_dpll]
+[ 2169.751271]  auxiliary_bus_remove+0x2e/0x40
+[ 2169.751694]  device_release_driver_internal+0x24b/0x2e0
+[ 2169.752191]  unbind_store+0xa6/0xb0
+[ 2169.752563]  kernfs_fop_write_iter+0x1df/0x2a0
+[ 2169.753004]  vfs_write+0x41f/0x790
+[ 2169.753381]  ksys_write+0xc7/0x160
+[ 2169.753750]  do_syscall_64+0x6f/0x140
+[ 2169.754132]  entry_SYSCALL_64_after_hwframe+0x46/0x4e
 
-The issue as follows: __netlink_dump_start() calls control->start(cb)
-with nlk->cb_mutex held. In control->start(cb) the dpll_lock is taken.
-Then nlk->cb_mutex is released and taken again in netlink_dump(), while
-dpll_lock still being held. That leads to ABBA deadlock when another
-CPU races with the same operation.
+[ 2169.754847] Last potentially related work creation:
+[ 2169.755315]  kasan_save_stack+0x1c/0x40
+[ 2169.755709]  __kasan_record_aux_stack+0x9b/0xf0
+[ 2169.756165]  __queue_work+0x382/0x8f0
+[ 2169.756552]  call_timer_fn+0x126/0x320
+[ 2169.756941]  __run_timers.part.0+0x2ea/0x4c0
+[ 2169.757376]  run_timer_softirq+0x40/0x80
+[ 2169.757782]  __do_softirq+0x1a1/0x509
 
-Fix this by moving dpll_lock taking into dumpit() callback which ensures
-correct lock taking order.
+[ 2169.758387] Second to last potentially related work creation:
+[ 2169.758924]  kasan_save_stack+0x1c/0x40
+[ 2169.759322]  __kasan_record_aux_stack+0x9b/0xf0
+[ 2169.759773]  __queue_work+0x382/0x8f0
+[ 2169.760156]  call_timer_fn+0x126/0x320
+[ 2169.760550]  __run_timers.part.0+0x2ea/0x4c0
+[ 2169.760978]  run_timer_softirq+0x40/0x80
+[ 2169.761381]  __do_softirq+0x1a1/0x509
 
-Fixes: 9d71b54b65b1 ("dpll: netlink: Add DPLL framework base functions")
+[ 2169.761998] The buggy address belongs to the object at ffff88812b326a00
+                which belongs to the cache kmalloc-256 of size 256
+[ 2169.763061] The buggy address is located 112 bytes inside of
+                freed 256-byte region [ffff88812b326a00, ffff88812b326b00)
+
+[ 2169.764346] The buggy address belongs to the physical page:
+[ 2169.764866] page:000000000f2b1e89 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x12b324
+[ 2169.765731] head:000000000f2b1e89 order:2 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+[ 2169.766484] anon flags: 0x200000000000840(slab|head|node=0|zone=2)
+[ 2169.767048] page_type: 0xffffffff()
+[ 2169.767422] raw: 0200000000000840 ffff888100042b40 0000000000000000 dead000000000001
+[ 2169.768183] raw: 0000000000000000 0000000000200020 00000001ffffffff 0000000000000000
+[ 2169.768899] page dumped because: kasan: bad access detected
+
+[ 2169.769649] Memory state around the buggy address:
+[ 2169.770116]  ffff88812b326900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 2169.770805]  ffff88812b326980: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 2169.771485] >ffff88812b326a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[ 2169.772173]                                                              ^
+[ 2169.772787]  ffff88812b326a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[ 2169.773477]  ffff88812b326b00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[ 2169.774160] ==================================================================
+[ 2169.774845] ==================================================================
+
+I didn't manage to reproduce it. Though the issue seems to be obvious.
+There is a chance that the mlx5_dpll_remove() calls
+cancel_delayed_work() when the work runs and manages to re-arm itself.
+In that case, after delay timer triggers next attempt to queue it,
+it works with freed memory.
+
+Fix this by using cancel_delayed_work_sync() instead which makes sure
+that work is done when it returns.
+
+Fixes: 496fd0a26bbf ("mlx5: Implement SyncE support using DPLL infrastructure")
 Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Link: https://lore.kernel.org/r/20240207115902.371649-1-jiri@resnulli.us
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240206164328.360313-1-jiri@resnulli.us
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/dpll.yaml |  4 ----
- drivers/dpll/dpll_netlink.c           | 20 ++++++--------------
- drivers/dpll/dpll_nl.c                |  4 ----
- drivers/dpll/dpll_nl.h                |  2 --
- 4 files changed, 6 insertions(+), 24 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/dpll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/dpll.yaml b/Documentation/netlink/specs/dpll.yaml
-index cf8abe1c0550..2b4c4bcd8361 100644
---- a/Documentation/netlink/specs/dpll.yaml
-+++ b/Documentation/netlink/specs/dpll.yaml
-@@ -374,8 +374,6 @@ operations:
-             - type
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
+index 2cd81bb32c66..8ce5c8bcda1c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
+@@ -374,7 +374,7 @@ static void mlx5_dpll_remove(struct auxiliary_device *adev)
+ 	struct mlx5_dpll *mdpll = auxiliary_get_drvdata(adev);
+ 	struct mlx5_core_dev *mdev = mdpll->mdev;
  
-       dump:
--        pre: dpll-lock-dumpit
--        post: dpll-unlock-dumpit
-         reply: *dev-attrs
- 
-     -
-@@ -462,8 +460,6 @@ operations:
-             - phase-adjust
- 
-       dump:
--        pre: dpll-lock-dumpit
--        post: dpll-unlock-dumpit
-         request:
-           attributes:
-             - id
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index 7cc99d627942..c8c2e836193a 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -1171,6 +1171,7 @@ int dpll_nl_pin_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 	unsigned long i;
- 	int ret = 0;
- 
-+	mutex_lock(&dpll_lock);
- 	xa_for_each_marked_start(&dpll_pin_xa, i, pin, DPLL_REGISTERED,
- 				 ctx->idx) {
- 		if (!dpll_pin_available(pin))
-@@ -1190,6 +1191,8 @@ int dpll_nl_pin_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 		}
- 		genlmsg_end(skb, hdr);
- 	}
-+	mutex_unlock(&dpll_lock);
-+
- 	if (ret == -EMSGSIZE) {
- 		ctx->idx = i;
- 		return skb->len;
-@@ -1345,6 +1348,7 @@ int dpll_nl_device_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 	unsigned long i;
- 	int ret = 0;
- 
-+	mutex_lock(&dpll_lock);
- 	xa_for_each_marked_start(&dpll_device_xa, i, dpll, DPLL_REGISTERED,
- 				 ctx->idx) {
- 		hdr = genlmsg_put(skb, NETLINK_CB(cb->skb).portid,
-@@ -1361,6 +1365,8 @@ int dpll_nl_device_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
- 		}
- 		genlmsg_end(skb, hdr);
- 	}
-+	mutex_unlock(&dpll_lock);
-+
- 	if (ret == -EMSGSIZE) {
- 		ctx->idx = i;
- 		return skb->len;
-@@ -1411,20 +1417,6 @@ dpll_unlock_doit(const struct genl_split_ops *ops, struct sk_buff *skb,
- 	mutex_unlock(&dpll_lock);
- }
- 
--int dpll_lock_dumpit(struct netlink_callback *cb)
--{
--	mutex_lock(&dpll_lock);
--
--	return 0;
--}
--
--int dpll_unlock_dumpit(struct netlink_callback *cb)
--{
--	mutex_unlock(&dpll_lock);
--
--	return 0;
--}
--
- int dpll_pin_pre_doit(const struct genl_split_ops *ops, struct sk_buff *skb,
- 		      struct genl_info *info)
- {
-diff --git a/drivers/dpll/dpll_nl.c b/drivers/dpll/dpll_nl.c
-index eaee5be7aa64..1e95f5397cfc 100644
---- a/drivers/dpll/dpll_nl.c
-+++ b/drivers/dpll/dpll_nl.c
-@@ -95,9 +95,7 @@ static const struct genl_split_ops dpll_nl_ops[] = {
- 	},
- 	{
- 		.cmd	= DPLL_CMD_DEVICE_GET,
--		.start	= dpll_lock_dumpit,
- 		.dumpit	= dpll_nl_device_get_dumpit,
--		.done	= dpll_unlock_dumpit,
- 		.flags	= GENL_ADMIN_PERM | GENL_CMD_CAP_DUMP,
- 	},
- 	{
-@@ -129,9 +127,7 @@ static const struct genl_split_ops dpll_nl_ops[] = {
- 	},
- 	{
- 		.cmd		= DPLL_CMD_PIN_GET,
--		.start		= dpll_lock_dumpit,
- 		.dumpit		= dpll_nl_pin_get_dumpit,
--		.done		= dpll_unlock_dumpit,
- 		.policy		= dpll_pin_get_dump_nl_policy,
- 		.maxattr	= DPLL_A_PIN_ID,
- 		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DUMP,
-diff --git a/drivers/dpll/dpll_nl.h b/drivers/dpll/dpll_nl.h
-index 92d4c9c4f788..f491262bee4f 100644
---- a/drivers/dpll/dpll_nl.h
-+++ b/drivers/dpll/dpll_nl.h
-@@ -30,8 +30,6 @@ dpll_post_doit(const struct genl_split_ops *ops, struct sk_buff *skb,
- void
- dpll_pin_post_doit(const struct genl_split_ops *ops, struct sk_buff *skb,
- 		   struct genl_info *info);
--int dpll_lock_dumpit(struct netlink_callback *cb);
--int dpll_unlock_dumpit(struct netlink_callback *cb);
- 
- int dpll_nl_device_id_get_doit(struct sk_buff *skb, struct genl_info *info);
- int dpll_nl_device_get_doit(struct sk_buff *skb, struct genl_info *info);
+-	cancel_delayed_work(&mdpll->work);
++	cancel_delayed_work_sync(&mdpll->work);
+ 	mlx5_dpll_mdev_netdev_untrack(mdpll, mdev);
+ 	destroy_workqueue(mdpll->wq);
+ 	dpll_pin_unregister(mdpll->dpll, mdpll->dpll_pin,
 -- 
 2.43.0
 
