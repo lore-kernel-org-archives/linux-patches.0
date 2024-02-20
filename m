@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E871509BF;
-	Tue, 20 Feb 2024 21:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F6E1509AC;
+	Tue, 20 Feb 2024 21:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463793; cv=none; b=WlFWwtraAEEPEPLBV5UjH6JueZFjPwo4RP6gbJwnvU5Iwm0Ubw60+7WuqW/F+TRxRLf+itvsyOOPu2YbRUyA1kHXSKLJFYS9vsytZ+BzUa8HNB4GREPE5U7rkp2IRs14RwQ1JKDxuLDUNS9X6gEUaty3dVe5GQNNC+Cb0UTbH5c=
+	t=1708463796; cv=none; b=ixa4dWO5RTTimyzqVFaSf3tztMfg95i1W1rfigMvmD8IX9Znp/btCJNEHxx0aq6p+RBEEgJwxIMp3cjRR7HdIPqqHC4IG9Le4OrrFt7EMgrV1tHTRC9hlaCvUV6tF3vikdu6jeie9G3X7tKMJ0PXaulDL9ow5oapA5f1GxFuyGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463793; c=relaxed/simple;
-	bh=Oe7oGxwZB/1+FctoX/LQWwHbugaqvF7CmiOrRhWK+yA=;
+	s=arc-20240116; t=1708463796; c=relaxed/simple;
+	bh=D8CPT5vbhPdLTnb5fxSTkUdIAjVAhWKY3VlVvsr63MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPVcxLRCsc09mhFPMofnlKUOPFUnNmB8/klYXDopC2OQe9VyEeFSLoe11fp/m73Vu0qM4XhHGdNwk+lf9JCRVNxvTLXFmVxYczOn3Smnvbz9z4FqgcYLqrYlCQU87lRnlsTTLV5EJ+Q7UazMkGeRqZgCpiMv1wTjp7WxzQSQFrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tt3LRed6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDDNnrgR0JkzmgB/3B1CS8aCjU0mpzo6SEWbDKUv6P+s7GoQiAcDyEpD1dRVAHeCJHebKubusRnZKipOCITGBBywBn80C00W5aNTSGq8for3KszIP6oNjK+swjYku/lk2mP0LN7RlBJaLb8pwOEbYBMwkOavIjJJqqq0t+XGs1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2AYHXzW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tt3LRed6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2729EC433C7;
-	Tue, 20 Feb 2024 21:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2AYHXzW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C26C433F1;
+	Tue, 20 Feb 2024 21:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463793;
-	bh=Oe7oGxwZB/1+FctoX/LQWwHbugaqvF7CmiOrRhWK+yA=;
+	s=korg; t=1708463796;
+	bh=D8CPT5vbhPdLTnb5fxSTkUdIAjVAhWKY3VlVvsr63MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tt3LRed6bxOyW9Jss8qc1nCWTN6IEZ9Gr+D9M0kcAs45rMzISEy3sEtwljxWXH4Ei
-	 XWFwDHvnUpftusF8xi9no2c0+5j6PdUha+JsHkwX7fPUGQOpsAFMox9tIeJPWi8S0d
-	 r/KCJZhPISq4qPx7PLak7m68/oCAqlsdhGMA5WSw=
+	b=h2AYHXzWc41s1cU2ombZDDrwsy7eiJwKAKqVJ8mmidBQYW4RvqPSiX9hJI0QvgJ/Y
+	 nf2RD1AmW+daVdB42DEGNRm9K5n5VuioUlj0Fz6ASj9Kz2pvuiHgVf74ztNDUqxI40
+	 YlWwdfMKraBN2ZZmqfAS44+k+m0VtRDgehf52lOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.6 147/331] ext4: avoid bb_free and bb_fragments inconsistency in mb_free_blocks()
-Date: Tue, 20 Feb 2024 21:54:23 +0100
-Message-ID: <20240220205642.165285982@linuxfoundation.org>
+	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	"zhili.liu" <zhili.liu@ucas.com.cn>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 156/331] iio: magnetometer: rm3100: add boundary check for the value read from RM3100_REG_TMRC
+Date: Tue, 20 Feb 2024 21:54:32 +0100
+Message-ID: <20240220205642.429517600@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -51,101 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: zhili.liu <zhili.liu@ucas.com.cn>
 
-commit 2331fd4a49864e1571b4f50aa3aa1536ed6220d0 upstream.
+commit 792595bab4925aa06532a14dd256db523eb4fa5e upstream.
 
-After updating bb_free in mb_free_blocks, it is possible to return without
-updating bb_fragments because the block being freed is found to have
-already been freed, which leads to inconsistency between bb_free and
-bb_fragments.
+Recently, we encounter kernel crash in function rm3100_common_probe
+caused by out of bound access of array rm3100_samp_rates (because of
+underlying hardware failures). Add boundary check to prevent out of
+bound access.
 
-Since the group may be unlocked in ext4_grp_locked_error(), this can lead
-to problems such as dividing by zero when calculating the average fragment
-length. Hence move the update of bb_free to after the block double-free
-check guarantees that the corresponding statistics are updated only after
-the core block bitmap is modified.
-
-Fixes: eabe0444df90 ("ext4: speed-up releasing blocks on commit")
-CC:  <stable@vger.kernel.org> # 3.10
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-5-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 121354b2eceb ("iio: magnetometer: Add driver support for PNI RM3100")
+Suggested-by: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Signed-off-by: zhili.liu <zhili.liu@ucas.com.cn>
+Link: https://lore.kernel.org/r/1704157631-3814-1-git-send-email-zhouzhouyi@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ drivers/iio/magnetometer/rm3100-core.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -1909,11 +1909,6 @@ static void mb_free_blocks(struct inode
- 	mb_check_buddy(e4b);
- 	mb_free_blocks_double(inode, e4b, first, count);
+--- a/drivers/iio/magnetometer/rm3100-core.c
++++ b/drivers/iio/magnetometer/rm3100-core.c
+@@ -530,6 +530,7 @@ int rm3100_common_probe(struct device *d
+ 	struct rm3100_data *data;
+ 	unsigned int tmp;
+ 	int ret;
++	int samp_rate_index;
  
--	this_cpu_inc(discard_pa_seq);
--	e4b->bd_info->bb_free += count;
--	if (first < e4b->bd_info->bb_first_free)
--		e4b->bd_info->bb_first_free = first;
--
- 	/* access memory sequentially: check left neighbour,
- 	 * clear range and then check right neighbour
- 	 */
-@@ -1927,23 +1922,31 @@ static void mb_free_blocks(struct inode
- 		struct ext4_sb_info *sbi = EXT4_SB(sb);
- 		ext4_fsblk_t blocknr;
- 
-+		/*
-+		 * Fastcommit replay can free already freed blocks which
-+		 * corrupts allocation info. Regenerate it.
-+		 */
-+		if (sbi->s_mount_state & EXT4_FC_REPLAY) {
-+			mb_regenerate_buddy(e4b);
-+			goto check;
-+		}
+ 	indio_dev = devm_iio_device_alloc(dev, sizeof(*data));
+ 	if (!indio_dev)
+@@ -586,9 +587,14 @@ int rm3100_common_probe(struct device *d
+ 	ret = regmap_read(regmap, RM3100_REG_TMRC, &tmp);
+ 	if (ret < 0)
+ 		return ret;
 +
- 		blocknr = ext4_group_first_block_no(sb, e4b->bd_group);
- 		blocknr += EXT4_C2B(sbi, block);
--		if (!(sbi->s_mount_state & EXT4_FC_REPLAY)) {
--			ext4_grp_locked_error(sb, e4b->bd_group,
--					      inode ? inode->i_ino : 0,
--					      blocknr,
--					      "freeing already freed block (bit %u); block bitmap corrupt.",
--					      block);
--			ext4_mark_group_bitmap_corrupted(
--				sb, e4b->bd_group,
-+		ext4_grp_locked_error(sb, e4b->bd_group,
-+				      inode ? inode->i_ino : 0, blocknr,
-+				      "freeing already freed block (bit %u); block bitmap corrupt.",
-+				      block);
-+		ext4_mark_group_bitmap_corrupted(sb, e4b->bd_group,
- 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
--		} else {
--			mb_regenerate_buddy(e4b);
--		}
--		goto done;
-+		return;
- 	}
++	samp_rate_index = tmp - RM3100_TMRC_OFFSET;
++	if (samp_rate_index < 0 || samp_rate_index >=  RM3100_SAMP_NUM) {
++		dev_err(dev, "The value read from RM3100_REG_TMRC is invalid!\n");
++		return -EINVAL;
++	}
+ 	/* Initializing max wait time, which is double conversion time. */
+-	data->conversion_time = rm3100_samp_rates[tmp - RM3100_TMRC_OFFSET][2]
+-				* 2;
++	data->conversion_time = rm3100_samp_rates[samp_rate_index][2] * 2;
  
-+	this_cpu_inc(discard_pa_seq);
-+	e4b->bd_info->bb_free += count;
-+	if (first < e4b->bd_info->bb_first_free)
-+		e4b->bd_info->bb_first_free = first;
-+
- 	/* let's maintain fragments counter */
- 	if (left_is_free && right_is_free)
- 		e4b->bd_info->bb_fragments--;
-@@ -1968,9 +1971,9 @@ static void mb_free_blocks(struct inode
- 	if (first <= last)
- 		mb_buddy_mark_free(e4b, first >> 1, last >> 1);
- 
--done:
- 	mb_set_largest_free_order(sb, e4b->bd_info);
- 	mb_update_avg_fragment_size(sb, e4b->bd_info);
-+check:
- 	mb_check_buddy(e4b);
- }
- 
+ 	/* Cycle count values may not be what we want. */
+ 	if ((tmp - RM3100_TMRC_OFFSET) == 0)
 
 
