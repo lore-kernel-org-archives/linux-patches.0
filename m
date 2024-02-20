@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8EE14A4D2;
-	Tue, 20 Feb 2024 21:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8D614A4D2;
+	Tue, 20 Feb 2024 21:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464663; cv=none; b=rk5LsiI1ehLmy8mkI64GCjn1zUxG/eOHX4zjvh6EaznclUL1i9DhrPgNTbsrX7qtVSbML5/v6VDibyeuCjWqxqDrvfbwBpF5eVUds0D+5pFOBCu4ZbMgt1T5wwch27wto04MqihXSO8kt1DG4+uVJpMkmw0ud3ux37hwxN49Ks0=
+	t=1708464666; cv=none; b=H5iHiEzzCOAYkB6djbPHvGK4h44evIgepmJKpFxEj5IJGV9J+ukYS+Y6lUeH3xCgRVtlQHgKDM4U7LH1OhcRpILuZ9ITLyVFK7ocictkDh7hEZugfVFg7e5F7rMNatrEStkLTzabf1ypU1GZLmH6pcxvViBnPP8SvWTl2Eb0XDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464663; c=relaxed/simple;
-	bh=Nq+Uj/U1ljAz3yf4UR6PHEku2LfmD6S1Pxi8tc4ccPc=;
+	s=arc-20240116; t=1708464666; c=relaxed/simple;
+	bh=7lyZoq3SGNBGAfYnKCQcNo7o8bQuFXV04mv5uSTpOeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8HLJrs9LZsh0BJIvS8lu2m8Mw96vzP87y5bwaKwQCKY5oFVh+8lXxkGkdMbDUsrxMz/BsbULWSDSw4ofNL+ZMI8WhqJjGX1vnsFkeOUg8G7fofSlOkJ30l9RCdavXxb3rTsQ/rlq2I0jt92c8lZSn+Tv3j++LrCGhV/O0p3bTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nyh3f4tF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rKbIv/mR4rd2B66Kp9qVULTiQ9aH3tKySqsXTkyaUwivAj3EAckUjM6/w8bK4G5tvq4uYYYC1vA+Umj270gZs5RaflM/QFfWvkvHBv8YYFWMwq9LdYb8LpenrvOr7zK2pamL5drSMQKQB82pMTN9xsQjYeazkA81bGYVeQSN4sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgZ97n4t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nyh3f4tF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9902AC433C7;
-	Tue, 20 Feb 2024 21:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgZ97n4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F86AC433C7;
+	Tue, 20 Feb 2024 21:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464663;
-	bh=Nq+Uj/U1ljAz3yf4UR6PHEku2LfmD6S1Pxi8tc4ccPc=;
+	s=korg; t=1708464666;
+	bh=7lyZoq3SGNBGAfYnKCQcNo7o8bQuFXV04mv5uSTpOeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nyh3f4tF5iK93bCD0Gs3EqGUd268gl71g3vZLaQQNMiquO85oEDJESYrm3+Moo86H
-	 HAEaKQqW0Rj5B/nBeum6ve+k0BzXDm0bnt9PeHQy97zuwwg5UZXcnZcom9uGaV0X+g
-	 J9zL4jlElmC17pa2rQYgCK0FrR1fhKPupKRLBQuo=
+	b=RgZ97n4tl2Bdr1WSfHsgB5Ubq20XhUVGhucJpiF06A8CRQH9wukmeDoJPaKT6A3Yx
+	 vD0nWFt5RUElGlZbkahlD2Y0tMLTuhmE6z4FN4sSMAjMYii9jhJMzJr0v1wy3ba39Z
+	 BJEJ61Q2M28ObMA6dx1f9WSVPT6m3INjTfJobVuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 066/309] scs: add CONFIG_MMU dependency for vfree_atomic()
-Date: Tue, 20 Feb 2024 21:53:45 +0100
-Message-ID: <20240220205635.279208766@linuxfoundation.org>
+	Vincent Donnefort <vdonnefort@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.7 067/309] tracing/trigger: Fix to return error if failed to alloc snapshot
+Date: Tue, 20 Feb 2024 21:53:46 +0100
+Message-ID: <20240220205635.308464683@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,37 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 6f9dc684cae638dda0570154509884ee78d0f75c upstream.
+commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
 
-The shadow call stack implementation fails to build without CONFIG_MMU:
+Fix register_snapshot_trigger() to return error code if it failed to
+allocate a snapshot instead of 0 (success). Unless that, it will register
+snapshot trigger without an error.
 
-  ld.lld: error: undefined symbol: vfree_atomic
-  >>> referenced by scs.c
-  >>>               kernel/scs.o:(scs_free) in archive vmlinux.a
+Link: https://lore.kernel.org/linux-trace-kernel/170622977792.270660.2789298642759362200.stgit@devnote2
 
-Link: https://lkml.kernel.org/r/20240122175204.2371009-1-samuel.holland@sifive.com
-Fixes: a2abe7cbd8fe ("scs: switch to vmapped shadow stacks")
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0bbe7f719985 ("tracing: Fix the race between registering 'snapshot' event trigger and triggering 'snapshot' operation")
+Cc: stable@vger.kernel.org
+Cc: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_events_trigger.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -681,6 +681,7 @@ config SHADOW_CALL_STACK
- 	bool "Shadow Call Stack"
- 	depends on ARCH_SUPPORTS_SHADOW_CALL_STACK
- 	depends on DYNAMIC_FTRACE_WITH_ARGS || DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
-+	depends on MMU
- 	help
- 	  This option enables the compiler's Shadow Call Stack, which
- 	  uses a shadow stack to protect function return addresses from
+--- a/kernel/trace/trace_events_trigger.c
++++ b/kernel/trace/trace_events_trigger.c
+@@ -1470,8 +1470,10 @@ register_snapshot_trigger(char *glob,
+ 			  struct event_trigger_data *data,
+ 			  struct trace_event_file *file)
+ {
+-	if (tracing_alloc_snapshot_instance(file->tr) != 0)
+-		return 0;
++	int ret = tracing_alloc_snapshot_instance(file->tr);
++
++	if (ret < 0)
++		return ret;
+ 
+ 	return register_trigger(glob, data, file);
+ }
 
 
