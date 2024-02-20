@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5DA133987;
-	Tue, 20 Feb 2024 21:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D14014AD12;
+	Tue, 20 Feb 2024 21:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463174; cv=none; b=jLL0ibYAaL5L563ujaf6SheKFJpOL/T/9EUUoQc8wOK4L178tzdANjU3AvaOs2hpOwlLJdtNAhSAxm4fkt15YzdXmQX/VcSOHpxmlm5yCHPyhIGM2ZT9xJgdQas4TZyxoU61njdqHWPPYEYyfeMl9WiBu8XumEuyB40h4bhUDpA=
+	t=1708463177; cv=none; b=hSADDnrg5pqoGxJwK+lOAcsh1Sd0bRDY8Y3WIXkgHNlP0vC/ho4g6qHWWuFwf2q64Euhmt+hABkStl30Di6DfTg1OfwPzqFSQ0+4Lj/cQQ8ITCqQbNi5S1Yn0b+d+df/GZke962b+E8uk4LyNMmzZNUtYk3RtkcYjtEnhNRwqy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463174; c=relaxed/simple;
-	bh=uT+JMGFLdXbfVnwGsBv+eL8W9HAsw/BxWMoTvGMUbJ4=;
+	s=arc-20240116; t=1708463177; c=relaxed/simple;
+	bh=JIJAE9Dit1jn3iqcZmDfPnUuY9JVF5diqKsNnr/Msj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZiXL3mTPXiE3yb8CJRbFPnE3cBKLRs26TH69psg1nFt+v911+Jbo9MMZoJdJ9mrCmvS6csSEjQHJwyux9aj87nGmvtnfu+k2Ckg5yfU8oiVodkNwHBFu1Aa3VO+m3rnjeqTNbPfiZAUOm4QcHvsu+ezbaGcgx38akob+Amj3tU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GhzXpCLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cv99PdouegLbNb3AP4naQG87ztrLYQBFhUbm524oV3HOzEpC85LfQ+8/mvjKxot+vEH0R3eX4YTx07U0SdAvvfAvWTrL8E0MsxhcwRUJHIXAQkH9LAgrWA5+AZduPf8QOVuVtXhZSeDv6g9AJjtROj4QCVpQ25dXdIF3cld/Cd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ll1Bj996; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GhzXpCLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC646C433F1;
-	Tue, 20 Feb 2024 21:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ll1Bj996"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03615C433C7;
+	Tue, 20 Feb 2024 21:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463174;
-	bh=uT+JMGFLdXbfVnwGsBv+eL8W9HAsw/BxWMoTvGMUbJ4=;
+	s=korg; t=1708463177;
+	bh=JIJAE9Dit1jn3iqcZmDfPnUuY9JVF5diqKsNnr/Msj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GhzXpCLBzE0m91KEpedXj58H34BwrO3rqfKKh9b/WdFrHh5sVSbU4c2ThhiyytuNN
-	 wKubKBeYKgiU9AkozqAm077C6pl2n14KSbGfYCa9E0GT/LUNmfr3cF1AFzmseQyrvZ
-	 9I1BglWtRa3nbblAgbsngrLPEMn/HQMSkcI+JT5c=
+	b=Ll1Bj996tw16QvyrqpcW/paUQrRH63ALBfqAvognLhlDP0+QF9P1gpny0VjnTONVg
+	 3/cgLkllxGoYy0PJtzkowmEaooC6Ie2TmxAcg9MPkH2DQXWitmsglH/LdqHsyxSzvB
+	 88GVEMHPddvYfOPvZCqIo/txawy5itvP/IjEvWgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hocko <mhocko@suse.com>,
-	Oscar Salvador <osalvador@suse.de>,
+	Prakash Sangappa <prakash.sangappa@oracle.com>,
 	Muchun Song <muchun.song@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 158/197] fs,hugetlb: fix NULL pointer dereference in hugetlbs_fill_super
-Date: Tue, 20 Feb 2024 21:51:57 +0100
-Message-ID: <20240220204845.803645742@linuxfoundation.org>
+Subject: [PATCH 6.1 159/197] mm: hugetlb pages should not be reserved by shmat() if SHM_NORESERVE
+Date: Tue, 20 Feb 2024 21:51:58 +0100
+Message-ID: <20240220204845.832778670@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -46,189 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oscar Salvador <osalvador@suse.de>
+From: Prakash Sangappa <prakash.sangappa@oracle.com>
 
-commit 79d72c68c58784a3e1cd2378669d51bfd0cb7498 upstream.
+commit e656c7a9e59607d1672d85ffa9a89031876ffe67 upstream.
 
-When configuring a hugetlb filesystem via the fsconfig() syscall, there is
-a possible NULL dereference in hugetlbfs_fill_super() caused by assigning
-NULL to ctx->hstate in hugetlbfs_parse_param() when the requested pagesize
-is non valid.
+For shared memory of type SHM_HUGETLB, hugetlb pages are reserved in
+shmget() call.  If SHM_NORESERVE flags is specified then the hugetlb pages
+are not reserved.  However when the shared memory is attached with the
+shmat() call the hugetlb pages are getting reserved incorrectly for
+SHM_HUGETLB shared memory created with SHM_NORESERVE which is a bug.
 
-E.g: Taking the following steps:
+-------------------------------
+Following test shows the issue.
 
-     fd =3D fsopen("hugetlbfs", FSOPEN_CLOEXEC);
-     fsconfig(fd, FSCONFIG_SET_STRING, "pagesize", "1024", 0);
-     fsconfig(fd, FSCONFIG_CMD_CREATE, NULL, NULL, 0);
+$cat shmhtb.c
 
-Given that the requested "pagesize" is invalid, ctxt->hstate will be replac=
-ed
-with NULL, losing its previous value, and we will print an error:
+int main()
+{
+	int shmflags = 0660 | IPC_CREAT | SHM_HUGETLB | SHM_NORESERVE;
+	int shmid;
 
- ...
- ...
- case Opt_pagesize:
- ps =3D memparse(param->string, &rest);
- ctx->hstate =3D h;
- if (!ctx->hstate) {
-         pr_err("Unsupported page size %lu MB\n", ps / SZ_1M);
-         return -EINVAL;
- }
- return 0;
- ...
- ...
+	shmid = shmget(SKEY, SHMSZ, shmflags);
+	if (shmid < 0)
+	{
+		printf("shmat: shmget() failed, %d\n", errno);
+		return 1;
+	}
+	printf("After shmget()\n");
+	system("cat /proc/meminfo | grep -i hugepages_");
 
-This is a problem because later on, we will dereference ctxt->hstate in
-hugetlbfs_fill_super()
+	shmat(shmid, NULL, 0);
+	printf("\nAfter shmat()\n");
+	system("cat /proc/meminfo | grep -i hugepages_");
 
- ...
- ...
- sb->s_blocksize =3D huge_page_size(ctx->hstate);
- ...
- ...
+	shmctl(shmid, IPC_RMID, NULL);
+	return 0;
+}
 
-Causing below Oops.
+ #sysctl -w vm.nr_hugepages=20
+ #./shmhtb
 
-Fix this by replacing cxt->hstate value only when then pagesize is known
-to be valid.
+After shmget()
+HugePages_Total:      20
+HugePages_Free:       20
+HugePages_Rsvd:        0
+HugePages_Surp:        0
 
- kernel: hugetlbfs: Unsupported page size 0 MB
- kernel: BUG: kernel NULL pointer dereference, address: 0000000000000028
- kernel: #PF: supervisor read access in kernel mode
- kernel: #PF: error_code(0x0000) - not-present page
- kernel: PGD 800000010f66c067 P4D 800000010f66c067 PUD 1b22f8067 PMD 0
- kernel: Oops: 0000 [#1] PREEMPT SMP PTI
- kernel: CPU: 4 PID: 5659 Comm: syscall Tainted: G            E      6.8.0-=
-rc2-default+ #22 5a47c3fef76212addcc6eb71344aabc35190ae8f
- kernel: Hardware name: Intel Corp. GROVEPORT/GROVEPORT, BIOS GVPRCRB1.86B.=
-0016.D04.1705030402 05/03/2017
- kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
- kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
-00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
-8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
- kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
- kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
- kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
- kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
- kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
- kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
- kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
-0000000000
- kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
- kernel: Call Trace:
- kernel:  <TASK>
- kernel:  ? __die_body+0x1a/0x60
- kernel:  ? page_fault_oops+0x16f/0x4a0
- kernel:  ? search_bpf_extables+0x65/0x70
- kernel:  ? fixup_exception+0x22/0x310
- kernel:  ? exc_page_fault+0x69/0x150
- kernel:  ? asm_exc_page_fault+0x22/0x30
- kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
- kernel:  ? hugetlbfs_fill_super+0xb4/0x1a0
- kernel:  ? hugetlbfs_fill_super+0x28/0x1a0
- kernel:  ? __pfx_hugetlbfs_fill_super+0x10/0x10
- kernel:  vfs_get_super+0x40/0xa0
- kernel:  ? __pfx_bpf_lsm_capable+0x10/0x10
- kernel:  vfs_get_tree+0x25/0xd0
- kernel:  vfs_cmd_create+0x64/0xe0
- kernel:  __x64_sys_fsconfig+0x395/0x410
- kernel:  do_syscall_64+0x80/0x160
- kernel:  ? syscall_exit_to_user_mode+0x82/0x240
- kernel:  ? do_syscall_64+0x8d/0x160
- kernel:  ? syscall_exit_to_user_mode+0x82/0x240
- kernel:  ? do_syscall_64+0x8d/0x160
- kernel:  ? exc_page_fault+0x69/0x150
- kernel:  entry_SYSCALL_64_after_hwframe+0x6e/0x76
- kernel: RIP: 0033:0x7ffbc0cb87c9
- kernel: Code: 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 66 90 48 89 f8 =
-48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 0=
-1 f0 ff ff 73 01 c3 48 8b 0d 97 96 0d 00 f7 d8 64 89 01 48
- kernel: RSP: 002b:00007ffc29d2f388 EFLAGS: 00000206 ORIG_RAX: 000000000000=
-01af
- kernel: RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffbc0cb87c9
- kernel: RDX: 0000000000000000 RSI: 0000000000000006 RDI: 0000000000000003
- kernel: RBP: 00007ffc29d2f3b0 R08: 0000000000000000 R09: 0000000000000000
- kernel: R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
- kernel: R13: 00007ffc29d2f4c0 R14: 0000000000000000 R15: 0000000000000000
- kernel:  </TASK>
- kernel: Modules linked in: rpcsec_gss_krb5(E) auth_rpcgss(E) nfsv4(E) dns_=
-resolver(E) nfs(E) lockd(E) grace(E) sunrpc(E) netfs(E) af_packet(E) bridge=
-(E) stp(E) llc(E) iscsi_ibft(E) iscsi_boot_sysfs(E) intel_rapl_msr(E) intel=
-_rapl_common(E) iTCO_wdt(E) intel_pmc_bxt(E) sb_edac(E) iTCO_vendor_support=
-(E) x86_pkg_temp_thermal(E) intel_powerclamp(E) coretemp(E) kvm_intel(E) rf=
-kill(E) ipmi_ssif(E) kvm(E) acpi_ipmi(E) irqbypass(E) pcspkr(E) igb(E) ipmi=
-_si(E) mei_me(E) i2c_i801(E) joydev(E) intel_pch_thermal(E) i2c_smbus(E) dc=
-a(E) lpc_ich(E) mei(E) ipmi_devintf(E) ipmi_msghandler(E) acpi_pad(E) tiny_=
-power_button(E) button(E) fuse(E) efi_pstore(E) configfs(E) ip_tables(E) x_=
-tables(E) ext4(E) mbcache(E) jbd2(E) hid_generic(E) usbhid(E) sd_mod(E) t10=
-_pi(E) crct10dif_pclmul(E) crc32_pclmul(E) crc32c_intel(E) polyval_clmulni(=
-E) ahci(E) xhci_pci(E) polyval_generic(E) gf128mul(E) ghash_clmulni_intel(E=
-) sha512_ssse3(E) sha256_ssse3(E) xhci_pci_renesas(E) libahci(E) ehci_pci(E=
-) sha1_ssse3(E) xhci_hcd(E) ehci_hcd(E) libata(E)
- kernel:  mgag200(E) i2c_algo_bit(E) usbcore(E) wmi(E) sg(E) dm_multipath(E=
-) dm_mod(E) scsi_dh_rdac(E) scsi_dh_emc(E) scsi_dh_alua(E) scsi_mod(E) scsi=
-_common(E) aesni_intel(E) crypto_simd(E) cryptd(E)
- kernel: Unloaded tainted modules: acpi_cpufreq(E):1 fjes(E):1
- kernel: CR2: 0000000000000028
- kernel: ---[ end trace 0000000000000000 ]---
- kernel: RIP: 0010:hugetlbfs_fill_super+0xb4/0x1a0
- kernel: Code: 48 8b 3b e8 3e c6 ed ff 48 85 c0 48 89 45 20 0f 84 d6 00 00 =
-00 48 b8 ff ff ff ff ff ff ff 7f 4c 89 e7 49 89 44 24 20 48 8b 03 <8b> 48 2=
-8 b8 00 10 00 00 48 d3 e0 49 89 44 24 18 48 8b 03 8b 40 28
- kernel: RSP: 0018:ffffbe9960fcbd48 EFLAGS: 00010246
- kernel: RAX: 0000000000000000 RBX: ffff9af5272ae780 RCX: 0000000000372004
- kernel: RDX: ffffffffffffffff RSI: ffffffffffffffff RDI: ffff9af555e9b000
- kernel: RBP: ffff9af52ee66b00 R08: 0000000000000040 R09: 0000000000370004
- kernel: R10: ffffbe9960fcbd48 R11: 0000000000000040 R12: ffff9af555e9b000
- kernel: R13: ffffffffa66b86c0 R14: ffff9af507d2f400 R15: ffff9af507d2f400
- kernel: FS:  00007ffbc0ba4740(0000) GS:ffff9b0bd7000000(0000) knlGS:000000=
-0000000000
- kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- kernel: CR2: 0000000000000028 CR3: 00000001b1ee0000 CR4: 00000000001506f0
+After shmat()
+HugePages_Total:      20
+HugePages_Free:       20
+HugePages_Rsvd:        5 <--
+HugePages_Surp:        0
+--------------------------------
 
-Link: https://lkml.kernel.org/r/20240130210418.3771-1-osalvador@suse.de
-Fixes: 32021982a324 ("hugetlbfs: Convert to fs_context")
-Signed-off-by: Michal Hocko <mhocko@suse.com>
-Signed-off-by: Oscar Salvador <osalvador@suse.de>
+Fix is to ensure that hugetlb pages are not reserved for SHM_HUGETLB shared
+memory in the shmat() call.
+
+Link: https://lkml.kernel.org/r/1706040282-12388-1-git-send-email-prakash.sangappa@oracle.com
+Signed-off-by: Prakash Sangappa <prakash.sangappa@oracle.com>
 Acked-by: Muchun Song <muchun.song@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hugetlbfs/inode.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/hugetlbfs/inode.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
 --- a/fs/hugetlbfs/inode.c
 +++ b/fs/hugetlbfs/inode.c
-@@ -1350,6 +1350,7 @@ static int hugetlbfs_parse_param(struct
- {
- 	struct hugetlbfs_fs_context *ctx =3D fc->fs_private;
- 	struct fs_parse_result result;
-+	struct hstate *h;
- 	char *rest;
- 	unsigned long ps;
- 	int opt;
-@@ -1394,11 +1395,12 @@ static int hugetlbfs_parse_param(struct
-=20
- 	case Opt_pagesize:
- 		ps =3D memparse(param->string, &rest);
--		ctx->hstate =3D size_to_hstate(ps);
--		if (!ctx->hstate) {
-+		h =3D size_to_hstate(ps);
-+		if (!h) {
- 			pr_err("Unsupported page size %lu MB\n", ps / SZ_1M);
- 			return -EINVAL;
- 		}
-+		ctx->hstate =3D h;
- 		return 0;
-=20
- 	case Opt_min_size:
+@@ -123,6 +123,7 @@ static int hugetlbfs_file_mmap(struct fi
+ 	loff_t len, vma_len;
+ 	int ret;
+ 	struct hstate *h = hstate_file(file);
++	vm_flags_t vm_flags;
+ 
+ 	/*
+ 	 * vma address alignment (but not the pgoff alignment) has
+@@ -164,10 +165,20 @@ static int hugetlbfs_file_mmap(struct fi
+ 	file_accessed(file);
+ 
+ 	ret = -ENOMEM;
++
++	vm_flags = vma->vm_flags;
++	/*
++	 * for SHM_HUGETLB, the pages are reserved in the shmget() call so skip
++	 * reserving here. Note: only for SHM hugetlbfs file, the inode
++	 * flag S_PRIVATE is set.
++	 */
++	if (inode->i_flags & S_PRIVATE)
++		vm_flags |= VM_NORESERVE;
++
+ 	if (!hugetlb_reserve_pages(inode,
+ 				vma->vm_pgoff >> huge_page_order(h),
+ 				len >> huge_page_shift(h), vma,
+-				vma->vm_flags))
++				vm_flags))
+ 		goto out;
+ 
+ 	ret = 0;
 
 
