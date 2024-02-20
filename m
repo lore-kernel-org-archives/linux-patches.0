@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AD81509BF;
-	Tue, 20 Feb 2024 21:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE464151CDD;
+	Tue, 20 Feb 2024 21:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463078; cv=none; b=tnD79cqhfaiJCLZZZrepIOmx8ZajpsuE4/FjrD7EbkfksQPOXInHmjm0LgsiZLsob7kRv7KDuGPbNLD7ct0B3torwikjLHHRfhz2wemTYdCC0LUqROEoLwDhw7TRPc3PS8axGKzXNRqh6VhNT+TUKzEAqLVRblbuomIB8fgXRn4=
+	t=1708463082; cv=none; b=F2duqrerOT9IX57kgn17Z9sEk9qeMcT1hG+gHsrToLyXuRIRh7MyzfNsrdPT67OuVIB/00n46WUyHZfB3yfQPBeguakgrjttzOD2MXSX54617Twfuh0Hvu8HCxUD1a5vI5lF16TiPEyYRPToWspjEn3Kao7pdBlK9qZzZS418z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463078; c=relaxed/simple;
-	bh=jwG5V5fpSTbN5cNHPKq5YGWeiM6DwhMLar/boVT82EY=;
+	s=arc-20240116; t=1708463082; c=relaxed/simple;
+	bh=clyBH0icWTkTKJc5jUCFnyN0OBl6CdPGVEjdswt6fxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4W40JipNxYWIdF5s9XQVBv8B+2uVoHUow4/E0a6o7bKa+51h5doJNxRdUuTQeZPSZeY7nwnF1yp4attrMpRV4Uujb1zvvW8nM16lzOCmm/NYb088k4r/dpYzGRG/pH5rSHzvx61Vij8hKfzpe1LaU/j52WP3Nt028JjkfdUEEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV1zOfEc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j6yi/hOxPsPv3zMWsWalbmwwfFg0/Mjbq1XX7zai84kSyzjZ7VLAdjJkwASg791/9cR55qeNW9VqnEmD+9YzDLPfyfdeccQaxEY5rjP+DXWPGit1W6AGmROAflTIb3oDCIAvB2J/RoHVyMx6ks6n12S2Jleum59yQD4HhaEhXpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+h7nt+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV1zOfEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3184BC433C7;
-	Tue, 20 Feb 2024 21:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+h7nt+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFF8C433F1;
+	Tue, 20 Feb 2024 21:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463078;
-	bh=jwG5V5fpSTbN5cNHPKq5YGWeiM6DwhMLar/boVT82EY=;
+	s=korg; t=1708463081;
+	bh=clyBH0icWTkTKJc5jUCFnyN0OBl6CdPGVEjdswt6fxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CV1zOfEcjaOEfownOwjmuEJSJxaIowuJwDlhyIPdltSIPMLVd6EQmQLwYZdAc3jL+
-	 O3mvokKMM0Yd4mVVCNK06ArK9tTaatNmAy69uLg/BMEFTRnZEnKh2i3kZceVtAeUNd
-	 Zpw8nbRZT/FhxJGe1am4dZWJANCS6LUuy93UEKt8=
+	b=D+h7nt+o3C9vDhm142tqn5vH036R6kzZAiMH77GfD0gPelgnr6L8b7VCqytXt2lJK
+	 6S3i/lgtU0xSjfJcPhgtGwPBK+/lUJHcht8g6qWnUO0QiW2vKlzilG7UKOmLXFHPRk
+	 FvGxnwIAUVdAdMonV7RvLp21qUXYyc4nSvorJQJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Bogomolov <bogomolov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrei Vagin <avagin@google.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.1 128/197] x86/fpu: Stop relying on userspace for info to fault in xsave buffer
-Date: Tue, 20 Feb 2024 21:51:27 +0100
-Message-ID: <20240220204844.903734620@linuxfoundation.org>
+	Mingwei Zhang <mizhang@google.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 129/197] KVM: x86/pmu: Fix type length error when reading pmu->fixed_ctr_ctrl
+Date: Tue, 20 Feb 2024 21:51:28 +0100
+Message-ID: <20240220204844.933540146@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,94 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Vagin <avagin@google.com>
+From: Mingwei Zhang <mizhang@google.com>
 
-commit d877550eaf2dc9090d782864c96939397a3c6835 upstream.
+commit 05519c86d6997cfb9bb6c82ce1595d1015b718dc upstream.
 
-Before this change, the expected size of the user space buffer was
-taken from fx_sw->xstate_size. fx_sw->xstate_size can be changed
-from user-space, so it is possible construct a sigreturn frame where:
+Use a u64 instead of a u8 when taking a snapshot of pmu->fixed_ctr_ctrl
+when reprogramming fixed counters, as truncating the value results in KVM
+thinking fixed counter 2 is already disabled (the bug also affects fixed
+counters 3+, but KVM doesn't yet support those).  As a result, if the
+guest disables fixed counter 2, KVM will get a false negative and fail to
+reprogram/disable emulation of the counter, which can leads to incorrect
+counts and spurious PMIs in the guest.
 
- * fx_sw->xstate_size is smaller than the size required by valid bits in
-   fx_sw->xfeatures.
- * user-space unmaps parts of the sigrame fpu buffer so that not all of
-   the buffer required by xrstor is accessible.
-
-In this case, xrstor tries to restore and accesses the unmapped area
-which results in a fault. But fault_in_readable succeeds because buf +
-fx_sw->xstate_size is within the still mapped area, so it goes back and
-tries xrstor again. It will spin in this loop forever.
-
-Instead, fault in the maximum size which can be touched by XRSTOR (taken
-from fpstate->user_size).
-
-[ dhansen: tweak subject / changelog ]
-
-Fixes: fcb3635f5018 ("x86/fpu/signal: Handle #PF in the direct restore path")
-Reported-by: Konstantin Bogomolov <bogomolov@google.com>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Andrei Vagin <avagin@google.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240130063603.3392627-1-avagin%40google.com
+Fixes: 76d287b2342e ("KVM: x86/pmu: Drop "u8 ctrl, int idx" for reprogram_fixed_counter()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mingwei Zhang <mizhang@google.com>
+Link: https://lore.kernel.org/r/20240123221220.3911317-1-mizhang@google.com
+[sean: rewrite changelog to call out the effects of the bug]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/signal.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ arch/x86/kvm/vmx/pmu_intel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/fpu/signal.c
-+++ b/arch/x86/kernel/fpu/signal.c
-@@ -274,12 +274,13 @@ static int __restore_fpregs_from_user(vo
-  * Attempt to restore the FPU registers directly from user memory.
-  * Pagefaults are handled and any errors returned are fatal.
-  */
--static bool restore_fpregs_from_user(void __user *buf, u64 xrestore,
--				     bool fx_only, unsigned int size)
-+static bool restore_fpregs_from_user(void __user *buf, u64 xrestore, bool fx_only)
+--- a/arch/x86/kvm/vmx/pmu_intel.c
++++ b/arch/x86/kvm/vmx/pmu_intel.c
+@@ -38,7 +38,7 @@ static int fixed_pmc_events[] = {1, 0, 7
+ static void reprogram_fixed_counters(struct kvm_pmu *pmu, u64 data)
  {
- 	struct fpu *fpu = &current->thread.fpu;
- 	int ret;
+ 	struct kvm_pmc *pmc;
+-	u8 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
++	u64 old_fixed_ctr_ctrl = pmu->fixed_ctr_ctrl;
+ 	int i;
  
-+	/* Restore enabled features only. */
-+	xrestore &= fpu->fpstate->user_xfeatures;
- retry:
- 	fpregs_lock();
- 	/* Ensure that XFD is up to date */
-@@ -309,7 +310,7 @@ retry:
- 		if (ret != X86_TRAP_PF)
- 			return false;
- 
--		if (!fault_in_readable(buf, size))
-+		if (!fault_in_readable(buf, fpu->fpstate->user_size))
- 			goto retry;
- 		return false;
- 	}
-@@ -339,7 +340,6 @@ static bool __fpu_restore_sig(void __use
- 	struct user_i387_ia32_struct env;
- 	bool success, fx_only = false;
- 	union fpregs_state *fpregs;
--	unsigned int state_size;
- 	u64 user_xfeatures = 0;
- 
- 	if (use_xsave()) {
-@@ -349,17 +349,14 @@ static bool __fpu_restore_sig(void __use
- 			return false;
- 
- 		fx_only = !fx_sw_user.magic1;
--		state_size = fx_sw_user.xstate_size;
- 		user_xfeatures = fx_sw_user.xfeatures;
- 	} else {
- 		user_xfeatures = XFEATURE_MASK_FPSSE;
--		state_size = fpu->fpstate->user_size;
- 	}
- 
- 	if (likely(!ia32_fxstate)) {
- 		/* Restore the FPU registers directly from user memory. */
--		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only,
--						state_size);
-+		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only);
- 	}
- 
- 	/*
+ 	pmu->fixed_ctr_ctrl = data;
 
 
