@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BAA612D7;
-	Tue, 20 Feb 2024 21:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7617D14A4E6;
+	Tue, 20 Feb 2024 21:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464065; cv=none; b=QVK+AAHtfN1DCrTc56Sby53yllJgFpdMdxzG0FNZ5HQB+5HGh/wgBEtj+FQKtPZ6EKGeKptYwmii+IcFR7PozKRDXqafGRPO5FL37clhs+aGmuCecpJztpGhu3nPZuzBGIak1ZdxbQwcjgAr2vRYhhnbsgE7IC+HYLDTQyDGlXg=
+	t=1708464068; cv=none; b=bXlNAElHavUynK07nJCGrKwVExzL6mMxuPLo6d8ydscqked561b3wRdSyLh2cQPVHBKcO4gHW9f0RHWsSeiaC02ZZ+WHv50XE7Npk/0sIiggWH0gYqh7FNbMAb9oso+uCBC5tdP0x0CBArWMAOXKTBFX61NIu3h2D2313TMWqJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464065; c=relaxed/simple;
-	bh=VTza+G5oCO0ZgAgjnNY7t3rRbR90fJdj9kz0Z0ZXEg0=;
+	s=arc-20240116; t=1708464068; c=relaxed/simple;
+	bh=g+p9gCrNOOFgKdXdNGzveW4cszUt/oDH1ndoyW0spG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CH3q4CJ1o0bw2gd7CtFdlNytHw/nZTrrqK6nJZEE4F4BOFU62Z8Z704ylCMJYDnqmyMjfOFYLtcTKQ93WAD0gKi6yMjSFoKucsEG5PI42oMNyjgPq4nBMbP8tVjKNn5jUunTeb6/boA0uLO4yRK+ZH06x2cc0ky1xEgPcuRIhZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSF2SSVa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H4dsIGp9YlAScvUwinl+VLl+1Chxb9i7b8oIjl+MB9kdCPdl1hZheJbpvXEQceMGZPcWLCmCYNL0gdh+Z8sFSqvGXxgBaygpKDexPT7G77yRQWq860xmxY3+6iZyN+S8yCG07EfVlJ+w5qE+brursh4hhS5KB3hzeXmQXZfSTj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilTHs0tZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSF2SSVa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F956C433F1;
-	Tue, 20 Feb 2024 21:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilTHs0tZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F56EC433F1;
+	Tue, 20 Feb 2024 21:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464064;
-	bh=VTza+G5oCO0ZgAgjnNY7t3rRbR90fJdj9kz0Z0ZXEg0=;
+	s=korg; t=1708464067;
+	bh=g+p9gCrNOOFgKdXdNGzveW4cszUt/oDH1ndoyW0spG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSF2SSVaL13goEzgktPNdkayfnum6b5PNr6AIHG56I/6eeq6Xht3LzkKtBBcBa5eH
-	 Hm2Y8w0b1T5TCbyREWip9GDb0SnrSvdQws8Vf5QmNK0TW5O7jZWun7QvO4b5vnySC0
-	 puAYIXxmMmWE3uYARSDcsnUPqllTBPsasAMaPiYE=
+	b=ilTHs0tZQDObIRXeV3pekJeYYTB1vKmrkDClj1CYJIBQW4ibh26XOMBvS8Oct5F6g
+	 6B/01l47JHr8UngL/YsYr79rAVpFVPHC+0ZvXuMEnQPBPyljLrcyNqjQKd7LH4mHy0
+	 lBKiV3qxXr+AA9DWQHT0+ji7UZFvIewfzgfxCcdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishabh Dave <ridave@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 239/331] ceph: prevent use-after-free in encode_cap_msg()
-Date: Tue, 20 Feb 2024 21:55:55 +0100
-Message-ID: <20240220205645.296870097@linuxfoundation.org>
+	Mohammad Rahimi <rahimi.mhmmd@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 213/331] thunderbolt: Fix setting the CNS bit in ROUTER_CS_5
+Date: Tue, 20 Feb 2024 21:55:29 +0100
+Message-ID: <20240220205644.411914971@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -52,53 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishabh Dave <ridave@redhat.com>
+From: Mohammad Rahimi <rahimi.mhmmd@gmail.com>
 
-commit cda4672da1c26835dcbd7aec2bfed954eda9b5ef upstream.
+commit ec4d82f855ce332de26fe080892483de98cc1a19 upstream.
 
-In fs/ceph/caps.c, in encode_cap_msg(), "use after free" error was
-caught by KASAN at this line - 'ceph_buffer_get(arg->xattr_buf);'. This
-implies before the refcount could be increment here, it was freed.
+The bit 23, CM TBT3 Not Supported (CNS), in ROUTER_CS_5 indicates
+whether a USB4 Connection Manager is TBT3-Compatible and should be:
+    0b for TBT3-Compatible
+    1b for Not TBT3-Compatible
 
-In same file, in "handle_cap_grant()" refcount is decremented by this
-line - 'ceph_buffer_put(ci->i_xattrs.blob);'. It appears that a race
-occurred and resource was freed by the latter line before the former
-line could increment it.
-
-encode_cap_msg() is called by __send_cap() and __send_cap() is called by
-ceph_check_caps() after calling __prep_cap(). __prep_cap() is where
-arg->xattr_buf is assigned to ci->i_xattrs.blob. This is the spot where
-the refcount must be increased to prevent "use after free" error.
-
+Fixes: b04079837b20 ("thunderbolt: Add initial support for USB4")
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/59259
-Signed-off-by: Rishabh Dave <ridave@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Mohammad Rahimi <rahimi.mhmmd@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/tb_regs.h |    2 +-
+ drivers/thunderbolt/usb4.c    |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1415,7 +1415,7 @@ static void __prep_cap(struct cap_msg_ar
- 	if (flushing & CEPH_CAP_XATTR_EXCL) {
- 		arg->old_xattr_buf = __ceph_build_xattrs_blob(ci);
- 		arg->xattr_version = ci->i_xattrs.version;
--		arg->xattr_buf = ci->i_xattrs.blob;
-+		arg->xattr_buf = ceph_buffer_get(ci->i_xattrs.blob);
- 	} else {
- 		arg->xattr_buf = NULL;
- 		arg->old_xattr_buf = NULL;
-@@ -1513,6 +1513,7 @@ static void __send_cap(struct cap_msg_ar
- 	encode_cap_msg(msg, arg);
- 	ceph_con_send(&arg->session->s_con, msg);
- 	ceph_buffer_put(arg->old_xattr_buf);
-+	ceph_buffer_put(arg->xattr_buf);
- 	if (arg->wake)
- 		wake_up_all(&ci->i_cap_wq);
+--- a/drivers/thunderbolt/tb_regs.h
++++ b/drivers/thunderbolt/tb_regs.h
+@@ -203,7 +203,7 @@ struct tb_regs_switch_header {
+ #define ROUTER_CS_5_WOP				BIT(1)
+ #define ROUTER_CS_5_WOU				BIT(2)
+ #define ROUTER_CS_5_WOD				BIT(3)
+-#define ROUTER_CS_5_C3S				BIT(23)
++#define ROUTER_CS_5_CNS				BIT(23)
+ #define ROUTER_CS_5_PTO				BIT(24)
+ #define ROUTER_CS_5_UTO				BIT(25)
+ #define ROUTER_CS_5_HCO				BIT(26)
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -290,7 +290,7 @@ int usb4_switch_setup(struct tb_switch *
+ 	}
+ 
+ 	/* TBT3 supported by the CM */
+-	val |= ROUTER_CS_5_C3S;
++	val &= ~ROUTER_CS_5_CNS;
+ 
+ 	return tb_sw_write(sw, &val, TB_CFG_SWITCH, ROUTER_CS_5, 1);
  }
 
 
