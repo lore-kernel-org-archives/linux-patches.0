@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CFC3151CCC;
-	Tue, 20 Feb 2024 21:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDF2612D7;
+	Tue, 20 Feb 2024 21:18:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463881; cv=none; b=Kp6qHCqVyy8jIRbrmCe3F50x37T5uDXm0EXa8ce8I25cXDb+V1LxSr6Sk1OxEUvLOhHiMzYXzVj/1dGLZPJ71yFBhiNDoFYmGTbbzCkDmP3pVXcxV47mJy/Oz+nsZFgE6XhOE/11031KdJ9Styzwutve3YCTEySAzsovrTCdIcc=
+	t=1708463884; cv=none; b=CYLULS8T6jDKbxmR4mDhGQmw4UKZDgDFnKwmcLwM2kh3DhZr/SmRpjLkTiXaMOAKkRCfSHpAfSVa8STIaW0XapzwIW+Y0yNei0xsV0OeR4rgSY8RZOcJO7Zsx6yEZ3IH8GN7GxTtKrjE6WciphdWFCMxFewJHL2Mb10LrIdpeF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463881; c=relaxed/simple;
-	bh=opo3C22fOqG/id70eR4gekTl9/VnSPnGnGvNnnSHgrc=;
+	s=arc-20240116; t=1708463884; c=relaxed/simple;
+	bh=2S9CTb3gZb+mE/z8aIj1qVI6TYuIlnPqbOtIg/dUwMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHrL9D7m+7q5DAhf2r2BYEiV7NoYNfTK2ZlRUbhrmVxY236rdzOyxfUBX+wQIBrW4D1oBryClh2m2huZfamXJhLEuhXQGO26ns2e4B3tYb1RCSJsW4iiyHujD1JBbVlE7J1fbnRLqexsPPzClQfPrevp16y18JnnDc4Hi7u0gT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s58wtgx2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l9JbR5xvuZ+NpNxc/06LUpR8ovdFZ2OMEVdB9pmWKpkT2IhbDzGcA69ATUBFEOb/bBkPyALBb44Q2J9fxhq2xras8Ezn17KQifixNuOMyAfVUo/bfdwtlMhhsZVwmIv6yh7oRLh9WR2QwJ9DuW+73GoE8hA/jfG8qnztzIH1uTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3QRAxc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s58wtgx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1881C433F1;
-	Tue, 20 Feb 2024 21:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3QRAxc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179C9C433F1;
+	Tue, 20 Feb 2024 21:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463881;
-	bh=opo3C22fOqG/id70eR4gekTl9/VnSPnGnGvNnnSHgrc=;
+	s=korg; t=1708463884;
+	bh=2S9CTb3gZb+mE/z8aIj1qVI6TYuIlnPqbOtIg/dUwMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s58wtgx2GPYc8uy69/+HcRa5hWw/J5gBKIj08+gBRGUHl9jl3lI2G3eFekTlMmHXx
-	 0k9AN97c22Is9oz1jyE1LJhL/J/BoIlZ0O4ofWcqIIsS6tWdLYZY7H4QJtvDK9Q4BS
-	 SoekpAelLdWA26+4l2B4DbXZsPvWgu+t8xlYlrXU=
+	b=l3QRAxc5HXSxej7scD5JlDNf0DX2XtyH70fsCBO+DPEX8zNB2WShgB+T0TRMXVeCR
+	 lLhF5AvVgeNXLrXIerIV+47FoNzHsbLjkW3gaLYtLkllq5qDsZKQuHxN6N1DKfzoht
+	 tNn+vV3OOHcdBgEawuD7cjVzoGUbNiIYD052HBew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 154/331] Revert "workqueue: Override implicit ordered attribute in workqueue_apply_unbound_cpumask()"
-Date: Tue, 20 Feb 2024 21:54:30 +0100
-Message-ID: <20240220205642.372336868@linuxfoundation.org>
+	David Schiller <david.schiller@jku.at>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 155/331] staging: iio: ad5933: fix type mismatch regression
+Date: Tue, 20 Feb 2024 21:54:31 +0100
+Message-ID: <20240220205642.401187887@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 References: <20240220205637.572693592@linuxfoundation.org>
@@ -49,54 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: David Schiller <david.schiller@jku.at>
 
-commit aac8a59537dfc704ff344f1aacfd143c089ee20f upstream.
+commit 6db053cd949fcd6254cea9f2cd5d39f7bd64379c upstream.
 
-This reverts commit ca10d851b9ad0338c19e8e3089e24d565ebfffd7.
+Commit 4c3577db3e4f ("Staging: iio: impedance-analyzer: Fix sparse
+warning") fixed a compiler warning, but introduced a bug that resulted
+in one of the two 16 bit IIO channels always being zero (when both are
+enabled).
 
-The commit allowed workqueue_apply_unbound_cpumask() to clear __WQ_ORDERED
-on now removed implicitly ordered workqueues. This was incorrect in that
-system-wide config change shouldn't break ordering properties of all
-workqueues. The reason why apply_workqueue_attrs() path was allowed to do so
-was because it was targeting the specific workqueue - either the workqueue
-had WQ_SYSFS set or the workqueue user specifically tried to change
-max_active, both of which indicate that the workqueue doesn't need to be
-ordered.
+This is because int is 32 bits wide on most architectures and in the
+case of a little-endian machine the two most significant bytes would
+occupy the buffer for the second channel as 'val' is being passed as a
+void pointer to 'iio_push_to_buffers()'.
 
-The implicitly ordered workqueue promotion was removed by the previous
-commit 3bc1e711c26b ("workqueue: Don't implicitly make UNBOUND workqueues w/
-@max_active==1 ordered"). However, it didn't update this path and broke
-build. Let's revert the commit which was incorrect in the first place which
-also fixes build.
+Fix by defining 'val' as u16. Tested working on ARM64.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Fixes: 3bc1e711c26b ("workqueue: Don't implicitly make UNBOUND workqueues w/ @max_active==1 ordered")
-Fixes: ca10d851b9ad ("workqueue: Override implicit ordered attribute in workqueue_apply_unbound_cpumask()")
-Cc: stable@vger.kernel.org # v6.6+
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 4c3577db3e4f ("Staging: iio: impedance-analyzer: Fix sparse warning")
+Signed-off-by: David Schiller <david.schiller@jku.at>
+Link: https://lore.kernel.org/r/20240122134916.2137957-1-david.schiller@jku.at
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/workqueue.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/staging/iio/impedance-analyzer/ad5933.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -5793,13 +5793,9 @@ static int workqueue_apply_unbound_cpuma
- 	list_for_each_entry(wq, &workqueues, list) {
- 		if (!(wq->flags & WQ_UNBOUND))
- 			continue;
--
- 		/* creating multiple pwqs breaks ordering guarantee */
--		if (!list_empty(&wq->pwqs)) {
--			if (wq->flags & __WQ_ORDERED_EXPLICIT)
--				continue;
--			wq->flags &= ~__WQ_ORDERED;
--		}
-+		if (wq->flags & __WQ_ORDERED)
-+			continue;
+--- a/drivers/staging/iio/impedance-analyzer/ad5933.c
++++ b/drivers/staging/iio/impedance-analyzer/ad5933.c
+@@ -608,7 +608,7 @@ static void ad5933_work(struct work_stru
+ 		struct ad5933_state, work.work);
+ 	struct iio_dev *indio_dev = i2c_get_clientdata(st->client);
+ 	__be16 buf[2];
+-	int val[2];
++	u16 val[2];
+ 	unsigned char status;
+ 	int ret;
  
- 		ctx = apply_wqattrs_prepare(wq, wq->unbound_attrs, unbound_cpumask);
- 		if (IS_ERR(ctx)) {
 
 
