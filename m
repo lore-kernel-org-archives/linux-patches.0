@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87084612D7;
-	Tue, 20 Feb 2024 21:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDA314C585;
+	Tue, 20 Feb 2024 21:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463261; cv=none; b=HDkOfR25Oss3WesjUDV7AZBDDowsgEo/D0PaMVxBmfeGzZPGp4UbBu64pkG+eZIB092RS0kmYpQb5SUV4FlVGgDJixlOiyhv62c/+KbLfWU/zw48E+Ji5qxlwPKNBhC54HavvGhRMMfTogLv0NSGHBjQxulMVWMPtTK93TzW53M=
+	t=1708463264; cv=none; b=R+wgZd+h6zbDGsdolKQY4FbiXmA9REoq3KTuy/MmKS0y6GzdgsYnI5YV8hCHz8aYnTKGgoscDA/g3GsDJ6cau2czftHaNl8aKSkIiifUqGDvBcVXP3LloRNkNweAWZh0K/cTlheASbQr8MXupteGfa2OC2RAtVnS0yJSBf9i4CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463261; c=relaxed/simple;
-	bh=t1qQw1VdEO+AY8JA11MCm4RDvjEOAvkp5PGX56R+vFI=;
+	s=arc-20240116; t=1708463264; c=relaxed/simple;
+	bh=U12OD/V2n4WGQiSOBz7E+t5nSxvg7OOapAnkfn4MBEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q/le9+vNvwnAmwCdt4ZbKOkF/U4+N+miwOku7FDuQCWaGSVkxDSCzPIgFlJWZOydT/YXP/XZyhF3J6yMsAG9zscLhSfR07nQ7mQk2wdqESNBOiaic0ul0W5C5RqN56bxuIEHa2Yk+orb2bq3l/xutih3gX/E62CQDnr/htorwcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmtUPiVN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cIc139r8LkOpa1EF5GZ9wY//sB2jQ9UNGs340Zh9+tQuRI3cciaqIgrv9XcNGN4/C6gh5KRNQZcJGOoA/sGYyJ0D+FfhnRlu1Pa2nzIgnEe24/Z8fbT8rbJAMeyOfyx+6Ti7K7zS0seK+7rhAPYRZiDxOvr9f9xZDrRlq+bbC6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw5P3I8b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmtUPiVN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F01F9C433C7;
-	Tue, 20 Feb 2024 21:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw5P3I8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265F4C433F1;
+	Tue, 20 Feb 2024 21:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463261;
-	bh=t1qQw1VdEO+AY8JA11MCm4RDvjEOAvkp5PGX56R+vFI=;
+	s=korg; t=1708463264;
+	bh=U12OD/V2n4WGQiSOBz7E+t5nSxvg7OOapAnkfn4MBEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VmtUPiVNKkT54ADvrKIybtrcQHaispYzE5kGpBfSgnRpKzM1PasrMvb65mi4Yg2NT
-	 /aBr7v1sisTM1gAtOCa6Ig+CZlQaLtnBFdPLcMt9jVmTlrQSHkx2gk//caZRtf0mnN
-	 a8V4km9PM6nCoVrL0NIr8OsrPWy/pGfXYZQtc93M=
+	b=Dw5P3I8bSaiG3ikoq+dChdk+VO3QuYDrGp3eD6czH+QryCeyzuNSdb4YtiWQrNf/3
+	 9BZOnTWIa8MN5f2kCQcQwJ45/tiP6UQAKaAlBL+Ps537c2ggnIX4NWxMaX6ytco/DN
+	 6c72HeUjW1zc+TxrI3m56halB+RrI6YS6Z5q3UsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 186/197] parisc: Fix random data corruption from exception handler
-Date: Tue, 20 Feb 2024 21:52:25 +0100
-Message-ID: <20240220204846.641850701@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 187/197] nfsd: fix RELEASE_LOCKOWNER
+Date: Tue, 20 Feb 2024 21:52:26 +0100
+Message-ID: <20240220204846.676346979@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -49,386 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: NeilBrown <neilb@suse.de>
 
-commit 8b1d72395635af45410b66cc4c4ab37a12c4a831 upstream.
+[ Upstream commit edcf9725150e42beeca42d085149f4c88fa97afd ]
 
-The current exception handler implementation, which assists when accessing
-user space memory, may exhibit random data corruption if the compiler decides
-to use a different register than the specified register %r29 (defined in
-ASM_EXCEPTIONTABLE_REG) for the error code. If the compiler choose another
-register, the fault handler will nevertheless store -EFAULT into %r29 and thus
-trash whatever this register is used for.
-Looking at the assembly I found that this happens sometimes in emulate_ldd().
+The test on so_count in nfsd4_release_lockowner() is nonsense and
+harmful.  Revert to using check_for_locks(), changing that to not sleep.
 
-To solve the issue, the easiest solution would be if it somehow is
-possible to tell the fault handler which register is used to hold the error
-code. Using %0 or %1 in the inline assembly is not posssible as it will show
-up as e.g. %r29 (with the "%r" prefix), which the GNU assembler can not
-convert to an integer.
+First: harmful.
+As is documented in the kdoc comment for nfsd4_release_lockowner(), the
+test on so_count can transiently return a false positive resulting in a
+return of NFS4ERR_LOCKS_HELD when in fact no locks are held.  This is
+clearly a protocol violation and with the Linux NFS client it can cause
+incorrect behaviour.
 
-This patch takes another, better and more flexible approach:
-We extend the __ex_table (which is out of the execution path) by one 32-word.
-In this word we tell the compiler to insert the assembler instruction
-"or %r0,%r0,%reg", where %reg references the register which the compiler
-choosed for the error return code.
-In case of an access failure, the fault handler finds the __ex_table entry and
-can examine the opcode. The used register is encoded in the lowest 5 bits, and
-the fault handler can then store -EFAULT into this register.
+If RELEASE_LOCKOWNER is sent while some other thread is still
+processing a LOCK request which failed because, at the time that request
+was received, the given owner held a conflicting lock, then the nfsd
+thread processing that LOCK request can hold a reference (conflock) to
+the lock owner that causes nfsd4_release_lockowner() to return an
+incorrect error.
 
-Since we extend the __ex_table to 3 words we can't use the BUILDTIME_TABLE_SORT
-config option any longer.
+The Linux NFS client ignores that NFS4ERR_LOCKS_HELD error because it
+never sends NFS4_RELEASE_LOCKOWNER without first releasing any locks, so
+it knows that the error is impossible.  It assumes the lock owner was in
+fact released so it feels free to use the same lock owner identifier in
+some later locking request.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v6.0+
+When it does reuse a lock owner identifier for which a previous RELEASE
+failed, it will naturally use a lock_seqid of zero.  However the server,
+which didn't release the lock owner, will expect a larger lock_seqid and
+so will respond with NFS4ERR_BAD_SEQID.
+
+So clearly it is harmful to allow a false positive, which testing
+so_count allows.
+
+The test is nonsense because ... well... it doesn't mean anything.
+
+so_count is the sum of three different counts.
+1/ the set of states listed on so_stateids
+2/ the set of active vfs locks owned by any of those states
+3/ various transient counts such as for conflicting locks.
+
+When it is tested against '2' it is clear that one of these is the
+transient reference obtained by find_lockowner_str_locked().  It is not
+clear what the other one is expected to be.
+
+In practice, the count is often 2 because there is precisely one state
+on so_stateids.  If there were more, this would fail.
+
+In my testing I see two circumstances when RELEASE_LOCKOWNER is called.
+In one case, CLOSE is called before RELEASE_LOCKOWNER.  That results in
+all the lock states being removed, and so the lockowner being discarded
+(it is removed when there are no more references which usually happens
+when the lock state is discarded).  When nfsd4_release_lockowner() finds
+that the lock owner doesn't exist, it returns success.
+
+The other case shows an so_count of '2' and precisely one state listed
+in so_stateid.  It appears that the Linux client uses a separate lock
+owner for each file resulting in one lock state per lock owner, so this
+test on '2' is safe.  For another client it might not be safe.
+
+So this patch changes check_for_locks() to use the (newish)
+find_any_file_locked() so that it doesn't take a reference on the
+nfs4_file and so never calls nfsd_file_put(), and so never sleeps.  With
+this check is it safe to restore the use of check_for_locks() rather
+than testing so_count against the mysterious '2'.
+
+Fixes: ce3c4ad7f4ce ("NFSD: Fix possible sleep during nfsd4_release_lockowner()")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@vger.kernel.org # v6.2+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ fs/nfsd/nfs4state.c |   26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
----
- arch/parisc/Kconfig                     |    1 
- arch/parisc/include/asm/assembly.h      |    1 
- arch/parisc/include/asm/extable.h       |   64 ++++++++++++++++++++++++++++++++
- arch/parisc/include/asm/special_insns.h |    6 ++-
- arch/parisc/include/asm/uaccess.h       |   48 +++---------------------
- arch/parisc/kernel/unaligned.c          |   44 +++++++++++-----------
- arch/parisc/mm/fault.c                  |   11 ++++-
- 7 files changed, 106 insertions(+), 69 deletions(-)
-
---- a/arch/parisc/Kconfig
-+++ b/arch/parisc/Kconfig
-@@ -24,7 +24,6 @@ config PARISC
- 	select RTC_DRV_GENERIC
- 	select INIT_ALL_POSSIBLE
- 	select BUG
--	select BUILDTIME_TABLE_SORT
- 	select HAVE_PCI
- 	select HAVE_PERF_EVENTS
- 	select HAVE_KERNEL_BZIP2
---- a/arch/parisc/include/asm/assembly.h
-+++ b/arch/parisc/include/asm/assembly.h
-@@ -576,6 +576,7 @@
- 	.section __ex_table,"aw"			!	\
- 	.align 4					!	\
- 	.word (fault_addr - .), (except_addr - .)	!	\
-+	or %r0,%r0,%r0					!	\
- 	.previous
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7736,14 +7736,16 @@ check_for_locks(struct nfs4_file *fp, st
+ {
+ 	struct file_lock *fl;
+ 	int status = false;
+-	struct nfsd_file *nf = find_any_file(fp);
++	struct nfsd_file *nf;
+ 	struct inode *inode;
+ 	struct file_lock_context *flctx;
  
++	spin_lock(&fp->fi_lock);
++	nf = find_any_file_locked(fp);
+ 	if (!nf) {
+ 		/* Any valid lock stateid should have some sort of access */
+ 		WARN_ON_ONCE(1);
+-		return status;
++		goto out;
+ 	}
  
---- /dev/null
-+++ b/arch/parisc/include/asm/extable.h
-@@ -0,0 +1,64 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#ifndef __PARISC_EXTABLE_H
-+#define __PARISC_EXTABLE_H
+ 	inode = locks_inode(nf->nf_file);
+@@ -7759,7 +7761,8 @@ check_for_locks(struct nfs4_file *fp, st
+ 		}
+ 		spin_unlock(&flctx->flc_lock);
+ 	}
+-	nfsd_file_put(nf);
++out:
++	spin_unlock(&fp->fi_lock);
+ 	return status;
+ }
+ 
+@@ -7769,10 +7772,8 @@ check_for_locks(struct nfs4_file *fp, st
+  * @cstate: NFSv4 COMPOUND state
+  * @u: RELEASE_LOCKOWNER arguments
+  *
+- * The lockowner's so_count is bumped when a lock record is added
+- * or when copying a conflicting lock. The latter case is brief,
+- * but can lead to fleeting false positives when looking for
+- * locks-in-use.
++ * Check if theree are any locks still held and if not - free the lockowner
++ * and any lock state that is owned.
+  *
+  * Return values:
+  *   %nfs_ok: lockowner released or not found
+@@ -7808,10 +7809,13 @@ nfsd4_release_lockowner(struct svc_rqst
+ 		spin_unlock(&clp->cl_lock);
+ 		return nfs_ok;
+ 	}
+-	if (atomic_read(&lo->lo_owner.so_count) != 2) {
+-		spin_unlock(&clp->cl_lock);
+-		nfs4_put_stateowner(&lo->lo_owner);
+-		return nfserr_locks_held;
 +
-+#include <asm/ptrace.h>
-+#include <linux/compiler.h>
-+
-+/*
-+ * The exception table consists of three addresses:
-+ *
-+ * - A relative address to the instruction that is allowed to fault.
-+ * - A relative address at which the program should continue (fixup routine)
-+ * - An asm statement which specifies which CPU register will
-+ *   receive -EFAULT when an exception happens if the lowest bit in
-+ *   the fixup address is set.
-+ *
-+ * Note: The register specified in the err_opcode instruction will be
-+ * modified at runtime if a fault happens. Register %r0 will be ignored.
-+ *
-+ * Since relative addresses are used, 32bit values are sufficient even on
-+ * 64bit kernel.
-+ */
-+
-+struct pt_regs;
-+int fixup_exception(struct pt_regs *regs);
-+
-+#define ARCH_HAS_RELATIVE_EXTABLE
-+struct exception_table_entry {
-+	int insn;	/* relative address of insn that is allowed to fault. */
-+	int fixup;	/* relative address of fixup routine */
-+	int err_opcode; /* sample opcode with register which holds error code */
-+};
-+
-+#define ASM_EXCEPTIONTABLE_ENTRY( fault_addr, except_addr, opcode )\
-+	".section __ex_table,\"aw\"\n"			   \
-+	".align 4\n"					   \
-+	".word (" #fault_addr " - .), (" #except_addr " - .)\n" \
-+	opcode "\n"					   \
-+	".previous\n"
-+
-+/*
-+ * ASM_EXCEPTIONTABLE_ENTRY_EFAULT() creates a special exception table entry
-+ * (with lowest bit set) for which the fault handler in fixup_exception() will
-+ * load -EFAULT on fault into the register specified by the err_opcode instruction,
-+ * and zeroes the target register in case of a read fault in get_user().
-+ */
-+#define ASM_EXCEPTIONTABLE_VAR(__err_var)		\
-+	int __err_var = 0
-+#define ASM_EXCEPTIONTABLE_ENTRY_EFAULT( fault_addr, except_addr, register )\
-+	ASM_EXCEPTIONTABLE_ENTRY( fault_addr, except_addr + 1, "or %%r0,%%r0," register)
-+
-+static inline void swap_ex_entry_fixup(struct exception_table_entry *a,
-+				       struct exception_table_entry *b,
-+				       struct exception_table_entry tmp,
-+				       int delta)
-+{
-+	a->fixup = b->fixup + delta;
-+	b->fixup = tmp.fixup - delta;
-+	a->err_opcode = b->err_opcode;
-+	b->err_opcode = tmp.err_opcode;
-+}
-+#define swap_ex_entry_fixup swap_ex_entry_fixup
-+
-+#endif
---- a/arch/parisc/include/asm/special_insns.h
-+++ b/arch/parisc/include/asm/special_insns.h
-@@ -8,7 +8,8 @@
- 		"copy %%r0,%0\n"			\
- 		"8:\tlpa %%r0(%1),%0\n"			\
- 		"9:\n"					\
--		ASM_EXCEPTIONTABLE_ENTRY(8b, 9b)	\
-+		ASM_EXCEPTIONTABLE_ENTRY(8b, 9b,	\
-+				"or %%r0,%%r0,%%r0")	\
- 		: "=&r" (pa)				\
- 		: "r" (va)				\
- 		: "memory"				\
-@@ -22,7 +23,8 @@
- 		"copy %%r0,%0\n"			\
- 		"8:\tlpa %%r0(%%sr3,%1),%0\n"		\
- 		"9:\n"					\
--		ASM_EXCEPTIONTABLE_ENTRY(8b, 9b)	\
-+		ASM_EXCEPTIONTABLE_ENTRY(8b, 9b,	\
-+				"or %%r0,%%r0,%%r0")	\
- 		: "=&r" (pa)				\
- 		: "r" (va)				\
- 		: "memory"				\
---- a/arch/parisc/include/asm/uaccess.h
-+++ b/arch/parisc/include/asm/uaccess.h
-@@ -7,6 +7,7 @@
-  */
- #include <asm/page.h>
- #include <asm/cache.h>
-+#include <asm/extable.h>
- 
- #include <linux/bug.h>
- #include <linux/string.h>
-@@ -26,37 +27,6 @@
- #define STD_USER(sr, x, ptr)	__put_user_asm(sr, "std", x, ptr)
- #endif
- 
--/*
-- * The exception table contains two values: the first is the relative offset to
-- * the address of the instruction that is allowed to fault, and the second is
-- * the relative offset to the address of the fixup routine. Since relative
-- * addresses are used, 32bit values are sufficient even on 64bit kernel.
-- */
--
--#define ARCH_HAS_RELATIVE_EXTABLE
--struct exception_table_entry {
--	int insn;	/* relative address of insn that is allowed to fault. */
--	int fixup;	/* relative address of fixup routine */
--};
--
--#define ASM_EXCEPTIONTABLE_ENTRY( fault_addr, except_addr )\
--	".section __ex_table,\"aw\"\n"			   \
--	".align 4\n"					   \
--	".word (" #fault_addr " - .), (" #except_addr " - .)\n\t" \
--	".previous\n"
--
--/*
-- * ASM_EXCEPTIONTABLE_ENTRY_EFAULT() creates a special exception table entry
-- * (with lowest bit set) for which the fault handler in fixup_exception() will
-- * load -EFAULT into %r29 for a read or write fault, and zeroes the target
-- * register in case of a read fault in get_user().
-- */
--#define ASM_EXCEPTIONTABLE_REG	29
--#define ASM_EXCEPTIONTABLE_VAR(__variable)		\
--	register long __variable __asm__ ("r29") = 0
--#define ASM_EXCEPTIONTABLE_ENTRY_EFAULT( fault_addr, except_addr )\
--	ASM_EXCEPTIONTABLE_ENTRY( fault_addr, except_addr + 1)
--
- #define __get_user_internal(sr, val, ptr)		\
- ({							\
- 	ASM_EXCEPTIONTABLE_VAR(__gu_err);		\
-@@ -83,7 +53,7 @@ struct exception_table_entry {
- 							\
- 	__asm__("1: " ldx " 0(%%sr%2,%3),%0\n"		\
- 		"9:\n"					\
--		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)	\
-+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b, "%1")	\
- 		: "=r"(__gu_val), "+r"(__gu_err)        \
- 		: "i"(sr), "r"(ptr));			\
- 							\
-@@ -115,8 +85,8 @@ struct exception_table_entry {
- 		"1: ldw 0(%%sr%2,%3),%0\n"		\
- 		"2: ldw 4(%%sr%2,%3),%R0\n"		\
- 		"9:\n"					\
--		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)	\
--		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 9b)	\
-+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b, "%1")	\
-+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 9b, "%1")	\
- 		: "=&r"(__gu_tmp.l), "+r"(__gu_err)	\
- 		: "i"(sr), "r"(ptr));			\
- 							\
-@@ -174,7 +144,7 @@ struct exception_table_entry {
- 	__asm__ __volatile__ (					\
- 		"1: " stx " %1,0(%%sr%2,%3)\n"			\
- 		"9:\n"						\
--		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)		\
-+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b, "%0")	\
- 		: "+r"(__pu_err)				\
- 		: "r"(x), "i"(sr), "r"(ptr))
- 
-@@ -186,15 +156,14 @@ struct exception_table_entry {
- 		"1: stw %1,0(%%sr%2,%3)\n"			\
- 		"2: stw %R1,4(%%sr%2,%3)\n"			\
- 		"9:\n"						\
--		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)		\
--		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 9b)		\
-+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b, "%0")	\
-+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 9b, "%0")	\
- 		: "+r"(__pu_err)				\
- 		: "r"(__val), "i"(sr), "r"(ptr));		\
- } while (0)
- 
- #endif /* !defined(CONFIG_64BIT) */
- 
--
- /*
-  * Complex access routines -- external declarations
-  */
-@@ -216,7 +185,4 @@ unsigned long __must_check raw_copy_from
- #define INLINE_COPY_TO_USER
- #define INLINE_COPY_FROM_USER
- 
--struct pt_regs;
--int fixup_exception(struct pt_regs *regs);
--
- #endif /* __PARISC_UACCESS_H */
---- a/arch/parisc/kernel/unaligned.c
-+++ b/arch/parisc/kernel/unaligned.c
-@@ -118,8 +118,8 @@ static int emulate_ldh(struct pt_regs *r
- "2:	ldbs	1(%%sr1,%3), %0\n"
- "	depw	%2, 23, 24, %0\n"
- "3:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b, "%1")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b, "%1")
- 	: "+r" (val), "+r" (ret), "=&r" (temp1)
- 	: "r" (saddr), "r" (regs->isr) );
- 
-@@ -150,8 +150,8 @@ static int emulate_ldw(struct pt_regs *r
- "	mtctl	%2,11\n"
- "	vshd	%0,%3,%0\n"
- "3:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b, "%1")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b, "%1")
- 	: "+r" (val), "+r" (ret), "=&r" (temp1), "=&r" (temp2)
- 	: "r" (saddr), "r" (regs->isr) );
- 
-@@ -187,8 +187,8 @@ static int emulate_ldd(struct pt_regs *r
- "	mtsar	%%r19\n"
- "	shrpd	%0,%%r20,%%sar,%0\n"
- "3:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b, "%1")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b, "%1")
- 	: "=r" (val), "+r" (ret)
- 	: "0" (val), "r" (saddr), "r" (regs->isr)
- 	: "r19", "r20" );
-@@ -207,9 +207,9 @@ static int emulate_ldd(struct pt_regs *r
- "	vshd	%0,%R0,%0\n"
- "	vshd	%R0,%4,%R0\n"
- "4:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 4b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 4b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(3b, 4b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 4b, "%1")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 4b, "%1")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(3b, 4b, "%1")
- 	: "+r" (val), "+r" (ret), "+r" (saddr), "=&r" (shift), "=&r" (temp1)
- 	: "r" (regs->isr) );
-     }
-@@ -242,8 +242,8 @@ static int emulate_sth(struct pt_regs *r
- "1:	stb %1, 0(%%sr1, %3)\n"
- "2:	stb %2, 1(%%sr1, %3)\n"
- "3:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b, "%0")
- 	: "+r" (ret), "=&r" (temp1)
- 	: "r" (val), "r" (regs->ior), "r" (regs->isr) );
- 
-@@ -283,8 +283,8 @@ static int emulate_stw(struct pt_regs *r
- "	stw	%%r20,0(%%sr1,%2)\n"
- "	stw	%%r21,4(%%sr1,%2)\n"
- "3:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 3b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 3b, "%0")
- 	: "+r" (ret)
- 	: "r" (val), "r" (regs->ior), "r" (regs->isr)
- 	: "r19", "r20", "r21", "r22", "r1" );
-@@ -327,10 +327,10 @@ static int emulate_std(struct pt_regs *r
- "3:	std	%%r20,0(%%sr1,%2)\n"
- "4:	std	%%r21,8(%%sr1,%2)\n"
- "5:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 5b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 5b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(3b, 5b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(4b, 5b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 5b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 5b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(3b, 5b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(4b, 5b, "%0")
- 	: "+r" (ret)
- 	: "r" (val), "r" (regs->ior), "r" (regs->isr)
- 	: "r19", "r20", "r21", "r22", "r1" );
-@@ -356,11 +356,11 @@ static int emulate_std(struct pt_regs *r
- "4:	stw	%%r1,4(%%sr1,%3)\n"
- "5:	stw	%2,8(%%sr1,%3)\n"
- "6:	\n"
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 6b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 6b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(3b, 6b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(4b, 6b)
--	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(5b, 6b)
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 6b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 6b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(3b, 6b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(4b, 6b, "%0")
-+	ASM_EXCEPTIONTABLE_ENTRY_EFAULT(5b, 6b, "%0")
- 	: "+r" (ret)
- 	: "r" (valh), "r" (vall), "r" (regs->ior), "r" (regs->isr)
- 	: "r19", "r20", "r21", "r1" );
---- a/arch/parisc/mm/fault.c
-+++ b/arch/parisc/mm/fault.c
-@@ -150,11 +150,16 @@ int fixup_exception(struct pt_regs *regs
- 		 * Fix up get_user() and put_user().
- 		 * ASM_EXCEPTIONTABLE_ENTRY_EFAULT() sets the least-significant
- 		 * bit in the relative address of the fixup routine to indicate
--		 * that gr[ASM_EXCEPTIONTABLE_REG] should be loaded with
--		 * -EFAULT to report a userspace access error.
-+		 * that the register encoded in the "or %r0,%r0,register"
-+		 * opcode should be loaded with -EFAULT to report a userspace
-+		 * access error.
- 		 */
- 		if (fix->fixup & 1) {
--			regs->gr[ASM_EXCEPTIONTABLE_REG] = -EFAULT;
-+			int fault_error_reg = fix->err_opcode & 0x1f;
-+			if (!WARN_ON(!fault_error_reg))
-+				regs->gr[fault_error_reg] = -EFAULT;
-+			pr_debug("Unalignment fixup of register %d at %pS\n",
-+				fault_error_reg, (void*)regs->iaoq[0]);
- 
- 			/* zero target register for get_user() */
- 			if (parisc_acctyp(0, regs->iir) == VM_READ) {
++	list_for_each_entry(stp, &lo->lo_owner.so_stateids, st_perstateowner) {
++		if (check_for_locks(stp->st_stid.sc_file, lo)) {
++			spin_unlock(&clp->cl_lock);
++			nfs4_put_stateowner(&lo->lo_owner);
++			return nfserr_locks_held;
++		}
+ 	}
+ 	unhash_lockowner_locked(lo);
+ 	while (!list_empty(&lo->lo_owner.so_stateids)) {
 
 
