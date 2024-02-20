@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09E414A4E6;
-	Tue, 20 Feb 2024 21:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20E514A4E6;
+	Tue, 20 Feb 2024 21:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464398; cv=none; b=E/YSd1cN8rT2CXqcqCZJl9zFPL5kmtrad4grk2sYKxfaabR4Y0Na0RIWXj/xm/Ft2aKTR0o+3PDQ7Rh5WVLiz4Utq8L/x1sUhOEjPoAElQDWL1aY5prXlqOqkMfw0XpmOEl1aAk5b+87+TYzbrohBuCo2BVlkSTS3ceHvb1su7Y=
+	t=1708464402; cv=none; b=Cov4WfcXVN+5dcAiGJNF6GDp+UizzXGFYbSrfO3OspgewBwcDtL3zDSOEViMPYaVKw2k3qRm1ENhFJl6qLc5TLCg8FcJI+1gHem+Iu6EZk5GHfIlMjTtkOn2NuQsoFOod3MWVZDmYjtJZDSZkNfhelxUtjPlKALDZyHC/74QLsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464398; c=relaxed/simple;
-	bh=hFoW2ByaVQt9syEwYkoIFkhScL7/G0M+QEj6+eEohxU=;
+	s=arc-20240116; t=1708464402; c=relaxed/simple;
+	bh=mRGSDT9bqP/oD3loC05Rb0Gj7DC27j/pvVLyKgShats=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSNK7RtjvUZMuUfrDGe6yJKTxa0aq50XmeBLyELlga/1DWiycZWiKNlN23kiDPIWxRlX0UqtX+hDxIcnKLkwubXo8uvHHBsx+63vnp+Dqrc5OPtOpJvSE95OLWNK+B0C6YA99L+dDlbga0lCsUxCMfT9ocHb/nHndr58vezpqlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tmb9i3sO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shS/5oZSFa4JPdnNTumq6/qvBmCCP2fiuYVMeXc0EBk7y5MBMFs2VDAEfwyRVqLopii1dGNaK6oChBiloYAsx2U93oDOpE4OzWenYp6E4Rz1dDwSQCuLXAeQU2xV3guNGjN5LjGvKbcqt2Cc6m286qqtIVt4hwv8njzwnxHQyJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRD6cKwe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tmb9i3sO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FF1C433F1;
-	Tue, 20 Feb 2024 21:26:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRD6cKwe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B10C433F1;
+	Tue, 20 Feb 2024 21:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464398;
-	bh=hFoW2ByaVQt9syEwYkoIFkhScL7/G0M+QEj6+eEohxU=;
+	s=korg; t=1708464401;
+	bh=mRGSDT9bqP/oD3loC05Rb0Gj7DC27j/pvVLyKgShats=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tmb9i3sOaV697AFIaKTxZMb53F//OITAl+pGwB14gVreTkmRCnGUSDm+2EiJoffTM
-	 Ia7T0mvPIALh1yqtIQUd9pnAVRcSLC4GY+DWwgvHJLcNM0iseeRt9bCBv5sa1H7P2v
-	 G+4TPpuCa2t9GxZ68R1l3Uz6s5iAWOvRC3CQNGJI=
+	b=qRD6cKwei4zqZunHDTZpiwdy5sCFuixG3CE59+mzCgbGOocz4hdcDOWHAXURjdPMA
+	 Ur6LcQpdoBS6IkETXyQ/soCRBmvl8yPyBiHivs6VkFHBtEk0YCwuwjBaywLEJheF1B
+	 u6RQRkCsi+gYoC11WC70VtPl4+BXdsGebnBQvyGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.7 013/309] btrfs: dont reserve space for checksums when writing to nocow files
-Date: Tue, 20 Feb 2024 21:52:52 +0100
-Message-ID: <20240220205633.559136695@linuxfoundation.org>
+Subject: [PATCH 6.7 014/309] btrfs: reject encoded write if inode has nodatasum flag set
+Date: Tue, 20 Feb 2024 21:52:53 +0100
+Message-ID: <20240220205633.593466248@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,107 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-commit feefe1f49d26bad9d8997096e3a200280fa7b1c5 upstream.
+commit 1bd96c92c6a0a4d43815eb685c15aa4b78879dc9 upstream.
 
-Currently when doing a write to a file we always reserve metadata space
-for inserting data checksums. However we don't need to do it if we have
-a nodatacow file (-o nodatacow mount option or chattr +C) or if checksums
-are disabled (-o nodatasum mount option), as in that case we are only
-adding unnecessary pressure to metadata reservations.
+Currently we allow an encoded write against inodes that have the NODATASUM
+flag set, either because they are NOCOW files or they were created while
+the filesystem was mounted with "-o nodatasum". This results in having
+compressed extents without corresponding checksums, which is a filesystem
+inconsistency reported by 'btrfs check'.
 
-For example on x86_64, with the default node size of 16K, a 4K buffered
-write into a nodatacow file is reserving 655360 bytes of metadata space,
-as it's accounting for checksums. After this change, which stops reserving
-space for checksums if we have a nodatacow file or checksums are disabled,
-we only need to reserve 393216 bytes of metadata.
+For example, running btrfs/281 with MOUNT_OPTIONS="-o nodatacow" triggers
+this and 'btrfs check' errors out with:
+
+   [1/7] checking root items
+   [2/7] checking extents
+   [3/7] checking free space tree
+   [4/7] checking fs roots
+   root 256 inode 257 errors 1040, bad file extent, some csum missing
+   root 256 inode 258 errors 1040, bad file extent, some csum missing
+   ERROR: errors found in fs roots
+   (...)
+
+So reject encoded writes if the target inode has NODATASUM set.
 
 CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/delalloc-space.c |   29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ fs/btrfs/inode.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/btrfs/delalloc-space.c
-+++ b/fs/btrfs/delalloc-space.c
-@@ -245,7 +245,6 @@ static void btrfs_calculate_inode_block_
- 	struct btrfs_block_rsv *block_rsv = &inode->block_rsv;
- 	u64 reserve_size = 0;
- 	u64 qgroup_rsv_size = 0;
--	u64 csum_leaves;
- 	unsigned outstanding_extents;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -10233,6 +10233,13 @@ ssize_t btrfs_do_encoded_write(struct ki
+ 	if (encoded->encryption != BTRFS_ENCODED_IO_ENCRYPTION_NONE)
+ 		return -EINVAL;
  
- 	lockdep_assert_held(&inode->lock);
-@@ -260,10 +259,12 @@ static void btrfs_calculate_inode_block_
- 						outstanding_extents);
- 		reserve_size += btrfs_calc_metadata_size(fs_info, 1);
- 	}
--	csum_leaves = btrfs_csum_bytes_to_leaves(fs_info,
--						 inode->csum_bytes);
--	reserve_size += btrfs_calc_insert_metadata_size(fs_info,
--							csum_leaves);
-+	if (!(inode->flags & BTRFS_INODE_NODATASUM)) {
-+		u64 csum_leaves;
-+
-+		csum_leaves = btrfs_csum_bytes_to_leaves(fs_info, inode->csum_bytes);
-+		reserve_size += btrfs_calc_insert_metadata_size(fs_info, csum_leaves);
-+	}
- 	/*
- 	 * For qgroup rsv, the calculation is very simple:
- 	 * account one nodesize for each outstanding extent
-@@ -278,14 +279,20 @@ static void btrfs_calculate_inode_block_
- 	spin_unlock(&block_rsv->lock);
- }
- 
--static void calc_inode_reservations(struct btrfs_fs_info *fs_info,
-+static void calc_inode_reservations(struct btrfs_inode *inode,
- 				    u64 num_bytes, u64 disk_num_bytes,
- 				    u64 *meta_reserve, u64 *qgroup_reserve)
- {
-+	struct btrfs_fs_info *fs_info = inode->root->fs_info;
- 	u64 nr_extents = count_max_extents(fs_info, num_bytes);
--	u64 csum_leaves = btrfs_csum_bytes_to_leaves(fs_info, disk_num_bytes);
-+	u64 csum_leaves;
- 	u64 inode_update = btrfs_calc_metadata_size(fs_info, 1);
- 
++	/*
++	 * Compressed extents should always have checksums, so error out if we
++	 * have a NOCOW file or inode was created while mounted with NODATASUM.
++	 */
 +	if (inode->flags & BTRFS_INODE_NODATASUM)
-+		csum_leaves = 0;
-+	else
-+		csum_leaves = btrfs_csum_bytes_to_leaves(fs_info, disk_num_bytes);
++		return -EINVAL;
 +
- 	*meta_reserve = btrfs_calc_insert_metadata_size(fs_info,
- 						nr_extents + csum_leaves);
+ 	orig_count = iov_iter_count(from);
  
-@@ -337,7 +344,7 @@ int btrfs_delalloc_reserve_metadata(stru
- 	 * everything out and try again, which is bad.  This way we just
- 	 * over-reserve slightly, and clean up the mess when we are done.
- 	 */
--	calc_inode_reservations(fs_info, num_bytes, disk_num_bytes,
-+	calc_inode_reservations(inode, num_bytes, disk_num_bytes,
- 				&meta_reserve, &qgroup_reserve);
- 	ret = btrfs_qgroup_reserve_meta_prealloc(root, qgroup_reserve, true,
- 						 noflush);
-@@ -359,7 +366,8 @@ int btrfs_delalloc_reserve_metadata(stru
- 	nr_extents = count_max_extents(fs_info, num_bytes);
- 	spin_lock(&inode->lock);
- 	btrfs_mod_outstanding_extents(inode, nr_extents);
--	inode->csum_bytes += disk_num_bytes;
-+	if (!(inode->flags & BTRFS_INODE_NODATASUM))
-+		inode->csum_bytes += disk_num_bytes;
- 	btrfs_calculate_inode_block_rsv_size(fs_info, inode);
- 	spin_unlock(&inode->lock);
- 
-@@ -393,7 +401,8 @@ void btrfs_delalloc_release_metadata(str
- 
- 	num_bytes = ALIGN(num_bytes, fs_info->sectorsize);
- 	spin_lock(&inode->lock);
--	inode->csum_bytes -= num_bytes;
-+	if (!(inode->flags & BTRFS_INODE_NODATASUM))
-+		inode->csum_bytes -= num_bytes;
- 	btrfs_calculate_inode_block_rsv_size(fs_info, inode);
- 	spin_unlock(&inode->lock);
- 
+ 	/* The extent size must be sane. */
 
 
