@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2ADF14C585;
-	Tue, 20 Feb 2024 21:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50B314C585;
+	Tue, 20 Feb 2024 21:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708463198; cv=none; b=Dv5wMFRRb/M1awkvDFGgqLRNyndlRvM7pyCUt2ytz1x+1Lh0r2SBMmgCVII6gFLllzpI4t02iHt89Tnk7HWxlf8x4vQTa7exjjmVI2TNYowJ0+750INe/YSSGbeHRBv/ZTv/c7lk9Pr3Js7sUEQTQNGIC4glENrrD2KJLE2Aro8=
+	t=1708463201; cv=none; b=nh5q3JOrl/bfxSgJqXI/q18svnY+58vA5Rsw4y/R6VBiA2d00Sd442zG3ptoOLRpH9ZEaJ5weBzIDmFYQsr36r9lZ14J6/4ec6fxNn/8TJ9xGPjysZzt4/9DPZp54A9zp1EnwO6QqWrqPPPdBc1M4yDHoGdDNF4AIzfTcM2YP2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708463198; c=relaxed/simple;
-	bh=B9YovDj7Sru5xmMc8RyrNTXJ7SWN0E+1oGQe+B+xIVU=;
+	s=arc-20240116; t=1708463201; c=relaxed/simple;
+	bh=zc+vKyNrW7oiqPbxiPg6tQOrCy1rKXF8UzEWA8tUKzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjAKoEre9LrwZIb8I+hN6tB63gobMScbauRPlipAkXYNcLUIaWqFkZ0CZVMqycsN+HVUeaxJ6ZNjVNZ7PjmxozkFmMS6QOnB2vhBoZ2/cKnOdw2/LnMYjRyEDzw08L5Ye5FAzDXReUuGiivPSpslmmU0dSLY+ehrvwek6giU7xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iD1Kqo0/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmtbS7noRjp4ipokzct/JmRxCB1GlSYYKi9OewbglX1GBj1j/wu5I2NaBTOJ3UUBZ4IGsg9PES0yD2GglYozXkYoN+z0FlScS/siDPKjy8U2OsuODfqrl520Zo95S1NHzciLXhyFhYeFzf6ALXDHWbAjlk0gPjwBUMcidEfddEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMAJlh4P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iD1Kqo0/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43862C433F1;
-	Tue, 20 Feb 2024 21:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMAJlh4P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DB8C433C7;
+	Tue, 20 Feb 2024 21:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708463198;
-	bh=B9YovDj7Sru5xmMc8RyrNTXJ7SWN0E+1oGQe+B+xIVU=;
+	s=korg; t=1708463201;
+	bh=zc+vKyNrW7oiqPbxiPg6tQOrCy1rKXF8UzEWA8tUKzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iD1Kqo0/FZSxwX1XMZg2ed/P7O+T41s4IkPGfEJSueGbGq4zb/oXWhJaQJbnpsRmI
-	 3/r1R4EXmr3A7FO2ZrcnFw8BTPLBCVs/az72R1yayVyi1uUFOMbVl5qL6ilk/bhrt6
-	 zJAAxCwHCRCU4RNBo2swIuWvJXa5Op6ys3XhQR3g=
+	b=RMAJlh4Pv97xRwQHTjR2XQcqqhqoY7hQKMTzj4v9hzP0LJNwDFsL6HAyNpqX1gJ6L
+	 mfYPkTUPyFpBJSEPUH1RCnG44uk5AhwbVQjGKazkJGxsP9dvVL4cjF95z/4GbwvJZw
+	 scxwZYhkf397TWHL+03fCBRgahZG0BxQb0SwQcKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Basilio <daniel.basilio@corigine.com>,
+	Daniel de Villiers <daniel.devilliers@corigine.com>,
 	Louis Peens <louis.peens@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 138/197] nfp: use correct macro for LengthSelect in BAR config
-Date: Tue, 20 Feb 2024 21:51:37 +0100
-Message-ID: <20240220204845.199316984@linuxfoundation.org>
+Subject: [PATCH 6.1 139/197] nfp: flower: prevent re-adding mac index for bonded port
+Date: Tue, 20 Feb 2024 21:51:38 +0100
+Message-ID: <20240220204845.230136416@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -51,46 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Basilio <daniel.basilio@corigine.com>
+From: Daniel de Villiers <daniel.devilliers@corigine.com>
 
-commit b3d4f7f2288901ed2392695919b3c0e24c1b4084 upstream.
+commit 1a1c13303ff6d64e6f718dc8aa614e580ca8d9b4 upstream.
 
-The 1st and 2nd expansion BAR configuration registers are configured,
-when the driver starts up, in variables 'barcfg_msix_general' and
-'barcfg_msix_xpb', respectively. The 'LengthSelect' field is ORed in
-from bit 0, which is incorrect. The 'LengthSelect' field should
-start from bit 27.
+When physical ports are reset (either through link failure or manually
+toggled down and up again) that are slaved to a Linux bond with a tunnel
+endpoint IP address on the bond device, not all tunnel packets arriving
+on the bond port are decapped as expected.
 
-This has largely gone un-noticed because
-NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT happens to be 0.
+The bond dev assigns the same MAC address to itself and each of its
+slaves. When toggling a slave device, the same MAC address is therefore
+offloaded to the NFP multiple times with different indexes.
 
-Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
-Cc: stable@vger.kernel.org # 4.11+
-Signed-off-by: Daniel Basilio <daniel.basilio@corigine.com>
+The issue only occurs when re-adding the shared mac. The
+nfp_tunnel_add_shared_mac() function has a conditional check early on
+that checks if a mac entry already exists and if that mac entry is
+global: (entry && nfp_tunnel_is_mac_idx_global(entry->index)). In the
+case of a bonded device (For example br-ex), the mac index is obtained,
+and no new index is assigned.
+
+We therefore modify the conditional in nfp_tunnel_add_shared_mac() to
+check if the port belongs to the LAG along with the existing checks to
+prevent a new global mac index from being re-assigned to the slave port.
+
+Fixes: 20cce8865098 ("nfp: flower: enable MAC address sharing for offloadable devs")
+CC: stable@vger.kernel.org # 5.1+
+Signed-off-by: Daniel de Villiers <daniel.devilliers@corigine.com>
 Signed-off-by: Louis Peens <louis.peens@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
-@@ -537,11 +537,13 @@ static int enable_bars(struct nfp6000_pc
- 	const u32 barcfg_msix_general =
- 		NFP_PCIE_BAR_PCIE2CPP_MapType(
- 			NFP_PCIE_BAR_PCIE2CPP_MapType_GENERAL) |
--		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT;
-+		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
-+			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT);
- 	const u32 barcfg_msix_xpb =
- 		NFP_PCIE_BAR_PCIE2CPP_MapType(
- 			NFP_PCIE_BAR_PCIE2CPP_MapType_BULK) |
--		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT |
-+		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
-+			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT) |
- 		NFP_PCIE_BAR_PCIE2CPP_Target_BaseAddress(
- 			NFP_CPP_TARGET_ISLAND_XPB);
- 	const u32 barcfg_explicit[4] = {
+--- a/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c
++++ b/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c
+@@ -980,7 +980,7 @@ nfp_tunnel_add_shared_mac(struct nfp_app
+ 	u16 nfp_mac_idx = 0;
+ 
+ 	entry = nfp_tunnel_lookup_offloaded_macs(app, netdev->dev_addr);
+-	if (entry && nfp_tunnel_is_mac_idx_global(entry->index)) {
++	if (entry && (nfp_tunnel_is_mac_idx_global(entry->index) || netif_is_lag_port(netdev))) {
+ 		if (entry->bridge_count ||
+ 		    !nfp_flower_is_supported_bridge(netdev)) {
+ 			nfp_tunnel_offloaded_macs_inc_ref_and_link(entry,
 
 
