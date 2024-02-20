@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8981509BF;
-	Tue, 20 Feb 2024 21:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C280914F9DA;
+	Tue, 20 Feb 2024 21:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462962; cv=none; b=arIC9x3c8FM/0vMfFDBNZeN02TzmX0tXhMRSRPdkfgUi+97qnS8XyFwPAB+qnBTVoNh4ox5Y6dGmmF72Bixlt4MyH6YpdS0yVD//27cD4hQXtKZpGF84g7ZAeSrCYnvjYEkwoDsH/5HgL4xqp/E0qbuCZPJp6eF+ERFLlvuRvnU=
+	t=1708462965; cv=none; b=cKncw40G74KrE5l4/8S9vx+yAjon9HZU9HbOcbTs0qN9kCM0X9DkQ+kxg4kiJ1329LsaOTiYGfXH0CxrHqDVWtbgECCr4ic5Obi2EjbWSik8kY5DKxWVLP4Xlo23sKWGrce1z2sp9e6wdZ0uaCoZer3nddSMWQR+H9XXopY0qSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462962; c=relaxed/simple;
-	bh=DF3MjrnKLlckyGfyYrv9Q1Ct8sMVMUXs5NRmN3YkuUc=;
+	s=arc-20240116; t=1708462965; c=relaxed/simple;
+	bh=PbymZf3Uu9HsYKz+LYLiylyv+F7EXs8XEQ3+QvOSWcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxYD8U5e0+MjrOp52JN1T6BcaSUXOdy/KDyuWzW/zHxwFka8StJSD1qzED3wbQTIYyyMDHz4Ycmtg5wMGiVMLFLA4tqNVf+DtsRXbwtxU1aRKkJJhisLJMepF6c1w5o7izgFuvFdIMKw081dX3dieEAQ9MjB3jKcuyuRtz4ay2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=01+lcsl8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DzYrtD+3Ud33lm0enMNLZ3KFFqyPkV95n5vZV/UW/GKISs/stfk0FkfeC06foPVNHJbvmlcfxr+/6qVyLcbTaqdWz/milDgA+VLdBTmSyyxlT3gx2DAxu35z2q/Mw24CLMXr4MgXaKpSSiT45/fa+U2rcDKSE0W2EqS9MlMqy1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CM2kEAom; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="01+lcsl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41ECC433C7;
-	Tue, 20 Feb 2024 21:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CM2kEAom"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC32C433C7;
+	Tue, 20 Feb 2024 21:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462962;
-	bh=DF3MjrnKLlckyGfyYrv9Q1Ct8sMVMUXs5NRmN3YkuUc=;
+	s=korg; t=1708462965;
+	bh=PbymZf3Uu9HsYKz+LYLiylyv+F7EXs8XEQ3+QvOSWcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01+lcsl80Mj8slUMp6ONHiX7TSV8LEbWkv944kZQ7I5kntiGAOMzmdF9PRw2vZagY
-	 neSDmSi28/LaRzdhmELeC6eg3ZNwuuASe5K83wULW8CQ1Kr1bi8QHWoYQRCkof1WRv
-	 tx3sdDFl5j22G1J9QKn+VSVc/lOuD00mK8ZKimak=
+	b=CM2kEAomHSqKNVh9lmb8ehtFhWQXUz3D9xhlU1dfKkiJTKMaVj2sg8pxoYYxvDRlD
+	 Q3WBwfyCtzLB7fLYrutMDbfucU7fnvMJF8zaODtshls32Gw5u2JMkHhsSLgwM3+zZR
+	 R1ZhwtBrYUGpyn+KAxmJdAeLANrVd63qqtnLielo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.1 091/197] modpost: Add .ltext and .ltext.* to TEXT_SECTIONS
-Date: Tue, 20 Feb 2024 21:50:50 +0100
-Message-ID: <20240220204843.809772604@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 092/197] ALSA: hda/realtek: Enable headset mic on Vaio VJFE-ADL
+Date: Tue, 20 Feb 2024 21:50:51 +0100
+Message-ID: <20240220204843.839491912@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -50,51 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit 397586506c3da005b9333ce5947ad01e8018a3be upstream.
+commit c7de2d9bb68a5fc71c25ff96705a80a76c8436eb upstream.
 
-After the linked LLVM change, building ARCH=um defconfig results in a
-segmentation fault in modpost. Prior to commit a23e7584ecf3 ("modpost:
-unify 'sym' and 'to' in default_mismatch_handler()"), there was a
-warning:
+Vaio VJFE-ADL is equipped with ALC269VC, and it needs
+ALC298_FIXUP_SPK_VOLUME quirk to make its headset mic work.
 
-  WARNING: modpost: vmlinux.o(__ex_table+0x88): Section mismatch in reference to the .ltext:(unknown)
-  WARNING: modpost: The relocation at __ex_table+0x88 references
-  section ".ltext" which is not in the list of
-  authorized sections.  If you're adding a new section
-  and/or if this reference is valid, add ".ltext" to the
-  list of authorized sections to jump to on fault.
-  This can be achieved by adding ".ltext" to
-  OTHER_TEXT_SECTIONS in scripts/mod/modpost.c.
-
-The linked LLVM change moves global objects to the '.ltext' (and
-'.ltext.*' with '-ffunction-sections') sections with '-mcmodel=large',
-which ARCH=um uses. These sections should be handled just as '.text'
-and '.text.*' are, so add them to TEXT_SECTIONS.
-
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/1981
-Link: https://github.com/llvm/llvm-project/commit/4bf8a688956a759b7b6b8d94f42d25c13c7af130
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240201122114.30080-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/mod/modpost.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -825,7 +825,8 @@ static void check_section(const char *mo
- 
- #define DATA_SECTIONS ".data", ".data.rel"
- #define TEXT_SECTIONS ".text", ".text.*", ".sched.text", \
--		".kprobes.text", ".cpuidle.text", ".noinstr.text"
-+		".kprobes.text", ".cpuidle.text", ".noinstr.text", \
-+		".ltext", ".ltext.*"
- #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
- 		".fixup", ".entry.text", ".exception.text", \
- 		".coldtext", ".softirqentry.text"
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10053,6 +10053,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
++	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+ 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
 
 
