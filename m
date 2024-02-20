@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9CC14F9DA;
-	Tue, 20 Feb 2024 21:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A12151CD0;
+	Tue, 20 Feb 2024 21:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462888; cv=none; b=ROEn4LC+OOtTlw2wfKUJJYo+UV+GH4tG4TJaJ7l3idYSY69pmK6n4yMlKyg1sXHPg5XPcy1eXP4/GJIKGrL7eN0r7GtW2+mApUYkWaVF/V8I8f73laqCa4PiavImINYSGoNoh78sl9KkR4p1DQCrFEu0ibLtJwAHT1zXYAY8Euo=
+	t=1708462893; cv=none; b=ebEhtf+ZFDKqX84IuT4rrG+E0mID5/1GeDzzXYLJKPEJbj893MUWVypxLgOf067epf4HQyAa3csgTtyCKZ/TeiK+vq6V04Sutn9sIU06RmCANHO/4aSubCWGmjntbpqz+Or0uSlVtJx7U7p4OJ980j5bGYygnbnjz6lbH/wF+I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462888; c=relaxed/simple;
-	bh=Y2qSltzdY/t0UdaELxy7wotyEUTJVz58EY7kefWHvlI=;
+	s=arc-20240116; t=1708462893; c=relaxed/simple;
+	bh=JsMOta0SHBtrBqF28lq8cxwIr8CDXI1q2HrXEOtwzMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfLKKwHzUzC4wMFEhjoGqy4ml1BOL6eWiGnrQE983s/OSzq3hn66ViE5CSwRtFnfu4SrdWhRO7gjJqgakBfOgT/bpiOP7XyoN+smW/kYE0ZZeKI3Gj0p3DLxwHfm2lxPLNQzwJQ4Iz1N8cwu+f1soUoWfYL0tnM7nzbp0PSNpSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ss/5DNlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juVViLnlYLnHcJeyW1xKFNtkZTC4OTbbB5U2uXTi4OxREb+oG27qsMoZWgp7sY8QhqZdPhz9uycqyjwCulNKyvvZfx1YGpsVhaaEJDjcFRtwkgtvHPdSME6CzB5pe9fvZLOxerI+CkIsS758KtZVhD+7hE4LMtqEDi6X6cdR+mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjNCGVyV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ss/5DNlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929BFC433F1;
-	Tue, 20 Feb 2024 21:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjNCGVyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A0DC433F1;
+	Tue, 20 Feb 2024 21:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462888;
-	bh=Y2qSltzdY/t0UdaELxy7wotyEUTJVz58EY7kefWHvlI=;
+	s=korg; t=1708462891;
+	bh=JsMOta0SHBtrBqF28lq8cxwIr8CDXI1q2HrXEOtwzMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ss/5DNljhc2xZjtSfODFOT40K5aNvBM692H1CBrz3jG9c+aLLV+Ae9djq96Fjms0B
-	 9vh6sNLO//iDkV61XWZH2dwE1ykQynlJK0hI41G2DSb7B5jOTUtWsRyIL3cZ/Zl/PG
-	 A1Ams7aOZ/tDml39g6paN1S6q/P36efW0H7UHaHY=
+	b=PjNCGVyVtLKAXFZtlJ72VtHC7GSQwrxecOPtGOH6BJsRvqU/hTGdVN2PchFzJ/rfG
+	 1egrHSiUKs3VfM3qkfU0GTdJr862m5yWD7NTyLxZo4a+HFwx/pXU/eTLFWyHeGlMmx
+	 JsVakeuk2Up3cQauE+NI00K/OqIOimvBCPRoxaso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 067/197] mptcp: fix data re-injection from stale subflow
-Date: Tue, 20 Feb 2024 21:50:26 +0100
-Message-ID: <20240220204843.085469580@linuxfoundation.org>
+	Techno Mooney <techno.mooney@gmail.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 040/197] ASoC: amd: yc: Add DMI quirk for MSI Bravo 15 C7VF
+Date: Tue, 20 Feb 2024 21:49:59 +0100
+Message-ID: <20240220204842.279279098@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -52,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Techno Mooney <techno.mooney@gmail.com>
 
-commit b6c620dc43ccb4e802894e54b651cf81495e9598 upstream.
+commit c6dce23ec993f7da7790a9eadb36864ceb60e942 upstream.
 
-When the MPTCP PM detects that a subflow is stale, all the packet
-scheduler must re-inject all the mptcp-level unacked data. To avoid
-acquiring unneeded locks, it first try to check if any unacked data
-is present at all in the RTX queue, but such check is currently
-broken, as it uses TCP-specific helper on an MPTCP socket.
+The laptop requires a quirk ID to enable its internal microphone. Add
+it to the DMI quirk table.
 
-Funnily enough fuzzers and static checkers are happy, as the accessed
-memory still belongs to the mptcp_sock struct, and even from a
-functional perspective the recovery completed successfully, as
-the short-cut test always failed.
-
-A recent unrelated TCP change - commit d5fed5addb2b ("tcp: reorganize
-tcp_sock fast path variables") - exposed the issue, as the tcp field
-reorganization makes the mptcp code always skip the re-inection.
-
-Fix the issue dropping the bogus call: we are on a slow path, the early
-optimization proved once again to be evil.
-
-Fixes: 1e1d9d6f119c ("mptcp: handle pending data on closed subflow")
+Reported-by: Techno Mooney <techno.mooney@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218402
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/468
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-1-4c1c11e571ff@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Techno Mooney <techno.mooney@gmail.com>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Link: https://msgid.link/r/20240129081148.1044891-1-bagasdotme@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 ---
- 1 file changed, 3 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2336,9 +2336,6 @@ bool __mptcp_retransmit_pending_data(str
- 	if (__mptcp_check_fallback(mptcp_sk(sk)))
- 		return false;
- 
--	if (tcp_rtx_and_write_queues_empty(sk))
--		return false;
--
- 	/* the closing socket has some data untransmitted and/or unacked:
- 	 * some data in the mptcp rtx queue has not really xmitted yet.
- 	 * keep it simple and re-inject the whole mptcp level rtx queue
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -300,6 +300,13 @@ static const struct dmi_system_id yc_acp
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Micro-Star International Co., Ltd."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Bravo 15 C7VF"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "Razer"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Blade 14 (2022) - RZ09-0427"),
+ 		}
 
 
