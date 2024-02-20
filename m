@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B5E1509AE;
-	Tue, 20 Feb 2024 20:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72492151CDE;
+	Tue, 20 Feb 2024 20:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708462775; cv=none; b=iGO5htehUiBSm64zkJ3cdMWMTdY0waZm58HDOBj58Oaw9cb5kpHnRs4X72geIWf4zsNznEJ40eIsxkVVJAwp2dW2IcrYNtrPi3Ot+Gxswuk+yIxOp4U5NT+7mOjx4ft6QjxMde1HrQAJus9m8DU7X0TDRymR4SxujpZqpUiO+8E=
+	t=1708462778; cv=none; b=RB/FBK5dBfWnxTeWgv+LzYGJFX+JYIjBkCWxb1DRyugM5niBEzOFJmoHrPfR6RJwRsk+bleWysXLoLrj/pS0CoAJev6KQn/quUMWkkp2E9QNS6O/YnH3JzaQbRJ6PYgC4+itsHh5mKitmGXa/GzJe/BybKikosKAjrmiudDesv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708462775; c=relaxed/simple;
-	bh=y/V4IIf6ciH9PlP3TmXsrIuY9nmEHcHoezHy512dvGM=;
+	s=arc-20240116; t=1708462778; c=relaxed/simple;
+	bh=XuZ6G3GqekGmAT0f1I0Ec/zSshL3zOwNscNnaepgDyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKbLfInMgMWYRIDlrG6sYUvvrmwRvbbHHQXF5ol7BIoWA7E1qhlbyWlqYi4bxQRJVxbYjDjAltT3SI8mDCC2zSFc6v2iGWsqAAyjJyzcG5sNI2d4NthcfISLuTsApNBVAY4WbFuWHg/3MYW6bdGpPImP8OcnusKmZkagrk9z6/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASwytcgl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vl/kNkkNcXcfMH55w7Wk6mK6V40y+gYsMlQj+L57nb1kTzajYNU8BrQdoMat4OZvlL3NnWI3PoT3nZvkmiCIXnkUSXXVZ5J1yg3bUmdzPwaHzzHMJ1I/0neILIwu5orKWL4m4u8R4E/oz/eIk2bZZbWvgMVOnP6xvRlbwtGpja4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtdCSxlg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASwytcgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A6CC433F1;
-	Tue, 20 Feb 2024 20:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtdCSxlg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868E0C433C7;
+	Tue, 20 Feb 2024 20:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708462774;
-	bh=y/V4IIf6ciH9PlP3TmXsrIuY9nmEHcHoezHy512dvGM=;
+	s=korg; t=1708462778;
+	bh=XuZ6G3GqekGmAT0f1I0Ec/zSshL3zOwNscNnaepgDyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ASwytcgltRsihMCgCs+2pFeEeUtumIX9B2ZID6wbVC8CxDtJW7IMFOauoqFGontTM
-	 3YFpx6kF0JweM7QFzmJ7Q140UdeeQceUZnnqfEDYveaUlFSCptIlrxwsZdi1yaCA0+
-	 L+UCT8Q4TIFFppmHHpXk+T/6I1wmG4e65WBYrbhw=
+	b=mtdCSxlg0ydlKInVZ4nTygc0s/1kgU2KGlvwSkNXvbjLkF5GMNPsb3KuhXPpCkWDm
+	 V5lTbCXsoM+ACuxzqQkeZNue1UH4tDA6Fz25yGD+PnGf/q90so/ngYFqF80fmwJOd5
+	 vX8oVu6+oSnFAe0CzQoKncpzDQNHr+meDPLiYUBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ivan Vecera <ivecera@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/197] i40e: Do not allow untrusted VF to remove administratively set MAC
-Date: Tue, 20 Feb 2024 21:49:51 +0100
-Message-ID: <20240220204842.040976099@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 033/197] i40e: Fix waiting for queues of all VSIs to be disabled
+Date: Tue, 20 Feb 2024 21:49:52 +0100
+Message-ID: <20240220204842.070366108@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220204841.073267068@linuxfoundation.org>
 References: <20240220204841.073267068@linuxfoundation.org>
@@ -56,120 +56,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 73d9629e1c8c1982f13688c4d1019c3994647ccc ]
+[ Upstream commit c73729b64bb692186da080602cd13612783f52ac ]
 
-Currently when PF administratively sets VF's MAC address and the VF
-is put down (VF tries to delete all MACs) then the MAC is removed
-from MAC filters and primary VF MAC is zeroed.
+The function i40e_pf_wait_queues_disabled() iterates all PF's VSIs
+up to 'pf->hw.func_caps.num_vsis' but this is incorrect because
+the real number of VSIs can be up to 'pf->num_alloc_vsi' that
+can be higher. Fix this loop.
 
-Do not allow untrusted VF to remove primary MAC when it was set
-administratively by PF.
-
-Reproducer:
-1) Create VF
-2) Set VF interface up
-3) Administratively set the VF's MAC
-4) Put VF interface down
-
-[root@host ~]# echo 1 > /sys/class/net/enp2s0f0/device/sriov_numvfs
-[root@host ~]# ip link set enp2s0f0v0 up
-[root@host ~]# ip link set enp2s0f0 vf 0 mac fe:6c:b5:da:c7:7d
-[root@host ~]# ip link show enp2s0f0
-23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
-    vf 0     link/ether fe:6c:b5:da:c7:7d brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-[root@host ~]# ip link set enp2s0f0v0 down
-[root@host ~]# ip link show enp2s0f0
-23: enp2s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
-    link/ether 3c:ec:ef:b7:dd:04 brd ff:ff:ff:ff:ff:ff
-    vf 0     link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff, spoof checking on, link-state auto, trust off
-
-Fixes: 700bbf6c1f9e ("i40e: allow VF to remove any MAC filter")
-Fixes: ceb29474bbbc ("i40e: Add support for VF to specify its primary MAC address")
+Fixes: 69129dc39fac ("i40e: Modify Tx disable wait flow in case of DCB reconfiguration")
 Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20240208180335.1844996-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/intel/i40e/i40e_virtchnl_pf.c    | 38 ++++++++++++++++---
- 1 file changed, 33 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 3d3db58090ed..ed4be80fec2a 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -2846,6 +2846,24 @@ static int i40e_vc_get_stats_msg(struct i40e_vf *vf, u8 *msg)
- 				      (u8 *)&stats, sizeof(stats));
- }
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 63d43ef86f9b..76455405a6d8 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -5333,7 +5333,7 @@ static int i40e_pf_wait_queues_disabled(struct i40e_pf *pf)
+ {
+ 	int v, ret = 0;
  
-+/**
-+ * i40e_can_vf_change_mac
-+ * @vf: pointer to the VF info
-+ *
-+ * Return true if the VF is allowed to change its MAC filters, false otherwise
-+ */
-+static bool i40e_can_vf_change_mac(struct i40e_vf *vf)
-+{
-+	/* If the VF MAC address has been set administratively (via the
-+	 * ndo_set_vf_mac command), then deny permission to the VF to
-+	 * add/delete unicast MAC addresses, unless the VF is trusted
-+	 */
-+	if (vf->pf_set_mac && !vf->trusted)
-+		return false;
-+
-+	return true;
-+}
-+
- #define I40E_MAX_MACVLAN_PER_HW 3072
- #define I40E_MAX_MACVLAN_PER_PF(num_ports) (I40E_MAX_MACVLAN_PER_HW /	\
- 	(num_ports))
-@@ -2905,8 +2923,8 @@ static inline int i40e_check_vf_permission(struct i40e_vf *vf,
- 		 * The VF may request to set the MAC address filter already
- 		 * assigned to it so do not return an error in that case.
- 		 */
--		if (!test_bit(I40E_VIRTCHNL_VF_CAP_PRIVILEGE, &vf->vf_caps) &&
--		    !is_multicast_ether_addr(addr) && vf->pf_set_mac &&
-+		if (!i40e_can_vf_change_mac(vf) &&
-+		    !is_multicast_ether_addr(addr) &&
- 		    !ether_addr_equal(addr, vf->default_lan_addr.addr)) {
- 			dev_err(&pf->pdev->dev,
- 				"VF attempting to override administratively set MAC address, bring down and up the VF interface to resume normal operation\n");
-@@ -3049,19 +3067,29 @@ static int i40e_vc_del_mac_addr_msg(struct i40e_vf *vf, u8 *msg)
- 			ret = I40E_ERR_INVALID_MAC_ADDR;
- 			goto error_param;
- 		}
--		if (ether_addr_equal(al->list[i].addr, vf->default_lan_addr.addr))
--			was_unimac_deleted = true;
- 	}
- 	vsi = pf->vsi[vf->lan_vsi_idx];
- 
- 	spin_lock_bh(&vsi->mac_filter_hash_lock);
- 	/* delete addresses from the list */
--	for (i = 0; i < al->num_elements; i++)
-+	for (i = 0; i < al->num_elements; i++) {
-+		const u8 *addr = al->list[i].addr;
-+
-+		/* Allow to delete VF primary MAC only if it was not set
-+		 * administratively by PF or if VF is trusted.
-+		 */
-+		if (ether_addr_equal(addr, vf->default_lan_addr.addr) &&
-+		    i40e_can_vf_change_mac(vf))
-+			was_unimac_deleted = true;
-+		else
-+			continue;
-+
- 		if (i40e_del_mac_filter(vsi, al->list[i].addr)) {
- 			ret = I40E_ERR_INVALID_MAC_ADDR;
- 			spin_unlock_bh(&vsi->mac_filter_hash_lock);
- 			goto error_param;
- 		}
-+	}
- 
- 	spin_unlock_bh(&vsi->mac_filter_hash_lock);
- 
+-	for (v = 0; v < pf->hw.func_caps.num_vsis; v++) {
++	for (v = 0; v < pf->num_alloc_vsi; v++) {
+ 		if (pf->vsi[v]) {
+ 			ret = i40e_vsi_wait_queues_disabled(pf->vsi[v]);
+ 			if (ret)
 -- 
 2.43.0
 
