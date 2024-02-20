@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7435514A4E6;
-	Tue, 20 Feb 2024 21:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA8414AD0F;
+	Tue, 20 Feb 2024 21:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708464711; cv=none; b=u6xfYLhUCyoV/tivRpuzhUThwoJQNzaPRWsj8U7rM5fYQWxPWTJ4VnsrcCtDq+t/27whKN1EjpB53uSp13kQFSKEZ404ANBvx/U3aguijVXG4LA0kjMSN5SedA//MfMSxqRnM2nh7PGhqz0QOghNpsHMAbAhGqU5e7ADojkaZ4c=
+	t=1708464715; cv=none; b=hozcTzW9IUrRuXgEB8gHSURz1l7w/rImaInNhijGN7w/Twsj7+p09v0vRDf2rO2HoeZd3uXOzc0/tTNKZNEqDTiyUC/laBcMUAf3zq0LjG39fXM/yZC/oiloKzjn0zEAeTmVp33OOozc5QdeamUJX+cDTmQxyf1C8fvmtlqGZe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708464711; c=relaxed/simple;
-	bh=TYSkgrsYV9TLn42i6O13wFAlmY3qQYBrj8y1VzLyfUA=;
+	s=arc-20240116; t=1708464715; c=relaxed/simple;
+	bh=05rDaWPbkhJ1OPnViRast9VU/pnkoXttk46gdWDgBUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GouhR290KIDB2Iq4kRwAJczh1yK5goN9c2vzP2aotPmNLo3Yfe+PiW3oi73fJpqusw6sbZQjDO7bYpZqnIfR2CtJvGpRFvYQF1u9LJvbpVt4GDq1hye748lqyWGa6IzA864C09DEARQE2uc9AF5FPxtmUH4YkL69m/RdTrwCXT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQz4rWPZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBN8j6eMgxqMHmrtW4PA1gRyABbU6Ulyc+yXh/p2M+ZG9j7gH4Cd0E+r2JJGgONf+a+y8Tn9j6U5eua1PVaP9TVzhoQ9cXFTkT2Ry7k57qmXx7clzn6H69pXzG6kEfZvyLvN1ezAH9e8zrMKoAw1VBTIchHiGGJmQJCGRIJBusA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kr/yN4B/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQz4rWPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B07C433C7;
-	Tue, 20 Feb 2024 21:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kr/yN4B/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DF5C433F1;
+	Tue, 20 Feb 2024 21:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708464711;
-	bh=TYSkgrsYV9TLn42i6O13wFAlmY3qQYBrj8y1VzLyfUA=;
+	s=korg; t=1708464714;
+	bh=05rDaWPbkhJ1OPnViRast9VU/pnkoXttk46gdWDgBUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQz4rWPZNyqGurLQG6NXextHdaxVXABCtjX+gYoPLmKnKKINPscQQY6yt/AyG24iE
-	 MSsW4FrO9bPiUPCyBWHUMLu0FBMF4RcRgvAfB5supAvg9ABCTRQjLeyNTPb5t8HbKh
-	 jARR4GsF+gKR4WeKCl42rOzD0TiQJidINA9C1Ro4=
+	b=kr/yN4B/aUn3tWU/kIlaRD+vJ5kujIoWRs2GMfhF8bIn07FmFHxuO+Bxq4E9ugCnG
+	 vPOiznO9r72I9sa2uHx9BWdEgBPK+SmI8/oXzJn2n+LwgikVbzulW32D9ZBAY1O21M
+	 Zk+3V5MXmpE14VbNZdUwukj9LJDaTci5hOloOwRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Sven Peter <sven@svenpeter.dev>,
+	Jean Delvare <jdelvare@suse.de>,
+	Piotr Zakowski <piotr.zakowski@intel.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 112/309] i2c: pasemi: split driver into two separate modules
-Date: Tue, 20 Feb 2024 21:54:31 +0100
-Message-ID: <20240220205636.694676800@linuxfoundation.org>
+Subject: [PATCH 6.7 113/309] i2c: i801: Fix block process call transactions
+Date: Tue, 20 Feb 2024 21:54:32 +0100
+Message-ID: <20240220205636.725779095@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
 References: <20240220205633.096363225@linuxfoundation.org>
@@ -52,67 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jean Delvare <jdelvare@suse.de>
 
-[ Upstream commit f44bff19268517ee98e80e944cad0f04f1db72e3 ]
+[ Upstream commit c1c9d0f6f7f1dbf29db996bd8e166242843a5f21 ]
 
-On powerpc, it is possible to compile test both the new apple (arm) and
-old pasemi (powerpc) drivers for the i2c hardware at the same time,
-which leads to a warning about linking the same object file twice:
+According to the Intel datasheets, software must reset the block
+buffer index twice for block process call transactions: once before
+writing the outgoing data to the buffer, and once again before
+reading the incoming data from the buffer.
 
-scripts/Makefile.build:244: drivers/i2c/busses/Makefile: i2c-pasemi-core.o is added to multiple modules: i2c-apple i2c-pasemi
+The driver is currently missing the second reset, causing the wrong
+portion of the block buffer to be read.
 
-Rework the driver to have an explicit helper module, letting Kbuild
-take care of whether this should be built-in or a loadable driver.
-
-Fixes: 9bc5f4f660ff ("i2c: pasemi: Split pci driver to its own file")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Reported-by: Piotr Zakowski <piotr.zakowski@intel.com>
+Closes: https://lore.kernel.org/linux-i2c/20240213120553.7b0ab120@endymion.delvare/
+Fixes: 315cd67c9453 ("i2c: i801: Add Block Write-Block Read Process Call support")
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/Makefile          | 6 ++----
- drivers/i2c/busses/i2c-pasemi-core.c | 6 ++++++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-i801.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-index 3757b9391e60..aa0ee8ecd6f2 100644
---- a/drivers/i2c/busses/Makefile
-+++ b/drivers/i2c/busses/Makefile
-@@ -90,10 +90,8 @@ obj-$(CONFIG_I2C_NPCM)		+= i2c-npcm7xx.o
- obj-$(CONFIG_I2C_OCORES)	+= i2c-ocores.o
- obj-$(CONFIG_I2C_OMAP)		+= i2c-omap.o
- obj-$(CONFIG_I2C_OWL)		+= i2c-owl.o
--i2c-pasemi-objs := i2c-pasemi-core.o i2c-pasemi-pci.o
--obj-$(CONFIG_I2C_PASEMI)	+= i2c-pasemi.o
--i2c-apple-objs := i2c-pasemi-core.o i2c-pasemi-platform.o
--obj-$(CONFIG_I2C_APPLE)	+= i2c-apple.o
-+obj-$(CONFIG_I2C_PASEMI)	+= i2c-pasemi-core.o i2c-pasemi-pci.o
-+obj-$(CONFIG_I2C_APPLE)		+= i2c-pasemi-core.o i2c-pasemi-platform.o
- obj-$(CONFIG_I2C_PCA_PLATFORM)	+= i2c-pca-platform.o
- obj-$(CONFIG_I2C_PNX)		+= i2c-pnx.o
- obj-$(CONFIG_I2C_PXA)		+= i2c-pxa.o
-diff --git a/drivers/i2c/busses/i2c-pasemi-core.c b/drivers/i2c/busses/i2c-pasemi-core.c
-index 7d54a9f34c74..bd8becbdeeb2 100644
---- a/drivers/i2c/busses/i2c-pasemi-core.c
-+++ b/drivers/i2c/busses/i2c-pasemi-core.c
-@@ -369,6 +369,7 @@ int pasemi_i2c_common_probe(struct pasemi_smbus *smbus)
+diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
+index 070999139c6d..6a5a93cf4ecc 100644
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -498,11 +498,10 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
+ 	/* Set block buffer mode */
+ 	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
  
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(pasemi_i2c_common_probe);
+-	inb_p(SMBHSTCNT(priv)); /* reset the data buffer index */
+-
+ 	if (read_write == I2C_SMBUS_WRITE) {
+ 		len = data->block[0];
+ 		outb_p(len, SMBHSTDAT0(priv));
++		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
+ 		for (i = 0; i < len; i++)
+ 			outb_p(data->block[i+1], SMBBLKDAT(priv));
+ 	}
+@@ -520,6 +519,7 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
+ 		}
  
- irqreturn_t pasemi_irq_handler(int irq, void *dev_id)
- {
-@@ -378,3 +379,8 @@ irqreturn_t pasemi_irq_handler(int irq, void *dev_id)
- 	complete(&smbus->irq_completion);
- 	return IRQ_HANDLED;
- }
-+EXPORT_SYMBOL_GPL(pasemi_irq_handler);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("Olof Johansson <olof@lixom.net>");
-+MODULE_DESCRIPTION("PA Semi PWRficient SMBus driver");
+ 		data->block[0] = len;
++		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
+ 		for (i = 0; i < len; i++)
+ 			data->block[i + 1] = inb_p(SMBBLKDAT(priv));
+ 	}
 -- 
 2.43.0
 
