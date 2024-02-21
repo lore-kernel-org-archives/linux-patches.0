@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3000B7C093;
-	Wed, 21 Feb 2024 13:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8C87A715;
+	Wed, 21 Feb 2024 13:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523356; cv=none; b=TW9/hdza3YaA2/yYtDiP7qDWjX1bxCWVv1spl+PpGCITvQniI7zeqsgPN/fG7zu+cnJXsKnLg3pUMWWFHKRAjgGYWdT/fxcbwKUkBpYYKIT3bmVelxrExED7nXr+e0ePNcSsXl6Wg2jWlOrvN3jRIVn+Y4lQ3qR2veVXJk5Snts=
+	t=1708523359; cv=none; b=u6soaJnrH8aHRKetfpQYZfPXXvcje6dvf2xuByhPGtZzyHUJK+bBmojh7Fmu4fdgSDIbdPXABbia58wv8Pkt/vlxkWDlj7GOBz+WQFwQs4RTADzYNAP4d3rf/k3q7duGO7wFMhtRlIlBTNLO2stvBB4O32VwQjXYre9h5ozYmP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523356; c=relaxed/simple;
-	bh=Q8oJZvh6jw7wLZIdvEVNtItFQ4J9pkiIEGAfsvYmqw0=;
+	s=arc-20240116; t=1708523359; c=relaxed/simple;
+	bh=EutInXz4LP9+lCK9w9kEhAEMgTbIIXBouew+7j85v+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nr3aFEg+DuTRo55djIJTyLGX5Y2sI7raRZG6WZQvi8rMO5gpkeMSPJYFvoksjHfv6blfJjuWR99n73hNt9TqJA+nXDBZ5FNw3RIoLRsOYfrGpYF3NW8Ru4mJ5yVTfHlqqgTj71UAsc7wWzwWCRAhg/ZzUjg5L9g2y+8PpXPhXeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XLIgvP4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9vrAp5atEg4Ok/ETQkh+Lsd3PN347C7TL1r503jaDd1BkCSQpttXAWlT0fQgkP6fVPnJI0Rskzj5ShCN1S7T6gxZtut7uRKl5unrWbs7RvdkJgbKuslcta6p2VqBrS+kuR/ZsBCTcHrK4HTz5ux6y4e/ewFcg2kx4dhevRp8mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEyGsaIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XLIgvP4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA99AC433F1;
-	Wed, 21 Feb 2024 13:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEyGsaIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5708C433C7;
+	Wed, 21 Feb 2024 13:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523355;
-	bh=Q8oJZvh6jw7wLZIdvEVNtItFQ4J9pkiIEGAfsvYmqw0=;
+	s=korg; t=1708523358;
+	bh=EutInXz4LP9+lCK9w9kEhAEMgTbIIXBouew+7j85v+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XLIgvP4niQOHN8uC8v1xGbVTWGqIpQ4/bmEBzRAhVVBaDZTOuRWwzLVxwCslx0XC
-	 xy1G/uCWWP0kIvehBAPaT4OiqjbPKfJ4eHrmzbUHd5oczIRgfrylUwbxdgqxQGOpKX
-	 MWWBID59+YJSEPW1CmAuBOaqR7wS6RBrq2MGFcbI=
+	b=ZEyGsaIsL8nQr2CoMrtzOJEIK4DBUNSa7sKu4r/FXTFEuYU7tpPxni6FC7QM6OjH+
+	 zb7BJhnES4HPOr7Ii1D4BkwRlN71PWfUBTZXBzQRE+TWonhR0phRJl8PmiFVyUQC4L
+	 0eO80h3WPHPvbGkUmu/ybkqCLdhIoc/gwRZHLKX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel de Villiers <daniel.devilliers@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 411/476] nfp: flower: prevent re-adding mac index for bonded port
-Date: Wed, 21 Feb 2024 14:07:42 +0100
-Message-ID: <20240221130023.194479899@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 412/476] wifi: mac80211: reload info pointer in ieee80211_tx_dequeue()
+Date: Wed, 21 Feb 2024 14:07:43 +0100
+Message-ID: <20240221130023.232413476@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,50 +49,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel de Villiers <daniel.devilliers@corigine.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 1a1c13303ff6d64e6f718dc8aa614e580ca8d9b4 upstream.
+commit c98d8836b817d11fdff4ca7749cbbe04ff7f0c64 upstream.
 
-When physical ports are reset (either through link failure or manually
-toggled down and up again) that are slaved to a Linux bond with a tunnel
-endpoint IP address on the bond device, not all tunnel packets arriving
-on the bond port are decapped as expected.
+This pointer can change here since the SKB can change, so we
+actually later open-coded IEEE80211_SKB_CB() again. Reload
+the pointer where needed, so the monitor-mode case using it
+gets fixed, and then use info-> later as well.
 
-The bond dev assigns the same MAC address to itself and each of its
-slaves. When toggling a slave device, the same MAC address is therefore
-offloaded to the NFP multiple times with different indexes.
-
-The issue only occurs when re-adding the shared mac. The
-nfp_tunnel_add_shared_mac() function has a conditional check early on
-that checks if a mac entry already exists and if that mac entry is
-global: (entry && nfp_tunnel_is_mac_idx_global(entry->index)). In the
-case of a bonded device (For example br-ex), the mac index is obtained,
-and no new index is assigned.
-
-We therefore modify the conditional in nfp_tunnel_add_shared_mac() to
-check if the port belongs to the LAG along with the existing checks to
-prevent a new global mac index from being re-assigned to the slave port.
-
-Fixes: 20cce8865098 ("nfp: flower: enable MAC address sharing for offloadable devs")
-CC: stable@vger.kernel.org # 5.1+
-Signed-off-by: Daniel de Villiers <daniel.devilliers@corigine.com>
-Signed-off-by: Louis Peens <louis.peens@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: stable@vger.kernel.org
+Fixes: 531682159092 ("mac80211: fix VLAN handling with TXQs")
+Link: https://msgid.link/20240131164910.b54c28d583bc.I29450cec84ea6773cff5d9c16ff92b836c331471@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/tx.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c
-+++ b/drivers/net/ethernet/netronome/nfp/flower/tunnel_conf.c
-@@ -927,7 +927,7 @@ nfp_tunnel_add_shared_mac(struct nfp_app
- 	u16 nfp_mac_idx = 0;
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3746,6 +3746,7 @@ begin:
+ 			goto begin;
  
- 	entry = nfp_tunnel_lookup_offloaded_macs(app, netdev->dev_addr);
--	if (entry && nfp_tunnel_is_mac_idx_global(entry->index)) {
-+	if (entry && (nfp_tunnel_is_mac_idx_global(entry->index) || netif_is_lag_port(netdev))) {
- 		if (entry->bridge_count ||
- 		    !nfp_flower_is_supported_bridge(netdev)) {
- 			nfp_tunnel_offloaded_macs_inc_ref_and_link(entry,
+ 		skb = __skb_dequeue(&tx.skbs);
++		info = IEEE80211_SKB_CB(skb);
+ 
+ 		if (!skb_queue_empty(&tx.skbs)) {
+ 			spin_lock_bh(&fq->lock);
+@@ -3790,7 +3791,7 @@ begin:
+ 	}
+ 
+ encap_out:
+-	IEEE80211_SKB_CB(skb)->control.vif = vif;
++	info->control.vif = vif;
+ 
+ 	if (vif &&
+ 	    wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL)) {
 
 
