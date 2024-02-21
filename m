@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D253E69DE7;
-	Wed, 21 Feb 2024 13:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDC069E00;
+	Wed, 21 Feb 2024 13:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521086; cv=none; b=hYzBHwPaBObvF9FzEx3ajSiWE/HBJOKWUmIoCqtF6OIAjUyBvjFC5Q9Y447wFjYpcuzjgdOvcnoH5mNHL6AVEtbJeWIF4ZlzbSgXCCR71ilP4iTEDeVBgXi6lF2wP83hbF6WHWsrtu25JMIiZoO3JBmuSqvMkEDvJ4P6iIiw91k=
+	t=1708521090; cv=none; b=VGOUnlVACr/6dZtnnE2FAPazLzepi5yNUQX7TKHtxGuLNUvgHpLbNOYMXHugobIYDHursu9mQENa6UmHnvxsTnwMF0ylIisWmQ//yzzJwAp1ueY0CDt961Cpqf4CbjfsRZkEcYFxD46slnACSH9SYxfzB+F9Nd0+Xmxk9/uiSpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521086; c=relaxed/simple;
-	bh=kCe7qGiDtedqPNdAKy3ybqA3s2CLWY3y+AHXYpDMRr0=;
+	s=arc-20240116; t=1708521090; c=relaxed/simple;
+	bh=wkdeTaCjMlxGrDJGkInp5NrGlao3clkU1/3RmYR1byA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IC4RkKbUt9Qm7avmWA692sW2By/zy83XidcumDMQY8z+kwXxVqHZKrppdItCr264RCfQp07VQcaDiQtdQ/KdPHOZB8mopRyDwwPXaWgy7RVpjm+y3YNBfrkSXyIsMM4+mG7GM1XJ7EA17XmNRFOVvDNVvPYWU8vZL6lt7fP9St0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhN7FuxQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aBmf+sPq15E/gd9lxtu8kGumgn2/apc8P/Wa3BgSUfDXzRd/jVbzY8piH7vQmcTIy9uKdYq2pj0B+TKQ/ATDEj8Cy3+UbTiCBB/HeNn++UJ9nEVVCVq8eN+Vk0RiwOHasBRjOUC2S4a1vzXeKayMGJjuVXUTQVJZ3NTGseejR9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ho75R7Ib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhN7FuxQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C2CC433C7;
-	Wed, 21 Feb 2024 13:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ho75R7Ib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4F7C43390;
+	Wed, 21 Feb 2024 13:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521086;
-	bh=kCe7qGiDtedqPNdAKy3ybqA3s2CLWY3y+AHXYpDMRr0=;
+	s=korg; t=1708521089;
+	bh=wkdeTaCjMlxGrDJGkInp5NrGlao3clkU1/3RmYR1byA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhN7FuxQhe6GpcyCCmXjxh0Ou0mAHzbvLILkkHMfO3/XLdeponziLOrHDSeGql/KM
-	 nc36wTytbSKxueEKJsvLg9YBiYHyQfkTvbHC0nl7yYd0IcZHaS7G2anU6IHCXvfWqq
-	 HCPHTXFSpEyKtMKMF0XeeQC+nArK2kljaPfdVAVA=
+	b=ho75R7Ib8RVkPcNgBm6YP3H4mn2Jw1BWsjGOs9pnUfNDPD138ZryONE82UeKaLRha
+	 iHRcDyJYNa5G5mPd1LFI+Hxe7+BTSS710fSmK99+Q+DmtUPGSIwyZi/uBFTRDyFCnA
+	 3WHocfqh75CDD7Ki8W4/7HX+eULMzjdZpGOxVCF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 4.19 021/202] Revert "driver core: Annotate dev_err_probe() with __must_check"
-Date: Wed, 21 Feb 2024 14:05:22 +0100
-Message-ID: <20240221125932.457721400@linuxfoundation.org>
+	=?UTF-8?q?Micha=C5=82=20Miros=C5=82aw?= <mirq-linux@rere.qmqm.pl>
+Subject: [PATCH 4.19 022/202] driver code: print symbolic error code
+Date: Wed, 21 Feb 2024 14:05:23 +0100
+Message-ID: <20240221125932.489711379@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -45,45 +43,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Michał Mirosław <mirq-linux@rere.qmqm.pl>
 
-commit f601e8f37c2c1c52f2923fffc48204a7f7dc023d upstream.
+commit 693a8e936590f93451e6f5a3d748616f5a59c80b upstream.
 
-This reverts commit e1f82a0dcf388d98bcc7ad195c03bd812405e6b2 as it's
-already starting to cause build warnings in linux-next for things that
-are "obviously correct".
+dev_err_probe() prepends the message with an error code. Let's make it
+more readable by translating the code to a more recognisable symbol.
 
-It's up to driver authors do "do the right thing" here with this
-function, and if they don't want to call it as the last line of a
-function, that's up to them, otherwise code that looks like:
-	ret = dev_err_probe(..., ret, ...);
-does look really "odd".
-
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Reported-by: Krzysztof Kozlowski <krzk@kernel.org>
-Fixes: e1f82a0dcf38 ("driver core: Annotate dev_err_probe() with __must_check")
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: a787e5400a1c ("driver core: add device probe log helper")
+Signed-off-by: Michał Mirosław <mirq-linux@rere.qmqm.pl>
+Link: https://lore.kernel.org/r/ea3f973e4708919573026fdce52c264db147626d.1598630856.git.mirq-linux@rere.qmqm.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/device.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -1582,7 +1582,7 @@ do {									\
- 			dev_driver_string(dev), dev_name(dev), ## arg)
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3366,9 +3366,9 @@ int dev_err_probe(const struct device *d
+ 	vaf.va = &args;
  
- extern __printf(3, 4)
--int __must_check dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
-+int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+ 	if (err != -EPROBE_DEFER)
+-		dev_err(dev, "error %d: %pV", err, &vaf);
++		dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+ 	else
+-		dev_dbg(dev, "error %d: %pV", err, &vaf);
++		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
  
- /* Create alias, so I can be autoloaded. */
- #define MODULE_ALIAS_CHARDEV(major,minor) \
+ 	va_end(args);
+ 
 
 
