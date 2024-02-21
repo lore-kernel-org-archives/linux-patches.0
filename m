@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B4479DAE;
-	Wed, 21 Feb 2024 14:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0520179DAE;
+	Wed, 21 Feb 2024 14:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524710; cv=none; b=TEqVEZP98W+zPgzBG8ULMIXv2eTWEC6A5IWxYyds09F7SnObAUtL7tTtWkcSVbxuoApH5eBr8cqUBdvkVtThUnGCmDdAhpTGfN6QN8cs/8Hw3h4km9b9vd4JwkweTy/Z9s0R/jEHVP5ZO7+oCTqd4I21nylfC03o8VL9PGf3VF8=
+	t=1708524714; cv=none; b=UYdRH2u4LEnzvYdyTElCbaHlpkfl15HocFUNgC1zs7Em0eRVB0wKPbc1RQGzDqzsksQ1S5SCoSawU3iAnMrR+oNZG7fmh9emF/jwAv9KBQhWpM0kT0ODBEH19lpM/A0YWymHNYsXa9tO20ePGmuwU2k4JTiWwZedtxdI6Y+4Ydk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524710; c=relaxed/simple;
-	bh=MB3uY1N3ID8t+J4d7nDhrLrB1VxUaDJLcAZyHsMgOak=;
+	s=arc-20240116; t=1708524714; c=relaxed/simple;
+	bh=q8vEuxScqBWiPt3aS7z/QWmwu42HkLXnsJmqb+quWm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMElczZDqo+1y6dJW4HRASjbQw2xeEC2i5RdoaExk5EEiLQ0wEiUSjx8X2vG23AR1SonZJZBTXUm1uCSnvLfZEZRJnLGV8KVf876aYKNIGaDjTuB4M56av3BPm6i4FwtjLOr/ZTkTe6vXmH7rcr4qSgC3epVR2aAkmx4laZdPa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgMCwwGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6M1/Q67CsiAxnI0HdGMNiC9Mf6J9N2UbGEFHe2ijH0mGFlP1sQ3jZB5taModaFjL+84y/JzOoxi0ncbRe4atNzx08uYci+rLNF1ekQsUBsXufmX4r83P19AuT4z+dnkFnF5ZU5YEKkBQkJITa/nNhgwFD2sJqR66i1IzYTsyiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjsToLND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgMCwwGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57937C433F1;
-	Wed, 21 Feb 2024 14:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjsToLND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642CCC433C7;
+	Wed, 21 Feb 2024 14:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524710;
-	bh=MB3uY1N3ID8t+J4d7nDhrLrB1VxUaDJLcAZyHsMgOak=;
+	s=korg; t=1708524713;
+	bh=q8vEuxScqBWiPt3aS7z/QWmwu42HkLXnsJmqb+quWm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WgMCwwGuhDzSuNDACowFDlItqqRsVv1pb27qm/Zad0/W/87Z7S5GR9FnD2JUhGQcV
-	 PTNCv90aCftWc4EKp4QH179RYzXSshcdZ9bVONNAG9oDcGEMpvsxsNZ37e2GujQi0u
-	 8MD22k9bXhqA2PxSSlrDQWVSv8n1dXwSAv6ZYUYM=
+	b=gjsToLNDGN4GZJHMQeP/NwIvzk43TDm/r8q/9XPFvNnle4gpbbeJiYaZg/XyswOcb
+	 DCd4rBGoxhj+CgVyWlyZmSYrpFkJFf7M3kbkYRPnDBwzkzX1JnZMpMgAIFRCUlZVmi
+	 J631e1Ezx6fAVFCzUqXzUTItpTj8lfYKwwjY64eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.10 326/379] media: rc: bpf attach/detach requires write permission
-Date: Wed, 21 Feb 2024 14:08:25 +0100
-Message-ID: <20240221130004.597680546@linuxfoundation.org>
+	Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 327/379] hv_netvsc: Fix race condition between netvsc_probe and netvsc_remove
+Date: Wed, 21 Feb 2024 14:08:26 +0100
+Message-ID: <20240221130004.635575834@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -50,82 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
 
-commit 6a9d552483d50953320b9d3b57abdee8d436f23f upstream.
+commit e0526ec5360a48ad3ab2e26e802b0532302a7e11 upstream.
 
-Note that bpf attach/detach also requires CAP_NET_ADMIN.
+In commit ac5047671758 ("hv_netvsc: Disable NAPI before closing the
+VMBus channel"), napi_disable was getting called for all channels,
+including all subchannels without confirming if they are enabled or not.
+
+This caused hv_netvsc getting hung at napi_disable, when netvsc_probe()
+has finished running but nvdev->subchan_work has not started yet.
+netvsc_subchan_work() -> rndis_set_subchannel() has not created the
+sub-channels and because of that netvsc_sc_open() is not running.
+netvsc_remove() calls cancel_work_sync(&nvdev->subchan_work), for which
+netvsc_subchan_work did not run.
+
+netif_napi_add() sets the bit NAPI_STATE_SCHED because it ensures NAPI
+cannot be scheduled. Then netvsc_sc_open() -> napi_enable will clear the
+NAPIF_STATE_SCHED bit, so it can be scheduled. napi_disable() does the
+opposite.
+
+Now during netvsc_device_remove(), when napi_disable is called for those
+subchannels, napi_disable gets stuck on infinite msleep.
+
+This fix addresses this problem by ensuring that napi_disable() is not
+getting called for non-enabled NAPI struct.
+But netif_napi_del() is still necessary for these non-enabled NAPI struct
+for cleanup purpose.
+
+Call trace:
+[  654.559417] task:modprobe        state:D stack:    0 pid: 2321 ppid:  1091 flags:0x00004002
+[  654.568030] Call Trace:
+[  654.571221]  <TASK>
+[  654.573790]  __schedule+0x2d6/0x960
+[  654.577733]  schedule+0x69/0xf0
+[  654.581214]  schedule_timeout+0x87/0x140
+[  654.585463]  ? __bpf_trace_tick_stop+0x20/0x20
+[  654.590291]  msleep+0x2d/0x40
+[  654.593625]  napi_disable+0x2b/0x80
+[  654.597437]  netvsc_device_remove+0x8a/0x1f0 [hv_netvsc]
+[  654.603935]  rndis_filter_device_remove+0x194/0x1c0 [hv_netvsc]
+[  654.611101]  ? do_wait_intr+0xb0/0xb0
+[  654.615753]  netvsc_remove+0x7c/0x120 [hv_netvsc]
+[  654.621675]  vmbus_remove+0x27/0x40 [hv_vmbus]
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: ac5047671758 ("hv_netvsc: Disable NAPI before closing the VMBus channel")
+Signed-off-by: Souradeep Chakrabarti <schakrabarti@linux.microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/1706686551-28510-1-git-send-email-schakrabarti@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/bpf-lirc.c     |    6 +++---
- drivers/media/rc/lirc_dev.c     |    5 ++++-
- drivers/media/rc/rc-core-priv.h |    2 +-
- 3 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/hyperv/netvsc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/media/rc/bpf-lirc.c
-+++ b/drivers/media/rc/bpf-lirc.c
-@@ -249,7 +249,7 @@ int lirc_prog_attach(const union bpf_att
- 	if (attr->attach_flags)
- 		return -EINVAL;
- 
--	rcdev = rc_dev_get_from_fd(attr->target_fd);
-+	rcdev = rc_dev_get_from_fd(attr->target_fd, true);
- 	if (IS_ERR(rcdev))
- 		return PTR_ERR(rcdev);
- 
-@@ -274,7 +274,7 @@ int lirc_prog_detach(const union bpf_att
- 	if (IS_ERR(prog))
- 		return PTR_ERR(prog);
- 
--	rcdev = rc_dev_get_from_fd(attr->target_fd);
-+	rcdev = rc_dev_get_from_fd(attr->target_fd, true);
- 	if (IS_ERR(rcdev)) {
- 		bpf_prog_put(prog);
- 		return PTR_ERR(rcdev);
-@@ -299,7 +299,7 @@ int lirc_prog_query(const union bpf_attr
- 	if (attr->query.query_flags)
- 		return -EINVAL;
- 
--	rcdev = rc_dev_get_from_fd(attr->query.target_fd);
-+	rcdev = rc_dev_get_from_fd(attr->query.target_fd, false);
- 	if (IS_ERR(rcdev))
- 		return PTR_ERR(rcdev);
- 
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -826,7 +826,7 @@ void __exit lirc_dev_exit(void)
- 	unregister_chrdev_region(lirc_base_dev, RC_DEV_MAX);
- }
- 
--struct rc_dev *rc_dev_get_from_fd(int fd)
-+struct rc_dev *rc_dev_get_from_fd(int fd, bool write)
- {
- 	struct fd f = fdget(fd);
- 	struct lirc_fh *fh;
-@@ -840,6 +840,9 @@ struct rc_dev *rc_dev_get_from_fd(int fd
- 		return ERR_PTR(-EINVAL);
+--- a/drivers/net/hyperv/netvsc.c
++++ b/drivers/net/hyperv/netvsc.c
+@@ -654,7 +654,10 @@ void netvsc_device_remove(struct hv_devi
+ 	/* Disable NAPI and disassociate its context from the device. */
+ 	for (i = 0; i < net_device->num_chn; i++) {
+ 		/* See also vmbus_reset_channel_cb(). */
+-		napi_disable(&net_device->chan_table[i].napi);
++		/* only disable enabled NAPI channel */
++		if (i < ndev->real_num_rx_queues)
++			napi_disable(&net_device->chan_table[i].napi);
++
+ 		netif_napi_del(&net_device->chan_table[i].napi);
  	}
  
-+	if (write && !(f.file->f_mode & FMODE_WRITE))
-+		return ERR_PTR(-EPERM);
-+
- 	fh = f.file->private_data;
- 	dev = fh->rc;
- 
---- a/drivers/media/rc/rc-core-priv.h
-+++ b/drivers/media/rc/rc-core-priv.h
-@@ -325,7 +325,7 @@ void lirc_raw_event(struct rc_dev *dev,
- void lirc_scancode_event(struct rc_dev *dev, struct lirc_scancode *lsc);
- int lirc_register(struct rc_dev *dev);
- void lirc_unregister(struct rc_dev *dev);
--struct rc_dev *rc_dev_get_from_fd(int fd);
-+struct rc_dev *rc_dev_get_from_fd(int fd, bool write);
- #else
- static inline int lirc_dev_init(void) { return 0; }
- static inline void lirc_dev_exit(void) {}
 
 
