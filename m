@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09C07C08D;
-	Wed, 21 Feb 2024 13:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91FB69D2E;
+	Wed, 21 Feb 2024 13:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522034; cv=none; b=Y9t5p8xxsyWPowYPXYbSqxCkmWdRzW2HrQhTb6j/ujSwkMz+SAbXFmivbdi3Nsczwt8Q7ZdHCtCUCJ/6DhOXtWXD8gpdjc6DMSrBLLXbLIT4pywwiuWE1emVVrhgW3i7hsBJvDQG2Vf1gpwf0GP3983gLfoPsXNtrbs1ANe74X4=
+	t=1708522037; cv=none; b=ma0cXd9jozPxIA3eu05zLO9kP9844axbt2I1pZZ1kCSw2jv4XcSpLj/KdtiwndkJ56sztIrqOCkPuUqxuvLpll0gga8YMeOTQ7ZfewzPO7TyRGWFCqRwzRGCOXPvgP/tikv24l0lA+vCJJ6uFT3svzPuYBnBsMLraqxnVWNXA30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522034; c=relaxed/simple;
-	bh=H085vX9IPKzFhBYGAZjFchiEeDfs61g/xm/kuvq8cZg=;
+	s=arc-20240116; t=1708522037; c=relaxed/simple;
+	bh=/iH7i1U4+nbrRg70LOYZSDuVVBn9sifEjT3gouJ1jLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YwtN3EqxZYOFgpTJ+u91cYrTjQTF+IzzH75WIlK4FFOBiEeJUydxu5BXL4CNte1CM1b+JLedHnpcH0zbWONTf3y4xJYCzdBKQTJvcdkpPxyE+PRzmiovzSujoJENCsC4tVnKUQMkvJBPGe+XJo1o/NGaAv7gWHAYZdrr0k5nt1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZdITSzm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PY0oT6A+5Rl/PzK102O0taCbbSt9kRqm/DYFoJjxS1miS58tjLkfhn9lSzT1YSJCTY+kDatBBjQ+3K0WkSZqt1MKmj4Gck+VUD15ANLyTuUb01/D+LFuiXmPBVLpmkk+V1juB8W4gZ05R4+BGmaGsQWRwgy1+rXWYpu4T1DpulY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dqNcgyX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZdITSzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C22C433C7;
-	Wed, 21 Feb 2024 13:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dqNcgyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3980AC433C7;
+	Wed, 21 Feb 2024 13:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522034;
-	bh=H085vX9IPKzFhBYGAZjFchiEeDfs61g/xm/kuvq8cZg=;
+	s=korg; t=1708522037;
+	bh=/iH7i1U4+nbrRg70LOYZSDuVVBn9sifEjT3gouJ1jLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZdITSzmby/zVq8BSbjApPsZByApoKLGg993+4+jRBRcakcY6vSbGRhNTHQBvdfYu
-	 jnB+v5V56LQu8OgFN8QmDAM0y2jZszPRAkkESE7KbcTByGrP7JTN8tfb2sJYGmsq+6
-	 5BrSMKsTHzV7BiRAYmQUuK40989PrvGXH2M+lOg4=
+	b=2dqNcgyXa0mZ2HlqJ7JTe9YdP6XKbnye78XtIWYCrcliy891yp7/M7Nn3Nle8/eYH
+	 Df4mwREW+iNwON+rVzUw5RorTvN64MmRlfZBd2DzqJGzzPlX7oCNkVOyzaRuryIv2F
+	 QLrCtits1H6At/XSFWCxd8A1/tPOnfcPonGlzICs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Dipietro <dipiets@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 054/476] tcp: Add memory barrier to tcp_push()
-Date: Wed, 21 Feb 2024 14:01:45 +0100
-Message-ID: <20240221130009.920247008@linuxfoundation.org>
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	linux-hardening@vger.kernel.org,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.15 063/476] overflow: Allow mixed type arguments
+Date: Wed, 21 Feb 2024 14:01:54 +0100
+Message-ID: <20240221130010.264862772@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,101 +55,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salvatore Dipietro <dipiets@amazon.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 7267e8dcad6b2f9fce05a6a06335d7040acbc2b6 ]
+commit d219d2a9a92e39aa92799efe8f2aa21259b6dd82 upstream.
 
-On CPUs with weak memory models, reads and updates performed by tcp_push
-to the sk variables can get reordered leaving the socket throttled when
-it should not. The tasklet running tcp_wfree() may also not observe the
-memory updates in time and will skip flushing any packets throttled by
-tcp_push(), delaying the sending. This can pathologically cause 40ms
-extra latency due to bad interactions with delayed acks.
+When the check_[op]_overflow() helpers were introduced, all arguments
+were required to be the same type to make the fallback macros simpler.
+However, now that the fallback macros have been removed[1], it is fine
+to allow mixed types, which makes using the helpers much more useful,
+as they can be used to test for type-based overflows (e.g. adding two
+large ints but storing into a u8), as would be handy in the drm core[2].
 
-Adding a memory barrier in tcp_push removes the bug, similarly to the
-previous commit bf06200e732d ("tcp: tsq: fix nonagle handling").
-smp_mb__after_atomic() is used to not incur in unnecessary overhead
-on x86 since not affected.
+Remove the restriction, and add additional self-tests that exercise
+some of the mixed-type overflow cases, and double-check for accidental
+macro side-effects.
 
-Patch has been tested using an AWS c7g.2xlarge instance with Ubuntu
-22.04 and Apache Tomcat 9.0.83 running the basic servlet below:
+[1] https://git.kernel.org/linus/4eb6bd55cfb22ffc20652732340c4962f3ac9a91
+[2] https://lore.kernel.org/lkml/20220824084514.2261614-2-gwan-gyeong.mun@intel.com
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class HelloWorldServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-        response.setContentType("text/html;charset=utf-8");
-        OutputStreamWriter osw = new OutputStreamWriter(response.getOutputStream(),"UTF-8");
-        String s = "a".repeat(3096);
-        osw.write(s,0,s.length());
-        osw.flush();
-    }
-}
-
-Load was applied using wrk2 (https://github.com/kinvolk/wrk2) from an AWS
-c6i.8xlarge instance. Before the patch an additional 40ms latency from P99.99+
-values is observed while, with the patch, the extra latency disappears.
-
-No patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.91ms
- 75.000%    1.13ms
- 90.000%    1.46ms
- 99.000%    1.74ms
- 99.900%    1.89ms
- 99.990%   41.95ms  <<< 40+ ms extra latency
- 99.999%   48.32ms
-100.000%   48.96ms
-
-With patch and tcp_autocorking=1
-./wrk -t32 -c128 -d40s --latency -R10000  http://172.31.60.173:8080/hello/hello
-  ...
- 50.000%    0.90ms
- 75.000%    1.13ms
- 90.000%    1.45ms
- 99.000%    1.72ms
- 99.900%    1.83ms
- 99.990%    2.11ms  <<< no 40+ ms extra latency
- 99.999%    2.53ms
-100.000%    2.62ms
-
-Patch has been also tested on x86 (m7i.2xlarge instance) which it is not
-affected by this issue and the patch doesn't introduce any additional
-delay.
-
-Fixes: 7aa5470c2c09 ("tcp: tsq: move tsq_flags close to sk_wmem_alloc")
-Signed-off-by: Salvatore Dipietro <dipiets@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240119190133.43698-1-dipiets@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Cc: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: linux-hardening@vger.kernel.org
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Tested-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+[ dropped the test portion of the commit as that doesn't apply to
+  5.15.y - gregkh]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/overflow.h |   72 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 41 insertions(+), 31 deletions(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 86dff7abdfd6..0659f0d9414d 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -722,6 +722,7 @@ void tcp_push(struct sock *sk, int flags, int mss_now,
- 		if (!test_bit(TSQ_THROTTLED, &sk->sk_tsq_flags)) {
- 			NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAUTOCORKING);
- 			set_bit(TSQ_THROTTLED, &sk->sk_tsq_flags);
-+			smp_mb__after_atomic();
- 		}
- 		/* It is possible TX completion already happened
- 		 * before we set TSQ_THROTTLED.
--- 
-2.43.0
-
+--- a/include/linux/overflow.h
++++ b/include/linux/overflow.h
+@@ -51,40 +51,50 @@ static inline bool __must_check __must_c
+ 	return unlikely(overflow);
+ }
+ 
+-/*
+- * For simplicity and code hygiene, the fallback code below insists on
+- * a, b and *d having the same type (similar to the min() and max()
+- * macros), whereas gcc's type-generic overflow checkers accept
+- * different types. Hence we don't just make check_add_overflow an
+- * alias for __builtin_add_overflow, but add type checks similar to
+- * below.
++/** check_add_overflow() - Calculate addition with overflow checking
++ *
++ * @a: first addend
++ * @b: second addend
++ * @d: pointer to store sum
++ *
++ * Returns 0 on success.
++ *
++ * *@d holds the results of the attempted addition, but is not considered
++ * "safe for use" on a non-zero return value, which indicates that the
++ * sum has overflowed or been truncated.
+  */
+-#define check_add_overflow(a, b, d) __must_check_overflow(({	\
+-	typeof(a) __a = (a);			\
+-	typeof(b) __b = (b);			\
+-	typeof(d) __d = (d);			\
+-	(void) (&__a == &__b);			\
+-	(void) (&__a == __d);			\
+-	__builtin_add_overflow(__a, __b, __d);	\
+-}))
++#define check_add_overflow(a, b, d)	\
++	__must_check_overflow(__builtin_add_overflow(a, b, d))
+ 
+-#define check_sub_overflow(a, b, d) __must_check_overflow(({	\
+-	typeof(a) __a = (a);			\
+-	typeof(b) __b = (b);			\
+-	typeof(d) __d = (d);			\
+-	(void) (&__a == &__b);			\
+-	(void) (&__a == __d);			\
+-	__builtin_sub_overflow(__a, __b, __d);	\
+-}))
++/** check_sub_overflow() - Calculate subtraction with overflow checking
++ *
++ * @a: minuend; value to subtract from
++ * @b: subtrahend; value to subtract from @a
++ * @d: pointer to store difference
++ *
++ * Returns 0 on success.
++ *
++ * *@d holds the results of the attempted subtraction, but is not considered
++ * "safe for use" on a non-zero return value, which indicates that the
++ * difference has underflowed or been truncated.
++ */
++#define check_sub_overflow(a, b, d)	\
++	__must_check_overflow(__builtin_sub_overflow(a, b, d))
+ 
+-#define check_mul_overflow(a, b, d) __must_check_overflow(({	\
+-	typeof(a) __a = (a);			\
+-	typeof(b) __b = (b);			\
+-	typeof(d) __d = (d);			\
+-	(void) (&__a == &__b);			\
+-	(void) (&__a == __d);			\
+-	__builtin_mul_overflow(__a, __b, __d);	\
+-}))
++/** check_mul_overflow() - Calculate multiplication with overflow checking
++ *
++ * @a: first factor
++ * @b: second factor
++ * @d: pointer to store product
++ *
++ * Returns 0 on success.
++ *
++ * *@d holds the results of the attempted multiplication, but is not
++ * considered "safe for use" on a non-zero return value, which indicates
++ * that the product has overflowed or been truncated.
++ */
++#define check_mul_overflow(a, b, d)	\
++	__must_check_overflow(__builtin_mul_overflow(a, b, d))
+ 
+ /** check_shl_overflow() - Calculate a left-shifted value and check overflow
+  *
 
 
