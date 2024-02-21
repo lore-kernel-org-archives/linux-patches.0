@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6594C3D0A1;
-	Wed, 21 Feb 2024 14:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899927C09C;
+	Wed, 21 Feb 2024 14:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525534; cv=none; b=UlHVTuqjHEJykwtFGL31KVip10/Vt2yG0BafBaqyzIygTu80ia/E6HFQbPNpWkMSkLpXxFGItnLKODrEkp+p8UWl6Y14XFoCmv047m8nVg00iwSWdE5UdTViXYCEkbtHQBagtNYUshM7B6my/EVNus2XHx2zWgxtVpDyHyw4IP4=
+	t=1708525537; cv=none; b=kf71GzxGNssDjgpzW5t9ZhP7paDCQBssnPe05sBegwQYNY0U/Li3BZaUOSEIWENOsZ0rvytoYzyEgUskFrUdahpaw+KQG9bYRwB1y8BawcmQAu2cWSIuUUTHReJ5cItijOoCFQOr2eJwTwLe/8jA/auZfjP/zwNN/sw+lFNdB1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525534; c=relaxed/simple;
-	bh=o9iZk0f2BhzQgDoynd3HBGsK5+e541luEquJ9PEwSZE=;
+	s=arc-20240116; t=1708525537; c=relaxed/simple;
+	bh=OR5LZZPLOrL/iyv5/vCRq2UnkWx1A8Deo9mT4HaaZDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQOYqNCs5UikuO5TMlVa+PnZ6gCvIxUr71EnWqn6RrMDEcoVeLY/4CLPCwI2s5MBTuft3HAmA/6zwfjXKzfFwu2EYu0pz0j0yXtKJkSofrOlbIMl+sSPb9P+0LQCr9k0BnsutrZW2uIl+3vIdDUqoS4VBltTrCszn08ob1Uf/5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmwlIR12; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bMZiMr6+nn5avW/0OoQcwv9q5dgjnG4cD7U4YXMKNp0xYmXOTXWsG9tinNoMVR7iLMYgk7bH5+0ig4Znr5EKhpXuTUSOUuCVHwwu3O3dsRONJxgNICs3lr+oQn55p0a1cK3G2VZgUEng76J874YbAL/P+zZ/sqxx7cD3HcuB9D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/itfHGp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmwlIR12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1677C433C7;
-	Wed, 21 Feb 2024 14:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/itfHGp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08786C433F1;
+	Wed, 21 Feb 2024 14:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525534;
-	bh=o9iZk0f2BhzQgDoynd3HBGsK5+e541luEquJ9PEwSZE=;
+	s=korg; t=1708525537;
+	bh=OR5LZZPLOrL/iyv5/vCRq2UnkWx1A8Deo9mT4HaaZDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmwlIR12kVIJXVcNAkYivt/EW5wPln5FzYkYzk1w6Gt+FWaoTOIKdTDxoGRXLcWip
-	 z0IRFr4iH8lxMx5K2D3/RoylJ0WwIjgEgJ7IbvGSx/BgM8ZolwcUksLr5KJ4FZMqjn
-	 4u8+SfqVUgHTSGzQsEouarT2t60PpPKTeuqMqpk4=
+	b=q/itfHGp7kECYTWhdY5DPKGUisfl3FjP4fMU6albXTRC1AHkYJ1jN+v0QAJO3/pKE
+	 L73Jtpnd4i2BLnQfi9fu4GNKryfmWjg+UATfrCEx0W4cYTm8X9aQwDRBdx5wwNzi9E
+	 c5qx2qInO+hAqI/4z54HW9Asp6Zve7mtSqeJlhcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhang Rui <rui.zhang@intel.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 185/267] hwmon: (coretemp) Fix out-of-bounds memory access
-Date: Wed, 21 Feb 2024 14:08:46 +0100
-Message-ID: <20240221125945.935989317@linuxfoundation.org>
+Subject: [PATCH 5.4 186/267] hwmon: (coretemp) Fix bogus core_id to attr name mapping
+Date: Wed, 21 Feb 2024 14:08:47 +0100
+Message-ID: <20240221125945.964656999@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -53,48 +53,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 4e440abc894585a34c2904a32cd54af1742311b3 ]
+[ Upstream commit fdaf0c8629d4524a168cb9e4ad4231875749b28c ]
 
-Fix a bug that pdata->cpu_map[] is set before out-of-bounds check.
-The problem might be triggered on systems with more than 128 cores per
-package.
+Before commit 7108b80a542b ("hwmon/coretemp: Handle large core ID
+value"), there is a fixed mapping between
+1. cpu_core_id
+2. the index in pdata->core_data[] array
+3. the sysfs attr name, aka "tempX_"
+The later two always equal cpu_core_id + 2.
+
+After the commit, pdata->core_data[] index is got from ida so that it
+can handle sparse core ids and support more cores within a package.
+
+However, the commit erroneously maps the sysfs attr name to
+pdata->core_data[] index instead of cpu_core_id + 2.
+
+As a result, the code is not aligned with the comments, and brings user
+visible changes in hwmon sysfs on systems with sparse core id.
+
+For example, before commit 7108b80a542b ("hwmon/coretemp: Handle large
+core ID value"),
+/sys/class/hwmon/hwmon2/temp2_label:Core 0
+/sys/class/hwmon/hwmon2/temp3_label:Core 1
+/sys/class/hwmon/hwmon2/temp4_label:Core 2
+/sys/class/hwmon/hwmon2/temp5_label:Core 3
+/sys/class/hwmon/hwmon2/temp6_label:Core 4
+/sys/class/hwmon/hwmon3/temp10_label:Core 8
+/sys/class/hwmon/hwmon3/temp11_label:Core 9
+after commit,
+/sys/class/hwmon/hwmon2/temp2_label:Core 0
+/sys/class/hwmon/hwmon2/temp3_label:Core 1
+/sys/class/hwmon/hwmon2/temp4_label:Core 2
+/sys/class/hwmon/hwmon2/temp5_label:Core 3
+/sys/class/hwmon/hwmon2/temp6_label:Core 4
+/sys/class/hwmon/hwmon2/temp7_label:Core 8
+/sys/class/hwmon/hwmon2/temp8_label:Core 9
+
+Restore the previous behavior and rework the code, comments and variable
+names to avoid future confusions.
 
 Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
 Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240202092144.71180-2-rui.zhang@intel.com
+Link: https://lore.kernel.org/r/20240202092144.71180-3-rui.zhang@intel.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: fdaf0c8629d4 ("hwmon: (coretemp) Fix bogus core_id to attr name mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/hwmon/coretemp.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 0eabad344961..10e1d189a619 100644
+index 10e1d189a619..ecee12d0346b 100644
 --- a/drivers/hwmon/coretemp.c
 +++ b/drivers/hwmon/coretemp.c
-@@ -467,18 +467,14 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
+@@ -380,7 +380,7 @@ static int get_tjmax(struct cpuinfo_x86 *c, u32 id, struct device *dev)
+ }
+ 
+ static int create_core_attrs(struct temp_data *tdata, struct device *dev,
+-			     int attr_no)
++			     int index)
+ {
+ 	int i;
+ 	static ssize_t (*const rd_ptr[TOTAL_ATTRS]) (struct device *dev,
+@@ -392,13 +392,20 @@ static int create_core_attrs(struct temp_data *tdata, struct device *dev,
+ 	};
+ 
+ 	for (i = 0; i < tdata->attr_size; i++) {
++		/*
++		 * We map the attr number to core id of the CPU
++		 * The attr number is always core id + 2
++		 * The Pkgtemp will always show up as temp1_*, if available
++		 */
++		int attr_no = tdata->is_pkg_data ? 1 : tdata->cpu_core_id + 2;
++
+ 		snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
+ 			 "temp%d_%s", attr_no, suffixes[i]);
+ 		sysfs_attr_init(&tdata->sd_attrs[i].dev_attr.attr);
+ 		tdata->sd_attrs[i].dev_attr.attr.name = tdata->attr_name[i];
+ 		tdata->sd_attrs[i].dev_attr.attr.mode = 0444;
+ 		tdata->sd_attrs[i].dev_attr.show = rd_ptr[i];
+-		tdata->sd_attrs[i].index = attr_no;
++		tdata->sd_attrs[i].index = index;
+ 		tdata->attrs[i] = &tdata->sd_attrs[i].dev_attr.attr;
+ 	}
+ 	tdata->attr_group.attrs = tdata->attrs;
+@@ -456,23 +463,22 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
+ 	struct platform_data *pdata = platform_get_drvdata(pdev);
+ 	struct cpuinfo_x86 *c = &cpu_data(cpu);
+ 	u32 eax, edx;
+-	int err, index, attr_no;
++	int err, index;
+ 
+ 	/*
+-	 * Find attr number for sysfs:
+-	 * We map the attr number to core id of the CPU
+-	 * The attr number is always core id + 2
+-	 * The Pkgtemp will always show up as temp1_*, if available
++	 * Get the index of tdata in pdata->core_data[]
++	 * tdata for package: pdata->core_data[1]
++	 * tdata for core: pdata->core_data[2] .. pdata->core_data[NUM_REAL_CORES + 1]
+ 	 */
  	if (pkg_flag) {
- 		attr_no = PKG_SYSFS_ATTR_NO;
+-		attr_no = PKG_SYSFS_ATTR_NO;
++		index = PKG_SYSFS_ATTR_NO;
  	} else {
--		index = ida_alloc(&pdata->ida, GFP_KERNEL);
-+		index = ida_alloc_max(&pdata->ida, NUM_REAL_CORES - 1, GFP_KERNEL);
+ 		index = ida_alloc_max(&pdata->ida, NUM_REAL_CORES - 1, GFP_KERNEL);
  		if (index < 0)
  			return index;
-+
+ 
  		pdata->cpu_map[index] = topology_core_id(cpu);
- 		attr_no = index + BASE_SYSFS_ATTR_NO;
+-		attr_no = index + BASE_SYSFS_ATTR_NO;
++		index += BASE_SYSFS_ATTR_NO;
  	}
  
--	if (attr_no > MAX_CORE_DATA - 1) {
--		err = -ERANGE;
--		goto ida_free;
--	}
--
  	tdata = init_temp_data(cpu, pkg_flag);
- 	if (!tdata) {
- 		err = -ENOMEM;
+@@ -504,20 +510,20 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
+ 		}
+ 	}
+ 
+-	pdata->core_data[attr_no] = tdata;
++	pdata->core_data[index] = tdata;
+ 
+ 	/* Create sysfs interfaces */
+-	err = create_core_attrs(tdata, pdata->hwmon_dev, attr_no);
++	err = create_core_attrs(tdata, pdata->hwmon_dev, index);
+ 	if (err)
+ 		goto exit_free;
+ 
+ 	return 0;
+ exit_free:
+-	pdata->core_data[attr_no] = NULL;
++	pdata->core_data[index] = NULL;
+ 	kfree(tdata);
+ ida_free:
+ 	if (!pkg_flag)
+-		ida_free(&pdata->ida, index);
++		ida_free(&pdata->ida, index - BASE_SYSFS_ATTR_NO);
+ 	return err;
+ }
+ 
 -- 
 2.43.0
 
