@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0719D4C62;
-	Wed, 21 Feb 2024 14:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9151E7BB11;
+	Wed, 21 Feb 2024 14:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525632; cv=none; b=gns6RN6v07a8z5zvDD6W5CSaleu3/COO17LvQE86ffWoeAWAC6dNceBL51HjMhyQTcfBr89zj/leokVBdRdP5GNWmHA8Hf219KGCCQeSXNlKkT7yri/4dixuqj/MizJJmxbER8TohWUONSB1aFmd7KShbEheENLb6HTIcB2fygk=
+	t=1708525634; cv=none; b=FKmgTXGN/82++RRtnIm6W3Jhv2MI4nb9IdDuCZbrXnavaAQM0WSQxAXufM2wuWYVSCxLEG2keWmznPwr9+H8XbuQmf5+ghhG3kZOwG4BlvChxyXUxpGxQYQeY33i1YPWGnVjNskK+uroytgW/m2qv+ZunIYgxDpLkZ1v9zbADa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525632; c=relaxed/simple;
-	bh=7BjqHf244sB3cOJrCRElSc27HTMZI1a5qX5j42lcUdY=;
+	s=arc-20240116; t=1708525634; c=relaxed/simple;
+	bh=ocVRjMoqs+FiyfKAPluJdPYBVZo2hha39bLY1MP6rYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mECXr8KspuNc0j9LY49nLdAj4fDWx0q/pOIAzrJaoJJr6zW5PNA9IdiYKniihzWCi6dQP5GcoGNwuUv/xvOSjWbMVLLULMarx08WYVyirc0qkrvE/K3RHF4rtDECJuWEzsBhipY0tUpEC2oakZP9TA1cH4SSRhARH6vrtRqU/do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbQwvxQZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C+f08XdVqXpPmPt76U08w7zmqDZjSNeI+oKVQy6Yi5YEVZxxFoFpksHjf/qUeuRxAUQFN0bm9RG0KIC8SpGmjYk6eHcTELVU/X4r8J/qGiwCTolkUZjgSapxmfqbWXS5DyEiOJ4Y4/0sa0q8IrIBpROujhCVQNLuwbkjvASleYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqVxJzb9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbQwvxQZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0958BC433C7;
-	Wed, 21 Feb 2024 14:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqVxJzb9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF93C433F1;
+	Wed, 21 Feb 2024 14:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525631;
-	bh=7BjqHf244sB3cOJrCRElSc27HTMZI1a5qX5j42lcUdY=;
+	s=korg; t=1708525634;
+	bh=ocVRjMoqs+FiyfKAPluJdPYBVZo2hha39bLY1MP6rYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbQwvxQZrtdV8V+bTaxj6fyLPN9tX9koMsCLp8l68Pbbvmgocvowf+cjC7o0oyGrk
-	 Wlx2pplU0wIMz5BqAZX0YJBiMGFkSm6YT9lD3l6X1LhQFT/a3qo/5l6IjC96Vd81MT
-	 AtoZAq1z+BQOsWiF6lZ4dxK298dyu+WFtwIClViM=
+	b=mqVxJzb9fhD0bsU2a8da7VHieR4KBOP9VMs93EfbLz2HHsptuI+Vgxb5YYgw2lDc0
+	 w5yeMl2Y47+N+Lv5fhVJHOHOk8fziwhz1hxmYK447P5pczTE1MPYybj0vqJ5mTXHXH
+	 oZh0Hphcnp741M3jSAb3V7BBkN9GIuqBEgWqJegs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zach OKeefe <zokeefe@google.com>,
-	Maxim Patlasov <MPatlasov@parallels.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 214/267] mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again
-Date: Wed, 21 Feb 2024 14:09:15 +0100
-Message-ID: <20240221125946.933043806@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.4 215/267] HID: wacom: generic: Avoid reporting a serial of 0 to userspace
+Date: Wed, 21 Feb 2024 14:09:16 +0100
+Message-ID: <20240221125946.963556675@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,46 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zach O'Keefe <zokeefe@google.com>
+From: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
 
-commit 9319b647902cbd5cc884ac08a8a6d54ce111fc78 upstream.
+commit ab41a31dd5e2681803642b6d08590b61867840ec upstream.
 
-(struct dirty_throttle_control *)->thresh is an unsigned long, but is
-passed as the u32 divisor argument to div_u64().  On architectures where
-unsigned long is 64 bytes, the argument will be implicitly truncated.
+The xf86-input-wacom driver does not treat '0' as a valid serial
+number and will drop any input report which contains an
+MSC_SERIAL = 0 event. The kernel driver already takes care to
+avoid sending any MSC_SERIAL event if the value of serial[0] == 0
+(which is the case for devices that don't actually report a
+serial number), but this is not quite sufficient.
+Only the lower 32 bits of the serial get reported to userspace,
+so if this portion of the serial is zero then there can still
+be problems.
 
-Use div64_u64() instead of div_u64() so that the value used in the "is
-this a safe division" check is the same as the divisor.
+This commit allows the driver to report either the lower 32 bits
+if they are non-zero or the upper 32 bits otherwise.
 
-Also, remove redundant cast of the numerator to u64, as that should happen
-implicitly.
-
-This would be difficult to exploit in memcg domain, given the ratio-based
-arithmetic domain_drity_limits() uses, but is much easier in global
-writeback domain with a BDI_CAP_STRICTLIMIT-backing device, using e.g.
-vm.dirty_bytes=(1<<32)*PAGE_SIZE so that dtc->thresh == (1<<32)
-
-Link: https://lkml.kernel.org/r/20240118181954.1415197-1-zokeefe@google.com
-Fixes: f6789593d5ce ("mm/page-writeback.c: fix divide by zero in bdi_dirty_limits()")
-Signed-off-by: Zach O'Keefe <zokeefe@google.com>
-Cc: Maxim Patlasov <MPatlasov@parallels.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
+Fixes: f85c9dc678a5 ("HID: wacom: generic: Support tool ID and additional tool types")
+CC: stable@vger.kernel.org # v4.10
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page-writeback.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/wacom_wac.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -1530,7 +1530,7 @@ static inline void wb_dirty_limits(struc
- 	 */
- 	dtc->wb_thresh = __wb_calc_thresh(dtc);
- 	dtc->wb_bg_thresh = dtc->thresh ?
--		div_u64((u64)dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
-+		div64_u64(dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -2540,7 +2540,14 @@ static void wacom_wac_pen_report(struct
+ 				wacom_wac->hid_data.tipswitch);
+ 		input_report_key(input, wacom_wac->tool[0], sense);
+ 		if (wacom_wac->serial[0]) {
+-			input_event(input, EV_MSC, MSC_SERIAL, wacom_wac->serial[0]);
++			/*
++			 * xf86-input-wacom does not accept a serial number
++			 * of '0'. Report the low 32 bits if possible, but
++			 * if they are zero, report the upper ones instead.
++			 */
++			__u32 serial_lo = wacom_wac->serial[0] & 0xFFFFFFFFu;
++			__u32 serial_hi = wacom_wac->serial[0] >> 32;
++			input_event(input, EV_MSC, MSC_SERIAL, (int)(serial_lo ? serial_lo : serial_hi));
+ 			input_report_abs(input, ABS_MISC, sense ? id : 0);
+ 		}
  
- 	/*
- 	 * In order to avoid the stacked BDI deadlock we need
 
 
