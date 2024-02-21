@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A1669D37;
-	Wed, 21 Feb 2024 13:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C1669D2B;
+	Wed, 21 Feb 2024 13:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521197; cv=none; b=KFqjYHjoelRA0hrMnKpMgzShuybuRIIBuL0QdV1TVeoj88uRP2p3Ms7WK7lo0GqHWgMkdHXBBdsuD6olOQ4qZj756vzLY0mAe2mZucOx4G2zq5M3yH5PdLa0RUAEISVCQbfQE6ghFmaNkRmt7kwClCoaitIezDfyv3Y+/xxqgrE=
+	t=1708521200; cv=none; b=dNldAWcDfcggGhhAK9hOufO7KjomGzJtYvpFUfDcw4WoIDLggZFmMoXmBmtJzAqSWxNKOTe/gwmUPaX0Ih0pbxMRtHpLRqiSOvMHVW+XRYuMjv8oMZy8SBq6BDI3JUErx3v4KSZuEcacf06R3cLEOqGLiWsdfZdQWn+2nlsGHeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521197; c=relaxed/simple;
-	bh=/xHIYzBeZkH5PT9YUCodD+eqBc7NKDxXVV+Msr/ls2s=;
+	s=arc-20240116; t=1708521200; c=relaxed/simple;
+	bh=XWphp+VEBVar9rl9cAKfZ1ZjCAGB3jfyJILwn1KX6LU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKn4PjmWGvg+i7e3pywneHeVjZhHIIkwk6ILbaDILOhVlk45F3Wpxs9mMiewB/67k3NDTil3NQ3zC30K8n9f6AHFi08GiQ9bgeSZAsleF1WXOg6w98jhgKBdqJvnEWDgeDpVcalxRsqu4V/72GcB4iu/H67TMyhYAyFPF44Doa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYsoJ9qm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cxNIxgySNHeqB1z/0HBoVui8aVo9OLLhb08PjI4LbTaczf7i81JFWJv916zgI5k1u+JgpFRQBV/9zbQGBGk55PS1nNpA+cDoKN4Y1/a/PysQJf77mHlkHvHos5IwPyxJXfLcJnOdtfdKpbYnyP/yDdVGTrQFVJeX8HC4PSEjL8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJxox+aZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYsoJ9qm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887C1C43390;
-	Wed, 21 Feb 2024 13:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJxox+aZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A46BC433C7;
+	Wed, 21 Feb 2024 13:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521197;
-	bh=/xHIYzBeZkH5PT9YUCodD+eqBc7NKDxXVV+Msr/ls2s=;
+	s=korg; t=1708521200;
+	bh=XWphp+VEBVar9rl9cAKfZ1ZjCAGB3jfyJILwn1KX6LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYsoJ9qmVZ9oYPC+UAwvMaOUB/OHH0Xt/PNzIb3xBogL60cxeo7BQGjqQoXoNuvtC
-	 Uc2/DuPtF9RaGWjzFWIsUsrveGdhnKiOXgKmyhei7ssutXJ9x0ZVftuQCfsj4WYbNY
-	 dq9ub03HM+ohgqJuHzJHlOS1e+9xr/GyPisk+G4Y=
+	b=JJxox+aZuzVy5KbzekN3IXlq4DiysfC2idJ8m/h2jbut+//TKSbu9sqFaOV6XC77Q
+	 /qUo/1JWl4AM6+9JmsRJ3DXL5I4vfxcfRFkS81A4VByogMpdy7u97In2Wv38WJ5Rsk
+	 L/uk8/HLE0eO1aJE/UjGE8f0A5a3wkKARudhkLuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 4.19 017/202] block: Remove special-casing of compound pages
-Date: Wed, 21 Feb 2024 14:05:18 +0100
-Message-ID: <20240221125932.312761204@linuxfoundation.org>
+	"stable@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,  linux-kbuild@vger.kernel.org, llvm@lists.linux.dev,  Nathan Chancellor" <nathan@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4.19 018/202] powerpc: Use always instead of always-y in for crtsavres.o
+Date: Wed, 21 Feb 2024 14:05:19 +0100
+Message-ID: <20240221125932.342861096@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -50,70 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 1b151e2435fc3a9b10c8946c6aebe9f3e1938c55 upstream.
+This commit is for linux-4.19.y only, it has no direct upstream
+equivalent.
 
-The special casing was originally added in pre-git history; reproducing
-the commit log here:
+Prior to commit 5f2fb52fac15 ("kbuild: rename hostprogs-y/always to
+hostprogs/always-y"), always-y did not exist, making the backport of
+mainline commit 1b1e38002648 ("powerpc: add crtsavres.o to always-y
+instead of extra-y") to linux-4.19.y as commit b7b85ec5ec15 ("powerpc:
+add crtsavres.o to always-y instead of extra-y") incorrect, breaking the
+build with linkers that need crtsavres.o:
 
-> commit a318a92567d77
-> Author: Andrew Morton <akpm@osdl.org>
-> Date:   Sun Sep 21 01:42:22 2003 -0700
->
->     [PATCH] Speed up direct-io hugetlbpage handling
->
->     This patch short-circuits all the direct-io page dirtying logic for
->     higher-order pages.  Without this, we pointlessly bounce BIOs up to
->     keventd all the time.
+  ld.lld: error: cannot open arch/powerpc/lib/crtsavres.o: No such file or directory
 
-In the last twenty years, compound pages have become used for more than
-just hugetlb.  Rewrite these functions to operate on folios instead
-of pages and remove the special case for hugetlbfs; I don't think
-it's needed any more (and if it is, we can put it back in as a call
-to folio_test_hugetlb()).
+Backporting the aforementioned kbuild commit is not suitable for stable
+due to its size and number of conflicts, so transform the always-y usage
+to an equivalent form using always, which resolves the build issues.
 
-This was found by inspection; as far as I can tell, this bug can lead
-to pages used as the destination of a direct I/O read not being marked
-as dirty.  If those pages are then reclaimed by the MM without being
-dirtied for some other reason, they won't be written out.  Then when
-they're faulted back in, they will not contain the data they should.
-It'll take a pretty unusual setup to produce this problem with several
-races all going the wrong way.
-
-This problem predates the folio work; it could for example have been
-triggered by mmaping a THP in tmpfs and using that as the target of an
-O_DIRECT read.
-
-Fixes: 800d8c63b2e98 ("shmem: add huge pages support")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: b7b85ec5ec15 ("powerpc: add crtsavres.o to always-y instead of extra-y")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bio.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/powerpc/lib/Makefile |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -1592,8 +1592,7 @@ void bio_set_pages_dirty(struct bio *bio
- 	int i;
+--- a/arch/powerpc/lib/Makefile
++++ b/arch/powerpc/lib/Makefile
+@@ -21,8 +21,8 @@ obj-$(CONFIG_PPC32)	+= div64.o copy_32.o
+ # 64-bit linker creates .sfpr on demand for final link (vmlinux),
+ # so it is only needed for modules, and only for older linkers which
+ # do not support --save-restore-funcs
+-ifeq ($(call ld-ifversion, -lt, 225000000, y),y)
+-always-$(CONFIG_PPC64)	+= crtsavres.o
++ifeq ($(call ld-ifversion, -lt, 225000000, y)$(CONFIG_PPC64),yy)
++always	+= crtsavres.o
+ endif
  
- 	bio_for_each_segment_all(bvec, bio, i) {
--		if (!PageCompound(bvec->bv_page))
--			set_page_dirty_lock(bvec->bv_page);
-+		set_page_dirty_lock(bvec->bv_page);
- 	}
- }
- EXPORT_SYMBOL_GPL(bio_set_pages_dirty);
-@@ -1652,7 +1651,7 @@ void bio_check_pages_dirty(struct bio *b
- 	int i;
- 
- 	bio_for_each_segment_all(bvec, bio, i) {
--		if (!PageDirty(bvec->bv_page) && !PageCompound(bvec->bv_page))
-+		if (!PageDirty(bvec->bv_page))
- 			goto defer;
- 	}
- 
+ obj-$(CONFIG_PPC_BOOK3S_64) += copyuser_power7.o copypage_power7.o \
 
 
