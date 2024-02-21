@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018FA78B60;
-	Wed, 21 Feb 2024 14:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDB04C62;
+	Wed, 21 Feb 2024 14:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525670; cv=none; b=sCoT3FTH/4IFHJnITCQGx/FR7digWPscVpE6toMsSRzZQdaWGUF/Aw3KMIbwaHityVE36UhdysWeG4zu9wrRMr1ireUwadDJGKANIDsrYnHtJuExj7kNd+gyK9IdIQgtzNwO+jGHJrTReeGC2vbaykNylw5pm4GqDOiBqXlZVlw=
+	t=1708525673; cv=none; b=WDg8R6kKeYcBn1H1jfwNyvqFECAxXTbmPXRN4TSCITitUfnr54HpC0/wNGfVI9MKBqvvapmR6HDfpfAkdNoVtDv+ovB95F2NU3mq5ovCl1ioI/60rj1ajgTmY4/OUfEj2UqVOZnEbgd+v2ptu/7VRz9Lou36yt3X+fykeJMOR5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525670; c=relaxed/simple;
-	bh=Wg1cn2uMIqIRas87aCbwN6cZ39JUKqJDR99jeWK6n6E=;
+	s=arc-20240116; t=1708525673; c=relaxed/simple;
+	bh=1blcRQjkYk1q4VdC+6TctMW5xy6pnuEu6kzNfDb0ytY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8vbhgRz9jgPLhacY/vtGyY1wzlKAzXwiGxtFaNrf9yt8n0GNOZ60I7U1IgBcrqDgDTd1TrJDQTJ+vgtqOgso6E7ltBzUniRPn48MEDyg9x+6U3+QgfpLsiDkWoCtJMAWLyDCkOTgbZcCZ0DIzscdh3rFDujoXrnan1jKNPEcFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXSgRI23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qar5hxmZq8JTeKqHJparJKv/b1pveRCSuGcNAYpPG4QffS01iha7QAU/hQ/qkEnIiC6Yhe+Aw/AFCSKn1fkSGFvMd0+bIAtIIuJRNQ6IOWu2bBt4Lwv807CSHKIwxaCdBQKzynLai+k+XrM1yVKTxjkRdkRDgdtoEnNEbdj4KbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgMeOr/P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXSgRI23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D7FC433F1;
-	Wed, 21 Feb 2024 14:27:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgMeOr/P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0F7C433F1;
+	Wed, 21 Feb 2024 14:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525669;
-	bh=Wg1cn2uMIqIRas87aCbwN6cZ39JUKqJDR99jeWK6n6E=;
+	s=korg; t=1708525673;
+	bh=1blcRQjkYk1q4VdC+6TctMW5xy6pnuEu6kzNfDb0ytY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXSgRI23Vaz6aG3eUMmSXMzLq7qTO3r48ZBoF7Qjeq7YQMXyIZS+f9c5XbBIQBegH
-	 5bxxDsSVdE+egtywOIKvwaWU4q88o7K6MujVJQ/+xRjsVHmiXHacxHlp21LARNcAr/
-	 yVQbiPEOqvKvkSrLmOVJ4riIpiJl0fVAZrXh92Xk=
+	b=XgMeOr/P+2oloGcmCHVE+PF0/gbb6W3oGjUV4hnUFshD57UcgDCzjXojPKN0fXivf
+	 nZ2pdoFsfCZBZCeRD9HZV/xSEPlCgvyjY9GWxyfMEHKChHQSec4QIFIwOi/f5/Qall
+	 0VO1voVqUpQTC7ZxugM7w7RqcGne77wuqTvFr5gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.4 198/267] hrtimer: Report offline hrtimer enqueue
-Date: Wed, 21 Feb 2024 14:08:59 +0100
-Message-ID: <20240221125946.373802086@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.4 199/267] Input: atkbd - skip ATKBD_CMD_SETLEDS when skipping ATKBD_CMD_GETID
+Date: Wed, 21 Feb 2024 14:09:00 +0100
+Message-ID: <20240221125946.402885635@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,78 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit dad6a09f3148257ac1773cd90934d721d68ab595 upstream.
+commit 683cd8259a9b883a51973511f860976db2550a6e upstream.
 
-The hrtimers migration on CPU-down hotplug process has been moved
-earlier, before the CPU actually goes to die. This leaves a small window
-of opportunity to queue an hrtimer in a blind spot, leaving it ignored.
+After commit 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in
+translated mode") the keyboard on Dell XPS 13 9350 / 9360 / 9370 models
+has stopped working after a suspend/resume.
 
-For example a practical case has been reported with RCU waking up a
-SCHED_FIFO task right before the CPUHP_AP_IDLE_DEAD stage, queuing that
-way a sched/rt timer to the local offline CPU.
+The problem appears to be that atkbd_probe() fails when called
+from atkbd_reconnect() on resume, which on systems where
+ATKBD_CMD_GETID is skipped can only happen by ATKBD_CMD_SETLEDS
+failing. ATKBD_CMD_SETLEDS failing because ATKBD_CMD_GETID was
+skipped is weird, but apparently that is what is happening.
 
-Make sure such situations never go unnoticed and warn when that happens.
+Fix this by also skipping ATKBD_CMD_SETLEDS when skipping
+ATKBD_CMD_GETID.
 
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Reported-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Closes: https://lore.kernel.org/linux-input/0aa4a61f-c939-46fe-a572-08022e8931c7@molgen.mpg.de/
+Closes: https://bbs.archlinux.org/viewtopic.php?pid=2146300
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218424
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2260517
+Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240129235646.3171983-4-boqun.feng@gmail.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240126160724.13278-2-hdegoede@redhat.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hrtimer.h |    4 +++-
- kernel/time/hrtimer.c   |    3 +++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/input/keyboard/atkbd.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -196,6 +196,7 @@ enum  hrtimer_base_type {
-  * @max_hang_time:	Maximum time spent in hrtimer_interrupt
-  * @softirq_expiry_lock: Lock which is taken while softirq based hrtimer are
-  *			 expired
-+ * @online:		CPU is online from an hrtimers point of view
-  * @timer_waiters:	A hrtimer_cancel() invocation waits for the timer
-  *			callback to finish.
-  * @expires_next:	absolute time of the next event, is required for remote
-@@ -218,7 +219,8 @@ struct hrtimer_cpu_base {
- 	unsigned int			hres_active		: 1,
- 					in_hrtirq		: 1,
- 					hang_detected		: 1,
--					softirq_activated       : 1;
-+					softirq_activated       : 1,
-+					online			: 1;
- #ifdef CONFIG_HIGH_RES_TIMERS
- 	unsigned int			nr_events;
- 	unsigned short			nr_retries;
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -981,6 +981,7 @@ static int enqueue_hrtimer(struct hrtime
- 			   enum hrtimer_mode mode)
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -761,7 +761,6 @@ static int atkbd_probe(struct atkbd *atk
  {
- 	debug_activate(timer, mode);
-+	WARN_ON_ONCE(!base->cpu_base->online);
+ 	struct ps2dev *ps2dev = &atkbd->ps2dev;
+ 	unsigned char param[2];
+-	bool skip_getid;
  
- 	base->cpu_base->active_bases |= 1 << base->index;
+ /*
+  * Some systems, where the bit-twiddling when testing the io-lines of the
+@@ -775,6 +774,11 @@ static int atkbd_probe(struct atkbd *atk
+ 				 "keyboard reset failed on %s\n",
+ 				 ps2dev->serio->phys);
  
-@@ -2069,6 +2070,7 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	cpu_base->softirq_next_timer = NULL;
- 	cpu_base->expires_next = KTIME_MAX;
- 	cpu_base->softirq_expires_next = KTIME_MAX;
-+	cpu_base->online = 1;
- 	hrtimer_cpu_base_init_expiry_lock(cpu_base);
- 	return 0;
- }
-@@ -2136,6 +2138,7 @@ int hrtimers_cpu_dying(unsigned int dyin
- 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
++	if (atkbd_skip_getid(atkbd)) {
++		atkbd->id = 0xab83;
++		return 0;
++	}
++
+ /*
+  * Then we check the keyboard ID. We should get 0xab83 under normal conditions.
+  * Some keyboards report different values, but the first byte is always 0xab or
+@@ -783,18 +787,17 @@ static int atkbd_probe(struct atkbd *atk
+  */
  
- 	raw_spin_unlock(&new_base->lock);
-+	old_base->online = 0;
- 	raw_spin_unlock(&old_base->lock);
+ 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
+-	skip_getid = atkbd_skip_getid(atkbd);
+-	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
++	if (ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
  
- 	return 0;
+ /*
+- * If the get ID command was skipped or failed, we check if we can at least set
++ * If the get ID command failed, we check if we can at least set
+  * the LEDs on the keyboard. This should work on every keyboard out there.
+  * It also turns the LEDs off, which we want anyway.
+  */
+ 		param[0] = 0;
+ 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
+ 			return -1;
+-		atkbd->id = skip_getid ? 0xab83 : 0xabba;
++		atkbd->id = 0xabba;
+ 		return 0;
+ 	}
+ 
 
 
