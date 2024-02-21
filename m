@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1062F4C62;
-	Wed, 21 Feb 2024 14:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EAA4C62;
+	Wed, 21 Feb 2024 14:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525081; cv=none; b=MwOith2gg2NdZQPibAXgsCSUKPkSaELTkSqEfsE50zwoihs6x3JnKC02vgyTX56s8gf2Ae/W83HIRcfE5jM6XweDud0Wko3k7gxA4QoQuw7HBJuTNP4qe5lDHWy27ViELLHiArMi10Cy+tr7BIlAE0YTrY2s571SXtYlbneDatQ=
+	t=1708525083; cv=none; b=ehDSJxCncG4OxFTJCMtlUarbiZF5tXjL6s2p3gybaRqwulRZsV3smpXsW1gBroLs4A9W3e9eOVLepEjvjhAoOcnff5/2CNNI9xSqNkpB6F64X+oZ9YOw9WcV0HvhcTFw40j3EhlZhb+xLusOifz7LgJC+6sW1f8PFDekuAZJa8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525081; c=relaxed/simple;
-	bh=dTyrfBhwwblB1bRAj/061aSoa7V0ACBTrfTFSC00Nv0=;
+	s=arc-20240116; t=1708525083; c=relaxed/simple;
+	bh=nWX2GnNhFO4hygytI0a1fYvwKxVuCOZXoHkPPncSFVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C3gNBRVBg2fMsDNvvHPUt5B+dUf+R5QnxHAWK0cvQHaHeVaISLkDNN4AUOMipjw7Ia8xnYc5yz6jnyl/2EOlrqw5jaYoIGoGjz18+TZ/UTV/Y6Pj7RqI4imz8naXcayrCn+u4dkqPrvnU7T1Dv16fqjU0MVsNNkkSfcWS9NFwWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xM1DutKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKvZw3ZaQtQA3DXzDvBdYU3h6o9Cyeij4oCXhv1Owy4W3zNKElliixBuSLKWBG3pLJHoq7cwo5qonLyVdWoklfYfiW2BEOgnTghwPipr6YbhH3nrxFvbT/1zVAwPDiPImhHkgfaXMZs10CY8MAjqwia7t8rBaP0Qnl8/R4fte9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ea8ccYCE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xM1DutKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC4BC433C7;
-	Wed, 21 Feb 2024 14:18:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ea8ccYCE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F0AC433F1;
+	Wed, 21 Feb 2024 14:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525080;
-	bh=dTyrfBhwwblB1bRAj/061aSoa7V0ACBTrfTFSC00Nv0=;
+	s=korg; t=1708525083;
+	bh=nWX2GnNhFO4hygytI0a1fYvwKxVuCOZXoHkPPncSFVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xM1DutKtpv4l3OxZeuBN4uvFJ6A/y9pAgXq/b0a/rWiBU4LhQdV47wf1FW3lHmx0v
-	 jm1BdQl/wcx5NHhLiEJJw3COzUw2G+/U1z9G+3JkhJzaaD27dMp+csFrc/L09mj1Up
-	 fIuw712Wxz9qaexSnL1tmxcKQiVOFmLxAoORTzBk=
+	b=Ea8ccYCEoBfhqJf9NKSqPXaHnKkMYv1vM4PZasRwbXkkcI4YmCPI4uZKgNkRxjJ1s
+	 XqQJFvq3zT6LSOeevQpS+Wv1V/o9d62grIsuerfHWdO0PGa+vyt6gBaebVN2tNVbgh
+	 G41pRF1mDTMafjXfrvKeqVTLF/iqx+K5CRiCm/sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Inki Dae <inki.dae@samsung.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Wenhua Lin <Wenhua.Lin@unisoc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/267] drm/exynos: gsc: minor fix for loop iteration in gsc_runtime_resume
-Date: Wed, 21 Feb 2024 14:06:36 +0100
-Message-ID: <20240221125941.741884826@linuxfoundation.org>
+Subject: [PATCH 5.4 056/267] gpio: eic-sprd: Clear interrupt after set the interrupt type
+Date: Wed, 21 Feb 2024 14:06:37 +0100
+Message-ID: <20240221125941.771420132@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,37 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Wenhua Lin <Wenhua.Lin@unisoc.com>
 
-[ Upstream commit 4050957c7c2c14aa795dbf423b4180d5ac04e113 ]
+[ Upstream commit 84aef4ed59705585d629e81d633a83b7d416f5fb ]
 
-Do not forget to call clk_disable_unprepare() on the first element of
-ctx->clocks array.
+The raw interrupt status of eic maybe set before the interrupt is enabled,
+since the eic interrupt has a latch function, which would trigger the
+interrupt event once enabled it from user side. To solve this problem,
+interrupts generated before setting the interrupt trigger type are ignored.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: 8b7d3ec83aba ("drm/exynos: gsc: Convert driver to IPP v2 core API")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Fixes: 25518e024e3a ("gpio: Add Spreadtrum EIC driver support")
+Acked-by: Chunyan Zhang <zhang.lyra@gmail.com>
+Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_gsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-eic-sprd.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index 45e9aee8366a..bcf830c5b8ea 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -1344,7 +1344,7 @@ static int __maybe_unused gsc_runtime_resume(struct device *dev)
- 	for (i = 0; i < ctx->num_clocks; i++) {
- 		ret = clk_prepare_enable(ctx->clocks[i]);
- 		if (ret) {
--			while (--i > 0)
-+			while (--i >= 0)
- 				clk_disable_unprepare(ctx->clocks[i]);
- 			return ret;
- 		}
+diff --git a/drivers/gpio/gpio-eic-sprd.c b/drivers/gpio/gpio-eic-sprd.c
+index a69b3faf51ef..e50e27304c38 100644
+--- a/drivers/gpio/gpio-eic-sprd.c
++++ b/drivers/gpio/gpio-eic-sprd.c
+@@ -318,20 +318,27 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
+ 		switch (flow_type) {
+ 		case IRQ_TYPE_LEVEL_HIGH:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IEV, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IC, 1);
+ 			break;
+ 		case IRQ_TYPE_LEVEL_LOW:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IEV, 0);
++			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IC, 1);
+ 			break;
+ 		case IRQ_TYPE_EDGE_RISING:
+ 		case IRQ_TYPE_EDGE_FALLING:
+ 		case IRQ_TYPE_EDGE_BOTH:
+ 			state = sprd_eic_get(chip, offset);
+-			if (state)
++			if (state) {
+ 				sprd_eic_update(chip, offset,
+ 						SPRD_EIC_DBNC_IEV, 0);
+-			else
++				sprd_eic_update(chip, offset,
++						SPRD_EIC_DBNC_IC, 1);
++			} else {
+ 				sprd_eic_update(chip, offset,
+ 						SPRD_EIC_DBNC_IEV, 1);
++				sprd_eic_update(chip, offset,
++						SPRD_EIC_DBNC_IC, 1);
++			}
+ 			break;
+ 		default:
+ 			return -ENOTSUPP;
+@@ -343,20 +350,27 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
+ 		switch (flow_type) {
+ 		case IRQ_TYPE_LEVEL_HIGH:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTPOL, 0);
++			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTCLR, 1);
+ 			break;
+ 		case IRQ_TYPE_LEVEL_LOW:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTPOL, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTCLR, 1);
+ 			break;
+ 		case IRQ_TYPE_EDGE_RISING:
+ 		case IRQ_TYPE_EDGE_FALLING:
+ 		case IRQ_TYPE_EDGE_BOTH:
+ 			state = sprd_eic_get(chip, offset);
+-			if (state)
++			if (state) {
+ 				sprd_eic_update(chip, offset,
+ 						SPRD_EIC_LATCH_INTPOL, 0);
+-			else
++				sprd_eic_update(chip, offset,
++						SPRD_EIC_LATCH_INTCLR, 1);
++			} else {
+ 				sprd_eic_update(chip, offset,
+ 						SPRD_EIC_LATCH_INTPOL, 1);
++				sprd_eic_update(chip, offset,
++						SPRD_EIC_LATCH_INTCLR, 1);
++			}
+ 			break;
+ 		default:
+ 			return -ENOTSUPP;
+@@ -370,29 +384,34 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_edge_irq);
+ 			break;
+ 		case IRQ_TYPE_EDGE_FALLING:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 0);
++			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_edge_irq);
+ 			break;
+ 		case IRQ_TYPE_EDGE_BOTH:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_edge_irq);
+ 			break;
+ 		case IRQ_TYPE_LEVEL_HIGH:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 1);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_level_irq);
+ 			break;
+ 		case IRQ_TYPE_LEVEL_LOW:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 1);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 0);
++			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_level_irq);
+ 			break;
+ 		default:
+@@ -405,29 +424,34 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_edge_irq);
+ 			break;
+ 		case IRQ_TYPE_EDGE_FALLING:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 0);
++			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_edge_irq);
+ 			break;
+ 		case IRQ_TYPE_EDGE_BOTH:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_edge_irq);
+ 			break;
+ 		case IRQ_TYPE_LEVEL_HIGH:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 1);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 1);
++			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_level_irq);
+ 			break;
+ 		case IRQ_TYPE_LEVEL_LOW:
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 1);
+ 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 0);
++			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
+ 			irq_set_handler_locked(data, handle_level_irq);
+ 			break;
+ 		default:
 -- 
 2.43.0
 
