@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94CF76037;
-	Wed, 21 Feb 2024 14:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23026A8D6;
+	Wed, 21 Feb 2024 14:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525001; cv=none; b=UcjCHabe4REZyLkWtCFxVRTKJykRmkTNan6xGw7LWCzf7wMQb9kZ0eV6j8apuoRshBbKydQ5rjiWHRVnG/2Zh+j4S4WBOcR0bO6Quni1MBlpptUTgM/UHMsTqSGJ/s3XLMWNY3RcDm8zmJTl6cU3AAA5F0SvCUTsoUhvjwJ0l8k=
+	t=1708525004; cv=none; b=UGwMMiTibEWECvTXSP0yCf4qELE/VpvHwO+OqJ0vEXYJ5vwcA4nqejYb08gXFJYIfm6IqMbUFhNIXQxV2OHr4784R/GT0O+vR4TW1niSMUor/dr+nBYlo+dgeYPMxV3Ir0+u29FHPsNSXmCq3PzkeJoasIYcZrsQqYT+yjFb5IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525001; c=relaxed/simple;
-	bh=dxPPXG/U0FYXtgZybMRvKsiJja2aAK6ZdW9ZfNCADSw=;
+	s=arc-20240116; t=1708525004; c=relaxed/simple;
+	bh=kag4PtrrdQ0Px7B1PCmZZJ0/xy987hT2r59awfozZA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWNs4cLRdIe5JzX5ibjZN1reJzpsU9aEeQfDINe6pfCD9AE6e54g1lKQu409bWdit1wdjZJO0sN98JHM0qv7mZVawfFIz52/AlS7xkNSeNrc/ORNVaW4sAh5BUEW5FRjQ3c3byIYGYdNIx13AzTzyZH6/vPur6hTpGjG5GaQvQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2dPT0YD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g57JiRkFcExGYis6/C43N+cRpOYl16eV7SyQ+Xosu7h7IPn5Gn18FCfbFi6BAwS+Qd8w/5KwihWVr3/coS2hBIEIqFjv0xSIY4a3F9bfIMbsH9YDi0xta2zvNMRJTIP8UsMbzp9tKsY4dR45Ar042RiZR+SDw8+jNbkG+Iw6ygc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNSZGwgs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2dPT0YD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBBEC433F1;
-	Wed, 21 Feb 2024 14:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNSZGwgs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B53C433F1;
+	Wed, 21 Feb 2024 14:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525000;
-	bh=dxPPXG/U0FYXtgZybMRvKsiJja2aAK6ZdW9ZfNCADSw=;
+	s=korg; t=1708525003;
+	bh=kag4PtrrdQ0Px7B1PCmZZJ0/xy987hT2r59awfozZA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2dPT0YDeV6tZHzMqsj9PIRCsw7BtoBKWrcOzcIkNwK44TrRxG+3Vv59pIgC54zHV
-	 9GuGMFUPhOunqAwU4L9vCPF7KyGquBfryJTmz3nEqTw0ztgI/v98uNWMh9okpzrHWi
-	 ki87DyGwlw0qVmrO7Vw/tZ+PZ1lQYAvIMfSQyixw=
+	b=ZNSZGwgs8vE1zceFenuirWLm1nZ8QhzhtJsRQULv3is/sJdxh1Ht8yT2JsRgtsYJb
+	 ZzIY8Z9yQOt0p5HY2xZbnbR7p3B4A3G/F3XV2PUQC6ZMJ+eE93aDtX/WcQtSNIFdJj
+	 cJ3PWgAY2NWJAWALXf09PWKyjHkjEDyCA1VYSH34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b5ad66046b913bc04c6f@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 029/267] llc: Drop support for ETH_P_TR_802_2.
-Date: Wed, 21 Feb 2024 14:06:10 +0100
-Message-ID: <20240221125940.956242304@linuxfoundation.org>
+Subject: [PATCH 5.4 030/267] net/rds: Fix UBSAN: array-index-out-of-bounds in rds_cmsg_recv
+Date: Wed, 21 Feb 2024 14:06:11 +0100
+Message-ID: <20240221125940.986179127@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -53,128 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
 
-[ Upstream commit e3f9bed9bee261e3347131764e42aeedf1ffea61 ]
+[ Upstream commit 13e788deb7348cc88df34bed736c3b3b9927ea52 ]
 
-syzbot reported an uninit-value bug below. [0]
+Syzcaller UBSAN crash occurs in rds_cmsg_recv(),
+which reads inc->i_rx_lat_trace[j + 1] with index 4 (3 + 1),
+but with array size of 4 (RDS_RX_MAX_TRACES).
+Here 'j' is assigned from rs->rs_rx_trace[i] and in-turn from
+trace.rx_trace_pos[i] in rds_recv_track_latency(),
+with both arrays sized 3 (RDS_MSG_RX_DGRAM_TRACE_MAX). So fix the
+off-by-one bounds check in rds_recv_track_latency() to prevent
+a potential crash in rds_cmsg_recv().
 
-llc supports ETH_P_802_2 (0x0004) and used to support ETH_P_TR_802_2
-(0x0011), and syzbot abused the latter to trigger the bug.
-
-  write$tun(r0, &(0x7f0000000040)={@val={0x0, 0x11}, @val, @mpls={[], @llc={@snap={0xaa, 0x1, ')', "90e5dd"}}}}, 0x16)
-
-llc_conn_handler() initialises local variables {saddr,daddr}.mac
-based on skb in llc_pdu_decode_sa()/llc_pdu_decode_da() and passes
-them to __llc_lookup().
-
-However, the initialisation is done only when skb->protocol is
-htons(ETH_P_802_2), otherwise, __llc_lookup_established() and
-__llc_lookup_listener() will read garbage.
-
-The missing initialisation existed prior to commit 211ed865108e
-("net: delete all instances of special processing for token ring").
-
-It removed the part to kick out the token ring stuff but forgot to
-close the door allowing ETH_P_TR_802_2 packets to sneak into llc_rcv().
-
-Let's remove llc_tr_packet_type and complete the deprecation.
-
-[0]:
-BUG: KMSAN: uninit-value in __llc_lookup_established+0xe9d/0xf90
- __llc_lookup_established+0xe9d/0xf90
- __llc_lookup net/llc/llc_conn.c:611 [inline]
- llc_conn_handler+0x4bd/0x1360 net/llc/llc_conn.c:791
- llc_rcv+0xfbb/0x14a0 net/llc/llc_input.c:206
- __netif_receive_skb_one_core net/core/dev.c:5527 [inline]
- __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5641
- netif_receive_skb_internal net/core/dev.c:5727 [inline]
- netif_receive_skb+0x58/0x660 net/core/dev.c:5786
- tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
- tun_get_user+0x53af/0x66d0 drivers/net/tun.c:2002
- tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
- call_write_iter include/linux/fs.h:2020 [inline]
- new_sync_write fs/read_write.c:491 [inline]
- vfs_write+0x8ef/0x1490 fs/read_write.c:584
- ksys_write+0x20f/0x4c0 fs/read_write.c:637
- __do_sys_write fs/read_write.c:649 [inline]
- __se_sys_write fs/read_write.c:646 [inline]
- __x64_sys_write+0x93/0xd0 fs/read_write.c:646
+Found by syzcaller:
+=================================================================
+UBSAN: array-index-out-of-bounds in net/rds/recv.c:585:39
+index 4 is out of range for type 'u64 [4]'
+CPU: 1 PID: 8058 Comm: syz-executor228 Not tainted 6.6.0-gd2f51b3516da #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x136/0x150 lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:217 [inline]
+ __ubsan_handle_out_of_bounds+0xd5/0x130 lib/ubsan.c:348
+ rds_cmsg_recv+0x60d/0x700 net/rds/recv.c:585
+ rds_recvmsg+0x3fb/0x1610 net/rds/recv.c:716
+ sock_recvmsg_nosec net/socket.c:1044 [inline]
+ sock_recvmsg+0xe2/0x160 net/socket.c:1066
+ __sys_recvfrom+0x1b6/0x2f0 net/socket.c:2246
+ __do_sys_recvfrom net/socket.c:2264 [inline]
+ __se_sys_recvfrom net/socket.c:2260 [inline]
+ __x64_sys_recvfrom+0xe0/0x1b0 net/socket.c:2260
  do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:82
+ do_syscall_64+0x40/0x110 arch/x86/entry/common.c:82
  entry_SYSCALL_64_after_hwframe+0x63/0x6b
+==================================================================
 
-Local variable daddr created at:
- llc_conn_handler+0x53/0x1360 net/llc/llc_conn.c:783
- llc_rcv+0xfbb/0x14a0 net/llc/llc_input.c:206
-
-CPU: 1 PID: 5004 Comm: syz-executor994 Not tainted 6.6.0-syzkaller-14500-g1c41041124bd #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/09/2023
-
-Fixes: 211ed865108e ("net: delete all instances of special processing for token ring")
-Reported-by: syzbot+b5ad66046b913bc04c6f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b5ad66046b913bc04c6f
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240119015515.61898-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3289025aedc0 ("RDS: add receive message trace used by application")
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Closes: https://lore.kernel.org/linux-rdma/CALGdzuoVdq-wtQ4Az9iottBqC5cv9ZhcE5q8N7LfYFvkRsOVcw@mail.gmail.com/
+Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/llc_pdu.h | 6 ++----
- net/llc/llc_core.c    | 7 -------
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ net/rds/af_rds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/llc_pdu.h b/include/net/llc_pdu.h
-index 49aa79c7b278..581cd37aa98b 100644
---- a/include/net/llc_pdu.h
-+++ b/include/net/llc_pdu.h
-@@ -262,8 +262,7 @@ static inline void llc_pdu_header_init(struct sk_buff *skb, u8 type,
-  */
- static inline void llc_pdu_decode_sa(struct sk_buff *skb, u8 *sa)
- {
--	if (skb->protocol == htons(ETH_P_802_2))
--		memcpy(sa, eth_hdr(skb)->h_source, ETH_ALEN);
-+	memcpy(sa, eth_hdr(skb)->h_source, ETH_ALEN);
- }
+diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
+index 1a5bf3fa4578..af22f47c8612 100644
+--- a/net/rds/af_rds.c
++++ b/net/rds/af_rds.c
+@@ -421,7 +421,7 @@ static int rds_recv_track_latency(struct rds_sock *rs, char __user *optval,
  
- /**
-@@ -275,8 +274,7 @@ static inline void llc_pdu_decode_sa(struct sk_buff *skb, u8 *sa)
-  */
- static inline void llc_pdu_decode_da(struct sk_buff *skb, u8 *da)
- {
--	if (skb->protocol == htons(ETH_P_802_2))
--		memcpy(da, eth_hdr(skb)->h_dest, ETH_ALEN);
-+	memcpy(da, eth_hdr(skb)->h_dest, ETH_ALEN);
- }
- 
- /**
-diff --git a/net/llc/llc_core.c b/net/llc/llc_core.c
-index 64d4bef04e73..4900a27b5176 100644
---- a/net/llc/llc_core.c
-+++ b/net/llc/llc_core.c
-@@ -135,22 +135,15 @@ static struct packet_type llc_packet_type __read_mostly = {
- 	.func = llc_rcv,
- };
- 
--static struct packet_type llc_tr_packet_type __read_mostly = {
--	.type = cpu_to_be16(ETH_P_TR_802_2),
--	.func = llc_rcv,
--};
--
- static int __init llc_init(void)
- {
- 	dev_add_pack(&llc_packet_type);
--	dev_add_pack(&llc_tr_packet_type);
- 	return 0;
- }
- 
- static void __exit llc_exit(void)
- {
- 	dev_remove_pack(&llc_packet_type);
--	dev_remove_pack(&llc_tr_packet_type);
- }
- 
- module_init(llc_init);
+ 	rs->rs_rx_traces = trace.rx_traces;
+ 	for (i = 0; i < rs->rs_rx_traces; i++) {
+-		if (trace.rx_trace_pos[i] > RDS_MSG_RX_DGRAM_TRACE_MAX) {
++		if (trace.rx_trace_pos[i] >= RDS_MSG_RX_DGRAM_TRACE_MAX) {
+ 			rs->rs_rx_traces = 0;
+ 			return -EFAULT;
+ 		}
 -- 
 2.43.0
 
