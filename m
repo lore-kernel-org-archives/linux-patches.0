@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACB479DAB;
-	Wed, 21 Feb 2024 13:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FC779DD7;
+	Wed, 21 Feb 2024 13:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522233; cv=none; b=X5fGe5x43A//hK+Yqqc4pqJkQGTRuYMQXsTGWem26d+zZRM/euG57ahN5Jat6nU4yAO+xx93sxtNCHBCNMmM0YRLhhcvVaQzhpyJlwLms3gdc0fJpG4VgbU7DNHbZuISg4d300E9TZYLXtLQXzFzSFyBC62u8UAU9ZYTYOHalQU=
+	t=1708522237; cv=none; b=FBl1WWITIEBQ9NmjEZ9wahvwDjBc7SqY5/Dz4csGJXZ62ZhZgb0cnuw4xGJwc7OQPnsqF0r0Eb2hGgh5RfFu6ep1FBVgsh9cd6eRTOXwYdZngdU9ZZ/R9vkVxuae64m2mcjpZwI7u/RbK6vTSK8a/zHfkwgEOpyGXGqsKOyZ67w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522233; c=relaxed/simple;
-	bh=S0NnrlO3UpWjqIsyP4x1dcIF5OEjRb0Y0RNtXnonzjw=;
+	s=arc-20240116; t=1708522237; c=relaxed/simple;
+	bh=BZYoWM7bIbETJgqk4CXQKh5pInpt7mupamqM2AM5nqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0cFRVPNC5MV3Df7oNDyX+zbqyUq20vpd2113/A7gis7O1NJP189msQccqkHJ00Dd6xiGSwJ/LbafoRtzVFFL5hsXChxaEdGI3awdXyWFeOvriOUAGEHLTrBYRoPRABpKekMvh0Y/02L1Jnl2qwyHwBwqLSfw7V+jBj2KL3CIqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LC1gR2k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1TWMDj0DlNU8CcfNV+jibKPYz1uN8KF7gBcpVX8gEVdkfkHvkJX+neiPj7dZZ/+vJWjoZv432DDz+d1Mdp7wpTSZbp9QkD3WUHdrVhWWeHLkdHttbI6uoFktwML22XNCKvFXhrQGXVBzfqvUM6LvgdTaAUxEt5rDCTyJ3ThU0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JumYB72j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LC1gR2k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86961C433B1;
-	Wed, 21 Feb 2024 13:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JumYB72j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5356EC43394;
+	Wed, 21 Feb 2024 13:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522233;
-	bh=S0NnrlO3UpWjqIsyP4x1dcIF5OEjRb0Y0RNtXnonzjw=;
+	s=korg; t=1708522236;
+	bh=BZYoWM7bIbETJgqk4CXQKh5pInpt7mupamqM2AM5nqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2LC1gR2ku28r1rHcYviKF45nq8gQke5nIh31M8WNZT6OW3u5PRb/sXlls2PM0mw54
-	 h41iAcHoECLks9iK2tU9vyksAnZ5Gh1masrJriFhn/32E5llkPPzkzhE5OsBAUz3jy
-	 lQ11dcgAtumzxLGIoiJtir5KC2xOxi99WF30QIKE=
+	b=JumYB72jGqirXmoZxEZCcfpNiMrjWN9BhC4yTvoECk9kbxlnMRvvJgcPMYtPFTfd/
+	 Yo1eWzaB6LQkYVcSeMk8xy5f43DOU1F5Aam4nNsImV7M5YLtd4G6csOTN4Gpv536rD
+	 T7a4l9FGeblzcs64ieuURU+POTCn+zu+RC0D+vh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/476] PM / devfreq: Fix buffer overflow in trans_stat_show
-Date: Wed, 21 Feb 2024 14:02:40 +0100
-Message-ID: <20240221130011.999916709@linuxfoundation.org>
+Subject: [PATCH 5.15 110/476] btrfs: add definition for EXTENT_TREE_V2
+Date: Wed, 21 Feb 2024 14:02:41 +0100
+Message-ID: <20240221130012.035460073@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,139 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 08e23d05fa6dc4fc13da0ccf09defdd4bbc92ff4 ]
+[ Upstream commit 2c7d2a230237e7c43fa067d695937b7e484bb92a ]
 
-Fix buffer overflow in trans_stat_show().
+This adds the initial definition of the EXTENT_TREE_V2 incompat feature
+flag.  This also hides the support behind CONFIG_BTRFS_DEBUG.
 
-Convert simple snprintf to the more secure scnprintf with size of
-PAGE_SIZE.
+THIS IS A IN DEVELOPMENT FORMAT CHANGE, DO NOT USE UNLESS YOU ARE A
+DEVELOPER OR A TESTER.
 
-Add condition checking if we are exceeding PAGE_SIZE and exit early from
-loop. Also add at the end a warning that we exceeded PAGE_SIZE and that
-stats is disabled.
+The format is in flux and will be added in stages, any fs will need to
+be re-made between updates to the format.
 
-Return -EFBIG in the case where we don't have enough space to write the
-full transition table.
-
-Also document in the ABI that this function can return -EFBIG error.
-
-Link: https://lore.kernel.org/all/20231024183016.14648-2-ansuelsmth@gmail.com/
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218041
-Fixes: e552bbaf5b98 ("PM / devfreq: Add sysfs node for representing frequency transition information.")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 7081929ab257 ("btrfs: don't abort filesystem when attempting to snapshot deleted subvolume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-class-devfreq |    3 +
- drivers/devfreq/devfreq.c                     |   59 +++++++++++++++++---------
- 2 files changed, 43 insertions(+), 19 deletions(-)
+ fs/btrfs/ctree.h           | 21 +++++++++++++++++++++
+ fs/btrfs/sysfs.c           |  5 ++++-
+ include/uapi/linux/btrfs.h |  1 +
+ 3 files changed, 26 insertions(+), 1 deletion(-)
 
---- a/Documentation/ABI/testing/sysfs-class-devfreq
-+++ b/Documentation/ABI/testing/sysfs-class-devfreq
-@@ -52,6 +52,9 @@ Description:
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index 7905f178efa3..17ebcf19b444 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -282,6 +282,26 @@ struct btrfs_super_block {
+ #define BTRFS_FEATURE_COMPAT_RO_SAFE_SET	0ULL
+ #define BTRFS_FEATURE_COMPAT_RO_SAFE_CLEAR	0ULL
  
- 			echo 0 > /sys/class/devfreq/.../trans_stat
++#ifdef CONFIG_BTRFS_DEBUG
++/*
++ * Extent tree v2 supported only with CONFIG_BTRFS_DEBUG
++ */
++#define BTRFS_FEATURE_INCOMPAT_SUPP			\
++	(BTRFS_FEATURE_INCOMPAT_MIXED_BACKREF |		\
++	 BTRFS_FEATURE_INCOMPAT_DEFAULT_SUBVOL |	\
++	 BTRFS_FEATURE_INCOMPAT_MIXED_GROUPS |		\
++	 BTRFS_FEATURE_INCOMPAT_BIG_METADATA |		\
++	 BTRFS_FEATURE_INCOMPAT_COMPRESS_LZO |		\
++	 BTRFS_FEATURE_INCOMPAT_COMPRESS_ZSTD |		\
++	 BTRFS_FEATURE_INCOMPAT_RAID56 |		\
++	 BTRFS_FEATURE_INCOMPAT_EXTENDED_IREF |		\
++	 BTRFS_FEATURE_INCOMPAT_SKINNY_METADATA |	\
++	 BTRFS_FEATURE_INCOMPAT_NO_HOLES	|	\
++	 BTRFS_FEATURE_INCOMPAT_METADATA_UUID	|	\
++	 BTRFS_FEATURE_INCOMPAT_RAID1C34	|	\
++	 BTRFS_FEATURE_INCOMPAT_ZONED		|	\
++	 BTRFS_FEATURE_INCOMPAT_EXTENT_TREE_V2)
++#else
+ #define BTRFS_FEATURE_INCOMPAT_SUPP			\
+ 	(BTRFS_FEATURE_INCOMPAT_MIXED_BACKREF |		\
+ 	 BTRFS_FEATURE_INCOMPAT_DEFAULT_SUBVOL |	\
+@@ -296,6 +316,7 @@ struct btrfs_super_block {
+ 	 BTRFS_FEATURE_INCOMPAT_METADATA_UUID	|	\
+ 	 BTRFS_FEATURE_INCOMPAT_RAID1C34	|	\
+ 	 BTRFS_FEATURE_INCOMPAT_ZONED)
++#endif
  
-+		If the transition table is bigger than PAGE_SIZE, reading
-+		this will return an -EFBIG error.
-+
- What:		/sys/class/devfreq/.../available_frequencies
- Date:		October 2012
- Contact:	Nishanth Menon <nm@ti.com>
---- a/drivers/devfreq/devfreq.c
-+++ b/drivers/devfreq/devfreq.c
-@@ -1653,7 +1653,7 @@ static ssize_t trans_stat_show(struct de
- 			       struct device_attribute *attr, char *buf)
- {
- 	struct devfreq *df = to_devfreq(dev);
--	ssize_t len;
-+	ssize_t len = 0;
- 	int i, j;
- 	unsigned int max_state;
+ #define BTRFS_FEATURE_INCOMPAT_SAFE_SET			\
+ 	(BTRFS_FEATURE_INCOMPAT_EXTENDED_IREF)
+diff --git a/fs/btrfs/sysfs.c b/fs/btrfs/sysfs.c
+index 899dda6eb835..93a9dfbc8d13 100644
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -283,9 +283,11 @@ BTRFS_FEAT_ATTR_INCOMPAT(no_holes, NO_HOLES);
+ BTRFS_FEAT_ATTR_INCOMPAT(metadata_uuid, METADATA_UUID);
+ BTRFS_FEAT_ATTR_COMPAT_RO(free_space_tree, FREE_SPACE_TREE);
+ BTRFS_FEAT_ATTR_INCOMPAT(raid1c34, RAID1C34);
+-/* Remove once support for zoned allocation is feature complete */
+ #ifdef CONFIG_BTRFS_DEBUG
++/* Remove once support for zoned allocation is feature complete */
+ BTRFS_FEAT_ATTR_INCOMPAT(zoned, ZONED);
++/* Remove once support for extent tree v2 is feature complete */
++BTRFS_FEAT_ATTR_INCOMPAT(extent_tree_v2, EXTENT_TREE_V2);
+ #endif
+ #ifdef CONFIG_FS_VERITY
+ BTRFS_FEAT_ATTR_COMPAT_RO(verity, VERITY);
+@@ -314,6 +316,7 @@ static struct attribute *btrfs_supported_feature_attrs[] = {
+ 	BTRFS_FEAT_ATTR_PTR(raid1c34),
+ #ifdef CONFIG_BTRFS_DEBUG
+ 	BTRFS_FEAT_ATTR_PTR(zoned),
++	BTRFS_FEAT_ATTR_PTR(extent_tree_v2),
+ #endif
+ #ifdef CONFIG_FS_VERITY
+ 	BTRFS_FEAT_ATTR_PTR(verity),
+diff --git a/include/uapi/linux/btrfs.h b/include/uapi/linux/btrfs.h
+index 4693b6ba30a1..493b10b9fedd 100644
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -310,6 +310,7 @@ struct btrfs_ioctl_fs_info_args {
+ #define BTRFS_FEATURE_INCOMPAT_METADATA_UUID	(1ULL << 10)
+ #define BTRFS_FEATURE_INCOMPAT_RAID1C34		(1ULL << 11)
+ #define BTRFS_FEATURE_INCOMPAT_ZONED		(1ULL << 12)
++#define BTRFS_FEATURE_INCOMPAT_EXTENT_TREE_V2	(1ULL << 13)
  
-@@ -1662,7 +1662,7 @@ static ssize_t trans_stat_show(struct de
- 	max_state = df->profile->max_state;
- 
- 	if (max_state == 0)
--		return sprintf(buf, "Not Supported.\n");
-+		return scnprintf(buf, PAGE_SIZE, "Not Supported.\n");
- 
- 	mutex_lock(&df->lock);
- 	if (!df->stop_polling &&
-@@ -1672,33 +1672,54 @@ static ssize_t trans_stat_show(struct de
- 	}
- 	mutex_unlock(&df->lock);
- 
--	len = sprintf(buf, "     From  :   To\n");
--	len += sprintf(buf + len, "           :");
--	for (i = 0; i < max_state; i++)
--		len += sprintf(buf + len, "%10lu",
--				df->profile->freq_table[i]);
-+	len += scnprintf(buf + len, PAGE_SIZE - len, "     From  :   To\n");
-+	len += scnprintf(buf + len, PAGE_SIZE - len, "           :");
-+	for (i = 0; i < max_state; i++) {
-+		if (len >= PAGE_SIZE - 1)
-+			break;
-+		len += scnprintf(buf + len, PAGE_SIZE - len, "%10lu",
-+				 df->profile->freq_table[i]);
-+	}
-+	if (len >= PAGE_SIZE - 1)
-+		return PAGE_SIZE - 1;
- 
--	len += sprintf(buf + len, "   time(ms)\n");
-+	len += scnprintf(buf + len, PAGE_SIZE - len, "   time(ms)\n");
- 
- 	for (i = 0; i < max_state; i++) {
-+		if (len >= PAGE_SIZE - 1)
-+			break;
- 		if (df->profile->freq_table[i]
- 					== df->previous_freq) {
--			len += sprintf(buf + len, "*");
-+			len += scnprintf(buf + len, PAGE_SIZE - len, "*");
- 		} else {
--			len += sprintf(buf + len, " ");
-+			len += scnprintf(buf + len, PAGE_SIZE - len, " ");
- 		}
--		len += sprintf(buf + len, "%10lu:",
--				df->profile->freq_table[i]);
--		for (j = 0; j < max_state; j++)
--			len += sprintf(buf + len, "%10u",
--				df->stats.trans_table[(i * max_state) + j]);
-+		if (len >= PAGE_SIZE - 1)
-+			break;
-+
-+		len += scnprintf(buf + len, PAGE_SIZE - len, "%10lu:",
-+				 df->profile->freq_table[i]);
-+		for (j = 0; j < max_state; j++) {
-+			if (len >= PAGE_SIZE - 1)
-+				break;
-+			len += scnprintf(buf + len, PAGE_SIZE - len, "%10u",
-+					 df->stats.trans_table[(i * max_state) + j]);
-+		}
-+		if (len >= PAGE_SIZE - 1)
-+			break;
-+		len += scnprintf(buf + len, PAGE_SIZE - len, "%10llu\n", (u64)
-+				 jiffies64_to_msecs(df->stats.time_in_state[i]));
-+	}
- 
--		len += sprintf(buf + len, "%10llu\n", (u64)
--			jiffies64_to_msecs(df->stats.time_in_state[i]));
-+	if (len < PAGE_SIZE - 1)
-+		len += scnprintf(buf + len, PAGE_SIZE - len, "Total transition : %u\n",
-+				 df->stats.total_trans);
-+
-+	if (len >= PAGE_SIZE - 1) {
-+		pr_warn_once("devfreq transition table exceeds PAGE_SIZE. Disabling\n");
-+		return -EFBIG;
- 	}
- 
--	len += sprintf(buf + len, "Total transition : %u\n",
--					df->stats.total_trans);
- 	return len;
- }
- 
+ struct btrfs_ioctl_feature_flags {
+ 	__u64 compat_flags;
+-- 
+2.43.0
+
 
 
