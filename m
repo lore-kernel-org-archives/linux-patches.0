@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31BD53816;
-	Wed, 21 Feb 2024 13:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25C553816;
+	Wed, 21 Feb 2024 13:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521803; cv=none; b=MX6smQiGOSbTwXYdpoQY6S9gP3La125/zGqtptWY5QHXB3sNJLmPHPomM/ioT1j6NKcpXIrxnMl/Ra51UCx+p8xs0ie0BKfh5Y/ss9NlZf1uffsgJ8aIP695CnSZs3nQhiPQ5A9I4r/rXi/txzPoORIEO/5manJtUdXV/JZ9HaM=
+	t=1708521811; cv=none; b=TgrZ/9BHDjDYj9MaWxZasLg/CO6uLKaPMedePMpPZ4bJkG/RdfHO2h7F1GuZhr9hBeBZcjGJCU/4pVTanfHCgXjED87yEdKbmyAlPGp8N+aghasbyGuf3hmb2/cQV8rqjp3cRUlwTsIrGPzhYNl6Wz278hjE6hHaoJzsCqg/YF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521803; c=relaxed/simple;
-	bh=RExbldwi9CnWdKZ/9VmcumkSMVlO+pPaR9GUNMQMgyg=;
+	s=arc-20240116; t=1708521811; c=relaxed/simple;
+	bh=PdPnfr7sI/vgLqYI5BJ/1X0wihvwTSxMZaCkf85KtE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wm9R71VTIwMfSPL4S4Pe3yCOKEnwJ2JtDgn4JyHDsQ66rzhWHdY0cEYNV0RkJm2NQvwMvt9VgEYC6MP6MSykg4/x6jy9hLu994vacz2xtPH/Z6bcBuGZxYoH0rQ4Rf5foWMR/hYb4cYV/oocBwd1MMIDQG1trKAIzOFB0lHHh+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xg1bn0od; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AR/C7BtcZY4s7vtNrtLfQcGt+1YjzRSSXk2yWW7SpMoHnzzJo1uK98udV/oKjjkCEacjCf+n5RTUnHwx2jsEjloRLPxHiLigHft9fcCEBjn1ohkJ7FXiuM0ACLtP7dA1YgPErUnphXNnTwVQh4SEyvb1OnbYd3NcgNtt2HPo3LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0rCVl+4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xg1bn0od"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE2FC433F1;
-	Wed, 21 Feb 2024 13:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0rCVl+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42852C433F1;
+	Wed, 21 Feb 2024 13:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521803;
-	bh=RExbldwi9CnWdKZ/9VmcumkSMVlO+pPaR9GUNMQMgyg=;
+	s=korg; t=1708521811;
+	bh=PdPnfr7sI/vgLqYI5BJ/1X0wihvwTSxMZaCkf85KtE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xg1bn0od0urvZw5LrA1nK+epcJl3nheT8UGz0JaZJMFjQEW2b9mrj6fDkLuYlWIdG
-	 fBqoPJ22R8EWqlOIxPqcoVCVV/mozwK9hirLSwbomuAlbRq73bT3xjJ7fx2xVVNxmc
-	 gL19LS9sptddDfjdkWMCqeWlZ+xMIUVyoscSkiqs=
+	b=U0rCVl+4GjgB5pCaKfpvS7pDoeRvIyPL9D2d30yu1M3jgswbTTkteX7Jt3B2yRdKM
+	 TA7990lflB8ADtKcpL8qT4a1TL3TfYje+dZMTGUvVNezU7L1TxzGqs1l+ORWc8QPDf
+	 fXUqASJYcc3tqGhzLIMCnX9oQCYFFI0KZGJqAaTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 4.19 202/202] netfilter: nf_tables: fix pointer math issue in nft_byteorder_eval()
-Date: Wed, 21 Feb 2024 14:08:23 +0100
-Message-ID: <20240221125938.309881970@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 200/202] nilfs2: replace WARN_ONs for invalid DAT metadata block requests
+Date: Wed, 21 Feb 2024 14:08:21 +0100
+Message-ID: <20240221125938.249496188@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -51,55 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit c301f0981fdd3fd1ffac6836b423c4d7a8e0eb63 upstream.
+commit 5124a0a549857c4b87173280e192eea24dea72ad upstream.
 
-The problem is in nft_byteorder_eval() where we are iterating through a
-loop and writing to dst[0], dst[1], dst[2] and so on...  On each
-iteration we are writing 8 bytes.  But dst[] is an array of u32 so each
-element only has space for 4 bytes.  That means that every iteration
-overwrites part of the previous element.
+If DAT metadata file block access fails due to corruption of the DAT file
+or abnormal virtual block numbers held by b-trees or inodes, a kernel
+warning is generated.
 
-I spotted this bug while reviewing commit caf3ef7468f7 ("netfilter:
-nf_tables: prevent OOB access in nft_byteorder_eval") which is a related
-issue.  I think that the reason we have not detected this bug in testing
-is that most of time we only write one element.
+This replaces the WARN_ONs by error output, so that a kernel, booted with
+panic_on_warn, does not panic.  This patch also replaces the detected
+return code -ENOENT with another internal code -EINVAL to notify the bmap
+layer of metadata corruption.  When the bmap layer sees -EINVAL, it
+handles the abnormal situation with nilfs_bmap_convert_error() and finally
+returns code -EIO as it should.
 
-Fixes: ce1e7989d989 ("netfilter: nft_byteorder: provide 64bit le/be conversion")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[Ajay: Modified to apply on v4.19.y]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+Link: https://lkml.kernel.org/r/0000000000005cc3d205ea23ddcf@google.com
+Link: https://lkml.kernel.org/r/20230126164114.6911-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: <syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_byteorder.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nilfs2/dat.c |   27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -41,19 +41,20 @@ static void nft_byteorder_eval(const str
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -40,8 +40,21 @@ static inline struct nilfs_dat_info *NIL
+ static int nilfs_dat_prepare_entry(struct inode *dat,
+ 				   struct nilfs_palloc_req *req, int create)
+ {
+-	return nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
+-					    create, &req->pr_entry_bh);
++	int ret;
++
++	ret = nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
++					   create, &req->pr_entry_bh);
++	if (unlikely(ret == -ENOENT)) {
++		nilfs_error(dat->i_sb,
++			  "DAT doesn't have a block to manage vblocknr = %llu",
++			  (unsigned long long)req->pr_entry_nr);
++		/*
++		 * Return internal code -EINVAL to notify bmap layer of
++		 * metadata corruption.
++		 */
++		ret = -EINVAL;
++	}
++	return ret;
+ }
  
- 	switch (priv->size) {
- 	case 8: {
-+		u64 *dst64 = (void *)dst;
- 		u64 src64;
+ static void nilfs_dat_commit_entry(struct inode *dat,
+@@ -123,11 +136,7 @@ static void nilfs_dat_commit_free(struct
  
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = get_unaligned((u64 *)&src[i]);
--				put_unaligned_be64(src64, &dst[i]);
-+				put_unaligned_be64(src64, &dst64[i]);
- 			}
- 			break;
- 		case NFT_BYTEORDER_HTON:
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = get_unaligned_be64(&src[i]);
--				put_unaligned(src64, (u64 *)&dst[i]);
-+				put_unaligned(src64, &dst64[i]);
- 			}
- 			break;
- 		}
+ int nilfs_dat_prepare_start(struct inode *dat, struct nilfs_palloc_req *req)
+ {
+-	int ret;
+-
+-	ret = nilfs_dat_prepare_entry(dat, req, 0);
+-	WARN_ON(ret == -ENOENT);
+-	return ret;
++	return nilfs_dat_prepare_entry(dat, req, 0);
+ }
+ 
+ void nilfs_dat_commit_start(struct inode *dat, struct nilfs_palloc_req *req,
+@@ -154,10 +163,8 @@ int nilfs_dat_prepare_end(struct inode *
+ 	int ret;
+ 
+ 	ret = nilfs_dat_prepare_entry(dat, req, 0);
+-	if (ret < 0) {
+-		WARN_ON(ret == -ENOENT);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	kaddr = kmap_atomic(req->pr_entry_bh->b_page);
+ 	entry = nilfs_palloc_block_get_entry(dat, req->pr_entry_nr,
 
 
