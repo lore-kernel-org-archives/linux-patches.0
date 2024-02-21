@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1207179DA2;
-	Wed, 21 Feb 2024 13:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC21A7C09C;
+	Wed, 21 Feb 2024 13:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522326; cv=none; b=FD6kR4l4LiOXM1J+Vidz0TqFWl3X7vRMtsL125vM2Lke8I0XBg8QAG7m8dFpo+aLRBEeJ+TPCZKo576Y30IK431BA6KQOWAELQp3eafOo7uFaKXX7PdveRX+Cvki7lQ6gekrTZzsxmJot5qM06uXbQoALI3Q+rhFQDRjHbtZEIc=
+	t=1708522328; cv=none; b=BpdGI1kKM6GrSZ80va+ehLSvl1c6LMnhWnZzFMu9SsiBAtWQNTnGIsB4ahUUaFNhaIPiOZ+yEv3C+CJ2CjZXqvZA+I3b3LK0QCW8sksR73eGk4YnkxL4QiCepZTyA+/tVgXCeH68mK3YZLJ0b8NHbL2sz2ZCal/dC4bNnnNkCXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522326; c=relaxed/simple;
-	bh=gEqNCNvutn1SnBBzrphTLtEFkm6cwhqzagTX8f+cyP8=;
+	s=arc-20240116; t=1708522328; c=relaxed/simple;
+	bh=DRcEepM2aV8hDH8+v2+SX3lBIYYrhDbnV6fqwMueHoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihltxVUrDMIv/Is+fNjnq/v2JhFQ0QMeqZpbNRFq719TN9IU/0tpPBoMR1ZFBqd3ixEahPp8qd7Np1uEuWkd2FmnFAHNRiAiM6HPrlzkq24x2IxQYpZFC7FEJ+jV83v8+6kqqOm4HHf7X/92jJErTKMzRktII/O5b5DFcb7bxTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwPV7Iih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbMPb9nlz3NfjuLLA+wksZ4bUIGlzHNFAJUfxQvDnvwgxGTpMqz7fp22eOMMlAU+Msat7S8qUi+lEwGmiSWHAzMShJihAi1zd/fXidW2n2zRIrdfJx3G/2yBSeo2FrQV+3/EYamglJyMHa9tkkul9qAMLVITcsbqJaJ+LNEoINU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFjDD1yz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwPV7Iih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051E9C433F1;
-	Wed, 21 Feb 2024 13:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFjDD1yz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166E9C433C7;
+	Wed, 21 Feb 2024 13:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522325;
-	bh=gEqNCNvutn1SnBBzrphTLtEFkm6cwhqzagTX8f+cyP8=;
+	s=korg; t=1708522328;
+	bh=DRcEepM2aV8hDH8+v2+SX3lBIYYrhDbnV6fqwMueHoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwPV7IihW1YENI403/cr1lehhxU63NMvoXwzCiRpRQazkQ/2pYQlEDO+W4mDgnA8E
-	 GaSBRag7UXSU29RaPlEpzrNT44w9mTPpn2wmSZQa47x2+ZuCpmkawtsqGjbi6B9l1c
-	 U/JgiO7TwbYnol6KNzZdTc7SyqTNRHgce6ouS7OA=
+	b=PFjDD1yzQlGzpiJFfNfIeJfX/zqXtlGJHYkZ5WO7KFszF+FePh1dxgN1ekLGhXzyQ
+	 SBkDnrFal+My5CYT6BHg+vQlkNq6uv5ub++DYboMKL4Ny3Sk3DFEugDDzYZTxFxH1h
+	 KoO75WQ97e4X6soSmTHV5elKolbJUCut9ygj/c3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen N Rao <naveen@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/476] powerpc/lib: Validate size for vector operations
-Date: Wed, 21 Feb 2024 14:03:04 +0100
-Message-ID: <20240221130012.878054269@linuxfoundation.org>
+Subject: [PATCH 5.15 116/476] drm: panel-simple: add missing bus flags for Tianma tm070jvhg[30/33]
+Date: Wed, 21 Feb 2024 14:02:47 +0100
+Message-ID: <20240221130012.283573385@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,69 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 
-[ Upstream commit 8f9abaa6d7de0a70fc68acaedce290c1f96e2e59 ]
+[ Upstream commit 45dd7df26cee741b31c25ffdd44fb8794eb45ccd ]
 
-Some of the fp/vmx code in sstep.c assume a certain maximum size for the
-instructions being emulated. The size of those operations however is
-determined separately in analyse_instr().
+The DE signal is active high on this display, fill in the missing
+bus_flags. This aligns panel_desc with its display_timing.
 
-Add a check to validate the assumption on the maximum size of the
-operations, so as to prevent any unintended kernel stack corruption.
+Fixes: 9a2654c0f62a ("drm/panel: Add and fill drm_panel type field")
+Fixes: b3bfcdf8a3b6 ("drm/panel: simple: add Tianma TM070JVHG33")
 
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Build-tested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231123071705.397625-1-naveen@kernel.org
+Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Link: https://lore.kernel.org/r/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/lib/sstep.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/panel/panel-simple.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/lib/sstep.c b/arch/powerpc/lib/sstep.c
-index 2d39b7c246e3..ecc2e06854d7 100644
---- a/arch/powerpc/lib/sstep.c
-+++ b/arch/powerpc/lib/sstep.c
-@@ -529,6 +529,8 @@ static int do_fp_load(struct instruction_op *op, unsigned long ea,
- 	} u;
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index d9f1675c348e..671bd1d1ad19 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -4173,6 +4173,7 @@ static const struct panel_desc tianma_tm070jdhg30 = {
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+ };
  
- 	nb = GETSIZE(op->type);
-+	if (nb > sizeof(u))
-+		return -EINVAL;
- 	if (!address_ok(regs, ea, nb))
- 		return -EFAULT;
- 	rn = op->reg;
-@@ -579,6 +581,8 @@ static int do_fp_store(struct instruction_op *op, unsigned long ea,
- 	} u;
+ static const struct panel_desc tianma_tm070jvhg33 = {
+@@ -4185,6 +4186,7 @@ static const struct panel_desc tianma_tm070jvhg33 = {
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
++	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
+ };
  
- 	nb = GETSIZE(op->type);
-+	if (nb > sizeof(u))
-+		return -EINVAL;
- 	if (!address_ok(regs, ea, nb))
- 		return -EFAULT;
- 	rn = op->reg;
-@@ -623,6 +627,9 @@ static nokprobe_inline int do_vec_load(int rn, unsigned long ea,
- 		u8 b[sizeof(__vector128)];
- 	} u = {};
- 
-+	if (size > sizeof(u))
-+		return -EINVAL;
-+
- 	if (!address_ok(regs, ea & ~0xfUL, 16))
- 		return -EFAULT;
- 	/* align to multiple of size */
-@@ -650,6 +657,9 @@ static nokprobe_inline int do_vec_store(int rn, unsigned long ea,
- 		u8 b[sizeof(__vector128)];
- 	} u;
- 
-+	if (size > sizeof(u))
-+		return -EINVAL;
-+
- 	if (!address_ok(regs, ea & ~0xfUL, 16))
- 		return -EFAULT;
- 	/* align to multiple of size */
+ static const struct display_timing tianma_tm070rvhg71_timing = {
 -- 
 2.43.0
 
