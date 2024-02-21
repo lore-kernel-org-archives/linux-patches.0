@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C96D7E0E8;
-	Wed, 21 Feb 2024 14:07:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375337E787;
+	Wed, 21 Feb 2024 14:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524434; cv=none; b=uvILF6Hwsa0wZJS53TnGqhC4/GgXQ2OOjiiXWqksKGFGWXDDyEIAuPqRbHnN07URKuL79lMe0hV4MaMm4SB64koI3Um9W39U2WLg7zj+uz1+ioK3eITarTpEnoNj82T72NwjeMaukqUaMKXvJ/eNwqrs+96MuIR73pDosA7cur8=
+	t=1708524437; cv=none; b=A3qKpTxOjLyN0eK2n8BWdUVjy1LLJ6HePwZYVHwPf1Lr9YEjmw04DJ85txneqBI1III/CI0dAwn75/Vc5v3g1I3OvmqoLTBOcY4F1PAAPvW9bUHpjJFp9E4K41VPsIExUFVHTFila0qY9lmIONEmNk+AhXMDDRrJvnhC52EbNN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524434; c=relaxed/simple;
-	bh=a658GTPPwGmuiWS4F3Q68j0VbqFvVunfRtQKftZhGTw=;
+	s=arc-20240116; t=1708524437; c=relaxed/simple;
+	bh=nWUcs2ZeISJfj/AskPdhOjpJQt6Ppg2kaq+wLFdjOlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lDMCVGoQT17DVBk3E9bqgNTUTvb6a+2tF2uDIaY+GcpxYh9V1how0fGyFjVn23aqxFy6AbI/gUZc9sMPIUQNC7WvKv+hfGl9+ChV0ZMCFj/gfo8eRAZQA4l9P+G8nt4MukqWbRErFoJz3WCNtX9ESJdhuUdnTDtjMqi7FJV17eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B61C/43A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mFvOPAC5E/kR5IrXC3xKVjgscXsEiMrqmtblnuJwH48UTmJ+fqgOkXjX0SvE0z3zAyssAZSBNxfRi/mjz9sgmc2sTOmJDKQbHK+7Y8sws8co0S1/tRDD947DlY4M67QriZ3ADBLW6hq+cJrBEJpoujwlzG2aYSjV2pog//MKFHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8xGdzt2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B61C/43A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D86FC433C7;
-	Wed, 21 Feb 2024 14:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8xGdzt2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A416C433C7;
+	Wed, 21 Feb 2024 14:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524434;
-	bh=a658GTPPwGmuiWS4F3Q68j0VbqFvVunfRtQKftZhGTw=;
+	s=korg; t=1708524437;
+	bh=nWUcs2ZeISJfj/AskPdhOjpJQt6Ppg2kaq+wLFdjOlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B61C/43AL4LxtWNXzkdvInfZVbObZ/d2bN9MEaOasthKK4gUsypu8W/qnTtBJjtJ8
-	 M+hwVff99fKw4Y49xmWUpPS7glk0ii/P++eJpZXoKttaTEsCbU6nFyToioKejzqlqm
-	 1Tb9+6WxIE7KwAHB/g+r3jsnpVrrCe7zOEDDw7oY=
+	b=k8xGdzt2aI8tRw6cC/zxW0yUWmCfhB+/WJx6BW43lv8vyoTOXEredvZxvIgP1DE/G
+	 iUF8KK3yDg2LhpWcCzSQX+ZHhhOtlxGirfS0oDX8EmoDv56y491Y2PJesihgqcxosd
+	 7Ks4I2diNloQbzrReTn1b/WHgB1dcJVHMZ4prTSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <bberg@redhat.com>,
-	Jiri Kosina <jkosina@suse.cz>,
-	Aseda Aboagye <aaboagye@chromium.org>
-Subject: [PATCH 5.10 242/379] HID: apple: Add 2021 magic keyboard FN key mapping
-Date: Wed, 21 Feb 2024 14:07:01 +0100
-Message-ID: <20240221130002.071612684@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 243/379] bonding: remove print in bond_verify_device_path
+Date: Wed, 21 Feb 2024 14:07:02 +0100
+Message-ID: <20240221130002.100448835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,72 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <bberg@redhat.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-commit 531cb56972f2773c941499fcfb639cd5128dfb27 upstream.
+commit 486058f42a4728053ae69ebbf78e9731d8ce6f8b upstream.
 
-The new 2021 apple models have a different FN key assignment. Add a new
-translation table and use that for the 2021 magic keyboard.
+As suggested by Paolo in link[1], if the memory allocation fails, the mm
+layer will emit a lot warning comprising the backtrace, so remove the
+print.
 
-Signed-off-by: Benjamin Berg <bberg@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Cc: Aseda Aboagye <aaboagye@chromium.org>
+[1] https://lore.kernel.org/all/20231118081653.1481260-1-shaozhengchao@huawei.com/
+
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-apple.c |   29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -70,6 +70,28 @@ struct apple_key_translation {
- 	u8 flags;
- };
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2777,11 +2777,8 @@ struct bond_vlan_tag *bond_verify_device
  
-+static const struct apple_key_translation apple2021_fn_keys[] = {
-+	{ KEY_BACKSPACE, KEY_DELETE },
-+	{ KEY_ENTER,	KEY_INSERT },
-+	{ KEY_F1,	KEY_BRIGHTNESSDOWN, APPLE_FLAG_FKEY },
-+	{ KEY_F2,	KEY_BRIGHTNESSUP,   APPLE_FLAG_FKEY },
-+	{ KEY_F3,	KEY_SCALE,          APPLE_FLAG_FKEY },
-+	{ KEY_F4,	KEY_SEARCH,         APPLE_FLAG_FKEY },
-+	{ KEY_F5,	KEY_MICMUTE,        APPLE_FLAG_FKEY },
-+	{ KEY_F6,	KEY_SLEEP,          APPLE_FLAG_FKEY },
-+	{ KEY_F7,	KEY_PREVIOUSSONG,   APPLE_FLAG_FKEY },
-+	{ KEY_F8,	KEY_PLAYPAUSE,      APPLE_FLAG_FKEY },
-+	{ KEY_F9,	KEY_NEXTSONG,       APPLE_FLAG_FKEY },
-+	{ KEY_F10,	KEY_MUTE,           APPLE_FLAG_FKEY },
-+	{ KEY_F11,	KEY_VOLUMEDOWN,     APPLE_FLAG_FKEY },
-+	{ KEY_F12,	KEY_VOLUMEUP,       APPLE_FLAG_FKEY },
-+	{ KEY_UP,	KEY_PAGEUP },
-+	{ KEY_DOWN,	KEY_PAGEDOWN },
-+	{ KEY_LEFT,	KEY_HOME },
-+	{ KEY_RIGHT,	KEY_END },
-+	{ }
-+};
-+
- static const struct apple_key_translation macbookair_fn_keys[] = {
- 	{ KEY_BACKSPACE, KEY_DELETE },
- 	{ KEY_ENTER,	KEY_INSERT },
-@@ -204,7 +226,9 @@ static int hidinput_apple_event(struct h
+ 	if (start_dev == end_dev) {
+ 		tags = kcalloc(level + 1, sizeof(*tags), GFP_ATOMIC);
+-		if (!tags) {
+-			net_err_ratelimited("%s: %s: Failed to allocate tags\n",
+-					    __func__, start_dev->name);
++		if (!tags)
+ 			return ERR_PTR(-ENOMEM);
+-		}
+ 		tags[level].vlan_proto = VLAN_N_VID;
+ 		return tags;
  	}
- 
- 	if (fnmode) {
--		if (hid->product >= USB_DEVICE_ID_APPLE_WELLSPRING4_ANSI &&
-+		if (hid->product == USB_DEVICE_ID_APPLE_MAGIC_KEYBOARD_2021)
-+			table = apple2021_fn_keys;
-+		else if (hid->product >= USB_DEVICE_ID_APPLE_WELLSPRING4_ANSI &&
- 				hid->product <= USB_DEVICE_ID_APPLE_WELLSPRING4A_JIS)
- 			table = macbookair_fn_keys;
- 		else if (hid->product < 0x21d || hid->product >= 0x300)
-@@ -363,6 +387,9 @@ static void apple_setup_input(struct inp
- 	for (trans = apple_iso_keyboard; trans->from; trans++)
- 		set_bit(trans->to, input->keybit);
- 
-+	for (trans = apple2021_fn_keys; trans->from; trans++)
-+		set_bit(trans->to, input->keybit);
-+
- 	if (swap_fn_leftctrl) {
- 		for (trans = swapped_fn_leftctrl_keys; trans->from; trans++)
- 			set_bit(trans->to, input->keybit);
 
 
