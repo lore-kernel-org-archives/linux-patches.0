@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD3376C82;
-	Wed, 21 Feb 2024 13:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ABF69D3B;
+	Wed, 21 Feb 2024 13:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523086; cv=none; b=ETSVlcKcjwP4y01agq2AOOcp9GiR2qRQmPkplgQX5XNDnYOKpF9TrljVG/bOTLY00Adrwul8lm7x0z0HRAVuTfV9rcwqKXeGcHjBGsf45jczvHaVKoC3Wva7EjhmxfUC2tneWKt+KxDuGO5x12f2y287w9VbFuvOEx9f9KDbn2U=
+	t=1708523089; cv=none; b=lItplurti/9lhqBurVYt33oyJjjcl+Twp3rIC8AKTgQhLtFN9nrmllZBHq1hGTtvYvQfdr4JPRo/uB4ckV9KZBLTSlG4n9M4EkYk12iZd02j/tG3xJtdlWd8ZZaCRULNae+h3dkO+4ZJi0cRxEte4THEJPOE8HEpRgyWViQydYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523086; c=relaxed/simple;
-	bh=x+6J/iv78tond7fd6rSL0100EHf37CNrX7AcVVL29WQ=;
+	s=arc-20240116; t=1708523089; c=relaxed/simple;
+	bh=MNiTSCmiPanwd2UTFIrATfd6cKjvgt9t6dRwt7Xhp9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGu7PnSigW2T85dxh0gwZpx6xA2XHdP+6vRbfhK9B9PzHON+WaKTP1pMMHyBE3X4erEJ9MQvSJ7URrzIdkWb9OPlIh68F6TaWQkGI1RLohpwRyP7MIiYLVhoK9i/zfTWVMVuJW2H+Gl77cWvgBqH1Fv7gSZB8qgCMWhkhxQKaq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlqKrdgG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T50MuJFnXc3YHqUSIQEK2f8gvryM+8mnq64dGMoyeuVJNP9lcSDSzCxTNgY6Zd01X1nH+EmifZf7X3NxNUXlLSQ+0hV1KmGDXWGyxBlydHdRGjgxQ3LL02ArDACCXLxSCk3tr4AOdj2IWG2ZbakDCzaboxrtsLEJpZdNfTd2aWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrSDHKe7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlqKrdgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B826FC433C7;
-	Wed, 21 Feb 2024 13:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrSDHKe7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAEACC433C7;
+	Wed, 21 Feb 2024 13:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523086;
-	bh=x+6J/iv78tond7fd6rSL0100EHf37CNrX7AcVVL29WQ=;
+	s=korg; t=1708523089;
+	bh=MNiTSCmiPanwd2UTFIrATfd6cKjvgt9t6dRwt7Xhp9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vlqKrdgGwKFRcZMQ9E2Zxp+2xH3lZGcxJJrqwSBbhCOyWEqwr6JbDF9MwYAK4IARJ
-	 kpAiuQjWyXPTxZKHN0EZTrhKAZWZSil4aEJ6Xq/TB3W0BuxvKLPY1JLjN+ZrdvKjNA
-	 3OPhCyZZcuRcW9CPCBXjGeJWxyGr+vPaDQER9fvE=
+	b=SrSDHKe7kxgzRnuEiXPQtiNbYhq7pY2H5nc+k9XjJYf7L2WN3eJtYToaLLlbhSoNz
+	 jlGXHzLi2DHYJ1b49U+BX+gCSZJZu3LDWdolTsC3OKmVee3EwgDO36tjUg4/gu+mIZ
+	 ri6kT923/tECv+WQxy83RAi60jVh1koshyQgg+Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 327/476] scsi: core: Move scsi_host_busy() out of host lock if it is for per-command
-Date: Wed, 21 Feb 2024 14:06:18 +0100
-Message-ID: <20240221130020.118648566@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 336/476] hrtimer: Report offline hrtimer enqueue
+Date: Wed, 21 Feb 2024 14:06:27 +0100
+Message-ID: <20240221130020.441289922@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -54,68 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 4e6c9011990726f4d175e2cdfebe5b0b8cce4839 ]
+commit dad6a09f3148257ac1773cd90934d721d68ab595 upstream.
 
-Commit 4373534a9850 ("scsi: core: Move scsi_host_busy() out of host lock
-for waking up EH handler") intended to fix a hard lockup issue triggered by
-EH. The core idea was to move scsi_host_busy() out of the host lock when
-processing individual commands for EH. However, a suggested style change
-inadvertently caused scsi_host_busy() to remain under the host lock. Fix
-this by calling scsi_host_busy() outside the lock.
+The hrtimers migration on CPU-down hotplug process has been moved
+earlier, before the CPU actually goes to die. This leaves a small window
+of opportunity to queue an hrtimer in a blind spot, leaving it ignored.
 
-Fixes: 4373534a9850 ("scsi: core: Move scsi_host_busy() out of host lock for waking up EH handler")
-Cc: Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Cc: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20240203024521.2006455-1-ming.lei@redhat.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For example a practical case has been reported with RCU waking up a
+SCHED_FIFO task right before the CPUHP_AP_IDLE_DEAD stage, queuing that
+way a sched/rt timer to the local offline CPU.
+
+Make sure such situations never go unnoticed and warn when that happens.
+
+Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
+Reported-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240129235646.3171983-4-boqun.feng@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_error.c | 3 ++-
- drivers/scsi/scsi_lib.c   | 4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ include/linux/hrtimer.h |    4 +++-
+ kernel/time/hrtimer.c   |    3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index ffd3d8df3d82..2d5dc488f511 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -276,11 +276,12 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
+--- a/include/linux/hrtimer.h
++++ b/include/linux/hrtimer.h
+@@ -197,6 +197,7 @@ enum  hrtimer_base_type {
+  * @max_hang_time:	Maximum time spent in hrtimer_interrupt
+  * @softirq_expiry_lock: Lock which is taken while softirq based hrtimer are
+  *			 expired
++ * @online:		CPU is online from an hrtimers point of view
+  * @timer_waiters:	A hrtimer_cancel() invocation waits for the timer
+  *			callback to finish.
+  * @expires_next:	absolute time of the next event, is required for remote
+@@ -219,7 +220,8 @@ struct hrtimer_cpu_base {
+ 	unsigned int			hres_active		: 1,
+ 					in_hrtirq		: 1,
+ 					hang_detected		: 1,
+-					softirq_activated       : 1;
++					softirq_activated       : 1,
++					online			: 1;
+ #ifdef CONFIG_HIGH_RES_TIMERS
+ 	unsigned int			nr_events;
+ 	unsigned short			nr_retries;
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -1082,6 +1082,7 @@ static int enqueue_hrtimer(struct hrtime
+ 			   enum hrtimer_mode mode)
  {
- 	struct scsi_cmnd *scmd = container_of(head, typeof(*scmd), rcu);
- 	struct Scsi_Host *shost = scmd->device->host;
-+	unsigned int busy = scsi_host_busy(shost);
- 	unsigned long flags;
+ 	debug_activate(timer, mode);
++	WARN_ON_ONCE(!base->cpu_base->online);
  
- 	spin_lock_irqsave(shost->host_lock, flags);
- 	shost->host_failed++;
--	scsi_eh_wakeup(shost, scsi_host_busy(shost));
-+	scsi_eh_wakeup(shost, busy);
- 	spin_unlock_irqrestore(shost->host_lock, flags);
+ 	base->cpu_base->active_bases |= 1 << base->index;
+ 
+@@ -2180,6 +2181,7 @@ int hrtimers_prepare_cpu(unsigned int cp
+ 	cpu_base->softirq_next_timer = NULL;
+ 	cpu_base->expires_next = KTIME_MAX;
+ 	cpu_base->softirq_expires_next = KTIME_MAX;
++	cpu_base->online = 1;
+ 	hrtimer_cpu_base_init_expiry_lock(cpu_base);
+ 	return 0;
  }
+@@ -2247,6 +2249,7 @@ int hrtimers_cpu_dying(unsigned int dyin
+ 	smp_call_function_single(ncpu, retrigger_next_event, NULL, 0);
  
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index e9ab87335115..0389bf281f4b 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -281,9 +281,11 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- 	rcu_read_lock();
- 	__clear_bit(SCMD_STATE_INFLIGHT, &cmd->state);
- 	if (unlikely(scsi_host_in_recovery(shost))) {
-+		unsigned int busy = scsi_host_busy(shost);
-+
- 		spin_lock_irqsave(shost->host_lock, flags);
- 		if (shost->host_failed || shost->host_eh_scheduled)
--			scsi_eh_wakeup(shost, scsi_host_busy(shost));
-+			scsi_eh_wakeup(shost, busy);
- 		spin_unlock_irqrestore(shost->host_lock, flags);
- 	}
- 	rcu_read_unlock();
--- 
-2.43.0
-
+ 	raw_spin_unlock(&new_base->lock);
++	old_base->online = 0;
+ 	raw_spin_unlock(&old_base->lock);
+ 
+ 	return 0;
 
 
