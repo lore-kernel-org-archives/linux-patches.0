@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61217BB01;
-	Wed, 21 Feb 2024 13:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65CD7BB1B;
+	Wed, 21 Feb 2024 13:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523435; cv=none; b=JMRxLM1zoPZmHaDoHmdpCdlWBcGj0NH/uiCjdXAXiTvZa8ZESte8Md8Cce+U21fH/EArZF4sipe1dloDIZ0h7VhxJ7A//xe2S3jp2pr59LR/8XRWykCty/+ZKv4Y9ahHt+dlGkfFqyIe/0BYn4xnJBY6c6/xPLKkcSKegoYJ/44=
+	t=1708523442; cv=none; b=gQ68mp/cZNgE4PvE8zT8nFE7MM6LcU5df/dl7XSBqHHLY4SD6pk83y5DAaA48HYoL7XX2NkennpyAvsxkxUm1+RDBc0LY2LCpjwedrrj5Vw2o68jz15xh9fFAUnSB6d7RNzDtcTalds19794a6r5PjZ/Vh3BOpWELv7aqJQg1no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523435; c=relaxed/simple;
-	bh=NcNiIDeksB+8HI3imukBz4JFb7c/39qWVprYVCx95HI=;
+	s=arc-20240116; t=1708523442; c=relaxed/simple;
+	bh=R5IGBSmTLbxAhCC2u9Zf9wbxIe05kLPxhrwb/h6ngjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qtu3vPvnT4K1XnDEzSa0UpVDxKjlAOnbNK6aLRNhLbWnKsLDw+1Ca7YxFs3wMvaivZ+40jPGo0RDecrurM/y1rLynZu8EBOJ2fLijPmRR3qrr/+l/j2cML0ZxWzcMqCrtG+CJkVSYeS2XTjADN8sRc+gCnkig9dORIdesz14ZUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3BY0vPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=erowUEVHQ8yG9aFAQnaLl01A8yFAhBzFlDK7vcS2NqFOYlrlPseILVRrNDV68h+WSC7v/PnMq8nh9+gyr5pXXYjTxkihKnns7qiSiCvqd3wLHOEy2glFQ9NfWhcYkmFFMNMtnStqhEz2deuhSRhmYJg5PlgqCJz40b2Tn7hMeXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYkVpkKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3BY0vPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270C1C433C7;
-	Wed, 21 Feb 2024 13:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYkVpkKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487E1C433F1;
+	Wed, 21 Feb 2024 13:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523434;
-	bh=NcNiIDeksB+8HI3imukBz4JFb7c/39qWVprYVCx95HI=;
+	s=korg; t=1708523437;
+	bh=R5IGBSmTLbxAhCC2u9Zf9wbxIe05kLPxhrwb/h6ngjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3BY0vPGr6JYDV2MxEbMwVGZVbBi4cdG3nepEjTTqzs8mjGnwWlM4zCEvygQeKeym
-	 3CGYAZwaa8y1/SlCE1kXdyCUFXW/hWPo6uhafb1vyu9w5wnZl3St/bPmykQQTXRUGn
-	 cUEplNyEZp6xaNC/oKE5IDnROLeD+yub9Ur8Zh58=
+	b=gYkVpkKAiZUcTxHvkEQGQ4xlMqawQa7IqcfuAjGnAzdmEc/qk7CEo5ol2r2/EB7wD
+	 yA8mNu3G5ctIHDUIowfBopHJsIgHBxD+4TLjRIuv/TbiyRPc9KY1kMzhDWihbnfChh
+	 JykrElPMBWFk/06DX7d/yuxEO/G4DIDgfTEzjHJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 436/476] usb: dwc3: gadget: Delay issuing End Transfer
-Date: Wed, 21 Feb 2024 14:08:07 +0100
-Message-ID: <20240221130024.155860682@linuxfoundation.org>
+	Prakash Sangappa <prakash.sangappa@oracle.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 419/476] mm: hugetlb pages should not be reserved by shmat() if SHM_NORESERVE
+Date: Wed, 21 Feb 2024 14:07:50 +0100
+Message-ID: <20240221130023.512969224@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,67 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Prakash Sangappa <prakash.sangappa@oracle.com>
 
-[ Upstream commit f66eef8fb8989a7193cafc3870f7c7b2b97f16cb ]
+commit e656c7a9e59607d1672d85ffa9a89031876ffe67 upstream.
 
-If the controller hasn't DMA'ed the Setup data from its fifo, it won't
-process the End Transfer command. Polling for the command completion may
-block the driver from servicing the Setup phase and cause a timeout.
-Previously we only check and delay issuing End Transfer in the case of
-endpoint dequeue. Let's do that for all End Transfer scenarios.
+For shared memory of type SHM_HUGETLB, hugetlb pages are reserved in
+shmget() call.  If SHM_NORESERVE flags is specified then the hugetlb pages
+are not reserved.  However when the shared memory is attached with the
+shmat() call the hugetlb pages are getting reserved incorrectly for
+SHM_HUGETLB shared memory created with SHM_NORESERVE which is a bug.
 
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/2fcf3b5d90068d549589a57a27a79f76c6769b04.1650593829.git.Thinh.Nguyen@synopsys.com
+-------------------------------
+Following test shows the issue.
+
+$cat shmhtb.c
+
+int main()
+{
+	int shmflags = 0660 | IPC_CREAT | SHM_HUGETLB | SHM_NORESERVE;
+	int shmid;
+
+	shmid = shmget(SKEY, SHMSZ, shmflags);
+	if (shmid < 0)
+	{
+		printf("shmat: shmget() failed, %d\n", errno);
+		return 1;
+	}
+	printf("After shmget()\n");
+	system("cat /proc/meminfo | grep -i hugepages_");
+
+	shmat(shmid, NULL, 0);
+	printf("\nAfter shmat()\n");
+	system("cat /proc/meminfo | grep -i hugepages_");
+
+	shmctl(shmid, IPC_RMID, NULL);
+	return 0;
+}
+
+ #sysctl -w vm.nr_hugepages=20
+ #./shmhtb
+
+After shmget()
+HugePages_Total:      20
+HugePages_Free:       20
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+
+After shmat()
+HugePages_Total:      20
+HugePages_Free:       20
+HugePages_Rsvd:        5 <--
+HugePages_Surp:        0
+--------------------------------
+
+Fix is to ensure that hugetlb pages are not reserved for SHM_HUGETLB shared
+memory in the shmat() call.
+
+Link: https://lkml.kernel.org/r/1706040282-12388-1-git-send-email-prakash.sangappa@oracle.com
+Signed-off-by: Prakash Sangappa <prakash.sangappa@oracle.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 730e12fbec53 ("usb: dwc3: gadget: Handle EP0 request dequeuing properly")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ fs/hugetlbfs/inode.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 4d830ba7d824..5cf2fb165a56 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2029,16 +2029,6 @@ static int dwc3_gadget_ep_dequeue(struct usb_ep *ep,
- 		if (r == req) {
- 			struct dwc3_request *t;
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -135,6 +135,7 @@ static int hugetlbfs_file_mmap(struct fi
+ 	loff_t len, vma_len;
+ 	int ret;
+ 	struct hstate *h = hstate_file(file);
++	vm_flags_t vm_flags;
  
--			/*
--			 * If a Setup packet is received but yet to DMA out, the controller will
--			 * not process the End Transfer command of any endpoint. Polling of its
--			 * DEPCMD.CmdAct may block setting up TRB for Setup packet, causing a
--			 * timeout. Delay issuing the End Transfer command until the Setup TRB is
--			 * prepared.
--			 */
--			if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status)
--				dep->flags |= DWC3_EP_DELAY_STOP;
--
- 			/* wait until it is processed */
- 			dwc3_stop_active_transfer(dep, true, true);
- 
-@@ -3663,6 +3653,18 @@ void dwc3_stop_active_transfer(struct dwc3_ep *dep, bool force,
- 	    (dep->flags & DWC3_EP_END_TRANSFER_PENDING))
- 		return;
- 
-+	/*
-+	 * If a Setup packet is received but yet to DMA out, the controller will
-+	 * not process the End Transfer command of any endpoint. Polling of its
-+	 * DEPCMD.CmdAct may block setting up TRB for Setup packet, causing a
-+	 * timeout. Delay issuing the End Transfer command until the Setup TRB is
-+	 * prepared.
-+	 */
-+	if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status) {
-+		dep->flags |= DWC3_EP_DELAY_STOP;
-+		return;
-+	}
-+
  	/*
- 	 * NOTICE: We are violating what the Databook says about the
- 	 * EndTransfer command. Ideally we would _always_ wait for the
--- 
-2.43.0
-
+ 	 * vma address alignment (but not the pgoff alignment) has
+@@ -176,10 +177,20 @@ static int hugetlbfs_file_mmap(struct fi
+ 	file_accessed(file);
+ 
+ 	ret = -ENOMEM;
++
++	vm_flags = vma->vm_flags;
++	/*
++	 * for SHM_HUGETLB, the pages are reserved in the shmget() call so skip
++	 * reserving here. Note: only for SHM hugetlbfs file, the inode
++	 * flag S_PRIVATE is set.
++	 */
++	if (inode->i_flags & S_PRIVATE)
++		vm_flags |= VM_NORESERVE;
++
+ 	if (!hugetlb_reserve_pages(inode,
+ 				vma->vm_pgoff >> huge_page_order(h),
+ 				len >> huge_page_shift(h), vma,
+-				vma->vm_flags))
++				vm_flags))
+ 		goto out;
+ 
+ 	ret = 0;
 
 
