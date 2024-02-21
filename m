@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EEB73161;
-	Wed, 21 Feb 2024 13:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9966F074;
+	Wed, 21 Feb 2024 13:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523029; cv=none; b=kg5MU0wFYG7me4Fi1euZyBOxNvpMdAymBBdaIyN7ib4sXQuQbhRe7OS0B+P38tGOI8VMiMSPRl6Vu8Vf1MOGPRbHlqWk6Sbo5cRh9khimxc5pH3+8Y47mwno+BoF6ugH2RCOrvPN1Opfu01WT1qLV6eowLNtTYg4D2hiY0TDnz8=
+	t=1708523032; cv=none; b=oFyuD1FWGgZyYjEm1d6BP/txTT63qkrdu9Bo9ZCtTxyLD/kgSbTXIdW51DYxIvLwyWjdkvfnIQk8PswThTS2sWKWJ/EqreLQVjUUVy0PIhrVgbOOpzNLyAtjaW0swBijuwmSWn7rtStZ5gChQe+SY1Tu8n+r7nFG/o4yQqdnapI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523029; c=relaxed/simple;
-	bh=Y3KJKnCSWR6dF2p/gREpLpBPT+u1xqDM9r1Br/J7nwA=;
+	s=arc-20240116; t=1708523032; c=relaxed/simple;
+	bh=RR6IX5igTFlrtWwgAMTywaCeHOqw187/OL4R9F40ykM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqOGp//eIVtSsQCVvtUepMttrHCrUxEOffU1djakEj5KdiJYb2y3K6rvXJjSXfyqzg0Z1QzuXRmAx1bKL+Kfbhd+iDk0z+nRqOumlBfr7rNmsj5B6gwnOD5hFXye11GCBasJNSKngJymz8gv5Z/k6BZAk0m9L0lQgjurTSVE6PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr3bPIk7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=isnERoY5wFqhUGMHo4vfeULRlyj6nA3tjKykUwPhVUpXGGO7KbKeEmP4/pOmyU8IdV2UhQq9ADPuxYQ5s7pvnJ3n/e5I+KyYn70O7xzG9AyCEHj6K48f+FECR/FPVtvXnwJdv2kx/TIUj+Jp3UyjaCuZy+eJRboDeB/JTw2YFh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYQd4BGM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr3bPIk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C75C43390;
-	Wed, 21 Feb 2024 13:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYQd4BGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C56C433C7;
+	Wed, 21 Feb 2024 13:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523029;
-	bh=Y3KJKnCSWR6dF2p/gREpLpBPT+u1xqDM9r1Br/J7nwA=;
+	s=korg; t=1708523032;
+	bh=RR6IX5igTFlrtWwgAMTywaCeHOqw187/OL4R9F40ykM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yr3bPIk7NIHU7ttgy5N0FMQ3NEAK9viCQ3UdAP1Wz4N5AKQ+FXsIQDVHWQMzDrGUZ
-	 Zx1PsqKxjj13YL8Q+7ilECsRYiZfJ6Bu2bC46FeNz2y+Pyd4B69RtDoOS/4dr+57hC
-	 sHyqsNvS/Z9uvjY84NrmkIu/+xLX/nhDv0PMnK+0=
+	b=CYQd4BGMmwpHFHcVYToyyZTLoRFTd360SfoPa7C1vBW5DTwKGNZqNw3Oj3777P/ST
+	 wLmGBXM4cbS38Bts/9thycJY4F7N0dguuElC8vjfgAGfFow1egXXx3Jl/nqm9kk2hX
+	 bgmfge2dcEIhamzcznYPHDmLaLJJnvDc7+D+DrG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Aurabindo Jayamohanan Pillai <Aurabindo.Pillai@amd.com>,
+	Mikita Lipski <mikita.lipski@amd.com>,
+	Anson Jacob <Anson.Jacob@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 319/476] netfilter: nft_compat: restrict match/target protocol to u16
-Date: Wed, 21 Feb 2024 14:06:10 +0100
-Message-ID: <20240221130019.806418139@linuxfoundation.org>
+Subject: [PATCH 5.15 320/476] drm/amd/display: Fix multiple memory leaks reported by coverity
+Date: Wed, 21 Feb 2024 14:06:11 +0100
+Message-ID: <20240221130019.840752400@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,49 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Anson Jacob <Anson.Jacob@amd.com>
 
-[ Upstream commit d694b754894c93fb4d71a7f3699439dec111decc ]
+[ Upstream commit 7b89bf83181363a84f86da787159ddbbef505b8c ]
 
-xt_check_{match,target} expects u16, but NFTA_RULE_COMPAT_PROTO is u32.
+coccinelle patch used:
 
-NLA_POLICY_MAX(NLA_BE32, 65535) cannot be used because .max in
-nla_policy is s16, see 3e48be05f3c7 ("netlink: add attribute range
-validation to policy").
+@@ expression enc1,vpg,afmt; @@
+-       if (!enc1 || !vpg || !afmt)
++       if (!enc1 || !vpg || !afmt) {
++               kfree(enc1);
++               kfree(vpg);
++               kfree(afmt);
+                return NULL;
++       }
 
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Addresses-Coverity-ID: 1466017: ("Resource leaks")
+
+Reviewed-by: Aurabindo Jayamohanan Pillai <Aurabindo.Pillai@amd.com>
+Acked-by: Mikita Lipski <mikita.lipski@amd.com>
+Signed-off-by: Anson Jacob <Anson.Jacob@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 58fca355ad37 ("drm/amd/display: Implement bounds check for stream encoder creation in DCN301")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_compat.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c   | 6 +++++-
+ drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c | 6 +++++-
+ drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c | 6 +++++-
+ drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c   | 6 +++++-
+ 4 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
-index 4ef664a2bbe6..64a2a5f19589 100644
---- a/net/netfilter/nft_compat.c
-+++ b/net/netfilter/nft_compat.c
-@@ -200,6 +200,7 @@ static const struct nla_policy nft_rule_compat_policy[NFTA_RULE_COMPAT_MAX + 1]
- static int nft_parse_compat(const struct nlattr *attr, u16 *proto, bool *inv)
- {
- 	struct nlattr *tb[NFTA_RULE_COMPAT_MAX+1];
-+	u32 l4proto;
- 	u32 flags;
- 	int err;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c
+index 735c92a5aa36..e8d4a8044d1f 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c
+@@ -1164,8 +1164,12 @@ struct stream_encoder *dcn30_stream_encoder_create(
+ 	vpg = dcn30_vpg_create(ctx, vpg_inst);
+ 	afmt = dcn30_afmt_create(ctx, afmt_inst);
  
-@@ -218,7 +219,12 @@ static int nft_parse_compat(const struct nlattr *attr, u16 *proto, bool *inv)
- 	if (flags & NFT_RULE_COMPAT_F_INV)
- 		*inv = true;
+-	if (!enc1 || !vpg || !afmt)
++	if (!enc1 || !vpg || !afmt) {
++		kfree(enc1);
++		kfree(vpg);
++		kfree(afmt);
+ 		return NULL;
++	}
  
--	*proto = ntohl(nla_get_be32(tb[NFTA_RULE_COMPAT_PROTO]));
-+	l4proto = ntohl(nla_get_be32(tb[NFTA_RULE_COMPAT_PROTO]));
-+	if (l4proto > U16_MAX)
-+		return -EINVAL;
-+
-+	*proto = l4proto;
-+
- 	return 0;
- }
+ 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios,
+ 					eng_id, vpg, afmt,
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c b/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c
+index dea358b01791..b6c363b462a7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c
+@@ -1195,8 +1195,12 @@ struct stream_encoder *dcn301_stream_encoder_create(
+ 	vpg = dcn301_vpg_create(ctx, vpg_inst);
+ 	afmt = dcn301_afmt_create(ctx, afmt_inst);
  
+-	if (!enc1 || !vpg || !afmt)
++	if (!enc1 || !vpg || !afmt) {
++		kfree(enc1);
++		kfree(vpg);
++		kfree(afmt);
+ 		return NULL;
++	}
+ 
+ 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios,
+ 					eng_id, vpg, afmt,
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c b/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c
+index 2292bb82026e..7f04042d2213 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c
+@@ -542,8 +542,12 @@ static struct stream_encoder *dcn302_stream_encoder_create(enum engine_id eng_id
+ 	vpg = dcn302_vpg_create(ctx, vpg_inst);
+ 	afmt = dcn302_afmt_create(ctx, afmt_inst);
+ 
+-	if (!enc1 || !vpg || !afmt)
++	if (!enc1 || !vpg || !afmt) {
++		kfree(enc1);
++		kfree(vpg);
++		kfree(afmt);
+ 		return NULL;
++	}
+ 
+ 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios, eng_id, vpg, afmt, &stream_enc_regs[eng_id],
+ 			&se_shift, &se_mask);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c
+index e224c5213258..4f7bc8829b20 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c
+@@ -1291,8 +1291,12 @@ static struct stream_encoder *dcn31_stream_encoder_create(
+ 	vpg = dcn31_vpg_create(ctx, vpg_inst);
+ 	afmt = dcn31_afmt_create(ctx, afmt_inst);
+ 
+-	if (!enc1 || !vpg || !afmt)
++	if (!enc1 || !vpg || !afmt) {
++		kfree(enc1);
++		kfree(vpg);
++		kfree(afmt);
+ 		return NULL;
++	}
+ 
+ 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios,
+ 					eng_id, vpg, afmt,
 -- 
 2.43.0
 
