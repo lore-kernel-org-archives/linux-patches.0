@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D747E78B50;
-	Wed, 21 Feb 2024 13:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2891A4D5B7;
+	Wed, 21 Feb 2024 13:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523104; cv=none; b=KpS1SW633dlN7wDCxgkiLSn+wq/3x8vvhK9E4thE1mek/LzAulBQhroKZm/z7mDu+0fNqx+o8s8y9cA+Dlc2ZsDdGjf81gbAXYTaL/CuDqd4W9UZRDbzm70/Uoha4WjBSZW25bcgmlOjuS3LmdzBPDfUxA02h2VuDa9CdwepkDc=
+	t=1708523108; cv=none; b=UUkYBoG2wtzXvpBcNuv8bGolksMxwh6IeLE42lfPLEFegj+Ok5/U4o1VW6WeRI5aKo8IGpFmBjhwl6Ygamibh7+ziNCSZUrhUY7M12KO5mkJRNrVJRzgP1fKP4X4f8kL9enH+Hr3qWKSsrl3FWh5yCiE/dwqrxZfyxaulmwcjZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523104; c=relaxed/simple;
-	bh=8Ro1DuEVRk0zmYolSHd21dzau5ZJAAbfdxCXepAQ984=;
+	s=arc-20240116; t=1708523108; c=relaxed/simple;
+	bh=dEJV8sy7+yarFpT3R8SnM7/FJyfOADL6drXpneSudds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QOzSqAAc4x/C+qvcky/H7hWMlOvVVGlPxAPzXcBz1xnY+IMgS8x8I0P/vKgudm7fgjyLRam1/aaxdjHSTfgx+CV8zgJ8JAcmZfRUq97nsEIp+Mgtk3uTqt9jXyB8BywKnp7YIBK9FgoEM5Kehb3k4uAvTHkRqz0S1FiAmreG0z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZg3lpBd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TjX+oA/FktrSCcqHUQ+WipfSfBgryBvkT/tGLEFWeohbewRiCEQHZ3o0PlXRjLibETH9J+NQHmFGt6Fci2LyAyh7y4Z91K08yaEpRIH24O2YBgMFBilRxSiiJPxcbvcziAqlhGLfXF5wFStsyeJus8Tv+ptAJ1IKE8nb/z9HPYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8S0CsFV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZg3lpBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47386C433F1;
-	Wed, 21 Feb 2024 13:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8S0CsFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B151C433F1;
+	Wed, 21 Feb 2024 13:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523104;
-	bh=8Ro1DuEVRk0zmYolSHd21dzau5ZJAAbfdxCXepAQ984=;
+	s=korg; t=1708523108;
+	bh=dEJV8sy7+yarFpT3R8SnM7/FJyfOADL6drXpneSudds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZg3lpBdVfHWGTbEVyFiOa5th4f5m5IW4s6UEs5GncOBP03Ng7iXP90u/Vd8AMlHE
-	 x2eFtgaZN2hOYearMHJRw1ddYuGVaGL6xabEbdoZBRvBSIfSMEJsfbzxgACnPqh9Uo
-	 1lmxMtrUx+DPdNAsUVjacx/WXzwlJ7Pha2TR0qtA=
+	b=U8S0CsFVdvEKSMRpTvCU13xL8h+e2mmHwurmFkUidVk8+H5LM3/O+OV7xsA/6wfDP
+	 jbVhL3Jdx0zNalhk3NxzdSU5rx4JowNHF7ElwT0ug7evUCW3lP+otBB94TdwQZAI1b
+	 c7YF5ybnqKJUXhv8GMbl26rSSc2Mmxk6Er5vhSWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	kernel test robot <lkp@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 341/476] net: stmmac: xgmac: use #define for string constants
-Date: Wed, 21 Feb 2024 14:06:32 +0100
-Message-ID: <20240221130020.621724123@linuxfoundation.org>
+	Furong Xu <0x1207@gmail.com>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 342/476] net: stmmac: xgmac: fix a typo of register name in DPP safety handling
+Date: Wed, 21 Feb 2024 14:06:33 +0100
+Message-ID: <20240221130020.650548163@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,124 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Furong Xu <0x1207@gmail.com>
 
-commit 1692b9775e745f84b69dc8ad0075b0855a43db4e upstream.
+commit 1ce2654d87e2fb91fea83b288bd9b2641045e42a upstream.
 
-The cited commit introduces and uses the string constants dpp_tx_err and
-dpp_rx_err. These are assigned to constant fields of the array
-dwxgmac3_error_desc.
+DDPP is copied from Synopsys Data book:
 
-It has been reported that on GCC 6 and 7.5.0 this results in warnings
-such as:
+DDPP: Disable Data path Parity Protection.
+    When it is 0x0, Data path Parity Protection is enabled.
+    When it is 0x1, Data path Parity Protection is disabled.
 
-  .../dwxgmac2_core.c:836:20: error: initialiser element is not constant
-   { true, "TDPES0", dpp_tx_err },
-
-I have been able to reproduce this using: GCC 7.5.0, 8.4.0, 9.4.0 and 10.5.0.
-But not GCC 13.2.0.
-
-So it seems this effects older compilers but not newer ones.
-As Jon points out in his report, the minimum compiler supported by
-the kernel is GCC 5.1, so it does seem that this ought to be fixed.
-
-It is not clear to me what combination of 'const', if any, would address
-this problem.  So this patch takes of using #defines for the string
-constants
-
-Compile tested only.
+The macro name should be XGMAC_DPP_DISABLE.
 
 Fixes: 46eba193d04f ("net: stmmac: xgmac: fix handling of DPP safety error for DMA channels")
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Closes: https://lore.kernel.org/netdev/c25eb595-8d91-40ea-9f52-efa15ebafdbc@nvidia.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202402081135.lAxxBXHk-lkp@intel.com/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240208-xgmac-const-v1-1-e69a1eeabfc8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Furong Xu <0x1207@gmail.com>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Link: https://lore.kernel.org/r/20240203053133.1129236-1-0x1207@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |   69 ++++++++++----------
- 1 file changed, 35 insertions(+), 34 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h      |    2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
+@@ -283,7 +283,7 @@
+ #define XGMAC_TXCEIE			BIT(0)
+ #define XGMAC_MTL_ECC_INT_STATUS	0x000010cc
+ #define XGMAC_MTL_DPP_CONTROL		0x000010e0
+-#define XGMAC_DDPP_DISABLE		BIT(0)
++#define XGMAC_DPP_DISABLE		BIT(0)
+ #define XGMAC_MTL_TXQ_OPMODE(x)		(0x00001100 + (0x80 * (x)))
+ #define XGMAC_TQS			GENMASK(25, 16)
+ #define XGMAC_TQS_SHIFT			16
 --- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -789,41 +789,42 @@ static const struct dwxgmac3_error_desc
- 	{ false, "UNKNOWN", "Unknown Error" }, /* 31 */
- };
+@@ -886,7 +886,7 @@ dwxgmac3_safety_feat_config(void __iomem
+ 	/* 5. Enable Data Path Parity Protection */
+ 	value = readl(ioaddr + XGMAC_MTL_DPP_CONTROL);
+ 	/* already enabled by default, explicit enable it again */
+-	value &= ~XGMAC_DDPP_DISABLE;
++	value &= ~XGMAC_DPP_DISABLE;
+ 	writel(value, ioaddr + XGMAC_MTL_DPP_CONTROL);
  
--static const char * const dpp_rx_err = "Read Rx Descriptor Parity checker Error";
--static const char * const dpp_tx_err = "Read Tx Descriptor Parity checker Error";
-+#define DPP_RX_ERR "Read Rx Descriptor Parity checker Error"
-+#define DPP_TX_ERR "Read Tx Descriptor Parity checker Error"
-+
- static const struct dwxgmac3_error_desc dwxgmac3_dma_dpp_errors[32] = {
--	{ true, "TDPES0", dpp_tx_err },
--	{ true, "TDPES1", dpp_tx_err },
--	{ true, "TDPES2", dpp_tx_err },
--	{ true, "TDPES3", dpp_tx_err },
--	{ true, "TDPES4", dpp_tx_err },
--	{ true, "TDPES5", dpp_tx_err },
--	{ true, "TDPES6", dpp_tx_err },
--	{ true, "TDPES7", dpp_tx_err },
--	{ true, "TDPES8", dpp_tx_err },
--	{ true, "TDPES9", dpp_tx_err },
--	{ true, "TDPES10", dpp_tx_err },
--	{ true, "TDPES11", dpp_tx_err },
--	{ true, "TDPES12", dpp_tx_err },
--	{ true, "TDPES13", dpp_tx_err },
--	{ true, "TDPES14", dpp_tx_err },
--	{ true, "TDPES15", dpp_tx_err },
--	{ true, "RDPES0", dpp_rx_err },
--	{ true, "RDPES1", dpp_rx_err },
--	{ true, "RDPES2", dpp_rx_err },
--	{ true, "RDPES3", dpp_rx_err },
--	{ true, "RDPES4", dpp_rx_err },
--	{ true, "RDPES5", dpp_rx_err },
--	{ true, "RDPES6", dpp_rx_err },
--	{ true, "RDPES7", dpp_rx_err },
--	{ true, "RDPES8", dpp_rx_err },
--	{ true, "RDPES9", dpp_rx_err },
--	{ true, "RDPES10", dpp_rx_err },
--	{ true, "RDPES11", dpp_rx_err },
--	{ true, "RDPES12", dpp_rx_err },
--	{ true, "RDPES13", dpp_rx_err },
--	{ true, "RDPES14", dpp_rx_err },
--	{ true, "RDPES15", dpp_rx_err },
-+	{ true, "TDPES0", DPP_TX_ERR },
-+	{ true, "TDPES1", DPP_TX_ERR },
-+	{ true, "TDPES2", DPP_TX_ERR },
-+	{ true, "TDPES3", DPP_TX_ERR },
-+	{ true, "TDPES4", DPP_TX_ERR },
-+	{ true, "TDPES5", DPP_TX_ERR },
-+	{ true, "TDPES6", DPP_TX_ERR },
-+	{ true, "TDPES7", DPP_TX_ERR },
-+	{ true, "TDPES8", DPP_TX_ERR },
-+	{ true, "TDPES9", DPP_TX_ERR },
-+	{ true, "TDPES10", DPP_TX_ERR },
-+	{ true, "TDPES11", DPP_TX_ERR },
-+	{ true, "TDPES12", DPP_TX_ERR },
-+	{ true, "TDPES13", DPP_TX_ERR },
-+	{ true, "TDPES14", DPP_TX_ERR },
-+	{ true, "TDPES15", DPP_TX_ERR },
-+	{ true, "RDPES0", DPP_RX_ERR },
-+	{ true, "RDPES1", DPP_RX_ERR },
-+	{ true, "RDPES2", DPP_RX_ERR },
-+	{ true, "RDPES3", DPP_RX_ERR },
-+	{ true, "RDPES4", DPP_RX_ERR },
-+	{ true, "RDPES5", DPP_RX_ERR },
-+	{ true, "RDPES6", DPP_RX_ERR },
-+	{ true, "RDPES7", DPP_RX_ERR },
-+	{ true, "RDPES8", DPP_RX_ERR },
-+	{ true, "RDPES9", DPP_RX_ERR },
-+	{ true, "RDPES10", DPP_RX_ERR },
-+	{ true, "RDPES11", DPP_RX_ERR },
-+	{ true, "RDPES12", DPP_RX_ERR },
-+	{ true, "RDPES13", DPP_RX_ERR },
-+	{ true, "RDPES14", DPP_RX_ERR },
-+	{ true, "RDPES15", DPP_RX_ERR },
- };
- 
- static void dwxgmac3_handle_dma_err(struct net_device *ndev,
+ 	return 0;
 
 
