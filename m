@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9ED3CF42;
-	Wed, 21 Feb 2024 14:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9093CF42;
+	Wed, 21 Feb 2024 14:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525143; cv=none; b=c1DbGEMJ6Fkr7c0+uEMx9WZuUafF8n9LV4WX/hm7009fw0RdzS6uuH8/A7o74uQW/c/13WpDkHItFSKAdwrFNq5b7Vy0dyg8fZtisSaSqfsLtOWr8+CvurMdsfeuJnUFMrpFVmmDsZ0n5PyGMHQadvUINGMBXcw+qYOAn9JsAkc=
+	t=1708525146; cv=none; b=oFDufO8oU80MM0x7DpO1BX/8FEUU7m9oH/9N2n+nylDbOYc74/dvbF40rHu9yWEnbPL7n5cNZH+oEwuW1ZEirwb7Cj5aAurJAcaPefMETLeKsBmMecRGJ2N848PyBLmhsTXaUFnb/n+lFGPbYFFp2X+bTWegW44dmBttmRiwC6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525143; c=relaxed/simple;
-	bh=riBfJ836mLM57mShagqu0vv5qZHbEYBhn/cvj6iyLag=;
+	s=arc-20240116; t=1708525146; c=relaxed/simple;
+	bh=2cBSjX2JnCAtoKrat72Vm1LpmxCKomjtWpDVrDaK4xU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFbKFDX+bavjHs8ZAK7ekef1UCoNX6/wQIwx0L0ileC8yTWLx1UGjamTIgTuCJ2j4/raHog74KtPe7JThaW7qM7HP/xE25LHZ5ub3qeaZRvUZyrgBhVz7aTcEYk3ktVu0hA3MoWgeVaI+2L5yxXCYZ34oTuSGb8vTsbQKUuR6wY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKtf/ss3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f7qm45LO4jI3MzLlnf9DIv/gydU4vFHY80AFFDTTfu9ij3vNnyqMeba05gFHyGK3xuQ+sq5cKYp37aWg+PCIxTvux1EoZyzZgySoiMed0HBxzTKIbaVBah8Ly8QOAQim/8g6PZJbrRnUFnq3uXzNscHuC1XN1IbS0UuFgnBkuzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uT8UZdF/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKtf/ss3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC76C433F1;
-	Wed, 21 Feb 2024 14:19:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uT8UZdF/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05C4C433F1;
+	Wed, 21 Feb 2024 14:19:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525143;
-	bh=riBfJ836mLM57mShagqu0vv5qZHbEYBhn/cvj6iyLag=;
+	s=korg; t=1708525146;
+	bh=2cBSjX2JnCAtoKrat72Vm1LpmxCKomjtWpDVrDaK4xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKtf/ss3pBtVrgBFqx1wukXAcdmkvnRFX0d0fSk8GnFnZi+emn124sfVcJZPgWhoO
-	 BmLuFv070jBah4F0FxG/u9PcxzGxekPOUYmhNnLJBdTndqHIQOs0l2Jv/cVsTEhMOn
-	 RMdtCxnyj2dtcO/0Mjk06Ajn9yhLPSUFfpkdZq44=
+	b=uT8UZdF/MADe6oms4fn6SSZxB3iuVRL2u9OOIH6jMR6NdyTpEsZVCEhPadeLH9o0w
+	 IvullkfP+xXMEwCDHFhoxTZA67cf+//eYBoDzuJ7kqUM7DIU5I2pfL3pg+t0DhQ7v6
+	 9PM2GZeNOREgVeFx26au4BtzaGGcnnCL4p8bsUUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 045/267] btrfs: defrag: reject unknown flags of btrfs_ioctl_defrag_range_args
-Date: Wed, 21 Feb 2024 14:06:26 +0100
-Message-ID: <20240221125941.429940484@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 5.4 046/267] rbd: dont move requests to the running list on errors
+Date: Wed, 21 Feb 2024 14:06:27 +0100
+Message-ID: <20240221125941.459688539@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,54 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 173431b274a9a54fc10b273b46e67f46bcf62d2e upstream.
+commit ded080c86b3f99683774af0441a58fc2e3d60cae upstream.
 
-Add extra sanity check for btrfs_ioctl_defrag_range_args::flags.
+The running list is supposed to contain requests that are pinning the
+exclusive lock, i.e. those that must be flushed before exclusive lock
+is released.  When wake_lock_waiters() is called to handle an error,
+requests on the acquiring list are failed with that error and no
+flushing takes place.  Briefly moving them to the running list is not
+only pointless but also harmful: if exclusive lock gets acquired
+before all of their state machines are scheduled and go through
+rbd_lock_del_request(), we trigger
 
-This is not really to enhance fuzzing tests, but as a preparation for
-future expansion on btrfs_ioctl_defrag_range_args.
+    rbd_assert(list_empty(&rbd_dev->running_list));
 
-In the future we're going to add new members, allowing more fine tuning
-for btrfs defrag.  Without the -ENONOTSUPP error, there would be no way
-to detect if the kernel supports those new defrag features.
+in rbd_try_acquire_lock().
 
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c           |    4 ++++
- include/uapi/linux/btrfs.h |    3 +++
- 2 files changed, 7 insertions(+)
+ drivers/block/rbd.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3102,6 +3102,10 @@ static int btrfs_ioctl_defrag(struct fil
- 				kfree(range);
- 				goto out;
- 			}
-+			if (range->flags & ~BTRFS_DEFRAG_RANGE_FLAGS_SUPP) {
-+				ret = -EOPNOTSUPP;
-+				goto out;
-+			}
- 			/* compression requires us to start the IO */
- 			if ((range->flags & BTRFS_DEFRAG_RANGE_COMPRESS)) {
- 				range->flags |= BTRFS_DEFRAG_RANGE_START_IO;
---- a/include/uapi/linux/btrfs.h
-+++ b/include/uapi/linux/btrfs.h
-@@ -539,6 +539,9 @@ struct btrfs_ioctl_clone_range_args {
-  */
- #define BTRFS_DEFRAG_RANGE_COMPRESS 1
- #define BTRFS_DEFRAG_RANGE_START_IO 2
-+#define BTRFS_DEFRAG_RANGE_FLAGS_SUPP	(BTRFS_DEFRAG_RANGE_COMPRESS |		\
-+					 BTRFS_DEFRAG_RANGE_START_IO)
-+
- struct btrfs_ioctl_defrag_range_args {
- 	/* start of the defrag operation */
- 	__u64 start;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3603,14 +3603,15 @@ static bool rbd_lock_add_request(struct
+ static void rbd_lock_del_request(struct rbd_img_request *img_req)
+ {
+ 	struct rbd_device *rbd_dev = img_req->rbd_dev;
+-	bool need_wakeup;
++	bool need_wakeup = false;
+ 
+ 	lockdep_assert_held(&rbd_dev->lock_rwsem);
+ 	spin_lock(&rbd_dev->lock_lists_lock);
+-	rbd_assert(!list_empty(&img_req->lock_item));
+-	list_del_init(&img_req->lock_item);
+-	need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING &&
+-		       list_empty(&rbd_dev->running_list));
++	if (!list_empty(&img_req->lock_item)) {
++		list_del_init(&img_req->lock_item);
++		need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING &&
++			       list_empty(&rbd_dev->running_list));
++	}
+ 	spin_unlock(&rbd_dev->lock_lists_lock);
+ 	if (need_wakeup)
+ 		complete(&rbd_dev->releasing_wait);
+@@ -3997,14 +3998,19 @@ static void wake_lock_waiters(struct rbd
+ 		return;
+ 	}
+ 
+-	list_for_each_entry(img_req, &rbd_dev->acquiring_list, lock_item) {
++	while (!list_empty(&rbd_dev->acquiring_list)) {
++		img_req = list_first_entry(&rbd_dev->acquiring_list,
++					   struct rbd_img_request, lock_item);
+ 		mutex_lock(&img_req->state_mutex);
+ 		rbd_assert(img_req->state == RBD_IMG_EXCLUSIVE_LOCK);
++		if (!result)
++			list_move_tail(&img_req->lock_item,
++				       &rbd_dev->running_list);
++		else
++			list_del_init(&img_req->lock_item);
+ 		rbd_img_schedule(img_req, result);
+ 		mutex_unlock(&img_req->state_mutex);
+ 	}
+-
+-	list_splice_tail_init(&rbd_dev->acquiring_list, &rbd_dev->running_list);
+ }
+ 
+ static int get_lock_owner_info(struct rbd_device *rbd_dev,
 
 
