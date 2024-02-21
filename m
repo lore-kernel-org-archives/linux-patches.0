@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A719469953;
-	Wed, 21 Feb 2024 13:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A091E4B2;
+	Wed, 21 Feb 2024 13:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522264; cv=none; b=JVbR2KtFu3jjlfgTZUSYmgaJFwN4EN6EAajMuFkFEXC1QOxydKFN23GoXcpw+4oVG3ymfcGe7HoGQX1sAlNzDupN4+MM9nHx4o7IQ0YCHnmJ5t66KbcdPKyErZEGKqzEvschWgnhK8qH5viUESTi4lRwkqVZxjKwcyqY9JrnsoE=
+	t=1708522267; cv=none; b=Y9ZZvMP14N/niJHyK9RRm/ElFnBuSMmgOKTOeNt0baaxindkUaIln0Od01s3wWdXSjaNT2MJlKxdMjQyHaOsUTSV2CzwkoooAbI0myqoOiHd6B68DgVPcgsp51JpUtGGwah0JRIzlv4dZvpWuoRDZMb/+ACc0REaGXpoHpTlf/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522264; c=relaxed/simple;
-	bh=Zy8qwI/HfZ617pVfx53YnJHRNN8t/VXvTN6JM1NsC2g=;
+	s=arc-20240116; t=1708522267; c=relaxed/simple;
+	bh=zatlJVt8/yzorpvXq4ak0N4U09v5e1DbTn9MAY6u9RI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X04WKWyndwvkkbeiJTrUmFhEsR8vPusY3lW7XK1LQcA1GYmpEwCn+KKvhEq892Sswv/+aFTF90JM9lqOaHq58ALzhnyJ8Py0nRTE0lZqTmm/0tttXak5igL3Ge7tneEa6SwK9YjtH0wAKmH+j99OjR7QGgWdq7vjsUhpisP/528=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytnue/Oz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PvdLVRq2ig7tpmNzNRr34VIOloY2qbh88vKKuvzJgsLQtOg8XVoBvLWfYT7/ZNLicGKAQZmKrFwGOUR7aMF76o9IUhqpHqPwshaNWFKE/hPaJ5mhufKxc1/TTOXQK/beXsgVpb59gS7K0jv1Rza+iwj/+eAp+pButGsBZKN7A9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QE1j5whJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytnue/Oz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A77DC43390;
-	Wed, 21 Feb 2024 13:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QE1j5whJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C78C433F1;
+	Wed, 21 Feb 2024 13:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522264;
-	bh=Zy8qwI/HfZ617pVfx53YnJHRNN8t/VXvTN6JM1NsC2g=;
+	s=korg; t=1708522267;
+	bh=zatlJVt8/yzorpvXq4ak0N4U09v5e1DbTn9MAY6u9RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ytnue/OzTYzL1mJaO/TujwGnlqN6aMUwMp7gYEIwSJivwKkGDrSwv0qFnNV7qSmnx
-	 fHNLXNSBHCAnkPD83jDRC4XdURZWd+Hc0dSOKrFNJoizStZbw3FEd6+x7BjqwSi/lZ
-	 Cwbj9Mh9TLeWqnueL1Xhifru3XHv0DktcEVG/WQg=
+	b=QE1j5whJk4zjZvyu8QoO2AcZOGwYeqzzLwDmmNdiU/lhtWlXdKqsNQqF8wCQFaYHs
+	 skmMsGZ3IjVcaxl5cWfdsv9/488ivQYmJBf1+4CFsq8xKTLmOUO9EXaEitYzqM767w
+	 DRTNfJUnv6BpF7jXbY2WIG8PsqKUqExusZK8mxLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 5.15 091/476] drm: Dont unref the same fb many times by mistake due to deadlock handling
-Date: Wed, 21 Feb 2024 14:02:22 +0100
-Message-ID: <20240221130011.352997368@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Robert Foss <rfoss@kernel.org>
+Subject: [PATCH 5.15 092/476] drm/bridge: nxp-ptn3460: fix i2c_master_send() error checking
+Date: Wed, 21 Feb 2024 14:02:23 +0100
+Message-ID: <20240221130011.402225847@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -44,52 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit cb4daf271302d71a6b9a7c01bd0b6d76febd8f0c upstream.
+commit 914437992876838662c968cb416f832110fb1093 upstream.
 
-If we get a deadlock after the fb lookup in drm_mode_page_flip_ioctl()
-we proceed to unref the fb and then retry the whole thing from the top.
-But we forget to reset the fb pointer back to NULL, and so if we then
-get another error during the retry, before the fb lookup, we proceed
-the unref the same fb again without having gotten another reference.
-The end result is that the fb will (eventually) end up being freed
-while it's still in use.
+The i2c_master_send/recv() functions return negative error codes or the
+number of bytes that were able to be sent/received.  This code has
+two problems.  1)  Instead of checking if all the bytes were sent or
+received, it checks that at least one byte was sent or received.
+2) If there was a partial send/receive then we should return a negative
+error code but this code returns success.
 
-Reset fb to NULL once we've unreffed it to avoid doing it again
-until we've done another fb lookup.
-
-This turned out to be pretty easy to hit on a DG2 when doing async
-flips (and CONFIG_DEBUG_WW_MUTEX_SLOWPATH=y). The first symptom I
-saw that drm_closefb() simply got stuck in a busy loop while walking
-the framebuffer list. Fortunately I was able to convince it to oops
-instead, and from there it was easier to track down the culprit.
-
+Fixes: a9fe713d7d45 ("drm/bridge: Add PTN3460 bridge driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231211081625.25704-1-ville.syrjala@linux.intel.com
-Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/0cdc2dce-ca89-451a-9774-1482ab2f4762@moroto.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_plane.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/bridge/nxp-ptn3460.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/drm_plane.c
-+++ b/drivers/gpu/drm/drm_plane.c
-@@ -1378,6 +1378,7 @@ retry:
- out:
- 	if (fb)
- 		drm_framebuffer_put(fb);
-+	fb = NULL;
- 	if (plane->old_fb)
- 		drm_framebuffer_put(plane->old_fb);
- 	plane->old_fb = NULL;
+--- a/drivers/gpu/drm/bridge/nxp-ptn3460.c
++++ b/drivers/gpu/drm/bridge/nxp-ptn3460.c
+@@ -56,13 +56,13 @@ static int ptn3460_read_bytes(struct ptn
+ 	ret = i2c_master_send(ptn_bridge->client, &addr, 1);
+ 	if (ret <= 0) {
+ 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
+-		return ret;
++		return ret ?: -EIO;
+ 	}
+ 
+ 	ret = i2c_master_recv(ptn_bridge->client, buf, len);
+-	if (ret <= 0) {
++	if (ret != len) {
+ 		DRM_ERROR("Failed to recv i2c data, ret=%d\n", ret);
+-		return ret;
++		return ret < 0 ? ret : -EIO;
+ 	}
+ 
+ 	return 0;
+@@ -78,9 +78,9 @@ static int ptn3460_write_byte(struct ptn
+ 	buf[1] = val;
+ 
+ 	ret = i2c_master_send(ptn_bridge->client, buf, ARRAY_SIZE(buf));
+-	if (ret <= 0) {
++	if (ret != ARRAY_SIZE(buf)) {
+ 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
+-		return ret;
++		return ret < 0 ? ret : -EIO;
+ 	}
+ 
+ 	return 0;
 
 
