@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389DD7E590;
-	Wed, 21 Feb 2024 14:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2BB7E590;
+	Wed, 21 Feb 2024 14:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524744; cv=none; b=aarJ1GZCvLG2ULES2BVDkt/gs8XCCibMf1x6vD0SCuqKnPkc6pIobOXLscM44mYdCx5tsnpSrwqQq19dCN9cpHh3LIDjpYAjzYTkfeXOgo6HIUWwnPsDNnRhTtA4mPozrd3Ak8MJbo3sYJHNHdTOH5+wjJ0U8PWLk5YGB7RcvMw=
+	t=1708524747; cv=none; b=Y1O6DUIc0mJeBeAW4axD1DcVOy18MAo3dvRautMvTDO0xseERX7yhEAOdVmgLtERDbI322nT/AK2r2Ovv4mEfGnSUwXDgD0zEXJd3jMVI1fD7rCQpMeWCuuviexifcXdmgQ0UjF0Cq+BzZZHZTGgGgj9uPuoyXFakF3tQWetbR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524744; c=relaxed/simple;
-	bh=F+vcePkSGuBkFCOSt1C7vfE7t6oQM0nCPSZo19XXbEA=;
+	s=arc-20240116; t=1708524747; c=relaxed/simple;
+	bh=CfwgDEVKIK6YUOMCDY/ey30w+54ygV074Tn9VNPBJXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5AuRrvZFZcevPxDzAXvo0P3VH+6/pSbHDJlkVK4vRMgtw32Fl+OQNJxD+fw2BciTNbJrgSC+6pfl7NkfK2XUDUkhFJYEdx66wV8tXgH58henwhoSNd2nheka086b384EO/slKGIryYpdmj5KQaZmaIKEDk2RYLK39/PgtMgFTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOEG4AI0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rUBwCDf8PWYzoteT62SeK6MK0r0OHsdUSUhLm8kDWqhDlV0jYExTkOxtsojNO2Ofo/RKS5qG335O5XpPW0wUEHvSsMrv2sVixei2LF9qxIHAMHVeuNCcUvRFAZWQD4wjWxLyyElxgXdvn8ngKALa+uTbnzepejuBpWwXEgN8RMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=05COFn6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOEG4AI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8DFC433F1;
-	Wed, 21 Feb 2024 14:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="05COFn6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4187C433C7;
+	Wed, 21 Feb 2024 14:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524744;
-	bh=F+vcePkSGuBkFCOSt1C7vfE7t6oQM0nCPSZo19XXbEA=;
+	s=korg; t=1708524747;
+	bh=CfwgDEVKIK6YUOMCDY/ey30w+54ygV074Tn9VNPBJXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOEG4AI0topDbWtyRJNfVLROKuaRLjYAYFD4q7Axpnl8/6FHPugRG7GRD7Xqsdwch
-	 ztneroumBB2DWNOdv4y7mbN2HFJh7ZPJaNJ0t253uHSKwexOoG/vcB2T4rjJpjw5we
-	 zInnzA4IEZEBnUh/Ws54flWY/wavjNKEhC0J3Se0=
+	b=05COFn6dnch/fpXO863S/sTMnZ95TAtpOlrgx26Ek87z+PcImKPpOWbFCN/Jw4zdu
+	 oBB9iEG54rDAgGxzx6kO2Pci/4+J8oq6W1XN4KluQIee7gOZTXbkM30KaDDdG2Xt1E
+	 dBIA+CPs+jqeDeVt/uGFJdg682AmJA3xWoJz4Ovs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bo liu <bo.liu@senarytech.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 334/379] ALSA: hda/conexant: Add quirk for SWS JS201D
-Date: Wed, 21 Feb 2024 14:08:33 +0100
-Message-ID: <20240221130004.861410970@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 335/379] nilfs2: fix data corruption in dsync block recovery for small block sizes
+Date: Wed, 21 Feb 2024 14:08:34 +0100
+Message-ID: <20240221130004.890144642@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -50,76 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bo liu <bo.liu@senarytech.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 4639c5021029d49fd2f97fa8d74731f167f98919 upstream.
+commit 67b8bcbaed4777871bb0dcc888fb02a614a98ab1 upstream.
 
-The SWS JS201D need a different pinconfig from windows driver.
-Add a quirk to use a specific pinconfig to SWS JS201D.
+The helper function nilfs_recovery_copy_block() of
+nilfs_recovery_dsync_blocks(), which recovers data from logs created by
+data sync writes during a mount after an unclean shutdown, incorrectly
+calculates the on-page offset when copying repair data to the file's page
+cache.  In environments where the block size is smaller than the page
+size, this flaw can cause data corruption and leak uninitialized memory
+bytes during the recovery process.
 
-Signed-off-by: bo liu <bo.liu@senarytech.com>
+Fix these issues by correcting this byte offset calculation on the page.
+
+Link: https://lkml.kernel.org/r/20240124121936.10575-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240205013802.51907-1-bo.liu@senarytech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ fs/nilfs2/recovery.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -235,6 +235,7 @@ enum {
- 	CXT_FIXUP_HP_ZBOOK_MUTE_LED,
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
-+	CXT_PINCFG_SWS_JS201D,
- };
+--- a/fs/nilfs2/recovery.c
++++ b/fs/nilfs2/recovery.c
+@@ -472,9 +472,10 @@ static int nilfs_prepare_segment_for_rec
  
- /* for hda_fixup_thinkpad_acpi() */
-@@ -732,6 +733,17 @@ static const struct hda_pintbl cxt_pincf
- 	{}
- };
+ static int nilfs_recovery_copy_block(struct the_nilfs *nilfs,
+ 				     struct nilfs_recovery_block *rb,
+-				     struct page *page)
++				     loff_t pos, struct page *page)
+ {
+ 	struct buffer_head *bh_org;
++	size_t from = pos & ~PAGE_MASK;
+ 	void *kaddr;
  
-+/* SuoWoSi/South-holding JS201D with sn6140 */
-+static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
-+	{ 0x16, 0x03211040 }, /* hp out */
-+	{ 0x17, 0x91170110 }, /* SPK/Class_D */
-+	{ 0x18, 0x95a70130 }, /* Internal mic */
-+	{ 0x19, 0x03a11020 }, /* Headset Mic */
-+	{ 0x1a, 0x40f001f0 }, /* Not used */
-+	{ 0x21, 0x40f001f0 }, /* Not used */
-+	{}
-+};
-+
- static const struct hda_fixup cxt_fixups[] = {
- 	[CXT_PINCFG_LENOVO_X200] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -887,6 +899,10 @@ static const struct hda_fixup cxt_fixups
- 		.chained = true,
- 		.chain_id = CXT_FIXUP_HEADSET_MIC,
- 	},
-+	[CXT_PINCFG_SWS_JS201D] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = cxt_pincfg_sws_js201d,
-+	},
- };
+ 	bh_org = __bread(nilfs->ns_bdev, rb->blocknr, nilfs->ns_blocksize);
+@@ -482,7 +483,7 @@ static int nilfs_recovery_copy_block(str
+ 		return -EIO;
  
- static const struct snd_pci_quirk cxt5045_fixups[] = {
-@@ -960,6 +976,7 @@ static const struct snd_pci_quirk cxt506
- 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
-+	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
- 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
- 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
-@@ -1000,6 +1017,7 @@ static const struct hda_model_fixup cxt5
- 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
- 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
- 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
-+	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
- 	{}
- };
+ 	kaddr = kmap_atomic(page);
+-	memcpy(kaddr + bh_offset(bh_org), bh_org->b_data, bh_org->b_size);
++	memcpy(kaddr + from, bh_org->b_data, bh_org->b_size);
+ 	kunmap_atomic(kaddr);
+ 	brelse(bh_org);
+ 	return 0;
+@@ -521,7 +522,7 @@ static int nilfs_recover_dsync_blocks(st
+ 			goto failed_inode;
+ 		}
+ 
+-		err = nilfs_recovery_copy_block(nilfs, rb, page);
++		err = nilfs_recovery_copy_block(nilfs, rb, pos, page);
+ 		if (unlikely(err))
+ 			goto failed_page;
  
 
 
