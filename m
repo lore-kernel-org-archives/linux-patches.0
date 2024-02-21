@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF27E797;
-	Wed, 21 Feb 2024 13:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0527E797;
+	Wed, 21 Feb 2024 13:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522175; cv=none; b=JEhDv6r1JrFNAy0WHlhte0uvnZnHTfLKGMu5GqrDGDO/mhyXCRO03W14nzSDSAoxOrMd4hz1SEEKfallQZzw+r/7nw5zDJEzqsLDb2JQIEmfue2668WVHnUtOukVBJyNBENSMCtnxO05Vx4ArDMH8CA0b9ksdzyDqopaCvO0GuM=
+	t=1708522183; cv=none; b=XT0zFA2TqRmTguygXMtS1KB0BjYANIWJszqGTCmjQO0FJrUTToV5ZyhJOBhOCkYntnodr+qRYKlZk5npJFdr0+3+rRs00Yk+COB61jbtn6ZfPM3tL3J9j14Koxu5f5r7/cmjdSXrHt/aMKOEIiYV/KzVl4uG0Q+CoDFEUtS8J6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522175; c=relaxed/simple;
-	bh=mMFEdd3sxUYjNLFtLATRmDqGvNpjT+42WGkfgOnwOtQ=;
+	s=arc-20240116; t=1708522183; c=relaxed/simple;
+	bh=a9yVN54Dxf0rp2gmc7cmY1chxGWF6zBjqG7HsmnmM+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TApIBr2yoKgk2DKs9F2qjfYSiu2iVvPxXVMMxZssqi+iUpQJJDDq1zmxoGCi/lY/77zFE9svRWvcOHLw0Cee71pP0iHcEqhmsC1tOjv4uqLT/VedN+FJ0rSUuh6BfwIlwX0sjzggm2A5V/v/MPBi4DGp24Tt59+wgxmYVNo3NTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTMd2GBj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iVf9sV6E5uhghgitgDLQX2Bx2C25qLOcIKSIg2N/48GOAwspeUXe1ZE19fYe5zGmkT0nqR9DtG+cu2FiFPnNAuN4+IawPAjLxQqbxJa9SLs1JDTKb+RfZ7NIqUAdHdoAoxR2vJtw2SoflI7vyoTmWxp0LZTYHf6LqREMhtZ++2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhiHMmfu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTMd2GBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFF5C433C7;
-	Wed, 21 Feb 2024 13:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhiHMmfu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3D9C433C7;
+	Wed, 21 Feb 2024 13:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522175;
-	bh=mMFEdd3sxUYjNLFtLATRmDqGvNpjT+42WGkfgOnwOtQ=;
+	s=korg; t=1708522183;
+	bh=a9yVN54Dxf0rp2gmc7cmY1chxGWF6zBjqG7HsmnmM+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sTMd2GBjzPGEKxJ2KB0aR2xtqZnqonksDbtsoMyB3jNci+MnD4Qt/N7xiv8t5cR8M
-	 gg1GejM6vC0RFUvT7AMXvKqIagL0mxQMyJrdm2kN5TJycpZwaG+/r3xjHtNYCDWF0N
-	 +6tz773JhysEL1woMVEPQ+2mFahUPPrR0s2RJL/Y=
+	b=RhiHMmfuAzobVkbhmhCK5LC4M+b1M4PpQFFFe8lsO0FpwAh7AogMNlYNpyuE1UKq8
+	 5KlO9CoAo82BpRj7I05w1xaD4VW6/QKYSdwkJ8dyHbVCMeNfVKwDwwOgTACMVdI9cR
+	 opxj7DkjlzTMvO6cNftss+NnrWGjjz/TUaqRfXCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 098/476] bus: mhi: host: Add alignment check for event ring read pointer
-Date: Wed, 21 Feb 2024 14:02:29 +0100
-Message-ID: <20240221130011.607399316@linuxfoundation.org>
+Subject: [PATCH 5.15 099/476] fs/pipe: move check to pipe_has_watch_queue()
+Date: Wed, 21 Feb 2024 14:02:30 +0100
+Message-ID: <20240221130011.650137890@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,44 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit eff9704f5332a13b08fbdbe0f84059c9e7051d5f ]
+[ Upstream commit b4bd6b4bac8edd61eb8f7b836969d12c0c6af165 ]
 
-Though we do check the event ring read pointer by "is_valid_ring_ptr"
-to make sure it is in the buffer range, but there is another risk the
-pointer may be not aligned.  Since we are expecting event ring elements
-are 128 bits(struct mhi_ring_element) aligned, an unaligned read pointer
-could lead to multiple issues like DoS or ring buffer memory corruption.
+This declutters the code by reducing the number of #ifdefs and makes
+the watch_queue checks simpler.  This has no runtime effect; the
+machine code is identical.
 
-So add a alignment check for event ring read pointer.
-
-Fixes: ec32332df764 ("bus: mhi: core: Sanity check values from remote device before use")
-cc: stable@vger.kernel.org
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20231031-alignment_check-v2-1-1441db7c5efd@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Message-Id: <20230921075755.1378787-2-max.kellermann@ionos.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: e95aada4cb93 ("pipe: wakeup wr_wait after setting max_usage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/pipe.c                 | 12 +++---------
+ include/linux/pipe_fs_i.h | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index 23bd1db94558..1cb7c60594f1 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -267,7 +267,8 @@ static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
+diff --git a/fs/pipe.c b/fs/pipe.c
+index e08f0fe55584..1a43948c0c36 100644
+--- a/fs/pipe.c
++++ b/fs/pipe.c
+@@ -435,12 +435,10 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
+ 		goto out;
+ 	}
  
- static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
- {
--	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
-+	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len &&
-+			!(addr & (sizeof(struct mhi_ring_element) - 1));
+-#ifdef CONFIG_WATCH_QUEUE
+-	if (pipe->watch_queue) {
++	if (pipe_has_watch_queue(pipe)) {
+ 		ret = -EXDEV;
+ 		goto out;
+ 	}
+-#endif
+ 
+ 	/*
+ 	 * If it wasn't empty we try to merge new data into
+@@ -1319,10 +1317,8 @@ static long pipe_set_size(struct pipe_inode_info *pipe, unsigned long arg)
+ 	unsigned int nr_slots, size;
+ 	long ret = 0;
+ 
+-#ifdef CONFIG_WATCH_QUEUE
+-	if (pipe->watch_queue)
++	if (pipe_has_watch_queue(pipe))
+ 		return -EBUSY;
+-#endif
+ 
+ 	size = round_pipe_size(arg);
+ 	nr_slots = size >> PAGE_SHIFT;
+@@ -1374,10 +1370,8 @@ struct pipe_inode_info *get_pipe_info(struct file *file, bool for_splice)
+ 
+ 	if (file->f_op != &pipefifo_fops || !pipe)
+ 		return NULL;
+-#ifdef CONFIG_WATCH_QUEUE
+-	if (for_splice && pipe->watch_queue)
++	if (for_splice && pipe_has_watch_queue(pipe))
+ 		return NULL;
+-#endif
+ 	return pipe;
  }
  
- int mhi_destroy_device(struct device *dev, void *data)
+diff --git a/include/linux/pipe_fs_i.h b/include/linux/pipe_fs_i.h
+index d15190b3e032..0613daf8997a 100644
+--- a/include/linux/pipe_fs_i.h
++++ b/include/linux/pipe_fs_i.h
+@@ -124,6 +124,22 @@ struct pipe_buf_operations {
+ 	bool (*get)(struct pipe_inode_info *, struct pipe_buffer *);
+ };
+ 
++/**
++ * pipe_has_watch_queue - Check whether the pipe is a watch_queue,
++ * i.e. it was created with O_NOTIFICATION_PIPE
++ * @pipe: The pipe to check
++ *
++ * Return: true if pipe is a watch queue, false otherwise.
++ */
++static inline bool pipe_has_watch_queue(const struct pipe_inode_info *pipe)
++{
++#ifdef CONFIG_WATCH_QUEUE
++	return pipe->watch_queue != NULL;
++#else
++	return false;
++#endif
++}
++
+ /**
+  * pipe_empty - Return true if the pipe is empty
+  * @head: The pipe ring head pointer
 -- 
 2.43.0
 
