@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEAD7E77B;
-	Wed, 21 Feb 2024 14:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9531378B7C;
+	Wed, 21 Feb 2024 14:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524342; cv=none; b=ScyNQ6EmxPi4nNaSapU6gx9QjIIRhscDeQKJ6biLZbc+zfBH49seRxTTv+PoVK1Sb3S+mwZbMA51HcFll+hpKU/mm0s4WCSTfiw5zoxF/lIJDbx3pxAAxMAa9QdRMhpbLTB0mQX6CyVjRX5TfOogEP0jaoHAha+21oOsIINaTVM=
+	t=1708524346; cv=none; b=O2gGjTDtmRcgsQ5xbX5ozSJHiVUus4YVEBtLuK8sCVqfniLDEHeQdibkRv5MzTHHTFr1HQvXyITB6d36FpkqoFiKGkpVYVqCe6WCpuWIAGPGtIb7Ykk1iWL5T2FUhU91wHbnMILaooTyrWEsTsZKxV/YJGhnR3JW1yQMlxOkSiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524342; c=relaxed/simple;
-	bh=FmS+2aepbOU3l9CNNtzrCHr+Ud2+cZ/rdHT7ae1NWZI=;
+	s=arc-20240116; t=1708524346; c=relaxed/simple;
+	bh=eR7Nk+6P1b1qAj3dnzV7nWuvp14hdSQpCfPO33Sdbzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HWZC06IHjPR2y8ncM43RMlNelI0k7Dljqee6zjIpJ5e9CGQd0KLkJTmCHf5w7OgLSIGglLR+cMvEtjNOZwItAJ2FBnm8NqSsbmLtm3S9d3wt8LQ5hsqTCJstLmKNo0KXtpI4JLPRTeAYkpO2O2Ref5vg6qWl4ZoVy63dSWXiaOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RR/TPa75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XIKtxfS5/xy0mjuYNUN54yw3Zc6OD1pLpZvoSQaBdPgkgJeapyw80VtMXrKwUL1pAd9Aoqg8MbjHQABH0IA6Vw1HPTVRV+GQuyAf/XKh635pzosfnJRDyLyQSJ0DtvEKDVNlG3Z/W3l5JXvdBNUb8NLoVIJX22dWwUPx1gg4U08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFK7pXri; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RR/TPa75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5575C43390;
-	Wed, 21 Feb 2024 14:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFK7pXri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F84C433F1;
+	Wed, 21 Feb 2024 14:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524342;
-	bh=FmS+2aepbOU3l9CNNtzrCHr+Ud2+cZ/rdHT7ae1NWZI=;
+	s=korg; t=1708524345;
+	bh=eR7Nk+6P1b1qAj3dnzV7nWuvp14hdSQpCfPO33Sdbzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RR/TPa75WBMrqlb4erYZF0H/h4SZSLyjiEPycOXqnRoYOJOWrQz9fF+aThnh8xjGp
-	 DS3cDpKeZWHrl2ojqLgK1cAsmyMrQyMHak9QzVcbyt9RxQ4BQY8NyVQRYiLHGOQOs8
-	 5A5XxNV9oqIoTj+d7btFPL5o/xFYp/irxyWa6NtI=
+	b=lFK7pXriGnr5Bgnnau/TI7NptAqO6ffRhY5rzrxvfOWpjlcRWKHcEYoP7jSxZyvj+
+	 g0WOIW3dFxbYSZGphV7+oZ1dQqkb/Gw4FZsOcEQ4yuarEAHt/dnehl62IXLV931iTN
+	 vI4G7Avn62S0MQpcfHnel4HbGG3AWeKQR3rGnnxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Chenyuan Mi <cymi20@fudan.edu.cn>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 214/379] libsubcmd: Fix memory leak in uniq()
-Date: Wed, 21 Feb 2024 14:06:33 +0100
-Message-ID: <20240221130001.235003786@linuxfoundation.org>
+Subject: [PATCH 5.10 188/379] ALSA: hda: Intel: add HDA_ARL PCI ID support
+Date: Wed, 21 Feb 2024 14:06:07 +0100
+Message-ID: <20240221130000.470688137@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,66 +48,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit ad30469a841b50dbb541df4d6971d891f703c297 ]
+[ Upstream commit a31014ebad617868c246d3985ff80d891f03711e ]
 
-uniq() will write one command name over another causing the overwritten
-string to be leaked. Fix by doing a pass that removes duplicates and a
-second that removes the holes.
+Yet another PCI ID.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Chenyuan Mi <cymi20@fudan.edu.cn>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20231208000515.1693746-1-irogers@google.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20231204212710.185976-3-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/subcmd/help.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ sound/pci/hda/hda_intel.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/lib/subcmd/help.c b/tools/lib/subcmd/help.c
-index bf02d62a3b2b..42f57b640f11 100644
---- a/tools/lib/subcmd/help.c
-+++ b/tools/lib/subcmd/help.c
-@@ -50,11 +50,21 @@ void uniq(struct cmdnames *cmds)
- 	if (!cmds->cnt)
- 		return;
- 
--	for (i = j = 1; i < cmds->cnt; i++)
--		if (strcmp(cmds->names[i]->name, cmds->names[i-1]->name))
--			cmds->names[j++] = cmds->names[i];
--
-+	for (i = 1; i < cmds->cnt; i++) {
-+		if (!strcmp(cmds->names[i]->name, cmds->names[i-1]->name))
-+			zfree(&cmds->names[i - 1]);
-+	}
-+	for (i = 0, j = 0; i < cmds->cnt; i++) {
-+		if (cmds->names[i]) {
-+			if (i == j)
-+				j++;
-+			else
-+				cmds->names[j++] = cmds->names[i];
-+		}
-+	}
- 	cmds->cnt = j;
-+	while (j < i)
-+		cmds->names[j++] = NULL;
- }
- 
- void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes)
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 12c6eb76fca3..a3c6a5eeba3a 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2581,6 +2581,8 @@ static const struct pci_device_id azx_ids[] = {
+ 	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE},
+ 	{ PCI_DEVICE(0x8086, 0x4b58),
+ 	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE},
++	/* Arrow Lake */
++	{ PCI_DEVICE_DATA(INTEL, HDA_ARL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE) },
+ 	/* Broxton-P(Apollolake) */
+ 	{ PCI_DEVICE(0x8086, 0x5a98),
+ 	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_BROXTON },
 -- 
 2.43.0
 
