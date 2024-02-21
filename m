@@ -1,68 +1,69 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E16D81ABB
-	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 18:39:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6C27FBBC;
+	Wed, 21 Feb 2024 19:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708540754; cv=none; b=INLIEru19xIvzhIX+7QzcFbQHdBRCe8LDgBRoFZdt3bTpuQQ9GHBhhGPxi5hmkCZ8zxFzQxTamTaN+scmMPoYSr8RQdLrT1pVeDZB7cZ6ulKt6WsqMyLFPvzTq/AJ1qlU9lwSXPrGY9G/le/S1uqZWgvpBY0HNeraGik746pAGc=
+	t=1708543337; cv=none; b=Id/2HroRQaAsWVMQWLRJKV5AsW7cE3ko0T31bXwzwues0mhony/viZfAYv0DS8rrtkrq2YHDhyNTGSfazXyPU1yTL9+VC9Ic73j2+n+nKNQuPf+6yKDDfe/rPyjpNGCdYYRluWot4CGh3g1f/ZZMwqrqksuKVp+d/TRhJfMFgS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708540754; c=relaxed/simple;
-	bh=wORu2VHuAnw935+Cv0QQr5ove+ncqd8zeKB3hAAfA0E=;
+	s=arc-20240116; t=1708543337; c=relaxed/simple;
+	bh=0OodqgNcvx8ntnlXtEmNl9CzN4cmy/3auP5St1YCfYo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PeUwgLkVnthnuwqqguw1/AvgZDyVp1o305brw8Rq9a7hksPfcyE8PFYjP9Q2lPPunKkodRwb3eeJIPpzTLv+2Z36h64fpaCINTRxfiP0RcTYENSPEKm8xyo3ZWj0RhG4HXSsqCRzBZHqIzsqmlHXOMUK7sC56gb/xl+8R8E9tjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=M2QsL3r0; arc=none smtp.client-ip=209.85.210.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=jUuO+8eBkXoaWBFgwnRaxALBa54+9LIgV3WoS585/J0XiaoJACOoyfvQmESRWl3gIYURJMhVzqtRvJ/iQ/sEb1I/EW/d+PicNbZPcdlyAYTGf51DTSaTV4sT7vhA3ctRH77biiLnNZAaLXOuZJz5T/lD+N5uiE+Kws8FalKXxHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJ87J93G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="M2QsL3r0"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6e0f43074edso585289a34.1
-        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 10:39:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1708540751; x=1709145551; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=epfXkFMvEj+O6RQTqhcuu/VpNn7r6C+NR5UDG63CzB0=;
-        b=M2QsL3r0q/XvtDDay92c+2t4rvFg0GU35GA2hfqyt8e/KTL9c9tdXE76WHo/nxfqO1
-         dHr/a6u1oAWBI2zf3o4YzI2/WqDZa/QSpNrvFRWJ6TvqS597sclSks7dEYEpOlPBrKjD
-         uKMvA/DQdx73IdgQVxUiLg+4Z5wsm1r4qCyE8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708540751; x=1709145551;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=epfXkFMvEj+O6RQTqhcuu/VpNn7r6C+NR5UDG63CzB0=;
-        b=bg8UddxRuOrzfqem0oo1EI1FE1SSR5rlaeh74lrsAi+V0cWQiVw6FsC0XJcGEBK6fq
-         5p8J5r7EGSeIFr86meleyGn9X1T2kTGEXwqGeidd6g6+jzHFBdu+mrsbn2RdAfjDrbPu
-         3dyu7x1Z1hoRmnhjfGB6vCPgkRAd6MoPwFLucIuF1ttXZ0KbBqVbsY3aEdeRqXcW000Q
-         7A4kmm7etOIrEB8ooRexmOsAce1G3NSKhs8G/Pjgvj9Ej09LJ+lsp3TaA7oPj9+eqGP6
-         ex6H+whsg/kcXzidMtx1NMS048jm67fNv2j3ybLgU57NLXNUIupHPsZ4FYyFLyyZGXKU
-         y8qQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXCk1N5SOALy/pUHYXfGab53535Eo4543dGTjSfq6f9pENpb3qYYWqCoK4kq+aJbP9juFLf1Iu4iX9yO0XI3XbROsvb6XMROQ==
-X-Gm-Message-State: AOJu0YyZ6kSveUQgWxD9b7NjEbaHsR8VDonfgux8NZ9u3YW1pouvgQq8
-	X2VUHqOF9Zn4fF2F/67dZhaYeaKkq/x3iQPCHRnEmIvfRYNMoqbDOh/vTrbC6A==
-X-Google-Smtp-Source: AGHT+IE6vQu9Ee36mA2Xebhws5M+r7A1PWQ4d3zqpqI9AXKlri0chGThzivmD6usVGdGBqrmBaAwIw==
-X-Received: by 2002:a05:6830:454:b0:6e2:e526:b0d9 with SMTP id d20-20020a056830045400b006e2e526b0d9mr17898788otc.16.1708540751121;
-        Wed, 21 Feb 2024 10:39:11 -0800 (PST)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id a23-20020a9d4717000000b006e43c2c4381sm1673596otf.74.2024.02.21.10.39.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 10:39:10 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 21 Feb 2024 12:39:09 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.7 000/313] 6.7.6-rc2 review
-Message-ID: <ZdZDTZQDspSCagGj@fedora64.linuxtx.org>
-References: <20240221125951.434262489@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJ87J93G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3ECC433C7;
+	Wed, 21 Feb 2024 19:22:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708543336;
+	bh=0OodqgNcvx8ntnlXtEmNl9CzN4cmy/3auP5St1YCfYo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XJ87J93G+evRIoU8Rda/h3gEh+MmBQn/ihau1koXbpG2vc7Q7X/Z3FDA+27G5eGKp
+	 adq/fFZsuxU9dGUvQ230eoKDaDysEUD69zfaKXCggxVmXhRcjlKBVEU0Q0k2rA3BAX
+	 vYHujOcAZrwDDP3o52EkzUI46Ox75hSNy38AGA5vguRG5WscWt6Sg9BGIIq/9CvBKy
+	 0RFb/VgnVQahUHpG96HdW0EROCdzv2pY9bcEZ1dAIkJDeQu+FTMCwMYjQo88bHW8fz
+	 y7YEBgT5m4GIfG0M10Xe1DX+64vISb2glhnZ3nFnLAeDL6LA7l90+0tr269uPe1yt8
+	 afMcW129BlMSA==
+Date: Wed, 21 Feb 2024 19:22:06 +0000
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
+	llvm@lists.linux.dev, Ingo Molnar <mingo@redhat.com>,
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Salil Mehta <salil.mehta@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>, x86@kernel.org,
+	Yisen Zhuang <yisen.zhuang@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Leon Romanovsky <leonro@mellanox.com>, linux-arch@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, patches@lists.linux.dev,
+	Niklas Schnelle <schnelle@linux.ibm.com>
+Subject: Re: [PATCH 4/6] arm64/io: Provide a WC friendly __iowriteXX_copy()
+Message-ID: <20240221192205.GA7619@willie-the-truck>
+References: <0-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
+ <4-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -71,28 +72,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240221125951.434262489@linuxfoundation.org>
+In-Reply-To: <4-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Wed, Feb 21, 2024 at 02:01:12PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.7.6 release.
-> There are 313 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 23 Feb 2024 12:59:02 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.6-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, Feb 20, 2024 at 09:17:08PM -0400, Jason Gunthorpe wrote:
+> +static inline void __const_memcpy_toio_aligned64(volatile u64 __iomem *to,
+> +						 const u64 *from, size_t count)
+> +{
+> +	switch (count) {
+> +	case 8:
+> +		asm volatile("str %x0, [%8, #8 * 0]\n"
+> +			     "str %x1, [%8, #8 * 1]\n"
+> +			     "str %x2, [%8, #8 * 2]\n"
+> +			     "str %x3, [%8, #8 * 3]\n"
+> +			     "str %x4, [%8, #8 * 4]\n"
+> +			     "str %x5, [%8, #8 * 5]\n"
+> +			     "str %x6, [%8, #8 * 6]\n"
+> +			     "str %x7, [%8, #8 * 7]\n"
+> +			     :
+> +			     : "rZ"(from[0]), "rZ"(from[1]), "rZ"(from[2]),
+> +			       "rZ"(from[3]), "rZ"(from[4]), "rZ"(from[5]),
+> +			       "rZ"(from[6]), "rZ"(from[7]), "r"(to));
+> +		break;
+> +	case 4:
+> +		asm volatile("str %x0, [%4, #8 * 0]\n"
+> +			     "str %x1, [%4, #8 * 1]\n"
+> +			     "str %x2, [%4, #8 * 2]\n"
+> +			     "str %x3, [%4, #8 * 3]\n"
+> +			     :
+> +			     : "rZ"(from[0]), "rZ"(from[1]), "rZ"(from[2]),
+> +			       "rZ"(from[3]), "r"(to));
+> +		break;
+> +	case 2:
+> +		asm volatile("str %x0, [%2, #8 * 0]\n"
+> +			     "str %x1, [%2, #8 * 1]\n"
+> +			     :
+> +			     : "rZ"(from[0]), "rZ"(from[1]), "r"(to));
+> +		break;
+> +	case 1:
+> +		__raw_writel(*from, to);
 
-Tested rc2 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+Shouldn't this be __raw_writeq?
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Will
