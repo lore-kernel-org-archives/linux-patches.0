@@ -1,64 +1,64 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8519D42A8B
-	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 18:16:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A2642A8B
+	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 18:16:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708539377; cv=none; b=R4884WxlAps6Roa+InqoX1IRnGhFI7IAahgxo3hhbnOMgjF2RuByXcVas5uWeBY11DO8e7atXx3sQ8gfhwAG3FkaPEyiq1bwxvYiDDTB9d5bEeCxxw3uR7y4AwRRGnbnejLAJUWnaf8Dl01dZ9DA/ztPKWjDOwC1bELEtVY8FQY=
+	t=1708539385; cv=none; b=kqjyH9/PdHjZ1DeMmca9AwA88kPRGAD5GQgQAit/LYP7Bt/8JpRVh79bx4OJFoe7v5xLH4jht4g3AtXNI2cp2o/mq/OZ/vYMBTVf+M0aGXRSIf4iOXpJRmaMXDTQeSD9xs2gDpBYanESwq26fO+Jia+iP1jAZ24DpMzu5xwuHWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708539377; c=relaxed/simple;
-	bh=hgsWyRrSep4NiW1tKez/ELNs28gAM9XzOhMl90iKF7M=;
+	s=arc-20240116; t=1708539385; c=relaxed/simple;
+	bh=3SHL1XNkaiKpxO6lQfgzzHFCVUWOFLqJpgPVgR2uRbI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gQ/OQXEfcinufi0qLtDNfJPuKxeo2pdACqM8X5M+qOPQNNcScZ/LMoFZv40Lx4DDv0ioUJjh1gR9JNMhHqI+hzxXa//3Jk+A0zhDI8RpTaPsQNh1rY55KL+Z4D1Tin7ibgEDkisFU7C+qN3MQGIiUCCn2qPXCr7pkRrtfcP5II4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=KpUubJVC; arc=none smtp.client-ip=170.10.133.124
+	 In-Reply-To:Content-Type; b=oaXE9+zh6IiQGGnfAfsEs8JfQiI9MqQEVD+c+LrTv5Z8T4ARb/mYL5HbF/uZfDayNoMSQKoTDv+KnfN4Cro3b+pk2fjA9GUljY2Ci6jo4q7x3crvrnmHek7ELqIkJvSbw3lmdI1CssBXXNENyvDFbcsTLNQIrDvqIgCkBLoRc8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=If0SEN+e; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KpUubJVC"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="If0SEN+e"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1708539374;
+	s=mimecast20190719; t=1708539382;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=4GEaNZlEBloWbRyh4jy2wv42oZbqaCNyc3k53XAux/o=;
-	b=KpUubJVCx7UX1cvmOxjNt9IUCl5IwVLbIRoVp9w2E+Q0i4lTEEVjGk7bg+GvXeYxkF4r3o
-	nDBj585tcOt80LICgq+oriueJeopt2wWBeI3cVjacEvuTIeEn1z2Sfvp0TADmSbNUX8gGv
-	Pac6uw6oE4mHlfBT/Wq4tHE9QpkZBjY=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=Y0pSHPkWhI1aovz8fuYtLZqGyE3hV9KFpQFptJhCaj8=;
+	b=If0SEN+enjwi+mJtm8jeH5Pha2/9kCohRWghkcYUZkdEgbA6N4f0NkOb8vui1wDXHkATy/
+	EnjjQtYrS46VBoY4TNTYBcDpF7KGXW4vlYGiNZQ+1O5i5lzQEUUsskqAL6aGavjGfPePXY
+	c9w3f4YWI07/EqIFwDxxk6DO5iERDDI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-150-ZYtNtnJxPUCQ7QGLt8bsEg-1; Wed, 21 Feb 2024 13:16:13 -0500
-X-MC-Unique: ZYtNtnJxPUCQ7QGLt8bsEg-1
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-a3d7cd58ae2so295854266b.1
-        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 10:16:12 -0800 (PST)
+ us-mta-261-UmRFK28MMoaZBW3OBusjMw-1; Wed, 21 Feb 2024 13:16:21 -0500
+X-MC-Unique: UmRFK28MMoaZBW3OBusjMw-1
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-a3ef988b742so131235366b.3
+        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 10:16:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708539372; x=1709144172;
+        d=1e100.net; s=20230601; t=1708539380; x=1709144180;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4GEaNZlEBloWbRyh4jy2wv42oZbqaCNyc3k53XAux/o=;
-        b=mp32a96lwftg9VwsoMdQgoq2uy1u9ijhP1tzvET+55B5R1LJu8Em3lRGP+fqe7dm2k
-         U5dyUgJ8xlVM8K7mcVm4n2yIDccRm0VN/+qVoehxKr6ZfhHC/hOUtlqgmcR/QKA59WSP
-         K3vVBypz/ou6ydXwJ5PRj2+N2b0D0enubo6VjTOpeSGmf/TN9iZWEh5X8axdmGruCZhy
-         9AJiH9GcqR5K+vgGaIIGCX4tBjmUwWAuTUttIFbbWVN/YPEPd+YGZrWsi5mQcMUi6KGu
-         pe7fzDJoV37Ke0kyONdTD+YC2I+IOMdWKKFDTLe9YzP8yOr4k5YY6rkCSL2fhZhPH3jr
-         p4pA==
-X-Gm-Message-State: AOJu0YwUie9fLLJgf0I1L8mBkaktnGbgXVuqJ2pH/enFkBblEF0E0O86
-	RkV3KxUycACFLS/57hWWu8QP8gS2fRrEdJGmnes2avC0Z42vSCqrrLOvMR/1Os/AX+YZXdVkT8l
-	bdJfgGHzlU2C5staXkn0B2LzcZnsXlVXagUTrMotZJbtH6ux1fx0Wn0c=
-X-Received: by 2002:a17:906:c9c8:b0:a3f:436a:1e41 with SMTP id hk8-20020a170906c9c800b00a3f436a1e41mr1550832ejb.53.1708539372087;
-        Wed, 21 Feb 2024 10:16:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGKm19QZl7AKSibJClPAOaQHmbakjqT8cRQsA9KQB2ClIfBY/eBkbEsL0K13tlEIaXhr4W5Dg==
-X-Received: by 2002:a17:906:c9c8:b0:a3f:436a:1e41 with SMTP id hk8-20020a170906c9c800b00a3f436a1e41mr1550823ejb.53.1708539371709;
-        Wed, 21 Feb 2024 10:16:11 -0800 (PST)
+        bh=Y0pSHPkWhI1aovz8fuYtLZqGyE3hV9KFpQFptJhCaj8=;
+        b=HW6lmvJJJ4XX01AuXXmeJrIiA412erNEpeXFlZPjnmwXQz1c9WwTlZGTdY1mTnFTvo
+         EBXVv/lpV/vzuibqgYsVpccWY8G06kAostyl95Pz5ay7EHg0hoo/jcELtQWgZwN+OvGj
+         OJWFV4jHs7/ZXMOuOXnxfkxi4p3vl/ikgxBiwnqYgwYX3g/ORAcMdk0i9Z+VUYcQPqSP
+         h/Bc5wWGgZ8+hU33ky9nULGkeBcPqPkrUUvSlB5zrMAYEtPB36PZ7royCowPHZledOfC
+         pf1noEnb187RQWvOhGuSD3O/U2SDr+D/CrBIJvZ4fbqZ838zHczPwoYIw1KgFNvdt6f1
+         dMQQ==
+X-Gm-Message-State: AOJu0YzIhvvBksRztAlA2072vwV/xny8WS9p7zhyn3++H1IBCL1R/AEb
+	BYYWTBZeO2+fl68ccm7FNHliSwgGcY7xJyHPk4f0PRCoL19MpBA3KaKfA1xhrir+gvYkDq4qzkt
+	C4U+TM2XQrqimMGNlPnAQDyAJha7cc6n+JXYLBlCI3U9XMcAPFmP2fbIB0GZ5o5E=
+X-Received: by 2002:a17:906:48d6:b0:a3e:eb81:ab62 with SMTP id d22-20020a17090648d600b00a3eeb81ab62mr4536906ejt.7.1708539379895;
+        Wed, 21 Feb 2024 10:16:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHHskiBfNYd4NyraNAJC7Bc0q5aY/6QnoJyFU2X6qqBRdrzuezl4GTeeM7GvpdeWZvJ5o1hpA==
+X-Received: by 2002:a17:906:48d6:b0:a3e:eb81:ab62 with SMTP id d22-20020a17090648d600b00a3eeb81ab62mr4536897ejt.7.1708539379571;
+        Wed, 21 Feb 2024 10:16:19 -0800 (PST)
 Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id k9-20020a1709063fc900b00a3cfd838f32sm5247099ejj.178.2024.02.21.10.16.11
+        by smtp.gmail.com with ESMTPSA id k9-20020a1709063fc900b00a3cfd838f32sm5247099ejj.178.2024.02.21.10.16.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 10:16:11 -0800 (PST)
-Message-ID: <f364367d-b096-48e4-b074-8fd45a05aa9c@redhat.com>
-Date: Wed, 21 Feb 2024 19:16:11 +0100
+        Wed, 21 Feb 2024 10:16:19 -0800 (PST)
+Message-ID: <2a85437b-c395-48a5-addc-16c6bb1c590c@redhat.com>
+Date: Wed, 21 Feb 2024 19:16:18 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,14 +66,14 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 213/379] misc: lis3lv02d_i2c: Add missing setting of
+Subject: Re: [PATCH 4.19 123/202] misc: lis3lv02d_i2c: Add missing setting of
  the reg_ctrl callback
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
-References: <20240221125954.917878865@linuxfoundation.org>
- <20240221130001.205668819@linuxfoundation.org>
+References: <20240221125931.742034354@linuxfoundation.org>
+ <20240221125935.687309540@linuxfoundation.org>
 From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20240221130001.205668819@linuxfoundation.org>
+In-Reply-To: <20240221125935.687309540@linuxfoundation.org>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US, nl
@@ -82,8 +82,8 @@ Content-Transfer-Encoding: 7bit
 
 Hi Greg,
 
-On 2/21/24 14:06, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
+On 2/21/24 14:07, Greg Kroah-Hartman wrote:
+> 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 This is known to cause a regression (WARN triggering on suspend,
 possible panic if panic-on-warn is set).
@@ -103,6 +103,7 @@ branches.
 Regards,
 
 Hans
+
 
 
 
@@ -150,10 +151,10 @@ Hans
 >  1 file changed, 1 insertion(+)
 > 
 > diff --git a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-> index 52555d2e824b..ab1db760ba4e 100644
+> index 14b7d539fed6..e8da06020c81 100644
 > --- a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
 > +++ b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-> @@ -151,6 +151,7 @@ static int lis3lv02d_i2c_probe(struct i2c_client *client,
+> @@ -164,6 +164,7 @@ static int lis3lv02d_i2c_probe(struct i2c_client *client,
 >  	lis3_dev.init	  = lis3_i2c_init;
 >  	lis3_dev.read	  = lis3_i2c_read;
 >  	lis3_dev.write	  = lis3_i2c_write;
