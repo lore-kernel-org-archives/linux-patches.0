@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57714D5BA;
-	Wed, 21 Feb 2024 13:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136094D5BA;
+	Wed, 21 Feb 2024 13:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522552; cv=none; b=puS1OLov9T/R3xhnuLcu1/o4qn2evMGivOgahizzOnitdlQqf/EqQBYta41lYsKL6Wq4lVeCo19UkWABCUaEX6g6V6JwJHRM7Bae0XUGKOG9meb4kvybmEdleb+lasnPot/Rb0Vl0hAaKvfrTn98mw0hKOw5oFYIyFNszYxVDjY=
+	t=1708522561; cv=none; b=NCQU8XrMkH9UBrVseLyOpnKxSpr4/ZVGdH4HZ1hv7365qkRjeTr0NZzuhwl3ZNl3TWvg7/zuZWPv0t4P+s8NkPKbPieDW4sktZw17tCFEPt6QfyaRU5TkUXNaf0VhkFZe229euKM3qkkTdcTwkmrJyCESeb5Z4oXtoJWTN6Ahzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522552; c=relaxed/simple;
-	bh=zNkjvWYcoIbn0mNGKOmBvlLlgvoo+zBdxgGYoBPvD4Y=;
+	s=arc-20240116; t=1708522561; c=relaxed/simple;
+	bh=GXunaEFnoK9D2UsFg7jAK3TpIHqkx/J+qkb2y2LkAl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pem6BRvzIAPLHYfRBqmglDxReOpUbLjIqVo6CsPEtKW85Lxne+murpN2EWQC7iclxQMp5jd/q+4n9uO1wVnHfte/3vRN1xfVrIKCA5MXtv08SoKq84viK20UMox9oCDSPCaFK3LaBDX2EqFxE5nV8NN/utGSr0Wqw6hmlaiHJVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xahV4+O/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRKzQ+MEZ+tvuTDn1QD3pwC5VtousE9anAnk4pqhaC5HbSEW6YqjhhB9jDXiudh46Ed4wcOwAwFrF/Nsiew2EfAc9cVwEtlk39cn33gqUPtZ4oWENF4sloPaCE4l8IE3suTfU/4b3g7qqUUOGrh2pPq/kgjKwcCIPJyw0ksrkmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UazD6FWD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xahV4+O/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE26C433C7;
-	Wed, 21 Feb 2024 13:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UazD6FWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 516DDC433F1;
+	Wed, 21 Feb 2024 13:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522552;
-	bh=zNkjvWYcoIbn0mNGKOmBvlLlgvoo+zBdxgGYoBPvD4Y=;
+	s=korg; t=1708522560;
+	bh=GXunaEFnoK9D2UsFg7jAK3TpIHqkx/J+qkb2y2LkAl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xahV4+O/2c8qZ0BAoAcySejsroHy0aw14LBLJQUE+ZH7QxN/F3QjJdRvP+51MeRH1
-	 1YIacihXRPVzQuH5INE6sM/U8zIn5wGhKgNkA0QuiFIat2HtniS68zRsAFnNZ/t+RE
-	 pCRNa1MMdT5rX6Kf8F1512faI2QCc1P+jXpPks1k=
+	b=UazD6FWDzQ1hPAIeLgINjuaBRG1UiMABj7JbGbSTxM+eyuHxvK83+o8xR1FxlCbZC
+	 4vUIMOtmgk3R1i1UdkdVZ+yjD+fmW1H7dDzsUu4Y7hCCAuASsa3yC+7EPO2iyNvjbu
+	 X/DK2pTTahzoaSMB6JPvwe6AN1yI2WB2RqjkrCqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alex Lyakas <alex.lyakas@zadara.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 177/476] bpf: Add map and need_defer parameters to .map_fd_put_ptr()
-Date: Wed, 21 Feb 2024 14:03:48 +0100
-Message-ID: <20240221130014.443066304@linuxfoundation.org>
+Subject: [PATCH 5.15 195/476] md: Whenassemble the array, consult the superblock of the freshest device
+Date: Wed, 21 Feb 2024 14:04:06 +0100
+Message-ID: <20240221130015.130485183@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,171 +51,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Alex Lyakas <alex.lyakas@zadara.com>
 
-[ Upstream commit 20c20bd11a0702ce4dc9300c3da58acf551d9725 ]
+[ Upstream commit dc1cc22ed58f11d58d8553c5ec5f11cbfc3e3039 ]
 
-map is the pointer of outer map, and need_defer needs some explanation.
-need_defer tells the implementation to defer the reference release of
-the passed element and ensure that the element is still alive before
-the bpf program, which may manipulate it, exits.
+Upon assembling the array, both kernel and mdadm allow the devices to have event
+counter difference of 1, and still consider them as up-to-date.
+However, a device whose event count is behind by 1, may in fact not be up-to-date,
+and array resync with such a device may cause data corruption.
+To avoid this, consult the superblock of the freshest device about the status
+of a device, whose event counter is behind by 1.
 
-The following three cases will invoke map_fd_put_ptr() and different
-need_defer values will be passed to these callers:
-
-1) release the reference of the old element in the map during map update
-   or map deletion. The release must be deferred, otherwise the bpf
-   program may incur use-after-free problem, so need_defer needs to be
-   true.
-2) release the reference of the to-be-added element in the error path of
-   map update. The to-be-added element is not visible to any bpf
-   program, so it is OK to pass false for need_defer parameter.
-3) release the references of all elements in the map during map release.
-   Any bpf program which has access to the map must have been exited and
-   released, so need_defer=false will be OK.
-
-These two parameters will be used by the following patches to fix the
-potential use-after-free problem for map-in-map.
-
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20231204140425.1480317-3-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Alex Lyakas <alex.lyakas@zadara.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/1702470271-16073-1-git-send-email-alex.lyakas@zadara.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h     |  6 +++++-
- kernel/bpf/arraymap.c   | 12 +++++++-----
- kernel/bpf/hashtab.c    |  6 +++---
- kernel/bpf/map_in_map.c |  2 +-
- kernel/bpf/map_in_map.h |  2 +-
- 5 files changed, 17 insertions(+), 11 deletions(-)
+ drivers/md/md.c | 54 ++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 44 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 00c615fc8ec3..48f3cc3bafea 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -91,7 +91,11 @@ struct bpf_map_ops {
- 	/* funcs called by prog_array and perf_event_array map */
- 	void *(*map_fd_get_ptr)(struct bpf_map *map, struct file *map_file,
- 				int fd);
--	void (*map_fd_put_ptr)(void *ptr);
-+	/* If need_defer is true, the implementation should guarantee that
-+	 * the to-be-put element is still alive before the bpf program, which
-+	 * may manipulate it, exists.
-+	 */
-+	void (*map_fd_put_ptr)(struct bpf_map *map, void *ptr, bool need_defer);
- 	int (*map_gen_lookup)(struct bpf_map *map, struct bpf_insn *insn_buf);
- 	u32 (*map_fd_sys_lookup_elem)(void *ptr);
- 	void (*map_seq_show_elem)(struct bpf_map *map, void *key,
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index 23ffb8f0b5d7..c76870bfd816 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -811,7 +811,7 @@ int bpf_fd_array_map_update_elem(struct bpf_map *map, struct file *map_file,
- 	}
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index aae9ec78c0e8..ff65e5eddfa1 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1162,6 +1162,7 @@ struct super_type  {
+ 					  struct md_rdev *refdev,
+ 					  int minor_version);
+ 	int		    (*validate_super)(struct mddev *mddev,
++					      struct md_rdev *freshest,
+ 					      struct md_rdev *rdev);
+ 	void		    (*sync_super)(struct mddev *mddev,
+ 					  struct md_rdev *rdev);
+@@ -1300,8 +1301,9 @@ static int super_90_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor
  
- 	if (old_ptr)
--		map->ops->map_fd_put_ptr(old_ptr);
-+		map->ops->map_fd_put_ptr(map, old_ptr, true);
- 	return 0;
- }
- 
-@@ -834,7 +834,7 @@ static int fd_array_map_delete_elem(struct bpf_map *map, void *key)
- 	}
- 
- 	if (old_ptr) {
--		map->ops->map_fd_put_ptr(old_ptr);
-+		map->ops->map_fd_put_ptr(map, old_ptr, true);
- 		return 0;
- 	} else {
- 		return -ENOENT;
-@@ -858,8 +858,9 @@ static void *prog_fd_array_get_ptr(struct bpf_map *map,
- 	return prog;
- }
- 
--static void prog_fd_array_put_ptr(void *ptr)
-+static void prog_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ /*
+  * validate_super for 0.90.0
++ * note: we are not using "freshest" for 0.9 superblock
+  */
+-static int super_90_validate(struct mddev *mddev, struct md_rdev *rdev)
++static int super_90_validate(struct mddev *mddev, struct md_rdev *freshest, struct md_rdev *rdev)
  {
-+	/* bpf_prog is freed after one RCU or tasks trace grace period */
- 	bpf_prog_put(ptr);
- }
- 
-@@ -1148,8 +1149,9 @@ static void *perf_event_fd_array_get_ptr(struct bpf_map *map,
- 	return ee;
- }
- 
--static void perf_event_fd_array_put_ptr(void *ptr)
-+static void perf_event_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
- {
-+	/* bpf_perf_event is freed after one RCU grace period */
- 	bpf_event_entry_free_rcu(ptr);
- }
- 
-@@ -1204,7 +1206,7 @@ static void *cgroup_fd_array_get_ptr(struct bpf_map *map,
- 	return cgroup_get_from_fd(fd);
- }
- 
--static void cgroup_fd_array_put_ptr(void *ptr)
-+static void cgroup_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
- {
- 	/* cgroup_put free cgrp after a rcu grace period */
- 	cgroup_put(ptr);
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index a63c68f5945c..28b43642c059 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -857,7 +857,7 @@ static void htab_put_fd_value(struct bpf_htab *htab, struct htab_elem *l)
- 
- 	if (map->ops->map_fd_put_ptr) {
- 		ptr = fd_htab_map_get_ptr(map, l);
--		map->ops->map_fd_put_ptr(ptr);
-+		map->ops->map_fd_put_ptr(map, ptr, true);
- 	}
- }
- 
-@@ -2330,7 +2330,7 @@ static void fd_htab_map_free(struct bpf_map *map)
- 		hlist_nulls_for_each_entry_safe(l, n, head, hash_node) {
- 			void *ptr = fd_htab_map_get_ptr(map, l);
- 
--			map->ops->map_fd_put_ptr(ptr);
-+			map->ops->map_fd_put_ptr(map, ptr, false);
- 		}
- 	}
- 
-@@ -2371,7 +2371,7 @@ int bpf_fd_htab_map_update_elem(struct bpf_map *map, struct file *map_file,
- 
- 	ret = htab_map_update_elem(map, key, &ptr, map_flags);
- 	if (ret)
--		map->ops->map_fd_put_ptr(ptr);
-+		map->ops->map_fd_put_ptr(map, ptr, false);
- 
+ 	mdp_disk_t *desc;
+ 	mdp_super_t *sb = page_address(rdev->sb_page);
+@@ -1816,7 +1818,7 @@ static int super_1_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor_
  	return ret;
  }
-diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
-index 5cd8f5277279..af0f15db1bf9 100644
---- a/kernel/bpf/map_in_map.c
-+++ b/kernel/bpf/map_in_map.c
-@@ -108,7 +108,7 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
- 	return inner_map;
- }
  
--void bpf_map_fd_put_ptr(void *ptr)
-+void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+-static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
++static int super_1_validate(struct mddev *mddev, struct md_rdev *freshest, struct md_rdev *rdev)
  {
- 	/* ptr->ops->map_free() has to go through one
- 	 * rcu grace period by itself.
-diff --git a/kernel/bpf/map_in_map.h b/kernel/bpf/map_in_map.h
-index bcb7534afb3c..7d61602354de 100644
---- a/kernel/bpf/map_in_map.h
-+++ b/kernel/bpf/map_in_map.h
-@@ -13,7 +13,7 @@ struct bpf_map *bpf_map_meta_alloc(int inner_map_ufd);
- void bpf_map_meta_free(struct bpf_map *map_meta);
- void *bpf_map_fd_get_ptr(struct bpf_map *map, struct file *map_file,
- 			 int ufd);
--void bpf_map_fd_put_ptr(void *ptr);
-+void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer);
- u32 bpf_map_fd_sys_lookup_elem(void *ptr);
+ 	struct mdp_superblock_1 *sb = page_address(rdev->sb_page);
+ 	__u64 ev1 = le64_to_cpu(sb->events);
+@@ -1912,13 +1914,15 @@ static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
+ 		}
+ 	} else if (mddev->pers == NULL) {
+ 		/* Insist of good event counter while assembling, except for
+-		 * spares (which don't need an event count) */
+-		++ev1;
++		 * spares (which don't need an event count).
++		 * Similar to mdadm, we allow event counter difference of 1
++		 * from the freshest device.
++		 */
+ 		if (rdev->desc_nr >= 0 &&
+ 		    rdev->desc_nr < le32_to_cpu(sb->max_dev) &&
+ 		    (le16_to_cpu(sb->dev_roles[rdev->desc_nr]) < MD_DISK_ROLE_MAX ||
+ 		     le16_to_cpu(sb->dev_roles[rdev->desc_nr]) == MD_DISK_ROLE_JOURNAL))
+-			if (ev1 < mddev->events)
++			if (ev1 + 1 < mddev->events)
+ 				return -EINVAL;
+ 	} else if (mddev->bitmap) {
+ 		/* If adding to array with a bitmap, then we can accept an
+@@ -1939,8 +1943,38 @@ static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
+ 		    rdev->desc_nr >= le32_to_cpu(sb->max_dev)) {
+ 			role = MD_DISK_ROLE_SPARE;
+ 			rdev->desc_nr = -1;
+-		} else
++		} else if (mddev->pers == NULL && freshest && ev1 < mddev->events) {
++			/*
++			 * If we are assembling, and our event counter is smaller than the
++			 * highest event counter, we cannot trust our superblock about the role.
++			 * It could happen that our rdev was marked as Faulty, and all other
++			 * superblocks were updated with +1 event counter.
++			 * Then, before the next superblock update, which typically happens when
++			 * remove_and_add_spares() removes the device from the array, there was
++			 * a crash or reboot.
++			 * If we allow current rdev without consulting the freshest superblock,
++			 * we could cause data corruption.
++			 * Note that in this case our event counter is smaller by 1 than the
++			 * highest, otherwise, this rdev would not be allowed into array;
++			 * both kernel and mdadm allow event counter difference of 1.
++			 */
++			struct mdp_superblock_1 *freshest_sb = page_address(freshest->sb_page);
++			u32 freshest_max_dev = le32_to_cpu(freshest_sb->max_dev);
++
++			if (rdev->desc_nr >= freshest_max_dev) {
++				/* this is unexpected, better not proceed */
++				pr_warn("md: %s: rdev[%pg]: desc_nr(%d) >= freshest(%pg)->sb->max_dev(%u)\n",
++						mdname(mddev), rdev->bdev, rdev->desc_nr,
++						freshest->bdev, freshest_max_dev);
++				return -EUCLEAN;
++			}
++
++			role = le16_to_cpu(freshest_sb->dev_roles[rdev->desc_nr]);
++			pr_debug("md: %s: rdev[%pg]: role=%d(0x%x) according to freshest %pg\n",
++				     mdname(mddev), rdev->bdev, role, role, freshest->bdev);
++		} else {
+ 			role = le16_to_cpu(sb->dev_roles[rdev->desc_nr]);
++		}
+ 		switch(role) {
+ 		case MD_DISK_ROLE_SPARE: /* spare */
+ 			break;
+@@ -2890,7 +2924,7 @@ static int add_bound_rdev(struct md_rdev *rdev)
+ 		 * and should be added immediately.
+ 		 */
+ 		super_types[mddev->major_version].
+-			validate_super(mddev, rdev);
++			validate_super(mddev, NULL/*freshest*/, rdev);
+ 		if (add_journal)
+ 			mddev_suspend(mddev);
+ 		err = mddev->pers->hot_add_disk(mddev, rdev);
+@@ -3809,7 +3843,7 @@ static int analyze_sbs(struct mddev *mddev)
+ 	}
  
- #endif
+ 	super_types[mddev->major_version].
+-		validate_super(mddev, freshest);
++		validate_super(mddev, NULL/*freshest*/, freshest);
+ 
+ 	i = 0;
+ 	rdev_for_each_safe(rdev, tmp, mddev) {
+@@ -3824,7 +3858,7 @@ static int analyze_sbs(struct mddev *mddev)
+ 		}
+ 		if (rdev != freshest) {
+ 			if (super_types[mddev->major_version].
+-			    validate_super(mddev, rdev)) {
++			    validate_super(mddev, freshest, rdev)) {
+ 				pr_warn("md: kicking non-fresh %s from array!\n",
+ 					bdevname(rdev->bdev,b));
+ 				md_kick_rdev_from_array(rdev);
+@@ -6795,7 +6829,7 @@ int md_add_new_disk(struct mddev *mddev, struct mdu_disk_info_s *info)
+ 			rdev->saved_raid_disk = rdev->raid_disk;
+ 		} else
+ 			super_types[mddev->major_version].
+-				validate_super(mddev, rdev);
++				validate_super(mddev, NULL/*freshest*/, rdev);
+ 		if ((info->state & (1<<MD_DISK_SYNC)) &&
+ 		     rdev->raid_disk != info->raid_disk) {
+ 			/* This was a hot-add request, but events doesn't
 -- 
 2.43.0
 
