@@ -1,67 +1,67 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E6D8002D
-	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 15:17:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03B36994A
+	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 15:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708528633; cv=none; b=JLTG0TlixrTV0n8ciIbVY2H9dRw6ftgV0hpG6bnL2etD39vxTXVlmC7opcmoUUocZVLp4TvdsMdGaJUSqgmCNJ4fyIkVErgRhLxHbPj3VytJ6inKil7tGY+p+zd2UHpudJ+1H50VH8TffXYaoLVIHxRjalvJt+1W8SARQAdp5kc=
+	t=1708529171; cv=none; b=cZs6YZTblrs9DYKJOYcJ5Y67UMkqGuQhyGJSCRmuPDkjIdRK9/8q1unlJ4vl9KpbyQy+Pm8mrCqUE5CkvPUOAQnGNzVk15355w+ikEpJe341eS0rNNrvVbh+VEcwgpunQsjjKMQaf1T66iIw8B/Er4HAgbGOouH8r26nQ/rXG2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708528633; c=relaxed/simple;
-	bh=nGTqTtzt2sUbREhVbQv0j4QAW9PmN/RDVodP5ym54x4=;
+	s=arc-20240116; t=1708529171; c=relaxed/simple;
+	bh=cci5BOGZK3Spt55yQ2qdW1t58lXnRhMvgGTY0oAAFq0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eGudleh8ejDmDehLH3ei4wqhojW8bgMHjpyulUUd7FdEdgCC5kqvdxp0fBMqHHVnTNw/rhTF0L5XeR8grwYZIYWi6pwUMGE6l5gtN6DqTNeGukhhYsMIHtNRXKRhPM7MCLHw5Uyz4zCSFBtK9UvLhaPiaebikfK6j+/sU8dgULg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DE9fgSph; arc=none smtp.client-ip=209.85.208.175
+	 To:Cc:Content-Type; b=LL8//iGD9uCvxPlVP9CenyrwsT/SbOHcznHXjc++cVO4pz7n337CzOYEHA4U+f3RNOCQQPrMsVqOFDkQVff4uJZXy9ySm7OCN4QAfeMactRCB1o0LvPDRY4+4Av1r1Cpfdn+CjmnDO4jlUIi0g/ckr80Fsp2xkUvnLedV+6oC5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WnYNr+8O; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DE9fgSph"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2d21cdbc85bso9768051fa.2
-        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 07:17:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WnYNr+8O"
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-512a85806fcso823801e87.2
+        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 07:26:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708528630; x=1709133430; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1708529168; x=1709133968; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JXiICswg4YzXiw6dk2Mwt7frOWpPnP2GHTGVPqL0gDM=;
-        b=DE9fgSphpJ4VChmsjUCSc01ufB2CYCA376F61HCaJjFC/5hvLM7UNzlrXSVs/AQrx+
-         kh3qMu7ciAeCcvK+nc7GGEAYfzUYNLYQgN0IPW8tuRJdU7tg1OO2PgFVsRASL/yelFaX
-         6h7FzFQ9qCoxUY6PvOUH7/r6g/jiGl1hNOed3Gzm7/T6l4QMWB3pAdKFbY0arPszA78v
-         XrTlvVnxUb1GM5A9+Lg7knN0ed8WRZGNUpPxsn9lNsN/uDUa0AZndCsmGjXlOyySkFar
-         mrJlmddnuuRO3sxqGz7hkmMYpcpQT+y492pDQx9/G8cB8GSR8VAetH5E8kUozRQs04Xx
-         SVpA==
+        bh=c7CFRwEaj5O3n1vig9mmc40S2b7I6iaaWbSwi8GiOwQ=;
+        b=WnYNr+8O08AecDr34YvVHekeU/48SY5pX5NsEKAjZTXfhxHL4jU09COjyKbTDxo+rw
+         pIJ0hnOAvL1YlCCGk6MT80d/OMz36K1E57xXgRjcNYC4GOy7o9PhUysJ/U4eRuti2YQx
+         49daYBXJC9mdf3lHXT0wH0N1z0hg1+KFw+R7BZ/Thf1RdhbVz1QmLAZztoNjf6C7JtHl
+         XtlP66byb1TQclVE6lstQ0jR5A25eoIEPRGmwVVRi9mPeDoyOGqdvUelO/I3d/03foCy
+         BnUL/h/00w7OmJND8BNUKsqW9NBbsI1sFzfpnspdVItjkZpdd5xce/0DofBm7OKGvPw2
+         n6Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708528630; x=1709133430;
+        d=1e100.net; s=20230601; t=1708529168; x=1709133968;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JXiICswg4YzXiw6dk2Mwt7frOWpPnP2GHTGVPqL0gDM=;
-        b=IZUrNfi8nPXOzcSzaFn8hO+mBV6kSCS/eEmIqJ0c+cFAVQM958Rsovjv67DRTq9KOq
-         aybKR5bgU2wjH79Lx6Srh9iRBOz3Iwt2+FjsuWtWsboyH6EWlkT6+wkQJbx6E/bMVknQ
-         UrtFQXf1ZwXvaBMlcFsh5SjYKpftbm1kjLLPXmXnVRbsAz9bm8DoEjgA/kLWZnO1Zi5I
-         c/Iyr9Bgbn5v6/x3nkhdyX27awf1P2xkpVkuXZSgDlUQdPD+IcxiDeJ/BFWZFurC2w7n
-         YG8Ggud73JBf0teozM+qIkffQSWIqPqIssRZDOfQYsdOrfg5+9UaI5SlzTHBlt6+GUOG
-         DMUw==
-X-Forwarded-Encrypted: i=1; AJvYcCUZ4U4rTwEE+3gM90JDOpEoYpbgD9+z8HTq0eK5mQqbA7RPYhRPt9jAy7sRi36CNSIkqkE/+cuulxNlh0tn23os2HQGQfU34g==
-X-Gm-Message-State: AOJu0YzAnQXwaxu8r4ephfcOmURVzY56bFdlS5x9DWJfXUWHm0Ofs8wl
-	Z53F6GpTDZhtqhUiyfTY81Rv5iAMOd5rm+Uu5Owgr+vJczKuH/50d/mK37PSlbBfitrKqGj1Hcj
-	9HZHky7vbUnDJLSZHigXUQUByIeV/WerJb5E=
-X-Google-Smtp-Source: AGHT+IHIynpkHqXe8avSjnJLeB5fSyluG656zsi359TGvdRHvZvNP0y0mooqtI6wTgWvZpDaDR39gmrlO8fgWUle50s=
-X-Received: by 2002:a2e:8303:0:b0:2d0:97ac:69fa with SMTP id
- a3-20020a2e8303000000b002d097ac69famr11232242ljh.25.1708528629754; Wed, 21
- Feb 2024 07:17:09 -0800 (PST)
+        bh=c7CFRwEaj5O3n1vig9mmc40S2b7I6iaaWbSwi8GiOwQ=;
+        b=bFpwnSOEtqCacPL/HlJHsNCUCqfXxmVVsrV2KtUyF1lGm8j8IPsNL96U2lrjdKjmwr
+         Wf6avfXWFhCcMKvcPcRr39kPu+qaNxUXmkFJt7Wc/sVYXkMf4p/rbb98ANLp/6omrnxA
+         5wHaRqI0LKVk5mfAOogK7IKfrfZqbAELCbE3nyen6Av9zSfzfN59tAOTBpCGHizRGadn
+         j/JzgCRjPTPD4JSYszl2g9VBqJqjia3Ie2G0CgsO7ZWbry2OWFA9SN9GjJqKG6//amWf
+         M6D1jSAIoT1XuauZvSCZr53FvF1cf9DyR9a5pvOlgiILrY5gLlsYamlkUFzNs+Ug+seB
+         9+Pw==
+X-Forwarded-Encrypted: i=1; AJvYcCU8YbaSXcV7kKDPa9QHSHEQKfnb2XLPeCb7xtNhYjbdl3XpHOcPSZvFglH8WNcoBOstgLY5lqiPgbYCxt3rl4k1nX+5mUA/pQ==
+X-Gm-Message-State: AOJu0YyifXK0ktw4DenYMhAXQ91ABG+rHAST64VXfmq66pfB9P4SpBKd
+	c9C3Sp0NBvoCt6oUXQ5jUU3tJ7POezlQbE5MsSVGULO3gIJUV509/09r1OdLUz+6XoJgpeWPeXk
+	mGaghzwJlMTjALHrLIE3TwB5b5gw=
+X-Google-Smtp-Source: AGHT+IHKXAczEIV6dUiAdkT+Wz92ctah8iGk2CHccvb9gcB8i8NaBhlm16ApdXAmheuRwLyy/wxvNaN3pXDa62LWkqE=
+X-Received: by 2002:a05:6512:6ce:b0:512:cc76:4dab with SMTP id
+ u14-20020a05651206ce00b00512cc764dabmr3308659lff.29.1708529167899; Wed, 21
+ Feb 2024 07:26:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240221125931.742034354@linuxfoundation.org> <20240221125938.249496188@linuxfoundation.org>
-In-Reply-To: <20240221125938.249496188@linuxfoundation.org>
+References: <20240221125940.058369148@linuxfoundation.org> <20240221125948.348622258@linuxfoundation.org>
+In-Reply-To: <20240221125948.348622258@linuxfoundation.org>
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Date: Thu, 22 Feb 2024 00:16:53 +0900
-Message-ID: <CAKFNMo=7OYs+_GWPqytySpnvRiY1LjFUV80ppE7WxSBzEjN9tg@mail.gmail.com>
-Subject: Re: [PATCH 4.19 200/202] nilfs2: replace WARN_ONs for invalid DAT
+Date: Thu, 22 Feb 2024 00:25:51 +0900
+Message-ID: <CAKFNMonCSHt1ziZo=UcUvRSRfoARYUT+YycnoF2jQx78XENOyA@mail.gmail.com>
+Subject: Re: [PATCH 5.4 258/267] nilfs2: replace WARN_ONs for invalid DAT
  metadata block requests
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
@@ -70,10 +70,10 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 21, 2024 at 10:23=E2=80=AFPM Greg Kroah-Hartman wrote:
+On Wed, Feb 21, 2024 at 11:30=E2=80=AFPM Greg Kroah-Hartman wrote:
 >
-> 4.19-stable review patch.  If anyone has any objections, please let me kn=
-ow.
+> 5.4-stable review patch.  If anyone has any objections, please let me kno=
+w.
 >
 > ------------------
 >
@@ -165,10 +165,10 @@ req,
 
 Hi Greg,
 
-Could you please drop this patch for 4.19?
+Please drop this patch for 5.4 as well as the patch for 4.19.
+(same reason as the review comment for the 4.19 patch)
 
-This uses nilfs_error() instead of nilfs_err(), but they are different
-functions.
-I will separately send an equivalent replacement patch for 4.19 (and 5.4).
+I will send an equivalent replacement patch.
 
+Thanks,
 Ryusuke Konishi
