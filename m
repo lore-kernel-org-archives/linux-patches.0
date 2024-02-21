@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB343C2F;
-	Wed, 21 Feb 2024 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2E73C2F;
+	Wed, 21 Feb 2024 13:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523274; cv=none; b=SFJ/SqPqayHMtuZCzKm7eJL0s9csFbZNL97u3quzmINaAcnT4nWPwW4MhVO3jwrFGsnl9H9leIvaziOP1nRG5y/AQbz1Ui75a8LPdhB4oV3UOcR8oi4nbxmJ+mK9Is+MmmClTdNy5bgLUOWt2GvoNixx5R/VVMgXBNmLBREYyoY=
+	t=1708523277; cv=none; b=SYjY/eO0eVxkjLTxpveo5JO1G+yUPGWNn6rmiHu6ByxjGY2uzlQZ3dAxKtvX2Xqrwi90j1RU5mfnQ1nGXFkqlQVgQiKRJ/VvJK/Kf+kRWGHM6hkg7fozh+ZoOoiq0znZLRc/ncwzQrCBYJTEeC+SjA2mFtBjwF0NumqcvimkAsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523274; c=relaxed/simple;
-	bh=HpByqWA6dDTzn+vNhpTSyYdh3ezzrebKkCGqr3OQSbw=;
+	s=arc-20240116; t=1708523277; c=relaxed/simple;
+	bh=pfw+QyW0BeNdCWFX+y7VgYOMyrDiSPfPElUI+UcNVOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCDIH29gP0k78OPA9E6gangzv25McDhIkXQDm96kiApisFC4OeATzqm3iXiIXik1ssHEsDZXZfbODcZ9LmvLZAhYVzEs0dizSXBfS9ZgL8lEZ5WFbM48ZvDUyVs7p4OlLZv5ZglzgschJdQKimKT+F8mxjWAIJhgOdqXCTkP0QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MamXD2fX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pmVcgRM/oRvQ0sSbsyVFd9KQWKOrxVUhKv2MDT5FXCHakIBDAd1RpQLeA+T0xK9dDbjGnGiOSIvOlHWCz7rYFpV2IlgmmIRyP2tAuKXKHnD33bLLWGLBllbX/i30DpguEpbZSmDHp7v/cbHyKA0gjrlzuQD9UjyfI7clW91+P+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8NsbXUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MamXD2fX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF92C433F1;
-	Wed, 21 Feb 2024 13:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8NsbXUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226EBC43390;
+	Wed, 21 Feb 2024 13:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523274;
-	bh=HpByqWA6dDTzn+vNhpTSyYdh3ezzrebKkCGqr3OQSbw=;
+	s=korg; t=1708523277;
+	bh=pfw+QyW0BeNdCWFX+y7VgYOMyrDiSPfPElUI+UcNVOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MamXD2fXVLJMPzqyWdqreTqTVar7e/Wvv5UBCE8J2pTIg/jUgWWF0zH20q6KRHLwG
-	 9GUw9GstfSJEJ9Wcp+Rvi7aktOO86g0LkqkU0jO7QDzQIjoYbVD8DLRPSYW5jgH5RN
-	 8rUOga2BxHD5TcETxg+aDothry9bl+T0JU+KNeR4=
+	b=A8NsbXUA4zTZy/yy989adKlOQf9LCcpEvFgtLhTX0JPd3AYrRQK9Re+jgn/+OB1ST
+	 4f/p+n7z2WVMWcqm3Nm1FU6d4cSAmBemAvMc5avRkysJv7mXfJxE8RNSk6S661jBJn
+	 i5iCcwsbpCeKKtxBSwU7cCeUS/SvS4tQsN3jQ2DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 385/476] ASoC: codecs: wcd938x: handle deferred probe
-Date: Wed, 21 Feb 2024 14:07:16 +0100
-Message-ID: <20240221130022.276979251@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 359/476] scsi: storvsc: Fix ring buffer size calculation
+Date: Wed, 21 Feb 2024 14:06:50 +0100
+Message-ID: <20240221130021.271340395@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,37 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Michael Kelley <mhklinux@outlook.com>
 
-commit 086df711d9b886194481b4fbe525eb43e9ae7403 upstream.
+commit f4469f3858352ad1197434557150b1f7086762a0 upstream.
 
-WCD938x sound codec driver ignores return status of getting regulators
-and returns EINVAL instead of EPROBE_DEFER.  If regulator provider
-probes after the codec, system is left without probed audio:
+Current code uses the specified ring buffer size (either the default of 128
+Kbytes or a module parameter specified value) to encompass the one page
+ring buffer header plus the actual ring itself.  When the page size is 4K,
+carving off one page for the header isn't significant.  But when the page
+size is 64K on ARM64, only half of the default 128 Kbytes is left for the
+actual ring.  While this doesn't break anything, the smaller ring size
+could be a performance bottleneck.
 
-  wcd938x_codec audio-codec: wcd938x_probe: Fail to obtain platform data
-  wcd938x_codec: probe of audio-codec failed with error -22
+Fix this by applying the VMBUS_RING_SIZE macro to the specified ring buffer
+size.  This macro adds a page for the header, and rounds up the size to a
+page boundary, using the page size for which the kernel is built.  Use this
+new size for subsequent ring buffer calculations.  For example, on ARM64
+with 64K page size and the default ring size, this results in the actual
+ring being 128 Kbytes, which is intended.
 
-Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://msgid.link/r/20240117151208.1219755-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org # 5.15.x
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/20240122170956.496436-1-mhklinux@outlook.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd938x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/storvsc_drv.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -4573,7 +4573,7 @@ static int wcd938x_probe(struct platform
- 	ret = wcd938x_populate_dt_data(wcd938x, dev);
- 	if (ret) {
- 		dev_err(dev, "%s: Fail to obtain platform data\n", __func__);
--		return -EINVAL;
-+		return ret;
- 	}
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -367,6 +367,7 @@ enum storvsc_request_type {
+  */
  
- 	ret = wcd938x_add_slave_components(wcd938x, dev, &match);
+ static int storvsc_ringbuffer_size = (128 * 1024);
++static int aligned_ringbuffer_size;
+ static u32 max_outstanding_req_per_channel;
+ static int storvsc_change_queue_depth(struct scsi_device *sdev, int queue_depth);
+ 
+@@ -737,8 +738,8 @@ static void handle_sc_creation(struct vm
+ 	new_sc->next_request_id_callback = storvsc_next_request_id;
+ 
+ 	ret = vmbus_open(new_sc,
+-			 storvsc_ringbuffer_size,
+-			 storvsc_ringbuffer_size,
++			 aligned_ringbuffer_size,
++			 aligned_ringbuffer_size,
+ 			 (void *)&props,
+ 			 sizeof(struct vmstorage_channel_properties),
+ 			 storvsc_on_channel_callback, new_sc);
+@@ -2033,7 +2034,7 @@ static int storvsc_probe(struct hv_devic
+ 	hv_set_drvdata(device, stor_device);
+ 
+ 	stor_device->port_number = host->host_no;
+-	ret = storvsc_connect_to_vsp(device, storvsc_ringbuffer_size, is_fc);
++	ret = storvsc_connect_to_vsp(device, aligned_ringbuffer_size, is_fc);
+ 	if (ret)
+ 		goto err_out1;
+ 
+@@ -2226,7 +2227,7 @@ static int storvsc_resume(struct hv_devi
+ {
+ 	int ret;
+ 
+-	ret = storvsc_connect_to_vsp(hv_dev, storvsc_ringbuffer_size,
++	ret = storvsc_connect_to_vsp(hv_dev, aligned_ringbuffer_size,
+ 				     hv_dev_is_fc(hv_dev));
+ 	return ret;
+ }
+@@ -2264,8 +2265,9 @@ static int __init storvsc_drv_init(void)
+ 	 * for Win7 and older hosts because it does not take into account
+ 	 * the vmscsi_size_delta correction to the max request size.
+ 	 */
++	aligned_ringbuffer_size = VMBUS_RING_SIZE(storvsc_ringbuffer_size);
+ 	max_outstanding_req_per_channel =
+-		((storvsc_ringbuffer_size - PAGE_SIZE) /
++		((aligned_ringbuffer_size - PAGE_SIZE) /
+ 		ALIGN(MAX_MULTIPAGE_BUFFER_PACKET +
+ 		sizeof(struct vstor_packet) + sizeof(u64),
+ 		sizeof(u64)));
 
 
