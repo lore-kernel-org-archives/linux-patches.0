@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E112D7CF08;
-	Wed, 21 Feb 2024 13:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5916E7C6C0;
+	Wed, 21 Feb 2024 13:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523378; cv=none; b=p5N7MP9y45Gb8jC07sZRMDbtU91tcOLiFTEFP17Jv7MoeGdBwCNQdBUX/juRBJ0b5h1r5YTo6tY5BvpXBBc//BnvTVFWOB7cALAnsGttQnw6v+ARC+o2QFr8wfP7AIpPeeaUzMgkDUT5gUsQ4S4VN7m0jiYMtpQ9lTxsHKFwmWE=
+	t=1708523380; cv=none; b=M2b3rpyBsvBv4P4HOjR+bJYbL2T2pkbmijrIAQmHKVmqVV4zjiXQ6vrKVbhTd2MO0dJyVRxDHhYzpSbUgVsLgPK+M5988Gslq8HFODh0WmPFSvmgkWo2GtLS2yYOjHusIA03ECn16vtK9ar9KdZFjKIvdn1zbcSUVcXlpa5ddcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523378; c=relaxed/simple;
-	bh=LmYXUH1Fvs9wRH3PZ0fllRKVSAQ9N/B8o2cNIHi7GqE=;
+	s=arc-20240116; t=1708523380; c=relaxed/simple;
+	bh=wqqpnxbcPEXmw6k9cNVveimLQI0VdgsaBlr3Z7RZKy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKY43GYRxCKmb3R4H/cP0V91dKIoix+dmrkDECez/X5cWfcecBaYmejk82tOU1/0SLskDQRkQTwTIkrWQYKrVuDRgNdgeCYBRfhhfJMRAqepIPxLFRpkN6I6FJQB9xVcD801TTjo17D+elg1NmZWMqkQNVNJ3ABHA/tnANI6Fh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/c3ypFa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LOLBxOXn819pTw22scp5JQX/TLMb4LevRJOR0y8ZroS4q9de7GFJaSGglG5NuNkW7R7BmbGjv7RETYActb3QuER6QTY6MWU6RXaoXd10wWuS18GcLWSZS5iJXJQ6Xm7RpMI6IAiIJ9NkGwudVXylj4yOKOr3VCa8caT5pCpCbcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNRbuJ5v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/c3ypFa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E321C433C7;
-	Wed, 21 Feb 2024 13:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNRbuJ5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98703C433F1;
+	Wed, 21 Feb 2024 13:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523375;
-	bh=LmYXUH1Fvs9wRH3PZ0fllRKVSAQ9N/B8o2cNIHi7GqE=;
+	s=korg; t=1708523379;
+	bh=wqqpnxbcPEXmw6k9cNVveimLQI0VdgsaBlr3Z7RZKy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/c3ypFaMBlXBy22ujcdYO1rDk6aAAXVMtd/IF7Q+MK5xpWiwRQ7KxcbOXLKpaLI8
-	 BQuKep5QlZMs3eGpJAHdTbhZY7f+XY19oyT1AuZ21h4dKcY9m2FP4Yx6f5lctj2m3F
-	 L+4H1Y27cxNlXoLlo4YT2u7iDGoIHXZTzRa+mgFA=
+	b=mNRbuJ5vjCAwx9+CsjIjStdM2wPzLgYdxNeSzDlFwni/1uQX7D/xG9turRqoBm6mN
+	 bff+4Ffun3sWVZ48jrLKLjwdBOF+AIUdWHLFncxoDufoNRiPJmyoONVHLRT9J5GXwu
+	 1uqGTzpjbAkIn/0UtH5Nx/uYjjS/IBImoBmD97Ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 416/476] s390/qeth: Fix potential loss of L3-IP@ in case of network issues
-Date: Wed, 21 Feb 2024 14:07:47 +0100
-Message-ID: <20240221130023.394103906@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Mete Durlu <meted@linux.ibm.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 390/476] tracing: Fix wasted memory in saved_cmdlines logic
+Date: Wed, 21 Feb 2024 14:07:21 +0100
+Message-ID: <20240221130022.445093638@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,70 +54,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 2fe8a236436fe40d8d26a1af8d150fc80f04ee1a upstream.
+commit 44dc5c41b5b1267d4dd037d26afc0c4d3a568acb upstream.
 
-Symptom:
-In case of a bad cable connection (e.g. dirty optics) a fast sequence of
-network DOWN-UP-DOWN-UP could happen. UP triggers recovery of the qeth
-interface. In case of a second DOWN while recovery is still ongoing, it
-can happen that the IP@ of a Layer3 qeth interface is lost and will not
-be recovered by the second UP.
+While looking at improving the saved_cmdlines cache I found a huge amount
+of wasted memory that should be used for the cmdlines.
 
-Problem:
-When registration of IP addresses with Layer 3 qeth devices fails, (e.g.
-because of bad address format) the respective IP address is deleted from
-its hash-table in the driver. If registration fails because of a ENETDOWN
-condition, the address should stay in the hashtable, so a subsequent
-recovery can restore it.
+The tracing data saves pids during the trace. At sched switch, if a trace
+occurred, it will save the comm of the task that did the trace. This is
+saved in a "cache" that maps pids to comms and exposed to user space via
+the /sys/kernel/tracing/saved_cmdlines file. Currently it only caches by
+default 128 comms.
 
-3caa4af834df ("qeth: keep ip-address after LAN_OFFLINE failure")
-fixes this for registration failures during normal operation, but not
-during recovery.
+The structure that uses this creates an array to store the pids using
+PID_MAX_DEFAULT (which is usually set to 32768). This causes the structure
+to be of the size of 131104 bytes on 64 bit machines.
 
-Solution:
-Keep L3-IP address in case of ENETDOWN in qeth_l3_recover_ip(). For
-consistency with qeth_l3_add_ip() we also keep it in case of EADDRINUSE,
-i.e. for some reason the card already/still has this address registered.
+In hex: 131104 = 0x20020, and since the kernel allocates generic memory in
+powers of two, the kernel would allocate 0x40000 or 262144 bytes to store
+this structure. That leaves 131040 bytes of wasted space.
 
-Fixes: 4a71df50047f ("qeth: new qeth device driver")
+Worse, the structure points to an allocated array to store the comm names,
+which is 16 bytes times the amount of names to save (currently 128), which
+is 2048 bytes. Instead of allocating a separate array, make the structure
+end with a variable length string and use the extra space for that.
+
+This is similar to a recommendation that Linus had made about eventfs_inode names:
+
+  https://lore.kernel.org/all/20240130190355.11486-5-torvalds@linux-foundation.org/
+
+Instead of allocating a separate string array to hold the saved comms,
+have the structure end with: char saved_cmdlines[]; and round up to the
+next power of two over sizeof(struct saved_cmdline_buffers) + num_cmdlines * TASK_COMM_LEN
+It will use this extra space for the saved_cmdline portion.
+
+Now, instead of saving only 128 comms by default, by using this wasted
+space at the end of the structure it can save over 8000 comms and even
+saves space by removing the need for allocating the other array.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20240209063622.1f7b6d5f@rorschach.local.home
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240206085849.2902775-1-wintera@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Vincent Donnefort <vdonnefort@google.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Mete Durlu <meted@linux.ibm.com>
+Fixes: 939c7a4f04fcd ("tracing: Introduce saved_cmdlines_size file")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/net/qeth_l3_main.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/trace/trace.c |   75 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 37 insertions(+), 38 deletions(-)
 
---- a/drivers/s390/net/qeth_l3_main.c
-+++ b/drivers/s390/net/qeth_l3_main.c
-@@ -254,9 +254,10 @@ static void qeth_l3_clear_ip_htable(stru
- 		if (!recover) {
- 			hash_del(&addr->hnode);
- 			kfree(addr);
--			continue;
-+		} else {
-+			/* prepare for recovery */
-+			addr->disp_flag = QETH_DISP_ADDR_ADD;
- 		}
--		addr->disp_flag = QETH_DISP_ADDR_ADD;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -2236,7 +2236,7 @@ struct saved_cmdlines_buffer {
+ 	unsigned *map_cmdline_to_pid;
+ 	unsigned cmdline_num;
+ 	int cmdline_idx;
+-	char *saved_cmdlines;
++	char saved_cmdlines[];
+ };
+ static struct saved_cmdlines_buffer *savedcmd;
+ 
+@@ -2250,47 +2250,58 @@ static inline void set_cmdline(int idx,
+ 	strncpy(get_saved_cmdlines(idx), cmdline, TASK_COMM_LEN);
+ }
+ 
+-static int allocate_cmdlines_buffer(unsigned int val,
+-				    struct saved_cmdlines_buffer *s)
++static void free_saved_cmdlines_buffer(struct saved_cmdlines_buffer *s)
+ {
++	int order = get_order(sizeof(*s) + s->cmdline_num * TASK_COMM_LEN);
++
++	kfree(s->map_cmdline_to_pid);
++	free_pages((unsigned long)s, order);
++}
++
++static struct saved_cmdlines_buffer *allocate_cmdlines_buffer(unsigned int val)
++{
++	struct saved_cmdlines_buffer *s;
++	struct page *page;
++	int orig_size, size;
++	int order;
++
++	/* Figure out how much is needed to hold the given number of cmdlines */
++	orig_size = sizeof(*s) + val * TASK_COMM_LEN;
++	order = get_order(orig_size);
++	size = 1 << (order + PAGE_SHIFT);
++	page = alloc_pages(GFP_KERNEL, order);
++	if (!page)
++		return NULL;
++
++	s = page_address(page);
++	memset(s, 0, sizeof(*s));
++
++	/* Round up to actual allocation */
++	val = (size - sizeof(*s)) / TASK_COMM_LEN;
++	s->cmdline_num = val;
++
+ 	s->map_cmdline_to_pid = kmalloc_array(val,
+ 					      sizeof(*s->map_cmdline_to_pid),
+ 					      GFP_KERNEL);
+-	if (!s->map_cmdline_to_pid)
+-		return -ENOMEM;
+-
+-	s->saved_cmdlines = kmalloc_array(TASK_COMM_LEN, val, GFP_KERNEL);
+-	if (!s->saved_cmdlines) {
+-		kfree(s->map_cmdline_to_pid);
+-		return -ENOMEM;
++	if (!s->map_cmdline_to_pid) {
++		free_saved_cmdlines_buffer(s);
++		return NULL;
  	}
  
- 	mutex_unlock(&card->ip_lock);
-@@ -277,9 +278,11 @@ static void qeth_l3_recover_ip(struct qe
- 		if (addr->disp_flag == QETH_DISP_ADDR_ADD) {
- 			rc = qeth_l3_register_addr_entry(card, addr);
+ 	s->cmdline_idx = 0;
+-	s->cmdline_num = val;
+ 	memset(&s->map_pid_to_cmdline, NO_CMDLINE_MAP,
+ 	       sizeof(s->map_pid_to_cmdline));
+ 	memset(s->map_cmdline_to_pid, NO_CMDLINE_MAP,
+ 	       val * sizeof(*s->map_cmdline_to_pid));
  
--			if (!rc) {
-+			if (!rc || rc == -EADDRINUSE || rc == -ENETDOWN) {
-+				/* keep it in the records */
- 				addr->disp_flag = QETH_DISP_ADDR_DO_NOTHING;
- 			} else {
-+				/* bad address */
- 				hash_del(&addr->hnode);
- 				kfree(addr);
- 			}
+-	return 0;
++	return s;
+ }
+ 
+ static int trace_create_savedcmd(void)
+ {
+-	int ret;
+-
+-	savedcmd = kmalloc(sizeof(*savedcmd), GFP_KERNEL);
+-	if (!savedcmd)
+-		return -ENOMEM;
++	savedcmd = allocate_cmdlines_buffer(SAVED_CMDLINES_DEFAULT);
+ 
+-	ret = allocate_cmdlines_buffer(SAVED_CMDLINES_DEFAULT, savedcmd);
+-	if (ret < 0) {
+-		kfree(savedcmd);
+-		savedcmd = NULL;
+-		return -ENOMEM;
+-	}
+-
+-	return 0;
++	return savedcmd ? 0 : -ENOMEM;
+ }
+ 
+ int is_tracing_stopped(void)
+@@ -5947,26 +5958,14 @@ tracing_saved_cmdlines_size_read(struct
+ 	return simple_read_from_buffer(ubuf, cnt, ppos, buf, r);
+ }
+ 
+-static void free_saved_cmdlines_buffer(struct saved_cmdlines_buffer *s)
+-{
+-	kfree(s->saved_cmdlines);
+-	kfree(s->map_cmdline_to_pid);
+-	kfree(s);
+-}
+-
+ static int tracing_resize_saved_cmdlines(unsigned int val)
+ {
+ 	struct saved_cmdlines_buffer *s, *savedcmd_temp;
+ 
+-	s = kmalloc(sizeof(*s), GFP_KERNEL);
++	s = allocate_cmdlines_buffer(val);
+ 	if (!s)
+ 		return -ENOMEM;
+ 
+-	if (allocate_cmdlines_buffer(val, s) < 0) {
+-		kfree(s);
+-		return -ENOMEM;
+-	}
+-
+ 	preempt_disable();
+ 	arch_spin_lock(&trace_cmdline_lock);
+ 	savedcmd_temp = savedcmd;
 
 
