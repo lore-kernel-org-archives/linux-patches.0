@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9794B69DF9;
-	Wed, 21 Feb 2024 13:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D096EB77;
+	Wed, 21 Feb 2024 13:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521472; cv=none; b=kxDUwCJEKs2xQ74p0kzMkEgN9kOPLTj7mpEdOHeJEoWHfvFjZu7zG+pBjnZLLYu+I6atvLgfPcLY1c0vok9NSVNOeLteZIf46670hAsGKbON7zMu2rbV9ndkbtAkpZYTwXuY/yxB17MM2XadcJ56Uxu2tmhm6eR3aL+/0DxSqVI=
+	t=1708521475; cv=none; b=YyBbw4Bw1CYFu04AdnFsmJ4h9m3NxuvF/2vv6LQ7aR32HJN7MAM0cwnxi8y15jj69l91yLApra8H2L9N/wG2L5XYqGBuJrvTZg3Inaj669f0AsxpLyPnCOCuWVqj1xlvpSrgK8mvGEpC2jriU7wl3zjn49Be9NgvwyAR3Czg930=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521472; c=relaxed/simple;
-	bh=nujEKVke6HwptxPMhY6oA4ikwei4wzVkDhjPyogWOhA=;
+	s=arc-20240116; t=1708521475; c=relaxed/simple;
+	bh=GvwVNsG8Bk87xGXb2jH/QkWckT17KQWSTa9HnK5DRD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5dhl3UQ8bZ5efo+dpt6h7ww158UXSbrrBr93A/rebeVoYGUxNjRodq+PQ60BM8vJLDj72PIgLJhsqrXGsnF8k1onlU0snG8sXXQkHz1CXUGH0Hn1vAkfEmHRZG0Sa10UmuUA/63oJCTNNpADdK3cV+Devu6JiI1aE6Dfmef/N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qqNUEn8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQxgDQPvMnAuT+CFyPJBjho/IP7RIQc6ZDSTVhJ1ua6mz0mi+fNdw25LhSxSj1r1w0GkFzN+FSL+ujcWH1lr7sEn93CV7HUU44xs+JDWq4UEBzHsku2/FTQUh3KlDzwFHwF6eMncNuxh3SZBT/AC2HOr2aKyJOzBuvxeNbAKNBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zD58i8eZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qqNUEn8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F1CC433F1;
-	Wed, 21 Feb 2024 13:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zD58i8eZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDBEC433F1;
+	Wed, 21 Feb 2024 13:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521472;
-	bh=nujEKVke6HwptxPMhY6oA4ikwei4wzVkDhjPyogWOhA=;
+	s=korg; t=1708521475;
+	bh=GvwVNsG8Bk87xGXb2jH/QkWckT17KQWSTa9HnK5DRD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1qqNUEn8EApCgaXrQa2Gjuiw4Jtc8GXQh6guPemx/ealJ6pZOWXuaWcU3V2larLa2
-	 /pCFBZdP9rTnQvM7f5tulrn6uqWagDLhtAAzjt3f80v0l/IStE1zt3W0G3xdb0Q20r
-	 VEZlqXQnZyrIlDJFcSiz6PXCIZf8SklxU0KBmE2o=
+	b=zD58i8eZ6GYITiw6URGI7Ea0rUYq4Sod2M6ccy10fqSjLNm3umgi43UpzoDIUO9cD
+	 E/hiDVbnmC46sO7AW4dFVzXmAYXiPQuaDOd+iMdcapF/XdmF5es7wsbJGPd/o6yZmO
+	 PfURyFc2FAsGmBO5XEovbEry6vgdtnGOblblzNUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Vicki Pfau <vi@endrift.com>,
+	Hardik Gajjar <hgajjar@de.adit-jv.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 121/202] PCI: Only override AMD USB controller if required
-Date: Wed, 21 Feb 2024 14:07:02 +0100
-Message-ID: <20240221125935.628145830@linuxfoundation.org>
+Subject: [PATCH 4.19 122/202] usb: hub: Replace hardcoded quirk value with BIT() macro
+Date: Wed, 21 Feb 2024 14:07:03 +0100
+Message-ID: <20240221125935.657312757@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -53,53 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Hardik Gajjar <hgajjar@de.adit-jv.com>
 
-[ Upstream commit e585a37e5061f6d5060517aed1ca4ccb2e56a34c ]
+[ Upstream commit 6666ea93d2c422ebeb8039d11e642552da682070 ]
 
-By running a Van Gogh device (Steam Deck), the following message
-was noticed in the kernel log:
+This patch replaces the hardcoded quirk value in the macro with
+BIT().
 
-  pci 0000:04:00.3: PCI class overridden (0x0c03fe -> 0x0c03fe) so dwc3 driver can claim this instead of xhci
-
-Effectively this means the quirk executed but changed nothing, since the
-class of this device was already the proper one (likely adjusted by newer
-firmware versions).
-
-Check and perform the override only if necessary.
-
-Link: https://lore.kernel.org/r/20231120160531.361552-1-gpiccoli@igalia.com
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: Vicki Pfau <vi@endrift.com>
+Signed-off-by: Hardik Gajjar <hgajjar@de.adit-jv.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20231205181829.127353-1-hgajjar@de.adit-jv.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/usb/core/hub.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index a5d49f75e1ac..99a8a24ea79d 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -611,10 +611,13 @@ static void quirk_amd_dwc_class(struct pci_dev *pdev)
- {
- 	u32 class = pdev->class;
+diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
+index 898df2e43945..b4e970ad1f79 100644
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -43,8 +43,8 @@
+ #define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
+ #define USB_PRODUCT_TUSB8041_USB3		0x8140
+ #define USB_PRODUCT_TUSB8041_USB2		0x8142
+-#define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	0x01
+-#define HUB_QUIRK_DISABLE_AUTOSUSPEND		0x02
++#define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	BIT(0)
++#define HUB_QUIRK_DISABLE_AUTOSUSPEND		BIT(1)
  
--	/* Use "USB Device (not host controller)" class */
--	pdev->class = PCI_CLASS_SERIAL_USB_DEVICE;
--	pci_info(pdev, "PCI class overridden (%#08x -> %#08x) so dwc3 driver can claim this instead of xhci\n",
--		 class, pdev->class);
-+	if (class != PCI_CLASS_SERIAL_USB_DEVICE) {
-+		/* Use "USB Device (not host controller)" class */
-+		pdev->class = PCI_CLASS_SERIAL_USB_DEVICE;
-+		pci_info(pdev,
-+			"PCI class overridden (%#08x -> %#08x) so dwc3 driver can claim this instead of xhci\n",
-+			class, pdev->class);
-+	}
- }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
- 		quirk_amd_dwc_class);
+ #define USB_TP_TRANSMISSION_DELAY	40	/* ns */
+ #define USB_TP_TRANSMISSION_DELAY_MAX	65535	/* ns */
 -- 
 2.43.0
 
