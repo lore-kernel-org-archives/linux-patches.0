@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C35B69D2E;
-	Wed, 21 Feb 2024 13:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687AB779F8;
+	Wed, 21 Feb 2024 13:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522084; cv=none; b=rGPBdZsUN6w7UJqYxyvaf9CeswLz0n49p50+0Vr5l0J8NqPas8k33f2c/DFy43nYgATuWVZCsNRfvZAbpzl2goRz/VU6syFSdt+AfBqv+ftwCrmZUsXdadpTxsLhlj+HfkyQ4XnDEcGaHLEoh1jhWsCYa4pmXaolh94nsfi9zyE=
+	t=1708522087; cv=none; b=Xrsr0Zvbwyj0IJbjJRAVwEOB4H58GPMDVfeNgCXMmlaFkN4XUN1nWY5kWU+bNxLBEzAjsFKzahwfnhSDIiURpHUx2HTBCinrPH0XcTYiaV/PeJLqxdThF3oxMYxGDikjuJD0mOje9HQ4O/txRHv4qjzUI2V/QB6SoCta+JamHI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522084; c=relaxed/simple;
-	bh=tjLQtH4WQ+Nf5I4zn1vDAdjWwY9YhNMDCa+GKPKt6h8=;
+	s=arc-20240116; t=1708522087; c=relaxed/simple;
+	bh=CnsEycGScQk42T2hhw/4OXRVlvNXdcJgM1o7lqYNl+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tT06X6D3/tZjfyn3Uimwc/WH9HpZy36Uf/8gFu49z/HbKFVe7ER0+pInrcGLiLGhQtlvitWgrd9dLKdr+YMcb5NnVkZnaFMoUeFSf239GsdnG1mP1oQ6+EotHtXHk884TVXnTv0KUCgoXaNulO7vxzJ6jTrCPS+MIuB6GMHtJV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUa80MJk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r8X9gLE9QLQVgMpSvjsmDjFbSSDEGk7Nh9Kdlu4ss/DsbhCz0GnzhTyngqvIjDbkSJR1tAlM6/DNZPlaUPWjEOlAhGBX8H3pwHgW6bjdaiVHCrOnbzZ5uT1hpzEL4HDT3SvgzwaTARJs24av8TtG4vkjiJcTuCqe89VDdb8H7n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqVBkXPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUa80MJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A226DC433F1;
-	Wed, 21 Feb 2024 13:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqVBkXPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC34DC433F1;
+	Wed, 21 Feb 2024 13:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522084;
-	bh=tjLQtH4WQ+Nf5I4zn1vDAdjWwY9YhNMDCa+GKPKt6h8=;
+	s=korg; t=1708522087;
+	bh=CnsEycGScQk42T2hhw/4OXRVlvNXdcJgM1o7lqYNl+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUa80MJk5ys7Nhu5oP7+uKe6kmUyVO75KFGe1bt6MxGKoc88HOW9xvxlzVdtfnTwp
-	 sQ6RiSYeJW7lvrvZa7r4DoSYt5278khL8o6kJq+U/8j4u7Q28Qwpq0+AHYYwyATPDa
-	 4p0zdkDYXUWH3vNBNH3Rc7Dw173u/cQ9JObQ0tF0=
+	b=rqVBkXPjtvIjoV49K7dUcrjmmbxYCnitiSCXPtMSGsknIVPOFmoe2q3vQ0tG21dFA
+	 hSHSYKlLZaUVGDffRaa18lp1gl+4lDHM92qLtN8wBBkax1ITWvotpwBzhgLEUt/CKq
+	 82kgF9V+ikBbNJDZjvOA36lN+1sbtTY0CIYaG36k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-btrfs@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ken <ken@bllue.org>,
-	syzbot+d13490c82ad5353c779d@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Eugeniu Rosca <eugeniu.rosca@bosch.com>
-Subject: [PATCH 5.15 075/476] btrfs: fix race between reading a directory and adding entries to it
-Date: Wed, 21 Feb 2024 14:02:06 +0100
-Message-ID: <20240221130010.744121743@linuxfoundation.org>
+	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
+	Anand Jain <anand.jain@oracle.com>,
+	Omar Sandoval <osandov@fb.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 076/476] btrfs: avoid copying BTRFS_ROOT_SUBVOL_DEAD flag to snapshot of subvolume being deleted
+Date: Wed, 21 Feb 2024 14:02:07 +0100
+Message-ID: <20240221130010.781987031@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -54,145 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Omar Sandoval <osandov@fb.com>
 
-commit 8e7f82deb0c0386a03b62e30082574347f8b57d5 upstream.
+commit 3324d0547861b16cf436d54abba7052e0c8aa9de upstream.
 
-When opening a directory (opendir(3)) or rewinding it (rewinddir(3)), we
-are not holding the directory's inode locked, and this can result in later
-attempting to add two entries to the directory with the same index number,
-resulting in a transaction abort, with -EEXIST (-17), when inserting the
-second delayed dir index. This results in a trace like the following:
+Sweet Tea spotted a race between subvolume deletion and snapshotting
+that can result in the root item for the snapshot having the
+BTRFS_ROOT_SUBVOL_DEAD flag set. The race is:
 
-  Sep 11 22:34:59 myhostname kernel: BTRFS error (device dm-3): err add delayed dir index item(name: cockroach-stderr.log) into the insertion tree of the delayed node(root id: 5, inode id: 4539217, errno: -17)
-  Sep 11 22:34:59 myhostname kernel: ------------[ cut here ]------------
-  Sep 11 22:34:59 myhostname kernel: kernel BUG at fs/btrfs/delayed-inode.c:1504!
-  Sep 11 22:34:59 myhostname kernel: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-  Sep 11 22:34:59 myhostname kernel: CPU: 0 PID: 7159 Comm: cockroach Not tainted 6.4.15-200.fc38.x86_64 #1
-  Sep 11 22:34:59 myhostname kernel: Hardware name: ASUS ESC500 G3/P9D WS, BIOS 2402 06/27/2018
-  Sep 11 22:34:59 myhostname kernel: RIP: 0010:btrfs_insert_delayed_dir_index+0x1da/0x260
-  Sep 11 22:34:59 myhostname kernel: Code: eb dd 48 (...)
-  Sep 11 22:34:59 myhostname kernel: RSP: 0000:ffffa9980e0fbb28 EFLAGS: 00010282
-  Sep 11 22:34:59 myhostname kernel: RAX: 0000000000000000 RBX: ffff8b10b8f4a3c0 RCX: 0000000000000000
-  Sep 11 22:34:59 myhostname kernel: RDX: 0000000000000000 RSI: ffff8b177ec21540 RDI: ffff8b177ec21540
-  Sep 11 22:34:59 myhostname kernel: RBP: ffff8b110cf80888 R08: 0000000000000000 R09: ffffa9980e0fb938
-  Sep 11 22:34:59 myhostname kernel: R10: 0000000000000003 R11: ffffffff86146508 R12: 0000000000000014
-  Sep 11 22:34:59 myhostname kernel: R13: ffff8b1131ae5b40 R14: ffff8b10b8f4a418 R15: 00000000ffffffef
-  Sep 11 22:34:59 myhostname kernel: FS:  00007fb14a7fe6c0(0000) GS:ffff8b177ec00000(0000) knlGS:0000000000000000
-  Sep 11 22:34:59 myhostname kernel: CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  Sep 11 22:34:59 myhostname kernel: CR2: 000000c00143d000 CR3: 00000001b3b4e002 CR4: 00000000001706f0
-  Sep 11 22:34:59 myhostname kernel: Call Trace:
-  Sep 11 22:34:59 myhostname kernel:  <TASK>
-  Sep 11 22:34:59 myhostname kernel:  ? die+0x36/0x90
-  Sep 11 22:34:59 myhostname kernel:  ? do_trap+0xda/0x100
-  Sep 11 22:34:59 myhostname kernel:  ? btrfs_insert_delayed_dir_index+0x1da/0x260
-  Sep 11 22:34:59 myhostname kernel:  ? do_error_trap+0x6a/0x90
-  Sep 11 22:34:59 myhostname kernel:  ? btrfs_insert_delayed_dir_index+0x1da/0x260
-  Sep 11 22:34:59 myhostname kernel:  ? exc_invalid_op+0x50/0x70
-  Sep 11 22:34:59 myhostname kernel:  ? btrfs_insert_delayed_dir_index+0x1da/0x260
-  Sep 11 22:34:59 myhostname kernel:  ? asm_exc_invalid_op+0x1a/0x20
-  Sep 11 22:34:59 myhostname kernel:  ? btrfs_insert_delayed_dir_index+0x1da/0x260
-  Sep 11 22:34:59 myhostname kernel:  ? btrfs_insert_delayed_dir_index+0x1da/0x260
-  Sep 11 22:34:59 myhostname kernel:  btrfs_insert_dir_item+0x200/0x280
-  Sep 11 22:34:59 myhostname kernel:  btrfs_add_link+0xab/0x4f0
-  Sep 11 22:34:59 myhostname kernel:  ? ktime_get_real_ts64+0x47/0xe0
-  Sep 11 22:34:59 myhostname kernel:  btrfs_create_new_inode+0x7cd/0xa80
-  Sep 11 22:34:59 myhostname kernel:  btrfs_symlink+0x190/0x4d0
-  Sep 11 22:34:59 myhostname kernel:  ? schedule+0x5e/0xd0
-  Sep 11 22:34:59 myhostname kernel:  ? __d_lookup+0x7e/0xc0
-  Sep 11 22:34:59 myhostname kernel:  vfs_symlink+0x148/0x1e0
-  Sep 11 22:34:59 myhostname kernel:  do_symlinkat+0x130/0x140
-  Sep 11 22:34:59 myhostname kernel:  __x64_sys_symlinkat+0x3d/0x50
-  Sep 11 22:34:59 myhostname kernel:  do_syscall_64+0x5d/0x90
-  Sep 11 22:34:59 myhostname kernel:  ? syscall_exit_to_user_mode+0x2b/0x40
-  Sep 11 22:34:59 myhostname kernel:  ? do_syscall_64+0x6c/0x90
-  Sep 11 22:34:59 myhostname kernel:  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+Thread 1                                      | Thread 2
+----------------------------------------------|----------
+btrfs_delete_subvolume                        |
+  btrfs_set_root_flags(BTRFS_ROOT_SUBVOL_DEAD)|
+                                              |btrfs_mksubvol
+                                              |  down_read(subvol_sem)
+                                              |  create_snapshot
+                                              |    ...
+                                              |    create_pending_snapshot
+                                              |      copy root item from source
+  down_write(subvol_sem)                      |
 
-The race leading to the problem happens like this:
+This flag is only checked in send and swap activate, which this would
+cause to fail mysteriously.
 
-1) Directory inode X is loaded into memory, its ->index_cnt field is
-   initialized to (u64)-1 (at btrfs_alloc_inode());
+create_snapshot() now checks the root refs to reject a deleted
+subvolume, so we can fix this by locking subvol_sem earlier so that the
+BTRFS_ROOT_SUBVOL_DEAD flag and the root refs are updated atomically.
 
-2) Task A is adding a new file to directory X, holding its vfs inode lock,
-   and calls btrfs_set_inode_index() to get an index number for the entry.
-
-   Because the inode's index_cnt field is set to (u64)-1 it calls
-   btrfs_inode_delayed_dir_index_count() which fails because no dir index
-   entries were added yet to the delayed inode and then it calls
-   btrfs_set_inode_index_count(). This functions finds the last dir index
-   key and then sets index_cnt to that index value + 1. It found that the
-   last index key has an offset of 100. However before it assigns a value
-   of 101 to index_cnt...
-
-3) Task B calls opendir(3), ending up at btrfs_opendir(), where the VFS
-   lock for inode X is not taken, so it calls btrfs_get_dir_last_index()
-   and sees index_cnt still with a value of (u64)-1. Because of that it
-   calls btrfs_inode_delayed_dir_index_count() which fails since no dir
-   index entries were added to the delayed inode yet, and then it also
-   calls btrfs_set_inode_index_count(). This also finds that the last
-   index key has an offset of 100, and before it assigns the value 101
-   to the index_cnt field of inode X...
-
-4) Task A assigns a value of 101 to index_cnt. And then the code flow
-   goes to btrfs_set_inode_index() where it increments index_cnt from
-   101 to 102. Task A then creates a delayed dir index entry with a
-   sequence number of 101 and adds it to the delayed inode;
-
-5) Task B assigns 101 to the index_cnt field of inode X;
-
-6) At some later point when someone tries to add a new entry to the
-   directory, btrfs_set_inode_index() will return 101 again and shortly
-   after an attempt to add another delayed dir index key with index
-   number 101 will fail with -EEXIST resulting in a transaction abort.
-
-Fix this by locking the inode at btrfs_get_dir_last_index(), which is only
-only used when opening a directory or attempting to lseek on it.
-
-Reported-by: ken <ken@bllue.org>
-Link: https://lore.kernel.org/linux-btrfs/CAE6xmH+Lp=Q=E61bU+v9eWX8gYfLvu6jLYxjxjFpo3zHVPR0EQ@mail.gmail.com/
-Reported-by: syzbot+d13490c82ad5353c779d@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/00000000000036e1290603e097e0@google.com/
-Fixes: 9b378f6ad48c ("btrfs: fix infinite directory reads")
-CC: stable@vger.kernel.org # 6.5+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+CC: stable@vger.kernel.org # 4.14+
+Reported-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Omar Sandoval <osandov@fb.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Reviewed-by: Eugeniu Rosca <eugeniu.rosca@bosch.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/btrfs/inode.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
 --- a/fs/btrfs/inode.c
 +++ b/fs/btrfs/inode.c
-@@ -6173,21 +6173,24 @@ out:
+@@ -4501,6 +4501,8 @@ int btrfs_delete_subvolume(struct inode
+ 	u64 root_flags;
+ 	int ret;
  
- static int btrfs_get_dir_last_index(struct btrfs_inode *dir, u64 *index)
- {
--	if (dir->index_cnt == (u64)-1) {
--		int ret;
-+	int ret = 0;
- 
-+	btrfs_inode_lock(&dir->vfs_inode, 0);
-+	if (dir->index_cnt == (u64)-1) {
- 		ret = btrfs_inode_delayed_dir_index_count(dir);
- 		if (ret) {
- 			ret = btrfs_set_inode_index_count(dir);
- 			if (ret)
--				return ret;
-+				goto out;
- 		}
++	down_write(&fs_info->subvol_sem);
++
+ 	/*
+ 	 * Don't allow to delete a subvolume with send in progress. This is
+ 	 * inside the inode lock so the error handling that has to drop the bit
+@@ -4512,25 +4514,25 @@ int btrfs_delete_subvolume(struct inode
+ 		btrfs_warn(fs_info,
+ 			   "attempt to delete subvolume %llu during send",
+ 			   dest->root_key.objectid);
+-		return -EPERM;
++		ret = -EPERM;
++		goto out_up_write;
  	}
+ 	if (atomic_read(&dest->nr_swapfiles)) {
+ 		spin_unlock(&dest->root_item_lock);
+ 		btrfs_warn(fs_info,
+ 			   "attempt to delete subvolume %llu with active swapfile",
+ 			   root->root_key.objectid);
+-		return -EPERM;
++		ret = -EPERM;
++		goto out_up_write;
+ 	}
+ 	root_flags = btrfs_root_flags(&dest->root_item);
+ 	btrfs_set_root_flags(&dest->root_item,
+ 			     root_flags | BTRFS_ROOT_SUBVOL_DEAD);
+ 	spin_unlock(&dest->root_item_lock);
  
- 	/* index_cnt is the index number of next new entry, so decrement it. */
- 	*index = dir->index_cnt - 1;
-+out:
-+	btrfs_inode_unlock(&dir->vfs_inode, 0);
+-	down_write(&fs_info->subvol_sem);
+-
+ 	ret = may_destroy_subvol(dest);
+ 	if (ret)
+-		goto out_up_write;
++		goto out_undead;
  
--	return 0;
-+	return ret;
- }
+ 	btrfs_init_block_rsv(&block_rsv, BTRFS_BLOCK_RSV_TEMP);
+ 	/*
+@@ -4540,7 +4542,7 @@ int btrfs_delete_subvolume(struct inode
+ 	 */
+ 	ret = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
+ 	if (ret)
+-		goto out_up_write;
++		goto out_undead;
  
- /*
+ 	trans = btrfs_start_transaction(root, 0);
+ 	if (IS_ERR(trans)) {
+@@ -4606,15 +4608,17 @@ out_end_trans:
+ 	inode->i_flags |= S_DEAD;
+ out_release:
+ 	btrfs_subvolume_release_metadata(root, &block_rsv);
+-out_up_write:
+-	up_write(&fs_info->subvol_sem);
++out_undead:
+ 	if (ret) {
+ 		spin_lock(&dest->root_item_lock);
+ 		root_flags = btrfs_root_flags(&dest->root_item);
+ 		btrfs_set_root_flags(&dest->root_item,
+ 				root_flags & ~BTRFS_ROOT_SUBVOL_DEAD);
+ 		spin_unlock(&dest->root_item_lock);
+-	} else {
++	}
++out_up_write:
++	up_write(&fs_info->subvol_sem);
++	if (!ret) {
+ 		d_invalidate(dentry);
+ 		btrfs_prune_dentries(dest);
+ 		ASSERT(dest->send_in_progress == 0);
 
 
