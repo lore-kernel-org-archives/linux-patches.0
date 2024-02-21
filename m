@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7213D981;
-	Wed, 21 Feb 2024 14:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C9F78B5E;
+	Wed, 21 Feb 2024 14:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525102; cv=none; b=VIP+ad0AR3eLhIlvc+VL41aF3Y4cRVnipAWiB+hHjq9vntYdHwLpB6nYOg8bX3jdmnP2tKcjldXgHnNzEpSlqVzbN5WE2ZV+/IhLfqXmS8nmU2oFiJcp1/EMCnEMp9W74yoRybmLBMAYEL2fOUJKgt+GlCxiQNmlr7doH54vik4=
+	t=1708525105; cv=none; b=kmVBjfoxx276iAJ6Ht6F1K13aC9gVOWEAWX2ilftGfgKCP5/Gct5bKnRwE22OMHI8QIknyeaVt2OtdX8YZw2/zthuZYHT6nIU8zJJJb9L2Au9dHSfT1w24nyg8KavRvJzNNq3Kx5qtcjhftFToCJQFkcbF2NiA7G5nGYET/ZZRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525102; c=relaxed/simple;
-	bh=ziUrVfKwJ8zlHh30i+U9xMBGfFaJQ6wWHw01sWtKuD0=;
+	s=arc-20240116; t=1708525105; c=relaxed/simple;
+	bh=93hxTLOjHW+WWThGtfIaDm4rzoye02vPiw0HFiAaLl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YlFMv4/tIObOLOqhr+qovo7dR49OMw0hmkF63q3B5b/aeXZPG1snDxdXNItUVztsBkX2GnOS7V7KL9Bk8iImOtNbWo5HNq2GnkGVrLvvS1POkKpUUK7Rd8pHtGTRzPRtdBDf2afvbU6txsxpiKnhpRJLXWwFYk3z10/ADWzkKHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGgbjs9B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SCJfthGocOrDOykcc2z5y9Gd4129gfPKfIXAdf6glWtJHPXV8OQYl/vWxv5B3TgZw0DLIxh6uixatWLjPDZzmQMiT45HetapTdB3hdkVnS/05M6foCUXK6zMsA3/6N8Gtlza6wzRIRJPlFfU+X5mHMnpqMe8ThC2gBgT31nFLZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nfgqd6eX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGgbjs9B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2D3C433C7;
-	Wed, 21 Feb 2024 14:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nfgqd6eX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9016EC433C7;
+	Wed, 21 Feb 2024 14:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525102;
-	bh=ziUrVfKwJ8zlHh30i+U9xMBGfFaJQ6wWHw01sWtKuD0=;
+	s=korg; t=1708525105;
+	bh=93hxTLOjHW+WWThGtfIaDm4rzoye02vPiw0HFiAaLl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGgbjs9BKDSjade/XxmyyjHWjCBSTFq+oIhwtB3VSgkt8K6FTXLuEwMpRYvl0YpW5
-	 v4s6BhgLJxMi25ofArK7Awig+k03zuEnSt8sIyfw8+AR4XzH7OivvqUqj224tTAyt7
-	 FN7nTEVsC50/RB9u4fJwQkrWX6WQVwQs8GH9ajy8=
+	b=Nfgqd6eXLCynrM3lJ4/ZwvxKawCnUdWlR8jmRSMXpcO1SmyDPDhUNmNkfkWsZ91ih
+	 QXqgXj9Z5+yejLT2R+zzvzbwHU4vQay+zoJQPwLq7wGoa69LzzgHl0YC3OHUwfrQ5t
+	 Sp4ipruni7vJgKOQZH+8cS0YEtLxBbKKR4Dogv5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com,
-	syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com,
-	Anand Jain <anand.jain@oracle.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 042/267] btrfs: ref-verify: free ref cache before clearing mount opt
-Date: Wed, 21 Feb 2024 14:06:23 +0100
-Message-ID: <20240221125941.338276880@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Richard Palethorpe <rpalethorpe@suse.com>,
+	Nikolay Borisov <nik.borisov@suse.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.4 060/267] x86/entry/ia32: Ensure s32 is sign extended to s64
+Date: Wed, 21 Feb 2024 14:06:41 +0100
+Message-ID: <20240221125941.887545848@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -53,57 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Richard Palethorpe <rpalethorpe@suse.com>
 
-commit f03e274a8b29d1d1c1bbd7f764766cb5ca537ab7 upstream.
+commit 56062d60f117dccfb5281869e0ab61e090baf864 upstream.
 
-As clearing REF_VERIFY mount option indicates there were some errors in a
-ref-verify process, a ref cache is not relevant anymore and should be
-freed.
+Presently ia32 registers stored in ptregs are unconditionally cast to
+unsigned int by the ia32 stub. They are then cast to long when passed to
+__se_sys*, but will not be sign extended.
 
-btrfs_free_ref_cache() requires REF_VERIFY option being set so call
-it just before clearing the mount option.
+This takes the sign of the syscall argument into account in the ia32
+stub. It still casts to unsigned int to avoid implementation specific
+behavior. However then casts to int or unsigned int as necessary. So that
+the following cast to long sign extends the value.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+This fixes the io_pgetevents02 LTP test when compiled with -m32. Presently
+the systemcall io_pgetevents_time64() unexpectedly accepts -1 for the
+maximum number of events.
 
-Reported-by: syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com
-Fixes: fd708b81d972 ("Btrfs: add a extent ref verify tool")
-CC: stable@vger.kernel.org # 5.4+
-Closes: https://lore.kernel.org/lkml/000000000000e5a65c05ee832054@google.com/
-Reported-by: syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/0000000000007fe09705fdc6086c@google.com/
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+It doesn't appear other systemcalls with signed arguments are effected
+because they all have compat variants defined and wired up.
+
+Fixes: ebeb8c82ffaf ("syscalls/x86: Use 'struct pt_regs' based syscall calling for IA32_EMULATION and x32")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Richard Palethorpe <rpalethorpe@suse.com>
+Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240110130122.3836513-1-nik.borisov@suse.com
+Link: https://lore.kernel.org/ltp/20210921130127.24131-1-rpalethorpe@suse.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ref-verify.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/syscall_wrapper.h |   25 +++++++++++++++++++++----
+ include/linux/syscalls.h               |    1 +
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/ref-verify.c
-+++ b/fs/btrfs/ref-verify.c
-@@ -888,8 +888,10 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
- out_unlock:
- 	spin_unlock(&fs_info->ref_verify_lock);
- out:
--	if (ret)
-+	if (ret) {
-+		btrfs_free_ref_cache(fs_info);
- 		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
-+	}
- 	return ret;
- }
+--- a/arch/x86/include/asm/syscall_wrapper.h
++++ b/arch/x86/include/asm/syscall_wrapper.h
+@@ -14,12 +14,29 @@ struct pt_regs;
+ 		,,regs->di,,regs->si,,regs->dx				\
+ 		,,regs->r10,,regs->r8,,regs->r9)			\
  
-@@ -1018,8 +1020,8 @@ int btrfs_build_ref_tree(struct btrfs_fs
- 		}
- 	}
- 	if (ret) {
--		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
- 		btrfs_free_ref_cache(fs_info);
-+		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
- 	}
- 	btrfs_free_path(path);
- 	return ret;
++
++/* SYSCALL_PT_ARGS is Adapted from s390x */
++#define SYSCALL_PT_ARG6(m, t1, t2, t3, t4, t5, t6)			\
++	SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5), m(t6, (regs->bp))
++#define SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5)				\
++	SYSCALL_PT_ARG4(m, t1, t2, t3, t4),  m(t5, (regs->di))
++#define SYSCALL_PT_ARG4(m, t1, t2, t3, t4)				\
++	SYSCALL_PT_ARG3(m, t1, t2, t3),  m(t4, (regs->si))
++#define SYSCALL_PT_ARG3(m, t1, t2, t3)					\
++	SYSCALL_PT_ARG2(m, t1, t2), m(t3, (regs->dx))
++#define SYSCALL_PT_ARG2(m, t1, t2)					\
++	SYSCALL_PT_ARG1(m, t1), m(t2, (regs->cx))
++#define SYSCALL_PT_ARG1(m, t1) m(t1, (regs->bx))
++#define SYSCALL_PT_ARGS(x, ...) SYSCALL_PT_ARG##x(__VA_ARGS__)
++
++#define __SC_COMPAT_CAST(t, a)						\
++	(__typeof(__builtin_choose_expr(__TYPE_IS_L(t), 0, 0U)))	\
++	(unsigned int)a
++
+ /* Mapping of registers to parameters for syscalls on i386 */
+ #define SC_IA32_REGS_TO_ARGS(x, ...)					\
+-	__MAP(x,__SC_ARGS						\
+-	      ,,(unsigned int)regs->bx,,(unsigned int)regs->cx		\
+-	      ,,(unsigned int)regs->dx,,(unsigned int)regs->si		\
+-	      ,,(unsigned int)regs->di,,(unsigned int)regs->bp)
++	SYSCALL_PT_ARGS(x, __SC_COMPAT_CAST,				\
++			__MAP(x, __SC_TYPE, __VA_ARGS__))		\
+ 
+ #ifdef CONFIG_IA32_EMULATION
+ /*
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -120,6 +120,7 @@ struct clone_args;
+ #define __TYPE_IS_LL(t) (__TYPE_AS(t, 0LL) || __TYPE_AS(t, 0ULL))
+ #define __SC_LONG(t, a) __typeof(__builtin_choose_expr(__TYPE_IS_LL(t), 0LL, 0L)) a
+ #define __SC_CAST(t, a)	(__force t) a
++#define __SC_TYPE(t, a)	t
+ #define __SC_ARGS(t, a)	a
+ #define __SC_TEST(t, a) (void)BUILD_BUG_ON_ZERO(!__TYPE_IS_LL(t) && sizeof(t) > sizeof(long))
+ 
 
 
