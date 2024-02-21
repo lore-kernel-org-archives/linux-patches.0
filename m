@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965527E795;
-	Wed, 21 Feb 2024 14:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A3678B4B;
+	Wed, 21 Feb 2024 14:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524158; cv=none; b=Wko6cf5PeYmuTUL7yVMqFxYGC2NDqoiKGGt7EnfhTt6fLuuCTsSWB27K7ycK6CKt0xkU2jq1QKFcQJvgyP86Je0oG3pJxzX81H4KoK/DQnbNO76Efm63eLMQbCEvcr8b7IUvM2x94c9My6npOLJ9ITEVxSS47D32EWoJgGRpHjg=
+	t=1708524162; cv=none; b=MdzwZn+qpWPahcJ/PUeTEpFgECtM0sGi/Sd5AAmnEaNJoz4gi0/kdbm+jx3EY6exszw7Gn518w6eY5bQdiY6DdYyMrwlcRNjtsh+KD/CKbOYl4741ys6xDixlSjjspFKQ76fs/RS0rbSMLpcDvCzy/d9/PT8EXdPksohSmdsPZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524158; c=relaxed/simple;
-	bh=nG9oGOpQJBSCmwdyroGWr13Qn+Ngp6rRRol4/2xDdcs=;
+	s=arc-20240116; t=1708524162; c=relaxed/simple;
+	bh=mIiAS08oUQIaBzYKD86HJawIkhayOJYs2QD/cPsu+rU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g8Vjj15N2OQMZIpIGMCFi2mEyCFYpBCyh9x+eYpOybWXuxqwGMORUCa8pmqA0ffYYQH1AG4hB9MwRV+t431tEwMfK7JIYxcghQlIgHtjzBgciMZ611vrcnwSWDpdhcjv9sTYlOE2S0jj/IrXxjRF4Zcr8cvH/n/gsV3Air4zkis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t73exshK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gH3mDfqthz3G/A/nukFxYJbY5NuseqrOT9pQHS2mAzU3EYK2lC0gK0gICls6yKmhXo9jihvoqiT5a2PGHkqgGwLjU127sf7NBRsAX/iazF67SOh0ooZpFk0e5WR1qzdrDeKWju3S98aflNmFH9Nn6v9Z4s8x1l7oiUsAh9AVfIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5c2D7zv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t73exshK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BD8C433F1;
-	Wed, 21 Feb 2024 14:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5c2D7zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43D55C433C7;
+	Wed, 21 Feb 2024 14:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524158;
-	bh=nG9oGOpQJBSCmwdyroGWr13Qn+Ngp6rRRol4/2xDdcs=;
+	s=korg; t=1708524161;
+	bh=mIiAS08oUQIaBzYKD86HJawIkhayOJYs2QD/cPsu+rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t73exshKfFqneMeacZR+xV1PyEbfojGz3z6k9iLIn7GZy/lXBTu+WNCRmh2d5yF/R
-	 LSqcBwFJ73TJySGzP2Aar+GpT1Bzw5Lxo4MKmwKs27IGlFDU1yhCOLmJAzm3K6Kq5m
-	 QVKujb3TnWEprQCaTsh52aUmKDcl+rnCNwMnLMG8=
+	b=A5c2D7zvKnGwPa7sba5TtlhBh6kmke9vTa8TYYOWbOM78cbj2hkXxlVysl/jqvthu
+	 YfWd3geBMC7U3U1ujws9UK4Vo6wlDqSjol9+f/uyJobmEz+0CayNZPYfelcc6xHtYT
+	 NQhy8Qrvalb/wnIhmnjyOKN07H/LKklM15Pi1Ab0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weichen Chen <weichen.chen@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Kees Cook <keescook@chromium.org>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/379] pstore/ram: Fix crash when setting number of cpus to an odd number
-Date: Wed, 21 Feb 2024 14:05:02 +0100
-Message-ID: <20240221125958.567068015@linuxfoundation.org>
+Subject: [PATCH 5.10 155/379] ARM: dts: imx27: Fix sram node
+Date: Wed, 21 Feb 2024 14:05:34 +0100
+Message-ID: <20240221125959.504237927@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,45 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weichen Chen <weichen.chen@mediatek.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit d49270a04623ce3c0afddbf3e984cb245aa48e9c ]
+[ Upstream commit 2fb7b2a2f06bb3f8321cf26c33e4e820c5b238b6 ]
 
-When the number of cpu cores is adjusted to 7 or other odd numbers,
-the zone size will become an odd number.
-The address of the zone will become:
-    addr of zone0 = BASE
-    addr of zone1 = BASE + zone_size
-    addr of zone2 = BASE + zone_size*2
-    ...
-The address of zone1/3/5/7 will be mapped to non-alignment va.
-Eventually crashes will occur when accessing these va.
+Per sram.yaml, address-cells, size-cells and ranges are mandatory.
 
-So, use ALIGN_DOWN() to make sure the zone size is even
-to avoid this bug.
+Pass them to fix the following dt-schema warnings:
 
-Signed-off-by: Weichen Chen <weichen.chen@mediatek.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Tested-by: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Link: https://lore.kernel.org/r/20230224023632.6840-1-weichen.chen@mediatek.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/imx27.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index 98e579ce0d63..44fc3b396288 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -519,6 +519,7 @@ static int ramoops_init_przs(const char *name,
- 	}
- 
- 	zone_sz = mem_sz / *cnt;
-+	zone_sz = ALIGN_DOWN(zone_sz, 2);
- 	if (!zone_sz) {
- 		dev_err(dev, "%s zone size == 0\n", name);
- 		goto fail;
+diff --git a/arch/arm/boot/dts/imx27.dtsi b/arch/arm/boot/dts/imx27.dtsi
+index 7bc132737a37..8ae24c865521 100644
+--- a/arch/arm/boot/dts/imx27.dtsi
++++ b/arch/arm/boot/dts/imx27.dtsi
+@@ -588,6 +588,9 @@
+ 		iram: sram@ffff4c00 {
+ 			compatible = "mmio-sram";
+ 			reg = <0xffff4c00 0xb400>;
++			ranges = <0 0xffff4c00 0xb400>;
++			#address-cells = <1>;
++			#size-cells = <1>;
+ 		};
+ 	};
+ };
 -- 
 2.43.0
 
