@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1031B7BB16;
-	Wed, 21 Feb 2024 14:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA4F78B60;
+	Wed, 21 Feb 2024 14:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525360; cv=none; b=mGH5Stiq+d5hnhP/XED3cdYYcOWsWoKt4Je7fnVKsRxZPAog5aj5qktVWvapZMfjYpuwzRWPLVVEyYw7SNBff5SGiI+SYreOEIlgvTsLH3TEUK4uK8ATE/RgQw2QBhrecOz2zLinJ+5OUq1sdWLljRFMQUGkNMbTl4SYxDqAekU=
+	t=1708525363; cv=none; b=oqlcnt4VVlTDHBUHzpM810c0t7pj1FB3wbRMqhqHfXEHd6JZfpM4XQW+vTpQf+Hbf1kC+DzxUSiGe+jod8JDo2Sxne7XGir6RGe005MO0BlL8YRLTsYnZ+uI5DhPWa98g3HLPVpgbeEtT/vyR7YmOGD9wr7fa2N+IkW57//xWiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525360; c=relaxed/simple;
-	bh=8NzoKZPo2u1BiPPA/nsGJ4DcxBiXL0dh05IaQ44RZv0=;
+	s=arc-20240116; t=1708525363; c=relaxed/simple;
+	bh=GIYrQf72bgnAsO6E1+4UB70tl4NAyIFm4lEUFxLRl1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aq1N5gW5VYkz0e4snsGHBjmHHCsJq7MhDHprwC9QKB2P10rp5Ckhyq37ucnQp4TnG6BlGSb1vVd1apNf9/OlB+g0pg1OvOg8tC2tA0cOTW3+Cbvhc4iKvQpGh9k4FgSAxkCWcW/UdfrPK/wOmPoXAkaAyze1fEOPQsrx9UQIbho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOdYek4r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rtj5be+/NoBBsKqNWwIizPoDm4OAxGTwIBwkPDzVwkfyWSYwr0y0g37aa2BW3F2b06s45KvROaj8LolPlnd5SQ8VFNkPVgTs9FrHBctp3uWVdr/fA9dPNowBtT9413bFooj1DdBLR4wyQrbvWEB+rC9jnC7QpsaNEA9k6fzYSac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIRhBPrh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOdYek4r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ED6C433C7;
-	Wed, 21 Feb 2024 14:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIRhBPrh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C7AC433C7;
+	Wed, 21 Feb 2024 14:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525359;
-	bh=8NzoKZPo2u1BiPPA/nsGJ4DcxBiXL0dh05IaQ44RZv0=;
+	s=korg; t=1708525363;
+	bh=GIYrQf72bgnAsO6E1+4UB70tl4NAyIFm4lEUFxLRl1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOdYek4rjiQKx8sC0s3ITcrzZyzqgWhYcu/WNcBAL0o6ySv3zrbgVmEdus6EzDlwZ
-	 yuWd+kQLndeWfbVqesla+Xk0i0N5Ar4Jqi03hLra1k+cU4uOZWQk4ufVMWIWsoFU6D
-	 4XrFNmLMVvrKAFiw5qR/gqsXLwIEXgojXI+KUaBE=
+	b=dIRhBPrhCrtSwNIv4ikP1mZBqip1lSbX8wk/pW9dE8S6aHVyrukd7Hk3B3Z8i5Tf/
+	 w7oZ6KEG54ekHZHE6w7JXj6nqWjswo1BKcsrWvObuqyaMt65D6Fiit76knhxx0XU9r
+	 C2b0P/oTYK0J52MRVpiJdIMDZjBkY80s0N4UkBac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 104/267] ARM: dts: rockchip: fix rk3036 hdmi ports node
-Date: Wed, 21 Feb 2024 14:07:25 +0100
-Message-ID: <20240221125943.202649545@linuxfoundation.org>
+Subject: [PATCH 5.4 105/267] ARM: dts: imx25/27-eukrea: Fix RTC node name
+Date: Wed, 21 Feb 2024 14:07:26 +0100
+Message-ID: <20240221125943.232703887@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 27ded76ef0fcfcf939914532aae575cf23c221b4 ]
+[ Upstream commit 68c711b882c262e36895547cddea2c2d56ce611d ]
 
-Fix hdmi ports node so that it matches the
-rockchip,inno-hdmi.yaml binding.
+Node names should be generic. Use 'rtc' as node name to fix
+the following dt-schema warning:
 
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/9a2afac1-ed5c-382d-02b0-b2f5f1af3abb@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+imx25-eukrea-mbimxsd25-baseboard.dtb: pcf8563@51: $nodename:0: 'pcf8563@51' does not match '^rtc(@.*|-([0-9]|[1-9][0-9]+))?$'
+	from schema $id: http://devicetree.org/schemas/rtc/nxp,pcf8563.yaml#
+
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3036.dtsi | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi | 2 +-
+ arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3036.dtsi b/arch/arm/boot/dts/rk3036.dtsi
-index d282a7b638d8..cc2d596da7d4 100644
---- a/arch/arm/boot/dts/rk3036.dtsi
-+++ b/arch/arm/boot/dts/rk3036.dtsi
-@@ -337,12 +337,20 @@
- 		pinctrl-0 = <&hdmi_ctl>;
- 		status = "disabled";
+diff --git a/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi b/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
+index 0703f62d10d1..93a6e4e680b4 100644
+--- a/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
++++ b/arch/arm/boot/dts/imx25-eukrea-cpuimx25.dtsi
+@@ -27,7 +27,7 @@
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
  
--		hdmi_in: port {
-+		ports {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
--			hdmi_in_vop: endpoint@0 {
-+
-+			hdmi_in: port@0 {
- 				reg = <0>;
--				remote-endpoint = <&vop_out_hdmi>;
-+
-+				hdmi_in_vop: endpoint {
-+					remote-endpoint = <&vop_out_hdmi>;
-+				};
-+			};
-+
-+			hdmi_out: port@1 {
-+				reg = <1>;
- 			};
- 		};
+-	pcf8563@51 {
++	rtc@51 {
+ 		compatible = "nxp,pcf8563";
+ 		reg = <0x51>;
+ 	};
+diff --git a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
+index 74110bbcd9d4..4b83e2918b55 100644
+--- a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
++++ b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
+@@ -33,7 +33,7 @@
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
+ 
+-	pcf8563@51 {
++	rtc@51 {
+ 		compatible = "nxp,pcf8563";
+ 		reg = <0x51>;
  	};
 -- 
 2.43.0
