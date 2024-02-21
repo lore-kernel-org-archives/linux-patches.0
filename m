@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB3D55E5E;
-	Wed, 21 Feb 2024 13:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E6E78B7C;
+	Wed, 21 Feb 2024 13:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523485; cv=none; b=PJTKvO2M5s71fQoELYlnfKzBl2bQLoSnFcgsWdYfyUwyjm5WQIJDSIB7xKUmm1bJZFAIk1kanc1jKlM48Gy+CnU5ogWtiOIR7yi0XSTVPvtTy3bM6wPCIqkdzMaLHKzwDopG0b2ebm93uTgbiMhAuTlWZTfCDOT/qXXk7oKEAqQ=
+	t=1708523488; cv=none; b=Q1y5fca0xhBSk2s21BUm4aP8cApv0VpiMvbAT/le3kDHMZwABW3BTuWsCGsPzkTitUzAiN60my3hgWC591u/giJ8zqnIN6IsLiGBtILej9EXH1RJCvE003rLVN9L+r9aA9WwGOYPQ8R9pN8e3tilK8ip+1uY45job6VxDjf0MNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523485; c=relaxed/simple;
-	bh=3d+8lN8ssKpk/zdhfADUg4mvP+E6ki0M8x9g+XJAFr4=;
+	s=arc-20240116; t=1708523488; c=relaxed/simple;
+	bh=6oHrQiD3DRlv5OvTanFYdpIjhG7h+tLdmBqDKnrOuaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQJPCKl447+4/Gva9cm6WrevdvtbMKQUEqRpej2vhkZHGFMfP8PJVGZV6/skiYZPMZn8QY8l314/aeogTaB6/ghdadyBXsskFXT8vaBTRdU34t3TqD7Q++Mvydmj55RSaBR7DbHIjC/SHMLhsRtOVz5eQsI1dR9J2hYXx58Ipu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxq9wVrJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PuZ57in+QGwZky5kt/f4Lq5MkXoOlW1KoqftbFP7qzre5PaghZvPBCEZ1sp3HseJ2qFT7N8PMoP0CxCX5o7sh79gM3mX5oYwrAlooZ07LEMCCNcVq/+JxvV5Ki16tEmyemrOQyL0nFGFO38iiEo8IuukQPu+ziseNH5l0WUnpFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEb4ECnC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxq9wVrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC613C433C7;
-	Wed, 21 Feb 2024 13:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEb4ECnC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03DFC433C7;
+	Wed, 21 Feb 2024 13:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523485;
-	bh=3d+8lN8ssKpk/zdhfADUg4mvP+E6ki0M8x9g+XJAFr4=;
+	s=korg; t=1708523488;
+	bh=6oHrQiD3DRlv5OvTanFYdpIjhG7h+tLdmBqDKnrOuaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xxq9wVrJuVhxd6SvXQ+5gGF8Bvxkd08K/nz3uxFK3ftkoRcUHMg7bbVyvsYcGuNpe
-	 gjLwax7bA0SCdaYSxzAUtAHV8kOhn28MDlqshMPVgp4fSR82diZNolod9qkDclELwk
-	 ayr+SNRu+tga575YiSmKKXEZrZL4fkJUqpqFwgRs=
+	b=nEb4ECnCj6dUp4qlltOO/ZOq9HMeZM+uNvKtFq2lvWT6GfaLUAwMTP5hwyJIni2uR
+	 gTrCh/aUdEAFRzd1vBAVIYwv5fklrb+qF2fa/capw9GE1iy1I9VVvwkgu0Y3/tOBgf
+	 ylvh6h1AVjduu14omMF8JV732ONGyaX8DCjQ/AcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 447/476] fbdev: Dont sort deferred-I/O pages by default
-Date: Wed, 21 Feb 2024 14:08:18 +0100
-Message-ID: <20240221130024.555704253@linuxfoundation.org>
+	syzbot+1591462f226d9cbf0564@syzkaller.appspotmail.com,
+	Ziqi Zhao <astrajoan@yahoo.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 421/476] can: j1939: prevent deadlock by changing j1939_socks_lock to rwlock
+Date: Wed, 21 Feb 2024 14:07:52 +0100
+Message-ID: <20240221130023.603027199@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,187 +52,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Ziqi Zhao <astrajoan@yahoo.com>
 
-[ Upstream commit 8c30e2d81bfddc5ab9f6b04db1c0f7d6ca7bdf46 ]
+commit 6cdedc18ba7b9dacc36466e27e3267d201948c8d upstream.
 
-Fbdev's deferred I/O sorts all dirty pages by default, which incurs a
-significant overhead. Make the sorting step optional and update the few
-drivers that require it. Use a FIFO list by default.
+The following 3 locks would race against each other, causing the
+deadlock situation in the Syzbot bug report:
 
-Most fbdev drivers with deferred I/O build a bounding rectangle around
-the dirty pages or simply flush the whole screen. The only two affected
-DRM drivers, generic fbdev and vmwgfx, both use a bounding rectangle.
-In those cases, the exact order of the pages doesn't matter. The other
-drivers look at the page index or handle pages one-by-one. The patch
-sets the sort_pagelist flag for those, even though some of them would
-probably work correctly without sorting. Driver maintainers should update
-their driver accordingly.
+- j1939_socks_lock
+- active_session_list_lock
+- sk_session_queue_lock
 
-Sorting pages by memory offset for deferred I/O performs an implicit
-bubble-sort step on the list of dirty pages. The algorithm goes through
-the list of dirty pages and inserts each new page according to its
-index field. Even worse, list traversal always starts at the first
-entry. As video memory is most likely updated scanline by scanline, the
-algorithm traverses through the complete list for each updated page.
+A reasonable fix is to change j1939_socks_lock to an rwlock, since in
+the rare situations where a write lock is required for the linked list
+that j1939_socks_lock is protecting, the code does not attempt to
+acquire any more locks. This would break the circular lock dependency,
+where, for example, the current thread already locks j1939_socks_lock
+and attempts to acquire sk_session_queue_lock, and at the same time,
+another thread attempts to acquire j1939_socks_lock while holding
+sk_session_queue_lock.
 
-For example, with 1024x768x32bpp each page covers exactly one scanline.
-Writing a single screen update from top to bottom requires updating
-768 pages. With an average list length of 384 entries, a screen update
-creates (768 * 384 =) 294912 compare operation.
+NOTE: This patch along does not fix the unregister_netdevice bug
+reported by Syzbot; instead, it solves a deadlock situation to prepare
+for one or more further patches to actually fix the Syzbot bug, which
+appears to be a reference counting problem within the j1939 codebase.
 
-Fix this by making the sorting step opt-in and update the few drivers
-that require it. All other drivers work with unsorted page lists. Pages
-are appended to the list. Therefore, in the common case of writing the
-framebuffer top to bottom, pages are still sorted by offset, which may
-have a positive effect on performance.
-
-Playing a video [1] in mplayer's benchmark mode shows the difference
-(i7-4790, FullHD, simpledrm, kernel with debugging).
-
-  mplayer -benchmark -nosound -vo fbdev ./big_buck_bunny_720p_stereo.ogg
-
-With sorted page lists:
-
-  BENCHMARKs: VC:  32.960s VO:  73.068s A:   0.000s Sys:   2.413s =  108.441s
-  BENCHMARK%: VC: 30.3947% VO: 67.3802% A:  0.0000% Sys:  2.2251% = 100.0000%
-
-With unsorted page lists:
-
-  BENCHMARKs: VC:  31.005s VO:  42.889s A:   0.000s Sys:   2.256s =   76.150s
-  BENCHMARK%: VC: 40.7156% VO: 56.3219% A:  0.0000% Sys:  2.9625% = 100.0000%
-
-VC shows the overhead of video decoding, VO shows the overhead of the
-video output. Using unsorted page lists reduces the benchmark's run time
-by ~32s/~25%.
-
-v2:
-	* Make sorted pagelists the special case (Sam)
-	* Comment on drivers' use of pagelist (Sam)
-	* Warn about the overhead in comment
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_720p_stereo.ogg # [1]
-Link: https://patchwork.freedesktop.org/patch/msgid/20220211094640.21632-3-tzimmermann@suse.de
-Stable-dep-of: 33cd6ea9c067 ("fbdev: flush deferred IO before closing")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: <syzbot+1591462f226d9cbf0564@syzkaller.appspotmail.com>
+Signed-off-by: Ziqi Zhao <astrajoan@yahoo.com>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/all/20230721162226.8639-1-astrajoan@yahoo.com
+[mkl: remove unrelated newline change]
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/fbtft/fbtft-core.c  |  1 +
- drivers/video/fbdev/broadsheetfb.c  |  1 +
- drivers/video/fbdev/core/fb_defio.c | 24 +++++++++++++++++-------
- drivers/video/fbdev/metronomefb.c   |  1 +
- drivers/video/fbdev/udlfb.c         |  1 +
- include/linux/fb.h                  |  1 +
- 6 files changed, 22 insertions(+), 7 deletions(-)
+ net/can/j1939/j1939-priv.h |    2 +-
+ net/can/j1939/main.c       |    2 +-
+ net/can/j1939/socket.c     |   24 ++++++++++++------------
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
-index 1690358b8f01..52b19ec580a4 100644
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -654,6 +654,7 @@ struct fb_info *fbtft_framebuffer_alloc(struct fbtft_display *display,
- 	fbops->fb_blank     =      fbtft_fb_blank;
+--- a/net/can/j1939/j1939-priv.h
++++ b/net/can/j1939/j1939-priv.h
+@@ -86,7 +86,7 @@ struct j1939_priv {
+ 	unsigned int tp_max_packet_size;
  
- 	fbdefio->delay =           HZ / fps;
-+	fbdefio->sort_pagelist =   true;
- 	fbdefio->deferred_io =     fbtft_deferred_io;
- 	fb_deferred_io_init(info);
+ 	/* lock for j1939_socks list */
+-	spinlock_t j1939_socks_lock;
++	rwlock_t j1939_socks_lock;
+ 	struct list_head j1939_socks;
  
-diff --git a/drivers/video/fbdev/broadsheetfb.c b/drivers/video/fbdev/broadsheetfb.c
-index fd66f4d4a621..b9054f658838 100644
---- a/drivers/video/fbdev/broadsheetfb.c
-+++ b/drivers/video/fbdev/broadsheetfb.c
-@@ -1059,6 +1059,7 @@ static const struct fb_ops broadsheetfb_ops = {
+ 	struct kref rx_kref;
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -270,7 +270,7 @@ struct j1939_priv *j1939_netdev_start(st
+ 		return ERR_PTR(-ENOMEM);
  
- static struct fb_deferred_io broadsheetfb_defio = {
- 	.delay		= HZ/4,
-+	.sort_pagelist	= true,
- 	.deferred_io	= broadsheetfb_dpy_deferred_io,
- };
+ 	j1939_tp_init(priv);
+-	spin_lock_init(&priv->j1939_socks_lock);
++	rwlock_init(&priv->j1939_socks_lock);
+ 	INIT_LIST_HEAD(&priv->j1939_socks);
  
-diff --git a/drivers/video/fbdev/core/fb_defio.c b/drivers/video/fbdev/core/fb_defio.c
-index 95264a621221..bead69f39ffc 100644
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -92,7 +92,7 @@ static vm_fault_t fb_deferred_io_mkwrite(struct vm_fault *vmf)
- 	struct page *page = vmf->page;
- 	struct fb_info *info = vmf->vma->vm_private_data;
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
--	struct page *cur;
-+	struct list_head *pos = &fbdefio->pagelist;
+ 	mutex_lock(&j1939_netdev_lock);
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -80,16 +80,16 @@ static void j1939_jsk_add(struct j1939_p
+ 	jsk->state |= J1939_SOCK_BOUND;
+ 	j1939_priv_get(priv);
  
- 	/* this is a callback we get when userspace first tries to
- 	write to the page. we schedule a workqueue. that workqueue
-@@ -133,14 +133,24 @@ static vm_fault_t fb_deferred_io_mkwrite(struct vm_fault *vmf)
- 	if (!list_empty(&page->lru))
- 		goto page_already_added;
+-	spin_lock_bh(&priv->j1939_socks_lock);
++	write_lock_bh(&priv->j1939_socks_lock);
+ 	list_add_tail(&jsk->list, &priv->j1939_socks);
+-	spin_unlock_bh(&priv->j1939_socks_lock);
++	write_unlock_bh(&priv->j1939_socks_lock);
+ }
  
--	/* we loop through the pagelist before adding in order
--	to keep the pagelist sorted */
--	list_for_each_entry(cur, &fbdefio->pagelist, lru) {
--		if (cur->index > page->index)
--			break;
-+	if (unlikely(fbdefio->sort_pagelist)) {
-+		/*
-+		 * We loop through the pagelist before adding in order to
-+		 * keep the pagelist sorted. This has significant overhead
-+		 * of O(n^2) with n being the number of written pages. If
-+		 * possible, drivers should try to work with unsorted page
-+		 * lists instead.
-+		 */
-+		struct page *cur;
-+
-+		list_for_each_entry(cur, &fbdefio->pagelist, lru) {
-+			if (cur->index > page->index)
-+				break;
-+		}
-+		pos = &cur->lru;
+ static void j1939_jsk_del(struct j1939_priv *priv, struct j1939_sock *jsk)
+ {
+-	spin_lock_bh(&priv->j1939_socks_lock);
++	write_lock_bh(&priv->j1939_socks_lock);
+ 	list_del_init(&jsk->list);
+-	spin_unlock_bh(&priv->j1939_socks_lock);
++	write_unlock_bh(&priv->j1939_socks_lock);
+ 
+ 	j1939_priv_put(priv);
+ 	jsk->state &= ~J1939_SOCK_BOUND;
+@@ -329,13 +329,13 @@ bool j1939_sk_recv_match(struct j1939_pr
+ 	struct j1939_sock *jsk;
+ 	bool match = false;
+ 
+-	spin_lock_bh(&priv->j1939_socks_lock);
++	read_lock_bh(&priv->j1939_socks_lock);
+ 	list_for_each_entry(jsk, &priv->j1939_socks, list) {
+ 		match = j1939_sk_recv_match_one(jsk, skcb);
+ 		if (match)
+ 			break;
+ 	}
+-	spin_unlock_bh(&priv->j1939_socks_lock);
++	read_unlock_bh(&priv->j1939_socks_lock);
+ 
+ 	return match;
+ }
+@@ -344,11 +344,11 @@ void j1939_sk_recv(struct j1939_priv *pr
+ {
+ 	struct j1939_sock *jsk;
+ 
+-	spin_lock_bh(&priv->j1939_socks_lock);
++	read_lock_bh(&priv->j1939_socks_lock);
+ 	list_for_each_entry(jsk, &priv->j1939_socks, list) {
+ 		j1939_sk_recv_one(jsk, skb);
+ 	}
+-	spin_unlock_bh(&priv->j1939_socks_lock);
++	read_unlock_bh(&priv->j1939_socks_lock);
+ }
+ 
+ static void j1939_sk_sock_destruct(struct sock *sk)
+@@ -1078,12 +1078,12 @@ void j1939_sk_errqueue(struct j1939_sess
  	}
  
--	list_add_tail(&page->lru, &cur->lru);
-+	list_add_tail(&page->lru, pos);
- 
- page_already_added:
- 	mutex_unlock(&fbdefio->lock);
-diff --git a/drivers/video/fbdev/metronomefb.c b/drivers/video/fbdev/metronomefb.c
-index 952826557a0c..af858dd23ea6 100644
---- a/drivers/video/fbdev/metronomefb.c
-+++ b/drivers/video/fbdev/metronomefb.c
-@@ -568,6 +568,7 @@ static const struct fb_ops metronomefb_ops = {
- 
- static struct fb_deferred_io metronomefb_defio = {
- 	.delay		= HZ,
-+	.sort_pagelist	= true,
- 	.deferred_io	= metronomefb_dpy_deferred_io,
+ 	/* spread RX notifications to all sockets subscribed to this session */
+-	spin_lock_bh(&priv->j1939_socks_lock);
++	read_lock_bh(&priv->j1939_socks_lock);
+ 	list_for_each_entry(jsk, &priv->j1939_socks, list) {
+ 		if (j1939_sk_recv_match_one(jsk, &session->skcb))
+ 			__j1939_sk_errqueue(session, &jsk->sk, type);
+ 	}
+-	spin_unlock_bh(&priv->j1939_socks_lock);
++	read_unlock_bh(&priv->j1939_socks_lock);
  };
  
-diff --git a/drivers/video/fbdev/udlfb.c b/drivers/video/fbdev/udlfb.c
-index 0de7b867714a..8603898bf37e 100644
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -982,6 +982,7 @@ static int dlfb_ops_open(struct fb_info *info, int user)
+ void j1939_sk_send_loop_abort(struct sock *sk, int err)
+@@ -1271,7 +1271,7 @@ void j1939_sk_netdev_event_netdown(struc
+ 	struct j1939_sock *jsk;
+ 	int error_code = ENETDOWN;
  
- 		if (fbdefio) {
- 			fbdefio->delay = DL_DEFIO_WRITE_DELAY;
-+			fbdefio->sort_pagelist = true;
- 			fbdefio->deferred_io = dlfb_dpy_deferred_io;
- 		}
+-	spin_lock_bh(&priv->j1939_socks_lock);
++	read_lock_bh(&priv->j1939_socks_lock);
+ 	list_for_each_entry(jsk, &priv->j1939_socks, list) {
+ 		jsk->sk.sk_err = error_code;
+ 		if (!sock_flag(&jsk->sk, SOCK_DEAD))
+@@ -1279,7 +1279,7 @@ void j1939_sk_netdev_event_netdown(struc
  
-diff --git a/include/linux/fb.h b/include/linux/fb.h
-index 3d7306c9a706..9a77ab615c36 100644
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -204,6 +204,7 @@ struct fb_pixmap {
- struct fb_deferred_io {
- 	/* delay between mkwrite and deferred handler */
- 	unsigned long delay;
-+	bool sort_pagelist; /* sort pagelist by offset */
- 	struct mutex lock; /* mutex that protects the page list */
- 	struct list_head pagelist; /* list of touched pages */
- 	/* callback */
--- 
-2.43.0
-
+ 		j1939_sk_queue_drop_all(priv, jsk, error_code);
+ 	}
+-	spin_unlock_bh(&priv->j1939_socks_lock);
++	read_unlock_bh(&priv->j1939_socks_lock);
+ }
+ 
+ static int j1939_sk_no_ioctlcmd(struct socket *sock, unsigned int cmd,
 
 
