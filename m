@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556E455E5E;
-	Wed, 21 Feb 2024 13:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2AF76C99;
+	Wed, 21 Feb 2024 13:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523912; cv=none; b=EgDFYc/MIyUgY74Iej78OI4nICJVr6QwPYE1QAXHA5yYX1IsifZnjxannEy4ocnkGXqav4i99W7R/W39y2RIe1tYvXe11gcskg1a1cFIz10MW+Cx1djViI5WjjdNpeoZR2bIRrXDDTr7GKcFvkJd/LDAQJYLck0uWWPIpzs2/5w=
+	t=1708523915; cv=none; b=Bt7IM4cnPq8B3/QhWBmJV0+yNy2rfm9xTWQnL2kOezH3vhFj396PlNpFEaJofsMkmBDPX5blsxumiZzc4whnhZCN+3NDTXmu3A8R5XSHUwz69RAuj00hxwo5i4oQiQkg0gtvaewKGb5DhUyTYAJCO8aRgA6Em2dot9/bhoVYEP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523912; c=relaxed/simple;
-	bh=vTMlVpJYk8QdYmWbihrNJ31JMs6e9vvvPBMnuRzKEAg=;
+	s=arc-20240116; t=1708523915; c=relaxed/simple;
+	bh=gzG7TaMasnPo353MKC3UGmxt22wPGwszCUtIOtUNs44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=le8JR4w3LINcQdT3xtzNTdjSmfuo0JLbX6I3rQvMWtnb+9tdorvBn88Nf98BxPOdV9Tt+ERPVK0y1r24jTjUlJrkGzJvprPbuAAKD8duN4+Qounio9y2/D4OPTg8KjGlAeHXFhIigHVXyrFgLdmJZOmfyWtITTWiLMUZVE9ZTHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNBV4h3z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oMZw0NCoh7Bu3S48SZ70lRdAtS37LFiTL2qcMeDY8dDHc+4Tay7VDAbTwus9HIwCwL8UN2uaguTCI3FhMvk5gLeFiruGlZRtZK0AuPgeNq1y/XbFGGAvrEDl5RGsdPkp7kN72QHvRgI4d0tS5IASuuA4PYLkpcHW2A+u4wVbG0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2WpX2+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNBV4h3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E68C433C7;
-	Wed, 21 Feb 2024 13:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2WpX2+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5E4C433C7;
+	Wed, 21 Feb 2024 13:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523912;
-	bh=vTMlVpJYk8QdYmWbihrNJ31JMs6e9vvvPBMnuRzKEAg=;
+	s=korg; t=1708523915;
+	bh=gzG7TaMasnPo353MKC3UGmxt22wPGwszCUtIOtUNs44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNBV4h3z9yZLBzO6RpeZ/1Cw6uO9AVVfZwI6MvgRLHBjHdhHDgYwbVrfcdrQBt8yL
-	 BWlrZ1v8Nl9J1ycHEMepquFMuQ2DsMQ3I97DQJOE6z1m2Dyn44RVL+fl/PDNWjL03X
-	 HndMLwGqWishWEWifXBG7XZWEk/ZLmqqhfBir/Eg=
+	b=V2WpX2+PYZLdYcpnL+nAZvqMaQNsl4oTOy5AbLIpFfM6AmfgNKKsKPvBdLtHdCLbf
+	 8TGd9iqclFjmZsaVjiDJCsBQSpn7dayXoYKlma/TJ0RtCysbehvkLBGJz8YL9WZ3LK
+	 5Jo00kVTC8n1nP5kNPpJ8FZSW9TzBytF9UMY+Fsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Borisov <nborisov@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/379] btrfs: remove err variable from btrfs_delete_subvolume
-Date: Wed, 21 Feb 2024 14:04:28 +0100
-Message-ID: <20240221125957.539486757@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Chung-Chiang Cheng <cccheng@synology.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 063/379] btrfs: tree-checker: fix inline ref size in error messages
+Date: Wed, 21 Feb 2024 14:04:02 +0100
+Message-ID: <20240221125956.776359261@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,123 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Borisov <nborisov@suse.com>
+From: Chung-Chiang Cheng <cccheng@synology.com>
 
-[ Upstream commit ee0d904fd9c5662c58a737c77384f8959fdc8d12 ]
+commit f398e70dd69e6ceea71463a5380e6118f219197e upstream.
 
-Use only a single 'ret' to control whether we should abort the
-transaction or not. That's fine, because if we abort a transaction then
-btrfs_end_transaction will return the same value as passed to
-btrfs_abort_transaction. No semantic changes.
+The error message should accurately reflect the size rather than the
+type.
 
-Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+Fixes: f82d1c7ca8ae ("btrfs: tree-checker: Add EXTENT_ITEM and METADATA_ITEM check")
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Chung-Chiang Cheng <cccheng@synology.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 3324d0547861 ("btrfs: avoid copying BTRFS_ROOT_SUBVOL_DEAD flag to snapshot of subvolume being deleted")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c | 21 +++++++--------------
- 1 file changed, 7 insertions(+), 14 deletions(-)
+ fs/btrfs/tree-checker.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index c900a39666e3..c6b861f5bcfe 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4007,7 +4007,6 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 	struct btrfs_block_rsv block_rsv;
- 	u64 root_flags;
- 	int ret;
--	int err;
- 
- 	/*
- 	 * Don't allow to delete a subvolume with send in progress. This is
-@@ -4036,8 +4035,8 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 
- 	down_write(&fs_info->subvol_sem);
- 
--	err = may_destroy_subvol(dest);
--	if (err)
-+	ret = may_destroy_subvol(dest);
-+	if (ret)
- 		goto out_up_write;
- 
- 	btrfs_init_block_rsv(&block_rsv, BTRFS_BLOCK_RSV_TEMP);
-@@ -4046,13 +4045,13 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 	 * two for dir entries,
- 	 * two for root ref/backref.
- 	 */
--	err = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
--	if (err)
-+	ret = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
-+	if (ret)
- 		goto out_up_write;
- 
- 	trans = btrfs_start_transaction(root, 0);
- 	if (IS_ERR(trans)) {
--		err = PTR_ERR(trans);
-+		ret = PTR_ERR(trans);
- 		goto out_release;
- 	}
- 	trans->block_rsv = &block_rsv;
-@@ -4062,7 +4061,6 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 
- 	ret = btrfs_unlink_subvol(trans, dir, dentry);
- 	if (ret) {
--		err = ret;
- 		btrfs_abort_transaction(trans, ret);
- 		goto out_end_trans;
- 	}
-@@ -4080,7 +4078,6 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 					dest->root_key.objectid);
- 		if (ret) {
- 			btrfs_abort_transaction(trans, ret);
--			err = ret;
- 			goto out_end_trans;
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1334,7 +1334,7 @@ static int check_extent_item(struct exte
+ 		if (ptr + btrfs_extent_inline_ref_size(inline_type) > end) {
+ 			extent_err(leaf, slot,
+ "inline ref item overflows extent item, ptr %lu iref size %u end %lu",
+-				   ptr, inline_type, end);
++				   ptr, btrfs_extent_inline_ref_size(inline_type), end);
+ 			return -EUCLEAN;
  		}
- 	}
-@@ -4090,7 +4087,6 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 				  dest->root_key.objectid);
- 	if (ret && ret != -ENOENT) {
- 		btrfs_abort_transaction(trans, ret);
--		err = ret;
- 		goto out_end_trans;
- 	}
- 	if (!btrfs_is_empty_uuid(dest->root_item.received_uuid)) {
-@@ -4100,7 +4096,6 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 					  dest->root_key.objectid);
- 		if (ret && ret != -ENOENT) {
- 			btrfs_abort_transaction(trans, ret);
--			err = ret;
- 			goto out_end_trans;
- 		}
- 	}
-@@ -4111,14 +4106,12 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 	trans->block_rsv = NULL;
- 	trans->bytes_reserved = 0;
- 	ret = btrfs_end_transaction(trans);
--	if (ret && !err)
--		err = ret;
- 	inode->i_flags |= S_DEAD;
- out_release:
- 	btrfs_subvolume_release_metadata(root, &block_rsv);
- out_up_write:
- 	up_write(&fs_info->subvol_sem);
--	if (err) {
-+	if (ret) {
- 		spin_lock(&dest->root_item_lock);
- 		root_flags = btrfs_root_flags(&dest->root_item);
- 		btrfs_set_root_flags(&dest->root_item,
-@@ -4136,7 +4129,7 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 		}
- 	}
  
--	return err;
-+	return ret;
- }
- 
- static int btrfs_rmdir(struct inode *dir, struct dentry *dentry)
--- 
-2.43.0
-
 
 
