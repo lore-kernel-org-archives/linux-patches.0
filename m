@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134D57A708;
-	Wed, 21 Feb 2024 14:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816827A708;
+	Wed, 21 Feb 2024 14:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525480; cv=none; b=R5BSVpQ83SAHWi0BSp01PydjVsXGjTAXzMxBsCGU1Eh04LNs5MTxJWYulta+YWCHQOyqKxACtwlDlvd2iAyY6Ag/kRzteF0K90vFXptxo7iVgNgsC4RvnNRFLXsP6xakKyqOiKigHwx4WY4dWUKyO7DOnZ4TQ3RcFg0D3VLmLO0=
+	t=1708525482; cv=none; b=pnRdIgxB5TT6pX0bWfWgfqBAMx8SYnPGf92CGpAouBr89AiFIqE5r7CaDz4tM1EqCfr/Fx26yh+bB3PxKEHkNc7X4BuzZ8P/sYxBEWo+F6JmsFNjfu+9XIXfrKO8HbVRMWPEL/r2vjFG/yCAoqAIV4Hmeaomt1CYS5CCjOm7OAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525480; c=relaxed/simple;
-	bh=Pm8U5EVzPyzPEjvPzE2xiL3E/Z9hxVEkvyUdQqKovvI=;
+	s=arc-20240116; t=1708525482; c=relaxed/simple;
+	bh=hrVzOSnu1PBi3XAn6im9iCBfJ/GyaglrRKuZzXeamvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tMoD6J5fIlO1SFQT5KTMMxeqoCmAEqOyXdqvvGB1JpCC6m0KuRLEHkaaJiJA9A4F/2mOXV1Lq4dmmBRRKY+Vgn5hMgIc3S9C1yBXm/EUBptAw8D6MhtXP5fkdvClvoib3ZnTBlkxlkJBWGMgZzx/8qdWnEDQWd8R5sSZ0xbKVMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFioN3o+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+aliW/STHu6ICVHnndY4XYqupdLrO4/dcaVrnZ+PBZHiyRi7L6ZxPOkOINaIhw4HoyR1myZQQ2N3u1gB6duzbqgry03pidQiPmOpJbrcVUooPz9GqXdi4OQsXOkmuSR2rZpJFPfMYosLkCU60pu+HTrCgoZ0CAmZsoG26EG/qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bbs1hgm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFioN3o+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326B2C43390;
-	Wed, 21 Feb 2024 14:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bbs1hgm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9783C433C7;
+	Wed, 21 Feb 2024 14:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525479;
-	bh=Pm8U5EVzPyzPEjvPzE2xiL3E/Z9hxVEkvyUdQqKovvI=;
+	s=korg; t=1708525482;
+	bh=hrVzOSnu1PBi3XAn6im9iCBfJ/GyaglrRKuZzXeamvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XFioN3o+8QJZ/ZcWz0QWijl87zXG29NWomuP3FmZA99PIORCAKcCyOJQe8NBoxjaw
-	 73ZqarowdfrlKHjBZgXAEPK1JRFPVrrqLnZvwTFYZipoGPOBgjuLTvnGN6BWLEnSLm
-	 /hZWIfOwsn7gD6CnbODmAkJFg026a6Z2/wGKOq98=
+	b=Bbs1hgm+40QtcDWJpWpCRVQLOnBZ1AjgXRCWn67Co2G8X+KdDrI4uWaKiUZufTFgb
+	 IgF4P0MfUSLMYIj8bb/tLAWjIPEXJoDDa6df/z51uxZbSd/yNrWUr/FevH2HzEPMkH
+	 SNtsHERSHHamBnnDjmo+7m+IKLiI00mJOXXjQTcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 139/267] drm/amdgpu: Drop fence check in to_amdgpu_amdkfd_fence()
-Date: Wed, 21 Feb 2024 14:08:00 +0100
-Message-ID: <20240221125944.415470441@linuxfoundation.org>
+Subject: [PATCH 5.4 140/267] leds: trigger: panic: Dont register panic notifier if creating the trigger failed
+Date: Wed, 21 Feb 2024 14:08:01 +0100
+Message-ID: <20240221125944.446019310@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -48,47 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit bf2ad4fb8adca89374b54b225d494e0b1956dbea ]
+[ Upstream commit afacb21834bb02785ddb0c3ec197208803b74faa ]
 
-Return value of container_of(...) can't be null, so null check is not
-required for 'fence'. Hence drop its NULL check.
+It doesn't make sense to register the panic notifier if creating the
+panic trigger failed.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c:93 to_amdgpu_amdkfd_fence() warn: can 'fence' even be NULL?
-
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/8a61e229-5388-46c7-919a-4d18cc7362b2@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/leds/trigger/ledtrig-panic.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-index 3107b9575929..eef7517c9d24 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-@@ -88,7 +88,7 @@ struct amdgpu_amdkfd_fence *to_amdgpu_amdkfd_fence(struct dma_fence *f)
- 		return NULL;
+diff --git a/drivers/leds/trigger/ledtrig-panic.c b/drivers/leds/trigger/ledtrig-panic.c
+index 5751cd032f9d..4bf232465dfd 100644
+--- a/drivers/leds/trigger/ledtrig-panic.c
++++ b/drivers/leds/trigger/ledtrig-panic.c
+@@ -63,10 +63,13 @@ static long led_panic_blink(int state)
  
- 	fence = container_of(f, struct amdgpu_amdkfd_fence, base);
--	if (fence && f->ops == &amdkfd_fence_ops)
-+	if (f->ops == &amdkfd_fence_ops)
- 		return fence;
+ static int __init ledtrig_panic_init(void)
+ {
++	led_trigger_register_simple("panic", &trigger);
++	if (!trigger)
++		return -ENOMEM;
++
+ 	atomic_notifier_chain_register(&panic_notifier_list,
+ 				       &led_trigger_panic_nb);
  
- 	return NULL;
+-	led_trigger_register_simple("panic", &trigger);
+ 	panic_blink = led_panic_blink;
+ 	return 0;
+ }
 -- 
 2.43.0
 
