@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D6C762C1;
-	Wed, 21 Feb 2024 14:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AE57BB0C;
+	Wed, 21 Feb 2024 14:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524038; cv=none; b=FYJvJL+Pwp5rPF/OGmNm/TwvjeSmFVbfTBie3MTYkZrYIzRM/xQADutn1APAxNknnJdf9DgcVT2NfW/yeDw8L17RQCWQdYhN6w1y3ElbLa2LvyKx3ueyvFl1jZZlECTZYgeDL/Z3/+CXCBmFfkqgy9vZUBbJ9Q38cqEjS69895g=
+	t=1708524041; cv=none; b=DVsUfuqX2i3Osn1VXneHHYs7KEinyvr0qi+mWcp00VOZjB9r+soiuaJOzw12Ff2Upe1dJraUhtNLg+LDdGu2LN3YByAYrvO6m7WqXf1IM4t95ppqWeM5wSzqJdz+8qbrI371TfxSlJnqTT7u0+ROi/oEpwSCsupJ1Y1VTDTTPQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524038; c=relaxed/simple;
-	bh=Ypyt+AZVuORb5Dv64ibK8iZJSECYHOyiSxK00lAXoVs=;
+	s=arc-20240116; t=1708524041; c=relaxed/simple;
+	bh=drGzIVzvdwIiclk7pPb5v4Nikgpei+95BX1gjXDQx/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZO2saWq1RpmE4W77RhlF8owP6wBr59zoFwo0DrQxYsGdss6xpn2MWfSY3KHsp2WAxcixSX5YEufeoKNAiErMSVLByODlF7EvQp9CbpfAn3Ui+vlons4g8LO7EY4HpAtX7l1Dl408wU/Zqup7mToshg7rRKvITAtYnN445kH7fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pnu3QDNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HGOlY5UMOOJ8jZI0zTjwUkALP3j3knBJjthWSgvGQSaLnTXPCTPucMupVgJtFOjGKupF49XZ4a4wxup4++YlFC4Q36fEJkm5TBjyyTli0Ndhb68y8Ch7hfsA8kuPnf5VeORAxA3rOcLMEyZ58MWv/hO6aNf/Fi3Z54qVLbxrpMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrlqE7jz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pnu3QDNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BCBC433C7;
-	Wed, 21 Feb 2024 14:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrlqE7jz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70A1C433C7;
+	Wed, 21 Feb 2024 14:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524038;
-	bh=Ypyt+AZVuORb5Dv64ibK8iZJSECYHOyiSxK00lAXoVs=;
+	s=korg; t=1708524041;
+	bh=drGzIVzvdwIiclk7pPb5v4Nikgpei+95BX1gjXDQx/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pnu3QDNWMflvsuUC/Z13PFwJFGI4vbbA84eP6j0RJwXMYWGBzX4Z9wM051Q3kxIki
-	 fN3tmmCJigDMEj8mn2cll04oU7SpYkTN91e/YTOukv3Cw+z8/h3Xm18pKfJAuYIdft
-	 UjaXal3kpiOeU2PlVY5yEss9lYQoTpAxpngdKZdk=
+	b=TrlqE7jzIDCy+xOH6aNvJki7eUV2kJahffjEc4AujrFER2FuIQwJJh/dyaWrc4U5q
+	 HWAnmVoXsnHQgtfg0ZObSABwcMm7mIG6dyCfxGqVhPPVPdK16uo8b2lr6P+gD0W8Y7
+	 77udz8UkmucRjNKGclOS/7j3QCuiiUfkThWegVW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xi Ruoyao <xry111@xry111.site>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 098/379] mips: Call lose_fpu(0) before initializing fcr31 in mips_set_personality_nan
-Date: Wed, 21 Feb 2024 14:04:37 +0100
-Message-ID: <20240221125957.822079162@linuxfoundation.org>
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.10 099/379] tick/sched: Preserve number of idle sleeps across CPU hotplug events
+Date: Wed, 21 Feb 2024 14:04:38 +0100
+Message-ID: <20240221125957.851305759@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -50,57 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Tim Chen <tim.c.chen@linux.intel.com>
 
-commit 59be5c35850171e307ca5d3d703ee9ff4096b948 upstream.
+commit 9a574ea9069be30b835a3da772c039993c43369b upstream.
 
-If we still own the FPU after initializing fcr31, when we are preempted
-the dirty value in the FPU will be read out and stored into fcr31,
-clobbering our setting.  This can cause an improper floating-point
-environment after execve().  For example:
+Commit 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs
+CPU hotplug") preserved total idle sleep time and iowait sleeptime across
+CPU hotplug events.
 
-    zsh% cat measure.c
-    #include <fenv.h>
-    int main() { return fetestexcept(FE_INEXACT); }
-    zsh% cc measure.c -o measure -lm
-    zsh% echo $((1.0/3)) # raising FE_INEXACT
-    0.33333333333333331
-    zsh% while ./measure; do ; done
-    (stopped in seconds)
+Similar reasoning applies to the number of idle calls and idle sleeps to
+get the proper average of sleep time per idle invocation.
 
-Call lose_fpu(0) before setting fcr31 to prevent this.
+Preserve those fields too.
 
-Closes: https://lore.kernel.org/linux-mips/7a6aa1bbdbbe2e63ae96ff163fab0349f58f1b9e.camel@xry111.site/
-Fixes: 9b26616c8d9d ("MIPS: Respect the ISA level in FCSR handling")
+Fixes: 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs CPU hotplug")
+Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://lore.kernel.org/r/20240122233534.3094238-1-tim.c.chen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/elf.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/time/tick-sched.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/mips/kernel/elf.c
-+++ b/arch/mips/kernel/elf.c
-@@ -11,6 +11,7 @@
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -1440,6 +1440,7 @@ void tick_cancel_sched_timer(int cpu)
+ {
+ 	struct tick_sched *ts = &per_cpu(tick_cpu_sched, cpu);
+ 	ktime_t idle_sleeptime, iowait_sleeptime;
++	unsigned long idle_calls, idle_sleeps;
  
- #include <asm/cpu-features.h>
- #include <asm/cpu-info.h>
-+#include <asm/fpu.h>
+ # ifdef CONFIG_HIGH_RES_TIMERS
+ 	if (ts->sched_timer.base)
+@@ -1448,9 +1449,13 @@ void tick_cancel_sched_timer(int cpu)
  
- #ifdef CONFIG_MIPS_FP_SUPPORT
+ 	idle_sleeptime = ts->idle_sleeptime;
+ 	iowait_sleeptime = ts->iowait_sleeptime;
++	idle_calls = ts->idle_calls;
++	idle_sleeps = ts->idle_sleeps;
+ 	memset(ts, 0, sizeof(*ts));
+ 	ts->idle_sleeptime = idle_sleeptime;
+ 	ts->iowait_sleeptime = iowait_sleeptime;
++	ts->idle_calls = idle_calls;
++	ts->idle_sleeps = idle_sleeps;
+ }
+ #endif
  
-@@ -309,6 +310,11 @@ void mips_set_personality_nan(struct arc
- 	struct cpuinfo_mips *c = &boot_cpu_data;
- 	struct task_struct *t = current;
- 
-+	/* Do this early so t->thread.fpu.fcr31 won't be clobbered in case
-+	 * we are preempted before the lose_fpu(0) in start_thread.
-+	 */
-+	lose_fpu(0);
-+
- 	t->thread.fpu.fcr31 = c->fpu_csr31;
- 	switch (state->nan_2008) {
- 	case 0:
 
 
