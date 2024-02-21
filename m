@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF4969318;
-	Wed, 21 Feb 2024 13:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE473C2F;
+	Wed, 21 Feb 2024 13:47:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523232; cv=none; b=KXB2einCsnnyrCTB6Toff+WErpoyckJzdmNQQ9zYo/iNp994H2J+JSmQz5d6wVgh/TcqQq26MlLJexfc+4jwNNJSsyz2hgCfIqUObO1RsD/T9Phj4wc9wsh10fxbypVEjAD0LAB7xZjWZH6KKfmag10NxlAwDPoj9K8hqQ16hQ0=
+	t=1708523235; cv=none; b=Xj5y1AdipyUWl3TqB4XDlW/wk9l1lJ4HOLpGipI1sn9CMG9dDsAYOitvAibYArZC8bb+caChQH2XwJ1pPGJJMzSeils4aAawgMzXmzeH4Fc+htoN5oNhZlYrRQp0ng0DDLr6lRUJovUKZ3JCF7wDVXOPY4CG3QIOpg2wPRpkzzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523232; c=relaxed/simple;
-	bh=Z/94GXyUuZGRXTN3GQG3m/wowfpiK7Bn5S/CWPp91oY=;
+	s=arc-20240116; t=1708523235; c=relaxed/simple;
+	bh=DEEh3Qr2NxmADGR5S9dyILj6H/2aAU3c7pZQUVLdKCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csYe8UihHjRQIz9asPUwvv4jKneMr5YiOphJETFydKrF9ebyGft6pFP2p+c4tiq/ktbNIDTpKLvHn/eYSfDder9al5s+Y1kvTt3R5+VtvDlujmh29qBPUvS6SoIGGBPGEx9mGgNchAHBRZGHTvJV0eejb5WiZg6S75hLRnj4hg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnrUPGUu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+asXWyRbsnB/iw5qDS6m9/PGLRi18zb9NXyE127qZ8LNB83cjXNPoHHy6x4A9EdD94ArdCXlkaufGIG7JzqmRMxfZBKEeWpBhzbaYqpzlkhh1voFKcu7pN34gwNUjORew48z+BwD5ubNFHs01V0pNCwW5rQHaHLPAZQEt3pfNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNTi8PQw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnrUPGUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604C4C433F1;
-	Wed, 21 Feb 2024 13:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNTi8PQw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C002C433C7;
+	Wed, 21 Feb 2024 13:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523231;
-	bh=Z/94GXyUuZGRXTN3GQG3m/wowfpiK7Bn5S/CWPp91oY=;
+	s=korg; t=1708523234;
+	bh=DEEh3Qr2NxmADGR5S9dyILj6H/2aAU3c7pZQUVLdKCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FnrUPGUu6O+QNdIh0YGEMYxcx5UzfM3z2F7gwAsVEU9LXQIanklmnqVjEv1+/Htxw
-	 87IDzMD8j4loe2G+C2wwgZA6tyW1MCb7XcCmvHztPUGjEABqHisMuSq5+tsl0Ai8Sq
-	 ajMLW78269OmIJqUShf+K3XPRU9wz/qRcCd5y7jc=
+	b=HNTi8PQwy9nvv1sZl4OQ76rUoJkAl+rqRhgoJIejexgoOpdgL3jy9jf5L4FO/v89T
+	 l2E2H3BB90m6WIdXSx0ozTAm//X8OELRn1OpmtBCZJxFCRrXIeZ253JAjcsc4MFfVN
+	 3ERd60Es27LmYnGy+yFNURytgDm7i1GI7FFCfKzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radek Krejci <radek.krejci@oracle.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 374/476] modpost: trim leading spaces when processing source files list
-Date: Wed, 21 Feb 2024 14:07:05 +0100
-Message-ID: <20240221130021.852856199@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 375/476] mptcp: fix data re-injection from stale subflow
+Date: Wed, 21 Feb 2024 14:07:06 +0100
+Message-ID: <20240221130021.885274184@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,42 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radek Krejci <radek.krejci@oracle.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 5d9a16b2a4d9e8fa028892ded43f6501bc2969e5 ]
+commit b6c620dc43ccb4e802894e54b651cf81495e9598 upstream.
 
-get_line() does not trim the leading spaces, but the
-parse_source_files() expects to get lines with source files paths where
-the first space occurs after the file path.
+When the MPTCP PM detects that a subflow is stale, all the packet
+scheduler must re-inject all the mptcp-level unacked data. To avoid
+acquiring unneeded locks, it first try to check if any unacked data
+is present at all in the RTX queue, but such check is currently
+broken, as it uses TCP-specific helper on an MPTCP socket.
 
-Fixes: 70f30cfe5b89 ("modpost: use read_text_file() and get_line() for reading text files")
-Signed-off-by: Radek Krejci <radek.krejci@oracle.com>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Funnily enough fuzzers and static checkers are happy, as the accessed
+memory still belongs to the mptcp_sock struct, and even from a
+functional perspective the recovery completed successfully, as
+the short-cut test always failed.
+
+A recent unrelated TCP change - commit d5fed5addb2b ("tcp: reorganize
+tcp_sock fast path variables") - exposed the issue, as the tcp field
+reorganization makes the mptcp code always skip the re-inection.
+
+Fix the issue dropping the bogus call: we are on a slow path, the early
+optimization proved once again to be evil.
+
+Fixes: 1e1d9d6f119c ("mptcp: handle pending data on closed subflow")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/468
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-1-4c1c11e571ff@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/mod/sumversion.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/scripts/mod/sumversion.c b/scripts/mod/sumversion.c
-index 905c0ec291e1..e6962678032e 100644
---- a/scripts/mod/sumversion.c
-+++ b/scripts/mod/sumversion.c
-@@ -328,7 +328,12 @@ static int parse_source_files(const char *objfile, struct md4_ctx *md)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2203,9 +2203,6 @@ bool __mptcp_retransmit_pending_data(str
+ 	if (__mptcp_check_fallback(mptcp_sk(sk)))
+ 		return false;
  
- 	/* Sum all files in the same dir or subdirs. */
- 	while ((line = get_line(&pos))) {
--		char* p = line;
-+		char* p;
-+
-+		/* trim the leading spaces away */
-+		while (isspace(*line))
-+			line++;
-+		p = line;
- 
- 		if (strncmp(line, "source_", sizeof("source_")-1) == 0) {
- 			p = strrchr(line, ' ');
--- 
-2.43.0
-
+-	if (tcp_rtx_and_write_queues_empty(sk))
+-		return false;
+-
+ 	/* the closing socket has some data untransmitted and/or unacked:
+ 	 * some data in the mptcp rtx queue has not really xmitted yet.
+ 	 * keep it simple and re-inject the whole mptcp level rtx queue
 
 
