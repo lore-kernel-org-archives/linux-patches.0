@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E257C09A;
-	Wed, 21 Feb 2024 14:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B937BB01;
+	Wed, 21 Feb 2024 14:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524494; cv=none; b=T10NSbKfRCoPS3N1cdDFtDM62tym4n3/rnkaa0P1gsC0LEqBlZz4/RpSHZcL59dBipb8o1iuA1MoiQpVV7BT4YRKt97rRui1UzQSSpnlO1nEX7+sRSMVVGKzzpF8kv0tY7e/vVg1FgMcBLwtsN9o4gvobVg0aVRC32msSIn/7m4=
+	t=1708524497; cv=none; b=LvCCEKeBvXNx3xRSWE9mTaxx8ioIdMqoxQ11ILgaBlN4X8Az5CXlscl/8mZuD/9ImdD+rRAFZd+YyEzHmkF7O7nkDH6mqELd+AzHH6v55+je8elcgYpdZDaN9urSfGSojXHGDomEumxDH4V6rkUavwcA2qwtJcFpz1ZNPTdYwa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524494; c=relaxed/simple;
-	bh=6eei+uUJy2Tp4+TFQTQWvmwR6IaUAIXfqY9YUkVEhNc=;
+	s=arc-20240116; t=1708524497; c=relaxed/simple;
+	bh=wLIhKiuSMCueDTjw2Hv92JJ8NnmL0TezWdyiswNYENQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btmET4HB87RBg+FSFka1mO8EunKKSAGvlINWeFVdU0bXortcg4OE7fq02xbecWS50Th5Y1EcXnFIUnyigdX9JpYHwVgeKYJLXxYE2rnarbCS7unZtsw6aweSK+6Ch30B49tQ00DoYKWN0wklDf8LWQdWwS4iDHa+foN4ER8w6AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jLgyvKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sGEnO8PW6FdJM0NwH6gbqUYc6JRph3BVoi05xuHgp30OZqM/kjrGCQ2vEI0eGrmE8lrnuiURIClMqOMiO2idW6sTL615RioiTm4YX9g1NC+lZ6ZdhfeipnKCPhW5vFLB4phDfx+C+KzF9kjpuBorm045dFp1LPBzgZbGdFHESbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saSzdGcN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jLgyvKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBABFC433C7;
-	Wed, 21 Feb 2024 14:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saSzdGcN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA22C433F1;
+	Wed, 21 Feb 2024 14:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524494;
-	bh=6eei+uUJy2Tp4+TFQTQWvmwR6IaUAIXfqY9YUkVEhNc=;
+	s=korg; t=1708524497;
+	bh=wLIhKiuSMCueDTjw2Hv92JJ8NnmL0TezWdyiswNYENQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0jLgyvKm5Cxni5qaJhriP8Rr33Znl39sqlLKOX/g72SqffCgZBCRrohhJk4+4wd6a
-	 e+g/bBOP2YAsAOy/Pu6uyQ90UdaCdaLqG+bOySyQ0orjX9e3UNHQnoAwgzgT51TgLi
-	 RK656Z9SKECy+IZwGFn1lr2gV3mS/qHL3HGojGiA=
+	b=saSzdGcNSDD/7tv2PukXqrpjhrPDJWzbyHvwrI6BQdvMMF14U776jaSnjekLrfJsj
+	 9AH+bEAwhTKT5CuIdXi/wVpwksc6EFN+guThtK6PV6WxP1Y9LvZree4O1SW/+OMo4d
+	 u4POJxGCURdj/wzsjwLS+8lpoMTPtPUZPqkzOvWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
 	Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 262/379] rxrpc: Fix response to PING RESPONSE ACKs to a dead call
-Date: Wed, 21 Feb 2024 14:07:21 +0100
-Message-ID: <20240221130002.665266294@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+5142b87a9abc510e14fa@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 263/379] tipc: Check the bearer type before calling tipc_udp_nl_bearer_add()
+Date: Wed, 21 Feb 2024 14:07:22 +0100
+Message-ID: <20240221130002.694092914@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -57,48 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 6f769f22822aa4124b556339781b04d810f0e038 ]
+[ Upstream commit 3871aa01e1a779d866fa9dfdd5a836f342f4eb87 ]
 
-Stop rxrpc from sending a DUP ACK in response to a PING RESPONSE ACK on a
-dead call.  We may have initiated the ping but the call may have beaten the
-response to completion.
+syzbot reported the following general protection fault [1]:
 
-Fixes: 18bfeba50dfd ("rxrpc: Perform terminal call ACK/ABORT retransmission from conn processor")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+general protection fault, probably for non-canonical address 0xdffffc0000000010: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000080-0x0000000000000087]
+...
+RIP: 0010:tipc_udp_is_known_peer+0x9c/0x250 net/tipc/udp_media.c:291
+...
+Call Trace:
+ <TASK>
+ tipc_udp_nl_bearer_add+0x212/0x2f0 net/tipc/udp_media.c:646
+ tipc_nl_bearer_add+0x21e/0x360 net/tipc/bearer.c:1089
+ genl_family_rcv_msg_doit+0x1fc/0x2e0 net/netlink/genetlink.c:972
+ genl_family_rcv_msg net/netlink/genetlink.c:1052 [inline]
+ genl_rcv_msg+0x561/0x800 net/netlink/genetlink.c:1067
+ netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2544
+ genl_rcv+0x28/0x40 net/netlink/genetlink.c:1076
+ netlink_unicast_kernel net/netlink/af_netlink.c:1341 [inline]
+ netlink_unicast+0x53b/0x810 net/netlink/af_netlink.c:1367
+ netlink_sendmsg+0x8b7/0xd70 net/netlink/af_netlink.c:1909
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg+0xd5/0x180 net/socket.c:745
+ ____sys_sendmsg+0x6ac/0x940 net/socket.c:2584
+ ___sys_sendmsg+0x135/0x1d0 net/socket.c:2638
+ __sys_sendmsg+0x117/0x1e0 net/socket.c:2667
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x40/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+The cause of this issue is that when tipc_nl_bearer_add() is called with
+the TIPC_NLA_BEARER_UDP_OPTS attribute, tipc_udp_nl_bearer_add() is called
+even if the bearer is not UDP.
+
+tipc_udp_is_known_peer() called by tipc_udp_nl_bearer_add() assumes that
+the media_ptr field of the tipc_bearer has an udp_bearer type object, so
+the function goes crazy for non-UDP bearers.
+
+This patch fixes the issue by checking the bearer type before calling
+tipc_udp_nl_bearer_add() in tipc_nl_bearer_add().
+
+Fixes: ef20cd4dd163 ("tipc: introduce UDP replicast")
+Reported-and-tested-by: syzbot+5142b87a9abc510e14fa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5142b87a9abc510e14fa [1]
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Link: https://lore.kernel.org/r/20240131152310.4089541-1-syoshida@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/conn_event.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/tipc/bearer.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
-index aff184145ffa..9081e8429584 100644
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -41,6 +41,14 @@ static void rxrpc_conn_retransmit_call(struct rxrpc_connection *conn,
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index df6aba2246fa..2511718b8f3f 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -1072,6 +1072,12 @@ int tipc_nl_bearer_add(struct sk_buff *skb, struct genl_info *info)
  
- 	_enter("%d", conn->debug_id);
- 
-+	if (sp && sp->hdr.type == RXRPC_PACKET_TYPE_ACK) {
-+		if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header),
-+				  &pkt.ack, sizeof(pkt.ack)) < 0)
-+			return;
-+		if (pkt.ack.reason == RXRPC_ACK_PING_RESPONSE)
-+			return;
-+	}
+ #ifdef CONFIG_TIPC_MEDIA_UDP
+ 	if (attrs[TIPC_NLA_BEARER_UDP_OPTS]) {
++		if (b->media->type_id != TIPC_MEDIA_TYPE_UDP) {
++			rtnl_unlock();
++			NL_SET_ERR_MSG(info->extack, "UDP option is unsupported");
++			return -EINVAL;
++		}
 +
- 	chan = &conn->channels[channel];
- 
- 	/* If the last call got moved on whilst we were waiting to run, just
+ 		err = tipc_udp_nl_bearer_add(b,
+ 					     attrs[TIPC_NLA_BEARER_UDP_OPTS]);
+ 		if (err) {
 -- 
 2.43.0
 
