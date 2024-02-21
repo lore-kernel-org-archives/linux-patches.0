@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A505C78B4F;
-	Wed, 21 Feb 2024 14:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73E969E08;
+	Wed, 21 Feb 2024 14:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524222; cv=none; b=HoZOs/+lUrFeWluicQwUDhKdWv4urHrKVSfUPFd7mZraHoANFDgGHZ+sgIiouo1g/h7W5CnDbBonW+UpIJDlq9uhMoqzjPJIiRCCtcEExC/wbnPXH2Jjs114GfHX1rWxglKJ9gslXmznhIbDb5XjcrRzMExz/aEzjjO6QqwXY88=
+	t=1708524225; cv=none; b=NNaY87kcaLiCTuTvhanWf4EvpFyc6Q2WO2rWuQzHQLPy+XWtFXnNmrnjVp00diEfRZMbKQDnSkRkPVUoDzKfmgyXkfuah51rx2ScneZierI3GazthLaLTAX3BULAuFMazO+GQA122PByznqYBW7XcnNDbSFp/m4R5KwnbQMxnAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524222; c=relaxed/simple;
-	bh=mGo0OK+XtskRMXXv7RWD7xvdPVeL6afqyrmbd5n8Ubo=;
+	s=arc-20240116; t=1708524225; c=relaxed/simple;
+	bh=akXz0u2P11xHMf9YNXbfkVV7PB4Se26r5C7COzW9aTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OORNckMWrQPz3V/Nfd5A970zCZboSFxhwZU1rXf23MzFquZeExmtdA59U9bFVa/ZDLeh8TexTZO3Prtmjg50O+/51kE3xvlh5lAOAhoTMVYxjhpNzp0MPcx/CkmgPXt0jumcCXuS5Ni7QQMPRMHb49sNklXm1kD0vjPTEHjxWfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvwJTVpd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ic7YlXu43sPoB0mxNMHw9vNYOtvPPDoiQSDnBcilnw1Rm5CKgvNryM95Q4Xcq+uGbigWWkhPC1zN0UC1j109t+IAe8GwtGzufmZUtf9O55UhLxdnKaI1VmsxE+FXSacDdwh5+H56Y7RyVU66N3e+3qQwDXyq4JSSPSwpFMiN2A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vB6YlpBc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvwJTVpd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7FA7C433C7;
-	Wed, 21 Feb 2024 14:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vB6YlpBc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B4CC433F1;
+	Wed, 21 Feb 2024 14:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524222;
-	bh=mGo0OK+XtskRMXXv7RWD7xvdPVeL6afqyrmbd5n8Ubo=;
+	s=korg; t=1708524225;
+	bh=akXz0u2P11xHMf9YNXbfkVV7PB4Se26r5C7COzW9aTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvwJTVpdOXMep0nnTfdesg/o7EgU8c/OPRteJao1x8EeY57hMBCz6HplVeHXZkM/T
-	 m3c+IY5t3M/KneaptOo56rQsjmlEtpnnX+mcieI2E1o8jhE2/0QBWtCs+hVKVAnd56
-	 zTdDot+CdwQobdRwDYMCdA7di8Owk16N9rEXVtUI=
+	b=vB6YlpBcg52xgLA7qsZkyFtchqB0h+2hj+yy3gOAG+V1IAtwZMuTmwvp9nM65d+lB
+	 xf6ImNafQ4GBSdRqSMpQY2b5SJhHb5VaGEkPfBqO9Q+dTzH56h/SOTDekJYtae9QcR
+	 zEMqHF9hceuLUVoytb5vZo8s6QbkvH6axOFzCbvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/379] f2fs: fix write pointers on zoned device after roll forward
-Date: Wed, 21 Feb 2024 14:06:00 +0100
-Message-ID: <20240221130000.262412148@linuxfoundation.org>
+Subject: [PATCH 5.10 182/379] drm/drm_file: fix use of uninitialized variable
+Date: Wed, 21 Feb 2024 14:06:01 +0100
+Message-ID: <20240221130000.292862538@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,35 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit 9dad4d964291295ef48243d4e03972b85138bc9f ]
+[ Upstream commit 1d3062fad9c7313fff9970a88e0538a24480ffb8 ]
 
-1. do roll forward recovery
-2. update current segments pointers
-3. fix the entire zones' write pointers
-4. do checkpoint
+smatch reports:
 
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+drivers/gpu/drm/drm_file.c:967 drm_show_memory_stats() error: uninitialized symbol 'supported_status'.
+
+'supported_status' is only set in one code path. I'm not familiar with
+the code to say if that path will always be ran in real life, but
+whether that is the case or not, I think it is good to initialize
+'supported_status' to 0 to silence the warning (and possibly fix a bug).
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231103-uninit-fixes-v2-1-c22b2444f5f5@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/recovery.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
-index 2700e0fdd3e0..cd56af93df42 100644
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -855,6 +855,8 @@ int f2fs_recover_fsync_data(struct f2fs_sb_info *sbi, bool check_only)
- 	if (!err && fix_curseg_write_pointer && !f2fs_readonly(sbi->sb) &&
- 			f2fs_sb_has_blkzoned(sbi)) {
- 		err = f2fs_fix_curseg_write_pointer(sbi);
-+		if (!err)
-+			err = f2fs_check_write_pointer(sbi);
- 		ret = err;
- 	}
+diff --git a/drivers/gpu/drm/drm_file.c b/drivers/gpu/drm/drm_file.c
+index 537e7de8e9c3..93da7b5d785b 100644
+--- a/drivers/gpu/drm/drm_file.c
++++ b/drivers/gpu/drm/drm_file.c
+@@ -411,7 +411,7 @@ int drm_open(struct inode *inode, struct file *filp)
+ {
+ 	struct drm_device *dev;
+ 	struct drm_minor *minor;
+-	int retcode;
++	int retcode = 0;
+ 	int need_setup = 0;
  
+ 	minor = drm_minor_acquire(iminor(inode));
 -- 
 2.43.0
 
