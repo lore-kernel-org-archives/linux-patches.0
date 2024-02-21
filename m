@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A1779DBC;
-	Wed, 21 Feb 2024 13:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739902A1D7;
+	Wed, 21 Feb 2024 13:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522697; cv=none; b=E7pxopkuJp+xR4avWUJxFGXiAmPSMHXL1rFSRbMgG9LecJqSvJkNStJa3v0bfo532Kf7ifSDiUXJZdCBO0BdoyNLzsuvwZ8SXPQUHEDli6xTH5snSxGD85lF3d6s22cj7mmPJwkmnKDBf4zZD/MqpZa3AN0L3PaHWFxeyL3lOuk=
+	t=1708522705; cv=none; b=MIGFSK1Qe8C7bW7bXXrGW7skMu+VZN4fiGUmNXa1IZOHjEoBqSQwZPVE8ImGT7kcBNVlWvCX/MqJ+J6vCVo0IjXCUL/pIEeP8tu3uOSFfRQ9t1Fe+QGcDR841+es4d3Qjb1Y11e6JQe5aG8gpy0Ohs9ixT+JCm+Rra1M9XgdlJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522697; c=relaxed/simple;
-	bh=8wEGm6NZVea5MRaDfJ/3uDt+AoBF5iu3nSAxJaGKoiw=;
+	s=arc-20240116; t=1708522705; c=relaxed/simple;
+	bh=qEyh5l8YTpu8GubhBOvskUayNDV2sv4HjgUtVufaKKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ELj6LwHqzcsRUZ9yqv96rDW0l4neRNCpyv1e6YH3l3mixCNFsT7Uypjk6DBez7u0BF1/SirfZ/xd7vuT6ijruZbrmZOD/Bal7g3xIMoAt9U8R1uxKUK4DZvaE2DRNqDR/ePTS6QdhwWqLBZzxE0ecox0hJfPWpYbLRVMYBdRgQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCGdEA2L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ns58Nzo8dox+2NJrShfiXiJ6m1iJBIrsw0fC23/cHfCbaRhaS0Hj+m8NnxLil9na5VgL5vuEsnx0oUB2++/URABqMlsIbdcZCloxMcaK4kjlJY1dhplAzbkp+dc84Y3QYVZVQhtFRSWLwn8wDfjRf7NuYkoyvauAhG2VZVXKw/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hS6RqQ0m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCGdEA2L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAE1C43390;
-	Wed, 21 Feb 2024 13:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hS6RqQ0m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D48DC433C7;
+	Wed, 21 Feb 2024 13:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522696;
-	bh=8wEGm6NZVea5MRaDfJ/3uDt+AoBF5iu3nSAxJaGKoiw=;
+	s=korg; t=1708522704;
+	bh=qEyh5l8YTpu8GubhBOvskUayNDV2sv4HjgUtVufaKKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCGdEA2LSuoB9yoF3isVzH2BmsaXYyiPiGi5OQWc52PrNMjC3XZJuPyfMLP0PA29o
-	 UXv3KJsKYInrVQe3UgX4x62Jpx3NzS9M9sbEEf8kI0u7QcI39OI/4RrwLZg5AJE5F7
-	 +w0iABFCR8ah0S94wAzQv5fjJr9TF1oLlIge9uio=
+	b=hS6RqQ0m/Aa3q0KUmnCgih5PYPrL4GsdO3H0j3pW7Opy45vBVp46QLlXpRuVauZPy
+	 67xYNbh9uQFZj7g3dpz+EYF1f8+4Vdne4Xf2ewjJ8DTolxs+RntUSXzzkh3+12lN7z
+	 VrI8MYPmMPk6b9fcrMqCG8+2lG6VIsmTfmrX5aoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aric Cyr <aric.cyr@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Josip Pavic <josip.pavic@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/476] drm/amd/display: make flip_timestamp_in_us a 64-bit variable
-Date: Wed, 21 Feb 2024 14:04:45 +0100
-Message-ID: <20240221130016.536891156@linuxfoundation.org>
+Subject: [PATCH 5.15 208/476] f2fs: fix to check return value of f2fs_reserve_new_block()
+Date: Wed, 21 Feb 2024 14:04:19 +0100
+Message-ID: <20240221130015.602303937@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -54,41 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josip Pavic <josip.pavic@amd.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 6fb12518ca58412dc51054e2a7400afb41328d85 ]
+[ Upstream commit 956fa1ddc132e028f3b7d4cf17e6bfc8cb36c7fd ]
 
-[Why]
-This variable currently overflows after about 71 minutes. This doesn't
-cause any known functional issues but it does make debugging more
-difficult.
+Let's check return value of f2fs_reserve_new_block() in do_recover_data()
+rather than letting it fails silently.
 
-[How]
-Make it a 64-bit variable.
+Also refactoring check condition on return value of f2fs_reserve_new_block()
+as below:
+- trigger f2fs_bug_on() only for ENOSPC case;
+- use do-while statement to avoid redundant codes;
 
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
-Acked-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Josip Pavic <josip.pavic@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_hw_types.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/recovery.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
-index 52355fe6994c..51df38a210e8 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_hw_types.h
-@@ -417,7 +417,7 @@ struct dc_cursor_position {
- };
+diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
+index ba7eeb3c2738..da0801aa4118 100644
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -657,7 +657,16 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		 */
+ 		if (dest == NEW_ADDR) {
+ 			f2fs_truncate_data_blocks_range(&dn, 1);
+-			f2fs_reserve_new_block(&dn);
++			do {
++				err = f2fs_reserve_new_block(&dn);
++				if (err == -ENOSPC) {
++					f2fs_bug_on(sbi, 1);
++					break;
++				}
++			} while (err &&
++				IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
++			if (err)
++				goto err;
+ 			continue;
+ 		}
  
- struct dc_cursor_mi_param {
--	unsigned int pixel_clk_khz;
-+	unsigned long long pixel_clk_khz;
- 	unsigned int ref_clk_khz;
- 	struct rect viewport;
- 	struct fixed31_32 h_scale_ratio;
+@@ -665,12 +674,14 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		if (f2fs_is_valid_blkaddr(sbi, dest, META_POR)) {
+ 
+ 			if (src == NULL_ADDR) {
+-				err = f2fs_reserve_new_block(&dn);
+-				while (err &&
+-				       IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION))
++				do {
+ 					err = f2fs_reserve_new_block(&dn);
+-				/* We should not get -ENOSPC */
+-				f2fs_bug_on(sbi, err);
++					if (err == -ENOSPC) {
++						f2fs_bug_on(sbi, 1);
++						break;
++					}
++				} while (err &&
++					IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
+ 				if (err)
+ 					goto err;
+ 			}
 -- 
 2.43.0
 
