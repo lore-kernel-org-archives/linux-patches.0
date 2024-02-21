@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80E67EEF9;
-	Wed, 21 Feb 2024 14:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2005A7EEF7;
+	Wed, 21 Feb 2024 14:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524967; cv=none; b=gjp7oh/B28AKMjxZJ/rhmAJoK1ekKdh1q0LpOnGbi8dTW4snUWrLD0Qmgm64QkP/ipy98NfnqtisRE7UP8lNiZHPXP/JXvGGa4sCSLAevr93EHHLiW3V/Ne1K/UdDA9RfvluDYEPApw0tshCy5kbdHQCl7++p2FFhf4PopcOvBM=
+	t=1708524971; cv=none; b=uZEgDHBuxxSzQwT1HTQ+E0AIIn11jxY5iNc1rsqBsHv0PwbdsGxaWGrbADuaQEp+QrsFMYfWCe9zBOcKp4dbyUxIDGxIlEM8hTJ01Q+TEhVke+gqjfUtd5KI7mKAHAPGEPq+zfEU4zcWmpKCRYD8ZkJPCWF9KQPpLQPbKDlPxc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524967; c=relaxed/simple;
-	bh=oHLjz616FMbRRRyLEVMzHd9BM4DTPxIGj9O/n3X5HQg=;
+	s=arc-20240116; t=1708524971; c=relaxed/simple;
+	bh=5vzBi9xoK9jjfntcpkgV+QUVedwdoSZ5U62wJFw9ajk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTTjdvcQmKXwuuxdOU05iMfABvM4bEp2psF2weuGWmyhEtXpEqVuVKdVW5RV1n2Zmby0coxYtMmQwWFjZi8PaKeOw/yYG3wVHoje/WNJNRO5e2wfJIZ4K6C/dAp18lXDbYguktDZmrff8rDZCxOhTzpCSu0k4X+LPaqauNpzedA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+i2SXLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y1xcVxbRw/a/gsOlpfM+o0IBUWRbHIfEXTv9kBdnY730XYP9WUKWakOVMH3SGjZvj4nyESqnhzjqyGGaNgZBYblCMPfqY7XpWgJz3Ru4m1rjSX2v1AqHDjjZklQ3wv5MbarlCjwcHq5xKJ+cBIaQh8TMXbyEU6YkX2zNUxXVBWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8xHTeqd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+i2SXLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6851DC43390;
-	Wed, 21 Feb 2024 14:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8xHTeqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E642C43390;
+	Wed, 21 Feb 2024 14:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524966;
-	bh=oHLjz616FMbRRRyLEVMzHd9BM4DTPxIGj9O/n3X5HQg=;
+	s=korg; t=1708524969;
+	bh=5vzBi9xoK9jjfntcpkgV+QUVedwdoSZ5U62wJFw9ajk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+i2SXLDJCvpQxbEJJOUxulxqoOnoiA0uMHSRmFsRiRpOxXZGRl78Ef+IQ+ykd1tQ
-	 TXFss3rQGjb/b5QNAUhGdubwF4YmqcrmrgJUEcWcvU+NT5Ototbl3twywYhqVP36u3
-	 yTOWWhxScacI0pevaoXWhhk7lNQdNVPcUC0NTiwM=
+	b=Y8xHTeqdmfpga8qpxY5Osym2JJN3a0LZ8XPJPiLC0i5JKyvF0dklZ5mXGhCfcH2Xm
+	 snSq84+fRd1yqu3qiEgqnPRN4cufy01zS5jNfwlPSsEq0W26E9saAwXYfDUDwIdre2
+	 XTmv79BAXdInJejsW5sOhZQcuvqBLYGO9v41pwW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 5.4 019/267] rename(): fix the locking of subdirectories
-Date: Wed, 21 Feb 2024 14:06:00 +0100
-Message-ID: <20240221125940.653938056@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 020/267] block: Remove special-casing of compound pages
+Date: Wed, 21 Feb 2024 14:06:01 +0100
+Message-ID: <20240221125940.684073698@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -50,274 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 22e111ed6c83dcde3037fc81176012721bc34c0b upstream.
+commit 1b151e2435fc3a9b10c8946c6aebe9f3e1938c55 upstream.
 
-	We should never lock two subdirectories without having taken
-->s_vfs_rename_mutex; inode pointer order or not, the "order" proposed
-in 28eceeda130f "fs: Lock moved directories" is not transitive, with
-the usual consequences.
+The special casing was originally added in pre-git history; reproducing
+the commit log here:
 
-	The rationale for locking renamed subdirectory in all cases was
-the possibility of race between rename modifying .. in a subdirectory to
-reflect the new parent and another thread modifying the same subdirectory.
-For a lot of filesystems that's not a problem, but for some it can lead
-to trouble (e.g. the case when short directory contents is kept in the
-inode, but creating a file in it might push it across the size limit
-and copy its contents into separate data block(s)).
+> commit a318a92567d77
+> Author: Andrew Morton <akpm@osdl.org>
+> Date:   Sun Sep 21 01:42:22 2003 -0700
+>
+>     [PATCH] Speed up direct-io hugetlbpage handling
+>
+>     This patch short-circuits all the direct-io page dirtying logic for
+>     higher-order pages.  Without this, we pointlessly bounce BIOs up to
+>     keventd all the time.
 
-	However, we need that only in case when the parent does change -
-otherwise ->rename() doesn't need to do anything with .. entry in the
-first place.  Some instances are lazy and do a tautological update anyway,
-but it's really not hard to avoid.
+In the last twenty years, compound pages have become used for more than
+just hugetlb.  Rewrite these functions to operate on folios instead
+of pages and remove the special case for hugetlbfs; I don't think
+it's needed any more (and if it is, we can put it back in as a call
+to folio_test_hugetlb()).
 
-Amended locking rules for rename():
-	find the parent(s) of source and target
-	if source and target have the same parent
-		lock the common parent
-	else
-		lock ->s_vfs_rename_mutex
-		lock both parents, in ancestor-first order; if neither
-		is an ancestor of another, lock the parent of source
-		first.
-	find the source and target.
-	if source and target have the same parent
-		if operation is an overwriting rename of a subdirectory
-			lock the target subdirectory
-	else
-		if source is a subdirectory
-			lock the source
-		if target is a subdirectory
-			lock the target
-	lock non-directories involved, in inode pointer order if both
-	source and target are such.
+This was found by inspection; as far as I can tell, this bug can lead
+to pages used as the destination of a direct I/O read not being marked
+as dirty.  If those pages are then reclaimed by the MM without being
+dirtied for some other reason, they won't be written out.  Then when
+they're faulted back in, they will not contain the data they should.
+It'll take a pretty unusual setup to produce this problem with several
+races all going the wrong way.
 
-That way we are guaranteed that parents are locked (for obvious reasons),
-that any renamed non-directory is locked (nfsd relies upon that),
-that any victim is locked (emptiness check needs that, among other things)
-and subdirectory that changes parent is locked (needed to protect the update
-of .. entries).  We are also guaranteed that any operation locking more
-than one directory either takes ->s_vfs_rename_mutex or locks a parent
-followed by its child.
+This problem predates the folio work; it could for example have been
+triggered by mmaping a THP in tmpfs and using that as the target of an
+O_DIRECT read.
 
-Cc: stable@vger.kernel.org
-Fixes: 28eceeda130f "fs: Lock moved directories"
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 800d8c63b2e98 ("shmem: add huge pages support")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/directory-locking.rst |   25 ++++++----
- Documentation/filesystems/locking.rst           |    5 +-
- Documentation/filesystems/porting.rst           |   18 +++++++
- fs/namei.c                                      |   60 ++++++++++++++----------
- 4 files changed, 74 insertions(+), 34 deletions(-)
+ block/bio.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/Documentation/filesystems/directory-locking.rst
-+++ b/Documentation/filesystems/directory-locking.rst
-@@ -22,13 +22,16 @@ exclusive.
- 3) object removal.  Locking rules: caller locks parent, finds victim,
- locks victim and calls the method.  Locks are exclusive.
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -884,7 +884,7 @@ void bio_release_pages(struct bio *bio,
+ 		return;
  
--4) rename() that is _not_ cross-directory.  Locking rules: caller locks the
--parent and finds source and target.  We lock both (provided they exist).  If we
--need to lock two inodes of different type (dir vs non-dir), we lock directory
--first.  If we need to lock two inodes of the same type, lock them in inode
--pointer order.  Then call the method.  All locks are exclusive.
--NB: we might get away with locking the the source (and target in exchange
--case) shared.
-+4) rename() that is _not_ cross-directory.  Locking rules: caller locks
-+the parent and finds source and target.  Then we decide which of the
-+source and target need to be locked.  Source needs to be locked if it's a
-+non-directory; target - if it's a non-directory or about to be removed.
-+Take the locks that need to be taken, in inode pointer order if need
-+to take both (that can happen only when both source and target are
-+non-directories - the source because it wouldn't be locked otherwise
-+and the target because mixing directory and non-directory is allowed
-+only with RENAME_EXCHANGE, and that won't be removing the target).
-+After the locks had been taken, call the method.  All locks are exclusive.
- 
- 5) link creation.  Locking rules:
- 
-@@ -44,7 +47,7 @@ rules:
- 
- 	* lock the filesystem
- 	* lock parents in "ancestors first" order. If one is not ancestor of
--	  the other, lock them in inode pointer order.
-+	  the other, lock the parent of source first.
- 	* find source and target.
- 	* if old parent is equal to or is a descendent of target
- 	  fail with -ENOTEMPTY
-@@ -54,10 +57,11 @@ rules:
- 	  need to lock two inodes of different type (dir vs non-dir), we lock
- 	  the directory first. If we need to lock two inodes of the same type,
- 	  lock them in inode pointer order.
-+	* Lock subdirectories involved (source before target).
-+	* Lock non-directories involved, in inode pointer order.
- 	* call the method.
- 
--All ->i_rwsem are taken exclusive.  Again, we might get away with locking
--the the source (and target in exchange case) shared.
-+All ->i_rwsem are taken exclusive.
- 
- The rules above obviously guarantee that all directories that are going to be
- read, modified or removed by method will be locked by caller.
-@@ -67,6 +71,7 @@ If no directory is its own ancestor, the
- 
- Proof:
- 
-+[XXX: will be updated once we are done massaging the lock_rename()]
- 	First of all, at any moment we have a linear ordering of the
- 	objects - A < B iff (A is an ancestor of B) or (B is not an ancestor
-         of A and ptr(A) < ptr(B)).
---- a/Documentation/filesystems/locking.rst
-+++ b/Documentation/filesystems/locking.rst
-@@ -95,7 +95,7 @@ symlink:	exclusive
- mkdir:		exclusive
- unlink:		exclusive (both)
- rmdir:		exclusive (both)(see below)
--rename:		exclusive (all)	(see below)
-+rename:		exclusive (both parents, some children)	(see below)
- readlink:	no
- get_link:	no
- setattr:	exclusive
-@@ -113,6 +113,9 @@ tmpfile:	no
- 	Additionally, ->rmdir(), ->unlink() and ->rename() have ->i_rwsem
- 	exclusive on victim.
- 	cross-directory ->rename() has (per-superblock) ->s_vfs_rename_sem.
-+	->unlink() and ->rename() have ->i_rwsem exclusive on all non-directories
-+	involved.
-+	->rename() has ->i_rwsem exclusive on any subdirectory that changes parent.
- 
- See Documentation/filesystems/directory-locking.rst for more detailed discussion
- of the locking scheme for directory operations.
---- a/Documentation/filesystems/porting.rst
-+++ b/Documentation/filesystems/porting.rst
-@@ -858,3 +858,21 @@ be misspelled d_alloc_anon().
- [should've been added in 2016] stale comment in finish_open() nonwithstanding,
- failure exits in ->atomic_open() instances should *NOT* fput() the file,
- no matter what.  Everything is handled by the caller.
-+
-+---
-+
-+**mandatory**
-+
-+If ->rename() update of .. on cross-directory move needs an exclusion with
-+directory modifications, do *not* lock the subdirectory in question in your
-+->rename() - it's done by the caller now [that item should've been added in
-+28eceeda130f "fs: Lock moved directories"].
-+
-+---
-+
-+**mandatory**
-+
-+On same-directory ->rename() the (tautological) update of .. is not protected
-+by any locks; just don't do it if the old parent is the same as the new one.
-+We really can't lock two subdirectories in same-directory rename - not without
-+deadlocks.
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -2879,20 +2879,14 @@ struct dentry *lock_rename(struct dentry
- 	p = d_ancestor(p2, p1);
- 	if (p) {
- 		inode_lock_nested(p2->d_inode, I_MUTEX_PARENT);
--		inode_lock_nested(p1->d_inode, I_MUTEX_CHILD);
-+		inode_lock_nested(p1->d_inode, I_MUTEX_PARENT2);
- 		return p;
+ 	bio_for_each_segment_all(bvec, bio, iter_all) {
+-		if (mark_dirty && !PageCompound(bvec->bv_page))
++		if (mark_dirty)
+ 			set_page_dirty_lock(bvec->bv_page);
+ 		put_page(bvec->bv_page);
  	}
+@@ -1691,8 +1691,7 @@ void bio_set_pages_dirty(struct bio *bio
+ 	struct bvec_iter_all iter_all;
  
- 	p = d_ancestor(p1, p2);
--	if (p) {
--		inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
--		inode_lock_nested(p2->d_inode, I_MUTEX_CHILD);
--		return p;
--	}
--
--	lock_two_inodes(p1->d_inode, p2->d_inode,
--			I_MUTEX_PARENT, I_MUTEX_PARENT2);
--	return NULL;
-+	inode_lock_nested(p1->d_inode, I_MUTEX_PARENT);
-+	inode_lock_nested(p2->d_inode, I_MUTEX_PARENT2);
-+	return p;
+ 	bio_for_each_segment_all(bvec, bio, iter_all) {
+-		if (!PageCompound(bvec->bv_page))
+-			set_page_dirty_lock(bvec->bv_page);
++		set_page_dirty_lock(bvec->bv_page);
+ 	}
  }
- EXPORT_SYMBOL(lock_rename);
  
-@@ -4383,11 +4377,12 @@ SYSCALL_DEFINE2(link, const char __user
-  *
-  *	a) we can get into loop creation.
-  *	b) race potential - two innocent renames can create a loop together.
-- *	   That's where 4.4 screws up. Current fix: serialization on
-+ *	   That's where 4.4BSD screws up. Current fix: serialization on
-  *	   sb->s_vfs_rename_mutex. We might be more accurate, but that's another
-  *	   story.
-- *	c) we have to lock _four_ objects - parents and victim (if it exists),
-- *	   and source.
-+ *	c) we may have to lock up to _four_ objects - parents and victim (if it exists),
-+ *	   and source (if it's a non-directory or a subdirectory that moves to
-+ *	   different parent).
-  *	   And that - after we got ->i_mutex on parents (until then we don't know
-  *	   whether the target exists).  Solution: try to be smart with locking
-  *	   order for inodes.  We rely on the fact that tree topology may change
-@@ -4416,6 +4411,7 @@ int vfs_rename(struct inode *old_dir, st
- 	bool new_is_dir = false;
- 	unsigned max_links = new_dir->i_sb->s_max_links;
- 	struct name_snapshot old_name;
-+	bool lock_old_subdir, lock_new_subdir;
+@@ -1740,7 +1739,7 @@ void bio_check_pages_dirty(struct bio *b
+ 	struct bvec_iter_all iter_all;
  
- 	if (source == target)
- 		return 0;
-@@ -4465,15 +4461,32 @@ int vfs_rename(struct inode *old_dir, st
- 	take_dentry_name_snapshot(&old_name, old_dentry);
- 	dget(new_dentry);
- 	/*
--	 * Lock all moved children. Moved directories may need to change parent
--	 * pointer so they need the lock to prevent against concurrent
--	 * directory changes moving parent pointer. For regular files we've
--	 * historically always done this. The lockdep locking subclasses are
--	 * somewhat arbitrary but RENAME_EXCHANGE in particular can swap
--	 * regular files and directories so it's difficult to tell which
--	 * subclasses to use.
-+	 * Lock children.
-+	 * The source subdirectory needs to be locked on cross-directory
-+	 * rename or cross-directory exchange since its parent changes.
-+	 * The target subdirectory needs to be locked on cross-directory
-+	 * exchange due to parent change and on any rename due to becoming
-+	 * a victim.
-+	 * Non-directories need locking in all cases (for NFS reasons);
-+	 * they get locked after any subdirectories (in inode address order).
-+	 *
-+	 * NOTE: WE ONLY LOCK UNRELATED DIRECTORIES IN CROSS-DIRECTORY CASE.
-+	 * NEVER, EVER DO THAT WITHOUT ->s_vfs_rename_mutex.
- 	 */
--	lock_two_inodes(source, target, I_MUTEX_NORMAL, I_MUTEX_NONDIR2);
-+	lock_old_subdir = new_dir != old_dir;
-+	lock_new_subdir = new_dir != old_dir || !(flags & RENAME_EXCHANGE);
-+	if (is_dir) {
-+		if (lock_old_subdir)
-+			inode_lock_nested(source, I_MUTEX_CHILD);
-+		if (target && (!new_is_dir || lock_new_subdir))
-+			inode_lock(target);
-+	} else if (new_is_dir) {
-+		if (lock_new_subdir)
-+			inode_lock_nested(target, I_MUTEX_CHILD);
-+		inode_lock(source);
-+	} else {
-+		lock_two_nondirectories(source, target);
-+	}
- 
- 	error = -EBUSY;
- 	if (is_local_mountpoint(old_dentry) || is_local_mountpoint(new_dentry))
-@@ -4517,8 +4530,9 @@ int vfs_rename(struct inode *old_dir, st
- 			d_exchange(old_dentry, new_dentry);
+ 	bio_for_each_segment_all(bvec, bio, iter_all) {
+-		if (!PageDirty(bvec->bv_page) && !PageCompound(bvec->bv_page))
++		if (!PageDirty(bvec->bv_page))
+ 			goto defer;
  	}
- out:
--	inode_unlock(source);
--	if (target)
-+	if (!is_dir || lock_old_subdir)
-+		inode_unlock(source);
-+	if (target && (!new_is_dir || lock_new_subdir))
- 		inode_unlock(target);
- 	dput(new_dentry);
- 	if (!error) {
+ 
 
 
