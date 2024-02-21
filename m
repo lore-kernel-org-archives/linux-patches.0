@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBC953816;
-	Wed, 21 Feb 2024 13:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BCC69D2E;
+	Wed, 21 Feb 2024 13:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521221; cv=none; b=FjR4b8JNk7juxtvmzcm9IwBT2xafereG3Z8d5KqvY365yxOt2sSymk445ym1HpCdNPUB45ngDldKXyMduxEBxoEoJ+LL3DpUS5Ian9NGaUl7VrrZwDPy1w8EL/OGOGF4RJk01QJ/5ae4UFzHPZy72vybQF7gF3+mt9G+1qu+TS0=
+	t=1708521224; cv=none; b=lOJyzVPK7OfW8NFAKS4stsw0q67un0o+UBsfuoxGaZZkApkXzmyWnYaoNxnNjJZOMgNPyLRnwaj/jw2FhuzwdjN1aSUbD1KpMAnXHM5CUgY1ECGxrfRJaXfegK8ZH8uwZb43xRqOJEit+UvQwsLWO9qZY0b7I7Yw+LWW4iRKoYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521221; c=relaxed/simple;
-	bh=1aSim8fNRA9kYTeeZxf/A3l1mAPkMqv7Nlbx75YV41s=;
+	s=arc-20240116; t=1708521224; c=relaxed/simple;
+	bh=r84K9moTjsIXU92oUwbOcGyAhoAZz4AzpmiggXoG/JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IC4PJbnqZ5MyRul1XSLoVcwis6AdK2rxkY6ClvQ2Mp7DWe+m34UHigSQ+QH+Y1ZXCYYkraAOPI6z3GNXottnvkYlrRNJ6smL6dBuzTpDxTugQ75hfcUZrmtS123GOWSDRVf+A13iJXRo7NJ5DLEIQC2bsO0+j+OnINvwnpHIu4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1kxuBLP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kZMjn9uYgF4khYwphVZuNY/Vvo+C+Oe1fu0JDDTPZtm6rja863OtvCiEbgx120TRiX8SvIRD8A3DmbLKRa7Sqfij8zcDmEreko6jKSekRjUX/K+WsShKRYHkqjuDt0DPikVw1xfjQQxbeZjpJG2XIzOBEc+EcnjVeM8oNJg/DdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlPj03ey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1kxuBLP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2CAC43390;
-	Wed, 21 Feb 2024 13:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlPj03ey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C288DC433F1;
+	Wed, 21 Feb 2024 13:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521221;
-	bh=1aSim8fNRA9kYTeeZxf/A3l1mAPkMqv7Nlbx75YV41s=;
+	s=korg; t=1708521224;
+	bh=r84K9moTjsIXU92oUwbOcGyAhoAZz4AzpmiggXoG/JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1kxuBLPiOEYSyGrr/kxdMgPa+Jinw6pqUJ7TiCq4FOyR0LM+AwQVMsG/7BC+qyF2
-	 h5d8czzfh0I1kKEXX6OsBVtjRGq2GY2TwKFXx3aGUYgwxV6x8PoxAM85KwzakM2uwF
-	 3t5yne/KBkeMTQwt0hUgiCNQ5IYurbnGKfUwo13Y=
+	b=dlPj03eyzgLx4+xSoDb4OAiAqt/UCOvnH9hMHYcH/mKJwx+2F8fYYNYAGXSExNOO4
+	 13O36gBQj6F/OHARkOYl7DnjbdqV3kll1xoD0Zg7VKdKG1fmCXrWJuFMDV9XCOnzbt
+	 Fa3V1/VjmkaFrA8ho610KUWh/O8mR/kupiIKXSQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Riches <chris.riches@nutanix.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Yuluo Qiu <qyl27@outlook.com>,
+	Celeste Liu <CoelacanthusHex@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 054/202] audit: Send netlink ACK before setting connection in auditd_set
-Date: Wed, 21 Feb 2024 14:05:55 +0100
-Message-ID: <20240221125933.583565179@linuxfoundation.org>
+Subject: [PATCH 4.19 055/202] ACPI: video: Add quirk for the Colorful X15 AT 23 Laptop
+Date: Wed, 21 Feb 2024 14:05:56 +0100
+Message-ID: <20240221125933.615221830@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -51,115 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Riches <chris.riches@nutanix.com>
+From: Yuluo Qiu <qyl27@outlook.com>
 
-[ Upstream commit 022732e3d846e197539712e51ecada90ded0572a ]
+[ Upstream commit 143176a46bdd3bfbe9ba2462bf94458e80d65ebf ]
 
-When auditd_set sets the auditd_conn pointer, audit messages can
-immediately be put on the socket by other kernel threads. If the backlog
-is large or the rate is high, this can immediately fill the socket
-buffer. If the audit daemon requested an ACK for this operation, a full
-socket buffer causes the ACK to get dropped, also setting ENOBUFS on the
-socket.
+The Colorful X15 AT 23 ACPI video-bus device report spurious
+ACPI_VIDEO_NOTIFY_CYCLE events resulting in spurious KEY_SWITCHVIDEOMODE
+events being reported to userspace (and causing trouble there) when
+an external screen plugged in.
 
-To avoid this race and ensure ACKs get through, fast-track the ACK in
-this specific case to ensure it is sent before auditd_conn is set.
+Add a quirk setting the report_key_events mask to
+REPORT_BRIGHTNESS_KEY_EVENTS so that the ACPI_VIDEO_NOTIFY_CYCLE
+events will be ignored, while still reporting brightness up/down
+hotkey-presses to userspace normally.
 
-Signed-off-by: Chris Riches <chris.riches@nutanix.com>
-[PM: fix some tab vs space damage]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Yuluo Qiu <qyl27@outlook.com>
+Co-developed-by: Celeste Liu <CoelacanthusHex@gmail.com>
+Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/audit.c | 31 ++++++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 7 deletions(-)
+ drivers/acpi/acpi_video.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/kernel/audit.c b/kernel/audit.c
-index 471d3ad910aa..5fb87eccb8c2 100644
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -498,15 +498,19 @@ static void auditd_conn_free(struct rcu_head *rcu)
-  * @pid: auditd PID
-  * @portid: auditd netlink portid
-  * @net: auditd network namespace pointer
-+ * @skb: the netlink command from the audit daemon
-+ * @ack: netlink ack flag, cleared if ack'd here
-  *
-  * Description:
-  * This function will obtain and drop network namespace references as
-  * necessary.  Returns zero on success, negative values on failure.
-  */
--static int auditd_set(struct pid *pid, u32 portid, struct net *net)
-+static int auditd_set(struct pid *pid, u32 portid, struct net *net,
-+		      struct sk_buff *skb, bool *ack)
- {
- 	unsigned long flags;
- 	struct auditd_connection *ac_old, *ac_new;
-+	struct nlmsghdr *nlh;
- 
- 	if (!pid || !net)
- 		return -EINVAL;
-@@ -518,6 +522,13 @@ static int auditd_set(struct pid *pid, u32 portid, struct net *net)
- 	ac_new->portid = portid;
- 	ac_new->net = get_net(net);
- 
-+	/* send the ack now to avoid a race with the queue backlog */
-+	if (*ack) {
-+		nlh = nlmsg_hdr(skb);
-+		netlink_ack(skb, nlh, 0, NULL);
-+		*ack = false;
-+	}
-+
- 	spin_lock_irqsave(&auditd_conn_lock, flags);
- 	ac_old = rcu_dereference_protected(auditd_conn,
- 					   lockdep_is_held(&auditd_conn_lock));
-@@ -1204,7 +1215,8 @@ static int audit_replace(struct pid *pid)
- 	return auditd_send_unicast_skb(skb);
- }
- 
--static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
-+static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
-+			     bool *ack)
- {
- 	u32			seq;
- 	void			*data;
-@@ -1296,7 +1308,8 @@ static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
- 				/* register a new auditd connection */
- 				err = auditd_set(req_pid,
- 						 NETLINK_CB(skb).portid,
--						 sock_net(NETLINK_CB(skb).sk));
-+						 sock_net(NETLINK_CB(skb).sk),
-+						 skb, ack);
- 				if (audit_enabled != AUDIT_OFF)
- 					audit_log_config_change("audit_pid",
- 								new_pid,
-@@ -1529,9 +1542,10 @@ static int audit_receive_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
-  * Parse the provided skb and deal with any messages that may be present,
-  * malformed skbs are discarded.
-  */
--static void audit_receive(struct sk_buff  *skb)
-+static void audit_receive(struct sk_buff *skb)
- {
- 	struct nlmsghdr *nlh;
-+	bool ack;
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index c22297cce288..a3f8368fe231 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -581,6 +581,15 @@ static const struct dmi_system_id video_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Vostro 3350"),
+ 		},
+ 	},
++	{
++	 .callback = video_set_report_key_events,
++	 .driver_data = (void *)((uintptr_t)REPORT_BRIGHTNESS_KEY_EVENTS),
++	 .ident = "COLORFUL X15 AT 23",
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "COLORFUL"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "X15 AT 23"),
++		},
++	},
  	/*
- 	 * len MUST be signed for nlmsg_next to be able to dec it below 0
- 	 * if the nlmsg_len was not aligned
-@@ -1544,9 +1558,12 @@ static void audit_receive(struct sk_buff  *skb)
- 
- 	audit_ctl_lock();
- 	while (nlmsg_ok(nlh, len)) {
--		err = audit_receive_msg(skb, nlh);
--		/* if err or if this message says it wants a response */
--		if (err || (nlh->nlmsg_flags & NLM_F_ACK))
-+		ack = nlh->nlmsg_flags & NLM_F_ACK;
-+		err = audit_receive_msg(skb, nlh, &ack);
-+
-+		/* send an ack if the user asked for one and audit_receive_msg
-+		 * didn't already do it, or if there was an error. */
-+		if (ack || err)
- 			netlink_ack(skb, nlh, err, NULL);
- 
- 		nlh = nlmsg_next(nlh, &len);
+ 	 * Some machines change the brightness themselves when a brightness
+ 	 * hotkey gets pressed, despite us telling them not to. In this case
 -- 
 2.43.0
 
