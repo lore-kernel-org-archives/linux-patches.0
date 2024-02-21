@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ACC7B3E5;
-	Wed, 21 Feb 2024 13:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6264677A03;
+	Wed, 21 Feb 2024 13:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521900; cv=none; b=g9f8oCMyiF8Ph6WugQFZqSlm9naUO87BEkJi1U/oHRBy5Y7sbO9tVA5Uhu9/tcwQbpy2vshy5uochIvNNI6n8d08pssRf+eEeD3Hf8038SFvsSBkG4rlol5ERAeEFFgPMjGVrJLNGZMytwMZUjPLzJfJ/avWE43xbKQJAh2v+gQ=
+	t=1708521903; cv=none; b=ZB2Dds/w6I/JlKmRwJrCVBAJBTvXbefuW5rGtZNQs7TjPfOVadc8+FYCCxA7n6Rp3slXg25BIwqbJu4g/jnkZxD9MLSzNtt4ePloczQxXCnrj9U3cgPSACfHe5lFE66ZIimFE1jcrPKSKKUS5j67zRCaA63PyMHHrqaekcGxCfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521900; c=relaxed/simple;
-	bh=A1T2ORXmZkhjRrvcaw7P+Z2MXxqICi4jUqUoLPNMGu0=;
+	s=arc-20240116; t=1708521903; c=relaxed/simple;
+	bh=hB1/Zf1tdQ7GK4C4F5r3CHOA77+m0vnvY5qNtpi5K/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y14m/5HkCUBT5syKKDm/0PUAxgQObxUpkztK7R75fAfB7i0hVZP19Fh2mi03MLzdhHKa42uBXu5MQcJIr9SC4QA6nARCKIWSwdm3V08WPYVarHx+FhBK0sUtFIUwLGU9ITLXtrTrndZqlaaOrUgkJ4Div0uY65RQiIne556CpoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CvXCdDTc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKfWVu5FT5/98LEsPzaVZvrLxeMrBgg/DWaaoj0T78Q5Qe2xZqM0KgjNGsg/t634V1RWAbf8LLZaH57eUFI+iBhAyz5yESuIrJTpRddIQqPJtamYzTNPPMFqJvBJomxQTJpJL4UIsmjaBrU4nYD6DI5+7S4QMcMgBstlYlZmNfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MBigRH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CvXCdDTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B59C433C7;
-	Wed, 21 Feb 2024 13:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MBigRH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF093C433C7;
+	Wed, 21 Feb 2024 13:25:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521900;
-	bh=A1T2ORXmZkhjRrvcaw7P+Z2MXxqICi4jUqUoLPNMGu0=;
+	s=korg; t=1708521903;
+	bh=hB1/Zf1tdQ7GK4C4F5r3CHOA77+m0vnvY5qNtpi5K/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CvXCdDTcGSAbqtu4Zo7bKxcRr7mU8CoI3b10xGnRii+rCFQjpCmk4LdItDCtqRETH
-	 HRS9uhMbgiTBNaqd+JLGGhhi7/hlsj5xJeCt4mAm9hVEz+6US66P/fCpiBGOfp6iPd
-	 /BUJmG8yLpesNjbXg1Be2Q71/4xw8wHd55jvHHkU=
+	b=0MBigRH4ifDp42FeHk1NdyAUM6fY0Zw01U9+Urcm6sjYkdp7tiiCJIJxpwGUkOgZv
+	 sr4ol4aigHWv0YcRcPXf6UJCxL9/D96JwiV5VrJfUy1dHm5X0NM1irpFOWDiWZU35D
+	 aYTl5jOT8W8wr+bodxbhy6pWQyoGzTULWGIXVbQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/476] iio: adc: ad7091r: Enable internal vref if external vref is not supplied
-Date: Wed, 21 Feb 2024 14:00:59 +0100
-Message-ID: <20240221130008.171787462@linuxfoundation.org>
+Subject: [PATCH 5.15 009/476] dmaengine: fix NULL pointer in channel unregistration function
+Date: Wed, 21 Feb 2024 14:01:00 +0100
+Message-ID: <20240221130008.215222902@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,64 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcelo Schmitt <marcelo.schmitt@analog.com>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit e71c5c89bcb165a02df35325aa13d1ee40112401 ]
+[ Upstream commit f5c24d94512f1b288262beda4d3dcb9629222fc7 ]
 
-The ADC needs a voltage reference to work correctly.
-Users can provide an external voltage reference or use the chip internal
-reference to operate the ADC.
-The availability of an in chip reference for the ADC saves the user from
-having to supply an external voltage reference, which makes the external
-reference an optional property as described in the device tree
-documentation.
-Though, to use the internal reference, it must be enabled by writing to
-the configuration register.
-Enable AD7091R internal voltage reference if no external vref is supplied.
+__dma_async_device_channel_register() can fail. In case of failure,
+chan->local is freed (with free_percpu()), and chan->local is nullified.
+When dma_async_device_unregister() is called (because of managed API or
+intentionally by DMA controller driver), channels are unconditionally
+unregistered, leading to this NULL pointer:
+[    1.318693] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000d0
+[...]
+[    1.484499] Call trace:
+[    1.486930]  device_del+0x40/0x394
+[    1.490314]  device_unregister+0x20/0x7c
+[    1.494220]  __dma_async_device_channel_unregister+0x68/0xc0
 
-Fixes: 260442cc5be4 ("iio: adc: ad7091r5: Add scale and external VREF support")
-Signed-off-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Link: https://lore.kernel.org/r/b865033fa6a4fc4bf2b4a98ec51a6144e0f64f77.1703013352.git.marcelo.schmitt1@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Look at dma_async_device_register() function error path, channel device
+unregistration is done only if chan->local is not NULL.
+
+Then add the same condition at the beginning of
+__dma_async_device_channel_unregister() function, to avoid NULL pointer
+issue whatever the API used to reach this function.
+
+Fixes: d2fb0a043838 ("dmaengine: break out channel registration")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20231213160452.2598073-1-amelie.delaunay@foss.st.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7091r-base.c | 7 +++++++
- drivers/iio/adc/ad7091r-base.h | 2 ++
- 2 files changed, 9 insertions(+)
+ drivers/dma/dmaengine.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7091r-base.c b/drivers/iio/adc/ad7091r-base.c
-index 9ddda08918db..f345542e69a0 100644
---- a/drivers/iio/adc/ad7091r-base.c
-+++ b/drivers/iio/adc/ad7091r-base.c
-@@ -405,7 +405,14 @@ int ad7091r_probe(struct device *dev, const char *name,
- 	if (IS_ERR(st->vref)) {
- 		if (PTR_ERR(st->vref) == -EPROBE_DEFER)
- 			return -EPROBE_DEFER;
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index 4ec7bb58c195..9559ebd61f3b 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -1108,6 +1108,9 @@ EXPORT_SYMBOL_GPL(dma_async_device_channel_register);
+ static void __dma_async_device_channel_unregister(struct dma_device *device,
+ 						  struct dma_chan *chan)
+ {
++	if (chan->local == NULL)
++		return;
 +
- 		st->vref = NULL;
-+		/* Enable internal vref */
-+		ret = regmap_set_bits(st->map, AD7091R_REG_CONF,
-+				      AD7091R_REG_CONF_INT_VREF);
-+		if (ret)
-+			return dev_err_probe(st->dev, ret,
-+					     "Error on enable internal reference\n");
- 	} else {
- 		ret = regulator_enable(st->vref);
- 		if (ret)
-diff --git a/drivers/iio/adc/ad7091r-base.h b/drivers/iio/adc/ad7091r-base.h
-index 7a78976a2f80..b9e1c8bf3440 100644
---- a/drivers/iio/adc/ad7091r-base.h
-+++ b/drivers/iio/adc/ad7091r-base.h
-@@ -8,6 +8,8 @@
- #ifndef __DRIVERS_IIO_ADC_AD7091R_BASE_H__
- #define __DRIVERS_IIO_ADC_AD7091R_BASE_H__
- 
-+#define AD7091R_REG_CONF_INT_VREF	BIT(0)
-+
- /* AD7091R_REG_CH_LIMIT */
- #define AD7091R_HIGH_LIMIT		0xFFF
- #define AD7091R_LOW_LIMIT		0x0
+ 	WARN_ONCE(!device->device_release && chan->client_count,
+ 		  "%s called while %d clients hold a reference\n",
+ 		  __func__, chan->client_count);
 -- 
 2.43.0
 
