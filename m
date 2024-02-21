@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51BA78B73;
-	Wed, 21 Feb 2024 13:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572F838398;
+	Wed, 21 Feb 2024 13:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523458; cv=none; b=im7eDPYLitdX7/uUr+zMb/UnbXvVKjih7sIa0QBhmAIPe8zcJg85r/+TgT2n8LtHV7zxvV1Hrw0KyVOnb5zRpIv/GDn2rgTGjsS8Q+I/fqzkVjbOvgbbDUYeH2kUYGfUm3NiCGLuw9E5Xo+D0BunGfgKJiFwEj0ZiPXsDmkyyJc=
+	t=1708523462; cv=none; b=MBKsiAwf2KDqDzNDG52UInaQUtjclrBN/RnDldeJaJ3wQ8xFx0UE+IJxnqDPAiiMpIaQFxSVzVXdl8N0CZqhsIMPw4UzRKAkGdM0ntwLxFdgPLfTkkT73iDjlLm+y02Eszfa0zCvf3Zu5WjaWEqWu5by2WHVmzV6DqCXA1APFsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523458; c=relaxed/simple;
-	bh=kA3tfJEeop8IA1czY6W1CBRqIooGIIEgNkdaoWTOAT4=;
+	s=arc-20240116; t=1708523462; c=relaxed/simple;
+	bh=bWoFotOnLpxZ9o81QeKpToBQPQJt0tww3qMtn8vqht0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XMIJlUslmYHAteXqpu1XjPk8lPfmQ5jQvg8cZRg8/jg1GyzKHllJHmmkLXn+bjYTq8n3cXobfpGMP48PTchAFeA5AHiKRh95kIskZ2mvAI8EX7ZbJ1yx7+i1+kbCWF0XpAAeEy+WR3UbfoU6HS3H03N95GIyZbYGP8SyWgLjHwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=id+kAbnc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqwfCR460sI7sozDRI1oVnRLnUjLvSj8YVFaZC9t2Y41XUNmz0Cpcgw6Ytf/FwEyqcPxJnFKWi0soX16DUDc/EBzczRgZ7pqjtBOirkZBZcpnWewOV4WwJsRAj64KQmJh8+GE5PG3ZIgjjhQQvaLtOEfg0hybMemEWTuxLS7qAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEFidDzH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="id+kAbnc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABBFC433C7;
-	Wed, 21 Feb 2024 13:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEFidDzH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA99C433F1;
+	Wed, 21 Feb 2024 13:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523458;
-	bh=kA3tfJEeop8IA1czY6W1CBRqIooGIIEgNkdaoWTOAT4=;
+	s=korg; t=1708523462;
+	bh=bWoFotOnLpxZ9o81QeKpToBQPQJt0tww3qMtn8vqht0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=id+kAbnc1k9LT+TbsOUqWjQ4cdM8Q7Boh/PyQkaDMnm8ZIsi4RJogM2u1OIKflHhp
-	 PchzkHMPzCuZ1xjSv51FjPjcNG99TfPxp7GhhPx38qc7VxC3BeEdkke2Va9iAXEFT+
-	 jmrf4SWfMt/HF8nfozH87drt82nHrd5TRf4xib8M=
+	b=tEFidDzHrQglWI9RU80trL3S7OaN0uy/b5Z/tWii1oLn3fy9urCmgpTFmz/iEZQgj
+	 SQFoDlQM25gB3NGM1D6TVD8bhRAnFrhCHzTgZKQIQi+I8q6zjSUCjiJglyA76Kys17
+	 hFSDV7FGSwzCEQhGyd2NvVp3rhMPekiQwupZFR6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	stable <stable@kernel.org>,
 	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 441/476] usb: dwc3: gadget: Refactor EP0 forced stall/restart into a separate API
-Date: Wed, 21 Feb 2024 14:08:12 +0100
-Message-ID: <20240221130024.344979322@linuxfoundation.org>
+Subject: [PATCH 5.15 442/476] usb: dwc3: gadget: Handle EP0 request dequeuing properly
+Date: Wed, 21 Feb 2024 14:08:13 +0100
+Message-ID: <20240221130024.384668878@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,109 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-[ Upstream commit 8f40fc0808137c157dd408d2632e63bfca2aecdb ]
+[ Upstream commit 730e12fbec53ab59dd807d981a204258a4cfb29a ]
 
-Several sequences utilize the same routine for forcing the control endpoint
-back into the SETUP phase.  This is required, because those operations need
-to ensure that EP0 is back in the default state.
+Current EP0 dequeue path will share the same as other EPs.  However, there
+are some special considerations that need to be made for EP0 transfers:
 
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+  - EP0 transfers never transition into the started_list
+  - EP0 only has one active request at a time
+
+In case there is a vendor specific control message for a function over USB
+FFS, then there is no guarantee on the timeline which the DATA/STATUS stage
+is responded to.  While this occurs, any attempt to end transfers on
+non-control EPs will end up having the DWC3_EP_DELAY_STOP flag set, and
+defer issuing of the end transfer command.  If the USB FFS application
+decides to timeout the control transfer, or if USB FFS AIO path exits, the
+USB FFS driver will issue a call to usb_ep_dequeue() for the ep0 request.
+
+In case of the AIO exit path, the AIO FS blocks until all pending USB
+requests utilizing the AIO path is completed.  However, since the dequeue
+of ep0 req does not happen properly, all non-control EPs with the
+DWC3_EP_DELAY_STOP flag set will not be handled, and the AIO exit path will
+be stuck waiting for the USB FFS data endpoints to receive a completion
+callback.
+
+Fix is to utilize dwc3_ep0_reset_state() in the dequeue API to ensure EP0
+is brought back to the SETUP state, and ensures that any deferred end
+transfer commands are handled.  This also will end any active transfers
+on EP0, compared to the previous implementation which directly called
+giveback only.
+
+Fixes: fcd2def66392 ("usb: dwc3: gadget: Refactor dwc3_gadget_ep_dequeue")
+Cc: stable <stable@kernel.org>
 Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20230420212759.29429-3-quic_wcheng@quicinc.com
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20231206201814.32664-1-quic_wcheng@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 730e12fbec53 ("usb: dwc3: gadget: Handle EP0 request dequeuing properly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 53 ++++++++++++++++-----------------------
- 1 file changed, 21 insertions(+), 32 deletions(-)
+ drivers/usb/dwc3/gadget.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index a74ac44c6cd8..7704e2444b4b 100644
+index 7704e2444b4b..d472dab16889 100644
 --- a/drivers/usb/dwc3/gadget.c
 +++ b/drivers/usb/dwc3/gadget.c
-@@ -139,6 +139,24 @@ int dwc3_gadget_set_link_state(struct dwc3 *dwc, enum dwc3_link_state state)
- 	return -ETIMEDOUT;
- }
+@@ -2039,7 +2039,17 @@ static int dwc3_gadget_ep_dequeue(struct usb_ep *ep,
  
-+static void dwc3_ep0_reset_state(struct dwc3 *dwc)
-+{
-+	unsigned int	dir;
-+
-+	if (dwc->ep0state != EP0_SETUP_PHASE) {
-+		dir = !!dwc->ep0_expect_in;
-+		if (dwc->ep0state == EP0_DATA_PHASE)
-+			dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
-+		else
-+			dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
-+
-+		dwc->eps[0]->trb_enqueue = 0;
-+		dwc->eps[1]->trb_enqueue = 0;
-+
-+		dwc3_ep0_stall_and_restart(dwc);
-+	}
-+}
-+
- /**
-  * dwc3_ep_inc_trb - increment a trb index.
-  * @index: Pointer to the TRB index to increment.
-@@ -2495,16 +2513,9 @@ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
- 		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
- 				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
- 		if (ret == 0) {
--			unsigned int    dir;
--
- 			dev_warn(dwc->dev, "wait for SETUP phase timed out\n");
- 			spin_lock_irqsave(&dwc->lock, flags);
--			dir = !!dwc->ep0_expect_in;
--			if (dwc->ep0state == EP0_DATA_PHASE)
--				dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
--			else
--				dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
--			dwc3_ep0_stall_and_restart(dwc);
-+			dwc3_ep0_reset_state(dwc);
- 			spin_unlock_irqrestore(&dwc->lock, flags);
+ 	list_for_each_entry(r, &dep->pending_list, list) {
+ 		if (r == req) {
+-			dwc3_gadget_giveback(dep, req, -ECONNRESET);
++			/*
++			 * Explicitly check for EP0/1 as dequeue for those
++			 * EPs need to be handled differently.  Control EP
++			 * only deals with one USB req, and giveback will
++			 * occur during dwc3_ep0_stall_and_restart().  EP0
++			 * requests are never added to started_list.
++			 */
++			if (dep->number > 1)
++				dwc3_gadget_giveback(dep, req, -ECONNRESET);
++			else
++				dwc3_ep0_reset_state(dwc);
+ 			goto out;
  		}
  	}
-@@ -3762,16 +3773,7 @@ static void dwc3_gadget_disconnect_interrupt(struct dwc3 *dwc)
- 	dwc->setup_packet_pending = false;
- 	usb_gadget_set_state(dwc->gadget, USB_STATE_NOTATTACHED);
- 
--	if (dwc->ep0state != EP0_SETUP_PHASE) {
--		unsigned int    dir;
--
--		dir = !!dwc->ep0_expect_in;
--		if (dwc->ep0state == EP0_DATA_PHASE)
--			dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
--		else
--			dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
--		dwc3_ep0_stall_and_restart(dwc);
--	}
-+	dwc3_ep0_reset_state(dwc);
- }
- 
- static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
-@@ -3827,20 +3829,7 @@ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
- 	 * phase. So ensure that EP0 is in setup phase by issuing a stall
- 	 * and restart if EP0 is not in setup phase.
- 	 */
--	if (dwc->ep0state != EP0_SETUP_PHASE) {
--		unsigned int	dir;
--
--		dir = !!dwc->ep0_expect_in;
--		if (dwc->ep0state == EP0_DATA_PHASE)
--			dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
--		else
--			dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
--
--		dwc->eps[0]->trb_enqueue = 0;
--		dwc->eps[1]->trb_enqueue = 0;
--
--		dwc3_ep0_stall_and_restart(dwc);
--	}
-+	dwc3_ep0_reset_state(dwc);
- 
- 	/*
- 	 * In the Synopsis DesignWare Cores USB3 Databook Rev. 3.30a
 -- 
 2.43.0
 
