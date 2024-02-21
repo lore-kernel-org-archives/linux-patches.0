@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A3E7BB1E;
-	Wed, 21 Feb 2024 13:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C062A1D7;
+	Wed, 21 Feb 2024 13:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522934; cv=none; b=kwAvHJ1PNp4kI2nhs09DQ2rsOQ5s0SqVhBTJT6xDJJQHUMm2CaO9h6fMCzLOFEEofFM3Z9/m8Ls2Wfxf8LF1JN9YNoKFVD4DZrdNhUY8Ky/F8yoHPN9cGBDp54v5n9prUEqnLW3CB6vJDl5midhlv3SjAVD7sZKLIafhE+17RdA=
+	t=1708522942; cv=none; b=n6Cyd8SQIJgVf/mC7VnMmYkNGjb9BzIjuQGEyP3s16kwvz1E6FED0c2YXotrEVrxTFLcbui2zSxTZsPR7fcNOGhKJ2p5ZzjW2Dy4kcgDGNQOyG1JH2Uw6y5Gy9GIK8IARbplSHs3BQPi3KvEcIT4ouYukZw+SbuCq3dZTs54cFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522934; c=relaxed/simple;
-	bh=iutp0AkFkSvFuaMBxPB1hfqOE2Wy/rkjCLs6YEqdbCs=;
+	s=arc-20240116; t=1708522942; c=relaxed/simple;
+	bh=XQ/9lPHDE6O8iNTLR+FnYWkbEkqaYH83IDMa5AT2nUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CoFE6MKnfRDF5pNfazD70xPBg+MPYULomDOAywohQiCec4WDSIbXaLdqlcfOD3+CBUQZ0jCPxliA1XN0MA++wQKsYHitUOKOX01F9AapS1XDdlhjcjt6IZU3TymwnTYf7MgSDxvirQYLA0nWT2GQQGaU8lfYYjRfUvo5mHUknwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJQlx+Xm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hvpl+IecrjrfEuiHs+mGa5qxAwo2TNO77A/3hOPwio5Q25yhV8jCIEWk0xSwenufMIpuXl4MEsYHN0DIWNaU812NNu2J+YxPD8BikVgPDL5j2b733WsV+lLNe3ui9+bYR+ZLfy9m3EoY4JT1L+0zZMiyTYC0s6vxM4kbc1N+SlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xm8bHLjT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJQlx+Xm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35F7C43399;
-	Wed, 21 Feb 2024 13:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xm8bHLjT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E772C433F1;
+	Wed, 21 Feb 2024 13:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522934;
-	bh=iutp0AkFkSvFuaMBxPB1hfqOE2Wy/rkjCLs6YEqdbCs=;
+	s=korg; t=1708522942;
+	bh=XQ/9lPHDE6O8iNTLR+FnYWkbEkqaYH83IDMa5AT2nUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJQlx+XmCqNP/OOrKiXikohv71T/R2w34nl9BLyNPbT096FMh9LGnbZekokHszQdx
-	 dOP6a8GfFIFJkFsAP8JqFyTt2lsw/dtKsNfKw9kNEZeZH6R+u0vTg4Ms7fRKPJCBNi
-	 XiG7e22bHDFvJDO2uMQwHt+4pqUvvqMj0eaqSv/M=
+	b=xm8bHLjTWkHmS+oEwc0RVrXWdGL1qUaDhKmKEaKw0QGcHj1UBSkDu/QYnhU+NSFMi
+	 6t9/43ppliEAUn711Sqn+BqI1Qwwy4KG+8/nQWmounw17OxOsleIjP6+PCKkAwQUX6
+	 5uAnKzPsalUJMOnXaIA3U3MZfEsgydmrB/+9DuQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 295/476] ASoC: codecs: lpass-wsa-macro: fix compander volume hack
-Date: Wed, 21 Feb 2024 14:05:46 +0100
-Message-ID: <20240221130018.896894635@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 269/476] drm: using mul_u32_u32() requires linux/math64.h
+Date: Wed, 21 Feb 2024 14:05:20 +0100
+Message-ID: <20240221130017.797620317@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -45,80 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
 
-commit 46188db080bd1df7d2d28031b89e56f2fdbabd67 upstream.
+[ Upstream commit 933a2a376fb3f22ba4774f74233571504ac56b02 ]
 
-The LPASS WSA macro codec driver is updating the digital gain settings
-behind the back of user space on DAPM events if companding has been
-enabled.
+Some pending include file cleanups produced this error:
 
-As compander control is exported to user space, this can result in the
-digital gain setting being incremented (or decremented) every time the
-sound server is started and the codec suspended depending on what the
-UCM configuration looks like.
+In file included from include/linux/kernel.h:27,
+                 from drivers/gpu/ipu-v3/ipu-dp.c:7:
+include/drm/drm_color_mgmt.h: In function 'drm_color_lut_extract':
+include/drm/drm_color_mgmt.h:45:46: error: implicit declaration of function 'mul_u32_u32' [-Werror=implicit-function-declaration]
+   45 |                 return DIV_ROUND_CLOSEST_ULL(mul_u32_u32(user_input, (1 << bit_precision) - 1),
+      |                                              ^~~~~~~~~~~
 
-Soon enough playback will become distorted (or too quiet).
-
-This is specifically a problem on the Lenovo ThinkPad X13s as this
-bypasses the limit for the digital gain setting that has been set by the
-machine driver.
-
-Fix this by simply dropping the compander gain offset hack. If someone
-cares about modelling the impact of the compander setting this can
-possibly be done by exporting it as a volume control later.
-
-Note that the volume registers still need to be written after enabling
-clocks in order for any prior updates to take effect.
-
-Fixes: 2c4066e5d428 ("ASoC: codecs: lpass-wsa-macro: add dapm widgets and route")
-Cc: stable@vger.kernel.org      # 5.11
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://msgid.link/r/20240119112420.7446-4-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c6fbb6bca108 ("drm: Fix color LUT rounding")
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231219145734.13e40e1e@canb.auug.org.au
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/lpass-wsa-macro.c |    7 -------
- 1 file changed, 7 deletions(-)
+ include/drm/drm_color_mgmt.h | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -1577,7 +1577,6 @@ static int wsa_macro_enable_interpolator
- 	u16 gain_reg;
- 	u16 reg;
- 	int val;
--	int offset_val = 0;
- 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+diff --git a/include/drm/drm_color_mgmt.h b/include/drm/drm_color_mgmt.h
+index 54b2b2467bfd..ed81741036d7 100644
+--- a/include/drm/drm_color_mgmt.h
++++ b/include/drm/drm_color_mgmt.h
+@@ -24,6 +24,7 @@
+ #define __DRM_COLOR_MGMT_H__
  
- 	if (w->shift == WSA_MACRO_COMP1) {
-@@ -1616,10 +1615,8 @@ static int wsa_macro_enable_interpolator
- 					CDC_WSA_RX1_RX_PATH_MIX_SEC0,
- 					CDC_WSA_RX_PGA_HALF_DB_MASK,
- 					CDC_WSA_RX_PGA_HALF_DB_ENABLE);
--			offset_val = -2;
- 		}
- 		val = snd_soc_component_read(component, gain_reg);
--		val += offset_val;
- 		snd_soc_component_write(component, gain_reg, val);
- 		wsa_macro_config_ear_spkr_gain(component, wsa,
- 						event, gain_reg);
-@@ -1647,10 +1644,6 @@ static int wsa_macro_enable_interpolator
- 					CDC_WSA_RX1_RX_PATH_MIX_SEC0,
- 					CDC_WSA_RX_PGA_HALF_DB_MASK,
- 					CDC_WSA_RX_PGA_HALF_DB_DISABLE);
--			offset_val = 2;
--			val = snd_soc_component_read(component, gain_reg);
--			val += offset_val;
--			snd_soc_component_write(component, gain_reg, val);
- 		}
- 		wsa_macro_config_ear_spkr_gain(component, wsa,
- 						event, gain_reg);
+ #include <linux/ctype.h>
++#include <linux/math64.h>
+ #include <drm/drm_property.h>
+ 
+ struct drm_crtc;
+-- 
+2.43.0
+
 
 
