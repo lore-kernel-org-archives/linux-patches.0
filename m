@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A383969942;
-	Wed, 21 Feb 2024 13:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C18C69942;
+	Wed, 21 Feb 2024 13:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523419; cv=none; b=fdqhVGBd/gn0mraBViKj1gh76eY/tQUS4lvIdbH2zP2jh14S0iwzLTiBKW0G8vcQQFP+Ua4Xc2JfPlc0FVqjcM+b8ux/L+hkOLXiTpROwLqfMD6GDTYM9YSjQ3Nzfyhrx5/KAnz2F8k1oXmiLfw1Hz37EN7g9+6HEHLu8ams7HQ=
+	t=1708523422; cv=none; b=GV6prz2kFqjuAUNEg4A8rkY2rTCfyaMztAKaCJ3Lrnw3KtZvca37WR26PMgzlfOWu/GQxJsutOHjVsi57vn3J9qQQB3SsvAS0O5Ghu3og9ewxXvxAxqLvZUJhQHVQL7Aomlr1hgkrFvrOw5NW25QETxS8OBZWKGTZGPbDMDyNH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523419; c=relaxed/simple;
-	bh=cp89iE8V4iT78vY2rPN7fEhJbu2PhOGx9jb9x06c+8g=;
+	s=arc-20240116; t=1708523422; c=relaxed/simple;
+	bh=R7F1Man5LGgsK0FDR3r/7Pk72snPKfrjRjlfsJxrbFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+W7lUvdeAXGbspjpMZ4s8VHKfvdoTySWcVW5WdeMcdmGa5MpENoNlndEwoK+VQzipxVUDpkFulyaVv7J5jtKlbQey3izQwYcvNc8Pq++7nLFs0q+whOAqfVsC4Ue2vh5guBDcAuljWUzvbCSwkMaY9kx39PmvQuJIGHouyTLWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuCo2Gv0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=npgZDdifLN0Xl0mESYPOSbBwFwXOn28BO+UUN54GUpzHQ9nqdmezHcB2NlJ9X4zETFrJu/41mXiuOEtwDcuwBncX6xR3/uoEaf1/wrkfZIxSueQM2/z6mwhnZr0mM53gP+bMDF/MWO89WbazHOTsZ8uRdI4gJmSYlWv98FKS9Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z86S94/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuCo2Gv0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEB2C433F1;
-	Wed, 21 Feb 2024 13:50:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z86S94/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23731C433F1;
+	Wed, 21 Feb 2024 13:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523419;
-	bh=cp89iE8V4iT78vY2rPN7fEhJbu2PhOGx9jb9x06c+8g=;
+	s=korg; t=1708523422;
+	bh=R7F1Man5LGgsK0FDR3r/7Pk72snPKfrjRjlfsJxrbFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuCo2Gv0EvuKdgLgKVYE2L6CxNaegNrQrqfaD4JllsSjVxrRBEvRR6BURHAyEcy9U
-	 zV9mJ4odl9YPo+C5u/bGxbTxP1cCv7kGqEG6Zu/YQ4rOxcnEM2EKK2RVyUv0+coFcM
-	 eKyDLqybCxK2xP12ZzNdtN/DCNY9CR+TIMUZSVCQ=
+	b=z86S94/D38U/DRTRM8q6Fr2Un7aYXBvIW530DQ1fWi9QFTbGdnSnmYmKpeAwLoFkn
+	 O8PEQHTNRTUlBiQ+YNBNUnurbaamn3SrB1d8IzExWoVtc6uJVZTTIjubidiFXg9eaq
+	 gY0gv1yrhxJw00j49U3gkXuapKfCrOuuB04ElnYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lin <yu-hao.lin@nxp.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 431/476] wifi: mwifiex: fix uninitialized firmware_stat
-Date: Wed, 21 Feb 2024 14:08:02 +0100
-Message-ID: <20240221130023.958578187@linuxfoundation.org>
+Subject: [PATCH 5.15 432/476] crypto: lib/mpi - Fix unexpected pointer access in mpi_ec_init
+Date: Wed, 21 Feb 2024 14:08:03 +0100
+Message-ID: <20240221130023.988114533@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -54,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lin <yu-hao.lin@nxp.com>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
-[ Upstream commit 3df95e265924ac898c1a38a0c01846dd0bd3b354 ]
+[ Upstream commit ba3c5574203034781ac4231acf117da917efcd2a ]
 
-Variable firmware_stat is possible to be used without initialization.
+When the mpi_ec_ctx structure is initialized, some fields are not
+cleared, causing a crash when referencing the field when the
+structure was released. Initially, this issue was ignored because
+memory for mpi_ec_ctx is allocated with the __GFP_ZERO flag.
+For example, this error will be triggered when calculating the
+Za value for SM2 separately.
 
-Signed-off-by: David Lin <yu-hao.lin@nxp.com>
-Fixes: 1c5d463c0770 ("wifi: mwifiex: add extra delay for firmware ready")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202312192236.ZflaWYCw-lkp@intel.com/
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231221015511.1032128-1-yu-hao.lin@nxp.com
+Fixes: d58bb7e55a8a ("lib/mpi: Introduce ec implementation to MPI library")
+Cc: stable@vger.kernel.org # v6.5
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sdio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/mpi/ec.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
-index dd4bfb7d71ee..45f46a445a6c 100644
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -790,7 +790,7 @@ static int mwifiex_check_fw_status(struct mwifiex_adapter *adapter,
- {
- 	struct sdio_mmc_card *card = adapter->card;
- 	int ret = 0;
--	u16 firmware_stat;
-+	u16 firmware_stat = 0;
- 	u32 tries;
+diff --git a/lib/mpi/ec.c b/lib/mpi/ec.c
+index 40f5908e57a4..e16dca1e23d5 100644
+--- a/lib/mpi/ec.c
++++ b/lib/mpi/ec.c
+@@ -584,6 +584,9 @@ void mpi_ec_init(struct mpi_ec_ctx *ctx, enum gcry_mpi_ec_models model,
+ 	ctx->a = mpi_copy(a);
+ 	ctx->b = mpi_copy(b);
  
- 	for (tries = 0; tries < poll_num; tries++) {
++	ctx->d = NULL;
++	ctx->t.two_inv_p = NULL;
++
+ 	ctx->t.p_barrett = use_barrett > 0 ? mpi_barrett_init(ctx->p, 0) : NULL;
+ 
+ 	mpi_ec_get_reset(ctx);
 -- 
 2.43.0
 
