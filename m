@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B2D69951;
-	Wed, 21 Feb 2024 13:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641083C2F;
+	Wed, 21 Feb 2024 13:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522797; cv=none; b=Qfn9UoYikciExE7IUrR7EIlP/lwX5qSFD0KNTNBAEq/GQ4jke7urKpQzSOTEkmu2liZQgvmKGPkOYbXRtAqd7eEE0kocffW4OE9xl7yykR3OPp0X55VkLlHv2TKwUVvFQ6esSMlTBNNta46UfDbUO1ZXzDsYdv56NsRrK+1aqzA=
+	t=1708522800; cv=none; b=SXc9Be1QM88wk7IGlTCDgEmtkCSc33782Nm5LSctMjbBMelquFn1CV5DfkSrf/o2qsFg6lrvm36r01h0mwKFI7TYjOwqE7HbftirXFbhNvUiGMoMDBwmE3Ak5KIPc7MEYM59HUaYy7jmzuX87dCX9OOdwhogb4zd/P8jEPt0JQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522797; c=relaxed/simple;
-	bh=ZmkvINYhUfuH7B0uEfrPR0rVWOOA9a+Tjc20xt/sIm4=;
+	s=arc-20240116; t=1708522800; c=relaxed/simple;
+	bh=OXey8OHGqFY4kcJ0xg6FP4VEKkUHFJXD4Ld2GJVorVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HeLm/LxcpmS2n0kzMinAzi/anX9XFKSVgCacAL9LAn9a0sVCsaQhZH0bQOEzw/R0/mUp9ek4MchIDJHirFoxU1a5vOiiyFyzqIgZnUY7BUwH4EfKNCzgqoXx4HNTEOW+tXJwsvMy0L9AXQFC/7bbX9MZrOsO0f3M5C/PQtTtVU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNTxzCLa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uou/bKbgRQSPfxGA31M2/65VqQCs1utYJRtaemm35s1UzChmQX6H4pOluZApKaZg2hSjNvBDovY7Dyehb0Mzl59pY+ciBA39dnO0W0in1JnJdaChZc2ngPBw3+FnS7YvXNKtKSxqyyOhSqptleSvoFnyZbiciSoz9osY2ewN/oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NwlUC60C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNTxzCLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04030C433C7;
-	Wed, 21 Feb 2024 13:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwlUC60C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8947C433F1;
+	Wed, 21 Feb 2024 13:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522797;
-	bh=ZmkvINYhUfuH7B0uEfrPR0rVWOOA9a+Tjc20xt/sIm4=;
+	s=korg; t=1708522800;
+	bh=OXey8OHGqFY4kcJ0xg6FP4VEKkUHFJXD4Ld2GJVorVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNTxzCLa5TeWYIhMI1za4LV3C4qQXp+t+rMDGfIJ314wTKvvTthIzW5x30a8P7DJm
-	 Xuhl/Npwz9dAI7iMI/4IQcvFgXBTtE7p6nOGpXxwXgZwETua03WUxNvSc+GlJPIwgf
-	 FncgWpbPKIvsKQLSl3VKnFyTe3nbrno3y9js4e2c=
+	b=NwlUC60Ct/TJKCpbcQNLzQOy9oaAXNdCpF2Rk/y8QAdExA5h4Q5BGEQcYaoetvSrr
+	 FOqZy2SmbJGjsmJE0iKZ9GNArM7wMYv1KyoSBs5r5KBR6KMTp2hAznAXWJOxsZLox4
+	 zUW507p9xpQK+kqaNf7IERg8uy8s+C9n1/A0PJl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Changhui Zhong <czhong@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: =?UTF-8?q?=5BPATCH=205=2E15=20261/476=5D=20=3D=3FUTF-8=3Fq=3Fvirtio=3D5Fnet=3A=3D20Fix=3D20=22=3DE2=3D80=3D98=25d=3DE2=3D80=3D99=3D20directive=3F=3D=20=3D=3FUTF-8=3Fq=3F=3D20writing=3D20between=3D201=3D20and=3D2011=3D20bytes=3D20into=3D20a=3D20region=3F=3D=20=3D=3FUTF-8=3Fq=3F=3D20of=3D20size=3D2010=22=3D20warnings=3F=3D?=
-Date: Wed, 21 Feb 2024 14:05:12 +0100
-Message-ID: <20240221130017.498575027@linuxfoundation.org>
+Subject: [PATCH 5.15 262/476] blk-mq: fix IO hang from sbitmap wakeup race
+Date: Wed, 21 Feb 2024 14:05:13 +0100
+Message-ID: <20240221130017.533851684@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -46,84 +48,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit e3fe8d28c67bf6c291e920c6d04fa22afa14e6e4 ]
+[ Upstream commit 5266caaf5660529e3da53004b8b7174cab6374ed ]
 
-Fix the warnings when building virtio_net driver.
+In blk_mq_mark_tag_wait(), __add_wait_queue() may be re-ordered
+with the following blk_mq_get_driver_tag() in case of getting driver
+tag failure.
 
-"
-drivers/net/virtio_net.c: In function ‘init_vqs’:
-drivers/net/virtio_net.c:4551:48: warning: ‘%d’ directive writing between 1 and 11 bytes into a region of size 10 [-Wformat-overflow=]
- 4551 |                 sprintf(vi->rq[i].name, "input.%d", i);
-      |                                                ^~
-In function ‘virtnet_find_vqs’,
-    inlined from ‘init_vqs’ at drivers/net/virtio_net.c:4645:8:
-drivers/net/virtio_net.c:4551:41: note: directive argument in the range [-2147483643, 65534]
- 4551 |                 sprintf(vi->rq[i].name, "input.%d", i);
-      |                                         ^~~~~~~~~~
-drivers/net/virtio_net.c:4551:17: note: ‘sprintf’ output between 8 and 18 bytes into a destination of size 16
- 4551 |                 sprintf(vi->rq[i].name, "input.%d", i);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/net/virtio_net.c: In function ‘init_vqs’:
-drivers/net/virtio_net.c:4552:49: warning: ‘%d’ directive writing between 1 and 11 bytes into a region of size 9 [-Wformat-overflow=]
- 4552 |                 sprintf(vi->sq[i].name, "output.%d", i);
-      |                                                 ^~
-In function ‘virtnet_find_vqs’,
-    inlined from ‘init_vqs’ at drivers/net/virtio_net.c:4645:8:
-drivers/net/virtio_net.c:4552:41: note: directive argument in the range [-2147483643, 65534]
- 4552 |                 sprintf(vi->sq[i].name, "output.%d", i);
-      |                                         ^~~~~~~~~~~
-drivers/net/virtio_net.c:4552:17: note: ‘sprintf’ output between 9 and 19 bytes into a destination of size 16
- 4552 |                 sprintf(vi->sq[i].name, "output.%d", i);
+Then in __sbitmap_queue_wake_up(), waitqueue_active() may not observe
+the added waiter in blk_mq_mark_tag_wait() and wake up nothing, meantime
+blk_mq_mark_tag_wait() can't get driver tag successfully.
 
-"
+This issue can be reproduced by running the following test in loop, and
+fio hang can be observed in < 30min when running it on my test VM
+in laptop.
 
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://lore.kernel.org/r/20240104020902.2753599-1-yanjun.zhu@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	modprobe -r scsi_debug
+	modprobe scsi_debug delay=0 dev_size_mb=4096 max_queue=1 host_max_queue=1 submit_queues=4
+	dev=`ls -d /sys/bus/pseudo/drivers/scsi_debug/adapter*/host*/target*/*/block/* | head -1 | xargs basename`
+	fio --filename=/dev/"$dev" --direct=1 --rw=randrw --bs=4k --iodepth=1 \
+       		--runtime=100 --numjobs=40 --time_based --name=test \
+        	--ioengine=libaio
+
+Fix the issue by adding one explicit barrier in blk_mq_mark_tag_wait(), which
+is just fine in case of running out of tag.
+
+Cc: Jan Kara <jack@suse.cz>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Reported-by: Changhui Zhong <czhong@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240112122626.4181044-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ block/blk-mq.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 3eefe8171925..6a655bd442fe 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2913,10 +2913,11 @@ static int virtnet_find_vqs(struct virtnet_info *vi)
- {
- 	vq_callback_t **callbacks;
- 	struct virtqueue **vqs;
--	int ret = -ENOMEM;
--	int i, total_vqs;
- 	const char **names;
-+	int ret = -ENOMEM;
-+	int total_vqs;
- 	bool *ctx;
-+	u16 i;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index bbbbcd2c1941..d80ebba16778 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1176,6 +1176,22 @@ static bool blk_mq_mark_tag_wait(struct blk_mq_hw_ctx *hctx,
+ 	wait->flags &= ~WQ_FLAG_EXCLUSIVE;
+ 	__add_wait_queue(wq, wait);
  
- 	/* We expect 1 RX virtqueue followed by 1 TX virtqueue, followed by
- 	 * possible N-1 RX/TX queue pairs used in multiqueue mode, followed by
-@@ -2953,8 +2954,8 @@ static int virtnet_find_vqs(struct virtnet_info *vi)
- 	for (i = 0; i < vi->max_queue_pairs; i++) {
- 		callbacks[rxq2vq(i)] = skb_recv_done;
- 		callbacks[txq2vq(i)] = skb_xmit_done;
--		sprintf(vi->rq[i].name, "input.%d", i);
--		sprintf(vi->sq[i].name, "output.%d", i);
-+		sprintf(vi->rq[i].name, "input.%u", i);
-+		sprintf(vi->sq[i].name, "output.%u", i);
- 		names[rxq2vq(i)] = vi->rq[i].name;
- 		names[txq2vq(i)] = vi->sq[i].name;
- 		if (ctx)
++	/*
++	 * Add one explicit barrier since blk_mq_get_driver_tag() may
++	 * not imply barrier in case of failure.
++	 *
++	 * Order adding us to wait queue and allocating driver tag.
++	 *
++	 * The pair is the one implied in sbitmap_queue_wake_up() which
++	 * orders clearing sbitmap tag bits and waitqueue_active() in
++	 * __sbitmap_queue_wake_up(), since waitqueue_active() is lockless
++	 *
++	 * Otherwise, re-order of adding wait queue and getting driver tag
++	 * may cause __sbitmap_queue_wake_up() to wake up nothing because
++	 * the waitqueue_active() may not observe us in wait queue.
++	 */
++	smp_mb();
++
+ 	/*
+ 	 * It's possible that a tag was freed in the window between the
+ 	 * allocation failure and adding the hardware queue to the wait
 -- 
 2.43.0
 
