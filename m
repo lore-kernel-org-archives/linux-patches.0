@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BA378B7C;
-	Wed, 21 Feb 2024 13:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CAE78B7C;
+	Wed, 21 Feb 2024 13:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523413; cv=none; b=Ff7j1L3d8q9s+Eis0+Byr7BHs1UN6ANRJ9/vnN3+z2CqwxNN/Tdk74ZCwahiH9o7GwoX6TyQfESGmeH0k+pqzHNNML8VXsvYA7aa2d1nRyLUEscj7Pc0hA2R4QW1a+NmUF++A3GF73f1oOU7BxndUcBzCWPwmhtkUpbiBJHsimw=
+	t=1708523416; cv=none; b=e7JVdSUwrsPPscvmK7woukeSVuHr00ZYfCTQtI5Ptwhcr5GpDkoi/H9Pg9yDEghriOOm6h96MnER06lRUceQ68i+b9PPFY+gmQGE/3QR1ftYJkxp5InBkAVIDc/lwuz8p1uBgSYTL2lzvjvdy3VhJgYiwTTSh1BkpEY5DkrQZT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523413; c=relaxed/simple;
-	bh=x5Mp+s8lo1PdqFDJHw6Nn2sXnJLnbWFKAME2kQq/1IQ=;
+	s=arc-20240116; t=1708523416; c=relaxed/simple;
+	bh=Psdqdni1z+6LpQUzWYUCD4w2yUrclVLIeat9vazyWKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9T85wpjVEt+JSW5bTDBY/D+oqFqJwtm5HV5bUabtKiNn4xd2wGd63scmqmwBdqiEIAJCF1u5uYjZytsX5kFTRKP0nHq+VO3k66gBr4xTJVpt/4Cp/vp0UZMvyxOUl4VMHvocLoWK+cPiXanrWUwQCrfck9wEpoLX7CsGHUyhrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7UVbFrW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VUeoPOQtQzVTfzAJCQRIH/+l7pTyBHske/MWbmNOvaBwvspZHUmd/UJW579TiYSqvVACpUfY5xqeciRbAVYPnINLik6sAAC2pNUs0tmd8Hy7yyJfJFGxLKxDZlZZMkZVJYoUHNeGlvrDmo2qTWreAvP6aOJppleyJ5A7/B9c0UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo94B5GE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7UVbFrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72FFC433C7;
-	Wed, 21 Feb 2024 13:50:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo94B5GE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E789BC43390;
+	Wed, 21 Feb 2024 13:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523413;
-	bh=x5Mp+s8lo1PdqFDJHw6Nn2sXnJLnbWFKAME2kQq/1IQ=;
+	s=korg; t=1708523416;
+	bh=Psdqdni1z+6LpQUzWYUCD4w2yUrclVLIeat9vazyWKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n7UVbFrWGwONmvjxHtCQVl5j5t/dGY3JFgiO9x5dG6RUw5VffjrRFdGMOSFdtQlZP
-	 jHWadfrtsdf/FBkMBuB93+Sp9repFjq5f99MXlSS72Aj2wRzNggDwBZJrmthcKbicW
-	 Iye/1FuYIZsNydxaewbcyv3EkMXPvXGIMUcaEdgA=
+	b=bo94B5GE4AsAEPQ2c99sQXyu7t20BWmGy3hKHuyt5FaYHh7D92D3vkI/IJSvbztxp
+	 G4B+F5sHTV2lVQQJ1D+me8K7Z0D+vLUOUqxWy/Tgad5TS0yrE8+PsfYnDlCu2j6/w3
+	 2WeYiiwR3nZZvQUHKyZptzFYFTIHqBL2T2v1j/kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lin <yu-hao.lin@nxp.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Marcel Ziswiler <marcel.ziswiler@toradex.com>
-Subject: [PATCH 5.15 429/476] wifi: mwifiex: add extra delay for firmware ready
-Date: Wed, 21 Feb 2024 14:08:00 +0100
-Message-ID: <20240221130023.877183671@linuxfoundation.org>
+	Sjoerd Simons <sjoerd@collabora.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 430/476] bus: moxtet: Add spi device table
+Date: Wed, 21 Feb 2024 14:08:01 +0100
+Message-ID: <20240221130023.922634417@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -48,167 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Lin <yu-hao.lin@nxp.com>
+From: Sjoerd Simons <sjoerd@collabora.com>
 
-[ Upstream commit 1c5d463c0770c6fa2037511a24fb17966fd07d97 ]
+[ Upstream commit aaafe88d5500ba18b33be72458439367ef878788 ]
 
-For SDIO IW416, due to a bug, FW may return ready before complete full
-initialization. Command timeout may occur at driver load after reboot.
-Workaround by adding 100ms delay at checking FW status.
+The moxtet module fails to auto-load on. Add a SPI id table to
+allow it to do so.
 
-Signed-off-by: David Lin <yu-hao.lin@nxp.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com> # Verdin AM62 (IW416)
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20231208234029.2197-1-yu-hao.lin@nxp.com
+Signed-off-by: Sjoerd Simons <sjoerd@collabora.com>
+Cc:  <stable@vger.kernel.org>
+Reviewed-by: Marek Behún <kabel@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sdio.c | 19 +++++++++++++++++++
- drivers/net/wireless/marvell/mwifiex/sdio.h |  2 ++
- 2 files changed, 21 insertions(+)
+ drivers/bus/moxtet.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
-index 919f1bae61dc..dd4bfb7d71ee 100644
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -343,6 +343,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8786 = {
- 	.can_dump_fw = false,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = false,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8787 = {
-@@ -358,6 +359,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8787 = {
- 	.can_dump_fw = false,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8797 = {
-@@ -373,6 +375,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8797 = {
- 	.can_dump_fw = false,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8897 = {
-@@ -388,6 +391,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8897 = {
- 	.can_dump_fw = true,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8977 = {
-@@ -404,6 +408,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8977 = {
- 	.fw_dump_enh = true,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8978 = {
-@@ -420,6 +425,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8978 = {
- 	.fw_dump_enh = true,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = true,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8997 = {
-@@ -436,6 +442,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8997 = {
- 	.fw_dump_enh = true,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8887 = {
-@@ -451,6 +458,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8887 = {
- 	.can_dump_fw = false,
- 	.can_auto_tdls = true,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8987 = {
-@@ -467,6 +475,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8987 = {
- 	.fw_dump_enh = true,
- 	.can_auto_tdls = true,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static const struct mwifiex_sdio_device mwifiex_sdio_sd8801 = {
-@@ -482,6 +491,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8801 = {
- 	.can_dump_fw = false,
- 	.can_auto_tdls = false,
- 	.can_ext_scan = true,
-+	.fw_ready_extra_delay = false,
- };
- 
- static struct memory_type_mapping generic_mem_type_map[] = {
-@@ -574,6 +584,7 @@ mwifiex_sdio_probe(struct sdio_func *func, const struct sdio_device_id *id)
- 		card->fw_dump_enh = data->fw_dump_enh;
- 		card->can_auto_tdls = data->can_auto_tdls;
- 		card->can_ext_scan = data->can_ext_scan;
-+		card->fw_ready_extra_delay = data->fw_ready_extra_delay;
- 		INIT_WORK(&card->work, mwifiex_sdio_work);
- 	}
- 
-@@ -777,6 +788,7 @@ mwifiex_sdio_read_fw_status(struct mwifiex_adapter *adapter, u16 *dat)
- static int mwifiex_check_fw_status(struct mwifiex_adapter *adapter,
- 				   u32 poll_num)
- {
-+	struct sdio_mmc_card *card = adapter->card;
- 	int ret = 0;
- 	u16 firmware_stat;
- 	u32 tries;
-@@ -794,6 +806,13 @@ static int mwifiex_check_fw_status(struct mwifiex_adapter *adapter,
- 		ret = -1;
- 	}
- 
-+	if (card->fw_ready_extra_delay &&
-+	    firmware_stat == FIRMWARE_READY_SDIO)
-+		/* firmware might pretend to be ready, when it's not.
-+		 * Wait a little bit more as a workaround.
-+		 */
-+		msleep(100);
-+
- 	return ret;
+diff --git a/drivers/bus/moxtet.c b/drivers/bus/moxtet.c
+index fd87a59837fa..fbf0818933be 100644
+--- a/drivers/bus/moxtet.c
++++ b/drivers/bus/moxtet.c
+@@ -832,6 +832,12 @@ static int moxtet_remove(struct spi_device *spi)
+ 	return 0;
  }
  
-diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.h b/drivers/net/wireless/marvell/mwifiex/sdio.h
-index e9a9de566cc8..8f11fed8eae9 100644
---- a/drivers/net/wireless/marvell/mwifiex/sdio.h
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.h
-@@ -269,6 +269,7 @@ struct sdio_mmc_card {
- 	bool fw_dump_enh;
- 	bool can_auto_tdls;
- 	bool can_ext_scan;
-+	bool fw_ready_extra_delay;
- 
- 	struct mwifiex_sdio_mpa_tx mpa_tx;
- 	struct mwifiex_sdio_mpa_rx mpa_rx;
-@@ -292,6 +293,7 @@ struct mwifiex_sdio_device {
- 	bool fw_dump_enh;
- 	bool can_auto_tdls;
- 	bool can_ext_scan;
-+	bool fw_ready_extra_delay;
++static const struct spi_device_id moxtet_spi_ids[] = {
++	{ "moxtet" },
++	{ },
++};
++MODULE_DEVICE_TABLE(spi, moxtet_spi_ids);
++
+ static const struct of_device_id moxtet_dt_ids[] = {
+ 	{ .compatible = "cznic,moxtet" },
+ 	{},
+@@ -843,6 +849,7 @@ static struct spi_driver moxtet_spi_driver = {
+ 		.name		= "moxtet",
+ 		.of_match_table = moxtet_dt_ids,
+ 	},
++	.id_table	= moxtet_spi_ids,
+ 	.probe		= moxtet_probe,
+ 	.remove		= moxtet_remove,
  };
- 
- /*
 -- 
 2.43.0
 
