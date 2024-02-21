@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7E269D39;
-	Wed, 21 Feb 2024 13:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BC469962;
+	Wed, 21 Feb 2024 13:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708520499; cv=none; b=iCy3nfmFcZfXv0uNyucg/Ja0jZarE5eWR/v86RpARA1UOTig3gI9kH+JfK8nlrR0MY/tkESFG4VzSS08Vzpbc4LDopzUqElqZfTJEnB6jF10lBpplthxjL9PMAt4b6oCHKf7TQ6RYbyZZ9pu8w7nBecwPGgiTjI6s8rqtVU9ZvQ=
+	t=1708520604; cv=none; b=UW7I7XWvQ3Z4ms4APFDhQ035zcJhtymW7BgVA76rRAECJsCq0TTJEixlTlrKvOPCiLJ2pt4xdENHfJbi/QR3jMPDkfLvFBdQnhUsqHG+ZiyT9Wox8T3QHkPrnBL4i4UCgUwGj4CRUzqnBpIBkSEwEecfYu+kVaibvhm+CSAz25Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708520499; c=relaxed/simple;
-	bh=9C4NKp28QscIMDuI6pSQgu4TKK5cfNJwu4Ffg10VCjc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AZ6OVaHurF6ag3nIhi0lCvRosPdF4x8NII/tt99VsdU4eLiy4R0WyTVMJfZG0TB9HomUnKl6qT31QoYAC8kgzZnrMl8uPXNHP9LTQ9XNI1m6F+u5Sw96ZFzui04dMvd6Dh5YWuX3HNvnbtNzE49MGyt3tjimCUw+dgG0fg45Gxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtLgj2o7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708520604; c=relaxed/simple;
+	bh=BRMDxBmqWL2JdRh9+DGpwGwV2aHpre1oW6NmoruYEtE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=muq+CAcwz1kkEEDHety0EkRdYJ+ehtGB6K6KFYZ8SviZuIRUhKIcudVfR8hbv4bMHfzmV3sybwd9yIZy8aRxbT2pN58BfUT0JXftYcEMfYvr6stxLOR9s/6Z+1Zk+NCZY5GiR8W6YD+Nii+s0Zzv4dTdvEMaFt8j27tPoo0LUhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pie14dPO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtLgj2o7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60AD3C433F1;
-	Wed, 21 Feb 2024 13:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pie14dPO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30D0C433F1;
+	Wed, 21 Feb 2024 13:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708520498;
-	bh=9C4NKp28QscIMDuI6pSQgu4TKK5cfNJwu4Ffg10VCjc=;
+	s=korg; t=1708520603;
+	bh=BRMDxBmqWL2JdRh9+DGpwGwV2aHpre1oW6NmoruYEtE=;
 	h=From:To:Cc:Subject:Date:From;
-	b=CtLgj2o7M4+OGvkUIMQz5AdpQAmanPl5Iz9dTDCOLejAfbQcQzx1CL/0oTliXIr+8
-	 Ut/nyAG32W42HSfEtbSk6WUfzFoxfjv9aIQTyymvdeS70BOZHw0hZRts/VN4Yej4lh
-	 VnrfT2lddmPRHvduDwW+IiJmYkDN1D3mH1+VH+14=
+	b=pie14dPOEIE6h/LaCJ919pEg+Y5MFdDwGDPYRr+4gQOTFYvCsnf3dDyQxUoU54GtG
+	 xICv6AuLx9TVJ2iDGJ9bI+siYxcQ2pPRV/MPM3weh2SgnrMw2jqlr5nd6b7WNE85js
+	 rArvzeP2ioDJrtUiqhBcsuABksooTUjHx/1JOhTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -41,9 +41,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	rwarsow@gmx.de,
 	conor@kernel.org,
 	allen.lkml@gmail.com
-Subject: [PATCH 6.1 000/206] 6.1.79-rc1 review
-Date: Wed, 21 Feb 2024 13:58:04 +0100
-Message-ID: <20240221125936.478639123@linuxfoundation.org>
+Subject: [PATCH 6.1 000/206] 6.1.79-rc2 review
+Date: Wed, 21 Feb 2024 14:03:19 +0100
+Message-ID: <20240221130223.073542172@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -54,12 +54,12 @@ MIME-Version: 1.0
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc1.gz
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc2.gz
 X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
 X-KernelTest-Branch: linux-6.1.y
 X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.79-rc1
-X-KernelTest-Deadline: 2024-02-23T12:59+00:00
+X-KernelTest-Version: 6.1.79-rc2
+X-KernelTest-Deadline: 2024-02-23T13:02+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
@@ -68,11 +68,11 @@ There are 206 patches in this series, all will be posted as a response
 to this one.  If anyone has any issues with these being applied, please
 let me know.
 
-Responses should be made by Fri, 23 Feb 2024 12:59:02 +0000.
+Responses should be made by Fri, 23 Feb 2024 13:01:46 +0000.
 Anything received after that time might be too late.
 
 The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc1.gz
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc2.gz
 or in the git tree and branch at:
 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 and the diffstat can be found below.
@@ -85,7 +85,7 @@ greg k-h
 Pseudo-Shortlog of commits:
 
 Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.79-rc1
+    Linux 6.1.79-rc2
 
 Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
     fs/ntfs3: Add null pointer checks
