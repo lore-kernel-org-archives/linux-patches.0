@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17B955E5E;
-	Wed, 21 Feb 2024 13:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1856E55E5E;
+	Wed, 21 Feb 2024 13:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523887; cv=none; b=XPzemOLZsRYwQ9Yfmj1fz6ki9IAssQZkNw6wRAizc0Epc5oqjNzYlMgy6WzarP0FbiklqMEY1YL76V1kNNl0ip+by3GOkDedEPvQbVJYpSkIRiO6oFvBo+GiHzGGwVHdVwqVHDfe/qncwn5cFx6DmmthTtB5o220E2yEsjZCAbE=
+	t=1708523890; cv=none; b=rPSSXBJ/Xl7U4mRb99qNCA7UiONhEM4zPrCwdRSVAeDYTe/q01fAt+mew5eUwLtR42k75u38w6akm4vqlEcb7O8AGv1ChQu0faMLm7evOLUePEmAnHQNicW2LrTCoPgIOYrYGO2IwLHDdfPfsC3GQ55ZIQpMYYfwuaVPs/LDABA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523887; c=relaxed/simple;
-	bh=BMVp2L0+2s1HOPWXodfdBGGxM25vV/q/KGTxKKyihjE=;
+	s=arc-20240116; t=1708523890; c=relaxed/simple;
+	bh=3l6AhkzGK43htIm2KnJFYruMyfqn0q2Cod3LOJBmVLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjZdJke8Oe0RGeP881AEEUmyOlNWja5HlTi9WSpEMq8g7eh0fqR1whXoO+6YJQZYogtBjF6TX/dGifukBFtREJTIkSsQqUggChuobJosbYP+LCiXvkABUc0jxzEIMw8LyZTE1AnkXRdEU/87dVqOLbdpwMgxQvn44JCzKs2haDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auLCJKE9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rGlWgRVCLlBqMJqF/j/Zq0W12AYVQxoTF2/PmQ7GPTJSgYJ03cwCg6oMEsRk145TY5b86usSNXerEXHRpMXiAso3BeHWKxENMa9hAp4VQ8QUhMXXTveFeoxdG75kTbN4WTZ3g+VVucX7gI08xrRytWRCW6WZMJwbtgs7//YNiFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nvKN+bz0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auLCJKE9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515C1C433C7;
-	Wed, 21 Feb 2024 13:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nvKN+bz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D67C433F1;
+	Wed, 21 Feb 2024 13:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523886;
-	bh=BMVp2L0+2s1HOPWXodfdBGGxM25vV/q/KGTxKKyihjE=;
+	s=korg; t=1708523890;
+	bh=3l6AhkzGK43htIm2KnJFYruMyfqn0q2Cod3LOJBmVLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auLCJKE9BbW/UlqRuo0uJGpEHJSVcAI7BPSi9v3qddzftVBdzEU9dRKhgM4ss3UgY
-	 ZWuGxd4oPX0xuTzr85MhUWVV818kqxhwVhVW27kP6WT/eE6wjz0nneqsGM+xbdVgLU
-	 vLrsEn8RZw9VtfkhzpZWyCg6yfxgjv7KFBzkvHbA=
+	b=nvKN+bz0OrGuQqrKqkKtwyNor5yqaIQoYq16yX+lRpLMEdu2mxy9XCZI0j8E4V5d6
+	 VHiy8wg6SzCZE7ajcJGJPvPPcoJ1X72zWvPI8PI5hWh7+IE7b0b2TQ877OQw/YP2Bc
+	 lZyVarfW3ep17oo5pqhwpSRLuorzP/xNU9/HSkBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
 	David Howells <dhowells@redhat.com>,
+	Lukas Schauer <lukas@schauer.dev>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/379] fs/pipe: move check to pipe_has_watch_queue()
-Date: Wed, 21 Feb 2024 14:04:20 +0100
-Message-ID: <20240221125957.305275519@linuxfoundation.org>
+Subject: [PATCH 5.10 082/379] pipe: wakeup wr_wait after setting max_usage
+Date: Wed, 21 Feb 2024 14:04:21 +0100
+Message-ID: <20240221125957.334471427@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,94 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Lukas Schauer <lukas@schauer.dev>
 
-[ Upstream commit b4bd6b4bac8edd61eb8f7b836969d12c0c6af165 ]
+[ Upstream commit e95aada4cb93d42e25c30a0ef9eb2923d9711d4a ]
 
-This declutters the code by reducing the number of #ifdefs and makes
-the watch_queue checks simpler.  This has no runtime effect; the
-machine code is identical.
+Commit c73be61cede5 ("pipe: Add general notification queue support") a
+regression was introduced that would lock up resized pipes under certain
+conditions. See the reproducer in [1].
 
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Message-Id: <20230921075755.1378787-2-max.kellermann@ionos.com>
+The commit resizing the pipe ring size was moved to a different
+function, doing that moved the wakeup for pipe->wr_wait before actually
+raising pipe->max_usage. If a pipe was full before the resize occured it
+would result in the wakeup never actually triggering pipe_write.
+
+Set @max_usage and @nr_accounted before waking writers if this isn't a
+watch queue.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=212295 [1]
+Link: https://lore.kernel.org/r/20231201-orchideen-modewelt-e009de4562c6@brauner
+Fixes: c73be61cede5 ("pipe: Add general notification queue support")
 Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Lukas Schauer <lukas@schauer.dev>
+[Christian Brauner <brauner@kernel.org>: rewrite to account for watch queues]
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: e95aada4cb93 ("pipe: wakeup wr_wait after setting max_usage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pipe.c                 | 12 +++---------
- include/linux/pipe_fs_i.h | 16 ++++++++++++++++
- 2 files changed, 19 insertions(+), 9 deletions(-)
+ fs/pipe.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/fs/pipe.c b/fs/pipe.c
-index dbb090e1b026..7b3e94baba21 100644
+index 7b3e94baba21..588fe37d8d95 100644
 --- a/fs/pipe.c
 +++ b/fs/pipe.c
-@@ -435,12 +435,10 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
- 		goto out;
- 	}
+@@ -1300,6 +1300,11 @@ int pipe_resize_ring(struct pipe_inode_info *pipe, unsigned int nr_slots)
+ 	pipe->tail = tail;
+ 	pipe->head = head;
  
--#ifdef CONFIG_WATCH_QUEUE
--	if (pipe->watch_queue) {
-+	if (pipe_has_watch_queue(pipe)) {
- 		ret = -EXDEV;
- 		goto out;
- 	}
--#endif
- 
- 	/*
- 	 * If it wasn't empty we try to merge new data into
-@@ -1319,10 +1317,8 @@ static long pipe_set_size(struct pipe_inode_info *pipe, unsigned long arg)
- 	unsigned int nr_slots, size;
- 	long ret = 0;
- 
--#ifdef CONFIG_WATCH_QUEUE
--	if (pipe->watch_queue)
-+	if (pipe_has_watch_queue(pipe))
- 		return -EBUSY;
--#endif
- 
- 	size = round_pipe_size(arg);
- 	nr_slots = size >> PAGE_SHIFT;
-@@ -1375,10 +1371,8 @@ struct pipe_inode_info *get_pipe_info(struct file *file, bool for_splice)
- 
- 	if (file->f_op != &pipefifo_fops || !pipe)
- 		return NULL;
--#ifdef CONFIG_WATCH_QUEUE
--	if (for_splice && pipe->watch_queue)
-+	if (for_splice && pipe_has_watch_queue(pipe))
- 		return NULL;
--#endif
- 	return pipe;
- }
- 
-diff --git a/include/linux/pipe_fs_i.h b/include/linux/pipe_fs_i.h
-index ef236dbaa294..7b72d93c2653 100644
---- a/include/linux/pipe_fs_i.h
-+++ b/include/linux/pipe_fs_i.h
-@@ -124,6 +124,22 @@ struct pipe_buf_operations {
- 	bool (*get)(struct pipe_inode_info *, struct pipe_buffer *);
- };
- 
-+/**
-+ * pipe_has_watch_queue - Check whether the pipe is a watch_queue,
-+ * i.e. it was created with O_NOTIFICATION_PIPE
-+ * @pipe: The pipe to check
-+ *
-+ * Return: true if pipe is a watch queue, false otherwise.
-+ */
-+static inline bool pipe_has_watch_queue(const struct pipe_inode_info *pipe)
-+{
-+#ifdef CONFIG_WATCH_QUEUE
-+	return pipe->watch_queue != NULL;
-+#else
-+	return false;
-+#endif
-+}
++	if (!pipe_has_watch_queue(pipe)) {
++		pipe->max_usage = nr_slots;
++		pipe->nr_accounted = nr_slots;
++	}
 +
- /**
-  * pipe_empty - Return true if the pipe is empty
-  * @head: The pipe ring head pointer
+ 	spin_unlock_irq(&pipe->rd_wait.lock);
+ 
+ 	/* This might have made more room for writers */
+@@ -1351,8 +1356,6 @@ static long pipe_set_size(struct pipe_inode_info *pipe, unsigned long arg)
+ 	if (ret < 0)
+ 		goto out_revert_acct;
+ 
+-	pipe->max_usage = nr_slots;
+-	pipe->nr_accounted = nr_slots;
+ 	return pipe->max_usage * PAGE_SIZE;
+ 
+ out_revert_acct:
 -- 
 2.43.0
 
