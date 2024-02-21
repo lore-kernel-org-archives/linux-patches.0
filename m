@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E62B69317;
-	Wed, 21 Feb 2024 14:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8D869317;
+	Wed, 21 Feb 2024 14:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524071; cv=none; b=B7MPSBl9tbB0NYQOegHsMah4a2cRgQtphLIcAySsSo4MWK+H7yUODhB3T54lleO8sTWOAzxxKqokE0b61q6soO/cweYuwCKRBIFErLHL/b4x17Qt8HsmzsSRvC/Mav/qE39pYB5pfT156V3/3tsYZ4zchx3HLamWDrdiPV9SusE=
+	t=1708524074; cv=none; b=oM+QE4CXTc60ILdHSrZltP+XqcbfG7xsAkQk/T3FdNXm9eGhh7cit2Hxm2sIxCt/duo9Z8AFQrk0W6a3Gm0kpeaqqPJAvUfNpG2kC2Ht042grmzQ/RwxcPcRr1jVjgTr+RMDxeZ2qRlOUYSd7yARV2NWQtkvBzQ6LDg2beTfPYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524071; c=relaxed/simple;
-	bh=IksOKo6mFFN2drvBInt6srfz+GeYXxe8Aa5glbhEg9U=;
+	s=arc-20240116; t=1708524074; c=relaxed/simple;
+	bh=s1ywjxsZ2JQhtCKoOKSMxxQBxE+wlirqnjIQeucf0zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrDqMCmmrvzu7OGH+8/9jxKt78P7VRaga9M5NI22ccxJU5frU9UFzS00OJVcqaZ8qfYpSMTAsUw5pBa/kpJkfAx4PP635EHaLav74VVOdYHEXesWsiUnxr6FRZeLuwdqd9c14qVWbkRwywQuCAXks0vGew6sTlMqOtVl1HJ4ByI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kqqq9Tz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JhHmDcXJdZWg/UvaamMFHjEfBV+H1SphlXyg9bkGrx0jpavcfwSNDCE9vngXdzYo45tkUHsWvFbcKvidez5jncoIk6IyyRnu+kxS/VP05WXj0iHjGX3bWbW9H39NGiE57FWWk8PuUjQgLI/X23Jnmd6au82z+ouC19qZLS2k1JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wpsirc7f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kqqq9Tz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC493C43390;
-	Wed, 21 Feb 2024 14:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wpsirc7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38B1C433F1;
+	Wed, 21 Feb 2024 14:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524071;
-	bh=IksOKo6mFFN2drvBInt6srfz+GeYXxe8Aa5glbhEg9U=;
+	s=korg; t=1708524074;
+	bh=s1ywjxsZ2JQhtCKoOKSMxxQBxE+wlirqnjIQeucf0zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2kqqq9Tzxf/97ULG65fTXND7v31KnxGGvqrpxR+8Dq5oM7yS/h1qhU4UyabxDCZiy
-	 xa1CDjdU3QkrnYSUy84Oy/3cE/4A9hhmuu7yMDr07xqGTD6V+sqve/HBZij2J5j/IG
-	 BB58ird+pSKJqFdT9NNdd49R18l+kM3Tq0cWIKbw=
+	b=Wpsirc7fOd+FzBajy9HvMs4vIBJBOawmb3XK7T+TXAHXiAN52gKrvw6eQM8/ufPSJ
+	 52mytzcxLfPm9P7qnZkmXFgdDvvnhWa7ZYKBoZAG3DdRmvadKZtXU/aVYcK4Kf2QBU
+	 0HlZvC8CgdgFYoDuAm/NgaTHEUTmrz0GYh2mp5sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Kalle Valo <kvalo@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 137/379] wifi: rt2x00: restart beacon queue when hardware reset
-Date: Wed, 21 Feb 2024 14:05:16 +0100
-Message-ID: <20240221125958.982563888@linuxfoundation.org>
+Subject: [PATCH 5.10 138/379] selftests/bpf: satisfy compiler by having explicit return in btf test
+Date: Wed, 21 Feb 2024 14:05:17 +0100
+Message-ID: <20240221125959.011349829@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,77 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiji Yang <yangshiji66@outlook.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit a11d965a218f0cd95b13fe44d0bcd8a20ce134a8 ]
+[ Upstream commit f4c7e887324f5776eef6e6e47a90e0ac8058a7a8 ]
 
-When a hardware reset is triggered, all registers are reset, so all
-queues are forced to stop in hardware interface. However, mac80211
-will not automatically stop the queue. If we don't manually stop the
-beacon queue, the queue will be deadlocked and unable to start again.
-This patch fixes the issue where Apple devices cannot connect to the
-AP after calling ieee80211_restart_hw().
+Some compilers complain about get_pprint_mapv_size() not returning value
+in some code paths. Fix with explicit return.
 
-Signed-off-by: Shiji Yang <yangshiji66@outlook.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/TYAP286MB031530EB6D98DCE4DF20766CBCA4A@TYAP286MB0315.JPNP286.PROD.OUTLOOK.COM
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20231102033759.2541186-3-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ralink/rt2x00/rt2x00dev.c |  3 +++
- drivers/net/wireless/ralink/rt2x00/rt2x00mac.c | 11 +++++++++++
- 2 files changed, 14 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/btf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
-index b04f76551ca4..be3c153ab3b0 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
-@@ -101,6 +101,7 @@ void rt2x00lib_disable_radio(struct rt2x00_dev *rt2x00dev)
- 	rt2x00link_stop_tuner(rt2x00dev);
- 	rt2x00queue_stop_queues(rt2x00dev);
- 	rt2x00queue_flush_queues(rt2x00dev, true);
-+	rt2x00queue_stop_queue(rt2x00dev->bcn);
+diff --git a/tools/testing/selftests/bpf/prog_tests/btf.c b/tools/testing/selftests/bpf/prog_tests/btf.c
+index 28d22265b825..cbdc2839904e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/btf.c
++++ b/tools/testing/selftests/bpf/prog_tests/btf.c
+@@ -4611,6 +4611,7 @@ static size_t get_pprint_mapv_size(enum pprint_mapv_kind_t mapv_kind)
+ #endif
  
- 	/*
- 	 * Disable radio.
-@@ -1272,6 +1273,7 @@ int rt2x00lib_start(struct rt2x00_dev *rt2x00dev)
- 	rt2x00dev->intf_ap_count = 0;
- 	rt2x00dev->intf_sta_count = 0;
- 	rt2x00dev->intf_associated = 0;
-+	rt2x00dev->intf_beaconing = 0;
- 
- 	/* Enable the radio */
- 	retval = rt2x00lib_enable_radio(rt2x00dev);
-@@ -1298,6 +1300,7 @@ void rt2x00lib_stop(struct rt2x00_dev *rt2x00dev)
- 	rt2x00dev->intf_ap_count = 0;
- 	rt2x00dev->intf_sta_count = 0;
- 	rt2x00dev->intf_associated = 0;
-+	rt2x00dev->intf_beaconing = 0;
+ 	assert(0);
++	return 0;
  }
  
- static inline void rt2x00lib_set_if_combinations(struct rt2x00_dev *rt2x00dev)
-diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c b/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
-index 2f68a31072ae..795bd3b0ebd8 100644
---- a/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
-+++ b/drivers/net/wireless/ralink/rt2x00/rt2x00mac.c
-@@ -599,6 +599,17 @@ void rt2x00mac_bss_info_changed(struct ieee80211_hw *hw,
- 	 */
- 	if (changes & BSS_CHANGED_BEACON_ENABLED) {
- 		mutex_lock(&intf->beacon_skb_mutex);
-+
-+		/*
-+		 * Clear the 'enable_beacon' flag and clear beacon because
-+		 * the beacon queue has been stopped after hardware reset.
-+		 */
-+		if (test_bit(DEVICE_STATE_RESET, &rt2x00dev->flags) &&
-+		    intf->enable_beacon) {
-+			intf->enable_beacon = false;
-+			rt2x00queue_clear_beacon(rt2x00dev, vif);
-+		}
-+
- 		if (!bss_conf->enable_beacon && intf->enable_beacon) {
- 			rt2x00dev->intf_beaconing--;
- 			intf->enable_beacon = false;
+ static void set_pprint_mapv(enum pprint_mapv_kind_t mapv_kind,
 -- 
 2.43.0
 
