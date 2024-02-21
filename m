@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7521973161;
-	Wed, 21 Feb 2024 13:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443F6763F6;
+	Wed, 21 Feb 2024 13:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522727; cv=none; b=YqAr0QegYhIY7OO0/W3EWBK7JDZa0ImpC6QLEGTSl2tqpPQWqrXB2QqkUYkLrYXRIVo1GGTCzxAOLaqCJF7dI7t+UJMTnbPyYJvtxexIKxYjWYJcWPHeBoOm9GaKuf6pfZ44jtCgMllIvz6YvbN6PPEVVSHdEd/LkMVu0qzAXSY=
+	t=1708522730; cv=none; b=Rqmgm7rNd0FqJwFlU5bA5xa6gznNOsbVR+3zCHUYCAkzZvNn4m7yPbvb0Y82784Dpa8HNZq5jqqM1I3JU7AJL4vyeuwBcEEY0pkWbEkzzzc5vhLjvTBGssdAYS+2go74g/hA8ZHBvB7XzUKId7CyRZUFMxtJch45xbg6dpZ4SHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522727; c=relaxed/simple;
-	bh=c4MvLX9DdRywYq7B3K+lZL1CywstmINL8hOj8iKBV5I=;
+	s=arc-20240116; t=1708522730; c=relaxed/simple;
+	bh=cO6ejIwLajDoipaqFll6Ex03AxhgVvIqYUvY1Q3b8NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPe72eXa1F739tPsF05mN/YjSD2j2oTtrmmqPF4uq8bPqYRBiORz98HaZoFoNQwDytjhxWJttm6ac0g5iCnvKKCzLEFN/uBueiLUjT7IMunyqY07CodTwTyFfjAiH2FDddldH6DosSanxTRabETFzbRYB5p4bya+fHxiNGkT5Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fxyiq0fN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMCMPGw0t3wdPnwoo5ynBa9ETboC3K2/6wQqIK0YKGQ0vLNtU259uJ9zsDNBxUIngc4cuq2n+v/yTRyiXldok0oOdcR9wr9Ucl+zrH/rNFx/BCIw4H9GRDakiVlscOdaoDMaAzWGSLSMZ5j8cimZhczgjavj4H3jE2OhBk2ogkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACsrtfrP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fxyiq0fN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823F2C433C7;
-	Wed, 21 Feb 2024 13:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACsrtfrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC81DC433F1;
+	Wed, 21 Feb 2024 13:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522727;
-	bh=c4MvLX9DdRywYq7B3K+lZL1CywstmINL8hOj8iKBV5I=;
+	s=korg; t=1708522730;
+	bh=cO6ejIwLajDoipaqFll6Ex03AxhgVvIqYUvY1Q3b8NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fxyiq0fNacxQ//garFmHZkVDuFyIbMlyPCgT97wRpZZuiU/Rlql8zVaTIy2Tuom+Z
-	 Wtjzm3wUX3lCRfHq8gthzQBHoEJhOGGUF9WnLuROcEvRUzO0ZllH/cintsEAzsLfgx
-	 AHe0IjUaJVB31gRxctc9fcpt1rWX2XN0R7kgrWCw=
+	b=ACsrtfrPpAPIJFz+kclzY6MztHKn+WiL9v/Q4+W8wmJ201J4CNQpnjXHEsDeNSWB0
+	 m1T3S8likvVI6ajdmpPP9PScs5YaYaMgbJGEZ6Lli3MvidXBHN9itArvlbqH3FbDIL
+	 WYF1XmAsyA/V7JmVuJEFmOxdoSvv587FgsRFtNZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 212/476] RDMA/IPoIB: Fix error code return in ipoib_mcast_join
-Date: Wed, 21 Feb 2024 14:04:23 +0100
-Message-ID: <20240221130015.737418681@linuxfoundation.org>
+Subject: [PATCH 5.15 213/476] drm/amd/display: Fix tiled display misalignment
+Date: Wed, 21 Feb 2024 14:04:24 +0100
+Message-ID: <20240221130015.775217130@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,32 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
 
-[ Upstream commit 753fff78f430704548f45eda52d6d55371a52c0f ]
+[ Upstream commit c4b8394e76adba4f50a3c2696c75b214a291e24a ]
 
-Return the error code in case of ib_sa_join_multicast fail.
+[Why]
+When otg workaround is applied during clock update, otgs of
+tiled display went out of sync.
 
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Link: https://lore.kernel.org/r/20231121130316.126364-2-jinpu.wang@ionos.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[How]
+To call dc_trigger_sync() after clock update to sync otgs again.
+
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_multicast.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-index 5b3154503bf4..9e6967a40042 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-@@ -546,6 +546,7 @@ static int ipoib_mcast_join(struct net_device *dev, struct ipoib_mcast *mcast)
- 		spin_unlock_irq(&priv->lock);
- 		complete(&mcast->done);
- 		spin_lock_irq(&priv->lock);
-+		return ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 3919e75fec16..ef151a1bc31c 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -1680,6 +1680,10 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
+ 		wait_for_no_pipes_pending(dc, context);
+ 		/* pplib is notified if disp_num changed */
+ 		dc->hwss.optimize_bandwidth(dc, context);
++		/* Need to do otg sync again as otg could be out of sync due to otg
++		 * workaround applied during clock update
++		 */
++		dc_trigger_sync(dc, context);
  	}
- 	return 0;
- }
+ 
+ 	if (dc->ctx->dce_version >= DCE_VERSION_MAX)
 -- 
 2.43.0
 
