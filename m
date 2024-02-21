@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5617C097;
-	Wed, 21 Feb 2024 14:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E708B69D3B;
+	Wed, 21 Feb 2024 14:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525785; cv=none; b=jQ/HmYWjPGLUMHbVG4p3J2DbYdXGN9/1EDMkyXgXortOxRmvgwj83Pu0APzn3p7XrALfW7CXNjrU4Y3wj22OqO4M9S8QqkoZgvB0bfO+zJBq8i7307BsybzjyIBSZhGZd/5AHsH/HrE3rMt4mrLCXbJ9c9ijqRv94rbuR+W7eRI=
+	t=1708525789; cv=none; b=rGpKoP+FPjmypIHY4AjULvksQjDNlwUA+5iQ/hMf8pBNfzi584Smegn0ejumBrhUjuG9BKDwO1U3jxg2bdidS7rG2HXPsm2t7D6zTSoFSgl4/oEMgVzWu19g8Z6SFaqdyLvcgV+MbIuB9otilhS9ceXoIRJlInEXgUxtu01QJ1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525785; c=relaxed/simple;
-	bh=N7uts4nUbSQO8NeHtnXXzdP242E5lUzuSQJhjDRxHt0=;
+	s=arc-20240116; t=1708525789; c=relaxed/simple;
+	bh=gPEy8kIXSItW9Uha/r54BTGALmVYYGr16/lM+vELGi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1T8MtajRISPRYmzJ3h7UCCQeMc6ZQatNdofl7IiaBueGnrlUYEtseM3gZSb30cEwYG8ehZgjMJTCltzlGlF0iIlQP23j/QYBBR/ufmOHVu89b7DfMRnC/WXjCNZhUMyCFLPixYQIYxd7lYaBEKCnLtXWzbT8oDntV5saljbjzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9d6wK1p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VuegoW0nSBLCzYG/WDpAD57WBSdsxrOFbBAQGbWFa8i5rMionbDFeCnHrzj/eYOa2jriYmG77sNEoVUzIEeAzuUqpkW0YIxYtoqy7hr85zFHxmdpP6P56phGoOE/LR3ajS3VPQT619CvxECv+5B78qj1hS4/r2WFVpGyr53IETk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVd3W1QP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9d6wK1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB73C433F1;
-	Wed, 21 Feb 2024 14:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVd3W1QP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1116C433C7;
+	Wed, 21 Feb 2024 14:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525785;
-	bh=N7uts4nUbSQO8NeHtnXXzdP242E5lUzuSQJhjDRxHt0=;
+	s=korg; t=1708525788;
+	bh=gPEy8kIXSItW9Uha/r54BTGALmVYYGr16/lM+vELGi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r9d6wK1pAEKMdHk8ItuK59cWcqs1qILGgJyQ5yAPCZ2RIev2TGjNDlTRkoI0O4hjM
-	 F03cFvI9w2HfPBTJlle+fIczWlZdIW9CxmSoQlslXB8zMyE+9OzOA62XLhRD0JQA2s
-	 zIjpaZm+YeSg90LxO9eojUggg7Af3DOn9PqtAD/s=
+	b=OVd3W1QPZKpV4M2Bb7zx4oCK5L81VgYM6Ea6oacDpljvQQyjaz4M5vy46pAPalgpT
+	 gpkHcfg68DHlBaSYpeFwOcCylelPBwVA2dK3BzSYjlIBWqvzGhPj0SwzW1BRWdh0Rn
+	 GxoXRqykOBfH3sQ0sDRUNRQpgVvInyJ57BegSlP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Subject: [PATCH 5.4 256/267] sched/membarrier: reduce the ability to hammer on sys_membarrier
-Date: Wed, 21 Feb 2024 14:09:57 +0100
-Message-ID: <20240221125948.290127023@linuxfoundation.org>
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 265/267] net: bcmgenet: Fix EEE implementation
+Date: Wed, 21 Feb 2024 14:10:06 +0100
+Message-ID: <20240221125948.557217244@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,86 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linuxfoundation.org>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit 944d5fe50f3f03daacfea16300e656a1691c4a23 upstream.
+commit a9f31047baca57d47440c879cf259b86f900260c upstream.
 
-On some systems, sys_membarrier can be very expensive, causing overall
-slowdowns for everything.  So put a lock on the path in order to
-serialize the accesses to prevent the ability for this to be called at
-too high of a frequency and saturate the machine.
+We had a number of short comings:
 
-Reviewed-and-tested-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Acked-by: Borislav Petkov <bp@alien8.de>
-Fixes: 22e4ebb97582 ("membarrier: Provide expedited private command")
-Fixes: c5f58bd58f43 ("membarrier: Provide GLOBAL_EXPEDITED command")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-[ converted to explicit mutex_*() calls - cleanup.h is not in this stable
-  branch - gregkh ]
+- EEE must be re-evaluated whenever the state machine detects a link
+  change as wight be switching from a link partner with EEE
+  enabled/disabled
+
+- tx_lpi_enabled controls whether EEE should be enabled/disabled for the
+  transmit path, which applies to the TBUF block
+
+- We do not need to forcibly enable EEE upon system resume, as the PHY
+  state machine will trigger a link event that will do that, too
+
+Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/r/20230606214348.2408018-1-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/membarrier.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
 
---- a/kernel/sched/membarrier.c
-+++ b/kernel/sched/membarrier.c
-@@ -25,6 +25,8 @@
- 	| MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED			\
- 	| MEMBARRIER_PRIVATE_EXPEDITED_SYNC_CORE_BITMASK)
+---
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c |   22 ++++++++--------------
+ drivers/net/ethernet/broadcom/genet/bcmgenet.h |    3 +++
+ drivers/net/ethernet/broadcom/genet/bcmmii.c   |    6 ++++++
+ 3 files changed, 17 insertions(+), 14 deletions(-)
+
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -1018,7 +1018,8 @@ static void bcmgenet_get_ethtool_stats(s
+ 	}
+ }
  
-+static DEFINE_MUTEX(membarrier_ipi_mutex);
-+
- static void ipi_mb(void *info)
+-static void bcmgenet_eee_enable_set(struct net_device *dev, bool enable)
++void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
++			     bool tx_lpi_enabled)
  {
- 	smp_mb();	/* IPIs should be serializing but paranoid. */
-@@ -97,6 +99,7 @@ static int membarrier_global_expedited(v
- 	if (!zalloc_cpumask_var(&tmpmask, GFP_KERNEL))
- 		return -ENOMEM;
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	u32 off = priv->hw_params->tbuf_offset + TBUF_ENERGY_CTRL;
+@@ -1038,7 +1039,7 @@ static void bcmgenet_eee_enable_set(stru
  
-+	mutex_lock(&membarrier_ipi_mutex);
- 	cpus_read_lock();
- 	rcu_read_lock();
- 	for_each_online_cpu(cpu) {
-@@ -143,6 +146,8 @@ static int membarrier_global_expedited(v
- 	 * rq->curr modification in scheduler.
- 	 */
- 	smp_mb();	/* exit from system call is not a mb */
-+	mutex_unlock(&membarrier_ipi_mutex);
+ 	/* Enable EEE and switch to a 27Mhz clock automatically */
+ 	reg = bcmgenet_readl(priv->base + off);
+-	if (enable)
++	if (tx_lpi_enabled)
+ 		reg |= TBUF_EEE_EN | TBUF_PM_EN;
+ 	else
+ 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
+@@ -1059,6 +1060,7 @@ static void bcmgenet_eee_enable_set(stru
+ 
+ 	priv->eee.eee_enabled = enable;
+ 	priv->eee.eee_active = enable;
++	priv->eee.tx_lpi_enabled = tx_lpi_enabled;
+ }
+ 
+ static int bcmgenet_get_eee(struct net_device *dev, struct ethtool_eee *e)
+@@ -1074,6 +1076,7 @@ static int bcmgenet_get_eee(struct net_d
+ 
+ 	e->eee_enabled = p->eee_enabled;
+ 	e->eee_active = p->eee_active;
++	e->tx_lpi_enabled = p->tx_lpi_enabled;
+ 	e->tx_lpi_timer = bcmgenet_umac_readl(priv, UMAC_EEE_LPI_TIMER);
+ 
+ 	return phy_ethtool_get_eee(dev->phydev, e);
+@@ -1083,7 +1086,6 @@ static int bcmgenet_set_eee(struct net_d
+ {
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	struct ethtool_eee *p = &priv->eee;
+-	int ret = 0;
+ 
+ 	if (GENET_IS_V1(priv))
+ 		return -EOPNOTSUPP;
+@@ -1094,16 +1096,11 @@ static int bcmgenet_set_eee(struct net_d
+ 	p->eee_enabled = e->eee_enabled;
+ 
+ 	if (!p->eee_enabled) {
+-		bcmgenet_eee_enable_set(dev, false);
++		bcmgenet_eee_enable_set(dev, false, false);
+ 	} else {
+-		ret = phy_init_eee(dev->phydev, 0);
+-		if (ret) {
+-			netif_err(priv, hw, dev, "EEE initialization failed\n");
+-			return ret;
+-		}
+-
++		p->eee_active = phy_init_eee(dev->phydev, false) >= 0;
+ 		bcmgenet_umac_writel(priv, e->tx_lpi_timer, UMAC_EEE_LPI_TIMER);
+-		bcmgenet_eee_enable_set(dev, true);
++		bcmgenet_eee_enable_set(dev, p->eee_active, e->tx_lpi_enabled);
+ 	}
+ 
+ 	return phy_ethtool_set_eee(dev->phydev, e);
+@@ -3688,9 +3685,6 @@ static int bcmgenet_resume(struct device
+ 	if (!device_may_wakeup(d))
+ 		phy_resume(dev->phydev);
+ 
+-	if (priv->eee.eee_enabled)
+-		bcmgenet_eee_enable_set(dev, true);
+-
+ 	bcmgenet_netif_start(dev);
+ 
+ 	netif_device_attach(dev);
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
+@@ -736,4 +736,7 @@ int bcmgenet_wol_power_down_cfg(struct b
+ void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
+ 			       enum bcmgenet_power_mode mode);
+ 
++void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
++			     bool tx_lpi_enabled);
 +
- 	return 0;
- }
+ #endif /* __BCMGENET_H__ */
+--- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
+@@ -25,6 +25,7 @@
  
-@@ -178,6 +183,7 @@ static int membarrier_private_expedited(
- 	if (!zalloc_cpumask_var(&tmpmask, GFP_KERNEL))
- 		return -ENOMEM;
+ #include "bcmgenet.h"
  
-+	mutex_lock(&membarrier_ipi_mutex);
- 	cpus_read_lock();
- 	rcu_read_lock();
- 	for_each_online_cpu(cpu) {
-@@ -212,6 +218,7 @@ static int membarrier_private_expedited(
- 	 * rq->curr modification in scheduler.
- 	 */
- 	smp_mb();	/* exit from system call is not a mb */
-+	mutex_unlock(&membarrier_ipi_mutex);
- 
- 	return 0;
- }
-@@ -253,6 +260,7 @@ static int sync_runqueues_membarrier_sta
- 	 * between threads which are users of @mm has its membarrier state
- 	 * updated.
- 	 */
-+	mutex_lock(&membarrier_ipi_mutex);
- 	cpus_read_lock();
- 	rcu_read_lock();
- 	for_each_online_cpu(cpu) {
-@@ -269,6 +277,7 @@ static int sync_runqueues_membarrier_sta
- 
- 	free_cpumask_var(tmpmask);
- 	cpus_read_unlock();
-+	mutex_unlock(&membarrier_ipi_mutex);
- 
- 	return 0;
- }
++
+ /* setup netdev link state when PHY link status change and
+  * update UMAC and RGMII block when link up
+  */
+@@ -96,6 +97,11 @@ void bcmgenet_mii_setup(struct net_devic
+ 			       CMD_RX_PAUSE_IGNORE | CMD_TX_PAUSE_IGNORE);
+ 		reg |= cmd_bits;
+ 		bcmgenet_umac_writel(priv, reg, UMAC_CMD);
++
++		priv->eee.eee_active = phy_init_eee(phydev, 0) >= 0;
++		bcmgenet_eee_enable_set(dev,
++					priv->eee.eee_enabled && priv->eee.eee_active,
++					priv->eee.tx_lpi_enabled);
+ 	} else {
+ 		/* done if nothing has changed */
+ 		if (!status_changed)
 
 
