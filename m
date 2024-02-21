@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41E31E4B2;
-	Wed, 21 Feb 2024 13:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1520F1E4B2;
+	Wed, 21 Feb 2024 13:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522880; cv=none; b=Af/AW0UakFg/kgI1/dIfsm5h9RttjJ5jMQCHWGiK5nSsWRBZvxow+IelM1H+U7Gh3pAQL+pfSpwILqW+72MPQ9L1Gcsyv/ORc2kV7W6YHlHmpTvmXJ9JuKoRybiOn29MvRwSHZNCQGeaFJKwm32sgLttANDbsS6U2YEhiEL3eq0=
+	t=1708522883; cv=none; b=ONCx6HfF5UWtO7bjzi1OIWfvT/NijZiq2/u+LH0IIasMux3GxtVy7x2tSQjD+UXIz5BAYgw1raqRiA9dP9niyvBs01qjXFTuTNTvOljbegt1XkdrQvQAxUaJ621cNOMfyseU5o2V6BpKWZ+CLpW6bwyQ4AyRXJUHwpjukuj+4qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522880; c=relaxed/simple;
-	bh=FWlJSNtMFTSw2VzAZTOr9czySCC3VZ8exvey3Krrzpk=;
+	s=arc-20240116; t=1708522883; c=relaxed/simple;
+	bh=w5eVyc++CIyRIJI4mdaYG1CQGOXWYLeGh7pWfUisCvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tyxsga7GUGFdGqkrzc+YhrFILCdeM7dAEWmgzWpCzWudabn8vPqoly71KXIfR8tSlYkrbiR0x8x3mLRvlPu3l8FGZou8fVYQMXS5ZfxslajI4w2xLc2i/H0Xa4k2X2K4b0Q3hRotBGOdaAQm+09X6WKafRt/i8D1B8IGuoy1TcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXosV2xU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tGrMnAoQyHUALirkiGcKjj8x+5JH8pCEDziOx7h+lqmQptquG3uPEu1bM/nBl0Q30trCafo2WE5UCgsBH6VeTny/ROt9CWDyDcuCBUnuUMIw69rTqtuMmsnBOA6e97PhiHU8gV2r8A8D4hu9uuUecouHE8vEgDK2v9cVWKgmYVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdE9sh9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXosV2xU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA75C433F1;
-	Wed, 21 Feb 2024 13:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdE9sh9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DE0C433F1;
+	Wed, 21 Feb 2024 13:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522879;
-	bh=FWlJSNtMFTSw2VzAZTOr9czySCC3VZ8exvey3Krrzpk=;
+	s=korg; t=1708522883;
+	bh=w5eVyc++CIyRIJI4mdaYG1CQGOXWYLeGh7pWfUisCvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LXosV2xUqhEDB4025aTR++Bd0kppvtwlBgDxWgVQs7DbXxWWUbgIswEg4katHK9AM
-	 2p+f5XuDMzW1Dz3BEa1+JBK6JyKn4bK4o3WA/zs9AyCyFUdCqeF18evOS78VdYo7PK
-	 jFvQDOMzCuuDuveNm8/muIKx9p5wJwy194WIC0AM=
+	b=sdE9sh9X/C/BIj45cXu/O8WMKOM5PfQDL5yucPR3P0OJJBotIPd99DuK3nG9+iEeX
+	 tOD9QW4CNRwIPxz3Zw9dkKwV6Ypek+/0Sr8oghVlmRiTeWAq6A17+MBmn85NjuLays
+	 4yXHI68dJBlC63MRjAEYnZ7GzqeA46DXV+Dr3MWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+32b89eaa102b372ff76d@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 281/476] llc: call sock_orphan() at release time
-Date: Wed, 21 Feb 2024 14:05:32 +0100
-Message-ID: <20240221130018.379140961@linuxfoundation.org>
+	=?UTF-8?q?Linus=20L=C3=BCssing?= <linus.luessing@c0d3.blue>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 282/476] bridge: mcast: fix disabled snooping after long uptime
+Date: Wed, 21 Feb 2024 14:05:33 +0100
+Message-ID: <20240221130018.430012099@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -48,209 +46,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Linus Lüssing <linus.luessing@c0d3.blue>
 
-[ Upstream commit aa2b2eb3934859904c287bf5434647ba72e14c1c ]
+[ Upstream commit f5c3eb4b7251baba5cd72c9e93920e710ac8194a ]
 
-syzbot reported an interesting trace [1] caused by a stale sk->sk_wq
-pointer in a closed llc socket.
+The original idea of the delay_time check was to not apply multicast
+snooping too early when an MLD querier appears. And to instead wait at
+least for MLD reports to arrive before switching from flooding to group
+based, MLD snooped forwarding, to avoid temporary packet loss.
 
-In commit ff7b11aa481f ("net: socket: set sock->sk to NULL after
-calling proto_ops::release()") Eric Biggers hinted that some protocols
-are missing a sock_orphan(), we need to perform a full audit.
+However in a batman-adv mesh network it was noticed that after 248 days of
+uptime 32bit MIPS based devices would start to signal that they had
+stopped applying multicast snooping due to missing queriers - even though
+they were the elected querier and still sending MLD queries themselves.
 
-In net-next, I plan to clear sock->sk from sock_orphan() and
-amend Eric patch to add a warning.
+While time_is_before_jiffies() generally is safe against jiffies
+wrap-arounds, like the code comments in jiffies.h explain, it won't
+be able to track a difference larger than ULONG_MAX/2. With a 32bit
+large jiffies and one jiffies tick every 10ms (CONFIG_HZ=100) on these MIPS
+devices running OpenWrt this would result in a difference larger than
+ULONG_MAX/2 after 248 (= 2^32/100/60/60/24/2) days and
+time_is_before_jiffies() would then start to return false instead of
+true. Leading to multicast snooping not being applied to multicast
+packets anymore.
 
-[1]
- BUG: KASAN: slab-use-after-free in list_empty include/linux/list.h:373 [inline]
- BUG: KASAN: slab-use-after-free in waitqueue_active include/linux/wait.h:127 [inline]
- BUG: KASAN: slab-use-after-free in sock_def_write_space_wfree net/core/sock.c:3384 [inline]
- BUG: KASAN: slab-use-after-free in sock_wfree+0x9a8/0x9d0 net/core/sock.c:2468
-Read of size 8 at addr ffff88802f4fc880 by task ksoftirqd/1/27
+Fix this issue by using a proper timer_list object which won't have this
+ULONG_MAX/2 difference limitation.
 
-CPU: 1 PID: 27 Comm: ksoftirqd/1 Not tainted 6.8.0-rc1-syzkaller-00049-g6098d87eaf31 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0xd9/0x1b0 lib/dump_stack.c:106
-  print_address_description mm/kasan/report.c:377 [inline]
-  print_report+0xc4/0x620 mm/kasan/report.c:488
-  kasan_report+0xda/0x110 mm/kasan/report.c:601
-  list_empty include/linux/list.h:373 [inline]
-  waitqueue_active include/linux/wait.h:127 [inline]
-  sock_def_write_space_wfree net/core/sock.c:3384 [inline]
-  sock_wfree+0x9a8/0x9d0 net/core/sock.c:2468
-  skb_release_head_state+0xa3/0x2b0 net/core/skbuff.c:1080
-  skb_release_all net/core/skbuff.c:1092 [inline]
-  napi_consume_skb+0x119/0x2b0 net/core/skbuff.c:1404
-  e1000_unmap_and_free_tx_resource+0x144/0x200 drivers/net/ethernet/intel/e1000/e1000_main.c:1970
-  e1000_clean_tx_irq drivers/net/ethernet/intel/e1000/e1000_main.c:3860 [inline]
-  e1000_clean+0x4a1/0x26e0 drivers/net/ethernet/intel/e1000/e1000_main.c:3801
-  __napi_poll.constprop.0+0xb4/0x540 net/core/dev.c:6576
-  napi_poll net/core/dev.c:6645 [inline]
-  net_rx_action+0x956/0xe90 net/core/dev.c:6778
-  __do_softirq+0x21a/0x8de kernel/softirq.c:553
-  run_ksoftirqd kernel/softirq.c:921 [inline]
-  run_ksoftirqd+0x31/0x60 kernel/softirq.c:913
-  smpboot_thread_fn+0x660/0xa10 kernel/smpboot.c:164
-  kthread+0x2c6/0x3a0 kernel/kthread.c:388
-  ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
-  ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:242
- </TASK>
-
-Allocated by task 5167:
-  kasan_save_stack+0x33/0x50 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  unpoison_slab_object mm/kasan/common.c:314 [inline]
-  __kasan_slab_alloc+0x81/0x90 mm/kasan/common.c:340
-  kasan_slab_alloc include/linux/kasan.h:201 [inline]
-  slab_post_alloc_hook mm/slub.c:3813 [inline]
-  slab_alloc_node mm/slub.c:3860 [inline]
-  kmem_cache_alloc_lru+0x142/0x6f0 mm/slub.c:3879
-  alloc_inode_sb include/linux/fs.h:3019 [inline]
-  sock_alloc_inode+0x25/0x1c0 net/socket.c:308
-  alloc_inode+0x5d/0x220 fs/inode.c:260
-  new_inode_pseudo+0x16/0x80 fs/inode.c:1005
-  sock_alloc+0x40/0x270 net/socket.c:634
-  __sock_create+0xbc/0x800 net/socket.c:1535
-  sock_create net/socket.c:1622 [inline]
-  __sys_socket_create net/socket.c:1659 [inline]
-  __sys_socket+0x14c/0x260 net/socket.c:1706
-  __do_sys_socket net/socket.c:1720 [inline]
-  __se_sys_socket net/socket.c:1718 [inline]
-  __x64_sys_socket+0x72/0xb0 net/socket.c:1718
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xd3/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Freed by task 0:
-  kasan_save_stack+0x33/0x50 mm/kasan/common.c:47
-  kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-  kasan_save_free_info+0x3f/0x60 mm/kasan/generic.c:640
-  poison_slab_object mm/kasan/common.c:241 [inline]
-  __kasan_slab_free+0x121/0x1b0 mm/kasan/common.c:257
-  kasan_slab_free include/linux/kasan.h:184 [inline]
-  slab_free_hook mm/slub.c:2121 [inline]
-  slab_free mm/slub.c:4299 [inline]
-  kmem_cache_free+0x129/0x350 mm/slub.c:4363
-  i_callback+0x43/0x70 fs/inode.c:249
-  rcu_do_batch kernel/rcu/tree.c:2158 [inline]
-  rcu_core+0x819/0x1680 kernel/rcu/tree.c:2433
-  __do_softirq+0x21a/0x8de kernel/softirq.c:553
-
-Last potentially related work creation:
-  kasan_save_stack+0x33/0x50 mm/kasan/common.c:47
-  __kasan_record_aux_stack+0xba/0x100 mm/kasan/generic.c:586
-  __call_rcu_common.constprop.0+0x9a/0x7b0 kernel/rcu/tree.c:2683
-  destroy_inode+0x129/0x1b0 fs/inode.c:315
-  iput_final fs/inode.c:1739 [inline]
-  iput.part.0+0x560/0x7b0 fs/inode.c:1765
-  iput+0x5c/0x80 fs/inode.c:1755
-  dentry_unlink_inode+0x292/0x430 fs/dcache.c:400
-  __dentry_kill+0x1ca/0x5f0 fs/dcache.c:603
-  dput.part.0+0x4ac/0x9a0 fs/dcache.c:845
-  dput+0x1f/0x30 fs/dcache.c:835
-  __fput+0x3b9/0xb70 fs/file_table.c:384
-  task_work_run+0x14d/0x240 kernel/task_work.c:180
-  exit_task_work include/linux/task_work.h:38 [inline]
-  do_exit+0xa8a/0x2ad0 kernel/exit.c:871
-  do_group_exit+0xd4/0x2a0 kernel/exit.c:1020
-  __do_sys_exit_group kernel/exit.c:1031 [inline]
-  __se_sys_exit_group kernel/exit.c:1029 [inline]
-  __x64_sys_exit_group+0x3e/0x50 kernel/exit.c:1029
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xd3/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-The buggy address belongs to the object at ffff88802f4fc800
- which belongs to the cache sock_inode_cache of size 1408
-The buggy address is located 128 bytes inside of
- freed 1408-byte region [ffff88802f4fc800, ffff88802f4fcd80)
-
-The buggy address belongs to the physical page:
-page:ffffea0000bd3e00 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x2f4f8
-head:ffffea0000bd3e00 order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-anon flags: 0xfff00000000840(slab|head|node=0|zone=1|lastcpupid=0x7ff)
-page_type: 0xffffffff()
-raw: 00fff00000000840 ffff888013b06b40 0000000000000000 0000000000000001
-raw: 0000000000000000 0000000080150015 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 3, migratetype Reclaimable, gfp_mask 0xd20d0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC|__GFP_RECLAIMABLE), pid 4956, tgid 4956 (sshd), ts 31423924727, free_ts 0
-  set_page_owner include/linux/page_owner.h:31 [inline]
-  post_alloc_hook+0x2d0/0x350 mm/page_alloc.c:1533
-  prep_new_page mm/page_alloc.c:1540 [inline]
-  get_page_from_freelist+0xa28/0x3780 mm/page_alloc.c:3311
-  __alloc_pages+0x22f/0x2440 mm/page_alloc.c:4567
-  __alloc_pages_node include/linux/gfp.h:238 [inline]
-  alloc_pages_node include/linux/gfp.h:261 [inline]
-  alloc_slab_page mm/slub.c:2190 [inline]
-  allocate_slab mm/slub.c:2354 [inline]
-  new_slab+0xcc/0x3a0 mm/slub.c:2407
-  ___slab_alloc+0x4af/0x19a0 mm/slub.c:3540
-  __slab_alloc.constprop.0+0x56/0xa0 mm/slub.c:3625
-  __slab_alloc_node mm/slub.c:3678 [inline]
-  slab_alloc_node mm/slub.c:3850 [inline]
-  kmem_cache_alloc_lru+0x379/0x6f0 mm/slub.c:3879
-  alloc_inode_sb include/linux/fs.h:3019 [inline]
-  sock_alloc_inode+0x25/0x1c0 net/socket.c:308
-  alloc_inode+0x5d/0x220 fs/inode.c:260
-  new_inode_pseudo+0x16/0x80 fs/inode.c:1005
-  sock_alloc+0x40/0x270 net/socket.c:634
-  __sock_create+0xbc/0x800 net/socket.c:1535
-  sock_create net/socket.c:1622 [inline]
-  __sys_socket_create net/socket.c:1659 [inline]
-  __sys_socket+0x14c/0x260 net/socket.c:1706
-  __do_sys_socket net/socket.c:1720 [inline]
-  __se_sys_socket net/socket.c:1718 [inline]
-  __x64_sys_socket+0x72/0xb0 net/socket.c:1718
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xd3/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-page_owner free stack trace missing
-
-Memory state around the buggy address:
- ffff88802f4fc780: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88802f4fc800: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff88802f4fc880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                   ^
- ffff88802f4fc900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88802f4fc980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-
-Fixes: 43815482370c ("net: sock_def_readable() and friends RCU conversion")
-Reported-and-tested-by: syzbot+32b89eaa102b372ff76d@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240126165532.3396702-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b00589af3b04 ("bridge: disable snooping if there is no querier")
+Signed-off-by: Linus Lüssing <linus.luessing@c0d3.blue>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20240127175033.9640-1-linus.luessing@c0d3.blue
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/llc/af_llc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/br_multicast.c | 20 +++++++++++++++-----
+ net/bridge/br_private.h   |  4 ++--
+ 2 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/net/llc/af_llc.c b/net/llc/af_llc.c
-index 55ed3bd65eb4..70973bf18ee3 100644
---- a/net/llc/af_llc.c
-+++ b/net/llc/af_llc.c
-@@ -226,6 +226,8 @@ static int llc_ui_release(struct socket *sock)
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index db4f2641d1cd..9765f9f9bf7f 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -1607,6 +1607,10 @@ static void br_ip6_multicast_querier_expired(struct timer_list *t)
+ }
+ #endif
+ 
++static void br_multicast_query_delay_expired(struct timer_list *t)
++{
++}
++
+ static void br_multicast_select_own_querier(struct net_bridge_mcast *brmctx,
+ 					    struct br_ip *ip,
+ 					    struct sk_buff *skb)
+@@ -3024,7 +3028,7 @@ br_multicast_update_query_timer(struct net_bridge_mcast *brmctx,
+ 				unsigned long max_delay)
+ {
+ 	if (!timer_pending(&query->timer))
+-		query->delay_time = jiffies + max_delay;
++		mod_timer(&query->delay_timer, jiffies + max_delay);
+ 
+ 	mod_timer(&query->timer, jiffies + brmctx->multicast_querier_interval);
+ }
+@@ -3867,13 +3871,11 @@ void br_multicast_ctx_init(struct net_bridge *br,
+ 	brmctx->multicast_querier_interval = 255 * HZ;
+ 	brmctx->multicast_membership_interval = 260 * HZ;
+ 
+-	brmctx->ip4_other_query.delay_time = 0;
+ 	brmctx->ip4_querier.port_ifidx = 0;
+ 	seqcount_spinlock_init(&brmctx->ip4_querier.seq, &br->multicast_lock);
+ 	brmctx->multicast_igmp_version = 2;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	brmctx->multicast_mld_version = 1;
+-	brmctx->ip6_other_query.delay_time = 0;
+ 	brmctx->ip6_querier.port_ifidx = 0;
+ 	seqcount_spinlock_init(&brmctx->ip6_querier.seq, &br->multicast_lock);
+ #endif
+@@ -3882,6 +3884,8 @@ void br_multicast_ctx_init(struct net_bridge *br,
+ 		    br_ip4_multicast_local_router_expired, 0);
+ 	timer_setup(&brmctx->ip4_other_query.timer,
+ 		    br_ip4_multicast_querier_expired, 0);
++	timer_setup(&brmctx->ip4_other_query.delay_timer,
++		    br_multicast_query_delay_expired, 0);
+ 	timer_setup(&brmctx->ip4_own_query.timer,
+ 		    br_ip4_multicast_query_expired, 0);
+ #if IS_ENABLED(CONFIG_IPV6)
+@@ -3889,6 +3893,8 @@ void br_multicast_ctx_init(struct net_bridge *br,
+ 		    br_ip6_multicast_local_router_expired, 0);
+ 	timer_setup(&brmctx->ip6_other_query.timer,
+ 		    br_ip6_multicast_querier_expired, 0);
++	timer_setup(&brmctx->ip6_other_query.delay_timer,
++		    br_multicast_query_delay_expired, 0);
+ 	timer_setup(&brmctx->ip6_own_query.timer,
+ 		    br_ip6_multicast_query_expired, 0);
+ #endif
+@@ -4023,10 +4029,12 @@ static void __br_multicast_stop(struct net_bridge_mcast *brmctx)
+ {
+ 	del_timer_sync(&brmctx->ip4_mc_router_timer);
+ 	del_timer_sync(&brmctx->ip4_other_query.timer);
++	del_timer_sync(&brmctx->ip4_other_query.delay_timer);
+ 	del_timer_sync(&brmctx->ip4_own_query.timer);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	del_timer_sync(&brmctx->ip6_mc_router_timer);
+ 	del_timer_sync(&brmctx->ip6_other_query.timer);
++	del_timer_sync(&brmctx->ip6_other_query.delay_timer);
+ 	del_timer_sync(&brmctx->ip6_own_query.timer);
+ #endif
+ }
+@@ -4469,13 +4477,15 @@ int br_multicast_set_querier(struct net_bridge_mcast *brmctx, unsigned long val)
+ 	max_delay = brmctx->multicast_query_response_interval;
+ 
+ 	if (!timer_pending(&brmctx->ip4_other_query.timer))
+-		brmctx->ip4_other_query.delay_time = jiffies + max_delay;
++		mod_timer(&brmctx->ip4_other_query.delay_timer,
++			  jiffies + max_delay);
+ 
+ 	br_multicast_start_querier(brmctx, &brmctx->ip4_own_query);
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	if (!timer_pending(&brmctx->ip6_other_query.timer))
+-		brmctx->ip6_other_query.delay_time = jiffies + max_delay;
++		mod_timer(&brmctx->ip6_other_query.delay_timer,
++			  jiffies + max_delay);
+ 
+ 	br_multicast_start_querier(brmctx, &brmctx->ip6_own_query);
+ #endif
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index bd218c2b2cd9..ff10ddeeb50f 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -77,7 +77,7 @@ struct bridge_mcast_own_query {
+ /* other querier */
+ struct bridge_mcast_other_query {
+ 	struct timer_list		timer;
+-	unsigned long			delay_time;
++	struct timer_list		delay_timer;
+ };
+ 
+ /* selected querier */
+@@ -1066,7 +1066,7 @@ __br_multicast_querier_exists(struct net_bridge_mcast *brmctx,
+ 		own_querier_enabled = false;
  	}
- 	dev_put(llc->dev);
- 	sock_put(sk);
-+	sock_orphan(sk);
-+	sock->sk = NULL;
- 	llc_sk_free(sk);
- out:
- 	return 0;
+ 
+-	return time_is_before_jiffies(querier->delay_time) &&
++	return !timer_pending(&querier->delay_timer) &&
+ 	       (own_querier_enabled || timer_pending(&querier->timer));
+ }
+ 
 -- 
 2.43.0
 
