@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3903D981;
-	Wed, 21 Feb 2024 14:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7213D981;
+	Wed, 21 Feb 2024 14:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525099; cv=none; b=TK3Iptl+AIbtZcmtwOOfOwueI2YAaYeLpcx9rnOqrEzRx94Eam1P5Gf9z6EGaqtwfaDtiSPtYPUinQJiR7SxLCPOkhSLPmWJoRFWJNHcny2+BFPTapvkLeKahQ+5tniGX3ZsORY0G2JwyxgGbJcB5k/qKr4Cg6BfFK0DqR68kb0=
+	t=1708525102; cv=none; b=VIP+ad0AR3eLhIlvc+VL41aF3Y4cRVnipAWiB+hHjq9vntYdHwLpB6nYOg8bX3jdmnP2tKcjldXgHnNzEpSlqVzbN5WE2ZV+/IhLfqXmS8nmU2oFiJcp1/EMCnEMp9W74yoRybmLBMAYEL2fOUJKgt+GlCxiQNmlr7doH54vik4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525099; c=relaxed/simple;
-	bh=svFvsT0f21uQ2vJf3kmlWKN7qu9twkImaBEXfPpRq0Q=;
+	s=arc-20240116; t=1708525102; c=relaxed/simple;
+	bh=ziUrVfKwJ8zlHh30i+U9xMBGfFaJQ6wWHw01sWtKuD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wy5/bJk39QE3VFSjy9E7fhjL/EpxC7+yD0FcFIzN9QregmMS+gwpn6r3b3PNKCgtujk6pM2Kok0rIVV6vHSU0PojjL/QFpRrI00U73FvxfqmzxuMO/ZEvflJcR7gyPgObVki/3lfXulVewGXMa09eO4QhO1/yDTQ3XTwIcQYRRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAooFjWW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlFMv4/tIObOLOqhr+qovo7dR49OMw0hmkF63q3B5b/aeXZPG1snDxdXNItUVztsBkX2GnOS7V7KL9Bk8iImOtNbWo5HNq2GnkGVrLvvS1POkKpUUK7Rd8pHtGTRzPRtdBDf2afvbU6txsxpiKnhpRJLXWwFYk3z10/ADWzkKHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGgbjs9B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAooFjWW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F060C433F1;
-	Wed, 21 Feb 2024 14:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGgbjs9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2D3C433C7;
+	Wed, 21 Feb 2024 14:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525099;
-	bh=svFvsT0f21uQ2vJf3kmlWKN7qu9twkImaBEXfPpRq0Q=;
+	s=korg; t=1708525102;
+	bh=ziUrVfKwJ8zlHh30i+U9xMBGfFaJQ6wWHw01sWtKuD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oAooFjWWOcExocRNaCjtEhu+r8Bei1gSr5fkZp4zdTaTb0F2ACKI11oMTL1oos8o7
-	 5BzyH1ieJgjGsKHLlivKRkkJ/9N7saSn0CVpULicKE6BGZkVFmc2GdxW77wXjmNK0f
-	 NqODtIVh7EwLH3fDjmZw0BYWNJ7QuYMDyrhj6c08=
+	b=ZGgbjs9BKDSjade/XxmyyjHWjCBSTFq+oIhwtB3VSgkt8K6FTXLuEwMpRYvl0YpW5
+	 v4s6BhgLJxMi25ofArK7Awig+k03zuEnSt8sIyfw8+AR4XzH7OivvqUqj224tTAyt7
+	 FN7nTEVsC50/RB9u4fJwQkrWX6WQVwQs8GH9ajy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.4 059/267] tick/sched: Preserve number of idle sleeps across CPU hotplug events
-Date: Wed, 21 Feb 2024 14:06:40 +0100
-Message-ID: <20240221125941.858649978@linuxfoundation.org>
+	syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com,
+	syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com,
+	Anand Jain <anand.jain@oracle.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 042/267] btrfs: ref-verify: free ref cache before clearing mount opt
+Date: Wed, 21 Feb 2024 14:06:23 +0100
+Message-ID: <20240221125941.338276880@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -50,52 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Chen <tim.c.chen@linux.intel.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 9a574ea9069be30b835a3da772c039993c43369b upstream.
+commit f03e274a8b29d1d1c1bbd7f764766cb5ca537ab7 upstream.
 
-Commit 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs
-CPU hotplug") preserved total idle sleep time and iowait sleeptime across
-CPU hotplug events.
+As clearing REF_VERIFY mount option indicates there were some errors in a
+ref-verify process, a ref cache is not relevant anymore and should be
+freed.
 
-Similar reasoning applies to the number of idle calls and idle sleeps to
-get the proper average of sleep time per idle invocation.
+btrfs_free_ref_cache() requires REF_VERIFY option being set so call
+it just before clearing the mount option.
 
-Preserve those fields too.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs CPU hotplug")
-Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240122233534.3094238-1-tim.c.chen@linux.intel.com
+Reported-by: syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com
+Fixes: fd708b81d972 ("Btrfs: add a extent ref verify tool")
+CC: stable@vger.kernel.org # 5.4+
+Closes: https://lore.kernel.org/lkml/000000000000e5a65c05ee832054@google.com/
+Reported-by: syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/0000000000007fe09705fdc6086c@google.com/
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-sched.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/btrfs/ref-verify.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -1398,6 +1398,7 @@ void tick_cancel_sched_timer(int cpu)
- {
- 	struct tick_sched *ts = &per_cpu(tick_cpu_sched, cpu);
- 	ktime_t idle_sleeptime, iowait_sleeptime;
-+	unsigned long idle_calls, idle_sleeps;
- 
- # ifdef CONFIG_HIGH_RES_TIMERS
- 	if (ts->sched_timer.base)
-@@ -1406,9 +1407,13 @@ void tick_cancel_sched_timer(int cpu)
- 
- 	idle_sleeptime = ts->idle_sleeptime;
- 	iowait_sleeptime = ts->iowait_sleeptime;
-+	idle_calls = ts->idle_calls;
-+	idle_sleeps = ts->idle_sleeps;
- 	memset(ts, 0, sizeof(*ts));
- 	ts->idle_sleeptime = idle_sleeptime;
- 	ts->iowait_sleeptime = iowait_sleeptime;
-+	ts->idle_calls = idle_calls;
-+	ts->idle_sleeps = idle_sleeps;
+--- a/fs/btrfs/ref-verify.c
++++ b/fs/btrfs/ref-verify.c
+@@ -888,8 +888,10 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ out_unlock:
+ 	spin_unlock(&fs_info->ref_verify_lock);
+ out:
+-	if (ret)
++	if (ret) {
++		btrfs_free_ref_cache(fs_info);
+ 		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
++	}
+ 	return ret;
  }
- #endif
  
+@@ -1018,8 +1020,8 @@ int btrfs_build_ref_tree(struct btrfs_fs
+ 		}
+ 	}
+ 	if (ret) {
+-		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 		btrfs_free_ref_cache(fs_info);
++		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 	}
+ 	btrfs_free_path(path);
+ 	return ret;
 
 
