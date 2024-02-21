@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E2B76C99;
-	Wed, 21 Feb 2024 13:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D1479DAB;
+	Wed, 21 Feb 2024 13:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523918; cv=none; b=go5R/fOpI+ca2KtrPTFvsDJ9Kntm2Zpuu364MS1iShZ9pLuvGJFRf3idqZKskDSFgZBrzvTV9dap4QdP18RFzvqZA1Tr3Z42KBoHHmMRunPNvnOjZ2vNJlNKz1jWVzTMM7Kh10V/qxlwEJ9PVESn7kW2621e/2N4Gu5lcZaFzaA=
+	t=1708523926; cv=none; b=FR/uqo5T3pc1AaZJC/Rasfs6Rp0TVlug0gk+VWBju/hIz/fDK81aJFhJvbI3venNDWBeb4d4bVwAu94eG72aPOKcs23naIYz2Awl2yfNojWxfJ1XJeSjTmIglNRWXVC2wH5txi+eLdWCa8fLSUqVFt4OVkhOM/urtJPW59XkYTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523918; c=relaxed/simple;
-	bh=owHilLRJS5egEkwvXCPYqvS89BN6dYWstivygXv2o5w=;
+	s=arc-20240116; t=1708523926; c=relaxed/simple;
+	bh=QGKjcqTEhz4LXtKvkoBwF/5mBD6PPl3Is9DplGBytkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjdcsdVNavUz7xIdI4+TkP4HPGsl1gbsUGQeK1zHXdPJgHBczHx9L9+JBoFsSxrVVP5zJTY2mf2XFPLFE3qR5W0tCfMVHzmod1R9JGXY4v/NlhkN2pt9cc+fsNxJKg8BOng5LAKSWG6IxHD5GcpFOANTF9uaXtqIpDMDa8W1yX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBJh1Ww+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lgVVXBypIHxOB4jjGLjyeT5o834ZIqth0s/XzaqJRMLwG9nVAmtesT1KroVDFmU5CNY+e7PS2jQ2VRUZlp5sN168t88ZIX6XIhCm+A8B0WFBh5PmbWUI4yd1zJT9PF4S5L0FDqsE78uEGOlcgWXPhqiqMvpi9DeN/pIhF+heUnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2tbd2G3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBJh1Ww+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FFAC433C7;
-	Wed, 21 Feb 2024 13:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2tbd2G3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40319C433F1;
+	Wed, 21 Feb 2024 13:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523918;
-	bh=owHilLRJS5egEkwvXCPYqvS89BN6dYWstivygXv2o5w=;
+	s=korg; t=1708523926;
+	bh=QGKjcqTEhz4LXtKvkoBwF/5mBD6PPl3Is9DplGBytkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xBJh1Ww+eoxBx4Qt1KZNu4GGGaHnvpRoZQfAaXxjGEAy+w6vcKd9YGfnz374vBxGM
-	 1aS2gEpYikRrOURFYUHZZ5GpcAVmsaoq+ZEWb1d90fhGatyJk+4I4WaHGhx9r87ynQ
-	 vTSM0HwqXGwgnMmPRNITnViOmOCjj3eyYKwgJ0fc=
+	b=W2tbd2G3otu92fxfHgao0N+uPjVzvKn4ywt+9QxJCws8bwprKCTcaU+LE9ORTWokm
+	 JXsfmCJFXzzBxkp2nxaLGD8NAMwmhJMsrbm0tWEEkyJ8vVq8RX2DWVTynpmvtt5/eV
+	 LB6w1LTpypJleOWAHYcIL9NvEzuG1oEmHtOsWxZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sweet Tea Dorminy <sweettea-kernel@dorminy.me>,
-	Anand Jain <anand.jain@oracle.com>,
-	Omar Sandoval <osandov@fb.com>,
-	David Sterba <dsterba@suse.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/379] btrfs: avoid copying BTRFS_ROOT_SUBVOL_DEAD flag to snapshot of subvolume being deleted
-Date: Wed, 21 Feb 2024 14:04:29 +0100
-Message-ID: <20240221125957.568153839@linuxfoundation.org>
+Subject: [PATCH 5.10 091/379] NFSD: Modernize nfsd4_release_lockowner()
+Date: Wed, 21 Feb 2024 14:04:30 +0100
+Message-ID: <20240221125957.597967433@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,119 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Omar Sandoval <osandov@fb.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 3324d0547861b16cf436d54abba7052e0c8aa9de ]
+[ Upstream commit bd8fdb6e545f950f4654a9a10d7e819ad48146e5 ]
 
-Sweet Tea spotted a race between subvolume deletion and snapshotting
-that can result in the root item for the snapshot having the
-BTRFS_ROOT_SUBVOL_DEAD flag set. The race is:
+Refactor: Use existing helpers that other lock operations use. This
+change removes several automatic variables, so re-organize the
+variable declarations for readability.
 
-Thread 1                                      | Thread 2
-----------------------------------------------|----------
-btrfs_delete_subvolume                        |
-  btrfs_set_root_flags(BTRFS_ROOT_SUBVOL_DEAD)|
-                                              |btrfs_mksubvol
-                                              |  down_read(subvol_sem)
-                                              |  create_snapshot
-                                              |    ...
-                                              |    create_pending_snapshot
-                                              |      copy root item from source
-  down_write(subvol_sem)                      |
-
-This flag is only checked in send and swap activate, which this would
-cause to fail mysteriously.
-
-create_snapshot() now checks the root refs to reject a deleted
-subvolume, so we can fix this by locking subvol_sem earlier so that the
-BTRFS_ROOT_SUBVOL_DEAD flag and the root refs are updated atomically.
-
-CC: stable@vger.kernel.org # 4.14+
-Reported-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Reviewed-by: Sweet Tea Dorminy <sweettea-kernel@dorminy.me>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Omar Sandoval <osandov@fb.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ fs/nfsd/nfs4state.c | 36 +++++++++++-------------------------
+ 1 file changed, 11 insertions(+), 25 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index c6b861f5bcfe..250b6064876d 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4008,6 +4008,8 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 	u64 root_flags;
- 	int ret;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index d402ca0b535f..1b40b2197ce6 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7113,16 +7113,13 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 			union nfsd4_op_u *u)
+ {
+ 	struct nfsd4_release_lockowner *rlockowner = &u->release_lockowner;
++	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	clientid_t *clid = &rlockowner->rl_clientid;
+-	struct nfs4_stateowner *sop;
+-	struct nfs4_lockowner *lo = NULL;
+ 	struct nfs4_ol_stateid *stp;
+-	struct xdr_netobj *owner = &rlockowner->rl_owner;
+-	unsigned int hashval = ownerstr_hashval(owner);
+-	__be32 status;
+-	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
++	struct nfs4_lockowner *lo;
+ 	struct nfs4_client *clp;
+-	LIST_HEAD (reaplist);
++	LIST_HEAD(reaplist);
++	__be32 status;
  
-+	down_write(&fs_info->subvol_sem);
-+
- 	/*
- 	 * Don't allow to delete a subvolume with send in progress. This is
- 	 * inside the inode lock so the error handling that has to drop the bit
-@@ -4019,25 +4021,25 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 		btrfs_warn(fs_info,
- 			   "attempt to delete subvolume %llu during send",
- 			   dest->root_key.objectid);
--		return -EPERM;
-+		ret = -EPERM;
-+		goto out_up_write;
- 	}
- 	if (atomic_read(&dest->nr_swapfiles)) {
- 		spin_unlock(&dest->root_item_lock);
- 		btrfs_warn(fs_info,
- 			   "attempt to delete subvolume %llu with active swapfile",
- 			   root->root_key.objectid);
--		return -EPERM;
-+		ret = -EPERM;
-+		goto out_up_write;
- 	}
- 	root_flags = btrfs_root_flags(&dest->root_item);
- 	btrfs_set_root_flags(&dest->root_item,
- 			     root_flags | BTRFS_ROOT_SUBVOL_DEAD);
- 	spin_unlock(&dest->root_item_lock);
- 
--	down_write(&fs_info->subvol_sem);
+ 	dprintk("nfsd4_release_lockowner clientid: (%08x/%08x):\n",
+ 		clid->cl_boot, clid->cl_id);
+@@ -7130,30 +7127,19 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 	status = lookup_clientid(clid, cstate, nn, false);
+ 	if (status)
+ 		return status;
 -
- 	ret = may_destroy_subvol(dest);
- 	if (ret)
--		goto out_up_write;
-+		goto out_undead;
+ 	clp = cstate->clp;
+-	/* Find the matching lock stateowner */
+-	spin_lock(&clp->cl_lock);
+-	list_for_each_entry(sop, &clp->cl_ownerstr_hashtbl[hashval],
+-			    so_strhash) {
  
- 	btrfs_init_block_rsv(&block_rsv, BTRFS_BLOCK_RSV_TEMP);
- 	/*
-@@ -4047,7 +4049,7 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 	 */
- 	ret = btrfs_subvolume_reserve_metadata(root, &block_rsv, 5, true);
- 	if (ret)
--		goto out_up_write;
-+		goto out_undead;
- 
- 	trans = btrfs_start_transaction(root, 0);
- 	if (IS_ERR(trans)) {
-@@ -4109,15 +4111,17 @@ int btrfs_delete_subvolume(struct inode *dir, struct dentry *dentry)
- 	inode->i_flags |= S_DEAD;
- out_release:
- 	btrfs_subvolume_release_metadata(root, &block_rsv);
--out_up_write:
--	up_write(&fs_info->subvol_sem);
-+out_undead:
- 	if (ret) {
- 		spin_lock(&dest->root_item_lock);
- 		root_flags = btrfs_root_flags(&dest->root_item);
- 		btrfs_set_root_flags(&dest->root_item,
- 				root_flags & ~BTRFS_ROOT_SUBVOL_DEAD);
- 		spin_unlock(&dest->root_item_lock);
--	} else {
+-		if (sop->so_is_open_owner || !same_owner_str(sop, owner))
+-			continue;
+-
+-		if (atomic_read(&sop->so_count) != 1) {
+-			spin_unlock(&clp->cl_lock);
+-			return nfserr_locks_held;
+-		}
+-
+-		lo = lockowner(sop);
+-		nfs4_get_stateowner(sop);
+-		break;
+-	}
++	spin_lock(&clp->cl_lock);
++	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
+ 	if (!lo) {
+ 		spin_unlock(&clp->cl_lock);
+ 		return status;
+ 	}
+-
++	if (atomic_read(&lo->lo_owner.so_count) != 2) {
++		spin_unlock(&clp->cl_lock);
++		nfs4_put_stateowner(&lo->lo_owner);
++		return nfserr_locks_held;
 +	}
-+out_up_write:
-+	up_write(&fs_info->subvol_sem);
-+	if (!ret) {
- 		d_invalidate(dentry);
- 		btrfs_prune_dentries(dest);
- 		ASSERT(dest->send_in_progress == 0);
+ 	unhash_lockowner_locked(lo);
+ 	while (!list_empty(&lo->lo_owner.so_stateids)) {
+ 		stp = list_first_entry(&lo->lo_owner.so_stateids,
 -- 
 2.43.0
 
