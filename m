@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667041E522;
-	Wed, 21 Feb 2024 13:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4281E522;
+	Wed, 21 Feb 2024 13:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521306; cv=none; b=gitqNACHcm/42vc8IP+dSPg+wXnHjez5zcy4hgkdFfuYHmyNVsgqx3J09CPHk1tEt8+tUEJ8sMZPzi6gMO2UOEixorVGMXsdyCQZF4n4yDXguAWn2+0Xr178rENzleLPqBKRxQwZC+98kZmUXS7/70yx/cnUGIQ+tTreWAKPHM0=
+	t=1708521309; cv=none; b=cGkaH76OseRWfuF/GFR/6rBd1yJyrOmqHCl52wK+8vwKd+oZgzUKr6nt3+7HN8j0szlp7uviTkAfxhLLd37FcGa8GXXtw5gGVrmKl9/j9BOzA5HWld5nj2r+VexGMtV+LIxrSRE1njTeejniQNfUsXdlJwjD12Zfky7eK+DZFHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521306; c=relaxed/simple;
-	bh=TsuVqB8mrgSCVis7g51TcOAX0pIfylDrmXa/DCV0cWM=;
+	s=arc-20240116; t=1708521309; c=relaxed/simple;
+	bh=5gM96E//o6dLnx0fnRZuZwwEsrx0qNHwEAbqRdM3shg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hvQ/qSwtL9/pYpG9wTXG8D/4NPJ5hWq5g+BGmFWNeMTqwW0AWGYbGn8wrF7P4oVfAskxkAyvnT//ieSx0NtpOquroJ2mwPvZMN8O0GlcyO0o4Db0Kd5qiGDUEwACfeaM1135Xn0ak8Y6f6JVv86pEzD3zU94GXOdDOoBWcIqg9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLi8vw22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VLMD8SgimifR0WBmcGELvxL7Sg0zNK2EoN9/PSTp3BN2uj8zdEA4bav7yu6Q7okoU/PLvLtzSAIMpZ+kkGqJxgS29od6ZNunoHx5pL/mwcLqsKD6PyoTo/Xvn6yeAWGTAdADtPuIlFHq4lYOjrJV5ARFSm5nq7Fq06rbQz6OuDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/bC8XHt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLi8vw22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F4EC433C7;
-	Wed, 21 Feb 2024 13:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/bC8XHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB907C433C7;
+	Wed, 21 Feb 2024 13:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521306;
-	bh=TsuVqB8mrgSCVis7g51TcOAX0pIfylDrmXa/DCV0cWM=;
+	s=korg; t=1708521309;
+	bh=5gM96E//o6dLnx0fnRZuZwwEsrx0qNHwEAbqRdM3shg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLi8vw22ZlBbhCzOrZJV8J9QJ2eP1MQooUN2LhvS0W2oAjTcdC/u5+aZt7DDruRuw
-	 Tq6clLuRLn7ZXLIEkRI6uv+NH06gkQKIwGCV7/9/0qfzdmhsS26E4xXHTOp9lSN7Dg
-	 F6TOghLT1c7Es6ipatpngs/mGHkblLEWWC180YTc=
+	b=G/bC8XHtY0MLcaW/nPN5YhUk3EOIXTmaX0+/aiTIaMSMbhTBwjZk3KsftzxvR1fo9
+	 HvQXxzJSSHTTNvvJ9INHQo+eh7hqEJZdpY0OPnQuulL/N2sj6gJKskZgv4Zmn6NkGT
+	 Gc0N/g+OM2uHPxExSLouPNA18vL88tTf+1V6qFig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
-	Kunwu Chan <chentao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 050/202] powerpc/mm: Fix null-pointer dereference in pgtable_cache_add
-Date: Wed, 21 Feb 2024 14:05:51 +0100
-Message-ID: <20240221125933.449533106@linuxfoundation.org>
+Subject: [PATCH 4.19 051/202] powerpc: Fix build error due to is_valid_bugaddr()
+Date: Wed, 21 Feb 2024 14:05:52 +0100
+Message-ID: <20240221125933.486005064@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -46,53 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit f46c8a75263f97bda13c739ba1c90aced0d3b071 ]
+[ Upstream commit f8d3555355653848082c351fa90775214fb8a4fa ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+With CONFIG_GENERIC_BUG=n the build fails with:
 
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+  arch/powerpc/kernel/traps.c:1442:5: error: no previous prototype for ‘is_valid_bugaddr’ [-Werror=missing-prototypes]
+  1442 | int is_valid_bugaddr(unsigned long addr)
+       |     ^~~~~~~~~~~~~~~~
+
+The prototype is only defined, and the function is only needed, when
+CONFIG_GENERIC_BUG=y, so move the implementation under that.
+
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231204023223.2447523-1-chentao@kylinos.cn
+Link: https://msgid.link/20231130114433.3053544-2-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/init-common.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/powerpc/kernel/traps.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/mm/init-common.c b/arch/powerpc/mm/init-common.c
-index 2b656e67f2ea..927703af49be 100644
---- a/arch/powerpc/mm/init-common.c
-+++ b/arch/powerpc/mm/init-common.c
-@@ -65,7 +65,7 @@ void pgtable_cache_add(unsigned shift, void (*ctor)(void *))
- 	 * as to leave enough 0 bits in the address to contain it. */
- 	unsigned long minalign = max(MAX_PGTABLE_INDEX_SIZE + 1,
- 				     HUGEPD_SHIFT_MASK + 1);
--	struct kmem_cache *new;
-+	struct kmem_cache *new = NULL;
+diff --git a/arch/powerpc/kernel/traps.c b/arch/powerpc/kernel/traps.c
+index 63c751ce130a..67a00131ec42 100644
+--- a/arch/powerpc/kernel/traps.c
++++ b/arch/powerpc/kernel/traps.c
+@@ -1341,10 +1341,12 @@ static int emulate_instruction(struct pt_regs *regs)
+ 	return -EINVAL;
+ }
  
- 	/* It would be nice if this was a BUILD_BUG_ON(), but at the
- 	 * moment, gcc doesn't seem to recognize is_power_of_2 as a
-@@ -78,7 +78,8 @@ void pgtable_cache_add(unsigned shift, void (*ctor)(void *))
++#ifdef CONFIG_GENERIC_BUG
+ int is_valid_bugaddr(unsigned long addr)
+ {
+ 	return is_kernel_addr(addr);
+ }
++#endif
  
- 	align = max_t(unsigned long, align, minalign);
- 	name = kasprintf(GFP_KERNEL, "pgtable-2^%d", shift);
--	new = kmem_cache_create(name, table_size, align, 0, ctor);
-+	if (name)
-+		new = kmem_cache_create(name, table_size, align, 0, ctor);
- 	if (!new)
- 		panic("Could not allocate pgtable cache for order %d", shift);
- 
+ #ifdef CONFIG_MATH_EMULATION
+ static int emulate_math(struct pt_regs *regs)
 -- 
 2.43.0
 
