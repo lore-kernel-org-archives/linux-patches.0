@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4293D0A1;
-	Wed, 21 Feb 2024 14:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5524F3D0A1;
+	Wed, 21 Feb 2024 14:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525528; cv=none; b=lHW7IMmUB3ejgxXui/fxjaGlCz4LggrrZ3OzE3oqaEB63qBaHfu8p0ZEi1fcsEbBX6iU1iAouJYuLyeMUYVidIpVJWc2MJv8YfYcYxOscauAjQOSMpdlC7VMRN0PmYHxz7ybwGCzPIU/GKBO0ml0FAWG04MV4vx/tf4LXunBvx4=
+	t=1708525531; cv=none; b=iieDdlbQ606jP+p6kzjFKfu5owYlBACUS2yW9Zn60cgQu7u+QX59QPE1obqiH2R53E4ixMTvnsKHZulffhKc+GduiRXuDv7xtsygZ4R+vomYC2Op6SVw02+ghxxt6zw19XbmX4AaH8aRuz6iemlq/mbRBcYN8OFU/7VQYyepWJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525528; c=relaxed/simple;
-	bh=0a6TuoKdfS4f/djxn2eo0fhW0Vovc7bSsDDgAp/KDs8=;
+	s=arc-20240116; t=1708525531; c=relaxed/simple;
+	bh=WGAA8e78iqAaGCCLUyHgv/Yo4FQHnKwuySJbSUB+Izk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICGS2pgcgS4/hm68oY9972txf6hsfJKnxU/8CHsbRBNKuik9vt9Q23lUlQozzBvE/wcX859ZYfKZHdyIIAW2F6DxhEWhoytsyHsFWxsF84JuyO8SEe993eDHzSQng0kZleVAX5RXMBw1o5yuvDsVHPm33jpNlg1pxU6fg3RJuVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THW2QrX8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cnpGGnhiTIeq1Ght5NYbM7irsXEP1TNPBKskKi0ItZoK7KIpLxSE+sJMBIMraloo0m5FL7BCXY22UOOI4AvBBVKYXSrHDUkGTLuU7YPQhx35Q5SBS/gKHyUvQ+HB5WbPhFcjzRRgA2BACNVtF2NHXMivAXyFcRvl4Eu4xzkUh2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgZbjXOA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THW2QrX8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E70C433C7;
-	Wed, 21 Feb 2024 14:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgZbjXOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF520C433F1;
+	Wed, 21 Feb 2024 14:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525528;
-	bh=0a6TuoKdfS4f/djxn2eo0fhW0Vovc7bSsDDgAp/KDs8=;
+	s=korg; t=1708525531;
+	bh=WGAA8e78iqAaGCCLUyHgv/Yo4FQHnKwuySJbSUB+Izk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THW2QrX8bMao3rD4mUF+bkf2TrClDpi3tdLD/uJib/kNzGJKv4Q58YLEn7XrK5XM5
-	 cTeVWS5EOaEE4xXDVjRh/yfCI2mcbBxztVtIIw31Ddtfv7i4mceUaLGSophB0//JWJ
-	 K3UEs8nJeMei0ZZ5i1LpFM3R9OrnOafq01SVTgu4=
+	b=kgZbjXOAv4/c47597gF5zIOSbdvW0zAlQeSNmRnGELEao6p8REQtUSeUH/WiAY71b
+	 3F7p+P2ybPIVdFuqzew4LhMj/oK44Qa91+kXV6RBXccRP0legYBhq7p51IqICgZj9K
+	 7TQ6gC/akpoq0UIdUUAFcv8Pl7yYIpEgh8g+zo2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Loic Prylli <lprylli@netflix.com>,
+	Alexander Hansen <alexander.hansen@9elements.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 183/267] atm: idt77252: fix a memleak in open_card_ubr0
-Date: Wed, 21 Feb 2024 14:08:44 +0100
-Message-ID: <20240221125945.870534780@linuxfoundation.org>
+Subject: [PATCH 5.4 184/267] hwmon: (aspeed-pwm-tacho) mutex for tach reading
+Date: Wed, 21 Feb 2024 14:08:45 +0100
+Message-ID: <20240221125945.900302654@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,44 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Loic Prylli <lprylli@netflix.com>
 
-[ Upstream commit f3616173bf9be9bf39d131b120d6eea4e6324cb5 ]
+[ Upstream commit 1168491e7f53581ba7b6014a39a49cfbbb722feb ]
 
-When alloc_scq fails, card->vcs[0] (i.e. vc) should be freed. Otherwise,
-in the following call chain:
+the ASPEED_PTCR_RESULT Register can only hold the result for a
+single fan input. Adding a mutex to protect the register until the
+reading is done.
 
-idt77252_init_one
-  |-> idt77252_dev_open
-        |-> open_card_ubr0
-              |-> alloc_scq [failed]
-  |-> deinit_card
-        |-> vfree(card->vcs);
-
-card->vcs is freed and card->vcs[0] is leaked.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Loic Prylli <lprylli@netflix.com>
+Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
+Fixes: 2d7a548a3eff ("drivers: hwmon: Support for ASPEED PWM/Fan tach")
+Link: https://lore.kernel.org/r/121d888762a1232ef403cf35230ccf7b3887083a.1699007401.git.alexander.hansen@9elements.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/atm/idt77252.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/aspeed-pwm-tacho.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
-index c60611196786..605e992d25df 100644
---- a/drivers/atm/idt77252.c
-+++ b/drivers/atm/idt77252.c
-@@ -2935,6 +2935,8 @@ open_card_ubr0(struct idt77252_dev *card)
- 	vc->scq = alloc_scq(card, vc->class);
- 	if (!vc->scq) {
- 		printk("%s: can't get SCQ.\n", card->name);
-+		kfree(card->vcs[0]);
-+		card->vcs[0] = NULL;
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/hwmon/aspeed-pwm-tacho.c b/drivers/hwmon/aspeed-pwm-tacho.c
+index 40f3139f1e02..dca5d3bf0629 100644
+--- a/drivers/hwmon/aspeed-pwm-tacho.c
++++ b/drivers/hwmon/aspeed-pwm-tacho.c
+@@ -194,6 +194,8 @@ struct aspeed_pwm_tacho_data {
+ 	u8 fan_tach_ch_source[16];
+ 	struct aspeed_cooling_device *cdev[8];
+ 	const struct attribute_group *groups[3];
++	/* protects access to shared ASPEED_PTCR_RESULT */
++	struct mutex tach_lock;
+ };
  
+ enum type { TYPEM, TYPEN, TYPEO };
+@@ -528,6 +530,8 @@ static int aspeed_get_fan_tach_ch_rpm(struct aspeed_pwm_tacho_data *priv,
+ 	u8 fan_tach_ch_source, type, mode, both;
+ 	int ret;
+ 
++	mutex_lock(&priv->tach_lock);
++
+ 	regmap_write(priv->regmap, ASPEED_PTCR_TRIGGER, 0);
+ 	regmap_write(priv->regmap, ASPEED_PTCR_TRIGGER, 0x1 << fan_tach_ch);
+ 
+@@ -545,6 +549,8 @@ static int aspeed_get_fan_tach_ch_rpm(struct aspeed_pwm_tacho_data *priv,
+ 		ASPEED_RPM_STATUS_SLEEP_USEC,
+ 		usec);
+ 
++	mutex_unlock(&priv->tach_lock);
++
+ 	/* return -ETIMEDOUT if we didn't get an answer. */
+ 	if (ret)
+ 		return ret;
+@@ -909,6 +915,7 @@ static int aspeed_pwm_tacho_probe(struct platform_device *pdev)
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
++	mutex_init(&priv->tach_lock);
+ 	priv->regmap = devm_regmap_init(dev, NULL, (__force void *)regs,
+ 			&aspeed_pwm_tacho_regmap_config);
+ 	if (IS_ERR(priv->regmap))
 -- 
 2.43.0
 
