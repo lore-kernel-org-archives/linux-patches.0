@@ -1,144 +1,155 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47263FE0
-	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 01:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F2953A1
+	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 01:59:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708479641; cv=none; b=WvkdDyUrR3tChAg4AJ0szDJDEl9AF8dYGEvpPVJgaFZPk3ryur6V0gt1UPggcgGfNp1vbF61un07EyoxOyTH4vmzbWRcXQcYNDO+GsM4KzU/Bsi/cBqQCbHVh3gVnetoik2+a88jDFqe08p8rqlJiv+TWCpEtoXxJybcQzD9l6M=
+	t=1708480766; cv=none; b=nRCCdKdGOpnDaQVwuCgcgQxoCPpxJmSE6vrkz9JE4pppy5JKUUTOuB5Qyrmk/LwmbeqZFdFY5XoUNNRLBjaI+9iWAFZt3jZpp5WVBXZDSUctTES2JdBN4pn537h+4v7fAgmOm3i0zAthdoy3NzfMB9M9/w2RaF+AKauxSo68azY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708479641; c=relaxed/simple;
-	bh=MHjeNXfg70vZndjn2W8FYoWEeFiRzFLlHm568a5/VKM=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MLZnQ0UFTgx/iuoGcyWttVKNyDi7wEPrGBRbLBCEo2Wr48JzxJlBlZ0NdBfGwmnKmYqLufro7UlpWm/jiBi6RIue74djRMlm2z72mBb3KQL47dXxQwZHBSp/jt2N6WLwpIOBilxOKTwEwPDHkBWuoKajNagwm0vZBMm/RvvnXcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CxUmKfws; arc=none smtp.client-ip=209.85.167.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1708480766; c=relaxed/simple;
+	bh=Yy/8YwI1NXHNFY4dyp+Ak0PqgCVjvM91BpGs203MyMM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hDbD0GEoN5vUT5I3BAoKtR+DpnnEA49tD7ASjA7r+cw8x7fDr1UEIUl+k/hSkAS/DlqVtNkRtIbCNXzaRyQ+WoSFbwwB1jmmBY1dUT7dSK1Ikz/8TfCc3E92N8j8+MUy0KiaPotrgzBujOO0ga32/hg2cy4xODG5Jixs2YMkkj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lmXMOIFQ; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CxUmKfws"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3c02b993a5aso3721280b6e.1
-        for <patches@lists.linux.dev>; Tue, 20 Feb 2024 17:40:39 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lmXMOIFQ"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d746856d85so39331895ad.0
+        for <patches@lists.linux.dev>; Tue, 20 Feb 2024 17:59:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708479639; x=1709084439; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WFQJDZxmoMvr6g51d9kMvuqvb/f+3ctrTw6gtvp3hGc=;
-        b=CxUmKfwsyuaJ+8J2LpJDOpJ5hMGo4W3ekf9B5bbsAae7cT0cb4VS6P4A5Xy9JY0OcS
-         k/LIP+yvshpcwOvQdvpDk3Qvt2NUiadtnSg75yrpy5QYpM3UcyX0LNLzKy+P3IYHHJyy
-         ZW+CrHu7RhrPvNI3gsgXJWB4zwIDtI/wXUx/6AU+yvX6NTml1RlqzhdGxWDKfLAY2TTz
-         l7YjubaQgDwuSnvXpzZMEOtFAufEe5SCZ3CUuYUz0QBzCyWCSxF/qKccSaxoDYYO/Yqm
-         1UUEwfzIpj2732hTZbqcXMgsf5ErFVmGfaW8UQeDBFoMXfOGGGuqKGeATtX1hzh+I7eL
-         FZag==
+        d=chromium.org; s=google; t=1708480763; x=1709085563; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mhVd93tz1AXwUEn+kfLstiE+RXrMZSMseSHUIcWvQmI=;
+        b=lmXMOIFQWGs4AfCY8sNdLyKRD5N0T6EWC/q1tbFlnIsVNFVJUpVne+2GgRRf90dKBh
+         CH7UHKHJgjWDSD+GwJJ5Z5CqTkhbLj6TVCEX9WJYdjAkPNARkeJBvpr6jKCD3kAuUiHp
+         5W5bThTQ1R6p+NQygV9cozoxW8j2tWGC9NnEg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708479639; x=1709084439;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WFQJDZxmoMvr6g51d9kMvuqvb/f+3ctrTw6gtvp3hGc=;
-        b=ifcWaoGXhpYYgbRCs0RUv10Hk1+M0/ivOaR6iGBUQHizvNh7kLbVyzN6QiVXLeZjjM
-         bAnpGrh61TRsaXQ+L275MOZQrBYEY8vwU8Hbcu/m4fQ+Uduxmje5MeiNLZxZCZRvD8sB
-         fW3sxD8qxni04QFJEuidzKE5U09YsOiQ036OsdmhNisZD0P1AdYKf1p3q1Up6sPBgRJ6
-         Tg3dTeEc+vFIkwqaMc5yMUCbJpr80bvqBmNQUmaFBECEGCLAv/vLWUz8Z9HzAmTREtW5
-         LQYmhi5XdgR2Shf6geCol76Z95M6Cfp7ZDXCJ63ZjlVvrSbbA9Cza2dMZYHLbnxuCRYU
-         ri2A==
-X-Gm-Message-State: AOJu0YwIRMVIIKCg5v503vbsPmgfU91TcCIdkAR83OB9MWVIwdac6OpG
-	re+4vR1Nmkd1NEInWE7dnpHg0r9jl1ADMQgzArOFont6lJIarIzmXSGl0FZilec=
-X-Google-Smtp-Source: AGHT+IEtmFf0cEi0/mL21f4Jx5A5mi5l/Gl/Dzo0kvoN5f9i1O4XHUPyAD/0vafiZ2SjHgHDua6ylA==
-X-Received: by 2002:a05:6808:384f:b0:3c1:4d83:30dd with SMTP id ej15-20020a056808384f00b003c14d8330ddmr15714514oib.13.1708479638926;
-        Tue, 20 Feb 2024 17:40:38 -0800 (PST)
-Received: from [192.168.17.16] ([138.84.62.70])
-        by smtp.gmail.com with ESMTPSA id y16-20020a056808131000b003c046fa43d7sm1363131oiv.19.2024.02.20.17.40.37
+        d=1e100.net; s=20230601; t=1708480763; x=1709085563;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mhVd93tz1AXwUEn+kfLstiE+RXrMZSMseSHUIcWvQmI=;
+        b=ftY4YaCgATY5P1AVH9biOFg7PLkLlIJJXwFiId1aZ7xCzlD+7BmyOeHBSF1dPJEwZ5
+         2IJz/VVkXpwhC63h0CCe/J+UdzS+d0o8uBnaQSG/AlYcHRYoFyzYH+t8+NDRhPItTTMu
+         wqt73OzmqgaAHVb1uUoy2jWtL/G/kU+xYZoCz+xq2pRENbptZwouIAPsD3qQSAYvR4l6
+         85lvlZ/MhrKX8/R2tZHpx/oYCkreQ9dacg8O2/GdfmTF1ciuNfSJItwSXDnVYcod5jp5
+         f7gWpg8wsqcumndF1ps29oU7AlA/t5FgarC8NYs8iaQthy0KfWa0djv6TmzDGBV+5sCR
+         7I0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVb6XhZkNCJsUv+fq3f250EZAaiHhdO44sB+6NnILEJTGfA3mtKXsL0MVdxxthoOT49TVsBA3lynHkSFIcBjYkU28ylDjDORg==
+X-Gm-Message-State: AOJu0Ywe3vY5W77289Bc0YpdjI99vHK08U2h+fVBcwg4KeSgfaIZZXtD
+	Z01dKfVgig8p0qTJ/iw8Z+hT9L3xOiX0LqogWUClSx8MvIwYeKZUvoySkjk5Hg==
+X-Google-Smtp-Source: AGHT+IEVghrs6OTtT15OvGzhJzUuN8xWMbAKOn5u3u4aHZ8RPX6YQRHSxH1BHaJmaFKEDlN52VLlkg==
+X-Received: by 2002:a17:902:ea06:b0:1dc:30f2:6864 with SMTP id s6-20020a170902ea0600b001dc30f26864mr199733plg.23.1708480763218;
+        Tue, 20 Feb 2024 17:59:23 -0800 (PST)
+Received: from localhost (175.199.125.34.bc.googleusercontent.com. [34.125.199.175])
+        by smtp.gmail.com with UTF8SMTPSA id p3-20020a170902c70300b001db86c48221sm6908476plp.22.2024.02.20.17.59.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Feb 2024 17:40:38 -0800 (PST)
-Message-ID: <7e1faa29-a154-41fc-aebc-38d5f355ea90@linaro.org>
-Date: Tue, 20 Feb 2024 19:40:36 -0600
+        Tue, 20 Feb 2024 17:59:22 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-gpio@vger.kernel.org,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH] gpiolib: Pass consumer device through to core in devm_fwnode_gpiod_get_index()
+Date: Tue, 20 Feb 2024 17:59:18 -0800
+Message-ID: <20240221015920.676063-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/197] 6.1.79-rc1 review
-Content-Language: en-US
-From: =?UTF-8?Q?Daniel_D=C3=ADaz?= <daniel.diaz@linaro.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com,
- matthias.schiffer@ew.tq-group.com
-References: <20240220204841.073267068@linuxfoundation.org>
- <c873370c-c12f-4f03-a722-1ae59743089b@linaro.org>
-In-Reply-To: <c873370c-c12f-4f03-a722-1ae59743089b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hello!
+This devm API takes a consumer device as an argument to setup the devm
+action, but throws it away when calling further into gpiolib. This leads
+to odd debug messages like this:
 
-On 20/02/24 7:04 p. m., Daniel Díaz wrote:
-> On 20/02/24 2:49 p. m., Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 6.1.79 release.
->> There are 197 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Thu, 22 Feb 2024 20:48:08 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc1.gz
->> or in the git tree and branch at:
->>     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
-> 
-> We see a regression with PowerPC:
-> 
-> -----8<-----
->    /builds/linux/arch/powerpc/kernel/cpu_setup_6xx.S: Assembler messages:
->    /builds/linux/arch/powerpc/kernel/cpu_setup_6xx.S:124: Error: unrecognized opcode: `sym_func_start_local(setup_g2_le_hid2)'
->    /builds/linux/arch/powerpc/kernel/cpu_setup_6xx.S:131: Error: unrecognized opcode: `sym_func_end(setup_g2_le_hid2)'
->    make[4]: *** [/builds/linux/scripts/Makefile.build:382: arch/powerpc/kernel/cpu_setup_6xx.o] Error 1
-> ----->8-----
-> 
-> This is seen only on PowerPC with GCC 8, GCC 13, Clang 17, Clang nightly, on:
-> * allnoconfig
-> * tinyconfig
-> * mpc83xx_defconfig
-> * ppc6xx_defconfig
-> (at least)
-> 
-> Reproducer:
-> 
->    tuxmake \
->      --runtime podman \
->      --target-arch powerpc \
->      --toolchain gcc-8 \
->      --kconfig tinyconfig
-> 
+ (NULL device *): using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
 
-Bisection points to:
+Let's pass the consumer device down, by directly calling what
+fwnode_gpiod_get_index() calls but pass the device used for devm. This
+changes the message to look like this instead:
 
-   commit a65d7a833f486d0c162fdc854d2d5dd2e66ddd95
-   Author: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-   Date:   Wed Jan 24 11:38:38 2024 +0100
+ gpio-keys gpio-keys: using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
 
-       powerpc/6xx: set High BAT Enable flag on G2_LE cores
-       
-       [ Upstream commit a038a3ff8c6582404834852c043dadc73a5b68b4 ]
+Note that callers of fwnode_gpiod_get_index() will still see the NULL
+device pointer debug message, but there's not much we can do about that
+because the API doesn't take a struct device.
 
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 8eb1f71e7acc ("gpiolib: consolidate GPIO lookups")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpio/gpiolib-devres.c |  2 +-
+ drivers/gpio/gpiolib.c        | 14 +++++++-------
+ drivers/gpio/gpiolib.h        |  8 ++++++++
+ 3 files changed, 16 insertions(+), 8 deletions(-)
 
-Reverting that commit makes the build pass again.
+diff --git a/drivers/gpio/gpiolib-devres.c b/drivers/gpio/gpiolib-devres.c
+index fe9ce6b19f15..4987e62dcb3d 100644
+--- a/drivers/gpio/gpiolib-devres.c
++++ b/drivers/gpio/gpiolib-devres.c
+@@ -158,7 +158,7 @@ struct gpio_desc *devm_fwnode_gpiod_get_index(struct device *dev,
+ 	if (!dr)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	desc = fwnode_gpiod_get_index(fwnode, con_id, index, flags, label);
++	desc = gpiod_find_and_request(dev, fwnode, con_id, index, flags, label, false);
+ 	if (IS_ERR(desc)) {
+ 		devres_free(dr);
+ 		return desc;
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 44c8f5743a24..c6667a887ecb 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -4133,13 +4133,13 @@ static struct gpio_desc *gpiod_find_by_fwnode(struct fwnode_handle *fwnode,
+ 	return desc;
+ }
+ 
+-static struct gpio_desc *gpiod_find_and_request(struct device *consumer,
+-						struct fwnode_handle *fwnode,
+-						const char *con_id,
+-						unsigned int idx,
+-						enum gpiod_flags flags,
+-						const char *label,
+-						bool platform_lookup_allowed)
++struct gpio_desc *gpiod_find_and_request(struct device *consumer,
++					 struct fwnode_handle *fwnode,
++					 const char *con_id,
++					 unsigned int idx,
++					 enum gpiod_flags flags,
++					 const char *label,
++					 bool platform_lookup_allowed)
+ {
+ 	unsigned long lookupflags = GPIO_LOOKUP_FLAGS_DEFAULT;
+ 	struct gpio_desc *desc;
+diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
+index a4a2520b5f31..c6e5fb9aa212 100644
+--- a/drivers/gpio/gpiolib.h
++++ b/drivers/gpio/gpiolib.h
+@@ -202,6 +202,14 @@ static inline int gpiod_request_user(struct gpio_desc *desc, const char *label)
+ 	return ret;
+ }
+ 
++struct gpio_desc *gpiod_find_and_request(struct device *consumer,
++					 struct fwnode_handle *fwnode,
++					 const char *con_id,
++					 unsigned int idx,
++					 enum gpiod_flags flags,
++					 const char *label,
++					 bool platform_lookup_allowed);
++
+ int gpiod_configure_flags(struct gpio_desc *desc, const char *con_id,
+ 		unsigned long lflags, enum gpiod_flags dflags);
+ int gpio_set_debounce_timeout(struct gpio_desc *desc, unsigned int debounce);
 
-Greetings!
-
-Daniel Díaz
-daniel.diaz@linaro.org
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+-- 
+https://chromeos.dev
 
