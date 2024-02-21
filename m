@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF75169D1C;
-	Wed, 21 Feb 2024 13:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAD676C62;
+	Wed, 21 Feb 2024 13:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521430; cv=none; b=CnWQCOpznc8dNHDk4xLj36GGC1byhlh7C3d8ON21gRKY96A6eu37tEU/eXAFmrmPz1WKLlOqaYJFr3V83Rz31PKgV4iYKVujwcqbd2W8bYpGhSp2KbkpgX6fhLsMtVjLRDMTyiTs77AOj7A1Fb1RhzghjgtUX+yUYIHbIXc9O+Q=
+	t=1708521433; cv=none; b=pywkP4mtJ9yg9nnyHWLjeaWhZDWnMh75Ytqb/FjNEYSAiePvSh8jkw5AMbrfWOPbc2Od2z5lVCjeAIU2ayqJi8DdwOac79rILX5w4vTH48C7bUReMGuU2yr8/g2mnDaDZWmuJ16mjtmOEcCfDeHSKinncSqMkyysIT2rDQt7zl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521430; c=relaxed/simple;
-	bh=sAM9e8SlZESgy3X0/nmteecihOGJU+GhUjy5ZeMYXVY=;
+	s=arc-20240116; t=1708521433; c=relaxed/simple;
+	bh=sy4G68/8enhobcHWIwSfBNcDr/NYOzzzYPrPoDviA5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgCVUxJuYfw3MYzbP8rLpPkD+XnRRwIDpaPyoSEr7+EtE4gU6Ab8Ei8hyLsvycM/adHfcrT4uqJjXHNDVL8GgTJtJisLnyUjOMXJtIMJFQKvsZEHDE6ihOcqlwezhxEFJDZ9TY0uELylY3OovEQvYfn8cn4kYSo0Px2MC/ILzVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sx30A27r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U9jFggBcGKibRuaa5roHFGyTmNjdM74KyLLFGr3222yovKMAhSSxMWpPaeokqfbjJF0yRoJw0QzizIPcQmdP7WYl3nt8BQyAv1Ss55fJ1hT88WWOJeYk8dQHqWJMMaRNDYfpp8haDuksSKU6yUe+8QoXq0unBCeZe6LJCzi5Prc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkbdhlib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sx30A27r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB78C433C7;
-	Wed, 21 Feb 2024 13:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkbdhlib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A008C433F1;
+	Wed, 21 Feb 2024 13:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521429;
-	bh=sAM9e8SlZESgy3X0/nmteecihOGJU+GhUjy5ZeMYXVY=;
+	s=korg; t=1708521432;
+	bh=sy4G68/8enhobcHWIwSfBNcDr/NYOzzzYPrPoDviA5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sx30A27rxmwL1euyDObKhwtBa74rhzY/lK4g4RFGiIYYGJxM7MYNHNhee69iSXeHa
-	 M4PBzGv9m9hFsoSIG1B91ca4p6UkZmZiFOWvYFVwiAdVsQnXzuu/nWL1Ft6Vm5jx2x
-	 GqA8j0lhafykauZJuXHqENkvc4mOVr4d2tArzsjk=
+	b=nkbdhlibpZV7prx19UbPbM9xIS+yjLkNGvwEW902TbU5h3cpJx/Ga4WJF7gABzP3f
+	 cSFJucoYI+q5ljH5oqenKn01fqrMhRxdgCLwQUxPWalOWg0SJP5+KlXJzTiAu1fKNX
+	 hglK6qlgJLzYD0PMnjwNoqIDQpgvGQcuFTXPm050=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 079/202] ARM: dts: imx7s: Fix nand-controller #size-cells
-Date: Wed, 21 Feb 2024 14:06:20 +0100
-Message-ID: <20240221125934.360093835@linuxfoundation.org>
+Subject: [PATCH 4.19 080/202] wifi: ath9k: Fix potential array-index-out-of-bounds read in ath9k_htc_txstatus()
+Date: Wed, 21 Feb 2024 14:06:21 +0100
+Message-ID: <20240221125934.389782460@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -45,42 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-[ Upstream commit 4aadb841ed49bada1415c48c44d21f5b69e01299 ]
+[ Upstream commit 2adc886244dff60f948497b59affb6c6ebb3c348 ]
 
-nand-controller.yaml bindings says #size-cells shall be set to 0.
-Fixes the dtbs_check warning:
-arch/arm/boot/dts/nxp/imx/imx7s-mba7.dtb: nand-controller@33002000:
- #size-cells:0:0: 0 was expected
-  from schema $id: http://devicetree.org/schemas/mtd/gpmi-nand.yaml#
+Fix an array-index-out-of-bounds read in ath9k_htc_txstatus(). The bug
+occurs when txs->cnt, data from a URB provided by a USB device, is
+bigger than the size of the array txs->txstatus, which is
+HTC_MAX_TX_STATUS. WARN_ON() already checks it, but there is no bug
+handling code after the check. Make the function return if that is the
+case.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Found by a modified version of syzkaller.
+
+UBSAN: array-index-out-of-bounds in htc_drv_txrx.c
+index 13 is out of range for type '__wmi_event_txstatus [12]'
+Call Trace:
+ ath9k_htc_txstatus
+ ath9k_wmi_event_tasklet
+ tasklet_action_common
+ __do_softirq
+ irq_exit_rxu
+ sysvec_apic_timer_interrupt
+
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231113065756.1491991-1-linuxlovemin@yonsei.ac.kr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx7s.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/htc_drv_txrx.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx7s.dtsi b/arch/arm/boot/dts/imx7s.dtsi
-index ebe954f94e09..c62cf9fea481 100644
---- a/arch/arm/boot/dts/imx7s.dtsi
-+++ b/arch/arm/boot/dts/imx7s.dtsi
-@@ -1094,7 +1094,7 @@
- 		gpmi: gpmi-nand@33002000{
- 			compatible = "fsl,imx7d-gpmi-nand";
- 			#address-cells = <1>;
--			#size-cells = <1>;
-+			#size-cells = <0>;
- 			reg = <0x33002000 0x2000>, <0x33004000 0x4000>;
- 			reg-names = "gpmi-nand", "bch";
- 			interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c b/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c
+index 979ac31a77a0..527bca8f7deb 100644
+--- a/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c
++++ b/drivers/net/wireless/ath/ath9k/htc_drv_txrx.c
+@@ -647,9 +647,10 @@ void ath9k_htc_txstatus(struct ath9k_htc_priv *priv, void *wmi_event)
+ 	struct ath9k_htc_tx_event *tx_pend;
+ 	int i;
+ 
+-	for (i = 0; i < txs->cnt; i++) {
+-		WARN_ON(txs->cnt > HTC_MAX_TX_STATUS);
++	if (WARN_ON_ONCE(txs->cnt > HTC_MAX_TX_STATUS))
++		return;
+ 
++	for (i = 0; i < txs->cnt; i++) {
+ 		__txs = &txs->txstatus[i];
+ 
+ 		skb = ath9k_htc_tx_get_packet(priv, __txs);
 -- 
 2.43.0
 
