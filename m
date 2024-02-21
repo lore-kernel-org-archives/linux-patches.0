@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55727BAF7;
-	Wed, 21 Feb 2024 13:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0324D5BA;
+	Wed, 21 Feb 2024 13:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522365; cv=none; b=kPZoK5PArC0ZC+CEurfk4VcrYwbI/AFoW5EeCILzLEukF0ejokiWJVQHB/jg0HeuKGFm8Qa2Q/OeEBRcmQoWeMmFO3BJaShYL1M5DuvnL9DxVniGaHIJz9tvk9v7a/vzj9l5D8mdJOi5URLM4sCS21U1ahhWAVzvNZz0nz/eXPU=
+	t=1708522368; cv=none; b=j48vaxmILa/ifn6Ii75JkQg8m1F5Sre0Up7eEw+8r+9OiZDmsn1rL7xdkwmfLdEhNwnPRyUe4OA1vHDNUvSQ7SKE+yjV3bAxeFLbwFHa0CNHP9u+yZPrVCQ1rL4mhnnEo9rn1V1Ddw+4MH0f9vzkghUKRLYKcwyN/2WZ0tEo6DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522365; c=relaxed/simple;
-	bh=yw/nlXvWULR2TBydKfddMEwajMfUw3j5VfsipGP6R7o=;
+	s=arc-20240116; t=1708522368; c=relaxed/simple;
+	bh=2Vl9XYEeTd18ofx6UKl/6gJE40BlZ50gBRd171tqqe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJNrDoKu+nr9OVrSO1rW3z1+1u1Es9MNoZOtV7WWLR58mANHv6QXsyCnVQeGdfhzTgiN2v68wMNRpggT8maWFlCQa4alorQr/mF3PyGfkfq32MWk2aox9Ei5YqUwZ7yc3Gj+GFb+OPe9+GpqAnbjA8Q9+FLPV5hT4+czcBNHM+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKq6tyWt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fk+lbiJJgEruH+W9+yf79edD8OuDL84r/B645iWYfKwp5UVft/Pb7NLZijaUVHtJB6rga9UZuJR5WKSVfbH2QQXexrJSAxSFnJ+ZcbAMhm0I1F1ZR3jTnF4QwvRBdkCT2vMeX64STRJE/H2S02wetE+oDIadeP39Q9POinxEQqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e79HuJ31; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKq6tyWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB0BC433F1;
-	Wed, 21 Feb 2024 13:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e79HuJ31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F414C433C7;
+	Wed, 21 Feb 2024 13:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522365;
-	bh=yw/nlXvWULR2TBydKfddMEwajMfUw3j5VfsipGP6R7o=;
+	s=korg; t=1708522368;
+	bh=2Vl9XYEeTd18ofx6UKl/6gJE40BlZ50gBRd171tqqe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKq6tyWtgAZDJPyKQqyquhJtotWXQcaU9XwLXR46JLPzow79KzX1lxMpCOQw9gFF/
-	 pI82c91Hg/cOmBpLQnYKiHIid5wFj6L2mNe+2KsggRSc2liRbYVD3sFzh1n/7FPy38
-	 0Af5b5oWfbu4npthvr2r+/yZI35C/76yShGhaV8Y=
+	b=e79HuJ31sxoYvHDeWpsQnfQdDohev3r0ITx+s4ERAY+m3HvpCwwR9PrWOpqGE+pDj
+	 Hwg4sTxDx0uPrTXmQi6vmlpUWlteamRj2zQAVyeXB8gRDPy63egjUK9HEXFsO4KdmX
+	 2+erA86kzo0/PHKgpFjAGBVmUK0Js3OotSMw4ZIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Ma Wupeng <mawupeng1@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Xiaofei Tan <tanxiaofei@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	James Morse <james.morse@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/476] ACPI: APEI: set memory failure flags as MF_ACTION_REQUIRED on synchronous events
-Date: Wed, 21 Feb 2024 14:03:14 +0100
-Message-ID: <20240221130013.209172877@linuxfoundation.org>
+Subject: [PATCH 5.15 117/476] drm/exynos: fix accidental on-stack copy of exynos_drm_plane
+Date: Wed, 21 Feb 2024 14:02:48 +0100
+Message-ID: <20240221130012.312827593@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -56,141 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit a70297d2213253853e95f5b49651f924990c6d3b ]
+[ Upstream commit 960b537e91725bcb17dd1b19e48950e62d134078 ]
 
-There are two major types of uncorrected recoverable (UCR) errors :
+gcc rightfully complains about excessive stack usage in the fimd_win_set_pixfmt()
+function:
 
- - Synchronous error: The error is detected and raised at the point of
-   the consumption in the execution flow, e.g. when a CPU tries to
-   access a poisoned cache line. The CPU will take a synchronous error
-   exception such as Synchronous External Abort (SEA) on Arm64 and
-   Machine Check Exception (MCE) on X86. OS requires to take action (for
-   example, offline failure page/kill failure thread) to recover this
-   uncorrectable error.
+drivers/gpu/drm/exynos/exynos_drm_fimd.c: In function 'fimd_win_set_pixfmt':
+drivers/gpu/drm/exynos/exynos_drm_fimd.c:750:1: error: the frame size of 1032 bytes is larger than 1024 byte
+drivers/gpu/drm/exynos/exynos5433_drm_decon.c: In function 'decon_win_set_pixfmt':
+drivers/gpu/drm/exynos/exynos5433_drm_decon.c:381:1: error: the frame size of 1032 bytes is larger than 1024 bytes
 
- - Asynchronous error: The error is detected out of processor execution
-   context, e.g. when an error is detected by a background scrubber.
-   Some data in the memory are corrupted. But the data have not been
-   consumed. OS is optional to take action to recover this uncorrectable
-   error.
+There is really no reason to copy the large exynos_drm_plane
+structure to the stack before using one of its members, so just
+use a pointer instead.
 
-When APEI firmware first is enabled, a platform may describe one error
-source for the handling of synchronous errors (e.g. MCE or SEA notification
-), or for handling asynchronous errors (e.g. SCI or External Interrupt
-notification). In other words, we can distinguish synchronous errors by
-APEI notification. For synchronous errors, kernel will kill the current
-process which accessing the poisoned page by sending SIGBUS with
-BUS_MCEERR_AR. In addition, for asynchronous errors, kernel will notify the
-process who owns the poisoned page by sending SIGBUS with BUS_MCEERR_AO in
-early kill mode. However, the GHES driver always sets mf_flags to 0 so that
-all synchronous errors are handled as asynchronous errors in memory failure.
-
-To this end, set memory failure flags as MF_ACTION_REQUIRED on synchronous
-events.
-
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Tested-by: Ma Wupeng <mawupeng1@huawei.com>
-Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Reviewed-by: Xiaofei Tan <tanxiaofei@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: James Morse <james.morse@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6f8ee5c21722 ("drm/exynos: fimd: Make plane alpha configurable")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/exynos/exynos5433_drm_decon.c | 4 ++--
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c      | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 8678e162181f..160606af8b4f 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -99,6 +99,20 @@ static inline bool is_hest_type_generic_v2(struct ghes *ghes)
- 	return ghes->generic->header.type == ACPI_HEST_TYPE_GENERIC_ERROR_V2;
- }
- 
-+/*
-+ * A platform may describe one error source for the handling of synchronous
-+ * errors (e.g. MCE or SEA), or for handling asynchronous errors (e.g. SCI
-+ * or External Interrupt). On x86, the HEST notifications are always
-+ * asynchronous, so only SEA on ARM is delivered as a synchronous
-+ * notification.
-+ */
-+static inline bool is_hest_sync_notify(struct ghes *ghes)
-+{
-+	u8 notify_type = ghes->generic->notify.type;
-+
-+	return notify_type == ACPI_HEST_NOTIFY_SEA;
-+}
-+
- /*
-  * This driver isn't really modular, however for the time being,
-  * continuing to use module_param is the easiest way to remain
-@@ -461,7 +475,7 @@ static bool ghes_do_memory_failure(u64 physical_addr, int flags)
- }
- 
- static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
--				       int sev)
-+				       int sev, bool sync)
+diff --git a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
+index b5001db7a95c..2f6a5995b53f 100644
+--- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
+@@ -317,9 +317,9 @@ static void decon_win_set_bldmod(struct decon_context *ctx, unsigned int win,
+ static void decon_win_set_pixfmt(struct decon_context *ctx, unsigned int win,
+ 				 struct drm_framebuffer *fb)
  {
- 	int flags = -1;
- 	int sec_sev = ghes_severity(gdata->error_severity);
-@@ -475,7 +489,7 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	    (gdata->flags & CPER_SEC_ERROR_THRESHOLD_EXCEEDED))
- 		flags = MF_SOFT_OFFLINE;
- 	if (sev == GHES_SEV_RECOVERABLE && sec_sev == GHES_SEV_RECOVERABLE)
--		flags = 0;
-+		flags = sync ? MF_ACTION_REQUIRED : 0;
- 
- 	if (flags != -1)
- 		return ghes_do_memory_failure(mem_err->physical_addr, flags);
-@@ -483,9 +497,11 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- 	return false;
- }
- 
--static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int sev)
-+static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
-+				       int sev, bool sync)
+-	struct exynos_drm_plane plane = ctx->planes[win];
++	struct exynos_drm_plane *plane = &ctx->planes[win];
+ 	struct exynos_drm_plane_state *state =
+-		to_exynos_plane_state(plane.base.state);
++		to_exynos_plane_state(plane->base.state);
+ 	unsigned int alpha = state->base.alpha;
+ 	unsigned int pixel_alpha;
+ 	unsigned long val;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index c735e53939d8..f25e112a92ed 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -644,9 +644,9 @@ static void fimd_win_set_bldmod(struct fimd_context *ctx, unsigned int win,
+ static void fimd_win_set_pixfmt(struct fimd_context *ctx, unsigned int win,
+ 				struct drm_framebuffer *fb, int width)
  {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
-+	int flags = sync ? MF_ACTION_REQUIRED : 0;
- 	bool queued = false;
- 	int sec_sev, i;
- 	char *p;
-@@ -510,7 +526,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int s
- 		 * and don't filter out 'corrected' error here.
- 		 */
- 		if (is_cache && has_pa) {
--			queued = ghes_do_memory_failure(err_info->physical_fault_addr, 0);
-+			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
- 			p += err_info->length;
- 			continue;
- 		}
-@@ -631,6 +647,7 @@ static bool ghes_do_proc(struct ghes *ghes,
- 	const guid_t *fru_id = &guid_null;
- 	char *fru_text = "";
- 	bool queued = false;
-+	bool sync = is_hest_sync_notify(ghes);
- 
- 	sev = ghes_severity(estatus->error_severity);
- 	apei_estatus_for_each_section(estatus, gdata) {
-@@ -648,13 +665,13 @@ static bool ghes_do_proc(struct ghes *ghes,
- 			ghes_edac_report_mem_error(sev, mem_err);
- 
- 			arch_apei_report_mem_error(sev, mem_err);
--			queued = ghes_handle_memory_failure(gdata, sev);
-+			queued = ghes_handle_memory_failure(gdata, sev, sync);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
- 			ghes_handle_aer(gdata);
- 		}
- 		else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
--			queued = ghes_handle_arm_hw_error(gdata, sev);
-+			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
- 		} else {
- 			void *err = acpi_hest_get_payload(gdata);
- 
+-	struct exynos_drm_plane plane = ctx->planes[win];
++	struct exynos_drm_plane *plane = &ctx->planes[win];
+ 	struct exynos_drm_plane_state *state =
+-		to_exynos_plane_state(plane.base.state);
++		to_exynos_plane_state(plane->base.state);
+ 	uint32_t pixel_format = fb->format->format;
+ 	unsigned int alpha = state->base.alpha;
+ 	u32 val = WINCONx_ENWIN;
 -- 
 2.43.0
 
