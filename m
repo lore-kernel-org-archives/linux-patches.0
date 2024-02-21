@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474B17EEF9;
-	Wed, 21 Feb 2024 13:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209597EEE4;
+	Wed, 21 Feb 2024 13:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522375; cv=none; b=cKdeYS7cw4fMufAMAepbn+/+TbN7pUfylU0Cvt3K67Kvpw/G7/nDAvvedSXtefYLxB9KOtBzRVdbSDoHWiMsN9VRzEveKenrw8g2ETb5Ek504Brngrx7d9YJuXNMV1PVFNRg+oChXiLf8MxcQLYmeOEIOtT5hQZ+Do5IhtRCPOw=
+	t=1708522378; cv=none; b=TJvjHbGIagY0a7WULYUGB3SP/1dPvYzcBCQgbIQZAQTIUdJhCRb1BhEgyFD6MpnJlwjZZUICu7/T6aLgCY5Oe3uDd2weamMF7UZxbnbXkAYEJHO56Q8tLHImsMQK8OQZtseKe3t+Y4fCfjJDyUgLETYIj5M+c/fRG+ZeiVp6trA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522375; c=relaxed/simple;
-	bh=spAPi63TlqyZZzCCGWeEcKXxapbTafCAwZ/Mf94jvP8=;
+	s=arc-20240116; t=1708522378; c=relaxed/simple;
+	bh=LzTvuewFVBbNlLsQco//tITg21e9ZzJ+pe9F30Dvdqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZoRw6howb9dDVbL1f7QindRTQcoysymQrujd/kY7XIq0i0Mrfu5ANNqsv8vYP5Y5gnDRCWD1sPi3g67Q3Q/dsBrRehsU4XXBaMP8ekul4R3WVjNfKnBL0z5GU4X29S4izq9u2LHxwQ80yRVFUD4FAQaEuV/bPfMLjGIepF2gbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kb9MmP+h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hUo8DBktoT5QJQ0NqUqAyRYMCjt0iNJuRue/e7xJSD4KXj6epabpTwCy/xqPRmB47jfTn4SijMfbuRwSRCl/+Kd5ZlDsCCqRnJzCZomOIMURPw12BpPKHJL7vmFp5DoqDZsP8iOF7Ksq1k1TMKUoRUvCA9RRDaFq1S9rblCMEPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L33IMDVG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kb9MmP+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B266C433C7;
-	Wed, 21 Feb 2024 13:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L33IMDVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86970C433C7;
+	Wed, 21 Feb 2024 13:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522374;
-	bh=spAPi63TlqyZZzCCGWeEcKXxapbTafCAwZ/Mf94jvP8=;
+	s=korg; t=1708522378;
+	bh=LzTvuewFVBbNlLsQco//tITg21e9ZzJ+pe9F30Dvdqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kb9MmP+hn39461EWPeWDWUVzlMKjNkpRpbsioFwOHdoisSpahbCx5QE0jxySv50AR
-	 q8cG8xwCD97ME1XnWzF1YCmmIrJ/o/Wbb8nY0woKjnpABONIVtGpQ629tFOCK5YNuf
-	 LF+YZCh8SZqHlyvdsi79GXowwto1af2+uCaQcjtI=
+	b=L33IMDVGOjtPNuHcVrCFfB4C49gJuYqzmPueQKEA1+e8tZEWpZ6uWl5j45Y4Rnet6
+	 E9+aed7qoJ1s4pSTxmjkG24iGh/y5ZvpvtVUiVxm6zG0TlEsSZD+RHWhIHqndR12vW
+	 wsV4hk9PiRUuUcOek1veycLlVe1tsNmfsvtoYOIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Wenhua Lin <Wenhua.Lin@unisoc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Allison Karlitskaya <allison.karlitskaya@redhat.com>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/476] gpio: eic-sprd: Clear interrupt after set the interrupt type
-Date: Wed, 21 Feb 2024 14:02:50 +0100
-Message-ID: <20240221130012.386679851@linuxfoundation.org>
+Subject: [PATCH 5.15 120/476] block: Move checking GENHD_FL_NO_PART to bdev_add_partition()
+Date: Wed, 21 Feb 2024 14:02:51 +0100
+Message-ID: <20240221130012.415628881@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,158 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenhua Lin <Wenhua.Lin@unisoc.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit 84aef4ed59705585d629e81d633a83b7d416f5fb ]
+[ Upstream commit 7777f47f2ea64efd1016262e7b59fab34adfb869 ]
 
-The raw interrupt status of eic maybe set before the interrupt is enabled,
-since the eic interrupt has a latch function, which would trigger the
-interrupt event once enabled it from user side. To solve this problem,
-interrupts generated before setting the interrupt trigger type are ignored.
+Commit 1a721de8489f ("block: don't add or resize partition on the disk
+with GENHD_FL_NO_PART") prevented all operations about partitions on disks
+with GENHD_FL_NO_PART in blkpg_do_ioctl() since they are meaningless.
+However, it changed error code in some scenarios. So move checking
+GENHD_FL_NO_PART to bdev_add_partition() to eliminate impact.
 
-Fixes: 25518e024e3a ("gpio: Add Spreadtrum EIC driver support")
-Acked-by: Chunyan Zhang <zhang.lyra@gmail.com>
-Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 1a721de8489f ("block: don't add or resize partition on the disk with GENHD_FL_NO_PART")
+Reported-by: Allison Karlitskaya <allison.karlitskaya@redhat.com>
+Closes: https://lore.kernel.org/all/CAOYeF9VsmqKMcQjo1k6YkGNujwN-nzfxY17N3F-CMikE1tYp+w@mail.gmail.com/
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240118130401.792757-1-lilingfeng@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-eic-sprd.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ block/ioctl.c           | 2 --
+ block/partitions/core.c | 5 +++++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-eic-sprd.c b/drivers/gpio/gpio-eic-sprd.c
-index 865ab2b34fdd..3dfb8b6c6c71 100644
---- a/drivers/gpio/gpio-eic-sprd.c
-+++ b/drivers/gpio/gpio-eic-sprd.c
-@@ -318,20 +318,27 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 		switch (flow_type) {
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IEV, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IC, 1);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IEV, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IC, 1);
- 			break;
- 		case IRQ_TYPE_EDGE_RISING:
- 		case IRQ_TYPE_EDGE_FALLING:
- 		case IRQ_TYPE_EDGE_BOTH:
- 			state = sprd_eic_get(chip, offset);
--			if (state)
-+			if (state) {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_DBNC_IEV, 0);
--			else
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_DBNC_IC, 1);
-+			} else {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_DBNC_IEV, 1);
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_DBNC_IC, 1);
-+			}
- 			break;
- 		default:
- 			return -ENOTSUPP;
-@@ -343,20 +350,27 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 		switch (flow_type) {
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTCLR, 1);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTCLR, 1);
- 			break;
- 		case IRQ_TYPE_EDGE_RISING:
- 		case IRQ_TYPE_EDGE_FALLING:
- 		case IRQ_TYPE_EDGE_BOTH:
- 			state = sprd_eic_get(chip, offset);
--			if (state)
-+			if (state) {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_LATCH_INTPOL, 0);
--			else
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_LATCH_INTCLR, 1);
-+			} else {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_LATCH_INTPOL, 1);
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_LATCH_INTCLR, 1);
-+			}
- 			break;
- 		default:
- 			return -ENOTSUPP;
-@@ -370,29 +384,34 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_FALLING:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_BOTH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		default:
-@@ -405,29 +424,34 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_FALLING:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_BOTH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		default:
+diff --git a/block/ioctl.c b/block/ioctl.c
+index 0a3cf9aeec7d..7a939c178660 100644
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -20,8 +20,6 @@ static int blkpg_do_ioctl(struct block_device *bdev,
+ 	struct blkpg_partition p;
+ 	sector_t start, length;
+ 
+-	if (disk->flags & GENHD_FL_NO_PART)
+-		return -EINVAL;
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EACCES;
+ 	if (copy_from_user(&p, upart, sizeof(struct blkpg_partition)))
+diff --git a/block/partitions/core.c b/block/partitions/core.c
+index 1ead8c001561..b6a941889bb4 100644
+--- a/block/partitions/core.c
++++ b/block/partitions/core.c
+@@ -463,6 +463,11 @@ int bdev_add_partition(struct gendisk *disk, int partno, sector_t start,
+ 		goto out;
+ 	}
+ 
++	if (disk->flags & GENHD_FL_NO_PART) {
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	if (partition_overlaps(disk, start, length, -1)) {
+ 		ret = -EBUSY;
+ 		goto out;
 -- 
 2.43.0
 
