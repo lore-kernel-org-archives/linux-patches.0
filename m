@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C262869942;
-	Wed, 21 Feb 2024 14:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A527078B4F;
+	Wed, 21 Feb 2024 14:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524912; cv=none; b=uKaHHqm0qKbnYy6+f/6s+PZlYlERbqximGuMzT1nQyPXMRSlgW6aGqnSMEglwmMXuUS09I1y1omq++awU5qDWLkOqJgFvs++GcQrtlALPcj60ZKLGgHZQyvDmLaIBHA8H/TsPJF7Ko+JBYrxO9w0ppDsiOkKHJQn/Eag4ZRVCzk=
+	t=1708524920; cv=none; b=dzsCJ9eFLBCkM6tIBGjlkLCEy68yUOm/6uI3hfz7JgQkBcMiievCxAq3Zyb9ZDNgB2XghV5bNEaaiIDf/e2o2Ye4+hwbgcR/oY0H78HA72K7xrGeovj1xYww3e2wHbFawwlMibBJeu2J+BPhAkLMp2AdFLl3wV31EAu4DGyM+xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524912; c=relaxed/simple;
-	bh=G0zzy4go/1YWcVolnsgKVBUGdWt9/nBhoLxWBmTlSrs=;
+	s=arc-20240116; t=1708524920; c=relaxed/simple;
+	bh=QOH+weBv3C3hdmsf8z8322WMF36MxiIN8JK9wBhkIhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WtcCrnUS6vfXi1i1uxgZzBjAsEQlIlh5cJY+ENHrr12zGI6t4iQFROZMiU7FNam8pBW9rmKErzqLrw7l3OEAR/i2usOCCP1XfsJiforlEGTOy8B06kQHeblZc5QdEs7pYkMu0MlhZzZjZoJvC9B7dFinB/o8UNLb1kkD0YQ0PGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfEHU6ZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FDaGEXQrlQQqT7Iq8jMdTkXC/mAzupNWXJi3YOfIa87qD38cVQGbdeKA/7u67uhfdJcr4x8wXaH/gR1QKPk8XGWpeI0hpPqRt2b5rn8iHprJ4Kl+cTz8U3tjUrTpIyi/DKxvemw9RCdwCXWg/RrcmF9RWC9RpWhyM/iqc1Scmq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xER8sqRh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfEHU6ZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF13EC433C7;
-	Wed, 21 Feb 2024 14:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xER8sqRh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A7EC433C7;
+	Wed, 21 Feb 2024 14:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524912;
-	bh=G0zzy4go/1YWcVolnsgKVBUGdWt9/nBhoLxWBmTlSrs=;
+	s=korg; t=1708524920;
+	bh=QOH+weBv3C3hdmsf8z8322WMF36MxiIN8JK9wBhkIhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfEHU6ZG66xG/eP7mgBJaSU0Zx/UA2MMVQS4ByaSSFznx5PKdmgUgfVM/ZbI5UCCV
-	 cuPoZ5QkYHN8zrVnNheNcoAamW70/eAl8G4y1FQ+xnNE0PlsCbtBZi/42G6+kTuS41
-	 2wSK/DE9SK+JklKQSfJKJiknRnqT0F+Ks5YxPj8I=
+	b=xER8sqRh2k7nbc+7yVP5mHR63hGocd8UhsUGqd3aU4rNB+lfRs+8EBwMRywL3bBe/
+	 Ehd1F9SwucT/Nt8piBGyUSJZQXobMOLy0uNjVv22fFA+pSRGYYkNopSatVY6fcW+nF
+	 EZAMgUKuFazfpZet2wlbrKNgOsadkkiGyFYbvg9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 5.10 377/379] netfilter: nf_tables: fix pointer math issue in nft_byteorder_eval()
-Date: Wed, 21 Feb 2024 14:09:16 +0100
-Message-ID: <20240221130006.214080756@linuxfoundation.org>
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 378/379] net: bcmgenet: Fix EEE implementation
+Date: Wed, 21 Feb 2024 14:09:17 +0100
+Message-ID: <20240221130006.242696568@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,83 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-commit c301f0981fdd3fd1ffac6836b423c4d7a8e0eb63 upstream.
+commit a9f31047baca57d47440c879cf259b86f900260c upstream.
 
-The problem is in nft_byteorder_eval() where we are iterating through a
-loop and writing to dst[0], dst[1], dst[2] and so on...  On each
-iteration we are writing 8 bytes.  But dst[] is an array of u32 so each
-element only has space for 4 bytes.  That means that every iteration
-overwrites part of the previous element.
+We had a number of short comings:
 
-I spotted this bug while reviewing commit caf3ef7468f7 ("netfilter:
-nf_tables: prevent OOB access in nft_byteorder_eval") which is a related
-issue.  I think that the reason we have not detected this bug in testing
-is that most of time we only write one element.
+- EEE must be re-evaluated whenever the state machine detects a link
+  change as wight be switching from a link partner with EEE
+  enabled/disabled
 
-Fixes: ce1e7989d989 ("netfilter: nft_byteorder: provide 64bit le/be conversion")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[Ajay: Modified to apply on v5.10.y]
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
+- tx_lpi_enabled controls whether EEE should be enabled/disabled for the
+  transmit path, which applies to the TBUF block
+
+- We do not need to forcibly enable EEE upon system resume, as the PHY
+  state machine will trigger a link event that will do that, too
+
+Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/r/20230606214348.2408018-1-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h |    4 ++--
- net/netfilter/nft_byteorder.c     |    5 +++--
- net/netfilter/nft_meta.c          |    2 +-
- 3 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -142,9 +142,9 @@ static inline u16 nft_reg_load16(const u
- 	return *(u16 *)sreg;
+---
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c |   22 ++++++++--------------
+ drivers/net/ethernet/broadcom/genet/bcmgenet.h |    3 +++
+ drivers/net/ethernet/broadcom/genet/bcmmii.c   |    6 ++++++
+ 3 files changed, 17 insertions(+), 14 deletions(-)
+
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -1244,7 +1244,8 @@ static void bcmgenet_get_ethtool_stats(s
+ 	}
  }
  
--static inline void nft_reg_store64(u32 *dreg, u64 val)
-+static inline void nft_reg_store64(u64 *dreg, u64 val)
+-static void bcmgenet_eee_enable_set(struct net_device *dev, bool enable)
++void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
++			     bool tx_lpi_enabled)
  {
--	put_unaligned(val, (u64 *)dreg);
-+	put_unaligned(val, dreg);
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	u32 off = priv->hw_params->tbuf_offset + TBUF_ENERGY_CTRL;
+@@ -1264,7 +1265,7 @@ static void bcmgenet_eee_enable_set(stru
+ 
+ 	/* Enable EEE and switch to a 27Mhz clock automatically */
+ 	reg = bcmgenet_readl(priv->base + off);
+-	if (enable)
++	if (tx_lpi_enabled)
+ 		reg |= TBUF_EEE_EN | TBUF_PM_EN;
+ 	else
+ 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
+@@ -1285,6 +1286,7 @@ static void bcmgenet_eee_enable_set(stru
+ 
+ 	priv->eee.eee_enabled = enable;
+ 	priv->eee.eee_active = enable;
++	priv->eee.tx_lpi_enabled = tx_lpi_enabled;
  }
  
- static inline u64 nft_reg_load64(const u32 *sreg)
---- a/net/netfilter/nft_byteorder.c
-+++ b/net/netfilter/nft_byteorder.c
-@@ -38,20 +38,21 @@ void nft_byteorder_eval(const struct nft
+ static int bcmgenet_get_eee(struct net_device *dev, struct ethtool_eee *e)
+@@ -1300,6 +1302,7 @@ static int bcmgenet_get_eee(struct net_d
  
- 	switch (priv->size) {
- 	case 8: {
-+		u64 *dst64 = (void *)dst;
- 		u64 src64;
+ 	e->eee_enabled = p->eee_enabled;
+ 	e->eee_active = p->eee_active;
++	e->tx_lpi_enabled = p->tx_lpi_enabled;
+ 	e->tx_lpi_timer = bcmgenet_umac_readl(priv, UMAC_EEE_LPI_TIMER);
  
- 		switch (priv->op) {
- 		case NFT_BYTEORDER_NTOH:
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = nft_reg_load64(&src[i]);
--				nft_reg_store64(&dst[i], be64_to_cpu(src64));
-+				nft_reg_store64(&dst64[i], be64_to_cpu(src64));
- 			}
- 			break;
- 		case NFT_BYTEORDER_HTON:
- 			for (i = 0; i < priv->len / 8; i++) {
- 				src64 = (__force __u64)
- 					cpu_to_be64(nft_reg_load64(&src[i]));
--				nft_reg_store64(&dst[i], src64);
-+				nft_reg_store64(&dst64[i], src64);
- 			}
- 			break;
+ 	return phy_ethtool_get_eee(dev->phydev, e);
+@@ -1309,7 +1312,6 @@ static int bcmgenet_set_eee(struct net_d
+ {
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	struct ethtool_eee *p = &priv->eee;
+-	int ret = 0;
+ 
+ 	if (GENET_IS_V1(priv))
+ 		return -EOPNOTSUPP;
+@@ -1320,16 +1322,11 @@ static int bcmgenet_set_eee(struct net_d
+ 	p->eee_enabled = e->eee_enabled;
+ 
+ 	if (!p->eee_enabled) {
+-		bcmgenet_eee_enable_set(dev, false);
++		bcmgenet_eee_enable_set(dev, false, false);
+ 	} else {
+-		ret = phy_init_eee(dev->phydev, 0);
+-		if (ret) {
+-			netif_err(priv, hw, dev, "EEE initialization failed\n");
+-			return ret;
+-		}
+-
++		p->eee_active = phy_init_eee(dev->phydev, false) >= 0;
+ 		bcmgenet_umac_writel(priv, e->tx_lpi_timer, UMAC_EEE_LPI_TIMER);
+-		bcmgenet_eee_enable_set(dev, true);
++		bcmgenet_eee_enable_set(dev, p->eee_active, e->tx_lpi_enabled);
+ 	}
+ 
+ 	return phy_ethtool_set_eee(dev->phydev, e);
+@@ -4217,9 +4214,6 @@ static int bcmgenet_resume(struct device
+ 	if (!device_may_wakeup(d))
+ 		phy_resume(dev->phydev);
+ 
+-	if (priv->eee.eee_enabled)
+-		bcmgenet_eee_enable_set(dev, true);
+-
+ 	bcmgenet_netif_start(dev);
+ 
+ 	netif_device_attach(dev);
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
+@@ -756,4 +756,7 @@ int bcmgenet_wol_power_down_cfg(struct b
+ void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
+ 			       enum bcmgenet_power_mode mode);
+ 
++void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
++			     bool tx_lpi_enabled);
++
+ #endif /* __BCMGENET_H__ */
+--- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
+@@ -25,6 +25,7 @@
+ 
+ #include "bcmgenet.h"
+ 
++
+ /* setup netdev link state when PHY link status change and
+  * update UMAC and RGMII block when link up
+  */
+@@ -102,6 +103,11 @@ void bcmgenet_mii_setup(struct net_devic
+ 			reg |= CMD_TX_EN | CMD_RX_EN;
  		}
---- a/net/netfilter/nft_meta.c
-+++ b/net/netfilter/nft_meta.c
-@@ -63,7 +63,7 @@ nft_meta_get_eval_time(enum nft_meta_key
- {
- 	switch (key) {
- 	case NFT_META_TIME_NS:
--		nft_reg_store64(dest, ktime_get_real_ns());
-+		nft_reg_store64((u64 *)dest, ktime_get_real_ns());
- 		break;
- 	case NFT_META_TIME_DAY:
- 		nft_reg_store8(dest, nft_meta_weekday());
+ 		bcmgenet_umac_writel(priv, reg, UMAC_CMD);
++
++		priv->eee.eee_active = phy_init_eee(phydev, 0) >= 0;
++		bcmgenet_eee_enable_set(dev,
++					priv->eee.eee_enabled && priv->eee.eee_active,
++					priv->eee.tx_lpi_enabled);
+ 	} else {
+ 		/* done if nothing has changed */
+ 		if (!status_changed)
 
 
