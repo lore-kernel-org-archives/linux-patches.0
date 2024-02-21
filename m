@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414CD55E5E;
-	Wed, 21 Feb 2024 13:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B755E5E;
+	Wed, 21 Feb 2024 13:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523188; cv=none; b=W7crS4beEj0avlmo4XV+dtc6PaCSMLtj22tNHRdRm8Lnihe+MFEWnwWOE1CeIJGa1MEyTaP01kNSwOAQ+42A7TE1S9mXJuO0UWeG5YrUJPZs/ff+CkaptZGwusR5SHlzmMTNJYNsV1e0u1rqHYMrrMikyskMUWMiFCW+YbPthNw=
+	t=1708523191; cv=none; b=GNn8wR40PK/ZUmpam5drJt1PPVCTHQ56ap20sSEjPodE5sHMw/kYI37WytoMqqiyQIEUGe4rBzXqDjxClDo3J53MYG5G65YzGWnwt+7zftd+GxpSHx74T7JLkxIPNZPWPfDU1773DTCM2Qrz4skEYRK7HuNjqUesRNfrxvO4Q/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523188; c=relaxed/simple;
-	bh=VXFmQ1PPQDsQh3+JYT1wWzYQpTeLBMteiUg5J/6mFgc=;
+	s=arc-20240116; t=1708523191; c=relaxed/simple;
+	bh=YXrGCMmjNfntABRzSm8Hfd+dKLSBGzXpiGZJA8jjcDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghNDTPdpayZ3ItRWVmuna3+FKqcLrwl211kXLsmFTiDgwGtIQUiLWvhiXUEny6ZqTHOV+DKYlQbJlmxnxWUche/z3cdivMQGHqxvF8BuYoJkkoGNmPqWTIZP7hwlYMQlr4P65nHJEjRZ2HUz+F408MMla4dwk/lmkTXZPh9CkXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECJeLfz4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BfdbUFuMYaP5xVCICJn0fvDkr3/bKfOn68sjM+TELhhMFfmsC4GwBCfDTwM4tWByAerHKTtdB4j0mFIRAnIdibw9mdiXOF/JEmjBhrKrWLGb/JBY39tjaVPve+qL8nyOt1RsZ4vcCIV44mZtyenXwnvTlGCTEah2OqI2h/u/mOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V42I3rbL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECJeLfz4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBE6C433C7;
-	Wed, 21 Feb 2024 13:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V42I3rbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CB9C433C7;
+	Wed, 21 Feb 2024 13:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523187;
-	bh=VXFmQ1PPQDsQh3+JYT1wWzYQpTeLBMteiUg5J/6mFgc=;
+	s=korg; t=1708523190;
+	bh=YXrGCMmjNfntABRzSm8Hfd+dKLSBGzXpiGZJA8jjcDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ECJeLfz4/55NUBEl0kiFk2Qb5UmHdzkgxmMbolHfuXGDTVvOm/QsyHHLaEKiGSSBc
-	 FcFXFFH64gWLtxAGlp3vonkP9GW6En9kcnf/ReMXWcZHVh1MyUbsWriUVZipnjBr0I
-	 ocUYqtDO9uJ8eOfD855cmjl326ueui9e5pZtpBI0=
+	b=V42I3rbLcG2MpTivabllUHlv+Xo7SRIeood/b3bY+GdCjL6NvHfMUCIoW4oKl5XFq
+	 Yi287ks+LSh8bA0688F/EXOetuP3S5OKOJmCtWQESyY8qmvjCFoHxEv92R+79Hl+ot
+	 G2k42FiWfcJPc2iIxOnOxCXKSzCUg6fKqSL5/6n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>
-Subject: [PATCH 5.15 335/476] usb: host: xhci-plat: Add support for XHCI_SG_TRB_CACHE_SIZE_QUIRK
-Date: Wed, 21 Feb 2024 14:06:26 +0100
-Message-ID: <20240221130020.400552874@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 326/476] fs/ntfs3: Fix an NULL dereference bug
+Date: Wed, 21 Feb 2024 14:06:17 +0100
+Message-ID: <20240221130020.082898564@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -49,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 520b391e3e813c1dd142d1eebb3ccfa6d08c3995 upstream.
+[ Upstream commit b2dd7b953c25ffd5912dda17e980e7168bebcf6c ]
 
-Upstream commit bac1ec551434 ("usb: xhci: Set quirk for
-XHCI_SG_TRB_CACHE_SIZE_QUIRK") introduced a new quirk in XHCI
-which fixes XHC timeout, which was seen on synopsys XHCs while
-using SG buffers. Currently this quirk can only be set using
-xhci private data. But there are some drivers like dwc3/host.c
-which adds adds quirks using software node for xhci device.
-Hence set this xhci quirk by iterating over device properties.
+The issue here is when this is called from ntfs_load_attr_list().  The
+"size" comes from le32_to_cpu(attr->res.data_size) so it can't overflow
+on a 64bit systems but on 32bit systems the "+ 1023" can overflow and
+the result is zero.  This means that the kmalloc will succeed by
+returning the ZERO_SIZE_PTR and then the memcpy() will crash with an
+Oops on the next line.
 
-Cc: stable@vger.kernel.org # 5.11
-Fixes: bac1ec551434 ("usb: xhci: Set quirk for XHCI_SG_TRB_CACHE_SIZE_QUIRK")
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/20240116055816.1169821-3-quic_prashk@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-plat.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/ntfs_fs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -323,6 +323,9 @@ static int xhci_plat_probe(struct platfo
- 		if (device_property_read_bool(tmpdev, "quirk-broken-port-ped"))
- 			xhci->quirks |= XHCI_BROKEN_PORT_PED;
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 510ed2ea1c48..981276500043 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -468,7 +468,7 @@ bool al_delete_le(struct ntfs_inode *ni, enum ATTR_TYPE type, CLST vcn,
+ int al_update(struct ntfs_inode *ni, int sync);
+ static inline size_t al_aligned(size_t size)
+ {
+-	return (size + 1023) & ~(size_t)1023;
++	return size_add(size, 1023) & ~(size_t)1023;
+ }
  
-+		if (device_property_read_bool(tmpdev, "xhci-sg-trb-cache-size-quirk"))
-+			xhci->quirks |= XHCI_SG_TRB_CACHE_SIZE_QUIRK;
-+
- 		device_property_read_u32(tmpdev, "imod-interval-ns",
- 					 &xhci->imod_interval);
- 	}
+ /* Globals from bitfunc.c */
+-- 
+2.43.0
+
 
 
