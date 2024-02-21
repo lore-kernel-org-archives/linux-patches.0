@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59507CF0B;
-	Wed, 21 Feb 2024 13:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755F57E777;
+	Wed, 21 Feb 2024 13:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523988; cv=none; b=AhLtrwqZWDxLgUNV4rCg66lra1+pipb7v9DouHHQm3EsvXOa0cGwwnthdJPbDQXleeOGckb3m3VAZcovZ40NchbQlOqD+g2Ehr08RhfV1gLUtrjkEpY7fVGOcO2NYhsuRiNN6lZzAbes0E8LeVPx5o7DIND82lvSDi82c5x1qgE=
+	t=1708523991; cv=none; b=lNWjkVUCq+ThonHmywwsLjOhtAP79nC0Z6xesD5bKF1KxZ4E+5e95AauRMV/6F+sRg+g8L9QkCmrdIlf2/9wUKuQnjMmY4cz9dBVNwDdLmSd7+YPmLUjjTzIGbWcB5Hqr0/yoSdS/lQ7RxvjP//LDK8qi2+z5MVeOVpUEx7Fx94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523988; c=relaxed/simple;
-	bh=1d2mH0cMCH6EDQ7tl176EEnczPGqt4lwaCNqQdcbobE=;
+	s=arc-20240116; t=1708523991; c=relaxed/simple;
+	bh=Dhbk9KsJVh1bu9sDaO5nqkgRTi4Tgnk2O88N6QOXom8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zofiy8lnchCKitRFSzps1uNYKG7an71Nhvr0ZIe1XkkxkAxKZhdeDx48TuBRKN8TtDJDRrURUTM4MmoDpCv37ef0gytJlcZyzFRA7T3zkj9rKMsqGBLTPJfl+4V0V9XCLy/nm+i1najfCXH4fI2VJ5M4ze3/ZuVilQrCjH5wmpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdgNSQQq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFhA0FVvwapg1EkxphpMFGCe9+qDsq+AmJczKCZ7VATOaqmMjw+CJTyPFu+zV6qqHUUMyqPHBpThxStkQFd/LWq0ZvIwlR/SL1d6JY6uTribxQRbRyxOIKfk3+3I/Uo51bSGyi3QM3395UEILpM5PcjX3YPcSWstx4juNzMaF/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsDiCUUC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdgNSQQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC23C43390;
-	Wed, 21 Feb 2024 13:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsDiCUUC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C17EC433C7;
+	Wed, 21 Feb 2024 13:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523987;
-	bh=1d2mH0cMCH6EDQ7tl176EEnczPGqt4lwaCNqQdcbobE=;
+	s=korg; t=1708523991;
+	bh=Dhbk9KsJVh1bu9sDaO5nqkgRTi4Tgnk2O88N6QOXom8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NdgNSQQqJfDDCGevQHHL7D1CXWVZbb0/KTLU7x0GXV3IhkQ81cK9oRYGP2hTOkfyp
-	 NHhuQ1ik7lejzZiWkoYZM/H5PI4IGzlLcJ7PGpk4R82cJDONz2FHJIeld4K2htJzEL
-	 U9pGNlteZGp32FaM/ZBg4ySv3kI+TjlKB9UQBopY=
+	b=YsDiCUUCP4tQZrgZpOchBdTG4BNU4zfRMcwYSf8W2kKcLwMGZ44etxm9Dmr8a7n2Q
+	 Tz6sJRgQVY3jF/GTag1d/YIBnhb9Og6vzNwshN8qlml76Qpv5OA+cA+U1RbvZdy9fF
+	 EYVQSRzHkXH+uLBDfKeuwPDBRE6XlBJkNl6akTdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rui Zhang <zr.zhang@vivo.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/379] regulator: core: Only increment use_count when enable_count changes
-Date: Wed, 21 Feb 2024 14:04:50 +0100
-Message-ID: <20240221125958.208966843@linuxfoundation.org>
+Subject: [PATCH 5.10 094/379] drm/exynos: fix accidental on-stack copy of exynos_drm_plane
+Date: Wed, 21 Feb 2024 14:04:33 +0100
+Message-ID: <20240221125957.684569544@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,111 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rui Zhang <zr.zhang@vivo.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7993d3a9c34f609c02171e115fd12c10e2105ff4 ]
+[ Upstream commit 960b537e91725bcb17dd1b19e48950e62d134078 ]
 
-The use_count of a regulator should only be incremented when the
-enable_count changes from 0 to 1. Similarly, the use_count should
-only be decremented when the enable_count changes from 1 to 0.
+gcc rightfully complains about excessive stack usage in the fimd_win_set_pixfmt()
+function:
 
-In the previous implementation, use_count was sometimes decremented
-to 0 when some consumer called unbalanced disable,
-leading to unexpected disable even the regulator is enabled by
-other consumers. With this change, the use_count accurately reflects
-the number of users which the regulator is enabled.
+drivers/gpu/drm/exynos/exynos_drm_fimd.c: In function 'fimd_win_set_pixfmt':
+drivers/gpu/drm/exynos/exynos_drm_fimd.c:750:1: error: the frame size of 1032 bytes is larger than 1024 byte
+drivers/gpu/drm/exynos/exynos5433_drm_decon.c: In function 'decon_win_set_pixfmt':
+drivers/gpu/drm/exynos/exynos5433_drm_decon.c:381:1: error: the frame size of 1032 bytes is larger than 1024 bytes
 
-This should make things more robust in the case where a consumer does
-leak references.
+There is really no reason to copy the large exynos_drm_plane
+structure to the stack before using one of its members, so just
+use a pointer instead.
 
-Signed-off-by: Rui Zhang <zr.zhang@vivo.com>
-Link: https://lore.kernel.org/r/20231103074231.8031-1-zr.zhang@vivo.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6f8ee5c21722 ("drm/exynos: fimd: Make plane alpha configurable")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 56 +++++++++++++++++++++-------------------
- 1 file changed, 30 insertions(+), 26 deletions(-)
+ drivers/gpu/drm/exynos/exynos5433_drm_decon.c | 4 ++--
+ drivers/gpu/drm/exynos/exynos_drm_fimd.c      | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 51c4f604d3b2..54330eb0d03b 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -2768,7 +2768,8 @@ static int _regulator_enable(struct regulator *regulator)
- 		/* Fallthrough on positive return values - already enabled */
- 	}
- 
--	rdev->use_count++;
-+	if (regulator->enable_count == 1)
-+		rdev->use_count++;
- 
- 	return 0;
- 
-@@ -2846,37 +2847,40 @@ static int _regulator_disable(struct regulator *regulator)
- 
- 	lockdep_assert_held_once(&rdev->mutex.base);
- 
--	if (WARN(rdev->use_count <= 0,
-+	if (WARN(regulator->enable_count == 0,
- 		 "unbalanced disables for %s\n", rdev_get_name(rdev)))
- 		return -EIO;
- 
--	/* are we the last user and permitted to disable ? */
--	if (rdev->use_count == 1 &&
--	    (rdev->constraints && !rdev->constraints->always_on)) {
--
--		/* we are last user */
--		if (regulator_ops_is_valid(rdev, REGULATOR_CHANGE_STATUS)) {
--			ret = _notifier_call_chain(rdev,
--						   REGULATOR_EVENT_PRE_DISABLE,
--						   NULL);
--			if (ret & NOTIFY_STOP_MASK)
--				return -EINVAL;
--
--			ret = _regulator_do_disable(rdev);
--			if (ret < 0) {
--				rdev_err(rdev, "failed to disable: %pe\n", ERR_PTR(ret));
--				_notifier_call_chain(rdev,
--						REGULATOR_EVENT_ABORT_DISABLE,
-+	if (regulator->enable_count == 1) {
-+	/* disabling last enable_count from this regulator */
-+		/* are we the last user and permitted to disable ? */
-+		if (rdev->use_count == 1 &&
-+		    (rdev->constraints && !rdev->constraints->always_on)) {
-+
-+			/* we are last user */
-+			if (regulator_ops_is_valid(rdev, REGULATOR_CHANGE_STATUS)) {
-+				ret = _notifier_call_chain(rdev,
-+							   REGULATOR_EVENT_PRE_DISABLE,
-+							   NULL);
-+				if (ret & NOTIFY_STOP_MASK)
-+					return -EINVAL;
-+
-+				ret = _regulator_do_disable(rdev);
-+				if (ret < 0) {
-+					rdev_err(rdev, "failed to disable: %pe\n", ERR_PTR(ret));
-+					_notifier_call_chain(rdev,
-+							REGULATOR_EVENT_ABORT_DISABLE,
-+							NULL);
-+					return ret;
-+				}
-+				_notifier_call_chain(rdev, REGULATOR_EVENT_DISABLE,
- 						NULL);
--				return ret;
- 			}
--			_notifier_call_chain(rdev, REGULATOR_EVENT_DISABLE,
--					NULL);
--		}
- 
--		rdev->use_count = 0;
--	} else if (rdev->use_count > 1) {
--		rdev->use_count--;
-+			rdev->use_count = 0;
-+		} else if (rdev->use_count > 1) {
-+			rdev->use_count--;
-+		}
- 	}
- 
- 	if (ret == 0)
+diff --git a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
+index c277d2fc50c6..e43dfea09527 100644
+--- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
+@@ -318,9 +318,9 @@ static void decon_win_set_bldmod(struct decon_context *ctx, unsigned int win,
+ static void decon_win_set_pixfmt(struct decon_context *ctx, unsigned int win,
+ 				 struct drm_framebuffer *fb)
+ {
+-	struct exynos_drm_plane plane = ctx->planes[win];
++	struct exynos_drm_plane *plane = &ctx->planes[win];
+ 	struct exynos_drm_plane_state *state =
+-		to_exynos_plane_state(plane.base.state);
++		to_exynos_plane_state(plane->base.state);
+ 	unsigned int alpha = state->base.alpha;
+ 	unsigned int pixel_alpha;
+ 	unsigned long val;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_fimd.c b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+index bb67cad8371f..c045330f9c48 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_fimd.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fimd.c
+@@ -637,9 +637,9 @@ static void fimd_win_set_bldmod(struct fimd_context *ctx, unsigned int win,
+ static void fimd_win_set_pixfmt(struct fimd_context *ctx, unsigned int win,
+ 				struct drm_framebuffer *fb, int width)
+ {
+-	struct exynos_drm_plane plane = ctx->planes[win];
++	struct exynos_drm_plane *plane = &ctx->planes[win];
+ 	struct exynos_drm_plane_state *state =
+-		to_exynos_plane_state(plane.base.state);
++		to_exynos_plane_state(plane->base.state);
+ 	uint32_t pixel_format = fb->format->format;
+ 	unsigned int alpha = state->base.alpha;
+ 	u32 val = WINCONx_ENWIN;
 -- 
 2.43.0
 
