@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220237CF29;
-	Wed, 21 Feb 2024 14:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AF74C62;
+	Wed, 21 Feb 2024 14:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525594; cv=none; b=LLjKwQ7O3VecclqvALNnRkRLHA3vQjAbQmpyJAPiLQsQYZHwwEa0AOl1gOvHwbpn90UDvnpsv2r+Ay0vJF3XA8x7Z3yjaspAoAMUQ6ZRROliyXWlD5A5YnN8i/YvbC6QmY4ParLoJYyBF5Vi6hhVejtVMuGK948aIp77sOCh6yA=
+	t=1708525597; cv=none; b=u7Hqllpaayui4zZt9p03jgilsJQuERfdrDF8wd/0CrvKNbNLJJjuE5eJoxU8uMoApcQcPjZbw6V+8HmVwaxUmDokuq5O3O+KVGTu5P0qAoh0GdSYkFtL/AKp/xeCKP3q2KUEI0SdINJL2xnkbTH0HNuMse4V9XF6dryVqOv6oBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525594; c=relaxed/simple;
-	bh=ZCw6iP9BqPRwv4lVOv9Yy74fN6R9n7jV4pNV4cT0VkA=;
+	s=arc-20240116; t=1708525597; c=relaxed/simple;
+	bh=t+F7YqvhrYoNKLEYWA1N1lr9N2N6gEfrmMEEC+tq4vA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZnlNFGvgK+R1F40H8nu4RDm9xTHFaTOApXZCsGw8KwUXUFNvcMdWtezz0YNADGVfTkRgBm8EsOfoLPx7PGobSN1NCdSttYnAOPI4ovLAcuyVj4a4jBeWot8JBMgsEye4wUZsNLWAQytl8Wp6oW7OamRpZcg6XyZ6dfOTNdgnsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNla3Iq5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRkJh0zgTkdE65ewmOFGnKnEEbSncgbsMQVx3qzIhskO2AvB1zO3ihR3AM7sIX2M23j1zXM9/gnsGm/AVchqlDQgiL3SnSpyRmKWRNB79saNpE6Ke9L5pScrSnII3BStgflTBL09350yX8i/e37gu7bNb9ABdFYNhtYiQgA9S/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3vCkvuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNla3Iq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BADC43394;
-	Wed, 21 Feb 2024 14:26:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3vCkvuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE4DC433F1;
+	Wed, 21 Feb 2024 14:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525594;
-	bh=ZCw6iP9BqPRwv4lVOv9Yy74fN6R9n7jV4pNV4cT0VkA=;
+	s=korg; t=1708525597;
+	bh=t+F7YqvhrYoNKLEYWA1N1lr9N2N6gEfrmMEEC+tq4vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNla3Iq5bQ7xvd5b6lpySuNvT9Lwqlj+esKzvl8n2HJo0mxof/yeX4e15fSnUjC3+
-	 Qf1UYTp1Vwe0M+82Mq0eE9iPGIbEzjTylZzzLuPkyVnxH8u2fKndTDjfFOX6pmA/e/
-	 zV1m+bEuSQDB3RFZlxzT9HUyQ9b58KrL81cz7MQ0=
+	b=j3vCkvuCV6FDAIXnZZcqbjF7SLaNu9tdGonu1QgvMdIx+I97FvYQOhergcxvDko++
+	 CFm7gAd3o3Dr30VoZOtR0oR/3+CzbAaM6uSjOYIIz5JLGtqRC670dfSwwBXZSJlKy9
+	 IHi+qIOC2oYuAeGd74HGAkP5eBfieiJf5Mf0v5xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lonial con <kongln9170@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.4 203/267] netfilter: nft_set_rbtree: skip end interval element from gc
-Date: Wed, 21 Feb 2024 14:09:04 +0100
-Message-ID: <20240221125946.544872153@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 204/267] btrfs: forbid creating subvol qgroups
+Date: Wed, 21 Feb 2024 14:09:05 +0100
+Message-ID: <20240221125946.573568574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -50,52 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Boris Burkov <boris@bur.io>
 
-commit 60c0c230c6f046da536d3df8b39a20b9a9fd6af0 upstream.
+commit 0c309d66dacddf8ce939b891d9ead4a8e21ad6f0 upstream.
 
-rbtree lazy gc on insert might collect an end interval element that has
-been just added in this transactions, skip end interval elements that
-are not yet active.
+Creating a qgroup 0/subvolid leads to various races and it isn't
+helpful, because you can't specify a subvol id when creating a subvol,
+so you can't be sure it will be the right one. Any requirements on the
+automatic subvol can be gratified by using a higher level qgroup and the
+inheritance parameters of subvol creation.
 
-Fixes: f718863aca46 ("netfilter: nft_set_rbtree: fix overlap expiration walk")
-Cc: stable@vger.kernel.org
-Reported-by: lonial con <kongln9170@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: cecbb533b5fc ("btrfs: record simple quota deltas in delayed refs")
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_rbtree.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/btrfs/ioctl.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -237,8 +237,7 @@ static void nft_rbtree_gc_remove(struct
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -4974,6 +4974,11 @@ static long btrfs_ioctl_qgroup_create(st
+ 		goto out;
+ 	}
  
- static int nft_rbtree_gc_elem(const struct nft_set *__set,
- 			      struct nft_rbtree *priv,
--			      struct nft_rbtree_elem *rbe,
--			      u8 genmask)
-+			      struct nft_rbtree_elem *rbe)
- {
- 	struct nft_set *set = (struct nft_set *)__set;
- 	struct rb_node *prev = rb_prev(&rbe->node);
-@@ -257,7 +256,7 @@ static int nft_rbtree_gc_elem(const stru
- 	while (prev) {
- 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
- 		if (nft_rbtree_interval_end(rbe_prev) &&
--		    nft_set_elem_active(&rbe_prev->ext, genmask))
-+		    nft_set_elem_active(&rbe_prev->ext, NFT_GENMASK_ANY))
- 			break;
- 
- 		prev = rb_prev(prev);
-@@ -365,7 +364,7 @@ static int __nft_rbtree_insert(const str
- 		 */
- 		if (nft_set_elem_expired(&rbe->ext) &&
- 		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
--			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
-+			err = nft_rbtree_gc_elem(set, priv, rbe);
- 			if (err < 0)
- 				return err;
- 
++	if (sa->create && is_fstree(sa->qgroupid)) {
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	trans = btrfs_join_transaction(root);
+ 	if (IS_ERR(trans)) {
+ 		ret = PTR_ERR(trans);
 
 
