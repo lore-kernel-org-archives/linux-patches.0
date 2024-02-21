@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67EC78B50;
-	Wed, 21 Feb 2024 13:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B7678B50;
+	Wed, 21 Feb 2024 13:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522151; cv=none; b=rgg8gk2R/kjmoW8W+UqmSBF0jXF1fBherk/GSVRhyCX3L215DQLvGoKss/gQfJcKA57X7N4twq54rqpgdp34bhEURc+kxmVgTon0VTQ0KXZG/m3DabnU3Vlue9pL80COIiEII9ajQtOtCEc068UeZpcRWZBzCoFkzghk5EZILUQ=
+	t=1708522154; cv=none; b=Kqy1iYujp3ibJz0u6vYBooH8jJYf9q4mYyziY56AHyfBHyPZraLLgngQZFDRPkyTA0HP846kIj9y6cYFgCGS+gwo9BzXTw3aIWzbN9JCmSzlKSTh/iWROsgJAfyFHzwpo9caPELUOkB0G8RT2dy927SxKb1P8QbsNij5TVhtdoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522151; c=relaxed/simple;
-	bh=gEL7zdWIt0zjI8k4xFn25Rk0xzLoLl+TKqNVu4UFy4M=;
+	s=arc-20240116; t=1708522154; c=relaxed/simple;
+	bh=iZDZSvwl6irlDjxvtMvw8TSy4b6N92rPTKTq78tdp+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jEgPRglGcUhdhSOrhqreRlhY9z87zaNaVVfEgCth/UpuBdXBN72raFTa1Uk94HAsHHbf0vf/KtPaGzo9vEm1BSZPkrYoC3OLIBAx8gvjwiw3iHy3e1aF9e442QZJ0QAcK9LWBOryunz+ict81AvngRqTvT7pZtZXDTyG55aUQqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHiHnIq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGT0Xdv2YkvIZCP9VXxVOWJBnnpWCwL5vyOZdMGD1hISixb60PvE9h2gkjFXlM7q1JxtzdqWNKy/Yua6Cdp4hHR6t/eMKtHywXsKUiR6bS1brmRSsY/zGr9Hp32KeQeYptPMeodyst/yJwMbUlm2n7VLq+5Xih7GtXKXHLsi5s8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/uotznL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHiHnIq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E61C433C7;
-	Wed, 21 Feb 2024 13:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/uotznL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBF1C433B1;
+	Wed, 21 Feb 2024 13:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522151;
-	bh=gEL7zdWIt0zjI8k4xFn25Rk0xzLoLl+TKqNVu4UFy4M=;
+	s=korg; t=1708522154;
+	bh=iZDZSvwl6irlDjxvtMvw8TSy4b6N92rPTKTq78tdp+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHiHnIq0gKkVNfugy0DEvrrFugqj+COkxQv5pxzQ4T9KF4BJGEY9Z5glHzN24yRhF
-	 a3eFSStXgwjEumSoQgri+5CaXXtHR+NbwcQCRtupqXoSNKnGzw2moN4/gYQKZrAvq6
-	 uXAB2d7n9SL5rSSSitSJ53z5PvNe7fDAm2eOQ7mM=
+	b=J/uotznLA327b/AmlPN4dgWv4RJFbwTVI/dnA3eDDc4P3LbRikScw3dSOXYKAULaR
+	 u/PAnTzqe29bjwSoZiS3dLTW+YOkU/7WD+B5WCM4Syn4CM+gJYQEPfPG1OJYv+9KKU
+	 EUkejvD416SA+JJqaftJNImk9ZnR9SSmSnqOlFsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 084/476] wifi: iwlwifi: fix a memory corruption
-Date: Wed, 21 Feb 2024 14:02:15 +0100
-Message-ID: <20240221130011.084283708@linuxfoundation.org>
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Subject: [PATCH 5.15 093/476] drm/tidss: Fix atomic_flush check
+Date: Wed, 21 Feb 2024 14:02:24 +0100
+Message-ID: <20240221130011.439706687@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,36 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit cf4a0d840ecc72fcf16198d5e9c505ab7d5a5e4d upstream.
+commit 95d4b471953411854f9c80b568da7fcf753f3801 upstream.
 
-iwl_fw_ini_trigger_tlv::data is a pointer to a __le32, which means that
-if we copy to iwl_fw_ini_trigger_tlv::data + offset while offset is in
-bytes, we'll write past the buffer.
+tidss_crtc_atomic_flush() checks if the crtc is enabled, and if not,
+returns immediately as there's no reason to do any register changes.
 
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218233
-Fixes: cf29c5b66b9f ("iwlwifi: dbg_ini: implement time point handling")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240111150610.2d2b8b870194.I14ed76505a5cf87304e0c9cc05cc0ae85ed3bf91@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+However, the code checks for 'crtc->state->enable', which does not
+reflect the actual HW state. We should instead look at the
+'crtc->state->active' flag.
+
+This causes the tidss_crtc_atomic_flush() to proceed with the flush even
+if the active state is false, which then causes us to hit the
+WARN_ON(!crtc->state->event) check.
+
+Fix this by checking the active flag, and while at it, fix the related
+debug print which had "active" and "needs modeset" wrong way.
+
+Cc:  <stable@vger.kernel.org>
+Fixes: 32a1795f57ee ("drm/tidss: New driver for TI Keystone platform Display SubSystem")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Link: https://lore.kernel.org/r/20231109-tidss-probe-v2-10-ac91b5ea35c0@ideasonboard.com
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/tidss/tidss_crtc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-@@ -836,7 +836,7 @@ static int iwl_dbg_tlv_override_trig_nod
- 		node_trig = (void *)node_tlv->data;
- 	}
+--- a/drivers/gpu/drm/tidss/tidss_crtc.c
++++ b/drivers/gpu/drm/tidss/tidss_crtc.c
+@@ -172,13 +172,13 @@ static void tidss_crtc_atomic_flush(stru
+ 	struct tidss_device *tidss = to_tidss(ddev);
+ 	unsigned long flags;
  
--	memcpy(node_trig->data + offset, trig->data, trig_data_len);
-+	memcpy((u8 *)node_trig->data + offset, trig->data, trig_data_len);
- 	node_tlv->length = cpu_to_le32(size);
+-	dev_dbg(ddev->dev,
+-		"%s: %s enabled %d, needs modeset %d, event %p\n", __func__,
+-		crtc->name, drm_atomic_crtc_needs_modeset(crtc->state),
+-		crtc->state->enable, crtc->state->event);
++	dev_dbg(ddev->dev, "%s: %s is %sactive, %s modeset, event %p\n",
++		__func__, crtc->name, crtc->state->active ? "" : "not ",
++		drm_atomic_crtc_needs_modeset(crtc->state) ? "needs" : "doesn't need",
++		crtc->state->event);
  
- 	if (policy & IWL_FW_INI_APPLY_POLICY_OVERRIDE_CFG) {
+ 	/* There is nothing to do if CRTC is not going to be enabled. */
+-	if (!crtc->state->enable)
++	if (!crtc->state->active)
+ 		return;
+ 
+ 	/*
 
 
