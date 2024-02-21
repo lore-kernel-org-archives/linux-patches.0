@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BC06F074;
-	Wed, 21 Feb 2024 13:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447BD6F074;
+	Wed, 21 Feb 2024 13:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522585; cv=none; b=Y+ASBTsjWORl+RgtP4ntVcoA48PkOebxd0cyAlNBBAAiq/VClFE1ZImR89YppGPz8whhU7Hdsoo7mbQwvmBG60QiJ41lOMsqB0yhEKKaqauUmHv5VQdw3FKU86srxN3YmUL70rWYCoICywnBZ/+xZvN+MoqMuux03I8G+y65ru8=
+	t=1708522588; cv=none; b=QnsYXLG6+fsTAI0hd24efGqkO+A7TWyWLQejgVHlPfOjwP61Tv1PLCVJe2hSTvqbRLtFrP9j6RInQbtU8IvFGC9SUSoL1t6bPG8sEMfALLp7Q5ELRK1evBuI8Aem5HasDJJ9a7fpELPLvz3yTCslGrzKWRsaR8noaJVe20jT+9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522585; c=relaxed/simple;
-	bh=O1OuDe6advn7nE6oKRSa532AiD4d2wNDbw2ouvu4TqU=;
+	s=arc-20240116; t=1708522588; c=relaxed/simple;
+	bh=2SckYSpan7PnItNgVrtbL009Z1mF8DibdoMZ/k2IsDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/u8K64S1WSGS9I6Kj0+9/BUnvVgJHzdpsJmPikJ27XKeeUGogN2Lu3iqYEWCe6yN58hdThhF5qgn99G4kOLzROE2cSn5Q4MDGX79zDj8EBqA4n9LGBZ0tLqQB/8s5nBQFRUvNISy32nR/V+QldtYyAdA7e3BA5NNYcwN8JN+zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSeDh3OU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bOzqkNF52WkxOrzQZjkADSO8T1qAneGsP9RDwDCXQTOU8hMHanUqdLUogY6e4IVx0qniqZmcxLhT/HMFF1Fh6Dk7m4vPlb/j9OmA3NfybAIdYm17aNy8TZ7LRh0TqLTCgwmOspCqjJeDUwlZ4gS7EjCc5upE20l1fMXmAKmy9jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRaVbgHw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSeDh3OU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF0AC433F1;
-	Wed, 21 Feb 2024 13:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRaVbgHw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6483C433F1;
+	Wed, 21 Feb 2024 13:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522585;
-	bh=O1OuDe6advn7nE6oKRSa532AiD4d2wNDbw2ouvu4TqU=;
+	s=korg; t=1708522588;
+	bh=2SckYSpan7PnItNgVrtbL009Z1mF8DibdoMZ/k2IsDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSeDh3OUhYrnXzauyA/FAVaPFCtKd86BI/eJJzSrC2EbiQgu9O5cNW5ClNDQ5/ayj
-	 aJD0GSATQF8gJWMH9ntBc2SwO+wrK223sUld4eu6pc9pIk6/UpUMvwJ1Bexbe1Iz7x
-	 ofTfS2AXbIN7OgWIOV8cfKx3cA13jZzELUNu+WuE=
+	b=mRaVbgHwK/aT0PnjwoYKSBWF4gcOMfW+gEuRq44ZAADGI6vkyMYFg6pSKCReoEXdE
+	 GRwxEtZtyQ1o5ZViU+DjAC+i0qiaY9iscp6J/SIIdQpgkMUHn0BjhBcCPPw2l20M85
+	 vSO9cbA+PaBMLVHMycdTJBnPH7meuvHtS2fTTj7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Tsoy <alexander@tsoy.me>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 200/476] ALSA: usb-audio: Add delay quirk for MOTU M Series 2nd revision
-Date: Wed, 21 Feb 2024 14:04:11 +0100
-Message-ID: <20240221130015.312303475@linuxfoundation.org>
+	Su Hui <suhui@nfschina.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 201/476] wifi: rtlwifi: rtl8723{be,ae}: using calculate_bit_shift()
+Date: Wed, 21 Feb 2024 14:04:12 +0100
+Message-ID: <20240221130015.346633797@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,33 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Tsoy <alexander@tsoy.me>
+From: Su Hui <suhui@nfschina.com>
 
-commit d915a6850e27efb383cd4400caadfe47792623df upstream.
+[ Upstream commit 5c16618bc06a41ad68fd8499a21d35ef57ca06c2 ]
 
-Audio control requests that sets sampling frequency sometimes fail on
-this card. Adding delay between control messages eliminates that problem.
+Using calculate_bit_shift() to replace rtl8723_phy_calculate_bit_shift().
+And fix an undefined bitwise shift behavior problem.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217601
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
-Link: https://lore.kernel.org/r/20240124130239.358298-1-alexander@tsoy.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231219065739.1895666-12-suhui@nfschina.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c | 6 +++---
+ drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1796,6 +1796,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x0763, 0x2031, /* M-Audio Fast Track C600 */
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
-+	DEVICE_FLG(0x07fd, 0x000b, /* MOTU M Series 2nd hardware revision */
-+		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x08bb, 0x2702, /* LineX FM Transmitter */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x0951, 0x16ad, /* Kingston HyperX */
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
+index fe9b407dc2af..71e29b103da5 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723ae/phy.c
+@@ -49,7 +49,7 @@ u32 rtl8723e_phy_query_rf_reg(struct ieee80211_hw *hw,
+ 							    rfpath, regaddr);
+ 	}
+ 
+-	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -80,7 +80,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 			original_value = rtl8723_phy_rf_serial_read(hw,
+ 								    rfpath,
+ 								    regaddr);
+-			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
+@@ -89,7 +89,7 @@ void rtl8723e_phy_set_rf_reg(struct ieee80211_hw *hw,
+ 		rtl8723_phy_rf_serial_write(hw, rfpath, regaddr, data);
+ 	} else {
+ 		if (bitmask != RFREG_OFFSET_MASK) {
+-			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data =
+ 			    ((original_value & (~bitmask)) |
+ 			     (data << bitshift));
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
+index 2b9313cb93db..094cb36153f5 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8723be/phy.c
+@@ -41,7 +41,7 @@ u32 rtl8723be_phy_query_rf_reg(struct ieee80211_hw *hw, enum radio_path rfpath,
+ 	spin_lock(&rtlpriv->locks.rf_lock);
+ 
+ 	original_value = rtl8723_phy_rf_serial_read(hw, rfpath, regaddr);
+-	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++	bitshift = calculate_bit_shift(bitmask);
+ 	readback_value = (original_value & bitmask) >> bitshift;
+ 
+ 	spin_unlock(&rtlpriv->locks.rf_lock);
+@@ -68,7 +68,7 @@ void rtl8723be_phy_set_rf_reg(struct ieee80211_hw *hw, enum radio_path path,
+ 	if (bitmask != RFREG_OFFSET_MASK) {
+ 			original_value = rtl8723_phy_rf_serial_read(hw, path,
+ 								    regaddr);
+-			bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
++			bitshift = calculate_bit_shift(bitmask);
+ 			data = ((original_value & (~bitmask)) |
+ 				(data << bitshift));
+ 		}
+-- 
+2.43.0
+
 
 
