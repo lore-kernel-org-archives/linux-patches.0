@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40577BAFF;
-	Wed, 21 Feb 2024 13:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AC278B53;
+	Wed, 21 Feb 2024 13:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523155; cv=none; b=gIXZnmLmWqsPlrRtRfQ7yK7C+Q27MpUAzZWMxK+CN2lK3lgpuRsUirDUU30Xs3r9npSxSR0fGNx30tjruJkxsuCqVvrrAAFxwa9XwebAb4PXGiZscnjF00YPWQHAUlZ5f14arIlaA+Rub1D+uRXhofgno1JbkSN4rDilMg6EBjA=
+	t=1708523163; cv=none; b=LUt8kdQtaGk8HB/OyKwAQT/NlpEBmNle2QbDa/GIHz/EVGa3u+Zzn1fVv8rKU0uueKNVMcAoknh4NzverlDkSG+dD4rWlUtDllH1SSzkVszWePFKaiTQdxVCeCag8X3P4BHt0US95FEcZ5CEFStgOxd/oJVKBv8ZY8+0xFTlkqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523155; c=relaxed/simple;
-	bh=j+JN3TIODgRZ4fnCLlnjgMJTff40SDGp6TJzpJheK+8=;
+	s=arc-20240116; t=1708523163; c=relaxed/simple;
+	bh=vuktrPgCLNgTq8npsNk9EOKAfWsLeHUkPGDpHRcPnV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHwuN1UMvao0UgYQCM9t6QV5igAgO5xWYBmIrvlqBHlrMl0yEoHSxGt/rrKSZ0bqqx9Bj5yV0FeK0PbTKicxCN7B8TK8B1nPmwca6bMkfhpRlRirWU+hSFyI+yOoQ1+LZy6wtN1kNS+OgZAC6A+HehNOVp3FcYrHUmNVVWZsZWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHRZhgUH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JNfTuMWx7DobJwrgKiPNIDX9KtFgtu0kNvkJWJlxYu1UOXHDnr34ccwqIJn8qxMhhnNAwf1YtQjvwHHOMXxJW5uU/zQRoYK+snJ8lOFhwHvYp1EM0qS2/G3UURj0XeNrjsd4foF7EpaoAazH7BOdcHt1mAOT8cbKyQtKq71eKp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/zuABEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHRZhgUH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C926C433C7;
-	Wed, 21 Feb 2024 13:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/zuABEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A9EC433F1;
+	Wed, 21 Feb 2024 13:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523155;
-	bh=j+JN3TIODgRZ4fnCLlnjgMJTff40SDGp6TJzpJheK+8=;
+	s=korg; t=1708523163;
+	bh=vuktrPgCLNgTq8npsNk9EOKAfWsLeHUkPGDpHRcPnV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nHRZhgUHfFmrwj1xN4X7pclX5ULzjgak0cEmQRGTvLGv2RlwzQoaqe61C9EOx8J0n
-	 JS8nr2ogB+Ntr6mYL8UMPHympRdy8n6GvXx2uMJJBVmcjNXoroHNo6LxfWrAqnr99f
-	 oqGqdYV89aJfL7IIiZbIaVcdITMnEVSvMTTsUFBo=
+	b=f/zuABEnEJetMFjzqZbvYFC/E6mqh6pUdoDyaJGBRkYAc3GfFuik0qjCHJyLyQ96P
+	 Hcd48tyKBdx1lH9j1lmUHyX34ccF+u7JjFjuU+kuzoAWn9/6ZPJ7cLOWr1LPAmJ7Ew
+	 /3ABsTKko6I5YXXWeWt5uOY82/42CiNFNMUL7JYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 353/476] net: sysfs: Fix /sys/class/net/<iface> path for statistics
-Date: Wed, 21 Feb 2024 14:06:44 +0100
-Message-ID: <20240221130021.042731618@linuxfoundation.org>
+Subject: [PATCH 5.15 354/476] MIPS: Add memory clobber to csum_ipv6_magic() inline assembler
+Date: Wed, 21 Feb 2024 14:06:45 +0100
+Message-ID: <20240221130021.087974454@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,242 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 5b3fbd61b9d1f4ed2db95aaf03f9adae0373784d ]
+[ Upstream commit d55347bfe4e66dce2e1e7501e5492f4af3e315f8 ]
 
-The Documentation/ABI/testing/sysfs-class-net-statistics documentation
-is pointing to the wrong path for the interface.  Documentation is
-pointing to /sys/class/<iface>, instead of /sys/class/net/<iface>.
+After 'lib: checksum: Use aligned accesses for ip_fast_csum and
+csum_ipv6_magic tests' was applied, the test_csum_ipv6_magic unit test
+started failing for all mips platforms, both little and bit endian.
+Oddly enough, adding debug code into test_csum_ipv6_magic() made the
+problem disappear.
 
-Fix it by adding the `net/` directory before the interface.
+The gcc manual says:
 
-Fixes: 6044f9700645 ("net: sysfs: document /sys/class/net/statistics/*")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+"The "memory" clobber tells the compiler that the assembly code performs
+ memory reads or writes to items other than those listed in the input
+ and output operands (for example, accessing the memory pointed to by one
+ of the input parameters)
+"
+
+This is definitely the case for csum_ipv6_magic(). Indeed, adding the
+'memory' clobber fixes the problem.
+
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ABI/testing/sysfs-class-net-statistics    | 48 +++++++++----------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ arch/mips/include/asm/checksum.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-class-net-statistics b/Documentation/ABI/testing/sysfs-class-net-statistics
-index 55db27815361..53e508c6936a 100644
---- a/Documentation/ABI/testing/sysfs-class-net-statistics
-+++ b/Documentation/ABI/testing/sysfs-class-net-statistics
-@@ -1,4 +1,4 @@
--What:		/sys/class/<iface>/statistics/collisions
-+What:		/sys/class/net/<iface>/statistics/collisions
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -6,7 +6,7 @@ Description:
- 		Indicates the number of collisions seen by this network device.
- 		This value might not be relevant with all MAC layers.
+diff --git a/arch/mips/include/asm/checksum.h b/arch/mips/include/asm/checksum.h
+index 1e6c1354f245..eb15339e58fd 100644
+--- a/arch/mips/include/asm/checksum.h
++++ b/arch/mips/include/asm/checksum.h
+@@ -244,7 +244,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+ 	"	.set	pop"
+ 	: "=&r" (sum), "=&r" (tmp)
+ 	: "r" (saddr), "r" (daddr),
+-	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum));
++	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum)
++	: "memory");
  
--What:		/sys/class/<iface>/statistics/multicast
-+What:		/sys/class/net/<iface>/statistics/multicast
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -14,7 +14,7 @@ Description:
- 		Indicates the number of multicast packets received by this
- 		network device.
- 
--What:		/sys/class/<iface>/statistics/rx_bytes
-+What:		/sys/class/net/<iface>/statistics/rx_bytes
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -23,7 +23,7 @@ Description:
- 		See the network driver for the exact meaning of when this
- 		value is incremented.
- 
--What:		/sys/class/<iface>/statistics/rx_compressed
-+What:		/sys/class/net/<iface>/statistics/rx_compressed
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -32,7 +32,7 @@ Description:
- 		network device. This value might only be relevant for interfaces
- 		that support packet compression (e.g: PPP).
- 
--What:		/sys/class/<iface>/statistics/rx_crc_errors
-+What:		/sys/class/net/<iface>/statistics/rx_crc_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -41,7 +41,7 @@ Description:
- 		by this network device. Note that the specific meaning might
- 		depend on the MAC layer used by the interface.
- 
--What:		/sys/class/<iface>/statistics/rx_dropped
-+What:		/sys/class/net/<iface>/statistics/rx_dropped
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -51,7 +51,7 @@ Description:
- 		packet processing. See the network driver for the exact
- 		meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/rx_errors
-+What:		/sys/class/net/<iface>/statistics/rx_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -59,7 +59,7 @@ Description:
- 		Indicates the number of receive errors on this network device.
- 		See the network driver for the exact meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/rx_fifo_errors
-+What:		/sys/class/net/<iface>/statistics/rx_fifo_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -68,7 +68,7 @@ Description:
- 		network device. See the network driver for the exact
- 		meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/rx_frame_errors
-+What:		/sys/class/net/<iface>/statistics/rx_frame_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -78,7 +78,7 @@ Description:
- 		on the MAC layer protocol used. See the network driver for
- 		the exact meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/rx_length_errors
-+What:		/sys/class/net/<iface>/statistics/rx_length_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -87,7 +87,7 @@ Description:
- 		error, oversized or undersized. See the network driver for the
- 		exact meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/rx_missed_errors
-+What:		/sys/class/net/<iface>/statistics/rx_missed_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -96,7 +96,7 @@ Description:
- 		due to lack of capacity in the receive side. See the network
- 		driver for the exact meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/rx_nohandler
-+What:		/sys/class/net/<iface>/statistics/rx_nohandler
- Date:		February 2016
- KernelVersion:	4.6
- Contact:	netdev@vger.kernel.org
-@@ -104,7 +104,7 @@ Description:
- 		Indicates the number of received packets that were dropped on
- 		an inactive device by the network core.
- 
--What:		/sys/class/<iface>/statistics/rx_over_errors
-+What:		/sys/class/net/<iface>/statistics/rx_over_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -114,7 +114,7 @@ Description:
- 		(e.g: larger than MTU). See the network driver for the exact
- 		meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/rx_packets
-+What:		/sys/class/net/<iface>/statistics/rx_packets
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -122,7 +122,7 @@ Description:
- 		Indicates the total number of good packets received by this
- 		network device.
- 
--What:		/sys/class/<iface>/statistics/tx_aborted_errors
-+What:		/sys/class/net/<iface>/statistics/tx_aborted_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -132,7 +132,7 @@ Description:
- 		a medium collision). See the network driver for the exact
- 		meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/tx_bytes
-+What:		/sys/class/net/<iface>/statistics/tx_bytes
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -143,7 +143,7 @@ Description:
- 		transmitted packets or all packets that have been queued for
- 		transmission.
- 
--What:		/sys/class/<iface>/statistics/tx_carrier_errors
-+What:		/sys/class/net/<iface>/statistics/tx_carrier_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -152,7 +152,7 @@ Description:
- 		because of carrier errors (e.g: physical link down). See the
- 		network driver for the exact meaning of this value.
- 
--What:		/sys/class/<iface>/statistics/tx_compressed
-+What:		/sys/class/net/<iface>/statistics/tx_compressed
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -161,7 +161,7 @@ Description:
- 		this might only be relevant for devices that support
- 		compression (e.g: PPP).
- 
--What:		/sys/class/<iface>/statistics/tx_dropped
-+What:		/sys/class/net/<iface>/statistics/tx_dropped
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -170,7 +170,7 @@ Description:
- 		See the driver for the exact reasons as to why the packets were
- 		dropped.
- 
--What:		/sys/class/<iface>/statistics/tx_errors
-+What:		/sys/class/net/<iface>/statistics/tx_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -179,7 +179,7 @@ Description:
- 		a network device. See the driver for the exact reasons as to
- 		why the packets were dropped.
- 
--What:		/sys/class/<iface>/statistics/tx_fifo_errors
-+What:		/sys/class/net/<iface>/statistics/tx_fifo_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -188,7 +188,7 @@ Description:
- 		FIFO error. See the driver for the exact reasons as to why the
- 		packets were dropped.
- 
--What:		/sys/class/<iface>/statistics/tx_heartbeat_errors
-+What:		/sys/class/net/<iface>/statistics/tx_heartbeat_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -197,7 +197,7 @@ Description:
- 		reported as heartbeat errors. See the driver for the exact
- 		reasons as to why the packets were dropped.
- 
--What:		/sys/class/<iface>/statistics/tx_packets
-+What:		/sys/class/net/<iface>/statistics/tx_packets
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
-@@ -206,7 +206,7 @@ Description:
- 		device. See the driver for whether this reports the number of all
- 		attempted or successful transmissions.
- 
--What:		/sys/class/<iface>/statistics/tx_window_errors
-+What:		/sys/class/net/<iface>/statistics/tx_window_errors
- Date:		April 2005
- KernelVersion:	2.6.12
- Contact:	netdev@vger.kernel.org
+ 	return csum_fold(sum);
+ }
 -- 
 2.43.0
 
