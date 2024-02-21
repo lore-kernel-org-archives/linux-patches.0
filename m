@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20FA7B3F2;
-	Wed, 21 Feb 2024 13:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13B478B7C;
+	Wed, 21 Feb 2024 13:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523339; cv=none; b=qNb1gsL/WaanhAQfa2V8ghYRdwmHYb6TQnjCupk/1y1UELI5ZZ7/TaNZ5lEFfAP1+xqcBCgjd8yLw9/hhgjGXAIGYf8V4Ey6eAQAOil969ElXCDatyveaUNW8mNIWek8XQyYX3hAYGPQqXXvbAjpkCRXsu3Y7kScwZ+ilETKv6c=
+	t=1708523342; cv=none; b=BVTrE44iWyNOSdbHS+fU66SDfGZzh7tcVC+EfNkja0cPE0wTb7aKC81udOpn1A55bb+KGXP+de2hJwFpZBVs0/1z+Y1W1r2EtWv3OKX/syDsW0J6O5qIpJLI0d5i6Tolu1TCFejyhAnH3yTLgTgO+Af5pAICMuh83DmQF0VM+9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523339; c=relaxed/simple;
-	bh=o1N+EaROBu5losXiiovO3caepH0qrcvb3c8DKsW/Dg4=;
+	s=arc-20240116; t=1708523342; c=relaxed/simple;
+	bh=gOXAgDxea0uTHDji1qz7Q7OtiOxO8VdOwKeuwLeZwsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzB95atvqtLm7T/1rkTV6YwtoPnbu2h1Sy1YjZiXdzbTfsik0GCz53BZqJ6lnq5I4HqDpgbEF/ZJI8wguoPOTXhLg49GFjtGPg3BkCZY4M3rYgWGM1cttihzQKqIKC2fJg5sQDklm7DlJ6BrKDbXV74QEZsSjgvFODIWCWF76O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKvhB5OI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eo0c50kv+D9Qq8rCwBcS5gqF3pQUqouNChPG8rhCVgeYsCNaKXwkyolRWa518mDbb77dwY2mS9tiZSgYAs8tAVA4KTbTluTvHSbwfXwJE7SXj6Tz7vEqwcd4H/582cwI5ObI0zs04+1sG0gJdUk3HiaQ8MTzfPlgG+SqTn+HqTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVoyU/S2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKvhB5OI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303BDC433C7;
-	Wed, 21 Feb 2024 13:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVoyU/S2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A546C433F1;
+	Wed, 21 Feb 2024 13:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523339;
-	bh=o1N+EaROBu5losXiiovO3caepH0qrcvb3c8DKsW/Dg4=;
+	s=korg; t=1708523342;
+	bh=gOXAgDxea0uTHDji1qz7Q7OtiOxO8VdOwKeuwLeZwsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aKvhB5OIVu5Yk7ERBTk82HPo+qmlQHUwuatWrNTv/moJ4bS/7+6IcB6sMqKlLFqUG
-	 oLY9vHs1SD9nySwlwWpJe79PSKcBuzGQR9At9X2jB94BR6KCxQDx2JnS65+l5GbQdX
-	 EP3Mejc5Nnmm6cdgzORfUoy/gu3i9h9IIndEhLjc=
+	b=AVoyU/S2oZtEENRheYNnDcXPbFht22ktntGomKnyP6fN+SwwPsFaRjOakIv7MBibw
+	 I6kmCgPdJ8t6sMDz+JsnseA5KXzOWNum0w7VTjxTsTApfVqSC1IjBvBQ2ndwALolhp
+	 rmtDiJRXr5JWfa3Uftr52o4J6J51uTMTRlBoA2vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	xingwei lee <xrivendell7@gmail.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 389/476] ext4: fix double-free of blocks due to wrong extents moved_len
-Date: Wed, 21 Feb 2024 14:07:20 +0100
-Message-ID: <20240221130022.412693242@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 407/476] nilfs2: fix data corruption in dsync block recovery for small block sizes
+Date: Wed, 21 Feb 2024 14:07:38 +0100
+Message-ID: <20240221130023.049012006@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,68 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 55583e899a5357308274601364741a83e78d6ac4 upstream.
+commit 67b8bcbaed4777871bb0dcc888fb02a614a98ab1 upstream.
 
-In ext4_move_extents(), moved_len is only updated when all moves are
-successfully executed, and only discards orig_inode and donor_inode
-preallocations when moved_len is not zero. When the loop fails to exit
-after successfully moving some extents, moved_len is not updated and
-remains at 0, so it does not discard the preallocations.
+The helper function nilfs_recovery_copy_block() of
+nilfs_recovery_dsync_blocks(), which recovers data from logs created by
+data sync writes during a mount after an unclean shutdown, incorrectly
+calculates the on-page offset when copying repair data to the file's page
+cache.  In environments where the block size is smaller than the page
+size, this flaw can cause data corruption and leak uninitialized memory
+bytes during the recovery process.
 
-If the moved extents overlap with the preallocated extents, the
-overlapped extents are freed twice in ext4_mb_release_inode_pa() and
-ext4_process_freed_data() (as described in commit 94d7c16cbbbd ("ext4:
-Fix double-free of blocks with EXT4_IOC_MOVE_EXT")), and bb_free is
-incremented twice. Hence when trim is executed, a zero-division bug is
-triggered in mb_update_avg_fragment_size() because bb_free is not zero
-and bb_fragments is zero.
+Fix these issues by correcting this byte offset calculation on the page.
 
-Therefore, update move_len after each extent move to avoid the issue.
-
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Closes: https://lore.kernel.org/r/CAO4mrferzqBUnCag8R3m2zf897ts9UEuhjFQGPtODT92rYyR2Q@mail.gmail.com
-Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
-CC:  <stable@vger.kernel.org> # 3.18
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20240104142040.2835097-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://lkml.kernel.org/r/20240124121936.10575-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/move_extent.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nilfs2/recovery.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/move_extent.c
-+++ b/fs/ext4/move_extent.c
-@@ -615,6 +615,7 @@ ext4_move_extents(struct file *o_filp, s
- 		goto out;
- 	o_end = o_start + len;
+--- a/fs/nilfs2/recovery.c
++++ b/fs/nilfs2/recovery.c
+@@ -472,9 +472,10 @@ static int nilfs_prepare_segment_for_rec
  
-+	*moved_len = 0;
- 	while (o_start < o_end) {
- 		struct ext4_extent *ex;
- 		ext4_lblk_t cur_blk, next_blk;
-@@ -670,7 +671,7 @@ ext4_move_extents(struct file *o_filp, s
- 		 */
- 		ext4_double_up_write_data_sem(orig_inode, donor_inode);
- 		/* Swap original branches with new branches */
--		move_extent_per_page(o_filp, donor_inode,
-+		*moved_len += move_extent_per_page(o_filp, donor_inode,
- 				     orig_page_index, donor_page_index,
- 				     offset_in_page, cur_len,
- 				     unwritten, &ret);
-@@ -680,9 +681,6 @@ ext4_move_extents(struct file *o_filp, s
- 		o_start += cur_len;
- 		d_start += cur_len;
- 	}
--	*moved_len = o_start - orig_blk;
--	if (*moved_len > len)
--		*moved_len = len;
+ static int nilfs_recovery_copy_block(struct the_nilfs *nilfs,
+ 				     struct nilfs_recovery_block *rb,
+-				     struct page *page)
++				     loff_t pos, struct page *page)
+ {
+ 	struct buffer_head *bh_org;
++	size_t from = pos & ~PAGE_MASK;
+ 	void *kaddr;
  
- out:
- 	if (*moved_len) {
+ 	bh_org = __bread(nilfs->ns_bdev, rb->blocknr, nilfs->ns_blocksize);
+@@ -482,7 +483,7 @@ static int nilfs_recovery_copy_block(str
+ 		return -EIO;
+ 
+ 	kaddr = kmap_atomic(page);
+-	memcpy(kaddr + bh_offset(bh_org), bh_org->b_data, bh_org->b_size);
++	memcpy(kaddr + from, bh_org->b_data, bh_org->b_size);
+ 	kunmap_atomic(kaddr);
+ 	brelse(bh_org);
+ 	return 0;
+@@ -521,7 +522,7 @@ static int nilfs_recover_dsync_blocks(st
+ 			goto failed_inode;
+ 		}
+ 
+-		err = nilfs_recovery_copy_block(nilfs, rb, page);
++		err = nilfs_recovery_copy_block(nilfs, rb, pos, page);
+ 		if (unlikely(err))
+ 			goto failed_page;
+ 
 
 
