@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D60177A03;
-	Wed, 21 Feb 2024 13:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E9077A03;
+	Wed, 21 Feb 2024 13:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522999; cv=none; b=XdOE6I+tnHP6EKSp7BWDn8B1JqWAqV8D4kW4PHvjYI7Vjb1BJwP8dKcZK7/x/VtxqON/yzE+mcZuEkcRrhN+893Ie4GzB9UKSGlMT2aTvz4EAb4Crt6brWvgEdB1a0zmXMdMVP7wUslPW4IV2MuzWRmQB7SFyNkYs8jxw9d2/9k=
+	t=1708523002; cv=none; b=cE+dMZkiwdU/0aSXUFLmc1BzzDiA+kMaPenFg2tp2o4zis1F+rAOpsgdJfNXqt7cdsfrL2XfFpF3/HCEBG6/BQmQHQUfQpzybFDcRe/9b0oTkE4PbmR4BmiJ9psG7fyijhqtCZoxaqr9PqRpAKlT77Y8/IKsBSM+XnJaVraZoxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522999; c=relaxed/simple;
-	bh=+WCbI3fEJREfj0f8EgqrOzYINw5Y66RtrC0DxPT3RPQ=;
+	s=arc-20240116; t=1708523002; c=relaxed/simple;
+	bh=Cwt1Hdn0+pMh8ic+XOZmdZWdtiA6YHKcIbroZmtlN10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZPE8raVX2lzbC/PmThYulDyHryL4AOVd4JxEqm/iGNNrUmK0Jl9BHMycLWeIFtugbc8DWWBSDgA2Cw0O3/kFRoQPb073hV7faa2N9oF4kEcy0TYKBE2joypCWMdViYMDMsotyRsTaQmG2dZSGQkL2BfOVh3Does+XybIRHPSMx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgBKm8DR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1AxXQvoGyQaLuiL5WTUEt0RBZ7lrD15W2M2YQht61pE4B0hsg/G1KjbmnGkwwP5dzlBm3Vf3c9kgWsT/XBMoPCQT6FH7fX0vOPPnI+vyfICGMVTC0hlWX4mbhZtKNtsemrnouDZwBWEyE/sBPS54wwVc6bj6yokOR/qXdEaRLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfWqj+m6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgBKm8DR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D5BC433C7;
-	Wed, 21 Feb 2024 13:43:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfWqj+m6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA755C433F1;
+	Wed, 21 Feb 2024 13:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522999;
-	bh=+WCbI3fEJREfj0f8EgqrOzYINw5Y66RtrC0DxPT3RPQ=;
+	s=korg; t=1708523002;
+	bh=Cwt1Hdn0+pMh8ic+XOZmdZWdtiA6YHKcIbroZmtlN10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgBKm8DRHHxlCg+fzJc/fxR42tpr5AIj7eUmgSwPbB/AV6ULMgiVFjHn/cwcEh/WX
-	 2I7w2ZDFfVyX3GM7OUd5QdAp2ny2xa2NaMH/NEF3RfN+EYyVVEEXoV6Sptc2eB7KfT
-	 1BCrDlP9Sbgq08jqYW5k6ua3khO0SEM6q2NHXLFs=
+	b=NfWqj+m6Q3bkbQCpauCeGl8QBL4P6O3GeG0AtAfXdb2jCIl68SkIGBfXjgQN2MdVT
+	 STHsG+YDl4F0RVcXzT9vjI3X2swUC40pJ8pDM+vau3lu95ZmgT1y3JK3hlR4N9oEwL
+	 hvVn7t12khasDTQGbRCPLHAjxtPZRLPzcD3xvcSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 312/476] hwmon: (coretemp) Fix bogus core_id to attr name mapping
-Date: Wed, 21 Feb 2024 14:06:03 +0100
-Message-ID: <20240221130019.551658042@linuxfoundation.org>
+Subject: [PATCH 5.15 313/476] inet: read sk->sk_family once in inet_recv_error()
+Date: Wed, 21 Feb 2024 14:06:04 +0100
+Message-ID: <20240221130019.598548907@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,146 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fdaf0c8629d4524a168cb9e4ad4231875749b28c ]
+[ Upstream commit eef00a82c568944f113f2de738156ac591bbd5cd ]
 
-Before commit 7108b80a542b ("hwmon/coretemp: Handle large core ID
-value"), there is a fixed mapping between
-1. cpu_core_id
-2. the index in pdata->core_data[] array
-3. the sysfs attr name, aka "tempX_"
-The later two always equal cpu_core_id + 2.
+inet_recv_error() is called without holding the socket lock.
 
-After the commit, pdata->core_data[] index is got from ida so that it
-can handle sparse core ids and support more cores within a package.
+IPv6 socket could mutate to IPv4 with IPV6_ADDRFORM
+socket option and trigger a KCSAN warning.
 
-However, the commit erroneously maps the sysfs attr name to
-pdata->core_data[] index instead of cpu_core_id + 2.
-
-As a result, the code is not aligned with the comments, and brings user
-visible changes in hwmon sysfs on systems with sparse core id.
-
-For example, before commit 7108b80a542b ("hwmon/coretemp: Handle large
-core ID value"),
-/sys/class/hwmon/hwmon2/temp2_label:Core 0
-/sys/class/hwmon/hwmon2/temp3_label:Core 1
-/sys/class/hwmon/hwmon2/temp4_label:Core 2
-/sys/class/hwmon/hwmon2/temp5_label:Core 3
-/sys/class/hwmon/hwmon2/temp6_label:Core 4
-/sys/class/hwmon/hwmon3/temp10_label:Core 8
-/sys/class/hwmon/hwmon3/temp11_label:Core 9
-after commit,
-/sys/class/hwmon/hwmon2/temp2_label:Core 0
-/sys/class/hwmon/hwmon2/temp3_label:Core 1
-/sys/class/hwmon/hwmon2/temp4_label:Core 2
-/sys/class/hwmon/hwmon2/temp5_label:Core 3
-/sys/class/hwmon/hwmon2/temp6_label:Core 4
-/sys/class/hwmon/hwmon2/temp7_label:Core 8
-/sys/class/hwmon/hwmon2/temp8_label:Core 9
-
-Restore the previous behavior and rework the code, comments and variable
-names to avoid future confusions.
-
-Fixes: 7108b80a542b ("hwmon/coretemp: Handle large core ID value")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://lore.kernel.org/r/20240202092144.71180-3-rui.zhang@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: f4713a3dfad0 ("net-timestamp: make tcp_recvmsg call ipv6_recv_error for AF_INET6 socks")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 32 +++++++++++++++++++-------------
- 1 file changed, 19 insertions(+), 13 deletions(-)
+ net/ipv4/af_inet.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 7f6615ef8c88..d67d972d18aa 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -380,7 +380,7 @@ static int get_tjmax(struct cpuinfo_x86 *c, u32 id, struct device *dev)
- }
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index 6f6c05f198da..487f75993bf4 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -1605,10 +1605,12 @@ EXPORT_SYMBOL(inet_current_timestamp);
  
- static int create_core_attrs(struct temp_data *tdata, struct device *dev,
--			     int attr_no)
-+			     int index)
+ int inet_recv_error(struct sock *sk, struct msghdr *msg, int len, int *addr_len)
  {
- 	int i;
- 	static ssize_t (*const rd_ptr[TOTAL_ATTRS]) (struct device *dev,
-@@ -392,13 +392,20 @@ static int create_core_attrs(struct temp_data *tdata, struct device *dev,
- 	};
- 
- 	for (i = 0; i < tdata->attr_size; i++) {
-+		/*
-+		 * We map the attr number to core id of the CPU
-+		 * The attr number is always core id + 2
-+		 * The Pkgtemp will always show up as temp1_*, if available
-+		 */
-+		int attr_no = tdata->is_pkg_data ? 1 : tdata->cpu_core_id + 2;
+-	if (sk->sk_family == AF_INET)
++	unsigned int family = READ_ONCE(sk->sk_family);
 +
- 		snprintf(tdata->attr_name[i], CORETEMP_NAME_LENGTH,
- 			 "temp%d_%s", attr_no, suffixes[i]);
- 		sysfs_attr_init(&tdata->sd_attrs[i].dev_attr.attr);
- 		tdata->sd_attrs[i].dev_attr.attr.name = tdata->attr_name[i];
- 		tdata->sd_attrs[i].dev_attr.attr.mode = 0444;
- 		tdata->sd_attrs[i].dev_attr.show = rd_ptr[i];
--		tdata->sd_attrs[i].index = attr_no;
-+		tdata->sd_attrs[i].index = index;
- 		tdata->attrs[i] = &tdata->sd_attrs[i].dev_attr.attr;
- 	}
- 	tdata->attr_group.attrs = tdata->attrs;
-@@ -456,23 +463,22 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
- 	struct platform_data *pdata = platform_get_drvdata(pdev);
- 	struct cpuinfo_x86 *c = &cpu_data(cpu);
- 	u32 eax, edx;
--	int err, index, attr_no;
-+	int err, index;
- 
- 	/*
--	 * Find attr number for sysfs:
--	 * We map the attr number to core id of the CPU
--	 * The attr number is always core id + 2
--	 * The Pkgtemp will always show up as temp1_*, if available
-+	 * Get the index of tdata in pdata->core_data[]
-+	 * tdata for package: pdata->core_data[1]
-+	 * tdata for core: pdata->core_data[2] .. pdata->core_data[NUM_REAL_CORES + 1]
- 	 */
- 	if (pkg_flag) {
--		attr_no = PKG_SYSFS_ATTR_NO;
-+		index = PKG_SYSFS_ATTR_NO;
- 	} else {
- 		index = ida_alloc_max(&pdata->ida, NUM_REAL_CORES - 1, GFP_KERNEL);
- 		if (index < 0)
- 			return index;
- 
- 		pdata->cpu_map[index] = topology_core_id(cpu);
--		attr_no = index + BASE_SYSFS_ATTR_NO;
-+		index += BASE_SYSFS_ATTR_NO;
- 	}
- 
- 	tdata = init_temp_data(cpu, pkg_flag);
-@@ -504,20 +510,20 @@ static int create_core_data(struct platform_device *pdev, unsigned int cpu,
- 		}
- 	}
- 
--	pdata->core_data[attr_no] = tdata;
-+	pdata->core_data[index] = tdata;
- 
- 	/* Create sysfs interfaces */
--	err = create_core_attrs(tdata, pdata->hwmon_dev, attr_no);
-+	err = create_core_attrs(tdata, pdata->hwmon_dev, index);
- 	if (err)
- 		goto exit_free;
- 
- 	return 0;
- exit_free:
--	pdata->core_data[attr_no] = NULL;
-+	pdata->core_data[index] = NULL;
- 	kfree(tdata);
- ida_free:
- 	if (!pkg_flag)
--		ida_free(&pdata->ida, index);
-+		ida_free(&pdata->ida, index - BASE_SYSFS_ATTR_NO);
- 	return err;
- }
- 
++	if (family == AF_INET)
+ 		return ip_recv_error(sk, msg, len, addr_len);
+ #if IS_ENABLED(CONFIG_IPV6)
+-	if (sk->sk_family == AF_INET6)
++	if (family == AF_INET6)
+ 		return pingv6_ops.ipv6_recv_error(sk, msg, len, addr_len);
+ #endif
+ 	return -EINVAL;
 -- 
 2.43.0
 
