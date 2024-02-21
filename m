@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD647FBC8;
-	Wed, 21 Feb 2024 14:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910D87FBC7;
+	Wed, 21 Feb 2024 14:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524584; cv=none; b=DO617g4+DysQrNG+/O+M0jaXjyjDUE+am/sRKHV5ntOQd5nBXYZFh9vk5YIjAmVKS6zkPVQgPWlJFAf7qmvPKpDHHBX7iQ55qPEU8jPuv+id5U7kr2cQZKktKC0FTy36ThpJ/RDceaISj+0njPoGiban1gQD6HPrUwl6MtA0F7A=
+	t=1708524587; cv=none; b=DJZu0MF2VzYOrBtUkXxyANlRPh8vyt9dp5Gfh8brZ0m6MhThSBsjNqqP1M9O8aP+b3T4ce2WJAHoWA9HxFd1ngShGyai1qqk3rqz/KvL+HZm5j75bh5334KSK7yInR5MZZ44NNudyVLFYwEzpUXJ22/6JCQE96WK1DWykXfl1qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524584; c=relaxed/simple;
-	bh=Y81jBjDsXrqbM+zcprjjRPMaM0e7vR40gFWS9lrKe7g=;
+	s=arc-20240116; t=1708524587; c=relaxed/simple;
+	bh=dlxJrlZIVx12GFKax99hJ9nP9oJpk5Jaij2HdIvUcDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obILO7TrI0va3xLp2LU8RhRQZQ/rgKNlkqtLS+A+Q60FNxqU6w7LaZPiYVz/tyK4cVOVCi3uLPYBLw+a7OZmIYd1GDTVtMsyPRC0P5uIVPhzXH0hYBbHklUKiM/5RldB9T66oT9weHCfJCk5HQFqWIXcmqsl3AJIYxI83DbnCUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwK43MUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ukAEiJjKkFK2p1q+Wus0RR1yAwth83tiTgyBv4oyOv/j0eeSYl+ULneH/s4scKCYCIlZFKD9vIyv3iyBxtEIp+w0QRlU+BD7MC/VAJD4hlVwqry+IBW058Q7ksxtxC/5lG/+WXb8EHzQ/febI4IwDhYs14/JU9svEDRrqmFo0xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTZ3eGgJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwK43MUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC07EC433F1;
-	Wed, 21 Feb 2024 14:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTZ3eGgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A37C433F1;
+	Wed, 21 Feb 2024 14:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524584;
-	bh=Y81jBjDsXrqbM+zcprjjRPMaM0e7vR40gFWS9lrKe7g=;
+	s=korg; t=1708524587;
+	bh=dlxJrlZIVx12GFKax99hJ9nP9oJpk5Jaij2HdIvUcDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwK43MUgIP9PAFE3YqcStvfKSttShmkCxdHIN0WOy5Kj2wGwT0viznKWvvj0r40QP
-	 q+FhZLGL0b9KjKWW1Qk0gtAVHfwrI0C4lxXUbB3uAi5glfUPd/oQqo8YZsvlSQupoK
-	 FsPe/lUNn5sVjV49wIZf0A/mWwOXsF04H8wLKMnY=
+	b=KTZ3eGgJR9/9k567cMO7HvFUoLWK/gaD/4vT/S6OfeubMBGUCx/k0Wn6DgHSxbiBe
+	 1Vf6B+6w2mpyYL/n47ELm91kwTBQ3jM43Unm8HptIw46+LWci4FrabzX6FQMqweBa8
+	 utRuHh3mXpommUvl+8TrECG+F6djN3IfDXSdR1Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 289/379] btrfs: send: return EOPNOTSUPP on unknown flags
-Date: Wed, 21 Feb 2024 14:07:48 +0100
-Message-ID: <20240221130003.458337274@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Rob Herring <robh@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 290/379] of: unittest: Fix compile in the non-dynamic case
+Date: Wed, 21 Feb 2024 14:07:49 +0100
+Message-ID: <20240221130003.487676791@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -50,35 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Sterba <dsterba@suse.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit f884a9f9e59206a2d41f265e7e403f080d10b493 upstream.
+[ Upstream commit 607aad1e4356c210dbef9022955a3089377909b2 ]
 
-When some ioctl flags are checked we return EOPNOTSUPP, like for
-BTRFS_SCRUB_SUPPORTED_FLAGS, BTRFS_SUBVOL_CREATE_ARGS_MASK or fallocate
-modes. The EINVAL is supposed to be for a supported but invalid
-values or combination of options. Fix that when checking send flags so
-it's consistent with the rest.
+If CONFIG_OF_KOBJ is not set, a device_node does not contain a
+kobj and attempts to access the embedded kobj via kref_read break
+the compile.
 
-CC: stable@vger.kernel.org # 4.14+
-Link: https://lore.kernel.org/linux-btrfs/CAL3q7H5rryOLzp3EKq8RTbjMHMHeaJubfpsVLF6H4qJnKCUR1w@mail.gmail.com/
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Replace affected kref_read calls with a macro that reads the
+refcount if it exists and returns 1 if there is no embedded kobj.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202401291740.VP219WIz-lkp@intel.com/
+Fixes: 4dde83569832 ("of: Fix double free in of_parse_phandle_with_args_map")
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://lore.kernel.org/r/20240129192556.403271-1-lk@c--e.de
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/send.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/unittest.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -7285,7 +7285,7 @@ long btrfs_ioctl_send(struct file *mnt_f
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index f9083c868a36..a334c68db339 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -48,6 +48,12 @@ static struct unittest_results {
+ 	failed; \
+ })
+ 
++#ifdef CONFIG_OF_KOBJ
++#define OF_KREF_READ(NODE) kref_read(&(NODE)->kobj.kref)
++#else
++#define OF_KREF_READ(NODE) 1
++#endif
++
+ /*
+  * Expected message may have a message level other than KERN_INFO.
+  * Print the expected message only if the current loglevel will allow
+@@ -561,7 +567,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 			pr_err("missing testcase data\n");
+ 			return;
+ 		}
+-		prefs[i] = kref_read(&p[i]->kobj.kref);
++		prefs[i] = OF_KREF_READ(p[i]);
  	}
  
- 	if (arg->flags & ~BTRFS_SEND_FLAG_MASK) {
--		ret = -EINVAL;
-+		ret = -EOPNOTSUPP;
- 		goto out;
- 	}
+ 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
+@@ -684,9 +690,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
+ 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
  
+ 	for (i = 0; i < ARRAY_SIZE(p); ++i) {
+-		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
++		unittest(prefs[i] == OF_KREF_READ(p[i]),
+ 			 "provider%d: expected:%d got:%d\n",
+-			 i, prefs[i], kref_read(&p[i]->kobj.kref));
++			 i, prefs[i], OF_KREF_READ(p[i]));
+ 		of_node_put(p[i]);
+ 	}
+ }
+-- 
+2.43.0
+
 
 
