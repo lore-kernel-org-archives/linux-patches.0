@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE177C0BD;
-	Wed, 21 Feb 2024 13:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B57955E5E;
+	Wed, 21 Feb 2024 13:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523576; cv=none; b=jrqiHqEZaCTcw/CF5Z+bt0+EMNfvm2gMhx8qgkSaoSixMYA4jTTE6mTHedxSNdGn39Bc/rFHZJ+Gi8wHJW7o+CxR4UfxO4MOIBSA3v4TqeqZvyPg6DvfSZw+Iu/DtPNhzhXvexa2USzTWKKkwlfBvhYKR5Vx+rb0KgxMfS4zKGA=
+	t=1708523580; cv=none; b=Kuyj6VpYTTlITf2VcAxzJbz34GlWWDevaJUtxeVWC6NLG1p+v3YEt7ZxJ2tQSJngP+kGKuTZUs5Dgp1DZy4pgqj7uxWLa2LjnosorZFIuzWCOjHZ9sT1Kt1766uLZCm4IZvDu8tfwwoEwQsbx/nYWRQZ/2zknd1y96rYXhUA5D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523576; c=relaxed/simple;
-	bh=2CjHgdx1611UfKdHF+04xDBzMVrIqSuTfhRD7tIAvAk=;
+	s=arc-20240116; t=1708523580; c=relaxed/simple;
+	bh=9HA8aK8k5PJCJe20XN1KcEQuVAVhK7mAKAIu8v5dWQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fL7dom61txYlYQv74NuLn+0K9sN+8CsOEH5ng85w14zpjer6/xhUfbyGuSBpY+cqzo+1guO3o33HtHxNbtQBrJTTPd6FRWlfGX6ErikkWwb9kZrGeqtFWh27pKLiBeel0InhFG2b4oyZoXNYhFfu4KqZaI/uvjZyaIQz2EmttXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OLRI8Opw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LmbMQZYQASNLKD/DpZAYUBfK6KXH8SG48YNE0Wr6wbz7MZvjhWsdLFWso+z4zymVy9GAoxx+Cq9ynrw7cJCrMYGKIlX+ufi0WM9w3LrXxdkWrqpscR9nozTnpF5OhL4E76qsBoGz9WFr5znc0Ww+5Qqq1hqGQPvIrA9aNZKzzKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6h63yz5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OLRI8Opw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F089C433C7;
-	Wed, 21 Feb 2024 13:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6h63yz5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697BBC433F1;
+	Wed, 21 Feb 2024 13:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523576;
-	bh=2CjHgdx1611UfKdHF+04xDBzMVrIqSuTfhRD7tIAvAk=;
+	s=korg; t=1708523579;
+	bh=9HA8aK8k5PJCJe20XN1KcEQuVAVhK7mAKAIu8v5dWQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLRI8OpwXyC7qlnua8yZt2+LLy6KspCBAT6BxP/6cAuwBKE9RLtPXxAqM3SPjt7Rh
-	 Td8fOMrRM1ZW9I2rzUivS1bj6AAkElocEPXI4lzbS/ZYFA91yyDjz7C+P8YWUtb6eB
-	 Kwhu4NwDGNUOkq0R3Nk4WR1rmhWL0XbkJSkzlNtE=
+	b=R6h63yz5VEBEoYsxkC7yWXwE8GKkvmrfy87GioUJQ0GV2LdvDm9ZeePx908dMAIEA
+	 zFpiPlpcF38Ig9Tr26+DU5UYEWl2ofYLR87Q0bH43zzDvKq8KulGgHgmxJ3FbAtTxx
+	 bgOv8bVDxi6Iy+rTRn6u8UIDC25/obvs6ptxpRYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 476/476] usb: dwc3: gadget: Ignore End Transfer delay on teardown
-Date: Wed, 21 Feb 2024 14:08:47 +0100
-Message-ID: <20240221130025.577794706@linuxfoundation.org>
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Miko Larsson <mikoxyzzz@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 451/476] fbdev: Fix invalid page access after closing deferred I/O devices
+Date: Wed, 21 Feb 2024 14:08:22 +0100
+Message-ID: <20240221130024.699469227@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -49,56 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit c4e3ef5685393c5051b52cf1e94b8891d49793ab upstream.
+[ Upstream commit 3efc61d95259956db25347e2a9562c3e54546e20 ]
 
-If we delay sending End Transfer for Setup TRB to be prepared, we need
-to check if the End Transfer was in preparation for a driver
-teardown/soft-disconnect. In those cases, just send the End Transfer
-command without delay.
+When a fbdev with deferred I/O is once opened and closed, the dirty
+pages still remain queued in the pageref list, and eventually later
+those may be processed in the delayed work.  This may lead to a
+corruption of pages, hitting an Oops.
 
-In the case of soft-disconnect, there's a very small chance the command
-may not go through immediately. But should it happen, the Setup TRB will
-be prepared during the polling of the controller halted state, allowing
-the command to go through then.
+This patch makes sure to cancel the delayed work and clean up the
+pageref list at closing the device for addressing the bug.  A part of
+the cleanup code is factored out as a new helper function that is
+called from the common fb_release().
 
-In the case of disabling endpoint due to reconfiguration (e.g.
-set_interface(alt-setting) or usb reset), then it's driven by the host.
-Typically the host wouldn't immediately cancel the control request and
-send another control transfer to trigger the End Transfer command
-timeout.
-
-Fixes: 4db0fbb60136 ("usb: dwc3: gadget: Don't delay End Transfer on delayed_status")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/f1617a323e190b9cc408fb8b65456e32b5814113.1670546756.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Miko Larsson <mikoxyzzz@gmail.com>
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230129082856.22113-1-tiwai@suse.de
+Stable-dep-of: 33cd6ea9c067 ("fbdev: flush deferred IO before closing")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/core/fb_defio.c | 10 +++++++++-
+ drivers/video/fbdev/core/fbmem.c    |  4 ++++
+ include/linux/fb.h                  |  1 +
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1701,6 +1701,7 @@ static int __dwc3_stop_active_transfer(s
- 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
- 	}
- 
-+	dep->flags &= ~DWC3_EP_DELAY_STOP;
- 	return ret;
+diff --git a/drivers/video/fbdev/core/fb_defio.c b/drivers/video/fbdev/core/fb_defio.c
+index 5faeca61d3dd..b3f41f432ec2 100644
+--- a/drivers/video/fbdev/core/fb_defio.c
++++ b/drivers/video/fbdev/core/fb_defio.c
+@@ -292,7 +292,7 @@ void fb_deferred_io_open(struct fb_info *info,
  }
+ EXPORT_SYMBOL_GPL(fb_deferred_io_open);
  
-@@ -3710,8 +3711,10 @@ void dwc3_stop_active_transfer(struct dw
- 	if (dep->number <= 1 && dwc->ep0state != EP0_DATA_PHASE)
- 		return;
- 
-+	if (interrupt && (dep->flags & DWC3_EP_DELAY_STOP))
-+		return;
+-void fb_deferred_io_cleanup(struct fb_info *info)
++void fb_deferred_io_release(struct fb_info *info)
+ {
+ 	struct fb_deferred_io *fbdefio = info->fbdefio;
+ 	struct page *page;
+@@ -306,6 +306,14 @@ void fb_deferred_io_cleanup(struct fb_info *info)
+ 		page = fb_deferred_io_page(info, i);
+ 		page->mapping = NULL;
+ 	}
++}
++EXPORT_SYMBOL_GPL(fb_deferred_io_release);
 +
- 	if (!(dep->flags & DWC3_EP_TRANSFER_STARTED) ||
--	    (dep->flags & DWC3_EP_DELAY_STOP) ||
- 	    (dep->flags & DWC3_EP_END_TRANSFER_PENDING))
- 		return;
++void fb_deferred_io_cleanup(struct fb_info *info)
++{
++	struct fb_deferred_io *fbdefio = info->fbdefio;
++
++	fb_deferred_io_release(info);
  
+ 	kvfree(info->pagerefs);
+ 	mutex_destroy(&fbdefio->lock);
+diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
+index 1b288a613a6e..ec7a883715e3 100644
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -1454,6 +1454,10 @@ __releases(&info->lock)
+ 	struct fb_info * const info = file->private_data;
+ 
+ 	lock_fb_info(info);
++#if IS_ENABLED(CONFIG_FB_DEFERRED_IO)
++	if (info->fbdefio)
++		fb_deferred_io_release(info);
++#endif
+ 	if (info->fbops->fb_release)
+ 		info->fbops->fb_release(info,1);
+ 	module_put(info->fbops->owner);
+diff --git a/include/linux/fb.h b/include/linux/fb.h
+index b322d30f6225..433cddf8442b 100644
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -675,6 +675,7 @@ extern int  fb_deferred_io_init(struct fb_info *info);
+ extern void fb_deferred_io_open(struct fb_info *info,
+ 				struct inode *inode,
+ 				struct file *file);
++extern void fb_deferred_io_release(struct fb_info *info);
+ extern void fb_deferred_io_cleanup(struct fb_info *info);
+ extern int fb_deferred_io_fsync(struct file *file, loff_t start,
+ 				loff_t end, int datasync);
+-- 
+2.43.0
+
 
 
