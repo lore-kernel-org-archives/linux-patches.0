@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2383069E08;
-	Wed, 21 Feb 2024 13:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5878769E08;
+	Wed, 21 Feb 2024 13:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522733; cv=none; b=AnswBJY09UZhP+eaCVkNWO+p9hbOtp6t6UQhFTSZJk0H6ixBraeKOIk2EKNYYTHDZ6g8UamomtRjPGNwm5O7TW+0ZbwtwYYfArQnzkCYY5Sp9sWND0TmrKCxNhp9jVe4331xUJVM34/4BzByFyaiuxBNKLutizPOSeO3h4WQQN4=
+	t=1708522736; cv=none; b=B8Eeu0JsuSSNmKHjB1FQu29F8ob5IXigptd2NfWXzUxLw1HphqUB5HlrNBcG9c1jl8RVUuO3P7eP3KUE5GwD1oKMLuxwmqXR/qxp0nbGgH7CnBxqTIe1U5A7zpbJxIfCChZliF6hH3taDzXNrJ7utsxUcs9R0jmv5f4JiBV9Aks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522733; c=relaxed/simple;
-	bh=Ozw+Enq0DRSfuZwtO+er6txZ4gCIx3Qqgdhw6UjSLuE=;
+	s=arc-20240116; t=1708522736; c=relaxed/simple;
+	bh=ULMJIpUvi2o7bI0yht+7ZnpWPlNhUPiJMjkaLgQxMUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgcPiswkbrZTyv8zWV08wl9p9bwsATkXlonjZa1uJAsuMAUwl/9nxmykrM1Z7yifNJGHv2FmvRH/WcC9bRRCfqmuqC6CwA2eIgS6dZVLcLCgsC74dFbg0PMzBQUF6d7lH8tM/fatZLQsxRM4nQwj4BIDw5Rax/rPvtddu8krcKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLDG0bkl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4u8doC4uZ8198ze3pGl15g/1lKqYcIqkyDzpEik+M1qw683eZO7qNmMSk0VWPUQ/8UaSG0v8I7mcUb7zGSd3ZXHWmk2aRty3VbnEHXf7RRtOa2lOyPne9LcT1ToHGuaNM6unKFBHgUJE1IUYX6hM/80+210ZhkY4buZl40dZ0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPzt5gS7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLDG0bkl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8280C433F1;
-	Wed, 21 Feb 2024 13:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPzt5gS7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78176C433C7;
+	Wed, 21 Feb 2024 13:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522733;
-	bh=Ozw+Enq0DRSfuZwtO+er6txZ4gCIx3Qqgdhw6UjSLuE=;
+	s=korg; t=1708522735;
+	bh=ULMJIpUvi2o7bI0yht+7ZnpWPlNhUPiJMjkaLgQxMUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLDG0bklUfyryDA9ZkBbHFDDY4YRGS4aIC6MUtZbe/RGPBXwmqmkyZcHnZZdmxPIQ
-	 L4+SOUxfTbCdWb2/yBZ7EdN+eIBjXjU2ktC+e1hYo4H+3B33XvlthOeC5zLg7s99Bd
-	 GccEf+fbzkdVmjnhzgcyCB5VmwnUcr0Ycen7NDmo=
+	b=XPzt5gS7ou4eQivFQ4bMrWbYOg2Yv7zeTudFJWtYk97YCd4JLPORnBK2dK73/+ONI
+	 BszntBtAs4k8jiD7RkH5W2lGdGspX6LQMrYYaoZsgn1v9x0HNyUjlQ1iSkrempPA4a
+	 RbM7UK0FvDiMI6GRt56fps3t3oJZfHrkgpPxUcDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 214/476] f2fs: fix write pointers on zoned device after roll forward
-Date: Wed, 21 Feb 2024 14:04:25 +0100
-Message-ID: <20240221130015.813920492@linuxfoundation.org>
+Subject: [PATCH 5.15 205/476] bridge: cfm: fix enum typo in br_cc_ccm_tx_parse
+Date: Wed, 21 Feb 2024 14:04:16 +0100
+Message-ID: <20240221130015.496218051@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,35 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 9dad4d964291295ef48243d4e03972b85138bc9f ]
+[ Upstream commit c2b2ee36250d967c21890cb801e24af4b6a9eaa5 ]
 
-1. do roll forward recovery
-2. update current segments pointers
-3. fix the entire zones' write pointers
-4. do checkpoint
+It appears that there is a typo in the code where the nlattr array is
+being parsed with policy br_cfm_cc_ccm_tx_policy, but the instance is
+being accessed via IFLA_BRIDGE_CFM_CC_RDI_INSTANCE, which is associated
+with the policy br_cfm_cc_rdi_policy.
 
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This problem was introduced by commit 2be665c3940d ("bridge: cfm: Netlink
+SET configuration Interface.").
+
+Though it seems like a harmless typo since these two enum owns the exact
+same value (1 here), it is quite misleading hence fix it by using the
+correct enum IFLA_BRIDGE_CFM_CC_CCM_TX_INSTANCE here.
+
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/recovery.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bridge/br_cfm_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
-index da0801aa4118..f07ae58d266d 100644
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -871,6 +871,8 @@ int f2fs_recover_fsync_data(struct f2fs_sb_info *sbi, bool check_only)
- 	if (!err && fix_curseg_write_pointer && !f2fs_readonly(sbi->sb) &&
- 			f2fs_sb_has_blkzoned(sbi)) {
- 		err = f2fs_fix_curseg_write_pointer(sbi);
-+		if (!err)
-+			err = f2fs_check_write_pointer(sbi);
- 		ret = err;
- 	}
+diff --git a/net/bridge/br_cfm_netlink.c b/net/bridge/br_cfm_netlink.c
+index 5c4c369f8536..2faab44652e7 100644
+--- a/net/bridge/br_cfm_netlink.c
++++ b/net/bridge/br_cfm_netlink.c
+@@ -362,7 +362,7 @@ static int br_cc_ccm_tx_parse(struct net_bridge *br, struct nlattr *attr,
  
+ 	memset(&tx_info, 0, sizeof(tx_info));
+ 
+-	instance = nla_get_u32(tb[IFLA_BRIDGE_CFM_CC_RDI_INSTANCE]);
++	instance = nla_get_u32(tb[IFLA_BRIDGE_CFM_CC_CCM_TX_INSTANCE]);
+ 	nla_memcpy(&tx_info.dmac.addr,
+ 		   tb[IFLA_BRIDGE_CFM_CC_CCM_TX_DMAC],
+ 		   sizeof(tx_info.dmac.addr));
 -- 
 2.43.0
 
