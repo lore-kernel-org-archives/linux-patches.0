@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A261E7BAFF;
-	Wed, 21 Feb 2024 13:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEA17BB1B;
+	Wed, 21 Feb 2024 13:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523330; cv=none; b=t6uNOBdBgr7lRNMjP6uo3aLbb0YfZMYutKpQoCdx8hiifVEbNa/3RrpgOelKi7yGqvqJevaVlqA/8NxQDfciGe96qBiIScqRGOl2COpMFdFSDeHvy8OVqkJXyqgYT2LdW3QH2irS70GaigWxJX+JWcbtyM+QN5ERiT2ATwkR+FA=
+	t=1708523333; cv=none; b=a2jvm561HzHaSZ1tymq0/g8mDq+4xXYm+oEimk+8ueoiw7+Y3QijafMXUSyy9fLHQnHPe/tv8M4g8hmrxPJUAg/e02VpHj3Zvaa2o4qbnRO/fkMZR1XPBUr+CgrMPPtX5Ksv3OlUXRfOX19Hg1E+0JJ76apLZB/GMkcogFgpuTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523330; c=relaxed/simple;
-	bh=f7OSnkMBGTeufyvrTELTy5z7LH5AwrhTE242GmL+OD0=;
+	s=arc-20240116; t=1708523333; c=relaxed/simple;
+	bh=ysisiLQFl+M7F/OKiGWKtcIsLaiWhgCUzOsGGqpEjD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sckYV4ebvp7tJF39kHADR3Ow53BuHTMYCJmbvQsZj7jC+n7UFes9agS3buPDz5ruhuPqDJmgxky8bBoXnDHUkhP07Supo8zsONez72kRVmZh7EMcc2MywJn3sz9Utn8mnPgYa9c5asHVOHGDwwsr1IszNe579HQihJegBl4ZI58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARaAcl9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tg33VP8TTrvPQmPVyMwSXWS1+aJZCbcekACeg2+ThEDiYFfAUGM4ahWxUldH5DF2Y34WRHUgkq3b7dGquD2dtTNqdhXl3sUJQ/HtdD9M0OspRXiizeOOU7Uwdpatb8W9aC57BJrxYUco+q4FQxQh0YDKwYnGy79Opmt3J+emIss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ve3b9qQ2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARaAcl9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF63C433F1;
-	Wed, 21 Feb 2024 13:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ve3b9qQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A19C43390;
+	Wed, 21 Feb 2024 13:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523330;
-	bh=f7OSnkMBGTeufyvrTELTy5z7LH5AwrhTE242GmL+OD0=;
+	s=korg; t=1708523333;
+	bh=ysisiLQFl+M7F/OKiGWKtcIsLaiWhgCUzOsGGqpEjD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARaAcl9XLFSRmnSeFGtQjpu2tNtZXA8+rSFwbDre6d67o7fdMmB63xL2/CiqR6iFG
-	 78BV8W//EbCFKZWfQNNnKYKHCcYxOiuLcBDsnHFsERWsEk81tTPA5HKpfhLiIC4bOx
-	 qsJt62VFgBb7NTAOTidQapwcURZRp35YNSKQ1Fro=
+	b=ve3b9qQ2s2R47p9QGhe9HxTtKSANEPceI2mvGnDlIj7JI6hxk0pNTW+ggSvfr6TEM
+	 BanoLMeiQy/D7EHcQVO+uLMe0fPhdJVsiqGjxKEC9aaN+Ltp0tcOA76qfDR4NAzzPG
+	 36reo1tqC00xDoQ6BPfYIj6CO3LVYCS1U/f4Llf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 5.15 404/476] x86/mm/ident_map: Use gbpages only where full GB page should be mapped.
-Date: Wed, 21 Feb 2024 14:07:35 +0100
-Message-ID: <20240221130022.936148828@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 405/476] mmc: slot-gpio: Allow non-sleeping GPIO ro
+Date: Wed, 21 Feb 2024 14:07:36 +0100
+Message-ID: <20240221130022.968470154@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,77 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit d794734c9bbfe22f86686dc2909c25f5ffe1a572 upstream.
+commit cc9432c4fb159a3913e0ce3173b8218cd5bad2e0 upstream.
 
-When ident_pud_init() uses only gbpages to create identity maps, large
-ranges of addresses not actually requested can be included in the
-resulting table; a 4K request will map a full GB.  On UV systems, this
-ends up including regions that will cause hardware to halt the system
-if accessed (these are marked "reserved" by BIOS).  Even processor
-speculation into these regions is enough to trigger the system halt.
+This change uses the appropriate _cansleep or non-sleeping API for
+reading GPIO read-only state. This allows users with GPIOs that
+never sleepbeing called in atomic context.
 
-Only use gbpages when map creation requests include the full GB page
-of space.  Fall back to using smaller 2M pages when only portions of a
-GB page are included in the request.
+Implement the same mechanism as in commit 52af318c93e97 ("mmc: Allow
+non-sleeping GPIO cd").
 
-No attempt is made to coalesce mapping requests. If a request requires
-a map entry at the 2M (pmd) level, subsequent mapping requests within
-the same 1G region will also be at the pmd level, even if adjacent or
-overlapping such requests could have been combined to map a full
-gbpage.  Existing usage starts with larger regions and then adds
-smaller regions, so this should not have any great consequence.
-
-[ dhansen: fix up comment formatting, simplifty changelog ]
-
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240126164841.170866-1-steve.wahl%40hpe.com
+Link: https://lore.kernel.org/r/20240206083912.2543142-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ident_map.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/mmc/core/slot-gpio.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/x86/mm/ident_map.c
-+++ b/arch/x86/mm/ident_map.c
-@@ -26,18 +26,31 @@ static int ident_pud_init(struct x86_map
- 	for (; addr < end; addr = next) {
- 		pud_t *pud = pud_page + pud_index(addr);
- 		pmd_t *pmd;
-+		bool use_gbpage;
+--- a/drivers/mmc/core/slot-gpio.c
++++ b/drivers/mmc/core/slot-gpio.c
+@@ -62,11 +62,15 @@ int mmc_gpio_alloc(struct mmc_host *host
+ int mmc_gpio_get_ro(struct mmc_host *host)
+ {
+ 	struct mmc_gpio *ctx = host->slot.handler_priv;
++	int cansleep;
  
- 		next = (addr & PUD_MASK) + PUD_SIZE;
- 		if (next > end)
- 			next = end;
+ 	if (!ctx || !ctx->ro_gpio)
+ 		return -ENOSYS;
  
--		if (info->direct_gbpages) {
--			pud_t pudval;
-+		/* if this is already a gbpage, this portion is already mapped */
-+		if (pud_large(*pud))
-+			continue;
-+
-+		/* Is using a gbpage allowed? */
-+		use_gbpage = info->direct_gbpages;
+-	return gpiod_get_value_cansleep(ctx->ro_gpio);
++	cansleep = gpiod_cansleep(ctx->ro_gpio);
++	return cansleep ?
++		gpiod_get_value_cansleep(ctx->ro_gpio) :
++		gpiod_get_value(ctx->ro_gpio);
+ }
+ EXPORT_SYMBOL(mmc_gpio_get_ro);
  
--			if (pud_present(*pud))
--				continue;
-+		/* Don't use gbpage if it maps more than the requested region. */
-+		/* at the begining: */
-+		use_gbpage &= ((addr & ~PUD_MASK) == 0);
-+		/* ... or at the end: */
-+		use_gbpage &= ((next & ~PUD_MASK) == 0);
-+
-+		/* Never overwrite existing mappings */
-+		use_gbpage &= !pud_present(*pud);
-+
-+		if (use_gbpage) {
-+			pud_t pudval;
- 
--			addr &= PUD_MASK;
- 			pudval = __pud((addr - info->offset) | info->page_flag);
- 			set_pud(pud, pudval);
- 			continue;
 
 
