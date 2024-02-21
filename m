@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C3D7F7C9;
-	Wed, 21 Feb 2024 13:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C337F7F2;
+	Wed, 21 Feb 2024 13:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521962; cv=none; b=Qsx6h+GDPd/18h76/QqEG1yIhfw8h/iAaMGTfuguwm3niLTlPLOrEtjMn47zONZp1PsCtl04mM08d/FXs3+lgMOmKmHn5sAtivGIvCxrkCaEmJVwIHow78+Xs1pngmjcLy8qr1swkb7p0mwPGXeUeezBoS/wyLKKl2qK8iagZHo=
+	t=1708521971; cv=none; b=lLhjju9fx6DoC9qDK6Nkwqk0a2h8GvCxyjCaiZucZjyKNzWt0680so3rYgGF3Gcd6mj3tcGsN7kkq5fdG7Fb+dH3fFhqfPkj4gKEWYLwamGDyORQM4wJkFn0BrQP4f30Vi9xL/m5FLsu6fi3LfaS4FM0hPEjkp8MWnwMvwCCh/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521962; c=relaxed/simple;
-	bh=cBiIj3p7q/AQKB6x4VYcsM4ZKGPpRyZit7GK5TkjskY=;
+	s=arc-20240116; t=1708521971; c=relaxed/simple;
+	bh=lD9tXeeKj1Dvph7MAyOycXIVbrRfIyb5sugphCvDXyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivpnp4LzyBTHKpWvkKfaMCjjTmnjys45ivm0+4HDHkjuuacsrS76pArlDOpmbVSAD1Y8Dq52uyZ/lf205hPWwL7ZRM/9WFy/folVY393Al+alCj9oClE/e6jLNasAlrj5Q8Q4u4wksRzFDtEqYCiNAGIN9CsOuaGQe55l5p4C04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRw0xXgD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJkm7jpiNKQEQYYmcOPfn/WexVtcXqM6Ra0xsJEe9iBTu/K4aboWxhPJXGVV89XrvUkmcLGVp8SJiQGjUO7kJ9lmy+0bhmfFb+xcZJYIuRUbNsCZ35osXQLhk6k92h3VIBEaoy43fOrnvKSTFVSqhgZkLYSBHH2jb7SxhNcUrzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9J8QPnS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRw0xXgD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C89FC433B1;
-	Wed, 21 Feb 2024 13:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9J8QPnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8611EC433B2;
+	Wed, 21 Feb 2024 13:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521962;
-	bh=cBiIj3p7q/AQKB6x4VYcsM4ZKGPpRyZit7GK5TkjskY=;
+	s=korg; t=1708521971;
+	bh=lD9tXeeKj1Dvph7MAyOycXIVbrRfIyb5sugphCvDXyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wRw0xXgDBe6ih9IIF3SONq8VAp+tDYgoDABypgLZy5kpa04V1oLGZFEoHj+heEDbL
-	 jM9aFGi1m96WD3PWlRQPuw4nx8x+1GEDCFumFJdoVb8IMBxCHJvzNBH+PYEYWsSxCY
-	 M2jCDcpTRZ/b7sYs0euBZ4wCQRRWfLfjmmznG0Tk=
+	b=z9J8QPnS28bxH8F2O7RCtFy+ZIeXPrneOgdvh/qMxteMihqZqmImBx3M13XQOMscB
+	 Ix7cqS7FPrNGfhaX6TyTsqNFXtbo0ySTn+pW9g7npxeYWPh+cQZURFRyp/l3vTWxN7
+	 YzB8gX6FRBTYqLGGDfZO7/4ThDsNwpQ5D/oqwuvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 041/476] ksmbd: fix potential circular locking issue in smb2_set_ea()
-Date: Wed, 21 Feb 2024 14:01:32 +0100
-Message-ID: <20240221130009.459236129@linuxfoundation.org>
+	Bhaumik Bhatt <bbhatt@codeaurora.org>,
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 5.15 024/476] bus: mhi: host: Add spinlock to protect WP access when queueing TREs
+Date: Wed, 21 Feb 2024 14:01:15 +0100
+Message-ID: <20240221130008.803613668@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,54 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-[ Upstream commit 6fc0a265e1b932e5e97a038f99e29400a93baad0 ]
+commit b89b6a863dd53bc70d8e52d50f9cfaef8ef5e9c9 upstream.
 
-smb2_set_ea() can be called in parent inode lock range.
-So add get_write argument to smb2_set_ea() not to call nested
-mnt_want_write().
+Protect WP accesses such that multiple threads queueing buffers for
+incoming data do not race.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Meanwhile, if CONFIG_TRACE_IRQFLAGS is enabled, irq will be enabled once
+__local_bh_enable_ip is called as part of write_unlock_bh. Hence, let's
+take irqsave lock after TRE is generated to avoid running write_unlock_bh
+when irqsave lock is held.
+
+Cc: stable@vger.kernel.org
+Fixes: 189ff97cca53 ("bus: mhi: core: Add support for data transfer")
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/1702276972-41296-2-git-send-email-quic_qianyu@quicinc.com
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/bus/mhi/host/main.c |   22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2323,11 +2323,12 @@ out:
-  * @eabuf:	set info command buffer
-  * @buf_len:	set info command buffer length
-  * @path:	dentry path for get ea
-+ * @get_write:	get write access to a mount
-  *
-  * Return:	0 on success, otherwise error
-  */
- static int smb2_set_ea(struct smb2_ea_info *eabuf, unsigned int buf_len,
--		       const struct path *path)
-+		       const struct path *path, bool get_write)
- {
- 	struct user_namespace *user_ns = mnt_user_ns(path->mnt);
- 	char *attr_name = NULL, *value;
-@@ -3012,7 +3013,7 @@ int smb2_open(struct ksmbd_work *work)
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -1114,17 +1114,15 @@ static int mhi_queue(struct mhi_device *
+ 	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
+ 		return -EIO;
  
- 			rc = smb2_set_ea(&ea_buf->ea,
- 					 le32_to_cpu(ea_buf->ccontext.DataLength),
--					 &path);
-+					 &path, false);
- 			if (rc == -EOPNOTSUPP)
- 				rc = 0;
- 			else if (rc)
-@@ -5994,7 +5995,7 @@ static int smb2_set_info_file(struct ksm
- 			return -EINVAL;
+-	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+-
+ 	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
+-	if (unlikely(ret)) {
+-		ret = -EAGAIN;
+-		goto exit_unlock;
+-	}
++	if (unlikely(ret))
++		return -EAGAIN;
  
- 		return smb2_set_ea((struct smb2_ea_info *)req->Buffer,
--				   buf_len, &fp->filp->f_path);
-+				   buf_len, &fp->filp->f_path, true);
+ 	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
+ 	if (unlikely(ret))
+-		goto exit_unlock;
++		return ret;
++
++	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+ 
+ 	/* Packet is queued, take a usage ref to exit M3 if necessary
+ 	 * for host->device buffer, balanced put is done on buffer completion
+@@ -1144,7 +1142,6 @@ static int mhi_queue(struct mhi_device *
+ 	if (dir == DMA_FROM_DEVICE)
+ 		mhi_cntrl->runtime_put(mhi_cntrl);
+ 
+-exit_unlock:
+ 	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+ 
+ 	return ret;
+@@ -1196,6 +1193,9 @@ int mhi_gen_tre(struct mhi_controller *m
+ 	int eot, eob, chain, bei;
+ 	int ret;
+ 
++	/* Protect accesses for reading and incrementing WP */
++	write_lock_bh(&mhi_chan->lock);
++
+ 	buf_ring = &mhi_chan->buf_ring;
+ 	tre_ring = &mhi_chan->tre_ring;
+ 
+@@ -1213,8 +1213,10 @@ int mhi_gen_tre(struct mhi_controller *m
+ 
+ 	if (!info->pre_mapped) {
+ 		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
+-		if (ret)
++		if (ret) {
++			write_unlock_bh(&mhi_chan->lock);
+ 			return ret;
++		}
  	}
- 	case FILE_POSITION_INFORMATION:
- 	{
+ 
+ 	eob = !!(flags & MHI_EOB);
+@@ -1231,6 +1233,8 @@ int mhi_gen_tre(struct mhi_controller *m
+ 	mhi_add_ring_element(mhi_cntrl, tre_ring);
+ 	mhi_add_ring_element(mhi_cntrl, buf_ring);
+ 
++	write_unlock_bh(&mhi_chan->lock);
++
+ 	return 0;
+ }
+ 
 
 
