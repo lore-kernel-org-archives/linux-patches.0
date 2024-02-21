@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E2D38398;
-	Wed, 21 Feb 2024 13:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA5869942;
+	Wed, 21 Feb 2024 13:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523400; cv=none; b=ATOykzPkxt4C7pIOy8ncD0pXbC6aHso8oJBgjuGyHryE7A+NB6CyrCx/kMwuKgLTjid0kvdCMPXAD3tyv0WqcT19lSssvypMxGNiwoZlivIVHVcGxktrXxDO1P6Bo5T1KMCHq6wGOKSWL70/WemWRKYWz0h6Tyg9FsHsu/KZAgE=
+	t=1708523404; cv=none; b=uNpoPkurAqoLSnOMuMjkDBTY1uxzW7yHPhHQ6O/Rnb87ipKBUh0gReN4uwLr/62rnAb1lDixGv6Enp3A12y7QqwYrekW1tT2WCPtwl4OJxULiImGu7umsffv5hGFrn4qr36X1RoW/rNbg7298yPGpgjx4772GKY2rDumnefFwM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523400; c=relaxed/simple;
-	bh=c5kuHDUtMRSK53Szc86MBl+fFKT7aA2XQZmSYKOQE5E=;
+	s=arc-20240116; t=1708523404; c=relaxed/simple;
+	bh=iZBHUNcpe1Sqqs29eQRJrSdZouxnS2pCa0V1ZH5wKeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b3PN6dPaxdZvSInhKqN8r8vXwJKin61RE+Rm3GwCnSaWWHSJM02RalqzwXVg/L1qmqL9GNxLbcjJLR0L0Udl/lPMYnQnEx5Inbx0KOKiIIA6g/XzO7ErukXnPEUMRTLkFAbMHMO6zmO0WUr+suCpBRk9YMEYgYccYeNoI5fDLuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0b8Djbgz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dbLLsdBZEchpR5eAGPxINEK/forpe8iEsRVtLN1iZW4E6PK7MFU08GKvxXdwvY2xrXl04tln1acV27oD/Kl8p5FhOMCMQsSZ/I45tg8BDOD+10BygHYkzUbbSvYGHnbOmOpxGp8GhNQrtn/E+PX1QbInEBmhTngjYIGcw55iPlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqaPmoYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0b8Djbgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487F9C433F1;
-	Wed, 21 Feb 2024 13:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqaPmoYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A61DC433C7;
+	Wed, 21 Feb 2024 13:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523400;
-	bh=c5kuHDUtMRSK53Szc86MBl+fFKT7aA2XQZmSYKOQE5E=;
+	s=korg; t=1708523403;
+	bh=iZBHUNcpe1Sqqs29eQRJrSdZouxnS2pCa0V1ZH5wKeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0b8DjbgzbAIxKaE1bg5ib7KyQRvlFLrxemko/7LSSMoQOCB6+pz7rhkfCzahmNtsV
-	 gQKRAX3kdZQ+tMsMlEW1w0ez3NMbifjPFegsdusj9bKb/P6GFxM0VQMjsM2V/pMD8A
-	 L2VK6evG0ATF892ow5N3m7IUNAL39ZzcCzU1guJo=
+	b=TqaPmoYXxu20uYtoGWncaBzE2w+BDot2VIBF8nBaM7kET7hAakfd02Zsq5C4OyPnC
+	 FGNSFu8PegI2OoUARJH5S4Fd628tu5+BHa3+LeSH150/KMnwQhO3ZuS6fJ+J/Ndss1
+	 gDlnfSYyc9C6femXU6mLUyCF2Xsm3h7/7rmu8C7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
-	Martijn Coenen <maco@android.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Steven Moreland <smoreland@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 387/476] binder: signal epoll threads of self-work
-Date: Wed, 21 Feb 2024 14:07:18 +0100
-Message-ID: <20240221130022.337935129@linuxfoundation.org>
+	Rishabh Dave <ridave@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.15 418/476] ceph: prevent use-after-free in encode_cap_msg()
+Date: Wed, 21 Feb 2024 14:07:49 +0100
+Message-ID: <20240221130023.475745371@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -47,59 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Rishabh Dave <ridave@redhat.com>
 
-commit 97830f3c3088638ff90b20dfba2eb4d487bf14d7 upstream.
+commit cda4672da1c26835dcbd7aec2bfed954eda9b5ef upstream.
 
-In (e)poll mode, threads often depend on I/O events to determine when
-data is ready for consumption. Within binder, a thread may initiate a
-command via BINDER_WRITE_READ without a read buffer and then make use
-of epoll_wait() or similar to consume any responses afterwards.
+In fs/ceph/caps.c, in encode_cap_msg(), "use after free" error was
+caught by KASAN at this line - 'ceph_buffer_get(arg->xattr_buf);'. This
+implies before the refcount could be increment here, it was freed.
 
-It is then crucial that epoll threads are signaled via wakeup when they
-queue their own work. Otherwise, they risk waiting indefinitely for an
-event leaving their work unhandled. What is worse, subsequent commands
-won't trigger a wakeup either as the thread has pending work.
+In same file, in "handle_cap_grant()" refcount is decremented by this
+line - 'ceph_buffer_put(ci->i_xattrs.blob);'. It appears that a race
+occurred and resource was freed by the latter line before the former
+line could increment it.
 
-Fixes: 457b9a6f09f0 ("Staging: android: add binder driver")
-Cc: Arve Hjønnevåg <arve@android.com>
-Cc: Martijn Coenen <maco@android.com>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Steven Moreland <smoreland@google.com>
-Cc: stable@vger.kernel.org # v4.19+
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20240131215347.1808751-1-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+encode_cap_msg() is called by __send_cap() and __send_cap() is called by
+ceph_check_caps() after calling __prep_cap(). __prep_cap() is where
+arg->xattr_buf is assigned to ci->i_xattrs.blob. This is the spot where
+the refcount must be increased to prevent "use after free" error.
+
+Cc: stable@vger.kernel.org
+Link: https://tracker.ceph.com/issues/59259
+Signed-off-by: Rishabh Dave <ridave@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ceph/caps.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -450,6 +450,16 @@ binder_enqueue_thread_work_ilocked(struc
- {
- 	WARN_ON(!list_empty(&thread->waiting_thread_node));
- 	binder_enqueue_work_ilocked(work, &thread->todo);
-+
-+	/* (e)poll-based threads require an explicit wakeup signal when
-+	 * queuing their own work; they rely on these events to consume
-+	 * messages without I/O block. Without it, threads risk waiting
-+	 * indefinitely without handling the work.
-+	 */
-+	if (thread->looper & BINDER_LOOPER_STATE_POLL &&
-+	    thread->pid == current->pid && !thread->process_todo)
-+		wake_up_interruptible_sync(&thread->wait);
-+
- 	thread->process_todo = true;
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -1390,7 +1390,7 @@ static void __prep_cap(struct cap_msg_ar
+ 	if (flushing & CEPH_CAP_XATTR_EXCL) {
+ 		arg->old_xattr_buf = __ceph_build_xattrs_blob(ci);
+ 		arg->xattr_version = ci->i_xattrs.version;
+-		arg->xattr_buf = ci->i_xattrs.blob;
++		arg->xattr_buf = ceph_buffer_get(ci->i_xattrs.blob);
+ 	} else {
+ 		arg->xattr_buf = NULL;
+ 		arg->old_xattr_buf = NULL;
+@@ -1456,6 +1456,7 @@ static void __send_cap(struct cap_msg_ar
+ 	encode_cap_msg(msg, arg);
+ 	ceph_con_send(&arg->session->s_con, msg);
+ 	ceph_buffer_put(arg->old_xattr_buf);
++	ceph_buffer_put(arg->xattr_buf);
+ 	if (arg->wake)
+ 		wake_up_all(&ci->i_cap_wq);
  }
- 
 
 
