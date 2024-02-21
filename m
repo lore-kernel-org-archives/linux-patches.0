@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C2D7BB19;
-	Wed, 21 Feb 2024 13:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A719469953;
+	Wed, 21 Feb 2024 13:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522262; cv=none; b=O5+szH6QdwdzFpaoTtE/9XfdYaTsvNeon5XdU8+wATrJmH7C0slCu2vIMhQIIFjM938tACk75SPjGk7vKbGAE/E/YkY4Ukfd8KL1y7Qx+o22SNZU9u1CvrPxPENEqfOAEzlsRwA8oRHvFe4dr/iaZG1ydLK7a3OzZRbgWrPtjNI=
+	t=1708522264; cv=none; b=JVbR2KtFu3jjlfgTZUSYmgaJFwN4EN6EAajMuFkFEXC1QOxydKFN23GoXcpw+4oVG3ymfcGe7HoGQX1sAlNzDupN4+MM9nHx4o7IQ0YCHnmJ5t66KbcdPKyErZEGKqzEvschWgnhK8qH5viUESTi4lRwkqVZxjKwcyqY9JrnsoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522262; c=relaxed/simple;
-	bh=gyTizFg/529HMJtrNzAlgyFDThBRYGrkrD6UtlD9n8c=;
+	s=arc-20240116; t=1708522264; c=relaxed/simple;
+	bh=Zy8qwI/HfZ617pVfx53YnJHRNN8t/VXvTN6JM1NsC2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yy5SZEXCrfvcIehJwsj4Dzp1jW2d0la7HTaJrIZHWP5UqcFfLUJ3a42PovblkP6iCvsN5s+6q3XIk1T6ewAfyMTmUskI5wXcfIIrVZNYk8XxhQ13sXtSa1dVoMF1eoiOTPNzdrsWhlZjhWTjBdVI68wiMUn/Qos9xS0IpjMJEBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rs6q81Qn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X04WKWyndwvkkbeiJTrUmFhEsR8vPusY3lW7XK1LQcA1GYmpEwCn+KKvhEq892Sswv/+aFTF90JM9lqOaHq58ALzhnyJ8Py0nRTE0lZqTmm/0tttXak5igL3Ge7tneEa6SwK9YjtH0wAKmH+j99OjR7QGgWdq7vjsUhpisP/528=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ytnue/Oz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rs6q81Qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373F4C433F1;
-	Wed, 21 Feb 2024 13:31:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ytnue/Oz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A77DC43390;
+	Wed, 21 Feb 2024 13:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522261;
-	bh=gyTizFg/529HMJtrNzAlgyFDThBRYGrkrD6UtlD9n8c=;
+	s=korg; t=1708522264;
+	bh=Zy8qwI/HfZ617pVfx53YnJHRNN8t/VXvTN6JM1NsC2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rs6q81QnACsAFoxGTaXp+++xqpdBS/7BKHdtQ8mtR0MQbsc2zCNhwLI6T5Of4acRQ
-	 dTgQXp/nVECY8Pj3DSgOmd4AxrV5aebALt44p9ZalCAOrDp/7mDlRpm+ikvz0Q09KX
-	 TOC0MMvl3SrK6CbQQ2qa7gml+Yy8MKEJplmTdGYE=
+	b=Ytnue/OzTYzL1mJaO/TujwGnlqN6aMUwMp7gYEIwSJivwKkGDrSwv0qFnNV7qSmnx
+	 fHNLXNSBHCAnkPD83jDRC4XdURZWd+Hc0dSOKrFNJoizStZbw3FEd6+x7BjqwSi/lZ
+	 Cwbj9Mh9TLeWqnueL1Xhifru3XHv0DktcEVG/WQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	George Melikov <mail@gmelikov.ru>
-Subject: [PATCH 5.15 090/476] gpiolib: acpi: Ignore touchpad wakeup on GPD G1619-04
-Date: Wed, 21 Feb 2024 14:02:21 +0100
-Message-ID: <20240221130011.313378662@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH 5.15 091/476] drm: Dont unref the same fb many times by mistake due to deadlock handling
+Date: Wed, 21 Feb 2024 14:02:22 +0100
+Message-ID: <20240221130011.352997368@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -46,52 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 805c74eac8cb306dc69b87b6b066ab4da77ceaf1 upstream.
+commit cb4daf271302d71a6b9a7c01bd0b6d76febd8f0c upstream.
 
-Spurious wakeups are reported on the GPD G1619-04 which
-can be absolved by programming the GPIO to ignore wakeups.
+If we get a deadlock after the fb lookup in drm_mode_page_flip_ioctl()
+we proceed to unref the fb and then retry the whole thing from the top.
+But we forget to reset the fb pointer back to NULL, and so if we then
+get another error during the retry, before the fb lookup, we proceed
+the unref the same fb again without having gotten another reference.
+The end result is that the fb will (eventually) end up being freed
+while it's still in use.
+
+Reset fb to NULL once we've unreffed it to avoid doing it again
+until we've done another fb lookup.
+
+This turned out to be pretty easy to hit on a DG2 when doing async
+flips (and CONFIG_DEBUG_WW_MUTEX_SLOWPATH=y). The first symptom I
+saw that drm_closefb() simply got stuck in a busy loop while walking
+the framebuffer list. Fortunately I was able to convince it to oops
+instead, and from there it was easier to track down the culprit.
 
 Cc: stable@vger.kernel.org
-Reported-and-tested-by: George Melikov <mail@gmelikov.ru>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3073
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231211081625.25704-1-ville.syrjala@linux.intel.com
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/drm_plane.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1572,6 +1572,20 @@ static const struct dmi_system_id gpioli
- 			.ignore_wake = "INT33FF:01@0",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups from TP_ATTN# pin
-+		 * Found in BIOS 0.35
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3073
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "GPD"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "G1619-04"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_wake = "PNP0C50:00@8",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
- 
+--- a/drivers/gpu/drm/drm_plane.c
++++ b/drivers/gpu/drm/drm_plane.c
+@@ -1378,6 +1378,7 @@ retry:
+ out:
+ 	if (fb)
+ 		drm_framebuffer_put(fb);
++	fb = NULL;
+ 	if (plane->old_fb)
+ 		drm_framebuffer_put(plane->old_fb);
+ 	plane->old_fb = NULL;
 
 
