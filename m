@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538DB78B7C;
-	Wed, 21 Feb 2024 13:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805EB78B50;
+	Wed, 21 Feb 2024 13:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523674; cv=none; b=XIHSfwg5QBpqlXQ7JyEYUAn5o36UZ1jirN5e1tn4A2FvZHbKg81VM+G6gD0lOBNfkKSn81vFtQWgQbf0NrciuGhElT59KsDweYb2JF0BfJVLY91J/dsR+DSeg/OhJQ68bvk4IeQ0Znfzy2sqOSvilcCZS+rWsJdpAJPpHaHHcSs=
+	t=1708523682; cv=none; b=L6SKUPL7rlyNep9pLMDS6AvK+lj67GZe/KADlzJSBbhmjVpDudgO/rPO5Bxxfk9zHvqxGWJ8k9V2eF1Oh8P3pkLkfUziw01tSETQ3X6Sczw70foK7BfQpqyek30Zx5Yx+OZc1aqDntxgtbjzOq+cn66gBReErwiw58Y4RGbIH78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523674; c=relaxed/simple;
-	bh=pU22Bp3UPXLBoRflOhpdMOfSPWMjI02t2lttAA8jpAo=;
+	s=arc-20240116; t=1708523682; c=relaxed/simple;
+	bh=es4a31ldTUhN22l5d6F1qtx5NHD3EmG4DLBMTVXEgjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XkjgppjXWX9eAqC9rBv+aBmMvC175YWoAbDnRcZj3rnDsPVcjc1y82K5cmY6l0X7W6LsgoguMfJcJTJXBlr68iOA+PRMvMhvTEZAlvjrWdVJPJmKDkkpfYbXx4InveLAECdlCZlN7ir0VB3HYXFHX8Omihn4hQIg5M2zt/7i7k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHPMWiRc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JAK8+Mj0FmnhQcpPdOEhRwIc6EXpxxFob1VXCO90Q55APYlFaxuYJdJ272sY/guoGyBqXry7q5wNF/XPuftMpHRkuxs53yayMtdck9m/fK/A50twkLMJCVlbtwZ2k+JSp7I2wyoWKp+7kEdc/XYvJAmEOgCqsQN2iwbAB3XhXnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkRQ+aIx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHPMWiRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CB1C433C7;
-	Wed, 21 Feb 2024 13:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkRQ+aIx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3738C433C7;
+	Wed, 21 Feb 2024 13:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523674;
-	bh=pU22Bp3UPXLBoRflOhpdMOfSPWMjI02t2lttAA8jpAo=;
+	s=korg; t=1708523682;
+	bh=es4a31ldTUhN22l5d6F1qtx5NHD3EmG4DLBMTVXEgjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHPMWiRc7J8lXTyCqwrdlXmQs8yeTgO0eR+xxn8h1Qceo3wUagaUk2MAcGp9ZiB/L
-	 BQ0d8UwBQfq0Q26CGtlJRqkkCZOhqA9KSuj5SEL5/bS/NJ0bDKXApzSVtq+B4PWHXo
-	 SMOpBm2JIyFjREYM7EGjj8fcieYS0DfsExOBxZTk=
+	b=UkRQ+aIxG/gnPWimvsUkTFw+m69nH28JMmei/PzGaJyEHdF9kQ6IZR5eojK6gN67u
+	 4LI4R2osOTAEWqgyp7kF7Soe8INinynNfFNcWYyWc1n3oKINcjfM135HtW1sgniOHI
+	 cqVyy+wFPwEck6EmtR/6AU1tUQUSykK6RP+0VSoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
 	Youngmin Nam <youngmin.nam@samsung.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 025/379] async: Split async_schedule_node_domain()
-Date: Wed, 21 Feb 2024 14:03:24 +0100
-Message-ID: <20240221125955.662764719@linuxfoundation.org>
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Subject: [PATCH 5.10 026/379] async: Introduce async_schedule_dev_nocall()
+Date: Wed, 21 Feb 2024 14:03:25 +0100
+Message-ID: <20240221125955.692050236@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -54,95 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 6aa09a5bccd8e224d917afdb4c278fc66aacde4d upstream.
+commit 7d4b5d7a37bdd63a5a3371b988744b060d5bb86f upstream.
 
-In preparation for subsequent changes, split async_schedule_node_domain()
-in two pieces so as to allow the bottom part of it to be called from a
-somewhat different code path.
+In preparation for subsequent changes, introduce a specialized variant
+of async_schedule_dev() that will not invoke the argument function
+synchronously when it cannot be scheduled for asynchronous execution.
 
-No functional impact.
+The new function, async_schedule_dev_nocall(), will be used for fixing
+possible deadlocks in the system-wide power management core code.
 
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com> for the series.
 Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
 Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/async.c |   56 ++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 34 insertions(+), 22 deletions(-)
+ include/linux/async.h |    2 ++
+ kernel/async.c        |   29 +++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+)
 
---- a/kernel/async.c
-+++ b/kernel/async.c
-@@ -145,6 +145,39 @@ static void async_run_entry_fn(struct wo
- 	wake_up(&async_done);
+--- a/include/linux/async.h
++++ b/include/linux/async.h
+@@ -90,6 +90,8 @@ async_schedule_dev(async_func_t func, st
+ 	return async_schedule_node(func, dev, dev_to_node(dev));
  }
  
-+static async_cookie_t __async_schedule_node_domain(async_func_t func,
-+						   void *data, int node,
-+						   struct async_domain *domain,
-+						   struct async_entry *entry)
-+{
-+	async_cookie_t newcookie;
-+	unsigned long flags;
-+
-+	INIT_LIST_HEAD(&entry->domain_list);
-+	INIT_LIST_HEAD(&entry->global_list);
-+	INIT_WORK(&entry->work, async_run_entry_fn);
-+	entry->func = func;
-+	entry->data = data;
-+	entry->domain = domain;
-+
-+	spin_lock_irqsave(&async_lock, flags);
-+
-+	/* allocate cookie and queue */
-+	newcookie = entry->cookie = next_cookie++;
-+
-+	list_add_tail(&entry->domain_list, &domain->pending);
-+	if (domain->registered)
-+		list_add_tail(&entry->global_list, &async_global_pending);
-+
-+	atomic_inc(&entry_count);
-+	spin_unlock_irqrestore(&async_lock, flags);
-+
-+	/* schedule for execution */
-+	queue_work_node(node, system_unbound_wq, &entry->work);
-+
-+	return newcookie;
-+}
++bool async_schedule_dev_nocall(async_func_t func, struct device *dev);
 +
  /**
-  * async_schedule_node_domain - NUMA specific version of async_schedule_domain
+  * async_schedule_dev_domain - A device specific version of async_schedule_domain
   * @func: function to execute asynchronously
-@@ -186,29 +219,8 @@ async_cookie_t async_schedule_node_domai
- 		func(data, newcookie);
- 		return newcookie;
- 	}
--	INIT_LIST_HEAD(&entry->domain_list);
--	INIT_LIST_HEAD(&entry->global_list);
--	INIT_WORK(&entry->work, async_run_entry_fn);
--	entry->func = func;
--	entry->data = data;
--	entry->domain = domain;
--
--	spin_lock_irqsave(&async_lock, flags);
+--- a/kernel/async.c
++++ b/kernel/async.c
+@@ -244,6 +244,35 @@ async_cookie_t async_schedule_node(async
+ EXPORT_SYMBOL_GPL(async_schedule_node);
  
--	/* allocate cookie and queue */
--	newcookie = entry->cookie = next_cookie++;
--
--	list_add_tail(&entry->domain_list, &domain->pending);
--	if (domain->registered)
--		list_add_tail(&entry->global_list, &async_global_pending);
--
--	atomic_inc(&entry_count);
--	spin_unlock_irqrestore(&async_lock, flags);
--
--	/* schedule for execution */
--	queue_work_node(node, system_unbound_wq, &entry->work);
--
--	return newcookie;
-+	return __async_schedule_node_domain(func, data, node, domain, entry);
- }
- EXPORT_SYMBOL_GPL(async_schedule_node_domain);
- 
+ /**
++ * async_schedule_dev_nocall - A simplified variant of async_schedule_dev()
++ * @func: function to execute asynchronously
++ * @dev: device argument to be passed to function
++ *
++ * @dev is used as both the argument for the function and to provide NUMA
++ * context for where to run the function.
++ *
++ * If the asynchronous execution of @func is scheduled successfully, return
++ * true. Otherwise, do nothing and return false, unlike async_schedule_dev()
++ * that will run the function synchronously then.
++ */
++bool async_schedule_dev_nocall(async_func_t func, struct device *dev)
++{
++	struct async_entry *entry;
++
++	entry = kzalloc(sizeof(struct async_entry), GFP_KERNEL);
++
++	/* Give up if there is no memory or too much work. */
++	if (!entry || atomic_read(&entry_count) > MAX_WORK) {
++		kfree(entry);
++		return false;
++	}
++
++	__async_schedule_node_domain(func, dev, dev_to_node(dev),
++				     &async_dfl_domain, entry);
++	return true;
++}
++
++/**
+  * async_synchronize_full - synchronize all asynchronous function calls
+  *
+  * This function waits until all asynchronous function calls have been done.
 
 
