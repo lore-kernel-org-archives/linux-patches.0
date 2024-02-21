@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A7169D09;
-	Wed, 21 Feb 2024 13:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCC669D02;
+	Wed, 21 Feb 2024 13:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521290; cv=none; b=UwKDqq9YZsBO2EPwuo+ARGpQ5XSpimk0Z18TwYHNI+es6I7WJ0FHbenATVVWgP3Xoddz91ZqjrXWkdHRyOPoe9sEUh6cQGYtOITMeuLbB4h2KyvqBDohZ7/Ip1kQ1Vmd7Y9SnT/PvxEqS52oHPj65uR2rkrE98RlH1Wk5Ze3RRg=
+	t=1708521294; cv=none; b=APCi3KBEdM1/OABXcI+sldq9d1ewcXOWE2bXDFoPybX2hbYuYGOysUxlpcPDRngbt9/l6buw9AtNa+DKj7utWcf+XV64BXp/Xcga8T9FF25m/fyazQsf+2bNpOiP0LIabV5MFXHJEpvtLhV6LO9KQiAJlR8VR2KeRqDpPxSp/uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521290; c=relaxed/simple;
-	bh=qOzdr7xwOGJw+lbDjlvkbhn4y6BmSaL/MeH+8W5qeb8=;
+	s=arc-20240116; t=1708521294; c=relaxed/simple;
+	bh=+jkd0s9kilwobAZmuCh2OkBhN6GjOMx6oWMO9WvhRDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjRL2ICna5uezxA47VWpkenuWp0DHzwdoUVwCdD2ROST/SGWtG2m8AVAidlGLB3cy8FaloKkDC1d688gDqwkSCaUxhwYEKiglU+MA2ncullqK8HOmEk9c8nCpsWe6ve7vV05zRJQMRopwwAUDe9Fk0elrl3EnCLBoOQ13mwf8u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCk6uOMc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+nEhvmYlRjf3QGGRsqrrSv6vhHZ1e/ab+D6czYculRTVY4BEYRHVT6Cr/zuT6VGLOXqaEyLRGyinL38K8h6H/PmpecWS/Z/eAAMoH7p+OZALm/i1/z/XVtqspekhZ/+5qaYK526Kaokqf6awYkeRhcG8EEed+2EZC9P3Tt6fFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVrQfeUE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCk6uOMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5F6C433F1;
-	Wed, 21 Feb 2024 13:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVrQfeUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F4B3C433C7;
+	Wed, 21 Feb 2024 13:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521290;
-	bh=qOzdr7xwOGJw+lbDjlvkbhn4y6BmSaL/MeH+8W5qeb8=;
+	s=korg; t=1708521293;
+	bh=+jkd0s9kilwobAZmuCh2OkBhN6GjOMx6oWMO9WvhRDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JCk6uOMcKl2OMgKiciRl4AbPCa4EoUkZ+9bhN3zBebf97na9iKyH2IyciCbisecDu
-	 N3h3GdGBbzonVNpf1Emh8p20cKgA4UBNOH7rxyAO7TQP+GvUMDXn+vit2G5Ci4uUnu
-	 UhyRSpf26xGSLBtO8nTgmA3k1HC90skvA3QlnxP8=
+	b=iVrQfeUEBO7urbCqFhmQvTuNbHxHyyncxZxJC+qrxOBFG/G5/6u/6hoHOBHmqly9p
+	 PemJm1bqjL60hFSGFxi/SPSM985JUPUsoj3IqVuGdjRs8PpIvMi4pLDVRmdfuoijP3
+	 hnWO0LMV18K1Si1qZLYsjSOflaFN3XpkQk1bukbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 073/202] ext4: remove unnecessary check from alloc_flex_gd()
-Date: Wed, 21 Feb 2024 14:06:14 +0100
-Message-ID: <20240221125934.174464720@linuxfoundation.org>
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 4.19 047/202] tick/sched: Preserve number of idle sleeps across CPU hotplug events
+Date: Wed, 21 Feb 2024 14:05:48 +0100
+Message-ID: <20240221125933.332241128@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -52,44 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Tim Chen <tim.c.chen@linux.intel.com>
 
-[ Upstream commit b099eb87de105cf07cad731ded6fb40b2675108b ]
+commit 9a574ea9069be30b835a3da772c039993c43369b upstream.
 
-In commit 967ac8af4475 ("ext4: fix potential integer overflow in
-alloc_flex_gd()"), an overflow check is added to alloc_flex_gd() to
-prevent the allocated memory from being smaller than expected due to
-the overflow. However, after kmalloc() is replaced with kmalloc_array()
-in commit 6da2ec56059c ("treewide: kmalloc() -> kmalloc_array()"), the
-kmalloc_array() function has an overflow check, so the above problem
-will not occur. Therefore, the extra check is removed.
+Commit 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs
+CPU hotplug") preserved total idle sleep time and iowait sleeptime across
+CPU hotplug events.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231023013057.2117948-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Similar reasoning applies to the number of idle calls and idle sleeps to
+get the proper average of sleep time per idle invocation.
+
+Preserve those fields too.
+
+Fixes: 71fee48f ("tick-sched: Fix idle and iowait sleeptime accounting vs CPU hotplug")
+Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240122233534.3094238-1-tim.c.chen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c | 3 ---
- 1 file changed, 3 deletions(-)
+ kernel/time/tick-sched.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
-index 2d27d4e06f7b..d9a8742873c9 100644
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -245,10 +245,7 @@ static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
- 	if (flex_gd == NULL)
- 		goto out3;
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -1346,6 +1346,7 @@ void tick_cancel_sched_timer(int cpu)
+ {
+ 	struct tick_sched *ts = &per_cpu(tick_cpu_sched, cpu);
+ 	ktime_t idle_sleeptime, iowait_sleeptime;
++	unsigned long idle_calls, idle_sleeps;
  
--	if (flexbg_size >= UINT_MAX / sizeof(struct ext4_new_group_data))
--		goto out2;
- 	flex_gd->count = flexbg_size;
--
- 	flex_gd->groups = kmalloc_array(flexbg_size,
- 					sizeof(struct ext4_new_group_data),
- 					GFP_NOFS);
--- 
-2.43.0
-
+ # ifdef CONFIG_HIGH_RES_TIMERS
+ 	if (ts->sched_timer.base)
+@@ -1354,9 +1355,13 @@ void tick_cancel_sched_timer(int cpu)
+ 
+ 	idle_sleeptime = ts->idle_sleeptime;
+ 	iowait_sleeptime = ts->iowait_sleeptime;
++	idle_calls = ts->idle_calls;
++	idle_sleeps = ts->idle_sleeps;
+ 	memset(ts, 0, sizeof(*ts));
+ 	ts->idle_sleeptime = idle_sleeptime;
+ 	ts->iowait_sleeptime = iowait_sleeptime;
++	ts->idle_calls = idle_calls;
++	ts->idle_sleeps = idle_sleeps;
+ }
+ #endif
+ 
 
 
