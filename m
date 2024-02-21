@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DBC3CF42;
-	Wed, 21 Feb 2024 14:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBFD69317;
+	Wed, 21 Feb 2024 14:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525411; cv=none; b=Bpn93UHHO8KSDuNgak/lVcj00HcJEFghtZ0tod2UpWndahdagwRc7I+ZfVQAMGUtuMPVhZ7ANeqoDs24v/849vwyr1CJkNKu4bFtBGQsa2hbf2pYY6HkKtJzdJW2YgT9amUERLhVdSDs8/RrdQkgumK17QscgnJmIkaLlC0N/Ec=
+	t=1708525415; cv=none; b=Bq/2iX0Ce1FpbaErAl+5bZ2VfXSiYQ7K3vZtkhrHRPjtIcD/3x1Ms+yTuqG5rdF4gDYx9k2d/bWQjF3wyuNHnuVF6876iLZv4tEoUMREuCf263wbPNJryKHKKOTI6eC2N2OCEFfa9QFjAytn/uINfnhxP2of/ZWxEkz9HUuw+nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525411; c=relaxed/simple;
-	bh=nEf9B/U5ez7kcTtWz954Q2pSw9NcAXRCunCi/oXctl0=;
+	s=arc-20240116; t=1708525415; c=relaxed/simple;
+	bh=rtaJL8zl/dj5TjDAj+CYLPeTeyFu1fJQMwOXrNwzQDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDi1w7gY/KE23WRwxm46l5HKjESMCUrj4tOnfqZJeiDhKuwzCi+Amo2m+kwt3Mb8AYAwmERpcJtss9rJN6qOkpSNVByMa+oV+R6pPFVsQbBh6f61dDNWY04cJ9btVCbjlv2DvMwo7YTFoPlSnhkUSrPFG4gRHgrNaL+aYbEY+iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GNyBBwof; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dgXEI8Fz5wbZzkttXF9AhXd2qPZuSLNDQL7JXz7I7F6WDJc34xHhdxuZfJ5NX2zLdzEzTnNx9klpOOgtB0Wzn3f6Nd8iYEoe3dUMfoOP0QJxxdvvKpL2JZH3WAnVujhHDxeRsKHeIt1SddgDTMDbCJI28FztLb66iDvc8PmKl+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvbILqbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GNyBBwof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC75C433F1;
-	Wed, 21 Feb 2024 14:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvbILqbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF8EC433C7;
+	Wed, 21 Feb 2024 14:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525411;
-	bh=nEf9B/U5ez7kcTtWz954Q2pSw9NcAXRCunCi/oXctl0=;
+	s=korg; t=1708525414;
+	bh=rtaJL8zl/dj5TjDAj+CYLPeTeyFu1fJQMwOXrNwzQDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GNyBBwofNwIFZYBI2UxqEcsyYt5OYnY+w8gqybTz021H8yuFXW5PNeoDmezOdCe4U
-	 rb1w3TgJwWsL4d3GTRKdfYKPBAC50mdbvjJManynI53lt5jxpnsxxMD8CAwH0uTIln
-	 J6mWFNpXiCdGLYZmLRjTEWgZzEPhKq/tGh8oaRAc=
+	b=lvbILqbcNJBaFURmgk/Ea30vlXTRyv4Wl1FG2o/cJKrw3jM6WI+M6fSN6G6mDdOMl
+	 dXPhdqJNB2hJUol2XCC+aNHxfmrIjfun6X2QJH6pwPfJ0fEcpZA8L0fawAKTh1FPDn
+	 k1Row9xcx0LNoVafDS3p0S6+4IFXxzPsBY6CR7wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hardik Gajjar <hgajjar@de.adit-jv.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 148/267] usb: hub: Replace hardcoded quirk value with BIT() macro
-Date: Wed, 21 Feb 2024 14:08:09 +0100
-Message-ID: <20240221125944.709664955@linuxfoundation.org>
+Subject: [PATCH 5.4 149/267] fs/kernfs/dir: obey S_ISGID
+Date: Wed, 21 Feb 2024 14:08:10 +0100
+Message-ID: <20240221125944.738976932@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,37 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hardik Gajjar <hgajjar@de.adit-jv.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 6666ea93d2c422ebeb8039d11e642552da682070 ]
+[ Upstream commit 5133bee62f0ea5d4c316d503cc0040cac5637601 ]
 
-This patch replaces the hardcoded quirk value in the macro with
-BIT().
+Handling of S_ISGID is usually done by inode_init_owner() in all other
+filesystems, but kernfs doesn't use that function.  In kernfs, struct
+kernfs_node is the primary data structure, and struct inode is only
+created from it on demand.  Therefore, inode_init_owner() can't be
+used and we need to imitate its behavior.
 
-Signed-off-by: Hardik Gajjar <hgajjar@de.adit-jv.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20231205181829.127353-1-hgajjar@de.adit-jv.com
+S_ISGID support is useful for the cgroup filesystem; it allows
+subtrees managed by an unprivileged process to retain a certain owner
+gid, which then enables sharing access to the subtree with another
+unprivileged process.
+
+--
+v1 -> v2: minor coding style fix (comment)
+
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20231208093310.297233-2-max.kellermann@ionos.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hub.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/kernfs/dir.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
-index 9a1954e9f6f1..8e55eadb8feb 100644
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -44,8 +44,8 @@
- #define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
- #define USB_PRODUCT_TUSB8041_USB3		0x8140
- #define USB_PRODUCT_TUSB8041_USB2		0x8142
--#define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	0x01
--#define HUB_QUIRK_DISABLE_AUTOSUSPEND		0x02
-+#define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	BIT(0)
-+#define HUB_QUIRK_DISABLE_AUTOSUSPEND		BIT(1)
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index d2068566c0b8..d3a602ea795b 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -702,6 +702,18 @@ struct kernfs_node *kernfs_new_node(struct kernfs_node *parent,
+ {
+ 	struct kernfs_node *kn;
  
- #define USB_TP_TRANSMISSION_DELAY	40	/* ns */
- #define USB_TP_TRANSMISSION_DELAY_MAX	65535	/* ns */
++	if (parent->mode & S_ISGID) {
++		/* this code block imitates inode_init_owner() for
++		 * kernfs
++		 */
++
++		if (parent->iattr)
++			gid = parent->iattr->ia_gid;
++
++		if (flags & KERNFS_DIR)
++			mode |= S_ISGID;
++	}
++
+ 	kn = __kernfs_new_node(kernfs_root(parent), parent,
+ 			       name, mode, uid, gid, flags);
+ 	if (kn) {
 -- 
 2.43.0
 
