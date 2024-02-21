@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E98938398;
-	Wed, 21 Feb 2024 13:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F4038398;
+	Wed, 21 Feb 2024 13:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523689; cv=none; b=uT4X5i/9yvpZtYeWYwvvtquVPd0wZ0H7DBMk7J2tXf2AnMQ/OVEC1GDz3zpuDJZTctlLdNIWSO/vYYvW5QaQ3RuF0egnFJcp0q2GvVOpjHUXLzZEAwIPB9lxdu0gZnJDW5g+Dat+r6LFaarM+Fqvkpm7oLs73TxIHg0IYoDsqFM=
+	t=1708523692; cv=none; b=QOaFRBy9leEAGugMibAqRsgxuOiwUWx4WI08iA6VfazIWumkh505H5jQvCCVaY680Fgdgpg4AEaJTj+V7Njx5zu3aw6iboKoOWmmZ5XeDnKa4CsKwdZX+Y4P/auJsj07fhxIkIh18bLo2mzc8HZqj3u/7uBtkjTTWuegEMf5DhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523689; c=relaxed/simple;
-	bh=NQVeA7kCbTgF5opdTXdCvep/3IuY+w2oBbZIPSZoX3s=;
+	s=arc-20240116; t=1708523692; c=relaxed/simple;
+	bh=dqqbjycNx694mxCfz/Md1YHQLTM7LO52ktv82Tepb9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fzq3adIqIe3Enb7yXPFeVSvcSUzzEGp3hByW8KhmvFQBxOUcVs3x3PLrHAGj7gj2r2awwVuuBRXLGfVPZ1zfxL+rSAapm5WKMpksADlberDAYZIw4mFZsp6OlE5ktO8r2enkNjHagDCH9MngqwBYmhJlbbeac3Xiqcyq5xXd4bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nU6ZbXmf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/oPpo3f/mS9iDKjVTOuMNjuKMhB7UxNSDLShIOCl/J0htHEpmBMh33yj2gSwk9mZ+r+/bJU+k7Zc0PFhBz9DHyw7hAPKDsyReHZ+Oahm/iJa04uAxK7+7U9/A1kOBRPqN3n4BwrR1ejtRbi61P7pCAP2ftJ1YxeSkbd3CLlvrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naBxYy0C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nU6ZbXmf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909ABC433C7;
-	Wed, 21 Feb 2024 13:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naBxYy0C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3BC8C433C7;
+	Wed, 21 Feb 2024 13:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523689;
-	bh=NQVeA7kCbTgF5opdTXdCvep/3IuY+w2oBbZIPSZoX3s=;
+	s=korg; t=1708523692;
+	bh=dqqbjycNx694mxCfz/Md1YHQLTM7LO52ktv82Tepb9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nU6ZbXmfypm7s/vB4DKvThYJjwpu8iPwdVU3cmTpEzZ6KdAHjwFGJ/7hAMgfHLEDQ
-	 bS85wyXLr3laU0naXOBELO8XERdyfaeXlCLI6IArZ6bN5FtOnhoxI+Q1tvQ/e24jhN
-	 jneupk1hxunYTP73VCn4brv5I4TpklzM+h4zKaBo=
+	b=naBxYy0CEK3r1m5OvoK8bXx4RNvkhnkfmsJQDNllx+thhEuP0yHB6ssr/zhsZJMeD
+	 wiFRNNkU+25VwNIs/n/msS1d0JfQUeuHy1hE4tsp1XCMMyuJZwSGI/Y2MZTPPAQYpl
+	 Od0LeCDRxvcOzNPL5py7yBkTkaczCyicZT3mZdj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 028/379] arm64: dts: qcom: sdm845: fix USB DP/DM HS PHY interrupts
-Date: Wed, 21 Feb 2024 14:03:27 +0100
-Message-ID: <20240221125955.750735500@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ravi Gunasekaran <r-gunasekaran@ti.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 003/379] usb: cdns3: fix incorrect calculation of ep_buf_size when more than one config
+Date: Wed, 21 Feb 2024 14:03:02 +0100
+Message-ID: <20240221125955.023428385@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,63 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 204f9ed4bad6293933179517624143b8f412347c upstream.
+[ Upstream commit 2627335a1329a0d39d8d277994678571c4f21800 ]
 
-The USB DP/DM HS PHY interrupts need to be provided by the PDC interrupt
-controller in order to be able to wake the system up from low-power
-states and to be able to detect disconnect events, which requires
-triggering on falling edges.
+Previously, the cdns3_gadget_check_config() function in the cdns3 driver
+mistakenly calculated the ep_buf_size by considering only one
+configuration's endpoint information because "claimed" will be clear after
+call usb_gadget_check_config().
 
-A recent commit updated the trigger type but failed to change the
-interrupt provider as required. This leads to the current Linux driver
-failing to probe instead of printing an error during suspend and USB
-wakeup not working as intended.
+The fix involves checking the private flags EP_CLAIMED instead of relying
+on the "claimed" flag.
 
-Fixes: 84ad9ac8d9ca ("arm64: dts: qcom: sdm845: fix USB wakeup interrupt types")
-Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
-Cc: stable@vger.kernel.org      # 4.20
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20231213173403.29544-3-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: dce49449e04f ("usb: cdns3: allocate TX FIFO size according to composite EP number")
+Cc: stable <stable@kernel.org>
+Reported-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Tested-by: Ravi Gunasekaran <r-gunasekaran@ti.com>
+Link: https://lore.kernel.org/r/20230707230015.494999-2-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 92f02efa1d86 ("usb: cdns3: fix iso transfer error when mult is not zero")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/usb/cdns3/gadget.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3565,10 +3565,10 @@
- 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <150000000>;
+diff --git a/drivers/usb/cdns3/gadget.c b/drivers/usb/cdns3/gadget.c
+index 575180a59ad4..ee64c4ab8dd2 100644
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -3030,12 +3030,14 @@ static int cdns3_gadget_udc_stop(struct usb_gadget *gadget)
+ static int cdns3_gadget_check_config(struct usb_gadget *gadget)
+ {
+ 	struct cdns3_device *priv_dev = gadget_to_cdns3_device(gadget);
++	struct cdns3_endpoint *priv_ep;
+ 	struct usb_ep *ep;
+ 	int n_in = 0;
+ 	int total;
  
--			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&pdc_intc 8 IRQ_TYPE_EDGE_BOTH>,
-+					      <&pdc_intc 9 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+ 	list_for_each_entry(ep, &gadget->ep_list, ep_list) {
+-		if (ep->claimed && (ep->address & USB_DIR_IN))
++		priv_ep = ep_to_cdns3_ep(ep);
++		if ((priv_ep->flags & EP_CLAIMED) && (ep->address & USB_DIR_IN))
+ 			n_in++;
+ 	}
  
-@@ -3613,10 +3613,10 @@
- 					  <&gcc GCC_USB30_SEC_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <150000000>;
- 
--			interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 490 IRQ_TYPE_EDGE_BOTH>,
--				     <GIC_SPI 491 IRQ_TYPE_EDGE_BOTH>;
-+			interrupts-extended = <&intc GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&intc GIC_SPI 487 IRQ_TYPE_LEVEL_HIGH>,
-+					      <&pdc_intc 10 IRQ_TYPE_EDGE_BOTH>,
-+					      <&pdc_intc 11 IRQ_TYPE_EDGE_BOTH>;
- 			interrupt-names = "hs_phy_irq", "ss_phy_irq",
- 					  "dm_hs_phy_irq", "dp_hs_phy_irq";
- 
+-- 
+2.43.0
+
 
 
