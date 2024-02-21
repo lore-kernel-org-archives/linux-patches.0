@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8C87A715;
-	Wed, 21 Feb 2024 13:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD697E79D;
+	Wed, 21 Feb 2024 13:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523359; cv=none; b=u6soaJnrH8aHRKetfpQYZfPXXvcje6dvf2xuByhPGtZzyHUJK+bBmojh7Fmu4fdgSDIbdPXABbia58wv8Pkt/vlxkWDlj7GOBz+WQFwQs4RTADzYNAP4d3rf/k3q7duGO7wFMhtRlIlBTNLO2stvBB4O32VwQjXYre9h5ozYmP4=
+	t=1708523362; cv=none; b=UkFGbOu7VZMqy3r/H3UYbw1o22enuTJU/Qor2FyfvfdSqJQk2FPQOtNjb8r9mPgv+sAM4SNl8bjNOAW4sbaEqjl2nPmFOu4EQPQTIT2Kjy5Pnw5zTNRCVkpVPEqFd6+nN3EYhdUnajSMjHBde43KSrBFIqUNftzPGjE8/9M/gKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523359; c=relaxed/simple;
-	bh=EutInXz4LP9+lCK9w9kEhAEMgTbIIXBouew+7j85v+o=;
+	s=arc-20240116; t=1708523362; c=relaxed/simple;
+	bh=oREJK221AUQsGO7bJ4GmZCcX3EKb9dkk7wpMUiP88Nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9vrAp5atEg4Ok/ETQkh+Lsd3PN347C7TL1r503jaDd1BkCSQpttXAWlT0fQgkP6fVPnJI0Rskzj5ShCN1S7T6gxZtut7uRKl5unrWbs7RvdkJgbKuslcta6p2VqBrS+kuR/ZsBCTcHrK4HTz5ux6y4e/ewFcg2kx4dhevRp8mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEyGsaIs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKj4Yznw7DN5Tz1kchMtNgrAeHTdh1ugfOdbQC9YRrOxlsfF/lsbCJL2qwRfIl3/UbzGdbiLNBdlPYgc9hACEHaF2GZd+wP4vA44xU43Axzf870ljacN5voR1jGfLMMr1+op2AeRXeWZlkni/mMUjcNxjuXvL+6KgaDdhaEFfow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3BPvmTc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEyGsaIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5708C433C7;
-	Wed, 21 Feb 2024 13:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3BPvmTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC9FC433F1;
+	Wed, 21 Feb 2024 13:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523358;
-	bh=EutInXz4LP9+lCK9w9kEhAEMgTbIIXBouew+7j85v+o=;
+	s=korg; t=1708523361;
+	bh=oREJK221AUQsGO7bJ4GmZCcX3EKb9dkk7wpMUiP88Nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZEyGsaIsL8nQr2CoMrtzOJEIK4DBUNSa7sKu4r/FXTFEuYU7tpPxni6FC7QM6OjH+
-	 zb7BJhnES4HPOr7Ii1D4BkwRlN71PWfUBTZXBzQRE+TWonhR0phRJl8PmiFVyUQC4L
-	 0eO80h3WPHPvbGkUmu/ybkqCLdhIoc/gwRZHLKX0=
+	b=e3BPvmTcPZNnfBEG5O+8fZsIJDQjLrtsSM888eHk+5dlhrFbCMPhBn/xowGrzZWvi
+	 VjaSu2v30ZK9qtIh0U8za+XXfy3Bmt7KN8QuMJUQEsChbk4/R4Iul3AYkbL2ro4+cX
+	 pZw040cDolh1LG2qnV21GO4FyNkohbp22/gor6KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 412/476] wifi: mac80211: reload info pointer in ieee80211_tx_dequeue()
-Date: Wed, 21 Feb 2024 14:07:43 +0100
-Message-ID: <20240221130023.232413476@linuxfoundation.org>
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.15 413/476] irqchip/irq-brcmstb-l2: Add write memory barrier before exit
+Date: Wed, 21 Feb 2024 14:07:44 +0100
+Message-ID: <20240221130023.281235508@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -49,42 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Doug Berger <opendmb@gmail.com>
 
-commit c98d8836b817d11fdff4ca7749cbbe04ff7f0c64 upstream.
+commit b0344d6854d25a8b3b901c778b1728885dd99007 upstream.
 
-This pointer can change here since the SKB can change, so we
-actually later open-coded IEEE80211_SKB_CB() again. Reload
-the pointer where needed, so the monitor-mode case using it
-gets fixed, and then use info-> later as well.
+It was observed on Broadcom devices that use GIC v3 architecture L1
+interrupt controllers as the parent of brcmstb-l2 interrupt controllers
+that the deactivation of the parent interrupt could happen before the
+brcmstb-l2 deasserted its output. This would lead the GIC to reactivate the
+interrupt only to find that no L2 interrupt was pending. The result was a
+spurious interrupt invoking handle_bad_irq() with its associated
+messaging. While this did not create a functional problem it is a waste of
+cycles.
 
+The hazard exists because the memory mapped bus writes to the brcmstb-l2
+registers are buffered and the GIC v3 architecture uses a very efficient
+system register write to deactivate the interrupt.
+
+Add a write memory barrier prior to invoking chained_irq_exit() to
+introduce a dsb(st) on those systems to ensure the system register write
+cannot be executed until the memory mapped writes are visible to the
+system.
+
+[ florian: Added Fixes tag ]
+
+Fixes: 7f646e92766e ("irqchip: brcmstb-l2: Add Broadcom Set Top Box  Level-2 interrupt controller")
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 531682159092 ("mac80211: fix VLAN handling with TXQs")
-Link: https://msgid.link/20240131164910.b54c28d583bc.I29450cec84ea6773cff5d9c16ff92b836c331471@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/20240210012449.3009125-1-florian.fainelli@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-brcmstb-l2.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3746,6 +3746,7 @@ begin:
- 			goto begin;
+--- a/drivers/irqchip/irq-brcmstb-l2.c
++++ b/drivers/irqchip/irq-brcmstb-l2.c
+@@ -2,7 +2,7 @@
+ /*
+  * Generic Broadcom Set Top Box Level 2 Interrupt controller driver
+  *
+- * Copyright (C) 2014-2017 Broadcom
++ * Copyright (C) 2014-2024 Broadcom
+  */
  
- 		skb = __skb_dequeue(&tx.skbs);
-+		info = IEEE80211_SKB_CB(skb);
+ #define pr_fmt(fmt)	KBUILD_MODNAME	": " fmt
+@@ -113,6 +113,9 @@ static void brcmstb_l2_intc_irq_handle(s
+ 		generic_handle_domain_irq(b->domain, irq);
+ 	} while (status);
+ out:
++	/* Don't ack parent before all device writes are done */
++	wmb();
++
+ 	chained_irq_exit(chip, desc);
+ }
  
- 		if (!skb_queue_empty(&tx.skbs)) {
- 			spin_lock_bh(&fq->lock);
-@@ -3790,7 +3791,7 @@ begin:
- 	}
- 
- encap_out:
--	IEEE80211_SKB_CB(skb)->control.vif = vif;
-+	info->control.vif = vif;
- 
- 	if (vif &&
- 	    wiphy_ext_feature_isset(local->hw.wiphy, NL80211_EXT_FEATURE_AQL)) {
 
 
