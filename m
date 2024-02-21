@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A756A037;
-	Wed, 21 Feb 2024 13:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE5E69D09;
+	Wed, 21 Feb 2024 13:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521340; cv=none; b=fC7AsfNlPsQHy4dashNxp3enPKMpAh3You2NPgJJgSNCs+iy60puHagMdSiTzyb2QkiFCy2227hgMj2XCLybvqIxIHbrCU3yKr4jBFvaLEezA3TiIlCR2qtgDxvKpuBSWtQAg3vhzxozVen5kjZ0yR1sGmLhptweaOy262JKsqs=
+	t=1708521343; cv=none; b=XW/lpbuzWjxDtbOBe8FKXVLcmCCNTU0izlOgm983lkXRX1b8nCUwcq7fZjDc5v2QJDPHxeHXqvRdGWndKs2uF5j1AiJHOjlb6ikp5dhhIjEytP54PJZt5ilUveRkkPaTRxpd8QbLii9QiXvdcTP/UbOjof/7Rop4xGvsU8PSZkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521340; c=relaxed/simple;
-	bh=aeeGFiMkS+BGqPAbPDJJ27jAr8GMRHfyyZt9N7MuNLo=;
+	s=arc-20240116; t=1708521343; c=relaxed/simple;
+	bh=Bq7yhqBPNA/oJzl0wS5Ukv3XUZpNDCDM9WCrMDbLjH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBdxVSGSIdA1gtp5mBRg/TMCeE/utXFXa2PXZhnsqLPMRtFogloZJmPwd9/mykrWzaVJBvgQq6Q897k3zjyvCENLLYH49y4rsNMnnLCQEZp/Cz+8QIzuoOM302B8htdumM8KOztdg4Rn5A9b665xO0/J3Nwx5jnPDCMSATQFD28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR2CPOWX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8Gesa5fEvBh+52t1AITH1o1mGBBlsnlRRBGkXwzUlTEglO1VZfZkzGmPboTs2MTpvPRt7aHjI9yYfs9ezZlkX9t7pq00Li53yNYPbGrfqrJFY0P/BMz3QGvSyNjC3IHHmDJdt7TZbaH9j/knw6hHm3vjlsrKFzrEmEc8hBUX1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOwSSKcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR2CPOWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 628FBC433C7;
-	Wed, 21 Feb 2024 13:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOwSSKcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D523AC433C7;
+	Wed, 21 Feb 2024 13:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521340;
-	bh=aeeGFiMkS+BGqPAbPDJJ27jAr8GMRHfyyZt9N7MuNLo=;
+	s=korg; t=1708521343;
+	bh=Bq7yhqBPNA/oJzl0wS5Ukv3XUZpNDCDM9WCrMDbLjH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TR2CPOWXTWJVDOv8o219/aiyctdUIh4yj0tDfLyQDRb0FpxQf6iTKLqwG06iRjNfR
-	 cyp8mP7zqukiPHiFJMyJNL2MXYhRY33XSszp8GrIzQvbbTQFH4Be5OZEf0x/ej4G+6
-	 7P4KUU+4K6w/YLxiJEjThGg5ZCGXAgcHgDIRDzjQ=
+	b=gOwSSKcdPRnrL1PzxFUcaKrbp5Vcx1hGw7L2LmrBYILiqDtFzEZQyu+TDmr4Ebl8V
+	 zgOY7LT6FXqzWDvC3xB3LFvucEmW5jh/Qb96/PWUYlnmyOk+B4t+QhQ7gKhJbtSpIG
+	 iho2/Epe2mqtL8/ztwilghX9PLuAwBK9MlxHHZeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fabio Estevam <festevam@denx.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 088/202] ARM: dts: imx1: Fix sram node
-Date: Wed, 21 Feb 2024 14:06:29 +0100
-Message-ID: <20240221125934.636478433@linuxfoundation.org>
+Subject: [PATCH 4.19 089/202] ARM: dts: imx27-apf27dev: Fix LED name
+Date: Wed, 21 Feb 2024 14:06:30 +0100
+Message-ID: <20240221125934.666844453@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -53,49 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit c248e535973088ba7071ff6f26ab7951143450af ]
+[ Upstream commit dc35e253d032b959d92e12f081db5b00db26ae64 ]
 
-Per sram.yaml, address-cells, size-cells and ranges are mandatory.
+Per leds-gpio.yaml, the led names should start with 'led'.
 
-The node name should be sram.
+Change it to fix the following dt-schema warning:
 
-Change the node name and pass the required properties to fix the
-following dt-schema warnings:
-
-imx1-apf9328.dtb: esram@300000: $nodename:0: 'esram@300000' does not match '^sram(@.*)?'
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: '#address-cells' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: '#size-cells' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: 'ranges' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
+imx27-apf27dev.dtb: leds: 'user' does not match any of the regexes: '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
 
 Signed-off-by: Fabio Estevam <festevam@denx.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx1.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/imx27-apf27dev.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx1.dtsi b/arch/arm/boot/dts/imx1.dtsi
-index 2b6e77029de4..8c4c7464b133 100644
---- a/arch/arm/boot/dts/imx1.dtsi
-+++ b/arch/arm/boot/dts/imx1.dtsi
-@@ -268,9 +268,12 @@
- 			status = "disabled";
- 		};
+diff --git a/arch/arm/boot/dts/imx27-apf27dev.dts b/arch/arm/boot/dts/imx27-apf27dev.dts
+index 5f84b598e0d0..167f21434fbf 100644
+--- a/arch/arm/boot/dts/imx27-apf27dev.dts
++++ b/arch/arm/boot/dts/imx27-apf27dev.dts
+@@ -53,7 +53,7 @@
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_gpio_leds>;
  
--		esram: esram@300000 {
-+		esram: sram@300000 {
- 			compatible = "mmio-sram";
- 			reg = <0x00300000 0x20000>;
-+			ranges = <0 0x00300000 0x20000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
- 		};
- 	};
- };
+-		user {
++		led-user {
+ 			label = "Heartbeat";
+ 			gpios = <&gpio6 14 GPIO_ACTIVE_HIGH>;
+ 			linux,default-trigger = "heartbeat";
 -- 
 2.43.0
 
