@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877E04C62;
-	Wed, 21 Feb 2024 14:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701704C62;
+	Wed, 21 Feb 2024 14:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525268; cv=none; b=McxWHJSsLBW3HYsRnB96otP1jDdavABcySD2X5ZnGclyq2WskcqWtcErtRwYPRf+0c7JNsrKlNX3ZbVJvowd7z92HjGedNm1L9f69zW7eE84BtN4RgYolgG8K/CyeuLgPMU5aHWqKo2U/c5MmViEO+c+PO+AneP4C1m9mCKPiYY=
+	t=1708525271; cv=none; b=jVc7rhb1D8QDA0FBY0XG/buldZAj755KyHDo3IM3g0HL2+8687iyyQXYIMYJcYttB8xUnc7D6wgzyu2vMKMgUK3sixHhXDEDpV64qsqL/I/vLPkbtsOTSzjYMwTZRMAd4YltkAnnFeyG5stshlakkagtOuVVnBn8PVyCy/vnl8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525268; c=relaxed/simple;
-	bh=StDN7G5NwUoB3jN8q3WSkLAV4EFAgxxsoMFfDF+tlMs=;
+	s=arc-20240116; t=1708525271; c=relaxed/simple;
+	bh=iTpDmgYXQiJCGfdKv1+GNt/MrWdqP0JaOV19moeCXKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ot87v7ATw8PEgi7K+qHn8kFc5k/rB9WS4y6LoVIurP1NvEcTQ/0o4karXOEub25PJJILXhOprHH0tu4wxjcGO6dgDnkzyPaxzUySELXQXvubIbT/JFyiqOHdwZPSN0UpiJBnYDGTdPkwHOtReX/EX5Pb4nQVAA701DPR7Hec2Fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuwPrxJo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qB+8vzBQFfzRYffQrZcsoiAYPZ9GGwRMHIGUFUxwfjU1a5gU7ici6VgbQbxq8d4gGXPktvFWHVoKRzAPoyPn6WdEXYyCCRqyDaNi/NFWXvZNRtDo1NZ0tLI57XVO9nR6jJUSsNTVLuB/QDGeaZoK8gMysqZNpozwBFVhgUkhMJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzvhCl4q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuwPrxJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9669DC433C7;
-	Wed, 21 Feb 2024 14:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzvhCl4q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EED5C433C7;
+	Wed, 21 Feb 2024 14:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525268;
-	bh=StDN7G5NwUoB3jN8q3WSkLAV4EFAgxxsoMFfDF+tlMs=;
+	s=korg; t=1708525270;
+	bh=iTpDmgYXQiJCGfdKv1+GNt/MrWdqP0JaOV19moeCXKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuwPrxJoR69lu22wYLuphcLLHx7fUZ48wYmfzRbEnvnm29UdHHnnn/2jgS3cLCmTk
-	 UrEk9FCdQnDhFSqnXR/MbWUeATuwq5zIiMQkomcw1hvevNJsqaUgAPXAKwQbjPRggc
-	 JBF7/QKgVUVeIcQ2LDr80fYI9j7H8LyfmYOFqseU=
+	b=uzvhCl4q7gvfUgrinRccg2P8f86HheJRSccRiuX1DfxSr8prhG7kgMHKh+6Vguh0s
+	 ZF3ICjtvWH/Q1Gss1bXD8NbB6bcunMjylS52EQHWJdB484XeF0iRcxKCaH87JA44at
+	 ljRN/DIxJV9GZe8eQE/gWMJJS4cjsMTV8f+S0NAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+01cf2dbcbe2022454388@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 077/267] jfs: fix uaf in jfs_evict_inode
-Date: Wed, 21 Feb 2024 14:06:58 +0100
-Message-ID: <20240221125942.398939068@linuxfoundation.org>
+	Weichen Chen <weichen.chen@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Kees Cook <keescook@chromium.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 078/267] pstore/ram: Fix crash when setting number of cpus to an odd number
+Date: Wed, 21 Feb 2024 14:06:59 +0100
+Message-ID: <20240221125942.427357982@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,48 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Weichen Chen <weichen.chen@mediatek.com>
 
-[ Upstream commit e0e1958f4c365e380b17ccb35617345b31ef7bf3 ]
+[ Upstream commit d49270a04623ce3c0afddbf3e984cb245aa48e9c ]
 
-When the execution of diMount(ipimap) fails, the object ipimap that has been
-released may be accessed in diFreeSpecial(). Asynchronous ipimap release occurs
-when rcu_core() calls jfs_free_node().
+When the number of cpu cores is adjusted to 7 or other odd numbers,
+the zone size will become an odd number.
+The address of the zone will become:
+    addr of zone0 = BASE
+    addr of zone1 = BASE + zone_size
+    addr of zone2 = BASE + zone_size*2
+    ...
+The address of zone1/3/5/7 will be mapped to non-alignment va.
+Eventually crashes will occur when accessing these va.
 
-Therefore, when diMount(ipimap) fails, sbi->ipimap should not be initialized as
-ipimap.
+So, use ALIGN_DOWN() to make sure the zone size is even
+to avoid this bug.
 
-Reported-and-tested-by: syzbot+01cf2dbcbe2022454388@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Weichen Chen <weichen.chen@mediatek.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Tested-by: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Link: https://lore.kernel.org/r/20230224023632.6840-1-weichen.chen@mediatek.com
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_mount.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/pstore/ram.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/jfs/jfs_mount.c b/fs/jfs/jfs_mount.c
-index d41733540df9..459324f3570a 100644
---- a/fs/jfs/jfs_mount.c
-+++ b/fs/jfs/jfs_mount.c
-@@ -171,15 +171,15 @@ int jfs_mount(struct super_block *sb)
- 	}
- 	jfs_info("jfs_mount: ipimap:0x%p", ipimap);
- 
--	/* map further access of per fileset inodes by the fileset inode */
--	sbi->ipimap = ipimap;
--
- 	/* initialize fileset inode allocation map */
- 	if ((rc = diMount(ipimap))) {
- 		jfs_err("jfs_mount: diMount failed w/rc = %d", rc);
- 		goto err_ipimap;
+diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
+index 65cbc8a60ca3..9f83d8eba0e6 100644
+--- a/fs/pstore/ram.c
++++ b/fs/pstore/ram.c
+@@ -563,6 +563,7 @@ static int ramoops_init_przs(const char *name,
  	}
  
-+	/* map further access of per fileset inodes by the fileset inode */
-+	sbi->ipimap = ipimap;
-+
- 	return rc;
- 
- 	/*
+ 	zone_sz = mem_sz / *cnt;
++	zone_sz = ALIGN_DOWN(zone_sz, 2);
+ 	if (!zone_sz) {
+ 		dev_err(dev, "%s zone size == 0\n", name);
+ 		goto fail;
 -- 
 2.43.0
 
