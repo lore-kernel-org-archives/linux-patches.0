@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CC71E4B2;
-	Wed, 21 Feb 2024 13:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E547869951;
+	Wed, 21 Feb 2024 13:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522886; cv=none; b=G38PVAc8cb9R2FAX6n4F96m7/gDPKzTnzdcodG2BB4CDLLaq6AXwljqoA6+9dBwcEwyfbviSFG6Se+ac2pv5KhYRq6Pc0Sea54OXyXkI7wONSObtpW0BFkMfIg22nHcvidIlItG86ZjVp+Qr9DkQz8zsqCPVDlgYzLLI61GKLFo=
+	t=1708522889; cv=none; b=FMwrJv+Vcc/Dy6Rqm9VflmGFxOvYOTvpvI5SvqtJydQ5KwBEmWChcEbIQvGU3GXSjbCIqXfzCE0jzkgenLTgrbJjg0gn4oxK9rFOWGF+RHM25+hMOde/O1ZCnyVUyteQHcK1Q8MMpoZjIFWcE5hZCdDJ4PnwYVdA2Uozp038toc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522886; c=relaxed/simple;
-	bh=I4iyKYTpGHKaQ+xU1Wn4Cq04IqOYjdwsKSx7xhP0TaM=;
+	s=arc-20240116; t=1708522889; c=relaxed/simple;
+	bh=h9/HYGKhkJGUW1OQCtqOIyKno/UK7rCco8hAXmvg1tU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIyJarTOLgYcueWnDjm6XD5YHPCllmyuTmUNbp/4kSQAi9r49OLPFhFxjX29VhNExAQ8zpVhiZfoYwvwEQL5V/C0DvTHnOGnxM2oaO/UzD3rMM3LVg5IwEQ5gCYPujXNd1U8dk3Z7+XbkQ6r0NGStMNiYLB0yzAcnbC0Im1PCk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9itXbJV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OMs24Po3EIY3P1SIYOxFNC7V5h14CRxEKyVnFtXSgSs97S6hdz09bBFH/L7kflc4HDlR2S+EbsIZ10fa5WNKkACdxPcaZYpSSVzFSWL9CS0+PXVnkwJLcYiIi3MbbQ+4aPhvy0UOuUneguvymd7KZDZmub+2MJRDBXI0tB48u5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVsrDur5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9itXbJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AA2C433C7;
-	Wed, 21 Feb 2024 13:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVsrDur5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAF3C433C7;
+	Wed, 21 Feb 2024 13:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522885;
-	bh=I4iyKYTpGHKaQ+xU1Wn4Cq04IqOYjdwsKSx7xhP0TaM=;
+	s=korg; t=1708522888;
+	bh=h9/HYGKhkJGUW1OQCtqOIyKno/UK7rCco8hAXmvg1tU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9itXbJVScUs6F+TkfhBdl1X3vgWEzVABHOkVw6le7q0/lABUUJDmZg+vxh1ka+Rb
-	 DUkTjESGunlqX73j4zjaI4v9OXba7ZbeEgPKBg3/GLAiOsW/FoeWadW1JrD67bVdZw
-	 VtE1egWbIiEVZdbLKlLVWsTXCJAAku78QS3mOtkc=
+	b=aVsrDur5z0JO3EpgITuUvokPgTWfJsvEyWSTXk3vsihcXYcwoNIAw+bIu9CTvYMy3
+	 XlvzciWhaNK6iPkQUS1lx/BEmwaIhNhNg+ZUDJ11mZq2yVTZGafg97pNiiCvNoHBob
+	 Z25/BBfo5iMzb1q8ya8uhyGH4/ungsrH15INPBdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 283/476] netfilter: nf_tables: restrict tunnel object to NFPROTO_NETDEV
-Date: Wed, 21 Feb 2024 14:05:34 +0100
-Message-ID: <20240221130018.459890062@linuxfoundation.org>
+Subject: [PATCH 5.15 284/476] netfilter: nf_log: replace BUG_ON by WARN_ON_ONCE when putting logger
+Date: Wed, 21 Feb 2024 14:05:35 +0100
+Message-ID: <20240221130018.501398574@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,105 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 776d451648443f9884be4a1b4e38e8faf1c621f9 ]
+[ Upstream commit 259eb32971e9eb24d1777a28d82730659f50fdcb ]
 
-Bail out on using the tunnel dst template from other than netdev family.
-Add the infrastructure to check for the family in objects.
+Module reference is bumped for each user, this should not ever happen.
 
-Fixes: af308b94a2a4 ("netfilter: nf_tables: add tunnel support")
+But BUG_ON check should use rcu_access_pointer() instead.
+
+If this ever happens, do WARN_ON_ONCE() instead of BUG_ON() and
+consolidate pointer check under the rcu read side lock section.
+
+Fixes: fab4085f4e24 ("netfilter: log: nf_log_packet() as real unified interface")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  2 ++
- net/netfilter/nf_tables_api.c     | 14 +++++++++-----
- net/netfilter/nft_tunnel.c        |  1 +
- 3 files changed, 12 insertions(+), 5 deletions(-)
+ net/netfilter/nf_log.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 8e9c5bc1a9e6..1e6e4af4df0a 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1253,6 +1253,7 @@ void nft_obj_notify(struct net *net, const struct nft_table *table,
-  *	@type: stateful object numeric type
-  *	@owner: module owner
-  *	@maxattr: maximum netlink attribute
-+ *	@family: address family for AF-specific object types
-  *	@policy: netlink attribute policy
-  */
- struct nft_object_type {
-@@ -1262,6 +1263,7 @@ struct nft_object_type {
- 	struct list_head		list;
- 	u32				type;
- 	unsigned int                    maxattr;
-+	u8				family;
- 	struct module			*owner;
- 	const struct nla_policy		*policy;
- };
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 996238f0ca54..3ad2b22886ff 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6999,11 +6999,15 @@ static int nft_object_dump(struct sk_buff *skb, unsigned int attr,
- 	return -1;
- }
- 
--static const struct nft_object_type *__nft_obj_type_get(u32 objtype)
-+static const struct nft_object_type *__nft_obj_type_get(u32 objtype, u8 family)
- {
- 	const struct nft_object_type *type;
- 
- 	list_for_each_entry(type, &nf_tables_objects, list) {
-+		if (type->family != NFPROTO_UNSPEC &&
-+		    type->family != family)
-+			continue;
-+
- 		if (objtype == type->type)
- 			return type;
+diff --git a/net/netfilter/nf_log.c b/net/netfilter/nf_log.c
+index edee7fa944c1..8f5362a19b15 100644
+--- a/net/netfilter/nf_log.c
++++ b/net/netfilter/nf_log.c
+@@ -193,11 +193,12 @@ void nf_logger_put(int pf, enum nf_log_type type)
+ 		return;
  	}
-@@ -7011,11 +7015,11 @@ static const struct nft_object_type *__nft_obj_type_get(u32 objtype)
+ 
+-	BUG_ON(loggers[pf][type] == NULL);
+-
+ 	rcu_read_lock();
+ 	logger = rcu_dereference(loggers[pf][type]);
+-	module_put(logger->me);
++	if (!logger)
++		WARN_ON_ONCE(1);
++	else
++		module_put(logger->me);
+ 	rcu_read_unlock();
  }
- 
- static const struct nft_object_type *
--nft_obj_type_get(struct net *net, u32 objtype)
-+nft_obj_type_get(struct net *net, u32 objtype, u8 family)
- {
- 	const struct nft_object_type *type;
- 
--	type = __nft_obj_type_get(objtype);
-+	type = __nft_obj_type_get(objtype, family);
- 	if (type != NULL && try_module_get(type->owner))
- 		return type;
- 
-@@ -7108,7 +7112,7 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (info->nlh->nlmsg_flags & NLM_F_REPLACE)
- 			return -EOPNOTSUPP;
- 
--		type = __nft_obj_type_get(objtype);
-+		type = __nft_obj_type_get(objtype, family);
- 		if (WARN_ON_ONCE(!type))
- 			return -ENOENT;
- 
-@@ -7122,7 +7126,7 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (!nft_use_inc(&table->use))
- 		return -EMFILE;
- 
--	type = nft_obj_type_get(net, objtype);
-+	type = nft_obj_type_get(net, objtype, family);
- 	if (IS_ERR(type)) {
- 		err = PTR_ERR(type);
- 		goto err_type;
-diff --git a/net/netfilter/nft_tunnel.c b/net/netfilter/nft_tunnel.c
-index 2ee50996da8c..c8822fa8196d 100644
---- a/net/netfilter/nft_tunnel.c
-+++ b/net/netfilter/nft_tunnel.c
-@@ -684,6 +684,7 @@ static const struct nft_object_ops nft_tunnel_obj_ops = {
- 
- static struct nft_object_type nft_tunnel_obj_type __read_mostly = {
- 	.type		= NFT_OBJECT_TUNNEL,
-+	.family		= NFPROTO_NETDEV,
- 	.ops		= &nft_tunnel_obj_ops,
- 	.maxattr	= NFTA_TUNNEL_KEY_MAX,
- 	.policy		= nft_tunnel_key_policy,
+ EXPORT_SYMBOL_GPL(nf_logger_put);
 -- 
 2.43.0
 
