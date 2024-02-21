@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067F83CF42;
-	Wed, 21 Feb 2024 14:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A1D79DAE;
+	Wed, 21 Feb 2024 14:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525386; cv=none; b=Iu1RviHS5mQGBY2QhFHcjfgjq6Xp4EYo5u2g+sOBOMzQw6jgVSSroeda2HlLy1X/CU/cpToR31ZpgVnaexHpojzL1Fwn0pIe9SycSg1s80Jv/Mm/NCNczexkT//b9t0d3qFKYHbfP/Qge8Q/1EHWrGnErlc6ZP1xFgMVk+AmRxc=
+	t=1708525389; cv=none; b=tYMqnq3MJC9zRO+5oGNzZBiL+nI5Vvmp2MzW5fOh8jRMFVR5QJkfLFwOgD94bGxyFtzG//vQYGzj3ioPJ5Ps0+VxPUkxWAcCMZkPa4yfJKzj1Wns+lt9KXfo8C2ENvkwxVY0k3iFUxgfhSPsCQyFBie4sAjgD+EZ9MhkuRlsnkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525386; c=relaxed/simple;
-	bh=rFKtvdsNcyxZ135kT1rVXqbJwYTKLzTmJN3dy+jRF9U=;
+	s=arc-20240116; t=1708525389; c=relaxed/simple;
+	bh=qHjmAa91sfAcpKdlQvJev4QsmBaREOqcLZGFFPNGyJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3ubs6tVK3fYwByucZRKlXUhC8T5uCok0zQei4wxtzYMMXJeEbgFxAoLBXjnHPoYO41TaOgULIAoL1lq0+gRKYIPzF2vkM8kC86y5ZmhcC6dzEyn6dbHxIZ0P4r8fM+zTz6LpQhXj2ERO/3M2x3bggNHtvaUcgP/L4jqOi1PPRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhfYeqLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JMRtdkZ9RQHw8mWbO/X0q7tKUoLNlj4aN5VnvTgVDMX8xs8ikS4RGtvqqOUKyGuR3dNFYnXV+uPDkkpr0e9Eip1RJ82QJXNNArTHpI+Y9W3pCXTHSxBZVh3XdaMRYE/V/tLy/C0zYN0lVD1FAxSP0Nn7vg33D0H6LBmCkqFa+M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VR1dsn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhfYeqLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1795C43390;
-	Wed, 21 Feb 2024 14:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VR1dsn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF1DC433F1;
+	Wed, 21 Feb 2024 14:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525385;
-	bh=rFKtvdsNcyxZ135kT1rVXqbJwYTKLzTmJN3dy+jRF9U=;
+	s=korg; t=1708525388;
+	bh=qHjmAa91sfAcpKdlQvJev4QsmBaREOqcLZGFFPNGyJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhfYeqLCJ7NtzwBaWpvA+MJZBQEkPGtkbbOuG2nG20a8SRi7FkJJYm8fDzrlsOd99
-	 PRUApJgb4OBV7O8bknxDSb7OHGeVCp7inFQxAk6he7mGl8jYj5LXb04BhqbwWarD8B
-	 axprc3pIkXMu5DyjiB1cvwMgxo0/eRdb/nVX9HPM=
+	b=0VR1dsn3pfNRcmjvWj7esMfbvHrS6IcxK1DgpfLwY52T9OkawBwuqytSdoJtICb4h
+	 a2ye/thA9Jnr/fvtnS8pMdCYxQ6+RxDYNqN8flHPw8FiNyQbtZfRo+tfWLwosPOWWZ
+	 D3yj6dnYJ/fbppkd/1GPOhiTPdt801QebfvHxEj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Peter Lafreniere <peter@n8pjl.ca>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 132/267] IB/ipoib: Fix mcast list locking
-Date: Wed, 21 Feb 2024 14:07:53 +0100
-Message-ID: <20240221125944.193282269@linuxfoundation.org>
+Subject: [PATCH 5.4 141/267] um: Fix naming clash between UML and scheduler
+Date: Wed, 21 Feb 2024 14:08:02 +0100
+Message-ID: <20240221125944.476300530@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -49,92 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vacek <neelx@redhat.com>
+From: Anton Ivanov <anton.ivanov@cambridgegreys.com>
 
-[ Upstream commit 4f973e211b3b1c6d36f7c6a19239d258856749f9 ]
+[ Upstream commit 541d4e4d435c8b9bfd29f70a1da4a2db97794e0a ]
 
-Releasing the `priv->lock` while iterating the `priv->multicast_list` in
-`ipoib_mcast_join_task()` opens a window for `ipoib_mcast_dev_flush()` to
-remove the items while in the middle of iteration. If the mcast is removed
-while the lock was dropped, the for loop spins forever resulting in a hard
-lockup (as was reported on RHEL 4.18.0-372.75.1.el8_6 kernel):
+__cant_sleep was already used and exported by the scheduler.
+The name had to be changed to a UML specific one.
 
-    Task A (kworker/u72:2 below)       | Task B (kworker/u72:0 below)
-    -----------------------------------+-----------------------------------
-    ipoib_mcast_join_task(work)        | ipoib_ib_dev_flush_light(work)
-      spin_lock_irq(&priv->lock)       | __ipoib_ib_dev_flush(priv, ...)
-      list_for_each_entry(mcast,       | ipoib_mcast_dev_flush(dev = priv->dev)
-          &priv->multicast_list, list) |
-        ipoib_mcast_join(dev, mcast)   |
-          spin_unlock_irq(&priv->lock) |
-                                       |   spin_lock_irqsave(&priv->lock, flags)
-                                       |   list_for_each_entry_safe(mcast, tmcast,
-                                       |                  &priv->multicast_list, list)
-                                       |     list_del(&mcast->list);
-                                       |     list_add_tail(&mcast->list, &remove_list)
-                                       |   spin_unlock_irqrestore(&priv->lock, flags)
-          spin_lock_irq(&priv->lock)   |
-                                       |   ipoib_mcast_remove_list(&remove_list)
-   (Here, `mcast` is no longer on the  |     list_for_each_entry_safe(mcast, tmcast,
-    `priv->multicast_list` and we keep |                            remove_list, list)
-    spinning on the `remove_list` of   |  >>>  wait_for_completion(&mcast->done)
-    the other thread which is blocked  |
-    and the list is still valid on     |
-    it's stack.)
-
-Fix this by keeping the lock held and changing to GFP_ATOMIC to prevent
-eventual sleeps.
-Unfortunately we could not reproduce the lockup and confirm this fix but
-based on the code review I think this fix should address such lockups.
-
-crash> bc 31
-PID: 747      TASK: ff1c6a1a007e8000  CPU: 31   COMMAND: "kworker/u72:2"
---
-    [exception RIP: ipoib_mcast_join_task+0x1b1]
-    RIP: ffffffffc0944ac1  RSP: ff646f199a8c7e00  RFLAGS: 00000002
-    RAX: 0000000000000000  RBX: ff1c6a1a04dc82f8  RCX: 0000000000000000
-                                  work (&priv->mcast_task{,.work})
-    RDX: ff1c6a192d60ac68  RSI: 0000000000000286  RDI: ff1c6a1a04dc8000
-           &mcast->list
-    RBP: ff646f199a8c7e90   R8: ff1c699980019420   R9: ff1c6a1920c9a000
-    R10: ff646f199a8c7e00  R11: ff1c6a191a7d9800  R12: ff1c6a192d60ac00
-                                                         mcast
-    R13: ff1c6a1d82200000  R14: ff1c6a1a04dc8000  R15: ff1c6a1a04dc82d8
-           dev                    priv (&priv->lock)     &priv->multicast_list (aka head)
-    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
-
+Signed-off-by: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Reviewed-by: Peter Lafreniere <peter@n8pjl.ca>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_multicast.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/um/include/shared/kern_util.h | 2 +-
+ arch/um/kernel/process.c           | 2 +-
+ arch/um/os-Linux/helper.c          | 6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-index 805df1fcba84..de82fb0cb1d5 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_multicast.c
-@@ -543,21 +543,17 @@ static int ipoib_mcast_join(struct net_device *dev, struct ipoib_mcast *mcast)
- 			/* SM supports sendonly-fullmember, otherwise fallback to full-member */
- 			rec.join_state = SENDONLY_FULLMEMBER_JOIN;
- 	}
--	spin_unlock_irq(&priv->lock);
+diff --git a/arch/um/include/shared/kern_util.h b/arch/um/include/shared/kern_util.h
+index ccafb62e8cce..42dc0e47d3ad 100644
+--- a/arch/um/include/shared/kern_util.h
++++ b/arch/um/include/shared/kern_util.h
+@@ -49,7 +49,7 @@ extern void do_uml_exitcalls(void);
+  * Are we disallowed to sleep? Used to choose between GFP_KERNEL and
+  * GFP_ATOMIC.
+  */
+-extern int __cant_sleep(void);
++extern int __uml_cant_sleep(void);
+ extern int get_current_pid(void);
+ extern int copy_from_user_proc(void *to, void *from, int size);
+ extern int cpu(void);
+diff --git a/arch/um/kernel/process.c b/arch/um/kernel/process.c
+index d71dd7725bef..f185d19fd9b6 100644
+--- a/arch/um/kernel/process.c
++++ b/arch/um/kernel/process.c
+@@ -258,7 +258,7 @@ void arch_cpu_idle(void)
+ 	local_irq_enable();
+ }
  
- 	multicast = ib_sa_join_multicast(&ipoib_sa_client, priv->ca, priv->port,
--					 &rec, comp_mask, GFP_KERNEL,
-+					 &rec, comp_mask, GFP_ATOMIC,
- 					 ipoib_mcast_join_complete, mcast);
--	spin_lock_irq(&priv->lock);
- 	if (IS_ERR(multicast)) {
- 		ret = PTR_ERR(multicast);
- 		ipoib_warn(priv, "ib_sa_join_multicast failed, status %d\n", ret);
- 		/* Requeue this join task with a backoff delay */
- 		__ipoib_mcast_schedule_join_thread(priv, mcast, 1);
- 		clear_bit(IPOIB_MCAST_FLAG_BUSY, &mcast->flags);
--		spin_unlock_irq(&priv->lock);
- 		complete(&mcast->done);
--		spin_lock_irq(&priv->lock);
- 		return ret;
- 	}
- 	return 0;
+-int __cant_sleep(void) {
++int __uml_cant_sleep(void) {
+ 	return in_atomic() || irqs_disabled() || in_interrupt();
+ 	/* Is in_interrupt() really needed? */
+ }
+diff --git a/arch/um/os-Linux/helper.c b/arch/um/os-Linux/helper.c
+index 9fa6e4187d4f..57a27555092f 100644
+--- a/arch/um/os-Linux/helper.c
++++ b/arch/um/os-Linux/helper.c
+@@ -45,7 +45,7 @@ int run_helper(void (*pre_exec)(void *), void *pre_data, char **argv)
+ 	unsigned long stack, sp;
+ 	int pid, fds[2], ret, n;
+ 
+-	stack = alloc_stack(0, __cant_sleep());
++	stack = alloc_stack(0, __uml_cant_sleep());
+ 	if (stack == 0)
+ 		return -ENOMEM;
+ 
+@@ -69,7 +69,7 @@ int run_helper(void (*pre_exec)(void *), void *pre_data, char **argv)
+ 	data.pre_data = pre_data;
+ 	data.argv = argv;
+ 	data.fd = fds[1];
+-	data.buf = __cant_sleep() ? uml_kmalloc(PATH_MAX, UM_GFP_ATOMIC) :
++	data.buf = __uml_cant_sleep() ? uml_kmalloc(PATH_MAX, UM_GFP_ATOMIC) :
+ 					uml_kmalloc(PATH_MAX, UM_GFP_KERNEL);
+ 	pid = clone(helper_child, (void *) sp, CLONE_VM, &data);
+ 	if (pid < 0) {
+@@ -116,7 +116,7 @@ int run_helper_thread(int (*proc)(void *), void *arg, unsigned int flags,
+ 	unsigned long stack, sp;
+ 	int pid, status, err;
+ 
+-	stack = alloc_stack(0, __cant_sleep());
++	stack = alloc_stack(0, __uml_cant_sleep());
+ 	if (stack == 0)
+ 		return -ENOMEM;
+ 
 -- 
 2.43.0
 
