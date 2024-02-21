@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADF6763FE;
-	Wed, 21 Feb 2024 13:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC453816;
+	Wed, 21 Feb 2024 13:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521758; cv=none; b=mLU3u00tsE6PwbYbqTd/3GrXIw/5WIXm6RDjOJmPSR201mmXVCI61MOb9XLGq7WkRRLChBROw6+njlBNnq/r5+OCRK2iMUe54UO3nFH3eUotgkJjdbMBrL2trOUN1DoQ+cu5Co7kBWhxra7SS1sPy2E2gF3dK6F0a1GtHwevLOY=
+	t=1708521761; cv=none; b=OlLv4Da++fhkJkevCiVFMLcqLIEd4YA3wyyPwmuBzIRhZafTW9w6Bdd5EEX8U5cWyvuc3QXpBHAz0emu3KhxfaH9yj+dL9w5sRpr9B/rRmr806QgaMMPc4Jo4gFfBbrpywHR2ciQocp5LE/ixCGuiawHqv3O2T/GVuaXgwfc3JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521758; c=relaxed/simple;
-	bh=qQcP0oFSN9RR40+te1j65J34tmqKnzD8quYbnin9y9U=;
+	s=arc-20240116; t=1708521761; c=relaxed/simple;
+	bh=2ioa0P2FmDNmnlXud1Rnf8Slwjd08PvMAqMJMgBPKAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFhcNZphDwq/TKdexx5k2ZxH7T23z2yGEP1uDG4f3AFDm8l73wtX2zHuyHFs2SkQyTTDnKf3jQrb6cAhEV4GDzZ6weOVCKtQdQvF0em5+MF2aetfQ1OjHyEzwmOwCSa5IOtFZrxcfp0v0BrKtvLRFXHq/0umZhmhdXClM0hjzTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONwW33z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FsivJx1X/eejsrT/u5C178ybI3eaz7NyWCBEgnCPyR4wfSQKY/Fbe2Vlu9Rd77Z3Y7bzN0w/Kdv0+4BNCpjuMjiKymDf4RofyIZO9iRccS97JAa6pmHaYX5EO7srzYSkKqOQ3UalUNauSjdxxMrPWcsDSFOgNjzBcgEnWuBaHkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYFIypHu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONwW33z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93401C433C7;
-	Wed, 21 Feb 2024 13:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYFIypHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A785AC433F1;
+	Wed, 21 Feb 2024 13:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521758;
-	bh=qQcP0oFSN9RR40+te1j65J34tmqKnzD8quYbnin9y9U=;
+	s=korg; t=1708521761;
+	bh=2ioa0P2FmDNmnlXud1Rnf8Slwjd08PvMAqMJMgBPKAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ONwW33z23YhMRJF5rBZ2Voq55oM+SerYOatpixk3ElMdWlpkFjwaZ/+IRSwnP9O7O
-	 1UDEA8YIIrjDyssMmvdC2nfleQkBYAbYFMSSP/FC8UvGoGF17Y0c79IQ6fU2ak0VxN
-	 3uuAz3ypbw8pSHm8rNaWr6SdaV2tq/A1UFCyz2qY=
+	b=qYFIypHuRTzH3YbgNlk2/y/o1td3ZhaQ/yf5y+2QoWSPnysChw00K6JfyfTfysjFh
+	 vbRY4p3FyDt793E8vRCzD1Fx+nxwKmmiz9KZ739m4+7IGv2G8kzcEArOM4dL4yYMzw
+	 L+AWHVzMpw7Y3qTnhbDFjmRbC1nGCAXpb4K6h6jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 196/202] pmdomain: core: Move the unused cleanup to a _sync initcall
-Date: Wed, 21 Feb 2024 14:08:17 +0100
-Message-ID: <20240221125938.125257117@linuxfoundation.org>
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 197/202] Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"
+Date: Wed, 21 Feb 2024 14:08:18 +0100
+Message-ID: <20240221125938.154860462@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -50,34 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-commit 741ba0134fa7822fcf4e4a0a537a5c4cfd706b20 upstream.
+[ Upstream commit bed9e27baf52a09b7ba2a3714f1e24e17ced386d ]
 
-The unused clock cleanup uses the _sync initcall to give all users at
-earlier initcalls time to probe. Do the same to avoid leaving some PDs
-dangling at "on" (which actually happened on qcom!).
+This reverts commit 5e2cf333b7bd5d3e62595a44d598a254c697cd74.
 
-Fixes: 2fe71dcdfd10 ("PM / domains: Add late_initcall to disable unused PM domains")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231227-topic-pmdomain_sync_cleanup-v1-1-5f36769d538b@linaro.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+That commit introduced the following race and can cause system hung.
+
+ md_write_start:             raid5d:
+ // mddev->in_sync == 1
+ set "MD_SB_CHANGE_PENDING"
+                            // running before md_write_start wakeup it
+                             waiting "MD_SB_CHANGE_PENDING" cleared
+                             >>>>>>>>> hung
+ wakeup mddev->thread
+ ...
+ waiting "MD_SB_CHANGE_PENDING" cleared
+ >>>> hung, raid5d should clear this flag
+ but get hung by same flag.
+
+The issue reverted commit fixing is fixed by last patch in a new way.
+
+Fixes: 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20231108182216.73611-2-junxiao.bi@oracle.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid5.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -847,7 +847,7 @@ static int __init genpd_power_off_unused
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index b98abe927d06..e2fcc09a18cd 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -44,7 +44,6 @@
+  */
  
- 	return 0;
- }
--late_initcall(genpd_power_off_unused);
-+late_initcall_sync(genpd_power_off_unused);
+ #include <linux/blkdev.h>
+-#include <linux/delay.h>
+ #include <linux/kthread.h>
+ #include <linux/raid/pq.h>
+ #include <linux/async_tx.h>
+@@ -6330,18 +6329,7 @@ static void raid5d(struct md_thread *thread)
+ 			spin_unlock_irq(&conf->device_lock);
+ 			md_check_recovery(mddev);
+ 			spin_lock_irq(&conf->device_lock);
+-
+-			/*
+-			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
+-			 * seeing md_check_recovery() is needed to clear
+-			 * the flag when using mdmon.
+-			 */
+-			continue;
+ 		}
+-
+-		wait_event_lock_irq(mddev->sb_wait,
+-			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
+-			conf->device_lock);
+ 	}
+ 	pr_debug("%d stripes handled\n", handled);
  
- #if defined(CONFIG_PM_SLEEP) || defined(CONFIG_PM_GENERIC_DOMAINS_OF)
- 
+-- 
+2.43.0
+
 
 
