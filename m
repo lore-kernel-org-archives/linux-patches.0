@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB5B3EA71;
-	Wed, 21 Feb 2024 13:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306BD3EA71;
+	Wed, 21 Feb 2024 13:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521170; cv=none; b=oP1IBWiLiKFy+SBjv0wEgtUTICEnRpJDMM3IXcQfr0+9rnKhCsOo6k5O9AFwgQIwTkr0Aq8KpAXrv+lgfCuKMHubRNWb4BnFSC2VGCiJOB+9GN19fa/7evEb1UlkwKtOyONWG+0WNPwHZQVSDItz798e2cW5jwY+XNieP1XLVmE=
+	t=1708521178; cv=none; b=c7sBUme5vHIp7Wc87dFKkjpGe7NLpDmJsIcIGIE+l2ncxE8MqzX4/Wa1goX8NA929H4SrWcRXfXBJgMTTmHXn3PWEO8HfvFsYIBVt9tfiXVekzfsy0KXx2qa7AJoJ/2TJK7bB6OBsC134e5Ft7sNxUe03J475z+mBFb+FvafPS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521170; c=relaxed/simple;
-	bh=sw8Iy8FcKBzgZ8T/7a+DiNKlHqGlkMxa/ey4nCT3IFg=;
+	s=arc-20240116; t=1708521178; c=relaxed/simple;
+	bh=vGx8kJwmUGufOyjjoHjLciJekjPGVyxf6tXVugxQFzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWVzCY2OFWh9CIA8YztQPNTZ2IyesAIHTpksp27DipsG0gOrlpe+Zo0nOVRD0Be4OzSCmvJQjd24bThN/Sa/AQ4IzKBKBuqirKdsXFzr9y1j2PaiByEz4ALREXfSXPt87KTA66iOTYTs3Y3ecIO5J2NN/xRUQcZXQy3In0idZDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiu7xzQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nx7SI26VEt5mhLzUckozoojLzRx9QPMPWtNAdUQhyhqgzK2ojHMabWKedsZzYgNROkgPowPPU2T0LRk5eagCUxL27mHdZv8pYBtdiJW5GssvviHkDdaLb46Eau0EyhoJhC1s1FKJRm9/vP1NngR5zNsSeQyOft/+kiNFZ1NRYc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQ+T69k+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiu7xzQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954C1C433F1;
-	Wed, 21 Feb 2024 13:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQ+T69k+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3EFC433C7;
+	Wed, 21 Feb 2024 13:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521170;
-	bh=sw8Iy8FcKBzgZ8T/7a+DiNKlHqGlkMxa/ey4nCT3IFg=;
+	s=korg; t=1708521178;
+	bh=vGx8kJwmUGufOyjjoHjLciJekjPGVyxf6tXVugxQFzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fiu7xzQmwrnB+a/rswlonINtGnA9A4zCgRzkmtZqF1uxbimfsYny75HBZntKvbeu4
-	 Aww3ume6hvQv7xuhUCkLi5M7PLEZCj3Pxcu3/gwScoW1FY8mlsbMXG70SuiU9JAg02
-	 eeYp6fy8jsNb+BJ/45UFiG2Ucq5f9tFQbU+i/wI8=
+	b=jQ+T69k+HZuXpzXLB2gdkSN6JPYkZj9Xg4wGCXdok6YiUQL/sqlPxWTv/9C+W0fzB
+	 VFuAaxVgIGV/Sd7F22nEl9KGfGw4frwDPkfOlOgMlEH/n009sJbt2N3klvXedwJob4
+	 u6t/+OmQdGzqKq7FI+UMIUPWO5zwTXdIRCPleimM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	George Melikov <mail@gmelikov.ru>
-Subject: [PATCH 4.19 040/202] gpiolib: acpi: Ignore touchpad wakeup on GPD G1619-04
-Date: Wed, 21 Feb 2024 14:05:41 +0100
-Message-ID: <20240221125933.090702280@linuxfoundation.org>
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 4.19 014/202] rpmsg: virtio: Free driver_override when rpmsg_remove()
+Date: Wed, 21 Feb 2024 14:05:15 +0100
+Message-ID: <20240221125932.217791421@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -52,46 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 805c74eac8cb306dc69b87b6b066ab4da77ceaf1 upstream.
+commit d5362c37e1f8a40096452fc201c30e705750e687 upstream.
 
-Spurious wakeups are reported on the GPD G1619-04 which
-can be absolved by programming the GPIO to ignore wakeups.
+Free driver_override when rpmsg_remove(), otherwise
+the following memory leak will occur:
 
+unreferenced object 0xffff0000d55d7080 (size 128):
+  comm "kworker/u8:2", pid 56, jiffies 4294893188 (age 214.272s)
+  hex dump (first 32 bytes):
+    72 70 6d 73 67 5f 6e 73 00 00 00 00 00 00 00 00  rpmsg_ns........
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000009c94c9c1>] __kmem_cache_alloc_node+0x1f8/0x320
+    [<000000002300d89b>] __kmalloc_node_track_caller+0x44/0x70
+    [<00000000228a60c3>] kstrndup+0x4c/0x90
+    [<0000000077158695>] driver_set_override+0xd0/0x164
+    [<000000003e9c4ea5>] rpmsg_register_device_override+0x98/0x170
+    [<000000001c0c89a8>] rpmsg_ns_register_device+0x24/0x30
+    [<000000008bbf8fa2>] rpmsg_probe+0x2e0/0x3ec
+    [<00000000e65a68df>] virtio_dev_probe+0x1c0/0x280
+    [<00000000443331cc>] really_probe+0xbc/0x2dc
+    [<00000000391064b1>] __driver_probe_device+0x78/0xe0
+    [<00000000a41c9a5b>] driver_probe_device+0xd8/0x160
+    [<000000009c3bd5df>] __device_attach_driver+0xb8/0x140
+    [<0000000043cd7614>] bus_for_each_drv+0x7c/0xd4
+    [<000000003b929a36>] __device_attach+0x9c/0x19c
+    [<00000000a94e0ba8>] device_initial_probe+0x14/0x20
+    [<000000003c999637>] bus_probe_device+0xa0/0xac
+
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Fixes: b0b03b811963 ("rpmsg: Release rpmsg devices in backends")
 Cc: stable@vger.kernel.org
-Reported-and-tested-by: George Melikov <mail@gmelikov.ru>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3073
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20231215020049.78750-1-xiaolei.wang@windriver.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/rpmsg/virtio_rpmsg_bus.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1427,6 +1427,20 @@ static const struct dmi_system_id gpioli
- 			.ignore_wake = "INT33FF:01@0",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups from TP_ATTN# pin
-+		 * Found in BIOS 0.35
-+		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3073
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "GPD"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "G1619-04"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_wake = "PNP0C50:00@8",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
+--- a/drivers/rpmsg/virtio_rpmsg_bus.c
++++ b/drivers/rpmsg/virtio_rpmsg_bus.c
+@@ -381,6 +381,7 @@ static void virtio_rpmsg_release_device(
+ 	struct rpmsg_device *rpdev = to_rpmsg_device(dev);
+ 	struct virtio_rpmsg_channel *vch = to_virtio_rpmsg_channel(rpdev);
+ 
++	kfree(rpdev->driver_override);
+ 	kfree(vch);
+ }
  
 
 
