@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8C31E4B2;
-	Wed, 21 Feb 2024 13:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082C51E4B2;
+	Wed, 21 Feb 2024 13:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523202; cv=none; b=M13v3QfziyarxmTUVQy0DohNKI7kF9P5/FznHYB+wYf0iJLJlx2P3bj5a0ItxCyrf0OdYAIJOUDBggzmtFeZ/hieiuK2+DlE7CboTkKb2ctNH8dbY/JL/k0fSkYjKV14qNLiXinIEYbxIPhnKb2Q2q9vn7jpOjJJ6WyUbTECoRw=
+	t=1708523205; cv=none; b=b2L0pdZlvrfY0pGSv5uJnNHOE9kJr6Vt67fFk7+SOc/keEoiPnngSP1e0EzOJIWChDJ1zUFTnOWbTOFrcxcVoGK6Z9ceRRm0sjtjvk453MXS6TFviAtkv5XC7VkOhXj2MyQuvjc7vR3Qqm08tBqjeSNcgyW5kQFXvInCNOja8Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523202; c=relaxed/simple;
-	bh=llwHlXrtnhWFBlexRiSln0jFBvN3t5BwGAJP79ab3sU=;
+	s=arc-20240116; t=1708523205; c=relaxed/simple;
+	bh=xS8puSolasXwKy9m2X4SqetjbC2BRBb2cZYyutOl4V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AczOaD6nNo8SCAngyFtehCC847AOMZ/J9ulCyETyA344NVukVjA7Mjy0QlE4VetCvwvBJVB4xItzx72aTbQUQHjlc0F5W3Il9nCdyx8/r+3flkOtuxQLEp3j8me+HA0lCxD+tfYDtcjqjt1dgDhCsggiUmCWWvqQTzeTdItCgiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtcX0H8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=W1Rf2dtCYIeQUvoLxkXvqxyvvAsyVfl3S06+dQymkwfv+qobErgKIYSrXD+g0fCt33ZpGOyjDTutD4g/iehqRhlZUWtl2sAczmnbwWEU01vXUOS1AUsASG1/Sw/Zv9zC/syYdRExApbkOzwZfaLe3PCIio+NgTA+I0Icr1tjct4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+jEomft; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtcX0H8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DCAC43390;
-	Wed, 21 Feb 2024 13:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+jEomft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D01C433F1;
+	Wed, 21 Feb 2024 13:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523202;
-	bh=llwHlXrtnhWFBlexRiSln0jFBvN3t5BwGAJP79ab3sU=;
+	s=korg; t=1708523204;
+	bh=xS8puSolasXwKy9m2X4SqetjbC2BRBb2cZYyutOl4V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtcX0H8qZISNxD5ZMU2sDQnXhM6TwsAoRhRK8N8m2mns1RFwJIXtYWZZa94v7SFa+
-	 /NuK72z62T3LKKeMQMCdAR7C1spaZJvpNBEHT9K3QxEOM9SMMjru596tsx9vDrDboW
-	 KBIvCdA30RCSUkrjU4flNe2oTmSSF6zWgzNKVgeI=
+	b=a+jEomfttXuhqqDurR1bAVJuK9vJHfIzxdLw7BwsXb2r42cHdyvryaCFyhS9rq0pS
+	 G/E1B2yOUpxzVF2z1R8Q/BX0pK5xa6d5tXLy/boPrGhlUQsbCwgCTezMvIO4Q608Ta
+	 BmF2aVvwUD22viqhbZwKtjjCBdTwzPUi3J9LzGew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 366/476] usb: ucsi_acpi: Fix command completion handling
-Date: Wed, 21 Feb 2024 14:06:57 +0100
-Message-ID: <20240221130021.556237422@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 367/476] USB: hub: check for alternate port before enabling A_ALT_HNP_SUPPORT
+Date: Wed, 21 Feb 2024 14:06:58 +0100
+Message-ID: <20240221130021.602312434@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -44,81 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 2840143e393a4ddc1caab4372969ea337371168c upstream.
+commit f17c34ffc792bbb520e4b61baa16b6cfc7d44b13 upstream.
 
-In case of a spurious or otherwise delayed notification it is
-possible that CCI still reports the previous completion. The
-UCSI spec is aware of this and provides two completion bits in
-CCI, one for normal commands and one for acks. As acks and commands
-alternate the notification handler can determine if the completion
-bit is from the current command.
+The OTG 1.3 spec has the feature A_ALT_HNP_SUPPORT, which tells
+a device that it is connected to the wrong port. Some devices
+refuse to operate if you enable that feature, because it indicates
+to them that they ought to request to be connected to another port.
 
-The initial UCSI code correctly handled this but the distinction
-between the two completion bits was lost with the introduction of
-the new API.
+According to the spec this feature may be used based only the following
+three conditions:
 
-To fix this revive the ACK_PENDING bit for ucsi_acpi and only complete
-commands if the completion bit matches.
+6.5.3 a_alt_hnp_support
+Setting this feature indicates to the B-device that it is connected to
+an A-device port that is not capable of HNP, but that the A-device does
+have an alternate port that is capable of HNP.
+The A-device is required to set this feature under the following conditions:
+• the A-device has multiple receptacles
+• the A-device port that connects to the B-device does not support HNP
+• the A-device has another port that does support HNP
 
-Fixes: f56de278e8ec ("usb: typec: ucsi: acpi: Move to the new API")
-Cc: stable@vger.kernel.org
-Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240121204123.275441-3-lk@c--e.de
+A check for the third and first condition is missing. Add it.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Fixes: 7d2d641c44269 ("usb: otg: don't set a_alt_hnp_support feature for OTG 2.0 device")
+Link: https://lore.kernel.org/r/20240122153545.12284-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_acpi.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/usb/core/hub.c |   30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -70,9 +70,13 @@ static int ucsi_acpi_sync_write(struct u
- 				const void *val, size_t val_len)
- {
- 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
-+	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
- 	int ret;
- 
--	set_bit(COMMAND_PENDING, &ua->flags);
-+	if (ack)
-+		set_bit(ACK_PENDING, &ua->flags);
-+	else
-+		set_bit(COMMAND_PENDING, &ua->flags);
- 
- 	ret = ucsi_acpi_async_write(ucsi, offset, val, val_len);
- 	if (ret)
-@@ -82,7 +86,10 @@ static int ucsi_acpi_sync_write(struct u
- 		ret = -ETIMEDOUT;
- 
- out_clear_bit:
--	clear_bit(COMMAND_PENDING, &ua->flags);
-+	if (ack)
-+		clear_bit(ACK_PENDING, &ua->flags);
-+	else
-+		clear_bit(COMMAND_PENDING, &ua->flags);
- 
- 	return ret;
- }
-@@ -106,8 +113,10 @@ static void ucsi_acpi_notify(acpi_handle
- 	if (UCSI_CCI_CONNECTOR(cci))
- 		ucsi_connector_change(ua->ucsi, UCSI_CCI_CONNECTOR(cci));
- 
--	if (test_bit(COMMAND_PENDING, &ua->flags) &&
--	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
-+	if (cci & UCSI_CCI_ACK_COMPLETE && test_bit(ACK_PENDING, &ua->flags))
-+		complete(&ua->complete);
-+	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
-+	    test_bit(COMMAND_PENDING, &ua->flags))
- 		complete(&ua->complete);
- }
- 
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2368,17 +2368,25 @@ static int usb_enumerate_device_otg(stru
+ 			}
+ 		} else if (desc->bLength == sizeof
+ 				(struct usb_otg_descriptor)) {
+-			/* Set a_alt_hnp_support for legacy otg device */
+-			err = usb_control_msg(udev,
+-				usb_sndctrlpipe(udev, 0),
+-				USB_REQ_SET_FEATURE, 0,
+-				USB_DEVICE_A_ALT_HNP_SUPPORT,
+-				0, NULL, 0,
+-				USB_CTRL_SET_TIMEOUT);
+-			if (err < 0)
+-				dev_err(&udev->dev,
+-					"set a_alt_hnp_support failed: %d\n",
+-					err);
++			/*
++			 * We are operating on a legacy OTP device
++			 * These should be told that they are operating
++			 * on the wrong port if we have another port that does
++			 * support HNP
++			 */
++			if (bus->otg_port != 0) {
++				/* Set a_alt_hnp_support for legacy otg device */
++				err = usb_control_msg(udev,
++					usb_sndctrlpipe(udev, 0),
++					USB_REQ_SET_FEATURE, 0,
++					USB_DEVICE_A_ALT_HNP_SUPPORT,
++					0, NULL, 0,
++					USB_CTRL_SET_TIMEOUT);
++				if (err < 0)
++					dev_err(&udev->dev,
++						"set a_alt_hnp_support failed: %d\n",
++						err);
++			}
+ 		}
+ 	}
+ #endif
 
 
