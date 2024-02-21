@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B5C6A8D6;
-	Wed, 21 Feb 2024 14:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD2A3CF42;
+	Wed, 21 Feb 2024 14:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525440; cv=none; b=e/Ivy7bLwCrwxtbza16Xvj9X6AZjcndlixLl2XE/YtA1Mv6a2kFhYozwDhOnSt16wZg/XnGjdueT8iLLZpTZqkaDYTPbGvkGse6fadFfy+jUibsNZegUoPt1sjGyA86dkwSQ6v3OUIHwGSBasdPHGKcm3qTXOivwVWC7jmR3/EE=
+	t=1708525448; cv=none; b=ry1sQ1hX8QjAqKlD/cyfDfPpZAXeNrxd+x8RhS3KDMRo3tf48ppMgCre+f1AMQwXdpv9X8d4R7pjSnKoPhdBqQNh14xcXOG5qggZO1le0hcEhSshdBDKg8MOQx4CK7KMhV+3iFXOFHpooMQ6vGMmwQDi/11Z/Z7sekjwDN37gOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525440; c=relaxed/simple;
-	bh=9GbE1nv24KzijyyFu8pWhocWTc+IYZPrkMAvjEVkmmQ=;
+	s=arc-20240116; t=1708525448; c=relaxed/simple;
+	bh=WVC0KxXho6P5b2SY1S4VORYeGFuBKMDFrpfeBEvY+xM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t8N96HLQXNmQNpZY9ZXYNDrb3NDJ/128ojIRqzgWRhVrYWQ5pjjWGdO2dQth1kDtM1oFaRFuo/Nwlk52zn/XD4pIgmqJ38vIas+k1/LfUGFWoub0JzAbEeBLcH221xRhaKquZOQ3Ouk9qkiP2CB/zykFDWcLDnSrgjBO2hhnaVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDVT5ZsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IYceETKNcYhhseY9Pn80BgiSYoPpJU4ZvmvqPy7NTKO/b+DXEuu6keTgN27QRgXLblWsIMGv4LtCDWpD+EePLe/vyYSf8VXgwAVjWsJMcABvYK4NZJQ508LDtA/F2lK5p52euum0rrFAhmhGmAp/OjTmL1GUCE4u20+owWhiJLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9+qvnyo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDVT5ZsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80D6C433C7;
-	Wed, 21 Feb 2024 14:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9+qvnyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD6AC433C7;
+	Wed, 21 Feb 2024 14:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525440;
-	bh=9GbE1nv24KzijyyFu8pWhocWTc+IYZPrkMAvjEVkmmQ=;
+	s=korg; t=1708525448;
+	bh=WVC0KxXho6P5b2SY1S4VORYeGFuBKMDFrpfeBEvY+xM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yDVT5ZsTF9ndPqk5qh00wyZYW3eVU+hT+mk8a1e4fPfIgPaXtLXggfbcvYtEtNMmQ
-	 p9yGNVaPaY5V4Gf0miXZ0zrZPZ/AxOraSzFGWQiMXQk/UhCmpvlikumgdMQFL80tR3
-	 BmXfO/pevRJZzFPve4WI5QorKzGMLizOxLoYrwuw=
+	b=d9+qvnyov7lt4l0YowHB4nLbtFfpDVxNKZOrEQh4DWqEWcYhBz8vH+z6hKPhlerli
+	 0qDiPWXJVjJoc8kQ9VP156x0KD5OFm5DV1rSQ9BS0E//Fw/JgfzVHsYOONosDBmly2
+	 z/W75oXO469spWxJCof8ym2a7Pd4KcNv19ESwXiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Monk Liu <Monk.Liu@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 156/267] drm/amdgpu: Release adev->pm.fw before return in amdgpu_device_need_post()
-Date: Wed, 21 Feb 2024 14:08:17 +0100
-Message-ID: <20240221125944.974632841@linuxfoundation.org>
+Subject: [PATCH 5.4 157/267] perf: Fix the nr_addr_filters fix
+Date: Wed, 21 Feb 2024 14:08:18 +0100
+Message-ID: <20240221125945.003883258@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -48,49 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 8a44fdd3cf91debbd09b43bd2519ad2b2486ccf4 ]
+[ Upstream commit 388a1fb7da6aaa1970c7e2a7d7fcd983a87a8484 ]
 
-In function 'amdgpu_device_need_post(struct amdgpu_device *adev)' -
-'adev->pm.fw' may not be released before return.
+Thomas reported that commit 652ffc2104ec ("perf/core: Fix narrow
+startup race when creating the perf nr_addr_filters sysfs file") made
+the entire attribute group vanish, instead of only the nr_addr_filters
+attribute.
 
-Using the function release_firmware() to release adev->pm.fw.
+Additionally a stray return.
 
-Thus fixing the below:
-drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1571 amdgpu_device_need_post() warn: 'adev->pm.fw' from request_firmware() not released on lines: 1554.
+Insufficient coffee was involved with both writing and merging the
+patch.
 
-Cc: Monk Liu <Monk.Liu@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 652ffc2104ec ("perf/core: Fix narrow startup race when creating the perf nr_addr_filters sysfs file")
+Reported-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Link: https://lkml.kernel.org/r/20231122100756.GP8262@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/events/core.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index e5032eb9ae29..9dcb38bab0e1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -847,6 +847,7 @@ bool amdgpu_device_need_post(struct amdgpu_device *adev)
- 				return true;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 3ec29a27d877..f18a5bbc66ef 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -10089,12 +10089,10 @@ static umode_t pmu_dev_is_visible(struct kobject *kobj, struct attribute *a, int
+ 	struct device *dev = kobj_to_dev(kobj);
+ 	struct pmu *pmu = dev_get_drvdata(dev);
  
- 			fw_ver = *((uint32_t *)adev->pm.fw->data + 69);
-+			release_firmware(adev->pm.fw);
- 			if (fw_ver < 0x00160e00)
- 				return true;
- 		}
+-	if (!pmu->nr_addr_filters)
++	if (n == 2 && !pmu->nr_addr_filters)
+ 		return 0;
+ 
+ 	return a->mode;
+-
+-	return 0;
+ }
+ 
+ static struct attribute_group pmu_dev_attr_group = {
 -- 
 2.43.0
 
