@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A265B3FB21;
-	Wed, 21 Feb 2024 13:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C167C081;
+	Wed, 21 Feb 2024 13:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522491; cv=none; b=G5eL2cTnLshhjydjMHRTb1t2i79GT6ZsJQ/kzo0EE7PDNMD13FB3kYRhgKp51DmPmozMKDWqDM1sojrpfM9Ia0X3xfQP82kEW/xyoxMd4rVXqcv3ayY2zutjJ/ODJ/A+xakeEUO5yG/VVTjziLRrMgoGcYZtI1xlQwhHtowg6vc=
+	t=1708522500; cv=none; b=IsfcbGDMFxrKVHTagHRKAnjuzF6sVKr/sQEK0uGSUTXA3GP4bzBc7t1Y4FVfX9bqXN35DdA/1Y237iRLtemgwGjnmIFjEeM1CGaXBfjxTlqYReN0KjXfqctPY9avwwVGa5umXl+Lbq4a4HgW/OyN252Q1Ss4AX8ehJaKmAIWRFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522491; c=relaxed/simple;
-	bh=2XDSceo2setOmVMKyV4Ni42xvAk14S+klYYfN5rbY7k=;
+	s=arc-20240116; t=1708522500; c=relaxed/simple;
+	bh=/IofiOhR7dVpi2qBnTgd9YB+5eHwwANY3NXA4boDFCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqL1IplnNVvI4kRyu77RyNLKOLOCq3gzbGZO3Ov4jwnbblLWFYApCUdXeudfVuTEMS3iigcCdi9RdT+3V/tVtSVUPdItLMofqT1c97cbsHPzOWzb59x4aEsoNP/DxrEW0usKSBVM/EE0G38mx8IeUROhkmKTRBeb1EZIj5AJeis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPTt7Rb2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFB3Fq0ZiJIMkgJdGHhkblUqilFJGmjavJ1HdE62Lc1mk0/1cEBpBeLxTjF9hKehmZH7ww7s62AjEsplbzA60CyM3SPz1tvlO9fZ5FvtQI/6GvPfpIEMbhj0akbOsh4O1+W4zI9liH7gMMf530XipFJvUkeCzu/NVcjiDrg1QkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKQBJIk4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPTt7Rb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAD5C433F1;
-	Wed, 21 Feb 2024 13:34:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKQBJIk4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7D5C433F1;
+	Wed, 21 Feb 2024 13:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522491;
-	bh=2XDSceo2setOmVMKyV4Ni42xvAk14S+klYYfN5rbY7k=;
+	s=korg; t=1708522499;
+	bh=/IofiOhR7dVpi2qBnTgd9YB+5eHwwANY3NXA4boDFCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XPTt7Rb28fxMtyJQ/eZem2Foy1BUDJdiNuvaOuVGAEY+ZuekWsf4zpZHMoj06Bq3a
-	 UP/AIUrnt4rpxq47TkiZlwTpJwLwmYDLMoWTLNSFd6Ap8aKqf6k+/UoF/ekZaw6Hur
-	 7i8DpmeU+OW5mkpuKYpWIgC9eJyG4Mo7XtmmV4zk=
+	b=NKQBJIk47VGvZBDfCibcO3UPnwCch11NYbO/ead5U2sr75kpVE6FUwfnHS1UNJJfo
+	 OVJDQG0jgMTfFkZQBErUbjgh9SXUH1gJ+5sxCdWP/nl/kPeaJeUHkMOnDpwcy/ZHIH
+	 JbZd7uBJsV/HIiPK/1cOwNahlK4/W3hA16RYKHsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weichen Chen <weichen.chen@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Kees Cook <keescook@chromium.org>,
+	Bharat Bhushan <bbhushan2@marvell.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/476] pstore/ram: Fix crash when setting number of cpus to an odd number
-Date: Wed, 21 Feb 2024 14:03:20 +0100
-Message-ID: <20240221130013.435243631@linuxfoundation.org>
+Subject: [PATCH 5.15 150/476] crypto: octeontx2 - Fix cptvf driver cleanup
+Date: Wed, 21 Feb 2024 14:03:21 +0100
+Message-ID: <20240221130013.474048322@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,45 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weichen Chen <weichen.chen@mediatek.com>
+From: Bharat Bhushan <bbhushan2@marvell.com>
 
-[ Upstream commit d49270a04623ce3c0afddbf3e984cb245aa48e9c ]
+[ Upstream commit c480a421a4faf693c38e60b0fe6e554c9a3fee02 ]
 
-When the number of cpu cores is adjusted to 7 or other odd numbers,
-the zone size will become an odd number.
-The address of the zone will become:
-    addr of zone0 = BASE
-    addr of zone1 = BASE + zone_size
-    addr of zone2 = BASE + zone_size*2
-    ...
-The address of zone1/3/5/7 will be mapped to non-alignment va.
-Eventually crashes will occur when accessing these va.
+This patch fixes following cleanup issues:
+ - Missing instruction queue free on cleanup. This
+   will lead to memory leak.
+ - lfs->lfs_num is set to zero before cleanup, which
+   will lead to improper cleanup.
 
-So, use ALIGN_DOWN() to make sure the zone size is even
-to avoid this bug.
-
-Signed-off-by: Weichen Chen <weichen.chen@mediatek.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Tested-by: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Link: https://lore.kernel.org/r/20230224023632.6840-1-weichen.chen@mediatek.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Bharat Bhushan <bbhushan2@marvell.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/marvell/octeontx2/otx2_cptlf.c      | 6 ++++--
+ drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c | 3 +++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index f3fa3625d772..e15b4631364a 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -519,6 +519,7 @@ static int ramoops_init_przs(const char *name,
- 	}
+diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptlf.c b/drivers/crypto/marvell/octeontx2/otx2_cptlf.c
+index c8350fcd60fa..dc0c25f0a11a 100644
+--- a/drivers/crypto/marvell/octeontx2/otx2_cptlf.c
++++ b/drivers/crypto/marvell/octeontx2/otx2_cptlf.c
+@@ -414,8 +414,8 @@ int otx2_cptlf_init(struct otx2_cptlfs_info *lfs, u8 eng_grp_mask, int pri,
+ 	return 0;
  
- 	zone_sz = mem_sz / *cnt;
-+	zone_sz = ALIGN_DOWN(zone_sz, 2);
- 	if (!zone_sz) {
- 		dev_err(dev, "%s zone size == 0\n", name);
- 		goto fail;
+ free_iq:
+-	otx2_cpt_free_instruction_queues(lfs);
+ 	cptlf_hw_cleanup(lfs);
++	otx2_cpt_free_instruction_queues(lfs);
+ detach_rsrcs:
+ 	otx2_cpt_detach_rsrcs_msg(lfs);
+ clear_lfs_num:
+@@ -425,9 +425,11 @@ int otx2_cptlf_init(struct otx2_cptlfs_info *lfs, u8 eng_grp_mask, int pri,
+ 
+ void otx2_cptlf_shutdown(struct otx2_cptlfs_info *lfs)
+ {
+-	lfs->lfs_num = 0;
+ 	/* Cleanup LFs hardware side */
+ 	cptlf_hw_cleanup(lfs);
++	/* Free instruction queues */
++	otx2_cpt_free_instruction_queues(lfs);
+ 	/* Send request to detach LFs */
+ 	otx2_cpt_detach_rsrcs_msg(lfs);
++	lfs->lfs_num = 0;
+ }
+diff --git a/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c b/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c
+index 3411e664cf50..73de61ebbbcf 100644
+--- a/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c
++++ b/drivers/crypto/marvell/octeontx2/otx2_cptvf_main.c
+@@ -249,8 +249,11 @@ static void cptvf_lf_shutdown(struct otx2_cptlfs_info *lfs)
+ 	otx2_cptlf_unregister_interrupts(lfs);
+ 	/* Cleanup LFs software side */
+ 	lf_sw_cleanup(lfs);
++	/* Free instruction queues */
++	otx2_cpt_free_instruction_queues(lfs);
+ 	/* Send request to detach LFs */
+ 	otx2_cpt_detach_rsrcs_msg(lfs);
++	lfs->lfs_num = 0;
+ }
+ 
+ static int cptvf_lf_init(struct otx2_cptvf_dev *cptvf)
 -- 
 2.43.0
 
