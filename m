@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD58C1E4B2;
-	Wed, 21 Feb 2024 13:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DCE7C081;
+	Wed, 21 Feb 2024 13:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522252; cv=none; b=QI4ZVczYQ6V0pSRoX6WDsR9cXmo4vXZBDJCpSy+ZbHf1qgGr5FlHnVVTJ8Qj1kQEjdbCNrI/nzXQ0ZYMoM94z0SLYFUVPqWMDwwsPg1As3IISs17P8KkTBsoyxIdPSHYCIFObyLOVdmuP3pK4jh8+lDY35XNknyu7wXb0x1TTxk=
+	t=1708522255; cv=none; b=i1Iz6hN0qvxP6JgL3dB6J1iiR8VuzVnf21T/SbWTXTcjN8Sd3QQUj7rsZ/gFEt+PxaDy927fDEETc6gJsqO5uDqWxYXVQHiMB/IHIN3u4nYoTb5z/bzCV3+A7+xM5Unec7O1nvp5E+hHz75iVF8LcMRwIZUn8mqVqdOA1M3Te08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522252; c=relaxed/simple;
-	bh=kB5nK/K8kBHBHi5ltUT+r3WHlUEFFDx4d9K747QrlS0=;
+	s=arc-20240116; t=1708522255; c=relaxed/simple;
+	bh=kW1QYP3CoBCBV6DOBRi7gd7BobdYIzkG345QuQ3lymw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQ5X/ZzF5MRpXUqwSk9OV50ts3fOAWtYhTkChd/4gCIc1HpO3xpVKIrwX+t9r3y/9vr/Rz0JiBlksO75pp4x0Lr/ThGSZI8sZxc9cgWnSNQrrny4cugz20StYBUeEoOguT7/YXezLXKGm2A/boLa8dPgNRYRBrSYaSlkkgHjpUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/kk9vbS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JUnU95OHXLWXixfYEls7QgKbtFDRQ1lcj+Clizfnir69KJ6Y+JFqnoZz+tl/JsleeAefTmtEw+iH2c+DhB7CpPDZr8y2c+k7erGL7ozghiUcgRaN8FKT5vAUE1zT2ssRJ6zc0Pshibu6EHRXTARIBVGTl8SyumwysJGIZa45iDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsh2wfgK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/kk9vbS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A8BC433F1;
-	Wed, 21 Feb 2024 13:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsh2wfgK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4416AC433F1;
+	Wed, 21 Feb 2024 13:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522252;
-	bh=kB5nK/K8kBHBHi5ltUT+r3WHlUEFFDx4d9K747QrlS0=;
+	s=korg; t=1708522255;
+	bh=kW1QYP3CoBCBV6DOBRi7gd7BobdYIzkG345QuQ3lymw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/kk9vbSGPBKXNg/YjOGinsYCAE7zmchzx5UIIE0dyBRQvLbTekmP5+JI1EvLMQQJ
-	 eJrRj3mbgGUpoqRG2e0aDJ/TQhRfy47Dt+mQry0HwUwuFh2QbiaKXokO1ZJP0FRcCq
-	 mVC5vHOE+bepWlDybaj/C3Zo4CEpXnWEoQLihhuc=
+	b=gsh2wfgKxek+klCEzlhcJ1TdCvO7DOIWWzJMgkxlIjy7K/8WJedMEazwn69AO7tMr
+	 oP4n2CcRWdiEYzlnbCONf2H2NEOGVaLUifFPIB7cBZ7if2xJxpUXz+CXTCjCyaFrUZ
+	 879xbvTD1IeWZvfYpaLmPXRXxbDHWrpNLSqEvB5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Notselwyn <notselwyn@pwning.tech>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 087/476] netfilter: nf_tables: reject QUEUE/DROP verdict parameters
-Date: Wed, 21 Feb 2024 14:02:18 +0100
-Message-ID: <20240221130011.203154236@linuxfoundation.org>
+	Xinglong Yang <xinglong.yang@cixtech.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>
+Subject: [PATCH 5.15 088/476] firmware: arm_scmi: Check mailbox/SMT channel for consistency
+Date: Wed, 21 Feb 2024 14:02:19 +0100
+Message-ID: <20240221130011.233913823@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,69 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit f342de4e2f33e0e39165d8639387aa6c19dff660 upstream.
+commit 437a310b22244d4e0b78665c3042e5d1c0f45306 upstream.
 
-This reverts commit e0abdadcc6e1.
+On reception of a completion interrupt the shared memory area is accessed
+to retrieve the message header at first and then, if the message sequence
+number identifies a transaction which is still pending, the related
+payload is fetched too.
 
-core.c:nf_hook_slow assumes that the upper 16 bits of NF_DROP
-verdicts contain a valid errno, i.e. -EPERM, -EHOSTUNREACH or similar,
-or 0.
+When an SCMI command times out the channel ownership remains with the
+platform until eventually a late reply is received and, as a consequence,
+any further transmission attempt remains pending, waiting for the channel
+to be relinquished by the platform.
 
-Due to the reverted commit, its possible to provide a positive
-value, e.g. NF_ACCEPT (1), which results in use-after-free.
+Once that late reply is received the channel ownership is given back
+to the agent and any pending request is then allowed to proceed and
+overwrite the SMT area of the just delivered late reply; then the wait
+for the reply to the new request starts.
 
-Its not clear to me why this commit was made.
+It has been observed that the spurious IRQ related to the late reply can
+be wrongly associated with the freshly enqueued request: when that happens
+the SCMI stack in-flight lookup procedure is fooled by the fact that the
+message header now present in the SMT area is related to the new pending
+transaction, even though the real reply has still to arrive.
 
-NF_QUEUE is not used by nftables; "queue" rules in nftables
-will result in use of "nft_queue" expression.
+This race-condition on the A2P channel can be detected by looking at the
+channel status bits: a genuine reply from the platform will have set the
+channel free bit before triggering the completion IRQ.
 
-If we later need to allow specifiying errno values from userspace
-(do not know why), this has to call NF_DROP_GETERR and check that
-"err <= 0" holds true.
+Add a consistency check to validate such condition in the A2P ISR.
 
-Fixes: e0abdadcc6e1 ("netfilter: nf_tables: accept QUEUE/DROP verdict parameters")
-Cc: stable@vger.kernel.org
-Reported-by: Notselwyn <notselwyn@pwning.tech>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Xinglong Yang <xinglong.yang@cixtech.com>
+Closes: https://lore.kernel.org/all/PUZPR06MB54981E6FA00D82BFDBB864FBF08DA@PUZPR06MB5498.apcprd06.prod.outlook.com/
+Fixes: 5c8a47a5a91d ("firmware: arm_scmi: Make scmi core independent of the transport type")
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Tested-by: Xinglong Yang <xinglong.yang@cixtech.com>
+Link: https://lore.kernel.org/r/20231220172112.763539-1-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/firmware/arm_scmi/common.h  |    1 +
+ drivers/firmware/arm_scmi/mailbox.c |   14 ++++++++++++++
+ drivers/firmware/arm_scmi/shmem.c   |    6 ++++++
+ 3 files changed, 21 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10251,16 +10251,10 @@ static int nft_verdict_init(const struct
- 	data->verdict.code = ntohl(nla_get_be32(tb[NFTA_VERDICT_CODE]));
+--- a/drivers/firmware/arm_scmi/common.h
++++ b/drivers/firmware/arm_scmi/common.h
+@@ -439,6 +439,7 @@ void shmem_fetch_notification(struct scm
+ void shmem_clear_channel(struct scmi_shared_mem __iomem *shmem);
+ bool shmem_poll_done(struct scmi_shared_mem __iomem *shmem,
+ 		     struct scmi_xfer *xfer);
++bool shmem_channel_free(struct scmi_shared_mem __iomem *shmem);
  
- 	switch (data->verdict.code) {
--	default:
--		switch (data->verdict.code & NF_VERDICT_MASK) {
--		case NF_ACCEPT:
--		case NF_DROP:
--		case NF_QUEUE:
--			break;
--		default:
--			return -EINVAL;
--		}
--		fallthrough;
-+	case NF_ACCEPT:
-+	case NF_DROP:
-+	case NF_QUEUE:
-+		break;
- 	case NFT_CONTINUE:
- 	case NFT_BREAK:
- 	case NFT_RETURN:
-@@ -10295,6 +10289,8 @@ static int nft_verdict_init(const struct
+ /* declarations for message passing transports */
+ struct scmi_msg_payld;
+--- a/drivers/firmware/arm_scmi/mailbox.c
++++ b/drivers/firmware/arm_scmi/mailbox.c
+@@ -43,6 +43,20 @@ static void rx_callback(struct mbox_clie
+ {
+ 	struct scmi_mailbox *smbox = client_to_scmi_mailbox(cl);
  
- 		data->verdict.chain = chain;
- 		break;
-+	default:
-+		return -EINVAL;
- 	}
++	/*
++	 * An A2P IRQ is NOT valid when received while the platform still has
++	 * the ownership of the channel, because the platform at first releases
++	 * the SMT channel and then sends the completion interrupt.
++	 *
++	 * This addresses a possible race condition in which a spurious IRQ from
++	 * a previous timed-out reply which arrived late could be wrongly
++	 * associated with the next pending transaction.
++	 */
++	if (cl->knows_txdone && !shmem_channel_free(smbox->shmem)) {
++		dev_warn(smbox->cinfo->dev, "Ignoring spurious A2P IRQ !\n");
++		return;
++	}
++
+ 	scmi_rx_callback(smbox->cinfo, shmem_read_header(smbox->shmem), NULL);
+ }
  
- 	desc->len = sizeof(data->verdict);
+--- a/drivers/firmware/arm_scmi/shmem.c
++++ b/drivers/firmware/arm_scmi/shmem.c
+@@ -99,3 +99,9 @@ bool shmem_poll_done(struct scmi_shared_
+ 		(SCMI_SHMEM_CHAN_STAT_CHANNEL_ERROR |
+ 		 SCMI_SHMEM_CHAN_STAT_CHANNEL_FREE);
+ }
++
++bool shmem_channel_free(struct scmi_shared_mem __iomem *shmem)
++{
++	return (ioread32(&shmem->channel_status) &
++			SCMI_SHMEM_CHAN_STAT_CHANNEL_FREE);
++}
 
 
