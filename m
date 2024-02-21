@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9966F074;
-	Wed, 21 Feb 2024 13:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FC01E4B2;
+	Wed, 21 Feb 2024 13:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523032; cv=none; b=oFyuD1FWGgZyYjEm1d6BP/txTT63qkrdu9Bo9ZCtTxyLD/kgSbTXIdW51DYxIvLwyWjdkvfnIQk8PswThTS2sWKWJ/EqreLQVjUUVy0PIhrVgbOOpzNLyAtjaW0swBijuwmSWn7rtStZ5gChQe+SY1Tu8n+r7nFG/o4yQqdnapI=
+	t=1708523036; cv=none; b=Szinq7nkIec8Lkl/FKd/aDvU/NcBKrrj+rWUZzmQ/fknKN6wtJ65ZN24oQSqf7Ctro78yXEKi8YgoTBvVn9EV2fgRpaWzsjCvs8siwvkitNHe64oY5HP6tXknQc2ncpIbDyMMUC4NuYi/dLAIW+BLPaBWDIPcVJsaNvtV+CR3mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523032; c=relaxed/simple;
-	bh=RR6IX5igTFlrtWwgAMTywaCeHOqw187/OL4R9F40ykM=;
+	s=arc-20240116; t=1708523036; c=relaxed/simple;
+	bh=DoYrstMneQxsRzIItpXslW2mAGarsUMY0YNRWZaK+34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=isnERoY5wFqhUGMHo4vfeULRlyj6nA3tjKykUwPhVUpXGGO7KbKeEmP4/pOmyU8IdV2UhQq9ADPuxYQ5s7pvnJ3n/e5I+KyYn70O7xzG9AyCEHj6K48f+FECR/FPVtvXnwJdv2kx/TIUj+Jp3UyjaCuZy+eJRboDeB/JTw2YFh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CYQd4BGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5eQUUgkhs91dQi0M8KJHok20mDZOE42XbpFQZfGpF4qP2DD2+/9cTnAMHPigRbzcfUNQt7DLh4WlpjILqyZ7efZNUk3oSPd21jTTPZkfDwl9xf/sRyuh2LBbUwbWArwATO5N/xluYdc2UXCuNmnwDF6Xkuvl+2CtB3e3YHVh9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcIyby3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CYQd4BGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C56C433C7;
-	Wed, 21 Feb 2024 13:43:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcIyby3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B37C433C7;
+	Wed, 21 Feb 2024 13:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523032;
-	bh=RR6IX5igTFlrtWwgAMTywaCeHOqw187/OL4R9F40ykM=;
+	s=korg; t=1708523035;
+	bh=DoYrstMneQxsRzIItpXslW2mAGarsUMY0YNRWZaK+34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYQd4BGMmwpHFHcVYToyyZTLoRFTd360SfoPa7C1vBW5DTwKGNZqNw3Oj3777P/ST
-	 wLmGBXM4cbS38Bts/9thycJY4F7N0dguuElC8vjfgAGfFow1egXXx3Jl/nqm9kk2hX
-	 bgmfge2dcEIhamzcznYPHDmLaLJJnvDc7+D+DrG0=
+	b=PcIyby3XkdRMT69RDohHhVrOnUqWYGC7OKzRod9FRl8ky55RcA2QB+d1byMy3Ap4D
+	 5PC3xybDRjdlmxfSb4dfAjkYn111jihX3kNFXfqqgdsxQIDBKnQSNMlO7d5yTKQ+VT
+	 MH+jYYZncHoi8fbEGNMTrQ0I9VRQ3xoR2l/51cJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Jayamohanan Pillai <Aurabindo.Pillai@amd.com>,
-	Mikita Lipski <mikita.lipski@amd.com>,
-	Anson Jacob <Anson.Jacob@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Roman Li <roman.li@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 320/476] drm/amd/display: Fix multiple memory leaks reported by coverity
-Date: Wed, 21 Feb 2024 14:06:11 +0100
-Message-ID: <20240221130019.840752400@linuxfoundation.org>
+Subject: [PATCH 5.15 321/476] drm/amd/display: Implement bounds check for stream encoder creation in DCN301
+Date: Wed, 21 Feb 2024 14:06:12 +0100
+Message-ID: <20240221130019.878627648@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -54,109 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anson Jacob <Anson.Jacob@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 7b89bf83181363a84f86da787159ddbbef505b8c ]
+[ Upstream commit 58fca355ad37dcb5f785d9095db5f748b79c5dc2 ]
 
-coccinelle patch used:
+'stream_enc_regs' array is an array of dcn10_stream_enc_registers
+structures. The array is initialized with four elements, corresponding
+to the four calls to stream_enc_regs() in the array initializer. This
+means that valid indices for this array are 0, 1, 2, and 3.
 
-@@ expression enc1,vpg,afmt; @@
--       if (!enc1 || !vpg || !afmt)
-+       if (!enc1 || !vpg || !afmt) {
-+               kfree(enc1);
-+               kfree(vpg);
-+               kfree(afmt);
-                return NULL;
-+       }
+The error message 'stream_enc_regs' 4 <= 5 below, is indicating that
+there is an attempt to access this array with an index of 5, which is
+out of bounds. This could lead to undefined behavior
 
-Addresses-Coverity-ID: 1466017: ("Resource leaks")
+Here, eng_id is used as an index to access the stream_enc_regs array. If
+eng_id is 5, this would result in an out-of-bounds access on the
+stream_enc_regs array.
 
-Reviewed-by: Aurabindo Jayamohanan Pillai <Aurabindo.Pillai@amd.com>
-Acked-by: Mikita Lipski <mikita.lipski@amd.com>
-Signed-off-by: Anson Jacob <Anson.Jacob@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Thus fixing Buffer overflow error in dcn301_stream_encoder_create
+reported by Smatch:
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn301/dcn301_resource.c:1011 dcn301_stream_encoder_create() error: buffer overflow 'stream_enc_regs' 4 <= 5
+
+Fixes: 3a83e4e64bb1 ("drm/amd/display: Add dcn3.01 support to DC (v2)")
+Cc: Roman Li <Roman.Li@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 58fca355ad37 ("drm/amd/display: Implement bounds check for stream encoder creation in DCN301")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c   | 6 +++++-
- drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c | 6 +++++-
- drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c | 6 +++++-
- drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c   | 6 +++++-
- 4 files changed, 20 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c
-index 735c92a5aa36..e8d4a8044d1f 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_resource.c
-@@ -1164,8 +1164,12 @@ struct stream_encoder *dcn30_stream_encoder_create(
- 	vpg = dcn30_vpg_create(ctx, vpg_inst);
- 	afmt = dcn30_afmt_create(ctx, afmt_inst);
- 
--	if (!enc1 || !vpg || !afmt)
-+	if (!enc1 || !vpg || !afmt) {
-+		kfree(enc1);
-+		kfree(vpg);
-+		kfree(afmt);
- 		return NULL;
-+	}
- 
- 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios,
- 					eng_id, vpg, afmt,
 diff --git a/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c b/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c
-index dea358b01791..b6c363b462a7 100644
+index b6c363b462a7..a24f1c215da9 100644
 --- a/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c
 +++ b/drivers/gpu/drm/amd/display/dc/dcn301/dcn301_resource.c
-@@ -1195,8 +1195,12 @@ struct stream_encoder *dcn301_stream_encoder_create(
+@@ -1195,7 +1195,7 @@ struct stream_encoder *dcn301_stream_encoder_create(
  	vpg = dcn301_vpg_create(ctx, vpg_inst);
  	afmt = dcn301_afmt_create(ctx, afmt_inst);
  
--	if (!enc1 || !vpg || !afmt)
-+	if (!enc1 || !vpg || !afmt) {
-+		kfree(enc1);
-+		kfree(vpg);
-+		kfree(afmt);
- 		return NULL;
-+	}
- 
- 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios,
- 					eng_id, vpg, afmt,
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c b/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c
-index 2292bb82026e..7f04042d2213 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn302/dcn302_resource.c
-@@ -542,8 +542,12 @@ static struct stream_encoder *dcn302_stream_encoder_create(enum engine_id eng_id
- 	vpg = dcn302_vpg_create(ctx, vpg_inst);
- 	afmt = dcn302_afmt_create(ctx, afmt_inst);
- 
--	if (!enc1 || !vpg || !afmt)
-+	if (!enc1 || !vpg || !afmt) {
-+		kfree(enc1);
-+		kfree(vpg);
-+		kfree(afmt);
- 		return NULL;
-+	}
- 
- 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios, eng_id, vpg, afmt, &stream_enc_regs[eng_id],
- 			&se_shift, &se_mask);
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c
-index e224c5213258..4f7bc8829b20 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn31/dcn31_resource.c
-@@ -1291,8 +1291,12 @@ static struct stream_encoder *dcn31_stream_encoder_create(
- 	vpg = dcn31_vpg_create(ctx, vpg_inst);
- 	afmt = dcn31_afmt_create(ctx, afmt_inst);
- 
--	if (!enc1 || !vpg || !afmt)
-+	if (!enc1 || !vpg || !afmt) {
-+		kfree(enc1);
-+		kfree(vpg);
-+		kfree(afmt);
- 		return NULL;
-+	}
- 
- 	dcn30_dio_stream_encoder_construct(enc1, ctx, ctx->dc_bios,
- 					eng_id, vpg, afmt,
+-	if (!enc1 || !vpg || !afmt) {
++	if (!enc1 || !vpg || !afmt || eng_id >= ARRAY_SIZE(stream_enc_regs)) {
+ 		kfree(enc1);
+ 		kfree(vpg);
+ 		kfree(afmt);
 -- 
 2.43.0
 
