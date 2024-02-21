@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C31D78B4B;
-	Wed, 21 Feb 2024 13:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8C31E4B2;
+	Wed, 21 Feb 2024 13:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523194; cv=none; b=nAZyVQeX4MsEBm4YG8+9jaFDb25zxtBxMYvVjqYrGGElsN5k+R5C9/uXdHQsjiifh+3nH/mERrmdpcPrQv7+gEJqliDljwYFI9VqzffcwmRnFduv+XRJzRWITYhQxLyHjUgDmSXkKPPberNKYaLzaB486jF2LE6Og23F5V0Tu7c=
+	t=1708523202; cv=none; b=M13v3QfziyarxmTUVQy0DohNKI7kF9P5/FznHYB+wYf0iJLJlx2P3bj5a0ItxCyrf0OdYAIJOUDBggzmtFeZ/hieiuK2+DlE7CboTkKb2ctNH8dbY/JL/k0fSkYjKV14qNLiXinIEYbxIPhnKb2Q2q9vn7jpOjJJ6WyUbTECoRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523194; c=relaxed/simple;
-	bh=eyvOTqH3yMdghiou4EM/w8TwaFYc2RpK8ZiX+hIuKdY=;
+	s=arc-20240116; t=1708523202; c=relaxed/simple;
+	bh=llwHlXrtnhWFBlexRiSln0jFBvN3t5BwGAJP79ab3sU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ay2tcwsdrUBgJvPVeenHOpN9ppWz7StKEOYwrRaM4ywKVmh08wInMdhFbP5rMdjmCuWxGsLq0/rCWuP/NWiY7Ett8yHmyY3xth5A/0v8llbdjJ3yZH8x+Zj0ABMDkGkDTTMDdfjIPtZ+RnvVKEQGECtREr8baq+K/aQ41/fr17o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSJYB2rv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AczOaD6nNo8SCAngyFtehCC847AOMZ/J9ulCyETyA344NVukVjA7Mjy0QlE4VetCvwvBJVB4xItzx72aTbQUQHjlc0F5W3Il9nCdyx8/r+3flkOtuxQLEp3j8me+HA0lCxD+tfYDtcjqjt1dgDhCsggiUmCWWvqQTzeTdItCgiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtcX0H8q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSJYB2rv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9D3C433C7;
-	Wed, 21 Feb 2024 13:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtcX0H8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DCAC43390;
+	Wed, 21 Feb 2024 13:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523194;
-	bh=eyvOTqH3yMdghiou4EM/w8TwaFYc2RpK8ZiX+hIuKdY=;
+	s=korg; t=1708523202;
+	bh=llwHlXrtnhWFBlexRiSln0jFBvN3t5BwGAJP79ab3sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSJYB2rvRX3dhQG3f5s7MJEEjdlxocXIPeq7gPNrSVYzXssIpSGj8M7r8deH93UdG
-	 GrV8zMajNH0h6frSWcqlCwosBuRHoV03JGcv/GXDHEZZxA6FcMbxZlFnbl5glV6ofS
-	 7sU0p7Ffmerdtm0EkDfRSFlLiubx/FoTWlOcp+c8=
+	b=OtcX0H8qZISNxD5ZMU2sDQnXhM6TwsAoRhRK8N8m2mns1RFwJIXtYWZZa94v7SFa+
+	 /NuK72z62T3LKKeMQMCdAR7C1spaZJvpNBEHT9K3QxEOM9SMMjru596tsx9vDrDboW
+	 KBIvCdA30RCSUkrjU4flNe2oTmSSF6zWgzNKVgeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 357/476] tracing/trigger: Fix to return error if failed to alloc snapshot
-Date: Wed, 21 Feb 2024 14:06:48 +0100
-Message-ID: <20240221130021.199822181@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.15 366/476] usb: ucsi_acpi: Fix command completion handling
+Date: Wed, 21 Feb 2024 14:06:57 +0100
+Message-ID: <20240221130021.556237422@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,40 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
+commit 2840143e393a4ddc1caab4372969ea337371168c upstream.
 
-Fix register_snapshot_trigger() to return error code if it failed to
-allocate a snapshot instead of 0 (success). Unless that, it will register
-snapshot trigger without an error.
+In case of a spurious or otherwise delayed notification it is
+possible that CCI still reports the previous completion. The
+UCSI spec is aware of this and provides two completion bits in
+CCI, one for normal commands and one for acks. As acks and commands
+alternate the notification handler can determine if the completion
+bit is from the current command.
 
-Link: https://lore.kernel.org/linux-trace-kernel/170622977792.270660.2789298642759362200.stgit@devnote2
+The initial UCSI code correctly handled this but the distinction
+between the two completion bits was lost with the introduction of
+the new API.
 
-Fixes: 0bbe7f719985 ("tracing: Fix the race between registering 'snapshot' event trigger and triggering 'snapshot' operation")
+To fix this revive the ACK_PENDING bit for ucsi_acpi and only complete
+commands if the completion bit matches.
+
+Fixes: f56de278e8ec ("usb: typec: ucsi: acpi: Move to the new API")
 Cc: stable@vger.kernel.org
-Cc: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240121204123.275441-3-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_trigger.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace_events_trigger.c
-+++ b/kernel/trace/trace_events_trigger.c
-@@ -1161,8 +1161,10 @@ register_snapshot_trigger(char *glob, st
- 			  struct event_trigger_data *data,
- 			  struct trace_event_file *file)
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -70,9 +70,13 @@ static int ucsi_acpi_sync_write(struct u
+ 				const void *val, size_t val_len)
  {
--	if (tracing_alloc_snapshot_instance(file->tr) != 0)
--		return 0;
-+	int ret = tracing_alloc_snapshot_instance(file->tr);
-+
-+	if (ret < 0)
-+		return ret;
+ 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
+ 	int ret;
  
- 	return register_trigger(glob, ops, data, file);
+-	set_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		set_bit(ACK_PENDING, &ua->flags);
++	else
++		set_bit(COMMAND_PENDING, &ua->flags);
+ 
+ 	ret = ucsi_acpi_async_write(ucsi, offset, val, val_len);
+ 	if (ret)
+@@ -82,7 +86,10 @@ static int ucsi_acpi_sync_write(struct u
+ 		ret = -ETIMEDOUT;
+ 
+ out_clear_bit:
+-	clear_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		clear_bit(ACK_PENDING, &ua->flags);
++	else
++		clear_bit(COMMAND_PENDING, &ua->flags);
+ 
+ 	return ret;
  }
+@@ -106,8 +113,10 @@ static void ucsi_acpi_notify(acpi_handle
+ 	if (UCSI_CCI_CONNECTOR(cci))
+ 		ucsi_connector_change(ua->ucsi, UCSI_CCI_CONNECTOR(cci));
+ 
+-	if (test_bit(COMMAND_PENDING, &ua->flags) &&
+-	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
++	if (cci & UCSI_CCI_ACK_COMPLETE && test_bit(ACK_PENDING, &ua->flags))
++		complete(&ua->complete);
++	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
++	    test_bit(COMMAND_PENDING, &ua->flags))
+ 		complete(&ua->complete);
+ }
+ 
 
 
