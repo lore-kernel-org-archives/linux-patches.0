@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B452A1D7;
-	Wed, 21 Feb 2024 13:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B261E4B2;
+	Wed, 21 Feb 2024 13:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522970; cv=none; b=L7k06UbklXI210Pl5lLZLA7jLdldpiY6mOxXl6g7SCbEtzhLxi7GMehOaV52U+hX3jOKCH55wOl7XF0tnWItt/URsCkn5138IRleRemyQdQt/AYb1egGAZPluNRvYHGcYX+syjjZDP0iWafhJzjTjJnoS+/KmdGHnxCRHHLaspg=
+	t=1708522978; cv=none; b=DJRl6kVeuZgHy1qhz4OmC0rhPjwHRcDfASxfLKPOkOXrT/JVFbNoZ1RUyCrABBTfTDQWWPRtg8+RGXwSIjmNbl21dSGN7pVZfOtJhj2ECp7IKJ3O7rLu46CJgmteBspb6Rcw5EiS6A2HZZn6VnY/IckXqD/3GZx1VYVqMV5eeZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522970; c=relaxed/simple;
-	bh=bg3I3NvyHBMBTfuRU71+giDWkMMN+0uYfDbEd22APE8=;
+	s=arc-20240116; t=1708522978; c=relaxed/simple;
+	bh=5GTUTUO794I6YsiJhQ+ntaqpj6Qx2nVEyUCjjxd6z7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsHUnlF69qvA2NnZmTXiULAELMpTmh87iJeqA8Rk3sno5VXKyJttDAdxDxOVIQvpxEyxgdj5H7t922dLZGaeUC/vqHIHmthvTWWjiSU1pB58SgShBnGHA6dVQOMS6NPqaFmdbI4+pBsNt+yddwWp94Fjirth2s+tE3uG75zQXP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dv9R0sSI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YXf5EeECgHpr1LBD0y9Obow9okkH6UhckcuaKVLF7SN78vdmwkXAA2ASqSyab/yLO77i6GVwBH6m3ocmn9GzdHBA9aUAHjiWCKDERlemX+gaUvT/4piY5utLLOPqspoH4KzQKcjk4NB7QyRrr48R+nxwwAGNc8OGhu+GtZWLivU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsUPoSMN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dv9R0sSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D31C433F1;
-	Wed, 21 Feb 2024 13:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsUPoSMN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A35DC433F1;
+	Wed, 21 Feb 2024 13:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522970;
-	bh=bg3I3NvyHBMBTfuRU71+giDWkMMN+0uYfDbEd22APE8=;
+	s=korg; t=1708522978;
+	bh=5GTUTUO794I6YsiJhQ+ntaqpj6Qx2nVEyUCjjxd6z7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dv9R0sSI7wWZSt/QZqnUr31INMEMh/FuqlNpFvI0ybzuL34okibMpQXvhKyMc90bC
-	 e0zDZuenqvGq6QK+ex643oi/mMbDA6I+J9Lehhuo1SNXV4Za6zWmWGjbJleHvR4uhi
-	 z8izapdl50YZKCAPDpwiWd5T+tXAFqlRGFP+uJRQ=
+	b=lsUPoSMNTPKGrStdbb/X/gQajMuHtVOe66tI+Rg5YZAQPOjsbD/sxBMHbkluLkhpJ
+	 TDfncB6TX1EBgCNo+kffBUNdgRQlphEV3GrYTmcNjRA+q18nWfrtu07wk2j8B/JQnx
+	 PGda3bqCA/4MhO/xbR1T7r651sXRSiLvNdiDDoGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Antoine Tenart <atenart@kernel.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 306/476] selftests: net: avoid just another constant wait
-Date: Wed, 21 Feb 2024 14:05:57 +0100
-Message-ID: <20240221130019.322947616@linuxfoundation.org>
+Subject: [PATCH 5.15 307/476] tunnels: fix out of bounds access when building IPv6 PMTU error
+Date: Wed, 21 Feb 2024 14:05:58 +0100
+Message-ID: <20240221130019.368804488@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,67 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit 691bb4e49c98a47bc643dd808453136ce78b15b4 ]
+[ Upstream commit d75abeec401f8c86b470e7028a13fcdc87e5dd06 ]
 
-Using hard-coded constant timeout to wait for some expected
-event is deemed to fail sooner or later, especially in slow
-env.
+If the ICMPv6 error is built from a non-linear skb we get the following
+splat,
 
-Our CI has spotted another of such race:
-   # TEST: ipv6: cleanup of cached exceptions - nexthop objects          [FAIL]
-   #   can't delete veth device in a timely manner, PMTU dst likely leaked
+  BUG: KASAN: slab-out-of-bounds in do_csum+0x220/0x240
+  Read of size 4 at addr ffff88811d402c80 by task netperf/820
+  CPU: 0 PID: 820 Comm: netperf Not tainted 6.8.0-rc1+ #543
+  ...
+   kasan_report+0xd8/0x110
+   do_csum+0x220/0x240
+   csum_partial+0xc/0x20
+   skb_tunnel_check_pmtu+0xeb9/0x3280
+   vxlan_xmit_one+0x14c2/0x4080
+   vxlan_xmit+0xf61/0x5c00
+   dev_hard_start_xmit+0xfb/0x510
+   __dev_queue_xmit+0x7cd/0x32a0
+   br_dev_queue_push_xmit+0x39d/0x6a0
 
-Replace the crude sleep with a loop looking for the expected condition
-at low interval for a much longer range.
+Use skb_checksum instead of csum_partial who cannot deal with non-linear
+SKBs.
 
-Fixes: b3cc4f8a8a41 ("selftests: pmtu: add explicit tests for PMTU exceptions cleanup")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/fd5c745e9bb665b724473af6a9373a8c2a62b247.1706812005.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/ipv4/ip_tunnel_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 8797f7b5fb83..31e3d0db7a12 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1795,6 +1795,13 @@ check_command() {
- 	return 0
- }
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index d3275d1ed260..50ddbd7021f0 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -332,7 +332,7 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
+ 	};
+ 	skb_reset_network_header(skb);
  
-+check_running() {
-+	pid=${1}
-+	cmd=${2}
-+
-+	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
-+}
-+
- test_cleanup_vxlanX_exception() {
- 	outer="${1}"
- 	encap="vxlan"
-@@ -1825,11 +1832,12 @@ test_cleanup_vxlanX_exception() {
+-	csum = csum_partial(icmp6h, len, 0);
++	csum = skb_checksum(skb, skb_transport_offset(skb), len, 0);
+ 	icmp6h->icmp6_cksum = csum_ipv6_magic(&nip6h->saddr, &nip6h->daddr, len,
+ 					      IPPROTO_ICMPV6, csum);
  
- 	${ns_a} ip link del dev veth_A-R1 &
- 	iplink_pid=$!
--	sleep 1
--	if [ "$(cat /proc/${iplink_pid}/cmdline 2>/dev/null | tr -d '\0')" = "iplinkdeldevveth_A-R1" ]; then
--		err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
--		return 1
--	fi
-+	for i in $(seq 1 20); do
-+		check_running ${iplink_pid} "iplinkdeldevveth_A-R1" || return 0
-+		sleep 0.1
-+	done
-+	err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
-+	return 1
- }
- 
- test_cleanup_ipv6_exception() {
 -- 
 2.43.0
 
