@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BD27E105;
-	Wed, 21 Feb 2024 14:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D3C7C09A;
+	Wed, 21 Feb 2024 14:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524380; cv=none; b=XZjkSRRYYURuAeIbusqYsgTNZwCMtsuNyTj4wHD8BcGQagSrpXzPEtmotP4SakpRMO/B3IBUYyxPEaWRXNSam8luTXFLWSXcE8rNN5wwEOcjdJMjyQXCjmkcsKUWD209Csljcklx9+KmAaSG4IQiHHFCsHrj+AtUIq7DfnRWFeY=
+	t=1708524382; cv=none; b=CeXaRWls4wYak7QxmAKey6CmiVKal5PH7O/YWmFd+0hFsn5rVWLnibBu1hxu9J0iKl1yQ90jLU/oKKIspaQxvK8mFHwISNXluwauGGVt67kikrxY2Q7uFCBRnkL1pVjGYCBZMiBSGOjKnSml11T+yOvzZs2GOIlv2U3HdDCU2Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524380; c=relaxed/simple;
-	bh=fLbb8Je6uNYJ3JfVFbcdhA6svwF0aM5ZhwIwbSMjSFo=;
+	s=arc-20240116; t=1708524382; c=relaxed/simple;
+	bh=I2WpASzRV60LC6TTkX6zxn8viD+1XhUjbRzE7zkGXgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJTQUPCrgTjFD9F950TaYDnu0Mso/mSEbZzKehHPrqqcoTS2WhyIQCuQ/7fkLL+CbSZ44JvM0YEaTMLb6MWaoNKZPiu9uaZXdmKJSALCb/E6szG1Tr57ikLFRoQm2BI67GkHAI0+8dI84qHg1mL6fdJV5B2AYc+Gc5StPIwYo/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSczVeEB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mipUWvsp/2oI1Pzj3Mr+Jlygk4b5zIfL5fXXxUlbwAY4nnTLCSw7muoZJkxmicbDYTucMkIGBr3SNzjnXc1qbgcFPV2FsSFwgxMoIF0PgzF7y5P2/WUALcFGSGrMThynT59YB02M00ZtF51GHJC0D51d3JwrSCXcxHRQ4peuPYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKuKXV94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSczVeEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23930C433F1;
-	Wed, 21 Feb 2024 14:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKuKXV94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB82C433C7;
+	Wed, 21 Feb 2024 14:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524379;
-	bh=fLbb8Je6uNYJ3JfVFbcdhA6svwF0aM5ZhwIwbSMjSFo=;
+	s=korg; t=1708524382;
+	bh=I2WpASzRV60LC6TTkX6zxn8viD+1XhUjbRzE7zkGXgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSczVeEBLceoHwYcXTMWx2Hw/e7duyzkn/4NxUTPlFhOwCMBz4KZRqz1vH6Dj4e6i
-	 cCyrxgNHi84nBqxD0T5v5H8itwEGbcnl82RaBMx3kHa3fFPyPNWa+1TZzEqU0pH1qB
-	 sMFuxOpYNkEmRvkmXb7mUGwBIL1EU+i0WO8tp4J4=
+	b=CKuKXV94szSZJTnmUJza5/Ek6tlEEcVX07X8mHml5DTd0dbXk7I7n4ZZB0nPeXxAN
+	 poZtFS375Wo9enRJ2FJiS2vSDkcQBb4GGaTWnzXNXaIAaljUIRNQA4mnYDiLeMTjBM
+	 Ko4qGJr/ZryEJz1VBfgcG33ERxbbE6cjvUt/kCo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
+	Arjun Roy <arjunroy@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
+	Soheil Hassas Yeganeh <soheil@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 227/379] ip6_tunnel: make sure to pull inner header in __ip6_tnl_rcv()
-Date: Wed, 21 Feb 2024 14:06:46 +0100
-Message-ID: <20240221130001.613605615@linuxfoundation.org>
+Subject: [PATCH 5.10 228/379] net-zerocopy: Refactor frag-is-remappable test.
+Date: Wed, 21 Feb 2024 14:06:47 +0100
+Message-ID: <20240221130001.642129937@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,136 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arjun Roy <arjunroy@google.com>
 
-[ Upstream commit 8d975c15c0cd744000ca386247432d57b21f9df0 ]
+[ Upstream commit 98917cf0d6eda01e8c3c34d35398d46b247b6fd3 ]
 
-syzbot found __ip6_tnl_rcv() could access unitiliazed data [1].
+Refactor frag-is-remappable test for tcp receive zerocopy. This is
+part of a patch set that introduces short-circuited hybrid copies
+for small receive operations, which results in roughly 33% fewer
+syscalls for small RPC scenarios.
 
-Call pskb_inet_may_pull() to fix this, and initialize ipv6h
-variable after this call as it can change skb->head.
-
-[1]
- BUG: KMSAN: uninit-value in __INET_ECN_decapsulate include/net/inet_ecn.h:253 [inline]
- BUG: KMSAN: uninit-value in INET_ECN_decapsulate include/net/inet_ecn.h:275 [inline]
- BUG: KMSAN: uninit-value in IP6_ECN_decapsulate+0x7df/0x1e50 include/net/inet_ecn.h:321
-  __INET_ECN_decapsulate include/net/inet_ecn.h:253 [inline]
-  INET_ECN_decapsulate include/net/inet_ecn.h:275 [inline]
-  IP6_ECN_decapsulate+0x7df/0x1e50 include/net/inet_ecn.h:321
-  ip6ip6_dscp_ecn_decapsulate+0x178/0x1b0 net/ipv6/ip6_tunnel.c:727
-  __ip6_tnl_rcv+0xd4e/0x1590 net/ipv6/ip6_tunnel.c:845
-  ip6_tnl_rcv+0xce/0x100 net/ipv6/ip6_tunnel.c:888
- gre_rcv+0x143f/0x1870
-  ip6_protocol_deliver_rcu+0xda6/0x2a60 net/ipv6/ip6_input.c:438
-  ip6_input_finish net/ipv6/ip6_input.c:483 [inline]
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ip6_input+0x15d/0x430 net/ipv6/ip6_input.c:492
-  ip6_mc_input+0xa7e/0xc80 net/ipv6/ip6_input.c:586
-  dst_input include/net/dst.h:461 [inline]
-  ip6_rcv_finish+0x5db/0x870 net/ipv6/ip6_input.c:79
-  NF_HOOK include/linux/netfilter.h:314 [inline]
-  ipv6_rcv+0xda/0x390 net/ipv6/ip6_input.c:310
-  __netif_receive_skb_one_core net/core/dev.c:5532 [inline]
-  __netif_receive_skb+0x1a6/0x5a0 net/core/dev.c:5646
-  netif_receive_skb_internal net/core/dev.c:5732 [inline]
-  netif_receive_skb+0x58/0x660 net/core/dev.c:5791
-  tun_rx_batched+0x3ee/0x980 drivers/net/tun.c:1555
-  tun_get_user+0x53af/0x66d0 drivers/net/tun.c:2002
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2084 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0x786/0x1200 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xd0 fs/read_write.c:652
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0x6d/0x140 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Uninit was created at:
-  slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
-  slab_alloc_node mm/slub.c:3478 [inline]
-  kmem_cache_alloc_node+0x5e9/0xb10 mm/slub.c:3523
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:560
-  __alloc_skb+0x318/0x740 net/core/skbuff.c:651
-  alloc_skb include/linux/skbuff.h:1286 [inline]
-  alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6334
-  sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2787
-  tun_alloc_skb drivers/net/tun.c:1531 [inline]
-  tun_get_user+0x1e8a/0x66d0 drivers/net/tun.c:1846
-  tun_chr_write_iter+0x3af/0x5d0 drivers/net/tun.c:2048
-  call_write_iter include/linux/fs.h:2084 [inline]
-  new_sync_write fs/read_write.c:497 [inline]
-  vfs_write+0x786/0x1200 fs/read_write.c:590
-  ksys_write+0x20f/0x4c0 fs/read_write.c:643
-  __do_sys_write fs/read_write.c:655 [inline]
-  __se_sys_write fs/read_write.c:652 [inline]
-  __x64_sys_write+0x93/0xd0 fs/read_write.c:652
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0x6d/0x140 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-CPU: 0 PID: 5034 Comm: syz-executor331 Not tainted 6.7.0-syzkaller-00562-g9f8413c4a66f #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-
-Fixes: 0d3c703a9d17 ("ipv6: Cleanup IPv6 tunnel receive path")
-Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Arjun Roy <arjunroy@google.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240125170557.2663942-1-edumazet@google.com
+Signed-off-by: Soheil Hassas Yeganeh <soheil@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 577e4432f3ac ("tcp: add sanity checks to rx zerocopy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_tunnel.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ net/ipv4/tcp.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
-index 9b8b209b780a..d1f819238414 100644
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -829,8 +829,8 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 						struct sk_buff *skb),
- 			 bool log_ecn_err)
- {
--	const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
--	int err;
-+	const struct ipv6hdr *ipv6h;
-+	int nh, err;
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 27e0d3dfc5bd..18541527abce 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -1778,6 +1778,26 @@ static skb_frag_t *skb_advance_to_frag(struct sk_buff *skb, u32 offset_skb,
+ 	return frag;
+ }
  
- 	if ((!(tpi->flags & TUNNEL_CSUM) &&
- 	     (tunnel->parms.i_flags & TUNNEL_CSUM)) ||
-@@ -862,14 +862,29 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
- 			goto drop;
- 		}
- 
--		ipv6h = ipv6_hdr(skb);
- 		skb->protocol = eth_type_trans(skb, tunnel->dev);
- 		skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
- 	} else {
- 		skb->dev = tunnel->dev;
- 	}
- 
-+	/* Save offset of outer header relative to skb->head,
-+	 * because we are going to reset the network header to the inner header
-+	 * and might change skb->head.
-+	 */
-+	nh = skb_network_header(skb) - skb->head;
++static bool can_map_frag(const skb_frag_t *frag)
++{
++	return skb_frag_size(frag) == PAGE_SIZE && !skb_frag_off(frag);
++}
 +
- 	skb_reset_network_header(skb);
++static int find_next_mappable_frag(const skb_frag_t *frag,
++				   int remaining_in_skb)
++{
++	int offset = 0;
 +
-+	if (!pskb_inet_may_pull(skb)) {
-+		DEV_STATS_INC(tunnel->dev, rx_length_errors);
-+		DEV_STATS_INC(tunnel->dev, rx_errors);
-+		goto drop;
++	if (likely(can_map_frag(frag)))
++		return 0;
++
++	while (offset < remaining_in_skb && !can_map_frag(frag)) {
++		offset += skb_frag_size(frag);
++		++frag;
 +	}
++	return offset;
++}
 +
-+	/* Get the outer header. */
-+	ipv6h = (struct ipv6hdr *)(skb->head + nh);
+ static int tcp_copy_straggler_data(struct tcp_zerocopy_receive *zc,
+ 				   struct sk_buff *skb, u32 copylen,
+ 				   u32 *offset, u32 *seq)
+@@ -1903,6 +1923,8 @@ static int tcp_zerocopy_receive(struct sock *sk,
+ 	ret = 0;
+ 	curr_addr = address;
+ 	while (length + PAGE_SIZE <= zc->length) {
++		int mappable_offset;
 +
- 	memset(skb->cb, 0, sizeof(struct inet6_skb_parm));
+ 		if (zc->recv_skip_hint < PAGE_SIZE) {
+ 			u32 offset_frag;
  
- 	__skb_tunnel_rx(skb, tunnel->dev, tunnel->net);
+@@ -1930,15 +1952,11 @@ static int tcp_zerocopy_receive(struct sock *sk,
+ 			if (!frags || offset_frag)
+ 				break;
+ 		}
+-		if (skb_frag_size(frags) != PAGE_SIZE || skb_frag_off(frags)) {
+-			int remaining = zc->recv_skip_hint;
+ 
+-			while (remaining && (skb_frag_size(frags) != PAGE_SIZE ||
+-					     skb_frag_off(frags))) {
+-				remaining -= skb_frag_size(frags);
+-				frags++;
+-			}
+-			zc->recv_skip_hint -= remaining;
++		mappable_offset = find_next_mappable_frag(frags,
++							  zc->recv_skip_hint);
++		if (mappable_offset) {
++			zc->recv_skip_hint = mappable_offset;
+ 			break;
+ 		}
+ 		pages[pg_idx] = skb_frag_page(frags);
 -- 
 2.43.0
 
