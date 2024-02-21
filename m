@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587FC78B4B;
-	Wed, 21 Feb 2024 14:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2C53CF42;
+	Wed, 21 Feb 2024 14:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524511; cv=none; b=P7nsR71RUgDYOcxvwjTsTigFRK5YD+DuAZawEea3qHOE8vczN1ixHyBxiOLv03TY92xvRqm2hSuT1xDKMyZDinmD35DYI7gzhRV7+s/IObsX0LjYiMbleh0+As9D2d3Oy48d6p0aCO0j29O+UM2GvTb4xFOzfgf5nPjBvTUeRV0=
+	t=1708524513; cv=none; b=ct1rF2XOvhsC/YSA7rTe81qN3oilBDOupK05cDj9jnEpVDR5gqDbNVqPAnwz44O2F8BQMrtq2HPy1pF3+mIKynu4VpECu8Lh3egw6EJUNqCE0aGrj1w5/xlAoF6uZbCW4KP81j5D1XJXLj4U2sD0UQMYCC9eL4QY9AqS9E5uhYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524511; c=relaxed/simple;
-	bh=z1pl1m/RHZxMaFKCcA2kEyoiTgXI30agEZraT6xG6kk=;
+	s=arc-20240116; t=1708524513; c=relaxed/simple;
+	bh=IkJMriH7RVh9HlaRMsKPlYNEcnJJhgll06OZotIcChI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPCdvNFAAW0+F8oopGBT1W7UM7vhtEEIOUgsnJKEU7UdGD/Qd/viJ2TcPgn4d8to5wmFEsNaXFvHjLertEg/tBA/PP2a5XLCQEfenBXjco3Qb5LlQmOPNSCRY98ABNQQ8JRx9FPR15+EioV28ezrHHoJU7c+9Yz3YNF60zb1tkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrerSy8o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QtDDCWBr/zv6LQc7tVuNigCuQ3txoiuNqJAK/xGlKHRR4l1QrR6j6NvSIVtAG6e06pEfaKDb3uJS+uvfSs8vX3BBL2Axc+8kyK5aOD88WcTMT5HZbmwAucXtZQvC893Ellburf1AqHpQX11+p8/5XISt1FMOjXnDP4iycrCGhfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QANHmhKm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrerSy8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55E9C433F1;
-	Wed, 21 Feb 2024 14:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QANHmhKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FB7C433A6;
+	Wed, 21 Feb 2024 14:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524510;
-	bh=z1pl1m/RHZxMaFKCcA2kEyoiTgXI30agEZraT6xG6kk=;
+	s=korg; t=1708524513;
+	bh=IkJMriH7RVh9HlaRMsKPlYNEcnJJhgll06OZotIcChI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RrerSy8oRxbzOPbLzv/HLwKDtzhvNjuacttgwCA7S+jNfTUWTlUUlvxmDbPgky4f6
-	 ytrjdMe3Y8fKY0xT7XbQa19O8SMSULVG7eDhVNR0zPq9qdJc1QmZijZ7R2MJADA8NK
-	 m3A1Q/9mJgQKEHPG73SFYy9aBb4P4N1XbJMm7M9A=
+	b=QANHmhKmzKhUZFxsXCqYtQATs7n3Gv/xhhr2xdHENtMikgPtov/P50jcywqzG81IH
+	 mAjCd085Z1uQC9J3lG0eoPbyCLX+xaQW+uX7gFVyS4faHcztjw+EGhprOIPzjd+Z0Q
+	 xOyZSUXHFoc9VQK9A0IpotO9I4ZElbjZqltcMNok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Vinod Koul <vkoul@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 249/379] dmaengine: fsl-qdma: Fix a memory leak related to the queue command DMA
-Date: Wed, 21 Feb 2024 14:07:08 +0100
-Message-ID: <20240221130002.274947676@linuxfoundation.org>
+Subject: [PATCH 5.10 267/379] netfilter: nft_ct: reject direction for ct id
+Date: Wed, 21 Feb 2024 14:07:26 +0100
+Message-ID: <20240221130002.809428006@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,45 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 3aa58cb51318e329d203857f7a191678e60bb714 ]
+[ Upstream commit 38ed1c7062ada30d7c11e7a7acc749bf27aa14aa ]
 
-This dma_alloc_coherent() is undone neither in the remove function, nor in
-the error handling path of fsl_qdma_probe().
+Direction attribute is ignored, reject it in case this ever needs to be
+supported
 
-Switch to the managed version to fix both issues.
-
-Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/7f66aa14f59d32b13672dde28602b47deb294e1f.1704621515.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 3087c3f7c23b ("netfilter: nft_ct: Add ct id support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/fsl-qdma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/netfilter/nft_ct.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
-index 5cc887acb05b..69385f32e275 100644
---- a/drivers/dma/fsl-qdma.c
-+++ b/drivers/dma/fsl-qdma.c
-@@ -514,11 +514,11 @@ static struct fsl_qdma_queue
- 			queue_temp = queue_head + i + (j * queue_num);
- 
- 			queue_temp->cq =
--			dma_alloc_coherent(&pdev->dev,
--					   sizeof(struct fsl_qdma_format) *
--					   queue_size[i],
--					   &queue_temp->bus_addr,
--					   GFP_KERNEL);
-+			dmam_alloc_coherent(&pdev->dev,
-+					    sizeof(struct fsl_qdma_format) *
-+					    queue_size[i],
-+					    &queue_temp->bus_addr,
-+					    GFP_KERNEL);
- 			if (!queue_temp->cq)
- 				return NULL;
- 			queue_temp->block_base = fsl_qdma->block_base +
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index 5b16161526e7..2b15dbbca98b 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -482,6 +482,9 @@ static int nft_ct_get_init(const struct nft_ctx *ctx,
+ 		break;
+ #endif
+ 	case NFT_CT_ID:
++		if (tb[NFTA_CT_DIRECTION])
++			return -EINVAL;
++
+ 		len = sizeof(u32);
+ 		break;
+ 	default:
 -- 
 2.43.0
 
