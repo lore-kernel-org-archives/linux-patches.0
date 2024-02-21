@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3106E7CF26;
-	Wed, 21 Feb 2024 13:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FF738398;
+	Wed, 21 Feb 2024 13:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523526; cv=none; b=HCQHidL5e3/GslIMBFqk0r2xyoyhG1AwJsrPedwxm1nBI42Wra9/7g9oVCT7PCUT7DNxIgEwEWd1jmDAAYVCoz6Nfq24x/D7dY5qvgpgWzcf6+tm+3BbOfHUzSApGBM0lrIfg6dSiAu2BG6tnqw5WfeoW49e7PrMAWk/GcgU1eY=
+	t=1708523528; cv=none; b=VHABhv52FW1Hx1xcUGks8nvAaLzm2xVyeb+WVkATu6vIHqDNyFR+mXv/2Q+sI928ttkePDZu3r+KqeKiW9m6gu8i5b7MxNeITf4u2lfcl3fV7ceM7SjfM9hej85nF1No8GKhfac5srRmsBtLJ+rJ2TCcf/7ZNs1ipD8B+RSv/Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523526; c=relaxed/simple;
-	bh=xsdmKh8XIgG0C6ONNJHn9lcHrplb4o80zpvUZEq3GWE=;
+	s=arc-20240116; t=1708523528; c=relaxed/simple;
+	bh=8Wp4h5vgo24+XAg14Kop0KbrmYC/eKwvxdCAmfxQB1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZpsclu3NepTUv26G9fk8i+KRs79SIYVG3nYzTCITL4rEXFGbuwc3yuIXdnUFrQwp3xQAe0RTYUh3/gMw/SLwZFl0C50pBYnFhcvjozlcW/99iDoWTrqLMMW2wDiHhv5y+6kul9uqX2F9XFx4c8d2DBKp9rJRtYE6yq+Lf+2E4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8QHHEOb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GiBP31Twh+T9Ircm2d01P4rY7NSM+6mLivoLW5J+3c1CThHy2opPP7Y7Xfi+kRcCoMu3A+pybzQsvuooghtv6f7IwBeEas4C5YURJz1kFwuopvCCSxA2DildAjliA6uf5mcQMxRAxpdaTO1unxXULbDU7TKB0ZjWrqDx8xBc95s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPspnlDu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8QHHEOb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F927C433F1;
-	Wed, 21 Feb 2024 13:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPspnlDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157F5C43394;
+	Wed, 21 Feb 2024 13:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523525;
-	bh=xsdmKh8XIgG0C6ONNJHn9lcHrplb4o80zpvUZEq3GWE=;
+	s=korg; t=1708523528;
+	bh=8Wp4h5vgo24+XAg14Kop0KbrmYC/eKwvxdCAmfxQB1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8QHHEObRM9b6r52hXbmwN7LNLfSARdiMhpqdZXDu/6JZNeW5ND3POlaIfS704PbA
-	 Ix5GxfflJTKmLNrEOblbwAkrceyEV0xHeFD1I8ATWbH7KgME2ElobEjSMY+QPJyqG9
-	 8Ug/KKZJOfD1qvA9XgyP5MXu/rsWi4NX3Net0Zao=
+	b=iPspnlDuHTk94Jdjyk/Yh7vZE5z2hrzAJKqmjv0TfT2Ct5BHVhn1T/Wds4zUrNKzJ
+	 E5yONK3Vr+Zh8jvsHoIkV3bEVYXAN0seDty7gwGEw+16qx03R2usBTJUj7xzk7dHnH
+	 /QVaKs236xF8fJlospE/cTE4aLAMF3A9BfpjXN8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 463/476] nilfs2: replace WARN_ONs for invalid DAT metadata block requests
-Date: Wed, 21 Feb 2024 14:08:34 +0100
-Message-ID: <20240221130025.155386970@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	He Gao <hegao@google.com>
+Subject: [PATCH 5.15 464/476] dm: limit the number of targets and parameter size area
+Date: Wed, 21 Feb 2024 14:08:35 +0100
+Message-ID: <20240221130025.188437292@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,82 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 5124a0a549857c4b87173280e192eea24dea72ad upstream.
+commit bd504bcfec41a503b32054da5472904b404341a4 upstream.
 
-If DAT metadata file block access fails due to corruption of the DAT file
-or abnormal virtual block numbers held by b-trees or inodes, a kernel
-warning is generated.
+The kvmalloc function fails with a warning if the size is larger than
+INT_MAX. The warning was triggered by a syscall testing robot.
 
-This replaces the WARN_ONs by error output, so that a kernel, booted with
-panic_on_warn, does not panic.  This patch also replaces the detected
-return code -ENOENT with another internal code -EINVAL to notify the bmap
-layer of metadata corruption.  When the bmap layer sees -EINVAL, it
-handles the abnormal situation with nilfs_bmap_convert_error() and finally
-returns code -EIO as it should.
+In order to avoid the warning, this commit limits the number of targets to
+1048576 and the size of the parameter area to 1073741824.
 
-Link: https://lkml.kernel.org/r/0000000000005cc3d205ea23ddcf@google.com
-Link: https://lkml.kernel.org/r/20230126164114.6911-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: <syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: He Gao <hegao@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dat.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/md/dm-core.h  |    2 ++
+ drivers/md/dm-ioctl.c |    3 ++-
+ drivers/md/dm-table.c |    9 +++++++--
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/nilfs2/dat.c
-+++ b/fs/nilfs2/dat.c
-@@ -40,8 +40,21 @@ static inline struct nilfs_dat_info *NIL
- static int nilfs_dat_prepare_entry(struct inode *dat,
- 				   struct nilfs_palloc_req *req, int create)
+--- a/drivers/md/dm-core.h
++++ b/drivers/md/dm-core.h
+@@ -21,6 +21,8 @@
+ #include "dm-ima.h"
+ 
+ #define DM_RESERVED_MAX_IOS		1024
++#define DM_MAX_TARGETS			1048576
++#define DM_MAX_TARGET_PARAMS		1024
+ 
+ struct dm_kobject_holder {
+ 	struct kobject kobj;
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1859,7 +1859,8 @@ static int copy_params(struct dm_ioctl _
+ 	if (copy_from_user(param_kernel, user, minimum_data_size))
+ 		return -EFAULT;
+ 
+-	if (param_kernel->data_size < minimum_data_size)
++	if (unlikely(param_kernel->data_size < minimum_data_size) ||
++	    unlikely(param_kernel->data_size > DM_MAX_TARGETS * DM_MAX_TARGET_PARAMS))
+ 		return -EINVAL;
+ 
+ 	secure_data = param_kernel->flags & DM_SECURE_DATA_FLAG;
+--- a/drivers/md/dm-table.c
++++ b/drivers/md/dm-table.c
+@@ -126,7 +126,12 @@ static int alloc_targets(struct dm_table
+ int dm_table_create(struct dm_table **result, fmode_t mode,
+ 		    unsigned num_targets, struct mapped_device *md)
  {
--	return nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
--					    create, &req->pr_entry_bh);
-+	int ret;
+-	struct dm_table *t = kzalloc(sizeof(*t), GFP_KERNEL);
++	struct dm_table *t;
 +
-+	ret = nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
-+					   create, &req->pr_entry_bh);
-+	if (unlikely(ret == -ENOENT)) {
-+		nilfs_err(dat->i_sb,
-+			  "DAT doesn't have a block to manage vblocknr = %llu",
-+			  (unsigned long long)req->pr_entry_nr);
-+		/*
-+		 * Return internal code -EINVAL to notify bmap layer of
-+		 * metadata corruption.
-+		 */
-+		ret = -EINVAL;
-+	}
-+	return ret;
- }
++	if (num_targets > DM_MAX_TARGETS)
++		return -EOVERFLOW;
++
++	t = kzalloc(sizeof(*t), GFP_KERNEL);
  
- static void nilfs_dat_commit_entry(struct inode *dat,
-@@ -123,11 +136,7 @@ static void nilfs_dat_commit_free(struct
+ 	if (!t)
+ 		return -ENOMEM;
+@@ -140,7 +145,7 @@ int dm_table_create(struct dm_table **re
  
- int nilfs_dat_prepare_start(struct inode *dat, struct nilfs_palloc_req *req)
- {
--	int ret;
--
--	ret = nilfs_dat_prepare_entry(dat, req, 0);
--	WARN_ON(ret == -ENOENT);
--	return ret;
-+	return nilfs_dat_prepare_entry(dat, req, 0);
- }
+ 	if (!num_targets) {
+ 		kfree(t);
+-		return -ENOMEM;
++		return -EOVERFLOW;
+ 	}
  
- void nilfs_dat_commit_start(struct inode *dat, struct nilfs_palloc_req *req,
-@@ -154,10 +163,8 @@ int nilfs_dat_prepare_end(struct inode *
- 	int ret;
- 
- 	ret = nilfs_dat_prepare_entry(dat, req, 0);
--	if (ret < 0) {
--		WARN_ON(ret == -ENOENT);
-+	if (ret < 0)
- 		return ret;
--	}
- 
- 	kaddr = kmap_atomic(req->pr_entry_bh->b_page);
- 	entry = nilfs_palloc_block_get_entry(dat, req->pr_entry_nr,
+ 	if (alloc_targets(t, num_targets)) {
 
 
