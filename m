@@ -1,54 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CECB79DAB;
-	Wed, 21 Feb 2024 13:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9764F76037;
+	Wed, 21 Feb 2024 13:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523704; cv=none; b=cqTa4eiG1e2fCkRhordDScFyQY2UWn0HsqfG8yheVZJKOknYv14qax8H0OQOQTpQvMnTbxfHZBoERP00MDOrWBvjhjj+dIHuAsJDuDeM6hZW3CLF+eSi7+mHsf4qcRdeDrbK3/sPqRuYE8kWfdXQdDpAtlFVuO5tay778jzTwxM=
+	t=1708523707; cv=none; b=aVG0vsGNxiGWUTH50e4foZGJQnyEcwK7YiwWvXhUqacpr6l9sZlE0xKDuJncvOXjgeroo9ITrq7OUca8p41fd8cZMuX07gJgPJ4LeknTmIHZ61PmAI5V4QWxNiqelt6Yl4STT4Zowky8rpaAdHOCr+PSSAhaneXdl6F7dgAQG0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523704; c=relaxed/simple;
-	bh=AmzD+HpGzYBG6nuZAahBxfSD0c6cubSh46IEFNClbto=;
+	s=arc-20240116; t=1708523707; c=relaxed/simple;
+	bh=XIrcZKjgp8yRJI9jT31ORjyv55gpB1IjGGfYu/t8gCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yza4dCOSVByDrkXl15LwRsAPjyWaYQ9J5VkjbrkwU5XZ3UkV2sQirXiiS11lxeN+lEzEX+70h0v51fE42ijqhsNftIndzWAIDo7zDLfnrbVEdywTW/pn3o6TUlHb8DiiZnpvC+mqDwPG1UbihPyGXE6VZxMsfEygM3MU+74XNJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XuOqbs4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q01p3fWF/yp3yOSvFGEocnkw3r2SUORn/hJQ8yCTptrf9+FuxRPykZQiPMpwwb8SqoZrw/K6yzofl2ZUo9rFJjZ0T6/wiqM8BqUkufzcDRBMrJFwVuR8bofGk57sAb8QhC22OJN93+vo768fYBAlldWwxr9HrMOykICqSOIpUtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa4Gwyzf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XuOqbs4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79A9C433F1;
-	Wed, 21 Feb 2024 13:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa4Gwyzf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7103C433F1;
+	Wed, 21 Feb 2024 13:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523704;
-	bh=AmzD+HpGzYBG6nuZAahBxfSD0c6cubSh46IEFNClbto=;
+	s=korg; t=1708523707;
+	bh=XIrcZKjgp8yRJI9jT31ORjyv55gpB1IjGGfYu/t8gCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XuOqbs4inIDmB2qriakzr4ZndHKY3hYPRVE0aS59mFKcMGvr6lI7xLQZZpsZIpCP
-	 PU1u/Srg1RcZWmJ4JHb9kqjG20FIuZo459kFkPeSE+w67lIFl7msT1PgNgZYNuRmNY
-	 AdgJWWOu30kCKXc9YF2/c2Eg5DlhkqDAXNyD7suA=
+	b=Qa4GwyzfRA2KSSe+1R+ZPqz9+78zVkjoUwI5jc9uKtnBsVPNaCRBbTCTnvM7berU1
+	 QaRKwL1DLU9W3XkSM7QelQiTGQKTKxTQ/wnokn7D0mcJFwXnc6MU8pOGQm3KCoLzJJ
+	 zKYqLXxktvTzQPCbEkRC/+8CznQR1lNu/vNha9oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
 	Christian Eggers <ceggers@arri.de>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Kyungmin Park <kyungmin.park@samsung.com>,
 	Lars-Peter Clausen <lars@metafoo.de>,
-	Peter Meerwald <pmeerw@pmeerw.net>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Peter Meerwald <pmeerw@pmeerw.net>,
 	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/379] units: change from L to UL
-Date: Wed, 21 Feb 2024 14:03:06 +0100
-Message-ID: <20240221125955.138887846@linuxfoundation.org>
+Subject: [PATCH 5.10 008/379] units: add the HZ macros
+Date: Wed, 21 Feb 2024 14:03:07 +0100
+Message-ID: <20240221125955.168317591@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -69,67 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-[ Upstream commit c9221919a2d2df5741ab074dfec5bdfc6f1e043b ]
+[ Upstream commit e2c77032fcbe515194107994d12cd72ddb77b022 ]
 
-Patch series "Add Hz macros", v3.
+The macros for the unit conversion for frequency are duplicated in
+different places.
 
-There are multiple definitions of the HZ_PER_MHZ or HZ_PER_KHZ in the
-different drivers.  Instead of duplicating this definition again and
-again, add one in the units.h header to be reused in all the place the
-redefiniton occurs.
+Provide these macros in the 'units' header, so they can be reused.
 
-At the same time, change the type of the Watts, as they can not be
-negative.
-
-This patch (of 10):
-
-The users of the macros are safe to be assigned with an unsigned instead
-of signed as the variables using them are themselves unsigned.
-
-Link: https://lkml.kernel.org/r/20210816114732.1834145-1-daniel.lezcano@linaro.org
-Link: https://lkml.kernel.org/r/20210816114732.1834145-2-daniel.lezcano@linaro.org
+Link: https://lkml.kernel.org/r/20210816114732.1834145-3-daniel.lezcano@linaro.org
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Christian Eggers <ceggers@arri.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Chanwoo Choi <cw00.choi@samsung.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
 Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: Christian Eggers <ceggers@arri.de>
-Cc: Lukasz Luba <lukasz.luba@arm.com>
-Cc: MyungJoo Ham <myungjoo.ham@samsung.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: Kyungmin Park <kyungmin.park@samsung.com>
 Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Peter Meerwald <pmeerw@pmeerw.net>
-Cc: Zhang Rui <rui.zhang@intel.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Lukasz Luba <lukasz.luba@arm.com>
 Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: MyungJoo Ham <myungjoo.ham@samsung.com>
+Cc: Peter Meerwald <pmeerw@pmeerw.net>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: Chanwoo Choi <cw00.choi@samsung.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Zhang Rui <rui.zhang@intel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Stable-dep-of: 3ef79cd14122 ("serial: sc16is7xx: set safe default SPI clock frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/units.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/units.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/include/linux/units.h b/include/linux/units.h
-index 3457179f7116..62149b5082e1 100644
+index 62149b5082e1..b61e3f6d5099 100644
 --- a/include/linux/units.h
 +++ b/include/linux/units.h
-@@ -20,9 +20,9 @@
+@@ -20,6 +20,10 @@
  #define PICO	1000000000000ULL
  #define FEMTO	1000000000000000ULL
  
--#define MILLIWATT_PER_WATT	1000L
--#define MICROWATT_PER_MILLIWATT	1000L
--#define MICROWATT_PER_WATT	1000000L
-+#define MILLIWATT_PER_WATT	1000UL
-+#define MICROWATT_PER_MILLIWATT	1000UL
-+#define MICROWATT_PER_WATT	1000000UL
- 
- #define ABSOLUTE_ZERO_MILLICELSIUS -273150
- 
++#define HZ_PER_KHZ		1000UL
++#define KHZ_PER_MHZ		1000UL
++#define HZ_PER_MHZ		1000000UL
++
+ #define MILLIWATT_PER_WATT	1000UL
+ #define MICROWATT_PER_MILLIWATT	1000UL
+ #define MICROWATT_PER_WATT	1000000UL
 -- 
 2.43.0
 
