@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9407BB05;
-	Wed, 21 Feb 2024 13:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05627CF33;
+	Wed, 21 Feb 2024 13:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522405; cv=none; b=rOh3ERVLR8Qv3D3W9tyzrdZrGPVn3pN/F/p0m5RU0kmglVhK0d2859zOHaPaK+/TsMPkqKtpdlfGo+irJTfG6As3ioBouODQBl5Q5JvDFPL5wGG7NsGD3GKvbyGNgv0+ew0iRu++Zquu50TCcq1N/+y0/dE8gD5jXeezZR9wpfA=
+	t=1708522408; cv=none; b=dz45xmbRMnOJrrFGtJq364NlHWQnxU/Z+lD6SgR3RlnjYlD+UR9TKpyQti2YUaJgSkeVcbEuzE9WyKIhklVrRBPGjkHeI/2vsh4MPPO2m/PAaXlqyRsyt/BKwAIgiLEErSuhvIyRFsmGIXf4dLZ9mzQiWRqiJaeT0FfTKB/aSjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522405; c=relaxed/simple;
-	bh=CuOco8qf6sJcnKWOupL28jlHzSDKCX9RsCyV8Xch89Y=;
+	s=arc-20240116; t=1708522408; c=relaxed/simple;
+	bh=O07sxVX7OAiS9Jd3/fJRUgQ27biJDT/6JPxirD22cSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SNpWXuZ0cmfgMkdIUodh4I6SUaMP7/oMbLxp9Hy1i0/pJRr14OHtcV09JTllx2yQkymxZUHq6wumfcgKXx7frh1HGsoyxwgVdJoKXsM8aIYLR3Sp8VF0HzQRAbqx/a2uo1iJpXostwulphT+T+suLJSpAfxWD3YXzDd0OVF/Vgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWtAqRUh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+qsj5JitI5I8cRCYfdWk2c/DeQdovAZHx5bLxrOD98YRHeARlfz5B7+szZQSs2lWLTpiJYWZzGoFrUUeHTuWljv3DL4yMjLOcmeBK43Q7/Sl+Auif5qNbjCZU5GExnKfThQK+7JhucI58AW6RmaeoQkYDlzFQmfgABCDe5zZbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E250dmoP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWtAqRUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FB7C43390;
-	Wed, 21 Feb 2024 13:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E250dmoP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1901C433F1;
+	Wed, 21 Feb 2024 13:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522405;
-	bh=CuOco8qf6sJcnKWOupL28jlHzSDKCX9RsCyV8Xch89Y=;
+	s=korg; t=1708522408;
+	bh=O07sxVX7OAiS9Jd3/fJRUgQ27biJDT/6JPxirD22cSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWtAqRUh6v8ZR0VDWSbVmnbnGTshSgX+TnvJQm/glBa2FYmezJ7xXSdrqFpyOPYRO
-	 tYFmnNFIBMSnyY89nRAN0ghqTBaW7ABbxpHcDSyrhft1cbtemUORQaBKxx4xrfGdMF
-	 xaqlX9blPleiLyGzQ+PcY3l/bzekMcxwWL3F0REY=
+	b=E250dmoPWRs3PStIV7f9UNrr/mLwP6b1Hi5n07vOk06Nh//igilYOwuV5aMNA3vPI
+	 rF30ydoTwalmU/M2YrxWU6RDLQTOE4A3OpJMiPJ4ISAp4IK+GQB82AHZqA5rqF8S/f
+	 pvlCS5dUfgJijHWbjKABc3/qURd/6iMVVPkvnpPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+553d90297e6d2f50dbc7@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 155/476] jfs: fix array-index-out-of-bounds in diNewExt
-Date: Wed, 21 Feb 2024 14:03:26 +0100
-Message-ID: <20240221130013.654311595@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guo Ren <guoren@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 156/476] arch: consolidate arch_irq_work_raise prototypes
+Date: Wed, 21 Feb 2024 14:03:27 +0100
+Message-ID: <20240221130013.692276232@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,76 +54,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 49f9637aafa6e63ba686c13cb8549bf5e6920402 ]
+[ Upstream commit 64bac5ea17d527872121adddfee869c7a0618f8f ]
 
-[Syz report]
-UBSAN: array-index-out-of-bounds in fs/jfs/jfs_imap.c:2360:2
-index -878706688 is out of range for type 'struct iagctl[128]'
-CPU: 1 PID: 5065 Comm: syz-executor282 Not tainted 6.7.0-rc4-syzkaller-00009-gbee0e7762ad2 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
- ubsan_epilogue lib/ubsan.c:217 [inline]
- __ubsan_handle_out_of_bounds+0x11c/0x150 lib/ubsan.c:348
- diNewExt+0x3cf3/0x4000 fs/jfs/jfs_imap.c:2360
- diAllocExt fs/jfs/jfs_imap.c:1949 [inline]
- diAllocAG+0xbe8/0x1e50 fs/jfs/jfs_imap.c:1666
- diAlloc+0x1d3/0x1760 fs/jfs/jfs_imap.c:1587
- ialloc+0x8f/0x900 fs/jfs/jfs_inode.c:56
- jfs_mkdir+0x1c5/0xb90 fs/jfs/namei.c:225
- vfs_mkdir+0x2f1/0x4b0 fs/namei.c:4106
- do_mkdirat+0x264/0x3a0 fs/namei.c:4129
- __do_sys_mkdir fs/namei.c:4149 [inline]
- __se_sys_mkdir fs/namei.c:4147 [inline]
- __x64_sys_mkdir+0x6e/0x80 fs/namei.c:4147
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x45/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-RIP: 0033:0x7fcb7e6a0b57
-Code: ff ff 77 07 31 c0 c3 0f 1f 40 00 48 c7 c2 b8 ff ff ff f7 d8 64 89 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 b8 53 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffd83023038 EFLAGS: 00000286 ORIG_RAX: 0000000000000053
-RAX: ffffffffffffffda RBX: 00000000ffffffff RCX: 00007fcb7e6a0b57
-RDX: 00000000000a1020 RSI: 00000000000001ff RDI: 0000000020000140
-RBP: 0000000020000140 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000286 R12: 00007ffd830230d0
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+The prototype was hidden in an #ifdef on x86, which causes a warning:
 
-[Analysis]
-When the agstart is too large, it can cause agno overflow.
+kernel/irq_work.c:72:13: error: no previous prototype for 'arch_irq_work_raise' [-Werror=missing-prototypes]
 
-[Fix]
-After obtaining agno, if the value is invalid, exit the subsequent process.
+Some architectures have a working prototype, while others don't.
+Fix this by providing it in only one place that is always visible.
 
-Reported-and-tested-by: syzbot+553d90297e6d2f50dbc7@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-
-Modified the test from agno > MAXAG to agno >= MAXAG based on linux-next
-report by kernel test robot (Dan Carpenter).
-
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Acked-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/include/asm/irq_work.h   | 2 --
+ arch/csky/include/asm/irq_work.h    | 2 +-
+ arch/powerpc/include/asm/irq_work.h | 1 -
+ arch/riscv/include/asm/irq_work.h   | 2 +-
+ arch/s390/include/asm/irq_work.h    | 2 --
+ arch/x86/include/asm/irq_work.h     | 1 -
+ include/linux/irq_work.h            | 3 +++
+ 7 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index 6ed2e1d4c894..ac42f8ee553f 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -2179,6 +2179,9 @@ static int diNewExt(struct inomap * imap, struct iag * iagp, int extno)
- 	/* get the ag and iag numbers for this iag.
- 	 */
- 	agno = BLKTOAG(le64_to_cpu(iagp->agstart), sbi);
-+	if (agno >= MAXAG || agno < 0)
-+		return -EIO;
-+
- 	iagno = le32_to_cpu(iagp->iagnum);
+diff --git a/arch/arm64/include/asm/irq_work.h b/arch/arm64/include/asm/irq_work.h
+index 81bbfa3a035b..a1020285ea75 100644
+--- a/arch/arm64/include/asm/irq_work.h
++++ b/arch/arm64/include/asm/irq_work.h
+@@ -2,8 +2,6 @@
+ #ifndef __ASM_IRQ_WORK_H
+ #define __ASM_IRQ_WORK_H
  
- 	/* check if this is the last free extent within the
+-extern void arch_irq_work_raise(void);
+-
+ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return true;
+diff --git a/arch/csky/include/asm/irq_work.h b/arch/csky/include/asm/irq_work.h
+index 33aaf39d6f94..d39fcc1f5395 100644
+--- a/arch/csky/include/asm/irq_work.h
++++ b/arch/csky/include/asm/irq_work.h
+@@ -7,5 +7,5 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return true;
+ }
+-extern void arch_irq_work_raise(void);
++
+ #endif /* __ASM_CSKY_IRQ_WORK_H */
+diff --git a/arch/powerpc/include/asm/irq_work.h b/arch/powerpc/include/asm/irq_work.h
+index b8b0be8f1a07..c6d3078bd8c3 100644
+--- a/arch/powerpc/include/asm/irq_work.h
++++ b/arch/powerpc/include/asm/irq_work.h
+@@ -6,6 +6,5 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return true;
+ }
+-extern void arch_irq_work_raise(void);
+ 
+ #endif /* _ASM_POWERPC_IRQ_WORK_H */
+diff --git a/arch/riscv/include/asm/irq_work.h b/arch/riscv/include/asm/irq_work.h
+index b53891964ae0..b27a4d64fc6a 100644
+--- a/arch/riscv/include/asm/irq_work.h
++++ b/arch/riscv/include/asm/irq_work.h
+@@ -6,5 +6,5 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return IS_ENABLED(CONFIG_SMP);
+ }
+-extern void arch_irq_work_raise(void);
++
+ #endif /* _ASM_RISCV_IRQ_WORK_H */
+diff --git a/arch/s390/include/asm/irq_work.h b/arch/s390/include/asm/irq_work.h
+index 603783766d0a..f00c9f610d5a 100644
+--- a/arch/s390/include/asm/irq_work.h
++++ b/arch/s390/include/asm/irq_work.h
+@@ -7,6 +7,4 @@ static inline bool arch_irq_work_has_interrupt(void)
+ 	return true;
+ }
+ 
+-void arch_irq_work_raise(void);
+-
+ #endif /* _ASM_S390_IRQ_WORK_H */
+diff --git a/arch/x86/include/asm/irq_work.h b/arch/x86/include/asm/irq_work.h
+index 800ffce0db29..6b4d36c95165 100644
+--- a/arch/x86/include/asm/irq_work.h
++++ b/arch/x86/include/asm/irq_work.h
+@@ -9,7 +9,6 @@ static inline bool arch_irq_work_has_interrupt(void)
+ {
+ 	return boot_cpu_has(X86_FEATURE_APIC);
+ }
+-extern void arch_irq_work_raise(void);
+ #else
+ static inline bool arch_irq_work_has_interrupt(void)
+ {
+diff --git a/include/linux/irq_work.h b/include/linux/irq_work.h
+index ec2a47a81e42..ee5f9120c4d7 100644
+--- a/include/linux/irq_work.h
++++ b/include/linux/irq_work.h
+@@ -58,6 +58,9 @@ void irq_work_sync(struct irq_work *work);
+ void irq_work_run(void);
+ bool irq_work_needs_cpu(void);
+ void irq_work_single(void *arg);
++
++void arch_irq_work_raise(void);
++
+ #else
+ static inline bool irq_work_needs_cpu(void) { return false; }
+ static inline void irq_work_run(void) { }
 -- 
 2.43.0
 
