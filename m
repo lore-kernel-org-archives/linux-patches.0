@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF13B4D5B7;
-	Wed, 21 Feb 2024 13:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF4969318;
+	Wed, 21 Feb 2024 13:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523229; cv=none; b=rBhjUK+ifPqxpE4CfmTV5JOiHR1p5G/ccbpbhjvatwJyO2eNknt6x4TV/m9OrDzyNtTb6dpeLwzx5KB6hfs/rtqNZHEhDQNdHFT5cNoFN2ss89Pn5ChN59Gh+9jMOFQdX5+QMrtoaek/Y/Z7Eplu9ofXHK1Jto4HVt4MGI5bD2I=
+	t=1708523232; cv=none; b=KXB2einCsnnyrCTB6Toff+WErpoyckJzdmNQQ9zYo/iNp994H2J+JSmQz5d6wVgh/TcqQq26MlLJexfc+4jwNNJSsyz2hgCfIqUObO1RsD/T9Phj4wc9wsh10fxbypVEjAD0LAB7xZjWZH6KKfmag10NxlAwDPoj9K8hqQ16hQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523229; c=relaxed/simple;
-	bh=phkmQbiJ7rSiVv/9/cG9pgqSdj5eLxXkAFuntwOAo+k=;
+	s=arc-20240116; t=1708523232; c=relaxed/simple;
+	bh=Z/94GXyUuZGRXTN3GQG3m/wowfpiK7Bn5S/CWPp91oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amnviw38NBpV+pPwZApMnUAhcKx97inHbmWN86AnyyYPXddD6yYCpZQhHcbthSXQ1O8kSQHxqMyD/5QzWPpi5CjZ3IoJ+Rsc3RPp08tHYEY/WlxyfzDeR7sM5+bhFYVdLZ9Mq6IswxZtaiMx3nyGLI3aT5yEjAk+BH4Ofq1GrJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v47rjpcc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=csYe8UihHjRQIz9asPUwvv4jKneMr5YiOphJETFydKrF9ebyGft6pFP2p+c4tiq/ktbNIDTpKLvHn/eYSfDder9al5s+Y1kvTt3R5+VtvDlujmh29qBPUvS6SoIGGBPGEx9mGgNchAHBRZGHTvJV0eejb5WiZg6S75hLRnj4hg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnrUPGUu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v47rjpcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D29C433C7;
-	Wed, 21 Feb 2024 13:47:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnrUPGUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604C4C433F1;
+	Wed, 21 Feb 2024 13:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523228;
-	bh=phkmQbiJ7rSiVv/9/cG9pgqSdj5eLxXkAFuntwOAo+k=;
+	s=korg; t=1708523231;
+	bh=Z/94GXyUuZGRXTN3GQG3m/wowfpiK7Bn5S/CWPp91oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v47rjpccRUqoL3hCseJqEzpzYU0m4V2x3JQ0pJ6AdVv4QSJQAe9n1QS42KugsQuPT
-	 wFv3My6fVEPpgDiwCAGav7YIaHsgjseesGD6GaXGNDdgBNM3GsdFt2ybqfnnbNncXD
-	 DlmToFzE+NY91xXwCjoxcQQtrh7mirQTGbv5AE0w=
+	b=FnrUPGUu6O+QNdIh0YGEMYxcx5UzfM3z2F7gwAsVEU9LXQIanklmnqVjEv1+/Htxw
+	 87IDzMD8j4loe2G+C2wwgZA6tyW1MCb7XcCmvHztPUGjEABqHisMuSq5+tsl0Ai8Sq
+	 ajMLW78269OmIJqUShf+K3XPRU9wz/qRcCd5y7jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean Delvare <jdelvare@suse.de>,
-	Piotr Zakowski <piotr.zakowski@intel.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Radek Krejci <radek.krejci@oracle.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 373/476] i2c: i801: Fix block process call transactions
-Date: Wed, 21 Feb 2024 14:07:04 +0100
-Message-ID: <20240221130021.819058122@linuxfoundation.org>
+Subject: [PATCH 5.15 374/476] modpost: trim leading spaces when processing source files list
+Date: Wed, 21 Feb 2024 14:07:05 +0100
+Message-ID: <20240221130021.852856199@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,54 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean Delvare <jdelvare@suse.de>
+From: Radek Krejci <radek.krejci@oracle.com>
 
-[ Upstream commit c1c9d0f6f7f1dbf29db996bd8e166242843a5f21 ]
+[ Upstream commit 5d9a16b2a4d9e8fa028892ded43f6501bc2969e5 ]
 
-According to the Intel datasheets, software must reset the block
-buffer index twice for block process call transactions: once before
-writing the outgoing data to the buffer, and once again before
-reading the incoming data from the buffer.
+get_line() does not trim the leading spaces, but the
+parse_source_files() expects to get lines with source files paths where
+the first space occurs after the file path.
 
-The driver is currently missing the second reset, causing the wrong
-portion of the block buffer to be read.
-
-Signed-off-by: Jean Delvare <jdelvare@suse.de>
-Reported-by: Piotr Zakowski <piotr.zakowski@intel.com>
-Closes: https://lore.kernel.org/linux-i2c/20240213120553.7b0ab120@endymion.delvare/
-Fixes: 315cd67c9453 ("i2c: i801: Add Block Write-Block Read Process Call support")
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 70f30cfe5b89 ("modpost: use read_text_file() and get_line() for reading text files")
+Signed-off-by: Radek Krejci <radek.krejci@oracle.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/mod/sumversion.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index 8ecba1ca9236..87c2c7c84736 100644
---- a/drivers/i2c/busses/i2c-i801.c
-+++ b/drivers/i2c/busses/i2c-i801.c
-@@ -522,11 +522,10 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
- 	/* Set block buffer mode */
- 	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
+diff --git a/scripts/mod/sumversion.c b/scripts/mod/sumversion.c
+index 905c0ec291e1..e6962678032e 100644
+--- a/scripts/mod/sumversion.c
++++ b/scripts/mod/sumversion.c
+@@ -328,7 +328,12 @@ static int parse_source_files(const char *objfile, struct md4_ctx *md)
  
--	inb_p(SMBHSTCNT(priv)); /* reset the data buffer index */
--
- 	if (read_write == I2C_SMBUS_WRITE) {
- 		len = data->block[0];
- 		outb_p(len, SMBHSTDAT0(priv));
-+		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
- 		for (i = 0; i < len; i++)
- 			outb_p(data->block[i+1], SMBBLKDAT(priv));
- 	}
-@@ -542,6 +541,7 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
- 			return -EPROTO;
+ 	/* Sum all files in the same dir or subdirs. */
+ 	while ((line = get_line(&pos))) {
+-		char* p = line;
++		char* p;
++
++		/* trim the leading spaces away */
++		while (isspace(*line))
++			line++;
++		p = line;
  
- 		data->block[0] = len;
-+		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
- 		for (i = 0; i < len; i++)
- 			data->block[i + 1] = inb_p(SMBBLKDAT(priv));
- 	}
+ 		if (strncmp(line, "source_", sizeof("source_")-1) == 0) {
+ 			p = strrchr(line, ' ');
 -- 
 2.43.0
 
