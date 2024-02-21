@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2E147A7C;
-	Wed, 21 Feb 2024 13:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047BE69951;
+	Wed, 21 Feb 2024 13:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523311; cv=none; b=QF++8gyNA4YtaSoyIffut1jJO5hX2qhLmMuD6fSul4OlvLs2OKN+4+4GwHOotlQAig/Tsag62EMSELOtBLMwIQzIcBnS5T4ff1X6fcutbLnAmD7ggGRSrRyNVzuW32hIaq1dbR5p+o1WKFujmSaB+eMYxDKEsxnf5QzPHcNeSAg=
+	t=1708523315; cv=none; b=Uz5VvDK5n5zWMIhXPPivvh7SVYUt20xsbSJzctOl64VtxnVmvFgg6Jm/SimTNp4yS5xWCVXp9HPNVONOqLFx106RHT4Gk4QvF3t2aaTfASthRJEsIRO6NzPYBFAsGMVJ3V5OornHrJ9PIJdmrv3BJYuww7slcgzVHnMjjhljdoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523311; c=relaxed/simple;
-	bh=w/AH8CEczgCARr6SyUyA5wiJF71GAjcI+4LGqsY5x8E=;
+	s=arc-20240116; t=1708523315; c=relaxed/simple;
+	bh=GH5lNgmk9Jc9Q5iRx6F4rLp1Mor1qVoOQ2Lsbo13Yjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7luPOFSTrPyIk6gtXpoPzrG4QOpZQlArO5iPqRtxjFLuyLGN8UeB5aU5EV+Id6j3qdjgFIE/GxHq524kvzoztItWI75RIZvC0d810rjtbXWLR52xCB3iAXJKaPPJmrkKPdYCKSK4fxsxnpAYT/FDbMtY8p8RkGAB/lTbmisvQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmDk5co7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeaVGgWfMxTiW8AvJ/5etTzN2L/o7zGjcjbM35GBOVcML9xarZUClrfoQmwqgF1mvpu7DABTGXfM8Nv8oPL3+q5TRuauAJffWcLkL62KFLg+o39qxCTFO7FaJpQNPAWctjrmiLkQPo2b3xn1Z4cSUnwYtK+IIWQYai9u7MGNrPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgYUAVxT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmDk5co7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B31EC433C7;
-	Wed, 21 Feb 2024 13:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgYUAVxT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66105C433C7;
+	Wed, 21 Feb 2024 13:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523311;
-	bh=w/AH8CEczgCARr6SyUyA5wiJF71GAjcI+4LGqsY5x8E=;
+	s=korg; t=1708523314;
+	bh=GH5lNgmk9Jc9Q5iRx6F4rLp1Mor1qVoOQ2Lsbo13Yjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmDk5co7CtyjAL58zQjz36XhW1txhAiMKA0gHXnOEsiE8eT7xqeNtFLwi8pWCUB8e
-	 2hv+gf93Zx+DPl56N0ksjEmaQOSfBk7bBfY2A7mBT8BIqfr+L11fhXfiwUr0NMnKqY
-	 ePYbyzw4bGFNRaA7FVvmGr7uvB1NAtdRXy20M7iM=
+	b=KgYUAVxTJH4WMlrg9nWneq2kFmiZZ886DuP8IsmSbkFm3BasMYr3YIVzhH1Ua9wRp
+	 CiJXRTPQx8PlnJNYzrqvZkjx3bApTYUsjY0yz9BkI0uWfrWhamtW3zp0p1jHembyeZ
+	 lflQg8wbVFZr01vFurNhjl3D/q2CdnDn0SQ+0bcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 398/476] ring-buffer: Clean ring_buffer_poll_wait() error return
-Date: Wed, 21 Feb 2024 14:07:29 +0100
-Message-ID: <20240221130022.714321004@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Subject: [PATCH 5.15 399/476] serial: max310x: set default value when reading clock ready bit
+Date: Wed, 21 Feb 2024 14:07:30 +0100
+Message-ID: <20240221130022.751991473@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,41 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 66bbea9ed6446b8471d365a22734dc00556c4785 upstream.
+commit 0419373333c2f2024966d36261fd82a453281e80 upstream.
 
-The return type for ring_buffer_poll_wait() is __poll_t. This is behind
-the scenes an unsigned where we can set event bits. In case of a
-non-allocated CPU, we do return instead -EINVAL (0xffffffea). Lucky us,
-this ends up setting few error bits (EPOLLERR | EPOLLHUP | EPOLLNVAL), so
-user-space at least is aware something went wrong.
+If regmap_read() returns a non-zero value, the 'val' variable can be left
+uninitialized.
 
-Nonetheless, this is an incorrect code. Replace that -EINVAL with a
-proper EPOLLERR to clean that output. As this doesn't change the
-behaviour, there's no need to treat this change as a bug fix.
+Clear it before calling regmap_read() to make sure we properly detect
+the clock ready bit.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240131140955.3322792-1-vdonnefort@google.com
-
+Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
 Cc: stable@vger.kernel.org
-Fixes: 6721cb6002262 ("ring-buffer: Do not poll non allocated cpu buffers")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240116213001.3691629-2-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    2 +-
+ drivers/tty/serial/max310x.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1061,7 +1061,7 @@ __poll_t ring_buffer_poll_wait(struct tr
- 		full = 0;
- 	} else {
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
--			return -EINVAL;
-+			return EPOLLERR;
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -610,7 +610,7 @@ static u32 max310x_set_ref_clk(struct de
  
- 		cpu_buffer = buffer->buffers[cpu];
- 		work = &cpu_buffer->irq_work;
+ 	/* Wait for crystal */
+ 	if (xtal) {
+-		unsigned int val;
++		unsigned int val = 0;
+ 		msleep(10);
+ 		regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
+ 		if (!(val & MAX310X_STS_CLKREADY_BIT)) {
 
 
