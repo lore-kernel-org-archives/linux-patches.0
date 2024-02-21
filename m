@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBEE7B3EA;
-	Wed, 21 Feb 2024 13:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67EC78B50;
+	Wed, 21 Feb 2024 13:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522143; cv=none; b=AY8zBTFE7e1+jFoW9TyfrRRZRdPF4jmoPr/fPibKQfB0DTaqOnwCC00Ja2gNioXgA3liDhbFS3KP/ix2uhhsAPVV1y60kQTQLYkwldQx3oJrZ3rdHiTTRLxxleGtpScu2RnrPL0RwWv88nKeym6IHgQOPxxsGlYu6siL/KsFMc8=
+	t=1708522151; cv=none; b=rgg8gk2R/kjmoW8W+UqmSBF0jXF1fBherk/GSVRhyCX3L215DQLvGoKss/gQfJcKA57X7N4twq54rqpgdp34bhEURc+kxmVgTon0VTQ0KXZG/m3DabnU3Vlue9pL80COIiEII9ajQtOtCEc068UeZpcRWZBzCoFkzghk5EZILUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522143; c=relaxed/simple;
-	bh=rdIS2Eo574y+jEJlYZduh+DFMWE/QBUFMqJkLLYMy68=;
+	s=arc-20240116; t=1708522151; c=relaxed/simple;
+	bh=gEL7zdWIt0zjI8k4xFn25Rk0xzLoLl+TKqNVu4UFy4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bogzQF244Yur5T5OUQzAkWuSlUabMraLMfYBSXgPtfBYf8v9OYflc3C1nT3609TswQEOshYuEKILPvSyB0CEIWuTB/nefV1nMaiHJNg6X9/nq0OlTEv6QdLDpVBF+yPrBvTM4YF1PrZzJ7U9MAkll0rGghz7RxlGe26m3Il9Y/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dcRhzcc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jEgPRglGcUhdhSOrhqreRlhY9z87zaNaVVfEgCth/UpuBdXBN72raFTa1Uk94HAsHHbf0vf/KtPaGzo9vEm1BSZPkrYoC3OLIBAx8gvjwiw3iHy3e1aF9e442QZJ0QAcK9LWBOryunz+ict81AvngRqTvT7pZtZXDTyG55aUQqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHiHnIq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dcRhzcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B05C433C7;
-	Wed, 21 Feb 2024 13:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHiHnIq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E61C433C7;
+	Wed, 21 Feb 2024 13:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522143;
-	bh=rdIS2Eo574y+jEJlYZduh+DFMWE/QBUFMqJkLLYMy68=;
+	s=korg; t=1708522151;
+	bh=gEL7zdWIt0zjI8k4xFn25Rk0xzLoLl+TKqNVu4UFy4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dcRhzccz4P8wwClmAP3j70BHP5hKLmRO4CLX8A6dcWrVhSJOZDUGCfKIG78zuYB2
-	 Pp6C1KnfG8AnGdLLYBmyXG17UkkJPIB5OCc+A+tx3/zHFVV8hNt/c1oUFhGaiU8YNZ
-	 gRPl9T+tgnxY1l4dfspSuUxAJt2KQis/D8yyzcV8=
+	b=QHiHnIq0gKkVNfugy0DEvrrFugqj+COkxQv5pxzQ4T9KF4BJGEY9Z5glHzN24yRhF
+	 a3eFSStXgwjEumSoQgri+5CaXXtHR+NbwcQCRtupqXoSNKnGzw2moN4/gYQKZrAvq6
+	 uXAB2d7n9SL5rSSSitSJ53z5PvNe7fDAm2eOQ7mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/476] afs: Hide silly-rename files from userspace
-Date: Wed, 21 Feb 2024 14:01:44 +0100
-Message-ID: <20240221130009.884956991@linuxfoundation.org>
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 084/476] wifi: iwlwifi: fix a memory corruption
+Date: Wed, 21 Feb 2024 14:02:15 +0100
+Message-ID: <20240221130011.084283708@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,54 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 57e9d49c54528c49b8bffe6d99d782ea051ea534 ]
+commit cf4a0d840ecc72fcf16198d5e9c505ab7d5a5e4d upstream.
 
-There appears to be a race between silly-rename files being created/removed
-and various userspace tools iterating over the contents of a directory,
-leading to such errors as:
+iwl_fw_ini_trigger_tlv::data is a pointer to a __le32, which means that
+if we copy to iwl_fw_ini_trigger_tlv::data + offset while offset is in
+bytes, we'll write past the buffer.
 
-	find: './kernel/.tmp_cpio_dir/include/dt-bindings/reset/.__afs2080': No such file or directory
-	tar: ./include/linux/greybus/.__afs3C95: File removed before we read it
-
-when building a kernel.
-
-Fix afs_readdir() so that it doesn't return .__afsXXXX silly-rename files
-to userspace.  This doesn't stop them being looked up directly by name as
-we need to be able to look them up from within the kernel as part of the
-silly-rename algorithm.
-
-Fixes: 79ddbfa500b3 ("afs: Implement sillyrename for unlink and rename")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218233
+Fixes: cf29c5b66b9f ("iwlwifi: dbg_ini: implement time point handling")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240111150610.2d2b8b870194.I14ed76505a5cf87304e0c9cc05cc0ae85ed3bf91@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/dir.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index cec18f9f8bd7..106426de5027 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -492,6 +492,14 @@ static int afs_dir_iterate_block(struct afs_vnode *dvnode,
- 			continue;
- 		}
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+@@ -836,7 +836,7 @@ static int iwl_dbg_tlv_override_trig_nod
+ 		node_trig = (void *)node_tlv->data;
+ 	}
  
-+		/* Don't expose silly rename entries to userspace. */
-+		if (nlen > 6 &&
-+		    dire->u.name[0] == '.' &&
-+		    ctx->actor != afs_lookup_filldir &&
-+		    ctx->actor != afs_lookup_one_filldir &&
-+		    memcmp(dire->u.name, ".__afs", 6) == 0)
-+			continue;
-+
- 		/* found the next entry */
- 		if (!dir_emit(ctx, dire->u.name, nlen,
- 			      ntohl(dire->u.vnode),
--- 
-2.43.0
-
+-	memcpy(node_trig->data + offset, trig->data, trig_data_len);
++	memcpy((u8 *)node_trig->data + offset, trig->data, trig_data_len);
+ 	node_tlv->length = cpu_to_le32(size);
+ 
+ 	if (policy & IWL_FW_INI_APPLY_POLICY_OVERRIDE_CFG) {
 
 
