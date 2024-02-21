@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D522053816;
-	Wed, 21 Feb 2024 13:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6F053816;
+	Wed, 21 Feb 2024 13:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521208; cv=none; b=tsocR7glBrXCxTHryOwbkrSqNt1TieErjkTh7IxG8790+hvC5YOaP84G+LYik1vqmB3VKBOhIxfY3nCuquqIvnRTAw+imbYvD3OaZ8vLQC5yJs6CnM6k+TRQaexB+pj8odM0Or1fpejRaulo45rSys5XDv6jkcu5ZmXdsdNoGo0=
+	t=1708521211; cv=none; b=ABd1otd5+5AFxpj5xAeBQizp/lyKWEHUmwVlxAg6hFY2ITqqHA1iccSxuLg6hjn43K6i1I9dPDKO5QHWC/+zj3fxTA+B1eZQvBfdIKibnhZalcolgHdeS5Xg0JG6xmM0yROby/IzU2tqnMfzLtUHEth/Rl+lReaReCKuoYpoV9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521208; c=relaxed/simple;
-	bh=OGfLC4nT7/OgvJ3PJDHPe732OvDrXvWu4wW2JNN7uP8=;
+	s=arc-20240116; t=1708521211; c=relaxed/simple;
+	bh=8mRdwK5WYP6W4h9WizjksS3g3ltaV+vMqDwT7fVSN+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sFVzHh6FCF4QhuXlKrH4BgLxkq2A3BPuGCRkwb7ZozdGFxTWBjK36/fwpuZm2jLRMRtXCWxdUHu9DmPbrjcUqtnpcx0YOiU9Bu4bR3p4UoFBotNScMDZypqEOWrsZXvmVR/MgGM3zCjsR535g9WjtB8TdyCceomJhhJkiGJ43GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfT1Ri2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rbn3VIEL8Vngemn67PFIlM0jxhYmOOA4sqc9h9Fyfc7/W4l5OOQslgHO/7TQe4SJvem3HGiQLkzzfZm2RT+cM6fxOM727P/W3DtK9ZmX38N5SRhx3V/9GPjJLAM3AjeySvbypR4fj4C4FMsFcezOXo3j86gGSHqFZc1EAX0UIvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thLdHVAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfT1Ri2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89C1C433C7;
-	Wed, 21 Feb 2024 13:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thLdHVAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A30C433F1;
+	Wed, 21 Feb 2024 13:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521208;
-	bh=OGfLC4nT7/OgvJ3PJDHPe732OvDrXvWu4wW2JNN7uP8=;
+	s=korg; t=1708521211;
+	bh=8mRdwK5WYP6W4h9WizjksS3g3ltaV+vMqDwT7fVSN+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FfT1Ri2C44kcZeVnPU/45GZDrMLjllrVqp6He7661cgxoXiKw2yP5DjF5RgtymdNi
-	 +GmZzA5k4V6CdEGwZB0QjrNTBlSYBT7aNyUxWNnFzsto+TMMFcQFubCOR2fxiVcRWL
-	 U5TpjThigVebnmfZaExlslzQMTlWrkksSFlifLhI=
+	b=thLdHVAyusZx7217Jl+azIcO2oaaSq1AryjbEkW8JJjgqMfP56rq1LfTnJxw/d7/e
+	 LdlzMf6BSs2Rq2kPrGuC3/undzTvMok8C4B3siifpi4Q3/+q3q2qpQnlOVaOLH/EFF
+	 zAWyAtqdrJzYq/v4rsTPfwXzKvXuCC5n0fgtBstM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PATCH 4.19 019/202] x86/CPU/AMD: Fix disabling XSAVES on AMD family 0x17 due to erratum
-Date: Wed, 21 Feb 2024 14:05:20 +0100
-Message-ID: <20240221125932.377070058@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 4.19 020/202] driver core: Annotate dev_err_probe() with __must_check
+Date: Wed, 21 Feb 2024 14:05:21 +0100
+Message-ID: <20240221125932.409208356@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -49,61 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+commit e1f82a0dcf388d98bcc7ad195c03bd812405e6b2 upstream.
 
-The stable kernel version backport of the patch disabling XSAVES on AMD
-Zen family 0x17 applied this change to the wrong function (init_amd_k6()),
-one which isn't called for Zen CPUs.
+We have got already new users of this API which interpret it differently
+and miss the opportunity to optimize their code.
 
-Move the erratum to the init_amd_zn() function instead.
+In order to avoid similar cases in the future, annotate dev_err_probe()
+with __must_check.
 
-Add an explicit family 0x17 check to the erratum so nothing will break if
-someone naively makes this kernel version call init_amd_zn() also for
-family 0x19 in the future (as the current upstream code does).
-
-Fixes: f028a7db9824 ("x86/CPU/AMD: Disable XSAVES on AMD family 0x17")
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+Fixes: a787e5400a1c ("driver core: add device probe log helper")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20200826104459.81979-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/amd.c |   20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ include/linux/device.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/amd.c
-+++ b/arch/x86/kernel/cpu/amd.c
-@@ -271,15 +271,6 @@ static void init_amd_k6(struct cpuinfo_x
- 		return;
- 	}
- #endif
--	/*
--	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
--	 * certain circumstances on Zen1/2 uarch, and not all parts have had
--	 * updated microcode at the time of writing (March 2023).
--	 *
--	 * Affected parts all have no supervisor XSAVE states, meaning that
--	 * the XSAVEC instruction (which works fine) is equivalent.
--	 */
--	clear_cpu_cap(c, X86_FEATURE_XSAVES);
- }
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1582,7 +1582,7 @@ do {									\
+ 			dev_driver_string(dev), dev_name(dev), ## arg)
  
- static void init_amd_k7(struct cpuinfo_x86 *c)
-@@ -979,6 +970,17 @@ static void init_amd_zn(struct cpuinfo_x
- 		if (c->x86 == 0x19 && !cpu_has(c, X86_FEATURE_BTC_NO))
- 			set_cpu_cap(c, X86_FEATURE_BTC_NO);
- 	}
-+
-+	/*
-+	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
-+	 * certain circumstances on Zen1/2 uarch, and not all parts have had
-+	 * updated microcode at the time of writing (March 2023).
-+	 *
-+	 * Affected parts all have no supervisor XSAVE states, meaning that
-+	 * the XSAVEC instruction (which works fine) is equivalent.
-+	 */
-+	if (c->x86 == 0x17)
-+		clear_cpu_cap(c, X86_FEATURE_XSAVES);
- }
+ extern __printf(3, 4)
+-int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
++int __must_check dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
  
- static bool cpu_has_zenbleed_microcode(void)
+ /* Create alias, so I can be autoloaded. */
+ #define MODULE_ALIAS_CHARDEV(major,minor) \
 
 
