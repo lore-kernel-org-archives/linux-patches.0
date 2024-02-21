@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBD11E4B2;
-	Wed, 21 Feb 2024 13:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7FA1E4B2;
+	Wed, 21 Feb 2024 13:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523208; cv=none; b=dx870AHVUdedX+5eDUuB6iyxqpRITRudsJEw29YJsbDi9uLtdX6YVZSMpal2dRy09N6y0KhBVWoB4g/HNSaYcthPzBDK8+pPs9aG+rhm9Kwh9c0dqvTVF2VGZcIq/GgvYOzTUH5JsLeNYpQ34M4vDYGs9pE3MsQ7a2UdKtDqI1Q=
+	t=1708523211; cv=none; b=noeFeiT51MUrW/UhVJrYoj88JYp4gT+CCxScrMbSMRO0es+weOxgJXVpZKV8pK+zs+4CWZXmR2kiupsXBm/pYedsRjlVo5T92VRUx36ozeIqTyIPinxP9Cdnw025BFiCIUUmW7mKGObd8IN4/HMk10m1+wMytE/GjazYcSSLYWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523208; c=relaxed/simple;
-	bh=Iu9NehMCB7LgB0EqbLz3LdnCOSk3JK4kiEIkAP0RsU8=;
+	s=arc-20240116; t=1708523211; c=relaxed/simple;
+	bh=Go6BPD981oLS4BIdkZn87Yq3fONwhhOmZcLKkQLbEO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KH5/s5ixD0KdGkAotY2NTsDhAWUnjMjTMv4tibsjGuB8k/4bF0sdKBt06iPtE342e7OxXJ/f0JOak4iw2FS98/dtalYfJ1mdPtTuBGHz8nDAq48RaGxzHxr/vUORSswOGanCpFfE99pct8bgw9fkzFfbf19mPHLHTHSMSAFV3V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3+V8E11; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DcVF0dWEbPLG0VmA1hyzLbFQwwoyF0f4OxkGilQKO+dw8TqUOSELu2Ar1D7B2WaN8W3PJAG/pmFdJzaRKbsbmXwVrqFVfj3CDHDV25I1el24vDT+gys1DDU3OO1ZcbvmfQBLhFbBQVt34haR13s+RA0QUonYvxhVVVFjIWs2xrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUy/qT1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3+V8E11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9223EC433F1;
-	Wed, 21 Feb 2024 13:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUy/qT1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2428C433F1;
+	Wed, 21 Feb 2024 13:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523208;
-	bh=Iu9NehMCB7LgB0EqbLz3LdnCOSk3JK4kiEIkAP0RsU8=;
+	s=korg; t=1708523211;
+	bh=Go6BPD981oLS4BIdkZn87Yq3fONwhhOmZcLKkQLbEO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3+V8E11D+h/g1CSbotinbVRraIfP9zQwgbCHQRXZosWBrhtkH3lc2gxmI2HsWAOC
-	 1XO76LMvvUHYgfs948Q9ndMJq1xeDo72pIx62r9NyuiVB94EiiizlexrUOQN5WVlQ7
-	 lAGrpK4UISgsyNJgAWjWuOssWJQC/8y/DqsHY1T0=
+	b=SUy/qT1i5gQfaCqovzeINhQaO4t1LcDohi2fGJhVMFHuCEjEt1jOflgcjtXW+7UzI
+	 3/LJFzlKXF4HdJq1JCDc4pEdMKxwMPhz7viBUSNcBFl3GAxf0fy3EEv++Tt/iJbE7S
+	 t4cOxGdpNJhUAEx4gS5pseDrTB1a/uBRm4M+AHVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	yuan linyu <yuanlinyu@hihonor.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.15 368/476] usb: f_mass_storage: forbid async queue when shutdown happen
-Date: Wed, 21 Feb 2024 14:06:59 +0100
-Message-ID: <20240221130021.640660748@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Subject: [PATCH 5.15 369/476] usb: dwc3: gadget: Fix NULL pointer dereference in dwc3_gadget_suspend
+Date: Wed, 21 Feb 2024 14:07:00 +0100
+Message-ID: <20240221130021.679723758@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,71 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yuan linyu <yuanlinyu@hihonor.com>
+From: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
 
-commit b2d2d7ea0dd09802cf5a0545bf54d8ad8987d20c upstream.
+commit 61a348857e869432e6a920ad8ea9132e8d44c316 upstream.
 
-When write UDC to empty and unbind gadget driver from gadget device, it is
-possible that there are many queue failures for mass storage function.
+In current scenario if Plug-out and Plug-In performed continuously
+there could be a chance while checking for dwc->gadget_driver in
+dwc3_gadget_suspend, a NULL pointer dereference may occur.
 
-The root cause is mass storage main thread alaways try to queue request to
-receive a command from host if running flag is on, on platform like dwc3,
-if pull down called, it will not queue request again and return
--ESHUTDOWN, but it not affect running flag of mass storage function.
+Call Stack:
 
-Check return code from mass storage function and clear running flag if it
-is -ESHUTDOWN, also indicate start in/out transfer failure to break loops.
+	CPU1:                           CPU2:
+	gadget_unbind_driver            dwc3_suspend_common
+	dwc3_gadget_stop                dwc3_gadget_suspend
+                                        dwc3_disconnect_gadget
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: yuan linyu <yuanlinyu@hihonor.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20240123034829.3848409-1-yuanlinyu@hihonor.com
+CPU1 basically clears the variable and CPU2 checks the variable.
+Consider CPU1 is running and right before gadget_driver is cleared
+and in parallel CPU2 executes dwc3_gadget_suspend where it finds
+dwc->gadget_driver which is not NULL and resumes execution and then
+CPU1 completes execution. CPU2 executes dwc3_disconnect_gadget where
+it checks dwc->gadget_driver is already NULL because of which the
+NULL pointer deference occur.
+
+Cc: stable@vger.kernel.org
+Fixes: 9772b47a4c29 ("usb: dwc3: gadget: Fix suspend/resume during device mode")
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Uttkarsh Aggarwal <quic_uaggarwa@quicinc.com>
+Link: https://lore.kernel.org/r/20240119094825.26530-1-quic_uaggarwa@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/gadget.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -543,21 +543,37 @@ static int start_transfer(struct fsg_dev
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4412,15 +4412,13 @@ int dwc3_gadget_suspend(struct dwc3 *dwc
+ 	unsigned long flags;
+ 	int ret;
  
- static bool start_in_transfer(struct fsg_common *common, struct fsg_buffhd *bh)
- {
-+	int rc;
-+
- 	if (!fsg_is_set(common))
- 		return false;
- 	bh->state = BUF_STATE_SENDING;
--	if (start_transfer(common->fsg, common->fsg->bulk_in, bh->inreq))
-+	rc = start_transfer(common->fsg, common->fsg->bulk_in, bh->inreq);
-+	if (rc) {
- 		bh->state = BUF_STATE_EMPTY;
-+		if (rc == -ESHUTDOWN) {
-+			common->running = 0;
-+			return false;
-+		}
-+	}
- 	return true;
- }
+-	if (!dwc->gadget_driver)
+-		return 0;
+-
+ 	ret = dwc3_gadget_soft_disconnect(dwc);
+ 	if (ret)
+ 		goto err;
  
- static bool start_out_transfer(struct fsg_common *common, struct fsg_buffhd *bh)
- {
-+	int rc;
-+
- 	if (!fsg_is_set(common))
- 		return false;
- 	bh->state = BUF_STATE_RECEIVING;
--	if (start_transfer(common->fsg, common->fsg->bulk_out, bh->outreq))
-+	rc = start_transfer(common->fsg, common->fsg->bulk_out, bh->outreq);
-+	if (rc) {
- 		bh->state = BUF_STATE_FULL;
-+		if (rc == -ESHUTDOWN) {
-+			common->running = 0;
-+			return false;
-+		}
-+	}
- 	return true;
- }
+ 	spin_lock_irqsave(&dwc->lock, flags);
+-	dwc3_disconnect_gadget(dwc);
++	if (dwc->gadget_driver)
++		dwc3_disconnect_gadget(dwc);
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
  
+ 	return 0;
 
 
