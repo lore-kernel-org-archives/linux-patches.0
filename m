@@ -1,105 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4A55228;
-	Wed, 21 Feb 2024 10:33:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593E63D0BF
+	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 10:57:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708511592; cv=none; b=rmV8ngeqXZXx0H2gUHTrrQjR8O4mHt4D94/FjTsdWu0n/gHadNtr3qwNN/HCNkjrUj2e8sFUm8vNrDGQ4XYwpN8oUb7Vmo1pUDi0tcOdbF09Q5Ibkgf07XPP/+z10KtRjPeQoGxL6PYdwKuPjaJb5nGk31sPJJOr5Dsz6zoh/Ik=
+	t=1708513053; cv=none; b=SeHJ6+wb7sB/3o59KYEuoTuoYE5Wru8fxuWZDTkf1mXoeiYXAwNsdKbeDOfnGMy7q8GpcFqSXytBJBMKbfAzhToNw4awQRKef2n/lOq40T013DU3b2WdzxVzhBe8F+CehYQjtFdrDsRHpshbeLyexzF6/JwPk+UJHxeaJYvnI9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708511592; c=relaxed/simple;
-	bh=wBmpAvypePMGkIr64sby2PVZroYKG6tZ/uT/sRxVsCw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q+RZRFa2xAUSXkuRUk4KbEpo1T7LNkOvQ520yhw80swF4fax44wGsJqI1DLCrRQTpQv1Iqel1Li2hZhl672t423xLbHO9lDMNRiBrckMeThzm7r1OvSkTGiQdDIFMuMg0+6GRkLdG5zdQdlcJw45LV4UeBArC/rKG0v+Ol1m48w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSZpk8tr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708513053; c=relaxed/simple;
+	bh=12eHUbAjggF8yM7NgbCREXkzqk9dNvGWjPUhot5ICm4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P8vwsMcFBsYqztAMMAH51KrEMjW4/OVKYa8ed6ceIjVxKLtwqLsNg328uPI9RHtTKhdfZWCwt8ocBUyj3lBR8/779HQzrdmJVKor7Uaapw83edG6kZkkvwTKXNA83VuO0xj5/8wwdyis37/Je3imuINrnS6NHHmEZyVh4xlnmuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=2CNQf5o0; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSZpk8tr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1E5C433F1;
-	Wed, 21 Feb 2024 10:33:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708511592;
-	bh=wBmpAvypePMGkIr64sby2PVZroYKG6tZ/uT/sRxVsCw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tSZpk8tri2tl/8IMrs+lD1pVMj3Bf4dQXWUMZzYf7PdI4pCeNODVpgKdVS4KG9CRa
-	 vDleH5viYPTSufxHeZpKmIro4z9N3zOM+xjnnZ8W6dqqrKqDiaudLW7rnrXgx8Zh0k
-	 rJSsMcdQfhbjVAYriBiu3HKEYFGLqvtDN6E6x2Zc=
-Date: Wed, 21 Feb 2024 11:33:08 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Francesco Dolcini <francesco@dolcini.it>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>, Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 174/197] wifi: mwifiex: Support SD8978 chipset
-Message-ID: <2024022145-abnormal-evasive-c978@gregkh>
-References: <20240220204841.073267068@linuxfoundation.org>
- <20240220204846.279064097@linuxfoundation.org>
- <20240221080353.GB5131@francesco-nb>
- <2024022106-speculate-scallion-67a7@gregkh>
- <20240221083904.GA5872@francesco-nb>
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="2CNQf5o0"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4127706e48cso2656395e9.1
+        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 02:57:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1708513049; x=1709117849; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mXS0v4k2QIM4BKra2esPdMnm5lJf7ZlcPGjCl+7IYY0=;
+        b=2CNQf5o0hSkjXvLX6bn7e8bcrbJo5Nv1coFKin6DnStH6LticXUGpq+412ANRAKH/m
+         lxWfkUN1YozaIkFVsGyihZykWuGOZO4MpDSUD8KGOCV5TOIl4wfuZWu1RAVrHssoq8pP
+         DLBF8sI+QRkgalkQFfhBnFWYDQf8lvXNxrGwpotT4KpuOkXK9SFIbQv7G6w7lSPxEBS3
+         ndPz5niS++LKhNwW0tJCrQ+Bkz17RDb82091pYd+xju3+x+3922+gCQFQIur2C+w1vA3
+         SGBLiWSXA3iLtn5dEIBmypN90Se3CYpOBGDkkS2lAHOPh2inUz6fQKGA8F87ee96XleX
+         PCAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708513049; x=1709117849;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mXS0v4k2QIM4BKra2esPdMnm5lJf7ZlcPGjCl+7IYY0=;
+        b=g9/EeeGZl+A9S26T2IbqsSFeoTL91pSGoDPAShTyn1CD7TCQQSwJt/VVruqI9dodes
+         gVYKkKuLqACZvl9CJGP4Pgh0aTLYSIYZNpLCErwYG59aeRq541T/nUMlKOPOdwGWjtZ3
+         1CRUzzFhkPVBavZoJtY/CkZVCFl1qEgMoEVzt23GKodSlHfaxOO9tnxBhaW7GIkn6eAk
+         SEDa52olEy8RJZOcrZJJYf6o/z033VFHUM4pF67YzLO0s2Lf0BbPHvcvYCYJRZDzPyD+
+         0fTBhJu4baTQcZhR9VakuEHiqm0ECTJ4nJv3jAJmWmMKeR2jxMIenlg0PN0XLJRu5w+2
+         py1g==
+X-Forwarded-Encrypted: i=1; AJvYcCXsFUtr05K3tiE7uwxc13Ca8m2TzRd4nLDEAm6QI+rzAnYdVtDRJOyRhhAKhWZi4uyKapW2Ub5BMK9Dm1tm2Ic0gEOry6AbKw==
+X-Gm-Message-State: AOJu0YxThIDKXTsydSYJRRfsWjbtFMjpACwrVwNkMmSiiKor+JhSvDs+
+	45QlaYyR+0FAVMAhYQQlRBX1vE4trA3toR3NeYVDU4Dprt08pfsSHPsgYLFd84ngq9M9mzm8wMB
+	OFZivN8BRnN5mb4dikMwsim40vtraLYvMsWE6ow==
+X-Google-Smtp-Source: AGHT+IGuvBYOPybU+JlLxiW/kVCWLOvI2+PYz2s5jpQmusjJ3soy+dVF8/NFDj1SlG1DcCy9YtEo+OfpQSAULDF7mLk=
+X-Received: by 2002:adf:f742:0:b0:33d:7ea3:5b90 with SMTP id
+ z2-20020adff742000000b0033d7ea35b90mr829829wrp.65.1708513049204; Wed, 21 Feb
+ 2024 02:57:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240221083904.GA5872@francesco-nb>
+References: <20240220205637.572693592@linuxfoundation.org>
+In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Wed, 21 Feb 2024 19:57:18 +0900
+Message-ID: <CAKL4bV6j90+tQVoAVUaxkFUuCT05sK8OrjuBZntesw=UyOVaAg@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/331] 6.6.18-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 21, 2024 at 09:39:04AM +0100, Francesco Dolcini wrote:
-> On Wed, Feb 21, 2024 at 09:12:23AM +0100, Greg Kroah-Hartman wrote:
-> > On Wed, Feb 21, 2024 at 09:03:53AM +0100, Francesco Dolcini wrote:
-> > > On Tue, Feb 20, 2024 at 09:52:13PM +0100, Greg Kroah-Hartman wrote:
-> > > > 6.1-stable review patch.  If anyone has any objections, please let me know.
-> > > > 
-> > > > ------------------
-> > > > 
-> > > > From: Lukas Wunner <lukas@wunner.de>
-> > > > 
-> > > > [ Upstream commit bba047f15851c8b053221f1b276eb7682d59f755 ]
-> > > > 
-> > > > The Marvell SD8978 (aka NXP IW416) uses identical registers as SD8987,
-> > > > so reuse the existing mwifiex_reg_sd8987 definition.
-> > > > 
-> > > > Note that mwifiex_reg_sd8977 and mwifiex_reg_sd8997 are likewise
-> > > > identical, save for the fw_dump_ctrl register:  They define it as 0xf0
-> > > > whereas mwifiex_reg_sd8987 defines it as 0xf9.  I've verified that
-> > > > 0xf9 is the correct value on SD8978.  NXP's out-of-tree driver uses
-> > > > 0xf9 for all of them, so there's a chance that 0xf0 is not correct
-> > > > in the mwifiex_reg_sd8977 and mwifiex_reg_sd8997 definitions.  I cannot
-> > > > test that for lack of hardware, hence am leaving it as is.
-> > > > 
-> > > > NXP has only released a firmware which runs Bluetooth over UART.
-> > > > Perhaps Bluetooth over SDIO is unsupported by this chipset.
-> > > > Consequently, only an "sdiouart" firmware image is referenced, not an
-> > > > alternative "sdsd" image.
-> > > > 
-> > > > Signed-off-by: Lukas Wunner <lukas@wunner.de>
-> > > > Signed-off-by: Kalle Valo <kvalo@kernel.org>
-> > > > Link: https://lore.kernel.org/r/536b4f17a72ca460ad1b07045757043fb0778988.1674827105.git.lukas@wunner.de
-> > > > Stable-dep-of: 1c5d463c0770 ("wifi: mwifiex: add extra delay for firmware ready")
-> > > 
-> > > I would drop this and 1c5d463c0770.
-> > 
-> > Why?  Commit 1c5d463c0770 was explicitly tagged for stable inclusion,
-> > what changed?
-> 
-> 1c5d463c0770 is a fix for bba047f15851c8b053221f1b276eb7682d59f755.
-> 
-> So there is no bug, unless bba047f15851c8b053221f1b276eb7682d59f755 is
-> there.
+Hi Greg
 
-It is.
+On Wed, Feb 21, 2024 at 6:09=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.18 release.
+> There are 331 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 22 Feb 2024 20:55:45 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.18-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-> The mistake that we did at that time is that it should have been
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: bba047f15851 ("wifi: mwifiex: Support SD8978 chipset")
+6.6.18-rc1 tested.
 
-Great, that commit is currently in:
-	6.3 queue-5.10 queue-5.15 queue-6.1
-so all is good.
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-thanks,
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
-greg k-h
+[    0.000000] Linux version 6.6.18-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 13.2.1 20230801, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Wed Feb 21 19:34:18 JST 2024
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
