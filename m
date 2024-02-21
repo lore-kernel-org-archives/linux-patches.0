@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA5869942;
-	Wed, 21 Feb 2024 13:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EDE7BB0F;
+	Wed, 21 Feb 2024 13:50:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523404; cv=none; b=uNpoPkurAqoLSnOMuMjkDBTY1uxzW7yHPhHQ6O/Rnb87ipKBUh0gReN4uwLr/62rnAb1lDixGv6Enp3A12y7QqwYrekW1tT2WCPtwl4OJxULiImGu7umsffv5hGFrn4qr36X1RoW/rNbg7298yPGpgjx4772GKY2rDumnefFwM8=
+	t=1708523407; cv=none; b=a8JT8iyUELSpmP8CEp1jnmK9ANO7dUIcQEdVJm+JpgBDSb4ovQX6+VKbIfbEaTSG7qXQszGRXc9iYJQpXQ2X+kjlzgXKDaHCGMycFX0eE2oGEYA+oufFJFgtpJBNc9zhV3NQbpPdONpxJ//v8Yzp7n5St0JAf1OmIoFn5wlyUz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523404; c=relaxed/simple;
-	bh=iZBHUNcpe1Sqqs29eQRJrSdZouxnS2pCa0V1ZH5wKeU=;
+	s=arc-20240116; t=1708523407; c=relaxed/simple;
+	bh=WY+jW6aAuCiWQhUIEekj7/ug+lwVp18R3CeYcOZhbe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbLLsdBZEchpR5eAGPxINEK/forpe8iEsRVtLN1iZW4E6PK7MFU08GKvxXdwvY2xrXl04tln1acV27oD/Kl8p5FhOMCMQsSZ/I45tg8BDOD+10BygHYkzUbbSvYGHnbOmOpxGp8GhNQrtn/E+PX1QbInEBmhTngjYIGcw55iPlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TqaPmoYX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ebpZAk5ffzHCPBXuA9za8rczBnjqGR9xMcYrmZ1IAJA1Ew6yI78+UmUXVyQGTdlGqj2gNSjS765pLOV1rdG3Qs6qlAZAt/ugmHrG8TX9/s5MX+HBJUIM+P55NUEIfRSyMkNmzz3x3DHhKYUn+h+I3/1Q4Ir/iBuifWO6bTLTgK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=httftXqK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TqaPmoYX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A61DC433C7;
-	Wed, 21 Feb 2024 13:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="httftXqK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B90FC433C7;
+	Wed, 21 Feb 2024 13:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523403;
-	bh=iZBHUNcpe1Sqqs29eQRJrSdZouxnS2pCa0V1ZH5wKeU=;
+	s=korg; t=1708523407;
+	bh=WY+jW6aAuCiWQhUIEekj7/ug+lwVp18R3CeYcOZhbe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TqaPmoYXxu20uYtoGWncaBzE2w+BDot2VIBF8nBaM7kET7hAakfd02Zsq5C4OyPnC
-	 FGNSFu8PegI2OoUARJH5S4Fd628tu5+BHa3+LeSH150/KMnwQhO3ZuS6fJ+J/Ndss1
-	 gDlnfSYyc9C6femXU6mLUyCF2Xsm3h7/7rmu8C7k=
+	b=httftXqKcZCpJvAt/L5WS1FTvSXoN4c4OpPYd+sBiDSjWVTs6a6b+Zr/Rqvp+s9vG
+	 kJnlqQNdx63s7o1UvRljbUao+DCFubqZRUmUGjraCyFa9GHr05UXNjGW817SZw+Yh6
+	 V+0C7hGfF91F+XK1r5GEEparSEBmo4e/RX0tWddY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishabh Dave <ridave@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.15 418/476] ceph: prevent use-after-free in encode_cap_msg()
-Date: Wed, 21 Feb 2024 14:07:49 +0100
-Message-ID: <20240221130023.475745371@linuxfoundation.org>
+	Andrejs Cainikovs <andrejs.cainikovs@toradex.com>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 427/476] mwifiex: Select firmware based on strapping
+Date: Wed, 21 Feb 2024 14:07:58 +0100
+Message-ID: <20240221130023.815110111@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -46,59 +46,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rishabh Dave <ridave@redhat.com>
+From: Andrejs Cainikovs <andrejs.cainikovs@toradex.com>
 
-commit cda4672da1c26835dcbd7aec2bfed954eda9b5ef upstream.
+[ Upstream commit 255ca28a659d3cfb069f73c7644853ed93aecdb0 ]
 
-In fs/ceph/caps.c, in encode_cap_msg(), "use after free" error was
-caught by KASAN at this line - 'ceph_buffer_get(arg->xattr_buf);'. This
-implies before the refcount could be increment here, it was freed.
+Some WiFi/Bluetooth modules might have different host connection
+options, allowing to either use SDIO for both WiFi and Bluetooth,
+or SDIO for WiFi and UART for Bluetooth. It is possible to detect
+whether a module has SDIO-SDIO or SDIO-UART connection by reading
+its host strap register.
 
-In same file, in "handle_cap_grant()" refcount is decremented by this
-line - 'ceph_buffer_put(ci->i_xattrs.blob);'. It appears that a race
-occurred and resource was freed by the latter line before the former
-line could increment it.
+This change introduces a way to automatically select appropriate
+firmware depending of the connection method, and removes a need
+of symlinking or overwriting the original firmware file with a
+required one.
 
-encode_cap_msg() is called by __send_cap() and __send_cap() is called by
-ceph_check_caps() after calling __prep_cap(). __prep_cap() is where
-arg->xattr_buf is assigned to ci->i_xattrs.blob. This is the spot where
-the refcount must be increased to prevent "use after free" error.
+Host strap register used in this commit comes from the NXP driver [1]
+hosted at Code Aurora.
 
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/59259
-Signed-off-by: Rishabh Dave <ridave@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] https://source.codeaurora.org/external/imx/linux-imx/tree/drivers/net/wireless/nxp/mxm_wifiex/wlan_src/mlinux/moal_sdio_mmc.c?h=rel_imx_5.4.70_2.3.2&id=688b67b2c7220b01521ffe560da7eee33042c7bd#n1274
+
+Signed-off-by: Andrejs Cainikovs <andrejs.cainikovs@toradex.com>
+Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20220422090313.125857-2-andrejs.cainikovs@toradex.com
+Stable-dep-of: 1c5d463c0770 ("wifi: mwifiex: add extra delay for firmware ready")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/marvell/mwifiex/sdio.c | 21 ++++++++++++++++++++-
+ drivers/net/wireless/marvell/mwifiex/sdio.h |  5 +++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1390,7 +1390,7 @@ static void __prep_cap(struct cap_msg_ar
- 	if (flushing & CEPH_CAP_XATTR_EXCL) {
- 		arg->old_xattr_buf = __ceph_build_xattrs_blob(ci);
- 		arg->xattr_version = ci->i_xattrs.version;
--		arg->xattr_buf = ci->i_xattrs.blob;
-+		arg->xattr_buf = ceph_buffer_get(ci->i_xattrs.blob);
- 	} else {
- 		arg->xattr_buf = NULL;
- 		arg->old_xattr_buf = NULL;
-@@ -1456,6 +1456,7 @@ static void __send_cap(struct cap_msg_ar
- 	encode_cap_msg(msg, arg);
- 	ceph_con_send(&arg->session->s_con, msg);
- 	ceph_buffer_put(arg->old_xattr_buf);
-+	ceph_buffer_put(arg->xattr_buf);
- 	if (arg->wake)
- 		wake_up_all(&ci->i_cap_wq);
- }
+diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
+index b09e60fedeb1..016065a56e6c 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sdio.c
++++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
+@@ -182,6 +182,9 @@ static const struct mwifiex_sdio_card_reg mwifiex_reg_sd8997 = {
+ 	.host_int_rsr_reg = 0x4,
+ 	.host_int_status_reg = 0x0C,
+ 	.host_int_mask_reg = 0x08,
++	.host_strap_reg = 0xF4,
++	.host_strap_mask = 0x01,
++	.host_strap_value = 0x00,
+ 	.status_reg_0 = 0xE8,
+ 	.status_reg_1 = 0xE9,
+ 	.sdio_int_mask = 0xff,
+@@ -283,6 +286,9 @@ static const struct mwifiex_sdio_card_reg mwifiex_reg_sd8987 = {
+ 	.host_int_rsr_reg = 0x4,
+ 	.host_int_status_reg = 0x0C,
+ 	.host_int_mask_reg = 0x08,
++	.host_strap_reg = 0xF4,
++	.host_strap_mask = 0x01,
++	.host_strap_value = 0x00,
+ 	.status_reg_0 = 0xE8,
+ 	.status_reg_1 = 0xE9,
+ 	.sdio_int_mask = 0xff,
+@@ -537,6 +543,7 @@ mwifiex_sdio_probe(struct sdio_func *func, const struct sdio_device_id *id)
+ 		struct mwifiex_sdio_device *data = (void *)id->driver_data;
+ 
+ 		card->firmware = data->firmware;
++		card->firmware_sdiouart = data->firmware_sdiouart;
+ 		card->reg = data->reg;
+ 		card->max_ports = data->max_ports;
+ 		card->mp_agg_pkt_limit = data->mp_agg_pkt_limit;
+@@ -2440,6 +2447,7 @@ static int mwifiex_register_dev(struct mwifiex_adapter *adapter)
+ 	int ret;
+ 	struct sdio_mmc_card *card = adapter->card;
+ 	struct sdio_func *func = card->func;
++	const char *firmware = card->firmware;
+ 
+ 	/* save adapter pointer in card */
+ 	card->adapter = adapter;
+@@ -2456,7 +2464,18 @@ static int mwifiex_register_dev(struct mwifiex_adapter *adapter)
+ 		return ret;
+ 	}
+ 
+-	strcpy(adapter->fw_name, card->firmware);
++	/* Select correct firmware (sdsd or sdiouart) firmware based on the strapping
++	 * option
++	 */
++	if (card->firmware_sdiouart) {
++		u8 val;
++
++		mwifiex_read_reg(adapter, card->reg->host_strap_reg, &val);
++		if ((val & card->reg->host_strap_mask) == card->reg->host_strap_value)
++			firmware = card->firmware_sdiouart;
++	}
++	strcpy(adapter->fw_name, firmware);
++
+ 	if (card->fw_dump_enh) {
+ 		adapter->mem_type_mapping_tbl = generic_mem_type_map;
+ 		adapter->num_mem_types = 1;
+diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.h b/drivers/net/wireless/marvell/mwifiex/sdio.h
+index 5648512c9300..ad2c28cbb630 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sdio.h
++++ b/drivers/net/wireless/marvell/mwifiex/sdio.h
+@@ -196,6 +196,9 @@ struct mwifiex_sdio_card_reg {
+ 	u8 host_int_rsr_reg;
+ 	u8 host_int_status_reg;
+ 	u8 host_int_mask_reg;
++	u8 host_strap_reg;
++	u8 host_strap_mask;
++	u8 host_strap_value;
+ 	u8 status_reg_0;
+ 	u8 status_reg_1;
+ 	u8 sdio_int_mask;
+@@ -241,6 +244,7 @@ struct sdio_mmc_card {
+ 
+ 	struct completion fw_done;
+ 	const char *firmware;
++	const char *firmware_sdiouart;
+ 	const struct mwifiex_sdio_card_reg *reg;
+ 	u8 max_ports;
+ 	u8 mp_agg_pkt_limit;
+@@ -274,6 +278,7 @@ struct sdio_mmc_card {
+ 
+ struct mwifiex_sdio_device {
+ 	const char *firmware;
++	const char *firmware_sdiouart;
+ 	const struct mwifiex_sdio_card_reg *reg;
+ 	u8 max_ports;
+ 	u8 mp_agg_pkt_limit;
+-- 
+2.43.0
+
 
 
