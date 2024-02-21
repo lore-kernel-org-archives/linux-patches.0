@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CAE78B7C;
-	Wed, 21 Feb 2024 13:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A383969942;
+	Wed, 21 Feb 2024 13:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523416; cv=none; b=e7JVdSUwrsPPscvmK7woukeSVuHr00ZYfCTQtI5Ptwhcr5GpDkoi/H9Pg9yDEghriOOm6h96MnER06lRUceQ68i+b9PPFY+gmQGE/3QR1ftYJkxp5InBkAVIDc/lwuz8p1uBgSYTL2lzvjvdy3VhJgYiwTTSh1BkpEY5DkrQZT0=
+	t=1708523419; cv=none; b=fdqhVGBd/gn0mraBViKj1gh76eY/tQUS4lvIdbH2zP2jh14S0iwzLTiBKW0G8vcQQFP+Ua4Xc2JfPlc0FVqjcM+b8ux/L+hkOLXiTpROwLqfMD6GDTYM9YSjQ3Nzfyhrx5/KAnz2F8k1oXmiLfw1Hz37EN7g9+6HEHLu8ams7HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523416; c=relaxed/simple;
-	bh=Psdqdni1z+6LpQUzWYUCD4w2yUrclVLIeat9vazyWKQ=;
+	s=arc-20240116; t=1708523419; c=relaxed/simple;
+	bh=cp89iE8V4iT78vY2rPN7fEhJbu2PhOGx9jb9x06c+8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VUeoPOQtQzVTfzAJCQRIH/+l7pTyBHske/MWbmNOvaBwvspZHUmd/UJW579TiYSqvVACpUfY5xqeciRbAVYPnINLik6sAAC2pNUs0tmd8Hy7yyJfJFGxLKxDZlZZMkZVJYoUHNeGlvrDmo2qTWreAvP6aOJppleyJ5A7/B9c0UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo94B5GE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+W7lUvdeAXGbspjpMZ4s8VHKfvdoTySWcVW5WdeMcdmGa5MpENoNlndEwoK+VQzipxVUDpkFulyaVv7J5jtKlbQey3izQwYcvNc8Pq++7nLFs0q+whOAqfVsC4Ue2vh5guBDcAuljWUzvbCSwkMaY9kx39PmvQuJIGHouyTLWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuCo2Gv0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo94B5GE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E789BC43390;
-	Wed, 21 Feb 2024 13:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuCo2Gv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEB2C433F1;
+	Wed, 21 Feb 2024 13:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523416;
-	bh=Psdqdni1z+6LpQUzWYUCD4w2yUrclVLIeat9vazyWKQ=;
+	s=korg; t=1708523419;
+	bh=cp89iE8V4iT78vY2rPN7fEhJbu2PhOGx9jb9x06c+8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bo94B5GE4AsAEPQ2c99sQXyu7t20BWmGy3hKHuyt5FaYHh7D92D3vkI/IJSvbztxp
-	 G4B+F5sHTV2lVQQJ1D+me8K7Z0D+vLUOUqxWy/Tgad5TS0yrE8+PsfYnDlCu2j6/w3
-	 2WeYiiwR3nZZvQUHKyZptzFYFTIHqBL2T2v1j/kY=
+	b=zuCo2Gv0EvuKdgLgKVYE2L6CxNaegNrQrqfaD4JllsSjVxrRBEvRR6BURHAyEcy9U
+	 zV9mJ4odl9YPo+C5u/bGxbTxP1cCv7kGqEG6Zu/YQ4rOxcnEM2EKK2RVyUv0+coFcM
+	 eKyDLqybCxK2xP12ZzNdtN/DCNY9CR+TIMUZSVCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sjoerd Simons <sjoerd@collabora.com>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	David Lin <yu-hao.lin@nxp.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 430/476] bus: moxtet: Add spi device table
-Date: Wed, 21 Feb 2024 14:08:01 +0100
-Message-ID: <20240221130023.922634417@linuxfoundation.org>
+Subject: [PATCH 5.15 431/476] wifi: mwifiex: fix uninitialized firmware_stat
+Date: Wed, 21 Feb 2024 14:08:02 +0100
+Message-ID: <20240221130023.958578187@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -46,54 +48,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sjoerd Simons <sjoerd@collabora.com>
+From: David Lin <yu-hao.lin@nxp.com>
 
-[ Upstream commit aaafe88d5500ba18b33be72458439367ef878788 ]
+[ Upstream commit 3df95e265924ac898c1a38a0c01846dd0bd3b354 ]
 
-The moxtet module fails to auto-load on. Add a SPI id table to
-allow it to do so.
+Variable firmware_stat is possible to be used without initialization.
 
-Signed-off-by: Sjoerd Simons <sjoerd@collabora.com>
-Cc:  <stable@vger.kernel.org>
-Reviewed-by: Marek Behún <kabel@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: David Lin <yu-hao.lin@nxp.com>
+Fixes: 1c5d463c0770 ("wifi: mwifiex: add extra delay for firmware ready")
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202312192236.ZflaWYCw-lkp@intel.com/
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231221015511.1032128-1-yu-hao.lin@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/moxtet.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/sdio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/moxtet.c b/drivers/bus/moxtet.c
-index fd87a59837fa..fbf0818933be 100644
---- a/drivers/bus/moxtet.c
-+++ b/drivers/bus/moxtet.c
-@@ -832,6 +832,12 @@ static int moxtet_remove(struct spi_device *spi)
- 	return 0;
- }
+diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
+index dd4bfb7d71ee..45f46a445a6c 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sdio.c
++++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
+@@ -790,7 +790,7 @@ static int mwifiex_check_fw_status(struct mwifiex_adapter *adapter,
+ {
+ 	struct sdio_mmc_card *card = adapter->card;
+ 	int ret = 0;
+-	u16 firmware_stat;
++	u16 firmware_stat = 0;
+ 	u32 tries;
  
-+static const struct spi_device_id moxtet_spi_ids[] = {
-+	{ "moxtet" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(spi, moxtet_spi_ids);
-+
- static const struct of_device_id moxtet_dt_ids[] = {
- 	{ .compatible = "cznic,moxtet" },
- 	{},
-@@ -843,6 +849,7 @@ static struct spi_driver moxtet_spi_driver = {
- 		.name		= "moxtet",
- 		.of_match_table = moxtet_dt_ids,
- 	},
-+	.id_table	= moxtet_spi_ids,
- 	.probe		= moxtet_probe,
- 	.remove		= moxtet_remove,
- };
+ 	for (tries = 0; tries < poll_num; tries++) {
 -- 
 2.43.0
 
