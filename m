@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48481524A0;
-	Wed, 21 Feb 2024 14:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FB91BC44;
+	Wed, 21 Feb 2024 14:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525804; cv=none; b=hvojaRQ08ydgyoLiePi7t3juZSVuPkoRx08bpBULUno0V+JAKPFoAkcwYM6natPKdK9TJ18FTS41kcnSWXRVDhv/Q0ssEtOZXGiVJQA7ICaWeeJnuwmr6Wrrv87W6+IO0U9Ngay4Tlnb8JcKrrVKXbTN8UMhcykjV8GCftUX4Vc=
+	t=1708525807; cv=none; b=QULlgff4kyfUBVY/uhZqCTV5BdF8LlKnTkqGfQPCN4ffvzzosVPlpsMEQY6z0nU2bmCSYG+mSG+bxy3OiSjErG4qE/R/Dk/e36QJzfnIJl1QC/wPqo9PRcSmOpdhMTTNPnNOBoKG2utna4cQbsdLCtT/YAl5rHZJ5tqlM/B6Lro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525804; c=relaxed/simple;
-	bh=X74gGkxmoqDvc3PwncXRdMnuzHWiGXhBpAWc4CRsMTY=;
+	s=arc-20240116; t=1708525807; c=relaxed/simple;
+	bh=5iNFt82dwChTCojJqLCBWWUVvFOw3oky19PmPZQmfjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BoFmajbu/ULvBHJNzMchurM6KxKchrn0Kw2NwqnATUyS4VjmeU7cxFD4YA6jYAN2vEXtb9nswVU62WyP2F3DrcxXw8aDMu0lCgFMxM75mAmMZPdHNOabIHfTgVuiXP7SDEFQPPoXg/fiYa26ojKgGHFWbbcwIx0bNI/c21bRSKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFeCak8o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWOVzABZ3vRnGgdy2NBowSsTR7XXeueTLSjhuG9hxtBeMlhYm06luHBBIyZ6jBAZGdLVjcwySH8mTMt9+1q6wVTya8R6iyp+YZndW+Uq5K8vJ/ERjLhZ54+rXyPxRwPxSpkDBEyTM0BDuzvyQdVG+153EMpQ6nTB/Gg6gxD2RLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnxLi489; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFeCak8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C088AC433C7;
-	Wed, 21 Feb 2024 14:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnxLi489"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA9D1C433F1;
+	Wed, 21 Feb 2024 14:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525804;
-	bh=X74gGkxmoqDvc3PwncXRdMnuzHWiGXhBpAWc4CRsMTY=;
+	s=korg; t=1708525807;
+	bh=5iNFt82dwChTCojJqLCBWWUVvFOw3oky19PmPZQmfjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFeCak8oneDuvLfHJUun3RppjeFG5Rq4Hfk1ZIVdTTUh3KbxsPYWbuoPbWhbVvmDz
-	 XkyRD5MaGiUv72cTB4IpGsCQB04SaRQn/u84nobAHdGFux31NOMEi1j55Ai6/VTdOB
-	 o11te0nyB6lDjWHZVeIem9Pd+xQ34sBp7CuaqdQ4=
+	b=UnxLi4897xhpa/wUvYmNIG2UOV8Tzu7g6WrGNKpCLmQeKrdHEWhwh8GXlHhEOlfdW
+	 8BEZoSBcMNQds9ADtdhZiDKCZcsNiaJhbYyg4PsQOla8jI1v6W+JrFj1vDhM5KMhuW
+	 TiIjIYa5LKIKMHDjFr7ot+EE9fkP7gmwk7LI1auY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Amit Pundir <amit.pundir@linaro.org>
-Subject: [PATCH 5.4 259/267] PM: runtime: add devm_pm_runtime_enable helper
-Date: Wed, 21 Feb 2024 14:10:00 +0100
-Message-ID: <20240221125948.377864735@linuxfoundation.org>
+Subject: [PATCH 5.4 260/267] PM: runtime: Have devm_pm_runtime_enable() handle pm_runtime_dont_use_autosuspend()
+Date: Wed, 21 Feb 2024 14:10:01 +0100
+Message-ID: <20240221125948.408519163@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,77 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit b3636a3a2c51715736d3ec45f635ed03191962ce ]
+[ Upstream commit b4060db9251f919506e4d672737c6b8ab9a84701 ]
 
-A typical code pattern for pm_runtime_enable() call is to call it in the
-_probe function and to call pm_runtime_disable() both from _probe error
-path and from _remove function. For some drivers the whole remove
-function would consist of the call to pm_remove_disable().
+The PM Runtime docs say:
 
-Add helper function to replace this bolierplate piece of code. Calling
-devm_pm_runtime_enable() removes the need for calling
-pm_runtime_disable() both in the probe()'s error path and in the
-remove() function.
+  Drivers in ->remove() callback should undo the runtime PM changes done
+  in ->probe(). Usually this means calling pm_runtime_disable(),
+  pm_runtime_dont_use_autosuspend() etc.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20210731195034.979084-2-dmitry.baryshkov@linaro.org
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+>From grepping code, it's clear that many people aren't aware of the
+need to call pm_runtime_dont_use_autosuspend().
+
+When brainstorming solutions, one idea that came up was to leverage
+the new-ish devm_pm_runtime_enable() function. The idea here is that:
+
+ * When the devm action is called we know that the driver is being
+   removed. It's the perfect time to undo the use_autosuspend.
+
+ * The code of pm_runtime_dont_use_autosuspend() already handles the
+   case of being called when autosuspend wasn't enabled.
+
+Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: 3d07a411b4fa ("drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks")
 Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/runtime.c |   17 +++++++++++++++++
- include/linux/pm_runtime.h   |    4 ++++
- 2 files changed, 21 insertions(+)
+ drivers/base/power/runtime.c |    5 +++++
+ include/linux/pm_runtime.h   |    5 +++++
+ 2 files changed, 10 insertions(+)
 
 --- a/drivers/base/power/runtime.c
 +++ b/drivers/base/power/runtime.c
-@@ -1461,6 +1461,23 @@ void pm_runtime_enable(struct device *de
- }
- EXPORT_SYMBOL_GPL(pm_runtime_enable);
+@@ -1463,11 +1463,16 @@ EXPORT_SYMBOL_GPL(pm_runtime_enable);
  
-+static void pm_runtime_disable_action(void *data)
-+{
-+	pm_runtime_disable(data);
-+}
-+
-+/**
-+ * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
-+ * @dev: Device to handle.
-+ */
-+int devm_pm_runtime_enable(struct device *dev)
-+{
-+	pm_runtime_enable(dev);
-+
-+	return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
-+}
-+EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
-+
+ static void pm_runtime_disable_action(void *data)
+ {
++	pm_runtime_dont_use_autosuspend(data);
+ 	pm_runtime_disable(data);
+ }
+ 
  /**
-  * pm_runtime_forbid - Block runtime PM of a device.
+  * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
++ *
++ * NOTE: this will also handle calling pm_runtime_dont_use_autosuspend() for
++ * you at driver exit time if needed.
++ *
   * @dev: Device to handle.
+  */
+ int devm_pm_runtime_enable(struct device *dev)
 --- a/include/linux/pm_runtime.h
 +++ b/include/linux/pm_runtime.h
-@@ -64,6 +64,8 @@ static inline int pm_runtime_get_if_in_u
- 	return pm_runtime_get_if_active(dev, false);
+@@ -300,6 +300,11 @@ static inline void pm_runtime_disable(st
+ 	__pm_runtime_disable(dev, true);
  }
  
-+extern int devm_pm_runtime_enable(struct device *dev);
-+
- static inline void pm_suspend_ignore_children(struct device *dev, bool enable)
++/**
++ * NOTE: It's important to undo this with pm_runtime_dont_use_autosuspend()
++ * at driver exit time unless your driver initially enabled pm_runtime
++ * with devm_pm_runtime_enable() (which handles it for you).
++ */
+ static inline void pm_runtime_use_autosuspend(struct device *dev)
  {
- 	dev->power.ignore_children = enable;
-@@ -160,6 +162,8 @@ static inline void __pm_runtime_disable(
- static inline void pm_runtime_allow(struct device *dev) {}
- static inline void pm_runtime_forbid(struct device *dev) {}
- 
-+static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
-+
- static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
- static inline void pm_runtime_get_noresume(struct device *dev) {}
- static inline void pm_runtime_put_noidle(struct device *dev) {}
+ 	__pm_runtime_use_autosuspend(dev, true);
 
 
