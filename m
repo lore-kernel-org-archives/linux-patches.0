@@ -1,100 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA4784FA5;
-	Wed, 21 Feb 2024 18:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4C485C7A;
+	Wed, 21 Feb 2024 18:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708539666; cv=none; b=tdO+sQkpVr4NH/Hc9SXKVScuwoQwhL3YGwHNoqqlZBoclBYsqwCjKxsiZccZGOz7c9v/ue26FXy7BdY4+4DEdnBaKT/rdOhbAq+sVHW8a9YkUnxGCu+AIihOe89JcjG2ZwNl5eobv/aeRGllyHbm8f2MiviYiEjCSa7q2s57vpA=
+	t=1708540017; cv=none; b=iAOF0vPguCkA3h3VuBlWxkEe1P+cfPxkfmtmf87Ejb4eOPgSzZ9hrJ0BZWyBrDk/nkpxiUCCEjJW9ieFV2Q/nwhUtnGJ/5eTSH0VB13TGC2Zjz7tSWJXQ2oVDiSqbiBoIQ6gt8dE2QBW1t78k1ETmJbL7octrTUSuMe/8nTmD7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708539666; c=relaxed/simple;
-	bh=tQaWzc3U8kyTUOyG3hGc5iK+s3OXDgj0AzeWKbHcNFY=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=OJacFxZj2AVayfzj1rvhKnw7xtnH8oFqV9owaLEducMB0X7LKCe+KCGdiCONiP58U2eKmHEh/lAeoLVrd9APrdwMwt/+PaUozmw6Kiz/Arbrw10udpE315Hir+SvhFIwNLq2+242kC5MHlovNQBcFtbMOKmkX3sNnYEME0YGLd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F561lTe2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708540017; c=relaxed/simple;
+	bh=58AJTvRqsidy6n69RFy69mDV+GDJW6WJ657BWr7Jjy8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lFnu0wBAdC4T//EnbDAcwmf9p8nY7ewb6HalAViVTKnbxB56h/NJSGofTyLRhJW/DjGethTZua6CReOckZW7LauAw3ItppLjPV/FsqBqlzkruM/dFjBKuUoB8TWHCLRLRL0KLVsakQjqUA2iQoFOKfEwTdhkdAeLWus8MjhfFIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3xbOfWD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F561lTe2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AECEC433F1;
-	Wed, 21 Feb 2024 18:21:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708539666;
-	bh=tQaWzc3U8kyTUOyG3hGc5iK+s3OXDgj0AzeWKbHcNFY=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=F561lTe2JDbsfjGXvYgvVLgEO0kOuviDsp5/faAf/biHQ56QorfmvA/inS1XrvfJT
-	 GGtIXWZQlyOn5zCgu/CCCVTEiD04wc86dJrO11M4oo3hNJ9x+e22aEvo5bh/vwUdvw
-	 xL8M1UF4iaWsh+2Fu/L6Y1S4kB2YJ0CGKU3nn/Mf6n9ke3kq9i6sbIrpXlTbGqTm6J
-	 aLMhDan+ZxNA8DQzdiZiWA26zT5RQMq+un8HT1tEe39ugLStCXw08gbBusOz086znX
-	 qus+lwKIc/AqREgUHCJPCeL8CMdRHerpzHrIxreGEZJoYE8nOAyQ+WjOGOlJdhmIKi
-	 3vPYYPiCARF6w==
-From: Kalle Valo <kvalo@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: quic_jjohnson@quicinc.com,  morbo@google.com,  justinstitt@google.com,
-  quic_periyasa@quicinc.com,  ath12k@lists.infradead.org,
-  linux-wireless@vger.kernel.org,  llvm@lists.linux.dev,
-  patches@lists.linux.dev
-Subject: Re: [PATCH] wifi: ath12k: Fix uninitialized use of ret in
- ath12k_mac_allocate()
-References: <20240205-ath12k-mac-wuninitialized-v1-1-3fda7b17357f@kernel.org>
-	<170731849247.2220494.17976129376947521581.kvalo@kernel.org>
-	<20240221180013.GA2074929@dev-arch.thelio-3990X>
-Date: Wed, 21 Feb 2024 20:21:02 +0200
-In-Reply-To: <20240221180013.GA2074929@dev-arch.thelio-3990X> (Nathan
-	Chancellor's message of "Wed, 21 Feb 2024 11:00:13 -0700")
-Message-ID: <87ttm1llv5.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3xbOfWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F194C433F1;
+	Wed, 21 Feb 2024 18:26:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1708540016;
+	bh=58AJTvRqsidy6n69RFy69mDV+GDJW6WJ657BWr7Jjy8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O3xbOfWDhNH4cclhGhPilcMMAyGGLp4M6g/f+0HfFJBV9RQXD7A+V9UWKBLTuFhyf
+	 I6DD0TMl0FdEmIBDe89WrV6fr3Mp2nXKODm09ty0XfZVJ7kxwLp9p5sW0XsAHXDGhv
+	 O7QxwoByJMd8Zo0x65/aimMwzhv1iQ3LBWtGcx5g=
+Date: Wed, 21 Feb 2024 19:26:51 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Hans de Goede <hdegoede@redhat.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.4 151/267] misc: lis3lv02d_i2c: Add missing setting of
+ the reg_ctrl callback
+Message-ID: <2024022140-pond-plant-ad19@gregkh>
+References: <20240221125940.058369148@linuxfoundation.org>
+ <20240221125944.808861688@linuxfoundation.org>
+ <1943e2b2-6232-4566-9793-2b24eed89d59@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1943e2b2-6232-4566-9793-2b24eed89d59@redhat.com>
 
-Nathan Chancellor <nathan@kernel.org> writes:
+On Wed, Feb 21, 2024 at 07:16:38PM +0100, Hans de Goede wrote:
+> Hi Greg,
+> 
+> On 2/21/24 14:08, Greg Kroah-Hartman wrote:
+> > 5.4-stable review patch.  If anyone has any objections, please let me know.
+> 
+> This is known to cause a regression (WARN triggering on suspend,
+> possible panic if panic-on-warn is set).
+> 
+> A fix for the regression is pending:
+> 
+> https://lore.kernel.org/regressions/20240220190035.53402-1-hdegoede@redhat.com/T/#u
+> 
+> but it has not been merged yet, so please hold of on merging this 
+> patch until you can apply both at once.
+> 
+> I see that you are also planning to apply this to other stable
+> branches. I'm not sure if this is necessary but to be safe
+> I'll copy and paste this reply to the emails for the other stable
+> branches.
 
-> Hi Kalle,
->
-> On Wed, Feb 07, 2024 at 03:08:14PM +0000, Kalle Valo wrote:
->> Nathan Chancellor <nathan@kernel.org> wrote:
->> 
->> > Clang warns (or errors with CONFIG_WERROR=y):
->> > 
->> >   drivers/net/wireless/ath/ath12k/mac.c:8060:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
->> >    8060 |         return ret;
->> >         |                ^~~
->> >   drivers/net/wireless/ath/ath12k/mac.c:8022:9: note: initialize
->> > the variable 'ret' to silence this warning
->> >    8022 |         int ret, i, j;
->> >         |                ^
->> >         |                 = 0
->> >   1 error generated.
->> > 
->> > Commit 6db6e70a17f6 ("wifi: ath12k: Introduce the container for mac80211
->> > hw") added a completely uninitialized use of ret. Prior to that change,
->> > -ENOMEM was returned to the callers of ath12k_mac_allocate() whenever
->> > ath12k_mac_hw_allocate() failed. Assign that value to ret to make sure
->> > it is always initialized when used and clear up the warning.
->> > 
->> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1989i
->> > Fixes: 6db6e70a17f6 ("wifi: ath12k: Introduce the container for mac80211 hw")
->> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->> > Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
->> > Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
->> 
->> Patch applied to ath-next branch of ath.git, thanks.
->> 
->> 04edb5dc68f4 wifi: ath12k: Fix uninitialized use of ret in ath12k_mac_allocate()
->
-> It doesn't seem like this tree or branch flows into -next on its own, so
-> this patch is not present in and the build still breaks on
-> next-20240221. Can this be fixed so that this warning stops breaking our
-> builds?
+Not necessary, I'll drop it from all, thanks.
 
-Yeah, ath-next is not pulled to linux-next because of "reasons". We are
-planning to send ath-next pull request to wireless-next in the next few
-days.
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+greg k-h
