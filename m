@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B8E78B5E;
-	Wed, 21 Feb 2024 14:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FAB78B7C;
+	Wed, 21 Feb 2024 14:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524032; cv=none; b=tRZdPTT9gl9Cp9obDTPf1uZHE5xcx0u/1Xal5To6fvRRe6DykgCD8dhigwTiyCfJavudC97OB6EBw1uc6pgcQO7Hqbi/8R3pyKWiC+CK9gJ7b3c5lnKvTmN6qE14Sjn+H/NaMMz8t/shfjN66d5owbMHQ7lDARTPiKQ81tokUq0=
+	t=1708524035; cv=none; b=jAXjFKjlE+6bEtVhaSIAJU13pry2WdgpXcEgA0m11W7YV/4hgZ9qSy5Lc/z4sWPpIzU83Er9hL44DpjR6Gfy6MPGAUflI1a2xq6it90VH04Z9h5TWcbNojyhBZFc7lq4qy47/FAXZQjsarWm4BpRo5a/fpxRS83QDPsF5OqA858=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524032; c=relaxed/simple;
-	bh=4zRObaEghZBaHTsIYOAlevh2t1g6FPSFCW09Kn5bZiA=;
+	s=arc-20240116; t=1708524035; c=relaxed/simple;
+	bh=a609K5upoLcs+ZqWFJeN068anj/8nS1IXaNqGi/kQbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DikHYodz3HexUrgvUkDPMhQ3vTsr3G+zIT2xuYdRugwy2cZCzPdo97Ow37I3/ytvVBHlsD431g2FurBPilU5uaTsHX2rVXLqG4nO3AEwO/AbdgYpkjUdbfq0G+eEGf4JRKTfuc4ZgwGdReFNPtsTy2hpRNV/nKB4wCXfaDYeRPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pItgiUvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CcrqRXPcUb7RfUwlO0Dcej/M4YCr2jOmVjiwCM4uWGaTba9iIxJlw3dCEOWV11DFN+LgEzRHbamLXOA1S8Sk5B5g2P/X9K15t9jIfoHftWTuytCedNMcrXoXf+mKpV6c/o3Cvz+FGfhDBni2JGnSpdGFbfjp1NSpknvRymB/INc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqRpksc6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pItgiUvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1EAC433F1;
-	Wed, 21 Feb 2024 14:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqRpksc6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1786C433C7;
+	Wed, 21 Feb 2024 14:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524032;
-	bh=4zRObaEghZBaHTsIYOAlevh2t1g6FPSFCW09Kn5bZiA=;
+	s=korg; t=1708524035;
+	bh=a609K5upoLcs+ZqWFJeN068anj/8nS1IXaNqGi/kQbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pItgiUvLt3pXZWXd0KIW3tZM8y5RDM5goxjM3r+YdGsDzUaZgIgD6hCNoU4j7IRii
-	 XCb6RPITi4oOVjyNdx6KhFKgNcFAacA7k/gdQkbSJV5wdbZujuPvUKEXJkXKDgKsYi
-	 OxOctn7M7jqS9RqrjzrQ4uvBOgOObTz2D/wlUsRw=
+	b=YqRpksc6Qcj36QlI5j0Fhc8HI0vM8S2tuiSA/aA+9FrkgHEzEibdyxkQGIhMz7prC
+	 IE5ilFYqWzgLzhmzloZGyvFrytLYYYW4YJz0TYN3+DC+LT6KLQsT0qKA6GJHN8vC81
+	 dpP+dagWaORbEC+okqQTSk//MJTGEUJp5dTv+K58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Wenhua Lin <Wenhua.Lin@unisoc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 096/379] gpio: eic-sprd: Clear interrupt after set the interrupt type
-Date: Wed, 21 Feb 2024 14:04:35 +0100
-Message-ID: <20240221125957.763062950@linuxfoundation.org>
+Subject: [PATCH 5.10 097/379] spi: bcm-qspi: fix SFDP BFPT read by usig mspi read
+Date: Wed, 21 Feb 2024 14:04:36 +0100
+Message-ID: <20240221125957.792424067@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,158 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenhua Lin <Wenhua.Lin@unisoc.com>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-[ Upstream commit 84aef4ed59705585d629e81d633a83b7d416f5fb ]
+[ Upstream commit 574bf7bbe83794a902679846770f75a9b7f28176 ]
 
-The raw interrupt status of eic maybe set before the interrupt is enabled,
-since the eic interrupt has a latch function, which would trigger the
-interrupt event once enabled it from user side. To solve this problem,
-interrupts generated before setting the interrupt trigger type are ignored.
+SFDP read shall use the mspi reads when using the bcm_qspi_exec_mem_op()
+call. This fixes SFDP parameter page read failures seen with parts that
+now use SFDP protocol to read the basic flash parameter table.
 
-Fixes: 25518e024e3a ("gpio: Add Spreadtrum EIC driver support")
-Acked-by: Chunyan Zhang <zhang.lyra@gmail.com>
-Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 5f195ee7d830 ("spi: bcm-qspi: Implement the spi_mem interface")
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://msgid.link/r/20240109210033.43249-1-kamal.dasu@broadcom.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-eic-sprd.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ drivers/spi/spi-bcm-qspi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-eic-sprd.c b/drivers/gpio/gpio-eic-sprd.c
-index 865ab2b34fdd..3dfb8b6c6c71 100644
---- a/drivers/gpio/gpio-eic-sprd.c
-+++ b/drivers/gpio/gpio-eic-sprd.c
-@@ -318,20 +318,27 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 		switch (flow_type) {
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IEV, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IC, 1);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IEV, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_DBNC_IC, 1);
- 			break;
- 		case IRQ_TYPE_EDGE_RISING:
- 		case IRQ_TYPE_EDGE_FALLING:
- 		case IRQ_TYPE_EDGE_BOTH:
- 			state = sprd_eic_get(chip, offset);
--			if (state)
-+			if (state) {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_DBNC_IEV, 0);
--			else
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_DBNC_IC, 1);
-+			} else {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_DBNC_IEV, 1);
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_DBNC_IC, 1);
-+			}
- 			break;
- 		default:
- 			return -ENOTSUPP;
-@@ -343,20 +350,27 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 		switch (flow_type) {
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTCLR, 1);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_LATCH_INTCLR, 1);
- 			break;
- 		case IRQ_TYPE_EDGE_RISING:
- 		case IRQ_TYPE_EDGE_FALLING:
- 		case IRQ_TYPE_EDGE_BOTH:
- 			state = sprd_eic_get(chip, offset);
--			if (state)
-+			if (state) {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_LATCH_INTPOL, 0);
--			else
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_LATCH_INTCLR, 1);
-+			} else {
- 				sprd_eic_update(chip, offset,
- 						SPRD_EIC_LATCH_INTPOL, 1);
-+				sprd_eic_update(chip, offset,
-+						SPRD_EIC_LATCH_INTCLR, 1);
-+			}
- 			break;
- 		default:
- 			return -ENOTSUPP;
-@@ -370,29 +384,34 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_FALLING:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_BOTH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_ASYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		default:
-@@ -405,29 +424,34 @@ static int sprd_eic_irq_set_type(struct irq_data *data, unsigned int flow_type)
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_FALLING:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_EDGE_BOTH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_edge_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_HIGH:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 1);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		case IRQ_TYPE_LEVEL_LOW:
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTBOTH, 0);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTMODE, 1);
- 			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTPOL, 0);
-+			sprd_eic_update(chip, offset, SPRD_EIC_SYNC_INTCLR, 1);
- 			irq_set_handler_locked(data, handle_level_irq);
- 			break;
- 		default:
+diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
+index 2c734ea0784b..898658ab1dcd 100644
+--- a/drivers/spi/spi-bcm-qspi.c
++++ b/drivers/spi/spi-bcm-qspi.c
+@@ -19,7 +19,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
+ #include <linux/spi/spi.h>
+-#include <linux/spi/spi-mem.h>
++#include <linux/mtd/spi-nor.h>
+ #include <linux/sysfs.h>
+ #include <linux/types.h>
+ #include "spi-bcm-qspi.h"
+@@ -1048,7 +1048,7 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
+ 
+ 	/* non-aligned and very short transfers are handled by MSPI */
+ 	if (!IS_ALIGNED((uintptr_t)addr, 4) || !IS_ALIGNED((uintptr_t)buf, 4) ||
+-	    len < 4)
++	    len < 4 || op->cmd.opcode == SPINOR_OP_RDSFDP)
+ 		mspi_read = true;
+ 
+ 	if (!has_bspi(qspi) || mspi_read)
 -- 
 2.43.0
 
