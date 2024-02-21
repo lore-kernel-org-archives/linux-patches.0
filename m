@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F257CF32;
-	Wed, 21 Feb 2024 14:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7536E7BB03;
+	Wed, 21 Feb 2024 14:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525747; cv=none; b=Ny3KqD0tJcCSbHWzody7PcEh63ElqZacsNWDE16FU1v2FzIUYvm3PttGtt0IIS0DvmG2jMw9DLnihbF7YUMRAAj2QE3jpt69B0U827wMBm349L2e84G+7sQO+gMVBWPPSx26C2ZIwgbRF31A9o4y0fEwym/XVkUvm6Uv9QmFJX8=
+	t=1708525750; cv=none; b=QWbfVaHSEm/xz2m18zVMwZZXUpvWyoQcNCKCVMi4B9tE8rC8qKJpwnSityKfTOPcyiUHA8uX9oW7FmLbXB4lOIv5WS+gWD4fpoFqyUQpT7GG4ZBjU+DPY7uinOu5vJdJLnpbXtkAvRONqkxxe3uchYK0S1TxZ5sCqI+ASQmS24k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525747; c=relaxed/simple;
-	bh=yVRSfPk2zKdpHLF9JsP/5rt/l8zd8XVtfg35BktiiC8=;
+	s=arc-20240116; t=1708525750; c=relaxed/simple;
+	bh=qs1yP0G1efgdTVPgsyXvUonh+D3TfB1RPYkSl2Rg7EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpnwA8mp8x74LUoM4GESYZ9OC+L6kpxdqhBjW7zScMMNQUHOB0avxV6qQqSDFPB4o7y9N2ZxPu2lbbjZdtVx1Bw78j3eO2tRatAs0M3PuTW59ZN7FGYzHHl9Ql+dZg8Nb2wgdiNRTTGeoBDbU+ESFu8ZViSQPZmjTggHbOka4MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJuTrVl/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZetpdfvWE4Jp/ghQP4rY8sRKFceRD+jzKUb0n/6Z540n3AUrb7yP3F3d2+a3GA3eypE5TQvQWUMBuGOPLEhsOLvEIwpPsI/2oMRxrotG6dhg9RUzF0Rja8cSLmsRV/qxUMmJqZdqV6uzRyu/Lv+rEn8m9W8bjSjmSvdhC0RBIS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnxjbROz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJuTrVl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B8E8C433F1;
-	Wed, 21 Feb 2024 14:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnxjbROz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CCD0C433C7;
+	Wed, 21 Feb 2024 14:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525746;
-	bh=yVRSfPk2zKdpHLF9JsP/5rt/l8zd8XVtfg35BktiiC8=;
+	s=korg; t=1708525750;
+	bh=qs1yP0G1efgdTVPgsyXvUonh+D3TfB1RPYkSl2Rg7EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OJuTrVl/a1D13RMq5bvzHnffH1GtaOuvADjXXeBbUHGiB91telD9hH+mL2UOKRETo
-	 9kggc9OtcdtLtmBnitA7JvCSVB3HOWiBhn2Fu2sbXnL2U5vqf7U/WmgfO9yjobhGJc
-	 N6uEJkKEiyXSY0RtpIw9bAmj08hNJmRmZNiUvfyQ=
+	b=PnxjbROzX9cAD7OFbPKBCdudKuz+B7Zm8S8ORLCFxLn2bLlsbMeoxTLYOoKOkE9MW
+	 YT2qaCTeZXs+k0PoDDoMNT3o3RGksLW7zb+VI8wavRPsS1heXRBaTvm1pHx9frn0fF
+	 q/O6lwoknH7OYLgLHp5Ftye7KVVMMKppvgGRvelU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 251/267] mips: Fix max_mapnr being uninitialized on early stages
-Date: Wed, 21 Feb 2024 14:09:52 +0100
-Message-ID: <20240221125948.134915907@linuxfoundation.org>
+Subject: [PATCH 5.4 252/267] KVM: arm64: vgic-its: Avoid potential UAF in LPI translation cache
+Date: Wed, 21 Feb 2024 14:09:53 +0100
+Message-ID: <20240221125948.164405813@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,89 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serge Semin <fancer.lancer@gmail.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-[ Upstream commit e1a9ae45736989c972a8d1c151bc390678ae6205 ]
+[ Upstream commit ad362fe07fecf0aba839ff2cc59a3617bd42c33f ]
 
-max_mapnr variable is utilized in the pfn_valid() method in order to
-determine the upper PFN space boundary. Having it uninitialized
-effectively makes any PFN passed to that method invalid. That in its turn
-causes the kernel mm-subsystem occasion malfunctions even after the
-max_mapnr variable is actually properly updated. For instance,
-pfn_valid() is called in the init_unavailable_range() method in the
-framework of the calls-chain on MIPS:
-setup_arch()
-+-> paging_init()
-    +-> free_area_init()
-        +-> memmap_init()
-            +-> memmap_init_zone_range()
-                +-> init_unavailable_range()
+There is a potential UAF scenario in the case of an LPI translation
+cache hit racing with an operation that invalidates the cache, such
+as a DISCARD ITS command. The root of the problem is that
+vgic_its_check_cache() does not elevate the refcount on the vgic_irq
+before dropping the lock that serializes refcount changes.
 
-Since pfn_valid() always returns "false" value before max_mapnr is
-initialized in the mem_init() method, any flatmem page-holes will be left
-in the poisoned/uninitialized state including the IO-memory pages. Thus
-any further attempts to map/remap the IO-memory by using MMU may fail.
-In particular it happened in my case on attempt to map the SRAM region.
-The kernel bootup procedure just crashed on the unhandled unaligned access
-bug raised in the __update_cache() method:
-
-> Unhandled kernel unaligned access[#1]:
-> CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc1-XXX-dirty #2056
-> ...
-> Call Trace:
-> [<8011ef9c>] __update_cache+0x88/0x1bc
-> [<80385944>] ioremap_page_range+0x110/0x2a4
-> [<80126948>] ioremap_prot+0x17c/0x1f4
-> [<80711b80>] __devm_ioremap+0x8c/0x120
-> [<80711e0c>] __devm_ioremap_resource+0xf4/0x218
-> [<808bf244>] sram_probe+0x4f4/0x930
-> [<80889d20>] platform_probe+0x68/0xec
-> ...
-
-Let's fix the problem by initializing the max_mapnr variable as soon as
-the required data is available. In particular it can be done right in the
-paging_init() method before free_area_init() is called since all the PFN
-zone boundaries have already been calculated by that time.
+Have vgic_its_check_cache() raise the refcount on the returned vgic_irq
+and add the corresponding decrement after queueing the interrupt.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240104183233.3560639-1-oliver.upton@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/init.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ virt/kvm/arm/vgic/vgic-its.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/mips/mm/init.c b/arch/mips/mm/init.c
-index dee6a790d42d..800cc5bc7a38 100644
---- a/arch/mips/mm/init.c
-+++ b/arch/mips/mm/init.c
-@@ -416,7 +416,12 @@ void __init paging_init(void)
- 		       (highend_pfn - max_low_pfn) << (PAGE_SHIFT - 10));
- 		max_zone_pfns[ZONE_HIGHMEM] = max_low_pfn;
- 	}
+diff --git a/virt/kvm/arm/vgic/vgic-its.c b/virt/kvm/arm/vgic/vgic-its.c
+index e06bb8ed7688..0533881bd2ab 100644
+--- a/virt/kvm/arm/vgic/vgic-its.c
++++ b/virt/kvm/arm/vgic/vgic-its.c
+@@ -581,7 +581,11 @@ static struct vgic_irq *vgic_its_check_cache(struct kvm *kvm, phys_addr_t db,
+ 	unsigned long flags;
+ 
+ 	raw_spin_lock_irqsave(&dist->lpi_list_lock, flags);
 +
-+	max_mapnr = highend_pfn ? highend_pfn : max_low_pfn;
-+#else
-+	max_mapnr = max_low_pfn;
- #endif
-+	high_memory = (void *) __va(max_low_pfn << PAGE_SHIFT);
+ 	irq = __vgic_its_check_cache(dist, db, devid, eventid);
++	if (irq)
++		vgic_get_irq_kref(irq);
++
+ 	raw_spin_unlock_irqrestore(&dist->lpi_list_lock, flags);
  
- 	free_area_init_nodes(max_zone_pfns);
+ 	return irq;
+@@ -761,6 +765,7 @@ int vgic_its_inject_cached_translation(struct kvm *kvm, struct kvm_msi *msi)
+ 	raw_spin_lock_irqsave(&irq->irq_lock, flags);
+ 	irq->pending_latch = true;
+ 	vgic_queue_irq_unlock(kvm, irq, flags);
++	vgic_put_irq(kvm, irq);
+ 
+ 	return 0;
  }
-@@ -452,13 +457,6 @@ void __init mem_init(void)
- 	 */
- 	BUILD_BUG_ON(IS_ENABLED(CONFIG_32BIT) && (_PFN_SHIFT > PAGE_SHIFT));
- 
--#ifdef CONFIG_HIGHMEM
--	max_mapnr = highend_pfn ? highend_pfn : max_low_pfn;
--#else
--	max_mapnr = max_low_pfn;
--#endif
--	high_memory = (void *) __va(max_low_pfn << PAGE_SHIFT);
--
- 	maar_init();
- 	memblock_free_all();
- 	setup_zero_pages();	/* Setup zeroed pages.  */
 -- 
 2.43.0
 
