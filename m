@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323587BB01;
-	Wed, 21 Feb 2024 14:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6169E69317;
+	Wed, 21 Feb 2024 14:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525379; cv=none; b=H6wJwFtc29b9obtz+kIK3WP8VnkVUrq+XcP7igCcdoVdVXHEHqsKuTGKuyPWXNo25rrPMWFw1k1ZK8kaHFpq1DBg/e6mK/Mf8Low8KLk6wGFMSJCk+55UZgGuf+OKFVNMZKgaVqXga2GwlNOxLrCNgxWJeBa2SHFKcWeBUsZpcM=
+	t=1708525382; cv=none; b=a8VgV/XyrkLmGv0vNexerQUiWJkQDHAcoObHkDRDlnF6jwssJWouaP2I6ESTuqXx3WAfRMHo7brHkR2+pm4lq75POiIG01s6mkU27F5CR12RPsYilsWnfR6VagMCUqDN06d18CpeUpZVcD4fhbgoJYGTEFY+qtLMWsMVtA8EFDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525379; c=relaxed/simple;
-	bh=PAu5+3hhDe1/2UPNAi4IcEVKEzcdwfeAlwAaIa7YCaU=;
+	s=arc-20240116; t=1708525382; c=relaxed/simple;
+	bh=paobAMrVkdYF+jDhINwulRJIiNBM/izpf85m2VCeAE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJJTp/ZXp85pn8ueiPfHeQ6/wZ3ZY7ctIm2hhG48tpHHPlA7bJl/caq6fRitS6VG7lRcxnqTbXDmaS9hCpdqNXUUyt2YjqSZH93wmnTeSeD6OKttirn1Vd3TTvmdTu8saXgTp8CZNU5lIwCjmniRAqeeeoy4LxszCKxtCCKiOkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGzYXH0o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rIBBDwtTRxXlS8kBbbwW8NitWYZYIHpxr8ZA/8SRqU9isSL3Drp/VjmkDPZk0yvhH5411iCANwh1U3ldGSMBuDGGayzRLYrBJabxJuSqZfwf4tfPLobmXqacfkryA0JPxBV3D6ABM6TDrt21hV78aMJx0BdMups/oYwUB7LxDz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVhxLiB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGzYXH0o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8755C433C7;
-	Wed, 21 Feb 2024 14:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVhxLiB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21A2C433F1;
+	Wed, 21 Feb 2024 14:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525379;
-	bh=PAu5+3hhDe1/2UPNAi4IcEVKEzcdwfeAlwAaIa7YCaU=;
+	s=korg; t=1708525382;
+	bh=paobAMrVkdYF+jDhINwulRJIiNBM/izpf85m2VCeAE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGzYXH0ofmR7vPwiMDAkTgUpZicG49u2YrDuFbz/lZtQhd5DRzTuEfHkX+8/P/ziT
-	 Z2139oqMx8AL9GusewvwynUEtkHKNFHfrzaclELCGsvoZ2MzCAd2OqTtj5jfT1LSU/
-	 8vPpgPdKHNTL72EUkF3yF91/MfO5t3FL2/rOdAok=
+	b=JVhxLiB2FjeKBz0yNvJy03JC66djt6KEoWBFqqwgRAW7n9db4J5bCFnZNMH8h9e25
+	 bnOQSCexXkyNq6R4AUsPU1ylU/b03lZKo6puCJUu0Et5SrKCWLOr5VWyc9SBE15SP0
+	 Vba/bRbp2p5EFvAIhswjRrTGROhf3rk7CBHtW85k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/267] ARM: dts: imx27-apf27dev: Fix LED name
-Date: Wed, 21 Feb 2024 14:07:31 +0100
-Message-ID: <20240221125943.409746462@linuxfoundation.org>
+Subject: [PATCH 5.4 101/267] bpf: Add map and need_defer parameters to .map_fd_put_ptr()
+Date: Wed, 21 Feb 2024 14:07:22 +0100
+Message-ID: <20240221125943.112773588@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,37 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit dc35e253d032b959d92e12f081db5b00db26ae64 ]
+[ Upstream commit 20c20bd11a0702ce4dc9300c3da58acf551d9725 ]
 
-Per leds-gpio.yaml, the led names should start with 'led'.
+map is the pointer of outer map, and need_defer needs some explanation.
+need_defer tells the implementation to defer the reference release of
+the passed element and ensure that the element is still alive before
+the bpf program, which may manipulate it, exits.
 
-Change it to fix the following dt-schema warning:
+The following three cases will invoke map_fd_put_ptr() and different
+need_defer values will be passed to these callers:
 
-imx27-apf27dev.dtb: leds: 'user' does not match any of the regexes: '(^led-[0-9a-f]$|led)', 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/leds/leds-gpio.yaml#
+1) release the reference of the old element in the map during map update
+   or map deletion. The release must be deferred, otherwise the bpf
+   program may incur use-after-free problem, so need_defer needs to be
+   true.
+2) release the reference of the to-be-added element in the error path of
+   map update. The to-be-added element is not visible to any bpf
+   program, so it is OK to pass false for need_defer parameter.
+3) release the references of all elements in the map during map release.
+   Any bpf program which has access to the map must have been exited and
+   released, so need_defer=false will be OK.
 
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+These two parameters will be used by the following patches to fix the
+potential use-after-free problem for map-in-map.
+
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20231204140425.1480317-3-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx27-apf27dev.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/bpf.h     |  6 +++++-
+ kernel/bpf/arraymap.c   | 12 +++++++-----
+ kernel/bpf/hashtab.c    |  6 +++---
+ kernel/bpf/map_in_map.c |  2 +-
+ kernel/bpf/map_in_map.h |  2 +-
+ 5 files changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx27-apf27dev.dts b/arch/arm/boot/dts/imx27-apf27dev.dts
-index 68fcb5ce9a9e..3d9bb7fc3be2 100644
---- a/arch/arm/boot/dts/imx27-apf27dev.dts
-+++ b/arch/arm/boot/dts/imx27-apf27dev.dts
-@@ -47,7 +47,7 @@
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_gpio_leds>;
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 5705cda3c4c4..6107b537245a 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -49,7 +49,11 @@ struct bpf_map_ops {
+ 	/* funcs called by prog_array and perf_event_array map */
+ 	void *(*map_fd_get_ptr)(struct bpf_map *map, struct file *map_file,
+ 				int fd);
+-	void (*map_fd_put_ptr)(void *ptr);
++	/* If need_defer is true, the implementation should guarantee that
++	 * the to-be-put element is still alive before the bpf program, which
++	 * may manipulate it, exists.
++	 */
++	void (*map_fd_put_ptr)(struct bpf_map *map, void *ptr, bool need_defer);
+ 	u32 (*map_gen_lookup)(struct bpf_map *map, struct bpf_insn *insn_buf);
+ 	u32 (*map_fd_sys_lookup_elem)(void *ptr);
+ 	void (*map_seq_show_elem)(struct bpf_map *map, void *key,
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 1c65ce0098a9..81ed9b79f401 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -542,7 +542,7 @@ int bpf_fd_array_map_update_elem(struct bpf_map *map, struct file *map_file,
  
--		user {
-+		led-user {
- 			label = "Heartbeat";
- 			gpios = <&gpio6 14 GPIO_ACTIVE_HIGH>;
- 			linux,default-trigger = "heartbeat";
+ 	old_ptr = xchg(array->ptrs + index, new_ptr);
+ 	if (old_ptr)
+-		map->ops->map_fd_put_ptr(old_ptr);
++		map->ops->map_fd_put_ptr(map, old_ptr, true);
+ 
+ 	return 0;
+ }
+@@ -558,7 +558,7 @@ static int fd_array_map_delete_elem(struct bpf_map *map, void *key)
+ 
+ 	old_ptr = xchg(array->ptrs + index, NULL);
+ 	if (old_ptr) {
+-		map->ops->map_fd_put_ptr(old_ptr);
++		map->ops->map_fd_put_ptr(map, old_ptr, true);
+ 		return 0;
+ 	} else {
+ 		return -ENOENT;
+@@ -582,8 +582,9 @@ static void *prog_fd_array_get_ptr(struct bpf_map *map,
+ 	return prog;
+ }
+ 
+-static void prog_fd_array_put_ptr(void *ptr)
++static void prog_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ {
++	/* bpf_prog is freed after one RCU or tasks trace grace period */
+ 	bpf_prog_put(ptr);
+ }
+ 
+@@ -694,8 +695,9 @@ static void *perf_event_fd_array_get_ptr(struct bpf_map *map,
+ 	return ee;
+ }
+ 
+-static void perf_event_fd_array_put_ptr(void *ptr)
++static void perf_event_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ {
++	/* bpf_perf_event is freed after one RCU grace period */
+ 	bpf_event_entry_free_rcu(ptr);
+ }
+ 
+@@ -736,7 +738,7 @@ static void *cgroup_fd_array_get_ptr(struct bpf_map *map,
+ 	return cgroup_get_from_fd(fd);
+ }
+ 
+-static void cgroup_fd_array_put_ptr(void *ptr)
++static void cgroup_fd_array_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ {
+ 	/* cgroup_put free cgrp after a rcu grace period */
+ 	cgroup_put(ptr);
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 03a67583f6fb..f1dec90f3a52 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -674,7 +674,7 @@ static void htab_put_fd_value(struct bpf_htab *htab, struct htab_elem *l)
+ 
+ 	if (map->ops->map_fd_put_ptr) {
+ 		ptr = fd_htab_map_get_ptr(map, l);
+-		map->ops->map_fd_put_ptr(ptr);
++		map->ops->map_fd_put_ptr(map, ptr, true);
+ 	}
+ }
+ 
+@@ -1426,7 +1426,7 @@ static void fd_htab_map_free(struct bpf_map *map)
+ 		hlist_nulls_for_each_entry_safe(l, n, head, hash_node) {
+ 			void *ptr = fd_htab_map_get_ptr(map, l);
+ 
+-			map->ops->map_fd_put_ptr(ptr);
++			map->ops->map_fd_put_ptr(map, ptr, false);
+ 		}
+ 	}
+ 
+@@ -1467,7 +1467,7 @@ int bpf_fd_htab_map_update_elem(struct bpf_map *map, struct file *map_file,
+ 
+ 	ret = htab_map_update_elem(map, key, &ptr, map_flags);
+ 	if (ret)
+-		map->ops->map_fd_put_ptr(ptr);
++		map->ops->map_fd_put_ptr(map, ptr, false);
+ 
+ 	return ret;
+ }
+diff --git a/kernel/bpf/map_in_map.c b/kernel/bpf/map_in_map.c
+index fab4fb134547..7fe5a73aff07 100644
+--- a/kernel/bpf/map_in_map.c
++++ b/kernel/bpf/map_in_map.c
+@@ -106,7 +106,7 @@ void *bpf_map_fd_get_ptr(struct bpf_map *map,
+ 	return inner_map;
+ }
+ 
+-void bpf_map_fd_put_ptr(void *ptr)
++void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer)
+ {
+ 	/* ptr->ops->map_free() has to go through one
+ 	 * rcu grace period by itself.
+diff --git a/kernel/bpf/map_in_map.h b/kernel/bpf/map_in_map.h
+index a507bf6ef8b9..d296890813cc 100644
+--- a/kernel/bpf/map_in_map.h
++++ b/kernel/bpf/map_in_map.h
+@@ -15,7 +15,7 @@ bool bpf_map_meta_equal(const struct bpf_map *meta0,
+ 			const struct bpf_map *meta1);
+ void *bpf_map_fd_get_ptr(struct bpf_map *map, struct file *map_file,
+ 			 int ufd);
+-void bpf_map_fd_put_ptr(void *ptr);
++void bpf_map_fd_put_ptr(struct bpf_map *map, void *ptr, bool need_defer);
+ u32 bpf_map_fd_sys_lookup_elem(void *ptr);
+ 
+ #endif
 -- 
 2.43.0
 
