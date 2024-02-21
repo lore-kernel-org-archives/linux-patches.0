@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1B28005F;
-	Wed, 21 Feb 2024 14:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DC080616;
+	Wed, 21 Feb 2024 14:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524665; cv=none; b=XAA1Y19PtWATGXecnBPhPCEp9vWN9UuSqir5X48nM+ftmc1sQwxCkmBa2TdPMx9PTs8xlGX3KN007Iamf66vV2oYAg1lovbQXlQm/Nc9M6tm4J+Nuz6H18UB6vfDR4Ax4SWWwwItS+r65eKfFN55IBjdLsWL8kl8wK99f4PqcKI=
+	t=1708524668; cv=none; b=axt7MWsI0kPDCRGyGROPSw5svmSIRFmm16krsdZxAPej1gN4Dy6BMDJamyCU3AL2tEhZP/sH8BDEUBpyqzjuiLTbWHU3GOwKrB5OmZh+qsBE1dLyoOlVdb536YLY86C7vyX7OwnCHxs8b6iGYA8uk0cR9Qx/Ke1h/D9R8mS4gmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524665; c=relaxed/simple;
-	bh=MDBzLrW18T+Ey7+r8nS4XLFv0xbKhzMK3PuvPLYPFyA=;
+	s=arc-20240116; t=1708524668; c=relaxed/simple;
+	bh=po3HOLoxoWO6GdQN/K4hXHCP9gVWgt193pfZUbOMIs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFtSqg6TEQ/id6LcgDXfxPchYcwNHTnFPlfTelEQ8LLTBs39xznoql2cnYn7DcfScqVIBndvvnRjAGY2M3reMcHEp55MJmqtjM6xhEsKp9FmGkKQvDkxuYiGOqJNqNHbQ4TIDO1nFI3V9OEWItIH+T17ADxrcOfWaHL7zUsk29g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYCZRH/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z9cTqBAqXIEHu/pnmUwL6ey8J1sUnf6yzTSbstLIGcUdxiQ6nZnDbZLrkjoCgpnsTVhNzm2B/jVw2ighsIw5r6/yokpfXYMl2qjMAdcQATgvIq1hplgAj3p2UY9zK05ZafPKTe71kovKhiOwYI2Rks9Jmits23L4Y6GQHYbH19c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1NFeiNX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYCZRH/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDE2C433F1;
-	Wed, 21 Feb 2024 14:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1NFeiNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBE2C433C7;
+	Wed, 21 Feb 2024 14:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524664;
-	bh=MDBzLrW18T+Ey7+r8nS4XLFv0xbKhzMK3PuvPLYPFyA=;
+	s=korg; t=1708524668;
+	bh=po3HOLoxoWO6GdQN/K4hXHCP9gVWgt193pfZUbOMIs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYCZRH/UFMbnPw6uQvbgQkWA08DTZgCqcK7LFuAhO1/32Sm+Y0HqRXktrIb4NG41x
-	 XmbSqabtf9Lx/YjvoT2bcC8PrpWxWAMJPcLu5UNvdBRKRkwHYU9b2auvO0ddNoElx7
-	 kXT6Kz2dO5QCXdrktO+/nEJ2HdL8UVlpQ2Nafjls=
+	b=Z1NFeiNXqDZOiHeCQocPfI2Th0sz5s4j/4EDQjrtj5IiVTLT3ZtofxMIoLwu1mDW5
+	 514gar+xtCMWHlTraIr5LiS7v4nQf3WfMMrdpIWRwF0Y9m/RMZxA/fy/9A7v7CMklQ
+	 eVsOTMv6uJ+cBMFr5ijBDsThei9mgO6+5jIK7Kks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Furong Xu <0x1207@gmail.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 284/379] net: stmmac: xgmac: fix a typo of register name in DPP safety handling
-Date: Wed, 21 Feb 2024 14:07:43 +0100
-Message-ID: <20240221130003.310976354@linuxfoundation.org>
+	lonial con <kongln9170@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 285/379] netfilter: nft_set_rbtree: skip end interval element from gc
+Date: Wed, 21 Feb 2024 14:07:44 +0100
+Message-ID: <20240221130003.340642719@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,50 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Furong Xu <0x1207@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 1ce2654d87e2fb91fea83b288bd9b2641045e42a upstream.
+commit 60c0c230c6f046da536d3df8b39a20b9a9fd6af0 upstream.
 
-DDPP is copied from Synopsys Data book:
+rbtree lazy gc on insert might collect an end interval element that has
+been just added in this transactions, skip end interval elements that
+are not yet active.
 
-DDPP: Disable Data path Parity Protection.
-    When it is 0x0, Data path Parity Protection is enabled.
-    When it is 0x1, Data path Parity Protection is disabled.
-
-The macro name should be XGMAC_DPP_DISABLE.
-
-Fixes: 46eba193d04f ("net: stmmac: xgmac: fix handling of DPP safety error for DMA channels")
-Signed-off-by: Furong Xu <0x1207@gmail.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/20240203053133.1129236-1-0x1207@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f718863aca46 ("netfilter: nft_set_rbtree: fix overlap expiration walk")
+Cc: stable@vger.kernel.org
+Reported-by: lonial con <kongln9170@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h      |    2 +-
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_set_rbtree.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-@@ -283,7 +283,7 @@
- #define XGMAC_TXCEIE			BIT(0)
- #define XGMAC_MTL_ECC_INT_STATUS	0x000010cc
- #define XGMAC_MTL_DPP_CONTROL		0x000010e0
--#define XGMAC_DDPP_DISABLE		BIT(0)
-+#define XGMAC_DPP_DISABLE		BIT(0)
- #define XGMAC_MTL_TXQ_OPMODE(x)		(0x00001100 + (0x80 * (x)))
- #define XGMAC_TQS			GENMASK(25, 16)
- #define XGMAC_TQS_SHIFT			16
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -883,7 +883,7 @@ static int dwxgmac3_safety_feat_config(v
- 	/* 5. Enable Data Path Parity Protection */
- 	value = readl(ioaddr + XGMAC_MTL_DPP_CONTROL);
- 	/* already enabled by default, explicit enable it again */
--	value &= ~XGMAC_DDPP_DISABLE;
-+	value &= ~XGMAC_DPP_DISABLE;
- 	writel(value, ioaddr + XGMAC_MTL_DPP_CONTROL);
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -237,7 +237,7 @@ static void nft_rbtree_gc_remove(struct
  
- 	return 0;
+ static const struct nft_rbtree_elem *
+ nft_rbtree_gc_elem(const struct nft_set *__set, struct nft_rbtree *priv,
+-		   struct nft_rbtree_elem *rbe, u8 genmask)
++		   struct nft_rbtree_elem *rbe)
+ {
+ 	struct nft_set *set = (struct nft_set *)__set;
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+@@ -256,7 +256,7 @@ nft_rbtree_gc_elem(const struct nft_set
+ 	while (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+ 		if (nft_rbtree_interval_end(rbe_prev) &&
+-		    nft_set_elem_active(&rbe_prev->ext, genmask))
++		    nft_set_elem_active(&rbe_prev->ext, NFT_GENMASK_ANY))
+ 			break;
+ 
+ 		prev = rb_prev(prev);
+@@ -367,7 +367,7 @@ static int __nft_rbtree_insert(const str
+ 		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
+ 			const struct nft_rbtree_elem *removed_end;
+ 
+-			removed_end = nft_rbtree_gc_elem(set, priv, rbe, genmask);
++			removed_end = nft_rbtree_gc_elem(set, priv, rbe);
+ 			if (IS_ERR(removed_end))
+ 				return PTR_ERR(removed_end);
+ 
 
 
