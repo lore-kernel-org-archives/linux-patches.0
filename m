@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FC97EF1F;
-	Wed, 21 Feb 2024 14:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5827EF1F;
+	Wed, 21 Feb 2024 14:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524814; cv=none; b=PLRbapAJXWxd/ymLUt7FJ6LHRmEc2GbFSWBCN5TMSBmiVhhIavd8J2Y1TVRzmd/yFID1ypoaepL654siX6ZvNV+K6vBeFIy+ErBD7cr8q9PO1kh7iyHlhru9WDSYw54QSoxPPHMahb75AOPcQSY4g4CsCok6aLUYbBfbtHfK94Q=
+	t=1708524817; cv=none; b=OEWP0sT0bbRFBiOVGV4viqmDTruUl8i/oQiaQ0uMRRDRZhGTNlKyEy3WFPTmZU3VPHdtlJgHtAr7Ufhe0V5uNZjWi8l0YhHdpKy4pb4rDHeKIJ+3dtGJl9TGAmmZEKkR7xp4p+NlKkBAKz8EBy7uuB49/Azxv5RB5FpBWmhxrNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524814; c=relaxed/simple;
-	bh=lkQjFSeflmhruS0IHub/SsboGVj0iiw+8Kp0xVz6EbM=;
+	s=arc-20240116; t=1708524817; c=relaxed/simple;
+	bh=tFdjhN1HTSLKUWqHtPM+TzgyswL/prCKAaBjEI+kj7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrbiQNHdy7Tcv+Hff4UUdpamHrb2bGBkHYFH0gFLI0k875K5KrtjUFmjuPjinfo8Eetb79y1SC2J69/JdxtKLYfPu/PW0kNpOGAeO/at7dL2V1m8h7Hf4zT9aGu7GHXsQxHcUgxJ7l0AsZCTkrTquRqEBmGVH8UfBJETvh2pvVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIiMMCxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IGaoB4FDRKFwtp/lhLN63fqPk8L2983a9hAJSZjTgoZZkqDqAbv8PbY32K0Ef+9MUV/D4X9E65cnz3NC0FLlkjpSuEJU+8+qdDfsYx5HOM2Vl4slqfSkGaUPjDuKU/uB234klx5koQOp14wB8FtRHxf+DgOHJDdh0I3Um5JRHuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0pjtA+p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIiMMCxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724AEC433C7;
-	Wed, 21 Feb 2024 14:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0pjtA+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9CDC433C7;
+	Wed, 21 Feb 2024 14:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524813;
-	bh=lkQjFSeflmhruS0IHub/SsboGVj0iiw+8Kp0xVz6EbM=;
+	s=korg; t=1708524817;
+	bh=tFdjhN1HTSLKUWqHtPM+TzgyswL/prCKAaBjEI+kj7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIiMMCxmUAvP0D6UsPdop0vF41uWLutW6rQf7RWmVnz8+RzlrYPx67G5GIA1L869M
-	 mUO0K9XswJTnSV7vyqnz1ewKF1qN1R4eMnjImhzL191Rypm2nUAkVYvudCdHL6z9SH
-	 DD6kL9GG5KjUM+Pv+VhawcHQ6S5QnIGKxOG93km4=
+	b=b0pjtA+peIgxp64lw0hmG8tLbpzaiAaU8rJZzItAwoZ3Ca9yZ4gvDffReBTyqtzjW
+	 euT29aEjUiaMNzcmIS4zvoVajlQYztG4T+7q9rDtt90nr+Y315rGf3mP1dsilEZ29r
+	 ST4/H3GA9scOr7eNeN8ldRVIgZ+hCW76xhDNy/kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 357/379] crypto: lib/mpi - Fix unexpected pointer access in mpi_ec_init
-Date: Wed, 21 Feb 2024 14:08:56 +0100
-Message-ID: <20240221130005.619297033@linuxfoundation.org>
+Subject: [PATCH 5.10 358/379] serial: Add rs485_supported to uart_port
+Date: Wed, 21 Feb 2024 14:08:57 +0100
+Message-ID: <20240221130005.649188296@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -45,46 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit ba3c5574203034781ac4231acf117da917efcd2a ]
+[ Upstream commit 8925c31c1ac2f1e05da988581f2a70a2a8c4d638 ]
 
-When the mpi_ec_ctx structure is initialized, some fields are not
-cleared, causing a crash when referencing the field when the
-structure was released. Initially, this issue was ignored because
-memory for mpi_ec_ctx is allocated with the __GFP_ZERO flag.
-For example, this error will be triggered when calculating the
-Za value for SM2 separately.
+Preparing to move serial_rs485 struct sanitization into serial core,
+each driver has to provide what fields/flags it supports. This
+information is pointed into by rs485_supported.
 
-Fixes: d58bb7e55a8a ("lib/mpi: Introduce ec implementation to MPI library")
-Cc: stable@vger.kernel.org # v6.5
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20220606100433.13793-4-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 0c2a5f471ce5 ("serial: 8250_exar: Set missing rs485_supported flag")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/mpi/ec.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/8250/8250_core.c | 1 +
+ include/linux/serial_core.h         | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/lib/mpi/ec.c b/lib/mpi/ec.c
-index c21470122dfc..941ba0b0067e 100644
---- a/lib/mpi/ec.c
-+++ b/lib/mpi/ec.c
-@@ -584,6 +584,9 @@ void mpi_ec_init(struct mpi_ec_ctx *ctx, enum gcry_mpi_ec_models model,
- 	ctx->a = mpi_copy(a);
- 	ctx->b = mpi_copy(b);
- 
-+	ctx->d = NULL;
-+	ctx->t.two_inv_p = NULL;
-+
- 	ctx->t.p_barrett = use_barrett > 0 ? mpi_barrett_init(ctx->p, 0) : NULL;
- 
- 	mpi_ec_get_reset(ctx);
+diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
+index 43f2eed6df78..355ee338d752 100644
+--- a/drivers/tty/serial/8250/8250_core.c
++++ b/drivers/tty/serial/8250/8250_core.c
+@@ -1026,6 +1026,7 @@ int serial8250_register_8250_port(struct uart_8250_port *up)
+ 		uart->port.throttle	= up->port.throttle;
+ 		uart->port.unthrottle	= up->port.unthrottle;
+ 		uart->port.rs485_config	= up->port.rs485_config;
++		uart->port.rs485_supported = up->port.rs485_supported;
+ 		uart->port.rs485	= up->port.rs485;
+ 		uart->rs485_start_tx	= up->rs485_start_tx;
+ 		uart->rs485_stop_tx	= up->rs485_stop_tx;
+diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
+index 6df4c3356ae6..46a21984c0b2 100644
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -254,6 +254,7 @@ struct uart_port {
+ 	struct attribute_group	*attr_group;		/* port specific attributes */
+ 	const struct attribute_group **tty_groups;	/* all attributes (serial core use only) */
+ 	struct serial_rs485     rs485;
++	const struct serial_rs485	*rs485_supported;	/* Supported mask for serial_rs485 */
+ 	struct gpio_desc	*rs485_term_gpio;	/* enable RS485 bus termination */
+ 	struct serial_iso7816   iso7816;
+ 	void			*private_data;		/* generic platform data pointer */
 -- 
 2.43.0
 
