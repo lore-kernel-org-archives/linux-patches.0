@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C9F78B5E;
-	Wed, 21 Feb 2024 14:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550DB3D981;
+	Wed, 21 Feb 2024 14:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525105; cv=none; b=kmVBjfoxx276iAJ6Ht6F1K13aC9gVOWEAWX2ilftGfgKCP5/Gct5bKnRwE22OMHI8QIknyeaVt2OtdX8YZw2/zthuZYHT6nIU8zJJJb9L2Au9dHSfT1w24nyg8KavRvJzNNq3Kx5qtcjhftFToCJQFkcbF2NiA7G5nGYET/ZZRg=
+	t=1708525108; cv=none; b=CYTdT34hPjv5pqRDOJ8a+DiuDjdTNgOme4F5UEkL6THuVDj2hX4zOdpNYKOYn2u3OiN2aqeSAMN5HUg9rp63HM61i9O7jVm9VU4Z39EDz5ObJnwODkyPuTki4BP9zPHf5PLTC4CmXgd+6IwnukdlUsUwLKFd2ykJTi2ZpZKy0aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525105; c=relaxed/simple;
-	bh=93hxTLOjHW+WWThGtfIaDm4rzoye02vPiw0HFiAaLl8=;
+	s=arc-20240116; t=1708525108; c=relaxed/simple;
+	bh=i2SHeGy/GaXNob2ybWThg01T3FY25L+AaaxwXExA+eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCJfthGocOrDOykcc2z5y9Gd4129gfPKfIXAdf6glWtJHPXV8OQYl/vWxv5B3TgZw0DLIxh6uixatWLjPDZzmQMiT45HetapTdB3hdkVnS/05M6foCUXK6zMsA3/6N8Gtlza6wzRIRJPlFfU+X5mHMnpqMe8ThC2gBgT31nFLZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nfgqd6eX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ifdLlS9yjfLQkIDjepxf3jG3gNNMzn/8A0EzO/R8yZHt1tNnbAusNrKzMBjhoafOBSRchwfDWxjuo3jUQSfhMtugw3eEPq08mGyD/ch1AwF1eiz2rexZ1EiZF/hdSEPDnZEyr3uGwB21ImCcVVzdwUK+qATgRKu4SzQ1UpX0uUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkGrucWY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nfgqd6eX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9016EC433C7;
-	Wed, 21 Feb 2024 14:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkGrucWY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB693C433C7;
+	Wed, 21 Feb 2024 14:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525105;
-	bh=93hxTLOjHW+WWThGtfIaDm4rzoye02vPiw0HFiAaLl8=;
+	s=korg; t=1708525108;
+	bh=i2SHeGy/GaXNob2ybWThg01T3FY25L+AaaxwXExA+eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nfgqd6eXLCynrM3lJ4/ZwvxKawCnUdWlR8jmRSMXpcO1SmyDPDhUNmNkfkWsZ91ih
-	 QXqgXj9Z5+yejLT2R+zzvzbwHU4vQay+zoJQPwLq7wGoa69LzzgHl0YC3OHUwfrQ5t
-	 Sp4ipruni7vJgKOQZH+8cS0YEtLxBbKKR4Dogv5Y=
+	b=dkGrucWYIeA0zFXnrcjllG4+xfcvWSA+rq8nQQIm5Rwo1kvBipax4XFio9R+HJhs8
+	 y1O63VGXFN2a2+jmA/Jq0Z1vPMrq+8PsV651xUkHTeuSZj2+3ZrAdZG9iGR6/truIQ
+	 zZvauq1lT6/Kca6HkovEsM5Di+HfkscK9oq/6VxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Richard Palethorpe <rpalethorpe@suse.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.4 060/267] x86/entry/ia32: Ensure s32 is sign extended to s64
-Date: Wed, 21 Feb 2024 14:06:41 +0100
-Message-ID: <20240221125941.887545848@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 061/267] powerpc/mm: Fix null-pointer dereference in pgtable_cache_add
+Date: Wed, 21 Feb 2024 14:06:42 +0100
+Message-ID: <20240221125941.916358989@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,86 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Palethorpe <rpalethorpe@suse.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-commit 56062d60f117dccfb5281869e0ab61e090baf864 upstream.
+[ Upstream commit f46c8a75263f97bda13c739ba1c90aced0d3b071 ]
 
-Presently ia32 registers stored in ptregs are unconditionally cast to
-unsigned int by the ia32 stub. They are then cast to long when passed to
-__se_sys*, but will not be sign extended.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-This takes the sign of the syscall argument into account in the ia32
-stub. It still casts to unsigned int to avoid implementation specific
-behavior. However then casts to int or unsigned int as necessary. So that
-the following cast to long sign extends the value.
-
-This fixes the io_pgetevents02 LTP test when compiled with -m32. Presently
-the systemcall io_pgetevents_time64() unexpectedly accepts -1 for the
-maximum number of events.
-
-It doesn't appear other systemcalls with signed arguments are effected
-because they all have compat variants defined and wired up.
-
-Fixes: ebeb8c82ffaf ("syscalls/x86: Use 'struct pt_regs' based syscall calling for IA32_EMULATION and x32")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Richard Palethorpe <rpalethorpe@suse.com>
-Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240110130122.3836513-1-nik.borisov@suse.com
-Link: https://lore.kernel.org/ltp/20210921130127.24131-1-rpalethorpe@suse.com/
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231204023223.2447523-1-chentao@kylinos.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/syscall_wrapper.h |   25 +++++++++++++++++++++----
- include/linux/syscalls.h               |    1 +
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ arch/powerpc/mm/init-common.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/syscall_wrapper.h
-+++ b/arch/x86/include/asm/syscall_wrapper.h
-@@ -14,12 +14,29 @@ struct pt_regs;
- 		,,regs->di,,regs->si,,regs->dx				\
- 		,,regs->r10,,regs->r8,,regs->r9)			\
+diff --git a/arch/powerpc/mm/init-common.c b/arch/powerpc/mm/init-common.c
+index a84da92920f7..e7b9cc90fd9e 100644
+--- a/arch/powerpc/mm/init-common.c
++++ b/arch/powerpc/mm/init-common.c
+@@ -104,7 +104,7 @@ void pgtable_cache_add(unsigned int shift)
+ 	 * as to leave enough 0 bits in the address to contain it. */
+ 	unsigned long minalign = max(MAX_PGTABLE_INDEX_SIZE + 1,
+ 				     HUGEPD_SHIFT_MASK + 1);
+-	struct kmem_cache *new;
++	struct kmem_cache *new = NULL;
  
-+
-+/* SYSCALL_PT_ARGS is Adapted from s390x */
-+#define SYSCALL_PT_ARG6(m, t1, t2, t3, t4, t5, t6)			\
-+	SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5), m(t6, (regs->bp))
-+#define SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5)				\
-+	SYSCALL_PT_ARG4(m, t1, t2, t3, t4),  m(t5, (regs->di))
-+#define SYSCALL_PT_ARG4(m, t1, t2, t3, t4)				\
-+	SYSCALL_PT_ARG3(m, t1, t2, t3),  m(t4, (regs->si))
-+#define SYSCALL_PT_ARG3(m, t1, t2, t3)					\
-+	SYSCALL_PT_ARG2(m, t1, t2), m(t3, (regs->dx))
-+#define SYSCALL_PT_ARG2(m, t1, t2)					\
-+	SYSCALL_PT_ARG1(m, t1), m(t2, (regs->cx))
-+#define SYSCALL_PT_ARG1(m, t1) m(t1, (regs->bx))
-+#define SYSCALL_PT_ARGS(x, ...) SYSCALL_PT_ARG##x(__VA_ARGS__)
-+
-+#define __SC_COMPAT_CAST(t, a)						\
-+	(__typeof(__builtin_choose_expr(__TYPE_IS_L(t), 0, 0U)))	\
-+	(unsigned int)a
-+
- /* Mapping of registers to parameters for syscalls on i386 */
- #define SC_IA32_REGS_TO_ARGS(x, ...)					\
--	__MAP(x,__SC_ARGS						\
--	      ,,(unsigned int)regs->bx,,(unsigned int)regs->cx		\
--	      ,,(unsigned int)regs->dx,,(unsigned int)regs->si		\
--	      ,,(unsigned int)regs->di,,(unsigned int)regs->bp)
-+	SYSCALL_PT_ARGS(x, __SC_COMPAT_CAST,				\
-+			__MAP(x, __SC_TYPE, __VA_ARGS__))		\
+ 	/* It would be nice if this was a BUILD_BUG_ON(), but at the
+ 	 * moment, gcc doesn't seem to recognize is_power_of_2 as a
+@@ -117,7 +117,8 @@ void pgtable_cache_add(unsigned int shift)
  
- #ifdef CONFIG_IA32_EMULATION
- /*
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -120,6 +120,7 @@ struct clone_args;
- #define __TYPE_IS_LL(t) (__TYPE_AS(t, 0LL) || __TYPE_AS(t, 0ULL))
- #define __SC_LONG(t, a) __typeof(__builtin_choose_expr(__TYPE_IS_LL(t), 0LL, 0L)) a
- #define __SC_CAST(t, a)	(__force t) a
-+#define __SC_TYPE(t, a)	t
- #define __SC_ARGS(t, a)	a
- #define __SC_TEST(t, a) (void)BUILD_BUG_ON_ZERO(!__TYPE_IS_LL(t) && sizeof(t) > sizeof(long))
+ 	align = max_t(unsigned long, align, minalign);
+ 	name = kasprintf(GFP_KERNEL, "pgtable-2^%d", shift);
+-	new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
++	if (name)
++		new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
+ 	if (!new)
+ 		panic("Could not allocate pgtable cache for order %d", shift);
  
+-- 
+2.43.0
+
 
 
