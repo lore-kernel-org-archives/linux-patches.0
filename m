@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46FA80058;
-	Wed, 21 Feb 2024 14:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA127C0BD;
+	Wed, 21 Feb 2024 14:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524643; cv=none; b=MpM5J96xJDJW8FcxxPkHDVy0Y7tFFEpg25OxcXgaqX4uB8ITKv+cOSWEKzPVoTaQOaCALgCi+3/MNUazQq+8IeBUudkl6Js/gPuldNUCYmn8RgJ2jLoxWodgz7/Q/qwsvC2mYVq1k/3GPl308IwjQRGAoS8oThsCA75zvmE+IM4=
+	t=1708524646; cv=none; b=RlxXUqyV8D93MtoMwYcUd80EgNDJnb/KJL8hc2W4PAbQCCsClhHP8Tb0w90bIJHniqY9va44V4fGKJG+uKE0ubykx5tUnhoZLDmdigfyqK5Fp4l9/hbtBm8qNwoBUxZDZSv1IqboQ6ELAvb8N82CiAJO2rpfRuRubqQmz0Qm1RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524643; c=relaxed/simple;
-	bh=AzUBFOoEK+CukRAUNGUCJT16bKsthtppzxUo1AYkaTQ=;
+	s=arc-20240116; t=1708524646; c=relaxed/simple;
+	bh=PTUblDmFXtoFAtIczjcb1R5D4x80gmw0/6NHVKzV4dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdOi3stVR1nEM2pvz2Cw8ajjN2lArD84L1fUl0b39Ricp2kOpRkPaPy/j2qTjcRQfopwG4RYXIvIoGQXaSxl58/w5jmqcHOcJoihoEvDDAkSKA8Hgd/WgbauNxdvOIAGB2Zf0XbGyZWTImk2N7pzTIAisQAkVQKiSs6JrRQbsbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vjj3Ok7N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PZQVleUyglvNbmYvR5Eg2F0HB7mB8sVwUKgVNw1VpLCXDVD0tAZE/gfcI4ulHkP0YbexkAg9VZpvBjFoiyvncPtV3fIi98rpP+TnEz/cG39bQkCWlsi+l9rqyY9T6r/9eAc9YXSUPg83/+N79vTDn9iYUzN3kbquWQ7gB5QxUlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Na20rqdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vjj3Ok7N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E78C433C7;
-	Wed, 21 Feb 2024 14:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Na20rqdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7E1C433F1;
+	Wed, 21 Feb 2024 14:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524643;
-	bh=AzUBFOoEK+CukRAUNGUCJT16bKsthtppzxUo1AYkaTQ=;
+	s=korg; t=1708524646;
+	bh=PTUblDmFXtoFAtIczjcb1R5D4x80gmw0/6NHVKzV4dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vjj3Ok7No/sVpd9OswWuRB3/mm/cMvJHllskrKhdRC1B7fw6PXS6gpAGDoyjVBKMu
-	 1WtgrNgBDKw8Jb/mAgIF0W6g69/H7Ga3wBLlANXpFy6D5N21a5dT1YlLcW99MLC+fy
-	 Y6h3WDjLuKXR86IFcJ3PmVO5+RkUYWPINy6cUxsM=
+	b=Na20rqdGfnPPyAipAF82ByF4d/NTZGYXk5CQv2QXjS5vzui9mBQGbYwbRS1ElFY0k
+	 dAdx7S52NRXToAAi3MtGgQbN+3LsPErOvAysOEd+2cMwV1jDzp6ER9kPzeC2DkGfaO
+	 mWb0apkg73PmlThX0KuIeuCoPCX6ubHWUJfyGpII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	yuan linyu <yuanlinyu@hihonor.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 305/379] usb: f_mass_storage: forbid async queue when shutdown happen
-Date: Wed, 21 Feb 2024 14:08:04 +0100
-Message-ID: <20240221130003.943590244@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 306/379] media: ir_toy: fix a memleak in irtoy_tx
+Date: Wed, 21 Feb 2024 14:08:05 +0100
+Message-ID: <20240221130003.972166266@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,71 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yuan linyu <yuanlinyu@hihonor.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit b2d2d7ea0dd09802cf5a0545bf54d8ad8987d20c upstream.
+[ Upstream commit dc9ceb90c4b42c6e5c6757df1d6257110433788e ]
 
-When write UDC to empty and unbind gadget driver from gadget device, it is
-possible that there are many queue failures for mass storage function.
+When irtoy_command fails, buf should be freed since it is allocated by
+irtoy_tx, or there is a memleak.
 
-The root cause is mass storage main thread alaways try to queue request to
-receive a command from host if running flag is on, on platform like dwc3,
-if pull down called, it will not queue request again and return
--ESHUTDOWN, but it not affect running flag of mass storage function.
-
-Check return code from mass storage function and clear running flag if it
-is -ESHUTDOWN, also indicate start in/out transfer failure to break loops.
-
-Cc: stable <stable@kernel.org>
-Signed-off-by: yuan linyu <yuanlinyu@hihonor.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20240123034829.3848409-1-yuanlinyu@hihonor.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4114978dcd24 ("media: ir_toy: prevent device from hanging during transmit")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/media/rc/ir_toy.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -575,21 +575,37 @@ static int start_transfer(struct fsg_dev
+diff --git a/drivers/media/rc/ir_toy.c b/drivers/media/rc/ir_toy.c
+index 7f394277478b..cd2fddf003bd 100644
+--- a/drivers/media/rc/ir_toy.c
++++ b/drivers/media/rc/ir_toy.c
+@@ -324,6 +324,7 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
+ 			    sizeof(COMMAND_SMODE_EXIT), STATE_RESET);
+ 	if (err) {
+ 		dev_err(irtoy->dev, "exit sample mode: %d\n", err);
++		kfree(buf);
+ 		return err;
+ 	}
  
- static bool start_in_transfer(struct fsg_common *common, struct fsg_buffhd *bh)
- {
-+	int rc;
-+
- 	if (!fsg_is_set(common))
- 		return false;
- 	bh->state = BUF_STATE_SENDING;
--	if (start_transfer(common->fsg, common->fsg->bulk_in, bh->inreq))
-+	rc = start_transfer(common->fsg, common->fsg->bulk_in, bh->inreq);
-+	if (rc) {
- 		bh->state = BUF_STATE_EMPTY;
-+		if (rc == -ESHUTDOWN) {
-+			common->running = 0;
-+			return false;
-+		}
-+	}
- 	return true;
- }
+@@ -331,6 +332,7 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
+ 			    sizeof(COMMAND_SMODE_ENTER), STATE_COMMAND);
+ 	if (err) {
+ 		dev_err(irtoy->dev, "enter sample mode: %d\n", err);
++		kfree(buf);
+ 		return err;
+ 	}
  
- static bool start_out_transfer(struct fsg_common *common, struct fsg_buffhd *bh)
- {
-+	int rc;
-+
- 	if (!fsg_is_set(common))
- 		return false;
- 	bh->state = BUF_STATE_RECEIVING;
--	if (start_transfer(common->fsg, common->fsg->bulk_out, bh->outreq))
-+	rc = start_transfer(common->fsg, common->fsg->bulk_out, bh->outreq);
-+	if (rc) {
- 		bh->state = BUF_STATE_FULL;
-+		if (rc == -ESHUTDOWN) {
-+			common->running = 0;
-+			return false;
-+		}
-+	}
- 	return true;
- }
- 
+-- 
+2.43.0
+
 
 
