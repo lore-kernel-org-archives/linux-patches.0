@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760C447A7C;
-	Wed, 21 Feb 2024 13:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7151377A03;
+	Wed, 21 Feb 2024 13:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523302; cv=none; b=nbclPA4OxSkLEGofncMgeIWRYRPLJwU6jCzHY1cU44KTEtxLsjWiVhStFP4FSV12mSqiayl1DdLRMYjmvenPj3Qc2otY4AtZeEW92+DPp5eDyV1y4+3o6wkeeDPtBmxcr+/ZobVusEahdX4k4xUiVP05qCsmR3chNC0ToxtouOY=
+	t=1708523305; cv=none; b=W+trKwqTrM4f4KqdUIsiLLKmO5eb2oTf/jTPvk05+JTorpGsAxB0kc3WNVgt+XJ9EhKTcTHQM12XYuJqUKw/YShb4TpKBNy4jfbhGf99qnop3QaQ8C3AnqpWnj2Zky8QXqgTeJY1I9OgDOok7VMViH1KPHB/vJeAxaCLCHgcQq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523302; c=relaxed/simple;
-	bh=CFjsY6XUhvEp3zWZlyXjpgPHaaC3kFlm0T2QM5N7Jm0=;
+	s=arc-20240116; t=1708523305; c=relaxed/simple;
+	bh=knEsCc4GWtUgFMXcJApjir04yMu3mxes7hRiCF+Lc3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YYm6zEj1Yh8bvY4CKq/UIoK6K23bOQy4AqrlpUnFwyZuVmkv/lJ/CZuj8AlI+ErUpEV/SVUQ4YBFUVrTFbqJZcXBxE9o62AImwZXUElLPP8DrVpX9fQy5CXlY0oJz5ZsQrQBUOZisnKl9xPs8fnNU+oAdGR3f9sWBpZ8a4iUYHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjFp3Vec; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aRmL4RsYzDsJAinffDti+RcJCeifH5b5V4DxReKyWkZz3zFW1oUPDq0kWYTx0gx+0liSIWX526A3abXjFdlK08RiVau4GIcq3ghYGl/iff51/0IXEsM5+Uo8PGu/owKlzq1Q1zQrQOGBgNpROVQ9VjUa89Ml0BkwFeP1+iZWa08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKLtYhdk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjFp3Vec"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BE6C433C7;
-	Wed, 21 Feb 2024 13:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKLtYhdk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D668FC433F1;
+	Wed, 21 Feb 2024 13:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523302;
-	bh=CFjsY6XUhvEp3zWZlyXjpgPHaaC3kFlm0T2QM5N7Jm0=;
+	s=korg; t=1708523305;
+	bh=knEsCc4GWtUgFMXcJApjir04yMu3mxes7hRiCF+Lc3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZjFp3Vec4K4h+wRu1MqILvtzj5ZwQ0XpDxk7Rc8ZWBQuqwFZQjB71xPXsdLnhRv2H
-	 5KtNOvy+dOU7KCESL78+9+Y1AYdhiKk+ZvN4dZWnCfxYLFckuO/nHkefbfgokL08Jp
-	 yX6K2f6kLt2Gfv/Be/0GC7XtHZ8prskS7BPbYoNU=
+	b=cKLtYhdkCnnitvUbpz9bweVUjM5WWbKh0CW47ctiPUkWc2u9NC1OgwRDBy6FRk/3t
+	 gd4o+eoOSQFsPjGJ30u3m3sIH2RoLbmg+dMinQtl0F80CIpZaHDE4jGp9GQw7N4pbH
+	 FfKTfk8YXDtq5D6vh2FYz0RP8OY3RCPUq25uwT/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 356/476] scs: add CONFIG_MMU dependency for vfree_atomic()
-Date: Wed, 21 Feb 2024 14:06:47 +0100
-Message-ID: <20240221130021.162038771@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ekansh Gupta <quic_ekangupt@quicinc.com>
+Subject: [PATCH 5.15 388/476] misc: fastrpc: Mark all sessions as invalid in cb_remove
+Date: Wed, 21 Feb 2024 14:07:19 +0100
+Message-ID: <20240221130022.383696412@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,37 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel.holland@sifive.com>
+From: Ekansh Gupta <quic_ekangupt@quicinc.com>
 
-commit 6f9dc684cae638dda0570154509884ee78d0f75c upstream.
+commit a4e61de63e34860c36a71d1a364edba16fb6203b upstream.
 
-The shadow call stack implementation fails to build without CONFIG_MMU:
+In remoteproc shutdown sequence, rpmsg_remove will get called which
+would depopulate all the child nodes that have been created during
+rpmsg_probe. This would result in cb_remove call for all the context
+banks for the remoteproc. In cb_remove function, session 0 is
+getting skipped which is not correct as session 0 will never become
+available again. Add changes to mark session 0 also as invalid.
 
-  ld.lld: error: undefined symbol: vfree_atomic
-  >>> referenced by scs.c
-  >>>               kernel/scs.o:(scs_free) in archive vmlinux.a
-
-Link: https://lkml.kernel.org/r/20240122175204.2371009-1-samuel.holland@sifive.com
-Fixes: a2abe7cbd8fe ("scs: switch to vmapped shadow stacks")
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Link: https://lore.kernel.org/r/20240108114833.20480-1-quic_ekangupt@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/fastrpc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -605,6 +605,7 @@ config SHADOW_CALL_STACK
- 	bool "Clang Shadow Call Stack"
- 	depends on CC_IS_CLANG && ARCH_SUPPORTS_SHADOW_CALL_STACK
- 	depends on DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
-+	depends on MMU
- 	help
- 	  This option enables Clang's Shadow Call Stack, which uses a
- 	  shadow stack to protect function return addresses from being
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1594,7 +1594,7 @@ static int fastrpc_cb_remove(struct plat
+ 	int i;
+ 
+ 	spin_lock_irqsave(&cctx->lock, flags);
+-	for (i = 1; i < FASTRPC_MAX_SESSIONS; i++) {
++	for (i = 0; i < FASTRPC_MAX_SESSIONS; i++) {
+ 		if (cctx->session[i].sid == sess->sid) {
+ 			cctx->session[i].valid = false;
+ 			cctx->sesscount--;
 
 
