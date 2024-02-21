@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE24855E5E;
-	Wed, 21 Feb 2024 13:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16C94D5B7;
+	Wed, 21 Feb 2024 13:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523222; cv=none; b=fn3YQzHg5Cf2iGG1B0dRsZwIYKsPrNowBYIIHyt4pZU81OYfpeNobYkwHeJdG4gXxcQT6XirQvuzOxOE+RK2QC4RLdnAWl/apZTvGT4KwROb4ZfmOpankWCyB0oD+eE80nNZCNRH6GpAIKFBNnCDT2H8Nlb+dFa3VO1jTWhK8Rc=
+	t=1708523226; cv=none; b=bDW+qz2r1E/l+UF7CPNIDM+9FWq6VTrFqabrwzIpNxJrk9Z1HG8kN9VV0UU/WxqM8RhEczljLWQQPggQLupqE79j9SDOCOmtMnWkuGVRU7nYP/MijXYJqYLDJsmPHtKVpAfcKx3vkd4boDG5w07aZKkjM1KJiRNVIiMT/8L+lCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523222; c=relaxed/simple;
-	bh=maa3kSqao3fzS4HsaPZsdmTmIuEqBjpk+16VrRT0JXQ=;
+	s=arc-20240116; t=1708523226; c=relaxed/simple;
+	bh=Lbu0tjWT5pJU9Z6b5yOjqCaB+cEZF4SAlP6XSsABSFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YMYDRoft8ILfnQvRZl6f445hts6yTLguEh+dtOXKTG0JePgBE4FMKY67PCKQKEjTV2/ZYHLqdPF4VPGoJH6b4WHt9a9ro0GdcgKwp6Ln50VFB/XBmhsoQWXp/i/xVcUzGTo8Igz3s+hOUUjMQwDFthmL+HQ3rLLaCEx80qbjA38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HXxLfDro; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+Dpi0WR9yXad4B8YYiBox2BVShbCuV7PctQBg6cxLOyJLFuBCJk6DfQquQfyicGUgzJdoNdSuLgkkbOvjTE7v7Hd1+etoLGklDcni6pawa9zucIQMntZnC/JyH93OI6DC+VWFSQgjjrCec/PoFxepWQ618h9fmMVXA/azPZaOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzj312aO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HXxLfDro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250DDC433C7;
-	Wed, 21 Feb 2024 13:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzj312aO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50923C433C7;
+	Wed, 21 Feb 2024 13:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523222;
-	bh=maa3kSqao3fzS4HsaPZsdmTmIuEqBjpk+16VrRT0JXQ=;
+	s=korg; t=1708523225;
+	bh=Lbu0tjWT5pJU9Z6b5yOjqCaB+cEZF4SAlP6XSsABSFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HXxLfDroNb7NyvVaiPMVPyveN6Q26OEW4m++WotaEKmnPgVP1wBRHw6v0TXeQ03Ja
-	 Xmko3wQ+5twLTJsC/zd8I8RVD8iwhVUILPAl0llOJqHcR/7Ek8qMGvRkZNzjWv0Ye5
-	 mb+HzQRKR0hlfNf6TxT2K25nOnKuayd6igIBJoZ0=
+	b=dzj312aOgHLtEUja5EXpDWGOSassBUtwgZBwqiupwNs5F4irDcUTXwN8eYNLda2cK
+	 M6sMYuWDUQo5CdztCEOJ15SXwpIjY6q0OYgUuffzrCSgY7Afvd3su0xFFaQ3c8twEy
+	 21za6YMIG+QLrKjhdGARMbs1s3nYGdH1qPRpmzM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangfeng Xiao <xiaojiangfeng@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 371/476] powerpc/kasan: Fix addr error caused by page alignment
-Date: Wed, 21 Feb 2024 14:07:02 +0100
-Message-ID: <20240221130021.749747252@linuxfoundation.org>
+Subject: [PATCH 5.15 372/476] i2c: i801: Remove i801_set_block_buffer_mode
+Date: Wed, 21 Feb 2024 14:07:03 +0100
+Message-ID: <20240221130021.778800241@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,61 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 4a7aee96200ad281a5cc4cf5c7a2e2a49d2b97b0 ]
+[ Upstream commit 1e1d6582f483a4dba4ea03445e6f2f05d9de5bcf ]
 
-In kasan_init_region, when k_start is not page aligned, at the begin of
-for loop, k_cur = k_start & PAGE_MASK is less than k_start, and then
-`va = block + k_cur - k_start` is less than block, the addr va is invalid,
-because the memory address space from va to block is not alloced by
-memblock_alloc, which will not be reserved by memblock_reserve later, it
-will be used by other places.
+If FEATURE_BLOCK_BUFFER is set then bit SMBAUXCTL_E32B is supported
+and there's no benefit in reading it back. Origin of this check
+seems to be 14 yrs ago when people were not completely sure which
+chip versions support the block buffer mode.
 
-As a result, memory overwriting occurs.
-
-for example:
-int __init __weak kasan_init_region(void *start, size_t size)
-{
-[...]
-	/* if say block(dcd97000) k_start(feef7400) k_end(feeff3fe) */
-	block = memblock_alloc(k_end - k_start, PAGE_SIZE);
-	[...]
-	for (k_cur = k_start & PAGE_MASK; k_cur < k_end; k_cur += PAGE_SIZE) {
-		/* at the begin of for loop
-		 * block(dcd97000) va(dcd96c00) k_cur(feef7000) k_start(feef7400)
-		 * va(dcd96c00) is less than block(dcd97000), va is invalid
-		 */
-		void *va = block + k_cur - k_start;
-		[...]
-	}
-[...]
-}
-
-Therefore, page alignment is performed on k_start before
-memblock_alloc() to ensure the validity of the VA address.
-
-Fixes: 663c0c9496a6 ("powerpc/kasan: Fix shadow area set up for modules.")
-Signed-off-by: Jiangfeng Xiao <xiaojiangfeng@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/1705974359-43790-1-git-send-email-xiaojiangfeng@huawei.com
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Tested-by: Jean Delvare <jdelvare@suse.de>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: c1c9d0f6f7f1 ("i2c: i801: Fix block process call transactions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/kasan/kasan_init_32.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-i801.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/arch/powerpc/mm/kasan/kasan_init_32.c b/arch/powerpc/mm/kasan/kasan_init_32.c
-index f3e4d069e0ba..643fc525897d 100644
---- a/arch/powerpc/mm/kasan/kasan_init_32.c
-+++ b/arch/powerpc/mm/kasan/kasan_init_32.c
-@@ -64,6 +64,7 @@ int __init __weak kasan_init_region(void *start, size_t size)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
+index 30b725d11178..8ecba1ca9236 100644
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -519,9 +519,11 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
+ 		return -EOPNOTSUPP;
+ 	}
  
-+	k_start = k_start & PAGE_MASK;
- 	block = memblock_alloc(k_end - k_start, PAGE_SIZE);
- 	if (!block)
- 		return -ENOMEM;
++	/* Set block buffer mode */
++	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
++
+ 	inb_p(SMBHSTCNT(priv)); /* reset the data buffer index */
+ 
+-	/* Use 32-byte buffer to process this transaction */
+ 	if (read_write == I2C_SMBUS_WRITE) {
+ 		len = data->block[0];
+ 		outb_p(len, SMBHSTDAT0(priv));
+@@ -747,14 +749,6 @@ static int i801_block_transaction_byte_by_byte(struct i801_priv *priv,
+ 	return i801_check_post(priv, status);
+ }
+ 
+-static int i801_set_block_buffer_mode(struct i801_priv *priv)
+-{
+-	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
+-	if ((inb_p(SMBAUXCTL(priv)) & SMBAUXCTL_E32B) == 0)
+-		return -EIO;
+-	return 0;
+-}
+-
+ /* Block transaction function */
+ static int i801_block_transaction(struct i801_priv *priv, union i2c_smbus_data *data,
+ 				  char read_write, int command)
+@@ -783,9 +777,8 @@ static int i801_block_transaction(struct i801_priv *priv, union i2c_smbus_data *
+ 	/* Experience has shown that the block buffer can only be used for
+ 	   SMBus (not I2C) block transactions, even though the datasheet
+ 	   doesn't mention this limitation. */
+-	if ((priv->features & FEATURE_BLOCK_BUFFER)
+-	 && command != I2C_SMBUS_I2C_BLOCK_DATA
+-	 && i801_set_block_buffer_mode(priv) == 0)
++	if ((priv->features & FEATURE_BLOCK_BUFFER) &&
++	    command != I2C_SMBUS_I2C_BLOCK_DATA)
+ 		result = i801_block_transaction_by_block(priv, data,
+ 							 read_write,
+ 							 command);
 -- 
 2.43.0
 
