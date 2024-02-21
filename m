@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4737A708;
-	Wed, 21 Feb 2024 14:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E377BB11;
+	Wed, 21 Feb 2024 14:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525640; cv=none; b=EFmioJ47OeS5D0MLYLJm0a6lZD8gsN6hmFSumBLMu109TZSAmKfw0UDlZQXE2+nj9np/vCs/mBG4SAuW0Dr7OcYIyz6nyYafwjsXBou5II6pgfxjbu0TktTXtnN+c2OIWoXNxGXlsaoTo2ScO+ZaF/1oEm9vxnmH9UdViehv6zg=
+	t=1708525644; cv=none; b=K3yEXYeHom3O8tfKwy/nSXj7AG6ILzWvpGy5EHLyazsnzaiPkiLxa+yjIBdlVoF/WBMiqfM4ttb5Qp/vMgr/0mDwu2t6RHHUcdOQ0ACG90jzvqpIOMqYmb/LYx1rEC0xMwYz1jOh2JmE5RJC1RcDPS2/ins8ZjxV5mzRWKFl0IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525640; c=relaxed/simple;
-	bh=B6nD93u2UIc0A0zjWbci7oMQWun1/sSKW7G38KmBw4g=;
+	s=arc-20240116; t=1708525644; c=relaxed/simple;
+	bh=mwGzmHk3YOrWy6IY9KP6OXTuguBfAy+5kg+7jrCZa0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YwFecq1qcxpzWFWck2zJ0LQk2k6gOCKwlfJe+9+Znc9hsJwzEExAZLh3ZvsNyVWAjW4TezrLeIYBKgiI7MnrYp0aCem59fsA1dNjHEjdW7amt7jzXrju/ly5pmobUEx1702OytanKqNdHPG9FIiszBh5ZNLKr1w7+TafeThHnHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytwYVddZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QVE2GucG3e2vPESXX9BaKz9cOTWic96j4KsIJFqVfmcTl0a/cF/NHBhi6obMnHQo1qlgF3VbqFRIGLmXO2Q+hXJj12Yh6vfoPNUebOhNUatUwDJ9+OrpV5QwAAD9blAHfHjgAOq9ck6BuMG2ASXwNhLQENT8/LwMTMt0MHGN4So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afWu0fZe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytwYVddZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B31AC433F1;
-	Wed, 21 Feb 2024 14:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afWu0fZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36256C433F1;
+	Wed, 21 Feb 2024 14:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525640;
-	bh=B6nD93u2UIc0A0zjWbci7oMQWun1/sSKW7G38KmBw4g=;
+	s=korg; t=1708525643;
+	bh=mwGzmHk3YOrWy6IY9KP6OXTuguBfAy+5kg+7jrCZa0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytwYVddZonxsNrIQY+ZQVHNhBTEU/Y86B3Nad/zOuONkarnYXblxjFVgxYlFN9clc
-	 hgxC2hpq5JH/1axCSjJYCXNpaQ2BqvkJamBPLkviZWv582rfM3aimkEasGQLSwr6Dj
-	 V+XpHh4uw4Ah6W0VNZZewUSktCi7iuRmlRaLMqPU=
+	b=afWu0fZejp1U5K/4n/8+nb3Kug5N3lQH6u6JHyk8PdAs1/Ii2GpUstuJ3H3QtKZSa
+	 xPfehKohx6zNgWzbA6KzA0ppQO1lERQNqEy8ITAewibZg2evZQ0wi6K0nPeRI9waNC
+	 3gQjeIjWL5Rf8T/Kx57DGmhsush5oon+vkhSPgD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.4 217/267] USB: hub: check for alternate port before enabling A_ALT_HNP_SUPPORT
-Date: Wed, 21 Feb 2024 14:09:18 +0100
-Message-ID: <20240221125947.026660537@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	yuan linyu <yuanlinyu@hihonor.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.4 218/267] usb: f_mass_storage: forbid async queue when shutdown happen
+Date: Wed, 21 Feb 2024 14:09:19 +0100
+Message-ID: <20240221125947.059855608@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -44,83 +45,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: yuan linyu <yuanlinyu@hihonor.com>
 
-commit f17c34ffc792bbb520e4b61baa16b6cfc7d44b13 upstream.
+commit b2d2d7ea0dd09802cf5a0545bf54d8ad8987d20c upstream.
 
-The OTG 1.3 spec has the feature A_ALT_HNP_SUPPORT, which tells
-a device that it is connected to the wrong port. Some devices
-refuse to operate if you enable that feature, because it indicates
-to them that they ought to request to be connected to another port.
+When write UDC to empty and unbind gadget driver from gadget device, it is
+possible that there are many queue failures for mass storage function.
 
-According to the spec this feature may be used based only the following
-three conditions:
+The root cause is mass storage main thread alaways try to queue request to
+receive a command from host if running flag is on, on platform like dwc3,
+if pull down called, it will not queue request again and return
+-ESHUTDOWN, but it not affect running flag of mass storage function.
 
-6.5.3 a_alt_hnp_support
-Setting this feature indicates to the B-device that it is connected to
-an A-device port that is not capable of HNP, but that the A-device does
-have an alternate port that is capable of HNP.
-The A-device is required to set this feature under the following conditions:
-• the A-device has multiple receptacles
-• the A-device port that connects to the B-device does not support HNP
-• the A-device has another port that does support HNP
+Check return code from mass storage function and clear running flag if it
+is -ESHUTDOWN, also indicate start in/out transfer failure to break loops.
 
-A check for the third and first condition is missing. Add it.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
 Cc: stable <stable@kernel.org>
-Fixes: 7d2d641c44269 ("usb: otg: don't set a_alt_hnp_support feature for OTG 2.0 device")
-Link: https://lore.kernel.org/r/20240122153545.12284-1-oneukum@suse.com
+Signed-off-by: yuan linyu <yuanlinyu@hihonor.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20240123034829.3848409-1-yuanlinyu@hihonor.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ drivers/usb/gadget/function/f_mass_storage.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -2365,17 +2365,25 @@ static int usb_enumerate_device_otg(stru
- 			}
- 		} else if (desc->bLength == sizeof
- 				(struct usb_otg_descriptor)) {
--			/* Set a_alt_hnp_support for legacy otg device */
--			err = usb_control_msg(udev,
--				usb_sndctrlpipe(udev, 0),
--				USB_REQ_SET_FEATURE, 0,
--				USB_DEVICE_A_ALT_HNP_SUPPORT,
--				0, NULL, 0,
--				USB_CTRL_SET_TIMEOUT);
--			if (err < 0)
--				dev_err(&udev->dev,
--					"set a_alt_hnp_support failed: %d\n",
--					err);
-+			/*
-+			 * We are operating on a legacy OTP device
-+			 * These should be told that they are operating
-+			 * on the wrong port if we have another port that does
-+			 * support HNP
-+			 */
-+			if (bus->otg_port != 0) {
-+				/* Set a_alt_hnp_support for legacy otg device */
-+				err = usb_control_msg(udev,
-+					usb_sndctrlpipe(udev, 0),
-+					USB_REQ_SET_FEATURE, 0,
-+					USB_DEVICE_A_ALT_HNP_SUPPORT,
-+					0, NULL, 0,
-+					USB_CTRL_SET_TIMEOUT);
-+				if (err < 0)
-+					dev_err(&udev->dev,
-+						"set a_alt_hnp_support failed: %d\n",
-+						err);
-+			}
- 		}
- 	}
- #endif
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -574,21 +574,37 @@ static int start_transfer(struct fsg_dev
+ 
+ static bool start_in_transfer(struct fsg_common *common, struct fsg_buffhd *bh)
+ {
++	int rc;
++
+ 	if (!fsg_is_set(common))
+ 		return false;
+ 	bh->state = BUF_STATE_SENDING;
+-	if (start_transfer(common->fsg, common->fsg->bulk_in, bh->inreq))
++	rc = start_transfer(common->fsg, common->fsg->bulk_in, bh->inreq);
++	if (rc) {
+ 		bh->state = BUF_STATE_EMPTY;
++		if (rc == -ESHUTDOWN) {
++			common->running = 0;
++			return false;
++		}
++	}
+ 	return true;
+ }
+ 
+ static bool start_out_transfer(struct fsg_common *common, struct fsg_buffhd *bh)
+ {
++	int rc;
++
+ 	if (!fsg_is_set(common))
+ 		return false;
+ 	bh->state = BUF_STATE_RECEIVING;
+-	if (start_transfer(common->fsg, common->fsg->bulk_out, bh->outreq))
++	rc = start_transfer(common->fsg, common->fsg->bulk_out, bh->outreq);
++	if (rc) {
+ 		bh->state = BUF_STATE_FULL;
++		if (rc == -ESHUTDOWN) {
++			common->running = 0;
++			return false;
++		}
++	}
+ 	return true;
+ }
+ 
 
 
