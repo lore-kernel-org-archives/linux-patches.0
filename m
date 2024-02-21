@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E649E7EF1E;
-	Wed, 21 Feb 2024 13:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2120A7E116;
+	Wed, 21 Feb 2024 13:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521945; cv=none; b=d+OMAPv4PH+ZLAV1c9ZxjfGUQHC9OQwRt5EmHuxWAwCIU6gijOLZsNMJz+oxdMzx+fjhzDvQdE/xo0/3qV5Fhc8DUBWGY2Sk6W+zGAlaIuo5COyqQ5VD40z8Fa33UxMU1UTbfvTyOYfq/8xMs9oKAivJpoMiOcjMO1UAYUUzpyk=
+	t=1708521948; cv=none; b=OhGtU1bo56cjOnRg/0roXPk6QwhHTlPpaUU6RMrW9MGgxhqDkwre6pDR9gakNMJvbnUlfvI1+5vOxbeQCTX4Edus8KLqA5FggTPszi/fMZR6TMC7wNGOGZUDtvWFD//I/Hzz4kNhzeXP81wHWJ08WRjFxOV8aPzt8tMPqFHDFeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521945; c=relaxed/simple;
-	bh=HPzUfs+jaXrxix7TEeUT0BENo6NUN+XqAhu1SbLrAws=;
+	s=arc-20240116; t=1708521948; c=relaxed/simple;
+	bh=DruuK8lV+5McDMUXieEgMIu2TvmrjZl3bfo6b6ysuAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9JtrfW4oL6WUfEJfLP+0pQyJN0Mu8+r4qoy1SWntDV2O5H8nY/iaSrKp8v8v87mWPNFaKuytTn2sVHLJNyjQXKkVJeoYbu2Zz5eanUSXEKaHMjfZ85A6k/w44ozj5dWpjxCL8uWEnrSeO/pyH7asvmIrTtyz7bpeIYzU97u2/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kXo2TW2W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DucRH5iDtpyh+I88li/4kxqe1qjeBJe/cfoRBg5By0k3xrAmxEYWmHkfJSS7GwzZ1HbPsprtlWIuCvcW6pJAwC5/IoKpl4G+u7MNLF4O/FLAk/ZblYGKctJRiTmyjygskiNgi/QhrU7g/ZwAOCqLsmYsC71n8yzpEE5UpFYgEws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sj8vyLvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kXo2TW2W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256CCC433C7;
-	Wed, 21 Feb 2024 13:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sj8vyLvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F390C433F1;
+	Wed, 21 Feb 2024 13:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521944;
-	bh=HPzUfs+jaXrxix7TEeUT0BENo6NUN+XqAhu1SbLrAws=;
+	s=korg; t=1708521947;
+	bh=DruuK8lV+5McDMUXieEgMIu2TvmrjZl3bfo6b6ysuAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kXo2TW2Wx5uffar9QICTIPcMEQwya4gChiyxr5Ypuys+4Yg3WZfSREiKtZAq5QGf4
-	 6l8tk041sK332/mpZ/rmJpZXehoje0zakYt1UaIGYA2VnIzq9qF60NBvooxYmAt2uf
-	 hXChdE+nA0xy9dL/01E4AFi+JkPF+E9khwRXR6oY=
+	b=sj8vyLvq7ji4O95I0Q45KLDW1O2kHd+LTVrz+PzW9yRHIZp5R30XYpKCjKE+UPETq
+	 AE/zmWUuV8uMu/D2/ulG3t2lMz6/ZEmtWw7zfSNRY49uFI3sCpFmdv/p/5pyilw9oq
+	 LsAGDxqHUhdqm3GTmo7/3wLDURImtHeAug76fXcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 5.15 037/476] nouveau/vmm: dont set addr on the fail path to avoid warning
-Date: Wed, 21 Feb 2024 14:01:28 +0100
-Message-ID: <20240221130009.320590159@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 5.15 038/476] ubifs: ubifs_symlink: Fix memleak of inode->i_link in error path
+Date: Wed, 21 Feb 2024 14:01:29 +0100
+Message-ID: <20240221130009.349050082@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -44,120 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit cacea81390fd8c8c85404e5eb2adeb83d87a912e upstream.
+commit 1e022216dcd248326a5bb95609d12a6815bca4e2 upstream.
 
-nvif_vmm_put gets called if addr is set, but if the allocation
-fails we don't need to call put, otherwise we get a warning like
+For error handling path in ubifs_symlink(), inode will be marked as
+bad first, then iput() is invoked. If inode->i_link is initialized by
+fscrypt_encrypt_symlink() in encryption scenario, inode->i_link won't
+be freed by callchain ubifs_free_inode -> fscrypt_free_inode in error
+handling path, because make_bad_inode() has changed 'inode->i_mode' as
+'S_IFREG'.
+Following kmemleak is easy to be reproduced by injecting error in
+ubifs_jnl_update() when doing symlink in encryption scenario:
+ unreferenced object 0xffff888103da3d98 (size 8):
+  comm "ln", pid 1692, jiffies 4294914701 (age 12.045s)
+  backtrace:
+   kmemdup+0x32/0x70
+   __fscrypt_encrypt_symlink+0xed/0x1c0
+   ubifs_symlink+0x210/0x300 [ubifs]
+   vfs_symlink+0x216/0x360
+   do_symlinkat+0x11a/0x190
+   do_syscall_64+0x3b/0xe0
+There are two ways fixing it:
+ 1. Remove make_bad_inode() in error handling path. We can do that
+    because ubifs_evict_inode() will do same processes for good
+    symlink inode and bad symlink inode, for inode->i_nlink checking
+    is before is_bad_inode().
+ 2. Free inode->i_link before marking inode bad.
+Method 2 is picked, it has less influence, personally, I think.
 
-[523232.435671] ------------[ cut here ]------------
-[523232.435674] WARNING: CPU: 8 PID: 1505697 at drivers/gpu/drm/nouveau/nvi=
-f/vmm.c:68 nvif_vmm_put+0x72/0x80 [nouveau]
-[523232.435795] Modules linked in: uinput rfcomm snd_seq_dummy snd_hrtimer =
-nf_conntrack_netbios_ns nf_conntrack_broadcast nft_fib_inet nft_fib_ipv4 nf=
-t_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject=
- nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_=
-set nf_tables nfnetlink qrtr bnep sunrpc binfmt_misc intel_rapl_msr intel_r=
-apl_common intel_uncore_frequency intel_uncore_frequency_common isst_if_com=
-mon iwlmvm nfit libnvdimm vfat fat x86_pkg_temp_thermal intel_powerclamp ma=
-c80211 snd_soc_avs snd_soc_hda_codec coretemp snd_hda_ext_core snd_soc_core=
- snd_hda_codec_realtek kvm_intel snd_hda_codec_hdmi snd_compress snd_hda_co=
-dec_generic ac97_bus snd_pcm_dmaengine snd_hda_intel libarc4 snd_intel_dspc=
-fg snd_intel_sdw_acpi snd_hda_codec kvm iwlwifi snd_hda_core btusb snd_hwde=
-p btrtl snd_seq btintel irqbypass btbcm rapl snd_seq_device eeepc_wmi btmtk=
- intel_cstate iTCO_wdt cfg80211 snd_pcm asus_wmi bluetooth intel_pmc_bxt iT=
-CO_vendor_support snd_timer ledtrig_audio pktcdvd snd mei_me
-[523232.435828]  sparse_keymap intel_uncore i2c_i801 platform_profile wmi_b=
-mof mei pcspkr ioatdma soundcore i2c_smbus rfkill idma64 dca joydev acpi_ta=
-d loop zram nouveau drm_ttm_helper ttm video drm_exec drm_gpuvm gpu_sched c=
-rct10dif_pclmul i2c_algo_bit nvme crc32_pclmul crc32c_intel drm_display_hel=
-per polyval_clmulni nvme_core polyval_generic e1000e mxm_wmi cec ghash_clmu=
-lni_intel r8169 sha512_ssse3 nvme_common wmi pinctrl_sunrisepoint uas usb_s=
-torage ip6_tables ip_tables fuse
-[523232.435849] CPU: 8 PID: 1505697 Comm: gnome-shell Tainted: G        W  =
-        6.6.0-rc7-nvk-uapi+ #12
-[523232.435851] Hardware name: System manufacturer System Product Name/ROG =
-STRIX X299-E GAMING II, BIOS 1301 09/24/2021
-[523232.435852] RIP: 0010:nvif_vmm_put+0x72/0x80 [nouveau]
-[523232.435934] Code: 00 00 48 89 e2 be 02 00 00 00 48 c7 04 24 00 00 00 00=
- 48 89 44 24 08 e8 fc bf ff ff 85
-c0 75 0a 48 c7 43 08 00 00 00 00 eb b3 <0f> 0b eb f2 e8 f5 c9 b2 e6 0f 1f 4=
-4 00 00 90 90 90 90 90 90 90 90
-[523232.435936] RSP: 0018:ffffc900077ffbd8 EFLAGS: 00010282
-[523232.435937] RAX: 00000000fffffffe RBX: ffffc900077ffc00 RCX: 0000000000=
-000010
-[523232.435938] RDX: 0000000000000010 RSI: ffffc900077ffb38 RDI: ffffc90007=
-7ffbd8
-[523232.435940] RBP: ffff888e1c4f2140 R08: 0000000000000000 R09: 0000000000=
-000000
-[523232.435940] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888503=
-811800
-[523232.435941] R13: ffffc900077ffca0 R14: ffff888e1c4f2140 R15: ffff888103=
-17e1e0
-[523232.435942] FS:  00007f933a769640(0000) GS:ffff88905fa00000(0000) knlGS=
-:0000000000000000
-[523232.435943] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[523232.435944] CR2: 00007f930bef7000 CR3: 00000005d0322001 CR4: 0000000000=
-3706e0
-[523232.435945] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000=
-000000
-[523232.435946] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000=
-000400
-[523232.435964] Call Trace:
-[523232.435965]  <TASK>
-[523232.435966]  ? nvif_vmm_put+0x72/0x80 [nouveau]
-[523232.436051]  ? __warn+0x81/0x130
-[523232.436055]  ? nvif_vmm_put+0x72/0x80 [nouveau]
-[523232.436138]  ? report_bug+0x171/0x1a0
-[523232.436142]  ? handle_bug+0x3c/0x80
-[523232.436144]  ? exc_invalid_op+0x17/0x70
-[523232.436145]  ? asm_exc_invalid_op+0x1a/0x20
-[523232.436149]  ? nvif_vmm_put+0x72/0x80 [nouveau]
-[523232.436230]  ? nvif_vmm_put+0x64/0x80 [nouveau]
-[523232.436342]  nouveau_vma_del+0x80/0xd0 [nouveau]
-[523232.436506]  nouveau_vma_new+0x1a0/0x210 [nouveau]
-[523232.436671]  nouveau_gem_object_open+0x1d0/0x1f0 [nouveau]
-[523232.436835]  drm_gem_handle_create_tail+0xd1/0x180
-[523232.436840]  drm_prime_fd_to_handle_ioctl+0x12e/0x200
-[523232.436844]  ? __pfx_drm_prime_fd_to_handle_ioctl+0x10/0x10
-[523232.436847]  drm_ioctl_kernel+0xd3/0x180
-[523232.436849]  drm_ioctl+0x26d/0x4b0
-[523232.436851]  ? __pfx_drm_prime_fd_to_handle_ioctl+0x10/0x10
-[523232.436855]  nouveau_drm_ioctl+0x5a/0xb0 [nouveau]
-[523232.437032]  __x64_sys_ioctl+0x94/0xd0
-[523232.437036]  do_syscall_64+0x5d/0x90
-[523232.437040]  ? syscall_exit_to_user_mode+0x2b/0x40
-[523232.437044]  ? do_syscall_64+0x6c/0x90
-[523232.437046]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Reported-by: Faith Ekstrand <faith.ekstrand@collabora.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240117213852.295565-1=
--airlied@gmail.com
+Fixes: 2c58d548f570 ("fscrypt: cache decrypted symlink target in ->i_link")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_vmm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ubifs/dir.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_vmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_vmm.c
-@@ -108,6 +108,9 @@ nouveau_vma_new(struct nouveau_bo *nvbo,
- 	} else {
- 		ret =3D nvif_vmm_get(&vmm->vmm, PTES, false, mem->mem.page, 0,
- 				   mem->mem.size, &tmp);
-+		if (ret)
-+			goto done;
-+
- 		vma->addr =3D tmp.addr;
- 	}
-=20
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -1225,6 +1225,8 @@ out_cancel:
+ 	dir_ui->ui_size = dir->i_size;
+ 	mutex_unlock(&dir_ui->ui_mutex);
+ out_inode:
++	/* Free inode->i_link before inode is marked as bad. */
++	fscrypt_free_inode(inode);
+ 	make_bad_inode(inode);
+ 	iput(inode);
+ out_fname:
 
 
