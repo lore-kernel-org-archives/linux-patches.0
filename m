@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B57E1E4B2;
-	Wed, 21 Feb 2024 13:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FBF78B7C;
+	Wed, 21 Feb 2024 13:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522952; cv=none; b=fAdiaLj+IigS2putKNIFRRIneMn0204fzqWMzSej/x45i3CosRgsEYMfiS2RgWoubNv+jQfHbpapdvr3hYxJLAYSTeEdey4Oe32IsPYkeoYaBM5c1Zd6eVDU03Nb7LzOtjrmD6qmNR71Sq1MsXsudYOAQtd+cJHWYkMUhj0DFus=
+	t=1708522955; cv=none; b=hPlmN0P5523a5qHelC8Jp8eTs7ntvNVNGFzP5ct+4GRt6JPOEEuWmgCtaOFtvKG9IT0Fkm1oqLFMQymv6USf+m1qLpebmaxUcCmwRA6jOYUn15OgfzN70V1Qtggx+7NHGi7vq9ffcMFdkFmQE+yPtW+/1nMoUZG9v8DhLnW1Sso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522952; c=relaxed/simple;
-	bh=SITxeQpW+GRQKi0folSu5aNmliCxa8Xx/+63UP394dA=;
+	s=arc-20240116; t=1708522955; c=relaxed/simple;
+	bh=/v/dm77vYOI1zCD8HZtSOOyYmmpfiiF/UlbQfSZGNyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsHiAonsjwlhunZktLi3N+81E3bzNjJ1Su2dNUMAg3bdloW276fHBuDWDNiF0YU/5BBQfG+4E5J4TL2cBXUknRa77XmnXU7bcAxMa6HtuEnCUeJ6a+o0PFgq7tIaF0/jMmTs704BXwAfyFdidGVi6TSVrjLzf1u8TluP4CSR8NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0U0Uzcb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LnQxl6aYr9eEPk29sa2hj5FfqjJg5BNQKDqrt1LWKuEWHf12HMx/roUiYu8BXseguIURcjf1TDdGHlKZCI2dDfVx0rBjauINUENiVTZ8Xx0U+19INVghGa59znrfJTzoE2mz+ohvTRuxUfWXJmIbcltVvqvtZ7bFIPRrCGmHPyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DirKMdn+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0U0Uzcb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BECDC433C7;
-	Wed, 21 Feb 2024 13:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DirKMdn+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822BAC433F1;
+	Wed, 21 Feb 2024 13:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522952;
-	bh=SITxeQpW+GRQKi0folSu5aNmliCxa8Xx/+63UP394dA=;
+	s=korg; t=1708522954;
+	bh=/v/dm77vYOI1zCD8HZtSOOyYmmpfiiF/UlbQfSZGNyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V0U0Uzcb/hI3C++wWYle79jbHlRrYLXu94j9p2tujSn3GDxXXefHrL8qonOh3aUb7
-	 prenjhQeAn5GjK103c7czHIsCZiM+wZx4RsXR0LwJ592kAoJknXiedp5cdtvuPmjIE
-	 Jw1nM6owLJul97jCWMFSwGjCUVNYETK4A+KPs2WM=
+	b=DirKMdn+AGnHVLBiptnftUSveLJog0gzu0FQ9gg/Lt3ccwtIJNsHcN2hgAZS2XYtC
+	 nQryzr9V/BN9i2CvJ67pdc9TrM3XdPorPFaWFF+oD7wUK2Lm1+BJgZY2eZMGneU/jz
+	 Ytww8YU4fdOClzvDyP48B6deCNEdnmKFuEyHn46U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/476] selftests: net: give more time for GRO aggregation
-Date: Wed, 21 Feb 2024 14:05:23 +0100
-Message-ID: <20240221130018.029546241@linuxfoundation.org>
+Subject: [PATCH 5.15 273/476] ip6_tunnel: use dev_sw_netstats_rx_add()
+Date: Wed, 21 Feb 2024 14:05:24 +0100
+Message-ID: <20240221130018.065485382@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 89abe628375301fedb68770644df845d49018d8b ]
+[ Upstream commit afd2051b18404640a116fd3bb2460da214ccbda4 ]
 
-The gro.sh test-case relay on the gro_flush_timeout to ensure
-that all the segments belonging to any given batch are properly
-aggregated.
+We have a convenient helper, let's use it.
 
-The other end, the sender is a user-space program transmitting
-each packet with a separate write syscall. A busy host and/or
-stracing the sender program can make the relevant segments reach
-the GRO engine after the flush timeout triggers.
-
-Give the GRO flush timeout more slack, to avoid sporadic self-tests
-failures.
-
-Fixes: 9af771d2ec04 ("selftests/net: allow GRO coalesce test on veth")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/bffec2beab3a5672dd13ecabe4fad81d2155b367.1706206101.git.pabeni@redhat.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 8d975c15c0cd ("ip6_tunnel: make sure to pull inner header in __ip6_tnl_rcv()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/setup_veth.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_tunnel.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/net/setup_veth.sh b/tools/testing/selftests/net/setup_veth.sh
-index 1003ddf7b3b2..227fd1076f21 100644
---- a/tools/testing/selftests/net/setup_veth.sh
-+++ b/tools/testing/selftests/net/setup_veth.sh
-@@ -8,7 +8,7 @@ setup_veth_ns() {
- 	local -r ns_mac="$4"
+diff --git a/net/ipv6/ip6_tunnel.c b/net/ipv6/ip6_tunnel.c
+index a41ba4b161c4..35bd93347b8b 100644
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -798,7 +798,6 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 						struct sk_buff *skb),
+ 			 bool log_ecn_err)
+ {
+-	struct pcpu_sw_netstats *tstats;
+ 	const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
+ 	int err;
  
- 	[[ -e /var/run/netns/"${ns_name}" ]] || ip netns add "${ns_name}"
--	echo 100000 > "/sys/class/net/${ns_dev}/gro_flush_timeout"
-+	echo 1000000 > "/sys/class/net/${ns_dev}/gro_flush_timeout"
- 	ip link set dev "${ns_dev}" netns "${ns_name}" mtu 65535
- 	ip -netns "${ns_name}" link set dev "${ns_dev}" up
+@@ -858,11 +857,7 @@ static int __ip6_tnl_rcv(struct ip6_tnl *tunnel, struct sk_buff *skb,
+ 		}
+ 	}
+ 
+-	tstats = this_cpu_ptr(tunnel->dev->tstats);
+-	u64_stats_update_begin(&tstats->syncp);
+-	tstats->rx_packets++;
+-	tstats->rx_bytes += skb->len;
+-	u64_stats_update_end(&tstats->syncp);
++	dev_sw_netstats_rx_add(tunnel->dev, skb->len);
+ 
+ 	skb_scrub_packet(skb, !net_eq(tunnel->net, dev_net(tunnel->dev)));
  
 -- 
 2.43.0
