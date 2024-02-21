@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BA369D29;
-	Wed, 21 Feb 2024 13:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F567BB02;
+	Wed, 21 Feb 2024 13:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523613; cv=none; b=ppENEgDkE4i5Li19eT2fGsK+s691kybong10g88MuKARcreww/oUOLfMVVh4Jp9qP5aP6Snyn7kfzUZjHw0XE3PRNtisdQKKPsv7mRCa356e3BloM4Bxb7pNhhSKoS9hOUGFfbgpzfsgzVHaFpODbRBPOPJsFL5d5NRF0koaONc=
+	t=1708523616; cv=none; b=ZhxlPRVuoxmqUHxpHcRrJDX5F8nvvgwPAdW7MfaHTKHSAJ6zX2PVF7hZegYSM4/ptUfb2SDugxNhEL1NmhCE3Uw4leLwy9TBy7NzLVqt6fmBnTllEY4ad74H0ZiiOq6WcOvwMCKRqSak9rdhL7rjwM08EcdxerZG9La1TuqBoJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523613; c=relaxed/simple;
-	bh=ysDLfNlqLgnNzh9cMCxSg0czJbIPc83KWr+p8Q0nFG8=;
+	s=arc-20240116; t=1708523616; c=relaxed/simple;
+	bh=O1mtQzytfF246fqnDcFYtVlFwHiKDzItq2aY9+crEoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9AH3XI50o6ENh1ftHDXK9IB6gBqZ3afMNx0g1l6DP4LGkujdkin0i+EqjCWx8VUZxzZmDs+tJHmrNVWPkZFXo+x6zSW/uKpshq+5SSZS+F363VIyZsBt7Puf3w6FpjtSD3cwmaFKOOK6RqRvPm8UYhKSB06f29g9MGtAzbwZqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLxnIeNr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bV/UgVAFLQEs/bxEfxgQzgl1tA3P2Hp8xnSB0bAk6eSDpm0vFOArOSfHZtrmSp1s8UpC6F7WR+4A6hOPhRegkfv1p4faa0vJxxn0wbv9sqwO64VO8MDDa8I0f/zOV89j8wnnrLTLH2kL3fsNFkFa2IMsdQhOUCHotbTrjQQN+68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FL1fi+wA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLxnIeNr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34EDC433F1;
-	Wed, 21 Feb 2024 13:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FL1fi+wA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F204CC43390;
+	Wed, 21 Feb 2024 13:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523613;
-	bh=ysDLfNlqLgnNzh9cMCxSg0czJbIPc83KWr+p8Q0nFG8=;
+	s=korg; t=1708523616;
+	bh=O1mtQzytfF246fqnDcFYtVlFwHiKDzItq2aY9+crEoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLxnIeNrleNy29xrIrDANxT6LnKGYYZCVQ/DEN45ZuySjhyR6yQY3K8dgSQDmwPPK
-	 L2GWNaxNgqExlqGtroiPi1Y6K6aHrmFVSgkz+HmHsxAzho5zquhEE0Nn/TsdK+YJhx
-	 G7GLLLEfY6pm4HHP3TkAxbgqDQlS0f+gJObUFAY0=
+	b=FL1fi+wAAnZCfcw6KD4QDf/15/nriqGg0dmhSNFByX2yjO3+aq6OLpWeU1p6T0fut
+	 51vsfDyxlBu3tylJZdyhKacaHLDNf0k7rKNp8nSyJR2YT+sTNFEbK3JRn4ClbPjNyW
+	 tXRTScLSEX2tra646gQwyPJn1C3Wm3pyibRVs3SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 010/379] spi: introduce SPI_MODE_X_MASK macro
-Date: Wed, 21 Feb 2024 14:03:09 +0100
-Message-ID: <20240221125955.226895586@linuxfoundation.org>
+Subject: [PATCH 5.10 011/379] serial: sc16is7xx: add check for unsupported SPI modes during probe
+Date: Wed, 21 Feb 2024 14:03:10 +0100
+Message-ID: <20240221125955.256006545@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,44 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 029b42d8519cef70c4fb5fcaccd08f1053ed2bf0 ]
+[ Upstream commit 6d710b769c1f5f0d55c9ad9bb49b7dce009ec103 ]
 
-Provide a macro to filter all SPI_MODE_0,1,2,3 mode in one run.
+The original comment is confusing because it implies that variants other
+than the SC16IS762 supports other SPI modes beside SPI_MODE_0.
 
-The latest SPI framework will parse the devicetree in following call
-sequence: of_register_spi_device() -> of_spi_parse_dt()
-So, driver do not need to pars the devicetree and will get prepared
-flags in the probe.
+Extract from datasheet:
+    The SC16IS762 differs from the SC16IS752 in that it supports SPI clock
+    speeds up to 15 Mbit/s instead of the 4 Mbit/s supported by the
+    SC16IS752... In all other aspects, the SC16IS762 is functionally and
+    electrically the same as the SC16IS752.
 
-On one hand it is good far most drivers. On other hand some drivers need to
-filter flags provide by SPI framework and apply know to work flags. This drivers
-may use SPI_MODE_X_MASK to filter MODE flags and set own, known flags:
-  spi->flags &= ~SPI_MODE_X_MASK;
-  spi->flags |= SPI_MODE_0;
+The same is also true of the SC16IS760 variant versus the SC16IS740 and
+SC16IS750 variants.
 
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://lore.kernel.org/r/20201027095724.18654-2-o.rempel@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 6d710b769c1f ("serial: sc16is7xx: add check for unsupported SPI modes during probe")
+For all variants, only SPI mode 0 is supported.
+
+Change comment and abort probing if the specified SPI mode is not
+SPI_MODE_0.
+
+Fixes: 2c837a8a8f9f ("sc16is7xx: spi interface is added")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20231221231823.2327894-3-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/spi/spi.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/sc16is7xx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
-index e1d88630ff24..ab7747549d23 100644
---- a/include/linux/spi/spi.h
-+++ b/include/linux/spi/spi.h
-@@ -171,6 +171,7 @@ struct spi_device {
- #define	SPI_MODE_1	(0|SPI_CPHA)
- #define	SPI_MODE_2	(SPI_CPOL|0)
- #define	SPI_MODE_3	(SPI_CPOL|SPI_CPHA)
-+#define	SPI_MODE_X_MASK	(SPI_CPOL|SPI_CPHA)
- #define	SPI_CS_HIGH	0x04			/* chipselect active high? */
- #define	SPI_LSB_FIRST	0x08			/* per-word bits-on-wire */
- #define	SPI_3WIRE	0x10			/* SI/SO signals shared */
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index dfaca09de79b..31e0c5c3ddea 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1450,7 +1450,10 @@ static int sc16is7xx_spi_probe(struct spi_device *spi)
+ 
+ 	/* Setup SPI bus */
+ 	spi->bits_per_word	= 8;
+-	/* only supports mode 0 on SC16IS762 */
++	/* For all variants, only mode 0 is supported */
++	if ((spi->mode & SPI_MODE_X_MASK) != SPI_MODE_0)
++		return dev_err_probe(&spi->dev, -EINVAL, "Unsupported SPI mode\n");
++
+ 	spi->mode		= spi->mode ? : SPI_MODE_0;
+ 	spi->max_speed_hz	= spi->max_speed_hz ? : 4 * HZ_PER_MHZ;
+ 	ret = spi_setup(spi);
 -- 
 2.43.0
 
