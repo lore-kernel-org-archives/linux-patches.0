@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FF67BB1F;
-	Wed, 21 Feb 2024 14:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4937CF02;
+	Wed, 21 Feb 2024 14:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525086; cv=none; b=gSjumfjqwFyO5lm35JV85bcDD3olBpw+urANxm3UmDLX16TDxnNDcWatzslFDy6VvUd5cuTCwBp9ZbXJibXhUndAbAd8CToArSloMgItZWYIOB7YVeYEDtgMrpECmTxp7o2UVU9YdYje+Gt1LGWYCsEg2H0S1h0qRy2nQ+SMY0w=
+	t=1708525089; cv=none; b=BBDIbegfdNWUy7MXXCJbk9unrojv6b3fyMNhrS0S34CMR7VX47M7V8HE1adlx5XrNzm6TenOvtBy1YB48FcRX+oEKN0KZrfVMB3up9kCnYIv3UkVWkPNHJvQhBz88xBG/Xu4GAIkhHOsKh2h1+P7sacX0omwI3tUSAUYmVUDjVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525086; c=relaxed/simple;
-	bh=wCBwiOPdPJnaevFNVTj0S4GVvPd1rpvgqskgQkTZYD8=;
+	s=arc-20240116; t=1708525089; c=relaxed/simple;
+	bh=nbUK88B4DGlerWH0ydGMVQaY9v8fqAt0Hu2hSn7ih0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oL1ipn5B9cM/yplv81+kyD2zyCEfj6jKP8IvudwIWJP/rlia0j0oDLTNg1Pm31jQ49u0nssac5MLSmH/+K9dBOeqAbArbkjXM6NisTmPM1Q4RUcmbvTzDH5s2giMqOIQ9xQyfaLMm99JAW/DlUSorW9Ds3ytvNgBylh/QiQYXCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbkG1e5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uH5DfzuxARPr/XtpAoclgEN/AP6RQ8W4JfCy3kcp8hOcmwtHzVd+xoS2/8SpjXqdtFPdhdgcK1H8gx8bjWxm2ii1NHKoH3ei0JETtTB7plB7jUFj8LB7E9yVie233go02RTu8foN3mquJSjNy3FG/izpOhsBqwmJ+ulRMW/EGMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G61X+U6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbkG1e5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE61C433C7;
-	Wed, 21 Feb 2024 14:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G61X+U6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206BFC433C7;
+	Wed, 21 Feb 2024 14:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525086;
-	bh=wCBwiOPdPJnaevFNVTj0S4GVvPd1rpvgqskgQkTZYD8=;
+	s=korg; t=1708525089;
+	bh=nbUK88B4DGlerWH0ydGMVQaY9v8fqAt0Hu2hSn7ih0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XbkG1e5Aj2ja01+aSh/CXbkdwixXO146loyOZu9SR3xWYuaur3R9+2GwMI9NuJvvB
-	 HyASw8sUHonBDHB5YDxDoEN4jJoKqu0n4sGrk9v48BySmV2yXZ7rfRu664qSoQfzJ1
-	 vkGkql/mnz4adufbF9k2DnibhsXeO57Lp7brgvC8=
+	b=G61X+U6ZurZF3mgIg57hwFXHuaYWVy24xn32roqmyiSLY8KBReWE24/AA4/JQGkuD
+	 S1c6hItL0qCYuQGrluy5OtkemtmIuzJ2L6Gkfd/VoP4iY+29C10w7zjsE5TjjDA3FV
+	 EJNOcQCD3Fgj9PxIJlU1r5X4Sod1aNCyQS/iiqBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 057/267] spi: bcm-qspi: fix SFDP BFPT read by usig mspi read
-Date: Wed, 21 Feb 2024 14:06:38 +0100
-Message-ID: <20240221125941.800856178@linuxfoundation.org>
+	Xi Ruoyao <xry111@xry111.site>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.4 058/267] mips: Call lose_fpu(0) before initializing fcr31 in mips_set_personality_nan
+Date: Wed, 21 Feb 2024 14:06:39 +0100
+Message-ID: <20240221125941.829638279@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,49 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-[ Upstream commit 574bf7bbe83794a902679846770f75a9b7f28176 ]
+commit 59be5c35850171e307ca5d3d703ee9ff4096b948 upstream.
 
-SFDP read shall use the mspi reads when using the bcm_qspi_exec_mem_op()
-call. This fixes SFDP parameter page read failures seen with parts that
-now use SFDP protocol to read the basic flash parameter table.
+If we still own the FPU after initializing fcr31, when we are preempted
+the dirty value in the FPU will be read out and stored into fcr31,
+clobbering our setting.  This can cause an improper floating-point
+environment after execve().  For example:
 
-Fixes: 5f195ee7d830 ("spi: bcm-qspi: Implement the spi_mem interface")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://msgid.link/r/20240109210033.43249-1-kamal.dasu@broadcom.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    zsh% cat measure.c
+    #include <fenv.h>
+    int main() { return fetestexcept(FE_INEXACT); }
+    zsh% cc measure.c -o measure -lm
+    zsh% echo $((1.0/3)) # raising FE_INEXACT
+    0.33333333333333331
+    zsh% while ./measure; do ; done
+    (stopped in seconds)
+
+Call lose_fpu(0) before setting fcr31 to prevent this.
+
+Closes: https://lore.kernel.org/linux-mips/7a6aa1bbdbbe2e63ae96ff163fab0349f58f1b9e.camel@xry111.site/
+Fixes: 9b26616c8d9d ("MIPS: Respect the ISA level in FCSR handling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm-qspi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/kernel/elf.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/spi/spi-bcm-qspi.c b/drivers/spi/spi-bcm-qspi.c
-index 118d9161a788..b4032d1e7c98 100644
---- a/drivers/spi/spi-bcm-qspi.c
-+++ b/drivers/spi/spi-bcm-qspi.c
-@@ -19,7 +19,7 @@
- #include <linux/platform_device.h>
- #include <linux/slab.h>
- #include <linux/spi/spi.h>
--#include <linux/spi/spi-mem.h>
-+#include <linux/mtd/spi-nor.h>
- #include <linux/sysfs.h>
- #include <linux/types.h>
- #include "spi-bcm-qspi.h"
-@@ -976,7 +976,7 @@ static int bcm_qspi_exec_mem_op(struct spi_mem *mem,
+--- a/arch/mips/kernel/elf.c
++++ b/arch/mips/kernel/elf.c
+@@ -11,6 +11,7 @@
  
- 	/* non-aligned and very short transfers are handled by MSPI */
- 	if (!IS_ALIGNED((uintptr_t)addr, 4) || !IS_ALIGNED((uintptr_t)buf, 4) ||
--	    len < 4)
-+	    len < 4 || op->cmd.opcode == SPINOR_OP_RDSFDP)
- 		mspi_read = true;
+ #include <asm/cpu-features.h>
+ #include <asm/cpu-info.h>
++#include <asm/fpu.h>
  
- 	if (!has_bspi(qspi) || mspi_read)
--- 
-2.43.0
-
+ #ifdef CONFIG_MIPS_FP_SUPPORT
+ 
+@@ -309,6 +310,11 @@ void mips_set_personality_nan(struct arc
+ 	struct cpuinfo_mips *c = &boot_cpu_data;
+ 	struct task_struct *t = current;
+ 
++	/* Do this early so t->thread.fpu.fcr31 won't be clobbered in case
++	 * we are preempted before the lose_fpu(0) in start_thread.
++	 */
++	lose_fpu(0);
++
+ 	t->thread.fpu.fcr31 = c->fpu_csr31;
+ 	switch (state->nan_2008) {
+ 	case 0:
 
 
