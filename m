@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2BF3EA71;
-	Wed, 21 Feb 2024 13:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF643EA71;
+	Wed, 21 Feb 2024 13:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521067; cv=none; b=ty8kRHEn9jQJafhSf+WkfP4+tqWxskKFFpoWeK3at0dw2JsqEp01QbIkna74A14Q/aFAIqoluy2mCzbIKKu1UYWUbX7DxJ1IQhtsIeAb3FZKs88fURBqIjGE8vP+SQFnIqkXEMnkGwiHBot/QwKkOIzXq0XegFPAKd2YCAS3n5E=
+	t=1708521070; cv=none; b=sPaTuFRCUE+Fr+Ni7zLvAGIuosrHdYfkZkMJSR6asEG5ku9Bqp1HbbG/eHoCd+GpIBB8e0lkq94943emAGgZSgcuhMbxNESdD87TGBxoczm/ntPPQD5/QoQPrB1KpkDc8m1XDyjuW9XFcR1jVmnnjqji8hDpY0Pxl+OBPuKbafs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521067; c=relaxed/simple;
-	bh=sJaON7YYitCTO+u+2a53vdeTvYXuHsXHBrFIqI2kITo=;
+	s=arc-20240116; t=1708521070; c=relaxed/simple;
+	bh=CubFgC7yWsP4yUz9DBjsYXVA7cEahnWoRc9FJxBSi/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eodq1WJFOHS7Z4PnlJK7U5HcViaN10PBU+FQUR3wqau33kvMqP1tU38pohRtxNyGK2KhjEwvo6Y1S1DcEZf7QC1MW/yx4JqpweEbLc/gMpj95Xa1tSEhv4t1BzGfEjItD20fu1NzjVuVYKTSnaWOFbksrG8vHSSVJBiJAn5raC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbtExKns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uEAakCfLPPL123KYf03llRH0OPOEU4KaczPUnrNq2/kxj2Tx4XVr8Av9ypmJArr4apF1yP6+1ib4u7gxrsY6bG73hlXDJCT6PjIHp9k8AxdPaBvP1KInnNWigXUdfuhKPPyfXSY8fJ8RyF/PdGoNwYnPgPEXbZEPf0dnmgEvVjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/KGtkvZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbtExKns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF16C433C7;
-	Wed, 21 Feb 2024 13:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/KGtkvZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2002C433F1;
+	Wed, 21 Feb 2024 13:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521067;
-	bh=sJaON7YYitCTO+u+2a53vdeTvYXuHsXHBrFIqI2kITo=;
+	s=korg; t=1708521070;
+	bh=CubFgC7yWsP4yUz9DBjsYXVA7cEahnWoRc9FJxBSi/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbtExKnsd8vULmKPJ1oKBiQeqtE+G6cNnC2WOASp4MMLUfcqHU2I4ZzoNesXigcYV
-	 7qlmdZus7egRDiYcTWWTGXdZg5sni1y0GkiTeLziFI46HF0OlL03mjyywq060ksJ7v
-	 0ts3vCUX6fA8XeSweX8iObN0Pi2pf4ePUkqzG2Cs=
+	b=J/KGtkvZ9QerxTpAoSN6jsGw55YZOa4GDEQVS4k9bfR1/oj9UwBX2m0Xxr1qqUiMu
+	 47+4/FPFNZ8fd/Mhqtasxku4hE9Yh43fnaGfTId0z+7pPMrck2xpul7Ad9zjx8i1je
+	 j/Y62MlcfH58Tv3QYgunDLWdO9fF+o/Zc9GGMNzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Andrzej Hajda <a.hajda@samsung.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 006/202] serial: sc16is7xx: set safe default SPI clock frequency
-Date: Wed, 21 Feb 2024 14:05:07 +0100
-Message-ID: <20240221125931.944387783@linuxfoundation.org>
+Subject: [PATCH 4.19 007/202] driver core: add device probe log helper
+Date: Wed, 21 Feb 2024 14:05:08 +0100
+Message-ID: <20240221125931.981661835@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -50,48 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Andrzej Hajda <a.hajda@samsung.com>
 
-[ Upstream commit 3ef79cd1412236d884ab0c46b4d1921380807b48 ]
+[ Upstream commit a787e5400a1ceeb0ef92d71ec43aeb35b1fa1334 ]
 
-15 MHz is supported only by 76x variants.
+During probe every time driver gets resource it should usually check for
+error printk some message if it is not -EPROBE_DEFER and return the error.
+This pattern is simple but requires adding few lines after any resource
+acquisition code, as a result it is often omitted or implemented only
+partially.
+dev_err_probe helps to replace such code sequences with simple call,
+so code:
+	if (err != -EPROBE_DEFER)
+		dev_err(dev, ...);
+	return err;
+becomes:
+	return dev_err_probe(dev, err, ...);
 
-If the SPI clock frequency is not specified, use a safe default clock value
-of 4 MHz that is supported by all variants.
-
-Also use HZ_PER_MHZ macro to improve readability.
-
-Fixes: 2c837a8a8f9f ("sc16is7xx: spi interface is added")
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20231221231823.2327894-4-hugo@hugovil.com
+Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
+Reviewed-by: Rafael J. Wysocki <rafael@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20200713144324.23654-2-a.hajda@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 6d710b769c1f ("serial: sc16is7xx: add check for unsupported SPI modes during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/base/core.c    | 42 ++++++++++++++++++++++++++++++++++++++++++
+ include/linux/device.h |  3 +++
+ 2 files changed, 45 insertions(+)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index c65f9194abb0..07898a46fd96 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -24,6 +24,7 @@
- #include <linux/tty_flip.h>
- #include <linux/spi/spi.h>
- #include <linux/uaccess.h>
-+#include <linux/units.h>
- #include <uapi/linux/sched/types.h>
+diff --git a/drivers/base/core.c b/drivers/base/core.c
+index 6e380ad9d08a..b66647277d52 100644
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3334,6 +3334,48 @@ define_dev_printk_level(_dev_info, KERN_INFO);
  
- #define SC16IS7XX_NAME			"sc16is7xx"
-@@ -1408,7 +1409,7 @@ static int sc16is7xx_spi_probe(struct spi_device *spi)
- 	spi->bits_per_word	= 8;
- 	/* only supports mode 0 on SC16IS762 */
- 	spi->mode		= spi->mode ? : SPI_MODE_0;
--	spi->max_speed_hz	= spi->max_speed_hz ? : 15000000;
-+	spi->max_speed_hz	= spi->max_speed_hz ? : 4 * HZ_PER_MHZ;
- 	ret = spi_setup(spi);
- 	if (ret)
- 		return ret;
+ #endif
+ 
++/**
++ * dev_err_probe - probe error check and log helper
++ * @dev: the pointer to the struct device
++ * @err: error value to test
++ * @fmt: printf-style format string
++ * @...: arguments as specified in the format string
++ *
++ * This helper implements common pattern present in probe functions for error
++ * checking: print debug or error message depending if the error value is
++ * -EPROBE_DEFER and propagate error upwards.
++ * It replaces code sequence:
++ * 	if (err != -EPROBE_DEFER)
++ * 		dev_err(dev, ...);
++ * 	else
++ * 		dev_dbg(dev, ...);
++ * 	return err;
++ * with
++ * 	return dev_err_probe(dev, err, ...);
++ *
++ * Returns @err.
++ *
++ */
++int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
++{
++	struct va_format vaf;
++	va_list args;
++
++	va_start(args, fmt);
++	vaf.fmt = fmt;
++	vaf.va = &args;
++
++	if (err != -EPROBE_DEFER)
++		dev_err(dev, "error %d: %pV", err, &vaf);
++	else
++		dev_dbg(dev, "error %d: %pV", err, &vaf);
++
++	va_end(args);
++
++	return err;
++}
++EXPORT_SYMBOL_GPL(dev_err_probe);
++
+ static inline bool fwnode_is_primary(struct fwnode_handle *fwnode)
+ {
+ 	return fwnode && !IS_ERR(fwnode->secondary);
+diff --git a/include/linux/device.h b/include/linux/device.h
+index bccd367c11de..0714d6e5d500 100644
+--- a/include/linux/device.h
++++ b/include/linux/device.h
+@@ -1581,6 +1581,9 @@ do {									\
+ 	WARN_ONCE(condition, "%s %s: " format, \
+ 			dev_driver_string(dev), dev_name(dev), ## arg)
+ 
++extern __printf(3, 4)
++int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
++
+ /* Create alias, so I can be autoloaded. */
+ #define MODULE_ALIAS_CHARDEV(major,minor) \
+ 	MODULE_ALIAS("char-major-" __stringify(major) "-" __stringify(minor))
 -- 
 2.43.0
 
