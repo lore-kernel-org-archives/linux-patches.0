@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F244C62;
-	Wed, 21 Feb 2024 14:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4737A708;
+	Wed, 21 Feb 2024 14:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525637; cv=none; b=guzPkiAEZ24tGwSO/B462S4ks0LY6VsQci+doHngSCJhkssDaPkx1DoYR+SwlWSXEyc1gk8gICggarnI4ZJBgqvLT2CP7AjCAH6jxIwPF/StN9bHgHyzrZzboCt15FPkprQYj6lEBmYvBaLyrQ8FTvizcn4B0cyVaKejGZotamw=
+	t=1708525640; cv=none; b=EFmioJ47OeS5D0MLYLJm0a6lZD8gsN6hmFSumBLMu109TZSAmKfw0UDlZQXE2+nj9np/vCs/mBG4SAuW0Dr7OcYIyz6nyYafwjsXBou5II6pgfxjbu0TktTXtnN+c2OIWoXNxGXlsaoTo2ScO+ZaF/1oEm9vxnmH9UdViehv6zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525637; c=relaxed/simple;
-	bh=gw8JERSiSovd3fAYstutUctWKPBlMy384Yj0u/kc+eA=;
+	s=arc-20240116; t=1708525640; c=relaxed/simple;
+	bh=B6nD93u2UIc0A0zjWbci7oMQWun1/sSKW7G38KmBw4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IupOYFgfaKBVm6wGMd6RuI2A5aW0upVHKgmzY2mqMGs9NG4GQUZFmkySSyIBw3Mdyvisv7ynvpnnJjWGGDwaXNhRa2HHP3OvZ0dHN/RUWlFAbcWCSDDyofI9h7urtlrmzwW+fIxuleymuuh65nlHVq42nQV6jmikD19UGd9kdp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZLmg1w+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YwFecq1qcxpzWFWck2zJ0LQk2k6gOCKwlfJe+9+Znc9hsJwzEExAZLh3ZvsNyVWAjW4TezrLeIYBKgiI7MnrYp0aCem59fsA1dNjHEjdW7amt7jzXrju/ly5pmobUEx1702OytanKqNdHPG9FIiszBh5ZNLKr1w7+TafeThHnHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytwYVddZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZLmg1w+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40B0C433F1;
-	Wed, 21 Feb 2024 14:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytwYVddZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B31AC433F1;
+	Wed, 21 Feb 2024 14:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525637;
-	bh=gw8JERSiSovd3fAYstutUctWKPBlMy384Yj0u/kc+eA=;
+	s=korg; t=1708525640;
+	bh=B6nD93u2UIc0A0zjWbci7oMQWun1/sSKW7G38KmBw4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZLmg1w+porGfix7FSEhBJ7xxVtaaGB1gnvVWVTq4Y/F8DdU+2Jz8SC2gspV4BfdM
-	 oWmPshFQLCX3xHYOusCf9dKlFhbsl+i11Z6Qvvfjum7ogCjFvvX188lIbnItuFJ50C
-	 xD59PXI8bUchz8mB3cgB5mAkAV8uUEd+PV8b1o0k=
+	b=ytwYVddZonxsNrIQY+ZQVHNhBTEU/Y86B3Nad/zOuONkarnYXblxjFVgxYlFN9clc
+	 hgxC2hpq5JH/1axCSjJYCXNpaQ2BqvkJamBPLkviZWv582rfM3aimkEasGQLSwr6Dj
+	 V+XpHh4uw4Ah6W0VNZZewUSktCi7iuRmlRaLMqPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.4 216/267] HID: wacom: Do not register input devices until after hid_hw_start
-Date: Wed, 21 Feb 2024 14:09:17 +0100
-Message-ID: <20240221125946.995040407@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 217/267] USB: hub: check for alternate port before enabling A_ALT_HNP_SUPPORT
+Date: Wed, 21 Feb 2024 14:09:18 +0100
+Message-ID: <20240221125947.026660537@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -45,153 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Gerecke <killertofu@gmail.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit c1d6708bf0d3dd976460d435373cf5abf21ce258 upstream.
+commit f17c34ffc792bbb520e4b61baa16b6cfc7d44b13 upstream.
 
-If a input device is opened before hid_hw_start is called, events may
-not be received from the hardware. In the case of USB-backed devices,
-for example, the hid_hw_start function is responsible for filling in
-the URB which is submitted when the input device is opened. If a device
-is opened prematurely, polling will never start because the device will
-not have been in the correct state to send the URB.
+The OTG 1.3 spec has the feature A_ALT_HNP_SUPPORT, which tells
+a device that it is connected to the wrong port. Some devices
+refuse to operate if you enable that feature, because it indicates
+to them that they ought to request to be connected to another port.
 
-Because the wacom driver registers its input devices before calling
-hid_hw_start, there is a window of time where a device can be opened
-and end up in an inoperable state. Some ARM-based Chromebooks in particular
-reliably trigger this bug.
+According to the spec this feature may be used based only the following
+three conditions:
 
-This commit splits the wacom_register_inputs function into two pieces.
-One which is responsible for setting up the allocated inputs (and runs
-prior to hid_hw_start so that devices are ready for any input events
-they may end up receiving) and another which only registers the devices
-(and runs after hid_hw_start to ensure devices can be immediately opened
-without issue). Note that the functions to initialize the LEDs and remotes
-are also moved after hid_hw_start to maintain their own dependency chains.
+6.5.3 a_alt_hnp_support
+Setting this feature indicates to the B-device that it is connected to
+an A-device port that is not capable of HNP, but that the A-device does
+have an alternate port that is capable of HNP.
+The A-device is required to set this feature under the following conditions:
+• the A-device has multiple receptacles
+• the A-device port that connects to the B-device does not support HNP
+• the A-device has another port that does support HNP
 
-Fixes: 7704ac937345 ("HID: wacom: implement generic HID handling for pen generic devices")
-Cc: stable@vger.kernel.org # v3.18+
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Tested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+A check for the third and first condition is missing. Add it.
+
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Fixes: 7d2d641c44269 ("usb: otg: don't set a_alt_hnp_support feature for OTG 2.0 device")
+Link: https://lore.kernel.org/r/20240122153545.12284-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |   63 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 43 insertions(+), 20 deletions(-)
+ drivers/usb/core/hub.c |   30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2088,7 +2088,7 @@ static int wacom_allocate_inputs(struct
- 	return 0;
- }
- 
--static int wacom_register_inputs(struct wacom *wacom)
-+static int wacom_setup_inputs(struct wacom *wacom)
- {
- 	struct input_dev *pen_input_dev, *touch_input_dev, *pad_input_dev;
- 	struct wacom_wac *wacom_wac = &(wacom->wacom_wac);
-@@ -2107,10 +2107,6 @@ static int wacom_register_inputs(struct
- 		input_free_device(pen_input_dev);
- 		wacom_wac->pen_input = NULL;
- 		pen_input_dev = NULL;
--	} else {
--		error = input_register_device(pen_input_dev);
--		if (error)
--			goto fail;
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2365,17 +2365,25 @@ static int usb_enumerate_device_otg(stru
+ 			}
+ 		} else if (desc->bLength == sizeof
+ 				(struct usb_otg_descriptor)) {
+-			/* Set a_alt_hnp_support for legacy otg device */
+-			err = usb_control_msg(udev,
+-				usb_sndctrlpipe(udev, 0),
+-				USB_REQ_SET_FEATURE, 0,
+-				USB_DEVICE_A_ALT_HNP_SUPPORT,
+-				0, NULL, 0,
+-				USB_CTRL_SET_TIMEOUT);
+-			if (err < 0)
+-				dev_err(&udev->dev,
+-					"set a_alt_hnp_support failed: %d\n",
+-					err);
++			/*
++			 * We are operating on a legacy OTP device
++			 * These should be told that they are operating
++			 * on the wrong port if we have another port that does
++			 * support HNP
++			 */
++			if (bus->otg_port != 0) {
++				/* Set a_alt_hnp_support for legacy otg device */
++				err = usb_control_msg(udev,
++					usb_sndctrlpipe(udev, 0),
++					USB_REQ_SET_FEATURE, 0,
++					USB_DEVICE_A_ALT_HNP_SUPPORT,
++					0, NULL, 0,
++					USB_CTRL_SET_TIMEOUT);
++				if (err < 0)
++					dev_err(&udev->dev,
++						"set a_alt_hnp_support failed: %d\n",
++						err);
++			}
+ 		}
  	}
- 
- 	error = wacom_setup_touch_input_capabilities(touch_input_dev, wacom_wac);
-@@ -2119,10 +2115,6 @@ static int wacom_register_inputs(struct
- 		input_free_device(touch_input_dev);
- 		wacom_wac->touch_input = NULL;
- 		touch_input_dev = NULL;
--	} else {
--		error = input_register_device(touch_input_dev);
--		if (error)
--			goto fail;
- 	}
- 
- 	error = wacom_setup_pad_input_capabilities(pad_input_dev, wacom_wac);
-@@ -2131,7 +2123,34 @@ static int wacom_register_inputs(struct
- 		input_free_device(pad_input_dev);
- 		wacom_wac->pad_input = NULL;
- 		pad_input_dev = NULL;
--	} else {
-+	}
-+
-+	return 0;
-+}
-+
-+static int wacom_register_inputs(struct wacom *wacom)
-+{
-+	struct input_dev *pen_input_dev, *touch_input_dev, *pad_input_dev;
-+	struct wacom_wac *wacom_wac = &(wacom->wacom_wac);
-+	int error = 0;
-+
-+	pen_input_dev = wacom_wac->pen_input;
-+	touch_input_dev = wacom_wac->touch_input;
-+	pad_input_dev = wacom_wac->pad_input;
-+
-+	if (pen_input_dev) {
-+		error = input_register_device(pen_input_dev);
-+		if (error)
-+			goto fail;
-+	}
-+
-+	if (touch_input_dev) {
-+		error = input_register_device(touch_input_dev);
-+		if (error)
-+			goto fail;
-+	}
-+
-+	if (pad_input_dev) {
- 		error = input_register_device(pad_input_dev);
- 		if (error)
- 			goto fail;
-@@ -2381,6 +2400,20 @@ static int wacom_parse_and_register(stru
- 			goto fail;
- 	}
- 
-+	error = wacom_setup_inputs(wacom);
-+	if (error)
-+		goto fail;
-+
-+	if (features->type == HID_GENERIC)
-+		connect_mask |= HID_CONNECT_DRIVER;
-+
-+	/* Regular HID work starts now */
-+	error = hid_hw_start(hdev, connect_mask);
-+	if (error) {
-+		hid_err(hdev, "hw start failed\n");
-+		goto fail;
-+	}
-+
- 	error = wacom_register_inputs(wacom);
- 	if (error)
- 		goto fail;
-@@ -2395,16 +2428,6 @@ static int wacom_parse_and_register(stru
- 			goto fail;
- 	}
- 
--	if (features->type == HID_GENERIC)
--		connect_mask |= HID_CONNECT_DRIVER;
--
--	/* Regular HID work starts now */
--	error = hid_hw_start(hdev, connect_mask);
--	if (error) {
--		hid_err(hdev, "hw start failed\n");
--		goto fail;
--	}
--
- 	if (!wireless) {
- 		/* Note that if query fails it is not a hard failure */
- 		wacom_query_tablet_data(wacom);
+ #endif
 
 
