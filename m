@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3155855E5E;
-	Wed, 21 Feb 2024 13:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4383555E5E;
+	Wed, 21 Feb 2024 13:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523114; cv=none; b=A8xYP9AudIa2WBTGDYlrP+OKcB1NMCSokgMcYu+0ZmRHxzP9dihIKIXyboc4z5UsFNNOcUCnoMjyCVP5E1f58Btc3EjRsaPrfwaG+S9/cP8xjJFAzqOtMaeHOPSg+dcSJIA8L8DRFEC8NWLXcNoeCWJ6QoNYVOURnpELevttH1A=
+	t=1708523117; cv=none; b=hmBuimNbPWV40vO85XXI/1lf2DnCtDpmYs+G2YDqxFGQmPvAsytTL46nY2HD3IkI2ICBvT6gnXYyX8VWezyDJa4rAJqjlbmyF07w5zN9XpXJCNpgsZzPKubiXJGINglklJAp5wFeJA2uODdWA3Fi8K7LutJR2UXCHe65UFyBp8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523114; c=relaxed/simple;
-	bh=JNs3ruoHMwdXzyYCg3DwxGAorY6SeI6vq4wJNgV+ZXQ=;
+	s=arc-20240116; t=1708523117; c=relaxed/simple;
+	bh=6GzJ62gpls329yMN1WNuaLQCtEQTfitNEnJ9kq8fGTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVedrZcwNUVbT8T5vg2y3nRdVdMGnr1Fr6akjOCDLEPM1mL6ED8NBVc1LvoKflSIKzvy1Np3oHvIr0Ot52jz8dLiSUFeFHooJqK9LOkK0X3jmt3Kv5zZnuxb1fif6xtT1lFtYAUvAb/3y33WGpryHkUJAYQNAkkhAapwrHu9gv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJdKIoEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EuNOBosV9QlEIASoP5Pt05A+A0O+/n9CG+6pZdXYVg69qFGxHL6OiXeinA6UZOZaUXJCYl5QJNV5csDURbRhy2DKSVhlrb9EZsVvoivqitQZwlrNgw26Cb9Qae+a8K45OLoXCm3ScNh30r/zRQLCZxFpaOTpP2mswe/dcTCl4+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZR8uOTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJdKIoEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987E2C433F1;
-	Wed, 21 Feb 2024 13:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZR8uOTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68B1C433F1;
+	Wed, 21 Feb 2024 13:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523114;
-	bh=JNs3ruoHMwdXzyYCg3DwxGAorY6SeI6vq4wJNgV+ZXQ=;
+	s=korg; t=1708523117;
+	bh=6GzJ62gpls329yMN1WNuaLQCtEQTfitNEnJ9kq8fGTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJdKIoEZD5huc15UsmyMxfrS36WMrvS/C11HMaWv1aXC9+kSN/I2ztNOAI8jblHiZ
-	 c5M1nUDO77806EnbdB6zzAxs86tpQYfpYEfnR6rvUk8wsP9l+DZUOm7FXUUfzbJiQN
-	 80yb6NB0JBeeIQDt+HdgswxKR6HICwHAWCD4Ckts=
+	b=DZR8uOTQe3CRI0dKWIF8/m357JyHtRuFNWtXDcuxlngdeUT/IACPmOHMqSbubFvn1
+	 t66E6yb5q4CVGQb6yFr1S6hPqpF4fJokz1X247+riOiupMioY1DXZeU3+ZRM4jl95r
+	 lGty8PmwyRBP8cTMJShp31a1AgMrD9bEZ+NbFp+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 344/476] btrfs: forbid creating subvol qgroups
-Date: Wed, 21 Feb 2024 14:06:35 +0100
-Message-ID: <20240221130020.711873919@linuxfoundation.org>
+Subject: [PATCH 5.15 345/476] btrfs: do not ASSERT() if the newly created subvolume already got read
+Date: Wed, 21 Feb 2024 14:06:36 +0100
+Message-ID: <20240221130020.747947159@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,40 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 0c309d66dacddf8ce939b891d9ead4a8e21ad6f0 upstream.
+commit e03ee2fe873eb68c1f9ba5112fee70303ebf9dfb upstream.
 
-Creating a qgroup 0/subvolid leads to various races and it isn't
-helpful, because you can't specify a subvol id when creating a subvol,
-so you can't be sure it will be the right one. Any requirements on the
-automatic subvol can be gratified by using a higher level qgroup and the
-inheritance parameters of subvol creation.
+[BUG]
+There is a syzbot crash, triggered by the ASSERT() during subvolume
+creation:
 
-Fixes: cecbb533b5fc ("btrfs: record simple quota deltas in delayed refs")
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
+ assertion failed: !anon_dev, in fs/btrfs/disk-io.c:1319
+ ------------[ cut here ]------------
+ kernel BUG at fs/btrfs/disk-io.c:1319!
+ invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+ RIP: 0010:btrfs_get_root_ref.part.0+0x9aa/0xa60
+  <TASK>
+  btrfs_get_new_fs_root+0xd3/0xf0
+  create_subvol+0xd02/0x1650
+  btrfs_mksubvol+0xe95/0x12b0
+  __btrfs_ioctl_snap_create+0x2f9/0x4f0
+  btrfs_ioctl_snap_create+0x16b/0x200
+  btrfs_ioctl+0x35f0/0x5cf0
+  __x64_sys_ioctl+0x19d/0x210
+  do_syscall_64+0x3f/0xe0
+  entry_SYSCALL_64_after_hwframe+0x63/0x6b
+ ---[ end trace 0000000000000000 ]---
+
+[CAUSE]
+During create_subvol(), after inserting root item for the newly created
+subvolume, we would trigger btrfs_get_new_fs_root() to get the
+btrfs_root of that subvolume.
+
+The idea here is, we have preallocated an anonymous device number for
+the subvolume, thus we can assign it to the new subvolume.
+
+But there is really nothing preventing things like backref walk to read
+the new subvolume.
+If that happens before we call btrfs_get_new_fs_root(), the subvolume
+would be read out, with a new anonymous device number assigned already.
+
+In that case, we would trigger ASSERT(), as we really expect no one to
+read out that subvolume (which is not yet accessible from the fs).
+But things like backref walk is still possible to trigger the read on
+the subvolume.
+
+Thus our assumption on the ASSERT() is not correct in the first place.
+
+[FIX]
+Fix it by removing the ASSERT(), and just free the @anon_dev, reset it
+to 0, and continue.
+
+If the subvolume tree is read out by something else, it should have
+already get a new anon_dev assigned thus we only need to free the
+preallocated one.
+
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Fixes: 2dfb1e43f57d ("btrfs: preallocate anon block device at first phase of snapshot creation")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/btrfs/disk-io.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4338,6 +4338,11 @@ static long btrfs_ioctl_qgroup_create(st
- 		goto out;
- 	}
- 
-+	if (sa->create && is_fstree(sa->qgroupid)) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -1619,8 +1619,17 @@ static struct btrfs_root *btrfs_get_root
+ again:
+ 	root = btrfs_lookup_fs_root(fs_info, objectid);
+ 	if (root) {
+-		/* Shouldn't get preallocated anon_dev for cached roots */
+-		ASSERT(!anon_dev);
++		/*
++		 * Some other caller may have read out the newly inserted
++		 * subvolume already (for things like backref walk etc).  Not
++		 * that common but still possible.  In that case, we just need
++		 * to free the anon_dev.
++		 */
++		if (unlikely(anon_dev)) {
++			free_anon_bdev(anon_dev);
++			anon_dev = 0;
++		}
 +
- 	trans = btrfs_join_transaction(root);
- 	if (IS_ERR(trans)) {
- 		ret = PTR_ERR(trans);
+ 		if (check_ref && btrfs_root_refs(&root->root_item) == 0) {
+ 			btrfs_put_root(root);
+ 			return ERR_PTR(-ENOENT);
 
 
