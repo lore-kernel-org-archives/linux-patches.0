@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9505B69D29;
-	Wed, 21 Feb 2024 14:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB2B7E581;
+	Wed, 21 Feb 2024 14:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525114; cv=none; b=mZ6wbBpv/E9s4eXhux1ZFKibkWq6jCqdF9OOTezvT2PYH0U6r1coCh1fvumqhbhE/rI5Smi5JtgY8yYgPuM+5LyUs0ZOgd2m6ubYtRM7n1JhOwoaNniDlIdnofm7PGAppMnVaNeoRmkvDK0a7gbwQv25mq2i4yqBBRmI+xlizWk=
+	t=1708525117; cv=none; b=b94S1moR1EiCEliH41EyA7VJ1TYtJvAg14osLSorQHsxxw0NdgzHUp1h2cHc04yEJ3eLvia9DF+ud9O5cfb+dWbtsdT/xxgXUYs0mX9DlyNpDNXG6HlgScYwyypbgApQNhmi6xjdWNgj/CxU2ksZ7NT8Q0sioyrAAtzpZIFqyww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525114; c=relaxed/simple;
-	bh=Rp0JzyEK49ijNC6c1Yvqo1VkD80mt3dbyrEtJ36elSU=;
+	s=arc-20240116; t=1708525117; c=relaxed/simple;
+	bh=JYADzpHKEPvSzq2WcmZYnwweBe6VL58GaNqZUjCE54Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PVY3UWAycYucW0fxHjRc0eRSVIHhjTdR9gHXMzBHVrdAV6LX0ig3jdBxlO1sJSWWQgyR/7GdwaX5RDmFrI04i4BLE0Q+wtJYIGEWUA5PNYZu7qLmQmYLYVf6GnYGPK3aeWKH3WCyXjHkSUYflcYeHOKOrPqV1cP2tQqCrk+7/SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Syvv3tn0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hkEzwiMGq+WtOvpRQxBs1qh/raPMWIZWL3sRub3xzcVu6UT13kZGu7/529y9J9r9gnLWyJsNmjLqnuCaIIY2YEpIWQBrb9BTYEaT30NQ+MUnbcDyBES+Z5o6iQowagmI3w9WxNkqWUy44okVrM36WC5hh92DhcNx1kay2PoJJZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWOw1x/e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Syvv3tn0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02ECBC433F1;
-	Wed, 21 Feb 2024 14:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWOw1x/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E368C433C7;
+	Wed, 21 Feb 2024 14:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525114;
-	bh=Rp0JzyEK49ijNC6c1Yvqo1VkD80mt3dbyrEtJ36elSU=;
+	s=korg; t=1708525117;
+	bh=JYADzpHKEPvSzq2WcmZYnwweBe6VL58GaNqZUjCE54Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Syvv3tn0xs7TiGnFYokE1WM1Os1LeuxxtiWH9c7t/qw2IoCoy/97iSDLTLbxrnZWn
-	 VzFlUQ1RZqC75pQkTR9ZXuk++4kqH5MOKbJvWrpuDYch+eIikHGQKrPsxp0FX8O3+7
-	 Rj198DKvNXkP7l+8QlabLFutFAniVbIUSax7Z2Ps=
+	b=eWOw1x/eNABAiyi+dAF4uWSigtlEfxRc47uU5zzdueXxGMhj8EQJV1dPonSSv0EES
+	 ZLZPNxMCqaDBAqs+4e35oysHpBBOZ4b0DGCdDCnA0g1G7slgx81Lmd7uCEmQ+7v6M7
+	 hkRKzlX5l8vowc3Owszdrs/Vrtt4FAbvxcAI/TRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 063/267] powerpc/mm: Fix build failures due to arch_reserved_kernel_pages()
-Date: Wed, 21 Feb 2024 14:06:44 +0100
-Message-ID: <20240221125941.979198483@linuxfoundation.org>
+Subject: [PATCH 5.4 064/267] powerpc: pmd_move_must_withdraw() is only needed for CONFIG_TRANSPARENT_HUGEPAGE
+Date: Wed, 21 Feb 2024 14:06:45 +0100
+Message-ID: <20240221125942.008268843@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -44,70 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
 
-[ Upstream commit d8c3f243d4db24675b653f0568bb65dae34e6455 ]
+[ Upstream commit 0d555b57ee660d8a871781c0eebf006e855e918d ]
 
-With NUMA=n and FA_DUMP=y or PRESERVE_FA_DUMP=y the build fails with:
+The linux-next build of powerpc64 allnoconfig fails with:
 
-  arch/powerpc/kernel/fadump.c:1739:22: error: no previous prototype for ‘arch_reserved_kernel_pages’ [-Werror=missing-prototypes]
-  1739 | unsigned long __init arch_reserved_kernel_pages(void)
-       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  arch/powerpc/mm/book3s64/pgtable.c:557:5: error: no previous prototype for 'pmd_move_must_withdraw'
+    557 | int pmd_move_must_withdraw(struct spinlock *new_pmd_ptl,
+        |     ^~~~~~~~~~~~~~~~~~~~~~
 
-The prototype for arch_reserved_kernel_pages() is in include/linux/mm.h,
-but it's guarded by __HAVE_ARCH_RESERVED_KERNEL_PAGES. The powerpc
-headers define __HAVE_ARCH_RESERVED_KERNEL_PAGES in asm/mmzone.h, which
-is not included into the generic headers when NUMA=n.
+Caused by commit:
 
-Move the definition of __HAVE_ARCH_RESERVED_KERNEL_PAGES into asm/mmu.h
-which is included regardless of NUMA=n.
+  c6345dfa6e3e ("Makefile.extrawarn: turn on missing-prototypes globally")
 
-Additionally the ifdef around __HAVE_ARCH_RESERVED_KERNEL_PAGES needs to
-also check for CONFIG_PRESERVE_FA_DUMP.
+Fix it by moving the function definition under
+CONFIG_TRANSPARENT_HUGEPAGE like the prototype. The function is only
+called when CONFIG_TRANSPARENT_HUGEPAGE=y.
 
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+[mpe: Flesh out change log from linux-next patch]
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231130114433.3053544-1-mpe@ellerman.id.au
+Link: https://msgid.link/20231127132809.45c2b398@canb.auug.org.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/mmu.h    | 4 ++++
- arch/powerpc/include/asm/mmzone.h | 3 ---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ arch/powerpc/mm/book3s64/pgtable.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/mmu.h b/arch/powerpc/include/asm/mmu.h
-index 0699cfeeb8c9..2141ae7441a9 100644
---- a/arch/powerpc/include/asm/mmu.h
-+++ b/arch/powerpc/include/asm/mmu.h
-@@ -375,5 +375,9 @@ extern void *abatron_pteptrs[2];
- #include <asm/nohash/mmu.h>
- #endif
+diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
+index 2bf7e1b4fd82..c4890f4b0b6c 100644
+--- a/arch/powerpc/mm/book3s64/pgtable.c
++++ b/arch/powerpc/mm/book3s64/pgtable.c
+@@ -442,6 +442,7 @@ void ptep_modify_prot_commit(struct vm_area_struct *vma, unsigned long addr,
+ 	set_pte_at(vma->vm_mm, addr, ptep, pte);
+ }
  
-+#if defined(CONFIG_FA_DUMP) || defined(CONFIG_PRESERVE_FA_DUMP)
-+#define __HAVE_ARCH_RESERVED_KERNEL_PAGES
++#ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ /*
+  * For hash translation mode, we use the deposited table to store hash slot
+  * information and they are stored at PTRS_PER_PMD offset from related pmd
+@@ -463,6 +464,7 @@ int pmd_move_must_withdraw(struct spinlock *new_pmd_ptl,
+ 
+ 	return true;
+ }
 +#endif
-+
- #endif /* __KERNEL__ */
- #endif /* _ASM_POWERPC_MMU_H_ */
-diff --git a/arch/powerpc/include/asm/mmzone.h b/arch/powerpc/include/asm/mmzone.h
-index 91c69ff53a8a..50c2198c2c76 100644
---- a/arch/powerpc/include/asm/mmzone.h
-+++ b/arch/powerpc/include/asm/mmzone.h
-@@ -42,9 +42,6 @@ u64 memory_hotplug_max(void);
- #else
- #define memory_hotplug_max() memblock_end_of_DRAM()
- #endif /* CONFIG_NEED_MULTIPLE_NODES */
--#ifdef CONFIG_FA_DUMP
--#define __HAVE_ARCH_RESERVED_KERNEL_PAGES
--#endif
  
- #endif /* __KERNEL__ */
- #endif /* _ASM_MMZONE_H_ */
+ /*
+  * Does the CPU support tlbie?
 -- 
 2.43.0
 
