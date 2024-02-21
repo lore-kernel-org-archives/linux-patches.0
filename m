@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B57955E5E;
-	Wed, 21 Feb 2024 13:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE4B55E5E;
+	Wed, 21 Feb 2024 13:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523580; cv=none; b=Kuyj6VpYTTlITf2VcAxzJbz34GlWWDevaJUtxeVWC6NLG1p+v3YEt7ZxJ2tQSJngP+kGKuTZUs5Dgp1DZy4pgqj7uxWLa2LjnosorZFIuzWCOjHZ9sT1Kt1766uLZCm4IZvDu8tfwwoEwQsbx/nYWRQZ/2zknd1y96rYXhUA5D4=
+	t=1708523583; cv=none; b=hj23gd8G8vUBi+wAPhwm74qnwdS7iIEaAH67axpVxSpXfC0cfqnqmlCGZ+l1mJJT1VF/Ul7ogIRZz8U6AZuwUOD1nwYArpRJBYZYZ0GoWufqWCNWIF6pstEdg70H1QsTfTHfBWmVuJxgFpJR7e6wtt2g8vZ49lXYF9Xldcg3T0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523580; c=relaxed/simple;
-	bh=9HA8aK8k5PJCJe20XN1KcEQuVAVhK7mAKAIu8v5dWQw=;
+	s=arc-20240116; t=1708523583; c=relaxed/simple;
+	bh=gb5dkwkecC5gTVcb9JC2n7E+9nrQFPAHLNMmkU4s8x8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmbMQZYQASNLKD/DpZAYUBfK6KXH8SG48YNE0Wr6wbz7MZvjhWsdLFWso+z4zymVy9GAoxx+Cq9ynrw7cJCrMYGKIlX+ufi0WM9w3LrXxdkWrqpscR9nozTnpF5OhL4E76qsBoGz9WFr5znc0Ww+5Qqq1hqGQPvIrA9aNZKzzKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6h63yz5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MnpaP4ELN8IBLeqaiWcS9jTfBH3sxS7rSo48oCO5AxPZQglG0AN3Wz51lE1fSYczikRDOJKyqSd6JdUGRyAGwt3rpbBueigUcTKYrBI0CXn9NXDh5jkwGSUduWaJb9JnHs09Cwsw3CvoItDL1OzvNyzzY18e3ilU8Cl8aN0oC/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPAQ87PX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6h63yz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697BBC433F1;
-	Wed, 21 Feb 2024 13:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPAQ87PX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A58BC43394;
+	Wed, 21 Feb 2024 13:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523579;
-	bh=9HA8aK8k5PJCJe20XN1KcEQuVAVhK7mAKAIu8v5dWQw=;
+	s=korg; t=1708523582;
+	bh=gb5dkwkecC5gTVcb9JC2n7E+9nrQFPAHLNMmkU4s8x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R6h63yz5VEBEoYsxkC7yWXwE8GKkvmrfy87GioUJQ0GV2LdvDm9ZeePx908dMAIEA
-	 zFpiPlpcF38Ig9Tr26+DU5UYEWl2ofYLR87Q0bH43zzDvKq8KulGgHgmxJ3FbAtTxx
-	 bgOv8bVDxi6Iy+rTRn6u8UIDC25/obvs6ptxpRYg=
+	b=sPAQ87PXnvxbi5cVTwqliNZziBKTQ6gsl7Oir8TuJDTv/rAVLGoFkE1BIJ6MpL9dW
+	 wM12Pc47CsVgztF7HunSPcv/09bdY6BQas+m6obD3CNa+I1efnHu0jriKJoDW4pOag
+	 fznU2ovF4lmLCq5UvZ3/VEgmHee/n4/AsT2Hx81c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
-	Miko Larsson <mikoxyzzz@gmail.com>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 451/476] fbdev: Fix invalid page access after closing deferred I/O devices
-Date: Wed, 21 Feb 2024 14:08:22 +0100
-Message-ID: <20240221130024.699469227@linuxfoundation.org>
+Subject: [PATCH 5.15 452/476] fbdev: Fix incorrect page mapping clearance at fb_deferred_io_release()
+Date: Wed, 21 Feb 2024 14:08:23 +0100
+Message-ID: <20240221130024.744202577@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -55,89 +54,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 3efc61d95259956db25347e2a9562c3e54546e20 ]
+[ Upstream commit fe9ae05cfbe587dda724fcf537c00bc2f287da62 ]
 
-When a fbdev with deferred I/O is once opened and closed, the dirty
-pages still remain queued in the pageref list, and eventually later
-those may be processed in the delayed work.  This may lead to a
-corruption of pages, hitting an Oops.
+The recent fix for the deferred I/O by the commit
+  3efc61d95259 ("fbdev: Fix invalid page access after closing deferred I/O devices")
+caused a regression when the same fb device is opened/closed while
+it's being used.  It resulted in a frozen screen even if something
+is redrawn there after the close.  The breakage is because the patch
+was made under a wrong assumption of a single open; in the current
+code, fb_deferred_io_release() cleans up the page mapping of the
+pageref list and it calls cancel_delayed_work_sync() unconditionally,
+where both are no correct behavior for multiple opens.
 
-This patch makes sure to cancel the delayed work and clean up the
-pageref list at closing the device for addressing the bug.  A part of
-the cleanup code is factored out as a new helper function that is
-called from the common fb_release().
+This patch adds a refcount for the opens of the device, and applies
+the cleanup only when all files get closed.
 
-Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+As both fb_deferred_io_open() and _close() are called always in the
+fb_info lock (mutex), it's safe to use the normal int for the
+refcounting.
+
+Also, a useless BUG_ON() is dropped.
+
+Fixes: 3efc61d95259 ("fbdev: Fix invalid page access after closing deferred I/O devices")
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Tested-by: Miko Larsson <mikoxyzzz@gmail.com>
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230129082856.22113-1-tiwai@suse.de
+Link: https://patchwork.freedesktop.org/patch/msgid/20230308105012.1845-1-tiwai@suse.de
 Stable-dep-of: 33cd6ea9c067 ("fbdev: flush deferred IO before closing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fb_defio.c | 10 +++++++++-
- drivers/video/fbdev/core/fbmem.c    |  4 ++++
+ drivers/video/fbdev/core/fb_defio.c | 17 +++++++++++++----
  include/linux/fb.h                  |  1 +
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/video/fbdev/core/fb_defio.c b/drivers/video/fbdev/core/fb_defio.c
-index 5faeca61d3dd..b3f41f432ec2 100644
+index b3f41f432ec2..7e76e53b83d5 100644
 --- a/drivers/video/fbdev/core/fb_defio.c
 +++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -292,7 +292,7 @@ void fb_deferred_io_open(struct fb_info *info,
+@@ -288,17 +288,18 @@ void fb_deferred_io_open(struct fb_info *info,
+ 			 struct inode *inode,
+ 			 struct file *file)
+ {
++	struct fb_deferred_io *fbdefio = info->fbdefio;
++
+ 	file->f_mapping->a_ops = &fb_deferred_io_aops;
++	fbdefio->open_count++;
  }
  EXPORT_SYMBOL_GPL(fb_deferred_io_open);
  
--void fb_deferred_io_cleanup(struct fb_info *info)
-+void fb_deferred_io_release(struct fb_info *info)
+-void fb_deferred_io_release(struct fb_info *info)
++static void fb_deferred_io_lastclose(struct fb_info *info)
  {
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
+-	struct fb_deferred_io *fbdefio = info->fbdefio;
  	struct page *page;
-@@ -306,6 +306,14 @@ void fb_deferred_io_cleanup(struct fb_info *info)
- 		page = fb_deferred_io_page(info, i);
+ 	int i;
+ 
+-	BUG_ON(!fbdefio);
+ 	cancel_delayed_work_sync(&info->deferred_work);
+ 
+ 	/* clear out the mapping that we setup */
+@@ -307,13 +308,21 @@ void fb_deferred_io_release(struct fb_info *info)
  		page->mapping = NULL;
  	}
-+}
-+EXPORT_SYMBOL_GPL(fb_deferred_io_release);
+ }
 +
-+void fb_deferred_io_cleanup(struct fb_info *info)
++void fb_deferred_io_release(struct fb_info *info)
 +{
 +	struct fb_deferred_io *fbdefio = info->fbdefio;
 +
-+	fb_deferred_io_release(info);
++	if (!--fbdefio->open_count)
++		fb_deferred_io_lastclose(info);
++}
+ EXPORT_SYMBOL_GPL(fb_deferred_io_release);
+ 
+ void fb_deferred_io_cleanup(struct fb_info *info)
+ {
+ 	struct fb_deferred_io *fbdefio = info->fbdefio;
+ 
+-	fb_deferred_io_release(info);
++	fb_deferred_io_lastclose(info);
  
  	kvfree(info->pagerefs);
  	mutex_destroy(&fbdefio->lock);
-diff --git a/drivers/video/fbdev/core/fbmem.c b/drivers/video/fbdev/core/fbmem.c
-index 1b288a613a6e..ec7a883715e3 100644
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -1454,6 +1454,10 @@ __releases(&info->lock)
- 	struct fb_info * const info = file->private_data;
- 
- 	lock_fb_info(info);
-+#if IS_ENABLED(CONFIG_FB_DEFERRED_IO)
-+	if (info->fbdefio)
-+		fb_deferred_io_release(info);
-+#endif
- 	if (info->fbops->fb_release)
- 		info->fbops->fb_release(info,1);
- 	module_put(info->fbops->owner);
 diff --git a/include/linux/fb.h b/include/linux/fb.h
-index b322d30f6225..433cddf8442b 100644
+index 433cddf8442b..b79a833524ef 100644
 --- a/include/linux/fb.h
 +++ b/include/linux/fb.h
-@@ -675,6 +675,7 @@ extern int  fb_deferred_io_init(struct fb_info *info);
- extern void fb_deferred_io_open(struct fb_info *info,
- 				struct inode *inode,
- 				struct file *file);
-+extern void fb_deferred_io_release(struct fb_info *info);
- extern void fb_deferred_io_cleanup(struct fb_info *info);
- extern int fb_deferred_io_fsync(struct file *file, loff_t start,
- 				loff_t end, int datasync);
+@@ -212,6 +212,7 @@ struct fb_deferred_io {
+ 	/* delay between mkwrite and deferred handler */
+ 	unsigned long delay;
+ 	bool sort_pagereflist; /* sort pagelist by offset */
++	int open_count; /* number of opened files; protected by fb_info lock */
+ 	struct mutex lock; /* mutex that protects the pageref list */
+ 	struct list_head pagereflist; /* list of pagerefs for touched pages */
+ 	/* callback */
 -- 
 2.43.0
 
