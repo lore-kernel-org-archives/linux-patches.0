@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEA63FB21;
-	Wed, 21 Feb 2024 13:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498943C2F;
+	Wed, 21 Feb 2024 13:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522803; cv=none; b=oQkTqvmWRNtQ6xQT5+Jyctc679McD+5WGqY9+gjEGRfHRbev8jfAjbHeEYVHJkHeNU5D0LR83LsCILv9f1hTYmdQZN5jRuTfT4Xlhn5kp47NpTsre1FtOMw9UUUNzC7mIN3yLpSJezLLnoHxqHG3eFhIYaSYMtc3QjCTWg3tNfg=
+	t=1708522806; cv=none; b=WDxAtog9SyBfuuh2UhMXrFCHrhyXSKmbSSLetCb92Q6x5LclJzDA+M0cm6am+UkWz++kjLsDvCMRWFQZ2IWugrppqPEVRroEvQhfWik89VxwZtNuMS6iEZ5yAXq3hjq65TY7ncRM1qRMN1QgHFZChsABr4eargBqvgWtzGWB+Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522803; c=relaxed/simple;
-	bh=z3ZfeLVzKTEIW+LaDzlZLPTp1+LfCJFf3Ad3GelIEvY=;
+	s=arc-20240116; t=1708522806; c=relaxed/simple;
+	bh=97KYGg8IJiShj2O9xGCTISHRoGptnUHIT+HWXc2CPxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nv5jN8IYsXqD/CA/WYW0FAh24qBg+nP4TcZBtx7Z4SnSMiyxO9mkgqbBzTPad7goV8rrYwMWBoD2vxSb5iU1pRDCJIlxot3hbpil2xuNIl2y5mWgOPRLO5E8yuAx4ORhZ6lIKofKSSvK+bN8WrNNEC9GAMxeedZ3f9WcWYloGXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Danzuzq5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mBrjp7HV5Zmm211xqa9biEQAI2EqVIATAAnk5okydZ0N9CUdh+chE4Xs05o26ZQkw0wZBv+8jPjiP+xTreSJsKO5cFh/OjUZ9FwI7GFyRqJZVDmAwJ6BWF+PuHQUszDHPTg1yil5ejt7gmwxz3z5l01eRVvSVFWzn22eyiq9bEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXpezb9A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Danzuzq5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0D7C433C7;
-	Wed, 21 Feb 2024 13:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXpezb9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBADBC43390;
+	Wed, 21 Feb 2024 13:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522803;
-	bh=z3ZfeLVzKTEIW+LaDzlZLPTp1+LfCJFf3Ad3GelIEvY=;
+	s=korg; t=1708522806;
+	bh=97KYGg8IJiShj2O9xGCTISHRoGptnUHIT+HWXc2CPxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Danzuzq5ijPnaznUiZj+f4iyHxWEa4u4ekUIsRicCUzjD6LPEUQ2st3/uCC1iL4aX
-	 t70rpYF6IFlO0p82GlONe0fUqcRK8k5rRDcLsEENU2On/yqexzm8sqVen1Re3P+S8d
-	 udlQQc2a/gfrVCfb9HCVKshiZYvuE+XuOlMfqMVo=
+	b=LXpezb9ArIihPCRWEuTny0uqWoHkhyr9JhXX9g/RQa0JEVRxcozL+9Gri1s58JMla
+	 QTaOyfaQ9cpOzj3EX1esBQ9JQFRWKc+1PVc9KBw2JE+g3qfJvZrOMyI6jqtfxaESeF
+	 zqPmVSb4wPfINooQxNDNuGEsle2NXPwHkm/2HmP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Xiubo Li <xiubli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Eric Huang <JinHuiEric.Huang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 263/476] ceph: fix deadlock or deadcode of misusing dget()
-Date: Wed, 21 Feb 2024 14:05:14 +0100
-Message-ID: <20240221130017.564060454@linuxfoundation.org>
+Subject: [PATCH 5.15 264/476] drm/amd/powerplay: Fix kzalloc parameter ATOM_Tonga_PPM_Table in get_platform_power_management_table()
+Date: Wed, 21 Feb 2024 14:05:15 +0100
+Message-ID: <20240221130017.606436250@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -47,67 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit b493ad718b1f0357394d2cdecbf00a44a36fa085 ]
+[ Upstream commit 6616b5e1999146b1304abe78232af810080c67e3 ]
 
-The lock order is incorrect between denty and its parent, we should
-always make sure that the parent get the lock first.
+In 'struct phm_ppm_table *ptr' allocation using kzalloc, an incorrect
+structure type is passed to sizeof() in kzalloc, larger structure types
+were used, thus using correct type 'struct phm_ppm_table' fixes the
+below:
 
-But since this deadcode is never used and the parent dir will always
-be set from the callers, let's just remove it.
+drivers/gpu/drm/amd/amdgpu/../pm/powerplay/hwmgr/process_pptables_v1_0.c:203 get_platform_power_management_table() warn: struct type mismatch 'phm_ppm_table vs _ATOM_Tonga_PPM_Table'
 
-Link: https://lore.kernel.org/r/20231116081919.GZ1957730@ZenIV
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Cc: Eric Huang <JinHuiEric.Huang@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index ca92f2d2f3c7..e4e79392a2df 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -4536,12 +4536,14 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
- 			       struct inode *dir,
- 			       int mds, int drop, int unless)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+index f2a55c1413f5..17882f8dfdd3 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/process_pptables_v1_0.c
+@@ -200,7 +200,7 @@ static int get_platform_power_management_table(
+ 		struct pp_hwmgr *hwmgr,
+ 		ATOM_Tonga_PPM_Table *atom_ppm_table)
  {
--	struct dentry *parent = NULL;
- 	struct ceph_mds_request_release *rel = *p;
- 	struct ceph_dentry_info *di = ceph_dentry(dentry);
- 	int force = 0;
- 	int ret;
+-	struct phm_ppm_table *ptr = kzalloc(sizeof(ATOM_Tonga_PPM_Table), GFP_KERNEL);
++	struct phm_ppm_table *ptr = kzalloc(sizeof(*ptr), GFP_KERNEL);
+ 	struct phm_ppt_v1_information *pp_table_information =
+ 		(struct phm_ppt_v1_information *)(hwmgr->pptable);
  
-+	/* This shouldn't happen */
-+	BUG_ON(!dir);
-+
- 	/*
- 	 * force an record for the directory caps if we have a dentry lease.
- 	 * this is racy (can't take i_ceph_lock and d_lock together), but it
-@@ -4551,14 +4553,9 @@ int ceph_encode_dentry_release(void **p, struct dentry *dentry,
- 	spin_lock(&dentry->d_lock);
- 	if (di->lease_session && di->lease_session->s_mds == mds)
- 		force = 1;
--	if (!dir) {
--		parent = dget(dentry->d_parent);
--		dir = d_inode(parent);
--	}
- 	spin_unlock(&dentry->d_lock);
- 
- 	ret = ceph_encode_inode_release(p, dir, mds, drop, unless, force);
--	dput(parent);
- 
- 	spin_lock(&dentry->d_lock);
- 	if (ret && di->lease_session && di->lease_session->s_mds == mds) {
 -- 
 2.43.0
 
