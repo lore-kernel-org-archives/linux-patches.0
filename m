@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFE169942;
-	Wed, 21 Feb 2024 13:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1F669942;
+	Wed, 21 Feb 2024 13:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523655; cv=none; b=aU3LrO1CtwdK9/MIOWIEajf6QOIdWtZyRTitll0w3GxfCbE0A+CCZnhw6vT1nkwTLHuge0T/3p+BZiiao6A47J111OKhY7CiuSw/yz6UsB5ZCpb2OCYtIO7DdGLxREsVUNiThFIxAAva2TROc62REpdmbuQ/e8CKj4p+/7zUIak=
+	t=1708523659; cv=none; b=VVD9IylqToRREXa0eYC7ZLdLXz62BxCyY6g5YKVcSxaM6yl+VbwmP8WDvZ97bmYcpiOpqqZdGSU0xReWxY7X2hp6k5OUIXSQ5r8IddgEnbRFcUfaFeydfhfoFRsoNrprkwhDb64uUCAB0EHgEgNtJs2OsyrYUv3Mpx/hWdp46FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523655; c=relaxed/simple;
-	bh=jYX4O9t2zkMIVxdMTNyiEIFM7S7sJFm/oxpp3n+hjVM=;
+	s=arc-20240116; t=1708523659; c=relaxed/simple;
+	bh=qZMZv04+fcx6BiNJoTcZXzT3gwOnTwyEG1jlr7eWZDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4d6ixzc2vsrws6S9TQeiAzsRS5Wyy8F+MHcpuTAp7d9xh6f6A/+YYcigaOq+G1OBJI4XaCBh2zi2zFPCt2bxTmiHke4pZtvemNg4Olhn/htythG7TLODZOIrF0b4ZXl3RHMuSTLkgfLtcQ1X73alCJtzlZ+cl83R1u+G3d7m1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbMMx0tj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiECW6iIDBxVPW2xCB/yGGb13Nto74qyN7NwiN61PK9EarM7HxD9hEVY1MJBAbcMtSBvMZQ0x8/d2CIYYlIt3CIgOAxOMSVG103+nfBx5bwayH1KAWFyWEwt0ds+PWsNh3Tq6LPnFdsJbysFGIhNm+9FAEniO712TxCu5+eXOKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvidqamS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbMMx0tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32239C433F1;
-	Wed, 21 Feb 2024 13:54:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvidqamS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DBA6C433F1;
+	Wed, 21 Feb 2024 13:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523655;
-	bh=jYX4O9t2zkMIVxdMTNyiEIFM7S7sJFm/oxpp3n+hjVM=;
+	s=korg; t=1708523658;
+	bh=qZMZv04+fcx6BiNJoTcZXzT3gwOnTwyEG1jlr7eWZDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbMMx0tjRs13vogXhQ2nBzRk//L0tBVox2GPrMBWpuvzCZWx1e2MtzK6pVqPEx3vU
-	 EUfJezT2JFCa1oDQ3lXjkhzc3QCHz7wakJQd2IIaRn99EII8CS0sGNnerHvX7xTR8U
-	 KW/GpPagvXKRYSpwxKq+tMrAVEmXNUpJUpu6SEOk=
+	b=KvidqamS12Y17+Vim0oBDSHkmnCbUH8FC02A6OYLzAOCikyFUIUbCp62DfXdMGSQo
+	 NxnoBQzH4g22nOXjEEuc/drqLlclUS46E00M2L3nSTvNhZ8M7m4Do/sL/2Gw28tvQW
+	 Em4TT+IKGnZLztS2cDDl0QtfOL0ZBbQePctL6FPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/379] usb: cdns3: fix uvc failure work since sg support enabled
-Date: Wed, 21 Feb 2024 14:03:01 +0100
-Message-ID: <20240221125954.994805413@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+c52ab18308964d248092@syzkaller.appspotmail.com,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 020/379] hwrng: core - Fix page fault dead lock on mmap-ed hwrng
+Date: Wed, 21 Feb 2024 14:03:19 +0100
+Message-ID: <20240221125955.517581554@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -50,159 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 1b8be5ecff26201bafb0a554c74e91571299fb94 ]
+commit 78aafb3884f6bc6636efcc1760c891c8500b9922 upstream.
 
-When IP version >= DEV_VER_V2, gadget:sg_supported is true. So uvc gadget
-function driver will use sg to equeue data, first is 8bytes header, the
-second is 1016bytes data.
+There is a dead-lock in the hwrng device read path.  This triggers
+when the user reads from /dev/hwrng into memory also mmap-ed from
+/dev/hwrng.  The resulting page fault triggers a recursive read
+which then dead-locks.
 
-    cdns3_prepare_trb: ep2in: trb 0000000000ac755f, dma buf: 0xbf455000, size: 8, burst: 128 ctrl: 0x00000415 (C=1, T=0, ISP, CHAIN, Normal)
-    cdns3_prepare_trb: ep2in: trb 00000000a574e693, dma buf: 0xc0200fe0, size: 1016, burst: 128 ctrl: 0x00000405 (C=1, T=0, ISP, Normal)
+Fix this by using a stack buffer when calling copy_to_user.
 
-But cdns3_ep_run_transfer() can't correctly handle this case, which only
-support one TRB for ISO transfer.
-
-The controller requires duplicate the TD for each SOF if priv_ep->interval
-is not 1. DMA will read data from DDR to internal FIFO when get SOF. Send
-data to bus when receive IN token. DMA always refill FIFO when get SOF
-regardless host send IN token or not. If host send IN token later, some
-frames data will be lost.
-
-Fixed it by below major steps:
-
-1. Calculate numembers of TRB base on sg_nums and priv_ep->interval.
-2. Remove CHAIN flags for each end TRB of TD when duplicate TD.
-3. The controller requires LINK TRB must be first TRB of TD. When check
-there are not enough TRBs lefts, just fill LINK TRB for left TRBs.
-
-.... CHAIN_TRB DATA_TRB, CHAIN_TRB DATA_TRB,  LINK_TRB ... LINK_TRB
-                                                           ^End of TRB List
-
-Cc:  <stable@vger.kernel.org>
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231224153816.1664687-2-Frank.Li@nxp.com
+Reported-by: Edward Adam Davis <eadavis@qq.com>
+Reported-by: syzbot+c52ab18308964d248092@syzkaller.appspotmail.com
+Fixes: 9996508b3353 ("hwrng: core - Replace u32 in driver API with byte array")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/gadget.c | 51 ++++++++++++++++++++++++++++++--------
- 1 file changed, 40 insertions(+), 11 deletions(-)
+ drivers/char/hw_random/core.c |   34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/usb/cdns3/gadget.c b/drivers/usb/cdns3/gadget.c
-index 82b6fd2bc890..575180a59ad4 100644
---- a/drivers/usb/cdns3/gadget.c
-+++ b/drivers/usb/cdns3/gadget.c
-@@ -1118,6 +1118,7 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
- 	dma_addr_t trb_dma;
- 	u32 togle_pcs = 1;
- 	int sg_iter = 0;
-+	int num_trb_req;
- 	int num_trb;
- 	int address;
- 	u32 control;
-@@ -1126,15 +1127,13 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
- 	struct scatterlist *s = NULL;
- 	bool sg_supported = !!(request->num_mapped_sgs);
+--- a/drivers/char/hw_random/core.c
++++ b/drivers/char/hw_random/core.c
+@@ -24,10 +24,13 @@
+ #include <linux/random.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
++#include <linux/string.h>
+ #include <linux/uaccess.h>
  
-+	num_trb_req = sg_supported ? request->num_mapped_sgs : 1;
-+
-+	/* ISO transfer require each SOF have a TD, each TD include some TRBs */
- 	if (priv_ep->type == USB_ENDPOINT_XFER_ISOC)
--		num_trb = priv_ep->interval;
-+		num_trb = priv_ep->interval * num_trb_req;
- 	else
--		num_trb = sg_supported ? request->num_mapped_sgs : 1;
--
--	if (num_trb > priv_ep->free_trbs) {
--		priv_ep->flags |= EP_RING_FULL;
--		return -ENOBUFS;
--	}
-+		num_trb = num_trb_req;
+ #define RNG_MODULE_NAME		"hw_random"
  
- 	priv_req = to_cdns3_request(request);
- 	address = priv_ep->endpoint.desc->bEndpointAddress;
-@@ -1183,14 +1182,31 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
++#define RNG_BUFFER_SIZE (SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES)
++
+ static struct hwrng *current_rng;
+ /* the current rng has been explicitly chosen by user via sysfs */
+ static int cur_rng_set_by_user;
+@@ -59,7 +62,7 @@ static inline int rng_get_data(struct hw
  
- 		link_trb->control = cpu_to_le32(((priv_ep->pcs) ? TRB_CYCLE : 0) |
- 				    TRB_TYPE(TRB_LINK) | TRB_TOGGLE | ch_bit);
+ static size_t rng_buffer_size(void)
+ {
+-	return SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES;
++	return RNG_BUFFER_SIZE;
+ }
+ 
+ static void add_early_randomness(struct hwrng *rng)
+@@ -206,6 +209,7 @@ static inline int rng_get_data(struct hw
+ static ssize_t rng_dev_read(struct file *filp, char __user *buf,
+ 			    size_t size, loff_t *offp)
+ {
++	u8 buffer[RNG_BUFFER_SIZE];
+ 	ssize_t ret = 0;
+ 	int err = 0;
+ 	int bytes_read, len;
+@@ -233,34 +237,37 @@ static ssize_t rng_dev_read(struct file
+ 			if (bytes_read < 0) {
+ 				err = bytes_read;
+ 				goto out_unlock_reading;
++			} else if (bytes_read == 0 &&
++				   (filp->f_flags & O_NONBLOCK)) {
++				err = -EAGAIN;
++				goto out_unlock_reading;
+ 			}
 +
-+		if (priv_ep->type == USB_ENDPOINT_XFER_ISOC) {
-+			/*
-+			 * ISO require LINK TRB must be first one of TD.
-+			 * Fill LINK TRBs for left trb space to simply software process logic.
-+			 */
-+			while (priv_ep->enqueue) {
-+				*trb = *link_trb;
-+				trace_cdns3_prepare_trb(priv_ep, trb);
-+
-+				cdns3_ep_inc_enq(priv_ep);
-+				trb = priv_ep->trb_pool + priv_ep->enqueue;
-+				priv_req->trb = trb;
-+			}
+ 			data_avail = bytes_read;
+ 		}
+ 
+-		if (!data_avail) {
+-			if (filp->f_flags & O_NONBLOCK) {
+-				err = -EAGAIN;
+-				goto out_unlock_reading;
+-			}
+-		} else {
+-			len = data_avail;
++		len = data_avail;
++		if (len) {
+ 			if (len > size)
+ 				len = size;
+ 
+ 			data_avail -= len;
+ 
+-			if (copy_to_user(buf + ret, rng_buffer + data_avail,
+-								len)) {
++			memcpy(buffer, rng_buffer + data_avail, len);
 +		}
-+	}
++		mutex_unlock(&reading_mutex);
++		put_rng(rng);
 +
-+	if (num_trb > priv_ep->free_trbs) {
-+		priv_ep->flags |= EP_RING_FULL;
-+		return -ENOBUFS;
- 	}
- 
- 	if (priv_dev->dev_ver <= DEV_VER_V2)
- 		togle_pcs = cdns3_wa1_update_guard(priv_ep, trb);
- 
--	if (sg_supported)
--		s = request->sg;
--
- 	/* set incorrect Cycle Bit for first trb*/
- 	control = priv_ep->pcs ? 0 : TRB_CYCLE;
- 	trb->length = 0;
-@@ -1208,6 +1224,9 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
- 	do {
- 		u32 length;
- 
-+		if (!(sg_iter % num_trb_req) && sg_supported)
-+			s = request->sg;
-+
- 		/* fill TRB */
- 		control |= TRB_TYPE(TRB_NORMAL);
- 		if (sg_supported) {
-@@ -1249,7 +1268,7 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
- 		if (sg_supported) {
- 			trb->control |= cpu_to_le32(TRB_ISP);
- 			/* Don't set chain bit for last TRB */
--			if (sg_iter < num_trb - 1)
-+			if ((sg_iter % num_trb_req) < num_trb_req - 1)
- 				trb->control |= cpu_to_le32(TRB_CHAIN);
- 
- 			s = sg_next(s);
-@@ -1507,6 +1526,12 @@ static void cdns3_transfer_completed(struct cdns3_device *priv_dev,
- 
- 		/* The TRB was changed as link TRB, and the request was handled at ep_dequeue */
- 		while (TRB_FIELD_TO_TYPE(le32_to_cpu(trb->control)) == TRB_LINK) {
-+
-+			/* ISO ep_traddr may stop at LINK TRB */
-+			if (priv_ep->dequeue == cdns3_get_dma_pos(priv_dev, priv_ep) &&
-+			    priv_ep->type == USB_ENDPOINT_XFER_ISOC)
-+				break;
-+
- 			trace_cdns3_complete_trb(priv_ep, trb);
- 			cdns3_ep_inc_deq(priv_ep);
- 			trb = priv_ep->trb_pool + priv_ep->dequeue;
-@@ -1539,6 +1564,10 @@ static void cdns3_transfer_completed(struct cdns3_device *priv_dev,
++		if (len) {
++			if (copy_to_user(buf + ret, buffer, len)) {
+ 				err = -EFAULT;
+-				goto out_unlock_reading;
++				goto out;
  			}
  
- 			if (request_handled) {
-+				/* TRBs are duplicated by priv_ep->interval time for ISO IN */
-+				if (priv_ep->type == USB_ENDPOINT_XFER_ISOC && priv_ep->dir)
-+					request->actual /= priv_ep->interval;
-+
- 				cdns3_gadget_giveback(priv_ep, priv_req, 0);
- 				request_handled = false;
- 				transfer_end = false;
--- 
-2.43.0
-
+ 			size -= len;
+ 			ret += len;
+ 		}
+ 
+-		mutex_unlock(&reading_mutex);
+-		put_rng(rng);
+ 
+ 		if (need_resched())
+ 			schedule_timeout_interruptible(1);
+@@ -271,6 +278,7 @@ static ssize_t rng_dev_read(struct file
+ 		}
+ 	}
+ out:
++	memzero_explicit(buffer, sizeof(buffer));
+ 	return ret ? : err;
+ 
+ out_unlock_reading:
 
 
