@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3ABF78B73;
-	Wed, 21 Feb 2024 14:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4293D0A1;
+	Wed, 21 Feb 2024 14:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525525; cv=none; b=Cb5mu5arGRdBewa/3kVaE19xxinXlOA0waLfYaSi8sOiqYMtNwyGN1vMw0vSroUPtiHanR4kedOjXb9NTEZlTJvd+UQS2WGGsIEEcJMvRSIbOxMJZn2PaGdPSXZauseFDvM8sc1wQWGBpLIY4Hf9RIGHkbs+mZ32d7HuId1klgA=
+	t=1708525528; cv=none; b=lHW7IMmUB3ejgxXui/fxjaGlCz4LggrrZ3OzE3oqaEB63qBaHfu8p0ZEi1fcsEbBX6iU1iAouJYuLyeMUYVidIpVJWc2MJv8YfYcYxOscauAjQOSMpdlC7VMRN0PmYHxz7ybwGCzPIU/GKBO0ml0FAWG04MV4vx/tf4LXunBvx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525525; c=relaxed/simple;
-	bh=J4bwz41iUuXwGz/Z7zS5jskbo0hqezDykZte43225qU=;
+	s=arc-20240116; t=1708525528; c=relaxed/simple;
+	bh=0a6TuoKdfS4f/djxn2eo0fhW0Vovc7bSsDDgAp/KDs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3pbKwK3Po5OcJLTMrrC44+IkzDZVCCRW7DtrNiUarYSnur/FSmxLdO7ny9H4eCHvtKQ3nh8Llqr86KdTyS7kOlz+PNEu9R6NJDMoXQynnh1tfbHVY9LhyLb5PYNStoLU7xZzeh6XhmZIBA5YQU/Z9y0VaSvXvT8d5F1XHrVnMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHf1SRD7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ICGS2pgcgS4/hm68oY9972txf6hsfJKnxU/8CHsbRBNKuik9vt9Q23lUlQozzBvE/wcX859ZYfKZHdyIIAW2F6DxhEWhoytsyHsFWxsF84JuyO8SEe993eDHzSQng0kZleVAX5RXMBw1o5yuvDsVHPm33jpNlg1pxU6fg3RJuVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THW2QrX8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHf1SRD7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3DFC43390;
-	Wed, 21 Feb 2024 14:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THW2QrX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E70C433C7;
+	Wed, 21 Feb 2024 14:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525525;
-	bh=J4bwz41iUuXwGz/Z7zS5jskbo0hqezDykZte43225qU=;
+	s=korg; t=1708525528;
+	bh=0a6TuoKdfS4f/djxn2eo0fhW0Vovc7bSsDDgAp/KDs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHf1SRD7m97XnIm5GaTMY74rc6QFdDeD/lUhUe73PEpV5yuibx5sSAymCmakK4rzw
-	 15ehIZ8I8g9Jqw5u7L37ZDjdM/wVAfn0ELBEPZk3YTfzt8vhoe4qefZQ6OrWAxLs2G
-	 fzMOjnU19avrf8o3vhxXiBwbS9b/PIz0jzZ0DgWU=
+	b=THW2QrX8bMao3rD4mUF+bkf2TrClDpi3tdLD/uJib/kNzGJKv4Q58YLEn7XrK5XM5
+	 cTeVWS5EOaEE4xXDVjRh/yfCI2mcbBxztVtIIw31Ddtfv7i4mceUaLGSophB0//JWJ
+	 K3UEs8nJeMei0ZZ5i1LpFM3R9OrnOafq01SVTgu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 182/267] selftests: net: avoid just another constant wait
-Date: Wed, 21 Feb 2024 14:08:43 +0100
-Message-ID: <20240221125945.841071614@linuxfoundation.org>
+Subject: [PATCH 5.4 183/267] atm: idt77252: fix a memleak in open_card_ubr0
+Date: Wed, 21 Feb 2024 14:08:44 +0100
+Message-ID: <20240221125945.870534780@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,67 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit 691bb4e49c98a47bc643dd808453136ce78b15b4 ]
+[ Upstream commit f3616173bf9be9bf39d131b120d6eea4e6324cb5 ]
 
-Using hard-coded constant timeout to wait for some expected
-event is deemed to fail sooner or later, especially in slow
-env.
+When alloc_scq fails, card->vcs[0] (i.e. vc) should be freed. Otherwise,
+in the following call chain:
 
-Our CI has spotted another of such race:
-   # TEST: ipv6: cleanup of cached exceptions - nexthop objects          [FAIL]
-   #   can't delete veth device in a timely manner, PMTU dst likely leaked
+idt77252_init_one
+  |-> idt77252_dev_open
+        |-> open_card_ubr0
+              |-> alloc_scq [failed]
+  |-> deinit_card
+        |-> vfree(card->vcs);
 
-Replace the crude sleep with a loop looking for the expected condition
-at low interval for a much longer range.
+card->vcs is freed and card->vcs[0] is leaked.
 
-Fixes: b3cc4f8a8a41 ("selftests: pmtu: add explicit tests for PMTU exceptions cleanup")
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/fd5c745e9bb665b724473af6a9373a8c2a62b247.1706812005.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/pmtu.sh | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/atm/idt77252.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
-index 88be9083b923..a4dc32729749 100755
---- a/tools/testing/selftests/net/pmtu.sh
-+++ b/tools/testing/selftests/net/pmtu.sh
-@@ -1129,6 +1129,13 @@ check_command() {
- 	return 0
- }
+diff --git a/drivers/atm/idt77252.c b/drivers/atm/idt77252.c
+index c60611196786..605e992d25df 100644
+--- a/drivers/atm/idt77252.c
++++ b/drivers/atm/idt77252.c
+@@ -2935,6 +2935,8 @@ open_card_ubr0(struct idt77252_dev *card)
+ 	vc->scq = alloc_scq(card, vc->class);
+ 	if (!vc->scq) {
+ 		printk("%s: can't get SCQ.\n", card->name);
++		kfree(card->vcs[0]);
++		card->vcs[0] = NULL;
+ 		return -ENOMEM;
+ 	}
  
-+check_running() {
-+	pid=${1}
-+	cmd=${2}
-+
-+	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
-+}
-+
- test_cleanup_vxlanX_exception() {
- 	outer="${1}"
- 	encap="vxlan"
-@@ -1159,11 +1166,12 @@ test_cleanup_vxlanX_exception() {
- 
- 	${ns_a} ip link del dev veth_A-R1 &
- 	iplink_pid=$!
--	sleep 1
--	if [ "$(cat /proc/${iplink_pid}/cmdline 2>/dev/null | tr -d '\0')" = "iplinkdeldevveth_A-R1" ]; then
--		err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
--		return 1
--	fi
-+	for i in $(seq 1 20); do
-+		check_running ${iplink_pid} "iplinkdeldevveth_A-R1" || return 0
-+		sleep 0.1
-+	done
-+	err "  can't delete veth device in a timely manner, PMTU dst likely leaked"
-+	return 1
- }
- 
- test_cleanup_ipv6_exception() {
 -- 
 2.43.0
 
