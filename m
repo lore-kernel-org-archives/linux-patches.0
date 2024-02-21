@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2593C69942;
-	Wed, 21 Feb 2024 14:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF2269942;
+	Wed, 21 Feb 2024 14:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525025; cv=none; b=Y0XV3bc+Fw6g4R5S9pXO1jDfwdfgn1mITjVoVCNdeV4ksfZ7d7mv301evzAKh4+HC9GSkofyYWMA6PxJoAWTTt6yC7pOvRjQYNANDnQEm9RgBGtXpr+z7JdYGhAq727udo9QOjoVKq7mKryezlZ3m9Zmb+yiRTb1m+xBfb4ebVs=
+	t=1708525028; cv=none; b=F8qiSNje3gytSeaX4Lvv/nyUpOlB1wjV975mONhkftfkX8otn8k4unI5T5k4irhvFfL8jIy9Mc/WyPtvbxN5q6UOeN/EJf2JHQZ0olwdafrCFg2Rr7wUu/9DMt3nlfermm879ufSE9aQB/QzYi5nFfXq6xv+v9HJh5JDNzUqQj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525025; c=relaxed/simple;
-	bh=0LFGoDtGidrrJTFPy1pfakleeTI4pdUZShVZIOk/wH8=;
+	s=arc-20240116; t=1708525028; c=relaxed/simple;
+	bh=RovVNGdt3j+glhWlc2bhQzDLqW0OQDMts8/IkPTElDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V50xXRfjjfvFdWhYTEfr5XsjQlSDJE2lvcfEa/n05tR+HNwWlj0caP1rj/gADzZQ4+p4Otp7XuCZ3FKZ86ZyCF7m3uLOctn2h3N2R13746BpeDaxuWkOpbaRiaZVwZLe+bzD2J6ziT05J1RysuLzmDXxH6eBLjogvdXwbynyxyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QS/ijctK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emi8dGWk+I1INfouBWIT+OtYz1iC68+Ra9FCYra575TYKHcn5KqA7ra+wDvnYc8rcMqRwXCGg57OcqxcjWQsWlKz/xzx+c2qjnG7bxXBfzZns3m9tVLD2EIVlB8rkaI7f79gPvovLDdjR9WyGybAyy5bT/Tz0ofm7295BYIes9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPAY7zNp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QS/ijctK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73FDC433F1;
-	Wed, 21 Feb 2024 14:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPAY7zNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1328C433C7;
+	Wed, 21 Feb 2024 14:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525025;
-	bh=0LFGoDtGidrrJTFPy1pfakleeTI4pdUZShVZIOk/wH8=;
+	s=korg; t=1708525028;
+	bh=RovVNGdt3j+glhWlc2bhQzDLqW0OQDMts8/IkPTElDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QS/ijctKm0LhwbecX7twPrCOKRMS4iWW9iYk77t8WTBty+UBypeCL8G1Zr2rzNBJN
-	 duSVpf/dm89Pa9CkHONHz2KTTmWh7lc6BHSE3ojJl/EpknG9bqMx9nhhe5hoxXq5PV
-	 D1vAektUCcyX/yQdFGNzJodB9NcbXTgnbYSMZZnA=
+	b=VPAY7zNpUEwjB+EkFcwfcpeF/QXGqnmGKWBiNIMaeZ2LN5UdWR7VcC907XJdN9k7p
+	 NenQ7XASJhclvXFIcoZkPO5JXe3xpZkHqBeqCoa30iHEoPJt3uZO9PXSc/YJGCBi7Z
+	 /14B6N4heOAmdmIbDD878Hb4jbJEmcqPIz1CZ5SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 037/267] net/mlx5e: fix a double-free in arfs_create_groups
-Date: Wed, 21 Feb 2024 14:06:18 +0100
-Message-ID: <20240221125941.190756291@linuxfoundation.org>
+Subject: [PATCH 5.4 038/267] netfilter: nf_tables: restrict anonymous set and map names to 16 bytes
+Date: Wed, 21 Feb 2024 14:06:19 +0100
+Message-ID: <20240221125941.221121311@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,98 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3c6d5189246f590e4e1f167991558bdb72a4738b ]
+[ Upstream commit b462579b2b86a8f5230543cadd3a4836be27baf7 ]
 
-When `in` allocated by kvzalloc fails, arfs_create_groups will free
-ft->g and return an error. However, arfs_create_table, the only caller of
-arfs_create_groups, will hold this error and call to
-mlx5e_destroy_flow_table, in which the ft->g will be freed again.
+nftables has two types of sets/maps, one where userspace defines the
+name, and anonymous sets/maps, where userspace defines a template name.
 
-Fixes: 1cabe6b0965e ("net/mlx5e: Create aRFS flow tables")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+For the latter, kernel requires presence of exactly one "%d".
+nftables uses "__set%d" and "__map%d" for this.  The kernel will
+expand the format specifier and replaces it with the smallest unused
+number.
+
+As-is, userspace could define a template name that allows to move
+the set name past the 256 bytes upperlimit (post-expansion).
+
+I don't see how this could be a problem, but I would prefer if userspace
+cannot do this, so add a limit of 16 bytes for the '%d' template name.
+
+16 bytes is the old total upper limit for set names that existed when
+nf_tables was merged initially.
+
+Fixes: 387454901bd6 ("netfilter: nf_tables: Allow set names of up to 255 chars")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_arfs.c | 26 +++++++++++--------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ net/netfilter/nf_tables_api.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-index b75074d8d22b..18c2abbe0b7e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-@@ -227,11 +227,13 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 534126f3687b..49e4ffa33a4e 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -24,6 +24,7 @@
+ #include <net/sock.h>
  
- 	ft->g = kcalloc(MLX5E_ARFS_NUM_GROUPS,
- 			sizeof(*ft->g), GFP_KERNEL);
--	in = kvzalloc(inlen, GFP_KERNEL);
--	if  (!in || !ft->g) {
--		kfree(ft->g);
--		kvfree(in);
-+	if (!ft->g)
- 		return -ENOMEM;
+ #define NFT_MODULE_AUTOLOAD_LIMIT (MODULE_NAME_LEN - sizeof("nft-expr-255-"))
++#define NFT_SET_MAX_ANONLEN 16
+ 
+ unsigned int nf_tables_net_id __read_mostly;
+ EXPORT_SYMBOL_GPL(nf_tables_net_id);
+@@ -3395,6 +3396,9 @@ static int nf_tables_set_alloc_name(struct nft_ctx *ctx, struct nft_set *set,
+ 		if (p[1] != 'd' || strchr(p + 2, '%'))
+ 			return -EINVAL;
+ 
++		if (strnlen(name, NFT_SET_MAX_ANONLEN) >= NFT_SET_MAX_ANONLEN)
++			return -EINVAL;
 +
-+	in = kvzalloc(inlen, GFP_KERNEL);
-+	if (!in) {
-+		err = -ENOMEM;
-+		goto err_free_g;
- 	}
- 
- 	mc = MLX5_ADDR_OF(create_flow_group_in, in, match_criteria);
-@@ -251,7 +253,7 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 		break;
- 	default:
- 		err = -EINVAL;
--		goto out;
-+		goto err_free_in;
- 	}
- 
- 	switch (type) {
-@@ -273,7 +275,7 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 		break;
- 	default:
- 		err = -EINVAL;
--		goto out;
-+		goto err_free_in;
- 	}
- 
- 	MLX5_SET_CFG(in, match_criteria_enable, MLX5_MATCH_OUTER_HEADERS);
-@@ -282,7 +284,7 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 	MLX5_SET_CFG(in, end_flow_index, ix - 1);
- 	ft->g[ft->num_groups] = mlx5_create_flow_group(ft->t, in);
- 	if (IS_ERR(ft->g[ft->num_groups]))
--		goto err;
-+		goto err_clean_group;
- 	ft->num_groups++;
- 
- 	memset(in, 0, inlen);
-@@ -291,18 +293,20 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 	MLX5_SET_CFG(in, end_flow_index, ix - 1);
- 	ft->g[ft->num_groups] = mlx5_create_flow_group(ft->t, in);
- 	if (IS_ERR(ft->g[ft->num_groups]))
--		goto err;
-+		goto err_clean_group;
- 	ft->num_groups++;
- 
- 	kvfree(in);
- 	return 0;
- 
--err:
-+err_clean_group:
- 	err = PTR_ERR(ft->g[ft->num_groups]);
- 	ft->g[ft->num_groups] = NULL;
--out:
-+err_free_in:
- 	kvfree(in);
--
-+err_free_g:
-+	kfree(ft->g);
-+	ft->g = NULL;
- 	return err;
- }
- 
+ 		inuse = (unsigned long *)get_zeroed_page(GFP_KERNEL);
+ 		if (inuse == NULL)
+ 			return -ENOMEM;
 -- 
 2.43.0
 
