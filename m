@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F15B7BB16;
-	Wed, 21 Feb 2024 13:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EA47E774;
+	Wed, 21 Feb 2024 13:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523961; cv=none; b=bXCxuU4fQO09HwmFp3Zp2eA49W+tgcalPlmdAP9wBlOgfVjhf95myzicy4ctyRbjwsl3+4PLkCf9ltQ8dTkN46gOiYQpDZtasUjIKNiWmE4Vn5bBtlZL/l6+JPXFVk8EZmdPDK3esLjc82zCD6DrAKzDW34VsMvojMMuBF03Ldk=
+	t=1708523964; cv=none; b=e0xTOdBTzf1/qNWzLSNLys22juojhVJj93RZEL9DpWZUqGz68dKDRFjHsIVF0apJGF5Kfs4UMbNzYjyjfMf06odHoRdz4qNGhnvJAyOERgdz9Ve31y3LL8SyRWoMg7qI7/PICXtVMn9Wd+r1HbgPqbbaCdkQ9zN4JFftCJbO9v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523961; c=relaxed/simple;
-	bh=HlngtkI1J5OCUkhIgGLQ1mzjETONitHHu2Seis6pUuc=;
+	s=arc-20240116; t=1708523964; c=relaxed/simple;
+	bh=PB9eHq2iny83WXjgDg6InCg8j9w+6wPQd1+UNLacLCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lkMXstJRI8QCmoZqSxFjngDYUPmdTeBpLc5o8Iv2D2YSChl8HOoSOsrne8wNnCJwGceMbFsinVNigVoZ19ReFqONbwS9dk9c6Y+kF31HUA2kKe2sZaB8+9opmVafGiEZDMrz9WIa1cQXowUzJyASp6+vy1myobVRnqKUY3R7Hmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMy8rZox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATNB54uqKygkECDE4BHIW5gRdJ0L8yhdcv/FEcGTcpr7j1Ckb2U5GAizafKsNCam/wY/bOS4hjVWvFGPj1o619hFQW+iQluvAlSyDYmC2aWGMMm8IGp15vUhTrPWjVkPUKSz030koFp+XTvL7q8tf/yAseM4qnhTzo4jekl6kBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GtBvoYKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMy8rZox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE62C433F1;
-	Wed, 21 Feb 2024 13:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GtBvoYKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC376C433B2;
+	Wed, 21 Feb 2024 13:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523961;
-	bh=HlngtkI1J5OCUkhIgGLQ1mzjETONitHHu2Seis6pUuc=;
+	s=korg; t=1708523964;
+	bh=PB9eHq2iny83WXjgDg6InCg8j9w+6wPQd1+UNLacLCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMy8rZoxpEnvc+9BUmXLbHSL2nuH/iTc/H9WuQ0axgAF7gi/WNLhzhzXXhmtutLDf
-	 49skQiPpwsqlJYJyLEuIfPlLbKNrgKXTScmZUtZh5JxLZUKW8FaXBMV+OPJMgKZ+NJ
-	 5T4+Uesk0JVPXDDYFIn72yPstSYJKOYqROAhTMac=
+	b=GtBvoYKQ1tyVsOcdMc4wSS45bub0GfF52am/t9pHhsuKURk785FXEy5kuvdtSQdWV
+	 aBhLaoWEQa1m01yzlmWeqrDQlJNbxWvTdJsOuR/qqHAJUprI0B3jJdr0tLfY0+yeV4
+	 Nt8BbwL335Uul2FoP0mqZ9fpF86r4eVOm7Dv3RLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Junichi Nomura <junichi.nomura@nec.com>,
+	Derek Barbosa <debarbos@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 104/379] powerpc/mm: Fix build failures due to arch_reserved_kernel_pages()
-Date: Wed, 21 Feb 2024 14:04:43 +0100
-Message-ID: <20240221125957.995067824@linuxfoundation.org>
+Subject: [PATCH 5.10 105/379] x86/boot: Ignore NMIs during very early boot
+Date: Wed, 21 Feb 2024 14:04:44 +0100
+Message-ID: <20240221125958.024823108@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -44,70 +52,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Jun'ichi Nomura <junichi.nomura@nec.com>
 
-[ Upstream commit d8c3f243d4db24675b653f0568bb65dae34e6455 ]
+[ Upstream commit 78a509fba9c9b1fcb77f95b7c6be30da3d24823a ]
 
-With NUMA=n and FA_DUMP=y or PRESERVE_FA_DUMP=y the build fails with:
+When there are two racing NMIs on x86, the first NMI invokes NMI handler and
+the 2nd NMI is latched until IRET is executed.
 
-  arch/powerpc/kernel/fadump.c:1739:22: error: no previous prototype for ‘arch_reserved_kernel_pages’ [-Werror=missing-prototypes]
-  1739 | unsigned long __init arch_reserved_kernel_pages(void)
-       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+If panic on NMI and panic kexec are enabled, the first NMI triggers
+panic and starts booting the next kernel via kexec. Note that the 2nd
+NMI is still latched. During the early boot of the next kernel, once
+an IRET is executed as a result of a page fault, then the 2nd NMI is
+unlatched and invokes the NMI handler.
 
-The prototype for arch_reserved_kernel_pages() is in include/linux/mm.h,
-but it's guarded by __HAVE_ARCH_RESERVED_KERNEL_PAGES. The powerpc
-headers define __HAVE_ARCH_RESERVED_KERNEL_PAGES in asm/mmzone.h, which
-is not included into the generic headers when NUMA=n.
+However, NMI handler is not set up at the early stage of boot, which
+results in a boot failure.
 
-Move the definition of __HAVE_ARCH_RESERVED_KERNEL_PAGES into asm/mmu.h
-which is included regardless of NUMA=n.
+Avoid such problems by setting up a NOP handler for early NMIs.
 
-Additionally the ifdef around __HAVE_ARCH_RESERVED_KERNEL_PAGES needs to
-also check for CONFIG_PRESERVE_FA_DUMP.
+[ mingo: Refined the changelog. ]
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231130114433.3053544-1-mpe@ellerman.id.au
+Signed-off-by: Jun'ichi Nomura <junichi.nomura@nec.com>
+Signed-off-by: Derek Barbosa <debarbos@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/mmu.h    | 4 ++++
- arch/powerpc/include/asm/mmzone.h | 3 ---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/boot/compressed/ident_map_64.c    | 5 +++++
+ arch/x86/boot/compressed/idt_64.c          | 1 +
+ arch/x86/boot/compressed/idt_handlers_64.S | 1 +
+ arch/x86/boot/compressed/misc.h            | 1 +
+ 4 files changed, 8 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/mmu.h b/arch/powerpc/include/asm/mmu.h
-index 255a1837e9f7..3a5a27318a0e 100644
---- a/arch/powerpc/include/asm/mmu.h
-+++ b/arch/powerpc/include/asm/mmu.h
-@@ -390,5 +390,9 @@ extern void *abatron_pteptrs[2];
- #include <asm/nohash/mmu.h>
- #endif
- 
-+#if defined(CONFIG_FA_DUMP) || defined(CONFIG_PRESERVE_FA_DUMP)
-+#define __HAVE_ARCH_RESERVED_KERNEL_PAGES
-+#endif
+diff --git a/arch/x86/boot/compressed/ident_map_64.c b/arch/x86/boot/compressed/ident_map_64.c
+index f4a2e6d373b2..1e4eb3894ec4 100644
+--- a/arch/x86/boot/compressed/ident_map_64.c
++++ b/arch/x86/boot/compressed/ident_map_64.c
+@@ -367,3 +367,8 @@ void do_boot_page_fault(struct pt_regs *regs, unsigned long error_code)
+ 	 */
+ 	add_identity_map(address, end);
+ }
 +
- #endif /* __KERNEL__ */
- #endif /* _ASM_POWERPC_MMU_H_ */
-diff --git a/arch/powerpc/include/asm/mmzone.h b/arch/powerpc/include/asm/mmzone.h
-index 6cda76b57c5d..bd1a8d7256ff 100644
---- a/arch/powerpc/include/asm/mmzone.h
-+++ b/arch/powerpc/include/asm/mmzone.h
-@@ -42,9 +42,6 @@ u64 memory_hotplug_max(void);
- #else
- #define memory_hotplug_max() memblock_end_of_DRAM()
- #endif /* CONFIG_NEED_MULTIPLE_NODES */
--#ifdef CONFIG_FA_DUMP
--#define __HAVE_ARCH_RESERVED_KERNEL_PAGES
--#endif
++void do_boot_nmi_trap(struct pt_regs *regs, unsigned long error_code)
++{
++	/* Empty handler to ignore NMI during early boot */
++}
+diff --git a/arch/x86/boot/compressed/idt_64.c b/arch/x86/boot/compressed/idt_64.c
+index 804a502ee0d2..eb30bb20c33b 100644
+--- a/arch/x86/boot/compressed/idt_64.c
++++ b/arch/x86/boot/compressed/idt_64.c
+@@ -45,6 +45,7 @@ void load_stage2_idt(void)
+ 	boot_idt_desc.address = (unsigned long)boot_idt;
  
- #ifdef CONFIG_MEMORY_HOTPLUG
- extern int create_section_mapping(unsigned long start, unsigned long end,
+ 	set_idt_entry(X86_TRAP_PF, boot_page_fault);
++	set_idt_entry(X86_TRAP_NMI, boot_nmi_trap);
+ 
+ #ifdef CONFIG_AMD_MEM_ENCRYPT
+ 	set_idt_entry(X86_TRAP_VC, boot_stage2_vc);
+diff --git a/arch/x86/boot/compressed/idt_handlers_64.S b/arch/x86/boot/compressed/idt_handlers_64.S
+index 22890e199f5b..4d03c8562f63 100644
+--- a/arch/x86/boot/compressed/idt_handlers_64.S
++++ b/arch/x86/boot/compressed/idt_handlers_64.S
+@@ -70,6 +70,7 @@ SYM_FUNC_END(\name)
+ 	.code64
+ 
+ EXCEPTION_HANDLER	boot_page_fault do_boot_page_fault error_code=1
++EXCEPTION_HANDLER	boot_nmi_trap do_boot_nmi_trap error_code=0
+ 
+ #ifdef CONFIG_AMD_MEM_ENCRYPT
+ EXCEPTION_HANDLER	boot_stage1_vc do_vc_no_ghcb		error_code=1
+diff --git a/arch/x86/boot/compressed/misc.h b/arch/x86/boot/compressed/misc.h
+index d9a631c5973c..0ccc32718483 100644
+--- a/arch/x86/boot/compressed/misc.h
++++ b/arch/x86/boot/compressed/misc.h
+@@ -156,6 +156,7 @@ extern struct desc_ptr boot_idt_desc;
+ 
+ /* IDT Entry Points */
+ void boot_page_fault(void);
++void boot_nmi_trap(void);
+ void boot_stage1_vc(void);
+ void boot_stage2_vc(void);
+ 
 -- 
 2.43.0
 
