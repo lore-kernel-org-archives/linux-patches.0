@@ -1,165 +1,100 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7350B42A8B
-	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 18:16:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA4784FA5;
+	Wed, 21 Feb 2024 18:21:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708539406; cv=none; b=oKVEG6AikOiWBEncQ+NO11Nhnryjl9j1M2FF6xOWI0rwBc1nueSdq3sYLGfyqUtA88Ej7cLdv49r8z6Q9xBOg2KCHcnaocDowY9iDwGjUPj2+EIYLz9FcW8wLW+vRhgZmhs9m1HZmM9yvjwf3MmjvUK3ZD2CJkzj+VG5tL6Ohcw=
+	t=1708539666; cv=none; b=tdO+sQkpVr4NH/Hc9SXKVScuwoQwhL3YGwHNoqqlZBoclBYsqwCjKxsiZccZGOz7c9v/ue26FXy7BdY4+4DEdnBaKT/rdOhbAq+sVHW8a9YkUnxGCu+AIihOe89JcjG2ZwNl5eobv/aeRGllyHbm8f2MiviYiEjCSa7q2s57vpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708539406; c=relaxed/simple;
-	bh=/cidh8CN4VzTaklU4uttUClFrQiCgnt1mOisf1XiD7Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lPTx9iO3yRa7IGEhaH4zXcd6ZTc5tY5y1JfQg4DXaXTGYAsdKANYpHg4/gNtgSI/VYRzcAkTEsrVlmaWNxRO9R3i0twmfgtjZa8HBHCcm9HMZpQ2y8ZI+/eRCyjN8yQS7O6gjj4QbXb0tKGJf+78g5H+96kwPVhMK++xgsjyoqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HeMkySVM; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1708539666; c=relaxed/simple;
+	bh=tQaWzc3U8kyTUOyG3hGc5iK+s3OXDgj0AzeWKbHcNFY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=OJacFxZj2AVayfzj1rvhKnw7xtnH8oFqV9owaLEducMB0X7LKCe+KCGdiCONiP58U2eKmHEh/lAeoLVrd9APrdwMwt/+PaUozmw6Kiz/Arbrw10udpE315Hir+SvhFIwNLq2+242kC5MHlovNQBcFtbMOKmkX3sNnYEME0YGLd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F561lTe2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HeMkySVM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1708539403;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7geH7zqTjsCuG6SWt2WbIl3Id3/C3wxgMjpQITyfqdg=;
-	b=HeMkySVMX+80tJ4/6OXhq2duJh9FiZDCSfrcrhYzvrRZ6WjAziW9gLhDUyjWHwaEK57ljk
-	EWqpMwTwkQYPp1rs1qlh3TQGNGO7H8jQAmpTQT1TF8+CWGCri4AGZyoeuk2Utm2rmlOGAP
-	NSSm1awG4gYWxcQ2lV6O+rvYyfpminw=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-Yuj3QCizOKKNj-Ad4HIEAQ-1; Wed, 21 Feb 2024 13:16:40 -0500
-X-MC-Unique: Yuj3QCizOKKNj-Ad4HIEAQ-1
-Received: by mail-ed1-f72.google.com with SMTP id 4fb4d7f45d1cf-564408e925dso647188a12.3
-        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 10:16:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708539399; x=1709144199;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7geH7zqTjsCuG6SWt2WbIl3Id3/C3wxgMjpQITyfqdg=;
-        b=WFyzUofRyGBLdnokTM5mR8Uz+v0kijnVxGOTEESRiQfWjh8drISPM82KE3JQs8QHzM
-         81wUn2BwTHMzSl4Bx1ob3j187xzvfZ5LTrkqH4MXqJj6rFh4zTwpePinW0En2NaL5IF0
-         ZC9xGOpDenvaYIsKI9mDG/uqy7pmHuei9HbSEbEdEQMqa0tWHE0PGFsXOfWHHe573Voe
-         ++7rnP0n8PVwIOdQLDExyCiTvpavRht09T1/C5vF7VTZGa40irVsIBre31q+X2rM/aJY
-         Jb2EaJy8NBZqlI3vXGhZ1R57dyjmrSve6gDLNl44yvkReJqNntM7LSPIPOyMg5OlI5NL
-         Pm0Q==
-X-Gm-Message-State: AOJu0Yzb8EGMgozrY2Cm0K5PiiD049nUBQV9ybjUHmtAwIXcbvijdSwG
-	73sT0h7+/5Y9MzfzgCLtq/LzonAf0+VZ41OudS16EPDjXM7gO2kxgHisMF4LxfcVT2FiU/KcDhs
-	g/w1/R4IXALGULC6zT9KsYsURnZYSlWoORGt6MV12BuZpmm4tBASgdhb7Y+axZMs=
-X-Received: by 2002:a17:906:e24d:b0:a3f:1043:9078 with SMTP id gq13-20020a170906e24d00b00a3f10439078mr3353431ejb.30.1708539399316;
-        Wed, 21 Feb 2024 10:16:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHFiPWNkVg9jG7rLOzM5Ss0M4J1Tgmx8LWfAug9prlQp5uxH0e9eCv5b/RRiQ7qIwzoACXDSg==
-X-Received: by 2002:a17:906:e24d:b0:a3f:1043:9078 with SMTP id gq13-20020a170906e24d00b00a3f10439078mr3353425ejb.30.1708539399130;
-        Wed, 21 Feb 2024 10:16:39 -0800 (PST)
-Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id k9-20020a1709063fc900b00a3cfd838f32sm5247099ejj.178.2024.02.21.10.16.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 10:16:38 -0800 (PST)
-Message-ID: <1943e2b2-6232-4566-9793-2b24eed89d59@redhat.com>
-Date: Wed, 21 Feb 2024 19:16:38 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F561lTe2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AECEC433F1;
+	Wed, 21 Feb 2024 18:21:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708539666;
+	bh=tQaWzc3U8kyTUOyG3hGc5iK+s3OXDgj0AzeWKbHcNFY=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=F561lTe2JDbsfjGXvYgvVLgEO0kOuviDsp5/faAf/biHQ56QorfmvA/inS1XrvfJT
+	 GGtIXWZQlyOn5zCgu/CCCVTEiD04wc86dJrO11M4oo3hNJ9x+e22aEvo5bh/vwUdvw
+	 xL8M1UF4iaWsh+2Fu/L6Y1S4kB2YJ0CGKU3nn/Mf6n9ke3kq9i6sbIrpXlTbGqTm6J
+	 aLMhDan+ZxNA8DQzdiZiWA26zT5RQMq+un8HT1tEe39ugLStCXw08gbBusOz086znX
+	 qus+lwKIc/AqREgUHCJPCeL8CMdRHerpzHrIxreGEZJoYE8nOAyQ+WjOGOlJdhmIKi
+	 3vPYYPiCARF6w==
+From: Kalle Valo <kvalo@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: quic_jjohnson@quicinc.com,  morbo@google.com,  justinstitt@google.com,
+  quic_periyasa@quicinc.com,  ath12k@lists.infradead.org,
+  linux-wireless@vger.kernel.org,  llvm@lists.linux.dev,
+  patches@lists.linux.dev
+Subject: Re: [PATCH] wifi: ath12k: Fix uninitialized use of ret in
+ ath12k_mac_allocate()
+References: <20240205-ath12k-mac-wuninitialized-v1-1-3fda7b17357f@kernel.org>
+	<170731849247.2220494.17976129376947521581.kvalo@kernel.org>
+	<20240221180013.GA2074929@dev-arch.thelio-3990X>
+Date: Wed, 21 Feb 2024 20:21:02 +0200
+In-Reply-To: <20240221180013.GA2074929@dev-arch.thelio-3990X> (Nathan
+	Chancellor's message of "Wed, 21 Feb 2024 11:00:13 -0700")
+Message-ID: <87ttm1llv5.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 151/267] misc: lis3lv02d_i2c: Add missing setting of
- the reg_ctrl callback
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
-References: <20240221125940.058369148@linuxfoundation.org>
- <20240221125944.808861688@linuxfoundation.org>
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <20240221125944.808861688@linuxfoundation.org>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US, nl
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Greg,
+Nathan Chancellor <nathan@kernel.org> writes:
 
-On 2/21/24 14:08, Greg Kroah-Hartman wrote:
-> 5.4-stable review patch.  If anyone has any objections, please let me know.
+> Hi Kalle,
+>
+> On Wed, Feb 07, 2024 at 03:08:14PM +0000, Kalle Valo wrote:
+>> Nathan Chancellor <nathan@kernel.org> wrote:
+>> 
+>> > Clang warns (or errors with CONFIG_WERROR=y):
+>> > 
+>> >   drivers/net/wireless/ath/ath12k/mac.c:8060:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
+>> >    8060 |         return ret;
+>> >         |                ^~~
+>> >   drivers/net/wireless/ath/ath12k/mac.c:8022:9: note: initialize
+>> > the variable 'ret' to silence this warning
+>> >    8022 |         int ret, i, j;
+>> >         |                ^
+>> >         |                 = 0
+>> >   1 error generated.
+>> > 
+>> > Commit 6db6e70a17f6 ("wifi: ath12k: Introduce the container for mac80211
+>> > hw") added a completely uninitialized use of ret. Prior to that change,
+>> > -ENOMEM was returned to the callers of ath12k_mac_allocate() whenever
+>> > ath12k_mac_hw_allocate() failed. Assign that value to ret to make sure
+>> > it is always initialized when used and clear up the warning.
+>> > 
+>> > Closes: https://github.com/ClangBuiltLinux/linux/issues/1989i
+>> > Fixes: 6db6e70a17f6 ("wifi: ath12k: Introduce the container for mac80211 hw")
+>> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>> > Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+>> > Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+>> 
+>> Patch applied to ath-next branch of ath.git, thanks.
+>> 
+>> 04edb5dc68f4 wifi: ath12k: Fix uninitialized use of ret in ath12k_mac_allocate()
+>
+> It doesn't seem like this tree or branch flows into -next on its own, so
+> this patch is not present in and the build still breaks on
+> next-20240221. Can this be fixed so that this warning stops breaking our
+> builds?
 
-This is known to cause a regression (WARN triggering on suspend,
-possible panic if panic-on-warn is set).
+Yeah, ath-next is not pulled to linux-next because of "reasons". We are
+planning to send ath-next pull request to wireless-next in the next few
+days.
 
-A fix for the regression is pending:
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-https://lore.kernel.org/regressions/20240220190035.53402-1-hdegoede@redhat.com/T/#u
-
-but it has not been merged yet, so please hold of on merging this 
-patch until you can apply both at once.
-
-I see that you are also planning to apply this to other stable
-branches. I'm not sure if this is necessary but to be safe
-I'll copy and paste this reply to the emails for the other stable
-branches.
-
-Regards,
-
-Hans
-
-
-
-
-> 
-> ------------------
-> 
-> From: Hans de Goede <hdegoede@redhat.com>
-> 
-> [ Upstream commit b1b9f7a494400c0c39f8cd83de3aaa6111c55087 ]
-> 
-> The lis3lv02d_i2c driver was missing a line to set the lis3_dev's
-> reg_ctrl callback.
-> 
-> lis3_reg_ctrl(on) is called from the init callback, but due to
-> the missing reg_ctrl callback the regulators where never turned off
-> again leading to the following oops/backtrace when detaching the driver:
-> 
-> [   82.313527] ------------[ cut here ]------------
-> [   82.313546] WARNING: CPU: 1 PID: 1724 at drivers/regulator/core.c:2396 _regulator_put+0x219/0x230
-> ...
-> [   82.313695] RIP: 0010:_regulator_put+0x219/0x230
-> ...
-> [   82.314767] Call Trace:
-> [   82.314770]  <TASK>
-> [   82.314772]  ? _regulator_put+0x219/0x230
-> [   82.314777]  ? __warn+0x81/0x170
-> [   82.314784]  ? _regulator_put+0x219/0x230
-> [   82.314791]  ? report_bug+0x18d/0x1c0
-> [   82.314801]  ? handle_bug+0x3c/0x80
-> [   82.314806]  ? exc_invalid_op+0x13/0x60
-> [   82.314812]  ? asm_exc_invalid_op+0x16/0x20
-> [   82.314845]  ? _regulator_put+0x219/0x230
-> [   82.314857]  regulator_bulk_free+0x39/0x60
-> [   82.314865]  i2c_device_remove+0x22/0xb0
-> 
-> Add the missing setting of the callback so that the regulators
-> properly get turned off again when not used.
-> 
-> Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-> Link: https://lore.kernel.org/r/20231224183402.95640-1-hdegoede@redhat.com
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/misc/lis3lv02d/lis3lv02d_i2c.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-> index 52555d2e824b..ab1db760ba4e 100644
-> --- a/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-> +++ b/drivers/misc/lis3lv02d/lis3lv02d_i2c.c
-> @@ -151,6 +151,7 @@ static int lis3lv02d_i2c_probe(struct i2c_client *client,
->  	lis3_dev.init	  = lis3_i2c_init;
->  	lis3_dev.read	  = lis3_i2c_read;
->  	lis3_dev.write	  = lis3_i2c_write;
-> +	lis3_dev.reg_ctrl = lis3_reg_ctrl;
->  	lis3_dev.irq	  = client->irq;
->  	lis3_dev.ac	  = lis3lv02d_axis_map;
->  	lis3_dev.pm_dev	  = &client->dev;
-
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
