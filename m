@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C6D7BB01;
-	Wed, 21 Feb 2024 14:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046D77BAF7;
+	Wed, 21 Feb 2024 14:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525682; cv=none; b=mYcUvkOKcpeIISCB9rj1HOp5y/qD7F9sjJloZrOdLCm57u+UgVDoa2mbiEu5i9/UAwuKr05mHKVqzrq7GUmFgphtlgCXYh4cOwh1h0b+tLQceOgD4a4/pILeqPlpOebTNBSIkrGJboS7HURL5QCgJ2dHKK7yiD99Wg5LJ1WyUhg=
+	t=1708525686; cv=none; b=qOGtjeDPhf7R6C80hRHiADN9UZLAs1XUCm0WV9zEbOlfMXrVtKxNGWzk+VRQhtCDu0LRa8bKyD+FtbL36ydUCYTPGUXEckOojt9Z+N7ZD7LyPMJE7vSZWeOWdN0xJZXUSb8xkBZaTz0ScVkExrxAE01JTc0wHjQLbrbR6B/zP8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525682; c=relaxed/simple;
-	bh=0A1r/NVEgMPDKEAynzfPrh+dBwoBhLHRzKEgZBT5tCY=;
+	s=arc-20240116; t=1708525686; c=relaxed/simple;
+	bh=5czdQ1ULAy4bFgxgAdcZBPt0vwVEMX9TT446CwlX2FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEiYhRbTtOrTA5f2OtjMWqk6QJ2mYePhojxihcsfpTkd1padAhHnO49v11s8C43wC0mWBSjb1Hugv3JIAgP3mnmJ6fg8JsiLuNZLNf8j813ZXRNyqXnBCotkbicj9Pt++sqg34eAmj3Ic0vig7levbc9pD5ClmsIhpwdlJRUd/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLYhstWd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SzL1XMa2KMEnq65J5KL/obaAsJCgBlFdfe3M6/kpCCo8INa0zpbY5lT1CP0CLIfhUHvIURq/3HGCHIPspvqRovAzQkc3jizpRduRCGBYjbjXr3LC+AQJrMcSO5EtQ0FHCCX86akEP85SJjVDuGkJjpimgncD1m7mytQeAgNc+LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BI+Ozcrn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLYhstWd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCE0C433F1;
-	Wed, 21 Feb 2024 14:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BI+Ozcrn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B551C433C7;
+	Wed, 21 Feb 2024 14:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525682;
-	bh=0A1r/NVEgMPDKEAynzfPrh+dBwoBhLHRzKEgZBT5tCY=;
+	s=korg; t=1708525685;
+	bh=5czdQ1ULAy4bFgxgAdcZBPt0vwVEMX9TT446CwlX2FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLYhstWdtFhS+8LQsGULF//DJYvbUZExPXLO7LqnBAwbZxiUBDSqotZsobiH7+XJh
-	 1cOszEqBhmG1exPq3/YFxPa8+lE82gaLa5CVLpYefC0uUEA8r+zxV5YJW7FzN9gTi1
-	 OgGMcnTZiyqWzMJtYfw3kfhVHyl7j8zOe89qpTMo=
+	b=BI+OzcrnU6rpgWcycrB1Ogi3ME4xYSpyDVY/DjB0HZA18nMi+3QwJXSHe8ZCgg5Qz
+	 bwhORudXA3G3RXRlofiQaYBxVfMYXZabCylVtc+wNu1jfZg2pBinI32q7254iRI7eB
+	 46o4I0R2Ky4uoUDuUN1eVTOHpf14wZxc1y0CJHj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Furong Xu <0x1207@gmail.com>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 202/267] net: stmmac: xgmac: fix a typo of register name in DPP safety handling
-Date: Wed, 21 Feb 2024 14:09:03 +0100
-Message-ID: <20240221125946.506587948@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 193/267] netfilter: nft_ct: reject direction for ct id
+Date: Wed, 21 Feb 2024 14:08:54 +0100
+Message-ID: <20240221125946.191542878@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,50 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Furong Xu <0x1207@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 1ce2654d87e2fb91fea83b288bd9b2641045e42a upstream.
+[ Upstream commit 38ed1c7062ada30d7c11e7a7acc749bf27aa14aa ]
 
-DDPP is copied from Synopsys Data book:
+Direction attribute is ignored, reject it in case this ever needs to be
+supported
 
-DDPP: Disable Data path Parity Protection.
-    When it is 0x0, Data path Parity Protection is enabled.
-    When it is 0x1, Data path Parity Protection is disabled.
-
-The macro name should be XGMAC_DPP_DISABLE.
-
-Fixes: 46eba193d04f ("net: stmmac: xgmac: fix handling of DPP safety error for DMA channels")
-Signed-off-by: Furong Xu <0x1207@gmail.com>
-Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
-Link: https://lore.kernel.org/r/20240203053133.1129236-1-0x1207@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3087c3f7c23b ("netfilter: nft_ct: Add ct id support")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h      |    2 +-
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_ct.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-@@ -257,7 +257,7 @@
- #define XGMAC_TXCEIE			BIT(0)
- #define XGMAC_MTL_ECC_INT_STATUS	0x000010cc
- #define XGMAC_MTL_DPP_CONTROL		0x000010e0
--#define XGMAC_DDPP_DISABLE		BIT(0)
-+#define XGMAC_DPP_DISABLE		BIT(0)
- #define XGMAC_MTL_TXQ_OPMODE(x)		(0x00001100 + (0x80 * (x)))
- #define XGMAC_TQS			GENMASK(25, 16)
- #define XGMAC_TQS_SHIFT			16
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -852,7 +852,7 @@ static int dwxgmac3_safety_feat_config(v
- 	/* 5. Enable Data Path Parity Protection */
- 	value = readl(ioaddr + XGMAC_MTL_DPP_CONTROL);
- 	/* already enabled by default, explicit enable it again */
--	value &= ~XGMAC_DDPP_DISABLE;
-+	value &= ~XGMAC_DPP_DISABLE;
- 	writel(value, ioaddr + XGMAC_MTL_DPP_CONTROL);
- 
- 	return 0;
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index 9507f1e56107..161c4fd715fa 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -481,6 +481,9 @@ static int nft_ct_get_init(const struct nft_ctx *ctx,
+ 		break;
+ #endif
+ 	case NFT_CT_ID:
++		if (tb[NFTA_CT_DIRECTION])
++			return -EINVAL;
++
+ 		len = sizeof(u32);
+ 		break;
+ 	default:
+-- 
+2.43.0
+
 
 
