@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A017E110;
-	Wed, 21 Feb 2024 14:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500517E59A;
+	Wed, 21 Feb 2024 14:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525065; cv=none; b=hQiPvPn9DrFaeaL32sSm0En5TEiCkpfu+KmphDFhGdbjn2I6iV6dPN354YPHuHolHK/+TNx6R13P90r7+GLRQyVFhL9IWT/oRdULSmfTnVMLlQ5DLXkjc3ASgijGSXUVJP5+JSQ3Wi5Nae3MF2IR7s1jPGltx4iaot8+2JcfihU=
+	t=1708525068; cv=none; b=cIYzwCuVe2EpcjF4bvmOlI0w4OObnSA9JMRJTX0yQwbEoEQ7zDcGeydULnvyLIAxgXjk/BZ8n+9D3bNPDgytrKCtb6ScBud9GXskYhN5i6X9ij7ww/k90gE2bRAiMJ2tFJbaHWtMZj6AUoypwLP+XuRTYOpK+lXRy02VbqfDu7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525065; c=relaxed/simple;
-	bh=xEFNDpiNcW5jMbt4RJBjG25s751zRXLqvN7GXqUiJBM=;
+	s=arc-20240116; t=1708525068; c=relaxed/simple;
+	bh=TVwJ8f+xN43LuaWjSSlBK1+/b07TnzJdfgHJ2HWdANM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjG/nBek5f+Yvzmlgw7uL2Eaf/B2olCSTKYUnVBb96r4l0jINv2bmWRls3JFz5v1J9prsEs4P9quy6h0JgRVDKCw0O6XO80p2Jb36vEXYceef8J8W+gjGBUdKWHkX854i3w8F/7rP6+FjFZzAnasCFtDOdSlkImJ8uo1el4XV2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hydfFRL7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RhxFiuHUCPKtencJQbgkfOSLu/wP+u/KZA6vkQQ63mqxQvbK5A4DVmTFMAbu4HMm7e3+VUvVG8NW9il17gRCHiFlXxQFoptO8qtqbslNAn9FePJu8i2BY2gpfEIEamWYyHqb8YVcxzZHLciQR2tkuZ/rXgiAuY3nFCOlJT7uwEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k57zSscw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hydfFRL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD15EC433C7;
-	Wed, 21 Feb 2024 14:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k57zSscw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9368C433F1;
+	Wed, 21 Feb 2024 14:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525065;
-	bh=xEFNDpiNcW5jMbt4RJBjG25s751zRXLqvN7GXqUiJBM=;
+	s=korg; t=1708525068;
+	bh=TVwJ8f+xN43LuaWjSSlBK1+/b07TnzJdfgHJ2HWdANM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hydfFRL7nGj2+lNcqEQXoSQADk+UQUCFvTFObt/8gY/gMIKYeNh5J9+9eZyzoFQ8p
-	 F3ASe5tUMFZeqjokTl9mjSoOK0qppdHQppRRcYUVN6aCi50NVjPHV3CqqTc9Jr8bvO
-	 ABm+Aj3OUqma1jz6WBuSJRBRMYHEFFyWAVsGkmx0=
+	b=k57zSscwp40l4nh4kWpo8XCN/9JYFxjx1ztaqdhR/pATNBsVNAiVHF1/fWd23/rjG
+	 rzDO8ShiCX7MammEePtp3y/0B9lSDJ5MGhzM9psNJxVTWHYT4VIj7vCWLIwdotDrfe
+	 vQfRs8ggVVem+5FcrZ8oeglCeF8CzTnv9noDdBJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 5.4 051/267] drm/bridge: nxp-ptn3460: simplify some error checking
-Date: Wed, 21 Feb 2024 14:06:32 +0100
-Message-ID: <20240221125941.606948469@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 052/267] NFSD: Modernize nfsd4_release_lockowner()
+Date: Wed, 21 Feb 2024 14:06:33 +0100
+Message-ID: <20240221125941.636617894@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,62 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 28d3d0696688154cc04983f343011d07bf0508e4 upstream.
+[ Upstream commit bd8fdb6e545f950f4654a9a10d7e819ad48146e5 ]
 
-The i2c_master_send/recv() functions return negative error codes or
-they return "len" on success.  So the error handling here can be written
-as just normal checks for "if (ret < 0) return ret;".  No need to
-complicate things.
+Refactor: Use existing helpers that other lock operations use. This
+change removes several automatic variables, so re-organize the
+variable declarations for readability.
 
-Btw, in this code the "len" parameter can never be zero, but even if
-it were, then I feel like this would still be the best way to write it.
-
-Fixes: 914437992876 ("drm/bridge: nxp-ptn3460: fix i2c_master_send() error checking")
-Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/04242630-42d8-4920-8c67-24ac9db6b3c9@moroto.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/nxp-ptn3460.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/nfsd/nfs4state.c | 36 +++++++++++-------------------------
+ 1 file changed, 11 insertions(+), 25 deletions(-)
 
---- a/drivers/gpu/drm/bridge/nxp-ptn3460.c
-+++ b/drivers/gpu/drm/bridge/nxp-ptn3460.c
-@@ -54,15 +54,15 @@ static int ptn3460_read_bytes(struct ptn
- 	int ret;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index a0aa7e63739d..9a77a3eac4ac 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -6873,16 +6873,13 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 			union nfsd4_op_u *u)
+ {
+ 	struct nfsd4_release_lockowner *rlockowner = &u->release_lockowner;
++	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	clientid_t *clid = &rlockowner->rl_clientid;
+-	struct nfs4_stateowner *sop;
+-	struct nfs4_lockowner *lo = NULL;
+ 	struct nfs4_ol_stateid *stp;
+-	struct xdr_netobj *owner = &rlockowner->rl_owner;
+-	unsigned int hashval = ownerstr_hashval(owner);
+-	__be32 status;
+-	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
++	struct nfs4_lockowner *lo;
+ 	struct nfs4_client *clp;
+-	LIST_HEAD (reaplist);
++	LIST_HEAD(reaplist);
++	__be32 status;
  
- 	ret = i2c_master_send(ptn_bridge->client, &addr, 1);
--	if (ret <= 0) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret ?: -EIO;
-+		return ret;
+ 	dprintk("nfsd4_release_lockowner clientid: (%08x/%08x):\n",
+ 		clid->cl_boot, clid->cl_id);
+@@ -6890,30 +6887,19 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 	status = lookup_clientid(clid, cstate, nn);
+ 	if (status)
+ 		return status;
+-
+ 	clp = cstate->clp;
+-	/* Find the matching lock stateowner */
+-	spin_lock(&clp->cl_lock);
+-	list_for_each_entry(sop, &clp->cl_ownerstr_hashtbl[hashval],
+-			    so_strhash) {
+ 
+-		if (sop->so_is_open_owner || !same_owner_str(sop, owner))
+-			continue;
+-
+-		if (atomic_read(&sop->so_count) != 1) {
+-			spin_unlock(&clp->cl_lock);
+-			return nfserr_locks_held;
+-		}
+-
+-		lo = lockowner(sop);
+-		nfs4_get_stateowner(sop);
+-		break;
+-	}
++	spin_lock(&clp->cl_lock);
++	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
+ 	if (!lo) {
+ 		spin_unlock(&clp->cl_lock);
+ 		return status;
  	}
- 
- 	ret = i2c_master_recv(ptn_bridge->client, buf, len);
--	if (ret != len) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to recv i2c data, ret=%d\n", ret);
--		return ret < 0 ? ret : -EIO;
-+		return ret;
- 	}
- 
- 	return 0;
-@@ -78,9 +78,9 @@ static int ptn3460_write_byte(struct ptn
- 	buf[1] = val;
- 
- 	ret = i2c_master_send(ptn_bridge->client, buf, ARRAY_SIZE(buf));
--	if (ret != ARRAY_SIZE(buf)) {
-+	if (ret < 0) {
- 		DRM_ERROR("Failed to send i2c command, ret=%d\n", ret);
--		return ret < 0 ? ret : -EIO;
-+		return ret;
- 	}
- 
- 	return 0;
+-
++	if (atomic_read(&lo->lo_owner.so_count) != 2) {
++		spin_unlock(&clp->cl_lock);
++		nfs4_put_stateowner(&lo->lo_owner);
++		return nfserr_locks_held;
++	}
+ 	unhash_lockowner_locked(lo);
+ 	while (!list_empty(&lo->lo_owner.so_stateids)) {
+ 		stp = list_first_entry(&lo->lo_owner.so_stateids,
+-- 
+2.43.0
+
 
 
