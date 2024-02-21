@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FDD7BB18;
-	Wed, 21 Feb 2024 14:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892DB7BB18;
+	Wed, 21 Feb 2024 14:05:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524302; cv=none; b=RYfjQxwT9ysm5DISmZCPvtje5D/liD9hzawgALSqnrLfYGsgLQn7z0buRpOLteU3DsvNXbkUeG74FYiOCAX37RZtQL31bjEp0U/rG71lqFT/gkTVwwCBeOMOSGnhQItqbOegWsHJ6PQACZ0okvGa+RppT27FxlxX3L+uFU92A1E=
+	t=1708524305; cv=none; b=QHzRtmFzC0NBe/1wLtlRbhG2DvYgIBgodAOUjf4zZXdDdFCAt7RFux2sMt7E74nltvufSV9c8QllA2i0j4M5kyioWyCSLju9RNY2wsQgPucr2V5JUVBp8mX5ovmTC6dPhKM42nkclPmjJhe79t6xiwNpOEgt/G/DLq/PvoDAGSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524302; c=relaxed/simple;
-	bh=YoUdixj2NDfBfH/bW4XefA0wYIDogPHxxBZrZdPUoGU=;
+	s=arc-20240116; t=1708524305; c=relaxed/simple;
+	bh=tMMvAy3h/5fRrY+CfLwu+4zUhM8k5bUhEMIwXRjXYVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iurODn5Ck5nb1tLNfu7seF67pitD+LiLaDvjdiKLsuCdl38tWy4Mjlvfzpl1JEJqu15I5kO1lwovRnWsO1kgvaPSKsLp1tznjhublzAethPBpM9kSpsiO9hNwtXngmzPpXEdL+Wuzhe018Z771sYfLyO5iUXAAvFo9qV6uZKasY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hnm3huHn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KcwOwLsGfLOao7xA/7tV+6WmkkDzDg49X6zyAv7j+8mvOcwGW8YnqIY3hpUWUKA5wyAaR6Q++oV8CMG/euJ2Hr97xi1mg1WHCUAkkKTLawEdNXmi2r4+ZOXAkeDjb4GCbpd8JjFjTVKfEUKlf0mCboQ+64/Mg0yyL1EmNiLhoe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbqbWHWV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hnm3huHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7110FC433F1;
-	Wed, 21 Feb 2024 14:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbqbWHWV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B972C433C7;
+	Wed, 21 Feb 2024 14:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524301;
-	bh=YoUdixj2NDfBfH/bW4XefA0wYIDogPHxxBZrZdPUoGU=;
+	s=korg; t=1708524305;
+	bh=tMMvAy3h/5fRrY+CfLwu+4zUhM8k5bUhEMIwXRjXYVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hnm3huHn7jeKagqBRS0kKvj3v71W1rpgSSizZX/kQCfG6/EvtYrFqKSBIsP+6IZdg
-	 a5qOJrLGLMyJzN7vS2thrUPSJWMgOs992PBN9D9gjVTukQrzUQiT6Np0401Y4oKdDY
-	 HjlTVyHX/WUpQew3bMhWfAejAxGsJN9YPbXOj678=
+	b=vbqbWHWVn7s/DFCbZ7mbySQbyZSsCBvz54kMNRCqHgf57DSQuaXKQhsXoqFfWvfub
+	 qZbPhN04pSy370Pdii4mPv0egnDk7woVeyrIWAEN3/PPEwi/zxwh1MSesOvKzHCNE5
+	 AtlANtPzrp4ACetYjl6qDwHfteEkkoUaArS/9UJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Shah <harshitshah.opendev@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 204/379] i3c: master: cdns: Update maximum prescaler value for i2c clock
-Date: Wed, 21 Feb 2024 14:06:23 +0100
-Message-ID: <20240221130000.937401366@linuxfoundation.org>
+Subject: [PATCH 5.10 187/379] PCI: add INTEL_HDA_ARL to pci_ids.h
+Date: Wed, 21 Feb 2024 14:06:06 +0100
+Message-ID: <20240221130000.441267270@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -45,63 +48,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harshit Shah <harshitshah.opendev@gmail.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 374c13f9080a1b9835a5ed3e7bea93cf8e2dc262 ]
+[ Upstream commit 5ec42bf04d72fd6d0a6855810cc779e0ee31dfd7 ]
 
-As per the Cadence IP document fixed the I2C clock divider value limit from
-16 bits instead of 10 bits. Without this change setting up the I2C clock to
-low frequencies will not work as the prescaler value might be greater than
-10 bit number.
+The PCI ID insertion follows the increasing order in the table, but
+this hardware follows MTL (MeteorLake).
 
-I3C clock divider value is 10 bits only. Updating the macro names for both.
-
-Signed-off-by: Harshit Shah <harshitshah.opendev@gmail.com>
-Link: https://lore.kernel.org/r/1703927483-28682-1-git-send-email-harshitshah.opendev@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20231204212710.185976-2-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/i3c-master-cdns.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/pci_ids.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i3c/master/i3c-master-cdns.c b/drivers/i3c/master/i3c-master-cdns.c
-index 6b9df33ac561..6b126fce5a9e 100644
---- a/drivers/i3c/master/i3c-master-cdns.c
-+++ b/drivers/i3c/master/i3c-master-cdns.c
-@@ -77,7 +77,8 @@
- #define PRESCL_CTRL0			0x14
- #define PRESCL_CTRL0_I2C(x)		((x) << 16)
- #define PRESCL_CTRL0_I3C(x)		(x)
--#define PRESCL_CTRL0_MAX		GENMASK(9, 0)
-+#define PRESCL_CTRL0_I3C_MAX		GENMASK(9, 0)
-+#define PRESCL_CTRL0_I2C_MAX		GENMASK(15, 0)
- 
- #define PRESCL_CTRL1			0x18
- #define PRESCL_CTRL1_PP_LOW_MASK	GENMASK(15, 8)
-@@ -1234,7 +1235,7 @@ static int cdns_i3c_master_bus_init(struct i3c_master_controller *m)
- 		return -EINVAL;
- 
- 	pres = DIV_ROUND_UP(sysclk_rate, (bus->scl_rate.i3c * 4)) - 1;
--	if (pres > PRESCL_CTRL0_MAX)
-+	if (pres > PRESCL_CTRL0_I3C_MAX)
- 		return -ERANGE;
- 
- 	bus->scl_rate.i3c = sysclk_rate / ((pres + 1) * 4);
-@@ -1247,7 +1248,7 @@ static int cdns_i3c_master_bus_init(struct i3c_master_controller *m)
- 	max_i2cfreq = bus->scl_rate.i2c;
- 
- 	pres = (sysclk_rate / (max_i2cfreq * 5)) - 1;
--	if (pres > PRESCL_CTRL0_MAX)
-+	if (pres > PRESCL_CTRL0_I2C_MAX)
- 		return -ERANGE;
- 
- 	bus->scl_rate.i2c = sysclk_rate / ((pres + 1) * 5);
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 1a41147b22e8..80744a7b5e33 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -3020,6 +3020,7 @@
+ #define PCI_DEVICE_ID_INTEL_82443GX_0	0x71a0
+ #define PCI_DEVICE_ID_INTEL_82443GX_2	0x71a2
+ #define PCI_DEVICE_ID_INTEL_82372FB_1	0x7601
++#define PCI_DEVICE_ID_INTEL_HDA_ARL	0x7728
+ #define PCI_DEVICE_ID_INTEL_SCH_LPC	0x8119
+ #define PCI_DEVICE_ID_INTEL_SCH_IDE	0x811a
+ #define PCI_DEVICE_ID_INTEL_E6XX_CU	0x8183
 -- 
 2.43.0
 
