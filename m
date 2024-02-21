@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E23779F8;
-	Wed, 21 Feb 2024 13:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC7F762C1;
+	Wed, 21 Feb 2024 13:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522094; cv=none; b=NFftjgi+QBKoBTPHV6YqS0dGDw92vgGDRqG2YEvJeA6TaFUyMrK/vfQGtP/6swNen2RVc53TNPPTN75sKNF7navNrgmR4it4WNvolxpofMxcJUkdtgQaM0Nc2lQN4EjQg4K30pSmKIIjQrR/RDcHsFy9sW68tbrNRgjkGek6LPw=
+	t=1708522097; cv=none; b=Ur8Y7rxcOr2sNe/Oeqqjhz1O8T99tRrK5jb5zUBolA4hq63vcUiMsJfFwB5K7RrRoHJsccVafNnEpsDSUKL2ve0fkb1U6VtoP65T40NmvSmO+qr+ef0CZFLwcRvFas8WDnjIOYM6P0mBoUmypV71m7qG0EVEH2pTlIJBcGpGCTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522094; c=relaxed/simple;
-	bh=0qhPtGDGndBQdIRPB6T+Z3VaYIAKxdr4PrRn0NMCTn0=;
+	s=arc-20240116; t=1708522097; c=relaxed/simple;
+	bh=ifzO++2H7GHcOZaXFf3sHiryqyxOHBE7Z785tP+VS4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEgbstJsGhWChXSxbF5uGy1GLhilUmqm+wbiALStP6eGZdDmnOpiUHcRinWeVq65U4X6BrhsruSBcUlr/17qjDfHpS6/doaofrRZp5D78yMqKIDtEnntoeve7WW1LLTDFraDH98YeDb9u+6xfkVH+TMecheW20Tr49fXwLKqeCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nm5mKieV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SP7DEYDUOVWsCfkavu3V72QdfvBFWb2TNklqtAldCvqb1ld8maYPttbY0YaRRxvVEFYBOYE/NGQ3Xum96I3WseM3YO6j9R2AYwTibQVsD8JjghdIE0QGE2ov+Ttur8eTVi4gac/RTi3v/bSqrDHWcYVPFxQE0JCeACwuhcPrEgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H246hgXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nm5mKieV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD2FC433F1;
-	Wed, 21 Feb 2024 13:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H246hgXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A81FC433F1;
+	Wed, 21 Feb 2024 13:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522094;
-	bh=0qhPtGDGndBQdIRPB6T+Z3VaYIAKxdr4PrRn0NMCTn0=;
+	s=korg; t=1708522097;
+	bh=ifzO++2H7GHcOZaXFf3sHiryqyxOHBE7Z785tP+VS4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nm5mKieV79+QWrKtcF2UZnvtq49efy9GGs1XbPTagvKI2KzrC7a76ZJmOQbtJPJEU
-	 7Nx/ZCuj0AKRBl0KhSGgxwoz9KXr1op/CDYbh7jfHXx7giOzt3u+VQz+dyIqJ6P2uA
-	 jxtkpMrZQ0G9NUVCyDu6JCE3WYx0ytqjZjd8RBQc=
+	b=H246hgXNk5yocJ54/l2JcJiAuWm0xEv8ewaW1Ed4YtSZ73C5Ck+hrIIS2D741NLmc
+	 1zizf+xxBTIBKXys7594NDvX94AnqFI1M9sTfuCF9nNBlacAHYjJbPHwsabeJXvz/N
+	 KEoAsmgZxNpOsNmTz32UYJs2l2Jk2Qj0nRyYmDNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Chung-Chiang Cheng <cccheng@synology.com>,
+	syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 078/476] btrfs: tree-checker: fix inline ref size in error messages
-Date: Wed, 21 Feb 2024 14:02:09 +0100
-Message-ID: <20240221130010.862559273@linuxfoundation.org>
+Subject: [PATCH 5.15 079/476] btrfs: dont warn if discard range is not aligned to sector
+Date: Wed, 21 Feb 2024 14:02:10 +0100
+Message-ID: <20240221130010.894539382@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,35 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chung-Chiang Cheng <cccheng@synology.com>
+From: David Sterba <dsterba@suse.com>
 
-commit f398e70dd69e6ceea71463a5380e6118f219197e upstream.
+commit a208b3f132b48e1f94f620024e66fea635925877 upstream.
 
-The error message should accurately reflect the size rather than the
-type.
+There's a warning in btrfs_issue_discard() when the range is not aligned
+to 512 bytes, originally added in 4d89d377bbb0 ("btrfs:
+btrfs_issue_discard ensure offset/length are aligned to sector
+boundaries"). We can't do sub-sector writes anyway so the adjustment is
+the only thing that we can do and the warning is unnecessary.
 
-Fixes: f82d1c7ca8ae ("btrfs: tree-checker: Add EXTENT_ITEM and METADATA_ITEM check")
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Chung-Chiang Cheng <cccheng@synology.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+CC: stable@vger.kernel.org # 4.19+
+Reported-by: syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/extent-tree.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1382,7 +1382,7 @@ static int check_extent_item(struct exte
- 		if (unlikely(ptr + btrfs_extent_inline_ref_size(inline_type) > end)) {
- 			extent_err(leaf, slot,
- "inline ref item overflows extent item, ptr %lu iref size %u end %lu",
--				   ptr, inline_type, end);
-+				   ptr, btrfs_extent_inline_ref_size(inline_type), end);
- 			return -EUCLEAN;
- 		}
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1206,7 +1206,8 @@ static int btrfs_issue_discard(struct bl
+ 	u64 bytes_left, end;
+ 	u64 aligned_start = ALIGN(start, 1 << 9);
  
+-	if (WARN_ON(start != aligned_start)) {
++	/* Adjust the range to be aligned to 512B sectors if necessary. */
++	if (start != aligned_start) {
+ 		len -= aligned_start - start;
+ 		len = round_down(len, 1 << 9);
+ 		start = aligned_start;
 
 
