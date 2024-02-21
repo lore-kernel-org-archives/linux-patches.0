@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027604C62;
-	Wed, 21 Feb 2024 14:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F89378B4B;
+	Wed, 21 Feb 2024 14:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524795; cv=none; b=LUepLpLMDorZfSZzlQ/iXcAGkDNCXbggJ4psNnMC7iEz8zt7EBSyCGmwk+6mkTvQGdCfHgMoAS/5APi09n4PBwUxhp/Ysf6H8ipkqHKc1qlGT78xTOjP/BGIEwqLCJGuO09qXGSkqIQl0GlvcUJ5UNGhr35F8xAMX4/Fk47ofm0=
+	t=1708524798; cv=none; b=SEXP9qVMbPu7109qHUiKzmQpNCdQOWyVZBfUHjIxxn9MnvzATim5lgOrs6HtO2jujx/X0n+QBoHgaRiPR7dd7UAgDYlIo4zNzAvaJ7ctEBXn93in5vG7trd7cnqTCyJvbRCC/ROAgo9AhlF+6h4TbXzUB4l683DkwUH6RzCyWhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524795; c=relaxed/simple;
-	bh=j288dkNwff9hQqjmd48/qjPkRr8HpZmqx/Q3LwFfcVM=;
+	s=arc-20240116; t=1708524798; c=relaxed/simple;
+	bh=OTcyVrRpYMjhsK9xccrjJx8F8bdLn43AB/Aiucq4XUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KU1WuuFNLAhl8SMC0r4TJnUJPwZNf6z58WXv9t9t9SeQXvpNcTaGKiYxBMdapCpDchw+FUK9tKr5P4DREDhmNRHDNzyU+PNQ7WN44MmJHbMsN+Ef5XV4PuatTwLt3DlUbzxwodVbj5d2kPWGQertHBl2zZf313h1nO+ioQWfLjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTn2nBwT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SecrxPHzvMnimZIGWFLaDMGruBBjj6lZLxSlRrW/IQyo2x2ozwXfpqN8UcdghhLW2DGtE7cG27cxmy0y0RiBKOTgI31xAguUb5opgQluTnRvQZC1iK9pCezup2b4YWNe4k8UpZsqh14HmEaDnFQCH9gwmzCxMVZ3T34zvUvvDQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEEksZ9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTn2nBwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66385C433F1;
-	Wed, 21 Feb 2024 14:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEEksZ9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91718C433C7;
+	Wed, 21 Feb 2024 14:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524794;
-	bh=j288dkNwff9hQqjmd48/qjPkRr8HpZmqx/Q3LwFfcVM=;
+	s=korg; t=1708524798;
+	bh=OTcyVrRpYMjhsK9xccrjJx8F8bdLn43AB/Aiucq4XUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTn2nBwT8SUhTcEMcQSZZ9LyT1F7pyw1hSFJvwKonAgPgApivoR3MV/8/IxOFyCjt
-	 clcI25OqTIquUinKqhWpTK7eHL8Q+NxiSwSIMJqEaWZQWhfZS3+RpU/ZDZ+szcesMB
-	 MK3f1EcUf0JlwvSbFSthXFgEz+DFyNiCOqAUE5zY=
+	b=PEEksZ9XcbPbjkCp9+qGnBD2mWIz5ZIvuFVisgsxKik3Vc5t1zCN/OgwpgqEcCK9G
+	 iPCiK3p95kRiaMIb4N6ZLcfCxAjQden9ZNbI9IpLQwbRoK2qxZQn9zjI+SKGH8ahBz
+	 d2EGvUHChB8U8d3Fnc0q+z9QTNburKi6RGNBV+PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
+	David Lin <yu-hao.lin@nxp.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Brian Norris <briannorris@chromium.org>,
 	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 351/379] wifi: mwifiex: Support SD8978 chipset
-Date: Wed, 21 Feb 2024 14:08:50 +0100
-Message-ID: <20240221130005.402969382@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Marcel Ziswiler <marcel.ziswiler@toradex.com>
+Subject: [PATCH 5.10 352/379] wifi: mwifiex: add extra delay for firmware ready
+Date: Wed, 21 Feb 2024 14:08:51 +0100
+Message-ID: <20240221130005.437208744@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,175 +54,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: David Lin <yu-hao.lin@nxp.com>
 
-[ Upstream commit bba047f15851c8b053221f1b276eb7682d59f755 ]
+[ Upstream commit 1c5d463c0770c6fa2037511a24fb17966fd07d97 ]
 
-The Marvell SD8978 (aka NXP IW416) uses identical registers as SD8987,
-so reuse the existing mwifiex_reg_sd8987 definition.
+For SDIO IW416, due to a bug, FW may return ready before complete full
+initialization. Command timeout may occur at driver load after reboot.
+Workaround by adding 100ms delay at checking FW status.
 
-Note that mwifiex_reg_sd8977 and mwifiex_reg_sd8997 are likewise
-identical, save for the fw_dump_ctrl register:  They define it as 0xf0
-whereas mwifiex_reg_sd8987 defines it as 0xf9.  I've verified that
-0xf9 is the correct value on SD8978.  NXP's out-of-tree driver uses
-0xf9 for all of them, so there's a chance that 0xf0 is not correct
-in the mwifiex_reg_sd8977 and mwifiex_reg_sd8997 definitions.  I cannot
-test that for lack of hardware, hence am leaving it as is.
-
-NXP has only released a firmware which runs Bluetooth over UART.
-Perhaps Bluetooth over SDIO is unsupported by this chipset.
-Consequently, only an "sdiouart" firmware image is referenced, not an
-alternative "sdsd" image.
-
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: David Lin <yu-hao.lin@nxp.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Tested-by: Marcel Ziswiler <marcel.ziswiler@toradex.com> # Verdin AM62 (IW416)
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/536b4f17a72ca460ad1b07045757043fb0778988.1674827105.git.lukas@wunner.de
-Stable-dep-of: 1c5d463c0770 ("wifi: mwifiex: add extra delay for firmware ready")
+Link: https://msgid.link/20231208234029.2197-1-yu-hao.lin@nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/net/wireless/marvell-8xxx.txt    |  4 ++-
- drivers/net/wireless/marvell/mwifiex/Kconfig  |  5 ++--
- drivers/net/wireless/marvell/mwifiex/sdio.c   | 25 +++++++++++++++++--
- drivers/net/wireless/marvell/mwifiex/sdio.h   |  1 +
- include/linux/mmc/sdio_ids.h                  |  1 +
- 5 files changed, 31 insertions(+), 5 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/sdio.c | 19 +++++++++++++++++++
+ drivers/net/wireless/marvell/mwifiex/sdio.h |  2 ++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/wireless/marvell-8xxx.txt b/Documentation/devicetree/bindings/net/wireless/marvell-8xxx.txt
-index 9bf9bbac16e2..cdc303caf5f4 100644
---- a/Documentation/devicetree/bindings/net/wireless/marvell-8xxx.txt
-+++ b/Documentation/devicetree/bindings/net/wireless/marvell-8xxx.txt
-@@ -1,4 +1,4 @@
--Marvell 8787/8897/8997 (sd8787/sd8897/sd8997/pcie8997) SDIO/PCIE devices
-+Marvell 8787/8897/8978/8997 (sd8787/sd8897/sd8978/sd8997/pcie8997) SDIO/PCIE devices
- ------
- 
- This node provides properties for controlling the Marvell SDIO/PCIE wireless device.
-@@ -10,7 +10,9 @@ Required properties:
-   - compatible : should be one of the following:
- 	* "marvell,sd8787"
- 	* "marvell,sd8897"
-+	* "marvell,sd8978"
- 	* "marvell,sd8997"
-+	* "nxp,iw416"
- 	* "pci11ab,2b42"
- 	* "pci1b4b,2b42"
- 
-diff --git a/drivers/net/wireless/marvell/mwifiex/Kconfig b/drivers/net/wireless/marvell/mwifiex/Kconfig
-index 2b4ff2b78a7e..b182f7155d66 100644
---- a/drivers/net/wireless/marvell/mwifiex/Kconfig
-+++ b/drivers/net/wireless/marvell/mwifiex/Kconfig
-@@ -10,13 +10,14 @@ config MWIFIEX
- 	  mwifiex.
- 
- config MWIFIEX_SDIO
--	tristate "Marvell WiFi-Ex Driver for SD8786/SD8787/SD8797/SD8887/SD8897/SD8977/SD8987/SD8997"
-+	tristate "Marvell WiFi-Ex Driver for SD8786/SD8787/SD8797/SD8887/SD8897/SD8977/SD8978/SD8987/SD8997"
- 	depends on MWIFIEX && MMC
- 	select FW_LOADER
- 	select WANT_DEV_COREDUMP
- 	help
- 	  This adds support for wireless adapters based on Marvell
--	  8786/8787/8797/8887/8897/8977/8987/8997 chipsets with SDIO interface.
-+	  8786/8787/8797/8887/8897/8977/8978/8987/8997 chipsets with
-+	  SDIO interface. SD8978 is also known as NXP IW416.
- 
- 	  If you choose to build it as a module, it will be called
- 	  mwifiex_sdio.
 diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.c b/drivers/net/wireless/marvell/mwifiex/sdio.c
-index 016065a56e6c..919f1bae61dc 100644
+index 919f1bae61dc..dd4bfb7d71ee 100644
 --- a/drivers/net/wireless/marvell/mwifiex/sdio.c
 +++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -275,7 +275,7 @@ static const struct mwifiex_sdio_card_reg mwifiex_reg_sd8887 = {
- 				 0x68, 0x69, 0x6a},
+@@ -343,6 +343,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8786 = {
+ 	.can_dump_fw = false,
+ 	.can_auto_tdls = false,
+ 	.can_ext_scan = false,
++	.fw_ready_extra_delay = false,
  };
  
--static const struct mwifiex_sdio_card_reg mwifiex_reg_sd8987 = {
-+static const struct mwifiex_sdio_card_reg mwifiex_reg_sd89xx = {
- 	.start_rd_port = 0,
- 	.start_wr_port = 0,
- 	.base_0_reg = 0xF8,
-@@ -406,6 +406,22 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8977 = {
+ static const struct mwifiex_sdio_device mwifiex_sdio_sd8787 = {
+@@ -358,6 +359,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8787 = {
+ 	.can_dump_fw = false,
+ 	.can_auto_tdls = false,
  	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
  };
  
-+static const struct mwifiex_sdio_device mwifiex_sdio_sd8978 = {
-+	.firmware_sdiouart = SD8978_SDIOUART_FW_NAME,
-+	.reg = &mwifiex_reg_sd89xx,
-+	.max_ports = 32,
-+	.mp_agg_pkt_limit = 16,
-+	.tx_buf_size = MWIFIEX_TX_DATA_BUF_SIZE_4K,
-+	.mp_tx_agg_buf_size = MWIFIEX_MP_AGGR_BUF_SIZE_MAX,
-+	.mp_rx_agg_buf_size = MWIFIEX_MP_AGGR_BUF_SIZE_MAX,
-+	.supports_sdio_new_mode = true,
-+	.has_control_mask = false,
-+	.can_dump_fw = true,
-+	.fw_dump_enh = true,
-+	.can_auto_tdls = false,
-+	.can_ext_scan = true,
-+};
-+
+ static const struct mwifiex_sdio_device mwifiex_sdio_sd8797 = {
+@@ -373,6 +375,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8797 = {
+ 	.can_dump_fw = false,
+ 	.can_auto_tdls = false,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
+ };
+ 
+ static const struct mwifiex_sdio_device mwifiex_sdio_sd8897 = {
+@@ -388,6 +391,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8897 = {
+ 	.can_dump_fw = true,
+ 	.can_auto_tdls = false,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
+ };
+ 
+ static const struct mwifiex_sdio_device mwifiex_sdio_sd8977 = {
+@@ -404,6 +408,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8977 = {
+ 	.fw_dump_enh = true,
+ 	.can_auto_tdls = false,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
+ };
+ 
+ static const struct mwifiex_sdio_device mwifiex_sdio_sd8978 = {
+@@ -420,6 +425,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8978 = {
+ 	.fw_dump_enh = true,
+ 	.can_auto_tdls = false,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = true,
+ };
+ 
  static const struct mwifiex_sdio_device mwifiex_sdio_sd8997 = {
- 	.firmware = SD8997_DEFAULT_FW_NAME,
- 	.reg = &mwifiex_reg_sd8997,
-@@ -439,7 +455,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8887 = {
+@@ -436,6 +442,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8997 = {
+ 	.fw_dump_enh = true,
+ 	.can_auto_tdls = false,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
+ };
+ 
+ static const struct mwifiex_sdio_device mwifiex_sdio_sd8887 = {
+@@ -451,6 +458,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8887 = {
+ 	.can_dump_fw = false,
+ 	.can_auto_tdls = true,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
+ };
  
  static const struct mwifiex_sdio_device mwifiex_sdio_sd8987 = {
- 	.firmware = SD8987_DEFAULT_FW_NAME,
--	.reg = &mwifiex_reg_sd8987,
-+	.reg = &mwifiex_reg_sd89xx,
- 	.max_ports = 32,
- 	.mp_agg_pkt_limit = 16,
- 	.tx_buf_size = MWIFIEX_TX_DATA_BUF_SIZE_2K,
-@@ -493,7 +509,9 @@ static struct memory_type_mapping mem_type_mapping_tbl[] = {
- static const struct of_device_id mwifiex_sdio_of_match_table[] __maybe_unused = {
- 	{ .compatible = "marvell,sd8787" },
- 	{ .compatible = "marvell,sd8897" },
-+	{ .compatible = "marvell,sd8978" },
- 	{ .compatible = "marvell,sd8997" },
-+	{ .compatible = "nxp,iw416" },
- 	{ }
+@@ -467,6 +475,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8987 = {
+ 	.fw_dump_enh = true,
+ 	.can_auto_tdls = true,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
  };
  
-@@ -931,6 +949,8 @@ static const struct sdio_device_id mwifiex_ids[] = {
- 		.driver_data = (unsigned long)&mwifiex_sdio_sd8801},
- 	{SDIO_DEVICE(SDIO_VENDOR_ID_MARVELL, SDIO_DEVICE_ID_MARVELL_8977_WLAN),
- 		.driver_data = (unsigned long)&mwifiex_sdio_sd8977},
-+	{SDIO_DEVICE(SDIO_VENDOR_ID_MARVELL, SDIO_DEVICE_ID_MARVELL_8978_WLAN),
-+		.driver_data = (unsigned long)&mwifiex_sdio_sd8978},
- 	{SDIO_DEVICE(SDIO_VENDOR_ID_MARVELL, SDIO_DEVICE_ID_MARVELL_8987_WLAN),
- 		.driver_data = (unsigned long)&mwifiex_sdio_sd8987},
- 	{SDIO_DEVICE(SDIO_VENDOR_ID_MARVELL, SDIO_DEVICE_ID_MARVELL_8997_WLAN),
-@@ -3175,5 +3195,6 @@ MODULE_FIRMWARE(SD8797_DEFAULT_FW_NAME);
- MODULE_FIRMWARE(SD8897_DEFAULT_FW_NAME);
- MODULE_FIRMWARE(SD8887_DEFAULT_FW_NAME);
- MODULE_FIRMWARE(SD8977_DEFAULT_FW_NAME);
-+MODULE_FIRMWARE(SD8978_SDIOUART_FW_NAME);
- MODULE_FIRMWARE(SD8987_DEFAULT_FW_NAME);
- MODULE_FIRMWARE(SD8997_DEFAULT_FW_NAME);
+ static const struct mwifiex_sdio_device mwifiex_sdio_sd8801 = {
+@@ -482,6 +491,7 @@ static const struct mwifiex_sdio_device mwifiex_sdio_sd8801 = {
+ 	.can_dump_fw = false,
+ 	.can_auto_tdls = false,
+ 	.can_ext_scan = true,
++	.fw_ready_extra_delay = false,
+ };
+ 
+ static struct memory_type_mapping generic_mem_type_map[] = {
+@@ -574,6 +584,7 @@ mwifiex_sdio_probe(struct sdio_func *func, const struct sdio_device_id *id)
+ 		card->fw_dump_enh = data->fw_dump_enh;
+ 		card->can_auto_tdls = data->can_auto_tdls;
+ 		card->can_ext_scan = data->can_ext_scan;
++		card->fw_ready_extra_delay = data->fw_ready_extra_delay;
+ 		INIT_WORK(&card->work, mwifiex_sdio_work);
+ 	}
+ 
+@@ -777,6 +788,7 @@ mwifiex_sdio_read_fw_status(struct mwifiex_adapter *adapter, u16 *dat)
+ static int mwifiex_check_fw_status(struct mwifiex_adapter *adapter,
+ 				   u32 poll_num)
+ {
++	struct sdio_mmc_card *card = adapter->card;
+ 	int ret = 0;
+ 	u16 firmware_stat;
+ 	u32 tries;
+@@ -794,6 +806,13 @@ static int mwifiex_check_fw_status(struct mwifiex_adapter *adapter,
+ 		ret = -1;
+ 	}
+ 
++	if (card->fw_ready_extra_delay &&
++	    firmware_stat == FIRMWARE_READY_SDIO)
++		/* firmware might pretend to be ready, when it's not.
++		 * Wait a little bit more as a workaround.
++		 */
++		msleep(100);
++
+ 	return ret;
+ }
+ 
 diff --git a/drivers/net/wireless/marvell/mwifiex/sdio.h b/drivers/net/wireless/marvell/mwifiex/sdio.h
-index 5ff33ee53bb3..4ed3988fa7d1 100644
+index 4ed3988fa7d1..5fef84da4cbd 100644
 --- a/drivers/net/wireless/marvell/mwifiex/sdio.h
 +++ b/drivers/net/wireless/marvell/mwifiex/sdio.h
-@@ -37,6 +37,7 @@
- #define SD8887_DEFAULT_FW_NAME "mrvl/sd8887_uapsta.bin"
- #define SD8801_DEFAULT_FW_NAME "mrvl/sd8801_uapsta.bin"
- #define SD8977_DEFAULT_FW_NAME "mrvl/sdsd8977_combo_v2.bin"
-+#define SD8978_SDIOUART_FW_NAME "mrvl/sdiouartiw416_combo_v0.bin"
- #define SD8987_DEFAULT_FW_NAME "mrvl/sd8987_uapsta.bin"
- #define SD8997_DEFAULT_FW_NAME "mrvl/sdsd8997_combo_v4.bin"
+@@ -271,6 +271,7 @@ struct sdio_mmc_card {
+ 	bool fw_dump_enh;
+ 	bool can_auto_tdls;
+ 	bool can_ext_scan;
++	bool fw_ready_extra_delay;
  
-diff --git a/include/linux/mmc/sdio_ids.h b/include/linux/mmc/sdio_ids.h
-index 12036619346c..c26fd094e097 100644
---- a/include/linux/mmc/sdio_ids.h
-+++ b/include/linux/mmc/sdio_ids.h
-@@ -100,6 +100,7 @@
- #define SDIO_DEVICE_ID_MARVELL_8977_BT		0x9146
- #define SDIO_DEVICE_ID_MARVELL_8987_WLAN	0x9149
- #define SDIO_DEVICE_ID_MARVELL_8987_BT		0x914a
-+#define SDIO_DEVICE_ID_MARVELL_8978_WLAN	0x9159
+ 	struct mwifiex_sdio_mpa_tx mpa_tx;
+ 	struct mwifiex_sdio_mpa_rx mpa_rx;
+@@ -294,6 +295,7 @@ struct mwifiex_sdio_device {
+ 	bool fw_dump_enh;
+ 	bool can_auto_tdls;
+ 	bool can_ext_scan;
++	bool fw_ready_extra_delay;
+ };
  
- #define SDIO_VENDOR_ID_MEDIATEK			0x037a
- #define SDIO_DEVICE_ID_MEDIATEK_MT7663		0x7663
+ /*
 -- 
 2.43.0
 
