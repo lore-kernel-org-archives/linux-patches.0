@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C062A1D7;
-	Wed, 21 Feb 2024 13:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5512A1D7;
+	Wed, 21 Feb 2024 13:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522942; cv=none; b=n6Cyd8SQIJgVf/mC7VnMmYkNGjb9BzIjuQGEyP3s16kwvz1E6FED0c2YXotrEVrxTFLcbui2zSxTZsPR7fcNOGhKJ2p5ZzjW2Dy4kcgDGNQOyG1JH2Uw6y5Gy9GIK8IARbplSHs3BQPi3KvEcIT4ouYukZw+SbuCq3dZTs54cFw=
+	t=1708522946; cv=none; b=aMZgIgboLEiG5O6/ezXOjt8UoLDahVPKLqvbOXTSexXHp9UxKJYr33ZdoRlyByo/d7eEFKlyKHg/b3CJwarjxRxBTi5QIuEfSjjGD9NYqJQ/Ffnk0izX+ucd7pA9qsiIEPebMYnmva72D1+Rdiug56DQ9b/qARD0WksBNx/G8b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522942; c=relaxed/simple;
-	bh=XQ/9lPHDE6O8iNTLR+FnYWkbEkqaYH83IDMa5AT2nUc=;
+	s=arc-20240116; t=1708522946; c=relaxed/simple;
+	bh=rM2F9xu9V+Ai9Rtm8E+6rgmgFDxav7RZ/ig3ggeMPrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hvpl+IecrjrfEuiHs+mGa5qxAwo2TNO77A/3hOPwio5Q25yhV8jCIEWk0xSwenufMIpuXl4MEsYHN0DIWNaU812NNu2J+YxPD8BikVgPDL5j2b733WsV+lLNe3ui9+bYR+ZLfy9m3EoY4JT1L+0zZMiyTYC0s6vxM4kbc1N+SlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xm8bHLjT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cOISNHdxgGxcaBO0VuIXq3rfj6oZBJJ2wFKo0fQxRy2mw0EDzy+DRV1vByqKBVRGlRNrTdW6qf3kLOEpQXWDyjGx3VxvYodpSxtWD0rlHaSZxLwmkXXGfzW4Dedu+mksoW8kwdTgaap7OqCVnkuaeUJXIs26LdJno6E/b4HQ5jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTsSvJa3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xm8bHLjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E772C433F1;
-	Wed, 21 Feb 2024 13:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTsSvJa3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A99C433F1;
+	Wed, 21 Feb 2024 13:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522942;
-	bh=XQ/9lPHDE6O8iNTLR+FnYWkbEkqaYH83IDMa5AT2nUc=;
+	s=korg; t=1708522945;
+	bh=rM2F9xu9V+Ai9Rtm8E+6rgmgFDxav7RZ/ig3ggeMPrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xm8bHLjTWkHmS+oEwc0RVrXWdGL1qUaDhKmKEaKw0QGcHj1UBSkDu/QYnhU+NSFMi
-	 6t9/43ppliEAUn711Sqn+BqI1Qwwy4KG+8/nQWmounw17OxOsleIjP6+PCKkAwQUX6
-	 5uAnKzPsalUJMOnXaIA3U3MZfEsgydmrB/+9DuQM=
+	b=BTsSvJa3hwQYw7+33YlFionMcWYtIEqJCjaf3XKB+CfZdqEwpTbzqreJvs4gL2WiB
+	 9FL1ivBljxzJXFcLuWI2ue7+fRhgfkGB/7XYfBWOGY6g4oI4xgFYCWAPMYdpNhob86
+	 1/4iKuCrNHBgdzIoEzbZoeyqqGYiNbMEzuTKFERM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Su Hui <suhui@nfschina.com>,
+	Artur Paszkiewicz <artur.paszkiewicz@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 269/476] drm: using mul_u32_u32() requires linux/math64.h
-Date: Wed, 21 Feb 2024 14:05:20 +0100
-Message-ID: <20240221130017.797620317@linuxfoundation.org>
+Subject: [PATCH 5.15 270/476] scsi: isci: Fix an error code problem in isci_io_request_build()
+Date: Wed, 21 Feb 2024 14:05:21 +0100
+Message-ID: <20240221130017.840018733@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -45,47 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Rothwell <sfr@canb.auug.org.au>
+From: Su Hui <suhui@nfschina.com>
 
-[ Upstream commit 933a2a376fb3f22ba4774f74233571504ac56b02 ]
+[ Upstream commit 658365c6b0857e6a306436e315a8633937e3af42 ]
 
-Some pending include file cleanups produced this error:
+Clang static complains that Value stored to 'status' is never read. Return
+'status' rather than 'SCI_SUCCESS'.
 
-In file included from include/linux/kernel.h:27,
-                 from drivers/gpu/ipu-v3/ipu-dp.c:7:
-include/drm/drm_color_mgmt.h: In function 'drm_color_lut_extract':
-include/drm/drm_color_mgmt.h:45:46: error: implicit declaration of function 'mul_u32_u32' [-Werror=implicit-function-declaration]
-   45 |                 return DIV_ROUND_CLOSEST_ULL(mul_u32_u32(user_input, (1 << bit_precision) - 1),
-      |                                              ^~~~~~~~~~~
-
-Fixes: c6fbb6bca108 ("drm: Fix color LUT rounding")
-Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231219145734.13e40e1e@canb.auug.org.au
+Fixes: f1f52e75939b ("isci: uplevel request infrastructure")
+Signed-off-by: Su Hui <suhui@nfschina.com>
+Link: https://lore.kernel.org/r/20240112041926.3924315-1-suhui@nfschina.com
+Reviewed-by: Artur Paszkiewicz <artur.paszkiewicz@intel.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_color_mgmt.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/isci/request.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/drm/drm_color_mgmt.h b/include/drm/drm_color_mgmt.h
-index 54b2b2467bfd..ed81741036d7 100644
---- a/include/drm/drm_color_mgmt.h
-+++ b/include/drm/drm_color_mgmt.h
-@@ -24,6 +24,7 @@
- #define __DRM_COLOR_MGMT_H__
+diff --git a/drivers/scsi/isci/request.c b/drivers/scsi/isci/request.c
+index fcaa84a3c210..6ef40993906a 100644
+--- a/drivers/scsi/isci/request.c
++++ b/drivers/scsi/isci/request.c
+@@ -3390,7 +3390,7 @@ static enum sci_status isci_io_request_build(struct isci_host *ihost,
+ 		return SCI_FAILURE;
+ 	}
  
- #include <linux/ctype.h>
-+#include <linux/math64.h>
- #include <drm/drm_property.h>
+-	return SCI_SUCCESS;
++	return status;
+ }
  
- struct drm_crtc;
+ static struct isci_request *isci_request_from_tag(struct isci_host *ihost, u16 tag)
 -- 
 2.43.0
 
