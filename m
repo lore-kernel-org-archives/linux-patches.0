@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E0D69D29;
-	Wed, 21 Feb 2024 14:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BF44C62;
+	Wed, 21 Feb 2024 14:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525294; cv=none; b=jiz5j1O7CFT9ggd7zj54tbEAM+fkJIZMNL86QnwCWCz9qOM/FgoniqpxrgosEd1M3L6cnxmtnc/YU+Z6Ruqo7CpB0XlOmCTb7hQhcq9TPWvYirP3ie+coclqNZaevKIfgGemHTinYujNqfXdapGPZAkOcWDgr6u2sa8XPsWQAWQ=
+	t=1708525298; cv=none; b=dKOP4+4wfLsJxCQsQ0T2N1nKX3J8R76XJP/3EUqMHCR+lDeU8hQMrDEkcvEVTMav1T/8Vu3utWATUD1+kZSYPJm8glJxerWdw0/hApWJz5lKsfzEfGpPg+kL8tFq81Izm69SU7Pym01kzD3hmLmkfTswZFIWl3DSBWO8tWg1zKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525294; c=relaxed/simple;
-	bh=8hnQW2Nf32AOyO+BL/tn9ey3JKmFTugdWbi3vi/MFLg=;
+	s=arc-20240116; t=1708525298; c=relaxed/simple;
+	bh=jh4sEC/Je0UGGquy2axx/CInYg4HAWR/XxlBpm0g0ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sgw0nx3MKAPMZKJ2qaOB8rahuUwy1HFsUGM+i4fkXzD0zl9Vaj2ulxNxGgenaOoiWqf6Ose+CzfEoPMvpOQz+fDHUzsZdDo5DemIwz1fON2D4s2gq5qWWbdCTs4m4hothB+76VigTRUbJbKiKVRQNB5ChMklRxz8JLwG1GC22Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeK3OQeu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pw3Yeu8ar4H2InAbbQi63urdQZr+NHenMPkuRfZ9pbI70JXIGZikPxBQX3kqkHpTNscQ+tPB1PcRrStSgWAg6604Cooa9snmmQZqM9V/97ATbJAbobeFTP8IKLpb1UmMJbxoeNvWzA59/bguxQiCLIdGYlCi9hU3xFy9gx04Jyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyRA1zEP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeK3OQeu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3B4C433C7;
-	Wed, 21 Feb 2024 14:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyRA1zEP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A28C433C7;
+	Wed, 21 Feb 2024 14:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525294;
-	bh=8hnQW2Nf32AOyO+BL/tn9ey3JKmFTugdWbi3vi/MFLg=;
+	s=korg; t=1708525297;
+	bh=jh4sEC/Je0UGGquy2axx/CInYg4HAWR/XxlBpm0g0ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XeK3OQeujrvG+asyKm8+SUBSVTzLHhIqDVBMeW43KhGjQeohfU2JQk3ozG6T85p3M
-	 X5d5hMnaXGH/H4oYn+aXyhFUetTjYv0myUV6kvBqcP3KrIZcV84rzzxn45Tbxhbwa2
-	 tSdVuNfZjq6ssmY71Y44e1dEt/6w8cSaH+GafXnE=
+	b=dyRA1zEPcasF2AGIZEIsOxeNx2SpzuO3g2Ej8tn5iRQVMI07eDY30BjWPh5Kk1X9z
+	 zux2syNq0AVi86gbsGlMwY4Ewtrgp/517BkuZlZ34ojpjQpfXu7es4Fwluy7h5JUp6
+	 f2NzOrRXjhWnArL7L0o2N6MzfQloFyufDJOOOVY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Alex Lyakas <alex.lyakas@zadara.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 113/267] block: prevent an integer overflow in bvec_try_merge_hw_page
-Date: Wed, 21 Feb 2024 14:07:34 +0100
-Message-ID: <20240221125943.511519908@linuxfoundation.org>
+Subject: [PATCH 5.4 114/267] md: Whenassemble the array, consult the superblock of the freshest device
+Date: Wed, 21 Feb 2024 14:07:35 +0100
+Message-ID: <20240221125943.549677624@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,34 +51,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Alex Lyakas <alex.lyakas@zadara.com>
 
-[ Upstream commit 3f034c374ad55773c12dd8f3c1607328e17c0072 ]
+[ Upstream commit dc1cc22ed58f11d58d8553c5ec5f11cbfc3e3039 ]
 
-Reordered a check to avoid a possible overflow when adding len to bv_len.
+Upon assembling the array, both kernel and mdadm allow the devices to have event
+counter difference of 1, and still consider them as up-to-date.
+However, a device whose event count is behind by 1, may in fact not be up-to-date,
+and array resync with such a device may cause data corruption.
+To avoid this, consult the superblock of the freshest device about the status
+of a device, whose event counter is behind by 1.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20231204173419.782378-2-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Alex Lyakas <alex.lyakas@zadara.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/1702470271-16073-1-git-send-email-alex.lyakas@zadara.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 54 ++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 44 insertions(+), 10 deletions(-)
 
-diff --git a/block/bio.c b/block/bio.c
-index 6bdb95174adc..e3d3e75c97e0 100644
---- a/block/bio.c
-+++ b/block/bio.c
-@@ -710,7 +710,7 @@ static bool bio_try_merge_pc_page(struct request_queue *q, struct bio *bio,
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index a006f3a9554b..61c3e8df1b55 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1098,6 +1098,7 @@ struct super_type  {
+ 					  struct md_rdev *refdev,
+ 					  int minor_version);
+ 	int		    (*validate_super)(struct mddev *mddev,
++					      struct md_rdev *freshest,
+ 					      struct md_rdev *rdev);
+ 	void		    (*sync_super)(struct mddev *mddev,
+ 					  struct md_rdev *rdev);
+@@ -1236,8 +1237,9 @@ static int super_90_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor
  
- 	if ((addr1 | mask) != (addr2 | mask))
- 		return false;
--	if (bv->bv_len + len > queue_max_segment_size(q))
-+	if (len > queue_max_segment_size(q) - bv->bv_len)
- 		return false;
- 	return __bio_try_merge_page(bio, page, len, offset, same_page);
+ /*
+  * validate_super for 0.90.0
++ * note: we are not using "freshest" for 0.9 superblock
+  */
+-static int super_90_validate(struct mddev *mddev, struct md_rdev *rdev)
++static int super_90_validate(struct mddev *mddev, struct md_rdev *freshest, struct md_rdev *rdev)
+ {
+ 	mdp_disk_t *desc;
+ 	mdp_super_t *sb = page_address(rdev->sb_page);
+@@ -1752,7 +1754,7 @@ static int super_1_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor_
+ 	return ret;
  }
+ 
+-static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
++static int super_1_validate(struct mddev *mddev, struct md_rdev *freshest, struct md_rdev *rdev)
+ {
+ 	struct mdp_superblock_1 *sb = page_address(rdev->sb_page);
+ 	__u64 ev1 = le64_to_cpu(sb->events);
+@@ -1848,13 +1850,15 @@ static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
+ 		}
+ 	} else if (mddev->pers == NULL) {
+ 		/* Insist of good event counter while assembling, except for
+-		 * spares (which don't need an event count) */
+-		++ev1;
++		 * spares (which don't need an event count).
++		 * Similar to mdadm, we allow event counter difference of 1
++		 * from the freshest device.
++		 */
+ 		if (rdev->desc_nr >= 0 &&
+ 		    rdev->desc_nr < le32_to_cpu(sb->max_dev) &&
+ 		    (le16_to_cpu(sb->dev_roles[rdev->desc_nr]) < MD_DISK_ROLE_MAX ||
+ 		     le16_to_cpu(sb->dev_roles[rdev->desc_nr]) == MD_DISK_ROLE_JOURNAL))
+-			if (ev1 < mddev->events)
++			if (ev1 + 1 < mddev->events)
+ 				return -EINVAL;
+ 	} else if (mddev->bitmap) {
+ 		/* If adding to array with a bitmap, then we can accept an
+@@ -1875,8 +1879,38 @@ static int super_1_validate(struct mddev *mddev, struct md_rdev *rdev)
+ 		    rdev->desc_nr >= le32_to_cpu(sb->max_dev)) {
+ 			role = MD_DISK_ROLE_SPARE;
+ 			rdev->desc_nr = -1;
+-		} else
++		} else if (mddev->pers == NULL && freshest && ev1 < mddev->events) {
++			/*
++			 * If we are assembling, and our event counter is smaller than the
++			 * highest event counter, we cannot trust our superblock about the role.
++			 * It could happen that our rdev was marked as Faulty, and all other
++			 * superblocks were updated with +1 event counter.
++			 * Then, before the next superblock update, which typically happens when
++			 * remove_and_add_spares() removes the device from the array, there was
++			 * a crash or reboot.
++			 * If we allow current rdev without consulting the freshest superblock,
++			 * we could cause data corruption.
++			 * Note that in this case our event counter is smaller by 1 than the
++			 * highest, otherwise, this rdev would not be allowed into array;
++			 * both kernel and mdadm allow event counter difference of 1.
++			 */
++			struct mdp_superblock_1 *freshest_sb = page_address(freshest->sb_page);
++			u32 freshest_max_dev = le32_to_cpu(freshest_sb->max_dev);
++
++			if (rdev->desc_nr >= freshest_max_dev) {
++				/* this is unexpected, better not proceed */
++				pr_warn("md: %s: rdev[%pg]: desc_nr(%d) >= freshest(%pg)->sb->max_dev(%u)\n",
++						mdname(mddev), rdev->bdev, rdev->desc_nr,
++						freshest->bdev, freshest_max_dev);
++				return -EUCLEAN;
++			}
++
++			role = le16_to_cpu(freshest_sb->dev_roles[rdev->desc_nr]);
++			pr_debug("md: %s: rdev[%pg]: role=%d(0x%x) according to freshest %pg\n",
++				     mdname(mddev), rdev->bdev, role, role, freshest->bdev);
++		} else {
+ 			role = le16_to_cpu(sb->dev_roles[rdev->desc_nr]);
++		}
+ 		switch(role) {
+ 		case MD_DISK_ROLE_SPARE: /* spare */
+ 			break;
+@@ -2780,7 +2814,7 @@ static int add_bound_rdev(struct md_rdev *rdev)
+ 		 * and should be added immediately.
+ 		 */
+ 		super_types[mddev->major_version].
+-			validate_super(mddev, rdev);
++			validate_super(mddev, NULL/*freshest*/, rdev);
+ 		if (add_journal)
+ 			mddev_suspend(mddev);
+ 		err = mddev->pers->hot_add_disk(mddev, rdev);
+@@ -3690,7 +3724,7 @@ static int analyze_sbs(struct mddev *mddev)
+ 	}
+ 
+ 	super_types[mddev->major_version].
+-		validate_super(mddev, freshest);
++		validate_super(mddev, NULL/*freshest*/, freshest);
+ 
+ 	i = 0;
+ 	rdev_for_each_safe(rdev, tmp, mddev) {
+@@ -3705,7 +3739,7 @@ static int analyze_sbs(struct mddev *mddev)
+ 		}
+ 		if (rdev != freshest) {
+ 			if (super_types[mddev->major_version].
+-			    validate_super(mddev, rdev)) {
++			    validate_super(mddev, freshest, rdev)) {
+ 				pr_warn("md: kicking non-fresh %s from array!\n",
+ 					bdevname(rdev->bdev,b));
+ 				md_kick_rdev_from_array(rdev);
+@@ -6610,7 +6644,7 @@ static int add_new_disk(struct mddev *mddev, mdu_disk_info_t *info)
+ 			rdev->saved_raid_disk = rdev->raid_disk;
+ 		} else
+ 			super_types[mddev->major_version].
+-				validate_super(mddev, rdev);
++				validate_super(mddev, NULL/*freshest*/, rdev);
+ 		if ((info->state & (1<<MD_DISK_SYNC)) &&
+ 		     rdev->raid_disk != info->raid_disk) {
+ 			/* This was a hot-add request, but events doesn't
 -- 
 2.43.0
 
