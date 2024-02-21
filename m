@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E713C53816;
-	Wed, 21 Feb 2024 13:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A2253816;
+	Wed, 21 Feb 2024 13:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521744; cv=none; b=U6nxdXc0XMgrt4lq8FNVof2mHrBBkZbQRsJm81veziCghjIaoZsaMuD6PRzQXuzhs5bg3b2vIz0ds/fviO3a/e6tBaUY6BpWtBUfuSAYay8fG+4Hzp5XlOILueF2ktQs0fXyTO9QHv1FrJrgpBQWq6EjooEFLVmIGZBlFhhP61A=
+	t=1708521746; cv=none; b=PXTBNOBv3plGFSsAISet9NA8VN0A5M5zvJiUNRCWioFZWKTv+zBLHYwzOE+Ym+itubom0ICpxh/AYkCMuf9kmD3QwX0z2tkrt5SYAw9eCYmV9QYpJgp9Yy7khjEYosTXyA0imEk4Ve16AIZDHQk2VagD+vfvvD5JsSyL4j4fG6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521744; c=relaxed/simple;
-	bh=1q6uWuXe8V5m/ivItWzkz3+sVWuwkUsHQFKiMix2jE0=;
+	s=arc-20240116; t=1708521746; c=relaxed/simple;
+	bh=XYK1/oOTHMlLyMp8ocu40SQ4xn1rYKSVyUhlmLaFbbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sT0NUBUbLplOLbPpkg8RdYDQqQUl5P3cC7/UfzBuPuEZJzelaytJmlCwCLO+4886WwbYtZW29EUt6nbS24IlkMUMli9n/ZU6AHBmC8E5QMecgapTEuAhjozolkp65jR9chpibKG0UxUO5hZcPm3tfZgZAjVtRfYLekS+RmhJo9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOrk0eRv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U7T8MFVtAQFBvB8/r5qytEVTHtAXcEa8WV2kCVwrMu50u9tP3hCtk79701ogjJs2oXvpW9bakr4KrosfmOOdLXBLyuicMewf1PXzESAQl8wlT1eHfj7oBEOVrNNTABxp15tXw8ESXFlWE+UbZQedDTn5/dH4MdyEbUvVJTnuJv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbrF4OvH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOrk0eRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4CDC43390;
-	Wed, 21 Feb 2024 13:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbrF4OvH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCCBC433C7;
+	Wed, 21 Feb 2024 13:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521743;
-	bh=1q6uWuXe8V5m/ivItWzkz3+sVWuwkUsHQFKiMix2jE0=;
+	s=korg; t=1708521746;
+	bh=XYK1/oOTHMlLyMp8ocu40SQ4xn1rYKSVyUhlmLaFbbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOrk0eRvNeQZ190wvzuAxNvivn6EECPDrXWo2J1XrDjYsPt1/tKAwXi0GM4pLzrT+
-	 tAeBFEWRleWBVhQMt0YngnDp3LCnwCKYcR/2PTK9uKPH3us2Y7PE45Aptyj1x6i+XV
-	 fQ6QZI2SeMXLWqNFNdKuIWFmpraNSX9aINoxt0w4=
+	b=KbrF4OvHWp9ky6rpXTDqjlENRgaRHOo0jxTUFR3vJk6n9bXUdqVDLAzciMIcuCwUz
+	 OiMTUdMg8mHTDU2Ms957dKWXswgBQXfzBYO1Z4bxqvZCJx+TD46WCn8fCpYa5PYQ3l
+	 /2mP9dyI1ugUug8QlZItP7Zf20PAJ5RiLh4YQB1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+ee2ae68da3b22d04cd8d@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 193/202] nilfs2: fix hang in nilfs_lookup_dirty_data_buffers()
-Date: Wed, 21 Feb 2024 14:08:14 +0100
-Message-ID: <20240221125938.027014186@linuxfoundation.org>
+	Daniel Basilio <daniel.basilio@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 194/202] nfp: use correct macro for LengthSelect in BAR config
+Date: Wed, 21 Feb 2024 14:08:15 +0100
+Message-ID: <20240221125938.056072485@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -51,62 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Daniel Basilio <daniel.basilio@corigine.com>
 
-commit 38296afe3c6ee07319e01bb249aa4bb47c07b534 upstream.
+commit b3d4f7f2288901ed2392695919b3c0e24c1b4084 upstream.
 
-Syzbot reported a hang issue in migrate_pages_batch() called by mbind()
-and nilfs_lookup_dirty_data_buffers() called in the log writer of nilfs2.
+The 1st and 2nd expansion BAR configuration registers are configured,
+when the driver starts up, in variables 'barcfg_msix_general' and
+'barcfg_msix_xpb', respectively. The 'LengthSelect' field is ORed in
+from bit 0, which is incorrect. The 'LengthSelect' field should
+start from bit 27.
 
-While migrate_pages_batch() locks a folio and waits for the writeback to
-complete, the log writer thread that should bring the writeback to
-completion picks up the folio being written back in
-nilfs_lookup_dirty_data_buffers() that it calls for subsequent log
-creation and was trying to lock the folio.  Thus causing a deadlock.
+This has largely gone un-noticed because
+NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT happens to be 0.
 
-In the first place, it is unexpected that folios/pages in the middle of
-writeback will be updated and become dirty.  Nilfs2 adds a checksum to
-verify the validity of the log being written and uses it for recovery at
-mount, so data changes during writeback are suppressed.  Since this is
-broken, an unclean shutdown could potentially cause recovery to fail.
-
-Investigation revealed that the root cause is that the wait for writeback
-completion in nilfs_page_mkwrite() is conditional, and if the backing
-device does not require stable writes, data may be modified without
-waiting.
-
-Fix these issues by making nilfs_page_mkwrite() wait for writeback to
-finish regardless of the stable write requirement of the backing device.
-
-Link: https://lkml.kernel.org/r/20240131145657.4209-1-konishi.ryusuke@gmail.com
-Fixes: 1d1d1a767206 ("mm: only enforce stable page writes if the backing device requires it")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+ee2ae68da3b22d04cd8d@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/00000000000047d819061004ad6c@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
+Cc: stable@vger.kernel.org # 4.11+
+Signed-off-by: Daniel Basilio <daniel.basilio@corigine.com>
+Signed-off-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/file.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/file.c
-+++ b/fs/nilfs2/file.c
-@@ -105,7 +105,13 @@ static vm_fault_t nilfs_page_mkwrite(str
- 	nilfs_transaction_commit(inode->i_sb);
- 
-  mapped:
--	wait_for_stable_page(page);
-+	/*
-+	 * Since checksumming including data blocks is performed to determine
-+	 * the validity of the log to be written and used for recovery, it is
-+	 * necessary to wait for writeback to finish here, regardless of the
-+	 * stable write requirement of the backing device.
-+	 */
-+	wait_on_page_writeback(page);
-  out:
- 	sb_end_pagefault(inode->i_sb);
- 	return block_page_mkwrite_return(ret);
+--- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
++++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
+@@ -571,11 +571,13 @@ static int enable_bars(struct nfp6000_pc
+ 	const u32 barcfg_msix_general =
+ 		NFP_PCIE_BAR_PCIE2CPP_MapType(
+ 			NFP_PCIE_BAR_PCIE2CPP_MapType_GENERAL) |
+-		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT;
++		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
++			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT);
+ 	const u32 barcfg_msix_xpb =
+ 		NFP_PCIE_BAR_PCIE2CPP_MapType(
+ 			NFP_PCIE_BAR_PCIE2CPP_MapType_BULK) |
+-		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT |
++		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
++			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT) |
+ 		NFP_PCIE_BAR_PCIE2CPP_Target_BaseAddress(
+ 			NFP_CPP_TARGET_ISLAND_XPB);
+ 	const u32 barcfg_explicit[4] = {
 
 
