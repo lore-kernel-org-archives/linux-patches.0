@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA913EA71;
-	Wed, 21 Feb 2024 13:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CA63EA71;
+	Wed, 21 Feb 2024 13:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521151; cv=none; b=ZYP3bOZtlsCTpIF8f10uVv19aqDMQz8rS+vaKiFYzKqZ+8nepdT+z7QfyuFO19vJDl3Mn7NRnOcBCn/1WiF0zxZRh7YlaMvgqicDYOxPAXz7toR67e9ohDK32i9jMXycUwMeZ/BDeAwYRrk0YUWNKDLLy9+poI8SMvnNk5Tv6bI=
+	t=1708521154; cv=none; b=X3xrHEZDfVkff7WWk5X9ggQ7IDH5eBjk7AgGLTzhwhBglmrYWvKsS3KkR/mA3uuN2TQ+Pfe8NZ7vlzLvsOJZMZJ5/jNJm4S+t9Lo6VmzUzK2Rj0uKps+zcA2Z0j5FrYk9lJkAOZeh8FtFlFabzqi7QBmPm1j/eplNlbc1YAlqj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521151; c=relaxed/simple;
-	bh=rH8ollqpuPtxXPV3EAAbDp7T3EulW9tTgNV4GrSMHus=;
+	s=arc-20240116; t=1708521154; c=relaxed/simple;
+	bh=seQsWcEqfHz5ZJ6TSOOCCTpEs7C29ETyoSDGpnZBYGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SEg9RHvCrBtZg0S7LR1GhUu/5Kd5+/IOT1UNUlLhuyHKWTTBoAM1N4qFfGcpUPNbR7APZ4/gw2lqTNP5fng8qpcvE5ebCQv4Z5nzRRKjdmaIwGgHKkeCSFDASCAHL0MqvJCTs40LLKmm7UbcDoEE+gBFK1MLly8n/UGXEWzd3Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSA0yO3x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SAls8v5dMpXkm0IDuVhdXFbESZFl96lRl+ZV8h6KlBh+x6XoUbb+juDTzPNB8FYgexF45C8N1bJvQXwbWZsjL+ehB3Qw/MKSlcvJTnO99f1OvYSvMvGTv/MShGHLDrLhCp2ay1UqQzNDZe0DiZ/j1afCyTRtU7Zie3j5IYJs04I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWHnJSep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSA0yO3x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE75C433C7;
-	Wed, 21 Feb 2024 13:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWHnJSep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F42C433F1;
+	Wed, 21 Feb 2024 13:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521151;
-	bh=rH8ollqpuPtxXPV3EAAbDp7T3EulW9tTgNV4GrSMHus=;
+	s=korg; t=1708521154;
+	bh=seQsWcEqfHz5ZJ6TSOOCCTpEs7C29ETyoSDGpnZBYGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSA0yO3xFAYtViRv4EiUtAllSMPHortuwgr3NaD9mZJPCh+8TY+ltrFlTd/uT0ydx
-	 +5eRBrA8350riL99reAA/nkdbAhca3Hj5HEGZHJsYLe/Tb5pgeMS1PoEqMbfJqCPGV
-	 IVxduBByfdPw2rcqSU/sWiDLgDlvW1q977SYHonY=
+	b=eWHnJSepY3J8BMlZKpC7lmDr1RQBdI4VAig8Ub/PIO+XG1XWpJuF3bjgEqR+UH3se
+	 isqUA305vNZ9OjX450MmC9/eax/0xIpU3CR9FGRwNPPYKwzYUKaczQNtswi+kvNCPm
+	 N2kDSdGCKURqv0VbOaQt7l4N5H4nXBGQ6sBo8J28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 034/202] netfilter: nf_tables: restrict anonymous set and map names to 16 bytes
-Date: Wed, 21 Feb 2024 14:05:35 +0100
-Message-ID: <20240221125932.896992620@linuxfoundation.org>
+Subject: [PATCH 4.19 035/202] fjes: fix memleaks in fjes_hw_setup
+Date: Wed, 21 Feb 2024 14:05:36 +0100
+Message-ID: <20240221125932.926203508@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -51,57 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit b462579b2b86a8f5230543cadd3a4836be27baf7 ]
+[ Upstream commit f6cc4b6a3ae53df425771000e9c9540cce9b7bb1 ]
 
-nftables has two types of sets/maps, one where userspace defines the
-name, and anonymous sets/maps, where userspace defines a template name.
+In fjes_hw_setup, it allocates several memory and delay the deallocation
+to the fjes_hw_exit in fjes_probe through the following call chain:
 
-For the latter, kernel requires presence of exactly one "%d".
-nftables uses "__set%d" and "__map%d" for this.  The kernel will
-expand the format specifier and replaces it with the smallest unused
-number.
+fjes_probe
+  |-> fjes_hw_init
+        |-> fjes_hw_setup
+  |-> fjes_hw_exit
 
-As-is, userspace could define a template name that allows to move
-the set name past the 256 bytes upperlimit (post-expansion).
+However, when fjes_hw_setup fails, fjes_hw_exit won't be called and thus
+all the resources allocated in fjes_hw_setup will be leaked. In this
+patch, we free those resources in fjes_hw_setup and prevents such leaks.
 
-I don't see how this could be a problem, but I would prefer if userspace
-cannot do this, so add a limit of 16 bytes for the '%d' template name.
-
-16 bytes is the old total upper limit for set names that existed when
-nf_tables was merged initially.
-
-Fixes: 387454901bd6 ("netfilter: nf_tables: Allow set names of up to 255 chars")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 2fcbca687702 ("fjes: platform_driver's .probe and .remove routine")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240122172445.3841883-1-alexious@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/fjes/fjes_hw.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e0c224dea316..4465b832305f 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -26,6 +26,7 @@
- #include <net/sock.h>
+diff --git a/drivers/net/fjes/fjes_hw.c b/drivers/net/fjes/fjes_hw.c
+index 9c652c04375b..c3fa8db69b9e 100644
+--- a/drivers/net/fjes/fjes_hw.c
++++ b/drivers/net/fjes/fjes_hw.c
+@@ -235,21 +235,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
  
- #define NFT_MODULE_AUTOLOAD_LIMIT (MODULE_NAME_LEN - sizeof("nft-expr-255-"))
-+#define NFT_SET_MAX_ANONLEN 16
+ 	mem_size = FJES_DEV_REQ_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.req_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.req_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.req_buf)) {
++		result = -ENOMEM;
++		goto free_ep_info;
++	}
  
- unsigned int nf_tables_net_id __read_mostly;
+ 	hw->hw_info.req_buf_size = mem_size;
  
-@@ -3184,6 +3185,9 @@ static int nf_tables_set_alloc_name(struct nft_ctx *ctx, struct nft_set *set,
- 		if (p[1] != 'd' || strchr(p + 2, '%'))
- 			return -EINVAL;
+ 	mem_size = FJES_DEV_RES_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.res_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.res_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.res_buf)) {
++		result = -ENOMEM;
++		goto free_req_buf;
++	}
  
-+		if (strnlen(name, NFT_SET_MAX_ANONLEN) >= NFT_SET_MAX_ANONLEN)
-+			return -EINVAL;
+ 	hw->hw_info.res_buf_size = mem_size;
+ 
+ 	result = fjes_hw_alloc_shared_status_region(hw);
+ 	if (result)
+-		return result;
++		goto free_res_buf;
+ 
+ 	hw->hw_info.buffer_share_bit = 0;
+ 	hw->hw_info.buffer_unshare_reserve_bit = 0;
+@@ -260,11 +264,11 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->tx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
+ 
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->rx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
+ 
+ 			spin_lock_irqsave(&hw->rx_status_lock, flags);
+ 			fjes_hw_setup_epbuf(&buf_pair->tx, mac,
+@@ -287,6 +291,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 	fjes_hw_init_command_registers(hw, &param);
+ 
+ 	return 0;
 +
- 		inuse = (unsigned long *)get_zeroed_page(GFP_KERNEL);
- 		if (inuse == NULL)
- 			return -ENOMEM;
++free_epbuf:
++	for (epidx = 0; epidx < hw->max_epid ; epidx++) {
++		if (epidx == hw->my_epid)
++			continue;
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].tx);
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].rx);
++	}
++	fjes_hw_free_shared_status_region(hw);
++free_res_buf:
++	kfree(hw->hw_info.res_buf);
++	hw->hw_info.res_buf = NULL;
++free_req_buf:
++	kfree(hw->hw_info.req_buf);
++	hw->hw_info.req_buf = NULL;
++free_ep_info:
++	kfree(hw->ep_shm_info);
++	hw->ep_shm_info = NULL;
++	return result;
+ }
+ 
+ static void fjes_hw_cleanup(struct fjes_hw *hw)
 -- 
 2.43.0
 
