@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021F76A8D6;
-	Wed, 21 Feb 2024 14:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3E67D413;
+	Wed, 21 Feb 2024 14:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524870; cv=none; b=kANlWplUQthpXjgPOAxPRhbVMeDx5fV6sY8ByH8ROn6r9N7ET0r0t7pdu872do0m+uMBD8g43lyImJ76l9VAiq4khMtv+Ibb9u9h5CUs8VscV9TgfJg+BPAqFrjKZXmpEymwHzmrK0wcDXTsbbv/ImRv6mxHp8zqBaaYA3Fkd/c=
+	t=1708524873; cv=none; b=dIkHcOvxXECt3+BYcmhA8FgiTV2anNfGHzMGHg2k8bBv2wbRCXmrsKD8dADx/qB8nTen2f1KNW93cSKkNQH4UNxLkSYpBYnQJb3+bVjyt6mdpiX03wqyQ9fnkD1v45pO9oecKyr0EkrxILAQRRYHvsyyAdJvSV20rsNui9eLXW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524870; c=relaxed/simple;
-	bh=0zrh3sF54acJ23gOWm7P2csz6Jw4oS2BRCpclyfTPjY=;
+	s=arc-20240116; t=1708524873; c=relaxed/simple;
+	bh=OyPYW328tcEqUyTMButanUf/dbyy4Wa1OZjgP/4qfJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rv+pVAvPqVJjJCt7bDDic+PB97/d0Y56AL+gtgNl6N1LaHu6rArxiWNR+BPAq0h/3TMcf7VCuAYJ7TSsyaL43zG/QcKPcgqCxoOC3K/BhPMfpgWXuof+fD74td8zUYijbc6U/CUg/A+FyKygJo5Fh8qN9lLgdHdYt0Fw5T1mgxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7oA+sig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYcASWMWGoO4DHh2nmDLoA4ZiVCTSSlRpjlRRXJYlSlgV5lLnPdQNqu/2lyj+fRvoY7LzRA/BoSCJUjGS8qChy0MzDMY8SOKxJMYXrDTIIdXFwsviAzJvJduuxMB2xrPshoEuifkGijlU4fZ1LUDvxwkQ6qk3BYOcKkMDfaBtBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc0pWEpR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7oA+sig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1C9C433F1;
-	Wed, 21 Feb 2024 14:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc0pWEpR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFE5C433C7;
+	Wed, 21 Feb 2024 14:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524869;
-	bh=0zrh3sF54acJ23gOWm7P2csz6Jw4oS2BRCpclyfTPjY=;
+	s=korg; t=1708524873;
+	bh=OyPYW328tcEqUyTMButanUf/dbyy4Wa1OZjgP/4qfJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y7oA+sigUd7D3iqc2RNLn8fIs3hLR5aNvR1wgZfB0OvMyXMktoVOM3jRYPrE+0rIe
-	 z/wm2N53OIzl41x2rmgUCaeLOEez6sCAJZ+LazCdYoZiHv5QdN7IPddNAUESwqgZ8T
-	 HW+oPKVkqGdsOTE1g3kxBdzrNqoYgSCIJF5Jw0c8=
+	b=nc0pWEpRjjGf2ke3B+iuC5UnmLRJtrgGYnedDrPoK96SgTym+y8lHuCEFcSB1A76b
+	 Bgusn4SGsn8yj819BfgbRQYTaHV7x0ZmwXs3+WM9nPU80ljGTkpoG6UIs8QVkvGVmI
+	 fhjB3ZT/bug58Ol0SGFF5g5rheqZOKKdmP7dkpiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishabh Dave <ridave@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.10 344/379] ceph: prevent use-after-free in encode_cap_msg()
-Date: Wed, 21 Feb 2024 14:08:43 +0100
-Message-ID: <20240221130005.164568791@linuxfoundation.org>
+	Nuno Sa <nuno.sa@analog.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 5.10 345/379] of: property: fix typo in io-channels
+Date: Wed, 21 Feb 2024 14:08:44 +0100
+Message-ID: <20240221130005.194681583@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,53 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishabh Dave <ridave@redhat.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit cda4672da1c26835dcbd7aec2bfed954eda9b5ef upstream.
+commit 8f7e917907385e112a845d668ae2832f41e64bf5 upstream.
 
-In fs/ceph/caps.c, in encode_cap_msg(), "use after free" error was
-caught by KASAN at this line - 'ceph_buffer_get(arg->xattr_buf);'. This
-implies before the refcount could be increment here, it was freed.
+The property is io-channels and not io-channel. This was effectively
+preventing the devlink creation.
 
-In same file, in "handle_cap_grant()" refcount is decremented by this
-line - 'ceph_buffer_put(ci->i_xattrs.blob);'. It appears that a race
-occurred and resource was freed by the latter line before the former
-line could increment it.
-
-encode_cap_msg() is called by __send_cap() and __send_cap() is called by
-ceph_check_caps() after calling __prep_cap(). __prep_cap() is where
-arg->xattr_buf is assigned to ci->i_xattrs.blob. This is the spot where
-the refcount must be increased to prevent "use after free" error.
-
+Fixes: 8e12257dead7 ("of: property: Add device link support for iommus, mboxes and io-channels")
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/59259
-Signed-off-by: Rishabh Dave <ridave@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Reviewed-by: Saravana Kannan <saravanak@google.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20240123-iio-backend-v7-1-1bff236b8693@analog.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/caps.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/of/property.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -1402,7 +1402,7 @@ static void __prep_cap(struct cap_msg_ar
- 	if (flushing & CEPH_CAP_XATTR_EXCL) {
- 		arg->old_xattr_buf = __ceph_build_xattrs_blob(ci);
- 		arg->xattr_version = ci->i_xattrs.version;
--		arg->xattr_buf = ci->i_xattrs.blob;
-+		arg->xattr_buf = ceph_buffer_get(ci->i_xattrs.blob);
- 	} else {
- 		arg->xattr_buf = NULL;
- 		arg->old_xattr_buf = NULL;
-@@ -1468,6 +1468,7 @@ static void __send_cap(struct cap_msg_ar
- 	encode_cap_msg(msg, arg);
- 	ceph_con_send(&arg->session->s_con, msg);
- 	ceph_buffer_put(arg->old_xattr_buf);
-+	ceph_buffer_put(arg->xattr_buf);
- 	if (arg->wake)
- 		wake_up_all(&ci->i_cap_wq);
- }
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -1306,7 +1306,7 @@ DEFINE_SIMPLE_PROP(clocks, "clocks", "#c
+ DEFINE_SIMPLE_PROP(interconnects, "interconnects", "#interconnect-cells")
+ DEFINE_SIMPLE_PROP(iommus, "iommus", "#iommu-cells")
+ DEFINE_SIMPLE_PROP(mboxes, "mboxes", "#mbox-cells")
+-DEFINE_SIMPLE_PROP(io_channels, "io-channel", "#io-channel-cells")
++DEFINE_SIMPLE_PROP(io_channels, "io-channels", "#io-channel-cells")
+ DEFINE_SIMPLE_PROP(interrupt_parent, "interrupt-parent", NULL)
+ DEFINE_SIMPLE_PROP(dmas, "dmas", "#dma-cells")
+ DEFINE_SIMPLE_PROP(power_domains, "power-domains", "#power-domain-cells")
 
 
