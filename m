@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377244D5B7;
-	Wed, 21 Feb 2024 13:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4747B3F2;
+	Wed, 21 Feb 2024 13:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523170; cv=none; b=VLKQ237XEfUy3lsyi9Fvxk7MX8u/Tml7iym3BUePty6Va0RC6DLVXpyPF/06rLnYyIb3hmoZ8VHrqnl7BjCI4waUzE0qgSK89RWZYV6rHTcjrFbo8qI72qNl/quCmUCSXS9cRPSQpCE0I6j9nIayGZw9WzLeFIdDmjzFFRDB3+g=
+	t=1708523172; cv=none; b=WeOl7Hbqm1ES/QExEOgj6JdfAxHjwiDZiDOh42Li9Gwu6ng/iysW5J/YA9iSOoyM2mCjNtaaihYQkmvfc6dIuOhxZkxssMCEOLLFlo/BXwuOFOvU1z+t1+fBy4TN7B2PrehSVIQBFg9nGKmY5T8FB89MhE7B0yRCK8WO/WQWb18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523170; c=relaxed/simple;
-	bh=HFq9luowGub6VNB9S2FpxbQR/M/9N6Ey/XWvuqwyhcQ=;
+	s=arc-20240116; t=1708523172; c=relaxed/simple;
+	bh=aBC8A86UhPWSMeeSvMUbcu9XaVJFpfPEOA7xL/EZzgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYqrrvqCeBTUuzVjrqcop5NqWsXhWqU73q6kLwFA4E2c9wf/Ods4+HuO7kuH/B5XjwVlbZv0/IlN5PDUFSSuwdY26BoQpgfiEWq79AV8//lklhs42j+ST0+hpgps2bcv52IQ03OZyz0zvcMWV8qlYpa5KI/vsvb0BaOhZZ1Uim0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCckHDDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ulj6KhnU2kaECz/LXMCJH1/h40V0cfaSA+tNoTAj9WLLDL7MY4ZsMSELXTC1Rzz/fw1/KmxyNr3fCPMFKzmEOQncTj9sZz0AK5i657tsrCDTti1uuRKxDx6MartS+mTjyE6KG4dVXioFuKEUoX/Ai8CnF2MqBD8GyVstcoLC2wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7b/eL+X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCckHDDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69EFBC433C7;
-	Wed, 21 Feb 2024 13:46:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7b/eL+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58117C433C7;
+	Wed, 21 Feb 2024 13:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523169;
-	bh=HFq9luowGub6VNB9S2FpxbQR/M/9N6Ey/XWvuqwyhcQ=;
+	s=korg; t=1708523172;
+	bh=aBC8A86UhPWSMeeSvMUbcu9XaVJFpfPEOA7xL/EZzgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bCckHDDHmSvjVsNeTZhTThdVoF4OxLbUFq/eQlXP2t69KiT4xSXvpMsxyhUiGZ0pQ
-	 hbBcu3XWTaVcLe2mvOblJY0HIsWJgCPxsr7QGr+ffIU+IymaqFqdbFGx/HvlgsRtxe
-	 rzg4uv8g6XJzW24lgV8zSK0yNEY1twUzSTWJb9gE=
+	b=E7b/eL+XsYyK8J3+Ioaprxc1tKtEpe7L7Eq3WExTyo/lbyn2yITwdBTWlyOAsTWwn
+	 JYEx+L65gG2Z6hIgj+jAhzplVDNK4kXr5pl5PhxpVivXeuGLHbLNHI4hp1PzFHDIww
+	 2gSOWzcdJcx+7OPgh18wa7IIERmnUO5wTY0ugbHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/476] drivers: lkdtm: fix clang -Wformat warning
-Date: Wed, 21 Feb 2024 14:06:20 +0100
-Message-ID: <20240221130020.181805789@linuxfoundation.org>
+	Julian Sikorski <belegdol+github@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 330/476] ALSA: usb-audio: Add a quirk for Yamaha YIT-W12TX transmitter
+Date: Wed, 21 Feb 2024 14:06:21 +0100
+Message-ID: <20240221130020.219023292@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,52 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Julian Sikorski <belegdol+github@gmail.com>
 
-[ Upstream commit b4909252da9be56fe1e0a23c2c1908c5630525fa ]
+commit a969210066054ea109d8b7aff29a9b1c98776841 upstream.
 
-When building with Clang we encounter the following warning
-(ARCH=hexagon + CONFIG_FRAME_WARN=0):
-| ../drivers/misc/lkdtm/bugs.c:107:3: error: format specifies type
-| 'unsigned long' but the argument has type 'int' [-Werror,-Wformat]
-|                 REC_STACK_SIZE, recur_count);
-|                 ^~~~~~~~~~~~~~
+The device fails to initialize otherwise, giving the following error:
+[ 3676.671641] usb 2-1.1: 1:1: cannot get freq at ep 0x1
 
-Cast REC_STACK_SIZE to `unsigned long` to match format specifier `%lu`
-as well as maintain symmetry with `#define REC_STACK_SIZE
-(_AC(CONFIG_FRAME_WARN, UL) / 2)`.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/378
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Justin Stitt <justinstitt@google.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Kees Cook <keescook@chromium.org>
-Fixes: 24cccab42c419 ("lkdtm/bugs: Adjust recursion test to avoid elision")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20220721215706.4153027-1-justinstitt@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Julian Sikorski <belegdol+github@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240123084935.2745-1-belegdol+github@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/lkdtm/bugs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/lkdtm/bugs.c b/drivers/misc/lkdtm/bugs.c
-index fac4a811b97b..3ab8dbae96af 100644
---- a/drivers/misc/lkdtm/bugs.c
-+++ b/drivers/misc/lkdtm/bugs.c
-@@ -29,7 +29,7 @@ struct lkdtm_list {
- #if defined(CONFIG_FRAME_WARN) && (CONFIG_FRAME_WARN > 0)
- #define REC_STACK_SIZE (_AC(CONFIG_FRAME_WARN, UL) / 2)
- #else
--#define REC_STACK_SIZE (THREAD_SIZE / 8)
-+#define REC_STACK_SIZE (THREAD_SIZE / 8UL)
- #endif
- #define REC_NUM_DEFAULT ((THREAD_SIZE / REC_STACK_SIZE) * 2)
- 
--- 
-2.43.0
-
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -1759,6 +1759,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x0499, 0x1509, /* Steinberg UR22 */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
++	DEVICE_FLG(0x0499, 0x3108, /* Yamaha YIT-W12TX */
++		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x04d8, 0xfeea, /* Benchmark DAC1 Pre */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x04e8, 0xa051, /* Samsung USBC Headset (AKG) */
 
 
