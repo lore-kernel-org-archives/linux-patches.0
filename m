@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63B378B4B;
-	Wed, 21 Feb 2024 14:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3068278B4B;
+	Wed, 21 Feb 2024 14:14:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524848; cv=none; b=Dm/dJUcwPJEt36gpP/YrK/N0aUYstQffA74U9vCLOmXiL5R4/1gidOLbCI/MEEuii6GBDwiEkwhny55mR8J8TCFwBnr5cTCl+CFgLwMrq3zpJFPNlzQ+ChKyIKaNOT1azM02j8JqYC3n/KGAikbDKKW/wEJZv22nzaZlkB4zOK0=
+	t=1708524852; cv=none; b=r6EMuEYA4g/+vnKOgKhQXiPeWxssB1JpfPZugYIvzb+QZKSaRRCviKZG6n6qZLpopGQ+V0RepeRzKuTZyudklDmqb4uZuVz296+mAzB9BMlea6sJn3Fn3BDAA4mQR331a7kP6Y1+VJUnEModoTpbylAlFVqDLJ/YRPalMynp9zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524848; c=relaxed/simple;
-	bh=Jl0DoNZwelgC0ypbMBKWdjr2ErjC36f+0bZqqaux3T4=;
+	s=arc-20240116; t=1708524852; c=relaxed/simple;
+	bh=3MiNwxrL67HE70LKre8tez7BBZ4TT6h6T87itWp7KDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mn+8pWiI1F0+zyA5TIR+vIW8vi+qgw+LOwQIRSUp8pR7+9Wg+8jOGuifeJGkWBke5qLe4xJXyRaWBQzkOzdXU3xDwqvlNQWnZyHKGkmQRnX5cmRA0ZLb5Rbb3kEa6Kpo3V0dq9793Tw/Qu4NAUq/HISen90wd2eJo3GYFqmEzkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVhW5IdT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hB6FBRR3u3MHvmaZ/HGUOymQaI5qt+piRpsjXlZVencjB6g0yKj8f5Ot4nB+6iCnK6/CpWlGMxVT0pwe/B2ovpkVPVkPartMUOd1Bn9bB3HB/6Yxp0SJEmbOxHc5A3L4McBycyP/kHsancU/52Dc/pNbAm6r6bnYtPOeWc2CByk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I37vSY/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVhW5IdT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6CDC433F1;
-	Wed, 21 Feb 2024 14:14:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I37vSY/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE7BC433C7;
+	Wed, 21 Feb 2024 14:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524848;
-	bh=Jl0DoNZwelgC0ypbMBKWdjr2ErjC36f+0bZqqaux3T4=;
+	s=korg; t=1708524852;
+	bh=3MiNwxrL67HE70LKre8tez7BBZ4TT6h6T87itWp7KDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVhW5IdTmrg26ulPPUA11t3ZWZ2UFbnCFfaLo12vpqCwMPs7WPtmXubnGG0y3nomr
-	 rP8r/xhj3usBsDMmvxij9wH53wB+KUvRQfaD6hOGaMng8FIOl+v0ID3uzjtHR3pA7b
-	 SXgKh7RxCXNR0+2GA2MtLTcJwf9FqsFiBN1qav+k=
+	b=I37vSY/o39PmebRHJpVWDIPPzZrKzoCClTa+6vV2Y9t3DkVnFtZPuNdQOaC4xyRKX
+	 0igPWw5JWHAyJ/YXEU0aVpp86CVrgHZTHSgfO84E6iVSrYybXvHsby9h4o1lB/Z+h9
+	 BXTtSXls1GpAl6751EdOB+JIvDZyLtHeZjpojHRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Felix Moessbauer <felix.moessbauer@siemens.com>
-Subject: [PATCH 5.10 367/379] hrtimer: Ignore slack time for RT tasks in schedule_hrtimeout_range()
-Date: Wed, 21 Feb 2024 14:09:06 +0100
-Message-ID: <20240221130005.920168000@linuxfoundation.org>
+	Xiang Yang <xiangyang3@huawei.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.10 368/379] Revert "arm64: Stash shadow stack pointer in the task struct on interrupt"
+Date: Wed, 21 Feb 2024 14:09:07 +0100
+Message-ID: <20240221130005.949150800@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,68 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
 
-commit 0c52310f260014d95c1310364379772cb74cf82d upstream.
+This reverts commit 3f225f29c69c13ce1cbdb1d607a42efeef080056 which is
+commit 59b37fe52f49955791a460752c37145f1afdcad1 upstream.
 
-While in theory the timer can be triggered before expires + delta, for the
-cases of RT tasks they really have no business giving any lenience for
-extra slack time, so override any passed value by the user and always use
-zero for schedule_hrtimeout_range() calls. Furthermore, this is similar to
-what the nanosleep(2) family already does with current->timer_slack_ns.
+The shadow call stack for irq now is stored in current task's thread info
+in irq_stack_entry. There is a possibility that we have some soft irqs
+pending at the end of hard irq, and when we process softirq with the irq
+enabled, irq_stack_entry will enter again and overwrite the shadow call
+stack whitch stored in current task's thread info, leading to the
+incorrect shadow call stack restoration for the first entry of the hard
+IRQ, then the system end up with a panic.
 
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20230123173206.6764-3-dave@stgolabs.net
-Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
+task A                               |  task A
+-------------------------------------+------------------------------------
+el1_irq        //irq1 enter          |
+  irq_handler  //save scs_sp1        |
+    gic_handle_irq                   |
+    irq_exit                         |
+      __do_softirq                   |
+                                     | el1_irq         //irq2 enter
+                                     |   irq_handler   //save scs_sp2
+                                     |                 //overwrite scs_sp1
+                                     |   ...
+                                     |   irq_stack_exit //restore scs_sp2
+  irq_stack_exit //restore wrong     |
+                 //scs_sp2           |
+
+So revert this commit to fix it.
+
+Fixes: 3f225f29c69c ("arm64: Stash shadow stack pointer in the task struct on interrupt")
+Signed-off-by: Xiang Yang <xiangyang3@huawei.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/hrtimer.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/arm64/kernel/entry.S |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2164,7 +2164,7 @@ void __init hrtimers_init(void)
- /**
-  * schedule_hrtimeout_range_clock - sleep until timeout
-  * @expires:	timeout value (ktime_t)
-- * @delta:	slack in expires timeout (ktime_t)
-+ * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
-  * @mode:	timer mode
-  * @clock_id:	timer clock to be used
-  */
-@@ -2191,6 +2191,13 @@ schedule_hrtimeout_range_clock(ktime_t *
- 		return -EINTR;
- 	}
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -431,7 +431,9 @@ SYM_CODE_END(__swpan_exit_el0)
  
-+	/*
-+	 * Override any slack passed by the user if under
-+	 * rt contraints.
-+	 */
-+	if (rt_task(current))
-+		delta = 0;
-+
- 	hrtimer_init_sleeper_on_stack(&t, clock_id, mode);
- 	hrtimer_set_expires_range_ns(&t.timer, *expires, delta);
- 	hrtimer_sleeper_start_expires(&t, mode);
-@@ -2210,7 +2217,7 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout_ran
- /**
-  * schedule_hrtimeout_range - sleep until timeout
-  * @expires:	timeout value (ktime_t)
-- * @delta:	slack in expires timeout (ktime_t)
-+ * @delta:	slack in expires timeout (ktime_t) for SCHED_OTHER tasks
-  * @mode:	timer mode
-  *
-  * Make the current task sleep until the given expiry time has
-@@ -2218,7 +2225,8 @@ EXPORT_SYMBOL_GPL(schedule_hrtimeout_ran
-  * the current task state has been set (see set_current_state()).
-  *
-  * The @delta argument gives the kernel the freedom to schedule the
-- * actual wakeup to a time that is both power and performance friendly.
-+ * actual wakeup to a time that is both power and performance friendly
-+ * for regular (non RT/DL) tasks.
-  * The kernel give the normal best effort behavior for "@expires+@delta",
-  * but may decide to fire the timer earlier, but no earlier than @expires.
-  *
+ 	.macro	irq_stack_entry
+ 	mov	x19, sp			// preserve the original sp
+-	scs_save tsk			// preserve the original shadow stack
++#ifdef CONFIG_SHADOW_CALL_STACK
++	mov	x24, scs_sp		// preserve the original shadow stack
++#endif
+ 
+ 	/*
+ 	 * Compare sp with the base of the task stack.
+@@ -465,7 +467,9 @@ SYM_CODE_END(__swpan_exit_el0)
+ 	 */
+ 	.macro	irq_stack_exit
+ 	mov	sp, x19
+-	scs_load_current
++#ifdef CONFIG_SHADOW_CALL_STACK
++	mov	scs_sp, x24
++#endif
+ 	.endm
+ 
+ /* GPRs used by entry code */
 
 
