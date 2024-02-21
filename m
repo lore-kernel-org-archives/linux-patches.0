@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B91D3FB21;
-	Wed, 21 Feb 2024 13:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20A23C2F;
+	Wed, 21 Feb 2024 13:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522739; cv=none; b=b1Mp3Qxp58URI3jfMWr/XpIRz4VuNBv2rSgI+vozttDWQze2AS3lSOB2GdVnZd9zU37wN1peTVSGP9+dUcggjBlxQ5Ln3hr0LthV1gepP0txveoZ2dCJ1B7ZZiftQEZRucRoYXjC+5pbF126BkVb1qzsx8GVsK585sSN3P6zNUc=
+	t=1708522747; cv=none; b=uOXhNwhbd84GPGZl19EiOeK03Vx6DOJTGRRCccZwG7BjGBSV3NgX0tDD52pqMie3wZwHjgQ5361lap+p+nPCO0INirAls4arq1ulxDtEHXQQk7P6piQyBGyI4vqFAyUG9uMdE05e6ve3Lqyj+k4+OHZoLFxB7JuXNAQAhAUSc6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522739; c=relaxed/simple;
-	bh=8v8gqccmxBqZZbH+b/+ZTht0IiSi1utHHzj1LGE2BXI=;
+	s=arc-20240116; t=1708522747; c=relaxed/simple;
+	bh=Ne9OF0vnLKHRir7zH4xTgLcoC9wApSwSXOUeFmSzs84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XeRXxD2XPPvxl2QhAaGSiZZLMP4WWYSNxm/+A1gAvvgzZceGmX6Ios+mYU4N0QVuLN8xuAbtA3RbIlLX/MImkBvKDjoCOTB97bMDY6ip/EyCsSXHVTH3QjneyLUQeADwZlnHJd8ubFdjy9jn2P0AeXK4oeJktE8hSeYcqC1Joxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8ZpiaUy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/MFyUU9TNOrDPFmxXOQBGd7lJF7og4Lbc5RbOhtAercRVbmQNTKvywnkpYbidEFC4IWEGhDYRjZdhf9tlirrtl3ncMvdl4OyXsPbH53jSDQuANgwdL2esO23pN2yuO3ZXPmTJ6Pm1GDFKTKgeLmpBbdw/XyHFT4uvoh6v9VspE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XORUZBSv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8ZpiaUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE10C433C7;
-	Wed, 21 Feb 2024 13:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XORUZBSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F337C433F1;
+	Wed, 21 Feb 2024 13:39:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522738;
-	bh=8v8gqccmxBqZZbH+b/+ZTht0IiSi1utHHzj1LGE2BXI=;
+	s=korg; t=1708522746;
+	bh=Ne9OF0vnLKHRir7zH4xTgLcoC9wApSwSXOUeFmSzs84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n8ZpiaUyiyN+NDNlk5fnkH+hn1DD5P51U9HWadVIB/MB6ml5FeOaE5paChudtCkiy
-	 gndQaNJpGighhtXU5Caipunr4B7P/7PRge7gm/dxqZJAPA1L9fgg8qxqaKDRHaplko
-	 uti8Ay266aLEPdFS+DzlIbvKS1OpLhcIsCK3UE1Q=
+	b=XORUZBSvCh94txz4ewg6Ub9AxYwHdBgv+k7fmu82q5chFlgOjFGE8FNsKLrhVJfZa
+	 vDk1oUp6zUuHMUZ+sEwH/KAO//LA20MkFKebOxolAwo+E8QiHPzJeTL+QKTqVHsn3h
+	 4xZX8BAPyCSdYp+3wzGVftyStO7FqHj+ofNsOgL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Oliver F. Brown" <oliver.brown@oss.nxp.com>,
-	Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Harshit Shah <harshitshah.opendev@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/476] clk: imx: clk-imx8qxp: fix LVDS bypass, pixel and phy clocks
-Date: Wed, 21 Feb 2024 14:04:47 +0100
-Message-ID: <20240221130016.610865684@linuxfoundation.org>
+Subject: [PATCH 5.15 245/476] i3c: master: cdns: Update maximum prescaler value for i2c clock
+Date: Wed, 21 Feb 2024 14:04:56 +0100
+Message-ID: <20240221130016.922177708@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,75 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Harshit Shah <harshitshah.opendev@gmail.com>
 
-[ Upstream commit 3f5f63adeea7e7aa715e101ffe4b4ac9705f9664 ]
+[ Upstream commit 374c13f9080a1b9835a5ed3e7bea93cf8e2dc262 ]
 
-To be compatible with SCU firmware based on 1.15 a different clock
-routing for LVDS is needed.
+As per the Cadence IP document fixed the I2C clock divider value limit from
+16 bits instead of 10 bits. Without this change setting up the I2C clock to
+low frequencies will not work as the prescaler value might be greater than
+10 bit number.
 
-Signed-off-by: Oliver F. Brown <oliver.brown@oss.nxp.com>
-Signed-off-by: Ranjani Vaidyanathan <ranjani.vaidyanathan@nxp.com>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20231218122407.2757175-1-alexander.stein@ew.tq-group.com/
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+I3C clock divider value is 10 bits only. Updating the macro names for both.
+
+Signed-off-by: Harshit Shah <harshitshah.opendev@gmail.com>
+Link: https://lore.kernel.org/r/1703927483-28682-1-git-send-email-harshitshah.opendev@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8qxp.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/i3c/master/i3c-master-cdns.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
-index 32df47c56621..ef560b59df11 100644
---- a/drivers/clk/imx/clk-imx8qxp.c
-+++ b/drivers/clk/imx/clk-imx8qxp.c
-@@ -67,6 +67,22 @@ static const char * const lcd_pxl_sels[] = {
- 	"lcd_pxl_bypass_div_clk",
- };
+diff --git a/drivers/i3c/master/i3c-master-cdns.c b/drivers/i3c/master/i3c-master-cdns.c
+index 4a49c75a9408..b9cfda6ae9ae 100644
+--- a/drivers/i3c/master/i3c-master-cdns.c
++++ b/drivers/i3c/master/i3c-master-cdns.c
+@@ -77,7 +77,8 @@
+ #define PRESCL_CTRL0			0x14
+ #define PRESCL_CTRL0_I2C(x)		((x) << 16)
+ #define PRESCL_CTRL0_I3C(x)		(x)
+-#define PRESCL_CTRL0_MAX		GENMASK(9, 0)
++#define PRESCL_CTRL0_I3C_MAX		GENMASK(9, 0)
++#define PRESCL_CTRL0_I2C_MAX		GENMASK(15, 0)
  
-+static const char *const lvds0_sels[] = {
-+	"clk_dummy",
-+	"clk_dummy",
-+	"clk_dummy",
-+	"clk_dummy",
-+	"mipi0_lvds_bypass_clk",
-+};
-+
-+static const char *const lvds1_sels[] = {
-+	"clk_dummy",
-+	"clk_dummy",
-+	"clk_dummy",
-+	"clk_dummy",
-+	"mipi1_lvds_bypass_clk",
-+};
-+
- static const char * const mipi_sels[] = {
- 	"clk_dummy",
- 	"clk_dummy",
-@@ -201,9 +217,9 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
- 	/* MIPI-LVDS SS */
- 	imx_clk_scu("mipi0_bypass_clk", IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_BYPASS);
- 	imx_clk_scu("mipi0_pixel_clk", IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_PER);
--	imx_clk_scu("mipi0_lvds_pixel_clk", IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC2);
- 	imx_clk_scu("mipi0_lvds_bypass_clk", IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_BYPASS);
--	imx_clk_scu("mipi0_lvds_phy_clk", IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC3);
-+	imx_clk_scu2("mipi0_lvds_pixel_clk", lvds0_sels, ARRAY_SIZE(lvds0_sels), IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC2);
-+	imx_clk_scu2("mipi0_lvds_phy_clk", lvds0_sels, ARRAY_SIZE(lvds0_sels), IMX_SC_R_LVDS_0, IMX_SC_PM_CLK_MISC3);
- 	imx_clk_scu2("mipi0_dsi_tx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_MST_BUS);
- 	imx_clk_scu2("mipi0_dsi_rx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_SLV_BUS);
- 	imx_clk_scu2("mipi0_dsi_phy_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_0, IMX_SC_PM_CLK_PHY);
-@@ -213,9 +229,9 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
+ #define PRESCL_CTRL1			0x18
+ #define PRESCL_CTRL1_PP_LOW_MASK	GENMASK(15, 8)
+@@ -1234,7 +1235,7 @@ static int cdns_i3c_master_bus_init(struct i3c_master_controller *m)
+ 		return -EINVAL;
  
- 	imx_clk_scu("mipi1_bypass_clk", IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_BYPASS);
- 	imx_clk_scu("mipi1_pixel_clk", IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_PER);
--	imx_clk_scu("mipi1_lvds_pixel_clk", IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC2);
- 	imx_clk_scu("mipi1_lvds_bypass_clk", IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_BYPASS);
--	imx_clk_scu("mipi1_lvds_phy_clk", IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC3);
-+	imx_clk_scu2("mipi1_lvds_pixel_clk", lvds1_sels, ARRAY_SIZE(lvds1_sels), IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC2);
-+	imx_clk_scu2("mipi1_lvds_phy_clk", lvds1_sels, ARRAY_SIZE(lvds1_sels), IMX_SC_R_LVDS_1, IMX_SC_PM_CLK_MISC3);
+ 	pres = DIV_ROUND_UP(sysclk_rate, (bus->scl_rate.i3c * 4)) - 1;
+-	if (pres > PRESCL_CTRL0_MAX)
++	if (pres > PRESCL_CTRL0_I3C_MAX)
+ 		return -ERANGE;
  
- 	imx_clk_scu2("mipi1_dsi_tx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_MST_BUS);
- 	imx_clk_scu2("mipi1_dsi_rx_esc_clk", mipi_sels, ARRAY_SIZE(mipi_sels), IMX_SC_R_MIPI_1, IMX_SC_PM_CLK_SLV_BUS);
+ 	bus->scl_rate.i3c = sysclk_rate / ((pres + 1) * 4);
+@@ -1247,7 +1248,7 @@ static int cdns_i3c_master_bus_init(struct i3c_master_controller *m)
+ 	max_i2cfreq = bus->scl_rate.i2c;
+ 
+ 	pres = (sysclk_rate / (max_i2cfreq * 5)) - 1;
+-	if (pres > PRESCL_CTRL0_MAX)
++	if (pres > PRESCL_CTRL0_I2C_MAX)
+ 		return -ERANGE;
+ 
+ 	bus->scl_rate.i2c = sysclk_rate / ((pres + 1) * 5);
 -- 
 2.43.0
 
