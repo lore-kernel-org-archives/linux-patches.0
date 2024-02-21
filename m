@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500517E59A;
-	Wed, 21 Feb 2024 14:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1BE69962;
+	Wed, 21 Feb 2024 14:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525068; cv=none; b=cIYzwCuVe2EpcjF4bvmOlI0w4OObnSA9JMRJTX0yQwbEoEQ7zDcGeydULnvyLIAxgXjk/BZ8n+9D3bNPDgytrKCtb6ScBud9GXskYhN5i6X9ij7ww/k90gE2bRAiMJ2tFJbaHWtMZj6AUoypwLP+XuRTYOpK+lXRy02VbqfDu7c=
+	t=1708525071; cv=none; b=nnirVEAemz0+TvL05kYKqn7rJ8OZcIwyHcz63BcDf5DT4LFZ790+02PrGm5C54Ee0XIB+nekz5V1v9GXsWiq8gXNFrn34Pv1Ctdap+m/M8blaccCisxVACFC9zyp5C+veWKFVHi9dnSbLMPrr2Q9ulKDRvtMoHqZwlk9wFioK4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525068; c=relaxed/simple;
-	bh=TVwJ8f+xN43LuaWjSSlBK1+/b07TnzJdfgHJ2HWdANM=;
+	s=arc-20240116; t=1708525071; c=relaxed/simple;
+	bh=g152cpNauYOHBIjGvSEcp2l2kF4FUepzitmSBJbpR2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RhxFiuHUCPKtencJQbgkfOSLu/wP+u/KZA6vkQQ63mqxQvbK5A4DVmTFMAbu4HMm7e3+VUvVG8NW9il17gRCHiFlXxQFoptO8qtqbslNAn9FePJu8i2BY2gpfEIEamWYyHqb8YVcxzZHLciQR2tkuZ/rXgiAuY3nFCOlJT7uwEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k57zSscw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O4QcAaq5dA4F6vA6x9o0dGS988jpW5bYYSEfXLccDRSNZJEqrD56tjbSNV5Cm8WP/KM+ImZfhRpAQ0bHdNbvVclGzoQSEVW8LDRM5S3Gj/8jZM6PCKXXZa7olpXCVwmu6zE9tIiaS0zBbCdMiZlbwzc3Jwb4TLeFyLBhV82vNTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cr0+N0Ke; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k57zSscw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9368C433F1;
-	Wed, 21 Feb 2024 14:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cr0+N0Ke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC47AC433C7;
+	Wed, 21 Feb 2024 14:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525068;
-	bh=TVwJ8f+xN43LuaWjSSlBK1+/b07TnzJdfgHJ2HWdANM=;
+	s=korg; t=1708525071;
+	bh=g152cpNauYOHBIjGvSEcp2l2kF4FUepzitmSBJbpR2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k57zSscwp40l4nh4kWpo8XCN/9JYFxjx1ztaqdhR/pATNBsVNAiVHF1/fWd23/rjG
-	 rzDO8ShiCX7MammEePtp3y/0B9lSDJ5MGhzM9psNJxVTWHYT4VIj7vCWLIwdotDrfe
-	 vQfRs8ggVVem+5FcrZ8oeglCeF8CzTnv9noDdBJw=
+	b=cr0+N0KecHRr2uoVRKEiV/OrRG/D63JbtYswwgqu5zD0zN7I6qRKwwxRu7zRWzNhd
+	 MAkrCNM/IM+w6MLzGMngAl9lNsvD3kcBmOuQz88vQ9dOXzXLhJyfQVcMRzUBWyrywN
+	 XWsga85wiD/ebQUs1nk9Uu63fwvn0ByiSNj7Jz7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 052/267] NFSD: Modernize nfsd4_release_lockowner()
-Date: Wed, 21 Feb 2024 14:06:33 +0100
-Message-ID: <20240221125941.636617894@linuxfoundation.org>
+Subject: [PATCH 5.4 053/267] NFSD: Add documenting comment for nfsd4_release_lockowner()
+Date: Wed, 21 Feb 2024 14:06:34 +0100
+Message-ID: <20240221125941.674754981@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,82 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit bd8fdb6e545f950f4654a9a10d7e819ad48146e5 ]
+[ Upstream commit 043862b09cc00273e35e6c3a6389957953a34207 ]
 
-Refactor: Use existing helpers that other lock operations use. This
-change removes several automatic variables, so re-organize the
-variable declarations for readability.
+And return explicit nfserr values that match what is documented in the
+new comment / API contract.
 
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 36 +++++++++++-------------------------
- 1 file changed, 11 insertions(+), 25 deletions(-)
+ fs/nfsd/nfs4state.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index a0aa7e63739d..9a77a3eac4ac 100644
+index 9a77a3eac4ac..0dfc45d37658 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -6873,16 +6873,13 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 			union nfsd4_op_u *u)
- {
- 	struct nfsd4_release_lockowner *rlockowner = &u->release_lockowner;
-+	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
- 	clientid_t *clid = &rlockowner->rl_clientid;
--	struct nfs4_stateowner *sop;
--	struct nfs4_lockowner *lo = NULL;
- 	struct nfs4_ol_stateid *stp;
--	struct xdr_netobj *owner = &rlockowner->rl_owner;
--	unsigned int hashval = ownerstr_hashval(owner);
--	__be32 status;
--	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
-+	struct nfs4_lockowner *lo;
- 	struct nfs4_client *clp;
--	LIST_HEAD (reaplist);
-+	LIST_HEAD(reaplist);
-+	__be32 status;
+@@ -6867,6 +6867,23 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
+ 	return status;
+ }
  
- 	dprintk("nfsd4_release_lockowner clientid: (%08x/%08x):\n",
- 		clid->cl_boot, clid->cl_id);
-@@ -6890,30 +6887,19 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 	status = lookup_clientid(clid, cstate, nn);
- 	if (status)
- 		return status;
--
- 	clp = cstate->clp;
--	/* Find the matching lock stateowner */
--	spin_lock(&clp->cl_lock);
--	list_for_each_entry(sop, &clp->cl_ownerstr_hashtbl[hashval],
--			    so_strhash) {
- 
--		if (sop->so_is_open_owner || !same_owner_str(sop, owner))
--			continue;
--
--		if (atomic_read(&sop->so_count) != 1) {
--			spin_unlock(&clp->cl_lock);
--			return nfserr_locks_held;
--		}
--
--		lo = lockowner(sop);
--		nfs4_get_stateowner(sop);
--		break;
--	}
-+	spin_lock(&clp->cl_lock);
-+	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
++/**
++ * nfsd4_release_lockowner - process NFSv4.0 RELEASE_LOCKOWNER operations
++ * @rqstp: RPC transaction
++ * @cstate: NFSv4 COMPOUND state
++ * @u: RELEASE_LOCKOWNER arguments
++ *
++ * The lockowner's so_count is bumped when a lock record is added
++ * or when copying a conflicting lock. The latter case is brief,
++ * but can lead to fleeting false positives when looking for
++ * locks-in-use.
++ *
++ * Return values:
++ *   %nfs_ok: lockowner released or not found
++ *   %nfserr_locks_held: lockowner still in use
++ *   %nfserr_stale_clientid: clientid no longer active
++ *   %nfserr_expired: clientid not recognized
++ */
+ __be32
+ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 			struct nfsd4_compound_state *cstate,
+@@ -6893,7 +6910,7 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
  	if (!lo) {
  		spin_unlock(&clp->cl_lock);
- 		return status;
+-		return status;
++		return nfs_ok;
  	}
+ 	if (atomic_read(&lo->lo_owner.so_count) != 2) {
+ 		spin_unlock(&clp->cl_lock);
+@@ -6909,11 +6926,11 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 		put_ol_stateid_locked(stp, &reaplist);
+ 	}
+ 	spin_unlock(&clp->cl_lock);
++
+ 	free_ol_stateid_reaplist(&reaplist);
+ 	remove_blocked_locks(lo);
+ 	nfs4_put_stateowner(&lo->lo_owner);
 -
-+	if (atomic_read(&lo->lo_owner.so_count) != 2) {
-+		spin_unlock(&clp->cl_lock);
-+		nfs4_put_stateowner(&lo->lo_owner);
-+		return nfserr_locks_held;
-+	}
- 	unhash_lockowner_locked(lo);
- 	while (!list_empty(&lo->lo_owner.so_stateids)) {
- 		stp = list_first_entry(&lo->lo_owner.so_stateids,
+-	return status;
++	return nfs_ok;
+ }
+ 
+ static inline struct nfs4_client_reclaim *
 -- 
 2.43.0
 
