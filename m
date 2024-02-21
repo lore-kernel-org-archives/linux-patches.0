@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDAC4D5B7;
-	Wed, 21 Feb 2024 13:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562E54D5B7;
+	Wed, 21 Feb 2024 13:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523130; cv=none; b=njyj+l9ScWoEHEMCkmcLGcdNeFFGDLG47OO7DIdttUGNPk5PJuxRt+WldVdhovDsgCn+RLH25YM1xkSaYozKXFzYvDCMRCVZe9CViXJFVODIILwX2QAH03IeinhMgTz4uOHZ5Tbp33VYv+n28BlrvyorrjF2BGmHZj5R+xwRD2E=
+	t=1708523133; cv=none; b=dI6XlroE3lNJzPFr/sYSD1KWvv7p0RrbIdm9iONZAZUpccMSYnm7mhcZJeMJGPGTEz5XWOn8EaYjnSsnUhpUPp/nFTW7PK0YKvL1oy0YEYByC3ebJRkbfe6uYGnt0bLmClRT7u+xYw9Hm5ohNhqkIqDxsgoWMYUZNJ1PwvKmFYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523130; c=relaxed/simple;
-	bh=F2G7T2J4jiaa3056xinUA+kERB4U86O9JzQJotv7vdc=;
+	s=arc-20240116; t=1708523133; c=relaxed/simple;
+	bh=/j2Mtl5Bkusi4FsorGss6I1BKtsMsOKCl8+P44ANTaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UM8WkDncxuLXGA1yRvYjkZ0dLIIp24OIDaZ5mPiBO7KNPbM4SDPLXgBfzV7XKDsN+qRSjgp6xt23d8K+Z1N8dvVHIReUdXx2xDTKI67F8WSJ1B8BXkmn3Z0YHWc+YF0Zw25MxSCKecyEPnCvH7kSCajtkMdthH0iIRSkJmHgfMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqEn5T79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sVtaZu4kP8Ty6nyvllUaS5qltiW+pXm8Q6GP5j4aGHv8BN2dYWP90P4ox99xtPFXkvpWJ+speb+MeJb2RMw4242iAmVLjqB8sYancBnsfQkOwXnQFIpnnYtJKi+R0zykmlScry/wdqEX/BO9/h9dZWwnLD+R4nDYIMWfaRq6QKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doihKC9R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqEn5T79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C738C433C7;
-	Wed, 21 Feb 2024 13:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doihKC9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 894F9C43394;
+	Wed, 21 Feb 2024 13:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523129;
-	bh=F2G7T2J4jiaa3056xinUA+kERB4U86O9JzQJotv7vdc=;
+	s=korg; t=1708523133;
+	bh=/j2Mtl5Bkusi4FsorGss6I1BKtsMsOKCl8+P44ANTaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VqEn5T79z/2Nadd0PgHAKWa4uM3MTFRov42NNz0CYACMaCrmTAWKC3v/U8HXdl4Pn
-	 JQOEVM9p6H0ApoIpUfchJm/R+oskV5p49zp9oqJrnLWqJLbqXZeqvh79IUBKMVeyHV
-	 0QFiVZPjmkpju3LIwkEW0qostNRMFhIceP6HCbkE=
+	b=doihKC9RUarPJqRMYcBv0sRY+JAAxbpWb/zlkE42OJYFMRL0O38hCohEX0e3rLU2m
+	 a9AyOPvT4JRtdtKc9l9QKebJDlUjUIL9NK10O6jSyYzSkpMLqz2npoVpK4FRqPtAf4
+	 OlYKUxIkU4zPzlj824fSbKZJL+61kPrCKDyWkUNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Rob Herring <robh@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 348/476] of: unittest: Fix compile in the non-dynamic case
-Date: Wed, 21 Feb 2024 14:06:39 +0100
-Message-ID: <20240221130020.850474709@linuxfoundation.org>
+Subject: [PATCH 5.15 349/476] wifi: iwlwifi: Fix some error codes
+Date: Wed, 21 Feb 2024 14:06:40 +0100
+Message-ID: <20240221130020.883405022@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,66 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 607aad1e4356c210dbef9022955a3089377909b2 ]
+[ Upstream commit c6ebb5b67641994de8bc486b33457fe0b681d6fe ]
 
-If CONFIG_OF_KOBJ is not set, a device_node does not contain a
-kobj and attempts to access the embedded kobj via kref_read break
-the compile.
+This saves the error as PTR_ERR(wifi_pkg).  The problem is that
+"wifi_pkg" is a valid pointer, not an error pointer.  Set the error code
+to -EINVAL instead.
 
-Replace affected kref_read calls with a macro that reads the
-refcount if it exists and returns 1 if there is no embedded kobj.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202401291740.VP219WIz-lkp@intel.com/
-Fixes: 4dde83569832 ("of: Fix double free in of_parse_phandle_with_args_map")
-Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
-Link: https://lore.kernel.org/r/20240129192556.403271-1-lk@c--e.de
-Signed-off-by: Rob Herring <robh@kernel.org>
+Fixes: 2a8084147bff ("iwlwifi: acpi: support reading and storing WRDS revision 1 and 2")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://msgid.link/9620bb77-2d7c-4d76-b255-ad824ebf8e35@moroto.mountain
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 699daf0645d1..5a8d37cef0ba 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -49,6 +49,12 @@ static struct unittest_results {
- 	failed; \
- })
- 
-+#ifdef CONFIG_OF_KOBJ
-+#define OF_KREF_READ(NODE) kref_read(&(NODE)->kobj.kref)
-+#else
-+#define OF_KREF_READ(NODE) 1
-+#endif
-+
- /*
-  * Expected message may have a message level other than KERN_INFO.
-  * Print the expected message only if the current loglevel will allow
-@@ -562,7 +568,7 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
- 			pr_err("missing testcase data\n");
- 			return;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index 9e00d1d7e146..f0e0d4ccbc09 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -527,7 +527,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
+ 					 &tbl_rev);
+ 	if (!IS_ERR(wifi_pkg)) {
+ 		if (tbl_rev != 2) {
+-			ret = PTR_ERR(wifi_pkg);
++			ret = -EINVAL;
+ 			goto out_free;
  		}
--		prefs[i] = kref_read(&p[i]->kobj.kref);
-+		prefs[i] = OF_KREF_READ(p[i]);
- 	}
  
- 	rc = of_count_phandle_with_args(np, "phandle-list", "#phandle-cells");
-@@ -685,9 +691,9 @@ static void __init of_unittest_parse_phandle_with_args_map(void)
- 	unittest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
+@@ -543,7 +543,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
+ 					 &tbl_rev);
+ 	if (!IS_ERR(wifi_pkg)) {
+ 		if (tbl_rev != 1) {
+-			ret = PTR_ERR(wifi_pkg);
++			ret = -EINVAL;
+ 			goto out_free;
+ 		}
  
- 	for (i = 0; i < ARRAY_SIZE(p); ++i) {
--		unittest(prefs[i] == kref_read(&p[i]->kobj.kref),
-+		unittest(prefs[i] == OF_KREF_READ(p[i]),
- 			 "provider%d: expected:%d got:%d\n",
--			 i, prefs[i], kref_read(&p[i]->kobj.kref));
-+			 i, prefs[i], OF_KREF_READ(p[i]));
- 		of_node_put(p[i]);
- 	}
- }
+@@ -559,7 +559,7 @@ int iwl_sar_get_wrds_table(struct iwl_fw_runtime *fwrt)
+ 					 &tbl_rev);
+ 	if (!IS_ERR(wifi_pkg)) {
+ 		if (tbl_rev != 0) {
+-			ret = PTR_ERR(wifi_pkg);
++			ret = -EINVAL;
+ 			goto out_free;
+ 		}
+ 
+@@ -614,7 +614,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
+ 					 &tbl_rev);
+ 	if (!IS_ERR(wifi_pkg)) {
+ 		if (tbl_rev != 2) {
+-			ret = PTR_ERR(wifi_pkg);
++			ret = -EINVAL;
+ 			goto out_free;
+ 		}
+ 
+@@ -630,7 +630,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
+ 					 &tbl_rev);
+ 	if (!IS_ERR(wifi_pkg)) {
+ 		if (tbl_rev != 1) {
+-			ret = PTR_ERR(wifi_pkg);
++			ret = -EINVAL;
+ 			goto out_free;
+ 		}
+ 
+@@ -646,7 +646,7 @@ int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
+ 					 &tbl_rev);
+ 	if (!IS_ERR(wifi_pkg)) {
+ 		if (tbl_rev != 0) {
+-			ret = PTR_ERR(wifi_pkg);
++			ret = -EINVAL;
+ 			goto out_free;
+ 		}
+ 
 -- 
 2.43.0
 
