@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8AD7E77A;
-	Wed, 21 Feb 2024 14:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57CA1E4B2;
+	Wed, 21 Feb 2024 14:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524726; cv=none; b=TGXB+ym92kJZibuRmbtbC2X0bLLvdBCJelI2GqExJD2C/bWR5EVDKrbLtr36DQ0uO/wzNDmO9EZV30uvK0O0SNB6RZzAX8beFfmzub4c4NMJgilwjsHH6OGIZtczaClyBHZHZqB/NoDrlf6G7TdK5BB3toDLjIzA6CksxNlTFyY=
+	t=1708524729; cv=none; b=fjgfy2/f5XcuTMbJqRI8/AOVuaz3fP1uDudocyzhk0HUECXW21mxfPPFOXJ02m8yhpfgwd5wGC/N8AszQBcwkupeuaKmw3/o7FAHGgOs/WWfyO748GDJutVCb69wB6uj9pUQ+1skEoNGfwJzgFcDwqyiqWUAr3ENGgqRAKr3rn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524726; c=relaxed/simple;
-	bh=mtBqJ1aM0oolRRh9YhEaNGGP2agAXIiBz07kosvZY/0=;
+	s=arc-20240116; t=1708524729; c=relaxed/simple;
+	bh=wV5t+vPLe+TJfUHWopypMXbPhVB5VbK1zrVnnZm5F04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EKFNJWqSIc3VA2L/4PmBix+dnMGVzm/AxPi3Wz1MVSZDNkx8KsgnSMApi/ZzirMuoywF+CF1BnH5YBe6riNJMuZ/vjK5ZgA0n5h6zZdNQqjApmt8oCNDwW9PSFy+aAOpbaSIzp/B+LwMYVQQCqqqogLGvw7K99SM5sIHEvzO7W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrQ9dbQy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=km9viUPfKVpWHJBkfct5QJiNpErAds+L6mvFQRsyn6B14T0iImSYWtGFLJ35kXPFrkM3e6z4LBv4B9C12TomlhzVK9oxT8gWo3TrN+uYvceRV/0YnDatNHHkcQJ/N1IAbO9yHwdCXQVxVKuHOAxGbH+18w774oMonQcfzLVaMbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSVrGgx4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrQ9dbQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF351C433F1;
-	Wed, 21 Feb 2024 14:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSVrGgx4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E14C433F1;
+	Wed, 21 Feb 2024 14:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524726;
-	bh=mtBqJ1aM0oolRRh9YhEaNGGP2agAXIiBz07kosvZY/0=;
+	s=korg; t=1708524729;
+	bh=wV5t+vPLe+TJfUHWopypMXbPhVB5VbK1zrVnnZm5F04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrQ9dbQyhNG5fNJuJ3MD960IgZrNYHErEOF2b1tFKrlQqqcnIxLq2mLgSTqiMjDED
-	 DkBUyJvhh/jHWTL4vFz5xJiFCSVPBk6oKOGExB/fV5EE/Od6gj1JF8GY+aCCslPWAA
-	 AIbDowpq543YJN/XjEt7y3VW7BU91nh20jAQ16uM=
+	b=pSVrGgx4Qz7QzYfciXN+4AnP8xRzkaUwbpwKoKDeBiPgHTuus7viugKFkt0bbgunX
+	 O5LjtENd8kwD6FkXykVaB+6TBgOs0CqJsCrniR6kjdpp/BLIVrDwi6Ph9Elddf6Oe2
+	 MEsQ/RgB2Nl7nVNIEICTj6TyNAUK4FU0KaEzcSAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Subject: [PATCH 5.10 330/379] serial: max310x: improve crystal stable clock detection
-Date: Wed, 21 Feb 2024 14:08:29 +0100
-Message-ID: <20240221130004.732032096@linuxfoundation.org>
+	Aleksander Mazur <deweloper@wp.pl>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	stable@kernel.org
+Subject: [PATCH 5.10 331/379] x86/Kconfig: Transmeta Crusoe is CPU family 5, not 6
+Date: Wed, 21 Feb 2024 14:08:30 +0100
+Message-ID: <20240221130004.769663365@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -44,86 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Aleksander Mazur <deweloper@wp.pl>
 
-commit 93cd256ab224c2519e7c4e5f58bb4f1ac2bf0965 upstream.
+commit f6a1892585cd19e63c4ef2334e26cd536d5b678d upstream.
 
-Some people are seeing a warning similar to this when using a crystal:
+The kernel built with MCRUSOE is unbootable on Transmeta Crusoe.  It shows
+the following error message:
 
-    max310x 11-006c: clock is not stable yet
+  This kernel requires an i686 CPU, but only detected an i586 CPU.
+  Unable to boot - please use a kernel appropriate for your CPU.
 
-The datasheet doesn't mention the maximum time to wait for the clock to be
-stable when using a crystal, and it seems that the 10ms delay in the driver
-is not always sufficient.
+Remove MCRUSOE from the condition introduced in commit in Fixes, effectively
+changing X86_MINIMUM_CPU_FAMILY back to 5 on that machine, which matches the
+CPU family given by CPUID.
 
-Jan Kundrát reported that it took three tries (each separated by 10ms) to
-get a stable clock.
+  [ bp: Massage commit message. ]
 
-Modify behavior to check stable clock ready bit multiple times (20), and
-waiting 10ms between each try.
-
-Note: the first draft of the driver originally used a 50ms delay, without
-checking the clock stable bit.
-Then a loop with 1000 retries was implemented, each time reading the clock
-stable bit.
-
-Fixes: 4cf9a888fd3c ("serial: max310x: Check the clock readiness")
-Cc: stable@vger.kernel.org
-Suggested-by: Jan Kundrát <jan.kundrat@cesnet.cz>
-Link: https://www.spinics.net/lists/linux-serial/msg35773.html
-Link: https://lore.kernel.org/all/20240110174015.6f20195fde08e5c9e64e5675@hugovil.com/raw
-Link: https://github.com/boundarydevices/linux/commit/e5dfe3e4a751392515d78051973190301a37ca9a
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240116213001.3691629-3-hugo@hugovil.com
+Fixes: 25d76ac88821 ("x86/Kconfig: Explicitly enumerate i686-class CPUs in Kconfig")
+Signed-off-by: Aleksander Mazur <deweloper@wp.pl>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: H. Peter Anvin <hpa@zytor.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240123134309.1117782-1-deweloper@wp.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ arch/x86/Kconfig.cpu |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -235,6 +235,10 @@
- #define MAX310x_REV_MASK		(0xf8)
- #define MAX310X_WRITE_BIT		0x80
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -379,7 +379,7 @@ config X86_CMOV
+ config X86_MINIMUM_CPU_FAMILY
+ 	int
+ 	default "64" if X86_64
+-	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCRUSOE || MCORE2 || MK7 || MK8)
++	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCORE2 || MK7 || MK8)
+ 	default "5" if X86_32 && X86_CMPXCHG64
+ 	default "4"
  
-+/* Crystal-related definitions */
-+#define MAX310X_XTAL_WAIT_RETRIES	20 /* Number of retries */
-+#define MAX310X_XTAL_WAIT_DELAY_MS	10 /* Delay between retries */
-+
- /* MAX3107 specific */
- #define MAX3107_REV_ID			(0xa0)
- 
-@@ -610,12 +614,19 @@ static int max310x_set_ref_clk(struct de
- 
- 	/* Wait for crystal */
- 	if (xtal) {
--		unsigned int val = 0;
--		msleep(10);
--		regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
--		if (!(val & MAX310X_STS_CLKREADY_BIT)) {
-+		bool stable = false;
-+		unsigned int try = 0, val = 0;
-+
-+		do {
-+			msleep(MAX310X_XTAL_WAIT_DELAY_MS);
-+			regmap_read(s->regmap, MAX310X_STS_IRQSTS_REG, &val);
-+
-+			if (val & MAX310X_STS_CLKREADY_BIT)
-+				stable = true;
-+		} while (!stable && (++try < MAX310X_XTAL_WAIT_RETRIES));
-+
-+		if (!stable)
- 			dev_warn(dev, "clock is not stable yet\n");
--		}
- 	}
- 
- 	return (int)bestfreq;
 
 
