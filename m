@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B0978B53;
-	Wed, 21 Feb 2024 13:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942D478B53;
+	Wed, 21 Feb 2024 13:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523324; cv=none; b=I04TFLigoKOqXac7oN8pPMTB9toOzTlViNlwcgjyS04lm19q+sMFsq3g56PFYz6pF79xr66i2v9E5bb521RoWkQW7196nFNlbWbyJ/licUUNY/W4XiBr1iGNhF2r45uN+D37ayLRA7CVtdV9dVLqX8t0PYRhkkguXXaSCLfZ0Xs=
+	t=1708523327; cv=none; b=uoLu9AiAvOUgttbL/COYLXWrxUWK9jwWpQXROkjeXXRZppFIi36sMSD3bttWpcsYY0iDLgzQdOmB56CjsClFZEiqS5tKc0/Y4w8ioGz9qMYeGTFqFGlwmJb3rEtB+YeZO1quEW8FTmR/EBSVvKRMXwltPcAIBBiXpjU1XdYRAfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523324; c=relaxed/simple;
-	bh=scB8eRB5K67HrhhQlA+z1i7FVS0qaPWCk9ZGToiAlNU=;
+	s=arc-20240116; t=1708523327; c=relaxed/simple;
+	bh=9EPw+s5zdKgFZxAycx09VlDC1eHBhS5F3+FVSDkmSsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuvxP4xukYOdWq/EEtDBIMXWyXkzdMwnV7q/vEKpoEOhBhukPLn/yWhNFEhEHKgIV3gbEDmIys+zGZJKB2ffmNdxAYDZXCh7Kh2/+uQ6ZNwoOJRrd2gcZvILa7Wnkiy0kDEycoVlRaIf2p9lvUsiDAChhN9d0k9MKDjI8XT80UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqkfSWh4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4NWXYRZEecoBiJleYYAlCIQSP43Q6Hkz8qiB7G98Nx/5vAxFKHPLX5RAdVCI4kGgNhfuL3RZrM/kNP7TtUVMV5qKQQwJB07NJkWLoCzZ+Ru0cxw6Vcbn1vLtLawu9Fs+4mnVQfksH4j8UTbfZHAlZ75BJYoJbOaHFL8vnx6kAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBH9jIHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqkfSWh4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD970C433C7;
-	Wed, 21 Feb 2024 13:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBH9jIHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02470C433F1;
+	Wed, 21 Feb 2024 13:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523324;
-	bh=scB8eRB5K67HrhhQlA+z1i7FVS0qaPWCk9ZGToiAlNU=;
+	s=korg; t=1708523327;
+	bh=9EPw+s5zdKgFZxAycx09VlDC1eHBhS5F3+FVSDkmSsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqkfSWh4nLwAKqUuU/yPFuwilPpZyV8iziR338S6z9SsLrNv2icL8n3/o4DW+FxxY
-	 Xk1mhF23cVwaiaG9/emRtznTAjy5ew9yPwfIUztUjkca1tbxYUp++OLaH6V0LaOZEo
-	 M4sKf2H/YmbUgmlQOP/Uqa4MuKNNGfE1NLipKpoY=
+	b=DBH9jIHPQt7vJizSY5PlH+GcUWlIMQ6WA05njh10qiy4/MWeWhzcv8x0+ZPeN7Zuc
+	 pODqPA0mEFRWDknp5mhmA5JyYP2WJkaxC2iwNqNojZqgOvnUJsJZEgaICcB3dCuar/
+	 CtNHiYMwpfrkrqrk3UXOpNv46p/oq7uihVJh2zqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nysal Jan K.A" <nysal@linux.ibm.com>,
-	Naveen N Rao <naveen@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.15 402/476] powerpc/64: Set task pt_regs->link to the LR value on scv entry
-Date: Wed, 21 Feb 2024 14:07:33 +0100
-Message-ID: <20240221130022.865075499@linuxfoundation.org>
+	Aleksander Mazur <deweloper@wp.pl>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 403/476] x86/Kconfig: Transmeta Crusoe is CPU family 5, not 6
+Date: Wed, 21 Feb 2024 14:07:34 +0100
+Message-ID: <20240221130022.903726312@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,163 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Aleksander Mazur <deweloper@wp.pl>
 
-commit aad98efd0b121f63a2e1c221dcb4d4850128c697 upstream.
+commit f6a1892585cd19e63c4ef2334e26cd536d5b678d upstream.
 
-Nysal reported that userspace backtraces are missing in offcputime bcc
-tool. As an example:
-    $ sudo ./bcc/tools/offcputime.py -uU
-    Tracing off-CPU time (us) of user threads by user stack... Hit Ctrl-C to end.
+The kernel built with MCRUSOE is unbootable on Transmeta Crusoe.  It shows
+the following error message:
 
-    ^C
-	write
-	-                python (9107)
-	    8
+  This kernel requires an i686 CPU, but only detected an i586 CPU.
+  Unable to boot - please use a kernel appropriate for your CPU.
 
-	write
-	-                sudo (9105)
-	    9
+Remove MCRUSOE from the condition introduced in commit in Fixes, effectively
+changing X86_MINIMUM_CPU_FAMILY back to 5 on that machine, which matches the
+CPU family given by CPUID.
 
-	mmap
-	-                python (9107)
-	    16
+  [ bp: Massage commit message. ]
 
-	clock_nanosleep
-	-                multipathd (697)
-	    3001604
-
-The offcputime bcc tool attaches a bpf program to a kprobe on
-finish_task_switch(), which is usually hit on a syscall from userspace.
-With the switch to system call vectored, we started setting
-pt_regs->link to zero. This is because system call vectored behaves like
-a function call with LR pointing to the system call return address, and
-with no modification to SRR0/SRR1. The LR value does indicate our next
-instruction, so it is being saved as pt_regs->nip, and pt_regs->link is
-being set to zero. This is not a problem by itself, but BPF uses perf
-callchain infrastructure for capturing stack traces, and that stores LR
-as the second entry in the stack trace. perf has code to cope with the
-second entry being zero, and skips over it. However, generic userspace
-unwinders assume that a zero entry indicates end of the stack trace,
-resulting in a truncated userspace stack trace.
-
-Rather than fixing all userspace unwinders to ignore/skip past the
-second entry, store the real LR value in pt_regs->link so that there
-continues to be a valid, though duplicate entry in the stack trace.
-
-With this change:
-    $ sudo ./bcc/tools/offcputime.py -uU
-    Tracing off-CPU time (us) of user threads by user stack... Hit Ctrl-C to end.
-
-    ^C
-	write
-	write
-	[unknown]
-	[unknown]
-	[unknown]
-	[unknown]
-	[unknown]
-	PyObject_VectorcallMethod
-	[unknown]
-	[unknown]
-	PyObject_CallOneArg
-	PyFile_WriteObject
-	PyFile_WriteString
-	[unknown]
-	[unknown]
-	PyObject_Vectorcall
-	_PyEval_EvalFrameDefault
-	PyEval_EvalCode
-	[unknown]
-	[unknown]
-	[unknown]
-	_PyRun_SimpleFileObject
-	_PyRun_AnyFileObject
-	Py_RunMain
-	[unknown]
-	Py_BytesMain
-	[unknown]
-	__libc_start_main
-	-                python (1293)
-	    7
-
-	write
-	write
-	[unknown]
-	sudo_ev_loop_v1
-	sudo_ev_dispatch_v1
-	[unknown]
-	[unknown]
-	[unknown]
-	[unknown]
-	__libc_start_main
-	-                sudo (1291)
-	    7
-
-	syscall
-	syscall
-	bpf_open_perf_buffer_opts
-	[unknown]
-	[unknown]
-	[unknown]
-	[unknown]
-	_PyObject_MakeTpCall
-	PyObject_Vectorcall
-	_PyEval_EvalFrameDefault
-	PyEval_EvalCode
-	[unknown]
-	[unknown]
-	[unknown]
-	_PyRun_SimpleFileObject
-	_PyRun_AnyFileObject
-	Py_RunMain
-	[unknown]
-	Py_BytesMain
-	[unknown]
-	__libc_start_main
-	-                python (1293)
-	    11
-
-	clock_nanosleep
-	clock_nanosleep
-	nanosleep
-	sleep
-	[unknown]
-	[unknown]
-	__clone
-	-                multipathd (698)
-	    3001661
-
-Fixes: 7fa95f9adaee ("powerpc/64s: system call support for scv/rfscv instructions")
-Cc: stable@vger.kernel.org
-Reported-by: "Nysal Jan K.A" <nysal@linux.ibm.com>
-Signed-off-by: Naveen N Rao <naveen@kernel.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240202154316.395276-1-naveen@kernel.org
+Fixes: 25d76ac88821 ("x86/Kconfig: Explicitly enumerate i686-class CPUs in Kconfig")
+Signed-off-by: Aleksander Mazur <deweloper@wp.pl>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: H. Peter Anvin <hpa@zytor.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240123134309.1117782-1-deweloper@wp.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/interrupt_64.S |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/Kconfig.cpu |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/interrupt_64.S
-+++ b/arch/powerpc/kernel/interrupt_64.S
-@@ -62,7 +62,8 @@ _ASM_NOKPROBE_SYMBOL(system_call_vectore
- 	mr	r10,r1
- 	ld	r1,PACAKSAVE(r13)
- 	std	r10,0(r1)
--	std	r11,_NIP(r1)
-+	std	r11,_LINK(r1)
-+	std	r11,_NIP(r1)	/* Saved LR is also the next instruction */
- 	std	r12,_MSR(r1)
- 	std	r0,GPR0(r1)
- 	std	r10,GPR1(r1)
-@@ -85,7 +86,6 @@ _ASM_NOKPROBE_SYMBOL(system_call_vectore
- 	std	r9,GPR13(r1)
- 	SAVE_NVGPRS(r1)
- 	std	r11,_XER(r1)
--	std	r11,_LINK(r1)
- 	std	r11,_CTR(r1)
+--- a/arch/x86/Kconfig.cpu
++++ b/arch/x86/Kconfig.cpu
+@@ -379,7 +379,7 @@ config X86_CMOV
+ config X86_MINIMUM_CPU_FAMILY
+ 	int
+ 	default "64" if X86_64
+-	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCRUSOE || MCORE2 || MK7 || MK8)
++	default "6" if X86_32 && (MPENTIUM4 || MPENTIUMM || MPENTIUMIII || MPENTIUMII || M686 || MVIAC3_2 || MVIAC7 || MEFFICEON || MATOM || MCORE2 || MK7 || MK8)
+ 	default "5" if X86_32 && X86_CMPXCHG64
+ 	default "4"
  
- 	li	r11,\trapnr
 
 
