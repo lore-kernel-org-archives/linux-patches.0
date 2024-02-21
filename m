@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237A47B3EA;
-	Wed, 21 Feb 2024 13:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027E67C0AB;
+	Wed, 21 Feb 2024 13:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522509; cv=none; b=Sck+VptdGBOmSTIkQl7Mw+FD9p/0lPiELmPq3F+5ATYg1dpuMDU6i2lOFw7qUQbBrYK8XUH5w0t02WCO/OMuprYe0/CRuRPJSyCOPGm8RE9KDPqBUr37GQfAFvzbUI1SjG7Ysy2NusFO5iAtCD8xp9xU+LrdtiOsSuPIuD7h1Jg=
+	t=1708522512; cv=none; b=NRJODtOlYc47SaJ9So9MiO1bfF9zdUUNbpu25UAAN1BAWmC5yh9Qmw7mxe/iwRGIa7iVpCpt3C5+qKwoSCp+jF3ixgoQ+7+STgxVkLH4oJhE828d8pGIbeyWqTioiv9DvT0liVhwotWBbdUR73u/3tghZZ4ryg4RRoSu+TF9rG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522509; c=relaxed/simple;
-	bh=Sh7imo9CcF6i4vqPaz34VSieEjNHAiMRZrLRG6B3D50=;
+	s=arc-20240116; t=1708522512; c=relaxed/simple;
+	bh=R+kTDrpeoMXAAp4IGuAk1PVnFe3DPId/BvM5LED94g0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbxSptfgnhkkkLK0DaB94L9Vw4xHTDWcq2vyfAmiX5t7f6GLAsVku8z6HBEDzqbCbK6AJdLOtf44xSIn+4ZslSok3dNavVBrllztoNj9B7e+jaFdT3Otyg3S87GqrY6KoucrmtrflgBDbLXvKoYMvBKcw/8G0wIb+ycPowfSjaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vA2757dW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A9CWmG7qFFVGkrcrbTG+6QXtdQBrhB799dBRcTej1/Tpw7U7hjSXr6t3ITGSQF9IlPtJEBCfEv2OWF7wmancX5HcwpPYNJsXClXhx6b1NyoKH079LiYqiK7zjNFit8avifPFgNFAGIcigVKG3KMVL/NEeBxN0Wda0OCVvHpsH2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOuZQNkX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vA2757dW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5ADC433C7;
-	Wed, 21 Feb 2024 13:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOuZQNkX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8079BC433F1;
+	Wed, 21 Feb 2024 13:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522509;
-	bh=Sh7imo9CcF6i4vqPaz34VSieEjNHAiMRZrLRG6B3D50=;
+	s=korg; t=1708522511;
+	bh=R+kTDrpeoMXAAp4IGuAk1PVnFe3DPId/BvM5LED94g0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vA2757dW6UFVj4qDAnl9nkIHyBPHrFKeHacLcUTiTLIgjxzUz3vtzyrPrme0sLzk0
-	 4pUjOQ1BVYWFVsqLO+AJgqEcAjpVtExHt9L7xF64CDycmYgXW/HX99eNGE+rD39cXm
-	 g6mGVylySAtAZ/lYKJ/EIEOmPtvGnBnFTbnsyR+8=
+	b=VOuZQNkXGQ5wnk53G8BwmSLdEGl0FTld4194oIG1MGGxVwba0s9MFgFE0CiRdTf2x
+	 c5VJEkziAA3x9uYUPOaiVsVyqSdOxupQ32BOvqtWXJNrmHRimIl8h2IibYIlf8mBKf
+	 n/WfHdYnZTLhpOgOITAmIXfIdki/+Wb97R+qxS0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com,
+	Osama Muhammad <osmtendev@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 153/476] afs: fix the usage of read_seqbegin_or_lock() in afs_find_server*()
-Date: Wed, 21 Feb 2024 14:03:24 +0100
-Message-ID: <20240221130013.594628428@linuxfoundation.org>
+Subject: [PATCH 5.15 144/476] FS:JFS:UBSAN:array-index-out-of-bounds in dbAdjTree
+Date: Wed, 21 Feb 2024 14:03:15 +0100
+Message-ID: <20240221130013.243670397@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,87 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 1702e0654ca9a7bcd7c7619c8a5004db58945b71 ]
+[ Upstream commit 9862ec7ac1cbc6eb5ee4a045b5d5b8edbb2f7e68 ]
 
-David Howells says:
+Syzkaller reported the following issue:
 
- (5) afs_find_server().
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dmap.c:2867:6
+index 196694 is out of range for type 's8[1365]' (aka 'signed char[1365]')
+CPU: 1 PID: 109 Comm: jfsCommit Not tainted 6.6.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:217 [inline]
+ __ubsan_handle_out_of_bounds+0x11c/0x150 lib/ubsan.c:348
+ dbAdjTree+0x474/0x4f0 fs/jfs/jfs_dmap.c:2867
+ dbJoin+0x210/0x2d0 fs/jfs/jfs_dmap.c:2834
+ dbFreeBits+0x4eb/0xda0 fs/jfs/jfs_dmap.c:2331
+ dbFreeDmap fs/jfs/jfs_dmap.c:2080 [inline]
+ dbFree+0x343/0x650 fs/jfs/jfs_dmap.c:402
+ txFreeMap+0x798/0xd50 fs/jfs/jfs_txnmgr.c:2534
+ txUpdateMap+0x342/0x9e0
+ txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
+ jfs_lazycommit+0x47a/0xb70 fs/jfs/jfs_txnmgr.c:2732
+ kthread+0x2d3/0x370 kernel/kthread.c:388
+ ret_from_fork+0x48/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
+================================================================================
+Kernel panic - not syncing: UBSAN: panic_on_warn set ...
+CPU: 1 PID: 109 Comm: jfsCommit Not tainted 6.6.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/04/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1e7/0x2d0 lib/dump_stack.c:106
+ panic+0x30f/0x770 kernel/panic.c:340
+ check_panic_on_warn+0x82/0xa0 kernel/panic.c:236
+ ubsan_epilogue lib/ubsan.c:223 [inline]
+ __ubsan_handle_out_of_bounds+0x13c/0x150 lib/ubsan.c:348
+ dbAdjTree+0x474/0x4f0 fs/jfs/jfs_dmap.c:2867
+ dbJoin+0x210/0x2d0 fs/jfs/jfs_dmap.c:2834
+ dbFreeBits+0x4eb/0xda0 fs/jfs/jfs_dmap.c:2331
+ dbFreeDmap fs/jfs/jfs_dmap.c:2080 [inline]
+ dbFree+0x343/0x650 fs/jfs/jfs_dmap.c:402
+ txFreeMap+0x798/0xd50 fs/jfs/jfs_txnmgr.c:2534
+ txUpdateMap+0x342/0x9e0
+ txLazyCommit fs/jfs/jfs_txnmgr.c:2664 [inline]
+ jfs_lazycommit+0x47a/0xb70 fs/jfs/jfs_txnmgr.c:2732
+ kthread+0x2d3/0x370 kernel/kthread.c:388
+ ret_from_fork+0x48/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x11/0x20 arch/x86/entry/entry_64.S:304
+ </TASK>
+Kernel Offset: disabled
+Rebooting in 86400 seconds..
 
-     There could be a lot of servers in the list and each server can have
-     multiple addresses, so I think this would be better with an exclusive
-     second pass.
+The issue is caused when the value of lp becomes greater than
+CTLTREESIZE which is the max size of stree. Adding a simple check
+solves this issue.
 
-     The server list isn't likely to change all that often, but when it does
-     change, there's a good chance several servers are going to be
-     added/removed one after the other.  Further, this is only going to be
-     used for incoming cache management/callback requests from the server,
-     which hopefully aren't going to happen too often - but it is remotely
-     drivable.
+Dave:
+As the function returns a void, good error handling
+would require a more intrusive code reorganization, so I modified
+Osama's patch at use WARN_ON_ONCE for lack of a cleaner option.
 
- (6) afs_find_server_by_uuid().
+The patch is tested via syzbot.
 
-     Similarly to (5), there could be a lot of servers to search through, but
-     they are in a tree not a flat list, so it should be faster to process.
-     Again, it's not likely to change that often and, again, when it does
-     change it's likely to involve multiple changes.  This can be driven
-     remotely by an incoming cache management request but is mostly going to
-     be driven by setting up or reconfiguring a volume's server list -
-     something that also isn't likely to happen often.
-
-Make the "seq" counter odd on the 2nd pass, otherwise read_seqbegin_or_lock()
-never takes the lock.
-
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/20231130115614.GA21581@redhat.com/
+Reported-by: syzbot+39ba34a099ac2e9bd3cb@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=39ba34a099ac2e9bd3cb
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/server.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/jfs/jfs_dmap.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/afs/server.c b/fs/afs/server.c
-index ffed828622b6..34b47218129e 100644
---- a/fs/afs/server.c
-+++ b/fs/afs/server.c
-@@ -27,7 +27,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 	const struct afs_addr_list *alist;
- 	struct afs_server *server = NULL;
- 	unsigned int i;
--	int seq = 0, diff;
-+	int seq = 1, diff;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 5b01026fff9b..bd2bb5724cc1 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -2939,6 +2939,9 @@ static void dbAdjTree(dmtree_t * tp, int leafno, int newval)
+ 	/* is the current value the same as the old value ?  if so,
+ 	 * there is nothing to do.
+ 	 */
++	if (WARN_ON_ONCE(lp >= CTLTREESIZE))
++		return;
++
+ 	if (tp->dmt_stree[lp] == newval)
+ 		return;
  
- 	rcu_read_lock();
- 
-@@ -35,6 +35,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
- 		if (server)
- 			afs_unuse_server_notime(net, server, afs_server_trace_put_find_rsq);
- 		server = NULL;
-+		seq++; /* 2 on the 1st/lockless path, otherwise odd */
- 		read_seqbegin_or_lock(&net->fs_addr_lock, &seq);
- 
- 		if (srx->transport.family == AF_INET6) {
-@@ -90,7 +91,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
- {
- 	struct afs_server *server = NULL;
- 	struct rb_node *p;
--	int diff, seq = 0;
-+	int diff, seq = 1;
- 
- 	_enter("%pU", uuid);
- 
-@@ -102,7 +103,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
- 		if (server)
- 			afs_unuse_server(net, server, afs_server_trace_put_uuid_rsq);
- 		server = NULL;
--
-+		seq++; /* 2 on the 1st/lockless path, otherwise odd */
- 		read_seqbegin_or_lock(&net->fs_lock, &seq);
- 
- 		p = net->fs_servers.rb_node;
 -- 
 2.43.0
 
