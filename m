@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701704C62;
-	Wed, 21 Feb 2024 14:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E206A762C1;
+	Wed, 21 Feb 2024 14:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525271; cv=none; b=jVc7rhb1D8QDA0FBY0XG/buldZAj755KyHDo3IM3g0HL2+8687iyyQXYIMYJcYttB8xUnc7D6wgzyu2vMKMgUK3sixHhXDEDpV64qsqL/I/vLPkbtsOTSzjYMwTZRMAd4YltkAnnFeyG5stshlakkagtOuVVnBn8PVyCy/vnl8w=
+	t=1708525274; cv=none; b=eZMOVWIp+As6Jpi1P7roPxS4EV4+VCy3KWmU66DOANCRMx+toEsvoItqhvK++HvuFA+1lo8v7OKd/9Soc7khEn7HIpXllfyaR41Kd9vpxdoKQSqolhCsYlX7kO0flq4UFDBbC3VEZ8x7h0gzRC9eWERd3uYs8qAEmtJr2bcgq9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525271; c=relaxed/simple;
-	bh=iTpDmgYXQiJCGfdKv1+GNt/MrWdqP0JaOV19moeCXKI=;
+	s=arc-20240116; t=1708525274; c=relaxed/simple;
+	bh=Jd8o9YDeoLxmL5v8KEmy6SroT9rEhXTrL58epA1AGQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qB+8vzBQFfzRYffQrZcsoiAYPZ9GGwRMHIGUFUxwfjU1a5gU7ici6VgbQbxq8d4gGXPktvFWHVoKRzAPoyPn6WdEXYyCCRqyDaNi/NFWXvZNRtDo1NZ0tLI57XVO9nR6jJUSsNTVLuB/QDGeaZoK8gMysqZNpozwBFVhgUkhMJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzvhCl4q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=glsLBCwsfW5mz3UZU7kx1Gi8iCODZpn22l5ROE/8DUPzjHhgkkOjNNN244yAAXQ+1emUPUxmZXaT4qdWNyq0s2qAD41jXJXAE2WtVTwTGZSFRYsdrQo0EuXcEc/B9MQ+Wvn8qFAUH9gtDKhQ2/aQc/4qi/OIShfRKKDd897WWBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5ktIJ0H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzvhCl4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EED5C433C7;
-	Wed, 21 Feb 2024 14:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5ktIJ0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707C2C433F1;
+	Wed, 21 Feb 2024 14:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525270;
-	bh=iTpDmgYXQiJCGfdKv1+GNt/MrWdqP0JaOV19moeCXKI=;
+	s=korg; t=1708525273;
+	bh=Jd8o9YDeoLxmL5v8KEmy6SroT9rEhXTrL58epA1AGQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uzvhCl4q7gvfUgrinRccg2P8f86HheJRSccRiuX1DfxSr8prhG7kgMHKh+6Vguh0s
-	 ZF3ICjtvWH/Q1Gss1bXD8NbB6bcunMjylS52EQHWJdB484XeF0iRcxKCaH87JA44at
-	 ljRN/DIxJV9GZe8eQE/gWMJJS4cjsMTV8f+S0NAs=
+	b=l5ktIJ0HqwD2Kv2Fyvk/wFUdppK9d2TBx1UulvT9DkwVrDT8CYlozLW420m677UZU
+	 PlpneJM9f/Z5kbMBaA2yVW3d6EUnXJlBejW6PgmmB3ULR0ZRiKoQ0MlYZMRoQGpY2f
+	 jiaslqapmHqH40XADCr41oWXaN5h8btimXz1bAaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weichen Chen <weichen.chen@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Kees Cook <keescook@chromium.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 078/267] pstore/ram: Fix crash when setting number of cpus to an odd number
-Date: Wed, 21 Feb 2024 14:06:59 +0100
-Message-ID: <20240221125942.427357982@linuxfoundation.org>
+Subject: [PATCH 5.4 079/267] crypto: stm32/crc32 - fix parsing list of devices
+Date: Wed, 21 Feb 2024 14:07:00 +0100
+Message-ID: <20240221125942.456295302@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -53,45 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weichen Chen <weichen.chen@mediatek.com>
+From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
 
-[ Upstream commit d49270a04623ce3c0afddbf3e984cb245aa48e9c ]
+[ Upstream commit 0eaef675b94c746900dcea7f6c41b9a103ed5d53 ]
 
-When the number of cpu cores is adjusted to 7 or other odd numbers,
-the zone size will become an odd number.
-The address of the zone will become:
-    addr of zone0 = BASE
-    addr of zone1 = BASE + zone_size
-    addr of zone2 = BASE + zone_size*2
-    ...
-The address of zone1/3/5/7 will be mapped to non-alignment va.
-Eventually crashes will occur when accessing these va.
+smatch warnings:
+drivers/crypto/stm32/stm32-crc32.c:108 stm32_crc_get_next_crc() warn:
+can 'crc' even be NULL?
 
-So, use ALIGN_DOWN() to make sure the zone size is even
-to avoid this bug.
+Use list_first_entry_or_null instead of list_first_entry to retrieve
+the first device registered.
+The function list_first_entry always return a non NULL pointer even if
+the list is empty. Hence checking if the pointer returned is NULL does
+not tell if the list is empty or not.
 
-Signed-off-by: Weichen Chen <weichen.chen@mediatek.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Tested-by: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Link: https://lore.kernel.org/r/20230224023632.6840-1-weichen.chen@mediatek.com
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
+Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/stm32/stm32-crc32.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index 65cbc8a60ca3..9f83d8eba0e6 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -563,6 +563,7 @@ static int ramoops_init_przs(const char *name,
- 	}
+diff --git a/drivers/crypto/stm32/stm32-crc32.c b/drivers/crypto/stm32/stm32-crc32.c
+index 2ecc970f5cae..b66e06818afc 100644
+--- a/drivers/crypto/stm32/stm32-crc32.c
++++ b/drivers/crypto/stm32/stm32-crc32.c
+@@ -98,7 +98,7 @@ static struct stm32_crc *stm32_crc_get_next_crc(void)
+ 	struct stm32_crc *crc;
  
- 	zone_sz = mem_sz / *cnt;
-+	zone_sz = ALIGN_DOWN(zone_sz, 2);
- 	if (!zone_sz) {
- 		dev_err(dev, "%s zone size == 0\n", name);
- 		goto fail;
+ 	spin_lock_bh(&crc_list.lock);
+-	crc = list_first_entry(&crc_list.dev_list, struct stm32_crc, list);
++	crc = list_first_entry_or_null(&crc_list.dev_list, struct stm32_crc, list);
+ 	if (crc)
+ 		list_move_tail(&crc->list, &crc_list.dev_list);
+ 	spin_unlock_bh(&crc_list.lock);
 -- 
 2.43.0
 
