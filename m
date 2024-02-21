@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8834C62;
-	Wed, 21 Feb 2024 14:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48481524A0;
+	Wed, 21 Feb 2024 14:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525801; cv=none; b=LtlrFQ5CddUHqcH/wqwslYBR6ro1MLGDtBcZ9PChA+iUT4qkPQaP/pkBufmrTBfShXhrJNig5UI2BelK9WDmRTCHdSZ8Ua3h2dbBStsKomIqqHVO/fyV3/ozl5EPFyX4rp+T3LGPsDYb74dD6c/g/zdXSuWgKbg0DQ0w8cbxB0o=
+	t=1708525804; cv=none; b=hvojaRQ08ydgyoLiePi7t3juZSVuPkoRx08bpBULUno0V+JAKPFoAkcwYM6natPKdK9TJ18FTS41kcnSWXRVDhv/Q0ssEtOZXGiVJQA7ICaWeeJnuwmr6Wrrv87W6+IO0U9Ngay4Tlnb8JcKrrVKXbTN8UMhcykjV8GCftUX4Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525801; c=relaxed/simple;
-	bh=UNzoF2rIAWMW/mZKmYTim6YcBpdJ011TA0Zgsv9lxBo=;
+	s=arc-20240116; t=1708525804; c=relaxed/simple;
+	bh=X74gGkxmoqDvc3PwncXRdMnuzHWiGXhBpAWc4CRsMTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTOrrcz8jC/kJqqcCHsvtCbrdHeGzMC0hW1uIbFK0n/fY+xNYsij1nWn3P3cbeMHtEZtGTG+iVZO0uIe7SADvlhaUsWU98ROhDfGGqdQb+4ybZrMBh3NXVWIerE5BJz0Y1X6GcD/Eqryaczg//L4mCrMnFg5oQ+PNpo+NGnFVLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZfV7hii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BoFmajbu/ULvBHJNzMchurM6KxKchrn0Kw2NwqnATUyS4VjmeU7cxFD4YA6jYAN2vEXtb9nswVU62WyP2F3DrcxXw8aDMu0lCgFMxM75mAmMZPdHNOabIHfTgVuiXP7SDEFQPPoXg/fiYa26ojKgGHFWbbcwIx0bNI/c21bRSKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFeCak8o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZfV7hii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF7DC433F1;
-	Wed, 21 Feb 2024 14:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFeCak8o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C088AC433C7;
+	Wed, 21 Feb 2024 14:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525801;
-	bh=UNzoF2rIAWMW/mZKmYTim6YcBpdJ011TA0Zgsv9lxBo=;
+	s=korg; t=1708525804;
+	bh=X74gGkxmoqDvc3PwncXRdMnuzHWiGXhBpAWc4CRsMTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZfV7hiihKlidwNhCrT3tnkuMDR8M/+XRVxh4QNdXIO6ayY1UpkOjmEo3tryjx1sj
-	 BuvmP6nMEYVfHJXkBuk5Ja80CtkJTPAGlgc5J+N7f/xYQoRygoWUoq+gRqYJxH8Bk6
-	 T7BToFJ5gI2W+PeG4jT1MT2OzRMn6VNchQWJkanU=
+	b=CFeCak8oneDuvLfHJUun3RppjeFG5Rq4Hfk1ZIVdTTUh3KbxsPYWbuoPbWhbVvmDz
+	 XkyRD5MaGiUv72cTB4IpGsCQB04SaRQn/u84nobAHdGFux31NOMEi1j55Ai6/VTdOB
+	 o11te0nyB6lDjWHZVeIem9Pd+xQ34sBp7CuaqdQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 258/267] nilfs2: replace WARN_ONs for invalid DAT metadata block requests
-Date: Wed, 21 Feb 2024 14:09:59 +0100
-Message-ID: <20240221125948.348622258@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Amit Pundir <amit.pundir@linaro.org>
+Subject: [PATCH 5.4 259/267] PM: runtime: add devm_pm_runtime_enable helper
+Date: Wed, 21 Feb 2024 14:10:00 +0100
+Message-ID: <20240221125948.377864735@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,82 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 5124a0a549857c4b87173280e192eea24dea72ad upstream.
+[ Upstream commit b3636a3a2c51715736d3ec45f635ed03191962ce ]
 
-If DAT metadata file block access fails due to corruption of the DAT file
-or abnormal virtual block numbers held by b-trees or inodes, a kernel
-warning is generated.
+A typical code pattern for pm_runtime_enable() call is to call it in the
+_probe function and to call pm_runtime_disable() both from _probe error
+path and from _remove function. For some drivers the whole remove
+function would consist of the call to pm_remove_disable().
 
-This replaces the WARN_ONs by error output, so that a kernel, booted with
-panic_on_warn, does not panic.  This patch also replaces the detected
-return code -ENOENT with another internal code -EINVAL to notify the bmap
-layer of metadata corruption.  When the bmap layer sees -EINVAL, it
-handles the abnormal situation with nilfs_bmap_convert_error() and finally
-returns code -EIO as it should.
+Add helper function to replace this bolierplate piece of code. Calling
+devm_pm_runtime_enable() removes the need for calling
+pm_runtime_disable() both in the probe()'s error path and in the
+remove() function.
 
-Link: https://lkml.kernel.org/r/0000000000005cc3d205ea23ddcf@google.com
-Link: https://lkml.kernel.org/r/20230126164114.6911-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: <syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20210731195034.979084-2-dmitry.baryshkov@linaro.org
+Acked-by: Rafael J. Wysocki <rafael@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 3d07a411b4fa ("drm/msm/dsi: Use pm_runtime_resume_and_get to prevent refcnt leaks")
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dat.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/base/power/runtime.c |   17 +++++++++++++++++
+ include/linux/pm_runtime.h   |    4 ++++
+ 2 files changed, 21 insertions(+)
 
---- a/fs/nilfs2/dat.c
-+++ b/fs/nilfs2/dat.c
-@@ -40,8 +40,21 @@ static inline struct nilfs_dat_info *NIL
- static int nilfs_dat_prepare_entry(struct inode *dat,
- 				   struct nilfs_palloc_req *req, int create)
- {
--	return nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
--					    create, &req->pr_entry_bh);
-+	int ret;
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1461,6 +1461,23 @@ void pm_runtime_enable(struct device *de
+ }
+ EXPORT_SYMBOL_GPL(pm_runtime_enable);
+ 
++static void pm_runtime_disable_action(void *data)
++{
++	pm_runtime_disable(data);
++}
 +
-+	ret = nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
-+					   create, &req->pr_entry_bh);
-+	if (unlikely(ret == -ENOENT)) {
-+		nilfs_error(dat->i_sb,
-+			  "DAT doesn't have a block to manage vblocknr = %llu",
-+			  (unsigned long long)req->pr_entry_nr);
-+		/*
-+		 * Return internal code -EINVAL to notify bmap layer of
-+		 * metadata corruption.
-+		 */
-+		ret = -EINVAL;
-+	}
-+	return ret;
++/**
++ * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_enable(struct device *dev)
++{
++	pm_runtime_enable(dev);
++
++	return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
++
+ /**
+  * pm_runtime_forbid - Block runtime PM of a device.
+  * @dev: Device to handle.
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -64,6 +64,8 @@ static inline int pm_runtime_get_if_in_u
+ 	return pm_runtime_get_if_active(dev, false);
  }
  
- static void nilfs_dat_commit_entry(struct inode *dat,
-@@ -123,11 +136,7 @@ static void nilfs_dat_commit_free(struct
- 
- int nilfs_dat_prepare_start(struct inode *dat, struct nilfs_palloc_req *req)
++extern int devm_pm_runtime_enable(struct device *dev);
++
+ static inline void pm_suspend_ignore_children(struct device *dev, bool enable)
  {
--	int ret;
--
--	ret = nilfs_dat_prepare_entry(dat, req, 0);
--	WARN_ON(ret == -ENOENT);
--	return ret;
-+	return nilfs_dat_prepare_entry(dat, req, 0);
- }
+ 	dev->power.ignore_children = enable;
+@@ -160,6 +162,8 @@ static inline void __pm_runtime_disable(
+ static inline void pm_runtime_allow(struct device *dev) {}
+ static inline void pm_runtime_forbid(struct device *dev) {}
  
- void nilfs_dat_commit_start(struct inode *dat, struct nilfs_palloc_req *req,
-@@ -154,10 +163,8 @@ int nilfs_dat_prepare_end(struct inode *
- 	int ret;
- 
- 	ret = nilfs_dat_prepare_entry(dat, req, 0);
--	if (ret < 0) {
--		WARN_ON(ret == -ENOENT);
-+	if (ret < 0)
- 		return ret;
--	}
- 
- 	kaddr = kmap_atomic(req->pr_entry_bh->b_page);
- 	entry = nilfs_palloc_block_get_entry(dat, req->pr_entry_nr,
++static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
++
+ static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+ static inline void pm_runtime_get_noresume(struct device *dev) {}
+ static inline void pm_runtime_put_noidle(struct device *dev) {}
 
 
