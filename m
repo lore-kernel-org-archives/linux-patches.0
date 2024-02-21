@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E206A762C1;
-	Wed, 21 Feb 2024 14:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A44569D29;
+	Wed, 21 Feb 2024 14:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525274; cv=none; b=eZMOVWIp+As6Jpi1P7roPxS4EV4+VCy3KWmU66DOANCRMx+toEsvoItqhvK++HvuFA+1lo8v7OKd/9Soc7khEn7HIpXllfyaR41Kd9vpxdoKQSqolhCsYlX7kO0flq4UFDBbC3VEZ8x7h0gzRC9eWERd3uYs8qAEmtJr2bcgq9U=
+	t=1708525282; cv=none; b=co4WXxRSJtVyBmEO0BWEU+3t6vPMWoDjxAxMbpcDbcptRs4QWmXTmY4b694oVOnv6D3/4vVJ5oKhYNR5EHt37yKd015p0ulcWbbLmBpiQHDYIqrfQ+JARtwasT9tEYkDJy1JFFqOD6nIq8bK+Dz25HIA4j0w43r1OkCsCx3kbxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525274; c=relaxed/simple;
-	bh=Jd8o9YDeoLxmL5v8KEmy6SroT9rEhXTrL58epA1AGQ4=;
+	s=arc-20240116; t=1708525282; c=relaxed/simple;
+	bh=eGJVFEtvM73fqZiN5KAs2kV6sswxncFEO/nC0hQJA7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=glsLBCwsfW5mz3UZU7kx1Gi8iCODZpn22l5ROE/8DUPzjHhgkkOjNNN244yAAXQ+1emUPUxmZXaT4qdWNyq0s2qAD41jXJXAE2WtVTwTGZSFRYsdrQo0EuXcEc/B9MQ+Wvn8qFAUH9gtDKhQ2/aQc/4qi/OIShfRKKDd897WWBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5ktIJ0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ub4LmZEcIF7MYjvjvye+2208DV+9ei263uW7f2zq6L1M+dyrvk9ZJxBEDRwXwgRLs9JvEEKTA9GjMDrqDVx+v1dPDHYzh6loSd3u7TWcw8fWbVASMRpw3tTxM/U9Z+Mn/jn2EwWKFlRnyq1DTD1gW3ML5jLgqlSY0U1JWBV4pvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVzT9uUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5ktIJ0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 707C2C433F1;
-	Wed, 21 Feb 2024 14:21:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVzT9uUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A4BC433C7;
+	Wed, 21 Feb 2024 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525273;
-	bh=Jd8o9YDeoLxmL5v8KEmy6SroT9rEhXTrL58epA1AGQ4=;
+	s=korg; t=1708525281;
+	bh=eGJVFEtvM73fqZiN5KAs2kV6sswxncFEO/nC0hQJA7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5ktIJ0HqwD2Kv2Fyvk/wFUdppK9d2TBx1UulvT9DkwVrDT8CYlozLW420m677UZU
-	 PlpneJM9f/Z5kbMBaA2yVW3d6EUnXJlBejW6PgmmB3ULR0ZRiKoQ0MlYZMRoQGpY2f
-	 jiaslqapmHqH40XADCr41oWXaN5h8btimXz1bAaE=
+	b=hVzT9uUpN4N6/bBXdz0ZTN5Svtu1ORxPqXLNPAAT+xNfhIY7QGWZdYVmWZDQaMOoF
+	 NPxfYVsxWqEPE7bgvKtiAUvA8/NyUAgyBH3yEXOrrwDYBGsYuEPyJ0A0STy8xOgPI/
+	 65a7EDSBwBQ6c8e7ekdz/MgkNn/6PT8bMNiYYihg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yuluo Qiu <qyl27@outlook.com>,
+	Celeste Liu <CoelacanthusHex@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/267] crypto: stm32/crc32 - fix parsing list of devices
-Date: Wed, 21 Feb 2024 14:07:00 +0100
-Message-ID: <20240221125942.456295302@linuxfoundation.org>
+Subject: [PATCH 5.4 070/267] ACPI: video: Add quirk for the Colorful X15 AT 23 Laptop
+Date: Wed, 21 Feb 2024 14:06:51 +0100
+Message-ID: <20240221125942.182881674@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -53,44 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+From: Yuluo Qiu <qyl27@outlook.com>
 
-[ Upstream commit 0eaef675b94c746900dcea7f6c41b9a103ed5d53 ]
+[ Upstream commit 143176a46bdd3bfbe9ba2462bf94458e80d65ebf ]
 
-smatch warnings:
-drivers/crypto/stm32/stm32-crc32.c:108 stm32_crc_get_next_crc() warn:
-can 'crc' even be NULL?
+The Colorful X15 AT 23 ACPI video-bus device report spurious
+ACPI_VIDEO_NOTIFY_CYCLE events resulting in spurious KEY_SWITCHVIDEOMODE
+events being reported to userspace (and causing trouble there) when
+an external screen plugged in.
 
-Use list_first_entry_or_null instead of list_first_entry to retrieve
-the first device registered.
-The function list_first_entry always return a non NULL pointer even if
-the list is empty. Hence checking if the pointer returned is NULL does
-not tell if the list is empty or not.
+Add a quirk setting the report_key_events mask to
+REPORT_BRIGHTNESS_KEY_EVENTS so that the ACPI_VIDEO_NOTIFY_CYCLE
+events will be ignored, while still reporting brightness up/down
+hotkey-presses to userspace normally.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
-Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Yuluo Qiu <qyl27@outlook.com>
+Co-developed-by: Celeste Liu <CoelacanthusHex@gmail.com>
+Signed-off-by: Celeste Liu <CoelacanthusHex@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/stm32/stm32-crc32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_video.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/crypto/stm32/stm32-crc32.c b/drivers/crypto/stm32/stm32-crc32.c
-index 2ecc970f5cae..b66e06818afc 100644
---- a/drivers/crypto/stm32/stm32-crc32.c
-+++ b/drivers/crypto/stm32/stm32-crc32.c
-@@ -98,7 +98,7 @@ static struct stm32_crc *stm32_crc_get_next_crc(void)
- 	struct stm32_crc *crc;
- 
- 	spin_lock_bh(&crc_list.lock);
--	crc = list_first_entry(&crc_list.dev_list, struct stm32_crc, list);
-+	crc = list_first_entry_or_null(&crc_list.dev_list, struct stm32_crc, list);
- 	if (crc)
- 		list_move_tail(&crc->list, &crc_list.dev_list);
- 	spin_unlock_bh(&crc_list.lock);
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index 9648ec76de2b..fd33fdbaffa9 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -568,6 +568,15 @@ static const struct dmi_system_id video_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "Vostro 3350"),
+ 		},
+ 	},
++	{
++	 .callback = video_set_report_key_events,
++	 .driver_data = (void *)((uintptr_t)REPORT_BRIGHTNESS_KEY_EVENTS),
++	 .ident = "COLORFUL X15 AT 23",
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "COLORFUL"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "X15 AT 23"),
++		},
++	},
+ 	/*
+ 	 * Some machines change the brightness themselves when a brightness
+ 	 * hotkey gets pressed, despite us telling them not to. In this case
 -- 
 2.43.0
 
