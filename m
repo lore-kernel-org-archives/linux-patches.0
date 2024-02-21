@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F7D7BB18;
-	Wed, 21 Feb 2024 14:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3D67BB1F;
+	Wed, 21 Feb 2024 14:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524833; cv=none; b=dKG+t6mwpISSm3v1hrUOsCHOccxsiJmY5Hapm1e9UdG52nKAaCsMY3SgGqE5ox4wAHrMWzpRp/51sl57AcU0fazPh7PxpaiXgi8juLW9BOZR0TTXfhiSnb8FqW1+04zAr9m8XI8RX7NYZdu+VQo02Xd8zk2Cyqx4Q1TrPZM3yqU=
+	t=1708524836; cv=none; b=WW8obyNCPcd8ltxNavZV/O53PjyjHgcvWkY/LFMbzv1jDlzxd8YEQBlbfChvZ+YsuGDI7PDK3KM3aJjJKCEfSlx4i7vyRMnWDMGxc8P4lITgfZnnPE11uVxO1EmTCOsWNsuMDGOgJCQCOSfruzQ+soq1NKuYd50aBPxLZC0mcfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524833; c=relaxed/simple;
-	bh=rVMo0GNB4RIjWbB+dxyGKg3K5Uozcnp5MP7QC9OZDcw=;
+	s=arc-20240116; t=1708524836; c=relaxed/simple;
+	bh=UEb7zeyuLRrcDmUObbMW8S74OZJMLyHcbxYg9FNaQi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFWNlZeCSSE4nFrezQUM480DD1DHfadqHRoaenOjubBLUFr7blfnuFTtCjIYxMQeno4z32JZNjU9U4n+5hQA+klF4U+2/pzZvND6akj7fYS1wDe3f2fADOxcY6wfEgwo6v/tUhDWJJVQYmF6FCx4yeYjQ0dQMWFzy+bDfDsbsRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEJIO+Pr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EFWslOov2yVJvKpi+5i3hLU0JaI4g2YKjPsgiETorjgORc4Dyxe5Ew7R0pUOY3cnhWKCQ4XKQb+HY3DtnK9yMFHhQbN3yAVX+Qcc9jvFn5KnoFV0DNxUZE5HE9d8V7NgG1k78r/0qyPocru32CTQ+ROiYAoSWrv1BUqflzRYHQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0aUuo2H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEJIO+Pr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D417C433C7;
-	Wed, 21 Feb 2024 14:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0aUuo2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7352C433C7;
+	Wed, 21 Feb 2024 14:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524833;
-	bh=rVMo0GNB4RIjWbB+dxyGKg3K5Uozcnp5MP7QC9OZDcw=;
+	s=korg; t=1708524836;
+	bh=UEb7zeyuLRrcDmUObbMW8S74OZJMLyHcbxYg9FNaQi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEJIO+PrAik6JyIVd3FxKN+4IYaZlX6NnNhJZ02od1bj+9SK3ibrxxzYsiLdN9bYS
-	 u/JMW8I8RQOQ6cdHFvpa0oUSKA6dnPJUw068nk93uriXjfXXg864VNvyTUc9Up1hhy
-	 gZzviUr3hA0HhMigf3yi8ggcXELV4BDx/Ad2Nj+g=
+	b=s0aUuo2HKg4qaa0I1EVeDQHgkAB7WztrCjWWFoUZgJ9hmhVeukQr1r63ONRoxdmFd
+	 DSvz8Uaskg+sB7NJYo09Ll9Tc2Sd/hckaCMwoUIViiGZLRVrJEoUj979qx4JrOymxQ
+	 L+7906YrI8Z8hdvGa4OriKWAo6G9wKS88Vimu2mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Schspa Shi <schspa@gmail.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Kees Cook <keescook@chromium.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 362/379] scripts/decode_stacktrace.sh: support old bash version
-Date: Wed, 21 Feb 2024 14:09:01 +0100
-Message-ID: <20240221130005.774979565@linuxfoundation.org>
+Subject: [PATCH 5.10 363/379] scripts: decode_stacktrace: demangle Rust symbols
+Date: Wed, 21 Feb 2024 14:09:02 +0100
+Message-ID: <20240221130005.804185033@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,106 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Schspa Shi <schspa@gmail.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 3af8acf6aff2a98731522b52927429760f0b8006 ]
+[ Upstream commit 99115db4ecc87af73415939439ec604ea0531e6f ]
 
-Old bash version don't support associative array variables.  Avoid to use
-associative array variables to avoid error.
+Recent versions of both Binutils (`c++filt`) and LLVM (`llvm-cxxfilt`)
+provide Rust v0 mangling support.
 
-Without this, old bash version will report error as fellowing
-[   15.954042] Kernel panic - not syncing: sysrq triggered crash
-[   15.955252] CPU: 1 PID: 167 Comm: sh Not tainted 5.18.0-rc1-00208-gb7d075db2fd5 #4
-[   15.956472] Hardware name: Hobot J5 Virtual development board (DT)
-[   15.957856] Call trace:
-./scripts/decode_stacktrace.sh: line 128: ,dump_backtrace: syntax error: operand expected (error token is ",dump_backtrace")
-
-Link: https://lkml.kernel.org/r/20220409180331.24047-1-schspa@gmail.com
-Signed-off-by: Schspa Shi <schspa@gmail.com>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Alex Gaynor <alex.gaynor@gmail.com>
+Signed-off-by: Alex Gaynor <alex.gaynor@gmail.com>
+Co-developed-by: Wedson Almeida Filho <wedsonaf@google.com>
+Signed-off-by: Wedson Almeida Filho <wedsonaf@google.com>
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Stable-dep-of: efbd63983533 ("scripts/decode_stacktrace.sh: optionally use LLVM utilities")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/decode_stacktrace.sh | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ scripts/decode_stacktrace.sh | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/scripts/decode_stacktrace.sh b/scripts/decode_stacktrace.sh
-index 5bdf610f33d2..51d48bf65fd7 100755
+index 51d48bf65fd7..2157332750d5 100755
 --- a/scripts/decode_stacktrace.sh
 +++ b/scripts/decode_stacktrace.sh
-@@ -33,8 +33,13 @@ else
- 	release=""
+@@ -9,6 +9,14 @@ if [[ $# < 1 ]]; then
+ 	exit 1
  fi
  
--declare -A cache
--declare -A modcache
-+declare aarray_support=true
-+declare -A cache 2>/dev/null
-+if [[ $? != 0 ]]; then
-+	aarray_support=false
-+else
-+	declare -A modcache
++# Try to find a Rust demangler
++if type llvm-cxxfilt >/dev/null 2>&1 ; then
++	cppfilt=llvm-cxxfilt
++elif type c++filt >/dev/null 2>&1 ; then
++	cppfilt=c++filt
++	cppfilt_opts=-i
 +fi
++
+ if [[ $1 == "-r" ]] ; then
+ 	vmlinux=""
+ 	basepath="auto"
+@@ -157,6 +165,12 @@ parse_symbol() {
+ 	# In the case of inlines, move everything to same line
+ 	code=${code//$'\n'/' '}
  
- find_module() {
- 	if [[ "$modpath" != "" ]] ; then
-@@ -74,7 +79,7 @@ parse_symbol() {
- 
- 	if [[ $module == "" ]] ; then
- 		local objfile=$vmlinux
--	elif [[ "${modcache[$module]+isset}" == "isset" ]]; then
-+	elif [[ $aarray_support == true && "${modcache[$module]+isset}" == "isset" ]]; then
- 		local objfile=${modcache[$module]}
- 	else
- 		local objfile=$(find_module)
-@@ -82,7 +87,9 @@ parse_symbol() {
- 			echo "WARNING! Modules path isn't set, but is needed to parse this symbol" >&2
- 			return
- 		fi
--		modcache[$module]=$objfile
-+		if [[ $aarray_support == true ]]; then
-+			modcache[$module]=$objfile
-+		fi
- 	fi
- 
- 	# Remove the englobing parenthesis
-@@ -102,7 +109,7 @@ parse_symbol() {
- 	# Use 'nm vmlinux' to figure out the base address of said symbol.
- 	# It's actually faster to call it every time than to load it
- 	# all into bash.
--	if [[ "${cache[$module,$name]+isset}" == "isset" ]]; then
-+	if [[ $aarray_support == true && "${cache[$module,$name]+isset}" == "isset" ]]; then
- 		local base_addr=${cache[$module,$name]}
- 	else
- 		local base_addr=$(nm "$objfile" 2>/dev/null | awk '$3 == "'$name'" && ($2 == "t" || $2 == "T") {print $1; exit}')
-@@ -110,7 +117,9 @@ parse_symbol() {
- 			# address not found
- 			return
- 		fi
--		cache[$module,$name]="$base_addr"
-+		if [[ $aarray_support == true ]]; then
-+			cache[$module,$name]="$base_addr"
-+		fi
- 	fi
- 	# Let's start doing the math to get the exact address into the
- 	# symbol. First, strip out the symbol total length.
-@@ -126,11 +135,13 @@ parse_symbol() {
- 
- 	# Pass it to addr2line to get filename and line number
- 	# Could get more than one result
--	if [[ "${cache[$module,$address]+isset}" == "isset" ]]; then
-+	if [[ $aarray_support == true && "${cache[$module,$address]+isset}" == "isset" ]]; then
- 		local code=${cache[$module,$address]}
- 	else
- 		local code=$(${CROSS_COMPILE}addr2line -i -e "$objfile" "$address" 2>/dev/null)
--		cache[$module,$address]=$code
-+		if [[ $aarray_support == true ]]; then
-+			cache[$module,$address]=$code
-+		fi
- 	fi
- 
- 	# addr2line doesn't return a proper error code if it fails, so
++	# Demangle if the name looks like a Rust symbol and if
++	# we got a Rust demangler
++	if [[ $name =~ ^_R && $cppfilt != "" ]] ; then
++		name=$("$cppfilt" "$cppfilt_opts" "$name")
++	fi
++
+ 	# Replace old address with pretty line numbers
+ 	symbol="$segment$name ($code)"
+ }
 -- 
 2.43.0
 
