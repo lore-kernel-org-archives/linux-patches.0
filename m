@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A697E593;
-	Wed, 21 Feb 2024 14:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C12F7BB16;
+	Wed, 21 Feb 2024 14:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524007; cv=none; b=csgoZidVbzDCQwCAfDjWSKjV/6sIinhVMIR2nWEyQdQ5Ah3EWUVugLp54QGngodmatT0OAxKnUg87u+l7Jxco9oMqAw1iXFTgy7svPSgohK8xADt0GbvDGo9S33+vwPmuIVgJx+y8MMIj09vMXPyqfUpW64HTfrwE5wSdYOAJ8Q=
+	t=1708524010; cv=none; b=TcaNRIYIpcgOUxQjPwKMBBE5GN8U/zn+vThPx0Dr+ekdHBcDltsgB0TUDDWE1QgVE099wNpLwAwzyN18qwwE8kVvKQuB1/FxQmCC56HoXMTbnpMnzH3PEAoGY9JhQrRX8vvgI9Z+h3T1TcjzC/qYLmTdizcySubwmS9jXmNl+mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524007; c=relaxed/simple;
-	bh=8J2xOxQaKR3fjo++sItRRrkMyiEBcIIdaROTOOm4/kQ=;
+	s=arc-20240116; t=1708524010; c=relaxed/simple;
+	bh=pqPPMU6wWLCngCg8eGE6Av+MmRrqz0rKvezz0ari/zQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/v7RKWXcCdrEXmUPoAa8Wd0l0h6I6iL2OyXesni2uNZcHxD3iEUSw1BLZdgIVQykxTefHEW0z0g/WHQRwVzzKmW2u0TDj9FVZq8csB8vCdJp06++YIAQzPFmPfVK6PeX0m3Pie6Aj589A/kI+Bwkm4gMH2+ZykAGGbq9dPpNkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSH9X3Zg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y75r/JK91+d4u5yZJi6yn4NXAsJNo0wkU0Ho06Pva5Ui9Gi1xhkE17CgfibXmaRPMOEOng9MiX+iQGo0YmymRtuI/TpkeDAEfSGx+STAP+4+mUqE++0/YF5zbKfFL4MnCoiefD8tq2wIVBuxKRGcpiIQb+nrjGMB3GwEQsaMv28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJ+BBO3v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSH9X3Zg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537C3C43390;
-	Wed, 21 Feb 2024 14:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJ+BBO3v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA38C433C7;
+	Wed, 21 Feb 2024 14:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524006;
-	bh=8J2xOxQaKR3fjo++sItRRrkMyiEBcIIdaROTOOm4/kQ=;
+	s=korg; t=1708524010;
+	bh=pqPPMU6wWLCngCg8eGE6Av+MmRrqz0rKvezz0ari/zQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSH9X3ZglYenypmiWvAbM/GBfD0xbq/Z8z0e0KFWLVeFd/6wI4j7fAsgaCKgaBzm4
-	 CmwNTAg5+LXT12HUBL4sIxBMB97+cwfugoVJPJYQkpl6jjvbLNDnqHJ9p4eJywSzrs
-	 27TsA7upDfh6tHSPVm7uxqX2fj7Qs8Zb6vvYDA1s=
+	b=FJ+BBO3vmmgGLPTW9PUWfP4mLr1XDH0WPzNGxL7I0wigOO72IDR4QbjG5/LgSsKmD
+	 XWXxu5LhUIw9vF/IB5eQnLTb4UQbOsQU7w/Kxf3B2sokx9SdSdmgSCTHiSmlShJkBk
+	 qbsrCSRpy3ssQOsqJfswxsX3aNPZAR3qoIvS2uM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joyyoung Huang <huangzaiyang@oppo.com>,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Ma Wupeng <mawupeng1@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Xiaofei Tan <tanxiaofei@huawei.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	James Morse <james.morse@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 116/379] PM / devfreq: Synchronize devfreq_monitor_[start/stop]
-Date: Wed, 21 Feb 2024 14:04:55 +0100
-Message-ID: <20240221125958.359555521@linuxfoundation.org>
+Subject: [PATCH 5.10 117/379] ACPI: APEI: set memory failure flags as MF_ACTION_REQUIRED on synchronous events
+Date: Wed, 21 Feb 2024 14:04:56 +0100
+Message-ID: <20240221125958.389074357@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,165 +56,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit aed5ed595960c6d301dcd4ed31aeaa7a8054c0c6 ]
+[ Upstream commit a70297d2213253853e95f5b49651f924990c6d3b ]
 
-There is a chance if a frequent switch of the governor
-done in a loop result in timer list corruption where
-timer cancel being done from two place one from
-cancel_delayed_work_sync() and followed by expire_timers()
-can be seen from the traces[1].
+There are two major types of uncorrected recoverable (UCR) errors :
 
-while true
-do
-        echo "simple_ondemand" > /sys/class/devfreq/1d84000.ufshc/governor
-        echo "performance" > /sys/class/devfreq/1d84000.ufshc/governor
-done
+ - Synchronous error: The error is detected and raised at the point of
+   the consumption in the execution flow, e.g. when a CPU tries to
+   access a poisoned cache line. The CPU will take a synchronous error
+   exception such as Synchronous External Abort (SEA) on Arm64 and
+   Machine Check Exception (MCE) on X86. OS requires to take action (for
+   example, offline failure page/kill failure thread) to recover this
+   uncorrectable error.
 
-It looks to be issue with devfreq driver where
-device_monitor_[start/stop] need to synchronized so that
-delayed work should get corrupted while it is either
-being queued or running or being cancelled.
+ - Asynchronous error: The error is detected out of processor execution
+   context, e.g. when an error is detected by a background scrubber.
+   Some data in the memory are corrupted. But the data have not been
+   consumed. OS is optional to take action to recover this uncorrectable
+   error.
 
-Let's use polling flag and devfreq lock to synchronize the
-queueing the timer instance twice and work data being
-corrupted.
+When APEI firmware first is enabled, a platform may describe one error
+source for the handling of synchronous errors (e.g. MCE or SEA notification
+), or for handling asynchronous errors (e.g. SCI or External Interrupt
+notification). In other words, we can distinguish synchronous errors by
+APEI notification. For synchronous errors, kernel will kill the current
+process which accessing the poisoned page by sending SIGBUS with
+BUS_MCEERR_AR. In addition, for asynchronous errors, kernel will notify the
+process who owns the poisoned page by sending SIGBUS with BUS_MCEERR_AO in
+early kill mode. However, the GHES driver always sets mf_flags to 0 so that
+all synchronous errors are handled as asynchronous errors in memory failure.
 
-[1]
-...
-..
-<idle>-0    [003]   9436.209662:  timer_cancel   timer=0xffffff80444f0428
-<idle>-0    [003]   9436.209664:  timer_expire_entry   timer=0xffffff80444f0428  now=0x10022da1c  function=__typeid__ZTSFvP10timer_listE_global_addr  baseclk=0x10022da1c
-<idle>-0    [003]   9436.209718:  timer_expire_exit   timer=0xffffff80444f0428
-kworker/u16:6-14217    [003]   9436.209863:  timer_start   timer=0xffffff80444f0428  function=__typeid__ZTSFvP10timer_listE_global_addr  expires=0x10022da2b  now=0x10022da1c  flags=182452227
-vendor.xxxyyy.ha-1593    [004]   9436.209888:  timer_cancel   timer=0xffffff80444f0428
-vendor.xxxyyy.ha-1593    [004]   9436.216390:  timer_init   timer=0xffffff80444f0428
-vendor.xxxyyy.ha-1593    [004]   9436.216392:  timer_start   timer=0xffffff80444f0428  function=__typeid__ZTSFvP10timer_listE_global_addr  expires=0x10022da2c  now=0x10022da1d  flags=186646532
-vendor.xxxyyy.ha-1593    [005]   9436.220992:  timer_cancel   timer=0xffffff80444f0428
-xxxyyyTraceManag-7795    [004]   9436.261641:  timer_cancel   timer=0xffffff80444f0428
+To this end, set memory failure flags as MF_ACTION_REQUIRED on synchronous
+events.
 
-[2]
-
- 9436.261653][    C4] Unable to handle kernel paging request at virtual address dead00000000012a
-[ 9436.261664][    C4] Mem abort info:
-[ 9436.261666][    C4]   ESR = 0x96000044
-[ 9436.261669][    C4]   EC = 0x25: DABT (current EL), IL = 32 bits
-[ 9436.261671][    C4]   SET = 0, FnV = 0
-[ 9436.261673][    C4]   EA = 0, S1PTW = 0
-[ 9436.261675][    C4] Data abort info:
-[ 9436.261677][    C4]   ISV = 0, ISS = 0x00000044
-[ 9436.261680][    C4]   CM = 0, WnR = 1
-[ 9436.261682][    C4] [dead00000000012a] address between user and kernel address ranges
-[ 9436.261685][    C4] Internal error: Oops: 96000044 [#1] PREEMPT SMP
-[ 9436.261701][    C4] Skip md ftrace buffer dump for: 0x3a982d0
-...
-
-[ 9436.262138][    C4] CPU: 4 PID: 7795 Comm: TraceManag Tainted: G S      W  O      5.10.149-android12-9-o-g17f915d29d0c #1
-[ 9436.262141][    C4] Hardware name: Qualcomm Technologies, Inc.  (DT)
-[ 9436.262144][    C4] pstate: 22400085 (nzCv daIf +PAN -UAO +TCO BTYPE=--)
-[ 9436.262161][    C4] pc : expire_timers+0x9c/0x438
-[ 9436.262164][    C4] lr : expire_timers+0x2a4/0x438
-[ 9436.262168][    C4] sp : ffffffc010023dd0
-[ 9436.262171][    C4] x29: ffffffc010023df0 x28: ffffffd0636fdc18
-[ 9436.262178][    C4] x27: ffffffd063569dd0 x26: ffffffd063536008
-[ 9436.262182][    C4] x25: 0000000000000001 x24: ffffff88f7c69280
-[ 9436.262185][    C4] x23: 00000000000000e0 x22: dead000000000122
-[ 9436.262188][    C4] x21: 000000010022da29 x20: ffffff8af72b4e80
-[ 9436.262191][    C4] x19: ffffffc010023e50 x18: ffffffc010025038
-[ 9436.262195][    C4] x17: 0000000000000240 x16: 0000000000000201
-[ 9436.262199][    C4] x15: ffffffffffffffff x14: ffffff889f3c3100
-[ 9436.262203][    C4] x13: ffffff889f3c3100 x12: 00000000049f56b8
-[ 9436.262207][    C4] x11: 00000000049f56b8 x10: 00000000ffffffff
-[ 9436.262212][    C4] x9 : ffffffc010023e50 x8 : dead000000000122
-[ 9436.262216][    C4] x7 : ffffffffffffffff x6 : ffffffc0100239d8
-[ 9436.262220][    C4] x5 : 0000000000000000 x4 : 0000000000000101
-[ 9436.262223][    C4] x3 : 0000000000000080 x2 : ffffff889edc155c
-[ 9436.262227][    C4] x1 : ffffff8001005200 x0 : ffffff80444f0428
-[ 9436.262232][    C4] Call trace:
-[ 9436.262236][    C4]  expire_timers+0x9c/0x438
-[ 9436.262240][    C4]  __run_timers+0x1f0/0x330
-[ 9436.262245][    C4]  run_timer_softirq+0x28/0x58
-[ 9436.262255][    C4]  efi_header_end+0x168/0x5ec
-[ 9436.262265][    C4]  __irq_exit_rcu+0x108/0x124
-[ 9436.262274][    C4]  __handle_domain_irq+0x118/0x1e4
-[ 9436.262282][    C4]  gic_handle_irq.30369+0x6c/0x2bc
-[ 9436.262286][    C4]  el0_irq_naked+0x60/0x6c
-
-Link: https://lore.kernel.org/all/1700860318-4025-1-git-send-email-quic_mojha@quicinc.com/
-Reported-by: Joyyoung Huang <huangzaiyang@oppo.com>
-Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Tested-by: Ma Wupeng <mawupeng1@huawei.com>
+Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Xiaofei Tan <tanxiaofei@huawei.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: James Morse <james.morse@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/devfreq/devfreq.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/acpi/apei/ghes.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
-index 42c1eed44529..216594b86119 100644
---- a/drivers/devfreq/devfreq.c
-+++ b/drivers/devfreq/devfreq.c
-@@ -438,10 +438,14 @@ static void devfreq_monitor(struct work_struct *work)
- 	if (err)
- 		dev_err(&devfreq->dev, "dvfs failed with (%d) error\n", err);
- 
-+	if (devfreq->stop_polling)
-+		goto out;
-+
- 	queue_delayed_work(devfreq_wq, &devfreq->work,
- 				msecs_to_jiffies(devfreq->profile->polling_ms));
--	mutex_unlock(&devfreq->lock);
- 
-+out:
-+	mutex_unlock(&devfreq->lock);
- 	trace_devfreq_monitor(devfreq);
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 8678e162181f..160606af8b4f 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -99,6 +99,20 @@ static inline bool is_hest_type_generic_v2(struct ghes *ghes)
+ 	return ghes->generic->header.type == ACPI_HEST_TYPE_GENERIC_ERROR_V2;
  }
  
-@@ -459,6 +463,10 @@ void devfreq_monitor_start(struct devfreq *devfreq)
- 	if (devfreq->governor->interrupt_driven)
- 		return;
- 
-+	mutex_lock(&devfreq->lock);
-+	if (delayed_work_pending(&devfreq->work))
-+		goto out;
++/*
++ * A platform may describe one error source for the handling of synchronous
++ * errors (e.g. MCE or SEA), or for handling asynchronous errors (e.g. SCI
++ * or External Interrupt). On x86, the HEST notifications are always
++ * asynchronous, so only SEA on ARM is delivered as a synchronous
++ * notification.
++ */
++static inline bool is_hest_sync_notify(struct ghes *ghes)
++{
++	u8 notify_type = ghes->generic->notify.type;
 +
- 	switch (devfreq->profile->timer) {
- 	case DEVFREQ_TIMER_DEFERRABLE:
- 		INIT_DEFERRABLE_WORK(&devfreq->work, devfreq_monitor);
-@@ -467,12 +475,16 @@ void devfreq_monitor_start(struct devfreq *devfreq)
- 		INIT_DELAYED_WORK(&devfreq->work, devfreq_monitor);
- 		break;
- 	default:
--		return;
-+		goto out;
- 	}
- 
- 	if (devfreq->profile->polling_ms)
- 		queue_delayed_work(devfreq_wq, &devfreq->work,
- 			msecs_to_jiffies(devfreq->profile->polling_ms));
++	return notify_type == ACPI_HEST_NOTIFY_SEA;
++}
 +
-+out:
-+	devfreq->stop_polling = false;
-+	mutex_unlock(&devfreq->lock);
+ /*
+  * This driver isn't really modular, however for the time being,
+  * continuing to use module_param is the easiest way to remain
+@@ -461,7 +475,7 @@ static bool ghes_do_memory_failure(u64 physical_addr, int flags)
  }
- EXPORT_SYMBOL(devfreq_monitor_start);
  
-@@ -489,6 +501,14 @@ void devfreq_monitor_stop(struct devfreq *devfreq)
- 	if (devfreq->governor->interrupt_driven)
- 		return;
+ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
+-				       int sev)
++				       int sev, bool sync)
+ {
+ 	int flags = -1;
+ 	int sec_sev = ghes_severity(gdata->error_severity);
+@@ -475,7 +489,7 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
+ 	    (gdata->flags & CPER_SEC_ERROR_THRESHOLD_EXCEEDED))
+ 		flags = MF_SOFT_OFFLINE;
+ 	if (sev == GHES_SEV_RECOVERABLE && sec_sev == GHES_SEV_RECOVERABLE)
+-		flags = 0;
++		flags = sync ? MF_ACTION_REQUIRED : 0;
  
-+	mutex_lock(&devfreq->lock);
-+	if (devfreq->stop_polling) {
-+		mutex_unlock(&devfreq->lock);
-+		return;
-+	}
-+
-+	devfreq->stop_polling = true;
-+	mutex_unlock(&devfreq->lock);
- 	cancel_delayed_work_sync(&devfreq->work);
+ 	if (flags != -1)
+ 		return ghes_do_memory_failure(mem_err->physical_addr, flags);
+@@ -483,9 +497,11 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
+ 	return false;
  }
- EXPORT_SYMBOL(devfreq_monitor_stop);
+ 
+-static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int sev)
++static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
++				       int sev, bool sync)
+ {
+ 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
++	int flags = sync ? MF_ACTION_REQUIRED : 0;
+ 	bool queued = false;
+ 	int sec_sev, i;
+ 	char *p;
+@@ -510,7 +526,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata, int s
+ 		 * and don't filter out 'corrected' error here.
+ 		 */
+ 		if (is_cache && has_pa) {
+-			queued = ghes_do_memory_failure(err_info->physical_fault_addr, 0);
++			queued = ghes_do_memory_failure(err_info->physical_fault_addr, flags);
+ 			p += err_info->length;
+ 			continue;
+ 		}
+@@ -631,6 +647,7 @@ static bool ghes_do_proc(struct ghes *ghes,
+ 	const guid_t *fru_id = &guid_null;
+ 	char *fru_text = "";
+ 	bool queued = false;
++	bool sync = is_hest_sync_notify(ghes);
+ 
+ 	sev = ghes_severity(estatus->error_severity);
+ 	apei_estatus_for_each_section(estatus, gdata) {
+@@ -648,13 +665,13 @@ static bool ghes_do_proc(struct ghes *ghes,
+ 			ghes_edac_report_mem_error(sev, mem_err);
+ 
+ 			arch_apei_report_mem_error(sev, mem_err);
+-			queued = ghes_handle_memory_failure(gdata, sev);
++			queued = ghes_handle_memory_failure(gdata, sev, sync);
+ 		}
+ 		else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
+ 			ghes_handle_aer(gdata);
+ 		}
+ 		else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
+-			queued = ghes_handle_arm_hw_error(gdata, sev);
++			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
+ 		} else {
+ 			void *err = acpi_hest_get_payload(gdata);
+ 
 -- 
 2.43.0
 
