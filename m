@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB1180033;
-	Wed, 21 Feb 2024 14:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7801680033;
+	Wed, 21 Feb 2024 14:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524616; cv=none; b=aKUhbNTXCfIIvjviuxW5SgOWiL3gKgF523XWXh1JIEqCqNYPB7DqigBbu1kG0JkOSzwQY3DOTIIO9UzILNsAw7jcmdk3GOX9v5/FqxPmYNHgOAo+kdtyMyqwRHzKawKDikfNUmZs3rR7xBqxlFqQuKkM3seFVaqSWpkRZ7Pi4SU=
+	t=1708524620; cv=none; b=aNAsQRdZ1Lbm0B/0Lp/NAXVFPP/JW1B7KABW+bb9jj3m2B8pVi/lgWI8PWq2gLYZ6RSL1CG/hVHx7D63Gs3Co1bojSVVDYUinEtQD+rG2ORbf37bRR3OvD2DOgPe/VQ8xQnApDEmtI/3YBSvqSxqcYBDp4s6c4c8S/XDeGwN1O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524616; c=relaxed/simple;
-	bh=2wVjLIwjZskHYlP1SwNycProypCoyLCrfI49mm1KS+w=;
+	s=arc-20240116; t=1708524620; c=relaxed/simple;
+	bh=ZwjVPCY0Am3o53yDDEkWEixlhodVuRoyWg/UIb0IKwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVHJDz2Dn77o1uSjIrGIYYhqkCpYZtL0rZ1YzmBVYrLDnifx1wK7BOjn03tX97/174S01kCN1ouixzbwNVsu6Zbry7q8UUP/hSyjdA4QvSLvvUE32hCoCpx4JAufrHR2kp+7Tf1IpLJFao26Xt4o6fFdcxZX9axuGfV+sHrI2yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUNJMEMI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FvYc+to4NEBJndYUtyDFSep8oMbZJgIrf35LIVvk4NXZn58eMkyOLGQuFD017qke4Y2wz364DWv79ZwAYNue30qRySbEc2LH0hhrMZ8fHEBX4WbDqMIpfuXWPVU/GjPJHzubJzxq4lMm+g//G3LsSHteXDGRPaa6WY9d24dDGuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tAaxkm8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUNJMEMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FBDC433F1;
-	Wed, 21 Feb 2024 14:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAaxkm8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB972C433F1;
+	Wed, 21 Feb 2024 14:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524616;
-	bh=2wVjLIwjZskHYlP1SwNycProypCoyLCrfI49mm1KS+w=;
+	s=korg; t=1708524620;
+	bh=ZwjVPCY0Am3o53yDDEkWEixlhodVuRoyWg/UIb0IKwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUNJMEMIL3FUMmzNIzvXaOVidBaNwgOpsUqMxg5TJmgVnn2suURqp0a1f+TDbAn2+
-	 fgue/R5cfGEOL5GovSVVN1xgFABAch+lpcYF0KikpTjqs7Vom1cOJMPQfCxIlRDldc
-	 SOTO771dpYA+xRhLqxas8pJVPwknzH8SJDQah7AQ=
+	b=tAaxkm8BcubZyOPkMSV7gcAMmrhp4zILxkQFvKM4ikkgxirp85cJ7sA9PGXP39jFu
+	 66jhlcY/38qpIun9wGcbCE6w73gL+7LWeruny71NvYh5Sw9HDzEo+SZGyFyaET1hqK
+	 sWFEj0KTkeJT5SwN9zcos5CPR9q8rGJtUlJQh5d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 280/379] Input: atkbd - skip ATKBD_CMD_SETLEDS when skipping ATKBD_CMD_GETID
-Date: Wed, 21 Feb 2024 14:07:39 +0100
-Message-ID: <20240221130003.186443887@linuxfoundation.org>
+	Zach OKeefe <zokeefe@google.com>,
+	Maxim Patlasov <MPatlasov@parallels.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 298/379] mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again
+Date: Wed, 21 Feb 2024 14:07:57 +0100
+Message-ID: <20240221130003.739286268@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,82 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Zach O'Keefe <zokeefe@google.com>
 
-commit 683cd8259a9b883a51973511f860976db2550a6e upstream.
+commit 9319b647902cbd5cc884ac08a8a6d54ce111fc78 upstream.
 
-After commit 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in
-translated mode") the keyboard on Dell XPS 13 9350 / 9360 / 9370 models
-has stopped working after a suspend/resume.
+(struct dirty_throttle_control *)->thresh is an unsigned long, but is
+passed as the u32 divisor argument to div_u64().  On architectures where
+unsigned long is 64 bytes, the argument will be implicitly truncated.
 
-The problem appears to be that atkbd_probe() fails when called
-from atkbd_reconnect() on resume, which on systems where
-ATKBD_CMD_GETID is skipped can only happen by ATKBD_CMD_SETLEDS
-failing. ATKBD_CMD_SETLEDS failing because ATKBD_CMD_GETID was
-skipped is weird, but apparently that is what is happening.
+Use div64_u64() instead of div_u64() so that the value used in the "is
+this a safe division" check is the same as the divisor.
 
-Fix this by also skipping ATKBD_CMD_SETLEDS when skipping
-ATKBD_CMD_GETID.
+Also, remove redundant cast of the numerator to u64, as that should happen
+implicitly.
 
-Fixes: 936e4d49ecbc ("Input: atkbd - skip ATKBD_CMD_GETID in translated mode")
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Closes: https://lore.kernel.org/linux-input/0aa4a61f-c939-46fe-a572-08022e8931c7@molgen.mpg.de/
-Closes: https://bbs.archlinux.org/viewtopic.php?pid=2146300
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218424
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2260517
-Tested-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240126160724.13278-2-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+This would be difficult to exploit in memcg domain, given the ratio-based
+arithmetic domain_drity_limits() uses, but is much easier in global
+writeback domain with a BDI_CAP_STRICTLIMIT-backing device, using e.g.
+vm.dirty_bytes=(1<<32)*PAGE_SIZE so that dtc->thresh == (1<<32)
+
+Link: https://lkml.kernel.org/r/20240118181954.1415197-1-zokeefe@google.com
+Fixes: f6789593d5ce ("mm/page-writeback.c: fix divide by zero in bdi_dirty_limits()")
+Signed-off-by: Zach O'Keefe <zokeefe@google.com>
+Cc: Maxim Patlasov <MPatlasov@parallels.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ mm/page-writeback.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -802,7 +802,6 @@ static int atkbd_probe(struct atkbd *atk
- {
- 	struct ps2dev *ps2dev = &atkbd->ps2dev;
- 	unsigned char param[2];
--	bool skip_getid;
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -1524,7 +1524,7 @@ static inline void wb_dirty_limits(struc
+ 	 */
+ 	dtc->wb_thresh = __wb_calc_thresh(dtc);
+ 	dtc->wb_bg_thresh = dtc->thresh ?
+-		div_u64((u64)dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
++		div64_u64(dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
  
- /*
-  * Some systems, where the bit-twiddling when testing the io-lines of the
-@@ -816,6 +815,11 @@ static int atkbd_probe(struct atkbd *atk
- 				 "keyboard reset failed on %s\n",
- 				 ps2dev->serio->phys);
- 
-+	if (atkbd_skip_getid(atkbd)) {
-+		atkbd->id = 0xab83;
-+		return 0;
-+	}
-+
- /*
-  * Then we check the keyboard ID. We should get 0xab83 under normal conditions.
-  * Some keyboards report different values, but the first byte is always 0xab or
-@@ -824,18 +828,17 @@ static int atkbd_probe(struct atkbd *atk
-  */
- 
- 	param[0] = param[1] = 0xa5;	/* initialize with invalid values */
--	skip_getid = atkbd_skip_getid(atkbd);
--	if (skip_getid || ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
-+	if (ps2_command(ps2dev, param, ATKBD_CMD_GETID)) {
- 
- /*
-- * If the get ID command was skipped or failed, we check if we can at least set
-+ * If the get ID command failed, we check if we can at least set
-  * the LEDs on the keyboard. This should work on every keyboard out there.
-  * It also turns the LEDs off, which we want anyway.
-  */
- 		param[0] = 0;
- 		if (ps2_command(ps2dev, param, ATKBD_CMD_SETLEDS))
- 			return -1;
--		atkbd->id = skip_getid ? 0xab83 : 0xabba;
-+		atkbd->id = 0xabba;
- 		return 0;
- 	}
- 
+ 	/*
+ 	 * In order to avoid the stacked BDI deadlock we need
 
 
