@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8662253816;
-	Wed, 21 Feb 2024 13:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5AC53816;
+	Wed, 21 Feb 2024 13:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521734; cv=none; b=sMeiYkq1fG4upUrt7TcHXPMqtqKkyOKOjyHgCXYNsvjcyf3ZSXq0n42tEGya92XwNsopsGO3mrGIjwTAYyyFnKFwsKoHVk5pTt3cnv3y5NXHwqzEkh9KdjZsszDU6vgWb1JgVEXjjWj4P27+lI/byHSf+QoJO3fs9Qv9xGpdxAI=
+	t=1708521738; cv=none; b=WioxaVa1W4zSViGMblKcoGw9a6gl5s/NES179fGHWTyyLMjn7jUqjJ4Fk4IS0a75OeCdwncfJiehhixupwqMt/6GL6ImVOOaCyFxBcpYUoCvqOtuy4dzhid0tc4V/e/c1z8B+JCVhJJxio3tdUHS/LSoXSTzT2vEdshGICOQqFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521734; c=relaxed/simple;
-	bh=AWGB5XTET2+UX7jcOKsbj680tUarbcKg9yqBddXWkIk=;
+	s=arc-20240116; t=1708521738; c=relaxed/simple;
+	bh=P4DqFx2y1IKIPXGzFQMVjOQWISwuCw4+NASLAGn9WD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0Ssz1P255ygVy5l6uLLEmAO5gBpdi6gv0aE/E3XKQE9PIe9QQZke8DTGsy+wVlOnc5ZKfDVUpjQhbDseCRTWkr6coF9Ccy4pf+pG73nFrO1OhtJHx5pI+epxgVTLKXp3pT2P0dcwHUwhbz8rAf7nr/Kqo22HsvvLDPVhC41QOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxZmMLNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=frI0qjF4yaJWaxCq/aPmzwmCINO6+8x2b2CcPgIe6MlX24eQLPX8b4XkMt1kd9/Wz2KluLNRJ8biDTnWu3uW/JYgaaFFgnMYtpOX4Qjxmms+vDIcLiCdRDlEBXXOEqVi5+9mt8CbsuA17Vso36zO3KPW7KjKd7z8UxdxdKwDUEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U952NIhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxZmMLNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8F3C433F1;
-	Wed, 21 Feb 2024 13:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U952NIhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2084DC433C7;
+	Wed, 21 Feb 2024 13:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521734;
-	bh=AWGB5XTET2+UX7jcOKsbj680tUarbcKg9yqBddXWkIk=;
+	s=korg; t=1708521737;
+	bh=P4DqFx2y1IKIPXGzFQMVjOQWISwuCw4+NASLAGn9WD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cxZmMLNnCkWWpDjy33kj+Yv2WCODvvjTKjsY8oDyFBWb/mmkLGMveC3f0s/onf0gN
-	 ujIcjRT89cnmMhk/Y/jie4jeHW13CWtVJw5VKZfUoNQjZ+7VJ7lowVPXSWFMNzxoyN
-	 RFuMI2tBCXJ+6k+/BZwwEkac2nrYc5643Eb0SskA=
+	b=U952NIhd1jTsoGK9ooTPl2YFL/MlC6ZxO8205V9AsOr75Thzi+xfJJo/qHgmwT9MS
+	 rg0tYil45D7A5aj2ILa+efce2lF8NVIpChLZ0j4iRCVYvq8q5idaFgRd0C27EZi9cG
+	 q9jXgWKCOt6Af1eZjXPYH6I1NwkqLa9K4ZmRulU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 4.19 190/202] x86/mm/ident_map: Use gbpages only where full GB page should be mapped.
-Date: Wed, 21 Feb 2024 14:08:11 +0100
-Message-ID: <20240221125937.939785810@linuxfoundation.org>
+	bo liu <bo.liu@senarytech.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 191/202] ALSA: hda/conexant: Add quirk for SWS JS201D
+Date: Wed, 21 Feb 2024 14:08:12 +0100
+Message-ID: <20240221125937.968537862@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -50,77 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: bo liu <bo.liu@senarytech.com>
 
-commit d794734c9bbfe22f86686dc2909c25f5ffe1a572 upstream.
+commit 4639c5021029d49fd2f97fa8d74731f167f98919 upstream.
 
-When ident_pud_init() uses only gbpages to create identity maps, large
-ranges of addresses not actually requested can be included in the
-resulting table; a 4K request will map a full GB.  On UV systems, this
-ends up including regions that will cause hardware to halt the system
-if accessed (these are marked "reserved" by BIOS).  Even processor
-speculation into these regions is enough to trigger the system halt.
+The SWS JS201D need a different pinconfig from windows driver.
+Add a quirk to use a specific pinconfig to SWS JS201D.
 
-Only use gbpages when map creation requests include the full GB page
-of space.  Fall back to using smaller 2M pages when only portions of a
-GB page are included in the request.
-
-No attempt is made to coalesce mapping requests. If a request requires
-a map entry at the 2M (pmd) level, subsequent mapping requests within
-the same 1G region will also be at the pmd level, even if adjacent or
-overlapping such requests could have been combined to map a full
-gbpage.  Existing usage starts with larger regions and then adds
-smaller regions, so this should not have any great consequence.
-
-[ dhansen: fix up comment formatting, simplifty changelog ]
-
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240126164841.170866-1-steve.wahl%40hpe.com
+Signed-off-by: bo liu <bo.liu@senarytech.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240205013802.51907-1-bo.liu@senarytech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/ident_map.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ sound/pci/hda/patch_conexant.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/arch/x86/mm/ident_map.c
-+++ b/arch/x86/mm/ident_map.c
-@@ -26,18 +26,31 @@ static int ident_pud_init(struct x86_map
- 	for (; addr < end; addr = next) {
- 		pud_t *pud = pud_page + pud_index(addr);
- 		pmd_t *pmd;
-+		bool use_gbpage;
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -229,6 +229,7 @@ enum {
+ 	CXT_FIXUP_MUTE_LED_GPIO,
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
++	CXT_PINCFG_SWS_JS201D,
+ };
  
- 		next = (addr & PUD_MASK) + PUD_SIZE;
- 		if (next > end)
- 			next = end;
+ /* for hda_fixup_thinkpad_acpi() */
+@@ -717,6 +718,17 @@ static const struct hda_pintbl cxt_pincf
+ 	{}
+ };
  
--		if (info->direct_gbpages) {
--			pud_t pudval;
-+		/* if this is already a gbpage, this portion is already mapped */
-+		if (pud_large(*pud))
-+			continue;
++/* SuoWoSi/South-holding JS201D with sn6140 */
++static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
++	{ 0x16, 0x03211040 }, /* hp out */
++	{ 0x17, 0x91170110 }, /* SPK/Class_D */
++	{ 0x18, 0x95a70130 }, /* Internal mic */
++	{ 0x19, 0x03a11020 }, /* Headset Mic */
++	{ 0x1a, 0x40f001f0 }, /* Not used */
++	{ 0x21, 0x40f001f0 }, /* Not used */
++	{}
++};
 +
-+		/* Is using a gbpage allowed? */
-+		use_gbpage = info->direct_gbpages;
+ static const struct hda_fixup cxt_fixups[] = {
+ 	[CXT_PINCFG_LENOVO_X200] = {
+ 		.type = HDA_FIXUP_PINS,
+@@ -868,6 +880,10 @@ static const struct hda_fixup cxt_fixups
+ 		.chained = true,
+ 		.chain_id = CXT_FIXUP_HEADSET_MIC,
+ 	},
++	[CXT_PINCFG_SWS_JS201D] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = cxt_pincfg_sws_js201d,
++	},
+ };
  
--			if (pud_present(*pud))
--				continue;
-+		/* Don't use gbpage if it maps more than the requested region. */
-+		/* at the begining: */
-+		use_gbpage &= ((addr & ~PUD_MASK) == 0);
-+		/* ... or at the end: */
-+		use_gbpage &= ((next & ~PUD_MASK) == 0);
-+
-+		/* Never overwrite existing mappings */
-+		use_gbpage &= !pud_present(*pud);
-+
-+		if (use_gbpage) {
-+			pud_t pudval;
+ static const struct snd_pci_quirk cxt5045_fixups[] = {
+@@ -939,6 +955,7 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
++	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
+ 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
+ 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
+ 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
+@@ -978,6 +995,7 @@ static const struct hda_model_fixup cxt5
+ 	{ .id = CXT_FIXUP_MUTE_LED_GPIO, .name = "mute-led-gpio" },
+ 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
+ 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
++	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
+ 	{}
+ };
  
--			addr &= PUD_MASK;
- 			pudval = __pud((addr - info->offset) | info->page_flag);
- 			set_pud(pud, pudval);
- 			continue;
 
 
