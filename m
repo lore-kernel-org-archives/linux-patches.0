@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724EA7C0B8;
-	Wed, 21 Feb 2024 14:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DE176037;
+	Wed, 21 Feb 2024 14:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524178; cv=none; b=M+7YFnyevry9Ktke611iWjMr4SzZhkWBZbJB/36AUfu6CfC4QfDdzbsUX3YDtGrh9Aqajd1kE7H3EIbexKmWZBD7of0w1LQ4NPqwWcjPaK57vjJlXXVKfnSsPjPlKz3Tnhm1z99XafMqCthhsPFtqe24VQ778yoJGe/dqAHf0pk=
+	t=1708524181; cv=none; b=nrI1laLS52sk5gsiv20xb+67QwPzA3F7q+RR4t2WaDh6DuTnXGNpU8kmexdXpJPw7QvBuI0i/XA5WqTcz2n8SLS8wD8PgEOcH6avdfWj/LRX1BVlX+4qprDO1vp12TtPyzcrPlEFd09foIi2IP71oJ0Y7PLfcEUOJgQkgbZhMTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524178; c=relaxed/simple;
-	bh=CsARNPzOwgplkI2JyjcXbFedjfri+TRO/i95InnTsjM=;
+	s=arc-20240116; t=1708524181; c=relaxed/simple;
+	bh=1hpUcTHVdlbZ7CO1TUqmLR6yuQAt6xi7rznKTkPA3rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZ1S/NCPDrIzvd2PhMmQqCDbVN5Mnmx8F7Dddk8SGPlVlU7QFeXTsCp34cE8HmpSOs11U5DCb8fydJ/xo/MdDSjvcgLcz6Q9VeXnIukfcFDOUN04jJCy64uGx5ZBQdyuyh4lU0ZRdWR6LMrmH9Mzz4vWMZ/NEXr7Cv6/ERCOBsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=etM30U+H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBsyVsVc2HFN74YWE6PHdkVR8RDe/x3j6fSTpLhDM/Ocw/U8bpgBXuNTf2fLwLPrpaJ/ILZ7IpeWC2abVgbJGdiPamECjHMuqulLcLr5Xm2Jo5crrJIJAEA4A98LLh3gr4JAHVv9CXM9UjiG2CIk/MISz3LgW5y+2OgniAGWOPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgT1Tp9h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="etM30U+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC16FC433F1;
-	Wed, 21 Feb 2024 14:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgT1Tp9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013EEC433F1;
+	Wed, 21 Feb 2024 14:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524178;
-	bh=CsARNPzOwgplkI2JyjcXbFedjfri+TRO/i95InnTsjM=;
+	s=korg; t=1708524181;
+	bh=1hpUcTHVdlbZ7CO1TUqmLR6yuQAt6xi7rznKTkPA3rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=etM30U+HRi9Qtco7Kp8IDYlhCCzTVnmnh1LOK5LcCL42yR9hlTBD/z9v+ItVt8oNJ
-	 KxsY4V96wRuxT0ayQCDU6Mec4tA4ANW0k709f18lqpkoeuOyxQcKWVv3R/m1kgCG55
-	 bWo+IoP8fBNXLrBQJmDf++7dzouXjSTaS1hNIyPk=
+	b=mgT1Tp9hCZ1EcVImCbg4k0KO3WFNXWkGbNWrfgndW/OIYPwUKVD4Yg15QUgGi5fGU
+	 f/FAjAHnDAHfua407/J5N6LexuW5ZUdjH5RsBPNVTH6lPii+9LUPVHwsQxHNbmISHR
+	 wasOzNj8A2NXhjvSEkzIgjRn721UOTBzl3MtbSa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mao Jinlong <quic_jinlmao@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zenm Chen <zenmchen@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 168/379] arm64: dts: qcom: msm8998: Fix out-ports is a required property
-Date: Wed, 21 Feb 2024 14:05:47 +0100
-Message-ID: <20240221125959.888511896@linuxfoundation.org>
+Subject: [PATCH 5.10 169/379] wifi: rtl8xxxu: Add additional USB IDs for RTL8192EU devices
+Date: Wed, 21 Feb 2024 14:05:48 +0100
+Message-ID: <20240221125959.916855091@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,86 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-[ Upstream commit ae5ee3562a2519214b12228545e88a203dd68bbd ]
+[ Upstream commit 4e87ca403e2008b9e182239e1abbf6876a55eb33 ]
 
-out-ports is a required property for coresight ETM. Add out-ports for
-ETM nodes to fix the warning.
+Add additional USB IDs found in the vendor driver from
+https://github.com/Mange/rtl8192eu-linux-driver to support more
+RTL8192EU devices.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-Link: https://lore.kernel.org/r/20231210072633.4243-4-quic_jinlmao@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20231217123017.1982-1-zenmchen@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++----------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 7c8d69ca91cf..ca8e7848769a 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1577,9 +1577,11 @@
- 
- 			cpu = <&CPU4>;
- 
--			port{
--				etm4_out: endpoint {
--					remote-endpoint = <&apss_funnel_in4>;
-+			out-ports {
-+				port{
-+					etm4_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in4>;
-+					};
- 				};
- 			};
- 		};
-@@ -1594,9 +1596,11 @@
- 
- 			cpu = <&CPU5>;
- 
--			port{
--				etm5_out: endpoint {
--					remote-endpoint = <&apss_funnel_in5>;
-+			out-ports {
-+				port{
-+					etm5_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in5>;
-+					};
- 				};
- 			};
- 		};
-@@ -1611,9 +1615,11 @@
- 
- 			cpu = <&CPU6>;
- 
--			port{
--				etm6_out: endpoint {
--					remote-endpoint = <&apss_funnel_in6>;
-+			out-ports {
-+				port{
-+					etm6_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in6>;
-+					};
- 				};
- 			};
- 		};
-@@ -1628,9 +1634,11 @@
- 
- 			cpu = <&CPU7>;
- 
--			port{
--				etm7_out: endpoint {
--					remote-endpoint = <&apss_funnel_in7>;
-+			out-ports {
-+				port{
-+					etm7_out: endpoint {
-+						remote-endpoint = <&apss_funnel_in7>;
-+					};
- 				};
- 			};
- 		};
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 004778faf3d0..3051fb358fdd 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -6973,6 +6973,18 @@ static const struct usb_device_id dev_table[] = {
+ 	.driver_info = (unsigned long)&rtl8192eu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x818c, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* D-Link DWA-131 rev C1 */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3312, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* TP-Link TL-WN8200ND V2 */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x0126, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* Mercusys MW300UM */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0100, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
++/* Mercusys MW300UH */
++{USB_DEVICE_AND_INTERFACE_INFO(0x2c4e, 0x0104, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192eu_fops},
+ #endif
+ { }
+ };
 -- 
 2.43.0
 
