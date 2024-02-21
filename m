@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E708B69D3B;
-	Wed, 21 Feb 2024 14:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A815C79DBF;
+	Wed, 21 Feb 2024 14:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525789; cv=none; b=rGpKoP+FPjmypIHY4AjULvksQjDNlwUA+5iQ/hMf8pBNfzi584Smegn0ejumBrhUjuG9BKDwO1U3jxg2bdidS7rG2HXPsm2t7D6zTSoFSgl4/oEMgVzWu19g8Z6SFaqdyLvcgV+MbIuB9otilhS9ceXoIRJlInEXgUxtu01QJ1w=
+	t=1708525791; cv=none; b=LdC54y1pFNIe0lExh/OFA2dZM5eGU2IDsdqpOvM6sBPCE81xeyMC7JF8To04ro8tzcBrEDzZa6QXWhPC+V8ItiGfhKOmjBRoJ8a3VtFcTewZTwRi9pHh+CeKs6g5FFvjxcIgYGXgTjVTyBNRpTCyJzS9eoPjZ30536dEofVU1RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525789; c=relaxed/simple;
-	bh=gPEy8kIXSItW9Uha/r54BTGALmVYYGr16/lM+vELGi4=;
+	s=arc-20240116; t=1708525791; c=relaxed/simple;
+	bh=P2IOd4ywgRN+1nK8iDRrg0O29GgZ8d5h18U9SS4LIvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuegoW0nSBLCzYG/WDpAD57WBSdsxrOFbBAQGbWFa8i5rMionbDFeCnHrzj/eYOa2jriYmG77sNEoVUzIEeAzuUqpkW0YIxYtoqy7hr85zFHxmdpP6P56phGoOE/LR3ajS3VPQT619CvxECv+5B78qj1hS4/r2WFVpGyr53IETk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVd3W1QP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYDxu7HIU36WGPB2Ijs/PeyyLvJrYODNeSABJmMKiI5kKutXy58eNyZaAYEMHzYC0cVr9S9TpJ/QLO/BpKXyutiquDx9TCbiiThW4z05ziS4BUdo6EdvSPuCZV5GbduvKFZ7bvgS31jGVfYBfukjHbSAVEwbGdwHJC3yMnYahcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcZiADcV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVd3W1QP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1116C433C7;
-	Wed, 21 Feb 2024 14:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcZiADcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153B3C433F1;
+	Wed, 21 Feb 2024 14:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525788;
-	bh=gPEy8kIXSItW9Uha/r54BTGALmVYYGr16/lM+vELGi4=;
+	s=korg; t=1708525791;
+	bh=P2IOd4ywgRN+1nK8iDRrg0O29GgZ8d5h18U9SS4LIvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OVd3W1QPZKpV4M2Bb7zx4oCK5L81VgYM6Ea6oacDpljvQQyjaz4M5vy46pAPalgpT
-	 gpkHcfg68DHlBaSYpeFwOcCylelPBwVA2dK3BzSYjlIBWqvzGhPj0SwzW1BRWdh0Rn
-	 GxoXRqykOBfH3sQ0sDRUNRQpgVvInyJ57BegSlP8=
+	b=jcZiADcVTOuGlppGVTon5N9Mb9s8AEZQdx3bWLPviOUNqkNeBCHd4zrprVjvNQjZn
+	 bhvdSfy61qPPB0Dy75MQMBCQ3yDCSAyZDwSX89RQ/n1Yz5c/Xv2dfRse+XunK7mvh7
+	 HVKq57+qMoYzGs6cZ9Xj0m6TtZFoZedVZh16cLUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 265/267] net: bcmgenet: Fix EEE implementation
-Date: Wed, 21 Feb 2024 14:10:06 +0100
-Message-ID: <20240221125948.557217244@linuxfoundation.org>
+	Frank Rowand <frank.rowand@sony.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 5.4 266/267] of: unittest: fix EXPECT text for gpio hog errors
+Date: Wed, 21 Feb 2024 14:10:07 +0100
+Message-ID: <20240221125948.586943869@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,142 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Frank Rowand <frank.rowand@sony.com>
 
-commit a9f31047baca57d47440c879cf259b86f900260c upstream.
+commit e85860e5bc077865a04f0a88d0b0335d3200484a upstream.
 
-We had a number of short comings:
+The console message text for gpio hog errors does not match
+what unittest expects.
 
-- EEE must be re-evaluated whenever the state machine detects a link
-  change as wight be switching from a link partner with EEE
-  enabled/disabled
-
-- tx_lpi_enabled controls whether EEE should be enabled/disabled for the
-  transmit path, which applies to the TBUF block
-
-- We do not need to forcibly enable EEE upon system resume, as the PHY
-  state machine will trigger a link event that will do that, too
-
-Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://lore.kernel.org/r/20230606214348.2408018-1-florian.fainelli@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f4056e705b2ef ("of: unittest: add overlay gpio test to catch gpio hog problem")
+Signed-off-by: Frank Rowand <frank.rowand@sony.com>
+Link: https://lore.kernel.org/r/20211029013225.2048695-1-frowand.list@gmail.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
+ drivers/of/unittest.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
----
- drivers/net/ethernet/broadcom/genet/bcmgenet.c |   22 ++++++++--------------
- drivers/net/ethernet/broadcom/genet/bcmgenet.h |    3 +++
- drivers/net/ethernet/broadcom/genet/bcmmii.c   |    6 ++++++
- 3 files changed, 17 insertions(+), 14 deletions(-)
-
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -1018,7 +1018,8 @@ static void bcmgenet_get_ethtool_stats(s
- 	}
- }
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -2258,19 +2258,19 @@ static void __init of_unittest_overlay_g
+ 	 */
  
--static void bcmgenet_eee_enable_set(struct net_device *dev, bool enable)
-+void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
-+			     bool tx_lpi_enabled)
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	u32 off = priv->hw_params->tbuf_offset + TBUF_ENERGY_CTRL;
-@@ -1038,7 +1039,7 @@ static void bcmgenet_eee_enable_set(stru
+ 	EXPECT_BEGIN(KERN_INFO,
+-		     "GPIO line <<int>> (line-B-input) hogged as input\n");
++		     "gpio-<<int>> (line-B-input): hogged as input\n");
  
- 	/* Enable EEE and switch to a 27Mhz clock automatically */
- 	reg = bcmgenet_readl(priv->base + off);
--	if (enable)
-+	if (tx_lpi_enabled)
- 		reg |= TBUF_EEE_EN | TBUF_PM_EN;
- 	else
- 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
-@@ -1059,6 +1060,7 @@ static void bcmgenet_eee_enable_set(stru
+ 	EXPECT_BEGIN(KERN_INFO,
+-		     "GPIO line <<int>> (line-A-input) hogged as input\n");
++		     "gpio-<<int>> (line-A-input): hogged as input\n");
  
- 	priv->eee.eee_enabled = enable;
- 	priv->eee.eee_active = enable;
-+	priv->eee.tx_lpi_enabled = tx_lpi_enabled;
- }
+ 	ret = platform_driver_register(&unittest_gpio_driver);
+ 	if (unittest(ret == 0, "could not register unittest gpio driver\n"))
+ 		return;
  
- static int bcmgenet_get_eee(struct net_device *dev, struct ethtool_eee *e)
-@@ -1074,6 +1076,7 @@ static int bcmgenet_get_eee(struct net_d
+ 	EXPECT_END(KERN_INFO,
+-		   "GPIO line <<int>> (line-A-input) hogged as input\n");
++		   "gpio-<<int>> (line-A-input): hogged as input\n");
+ 	EXPECT_END(KERN_INFO,
+-		   "GPIO line <<int>> (line-B-input) hogged as input\n");
++		   "gpio-<<int>> (line-B-input): hogged as input\n");
  
- 	e->eee_enabled = p->eee_enabled;
- 	e->eee_active = p->eee_active;
-+	e->tx_lpi_enabled = p->tx_lpi_enabled;
- 	e->tx_lpi_timer = bcmgenet_umac_readl(priv, UMAC_EEE_LPI_TIMER);
+ 	unittest(probe_pass_count + 2 == unittest_gpio_probe_pass_count,
+ 		 "unittest_gpio_probe() failed or not called\n");
+@@ -2297,7 +2297,7 @@ static void __init of_unittest_overlay_g
+ 	chip_request_count = unittest_gpio_chip_request_count;
  
- 	return phy_ethtool_get_eee(dev->phydev, e);
-@@ -1083,7 +1086,6 @@ static int bcmgenet_set_eee(struct net_d
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	struct ethtool_eee *p = &priv->eee;
--	int ret = 0;
+ 	EXPECT_BEGIN(KERN_INFO,
+-		     "GPIO line <<int>> (line-D-input) hogged as input\n");
++		     "gpio-<<int>> (line-D-input): hogged as input\n");
  
- 	if (GENET_IS_V1(priv))
- 		return -EOPNOTSUPP;
-@@ -1094,16 +1096,11 @@ static int bcmgenet_set_eee(struct net_d
- 	p->eee_enabled = e->eee_enabled;
+ 	/* overlay_gpio_03 contains gpio node and child gpio hog node */
  
- 	if (!p->eee_enabled) {
--		bcmgenet_eee_enable_set(dev, false);
-+		bcmgenet_eee_enable_set(dev, false, false);
- 	} else {
--		ret = phy_init_eee(dev->phydev, 0);
--		if (ret) {
--			netif_err(priv, hw, dev, "EEE initialization failed\n");
--			return ret;
--		}
--
-+		p->eee_active = phy_init_eee(dev->phydev, false) >= 0;
- 		bcmgenet_umac_writel(priv, e->tx_lpi_timer, UMAC_EEE_LPI_TIMER);
--		bcmgenet_eee_enable_set(dev, true);
-+		bcmgenet_eee_enable_set(dev, p->eee_active, e->tx_lpi_enabled);
- 	}
+@@ -2305,7 +2305,7 @@ static void __init of_unittest_overlay_g
+ 		 "Adding overlay 'overlay_gpio_03' failed\n");
  
- 	return phy_ethtool_set_eee(dev->phydev, e);
-@@ -3688,9 +3685,6 @@ static int bcmgenet_resume(struct device
- 	if (!device_may_wakeup(d))
- 		phy_resume(dev->phydev);
+ 	EXPECT_END(KERN_INFO,
+-		   "GPIO line <<int>> (line-D-input) hogged as input\n");
++		   "gpio-<<int>> (line-D-input): hogged as input\n");
  
--	if (priv->eee.eee_enabled)
--		bcmgenet_eee_enable_set(dev, true);
--
- 	bcmgenet_netif_start(dev);
+ 	unittest(probe_pass_count + 1 == unittest_gpio_probe_pass_count,
+ 		 "unittest_gpio_probe() failed or not called\n");
+@@ -2344,7 +2344,7 @@ static void __init of_unittest_overlay_g
+ 	 */
  
- 	netif_device_attach(dev);
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
-@@ -736,4 +736,7 @@ int bcmgenet_wol_power_down_cfg(struct b
- void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
- 			       enum bcmgenet_power_mode mode);
+ 	EXPECT_BEGIN(KERN_INFO,
+-		     "GPIO line <<int>> (line-C-input) hogged as input\n");
++		     "gpio-<<int>> (line-C-input): hogged as input\n");
  
-+void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
-+			     bool tx_lpi_enabled);
-+
- #endif /* __BCMGENET_H__ */
---- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
-@@ -25,6 +25,7 @@
+ 	/* overlay_gpio_04b contains child gpio hog node */
  
- #include "bcmgenet.h"
+@@ -2352,7 +2352,7 @@ static void __init of_unittest_overlay_g
+ 		 "Adding overlay 'overlay_gpio_04b' failed\n");
  
-+
- /* setup netdev link state when PHY link status change and
-  * update UMAC and RGMII block when link up
-  */
-@@ -96,6 +97,11 @@ void bcmgenet_mii_setup(struct net_devic
- 			       CMD_RX_PAUSE_IGNORE | CMD_TX_PAUSE_IGNORE);
- 		reg |= cmd_bits;
- 		bcmgenet_umac_writel(priv, reg, UMAC_CMD);
-+
-+		priv->eee.eee_active = phy_init_eee(phydev, 0) >= 0;
-+		bcmgenet_eee_enable_set(dev,
-+					priv->eee.eee_enabled && priv->eee.eee_active,
-+					priv->eee.tx_lpi_enabled);
- 	} else {
- 		/* done if nothing has changed */
- 		if (!status_changed)
+ 	EXPECT_END(KERN_INFO,
+-		   "GPIO line <<int>> (line-C-input) hogged as input\n");
++		   "gpio-<<int>> (line-C-input): hogged as input\n");
+ 
+ 	unittest(chip_request_count + 1 == unittest_gpio_chip_request_count,
+ 		 "unittest_gpio_chip_request() called %d times (expected 1 time)\n",
 
 
