@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A8C7C093;
-	Wed, 21 Feb 2024 14:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68FB7BB11;
+	Wed, 21 Feb 2024 14:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524060; cv=none; b=QSqVaa/LsYFUdFrjleTGctSGJNt+ZJZC0KH1SyZ9mshjrpA/2210GCHfc4q5/cOHgsy9+ax/XeNpGVNjuQ5j9NXbfWhwh0IdGtZqj+jcMbS20zCJq/LuvQZVNOhsZ3CmtLNslcQSxv1jlmyB/w6jDd233XDbCVoBu7H6OgckA+Q=
+	t=1708524063; cv=none; b=bQSZRrC5pkhBhs1flcN/YjCimg+1BO+buhCVKIwulCnmWKUxQlzirvMfia+JkFIJSKTew95ZyoWvAAaeb/p05FHSN5OtIdqiqaxV35f7MUBS4tHk+CmbRZ3bm2AIlUszVi5eswrh78JQmYhFK9C8TLRhq5SOLk3P1P/rE61apU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524060; c=relaxed/simple;
-	bh=NOse1hTjIMnTmoyWWy+R1kEKPP8yyWFGFfrd22HqYHw=;
+	s=arc-20240116; t=1708524063; c=relaxed/simple;
+	bh=m4PgwttbP2EcaqAC7g0h+XAggC85EKCdXin4antPkLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSDXfqTlvqLjnvYmHceFH0SxqaQIukqPrwzL51ENhEOLDJOSdCG6lt/rkZ4uXZMWNDjW7/3Gc65pN22rzCFmdBFfEKZL4qQLCSjH4L8lg7vkPMvZNBSYqBA9nce44Z8pVzG6VyHww3n8YUtCIDXnl/WnLoD7UDFIcgAI0Fz6g1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k82lYuWH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jirpR13XfSZSBm3Q0ul/Qdtkz5v+Cncr9T7MGhOzJTxKuymSHzPs55gTHg8DY9upredkOnpgfNxQqSqnj1x/n3q12ALo3Un9HDxGgy55wkourOygRcPaan6xg4IayS8eXxb40sKd7ZpopudW1S0FFG07Dtu9oXGX++Ki+gJcH7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rU8EuASC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k82lYuWH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DD5C433F1;
-	Wed, 21 Feb 2024 14:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rU8EuASC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8A8C433F1;
+	Wed, 21 Feb 2024 14:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524060;
-	bh=NOse1hTjIMnTmoyWWy+R1kEKPP8yyWFGFfrd22HqYHw=;
+	s=korg; t=1708524063;
+	bh=m4PgwttbP2EcaqAC7g0h+XAggC85EKCdXin4antPkLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k82lYuWHfU2ntmEKDRqxQuiDb090D5Yc1+TrbR4WIr/HRpw8S3MUMekiCupYq1yfe
-	 v9wXvWBdIvo7cMfvxaZvUVgkQve3qR8K4Tk6O190OSj6L5Lo6Ipv8/p+YocC5LT90c
-	 todrNhB3ius6ZUK1Gc5ZRt3z/k+tvKb+UuWwVHXQ=
+	b=rU8EuASCb8t7GsJqGelN2Y6+N8RY1BtCvTy5NoJhq8w7AV3ug1BM5D7hvq2y00Gi2
+	 FDKaJ45a8+mBn7HikwhtmEeaScI7axfAah48CUdQTfNabe/BQmQ5FH9htFGrru8y3J
+	 YJR4zByPeJCz50IdJMorjO4ERzm/S6P7E9Sp4nUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 134/379] ext4: unify the type of flexbg_size to unsigned int
-Date: Wed, 21 Feb 2024 14:05:13 +0100
-Message-ID: <20240221125958.895202773@linuxfoundation.org>
+Subject: [PATCH 5.10 135/379] ext4: remove unnecessary check from alloc_flex_gd()
+Date: Wed, 21 Feb 2024 14:05:14 +0100
+Message-ID: <20240221125958.924199082@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -54,85 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 658a52344fb139f9531e7543a6e0015b630feb38 ]
+[ Upstream commit b099eb87de105cf07cad731ded6fb40b2675108b ]
 
-The maximum value of flexbg_size is 2^31, but the maximum value of int
-is (2^31 - 1), so overflow may occur when the type of flexbg_size is
-declared as int.
-
-For example, when uninit_mask is initialized in ext4_alloc_group_tables(),
-if flexbg_size == 2^31, the initialized uninit_mask is incorrect, and this
-may causes set_flexbg_block_bitmap() to trigger a BUG_ON().
-
-Therefore, the flexbg_size type is declared as unsigned int to avoid
-overflow and memory waste.
+In commit 967ac8af4475 ("ext4: fix potential integer overflow in
+alloc_flex_gd()"), an overflow check is added to alloc_flex_gd() to
+prevent the allocated memory from being smaller than expected due to
+the overflow. However, after kmalloc() is replaced with kmalloc_array()
+in commit 6da2ec56059c ("treewide: kmalloc() -> kmalloc_array()"), the
+kmalloc_array() function has an overflow check, so the above problem
+will not occur. Therefore, the extra check is removed.
 
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231023013057.2117948-2-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20231023013057.2117948-3-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/resize.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ fs/ext4/resize.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
-index 9b4199a1e039..96d278688fd7 100644
+index 96d278688fd7..66ce3d118203 100644
 --- a/fs/ext4/resize.c
 +++ b/fs/ext4/resize.c
-@@ -237,7 +237,7 @@ struct ext4_new_flex_group_data {
-  *
-  * Returns NULL on failure otherwise address of the allocated structure.
-  */
--static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned long flexbg_size)
-+static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
- {
- 	struct ext4_new_flex_group_data *flex_gd;
+@@ -245,10 +245,7 @@ static struct ext4_new_flex_group_data *alloc_flex_gd(unsigned int flexbg_size)
+ 	if (flex_gd == NULL)
+ 		goto out3;
  
-@@ -292,7 +292,7 @@ static void free_flex_gd(struct ext4_new_flex_group_data *flex_gd)
-  */
- static int ext4_alloc_group_tables(struct super_block *sb,
- 				struct ext4_new_flex_group_data *flex_gd,
--				int flexbg_size)
-+				unsigned int flexbg_size)
- {
- 	struct ext4_new_group_data *group_data = flex_gd->groups;
- 	ext4_fsblk_t start_blk;
-@@ -393,12 +393,12 @@ static int ext4_alloc_group_tables(struct super_block *sb,
- 		group = group_data[0].group;
- 
- 		printk(KERN_DEBUG "EXT4-fs: adding a flex group with "
--		       "%d groups, flexbg size is %d:\n", flex_gd->count,
-+		       "%u groups, flexbg size is %u:\n", flex_gd->count,
- 		       flexbg_size);
- 
- 		for (i = 0; i < flex_gd->count; i++) {
- 			ext4_debug(
--			       "adding %s group %u: %u blocks (%d free, %d mdata blocks)\n",
-+			       "adding %s group %u: %u blocks (%u free, %u mdata blocks)\n",
- 			       ext4_bg_has_super(sb, group + i) ? "normal" :
- 			       "no-super", group + i,
- 			       group_data[i].blocks_count,
-@@ -1563,7 +1563,7 @@ static int ext4_flex_group_add(struct super_block *sb,
- static int ext4_setup_next_flex_gd(struct super_block *sb,
- 				    struct ext4_new_flex_group_data *flex_gd,
- 				    ext4_fsblk_t n_blocks_count,
--				    unsigned long flexbg_size)
-+				    unsigned int flexbg_size)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	struct ext4_super_block *es = sbi->s_es;
-@@ -1941,8 +1941,9 @@ int ext4_resize_fs(struct super_block *sb, ext4_fsblk_t n_blocks_count)
- 	ext4_fsblk_t o_blocks_count;
- 	ext4_fsblk_t n_blocks_count_retry = 0;
- 	unsigned long last_update_time = 0;
--	int err = 0, flexbg_size = 1 << sbi->s_log_groups_per_flex;
-+	int err = 0;
- 	int meta_bg;
-+	unsigned int flexbg_size = ext4_flex_bg_size(sbi);
- 
- 	/* See if the device is actually as big as what was requested */
- 	bh = ext4_sb_bread(sb, n_blocks_count - 1, 0);
+-	if (flexbg_size >= UINT_MAX / sizeof(struct ext4_new_group_data))
+-		goto out2;
+ 	flex_gd->count = flexbg_size;
+-
+ 	flex_gd->groups = kmalloc_array(flexbg_size,
+ 					sizeof(struct ext4_new_group_data),
+ 					GFP_NOFS);
 -- 
 2.43.0
 
