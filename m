@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE5E3B287;
-	Wed, 21 Feb 2024 14:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220237CF29;
+	Wed, 21 Feb 2024 14:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525592; cv=none; b=EuKsfkuzksB4pCAl/t5R0A+NoeMG7WNWHRaRu9mmodWQOywiyr4rxT6npaf7BR/MCaaLALR2HNA2/USPaIcBDZ5XC2AFot8j3q69SSxl5eYHwkVpFfzSR+y0T/pUQgPmh3akhYGX/UVAYPKOir9822l+zM+Giv6ZU2FsePxz0mg=
+	t=1708525594; cv=none; b=LLjKwQ7O3VecclqvALNnRkRLHA3vQjAbQmpyJAPiLQsQYZHwwEa0AOl1gOvHwbpn90UDvnpsv2r+Ay0vJF3XA8x7Z3yjaspAoAMUQ6ZRROliyXWlD5A5YnN8i/YvbC6QmY4ParLoJYyBF5Vi6hhVejtVMuGK948aIp77sOCh6yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525592; c=relaxed/simple;
-	bh=vmuWrMUXIcSedqu8ZVhX9pH79NHXUEsUAymcmywGJvM=;
+	s=arc-20240116; t=1708525594; c=relaxed/simple;
+	bh=ZCw6iP9BqPRwv4lVOv9Yy74fN6R9n7jV4pNV4cT0VkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsnhMAbBTfvINIB90uSQru20lG7oBs6xQp3LRH3bx5qmPP9P2zC1jmxZH17Cc9PiVrxO50bZuYTJk7dXrm87NnSZfqbhmSXJT7maNgKRaRmW9LPmlv2ETJQddH1jLzg0daQ5xEEDZGHc47DojSRpbbucq9ojFJk7LKWnS7zDRgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+ZDNsyz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IZnlNFGvgK+R1F40H8nu4RDm9xTHFaTOApXZCsGw8KwUXUFNvcMdWtezz0YNADGVfTkRgBm8EsOfoLPx7PGobSN1NCdSttYnAOPI4ovLAcuyVj4a4jBeWot8JBMgsEye4wUZsNLWAQytl8Wp6oW7OamRpZcg6XyZ6dfOTNdgnsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNla3Iq5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+ZDNsyz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77181C433F1;
-	Wed, 21 Feb 2024 14:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNla3Iq5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BADC43394;
+	Wed, 21 Feb 2024 14:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525591;
-	bh=vmuWrMUXIcSedqu8ZVhX9pH79NHXUEsUAymcmywGJvM=;
+	s=korg; t=1708525594;
+	bh=ZCw6iP9BqPRwv4lVOv9Yy74fN6R9n7jV4pNV4cT0VkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+ZDNsyz1bR2hRX/tmLWSsdxC0BvJZH/oMADlm9sGPfskbNdQ9bNIygEbPdPVJFNI
-	 JdwjKnZyZ2unW0T9UY0nzl17ZccKD6DiQ7cumMHcqS3lr1Z5mqWJiom7V5yQYYlVbO
-	 U7KqkNLTsPPEsaKxqkshjW1hg/KHBaiYZS9zYp70=
+	b=eNla3Iq5bQ7xvd5b6lpySuNvT9Lwqlj+esKzvl8n2HJo0mxof/yeX4e15fSnUjC3+
+	 Qf1UYTp1Vwe0M+82Mq0eE9iPGIbEzjTylZzzLuPkyVnxH8u2fKndTDjfFOX6pmA/e/
+	 zV1m+bEuSQDB3RFZlxzT9HUyQ9b58KrL81cz7MQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Wiedmann <jwi@linux.ibm.com>,
-	Karsten Graul <kgraul@linux.ibm.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 194/267] net/af_iucv: clean up a try_then_request_module()
-Date: Wed, 21 Feb 2024 14:08:55 +0100
-Message-ID: <20240221125946.228634831@linuxfoundation.org>
+	lonial con <kongln9170@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.4 203/267] netfilter: nft_set_rbtree: skip end interval element from gc
+Date: Wed, 21 Feb 2024 14:09:04 +0100
+Message-ID: <20240221125946.544872153@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,72 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Wiedmann <jwi@linux.ibm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 4eb9eda6ba64114d98827e2870e024d5ab7cd35b ]
+commit 60c0c230c6f046da536d3df8b39a20b9a9fd6af0 upstream.
 
-Use IS_ENABLED(CONFIG_IUCV) to determine whether the iucv_if symbol
-is available, and let depmod deal with the module dependency.
+rbtree lazy gc on insert might collect an end interval element that has
+been just added in this transactions, skip end interval elements that
+are not yet active.
 
-This was introduced back with commit 6fcd61f7bf5d ("af_iucv: use
-loadable iucv interface"). And to avoid sprinkling IS_ENABLED() over
-all the code, we're keeping the indirection through pr_iucv->...().
-
-Signed-off-by: Julian Wiedmann <jwi@linux.ibm.com>
-Signed-off-by: Karsten Graul <kgraul@linux.ibm.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f718863aca46 ("netfilter: nft_set_rbtree: fix overlap expiration walk")
+Cc: stable@vger.kernel.org
+Reported-by: lonial con <kongln9170@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/af_iucv.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ net/netfilter/nft_set_rbtree.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index bbc1924d64e5..652285191da1 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -2455,7 +2455,7 @@ static int __init afiucv_init(void)
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -237,8 +237,7 @@ static void nft_rbtree_gc_remove(struct
+ 
+ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 			      struct nft_rbtree *priv,
+-			      struct nft_rbtree_elem *rbe,
+-			      u8 genmask)
++			      struct nft_rbtree_elem *rbe)
  {
- 	int err;
+ 	struct nft_set *set = (struct nft_set *)__set;
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+@@ -257,7 +256,7 @@ static int nft_rbtree_gc_elem(const stru
+ 	while (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+ 		if (nft_rbtree_interval_end(rbe_prev) &&
+-		    nft_set_elem_active(&rbe_prev->ext, genmask))
++		    nft_set_elem_active(&rbe_prev->ext, NFT_GENMASK_ANY))
+ 			break;
  
--	if (MACHINE_IS_VM) {
-+	if (MACHINE_IS_VM && IS_ENABLED(CONFIG_IUCV)) {
- 		cpcmd("QUERY USERID", iucv_userid, sizeof(iucv_userid), &err);
- 		if (unlikely(err)) {
- 			WARN_ON(err);
-@@ -2463,11 +2463,7 @@ static int __init afiucv_init(void)
- 			goto out;
- 		}
+ 		prev = rb_prev(prev);
+@@ -365,7 +364,7 @@ static int __nft_rbtree_insert(const str
+ 		 */
+ 		if (nft_set_elem_expired(&rbe->ext) &&
+ 		    nft_set_elem_active(&rbe->ext, cur_genmask)) {
+-			err = nft_rbtree_gc_elem(set, priv, rbe, genmask);
++			err = nft_rbtree_gc_elem(set, priv, rbe);
+ 			if (err < 0)
+ 				return err;
  
--		pr_iucv = try_then_request_module(symbol_get(iucv_if), "iucv");
--		if (!pr_iucv) {
--			printk(KERN_WARNING "iucv_if lookup failed\n");
--			memset(&iucv_userid, 0, sizeof(iucv_userid));
--		}
-+		pr_iucv = &iucv_if;
- 	} else {
- 		memset(&iucv_userid, 0, sizeof(iucv_userid));
- 		pr_iucv = NULL;
-@@ -2501,17 +2497,13 @@ static int __init afiucv_init(void)
- out_proto:
- 	proto_unregister(&iucv_proto);
- out:
--	if (pr_iucv)
--		symbol_put(iucv_if);
- 	return err;
- }
- 
- static void __exit afiucv_exit(void)
- {
--	if (pr_iucv) {
-+	if (pr_iucv)
- 		afiucv_iucv_exit();
--		symbol_put(iucv_if);
--	}
- 
- 	unregister_netdevice_notifier(&afiucv_netdev_notifier);
- 	dev_remove_pack(&iucv_packet_type);
--- 
-2.43.0
-
 
 
