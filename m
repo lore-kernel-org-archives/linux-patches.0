@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CA63EA71;
-	Wed, 21 Feb 2024 13:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6183EA71;
+	Wed, 21 Feb 2024 13:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521154; cv=none; b=X3xrHEZDfVkff7WWk5X9ggQ7IDH5eBjk7AgGLTzhwhBglmrYWvKsS3KkR/mA3uuN2TQ+Pfe8NZ7vlzLvsOJZMZJ5/jNJm4S+t9Lo6VmzUzK2Rj0uKps+zcA2Z0j5FrYk9lJkAOZeh8FtFlFabzqi7QBmPm1j/eplNlbc1YAlqj8=
+	t=1708521157; cv=none; b=bXzTYhMuCx3FxFUVqbKGijVv+5JPXrqMgf2LztT2kk8xkmLBh9K9APrvvTKfwekIzLiOsN8G+zw/h/bqLOkMkmuUo6YhcwBN+312Vs+NBaddQJaMDuOGjRVHmvQrwwERpMTW7nRz2U0I1rd8VbQbOL7mQlN+ga9R3lWewhqLcQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521154; c=relaxed/simple;
-	bh=seQsWcEqfHz5ZJ6TSOOCCTpEs7C29ETyoSDGpnZBYGA=;
+	s=arc-20240116; t=1708521157; c=relaxed/simple;
+	bh=UZqmsvAgn3CLj1Pi8WN2pWatDzZc3e41wD86qsJS33E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAls8v5dMpXkm0IDuVhdXFbESZFl96lRl+ZV8h6KlBh+x6XoUbb+juDTzPNB8FYgexF45C8N1bJvQXwbWZsjL+ehB3Qw/MKSlcvJTnO99f1OvYSvMvGTv/MShGHLDrLhCp2ay1UqQzNDZe0DiZ/j1afCyTRtU7Zie3j5IYJs04I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWHnJSep; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=roo7EF2mdZOaqAECF8prCvU/pwcngxTjkirI1OOeFBrS7183/dONo0Lw2cILHk0Mdk8b41+f8LiahVTsrR8XsIfzBm/rKHcgn2IVhUaRhl5qKgZY3HjvpJjszrgUigQoe05Uz4KS9xukySFjHtPsKboproAQZxhFlWCVjbtC2/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GW2vADf4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWHnJSep"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F42C433F1;
-	Wed, 21 Feb 2024 13:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GW2vADf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210DCC433F1;
+	Wed, 21 Feb 2024 13:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521154;
-	bh=seQsWcEqfHz5ZJ6TSOOCCTpEs7C29ETyoSDGpnZBYGA=;
+	s=korg; t=1708521157;
+	bh=UZqmsvAgn3CLj1Pi8WN2pWatDzZc3e41wD86qsJS33E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWHnJSepY3J8BMlZKpC7lmDr1RQBdI4VAig8Ub/PIO+XG1XWpJuF3bjgEqR+UH3se
-	 isqUA305vNZ9OjX450MmC9/eax/0xIpU3CR9FGRwNPPYKwzYUKaczQNtswi+kvNCPm
-	 N2kDSdGCKURqv0VbOaQt7l4N5H4nXBGQ6sBo8J28=
+	b=GW2vADf4ITpWBRWinpgqdW3JAHJG2s13lPGMrY0mYNpBFotofvQkyxGYYYWeMA+4L
+	 aRGXJXTWk+kvr7T5DCG86rmQuBeeSjilHhqNvcz3ouYsNITb12FNmOPUh/Xs7/NdMO
+	 wZoDOnvwB04Tq7Y2e4nVtghM5fVS5Vb6cj3yUEkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 035/202] fjes: fix memleaks in fjes_hw_setup
-Date: Wed, 21 Feb 2024 14:05:36 +0100
-Message-ID: <20240221125932.926203508@linuxfoundation.org>
+Subject: [PATCH 4.19 036/202] net: fec: fix the unhandled context fault from smmu
+Date: Wed, 21 Feb 2024 14:05:37 +0100
+Message-ID: <20240221125932.959786956@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -52,109 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit f6cc4b6a3ae53df425771000e9c9540cce9b7bb1 ]
+[ Upstream commit 5e344807735023cd3a67c37a1852b849caa42620 ]
 
-In fjes_hw_setup, it allocates several memory and delay the deallocation
-to the fjes_hw_exit in fjes_probe through the following call chain:
+When repeatedly changing the interface link speed using the command below:
 
-fjes_probe
-  |-> fjes_hw_init
-        |-> fjes_hw_setup
-  |-> fjes_hw_exit
+ethtool -s eth0 speed 100 duplex full
+ethtool -s eth0 speed 1000 duplex full
 
-However, when fjes_hw_setup fails, fjes_hw_exit won't be called and thus
-all the resources allocated in fjes_hw_setup will be leaked. In this
-patch, we free those resources in fjes_hw_setup and prevents such leaks.
+The following errors may sometimes be reported by the ARM SMMU driver:
 
-Fixes: 2fcbca687702 ("fjes: platform_driver's .probe and .remove routine")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240122172445.3841883-1-alexious@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ 5395.035364] fec 5b040000.ethernet eth0: Link is Down
+[ 5395.039255] arm-smmu 51400000.iommu: Unhandled context fault:
+fsr=0x402, iova=0x00000000, fsynr=0x100001, cbfrsynra=0x852, cb=2
+[ 5398.108460] fec 5b040000.ethernet eth0: Link is Up - 100Mbps/Full -
+flow control off
+
+It is identified that the FEC driver does not properly stop the TX queue
+during the link speed transitions, and this results in the invalid virtual
+I/O address translations from the SMMU and causes the context faults.
+
+Fixes: dbc64a8ea231 ("net: fec: move calls to quiesce/resume packet processing out of fec_restart()")
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://lore.kernel.org/r/20240123165141.2008104-1-shenwei.wang@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/fjes/fjes_hw.c | 37 ++++++++++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/fjes/fjes_hw.c b/drivers/net/fjes/fjes_hw.c
-index 9c652c04375b..c3fa8db69b9e 100644
---- a/drivers/net/fjes/fjes_hw.c
-+++ b/drivers/net/fjes/fjes_hw.c
-@@ -235,21 +235,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1798,6 +1798,7 @@ static void fec_enet_adjust_link(struct
  
- 	mem_size = FJES_DEV_REQ_BUF_SIZE(hw->max_epid);
- 	hw->hw_info.req_buf = kzalloc(mem_size, GFP_KERNEL);
--	if (!(hw->hw_info.req_buf))
--		return -ENOMEM;
-+	if (!(hw->hw_info.req_buf)) {
-+		result = -ENOMEM;
-+		goto free_ep_info;
-+	}
- 
- 	hw->hw_info.req_buf_size = mem_size;
- 
- 	mem_size = FJES_DEV_RES_BUF_SIZE(hw->max_epid);
- 	hw->hw_info.res_buf = kzalloc(mem_size, GFP_KERNEL);
--	if (!(hw->hw_info.res_buf))
--		return -ENOMEM;
-+	if (!(hw->hw_info.res_buf)) {
-+		result = -ENOMEM;
-+		goto free_req_buf;
-+	}
- 
- 	hw->hw_info.res_buf_size = mem_size;
- 
- 	result = fjes_hw_alloc_shared_status_region(hw);
- 	if (result)
--		return result;
-+		goto free_res_buf;
- 
- 	hw->hw_info.buffer_share_bit = 0;
- 	hw->hw_info.buffer_unshare_reserve_bit = 0;
-@@ -260,11 +264,11 @@ static int fjes_hw_setup(struct fjes_hw *hw)
- 
- 			result = fjes_hw_alloc_epbuf(&buf_pair->tx);
- 			if (result)
--				return result;
-+				goto free_epbuf;
- 
- 			result = fjes_hw_alloc_epbuf(&buf_pair->rx);
- 			if (result)
--				return result;
-+				goto free_epbuf;
- 
- 			spin_lock_irqsave(&hw->rx_status_lock, flags);
- 			fjes_hw_setup_epbuf(&buf_pair->tx, mac,
-@@ -287,6 +291,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
- 	fjes_hw_init_command_registers(hw, &param);
- 
- 	return 0;
-+
-+free_epbuf:
-+	for (epidx = 0; epidx < hw->max_epid ; epidx++) {
-+		if (epidx == hw->my_epid)
-+			continue;
-+		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].tx);
-+		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].rx);
-+	}
-+	fjes_hw_free_shared_status_region(hw);
-+free_res_buf:
-+	kfree(hw->hw_info.res_buf);
-+	hw->hw_info.res_buf = NULL;
-+free_req_buf:
-+	kfree(hw->hw_info.req_buf);
-+	hw->hw_info.req_buf = NULL;
-+free_ep_info:
-+	kfree(hw->ep_shm_info);
-+	hw->ep_shm_info = NULL;
-+	return result;
- }
- 
- static void fjes_hw_cleanup(struct fjes_hw *hw)
--- 
-2.43.0
-
+ 		/* if any of the above changed restart the FEC */
+ 		if (status_change) {
++			netif_stop_queue(ndev);
+ 			napi_disable(&fep->napi);
+ 			netif_tx_lock_bh(ndev);
+ 			fec_restart(ndev);
+@@ -1807,6 +1808,7 @@ static void fec_enet_adjust_link(struct
+ 		}
+ 	} else {
+ 		if (fep->link) {
++			netif_stop_queue(ndev);
+ 			napi_disable(&fep->napi);
+ 			netif_tx_lock_bh(ndev);
+ 			fec_stop(ndev);
 
 
