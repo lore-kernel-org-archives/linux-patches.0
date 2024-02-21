@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A058678B4F;
-	Wed, 21 Feb 2024 14:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C518E78B4F;
+	Wed, 21 Feb 2024 14:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524054; cv=none; b=Ju8Tz7cOxixzPCv9gSu8QTNfD17qh1VxotMtB4EMaBOlrjDN/FK2Ij0F1t0JBfkk5Hf37uZ57+0wR1sCn0p7RhkwewmrH78zl6D7kUXOnyvDJN73RigvR8nNdKWQH94lGS/YrDqVj+LsPkYvixXyOoDeyfrZ75udI7o2HbyfLqY=
+	t=1708524057; cv=none; b=kkBUrn41XN3Bze5PewnLtDsBLNlPosUVLjyN4zKpEdjFvZzbkoYGeHMTLtGcOB9m1ta1dZUwu1c4uEdKw4wb+wGZD9rXn8dcitCVQrZDz0hnilnIo66DFBmYr4oNwR0+f/PVzSZA/1a11e9cOgQl3Tp4qBClJiVonSwKdlwwl0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524054; c=relaxed/simple;
-	bh=vMQTxP+PvTjCTSh0Rmk0XUCR8CG9NB2OL8c7L1ORA/M=;
+	s=arc-20240116; t=1708524057; c=relaxed/simple;
+	bh=TiXYV5ts68jvB++gM6IhH0XdmSDe4kQNKq18+kb/wcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esP7zAPVD19u348QsoFjKzZzkco1zQEr6eh9aL9uC3lQExVRrLZZE2uYhRtWIcShzetGzalV5gpjQdtmkvP4mrcNevv4tMxoss228Bvtp3MOLoqugXOlO27+IwKDPN+mXKsOycO+Xv+HA1ENEogYjft37c6UrU7g3eKYgb6ZXxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6TmhV7R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQBXYLSfnMYseoEoUj+Nkn4CAdj48UwwnN3y9XFAKqARGP/WZ1ca4dR12yNZO5JqOCANKtNXq9TJPHzs7MJO5EmmEyRBrM9YRGKkca4XfsvB2La+T3KJkQjgd2pfccOO+fYjUdQeNM3dBeUaChvGRHy/YpgJHLwa016D2/neKy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGyf11j+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6TmhV7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E9C0C433C7;
-	Wed, 21 Feb 2024 14:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGyf11j+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B94C433F1;
+	Wed, 21 Feb 2024 14:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524054;
-	bh=vMQTxP+PvTjCTSh0Rmk0XUCR8CG9NB2OL8c7L1ORA/M=;
+	s=korg; t=1708524057;
+	bh=TiXYV5ts68jvB++gM6IhH0XdmSDe4kQNKq18+kb/wcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6TmhV7RZ5y4Wk0RwkYmHru4u5iAJP1jen8jhU35aGu0w+TFl7cnZaWKLDDb+FQBw
-	 vzGUs+w6t6bP4WdxVlbIauOQsF2y1Xp7pzqZyO5fMQ0mZ51x7TyBtaa3oPXfztkOmT
-	 atfVIMcbEBE9WF0nu7w2eaA+uSB2MBfKFpjRtEo8=
+	b=FGyf11j+i8v0W7EzqXGaFTLwc9dbq/pxH7JX98iV8BjAtGY8xXiOWSUyhJiJQSMyi
+	 qLJsdt1fAHo5UveNHWZ+mEZswMD9x4sdNzRnaTeCFNdgZAngCtMsTkQsvMdkgUSVDt
+	 3YujHNOi58P6JgvBj7RdCp8fXtvZCSXrhQFqI6vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 124/379] crypto: stm32/crc32 - fix parsing list of devices
-Date: Wed, 21 Feb 2024 14:05:03 +0100
-Message-ID: <20240221125958.596683910@linuxfoundation.org>
+Subject: [PATCH 5.10 133/379] ext4: fix inconsistent between segment fstrim and full fstrim
+Date: Wed, 21 Feb 2024 14:05:12 +0100
+Message-ID: <20240221125958.860438793@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,44 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 0eaef675b94c746900dcea7f6c41b9a103ed5d53 ]
+[ Upstream commit 68da4c44b994aea797eb9821acb3a4a36015293e ]
 
-smatch warnings:
-drivers/crypto/stm32/stm32-crc32.c:108 stm32_crc_get_next_crc() warn:
-can 'crc' even be NULL?
+Suppose we issue two FITRIM ioctls for ranges [0,15] and [16,31] with
+mininum length of trimmed range set to 8 blocks. If we have say a range of
+blocks 10-22 free, this range will not be trimmed because it straddles the
+boundary of the two FITRIM ranges and neither part is big enough. This is a
+bit surprising to some users that call FITRIM on smaller ranges of blocks
+to limit impact on the system. Also XFS trims all free space extents that
+overlap with the specified range so we are inconsistent among filesystems.
+Let's change ext4_try_to_trim_range() to consider for trimming the whole
+free space extent that straddles the end of specified range, not just the
+part of it within the range.
 
-Use list_first_entry_or_null instead of list_first_entry to retrieve
-the first device registered.
-The function list_first_entry always return a non NULL pointer even if
-the list is empty. Hence checking if the pointer returned is NULL does
-not tell if the list is empty or not.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
-Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231216010919.1995851-1-yebin10@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/stm32/stm32-crc32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/stm32/stm32-crc32.c b/drivers/crypto/stm32/stm32-crc32.c
-index 90a920e7f664..c439be1650c8 100644
---- a/drivers/crypto/stm32/stm32-crc32.c
-+++ b/drivers/crypto/stm32/stm32-crc32.c
-@@ -104,7 +104,7 @@ static struct stm32_crc *stm32_crc_get_next_crc(void)
- 	struct stm32_crc *crc;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 39d03e0ef78b..9bec75847b85 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5916,13 +5916,15 @@ static int ext4_try_to_trim_range(struct super_block *sb,
+ 		struct ext4_buddy *e4b, ext4_grpblk_t start,
+ 		ext4_grpblk_t max, ext4_grpblk_t minblocks)
+ {
+-	ext4_grpblk_t next, count, free_count;
++	ext4_grpblk_t next, count, free_count, last, origin_start;
+ 	bool set_trimmed = false;
+ 	void *bitmap;
  
- 	spin_lock_bh(&crc_list.lock);
--	crc = list_first_entry(&crc_list.dev_list, struct stm32_crc, list);
-+	crc = list_first_entry_or_null(&crc_list.dev_list, struct stm32_crc, list);
- 	if (crc)
- 		list_move_tail(&crc->list, &crc_list.dev_list);
- 	spin_unlock_bh(&crc_list.lock);
++	last = ext4_last_grp_cluster(sb, e4b->bd_group);
+ 	bitmap = e4b->bd_bitmap;
+-	if (start == 0 && max >= ext4_last_grp_cluster(sb, e4b->bd_group))
++	if (start == 0 && max >= last)
+ 		set_trimmed = true;
++	origin_start = start;
+ 	start = max(e4b->bd_info->bb_first_free, start);
+ 	count = 0;
+ 	free_count = 0;
+@@ -5931,7 +5933,10 @@ static int ext4_try_to_trim_range(struct super_block *sb,
+ 		start = mb_find_next_zero_bit(bitmap, max + 1, start);
+ 		if (start > max)
+ 			break;
+-		next = mb_find_next_bit(bitmap, max + 1, start);
++
++		next = mb_find_next_bit(bitmap, last + 1, start);
++		if (origin_start == 0 && next >= last)
++			set_trimmed = true;
+ 
+ 		if ((next - start) >= minblocks) {
+ 			int ret = ext4_trim_extent(sb, start, next - start, e4b);
 -- 
 2.43.0
 
