@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B257B69D2E;
-	Wed, 21 Feb 2024 13:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B08469318;
+	Wed, 21 Feb 2024 13:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522061; cv=none; b=jNb5yCrAhEWn3Zs53RxGcqtKFVN4mHkqDtLDyi7hWnnFwYY/A4PuACn1ocQSFxVGtDtTQLW/ebJ8bMxy0rNAfGsZAwgnvUeTX1gdf7oaPNTDOplrSIrKYjGefieHuXZbclyXfuQNrpV2Gl48p8BNtCc1FxM20Yo+5yrnq8t5UcM=
+	t=1708522065; cv=none; b=i0EQKKDvc0fqEi0M0rlnR+WecX5uTn5jG5jeLoucOODPrbs79mvirxMWjYZDZCfEdhC6x+i1pUg7OMkIezZKAPbOn3fhE4eWWKHgyexODaiZMvyeQhdI1QDMk/U+iYVTEoXYGbO5XLaJ8RUeP52dqyN8m4nDY3Vba+ZCjpV0QFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522061; c=relaxed/simple;
-	bh=IHip1eT6vN6lDM7GyW4Bwb4QbwOlUXGwoxJGXYX+2Cg=;
+	s=arc-20240116; t=1708522065; c=relaxed/simple;
+	bh=JFeZMby3k2WVXiBlSW3ZbM1KTyFMwvxDT+O7zWSgpBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YHVhr77YBNF2oM2JBoSG6L7Gcadpv4lEUbL8Wkr0yPwx0Aagjfq+m+urpjGcOiObY/Qtg+L5EDZaUpBFOcI0w0H3Th0L3zvtDQ63GolS7OtTQbsU0ndVD/8XWfXzs+UqyJidqCdwbqpEB9VvkjuSEN4/VYut8ykuNOEbIdbTGmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHHISgB/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OFlRb+2pagZrXLOIZPZoy4Wj5g7TcP1z2PA5DELIc8vuNH3+B+cXsvqjYFM2TEctXx1wwFllo+3VUA/bfhlV/cm5hZjNnsO56S4l+VHTG9eetliotbpgoFCWkmmUhqp93RU5JApcZiBNH5X8BI4OmVVul7p02N59sO5nv5twg2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjKmoP0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHHISgB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392F9C433C7;
-	Wed, 21 Feb 2024 13:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjKmoP0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA88C433F1;
+	Wed, 21 Feb 2024 13:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522061;
-	bh=IHip1eT6vN6lDM7GyW4Bwb4QbwOlUXGwoxJGXYX+2Cg=;
+	s=korg; t=1708522064;
+	bh=JFeZMby3k2WVXiBlSW3ZbM1KTyFMwvxDT+O7zWSgpBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHHISgB/TonyoKq0NX0cUNnqg2wPgnBAv9ku1+z2SA8HS+Epc+833gIuGbfGoJD4E
-	 8ivahQshowKLl5d+61K8TxKXllW6RjjirVQnIJTOwjGNCzA/TkrQjq9AkGYD/WeO9J
-	 j0Xb7FcZ3zjXwAuw7wdxZAdV1x0rJZB5+7DRqXNo=
+	b=hjKmoP0lBzI1XmTqRMsTFUpIuo8Sw6XZQ/MYj/n3cDRfO7Q3xCrS1DioRFbrQZ6X6
+	 DdArEhkr0am3F48W/jVeu110BRPQxBEtF7ZKdhIaB4uoW5mJW82zOxSj4hnYoEv9hL
+	 ziVIkvzB5pebBKNby0++Ji+NoEYWblJSnECPVI2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhipeng Lu <alexious@zju.edu.cn>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/476] selftests: netdevsim: fix the udp_tunnel_nic test
-Date: Wed, 21 Feb 2024 14:02:00 +0100
-Message-ID: <20240221130010.487549680@linuxfoundation.org>
+Subject: [PATCH 5.15 070/476] fjes: fix memleaks in fjes_hw_setup
+Date: Wed, 21 Feb 2024 14:02:01 +0100
+Message-ID: <20240221130010.522499427@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,100 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-[ Upstream commit 0879020a7817e7ce636372c016b4528f541c9f4d ]
+[ Upstream commit f6cc4b6a3ae53df425771000e9c9540cce9b7bb1 ]
 
-This test is missing a whole bunch of checks for interface
-renaming and one ifup. Presumably it was only used on a system
-with renaming disabled and NetworkManager running.
+In fjes_hw_setup, it allocates several memory and delay the deallocation
+to the fjes_hw_exit in fjes_probe through the following call chain:
 
-Fixes: 91f430b2c49d ("selftests: net: add a test for UDP tunnel info infra")
-Acked-by: Paolo Abeni <pabeni@redhat.com>
+fjes_probe
+  |-> fjes_hw_init
+        |-> fjes_hw_setup
+  |-> fjes_hw_exit
+
+However, when fjes_hw_setup fails, fjes_hw_exit won't be called and thus
+all the resources allocated in fjes_hw_setup will be leaked. In this
+patch, we free those resources in fjes_hw_setup and prevents such leaks.
+
+Fixes: 2fcbca687702 ("fjes: platform_driver's .probe and .remove routine")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240123060529.1033912-1-kuba@kernel.org
+Link: https://lore.kernel.org/r/20240122172445.3841883-1-alexious@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/drivers/net/netdevsim/udp_tunnel_nic.sh    | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/fjes/fjes_hw.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-index 1b08e042cf94..185b02d2d4cd 100755
---- a/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-+++ b/tools/testing/selftests/drivers/net/netdevsim/udp_tunnel_nic.sh
-@@ -269,6 +269,7 @@ for port in 0 1; do
- 	echo 1 > $NSIM_DEV_SYS/new_port
-     fi
-     NSIM_NETDEV=`get_netdev_name old_netdevs`
-+    ifconfig $NSIM_NETDEV up
+diff --git a/drivers/net/fjes/fjes_hw.c b/drivers/net/fjes/fjes_hw.c
+index 065bb0a40b1d..a1405a3e294c 100644
+--- a/drivers/net/fjes/fjes_hw.c
++++ b/drivers/net/fjes/fjes_hw.c
+@@ -220,21 +220,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
  
-     msg="new NIC device created"
-     exp0=( 0 0 0 0 )
-@@ -430,6 +431,7 @@ for port in 0 1; do
-     fi
+ 	mem_size = FJES_DEV_REQ_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.req_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.req_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.req_buf)) {
++		result = -ENOMEM;
++		goto free_ep_info;
++	}
  
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
+ 	hw->hw_info.req_buf_size = mem_size;
  
-     overflow_table0 "overflow NIC table"
-@@ -487,6 +489,7 @@ for port in 0 1; do
-     fi
+ 	mem_size = FJES_DEV_RES_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.res_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.res_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.res_buf)) {
++		result = -ENOMEM;
++		goto free_req_buf;
++	}
  
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
+ 	hw->hw_info.res_buf_size = mem_size;
  
-     overflow_table0 "overflow NIC table"
-@@ -543,6 +546,7 @@ for port in 0 1; do
-     fi
+ 	result = fjes_hw_alloc_shared_status_region(hw);
+ 	if (result)
+-		return result;
++		goto free_res_buf;
  
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
+ 	hw->hw_info.buffer_share_bit = 0;
+ 	hw->hw_info.buffer_unshare_reserve_bit = 0;
+@@ -245,11 +249,11 @@ static int fjes_hw_setup(struct fjes_hw *hw)
  
-     overflow_table0 "destroy NIC"
-@@ -572,6 +576,7 @@ for port in 0 1; do
-     fi
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->tx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
  
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->rx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
  
-     msg="create VxLANs v6"
-@@ -632,6 +637,7 @@ for port in 0 1; do
-     fi
+ 			spin_lock_irqsave(&hw->rx_status_lock, flags);
+ 			fjes_hw_setup_epbuf(&buf_pair->tx, mac,
+@@ -272,6 +276,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 	fjes_hw_init_command_registers(hw, &param);
  
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
+ 	return 0;
++
++free_epbuf:
++	for (epidx = 0; epidx < hw->max_epid ; epidx++) {
++		if (epidx == hw->my_epid)
++			continue;
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].tx);
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].rx);
++	}
++	fjes_hw_free_shared_status_region(hw);
++free_res_buf:
++	kfree(hw->hw_info.res_buf);
++	hw->hw_info.res_buf = NULL;
++free_req_buf:
++	kfree(hw->hw_info.req_buf);
++	hw->hw_info.req_buf = NULL;
++free_ep_info:
++	kfree(hw->ep_shm_info);
++	hw->ep_shm_info = NULL;
++	return result;
+ }
  
-     echo 110 > $NSIM_DEV_DFS/ports/$port/udp_ports_inject_error
-@@ -687,6 +693,7 @@ for port in 0 1; do
-     fi
- 
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     msg="create VxLANs v6"
-@@ -746,6 +753,7 @@ for port in 0 1; do
-     fi
- 
-     echo $port > $NSIM_DEV_SYS/new_port
-+    NSIM_NETDEV=`get_netdev_name old_netdevs`
-     ifconfig $NSIM_NETDEV up
- 
-     msg="create VxLANs v6"
-@@ -876,6 +884,7 @@ msg="re-add a port"
- 
- echo 2 > $NSIM_DEV_SYS/del_port
- echo 2 > $NSIM_DEV_SYS/new_port
-+NSIM_NETDEV=`get_netdev_name old_netdevs`
- check_tables
- 
- msg="replace VxLAN in overflow table"
+ static void fjes_hw_cleanup(struct fjes_hw *hw)
 -- 
 2.43.0
 
