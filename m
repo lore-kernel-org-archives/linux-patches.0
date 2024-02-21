@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194AF762C1;
-	Wed, 21 Feb 2024 13:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904E5762C1;
+	Wed, 21 Feb 2024 13:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523831; cv=none; b=XC9UkB5xGUr0XjRBXTa2L4lCd25AjQrMT4y/wOwxHyNHzZ+J2lnFVpxpljtCjbJtPZwLHxJQER/xbZSPFCVStDssfKCa90OZ/f4MZzMmqUDkTvX/33uTiYy9kDLNZPKuJcZIBDUmywVi1YOLIulqB8Xtq0od0OrOLCrcJfebsEk=
+	t=1708523834; cv=none; b=XgFEjFbSrQnwlkeW1w3fcCHTkgETLT6JTtcpgf+hrCiBYR6sEw4ne3GktjkxsIZ627G0Xy8XlyMRZK+nAYbgjbaaK5AhKpdET9s5jTpA1OopbHdZY8DSEtpl0sW72ZGE5e747tVGJQ4rAAF7I2QqowEV6cvdZfffm2S/weF/sFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523831; c=relaxed/simple;
-	bh=uov3ReQzE10/Z3Q++bTIericHx0Svi3UlF/I7zKff74=;
+	s=arc-20240116; t=1708523834; c=relaxed/simple;
+	bh=3JmaBCCD6xR0jgL+C8NY3Pg42OZWWQVYAS2/hxFrSB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sedkGthe/4Lxb5W9nYTgkK9Qx3pq3E1neT1gWdoLFfsGpLIlxreF+j68MZMlOYdEL/Vlh2w5IcP2DZYY5cr2I8J0NH+Ubb1v7R9b4aDqfkDQnaz55eIWsqD1OioarXE9SzC9x2PIVuXDYnINGMghM/2GFBP23q0ZLbLW9Awuh30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5uYZwA5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j475Tu28OwyBw42Uk9q/wSaVyN2u26rRb7QqslnpXCCfhv7lZXMyRdbx6PIS3qPJKpqfZPvsGN4A90CK8BHmY5ZbzzrLwQuloeYcqMUSsHfYn8N3pT2L9QCGELUGEyqryTUyEL7u1D+DX7q22EJTVEwWFl88rs2/hQ7JeZ4VNpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNh4UxN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5uYZwA5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D53C433F1;
-	Wed, 21 Feb 2024 13:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNh4UxN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19938C433F1;
+	Wed, 21 Feb 2024 13:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523830;
-	bh=uov3ReQzE10/Z3Q++bTIericHx0Svi3UlF/I7zKff74=;
+	s=korg; t=1708523834;
+	bh=3JmaBCCD6xR0jgL+C8NY3Pg42OZWWQVYAS2/hxFrSB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5uYZwA5hnfg6umzGbEhrVOqof4FJQEpZQQ9IgorRjRiw2bqDYWbtDsY+Zcz1C+Tr
-	 ZGAEvCSuZ4HjerSSWwk30sEjElV5Yt1FU3cFO5l30iUovG7QgEKPdXgYYiwyFuDR5x
-	 jVV6CrMbk6clCYaby9D43W0wOFhb+7LN1aPLXxhQ=
+	b=sNh4UxN+MARVmP7egQ9hpeS2TjbMaDHTNv1NCtO0g2ej+PxVEW4httYAH8GLJa23P
+	 /XvFa2CiM4qatdl3CX9Ys0ON5Q7BTT33M4XWyix/55wt2NxuBJlJizEP5b04CMbbSt
+	 QZLPcfdJ5/GvZF9vHSG3iHw/7XB7kLRSmxVqU4/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Notselwyn <notselwyn@pwning.tech>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 071/379] netfilter: nf_tables: reject QUEUE/DROP verdict parameters
-Date: Wed, 21 Feb 2024 14:04:10 +0100
-Message-ID: <20240221125957.015911032@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	George Melikov <mail@gmelikov.ru>
+Subject: [PATCH 5.10 072/379] gpiolib: acpi: Ignore touchpad wakeup on GPD G1619-04
+Date: Wed, 21 Feb 2024 14:04:11 +0100
+Message-ID: <20240221125957.044414214@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,69 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit f342de4e2f33e0e39165d8639387aa6c19dff660 upstream.
+commit 805c74eac8cb306dc69b87b6b066ab4da77ceaf1 upstream.
 
-This reverts commit e0abdadcc6e1.
+Spurious wakeups are reported on the GPD G1619-04 which
+can be absolved by programming the GPIO to ignore wakeups.
 
-core.c:nf_hook_slow assumes that the upper 16 bits of NF_DROP
-verdicts contain a valid errno, i.e. -EPERM, -EHOSTUNREACH or similar,
-or 0.
-
-Due to the reverted commit, its possible to provide a positive
-value, e.g. NF_ACCEPT (1), which results in use-after-free.
-
-Its not clear to me why this commit was made.
-
-NF_QUEUE is not used by nftables; "queue" rules in nftables
-will result in use of "nft_queue" expression.
-
-If we later need to allow specifiying errno values from userspace
-(do not know why), this has to call NF_DROP_GETERR and check that
-"err <= 0" holds true.
-
-Fixes: e0abdadcc6e1 ("netfilter: nf_tables: accept QUEUE/DROP verdict parameters")
 Cc: stable@vger.kernel.org
-Reported-by: Notselwyn <notselwyn@pwning.tech>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-and-tested-by: George Melikov <mail@gmelikov.ru>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3073
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/gpio/gpiolib-acpi.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9340,16 +9340,10 @@ static int nft_verdict_init(const struct
- 	data->verdict.code = ntohl(nla_get_be32(tb[NFTA_VERDICT_CODE]));
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -1479,6 +1479,20 @@ static const struct dmi_system_id gpioli
+ 			.ignore_wake = "INT33FF:01@0",
+ 		},
+ 	},
++	{
++		/*
++		 * Spurious wakeups from TP_ATTN# pin
++		 * Found in BIOS 0.35
++		 * https://gitlab.freedesktop.org/drm/amd/-/issues/3073
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "GPD"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "G1619-04"),
++		},
++		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
++			.ignore_wake = "PNP0C50:00@8",
++		},
++	},
+ 	{} /* Terminating entry */
+ };
  
- 	switch (data->verdict.code) {
--	default:
--		switch (data->verdict.code & NF_VERDICT_MASK) {
--		case NF_ACCEPT:
--		case NF_DROP:
--		case NF_QUEUE:
--			break;
--		default:
--			return -EINVAL;
--		}
--		fallthrough;
-+	case NF_ACCEPT:
-+	case NF_DROP:
-+	case NF_QUEUE:
-+		break;
- 	case NFT_CONTINUE:
- 	case NFT_BREAK:
- 	case NFT_RETURN:
-@@ -9384,6 +9378,8 @@ static int nft_verdict_init(const struct
- 
- 		data->verdict.chain = chain;
- 		break;
-+	default:
-+		return -EINVAL;
- 	}
- 
- 	desc->len = sizeof(data->verdict);
 
 
