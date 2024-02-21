@@ -1,130 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACD369D02;
-	Wed, 21 Feb 2024 12:37:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8682D4F885
+	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 12:52:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708519053; cv=none; b=MZ2t4LHa2rzd2b9STx2tLkrlLZKpM/zLRHt/tLvKgqNOqjWUGGZs38ExCsrwSoN/Vd57eX9MGpQNh2QGVjPEWeIgTUnLHU7LKtrXVDc2fcPFQnyD90BDxWLmwNO5BtsAQQOTP412YB0AQQRxBMUefdpf24ZlM5oRw54tZJZ+iq0=
+	t=1708519947; cv=none; b=To/8wtJIQxoNLvQZc1DHGy74+bfbAJq72QaNlPhBb8VtkOqiOWdTH1M1u+LQM/gJWGPOLrz1wqDFDwHXZDtU4134EsFJAwZHRPZ83TJLyDCkavSm17qnQ1s4j/doBiphhbYm+JQpPvzXa4YMCtpZwfLwCMlwN98Siaq5Ks9mR+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708519053; c=relaxed/simple;
-	bh=ESR5FUVH7HdQuYDC2PkSSIiu8ZJk0BRHYo1/BQuDM/w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GHpvzDEWmJNX9PR0fDVuXA1Gnc9wbRLgMsAzyFGBcl17LvF3kn92S6CBZzV2SIBOn4CYH3PuzGETi+Sg7NEEN11AzbjwI4JwHUQGf/KwG7QPrW7O7I4toYsCDZi0K3VrYbfxOrOcHf7X8bgVDS4ZTF4U6mgKQlFe1yRJpAUPMjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YO1nHeeq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708519947; c=relaxed/simple;
+	bh=YfrhMTVoCpaOCwGuwxadanUe9z7a5TmiWwldvqLyFq8=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=tpvJcK5KMbZZMGBYDCHtKgmTlmMIBgJGO/spRoz0Fr8RV2UAOkFUF84P8C0kv2qiqdN+TnUmO6j90xNplXcNUg3DbUwlPls0fKThaELP/YysrFUKGOPt/PucbBxBL6pvfcFDYTzwskd5MtEkVmawzh8YuQ+fYOmT8B3IZmZ0g3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=qPMPmOuq; arc=none smtp.client-ip=35.89.44.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YO1nHeeq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3C8C433C7;
-	Wed, 21 Feb 2024 12:37:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708519053;
-	bh=ESR5FUVH7HdQuYDC2PkSSIiu8ZJk0BRHYo1/BQuDM/w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YO1nHeeqGoI+x+F6a3bmVPJFPcdxoe6zwkhq9LxK4lbUfYKnN90wjj4moyiPoQC8y
-	 PiUKWbGfeZI8Ozr/omEKFkiAzKTKDc5BfW4u2DlvoV73mdb8M7D/9jBSxyQfaZu/I+
-	 lApKCHtWM1Jul6kevOEi+qf1/loA78A+AglWToxU=
-Date: Wed, 21 Feb 2024 13:37:30 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Cc: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: Re: [PATCH 6.1 000/197] 6.1.79-rc1 review
-Message-ID: <2024022122-diminish-astrology-3635@gregkh>
-References: <20240220204841.073267068@linuxfoundation.org>
- <c873370c-c12f-4f03-a722-1ae59743089b@linaro.org>
- <7e1faa29-a154-41fc-aebc-38d5f355ea90@linaro.org>
- <10ad8f935e598244d4cb68aa20130952a26ba2ef.camel@ew.tq-group.com>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="qPMPmOuq"
+Received: from eig-obgw-5006a.ext.cloudfilter.net ([10.0.29.179])
+	by cmsmtp with ESMTPS
+	id cktyr52MOCF6Gcm5CruTLO; Wed, 21 Feb 2024 12:52:18 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id cm5BrU9GS5lkycm5CrULNG; Wed, 21 Feb 2024 12:52:18 +0000
+X-Authority-Analysis: v=2.4 cv=Q7LU4Z2a c=1 sm=1 tr=0 ts=65d5f202
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=k7vzHIieQBIA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=L9Sf91wUQ-ZH2L_8bsYA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=yNckihx7BDHuMnmfBTKPKPzdPGsXM9jOTwLQjrapyJU=; b=qPMPmOuq8Aq+OObKJg0c7Tl18b
+	/jshCO8TL1KkT6vwdoDTjerFv6oCSqyOf6GkGP5fDEb05Gn5WZOsFCe1X0dfZvU2i05vQlcB9ybH9
+	lH1r1YbMGQE6D64gyiWeo+4Y0numuLwIfLSMZxyCGuS7ffkeHafju2rTbSudfPuO9zbLM8v09IloZ
+	z89FMrN5zaen8rndZ2FnKG7uqtnUY8hMx0xz14TzPBy/QBq+MmLNYcTIduhaMBUfh3dtVP+Fr6LBr
+	iQmhUIA0UZUXjrq8UHWv91y9sB0JSA2whWMEophOC7PG6nMukn56ivTOCWdN1iuVFeXONU84aCtOl
+	QwD0dQWA==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:47092 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1rcm59-002mw4-2O;
+	Wed, 21 Feb 2024 05:52:15 -0700
+Subject: Re: [PATCH 6.7 000/309] 6.7.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240220205633.096363225@linuxfoundation.org>
+In-Reply-To: <20240220205633.096363225@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <11360706-9148-30d3-a4ea-84dc6478cd45@w6rz.net>
+Date: Wed, 21 Feb 2024 04:52:13 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <10ad8f935e598244d4cb68aa20130952a26ba2ef.camel@ew.tq-group.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1rcm59-002mw4-2O
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:47092
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfHB8IM5AhNZvaPSII70vql83OtIOx0dHawezPnULKboc7jp+u/fKDKzEnpFp8Mp90i8FOZr91Zb4XIHtyhMcuWVkZxPykUplWkMKSo++yERWPcADkkiL
+ +C4amt9lnOWtPnFBAcLeelP0R4Oos6Y4i5iOMlR8xn4jcBYgTJTMMxf0HiFcNj5ZpYL2BHG0HV7jmQ==
 
-On Wed, Feb 21, 2024 at 09:16:32AM +0100, Matthias Schiffer wrote:
-> On Tue, 2024-02-20 at 19:40 -0600, Daniel Díaz wrote:
-> > ********************
-> > Achtung externe E-Mail: Öffnen Sie Anhänge und Links nur, wenn Sie wissen, dass diese aus einer sicheren Quelle stammen und sicher sind. Leiten Sie die E-Mail im Zweifelsfall zur Prüfung an den IT-Helpdesk weiter.
-> > Attention external email: Open attachments and links only if you know that they are from a secure source and are safe. In doubt forward the email to the IT-Helpdesk to check it.
-> > ********************
-> > 
-> > Hello!
-> > 
-> > On 20/02/24 7:04 p. m., Daniel Díaz wrote:
-> > > On 20/02/24 2:49 p. m., Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.1.79 release.
-> > > > There are 197 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Thu, 22 Feb 2024 20:48:08 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > > The whole patch series can be found in one patch at:
-> > > >     https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > > and the diffstat can be found below.
-> > > > 
-> > > > thanks,
-> > > > 
-> > > > greg k-h
-> > > 
-> > > We see a regression with PowerPC:
-> > > 
-> > > -----8<-----
-> > >    /builds/linux/arch/powerpc/kernel/cpu_setup_6xx.S: Assembler messages:
-> > >    /builds/linux/arch/powerpc/kernel/cpu_setup_6xx.S:124: Error: unrecognized opcode: `sym_func_start_local(setup_g2_le_hid2)'
-> > >    /builds/linux/arch/powerpc/kernel/cpu_setup_6xx.S:131: Error: unrecognized opcode: `sym_func_end(setup_g2_le_hid2)'
-> > >    make[4]: *** [/builds/linux/scripts/Makefile.build:382: arch/powerpc/kernel/cpu_setup_6xx.o] Error 1
-> > > ----->8-----
-> > > 
-> > > This is seen only on PowerPC with GCC 8, GCC 13, Clang 17, Clang nightly, on:
-> > > * allnoconfig
-> > > * tinyconfig
-> > > * mpc83xx_defconfig
-> > > * ppc6xx_defconfig
-> > > (at least)
-> > > 
-> > > Reproducer:
-> > > 
-> > >    tuxmake \
-> > >      --runtime podman \
-> > >      --target-arch powerpc \
-> > >      --toolchain gcc-8 \
-> > >      --kconfig tinyconfig
-> > > 
-> > 
-> > Bisection points to:
-> > 
-> >    commit a65d7a833f486d0c162fdc854d2d5dd2e66ddd95
-> >    Author: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-> >    Date:   Wed Jan 24 11:38:38 2024 +0100
-> > 
-> >        powerpc/6xx: set High BAT Enable flag on G2_LE cores
-> >        
-> >        [ Upstream commit a038a3ff8c6582404834852c043dadc73a5b68b4 ]
-> > 
-> > 
-> > Reverting that commit makes the build pass again.
-> 
-> It seems that backporting the mentioned commit verbatim would also require
-> 2da37761671b5bdedbe04e6469cfa57cd6b6ae45 ("powerpc/32: Fix objtool unannotated intra-function call
-> warnings") to make SYM_FUNC_START_LOCAL/SYM_FUNC_END available. Please drop this patch from 6.1 and
-> older for now.
+On 2/20/24 12:52 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.7.6 release.
+> There are 309 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 22 Feb 2024 20:55:42 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Now dropped, thanks!
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-greg k-h
+Tested-by: Ron Economos <re@w6rz.net>
+
