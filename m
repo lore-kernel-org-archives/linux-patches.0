@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18F47C0A0;
-	Wed, 21 Feb 2024 14:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99DD78B5E;
+	Wed, 21 Feb 2024 14:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524027; cv=none; b=E6C5GBFXHINubdYbSZo1Ax3M3oG1ThVROYFU+7HLfveOCaJuxeoRM/fsouG3Yf0svEUy8+8mY70BoAnMyVnV1nGyVvKNkKLqRILWuylNpORnLI7Gn4BtntklUxp616rQBRZ2unSM26nHeyChw/xBPrND7UDsoxDmEZwp9kGxaIc=
+	t=1708524029; cv=none; b=OuyMEAtYwsYDG3sPmZy5B8GF4KMMD/gfswz/Gq+Qdj2/KG9mLvHpndT+jTmu0kbW3zkMqENRHa2PAOTPdhNCNZCuuK5DASRQLsXKPQJnEBxjyR1k+TaYzf+Qty35BwC8V4aXRwK8Ia5OJLg1mFLkOeaWKZlCblAC7pl9RzbrptY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524027; c=relaxed/simple;
-	bh=oXjUBZ0RqPA17Yt1XsnmsmKDBPE6Z+Saa1hmHLvhAe8=;
+	s=arc-20240116; t=1708524029; c=relaxed/simple;
+	bh=ARyPrDk7hk9sOBWlthu94Hs+9dD9gtxQZdRBMUSVGqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kysNwXwJa3YtLAlcdu3UO/36b4EJCZ43YAxD/GaHIR/MPmvvCbKiz/Qt5pRzOsql5xZs2N8y5B1SSyaqmFtoMss7QHljIzIbuYpXU2SlwYlGcmKUR4J2I1j0MpYl9KrCiQV4fXqkQ6EtmZInx7M5fLb1yIzdff6061/1cecj+G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CU9gAgyx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P9nsjxsr+1g1PgN4khJ/1NRDou7/oJuJwpDbvZjH0lRi9ae6D2ulwEt0lWBce93qX9eji8LU3BjLpnnSyiFoD73JLqjAuNGzK3adJKS/aZD/MVflR9IeR3T4L9skNQqhp7fcBvS2UBHn8Tq66JyaXVhCkRQls75obM60OdJJjPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKpvnT9X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CU9gAgyx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBCCC433F1;
-	Wed, 21 Feb 2024 14:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKpvnT9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576DBC433F1;
+	Wed, 21 Feb 2024 14:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524025;
-	bh=oXjUBZ0RqPA17Yt1XsnmsmKDBPE6Z+Saa1hmHLvhAe8=;
+	s=korg; t=1708524028;
+	bh=ARyPrDk7hk9sOBWlthu94Hs+9dD9gtxQZdRBMUSVGqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CU9gAgyxEAeIeVRbgE0Zq2jfWahKfaqbbyly2+uCpkdS7ukjdkG7+WHhoakIZ39nQ
-	 ryEmZ2d74KIYd4TfZP5VeJhwUCvTJxddLonu6QA3V5bkW8nEbY8xTTh1rtcw4Niap/
-	 oA8MUpWQqPkRZ+cKBAhm5gRideld1RdOpqXxMpq4=
+	b=cKpvnT9XK7GhiuUQGCqRz18MH5cxg5ZBXh1Mjm4tNX9hIBMsjcyL1jujUBfYM3dh9
+	 bkiix+zp3KTg0aVZ4rzl2mFgTh1IkhKSSwGCAksZGySLkz3vSAccvdiT9G4RgCO1V7
+	 ih3xkNqxieBT4GHbt1bNtkB01tK3+4N1hLNxyeaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Inki Dae <inki.dae@samsung.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/379] drm/exynos: gsc: minor fix for loop iteration in gsc_runtime_resume
-Date: Wed, 21 Feb 2024 14:04:34 +0100
-Message-ID: <20240221125957.733947711@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+01cf2dbcbe2022454388@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 122/379] jfs: fix uaf in jfs_evict_inode
+Date: Wed, 21 Feb 2024 14:05:01 +0100
+Message-ID: <20240221125958.538191194@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,37 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 4050957c7c2c14aa795dbf423b4180d5ac04e113 ]
+[ Upstream commit e0e1958f4c365e380b17ccb35617345b31ef7bf3 ]
 
-Do not forget to call clk_disable_unprepare() on the first element of
-ctx->clocks array.
+When the execution of diMount(ipimap) fails, the object ipimap that has been
+released may be accessed in diFreeSpecial(). Asynchronous ipimap release occurs
+when rcu_core() calls jfs_free_node().
 
-Found by Linux Verification Center (linuxtesting.org).
+Therefore, when diMount(ipimap) fails, sbi->ipimap should not be initialized as
+ipimap.
 
-Fixes: 8b7d3ec83aba ("drm/exynos: gsc: Convert driver to IPP v2 core API")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Reported-and-tested-by: syzbot+01cf2dbcbe2022454388@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_gsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_mount.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index 45e9aee8366a..bcf830c5b8ea 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -1344,7 +1344,7 @@ static int __maybe_unused gsc_runtime_resume(struct device *dev)
- 	for (i = 0; i < ctx->num_clocks; i++) {
- 		ret = clk_prepare_enable(ctx->clocks[i]);
- 		if (ret) {
--			while (--i > 0)
-+			while (--i >= 0)
- 				clk_disable_unprepare(ctx->clocks[i]);
- 			return ret;
- 		}
+diff --git a/fs/jfs/jfs_mount.c b/fs/jfs/jfs_mount.c
+index aa4ff7bcaff2..55702b31ab3c 100644
+--- a/fs/jfs/jfs_mount.c
++++ b/fs/jfs/jfs_mount.c
+@@ -172,15 +172,15 @@ int jfs_mount(struct super_block *sb)
+ 	}
+ 	jfs_info("jfs_mount: ipimap:0x%p", ipimap);
+ 
+-	/* map further access of per fileset inodes by the fileset inode */
+-	sbi->ipimap = ipimap;
+-
+ 	/* initialize fileset inode allocation map */
+ 	if ((rc = diMount(ipimap))) {
+ 		jfs_err("jfs_mount: diMount failed w/rc = %d", rc);
+ 		goto err_ipimap;
+ 	}
+ 
++	/* map further access of per fileset inodes by the fileset inode */
++	sbi->ipimap = ipimap;
++
+ 	return rc;
+ 
+ 	/*
 -- 
 2.43.0
 
