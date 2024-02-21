@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECE97BAFA;
-	Wed, 21 Feb 2024 13:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33EA7E78B;
+	Wed, 21 Feb 2024 13:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521977; cv=none; b=hGbpNJAfU4fNN67Zwg6xw4hrNPezBmyRTl7syDJjHZHkXY9tX2PvtFXllw8f25z1NIt8NW5A2LAVQ2tIzhXO5pshSq8368Ds3gRfw4KIXuVfLpXzduZrnb7A/6qPN1RzLr1272DEOB+yraGPjLYnbcUnlK6MDLk1JDI53vaUlTI=
+	t=1708521980; cv=none; b=sPH2lS6K024EFA23lxUxp8jW9L6yrYu/jv2ZwVZYlUnx9vo0z3hudgQ/UIfMVKCDDcI+2P0aWvtH8N3UDrljsKb19W2x6Tau8jyHrKwfA8dPw+hc/I+RgoVcqngL8O3IPSotcVPQkgx5/ZysJumRSgh1ZNACAS9dDKhQOx6t/vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521977; c=relaxed/simple;
-	bh=mHWQxkTVkyCvnIHPxB5xzTwlwsf91XnFg7TJuytVaRA=;
+	s=arc-20240116; t=1708521980; c=relaxed/simple;
+	bh=qjIt9JrLb0S3uLhj322Sl2LsB1h+yZgECJ4BGlYx1ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kStUeEd/fpC8S9p9FyUnTdXlviE7t2HNKsRUxHUux3c+559Bv5fC+E9NlYb+WzKb2OEDIuiE8LAkCc3Sth7Mg853BCnl01WC0cdilpnVRxHIkLASoUWDmXP/hRRMKcTEMeA/0YOu0Oe6l3fy0lNZef8m00Sn8Y3O+dB4NkDyDFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZhE46zk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xq5KYmx+XVBN2fr6Xwtbyor5pwLT5Es/GN5NNSQhgoLBdq3JGr/b9Imzx7upxS1Y1rRgHsoQUWgImLxIxZ8yn+1HBO+rQNJsRlyo5/Lfk4bm7chJGoRUiE9wQPo6KZnJ2/NTsTEUnfRBXMy1JOihKwO2fI8wO47ybZhXip99jKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXNxF52K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZhE46zk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8FA3C433F1;
-	Wed, 21 Feb 2024 13:26:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXNxF52K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E288CC43330;
+	Wed, 21 Feb 2024 13:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521977;
-	bh=mHWQxkTVkyCvnIHPxB5xzTwlwsf91XnFg7TJuytVaRA=;
+	s=korg; t=1708521980;
+	bh=qjIt9JrLb0S3uLhj322Sl2LsB1h+yZgECJ4BGlYx1ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZhE46zkPtyEK247y02D5KNB8UvkhqQ/I/4L8dxkN5una4JabZMNUx/Pomk4kWADW
-	 6pobLHnNIVNrCfNCmZ2BSC/cDbPCEVDhRyNOedNwk/VOZgvNzN3nj1W35xNAxD2Xow
-	 6zw2fa87ngZmB0x1R/HfYxRKRpe1AzQdCbvp6mTY=
+	b=UXNxF52KVhWSLoUUuOFTRU9Pf+xAZZ0xlxe/sshQHMbM16Ugn4NcmU1oe8kXjy0ig
+	 VGbQdq2V08JXWcOooL2P9ElwiIR/e8Cd0pB0zQW5oZ5U02SdVVhuCmQ2d/On5tddFT
+	 /flSTo41FjqPCV1vbsjv9Zsgp4GhS8ezdkr3vutg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kevin Hao <haokexin@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 043/476] ksmbd: send lease break notification on FILE_RENAME_INFORMATION
-Date: Wed, 21 Feb 2024 14:01:34 +0100
-Message-ID: <20240221130009.525034093@linuxfoundation.org>
+Subject: [PATCH 5.15 044/476] ksmbd: Add missing set_freezable() for freezable kthread
+Date: Wed, 21 Feb 2024 14:01:35 +0100
+Message-ID: <20240221130009.567718548@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,66 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 3fc74c65b367476874da5fe6f633398674b78e5a ]
+From: Kevin Hao <haokexin@gmail.com>
 
-Send lease break notification on FILE_RENAME_INFORMATION request.
-This patch fix smb2.lease.v2_epoch2 test failure.
+[ Upstream commit 8fb7b723924cc9306bc161f45496497aec733904 ]
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+The kernel thread function ksmbd_conn_handler_loop() invokes
+the try_to_freeze() in its loop. But all the kernel threads are
+non-freezable by default. So if we want to make a kernel thread to be
+freezable, we have to invoke set_freezable() explicitly.
+
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/oplock.c  |   12 +++++++-----
- fs/ksmbd/smb2pdu.c |    1 +
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ fs/ksmbd/connection.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -541,14 +541,12 @@ static struct oplock_info *same_client_h
- 				continue;
- 			}
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -284,6 +284,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 		goto out;
  
--			if (lctx->req_state != lease->state)
--				lease->epoch++;
--
- 			/* upgrading lease */
- 			if ((atomic_read(&ci->op_count) +
- 			     atomic_read(&ci->sop_count)) == 1) {
- 				if (lease->state != SMB2_LEASE_NONE_LE &&
- 				    lease->state == (lctx->req_state & lease->state)) {
-+					lease->epoch++;
- 					lease->state |= lctx->req_state;
- 					if (lctx->req_state &
- 						SMB2_LEASE_WRITE_CACHING_LE)
-@@ -559,13 +557,17 @@ static struct oplock_info *same_client_h
- 				    atomic_read(&ci->sop_count)) > 1) {
- 				if (lctx->req_state ==
- 				    (SMB2_LEASE_READ_CACHING_LE |
--				     SMB2_LEASE_HANDLE_CACHING_LE))
-+				     SMB2_LEASE_HANDLE_CACHING_LE)) {
-+					lease->epoch++;
- 					lease->state = lctx->req_state;
-+				}
- 			}
- 
- 			if (lctx->req_state && lease->state ==
--			    SMB2_LEASE_NONE_LE)
-+			    SMB2_LEASE_NONE_LE) {
-+				lease->epoch++;
- 				lease_none_upgrade(opinfo, lctx->req_state);
-+			}
- 		}
- 		read_lock(&ci->m_lock);
- 	}
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -5581,6 +5581,7 @@ static int smb2_rename(struct ksmbd_work
- 	if (!file_info->ReplaceIfExists)
- 		flags = RENAME_NOREPLACE;
- 
-+	smb_break_all_levII_oplock(work, fp, 0);
- 	rc = ksmbd_vfs_rename(work, &fp->filp->f_path, new_name, flags);
- out:
- 	kfree(new_name);
+ 	conn->last_active = jiffies;
++	set_freezable();
+ 	while (ksmbd_conn_alive(conn)) {
+ 		if (try_to_freeze())
+ 			continue;
 
 
