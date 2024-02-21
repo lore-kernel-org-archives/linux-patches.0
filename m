@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B755E5E;
-	Wed, 21 Feb 2024 13:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C31D78B4B;
+	Wed, 21 Feb 2024 13:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523191; cv=none; b=GNn8wR40PK/ZUmpam5drJt1PPVCTHQ56ap20sSEjPodE5sHMw/kYI37WytoMqqiyQIEUGe4rBzXqDjxClDo3J53MYG5G65YzGWnwt+7zftd+GxpSHx74T7JLkxIPNZPWPfDU1773DTCM2Qrz4skEYRK7HuNjqUesRNfrxvO4Q/o=
+	t=1708523194; cv=none; b=nAZyVQeX4MsEBm4YG8+9jaFDb25zxtBxMYvVjqYrGGElsN5k+R5C9/uXdHQsjiifh+3nH/mERrmdpcPrQv7+gEJqliDljwYFI9VqzffcwmRnFduv+XRJzRWITYhQxLyHjUgDmSXkKPPberNKYaLzaB486jF2LE6Og23F5V0Tu7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523191; c=relaxed/simple;
-	bh=YXrGCMmjNfntABRzSm8Hfd+dKLSBGzXpiGZJA8jjcDc=;
+	s=arc-20240116; t=1708523194; c=relaxed/simple;
+	bh=eyvOTqH3yMdghiou4EM/w8TwaFYc2RpK8ZiX+hIuKdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BfdbUFuMYaP5xVCICJn0fvDkr3/bKfOn68sjM+TELhhMFfmsC4GwBCfDTwM4tWByAerHKTtdB4j0mFIRAnIdibw9mdiXOF/JEmjBhrKrWLGb/JBY39tjaVPve+qL8nyOt1RsZ4vcCIV44mZtyenXwnvTlGCTEah2OqI2h/u/mOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V42I3rbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ay2tcwsdrUBgJvPVeenHOpN9ppWz7StKEOYwrRaM4ywKVmh08wInMdhFbP5rMdjmCuWxGsLq0/rCWuP/NWiY7Ett8yHmyY3xth5A/0v8llbdjJ3yZH8x+Zj0ABMDkGkDTTMDdfjIPtZ+RnvVKEQGECtREr8baq+K/aQ41/fr17o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSJYB2rv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V42I3rbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CB9C433C7;
-	Wed, 21 Feb 2024 13:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSJYB2rv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9D3C433C7;
+	Wed, 21 Feb 2024 13:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523190;
-	bh=YXrGCMmjNfntABRzSm8Hfd+dKLSBGzXpiGZJA8jjcDc=;
+	s=korg; t=1708523194;
+	bh=eyvOTqH3yMdghiou4EM/w8TwaFYc2RpK8ZiX+hIuKdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V42I3rbLcG2MpTivabllUHlv+Xo7SRIeood/b3bY+GdCjL6NvHfMUCIoW4oKl5XFq
-	 Yi287ks+LSh8bA0688F/EXOetuP3S5OKOJmCtWQESyY8qmvjCFoHxEv92R+79Hl+ot
-	 G2k42FiWfcJPc2iIxOnOxCXKSzCUg6fKqSL5/6n0=
+	b=aSJYB2rvRX3dhQG3f5s7MJEEjdlxocXIPeq7gPNrSVYzXssIpSGj8M7r8deH93UdG
+	 GrV8zMajNH0h6frSWcqlCwosBuRHoV03JGcv/GXDHEZZxA6FcMbxZlFnbl5glV6ofS
+	 7sU0p7Ffmerdtm0EkDfRSFlLiubx/FoTWlOcp+c8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/476] fs/ntfs3: Fix an NULL dereference bug
-Date: Wed, 21 Feb 2024 14:06:17 +0100
-Message-ID: <20240221130020.082898564@linuxfoundation.org>
+	Vincent Donnefort <vdonnefort@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 357/476] tracing/trigger: Fix to return error if failed to alloc snapshot
+Date: Wed, 21 Feb 2024 14:06:48 +0100
+Message-ID: <20240221130021.199822181@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit b2dd7b953c25ffd5912dda17e980e7168bebcf6c ]
+commit 0958b33ef5a04ed91f61cef4760ac412080c4e08 upstream.
 
-The issue here is when this is called from ntfs_load_attr_list().  The
-"size" comes from le32_to_cpu(attr->res.data_size) so it can't overflow
-on a 64bit systems but on 32bit systems the "+ 1023" can overflow and
-the result is zero.  This means that the kmalloc will succeed by
-returning the ZERO_SIZE_PTR and then the memcpy() will crash with an
-Oops on the next line.
+Fix register_snapshot_trigger() to return error code if it failed to
+allocate a snapshot instead of 0 (success). Unless that, it will register
+snapshot trigger without an error.
 
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-trace-kernel/170622977792.270660.2789298642759362200.stgit@devnote2
+
+Fixes: 0bbe7f719985 ("tracing: Fix the race between registering 'snapshot' event trigger and triggering 'snapshot' operation")
+Cc: stable@vger.kernel.org
+Cc: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/ntfs_fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events_trigger.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 510ed2ea1c48..981276500043 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -468,7 +468,7 @@ bool al_delete_le(struct ntfs_inode *ni, enum ATTR_TYPE type, CLST vcn,
- int al_update(struct ntfs_inode *ni, int sync);
- static inline size_t al_aligned(size_t size)
+--- a/kernel/trace/trace_events_trigger.c
++++ b/kernel/trace/trace_events_trigger.c
+@@ -1161,8 +1161,10 @@ register_snapshot_trigger(char *glob, st
+ 			  struct event_trigger_data *data,
+ 			  struct trace_event_file *file)
  {
--	return (size + 1023) & ~(size_t)1023;
-+	return size_add(size, 1023) & ~(size_t)1023;
- }
+-	if (tracing_alloc_snapshot_instance(file->tr) != 0)
+-		return 0;
++	int ret = tracing_alloc_snapshot_instance(file->tr);
++
++	if (ret < 0)
++		return ret;
  
- /* Globals from bitfunc.c */
--- 
-2.43.0
-
+ 	return register_trigger(glob, ops, data, file);
+ }
 
 
