@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FA055E5E;
-	Wed, 21 Feb 2024 13:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F28D55E5E;
+	Wed, 21 Feb 2024 13:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523559; cv=none; b=GCaXS3AI1h9ulSA/HoYuOknG9ODh1Buw3wyfQMnaPyG4Z8BkB0tU8mL9ER8JZSdd1L1piJfJ/o8fRHQCjVvH+Kk5jUL8hpEn3dZ43O7vleHvL7YvhTgib20DAGl1q646c6/N9VfDfM87IX+ScuiWVcGY7zdz9Iloqs4SWlvDEoc=
+	t=1708523562; cv=none; b=CO+TFi3nbOopbNWeZzp/ZkLV1dtPDXyYE+BCPtAjnBGss+t10znt+Me9gT5MVCEzZKitAMjrfcHKD9cpwoCvw5d45buFjqQJ1F6Ro3aTi1VwQMAZrXLBhPtIkbNPvyXJ6GM+Bu5ridKMM6crsDvA03f+y/Hf5CdjSUO2pCvXlA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523559; c=relaxed/simple;
-	bh=BLeOqfWCCe2wFULvUWu98wjX6A17RUvv2qRnANY+c8s=;
+	s=arc-20240116; t=1708523562; c=relaxed/simple;
+	bh=oq262k9KVw41qURcLRm2bh+muuixBB6gpJzeb0/zadk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JuoKZyYqx0CKWvmJx1fqevdhmI8sdNpmIsONtucocAVudgX9PhdTZSEM+km7TWz9rp4SXjuOGIY9s79NZ3clyeTMOippYi6OSnMJzFQfX1gW8HqTm2s32OfYDx+IiOfqMuH9MYIYE6pt+Fre0P7ox7Ugd3Y0E3S9e5a8BKSx9nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YT4F6z4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGaQgOtwiGw/8eSNRmHYgvY3fiAHZVpju1lA6VLnlwgsKC5Ztw5YyuTXjK6BEsIRYB+URqEUcVRuj/g0yobD54U27MjZVN5H8v93/WqfClyx7cbGGnIU3O6BKk4hJYcS/J/kENi1uQYfxv3+cJjoEWAQt5qg6ukYHQjzZxtV4Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgwrO4M8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YT4F6z4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52A90C43390;
-	Wed, 21 Feb 2024 13:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgwrO4M8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D06BC433C7;
+	Wed, 21 Feb 2024 13:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523558;
-	bh=BLeOqfWCCe2wFULvUWu98wjX6A17RUvv2qRnANY+c8s=;
+	s=korg; t=1708523562;
+	bh=oq262k9KVw41qURcLRm2bh+muuixBB6gpJzeb0/zadk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YT4F6z4xbjguJvjsU8rWFvTb24OQkmJarzQ8JWvnH1K4u5V6vcTJy1tUcMU0S2Z67
-	 RGHS8ZeJbdnkls+PMJeCOB25uViPVMG90Ib6k5pzPtZFqwWvRIpGmVaylmMVH1rG1K
-	 oudYCNWjQ/pYFb9YTtRkSOuqKemXeyO1Y+nF9OjA=
+	b=bgwrO4M8NkFoUvQyGyWaIFbf8Yh7MQsOkvv1FzdtLrfPUznLlGRr2yeeuJFcBXH/Z
+	 vrrpUtGD70eCEXtXDION74Yb7sSjhn9D3nZkNr6YvHEIRee8EcLZd2Hi50XM+Nc5C3
+	 lS0OHCAYS63Qp7EXa8zGpqVhdNzp4SnzIk2t/nuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Suti <peter.suti@streamunlimited.com>
-Subject: [PATCH 5.15 472/476] staging: fbtft: core: set smem_len before fb_deferred_io_init call
-Date: Wed, 21 Feb 2024 14:08:43 +0100
-Message-ID: <20240221130025.447181560@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 473/476] usb: dwc3: gadget: Dont delay End Transfer on delayed_status
+Date: Wed, 21 Feb 2024 14:08:44 +0100
+Message-ID: <20240221130025.478306505@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -49,40 +49,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Suti <peter.suti@streamunlimited.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-commit 81e878887ff82a7dd42f22951391069a5d520627 upstream.
+commit 4db0fbb601361767144e712beb96704b966339f5 upstream.
 
-The fbtft_framebuffer_alloc() calls fb_deferred_io_init() before
-initializing info->fix.smem_len.  It is set to zero by the
-framebuffer_alloc() function.  It will trigger a WARN_ON() at the
-start of fb_deferred_io_init() and the function will not do anything.
+The gadget driver may wait on the request completion when it sets the
+USB_GADGET_DELAYED_STATUS. Make sure that the End Transfer command can
+go through if the dwc->delayed_status is set so that the request can
+complete. When the delayed_status is set, the Setup packet is already
+processed, and the next phase should be either Data or Status. It's
+unlikely that the host would cancel the control transfer and send a new
+Setup packet during End Transfer command. But if that's the case, we can
+try again when ep0state returns to EP0_SETUP_PHASE.
 
-Fixes: 856082f021a2 ("fbdev: defio: fix the pagelist corruption")
-Signed-off-by: Peter Suti <peter.suti@streamunlimited.com>
-Link: https://lore.kernel.org/r/20220727073550.1491126-1-peter.suti@streamunlimited.com
+Fixes: e1ee843488d5 ("usb: dwc3: gadget: Force sending delayed status during soft disconnect")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/3f9f59e5d74efcbaee444cf4b30ef639cc7b124e.1666146954.git.Thinh.Nguyen@synopsys.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/fbtft/fbtft-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -657,7 +657,6 @@ struct fb_info *fbtft_framebuffer_alloc(
- 	fbdefio->delay =            HZ / fps;
- 	fbdefio->sort_pagereflist = true;
- 	fbdefio->deferred_io =      fbtft_deferred_io;
--	fb_deferred_io_init(info);
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1680,6 +1680,16 @@ static int __dwc3_stop_active_transfer(s
+ 	cmd |= DWC3_DEPCMD_PARAM(dep->resource_index);
+ 	memset(&params, 0, sizeof(params));
+ 	ret = dwc3_send_gadget_ep_cmd(dep, cmd, &params);
++	/*
++	 * If the End Transfer command was timed out while the device is
++	 * not in SETUP phase, it's possible that an incoming Setup packet
++	 * may prevent the command's completion. Let's retry when the
++	 * ep0state returns to EP0_SETUP_PHASE.
++	 */
++	if (ret == -ETIMEDOUT && dep->dwc->ep0state != EP0_SETUP_PHASE) {
++		dep->flags |= DWC3_EP_DELAY_STOP;
++		return 0;
++	}
+ 	WARN_ON_ONCE(ret);
+ 	dep->resource_index = 0;
  
- 	snprintf(info->fix.id, sizeof(info->fix.id), "%s", dev->driver->name);
- 	info->fix.type =           FB_TYPE_PACKED_PIXELS;
-@@ -668,6 +667,7 @@ struct fb_info *fbtft_framebuffer_alloc(
- 	info->fix.line_length =    width * bpp / 8;
- 	info->fix.accel =          FB_ACCEL_NONE;
- 	info->fix.smem_len =       vmem_size;
-+	fb_deferred_io_init(info);
- 
- 	info->var.rotate =         pdata->rotate;
- 	info->var.xres =           width;
+@@ -3701,7 +3711,7 @@ void dwc3_stop_active_transfer(struct dw
+ 	 * timeout. Delay issuing the End Transfer command until the Setup TRB is
+ 	 * prepared.
+ 	 */
+-	if (dwc->ep0state != EP0_SETUP_PHASE) {
++	if (dwc->ep0state != EP0_SETUP_PHASE && !dwc->delayed_status) {
+ 		dep->flags |= DWC3_EP_DELAY_STOP;
+ 		return;
+ 	}
 
 
