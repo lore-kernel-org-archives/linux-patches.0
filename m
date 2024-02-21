@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940E43CF42;
-	Wed, 21 Feb 2024 14:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADBB69D38;
+	Wed, 21 Feb 2024 14:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525155; cv=none; b=uSrgzpZs9pygDaVWCctOmMk41bGbmCKhKIt0sSms5u5jReiBr0rWttGvOfAqp9CtE17uyAv5RPP9/fgcW0z7a80u04BVdGVmxddhEqlS9gU9TWnMfzpx0vRdyOtHL4JY3SLqbUteZMuQvThqcszXo5Nq9qN0ueAP9opdtbnczDI=
+	t=1708525158; cv=none; b=hLoCykNYYry/YuK9QBADyjm34XDzGg1eCK2cSkGOirI2TQAmHddvBkwLREU6xJR2Ts/Y0+bt0VlMwpaikN0aPVAfGWs/mnhOWwQv6NkfV4ve4VUvh0dzbtNUk59XiBd34iz/jjKDtA85fjr1OeFA8zX7z8BLtW86gRMAqYT4DSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525155; c=relaxed/simple;
-	bh=dfaIaZCTkMc1l5o5dPIjiXZ71B6x1ZrpYxBcpAYnwSA=;
+	s=arc-20240116; t=1708525158; c=relaxed/simple;
+	bh=yry7HrmUWshi4fmF0LCqrp/G4VVBz1sVu/0BOm0JtIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DbMfk0cv8XVwh3espJW1ZKS9PLHkXShR+O+SmasSljxotX/IW7S3kn6NpFWawcok90awBlQfstADb6VMubHX3hM47nC6fo0r/8d8DbCl8F2UXfEnkO0Iw/baAlUZ6h6gF++OkDzfaUJ0p+JCI9hN0O3bbfzjhvn6LIpQlB9Hi40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyrYpEl4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k+RC2SLQtEEKoXJlAE3+G6lOrzGm1tLCtq57IjsCi5sZ2c1Ge+0c0CbYnx/QkOR6EGJ2HAt5YH0DyOyKLb4gsx6Bd5NLesvoKZ7Xp9dLJJFHi5VgLPF227k/K3epVQYSTyUyL9+JxUGfoBqf35FIq1xjqrFImBknaQEJveQATxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGxLyK8R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyrYpEl4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13481C43390;
-	Wed, 21 Feb 2024 14:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGxLyK8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6EFCC433C7;
+	Wed, 21 Feb 2024 14:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525155;
-	bh=dfaIaZCTkMc1l5o5dPIjiXZ71B6x1ZrpYxBcpAYnwSA=;
+	s=korg; t=1708525158;
+	bh=yry7HrmUWshi4fmF0LCqrp/G4VVBz1sVu/0BOm0JtIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyrYpEl47i8eeyU23oj8r6A+RAQI64dHkW4I7MRcNGfsq79LQGxrXSS5C+TrH/FuC
-	 c3s9Vth+6igWUt7GeuzCFM8LDap4t4oYiSkItv46lvkXaFbVHlMoDg107MMvARVHLc
-	 kfsFd0j9O5hrzwtbTS+ncorYZ2PtLgvTLWS3wcJA=
+	b=KGxLyK8RZeO/XVOjKf4ZIUFONl4egpT/pMqJ55NVcct86IM3GcSccSQv7iiYowrXL
+	 p500T9WC7sSRu8rtAM+6n0gQcpvGOX4NNnizYu1sIKWLBhf5e+W6GIOk4WjIHQm9v/
+	 6emST/4eWr+U2cfGc6y8JfoGqb1uz8vVj2cOxKxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Javier Martinez Canillas <javierm@redhat.com>
-Subject: [PATCH 5.4 049/267] drm: Dont unref the same fb many times by mistake due to deadlock handling
-Date: Wed, 21 Feb 2024 14:06:30 +0100
-Message-ID: <20240221125941.548564084@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 040/267] fjes: fix memleaks in fjes_hw_setup
+Date: Wed, 21 Feb 2024 14:06:21 +0100
+Message-ID: <20240221125941.279009110@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -44,52 +46,115 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit cb4daf271302d71a6b9a7c01bd0b6d76febd8f0c upstream.
+[ Upstream commit f6cc4b6a3ae53df425771000e9c9540cce9b7bb1 ]
 
-If we get a deadlock after the fb lookup in drm_mode_page_flip_ioctl()
-we proceed to unref the fb and then retry the whole thing from the top.
-But we forget to reset the fb pointer back to NULL, and so if we then
-get another error during the retry, before the fb lookup, we proceed
-the unref the same fb again without having gotten another reference.
-The end result is that the fb will (eventually) end up being freed
-while it's still in use.
+In fjes_hw_setup, it allocates several memory and delay the deallocation
+to the fjes_hw_exit in fjes_probe through the following call chain:
 
-Reset fb to NULL once we've unreffed it to avoid doing it again
-until we've done another fb lookup.
+fjes_probe
+  |-> fjes_hw_init
+        |-> fjes_hw_setup
+  |-> fjes_hw_exit
 
-This turned out to be pretty easy to hit on a DG2 when doing async
-flips (and CONFIG_DEBUG_WW_MUTEX_SLOWPATH=y). The first symptom I
-saw that drm_closefb() simply got stuck in a busy loop while walking
-the framebuffer list. Fortunately I was able to convince it to oops
-instead, and from there it was easier to track down the culprit.
+However, when fjes_hw_setup fails, fjes_hw_exit won't be called and thus
+all the resources allocated in fjes_hw_setup will be leaked. In this
+patch, we free those resources in fjes_hw_setup and prevents such leaks.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231211081625.25704-1-ville.syrjala@linux.intel.com
-Acked-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2fcbca687702 ("fjes: platform_driver's .probe and .remove routine")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://lore.kernel.org/r/20240122172445.3841883-1-alexious@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_plane.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/fjes/fjes_hw.c | 37 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/drm_plane.c
-+++ b/drivers/gpu/drm/drm_plane.c
-@@ -1203,6 +1203,7 @@ retry:
- out:
- 	if (fb)
- 		drm_framebuffer_put(fb);
-+	fb = NULL;
- 	if (plane->old_fb)
- 		drm_framebuffer_put(plane->old_fb);
- 	plane->old_fb = NULL;
+diff --git a/drivers/net/fjes/fjes_hw.c b/drivers/net/fjes/fjes_hw.c
+index 8a4fbfacad7e..a4d3c7fa9ad3 100644
+--- a/drivers/net/fjes/fjes_hw.c
++++ b/drivers/net/fjes/fjes_hw.c
+@@ -220,21 +220,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 
+ 	mem_size = FJES_DEV_REQ_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.req_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.req_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.req_buf)) {
++		result = -ENOMEM;
++		goto free_ep_info;
++	}
+ 
+ 	hw->hw_info.req_buf_size = mem_size;
+ 
+ 	mem_size = FJES_DEV_RES_BUF_SIZE(hw->max_epid);
+ 	hw->hw_info.res_buf = kzalloc(mem_size, GFP_KERNEL);
+-	if (!(hw->hw_info.res_buf))
+-		return -ENOMEM;
++	if (!(hw->hw_info.res_buf)) {
++		result = -ENOMEM;
++		goto free_req_buf;
++	}
+ 
+ 	hw->hw_info.res_buf_size = mem_size;
+ 
+ 	result = fjes_hw_alloc_shared_status_region(hw);
+ 	if (result)
+-		return result;
++		goto free_res_buf;
+ 
+ 	hw->hw_info.buffer_share_bit = 0;
+ 	hw->hw_info.buffer_unshare_reserve_bit = 0;
+@@ -245,11 +249,11 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->tx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
+ 
+ 			result = fjes_hw_alloc_epbuf(&buf_pair->rx);
+ 			if (result)
+-				return result;
++				goto free_epbuf;
+ 
+ 			spin_lock_irqsave(&hw->rx_status_lock, flags);
+ 			fjes_hw_setup_epbuf(&buf_pair->tx, mac,
+@@ -272,6 +276,25 @@ static int fjes_hw_setup(struct fjes_hw *hw)
+ 	fjes_hw_init_command_registers(hw, &param);
+ 
+ 	return 0;
++
++free_epbuf:
++	for (epidx = 0; epidx < hw->max_epid ; epidx++) {
++		if (epidx == hw->my_epid)
++			continue;
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].tx);
++		fjes_hw_free_epbuf(&hw->ep_shm_info[epidx].rx);
++	}
++	fjes_hw_free_shared_status_region(hw);
++free_res_buf:
++	kfree(hw->hw_info.res_buf);
++	hw->hw_info.res_buf = NULL;
++free_req_buf:
++	kfree(hw->hw_info.req_buf);
++	hw->hw_info.req_buf = NULL;
++free_ep_info:
++	kfree(hw->ep_shm_info);
++	hw->ep_shm_info = NULL;
++	return result;
+ }
+ 
+ static void fjes_hw_cleanup(struct fjes_hw *hw)
+-- 
+2.43.0
+
 
 
