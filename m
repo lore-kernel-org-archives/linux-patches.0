@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217726F074;
-	Wed, 21 Feb 2024 13:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE857F469;
+	Wed, 21 Feb 2024 13:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522392; cv=none; b=XjhcqEdv0n8O13nE4qE6xWx7ToAjh4k+4y6jEP86DsuFBexYoQtVkwJwKq7oj8ifrFiHdxpAmdbVy9COWrZ0qH0Mgdwb1byNeHKIA5qj32FYIOFKjLOZ+oYxG2VltKk486MH+7QnPgQX4IocJihdNtXc4VEAPtDQMuT0fPnQoXs=
+	t=1708522399; cv=none; b=bVaIAhlFtjWqSE6+Wkc6rMd+kCChdFpqrveAwoiT6uP1cU2crwYeb3Uq7QddSw54oh6M64O2me7S91oSw99koDFxvAzHvP3gA0n6WfoiVPRNFq3rgj3PiUlE4wJNEiEYzYByi4Efgpl4A7i9CpxXswniDDrF9Iz/YhgcO1eMIW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522392; c=relaxed/simple;
-	bh=wy4mZ99YuqORxH2bceluzgguMyQJNYCsBWJaf/GPDHc=;
+	s=arc-20240116; t=1708522399; c=relaxed/simple;
+	bh=QD9d/DsgGpyYp3r/tyuU0BNlG7HJ2b3O7rm6F6nzuhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ry0i7PWONoYnScUbWhmdxcBv4Gresn6NVGTQvn0bEdCTaRqEIH5Act2Bn/SiggMFj4+NQuY5Jm5YZo4i5mJD70Qazfj+dGoJpaKYoATLu7kMm4IE2TdE9l9wucTasDpvu7G/3KA7LoayjJg17bHKqUVDGPp7KT5/291hBiCVB1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1NF9obC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ImQyohhBMDftTtjbmwsyRAdsbZ1Z2No5fCgW+jGxQijaMg9NPs2wFPEBTxVh2Lh798onh23YQLXZmnGrPH1ZK1xoPtYpYFY5XxJ6qt7KCaKf+tQaqSVydBKRpzc8EaINI2RiH/UF2pBiQC1Q8lnEhCbPMDZk7f+KkxsdYfoPMdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3TB49o9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1NF9obC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C47C433C7;
-	Wed, 21 Feb 2024 13:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3TB49o9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85102C433C7;
+	Wed, 21 Feb 2024 13:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522390;
-	bh=wy4mZ99YuqORxH2bceluzgguMyQJNYCsBWJaf/GPDHc=;
+	s=korg; t=1708522399;
+	bh=QD9d/DsgGpyYp3r/tyuU0BNlG7HJ2b3O7rm6F6nzuhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1NF9obCc48a1zCOobp79O7AcTu7LA4CrV/fWVS8y+E1PQEl/tUM5Hc1CMp2UOvcN
-	 4qG5qlTfSOXPkjcL+hoh7iqCUhIAdnfEa2kcOjuPFi+QbQ0KNi8AkxfQVrAyV3FPcF
-	 0QiUW4YWnnA5ZWsl6p2KCscgXERZhMaMuzV+eqJw=
+	b=c3TB49o9aadcvMNrJJG/CAGwlZMLmSDevk/klnC4c+Ra48ktBi8CYQhDh+8EdmN/4
+	 9pgrVz6aijJF20aYFFvDqnnbtXv++rvj8knQsyCuW7ltICgUqXbafS45ZqsAzB305c
+	 Nc0rXhRbm3wBDwn3CidWe7b1ml3z4WO9laS0cJV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/476] cpufreq: intel_pstate: Drop redundant intel_pstate_get_hwp_cap() call
-Date: Wed, 21 Feb 2024 14:02:45 +0100
-Message-ID: <20240221130012.202488106@linuxfoundation.org>
+	Osama Muhammad <osmtendev@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+d4b1df2e9d4ded6488ec@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 145/476] UBSAN: array-index-out-of-bounds in dtSplitRoot
+Date: Wed, 21 Feb 2024 14:03:16 +0100
+Message-ID: <20240221130013.281155958@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,62 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Osama Muhammad <osmtendev@gmail.com>
 
-[ Upstream commit 458b03f81afbb27143c45d47c2d8f418b2ba2407 ]
+[ Upstream commit 27e56f59bab5ddafbcfe69ad7a4a6ea1279c1b16 ]
 
-It is not necessary to call intel_pstate_get_hwp_cap() from
-intel_pstate_update_perf_limits(), because it gets called from
-intel_pstate_verify_cpu_policy() which is either invoked directly
-right before intel_pstate_update_perf_limits(), in
-intel_cpufreq_verify_policy() in the passive mode, or called
-from driver callbacks in a sequence that causes it to be followed
-by an immediate intel_pstate_update_perf_limits().
+Syzkaller reported the following issue:
 
-Namely, in the active mode intel_cpufreq_verify_policy() is called
-by intel_pstate_verify_policy() which is the ->verify() callback
-routine of intel_pstate and gets called by the cpufreq core right
-before intel_pstate_set_policy(), which is the driver's ->setoplicy()
-callback routine, where intel_pstate_update_perf_limits() is called.
+oop0: detected capacity change from 0 to 32768
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 192cdb1c907f ("cpufreq: intel_pstate: Refine computation of P-state for given frequency")
+UBSAN: array-index-out-of-bounds in fs/jfs/jfs_dtree.c:1971:9
+index -2 is out of range for type 'struct dtslot [128]'
+CPU: 0 PID: 3613 Comm: syz-executor270 Not tainted 6.0.0-syzkaller-09423-g493ffd6605b2 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/22/2022
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+ ubsan_epilogue lib/ubsan.c:151 [inline]
+ __ubsan_handle_out_of_bounds+0xdb/0x130 lib/ubsan.c:283
+ dtSplitRoot+0x8d8/0x1900 fs/jfs/jfs_dtree.c:1971
+ dtSplitUp fs/jfs/jfs_dtree.c:985 [inline]
+ dtInsert+0x1189/0x6b80 fs/jfs/jfs_dtree.c:863
+ jfs_mkdir+0x757/0xb00 fs/jfs/namei.c:270
+ vfs_mkdir+0x3b3/0x590 fs/namei.c:4013
+ do_mkdirat+0x279/0x550 fs/namei.c:4038
+ __do_sys_mkdirat fs/namei.c:4053 [inline]
+ __se_sys_mkdirat fs/namei.c:4051 [inline]
+ __x64_sys_mkdirat+0x85/0x90 fs/namei.c:4051
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fcdc0113fd9
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 c0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffeb8bc67d8 EFLAGS: 00000246 ORIG_RAX: 0000000000000102
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007fcdc0113fd9
+RDX: 0000000000000000 RSI: 0000000020000340 RDI: 0000000000000003
+RBP: 00007fcdc00d37a0 R08: 0000000000000000 R09: 00007fcdc00d37a0
+R10: 00005555559a72c0 R11: 0000000000000246 R12: 00000000f8008000
+R13: 0000000000000000 R14: 00083878000000f8 R15: 0000000000000000
+ </TASK>
+
+The issue is caused when the value of fsi becomes less than -1.
+The check to break the loop when fsi value becomes -1 is present
+but syzbot was able to produce value less than -1 which cause the error.
+This patch simply add the change for the values less than 0.
+
+The patch is tested via syzbot.
+
+Reported-and-tested-by: syzbot+d4b1df2e9d4ded6488ec@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=d4b1df2e9d4ded6488ec
+Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/intel_pstate.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ fs/jfs/jfs_dtree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 736cb2cfcbb0..f2a94afb6eec 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -2332,18 +2332,14 @@ static void intel_pstate_update_perf_limits(struct cpudata *cpu,
- 	 * HWP needs some special consideration, because HWP_REQUEST uses
- 	 * abstract values to represent performance rather than pure ratios.
- 	 */
--	if (hwp_active) {
--		intel_pstate_get_hwp_cap(cpu);
--
--		if (cpu->pstate.scaling != perf_ctl_scaling) {
--			int scaling = cpu->pstate.scaling;
--			int freq;
--
--			freq = max_policy_perf * perf_ctl_scaling;
--			max_policy_perf = DIV_ROUND_UP(freq, scaling);
--			freq = min_policy_perf * perf_ctl_scaling;
--			min_policy_perf = DIV_ROUND_UP(freq, scaling);
--		}
-+	if (hwp_active && cpu->pstate.scaling != perf_ctl_scaling) {
-+		int scaling = cpu->pstate.scaling;
-+		int freq;
-+
-+		freq = max_policy_perf * perf_ctl_scaling;
-+		max_policy_perf = DIV_ROUND_UP(freq, scaling);
-+		freq = min_policy_perf * perf_ctl_scaling;
-+		min_policy_perf = DIV_ROUND_UP(freq, scaling);
- 	}
+diff --git a/fs/jfs/jfs_dtree.c b/fs/jfs/jfs_dtree.c
+index 837d42f61464..fafcb90219cf 100644
+--- a/fs/jfs/jfs_dtree.c
++++ b/fs/jfs/jfs_dtree.c
+@@ -1970,7 +1970,7 @@ static int dtSplitRoot(tid_t tid,
+ 		do {
+ 			f = &rp->slot[fsi];
+ 			fsi = f->next;
+-		} while (fsi != -1);
++		} while (fsi >= 0);
  
- 	pr_debug("cpu:%d min_policy_perf:%d max_policy_perf:%d\n",
+ 		f->next = n;
+ 	}
 -- 
 2.43.0
 
