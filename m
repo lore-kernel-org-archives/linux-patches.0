@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7483D981;
-	Wed, 21 Feb 2024 14:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518CA3D981;
+	Wed, 21 Feb 2024 14:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525047; cv=none; b=uaC1ZCByxARwgWTb9KgL21miFBAj29NQ5ou0ap98fXh2G3jBvk8ikmtUXmIyyH3Gmo2ttST7cUX7hVzT05MYeuSZZ5mAY7+9MOKPG6Pz3Q3YAWl10HXEffOsQ3QyjnEZEl21coyhihQcujsr888NOC+iEZe3LxQIu4tRd7AjK8Y=
+	t=1708525050; cv=none; b=rIb58Nw2t3se3Q4XSXLbNGu7mOjBNcJ4Smv8ApfrwO3sysqEqB6oh1XfkulhnGNxK2hClly363cNsQfOTpMIHcPNn7iR6ZRlUx4eS3mgB9FE2A5fmWFbqVTDpX+sEGE/tpmNRwjX+T+3dkBWWDRQuS8wSzCm2TnmelkY8JW77VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525047; c=relaxed/simple;
-	bh=FAGRXOanxUF5yFshvzS9qzpjInK0aUuCsRTinPquOEk=;
+	s=arc-20240116; t=1708525050; c=relaxed/simple;
+	bh=S76vDaAZZ4HoyVwPIcrsng5hjQiRi5rVOD2rATuXhKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRvY5hGPtHzVyZpJM2lP70vTX3+z2O/9jUF+RiNnUz2qVv0lMOezzpoKzQd9JF8pajsFoXorOs+1xtBilAKZ+LLCsS/S5MONzbAFnc2g+SwxdErTHDBZfyvzyAMZzc54V8JEaWTKDYOyRhUjpHJuXzodUOU+CUnOAU9Ex3l0tgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJAVtyyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HTOvMAUv5wqcicDOe90lxDjiLf0f/xpWeLtqG0KdkL3uiHpOtWbXAjz4phGw4GA+e0e/H6c7CeRgts/9s7+J7XYVUMlZCbVzdFis2ej1UJ3mwBfiRBMMso798JEwV6jXzcwS1HIuXJXXm+K+uPkIgCyfblz25xKqgvAIR70nVkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlOyw9U7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJAVtyyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93851C433C7;
-	Wed, 21 Feb 2024 14:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlOyw9U7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5D1C433F1;
+	Wed, 21 Feb 2024 14:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525047;
-	bh=FAGRXOanxUF5yFshvzS9qzpjInK0aUuCsRTinPquOEk=;
+	s=korg; t=1708525050;
+	bh=S76vDaAZZ4HoyVwPIcrsng5hjQiRi5rVOD2rATuXhKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJAVtyywHwgPNjRirpxmASGX9865q7qwB+srbTjm8lD9MTulg1KjJ/o1Egu/1+71w
-	 f75V/0ZwK1jI1saI03BXQNkohq1bRotplzCeqqabr/nLkMc20zamia4HJv8cnZeJNr
-	 hajSgv5bHink+XxZvo9Jp8sX67L8jx92zktfGgtA=
+	b=SlOyw9U7m851d7JLZOw//KUH/YZmkS8w7UZpno52LzoHU7/q7sq7tane65r8TTgbk
+	 c71B0i2nZ74GdUakxY1/JW8eaX4O20nY4TDpHPeZ0rmWumDzyOlfaGcFuM57Igj93X
+	 V8KSvB2xjaRPYByJ3WhQQvPoZmnvW76aKRSFkF0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@wdc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 016/267] mmc: core: Use mrq.sbc in close-ended ffu
-Date: Wed, 21 Feb 2024 14:05:57 +0100
-Message-ID: <20240221125940.565350890@linuxfoundation.org>
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 5.4 017/267] nouveau/vmm: dont set addr on the fail path to avoid warning
+Date: Wed, 21 Feb 2024 14:05:58 +0100
+Message-ID: <20240221125940.595099723@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -45,151 +44,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Avri Altman <avri.altman@wdc.com>
+From: Dave Airlie <airlied@redhat.com>
 
-commit 4d0c8d0aef6355660b6775d57ccd5d4ea2e15802 upstream.
+commit cacea81390fd8c8c85404e5eb2adeb83d87a912e upstream.
 
-Field Firmware Update (ffu) may use close-ended or open ended sequence.
-Each such sequence is comprised of a write commands enclosed between 2
-switch commands - to and from ffu mode. So for the close-ended case, it
-will be: cmd6->cmd23-cmd25-cmd6.
+nvif_vmm_put gets called if addr is set, but if the allocation
+fails we don't need to call put, otherwise we get a warning like
 
-Some host controllers however, get confused when multi-block rw is sent
-without sbc, and may generate auto-cmd12 which breaks the ffu sequence.
-I encountered  this issue while testing fwupd (github.com/fwupd/fwupd)
-on HP Chromebook x2, a qualcomm based QC-7c, code name - strongbad.
+[523232.435671] ------------[ cut here ]------------
+[523232.435674] WARNING: CPU: 8 PID: 1505697 at drivers/gpu/drm/nouveau/nvi=
+f/vmm.c:68 nvif_vmm_put+0x72/0x80 [nouveau]
+[523232.435795] Modules linked in: uinput rfcomm snd_seq_dummy snd_hrtimer =
+nf_conntrack_netbios_ns nf_conntrack_broadcast nft_fib_inet nft_fib_ipv4 nf=
+t_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject=
+ nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_=
+set nf_tables nfnetlink qrtr bnep sunrpc binfmt_misc intel_rapl_msr intel_r=
+apl_common intel_uncore_frequency intel_uncore_frequency_common isst_if_com=
+mon iwlmvm nfit libnvdimm vfat fat x86_pkg_temp_thermal intel_powerclamp ma=
+c80211 snd_soc_avs snd_soc_hda_codec coretemp snd_hda_ext_core snd_soc_core=
+ snd_hda_codec_realtek kvm_intel snd_hda_codec_hdmi snd_compress snd_hda_co=
+dec_generic ac97_bus snd_pcm_dmaengine snd_hda_intel libarc4 snd_intel_dspc=
+fg snd_intel_sdw_acpi snd_hda_codec kvm iwlwifi snd_hda_core btusb snd_hwde=
+p btrtl snd_seq btintel irqbypass btbcm rapl snd_seq_device eeepc_wmi btmtk=
+ intel_cstate iTCO_wdt cfg80211 snd_pcm asus_wmi bluetooth intel_pmc_bxt iT=
+CO_vendor_support snd_timer ledtrig_audio pktcdvd snd mei_me
+[523232.435828]  sparse_keymap intel_uncore i2c_i801 platform_profile wmi_b=
+mof mei pcspkr ioatdma soundcore i2c_smbus rfkill idma64 dca joydev acpi_ta=
+d loop zram nouveau drm_ttm_helper ttm video drm_exec drm_gpuvm gpu_sched c=
+rct10dif_pclmul i2c_algo_bit nvme crc32_pclmul crc32c_intel drm_display_hel=
+per polyval_clmulni nvme_core polyval_generic e1000e mxm_wmi cec ghash_clmu=
+lni_intel r8169 sha512_ssse3 nvme_common wmi pinctrl_sunrisepoint uas usb_s=
+torage ip6_tables ip_tables fuse
+[523232.435849] CPU: 8 PID: 1505697 Comm: gnome-shell Tainted: G        W  =
+        6.6.0-rc7-nvk-uapi+ #12
+[523232.435851] Hardware name: System manufacturer System Product Name/ROG =
+STRIX X299-E GAMING II, BIOS 1301 09/24/2021
+[523232.435852] RIP: 0010:nvif_vmm_put+0x72/0x80 [nouveau]
+[523232.435934] Code: 00 00 48 89 e2 be 02 00 00 00 48 c7 04 24 00 00 00 00=
+ 48 89 44 24 08 e8 fc bf ff ff 85
+c0 75 0a 48 c7 43 08 00 00 00 00 eb b3 <0f> 0b eb f2 e8 f5 c9 b2 e6 0f 1f 4=
+4 00 00 90 90 90 90 90 90 90 90
+[523232.435936] RSP: 0018:ffffc900077ffbd8 EFLAGS: 00010282
+[523232.435937] RAX: 00000000fffffffe RBX: ffffc900077ffc00 RCX: 0000000000=
+000010
+[523232.435938] RDX: 0000000000000010 RSI: ffffc900077ffb38 RDI: ffffc90007=
+7ffbd8
+[523232.435940] RBP: ffff888e1c4f2140 R08: 0000000000000000 R09: 0000000000=
+000000
+[523232.435940] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888503=
+811800
+[523232.435941] R13: ffffc900077ffca0 R14: ffff888e1c4f2140 R15: ffff888103=
+17e1e0
+[523232.435942] FS:  00007f933a769640(0000) GS:ffff88905fa00000(0000) knlGS=
+:0000000000000000
+[523232.435943] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[523232.435944] CR2: 00007f930bef7000 CR3: 00000005d0322001 CR4: 0000000000=
+3706e0
+[523232.435945] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000=
+000000
+[523232.435946] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000=
+000400
+[523232.435964] Call Trace:
+[523232.435965]  <TASK>
+[523232.435966]  ? nvif_vmm_put+0x72/0x80 [nouveau]
+[523232.436051]  ? __warn+0x81/0x130
+[523232.436055]  ? nvif_vmm_put+0x72/0x80 [nouveau]
+[523232.436138]  ? report_bug+0x171/0x1a0
+[523232.436142]  ? handle_bug+0x3c/0x80
+[523232.436144]  ? exc_invalid_op+0x17/0x70
+[523232.436145]  ? asm_exc_invalid_op+0x1a/0x20
+[523232.436149]  ? nvif_vmm_put+0x72/0x80 [nouveau]
+[523232.436230]  ? nvif_vmm_put+0x64/0x80 [nouveau]
+[523232.436342]  nouveau_vma_del+0x80/0xd0 [nouveau]
+[523232.436506]  nouveau_vma_new+0x1a0/0x210 [nouveau]
+[523232.436671]  nouveau_gem_object_open+0x1d0/0x1f0 [nouveau]
+[523232.436835]  drm_gem_handle_create_tail+0xd1/0x180
+[523232.436840]  drm_prime_fd_to_handle_ioctl+0x12e/0x200
+[523232.436844]  ? __pfx_drm_prime_fd_to_handle_ioctl+0x10/0x10
+[523232.436847]  drm_ioctl_kernel+0xd3/0x180
+[523232.436849]  drm_ioctl+0x26d/0x4b0
+[523232.436851]  ? __pfx_drm_prime_fd_to_handle_ioctl+0x10/0x10
+[523232.436855]  nouveau_drm_ioctl+0x5a/0xb0 [nouveau]
+[523232.437032]  __x64_sys_ioctl+0x94/0xd0
+[523232.437036]  do_syscall_64+0x5d/0x90
+[523232.437040]  ? syscall_exit_to_user_mode+0x2b/0x40
+[523232.437044]  ? do_syscall_64+0x6c/0x90
+[523232.437046]  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-Instead of a quirk, or hooking the request function of the msm ops,
-it would be better to fix the ioctl handling and make it use mrq.sbc
-instead of issuing SET_BLOCK_COUNT separately.
-
-Signed-off-by: Avri Altman <avri.altman@wdc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Reported-by: Faith Ekstrand <faith.ekstrand@collabora.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231129092535.3278-1-avri.altman@wdc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240117213852.295565-1=
+-airlied@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/block.c |   46 +++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 43 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_vmm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/core/block.c
-+++ b/drivers/mmc/core/block.c
-@@ -345,6 +345,10 @@ struct mmc_blk_ioc_data {
- 	struct mmc_ioc_cmd ic;
- 	unsigned char *buf;
- 	u64 buf_bytes;
-+	unsigned int flags;
-+#define MMC_BLK_IOC_DROP	BIT(0)	/* drop this mrq */
-+#define MMC_BLK_IOC_SBC	BIT(1)	/* use mrq.sbc */
+--- a/drivers/gpu/drm/nouveau/nouveau_vmm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_vmm.c
+@@ -108,6 +108,9 @@ nouveau_vma_new(struct nouveau_bo *nvbo,
+ 	} else {
+ 		ret =3D nvif_vmm_get(&vmm->vmm, PTES, false, mem->mem.page, 0,
+ 				   mem->mem.size, &tmp);
++		if (ret)
++			goto done;
 +
- 	struct mmc_rpmb_data *rpmb;
- };
- 
-@@ -490,7 +494,7 @@ static int card_busy_detect(struct mmc_c
- }
- 
- static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
--			       struct mmc_blk_ioc_data *idata)
-+			       struct mmc_blk_ioc_data **idatas, int i)
- {
- 	struct mmc_command cmd = {}, sbc = {};
- 	struct mmc_data data = {};
-@@ -498,10 +502,18 @@ static int __mmc_blk_ioctl_cmd(struct mm
- 	struct scatterlist sg;
- 	int err;
- 	unsigned int target_part;
-+	struct mmc_blk_ioc_data *idata = idatas[i];
-+	struct mmc_blk_ioc_data *prev_idata = NULL;
- 
- 	if (!card || !md || !idata)
- 		return -EINVAL;
- 
-+	if (idata->flags & MMC_BLK_IOC_DROP)
-+		return 0;
-+
-+	if (idata->flags & MMC_BLK_IOC_SBC)
-+		prev_idata = idatas[i - 1];
-+
- 	/*
- 	 * The RPMB accesses comes in from the character device, so we
- 	 * need to target these explicitly. Else we just target the
-@@ -568,7 +580,7 @@ static int __mmc_blk_ioctl_cmd(struct mm
- 			return err;
+ 		vma->addr =3D tmp.addr;
  	}
- 
--	if (idata->rpmb) {
-+	if (idata->rpmb || prev_idata) {
- 		sbc.opcode = MMC_SET_BLOCK_COUNT;
- 		/*
- 		 * We don't do any blockcount validation because the max size
-@@ -576,6 +588,8 @@ static int __mmc_blk_ioctl_cmd(struct mm
- 		 * 'Reliable Write' bit here.
- 		 */
- 		sbc.arg = data.blocks | (idata->ic.write_flag & BIT(31));
-+		if (prev_idata)
-+			sbc.arg = prev_idata->ic.arg;
- 		sbc.flags = MMC_RSP_R1 | MMC_CMD_AC;
- 		mrq.sbc = &sbc;
- 	}
-@@ -594,6 +608,15 @@ static int __mmc_blk_ioctl_cmd(struct mm
- 	mmc_wait_for_req(card->host, &mrq);
- 	memcpy(&idata->ic.response, cmd.resp, sizeof(cmd.resp));
- 
-+	if (prev_idata) {
-+		memcpy(&prev_idata->ic.response, sbc.resp, sizeof(sbc.resp));
-+		if (sbc.error) {
-+			dev_err(mmc_dev(card->host), "%s: sbc error %d\n",
-+							__func__, sbc.error);
-+			return sbc.error;
-+		}
-+	}
-+
- 	if (cmd.error) {
- 		dev_err(mmc_dev(card->host), "%s: cmd error %d\n",
- 						__func__, cmd.error);
-@@ -1035,6 +1058,20 @@ static inline void mmc_blk_reset_success
- 	md->reset_done &= ~type;
- }
- 
-+static void mmc_blk_check_sbc(struct mmc_queue_req *mq_rq)
-+{
-+	struct mmc_blk_ioc_data **idata = mq_rq->drv_op_data;
-+	int i;
-+
-+	for (i = 1; i < mq_rq->ioc_count; i++) {
-+		if (idata[i - 1]->ic.opcode == MMC_SET_BLOCK_COUNT &&
-+		    mmc_op_multi(idata[i]->ic.opcode)) {
-+			idata[i - 1]->flags |= MMC_BLK_IOC_DROP;
-+			idata[i]->flags |= MMC_BLK_IOC_SBC;
-+		}
-+	}
-+}
-+
- /*
-  * The non-block commands come back from the block layer after it queued it and
-  * processed it with all other requests and then they get issued in this
-@@ -1062,11 +1099,14 @@ static void mmc_blk_issue_drv_op(struct
- 			if (ret)
- 				break;
- 		}
-+
-+		mmc_blk_check_sbc(mq_rq);
-+
- 		fallthrough;
- 	case MMC_DRV_OP_IOCTL_RPMB:
- 		idata = mq_rq->drv_op_data;
- 		for (i = 0, ret = 0; i < mq_rq->ioc_count; i++) {
--			ret = __mmc_blk_ioctl_cmd(card, md, idata[i]);
-+			ret = __mmc_blk_ioctl_cmd(card, md, idata, i);
- 			if (ret)
- 				break;
- 		}
+=20
 
 
