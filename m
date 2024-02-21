@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A2253816;
-	Wed, 21 Feb 2024 13:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1049173161;
+	Wed, 21 Feb 2024 13:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521746; cv=none; b=PXTBNOBv3plGFSsAISet9NA8VN0A5M5zvJiUNRCWioFZWKTv+zBLHYwzOE+Ym+itubom0ICpxh/AYkCMuf9kmD3QwX0z2tkrt5SYAw9eCYmV9QYpJgp9Yy7khjEYosTXyA0imEk4Ve16AIZDHQk2VagD+vfvvD5JsSyL4j4fG6Y=
+	t=1708521755; cv=none; b=nHobrKVM+cvnGxFxpEsArHfVhVZo7MQG9V5hnGNn0Q5OOGUjJSkgl1Uwm1ZMgjXhxoedIFK3YQGrRr4vBPRkG11Zg51D6PxtQiCZQ790XA9e534NxTFBCbjuYu7TFeWRBqOvqhERNsrQv1r4anc52+2xIlmtNQd7FjoqaeocY0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521746; c=relaxed/simple;
-	bh=XYK1/oOTHMlLyMp8ocu40SQ4xn1rYKSVyUhlmLaFbbA=;
+	s=arc-20240116; t=1708521755; c=relaxed/simple;
+	bh=25Gj7m4FkclrBImbi55YzYlLSglHauGN48rs89CA3K4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7T8MFVtAQFBvB8/r5qytEVTHtAXcEa8WV2kCVwrMu50u9tP3hCtk79701ogjJs2oXvpW9bakr4KrosfmOOdLXBLyuicMewf1PXzESAQl8wlT1eHfj7oBEOVrNNTABxp15tXw8ESXFlWE+UbZQedDTn5/dH4MdyEbUvVJTnuJv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbrF4OvH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uaneI9p8+D3mYK517VRG/0XsPercyko0CDkPRHaOAORaJWhOCZRX1ZqAvhOX5AQDftewdawkZGH26OVDMbtWaWjsqMdbqCG1IiEXbzoKQrinvbzmlmnyoj6Y89fLsLvO1PHIksmxxkaEnZNAPzcv/1U3tnNntVCDrwJ3atgO0ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaiVt2S/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbrF4OvH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCCBC433C7;
-	Wed, 21 Feb 2024 13:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaiVt2S/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABB7C433F1;
+	Wed, 21 Feb 2024 13:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521746;
-	bh=XYK1/oOTHMlLyMp8ocu40SQ4xn1rYKSVyUhlmLaFbbA=;
+	s=korg; t=1708521754;
+	bh=25Gj7m4FkclrBImbi55YzYlLSglHauGN48rs89CA3K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbrF4OvHWp9ky6rpXTDqjlENRgaRHOo0jxTUFR3vJk6n9bXUdqVDLAzciMIcuCwUz
-	 OiMTUdMg8mHTDU2Ms957dKWXswgBQXfzBYO1Z4bxqvZCJx+TD46WCn8fCpYa5PYQ3l
-	 /2mP9dyI1ugUug8QlZItP7Zf20PAJ5RiLh4YQB1c=
+	b=GaiVt2S/qqO4DCW+ApHLMcn3gKv/54PMWbz1OfGQjJ2Wv07aBqL1PiOlH2aTwKknX
+	 R0cQulsHO4CSmtZ/F06V6un+1KyyPRzouLk5JvTMMP7ATFoqD2JHE5ApnqsscXUcxx
+	 UYJDGFS7I94jeaXNiGg18zugICvmKpISXQ5tJFXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Basilio <daniel.basilio@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 194/202] nfp: use correct macro for LengthSelect in BAR config
-Date: Wed, 21 Feb 2024 14:08:15 +0100
-Message-ID: <20240221125938.056072485@linuxfoundation.org>
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 4.19 195/202] irqchip/irq-brcmstb-l2: Add write memory barrier before exit
+Date: Wed, 21 Feb 2024 14:08:16 +0100
+Message-ID: <20240221125938.095317014@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -51,46 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Basilio <daniel.basilio@corigine.com>
+From: Doug Berger <opendmb@gmail.com>
 
-commit b3d4f7f2288901ed2392695919b3c0e24c1b4084 upstream.
+commit b0344d6854d25a8b3b901c778b1728885dd99007 upstream.
 
-The 1st and 2nd expansion BAR configuration registers are configured,
-when the driver starts up, in variables 'barcfg_msix_general' and
-'barcfg_msix_xpb', respectively. The 'LengthSelect' field is ORed in
-from bit 0, which is incorrect. The 'LengthSelect' field should
-start from bit 27.
+It was observed on Broadcom devices that use GIC v3 architecture L1
+interrupt controllers as the parent of brcmstb-l2 interrupt controllers
+that the deactivation of the parent interrupt could happen before the
+brcmstb-l2 deasserted its output. This would lead the GIC to reactivate the
+interrupt only to find that no L2 interrupt was pending. The result was a
+spurious interrupt invoking handle_bad_irq() with its associated
+messaging. While this did not create a functional problem it is a waste of
+cycles.
 
-This has largely gone un-noticed because
-NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT happens to be 0.
+The hazard exists because the memory mapped bus writes to the brcmstb-l2
+registers are buffered and the GIC v3 architecture uses a very efficient
+system register write to deactivate the interrupt.
 
-Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
-Cc: stable@vger.kernel.org # 4.11+
-Signed-off-by: Daniel Basilio <daniel.basilio@corigine.com>
-Signed-off-by: Louis Peens <louis.peens@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add a write memory barrier prior to invoking chained_irq_exit() to
+introduce a dsb(st) on those systems to ensure the system register write
+cannot be executed until the memory mapped writes are visible to the
+system.
+
+[ florian: Added Fixes tag ]
+
+Fixes: 7f646e92766e ("irqchip: brcmstb-l2: Add Broadcom Set Top Box  Level-2 interrupt controller")
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240210012449.3009125-1-florian.fainelli@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-brcmstb-l2.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
-@@ -571,11 +571,13 @@ static int enable_bars(struct nfp6000_pc
- 	const u32 barcfg_msix_general =
- 		NFP_PCIE_BAR_PCIE2CPP_MapType(
- 			NFP_PCIE_BAR_PCIE2CPP_MapType_GENERAL) |
--		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT;
-+		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
-+			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT);
- 	const u32 barcfg_msix_xpb =
- 		NFP_PCIE_BAR_PCIE2CPP_MapType(
- 			NFP_PCIE_BAR_PCIE2CPP_MapType_BULK) |
--		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT |
-+		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
-+			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT) |
- 		NFP_PCIE_BAR_PCIE2CPP_Target_BaseAddress(
- 			NFP_CPP_TARGET_ISLAND_XPB);
- 	const u32 barcfg_explicit[4] = {
+--- a/drivers/irqchip/irq-brcmstb-l2.c
++++ b/drivers/irqchip/irq-brcmstb-l2.c
+@@ -121,6 +121,9 @@ static void brcmstb_l2_intc_irq_handle(s
+ 		generic_handle_irq(irq_linear_revmap(b->domain, irq));
+ 	} while (status);
+ out:
++	/* Don't ack parent before all device writes are done */
++	wmb();
++
+ 	chained_irq_exit(chip, desc);
+ }
+ 
 
 
