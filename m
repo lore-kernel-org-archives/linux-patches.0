@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E6F78B73;
-	Wed, 21 Feb 2024 14:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09FF3B287;
+	Wed, 21 Feb 2024 14:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525601; cv=none; b=ZLZ2fw5aWrLxAvBlMYDd0d/EzD2UZPMq1gqbJp3nL55tlSrnxl+Be0P5MfxywXug67mq78tpA5d3Ikz7BJhkRkQdh0EEmySz5pCQWSqfDiCOvy7kqMKWBgx2x+7JVxEKbszzZnhJ47IUh/x81emolkQG1pzPhFVY4jkCLC/Ku34=
+	t=1708525603; cv=none; b=KYDQRY/d3aQjXvWRS37jxHouMfYYjmBhNsV7yMJP09iqTSPL7rEQzkyYcnUUhSzR6Sa/j9MeblJH3udL8yKlEHCMPZ+8WLivCp9ZDSDUsfI6WwFy9hZu1x3/SjXSzuI6rbi6nne2QqYTjZEgsvppRmZxIo9NbXkLbOo9ypJwfQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525601; c=relaxed/simple;
-	bh=xiYW76gwzki4L249pSFrDneJLNWzZGz/kdAyResKxqA=;
+	s=arc-20240116; t=1708525603; c=relaxed/simple;
+	bh=ZyRWxMa+e5VC92YNZEdmTcX4QEpSB9vwnTm+hoY+gpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSoBlOd+YUh0yTS246CfwBHj1a3rECR+2VWA9qsppQespt7wTARgIJhBKwORWuc/oLScjVlEXzHQEFgiNrW1VCrh+hkmsNeJ8+CISu9ovGv9ewzVUVsFEFU96AEx/+67oVHr3EhB/lj+4UhukRvmbta8ELZ0DF1YB8LZKCCIsng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XH//7BSJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RMLB/Kw7LbpHaKZXVAqFdww/DJ1G1owIAZ3sDFpwDMAsjoYxI82vmaGlJDokdbcqtcbx06zTcDuQOgQ1d/oOR2mOe/DH1hAb2yv3NjlollfB3qRS5obmpAGANJf8Zveus8gdFEXCcFp4FnaVkWRKia6C7piEEg1QH5fw0IDso30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HenriSG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XH//7BSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B162AC433C7;
-	Wed, 21 Feb 2024 14:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HenriSG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31875C433C7;
+	Wed, 21 Feb 2024 14:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525600;
-	bh=xiYW76gwzki4L249pSFrDneJLNWzZGz/kdAyResKxqA=;
+	s=korg; t=1708525603;
+	bh=ZyRWxMa+e5VC92YNZEdmTcX4QEpSB9vwnTm+hoY+gpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XH//7BSJo40wHqG2xynbh0aNTNKyICGMBYJJWCS2XzTqyCtAfYUm4d4jx2jNiZraD
-	 PWcn4fD/eHW1Y35Zhh69WQ/pcJBuFUGgfcnu5CvqZ0SNT0TayhM+KEeAw8zYJL1pbx
-	 Hrkjrsovcknj6SQPzqzqEUg7i45xmqxIT4Ftn2gs=
+	b=HenriSG1s5H+8gSHVSX7Iz7DCnxXk7akaHk3C+HyYXMRU5l3ruuL9Cm6fA3JQ7jR4
+	 iyWD3t5LtJLfat45QhhHxO5htBao+TDk3s/kUbW9oiZAZ2RGuzITyFVDBKZVSAtO7h
+	 u6s+Jndo3Af7wxCzTWlHroJ8RtsT8IIBRyB6FWkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 205/267] btrfs: forbid deleting live subvol qgroup
-Date: Wed, 21 Feb 2024 14:09:06 +0100
-Message-ID: <20240221125946.613805866@linuxfoundation.org>
+Subject: [PATCH 5.4 206/267] btrfs: send: return EOPNOTSUPP on unknown flags
+Date: Wed, 21 Feb 2024 14:09:07 +0100
+Message-ID: <20240221125946.651109128@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,54 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: David Sterba <dsterba@suse.com>
 
-commit a8df35619948bd8363d330c20a90c9a7fbff28c0 upstream.
+commit f884a9f9e59206a2d41f265e7e403f080d10b493 upstream.
 
-If a subvolume still exists, forbid deleting its qgroup 0/subvolid.
-This behavior generally leads to incorrect behavior in squotas and
-doesn't have a legitimate purpose.
+When some ioctl flags are checked we return EOPNOTSUPP, like for
+BTRFS_SCRUB_SUPPORTED_FLAGS, BTRFS_SUBVOL_CREATE_ARGS_MASK or fallocate
+modes. The EINVAL is supposed to be for a supported but invalid
+values or combination of options. Fix that when checking send flags so
+it's consistent with the rest.
 
-Fixes: cecbb533b5fc ("btrfs: record simple quota deltas in delayed refs")
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
+CC: stable@vger.kernel.org # 4.14+
+Link: https://lore.kernel.org/linux-btrfs/CAL3q7H5rryOLzp3EKq8RTbjMHMHeaJubfpsVLF6H4qJnKCUR1w@mail.gmail.com/
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/btrfs/send.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -1561,6 +1561,15 @@ out:
- 	return ret;
- }
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -7363,7 +7363,7 @@ long btrfs_ioctl_send(struct file *mnt_f
+ 	}
  
-+static bool qgroup_has_usage(struct btrfs_qgroup *qgroup)
-+{
-+	return (qgroup->rfer > 0 || qgroup->rfer_cmpr > 0 ||
-+		qgroup->excl > 0 || qgroup->excl_cmpr > 0 ||
-+		qgroup->rsv.values[BTRFS_QGROUP_RSV_DATA] > 0 ||
-+		qgroup->rsv.values[BTRFS_QGROUP_RSV_META_PREALLOC] > 0 ||
-+		qgroup->rsv.values[BTRFS_QGROUP_RSV_META_PERTRANS] > 0);
-+}
-+
- int btrfs_remove_qgroup(struct btrfs_trans_handle *trans, u64 qgroupid)
- {
- 	struct btrfs_fs_info *fs_info = trans->fs_info;
-@@ -1580,6 +1589,11 @@ int btrfs_remove_qgroup(struct btrfs_tra
+ 	if (arg->flags & ~BTRFS_SEND_FLAG_MASK) {
+-		ret = -EINVAL;
++		ret = -EOPNOTSUPP;
  		goto out;
  	}
  
-+	if (is_fstree(qgroupid) && qgroup_has_usage(qgroup)) {
-+		ret = -EBUSY;
-+		goto out;
-+	}
-+
- 	/* Check if there are no children of this qgroup */
- 	if (!list_empty(&qgroup->members)) {
- 		ret = -EBUSY;
 
 
