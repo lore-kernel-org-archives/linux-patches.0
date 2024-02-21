@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1168469D09;
-	Wed, 21 Feb 2024 13:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B391E522;
+	Wed, 21 Feb 2024 13:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521300; cv=none; b=lx9sVjofeDaGPkvrXKOG5RZh9Jd6si5J1Bfqo+EkE8T/7mWJR2lzfs3d/WWhESJ26pySNUd88g1HcKB+emXLgCcBeQ0iMBMbhVCx676MB4tX1aS7M4kWTpNeVOtqg5zxhuwiaQLS3YdBF6jo7xtJBVWncl+VZKBt+z/0Wygo91Q=
+	t=1708521303; cv=none; b=U0hBRQMjmSZ0V+g95WYJFzsmDTqFVzqp4KgnGaCoOkcIH6r5l3Xk9QgRxhy+CfAbkumDec0dxbDpzB428ugKz+C5BBc+unNoV0157S/kZQ265Af7xN5wS22t8+rvdAUj9h0L1WN9T28si2Tbtb6VKKHVXMyO0s2DdMr5DS0Cgik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521300; c=relaxed/simple;
-	bh=ss1KEpUsUJixKytzjlbaAvU78vRQunONTnKbAmBCl/E=;
+	s=arc-20240116; t=1708521303; c=relaxed/simple;
+	bh=PYIa/QigolERIMMGtvhKok6Yvtr93muyO1K76vxyOoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPEINcq3hCUerfXGggZoG4tzl5FMWBCv0QB3GDQ+nrvsRb9yToWG1Vp00TWY3G2e8IydjIrao2j+7W2ds60ZEci4t8gsYEI1/M1cQLlnYTLreFBPnUmH+6z8qEVYiVpI9SgjrruXrouCO2BcFA961u5aZA42q+ei97vNIMf06i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLAvngXT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buklcPCsE0o/kyP87V9TJ8Lw7qk3wYgpK7TtLq9ekujYrSbQjoy1T/lpS2fuLtEyDKc910HxI3KbkRGvT5aGUvbCM11dWZwEGcJR8TZoFsv822CsrZl6M08DLPHsIyyY9rO7jLpzFeQyOMljLFArcrFVD2jEjiLRzrcSGleXXAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiYifguy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLAvngXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73528C433C7;
-	Wed, 21 Feb 2024 13:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiYifguy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917CFC433C7;
+	Wed, 21 Feb 2024 13:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521299;
-	bh=ss1KEpUsUJixKytzjlbaAvU78vRQunONTnKbAmBCl/E=;
+	s=korg; t=1708521303;
+	bh=PYIa/QigolERIMMGtvhKok6Yvtr93muyO1K76vxyOoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLAvngXTDqzFrY/39ki25XS6Kr8covV1D1mRM8s1iv40ht3eaayLLcq6xo0W8Jxc/
-	 sK4ECS4YzvQzybjKre92WIFC4Mv/wYodaC39e3b8RMgqy0WuRsf3oCumr+jZlxx4sv
-	 YDq8kuGaHrcH72Ekk+IWLDIPKP+eyleVengPRVYY=
+	b=AiYifguyORKsis5gmsIuPtDIylBOxMj7KT+JJGY/fB/U5S1Ng6oA6GuJKJCeKA6Om
+	 9UsCn/YIAHxgb6FhOfdDeASqeTy2AC996HbzgQZTLHmWEH3PQZGVYD9eHtZ/XTp5gF
+	 3AptQUD06byuTgmZ0Hh+FXCzHZxDNlKFQkZHIF4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Richard Palethorpe <rpalethorpe@suse.com>,
-	Nikolay Borisov <nik.borisov@suse.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.19 048/202] x86/entry/ia32: Ensure s32 is sign extended to s64
-Date: Wed, 21 Feb 2024 14:05:49 +0100
-Message-ID: <20240221125933.370602192@linuxfoundation.org>
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 049/202] net/sched: cbs: Fix not adding cbs instance to list
+Date: Wed, 21 Feb 2024 14:05:50 +0100
+Message-ID: <20240221125933.410439817@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -52,86 +51,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Palethorpe <rpalethorpe@suse.com>
+From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 
-commit 56062d60f117dccfb5281869e0ab61e090baf864 upstream.
+commit 3e8b9bfa110896f95d602d8c98d5f9d67e41d78c upstream.
 
-Presently ia32 registers stored in ptregs are unconditionally cast to
-unsigned int by the ia32 stub. They are then cast to long when passed to
-__se_sys*, but will not be sign extended.
+When removing a cbs instance when offloading is enabled, the crash
+below can be observed.
 
-This takes the sign of the syscall argument into account in the ia32
-stub. It still casts to unsigned int to avoid implementation specific
-behavior. However then casts to int or unsigned int as necessary. So that
-the following cast to long sign extends the value.
+The problem happens because that when offloading is enabled, the cbs
+instance is not added to the list.
 
-This fixes the io_pgetevents02 LTP test when compiled with -m32. Presently
-the systemcall io_pgetevents_time64() unexpectedly accepts -1 for the
-maximum number of events.
+Also, the current code doesn't handle correctly the case when offload
+is disabled without removing the qdisc: if the link speed changes the
+credit calculations will be wrong. When we create the cbs instance
+with offloading enabled, it's not added to the notification list, when
+later we disable offloading, it's not in the list, so link speed
+changes will not affect it.
 
-It doesn't appear other systemcalls with signed arguments are effected
-because they all have compat variants defined and wired up.
+The solution for both issues is the same, add the cbs instance being
+created unconditionally to the global list, even if the link state
+notification isn't useful "right now".
 
-Fixes: ebeb8c82ffaf ("syscalls/x86: Use 'struct pt_regs' based syscall calling for IA32_EMULATION and x32")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Richard Palethorpe <rpalethorpe@suse.com>
-Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240110130122.3836513-1-nik.borisov@suse.com
-Link: https://lore.kernel.org/ltp/20210921130127.24131-1-rpalethorpe@suse.com/
+Crash log:
+
+[518758.189866] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[518758.189870] #PF: supervisor read access in kernel mode
+[518758.189871] #PF: error_code(0x0000) - not-present page
+[518758.189872] PGD 0 P4D 0
+[518758.189874] Oops: 0000 [#1] SMP PTI
+[518758.189876] CPU: 3 PID: 4825 Comm: tc Not tainted 5.2.9 #1
+[518758.189877] Hardware name: Gigabyte Technology Co., Ltd. Z390 AORUS ULTRA/Z390 AORUS ULTRA-CF, BIOS F7 03/14/2019
+[518758.189881] RIP: 0010:__list_del_entry_valid+0x29/0xa0
+[518758.189883] Code: 90 48 b8 00 01 00 00 00 00 ad de 55 48 8b 17 4c 8b 47 08 48 89 e5 48 39 c2 74 27 48 b8 00 02 00 00 00 00 ad de 49 39 c0 74 2d <49> 8b 30 48 39 fe 75 3d 48 8b 52 08 48 39 f2 75 4c b8 01 00 00 00
+[518758.189885] RSP: 0018:ffffa27e43903990 EFLAGS: 00010207
+[518758.189887] RAX: dead000000000200 RBX: ffff8bce69f0f000 RCX: 0000000000000000
+[518758.189888] RDX: 0000000000000000 RSI: ffff8bce69f0f064 RDI: ffff8bce69f0f1e0
+[518758.189890] RBP: ffffa27e43903990 R08: 0000000000000000 R09: ffff8bce69e788c0
+[518758.189891] R10: ffff8bce62acd400 R11: 00000000000003cb R12: ffff8bce69e78000
+[518758.189892] R13: ffff8bce69f0f140 R14: 0000000000000000 R15: 0000000000000000
+[518758.189894] FS:  00007fa1572c8f80(0000) GS:ffff8bce6e0c0000(0000) knlGS:0000000000000000
+[518758.189895] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[518758.189896] CR2: 0000000000000000 CR3: 000000040a398006 CR4: 00000000003606e0
+[518758.189898] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[518758.189899] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[518758.189900] Call Trace:
+[518758.189904]  cbs_destroy+0x32/0xa0 [sch_cbs]
+[518758.189906]  qdisc_destroy+0x45/0x120
+[518758.189907]  qdisc_put+0x25/0x30
+[518758.189908]  qdisc_graft+0x2c1/0x450
+[518758.189910]  tc_get_qdisc+0x1c8/0x310
+[518758.189912]  ? get_page_from_freelist+0x91a/0xcb0
+[518758.189914]  rtnetlink_rcv_msg+0x293/0x360
+[518758.189916]  ? kmem_cache_alloc_node_trace+0x178/0x260
+[518758.189918]  ? __kmalloc_node_track_caller+0x38/0x50
+[518758.189920]  ? rtnl_calcit.isra.0+0xf0/0xf0
+[518758.189922]  netlink_rcv_skb+0x48/0x110
+[518758.189923]  rtnetlink_rcv+0x10/0x20
+[518758.189925]  netlink_unicast+0x15b/0x1d0
+[518758.189926]  netlink_sendmsg+0x1ea/0x380
+[518758.189929]  sock_sendmsg+0x2f/0x40
+[518758.189930]  ___sys_sendmsg+0x295/0x2f0
+[518758.189932]  ? ___sys_recvmsg+0x151/0x1e0
+[518758.189933]  ? do_wp_page+0x7e/0x450
+[518758.189935]  __sys_sendmsg+0x48/0x80
+[518758.189937]  __x64_sys_sendmsg+0x1a/0x20
+[518758.189939]  do_syscall_64+0x53/0x1f0
+[518758.189941]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+[518758.189942] RIP: 0033:0x7fa15755169a
+[518758.189944] Code: 48 c7 c0 ff ff ff ff eb be 0f 1f 80 00 00 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 18 b8 2e 00 00 00 c5 fc 77 0f 05 <48> 3d 00 f0 ff ff 77 5e c3 0f 1f 44 00 00 48 83 ec 28 89 54 24 1c
+[518758.189946] RSP: 002b:00007ffda58b60b8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+[518758.189948] RAX: ffffffffffffffda RBX: 000055e4b836d9a0 RCX: 00007fa15755169a
+[518758.189949] RDX: 0000000000000000 RSI: 00007ffda58b6128 RDI: 0000000000000003
+[518758.189951] RBP: 00007ffda58b6190 R08: 0000000000000001 R09: 000055e4b9d848a0
+[518758.189952] R10: 0000000000000000 R11: 0000000000000246 R12: 000000005d654b49
+[518758.189953] R13: 0000000000000000 R14: 00007ffda58b6230 R15: 00007ffda58b6210
+[518758.189955] Modules linked in: sch_cbs sch_etf sch_mqprio netlink_diag unix_diag e1000e igb intel_pch_thermal thermal video backlight pcc_cpufreq
+[518758.189960] CR2: 0000000000000000
+[518758.189961] ---[ end trace 6a13f7aaf5376019 ]---
+[518758.189963] RIP: 0010:__list_del_entry_valid+0x29/0xa0
+[518758.189964] Code: 90 48 b8 00 01 00 00 00 00 ad de 55 48 8b 17 4c 8b 47 08 48 89 e5 48 39 c2 74 27 48 b8 00 02 00 00 00 00 ad de 49 39 c0 74 2d <49> 8b 30 48 39 fe 75 3d 48 8b 52 08 48 39 f2 75 4c b8 01 00 00 00
+[518758.189967] RSP: 0018:ffffa27e43903990 EFLAGS: 00010207
+[518758.189968] RAX: dead000000000200 RBX: ffff8bce69f0f000 RCX: 0000000000000000
+[518758.189969] RDX: 0000000000000000 RSI: ffff8bce69f0f064 RDI: ffff8bce69f0f1e0
+[518758.189971] RBP: ffffa27e43903990 R08: 0000000000000000 R09: ffff8bce69e788c0
+[518758.189972] R10: ffff8bce62acd400 R11: 00000000000003cb R12: ffff8bce69e78000
+[518758.189973] R13: ffff8bce69f0f140 R14: 0000000000000000 R15: 0000000000000000
+[518758.189975] FS:  00007fa1572c8f80(0000) GS:ffff8bce6e0c0000(0000) knlGS:0000000000000000
+[518758.189976] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[518758.189977] CR2: 0000000000000000 CR3: 000000040a398006 CR4: 00000000003606e0
+[518758.189979] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[518758.189980] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+
+Fixes: e0a7683d30e9 ("net/sched: cbs: fix port_rate miscalculation")
+Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/syscall_wrapper.h |   25 +++++++++++++++++++++----
- include/linux/syscalls.h               |    1 +
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ net/sched/sch_cbs.c |   30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
---- a/arch/x86/include/asm/syscall_wrapper.h
-+++ b/arch/x86/include/asm/syscall_wrapper.h
-@@ -12,12 +12,29 @@
- 		,,regs->di,,regs->si,,regs->dx				\
- 		,,regs->r10,,regs->r8,,regs->r9)			\
+--- a/net/sched/sch_cbs.c
++++ b/net/sched/sch_cbs.c
+@@ -405,7 +405,6 @@ static int cbs_init(struct Qdisc *sch, s
+ {
+ 	struct cbs_sched_data *q = qdisc_priv(sch);
+ 	struct net_device *dev = qdisc_dev(sch);
+-	int err;
  
-+
-+/* SYSCALL_PT_ARGS is Adapted from s390x */
-+#define SYSCALL_PT_ARG6(m, t1, t2, t3, t4, t5, t6)			\
-+	SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5), m(t6, (regs->bp))
-+#define SYSCALL_PT_ARG5(m, t1, t2, t3, t4, t5)				\
-+	SYSCALL_PT_ARG4(m, t1, t2, t3, t4),  m(t5, (regs->di))
-+#define SYSCALL_PT_ARG4(m, t1, t2, t3, t4)				\
-+	SYSCALL_PT_ARG3(m, t1, t2, t3),  m(t4, (regs->si))
-+#define SYSCALL_PT_ARG3(m, t1, t2, t3)					\
-+	SYSCALL_PT_ARG2(m, t1, t2), m(t3, (regs->dx))
-+#define SYSCALL_PT_ARG2(m, t1, t2)					\
-+	SYSCALL_PT_ARG1(m, t1), m(t2, (regs->cx))
-+#define SYSCALL_PT_ARG1(m, t1) m(t1, (regs->bx))
-+#define SYSCALL_PT_ARGS(x, ...) SYSCALL_PT_ARG##x(__VA_ARGS__)
-+
-+#define __SC_COMPAT_CAST(t, a)						\
-+	(__typeof(__builtin_choose_expr(__TYPE_IS_L(t), 0, 0U)))	\
-+	(unsigned int)a
-+
- /* Mapping of registers to parameters for syscalls on i386 */
- #define SC_IA32_REGS_TO_ARGS(x, ...)					\
--	__MAP(x,__SC_ARGS						\
--	      ,,(unsigned int)regs->bx,,(unsigned int)regs->cx		\
--	      ,,(unsigned int)regs->dx,,(unsigned int)regs->si		\
--	      ,,(unsigned int)regs->di,,(unsigned int)regs->bp)
-+	SYSCALL_PT_ARGS(x, __SC_COMPAT_CAST,				\
-+			__MAP(x, __SC_TYPE, __VA_ARGS__))		\
+ 	if (!opt) {
+ 		NL_SET_ERR_MSG(extack, "Missing CBS qdisc options  which are mandatory");
+@@ -417,6 +416,10 @@ static int cbs_init(struct Qdisc *sch, s
+ 	if (!q->qdisc)
+ 		return -ENOMEM;
  
- #ifdef CONFIG_IA32_EMULATION
- /*
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -120,6 +120,7 @@ union bpf_attr;
- #define __TYPE_IS_LL(t) (__TYPE_AS(t, 0LL) || __TYPE_AS(t, 0ULL))
- #define __SC_LONG(t, a) __typeof(__builtin_choose_expr(__TYPE_IS_LL(t), 0LL, 0L)) a
- #define __SC_CAST(t, a)	(__force t) a
-+#define __SC_TYPE(t, a)	t
- #define __SC_ARGS(t, a)	a
- #define __SC_TEST(t, a) (void)BUILD_BUG_ON_ZERO(!__TYPE_IS_LL(t) && sizeof(t) > sizeof(long))
++	spin_lock(&cbs_list_lock);
++	list_add(&q->cbs_list, &cbs_list);
++	spin_unlock(&cbs_list_lock);
++
+ 	qdisc_hash_add(q->qdisc, false);
  
+ 	q->queue = sch->dev_queue - netdev_get_tx_queue(dev, 0);
+@@ -426,17 +429,7 @@ static int cbs_init(struct Qdisc *sch, s
+ 
+ 	qdisc_watchdog_init(&q->watchdog, sch);
+ 
+-	err = cbs_change(sch, opt, extack);
+-	if (err)
+-		return err;
+-
+-	if (!q->offload) {
+-		spin_lock(&cbs_list_lock);
+-		list_add(&q->cbs_list, &cbs_list);
+-		spin_unlock(&cbs_list_lock);
+-	}
+-
+-	return 0;
++	return cbs_change(sch, opt, extack);
+ }
+ 
+ static void cbs_destroy(struct Qdisc *sch)
+@@ -444,15 +437,18 @@ static void cbs_destroy(struct Qdisc *sc
+ 	struct cbs_sched_data *q = qdisc_priv(sch);
+ 	struct net_device *dev = qdisc_dev(sch);
+ 
+-	spin_lock(&cbs_list_lock);
+-	list_del(&q->cbs_list);
+-	spin_unlock(&cbs_list_lock);
++	/* Nothing to do if we couldn't create the underlying qdisc */
++	if (!q->qdisc)
++		return;
+ 
+ 	qdisc_watchdog_cancel(&q->watchdog);
+ 	cbs_disable_offload(dev, q);
+ 
+-	if (q->qdisc)
+-		qdisc_put(q->qdisc);
++	spin_lock(&cbs_list_lock);
++	list_del(&q->cbs_list);
++	spin_unlock(&cbs_list_lock);
++
++	qdisc_put(q->qdisc);
+ }
+ 
+ static int cbs_dump(struct Qdisc *sch, struct sk_buff *skb)
 
 
