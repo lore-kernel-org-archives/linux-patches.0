@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAF855E5E;
-	Wed, 21 Feb 2024 13:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A889A78B53;
+	Wed, 21 Feb 2024 13:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523565; cv=none; b=WQTs7l35toB5O0bP/30Zvc2n6vu5q2OcbWOFEZfo/KHA4WUvNdlA6BkVZ4fKtBY8AsRe8LaH66yzRMa3yTWqoZqYsikcDlm6G/GAFsc4yBkRFC+dEtybUeBsP0aP3Ci6ijT3SWEDHGJz684FGKz1sMxfvbHTf7X4Y3i+d+xGYCk=
+	t=1708523573; cv=none; b=pzS+lsibN4tMVr3+QGlA00agc72QjyTalZxIwqaOU0OlwxlDAfEXCVXRbgfZhxESOGCnuEvQebwQFfLZ7JgXvYlajPzWOSaSE3KE3tWBgp8TsO8AMn03Pu6my0A4WTQZjDVvP09Ha3XhRaR5UZA8XBrMnN8N/aZXb7NkYZGYj98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523565; c=relaxed/simple;
-	bh=4IPddyWVEUfRYKADp4PcwXWlVpXpfXsmM2TUVhUuZK8=;
+	s=arc-20240116; t=1708523573; c=relaxed/simple;
+	bh=jDUmqKUDto++Mv2ZUEfmLYdn4CIhXHJPLxM1nCCZheA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQivNKUiD+L6xzJxIkixrnSd5PEBMZ2MT0WcmpEXIdYVI46X9MEIZhSF0D5QpZhWQzwtzhO4eFCyFDYGJbflFX+rh8YWMQjJ6DgbKMceOtqT3zJCXot5BoAEq3aLL2JOBTTY0h3LPE3EGw05wvK1UB5B2CuH5LaTa/CGZDvrOvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yA8t2b5C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUNj899xwAA9MTXY1BtVXuyy1sWBWiddlx2EcufD1RgrXFx0+3iQxhrfZRUup5RpB94kGuDoyIOnE7KIUzy1pP6cfbOS1jNkF2H8hwP4NOi2gOtfUjHEO8NuJ5psuelSPj6w3Q5MMEn41HdtTJFFhcKZZ7hbm6ETGLmSxWLzsE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0FjG3Ba3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yA8t2b5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7200C43142;
-	Wed, 21 Feb 2024 13:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0FjG3Ba3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7B1C43601;
+	Wed, 21 Feb 2024 13:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523565;
-	bh=4IPddyWVEUfRYKADp4PcwXWlVpXpfXsmM2TUVhUuZK8=;
+	s=korg; t=1708523573;
+	bh=jDUmqKUDto++Mv2ZUEfmLYdn4CIhXHJPLxM1nCCZheA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yA8t2b5COmDymJYATH1ptQi85GOE77OjDXGdS7LZWIJnSikYnotgE9vibopXv4q9+
-	 0RV/TYeq6x3WFyvtKOHZe6eZHasXo0Hqs3nmy97+2aJs2Y3cXd1oGZYbjQFlad/VhL
-	 Iv8jY71Lj5U6bxfH+kVZdkSd63m5DLynfERsBnTU=
+	b=0FjG3Ba3qL07FME8vRLbIKNV0YNUCUvqZ7Cr5sbLdDCXchoSRJH2IgH0yswboxMq5
+	 S4S+cl5UGD1/+m+faNNJEEayKR4m8HvzO2b1oD5BxSS52NvLsA4agpXjSjsojq0CRo
+	 V93QIGv9jsWG8KPx86raWv7kesd/9Dyh571wU4UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH 5.15 474/476] usb: dwc3: gadget: Execute gadget stop after halting the controller
-Date: Wed, 21 Feb 2024 14:08:45 +0100
-Message-ID: <20240221130025.513137333@linuxfoundation.org>
+	Mikhail Rudenko <mike.rudenko@gmail.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 5.15 475/476] media: Revert "media: rkisp1: Drop IRQF_SHARED"
+Date: Wed, 21 Feb 2024 14:08:46 +0100
+Message-ID: <20240221130025.543522573@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,55 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-commit 39674be56fba1cd3a03bf4617f523a35f85fd2c1 upstream.
+commit a107d643b2a3382e0a2d2c4ef08bf8c6bff4561d upstream.
 
-Do not call gadget stop until the poll for controller halt is
-completed.  DEVTEN is cleared as part of gadget stop, so the intention to
-allow ep0 events to continue while waiting for controller halt is not
-happening.
+This reverts commit 85d2a31fe4d9be1555f621ead7a520d8791e0f74.
 
-Fixes: c96683798e27 ("usb: dwc3: ep0: Don't prepare beyond Setup stage")
-Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20230420212759.29429-2-quic_wcheng@quicinc.com
+The rkisp1 does share interrupt lines on some platforms, after all. Thus
+we need to revert this, and implement a fix for the rkisp1 shared irq
+handling in a follow-up patch.
+
+Closes: https://lore.kernel.org/all/87o7eo8vym.fsf@gmail.com/
+Link: https://lore.kernel.org/r/20231218-rkisp-shirq-fix-v1-1-173007628248@ideasonboard.com
+
+Reported-by: Mikhail Rudenko <mike.rudenko@gmail.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2517,7 +2517,6 @@ static int dwc3_gadget_soft_disconnect(s
- 	 * bit.
- 	 */
- 	dwc3_stop_active_transfers(dwc);
--	__dwc3_gadget_stop(dwc);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
+--- a/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
++++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-dev.c
+@@ -482,7 +482,7 @@ static int rkisp1_probe(struct platform_
+ 	if (irq < 0)
+ 		return irq;
  
- 	/*
-@@ -2547,7 +2546,19 @@ static int dwc3_gadget_soft_disconnect(s
- 	 * remaining event generated by the controller while polling for
- 	 * DSTS.DEVCTLHLT.
- 	 */
--	return dwc3_gadget_run_stop(dwc, false);
-+	ret = dwc3_gadget_run_stop(dwc, false);
-+
-+	/*
-+	 * Stop the gadget after controller is halted, so that if needed, the
-+	 * events to update EP0 state can still occur while the run/stop
-+	 * routine polls for the halted state.  DEVTEN is cleared as part of
-+	 * gadget stop.
-+	 */
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	__dwc3_gadget_stop(dwc);
-+	spin_unlock_irqrestore(&dwc->lock, flags);
-+
-+	return ret;
- }
- 
- static int dwc3_gadget_soft_connect(struct dwc3 *dwc)
+-	ret = devm_request_irq(dev, irq, rkisp1_isr, 0,
++	ret = devm_request_irq(dev, irq, rkisp1_isr, IRQF_SHARED,
+ 			       dev_driver_string(dev), dev);
+ 	if (ret) {
+ 		dev_err(dev, "request irq failed: %d\n", ret);
 
 
