@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7797C7BAF7;
-	Wed, 21 Feb 2024 14:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB457C6C0;
+	Wed, 21 Feb 2024 14:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525647; cv=none; b=HS5v3bjStkoHtY/wPp5lZ/UUcvz3GlKUEY6XsRP6FHVznWpDw/O93q/vM+SahVZUDmnJ943rb1nJg3rzR6PLhFDNMHYmvhg81YKSVAoMtYK45Ns4GGXjc3uuVt34LpnFBiODwsk0neE3ObUAED0Lug81pmoK3sskhhvMuqP3p3Q=
+	t=1708525650; cv=none; b=u8Z38c8SwMIDxf86Zx4YoAPbj0J0CWBSVg3reXoIT8apmFUfVzIm54ZarQwkBXQq0VFoHL00gez9gfg+2cfsdXY5nye/Moj8ZosySvpKM7zZB1ii7FGJ6l6roumg3QeOgfhAmWpwReD/pcBp03n1H2mCMmzCnwPfeCC191bmM34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525647; c=relaxed/simple;
-	bh=UUiNulxrAfr9q/DApo4Ctj4YuWDrODNLok8RbHEF4Sw=;
+	s=arc-20240116; t=1708525650; c=relaxed/simple;
+	bh=HfAclfuxQiBVXPLqMFycxGI6JFBndzpSgTLcNKCcHpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQkP8gAZsKXov//segKGE4c/7NPNuwdK670XEwy8FO7BReGyLSg7FbrAewDUm5ODRzED/+ch8WL1uiI9Z9LFaDalAxqGNM4iGyBPDP0eNW/iCdmJCpgs1XADForx3N6OFwuMZGVb1G60BEYaMB+l4zV6imz7BgwL0beYfckETTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v36jFZ7R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WeVUPOxoX16k85kDziiShpmD2nboiKZRvyHlnfJ08Mz3hX0qRaPxBjBc8vFdJDENNxvq+jI0ANkL8Rh3Ho+TXpLaZFYJTzG0M+YsGdPhuimN+di6OMSdln2Dq7GNF0PmX8cuUhNmSZm9IZJfn316tarFuTSTUM6hdNcb5x+98XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrBw1TRr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v36jFZ7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4F3C433F1;
-	Wed, 21 Feb 2024 14:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrBw1TRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08039C433C7;
+	Wed, 21 Feb 2024 14:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525647;
-	bh=UUiNulxrAfr9q/DApo4Ctj4YuWDrODNLok8RbHEF4Sw=;
+	s=korg; t=1708525650;
+	bh=HfAclfuxQiBVXPLqMFycxGI6JFBndzpSgTLcNKCcHpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v36jFZ7RFI6oSSRwRdzo+lV1LQl2rDuGvPfNgXXbnIe/xdAFubquA0uwGkyPP9tlE
-	 /QesHcai049LSYApipekorIocQXo2xbD15pViVcdeMdEgUr8aoBhzaZStkPiv4ZpjS
-	 XjhWVwEftq65SI1Pth6rrqlhqaeNzl0m3YpnXwz0=
+	b=HrBw1TRrHfm9ANdrrxzIce/dOAX4Rgr3lArIiO+g7MoV3ofwXvUZQ1DjVYWTbCmUw
+	 hwR9yp+4gcS+hcFsHqsU/ptewn91kHewDNPiaZO5idMbAMqtxM4DH0/kD595wALvhp
+	 cs9pqVs8LMyzWnYxTUda9UejhTOOzgA8bsUPrR0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
 	Jean Delvare <jdelvare@suse.de>,
-	Wolfram Sang <wsa@kernel.org>,
+	Piotr Zakowski <piotr.zakowski@intel.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 219/267] i2c: i801: Remove i801_set_block_buffer_mode
-Date: Wed, 21 Feb 2024 14:09:20 +0100
-Message-ID: <20240221125947.095345752@linuxfoundation.org>
+Subject: [PATCH 5.4 220/267] i2c: i801: Fix block process call transactions
+Date: Wed, 21 Feb 2024 14:09:21 +0100
+Message-ID: <20240221125947.124511800@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,69 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jean Delvare <jdelvare@suse.de>
 
-[ Upstream commit 1e1d6582f483a4dba4ea03445e6f2f05d9de5bcf ]
+[ Upstream commit c1c9d0f6f7f1dbf29db996bd8e166242843a5f21 ]
 
-If FEATURE_BLOCK_BUFFER is set then bit SMBAUXCTL_E32B is supported
-and there's no benefit in reading it back. Origin of this check
-seems to be 14 yrs ago when people were not completely sure which
-chip versions support the block buffer mode.
+According to the Intel datasheets, software must reset the block
+buffer index twice for block process call transactions: once before
+writing the outgoing data to the buffer, and once again before
+reading the incoming data from the buffer.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Jean Delvare <jdelvare@suse.de>
-Tested-by: Jean Delvare <jdelvare@suse.de>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: c1c9d0f6f7f1 ("i2c: i801: Fix block process call transactions")
+The driver is currently missing the second reset, causing the wrong
+portion of the block buffer to be read.
+
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+Reported-by: Piotr Zakowski <piotr.zakowski@intel.com>
+Closes: https://lore.kernel.org/linux-i2c/20240213120553.7b0ab120@endymion.delvare/
+Fixes: 315cd67c9453 ("i2c: i801: Add Block Write-Block Read Process Call support")
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-i801.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ drivers/i2c/busses/i2c-i801.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
-index 50c972b3efe0..21ed6d98c048 100644
+index 21ed6d98c048..18489940a947 100644
 --- a/drivers/i2c/busses/i2c-i801.c
 +++ b/drivers/i2c/busses/i2c-i801.c
-@@ -528,9 +528,11 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
- 		return -EOPNOTSUPP;
- 	}
+@@ -531,11 +531,10 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
+ 	/* Set block buffer mode */
+ 	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
  
-+	/* Set block buffer mode */
-+	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
-+
- 	inb_p(SMBHSTCNT(priv)); /* reset the data buffer index */
- 
--	/* Use 32-byte buffer to process this transaction */
+-	inb_p(SMBHSTCNT(priv)); /* reset the data buffer index */
+-
  	if (read_write == I2C_SMBUS_WRITE) {
  		len = data->block[0];
  		outb_p(len, SMBHSTDAT0(priv));
-@@ -768,14 +770,6 @@ static int i801_block_transaction_byte_by_byte(struct i801_priv *priv,
- 	return i801_check_post(priv, status);
- }
++		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
+ 		for (i = 0; i < len; i++)
+ 			outb_p(data->block[i+1], SMBBLKDAT(priv));
+ 	}
+@@ -551,6 +550,7 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
+ 			return -EPROTO;
  
--static int i801_set_block_buffer_mode(struct i801_priv *priv)
--{
--	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
--	if ((inb_p(SMBAUXCTL(priv)) & SMBAUXCTL_E32B) == 0)
--		return -EIO;
--	return 0;
--}
--
- /* Block transaction function */
- static int i801_block_transaction(struct i801_priv *priv,
- 				  union i2c_smbus_data *data, char read_write,
-@@ -805,9 +799,8 @@ static int i801_block_transaction(struct i801_priv *priv,
- 	/* Experience has shown that the block buffer can only be used for
- 	   SMBus (not I2C) block transactions, even though the datasheet
- 	   doesn't mention this limitation. */
--	if ((priv->features & FEATURE_BLOCK_BUFFER)
--	 && command != I2C_SMBUS_I2C_BLOCK_DATA
--	 && i801_set_block_buffer_mode(priv) == 0)
-+	if ((priv->features & FEATURE_BLOCK_BUFFER) &&
-+	    command != I2C_SMBUS_I2C_BLOCK_DATA)
- 		result = i801_block_transaction_by_block(priv, data,
- 							 read_write,
- 							 command, hwpec);
+ 		data->block[0] = len;
++		inb_p(SMBHSTCNT(priv));	/* reset the data buffer index */
+ 		for (i = 0; i < len; i++)
+ 			data->block[i + 1] = inb_p(SMBBLKDAT(priv));
+ 	}
 -- 
 2.43.0
 
