@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A407866C;
-	Wed, 21 Feb 2024 13:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815A97866C;
+	Wed, 21 Feb 2024 13:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522468; cv=none; b=MbHI+XGqv6CVlMK0493NQFQYz05tDkFW2IZJWMfKtuH9eyQA1bY0SyvwViD7PMX3NH0Ta8nbqzRCKBx5b56jmCS8mTpWElTSvFG6nR6cIuEyI7KLV2uhln77X/4/rsRhHZ82qTvpgaxo75Yj1VwZfDhBpKWnGUKGWDmRyX+gqfQ=
+	t=1708522471; cv=none; b=mtX6RX5h2ZrRM8dAFsOXl3BiIHagwBVkQfSHPpLgO7mGQLQDtKmtF/cMDyR+eGj93up5RxQ8ao0PpPfm5J8Hq4uDkW0WaG8eFbbgc6nA3qG7Mm7TZCd9K42b39BbyoS4Uc42DO8GbhFxEelUALe/yqBneifLocQCrC2gXqyBR/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522468; c=relaxed/simple;
-	bh=7KVzUocuuV1PUqsrV9ql0VHD2Q6VAegwm9vw4GYBb+c=;
+	s=arc-20240116; t=1708522471; c=relaxed/simple;
+	bh=n1lmMVVT703q6zubMJpAt29k3JJoygqDhvDMApFOFJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DoCa0F3g0o+wmYpiTCITBHr5tMvvsnNBcTas/xxIwm04NtwINV+al65W5QpYUcs8D5I9shm2roRXKYT82+c3koMKx9JtX8mp9Rr44nzsnFkQ7pzxB1Jxv91IDrhCGiwhBpwjI1/jnBfw0BXW43gGcnPKaFMgZJBMFwMQyc56+oY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLVlXNqk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q/eoQmACdAirjg2+anzU84VbSgPtXTfk/wEQpPwuzV991zAFP9JZwWQa8Nu477fdh5yAQPFBhaNPzvuv6vY/Qk7Vfo9Yowd3+vKesM6OZwwzOa06qPLwUatKrrKKsbHblcHv5mxAAoL3u93zdqz8O7+8v3TOg6vWybJJu/4BGYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSeKZ+PM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLVlXNqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891E1C433F1;
-	Wed, 21 Feb 2024 13:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSeKZ+PM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35E4C433F1;
+	Wed, 21 Feb 2024 13:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522468;
-	bh=7KVzUocuuV1PUqsrV9ql0VHD2Q6VAegwm9vw4GYBb+c=;
+	s=korg; t=1708522471;
+	bh=n1lmMVVT703q6zubMJpAt29k3JJoygqDhvDMApFOFJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLVlXNqkYZGubdZa3Ru7lw8/I+Lc3C4ZsHy2pEOs1CjD38L6JbNHws1J+luds0ktb
-	 hCEuO6UaeOWDqem0EPxdgHd9PaCs0BpO+5fgty6+YMtU1CCBXzKbO6/WM+uszsLYhK
-	 HuV/iBVryuM8rzEpIIm/3HN7DmW2bpUuK1Kx2/Zs=
+	b=TSeKZ+PM40Jtz6UcWf0r3z3b87aiz5BNHzARDKyIsr8hc9VTL8fNDVkbD8B7h4n8A
+	 uZl7uvAb0XJabrUntDa+0lQpyGJfRGk2rGHZ7lXgCVI0Cki3vvsNpoLQETQ4G5BnqI
+	 emgmB5DjIqoM10H1s2DF0vHKGTcc70TOiKnUXTNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	ching Huang <ching2048@areca.com.tw>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 171/476] bonding: return -ENOMEM instead of BUG in alb_upper_dev_walk
-Date: Wed, 21 Feb 2024 14:03:42 +0100
-Message-ID: <20240221130014.242006915@linuxfoundation.org>
+Subject: [PATCH 5.15 172/476] scsi: arcmsr: Support new PCI device IDs 1883 and 1886
+Date: Wed, 21 Feb 2024 14:03:43 +0100
+Message-ID: <20240221130014.279774924@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,67 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: ching Huang <ching2048@areca.com.tw>
 
-[ Upstream commit d6b83f1e3707c4d60acfa58afd3515e17e5d5384 ]
+[ Upstream commit 41c8a1a1e90fa4721f856bf3cf71211fd16d6434 ]
 
-If failed to allocate "tags" or could not find the final upper device from
-start_dev's upper list in bond_verify_device_path(), only the loopback
-detection of the current upper device should be affected, and the system is
-no need to be panic.
-So return -ENOMEM in alb_upper_dev_walk to stop walking, print some warn
-information when failed to allocate memory for vlan tags in
-bond_verify_device_path.
+Add support for Areca RAID controllers with PCI device IDs 1883 and 1886.
 
-I also think that the following function calls
-netdev_walk_all_upper_dev_rcu
----->>>alb_upper_dev_walk
----------->>>bond_verify_device_path
->From this way, "end device" can eventually be obtained from "start device"
-in bond_verify_device_path, IS_ERR(tags) could be instead of
-IS_ERR_OR_NULL(tags) in alb_upper_dev_walk.
-
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Link: https://lore.kernel.org/r/20231118081653.1481260-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: ching Huang <ching2048@areca.com.tw>
+Link: https://lore.kernel.org/r/7732e743eaad57681b1552eec9c6a86c76dbe459.camel@areca.com.tw
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_alb.c  | 3 ++-
- drivers/net/bonding/bond_main.c | 5 ++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/scsi/arcmsr/arcmsr.h     | 4 ++++
+ drivers/scsi/arcmsr/arcmsr_hba.c | 6 ++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
-index b29393831a30..7091b018078b 100644
---- a/drivers/net/bonding/bond_alb.c
-+++ b/drivers/net/bonding/bond_alb.c
-@@ -973,7 +973,8 @@ static int alb_upper_dev_walk(struct net_device *upper,
- 	if (netif_is_macvlan(upper) && !strict_match) {
- 		tags = bond_verify_device_path(bond->dev, upper, 0);
- 		if (IS_ERR_OR_NULL(tags))
--			BUG();
-+			return -ENOMEM;
-+
- 		alb_send_lp_vid(slave, upper->dev_addr,
- 				tags[0].vlan_proto, tags[0].vlan_id);
- 		kfree(tags);
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 9aed194d308d..1ecd0c136fc6 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2893,8 +2893,11 @@ struct bond_vlan_tag *bond_verify_device_path(struct net_device *start_dev,
- 
- 	if (start_dev == end_dev) {
- 		tags = kcalloc(level + 1, sizeof(*tags), GFP_ATOMIC);
--		if (!tags)
-+		if (!tags) {
-+			net_err_ratelimited("%s: %s: Failed to allocate tags\n",
-+					    __func__, start_dev->name);
- 			return ERR_PTR(-ENOMEM);
-+		}
- 		tags[level].vlan_proto = VLAN_N_VID;
- 		return tags;
- 	}
+diff --git a/drivers/scsi/arcmsr/arcmsr.h b/drivers/scsi/arcmsr/arcmsr.h
+index 6ce57f031df5..3324114e6b06 100644
+--- a/drivers/scsi/arcmsr/arcmsr.h
++++ b/drivers/scsi/arcmsr/arcmsr.h
+@@ -77,9 +77,13 @@ struct device_attribute;
+ #ifndef PCI_DEVICE_ID_ARECA_1203
+ #define PCI_DEVICE_ID_ARECA_1203	0x1203
+ #endif
++#ifndef PCI_DEVICE_ID_ARECA_1883
++#define PCI_DEVICE_ID_ARECA_1883	0x1883
++#endif
+ #ifndef PCI_DEVICE_ID_ARECA_1884
+ #define PCI_DEVICE_ID_ARECA_1884	0x1884
+ #endif
++#define PCI_DEVICE_ID_ARECA_1886_0	0x1886
+ #define PCI_DEVICE_ID_ARECA_1886	0x188A
+ #define	ARCMSR_HOURS			(1000 * 60 * 60 * 4)
+ #define	ARCMSR_MINUTES			(1000 * 60 * 60)
+diff --git a/drivers/scsi/arcmsr/arcmsr_hba.c b/drivers/scsi/arcmsr/arcmsr_hba.c
+index ec1a834c922d..e33298b2d51c 100644
+--- a/drivers/scsi/arcmsr/arcmsr_hba.c
++++ b/drivers/scsi/arcmsr/arcmsr_hba.c
+@@ -214,8 +214,12 @@ static struct pci_device_id arcmsr_device_id_table[] = {
+ 		.driver_data = ACB_ADAPTER_TYPE_A},
+ 	{PCI_DEVICE(PCI_VENDOR_ID_ARECA, PCI_DEVICE_ID_ARECA_1880),
+ 		.driver_data = ACB_ADAPTER_TYPE_C},
++	{PCI_DEVICE(PCI_VENDOR_ID_ARECA, PCI_DEVICE_ID_ARECA_1883),
++		.driver_data = ACB_ADAPTER_TYPE_C},
+ 	{PCI_DEVICE(PCI_VENDOR_ID_ARECA, PCI_DEVICE_ID_ARECA_1884),
+ 		.driver_data = ACB_ADAPTER_TYPE_E},
++	{PCI_DEVICE(PCI_VENDOR_ID_ARECA, PCI_DEVICE_ID_ARECA_1886_0),
++		.driver_data = ACB_ADAPTER_TYPE_F},
+ 	{PCI_DEVICE(PCI_VENDOR_ID_ARECA, PCI_DEVICE_ID_ARECA_1886),
+ 		.driver_data = ACB_ADAPTER_TYPE_F},
+ 	{0, 0}, /* Terminating entry */
+@@ -4710,9 +4714,11 @@ static const char *arcmsr_info(struct Scsi_Host *host)
+ 	case PCI_DEVICE_ID_ARECA_1680:
+ 	case PCI_DEVICE_ID_ARECA_1681:
+ 	case PCI_DEVICE_ID_ARECA_1880:
++	case PCI_DEVICE_ID_ARECA_1883:
+ 	case PCI_DEVICE_ID_ARECA_1884:
+ 		type = "SAS/SATA";
+ 		break;
++	case PCI_DEVICE_ID_ARECA_1886_0:
+ 	case PCI_DEVICE_ID_ARECA_1886:
+ 		type = "NVMe/SAS/SATA";
+ 		break;
 -- 
 2.43.0
 
