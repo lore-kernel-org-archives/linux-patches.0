@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E40878B4F;
-	Wed, 21 Feb 2024 13:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EEB73161;
+	Wed, 21 Feb 2024 13:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523026; cv=none; b=REkw3oFCohNINpTSn1Mqz87okfkuPMoNOah486f1tkaEBw1RaGTRpqs9ULBYiDD+Cm/TicogxMIZu6sxKb/Jc3tPdNHn73UzzNbklkYhHDhrIpE4sINJsQDTho9WvsmFWTQ1oA1o1iqR17DUpcSWoH1urZ9SaDN1kR190JkqVOw=
+	t=1708523029; cv=none; b=kg5MU0wFYG7me4Fi1euZyBOxNvpMdAymBBdaIyN7ib4sXQuQbhRe7OS0B+P38tGOI8VMiMSPRl6Vu8Vf1MOGPRbHlqWk6Sbo5cRh9khimxc5pH3+8Y47mwno+BoF6ugH2RCOrvPN1Opfu01WT1qLV6eowLNtTYg4D2hiY0TDnz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523026; c=relaxed/simple;
-	bh=g9OLVsVKXRFTtr2GvLDHlVCxP0zSvVAuMoNYdrorqOI=;
+	s=arc-20240116; t=1708523029; c=relaxed/simple;
+	bh=Y3KJKnCSWR6dF2p/gREpLpBPT+u1xqDM9r1Br/J7nwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uy6MUh3Uvrl7zEh0I53ARpq+aSCcVI9o4XiSmPAIz2BEcVi2+I9U3uTFFQOmLEQ4N5bRNGud87Y/9VHV+Hhq8PWqmOxPoFUK2dKvAVJUdQ9b/7YyV/OfO9kD2j95m+y+Lxt+B1JuFzN2lLcRcoGGncyrjlMf/2qO9hf9+fAq+Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do/4vIsE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqOGp//eIVtSsQCVvtUepMttrHCrUxEOffU1djakEj5KdiJYb2y3K6rvXJjSXfyqzg0Z1QzuXRmAx1bKL+Kfbhd+iDk0z+nRqOumlBfr7rNmsj5B6gwnOD5hFXye11GCBasJNSKngJymz8gv5Z/k6BZAk0m9L0lQgjurTSVE6PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yr3bPIk7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do/4vIsE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F67C43390;
-	Wed, 21 Feb 2024 13:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yr3bPIk7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C75C43390;
+	Wed, 21 Feb 2024 13:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523026;
-	bh=g9OLVsVKXRFTtr2GvLDHlVCxP0zSvVAuMoNYdrorqOI=;
+	s=korg; t=1708523029;
+	bh=Y3KJKnCSWR6dF2p/gREpLpBPT+u1xqDM9r1Br/J7nwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Do/4vIsEmSrkZFW1IWPYdlBn+syfl8datOFBgNhVUxLfZSZkreaBaHVwVoRSe5FI+
-	 xwAaKyJKrBg1g+SwVEjnRLzRhWnXkQm6M1Tf1C1Ga8t6oC4IV7P/g1bjC5dwaNOGuK
-	 PTE0Nu+7xZhV9WlOttlPIvpyRsZU1kKFIuX7DWYQ=
+	b=Yr3bPIk7NIHU7ttgy5N0FMQ3NEAK9viCQ3UdAP1Wz4N5AKQ+FXsIQDVHWQMzDrGUZ
+	 Zx1PsqKxjj13YL8Q+7ilECsRYiZfJ6Bu2bC46FeNz2y+Pyd4B69RtDoOS/4dr+57hC
+	 sHyqsNvS/Z9uvjY84NrmkIu/+xLX/nhDv0PMnK+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 318/476] netfilter: nft_compat: reject unused compat flag
-Date: Wed, 21 Feb 2024 14:06:09 +0100
-Message-ID: <20240221130019.777084142@linuxfoundation.org>
+Subject: [PATCH 5.15 319/476] netfilter: nft_compat: restrict match/target protocol to u16
+Date: Wed, 21 Feb 2024 14:06:10 +0100
+Message-ID: <20240221130019.806418139@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,49 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 292781c3c5485ce33bd22b2ef1b2bed709b4d672 ]
+[ Upstream commit d694b754894c93fb4d71a7f3699439dec111decc ]
 
-Flag (1 << 0) is ignored is set, never used, reject it it with EINVAL
-instead.
+xt_check_{match,target} expects u16, but NFTA_RULE_COMPAT_PROTO is u32.
+
+NLA_POLICY_MAX(NLA_BE32, 65535) cannot be used because .max in
+nla_policy is s16, see 3e48be05f3c7 ("netlink: add attribute range
+validation to policy").
 
 Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/netfilter/nf_tables.h | 2 ++
- net/netfilter/nft_compat.c               | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ net/netfilter/nft_compat.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
-index 07871c8a0601..62cc780a168a 100644
---- a/include/uapi/linux/netfilter/nf_tables.h
-+++ b/include/uapi/linux/netfilter/nf_tables.h
-@@ -266,9 +266,11 @@ enum nft_rule_attributes {
- /**
-  * enum nft_rule_compat_flags - nf_tables rule compat flags
-  *
-+ * @NFT_RULE_COMPAT_F_UNUSED: unused
-  * @NFT_RULE_COMPAT_F_INV: invert the check result
-  */
- enum nft_rule_compat_flags {
-+	NFT_RULE_COMPAT_F_UNUSED = (1 << 0),
- 	NFT_RULE_COMPAT_F_INV	= (1 << 1),
- 	NFT_RULE_COMPAT_F_MASK	= NFT_RULE_COMPAT_F_INV,
- };
 diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
-index 3fb8d7fb21af..4ef664a2bbe6 100644
+index 4ef664a2bbe6..64a2a5f19589 100644
 --- a/net/netfilter/nft_compat.c
 +++ b/net/netfilter/nft_compat.c
-@@ -212,7 +212,8 @@ static int nft_parse_compat(const struct nlattr *attr, u16 *proto, bool *inv)
- 		return -EINVAL;
+@@ -200,6 +200,7 @@ static const struct nla_policy nft_rule_compat_policy[NFTA_RULE_COMPAT_MAX + 1]
+ static int nft_parse_compat(const struct nlattr *attr, u16 *proto, bool *inv)
+ {
+ 	struct nlattr *tb[NFTA_RULE_COMPAT_MAX+1];
++	u32 l4proto;
+ 	u32 flags;
+ 	int err;
  
- 	flags = ntohl(nla_get_be32(tb[NFTA_RULE_COMPAT_FLAGS]));
--	if (flags & ~NFT_RULE_COMPAT_F_MASK)
-+	if (flags & NFT_RULE_COMPAT_F_UNUSED ||
-+	    flags & ~NFT_RULE_COMPAT_F_MASK)
- 		return -EINVAL;
+@@ -218,7 +219,12 @@ static int nft_parse_compat(const struct nlattr *attr, u16 *proto, bool *inv)
  	if (flags & NFT_RULE_COMPAT_F_INV)
  		*inv = true;
+ 
+-	*proto = ntohl(nla_get_be32(tb[NFTA_RULE_COMPAT_PROTO]));
++	l4proto = ntohl(nla_get_be32(tb[NFTA_RULE_COMPAT_PROTO]));
++	if (l4proto > U16_MAX)
++		return -EINVAL;
++
++	*proto = l4proto;
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
