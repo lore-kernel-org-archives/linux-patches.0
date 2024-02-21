@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703307BAFE;
-	Wed, 21 Feb 2024 13:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5707B3EA;
+	Wed, 21 Feb 2024 13:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522503; cv=none; b=MsVBi2tCbrbZSvIadUOq3H8RK+zXj8iOJSeSuLXTWL0Ug2of6aO3fYWjyNomRPHeW+JPISxItgJm22/tsfmzPlujdkaba7u/fISO8UjFsA+ZIgCVQkr2IF0DfOKlpu9uB/gRhqb/11+L1DcKA035dhBaaK0Ot3BBGHuFuufdRNI=
+	t=1708522506; cv=none; b=S9hpz+3h9BGfJSW3xZ2Tt/FEV0x7kqmtSH42ulu8baSf5EzF0WQZxYf4XwptBfPzfTWVj8zHyCVPQcigTPaO+oLrWYwDqjH+pijlcVbRh3VwIOIhng2qycCA5pG2qLiuk8BKv6/ZkgZ1denMvA2YJ5H+lWQ4a5wXIMhLSF5pJ2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522503; c=relaxed/simple;
-	bh=+/BHgB1vC0VOYbRLstfz8y7VyJ2R82FtK3l57tu89MA=;
+	s=arc-20240116; t=1708522506; c=relaxed/simple;
+	bh=XJ6iT5fpnVqc03g48RUfmksKJP/n6Xyq0EUvfd/xEQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXztEOu1STVTcFHrRXybtEtvPOj9Jz9EbsI4F4ks4EprezGMhb7deddTQtuu3ighLIvduYdwrlKIc9uZVb7ogh7LvUzDPIN/dQaI0I5ToGL/9UH9TQwMoBxZP8gv+OsygmOJRqQUFd0Y6MpzQac084XmHUB5NVldZWmB/rXjIT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MGrWTKGO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KPTSXRRgyB0pX/I/V/oTZHGdi4vGdulSQbJNP7qgdTov3hZmJKkB2btdJERd2yZLeofCRWUeMFeZpHAp3+Vw013RGeI3W/6Uwhlm/QrXZc9wImlwbUHTPA42Y38PQMepn/ERrYWR4a5PQ0tlH1QK/FBj3o9Inr93DsZWhw0aRjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYxP2mnp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MGrWTKGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9114EC433F1;
-	Wed, 21 Feb 2024 13:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYxP2mnp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5825C433B1;
+	Wed, 21 Feb 2024 13:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522502;
-	bh=+/BHgB1vC0VOYbRLstfz8y7VyJ2R82FtK3l57tu89MA=;
+	s=korg; t=1708522506;
+	bh=XJ6iT5fpnVqc03g48RUfmksKJP/n6Xyq0EUvfd/xEQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGrWTKGOAh3VhFLNWenSy6QKkPUDsIsNrqQdpH4mLu2jvoqGw+4IZRVz5NENrpmKh
-	 g6ayi2+xFmrf2kevh8UPQxBPYDSWQeey39wxnpj6c6zNwfYSAqf+jZ+L7zoZCSsN8p
-	 g9oQZ6A2kzHRvZ6Wr0gA7sktHuRx4SUE/oZP8cTU=
+	b=AYxP2mnpACqHIqCWSerifbpGps/khuyKXSN3cD3RdPRHTVpR3VWIb/uNFR/TAp12I
+	 ibXetR8Y7IX4A5SHeUelsPhUHq/5bjBahkka1qEzPe0z2O9XuwUdI+UMdiyY88teWR
+	 5D31i3coPZ5attY2OiwvePD7Lq8P/IbAFuhCI3kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Thomas Bourgoin <thomas.bourgoin@foss.st.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Oleg Nesterov <oleg@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/476] crypto: stm32/crc32 - fix parsing list of devices
-Date: Wed, 21 Feb 2024 14:03:22 +0100
-Message-ID: <20240221130013.512309158@linuxfoundation.org>
+Subject: [PATCH 5.15 152/476] afs: fix the usage of read_seqbegin_or_lock() in afs_lookup_volume_rcu()
+Date: Wed, 21 Feb 2024 14:03:23 +0100
+Message-ID: <20240221130013.559921767@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,44 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 0eaef675b94c746900dcea7f6c41b9a103ed5d53 ]
+[ Upstream commit 4121b4337146b64560d1e46ebec77196d9287802 ]
 
-smatch warnings:
-drivers/crypto/stm32/stm32-crc32.c:108 stm32_crc_get_next_crc() warn:
-can 'crc' even be NULL?
+David Howells says:
 
-Use list_first_entry_or_null instead of list_first_entry to retrieve
-the first device registered.
-The function list_first_entry always return a non NULL pointer even if
-the list is empty. Hence checking if the pointer returned is NULL does
-not tell if the list is empty or not.
+ (2) afs_lookup_volume_rcu().
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202311281111.ou2oUL2i-lkp@intel.com/
-Signed-off-by: Thomas Bourgoin <thomas.bourgoin@foss.st.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+     There can be a lot of volumes known by a system.  A thousand would
+     require a 10-step walk and this is drivable by remote operation, so I
+     think this should probably take a lock on the second pass too.
+
+Make the "seq" counter odd on the 2nd pass, otherwise read_seqbegin_or_lock()
+never takes the lock.
+
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/20231130115606.GA21571@redhat.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/stm32/stm32-crc32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/afs/callback.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/stm32/stm32-crc32.c b/drivers/crypto/stm32/stm32-crc32.c
-index 90a920e7f664..c439be1650c8 100644
---- a/drivers/crypto/stm32/stm32-crc32.c
-+++ b/drivers/crypto/stm32/stm32-crc32.c
-@@ -104,7 +104,7 @@ static struct stm32_crc *stm32_crc_get_next_crc(void)
- 	struct stm32_crc *crc;
+diff --git a/fs/afs/callback.c b/fs/afs/callback.c
+index 1b4d5809808d..e0f5dcffe4e3 100644
+--- a/fs/afs/callback.c
++++ b/fs/afs/callback.c
+@@ -110,13 +110,14 @@ static struct afs_volume *afs_lookup_volume_rcu(struct afs_cell *cell,
+ {
+ 	struct afs_volume *volume = NULL;
+ 	struct rb_node *p;
+-	int seq = 0;
++	int seq = 1;
  
- 	spin_lock_bh(&crc_list.lock);
--	crc = list_first_entry(&crc_list.dev_list, struct stm32_crc, list);
-+	crc = list_first_entry_or_null(&crc_list.dev_list, struct stm32_crc, list);
- 	if (crc)
- 		list_move_tail(&crc->list, &crc_list.dev_list);
- 	spin_unlock_bh(&crc_list.lock);
+ 	do {
+ 		/* Unfortunately, rbtree walking doesn't give reliable results
+ 		 * under just the RCU read lock, so we have to check for
+ 		 * changes.
+ 		 */
++		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&cell->volume_lock, &seq);
+ 
+ 		p = rcu_dereference_raw(cell->volumes.rb_node);
 -- 
 2.43.0
 
