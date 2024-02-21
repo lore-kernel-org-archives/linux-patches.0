@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF643EA71;
-	Wed, 21 Feb 2024 13:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBE869954;
+	Wed, 21 Feb 2024 13:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521070; cv=none; b=sPaTuFRCUE+Fr+Ni7zLvAGIuosrHdYfkZkMJSR6asEG5ku9Bqp1HbbG/eHoCd+GpIBB8e0lkq94943emAGgZSgcuhMbxNESdD87TGBxoczm/ntPPQD5/QoQPrB1KpkDc8m1XDyjuW9XFcR1jVmnnjqji8hDpY0Pxl+OBPuKbafs=
+	t=1708521074; cv=none; b=uIRmyW9CBDzumPbgPIE5oQjXtd7u9wBf/g3J8z20xaK9xnhDvDA2IwT/YkMV0F+6kDkwE9lZ9NGg/kjS6cP5zxnPeRBssb+IbgTUEVeAfWJY2Iu0BEr1oqUKpQIRFI7pNNbG+sDBfkv5GNpue2y04TvlC2S2750lKH8lVF4eBH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521070; c=relaxed/simple;
-	bh=CubFgC7yWsP4yUz9DBjsYXVA7cEahnWoRc9FJxBSi/4=;
+	s=arc-20240116; t=1708521074; c=relaxed/simple;
+	bh=KOOSQVR1Gh6n2Vf2CYqLjtBvQwF+ibl47F3yGEXLuEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uEAakCfLPPL123KYf03llRH0OPOEU4KaczPUnrNq2/kxj2Tx4XVr8Av9ypmJArr4apF1yP6+1ib4u7gxrsY6bG73hlXDJCT6PjIHp9k8AxdPaBvP1KInnNWigXUdfuhKPPyfXSY8fJ8RyF/PdGoNwYnPgPEXbZEPf0dnmgEvVjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/KGtkvZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAiOTSIpoWffh8pLCumt0F5T6jX7XZ9pGUfO3RmyFi8dMGeCxYvr3oT5KcgsOxkiOgTc+bxNnC0x1yivXtwXHapV3ycM3YSaYjeZKksKBSGQmSnsMSlUCSh3hi3dhs3jz+swOPuuf9Fdivqx3OU34nGre0UdOV8xTRkNjSesoTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JAwvPZ88; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/KGtkvZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2002C433F1;
-	Wed, 21 Feb 2024 13:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JAwvPZ88"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E78BC433F1;
+	Wed, 21 Feb 2024 13:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521070;
-	bh=CubFgC7yWsP4yUz9DBjsYXVA7cEahnWoRc9FJxBSi/4=;
+	s=korg; t=1708521073;
+	bh=KOOSQVR1Gh6n2Vf2CYqLjtBvQwF+ibl47F3yGEXLuEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/KGtkvZ9QerxTpAoSN6jsGw55YZOa4GDEQVS4k9bfR1/oj9UwBX2m0Xxr1qqUiMu
-	 47+4/FPFNZ8fd/Mhqtasxku4hE9Yh43fnaGfTId0z+7pPMrck2xpul7Ad9zjx8i1je
-	 j/Y62MlcfH58Tv3QYgunDLWdO9fF+o/Zc9GGMNzg=
+	b=JAwvPZ889JClosLvVGN3egvpyV1f1JNJiZW+Bk+KPZvCAUikEXrWq1X6QWHYm5MRU
+	 a8I2/Dfb3bM7bB7e++Qb459qFGDwETYySYXqwTP3sNZ5cxFdj307Yly937ddLI/O0B
+	 dfaX73oe5ESk+vzYIqbdclxC0fThSr3Ans+bGctI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <a.hajda@samsung.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Mark Brown <broonie@kernel.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 007/202] driver core: add device probe log helper
-Date: Wed, 21 Feb 2024 14:05:08 +0100
-Message-ID: <20240221125931.981661835@linuxfoundation.org>
+Subject: [PATCH 4.19 008/202] spi: introduce SPI_MODE_X_MASK macro
+Date: Wed, 21 Feb 2024 14:05:09 +0100
+Message-ID: <20240221125932.013452815@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -53,103 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Hajda <a.hajda@samsung.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit a787e5400a1ceeb0ef92d71ec43aeb35b1fa1334 ]
+[ Upstream commit 029b42d8519cef70c4fb5fcaccd08f1053ed2bf0 ]
 
-During probe every time driver gets resource it should usually check for
-error printk some message if it is not -EPROBE_DEFER and return the error.
-This pattern is simple but requires adding few lines after any resource
-acquisition code, as a result it is often omitted or implemented only
-partially.
-dev_err_probe helps to replace such code sequences with simple call,
-so code:
-	if (err != -EPROBE_DEFER)
-		dev_err(dev, ...);
-	return err;
-becomes:
-	return dev_err_probe(dev, err, ...);
+Provide a macro to filter all SPI_MODE_0,1,2,3 mode in one run.
 
-Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
-Reviewed-by: Rafael J. Wysocki <rafael@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/20200713144324.23654-2-a.hajda@samsung.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The latest SPI framework will parse the devicetree in following call
+sequence: of_register_spi_device() -> of_spi_parse_dt()
+So, driver do not need to pars the devicetree and will get prepared
+flags in the probe.
+
+On one hand it is good far most drivers. On other hand some drivers need to
+filter flags provide by SPI framework and apply know to work flags. This drivers
+may use SPI_MODE_X_MASK to filter MODE flags and set own, known flags:
+  spi->flags &= ~SPI_MODE_X_MASK;
+  spi->flags |= SPI_MODE_0;
+
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20201027095724.18654-2-o.rempel@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 6d710b769c1f ("serial: sc16is7xx: add check for unsupported SPI modes during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c    | 42 ++++++++++++++++++++++++++++++++++++++++++
- include/linux/device.h |  3 +++
- 2 files changed, 45 insertions(+)
+ include/linux/spi/spi.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index 6e380ad9d08a..b66647277d52 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -3334,6 +3334,48 @@ define_dev_printk_level(_dev_info, KERN_INFO);
- 
- #endif
- 
-+/**
-+ * dev_err_probe - probe error check and log helper
-+ * @dev: the pointer to the struct device
-+ * @err: error value to test
-+ * @fmt: printf-style format string
-+ * @...: arguments as specified in the format string
-+ *
-+ * This helper implements common pattern present in probe functions for error
-+ * checking: print debug or error message depending if the error value is
-+ * -EPROBE_DEFER and propagate error upwards.
-+ * It replaces code sequence:
-+ * 	if (err != -EPROBE_DEFER)
-+ * 		dev_err(dev, ...);
-+ * 	else
-+ * 		dev_dbg(dev, ...);
-+ * 	return err;
-+ * with
-+ * 	return dev_err_probe(dev, err, ...);
-+ *
-+ * Returns @err.
-+ *
-+ */
-+int dev_err_probe(const struct device *dev, int err, const char *fmt, ...)
-+{
-+	struct va_format vaf;
-+	va_list args;
-+
-+	va_start(args, fmt);
-+	vaf.fmt = fmt;
-+	vaf.va = &args;
-+
-+	if (err != -EPROBE_DEFER)
-+		dev_err(dev, "error %d: %pV", err, &vaf);
-+	else
-+		dev_dbg(dev, "error %d: %pV", err, &vaf);
-+
-+	va_end(args);
-+
-+	return err;
-+}
-+EXPORT_SYMBOL_GPL(dev_err_probe);
-+
- static inline bool fwnode_is_primary(struct fwnode_handle *fwnode)
- {
- 	return fwnode && !IS_ERR(fwnode->secondary);
-diff --git a/include/linux/device.h b/include/linux/device.h
-index bccd367c11de..0714d6e5d500 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -1581,6 +1581,9 @@ do {									\
- 	WARN_ONCE(condition, "%s %s: " format, \
- 			dev_driver_string(dev), dev_name(dev), ## arg)
- 
-+extern __printf(3, 4)
-+int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
-+
- /* Create alias, so I can be autoloaded. */
- #define MODULE_ALIAS_CHARDEV(major,minor) \
- 	MODULE_ALIAS("char-major-" __stringify(major) "-" __stringify(minor))
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index 16158fe097a8..23a232d6db69 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -153,6 +153,7 @@ struct spi_device {
+ #define	SPI_MODE_1	(0|SPI_CPHA)
+ #define	SPI_MODE_2	(SPI_CPOL|0)
+ #define	SPI_MODE_3	(SPI_CPOL|SPI_CPHA)
++#define	SPI_MODE_X_MASK	(SPI_CPOL|SPI_CPHA)
+ #define	SPI_CS_HIGH	0x04			/* chipselect active high? */
+ #define	SPI_LSB_FIRST	0x08			/* per-word bits-on-wire */
+ #define	SPI_3WIRE	0x10			/* SI/SO signals shared */
 -- 
 2.43.0
 
