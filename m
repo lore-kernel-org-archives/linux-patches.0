@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2B653816;
-	Wed, 21 Feb 2024 13:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4B66995F;
+	Wed, 21 Feb 2024 13:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521678; cv=none; b=TmPvaykgKSk6lrP0UngfKF+FDHt4yC9fA3NAhIgw2p9S+VDOo1XdQEnpsGsbTTu8aAF0EDqAcW3r56KG/zCwn/tMxPIoMvTOewYd1e54hH5Fe7T8EfkTtaTQ/i2VRQ/OQAt8bHJPGW4OfK2FHOsMyH1H57heuxFW0+WD45NtJI0=
+	t=1708521681; cv=none; b=MoR1GJOE/NvBqYJB/racRfp/VC0h5x2v5az5Qy3gOTab+AJfmAIK9gftR+QNrwX/DY5bs5vdK3VcFynYUjBNWkuQ61RZVDjQ+XD2+LHtA226qFhvJz0b1CEyQ/yUW9x0OEio/W9Gv7RWQBDLWtoi5YhL0oXEupaS7Aof25Y84bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521678; c=relaxed/simple;
-	bh=iI6NtBWolpdSeWyhVc5BQuZ8b1rp+4PcfjoV11EAFC0=;
+	s=arc-20240116; t=1708521681; c=relaxed/simple;
+	bh=mglABByQjoDl4WXumKoHVLhdoYOR+mKWgRLzVaB805M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrAOuFzfCk8wXgvRHoK+ARjkgSxH+acBhtUiD3cWfXktGYeG8iG7o7UP6iQGr3DKIZ+OHFJ4Cv5nFzlzxdkrzEPIDsTAFh739smtQlL9HGTcmHAJej+b1rB9chyQmC3CjO3QkM9UFTjZHEk0UvutRF78OszBN4feNpOdKbkfbCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zXku7ROm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZvFCy/r7DNR+/lhw3tCMpcBjveAVA0ZPGNcQXbtihEG2QskGK10JGmZPXYIDjjmljdNFcTSCEyxSq0/8nivRYgq49vQbfydeTXiARjkMY++23RfDf9ni9Bl6FLuwS0gCA4joMaITy9M1e1WF6SF75udw0nOKtLfXDm1CxlkTxc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmIyJW12; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zXku7ROm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AC5C433C7;
-	Wed, 21 Feb 2024 13:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmIyJW12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E53C43390;
+	Wed, 21 Feb 2024 13:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521678;
-	bh=iI6NtBWolpdSeWyhVc5BQuZ8b1rp+4PcfjoV11EAFC0=;
+	s=korg; t=1708521681;
+	bh=mglABByQjoDl4WXumKoHVLhdoYOR+mKWgRLzVaB805M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zXku7ROmWGBc/v9Lcfst1Wz2ITZ62buW8yDNBDjleSawM1Y/7uJWGb7In3dpi3I5m
-	 TdTEHYLZfJDc/6zPSsvZ5nM+xOyJY68UtAL8HvYU/ITh1TrrKHDP1SI2nfPGVoW73w
-	 RnTbXVMLcdveQa2yMy6oH7WBofIbeeI6amXb52TU=
+	b=lmIyJW124ZOjFF6rqSOt76mykM/3jIcXTGoS/9hBtsg90sE26LCA3qxu/iCLpvBUV
+	 5XrzVGwB1xJz8yviL5rlL496BGgFlRycZtehF4rrr/J4ak82ophRjCL1woKfOBEwap
+	 QGpZyyWDzTFZC0u1MWNH6JlG10uXoOSOOpqR8SH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 138/202] netfilter: nf_log: replace BUG_ON by WARN_ON_ONCE when putting logger
-Date: Wed, 21 Feb 2024 14:07:19 +0100
-Message-ID: <20240221125936.170464956@linuxfoundation.org>
+Subject: [PATCH 4.19 171/202] MIPS: Add memory clobber to csum_ipv6_magic() inline assembler
+Date: Wed, 21 Feb 2024 14:07:52 +0100
+Message-ID: <20240221125937.289392993@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -50,44 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 259eb32971e9eb24d1777a28d82730659f50fdcb ]
+[ Upstream commit d55347bfe4e66dce2e1e7501e5492f4af3e315f8 ]
 
-Module reference is bumped for each user, this should not ever happen.
+After 'lib: checksum: Use aligned accesses for ip_fast_csum and
+csum_ipv6_magic tests' was applied, the test_csum_ipv6_magic unit test
+started failing for all mips platforms, both little and bit endian.
+Oddly enough, adding debug code into test_csum_ipv6_magic() made the
+problem disappear.
 
-But BUG_ON check should use rcu_access_pointer() instead.
+The gcc manual says:
 
-If this ever happens, do WARN_ON_ONCE() instead of BUG_ON() and
-consolidate pointer check under the rcu read side lock section.
+"The "memory" clobber tells the compiler that the assembly code performs
+ memory reads or writes to items other than those listed in the input
+ and output operands (for example, accessing the memory pointed to by one
+ of the input parameters)
+"
 
-Fixes: fab4085f4e24 ("netfilter: log: nf_log_packet() as real unified interface")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This is definitely the case for csum_ipv6_magic(). Indeed, adding the
+'memory' clobber fixes the problem.
+
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_log.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/mips/include/asm/checksum.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_log.c b/net/netfilter/nf_log.c
-index a61d6df6e5f6..75bdeee325eb 100644
---- a/net/netfilter/nf_log.c
-+++ b/net/netfilter/nf_log.c
-@@ -202,11 +202,12 @@ void nf_logger_put(int pf, enum nf_log_type type)
- 		return;
- 	}
+diff --git a/arch/mips/include/asm/checksum.h b/arch/mips/include/asm/checksum.h
+index e8161e4dfde7..4680bac894f6 100644
+--- a/arch/mips/include/asm/checksum.h
++++ b/arch/mips/include/asm/checksum.h
+@@ -276,7 +276,8 @@ static __inline__ __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
+ 	"	.set	pop"
+ 	: "=&r" (sum), "=&r" (tmp)
+ 	: "r" (saddr), "r" (daddr),
+-	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum));
++	  "0" (htonl(len)), "r" (htonl(proto)), "r" (sum)
++	: "memory");
  
--	BUG_ON(loggers[pf][type] == NULL);
--
- 	rcu_read_lock();
- 	logger = rcu_dereference(loggers[pf][type]);
--	module_put(logger->me);
-+	if (!logger)
-+		WARN_ON_ONCE(1);
-+	else
-+		module_put(logger->me);
- 	rcu_read_unlock();
+ 	return csum_fold(sum);
  }
- EXPORT_SYMBOL_GPL(nf_logger_put);
 -- 
 2.43.0
 
