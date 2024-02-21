@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE13E566A;
-	Wed, 21 Feb 2024 14:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15B53EA6C;
+	Wed, 21 Feb 2024 14:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525813; cv=none; b=IOimTLoBXrW1Qp2eAnUR7beQwIOwDcRMUi6GJCpG8lb6exdtMLXsBOCpDWLRbwbhZ4n6lMVvORbdxxDGn0p+grFpsPrpJUyjaziIQ5JkN904LJ8v3MoOe0HeUs4BIPryW4pd8lXlCYnGgPTYOFemsQBkftDi8iAaK7skwFlzJmQ=
+	t=1708525816; cv=none; b=sZllS9O8eWIQNtyahkHX+nL9/BmDAvH43fJh0b5aXL7Usv6hGAc8sIWW9AVTC4MvYYJx4vQo0XYk3OeLJeNlLFrPJqH1Lup2wM9OeH0v8WziIsXA40s1nxL2zDi0QlfN59YLgZWDnWvR2rogcyHCVFud0X2nHJ/EZogFpy837A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525813; c=relaxed/simple;
-	bh=iN4p/SeO/BnOxQQyPMBsdVJXdWy6w7YAX1dbsvv9KCE=;
+	s=arc-20240116; t=1708525816; c=relaxed/simple;
+	bh=Dmg/xjzBqC8PufZM/7B8WFmby7dG3PvggdXdMET0pdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHTxDrWMUoRVFiPejChHe6KkZdlVVGu9mn1k4XCp3yrDO70sboQrmFE7Gps9U1+tx+suB1CsTka9tVfXrqm/AbXYRnrbJjDbLau3aKXNJH8na67kR3vglHYzyWNL02CTQmivAg0ZBwNRg6d/7BD8JtFFZYaqilIkhMB2m6X5tbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIvBbcOo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CG3sl3eaLaTU/umgNkp/cedpGD8nosrxZ65Q06zxm6eflsSnv10bzeknOZdf0j9oBdSbHqZBLSgAWFAkXcX6DSV8Ya/xo8dmmynkWJQLG0y3jzS4B+DUKkugnKu4ajLr5h7UlxJ0kMlcG5eX24aen+kPxzY3sbFnc2WdUY3UWU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rv9ijGEx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIvBbcOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45452C433F1;
-	Wed, 21 Feb 2024 14:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rv9ijGEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B92C433C7;
+	Wed, 21 Feb 2024 14:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525813;
-	bh=iN4p/SeO/BnOxQQyPMBsdVJXdWy6w7YAX1dbsvv9KCE=;
+	s=korg; t=1708525816;
+	bh=Dmg/xjzBqC8PufZM/7B8WFmby7dG3PvggdXdMET0pdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIvBbcOo+bseXms30u6PQeGBLKQlslaxi4OlyUkQ4urKakAQ0/3siLxwLDKw7l5me
-	 Yc9BTwn6AIEFStqdzFjCWN8KEHL9WG5luEAqSlYgS0NsbW5fOHi5S2B8R4StuRLM6V
-	 PVQl9EqV1HcSQqLrE8CwHe1br1YNsjRj0Nsur9fE=
+	b=Rv9ijGExrKk1kVB5RUl0of5DeIZuioKlMf9ABKQ1BnB6a4M4A/wuHFOyUTIEMRHWz
+	 Y+wJOwXBgFfY+vTtsC3jWNu9MchcaVO1XR4LuUAO4hbzWhw+eV+xHKNuqQSOhX+/+p
+	 ZOwLB+bJRNqnLk6QF8PXwov6Exm1HwMooVgaOh3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alfred Piccioni <alpic@google.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.4 262/267] lsm: new security_file_ioctl_compat() hook
-Date: Wed, 21 Feb 2024 14:10:03 +0100
-Message-ID: <20240221125948.468633057@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ajay Kaher <ajay.kaher@broadcom.com>
+Subject: [PATCH 5.4 263/267] netfilter: nf_tables: fix pointer math issue in nft_byteorder_eval()
+Date: Wed, 21 Feb 2024 14:10:04 +0100
+Message-ID: <20240221125948.498266442@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,208 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alfred Piccioni <alpic@google.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit f1bb47a31dff6d4b34fb14e99850860ee74bb003 upstream.
+commit c301f0981fdd3fd1ffac6836b423c4d7a8e0eb63 upstream.
 
-Some ioctl commands do not require ioctl permission, but are routed to
-other permissions such as FILE_GETATTR or FILE_SETATTR. This routing is
-done by comparing the ioctl cmd to a set of 64-bit flags (FS_IOC_*).
+The problem is in nft_byteorder_eval() where we are iterating through a
+loop and writing to dst[0], dst[1], dst[2] and so on...  On each
+iteration we are writing 8 bytes.  But dst[] is an array of u32 so each
+element only has space for 4 bytes.  That means that every iteration
+overwrites part of the previous element.
 
-However, if a 32-bit process is running on a 64-bit kernel, it emits
-32-bit flags (FS_IOC32_*) for certain ioctl operations. These flags are
-being checked erroneously, which leads to these ioctl operations being
-routed to the ioctl permission, rather than the correct file
-permissions.
+I spotted this bug while reviewing commit caf3ef7468f7 ("netfilter:
+nf_tables: prevent OOB access in nft_byteorder_eval") which is a related
+issue.  I think that the reason we have not detected this bug in testing
+is that most of time we only write one element.
 
-This was also noted in a RED-PEN finding from a while back -
-"/* RED-PEN how should LSM module know it's handling 32bit? */".
-
-This patch introduces a new hook, security_file_ioctl_compat(), that is
-called from the compat ioctl syscall. All current LSMs have been changed
-to support this hook.
-
-Reviewing the three places where we are currently using
-security_file_ioctl(), it appears that only SELinux needs a dedicated
-compat change; TOMOYO and SMACK appear to be functional without any
-change.
-
-Cc: stable@vger.kernel.org
-Fixes: 0b24dcb7f2f7 ("Revert "selinux: simplify ioctl checking"")
-Signed-off-by: Alfred Piccioni <alpic@google.com>
-Reviewed-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-[PM: subject tweak, line length fixes, and alignment corrections]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Fixes: ce1e7989d989 ("netfilter: nft_byteorder: provide 64bit le/be conversion")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[Ajay: Modified to apply on v5.4.y]
+Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/compat_ioctl.c          |    3 +--
- include/linux/lsm_hooks.h  |    9 +++++++++
- include/linux/security.h   |    9 +++++++++
- security/security.c        |   17 +++++++++++++++++
- security/selinux/hooks.c   |   28 ++++++++++++++++++++++++++++
- security/smack/smack_lsm.c |    1 +
- security/tomoyo/tomoyo.c   |    1 +
- 7 files changed, 66 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h |    4 ++--
+ net/netfilter/nft_byteorder.c     |    5 +++--
+ net/netfilter/nft_meta.c          |    2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/compat_ioctl.c
-+++ b/fs/compat_ioctl.c
-@@ -994,8 +994,7 @@ COMPAT_SYSCALL_DEFINE3(ioctl, unsigned i
- 	if (!f.file)
- 		goto out;
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -130,9 +130,9 @@ static inline u16 nft_reg_load16(u32 *sr
+ 	return *(u16 *)sreg;
+ }
  
--	/* RED-PEN how should LSM module know it's handling 32bit? */
--	error = security_file_ioctl(f.file, cmd, arg);
-+	error = security_file_ioctl_compat(f.file, cmd, arg);
- 	if (error)
- 		goto out_fput;
- 
---- a/include/linux/lsm_hooks.h
-+++ b/include/linux/lsm_hooks.h
-@@ -498,6 +498,12 @@
-  *	simple integer value.  When @arg represents a user space pointer, it
-  *	should never be used by the security module.
-  *	Return 0 if permission is granted.
-+ * @file_ioctl_compat:
-+ *	@file contains the file structure.
-+ *	@cmd contains the operation to perform.
-+ *	@arg contains the operational arguments.
-+ *	Check permission for a compat ioctl operation on @file.
-+ *	Return 0 if permission is granted.
-  * @mmap_addr :
-  *	Check permissions for a mmap operation at @addr.
-  *	@addr contains virtual address that will be used for the operation.
-@@ -1602,6 +1608,8 @@ union security_list_options {
- 	void (*file_free_security)(struct file *file);
- 	int (*file_ioctl)(struct file *file, unsigned int cmd,
- 				unsigned long arg);
-+	int (*file_ioctl_compat)(struct file *file, unsigned int cmd,
-+				unsigned long arg);
- 	int (*mmap_addr)(unsigned long addr);
- 	int (*mmap_file)(struct file *file, unsigned long reqprot,
- 				unsigned long prot, unsigned long flags);
-@@ -1907,6 +1915,7 @@ struct security_hook_heads {
- 	struct hlist_head file_alloc_security;
- 	struct hlist_head file_free_security;
- 	struct hlist_head file_ioctl;
-+	struct hlist_head file_ioctl_compat;
- 	struct hlist_head mmap_addr;
- 	struct hlist_head mmap_file;
- 	struct hlist_head file_mprotect;
---- a/include/linux/security.h
-+++ b/include/linux/security.h
-@@ -362,6 +362,8 @@ int security_file_permission(struct file
- int security_file_alloc(struct file *file);
- void security_file_free(struct file *file);
- int security_file_ioctl(struct file *file, unsigned int cmd, unsigned long arg);
-+int security_file_ioctl_compat(struct file *file, unsigned int cmd,
-+			       unsigned long arg);
- int security_mmap_file(struct file *file, unsigned long prot,
- 			unsigned long flags);
- int security_mmap_addr(unsigned long addr);
-@@ -906,6 +908,13 @@ static inline int security_file_ioctl(st
+-static inline void nft_reg_store64(u32 *dreg, u64 val)
++static inline void nft_reg_store64(u64 *dreg, u64 val)
  {
- 	return 0;
- }
-+
-+static inline int security_file_ioctl_compat(struct file *file,
-+					     unsigned int cmd,
-+					     unsigned long arg)
-+{
-+	return 0;
-+}
- 
- static inline int security_mmap_file(struct file *file, unsigned long prot,
- 				     unsigned long flags)
---- a/security/security.c
-+++ b/security/security.c
-@@ -1422,6 +1422,23 @@ int security_file_ioctl(struct file *fil
- 	return call_int_hook(file_ioctl, 0, file, cmd, arg);
+-	put_unaligned(val, (u64 *)dreg);
++	put_unaligned(val, dreg);
  }
  
-+/**
-+ * security_file_ioctl_compat() - Check if an ioctl is allowed in compat mode
-+ * @file: associated file
-+ * @cmd: ioctl cmd
-+ * @arg: ioctl arguments
-+ *
-+ * Compat version of security_file_ioctl() that correctly handles 32-bit
-+ * processes running on 64-bit kernels.
-+ *
-+ * Return: Returns 0 if permission is granted.
-+ */
-+int security_file_ioctl_compat(struct file *file, unsigned int cmd,
-+			       unsigned long arg)
-+{
-+	return call_int_hook(file_ioctl_compat, 0, file, cmd, arg);
-+}
-+
- static inline unsigned long mmap_prot(struct file *file, unsigned long prot)
- {
- 	/*
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -3668,6 +3668,33 @@ static int selinux_file_ioctl(struct fil
- 	return error;
- }
+ static inline u64 nft_reg_load64(u32 *sreg)
+--- a/net/netfilter/nft_byteorder.c
++++ b/net/netfilter/nft_byteorder.c
+@@ -38,20 +38,21 @@ void nft_byteorder_eval(const struct nft
  
-+static int selinux_file_ioctl_compat(struct file *file, unsigned int cmd,
-+			      unsigned long arg)
-+{
-+	/*
-+	 * If we are in a 64-bit kernel running 32-bit userspace, we need to
-+	 * make sure we don't compare 32-bit flags to 64-bit flags.
-+	 */
-+	switch (cmd) {
-+	case FS_IOC32_GETFLAGS:
-+		cmd = FS_IOC_GETFLAGS;
-+		break;
-+	case FS_IOC32_SETFLAGS:
-+		cmd = FS_IOC_SETFLAGS;
-+		break;
-+	case FS_IOC32_GETVERSION:
-+		cmd = FS_IOC_GETVERSION;
-+		break;
-+	case FS_IOC32_SETVERSION:
-+		cmd = FS_IOC_SETVERSION;
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return selinux_file_ioctl(file, cmd, arg);
-+}
-+
- static int default_noexec;
+ 	switch (priv->size) {
+ 	case 8: {
++		u64 *dst64 = (void *)dst;
+ 		u64 src64;
  
- static int file_map_prot_check(struct file *file, unsigned long prot, int shared)
-@@ -6933,6 +6960,7 @@ static struct security_hook_list selinux
- 	LSM_HOOK_INIT(file_permission, selinux_file_permission),
- 	LSM_HOOK_INIT(file_alloc_security, selinux_file_alloc_security),
- 	LSM_HOOK_INIT(file_ioctl, selinux_file_ioctl),
-+	LSM_HOOK_INIT(file_ioctl_compat, selinux_file_ioctl_compat),
- 	LSM_HOOK_INIT(mmap_file, selinux_mmap_file),
- 	LSM_HOOK_INIT(mmap_addr, selinux_mmap_addr),
- 	LSM_HOOK_INIT(file_mprotect, selinux_file_mprotect),
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -4648,6 +4648,7 @@ static struct security_hook_list smack_h
- 
- 	LSM_HOOK_INIT(file_alloc_security, smack_file_alloc_security),
- 	LSM_HOOK_INIT(file_ioctl, smack_file_ioctl),
-+	LSM_HOOK_INIT(file_ioctl_compat, smack_file_ioctl),
- 	LSM_HOOK_INIT(file_lock, smack_file_lock),
- 	LSM_HOOK_INIT(file_fcntl, smack_file_fcntl),
- 	LSM_HOOK_INIT(mmap_file, smack_mmap_file),
---- a/security/tomoyo/tomoyo.c
-+++ b/security/tomoyo/tomoyo.c
-@@ -554,6 +554,7 @@ static struct security_hook_list tomoyo_
- 	LSM_HOOK_INIT(path_rename, tomoyo_path_rename),
- 	LSM_HOOK_INIT(inode_getattr, tomoyo_inode_getattr),
- 	LSM_HOOK_INIT(file_ioctl, tomoyo_file_ioctl),
-+	LSM_HOOK_INIT(file_ioctl_compat, tomoyo_file_ioctl),
- 	LSM_HOOK_INIT(path_chmod, tomoyo_path_chmod),
- 	LSM_HOOK_INIT(path_chown, tomoyo_path_chown),
- 	LSM_HOOK_INIT(path_chroot, tomoyo_path_chroot),
+ 		switch (priv->op) {
+ 		case NFT_BYTEORDER_NTOH:
+ 			for (i = 0; i < priv->len / 8; i++) {
+ 				src64 = nft_reg_load64(&src[i]);
+-				nft_reg_store64(&dst[i], be64_to_cpu(src64));
++				nft_reg_store64(&dst64[i], be64_to_cpu(src64));
+ 			}
+ 			break;
+ 		case NFT_BYTEORDER_HTON:
+ 			for (i = 0; i < priv->len / 8; i++) {
+ 				src64 = (__force __u64)
+ 					cpu_to_be64(nft_reg_load64(&src[i]));
+-				nft_reg_store64(&dst[i], src64);
++				nft_reg_store64(&dst64[i], src64);
+ 			}
+ 			break;
+ 		}
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -247,7 +247,7 @@ void nft_meta_get_eval(const struct nft_
+ 		strncpy((char *)dest, out->rtnl_link_ops->kind, IFNAMSIZ);
+ 		break;
+ 	case NFT_META_TIME_NS:
+-		nft_reg_store64(dest, ktime_get_real_ns());
++		nft_reg_store64((u64 *)dest, ktime_get_real_ns());
+ 		break;
+ 	case NFT_META_TIME_DAY:
+ 		nft_reg_store8(dest, nft_meta_weekday(ktime_get_real_seconds()));
 
 
