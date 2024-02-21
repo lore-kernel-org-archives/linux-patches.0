@@ -1,155 +1,111 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F2953A1
-	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 01:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9D820DCB
+	for <patches@lists.linux.dev>; Wed, 21 Feb 2024 06:42:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708480766; cv=none; b=nRCCdKdGOpnDaQVwuCgcgQxoCPpxJmSE6vrkz9JE4pppy5JKUUTOuB5Qyrmk/LwmbeqZFdFY5XoUNNRLBjaI+9iWAFZt3jZpp5WVBXZDSUctTES2JdBN4pn537h+4v7fAgmOm3i0zAthdoy3NzfMB9M9/w2RaF+AKauxSo68azY=
+	t=1708497744; cv=none; b=I/FqimYqd5w7eXMgGxHWVeZPLK0SnRvuaFlC1mXwENI02yt+/Sbfb5J2AxFEBkVZli3ubgcULCDHCIQeZxCJdEPPg5/eQGk76IGxeP/vmN4dsqsENX3mRJRidfR684cbQJ59q4X5Zj9ZPs+18a87XDloua1zOVIFtfzuswRpkRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708480766; c=relaxed/simple;
-	bh=Yy/8YwI1NXHNFY4dyp+Ak0PqgCVjvM91BpGs203MyMM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hDbD0GEoN5vUT5I3BAoKtR+DpnnEA49tD7ASjA7r+cw8x7fDr1UEIUl+k/hSkAS/DlqVtNkRtIbCNXzaRyQ+WoSFbwwB1jmmBY1dUT7dSK1Ikz/8TfCc3E92N8j8+MUy0KiaPotrgzBujOO0ga32/hg2cy4xODG5Jixs2YMkkj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lmXMOIFQ; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1708497744; c=relaxed/simple;
+	bh=VNdJmD/gpyse/FMH9lufHreZgd3FLHQhGe9fMKcG+6w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sKCZtgH6emYx1PW6X2U4anEayBOF9WUP0j/KxhKTmfw2cnGIBf1bWMmr0FKhp10MAKLLhXCl8BcFrWQ4moXQBgl/nKddv1bJvYLGJU4WsLceJ6i07x+TsWgB25kydQvHzxcaEEQKa7qQ3ULi84l+6qtYUTqx0m2uE0QbnzgSYUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GlTFd9NK; arc=none smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lmXMOIFQ"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d746856d85so39331895ad.0
-        for <patches@lists.linux.dev>; Tue, 20 Feb 2024 17:59:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GlTFd9NK"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-6e44c9a62b6so1396380a34.3
+        for <patches@lists.linux.dev>; Tue, 20 Feb 2024 22:42:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1708480763; x=1709085563; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mhVd93tz1AXwUEn+kfLstiE+RXrMZSMseSHUIcWvQmI=;
-        b=lmXMOIFQWGs4AfCY8sNdLyKRD5N0T6EWC/q1tbFlnIsVNFVJUpVne+2GgRRf90dKBh
-         CH7UHKHJgjWDSD+GwJJ5Z5CqTkhbLj6TVCEX9WJYdjAkPNARkeJBvpr6jKCD3kAuUiHp
-         5W5bThTQ1R6p+NQygV9cozoxW8j2tWGC9NnEg=
+        d=gmail.com; s=20230601; t=1708497742; x=1709102542; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8qepPg3+JSFA4GPvBKRhv/lZipuP/R6kgkTa4naVw58=;
+        b=GlTFd9NKAQrjS+o47kMFQKeK6FOu4YO6rPvaNvC/MqMo7iKb6/dMFlzq2sFFPsjokz
+         vn4/k3jSdfTihIJcIAyXW/HWU/9G709WNhcxgwuJCaWWB7MI4ijmNWlWj7Q4DcR6C4ey
+         NO3/ylMyUX2mAK7a6wBD5+CMjzFuKOsVXZiFXsQCHIAHTtqSZ9B/pyJKjVwvjKqtvMaA
+         dv4ef0f3gvduPoIgws08qqEn9sApc6D1oeClQCvp1aZ0i6jy8Hlri8w93GW6RXN6vW9R
+         NU2qU7cJkDqBVfUVpN7v9sERST9BspbyZxfMGo4apCO2wFoLFbLJhLy9Qw4YJtb44tvG
+         V8Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708480763; x=1709085563;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mhVd93tz1AXwUEn+kfLstiE+RXrMZSMseSHUIcWvQmI=;
-        b=ftY4YaCgATY5P1AVH9biOFg7PLkLlIJJXwFiId1aZ7xCzlD+7BmyOeHBSF1dPJEwZ5
-         2IJz/VVkXpwhC63h0CCe/J+UdzS+d0o8uBnaQSG/AlYcHRYoFyzYH+t8+NDRhPItTTMu
-         wqt73OzmqgaAHVb1uUoy2jWtL/G/kU+xYZoCz+xq2pRENbptZwouIAPsD3qQSAYvR4l6
-         85lvlZ/MhrKX8/R2tZHpx/oYCkreQ9dacg8O2/GdfmTF1ciuNfSJItwSXDnVYcod5jp5
-         f7gWpg8wsqcumndF1ps29oU7AlA/t5FgarC8NYs8iaQthy0KfWa0djv6TmzDGBV+5sCR
-         7I0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVb6XhZkNCJsUv+fq3f250EZAaiHhdO44sB+6NnILEJTGfA3mtKXsL0MVdxxthoOT49TVsBA3lynHkSFIcBjYkU28ylDjDORg==
-X-Gm-Message-State: AOJu0Ywe3vY5W77289Bc0YpdjI99vHK08U2h+fVBcwg4KeSgfaIZZXtD
-	Z01dKfVgig8p0qTJ/iw8Z+hT9L3xOiX0LqogWUClSx8MvIwYeKZUvoySkjk5Hg==
-X-Google-Smtp-Source: AGHT+IEVghrs6OTtT15OvGzhJzUuN8xWMbAKOn5u3u4aHZ8RPX6YQRHSxH1BHaJmaFKEDlN52VLlkg==
-X-Received: by 2002:a17:902:ea06:b0:1dc:30f2:6864 with SMTP id s6-20020a170902ea0600b001dc30f26864mr199733plg.23.1708480763218;
-        Tue, 20 Feb 2024 17:59:23 -0800 (PST)
-Received: from localhost (175.199.125.34.bc.googleusercontent.com. [34.125.199.175])
-        by smtp.gmail.com with UTF8SMTPSA id p3-20020a170902c70300b001db86c48221sm6908476plp.22.2024.02.20.17.59.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Feb 2024 17:59:22 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-gpio@vger.kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH] gpiolib: Pass consumer device through to core in devm_fwnode_gpiod_get_index()
-Date: Tue, 20 Feb 2024 17:59:18 -0800
-Message-ID: <20240221015920.676063-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
+        d=1e100.net; s=20230601; t=1708497742; x=1709102542;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8qepPg3+JSFA4GPvBKRhv/lZipuP/R6kgkTa4naVw58=;
+        b=DF2LK3Gk6XtSYk1OhvyaN8P4ofnA4t3uGBNjO8ZK6qmCDDy29r5Kn75LLceWtiDqFx
+         TfTeUViXBh9vlkCI4HSgnP6+6a++m3pbuVNE4Wrajv2JDPmnoGSE8Dy59taxI8HCeWRw
+         Rax1tKboH53iA/3+4oiwGwtFFyU+JPY7JMnFFUJ77zwRptSpUS967/6KID6QjdgZiow9
+         b8pTU/RXMwFXT6MH8+gsP7I1aEl3+DRDFmelrOeNifU1X9vqYOb+PybaOhAq46koHm2s
+         QLQ3ZDmJC/gZWQ84U1mWnqTYKBGfQNR8um25v/bCxr4e4EznEccdLAGdNdFXMmARFInl
+         Qg7A==
+X-Gm-Message-State: AOJu0YxEWMn+mYzWz0t7MIyz4TrozPxM63uRvBjZxN6l8+KLzKA5uI3f
+	zDKo17LyQhkKnOOCr7HgzyADheP5EdyZMh7EUvoPo/XeWRxk720v
+X-Google-Smtp-Source: AGHT+IFX2wH+plNNcu1hJmDhVaeR7nE/+xXlIrJD4rY1IqlkWMMc9Bz7kLC8LWre+uDoFlouYw/hgA==
+X-Received: by 2002:a05:6830:12:b0:6e2:d9a0:b2b0 with SMTP id c18-20020a056830001200b006e2d9a0b2b0mr18278306otp.0.1708497742019;
+        Tue, 20 Feb 2024 22:42:22 -0800 (PST)
+Received: from archie.me ([103.131.18.64])
+        by smtp.gmail.com with ESMTPSA id 5-20020a630f45000000b005d30550f954sm7667671pgp.31.2024.02.20.22.42.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Feb 2024 22:42:21 -0800 (PST)
+Received: by archie.me (Postfix, from userid 1000)
+	id D76C318468568; Wed, 21 Feb 2024 13:42:17 +0700 (WIB)
+Date: Wed, 21 Feb 2024 13:42:17 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com
+Subject: Re: [PATCH 6.6 000/331] 6.6.18-rc1 review
+Message-ID: <ZdWbSQMfQoHUZFMH@archie.me>
+References: <20240220205637.572693592@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="xfP/hcoK8GryOZ4A"
+Content-Disposition: inline
+In-Reply-To: <20240220205637.572693592@linuxfoundation.org>
 
-This devm API takes a consumer device as an argument to setup the devm
-action, but throws it away when calling further into gpiolib. This leads
-to odd debug messages like this:
 
- (NULL device *): using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
+--xfP/hcoK8GryOZ4A
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Let's pass the consumer device down, by directly calling what
-fwnode_gpiod_get_index() calls but pass the device used for devm. This
-changes the message to look like this instead:
+On Tue, Feb 20, 2024 at 09:51:56PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.18 release.
+> There are 331 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
 
- gpio-keys gpio-keys: using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
+Successfully compiled and installed the kernel on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
-Note that callers of fwnode_gpiod_get_index() will still see the NULL
-device pointer debug message, but there's not much we can do about that
-because the API doesn't take a struct device.
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Fixes: 8eb1f71e7acc ("gpiolib: consolidate GPIO lookups")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/gpio/gpiolib-devres.c |  2 +-
- drivers/gpio/gpiolib.c        | 14 +++++++-------
- drivers/gpio/gpiolib.h        |  8 ++++++++
- 3 files changed, 16 insertions(+), 8 deletions(-)
+--=20
+An old man doll... just what I always wanted! - Clara
 
-diff --git a/drivers/gpio/gpiolib-devres.c b/drivers/gpio/gpiolib-devres.c
-index fe9ce6b19f15..4987e62dcb3d 100644
---- a/drivers/gpio/gpiolib-devres.c
-+++ b/drivers/gpio/gpiolib-devres.c
-@@ -158,7 +158,7 @@ struct gpio_desc *devm_fwnode_gpiod_get_index(struct device *dev,
- 	if (!dr)
- 		return ERR_PTR(-ENOMEM);
- 
--	desc = fwnode_gpiod_get_index(fwnode, con_id, index, flags, label);
-+	desc = gpiod_find_and_request(dev, fwnode, con_id, index, flags, label, false);
- 	if (IS_ERR(desc)) {
- 		devres_free(dr);
- 		return desc;
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 44c8f5743a24..c6667a887ecb 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -4133,13 +4133,13 @@ static struct gpio_desc *gpiod_find_by_fwnode(struct fwnode_handle *fwnode,
- 	return desc;
- }
- 
--static struct gpio_desc *gpiod_find_and_request(struct device *consumer,
--						struct fwnode_handle *fwnode,
--						const char *con_id,
--						unsigned int idx,
--						enum gpiod_flags flags,
--						const char *label,
--						bool platform_lookup_allowed)
-+struct gpio_desc *gpiod_find_and_request(struct device *consumer,
-+					 struct fwnode_handle *fwnode,
-+					 const char *con_id,
-+					 unsigned int idx,
-+					 enum gpiod_flags flags,
-+					 const char *label,
-+					 bool platform_lookup_allowed)
- {
- 	unsigned long lookupflags = GPIO_LOOKUP_FLAGS_DEFAULT;
- 	struct gpio_desc *desc;
-diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-index a4a2520b5f31..c6e5fb9aa212 100644
---- a/drivers/gpio/gpiolib.h
-+++ b/drivers/gpio/gpiolib.h
-@@ -202,6 +202,14 @@ static inline int gpiod_request_user(struct gpio_desc *desc, const char *label)
- 	return ret;
- }
- 
-+struct gpio_desc *gpiod_find_and_request(struct device *consumer,
-+					 struct fwnode_handle *fwnode,
-+					 const char *con_id,
-+					 unsigned int idx,
-+					 enum gpiod_flags flags,
-+					 const char *label,
-+					 bool platform_lookup_allowed);
-+
- int gpiod_configure_flags(struct gpio_desc *desc, const char *con_id,
- 		unsigned long lflags, enum gpiod_flags dflags);
- int gpio_set_debounce_timeout(struct gpio_desc *desc, unsigned int debounce);
+--xfP/hcoK8GryOZ4A
+Content-Type: application/pgp-signature; name="signature.asc"
 
-base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
--- 
-https://chromeos.dev
+-----BEGIN PGP SIGNATURE-----
 
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZdWbQAAKCRD2uYlJVVFO
+o8gSAQDcSoCptSpp/zoQllZP4KjRqZXxe+YdNcfeyiCxVWalRwD/TXM0d9CHkfig
+QgHIDWMCF5pGxWzKdg02GHHmkFstiwQ=
+=OaW4
+-----END PGP SIGNATURE-----
+
+--xfP/hcoK8GryOZ4A--
