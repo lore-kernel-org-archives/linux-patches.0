@@ -1,45 +1,43 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BB180C08;
-	Wed, 21 Feb 2024 16:46:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3C880C08;
+	Wed, 21 Feb 2024 16:48:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708534001; cv=none; b=uB8ka+SukxwHzYORKBytl/5YSvTJnkZw4Uox1ljR2oZvalFitCk/5Q0bnv73n4Wnyu6BkTr8Yhh7uZY6TNxhYHlH/x3LjpX4UWObJP2PrzlKKNZSoD6Zy2Ym6PsHTF7gWeGvO5PF/1ZzD5wfCA6QTG6wfTrlMhAzvfr4OP0LjkI=
+	t=1708534112; cv=none; b=pFAclY9PIJsD6PnrrxDRSLi/ZuVEdMdW4B3DP3bE1xx2XrbcAtD6IWXL4aamZ5im8IwGSYjxctXbfpUD15bzZ4unLfcrNsOfEJ4g8sKdqpk5zZRnM8rZa/gzOqaJMClFkKBfUiAf3fT6DxVsmFQJUORXX9c9qd6KSfKQhh/pQR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708534001; c=relaxed/simple;
-	bh=luA14+I6agAb3WN5vu4hfd77tv/XVl+XGCXKT2dSywU=;
+	s=arc-20240116; t=1708534112; c=relaxed/simple;
+	bh=E3KFvMLZM93hfbHg2L3W2NrtXBqubV8WcxzfaBbEJuQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O/NmuNjUalKQQ9GbCKeErKmSEinBOsaGhZnalqu49yWAq/EV6WwvT3A8EZYtNA9+BlT+DQDUD24QYd1skzGhDaREB4R7alm5HkUk262rbaviajeCkL7Sk5deueKZyZyw9h13i2KSfbN482ky8g2KM6fJi4/aMGVcLxnzpNU2mZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=LIZnfZSb; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=UTJE3x1Y+kOZTzkfQne3njyB7yO0ApXncrzJmARLCsB+GRL8ICE/Z8GYHfwDGRLGGsoft7hFdextmfHERLKfE+QWs1AZi2EYUeQAgB5spc0Y7+EJh2sC4IJaUSV9rwitQI9hX3hcTlsBPKYarcfSWCwJMNHjBTNwTG8kHYhNMOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YU3BH+bQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="LIZnfZSb"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=vF4GgIZYKuqOR3J0iKSalWbeQz2cXnj9J6PDCw6QbdU=; b=LIZnfZSbF8BBDRZJKgm/dANAND
-	Pj5o4ch1ijcAdKTXqu/PHyN4BOjz1UNbWo1yfvHfhYqeXS6vqlD4XhzL3NCKSrLF0v7JHy88R4UEw
-	QRgJD7w8D5BaTHlGn8746lF9PdG+6aGkkMFsJvRikkCymDHmAbB+cia5F+khV1bPMoP0X09cgj449
-	1Srv9rvO2zVLgGiT0eeXimbsxdTohA5aAEoCet6oTs93rs54pifPdkYHS7sitdSkuy5o0Fq7c1E8E
-	dPzMzf8bMT3XAlxyFznlWVhE/Jo0T5CIRvFbx2yEx9OOpG5sbo0hL3QaOGT1yx/y0VDn4bLFVEucB
-	XZfobmgQ==;
-Received: from mcgrof by bombadil.infradead.org with local (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1rcpjz-00000001miw-0uED;
-	Wed, 21 Feb 2024 16:46:39 +0000
-Date: Wed, 21 Feb 2024 08:46:39 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Dave Chinner <david@fromorbit.com>
-Cc: fstests@vger.kernel.org, anand.jain@oracle.com, aalbersh@redhat.com,
-	djwong@kernel.org, linux-fsdevel@vger.kernel.org,
-	kdevops@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 3/3] check: add --print-start-done to enhance watchdogs
-Message-ID: <ZdYo7zjD_lDlOdia@bombadil.infradead.org>
-References: <20240216181859.788521-1-mcgrof@kernel.org>
- <20240216181859.788521-4-mcgrof@kernel.org>
- <ZdLOKCYnM3XybqQp@dread.disaster.area>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YU3BH+bQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3331C433F1;
+	Wed, 21 Feb 2024 16:48:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708534111;
+	bh=E3KFvMLZM93hfbHg2L3W2NrtXBqubV8WcxzfaBbEJuQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YU3BH+bQkI2cnrxR6M6veZQTZ+hzlxf+xyrqHnd3VSEWXiyFtgBkSgGQQI1emz+Uq
+	 sOwcM4OhvpheEFmIiAy/YCfEA8Ov0nN7YWeZq2B6IACDynKSPVXDXMhoc21R0i//ZN
+	 w+MgDa+iELYFGeiunBZaMAVZS2vBj495IfvhkjxKMwAz8ic/ozsZIO/HaYGGgnoweb
+	 v411IOFRrKhlc2xH9x3wSYUbpJJhLxD0gjYyaAqXWYy/Oz/+y9/F+0CE8bAclGzrBs
+	 ymDH8wXUa9UzAyUJUbkbYWYokFo/qHf3pWPKSdLjHlYZWKtUyPzRWsKRbB58WzQpVm
+	 CxgLrCfne1kNA==
+Date: Wed, 21 Feb 2024 09:48:29 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Heiko Carstens <hca@linux.ibm.com>
+Cc: gor@linux.ibm.com, agordeev@linux.ibm.com, borntraeger@linux.ibm.com,
+	svens@linux.ibm.com, morbo@google.com, justinstitt@google.com,
+	linux-s390@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] s390/boot: Workaround current 'llvm-objdump -t -j ...'
+ behavior
+Message-ID: <20240221164829.GB1782141@dev-arch.thelio-3990X>
+References: <20240220-s390-work-around-llvm-objdump-t-j-v1-1-47bb0366a831@kernel.org>
+ <20240221091612.7561-A-hca@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,38 +46,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZdLOKCYnM3XybqQp@dread.disaster.area>
-Sender: Luis Chamberlain <mcgrof@infradead.org>
+In-Reply-To: <20240221091612.7561-A-hca@linux.ibm.com>
 
-On Mon, Feb 19, 2024 at 02:42:32PM +1100, Dave Chinner wrote:
-> On Fri, Feb 16, 2024 at 10:18:59AM -0800, Luis Chamberlain wrote:
-> > fstests specific watchdogs want to know when the full test suite will
-> > start and end. Right now the kernel ring buffer can get augmented but we
-> > can't know for sure if it was due to a test or some odd hardware issue
-> > after fstests ran. This is specially true for systems left running tests in
-> > loops in automation where we are not running things ourselves but rather just
-> > get access to kernel logs, or for filesystem runner watdogs such as the one
-> > in kdevops [0]. It is also often not easy to determine for sure based on
-> > just logs when fstests check really has completed unless we have a
-> > matching log of who spawned that test runner. Although we could keep track of
-> > this ourselves by an annotation locally on the test runner, it is useful to
-> > have independent tools which are not attached to the process which spawned
-> > check to just peak into a system and verify the system's progress with
-> > fstests by just using the kernel log. Keeping this in the test target kernel
-> > ring buffer enables these use cases.
+Hi Heiko,
+
+On Wed, Feb 21, 2024 at 10:16:12AM +0100, Heiko Carstens wrote:
+> On Tue, Feb 20, 2024 at 01:44:48PM -0700, Nathan Chancellor wrote:
+> > When building with OBJDUMP=llvm-objdump, there are a series of warnings
+> > from the section comparisons that arch/s390/boot/Makefile performs
+> > between vmlinux and arch/s390/boot/vmlinux:
+> ...
+> > It may be possible to change llvm-objdump's behavior to match GNU
+> > objdump's behavior but the difficulty of that task has not yet been
+> > explored. The combination of '$(OBJDUMP) -t -j' is not common in the
+> > kernel tree on a whole, so workaround this tool difference by grepping
+> > for the sections in the full symbol table output in a similar manner to
+> > the sed invocation. This results in no visible change for GNU objdump
+> > users while fixing the warnings for OBJDUMP=llvm-objdump, further
+> > enabling use of LLVM=1 for ARCH=s390 with versions of LLVM that have
+> > support for s390 in ld.lld and llvm-objcopy.
 > > 
-> > This is useful for example for filesyste checker specific watchdogs like the
-> > one in kdevops so that the watchdog knows when to start hunting for crashes
-> > based just on the kernel ring buffer, and so it also knows when the show is
-> > over.
+> > Reported-by: Heiko Carstens <hca@linux.ibm.com>
+> > Closes: https://lore.kernel.org/20240219113248.16287-C-hca@linux.ibm.com/
+> > Link: https://github.com/ClangBuiltLinux/linux/issues/859
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> > ---
+> > s390 llvm-objcopy support may be backported to LLVM 18.1.0 in time for
+> > the final release.
+> > 
+> > https://github.com/llvm/llvm-project/pull/82324
+> > 
+> > s390 ld.lld has already made it into release/18.x:
+> > 
+> > https://github.com/llvm/llvm-project/commit/0a44c3792a6ff799df5f100670d7e19d1bc49f03
+> > 
+> > If the objcopy change makes 18.1.0 final, features + this change should
+> > build cleanly with LLVM 18.1.0+ using LLVM=1 :)
+> > ---
+> >  arch/s390/boot/Makefile | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Why can't the runner that requires timing information in the
-> kernel log just emit a message to the kernel log before it
-> runs check and again immediately after completion of the check
-> script?
+> This seems to work like expected (also verified with a couple of scenarios
+> where things are supposed to break).
+> 
+> So compiling the kernel with LLVM=1 finally works on s390!
+> 
+> Patch applied - Thanks a lot!
 
-That's exactly what is done today, it just seemed to me that since this
-has been useful to a test runner now for years, it might make sense to
-generalize this.
- 
-  Luis
+Thanks a lot for testing and applying this quickly! Small update on the
+LLVM side, the llvm-objcopy change made it into 18.1.0-rc3:
+
+https://github.com/llvm/llvm-project/commit/5ef297ab611822537a385d45244867519563d3ef
+https://github.com/llvm/llvm-project/commits/llvmorg-18.1.0-rc3
+
+So it's pretty much official, 'ARCH=s390 LLVM=1' should build without
+any issues with Linux 6.9+ and LLVM 18.1.0+ :)
+
+Cheers,
+Nathan
