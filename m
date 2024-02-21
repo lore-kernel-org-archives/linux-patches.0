@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5AB7B3F2;
-	Wed, 21 Feb 2024 13:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20FA7B3F2;
+	Wed, 21 Feb 2024 13:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523336; cv=none; b=pU4XR9L37wo5NK1hjD/Lld8YTp7Fmght63SsViylVn651NTP+s7aoqQGwc0rYCWOrVVXQw85rhJzVj/nbRDVmpa6DGZUvKY0VQ0g/R94Pm5NGdVBxla43SLAR/F1JdN8ZC+6UsgQA5nBw2p7xchuqcaS8txi+NMaCVlwqE0AWzw=
+	t=1708523339; cv=none; b=qNb1gsL/WaanhAQfa2V8ghYRdwmHYb6TQnjCupk/1y1UELI5ZZ7/TaNZ5lEFfAP1+xqcBCgjd8yLw9/hhgjGXAIGYf8V4Ey6eAQAOil969ElXCDatyveaUNW8mNIWek8XQyYX3hAYGPQqXXvbAjpkCRXsu3Y7kScwZ+ilETKv6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523336; c=relaxed/simple;
-	bh=1qXKn1DgeW3XihGioOwBVhFpOj4jL5btg+4VWQwqk1k=;
+	s=arc-20240116; t=1708523339; c=relaxed/simple;
+	bh=o1N+EaROBu5losXiiovO3caepH0qrcvb3c8DKsW/Dg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gt8WZsSZzw6dCsIrT/tHg+eVICt9AtLGkL8ikG2TFGDMu+p5RdLgD177z+PJKAo/ACgyGsIwl4aRYfetBxIMY42eeaUCjm67hvFruFR1EzaTdSJo5rf+NNJKscn4gPQFO4Eqd5RmTAeORB/P6kmwPcKr0x5537wS3Vjjc/plAqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQoEjon7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzB95atvqtLm7T/1rkTV6YwtoPnbu2h1Sy1YjZiXdzbTfsik0GCz53BZqJ6lnq5I4HqDpgbEF/ZJI8wguoPOTXhLg49GFjtGPg3BkCZY4M3rYgWGM1cttihzQKqIKC2fJg5sQDklm7DlJ6BrKDbXV74QEZsSjgvFODIWCWF76O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKvhB5OI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQoEjon7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE60C43399;
-	Wed, 21 Feb 2024 13:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKvhB5OI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303BDC433C7;
+	Wed, 21 Feb 2024 13:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523336;
-	bh=1qXKn1DgeW3XihGioOwBVhFpOj4jL5btg+4VWQwqk1k=;
+	s=korg; t=1708523339;
+	bh=o1N+EaROBu5losXiiovO3caepH0qrcvb3c8DKsW/Dg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQoEjon7o7yg5vsqxFMeW+9eoeYfeValEVuAZ6gZi7Q854ZXZcTCxTLRb/9WDJx4p
-	 LjtDLv3J1ovlSxq1RZEDJ57Z4PEiaWm0m8xHZLkd0Obd5pOllIuUbaHwasm9VGaozg
-	 pS7hiBM5/6UJTzxQZyDnxNTlUO7qfUgMTfK9k+jQ=
+	b=aKvhB5OIVu5Yk7ERBTk82HPo+qmlQHUwuatWrNTv/moJ4bS/7+6IcB6sMqKlLFqUG
+	 oLY9vHs1SD9nySwlwWpJe79PSKcBuzGQR9At9X2jB94BR6KCxQDx2JnS65+l5GbQdX
+	 EP3Mejc5Nnmm6cdgzORfUoy/gu3i9h9IIndEhLjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bo liu <bo.liu@senarytech.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 406/476] ALSA: hda/conexant: Add quirk for SWS JS201D
-Date: Wed, 21 Feb 2024 14:07:37 +0100
-Message-ID: <20240221130023.010729181@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	xingwei lee <xrivendell7@gmail.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 389/476] ext4: fix double-free of blocks due to wrong extents moved_len
+Date: Wed, 21 Feb 2024 14:07:20 +0100
+Message-ID: <20240221130022.412693242@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -50,76 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bo liu <bo.liu@senarytech.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 4639c5021029d49fd2f97fa8d74731f167f98919 upstream.
+commit 55583e899a5357308274601364741a83e78d6ac4 upstream.
 
-The SWS JS201D need a different pinconfig from windows driver.
-Add a quirk to use a specific pinconfig to SWS JS201D.
+In ext4_move_extents(), moved_len is only updated when all moves are
+successfully executed, and only discards orig_inode and donor_inode
+preallocations when moved_len is not zero. When the loop fails to exit
+after successfully moving some extents, moved_len is not updated and
+remains at 0, so it does not discard the preallocations.
 
-Signed-off-by: bo liu <bo.liu@senarytech.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240205013802.51907-1-bo.liu@senarytech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the moved extents overlap with the preallocated extents, the
+overlapped extents are freed twice in ext4_mb_release_inode_pa() and
+ext4_process_freed_data() (as described in commit 94d7c16cbbbd ("ext4:
+Fix double-free of blocks with EXT4_IOC_MOVE_EXT")), and bb_free is
+incremented twice. Hence when trim is executed, a zero-division bug is
+triggered in mb_update_avg_fragment_size() because bb_free is not zero
+and bb_fragments is zero.
+
+Therefore, update move_len after each extent move to avoid the issue.
+
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Closes: https://lore.kernel.org/r/CAO4mrferzqBUnCag8R3m2zf897ts9UEuhjFQGPtODT92rYyR2Q@mail.gmail.com
+Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
+CC:  <stable@vger.kernel.org> # 3.18
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-2-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ fs/ext4/move_extent.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -344,6 +344,7 @@ enum {
- 	CXT_FIXUP_HP_ZBOOK_MUTE_LED,
- 	CXT_FIXUP_HEADSET_MIC,
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
-+	CXT_PINCFG_SWS_JS201D,
- };
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -615,6 +615,7 @@ ext4_move_extents(struct file *o_filp, s
+ 		goto out;
+ 	o_end = o_start + len;
  
- /* for hda_fixup_thinkpad_acpi() */
-@@ -841,6 +842,17 @@ static const struct hda_pintbl cxt_pincf
- 	{}
- };
++	*moved_len = 0;
+ 	while (o_start < o_end) {
+ 		struct ext4_extent *ex;
+ 		ext4_lblk_t cur_blk, next_blk;
+@@ -670,7 +671,7 @@ ext4_move_extents(struct file *o_filp, s
+ 		 */
+ 		ext4_double_up_write_data_sem(orig_inode, donor_inode);
+ 		/* Swap original branches with new branches */
+-		move_extent_per_page(o_filp, donor_inode,
++		*moved_len += move_extent_per_page(o_filp, donor_inode,
+ 				     orig_page_index, donor_page_index,
+ 				     offset_in_page, cur_len,
+ 				     unwritten, &ret);
+@@ -680,9 +681,6 @@ ext4_move_extents(struct file *o_filp, s
+ 		o_start += cur_len;
+ 		d_start += cur_len;
+ 	}
+-	*moved_len = o_start - orig_blk;
+-	if (*moved_len > len)
+-		*moved_len = len;
  
-+/* SuoWoSi/South-holding JS201D with sn6140 */
-+static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
-+	{ 0x16, 0x03211040 }, /* hp out */
-+	{ 0x17, 0x91170110 }, /* SPK/Class_D */
-+	{ 0x18, 0x95a70130 }, /* Internal mic */
-+	{ 0x19, 0x03a11020 }, /* Headset Mic */
-+	{ 0x1a, 0x40f001f0 }, /* Not used */
-+	{ 0x21, 0x40f001f0 }, /* Not used */
-+	{}
-+};
-+
- static const struct hda_fixup cxt_fixups[] = {
- 	[CXT_PINCFG_LENOVO_X200] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -996,6 +1008,10 @@ static const struct hda_fixup cxt_fixups
- 		.chained = true,
- 		.chain_id = CXT_FIXUP_HEADSET_MIC,
- 	},
-+	[CXT_PINCFG_SWS_JS201D] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = cxt_pincfg_sws_js201d,
-+	},
- };
- 
- static const struct snd_pci_quirk cxt5045_fixups[] = {
-@@ -1069,6 +1085,7 @@ static const struct snd_pci_quirk cxt506
- 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
-+	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
- 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
- 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
- 	SND_PCI_QUIRK(0x17aa, 0x215e, "Lenovo T410", CXT_PINCFG_LENOVO_TP410),
-@@ -1109,6 +1126,7 @@ static const struct hda_model_fixup cxt5
- 	{ .id = CXT_FIXUP_HP_ZBOOK_MUTE_LED, .name = "hp-zbook-mute-led" },
- 	{ .id = CXT_FIXUP_HP_MIC_NO_PRESENCE, .name = "hp-mic-fix" },
- 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
-+	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
- 	{}
- };
- 
+ out:
+ 	if (*moved_len) {
 
 
