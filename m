@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123E67D401;
-	Wed, 21 Feb 2024 13:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE7C7BB14;
+	Wed, 21 Feb 2024 13:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523952; cv=none; b=d7oSOrBM5b4VbnZwY22zvOvbxmAhAKLX/N+9VjN3aysE9EwrRduCqjm8ouHuerWuifWKLDIq/S3F633tjgqAuKR4/2ApIJjQwaO8+/Mq6MnL3qLtL1foIAMVjI7VEW1TQ1tStU53nzL/9d5JjJKwKmMB5Il+pDehGz4QQgqhvM8=
+	t=1708523955; cv=none; b=tVSiWoe0XNKAdVNnzD7uqXWUf0uWyTeIwQTOlaQwP39In43NCJqpoLB8njQCobFF87y8zdMW6U35fqJMFPcit7/dKVWtnM8RF/8XOpqPQQsJ7KSEBmlhg/q3l5MaCTqDk8NtXIHaibya84A2tpSzDFYDZmjy3tOvrejB/g/6KFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523952; c=relaxed/simple;
-	bh=UXGSa6Q/Olh8NH0xJQNFbm5MKDekN30gvvPnNvqaGjQ=;
+	s=arc-20240116; t=1708523955; c=relaxed/simple;
+	bh=Ova3qjBy4sH8lUNFXVnn9RLp2KVmpai2CrRk09U860M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADnxKSDso5+ZkL2nJevKkF0mM10h7qQZWfPdaOF1XlJ4fN/bBxVaR25klTkT7+ogk7VDTNEhbcSHt0qlpAoGUA4NLX/61Fd49J/aaKL18tUq/rSjt/pj9RVS9inOGaI7PjzxvfKbPWt4SV1DhC3xBBTF/h7/pMntufxxkJGTFfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+yV0zRm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TLWrUUKTZ3mb3Uu+JAliI//LWeQuIMjJIHU27Yvxd6TBZXdGtUPcAfKgVKT72LqlBcICMlAfPXe9k+PQTAMxs8SmCIFy08tqmvCVbUsW7kSDe8AUBkGfFPZ2ajijc0JPxCSTO/NKuNEI+eNPRDuBOQ5ogOOTWFiGHJ8bFbCoMMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAVgN2wP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+yV0zRm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8831CC43394;
-	Wed, 21 Feb 2024 13:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAVgN2wP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE92C433F1;
+	Wed, 21 Feb 2024 13:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523951;
-	bh=UXGSa6Q/Olh8NH0xJQNFbm5MKDekN30gvvPnNvqaGjQ=;
+	s=korg; t=1708523954;
+	bh=Ova3qjBy4sH8lUNFXVnn9RLp2KVmpai2CrRk09U860M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q+yV0zRmlAwFSHqwjAdpXhDKJplVQ6UbSA1QxNUcnSJFzZO1TJdyGyCX473pGczeL
-	 B1oSFNkoZVWkeGKN+kYj98sQAQNc2+XXUq1gxPaYMjd91UjJ8dSh+00v2zNnTcNXU2
-	 GWC5N1J4aPjexwOGxG2QJdWs9mKxejUiBCJohBPA=
+	b=RAVgN2wPVTaWwA/OUckZW0nxBhaim0ehw51o5QzdfSaMNpq21Fy1XPkpyH6rHEer4
+	 ftvmGLzHvu+kEMymWAaN6SfNlvQ8ihFQezMT4ulxU7asyivYbfTXArKnVKe4EcyV0j
+	 qEDo8pnZCur0KVk+gDZtR/7Pp2zh7JMuXnYrPL6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 093/379] drm: panel-simple: add missing bus flags for Tianma tm070jvhg[30/33]
-Date: Wed, 21 Feb 2024 14:04:32 +0100
-Message-ID: <20240221125957.655868982@linuxfoundation.org>
+Subject: [PATCH 5.10 102/379] drivers/perf: pmuv3: dont expose SW_INCR event in sysfs
+Date: Wed, 21 Feb 2024 14:04:41 +0100
+Message-ID: <20240221125957.937776051@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,47 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 45dd7df26cee741b31c25ffdd44fb8794eb45ccd ]
+[ Upstream commit ca6f537e459e2da4b331fe8928d1a0b0f9301f42 ]
 
-The DE signal is active high on this display, fill in the missing
-bus_flags. This aligns panel_desc with its display_timing.
+The SW_INCR event is somewhat unusual, and depends on the specific HW
+counter that it is programmed into. When programmed into PMEVCNTR<n>,
+SW_INCR will count any writes to PMSWINC_EL0 with bit n set, ignoring
+writes to SW_INCR with bit n clear.
 
-Fixes: 9a2654c0f62a ("drm/panel: Add and fill drm_panel type field")
-Fixes: b3bfcdf8a3b6 ("drm/panel: simple: add Tianma TM070JVHG33")
+Event rotation means that there's no fixed relationship between
+perf_events and HW counters, so this isn't all that useful.
 
-Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
-Link: https://lore.kernel.org/r/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231012084208.2731650-1-alexander.stein@ew.tq-group.com
+Further, we program PMUSERENR.{SW,EN}=={0,0}, which causes EL0 writes to
+PMSWINC_EL0 to be trapped and handled as UNDEFINED, resulting in a
+SIGILL to userspace.
+
+Given that, it's not a good idea to expose SW_INCR in sysfs. Hide it as
+we did for CHAIN back in commit:
+
+  4ba2578fa7b55701 ("arm64: perf: don't expose CHAIN event in sysfs")
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20231204115847.2993026-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-simple.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/kernel/perf_event.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
-index ee01b61a6baf..51470020ba61 100644
---- a/drivers/gpu/drm/panel/panel-simple.c
-+++ b/drivers/gpu/drm/panel/panel-simple.c
-@@ -3635,6 +3635,7 @@ static const struct panel_desc tianma_tm070jdhg30 = {
- 	},
- 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
- };
+diff --git a/arch/arm64/kernel/perf_event.c b/arch/arm64/kernel/perf_event.c
+index cdb3d4549b3a..8e428f8dd108 100644
+--- a/arch/arm64/kernel/perf_event.c
++++ b/arch/arm64/kernel/perf_event.c
+@@ -171,7 +171,11 @@ armv8pmu_events_sysfs_show(struct device *dev,
+ 	}).attr.attr)
  
- static const struct panel_desc tianma_tm070jvhg33 = {
-@@ -3647,6 +3648,7 @@ static const struct panel_desc tianma_tm070jvhg33 = {
- 	},
- 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
- 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
-+	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
- };
- 
- static const struct display_timing tianma_tm070rvhg71_timing = {
+ static struct attribute *armv8_pmuv3_event_attrs[] = {
+-	ARMV8_EVENT_ATTR(sw_incr, ARMV8_PMUV3_PERFCTR_SW_INCR),
++	/*
++	 * Don't expose the sw_incr event in /sys. It's not usable as writes to
++	 * PMSWINC_EL0 will trap as PMUSERENR.{SW,EN}=={0,0} and event rotation
++	 * means we don't have a fixed event<->counter relationship regardless.
++	 */
+ 	ARMV8_EVENT_ATTR(l1i_cache_refill, ARMV8_PMUV3_PERFCTR_L1I_CACHE_REFILL),
+ 	ARMV8_EVENT_ATTR(l1i_tlb_refill, ARMV8_PMUV3_PERFCTR_L1I_TLB_REFILL),
+ 	ARMV8_EVENT_ATTR(l1d_cache_refill, ARMV8_PMUV3_PERFCTR_L1D_CACHE_REFILL),
 -- 
 2.43.0
 
