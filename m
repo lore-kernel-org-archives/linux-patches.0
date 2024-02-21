@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235C27D401;
-	Wed, 21 Feb 2024 14:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B857D401;
+	Wed, 21 Feb 2024 14:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524634; cv=none; b=KcrlNaSv/99XKpbb93PWeMsm5hf/vi+42MZggpi82r/0LgDK2SEgekleN9HXBs8pbdNvCHTXNNAZUiPXiHUr1j6NaeWfi5PwygCzkpX19QcAbdN0eHK9MN88K+T4xEzDE+/TZW6oX55XPR2NsV1+QW5pDT6TlhS3urH/Fb1vHmo=
+	t=1708524637; cv=none; b=ae0i78PRD9afFDNhPcIgdSFin6ojJeue/CJfr77P1MGUWq7XHl8P4AR+ChQJNKwju1UTwY8vFFPvG9EDqxQ7hSgH41F6THw8AmNN1ZdDdxI5DnYyTQXsuFyEQCs8WwSr9gdDjEQE5cIuCHq68zE7xeGb+DYsFTN1Q64wsziz6KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524634; c=relaxed/simple;
-	bh=RXQmAWCcYdgq+5bVNXv/VZUmYoo9owrnnxPnlB5agM4=;
+	s=arc-20240116; t=1708524637; c=relaxed/simple;
+	bh=yK4lBRHLiYXtvbOXdmXDD305X58PZKcuv0COvmhqVY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UvKj75XzCoe2iGfDAVh0LYMT4dev9mqq7V97T4d+FbpFaxMwDEiWi2d8Yfs8l8C+xO+1IGFH0d7gUMNio+mio333Kw7zrgwoluj/A1HrlrXo1afS0Gq4EV9vUi6lO4w88Z6tfVi5LfZM1TdButsSpksGkMtBB1C8WS28Ck8ITDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpeQCDXr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mOj+Al+S9AZMr1dz+MyAwqgd15wtcRvPyxyR+qFs/SxwOwMAvgZl6B2cbZViNIPI1oD13nY0b4aYjzOh5Qn2INqQRl4MgzrgMPNbpzR9q5HOvJKj+VvatR3TzSlBmuQrlliqY90SjRXbpYlmHIRSE6pgiupKlUej2OdUdQj2U60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjmkPdw4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpeQCDXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D76EC433C7;
-	Wed, 21 Feb 2024 14:10:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjmkPdw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A998DC433F1;
+	Wed, 21 Feb 2024 14:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524634;
-	bh=RXQmAWCcYdgq+5bVNXv/VZUmYoo9owrnnxPnlB5agM4=;
+	s=korg; t=1708524637;
+	bh=yK4lBRHLiYXtvbOXdmXDD305X58PZKcuv0COvmhqVY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpeQCDXrp9JNnLQCv/v80zCITp5WnElyWUBvvl1nkEI0xJIvByXZmIcb2MdTbjs5j
-	 VgWIBupnVUM6aJI/PQ1xy71NTUor1fC5Gpu8OOHdxebPIFmqvaP7laydxJaGql6LID
-	 QCDnLrvL4t8t3LmeY2gbjCUMZw5jbZVQaqFz1rJ4=
+	b=mjmkPdw4TXjZPsQdXcXy6DoFK1I16n0PE0w+Iru57ta/dGK/oRq6/YqGSt+kwGxmh
+	 qB+DZjlhn+ilm2qQbzs04S5CMdQn3H+gq9/SvxvBeol2pgU4bzPkUEoZXW702TnC41
+	 Q/6PnapRGOqaia+0ZurGC6njUtnS0UhkEdIohWQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.10 302/379] HID: wacom: Do not register input devices until after hid_hw_start
-Date: Wed, 21 Feb 2024 14:08:01 +0100
-Message-ID: <20240221130003.855948081@linuxfoundation.org>
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 5.10 303/379] usb: ucsi_acpi: Fix command completion handling
+Date: Wed, 21 Feb 2024 14:08:02 +0100
+Message-ID: <20240221130003.886037803@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,147 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gerecke <killertofu@gmail.com>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit c1d6708bf0d3dd976460d435373cf5abf21ce258 upstream.
+commit 2840143e393a4ddc1caab4372969ea337371168c upstream.
 
-If a input device is opened before hid_hw_start is called, events may
-not be received from the hardware. In the case of USB-backed devices,
-for example, the hid_hw_start function is responsible for filling in
-the URB which is submitted when the input device is opened. If a device
-is opened prematurely, polling will never start because the device will
-not have been in the correct state to send the URB.
+In case of a spurious or otherwise delayed notification it is
+possible that CCI still reports the previous completion. The
+UCSI spec is aware of this and provides two completion bits in
+CCI, one for normal commands and one for acks. As acks and commands
+alternate the notification handler can determine if the completion
+bit is from the current command.
 
-Because the wacom driver registers its input devices before calling
-hid_hw_start, there is a window of time where a device can be opened
-and end up in an inoperable state. Some ARM-based Chromebooks in particular
-reliably trigger this bug.
+The initial UCSI code correctly handled this but the distinction
+between the two completion bits was lost with the introduction of
+the new API.
 
-This commit splits the wacom_register_inputs function into two pieces.
-One which is responsible for setting up the allocated inputs (and runs
-prior to hid_hw_start so that devices are ready for any input events
-they may end up receiving) and another which only registers the devices
-(and runs after hid_hw_start to ensure devices can be immediately opened
-without issue). Note that the functions to initialize the LEDs and remotes
-are also moved after hid_hw_start to maintain their own dependency chains.
+To fix this revive the ACK_PENDING bit for ucsi_acpi and only complete
+commands if the completion bit matches.
 
-Fixes: 7704ac937345 ("HID: wacom: implement generic HID handling for pen generic devices")
-Cc: stable@vger.kernel.org # v3.18+
-Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Tested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: f56de278e8ec ("usb: typec: ucsi: acpi: Move to the new API")
+Cc: stable@vger.kernel.org
+Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240121204123.275441-3-lk@c--e.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |   63 ++++++++++++++++++++++++++++++++----------------
- 1 file changed, 43 insertions(+), 20 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_acpi.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2088,7 +2088,7 @@ static int wacom_allocate_inputs(struct
- 	return 0;
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -70,9 +70,13 @@ static int ucsi_acpi_sync_write(struct u
+ 				const void *val, size_t val_len)
+ {
+ 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	bool ack = UCSI_COMMAND(*(u64 *)val) == UCSI_ACK_CC_CI;
+ 	int ret;
+ 
+-	set_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		set_bit(ACK_PENDING, &ua->flags);
++	else
++		set_bit(COMMAND_PENDING, &ua->flags);
+ 
+ 	ret = ucsi_acpi_async_write(ucsi, offset, val, val_len);
+ 	if (ret)
+@@ -82,7 +86,10 @@ static int ucsi_acpi_sync_write(struct u
+ 		ret = -ETIMEDOUT;
+ 
+ out_clear_bit:
+-	clear_bit(COMMAND_PENDING, &ua->flags);
++	if (ack)
++		clear_bit(ACK_PENDING, &ua->flags);
++	else
++		clear_bit(COMMAND_PENDING, &ua->flags);
+ 
+ 	return ret;
+ }
+@@ -106,8 +113,10 @@ static void ucsi_acpi_notify(acpi_handle
+ 	if (UCSI_CCI_CONNECTOR(cci))
+ 		ucsi_connector_change(ua->ucsi, UCSI_CCI_CONNECTOR(cci));
+ 
+-	if (test_bit(COMMAND_PENDING, &ua->flags) &&
+-	    cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))
++	if (cci & UCSI_CCI_ACK_COMPLETE && test_bit(ACK_PENDING, &ua->flags))
++		complete(&ua->complete);
++	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
++	    test_bit(COMMAND_PENDING, &ua->flags))
+ 		complete(&ua->complete);
  }
  
--static int wacom_register_inputs(struct wacom *wacom)
-+static int wacom_setup_inputs(struct wacom *wacom)
- {
- 	struct input_dev *pen_input_dev, *touch_input_dev, *pad_input_dev;
- 	struct wacom_wac *wacom_wac = &(wacom->wacom_wac);
-@@ -2107,10 +2107,6 @@ static int wacom_register_inputs(struct
- 		input_free_device(pen_input_dev);
- 		wacom_wac->pen_input = NULL;
- 		pen_input_dev = NULL;
--	} else {
--		error = input_register_device(pen_input_dev);
--		if (error)
--			goto fail;
- 	}
- 
- 	error = wacom_setup_touch_input_capabilities(touch_input_dev, wacom_wac);
-@@ -2119,10 +2115,6 @@ static int wacom_register_inputs(struct
- 		input_free_device(touch_input_dev);
- 		wacom_wac->touch_input = NULL;
- 		touch_input_dev = NULL;
--	} else {
--		error = input_register_device(touch_input_dev);
--		if (error)
--			goto fail;
- 	}
- 
- 	error = wacom_setup_pad_input_capabilities(pad_input_dev, wacom_wac);
-@@ -2131,7 +2123,34 @@ static int wacom_register_inputs(struct
- 		input_free_device(pad_input_dev);
- 		wacom_wac->pad_input = NULL;
- 		pad_input_dev = NULL;
--	} else {
-+	}
-+
-+	return 0;
-+}
-+
-+static int wacom_register_inputs(struct wacom *wacom)
-+{
-+	struct input_dev *pen_input_dev, *touch_input_dev, *pad_input_dev;
-+	struct wacom_wac *wacom_wac = &(wacom->wacom_wac);
-+	int error = 0;
-+
-+	pen_input_dev = wacom_wac->pen_input;
-+	touch_input_dev = wacom_wac->touch_input;
-+	pad_input_dev = wacom_wac->pad_input;
-+
-+	if (pen_input_dev) {
-+		error = input_register_device(pen_input_dev);
-+		if (error)
-+			goto fail;
-+	}
-+
-+	if (touch_input_dev) {
-+		error = input_register_device(touch_input_dev);
-+		if (error)
-+			goto fail;
-+	}
-+
-+	if (pad_input_dev) {
- 		error = input_register_device(pad_input_dev);
- 		if (error)
- 			goto fail;
-@@ -2381,6 +2400,20 @@ static int wacom_parse_and_register(stru
- 			goto fail;
- 	}
- 
-+	error = wacom_setup_inputs(wacom);
-+	if (error)
-+		goto fail;
-+
-+	if (features->type == HID_GENERIC)
-+		connect_mask |= HID_CONNECT_DRIVER;
-+
-+	/* Regular HID work starts now */
-+	error = hid_hw_start(hdev, connect_mask);
-+	if (error) {
-+		hid_err(hdev, "hw start failed\n");
-+		goto fail;
-+	}
-+
- 	error = wacom_register_inputs(wacom);
- 	if (error)
- 		goto fail;
-@@ -2395,16 +2428,6 @@ static int wacom_parse_and_register(stru
- 			goto fail;
- 	}
- 
--	if (features->type == HID_GENERIC)
--		connect_mask |= HID_CONNECT_DRIVER;
--
--	/* Regular HID work starts now */
--	error = hid_hw_start(hdev, connect_mask);
--	if (error) {
--		hid_err(hdev, "hw start failed\n");
--		goto fail;
--	}
--
- 	if (!wireless) {
- 		/* Note that if query fails it is not a hard failure */
- 		wacom_query_tablet_data(wacom);
 
 
