@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D17B69317;
-	Wed, 21 Feb 2024 14:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3264569317;
+	Wed, 21 Feb 2024 14:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524932; cv=none; b=N0fp7FjZ6K70u7gkLwcH0R0U1VVxezV4sGqYuQ1Qk2EJc6jg/Jz2ijsioVivPLl8ffSXgqDaSu2VgtOGV4HtwmiZy0qoSrhVC6SxZjh9mE5AnRdbKingABCYtB2sewBkswmUq0LXT3bzINFbMwsv0X2M+QLLa8M/dc+8FbM47lw=
+	t=1708524935; cv=none; b=e5qvft6aGRVbzMztlpFpkRtbfFjiZp5hDyxPzuizHPGhidIy+w/6vsg73WGFAwFXSROr4VxAvwrjsaVP0+vOrha5wOg0PZYU8fY9Z8Nr/90+a3vZLWJnC2VOX2dAwWy1/JwcrCkpKLJNEGJydm+3DxuePHaECj4IIk3uSJdeHbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524932; c=relaxed/simple;
-	bh=gRtWD8zCyYLZ3yLW+JXR7SuFPqTQW5CnHGiQY4iJd+M=;
+	s=arc-20240116; t=1708524935; c=relaxed/simple;
+	bh=cafeoqCBnSBK5g4FUTP4UoWOjtBoGUf89kcnJmc+sRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSGPVSi9jqktnYES7X8aFJcFA+JRYg92BjooUD/JtG4E9IBuZDJAK9vqZuw9SKUfwUQUYaUCwu7wRutFcUddMyZUGChYVh+3/MW1ifiG8+StwSPxYM8EKyuZGw7Nho7TLy1Qy9h0QCqnnVe6x9FnwLNihpjHRlARE2jLrgTMgZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPm71mET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AjClTXiuZQsCxv2S0+pTpmHMveOocNtJQGIf+DOMg6D2pw5RT+hmGeepTz7Az7yDDZdG1zp9/EefB/c8s4j5LHrjwL0xZYOSXg5fzAmFcJf4DUW/7kxFQDW+OvtQ/4NFth3V8qlViKLB+F7FTsYxhJ79YIrsyFJ8ALHz3+vFw3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02DnsUmo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPm71mET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829F0C433F1;
-	Wed, 21 Feb 2024 14:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02DnsUmo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9374DC43390;
+	Wed, 21 Feb 2024 14:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524932;
-	bh=gRtWD8zCyYLZ3yLW+JXR7SuFPqTQW5CnHGiQY4iJd+M=;
+	s=korg; t=1708524935;
+	bh=cafeoqCBnSBK5g4FUTP4UoWOjtBoGUf89kcnJmc+sRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPm71mETMDVbmjpypjHfI6KPQ/oe4iE5PUtRAy8tYjMOcADOuKfjFLgDjZnhFSo7h
-	 2gDE14ZzilaOokI/ZbBGdEH3o6qrz8Uz8U0jeaau9E/2+xrxH02se35V6zEBXRBbq3
-	 d+q3PR8SphIi4Ky717CliFUw4C6tHFnfjH4it3XM=
+	b=02DnsUmo8o/16AUdrkTwR+XkCdlXNKHdTyvpSl0Sq1KpkiHBwkc9oQeAcoh3ckQvK
+	 9gszg/DXTPkcKouzdbozi+nYmOFHnKEGsNZtDonoSL1J7trKuXXUGvzpalTd6hrl5h
+	 idHZzDJ3zts28ybOrcr4Ip+KGAg8JVIhKfCKutDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+5c04210f7c7f897c1e7f@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 371/379] nilfs2: fix potential bug in end_buffer_async_write
-Date: Wed, 21 Feb 2024 14:09:10 +0100
-Message-ID: <20240221130006.035511212@linuxfoundation.org>
+	qizhong cheng <qizhong.cheng@mediatek.com>,
+	Jianjun Wang <jianjun.wang@mediatek.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 001/267] PCI: mediatek: Clear interrupt status before dispatching handler
+Date: Wed, 21 Feb 2024 14:05:42 +0100
+Message-ID: <20240221125940.106713023@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
-References: <20240221125954.917878865@linuxfoundation.org>
+In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
+References: <20240221125940.058369148@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,105 +48,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: qizhong cheng <qizhong.cheng@mediatek.com>
 
-commit 5bc09b397cbf1221f8a8aacb1152650c9195b02b upstream.
+[ Upstream commit 4e11c29873a8a296a20f99b3e03095e65ebf897d ]
 
-According to a syzbot report, end_buffer_async_write(), which handles the
-completion of block device writes, may detect abnormal condition of the
-buffer async_write flag and cause a BUG_ON failure when using nilfs2.
+We found a failure when using the iperf tool during WiFi performance
+testing, where some MSIs were received while clearing the interrupt
+status, and these MSIs cannot be serviced.
 
-Nilfs2 itself does not use end_buffer_async_write().  But, the async_write
-flag is now used as a marker by commit 7f42ec394156 ("nilfs2: fix issue
-with race condition of competition between segments for dirty blocks") as
-a means of resolving double list insertion of dirty blocks in
-nilfs_lookup_dirty_data_buffers() and nilfs_lookup_node_buffers() and the
-resulting crash.
+The interrupt status can be cleared even if the MSI status remains pending.
+As such, given the edge-triggered interrupt type, its status should be
+cleared before being dispatched to the handler of the underling device.
 
-This modification is safe as long as it is used for file data and b-tree
-node blocks where the page caches are independent.  However, it was
-irrelevant and redundant to also introduce async_write for segment summary
-and super root blocks that share buffers with the backing device.  This
-led to the possibility that the BUG_ON check in end_buffer_async_write
-would fail as described above, if independent writebacks of the backing
-device occurred in parallel.
-
-The use of async_write for segment summary buffers has already been
-removed in a previous change.
-
-Fix this issue by removing the manipulation of the async_write flag for
-the remaining super root block buffer.
-
-Link: https://lkml.kernel.org/r/20240203161645.4992-1-konishi.ryusuke@gmail.com
-Fixes: 7f42ec394156 ("nilfs2: fix issue with race condition of competition between segments for dirty blocks")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+5c04210f7c7f897c1e7f@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/00000000000019a97c05fd42f8c8@google.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[kwilczynski: commit log, code comment wording]
+Link: https://lore.kernel.org/linux-pci/20231211094923.31967-1-jianjun.wang@mediatek.com
+Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
+Signed-off-by: qizhong cheng <qizhong.cheng@mediatek.com>
+Signed-off-by: Jianjun Wang <jianjun.wang@mediatek.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: rewrap comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pci/controller/pcie-mediatek.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -1707,7 +1707,6 @@ static void nilfs_segctor_prepare_write(
+diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
+index 728a59655825..ff22bca818f3 100644
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -623,14 +623,20 @@ static void mtk_pcie_intr_handler(struct irq_desc *desc)
+ 		if (status & MSI_STATUS){
+ 			unsigned long imsi_status;
  
- 		list_for_each_entry(bh, &segbuf->sb_payload_buffers,
- 				    b_assoc_buffers) {
--			set_buffer_async_write(bh);
- 			if (bh == segbuf->sb_super_root) {
- 				if (bh->b_page != bd_page) {
- 					lock_page(bd_page);
-@@ -1718,6 +1717,7 @@ static void nilfs_segctor_prepare_write(
++			/*
++			 * The interrupt status can be cleared even if the
++			 * MSI status remains pending. As such, given the
++			 * edge-triggered interrupt type, its status should
++			 * be cleared before being dispatched to the
++			 * handler of the underlying device.
++			 */
++			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 			while ((imsi_status = readl(port->base + PCIE_IMSI_STATUS))) {
+ 				for_each_set_bit(bit, &imsi_status, MTK_MSI_IRQS_NUM) {
+ 					virq = irq_find_mapping(port->inner_domain, bit);
+ 					generic_handle_irq(virq);
  				}
- 				break;
  			}
-+			set_buffer_async_write(bh);
- 			if (bh->b_page != fs_page) {
- 				nilfs_begin_page_io(fs_page);
- 				fs_page = bh->b_page;
-@@ -1803,7 +1803,6 @@ static void nilfs_abort_logs(struct list
+-			/* Clear MSI interrupt status */
+-			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 		}
+ 	}
  
- 		list_for_each_entry(bh, &segbuf->sb_payload_buffers,
- 				    b_assoc_buffers) {
--			clear_buffer_async_write(bh);
- 			if (bh == segbuf->sb_super_root) {
- 				clear_buffer_uptodate(bh);
- 				if (bh->b_page != bd_page) {
-@@ -1812,6 +1811,7 @@ static void nilfs_abort_logs(struct list
- 				}
- 				break;
- 			}
-+			clear_buffer_async_write(bh);
- 			if (bh->b_page != fs_page) {
- 				nilfs_end_page_io(fs_page, err);
- 				fs_page = bh->b_page;
-@@ -1899,8 +1899,9 @@ static void nilfs_segctor_complete_write
- 				 BIT(BH_Delay) | BIT(BH_NILFS_Volatile) |
- 				 BIT(BH_NILFS_Redirected));
- 
--			set_mask_bits(&bh->b_state, clear_bits, set_bits);
- 			if (bh == segbuf->sb_super_root) {
-+				set_buffer_uptodate(bh);
-+				clear_buffer_dirty(bh);
- 				if (bh->b_page != bd_page) {
- 					end_page_writeback(bd_page);
- 					bd_page = bh->b_page;
-@@ -1908,6 +1909,7 @@ static void nilfs_segctor_complete_write
- 				update_sr = true;
- 				break;
- 			}
-+			set_mask_bits(&bh->b_state, clear_bits, set_bits);
- 			if (bh->b_page != fs_page) {
- 				nilfs_end_page_io(fs_page, 0);
- 				fs_page = bh->b_page;
+-- 
+2.43.0
+
 
 
