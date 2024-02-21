@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B271762C1;
-	Wed, 21 Feb 2024 14:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967337C6E5;
+	Wed, 21 Feb 2024 14:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524267; cv=none; b=ojuKFKI5hnoFsunlvy9ro2Qtj8xO3l06bXyJrHA3EprCzGUwmlfWFLxVq8FnxDngIiW45yq5s4LVerx1zTxM+tR8GM0ToCwrTOQ8gVCpC9IzTvW0lALbvj8nqne2joiW5U+fzBTepMEF/DS/wo4/X3zsU+X6Yfn7F/OIEs5MVZY=
+	t=1708524270; cv=none; b=eteQ9sepvfDJYI3YyaYroDdZDXlQw3G8w6Wj7Hyu3dqn1VF7C7oI+O8wVmkIpZOEn33Mz+b18TRxRSC5I/9puHSHg8kaZ3fxfu1MQuReOsuweXklToOYVwKJwxa+nfCEopXvpguRqlebhHMFw4SsWec+S6XQdxsQzIG3rx6WGUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524267; c=relaxed/simple;
-	bh=viEZE6WP83cRCQSkxWdptmSoY4SPUoCMra6QEv7Rc2w=;
+	s=arc-20240116; t=1708524270; c=relaxed/simple;
+	bh=aUwwTqNXidOz+eT2RiW4xR+Gt5sosqMPk0DlRi/WEOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgBB8+1hKUAwRuI3zSzv34xBhgHx/TZQqykHBWnI3ujwKn7Mm6tKbGP1VFXW0pc0vBXdl+c5m1MWajwL9V1r9Zbh0SG1BAx5aQVYc0hQT7QDgQMq4YhJSIwIZr3XMix2XjOVP65q3N2xcT/IPa6NZjsggEySNyg3Xribrpxlno0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArIvPixL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GW0Mf9D/GTNs8gTFiEGeJfYimAapnMtYOgNu2HpKePyba5j4N4xUHYxeaj9nu1uhaBgD3EKsrbDIo95MpPlSCt7cvkY+4CA14N9qZx9i5haCSY63mYQtptorlgoRCIkSXYMUP/gBnF9CezhhVSOqrFbMhSZ5v6lsztM4caL2TkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usmyYIDI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArIvPixL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6B2C433F1;
-	Wed, 21 Feb 2024 14:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usmyYIDI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A16C433B1;
+	Wed, 21 Feb 2024 14:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524267;
-	bh=viEZE6WP83cRCQSkxWdptmSoY4SPUoCMra6QEv7Rc2w=;
+	s=korg; t=1708524270;
+	bh=aUwwTqNXidOz+eT2RiW4xR+Gt5sosqMPk0DlRi/WEOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArIvPixLh7xXYndtns1FfmxvQU7UssM2SMMUgPOzzYlqfIO49BMdQvQJRKzgl75LG
-	 ZWR6nk3pXSI5m4y5uxQ3tuQ0IRPS6LadkP0s1NYmMaXmgdJEkv6UXE2vXgu7Nt33M2
-	 +mPXmrqP23wRzYkjZrzSNDcqDjMWRjFnAt82yghc=
+	b=usmyYIDIzoOlze7oyfjy+57IWFtGfattEUY5Rj9RWxvOyz2a0gSTzf0H/HH6nHkng
+	 v2Uhgn0ITl9V1sYnLR4o3SVXO7EEwvmmjEl/58vlQUwI1F2l7C+fDH4upPws+Aq0Y5
+	 VtFEHLT+zwvW89ZnbGeq3S/QdHJB/zPesYin/tf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/379] ARM: dts: imx: Use flash@0,0 pattern
-Date: Wed, 21 Feb 2024 14:05:33 +0100
-Message-ID: <20240221125959.474984909@linuxfoundation.org>
+Subject: [PATCH 5.10 186/379] media: rockchip: rga: fix swizzling for RGB formats
+Date: Wed, 21 Feb 2024 14:06:05 +0100
+Message-ID: <20240221130000.408077360@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,79 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Michael Tretter <m.tretter@pengutronix.de>
 
-[ Upstream commit 1e1d7cc478fb16816de09740e3c323c0c188d58f ]
+[ Upstream commit 9e7dc39260edac180c206bb6149595a40eabae3e ]
 
-Per mtd-physmap.yaml, 'nor@0,0' is not a valid node pattern.
+When using 32 bit RGB formats, the RGA on the rk3568 produces wrong
+colors as the wrong color channels are read or written.  The reason is
+that the format description for the channel swizzeling is wrong and the
+wrong bits are configured. For example, when converting ARGB32 to NV12,
+the alpha channel is used as blue channel.. This doesn't happen if the
+color format is the same on both sides.
 
-Change it to 'flash@0,0' to fix the following dt-schema warning:
+Fix the color_swap settings of the formats to correctly handle 32 bit
+RGB formats.
 
-imx1-ads.dtb: nor@0,0: $nodename:0: 'nor@0,0' does not match '^(flash|.*sram|nand)(@.*)?$'
-	from schema $id: http://devicetree.org/schemas/mtd/mtd-physmap.yaml#
+For RGA_COLOR_FMT_XBGR8888, the RGA_COLOR_ALPHA_SWAP bit doesn't have an
+effect. Thus, it isn't possible to handle the V4L2_PIX_FMT_XRGB32. Thus,
+it is removed from the list of supported formats.
 
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx1-ads.dts                  | 2 +-
- arch/arm/boot/dts/imx1-apf9328.dts              | 2 +-
- arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi    | 2 +-
- arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/platform/rockchip/rga/rga.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx1-ads.dts b/arch/arm/boot/dts/imx1-ads.dts
-index 5833fb6f15d8..2c817c4a4c68 100644
---- a/arch/arm/boot/dts/imx1-ads.dts
-+++ b/arch/arm/boot/dts/imx1-ads.dts
-@@ -65,7 +65,7 @@
- 	pinctrl-0 = <&pinctrl_weim>;
- 	status = "okay";
- 
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		compatible = "cfi-flash";
- 		reg = <0 0x00000000 0x02000000>;
- 		bank-width = <4>;
-diff --git a/arch/arm/boot/dts/imx1-apf9328.dts b/arch/arm/boot/dts/imx1-apf9328.dts
-index 77b21aa7a146..27e72b07b517 100644
---- a/arch/arm/boot/dts/imx1-apf9328.dts
-+++ b/arch/arm/boot/dts/imx1-apf9328.dts
-@@ -45,7 +45,7 @@
- 	pinctrl-0 = <&pinctrl_weim>;
- 	status = "okay";
- 
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		compatible = "cfi-flash";
- 		reg = <0 0x00000000 0x02000000>;
- 		bank-width = <2>;
-diff --git a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
-index 4b83e2918b55..c7e923584878 100644
---- a/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
-+++ b/arch/arm/boot/dts/imx27-eukrea-cpuimx27.dtsi
-@@ -90,7 +90,7 @@
- &weim {
- 	status = "okay";
- 
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
- 		compatible = "cfi-flash";
-diff --git a/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi b/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi
-index 3d10273177e9..a5fdc2fd4ce5 100644
---- a/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi
-+++ b/arch/arm/boot/dts/imx27-phytec-phycore-som.dtsi
-@@ -322,7 +322,7 @@
- &weim {
- 	status = "okay";
- 
--	nor: nor@0,0 {
-+	nor: flash@0,0 {
- 		compatible = "cfi-flash";
- 		reg = <0 0x00000000 0x02000000>;
- 		bank-width = <2>;
+diff --git a/drivers/media/platform/rockchip/rga/rga.c b/drivers/media/platform/rockchip/rga/rga.c
+index e3246344fb72..bcbbd1408b36 100644
+--- a/drivers/media/platform/rockchip/rga/rga.c
++++ b/drivers/media/platform/rockchip/rga/rga.c
+@@ -187,25 +187,16 @@ static int rga_setup_ctrls(struct rga_ctx *ctx)
+ static struct rga_fmt formats[] = {
+ 	{
+ 		.fourcc = V4L2_PIX_FMT_ARGB32,
+-		.color_swap = RGA_COLOR_RB_SWAP,
++		.color_swap = RGA_COLOR_ALPHA_SWAP,
+ 		.hw_format = RGA_COLOR_FMT_ABGR8888,
+ 		.depth = 32,
+ 		.uv_factor = 1,
+ 		.y_div = 1,
+ 		.x_div = 1,
+ 	},
+-	{
+-		.fourcc = V4L2_PIX_FMT_XRGB32,
+-		.color_swap = RGA_COLOR_RB_SWAP,
+-		.hw_format = RGA_COLOR_FMT_XBGR8888,
+-		.depth = 32,
+-		.uv_factor = 1,
+-		.y_div = 1,
+-		.x_div = 1,
+-	},
+ 	{
+ 		.fourcc = V4L2_PIX_FMT_ABGR32,
+-		.color_swap = RGA_COLOR_ALPHA_SWAP,
++		.color_swap = RGA_COLOR_RB_SWAP,
+ 		.hw_format = RGA_COLOR_FMT_ABGR8888,
+ 		.depth = 32,
+ 		.uv_factor = 1,
+@@ -214,7 +205,7 @@ static struct rga_fmt formats[] = {
+ 	},
+ 	{
+ 		.fourcc = V4L2_PIX_FMT_XBGR32,
+-		.color_swap = RGA_COLOR_ALPHA_SWAP,
++		.color_swap = RGA_COLOR_RB_SWAP,
+ 		.hw_format = RGA_COLOR_FMT_XBGR8888,
+ 		.depth = 32,
+ 		.uv_factor = 1,
 -- 
 2.43.0
 
