@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE473C2F;
-	Wed, 21 Feb 2024 13:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5223C2F;
+	Wed, 21 Feb 2024 13:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523235; cv=none; b=Xj5y1AdipyUWl3TqB4XDlW/wk9l1lJ4HOLpGipI1sn9CMG9dDsAYOitvAibYArZC8bb+caChQH2XwJ1pPGJJMzSeils4aAawgMzXmzeH4Fc+htoN5oNhZlYrRQp0ng0DDLr6lRUJovUKZ3JCF7wDVXOPY4CG3QIOpg2wPRpkzzU=
+	t=1708523243; cv=none; b=fPwuQ17+vKIgBbe6XKplwcn/Tj5kJ0d1LvhWHsCXH1DLG7VLcZWL35Qbhc7/HtQLIi3rsx+r3cbwOXZ6tmyOdPemRI+tpkQxwqy/DWlGBS2UCAF3JLGaXc1gsV01IpUbinC1oDaqAzfhjAS4BQMgyF9ZTyVcZV6T3Jc9zRFnDgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523235; c=relaxed/simple;
-	bh=DEEh3Qr2NxmADGR5S9dyILj6H/2aAU3c7pZQUVLdKCU=;
+	s=arc-20240116; t=1708523243; c=relaxed/simple;
+	bh=UQqFvO/tquahAwYJqVp8OAh1gIbit83RxfJ5C6ymB3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+asXWyRbsnB/iw5qDS6m9/PGLRi18zb9NXyE127qZ8LNB83cjXNPoHHy6x4A9EdD94ArdCXlkaufGIG7JzqmRMxfZBKEeWpBhzbaYqpzlkhh1voFKcu7pN34gwNUjORew48z+BwD5ubNFHs01V0pNCwW5rQHaHLPAZQEt3pfNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNTi8PQw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BC+8vI6WwGJHieGkUH+PyZWikct5RjtJbxql3WytsO6mUw94MmWBFOEUlBy0apC3EUOGKdj5QsXn+jRu2S57Ej+8PLTopC0SG48MWAuzG3Zsg28ZACBEPcXjqml25FRsb4u9w5N5btIaiD5pZ1w6pkvkiaW7eIcdIBaL+EvAh9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jN01MN//; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNTi8PQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C002C433C7;
-	Wed, 21 Feb 2024 13:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jN01MN//"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8187DC433F1;
+	Wed, 21 Feb 2024 13:47:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523234;
-	bh=DEEh3Qr2NxmADGR5S9dyILj6H/2aAU3c7pZQUVLdKCU=;
+	s=korg; t=1708523243;
+	bh=UQqFvO/tquahAwYJqVp8OAh1gIbit83RxfJ5C6ymB3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNTi8PQwy9nvv1sZl4OQ76rUoJkAl+rqRhgoJIejexgoOpdgL3jy9jf5L4FO/v89T
-	 l2E2H3BB90m6WIdXSx0ozTAm//X8OELRn1OpmtBCZJxFCRrXIeZ253JAjcsc4MFfVN
-	 3ERd60Es27LmYnGy+yFNURytgDm7i1GI7FFCfKzU=
+	b=jN01MN//zKdJBuU33JqQkH/KSkgVOiCJLT7N84CNQV4LClV2aRkDzyvGsXdzb4J1k
+	 gn7EE6/oNJcwFfiP1suPq3Ej8o+ZnA+CLsp8q+X8jS4PoI4QxGaesWAaTVR3OuD2Qc
+	 2VSlklESj+yWeY7xqXR/9wZCsjU8PzGqjCQTkAI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 375/476] mptcp: fix data re-injection from stale subflow
-Date: Wed, 21 Feb 2024 14:07:06 +0100
-Message-ID: <20240221130021.885274184@linuxfoundation.org>
+	Zach OKeefe <zokeefe@google.com>,
+	Maxim Patlasov <MPatlasov@parallels.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 358/476] mm/writeback: fix possible divide-by-zero in wb_dirty_limits(), again
+Date: Wed, 21 Feb 2024 14:06:49 +0100
+Message-ID: <20240221130021.231294642@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,52 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Zach O'Keefe <zokeefe@google.com>
 
-commit b6c620dc43ccb4e802894e54b651cf81495e9598 upstream.
+commit 9319b647902cbd5cc884ac08a8a6d54ce111fc78 upstream.
 
-When the MPTCP PM detects that a subflow is stale, all the packet
-scheduler must re-inject all the mptcp-level unacked data. To avoid
-acquiring unneeded locks, it first try to check if any unacked data
-is present at all in the RTX queue, but such check is currently
-broken, as it uses TCP-specific helper on an MPTCP socket.
+(struct dirty_throttle_control *)->thresh is an unsigned long, but is
+passed as the u32 divisor argument to div_u64().  On architectures where
+unsigned long is 64 bytes, the argument will be implicitly truncated.
 
-Funnily enough fuzzers and static checkers are happy, as the accessed
-memory still belongs to the mptcp_sock struct, and even from a
-functional perspective the recovery completed successfully, as
-the short-cut test always failed.
+Use div64_u64() instead of div_u64() so that the value used in the "is
+this a safe division" check is the same as the divisor.
 
-A recent unrelated TCP change - commit d5fed5addb2b ("tcp: reorganize
-tcp_sock fast path variables") - exposed the issue, as the tcp field
-reorganization makes the mptcp code always skip the re-inection.
+Also, remove redundant cast of the numerator to u64, as that should happen
+implicitly.
 
-Fix the issue dropping the bogus call: we are on a slow path, the early
-optimization proved once again to be evil.
+This would be difficult to exploit in memcg domain, given the ratio-based
+arithmetic domain_drity_limits() uses, but is much easier in global
+writeback domain with a BDI_CAP_STRICTLIMIT-backing device, using e.g.
+vm.dirty_bytes=(1<<32)*PAGE_SIZE so that dtc->thresh == (1<<32)
 
-Fixes: 1e1d9d6f119c ("mptcp: handle pending data on closed subflow")
-Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/468
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240131-upstream-net-20240131-mptcp-ci-issues-v1-1-4c1c11e571ff@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20240118181954.1415197-1-zokeefe@google.com
+Fixes: f6789593d5ce ("mm/page-writeback.c: fix divide by zero in bdi_dirty_limits()")
+Signed-off-by: Zach O'Keefe <zokeefe@google.com>
+Cc: Maxim Patlasov <MPatlasov@parallels.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 ---
- 1 file changed, 3 deletions(-)
+ mm/page-writeback.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2203,9 +2203,6 @@ bool __mptcp_retransmit_pending_data(str
- 	if (__mptcp_check_fallback(mptcp_sk(sk)))
- 		return false;
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -1529,7 +1529,7 @@ static inline void wb_dirty_limits(struc
+ 	 */
+ 	dtc->wb_thresh = __wb_calc_thresh(dtc);
+ 	dtc->wb_bg_thresh = dtc->thresh ?
+-		div_u64((u64)dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
++		div64_u64(dtc->wb_thresh * dtc->bg_thresh, dtc->thresh) : 0;
  
--	if (tcp_rtx_and_write_queues_empty(sk))
--		return false;
--
- 	/* the closing socket has some data untransmitted and/or unacked:
- 	 * some data in the mptcp rtx queue has not really xmitted yet.
- 	 * keep it simple and re-inject the whole mptcp level rtx queue
+ 	/*
+ 	 * In order to avoid the stacked BDI deadlock we need
 
 
