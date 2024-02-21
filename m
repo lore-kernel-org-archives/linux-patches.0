@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAEE78B53;
-	Wed, 21 Feb 2024 13:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760C447A7C;
+	Wed, 21 Feb 2024 13:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523299; cv=none; b=drJi8WwqN5m43q449ZLgUupgNpImsFkykGYU82hg/RZdNnU/ZmdkCqNin6VWzmnkupmDXH2jIhVbn7lAXOFpf+evy+wjT+x2nto3U1Ok3GBDqAtfNRcC9FyTGt42eoUIwLNLMlfMto1j+o43FjMACHxeMcyFRDFBi6iIO32nK0c=
+	t=1708523302; cv=none; b=nbclPA4OxSkLEGofncMgeIWRYRPLJwU6jCzHY1cU44KTEtxLsjWiVhStFP4FSV12mSqiayl1DdLRMYjmvenPj3Qc2otY4AtZeEW92+DPp5eDyV1y4+3o6wkeeDPtBmxcr+/ZobVusEahdX4k4xUiVP05qCsmR3chNC0ToxtouOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523299; c=relaxed/simple;
-	bh=IEQaxgug0i+mPCVLFksrl+3FDZafmxEvnQ7ugYHvsFc=;
+	s=arc-20240116; t=1708523302; c=relaxed/simple;
+	bh=CFjsY6XUhvEp3zWZlyXjpgPHaaC3kFlm0T2QM5N7Jm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jl4Am6KMTdMYpB+ZfdEmolnJEluuwqWR/+PmQNpb27MZZ1dmRbbrJ0wvsyZTNzD5iAUQuIe6jwmVvcPmL+Lb1NUXFRvd5VDWablbdlTN394LPd3RO56k5dkpsdmK7NUViPosU+MZNQMieZ173r0Cgxz4PaOKiJDG06lK/uxwRXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0s2tQGc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YYm6zEj1Yh8bvY4CKq/UIoK6K23bOQy4AqrlpUnFwyZuVmkv/lJ/CZuj8AlI+ErUpEV/SVUQ4YBFUVrTFbqJZcXBxE9o62AImwZXUElLPP8DrVpX9fQy5CXlY0oJz5ZsQrQBUOZisnKl9xPs8fnNU+oAdGR3f9sWBpZ8a4iUYHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjFp3Vec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0s2tQGc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04DFC433C7;
-	Wed, 21 Feb 2024 13:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjFp3Vec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BE6C433C7;
+	Wed, 21 Feb 2024 13:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523299;
-	bh=IEQaxgug0i+mPCVLFksrl+3FDZafmxEvnQ7ugYHvsFc=;
+	s=korg; t=1708523302;
+	bh=CFjsY6XUhvEp3zWZlyXjpgPHaaC3kFlm0T2QM5N7Jm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0s2tQGc575Ki0Pk8wtmwCKmtKqTEuLUJiTL0JIG3RSN1yrAvY/z9I0n2MzS6nQ94
-	 xAmBrFDtmsWxdWoQop5hnQ+72uvF67dvaULpUD9t+fWmor2O55pbI6tk1yyzbWzCvL
-	 eygRvgLD/M8+yfWK8VY/dBxE3uDR1tnPIVh2Kzt8=
+	b=ZjFp3Vec4K4h+wRu1MqILvtzj5ZwQ0XpDxk7Rc8ZWBQuqwFZQjB71xPXsdLnhRv2H
+	 5KtNOvy+dOU7KCESL78+9+Y1AYdhiKk+ZvN4dZWnCfxYLFckuO/nHkefbfgokL08Jp
+	 yX6K2f6kLt2Gfv/Be/0GC7XtHZ8prskS7BPbYoNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 365/476] iio: hid-sensor-als: Return 0 for HID_USAGE_SENSOR_TIME_TIMESTAMP
-Date: Wed, 21 Feb 2024 14:06:56 +0100
-Message-ID: <20240221130021.515007278@linuxfoundation.org>
+	Samuel Holland <samuel.holland@sifive.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 356/476] scs: add CONFIG_MMU dependency for vfree_atomic()
+Date: Wed, 21 Feb 2024 14:06:47 +0100
+Message-ID: <20240221130021.162038771@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,34 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-commit 621c6257128149e45b36ffb973a01c3f3461b893 upstream.
+commit 6f9dc684cae638dda0570154509884ee78d0f75c upstream.
 
-When als_capture_sample() is called with usage ID
-HID_USAGE_SENSOR_TIME_TIMESTAMP, return 0. The HID sensor core ignores
-the return value for capture_sample() callback, so return value doesn't
-make difference. But correct the return value to return success instead
-of -EINVAL.
+The shadow call stack implementation fails to build without CONFIG_MMU:
 
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://lore.kernel.org/r/20240204125617.2635574-1-srinivas.pandruvada@linux.intel.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+  ld.lld: error: undefined symbol: vfree_atomic
+  >>> referenced by scs.c
+  >>>               kernel/scs.o:(scs_free) in archive vmlinux.a
+
+Link: https://lkml.kernel.org/r/20240122175204.2371009-1-samuel.holland@sifive.com
+Fixes: a2abe7cbd8fe ("scs: switch to vmapped shadow stacks")
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/hid-sensor-als.c |    1 +
+ arch/Kconfig |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/iio/light/hid-sensor-als.c
-+++ b/drivers/iio/light/hid-sensor-als.c
-@@ -228,6 +228,7 @@ static int als_capture_sample(struct hid
- 	case HID_USAGE_SENSOR_TIME_TIMESTAMP:
- 		als_state->timestamp = hid_sensor_convert_timestamp(&als_state->common_attributes,
- 								    *(s64 *)raw_data);
-+		ret = 0;
- 		break;
- 	default:
- 		break;
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -605,6 +605,7 @@ config SHADOW_CALL_STACK
+ 	bool "Clang Shadow Call Stack"
+ 	depends on CC_IS_CLANG && ARCH_SUPPORTS_SHADOW_CALL_STACK
+ 	depends on DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
++	depends on MMU
+ 	help
+ 	  This option enables Clang's Shadow Call Stack, which uses a
+ 	  shadow stack to protect function return addresses from being
 
 
