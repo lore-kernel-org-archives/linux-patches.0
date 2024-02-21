@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93217762C1;
-	Wed, 21 Feb 2024 13:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A664578B7C;
+	Wed, 21 Feb 2024 13:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523698; cv=none; b=aoe01ewGOYBMlCe/ZxFhPr67tIqfQbOLVgPJRQt/IFovLbWQyIC4HEjb4Hn6cfeuGAWi6cOHbpoeAjfFdtDCTZFzR/L93lIn7qSgNksN4e0qC08CsVaKtigiFYZ/YnAKbq9aEWiFpcQzHhA6eSJ3UssILxTSupVNnO6Rjbo6KIA=
+	t=1708523701; cv=none; b=WmLr1haiUQErsykE4awpz9xwc3NumYCAV0cg6fsKgft6MNYFSNKc3+XC8nM3IH1QstKc6zzKTgUrWZJbzLdNrbgX3GJVO2Oy7t+WpQ4HpA0tzBRoYvJTpykNcAtC/1l+fIs5oz6xBTR+Z95Cgo5ZmoI3Ri0r1A0aLvePd9nURss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523698; c=relaxed/simple;
-	bh=x4AtH/sZaJBfS6ZfbV/LBfLGsk+BPNiseBk1eQ3IdpE=;
+	s=arc-20240116; t=1708523701; c=relaxed/simple;
+	bh=RH/uTf4irE2Fzqt+zq++iCx7xbcXI6Lj59pkGQbN20k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1Z+NujQ3tFHU+CKBbqb3/879GhOHYoYtvaH7UEVbajeTBdL7DlbPylLzG9Yl+DmeyaUm/LcXORsgIiDSQQpHW1kJqYBMasa3B8qJRfZS3pSzUlk4SrogvQg0sHcaYZGy9HxP/D5XprQaNuOePV+tc/3GTC0Vpcp5buvWnYC3Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKET4KSg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iV/gTjuMwC49itu6p8aMdRF5ydKBPRIM2Q6gPoOxNRl+CgdkuPByl+G+2xYepn7a8qXcH66NuVCRvGY8jIKmfBG2Ek2eGDNSvMSTmQC997F9NxPvjjmMq/ILDP+YfmAChQzoPICC3KaB9N1PSLMCjpn4/9vqKjHwaSEuO7PTAa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhS9DrHY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKET4KSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FA4C433C7;
-	Wed, 21 Feb 2024 13:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhS9DrHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E164C433F1;
+	Wed, 21 Feb 2024 13:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523698;
-	bh=x4AtH/sZaJBfS6ZfbV/LBfLGsk+BPNiseBk1eQ3IdpE=;
+	s=korg; t=1708523701;
+	bh=RH/uTf4irE2Fzqt+zq++iCx7xbcXI6Lj59pkGQbN20k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKET4KSgvO/MB+3MAnAx9Pm9PBW6LonCLwpc/b81fOewasqytd0RleDuP2TkDPRIH
-	 MuwZKa6NfXW8MraeXbl52JebdJckxP1Gs0SEsldeb4ttBYt0TFRiylRGUV0O8oUDhD
-	 wbaEfjKjlbm+LNeddimGEvEp/K0/STjY0EQcnP1w=
+	b=vhS9DrHYkxdgNR8Y1DUOquUwzOvDUhpToRz3twik4lCNJ1pz1nTT+8cpmVeV32LYu
+	 s5TvoiFaZLsbYKx2hVinXpPMpSbMxF7kL7Zx1k2DYLuTG6nRSzbQ8NHGI7zifQyV8H
+	 Y103jEtav2AV54rnDFcxqcHtHZKAJGhPS6wrEtPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	qizhong cheng <qizhong.cheng@mediatek.com>,
+	Jianjun Wang <jianjun.wang@mediatek.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/379] usb: cdns3: Fix uvc fail when DMA cross 4k boundery since sg enabled
-Date: Wed, 21 Feb 2024 14:03:04 +0100
-Message-ID: <20240221125955.081133755@linuxfoundation.org>
+Subject: [PATCH 5.10 006/379] PCI: mediatek: Clear interrupt status before dispatching handler
+Date: Wed, 21 Feb 2024 14:03:05 +0100
+Message-ID: <20240221125955.109695977@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -44,94 +48,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: qizhong cheng <qizhong.cheng@mediatek.com>
 
-[ Upstream commit 40c304109e866a7dc123661a5c8ca72f6b5e14e0 ]
+[ Upstream commit 4e11c29873a8a296a20f99b3e03095e65ebf897d ]
 
-Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but
-still met problem when do ISO transfer if sg enabled.
+We found a failure when using the iperf tool during WiFi performance
+testing, where some MSIs were received while clearing the interrupt
+status, and these MSIs cannot be serviced.
 
-Data pattern likes below when sg enabled, package size is 1k and mult is 2
-	[UVC Header(8B) ] [data(3k - 8)] ...
+The interrupt status can be cleared even if the MSI status remains pending.
+As such, given the edge-triggered interrupt type, its status should be
+cleared before being dispatched to the handler of the underling device.
 
-The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error
-happen position as below pattern:
-	0xd000: wrong
-	0xe000: wrong
-	0xf000: correct
-	0x10000: wrong
-	0x11000: wrong
-	0x12000: correct
-	...
-
-To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according
-to start DMA address's alignment.
-
+[kwilczynski: commit log, code comment wording]
+Link: https://lore.kernel.org/linux-pci/20231211094923.31967-1-jianjun.wang@mediatek.com
+Fixes: 43e6409db64d ("PCI: mediatek: Add MSI support for MT2712 and MT7622")
+Signed-off-by: qizhong cheng <qizhong.cheng@mediatek.com>
+Signed-off-by: Jianjun Wang <jianjun.wang@mediatek.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: rewrap comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc:  <stable@vger.kernel.org>
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231224153816.1664687-4-Frank.Li@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/gadget.c | 32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-mediatek.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/cdns3/gadget.c b/drivers/usb/cdns3/gadget.c
-index 118c9402bb60..8a1f0a636848 100644
---- a/drivers/usb/cdns3/gadget.c
-+++ b/drivers/usb/cdns3/gadget.c
-@@ -1119,6 +1119,7 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
- 	u32 togle_pcs = 1;
- 	int sg_iter = 0;
- 	int num_trb_req;
-+	int trb_burst;
- 	int num_trb;
- 	int address;
- 	u32 control;
-@@ -1241,7 +1242,36 @@ static int cdns3_ep_run_transfer(struct cdns3_endpoint *priv_ep,
- 			total_tdl += DIV_ROUND_UP(length,
- 					       priv_ep->endpoint.maxpacket);
+diff --git a/drivers/pci/controller/pcie-mediatek.c b/drivers/pci/controller/pcie-mediatek.c
+index 23548b517e4b..ea91d63c8be1 100644
+--- a/drivers/pci/controller/pcie-mediatek.c
++++ b/drivers/pci/controller/pcie-mediatek.c
+@@ -620,14 +620,20 @@ static void mtk_pcie_intr_handler(struct irq_desc *desc)
+ 		if (status & MSI_STATUS){
+ 			unsigned long imsi_status;
  
--		trb->length |= cpu_to_le32(TRB_BURST_LEN(priv_ep->trb_burst_size) |
-+		trb_burst = priv_ep->trb_burst_size;
-+
-+		/*
-+		 * Supposed DMA cross 4k bounder problem should be fixed at DEV_VER_V2, but still
-+		 * met problem when do ISO transfer if sg enabled.
-+		 *
-+		 * Data pattern likes below when sg enabled, package size is 1k and mult is 2
-+		 *       [UVC Header(8B) ] [data(3k - 8)] ...
-+		 *
-+		 * The received data at offset 0xd000 will get 0xc000 data, len 0x70. Error happen
-+		 * as below pattern:
-+		 *	0xd000: wrong
-+		 *	0xe000: wrong
-+		 *	0xf000: correct
-+		 *	0x10000: wrong
-+		 *	0x11000: wrong
-+		 *	0x12000: correct
-+		 *	...
-+		 *
-+		 * But it is still unclear about why error have not happen below 0xd000, it should
-+		 * cross 4k bounder. But anyway, the below code can fix this problem.
-+		 *
-+		 * To avoid DMA cross 4k bounder at ISO transfer, reduce burst len according to 16.
-+		 */
-+		if (priv_ep->type == USB_ENDPOINT_XFER_ISOC && priv_dev->dev_ver <= DEV_VER_V2)
-+			if (ALIGN_DOWN(trb->buffer, SZ_4K) !=
-+			    ALIGN_DOWN(trb->buffer + length, SZ_4K))
-+				trb_burst = 16;
-+
-+		trb->length |= cpu_to_le32(TRB_BURST_LEN(trb_burst) |
- 					TRB_LEN(length));
- 		pcs = priv_ep->pcs ? TRB_CYCLE : 0;
++			/*
++			 * The interrupt status can be cleared even if the
++			 * MSI status remains pending. As such, given the
++			 * edge-triggered interrupt type, its status should
++			 * be cleared before being dispatched to the
++			 * handler of the underlying device.
++			 */
++			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 			while ((imsi_status = readl(port->base + PCIE_IMSI_STATUS))) {
+ 				for_each_set_bit(bit, &imsi_status, MTK_MSI_IRQS_NUM) {
+ 					virq = irq_find_mapping(port->inner_domain, bit);
+ 					generic_handle_irq(virq);
+ 				}
+ 			}
+-			/* Clear MSI interrupt status */
+-			writel(MSI_STATUS, port->base + PCIE_INT_STATUS);
+ 		}
+ 	}
  
 -- 
 2.43.0
