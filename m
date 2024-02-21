@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F2E2A1D7;
-	Wed, 21 Feb 2024 13:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B57E1E4B2;
+	Wed, 21 Feb 2024 13:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522949; cv=none; b=ZMXuABil9ELgaLskiErN+1UbJrW7IhMGVSGypQEMVJNk6oe0K4Gk/DHKOex3CSbOeSGdaMDqWc4ShsitV9gfA1/yHqX5t3OFCPe2lcIshgQzlsj+NrCaoeTzF3Z6FHsexzwuUThgg7C1KJn6sAoavQ+zMjQAVrtK2XHsnkX7i0c=
+	t=1708522952; cv=none; b=fAdiaLj+IigS2putKNIFRRIneMn0204fzqWMzSej/x45i3CosRgsEYMfiS2RgWoubNv+jQfHbpapdvr3hYxJLAYSTeEdey4Oe32IsPYkeoYaBM5c1Zd6eVDU03Nb7LzOtjrmD6qmNR71Sq1MsXsudYOAQtd+cJHWYkMUhj0DFus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522949; c=relaxed/simple;
-	bh=+5vmFQhY8GF0xnHnwTK9d2G1V9sqhbCJcnWkq7uH8S0=;
+	s=arc-20240116; t=1708522952; c=relaxed/simple;
+	bh=SITxeQpW+GRQKi0folSu5aNmliCxa8Xx/+63UP394dA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VY4DjiUqco3Xsz43X5aIfNSzYoI08nX53ScCKMGTXIbcgtgF0Xo1QGlrr2fl1FTLxoa/Vl2dVAso0PhJw77v0Y/k8agLMXnjIN0hr55uQLvuTagauU1znLrqKGhNn6g0ozSH8lvSMfrpKubkGkBRB0bnj/iDYZyQm+WSsvy79nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3CySzgK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JsHiAonsjwlhunZktLi3N+81E3bzNjJ1Su2dNUMAg3bdloW276fHBuDWDNiF0YU/5BBQfG+4E5J4TL2cBXUknRa77XmnXU7bcAxMa6HtuEnCUeJ6a+o0PFgq7tIaF0/jMmTs704BXwAfyFdidGVi6TSVrjLzf1u8TluP4CSR8NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0U0Uzcb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3CySzgK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B83C433F1;
-	Wed, 21 Feb 2024 13:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0U0Uzcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BECDC433C7;
+	Wed, 21 Feb 2024 13:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522948;
-	bh=+5vmFQhY8GF0xnHnwTK9d2G1V9sqhbCJcnWkq7uH8S0=;
+	s=korg; t=1708522952;
+	bh=SITxeQpW+GRQKi0folSu5aNmliCxa8Xx/+63UP394dA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3CySzgK+QgKEfUeWUaFG8d22f7aRpdBmmVo96w4Wvp63pahBQf2Uf2KGWrspvUpZ
-	 nI9byBCkMSQe3N7L9/3NufnEcw27ffTXxamnVvqErl8vXqD6vjVwlL5XwzBf0qoaNW
-	 DJFDa/zv3l+FFFwovl+KoxeLs/hA6VsLX1eIHY7Y=
+	b=V0U0Uzcb/hI3C++wWYle79jbHlRrYLXu94j9p2tujSn3GDxXXefHrL8qonOh3aUb7
+	 prenjhQeAn5GjK103c7czHIsCZiM+wZx4RsXR0LwJ592kAoJknXiedp5cdtvuPmjIE
+	 Jw1nM6owLJul97jCWMFSwGjCUVNYETK4A+KPs2WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ewan Milne <emilne@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 271/476] scsi: core: Move scsi_host_busy() out of host lock for waking up EH handler
-Date: Wed, 21 Feb 2024 14:05:22 +0100
-Message-ID: <20240221130017.991583574@linuxfoundation.org>
+Subject: [PATCH 5.15 272/476] selftests: net: give more time for GRO aggregation
+Date: Wed, 21 Feb 2024 14:05:23 +0100
+Message-ID: <20240221130018.029546241@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -54,113 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 4373534a9850627a2695317944898eb1283a2db0 ]
+[ Upstream commit 89abe628375301fedb68770644df845d49018d8b ]
 
-Inside scsi_eh_wakeup(), scsi_host_busy() is called & checked with host
-lock every time for deciding if error handler kthread needs to be waken up.
+The gro.sh test-case relay on the gro_flush_timeout to ensure
+that all the segments belonging to any given batch are properly
+aggregated.
 
-This can be too heavy in case of recovery, such as:
+The other end, the sender is a user-space program transmitting
+each packet with a separate write syscall. A busy host and/or
+stracing the sender program can make the relevant segments reach
+the GRO engine after the flush timeout triggers.
 
- - N hardware queues
+Give the GRO flush timeout more slack, to avoid sporadic self-tests
+failures.
 
- - queue depth is M for each hardware queue
-
- - each scsi_host_busy() iterates over (N * M) tag/requests
-
-If recovery is triggered in case that all requests are in-flight, each
-scsi_eh_wakeup() is strictly serialized, when scsi_eh_wakeup() is called
-for the last in-flight request, scsi_host_busy() has been run for (N * M -
-1) times, and request has been iterated for (N*M - 1) * (N * M) times.
-
-If both N and M are big enough, hard lockup can be triggered on acquiring
-host lock, and it is observed on mpi3mr(128 hw queues, queue depth 8169).
-
-Fix the issue by calling scsi_host_busy() outside the host lock. We don't
-need the host lock for getting busy count because host the lock never
-covers that.
-
-[mkp: Drop unnecessary 'busy' variables pointed out by Bart]
-
-Cc: Ewan Milne <emilne@redhat.com>
-Fixes: 6eb045e092ef ("scsi: core: avoid host-wide host_busy counter for scsi_mq")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20240112070000.4161982-1-ming.lei@redhat.com
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Reviewed-by: Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>
-Tested-by: Sathya Prakash Veerichetty <safhya.prakash@broadcom.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9af771d2ec04 ("selftests/net: allow GRO coalesce test on veth")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/bffec2beab3a5672dd13ecabe4fad81d2155b367.1706206101.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 8 ++++----
- drivers/scsi/scsi_lib.c   | 2 +-
- drivers/scsi/scsi_priv.h  | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/setup_veth.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index f79cfd1cb3e7..ffd3d8df3d82 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -61,11 +61,11 @@ static int scsi_eh_try_stu(struct scsi_cmnd *scmd);
- static enum scsi_disposition scsi_try_to_abort_cmd(struct scsi_host_template *,
- 						   struct scsi_cmnd *);
+diff --git a/tools/testing/selftests/net/setup_veth.sh b/tools/testing/selftests/net/setup_veth.sh
+index 1003ddf7b3b2..227fd1076f21 100644
+--- a/tools/testing/selftests/net/setup_veth.sh
++++ b/tools/testing/selftests/net/setup_veth.sh
+@@ -8,7 +8,7 @@ setup_veth_ns() {
+ 	local -r ns_mac="$4"
  
--void scsi_eh_wakeup(struct Scsi_Host *shost)
-+void scsi_eh_wakeup(struct Scsi_Host *shost, unsigned int busy)
- {
- 	lockdep_assert_held(shost->host_lock);
+ 	[[ -e /var/run/netns/"${ns_name}" ]] || ip netns add "${ns_name}"
+-	echo 100000 > "/sys/class/net/${ns_dev}/gro_flush_timeout"
++	echo 1000000 > "/sys/class/net/${ns_dev}/gro_flush_timeout"
+ 	ip link set dev "${ns_dev}" netns "${ns_name}" mtu 65535
+ 	ip -netns "${ns_name}" link set dev "${ns_dev}" up
  
--	if (scsi_host_busy(shost) == shost->host_failed) {
-+	if (busy == shost->host_failed) {
- 		trace_scsi_eh_wakeup(shost);
- 		wake_up_process(shost->ehandler);
- 		SCSI_LOG_ERROR_RECOVERY(5, shost_printk(KERN_INFO, shost,
-@@ -88,7 +88,7 @@ void scsi_schedule_eh(struct Scsi_Host *shost)
- 	if (scsi_host_set_state(shost, SHOST_RECOVERY) == 0 ||
- 	    scsi_host_set_state(shost, SHOST_CANCEL_RECOVERY) == 0) {
- 		shost->host_eh_scheduled++;
--		scsi_eh_wakeup(shost);
-+		scsi_eh_wakeup(shost, scsi_host_busy(shost));
- 	}
- 
- 	spin_unlock_irqrestore(shost->host_lock, flags);
-@@ -280,7 +280,7 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
- 
- 	spin_lock_irqsave(shost->host_lock, flags);
- 	shost->host_failed++;
--	scsi_eh_wakeup(shost);
-+	scsi_eh_wakeup(shost, scsi_host_busy(shost));
- 	spin_unlock_irqrestore(shost->host_lock, flags);
- }
- 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 3dbfd15e6fe7..e9ab87335115 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -283,7 +283,7 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- 	if (unlikely(scsi_host_in_recovery(shost))) {
- 		spin_lock_irqsave(shost->host_lock, flags);
- 		if (shost->host_failed || shost->host_eh_scheduled)
--			scsi_eh_wakeup(shost);
-+			scsi_eh_wakeup(shost, scsi_host_busy(shost));
- 		spin_unlock_irqrestore(shost->host_lock, flags);
- 	}
- 	rcu_read_unlock();
-diff --git a/drivers/scsi/scsi_priv.h b/drivers/scsi/scsi_priv.h
-index b7f963149352..b650407690a8 100644
---- a/drivers/scsi/scsi_priv.h
-+++ b/drivers/scsi/scsi_priv.h
-@@ -76,7 +76,7 @@ extern void scmd_eh_abort_handler(struct work_struct *work);
- extern enum blk_eh_timer_return scsi_times_out(struct request *req);
- extern int scsi_error_handler(void *host);
- extern enum scsi_disposition scsi_decide_disposition(struct scsi_cmnd *cmd);
--extern void scsi_eh_wakeup(struct Scsi_Host *shost);
-+extern void scsi_eh_wakeup(struct Scsi_Host *shost, unsigned int busy);
- extern void scsi_eh_scmd_add(struct scsi_cmnd *);
- void scsi_eh_ready_devs(struct Scsi_Host *shost,
- 			struct list_head *work_q,
 -- 
 2.43.0
 
