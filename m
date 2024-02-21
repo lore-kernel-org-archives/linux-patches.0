@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2320E4C62;
-	Wed, 21 Feb 2024 14:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3416D7CF33;
+	Wed, 21 Feb 2024 14:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524472; cv=none; b=mHPL1ym2srjJE4rcW5detsEo5Ogt2vwwpuXR54f8wvkYdc0wuzUDF1szOX2XY4J+pY2nLAehXIolDxshuvfuMetANsGg8gmsWz50ADi36abyefE7yO0pzKZtWTcsnL4iQm1b4MI497gZXMs5QA0oy1Ynr7/pp3Rjh/9lHvhkavQ=
+	t=1708524475; cv=none; b=o775tkUph1rxAiDxHWiv/TS3yfjuwOGiz81lVsc/DbfwKreYWo6LgQDWZQZ50AjIAKoQGjqwbZ547TNBvfyx2mPmKOMVlp3pZRWyJUHuloSvxr9BqjOJ3E0j3X1AkGJRjiBKkDm85ejr/PoYtUVXBzBmn2skY4+16p/VsuZatL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524472; c=relaxed/simple;
-	bh=uR/i1iX6Dza93AIs+XReH1ZUu/3pduVbuC6QwhvBj5w=;
+	s=arc-20240116; t=1708524475; c=relaxed/simple;
+	bh=TNZ+22lzneJ18bgAtvsEmbAZjV8E9vmktV7hM9rCenM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rytJM7plUYeHaqnaX6N6tVfJT40eAqS3ilch3INrfoMml1A4vQF0gGBk8EEUUPKCqp4CbJq8OtGtgAx1e81Ii6a3rl1hn4Sm7YQN8rYettDafqBy6+DVW5MD9o3DAzbkaPbpG78/15Ahq8dRFyyOmN/lMXrkpDnSH87GG+mOJ2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5CMi6G0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mRzn7L+nO1q4sJalw10p/lXIhGQIpvFliZbzjCGHXgenYt205Y1gqFA1ui+1eqpKuwQJrR7bds2/mm3/USu5QhElNkhHatn7kW5WvWYkGTXxa+rYCi/bd8gR7m72V4SDsbtRVwhYUD7V6nO8RBVGYo5nuE9B4AnBL0WeSc9yFHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UTPlmQTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5CMi6G0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8731FC433F1;
-	Wed, 21 Feb 2024 14:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UTPlmQTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98351C433F1;
+	Wed, 21 Feb 2024 14:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524472;
-	bh=uR/i1iX6Dza93AIs+XReH1ZUu/3pduVbuC6QwhvBj5w=;
+	s=korg; t=1708524475;
+	bh=TNZ+22lzneJ18bgAtvsEmbAZjV8E9vmktV7hM9rCenM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5CMi6G01oPgIbKa38yzcmArjv/03+ADLJX4rnC8iSpTq1sjAS9bOOlA8n3gEB6FR
-	 1ATElW9PkG/xTEHhkreylkaNk0yljJDPdoD8upJLVrXsT3RTxpOsogLEKJwPbql8RQ
-	 7G4bVvtd1p5n0qRk4uD1ryOOCvgTDN1f4z8SZU+I=
+	b=UTPlmQTkcZViDXvViKfq9CkvyJvle5k59eo3Jz+TW+rdlgjuAXXuiKNNsDItWZAI5
+	 UuucYp1DfCRI8Vn0sdHflUiYY4H1HjXYIO2nwyvCDb+AA1BeDqxmZDhRp66NAokIj5
+	 xsHWWupOAZwdYNmuhB1snzh84OrNV/Ew+foUtHCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Changhui Zhong <czhong@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 216/379] blk-mq: fix IO hang from sbitmap wakeup race
-Date: Wed, 21 Feb 2024 14:06:35 +0100
-Message-ID: <20240221130001.293554850@linuxfoundation.org>
+Subject: [PATCH 5.10 248/379] dmaengine: fsl-qdma: Fix a memory leak related to the status queue DMA
+Date: Wed, 21 Feb 2024 14:07:07 +0100
+Message-ID: <20240221130002.245670408@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -54,70 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 5266caaf5660529e3da53004b8b7174cab6374ed ]
+[ Upstream commit 968bc1d7203d384e72afe34124a1801b7af76514 ]
 
-In blk_mq_mark_tag_wait(), __add_wait_queue() may be re-ordered
-with the following blk_mq_get_driver_tag() in case of getting driver
-tag failure.
+This dma_alloc_coherent() is undone in the remove function, but not in the
+error handling path of fsl_qdma_probe().
 
-Then in __sbitmap_queue_wake_up(), waitqueue_active() may not observe
-the added waiter in blk_mq_mark_tag_wait() and wake up nothing, meantime
-blk_mq_mark_tag_wait() can't get driver tag successfully.
+Switch to the managed version to fix the issue in the probe and simplify
+the remove function.
 
-This issue can be reproduced by running the following test in loop, and
-fio hang can be observed in < 30min when running it on my test VM
-in laptop.
-
-	modprobe -r scsi_debug
-	modprobe scsi_debug delay=0 dev_size_mb=4096 max_queue=1 host_max_queue=1 submit_queues=4
-	dev=`ls -d /sys/bus/pseudo/drivers/scsi_debug/adapter*/host*/target*/*/block/* | head -1 | xargs basename`
-	fio --filename=/dev/"$dev" --direct=1 --rw=randrw --bs=4k --iodepth=1 \
-       		--runtime=100 --numjobs=40 --time_based --name=test \
-        	--ioengine=libaio
-
-Fix the issue by adding one explicit barrier in blk_mq_mark_tag_wait(), which
-is just fine in case of running out of tag.
-
-Cc: Jan Kara <jack@suse.cz>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Reported-by: Changhui Zhong <czhong@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20240112122626.4181044-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: b092529e0aa0 ("dmaengine: fsl-qdma: Add qDMA controller driver for Layerscape SoCs")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/a0ef5d0f5a47381617ef339df776ddc68ce48173.1704621515.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/dma/fsl-qdma.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index e153a36c9ba3..a7a31d7090ae 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -1188,6 +1188,22 @@ static bool blk_mq_mark_tag_wait(struct blk_mq_hw_ctx *hctx,
- 	wait->flags &= ~WQ_FLAG_EXCLUSIVE;
- 	__add_wait_queue(wq, wait);
- 
-+	/*
-+	 * Add one explicit barrier since blk_mq_get_driver_tag() may
-+	 * not imply barrier in case of failure.
-+	 *
-+	 * Order adding us to wait queue and allocating driver tag.
-+	 *
-+	 * The pair is the one implied in sbitmap_queue_wake_up() which
-+	 * orders clearing sbitmap tag bits and waitqueue_active() in
-+	 * __sbitmap_queue_wake_up(), since waitqueue_active() is lockless
-+	 *
-+	 * Otherwise, re-order of adding wait queue and getting driver tag
-+	 * may cause __sbitmap_queue_wake_up() to wake up nothing because
-+	 * the waitqueue_active() may not observe us in wait queue.
-+	 */
-+	smp_mb();
-+
+diff --git a/drivers/dma/fsl-qdma.c b/drivers/dma/fsl-qdma.c
+index 045ead46ec8f..5cc887acb05b 100644
+--- a/drivers/dma/fsl-qdma.c
++++ b/drivers/dma/fsl-qdma.c
+@@ -563,11 +563,11 @@ static struct fsl_qdma_queue
  	/*
- 	 * It's possible that a tag was freed in the window between the
- 	 * allocation failure and adding the hardware queue to the wait
+ 	 * Buffer for queue command
+ 	 */
+-	status_head->cq = dma_alloc_coherent(&pdev->dev,
+-					     sizeof(struct fsl_qdma_format) *
+-					     status_size,
+-					     &status_head->bus_addr,
+-					     GFP_KERNEL);
++	status_head->cq = dmam_alloc_coherent(&pdev->dev,
++					      sizeof(struct fsl_qdma_format) *
++					      status_size,
++					      &status_head->bus_addr,
++					      GFP_KERNEL);
+ 	if (!status_head->cq) {
+ 		devm_kfree(&pdev->dev, status_head);
+ 		return NULL;
+@@ -1272,8 +1272,6 @@ static void fsl_qdma_cleanup_vchan(struct dma_device *dmadev)
+ 
+ static int fsl_qdma_remove(struct platform_device *pdev)
+ {
+-	int i;
+-	struct fsl_qdma_queue *status;
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct fsl_qdma_engine *fsl_qdma = platform_get_drvdata(pdev);
+ 
+@@ -1282,11 +1280,6 @@ static int fsl_qdma_remove(struct platform_device *pdev)
+ 	of_dma_controller_free(np);
+ 	dma_async_device_unregister(&fsl_qdma->dma_dev);
+ 
+-	for (i = 0; i < fsl_qdma->block_number; i++) {
+-		status = fsl_qdma->status[i];
+-		dma_free_coherent(&pdev->dev, sizeof(struct fsl_qdma_format) *
+-				status->n_cq, status->cq, status->bus_addr);
+-	}
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
