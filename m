@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC137BB10;
-	Wed, 21 Feb 2024 14:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F139969D38;
+	Wed, 21 Feb 2024 14:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525161; cv=none; b=FKNuogEdpRBGwB3N7Seky7xvMkW9qfl91m2vO1oth3bGkxAjp68FKEfn1KB4Be9KoDg4wkvLWMQ6x6sVzTYaVoPgmgLRV0fKvEEVHR18MU32pO9zM9i0fIO8w/5qZVrMC52yTiabhVkqdrIG4hMpK3skohpFyp4N7CnH/bzftdo=
+	t=1708525165; cv=none; b=FDQGcvRkvNWd/9yk+KlzPsnNG4By2x20ZbREWy6qGK2ZVMC4M/XsNMnZqaPdV34mSBUGe6pF6jY013voyw1Fhm3eAn1TloLA+Rtp6uKm/PHHmSzo7A1Kw44TfnxrM9F7ts/1Bp1rPlk8LH4i7z+PS8ddtmpB0J2UbRIKC1YAZXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525161; c=relaxed/simple;
-	bh=VjvbtI4hC4BjBRyazqXWTCzCGLRMq8gCugEP7ro1xEo=;
+	s=arc-20240116; t=1708525165; c=relaxed/simple;
+	bh=nK5aBoDjaRimcmPkFAFEl3Jm0sCzA7YOTMSEQEjU478=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DTFNBH4Wfp+Hn1ZnHkdCUw/AccRWMksXXoUkZXIk7funqRo+v+kep4UjdA8KLUjCwAwiy0Si2Ev4hG3sOpJZbW4JZ6fOXE1VBvKHrf/vr0ye0jO9EHJ7oQMbhvLU26kdpBy4RCuXF5HvB7dfYR6FH2uH6oC9LBNIaU3c0N5xkFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpGbN9cA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+RPyCKhNL5vgf4NnN8423uTq6GB5VFXkhDASXAo4ZyEs+O/pDwngDOKMCBTVgk8F2vG+HAU4mRX/5isqfLnubuSEAdhN+hX1caxChjiT1az/PEd3wXUgXVX7MOKexUE5IXIB37YRiPim+tmfd41P+OMR2LDQqhjgKEqtm+Jdac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JA/uGFjr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpGbN9cA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD94C433F1;
-	Wed, 21 Feb 2024 14:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JA/uGFjr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E05C433F1;
+	Wed, 21 Feb 2024 14:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525161;
-	bh=VjvbtI4hC4BjBRyazqXWTCzCGLRMq8gCugEP7ro1xEo=;
+	s=korg; t=1708525164;
+	bh=nK5aBoDjaRimcmPkFAFEl3Jm0sCzA7YOTMSEQEjU478=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UpGbN9cA/TvpsI1JDHObkR1UzhgPagZzGcpzGtEl13LDogVquEcJRd7YR3/MVfyWO
-	 Z/lP1dwA89Le6bnFTBGG6iHqapzKTfx+8GDt5Z/gqm+EtcBY6plSZFn8CLodd57/cc
-	 nJ15cN/l6nrVG915sQE3/0e5VgvWUGOysstw4ZJE=
+	b=JA/uGFjrU1tAe8n4swSoaP2jDDLScjwh49/k2wm05wdoE71xYTcG3gkms/pNW1S66
+	 ofwPTNd0zURO0hGYneoSh7KflCj9tM/jQigDpDKmTN3CcIllXdVHti3tmvXzFGBt+x
+	 Wa5NXStkjh8ReDSg+OEWF/D1bXBWJknUCRs9p1Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kees Cook <keescook@chromium.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/267] PNP: ACPI: fix fortify warning
-Date: Wed, 21 Feb 2024 14:06:52 +0100
-Message-ID: <20240221125942.212699997@linuxfoundation.org>
+Subject: [PATCH 5.4 080/267] afs: fix the usage of read_seqbegin_or_lock() in afs_find_server*()
+Date: Wed, 21 Feb 2024 14:07:01 +0100
+Message-ID: <20240221125942.486259475@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,81 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit ba3f5058db437d919f8468db50483dd9028ff688 ]
+[ Upstream commit 1702e0654ca9a7bcd7c7619c8a5004db58945b71 ]
 
-When compiling with gcc version 14.0.0 20231126 (experimental)
-and CONFIG_FORTIFY_SOURCE=y, I've noticed the following:
+David Howells says:
 
-In file included from ./include/linux/string.h:295,
-                 from ./include/linux/bitmap.h:12,
-                 from ./include/linux/cpumask.h:12,
-                 from ./arch/x86/include/asm/paravirt.h:17,
-                 from ./arch/x86/include/asm/cpuid.h:62,
-                 from ./arch/x86/include/asm/processor.h:19,
-                 from ./arch/x86/include/asm/cpufeature.h:5,
-                 from ./arch/x86/include/asm/thread_info.h:53,
-                 from ./include/linux/thread_info.h:60,
-                 from ./arch/x86/include/asm/preempt.h:9,
-                 from ./include/linux/preempt.h:79,
-                 from ./include/linux/spinlock.h:56,
-                 from ./include/linux/mmzone.h:8,
-                 from ./include/linux/gfp.h:7,
-                 from ./include/linux/slab.h:16,
-                 from ./include/linux/resource_ext.h:11,
-                 from ./include/linux/acpi.h:13,
-                 from drivers/pnp/pnpacpi/rsparser.c:11:
-In function 'fortify_memcpy_chk',
-    inlined from 'pnpacpi_parse_allocated_vendor' at drivers/pnp/pnpacpi/rsparser.c:158:3,
-    inlined from 'pnpacpi_allocated_resource' at drivers/pnp/pnpacpi/rsparser.c:249:3:
-./include/linux/fortify-string.h:588:25: warning: call to '__read_overflow2_field'
-declared with attribute warning: detected read beyond size of field (2nd parameter);
-maybe use struct_group()? [-Wattribute-warning]
-  588 |                         __read_overflow2_field(q_size_field, size);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ (5) afs_find_server().
 
-According to the comments in include/linux/fortify-string.h, 'memcpy()',
-'memmove()' and 'memset()' must not be used beyond individual struct
-members to ensure that the compiler can enforce protection against
-buffer overflows, and, IIUC, this also applies to partial copies from
-the particular member ('vendor->byte_data' in this case). So it should
-be better (and safer) to do both copies at once (and 'byte_data' of
-'struct acpi_resource_vendor_typed' seems to be a good candidate for
-'__counted_by(byte_length)' as well).
+     There could be a lot of servers in the list and each server can have
+     multiple addresses, so I think this would be better with an exclusive
+     second pass.
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+     The server list isn't likely to change all that often, but when it does
+     change, there's a good chance several servers are going to be
+     added/removed one after the other.  Further, this is only going to be
+     used for incoming cache management/callback requests from the server,
+     which hopefully aren't going to happen too often - but it is remotely
+     drivable.
+
+ (6) afs_find_server_by_uuid().
+
+     Similarly to (5), there could be a lot of servers to search through, but
+     they are in a tree not a flat list, so it should be faster to process.
+     Again, it's not likely to change that often and, again, when it does
+     change it's likely to involve multiple changes.  This can be driven
+     remotely by an incoming cache management request but is mostly going to
+     be driven by setting up or reconfiguring a volume's server list -
+     something that also isn't likely to happen often.
+
+Make the "seq" counter odd on the 2nd pass, otherwise read_seqbegin_or_lock()
+never takes the lock.
+
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/20231130115614.GA21581@redhat.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pnp/pnpacpi/rsparser.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/afs/server.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pnp/pnpacpi/rsparser.c b/drivers/pnp/pnpacpi/rsparser.c
-index da78dc77aed3..9879deb4dc0b 100644
---- a/drivers/pnp/pnpacpi/rsparser.c
-+++ b/drivers/pnp/pnpacpi/rsparser.c
-@@ -151,13 +151,13 @@ static int vendor_resource_matches(struct pnp_dev *dev,
- static void pnpacpi_parse_allocated_vendor(struct pnp_dev *dev,
- 				    struct acpi_resource_vendor_typed *vendor)
+diff --git a/fs/afs/server.c b/fs/afs/server.c
+index d3a9288f7556..44985ca6602e 100644
+--- a/fs/afs/server.c
++++ b/fs/afs/server.c
+@@ -35,7 +35,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
+ 	const struct afs_addr_list *alist;
+ 	struct afs_server *server = NULL;
+ 	unsigned int i;
+-	int seq = 0, diff;
++	int seq = 1, diff;
+ 
+ 	rcu_read_lock();
+ 
+@@ -43,6 +43,7 @@ struct afs_server *afs_find_server(struct afs_net *net,
+ 		if (server)
+ 			afs_put_server(net, server, afs_server_trace_put_find_rsq);
+ 		server = NULL;
++		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&net->fs_addr_lock, &seq);
+ 
+ 		if (srx->transport.family == AF_INET6) {
+@@ -98,7 +99,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
  {
--	if (vendor_resource_matches(dev, vendor, &hp_ccsr_uuid, 16)) {
--		u64 start, length;
-+	struct { u64 start, length; } range;
+ 	struct afs_server *server = NULL;
+ 	struct rb_node *p;
+-	int diff, seq = 0;
++	int diff, seq = 1;
  
--		memcpy(&start, vendor->byte_data, sizeof(start));
--		memcpy(&length, vendor->byte_data + 8, sizeof(length));
+ 	_enter("%pU", uuid);
+ 
+@@ -110,7 +111,7 @@ struct afs_server *afs_find_server_by_uuid(struct afs_net *net, const uuid_t *uu
+ 		if (server)
+ 			afs_put_server(net, server, afs_server_trace_put_uuid_rsq);
+ 		server = NULL;
 -
--		pnp_add_mem_resource(dev, start, start + length - 1, 0);
-+	if (vendor_resource_matches(dev, vendor, &hp_ccsr_uuid,
-+				    sizeof(range))) {
-+		memcpy(&range, vendor->byte_data, sizeof(range));
-+		pnp_add_mem_resource(dev, range.start, range.start +
-+				     range.length - 1, 0);
- 	}
- }
++		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&net->fs_lock, &seq);
  
+ 		p = net->fs_servers.rb_node;
 -- 
 2.43.0
 
