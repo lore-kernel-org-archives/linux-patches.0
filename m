@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C1669D2B;
-	Wed, 21 Feb 2024 13:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D522053816;
+	Wed, 21 Feb 2024 13:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521200; cv=none; b=dNldAWcDfcggGhhAK9hOufO7KjomGzJtYvpFUfDcw4WoIDLggZFmMoXmBmtJzAqSWxNKOTe/gwmUPaX0Ih0pbxMRtHpLRqiSOvMHVW+XRYuMjv8oMZy8SBq6BDI3JUErx3v4KSZuEcacf06R3cLEOqGLiWsdfZdQWn+2nlsGHeI=
+	t=1708521208; cv=none; b=tsocR7glBrXCxTHryOwbkrSqNt1TieErjkTh7IxG8790+hvC5YOaP84G+LYik1vqmB3VKBOhIxfY3nCuquqIvnRTAw+imbYvD3OaZ8vLQC5yJs6CnM6k+TRQaexB+pj8odM0Or1fpejRaulo45rSys5XDv6jkcu5ZmXdsdNoGo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521200; c=relaxed/simple;
-	bh=XWphp+VEBVar9rl9cAKfZ1ZjCAGB3jfyJILwn1KX6LU=;
+	s=arc-20240116; t=1708521208; c=relaxed/simple;
+	bh=OGfLC4nT7/OgvJ3PJDHPe732OvDrXvWu4wW2JNN7uP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cxNIxgySNHeqB1z/0HBoVui8aVo9OLLhb08PjI4LbTaczf7i81JFWJv916zgI5k1u+JgpFRQBV/9zbQGBGk55PS1nNpA+cDoKN4Y1/a/PysQJf77mHlkHvHos5IwPyxJXfLcJnOdtfdKpbYnyP/yDdVGTrQFVJeX8HC4PSEjL8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJxox+aZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sFVzHh6FCF4QhuXlKrH4BgLxkq2A3BPuGCRkwb7ZozdGFxTWBjK36/fwpuZm2jLRMRtXCWxdUHu9DmPbrjcUqtnpcx0YOiU9Bu4bR3p4UoFBotNScMDZypqEOWrsZXvmVR/MgGM3zCjsR535g9WjtB8TdyCceomJhhJkiGJ43GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfT1Ri2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJxox+aZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A46BC433C7;
-	Wed, 21 Feb 2024 13:13:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfT1Ri2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89C1C433C7;
+	Wed, 21 Feb 2024 13:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521200;
-	bh=XWphp+VEBVar9rl9cAKfZ1ZjCAGB3jfyJILwn1KX6LU=;
+	s=korg; t=1708521208;
+	bh=OGfLC4nT7/OgvJ3PJDHPe732OvDrXvWu4wW2JNN7uP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJxox+aZuzVy5KbzekN3IXlq4DiysfC2idJ8m/h2jbut+//TKSbu9sqFaOV6XC77Q
-	 /qUo/1JWl4AM6+9JmsRJ3DXL5I4vfxcfRFkS81A4VByogMpdy7u97In2Wv38WJ5Rsk
-	 L/uk8/HLE0eO1aJE/UjGE8f0A5a3wkKARudhkLuE=
+	b=FfT1Ri2C44kcZeVnPU/45GZDrMLjllrVqp6He7661cgxoXiKw2yP5DjF5RgtymdNi
+	 +GmZzA5k4V6CdEGwZB0QjrNTBlSYBT7aNyUxWNnFzsto+TMMFcQFubCOR2fxiVcRWL
+	 U5TpjThigVebnmfZaExlslzQMTlWrkksSFlifLhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,  linux-kbuild@vger.kernel.org, llvm@lists.linux.dev,  Nathan Chancellor" <nathan@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 4.19 018/202] powerpc: Use always instead of always-y in for crtsavres.o
-Date: Wed, 21 Feb 2024 14:05:19 +0100
-Message-ID: <20240221125932.342861096@linuxfoundation.org>
+	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+Subject: [PATCH 4.19 019/202] x86/CPU/AMD: Fix disabling XSAVES on AMD family 0x17 due to erratum
+Date: Wed, 21 Feb 2024 14:05:20 +0100
+Message-ID: <20240221125932.377070058@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -50,43 +49,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
 
-This commit is for linux-4.19.y only, it has no direct upstream
-equivalent.
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Prior to commit 5f2fb52fac15 ("kbuild: rename hostprogs-y/always to
-hostprogs/always-y"), always-y did not exist, making the backport of
-mainline commit 1b1e38002648 ("powerpc: add crtsavres.o to always-y
-instead of extra-y") to linux-4.19.y as commit b7b85ec5ec15 ("powerpc:
-add crtsavres.o to always-y instead of extra-y") incorrect, breaking the
-build with linkers that need crtsavres.o:
+The stable kernel version backport of the patch disabling XSAVES on AMD
+Zen family 0x17 applied this change to the wrong function (init_amd_k6()),
+one which isn't called for Zen CPUs.
 
-  ld.lld: error: cannot open arch/powerpc/lib/crtsavres.o: No such file or directory
+Move the erratum to the init_amd_zn() function instead.
 
-Backporting the aforementioned kbuild commit is not suitable for stable
-due to its size and number of conflicts, so transform the always-y usage
-to an equivalent form using always, which resolves the build issues.
+Add an explicit family 0x17 check to the erratum so nothing will break if
+someone naively makes this kernel version call init_amd_zn() also for
+family 0x19 in the future (as the current upstream code does).
 
-Fixes: b7b85ec5ec15 ("powerpc: add crtsavres.o to always-y instead of extra-y")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: f028a7db9824 ("x86/CPU/AMD: Disable XSAVES on AMD family 0x17")
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/lib/Makefile |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/amd.c |   20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/arch/powerpc/lib/Makefile
-+++ b/arch/powerpc/lib/Makefile
-@@ -21,8 +21,8 @@ obj-$(CONFIG_PPC32)	+= div64.o copy_32.o
- # 64-bit linker creates .sfpr on demand for final link (vmlinux),
- # so it is only needed for modules, and only for older linkers which
- # do not support --save-restore-funcs
--ifeq ($(call ld-ifversion, -lt, 225000000, y),y)
--always-$(CONFIG_PPC64)	+= crtsavres.o
-+ifeq ($(call ld-ifversion, -lt, 225000000, y)$(CONFIG_PPC64),yy)
-+always	+= crtsavres.o
- endif
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -271,15 +271,6 @@ static void init_amd_k6(struct cpuinfo_x
+ 		return;
+ 	}
+ #endif
+-	/*
+-	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
+-	 * certain circumstances on Zen1/2 uarch, and not all parts have had
+-	 * updated microcode at the time of writing (March 2023).
+-	 *
+-	 * Affected parts all have no supervisor XSAVE states, meaning that
+-	 * the XSAVEC instruction (which works fine) is equivalent.
+-	 */
+-	clear_cpu_cap(c, X86_FEATURE_XSAVES);
+ }
  
- obj-$(CONFIG_PPC_BOOK3S_64) += copyuser_power7.o copypage_power7.o \
+ static void init_amd_k7(struct cpuinfo_x86 *c)
+@@ -979,6 +970,17 @@ static void init_amd_zn(struct cpuinfo_x
+ 		if (c->x86 == 0x19 && !cpu_has(c, X86_FEATURE_BTC_NO))
+ 			set_cpu_cap(c, X86_FEATURE_BTC_NO);
+ 	}
++
++	/*
++	 * Work around Erratum 1386.  The XSAVES instruction malfunctions in
++	 * certain circumstances on Zen1/2 uarch, and not all parts have had
++	 * updated microcode at the time of writing (March 2023).
++	 *
++	 * Affected parts all have no supervisor XSAVE states, meaning that
++	 * the XSAVEC instruction (which works fine) is equivalent.
++	 */
++	if (c->x86 == 0x17)
++		clear_cpu_cap(c, X86_FEATURE_XSAVES);
+ }
+ 
+ static bool cpu_has_zenbleed_microcode(void)
 
 
