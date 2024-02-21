@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783966BB52;
-	Wed, 21 Feb 2024 13:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECE97BAFA;
+	Wed, 21 Feb 2024 13:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521974; cv=none; b=ua/iC3wvbIr/Rz9A0MqBkXavsTLzOJS542TOUp69tYoumhDbWkugpSxvut2qsPBBYqEC2dx+dthEsrZKeD2h63hctZ5sLiMlDDVK/XtM18Ij/zTInnCTU4rfGFQif/ckYAuLNoA/y5NQefJVW09dJlYEL5BX0S+S39ZEPkNPrOA=
+	t=1708521977; cv=none; b=hGbpNJAfU4fNN67Zwg6xw4hrNPezBmyRTl7syDJjHZHkXY9tX2PvtFXllw8f25z1NIt8NW5A2LAVQ2tIzhXO5pshSq8368Ds3gRfw4KIXuVfLpXzduZrnb7A/6qPN1RzLr1272DEOB+yraGPjLYnbcUnlK6MDLk1JDI53vaUlTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521974; c=relaxed/simple;
-	bh=VcSInWm+0qp09Vjk0F4GqU+svUe/09zXs0B/seIyeFo=;
+	s=arc-20240116; t=1708521977; c=relaxed/simple;
+	bh=mHWQxkTVkyCvnIHPxB5xzTwlwsf91XnFg7TJuytVaRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LiumiuS/YvGK/tAm9nV7wyKLzUd6gjW/BKVFfpAZ6mlVDehFu+FY34NISa2SO1u/OsqAuu+BbycrZsgnX7dV1FlL3EG1+l4f4LN4uOmXzxxleeWkYkzg/XgJv7qV3sE0cH74beqU3p0/nfo4n2g6ZoMvD+16ECQPpNLAq38pSqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2L9+JT5O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kStUeEd/fpC8S9p9FyUnTdXlviE7t2HNKsRUxHUux3c+559Bv5fC+E9NlYb+WzKb2OEDIuiE8LAkCc3Sth7Mg853BCnl01WC0cdilpnVRxHIkLASoUWDmXP/hRRMKcTEMeA/0YOu0Oe6l3fy0lNZef8m00Sn8Y3O+dB4NkDyDFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZhE46zk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2L9+JT5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BA7C433C7;
-	Wed, 21 Feb 2024 13:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZhE46zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8FA3C433F1;
+	Wed, 21 Feb 2024 13:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521974;
-	bh=VcSInWm+0qp09Vjk0F4GqU+svUe/09zXs0B/seIyeFo=;
+	s=korg; t=1708521977;
+	bh=mHWQxkTVkyCvnIHPxB5xzTwlwsf91XnFg7TJuytVaRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2L9+JT5Ob9if3Kk7nwhz2Otht27w6OhwJ88tqf2sRE9qBkOZ3vDMLEmlshD7ujVX9
-	 yzG7nzCirqJMBukasrG2HCBJipCCKGQkQINBxT1PLCyD04bvVFWzbTJtiFW/RV0JDX
-	 oknJYocEA/iOUFyXtnml2aT+3F4+ODvtCtFOHWNg=
+	b=gZhE46zkPtyEK247y02D5KNB8UvkhqQ/I/4L8dxkN5una4JabZMNUx/Pomk4kWADW
+	 6pobLHnNIVNrCfNCmZ2BSC/cDbPCEVDhRyNOedNwk/VOZgvNzN3nj1W35xNAxD2Xow
+	 6zw2fa87ngZmB0x1R/HfYxRKRpe1AzQdCbvp6mTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 042/476] ksmbd: dont increment epoch if current state and request state are same
-Date: Wed, 21 Feb 2024 14:01:33 +0100
-Message-ID: <20240221130009.490491733@linuxfoundation.org>
+Subject: [PATCH 5.15 043/476] ksmbd: send lease break notification on FILE_RENAME_INFORMATION
+Date: Wed, 21 Feb 2024 14:01:34 +0100
+Message-ID: <20240221130009.525034093@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,56 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit b6e9a44e99603fe10e1d78901fdd97681a539612 ]
+[ Upstream commit 3fc74c65b367476874da5fe6f633398674b78e5a ]
 
-If existing lease state and request state are same, don't increment
-epoch in create context.
+Send lease break notification on FILE_RENAME_INFORMATION request.
+This patch fix smb2.lease.v2_epoch2 test failure.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/oplock.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/ksmbd/oplock.c  |   12 +++++++-----
+ fs/ksmbd/smb2pdu.c |    1 +
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
 --- a/fs/ksmbd/oplock.c
 +++ b/fs/ksmbd/oplock.c
-@@ -105,7 +105,7 @@ static int alloc_lease(struct oplock_inf
- 	lease->is_dir = lctx->is_dir;
- 	memcpy(lease->parent_lease_key, lctx->parent_lease_key, SMB2_LEASE_KEY_SIZE);
- 	lease->version = lctx->version;
--	lease->epoch = le16_to_cpu(lctx->epoch);
-+	lease->epoch = le16_to_cpu(lctx->epoch) + 1;
- 	INIT_LIST_HEAD(&opinfo->lease_entry);
- 	opinfo->o_lease = lease;
- 
-@@ -541,6 +541,9 @@ static struct oplock_info *same_client_h
+@@ -541,14 +541,12 @@ static struct oplock_info *same_client_h
  				continue;
  			}
  
-+			if (lctx->req_state != lease->state)
-+				lease->epoch++;
-+
+-			if (lctx->req_state != lease->state)
+-				lease->epoch++;
+-
  			/* upgrading lease */
  			if ((atomic_read(&ci->op_count) +
  			     atomic_read(&ci->sop_count)) == 1) {
-@@ -1035,7 +1038,7 @@ static void copy_lease(struct oplock_inf
- 	       SMB2_LEASE_KEY_SIZE);
- 	lease2->duration = lease1->duration;
- 	lease2->flags = lease1->flags;
--	lease2->epoch = lease1->epoch++;
-+	lease2->epoch = lease1->epoch;
- 	lease2->version = lease1->version;
- }
+ 				if (lease->state != SMB2_LEASE_NONE_LE &&
+ 				    lease->state == (lctx->req_state & lease->state)) {
++					lease->epoch++;
+ 					lease->state |= lctx->req_state;
+ 					if (lctx->req_state &
+ 						SMB2_LEASE_WRITE_CACHING_LE)
+@@ -559,13 +557,17 @@ static struct oplock_info *same_client_h
+ 				    atomic_read(&ci->sop_count)) > 1) {
+ 				if (lctx->req_state ==
+ 				    (SMB2_LEASE_READ_CACHING_LE |
+-				     SMB2_LEASE_HANDLE_CACHING_LE))
++				     SMB2_LEASE_HANDLE_CACHING_LE)) {
++					lease->epoch++;
+ 					lease->state = lctx->req_state;
++				}
+ 			}
  
-@@ -1454,7 +1457,7 @@ void create_lease_buf(u8 *rbuf, struct l
- 		memcpy(buf->lcontext.LeaseKey, lease->lease_key,
- 		       SMB2_LEASE_KEY_SIZE);
- 		buf->lcontext.LeaseFlags = lease->flags;
--		buf->lcontext.Epoch = cpu_to_le16(++lease->epoch);
-+		buf->lcontext.Epoch = cpu_to_le16(lease->epoch);
- 		buf->lcontext.LeaseState = lease->state;
- 		memcpy(buf->lcontext.ParentLeaseKey, lease->parent_lease_key,
- 		       SMB2_LEASE_KEY_SIZE);
+ 			if (lctx->req_state && lease->state ==
+-			    SMB2_LEASE_NONE_LE)
++			    SMB2_LEASE_NONE_LE) {
++				lease->epoch++;
+ 				lease_none_upgrade(opinfo, lctx->req_state);
++			}
+ 		}
+ 		read_lock(&ci->m_lock);
+ 	}
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -5581,6 +5581,7 @@ static int smb2_rename(struct ksmbd_work
+ 	if (!file_info->ReplaceIfExists)
+ 		flags = RENAME_NOREPLACE;
+ 
++	smb_break_all_levII_oplock(work, fp, 0);
+ 	rc = ksmbd_vfs_rename(work, &fp->filp->f_path, new_name, flags);
+ out:
+ 	kfree(new_name);
 
 
