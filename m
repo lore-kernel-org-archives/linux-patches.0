@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CC869942;
-	Wed, 21 Feb 2024 14:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B497C099;
+	Wed, 21 Feb 2024 14:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525031; cv=none; b=V0qdpCOIDbMblFoJ/DyNVthVeLESBOiKPP0ls5PG1h/N9Z75KabygjW5LKq/i+ngon/LOWx22Q1yeKv54wMeF/jVSoAzY/9b/HV/Sd5maoWH0Pnzw3tQZ6479PIhN4k04TYPQTiMXEdbSKdcKVyIHRHGv7T9Qicf4cjMdKDkluY=
+	t=1708525034; cv=none; b=hxm3OQCJ0h9KDl2wseY70ekh0qH4M1oJsiLoQmR8znxremHm5rpRH4DzeTgL5rYdK2K/j2zrU2ljOYULL3pM8FiboBZslErNFxgkOFkS5DvUg3oXxyoKJceOJKFFRNaFgjTYvv4fDADpHEpqqYFIilE5X6KNXLdYQFPG2QuRe0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525031; c=relaxed/simple;
-	bh=Nnza780wQQTXhac5HhLFwlQvfolKUt7QOp/b2BHAQu0=;
+	s=arc-20240116; t=1708525034; c=relaxed/simple;
+	bh=UXprKYvpBo4sOssEJgAgCXz243TwYzOSRJ4/M/x0AoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJjRUYZWtF7T06Sgrtr5AQg1AKvxcbeKzWnaTCjx15giEBX+VFqskkC1SZTrAVOPwFSc64Qd/ez6AiYwAAm3m1QRu5XcK2/mJRVHjOlmClM+e+UZPhQAxv0lDeKQvhSHistZVnzIx2A5HCXNI8tWeGhc19UiRsuHsRw6HtMimiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXxFGC8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KfXzFukr+aZVlIVWMBqgYdQUnnvfjhrHXCA4Eroj58akhK8ccUJnorSIY8nhrLdjzJgTIPxlAPfAJyF9P8aVhh0e2aJQKTzzu0h7+eIkwUWMxdQG6LUnTx7S24lhtUI0P32uoe+lP/b1eiZyw2yv9C65Qedjqu1dL5RBPIjR9L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwKLc1tS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXxFGC8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC746C433C7;
-	Wed, 21 Feb 2024 14:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwKLc1tS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0165AC433F1;
+	Wed, 21 Feb 2024 14:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525031;
-	bh=Nnza780wQQTXhac5HhLFwlQvfolKUt7QOp/b2BHAQu0=;
+	s=korg; t=1708525034;
+	bh=UXprKYvpBo4sOssEJgAgCXz243TwYzOSRJ4/M/x0AoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXxFGC8ZK8ZO3l5JyUiCj6C8B9ITOsPzaRYnzqCa7jcrsPUBw52L947pDT6vvPHe/
-	 1NJdBSzVn7459i7ft0C5cBSkk9fjk23nOASiPH7RKRvcU1azWuqDFoZIQhTz7n1DVE
-	 rPVDS5EyEx3AfymV41c+1EwhQIAJgUqeldRO+J8Q=
+	b=CwKLc1tSVHRf1WFu421czM5Gg26II64Cx9u4+clKb5FUOI1QsjGAAJ09E1nOq9ldu
+	 x7YQmen7KF5saCEgt2d5Wd5UiOaztwXq5mEAHPSpsJmOhTt0SyU6hxJuDkJnlAmJcK
+	 wowNYfVomfVusF5RSZYnoYT16RLuhXW71R3vPeUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	syzbot+c52ab18308964d248092@syzkaller.appspotmail.com,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.4 012/267] hwrng: core - Fix page fault dead lock on mmap-ed hwrng
-Date: Wed, 21 Feb 2024 14:05:53 +0100
-Message-ID: <20240221125940.443783840@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 039/267] netfilter: nf_tables: validate NFPROTO_* family
+Date: Wed, 21 Feb 2024 14:06:20 +0100
+Message-ID: <20240221125941.250562347@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,117 +50,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 78aafb3884f6bc6636efcc1760c891c8500b9922 upstream.
+[ Upstream commit d0009effa8862c20a13af4cb7475d9771b905693 ]
 
-There is a dead-lock in the hwrng device read path.  This triggers
-when the user reads from /dev/hwrng into memory also mmap-ed from
-/dev/hwrng.  The resulting page fault triggers a recursive read
-which then dead-locks.
+Several expressions explicitly refer to NF_INET_* hook definitions
+from expr->ops->validate, however, family is not validated.
 
-Fix this by using a stack buffer when calling copy_to_user.
+Bail out with EOPNOTSUPP in case they are used from unsupported
+families.
 
-Reported-by: Edward Adam Davis <eadavis@qq.com>
-Reported-by: syzbot+c52ab18308964d248092@syzkaller.appspotmail.com
-Fixes: 9996508b3353 ("hwrng: core - Replace u32 in driver API with byte array")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
+Fixes: a3c90f7a2323 ("netfilter: nf_tables: flow offload expression")
+Fixes: 2fa841938c64 ("netfilter: nf_tables: introduce routing expression")
+Fixes: 554ced0a6e29 ("netfilter: nf_tables: add support for native socket matching")
+Fixes: ad49d86e07a4 ("netfilter: nf_tables: Add synproxy support")
+Fixes: 4ed8eb6570a4 ("netfilter: nf_tables: Add native tproxy support")
+Fixes: 6c47260250fc ("netfilter: nf_tables: add xfrm expression")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/core.c |   34 +++++++++++++++++++++-------------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ net/netfilter/nft_compat.c       | 12 ++++++++++++
+ net/netfilter/nft_flow_offload.c |  5 +++++
+ net/netfilter/nft_nat.c          |  5 +++++
+ net/netfilter/nft_rt.c           |  5 +++++
+ net/netfilter/nft_socket.c       |  5 +++++
+ net/netfilter/nft_synproxy.c     |  7 +++++--
+ net/netfilter/nft_tproxy.c       |  5 +++++
+ net/netfilter/nft_xfrm.c         |  5 +++++
+ 8 files changed, 47 insertions(+), 2 deletions(-)
 
---- a/drivers/char/hw_random/core.c
-+++ b/drivers/char/hw_random/core.c
-@@ -24,10 +24,13 @@
- #include <linux/random.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
-+#include <linux/string.h>
- #include <linux/uaccess.h>
+diff --git a/net/netfilter/nft_compat.c b/net/netfilter/nft_compat.c
+index 1c975e1d3fea..f01f3cf4f8f5 100644
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -327,6 +327,12 @@ static int nft_target_validate(const struct nft_ctx *ctx,
+ 	unsigned int hook_mask = 0;
+ 	int ret;
  
- #define RNG_MODULE_NAME		"hw_random"
- 
-+#define RNG_BUFFER_SIZE (SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES)
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_BRIDGE &&
++	    ctx->family != NFPROTO_ARP)
++		return -EOPNOTSUPP;
 +
- static struct hwrng *current_rng;
- /* the current rng has been explicitly chosen by user via sysfs */
- static int cur_rng_set_by_user;
-@@ -59,7 +62,7 @@ static inline int rng_get_data(struct hw
+ 	if (nft_is_base_chain(ctx->chain)) {
+ 		const struct nft_base_chain *basechain =
+ 						nft_base_chain(ctx->chain);
+@@ -569,6 +575,12 @@ static int nft_match_validate(const struct nft_ctx *ctx,
+ 	unsigned int hook_mask = 0;
+ 	int ret;
  
- static size_t rng_buffer_size(void)
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_BRIDGE &&
++	    ctx->family != NFPROTO_ARP)
++		return -EOPNOTSUPP;
++
+ 	if (nft_is_base_chain(ctx->chain)) {
+ 		const struct nft_base_chain *basechain =
+ 						nft_base_chain(ctx->chain);
+diff --git a/net/netfilter/nft_flow_offload.c b/net/netfilter/nft_flow_offload.c
+index ca5d55a1d7d9..850d4e92702e 100644
+--- a/net/netfilter/nft_flow_offload.c
++++ b/net/netfilter/nft_flow_offload.c
+@@ -147,6 +147,11 @@ static int nft_flow_offload_validate(const struct nft_ctx *ctx,
  {
--	return SMP_CACHE_BYTES < 32 ? 32 : SMP_CACHE_BYTES;
-+	return RNG_BUFFER_SIZE;
+ 	unsigned int hook_mask = (1 << NF_INET_FORWARD);
+ 
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET)
++		return -EOPNOTSUPP;
++
+ 	return nft_chain_validate_hooks(ctx->chain, hook_mask);
  }
  
- static void add_early_randomness(struct hwrng *rng)
-@@ -202,6 +205,7 @@ static inline int rng_get_data(struct hw
- static ssize_t rng_dev_read(struct file *filp, char __user *buf,
- 			    size_t size, loff_t *offp)
+diff --git a/net/netfilter/nft_nat.c b/net/netfilter/nft_nat.c
+index 50fbd3c1d9f1..69fcea16218b 100644
+--- a/net/netfilter/nft_nat.c
++++ b/net/netfilter/nft_nat.c
+@@ -88,6 +88,11 @@ static int nft_nat_validate(const struct nft_ctx *ctx,
+ 	struct nft_nat *priv = nft_expr_priv(expr);
+ 	int err;
+ 
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET)
++		return -EOPNOTSUPP;
++
+ 	err = nft_chain_validate_dependency(ctx->chain, NFT_CHAIN_T_NAT);
+ 	if (err < 0)
+ 		return err;
+diff --git a/net/netfilter/nft_rt.c b/net/netfilter/nft_rt.c
+index bcd01a63e38f..f4a96164a5a1 100644
+--- a/net/netfilter/nft_rt.c
++++ b/net/netfilter/nft_rt.c
+@@ -166,6 +166,11 @@ static int nft_rt_validate(const struct nft_ctx *ctx, const struct nft_expr *exp
+ 	const struct nft_rt *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
+ 
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET)
++		return -EOPNOTSUPP;
++
+ 	switch (priv->key) {
+ 	case NFT_RT_NEXTHOP4:
+ 	case NFT_RT_NEXTHOP6:
+diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
+index 7e4f7063f481..c7b78e4ef459 100644
+--- a/net/netfilter/nft_socket.c
++++ b/net/netfilter/nft_socket.c
+@@ -139,6 +139,11 @@ static int nft_socket_validate(const struct nft_ctx *ctx,
+ 			       const struct nft_expr *expr,
+ 			       const struct nft_data **data)
  {
-+	u8 buffer[RNG_BUFFER_SIZE];
- 	ssize_t ret = 0;
- 	int err = 0;
- 	int bytes_read, len;
-@@ -229,34 +233,37 @@ static ssize_t rng_dev_read(struct file
- 			if (bytes_read < 0) {
- 				err = bytes_read;
- 				goto out_unlock_reading;
-+			} else if (bytes_read == 0 &&
-+				   (filp->f_flags & O_NONBLOCK)) {
-+				err = -EAGAIN;
-+				goto out_unlock_reading;
- 			}
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET)
++		return -EOPNOTSUPP;
 +
- 			data_avail = bytes_read;
- 		}
- 
--		if (!data_avail) {
--			if (filp->f_flags & O_NONBLOCK) {
--				err = -EAGAIN;
--				goto out_unlock_reading;
--			}
--		} else {
--			len = data_avail;
-+		len = data_avail;
-+		if (len) {
- 			if (len > size)
- 				len = size;
- 
- 			data_avail -= len;
- 
--			if (copy_to_user(buf + ret, rng_buffer + data_avail,
--								len)) {
-+			memcpy(buffer, rng_buffer + data_avail, len);
-+		}
-+		mutex_unlock(&reading_mutex);
-+		put_rng(rng);
+ 	return nft_chain_validate_hooks(ctx->chain,
+ 					(1 << NF_INET_PRE_ROUTING) |
+ 					(1 << NF_INET_LOCAL_IN) |
+diff --git a/net/netfilter/nft_synproxy.c b/net/netfilter/nft_synproxy.c
+index 15abb0e49603..2e026f903a4c 100644
+--- a/net/netfilter/nft_synproxy.c
++++ b/net/netfilter/nft_synproxy.c
+@@ -186,7 +186,6 @@ static int nft_synproxy_do_init(const struct nft_ctx *ctx,
+ 		break;
+ #endif
+ 	case NFPROTO_INET:
+-	case NFPROTO_BRIDGE:
+ 		err = nf_synproxy_ipv4_init(snet, ctx->net);
+ 		if (err)
+ 			goto nf_ct_failure;
+@@ -219,7 +218,6 @@ static void nft_synproxy_do_destroy(const struct nft_ctx *ctx)
+ 		break;
+ #endif
+ 	case NFPROTO_INET:
+-	case NFPROTO_BRIDGE:
+ 		nf_synproxy_ipv4_fini(snet, ctx->net);
+ 		nf_synproxy_ipv6_fini(snet, ctx->net);
+ 		break;
+@@ -253,6 +251,11 @@ static int nft_synproxy_validate(const struct nft_ctx *ctx,
+ 				 const struct nft_expr *expr,
+ 				 const struct nft_data **data)
+ {
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET)
++		return -EOPNOTSUPP;
 +
-+		if (len) {
-+			if (copy_to_user(buf + ret, buffer, len)) {
- 				err = -EFAULT;
--				goto out_unlock_reading;
-+				goto out;
- 			}
+ 	return nft_chain_validate_hooks(ctx->chain, (1 << NF_INET_LOCAL_IN) |
+ 						    (1 << NF_INET_FORWARD));
+ }
+diff --git a/net/netfilter/nft_tproxy.c b/net/netfilter/nft_tproxy.c
+index db780b5985ab..d9604a316600 100644
+--- a/net/netfilter/nft_tproxy.c
++++ b/net/netfilter/nft_tproxy.c
+@@ -293,6 +293,11 @@ static int nft_tproxy_validate(const struct nft_ctx *ctx,
+ 			       const struct nft_expr *expr,
+ 			       const struct nft_data **data)
+ {
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET)
++		return -EOPNOTSUPP;
++
+ 	return nft_chain_validate_hooks(ctx->chain, 1 << NF_INET_PRE_ROUTING);
+ }
  
- 			size -= len;
- 			ret += len;
- 		}
+diff --git a/net/netfilter/nft_xfrm.c b/net/netfilter/nft_xfrm.c
+index cbbbc4ecad3a..7f762fc42891 100644
+--- a/net/netfilter/nft_xfrm.c
++++ b/net/netfilter/nft_xfrm.c
+@@ -233,6 +233,11 @@ static int nft_xfrm_validate(const struct nft_ctx *ctx, const struct nft_expr *e
+ 	const struct nft_xfrm *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
  
--		mutex_unlock(&reading_mutex);
--		put_rng(rng);
- 
- 		if (need_resched())
- 			schedule_timeout_interruptible(1);
-@@ -267,6 +274,7 @@ static ssize_t rng_dev_read(struct file
- 		}
- 	}
- out:
-+	memzero_explicit(buffer, sizeof(buffer));
- 	return ret ? : err;
- 
- out_unlock_reading:
++	if (ctx->family != NFPROTO_IPV4 &&
++	    ctx->family != NFPROTO_IPV6 &&
++	    ctx->family != NFPROTO_INET)
++		return -EOPNOTSUPP;
++
+ 	switch (priv->dir) {
+ 	case XFRM_POLICY_IN:
+ 		hooks = (1 << NF_INET_FORWARD) |
+-- 
+2.43.0
+
 
 
