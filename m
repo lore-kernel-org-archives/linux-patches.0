@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A2D7E76D;
-	Wed, 21 Feb 2024 13:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0317A7E58D;
+	Wed, 21 Feb 2024 13:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522518; cv=none; b=ZGHrxG6d3r/LY4+H14aEAxfr4hQZ4aYq1cUIz9gIrlYu5xhvgh7VE4NkW5Iy33/xPbQ06DHPLWdSeGFVvnvKMoODM/t2uJZAz1gQsoRCLiDiV/h2++uaPxno0PgkqbE4sV/AyoN8KUavseCdQV4wBroja/1kAYnjKBHUKdkUk1E=
+	t=1708522521; cv=none; b=dlaId7SxsW8MuHf/YHcI8TD8+tcM/Okg5h3a3UsIgFk7gSDksLqTJUinLoJIzWpLUED9cg0x1BIazyDQO9M19eAYWWwl9aI3u+l2TxaBS3nvBuOAAoT1+2PTZ4cdD0U7bLmkyIXu+JNdygBQfT7QNSQdVcSfltLTnMxTuabpAn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522518; c=relaxed/simple;
-	bh=bUaUtPicHIpWtnuSabfK9iWMb0oCL7ha3Jq4GLjVdiw=;
+	s=arc-20240116; t=1708522521; c=relaxed/simple;
+	bh=Okm6G4FeiVJ3JJD8r0EwFg1LKsRY6AbYIptzgybZyOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrkxZhaTflvwB2lEb2+B/O+uGavsuWtuHII9Ea+tnFUwz5IS9WOeWiJslKXX04V1s2DzFU67j+3jZwoOWIlY5WaFfu1nxEcN/kIgX54eoXX0dQfAxd13MsDJlysS/c3+sCTUngKdi2jE3dba948OyjGckfD/8GdW5gfAjIgzlJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzqQBlZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=USnmANdrD2o8C+/cpdp9srAiBRIZHNfCh5gKxJeb1ky5X3EjB6bShfftDgQVz9CySKH7MO1put1Mj0JngABqm/AjrT7OIUdXy4C+9pr5EuuYk8VGA4Bk+5Qy3SJBV+qmkiF26IbYoC+GuC7kBL0/VELfu0Tkr36mSOnylhinRMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7ii1EIN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzqQBlZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441A0C43399;
-	Wed, 21 Feb 2024 13:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7ii1EIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF04C433F1;
+	Wed, 21 Feb 2024 13:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522517;
-	bh=bUaUtPicHIpWtnuSabfK9iWMb0oCL7ha3Jq4GLjVdiw=;
+	s=korg; t=1708522520;
+	bh=Okm6G4FeiVJ3JJD8r0EwFg1LKsRY6AbYIptzgybZyOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzqQBlZExVaodus2FSgSj6MuPyfhFyuz2k8VQX3OCaR51cZTPAAJwIOpOXSiI91oT
-	 ++IbXQrAfqnmQ4i3hqZa9CvpfSjrR57I37tErs9R5XCIsllVlg3SWEox3UYHVLKyAq
-	 Y/eL6EI9bb0ZTdSQheQ3HnNa1JnPf3XD5UQQ1Trg=
+	b=P7ii1EIN5I25dEJ1GZe2DgqpnmDkEa2QOcAJ8EYtBIkTgoBax7Ey54c4doSU2sCB6
+	 w2bLhy3qcug9ZsJQ22+0Ed8Q1vyi5RlJOCr5pFrrHJ48ZZuHHcj3Sb33EXISKXgwMU
+	 Hi3+gV4+6ZyOWmqi9kI2IfeaFFo3XJsR4YCBnmWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Brett Creeley <brett.creeley@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 185/476] ARM: dts: imx1: Fix sram node
-Date: Wed, 21 Feb 2024 14:03:56 +0100
-Message-ID: <20240221130014.725555167@linuxfoundation.org>
+Subject: [PATCH 5.15 186/476] ionic: pass opcode to devcmd_wait
+Date: Wed, 21 Feb 2024 14:03:57 +0100
+Message-ID: <20240221130014.759297604@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,51 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@denx.de>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit c248e535973088ba7071ff6f26ab7951143450af ]
+[ Upstream commit 24f110240c03c6b5368f1203bac72883d511e606 ]
 
-Per sram.yaml, address-cells, size-cells and ranges are mandatory.
+Don't rely on the PCI memory for the devcmd opcode because we
+read a 0xff value if the PCI bus is broken, which can cause us
+to report a bogus dev_cmd opcode later.
 
-The node name should be sram.
-
-Change the node name and pass the required properties to fix the
-following dt-schema warnings:
-
-imx1-apf9328.dtb: esram@300000: $nodename:0: 'esram@300000' does not match '^sram(@.*)?'
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: '#address-cells' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: '#size-cells' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-imx1-apf9328.dtb: esram@300000: 'ranges' is a required property
-	from schema $id: http://devicetree.org/schemas/sram/sram.yaml#
-
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx1.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_dev.c  | 1 +
+ drivers/net/ethernet/pensando/ionic/ionic_dev.h  | 1 +
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 2 +-
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx1.dtsi b/arch/arm/boot/dts/imx1.dtsi
-index 9b940987864c..8d6e900a9081 100644
---- a/arch/arm/boot/dts/imx1.dtsi
-+++ b/arch/arm/boot/dts/imx1.dtsi
-@@ -268,9 +268,12 @@
- 			status = "disabled";
- 		};
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.c b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+index b778d8264bca..f81b00c7e106 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+@@ -268,6 +268,7 @@ void ionic_dev_cmd_comp(struct ionic_dev *idev, union ionic_dev_cmd_comp *comp)
  
--		esram: esram@300000 {
-+		esram: sram@300000 {
- 			compatible = "mmio-sram";
- 			reg = <0x00300000 0x20000>;
-+			ranges = <0 0x00300000 0x20000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
- 		};
- 	};
- };
+ void ionic_dev_cmd_go(struct ionic_dev *idev, union ionic_dev_cmd *cmd)
+ {
++	idev->opcode = cmd->cmd.opcode;
+ 	memcpy_toio(&idev->dev_cmd_regs->cmd, cmd, sizeof(*cmd));
+ 	iowrite32(0, &idev->dev_cmd_regs->done);
+ 	iowrite32(1, &idev->dev_cmd_regs->doorbell);
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.h b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+index 38f38fe8f21d..1ab86eee8b5a 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.h
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.h
+@@ -144,6 +144,7 @@ struct ionic_dev {
+ 	bool fw_hb_ready;
+ 	bool fw_status_ready;
+ 	u8 fw_generation;
++	u8 opcode;
+ 
+ 	u64 __iomem *db_pages;
+ 	dma_addr_t phy_db_pages;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+index 538c024afed5..7942a7f0f7b3 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+@@ -350,7 +350,7 @@ int ionic_dev_cmd_wait(struct ionic *ionic, unsigned long max_seconds)
+ 	 */
+ 	max_wait = jiffies + (max_seconds * HZ);
+ try_again:
+-	opcode = readb(&idev->dev_cmd_regs->cmd.cmd.opcode);
++	opcode = idev->opcode;
+ 	start_time = jiffies;
+ 	do {
+ 		done = ionic_dev_cmd_done(idev);
 -- 
 2.43.0
 
