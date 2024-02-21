@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA7F78B53;
-	Wed, 21 Feb 2024 13:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4070E38398;
+	Wed, 21 Feb 2024 13:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523638; cv=none; b=e3W7L3RwD2cN8QuNcDH0R90MH3gfJLjZlgzt9O/bUP/NCQ5xARQmNP84kg2bKlYOmKCSFsSjqIK91Uh78pkjqoXYrl/7Yf5dNIT1q5C7DljFu1DJUMwDcT2Qi9z7cRUj9OtGkaKgnTcy1AUflW3aJFNIvXv3AFJLDSn6S2uJTvU=
+	t=1708523641; cv=none; b=Q75pfkxdDeEXaUlFL/BcSn08E3M+JGJZCyKPV5nx9DgHCUiAY6HPxqtkrmT2V9WEAyAZaotfim2/gqk8iISQB7PLIa3GxBDWy2+80YI0R84TfWHj4V4RiogmlRWhJAbEyaCo3xh1hLD/N36N/7cdoEa1EOVpHNTF/3+QRfR+lQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523638; c=relaxed/simple;
-	bh=07BTzR+ZsmWnyI0YuryOfsUmnhUY8cSvs7dXaP2C0bg=;
+	s=arc-20240116; t=1708523641; c=relaxed/simple;
+	bh=/m4Cngj/FF0ceA3So7N60LeavKpfPWMQx0jLquHx/t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3OwslNA0ddZ/EyNj8iUE8LgmysMTBFBkkhlImMEHd5WVaufuSHnYjRJ81Dy5Ski9SmkuHEvCP2vaX6GBwv4Y9s6ONiKVWthYRDTsgNri5zk8wb6EkhCCMXNCzWi6VvHwN7nzcBv9TmJX6m9oe8lGMu3UTodBwhooltl54OP0p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5vyCXaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AgC1gsXwh3U/zxVr3TAlSzHinZ4hiQ+N77p12g1P9wh9eZc30aKNAxOl2WzzgQ1mj5MOh+iCJW0n02yuY/x0vbFX+QugOvhC+5RNHvhChRnw212a0aZa71jPNkSIn9k/ggHA/fWqH4VHYtXViffv/MH2kwZFO4Z7M4pJLNSy90E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnOLuVmA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5vyCXaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9223BC433F1;
-	Wed, 21 Feb 2024 13:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnOLuVmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3450C433F1;
+	Wed, 21 Feb 2024 13:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523638;
-	bh=07BTzR+ZsmWnyI0YuryOfsUmnhUY8cSvs7dXaP2C0bg=;
+	s=korg; t=1708523641;
+	bh=/m4Cngj/FF0ceA3So7N60LeavKpfPWMQx0jLquHx/t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5vyCXaqRVNiyCJkYY3GU2h705R/b4VIWw6VcjFiH3Exu9oD2GBvGlMnnE19w32Rs
-	 dH7xIEBUvvNAx+y1xZk8Xun6iA3jwy8ZBFbBltH+OQYXiQODsjWUtZkSCLLaO9M2p1
-	 NXmjsHHdL6bz3N99tmL3mPbTbSx9D8vO+d8tgJYk=
+	b=EnOLuVmAUHW+KJiE+wQUdkroLlCxo3uYrzCaWel3fdUN+Uv2nyKt3RqR7TDle/PN0
+	 aFj8K+K319ndqXLH3skIFhKWSkqaAWKHvx4Smy+ZddoG5N0YzRYx7SwzTh3IkZom9n
+	 iJBKCx2gkLwt+9NCA2n4acv/qdlN90FWxrOC07Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>
-Subject: [PATCH 5.10 016/379] iio:adc:ad7091r: Move exports into IIO_AD7091R namespace.
-Date: Wed, 21 Feb 2024 14:03:15 +0100
-Message-ID: <20240221125955.400835572@linuxfoundation.org>
+	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 017/379] ext4: allow for the last group to be marked as trimmed
+Date: Wed, 21 Feb 2024 14:03:16 +0100
+Message-ID: <20240221125955.429829831@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,57 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Suraj Jitindar Singh <surajjs@amazon.com>
 
-commit 8a0080af84d3fb2423f0b3b55eff666f545eb097 upstream.
+commit 7c784d624819acbeefb0018bac89e632467cca5a upstream.
 
-In order to avoid unnecessary pollution of the global symbol namespace
-move the core/library functions into a specific namespace and import
-that into the various specific device drivers that use them.
+The ext4 filesystem tracks the trim status of blocks at the group
+level.  When an entire group has been trimmed then it is marked as
+such and subsequent trim invocations with the same minimum trim size
+will not be attempted on that group unless it is marked as able to be
+trimmed again such as when a block is freed.
 
-For more information see https://lwn.net/Articles/760045/
+Currently the last group can't be marked as trimmed due to incorrect
+logic in ext4_last_grp_cluster(). ext4_last_grp_cluster() is supposed
+to return the zero based index of the last cluster in a group. This is
+then used by ext4_try_to_trim_range() to determine if the trim
+operation spans the entire group and as such if the trim status of the
+group should be recorded.
 
-An alternative here would be to conclude that we are unlikely to see
-support for the other ad7091r parts in the near future and just merge
-the two modules into one supporting just the i2c -5 variant.
+ext4_last_grp_cluster() takes a 0 based group index, thus the valid
+values for grp are 0..(ext4_get_groups_count - 1). Any group index
+less than (ext4_get_groups_count - 1) is not the last group and must
+have EXT4_CLUSTERS_PER_GROUP(sb) clusters. For the last group we need
+to calculate the number of clusters based on the number of blocks in
+the group. Finally subtract 1 from the number of clusters as zero
+based indexing is expected.  Rearrange the function slightly to make
+it clear what we are calculating and returning.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Paul Cercueil <paul@crapouillou.net>
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/20220130205701.334592-3-jic23@kernel.org
+Reproducer:
+// Create file system where the last group has fewer blocks than
+// blocks per group
+$ mkfs.ext4 -b 4096 -g 8192 /dev/nvme0n1 8191
+$ mount /dev/nvme0n1 /mnt
+
+Before Patch:
+$ fstrim -v /mnt
+/mnt: 25.9 MiB (27156480 bytes) trimmed
+// Group not marked as trimmed so second invocation still discards blocks
+$ fstrim -v /mnt
+/mnt: 25.9 MiB (27156480 bytes) trimmed
+
+After Patch:
+fstrim -v /mnt
+/mnt: 25.9 MiB (27156480 bytes) trimmed
+// Group marked as trimmed so second invocation DOESN'T discard any blocks
+fstrim -v /mnt
+/mnt: 0 B (0 bytes) trimmed
+
+Fixes: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
+Cc:  <stable@vger.kernel.org> # 4.19+
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231213051635.37731-1-surajjs@amazon.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7091r-base.c |    4 ++--
- drivers/iio/adc/ad7091r5.c     |    1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/adc/ad7091r-base.c
-+++ b/drivers/iio/adc/ad7091r-base.c
-@@ -429,7 +429,7 @@ int ad7091r_probe(struct device *dev, co
- 
- 	return devm_iio_device_register(dev, iio_dev);
- }
--EXPORT_SYMBOL_GPL(ad7091r_probe);
-+EXPORT_SYMBOL_NS_GPL(ad7091r_probe, IIO_AD7091R);
- 
- static bool ad7091r_writeable_reg(struct device *dev, unsigned int reg)
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -5895,11 +5895,16 @@ __acquires(bitlock)
+ static ext4_grpblk_t ext4_last_grp_cluster(struct super_block *sb,
+ 					   ext4_group_t grp)
  {
-@@ -459,7 +459,7 @@ const struct regmap_config ad7091r_regma
- 	.writeable_reg = ad7091r_writeable_reg,
- 	.volatile_reg = ad7091r_volatile_reg,
- };
--EXPORT_SYMBOL_GPL(ad7091r_regmap_config);
-+EXPORT_SYMBOL_NS_GPL(ad7091r_regmap_config, IIO_AD7091R);
+-	if (grp < ext4_get_groups_count(sb))
+-		return EXT4_CLUSTERS_PER_GROUP(sb) - 1;
+-	return (ext4_blocks_count(EXT4_SB(sb)->s_es) -
+-		ext4_group_first_block_no(sb, grp) - 1) >>
+-					EXT4_CLUSTER_BITS(sb);
++	unsigned long nr_clusters_in_group;
++
++	if (grp < (ext4_get_groups_count(sb) - 1))
++		nr_clusters_in_group = EXT4_CLUSTERS_PER_GROUP(sb);
++	else
++		nr_clusters_in_group = (ext4_blocks_count(EXT4_SB(sb)->s_es) -
++					ext4_group_first_block_no(sb, grp))
++				       >> EXT4_CLUSTER_BITS(sb);
++
++	return nr_clusters_in_group - 1;
+ }
  
- MODULE_AUTHOR("Beniamin Bia <beniamin.bia@analog.com>");
- MODULE_DESCRIPTION("Analog Devices AD7091Rx multi-channel converters");
---- a/drivers/iio/adc/ad7091r5.c
-+++ b/drivers/iio/adc/ad7091r5.c
-@@ -91,3 +91,4 @@ module_i2c_driver(ad7091r5_driver);
- MODULE_AUTHOR("Beniamin Bia <beniamin.bia@analog.com>");
- MODULE_DESCRIPTION("Analog Devices AD7091R5 multi-channel ADC driver");
- MODULE_LICENSE("GPL v2");
-+MODULE_IMPORT_NS(IIO_AD7091R);
+ static bool ext4_trim_interrupted(void)
 
 
