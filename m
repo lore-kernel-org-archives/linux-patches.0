@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BBF17F7CC;
-	Wed, 21 Feb 2024 14:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9427F7CE;
+	Wed, 21 Feb 2024 14:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524842; cv=none; b=UJEVWX/4ch2ovK29jxV4MWQwZYPOopV4wX+WkJ9kY16FKlBR9+vbM90jf8BK6+nkLAzES4gtT+H4qdEctOf2FySd8P+JkBnFaJWgAL4Kmw+QOJi0SVNdLtcEmdf7+foBU4/8pmZOx+P2+H9K4C3HlZ8/zY0vlSpV4o3acubti6E=
+	t=1708524846; cv=none; b=Uw+fcJcAllq7yVVniJeJYezMFndvmIRpoHIPhbuBi4dLrOwKxxgjbf4mrsfM157x7s+8i8juxQ18SMBbGHe9Z/oJb7pbtRlhIBWKn6ivmjZkIByEtfiTa/clvZCVWvRwEDymfQAritnhmBIgrxIk1Xk+ZSmALegNAwztNJ9JEJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524842; c=relaxed/simple;
-	bh=hs6ClBPb8WTcthwv/kGiOi9NO1hW5/lNC2xra95bboY=;
+	s=arc-20240116; t=1708524846; c=relaxed/simple;
+	bh=gUjfnFTBHWo03wTiq3XM6O9Y+yhCwt1jvwiaDMqC1tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+QdAubmqQnG1KN0iyCuXw8epygK3Y8zlhjmYKIpJIPlGpx73PFpSDJZtdnohf/ijpOQgkvzS7B+K/wRgzkDUqged/RAtEILoa23h/Hn4xhbNbefKrG1kyGj+8TDCVwYZPpnpcvvZDAX5WoSz1mDmx198NV1k4oO1wuzvGY3Fjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3oLc4Uo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V+nRiZrwkKU2IwmirYrthJjsGIKBScc3+rKiW+DXspT3LF/ZSLIWMzGWtUYA6cgrG0Bgv9tMQcx1hKbo+8TXerMTmQupCyZ8CLodK/mE5gwveMjPuf7pTx+qfCSH9vEK4Pk0QWNitnbmWs8+rtBmA59BcjTftSJKrz0uiM29obQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSDFM5Gd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3oLc4Uo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09618C43390;
-	Wed, 21 Feb 2024 14:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSDFM5Gd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343EEC433F1;
+	Wed, 21 Feb 2024 14:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524842;
-	bh=hs6ClBPb8WTcthwv/kGiOi9NO1hW5/lNC2xra95bboY=;
+	s=korg; t=1708524845;
+	bh=gUjfnFTBHWo03wTiq3XM6O9Y+yhCwt1jvwiaDMqC1tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s3oLc4UoOvjfwwddjrfhfAav7pGwazjqbQm7/JkPetCdoi/tlSH00TjePC0dmqEuN
-	 H49u0jPir1xbs63Hxx9q1vbsVwT5fMjdB1uLgjfqflrFcoRvjOmLyYlQ9qI94ILSEQ
-	 F0SzjVKVetyyaMTPkhZkIUBVzdJ7Bprru9BL6myc=
+	b=uSDFM5GdhHCFUxufXEJvXSQNVBVMRIGqqE5tilKD9l05L5U9DkhCM/lhMag+7UnZa
+	 71fd/bTUYcuQrxv+3tkuoZRQ8aXTofcXH9NY3Zp1y7f/Rs3gZvWn9KenKUrSfW6gEo
+	 F390xPtv9YG/5ZDafPuAV2Q/UQQTGkdoxlabjqqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ale Crismani <ale.crismani@automattic.com>,
-	David Wang <00107082@163.com>,
+	syzbot+52bbc0ad036f6f0d4a25@syzkaller.appspotmail.com,
+	Brad Spengler <spender@grsecurity.net>,
+	=?UTF-8?q?=D0=A1=D1=82=D0=B0=D1=81=20=D0=9D=D0=B8=D1=87=D0=B8=D0=BF=D0=BE=D1=80=D0=BE=D0=B2=D0=B8=D1=87?= <stasn77@gmail.com>,
 	Jozsef Kadlecsik <kadlec@netfilter.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 365/379] netfilter: ipset: fix performance regression in swap operation
-Date: Wed, 21 Feb 2024 14:09:04 +0100
-Message-ID: <20240221130005.862402620@linuxfoundation.org>
+Subject: [PATCH 5.10 366/379] netfilter: ipset: Missing gc cancellations fixed
+Date: Wed, 21 Feb 2024 14:09:05 +0100
+Message-ID: <20240221130005.891434639@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -46,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
@@ -54,285 +56,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-commit 97f7cf1cd80eeed3b7c808b7c12463295c751001 upstream.
+commit 27c5a095e2518975e20a10102908ae8231699879 upstream.
 
-The patch "netfilter: ipset: fix race condition between swap/destroy
-and kernel side add/del/test", commit 28628fa9 fixes a race condition.
-But the synchronize_rcu() added to the swap function unnecessarily slows
-it down: it can safely be moved to destroy and use call_rcu() instead.
+The patch fdb8e12cc2cc ("netfilter: ipset: fix performance regression
+in swap operation") missed to add the calls to gc cancellations
+at the error path of create operations and at module unload. Also,
+because the half of the destroy operations now executed by a
+function registered by call_rcu(), neither NFNL_SUBSYS_IPSET mutex
+or rcu read lock is held and therefore the checking of them results
+false warnings.
 
-Eric Dumazet pointed out that simply calling the destroy functions as
-rcu callback does not work: sets with timeout use garbage collectors
-which need cancelling at destroy which can wait. Therefore the destroy
-functions are split into two: cancelling garbage collectors safely at
-executing the command received by netlink and moving the remaining
-part only into the rcu callback.
-
-Link: https://lore.kernel.org/lkml/C0829B10-EAA6-4809-874E-E1E9C05A8D84@automattic.com/
-Fixes: 28628fa952fe ("netfilter: ipset: fix race condition between swap/destroy and kernel side add/del/test")
-Reported-by: Ale Crismani <ale.crismani@automattic.com>
-Reported-by: David Wang <00107082@163.com>
-Tested-by: David Wang <00107082@163.com>
+Fixes: 97f7cf1cd80e ("netfilter: ipset: fix performance regression in swap operation")
+Reported-by: syzbot+52bbc0ad036f6f0d4a25@syzkaller.appspotmail.com
+Reported-by: Brad Spengler <spender@grsecurity.net>
+Reported-by: Стас Ничипорович <stasn77@gmail.com>
+Tested-by: Brad Spengler <spender@grsecurity.net>
+Tested-by: Стас Ничипорович <stasn77@gmail.com>
 Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/netfilter/ipset/ip_set.h  |    4 +++
- net/netfilter/ipset/ip_set_bitmap_gen.h |   14 +++++++++---
- net/netfilter/ipset/ip_set_core.c       |   37 ++++++++++++++++++++++++--------
- net/netfilter/ipset/ip_set_hash_gen.h   |   15 ++++++++++--
- net/netfilter/ipset/ip_set_list_set.c   |   13 ++++++++---
- 5 files changed, 65 insertions(+), 18 deletions(-)
+ net/netfilter/ipset/ip_set_core.c     |    2 ++
+ net/netfilter/ipset/ip_set_hash_gen.h |    4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/linux/netfilter/ipset/ip_set.h
-+++ b/include/linux/netfilter/ipset/ip_set.h
-@@ -188,6 +188,8 @@ struct ip_set_type_variant {
- 	/* Return true if "b" set is the same as "a"
- 	 * according to the create set parameters */
- 	bool (*same_set)(const struct ip_set *a, const struct ip_set *b);
-+	/* Cancel ongoing garbage collectors before destroying the set*/
-+	void (*cancel_gc)(struct ip_set *set);
- 	/* Region-locking is used */
- 	bool region_lock;
- };
-@@ -239,6 +241,8 @@ extern void ip_set_type_unregister(struc
- 
- /* A generic IP set */
- struct ip_set {
-+	/* For call_cru in destroy */
-+	struct rcu_head rcu;
- 	/* The name of the set */
- 	char name[IPSET_MAXNAMELEN];
- 	/* Lock protecting the set data */
---- a/net/netfilter/ipset/ip_set_bitmap_gen.h
-+++ b/net/netfilter/ipset/ip_set_bitmap_gen.h
-@@ -28,6 +28,7 @@
- #define mtype_del		IPSET_TOKEN(MTYPE, _del)
- #define mtype_list		IPSET_TOKEN(MTYPE, _list)
- #define mtype_gc		IPSET_TOKEN(MTYPE, _gc)
-+#define mtype_cancel_gc		IPSET_TOKEN(MTYPE, _cancel_gc)
- #define mtype			MTYPE
- 
- #define get_ext(set, map, id)	((map)->extensions + ((set)->dsize * (id)))
-@@ -57,9 +58,6 @@ mtype_destroy(struct ip_set *set)
- {
- 	struct mtype *map = set->data;
- 
--	if (SET_WITH_TIMEOUT(set))
--		del_timer_sync(&map->gc);
--
- 	if (set->dsize && set->extensions & IPSET_EXT_DESTROY)
- 		mtype_ext_cleanup(set);
- 	ip_set_free(map->members);
-@@ -288,6 +286,15 @@ mtype_gc(struct timer_list *t)
- 	add_timer(&map->gc);
- }
- 
-+static void
-+mtype_cancel_gc(struct ip_set *set)
-+{
-+	struct mtype *map = set->data;
-+
-+	if (SET_WITH_TIMEOUT(set))
-+		del_timer_sync(&map->gc);
-+}
-+
- static const struct ip_set_type_variant mtype = {
- 	.kadt	= mtype_kadt,
- 	.uadt	= mtype_uadt,
-@@ -301,6 +308,7 @@ static const struct ip_set_type_variant
- 	.head	= mtype_head,
- 	.list	= mtype_list,
- 	.same_set = mtype_same_set,
-+	.cancel_gc = mtype_cancel_gc,
- };
- 
- #endif /* __IP_SET_BITMAP_IP_GEN_H */
 --- a/net/netfilter/ipset/ip_set_core.c
 +++ b/net/netfilter/ipset/ip_set_core.c
-@@ -1186,6 +1186,14 @@ ip_set_destroy_set(struct ip_set *set)
- 	kfree(set);
- }
+@@ -1158,6 +1158,7 @@ static int ip_set_create(struct net *net
+ 	return ret;
  
-+static void
-+ip_set_destroy_set_rcu(struct rcu_head *head)
-+{
-+	struct ip_set *set = container_of(head, struct ip_set, rcu);
-+
-+	ip_set_destroy_set(set);
-+}
-+
- static int ip_set_destroy(struct net *net, struct sock *ctnl,
- 			  struct sk_buff *skb, const struct nlmsghdr *nlh,
- 			  const struct nlattr * const attr[],
-@@ -1199,8 +1207,6 @@ static int ip_set_destroy(struct net *ne
- 	if (unlikely(protocol_min_failed(attr)))
- 		return -IPSET_ERR_PROTOCOL;
- 
--	/* Must wait for flush to be really finished in list:set */
--	rcu_barrier();
- 
- 	/* Commands are serialized and references are
- 	 * protected by the ip_set_ref_lock.
-@@ -1212,8 +1218,10 @@ static int ip_set_destroy(struct net *ne
- 	 * counter, so if it's already zero, we can proceed
- 	 * without holding the lock.
- 	 */
--	read_lock_bh(&ip_set_ref_lock);
- 	if (!attr[IPSET_ATTR_SETNAME]) {
-+		/* Must wait for flush to be really finished in list:set */
-+		rcu_barrier();
-+		read_lock_bh(&ip_set_ref_lock);
- 		for (i = 0; i < inst->ip_set_max; i++) {
- 			s = ip_set(inst, i);
- 			if (s && (s->ref || s->ref_netlink)) {
-@@ -1227,12 +1235,17 @@ static int ip_set_destroy(struct net *ne
- 			s = ip_set(inst, i);
- 			if (s) {
- 				ip_set(inst, i) = NULL;
-+				/* Must cancel garbage collectors */
-+				s->variant->cancel_gc(s);
- 				ip_set_destroy_set(s);
- 			}
+ cleanup:
++	set->variant->cancel_gc(set);
+ 	set->variant->destroy(set);
+ put_out:
+ 	module_put(set->type->me);
+@@ -2413,6 +2414,7 @@ ip_set_net_exit(struct net *net)
+ 		set = ip_set(inst, i);
+ 		if (set) {
+ 			ip_set(inst, i) = NULL;
++			set->variant->cancel_gc(set);
+ 			ip_set_destroy_set(set);
  		}
- 		/* Modified by ip_set_destroy() only, which is serialized */
- 		inst->is_destroyed = false;
- 	} else {
-+		u16 features = 0;
-+
-+		read_lock_bh(&ip_set_ref_lock);
- 		s = find_set_and_id(inst, nla_data(attr[IPSET_ATTR_SETNAME]),
- 				    &i);
- 		if (!s) {
-@@ -1242,10 +1255,16 @@ static int ip_set_destroy(struct net *ne
- 			ret = -IPSET_ERR_BUSY;
- 			goto out;
- 		}
-+		features = s->type->features;
- 		ip_set(inst, i) = NULL;
- 		read_unlock_bh(&ip_set_ref_lock);
--
--		ip_set_destroy_set(s);
-+		if (features & IPSET_TYPE_NAME) {
-+			/* Must wait for flush to be really finished  */
-+			rcu_barrier();
-+		}
-+		/* Must cancel garbage collectors */
-+		s->variant->cancel_gc(s);
-+		call_rcu(&s->rcu, ip_set_destroy_set_rcu);
  	}
- 	return 0;
- out:
-@@ -1404,9 +1423,6 @@ static int ip_set_swap(struct net *net,
- 	ip_set(inst, to_id) = from;
- 	write_unlock_bh(&ip_set_ref_lock);
- 
--	/* Make sure all readers of the old set pointers are completed. */
--	synchronize_rcu();
--
- 	return 0;
- }
- 
-@@ -2444,8 +2460,11 @@ ip_set_fini(void)
- {
- 	nf_unregister_sockopt(&so_set);
- 	nfnetlink_subsys_unregister(&ip_set_netlink_subsys);
--
- 	unregister_pernet_subsys(&ip_set_net_ops);
-+
-+	/* Wait for call_rcu() in destroy */
-+	rcu_barrier();
-+
- 	pr_debug("these are the famous last words\n");
- }
- 
 --- a/net/netfilter/ipset/ip_set_hash_gen.h
 +++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -235,6 +235,7 @@ htable_size(u8 hbits)
- #undef mtype_gc_do
- #undef mtype_gc
- #undef mtype_gc_init
-+#undef mtype_cancel_gc
- #undef mtype_variant
- #undef mtype_data_match
+@@ -446,7 +446,7 @@ mtype_ahash_destroy(struct ip_set *set,
+ 	u32 i;
  
-@@ -279,6 +280,7 @@ htable_size(u8 hbits)
- #define mtype_gc_do		IPSET_TOKEN(MTYPE, _gc_do)
- #define mtype_gc		IPSET_TOKEN(MTYPE, _gc)
- #define mtype_gc_init		IPSET_TOKEN(MTYPE, _gc_init)
-+#define mtype_cancel_gc		IPSET_TOKEN(MTYPE, _cancel_gc)
- #define mtype_variant		IPSET_TOKEN(MTYPE, _variant)
- #define mtype_data_match	IPSET_TOKEN(MTYPE, _data_match)
- 
-@@ -464,9 +466,6 @@ mtype_destroy(struct ip_set *set)
+ 	for (i = 0; i < jhash_size(t->htable_bits); i++) {
+-		n = __ipset_dereference(hbucket(t, i));
++		n = (__force struct hbucket *)hbucket(t, i);
+ 		if (!n)
+ 			continue;
+ 		if (set->extensions & IPSET_EXT_DESTROY && ext_destroy)
+@@ -466,7 +466,7 @@ mtype_destroy(struct ip_set *set)
  	struct htype *h = set->data;
  	struct list_head *l, *lt;
  
--	if (SET_WITH_TIMEOUT(set))
--		cancel_delayed_work_sync(&h->gc.dwork);
--
- 	mtype_ahash_destroy(set, ipset_dereference_nfnl(h->table), true);
+-	mtype_ahash_destroy(set, ipset_dereference_nfnl(h->table), true);
++	mtype_ahash_destroy(set, (__force struct htable *)h->table, true);
  	list_for_each_safe(l, lt, &h->ad) {
  		list_del(l);
-@@ -613,6 +612,15 @@ mtype_gc_init(struct htable_gc *gc)
- 	queue_delayed_work(system_power_efficient_wq, &gc->dwork, HZ);
- }
- 
-+static void
-+mtype_cancel_gc(struct ip_set *set)
-+{
-+	struct htype *h = set->data;
-+
-+	if (SET_WITH_TIMEOUT(set))
-+		cancel_delayed_work_sync(&h->gc.dwork);
-+}
-+
- static int
- mtype_add(struct ip_set *set, void *value, const struct ip_set_ext *ext,
- 	  struct ip_set_ext *mext, u32 flags);
-@@ -1433,6 +1441,7 @@ static const struct ip_set_type_variant
- 	.uref	= mtype_uref,
- 	.resize	= mtype_resize,
- 	.same_set = mtype_same_set,
-+	.cancel_gc = mtype_cancel_gc,
- 	.region_lock = true,
- };
- 
---- a/net/netfilter/ipset/ip_set_list_set.c
-+++ b/net/netfilter/ipset/ip_set_list_set.c
-@@ -426,9 +426,6 @@ list_set_destroy(struct ip_set *set)
- 	struct list_set *map = set->data;
- 	struct set_elem *e, *n;
- 
--	if (SET_WITH_TIMEOUT(set))
--		del_timer_sync(&map->gc);
--
- 	list_for_each_entry_safe(e, n, &map->members, list) {
- 		list_del(&e->list);
- 		ip_set_put_byindex(map->net, e->id);
-@@ -545,6 +542,15 @@ list_set_same_set(const struct ip_set *a
- 	       a->extensions == b->extensions;
- }
- 
-+static void
-+list_set_cancel_gc(struct ip_set *set)
-+{
-+	struct list_set *map = set->data;
-+
-+	if (SET_WITH_TIMEOUT(set))
-+		del_timer_sync(&map->gc);
-+}
-+
- static const struct ip_set_type_variant set_variant = {
- 	.kadt	= list_set_kadt,
- 	.uadt	= list_set_uadt,
-@@ -558,6 +564,7 @@ static const struct ip_set_type_variant
- 	.head	= list_set_head,
- 	.list	= list_set_list,
- 	.same_set = list_set_same_set,
-+	.cancel_gc = list_set_cancel_gc,
- };
- 
- static void
+ 		kfree(l);
 
 
