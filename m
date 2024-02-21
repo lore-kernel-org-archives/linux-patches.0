@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD0478B73;
-	Wed, 21 Feb 2024 13:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3240578B5E;
+	Wed, 21 Feb 2024 13:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523546; cv=none; b=IVlOa39LSPCvzzeWg2w9YqU9j4OOKP5g5fu+8beFjl9d+/Ekkjh4qyvxzp7J2PGBu58BAbDtz/8MJyrSesfCLpVFOqkX+uzoxf/1Gw77e/GeNIs6U0Uj08eG2Kt4zkGfD34Ef+vZlAB3yqNgnIOjXHXuYe3gcTWFbO81Bk//rAE=
+	t=1708523549; cv=none; b=YPrcD68Lk3+NLq+AqMMH+DxYtdnnA8pmV9HOx0EnSzDDdNR5hTc8NvrksaWO6Rauv9/BPxyd1NYQNTfhoVEmTyelq3OqN3y5EJbLWoFsciNk45FZb6TcTMJG+TJM91pDZKwa9AHGyO+HvRS8Ove8goD9fjCUKc/Apn8KLgsb+uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523546; c=relaxed/simple;
-	bh=rzYFQLQVj6ZD5eU75DVP0UOO85A4RAvYdXzSz6TFIDU=;
+	s=arc-20240116; t=1708523549; c=relaxed/simple;
+	bh=na55M1UQPyvAYdfO/3D04/yPA5tqtgq/yc+YGIDM1s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lLSrzWIvbco+ks3VWYrORNhdwLJswz63Nc6veOd2bsgonrKbUoUPwMy5gP6GvZ++a8w6XnDxN3YPYm51E6HRon/mQT/bx9RnEM15SIzmd8BypnH+7acg2K4DKLGNZSlOYleKowCpuEPbqjUKDgWa9tm77VYBT97R3ZeXdzaQQGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/n11ySU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=atPrtikr6izy+qns5WAo9EmdyrTaH2C8xI534qwvShyE5E+AOJKJrYeunBWYi2pM26W75FgWnUwi3bf0uLgvRRAYeJWQPZtOOz+j/1NvmhuRENJGAZV1HbhjierbQgPbdfpqdu2lIRFXxyIbiW2euVencD/gxoSxFdgW8arq3s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xl1+ir2P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/n11ySU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F58C43394;
-	Wed, 21 Feb 2024 13:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xl1+ir2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D4CC433F1;
+	Wed, 21 Feb 2024 13:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523546;
-	bh=rzYFQLQVj6ZD5eU75DVP0UOO85A4RAvYdXzSz6TFIDU=;
+	s=korg; t=1708523549;
+	bh=na55M1UQPyvAYdfO/3D04/yPA5tqtgq/yc+YGIDM1s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/n11ySUqjAxRZQ/zXxsR3VBMsJHkbpLYrkIUFmrpnlcwJ33qzX0xw7exCsaDRY2+
-	 3GwzZyoJdFZYeeT+vmCA2PDLxhhevF9OEsPlA9JsWWuK9ER6I9jNtfizILwLMpeqwO
-	 GMb+Mv+14G2UL2b/UqSYHbg1XhDX1bRluMqe/7Mo=
+	b=xl1+ir2P2EoaEBTZocPWTWml9HFR7EmzSknDijxrzgoI/JXmosx/gGWBL2zwmLp4X
+	 Bro93a+d9nA7Vuuj7cs/Vrju4+58hWF0C6MnAfiay7CzojKI0qw2MD7t2eg4N1hp3x
+	 7KboYYE/ROJ4fL0USFkJSVM7J9UONiZLJdykM8xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Subject: [PATCH 5.15 468/476] Revert "selftests/bpf: Test tail call counting with bpf2bpf and data on stack"
-Date: Wed, 21 Feb 2024 14:08:39 +0100
-Message-ID: <20240221130025.325787931@linuxfoundation.org>
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 469/476] net: bcmgenet: Fix EEE implementation
+Date: Wed, 21 Feb 2024 14:08:40 +0100
+Message-ID: <20240221130025.356470567@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -49,135 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-This reverts commit 3eefb2fbf4ec1c1ff239b8b65e6e78aae335e4a6.
+commit a9f31047baca57d47440c879cf259b86f900260c upstream.
 
-libbpf support for "tc" progs doesn't exist for the linux-5.15.y tree.
-This commit was backported too far back in upstream, to a kernel where
-the libbpf support was not there for the test.
+We had a number of short comings:
 
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+- EEE must be re-evaluated whenever the state machine detects a link
+  change as wight be switching from a link partner with EEE
+  enabled/disabled
+
+- tx_lpi_enabled controls whether EEE should be enabled/disabled for the
+  transmit path, which applies to the TBUF block
+
+- We do not need to forcibly enable EEE upon system resume, as the PHY
+  state machine will trigger a link event that will do that, too
+
+Fixes: 6ef398ea60d9 ("net: bcmgenet: add EEE support")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/r/20230606214348.2408018-1-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/prog_tests/tailcalls.c    |   55 ------------------
- tools/testing/selftests/bpf/progs/tailcall_bpf2bpf6.c |   42 -------------
- 2 files changed, 97 deletions(-)
- delete mode 100644 tools/testing/selftests/bpf/progs/tailcall_bpf2bpf6.c
 
---- a/tools/testing/selftests/bpf/prog_tests/tailcalls.c
-+++ b/tools/testing/selftests/bpf/prog_tests/tailcalls.c
-@@ -810,59 +810,6 @@ out:
- 	bpf_object__close(obj);
+---
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c |   22 ++++++++--------------
+ drivers/net/ethernet/broadcom/genet/bcmgenet.h |    3 +++
+ drivers/net/ethernet/broadcom/genet/bcmmii.c   |    6 ++++++
+ 3 files changed, 17 insertions(+), 14 deletions(-)
+
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -1248,7 +1248,8 @@ static void bcmgenet_get_ethtool_stats(s
+ 	}
  }
  
--#include "tailcall_bpf2bpf6.skel.h"
--
--/* Tail call counting works even when there is data on stack which is
-- * not aligned to 8 bytes.
-- */
--static void test_tailcall_bpf2bpf_6(void)
--{
--	struct tailcall_bpf2bpf6 *obj;
--	int err, map_fd, prog_fd, main_fd, data_fd, i, val;
--	LIBBPF_OPTS(bpf_test_run_opts, topts,
--		.data_in = &pkt_v4,
--		.data_size_in = sizeof(pkt_v4),
--		.repeat = 1,
--	);
--
--	obj = tailcall_bpf2bpf6__open_and_load();
--	if (!ASSERT_OK_PTR(obj, "open and load"))
--		return;
--
--	main_fd = bpf_program__fd(obj->progs.entry);
--	if (!ASSERT_GE(main_fd, 0, "entry prog fd"))
--		goto out;
--
--	map_fd = bpf_map__fd(obj->maps.jmp_table);
--	if (!ASSERT_GE(map_fd, 0, "jmp_table map fd"))
--		goto out;
--
--	prog_fd = bpf_program__fd(obj->progs.classifier_0);
--	if (!ASSERT_GE(prog_fd, 0, "classifier_0 prog fd"))
--		goto out;
--
--	i = 0;
--	err = bpf_map_update_elem(map_fd, &i, &prog_fd, BPF_ANY);
--	if (!ASSERT_OK(err, "jmp_table map update"))
--		goto out;
--
--	err = bpf_prog_test_run_opts(main_fd, &topts);
--	ASSERT_OK(err, "entry prog test run");
--	ASSERT_EQ(topts.retval, 0, "tailcall retval");
--
--	data_fd = bpf_map__fd(obj->maps.bss);
--	if (!ASSERT_GE(data_fd, 0, "bss map fd"))
--		goto out;
--
--	i = 0;
--	err = bpf_map_lookup_elem(data_fd, &i, &val);
--	ASSERT_OK(err, "bss map lookup");
--	ASSERT_EQ(val, 1, "done flag is set");
--
--out:
--	tailcall_bpf2bpf6__destroy(obj);
--}
--
- void test_tailcalls(void)
+-static void bcmgenet_eee_enable_set(struct net_device *dev, bool enable)
++void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
++			     bool tx_lpi_enabled)
  {
- 	if (test__start_subtest("tailcall_1"))
-@@ -885,6 +832,4 @@ void test_tailcalls(void)
- 		test_tailcall_bpf2bpf_4(false);
- 	if (test__start_subtest("tailcall_bpf2bpf_5"))
- 		test_tailcall_bpf2bpf_4(true);
--	if (test__start_subtest("tailcall_bpf2bpf_6"))
--		test_tailcall_bpf2bpf_6();
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	u32 off = priv->hw_params->tbuf_offset + TBUF_ENERGY_CTRL;
+@@ -1268,7 +1269,7 @@ static void bcmgenet_eee_enable_set(stru
+ 
+ 	/* Enable EEE and switch to a 27Mhz clock automatically */
+ 	reg = bcmgenet_readl(priv->base + off);
+-	if (enable)
++	if (tx_lpi_enabled)
+ 		reg |= TBUF_EEE_EN | TBUF_PM_EN;
+ 	else
+ 		reg &= ~(TBUF_EEE_EN | TBUF_PM_EN);
+@@ -1289,6 +1290,7 @@ static void bcmgenet_eee_enable_set(stru
+ 
+ 	priv->eee.eee_enabled = enable;
+ 	priv->eee.eee_active = enable;
++	priv->eee.tx_lpi_enabled = tx_lpi_enabled;
  }
---- a/tools/testing/selftests/bpf/progs/tailcall_bpf2bpf6.c
-+++ /dev/null
-@@ -1,42 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--#include <linux/bpf.h>
--#include <bpf/bpf_helpers.h>
+ 
+ static int bcmgenet_get_eee(struct net_device *dev, struct ethtool_eee *e)
+@@ -1304,6 +1306,7 @@ static int bcmgenet_get_eee(struct net_d
+ 
+ 	e->eee_enabled = p->eee_enabled;
+ 	e->eee_active = p->eee_active;
++	e->tx_lpi_enabled = p->tx_lpi_enabled;
+ 	e->tx_lpi_timer = bcmgenet_umac_readl(priv, UMAC_EEE_LPI_TIMER);
+ 
+ 	return phy_ethtool_get_eee(dev->phydev, e);
+@@ -1313,7 +1316,6 @@ static int bcmgenet_set_eee(struct net_d
+ {
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	struct ethtool_eee *p = &priv->eee;
+-	int ret = 0;
+ 
+ 	if (GENET_IS_V1(priv))
+ 		return -EOPNOTSUPP;
+@@ -1324,16 +1326,11 @@ static int bcmgenet_set_eee(struct net_d
+ 	p->eee_enabled = e->eee_enabled;
+ 
+ 	if (!p->eee_enabled) {
+-		bcmgenet_eee_enable_set(dev, false);
++		bcmgenet_eee_enable_set(dev, false, false);
+ 	} else {
+-		ret = phy_init_eee(dev->phydev, 0);
+-		if (ret) {
+-			netif_err(priv, hw, dev, "EEE initialization failed\n");
+-			return ret;
+-		}
 -
--#define __unused __attribute__((unused))
++		p->eee_active = phy_init_eee(dev->phydev, false) >= 0;
+ 		bcmgenet_umac_writel(priv, e->tx_lpi_timer, UMAC_EEE_LPI_TIMER);
+-		bcmgenet_eee_enable_set(dev, true);
++		bcmgenet_eee_enable_set(dev, p->eee_active, e->tx_lpi_enabled);
+ 	}
+ 
+ 	return phy_ethtool_set_eee(dev->phydev, e);
+@@ -4219,9 +4216,6 @@ static int bcmgenet_resume(struct device
+ 	if (!device_may_wakeup(d))
+ 		phy_resume(dev->phydev);
+ 
+-	if (priv->eee.eee_enabled)
+-		bcmgenet_eee_enable_set(dev, true);
 -
--struct {
--	__uint(type, BPF_MAP_TYPE_PROG_ARRAY);
--	__uint(max_entries, 1);
--	__uint(key_size, sizeof(__u32));
--	__uint(value_size, sizeof(__u32));
--} jmp_table SEC(".maps");
--
--int done = 0;
--
--SEC("tc")
--int classifier_0(struct __sk_buff *skb __unused)
--{
--	done = 1;
--	return 0;
--}
--
--static __noinline
--int subprog_tail(struct __sk_buff *skb)
--{
--	/* Don't propagate the constant to the caller */
--	volatile int ret = 1;
--
--	bpf_tail_call_static(skb, &jmp_table, 0);
--	return ret;
--}
--
--SEC("tc")
--int entry(struct __sk_buff *skb)
--{
--	/* Have data on stack which size is not a multiple of 8 */
--	volatile char arr[1] = {};
--
--	return subprog_tail(skb);
--}
--
--char __license[] SEC("license") = "GPL";
+ 	bcmgenet_netif_start(dev);
+ 
+ 	netif_device_attach(dev);
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.h
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.h
+@@ -701,4 +701,7 @@ int bcmgenet_wol_power_down_cfg(struct b
+ void bcmgenet_wol_power_up_cfg(struct bcmgenet_priv *priv,
+ 			       enum bcmgenet_power_mode mode);
+ 
++void bcmgenet_eee_enable_set(struct net_device *dev, bool enable,
++			     bool tx_lpi_enabled);
++
+ #endif /* __BCMGENET_H__ */
+--- a/drivers/net/ethernet/broadcom/genet/bcmmii.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmmii.c
+@@ -25,6 +25,7 @@
+ 
+ #include "bcmgenet.h"
+ 
++
+ /* setup netdev link state when PHY link status change and
+  * update UMAC and RGMII block when link up
+  */
+@@ -102,6 +103,11 @@ void bcmgenet_mii_setup(struct net_devic
+ 			reg |= CMD_TX_EN | CMD_RX_EN;
+ 		}
+ 		bcmgenet_umac_writel(priv, reg, UMAC_CMD);
++
++		priv->eee.eee_active = phy_init_eee(phydev, 0) >= 0;
++		bcmgenet_eee_enable_set(dev,
++					priv->eee.eee_enabled && priv->eee.eee_active,
++					priv->eee.tx_lpi_enabled);
+ 	} else {
+ 		/* done if nothing has changed */
+ 		if (!status_changed)
 
 
