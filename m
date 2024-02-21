@@ -1,38 +1,62 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC572A1D7;
-	Wed, 21 Feb 2024 13:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2173969973;
+	Wed, 21 Feb 2024 13:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521051; cv=none; b=RpFvltBY4sLe6sG2ZsWTVEwOcyp1mSrfY2mJEPAQJ/6yym0T6QtCWRBPK/vyKJ50Pa55wuq/WkiayUnsciwonVEdqC6Nq44F0oFKUVT6Hls2xAR81UTQFTF1WFIgnhWsqk5r70DRyrvms4Sf7zSyOqhkSUZuJ2qYmThyBQ8O7nE=
+	t=1708521054; cv=none; b=bxuXnCrgqvUmaNJqZzEyOrQN6F5MYYPxpMtB0FVt5dnXZiO9B4f8U6qBI/3wRrR09z9BWdlZTaOqM3v6XH+kU00cAmylPxjUsyF0eptzczvyoOgvi0GeBvGZ0bgh0NTM0/EWjmVtuActp2fduuth74mOvO+MyaD/GoFQPF+hH1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521051; c=relaxed/simple;
-	bh=Yo75dkLHc7uAIYaTwINjmauf9N+hmdATbPfeLJxMkZ8=;
+	s=arc-20240116; t=1708521054; c=relaxed/simple;
+	bh=b4gVXDDAfgpI5yNKSEUMPABTuz68NO5wR6ENnZCTNVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qyzd4VQAHl5GSuqtpKCB5lwkNBDhK4044++oZ2Z4I9j0J6yfm4PPqDXhkLsDf4j69DnhVATXaDthqM7GkaepIpVlhbkZs6HmZQxmf4Y6pX++gxlrCTA5+97Ld209+E3EinB84eAz0FG+f1uw5bXp1s4RyDNrinP53wtjjskj8ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlN18AIw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=in82JIu7O/39S20g9Y4pyQgAqTqkWRrl12xLVpvUkK/AW32t2q6cCLVsHTq9JjFaXs5KXGnAG6tR2bTZJBYYfbMELH6+tBhlAclezwo65keLv51h7Li+TmDvbgJmmZaH0C9wuOMBlmISBgzpBvE3Uj/Z7K/plPurewJMAylKfk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kt9hQ4n2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlN18AIw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D89C433F1;
-	Wed, 21 Feb 2024 13:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kt9hQ4n2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEA7C433C7;
+	Wed, 21 Feb 2024 13:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521051;
-	bh=Yo75dkLHc7uAIYaTwINjmauf9N+hmdATbPfeLJxMkZ8=;
+	s=korg; t=1708521054;
+	bh=b4gVXDDAfgpI5yNKSEUMPABTuz68NO5wR6ENnZCTNVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlN18AIwQscf7suTrDvYuNa+NRY191qMsLV30IPdZaM+lTSYi02XyGhsOSqvyVzNZ
-	 QqHzyyagHy3ah/2rS2bvIx7AlsnsVm7MUeFcJenhhCf/seJg7LIMEiGM83sbUDiFPV
-	 jcrzwLKYFAO2KeQM0pz1mze2fMmgIAkhUdHFEJgs=
+	b=kt9hQ4n204QZSe7mfTcmm66E5nfbP3KqbhoxCFc4ywjh4Y2P0o2GEpNoe6nZUFZLn
+	 iiF7D0U335IT+cnlnqMOZ5uJ3hNExYy2+LB6+tcuNpVsAizjPDkiGCW7N8GsD764yj
+	 mmjg2aVJStcenqkErhOT1iJRzDCjP/GhoxpzyDao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Jitindar Singh <surajjs@amazon.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.19 010/202] ext4: allow for the last group to be marked as trimmed
-Date: Wed, 21 Feb 2024 14:05:11 +0100
-Message-ID: <20240221125932.085548616@linuxfoundation.org>
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Sujith Thomas <sujith.thomas@intel.com>,
+	Darren Hart <dvhart@infradead.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Amit Kucheria <amit.kucheria@verdurent.com>,
+	Jean Delvare <jdelvare@suse.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Keith Busch <kbusch@kernel.org>,
+	Jens Axboe <axboe@fb.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Kalle Valo <kvalo@codeaurora.org>,
+	Stanislaw Gruszka <sgruszka@redhat.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Hartmut Knaack <knaack.h@gmx.de>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Peter Meerwald-Stadler <pmeerw@pmeerw.net>,
+	Andy Shevchenko <andy@infradead.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 002/202] include/linux/units.h: add helpers for kelvin to/from Celsius conversion
+Date: Wed, 21 Feb 2024 14:05:03 +0100
+Message-ID: <20240221125931.820442631@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -51,86 +75,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Jitindar Singh <surajjs@amazon.com>
+From: Akinobu Mita <akinobu.mita@gmail.com>
 
-commit 7c784d624819acbeefb0018bac89e632467cca5a upstream.
+[ Upstream commit 23331e4893614deb555c65cdf115c8a28ed32471 ]
 
-The ext4 filesystem tracks the trim status of blocks at the group
-level.  When an entire group has been trimmed then it is marked as
-such and subsequent trim invocations with the same minimum trim size
-will not be attempted on that group unless it is marked as able to be
-trimmed again such as when a block is freed.
+Patch series "add header file for kelvin to/from Celsius conversion
+helpers", v4.
 
-Currently the last group can't be marked as trimmed due to incorrect
-logic in ext4_last_grp_cluster(). ext4_last_grp_cluster() is supposed
-to return the zero based index of the last cluster in a group. This is
-then used by ext4_try_to_trim_range() to determine if the trim
-operation spans the entire group and as such if the trim status of the
-group should be recorded.
+There are several helper macros to convert kelvin to/from Celsius in
+<linux/thermal.h> for thermal drivers.  These are useful for any other
+drivers or subsystems, but it's odd to include <linux/thermal.h> just
+for the helpers.
 
-ext4_last_grp_cluster() takes a 0 based group index, thus the valid
-values for grp are 0..(ext4_get_groups_count - 1). Any group index
-less than (ext4_get_groups_count - 1) is not the last group and must
-have EXT4_CLUSTERS_PER_GROUP(sb) clusters. For the last group we need
-to calculate the number of clusters based on the number of blocks in
-the group. Finally subtract 1 from the number of clusters as zero
-based indexing is expected.  Rearrange the function slightly to make
-it clear what we are calculating and returning.
+This adds a new <linux/units.h> that provides the equivalent inline
+functions for any drivers or subsystems, and switches all the users of
+conversion helpers in <linux/thermal.h> to use <linux/units.h> helpers.
 
-Reproducer:
-// Create file system where the last group has fewer blocks than
-// blocks per group
-$ mkfs.ext4 -b 4096 -g 8192 /dev/nvme0n1 8191
-$ mount /dev/nvme0n1 /mnt
+This patch (of 12):
 
-Before Patch:
-$ fstrim -v /mnt
-/mnt: 25.9 MiB (27156480 bytes) trimmed
-// Group not marked as trimmed so second invocation still discards blocks
-$ fstrim -v /mnt
-/mnt: 25.9 MiB (27156480 bytes) trimmed
+There are several helper macros to convert kelvin to/from Celsius in
+<linux/thermal.h> for thermal drivers.  These are useful for any other
+drivers or subsystems, but it's odd to include <linux/thermal.h> just
+for the helpers.
 
-After Patch:
-fstrim -v /mnt
-/mnt: 25.9 MiB (27156480 bytes) trimmed
-// Group marked as trimmed so second invocation DOESN'T discard any blocks
-fstrim -v /mnt
-/mnt: 0 B (0 bytes) trimmed
+This adds a new <linux/units.h> that provides the equivalent inline
+functions for any drivers or subsystems.  It is intended to replace the
+helpers in <linux/thermal.h>.
 
-Fixes: 45e4ab320c9b ("ext4: move setting of trimmed bit into ext4_try_to_trim_range()")
-Cc:  <stable@vger.kernel.org> # 4.19+
-Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20231213051635.37731-1-surajjs@amazon.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: http://lkml.kernel.org/r/1576386975-7941-2-git-send-email-akinobu.mita@gmail.com
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Sujith Thomas <sujith.thomas@intel.com>
+Cc: Darren Hart <dvhart@infradead.org>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Amit Kucheria <amit.kucheria@verdurent.com>
+Cc: Jean Delvare <jdelvare@suse.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: Jens Axboe <axboe@fb.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Cc: Kalle Valo <kvalo@codeaurora.org>
+Cc: Stanislaw Gruszka <sgruszka@redhat.com>
+Cc: Johannes Berg <johannes.berg@intel.com>
+Cc: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Cc: Luca Coelho <luciano.coelho@intel.com>
+Cc: Jonathan Cameron <jic23@kernel.org>
+Cc: Hartmut Knaack <knaack.h@gmx.de>
+Cc: Lars-Peter Clausen <lars@metafoo.de>
+Cc: Peter Meerwald-Stadler <pmeerw@pmeerw.net>
+Cc: Andy Shevchenko <andy@infradead.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 3ef79cd14122 ("serial: sc16is7xx: set safe default SPI clock frequency")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ include/linux/units.h | 84 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 84 insertions(+)
+ create mode 100644 include/linux/units.h
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -5192,11 +5192,16 @@ __acquires(bitlock)
- static ext4_grpblk_t ext4_last_grp_cluster(struct super_block *sb,
- 					   ext4_group_t grp)
- {
--	if (grp < ext4_get_groups_count(sb))
--		return EXT4_CLUSTERS_PER_GROUP(sb) - 1;
--	return (ext4_blocks_count(EXT4_SB(sb)->s_es) -
--		ext4_group_first_block_no(sb, grp) - 1) >>
--					EXT4_CLUSTER_BITS(sb);
-+	unsigned long nr_clusters_in_group;
+diff --git a/include/linux/units.h b/include/linux/units.h
+new file mode 100644
+index 000000000000..aaf716364ec3
+--- /dev/null
++++ b/include/linux/units.h
+@@ -0,0 +1,84 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_UNITS_H
++#define _LINUX_UNITS_H
 +
-+	if (grp < (ext4_get_groups_count(sb) - 1))
-+		nr_clusters_in_group = EXT4_CLUSTERS_PER_GROUP(sb);
-+	else
-+		nr_clusters_in_group = (ext4_blocks_count(EXT4_SB(sb)->s_es) -
-+					ext4_group_first_block_no(sb, grp))
-+				       >> EXT4_CLUSTER_BITS(sb);
++#include <linux/kernel.h>
 +
-+	return nr_clusters_in_group - 1;
- }
- 
- static bool ext4_trim_interrupted(void)
++#define ABSOLUTE_ZERO_MILLICELSIUS -273150
++
++static inline long milli_kelvin_to_millicelsius(long t)
++{
++	return t + ABSOLUTE_ZERO_MILLICELSIUS;
++}
++
++static inline long millicelsius_to_milli_kelvin(long t)
++{
++	return t - ABSOLUTE_ZERO_MILLICELSIUS;
++}
++
++#define MILLIDEGREE_PER_DEGREE 1000
++#define MILLIDEGREE_PER_DECIDEGREE 100
++
++static inline long kelvin_to_millicelsius(long t)
++{
++	return milli_kelvin_to_millicelsius(t * MILLIDEGREE_PER_DEGREE);
++}
++
++static inline long millicelsius_to_kelvin(long t)
++{
++	t = millicelsius_to_milli_kelvin(t);
++
++	return DIV_ROUND_CLOSEST(t, MILLIDEGREE_PER_DEGREE);
++}
++
++static inline long deci_kelvin_to_celsius(long t)
++{
++	t = milli_kelvin_to_millicelsius(t * MILLIDEGREE_PER_DECIDEGREE);
++
++	return DIV_ROUND_CLOSEST(t, MILLIDEGREE_PER_DEGREE);
++}
++
++static inline long celsius_to_deci_kelvin(long t)
++{
++	t = millicelsius_to_milli_kelvin(t * MILLIDEGREE_PER_DEGREE);
++
++	return DIV_ROUND_CLOSEST(t, MILLIDEGREE_PER_DECIDEGREE);
++}
++
++/**
++ * deci_kelvin_to_millicelsius_with_offset - convert Kelvin to Celsius
++ * @t: temperature value in decidegrees Kelvin
++ * @offset: difference between Kelvin and Celsius in millidegrees
++ *
++ * Return: temperature value in millidegrees Celsius
++ */
++static inline long deci_kelvin_to_millicelsius_with_offset(long t, long offset)
++{
++	return t * MILLIDEGREE_PER_DECIDEGREE - offset;
++}
++
++static inline long deci_kelvin_to_millicelsius(long t)
++{
++	return milli_kelvin_to_millicelsius(t * MILLIDEGREE_PER_DECIDEGREE);
++}
++
++static inline long millicelsius_to_deci_kelvin(long t)
++{
++	t = millicelsius_to_milli_kelvin(t);
++
++	return DIV_ROUND_CLOSEST(t, MILLIDEGREE_PER_DECIDEGREE);
++}
++
++static inline long kelvin_to_celsius(long t)
++{
++	return t + DIV_ROUND_CLOSEST(ABSOLUTE_ZERO_MILLICELSIUS,
++				     MILLIDEGREE_PER_DEGREE);
++}
++
++static inline long celsius_to_kelvin(long t)
++{
++	return t - DIV_ROUND_CLOSEST(ABSOLUTE_ZERO_MILLICELSIUS,
++				     MILLIDEGREE_PER_DEGREE);
++}
++
++#endif /* _LINUX_UNITS_H */
+-- 
+2.43.0
+
 
 
