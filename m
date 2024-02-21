@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFE88005F;
-	Wed, 21 Feb 2024 14:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773A280604;
+	Wed, 21 Feb 2024 14:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524653; cv=none; b=ZNTGxwmduk+WpkBBZKZzYPN2paoM3qJjzAQJ2qyEDKNV9pPGw3djID0jslVD8rkjjKbhEtPjSpxSlSVcRpeMHShs1t7IcE27ao26heL1YFinqmjaKaa63vQzd4s3bRzAi8yjnopAjLebBuqrGpDN2/6+e1DvHfcoJzl7DdEJXmg=
+	t=1708524656; cv=none; b=NXms2qc9fDDsW41GWtcPzBdNESEa4B7t7+z7hEYVCziro7mdSfjHkHw2BKsKyAPAOWPtryFiFHxZQ1svLHIx2DBnwC/90QnUIHjDxxQxe6xPFN05f8UGG+Xd7gamfHccbEVmVMtZaiIB8tpkBKGzp548z3PGb9wZLVjDlTNsY+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524653; c=relaxed/simple;
-	bh=GsS5y13VI+kfJh6oHgSSHp5m5JOXhxdmbFGliSej4Yw=;
+	s=arc-20240116; t=1708524656; c=relaxed/simple;
+	bh=ziw5RVNGJZU+hELz9Xr/4NFwaYkIwMTNWT/PFO0KRH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPPjHWoMnkxFiq+BfTRCSME6WkWq8p+tYDPCmoUhpGiQ31+rhJsjkFUO/6S22+EpN2LAJC8Ez81sMS6LWOgb4rjB998C2EG+ZeUQ8KNfRAlBze2vQeTCUGIqZzOoDFE1d8u6XpZBmsr/uaYQUlOcatiRzwqIyc24+8AOUq90gWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0b4iJbzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u63IWusSXJKZ+KHcS156hLzotmEUS9LBo9DiC5BonFrcKjA1KFl0A5o0BKH8BQmxHN+A5mjVNZAFFwCmCKIF8OY00UgFb1nhli4VbUqwcCjry61dUl77pq/lfejxcV3AHQq6jZEkTalMzZHwbHks54QAxwTyvo1FP2E76U8y3Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dULLBpjm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0b4iJbzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA67BC433F1;
-	Wed, 21 Feb 2024 14:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dULLBpjm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C6BC433F1;
+	Wed, 21 Feb 2024 14:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524653;
-	bh=GsS5y13VI+kfJh6oHgSSHp5m5JOXhxdmbFGliSej4Yw=;
+	s=korg; t=1708524656;
+	bh=ziw5RVNGJZU+hELz9Xr/4NFwaYkIwMTNWT/PFO0KRH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0b4iJbzWrJV6hV9+gR0YbuFeQa1hiV1tPAThYbmlyMaEa0e0ASJMyp6epjPKzGWPd
-	 2LWhl/w9z31BAXkTKgj/K5kFPZ5vnvHJDyvqyGRF+NnoMxPGqnejHMkduwJJzSg8j5
-	 UvFWLyL/WiBZRQoYjX9+RZXhIlFagZrf00AnJzzg=
+	b=dULLBpjmyDWh6uxdsq7cq1LbEUqT3FXqH8mDgAc/gSNp0LPKZo7CeCSsCSyKypTC7
+	 j8dqqr0V7rahRx1Uiot0TsGs/CgqE/xfcQ02K0atY9aCGwDK3E7BlFaPXqINNotUk6
+	 kqGnENn44k2pqOT/erzsyz3sE9wLx+zrcT1tsC1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathu Baronia <prathubaronia2011@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Ajay Kaher <ajay.kaher@broadcom.com>
-Subject: [PATCH 5.10 281/379] vhost: use kzalloc() instead of kmalloc() followed by memset()
-Date: Wed, 21 Feb 2024 14:07:40 +0100
-Message-ID: <20240221130003.224715011@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jean Delvare <jdelvare@suse.de>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 308/379] i2c: i801: Remove i801_set_block_buffer_mode
+Date: Wed, 21 Feb 2024 14:08:07 +0100
+Message-ID: <20240221130004.039523480@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,39 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathu Baronia <prathubaronia2011@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 4d8df0f5f79f747d75a7d356d9b9ea40a4e4c8a9 upstream.
+[ Upstream commit 1e1d6582f483a4dba4ea03445e6f2f05d9de5bcf ]
 
-Use kzalloc() to allocate new zeroed out msg node instead of
-memsetting a node allocated with kmalloc().
+If FEATURE_BLOCK_BUFFER is set then bit SMBAUXCTL_E32B is supported
+and there's no benefit in reading it back. Origin of this check
+seems to be 14 yrs ago when people were not completely sure which
+chip versions support the block buffer mode.
 
-Signed-off-by: Prathu Baronia <prathubaronia2011@gmail.com>
-Message-Id: <20230522085019.42914-1-prathubaronia2011@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Ajay Kaher <ajay.kaher@broadcom.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Jean Delvare <jdelvare@suse.de>
+Tested-by: Jean Delvare <jdelvare@suse.de>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: c1c9d0f6f7f1 ("i2c: i801: Fix block process call transactions")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vhost.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-i801.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -2577,12 +2577,11 @@ EXPORT_SYMBOL_GPL(vhost_disable_notify);
- /* Create a new message. */
- struct vhost_msg_node *vhost_new_msg(struct vhost_virtqueue *vq, int type)
- {
--	struct vhost_msg_node *node = kmalloc(sizeof *node, GFP_KERNEL);
-+	/* Make sure all padding within the structure is initialized. */
-+	struct vhost_msg_node *node = kzalloc(sizeof(*node), GFP_KERNEL);
- 	if (!node)
- 		return NULL;
+diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
+index cb8f56022592..15520d491140 100644
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -540,9 +540,11 @@ static int i801_block_transaction_by_block(struct i801_priv *priv,
+ 		return -EOPNOTSUPP;
+ 	}
  
--	/* Make sure all padding within the structure is initialized. */
--	memset(&node->msg, 0, sizeof node->msg);
- 	node->vq = vq;
- 	node->msg.type = type;
- 	return node;
++	/* Set block buffer mode */
++	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
++
+ 	inb_p(SMBHSTCNT(priv)); /* reset the data buffer index */
+ 
+-	/* Use 32-byte buffer to process this transaction */
+ 	if (read_write == I2C_SMBUS_WRITE) {
+ 		len = data->block[0];
+ 		outb_p(len, SMBHSTDAT0(priv));
+@@ -780,14 +782,6 @@ static int i801_block_transaction_byte_by_byte(struct i801_priv *priv,
+ 	return i801_check_post(priv, status);
+ }
+ 
+-static int i801_set_block_buffer_mode(struct i801_priv *priv)
+-{
+-	outb_p(inb_p(SMBAUXCTL(priv)) | SMBAUXCTL_E32B, SMBAUXCTL(priv));
+-	if ((inb_p(SMBAUXCTL(priv)) & SMBAUXCTL_E32B) == 0)
+-		return -EIO;
+-	return 0;
+-}
+-
+ /* Block transaction function */
+ static int i801_block_transaction(struct i801_priv *priv,
+ 				  union i2c_smbus_data *data, char read_write,
+@@ -817,9 +811,8 @@ static int i801_block_transaction(struct i801_priv *priv,
+ 	/* Experience has shown that the block buffer can only be used for
+ 	   SMBus (not I2C) block transactions, even though the datasheet
+ 	   doesn't mention this limitation. */
+-	if ((priv->features & FEATURE_BLOCK_BUFFER)
+-	 && command != I2C_SMBUS_I2C_BLOCK_DATA
+-	 && i801_set_block_buffer_mode(priv) == 0)
++	if ((priv->features & FEATURE_BLOCK_BUFFER) &&
++	    command != I2C_SMBUS_I2C_BLOCK_DATA)
+ 		result = i801_block_transaction_by_block(priv, data,
+ 							 read_write,
+ 							 command, hwpec);
+-- 
+2.43.0
+
 
 
