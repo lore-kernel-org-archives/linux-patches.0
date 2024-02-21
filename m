@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA61C7B3F2;
-	Wed, 21 Feb 2024 13:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A13973161;
+	Wed, 21 Feb 2024 13:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522136; cv=none; b=m1VezQIYnK/RdOAaUKcnINe4IxpErWABs9rAjzJKLMfzPceO0sTQCpFRKQ2LQw6DHfChcRYeSDYBHotxhJC/mCsPRG83X7olcm/P+gz4GVJI2rotvldrSphEW5bJtGkQ8N/DzjZdLOinOFMams+JGBKNbME6l70+QEanc9X98r4=
+	t=1708522140; cv=none; b=Hyv9qNF2e5SmvpfHdWRa6mXIer69k2Q6OBQX9Obd6cr+faQA/I4c+lpXs37dt+wl9XSsL2Y4wWrL/GMBdR0fdzcjgYXmkc0cITo+B9quyKppgP20hrMmPg1+qVO8hn5ZxfBV3FmE316WzZbCNbOkLU1tQzaLLZYIdg0Wsi1aGnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522136; c=relaxed/simple;
-	bh=Pvef3rrtjFuoidUBKOEUwdLi0Pbz0g6ggMvewh8ax+Y=;
+	s=arc-20240116; t=1708522140; c=relaxed/simple;
+	bh=AsUr1qpPW/OWQBc1PV7+HxaVGMmW2DiV/OzzoNbGiSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BOxf399YvMCk273Wad3E4hurpY3oEitPlrTCdjR9Gh7ChWys8BYctSPoH/2y/pvU8LdGAcb52f5e3qqazaXlIGbwUe3dUd3JSvnnC0mpbLKJrgl4ppY+d5k+Yse3yH7781enMc67qVlS8Z2cooadbEfPCHf8fN/oerlgPPNt3e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qqQ2lY6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cv2mhX0RwUtRIlfH1i0RV/6PeA9cYDAhEUZLs7s/+fmp0siXeXTE2BrOxJi3VvB3rKwau4ESiSZNHctBtSdmwsmJfCC2fmwh4KOfKGdA4Aq5W6IX4IvVz2HQkXuWREp9D7FsFBBCUbnvZeJOHFinheoefMON491iSNrFurBWKis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNw1P4Bk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qqQ2lY6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552F4C433F1;
-	Wed, 21 Feb 2024 13:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNw1P4Bk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEA7C433C7;
+	Wed, 21 Feb 2024 13:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522136;
-	bh=Pvef3rrtjFuoidUBKOEUwdLi0Pbz0g6ggMvewh8ax+Y=;
+	s=korg; t=1708522140;
+	bh=AsUr1qpPW/OWQBc1PV7+HxaVGMmW2DiV/OzzoNbGiSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1qqQ2lY65gQp2sac9M8Rg+78SeBjyztkridIb9zxXnxnXWBOog84ccFesS3yuhEd8
-	 kqvejQr8zieTFxpcqiXbFc2EVgzzD+wNL5A/OAhEK+HRfQ8w+Acofk7esiHGDyc2gA
-	 oCkV99PrmrfDs67iyAd6RYPbP3VVh2/R1rDSIDJk=
+	b=HNw1P4BkhpzpV7lRXMpCRsBg+ZVEi4ID923ibdYE4Ko0eZWoc+XVHWyRDoE/xYq3K
+	 jtWzD3COSbwAeP4n7QPJGJpHDPjy1oJtQTf5IkNKGpccZUrDUoAKTo5Mls4BSZj9FP
+	 WD5JVFrX48u+Xf1fQokyPpr7PI0mjJWurS5V2WBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Lu <alexious@zju.edu.cn>,
+	Dinghao Liu <dinghao.liu@zju.edu.cn>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 061/476] net/mlx5e: fix a double-free in arfs_create_groups
-Date: Wed, 21 Feb 2024 14:01:52 +0100
-Message-ID: <20240221130010.175556059@linuxfoundation.org>
+Subject: [PATCH 5.15 062/476] net/mlx5e: fix a potential double-free in fs_any_create_groups
+Date: Wed, 21 Feb 2024 14:01:53 +0100
+Message-ID: <20240221130010.224239262@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -52,98 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Lu <alexious@zju.edu.cn>
+From: Dinghao Liu <dinghao.liu@zju.edu.cn>
 
-[ Upstream commit 3c6d5189246f590e4e1f167991558bdb72a4738b ]
+[ Upstream commit aef855df7e1bbd5aa4484851561211500b22707e ]
 
-When `in` allocated by kvzalloc fails, arfs_create_groups will free
-ft->g and return an error. However, arfs_create_table, the only caller of
-arfs_create_groups, will hold this error and call to
-mlx5e_destroy_flow_table, in which the ft->g will be freed again.
+When kcalloc() for ft->g succeeds but kvzalloc() for in fails,
+fs_any_create_groups() will free ft->g. However, its caller
+fs_any_create_table() will free ft->g again through calling
+mlx5e_destroy_flow_table(), which will lead to a double-free.
+Fix this by setting ft->g to NULL in fs_any_create_groups().
 
-Fixes: 1cabe6b0965e ("net/mlx5e: Create aRFS flow tables")
-Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Fixes: 0f575c20bf06 ("net/mlx5e: Introduce Flow Steering ANY API")
+Signed-off-by: Dinghao Liu <dinghao.liu@zju.edu.cn>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_arfs.c | 26 +++++++++++--------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-index fe5d82fa6e92..313d62d38af8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
-@@ -239,11 +239,13 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 
- 	ft->g = kcalloc(MLX5E_ARFS_NUM_GROUPS,
- 			sizeof(*ft->g), GFP_KERNEL);
--	in = kvzalloc(inlen, GFP_KERNEL);
--	if  (!in || !ft->g) {
--		kfree(ft->g);
--		kvfree(in);
-+	if (!ft->g)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
+index b26edbc53cad..05905e988431 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/fs_tt_redirect.c
+@@ -435,6 +435,7 @@ static int fs_any_create_groups(struct mlx5e_flow_table *ft)
+ 	in = kvzalloc(inlen, GFP_KERNEL);
+ 	if  (!in || !ft->g) {
+ 		kfree(ft->g);
++		ft->g = NULL;
+ 		kvfree(in);
  		return -ENOMEM;
-+
-+	in = kvzalloc(inlen, GFP_KERNEL);
-+	if (!in) {
-+		err = -ENOMEM;
-+		goto err_free_g;
  	}
- 
- 	mc = MLX5_ADDR_OF(create_flow_group_in, in, match_criteria);
-@@ -263,7 +265,7 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 		break;
- 	default:
- 		err = -EINVAL;
--		goto out;
-+		goto err_free_in;
- 	}
- 
- 	switch (type) {
-@@ -285,7 +287,7 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 		break;
- 	default:
- 		err = -EINVAL;
--		goto out;
-+		goto err_free_in;
- 	}
- 
- 	MLX5_SET_CFG(in, match_criteria_enable, MLX5_MATCH_OUTER_HEADERS);
-@@ -294,7 +296,7 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 	MLX5_SET_CFG(in, end_flow_index, ix - 1);
- 	ft->g[ft->num_groups] = mlx5_create_flow_group(ft->t, in);
- 	if (IS_ERR(ft->g[ft->num_groups]))
--		goto err;
-+		goto err_clean_group;
- 	ft->num_groups++;
- 
- 	memset(in, 0, inlen);
-@@ -303,18 +305,20 @@ static int arfs_create_groups(struct mlx5e_flow_table *ft,
- 	MLX5_SET_CFG(in, end_flow_index, ix - 1);
- 	ft->g[ft->num_groups] = mlx5_create_flow_group(ft->t, in);
- 	if (IS_ERR(ft->g[ft->num_groups]))
--		goto err;
-+		goto err_clean_group;
- 	ft->num_groups++;
- 
- 	kvfree(in);
- 	return 0;
- 
--err:
-+err_clean_group:
- 	err = PTR_ERR(ft->g[ft->num_groups]);
- 	ft->g[ft->num_groups] = NULL;
--out:
-+err_free_in:
- 	kvfree(in);
--
-+err_free_g:
-+	kfree(ft->g);
-+	ft->g = NULL;
- 	return err;
- }
- 
 -- 
 2.43.0
 
