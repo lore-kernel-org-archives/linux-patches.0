@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61CE7E78F;
-	Wed, 21 Feb 2024 14:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70A978B7C;
+	Wed, 21 Feb 2024 14:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524443; cv=none; b=U51qQgXyBHKY0ryoMq4xIP2YgVA/66dFJGZord+lEAg9kwnHl8RC3LWSeeotOQO24X2Clu5q8BndMB2WbRqLhC4mmfRIsfiRAHJ3IGozp/QvGywzls2otOsqkEdtr/Lzqe6GdeZCejScYFv6ORcSrO77Ms3s3ivphKGpTpLBckI=
+	t=1708524447; cv=none; b=eVhBoOS3sAIrGOtAFlH8SSulH+HpxvuN4YvrSGEQujOn9S8Mdv3bMoNTEW2LCE9k52VMtWgRj2MRH8FqphGedzAlzaqMiMD4Yihs11XNr63NuWdppFYwOUSxF9XZVFKIaoeyZRa7duz0G4QlvtfaXA9vQNgLtx18t+zLuaW3mDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524443; c=relaxed/simple;
-	bh=PxwlP9XENhhbsBO2ZFtAGUBa7l+4/q5TOu85Occ1Va4=;
+	s=arc-20240116; t=1708524447; c=relaxed/simple;
+	bh=PtngySrfTBpKbfpvllwb36DmL3TwADLVZJKyxwGy0+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UglmOmSNeGjVMLS6a02W3jsf3s8FS87a9HCP2qPAHourtZKpjOeUhwuR6O7utx2GA8viStxdCrTkhKknrTECEgGka89NEiJubnSDiuFJ0YQ3tLvV647emmGyqEOTSYK1C9TZxbGPlJW8Kb2bGr8nWeWbeqGQTteRwdfhUvUahmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7wmtqt1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qIlNswRxL15cKsic9ylm1Ga96/PRQxKOxl4wYw/PMfjN7GOwwIqQhP8olFsHn9ohSzqkFzK7xswg70tf/CuLddWeBw5jknMXy+ff2jS9APA8E/QWA45s/E1jVcFLaJTue8X2pBo+vSqhLvkcWChtG+09Q2wL3bJWXKaTLA/xtVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGdGyf4m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7wmtqt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C977C433F1;
-	Wed, 21 Feb 2024 14:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGdGyf4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A4AC433F1;
+	Wed, 21 Feb 2024 14:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524443;
-	bh=PxwlP9XENhhbsBO2ZFtAGUBa7l+4/q5TOu85Occ1Va4=;
+	s=korg; t=1708524446;
+	bh=PtngySrfTBpKbfpvllwb36DmL3TwADLVZJKyxwGy0+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7wmtqt1IzhiOo8HJtxqyHBQxivnev0LW9Sfc3Y7qihi0ETK5UgXXgQQTpWI0HU3b
-	 Vjsmq7vObrID8OyVD1eF0AZnGnLxs/ltCgi2Q1RhQ8IPSIQgNS7newu5RPSOewFp6i
-	 lkQ64UK7x1Jlx2rrIJ359yJCX03HbcLOkwSD/zj8=
+	b=bGdGyf4mowsBeffRgD7bRxJwWekgdkBdBioBldvYtwZyALBkLU1e47S9c0HLNIyv7
+	 PuHoWmOrmBn3aO9M/8OgPexTg8vCKQsdg8h7w+LFJk1peH0srLnONhrYL0QYwHeVqR
+	 PtuvVnoy75NMEAhEdPfslhef0QH4L9fQCkZ3l76I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Monk Liu <Monk.Liu@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 245/379] PM: sleep: Fix error handling in dpm_prepare()
-Date: Wed, 21 Feb 2024 14:07:04 +0100
-Message-ID: <20240221130002.158766520@linuxfoundation.org>
+Subject: [PATCH 5.10 219/379] drm/amdgpu: Release adev->pm.fw before return in amdgpu_device_need_post()
+Date: Wed, 21 Feb 2024 14:06:38 +0100
+Message-ID: <20240221130001.380540168@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -53,42 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 544e737dea5ad1a457f25dbddf68761ff25e028b ]
+[ Upstream commit 8a44fdd3cf91debbd09b43bd2519ad2b2486ccf4 ]
 
-Commit 2aa36604e824 ("PM: sleep: Avoid calling put_device() under
-dpm_list_mtx") forgot to update the while () loop termination
-condition to also break the loop if error is nonzero, which
-causes the loop to become infinite if device_prepare() returns
-an error for one device.
+In function 'amdgpu_device_need_post(struct amdgpu_device *adev)' -
+'adev->pm.fw' may not be released before return.
 
-Add the missing !error check.
+Using the function release_firmware() to release adev->pm.fw.
 
-Fixes: 2aa36604e824 ("PM: sleep: Avoid calling put_device() under dpm_list_mtx")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reported-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: All applicable <stable@vger.kernel.org>
+Thus fixing the below:
+drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1571 amdgpu_device_need_post() warn: 'adev->pm.fw' from request_firmware() not released on lines: 1554.
+
+Cc: Monk Liu <Monk.Liu@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index c493e48e420f..fbc57c4fcdd0 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -1897,7 +1897,7 @@ int dpm_prepare(pm_message_t state)
- 	device_block_probing();
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index a093f1b27724..e833c02fabff 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1184,6 +1184,7 @@ bool amdgpu_device_need_post(struct amdgpu_device *adev)
+ 				return true;
  
- 	mutex_lock(&dpm_list_mtx);
--	while (!list_empty(&dpm_list)) {
-+	while (!list_empty(&dpm_list) && !error) {
- 		struct device *dev = to_device(dpm_list.next);
- 
- 		get_device(dev);
+ 			fw_ver = *((uint32_t *)adev->pm.fw->data + 69);
++			release_firmware(adev->pm.fw);
+ 			if (fw_ver < 0x00160e00)
+ 				return true;
+ 		}
 -- 
 2.43.0
 
