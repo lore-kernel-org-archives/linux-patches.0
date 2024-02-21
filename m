@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D61B7D3FB;
-	Wed, 21 Feb 2024 13:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9D67BB16;
+	Wed, 21 Feb 2024 13:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523349; cv=none; b=nbupUpjGceXY89dpTm0/b6hmMFAlD/cK6Novuni1X+8YC6msofePJlBDmB2qe9h3TWYBFfzGPkvx26nYd8nDxi1QwktxonkOReh87eZtH170zcF9bglSNDbWA1YsOt4rXx/aUhGrpu5BjrOVxCsGs7lM48s2Q5bAOXiNxeOscRA=
+	t=1708523352; cv=none; b=OZdKyKhc3WD9NKWzScOGjvF2xnWgAGeh9LGvwRagHhbkqJyWB5xBNnfbb44QlcAuMVF3JwFiF66n5ItLjOchAMz390bMjKncj8yFv3zPyFT6JWdCWXqP2TPcBu4la5jp8nz+BpAsGbT7cOpmcw4ALPXpJwt922kx+xTbl+JW140=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523349; c=relaxed/simple;
-	bh=QfesjK11pMcaVjn4RNrAkW6oKPDdgI5mENOksNuHay8=;
+	s=arc-20240116; t=1708523352; c=relaxed/simple;
+	bh=9XUQC2RwwPUvUMHxvWsCWSPAajmcHj7cibFGfOXjnZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+29sJ0p44/YKHXL0WKp+8ShAve6quqbrDzvi+l55QpVxvmhHCxlLADuyL3m683+q4/8rmmBNegrt+o68qg29IGh60+QEAnvkmTxlxAgLacFK1rjVV81Vwyv+f4bYNUpAQq+HAUlEMzP1hAwNQWorgitE0D1uTdIJkrIF55lGyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlupVVsV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ld1e7HRIxjmfJ5ha0Ovkzoqz6yrSyh3IVuxBU1lRodaGAM6Pnt7qWw9vO1f5ODPH4auykZqvLmVMQNyGMjEbGytLcsb9foil6ucb9B2//o8jQ+SrhjhQnh/NOMqUNhqY+RPRt03pFAqpJzv646VPNMBqSrYTpHuM1m83zC7Hqf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxwD5Tg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlupVVsV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0768C43394;
-	Wed, 21 Feb 2024 13:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxwD5Tg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6CFC433F1;
+	Wed, 21 Feb 2024 13:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523349;
-	bh=QfesjK11pMcaVjn4RNrAkW6oKPDdgI5mENOksNuHay8=;
+	s=korg; t=1708523352;
+	bh=9XUQC2RwwPUvUMHxvWsCWSPAajmcHj7cibFGfOXjnZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OlupVVsVi27gFz9RASoknz4KrXbEV+DwQD4DyUx6EkviXSwLUuJvf00DPU6miPOYI
-	 qWslMLLfjYci26gN2PPGAhTzCMNc+c9hC7JZZW+mpADLyn9OAvnI7v6aSznaIYA1fT
-	 FUBlKAFx5Ar4ugk0RSMqCDsMHPCgck+xB2GXPecs=
+	b=HxwD5Tg90N4h7OaGsTx0R/4oFIdYsrxWu2jsDqKy2Lwl4JtM4FN8p5vmmLzOoE0sg
+	 vNEggvbLQJ09sYjTzGtbf5kVZohrdGQtP9bLXz7/gbkwERcz0w3iIGa5uASXUgl+th
+	 Ay5DfOTtC4WTEldXST83Yql3gJieFF7bY7RUzi0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Kim Phillips <kim.phillips@amd.com>,
-	Liam Merwick <liam.merwick@oracle.com>,
-	John Allen <john.allen@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 409/476] crypto: ccp - Fix null pointer dereference in __sev_platform_shutdown_locked
-Date: Wed, 21 Feb 2024 14:07:40 +0100
-Message-ID: <20240221130023.124871380@linuxfoundation.org>
+	Daniel Basilio <daniel.basilio@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 410/476] nfp: use correct macro for LengthSelect in BAR config
+Date: Wed, 21 Feb 2024 14:07:41 +0100
+Message-ID: <20240221130023.163543753@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -53,118 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Daniel Basilio <daniel.basilio@corigine.com>
 
-commit ccb88e9549e7cfd8bcd511c538f437e20026e983 upstream.
+commit b3d4f7f2288901ed2392695919b3c0e24c1b4084 upstream.
 
-The SEV platform device can be shutdown with a null psp_master,
-e.g., using DEBUG_TEST_DRIVER_REMOVE.  Found using KASAN:
+The 1st and 2nd expansion BAR configuration registers are configured,
+when the driver starts up, in variables 'barcfg_msix_general' and
+'barcfg_msix_xpb', respectively. The 'LengthSelect' field is ORed in
+from bit 0, which is incorrect. The 'LengthSelect' field should
+start from bit 27.
 
-[  137.148210] ccp 0000:23:00.1: enabling device (0000 -> 0002)
-[  137.162647] ccp 0000:23:00.1: no command queues available
-[  137.170598] ccp 0000:23:00.1: sev enabled
-[  137.174645] ccp 0000:23:00.1: psp enabled
-[  137.178890] general protection fault, probably for non-canonical address 0xdffffc000000001e: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC KASAN NOPTI
-[  137.182693] KASAN: null-ptr-deref in range [0x00000000000000f0-0x00000000000000f7]
-[  137.182693] CPU: 93 PID: 1 Comm: swapper/0 Not tainted 6.8.0-rc1+ #311
-[  137.182693] RIP: 0010:__sev_platform_shutdown_locked+0x51/0x180
-[  137.182693] Code: 08 80 3c 08 00 0f 85 0e 01 00 00 48 8b 1d 67 b6 01 08 48 b8 00 00 00 00 00 fc ff df 48 8d bb f0 00 00 00 48 89 f9 48 c1 e9 03 <80> 3c 01 00 0f 85 fe 00 00 00 48 8b 9b f0 00 00 00 48 85 db 74 2c
-[  137.182693] RSP: 0018:ffffc900000cf9b0 EFLAGS: 00010216
-[  137.182693] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 000000000000001e
-[  137.182693] RDX: 0000000000000000 RSI: 0000000000000008 RDI: 00000000000000f0
-[  137.182693] RBP: ffffc900000cf9c8 R08: 0000000000000000 R09: fffffbfff58f5a66
-[  137.182693] R10: ffffc900000cf9c8 R11: ffffffffac7ad32f R12: ffff8881e5052c28
-[  137.182693] R13: ffff8881e5052c28 R14: ffff8881758e43e8 R15: ffffffffac64abf8
-[  137.182693] FS:  0000000000000000(0000) GS:ffff889de7000000(0000) knlGS:0000000000000000
-[  137.182693] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  137.182693] CR2: 0000000000000000 CR3: 0000001cf7c7e000 CR4: 0000000000350ef0
-[  137.182693] Call Trace:
-[  137.182693]  <TASK>
-[  137.182693]  ? show_regs+0x6c/0x80
-[  137.182693]  ? __die_body+0x24/0x70
-[  137.182693]  ? die_addr+0x4b/0x80
-[  137.182693]  ? exc_general_protection+0x126/0x230
-[  137.182693]  ? asm_exc_general_protection+0x2b/0x30
-[  137.182693]  ? __sev_platform_shutdown_locked+0x51/0x180
-[  137.182693]  sev_firmware_shutdown.isra.0+0x1e/0x80
-[  137.182693]  sev_dev_destroy+0x49/0x100
-[  137.182693]  psp_dev_destroy+0x47/0xb0
-[  137.182693]  sp_destroy+0xbb/0x240
-[  137.182693]  sp_pci_remove+0x45/0x60
-[  137.182693]  pci_device_remove+0xaa/0x1d0
-[  137.182693]  device_remove+0xc7/0x170
-[  137.182693]  really_probe+0x374/0xbe0
-[  137.182693]  ? srso_return_thunk+0x5/0x5f
-[  137.182693]  __driver_probe_device+0x199/0x460
-[  137.182693]  driver_probe_device+0x4e/0xd0
-[  137.182693]  __driver_attach+0x191/0x3d0
-[  137.182693]  ? __pfx___driver_attach+0x10/0x10
-[  137.182693]  bus_for_each_dev+0x100/0x190
-[  137.182693]  ? __pfx_bus_for_each_dev+0x10/0x10
-[  137.182693]  ? __kasan_check_read+0x15/0x20
-[  137.182693]  ? srso_return_thunk+0x5/0x5f
-[  137.182693]  ? _raw_spin_unlock+0x27/0x50
-[  137.182693]  driver_attach+0x41/0x60
-[  137.182693]  bus_add_driver+0x2a8/0x580
-[  137.182693]  driver_register+0x141/0x480
-[  137.182693]  __pci_register_driver+0x1d6/0x2a0
-[  137.182693]  ? srso_return_thunk+0x5/0x5f
-[  137.182693]  ? esrt_sysfs_init+0x1cd/0x5d0
-[  137.182693]  ? __pfx_sp_mod_init+0x10/0x10
-[  137.182693]  sp_pci_init+0x22/0x30
-[  137.182693]  sp_mod_init+0x14/0x30
-[  137.182693]  ? __pfx_sp_mod_init+0x10/0x10
-[  137.182693]  do_one_initcall+0xd1/0x470
-[  137.182693]  ? __pfx_do_one_initcall+0x10/0x10
-[  137.182693]  ? parameq+0x80/0xf0
-[  137.182693]  ? srso_return_thunk+0x5/0x5f
-[  137.182693]  ? __kmalloc+0x3b0/0x4e0
-[  137.182693]  ? kernel_init_freeable+0x92d/0x1050
-[  137.182693]  ? kasan_populate_vmalloc_pte+0x171/0x190
-[  137.182693]  ? srso_return_thunk+0x5/0x5f
-[  137.182693]  kernel_init_freeable+0xa64/0x1050
-[  137.182693]  ? __pfx_kernel_init+0x10/0x10
-[  137.182693]  kernel_init+0x24/0x160
-[  137.182693]  ? __switch_to_asm+0x3e/0x70
-[  137.182693]  ret_from_fork+0x40/0x80
-[  137.182693]  ? __pfx_kernel_init+0x10/0x10
-[  137.182693]  ret_from_fork_asm+0x1b/0x30
-[  137.182693]  </TASK>
-[  137.182693] Modules linked in:
-[  137.538483] ---[ end trace 0000000000000000 ]---
+This has largely gone un-noticed because
+NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT happens to be 0.
 
-Fixes: 1b05ece0c931 ("crypto: ccp - During shutdown, check SEV data pointer before using")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
-Acked-by: John Allen <john.allen@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 4cb584e0ee7d ("nfp: add CPP access core")
+Cc: stable@vger.kernel.org # 4.11+
+Signed-off-by: Daniel Basilio <daniel.basilio@corigine.com>
+Signed-off-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -323,10 +323,16 @@ EXPORT_SYMBOL_GPL(sev_platform_init);
- 
- static int __sev_platform_shutdown_locked(int *error)
- {
--	struct sev_device *sev = psp_master->sev_data;
-+	struct psp_device *psp = psp_master;
-+	struct sev_device *sev;
- 	int ret;
- 
--	if (!sev || sev->state == SEV_STATE_UNINIT)
-+	if (!psp || !psp->sev_data)
-+		return 0;
-+
-+	sev = psp->sev_data;
-+
-+	if (sev->state == SEV_STATE_UNINIT)
- 		return 0;
- 
- 	ret = __sev_do_cmd_locked(SEV_CMD_SHUTDOWN, NULL, error);
+--- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
++++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c
+@@ -542,11 +542,13 @@ static int enable_bars(struct nfp6000_pc
+ 	const u32 barcfg_msix_general =
+ 		NFP_PCIE_BAR_PCIE2CPP_MapType(
+ 			NFP_PCIE_BAR_PCIE2CPP_MapType_GENERAL) |
+-		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT;
++		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
++			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT);
+ 	const u32 barcfg_msix_xpb =
+ 		NFP_PCIE_BAR_PCIE2CPP_MapType(
+ 			NFP_PCIE_BAR_PCIE2CPP_MapType_BULK) |
+-		NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT |
++		NFP_PCIE_BAR_PCIE2CPP_LengthSelect(
++			NFP_PCIE_BAR_PCIE2CPP_LengthSelect_32BIT) |
+ 		NFP_PCIE_BAR_PCIE2CPP_Target_BaseAddress(
+ 			NFP_CPP_TARGET_ISLAND_XPB);
+ 	const u32 barcfg_explicit[4] = {
 
 
