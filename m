@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC453816;
-	Wed, 21 Feb 2024 13:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689CD53816;
+	Wed, 21 Feb 2024 13:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521761; cv=none; b=OlLv4Da++fhkJkevCiVFMLcqLIEd4YA3wyyPwmuBzIRhZafTW9w6Bdd5EEX8U5cWyvuc3QXpBHAz0emu3KhxfaH9yj+dL9w5sRpr9B/rRmr806QgaMMPc4Jo4gFfBbrpywHR2ciQocp5LE/ixCGuiawHqv3O2T/GVuaXgwfc3JQ=
+	t=1708521764; cv=none; b=mNdOYhNDz7yxZcwTkORazSy1poqOd0q+GV4TSTWkBI3zeD7L4O4zF+aYbgOzZL7Zm8uSxXo0Vjh++vpPLfnZMeA7CgncHZxflL0jfiuOG4eeo2FDSGdxRkjNF3ZfIXFWrIJDm2Xd4LhVR0ks16QrFgZyfdXXRw0kjKwgbza6kTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521761; c=relaxed/simple;
-	bh=2ioa0P2FmDNmnlXud1Rnf8Slwjd08PvMAqMJMgBPKAw=;
+	s=arc-20240116; t=1708521764; c=relaxed/simple;
+	bh=UekCm42itF3nhu4rOr3znNG0KnI+RyAFbyzxDPIRHbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsivJx1X/eejsrT/u5C178ybI3eaz7NyWCBEgnCPyR4wfSQKY/Fbe2Vlu9Rd77Z3Y7bzN0w/Kdv0+4BNCpjuMjiKymDf4RofyIZO9iRccS97JAa6pmHaYX5EO7srzYSkKqOQ3UalUNauSjdxxMrPWcsDSFOgNjzBcgEnWuBaHkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYFIypHu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+gtthlyJ8IZrhVdOMc/hClwA4NLI++mrBlB8P9Mbc8r0+YqogEusLZB9G4rnwXkzUNo0W6krm3jr7axvWExY9YPxEWX3qo6PxST1DLNmKXvwItsGbVgHpeBzNbI+ruLWW7mAl5EcI/u/gA9Q8iEaFnEeAFAvOGL2AWUeGrhHkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDcSA8sp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYFIypHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A785AC433F1;
-	Wed, 21 Feb 2024 13:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDcSA8sp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2920C433F1;
+	Wed, 21 Feb 2024 13:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521761;
-	bh=2ioa0P2FmDNmnlXud1Rnf8Slwjd08PvMAqMJMgBPKAw=;
+	s=korg; t=1708521764;
+	bh=UekCm42itF3nhu4rOr3znNG0KnI+RyAFbyzxDPIRHbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYFIypHuRTzH3YbgNlk2/y/o1td3ZhaQ/yf5y+2QoWSPnysChw00K6JfyfTfysjFh
-	 vbRY4p3FyDt793E8vRCzD1Fx+nxwKmmiz9KZ739m4+7IGv2G8kzcEArOM4dL4yYMzw
-	 L+AWHVzMpw7Y3qTnhbDFjmRbC1nGCAXpb4K6h6jw=
+	b=xDcSA8spxwxqv+MOgzKtNc5fyTQ+Cseaw3LWuQ2TUkvr+R83gVlmyvJonbWnC1Uc+
+	 7gpbeGeeXt5tqbiolZ5zKQFw53e7ob2iSBX4lZQpY3mjKMWbM1TNrIxX6bhMgVDcJg
+	 YQvkPF5jJORtaZQXSjKJyhjOQoGHGC3Kvrp+zQok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 197/202] Revert "md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d"
-Date: Wed, 21 Feb 2024 14:08:18 +0100
-Message-ID: <20240221125938.154860462@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Subject: [PATCH 4.19 198/202] sched/membarrier: reduce the ability to hammer on sys_membarrier
+Date: Wed, 21 Feb 2024 14:08:19 +0100
+Message-ID: <20240221125938.189914810@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -52,72 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Linus Torvalds <torvalds@linuxfoundation.org>
 
-[ Upstream commit bed9e27baf52a09b7ba2a3714f1e24e17ced386d ]
+commit 944d5fe50f3f03daacfea16300e656a1691c4a23 upstream.
 
-This reverts commit 5e2cf333b7bd5d3e62595a44d598a254c697cd74.
+On some systems, sys_membarrier can be very expensive, causing overall
+slowdowns for everything.  So put a lock on the path in order to
+serialize the accesses to prevent the ability for this to be called at
+too high of a frequency and saturate the machine.
 
-That commit introduced the following race and can cause system hung.
-
- md_write_start:             raid5d:
- // mddev->in_sync == 1
- set "MD_SB_CHANGE_PENDING"
-                            // running before md_write_start wakeup it
-                             waiting "MD_SB_CHANGE_PENDING" cleared
-                             >>>>>>>>> hung
- wakeup mddev->thread
- ...
- waiting "MD_SB_CHANGE_PENDING" cleared
- >>>> hung, raid5d should clear this flag
- but get hung by same flag.
-
-The issue reverted commit fixing is fixed by last patch in a new way.
-
-Fixes: 5e2cf333b7bd ("md/raid5: Wait for MD_SB_CHANGE_PENDING in raid5d")
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20231108182216.73611-2-junxiao.bi@oracle.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-and-tested-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Acked-by: Borislav Petkov <bp@alien8.de>
+Fixes: 22e4ebb97582 ("membarrier: Provide expedited private command")
+Fixes: c5f58bd58f43 ("membarrier: Provide GLOBAL_EXPEDITED command")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+[ converted to explicit mutex_*() calls - cleanup.h is not in this stable
+  branch - gregkh ]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ kernel/sched/membarrier.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index b98abe927d06..e2fcc09a18cd 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -44,7 +44,6 @@
-  */
+--- a/kernel/sched/membarrier.c
++++ b/kernel/sched/membarrier.c
+@@ -34,6 +34,8 @@
+ 	| MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED			\
+ 	| MEMBARRIER_PRIVATE_EXPEDITED_SYNC_CORE_BITMASK)
  
- #include <linux/blkdev.h>
--#include <linux/delay.h>
- #include <linux/kthread.h>
- #include <linux/raid/pq.h>
- #include <linux/async_tx.h>
-@@ -6330,18 +6329,7 @@ static void raid5d(struct md_thread *thread)
- 			spin_unlock_irq(&conf->device_lock);
- 			md_check_recovery(mddev);
- 			spin_lock_irq(&conf->device_lock);
--
--			/*
--			 * Waiting on MD_SB_CHANGE_PENDING below may deadlock
--			 * seeing md_check_recovery() is needed to clear
--			 * the flag when using mdmon.
--			 */
--			continue;
- 		}
--
--		wait_event_lock_irq(mddev->sb_wait,
--			!test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags),
--			conf->device_lock);
++static DEFINE_MUTEX(membarrier_ipi_mutex);
++
+ static void ipi_mb(void *info)
+ {
+ 	smp_mb();	/* IPIs should be serializing but paranoid. */
+@@ -64,6 +66,7 @@ static int membarrier_global_expedited(v
+ 		fallback = true;
  	}
- 	pr_debug("%d stripes handled\n", handled);
  
--- 
-2.43.0
-
++	mutex_lock(&membarrier_ipi_mutex);
+ 	cpus_read_lock();
+ 	for_each_online_cpu(cpu) {
+ 		struct task_struct *p;
+@@ -104,6 +107,7 @@ static int membarrier_global_expedited(v
+ 	 * rq->curr modification in scheduler.
+ 	 */
+ 	smp_mb();	/* exit from system call is not a mb */
++	mutex_unlock(&membarrier_ipi_mutex);
+ 	return 0;
+ }
+ 
+@@ -144,6 +148,7 @@ static int membarrier_private_expedited(
+ 		fallback = true;
+ 	}
+ 
++	mutex_lock(&membarrier_ipi_mutex);
+ 	cpus_read_lock();
+ 	for_each_online_cpu(cpu) {
+ 		struct task_struct *p;
+@@ -182,6 +187,7 @@ static int membarrier_private_expedited(
+ 	 * rq->curr modification in scheduler.
+ 	 */
+ 	smp_mb();	/* exit from system call is not a mb */
++	mutex_unlock(&membarrier_ipi_mutex);
+ 
+ 	return 0;
+ }
 
 
