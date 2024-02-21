@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169CC79DAE;
-	Wed, 21 Feb 2024 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573637C6C0;
+	Wed, 21 Feb 2024 14:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525319; cv=none; b=eNwEk8r7iTsOQmsup9H2YnBF8AOnTeN7rlhuwlcumHtsz7+EC4hZURMnLJ4UWvEOT+6Fmw4BIuaxiZYRUO1Eo39/52qIQzl4c/QhbYRjn0HBrRGAUfjBpNom3t1iaZZTQp4dAHdyk8DQdOmdwOAaj2eB6Wwhs/JTTwYziaZnljM=
+	t=1708525323; cv=none; b=fhH6Lyvg8HHXQqNfIXrqwuB5u628VrINyQHpWictO9aZWWAbrz2XpCHEEO9mi9uRmqN9QDHoOo2J9Qn59v2oB1iiSs2CZjgUnX9C7XJhxhmWAOYBbLPFxO8pCBwTTG2hLpHlGt9mDNeXwUR4e8eLq1zdFLwMtfjJlwkG/QidKQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525319; c=relaxed/simple;
-	bh=UNhrh4HaQ59OwhBlNMayRLy2M4cD5JR1q4QXOsLDUXc=;
+	s=arc-20240116; t=1708525323; c=relaxed/simple;
+	bh=d37JeiK6eN/UhtIPAS/esmB+ijDieC3j8OJUF04fjA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kejAQ3N4twGZuyMsB5daUUWiPsQmVlMIDjoA31EfBuV5qXaSaYQQ2s4yLsQ5GkVQrASgsSNUpVwfKM9I3K90wJfeCH7XGa4TBBfka90Pc0VN5ZK1sxAcICHRfx8M1MTd3Gjg8nQ3hPGXwm9xSFgUX4R9OuY91sX0DoKuS/ojtZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+IOG6In; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YMeJ0xOd01oMHTOaGBFQ0I2UwYKajAAh2/cvlhjtR7uFLwRWzYeI1zN95Fbx0cb0osY7tjKQHOTEMaW5iM6KGh6m/QmDWgNSGG/YgmpelWHHLt2ZzloA6xYXMPmWq0y58pywWX/GQu9iQSWNt2zoqgE4RWEWPmiQPUIj0yDaLpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTzu+P1B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+IOG6In"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB5CC433C7;
-	Wed, 21 Feb 2024 14:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTzu+P1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6475C433F1;
+	Wed, 21 Feb 2024 14:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525319;
-	bh=UNhrh4HaQ59OwhBlNMayRLy2M4cD5JR1q4QXOsLDUXc=;
+	s=korg; t=1708525322;
+	bh=d37JeiK6eN/UhtIPAS/esmB+ijDieC3j8OJUF04fjA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+IOG6InBuN9K3jnQbRSZihTW3FHTJUnEIlDmURAWRjH60wiyrsEqAdSrSZGqwpCK
-	 GczedmPPl0oduUFHkyWEU2HpFFXFMA3VekIiMy1n401juhQDJAwATjlU7tV+X5f+Mw
-	 OiYRCb31o45qNXped3cAwFqUDu54n9QZpsktlqOM=
+	b=nTzu+P1BMfAgAQACvfmjc6eUyScHq3evW0m5Uah7f/M6IhwcdfywouJrP7eCGO8Tw
+	 12NsFQB9kAHfUkeg0N9mA2ExhYDYZZbxNKhyggmHuYzvbqScGXqPkLcPI57SOn5ZpK
+	 KtS82GootHUzwLfi/u0aINoyl3TGmhzxHv5BPosE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 119/267] wifi: cfg80211: free beacon_ies when overridden from hidden BSS
-Date: Wed, 21 Feb 2024 14:07:40 +0100
-Message-ID: <20240221125943.717146965@linuxfoundation.org>
+Subject: [PATCH 5.4 120/267] f2fs: fix to check return value of f2fs_reserve_new_block()
+Date: Wed, 21 Feb 2024 14:07:41 +0100
+Message-ID: <20240221125943.751969994@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -52,42 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 32af9a9e1069e55bc02741fb00ac9d0ca1a2eaef ]
+[ Upstream commit 956fa1ddc132e028f3b7d4cf17e6bfc8cb36c7fd ]
 
-This is a more of a cosmetic fix. The branch will only be taken if
-proberesp_ies is set, which implies that beacon_ies is not set unless we
-are connected to an AP that just did a channel switch. And, in that case
-we should have found the BSS in the internal storage to begin with.
+Let's check return value of f2fs_reserve_new_block() in do_recover_data()
+rather than letting it fails silently.
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20231220133549.b898e22dadff.Id8c4c10aedd176ef2e18a4cad747b299f150f9df@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Also refactoring check condition on return value of f2fs_reserve_new_block()
+as below:
+- trigger f2fs_bug_on() only for ENOSPC case;
+- use do-while statement to avoid redundant codes;
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/f2fs/recovery.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index e35c54ba2fd5..f3a957f2bc49 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1294,8 +1294,12 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
- 				list_add(&new->hidden_list,
- 					 &hidden->hidden_list);
- 				hidden->refcount++;
-+
-+				ies = (void *)rcu_dereference(new->pub.beacon_ies);
- 				rcu_assign_pointer(new->pub.beacon_ies,
- 						   hidden->pub.beacon_ies);
-+				if (ies)
-+					kfree_rcu(ies, rcu_head);
+diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
+index da123c6d3ce0..7e30326b296c 100644
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -611,7 +611,16 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		 */
+ 		if (dest == NEW_ADDR) {
+ 			f2fs_truncate_data_blocks_range(&dn, 1);
+-			f2fs_reserve_new_block(&dn);
++			do {
++				err = f2fs_reserve_new_block(&dn);
++				if (err == -ENOSPC) {
++					f2fs_bug_on(sbi, 1);
++					break;
++				}
++			} while (err &&
++				IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
++			if (err)
++				goto err;
+ 			continue;
+ 		}
+ 
+@@ -619,12 +628,14 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
+ 		if (f2fs_is_valid_blkaddr(sbi, dest, META_POR)) {
+ 
+ 			if (src == NULL_ADDR) {
+-				err = f2fs_reserve_new_block(&dn);
+-				while (err &&
+-				       IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION))
++				do {
+ 					err = f2fs_reserve_new_block(&dn);
+-				/* We should not get -ENOSPC */
+-				f2fs_bug_on(sbi, err);
++					if (err == -ENOSPC) {
++						f2fs_bug_on(sbi, 1);
++						break;
++					}
++				} while (err &&
++					IS_ENABLED(CONFIG_F2FS_FAULT_INJECTION));
+ 				if (err)
+ 					goto err;
  			}
- 		} else {
- 			/*
 -- 
 2.43.0
 
