@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5E17CF0B;
-	Wed, 21 Feb 2024 13:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A53C3D96B;
+	Wed, 21 Feb 2024 13:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522343; cv=none; b=B50+4WwBBqXWKYpbwE29B3bHic+K5u5sx8NJBhehIz53VtMmS7H7orB3sihWbYe5GCbtbiS0yir4yN9DwlkwQ6YPkDN5WDtBbBSjXUAlinx7KLsPHhpjhoNRFSRa4zZewpNnBRw038L1Wo4wxJv9ihKX2fS8dGtGvemjViVijUY=
+	t=1708522347; cv=none; b=RTVjBSTHM4+8eLII5RHdQM49Pka/L3kgC6oILnrPMi+IHkmqeGLED24mh7vnQMKHX06tTtIbUW5UJ11K3sxSNIRoEr2cWkNP9K4KIBvQHhPI+iPACWXH5IR4e2k4IypIaMZUtrH2U6ur6he/LyL4NrsyVJMtsNObqRUmkESrEwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522343; c=relaxed/simple;
-	bh=1exUGo8HyGIy3mj7tgWUJR1d14cfYkK5qc2E78P8aHA=;
+	s=arc-20240116; t=1708522347; c=relaxed/simple;
+	bh=vync62f7JKQ8375cPLYsitLUTm4o9DOGn2Ckxpi7izw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mG143ppW8j7jpV1Kl8FOoqlOsNmGP97oJ8IcsrVM3PXgvgrN4SaO0zcIWsEvWywvDdxgxh4JG70J4tO08Ah0EH6O+wLZKK4W5ZgQGzd2vCxRlRYIB0rtyW4FAuc3jtrxth1Lgib8/QGRMoOk8J8xUOML3sm5EZTfUMPx9/JdzNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkZkTzDh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/6GBUc0C29p1ne93lm8PbF1399eY2dPDCWS9v7/p9ubWV186puE+N/pPS6dZN4Pcg5v9ggloKY2G1iQLtEd2s86XTVeSNQ0b/PEVd0litjfs+e95jk6t0zBx9soZ7yQppjcPAcWmTjydUbwQEJW1zZvO5rOEX8j0fJXvjk6Md4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/woIlmr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkZkTzDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB76BC433F1;
-	Wed, 21 Feb 2024 13:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/woIlmr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C91C43390;
+	Wed, 21 Feb 2024 13:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522343;
-	bh=1exUGo8HyGIy3mj7tgWUJR1d14cfYkK5qc2E78P8aHA=;
+	s=korg; t=1708522346;
+	bh=vync62f7JKQ8375cPLYsitLUTm4o9DOGn2Ckxpi7izw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MkZkTzDhVQYtkidFxYAjhH48VLdi8G3QIO9JYaoQflGEos4FKrlhlqj9ptPvTZIyv
-	 2WQsWLzp10AZbzd2on1dp1TydJ62dTjhVWwjBaYDZncJ8TOYVXcEPwYtB0z0+PzGYj
-	 lrhKNcebVUhBWCISjQGeFI4heo8rq0kj5sPwTiSU=
+	b=z/woIlmr7s8SzbyjFibO5DN9FlosmLD2rKzTrNUi7k8BT57hC7QdeX7FvdUIxhAam
+	 SZXO2nUETO4kBuWYhPM0NLaDfg/Iutlbo6D1eqQFvI2LRIWnvR/MsDFj4PdOFziBZP
+	 5c0vvuzhl5W+ELwcLVn2fUlrkuiAP1TkH+znlGWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Rui Zhang <zr.zhang@vivo.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/476] debugobjects: Stop accessing objects after releasing hash bucket lock
-Date: Wed, 21 Feb 2024 14:03:07 +0100
-Message-ID: <20240221130012.979000871@linuxfoundation.org>
+Subject: [PATCH 5.15 137/476] regulator: core: Only increment use_count when enable_count changes
+Date: Wed, 21 Feb 2024 14:03:08 +0100
+Message-ID: <20240221130013.008200778@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,405 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+From: Rui Zhang <zr.zhang@vivo.com>
 
-[ Upstream commit 9bb6362652f3f4d74a87d572a91ee1b38e673ef6 ]
+[ Upstream commit 7993d3a9c34f609c02171e115fd12c10e2105ff4 ]
 
-After release of the hashbucket lock the tracking object can be modified or
-freed by a concurrent thread.  Using it in such a case is error prone, even
-for printing the object state:
+The use_count of a regulator should only be incremented when the
+enable_count changes from 0 to 1. Similarly, the use_count should
+only be decremented when the enable_count changes from 1 to 0.
 
-    1. T1 tries to deactivate destroyed object, debugobjects detects it,
-       hash bucket lock is released.
+In the previous implementation, use_count was sometimes decremented
+to 0 when some consumer called unbalanced disable,
+leading to unexpected disable even the regulator is enabled by
+other consumers. With this change, the use_count accurately reflects
+the number of users which the regulator is enabled.
 
-    2. T2 preempts T1 and frees the tracking object.
+This should make things more robust in the case where a consumer does
+leak references.
 
-    3. The freed tracking object is allocated and initialized for a
-       different to be tracked kernel object.
-
-    4. T1 resumes and reports error for wrong kernel object.
-
-Create a local copy of the tracking object before releasing the hash bucket
-lock and use the local copy for reporting and fixups to prevent this.
-
-Signed-off-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20231025-debugobjects_fix-v3-1-2bc3bf7084c2@intel.com
+Signed-off-by: Rui Zhang <zr.zhang@vivo.com>
+Link: https://lore.kernel.org/r/20231103074231.8031-1-zr.zhang@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 200 ++++++++++++++++++---------------------------
- 1 file changed, 78 insertions(+), 122 deletions(-)
+ drivers/regulator/core.c | 56 +++++++++++++++++++++-------------------
+ 1 file changed, 30 insertions(+), 26 deletions(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 579406c1e9ed..09fddc0ea6d3 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -593,9 +593,8 @@ static struct debug_obj *lookup_object_or_alloc(void *addr, struct debug_bucket
- static void
- __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack)
- {
--	enum debug_obj_state state;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
--	struct debug_obj *obj;
- 	unsigned long flags;
- 
- 	/*
-@@ -621,24 +620,18 @@ __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack
- 	case ODEBUG_STATE_INIT:
- 	case ODEBUG_STATE_INACTIVE:
- 		obj->state = ODEBUG_STATE_INIT;
--		break;
--
--	case ODEBUG_STATE_ACTIVE:
--		state = obj->state;
--		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "init");
--		debug_object_fixup(descr->fixup_init, addr, state);
--		return;
--
--	case ODEBUG_STATE_DESTROYED:
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "init");
- 		return;
- 	default:
- 		break;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 8ad50dc8fb35..9b1f27f87c95 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -2881,7 +2881,8 @@ static int _regulator_enable(struct regulator *regulator)
+ 		/* Fallthrough on positive return values - already enabled */
  	}
  
-+	o = *obj;
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	debug_print_object(&o, "init");
+-	rdev->use_count++;
++	if (regulator->enable_count == 1)
++		rdev->use_count++;
+ 
+ 	return 0;
+ 
+@@ -2956,37 +2957,40 @@ static int _regulator_disable(struct regulator *regulator)
+ 
+ 	lockdep_assert_held_once(&rdev->mutex.base);
+ 
+-	if (WARN(rdev->use_count <= 0,
++	if (WARN(regulator->enable_count == 0,
+ 		 "unbalanced disables for %s\n", rdev_get_name(rdev)))
+ 		return -EIO;
+ 
+-	/* are we the last user and permitted to disable ? */
+-	if (rdev->use_count == 1 &&
+-	    (rdev->constraints && !rdev->constraints->always_on)) {
+-
+-		/* we are last user */
+-		if (regulator_ops_is_valid(rdev, REGULATOR_CHANGE_STATUS)) {
+-			ret = _notifier_call_chain(rdev,
+-						   REGULATOR_EVENT_PRE_DISABLE,
+-						   NULL);
+-			if (ret & NOTIFY_STOP_MASK)
+-				return -EINVAL;
+-
+-			ret = _regulator_do_disable(rdev);
+-			if (ret < 0) {
+-				rdev_err(rdev, "failed to disable: %pe\n", ERR_PTR(ret));
+-				_notifier_call_chain(rdev,
+-						REGULATOR_EVENT_ABORT_DISABLE,
++	if (regulator->enable_count == 1) {
++	/* disabling last enable_count from this regulator */
++		/* are we the last user and permitted to disable ? */
++		if (rdev->use_count == 1 &&
++		    (rdev->constraints && !rdev->constraints->always_on)) {
 +
-+	if (o.state == ODEBUG_STATE_ACTIVE)
-+		debug_object_fixup(descr->fixup_init, addr, o.state);
- }
- 
- /**
-@@ -679,11 +672,9 @@ EXPORT_SYMBOL_GPL(debug_object_init_on_stack);
- int debug_object_activate(void *addr, const struct debug_obj_descr *descr)
- {
- 	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
--	enum debug_obj_state state;
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
--	int ret;
- 
- 	if (!debug_objects_enabled)
- 		return 0;
-@@ -693,49 +684,38 @@ int debug_object_activate(void *addr, const struct debug_obj_descr *descr)
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
- 	obj = lookup_object_or_alloc(addr, db, descr, false, true);
--	if (likely(!IS_ERR_OR_NULL(obj))) {
--		bool print_object = false;
--
-+	if (unlikely(!obj)) {
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		debug_objects_oom();
-+		return 0;
-+	} else if (likely(!IS_ERR(obj))) {
- 		switch (obj->state) {
--		case ODEBUG_STATE_INIT:
--		case ODEBUG_STATE_INACTIVE:
--			obj->state = ODEBUG_STATE_ACTIVE;
--			ret = 0;
--			break;
--
- 		case ODEBUG_STATE_ACTIVE:
--			state = obj->state;
--			raw_spin_unlock_irqrestore(&db->lock, flags);
--			debug_print_object(obj, "activate");
--			ret = debug_object_fixup(descr->fixup_activate, addr, state);
--			return ret ? 0 : -EINVAL;
--
- 		case ODEBUG_STATE_DESTROYED:
--			print_object = true;
--			ret = -EINVAL;
-+			o = *obj;
- 			break;
-+		case ODEBUG_STATE_INIT:
-+		case ODEBUG_STATE_INACTIVE:
-+			obj->state = ODEBUG_STATE_ACTIVE;
-+			fallthrough;
- 		default:
--			ret = 0;
--			break;
-+			raw_spin_unlock_irqrestore(&db->lock, flags);
-+			return 0;
- 		}
--		raw_spin_unlock_irqrestore(&db->lock, flags);
--		if (print_object)
--			debug_print_object(obj, "activate");
--		return ret;
- 	}
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	debug_print_object(&o, "activate");
- 
--	/* If NULL the allocation has hit OOM */
--	if (!obj) {
--		debug_objects_oom();
--		return 0;
-+	switch (o.state) {
-+	case ODEBUG_STATE_ACTIVE:
-+	case ODEBUG_STATE_NOTAVAILABLE:
-+		if (debug_object_fixup(descr->fixup_activate, addr, o.state))
-+			return 0;
-+		fallthrough;
-+	default:
-+		return -EINVAL;
- 	}
--
--	/* Object is neither static nor tracked. It's not initialized */
--	debug_print_object(&o, "activate");
--	ret = debug_object_fixup(descr->fixup_activate, addr, ODEBUG_STATE_NOTAVAILABLE);
--	return ret ? 0 : -EINVAL;
- }
- EXPORT_SYMBOL_GPL(debug_object_activate);
- 
-@@ -746,10 +726,10 @@ EXPORT_SYMBOL_GPL(debug_object_activate);
-  */
- void debug_object_deactivate(void *addr, const struct debug_obj_descr *descr)
- {
-+	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
--	bool print_object = false;
- 
- 	if (!debug_objects_enabled)
- 		return;
-@@ -761,33 +741,24 @@ void debug_object_deactivate(void *addr, const struct debug_obj_descr *descr)
- 	obj = lookup_object(addr, db);
- 	if (obj) {
- 		switch (obj->state) {
-+		case ODEBUG_STATE_DESTROYED:
-+			break;
- 		case ODEBUG_STATE_INIT:
- 		case ODEBUG_STATE_INACTIVE:
- 		case ODEBUG_STATE_ACTIVE:
--			if (!obj->astate)
--				obj->state = ODEBUG_STATE_INACTIVE;
--			else
--				print_object = true;
--			break;
--
--		case ODEBUG_STATE_DESTROYED:
--			print_object = true;
--			break;
-+			if (obj->astate)
-+				break;
-+			obj->state = ODEBUG_STATE_INACTIVE;
-+			fallthrough;
- 		default:
--			break;
-+			raw_spin_unlock_irqrestore(&db->lock, flags);
-+			return;
- 		}
-+		o = *obj;
- 	}
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (!obj) {
--		struct debug_obj o = { .object = addr,
--				       .state = ODEBUG_STATE_NOTAVAILABLE,
--				       .descr = descr };
--
--		debug_print_object(&o, "deactivate");
--	} else if (print_object) {
--		debug_print_object(obj, "deactivate");
--	}
-+	debug_print_object(&o, "deactivate");
- }
- EXPORT_SYMBOL_GPL(debug_object_deactivate);
- 
-@@ -798,11 +769,9 @@ EXPORT_SYMBOL_GPL(debug_object_deactivate);
-  */
- void debug_object_destroy(void *addr, const struct debug_obj_descr *descr)
- {
--	enum debug_obj_state state;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
--	struct debug_obj *obj;
- 	unsigned long flags;
--	bool print_object = false;
- 
- 	if (!debug_objects_enabled)
- 		return;
-@@ -812,32 +781,31 @@ void debug_object_destroy(void *addr, const struct debug_obj_descr *descr)
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
- 	obj = lookup_object(addr, db);
--	if (!obj)
--		goto out_unlock;
-+	if (!obj) {
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		return;
-+	}
- 
- 	switch (obj->state) {
-+	case ODEBUG_STATE_ACTIVE:
-+	case ODEBUG_STATE_DESTROYED:
-+		break;
- 	case ODEBUG_STATE_NONE:
- 	case ODEBUG_STATE_INIT:
- 	case ODEBUG_STATE_INACTIVE:
- 		obj->state = ODEBUG_STATE_DESTROYED;
--		break;
--	case ODEBUG_STATE_ACTIVE:
--		state = obj->state;
-+		fallthrough;
-+	default:
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "destroy");
--		debug_object_fixup(descr->fixup_destroy, addr, state);
- 		return;
--
--	case ODEBUG_STATE_DESTROYED:
--		print_object = true;
--		break;
--	default:
--		break;
- 	}
--out_unlock:
++			/* we are last user */
++			if (regulator_ops_is_valid(rdev, REGULATOR_CHANGE_STATUS)) {
++				ret = _notifier_call_chain(rdev,
++							   REGULATOR_EVENT_PRE_DISABLE,
++							   NULL);
++				if (ret & NOTIFY_STOP_MASK)
++					return -EINVAL;
 +
-+	o = *obj;
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (print_object)
--		debug_print_object(obj, "destroy");
-+	debug_print_object(&o, "destroy");
-+
-+	if (o.state == ODEBUG_STATE_ACTIVE)
-+		debug_object_fixup(descr->fixup_destroy, addr, o.state);
- }
- EXPORT_SYMBOL_GPL(debug_object_destroy);
++				ret = _regulator_do_disable(rdev);
++				if (ret < 0) {
++					rdev_err(rdev, "failed to disable: %pe\n", ERR_PTR(ret));
++					_notifier_call_chain(rdev,
++							REGULATOR_EVENT_ABORT_DISABLE,
++							NULL);
++					return ret;
++				}
++				_notifier_call_chain(rdev, REGULATOR_EVENT_DISABLE,
+ 						NULL);
+-				return ret;
+ 			}
+-			_notifier_call_chain(rdev, REGULATOR_EVENT_DISABLE,
+-					NULL);
+-		}
  
-@@ -848,9 +816,8 @@ EXPORT_SYMBOL_GPL(debug_object_destroy);
-  */
- void debug_object_free(void *addr, const struct debug_obj_descr *descr)
- {
--	enum debug_obj_state state;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
--	struct debug_obj *obj;
- 	unsigned long flags;
- 
- 	if (!debug_objects_enabled)
-@@ -861,24 +828,26 @@ void debug_object_free(void *addr, const struct debug_obj_descr *descr)
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
- 	obj = lookup_object(addr, db);
--	if (!obj)
--		goto out_unlock;
-+	if (!obj) {
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		return;
-+	}
- 
- 	switch (obj->state) {
- 	case ODEBUG_STATE_ACTIVE:
--		state = obj->state;
--		raw_spin_unlock_irqrestore(&db->lock, flags);
--		debug_print_object(obj, "free");
--		debug_object_fixup(descr->fixup_free, addr, state);
--		return;
-+		break;
- 	default:
- 		hlist_del(&obj->node);
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
- 		free_object(obj);
- 		return;
- 	}
--out_unlock:
-+
-+	o = *obj;
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	debug_print_object(&o, "free");
-+
-+	debug_object_fixup(descr->fixup_free, addr, o.state);
- }
- EXPORT_SYMBOL_GPL(debug_object_free);
- 
-@@ -928,10 +897,10 @@ void
- debug_object_active_state(void *addr, const struct debug_obj_descr *descr,
- 			  unsigned int expect, unsigned int next)
- {
-+	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
--	bool print_object = false;
- 
- 	if (!debug_objects_enabled)
- 		return;
-@@ -944,28 +913,19 @@ debug_object_active_state(void *addr, const struct debug_obj_descr *descr,
- 	if (obj) {
- 		switch (obj->state) {
- 		case ODEBUG_STATE_ACTIVE:
--			if (obj->astate == expect)
--				obj->astate = next;
--			else
--				print_object = true;
--			break;
--
-+			if (obj->astate != expect)
-+				break;
-+			obj->astate = next;
-+			raw_spin_unlock_irqrestore(&db->lock, flags);
-+			return;
- 		default:
--			print_object = true;
- 			break;
- 		}
-+		o = *obj;
+-		rdev->use_count = 0;
+-	} else if (rdev->use_count > 1) {
+-		rdev->use_count--;
++			rdev->use_count = 0;
++		} else if (rdev->use_count > 1) {
++			rdev->use_count--;
++		}
  	}
  
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (!obj) {
--		struct debug_obj o = { .object = addr,
--				       .state = ODEBUG_STATE_NOTAVAILABLE,
--				       .descr = descr };
--
--		debug_print_object(&o, "active_state");
--	} else if (print_object) {
--		debug_print_object(obj, "active_state");
--	}
-+	debug_print_object(&o, "active_state");
- }
- EXPORT_SYMBOL_GPL(debug_object_active_state);
- 
-@@ -973,12 +933,10 @@ EXPORT_SYMBOL_GPL(debug_object_active_state);
- static void __debug_check_no_obj_freed(const void *address, unsigned long size)
- {
- 	unsigned long flags, oaddr, saddr, eaddr, paddr, chunks;
--	const struct debug_obj_descr *descr;
--	enum debug_obj_state state;
-+	int cnt, objs_checked = 0;
-+	struct debug_obj *obj, o;
- 	struct debug_bucket *db;
- 	struct hlist_node *tmp;
--	struct debug_obj *obj;
--	int cnt, objs_checked = 0;
- 
- 	saddr = (unsigned long) address;
- 	eaddr = saddr + size;
-@@ -1000,12 +958,10 @@ static void __debug_check_no_obj_freed(const void *address, unsigned long size)
- 
- 			switch (obj->state) {
- 			case ODEBUG_STATE_ACTIVE:
--				descr = obj->descr;
--				state = obj->state;
-+				o = *obj;
- 				raw_spin_unlock_irqrestore(&db->lock, flags);
--				debug_print_object(obj, "free");
--				debug_object_fixup(descr->fixup_free,
--						   (void *) oaddr, state);
-+				debug_print_object(&o, "free");
-+				debug_object_fixup(o.descr->fixup_free, (void *)oaddr, o.state);
- 				goto repeat;
- 			default:
- 				hlist_del(&obj->node);
+ 	if (ret == 0)
 -- 
 2.43.0
 
