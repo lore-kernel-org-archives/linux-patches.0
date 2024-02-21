@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D1479DAB;
-	Wed, 21 Feb 2024 13:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B2F76C99;
+	Wed, 21 Feb 2024 13:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523926; cv=none; b=FR/uqo5T3pc1AaZJC/Rasfs6Rp0TVlug0gk+VWBju/hIz/fDK81aJFhJvbI3venNDWBeb4d4bVwAu94eG72aPOKcs23naIYz2Awl2yfNojWxfJ1XJeSjTmIglNRWXVC2wH5txi+eLdWCa8fLSUqVFt4OVkhOM/urtJPW59XkYTo=
+	t=1708523930; cv=none; b=tfVTleM8/xXTn8xQGdaHpR0wY1EvKn+uergsa+FS4oPM+VrOJhOElScd8IVd568Au7ewRYIj8ZDDsWesXZ/aY2EtJb5bXOfqw/uzDAM4MgCIm5JSuiLgJAY5ugHAYpXv75MEVjrV8gV2hgiTx4DmKG9C0G/bENXms4oic3DNNUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523926; c=relaxed/simple;
-	bh=QGKjcqTEhz4LXtKvkoBwF/5mBD6PPl3Is9DplGBytkU=;
+	s=arc-20240116; t=1708523930; c=relaxed/simple;
+	bh=OyMAS3JEWztgmpJq2G8uVLhawsGVp9xEmglmU6jrBY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgVVXBypIHxOB4jjGLjyeT5o834ZIqth0s/XzaqJRMLwG9nVAmtesT1KroVDFmU5CNY+e7PS2jQ2VRUZlp5sN168t88ZIX6XIhCm+A8B0WFBh5PmbWUI4yd1zJT9PF4S5L0FDqsE78uEGOlcgWXPhqiqMvpi9DeN/pIhF+heUnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2tbd2G3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j30F8z5+tyYnI6tGMM6bpT65EalkXEIhQ7hKcudeRsMIkHprZWFkb+Ge2/SwwSlvALrwgHm9BAL3/0QT8m9XBRXu8dc92HEEKzm2Z+7+YmibuOmrQOmoyYngEUkwbLGd/kzRCFQTH1oxa5B4GMslCQLL6Hqz03UmOyviryV39U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjydQO5r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2tbd2G3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40319C433F1;
-	Wed, 21 Feb 2024 13:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjydQO5r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2CCC43390;
+	Wed, 21 Feb 2024 13:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523926;
-	bh=QGKjcqTEhz4LXtKvkoBwF/5mBD6PPl3Is9DplGBytkU=;
+	s=korg; t=1708523929;
+	bh=OyMAS3JEWztgmpJq2G8uVLhawsGVp9xEmglmU6jrBY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W2tbd2G3otu92fxfHgao0N+uPjVzvKn4ywt+9QxJCws8bwprKCTcaU+LE9ORTWokm
-	 JXsfmCJFXzzBxkp2nxaLGD8NAMwmhJMsrbm0tWEEkyJ8vVq8RX2DWVTynpmvtt5/eV
-	 LB6w1LTpypJleOWAHYcIL9NvEzuG1oEmHtOsWxZs=
+	b=sjydQO5ronEYAz0A6MUGdqrIH4BvpsQw9xf+If8jHVHGvbrhRm5mqMwq2ovE+h/Fc
+	 2FO9TfwI7AOjp9c2HiQCSrcoYEEnWRtR0hMZE7Yj53aFzAykIxNHXLeNSUXOQRZ21+
+	 8TrYTvSHSAJsZaRaveDzj6NW5GtGnZ5hRomBmTJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/379] NFSD: Modernize nfsd4_release_lockowner()
-Date: Wed, 21 Feb 2024 14:04:30 +0100
-Message-ID: <20240221125957.597967433@linuxfoundation.org>
+	syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 064/379] btrfs: dont warn if discard range is not aligned to sector
+Date: Wed, 21 Feb 2024 14:04:03 +0100
+Message-ID: <20240221125956.805927686@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -50,86 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit bd8fdb6e545f950f4654a9a10d7e819ad48146e5 ]
+commit a208b3f132b48e1f94f620024e66fea635925877 upstream.
 
-Refactor: Use existing helpers that other lock operations use. This
-change removes several automatic variables, so re-organize the
-variable declarations for readability.
+There's a warning in btrfs_issue_discard() when the range is not aligned
+to 512 bytes, originally added in 4d89d377bbb0 ("btrfs:
+btrfs_issue_discard ensure offset/length are aligned to sector
+boundaries"). We can't do sub-sector writes anyway so the adjustment is
+the only thing that we can do and the warning is unnecessary.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org # 4.19+
+Reported-by: syzbot+4a4f1eba14eb5c3417d1@syzkaller.appspotmail.com
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c | 36 +++++++++++-------------------------
- 1 file changed, 11 insertions(+), 25 deletions(-)
+ fs/btrfs/extent-tree.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index d402ca0b535f..1b40b2197ce6 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7113,16 +7113,13 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 			union nfsd4_op_u *u)
- {
- 	struct nfsd4_release_lockowner *rlockowner = &u->release_lockowner;
-+	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
- 	clientid_t *clid = &rlockowner->rl_clientid;
--	struct nfs4_stateowner *sop;
--	struct nfs4_lockowner *lo = NULL;
- 	struct nfs4_ol_stateid *stp;
--	struct xdr_netobj *owner = &rlockowner->rl_owner;
--	unsigned int hashval = ownerstr_hashval(owner);
--	__be32 status;
--	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
-+	struct nfs4_lockowner *lo;
- 	struct nfs4_client *clp;
--	LIST_HEAD (reaplist);
-+	LIST_HEAD(reaplist);
-+	__be32 status;
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1202,7 +1202,8 @@ static int btrfs_issue_discard(struct bl
+ 	u64 bytes_left, end;
+ 	u64 aligned_start = ALIGN(start, 1 << 9);
  
- 	dprintk("nfsd4_release_lockowner clientid: (%08x/%08x):\n",
- 		clid->cl_boot, clid->cl_id);
-@@ -7130,30 +7127,19 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
- 	status = lookup_clientid(clid, cstate, nn, false);
- 	if (status)
- 		return status;
--
- 	clp = cstate->clp;
--	/* Find the matching lock stateowner */
--	spin_lock(&clp->cl_lock);
--	list_for_each_entry(sop, &clp->cl_ownerstr_hashtbl[hashval],
--			    so_strhash) {
- 
--		if (sop->so_is_open_owner || !same_owner_str(sop, owner))
--			continue;
--
--		if (atomic_read(&sop->so_count) != 1) {
--			spin_unlock(&clp->cl_lock);
--			return nfserr_locks_held;
--		}
--
--		lo = lockowner(sop);
--		nfs4_get_stateowner(sop);
--		break;
--	}
-+	spin_lock(&clp->cl_lock);
-+	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
- 	if (!lo) {
- 		spin_unlock(&clp->cl_lock);
- 		return status;
- 	}
--
-+	if (atomic_read(&lo->lo_owner.so_count) != 2) {
-+		spin_unlock(&clp->cl_lock);
-+		nfs4_put_stateowner(&lo->lo_owner);
-+		return nfserr_locks_held;
-+	}
- 	unhash_lockowner_locked(lo);
- 	while (!list_empty(&lo->lo_owner.so_stateids)) {
- 		stp = list_first_entry(&lo->lo_owner.so_stateids,
--- 
-2.43.0
-
+-	if (WARN_ON(start != aligned_start)) {
++	/* Adjust the range to be aligned to 512B sectors if necessary. */
++	if (start != aligned_start) {
+ 		len -= aligned_start - start;
+ 		len = round_down(len, 1 << 9);
+ 		start = aligned_start;
 
 
