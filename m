@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4608D3FB21;
-	Wed, 21 Feb 2024 13:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2683C2F;
+	Wed, 21 Feb 2024 13:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522809; cv=none; b=UkTp1DrLjXZdffvFVZusJpXdJcrv9ps5PL42/rVjaTKMVEketwjKmYRtE9VMtrNB1yo+xtTF01aAb1bwReCnUUH3n0kwevp/ww4fnM1mB4zB4cslZrIRzI1uqZyNOSgESVR/DBENFD8eNp1/XbaHiEp84EvbyftP0KOZGd1Yfu8=
+	t=1708522812; cv=none; b=trNORXo0fxRfjM5Or+EaecxWqbS6v42mil806l49abDGllZztWLdcPeyy2wUR6d7/QA+pxe578GJIIg3rAJWYagaldhnXYGnc7W1m337SdSSpeyDz7WzxwRJKL/MYIc7EwV+/476VH7SQBj/C7YT+KgP26TliC0X89SOvV5ppMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522809; c=relaxed/simple;
-	bh=mmZHISCwI6qSJBLc+tA+3VucZZjXExbcY+c90chxvWc=;
+	s=arc-20240116; t=1708522812; c=relaxed/simple;
+	bh=WbQikY2yGhI21ZRI5XFre8iVD7cG+ed6PZb0rqkcmRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RgtHj/fB1ep+/i0ASQH+o0M8QVDru16z3av+/kxmqA46Vz8vW+B7YH3cHHKdmhzmRaQJNdPolBCNXJ5tHa7ZKeZ+gOXzQ5tMR77fjN+mOL9h1kiTBFNuCkAHKhzWaSbdPc4zWAfnmKqLmqtFo3Sbm2NvN1xHGJwkd5VuSsSbLAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06D2BLW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=heBJ+KdUQGqm7ZQcg3KW/2sIxyUZiGL7urD28hwfU8e3pkF4mF52dRZ+/QJ3ij2K5Yxmj12qPMUm581+KaUEuQP628GkRtIQEhppoiDHxLqXHCDFSrFVaveS21QcPxjCMqGJUHDvqSJ+Pz2RnoLXKY3z6wovWH4LrlyA57uX8uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQHqkPTo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06D2BLW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63D3C433F1;
-	Wed, 21 Feb 2024 13:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQHqkPTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDC7C43390;
+	Wed, 21 Feb 2024 13:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522809;
-	bh=mmZHISCwI6qSJBLc+tA+3VucZZjXExbcY+c90chxvWc=;
+	s=korg; t=1708522812;
+	bh=WbQikY2yGhI21ZRI5XFre8iVD7cG+ed6PZb0rqkcmRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=06D2BLW1JqrqTxFXbjz8+GovjcTvDmU1YOxRcgogu8dx6WuMTXsD3IlbE9cOO8gpj
-	 gj4tviLHVPoCAh7JH6qH0vJofYjUskIw9afhrtkdWxw1l5oYWlnJ88Sa+X5LZglNmR
-	 ii3Z+lfWX7NTcnuR2pjUPrVCdKNgU8kw6w0zoghM=
+	b=KQHqkPTo36/4iGThKnCY4/zzGrSErPrjmhT5OPt0BSg4W91Wu/lti9myv84p53l5g
+	 v8cduNy+6rv+s37GtJ7KUwXhQy+WwzY+fl0SqndlMeZkB+xO5Mpa28zQKHPYJO+sUK
+	 nBjLhPQUvrM00gAHM6Fk2amqJuErvp9fdODj+ZZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Monk Liu <Monk.Liu@amd.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 238/476] drm/amdgpu: Drop fence check in to_amdgpu_amdkfd_fence()
-Date: Wed, 21 Feb 2024 14:04:49 +0100
-Message-ID: <20240221130016.687901450@linuxfoundation.org>
+Subject: [PATCH 5.15 265/476] drm/amdgpu: Release adev->pm.fw before return in amdgpu_device_need_post()
+Date: Wed, 21 Feb 2024 14:05:16 +0100
+Message-ID: <20240221130017.642445631@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -57,38 +57,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit bf2ad4fb8adca89374b54b225d494e0b1956dbea ]
+[ Upstream commit 8a44fdd3cf91debbd09b43bd2519ad2b2486ccf4 ]
 
-Return value of container_of(...) can't be null, so null check is not
-required for 'fence'. Hence drop its NULL check.
+In function 'amdgpu_device_need_post(struct amdgpu_device *adev)' -
+'adev->pm.fw' may not be released before return.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c:93 to_amdgpu_amdkfd_fence() warn: can 'fence' even be NULL?
+Using the function release_firmware() to release adev->pm.fw.
 
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Thus fixing the below:
+drivers/gpu/drm/amd/amdgpu/amdgpu_device.c:1571 amdgpu_device_need_post() warn: 'adev->pm.fw' from request_firmware() not released on lines: 1554.
+
+Cc: Monk Liu <Monk.Liu@amd.com>
 Cc: Christian König <christian.koenig@amd.com>
 Cc: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-index 1d0dbff87d3f..fb66e888ab3f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_fence.c
-@@ -90,7 +90,7 @@ struct amdgpu_amdkfd_fence *to_amdgpu_amdkfd_fence(struct dma_fence *f)
- 		return NULL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 19e32f38a4c4..816dd59212c1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1292,6 +1292,7 @@ bool amdgpu_device_need_post(struct amdgpu_device *adev)
+ 				return true;
  
- 	fence = container_of(f, struct amdgpu_amdkfd_fence, base);
--	if (fence && f->ops == &amdkfd_fence_ops)
-+	if (f->ops == &amdkfd_fence_ops)
- 		return fence;
- 
- 	return NULL;
+ 			fw_ver = *((uint32_t *)adev->pm.fw->data + 69);
++			release_firmware(adev->pm.fw);
+ 			if (fw_ver < 0x00160e00)
+ 				return true;
+ 		}
 -- 
 2.43.0
 
