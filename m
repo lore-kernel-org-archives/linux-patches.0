@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597A547A7C;
-	Wed, 21 Feb 2024 14:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7336A47A7C;
+	Wed, 21 Feb 2024 14:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524048; cv=none; b=dmEaMeH4/4ikBOexdP4h0Ub2yDzxa71V3DstX0RctY4V4an4Ylh8GPBmUKRgOPB1jwvq3MCES/aYM6havKCN9Aad5uzTMTlwGRk5aGntBezXisoM5KHhRBkw5Fr4EO05L8uQsYoCjMHsxhesX2R33z/OqIXfF1f/PVQu8njBoIw=
+	t=1708524051; cv=none; b=ROB0l7prRXHYhoiCM2zoI79fNANkqNDUdiN2i60Zn09f0/FZjmFFHuxJEJj1uFjfeLEBM2F5TYlrIp1YoQ1asD4DkP63s5/HXTH4VFjSsESY4Zd5YvTkNAg59in405TMP9PB3VddJcQM3uhqjCjGhmLUYJeeWky2Rv8EcOy8Kks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524048; c=relaxed/simple;
-	bh=xwhf78L8WipF7xC19n85hhMcQPXkZKO2JsjpPLouN0U=;
+	s=arc-20240116; t=1708524051; c=relaxed/simple;
+	bh=YpyWVYswGpziSy3HhcIZxNBwCd0d8KAAi+gDYlV/m1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sb+2tEs9vcIOSrtxOe4i3wFJH6CHxrPkng1XHEYifDp8nJMa+o2XRDfNfgH+5YH0vek3MZm1p2z6zxXBC05aQszjUNH551gFMjt5M2eOYeAtWRbz5HVnt4EiNlPb5BLaLUBKqlPfJczEyZSP+h3BJDJuWhYdjr0QO3W2pPVQCS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTRCh17q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXKver4CltkBp8fiWzOY8iS6MLcnoqL/qXvJvoyy3wGhWgyI7SWge2xdKZvLliE6r76kDpL9Q60XM3scrGTv0X7g+uJwszDPASsIWXOo1sg54Ticc/va3SknKggfienPkJJCGsc7ZrbO/LmvXNTbMg74wbvmonMclgpPgnANbEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SC4C7g7p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTRCh17q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD696C433C7;
-	Wed, 21 Feb 2024 14:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SC4C7g7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7736C433C7;
+	Wed, 21 Feb 2024 14:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524048;
-	bh=xwhf78L8WipF7xC19n85hhMcQPXkZKO2JsjpPLouN0U=;
+	s=korg; t=1708524051;
+	bh=YpyWVYswGpziSy3HhcIZxNBwCd0d8KAAi+gDYlV/m1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTRCh17q8M+h+eZJ/nsPLBg75FoLE+FPCTL4cUl66w1Uxl4J8hBrFrfD/uIWG6KPb
-	 j3Nb1x7B6kXm9p2HGDY8A2QnftAlKCtYGh8eOfkq3yWLYRe+fpFYMifH4fyHWuRiIW
-	 xdSBjbqZV87g4j6UG7EjV0U1hMtUKdnuvSyvNqMA=
+	b=SC4C7g7pZqrDJ79Nq4piYUA2CPEsG88qytJgLbQopbJghOKk9AogXEK650l2LL3O4
+	 CUNI/yg2UgKxw6kzPOhng6O3Qd/FPW/KnSZzwEUVoMDvFxadi0XKDS7vb9aBZ65TY/
+	 IQP7ULhK/9eBa3f/ny+c9gLgiaHglImy/NUEb83U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Kunwu Chan <chentao@kylinos.cn>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/379] powerpc/mm: Fix null-pointer dereference in pgtable_cache_add
-Date: Wed, 21 Feb 2024 14:04:40 +0100
-Message-ID: <20240221125957.908818881@linuxfoundation.org>
+Subject: [PATCH 5.10 092/379] NFSD: Add documenting comment for nfsd4_release_lockowner()
+Date: Wed, 21 Feb 2024 14:04:31 +0100
+Message-ID: <20240221125957.626899942@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -52,47 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit f46c8a75263f97bda13c739ba1c90aced0d3b071 ]
+[ Upstream commit 043862b09cc00273e35e6c3a6389957953a34207 ]
 
-kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+And return explicit nfserr values that match what is documented in the
+new comment / API contract.
 
-Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231204023223.2447523-1-chentao@kylinos.cn
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Stable-dep-of: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/init-common.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/mm/init-common.c b/arch/powerpc/mm/init-common.c
-index 8e0d792ac296..52a20c97e46e 100644
---- a/arch/powerpc/mm/init-common.c
-+++ b/arch/powerpc/mm/init-common.c
-@@ -111,7 +111,7 @@ void pgtable_cache_add(unsigned int shift)
- 	 * as to leave enough 0 bits in the address to contain it. */
- 	unsigned long minalign = max(MAX_PGTABLE_INDEX_SIZE + 1,
- 				     HUGEPD_SHIFT_MASK + 1);
--	struct kmem_cache *new;
-+	struct kmem_cache *new = NULL;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 1b40b2197ce6..b6480be7b5e6 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7107,6 +7107,23 @@ check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner)
+ 	return status;
+ }
  
- 	/* It would be nice if this was a BUILD_BUG_ON(), but at the
- 	 * moment, gcc doesn't seem to recognize is_power_of_2 as a
-@@ -124,7 +124,8 @@ void pgtable_cache_add(unsigned int shift)
++/**
++ * nfsd4_release_lockowner - process NFSv4.0 RELEASE_LOCKOWNER operations
++ * @rqstp: RPC transaction
++ * @cstate: NFSv4 COMPOUND state
++ * @u: RELEASE_LOCKOWNER arguments
++ *
++ * The lockowner's so_count is bumped when a lock record is added
++ * or when copying a conflicting lock. The latter case is brief,
++ * but can lead to fleeting false positives when looking for
++ * locks-in-use.
++ *
++ * Return values:
++ *   %nfs_ok: lockowner released or not found
++ *   %nfserr_locks_held: lockowner still in use
++ *   %nfserr_stale_clientid: clientid no longer active
++ *   %nfserr_expired: clientid not recognized
++ */
+ __be32
+ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 			struct nfsd4_compound_state *cstate,
+@@ -7133,7 +7150,7 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 	lo = find_lockowner_str_locked(clp, &rlockowner->rl_owner);
+ 	if (!lo) {
+ 		spin_unlock(&clp->cl_lock);
+-		return status;
++		return nfs_ok;
+ 	}
+ 	if (atomic_read(&lo->lo_owner.so_count) != 2) {
+ 		spin_unlock(&clp->cl_lock);
+@@ -7149,11 +7166,11 @@ nfsd4_release_lockowner(struct svc_rqst *rqstp,
+ 		put_ol_stateid_locked(stp, &reaplist);
+ 	}
+ 	spin_unlock(&clp->cl_lock);
++
+ 	free_ol_stateid_reaplist(&reaplist);
+ 	remove_blocked_locks(lo);
+ 	nfs4_put_stateowner(&lo->lo_owner);
+-
+-	return status;
++	return nfs_ok;
+ }
  
- 	align = max_t(unsigned long, align, minalign);
- 	name = kasprintf(GFP_KERNEL, "pgtable-2^%d", shift);
--	new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
-+	if (name)
-+		new = kmem_cache_create(name, table_size, align, 0, ctor(shift));
- 	if (!new)
- 		panic("Could not allocate pgtable cache for order %d", shift);
- 
+ static inline struct nfs4_client_reclaim *
 -- 
 2.43.0
 
