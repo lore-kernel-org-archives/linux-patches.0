@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AE83CF42;
-	Wed, 21 Feb 2024 14:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EAA3CF42;
+	Wed, 21 Feb 2024 14:23:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525405; cv=none; b=awkx4YQtZuQ+IXC/qN9tCc44hQRfxw8aSB7MaF63xjXcX5cCoiyZGo5HTjpgOsCXLW0YOPZ38NvHf9y1yCa0i0AIsMHXC45dSDdA+YfjTZzhzcoxBJPXECFubJX6/ZjmjQeYb1CBYDDXEzBdGbW6uQJ/kEOChPzs8HRqgCvSjzs=
+	t=1708525408; cv=none; b=ITTKfDIrkj4ajFBWn3F42Y2UIEQHjPLUHMhFDc7qtNYxZjpoqCiAF+tZ3IHE1Sn71/SO7y/nAUpBGzePX+cstWVzUmlnn2HSAOSO2l2B1onemiQUEPBoCyk2RLfL2f6NM8ME6ePHgslRLazE3xYKjWAHrJ+/fctJzFi0UFSvUL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525405; c=relaxed/simple;
-	bh=MV4iXCM5iaboXWC/JUo3D9mCs9HsDCsUbOk5wovwJDU=;
+	s=arc-20240116; t=1708525408; c=relaxed/simple;
+	bh=ZT/GXNB3Ui7g/T1/y4nS+64ab7EAkd6xg+RZomtp2WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7qk+YUYMhVyNC9zKpRWLMYSGExv1+78UeqPp+DWKso/HSOUB6u7iNKAL6jTXZtLp3pGC+ZPRlnCftrbahTw1clafFjEXGbkWZoc8CZ+OnJJMh2eAltGHpeQfcCB5X6AOqtx2BKcR6VZqB1nGGACLqYlVStvfl4Pq4rizErmfIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLngDih1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZveEv5owCXPAfZdJS0rzN5gDi9IRLL90sdCALnIRf1km6FtCvKkmEhMv+DjUve9RGrrT2dP5EqcnIp5WUwKPUZ2c+IH1Dmy+we9vt6wd0G6QC0/c9VKHjnCVXkRDVnzO8scEUzEQ28MlotpnyJuRzHJW/kFi/S5hXfH5pYIgBPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aba7CRzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLngDih1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40116C433C7;
-	Wed, 21 Feb 2024 14:23:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aba7CRzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B02C433C7;
+	Wed, 21 Feb 2024 14:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525404;
-	bh=MV4iXCM5iaboXWC/JUo3D9mCs9HsDCsUbOk5wovwJDU=;
+	s=korg; t=1708525408;
+	bh=ZT/GXNB3Ui7g/T1/y4nS+64ab7EAkd6xg+RZomtp2WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLngDih1b4S4lHePkcTIE9lhibC2z49QKkr2VjFWaCRJG2yJLVGUBQqHIKJyozioJ
-	 cUfisa5MlKp1cONmu+YbIvwT4Z7Lq7NlXHyV00g5OeEcd6G7HDcpNbVXz53Sa06GuN
-	 sI6CJjXFogQ9UNKZKJvECkZF8prbUtxEqmJyLwV4=
+	b=aba7CRzzVFVb1Tr0kH5tmkgOYpw7c9ZyM043yplY6sECVEE4xWGkVOm/1tjtqOLsm
+	 YLmH1h67TGbSHwCedCYazHFbD2EHJ/6wa0+Qkec1LNOOfqdQ0ejPnnQN0O5773BjQv
+	 y+sA4QzJZVDV+KgSLfqU1p6iJq/pCnWCgAxzA5+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Daniel Stodden <dns@arista.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Vicki Pfau <vi@endrift.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Dmitry Safonov <dima@arista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 146/267] PCI: Only override AMD USB controller if required
-Date: Wed, 21 Feb 2024 14:08:07 +0100
-Message-ID: <20240221125944.641698076@linuxfoundation.org>
+Subject: [PATCH 5.4 147/267] PCI: switchtec: Fix stdev_release() crash after surprise hot remove
+Date: Wed, 21 Feb 2024 14:08:08 +0100
+Message-ID: <20240221125944.671325300@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -53,53 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Daniel Stodden <dns@arista.com>
 
-[ Upstream commit e585a37e5061f6d5060517aed1ca4ccb2e56a34c ]
+[ Upstream commit df25461119d987b8c81d232cfe4411e91dcabe66 ]
 
-By running a Van Gogh device (Steam Deck), the following message
-was noticed in the kernel log:
+A PCI device hot removal may occur while stdev->cdev is held open. The call
+to stdev_release() then happens during close or exit, at a point way past
+switchtec_pci_remove(). Otherwise the last ref would vanish with the
+trailing put_device(), just before return.
 
-  pci 0000:04:00.3: PCI class overridden (0x0c03fe -> 0x0c03fe) so dwc3 driver can claim this instead of xhci
+At that later point in time, the devm cleanup has already removed the
+stdev->mmio_mrpc mapping. Also, the stdev->pdev reference was not a counted
+one. Therefore, in DMA mode, the iowrite32() in stdev_release() will cause
+a fatal page fault, and the subsequent dma_free_coherent(), if reached,
+would pass a stale &stdev->pdev->dev pointer.
 
-Effectively this means the quirk executed but changed nothing, since the
-class of this device was already the proper one (likely adjusted by newer
-firmware versions).
+Fix by moving MRPC DMA shutdown into switchtec_pci_remove(), after
+stdev_kill(). Counting the stdev->pdev ref is now optional, but may prevent
+future accidents.
 
-Check and perform the override only if necessary.
+Reproducible via the script at
+https://lore.kernel.org/r/20231113212150.96410-1-dns@arista.com
 
-Link: https://lore.kernel.org/r/20231120160531.361552-1-gpiccoli@igalia.com
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Link: https://lore.kernel.org/r/20231122042316.91208-2-dns@arista.com
+Signed-off-by: Daniel Stodden <dns@arista.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: Vicki Pfau <vi@endrift.com>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Reviewed-by: Dmitry Safonov <dima@arista.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/pci/switch/switchtec.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index d1fab1d27e4d..821e71a45849 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -609,10 +609,13 @@ static void quirk_amd_dwc_class(struct pci_dev *pdev)
+diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
+index 2c9c3061894b..0037f368f62b 100644
+--- a/drivers/pci/switch/switchtec.c
++++ b/drivers/pci/switch/switchtec.c
+@@ -1082,13 +1082,6 @@ static void stdev_release(struct device *dev)
  {
- 	u32 class = pdev->class;
+ 	struct switchtec_dev *stdev = to_stdev(dev);
  
--	/* Use "USB Device (not host controller)" class */
--	pdev->class = PCI_CLASS_SERIAL_USB_DEVICE;
--	pci_info(pdev, "PCI class overridden (%#08x -> %#08x) so dwc3 driver can claim this instead of xhci\n",
--		 class, pdev->class);
-+	if (class != PCI_CLASS_SERIAL_USB_DEVICE) {
-+		/* Use "USB Device (not host controller)" class */
-+		pdev->class = PCI_CLASS_SERIAL_USB_DEVICE;
-+		pci_info(pdev,
-+			"PCI class overridden (%#08x -> %#08x) so dwc3 driver can claim this instead of xhci\n",
-+			class, pdev->class);
-+	}
+-	if (stdev->dma_mrpc) {
+-		iowrite32(0, &stdev->mmio_mrpc->dma_en);
+-		flush_wc_buf(stdev);
+-		writeq(0, &stdev->mmio_mrpc->dma_addr);
+-		dma_free_coherent(&stdev->pdev->dev, sizeof(*stdev->dma_mrpc),
+-				stdev->dma_mrpc, stdev->dma_mrpc_dma_addr);
+-	}
+ 	kfree(stdev);
  }
- DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_NL_USB,
- 		quirk_amd_dwc_class);
+ 
+@@ -1131,7 +1124,7 @@ static struct switchtec_dev *stdev_create(struct pci_dev *pdev)
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	stdev->alive = true;
+-	stdev->pdev = pdev;
++	stdev->pdev = pci_dev_get(pdev);
+ 	INIT_LIST_HEAD(&stdev->mrpc_queue);
+ 	mutex_init(&stdev->mrpc_mutex);
+ 	stdev->mrpc_busy = 0;
+@@ -1165,6 +1158,7 @@ static struct switchtec_dev *stdev_create(struct pci_dev *pdev)
+ 	return stdev;
+ 
+ err_put:
++	pci_dev_put(stdev->pdev);
+ 	put_device(&stdev->dev);
+ 	return ERR_PTR(rc);
+ }
+@@ -1407,6 +1401,18 @@ static int switchtec_init_pci(struct switchtec_dev *stdev,
+ 	return 0;
+ }
+ 
++static void switchtec_exit_pci(struct switchtec_dev *stdev)
++{
++	if (stdev->dma_mrpc) {
++		iowrite32(0, &stdev->mmio_mrpc->dma_en);
++		flush_wc_buf(stdev);
++		writeq(0, &stdev->mmio_mrpc->dma_addr);
++		dma_free_coherent(&stdev->pdev->dev, sizeof(*stdev->dma_mrpc),
++				  stdev->dma_mrpc, stdev->dma_mrpc_dma_addr);
++		stdev->dma_mrpc = NULL;
++	}
++}
++
+ static int switchtec_pci_probe(struct pci_dev *pdev,
+ 			       const struct pci_device_id *id)
+ {
+@@ -1464,6 +1470,9 @@ static void switchtec_pci_remove(struct pci_dev *pdev)
+ 	ida_simple_remove(&switchtec_minor_ida, MINOR(stdev->dev.devt));
+ 	dev_info(&stdev->dev, "unregistered.\n");
+ 	stdev_kill(stdev);
++	switchtec_exit_pci(stdev);
++	pci_dev_put(stdev->pdev);
++	stdev->pdev = NULL;
+ 	put_device(&stdev->dev);
+ }
+ 
 -- 
 2.43.0
 
