@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB81379DBC;
-	Wed, 21 Feb 2024 13:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1207179DA2;
+	Wed, 21 Feb 2024 13:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522324; cv=none; b=cWGcE4yrlSbywroNEacIf6U3KRRE7qIQnmnLXZchdXh91G5UcByJGfP5OwsQymEBafJC0x95QiAW1oocOUb29OfrTGiYGucXQbwSSZ8Ttf1xg+1pAXxYSYhwwuAAcXDTGuIvwFjmSOQJGsPF+sm5bP9s/4tCZ5bv6Y1bSYl9e0s=
+	t=1708522326; cv=none; b=FD6kR4l4LiOXM1J+Vidz0TqFWl3X7vRMtsL125vM2Lke8I0XBg8QAG7m8dFpo+aLRBEeJ+TPCZKo576Y30IK431BA6KQOWAELQp3eafOo7uFaKXX7PdveRX+Cvki7lQ6gekrTZzsxmJot5qM06uXbQoALI3Q+rhFQDRjHbtZEIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522324; c=relaxed/simple;
-	bh=20dFILn0zQnyuievY0GwSCvTPn5NxOI8lNILFuFzP/8=;
+	s=arc-20240116; t=1708522326; c=relaxed/simple;
+	bh=gEqNCNvutn1SnBBzrphTLtEFkm6cwhqzagTX8f+cyP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D15ELWcCiEU+U+1J8HqhiRz808gqHEZEPt/NJF0k0oNrs2/rVehJDVVlEimsSKebM4R2L8X5V1Eihuw41rvZZoEsjKrB8liusr86sTbkPAnymB9Bn3QVeZXMlfbgHj1qyzP62BPZfMGfehIB6h2wz/g2ZBBw7gKrVJs6jypEXy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgV1VvX+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ihltxVUrDMIv/Is+fNjnq/v2JhFQ0QMeqZpbNRFq719TN9IU/0tpPBoMR1ZFBqd3ixEahPp8qd7Np1uEuWkd2FmnFAHNRiAiM6HPrlzkq24x2IxQYpZFC7FEJ+jV83v8+6kqqOm4HHf7X/92jJErTKMzRktII/O5b5DFcb7bxTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwPV7Iih; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgV1VvX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4ACFC433F1;
-	Wed, 21 Feb 2024 13:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwPV7Iih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051E9C433F1;
+	Wed, 21 Feb 2024 13:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708522322;
-	bh=20dFILn0zQnyuievY0GwSCvTPn5NxOI8lNILFuFzP/8=;
+	s=korg; t=1708522325;
+	bh=gEqNCNvutn1SnBBzrphTLtEFkm6cwhqzagTX8f+cyP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgV1VvX+32GwcAa9fi1l95tID+UcaI025hyKIauuz+EV3MHHlf/7pjEe5UFAvMcaS
-	 9sLrKKgiLYwALRXk2u7sJblSt71Qgdywl4CXkHucRGI5ElmbdfVZ6YY/OdRjJfAz2S
-	 nGoIDuvawVCIF1cxq8KRJbQeubp/PxAaLLqLVdZ0=
+	b=AwPV7IihW1YENI403/cr1lehhxU63NMvoXwzCiRpRQazkQ/2pYQlEDO+W4mDgnA8E
+	 GaSBRag7UXSU29RaPlEpzrNT44w9mTPpn2wmSZQa47x2+ZuCpmkawtsqGjbi6B9l1c
+	 U/JgiO7TwbYnol6KNzZdTc7SyqTNRHgce6ouS7OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Naveen N Rao <naveen@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/476] powerpc: pmd_move_must_withdraw() is only needed for CONFIG_TRANSPARENT_HUGEPAGE
-Date: Wed, 21 Feb 2024 14:03:03 +0100
-Message-ID: <20240221130012.842473736@linuxfoundation.org>
+Subject: [PATCH 5.15 133/476] powerpc/lib: Validate size for vector operations
+Date: Wed, 21 Feb 2024 14:03:04 +0100
+Message-ID: <20240221130012.878054269@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221130007.738356493@linuxfoundation.org>
 References: <20240221130007.738356493@linuxfoundation.org>
@@ -51,53 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Rothwell <sfr@canb.auug.org.au>
+From: Naveen N Rao <naveen@kernel.org>
 
-[ Upstream commit 0d555b57ee660d8a871781c0eebf006e855e918d ]
+[ Upstream commit 8f9abaa6d7de0a70fc68acaedce290c1f96e2e59 ]
 
-The linux-next build of powerpc64 allnoconfig fails with:
+Some of the fp/vmx code in sstep.c assume a certain maximum size for the
+instructions being emulated. The size of those operations however is
+determined separately in analyse_instr().
 
-  arch/powerpc/mm/book3s64/pgtable.c:557:5: error: no previous prototype for 'pmd_move_must_withdraw'
-    557 | int pmd_move_must_withdraw(struct spinlock *new_pmd_ptl,
-        |     ^~~~~~~~~~~~~~~~~~~~~~
+Add a check to validate the assumption on the maximum size of the
+operations, so as to prevent any unintended kernel stack corruption.
 
-Caused by commit:
-
-  c6345dfa6e3e ("Makefile.extrawarn: turn on missing-prototypes globally")
-
-Fix it by moving the function definition under
-CONFIG_TRANSPARENT_HUGEPAGE like the prototype. The function is only
-called when CONFIG_TRANSPARENT_HUGEPAGE=y.
-
-Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
-[mpe: Flesh out change log from linux-next patch]
+Signed-off-by: Naveen N Rao <naveen@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Build-tested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20231127132809.45c2b398@canb.auug.org.au
+Link: https://msgid.link/20231123071705.397625-1-naveen@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/pgtable.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/lib/sstep.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/powerpc/mm/book3s64/pgtable.c b/arch/powerpc/mm/book3s64/pgtable.c
-index 9e16c7b1a6c5..da15f28c7b13 100644
---- a/arch/powerpc/mm/book3s64/pgtable.c
-+++ b/arch/powerpc/mm/book3s64/pgtable.c
-@@ -459,6 +459,7 @@ void ptep_modify_prot_commit(struct vm_area_struct *vma, unsigned long addr,
- 	set_pte_at(vma->vm_mm, addr, ptep, pte);
- }
+diff --git a/arch/powerpc/lib/sstep.c b/arch/powerpc/lib/sstep.c
+index 2d39b7c246e3..ecc2e06854d7 100644
+--- a/arch/powerpc/lib/sstep.c
++++ b/arch/powerpc/lib/sstep.c
+@@ -529,6 +529,8 @@ static int do_fp_load(struct instruction_op *op, unsigned long ea,
+ 	} u;
  
-+#ifdef CONFIG_TRANSPARENT_HUGEPAGE
- /*
-  * For hash translation mode, we use the deposited table to store hash slot
-  * information and they are stored at PTRS_PER_PMD offset from related pmd
-@@ -480,6 +481,7 @@ int pmd_move_must_withdraw(struct spinlock *new_pmd_ptl,
+ 	nb = GETSIZE(op->type);
++	if (nb > sizeof(u))
++		return -EINVAL;
+ 	if (!address_ok(regs, ea, nb))
+ 		return -EFAULT;
+ 	rn = op->reg;
+@@ -579,6 +581,8 @@ static int do_fp_store(struct instruction_op *op, unsigned long ea,
+ 	} u;
  
- 	return true;
- }
-+#endif
+ 	nb = GETSIZE(op->type);
++	if (nb > sizeof(u))
++		return -EINVAL;
+ 	if (!address_ok(regs, ea, nb))
+ 		return -EFAULT;
+ 	rn = op->reg;
+@@ -623,6 +627,9 @@ static nokprobe_inline int do_vec_load(int rn, unsigned long ea,
+ 		u8 b[sizeof(__vector128)];
+ 	} u = {};
  
- /*
-  * Does the CPU support tlbie?
++	if (size > sizeof(u))
++		return -EINVAL;
++
+ 	if (!address_ok(regs, ea & ~0xfUL, 16))
+ 		return -EFAULT;
+ 	/* align to multiple of size */
+@@ -650,6 +657,9 @@ static nokprobe_inline int do_vec_store(int rn, unsigned long ea,
+ 		u8 b[sizeof(__vector128)];
+ 	} u;
+ 
++	if (size > sizeof(u))
++		return -EINVAL;
++
+ 	if (!address_ok(regs, ea & ~0xfUL, 16))
+ 		return -EFAULT;
+ 	/* align to multiple of size */
 -- 
 2.43.0
 
