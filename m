@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F1E76C99;
-	Wed, 21 Feb 2024 13:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD38555E5E;
+	Wed, 21 Feb 2024 13:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523877; cv=none; b=LMQSnxQXkVIo8ZthR2nKn0BOrv08SBTdXxwC8uOpND6KMH8oL55PMfNUbUfwOh/bQcqc6sHrnOS8N0/paux7yL1IbaSNU53Lx7UK98APuayF6td4+rdZnxx/PCcBCf0a4ZQ9V6FHH8476dX5BRWiPIoaD165NfBBC99qJl3T+9s=
+	t=1708523880; cv=none; b=tJ7EBuPnYR7O92Rx9xr9LcDVTtNc79yn4eDiY5QRWxgsNtpU7G7L2n0wjFPSnrns0bzbLpboHRmD2eppGcsvq2PopC5Se2IGxueRpR84ZkTOTvnvxqUs1srQFH8Em4yqoLLJdxEax5gVHx35JoY2KshpfHNoB1hwOQRV0PHq+gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523877; c=relaxed/simple;
-	bh=E6sFRRWTAuDbJiJiNNLaE5jJl+S0cfgwrYGdptAy8J0=;
+	s=arc-20240116; t=1708523880; c=relaxed/simple;
+	bh=L4vv/55q8Ag7M7B7FO34vE123/DIXT2m4oGG3xA/+VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxsJHE1ldkoJBB3MWYykPPtI7in6JZHVPCgR1AsFT1UeWqx3EIH6K460mF1ZFixNYCYvR2HB/CSWQGyvKWicXPPzxoYChhD2N4HQz7vNgaBfFO0tfr2iEXRjSc3PEWZq3TkWDOiOTT/5IkH8ZiPWZLcPuIu2cufjvkZWNMQshpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeHagEJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f6gDZQjGsxktOeH7cVMS3gWdX9mmRs5RPOTUsK5KaKUhFx5M3LpTCW63S9fb27oVwwyvWtyEPIpDou98yTKuNjfHnxN4FtY1fD1uKqgcAP2ZKbyGfGht4x9SGxWGRQargWLQA6WR4tlWySj0olq3HVSVvXHa/WytwM5jQa2zBdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yn2ar327; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeHagEJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA27C433F1;
-	Wed, 21 Feb 2024 13:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yn2ar327"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6EB5C433F1;
+	Wed, 21 Feb 2024 13:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523877;
-	bh=E6sFRRWTAuDbJiJiNNLaE5jJl+S0cfgwrYGdptAy8J0=;
+	s=korg; t=1708523880;
+	bh=L4vv/55q8Ag7M7B7FO34vE123/DIXT2m4oGG3xA/+VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XeHagEJgG6n/fzbKQ6s7hyZFSj+nW2dHlCoN9QzxkMWVpNTMxdlu2v/j5HLOLGb6u
-	 0pYBLXlAkTJEJaT/MNdIgx7r50hzXyJki0ywgrBpZ8RqGP9E0FsprgJwHKjKpJTZ7Z
-	 cVRmo3zjSHXCSsGa8t3xD7K48MNC+uKK+4s2e4+s=
+	b=yn2ar327Regr/EHTiCxJXz0AvoLuukHQ2xpzStXqNN9X8qDiafj4AzaHfVwd3tdLZ
+	 gL1CPP/i72GpO2B/OMdC+XYpl0y64veF4ZlE5PgiNYhW/LuwbQT+deJsuEYWksa+G/
+	 PtNareIo6YPmTqY3zIDw/KzEghiKKARLK1IxIqcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li zeming <zeming@nfschina.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/379] PM: core: Remove unnecessary (void *) conversions
-Date: Wed, 21 Feb 2024 14:04:18 +0100
-Message-ID: <20240221125957.246168319@linuxfoundation.org>
+	syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com,
+	syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com,
+	Anand Jain <anand.jain@oracle.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 062/379] btrfs: ref-verify: free ref cache before clearing mount opt
+Date: Wed, 21 Feb 2024 14:04:01 +0100
+Message-ID: <20240221125956.746694296@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,83 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li zeming <zeming@nfschina.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 73d73f5ee7fb0c42ff87091d105bee720a9565f1 ]
+commit f03e274a8b29d1d1c1bbd7f764766cb5ca537ab7 upstream.
 
-Assignments from pointer variables of type (void *) do not require
-explicit type casts, so remove such type cases from the code in
-drivers/base/power/main.c where applicable.
+As clearing REF_VERIFY mount option indicates there were some errors in a
+ref-verify process, a ref cache is not relevant anymore and should be
+freed.
 
-Signed-off-by: Li zeming <zeming@nfschina.com>
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 7839d0078e0d ("PM: sleep: Fix possible deadlocks in core system-wide PM code")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+btrfs_free_ref_cache() requires REF_VERIFY option being set so call
+it just before clearing the mount option.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Reported-by: syzbot+be14ed7728594dc8bd42@syzkaller.appspotmail.com
+Fixes: fd708b81d972 ("Btrfs: add a extent ref verify tool")
+CC: stable@vger.kernel.org # 5.4+
+Closes: https://lore.kernel.org/lkml/000000000000e5a65c05ee832054@google.com/
+Reported-by: syzbot+c563a3c79927971f950f@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/0000000000007fe09705fdc6086c@google.com/
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/main.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/btrfs/ref-verify.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
-index 6c334a65644c..402f3c4e3668 100644
---- a/drivers/base/power/main.c
-+++ b/drivers/base/power/main.c
-@@ -683,7 +683,7 @@ static bool dpm_async_fn(struct device *dev, async_func_t func)
+--- a/fs/btrfs/ref-verify.c
++++ b/fs/btrfs/ref-verify.c
+@@ -899,8 +899,10 @@ int btrfs_ref_tree_mod(struct btrfs_fs_i
+ out_unlock:
+ 	spin_unlock(&fs_info->ref_verify_lock);
+ out:
+-	if (ret)
++	if (ret) {
++		btrfs_free_ref_cache(fs_info);
+ 		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
++	}
+ 	return ret;
+ }
  
- static void async_resume_noirq(void *data, async_cookie_t cookie)
- {
--	struct device *dev = (struct device *)data;
-+	struct device *dev = data;
- 	int error;
- 
- 	error = device_resume_noirq(dev, pm_transition, true);
-@@ -822,7 +822,7 @@ static int device_resume_early(struct device *dev, pm_message_t state, bool asyn
- 
- static void async_resume_early(void *data, async_cookie_t cookie)
- {
--	struct device *dev = (struct device *)data;
-+	struct device *dev = data;
- 	int error;
- 
- 	error = device_resume_early(dev, pm_transition, true);
-@@ -986,7 +986,7 @@ static int device_resume(struct device *dev, pm_message_t state, bool async)
- 
- static void async_resume(void *data, async_cookie_t cookie)
- {
--	struct device *dev = (struct device *)data;
-+	struct device *dev = data;
- 	int error;
- 
- 	error = device_resume(dev, pm_transition, true);
-@@ -1275,7 +1275,7 @@ static int __device_suspend_noirq(struct device *dev, pm_message_t state, bool a
- 
- static void async_suspend_noirq(void *data, async_cookie_t cookie)
- {
--	struct device *dev = (struct device *)data;
-+	struct device *dev = data;
- 	int error;
- 
- 	error = __device_suspend_noirq(dev, pm_transition, true);
-@@ -1458,7 +1458,7 @@ static int __device_suspend_late(struct device *dev, pm_message_t state, bool as
- 
- static void async_suspend_late(void *data, async_cookie_t cookie)
- {
--	struct device *dev = (struct device *)data;
-+	struct device *dev = data;
- 	int error;
- 
- 	error = __device_suspend_late(dev, pm_transition, true);
-@@ -1734,7 +1734,7 @@ static int __device_suspend(struct device *dev, pm_message_t state, bool async)
- 
- static void async_suspend(void *data, async_cookie_t cookie)
- {
--	struct device *dev = (struct device *)data;
-+	struct device *dev = data;
- 	int error;
- 
- 	error = __device_suspend(dev, pm_transition, true);
--- 
-2.43.0
-
+@@ -1029,8 +1031,8 @@ int btrfs_build_ref_tree(struct btrfs_fs
+ 		}
+ 	}
+ 	if (ret) {
+-		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 		btrfs_free_ref_cache(fs_info);
++		btrfs_clear_opt(fs_info->mount_opt, REF_VERIFY);
+ 	}
+ 	btrfs_free_path(path);
+ 	return ret;
 
 
