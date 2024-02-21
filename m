@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694133CF42;
-	Wed, 21 Feb 2024 14:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714793CF42;
+	Wed, 21 Feb 2024 14:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525458; cv=none; b=XMXNtv0X+/E5nr1VJuJMm6A16l+zKgYlNY/jaYNCeMbdzeEFbJziuGU3o6bJOUOcDQVI1yis26ujPVJ9Mh7TeZvEsKWqrzopXKZFudXmSRaoD/IkZHn5r9YVNTxcoiYLaznl+9UuJNWGFswbqkyi3BAxufA6mvzuJ9WD7gpM4Fk=
+	t=1708525461; cv=none; b=QJlkTBktnsEO2icz4CoeVQgP6uO51UDiVuFlGjxMzJriH5LMMxcc3mCnXLcxjKdraYb8swR/lqos7heXoxVtuMBgfyU6QkRHoGJNxRSjNZbyNWCsT+koTcUDtOGdkh6H+Nu1PPqsXeX7t9IXB9xQXdB9UV+Jqoi2jLxNXUhgiME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525458; c=relaxed/simple;
-	bh=TmLktg+QEfNXn5S5Igs9Fv5AvkQx8+MVlAKv5ncka2U=;
+	s=arc-20240116; t=1708525461; c=relaxed/simple;
+	bh=iVBA2IAGulJy4NUBllSA75uAFh8KZL27Yr2PBpgjw2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CsRyU0YyOxZyQibEaDz1PQyCZqPFKSFbmQTSb+jYA5yJJBn62eXSNluzvu2biaD7FDqVrikJtgDsjUyMX0gCNqx8tsVQFG3g4mnRbf3+ZzmuAyfwwQyJ1jeJ+LXGpv9zIzd5BK0RwsHjc/hjOwtsBvwCnJj1B3bYCUqr3TmOcbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjazY5em; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s61hTo/KX/vzZ1TurYB2zU79j4GaLr8XbZAiB1y7bLuFLzNMscEHTWE/4BXccy6HX8b8Dh3IO75iKK7VX7U74MGtSuNLhujIEsVnpFDbhKrgFxCIVqafDbT90/LI35Yf1iG5WBes9YWZ5PDapxI9KsFLTUqNxem1+2NbaUQ+p1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYf6yJb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjazY5em"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E595C433F1;
-	Wed, 21 Feb 2024 14:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYf6yJb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CDD1C433F1;
+	Wed, 21 Feb 2024 14:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525457;
-	bh=TmLktg+QEfNXn5S5Igs9Fv5AvkQx8+MVlAKv5ncka2U=;
+	s=korg; t=1708525461;
+	bh=iVBA2IAGulJy4NUBllSA75uAFh8KZL27Yr2PBpgjw2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YjazY5emj6dmv7V4SI1wMNA5TRk3jYEdU3wu7JHtQ06us8eZsIXsgqwrpTCiOcSz1
-	 6+F1WdomRz5u0H0WRrrHivV2QU/4My2oVf3gWZ7JIPoIgnKB8koRXqKj82y6Zc4u7D
-	 GEWU8wAgKz9FOExyrL4B92dQFdesqzJ61IdxlKF8=
+	b=EYf6yJb7OVS2hMOIMqrKZsROWJusPUZNGP9kDzq3mhRTa6qxzaPlnmaq6qWDlObEh
+	 bofQrBxZPtTr0HnlRuBtz1bCKh+wJPcb+sQWI8lO2mFYM+uVxRlxk+MxmGGy45dLaI
+	 /z3VUxpxlGMYjkYwzuDWGiUjXMZKp2ndElZMsj9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 160/267] net: remove unneeded break
-Date: Wed, 21 Feb 2024 14:08:21 +0100
-Message-ID: <20240221125945.102296968@linuxfoundation.org>
+Subject: [PATCH 5.4 134/267] drm/msm/dpu: Ratelimit framedone timeout msgs
+Date: Wed, 21 Feb 2024 14:07:55 +0100
+Message-ID: <20240221125944.262494900@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -51,82 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Rix <trix@redhat.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 7ebb9db011088f9bd357791f49cb7012e66f29e2 ]
+[ Upstream commit 2b72e50c62de60ad2d6bcd86aa38d4ccbdd633f2 ]
 
-A break is not needed if it is preceded by a return or goto
+When we start getting these, we get a *lot*.  So ratelimit it to not
+flood dmesg.
 
-Signed-off-by: Tom Rix <trix@redhat.com>
-Link: https://lore.kernel.org/r/20201019172607.31622-1-trix@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: bbc404d20d1b ("ixgbe: Fix an error handling path in ixgbe_read_iosf_sb_reg_x550()")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/571584/
+Link: https://lore.kernel.org/r/20231211182000.218088-1-robdclark@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_nic.c | 1 -
- drivers/net/ethernet/cisco/enic/enic_ethtool.c  | 1 -
- drivers/net/ethernet/intel/ixgbe/ixgbe_x540.c   | 1 -
- drivers/net/wan/lmc/lmc_proto.c                 | 4 ----
- 4 files changed, 7 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-index 145334fb18f4..4eeafd529385 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_nic.c
-@@ -903,7 +903,6 @@ int aq_nic_set_link_ksettings(struct aq_nic_s *self,
- 		default:
- 			err = -1;
- 			goto err_exit;
--		break;
- 		}
- 		if (!(self->aq_nic_cfg.aq_hw_caps->link_speed_msk & rate)) {
- 			err = -1;
-diff --git a/drivers/net/ethernet/cisco/enic/enic_ethtool.c b/drivers/net/ethernet/cisco/enic/enic_ethtool.c
-index ebd5c2cf1efe..e799c686594e 100644
---- a/drivers/net/ethernet/cisco/enic/enic_ethtool.c
-+++ b/drivers/net/ethernet/cisco/enic/enic_ethtool.c
-@@ -454,7 +454,6 @@ static int enic_grxclsrule(struct enic *enic, struct ethtool_rxnfc *cmd)
- 		break;
- 	default:
- 		return -EINVAL;
--		break;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 99d449ce4a07..03d671d23bf7 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -44,6 +44,9 @@
+ 		(p) ? ((p)->hw_pp ? (p)->hw_pp->idx - PINGPONG_0 : -1) : -1, \
+ 		##__VA_ARGS__)
+ 
++#define DPU_ERROR_ENC_RATELIMITED(e, fmt, ...) DPU_ERROR_RATELIMITED("enc%d " fmt,\
++		(e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
++
+ /*
+  * Two to anticipate panels that can do cmd/vid dynamic switching
+  * plan is to create all possible physical encoder types, and switch between
+@@ -2151,7 +2154,7 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
+ 		return;
  	}
  
- 	fsp->h_u.tcp_ip4_spec.ip4src = flow_get_u32_src(&n->keys);
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_x540.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_x540.c
-index de563cfd294d..4b93ba149ec5 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_x540.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_x540.c
-@@ -350,7 +350,6 @@ static s32 ixgbe_calc_eeprom_checksum_X540(struct ixgbe_hw *hw)
- 		if (ixgbe_read_eerd_generic(hw, pointer, &length)) {
- 			hw_dbg(hw, "EEPROM read failed\n");
- 			return IXGBE_ERR_EEPROM;
--			break;
- 		}
+-	DPU_ERROR_ENC(dpu_enc, "frame done timeout\n");
++	DPU_ERROR_ENC_RATELIMITED(dpu_enc, "frame done timeout\n");
  
- 		/* Skip pointer section if length is invalid. */
-diff --git a/drivers/net/wan/lmc/lmc_proto.c b/drivers/net/wan/lmc/lmc_proto.c
-index a58301dd0c1f..1c63ae9a3ba8 100644
---- a/drivers/net/wan/lmc/lmc_proto.c
-+++ b/drivers/net/wan/lmc/lmc_proto.c
-@@ -101,17 +101,13 @@ __be16 lmc_proto_type(lmc_softc_t *sc, struct sk_buff *skb) /*FOLD00*/
-     switch(sc->if_type){
-     case LMC_PPP:
- 	    return hdlc_type_trans(skb, sc->lmc_device);
--	    break;
-     case LMC_NET:
-         return htons(ETH_P_802_2);
--        break;
-     case LMC_RAW: /* Packet type for skbuff kind of useless */
-         return htons(ETH_P_802_2);
--        break;
-     default:
-         printk(KERN_WARNING "%s: No protocol set for this interface, assuming 802.2 (which is wrong!!)\n", sc->name);
-         return htons(ETH_P_802_2);
--        break;
-     }
-     lmc_trace(sc->lmc_device, "lmc_proto_tye out");
+ 	event = DPU_ENCODER_FRAME_EVENT_ERROR;
+ 	trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 4c889aabdaf9..6a4813505c33 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -50,6 +50,7 @@
+ 	} while (0)
  
+ #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
++#define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error]" fmt, ##__VA_ARGS__)
+ 
+ /**
+  * ktime_compare_safe - compare two ktime structures
 -- 
 2.43.0
 
