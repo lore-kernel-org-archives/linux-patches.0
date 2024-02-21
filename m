@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB4A7BB0E;
-	Wed, 21 Feb 2024 13:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282FE38398;
+	Wed, 21 Feb 2024 13:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523668; cv=none; b=Wq0LQPR0z5/YgxHiD4jS+kB7/BmJK07h4RQgo2ynVUDnnuxZqu61QieMu46mb00KaGkoXWOqUzu/Uzjo7Wgalo1P2meMIwyEe/k/MNEb+QdzuKpEXQMDXVwVvZwyhvKOtARg1BGrEnJ7dkmhErYVbFn6h2bSKoD+J09/WcKCBf8=
+	t=1708523671; cv=none; b=MemtI5ipvjB51cvaksaEVudmjyM3kSNxSEJ7pOwMWn0QYF7R4CTmac6qDmR7cxiHQS5uFw2j13qet4qvBFtSOtnTIm1CASQZgBp7nv7QYd7ZAsUHr8KKikix7OmtA+8nJRfciFxfFN3Wk14NcWbYXjBSfJslS37OP92nxULuQ/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523668; c=relaxed/simple;
-	bh=ASVcYrLBQCVkxUXahW05TycXMFVvReYHDiA8HTt8sKc=;
+	s=arc-20240116; t=1708523671; c=relaxed/simple;
+	bh=b7xp/vhLQHTYAua7tj61jDc9OV8Rm4t2UCDlb/RGLRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsPQJnRXAr3V0ogQbBoe83/6GrUrodJnL4kaUNRc1P3q7y61mhXhwRkPtSxrneBhBZA5mwb9LevpdEAOCMTAJkD0JBydAH4qdK9X+9y3aCtZqzX+JtDL2KsWFJv9OD1Bmqtdsb82Xto47GeJylnWdDb/yK4ouTm63zSRxtwRqYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPTV7WIF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=As0W0dejySbgX8NVWmmdHZ287ofkLTKx/r0V81ERv8uMb9y7YQQkOIrhcDnDYuKgwepT2eRai2Bit5WFUzjWbtcFT80lWXsojuYTLSItU57dRbaEa2Dl2YirkOVvZzviBAZmUGK7LhMB4suoudBxcpKWBR8mS0W/tatSc13zcE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFIdGFtL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPTV7WIF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A69C433F1;
-	Wed, 21 Feb 2024 13:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFIdGFtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCAAC433F1;
+	Wed, 21 Feb 2024 13:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523668;
-	bh=ASVcYrLBQCVkxUXahW05TycXMFVvReYHDiA8HTt8sKc=;
+	s=korg; t=1708523671;
+	bh=b7xp/vhLQHTYAua7tj61jDc9OV8Rm4t2UCDlb/RGLRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPTV7WIFSfqp1YucohFsPLsrgS6VcKVwvjVsQi64AW5xlrUxdCOSiTQlbZRYUnr14
-	 f5Yh7MPjJc+p3vrGtLsQ+4OsR/z1nBlwHx3yLCN9u9aFlGpQfdpR/jJFaE+Eremcwg
-	 77cU/ckpAjx8IL4p7BZHd8y3qIIR3yXWt2yXmcnw=
+	b=XFIdGFtL0V+DzJdZnzFk0H9vQIcvqRggYc/c5DmlTzuDQnKSlo/Y4qzUSJgA1Zbs4
+	 d1utJAa/06aCkLldjKXzDEuu0hUakjjOdZbOsPOhpslzDzS7d/d02A8Hh/u5tKYamo
+	 eESNnVkKkCOx2cQQD0wObTOBZVtUc2uw1tT1+QN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 5.10 023/379] bus: mhi: host: Drop chan lock before queuing buffers
-Date: Wed, 21 Feb 2024 14:03:22 +0100
-Message-ID: <20240221125955.604258214@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 024/379] parisc/firmware: Fix F-extend for PDC addresses
+Date: Wed, 21 Feb 2024 14:03:23 +0100
+Message-ID: <20240221125955.634126437@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,49 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 01bd694ac2f682fb8017e16148b928482bc8fa4b upstream.
+commit 735ae74f73e55c191d48689bd11ff4a06ea0508f upstream.
 
-Ensure read and write locks for the channel are not taken in succession by
-dropping the read lock from parse_xfer_event() such that a callback given
-to client can potentially queue buffers and acquire the write lock in that
-process. Any queueing of buffers should be done without channel read lock
-acquired as it can result in multiple locks and a soft lockup.
+When running with narrow firmware (64-bit kernel using a 32-bit
+firmware), extend PDC addresses into the 0xfffffff0.00000000
+region instead of the 0xf0f0f0f0.00000000 region.
 
-Cc: <stable@vger.kernel.org> # 5.7
-Fixes: 1d3173a3bae7 ("bus: mhi: core: Add support for processing events from client device")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/1702276972-41296-3-git-send-email-quic_qianyu@quicinc.com
-[mani: added fixes tag and cc'ed stable]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+This fixes the power button on the C3700 machine in qemu (64-bit CPU
+with 32-bit firmware), and my assumption is that the previous code was
+really never used (because most 64-bit machines have a 64-bit firmware),
+or it just worked on very old machines because they may only decode
+40-bit of virtual addresses.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/main.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/parisc/kernel/firmware.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -569,6 +569,8 @@ static int parse_xfer_event(struct mhi_c
- 			mhi_del_ring_element(mhi_cntrl, tre_ring);
- 			local_rp = tre_ring->rp;
+--- a/arch/parisc/kernel/firmware.c
++++ b/arch/parisc/kernel/firmware.c
+@@ -123,10 +123,10 @@ static unsigned long f_extend(unsigned l
+ #ifdef CONFIG_64BIT
+ 	if(unlikely(parisc_narrow_firmware)) {
+ 		if((address & 0xff000000) == 0xf0000000)
+-			return 0xf0f0f0f000000000UL | (u32)address;
++			return (0xfffffff0UL << 32) | (u32)address;
  
-+			read_unlock_bh(&mhi_chan->lock);
-+
- 			/* notify client */
- 			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
- 
-@@ -591,6 +593,8 @@ static int parse_xfer_event(struct mhi_c
- 					kfree(buf_info->cb_buf);
- 				}
- 			}
-+
-+			read_lock_bh(&mhi_chan->lock);
- 		}
- 		break;
- 	} /* CC_EOT */
+ 		if((address & 0xf0000000) == 0xf0000000)
+-			return 0xffffffff00000000UL | (u32)address;
++			return (0xffffffffUL << 32) | (u32)address;
+ 	}
+ #endif
+ 	return address;
 
 
