@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282FE38398;
-	Wed, 21 Feb 2024 13:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538DB78B7C;
+	Wed, 21 Feb 2024 13:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708523671; cv=none; b=MemtI5ipvjB51cvaksaEVudmjyM3kSNxSEJ7pOwMWn0QYF7R4CTmac6qDmR7cxiHQS5uFw2j13qet4qvBFtSOtnTIm1CASQZgBp7nv7QYd7ZAsUHr8KKikix7OmtA+8nJRfciFxfFN3Wk14NcWbYXjBSfJslS37OP92nxULuQ/E=
+	t=1708523674; cv=none; b=XIHSfwg5QBpqlXQ7JyEYUAn5o36UZ1jirN5e1tn4A2FvZHbKg81VM+G6gD0lOBNfkKSn81vFtQWgQbf0NrciuGhElT59KsDweYb2JF0BfJVLY91J/dsR+DSeg/OhJQ68bvk4IeQ0Znfzy2sqOSvilcCZS+rWsJdpAJPpHaHHcSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708523671; c=relaxed/simple;
-	bh=b7xp/vhLQHTYAua7tj61jDc9OV8Rm4t2UCDlb/RGLRM=;
+	s=arc-20240116; t=1708523674; c=relaxed/simple;
+	bh=pU22Bp3UPXLBoRflOhpdMOfSPWMjI02t2lttAA8jpAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=As0W0dejySbgX8NVWmmdHZ287ofkLTKx/r0V81ERv8uMb9y7YQQkOIrhcDnDYuKgwepT2eRai2Bit5WFUzjWbtcFT80lWXsojuYTLSItU57dRbaEa2Dl2YirkOVvZzviBAZmUGK7LhMB4suoudBxcpKWBR8mS0W/tatSc13zcE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFIdGFtL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XkjgppjXWX9eAqC9rBv+aBmMvC175YWoAbDnRcZj3rnDsPVcjc1y82K5cmY6l0X7W6LsgoguMfJcJTJXBlr68iOA+PRMvMhvTEZAlvjrWdVJPJmKDkkpfYbXx4InveLAECdlCZlN7ir0VB3HYXFHX8Omihn4hQIg5M2zt/7i7k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHPMWiRc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFIdGFtL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCAAC433F1;
-	Wed, 21 Feb 2024 13:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHPMWiRc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CB1C433C7;
+	Wed, 21 Feb 2024 13:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708523671;
-	bh=b7xp/vhLQHTYAua7tj61jDc9OV8Rm4t2UCDlb/RGLRM=;
+	s=korg; t=1708523674;
+	bh=pU22Bp3UPXLBoRflOhpdMOfSPWMjI02t2lttAA8jpAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XFIdGFtL0V+DzJdZnzFk0H9vQIcvqRggYc/c5DmlTzuDQnKSlo/Y4qzUSJgA1Zbs4
-	 d1utJAa/06aCkLldjKXzDEuu0hUakjjOdZbOsPOhpslzDzS7d/d02A8Hh/u5tKYamo
-	 eESNnVkKkCOx2cQQD0wObTOBZVtUc2uw1tT1+QN8=
+	b=WHPMWiRc7J8lXTyCqwrdlXmQs8yeTgO0eR+xxn8h1Qceo3wUagaUk2MAcGp9ZiB/L
+	 BQ0d8UwBQfq0Q26CGtlJRqkkCZOhqA9KSuj5SEL5/bS/NJ0bDKXApzSVtq+B4PWHXo
+	 SMOpBm2JIyFjREYM7EGjj8fcieYS0DfsExOBxZTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 024/379] parisc/firmware: Fix F-extend for PDC addresses
-Date: Wed, 21 Feb 2024 14:03:23 +0100
-Message-ID: <20240221125955.634126437@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Youngmin Nam <youngmin.nam@samsung.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 025/379] async: Split async_schedule_node_domain()
+Date: Wed, 21 Feb 2024 14:03:24 +0100
+Message-ID: <20240221125955.662764719@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -49,41 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 735ae74f73e55c191d48689bd11ff4a06ea0508f upstream.
+commit 6aa09a5bccd8e224d917afdb4c278fc66aacde4d upstream.
 
-When running with narrow firmware (64-bit kernel using a 32-bit
-firmware), extend PDC addresses into the 0xfffffff0.00000000
-region instead of the 0xf0f0f0f0.00000000 region.
+In preparation for subsequent changes, split async_schedule_node_domain()
+in two pieces so as to allow the bottom part of it to be called from a
+somewhat different code path.
 
-This fixes the power button on the C3700 machine in qemu (64-bit CPU
-with 32-bit firmware), and my assumption is that the previous code was
-really never used (because most 64-bit machines have a 64-bit firmware),
-or it just worked on very old machines because they may only decode
-40-bit of virtual addresses.
+No functional impact.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Tested-by: Youngmin Nam <youngmin.nam@samsung.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/firmware.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/async.c |   56 ++++++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 34 insertions(+), 22 deletions(-)
 
---- a/arch/parisc/kernel/firmware.c
-+++ b/arch/parisc/kernel/firmware.c
-@@ -123,10 +123,10 @@ static unsigned long f_extend(unsigned l
- #ifdef CONFIG_64BIT
- 	if(unlikely(parisc_narrow_firmware)) {
- 		if((address & 0xff000000) == 0xf0000000)
--			return 0xf0f0f0f000000000UL | (u32)address;
-+			return (0xfffffff0UL << 32) | (u32)address;
+--- a/kernel/async.c
++++ b/kernel/async.c
+@@ -145,6 +145,39 @@ static void async_run_entry_fn(struct wo
+ 	wake_up(&async_done);
+ }
  
- 		if((address & 0xf0000000) == 0xf0000000)
--			return 0xffffffff00000000UL | (u32)address;
-+			return (0xffffffffUL << 32) | (u32)address;
++static async_cookie_t __async_schedule_node_domain(async_func_t func,
++						   void *data, int node,
++						   struct async_domain *domain,
++						   struct async_entry *entry)
++{
++	async_cookie_t newcookie;
++	unsigned long flags;
++
++	INIT_LIST_HEAD(&entry->domain_list);
++	INIT_LIST_HEAD(&entry->global_list);
++	INIT_WORK(&entry->work, async_run_entry_fn);
++	entry->func = func;
++	entry->data = data;
++	entry->domain = domain;
++
++	spin_lock_irqsave(&async_lock, flags);
++
++	/* allocate cookie and queue */
++	newcookie = entry->cookie = next_cookie++;
++
++	list_add_tail(&entry->domain_list, &domain->pending);
++	if (domain->registered)
++		list_add_tail(&entry->global_list, &async_global_pending);
++
++	atomic_inc(&entry_count);
++	spin_unlock_irqrestore(&async_lock, flags);
++
++	/* schedule for execution */
++	queue_work_node(node, system_unbound_wq, &entry->work);
++
++	return newcookie;
++}
++
+ /**
+  * async_schedule_node_domain - NUMA specific version of async_schedule_domain
+  * @func: function to execute asynchronously
+@@ -186,29 +219,8 @@ async_cookie_t async_schedule_node_domai
+ 		func(data, newcookie);
+ 		return newcookie;
  	}
- #endif
- 	return address;
+-	INIT_LIST_HEAD(&entry->domain_list);
+-	INIT_LIST_HEAD(&entry->global_list);
+-	INIT_WORK(&entry->work, async_run_entry_fn);
+-	entry->func = func;
+-	entry->data = data;
+-	entry->domain = domain;
+-
+-	spin_lock_irqsave(&async_lock, flags);
+ 
+-	/* allocate cookie and queue */
+-	newcookie = entry->cookie = next_cookie++;
+-
+-	list_add_tail(&entry->domain_list, &domain->pending);
+-	if (domain->registered)
+-		list_add_tail(&entry->global_list, &async_global_pending);
+-
+-	atomic_inc(&entry_count);
+-	spin_unlock_irqrestore(&async_lock, flags);
+-
+-	/* schedule for execution */
+-	queue_work_node(node, system_unbound_wq, &entry->work);
+-
+-	return newcookie;
++	return __async_schedule_node_domain(func, data, node, domain, entry);
+ }
+ EXPORT_SYMBOL_GPL(async_schedule_node_domain);
+ 
 
 
