@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06B669942;
-	Wed, 21 Feb 2024 14:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE62569942;
+	Wed, 21 Feb 2024 14:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708524772; cv=none; b=TZ4FrstsbW3p717dvjuvX6GTwj7ZZhjQRC1oAX2Vkz3q5yYMgRiHsSmJyA2H0rOT8Ur/JAkPzkxpIrzDb7qsfeeWvH7mRieE8QejC6oILz66dFpxLduJu7Q30Ex75jIDvIDbQhaXEJEk6ZWDbe6P+HHZlLQQI1z3OeawohIlWFs=
+	t=1708524776; cv=none; b=cHEX67EiqHDXKHr1wJaTv86P6xGyQa2+OdlKVz5zrTtU8KRtmvGqxJa6BFd8wEowQynDODgXVTdPxrULS2y6dv50j+QHQ/RG1Ab+h7siGAqlE3SeqF1A5qFRneP+9opR0ei0XQPrkXASs7HPguGQyrwJ5nMGyuAqoMHCKU0rNyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708524772; c=relaxed/simple;
-	bh=MjxYe7NoAr9PbPGOv+U6Q0hc0OM2jwrMpuDauoueFH8=;
+	s=arc-20240116; t=1708524776; c=relaxed/simple;
+	bh=dL+ZWFVICiz1aoafzVREQs0aEJ8ZlAYFi6VJKSk1iOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQl2B39w4gH+UmYMAFWSt2jDprapiN7kwUtR7YcGw/GK1qU3NVLWSDytoPXEkzumCTp3BsEUIZPBteu9ZwkG7unB5HK8FwXQLn4iDNVvpaBlyn343siwTV9pSLRktkyf/D/nu1C02+lUO8SPPWJEBgRVvF+JOUVnzxqpnFqML/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CILSNe19; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CW95Xm0+j/lRoD7fS0cxw8eLVkcvrvYCUTtaAqIzNcR60M/V4AxqwOZ3nuaCv2U2oTs2TaTvzPgP89nR/uwrCep3hX3gfZrJPzXchmjHhTKVnSHIr1nKWka62B8uJzNCYEPjW5WxO25zz8VD7aYfGKTmyov1to52r/g5EcGRXeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKNZionZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CILSNe19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301F2C433F1;
-	Wed, 21 Feb 2024 14:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKNZionZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBC0C433F1;
+	Wed, 21 Feb 2024 14:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708524772;
-	bh=MjxYe7NoAr9PbPGOv+U6Q0hc0OM2jwrMpuDauoueFH8=;
+	s=korg; t=1708524775;
+	bh=dL+ZWFVICiz1aoafzVREQs0aEJ8ZlAYFi6VJKSk1iOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CILSNe192EgyIVu3dbrLzw+Pt23u7SYBWt3TZS92bVk84r80c3NtaU/nU8HioAuld
-	 IRbqQg6YMPC/wse7EsqGrOXXowAEZh0aEG+F6f17dy54A45VJeC7T8b4mBXgRR4b6V
-	 jvfmqEZEH3sFdqJUsCKv8Q/oI1iwUBFOccZ2nLS0=
+	b=ZKNZionZFlp/kTeXaafjSgeKK1GQKR5gKPUcHzAKtA/nk2z7+2KeDcurkvEB6ATNs
+	 7yLuMKeLM2fgXZeZDDY1zl1qpRXK2quWOu61f/69nnq9242EYmNKXP3UsYihplou2Z
+	 afny0NG0fa0iRWxwus9pdf1s45c8Zky3qeA00/Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6b7c68d9c21e4ee4251b@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	syzbot+3ae0a3f42c84074b7c8e@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 315/379] nfc: nci: free rx_data_reassembly skb on NCI device cleanup
-Date: Wed, 21 Feb 2024 14:08:14 +0100
-Message-ID: <20240221130004.250265951@linuxfoundation.org>
+Subject: [PATCH 5.10 316/379] net: hsr: remove WARN_ONCE() in send_hsr_supervision_frame()
+Date: Wed, 21 Feb 2024 14:08:15 +0100
+Message-ID: <20240221130004.284642733@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125954.917878865@linuxfoundation.org>
 References: <20240221125954.917878865@linuxfoundation.org>
@@ -51,45 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit bfb007aebe6bff451f7f3a4be19f4f286d0d5d9c upstream.
+commit 37e8c97e539015637cb920d3e6f1e404f707a06e upstream.
 
-rx_data_reassembly skb is stored during NCI data exchange for processing
-fragmented packets. It is dropped only when the last fragment is processed
-or when an NTF packet with NCI_OP_RF_DEACTIVATE_NTF opcode is received.
-However, the NCI device may be deallocated before that which leads to skb
-leak.
+Syzkaller reported [1] hitting a warning after failing to allocate
+resources for skb in hsr_init_skb(). Since a WARN_ONCE() call will
+not help much in this case, it might be prudent to switch to
+netdev_warn_once(). At the very least it will suppress syzkaller
+reports such as [1].
 
-As by design the rx_data_reassembly skb is bound to the NCI device and
-nothing prevents the device to be freed before the skb is processed in
-some way and cleaned, free it on the NCI device cleanup.
+Just in case, use netdev_warn_once() in send_prp_supervision_frame()
+for similar reasons.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+[1]
+HSR: Could not send supervision frame
+WARNING: CPU: 1 PID: 85 at net/hsr/hsr_device.c:294 send_hsr_supervision_frame+0x60a/0x810 net/hsr/hsr_device.c:294
+RIP: 0010:send_hsr_supervision_frame+0x60a/0x810 net/hsr/hsr_device.c:294
+...
+Call Trace:
+ <IRQ>
+ hsr_announce+0x114/0x370 net/hsr/hsr_device.c:382
+ call_timer_fn+0x193/0x590 kernel/time/timer.c:1700
+ expire_timers kernel/time/timer.c:1751 [inline]
+ __run_timers+0x764/0xb20 kernel/time/timer.c:2022
+ run_timer_softirq+0x58/0xd0 kernel/time/timer.c:2035
+ __do_softirq+0x21a/0x8de kernel/softirq.c:553
+ invoke_softirq kernel/softirq.c:427 [inline]
+ __irq_exit_rcu kernel/softirq.c:632 [inline]
+ irq_exit_rcu+0xb7/0x120 kernel/softirq.c:644
+ sysvec_apic_timer_interrupt+0x95/0xb0 arch/x86/kernel/apic/apic.c:1076
+ </IRQ>
+ <TASK>
+ asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:649
+...
 
-Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+This issue is also found in older kernels (at least up to 5.10).
+
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+6b7c68d9c21e4ee4251b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/000000000000f43987060043da7b@google.com/
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Reported-by: syzbot+3ae0a3f42c84074b7c8e@syzkaller.appspotmail.com
+Fixes: 121c33b07b31 ("net: hsr: introduce common code for skb initialization")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/nci/core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/hsr/hsr_device.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -1197,6 +1197,10 @@ void nci_free_device(struct nci_dev *nde
- {
- 	nfc_free_device(ndev->nfc_dev);
- 	nci_hci_deallocate(ndev);
-+
-+	/* drop partial rx data packet if present */
-+	if (ndev->rx_data_reassembly)
-+		kfree_skb(ndev->rx_data_reassembly);
- 	kfree(ndev);
- }
- EXPORT_SYMBOL(nci_free_device);
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -291,7 +291,7 @@ static void send_hsr_supervision_frame(s
+ 
+ 	skb = hsr_init_skb(master);
+ 	if (!skb) {
+-		WARN_ONCE(1, "HSR: Could not send supervision frame\n");
++		netdev_warn_once(master->dev, "HSR: Could not send supervision frame\n");
+ 		return;
+ 	}
+ 
+@@ -338,7 +338,7 @@ static void send_prp_supervision_frame(s
+ 
+ 	skb = hsr_init_skb(master);
+ 	if (!skb) {
+-		WARN_ONCE(1, "PRP: Could not send supervision frame\n");
++		netdev_warn_once(master->dev, "PRP: Could not send supervision frame\n");
+ 		return;
+ 	}
+ 
 
 
