@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9097A708;
-	Wed, 21 Feb 2024 14:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880FC7C0A4;
+	Wed, 21 Feb 2024 14:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525763; cv=none; b=u57Zbz9PrOLDJAXYgBLjpmt2lN1DLUaVJxt3zfZJYcGnu8tMY2QXlCo67bxCQT4PDILnnQHkkqg26uI6RBFIiKP/jhxgcJENTYMe4zBxJiVrcKNYE2NDvtXod4lxBgynk8F4YZ/rOHpKkkite4VIrVnQcGJ6lEwRV7dB9tYNFk0=
+	t=1708525766; cv=none; b=ef9GB89riQFUJEDPpsC57c1QPQPG4mG6pHSqPVVX+BAdn0eBHohXKOa7xHdM/7V1Evq01j7IgJvfEvdsBT3CRajof06SrX1cV1ilnf7j29Ci7zoyMcuaOL1TU3aFMpBqfi7A4baVRRxulMPpYzudytiztOONbcHLoTVtAPoWDo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525763; c=relaxed/simple;
-	bh=+hHomsUPq8mp9cQA4GbGSqokdDKOCnmknHPfQ2M6XKc=;
+	s=arc-20240116; t=1708525766; c=relaxed/simple;
+	bh=7lzW6UD4dPFSCtl+JcHmiQuR4Vz8THEmp9JHXjd2MWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQW535nvz2XLqpTw9vmQKD8w/oOdJZtvlNctQEr4ovm3WKAtVA/qmXCeWyiXNMuhzFej7hGCx73hKuTFsI3Nv5y74zZBZZYHD3acGdX45Y5Y3/UazplZeKDsbM1Vx78cz+8+NV1fRzwKpdbxinWmJ9tgBOVKrgNL0popT8tF3qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgZtz5QU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgSpZ9uQG5YEipuIZKTSz9kV62xZLOI19g+jjKcpZPW8viIopbHo7NQrOCENs1sstxYMk1sdKGaJAbJg1efH8FNV/WUDdQ/t6pQsKrnXmgaZROYA4C00WV0PEQ+5lHq609dSZpJYjiCg3kdVHgEOMHuQd/X6MwXlWcJjaTYucnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1Ah2N2J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgZtz5QU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D848C433F1;
-	Wed, 21 Feb 2024 14:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1Ah2N2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00406C433C7;
+	Wed, 21 Feb 2024 14:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708525762;
-	bh=+hHomsUPq8mp9cQA4GbGSqokdDKOCnmknHPfQ2M6XKc=;
+	s=korg; t=1708525766;
+	bh=7lzW6UD4dPFSCtl+JcHmiQuR4Vz8THEmp9JHXjd2MWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgZtz5QU1GZ4AbSrtBeiEfmK/AOLTMaRAQgun9wdBfT6RjeqF7Wo4TL1yWHS+dfbv
-	 nnDQ8a07olAeRfquKDFAI2OOt7k6EHp1B0XqRXEX0d9X720tP5nvVqQnSU+8zIxKWL
-	 vQJ6h8SM1P127esMw3j6a2cpZgJ8Pic2dt1iaFFg=
+	b=h1Ah2N2JciicJjS13XAoKJ1YSYE0Kzzlau2IpCeMEs1nUxf/vledd3Yee4GmA3YNL
+	 H4XICsxTDNvZ9qaWEf9YJckac1BVf74Rtd82zkj6wRT783JIxrWpbj1mG9p2V2zsMd
+	 YcBengKo11Zj7C5zt3lGCaW7/fUSfDi/cYNDjDN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ekansh Gupta <quic_ekangupt@quicinc.com>
-Subject: [PATCH 5.4 228/267] misc: fastrpc: Mark all sessions as invalid in cb_remove
-Date: Wed, 21 Feb 2024 14:09:29 +0100
-Message-ID: <20240221125947.407317443@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	xingwei lee <xrivendell7@gmail.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 229/267] ext4: fix double-free of blocks due to wrong extents moved_len
+Date: Wed, 21 Feb 2024 14:09:30 +0100
+Message-ID: <20240221125947.440482704@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125940.058369148@linuxfoundation.org>
 References: <20240221125940.058369148@linuxfoundation.org>
@@ -50,36 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit a4e61de63e34860c36a71d1a364edba16fb6203b upstream.
+commit 55583e899a5357308274601364741a83e78d6ac4 upstream.
 
-In remoteproc shutdown sequence, rpmsg_remove will get called which
-would depopulate all the child nodes that have been created during
-rpmsg_probe. This would result in cb_remove call for all the context
-banks for the remoteproc. In cb_remove function, session 0 is
-getting skipped which is not correct as session 0 will never become
-available again. Add changes to mark session 0 also as invalid.
+In ext4_move_extents(), moved_len is only updated when all moves are
+successfully executed, and only discards orig_inode and donor_inode
+preallocations when moved_len is not zero. When the loop fails to exit
+after successfully moving some extents, moved_len is not updated and
+remains at 0, so it does not discard the preallocations.
 
-Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Link: https://lore.kernel.org/r/20240108114833.20480-1-quic_ekangupt@quicinc.com
+If the moved extents overlap with the preallocated extents, the
+overlapped extents are freed twice in ext4_mb_release_inode_pa() and
+ext4_process_freed_data() (as described in commit 94d7c16cbbbd ("ext4:
+Fix double-free of blocks with EXT4_IOC_MOVE_EXT")), and bb_free is
+incremented twice. Hence when trim is executed, a zero-division bug is
+triggered in mb_update_avg_fragment_size() because bb_free is not zero
+and bb_fragments is zero.
+
+Therefore, update move_len after each extent move to avoid the issue.
+
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Reported-by: xingwei lee <xrivendell7@gmail.com>
+Closes: https://lore.kernel.org/r/CAO4mrferzqBUnCag8R3m2zf897ts9UEuhjFQGPtODT92rYyR2Q@mail.gmail.com
+Fixes: fcf6b1b729bc ("ext4: refactor ext4_move_extents code base")
+CC:  <stable@vger.kernel.org> # 3.18
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-2-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/move_extent.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1401,7 +1401,7 @@ static int fastrpc_cb_remove(struct plat
- 	int i;
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -615,6 +615,7 @@ ext4_move_extents(struct file *o_filp, s
+ 		goto out;
+ 	o_end = o_start + len;
  
- 	spin_lock_irqsave(&cctx->lock, flags);
--	for (i = 1; i < FASTRPC_MAX_SESSIONS; i++) {
-+	for (i = 0; i < FASTRPC_MAX_SESSIONS; i++) {
- 		if (cctx->session[i].sid == sess->sid) {
- 			cctx->session[i].valid = false;
- 			cctx->sesscount--;
++	*moved_len = 0;
+ 	while (o_start < o_end) {
+ 		struct ext4_extent *ex;
+ 		ext4_lblk_t cur_blk, next_blk;
+@@ -670,7 +671,7 @@ ext4_move_extents(struct file *o_filp, s
+ 		 */
+ 		ext4_double_up_write_data_sem(orig_inode, donor_inode);
+ 		/* Swap original branches with new branches */
+-		move_extent_per_page(o_filp, donor_inode,
++		*moved_len += move_extent_per_page(o_filp, donor_inode,
+ 				     orig_page_index, donor_page_index,
+ 				     offset_in_page, cur_len,
+ 				     unwritten, &ret);
+@@ -680,9 +681,6 @@ ext4_move_extents(struct file *o_filp, s
+ 		o_start += cur_len;
+ 		d_start += cur_len;
+ 	}
+-	*moved_len = o_start - orig_blk;
+-	if (*moved_len > len)
+-		*moved_len = len;
+ 
+ out:
+ 	if (*moved_len) {
 
 
