@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B391E522;
-	Wed, 21 Feb 2024 13:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667041E522;
+	Wed, 21 Feb 2024 13:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708521303; cv=none; b=U0hBRQMjmSZ0V+g95WYJFzsmDTqFVzqp4KgnGaCoOkcIH6r5l3Xk9QgRxhy+CfAbkumDec0dxbDpzB428ugKz+C5BBc+unNoV0157S/kZQ265Af7xN5wS22t8+rvdAUj9h0L1WN9T28si2Tbtb6VKKHVXMyO0s2DdMr5DS0Cgik=
+	t=1708521306; cv=none; b=gitqNACHcm/42vc8IP+dSPg+wXnHjez5zcy4hgkdFfuYHmyNVsgqx3J09CPHk1tEt8+tUEJ8sMZPzi6gMO2UOEixorVGMXsdyCQZF4n4yDXguAWn2+0Xr178rENzleLPqBKRxQwZC+98kZmUXS7/70yx/cnUGIQ+tTreWAKPHM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708521303; c=relaxed/simple;
-	bh=PYIa/QigolERIMMGtvhKok6Yvtr93muyO1K76vxyOoI=;
+	s=arc-20240116; t=1708521306; c=relaxed/simple;
+	bh=TsuVqB8mrgSCVis7g51TcOAX0pIfylDrmXa/DCV0cWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=buklcPCsE0o/kyP87V9TJ8Lw7qk3wYgpK7TtLq9ekujYrSbQjoy1T/lpS2fuLtEyDKc910HxI3KbkRGvT5aGUvbCM11dWZwEGcJR8TZoFsv822CsrZl6M08DLPHsIyyY9rO7jLpzFeQyOMljLFArcrFVD2jEjiLRzrcSGleXXAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AiYifguy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvQ/qSwtL9/pYpG9wTXG8D/4NPJ5hWq5g+BGmFWNeMTqwW0AWGYbGn8wrF7P4oVfAskxkAyvnT//ieSx0NtpOquroJ2mwPvZMN8O0GlcyO0o4Db0Kd5qiGDUEwACfeaM1135Xn0ak8Y6f6JVv86pEzD3zU94GXOdDOoBWcIqg9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLi8vw22; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AiYifguy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917CFC433C7;
-	Wed, 21 Feb 2024 13:15:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLi8vw22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F4EC433C7;
+	Wed, 21 Feb 2024 13:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1708521303;
-	bh=PYIa/QigolERIMMGtvhKok6Yvtr93muyO1K76vxyOoI=;
+	s=korg; t=1708521306;
+	bh=TsuVqB8mrgSCVis7g51TcOAX0pIfylDrmXa/DCV0cWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AiYifguyORKsis5gmsIuPtDIylBOxMj7KT+JJGY/fB/U5S1Ng6oA6GuJKJCeKA6Om
-	 9UsCn/YIAHxgb6FhOfdDeASqeTy2AC996HbzgQZTLHmWEH3PQZGVYD9eHtZ/XTp5gF
-	 3AptQUD06byuTgmZ0Hh+FXCzHZxDNlKFQkZHIF4M=
+	b=qLi8vw22ZlBbhCzOrZJV8J9QJ2eP1MQooUN2LhvS0W2oAjTcdC/u5+aZt7DDruRuw
+	 Tq6clLuRLn7ZXLIEkRI6uv+NH06gkQKIwGCV7/9/0qfzdmhsS26E4xXHTOp9lSN7Dg
+	 F6TOghLT1c7Es6ipatpngs/mGHkblLEWWC180YTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 049/202] net/sched: cbs: Fix not adding cbs instance to list
-Date: Wed, 21 Feb 2024 14:05:50 +0100
-Message-ID: <20240221125933.410439817@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Kunwu Chan <chentao@kylinos.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 050/202] powerpc/mm: Fix null-pointer dereference in pgtable_cache_add
+Date: Wed, 21 Feb 2024 14:05:51 +0100
+Message-ID: <20240221125933.449533106@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240221125931.742034354@linuxfoundation.org>
 References: <20240221125931.742034354@linuxfoundation.org>
@@ -51,169 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Kunwu Chan <chentao@kylinos.cn>
 
-commit 3e8b9bfa110896f95d602d8c98d5f9d67e41d78c upstream.
+[ Upstream commit f46c8a75263f97bda13c739ba1c90aced0d3b071 ]
 
-When removing a cbs instance when offloading is enabled, the crash
-below can be observed.
+kasprintf() returns a pointer to dynamically allocated memory
+which can be NULL upon failure. Ensure the allocation was successful
+by checking the pointer validity.
 
-The problem happens because that when offloading is enabled, the cbs
-instance is not added to the list.
-
-Also, the current code doesn't handle correctly the case when offload
-is disabled without removing the qdisc: if the link speed changes the
-credit calculations will be wrong. When we create the cbs instance
-with offloading enabled, it's not added to the notification list, when
-later we disable offloading, it's not in the list, so link speed
-changes will not affect it.
-
-The solution for both issues is the same, add the cbs instance being
-created unconditionally to the global list, even if the link state
-notification isn't useful "right now".
-
-Crash log:
-
-[518758.189866] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[518758.189870] #PF: supervisor read access in kernel mode
-[518758.189871] #PF: error_code(0x0000) - not-present page
-[518758.189872] PGD 0 P4D 0
-[518758.189874] Oops: 0000 [#1] SMP PTI
-[518758.189876] CPU: 3 PID: 4825 Comm: tc Not tainted 5.2.9 #1
-[518758.189877] Hardware name: Gigabyte Technology Co., Ltd. Z390 AORUS ULTRA/Z390 AORUS ULTRA-CF, BIOS F7 03/14/2019
-[518758.189881] RIP: 0010:__list_del_entry_valid+0x29/0xa0
-[518758.189883] Code: 90 48 b8 00 01 00 00 00 00 ad de 55 48 8b 17 4c 8b 47 08 48 89 e5 48 39 c2 74 27 48 b8 00 02 00 00 00 00 ad de 49 39 c0 74 2d <49> 8b 30 48 39 fe 75 3d 48 8b 52 08 48 39 f2 75 4c b8 01 00 00 00
-[518758.189885] RSP: 0018:ffffa27e43903990 EFLAGS: 00010207
-[518758.189887] RAX: dead000000000200 RBX: ffff8bce69f0f000 RCX: 0000000000000000
-[518758.189888] RDX: 0000000000000000 RSI: ffff8bce69f0f064 RDI: ffff8bce69f0f1e0
-[518758.189890] RBP: ffffa27e43903990 R08: 0000000000000000 R09: ffff8bce69e788c0
-[518758.189891] R10: ffff8bce62acd400 R11: 00000000000003cb R12: ffff8bce69e78000
-[518758.189892] R13: ffff8bce69f0f140 R14: 0000000000000000 R15: 0000000000000000
-[518758.189894] FS:  00007fa1572c8f80(0000) GS:ffff8bce6e0c0000(0000) knlGS:0000000000000000
-[518758.189895] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[518758.189896] CR2: 0000000000000000 CR3: 000000040a398006 CR4: 00000000003606e0
-[518758.189898] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[518758.189899] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[518758.189900] Call Trace:
-[518758.189904]  cbs_destroy+0x32/0xa0 [sch_cbs]
-[518758.189906]  qdisc_destroy+0x45/0x120
-[518758.189907]  qdisc_put+0x25/0x30
-[518758.189908]  qdisc_graft+0x2c1/0x450
-[518758.189910]  tc_get_qdisc+0x1c8/0x310
-[518758.189912]  ? get_page_from_freelist+0x91a/0xcb0
-[518758.189914]  rtnetlink_rcv_msg+0x293/0x360
-[518758.189916]  ? kmem_cache_alloc_node_trace+0x178/0x260
-[518758.189918]  ? __kmalloc_node_track_caller+0x38/0x50
-[518758.189920]  ? rtnl_calcit.isra.0+0xf0/0xf0
-[518758.189922]  netlink_rcv_skb+0x48/0x110
-[518758.189923]  rtnetlink_rcv+0x10/0x20
-[518758.189925]  netlink_unicast+0x15b/0x1d0
-[518758.189926]  netlink_sendmsg+0x1ea/0x380
-[518758.189929]  sock_sendmsg+0x2f/0x40
-[518758.189930]  ___sys_sendmsg+0x295/0x2f0
-[518758.189932]  ? ___sys_recvmsg+0x151/0x1e0
-[518758.189933]  ? do_wp_page+0x7e/0x450
-[518758.189935]  __sys_sendmsg+0x48/0x80
-[518758.189937]  __x64_sys_sendmsg+0x1a/0x20
-[518758.189939]  do_syscall_64+0x53/0x1f0
-[518758.189941]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
-[518758.189942] RIP: 0033:0x7fa15755169a
-[518758.189944] Code: 48 c7 c0 ff ff ff ff eb be 0f 1f 80 00 00 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 18 b8 2e 00 00 00 c5 fc 77 0f 05 <48> 3d 00 f0 ff ff 77 5e c3 0f 1f 44 00 00 48 83 ec 28 89 54 24 1c
-[518758.189946] RSP: 002b:00007ffda58b60b8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-[518758.189948] RAX: ffffffffffffffda RBX: 000055e4b836d9a0 RCX: 00007fa15755169a
-[518758.189949] RDX: 0000000000000000 RSI: 00007ffda58b6128 RDI: 0000000000000003
-[518758.189951] RBP: 00007ffda58b6190 R08: 0000000000000001 R09: 000055e4b9d848a0
-[518758.189952] R10: 0000000000000000 R11: 0000000000000246 R12: 000000005d654b49
-[518758.189953] R13: 0000000000000000 R14: 00007ffda58b6230 R15: 00007ffda58b6210
-[518758.189955] Modules linked in: sch_cbs sch_etf sch_mqprio netlink_diag unix_diag e1000e igb intel_pch_thermal thermal video backlight pcc_cpufreq
-[518758.189960] CR2: 0000000000000000
-[518758.189961] ---[ end trace 6a13f7aaf5376019 ]---
-[518758.189963] RIP: 0010:__list_del_entry_valid+0x29/0xa0
-[518758.189964] Code: 90 48 b8 00 01 00 00 00 00 ad de 55 48 8b 17 4c 8b 47 08 48 89 e5 48 39 c2 74 27 48 b8 00 02 00 00 00 00 ad de 49 39 c0 74 2d <49> 8b 30 48 39 fe 75 3d 48 8b 52 08 48 39 f2 75 4c b8 01 00 00 00
-[518758.189967] RSP: 0018:ffffa27e43903990 EFLAGS: 00010207
-[518758.189968] RAX: dead000000000200 RBX: ffff8bce69f0f000 RCX: 0000000000000000
-[518758.189969] RDX: 0000000000000000 RSI: ffff8bce69f0f064 RDI: ffff8bce69f0f1e0
-[518758.189971] RBP: ffffa27e43903990 R08: 0000000000000000 R09: ffff8bce69e788c0
-[518758.189972] R10: ffff8bce62acd400 R11: 00000000000003cb R12: ffff8bce69e78000
-[518758.189973] R13: ffff8bce69f0f140 R14: 0000000000000000 R15: 0000000000000000
-[518758.189975] FS:  00007fa1572c8f80(0000) GS:ffff8bce6e0c0000(0000) knlGS:0000000000000000
-[518758.189976] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[518758.189977] CR2: 0000000000000000 CR3: 000000040a398006 CR4: 00000000003606e0
-[518758.189979] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[518758.189980] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-
-Fixes: e0a7683d30e9 ("net/sched: cbs: fix port_rate miscalculation")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20231204023223.2447523-1-chentao@kylinos.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cbs.c |   30 +++++++++++++-----------------
- 1 file changed, 13 insertions(+), 17 deletions(-)
+ arch/powerpc/mm/init-common.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_cbs.c
-+++ b/net/sched/sch_cbs.c
-@@ -405,7 +405,6 @@ static int cbs_init(struct Qdisc *sch, s
- {
- 	struct cbs_sched_data *q = qdisc_priv(sch);
- 	struct net_device *dev = qdisc_dev(sch);
--	int err;
+diff --git a/arch/powerpc/mm/init-common.c b/arch/powerpc/mm/init-common.c
+index 2b656e67f2ea..927703af49be 100644
+--- a/arch/powerpc/mm/init-common.c
++++ b/arch/powerpc/mm/init-common.c
+@@ -65,7 +65,7 @@ void pgtable_cache_add(unsigned shift, void (*ctor)(void *))
+ 	 * as to leave enough 0 bits in the address to contain it. */
+ 	unsigned long minalign = max(MAX_PGTABLE_INDEX_SIZE + 1,
+ 				     HUGEPD_SHIFT_MASK + 1);
+-	struct kmem_cache *new;
++	struct kmem_cache *new = NULL;
  
- 	if (!opt) {
- 		NL_SET_ERR_MSG(extack, "Missing CBS qdisc options  which are mandatory");
-@@ -417,6 +416,10 @@ static int cbs_init(struct Qdisc *sch, s
- 	if (!q->qdisc)
- 		return -ENOMEM;
+ 	/* It would be nice if this was a BUILD_BUG_ON(), but at the
+ 	 * moment, gcc doesn't seem to recognize is_power_of_2 as a
+@@ -78,7 +78,8 @@ void pgtable_cache_add(unsigned shift, void (*ctor)(void *))
  
-+	spin_lock(&cbs_list_lock);
-+	list_add(&q->cbs_list, &cbs_list);
-+	spin_unlock(&cbs_list_lock);
-+
- 	qdisc_hash_add(q->qdisc, false);
+ 	align = max_t(unsigned long, align, minalign);
+ 	name = kasprintf(GFP_KERNEL, "pgtable-2^%d", shift);
+-	new = kmem_cache_create(name, table_size, align, 0, ctor);
++	if (name)
++		new = kmem_cache_create(name, table_size, align, 0, ctor);
+ 	if (!new)
+ 		panic("Could not allocate pgtable cache for order %d", shift);
  
- 	q->queue = sch->dev_queue - netdev_get_tx_queue(dev, 0);
-@@ -426,17 +429,7 @@ static int cbs_init(struct Qdisc *sch, s
- 
- 	qdisc_watchdog_init(&q->watchdog, sch);
- 
--	err = cbs_change(sch, opt, extack);
--	if (err)
--		return err;
--
--	if (!q->offload) {
--		spin_lock(&cbs_list_lock);
--		list_add(&q->cbs_list, &cbs_list);
--		spin_unlock(&cbs_list_lock);
--	}
--
--	return 0;
-+	return cbs_change(sch, opt, extack);
- }
- 
- static void cbs_destroy(struct Qdisc *sch)
-@@ -444,15 +437,18 @@ static void cbs_destroy(struct Qdisc *sc
- 	struct cbs_sched_data *q = qdisc_priv(sch);
- 	struct net_device *dev = qdisc_dev(sch);
- 
--	spin_lock(&cbs_list_lock);
--	list_del(&q->cbs_list);
--	spin_unlock(&cbs_list_lock);
-+	/* Nothing to do if we couldn't create the underlying qdisc */
-+	if (!q->qdisc)
-+		return;
- 
- 	qdisc_watchdog_cancel(&q->watchdog);
- 	cbs_disable_offload(dev, q);
- 
--	if (q->qdisc)
--		qdisc_put(q->qdisc);
-+	spin_lock(&cbs_list_lock);
-+	list_del(&q->cbs_list);
-+	spin_unlock(&cbs_list_lock);
-+
-+	qdisc_put(q->qdisc);
- }
- 
- static int cbs_dump(struct Qdisc *sch, struct sk_buff *skb)
+-- 
+2.43.0
+
 
 
