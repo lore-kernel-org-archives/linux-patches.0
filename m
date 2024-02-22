@@ -1,89 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34B4133284;
-	Thu, 22 Feb 2024 13:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6481332B1;
+	Thu, 22 Feb 2024 13:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708608084; cv=none; b=V87omIeqBjzxw66HFvtJuiKthZU2OKFjDhzK6doRo7FZZdvvo6pz+RssjGleauDDIKUR+OjVJk2/wD7/oyykOLTZ2GEMyO6BYmNoSUgq34NRSwaUdbFOI4X/aGbOIJW90V+55NJgHVUb8n11ytFoLZhvFXQ3TVKuuT7vzZ8wVzo=
+	t=1708608522; cv=none; b=cRlwWb/mcw2nTtu0Yvt4f0OfQe+BhEc3HIZ4MTR1l7GVn82poaH1NEBYZX9e1XIWW0LEcxie2/9nZkN2GNos/eP7xdTottSbKqcwvF6xBn+hDJSkhHee82Iic3sJBPdXyWT7EB6S2/AAW2uk6DCGCebAJ1gCXnyG3w5edM7KO9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708608084; c=relaxed/simple;
-	bh=xcTY52q2ylGFoTBRUjq7TdWYkgN6e4ulWhPL6YVDF0w=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pNvRdDUQGv9ZoRs84IJwc9zCPhXGo+uUe9C0UUMup7d6fvfhDznwOkpP6U4lcVg1NDtpxqxcvj/VaauDUFXX5n79gkjABlSZOibrso7gfyGveyT2hUpPUQrwWva8srUKapNvKgd/j784XCe+4SVxfJLlt3zjCaJf3AITpx78IBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qkljTMwk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708608522; c=relaxed/simple;
+	bh=drOFn0w7RI7+1TDvTcd+QBGWVufPJHpg9mM4HokE4rI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S9Bw6F2BOFwnXg95rXsuhjVj//xQPU7W/qEqFAxUa+JysSuIvFCE/z/A4+gIYpXGZeqyBQKGf6hMgpDw8eVcJQfPbj1m5XDBvKhsZqqpIyw0mL5zCSngzPbc4dr+1a02IO44i29l518BT2OWTvIwISZ9509MzFsNdq0h/gV9rSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9ViyT8w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qkljTMwk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030A9C43394;
-	Thu, 22 Feb 2024 13:21:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708608084;
-	bh=xcTY52q2ylGFoTBRUjq7TdWYkgN6e4ulWhPL6YVDF0w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkljTMwk1cWQZeDihgqFY3qjHp1WD4gniXmzskUokzib3aH6I/s/JklArtcK0emFu
-	 uBx0V5EVYdRc8CxQu9BnzgdJwZVIcrxHlqES71g/AQ2gHP1S0LMuL8FpyEtkIYgHTM
-	 YbNvOnr75johAbjv0735bW/mZvFOo8vd6zz+k1k3SCpd+Gv87vu1GESHWsq9UjEkSC
-	 3746eNIDxKmeZFo42xlw5/6Fml/r/EOm5Dht3rViGz/ZbBgQvjbR9PQnYbcHmvnmk0
-	 ZglhJueITHtJVjrImBbixK6OrKg8AAzEUn2eDSfjmMVDfy4+Ufpltjc4ZuQL8Vi1yY
-	 JbKrfozgS056w==
-From: Will Deacon <will@kernel.org>
-To: Robin Murphy <robin.murphy@arm.com>,
-	iommu@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Joerg Roedel <joro@8bytes.org>
-Cc: catalin.marinas@arm.com,
-	kernel-team@android.com,
-	Will Deacon <will@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v3] iommu/arm-smmu-v3: Do not use GFP_KERNEL under as spinlock
-Date: Thu, 22 Feb 2024 13:21:09 +0000
-Message-Id: <170860525230.21606.13716127943718563315.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <0-v3-11978fc67151+112-smmu_cd_atomic_jgg@nvidia.com>
-References: <0-v3-11978fc67151+112-smmu_cd_atomic_jgg@nvidia.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9ViyT8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9D6C433C7;
+	Thu, 22 Feb 2024 13:28:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1708608522;
+	bh=drOFn0w7RI7+1TDvTcd+QBGWVufPJHpg9mM4HokE4rI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q9ViyT8wF6vcZMOp/RJEhKGr2HI+SmaYMnj4BdK8i1X+hYxG4yfmKkQvVqDg/rxmR
+	 Lnx0BaELLfbZULp9mgZ9Fa/ERk8IzCF4cp4djv7lSikaNxElWjt6zXA7Lv6sWA0Y2q
+	 PRpeMgFSXlB6P88VZ7nZEimWLpKeDWhUdel4Ffbg=
+Date: Thu, 22 Feb 2024 14:28:39 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com,
+	Beyond <Wang.Beyond@amd.com>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: Re: [PATCH 5.4 000/267] 5.4.269-rc1 review
+Message-ID: <2024022214-unselect-scrounger-14d8@gregkh>
+References: <20240221125940.058369148@linuxfoundation.org>
+ <CA+G9fYua_rKjdmKMgYrRY_HRyMWPdJNz5=O0K4+M9P9wBWLPcw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYua_rKjdmKMgYrRY_HRyMWPdJNz5=O0K4+M9P9wBWLPcw@mail.gmail.com>
 
-On Wed, 21 Feb 2024 20:27:02 -0400, Jason Gunthorpe wrote:
-> If the SMMU is configured to use a two level CD table then
-> arm_smmu_write_ctx_desc() allocates a CD table leaf internally using
-> GFP_KERNEL. Due to recent changes this is being done under a spinlock to
-> iterate over the device list - thus it will trigger a sleeping while
-> atomic warning:
+On Thu, Feb 22, 2024 at 04:25:36PM +0530, Naresh Kamboju wrote:
+> On Wed, 21 Feb 2024 at 19:46, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 5.4.269 release.
+> > There are 267 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Fri, 23 Feb 2024 12:59:02 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.269-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
->   arm_smmu_sva_set_dev_pasid()
->     mutex_lock(&sva_lock);
->     __arm_smmu_sva_bind()
->      arm_smmu_mmu_notifier_get()
->       spin_lock_irqsave()
->       arm_smmu_write_ctx_desc()
-> 	arm_smmu_get_cd_ptr()
->          arm_smmu_alloc_cd_leaf_table()
-> 	  dmam_alloc_coherent(GFP_KERNEL)
+> The i386 allmodconfig builds failed on stable-rc 5.15, 5.10 and 5.4.
 > 
-> [...]
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> ERROR: modpost: "__udivdi3" [drivers/gpu/drm/amd/amdgpu/amdgpu.ko] undefined!
+> make[2]: *** [/builds/linux/scripts/Makefile.modpost:133:
+> modules-only.symvers] Error 1
+> 
+> Steps to reproduce:
+>  tuxmake --runtime podman --target-arch i386 --toolchain gcc-12
+> --kconfig allmodconfig
 
-Thanks guys, this looks really good now.
+Thanks, I've tracked this down to commit 6fb12518ca58 ("drm/amd/display:
+make flip_timestamp_in_us a 64-bit variable")
 
-Applied to will (for-joerg/arm-smmu/fixes), thanks!
+Let me see if I can find a fix, if not, I'll just drop it, thanks!
 
-[1/1] iommu/arm-smmu-v3: Do not use GFP_KERNEL under as spinlock
-      https://git.kernel.org/will/c/b5bf7778b722
-
-Cheers,
--- 
-Will
-
-https://fixes.arm64.dev
-https://next.arm64.dev
-https://will.arm64.dev
+greg k-h
