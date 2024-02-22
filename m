@@ -1,177 +1,154 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout149.security-mail.net (smtpout149.security-mail.net [85.31.212.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A821799E
-	for <patches@lists.linux.dev>; Thu, 22 Feb 2024 09:31:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708594264; cv=none; b=GShInftnvJtPlfxub1vY8oR+GOn6ZAUTIuh5ufjONYMJJVHuStB3ZGGCA7YJlyrTU0OTJjANu86HE1EBt2TiRGOKNNcm1AD/B/xrTKxqZnH6BhVohiOkY9jLeNzm2/dmSbeKJuEU5wZ+vLSsOrcBW6ydcvvgppxiR+qYxxRzMnE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708594264; c=relaxed/simple;
-	bh=9G7lJI5IDfPGdHdX5zwaUalzO36IGTyW3HIIjqi8i+0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kesNvvao6BrEylzUX6v7dgN21S3uGNPfDHOB4xgaCwHbPyh2VgGT13c/uFQKUfFpN0d7G2E95Enw53WKFt3NqXzfIhzs1/ju5HfTXTP7GnaWnDs2FfrDUoyINgbLCRQZZuAIDbd/OQE/F/n+ujtA99IrQa/A44Xiba5HzNhsoro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=GbZUUdGc; arc=none smtp.client-ip=209.85.217.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14C222EEF
+	for <patches@lists.linux.dev>; Thu, 22 Feb 2024 10:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=85.31.212.149
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708596319; cv=fail; b=AR9XnhSzN/928cL1IaY2tCSBM6nSo6JZPXnTQPnCgrzPJ2/SYL55B/6pQAtaRu/Yg51GrLZG+7a/TQFPcLWnQUzJhplC/CDLjOJxB27Rn4nmkwEnzVRcTjZQg2ASzIiGNzUn/h1zsWK6RqXhGGsbyBktf9wI/LmsU4QP+CvDIbo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708596319; c=relaxed/simple;
+	bh=7s12crFQF1jr+kFZE4OzeLY1WgH2i4yuxgdLqXENnes=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Pl4n2KcGFhOKwx5PxVRter54gEQ74wu7tab0oZOXlmzPKM81oGziIePnOT2KJH7aRTKfMrFdanvDXHHsQm74TJ8EhglbMuZ1fjOEdbdmtVJTGIV1ZzeKDEqC/0cFmRkdNPqAQ7DeKLeCo7psw6X7DdsVrc0KiFAkTUTeO/YnOpg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com; spf=pass smtp.mailfrom=kalrayinc.com; dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=HkeexRJv; dkim=fail (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=a7IfFn/N reason="signature verification failed"; arc=fail smtp.client-ip=85.31.212.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kalrayinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="GbZUUdGc"
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-471c0ec6d69so42489137.0
-        for <patches@lists.linux.dev>; Thu, 22 Feb 2024 01:31:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1708594262; x=1709199062; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1PlLc1PUqmILNE+p63A9C2ACu1wPfn85XBn9cLMW2dc=;
-        b=GbZUUdGcv5ePv4eFI32vO73s1MwxtZxhVTYzu2mfC/hrDLkRSUnAsk/NhgLtM6yIUC
-         1wXpwY9nSsI/XTFLmliVmjXf3I9elwKZzHBkZQWREvZvGDJjYETO0jUI/4g6c99TY+wI
-         IKslf5ChyQ6K/QQwOmrTK5yXYD/XyLR0wiKuWBR+BPn5PMs1C42FFarZkESeL8tzw5vr
-         2JfZ5XAAO6vexw0zLzmsFfvCPjztXbe7Ffw7nWBZj2Rad+XwgyU9U/QjsYM5GJgjH5xM
-         FKlyIUuQb5cALQlXLdtABUV4awGkcoKxHdy0rlpAxDE09fHw4osWIy3OhWReovU/pvii
-         fjEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708594262; x=1709199062;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1PlLc1PUqmILNE+p63A9C2ACu1wPfn85XBn9cLMW2dc=;
-        b=AmIWgiAZGr1uCWUan+hvb40UT6tuO6KmGLPkmDFZPfojEpfgKu8yIPtl4FZRQcrkdN
-         odnArbIupqxL200SxzWDKW+S3FkPsaG2TWVg9a0P9NDGiuBO+VG+FAeY1rm9tH9jyksX
-         QbgpPA4VNvlHtIb+Gg4RDzZ/iSPMZ0rf/pJtkKfytzGJJxiLJogavlf7CiT0/E/8q6yU
-         l95WJp6bi5Dv2HvLToUmMezG/aTzFzFhyaWY5YhKO4nomVFhZzrFujkRYoOz0FKzyQqn
-         ur601/v+YDQx7tf+rnp36AgklKPw2YnvF/4LCL2PiDqfocS5x8Efel9w+YM1uEwt1Np4
-         Tidw==
-X-Forwarded-Encrypted: i=1; AJvYcCX9IX7I686lwfNPTQrEXkT8+4lUZPC9i42hbEUdU8IRAn6/eqbiPACsSCxaWoQBdAiGg2JYri5Zuea7ra0muaAPrzHYI4jSug==
-X-Gm-Message-State: AOJu0Yz0voTFpY+GKguAtzICD8+crZqSHL9tNh7zmswsobrfU0S3KZ4A
-	hfXnUVnpD0cbGoAJCoLOfvDccGdGBRI+TijaDUHstzMVtyM9HK5Sv20GMKS6HZ+7asJ7/e4FP96
-	s61PlsGTaPu/8psYXBbOIOjk3+XmyJg1joigfHg==
-X-Google-Smtp-Source: AGHT+IEToLxGWX/9/V3sCdh/JRMTTDjiprSrSqjpvWgISAjno61KBiZrERpbtPCIbor9/5i13hG+MwHnX47Z9DOnSow=
-X-Received: by 2002:a67:fc58:0:b0:470:4e67:3b38 with SMTP id
- p24-20020a67fc58000000b004704e673b38mr13429459vsq.14.1708594262009; Thu, 22
- Feb 2024 01:31:02 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="HkeexRJv";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="a7IfFn/N"
+Received: from localhost (fx409.security-mail.net [127.0.0.1])
+	by fx409.security-mail.net (Postfix) with ESMTP id 0FF2A349CB2
+	for <patches@lists.linux.dev>; Thu, 22 Feb 2024 11:01:31 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kalrayinc.com;
+	s=sec-sig-email; t=1708596091;
+	bh=7s12crFQF1jr+kFZE4OzeLY1WgH2i4yuxgdLqXENnes=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=HkeexRJvHCXE8KpTfTaCkVxM1r8arQlvkIy86UWWKgCUycm2ffMRWUKFI3XBc4O1j
+	 2083rGwSu6MZzqbmqsi3WQvFFD7hEDgGDSckLwhoG6YT5TCE9WVeWGzXU5y4aEvHYH
+	 lydf5HbzkXdR3IRSLx1JewHZf2KMTRSaYuMgt+Ss=
+Received: from fx409 (fx409.security-mail.net [127.0.0.1]) by
+ fx409.security-mail.net (Postfix) with ESMTP id D0A84349C92; Thu, 22 Feb
+ 2024 11:01:30 +0100 (CET)
+Received: from FRA01-PR2-obe.outbound.protection.outlook.com
+ (mail-pr2fra01on0101.outbound.protection.outlook.com [104.47.24.101]) by
+ fx409.security-mail.net (Postfix) with ESMTPS id 64F7C349CCB; Thu, 22 Feb
+ 2024 11:01:27 +0100 (CET)
+Received: from MRZP264MB1896.FRAP264.PROD.OUTLOOK.COM (2603:10a6:501:16::6)
+ by PR0P264MB2025.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:16c::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.24; Thu, 22 Feb
+ 2024 10:01:26 +0000
+Received: from MRZP264MB1896.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::224f:f37a:bdfb:4374]) by MRZP264MB1896.FRAP264.PROD.OUTLOOK.COM
+ ([fe80::224f:f37a:bdfb:4374%4]) with mapi id 15.20.7316.023; Thu, 22 Feb
+ 2024 10:01:26 +0000
+X-Virus-Scanned: E-securemail
+Secumail-id: <2a6e.65d71b77.5710e.0>
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VJmyhEMEZ01srXucmMmoSJYxNFFt9mVp2SWf4K0iPhYFtPIlfi341NApShoDqtVDnXZr0AvH4mOL/ASD4lijMOL2IGafiI6JlA799G/Zxc0zVgTogyVSGhCLqHoqGKif6qN87NZeo+/vl7ky8VemtB+6U8CBnG+vb3+WLJ35LOa7cTX27A1gEBxdWtjDTsczLloz+j0s+P3reUdxJPydrmrN2rNdmalp6A6pk6RfxT6l/RxNjimkNlJV8kpCgenl326oAe3dkqwJkZymgt2troNHuREFNMfMZe221rbvyOcTGPl27RoMxkAlflJuls4HmKF35te+XTFoMQWSwShS8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=microsoft.com; s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=192FFxbe7Lzoht8qt6lDO/K8b2gMpd050Al+bpxRipk=;
+ b=bFHy9Q/5+BWf5GxamlcXcHee62zG1lAe9+ZwjzqGL2rRJ3sk3SXWBBhR68KbFy3j4A/rAwpNNwUoGdH4yGkUmI5C6I0zXU7od9XMlXSpB4tDACRdy3Nh/K5GgS8T4x5XlLDyoZaymgSWbL40TTOZ9A2u7wt8uYC/uhIhBtV/MCU9iCkS3cHGJVFthwEBFauyHFahJxUAhxsrLb1xgRx7P/6pTulKkiiOW/x8+axG40S6gEj8ryu5a8BovFHRUaxHb2ca39LtU7HTMYjMyfCHSIMkeUmyBRUWnMXwYVBaJLnRH1VA4g6+jtMGJUtnl3wKFba6qk0BzgnHIoSnPL0uzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=kalrayinc.com; dmarc=pass action=none
+ header.from=kalrayinc.com; dkim=pass header.d=kalrayinc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalrayinc.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=192FFxbe7Lzoht8qt6lDO/K8b2gMpd050Al+bpxRipk=;
+ b=a7IfFn/NouH8n2nN1engiJ+rBJQipSlTOXqM4lfd8arXw/9IzFJ6WCQ+/w56hCI6xdrw7QG9U9cAdcq4nCmjzupjie/Tx8pcqqjqZDmxIh8DmbbODAHknjDTFK/k2kFcAoSF9P2bZR35zfknyBq2n80THBouH3pZmUqAaBp8YG9v0JM0RbRHe2K9y9K7E1CW51K47xI7zqwiYq0TfcSMOcCUb3A5O8lB8Z0vHDbe9JLf8zQBdTT3sYGuReC9HOZtSNc1TVwa3WsoV+hr2/O1fJjAoAhz2ddzBZeDZ+mt4D0TXZnYEWL3T1LTw/RX2x2KGuvIfYjPLmyosfSWdXzBsg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=kalrayinc.com;
+Message-ID: <20c84ea4-cebc-82ba-827d-34c956e9faf6@kalrayinc.com>
+Date: Thu, 22 Feb 2024 11:01:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 6.1 000/206] 6.1.79-rc2 review
+Content-Language: en-us
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240221130223.073542172@linuxfoundation.org>
+From: Yann Sionneau <ysionneau@kalrayinc.com>
+In-Reply-To: <20240221130223.073542172@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AM0PR04CA0133.eurprd04.prod.outlook.com
+ (2603:10a6:208:55::38) To MRZP264MB1896.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:501:16::6)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240221015920.676063-1-swboyd@chromium.org>
-In-Reply-To: <20240221015920.676063-1-swboyd@chromium.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 22 Feb 2024 10:30:51 +0100
-Message-ID: <CAMRc=Md5BZxS-sCZO9oK9y02kf-Rh04DpaM8-cXk6KoJiDzmWw@mail.gmail.com>
-Subject: Re: [PATCH] gpiolib: Pass consumer device through to core in devm_fwnode_gpiod_get_index()
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, linux-gpio@vger.kernel.org, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MRZP264MB1896:EE_|PR0P264MB2025:EE_
+X-MS-Office365-Filtering-Correlation-Id: da60f5b1-2ea6-4b3f-e22c-08dc338d3b28
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: fj9V9JZbIIkTfR2FJk7qTzFihzRzQ0l7b2j827dYH5URHT0O6eYl+fMotsoxbfM13v1DLmpxcK+QX+KEOvfiF/6ra18rGwf+6xrPWqAMn9FcQVw6SceVRbhCI2TBWV3muikEU3EbWBGxzano3b/Qrun9JOUe69R+JOqrofkajyLr/KbQHqJyQ42cQqRGANwWTfg884+vo8dsvmC4eTsjWcrm4I2R4wMaP0BtJdEOzsG+pcy89BWnCB5J5izce5JQ8U0EkqWBjxqm/rHyPqoYmpoVWFP8Kv8k32/r3o6jqiUDOcRCb1fJT1rXFvHXiRYbane0Oj0lZm2C5Mxt/qBeQIkYi8ZyXdzdZUtlMdlqXhfPE5AI4uFGBD54H1Jg/llXW4nsAMeRFSrtLqm/2FtU1199TV1aE0o/Fzn8/vPUvipEKqcRW0pewIyezyXuK8HimnqwUCViJTwzQGadvg1yEbc9dD8FXuALu7+NZUmaHtcBMP9jRncEgQaBHEdDqYyGEfARizCuw+OCBN0IMqE3MA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MRZP264MB1896.FRAP264.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: twJu8MGUkEOl6KBnU3E/2J/ua5ONcHrTRb1W6GV6IQy9YZQAAAcWf8GizeTgHmvR1md4dJVaqv7VKpQKSD9g8vCQ5vrPE32/pcgnDTcLsvhrysT+CmtsipaElPrgArQBVO/MbanrBDprxmBOSsjeq+iO9vk8wQ8zG+LlujDMTQabJAbSMBHu11ys+ZgzigE8dMn30/oJykJRdv7d9FUQOiFJMLu84aG+lK+A3d2HQ282M1R4Q11nDFGoDlc+cT4HBox1IB+tB3SEalk7ztr8Le9nbL/nFVRgVpOpgFmr/j1dxQhwj77xdxU4zfiZ/6m9bh/5PeCfR6K4sHV5iw1k13EnxfgY/FMLQ/fn97hRIn4VKzLFWPRPWQrK92TnJ4I0WCH3VgyeWe1qIdhFsghanR/Vxfk17FAjPZ/ogX7KOjAsNxHGmRBPyg48t55KlTubd4raIImcABnbN3Q7z/ga7N7y6cYTjP89LSPXx+Cm+J7SZ5hJp3FE03DLqAmxVVxrAWJsEP273UbDj/yYGNuDRcv2IlR2evQmKxsQK6LZ78cq7qyg62htxUVvRSBOiYe6wuvV1amcFmYWacM2yf44jIoVS7gh5+89ubzpVXUvQYtf+vdqypMLcnBKEFuaJgzvpZMarFjmGFxs2g15nVu/hNek/vSYMDJfbxycesIumNxOg6kuWwbameMMbspgR0jFYzOMJh16wsUp4HEFe/64SzZs9WVC2qRDvZiaNpKPiXtoh7oyTTOSFN5XGe4sGUZkmvnoZWXE68eaY3ALrMcJiRIxYF2Aud6QlWegTD7bCzEXpW+bFgqgN9Q0ewHNtqPGnp2QoCg02dHVMpel6yJ/364eGjtcApHFVOs5zTk/D+o8B6YD2X0MCbg3FZJJGHE0ZA3oHqC8QphjthnSXcd4cKNVDbpM7amJOezpLKLbrWXQeZCCLC0XBQnDlVJe75nT
+ Q9b3eg+38s1JFYFjRtvlcczFZCmypj/4ZgCO/VJAxi6YVVa2YkaeSHer6ow012B8iviITPTDPlxe1mmK3iEY765RMB7YGlFWZJOgRRE7e2mYfIP49WSkEQ2F+Bu0l5EPrwlHWNGp0itGG0Bhnuu09MuqTHCRgiGNHl+dWtxrbNO7ZGaYwSE8YVWvYwSCmVbsQm+5sj2Uv/XF+RIQeIZFE7OahLlCWK9A5wmhhgjMI1Ygi0Y5s3YhYo+ETtRyUHunFP5QjNTIyVB71lsGgBlnp5z5OGu26NFju5sDdVLVwUv08/YA0sSrRgtq83K3MLAfkcHJDNJ2kJhipUJE9diK3a56774j9+CeWTB302hSTRZBkZe7rg1WC6yCWsVTffcF6c+PeRUB9JtpYLTxw/+SN3XkmTvWqTngCx/7xq4mruo2reF0rY6eNHJAC9Auw+nZ0vgFPkoijuS/k1qgIISO8W2L8p7p3C5+KnriGLn/ZlFJlr8Nagvbw1l/OL76KFPXz1hoUqWP7QxgQSIkyVPDdIJx8uSOn/inU2VuHhKUXXXvzujlstfMdeP2MRuoCz7jRXI6W6c0xAHqlyGExsg39r0DZcZVj/t3EbGbldyEFbKhOHrNYmGM5XUS1J6SM0tOxUqcCchbbuG9IRG9ARMbwQ==
+X-OriginatorOrg: kalrayinc.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: da60f5b1-2ea6-4b3f-e22c-08dc338d3b28
+X-MS-Exchange-CrossTenant-AuthSource: MRZP264MB1896.FRAP264.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Feb 2024 10:01:25.9150
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 8931925d-7620-4a64-b7fe-20afd86363d3
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 43y0gLKxWGJTdD5hYYDr7C7B59dWtyJTMdV70egz2XgiinJwNOJDlQb7kY8Sj2ZKmhOnCHTHVUckV0K9X2NrOw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR0P264MB2025
+X-ALTERMIMEV2_out: done
 
-On Wed, Feb 21, 2024 at 2:59=E2=80=AFAM Stephen Boyd <swboyd@chromium.org> =
-wrote:
->
-> This devm API takes a consumer device as an argument to setup the devm
-> action, but throws it away when calling further into gpiolib. This leads
-> to odd debug messages like this:
->
->  (NULL device *): using DT '/gpio-keys/switch-pen-insert' for '(null)' GP=
-IO lookup
->
-> Let's pass the consumer device down, by directly calling what
-> fwnode_gpiod_get_index() calls but pass the device used for devm. This
-> changes the message to look like this instead:
->
->  gpio-keys gpio-keys: using DT '/gpio-keys/switch-pen-insert' for '(null)=
-' GPIO lookup
->
-> Note that callers of fwnode_gpiod_get_index() will still see the NULL
-> device pointer debug message, but there's not much we can do about that
-> because the API doesn't take a struct device.
->
-> Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> Fixes: 8eb1f71e7acc ("gpiolib: consolidate GPIO lookups")
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/gpio/gpiolib-devres.c |  2 +-
->  drivers/gpio/gpiolib.c        | 14 +++++++-------
->  drivers/gpio/gpiolib.h        |  8 ++++++++
->  3 files changed, 16 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpio/gpiolib-devres.c b/drivers/gpio/gpiolib-devres.=
-c
-> index fe9ce6b19f15..4987e62dcb3d 100644
-> --- a/drivers/gpio/gpiolib-devres.c
-> +++ b/drivers/gpio/gpiolib-devres.c
-> @@ -158,7 +158,7 @@ struct gpio_desc *devm_fwnode_gpiod_get_index(struct =
-device *dev,
->         if (!dr)
->                 return ERR_PTR(-ENOMEM);
->
-> -       desc =3D fwnode_gpiod_get_index(fwnode, con_id, index, flags, lab=
-el);
-> +       desc =3D gpiod_find_and_request(dev, fwnode, con_id, index, flags=
-, label, false);
->         if (IS_ERR(desc)) {
->                 devres_free(dr);
->                 return desc;
-> diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-> index 44c8f5743a24..c6667a887ecb 100644
-> --- a/drivers/gpio/gpiolib.c
-> +++ b/drivers/gpio/gpiolib.c
-> @@ -4133,13 +4133,13 @@ static struct gpio_desc *gpiod_find_by_fwnode(str=
-uct fwnode_handle *fwnode,
->         return desc;
->  }
->
-> -static struct gpio_desc *gpiod_find_and_request(struct device *consumer,
-> -                                               struct fwnode_handle *fwn=
-ode,
-> -                                               const char *con_id,
-> -                                               unsigned int idx,
-> -                                               enum gpiod_flags flags,
-> -                                               const char *label,
-> -                                               bool platform_lookup_allo=
-wed)
-> +struct gpio_desc *gpiod_find_and_request(struct device *consumer,
-> +                                        struct fwnode_handle *fwnode,
-> +                                        const char *con_id,
-> +                                        unsigned int idx,
-> +                                        enum gpiod_flags flags,
-> +                                        const char *label,
-> +                                        bool platform_lookup_allowed)
->  {
->         unsigned long lookupflags =3D GPIO_LOOKUP_FLAGS_DEFAULT;
->         struct gpio_desc *desc;
-> diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-> index a4a2520b5f31..c6e5fb9aa212 100644
-> --- a/drivers/gpio/gpiolib.h
-> +++ b/drivers/gpio/gpiolib.h
-> @@ -202,6 +202,14 @@ static inline int gpiod_request_user(struct gpio_des=
-c *desc, const char *label)
->         return ret;
->  }
->
-> +struct gpio_desc *gpiod_find_and_request(struct device *consumer,
-> +                                        struct fwnode_handle *fwnode,
-> +                                        const char *con_id,
-> +                                        unsigned int idx,
-> +                                        enum gpiod_flags flags,
-> +                                        const char *label,
-> +                                        bool platform_lookup_allowed);
-> +
->  int gpiod_configure_flags(struct gpio_desc *desc, const char *con_id,
->                 unsigned long lflags, enum gpiod_flags dflags);
->  int gpio_set_debounce_timeout(struct gpio_desc *desc, unsigned int debou=
-nce);
->
-> base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
-> --
-> https://chromeos.dev
->
+Hi Greg,
 
-This doesn't apply on top of the for-next branch of the GPIO tree,
-please rebase and resend.
+On 2/21/24 14:03, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.79 release.
+> There are 206 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 23 Feb 2024 13:01:46 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
 
-Bart
+I tested 6.1.79-rc2 (64fdfe5f1a1d) on Kalray kvx arch (not upstream yet) : I had to patch `arch/kvx/include/asm/jump_label.h` to get it to compile because of the "asm goto" changes but apart from that everything looks good!
+
+It ran on real hw (k200, k200lp and k300 boards), on qemu as well as on our internal instruction set simulator (ISS).
+
+Tests were run on several interfaces/drivers (usb, qsfp ethernet, eMMC, PCIe endpoint+RC, SPI, remoteproc, uart, iommu). LTP and uClibc-ng testsuites are also run without any regression.
+
+Everything looks fine to us.
+
+Tested-by: Yann Sionneau<ysionneau@kalrayinc.com>
+
+Thanks a lot!
+
+-- 
+
+Yann
+
+
+
+
+
