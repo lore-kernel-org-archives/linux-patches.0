@@ -1,100 +1,115 @@
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C31FEAE7;
-	Thu, 22 Feb 2024 00:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE2011712
+	for <patches@lists.linux.dev>; Thu, 22 Feb 2024 01:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708563446; cv=none; b=MlgcdaYSOtXIk6P+WPJLKcbZwMy13+rA/o/8aOOlJpXUyCrEnAZKbnZAgNjFnlX2gAX6KDvUZ/ieraJsqy1LPM3Gsk81Jx9IlQCzJC9CYm+GZgZ88zzb4hyC1F4hnZSZaL6xoM7SCD2/3TLyBcLYkqk7xscKZlbD2RNfz1JmNLY=
+	t=1708565801; cv=none; b=CY43/n0P4rzSCkylJ4HOIXPQ2DkrRoyuK15FZXlWBKbsFBaVEMoBJawOD46SR5mIp+MzMbhN4r4m3joOBbtgeF6IMYDSQgiAcpYW+/VLN6sXwBP/Y0V5ZqpYebAYCRg8XAKf/QisPQsKaDjPTUPuYRxehxIyS5saUKG0IDUK1vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708563446; c=relaxed/simple;
-	bh=TpNLIT6IBsmqizqpSoGO/6QU3PYKUcfmgj/xzzcRj2E=;
-	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=H3aUBe/Nw+U8Cb5vYCbTAA+RGDzRfNhXpkaiIc/e3nzOct2CrKSOA1W9mbjpxEiBLDNBWgbsgnF4PJg0VfcOaPG7LKs8dA+TEqcvfheBkNJ5O3GTS6z2+Yq/CzRf7oN+NHxWtbHGslBGXp/f60W6nCG6sDmhCvfO1Jy5azB4mSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.163.44])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TgF6d26ZSz2Bd3b;
-	Thu, 22 Feb 2024 08:55:05 +0800 (CST)
-Received: from kwepemm600007.china.huawei.com (unknown [7.193.23.208])
-	by mail.maildlp.com (Postfix) with ESMTPS id A555D140383;
-	Thu, 22 Feb 2024 08:57:14 +0800 (CST)
-Received: from [10.67.120.192] (10.67.120.192) by
- kwepemm600007.china.huawei.com (7.193.23.208) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 22 Feb 2024 08:57:13 +0800
-Message-ID: <45ac5429-df48-489e-928f-8444aea127cd@huawei.com>
-Date: Thu, 22 Feb 2024 08:57:12 +0800
+	s=arc-20240116; t=1708565801; c=relaxed/simple;
+	bh=kLkAqXGFnab95FKYljZfZW9pzL31Qc+WCrO8iyh4Dyc=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=iK7vEy5+sVdy2ynSbRZTTl6ii6khBnPsv5kkmWd5qySEJpzSOnlNfbeSmLGr1vBblfskldqFVDQPU7+B1bcmIIAkRYjeHrjBzAGcHZAPaFRwlP4ebGoxbwdIj2Hs/8U8CQ+erweo/s2a2ntawc2viU5toxX07fgiIWmQ8zNd6Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Gvkj714Y; arc=none smtp.client-ip=44.202.169.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Gvkj714Y"
+Received: from eig-obgw-6009a.ext.cloudfilter.net ([10.0.30.184])
+	by cmsmtp with ESMTPS
+	id cvt4rU2IlTHHucy0lrJCCN; Thu, 22 Feb 2024 01:36:31 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id cy0krz5oGAdcUcy0krXqqs; Thu, 22 Feb 2024 01:36:30 +0000
+X-Authority-Analysis: v=2.4 cv=AMcGPNbb c=1 sm=1 tr=0 ts=65d6a51e
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=k7vzHIieQBIA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=0mXXa4OsfGGRi4sNyRUA:9 a=QEXdDO2ut3YA:10
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=PBT3EwsKOSdep8GUCvESCkDtcLNNU9SC1GjL1m7B1B0=; b=Gvkj714YJ2k9cm5ACwDvEnpHeJ
+	i4eGkqeR0hHqRFmpGfnlFlDwflA0ZMrn+pKBC/Pn8FKfi9ey9657OjjMeEsOP9ODzLND2KivtkpMq
+	RaPp72K/LZS7Wg6jzX8eiNazUE5zKtVVBDpXuzERI8WNw6PKQNNqA2hfX+DGETN5a3mZ+UBXJKCWX
+	itfMCohyq6jx0YsR946D7101nDzTRNE2V4oS/Dj7FXtrqW+naICRBUqt8N5Hofts+EyKuT8iZf0nn
+	pah9skh2mu9kG7TdlGCmOfLy62AfAJdgFWoeU4C8+mnXccVn9kEXUNttwIqNxcskka5/Lp7cJbm2W
+	kLFnt4cw==;
+Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:47288 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1rcy0i-003Hpj-1N;
+	Wed, 21 Feb 2024 18:36:28 -0700
+Subject: Re: [PATCH 6.6 000/338] 6.6.18-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
+References: <20240221125953.770767246@linuxfoundation.org>
+In-Reply-To: <20240221125953.770767246@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <0b5e606d-69a5-ed25-16ff-a1fd6a652f0e@w6rz.net>
+Date: Wed, 21 Feb 2024 17:36:26 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <shaojijie@huawei.com>, Arnd Bergmann <arnd@arndb.de>, Catalin Marinas
-	<catalin.marinas@arm.com>, Leon Romanovsky <leonro@mellanox.com>,
-	<linux-arch@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>, Mark
- Rutland <mark.rutland@arm.com>, Michael Guralnik <michaelgur@mellanox.com>,
-	<patches@lists.linux.dev>, Niklas Schnelle <schnelle@linux.ibm.com>, Will
- Deacon <will@kernel.org>
-Subject: Re: [PATCH 5/6] net: hns3: Remove io_stop_wc() calls after
- __iowrite64_copy()
-To: Jason Gunthorpe <jgg@nvidia.com>, Alexander Gordeev
-	<agordeev@linux.ibm.com>, Andrew Morton <akpm@linux-foundation.org>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>, Borislav Petkov
-	<bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, "David S. Miller"
-	<davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Gerald Schaefer
-	<gerald.schaefer@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, Heiko
- Carstens <hca@linux.ibm.com>, "H. Peter Anvin" <hpa@zytor.com>, Justin Stitt
-	<justinstitt@google.com>, Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky
-	<leon@kernel.org>, <linux-rdma@vger.kernel.org>,
-	<linux-s390@vger.kernel.org>, <llvm@lists.linux.dev>, Ingo Molnar
-	<mingo@redhat.com>, Bill Wendling <morbo@google.com>, Nathan Chancellor
-	<nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>,
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Salil Mehta
-	<salil.mehta@huawei.com>, Sven Schnelle <svens@linux.ibm.com>, Thomas
- Gleixner <tglx@linutronix.de>, <x86@kernel.org>, Yisen Zhuang
-	<yisen.zhuang@huawei.com>
-References: <5-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
-From: Jijie Shao <shaojijie@huawei.com>
-In-Reply-To: <5-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemm600007.china.huawei.com (7.193.23.208)
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 98.207.139.8
+X-Source-L: No
+X-Exim-ID: 1rcy0i-003Hpj-1N
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:47288
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfFYdKjqlS1NhAkSrRLv11LFI7obT+PJIVC17wIu2mf052bHGVbgltmxfwhEMOJLjujZm+MLzM/H6Nhx/SbkuS3XxIvGwodx7usoZ08Q7V4kT+kyXMQoa
+ tiNkMCYMMWRikIFj2gEWGpPx6Y9fdbTo4v+INgPGyNqrzFH9sszMMCi3wJ/WpaoYqk6Z4JafirJYWQ==
 
-Reviewed-by: Jijie Shao<shaojijie@huawei.com>
+On 2/21/24 5:01 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.18 release.
+> There are 338 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 23 Feb 2024 12:59:02 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.18-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-on 2024/2/21 9:17, Jason Gunthorpe wrote:
-> Now that the ARM64 arch implementation does the DGH as part of
-> __iowrite64_copy() there is no reason to open code this in drivers.
->
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 4 ----
->   1 file changed, 4 deletions(-)
->
-> diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-> index f1695c889d3a07..ff556c2b5bacb4 100644
-> --- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-> +++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-> @@ -2068,8 +2068,6 @@ static void hns3_tx_push_bd(struct hns3_enet_ring *ring, int num)
->   	__iowrite64_copy(ring->tqp->mem_base, desc,
->   			 (sizeof(struct hns3_desc) * HNS3_MAX_PUSH_BD_NUM) /
->   			 HNS3_BYTES_PER_64BIT);
-> -
-> -	io_stop_wc();
->   }
->   
->   static void hns3_tx_mem_doorbell(struct hns3_enet_ring *ring)
-> @@ -2088,8 +2086,6 @@ static void hns3_tx_mem_doorbell(struct hns3_enet_ring *ring)
->   	u64_stats_update_begin(&ring->syncp);
->   	ring->stats.tx_mem_doorbell += ring->pending_buf;
->   	u64_stats_update_end(&ring->syncp);
-> -
-> -	io_stop_wc();
->   }
->   
->   static void hns3_tx_doorbell(struct hns3_enet_ring *ring, int num,
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
