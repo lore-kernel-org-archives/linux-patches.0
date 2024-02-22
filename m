@@ -1,58 +1,31 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE80C11721
-	for <patches@lists.linux.dev>; Thu, 22 Feb 2024 00:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C31FEAE7;
+	Thu, 22 Feb 2024 00:57:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708563362; cv=none; b=HSRgTUsZrf5SIGAQ1WaXjGRUw8C0TWHQDUp8Fc+bUHZKx2szk2rHaQniYZjbXgENOdJMJuha96D5f/aZW3fIheA5PVGQbJo3EZOX1/B4lzkxmeBcfp8sM7NY4n/Plwc0cJxQD9ZYW0JUH6yrWATFPdqexHdgJFhU4+p8SvNH1EQ=
+	t=1708563446; cv=none; b=MlgcdaYSOtXIk6P+WPJLKcbZwMy13+rA/o/8aOOlJpXUyCrEnAZKbnZAgNjFnlX2gAX6KDvUZ/ieraJsqy1LPM3Gsk81Jx9IlQCzJC9CYm+GZgZ88zzb4hyC1F4hnZSZaL6xoM7SCD2/3TLyBcLYkqk7xscKZlbD2RNfz1JmNLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708563362; c=relaxed/simple;
-	bh=nOygF+tulfpl8khV6zhERbuIv8CNCUxTUNFrXzNgoOA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WwXCbfwYqtR9xgDVTUHBJcwW2XWHrLFpICI9Yhi9gqwQvaT/JxZ4JQ8oA7ed9tkkbSUXriL+NcrBRpwTIwDZnDBfpbQdcS5bKDN35Xw9G/aAtX1AjFdT54+wV6b8S7ZSeR1gUhYr+fMmYwU0Y+S2KFRiWTghcvNxIvKZE4SCGQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B1QO824b; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B1QO824b"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-29a430c3057so164338a91.1
-        for <patches@lists.linux.dev>; Wed, 21 Feb 2024 16:55:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708563359; x=1709168159; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WL3spPkKq/SZseTrtmjIOQn2serUsFfggo7i5+exlHs=;
-        b=B1QO824bN+Eu4njV/MS3y2RM1lKKA6toHz/fCmTQ5ON10g/i+ExYbAPG/ZazIqi82h
-         HZu4ENz5ZfhZaAE0leEhsR86w4W4yOdD/y8rRpSsbjapr0oJEKL49b27TAUwjYzCkaW3
-         zCeq7s5gZDOdDFC7HOzahqBwen1vXg4cvbcwH7I6BZklFwjZbZaqlVIJ8NcW7WUxjxpW
-         awQJ97ujY8SOEv+ihyml/cTumAVK+kvh9TXQ7uL6rBsW9Ou7kzGHiHENF0PHy3b+h3gT
-         Q2vNem20hRUUjngNrNVCXefRScqbPmaUg/bQoqYjjfYmh6YX5KbQWhHuH1kidfnnv+lS
-         V51g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708563359; x=1709168159;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WL3spPkKq/SZseTrtmjIOQn2serUsFfggo7i5+exlHs=;
-        b=va4I0l539J7qbFciusDUbzovOF4g3wGRgwb8nzYw6N33+5bh0r7om8PAIwgIIORuWv
-         SFrkn35/toFh3+L5rngD+8M5me4ofXdp5MDh+0lD6Mk0aiTUK8DNCuH3A2WjIlVToDS8
-         gj1F1QoGxvMmJTJF54Mx/USOW7wyO7AXmS16REVzQgKrMxvOCygIdhjwXBRHEDfQmmMR
-         I08nv2OYnaJ8GvkTYCdFmnFJzcA830M508Nw2tG1B3QCPyHUYluLLq8w4p08EGpuVsT1
-         fUD0fy83tbtsB6IqJ+pW3/qTz8OVzpHevr695hegPeJdW0zSpfdjlVwkJlIZQlQ95qmv
-         IkuA==
-X-Gm-Message-State: AOJu0YwHB4d+SOU9BkxaNcAyAhWQy3NW4CsHNOZ2BX2CfaVODENNe06Y
-	fj1BuHz4AYWoC8iKmS8npMbs2t5Vz1oytyDnK+rg5pbq8u1uHUeC
-X-Google-Smtp-Source: AGHT+IHGHvOImUTZQjA9JE22XMBCiWU5J8YqOmsuW6Tu+Y//TfZ5zD/Q6DNg/mCdyODiXiP/9aQMXw==
-X-Received: by 2002:a17:90a:bb03:b0:298:a28a:e58c with SMTP id u3-20020a17090abb0300b00298a28ae58cmr16493010pjr.9.1708563359051;
-        Wed, 21 Feb 2024 16:55:59 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id l14-20020a17090aaa8e00b002997f192d4esm1629662pjq.1.2024.02.21.16.55.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 16:55:58 -0800 (PST)
-Message-ID: <24a0eb8e-9007-4368-9ce7-7ef11c8e07b1@gmail.com>
-Date: Wed, 21 Feb 2024 16:55:57 -0800
+	s=arc-20240116; t=1708563446; c=relaxed/simple;
+	bh=TpNLIT6IBsmqizqpSoGO/6QU3PYKUcfmgj/xzzcRj2E=;
+	h=Message-ID:Date:MIME-Version:CC:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=H3aUBe/Nw+U8Cb5vYCbTAA+RGDzRfNhXpkaiIc/e3nzOct2CrKSOA1W9mbjpxEiBLDNBWgbsgnF4PJg0VfcOaPG7LKs8dA+TEqcvfheBkNJ5O3GTS6z2+Yq/CzRf7oN+NHxWtbHGslBGXp/f60W6nCG6sDmhCvfO1Jy5azB4mSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TgF6d26ZSz2Bd3b;
+	Thu, 22 Feb 2024 08:55:05 +0800 (CST)
+Received: from kwepemm600007.china.huawei.com (unknown [7.193.23.208])
+	by mail.maildlp.com (Postfix) with ESMTPS id A555D140383;
+	Thu, 22 Feb 2024 08:57:14 +0800 (CST)
+Received: from [10.67.120.192] (10.67.120.192) by
+ kwepemm600007.china.huawei.com (7.193.23.208) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 22 Feb 2024 08:57:13 +0800
+Message-ID: <45ac5429-df48-489e-928f-8444aea127cd@huawei.com>
+Date: Thu, 22 Feb 2024 08:57:12 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,44 +33,68 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.7 000/313] 6.7.6-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com
-References: <20240221125951.434262489@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240221125951.434262489@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+CC: <shaojijie@huawei.com>, Arnd Bergmann <arnd@arndb.de>, Catalin Marinas
+	<catalin.marinas@arm.com>, Leon Romanovsky <leonro@mellanox.com>,
+	<linux-arch@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>, Mark
+ Rutland <mark.rutland@arm.com>, Michael Guralnik <michaelgur@mellanox.com>,
+	<patches@lists.linux.dev>, Niklas Schnelle <schnelle@linux.ibm.com>, Will
+ Deacon <will@kernel.org>
+Subject: Re: [PATCH 5/6] net: hns3: Remove io_stop_wc() calls after
+ __iowrite64_copy()
+To: Jason Gunthorpe <jgg@nvidia.com>, Alexander Gordeev
+	<agordeev@linux.ibm.com>, Andrew Morton <akpm@linux-foundation.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>, Borislav Petkov
+	<bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, "David S. Miller"
+	<davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Gerald Schaefer
+	<gerald.schaefer@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, Heiko
+ Carstens <hca@linux.ibm.com>, "H. Peter Anvin" <hpa@zytor.com>, Justin Stitt
+	<justinstitt@google.com>, Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky
+	<leon@kernel.org>, <linux-rdma@vger.kernel.org>,
+	<linux-s390@vger.kernel.org>, <llvm@lists.linux.dev>, Ingo Molnar
+	<mingo@redhat.com>, Bill Wendling <morbo@google.com>, Nathan Chancellor
+	<nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>,
+	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Salil Mehta
+	<salil.mehta@huawei.com>, Sven Schnelle <svens@linux.ibm.com>, Thomas
+ Gleixner <tglx@linutronix.de>, <x86@kernel.org>, Yisen Zhuang
+	<yisen.zhuang@huawei.com>
+References: <5-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
+From: Jijie Shao <shaojijie@huawei.com>
+In-Reply-To: <5-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemm600007.china.huawei.com (7.193.23.208)
 
-On 2/21/24 05:01, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.7.6 release.
-> There are 313 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 23 Feb 2024 12:59:02 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.7.6-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.7.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Reviewed-by: Jijie Shao<shaojijie@huawei.com>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
-
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
-
+on 2024/2/21 9:17, Jason Gunthorpe wrote:
+> Now that the ARM64 arch implementation does the DGH as part of
+> __iowrite64_copy() there is no reason to open code this in drivers.
+>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 4 ----
+>   1 file changed, 4 deletions(-)
+>
+> diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+> index f1695c889d3a07..ff556c2b5bacb4 100644
+> --- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+> +++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+> @@ -2068,8 +2068,6 @@ static void hns3_tx_push_bd(struct hns3_enet_ring *ring, int num)
+>   	__iowrite64_copy(ring->tqp->mem_base, desc,
+>   			 (sizeof(struct hns3_desc) * HNS3_MAX_PUSH_BD_NUM) /
+>   			 HNS3_BYTES_PER_64BIT);
+> -
+> -	io_stop_wc();
+>   }
+>   
+>   static void hns3_tx_mem_doorbell(struct hns3_enet_ring *ring)
+> @@ -2088,8 +2086,6 @@ static void hns3_tx_mem_doorbell(struct hns3_enet_ring *ring)
+>   	u64_stats_update_begin(&ring->syncp);
+>   	ring->stats.tx_mem_doorbell += ring->pending_buf;
+>   	u64_stats_update_end(&ring->syncp);
+> -
+> -	io_stop_wc();
+>   }
+>   
+>   static void hns3_tx_doorbell(struct hns3_enet_ring *ring, int num,
