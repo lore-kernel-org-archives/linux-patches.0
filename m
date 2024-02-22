@@ -1,115 +1,78 @@
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
+Received: from out198-154.us.a.mail.aliyun.com (out198-154.us.a.mail.aliyun.com [47.90.198.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7686134CDB
-	for <patches@lists.linux.dev>; Thu, 22 Feb 2024 12:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC9C12D756
+	for <patches@lists.linux.dev>; Thu, 22 Feb 2024 13:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.198.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708605960; cv=none; b=XLX/LV7Kbwx8ud3ji8+JQYTy/ahZVmBEBmQU4J4VKHbTejH+mwf2RnAKjO7RfAlscL2X/LcfCgJgCI5doHMjLRqvs//Ki/KCHN9wQ/bSavKFyyNtXXf4D0Jf92hWds/z00nM9q/PTVwH4qkRfTzFm44GnOc5nN/7hFjsbvuy3eA=
+	t=1708606949; cv=none; b=fUc3rOh3JTdYhqjWnHDAdVDjhtJuibisnVTzXnxCmd3OOr2L3jurR1CUphQX+BBKvLKoROflpveZZ+LqCCmQjrEAdvFJN2MCb/HsS72YnRgItGC5HtO6UJxDj6gxKbpRE2UB30NnbxuZEJ0Upezzt6bxCtv+HMR3+j2aTRoTYAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708605960; c=relaxed/simple;
-	bh=NnaboX8aXXb197A/dlZOhBBisyfGhcUct3ugFaW30qI=;
-	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
-	 MIME-Version:Content-Type; b=or8BGTG61b8xap5hNRasBppQwrR8EJd9erseDTIWOL3DKk/iDopCEqoBHIJLRbTxTt7u9DU9J2GyjWH53verVx5iEtZ2YpN5uwlV4+KD6O/alZ1YUFdFb7acIjNC977YL2djovY7YM9GqmriTQliMOMEuSLtlgmamk27c02cKTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=vmWozsG9; arc=none smtp.client-ip=44.202.169.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="vmWozsG9"
-Received: from eig-obgw-5004a.ext.cloudfilter.net ([10.0.29.221])
-	by cmsmtp with ESMTPS
-	id d3yerWXEFTHHud8SarNJq0; Thu, 22 Feb 2024 12:45:56 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id d8SZruD7aJlV9d8Sarxy7T; Thu, 22 Feb 2024 12:45:56 +0000
-X-Authority-Analysis: v=2.4 cv=B6y/0vtM c=1 sm=1 tr=0 ts=65d74204
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=k7vzHIieQBIA:10 a=-Ou01B_BuAIA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=QYZglItAVTj7tyxopZAA:9 a=QEXdDO2ut3YA:10
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=I6AoeXe+ErGVFuvLrp2KUr3Wh804qc4vyrXamwgnRh8=; b=vmWozsG9R6omVfzqqagL7WZ50e
-	H3BYauv3YL8RpiXDdmUX5c76oZBkc87Y1LPGZEmwsBGEqLjyFpNN1ACknizyth19A3F3ruevlfpAp
-	bFmCCf00fR8VJsdU8ECQynmOmqcgDGaYc1D41dhxI9MvQVMaKImmJxEtpbdYGwonya0T/ovDkvc8v
-	wBdE9UJxES7rsQYbDkslUGTi+x8cGo4f8zhVvTDheWhXrqtUjMeaUzyr7mO2CYXluL5YjeC0STdqx
-	3yRRaZcwrKwBzGohJrDJR0RAzT5BPLsHgn0IsbS+FArceT5/RmA0IzvAUf+zRPcbH8C6XXBJYKSQF
-	ZDzq0nOA==;
-Received: from c-98-207-139-8.hsd1.ca.comcast.net ([98.207.139.8]:47348 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1rd8SX-003IC9-1i;
-	Thu, 22 Feb 2024 05:45:53 -0700
-Subject: Re: [PATCH 6.1 000/206] 6.1.79-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com
-References: <20240221130223.073542172@linuxfoundation.org>
-In-Reply-To: <20240221130223.073542172@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <5539c3c8-99a3-8f7e-72e9-0416441ffafe@w6rz.net>
-Date: Thu, 22 Feb 2024 04:45:51 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	s=arc-20240116; t=1708606949; c=relaxed/simple;
+	bh=7dY0J6tWUfZDjRXqq+3RTmoIss7uMaGRscXZvaR85HE=;
+	h=Date:From:To:Subject:Cc:In-Reply-To:References:Message-Id:
+	 MIME-Version:Content-Type; b=N2+RiUZ0NTsLFNxOWNzQwxNV5sctS/EKkLXEABdDqQM72NG1r5+3Ah9zvJeqhR/T5HDj2QUMntj31Il/LQmd3uhgT5NhyDsYKZ2MQj24/Ju3xVUl42WCqqwTKZDgmUQCYrfOrdu0zwEzVlSSqUcOe90YaKu3ugrR1a3pNDyOr4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=47.90.198.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.09046134|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.082199-0.00234652-0.915454;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047202;MF=wangyugui@e16-tech.com;NM=1;PH=DS;RN=5;RT=5;SR=0;TI=SMTPD_---.WX5xhwP_1708606924;
+Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.WX5xhwP_1708606924)
+          by smtp.aliyun-inc.com;
+          Thu, 22 Feb 2024 21:02:05 +0800
+Date: Thu, 22 Feb 2024 21:02:05 +0800
+From: Wang Yugui <wangyugui@e16-tech.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 111/476] NFSD: Modernize nfsd4_release_lockowner()
+Cc: stable@vger.kernel.org,
+ patches@lists.linux.dev,
+ Chuck Lever <chuck.lever@oracle.com>,
+ Sasha Levin <sashal@kernel.org>
+In-Reply-To: <2024022213-salami-earflap-aec9@gregkh>
+References: <20240222061911.6F1A.409509F4@e16-tech.com> <2024022213-salami-earflap-aec9@gregkh>
+Message-Id: <20240222210204.4F83.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 98.207.139.8
-X-Source-L: No
-X-Exim-ID: 1rd8SX-003IC9-1i
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-98-207-139-8.hsd1.ca.comcast.net ([10.0.1.47]) [98.207.139.8]:47348
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfHp3fBtWRappsHtY+cvCUSlYjTHnhY2MQZU4SL7tjaN170vjWdul8dP74M1Z1u6Q3eNEnK3akr6S0B3j7PVsI+qVTrVG49tp+GYAfAoldf7KNJrzN3h6
- xfVHomZ2SnXAzHUpxzCV3/A5vq/eSpPeZXztOBLr141Lk8zoxxmWgpvdSlZpGCNpmLj00KscKmMiig==
+X-Mailer: Becky! ver. 2.81.05 [en]
 
-On 2/21/24 5:03 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.79 release.
-> There are 206 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 23 Feb 2024 13:01:46 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.79-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi,
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+> On Thu, Feb 22, 2024 at 06:19:12AM +0800, Wang Yugui wrote:
+> > Hi,
+> > 
+> > 
+> > > 5.15-stable review patch.  If anyone has any objections, please let me know.
+> > > 
+> > > ------------------
+> > > 
+> > > From: Chuck Lever <chuck.lever@oracle.com>
+> > > 
+> > > [ Upstream commit bd8fdb6e545f950f4654a9a10d7e819ad48146e5 ]
+> > > 
+> > > Refactor: Use existing helpers that other lock operations use. This
+> > > change removes several automatic variables, so re-organize the
+> > > variable declarations for readability.
+> > > 
+> > > Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+> > > Stable-dep-of: edcf9725150e ("nfsd: fix RELEASE_LOCKOWNER")
+> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > 
+> > 
+> > "nfsd: fix RELEASE_LOCKOWNER" is yet not in 5.15.149-rc1?
+> > or I missed something?
+> 
+> Good catch, you are correct!  I'll go drop this, and the other nfsd
+> "dep-of" commit in this queue, and in the 5.10 and 5.4 queues.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Will we add "nfsd: fix RELEASE_LOCKOWNER" to 5.15.y later?
+
+It seems that at least 5.15.y need "nfsd: fix RELEASE_LOCKOWNER".
+
+Best Regards
+Wang Yugui (wangyugui@e16-tech.com)
+2024/02/22
 
