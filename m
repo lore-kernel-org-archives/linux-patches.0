@@ -1,159 +1,167 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.85.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9E9125A3
-	for <patches@lists.linux.dev>; Fri, 23 Feb 2024 06:52:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC72222EE9
+	for <patches@lists.linux.dev>; Fri, 23 Feb 2024 09:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.58.85.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708671178; cv=none; b=KrY3PK0WoKE5lgU4r0LJEUYgdIMTxxuUrl+nPDy/qiNeKx05kNzj4hov0uf9P0tveHzsG4dV9goouwLbXNdbs5qpsM88LiaPFRPkxGz0PkN1OLBS/DTKC4kq17K/oJMHQIXpSk7rRGyzQCXN+bS7mhuopGREI1ZytZut6Y1V3T0=
+	t=1708679272; cv=none; b=O5smqVI7LCXXHpTOVaMgk3/gIISrMaRzuZGyXn4xCsp+PTlCbTfthKHVKsMnHIttZK2ktePom6OIWn5MeZDrzrjHeRpaM11P0OZ6E+JpcL55BhU+9OZPGF8WJgmZyURzKiZSVdD7uA5+T+ALjRg6+MeLLDI3BQKX5qdbznP5vPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708671178; c=relaxed/simple;
-	bh=LIf7/UyiE55q8WBoINf1R7JpFbQ0n7ltteZEC2U4/sU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CLU1yJMXv2yNPnijh1zsbLQIEXlo7zA104Li7NAW/KNM6YstyJ4wMBvcAQFCtSXlzW8mtoUB2foP0al0ntd3L9Z843fmZJGSa3cOExiQNcHI+z+4WBOWVtxJA6Szp8DdkkKK0nflW3wlIEqf284nkm7GB/mvEML3FprC54EIMxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=WlkEF0LC; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="WlkEF0LC"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6e459b39e2cso14518b3a.1
-        for <patches@lists.linux.dev>; Thu, 22 Feb 2024 22:52:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1708671176; x=1709275976; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4gjzC9xBa8ids+ZwVlsrtDEaW20Z5hUGx3X+FKF8NKY=;
-        b=WlkEF0LCzrTALUKElKTT5BawulEgXpA/1oZl+vVFCkFKTosUVH993n61hO6iUE9O9/
-         a/FV2yURLcF99zFoPvPPPNzBc75IAb3Jty5RAaiOJwqhxLyfuMcuZdXW9r6jcJjJyPhr
-         8ARxv8IXNR0skyV/pFx9BdEjWpC/rkFxqY4OA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708671176; x=1709275976;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4gjzC9xBa8ids+ZwVlsrtDEaW20Z5hUGx3X+FKF8NKY=;
-        b=SxbTvtiKlmEPfCgUwOzrHQaOYz06a85/E+A/fuM1qNCESru24QzUENLBcE24d8UTLw
-         PbpJjWvVfQqrRCW3KoyaUpPogT4rVFr4kcPAVL+M8veryfXTLfkbXL65l4lXHpM6ZWXm
-         JvMCAsPsZKd8cInJJdeArk1kZN1nc9J1sGZc9xB1waZD0n1HlaVunrJ0yIOjsK/Ae34Z
-         TK9afUDvHHoMdltjP7TlFdGMBl8ukt0cUP/hDgK//FKW4Ug0+Ek1oq72mMyVvhlWJZLe
-         yV7HGnDAafiIlYPYOiT1CvytTt1gNQA0ezYZnQ1FbFOf/bZ1ZwpEviaWtu7lyMaeyDmR
-         uD5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUI7AXQoPG7PgtQE1W7+U8M03IH5ShacSCjF02TOpLWrsgNZJofK8ONUeYKDTyYA5bZaVDhzO4btqn+WdlQb/9s77/3kS8aGg==
-X-Gm-Message-State: AOJu0Yx52+nLMpnGqYrLE8/CAfXBNoWN7IJmRucNWhHrSyWYmEs2o0PL
-	mpe6/Q2AIo0YyeL+SSz6svzGcS5jtGvAm7T423tpAYZVzrXttSxTFMDqSMGr7A==
-X-Google-Smtp-Source: AGHT+IHlR5+CoNwE9VM1shWvRZnE7a1WH2TFVG3mmZ38R/O/bus+HV20LdXYzOWaJPORoTFS8y80qw==
-X-Received: by 2002:a05:6a20:c90d:b0:1a0:85ed:4769 with SMTP id gx13-20020a056a20c90d00b001a085ed4769mr1660947pzb.11.1708671176002;
-        Thu, 22 Feb 2024 22:52:56 -0800 (PST)
-Received: from localhost (175.199.125.34.bc.googleusercontent.com. [34.125.199.175])
-        by smtp.gmail.com with UTF8SMTPSA id i5-20020a639d05000000b005dc4829d0e1sm11651599pgd.85.2024.02.22.22.52.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Feb 2024 22:52:55 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-gpio@vger.kernel.org,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH v2] gpiolib: Pass consumer device through to core in devm_fwnode_gpiod_get_index()
-Date: Thu, 22 Feb 2024 22:52:53 -0800
-Message-ID: <20240223065254.3795204-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
+	s=arc-20240116; t=1708679272; c=relaxed/simple;
+	bh=HicMqPuP0z9kAN9RI1DRLqxYLPpRsSSu0aExBQ/IKhY=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 MIME-Version:Content-Type; b=W9ORz+gtnZHcXkIDf2wKDlis5C46p1pCSiQtONyd6mCgNPzQD3l9ld9ytPX2yqBNAXBTLnMPgqqRs3C0GNpSlzKvSHMEdxFqDM+1zaEoNMou9w64zD1jt/8zWET5eRZ8SMkHO15seaLXnR+lNm+3guXpuOlYuAaSujBVYixEK0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM; spf=pass smtp.mailfrom=aculab.com; arc=none smtp.client-ip=185.58.85.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aculab.com
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-284-PjVkpfHkNiSprLivrGQVxg-1; Fri, 23 Feb 2024 09:07:29 +0000
+X-MC-Unique: PjVkpfHkNiSprLivrGQVxg-1
+Received: from AcuMS.Aculab.com (10.202.163.4) by AcuMS.aculab.com
+ (10.202.163.4) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Fri, 23 Feb
+ 2024 09:07:27 +0000
+Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
+ id 15.00.1497.048; Fri, 23 Feb 2024 09:07:27 +0000
+From: David Laight <David.Laight@ACULAB.COM>
+To: 'Jason Gunthorpe' <jgg@nvidia.com>
+CC: Alexander Gordeev <agordeev@linux.ibm.com>, Andrew Morton
+	<akpm@linux-foundation.org>, Christian Borntraeger
+	<borntraeger@linux.ibm.com>, Borislav Petkov <bp@alien8.de>, Dave Hansen
+	<dave.hansen@linux.intel.com>, "David S. Miller" <davem@davemloft.net>, "Eric
+ Dumazet" <edumazet@google.com>, Gerald Schaefer
+	<gerald.schaefer@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, "Heiko
+ Carstens" <hca@linux.ibm.com>, "H. Peter Anvin" <hpa@zytor.com>, Justin Stitt
+	<justinstitt@google.com>, Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky
+	<leon@kernel.org>, "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+	"linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, Ingo Molnar
+	<mingo@redhat.com>, Bill Wendling <morbo@google.com>, Nathan Chancellor
+	<nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>,
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>, Paolo Abeni
+	<pabeni@redhat.com>, Salil Mehta <salil.mehta@huawei.com>, Jijie Shao
+	<shaojijie@huawei.com>, Sven Schnelle <svens@linux.ibm.com>, Thomas Gleixner
+	<tglx@linutronix.de>, "x86@kernel.org" <x86@kernel.org>, Yisen Zhuang
+	<yisen.zhuang@huawei.com>, Arnd Bergmann <arnd@arndb.de>, Catalin Marinas
+	<catalin.marinas@arm.com>, Leon Romanovsky <leonro@mellanox.com>,
+	"linux-arch@vger.kernel.org" <linux-arch@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, Mark Rutland <mark.rutland@arm.com>,
+	Michael Guralnik <michaelgur@mellanox.com>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, Niklas Schnelle <schnelle@linux.ibm.com>, "Will
+ Deacon" <will@kernel.org>
+Subject: RE: [PATCH 4/6] arm64/io: Provide a WC friendly __iowriteXX_copy()
+Thread-Topic: [PATCH 4/6] arm64/io: Provide a WC friendly __iowriteXX_copy()
+Thread-Index: AQHaZGPOOI9/P4jwQk+N+/Phnt6M8bEW6XcggAAM2oCAAKwjYA==
+Date: Fri, 23 Feb 2024 09:07:27 +0000
+Message-ID: <efc727fbb8de45c8b669b6ec174f95ce@AcuMS.aculab.com>
+References: <0-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
+ <4-v1-38290193eace+5-mlx5_arm_wc_jgg@nvidia.com>
+ <6d335e8701334a15b220b75d49b98d77@AcuMS.aculab.com>
+ <20240222223617.GC13330@nvidia.com>
+In-Reply-To: <20240222223617.GC13330@nvidia.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-This devm API takes a consumer device as an argument to setup the devm
-action, but throws it away when calling further into gpiolib. This leads
-to odd debug messages like this:
+From: Jason Gunthorpe
+> Sent: 22 February 2024 22:36
+> To: David Laight <David.Laight@ACULAB.COM>
+>=20
+> On Thu, Feb 22, 2024 at 10:05:04PM +0000, David Laight wrote:
+> > From: Jason Gunthorpe
+> > > Sent: 21 February 2024 01:17
+> > >
+> > > The kernel provides driver support for using write combining IO memor=
+y
+> > > through the __iowriteXX_copy() API which is commonly used as an optio=
+nal
+> > > optimization to generate 16/32/64 byte MemWr TLPs in a PCIe environme=
+nt.
+> > >
+> > ...
+> > > Implement __iowrite32/64_copy() specifically for ARM64 and use inline
+> > > assembly to build consecutive blocks of STR instructions. Provide dir=
+ect
+> > > support for 64/32/16 large TLP generation in this manner. Optimize fo=
+r
+> > > common constant lengths so that the compiler can directly inline the =
+store
+> > > blocks.
+> > ...
+> > > +/*
+> > > + * This generates a memcpy that works on a from/to address which is =
+aligned to
+> > > + * bits. Count is in terms of the number of bits sized quantities to=
+ copy. It
+> > > + * optimizes to use the STR groupings when possible so that it is WC=
+ friendly.
+> > > + */
+> > > +#define memcpy_toio_aligned(to, from, count, bits)                  =
+      \
+> > > +=09({                                                               =
+ \
+> > > +=09=09volatile u##bits __iomem *_to =3D to;                       \
+> > > +=09=09const u##bits *_from =3D from;                              \
+> > > +=09=09size_t _count =3D count;                                    \
+> > > +=09=09const u##bits *_end_from =3D _from + ALIGN_DOWN(_count, 8); \
+> > > +                                                                    =
+      \
+> > > +=09=09for (; _from < _end_from; _from +=3D 8, _to +=3D 8)           =
+\
+> > > +=09=09=09__const_memcpy_toio_aligned##bits(_to, _from, 8); \
+> > > +=09=09if ((_count % 8) >=3D 4) {
+> >
+> > If (_count & 4) {
+>=20
+> That would be obfuscating, IMHO. The compiler doesn't need such things
+> to generate optimal code.
 
- (NULL device *): using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
+Try it: https://godbolt.org/z/EvvGrTxv3=20
+And it isn't that obfuscated - no more so than your version.
 
-Let's pass the consumer device down, by directly calling what
-fwnode_gpiod_get_index() calls but pass the device used for devm. This
-changes the message to look like this instead:
+> > > +=09=09=09__const_memcpy_toio_aligned##bits(_to, _from, 1); \
+> > > +=09})
+> >
+> > But that looks bit a bit large to be inlined.
+>=20
+> You trimmed alot, this #define is in a C file and it is a template to
+> generate the 32 and 64 bit out of line functions. Things are done like
+> this because the 32/64 version are exactly the same logic except just
+> with different types and sizes.
 
- gpio-keys gpio-keys: using DT '/gpio-keys/switch-pen-insert' for '(null)' GPIO lookup
+I missed that in a quick read at 11pm :-(
 
-Note that callers of fwnode_gpiod_get_index() will still see the NULL
-device pointer debug message, but there's not much we can do about that
-because the API doesn't take a struct device.
+Although I doubt that generating long TLP from byte writes is
+really necessary.
+IIRC you were merging at most 4 writes.
+So better to do a single 32bit write instead.
+(Unless you have misaligned source data - unlikely.)
 
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Fixes: 8eb1f71e7acc ("gpiolib: consolidate GPIO lookups")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
+While write-combining to generate long TLP is probably mostly
+safe for PCIe targets, there are some that will only handle
+TLP for single 32bit data items.
+Which might be why the code is explicitly requesting 4 byte copies.
+So it may be entirely wrong to write-combine anything except
+the generic memcpy_toio().
 
-Changes from v1 (https://lore.kernel.org/r/20240221015920.676063-1-swboyd@chromium.org):
- * Rebased onto gpio/for-next
+=09David
 
- drivers/gpio/gpiolib-devres.c |  2 +-
- drivers/gpio/gpiolib.c        | 14 +++++++-------
- drivers/gpio/gpiolib.h        |  8 ++++++++
- 3 files changed, 16 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/gpio/gpiolib-devres.c b/drivers/gpio/gpiolib-devres.c
-index fe9ce6b19f15..4987e62dcb3d 100644
---- a/drivers/gpio/gpiolib-devres.c
-+++ b/drivers/gpio/gpiolib-devres.c
-@@ -158,7 +158,7 @@ struct gpio_desc *devm_fwnode_gpiod_get_index(struct device *dev,
- 	if (!dr)
- 		return ERR_PTR(-ENOMEM);
- 
--	desc = fwnode_gpiod_get_index(fwnode, con_id, index, flags, label);
-+	desc = gpiod_find_and_request(dev, fwnode, con_id, index, flags, label, false);
- 	if (IS_ERR(desc)) {
- 		devres_free(dr);
- 		return desc;
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 3c22920bd201..cff4ac2403a5 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -4187,13 +4187,13 @@ static struct gpio_desc *gpiod_find_by_fwnode(struct fwnode_handle *fwnode,
- 	return desc;
- }
- 
--static struct gpio_desc *gpiod_find_and_request(struct device *consumer,
--						struct fwnode_handle *fwnode,
--						const char *con_id,
--						unsigned int idx,
--						enum gpiod_flags flags,
--						const char *label,
--						bool platform_lookup_allowed)
-+struct gpio_desc *gpiod_find_and_request(struct device *consumer,
-+					 struct fwnode_handle *fwnode,
-+					 const char *con_id,
-+					 unsigned int idx,
-+					 enum gpiod_flags flags,
-+					 const char *label,
-+					 bool platform_lookup_allowed)
- {
- 	unsigned long lookupflags = GPIO_LOOKUP_FLAGS_DEFAULT;
- 	/*
-diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-index ada36aa0f81a..f67d5991ab1c 100644
---- a/drivers/gpio/gpiolib.h
-+++ b/drivers/gpio/gpiolib.h
-@@ -223,6 +223,14 @@ static inline int gpiod_request_user(struct gpio_desc *desc, const char *label)
- 	return ret;
- }
- 
-+struct gpio_desc *gpiod_find_and_request(struct device *consumer,
-+					 struct fwnode_handle *fwnode,
-+					 const char *con_id,
-+					 unsigned int idx,
-+					 enum gpiod_flags flags,
-+					 const char *label,
-+					 bool platform_lookup_allowed);
-+
- int gpiod_configure_flags(struct gpio_desc *desc, const char *con_id,
- 		unsigned long lflags, enum gpiod_flags dflags);
- int gpio_set_debounce_timeout(struct gpio_desc *desc, unsigned int debounce);
-
-base-commit: 36e44186e0badfda499b65d4462c49783bf92314
--- 
-https://chromeos.dev
+-
+Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
+PT, UK
+Registration No: 1397386 (Wales)
 
