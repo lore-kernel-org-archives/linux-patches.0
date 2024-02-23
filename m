@@ -1,121 +1,88 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02070D29B;
-	Fri, 23 Feb 2024 10:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B705C8FC;
+	Fri, 23 Feb 2024 10:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708683646; cv=none; b=rd2RRdtJRIbtw5TAxp/muF1jVax1JBy8A8tYJT9l2wh6ky9Y7IX0hZD+z9m1uHYs0pQaHI7Tcu/NNEnZdnRbho8BCZwD9jh9wmtTyFLtFht9zVULe80jcTIfPppWakNDMSQilM/ekdbsaOBZed/NulRWb11F3XJXR8WsapexiSQ=
+	t=1708683832; cv=none; b=lrOcMasv8xiWth/l8KfrBMt4XgAq2bPvZlMpDq4WRMiH3B6s/Q7DYTa1eJ53UzCpPznIxtCsHeVgDcyJsC8o5IIj0T3Mp2PNwNRg/JPymEE48dBBZibLh7UmpxnyxrW2cbjWL6mgtSxB+jRDtJxPvpHnro6Lb2zKdRmGmJJQSOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708683646; c=relaxed/simple;
-	bh=Y++Qoouf/06I7Qr2MljkIDCSHYasSsdWAIyi4ziBcZg=;
+	s=arc-20240116; t=1708683832; c=relaxed/simple;
+	bh=POfdF2ZcozXmc94NwYnJXw5bpLHLF02/HCONX/hP5F0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QIRrpcB1Ui06JmLNe6bAEfBYF4f6mpzvrvKk1S9i/4TA7H8eWMQ1uI/6b5Z8MqHldOJExUENniBTBJks5Xj/qxAiYFe6Orwj/Qnzd6J/eomw/diTBSm1sHY1wyb4L7x6uyCNaUhx0gAZxPERPKpPX/nXYVJLxQcmQc8T9Nx1+gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c4dR1Hon; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=onZCautQVr1puDV9zTA+lVj3gi6v0TZMrg/KKF6zMIVkR94Epl0ICYe9Z9J6gH9Zwq9zLaFKiDNkU4/8/ct5t0djBuBhVFWaW5MMzzrR7fy1uU3R8f9aHgOwZ2gBNUJoIPUDIVL9ZqsX/sNYhVHUPgeAYg7JIQJdaiYRRlcv3Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hbubaLcQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c4dR1Hon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64B7C433C7;
-	Fri, 23 Feb 2024 10:20:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hbubaLcQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD81C43390;
+	Fri, 23 Feb 2024 10:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708683645;
-	bh=Y++Qoouf/06I7Qr2MljkIDCSHYasSsdWAIyi4ziBcZg=;
+	s=k20201202; t=1708683831;
+	bh=POfdF2ZcozXmc94NwYnJXw5bpLHLF02/HCONX/hP5F0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c4dR1HonarJ2lveceEyBRuzECpwTCRR8GvTwn7IS4afEFPc/VrOAxltBu5XM0IMSc
-	 7O9f5aznQ2UshBu9vf/u3fCJChN4OzOqET5bRbntXvrqnoBcCELLnGOv3gLA5AafNd
-	 mABJMBwYYNxHjL3/frTT9rRGdJrN3E9p4qOEnG17A1iq2kZGNq1j4wBlD88fkwHVn/
-	 gQZTt3daxT6hmTeMVU7GPy7vofNurkEdVm4HVTGcrbBqQBcnZK5znMHf65TXMt6RsK
-	 EpiWHsKEdQviQFuxSuBoiY8v5Q+w28JL4XHfRifQTWCwYwRzevU+BoYfYl+sMae+IG
-	 e4FtJ7Sasr8Gg==
-Date: Fri, 23 Feb 2024 10:20:39 +0000
-From: Lee Jones <lee@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, devicetree@vger.kernel.org,
-	chrome-platform@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Pin-yen Lin <treapking@chromium.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>
-Subject: Re: [PATCH 1/2] dt-bindings: cros-ec: Add properties for GPIO
- controller
-Message-ID: <20240223102039.GK10170@google.com>
-References: <20240219202325.4095816-1-swboyd@chromium.org>
- <20240219202325.4095816-2-swboyd@chromium.org>
- <CAMRc=Mft4R83NSknze0BMMvJd7Yz3yNGqaBSRVBePgh_S3QU1g@mail.gmail.com>
+	b=hbubaLcQoaLHfcbIAVPWfexu6j5RRj/AGj/NMVXOc/9b0VdmsSZOcrzf7L6EeL8M0
+	 6HkSzwrO1awO6Lc72BAtPx2c7mvsqGYRp+l9ILMHDvNVkEH9+jTf78oycSXiotHnNz
+	 We2l0WXMP9CJWjNAP+Qn0JiOxpl8FPQkfwUVpVexEn1UVGkxUZNqmmBMS+fA1MSzK+
+	 d22/rT0z8/5f2Cc3TSxCjMjQDdtonOZAOtaDUWZ04DLlq/eDvwflAGBeI/EhXhvhV/
+	 tnxOpVp+CqZU0GSmAW0hWWada3Te5lm0y2nBTbC171yGJIA/YW01mIrCeLW2KEDNvO
+	 K393QH8TJpxig==
+Date: Fri, 23 Feb 2024 10:23:45 +0000
+From: Will Deacon <will@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, linux-um@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, kunit-dev@googlegroups.com,
+	linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org,
+	Frank Rowand <frowand.list@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: Re: [PATCH v4 5/7] arm64: Unconditionally call
+ unflatten_device_tree()
+Message-ID: <20240223102345.GA10274@willie-the-truck>
+References: <20240217010557.2381548-1-sboyd@kernel.org>
+ <20240217010557.2381548-6-sboyd@kernel.org>
+ <20240223000317.GA3835346-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=Mft4R83NSknze0BMMvJd7Yz3yNGqaBSRVBePgh_S3QU1g@mail.gmail.com>
+In-Reply-To: <20240223000317.GA3835346-robh@kernel.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Tue, 20 Feb 2024, Bartosz Golaszewski wrote:
-
-> On Mon, Feb 19, 2024 at 9:23 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > The ChromeOS embedded controller (EC) supports setting the state of
-> > GPIOs when the system is unlocked, and getting the state of GPIOs in all
-> > cases. The GPIOs are on the EC itself, so the EC acts similar to a GPIO
-> > expander. Add the #gpio-cells and gpio-controller properties to the
-> > cros-ec binding so that other devices described in DT can get the GPIOs
-> > on the EC.
-> >
-> > Cc: Linus Walleij <linus.walleij@linaro.org>
-> > Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+On Thu, Feb 22, 2024 at 05:03:17PM -0700, Rob Herring wrote:
+> On Fri, Feb 16, 2024 at 05:05:54PM -0800, Stephen Boyd wrote:
+> > Call this function unconditionally so that we can populate an empty DTB
+> > on platforms that don't boot with a firmware provided or builtin DTB.
+> > When ACPI is in use, unflatten_device_tree() ignores the
+> > 'initial_boot_params' pointer so the live DT on those systems won't be
+> > whatever that's pointing to. Similarly, when kexec copies the DT data
+> > the previous kernel to the new one on ACPI systems,
+> > of_kexec_alloc_and_setup_fdt() will ignore the live DT (the empty root
+> > one) and copy the 'initial_boot_params' data.
+> > 
 > > Cc: Rob Herring <robh+dt@kernel.org>
-> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> > Cc: Conor Dooley <conor+dt@kernel.org>
-> > Cc: Lee Jones <lee@kernel.org>
-> > Cc: Benson Leung <bleung@chromium.org>
-> > Cc: Guenter Roeck <groeck@chromium.org>
-> > Cc: <devicetree@vger.kernel.org>
-> > Cc: <chrome-platform@lists.linux.dev>
-> > Cc: Pin-yen Lin <treapking@chromium.org>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > Cc: Frank Rowand <frowand.list@gmail.com>
+> > Cc: Catalin Marinas <catalin.marinas@arm.com>
+> > Cc: Will Deacon <will@kernel.org>
+> > Cc: Mark Rutland <mark.rutland@arm.com>
+> > Cc: <linux-arm-kernel@lists.infradead.org>
+> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 > > ---
-> >  Documentation/devicetree/bindings/mfd/google,cros-ec.yaml | 7 +++++++
-> >  1 file changed, 7 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > index e1ca4f297c6d..aac8819bd00b 100644
-> > --- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > +++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
-> > @@ -93,6 +93,11 @@ properties:
-> >    '#size-cells':
-> >      const: 0
-> >
-> > +  '#gpio-cells':
-> > +    const: 2
-> > +
-> > +  gpio-controller: true
-> > +
-> >    typec:
-> >      $ref: /schemas/chrome/google,cros-ec-typec.yaml#
-> >
-> > @@ -275,6 +280,8 @@ examples:
-> >              interrupts = <99 0>;
-> >              interrupt-parent = <&gpio7>;
-> >              spi-max-frequency = <5000000>;
-> > +            #gpio-cells = <2>;
-> > +            gpio-controller;
-> >
-> >              proximity {
-> >                  compatible = "google,cros-ec-mkbp-proximity";
-> > --
-> > https://chromeos.dev
-> >
+> >  arch/arm64/kernel/setup.c | 3 +--
+> >  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> Applied, thanks!
+> Catalin, Will, Can I get an ack on this so I can take the series via the 
+> DT tree.
 
-Why are you applying this MFD patch?
+Mark had strong pretty strong objections to this in version one:
 
--- 
-Lee Jones [李琼斯]
+https://lore.kernel.org/all/ZaZtbU9hre3YhZam@FVFF77S0Q05N/
+
+and this patch looks the same now as it did then. Did something else
+change?
+
+Will
