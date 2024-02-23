@@ -1,58 +1,71 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2077.outbound.protection.outlook.com [40.107.93.77])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2050.outbound.protection.outlook.com [40.107.223.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3990C143C40;
-	Fri, 23 Feb 2024 18:44:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A95101CA;
+	Fri, 23 Feb 2024 18:54:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.50
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708713857; cv=fail; b=gPwIvLrPa1zzp7FuCZkRjtrMHkuVFcxoYccisAMWyUJztUb4CMgb+JxqJ0Kf1mGilIgMrYuSCllsHKfiwOyuhBhvJhEVIJU52ZvV8RJ4MbW3+tdlgUsAr0HinjShoovSetHFgjXW/6gsOEfatjsCAJeZ4pH3VM3booHgdOkBCW0=
+	t=1708714446; cv=fail; b=LjzbE+sgSisCm9Xyxa0rhSOCBSfW5JaO+fynCRMqT5GpfEKMrfVg7Jh73bacl8ct7+JL1QzaC7EcWTyc5pJv6iyY3Xrgz3ovXbpmIu1YJaN2Ww1GXfp3NO/WsYGR2feXJrGkFDZdtziGRfm+WRUXlUP1Q78LFNIjOtlCJUX7tw4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708713857; c=relaxed/simple;
-	bh=LZCOn102Rcbdk9qnjWdoEZh+srOaQDNQ5p5f8nrmVxc=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=LmND2raADtcGSf+X3Hq8hzavPr+qW+GWj3y5tRV5lM0zpXbZrYOrwWLGRyib0VNLOv9Zz2L92oiZb2mOFkWDNtOFYm2JI00Cej2YSBn4kVPuhoK7+T0BtZtYT9SqfPUwfCXu/0S9NlodnkYT+0emNn/x35PWGXva5c3QXy67ZpE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rolBw7oP; arc=fail smtp.client-ip=40.107.93.77
+	s=arc-20240116; t=1708714446; c=relaxed/simple;
+	bh=mD6TpMb7NtPhK2CN6A/OUDWlC3oGb0/vUWqyj1zXqLo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lijyEXpb71mBgNKoTeFV+rxmm1EAfTm5NZM4LkmIgX01EdD9qkZaEz5QHQayuSEEZ4LjcmpKnDIZQfU27QqbRyxispOJZuA7OcroAFPIwNu7zcYc/Kw5PkPAfbBEVZUSFohIDqQtc1Pa7u/nVP/8KoGf0zHoqoUpuZZspr46iQw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Z43rNrMN; arc=fail smtp.client-ip=40.107.223.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rolBw7oP"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Z43rNrMN"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LSi9HhNqSS/YcywcZf2ZvKmlPkyKttVK78XiF7QjU3LCFaorgwoc63V6hzLqTlYnRVceW6oscW71e/QEdBMcQYpt2mvFI0tgrGIHseuFhWRttlDvAG3NDGaWPTZnn1LH8qhLRXY1lJrDXNYLJSYzsY7F9nK/34RbktFXI5uZ+vina7zT5CeIcuuCrZXop2WmNFVvIaRvtofoscbStL25+Yt+6s/PS9ZqPVLSfzj3xPPv41TT6VXLdsXpMmlm1Q9PJRcJuS0XTQlkRJ0HWzzGVUOcDFyvQkiTFSS/yizf8WyDEObqp32IAhTgabn/pxtCt4QU0LqF/p66RVD/4mGaKw==
+ b=VKpfZks8YZAxPZUCkXmD09l1ilzeP3TfHb/qJw3AyNiXuByHT5Kxl4PaeUVy7PPBvjaZ0UCr2A36J1+Zn6rOwYyyXqJBWZNGelfiZFYwp71jCvdJoNLvWeydCEhubP7+379vNXZ4RbX4wZdfm1QePTwcull+DKVIHExtHyGwzuOGcGJMyeYa2E+5WhfdZ0z6deRiVZSqNHrh5qEuylVeR8+75JN89pI6NnVw66cOnbQ+hA2F0qKDnkpE5rIgBv845XBIVE7Ztpas074BvoZFOe6DgzqDVd5q1vl7AgE6GvOEp+UjtB9h/qZtQ3tJ2AG0dR06mdxUKmCBJzci7F1kKw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iqqeboJnwqWF84h/PAmxVpZuzFc9En4DRWDiyVj54t0=;
- b=N7iCGXcx6uV9f9eznulqYpdnpSwWzlXmNRYBt8xavzeJORB29uIJtu1PbcnbR3TUQmMIbW5AGk8bwvuoKjYfRJa4J5wzxqndK2CqFHR9+vM61R2GBgD3Y7wydaFNc2lJHYkozEBZ5VapoMQJjJeTbTRWq4cXQBS+oicmA8f3h0d31gyViQ3EQyTYgyf8faJkFbXe7CJ80wEC7uqHTNR/FDFO5U0iTa8EAWcXqZC6nGLayfhkk4PxBQ7HEgF9LdwFzLhgWvG63Bojp06ZCL1IClZvu4HfhMIkeugk+ogU2gVePcMciwzsqBMvQs0qjClHkCwyrobJnvhhGjJpeG2EFA==
+ bh=acIyiznf+Q6a2jwEpjRRzHo74ErdGDslzFBQGYW5Ohg=;
+ b=ScnxcfG+GmJsDdemaj0cdOJFbCahANP2/gKsZye3nP4rDc6B/f4gmJtjbAcCQh1DyCSzpYmksg7IO8PYnnHyUocA5919RULo/QO2U2uf8O+dqIcD6sVFf+Jpdhlai1j3PLxs6NZ9PjP3pQkkY/7wnES/Awm8mFKzbJK9O5BmwS/Yu1NcSF7IlobGwX+Jv4bAmtGijuRWQozZIHldgXmu9lSmYTwCrQOaBdEC8NROXhjPAkbCirEuocgJkwSm8uN+RD6hMkwBSANxmBoPIJWOJCI124iqqCUHp+OCogB0dNC0bpUqh1LM8vC4ASncYl0iRSwn2pOPYtoGSIH12dptiw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iqqeboJnwqWF84h/PAmxVpZuzFc9En4DRWDiyVj54t0=;
- b=rolBw7oPg3yjA60JdR2hvEM1wmcH/7yifrvTLsezTOPMKBp27p3TIZpkfQspA4LvbV9NF+UEreQViYPhX309xzEBzQy7LBWgOqNr0ApPR6uO0WDMLt41hhMCcStL1xR0J7w+wPAy+BiXoJOsxIxwLFLN2DTj5/ItTxWW9med7HOSOYKuI6DSkORhFW02/lZcCsm+TShXkCBrGiO2i2TtmlzmgwN8nTKzX/2vcuqChz1lRA7c9SK5UQ/ArydARvwQUHcd32Cc69KXSeOYmEx0OoTv1MgkxITWIzkWHw/b61ShOcbKNfiaUmmsTVdsrfmilDJwnN7zB9tkKioSs5g3vw==
+ bh=acIyiznf+Q6a2jwEpjRRzHo74ErdGDslzFBQGYW5Ohg=;
+ b=Z43rNrMN4F80Ct7eEfy5+o2PtzU8pGn2e2PNMFXNHl2o1b5caFn5BHNOSzFjkL/ceZAhb1BltgXXvbkmvtc1eUGPb5pfhSl22IsgjNoH/wppgYqKSOYkTYHnZH85gCYzCH5kR8Z+UjlJx66JEOZj/Ty0IIbHM37M9WrI8YHdIkdrqIIZ7GFHIwvymwfx3wN+OFjPsxLTgM014Y7vhcG/DeYLGHGobRaFRGPui3rhGris1HWD9fVDwRmGEMhOpLgmpwEIQmNoenw4hh4LRrNtNRq8cemf65QbWbIEE9lx0b8aS9lvWM8fO5FWyRxWFF8ZZ9unqTHzkQI+02NcQBcVBQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by MW4PR12MB7117.namprd12.prod.outlook.com (2603:10b6:303:221::11) with
+ by MN2PR12MB4094.namprd12.prod.outlook.com (2603:10b6:208:15f::23) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.30; Fri, 23 Feb
- 2024 18:44:10 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.24; Fri, 23 Feb
+ 2024 18:54:00 +0000
 Received: from LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::96dd:1160:6472:9873]) by LV2PR12MB5869.namprd12.prod.outlook.com
  ([fe80::96dd:1160:6472:9873%6]) with mapi id 15.20.7316.023; Fri, 23 Feb 2024
- 18:44:09 +0000
+ 18:54:00 +0000
+Date: Fri, 23 Feb 2024 14:53:58 -0400
 From: Jason Gunthorpe <jgg@nvidia.com>
-To: iommu@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>,
-	patches@lists.linux.dev
-Subject: [PATCH] iommufd/selftest: Don't check map/unmap pairing with HUGE_PAGES
-Date: Fri, 23 Feb 2024 14:44:08 -0400
-Message-ID: <0-v1-1e17e60a5c8a+103fb-iommufd_mock_hugepg_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BLAPR05CA0033.namprd05.prod.outlook.com
- (2603:10b6:208:335::14) To LV2PR12MB5869.namprd12.prod.outlook.com
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
+	Moritz Fischer <moritzf@google.com>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Mostafa Saleh <smostafa@google.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v5 02/17] iommu/arm-smmu-v3: Consolidate the STE
+ generation for abort/bypass
+Message-ID: <20240223185358.GA791502@nvidia.com>
+References: <2-v5-cd1be8dd9c71+3fa-smmuv3_newapi_p1_jgg@nvidia.com>
+ <2ca7f64e-a9e3-4d47-b04f-726c86223fd6@arm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ca7f64e-a9e3-4d47-b04f-726c86223fd6@arm.com>
+X-ClientProxiedBy: BL1PR13CA0026.namprd13.prod.outlook.com
+ (2603:10b6:208:256::31) To LV2PR12MB5869.namprd12.prod.outlook.com
  (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -61,164 +74,78 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|MW4PR12MB7117:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4513ee9b-699a-48ea-9bae-08dc349f6bdb
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|MN2PR12MB4094:EE_
+X-MS-Office365-Filtering-Correlation-Id: a0dcc29e-1099-4a11-87a5-08dc34a0cbbc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	c9i+QF06ZoY338nNE6jBSLDfH2Vm6fGZ8bbhcHVXRlcVjfWmO6mcBYpFmw8MSb/IhICQLsj4Go+MD0AFwCekd55ZQZ+eet7J1GdUcCdo8UFXPD5dQefy39/z2Il24LMtTKBQtX2tyKWEz5OvVn7LsSNNsCWbk3uLT9S9+Nn9w34ZUQ5DpLiAT+y0bOq/1CVEsr9KpkZyjz+KtznHnXRnWD9Jktojc0tn5LSDjB9QFuH/gaJLHOuMxSeh3TvxGjsQM1Ow4FESRB2y82P7m8uQrgZ7Ohsz/xjrpviMlxdh+ohD0kWfBrOwBK73O0qME++NgtWanpFlVxf7hZmt5tZr4MKoQ8NR5MDM9cf2EwAn7ehHwK8sw/pgIMUbMYoNCbFNJrM/t21jTZuygRjTovC+mLGp+OA2BaYtmka+eonIgiBXh4YiLJ2J4MTUVbxtt5+pWNWrHuXSPBnwkOW0BMYyvDJCZ52XxfLky9qHnBUHgakDJlX7x7F7/wIsPbnKxBPTUxAvgyrGEzA5v3KGE+jjVLm8tLtCazmCtOXLGkkxPIywB0fb3j0fDXhOOBrrlpuY
+	mAhPX8s36hofo2+aCJjO+4rCIrA/8vAP0Xr8er5jJHNgwt4rVnn1CQoTkqRSI3oxwmMhdW+Uu4VlcMy7AN/Xt7mGo3rSC6sEwAxFpbgPp2GpCfBCI6EmzJfFwqkcFsrlsj6ZmXy4Ajdn+sCN5lC9jOhEB+5RPmBWTqAQba5gQ6Ohyj+ngG1M9wM2YZ8GyXfVZ0oUS7xnFT0VVfze8nbbgqYMC1CO7wz49l3WbJxkuPEbemhe0pcAWEVHjsD0P4T4PCk/6vksgoq0t0+kHmGs8KjOSfz4RNuRhsn6yOJwqWeKXVmZ0XFRducQjOuGWVJeptIDzRP6E8Y8j1ifd+GsGmeZ89QL4M38dNLFFZaw0KV2yYKRCI43SB+F/t59xSyi/gjjPPmLnG9G/TnZF1RqPQVYP8JW5S3q8uIzgqRUVJfbLPl7iVxjeLd7jXrgTtg1EL/Itdu9lgQr/A6Cn4L7SmXrThBBQVQFVACtoXW5sadGUaCyQy3cjtRgukNyAh2zy+5MhUIr7cyqODD55zRkgtEAKTCt/qP0P/0/H8R5r8Y=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(230273577357003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?31TAT221VazEFT7/HN3ZUPlDXYCXKGBIkGlHtAcWofQgmEy5UYI5atiOWCLc?=
- =?us-ascii?Q?f0k72Dr5Pmh1MO4dPYqX048epSezghTVsIvwWJjSwlHYa4mc9baf7lLKUoNC?=
- =?us-ascii?Q?RdarosyNRXtmdzlX2SyYMA2k9ue6C7BKAD1dxum5ITlBnWLOKZy08iWGMRDz?=
- =?us-ascii?Q?AgnVSsvERSDie/cU9r9wAL8CtwV/xXcdzaGNVfE3EWvfO9SyzZJuLnAzrHoO?=
- =?us-ascii?Q?U93I/FaCHzGnr2oRdCanesQ2WAtZ/Ecc1HiJHqHZtXy4SBRk9SJ7u6L+kwQV?=
- =?us-ascii?Q?MdZ2PzozHej7LqqeznXSMJ1aGEaNkojtFwi9L5pkL+U7iFgCXFo3jn7sP0I+?=
- =?us-ascii?Q?e1cSWPDBzwPEjWrib9FVd/hTQ0+VgaJ3zfbezEIUZbGsP2izQKal7M02KGEL?=
- =?us-ascii?Q?njcjGX3Zt8WyLCVOiLdqMH9cvgaXdhHYo8lpNh/G80/rk3lFC3EsvNmfwbiF?=
- =?us-ascii?Q?pVumGbt0YdtAx7qqKDdg07XPl3reQEtj7RhS0zTdPV0xjpaX+mcx0F+S4wLy?=
- =?us-ascii?Q?vL6VT62PSrZs3DAMtpG26Rny3WNv5rXQzciYfUYmhX1IqQ2kjZCO4in7wxCQ?=
- =?us-ascii?Q?cq8Z5DnkNhlajggD20vgAfx7uzc1vFqQ62K8Ndkasx19VtqQS1oPB1SmZEjZ?=
- =?us-ascii?Q?3D/2cd/HWPe+aCqfPbD88dNc+FYiQY6qrl3FmPEOFXUo3YeGZgp7yypHV+fY?=
- =?us-ascii?Q?SbvGWATHjUpljLrQyzPBCj0Wp4nSAkpMU/28mEtCuNBapgGLkTezkQI3cCFa?=
- =?us-ascii?Q?5d9cpP079w52OVDBtKlFqBGwgbwCYK51NRv8j5khB+tbCueut62VAVlMz61F?=
- =?us-ascii?Q?SSemHsd1q6TZ38nEy51RJ14/34eshnkC86WJf8LJeOHn3pg3rn+11il8LMHu?=
- =?us-ascii?Q?/DdQvM8/5exNSqTSgLfCUGVkmgkyGd1D5mEGrZkFwD65VIY8/cQ86v/g2pVA?=
- =?us-ascii?Q?o+K1OJ3hrpfqcsFi3EkGI8wprgOz9ANH2adDIvohJB75tEKcrn7OUlblhQsU?=
- =?us-ascii?Q?RD6NI1I1BDaTKTxbI7UR3t96OHUNuqwI1/weiSagEOP9ZcNgL0L2/BpsSy8p?=
- =?us-ascii?Q?HkyqfJWOGsUhUkGp71iDutG6wOK8I3eq7UtxCmmSZT5k+b6vqLqU5BZTgTEb?=
- =?us-ascii?Q?d1EEB7uupryZVlT3zyHmaVna5PdsVQM0OFru4zBYmYhdqY+EyeKYEs4pRsvW?=
- =?us-ascii?Q?PCMxitOaethxVOM1hZUtnGGJNOGLwzGUiISE1oSEWAzop3er88SRKPQvzoPg?=
- =?us-ascii?Q?W1eTuugIMOqqpFbBRYDUxBWP9HqESi6IlNNDc4WCpAd0oerhWKuoPlD/lxU0?=
- =?us-ascii?Q?1gDNb/7UMrOjtn8lPNr3gUQmgOMWQ2ExB4oh/vsX1hIhzqmmcg1V5IrMj1cU?=
- =?us-ascii?Q?gQYs4cfrgWDU2sBfU+1jTRs+y4EouegyZdXm6a4kAqAHcs0YpkVhPprmTw44?=
- =?us-ascii?Q?O8wOmFMhbFiAPbiZRrIk0FFDIX6rSWDaU4tvKl8vLgWhXhC4m7GzfCk1Ur+f?=
- =?us-ascii?Q?eruFcajMeRR+wHw1X+iMvp3yb2CIYJqlhLisXBp74wFmVtMFoWK7glr1OzyT?=
- =?us-ascii?Q?DjHhzdpY4sf2tOEEWSYxl0DmA7uSGgB2H1o+Qd03?=
+	=?us-ascii?Q?MvKMMam0ZWA6w3A7dqTGSR5RjQXDZzT3kbW/KldJ3YK7b2hXhf9mi1DPHZgA?=
+ =?us-ascii?Q?HZnl7Xi/58HecMshU6V+gNhEOAojdAAr92IrwQN5P3T31tPncKm9ewMcaweV?=
+ =?us-ascii?Q?a119cwLgtUAWdGS7bxggB4S+zbmGA3KSao9bemmESoOpL4kdNNA34eI2ll1S?=
+ =?us-ascii?Q?D/LAC+JdR9Jsq7nrlGZpv3FP8yO7j58QF7kKSoI/M/tEN1/wOwUy/o6/V9KE?=
+ =?us-ascii?Q?5gjTkWUteMbY/pNNhLNE+upVWD+DbP+CgfPNYjJVcgly25AviFXBtAl5djGH?=
+ =?us-ascii?Q?fhb5H2XujyDeENH4X6Prlhy8Y5/j7SdYYzfy3Cl+FRlcsPDkyJeSuIMb2Zf7?=
+ =?us-ascii?Q?X3+084rxQv16U8XTuXhRbRK9IfzE7zBSNTBKuoC4p3PAtuhgBtmpBuZ3N2I6?=
+ =?us-ascii?Q?6a5nEUeB90hwCOgL+qhBnqq3F0hGosGdXhYwKMu1X1de1WBQTOI2PBxiN/nl?=
+ =?us-ascii?Q?tcTesjaZ6em+z5mMgFTAZeRBjeGs5RCZW9qzwt8s0B/g1AN3kCyODgP/yQjW?=
+ =?us-ascii?Q?j3UF/X+9dkjCw4rrbB0+RpJXxmbIU2tttVubbnhSXPivfU5V7BqCtYq76Oau?=
+ =?us-ascii?Q?UTIXCNzZRl4mgTxiDffX9lAmfP3tTF3XVnChvaQwYUp7pYpGiWnb2tTWNikl?=
+ =?us-ascii?Q?oBYpPN5cR+4opzpJv1/qaj0b55NslIx+Gnv5SfilDg1QWAc6SENbUnjmiAxC?=
+ =?us-ascii?Q?U/S2mbCgJqd5ZlifiYB7T6/uj7IADYl3dA4ZJ+gS5UHola7GGxFsmD1Tni14?=
+ =?us-ascii?Q?EKwIBP0w978xlHTd0oT/eNflQ4xxOqr4FEPcqSRS2U+t9eOX6lYc5UKdMg+b?=
+ =?us-ascii?Q?4CkZMXxaJc7By8AV4LrjU1DTiiPGJh+Ugp8eClYFDEo1fIbTx2DQ9AyZ2SPx?=
+ =?us-ascii?Q?kvNvoBzzofogxSuktx2sEeZOM89O4vuEYS+x/y7KnjSxgy02y1Idgr/S0vxD?=
+ =?us-ascii?Q?N0+qgIziw7rS27BefpjgdUibUGJkOCTeCfC2fDwU/4ekOm/2+qkYjaeIGpf8?=
+ =?us-ascii?Q?FEPl1Z3gP0R31WRK4zw3oRrRPLudUZyYTpHHgOdcC3C+TW8zaRUkhlhEZYoH?=
+ =?us-ascii?Q?j2iEHz1jIOGtA60UH5kil3Rr/OqpkZAGnGN5Pi9iW+XYO23cdTrO3SpNiKbp?=
+ =?us-ascii?Q?N518W1MKXY0YnKLqUt6j2gVIMWTNhlpPhBDz2tyeJAci9Lv1j53y0aONowT4?=
+ =?us-ascii?Q?7gI50s9klOWprC3Xzac9lluJG8OFtKQxyTZh6xdUHC/MLnCMu1UMFXy8t8Km?=
+ =?us-ascii?Q?mkXNIdT36GBwObNNNI6Gzq4LAM0XwFGWB9GlADQL/pH1G3G0PB1ZmKnCbLTB?=
+ =?us-ascii?Q?L8y8PEKZxRaWy4/fVH/Parxbv5MNYFOj3k71toMpZOY3hW65f2LrOOBYyepM?=
+ =?us-ascii?Q?eUu+K1ITqkqbgqk+LfkkCeEefJEkDaVLt4Zze58zkiJCAlTSM9xMxQ5gjj05?=
+ =?us-ascii?Q?H9ry0YqNTKJ35ip/ThUUcE4Np5IptTUHd+ul2DEpUB6iVTQ1RFjUFIRsKZd6?=
+ =?us-ascii?Q?pxJSoimhlO65J0bKpoc9EArkqx2Zax6+k35qW6T+h0lyBSChxk/QMdzhBW0v?=
+ =?us-ascii?Q?2hVklNlKcXmG1mCtiIqUiaflP3SfrLmpUrVuqHd+?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4513ee9b-699a-48ea-9bae-08dc349f6bdb
+X-MS-Exchange-CrossTenant-Network-Message-Id: a0dcc29e-1099-4a11-87a5-08dc34a0cbbc
 X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Feb 2024 18:44:09.5145
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Feb 2024 18:53:59.8627
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3Bb0HMqcIs47pkZbUKaLamU1eNiylrcjgSNjGp8kmDpUyUNaked3ZEUh6FUBpUW1
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7117
+X-MS-Exchange-CrossTenant-UserPrincipalName: 1oc3jPODFni2GaRZPdWM7IltBjz8HcsakGBgnOMtpy2WBYKX4+qZhZq6urZaLO+i
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4094
 
-Since MOCK_HUGE_PAGE_SIZE was introduced it allows the core code to invoke
-mock with large page sizes. This confuses the validation logic that checks
-that map/unmap are paired.
+On Thu, Feb 15, 2024 at 05:27:09PM +0000, Robin Murphy wrote:
+> > @@ -1583,22 +1595,20 @@ static void arm_smmu_write_strtab_ent(struct arm_smmu_master *master, u32 sid,
+> >   	arm_smmu_write_ste(master, sid, dst, &target);
+> >   }
+> > +/*
+> > + * This can safely directly manipulate the STE memory without a sync sequence
+> > + * because the STE table has not been installed in the SMMU yet.
+> > + */
+> >   static void arm_smmu_init_bypass_stes(struct arm_smmu_ste *strtab,
+> 
+> This name is long out-of-date - if we're refreshing this area, please rename
+> to something relevant to what it actually does, e.g. s/bypass/initial/.
 
-This is because the page size computed for map is based on the physical
-address and in many cases will always be the base page size, however the
-entire range generated by iommufd will be be passed to map.
+Done
 
-Randomly iommufd can see small groups of physically contiguous pages,
-(say 8k aligned and grouped together), but that group crosses a huge page
-boundary. The map side will observe this as a contiguous run and mark it
-accordingly, but there is a chance the unmap side will end up terminating
-interior huge pages in the middle of that group and trigger a validation
-failure. Meaning the validation only works if the core code passes the
-iova/length directly from iommufd to mock.
+> Although frankly I also think that at this point we should just get rid of
+> the disable_bypass parameter altogether - it's been almost entirely
+> meaningless since default domain support was added, and any tenuous cases
+> for wanting inital STEs to be bypass should probably be using RMRs now
+> anyway.
 
-syzkaller randomly hits this with failures like:
+I can write the patch for this if you and Will agree
 
-  WARNING: CPU: 0 PID: 11568 at drivers/iommu/iommufd/selftest.c:461 mock_domain_unmap_pages+0x1c0/0x250
-  Modules linked in:
-  CPU: 0 PID: 11568 Comm: syz-executor.0 Not tainted 6.8.0-rc3+ #4
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:mock_domain_unmap_pages+0x1c0/0x250
-  Code: 2b e8 94 37 0f ff 48 d1 eb 31 ff 48 b8 00 00 00 00 00 00 20 00 48 21 c3 48 89 de e8 aa 32 0f ff 48 85 db 75 07 e8 70 37 0f ff <0f> 0b e8 69 37 0f ff 31 f6 31 ff e8 90 32 0f ff e8 5b 37 0f ff 4c
-  RSP: 0018:ffff88800e707490 EFLAGS: 00010293
-  RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff822dfae6
-  RDX: ffff88800cf86400 RSI: ffffffff822dfaf0 RDI: 0000000000000007
-  RBP: ffff88800e7074d8 R08: 0000000000000000 R09: ffffed1001167c90
-  R10: 0000000000000000 R11: 0000000000000000 R12: 0000000001500000
-  R13: 0000000000083000 R14: 0000000000000001 R15: 0000000000000800
-  FS:  0000555556048480(0000) GS:ffff88806d400000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000001b2dc23000 CR3: 0000000008cbb000 CR4: 0000000000350eb0
-  Call Trace:
-   <TASK>
-   __iommu_unmap+0x281/0x520
-   iommu_unmap+0xc9/0x180
-   iopt_area_unmap_domain_range+0x1b1/0x290
-   iopt_area_unpin_domain+0x590/0x800
-   __iopt_area_unfill_domain+0x22e/0x650
-   iopt_area_unfill_domain+0x47/0x60
-   iopt_unfill_domain+0x187/0x590
-   iopt_table_remove_domain+0x267/0x2d0
-   iommufd_hwpt_paging_destroy+0x1f1/0x370
-   iommufd_object_remove+0x2a3/0x490
-   iommufd_device_detach+0x23a/0x2c0
-   iommufd_selftest_destroy+0x7a/0xf0
-   iommufd_fops_release+0x1d3/0x340
-   __fput+0x272/0xb50
-   __fput_sync+0x4b/0x60
-   __x64_sys_close+0x8b/0x110
-   do_syscall_64+0x71/0x140
-   entry_SYSCALL_64_after_hwframe+0x46/0x4e
-
-Do the simple thing and just disable the validation when the huge page
-tests are being run.
-
-Fixes: 7db521e23fe9 ("iommufd/selftest: Hugepage mock domain support")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/iommufd/selftest.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
-
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index d59e199a87055e..7a2199470f3121 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -446,20 +446,27 @@ static size_t mock_domain_unmap_pages(struct iommu_domain *domain,
- 
- 			/*
- 			 * iommufd generates unmaps that must be a strict
--			 * superset of the map's performend So every starting
--			 * IOVA should have been an iova passed to map, and the
-+			 * superset of the map's performend So every
-+			 * starting/ending IOVA should have been an iova passed
-+			 * to map.
- 			 *
--			 * First IOVA must be present and have been a first IOVA
--			 * passed to map_pages
-+			 * This simple logic doesn't work when the HUGE_PAGE is
-+			 * turned on since the core code will automatically
-+			 * switch between the two page sizes creating a break in
-+			 * the unmap calls. The break can land in the middle of
-+			 * contiguous IOVA.
- 			 */
--			if (first) {
--				WARN_ON(ent && !(xa_to_value(ent) &
--						 MOCK_PFN_START_IOVA));
--				first = false;
-+			if (!(domain->pgsize_bitmap & MOCK_HUGE_PAGE_SIZE)) {
-+				if (first) {
-+					WARN_ON(ent && !(xa_to_value(ent) &
-+							 MOCK_PFN_START_IOVA));
-+					first = false;
-+				}
-+				if (pgcount == 1 &&
-+				    cur + MOCK_IO_PAGE_SIZE == pgsize)
-+					WARN_ON(ent && !(xa_to_value(ent) &
-+							 MOCK_PFN_LAST_IOVA));
- 			}
--			if (pgcount == 1 && cur + MOCK_IO_PAGE_SIZE == pgsize)
--				WARN_ON(ent && !(xa_to_value(ent) &
--						 MOCK_PFN_LAST_IOVA));
- 
- 			iova += MOCK_IO_PAGE_SIZE;
- 			ret += MOCK_IO_PAGE_SIZE;
-
-base-commit: ad0b912913c0e21f217d5580289fda0819cd45ae
--- 
-2.43.2
-
+Thanks,
+Jason
