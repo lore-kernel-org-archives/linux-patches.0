@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D468314CAC6;
-	Fri, 23 Feb 2024 17:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B650F141993;
+	Fri, 23 Feb 2024 17:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708710199; cv=none; b=bWVh2iz3cdAd1hOa+XKWU5KVCB7toCReQLFikXomdgkR7LPWVI6E5bbiCpsBgggWivQ6cnSU96H2xPk1udCzIM0xahoTEX6KOx2AWILSVUa3EL/Br8oj2OY+H/+lNT5jNkROCPDuWhqbuJkzE8PL0p28NwF6JM37sVRR/VyAFVg=
+	t=1708710460; cv=none; b=GjTqEc8pfzFz/LFRWTp1fQuVFNrvLbxz4A68wWVgAXM5TxuG+YgpdzXWYDV4PsZBPgOdw0EnpxiYIDbI7omnj/9McKtT3Eztvkrls3pRnLB0ePYRAlMKS8i/248vIsQpz8533EQYM1f8AiXSfRUtqKLby0xeXuGEPB23QGoCoUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708710199; c=relaxed/simple;
-	bh=h0Z6febrHHLV18pVzOViZljOJbK5UtwzTaH1fctKaJ0=;
+	s=arc-20240116; t=1708710460; c=relaxed/simple;
+	bh=uyN4IXL3t5aphJYztaDQ+uPEstUMDnIE+PmrsESAGI8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gTioDZt3cdDQ9wblaFfytJ2Re3LeFz8fVyzGqeBqXLqQMIxrLxMJ+j5zNZR9JIsSovFNxyGkCuGZaJqKSrZAtFdhGd9kaqRE8hTFdge0v5XSGljrhCuTf4Oj5AHobjxVc1AtZ8Hg/l6EZvbMEKuy+1gU/Kij4qmOVanxO5gs1ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W2DiHODe; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=RbaLzmug8P+VMktakgGtgqnF5AqtqF5v18Bf6VONXMDepleOHtm0qHNa2VvdCZDZsJqjBMu1fL3jg7lOdYLcj4sx0o6b6my7SRfMKc1Sm4bPn1kLAurdTCXkEg9E94lBn+uFRCKhOY9SCCut4xr9NS6RTxpMsFNEzcdU9Ypn3vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mh9u3Exs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W2DiHODe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0130AC433C7;
-	Fri, 23 Feb 2024 17:43:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mh9u3Exs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51935C43390;
+	Fri, 23 Feb 2024 17:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708710199;
-	bh=h0Z6febrHHLV18pVzOViZljOJbK5UtwzTaH1fctKaJ0=;
+	s=k20201202; t=1708710460;
+	bh=uyN4IXL3t5aphJYztaDQ+uPEstUMDnIE+PmrsESAGI8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=W2DiHODe4yWCvhz6ISI0S5PdnMER7aKAtq/IhRypfHKMcyRzzcBciIyH4OOZ7bkKp
-	 lqKo1rjk9vxhrP89HRF8wEU9BCEy6TKZ/rMf/UpSeIBbCHDqTpO3ZIyxiWO+W7iWYH
-	 JZ92LpswcV81kmCbWb+zneIFpiP7RMLCnU6kJh1rJcPebc6fT9xmxN7qkHtk/ddR+3
-	 dUjFFlW2z2t6A/QZFg0FZ9n/8dHROZRzqmj5DFFT/DdWP5lZVJftnzZCKKqiv0ju0R
-	 phxvZzUQc0gxPspWdOXK+4I2AmZb48g6BBEPHB2VAgkq3eDf6BY828HFv2MZ3anQ+3
-	 WJGVkKaKs88gQ==
-Date: Fri, 23 Feb 2024 17:43:13 +0000
+	b=mh9u3Exslu0MqDrVFqUUkB2SDK8mmTevN16BWFQ9/MwkTriUDHh3mgdz8dgWhRDQI
+	 Zteohm4vpDosBFvv604oJM+yQCJMff92KkSjf/0ox1iHbffkMMbQuarRcihvjX1xJg
+	 8y+FONY94nucnADTXins3nK8SzFUsGk7uYDWyj7hVmFWKGKFGeOAE6Thk1ON4dc0Oj
+	 FE1fp8g59xbrwDSTUz4aVvDQtolbTms5tO9vjaqAFsOJmNeGlt952WqpWMebxZBca5
+	 SDLm9erxotX8nshRESd9rqfnAmWANy9s8EYyVxDulL++9EgxcczMjmNi9/vJj2YdPK
+	 lb9MsdWiM8vXA==
+Date: Fri, 23 Feb 2024 17:47:35 +0000
 From: Conor Dooley <conor@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -36,9 +36,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	allen.lkml@gmail.com
-Subject: Re: [PATCH 6.1 000/206] 6.1.79-rc2 review
-Message-ID: <20240223-conceded-ungraded-3bf06dcac60b@spud>
-References: <20240221130223.073542172@linuxfoundation.org>
+Subject: Re: [PATCH 6.6 000/338] 6.6.18-rc2 review
+Message-ID: <20240223-speckled-active-1efb9e182114@spud>
+References: <20240221125953.770767246@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,38 +46,36 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="N8inhLCaiHO09vQN"
+	protocol="application/pgp-signature"; boundary="xV04cpaxN+od26Hl"
 Content-Disposition: inline
-In-Reply-To: <20240221130223.073542172@linuxfoundation.org>
+In-Reply-To: <20240221125953.770767246@linuxfoundation.org>
 
 
---N8inhLCaiHO09vQN
+--xV04cpaxN+od26Hl
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Feb 21, 2024 at 02:03:19PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.79 release.
-> There are 206 patches in this series, all will be posted as a response
+On Wed, Feb 21, 2024 at 02:01:21PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.18 release.
+> There are 338 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-I know I am late, the perils of being sick alongside manual reporting,
-but better late than never.
-
+Better late than not at all,
 Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-Thanks,
+Cheers,
 Conor.
 
---N8inhLCaiHO09vQN
+--xV04cpaxN+od26Hl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZdjZMQAKCRB4tDGHoIJi
-0qCHAP9Av/dZq0bSBqxiUuafVJSeiV3qkeWsa4l8qoRKEX75vwEA6u43CalY+eUq
-B0WRcDYuTm5F8OVb9kh5SfSHec7k/gg=
-=E5Zu
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZdjaNgAKCRB4tDGHoIJi
+0mpeAQDUt1Ob3uZIlmZp0WzJOE6wUBLHijO+TLBL8+rzdPERygEAtO7j95RUzF/b
+C6dbfQb+evE/c4GyejidhEFBa/7cdwk=
+=7/eK
 -----END PGP SIGNATURE-----
 
---N8inhLCaiHO09vQN--
+--xV04cpaxN+od26Hl--
