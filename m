@@ -1,96 +1,116 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AAE41170E;
-	Fri, 23 Feb 2024 05:06:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B789012B93
+	for <patches@lists.linux.dev>; Fri, 23 Feb 2024 06:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708664822; cv=none; b=T2B+wHfm6djaESHa0TzUqOM6ws1GGL2re7eTQ5wA/sFFk760Hs6ksAKJXZJOl0UUR+m0D99+Uiy/FROMDGmUx4uWzrVYFVl4SlVLUpEij0v4fkvE0wCtspC1e5fQ2zywerY1NCzN4dU/Z0Qp7wyi/jzkuVa8I9e0+WLs45Wy8QY=
+	t=1708670436; cv=none; b=tapFoFQ00VrXGH6Kw0qzmGOQYOxeOUoEEypJWj8JyKja2I7J8fJZ/N8p9UUjUP76S2CqYIdlGGZU71MuaBgRNthaFxA2EkdBAbcfzQyYUIAUroPIwcGYGv7YSiOShAdUmeE0hyyXcljNZsj8tMs51radaPV98NKrP5OF/bwEgsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708664822; c=relaxed/simple;
-	bh=Vq0DUW3Exv2HDTgkq84X+iSqyIRr3W7hZEMz3qwsbH4=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=mm4QBH4LK1M/DyllY9GxxDmTH2rt2Y2BpS3BpS2QqgakH1dFtNRjJSUfRDiCc1mm8vsvQaYYPCtFSdx1Qb1wQnUbCgO4zrLikUAVIuG3W2vbX3ZGp+dUzaL4LkrGCotZz8DJ1je5CwEFdEE4kEu5Sl6pijJ2AnIgvvJzwzBiV+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mquI5VGy; arc=none smtp.client-ip=198.175.65.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1708670436; c=relaxed/simple;
+	bh=Jyw2KgNMUcRwAe/3vjo2g69lJx3RZu+Q5aJy6+FMHow=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lctlHG87eSdU1TuIndQkVjy9lI73XvP6m1bn4/QwT7p3XfKJsc842Y0TQplev3JSkvU8KYW5NtE+00hSsudnWUUFdTdAU72MsrrqA1ThHFxkAD7yurT6Bca8HhXQ0JLTt+nek8+586v1w4YfRkWcqS977HKae2bvY+9uJhZdDg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=H12nBDxZ; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mquI5VGy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1708664819; x=1740200819;
-  h=message-id:date:mime-version:cc:subject:to:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=Vq0DUW3Exv2HDTgkq84X+iSqyIRr3W7hZEMz3qwsbH4=;
-  b=mquI5VGyXVxyNLFuy5duYK2VAbTRVjl6/rOC4q5kmKgqyNh001xqfV6l
-   LoDujI5qWJ/3HQTGrdmgtSY6iPFLE5Vl6/Ks4iRN5zxLHxQbXUXU0+17t
-   BtKoGFN0zHPZHF9CUPcb5VCZHd/D3zmn820LY/yfEXya5pxRM2vNP6YbX
-   6kF+BGr2A7Lnb6YV+lh20keDznx7EYYXL84hWg4IxcQ5f0PaurKADzRcU
-   wDn4+lz2sw/9bfkSglvEpTFjJzodsyOUyv8m5M3GYNEIld62AF23EyrF4
-   K7JvHASOG7KmaVppe+3GVDZ6D4OpJigOnbhZClAB/gQS0oG8AkCWzGTF3
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="6778227"
-X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; 
-   d="scan'208";a="6778227"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2024 21:06:58 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; 
-   d="scan'208";a="5766182"
-Received: from blu2-mobl.ccr.corp.intel.com (HELO [10.249.171.186]) ([10.249.171.186])
-  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2024 21:06:55 -0800
-Message-ID: <b6dd12c0-4d2c-432e-96c6-10a24e4b16b1@linux.intel.com>
-Date: Fri, 23 Feb 2024 13:06:51 +0800
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="H12nBDxZ"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6e457fab0e2so392456b3a.0
+        for <patches@lists.linux.dev>; Thu, 22 Feb 2024 22:40:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1708670434; x=1709275234; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VlAxTgaIbiVQpF/ZQwxp07S3UGXkKE5YGd7hWgHUVZY=;
+        b=H12nBDxZuKuYvIUwiJGThTdpH51y7Zs+9vE1q1Kr3zLSYo6FkMZllCh8i9w9eN+Wjh
+         OipnEd3KFUQVurnT8G7D1PnSyXSu0V0J/XoEAMSsioFuOn9mWTknV6CLILzVJA2W7pYv
+         B+CQscLvLw/2DH3xk/xazInP/zyFOx6t8S3lM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708670434; x=1709275234;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VlAxTgaIbiVQpF/ZQwxp07S3UGXkKE5YGd7hWgHUVZY=;
+        b=nBy8iNyi41oB0aFCiCS2ZxopzP6uRez1LGvWJJKdGXRlp/ggMigE/+DEAoMkk3LM74
+         FKxquPgEeNSmqvLYvHHVrdyJYvr19+DZkm5YPUbJGsYnUX17dWv7uZr9kV3D2ciwBhl1
+         70qpbNVnnP146D0i8b5OCg65e1/RFAL6fIaQbA85M/PRoBhdqexVM14mheWcz1JxslUz
+         hYxz3rgG/ksuEfSHK17iGKijGOjVBV4WC2229yVOYcrvptI3qUtRMs7pX9cV3BwriK9U
+         Cq6yxkShaZGPlJCegUWcUcavTz8qSsduv3gz7nlrW6OkSj7RrRQ2dJNUeb87a+xq/8fU
+         104Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWq8rBtYg3s2icsFUm/2R9ddav0xG77GcNb1wntoqnl3HVBRq3G709+fYMv00RQbBwAvREcbJeCCybYpMmWy7axcJ86oICSFA==
+X-Gm-Message-State: AOJu0Yx2QrZe3OA6dP31TYH4oozgtv35J/qr/wVpPt8dfmhKQCFVJwxO
+	D6xjdcdACC8s9IvCmSoQi437LRij1HQ0ehHihQCgl2+nt5kQxGq/vrZehh6q8g==
+X-Google-Smtp-Source: AGHT+IH4UFzwgV0g9dgBCvcLiwOp8510IaCSr0SQ/rg50PPnqosFI2z6O/vgddexixApZQrnaAjOmw==
+X-Received: by 2002:a05:6a00:4307:b0:6e4:5ff9:f037 with SMTP id cb7-20020a056a00430700b006e45ff9f037mr2262350pfb.12.1708670434104;
+        Thu, 22 Feb 2024 22:40:34 -0800 (PST)
+Received: from localhost (175.199.125.34.bc.googleusercontent.com. [34.125.199.175])
+        by smtp.gmail.com with UTF8SMTPSA id fm18-20020a056a002f9200b006e484e13454sm5653680pfb.32.2024.02.22.22.40.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Feb 2024 22:40:33 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	Jason Ling <jasonling@chromium.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	llvm@lists.linux.dev
+Subject: [PATCH] arm64: ftrace: Don't forbid CALL_OPS+CC_OPTIMIZE_FOR_SIZE with Clang
+Date: Thu, 22 Feb 2024 22:40:29 -0800
+Message-ID: <20240223064032.3463229-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: baolu.lu@linux.intel.com, Joerg Roedel <jroedel@suse.de>,
- Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
- Tina Zhang <tina.zhang@intel.com>, Vasant Hegde <vasant.hegde@amd.com>,
- Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH rc] iommu/sva: Restore SVA handle sharing
-To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>
-References: <0-v1-9455fc497a6f+3b4-iommu_sva_sharing_jgg@nvidia.com>
-Content-Language: en-US
-From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <0-v1-9455fc497a6f+3b4-iommu_sva_sharing_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 2024/2/22 22:07, Jason Gunthorpe wrote:
-> Prior to commit 092edaddb660 ("iommu: Support mm PASID 1:n with sva
-> domains") the code allowed a SVA handle to be bound multiple times to the
-> same (mm, device) pair. This was alluded to in the kdoc comment, but we
-> had understood this to be more a remark about allowing multiple devices,
-> not a literal same-driver re-opening the same SVA.
-> 
-> It turns out uacce and idxd were both relying on the core code to handle
-> reference counting for same-device same-mm scenarios. As this looks hard
-> to resolve in the drivers bring it back to the core code.
-> 
-> The new design has changed the meaning of the domain->users refcount to
-> refer to the number of devices that are sharing that domain for the same
-> mm. This is part of the design to lift the SVA domain de-duplication out
-> of the drivers.
-> 
-> Return the old behavior by explicitly de-duplicating the struct iommu_sva
-> handle. The same (mm, device) will return the same handle pointer and the
-> core code will handle tracking this. The last unbind of the handle will
-> destroy it.
-> 
-> Fixes: 092edaddb660 ("iommu: Support mm PASID 1:n with sva domains")
-> Reported-by: Zhangfei Gao<zhangfei.gao@linaro.org>
-> Closes:https://lore.kernel.org/all/20240221110658.529-1-zhangfei.gao@linaro.org/
-> Tested-by: Zhangfei Gao<zhangfei.gao@linaro.org>
-> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
+Per commit b3f11af9b2ce ("arm64: ftrace: forbid CALL_OPS with
+CC_OPTIMIZE_FOR_SIZE"), GCC is silently ignoring `-falign-functions=N`
+when passed `-Os`, causing functions to be improperly aligned. This
+doesn't seem to be a problem with Clang though, where enabling CALL_OPS
+with CC_OPTIMIZE_FOR_SIZE doesn't spit out any warnings at boot about
+misaligned patch-sites. Only forbid CALL_OPS if GCC is used and we're
+optimizing for size so that CALL_OPS can be used with clang optimizing
+for size.
 
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+Cc: Jason Ling <jasonling@chromium.org>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: <llvm@lists.linux.dev>
+Fixes: b3f11af9b2ce ("arm64: ftrace: forbid CALL_OPS with CC_OPTIMIZE_FOR_SIZE")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ arch/arm64/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Best regards,
-baolu
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index aa7c1d435139..6b96d75a3a3d 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -198,7 +198,7 @@ config ARM64
+ 		if DYNAMIC_FTRACE_WITH_ARGS && DYNAMIC_FTRACE_WITH_CALL_OPS
+ 	select HAVE_DYNAMIC_FTRACE_WITH_CALL_OPS \
+ 		if (DYNAMIC_FTRACE_WITH_ARGS && !CFI_CLANG && \
+-		    !CC_OPTIMIZE_FOR_SIZE)
++		    (CC_IS_CLANG || !CC_OPTIMIZE_FOR_SIZE))
+ 	select FTRACE_MCOUNT_USE_PATCHABLE_FUNCTION_ENTRY \
+ 		if DYNAMIC_FTRACE_WITH_ARGS
+ 	select HAVE_SAMPLE_FTRACE_DIRECT
+
+base-commit: 6613476e225e090cc9aad49be7fa504e290dd33d
+-- 
+https://chromeos.dev
+
