@@ -1,121 +1,111 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2144C17736
-	for <patches@lists.linux.dev>; Sun, 25 Feb 2024 16:09:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA9717BB5
+	for <patches@lists.linux.dev>; Sun, 25 Feb 2024 16:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708877350; cv=none; b=Bv8eXDgqR+2qy9StjP4jWyckhneeAjQp1ZelHp0VvZg6tGwwUVUqbX/88Z0VpELNlRZjGdoequPk/UGQpLw+vxOe5/WArY0B7Df0linnXDIy/MQCn6R/zYutg/cpnhnPHC6mWN7uWPmx2OGs6gulrgbgb693uZvFpBWRT8ZG1Dg=
+	t=1708878222; cv=none; b=NnrSS0BnJo3psy87beuVXj1ufG7LPogus46mHZqu3S9dcWDzeYjUEkXH+OXNdzq6imZHQw2XQT4tt5SEKGmhNchjculdEut98itqaAzG48XiDsgWxwXK7vCAQlEoB3JesZ2rN8a4UAuwE7UVXE/hHlp0wem86Gyczv3nkYC8b2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708877350; c=relaxed/simple;
-	bh=bWVyG4ooUn4bG6bWqWfbJrqunJLdeEr0h0UomtvKp+A=;
+	s=arc-20240116; t=1708878222; c=relaxed/simple;
+	bh=LaigAbcADJ+dK0KzyX1kDd8eEpJpqVoPfgc/erPe1mM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=CVZfaRIfqAkUUNbKfAsCBlRmEQ8yTbgTYmrE0rYs7WkwErDjU/6aLEzKzCZxKBgG2UkS9wWZGz1GlfpgFwuAO0EE77tbBc/q7jIDHPEM2jOv5QU5kNin8QiJ/ABybYZc5QG87pPbGzvipqrmE7xP/hEEAE5PtKryn7uUi5hkgjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=g1jWYfzZ; arc=none smtp.client-ip=170.10.129.124
+	 In-Reply-To:Content-Type:Content-Disposition; b=fJRJ/Fh4VBklSF9SwBpfIfl0Iu/az9FsA2qiWtESN9AGqYozcmFJwcc2WbWKtfCEfngcnnVE5l1GV9jlD3+J21bSNzRyJw0g6Yo9Xiafo6q0Or6egPEixFrU2o7KyeVFNruy8qB1w2li6HoWKVxi1Mo/B9IUI07CB82bvR5Cquo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eCKy4srK; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="g1jWYfzZ"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eCKy4srK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1708877348;
+	s=mimecast20190719; t=1708878220;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=4M+DNtT1zWFOoFWAPUy1ymTQkIScq55vkJSM4JvyW08=;
-	b=g1jWYfzZzoR6EVZtrwwLdL6FO8/sRy8/qHrAdPpyvgofZnap84qu42UxJ0DFN8w2D1PF3B
-	g6W0VlqXvpzKJx63/yhEpA9bNCDHT7Bln1maIlXMKGxkmRnmra/Ohik1Nt4p1J5BcTtPpY
-	D/xmC0C6l6VSIVwgxvULoDMJOSQic7Y=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=gEvjBAUJeAAT4LjTg60EE6mIK+bI32dp7aAGjL49dA4=;
+	b=eCKy4srK7SAa5L19ItS1P5oDjuXNm3Z6Ig+CohLHDw9O3xoV3Toa+XInn1uUFBNUk9mlGp
+	fAjbYnGiVuUfM2oPmn/4wa6l5R0EjoMKHFMSOw/iHcX/q/CPqv7VSFdPTjkWP6aE+/Iokr
+	+sgrZXJRYyjvyc2+DkGOLcIDorKFIF4=
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
+ [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-Ym40wXmEOwyI3SqbE4TDOg-1; Sun, 25 Feb 2024 11:09:06 -0500
-X-MC-Unique: Ym40wXmEOwyI3SqbE4TDOg-1
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-6e4d20632c3so1093461b3a.0
-        for <patches@lists.linux.dev>; Sun, 25 Feb 2024 08:09:06 -0800 (PST)
+ us-mta-108-t2Wt6svkNLO8qIPl2VtEeA-1; Sun, 25 Feb 2024 11:23:35 -0500
+X-MC-Unique: t2Wt6svkNLO8qIPl2VtEeA-1
+Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-59fdfc539aeso1584476eaf.0
+        for <patches@lists.linux.dev>; Sun, 25 Feb 2024 08:23:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708877345; x=1709482145;
+        d=1e100.net; s=20230601; t=1708878214; x=1709483014;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4M+DNtT1zWFOoFWAPUy1ymTQkIScq55vkJSM4JvyW08=;
-        b=Tm19gJPZvrfP0WfjAePnOP2TlmSJC+aU+kKn8BzrBhlgx0nPXoGIXc6EA5/iGdCc6Q
-         tkxT0h4ZNrBU05ckY+b0UD8LMlT4hiKWvt7sPOAMFwj3kgBcDELWJ89kNa8xekgR8dsu
-         kWtrCxUPcu8xMb38Q0BZt2Dn2TDKL4nwjBubBbw+PCnUw3jBJaRwW7A8LNmog6hndfho
-         +ABYcpL6DJ78xdqmIIRxTvUwir7uQrWqauDw0iFMKZU3dLBhMX5sXsyDoP1edTVdRw9n
-         sWLbbLBX2LZB/BJH/AYPsQsWVwHL33ELusMM+AQoKzAI16EJ6T2cED2h9tZ7yGgMssgW
-         ZNVA==
-X-Forwarded-Encrypted: i=1; AJvYcCWDUmLBvRQweTMq/fJ0dWq5vXRpLI6y6scs12/aWnaWSvyrfIPL6QDtiY0rlZIK9oAc+26JleoGrBwP8L5v8MFk6u7+8cM9fw==
-X-Gm-Message-State: AOJu0Yy0ZvSOCurqET3sddEsG+04vu7xCX/sKeTWROjBDp+2nxSO3bAh
-	Tnuy/k0MsU0xDohXOklfKVH9RfGBuz11vgdIb8jJLfR1NxAi6p9/NMTnEiNOIeF10A1gyJw6F0D
-	Lyv+zoorkATdRmQG4f3LgAtf5E4YIUfRKEqa2Ssj6HBCoOwHvxIsS+as=
-X-Received: by 2002:aa7:8693:0:b0:6e4:59b3:928c with SMTP id d19-20020aa78693000000b006e459b3928cmr3576548pfo.10.1708877345563;
-        Sun, 25 Feb 2024 08:09:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IELhdpuksSCkCVmptASRnZV0pLXZtX48KEkxUmfLHWYV0Z7mnKZWeD/8mPjgbAgBqUzUgyzRw==
-X-Received: by 2002:aa7:8693:0:b0:6e4:59b3:928c with SMTP id d19-20020aa78693000000b006e459b3928cmr3576528pfo.10.1708877345170;
-        Sun, 25 Feb 2024 08:09:05 -0800 (PST)
+        bh=gEvjBAUJeAAT4LjTg60EE6mIK+bI32dp7aAGjL49dA4=;
+        b=RsJyuX/FYo0JKOlSkAkIjxzYfw75wubQtnd/Tpxpi5UjJ80/hzvlKuolSNNB9OsVxX
+         3h0iErLx4gAqizosYm9UbdKkkHf1qnD2gVJIMnY+ylXNPhEsVPiNWc4jHDsUOFhV6+he
+         YVyIJudsfkCH66xVPkKPVrQsUst8yRrGBwvxQHqLkhSQN84hUO1KL+uKTwWqgVcE2dMa
+         mj/z0sUvMcHNJhBBxEqCDRaK4ZcnrEhnerKNPuPRnwmgCarQanfeqdYCIJL+MKIknFXf
+         XOZaWLRUFRP4GszZn/B7fmEb2NJ53qTJxJpZdPJMArMFK9RW2StdiCYGwsuPpZGZggkz
+         0LKg==
+X-Forwarded-Encrypted: i=1; AJvYcCVumfbKmwEBdQGpanobfdYZYdZduwqTDZALQWFf59806Nn4Q0G0dwIAtWXEG3zr2WNmIdJwN+ur+887d26j/AjSHHjtQZ6CnQ==
+X-Gm-Message-State: AOJu0Yz70LpjAPPaFGNghv2EAyFlbfXdXFem0ovL4AK3ZTFYt95vwSHK
+	o/Z31VEtnEt3+6dLtnAd2YJlOE4JU/q3gk7MvjN7nDsSvcNiVD/P2fY7rPmSe6SE8Fne8fpkqz3
+	ytMZ5N5qfIC6KIO+vBopAydzRi/91YORqqdqDD4UDA/dvAxA8lgIkm8Q=
+X-Received: by 2002:a05:6358:89f:b0:17b:6171:adab with SMTP id m31-20020a056358089f00b0017b6171adabmr6105379rwj.1.1708878214729;
+        Sun, 25 Feb 2024 08:23:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLWqbRFV/lo5uRx+niwsDYaf3gj/dBLpYEFSQ6YUzFAmNj+KTGCNSHzPLbH22v7CIDVz38gA==
+X-Received: by 2002:a05:6358:89f:b0:17b:6171:adab with SMTP id m31-20020a056358089f00b0017b6171adabmr6105363rwj.1.1708878214412;
+        Sun, 25 Feb 2024 08:23:34 -0800 (PST)
 Received: from dell-per750-06-vm-08.rhts.eng.pek2.redhat.com ([43.228.180.230])
-        by smtp.gmail.com with ESMTPSA id f6-20020a056a00238600b006e0dd50b0d0sm2485386pfc.8.2024.02.25.08.09.02
+        by smtp.gmail.com with ESMTPSA id d9-20020a631d09000000b005df58c83e89sm2523823pgd.84.2024.02.25.08.23.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Feb 2024 08:09:04 -0800 (PST)
-Date: Mon, 26 Feb 2024 00:08:59 +0800
+        Sun, 25 Feb 2024 08:23:34 -0800 (PST)
+Date: Mon, 26 Feb 2024 00:23:29 +0800
 From: Zorro Lang <zlang@redhat.com>
 To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Dave Chinner <david@fromorbit.com>, fstests@vger.kernel.org,
-	anand.jain@oracle.com, aalbersh@redhat.com, djwong@kernel.org,
-	linux-fsdevel@vger.kernel.org, kdevops@lists.linux.dev,
+Cc: David Disseldorp <ddiss@suse.de>, Zorro Lang <zlang@kernel.org>,
+	fstests@vger.kernel.org, linux-fsdevel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: Re: [PATCH 2/3] check: add support for --list-group-tests
-Message-ID: <20240225160859.tqbs2ltiqcj72ozj@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
-References: <20240216181859.788521-1-mcgrof@kernel.org>
- <20240216181859.788521-3-mcgrof@kernel.org>
- <ZdLNJD5pYaK84w3r@dread.disaster.area>
- <ZdYosXHe9ec04kBr@bombadil.infradead.org>
+Subject: Re: [PATCH fstests] common/config: fix CANON_DEVS=yes when file does
+ not exist
+Message-ID: <20240225162329.ax3zvbs3c3fgrqcg@dell-per750-06-vm-08.rhts.eng.pek2.redhat.com>
+References: <20240214174209.3284958-1-mcgrof@kernel.org>
+ <20240215145422.2e12bb9b@echidna>
+ <Zc5O07ug7e4HVmKD@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <ZdYosXHe9ec04kBr@bombadil.infradead.org>
+In-Reply-To: <Zc5O07ug7e4HVmKD@bombadil.infradead.org>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Wed, Feb 21, 2024 at 08:45:37AM -0800, Luis Chamberlain wrote:
-> On Mon, Feb 19, 2024 at 02:38:12PM +1100, Dave Chinner wrote:
-> > On Fri, Feb 16, 2024 at 10:18:58AM -0800, Luis Chamberlain wrote:
-> > > Since the prior commit adds the ability to list groups but is used
-> > > only when we use --start-after, let's add an option which leverages this
-> > > to also allow us to easily query which tests are part of the groups
-> > > specified.
-> > > 
-> > > This can be used for dynamic test configuration suites such as kdevops
-> > > which may want to take advantage of this information to deterministically
-> > > determine if a test falls part of a specific group.
-> > > Demo:
-> > > 
-> > > root@demo-xfs-reflink /var/lib/xfstests # ./check --list-group-tests -g soak
-> > > 
-> > > generic/019 generic/388 generic/475 generic/476 generic/521 generic/522 generic/616 generic/617 generic/642 generic/648 generic/650 xfs/285 xfs/517 xfs/560 xfs/561 xfs/562 xfs/565 xfs/570 xfs/571 xfs/572 xfs/573 xfs/574 xfs/575 xfs/576 xfs/577 xfs/578 xfs/579 xfs/580 xfs/581 xfs/582 xfs/583 xfs/584 xfs/585 xfs/586 xfs/587 xfs/588 xfs/589 xfs/590 xfs/591 xfs/592 xfs/593 xfs/594 xfs/595 xfs/727 xfs/729 xfs/800
+On Thu, Feb 15, 2024 at 09:50:11AM -0800, Luis Chamberlain wrote:
+> On Thu, Feb 15, 2024 at 02:54:22PM +1100, David Disseldorp wrote:
+> > On Wed, 14 Feb 2024 09:42:08 -0800, Luis Chamberlain wrote:
 > > 
-> > So how is this different to ./check -n -g soak?
+> > > CANON_DEVS=yes allows you to use symlinks for devices, so fstests
+> > > resolves them back to the real backind device. The iteration for
+> > > resolving the backind device works obviously if you have the file
 > > 
-> > '-n' is supposed to show you want tests are going to be run
-> > without actually running them, so why can't you use that?
+> > s/backind/backing
 > 
-> '-n' will replicate as if you are running all tests but just skip while
-> --list-group-tests will just look for the tests for the group and bail right
-> away, and it is machine readable.
+> Zorro, can you do the minor edit?
 
-What do you mean "replicate as if you are running all tests but just skip"?
-Sorry I don't understand this explanation 100%, can you show us some examples
-to explain what kind of job you hope "--list-group-tests" to do, but the "-n"
-is helpless?
+Sure, will do that.
 
-Thanks,
-Zorro
-
+> 
+> > > present, but if one was not present there is a parsing error. Fix
+> > > this parsing error introduced by a0c36009103b8 ("fstests: add helper
+> > > to canonicalize devices used to enable persistent disks").
+> > > 
+> > > Fixes: a0c36009103b8 ("fstests: add helper to canonicalize devices used to enable persistent disks"
+> > > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+> > 
+> > Reviewed-by: David Disseldorp <ddiss@suse.de>
+> 
+> Thanks!
 > 
 >   Luis
 > 
