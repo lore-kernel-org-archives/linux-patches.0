@@ -1,220 +1,173 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2080.outbound.protection.outlook.com [40.107.94.80])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE9253390
-	for <patches@lists.linux.dev>; Mon, 26 Feb 2024 08:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708936747; cv=none; b=K//K3CtTsRC5qYmO50Nt2nt33jUWvYucJ2PA40oISZTSmgbYlBcYFreXcUzGYtyrVMVou6zk6XMFbNkqTSzD0ERB5QmpBIV+ZssdB4lrlL0GO7T7GavCENP6CYhz4SqtttAp0no3N9na4smUlDMzceIkVeeDpasSXR6pePN9V2A=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708936747; c=relaxed/simple;
-	bh=gUXKw1i0YN9NY2dtrWNeoIPxxbMcJyh+p5TcR5AoOVo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sWiSoqMBOUwTmxj/464PrzhFrGJSBpESebXDTRtGC1OxOzp38B7ewYJjlGe/B/63oe7GrBGJMQdlYGLE1aqynfTkekV5Laxfle9/T5xhYq/j2Yu1AvkaB4prNUFVYNzETfVNtszTlFyYOI44/8Ol8VeJWW6swIu/OYbwpAR4YL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ygsmojhv; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB554F888;
+	Mon, 26 Feb 2024 13:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.80
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708952880; cv=fail; b=ADewuN+O8DM9/ZcccFn8AquO/WuC2Ykub/pVhUXihl0Ch2zxOWQoQwNamRg44lLEaezsYUQVw+KN0uRkZ1PHEBGMiC3SnbQH3sRXJJu+utyVWM8pz6cYYzd5bnw0JOu0CKw0Mtav8QZ49dp0jAlrbPOP7YjXKHDhPZ9i26ZNISg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708952880; c=relaxed/simple;
+	bh=rJBqDT35moNjsfebbXZ4M8M6F0cd7/REHG4+KfHHsxs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=ZBgaysLT9Z4qYr+3B/qdG+GIeG8jgZbf7vyi7BxpQRostHxRINfjBcuYMAz9nzRUbUaTvO9VTw7XQM3oyoPNnIEQN/DhM3WoehN88AvA1M3Ig58VfnkGrTz2uS5J7TIqboNdbfKEz5eubWUSpqu2ZeGcLzbzNGpOB8gJGJ5RkGE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Znm6diLb; arc=fail smtp.client-ip=40.107.94.80
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ygsmojhv"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d23114b19dso40794611fa.3
-        for <patches@lists.linux.dev>; Mon, 26 Feb 2024 00:39:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708936744; x=1709541544; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=hNqFxveNN+H8aecbcycKBg8umKGdeV5MQ1apVnlx4RI=;
-        b=Ygsmojhvh2LPn/MFOJqmN6+HcHd12DY1VYxwUAsZbJGvkwKyHd62HPOviGylb8wf1h
-         TpzOYS/q1stpbWVty4IexQ0C2/545DjehFsJRFAq99AXULwANU9QIYnsGL2jM2j1O0lO
-         Ve0S+vjj7kweKGfIqldNSfDOxEGNEHO0LEkBpDGXk0jp8ir9sePmDz7Ie03wlrcYni4Z
-         QC1GYVQu/VGTX5ICWSfwCY9LIgHH9ysopWQ6XmBJJRbznKz7KDMtUcVFY8uyt1TTPQ9E
-         TDLYkStW7+YcBohw9kge3uJfU8VkuZMYLbIDkOu/xMo4TLwKTmjoJpWZOM7ZP7od2exb
-         qQNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708936744; x=1709541544;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hNqFxveNN+H8aecbcycKBg8umKGdeV5MQ1apVnlx4RI=;
-        b=u9TR3JQ7/H0beSyJJDkpgLv9QIrw3iURM889wPgqBMTxqAU5ahJnEhzrjxPATMCtb4
-         2b1A9xA/GKbyEEy0wBLs0VjRBja5otkcHM7feTv+vF0khp6c61/AGE7deqJ8P+SZmBup
-         QwQULa0Z3DcEJEvE0ynkwmh5UfJPF7oKElG7jVSaYd6Q37sa9z4lhP1Kemq1TAWCoCc8
-         UMW8HGSqT1uj0x+ybN05xjkTcIbPUTFc69Bl9lAynJsQafB6CNbygVKRXEOuu8opJ8kU
-         PDhdw6Fi4WVRLMw0SATrYKFqdaiag+9BX2poPaoKO3PBI1CLO4a95zPfG4GrMTaE2+Ro
-         tzbw==
-X-Forwarded-Encrypted: i=1; AJvYcCWgxp08hLdOJQeUXwRCSeLwpycRXRrsXnzR9M/NTLgx+C09bVzQwgglOo3mUnYtfTAn2Ghv0PmDBlSs+qMp9tisMk6ZwD3JjA==
-X-Gm-Message-State: AOJu0Yxu3ZOsEDULB4w5Uh/KqApXY6Rwi5GF4xuaCxDxqiqai06kVKKX
-	eIIq7D/2WKL/j1w+3AFYJGNP/z889FXBinTs7TU70EteEfU5y/B6Kw9Fwy5viRJl854WdWX8MW2
-	CByi/mnuul3At4+3vHbdK9qU2lwxl/XLTgu08gA==
-X-Google-Smtp-Source: AGHT+IHmHML7b3qoLecL20ShS0D8jjCvIbIUmDFgiUBztrjnO3WCKr1Ny1OWrIJBV2jCyp7Pq0IrbY/1iBrV5batGF0=
-X-Received: by 2002:a05:6512:239d:b0:512:f17f:2b30 with SMTP id
- c29-20020a056512239d00b00512f17f2b30mr4528397lfv.59.1708936744085; Mon, 26
- Feb 2024 00:39:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Znm6diLb"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bD74Vd5i2ZjZxEYJnnwW98lQpdlpqgrGuw0cbfumhYppDKxEj9DyVVuePGErBMcwjGTE3egRxqL22JTbYGgPcBNC8PNAHOmGpZzZzjLiMRVebVJrvaVgqa+RFk9qCoaSk0e4zkrJt57QPOFgZ8KC7OtajwJVw6eKXK85+po8V1YWhiQ52F6YPnfw4tR8YDhRHuOQ3s3K5qtY+xCkCMIswYduqozSrSwCCmBRTaxBAvqiIFA+Df4ONRnD9/ZKJm2GOxoB28Zhbef/2/D+0FJ5cvLideSN003tPFCYiDZq+ukTPlFhYmwBJoRN5M6Bi8Qwv+8zoEtiidJ4TkhbQsxkQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=x0lI/nCUrEDM/dVviu2RRltRxbSJnoZvL3DnbIrtIQ4=;
+ b=aPd/8tWtZBhsB/s4zTObfG96eMR2aYuJsQV2zG3SLTa9/sclHIHwiLIRf5iJlGOhP0JnAxBCUKvZg3JCMYcWSYCkB+7LNdVnrqnH/nrjVmc9aTI2mJrrxa2DYShAdwFzrRSg/I08s9JTSVRHVcG1TQoSwBx/LJFivIXWT/StNrt8OsFsfIKjLNS7NZx27ZZiavLR5qfnz/pdKk8In483sNQyK/nRxpjYCpEPb4hlywu6cQ6lRWhr+8MuFOsExe0Y1PESFyPr6vZhezV/5ga+K65/TiEaWgsisreKjbjGTP51RPHVcvje9/rHBiQdH8BKA3NYaENRC3V2ZQTKnmKOXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=x0lI/nCUrEDM/dVviu2RRltRxbSJnoZvL3DnbIrtIQ4=;
+ b=Znm6diLbsPcN9LOSQfkCcy7xwK8hcZucNFZyG9t1LzexBr6mxHXPiv94+ANexxq4yH94uh+oLCcNOkfp/16XVRSmVu+oyAMjZHsOjQIkLQEiQHa1OdRcuUnT5lA2BJKx4RW1+Rm5SYNREJ2+iiFDtlaPOHaY2lb7lTcGj5lmibxlxTYsp08kIcSW2CW0NxtgLh+MOTm0yLKH+JkBwjJxlQPVpHmOmITIDSayr6n67yiWe87LirUeQiJmbju6Oj52b1WelRkenRLvesdOXhif6uNFg2Fmvc+Vy424S23wXLNs9pdP7HBxvcDYQNJ6KoRU/+65HjgmSMJfKbro4LQ4vA==
+Received: from MN2PR12MB4269.namprd12.prod.outlook.com (2603:10b6:208:1d4::7)
+ by IA1PR12MB6066.namprd12.prod.outlook.com (2603:10b6:208:3ee::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.24; Mon, 26 Feb
+ 2024 13:07:56 +0000
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
+ by MN2PR12MB4269.namprd12.prod.outlook.com (2603:10b6:208:1d4::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.36; Mon, 26 Feb
+ 2024 13:07:54 +0000
+Received: from DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::2e3e:c7c0:84da:3941]) by DM6PR12MB3849.namprd12.prod.outlook.com
+ ([fe80::2e3e:c7c0:84da:3941%6]) with mapi id 15.20.7316.034; Mon, 26 Feb 2024
+ 13:07:54 +0000
+Date: Mon, 26 Feb 2024 09:07:53 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Zhangfei Gao <zhangfei.gao@linaro.org>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>, Joerg Roedel <jroedel@suse.de>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	Tina Zhang <tina.zhang@intel.com>,
+	Vasant Hegde <vasant.hegde@amd.com>
+Subject: Re: [PATCH rc] iommu/sva: Restore SVA handle sharing
+Message-ID: <20240226130753.GK13330@nvidia.com>
+References: <0-v1-9455fc497a6f+3b4-iommu_sva_sharing_jgg@nvidia.com>
+ <CABQgh9GTnT+ieqQiNFjc=CLeG0J01Rf3RdLxZatdkKJgNLqXsA@mail.gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABQgh9GTnT+ieqQiNFjc=CLeG0J01Rf3RdLxZatdkKJgNLqXsA@mail.gmail.com>
+X-ClientProxiedBy: MN2PR12CA0025.namprd12.prod.outlook.com
+ (2603:10b6:208:a8::38) To DM6PR12MB3849.namprd12.prod.outlook.com
+ (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v1-9455fc497a6f+3b4-iommu_sva_sharing_jgg@nvidia.com>
-In-Reply-To: <0-v1-9455fc497a6f+3b4-iommu_sva_sharing_jgg@nvidia.com>
-From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Mon, 26 Feb 2024 16:38:52 +0800
-Message-ID: <CABQgh9GTnT+ieqQiNFjc=CLeG0J01Rf3RdLxZatdkKJgNLqXsA@mail.gmail.com>
-Subject: Re: [PATCH rc] iommu/sva: Restore SVA handle sharing
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, 
-	Lu Baolu <baolu.lu@linux.intel.com>, Joerg Roedel <jroedel@suse.de>, 
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
-	Tina Zhang <tina.zhang@intel.com>, Vasant Hegde <vasant.hegde@amd.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic:
+	DM6PR12MB3849:EE_|MN2PR12MB4269:EE_|IA1PR12MB6066:EE_
+X-MS-Office365-Filtering-Correlation-Id: 157e9b63-38f9-4eb2-77c1-08dc36cbf1e2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	uplZtwGL8BvK6LBbbPE+MTiRJLW/PoeO49yucGIdx0GmHFpyWX5zsor4WxwMnNZYJpV+SuUbCm1wpI7mK2RHWn9Gfk7b3QPi0wzIEJ9ekeFFGxHO6YCuwtFNWbs40jzT0CvwhtD239ScPDpgN2WyxYqShx/MK5h3GVFIDcTyLqe5NPdBwudHYGtyTr+Ttss9TtsCPmaIOwXWCbP+kOaUANyb925yktf7hcyvGAJQYon+CVBKvBNUsYG+/XbDaSEL3l/MOg/iD2wMCb1B3lhvNmrKuXbX/F8TTLGif0ZbO7Yt952QhrSGrlDa9l8Nf5wfEXxMwUZ8e47fWqHYt77iWG+ZA2fD9Dxb4/XAdZBPyzF/lvxEqTOj4X8hCo1bH97MHIz7M53uOZMXv4a5zEiJyxUUCSuzFUefWXtgL8Ta7aJvFArp+do6FcBdrvEXoOgsV2jM9Hwp4wlU7P37N32TEyzh6CVmClUGnxaEERdVW0cil1c0NjpUcaFXhs+4gtQPN/TgE5GkYy/Y8qtc+kMNoW7dwcDLyo5bXMPEjWiuTsptM+tpyP2dQFDlGfvqBm53s4DBtqRRU/VwItUKpJnkk1LW6L95UTsCdp/Ykek3R4JO1eN/LK2DLDoBcoZKmtP+wFLyATemck3sERxwcsJ8tg==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB4269.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?+4tLXbH8fs4T3MEMjxbsDJ8OGxn3StiyeFxbFQJhYF3Opq533HxJkhvRTWfE?=
+ =?us-ascii?Q?8HFaeJya54/x799vjuU7iMRDgBwn7vsFYE3k9RMG9+rFP+hvRSF8qQJgBxmh?=
+ =?us-ascii?Q?e/+B9FTv2Zy5omO88M95teldMN5zza0L97HzbukQRcx9xQVLXXAmwTRrl81e?=
+ =?us-ascii?Q?N7Bjag7rrDVSxr07aDzeWJsgESxFZ6RRBUe4OtiJMFWdI4YpGIwItFFv3756?=
+ =?us-ascii?Q?XhMG/LCI14ayIrAtpNV3RA0mZqC4u7XsI0AInUu0XFccgjmW/2YYxabvTMsY?=
+ =?us-ascii?Q?vux5l4ejUXabBCtivtcjBPTJuPUWFrPI+4KaGc4RneESlBgA6pvoT6+9YlGG?=
+ =?us-ascii?Q?7SsfAY1wP936y3rjFaqnAjdvBbuRmMMA3mNGrnBaY5Geko1Uoh8284fw0qK2?=
+ =?us-ascii?Q?fDoITqQj+Pq3d2aJnjlJIFuvX0FPwYDelwQxt83/Cg2IVSlAYJE3UpQ2zYWF?=
+ =?us-ascii?Q?LbGLXyPwWulW+5sTvSfTTo/fDhH1xduYOxWwAVhhI80On+CJTxczei92xPcP?=
+ =?us-ascii?Q?tjstLpxkM9F2xlUPGLH8jhAUsgJDDvzeSYvCR0bf++NStTCDaTooWRIPTDsY?=
+ =?us-ascii?Q?uXYxpiNL8Yf0bLtHdPyI927jT2v54IpsNY3BCgotuKEB/FbE4lZWe2cKyfQF?=
+ =?us-ascii?Q?I5Ita+nOQZI8UwR592KXah1xBgEjLV8qlPihPOGKippPTgNdrgmTRbt7Z34Y?=
+ =?us-ascii?Q?fOLx1AH6rmoLOObdJudHuKzqC+JYsvm0VVTiAAnEKnvUD/e63Z+jUl8poD7c?=
+ =?us-ascii?Q?FySatmgVsUyW6e0uR9qwIjktLQlE267zYv9kr4QKf5WxMidvgYTjkS8ZOoOz?=
+ =?us-ascii?Q?JsXxS9BTS94L1Khp1PylQ75JsOCPEY7nH9gWxOWZjaoIpjwZB31xinpVEmr4?=
+ =?us-ascii?Q?iUOsjDB985Kd8aZDeeEQ46NOiJekeP+jX9UevoqZLqlnwb0UVNuXweKtZH6C?=
+ =?us-ascii?Q?NN1xhq93ipptWgij6yXk6yBG3mJGwQDCQtobBtHSmkg3SlWSsJr6vEVsT1QH?=
+ =?us-ascii?Q?fVe02QWT7h45Qff3Dl0J0u9NeyydszOfwTNXyfy3FnLbi+xEj3tRKwLshe4O?=
+ =?us-ascii?Q?56PRwLvO2+MEUByZ29Eky7j42kAOhXvaqyDPcAX3bjUw9PRs+okvYTl5D+OW?=
+ =?us-ascii?Q?HpS5pdkdN/Pf6AnAV225AAZk8mSwBNRZ9OLYMbEb0zsaxjK1YUnoIa4mYsiB?=
+ =?us-ascii?Q?TgCQShe6NjAgvV5KWAJKFgAEXS/u9yEiE3uZ0UzaJyvNz/qpelx/LleRWGDx?=
+ =?us-ascii?Q?LTnKnoempQLOCNPfEMYHymB1Ho21a6YIV4gRyBOi3kfw+ZfjzJ6kZ9nH2dbv?=
+ =?us-ascii?Q?5kcWAunli2Spd+fhA0/Snyd/xkVxmAunpyoaR8CG5RSq8M+bCXikVemsUUce?=
+ =?us-ascii?Q?VoHMO+sMbmNQlzxi8z11avzmp1gd0InWTpEv0dChQajiv9odRA6nQasxDyCh?=
+ =?us-ascii?Q?YaBqGCJacr24aOhfdD/kPd9JzlOsL+s/tTMAvq5GOTUTTlAuOJgEcfGTDUBj?=
+ =?us-ascii?Q?ARmWo5SHEiOR3fuOYYHCx16NjRbmnW6QHrCU77GcvEgeJl+EE/w7Mphn39Rr?=
+ =?us-ascii?Q?Ki2IVYdMjcgLcsYbU/Q=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 157e9b63-38f9-4eb2-77c1-08dc36cbf1e2
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2024 13:07:54.5483
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jDd4nl1mVTm0r9qA9yKFiH/W9StXDMd/Hs4qTTy4vUzC1IDYMExNdq/hESVf1Hvy
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6066
 
-On Thu, 22 Feb 2024 at 22:07, Jason Gunthorpe <jgg@nvidia.com> wrote:
->
-> Prior to commit 092edaddb660 ("iommu: Support mm PASID 1:n with sva
-> domains") the code allowed a SVA handle to be bound multiple times to the
-> same (mm, device) pair. This was alluded to in the kdoc comment, but we
-> had understood this to be more a remark about allowing multiple devices,
-> not a literal same-driver re-opening the same SVA.
->
-> It turns out uacce and idxd were both relying on the core code to handle
-> reference counting for same-device same-mm scenarios. As this looks hard
-> to resolve in the drivers bring it back to the core code.
->
-> The new design has changed the meaning of the domain->users refcount to
-> refer to the number of devices that are sharing that domain for the same
-> mm. This is part of the design to lift the SVA domain de-duplication out
-> of the drivers.
->
-> Return the old behavior by explicitly de-duplicating the struct iommu_sva
-> handle. The same (mm, device) will return the same handle pointer and the
-> core code will handle tracking this. The last unbind of the handle will
-> destroy it.
->
-> Fixes: 092edaddb660 ("iommu: Support mm PASID 1:n with sva domains")
-> Reported-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-> Closes: https://lore.kernel.org/all/20240221110658.529-1-zhangfei.gao@linaro.org/
-> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/iommu-sva.c | 17 +++++++++++++++++
->  include/linux/iommu.h     |  3 +++
->  2 files changed, 20 insertions(+)
->
+On Mon, Feb 26, 2024 at 04:38:52PM +0800, Zhangfei Gao wrote:
+> Hi, Jason
+> 
+> I am testing on 6.8-rc6 with more test and found one issue, sorry about this.
+> When test openssl rsa, it will use two devices, one is sec, the other is hpre.
+> I found the second handle can not be shared since bind_dev directly
+> goto out but not add_list.
+> 
+> So still need a minor fix like this
+> 
+>     iommu/sva: Fix SVA handle sharing in multi device case
+> 
+> 
+>     iommu_sva_bind_device will directly goto out in multi-device
+>     case when found existing domain, ignoring list_add handle,
+>     which causes the handle to fail to be shared.
+> 
+>     Fixs: 65d4418c5002 (iommu/sva: Restore SVA handle sharing)
+>     Signed-off-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+> 
 > diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
-> index c3fc9201d0be97..7f91c8d0064b71 100644
+> index 7f91c8d0064b..b1f3a864e124 100644
 > --- a/drivers/iommu/iommu-sva.c
 > +++ b/drivers/iommu/iommu-sva.c
-> @@ -41,6 +41,7 @@ static struct iommu_mm_data *iommu_alloc_mm_data(struct mm_struct *mm, struct de
->         }
->         iommu_mm->pasid = pasid;
->         INIT_LIST_HEAD(&iommu_mm->sva_domains);
-> +       INIT_LIST_HEAD(&iommu_mm->sva_handles);
->         /*
->          * Make sure the write to mm->iommu_mm is not reordered in front of
->          * initialization to iommu_mm fields. If it does, readers may see a
-> @@ -82,6 +83,14 @@ struct iommu_sva *iommu_sva_bind_device(struct device *dev, struct mm_struct *mm
->                 goto out_unlock;
->         }
->
-> +       list_for_each_entry(handle, &mm->iommu_mm->sva_handles, handle_item) {
-> +               if (handle->dev == dev) {
-> +                       refcount_inc(&handle->users);
-> +                       mutex_unlock(&iommu_sva_lock);
-> +                       return handle;
-> +               }
-> +       }
-> +
->         handle = kzalloc(sizeof(*handle), GFP_KERNEL);
->         if (!handle) {
->                 ret = -ENOMEM;
-> @@ -108,7 +117,9 @@ struct iommu_sva *iommu_sva_bind_device(struct device *dev, struct mm_struct *mm
+> @@ -117,11 +117,10 @@ struct iommu_sva *iommu_sva_bind_device(struct
+> device *dev, struct mm_struct *mm
 >         if (ret)
 >                 goto out_free_domain;
 >         domain->users = 1;
-> +       refcount_set(&handle->users, 1);
+> -       refcount_set(&handle->users, 1);
 >         list_add(&domain->next, &mm->iommu_mm->sva_domains);
-> +       list_add(&handle->handle_item, &mm->iommu_mm->sva_handles);
->
+> -       list_add(&handle->handle_item, &mm->iommu_mm->sva_handles);
+> 
 >  out:
+> +       refcount_set(&handle->users, 1);
+> +       list_add(&handle->handle_item, &mm->iommu_mm->sva_handles);
 >         mutex_unlock(&iommu_sva_lock);
-> @@ -141,6 +152,12 @@ void iommu_sva_unbind_device(struct iommu_sva *handle)
->         struct device *dev = handle->dev;
->
->         mutex_lock(&iommu_sva_lock);
-> +       if (!refcount_dec_and_test(&handle->users)) {
-> +               mutex_unlock(&iommu_sva_lock);
-> +               return;
-> +       }
-> +       list_del(&handle->handle_item);
-> +
->         iommu_detach_device_pasid(domain, dev, iommu_mm->pasid);
->         if (--domain->users == 0) {
->                 list_del(&domain->next);
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 1ea2a820e1eb03..5e27cb3a3be99b 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -892,11 +892,14 @@ struct iommu_fwspec {
->  struct iommu_sva {
->         struct device                   *dev;
->         struct iommu_domain             *domain;
-> +       struct list_head                handle_item;
-> +       refcount_t                      users;
->  };
->
->  struct iommu_mm_data {
->         u32                     pasid;
->         struct list_head        sva_domains;
-> +       struct list_head        sva_handles;
->  };
->
->  int iommu_fwspec_init(struct device *dev, struct fwnode_handle *iommu_fwnode,
->
-> base-commit: 510325e5ac5f45c1180189d3bfc108c54bf64544
-> --
-> 2.43.2
->
+>         handle->dev = dev;
+>         handle->domain = domain;
+> 
+> What do you think.
 
-Hi, Jason
+Yes, please send a patch
 
-I am testing on 6.8-rc6 with more test and found one issue, sorry about this.
-When test openssl rsa, it will use two devices, one is sec, the other is hpre.
-I found the second handle can not be shared since bind_dev directly
-goto out but not add_list.
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 
-So still need a minor fix like this
-
-    iommu/sva: Fix SVA handle sharing in multi device case
-
-
-    iommu_sva_bind_device will directly goto out in multi-device
-    case when found existing domain, ignoring list_add handle,
-    which causes the handle to fail to be shared.
-
-    Fixs: 65d4418c5002 (iommu/sva: Restore SVA handle sharing)
-    Signed-off-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-
-diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
-index 7f91c8d0064b..b1f3a864e124 100644
---- a/drivers/iommu/iommu-sva.c
-+++ b/drivers/iommu/iommu-sva.c
-@@ -117,11 +117,10 @@ struct iommu_sva *iommu_sva_bind_device(struct
-device *dev, struct mm_struct *mm
-        if (ret)
-                goto out_free_domain;
-        domain->users = 1;
--       refcount_set(&handle->users, 1);
-        list_add(&domain->next, &mm->iommu_mm->sva_domains);
--       list_add(&handle->handle_item, &mm->iommu_mm->sva_handles);
-
- out:
-+       refcount_set(&handle->users, 1);
-+       list_add(&handle->handle_item, &mm->iommu_mm->sva_handles);
-        mutex_unlock(&iommu_sva_lock);
-        handle->dev = dev;
-        handle->domain = domain;
-
-What do you think.
-
-Thanks
+Jason
