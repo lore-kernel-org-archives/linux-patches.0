@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32792F2D;
-	Tue, 27 Feb 2024 13:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943362F2D;
+	Tue, 27 Feb 2024 13:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041244; cv=none; b=j9GbnpFRlSzwnw3ZgVRT91Rl6g24uo+zKEmGw8oEjQPsxUt+H/cNsAQFRTZvzG4D1P9IfCV31ORvVXeQuKB7x6TUfHhhQAk/+mlhj1wQwf5zbAJs0YEpUyYCm+hxkjrGvZSmAC5IywZHfO3PF+eTI8OvBt4csyQxi4aCIhXeLHU=
+	t=1709041247; cv=none; b=lZPXGTyetSz8fLZp+4Hfs3Or4fj3pJfLOV2f3T4t7ompj8rK6wqGLWt2zByO9uSR8E66UsTUdwRma04hHn8XIr7OAbY1sgDYebPNsDwH9T2u1O7pz3WxVslxLtTDEeJErCZC9VNjh+9hBZU9ejZJ8100UEzZpF+MIH1S1RaeTLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041244; c=relaxed/simple;
-	bh=EKtd7buSB3EhpaII1wm9DNJ857kiH1YrawCVof9QNgg=;
+	s=arc-20240116; t=1709041247; c=relaxed/simple;
+	bh=MRAdmzNwqynbQUfc+lyd6RplRoBK5XSRypPsfLAyNO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ITjJMkTIkCNTbuNUNylOslE9dDsybUspuNARFCDlyYqrdBQiyKYtUQfbcWqGLavgF1sDg5v4xqmlAuPaqH6wF5rIcEP5B6RkDgRt9bmXtDkdyp6Q3QWp4kF2z6OzzkP0HaOOY72HjOjEIGOkEep/+TfAd0PtywUJIPhJvv6W5W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNaVAnzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AlsUIXIkLpuDvWv0fX1RdKhzxk4pboh/MR/XMyvOrcaRthftapUSHzJqoFj6cHkBITTYcIlWxbcItUwvkHRLm/EFoMaW0xnsYUVRfF/P5y8/KiSPCXaWovE/kgSNqzw3QL759s7lxG/yG6klwseglj4Na2pgJqbt15CqIsi3o7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRKmvzu/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNaVAnzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631FFC433C7;
-	Tue, 27 Feb 2024 13:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRKmvzu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CAACC433F1;
+	Tue, 27 Feb 2024 13:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041244;
-	bh=EKtd7buSB3EhpaII1wm9DNJ857kiH1YrawCVof9QNgg=;
+	s=korg; t=1709041247;
+	bh=MRAdmzNwqynbQUfc+lyd6RplRoBK5XSRypPsfLAyNO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gNaVAnzU32qb66WzehkZHm0spUo7BoG3c62YT8gGoXK3bUpFllg8xQ5w5FUAsGSn+
-	 g2BzKqaHeqKF9Asq3R76jkgDMN7AXmrRN2b/7RDxI+bydRnc9KLmM9G0So7NPdtuE5
-	 IDJdex3lCS3k1oOEKohcX8SpRRQqp0osNqipteJY=
+	b=sRKmvzu//AFRyMQbTZ52ogz+AnY+mtK42TNU17+kv0jnLUVxF+m054a/liMPsJI+g
+	 GU2nfXfbgQpWmX2LvofaXTolwTR2hGWTEtFsYbQUrYYqdLq5TtVFZEms7lSFbI8lB4
+	 r603kdZ4I2VMeCblXGWncV6nCq2CYRCln9l9Yj6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Justin Chen <justin.chen@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 270/334] ipv6: properly combine dev_base_seq and ipv6.dev_addr_genid
-Date: Tue, 27 Feb 2024 14:22:08 +0100
-Message-ID: <20240227131639.708084018@linuxfoundation.org>
+Subject: [PATCH 6.7 271/334] net: bcmasp: Indicate MAC is in charge of PHY PM
+Date: Tue, 27 Feb 2024 14:22:09 +0100
+Message-ID: <20240227131639.737999817@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,73 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit e898e4cd1aab271ca414f9ac6e08e4c761f6913c ]
+[ Upstream commit 5b76d928f8b779a1b19c5842e7cabee4cbb610c3 ]
 
-net->dev_base_seq and ipv6.dev_addr_genid are monotonically increasing.
+Avoid the PHY library call unnecessarily into the suspend/resume
+functions by setting phydev->mac_managed_pm to true. The ASP driver
+essentially does exactly what mdio_bus_phy_resume() does.
 
-If we XOR their values, we could miss to detect if both values
-were changed with the same amount.
-
-Fixes: 63998ac24f83 ("ipv6: provide addr and netconf dump consistency info")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 733ace18806c6..5a839c5fb1a5a 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -708,6 +708,22 @@ static int inet6_netconf_get_devconf(struct sk_buff *in_skb,
- 	return err;
- }
- 
-+/* Combine dev_addr_genid and dev_base_seq to detect changes.
-+ */
-+static u32 inet6_base_seq(const struct net *net)
-+{
-+	u32 res = atomic_read(&net->ipv6.dev_addr_genid) +
-+		  net->dev_base_seq;
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+index 53e5428812552..9cae5a3090000 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+@@ -1048,6 +1048,9 @@ static int bcmasp_netif_init(struct net_device *dev, bool phy_connect)
+ 			netdev_err(dev, "could not attach to PHY\n");
+ 			goto err_phy_disable;
+ 		}
 +
-+	/* Must not return 0 (see nl_dump_check_consistent()).
-+	 * Chose a value far away from 0.
-+	 */
-+	if (!res)
-+		res = 0x80000000;
-+	return res;
-+}
-+
-+
- static int inet6_netconf_dump_devconf(struct sk_buff *skb,
- 				      struct netlink_callback *cb)
- {
-@@ -741,8 +757,7 @@ static int inet6_netconf_dump_devconf(struct sk_buff *skb,
- 		idx = 0;
- 		head = &net->dev_index_head[h];
- 		rcu_read_lock();
--		cb->seq = atomic_read(&net->ipv6.dev_addr_genid) ^
--			  net->dev_base_seq;
-+		cb->seq = inet6_base_seq(net);
- 		hlist_for_each_entry_rcu(dev, head, index_hlist) {
- 			if (idx < s_idx)
- 				goto cont;
-@@ -5362,7 +5377,7 @@ static int inet6_dump_addr(struct sk_buff *skb, struct netlink_callback *cb,
- 	}
- 
- 	rcu_read_lock();
--	cb->seq = atomic_read(&tgt_net->ipv6.dev_addr_genid) ^ tgt_net->dev_base_seq;
-+	cb->seq = inet6_base_seq(tgt_net);
- 	for (h = s_h; h < NETDEV_HASHENTRIES; h++, s_idx = 0) {
- 		idx = 0;
- 		head = &tgt_net->dev_index_head[h];
++		/* Indicate that the MAC is responsible for PHY PM */
++		phydev->mac_managed_pm = true;
+ 	} else if (!intf->wolopts) {
+ 		ret = phy_resume(dev->phydev);
+ 		if (ret)
 -- 
 2.43.0
 
