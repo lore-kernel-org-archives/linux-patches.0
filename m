@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A4C13B7AB;
-	Tue, 27 Feb 2024 14:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6459E13A26F;
+	Tue, 27 Feb 2024 14:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042776; cv=none; b=fuQ/F9iJB8GaeawNW7pxD2RrtjE0ZJ1EkqY8eC0XmozRyaYwNVwhv5C2Uu9eoIUw/WMBQM33jMTgr90tpVIvR4TZ1D5igJh04kuBawNu4LFCcHXJK+kFM0DMLQ6gxURfQn5UzMH8v7Opd9oc+oQOnzAfz+WEH54M0bMZtf8PL5M=
+	t=1709042779; cv=none; b=DIbQuOl6kjpvRKvJOlL69++NwaiikrRFkFck9Ibsn0+rL5HuJPavahEQez8rEfFXhX37LJ6BdOZkxlUjJo1J9ZeG0zEb/SAlq2TMloJNMQ86ICT2loCYxWoN3xRVfHcuZ0+/j94lR5qsk9BscRAGHc3D3DnUztYpS6QDG4P2Qj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042776; c=relaxed/simple;
-	bh=xVnFJZSaC7ph63TLaJSsZCQYeiYQY2xVA1NeZ/BK9vA=;
+	s=arc-20240116; t=1709042779; c=relaxed/simple;
+	bh=YKknOHQda/mbDQ6xQJLZwEq6je9bbcVtaRGfBrRskj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=coNde7TUZ8Y25vYdQvn4RZ3ws9oCgtjXEkI5eiWDGm/bBlNJSX5UbRDa8vYu6npq6hLrk5PKSfmGs4h4vbzkrp0sVRn9tht+kwVjMPz8CbRYW+Xeq3ijQ234dQWiC3kheHuBbdFlQLYVAMBdNT3usr5UsJ3trCOfV9KzyEQWhCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TF8UMXzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dGG1jydElR3LbeRZtWyONGE3+BZgnHtg1aBb+CaT7KTu+nD5M7d8fxTc315vF6vsew1dvEIu1nywE6Dg1A5Eoy6rb6iiV64CE0JY/RPtgze/RbediIpu7L4MH/q95iVI8dw/9sOBcPQ0xiWItcs2A4Tx2R9tjKQSNmO1cSomR9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhTd0IJJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TF8UMXzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD593C433F1;
-	Tue, 27 Feb 2024 14:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhTd0IJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D291C433F1;
+	Tue, 27 Feb 2024 14:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042776;
-	bh=xVnFJZSaC7ph63TLaJSsZCQYeiYQY2xVA1NeZ/BK9vA=;
+	s=korg; t=1709042779;
+	bh=YKknOHQda/mbDQ6xQJLZwEq6je9bbcVtaRGfBrRskj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TF8UMXzU/uBte6eMvibHN9jWGI2CPpP1qDd33U/Aw6hbbEwGproB8aKmQHXJfbOhf
-	 UgbR/S5cP/xpVpfPK3QvcKi3si66HTgyApTBPPw3MAyGiaKVTJEiHnNjHeoQ0wFddR
-	 Z2LrmBHFAFEV8AjHlNweGjFh1its0D/aZj1xw1Ok=
+	b=AhTd0IJJebDsqqxBqxVkoqZ1pPLJvYPjwB6zQKH48/GKZQF71ITin1wdCD1MQG9Zy
+	 vu2CVaTqbq9rf8t2ZSq/T5oguOWjWlDxQAsp8klKQRZblz5DNW10axOJqaAJ1r3D/c
+	 vzsSie7Rsu8z8uLljO96vUJX0CS3pqZyfPZ8fBN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Luca Ellero <l.ellero@asem.it>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/245] clk: imx: avoid memory leak
-Date: Tue, 27 Feb 2024 14:25:04 +0100
-Message-ID: <20240227131619.002730554@linuxfoundation.org>
+Subject: [PATCH 5.15 117/245] Input: ads7846 - always set last command to PWRDOWN
+Date: Tue, 27 Feb 2024 14:25:05 +0100
+Message-ID: <20240227131619.033496768@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,39 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Luca Ellero <l.ellero@asem.it>
 
-[ Upstream commit f4419db4086e8c31821da14140e81498516a3c75 ]
+[ Upstream commit 13f82ca3878db8284a70ef9711d7f710a31eb562 ]
 
-In case imx_register_uart_clocks return early, the imx_uart_clocks
-memory will be no freed. So execute kfree always to avoid memory leak.
+Controllers that report pressure (e.g. ADS7846) use 5 commands and the
+correct sequence is READ_X, READ_Y, READ_Z1, READ_Z2, PWRDOWN.
 
-Fixes: 379c9a24cc23 ("clk: imx: Fix reparenting of UARTs not associated with stdout")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230104110032.1220721-2-peng.fan@oss.nxp.com
+Controllers that don't report pressure (e.g. ADS7845/ADS7843) use only 3
+commands and the correct sequence should be READ_X, READ_Y, PWRDOWN. But
+the sequence sent was incorrect: READ_X, READ_Y, READ_Z1.
+
+Fix this by setting the third (and last) command to PWRDOWN.
+
+Fixes: ffa458c1bd9b ("spi: ads7846 driver")
+Signed-off-by: Luca Ellero <l.ellero@asem.it>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20230126105227.47648-3-l.ellero@asem.it
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/ads7846.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk.c b/drivers/clk/imx/clk.c
-index 7cc669934253a..d4cf0c7045ab2 100644
---- a/drivers/clk/imx/clk.c
-+++ b/drivers/clk/imx/clk.c
-@@ -201,9 +201,10 @@ static int __init imx_clk_disable_uart(void)
- 			clk_disable_unprepare(imx_uart_clocks[i]);
- 			clk_put(imx_uart_clocks[i]);
- 		}
--		kfree(imx_uart_clocks);
- 	}
+diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
+index ef04988edf0c2..f416a4bcd72bf 100644
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -1074,6 +1074,9 @@ static int ads7846_setup_spi_msg(struct ads7846 *ts,
+ 		struct ads7846_buf_layout *l = &packet->l[cmd_idx];
+ 		unsigned int max_count;
  
-+	kfree(imx_uart_clocks);
++		if (cmd_idx == packet->cmds - 1)
++			cmd_idx = ADS7846_PWDOWN;
 +
- 	return 0;
- }
- late_initcall_sync(imx_clk_disable_uart);
+ 		if (ads7846_cmd_need_settle(cmd_idx))
+ 			max_count = packet->count + packet->count_skip;
+ 		else
+@@ -1110,7 +1113,12 @@ static int ads7846_setup_spi_msg(struct ads7846 *ts,
+ 
+ 	for (cmd_idx = 0; cmd_idx < packet->cmds; cmd_idx++) {
+ 		struct ads7846_buf_layout *l = &packet->l[cmd_idx];
+-		u8 cmd = ads7846_get_cmd(cmd_idx, vref);
++		u8 cmd;
++
++		if (cmd_idx == packet->cmds - 1)
++			cmd_idx = ADS7846_PWDOWN;
++
++		cmd = ads7846_get_cmd(cmd_idx, vref);
+ 
+ 		for (b = 0; b < l->count; b++)
+ 			packet->tx[l->offset + b].cmd = cmd;
 -- 
 2.43.0
 
