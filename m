@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08811419A0;
-	Tue, 27 Feb 2024 13:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF3813B2B9;
+	Tue, 27 Feb 2024 13:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041545; cv=none; b=FKFaREYROfuA/O2GDYjwq5rhgIzbA/S+ZTcbEYDem/tWhQSxt32pICcmBDZLVArRheORUkg6JDmRodJkKDxP7mTwWd3z/Lv+NK0LNaEPcp+1J1MIPttuJG/Gn1Rz8LUaTY6oOSLXegXNb/ValOS34aeSUzWbI2xhxPcI0PyYc9c=
+	t=1709041549; cv=none; b=oCB3yjGoOwiCPbQIV8IQOqWaDjLGHVh6x21ocTMKBRoa0Ft0DfqGE8xnZcKv0qhxSr1gMT3PpaDeEdJAT/h5lPLdj3Dexz6hqSfIEwhCddPyo6rBrScOCUosDlz063/iltQR8znL6xfVR1sttU18EAELsTfNawjX+XuZ6iLJGUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041545; c=relaxed/simple;
-	bh=2es+X6tt15dNhWrJd8ai3jZ6N2jn40P8ydbTzIFiOeI=;
+	s=arc-20240116; t=1709041549; c=relaxed/simple;
+	bh=zgwKldCsW+3XSE2NZ+EPIrDZOQakt6qTyS8tEcDq6oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPbbHuVuvPVJe1r0rg879Wl6rLEQRtrK4nse/sgjoWLAnoQcnJFviM9orfnIjeVMxUO0N7GLQlVm4OIoueZ6b+CVuaWtd62Sx5Twp2POkQ/Ay5Gi8vzmRrgpgmPzawAjICkt3aC4YfSDsoZXgBBPfcqVDHkRoL5OOtxzaBP1ISw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjgFqi8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ignin5+qj3//1sJV97sg3w7LHt9Z7xZrvln+IYIUHFFYScZp9zurQDFU/Z1K9sZO6PQXuquaLPdC9bIFBtgjKpc50LdB5yqryKZiQ/ykZzPFVUf2vUY7jbx+gtFmWAeBRl7EE/LhappUrC8vbiXc81nSk4amUl8tu+nrvAwJk7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXmoo5Il; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjgFqi8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A625C433F1;
-	Tue, 27 Feb 2024 13:45:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXmoo5Il"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A69C433F1;
+	Tue, 27 Feb 2024 13:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041545;
-	bh=2es+X6tt15dNhWrJd8ai3jZ6N2jn40P8ydbTzIFiOeI=;
+	s=korg; t=1709041548;
+	bh=zgwKldCsW+3XSE2NZ+EPIrDZOQakt6qTyS8tEcDq6oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjgFqi8phFjPbyk5k9x7Z/PabDUgSWPHnHf1K6efNzKpjhL6RSeO73WMlYoLQmpUk
-	 wXKzzHmMD7t1K9KuuoAtzgw2r4EV7Q7uYQyDJvqVkVhRl4UQiojwXA6TAhcjPQLgts
-	 WAJ4qXvRUXGrHRMYTR+lV5SWWDxfbCgndm4d3pUg=
+	b=aXmoo5IllGqhjr8sA3DUMukIHsvnp8HBHFnMsITlGYSy+xBrayiNxJchLeUhh84tU
+	 WklvVXEYL2WCq4/ZwtjCQbeWkRy6lDjCZZSOuEyjngz9sQqIBqwq8I0/UbkNqWWL6E
+	 D845N9sDQF7InHUdV5FK3hnwpjPTUngqwz2gcWyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gianmarco Lusvardi <glusvardi@posteo.net>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Quentin Monnet <quentin@isovalent.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	linux-mips@vger.kernel.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	linux-scsi@vger.kernel.org,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	kernel test robot <lkp@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 42/52] bpf, scripts: Correct GPL license name
-Date: Tue, 27 Feb 2024 14:26:29 +0100
-Message-ID: <20240227131549.911449480@linuxfoundation.org>
+Subject: [PATCH 4.19 43/52] scsi: jazz_esp: Only build if SCSI core is builtin
+Date: Tue, 27 Feb 2024 14:26:30 +0100
+Message-ID: <20240227131549.944152047@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -52,39 +60,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gianmarco Lusvardi <glusvardi@posteo.net>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit e37243b65d528a8a9f8b9a57a43885f8e8dfc15c ]
+[ Upstream commit 9ddf190a7df77b77817f955fdb9c2ae9d1c9c9a3 ]
 
-The bpf_doc script refers to the GPL as the "GNU Privacy License".
-I strongly suspect that the author wanted to refer to the GNU General
-Public License, under which the Linux kernel is released, as, to the
-best of my knowledge, there is no license named "GNU Privacy License".
-This patch corrects the license name in the script accordingly.
+JAZZ_ESP is a bool kconfig symbol that selects SCSI_SPI_ATTRS.  When
+CONFIG_SCSI=m, this results in SCSI_SPI_ATTRS=m while JAZZ_ESP=y, which
+causes many undefined symbol linker errors.
 
-Fixes: 56a092c89505 ("bpf: add script and prepare bpf.h for new helpers documentation")
-Signed-off-by: Gianmarco Lusvardi <glusvardi@posteo.net>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Quentin Monnet <quentin@isovalent.com>
-Link: https://lore.kernel.org/bpf/20240213230544.930018-3-glusvardi@posteo.net
+Fix this by only offering to build this driver when CONFIG_SCSI=y.
+
+[mkp: JAZZ_ESP is unique in that it does not support being compiled as a
+module unlike the remaining SPI SCSI HBA drivers]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20240214055953.9612-1-rdunlap@infradead.org
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Nicolas Schier <nicolas@fjasle.eu>
+Cc: James E.J. Bottomley <jejb@linux.ibm.com>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: linux-scsi@vger.kernel.org
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202402112222.Gl0udKyU-lkp@intel.com/
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/bpf_helpers_doc.py | 2 +-
+ drivers/scsi/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/bpf_helpers_doc.py b/scripts/bpf_helpers_doc.py
-index dcddacc25dff3..cf0ee47bcbeeb 100755
---- a/scripts/bpf_helpers_doc.py
-+++ b/scripts/bpf_helpers_doc.py
-@@ -286,7 +286,7 @@ eBPF programs can have an associated license, passed along with the bytecode
- instructions to the kernel when the programs are loaded. The format for that
- string is identical to the one in use for kernel modules (Dual licenses, such
- as "Dual BSD/GPL", may be used). Some helper functions are only accessible to
--programs that are compatible with the GNU Privacy License (GPL).
-+programs that are compatible with the GNU General Public License (GNU GPL).
+diff --git a/drivers/scsi/Kconfig b/drivers/scsi/Kconfig
+index 6047f0284f73a..5c3635378c321 100644
+--- a/drivers/scsi/Kconfig
++++ b/drivers/scsi/Kconfig
+@@ -1252,7 +1252,7 @@ source "drivers/scsi/arm/Kconfig"
  
- In order to use such helpers, the eBPF program must be loaded with the correct
- license string passed (via **attr**) to the **bpf**\ () system call, and this
+ config JAZZ_ESP
+ 	bool "MIPS JAZZ FAS216 SCSI support"
+-	depends on MACH_JAZZ && SCSI
++	depends on MACH_JAZZ && SCSI=y
+ 	select SCSI_SPI_ATTRS
+ 	help
+ 	  This is the driver for the onboard SCSI host adapter of MIPS Magnum
 -- 
 2.43.0
 
