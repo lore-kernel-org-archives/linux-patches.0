@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA60713AA4C;
-	Tue, 27 Feb 2024 13:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A849E13B7AE;
+	Tue, 27 Feb 2024 13:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041291; cv=none; b=oWyLl5whDqt4WEbHH7ds+HyTHQ4rY5LdJRP2Qm6qL/0epzLG7tWnhIW7Vrn8qxJlw+laDoENxmu6DT0fd0CQm+mM+6Ysm/HKF9Jv+tXdw7NhXuNRYbyi010UHJMFmBznyPhHDNN7RUALJY7dcmjwKzFcIQaKjxy1koU86v0Yj9s=
+	t=1709041294; cv=none; b=EZvyoloxy6wcX+R9u+5YWiEV0mDa6xjvCmq6TN7v77v9McwYq8qyhS49T7bL1scJ0Svi9oumQAHc0Y0YxlkZIELRQbuoinLucquMcDQ1ih2zrSywltDloAxc0m2b3CfI+1keUJ/u7ncTD96hdjoDPgz3E+iflGm/2/aaL9Knq3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041291; c=relaxed/simple;
-	bh=yz289ehJzLRLLGtPp+melPFph5wulFZCYmRuxM3Ay+s=;
+	s=arc-20240116; t=1709041294; c=relaxed/simple;
+	bh=YJzbrLdvjtTQPk2N3sMC5+bICNMSlMraZVXdafdMsyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GxLsCIt3hV00JKWKCWFqRuA5m57/LBb2mnITU3j+Vfh6N1slC1IjhiqfNz/wBq+KtQxBJSPQwuk5X5BQlk4JPuY9a3rTZOlXGp2Ifaaa0UtBt2TGqCmGhq1vfQyuuflswMvkvuFqquMoldEWBBSGdV0jcXItmhGXWe+6zIqXKKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLvW2ITY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SNmeyiGfNVGoKN5X7RyVZy0PiINxeqr6+EbnB6f5Lj8y7T+k0nPGFAEMaZ4BfPsrE4rsXvdJA8vzDI6Ce9ntqZs+L94tG0504tVGHO9CwJyLck+b8piXRy/pbwRgPaFIPSOUh4olvXKjfRsCdFjXvgj5vCpFEMhnoJHQ+uS0l9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVrn/QzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLvW2ITY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6EFC433C7;
-	Tue, 27 Feb 2024 13:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVrn/QzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005B8C433C7;
+	Tue, 27 Feb 2024 13:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041291;
-	bh=yz289ehJzLRLLGtPp+melPFph5wulFZCYmRuxM3Ay+s=;
+	s=korg; t=1709041294;
+	bh=YJzbrLdvjtTQPk2N3sMC5+bICNMSlMraZVXdafdMsyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLvW2ITYT9W9rboH8c+ZIbyAbHHxvn+dpEpjixchkHd5zfxA03ANQNV10q4tN2zP2
-	 OkYCJ7BwIZPYdEgccvZXBUXDNX8rB05zjcQN6tMZUfhMFSD5b9WUY083EQFuo0dt1z
-	 lW+XlO/vi5zR2mJGfIEnj8RNoipmn/Xx3ViCIsFk=
+	b=hVrn/QzTtEHuHK2qG1fR9QqVuS29TbiTE9BA8JFpFbeJtmcNb80zsjFzJ7vm9WwxW
+	 /cTMCuNbkB52M0rPXens8CjmFEgTcTMqwKXVLQL4wbjbh8KpqSrbBXaz3GdbREoj/P
+	 IxurrJyA4aoDcvsvVEmK7XdQ6RF9oK/qgz6ZIBV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Yi Liu <yi.l.liu@intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 288/334] drm/i915/tv: Fix TV mode
-Date: Tue, 27 Feb 2024 14:22:26 +0100
-Message-ID: <20240227131640.300610856@linuxfoundation.org>
+Subject: [PATCH 6.7 289/334] iommu/vt-d: Update iotlb in nested domain attach
+Date: Tue, 27 Feb 2024 14:22:27 +0100
+Message-ID: <20240227131640.337441771@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -47,144 +47,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Yi Liu <yi.l.liu@intel.com>
 
-[ Upstream commit fb1e881273f432e593f8789f99e725b09304cc97 ]
+[ Upstream commit 29e10487d6df050afeee886b7c1da208f389cb5b ]
 
-Commit 1fd4a5a36f9f ("drm/connector: Rename legacy TV property") failed
-to update all the users of the struct drm_tv_connector_state mode field,
-which resulted in a build failure in i915.
+Should call domain_update_iotlb() to update the has_iotlb_device flag
+of the domain after attaching device to nested domain. Without it, this
+flag is not set properly and would result in missing device TLB flush.
 
-However, a subsequent commit in the same series reintroduced a mode
-field in that structure, with a different semantic but the same type,
-with the assumption that all previous users were updated.
-
-Since that didn't happen, the i915 driver now compiles, but mixes
-accesses to the legacy_mode field and the newer mode field, but with the
-previous semantics.
-
-This obviously doesn't work very well, so we need to update the accesses
-that weren't in the legacy renaming commit.
-
-Fixes: 1fd4a5a36f9f ("drm/connector: Rename legacy TV property")
-Reported-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240220131251.453060-1-mripard@kernel.org
-(cherry picked from commit bf7626f19d6ff14b9722273e23700400cc4d78ba)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 9838f2bb6b6b ("iommu/vt-d: Set the nested domain to a device")
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20240208082307.15759-5-yi.l.liu@intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_sdvo.c | 10 +++++-----
- drivers/gpu/drm/i915/display/intel_tv.c   | 10 +++++-----
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/iommu/intel/iommu.c  | 4 +---
+ drivers/iommu/intel/iommu.h  | 1 +
+ drivers/iommu/intel/nested.c | 2 ++
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_sdvo.c b/drivers/gpu/drm/i915/display/intel_sdvo.c
-index a9ac7d45d1f33..312f88d90af95 100644
---- a/drivers/gpu/drm/i915/display/intel_sdvo.c
-+++ b/drivers/gpu/drm/i915/display/intel_sdvo.c
-@@ -1208,7 +1208,7 @@ static bool intel_sdvo_set_tv_format(struct intel_sdvo *intel_sdvo,
- 	struct intel_sdvo_tv_format format;
- 	u32 format_map;
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 897159dba47de..0cc6e08e12c13 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -540,8 +540,6 @@ static int domain_update_device_node(struct dmar_domain *domain)
+ 	return nid;
+ }
  
--	format_map = 1 << conn_state->tv.mode;
-+	format_map = 1 << conn_state->tv.legacy_mode;
- 	memset(&format, 0, sizeof(format));
- 	memcpy(&format, &format_map, min(sizeof(format), sizeof(format_map)));
- 
-@@ -2288,7 +2288,7 @@ static int intel_sdvo_get_tv_modes(struct drm_connector *connector)
- 	 * Read the list of supported input resolutions for the selected TV
- 	 * format.
- 	 */
--	format_map = 1 << conn_state->tv.mode;
-+	format_map = 1 << conn_state->tv.legacy_mode;
- 	memcpy(&tv_res, &format_map,
- 	       min(sizeof(format_map), sizeof(struct intel_sdvo_sdtv_resolution_request)));
- 
-@@ -2353,7 +2353,7 @@ intel_sdvo_connector_atomic_get_property(struct drm_connector *connector,
- 		int i;
- 
- 		for (i = 0; i < intel_sdvo_connector->format_supported_num; i++)
--			if (state->tv.mode == intel_sdvo_connector->tv_format_supported[i]) {
-+			if (state->tv.legacy_mode == intel_sdvo_connector->tv_format_supported[i]) {
- 				*val = i;
- 
- 				return 0;
-@@ -2409,7 +2409,7 @@ intel_sdvo_connector_atomic_set_property(struct drm_connector *connector,
- 	struct intel_sdvo_connector_state *sdvo_state = to_intel_sdvo_connector_state(state);
- 
- 	if (property == intel_sdvo_connector->tv_format) {
--		state->tv.mode = intel_sdvo_connector->tv_format_supported[val];
-+		state->tv.legacy_mode = intel_sdvo_connector->tv_format_supported[val];
- 
- 		if (state->crtc) {
- 			struct drm_crtc_state *crtc_state =
-@@ -3066,7 +3066,7 @@ static bool intel_sdvo_tv_create_property(struct intel_sdvo *intel_sdvo,
- 		drm_property_add_enum(intel_sdvo_connector->tv_format, i,
- 				      tv_format_names[intel_sdvo_connector->tv_format_supported[i]]);
- 
--	intel_sdvo_connector->base.base.state->tv.mode = intel_sdvo_connector->tv_format_supported[0];
-+	intel_sdvo_connector->base.base.state->tv.legacy_mode = intel_sdvo_connector->tv_format_supported[0];
- 	drm_object_attach_property(&intel_sdvo_connector->base.base.base,
- 				   intel_sdvo_connector->tv_format, 0);
- 	return true;
-diff --git a/drivers/gpu/drm/i915/display/intel_tv.c b/drivers/gpu/drm/i915/display/intel_tv.c
-index 2ee4f0d958513..f790fd10ba00a 100644
---- a/drivers/gpu/drm/i915/display/intel_tv.c
-+++ b/drivers/gpu/drm/i915/display/intel_tv.c
-@@ -949,7 +949,7 @@ intel_disable_tv(struct intel_atomic_state *state,
- 
- static const struct tv_mode *intel_tv_mode_find(const struct drm_connector_state *conn_state)
+-static void domain_update_iotlb(struct dmar_domain *domain);
+-
+ /* Return the super pagesize bitmap if supported. */
+ static unsigned long domain_super_pgsize_bitmap(struct dmar_domain *domain)
  {
--	int format = conn_state->tv.mode;
-+	int format = conn_state->tv.legacy_mode;
- 
- 	return &tv_modes[format];
- }
-@@ -1710,7 +1710,7 @@ static void intel_tv_find_better_format(struct drm_connector *connector)
- 			break;
- 	}
- 
--	connector->state->tv.mode = i;
-+	connector->state->tv.legacy_mode = i;
+@@ -1362,7 +1360,7 @@ domain_lookup_dev_info(struct dmar_domain *domain,
+ 	return NULL;
  }
  
- static int
-@@ -1865,7 +1865,7 @@ static int intel_tv_atomic_check(struct drm_connector *connector,
- 	old_state = drm_atomic_get_old_connector_state(state, connector);
- 	new_crtc_state = drm_atomic_get_new_crtc_state(state, new_state->crtc);
+-static void domain_update_iotlb(struct dmar_domain *domain)
++void domain_update_iotlb(struct dmar_domain *domain)
+ {
+ 	struct dev_pasid_info *dev_pasid;
+ 	struct device_domain_info *info;
+diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
+index ce030c5b5772a..70ac2b989127a 100644
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -888,6 +888,7 @@ int qi_submit_sync(struct intel_iommu *iommu, struct qi_desc *desc,
+  */
+ #define QI_OPT_WAIT_DRAIN		BIT(0)
  
--	if (old_state->tv.mode != new_state->tv.mode ||
-+	if (old_state->tv.legacy_mode != new_state->tv.legacy_mode ||
- 	    old_state->tv.margins.left != new_state->tv.margins.left ||
- 	    old_state->tv.margins.right != new_state->tv.margins.right ||
- 	    old_state->tv.margins.top != new_state->tv.margins.top ||
-@@ -1902,7 +1902,7 @@ static void intel_tv_add_properties(struct drm_connector *connector)
- 	conn_state->tv.margins.right = 46;
- 	conn_state->tv.margins.bottom = 37;
++void domain_update_iotlb(struct dmar_domain *domain);
+ int domain_attach_iommu(struct dmar_domain *domain, struct intel_iommu *iommu);
+ void domain_detach_iommu(struct dmar_domain *domain, struct intel_iommu *iommu);
+ void device_block_translation(struct device *dev);
+diff --git a/drivers/iommu/intel/nested.c b/drivers/iommu/intel/nested.c
+index b5a5563ab32c6..694c1c4223f66 100644
+--- a/drivers/iommu/intel/nested.c
++++ b/drivers/iommu/intel/nested.c
+@@ -65,6 +65,8 @@ static int intel_nested_attach_dev(struct iommu_domain *domain,
+ 	list_add(&info->link, &dmar_domain->devices);
+ 	spin_unlock_irqrestore(&dmar_domain->lock, flags);
  
--	conn_state->tv.mode = 0;
-+	conn_state->tv.legacy_mode = 0;
++	domain_update_iotlb(dmar_domain);
++
+ 	return 0;
+ }
  
- 	/* Create TV properties then attach current values */
- 	for (i = 0; i < ARRAY_SIZE(tv_modes); i++) {
-@@ -1916,7 +1916,7 @@ static void intel_tv_add_properties(struct drm_connector *connector)
- 
- 	drm_object_attach_property(&connector->base,
- 				   i915->drm.mode_config.legacy_tv_mode_property,
--				   conn_state->tv.mode);
-+				   conn_state->tv.legacy_mode);
- 	drm_object_attach_property(&connector->base,
- 				   i915->drm.mode_config.tv_left_margin_property,
- 				   conn_state->tv.margins.left);
 -- 
 2.43.0
 
