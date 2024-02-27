@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD7213B2B3;
-	Tue, 27 Feb 2024 14:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10116145B05;
+	Tue, 27 Feb 2024 14:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043224; cv=none; b=jVkjOwrKna7vJoyN52taGfNH+M4qNhkHJsSaBuHqMQeqnOTXQnggkkL86fyOTURJp9rYCEORk0ba+IyPTQ4LDuZCRfZmpLLgQkDS2ps0efiEJo8vGyMHqHUDJkjfAyCGqJDPkJUdLb9R2UfOzzWmOd7PN8+WiuOBINRh5+8l05I=
+	t=1709043227; cv=none; b=CrSUoVwmcqFBV2WSIagmP+gwxyNG4+F/Az7AKDaUWqVf7TvYBU4Z7i7gwFptD/+SNW/4uM5jAlWpPP7JpHuUyJUxknLOBCgbgdFWWIvyc0rvhuCOAkeXBd64f93YuN+aK4WtA3solPolSba5KvCAFYdaSXQk2Ql5wF9PxDEmhbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043224; c=relaxed/simple;
-	bh=6WcJ6hmMvvrY5tFHi6N8ISUhD5ut3vCL4dr0/IZFtzQ=;
+	s=arc-20240116; t=1709043227; c=relaxed/simple;
+	bh=henCDuT3K5Z9imXUnBdD9Q+K9RCj7SIZM45ph8Uqpdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7nIhPqLHJvdL/XvyBhW65u2nYjIIyLLQkGiVCaYQwWUdS1GG3Kix9r/tQrcOPvRlAwOUenBXOf4zTOQagrZdGWmouz6BxQlWLCB/EJULERXJA2NNcXIRED8mfTCQgC2Iq6IKyHpiLzljMRfjnfqn7NisjjofQZjz/exNAbUTpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dm75kG3N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PVAvd4YNV8C6Pc27I96v9QUrgoe5crwygATo2NzgOfAZIfnHoq++kjkiP2k0EiXHjc70I/O2rXdUDG0MNrpuf+wv7TD1Suu7vLni0eFzFf4zQhwOVNDg0suBGDD+PwvFBWv9jShT9nEKUwPSK4v8hpECSRsdc9YPYYmzYy48vXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoM66wNy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dm75kG3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9876C43390;
-	Tue, 27 Feb 2024 14:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoM66wNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900DBC433C7;
+	Tue, 27 Feb 2024 14:13:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043224;
-	bh=6WcJ6hmMvvrY5tFHi6N8ISUhD5ut3vCL4dr0/IZFtzQ=;
+	s=korg; t=1709043226;
+	bh=henCDuT3K5Z9imXUnBdD9Q+K9RCj7SIZM45ph8Uqpdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dm75kG3Nfu3oiW4Ab7iLvtx3GXFmVOudEcHw6KePoaS4zYpCPsuCVm4F42MYTdK5d
-	 egYDH2E8lHu880wa/2N+e0EAQuJHLgPciEcg517cr1t90o06wqYI9QNrMbW9VZEzan
-	 tSLFuNArszL7CDOSvSsROYEZy1si/2DW2J6YpmAY=
+	b=LoM66wNyabYxtl1iMk/nPO7fNVxvUB1+9I/xyEyN+nu0nAvkvKIYUJlqOLfxf/wFL
+	 /ghBgVpI//JeSmJ88qDe2lbnp/X56Vy6PQtxKE9vy/kGgGeeD0FEShCHyij8NhmB0V
+	 upBgGFmo8catjxIJXD+fxgYnRGKZAdj5W5h6JjaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <chentao@kylinos.cn>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/195] dmaengine: ti: edma: Add some null pointer checks to the edma_probe
-Date: Tue, 27 Feb 2024 14:24:51 +0100
-Message-ID: <20240227131611.388138193@linuxfoundation.org>
+Subject: [PATCH 6.1 031/195] regulator: pwm-regulator: Add validity checks in continuous .get_voltage
+Date: Tue, 27 Feb 2024 14:24:52 +0100
+Message-ID: <20240227131611.420901369@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -45,56 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunwu Chan <chentao@kylinos.cn>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 6e2276203ac9ff10fc76917ec9813c660f627369 ]
+[ Upstream commit c92688cac239794e4a1d976afa5203a4d3a2ac0e ]
 
-devm_kasprintf() returns a pointer to dynamically allocated memory
-which can be NULL upon failure. Ensure the allocation was successful
-by checking the pointer validity.
+Continuous regulators can be configured to operate only in a certain
+duty cycle range (for example from 0..91%). Add a check to error out if
+the duty cycle translates to an unsupported (or out of range) voltage.
 
-Signed-off-by: Kunwu Chan <chentao@kylinos.cn>
-Link: https://lore.kernel.org/r/20240118031929.192192-1-chentao@kylinos.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Suggested-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://msgid.link/r/20240113224628.377993-2-martin.blumenstingl@googlemail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/edma.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/regulator/pwm-regulator.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/dma/ti/edma.c b/drivers/dma/ti/edma.c
-index 7ec6e5d728b03..9212ac9f978f2 100644
---- a/drivers/dma/ti/edma.c
-+++ b/drivers/dma/ti/edma.c
-@@ -2413,6 +2413,11 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccint",
- 					  dev_name(dev));
-+		if (!irq_name) {
-+			ret = -ENOMEM;
-+			goto err_disable_pm;
-+		}
-+
- 		ret = devm_request_irq(dev, irq, dma_irq_handler, 0, irq_name,
- 				       ecc);
- 		if (ret) {
-@@ -2429,6 +2434,11 @@ static int edma_probe(struct platform_device *pdev)
- 	if (irq > 0) {
- 		irq_name = devm_kasprintf(dev, GFP_KERNEL, "%s_ccerrint",
- 					  dev_name(dev));
-+		if (!irq_name) {
-+			ret = -ENOMEM;
-+			goto err_disable_pm;
-+		}
-+
- 		ret = devm_request_irq(dev, irq, dma_ccerr_handler, 0, irq_name,
- 				       ecc);
- 		if (ret) {
+diff --git a/drivers/regulator/pwm-regulator.c b/drivers/regulator/pwm-regulator.c
+index b9eeaff1c6615..925e486f73a6d 100644
+--- a/drivers/regulator/pwm-regulator.c
++++ b/drivers/regulator/pwm-regulator.c
+@@ -158,6 +158,9 @@ static int pwm_regulator_get_voltage(struct regulator_dev *rdev)
+ 	pwm_get_state(drvdata->pwm, &pstate);
+ 
+ 	voltage = pwm_get_relative_duty_cycle(&pstate, duty_unit);
++	if (voltage < min(max_uV_duty, min_uV_duty) ||
++	    voltage > max(max_uV_duty, min_uV_duty))
++		return -ENOTRECOVERABLE;
+ 
+ 	/*
+ 	 * The dutycycle for min_uV might be greater than the one for max_uV.
 -- 
 2.43.0
 
