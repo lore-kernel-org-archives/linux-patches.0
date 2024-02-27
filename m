@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D408E54BFE;
-	Tue, 27 Feb 2024 14:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0B354BFE;
+	Tue, 27 Feb 2024 14:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044283; cv=none; b=gXoS4kFdi6O4ZVaFxCoL1e3LL4yIzjm8oHbmWZhGUqW0L8KW/45K569NdIPYQg1yLo9oCjInYsUfWDZpsHlPGJbYiBYQBeCRtOSvPKhy9Mp6KvdX2di+ruQ0ci3WOt46iuYnzC6jJ4PxFAxf4f8KIVWupC0Kuk5hH1u8ymOZUGI=
+	t=1709044286; cv=none; b=a6vf0KK/PgoU+8+nOTNGQFG5d706MqMrmFTg7Wn9ELEOGZ7GByTHqK7PyBozIPSomO/IHeEsuQNl1EWNYQeLNwMNhOqLMly2OJbZEZC1OqtdaHGlK5E8DNsWc3hDnoF09o8UCcAizc51bDRBfqU4o6dlvIRJbFR7KrjunGo3ukk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044283; c=relaxed/simple;
-	bh=5w4eW/Yc0zk880VxXzcTcKsI68vfXe1DsJTCoS/9SmY=;
+	s=arc-20240116; t=1709044286; c=relaxed/simple;
+	bh=LOxQGbvXxGIcskrN9CClW1ua/veg2QgtpTgvwYQDYos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YhfeDsSVidm3n0fMnOqTjEBDg5q+fnLjCbk/MDQ6ycySpoK3ZaCQtP1t6JkKRN4VQzYlIch0p7G4LhqeOkr3i9Ih7BxIfZITG1Hy2g9NSYKqF1VpVVwANe19Vgci+uyGn9Yv8PA3r8fjGKF8WWoF93lf46HKt70BDKQjsf6uk3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJaRCSEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anXJaQU7cazd2Q+nFB60+V9cMpr2bbVOvcQu0mJJx1IC0IxG28r0239RWDwcWJ+KPdYhi361hLK4j6/v1h3q0epMBGigWapDHl5Ctezg87gU97JpHoIs05OISdXwqxehrHz6b4WAbMLtgjWzivDPV23Pyiq0hPxJu53E8ltxFoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ba5VR9ZQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJaRCSEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611C4C433C7;
-	Tue, 27 Feb 2024 14:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ba5VR9ZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393CBC433C7;
+	Tue, 27 Feb 2024 14:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044283;
-	bh=5w4eW/Yc0zk880VxXzcTcKsI68vfXe1DsJTCoS/9SmY=;
+	s=korg; t=1709044286;
+	bh=LOxQGbvXxGIcskrN9CClW1ua/veg2QgtpTgvwYQDYos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJaRCSEZ97TBCDDiY0fnmxMPABduhZiAQXYRByGjGwXUE3NtYRPZoCT4dV0eTH6HD
-	 UUdSPzr29oadumK2zIeezBCmMEL7O9jJF0QoeYLuSxJRS9yR0pG8vRXd2/bZ0LpZRy
-	 wmIPh+5QCt7mF/zRGgUbEoO2JRguXMMfErW5kOX0=
+	b=Ba5VR9ZQD+ltCgr8Lw4tzMZBbAg5mQ2vI1+jNIk+kxkhi8x9t0BNxcj3F7GCJraDd
+	 viz1eMr+k6wvBnQumCyxSGtUSCu8Vt6sNTsoTuV0p1teLbv1B0ZJnEPorE5OIk/iXM
+	 1O3sGiN1R8go6XQEs4f1V8vxQnwVVTCSV6KrgfQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	David Howells <dhowells@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/122] afs: Increase buffer size in afs_update_volume_status()
-Date: Tue, 27 Feb 2024 14:27:48 +0100
-Message-ID: <20240227131602.206419086@linuxfoundation.org>
+Subject: [PATCH 5.10 108/122] ipv6: sr: fix possible use-after-free and null-ptr-deref
+Date: Tue, 27 Feb 2024 14:27:49 +0100
+Message-ID: <20240227131602.239658029@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,51 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 6ea38e2aeb72349cad50e38899b0ba6fbcb2af3d ]
+[ Upstream commit 5559cea2d5aa3018a5f00dd2aca3427ba09b386b ]
 
-The max length of volume->vid value is 20 characters.
-So increase idbuf[] size up to 24 to avoid overflow.
+The pernet operations structure for the subsystem must be registered
+before registering the generic netlink family.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-[DH: Actually, it's 20 + NUL, so increase it to 24 and use snprintf()]
-
-Fixes: d2ddc776a458 ("afs: Overhaul volume and server record caching and fileserver rotation")
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20240211150442.3416-1-d.dulov@aladdin.ru/ # v1
-Link: https://lore.kernel.org/r/20240212083347.10742-1-d.dulov@aladdin.ru/ # v2
-Link: https://lore.kernel.org/r/20240219143906.138346-3-dhowells@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 915d7e5e5930 ("ipv6: sr: add code base for control plane support of SR-IPv6")
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20240215202717.29815-1-kovalev@altlinux.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/volume.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/seg6.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/fs/afs/volume.c b/fs/afs/volume.c
-index f84194b791d3e..fb19c69284ab2 100644
---- a/fs/afs/volume.c
-+++ b/fs/afs/volume.c
-@@ -302,7 +302,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+diff --git a/net/ipv6/seg6.c b/net/ipv6/seg6.c
+index 2278c0234c497..a8439fded12dc 100644
+--- a/net/ipv6/seg6.c
++++ b/net/ipv6/seg6.c
+@@ -451,22 +451,24 @@ int __init seg6_init(void)
  {
- 	struct afs_server_list *new, *old, *discard;
- 	struct afs_vldb_entry *vldb;
--	char idbuf[16];
-+	char idbuf[24];
- 	int ret, idsz;
+ 	int err;
  
- 	_enter("");
-@@ -310,7 +310,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
- 	/* We look up an ID by passing it as a decimal string in the
- 	 * operation's name parameter.
- 	 */
--	idsz = sprintf(idbuf, "%llu", volume->vid);
-+	idsz = snprintf(idbuf, sizeof(idbuf), "%llu", volume->vid);
+-	err = genl_register_family(&seg6_genl_family);
++	err = register_pernet_subsys(&ip6_segments_ops);
+ 	if (err)
+ 		goto out;
  
- 	vldb = afs_vl_lookup_vldb(volume->cell, key, idbuf, idsz);
- 	if (IS_ERR(vldb)) {
+-	err = register_pernet_subsys(&ip6_segments_ops);
++	err = genl_register_family(&seg6_genl_family);
+ 	if (err)
+-		goto out_unregister_genl;
++		goto out_unregister_pernet;
+ 
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+ 	err = seg6_iptunnel_init();
+ 	if (err)
+-		goto out_unregister_pernet;
++		goto out_unregister_genl;
+ 
+ 	err = seg6_local_init();
+-	if (err)
+-		goto out_unregister_pernet;
++	if (err) {
++		seg6_iptunnel_exit();
++		goto out_unregister_genl;
++	}
+ #endif
+ 
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+@@ -487,11 +489,11 @@ int __init seg6_init(void)
+ #endif
+ #endif
+ #ifdef CONFIG_IPV6_SEG6_LWTUNNEL
+-out_unregister_pernet:
+-	unregister_pernet_subsys(&ip6_segments_ops);
+-#endif
+ out_unregister_genl:
+ 	genl_unregister_family(&seg6_genl_family);
++#endif
++out_unregister_pernet:
++	unregister_pernet_subsys(&ip6_segments_ops);
+ 	goto out;
+ }
+ 
 -- 
 2.43.0
 
