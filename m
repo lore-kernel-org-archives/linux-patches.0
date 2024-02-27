@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4221419A1;
-	Tue, 27 Feb 2024 14:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 909E1145350;
+	Tue, 27 Feb 2024 14:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042713; cv=none; b=hCZWHhK2E6ADCOECtZWdwvxYUqyxUcl5/edzASaKDpCvxLZZcWwQFyUw/a25Id/gQVoBm8v6kqtoKSp9GxEolOIqnihs87aTOFEKeQkZtAB4Tg/EbWYGB75DlbunTZ4hpbNOPfaRirPhbrOOgplRlQjAQdJNW0XmzfxZgQniyS0=
+	t=1709042715; cv=none; b=AGhuVEETuS0HDofT+26oHeUK+cbvmO0IQl3XB0bYLkDgeAGXT/ka3UbGLGHgsAfyz0Yi05dpDvXaMLPgIIBV6ahlfL94k1nGtzYw/VyDHHr2Zyq/d/N+ccghh66CnaFoaNBFDhV7Pzg2wb4Huml7W6P/Jbk18ehWOaEFtmJR05k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042713; c=relaxed/simple;
-	bh=MTS46WMYofkUn32+4IqLCYXBXircB8TkmPE0xRm6UKY=;
+	s=arc-20240116; t=1709042715; c=relaxed/simple;
+	bh=Z9UuI4Sd+UzHXvRbAsNZvb3jWy4v8k1yYYx2fja1Wes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WABBUrQbWH/DGXXM/qd9tr0SWA8peHVYnvGEOvgF2GnTc2gznWd026B7ll7eGnZF33PMF1lU5fZnXf2VZuQBJpRg+oHyLJBa01L7dhUuFRPKFwVRoljxcab755SluSg+mP08rYJAtIENf+3jCpDx1kPr2ozW1IAeLwUWsL4vDDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFDyCl2E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bFo9jbr5n8/cMjmXYAxCuUHXpjpLoQjPNyuKvgwRga6f4kdThEGj3Qk6PTzCwubRdwemoyU+FZ+buwla6HZWpS9jtS+oLBjZyP+o1tJ+9DZ9sobj7B/RpgP9nkj7rBNgJ4WIZ6F5WFe+SfhdZFW0JsunsMhXSDzwRnuO4/FcE/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaYVZ83v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFDyCl2E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AC7C433F1;
-	Tue, 27 Feb 2024 14:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaYVZ83v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2F5C43399;
+	Tue, 27 Feb 2024 14:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042712;
-	bh=MTS46WMYofkUn32+4IqLCYXBXircB8TkmPE0xRm6UKY=;
+	s=korg; t=1709042715;
+	bh=Z9UuI4Sd+UzHXvRbAsNZvb3jWy4v8k1yYYx2fja1Wes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFDyCl2ED80K3MI3gaFnvFiMUYSZxZIISHC7yI/wRaP72MkNvKnZvVF/BqZ1fGgkN
-	 sP/LEeSfPUlgwpShBrAU4NcL4bel1kanzFtKNmGXc1pxv3Ay0LGMPk8QlNmWqRZWbb
-	 6WgqSJOlS7jkFVC2Sxsq+OeIfpk/oKds7ByshuM8=
+	b=HaYVZ83vaazKJ9J0HWjgnwL0vV72dxNPQan++0zFL+niNSf1Y//o7VDamS4ceqTUb
+	 0F9lVCxFwsAagD7xHAW2WDX+5fEOabWPRR1u+MZVMBsLMaxXqu1rF0qn+EstDJ5zZ/
+	 KxnPZZZakA1oogcXDEdNpZ0zHhP4fef1gZfa61uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Bresticker <abrestic@rivosinc.com>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/245] efi: runtime: Fix potential overflow of soft-reserved region size
-Date: Tue, 27 Feb 2024 14:24:13 +0100
-Message-ID: <20240227131617.356154947@linuxfoundation.org>
+Subject: [PATCH 5.15 066/245] efi: Dont add memblocks for soft-reserved memory
+Date: Tue, 27 Feb 2024 14:24:14 +0100
+Message-ID: <20240227131617.388600666@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -53,45 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrew Bresticker <abrestic@rivosinc.com>
 
-[ Upstream commit de1034b38a346ef6be25fe8792f5d1e0684d5ff4 ]
+[ Upstream commit 0bcff59ef7a652fcdc6d535554b63278c2406c8f ]
 
-md_size will have been narrowed if we have >= 4GB worth of pages in a
-soft-reserved region.
+Adding memblocks for soft-reserved regions prevents them from later being
+hotplugged in by dax_kmem.
 
 Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/arm-runtime.c   | 2 +-
- drivers/firmware/efi/riscv-runtime.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/efi-init.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/firmware/efi/arm-runtime.c b/drivers/firmware/efi/arm-runtime.c
-index 3359ae2adf24b..9054c2852580d 100644
---- a/drivers/firmware/efi/arm-runtime.c
-+++ b/drivers/firmware/efi/arm-runtime.c
-@@ -107,7 +107,7 @@ static int __init arm_enable_runtime_services(void)
- 		efi_memory_desc_t *md;
+diff --git a/drivers/firmware/efi/efi-init.c b/drivers/firmware/efi/efi-init.c
+index b2c829e95bd14..4639ac6e4f9af 100644
+--- a/drivers/firmware/efi/efi-init.c
++++ b/drivers/firmware/efi/efi-init.c
+@@ -141,15 +141,6 @@ static __init int is_usable_memory(efi_memory_desc_t *md)
+ 	case EFI_BOOT_SERVICES_DATA:
+ 	case EFI_CONVENTIONAL_MEMORY:
+ 	case EFI_PERSISTENT_MEMORY:
+-		/*
+-		 * Special purpose memory is 'soft reserved', which means it
+-		 * is set aside initially, but can be hotplugged back in or
+-		 * be assigned to the dax driver after boot.
+-		 */
+-		if (efi_soft_reserve_enabled() &&
+-		    (md->attribute & EFI_MEMORY_SP))
+-			return false;
+-
+ 		/*
+ 		 * According to the spec, these regions are no longer reserved
+ 		 * after calling ExitBootServices(). However, we can only use
+@@ -194,6 +185,16 @@ static __init void reserve_regions(void)
+ 		size = npages << PAGE_SHIFT;
  
- 		for_each_efi_memory_desc(md) {
--			int md_size = md->num_pages << EFI_PAGE_SHIFT;
-+			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
- 			struct resource *res;
+ 		if (is_memory(md)) {
++			/*
++			 * Special purpose memory is 'soft reserved', which
++			 * means it is set aside initially. Don't add a memblock
++			 * for it now so that it can be hotplugged back in or
++			 * be assigned to the dax driver after boot.
++			 */
++			if (efi_soft_reserve_enabled() &&
++			    (md->attribute & EFI_MEMORY_SP))
++				continue;
++
+ 			early_init_dt_add_memory_arch(paddr, size);
  
- 			if (!(md->attribute & EFI_MEMORY_SP))
-diff --git a/drivers/firmware/efi/riscv-runtime.c b/drivers/firmware/efi/riscv-runtime.c
-index d28e715d2bcc8..6711e64eb0b16 100644
---- a/drivers/firmware/efi/riscv-runtime.c
-+++ b/drivers/firmware/efi/riscv-runtime.c
-@@ -85,7 +85,7 @@ static int __init riscv_enable_runtime_services(void)
- 		efi_memory_desc_t *md;
- 
- 		for_each_efi_memory_desc(md) {
--			int md_size = md->num_pages << EFI_PAGE_SHIFT;
-+			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
- 			struct resource *res;
- 
- 			if (!(md->attribute & EFI_MEMORY_SP))
+ 			if (!is_usable_memory(md))
 -- 
 2.43.0
 
