@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DCD13AA50;
-	Tue, 27 Feb 2024 14:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700CE13AA50;
+	Tue, 27 Feb 2024 14:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042418; cv=none; b=bqS09JzQnDa6l4xKtNQpoAtinmQj/xAt1eYSQ9O4Gn8ZMojPN1d9tsmr/NgQeQ7jYUQqSydT25iWuxYG8Hl1WgB2xQ41rQSlO3xAHEP3tAIrh/h0C5aDfu2RCZ0jKM1nZTEW74QaUCKotKXMtjBmeybkGSLcadFmXG9ceM0Gugc=
+	t=1709042421; cv=none; b=muLccr9qFJglUYOACV/H24w4KYzkq/olTUsz1Y8uSP53JkVG+KfCFx+P42zcohI90N7Uhcw7LSAixsVB2Wg8mmh/RhNRoKgq72tSVL5WHT3rkiVzqmhDKQFaFqlUL26kpqvda6KlNqTGb1NwLF4/iFk5iv4HWAMYJf1aPc1vc+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042418; c=relaxed/simple;
-	bh=SD15WUtworu67RdKTJfSTOitXNUYsVhF4YSypO0IAtk=;
+	s=arc-20240116; t=1709042421; c=relaxed/simple;
+	bh=UaFbNjX0ks7d8ZJn+EKE0Fas9zF9I+khVN8pRwY+cpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPgfDW25GyApriR2omlC9Qx94OQbu1LKxaMIIzAtEfiwQKSdr1MZa/Uebt+J6+14wnbuWVKFd/yOmvU0B8Gozxs11ktImhDCvums0O93NgTEQhCuJKqMGRZRqHxIEJat39q948e6llb5JkMwaxW4gNLwIFeuCBLeiVzDdloETq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJmolzBP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYME8bausJWBVJvhvm90KS03lGcyqls3mvjYfWizfYBnXr9SuP/HcRPw9XIoWiKgBtzrGG5GK6HOj1UQVO0TabMUaQqSKn9PWb3l+QeRTP5f4HZr7TbsuTEipYo6sI3JOQgwYbOrRL2wyAibiTLJrbGCdDAk3FULOJ+X0kqwhvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aW+5u8lz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJmolzBP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4EFC433C7;
-	Tue, 27 Feb 2024 14:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aW+5u8lz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB78C433F1;
+	Tue, 27 Feb 2024 14:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042418;
-	bh=SD15WUtworu67RdKTJfSTOitXNUYsVhF4YSypO0IAtk=;
+	s=korg; t=1709042421;
+	bh=UaFbNjX0ks7d8ZJn+EKE0Fas9zF9I+khVN8pRwY+cpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJmolzBPoyis7jS8RHizxOMrju2GnNKGU2aVCtXajNHYcdaUUNhOntnMcSoppWI30
-	 8iyQWKQwy89lxxXrjot/NlV+7/uu4TRLAuf73oZx7ZG0O/eSad9sdks0SUBE3gtseJ
-	 DFliIxHk9iQPKFFZfdATCF407nC7/kMVpv0AIemg=
+	b=aW+5u8lzYeovk7i7hjtBat0YNE9rbKz/utZUfa7cBwbQxY2BWkZHs95tRSlKFOXGv
+	 ZvlnFR2lczJvHqVF6sEJ0vFkIc1MuP97u2emJrpbHJwmAbA45hUtfV04zDRSDddD48
+	 nY5jPpbR65+rtIomiOYEPqEYuWpXnLU6rPgq8TM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Corey Minyard <minyard@acm.org>,
+	Andrew Manley <andrew.manley@sealingtech.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 289/299] drm/amd/display: Fix memory leak in dm_sw_fini()
-Date: Tue, 27 Feb 2024 14:26:40 +0100
-Message-ID: <20240227131634.973839157@linuxfoundation.org>
+Subject: [PATCH 6.6 290/299] i2c: imx: when being a target, mark the last read as processed
+Date: Tue, 27 Feb 2024 14:26:41 +0100
+Message-ID: <20240227131635.003493660@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,58 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Corey Minyard <minyard@acm.org>
 
-[ Upstream commit bae67893578d608e35691dcdfa90c4957debf1d3 ]
+[ Upstream commit 87aec499368d488c20292952d6d4be7cb9e49c5e ]
 
-After destroying dmub_srv, the memory associated with it is
-not freed, causing a memory leak:
+When being a target, NAK from the controller means that all bytes have
+been transferred. So, the last byte needs also to be marked as
+'processed'. Otherwise index registers of backends may not increase.
 
-unreferenced object 0xffff896302b45800 (size 1024):
-  comm "(udev-worker)", pid 222, jiffies 4294894636
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 6265fd77):
-    [<ffffffff993495ed>] kmalloc_trace+0x29d/0x340
-    [<ffffffffc0ea4a94>] dm_dmub_sw_init+0xb4/0x450 [amdgpu]
-    [<ffffffffc0ea4e55>] dm_sw_init+0x15/0x2b0 [amdgpu]
-    [<ffffffffc0ba8557>] amdgpu_device_init+0x1417/0x24e0 [amdgpu]
-    [<ffffffffc0bab285>] amdgpu_driver_load_kms+0x15/0x190 [amdgpu]
-    [<ffffffffc0ba09c7>] amdgpu_pci_probe+0x187/0x4e0 [amdgpu]
-    [<ffffffff9968fd1e>] local_pci_probe+0x3e/0x90
-    [<ffffffff996918a3>] pci_device_probe+0xc3/0x230
-    [<ffffffff99805872>] really_probe+0xe2/0x480
-    [<ffffffff99805c98>] __driver_probe_device+0x78/0x160
-    [<ffffffff99805daf>] driver_probe_device+0x1f/0x90
-    [<ffffffff9980601e>] __driver_attach+0xce/0x1c0
-    [<ffffffff99803170>] bus_for_each_dev+0x70/0xc0
-    [<ffffffff99804822>] bus_add_driver+0x112/0x210
-    [<ffffffff99807245>] driver_register+0x55/0x100
-    [<ffffffff990012d1>] do_one_initcall+0x41/0x300
-
-Fix this by freeing dmub_srv after destroying it.
-
-Fixes: 743b9786b14a ("drm/amd/display: Hook up the DMUB service in DM")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
+Signed-off-by: Corey Minyard <minyard@acm.org>
+Tested-by: Andrew Manley <andrew.manley@sealingtech.com>
+Reviewed-by: Andrew Manley <andrew.manley@sealingtech.com>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+[wsa: fixed comment and commit message to properly describe the case]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/i2c/busses/i2c-imx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 3194c10f345fc..50444ab7b3cc0 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2247,6 +2247,7 @@ static int dm_sw_fini(void *handle)
- 
- 	if (adev->dm.dmub_srv) {
- 		dmub_srv_destroy(adev->dm.dmub_srv);
-+		kfree(adev->dm.dmub_srv);
- 		adev->dm.dmub_srv = NULL;
+diff --git a/drivers/i2c/busses/i2c-imx.c b/drivers/i2c/busses/i2c-imx.c
+index 1775a79aeba2a..0951bfdc89cfa 100644
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -803,6 +803,11 @@ static irqreturn_t i2c_imx_slave_handle(struct imx_i2c_struct *i2c_imx,
+ 		ctl &= ~I2CR_MTX;
+ 		imx_i2c_write_reg(ctl, i2c_imx, IMX_I2C_I2CR);
+ 		imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR);
++
++		/* flag the last byte as processed */
++		i2c_imx_slave_event(i2c_imx,
++				    I2C_SLAVE_READ_PROCESSED, &value);
++
+ 		i2c_imx_slave_finish_op(i2c_imx);
+ 		return IRQ_HANDLED;
  	}
- 
 -- 
 2.43.0
 
