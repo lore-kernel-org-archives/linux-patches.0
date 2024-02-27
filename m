@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B12613B798;
-	Tue, 27 Feb 2024 14:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF1B78B61;
+	Tue, 27 Feb 2024 14:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043467; cv=none; b=ZN8IxXGvsQ9Iq1BFzYB8GG4QCFM7/va5tO6H0dPBqfGfAPU2GFZ+q2Tq61BNcAHEc15gIAny8Hcs10V+VDHGj3k6fzo220Blej+Jq3rSEA0P1GWujYgaJaHVXxNU0p3kMQP+Z9lymyuPt04GKUHZYiEu5gxm70u/3GktlcMvO2g=
+	t=1709043470; cv=none; b=jRTPCxRxLngnJCe4jJJX8tYOBhFWkSnL5YzEboVrKUalBPcfBwsdy4wPckOox1B9FBFig941xotk0ykoQs+UyA7l7lAR7fCINuGzed22MAB1R+70sTyegeOID3SXXKQgbqH7qKDHkihPsNuYo5RcgzBcm9VpQDO3QkxhYSOFW6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043467; c=relaxed/simple;
-	bh=FKlG5jiBdRPaaAbXiPMxQRIzcSW1AgNDX6AhDo16kyk=;
+	s=arc-20240116; t=1709043470; c=relaxed/simple;
+	bh=4Vs1dq0aviVoDrNQrLDSRPu7hfmEe6XBOjvSqzxx87w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3hpMjrQHZD99Cy2Ho4PE8Chnf6xiRmlow0hm+TGLD4XrRoLnGGP7u1kH+scrZWQaT5rr3g57Q3nMAL7OdsE5nBSiOLKsQdk3zaW6Aqf4hFB63dtzg4LS4F4k1lOgnNOZ8rVi7jIddkVtkbEb3LPytXixJzJi9A+3TsEEpxICi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtaZ/BbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m+xk30pnns/CJhgurvIGoaVok16gSp134ozh9wTCzxTjcL7oXNTBKCHU1RBCWqiMYLPNzqEJYIbz/nVu7ZdYjP2oRZyYJOErk0gQkO1OdFidgrOyrTW1cJDe83X8TqPflvg5h13hcyhtJJ0TajYJPpaR+J1qZQQMyItO8DHrB98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMSP54TU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtaZ/BbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC15DC433C7;
-	Tue, 27 Feb 2024 14:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMSP54TU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F45C433F1;
+	Tue, 27 Feb 2024 14:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043467;
-	bh=FKlG5jiBdRPaaAbXiPMxQRIzcSW1AgNDX6AhDo16kyk=;
+	s=korg; t=1709043470;
+	bh=4Vs1dq0aviVoDrNQrLDSRPu7hfmEe6XBOjvSqzxx87w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtaZ/BbGtI6m7Vzf/XN9ITas7D/Kov3ThfZN8jYVTLObuRbyPCtfc2AgNATIBHdb+
-	 qtQ+us7VSqlBvSFXgYuRHdP7RNVNK8eQLSStYBG5U0zZUCx3Eg50gyD8GCinS0boXv
-	 53QDwLEmoEWfqigddva5sBuOjeM/v0S1/iGjp698=
+	b=sMSP54TU8BLA4x+Zsk7xZvON+lPhmdKroQBujPFFQL18CcZY0TjfUYmjOrbkKLoT0
+	 gJ2kKc2b8B8hAv4A7U0iHFPqFYqGr8ZSeA52LkBD5iAqusuWKX76LndXEg0lVtevud
+	 xTBUf6NEfT8oQEsyXvTh0Jc/JXQ+ZdflMC9IZtEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 118/195] usb: dwc3: gadget: Dont disconnect if not started
-Date: Tue, 27 Feb 2024 14:26:19 +0100
-Message-ID: <20240227131614.354518084@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 6.1 119/195] usb: cdnsp: blocked some cdns3 specific code
+Date: Tue, 27 Feb 2024 14:26:20 +0100
+Message-ID: <20240227131614.387200751@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -50,39 +49,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit b191a18cb5c47109ca696370a74a5062a70adfd0 upstream.
+commit 18a6be674306c9acb05c08e5c3fd376ef50a917c upstream.
 
-Don't go through soft-disconnection sequence if the controller hasn't
-started. Otherwise, there will be timeout and warning reports from the
-soft-disconnection flow.
+host.c file has some parts of code that were introduced for CDNS3 driver
+and should not be used with CDNSP driver.
+This patch blocks using these parts of codes by CDNSP driver.
+These elements include:
+- xhci_plat_cdns3_xhci object
+- cdns3 specific XECP_PORT_CAP_REG register
+- cdns3 specific XECP_AUX_CTRL_REG1 register
 
-Cc: stable@vger.kernel.org
-Fixes: 61a348857e86 ("usb: dwc3: gadget: Fix NULL pointer dereference in dwc3_gadget_suspend")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/linux-usb/20240215233536.7yejlj3zzkl23vjd@synopsys.com/T/#mb0661cd5f9272602af390c18392b9a36da4f96e6
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/e3be9b929934e0680a6f4b8f6eb11b18ae9c7e07.1708043922.git.Thinh.Nguyen@synopsys.com
+cc: stable@vger.kernel.org
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Link: https://lore.kernel.org/r/20240206104018.48272-1-pawell@cadence.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/cdns3/host.c |   16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2548,6 +2548,11 @@ static int dwc3_gadget_soft_disconnect(s
- 	int ret;
+--- a/drivers/usb/cdns3/host.c
++++ b/drivers/usb/cdns3/host.c
+@@ -18,6 +18,11 @@
+ #include "../host/xhci.h"
+ #include "../host/xhci-plat.h"
  
- 	spin_lock_irqsave(&dwc->lock, flags);
-+	if (!dwc->pullups_connected) {
-+		spin_unlock_irqrestore(&dwc->lock, flags);
-+		return 0;
-+	}
++/*
++ * The XECP_PORT_CAP_REG and XECP_AUX_CTRL_REG1 exist only
++ * in Cadence USB3 dual-role controller, so it can't be used
++ * with Cadence CDNSP dual-role controller.
++ */
+ #define XECP_PORT_CAP_REG	0x8000
+ #define XECP_AUX_CTRL_REG1	0x8120
+ 
+@@ -57,6 +62,8 @@ static const struct xhci_plat_priv xhci_
+ 	.resume_quirk = xhci_cdns3_resume_quirk,
+ };
+ 
++static const struct xhci_plat_priv xhci_plat_cdnsp_xhci;
 +
- 	dwc->connected = false;
+ static int __cdns_host_init(struct cdns *cdns)
+ {
+ 	struct platform_device *xhci;
+@@ -81,8 +88,13 @@ static int __cdns_host_init(struct cdns
+ 		goto err1;
+ 	}
  
- 	/*
+-	cdns->xhci_plat_data = kmemdup(&xhci_plat_cdns3_xhci,
+-			sizeof(struct xhci_plat_priv), GFP_KERNEL);
++	if (cdns->version < CDNSP_CONTROLLER_V2)
++		cdns->xhci_plat_data = kmemdup(&xhci_plat_cdns3_xhci,
++				sizeof(struct xhci_plat_priv), GFP_KERNEL);
++	else
++		cdns->xhci_plat_data = kmemdup(&xhci_plat_cdnsp_xhci,
++				sizeof(struct xhci_plat_priv), GFP_KERNEL);
++
+ 	if (!cdns->xhci_plat_data) {
+ 		ret = -ENOMEM;
+ 		goto err1;
 
 
