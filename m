@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04E32F2D;
-	Tue, 27 Feb 2024 13:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEB42F2D;
+	Tue, 27 Feb 2024 13:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040876; cv=none; b=LZiGstl/BaAIRB2YuMDHP3ZDXIRqZ89QWG60ZZluDX1aGnyH+dQV2qvTB3pRvhtbqHuwHcZSCbPyEahpScR6ebHrEvdb1nDNdWp32b5u6LC6VIqzAPALHpGFgvxr2/a59W54QrEtLm4rzbtMApzFifOpoSRyA+FmboBvRZ4iMhU=
+	t=1709040879; cv=none; b=FDwAWBLvhBnFMrJb1YHgANBVx2Kr68OGsFM/nx2KP4oafPD6YbM3PthzcqJ5VxcaWFNgRsqRH01kx8NlwfxV9p3/pHoba3SlKkboh94Aa2L71hpq+UF95P4i9w/O7PwGY/Fq3ksA3DlCaQQm2RC+6pmYYhZO6z4ANGm6etCsMAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040876; c=relaxed/simple;
-	bh=42O6rpqgOf39EomAQLCdFpQ8eJa5XfR8NmLkG/EywZg=;
+	s=arc-20240116; t=1709040879; c=relaxed/simple;
+	bh=FjabROoGuI/4e4jriZyTwPaQS/Pn60FqdyLaQ94c7VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dc356G9RzRV1DDDE10xk6Ws0UGxd6TXqenlrA639QtR0Pd8X9cMtRVOc3qu6lQX/NwJzZSEY8oxwmDyTzzwdVEObJ63nks1QuA8v6/kMA6uCJiCYT+lhQh0wj9PEGsMWqm913FKdWiC3kkdj0FZaGqhkQN9i3ZMbCoOXoc8hroE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FipKCgHh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iNpYz0f0CAYTwFDz1Q6r/GtPgEjhXE/fRSV7CnZweXxJxtPogj9MnJvssJfXWsM6msUye2+acBOxC97kfiG5jWk7MN9s5HjYQBDrKH54Tx0Vfj8UpzIf4LDNCfeW9oggfHq4OHr1LSIQxfN7YvVbGsOlysgOZJ6Q5y7PYecyyxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gc8kl2XH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FipKCgHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8CFC433C7;
-	Tue, 27 Feb 2024 13:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gc8kl2XH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071A9C433C7;
+	Tue, 27 Feb 2024 13:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040876;
-	bh=42O6rpqgOf39EomAQLCdFpQ8eJa5XfR8NmLkG/EywZg=;
+	s=korg; t=1709040879;
+	bh=FjabROoGuI/4e4jriZyTwPaQS/Pn60FqdyLaQ94c7VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FipKCgHh1+hwR8dC6sIcdge0hAiWmBrtqUn6+VcqBP40TXZxdLrqxk100OItCUzJG
-	 J3YdDvwoQENpsEfqfwIKUHdwM8q7X2bi6BKkKnMxkWO3P+zjQj/m8HvA/fqMy6BO3O
-	 tA4zVbC041XjcKuVPUakzTFhqOeTI9ppGKTv2l6I=
+	b=Gc8kl2XHeamr21l7ssBvTGiUVQDxP2RAoNPjgv574BqRow1nViCFcdyf3/P32nygD
+	 JhArAGBhKEhV2AP6s74FUm0xES+PLv5gOGO6riI7uSZwnDs0dw3Dpzkoh4xheUir6g
+	 BfguEdyPGQyWqDGreqSIw6iMyHHuef9hQIFV9+zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mats Kronberg <kronberg@nsc.liu.se>,
-	Daniel Vacek <neelx@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.7 140/334] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
-Date: Tue, 27 Feb 2024 14:19:58 +0100
-Message-ID: <20240227131634.982364380@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.7 141/334] kunit: Add a macro to wrap a deferred action function
+Date: Tue, 27 Feb 2024 14:19:59 +0100
+Message-ID: <20240227131635.012068851@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,100 +53,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vacek <neelx@redhat.com>
+From: David Gow <davidgow@google.com>
 
-commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
+commit 56778b49c9a2cbc32c6b0fbd3ba1a9d64192d3af upstream.
 
-Unfortunately the commit `fd8958efe877` introduced another error
-causing the `descs` array to overflow. This reults in further crashes
-easily reproducible by `sendmsg` system call.
+KUnit's deferred action API accepts a void(*)(void *) function pointer
+which is called when the test is exited. However, we very frequently
+want to use existing functions which accept a single pointer, but which
+may not be of type void*. While this is probably dodgy enough to be on
+the wrong side of the C standard, it's been often used for similar
+callbacks, and gcc's -Wcast-function-type seems to ignore cases where
+the only difference is the type of the argument, assuming it's
+compatible (i.e., they're both pointers to data).
 
-[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
-[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
---
-[ 1080.974535] Call Trace:
-[ 1080.976990]  <TASK>
-[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
-[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
-[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
-[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
-[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
---
-[ 1081.148347]  __sys_sendmsg+0x59/0xa0
+However, clang 16 has introduced -Wcast-function-type-strict, which no
+longer permits any deviation in function pointer type. This seems to be
+because it'd break CFI, which validates the type of function calls.
 
-crash> ipoib_txreq 0xffff9cfeba229f00
-struct ipoib_txreq {
-  txreq = {
-    list = {
-      next = 0xffff9cfeba229f00,
-      prev = 0xffff9cfeba229f00
-    },
-    descp = 0xffff9cfeba229f40,
-    coalesce_buf = 0x0,
-    wait = 0xffff9cfea4e69a48,
-    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
-    packet_len = 0x46d,
-    tlen = 0x0,
-    num_desc = 0x0,
-    desc_limit = 0x6,
-    next_descq_idx = 0x45c,
-    coalesce_idx = 0x0,
-    flags = 0x0,
-    descs = {{
-        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
-      }, {
-        qw = {  0x3800014231b108, 0x4}
-      }, {
-        qw = { 0x310000e4ee0fcf0, 0x8}
-      }, {
-        qw = {  0x3000012e9f8000, 0x8}
-      }, {
-        qw = {  0x59000dfb9d0000, 0x8}
-      }, {
-        qw = {  0x78000e02e40000, 0x8}
-      }}
-  },
-  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
-  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
-  complete = 0x0,
-  priv = 0x0,
-  txq = 0xffff9cfea4e69880,
-  skb = 0xffff9d099809f400
-}
+This rather ruins our attempts to cast functions to defer them, and
+leaves us with a few options. The one we've chosen is to implement a
+macro which will generate a wrapper function which accepts a void*, and
+casts the argument to the appropriate type.
 
-If an SDMA send consists of exactly 6 descriptors and requires dword
-padding (in the 7th descriptor), the sdma_txreq descriptor array is not
-properly expanded and the packet will overflow into the container
-structure. This results in a panic when the send completion runs. The
-exact panic varies depending on what elements of the container structure
-get corrupted. The fix is to use the correct expression in
-_pad_sdma_tx_descs() to test the need to expand the descriptor array.
+For example, if you were trying to wrap:
+void foo_close(struct foo *handle);
+you could use:
+KUNIT_DEFINE_ACTION_WRAPPER(kunit_action_foo_close,
+			    foo_close,
+			    struct foo *);
 
-With this patch the crashes are no longer reproducible and the machine is
-stable.
+This would create a new kunit_action_foo_close() function, of type
+kunit_action_t, which could be passed into kunit_add_action() and
+similar functions.
 
-Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
-Cc: stable@vger.kernel.org
-Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
-Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
-Signed-off-by: Daniel Vacek <neelx@redhat.com>
-Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+In addition to defining this macro, update KUnit and its tests to use
+it.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/sdma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/dev-tools/kunit/usage.rst |   10 +++++++---
+ include/kunit/resource.h                |   21 +++++++++++++++++++++
+ lib/kunit/kunit-test.c                  |    5 +----
+ lib/kunit/test.c                        |    6 ++++--
+ 4 files changed, 33 insertions(+), 9 deletions(-)
 
---- a/drivers/infiniband/hw/hfi1/sdma.c
-+++ b/drivers/infiniband/hw/hfi1/sdma.c
-@@ -3158,7 +3158,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
- {
- 	int rval = 0;
+--- a/Documentation/dev-tools/kunit/usage.rst
++++ b/Documentation/dev-tools/kunit/usage.rst
+@@ -651,12 +651,16 @@ For example:
+ 	}
  
--	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
-+	if ((unlikely(tx->num_desc == tx->desc_limit))) {
- 		rval = _extend_sdma_tx_descs(dd, tx);
- 		if (rval) {
- 			__sdma_txclean(dd, tx);
+ Note that, for functions like device_unregister which only accept a single
+-pointer-sized argument, it's possible to directly cast that function to
+-a ``kunit_action_t`` rather than writing a wrapper function, for example:
++pointer-sized argument, it's possible to automatically generate a wrapper
++with the ``KUNIT_DEFINE_ACTION_WRAPPER()`` macro, for example:
+ 
+ .. code-block:: C
+ 
+-	kunit_add_action(test, (kunit_action_t *)&device_unregister, &dev);
++	KUNIT_DEFINE_ACTION_WRAPPER(device_unregister, device_unregister_wrapper, struct device *);
++	kunit_add_action(test, &device_unregister_wrapper, &dev);
++
++You should do this in preference to manually casting to the ``kunit_action_t`` type,
++as casting function pointers will break Control Flow Integrity (CFI).
+ 
+ ``kunit_add_action`` can fail if, for example, the system is out of memory.
+ You can use ``kunit_add_action_or_reset`` instead which runs the action
+--- a/include/kunit/resource.h
++++ b/include/kunit/resource.h
+@@ -391,6 +391,27 @@ void kunit_remove_resource(struct kunit
+ typedef void (kunit_action_t)(void *);
+ 
+ /**
++ * KUNIT_DEFINE_ACTION_WRAPPER() - Wrap a function for use as a deferred action.
++ *
++ * @wrapper: The name of the new wrapper function define.
++ * @orig: The original function to wrap.
++ * @arg_type: The type of the argument accepted by @orig.
++ *
++ * Defines a wrapper for a function which accepts a single, pointer-sized
++ * argument. This wrapper can then be passed to kunit_add_action() and
++ * similar. This should be used in preference to casting a function
++ * directly to kunit_action_t, as casting function pointers will break
++ * control flow integrity (CFI), leading to crashes.
++ */
++#define KUNIT_DEFINE_ACTION_WRAPPER(wrapper, orig, arg_type)	\
++	static void wrapper(void *in)				\
++	{							\
++		arg_type arg = (arg_type)in;			\
++		orig(arg);					\
++	}
++
++
++/**
+  * kunit_add_action() - Call a function when the test ends.
+  * @test: Test case to associate the action with.
+  * @action: The function to run on test exit
+--- a/lib/kunit/kunit-test.c
++++ b/lib/kunit/kunit-test.c
+@@ -538,10 +538,7 @@ static struct kunit_suite kunit_resource
+ #if IS_BUILTIN(CONFIG_KUNIT_TEST)
+ 
+ /* This avoids a cast warning if kfree() is passed direct to kunit_add_action(). */
+-static void kfree_wrapper(void *p)
+-{
+-	kfree(p);
+-}
++KUNIT_DEFINE_ACTION_WRAPPER(kfree_wrapper, kfree, const void *);
+ 
+ static void kunit_log_test(struct kunit *test)
+ {
+--- a/lib/kunit/test.c
++++ b/lib/kunit/test.c
+@@ -819,6 +819,8 @@ static struct notifier_block kunit_mod_n
+ };
+ #endif
+ 
++KUNIT_DEFINE_ACTION_WRAPPER(kfree_action_wrapper, kfree, const void *)
++
+ void *kunit_kmalloc_array(struct kunit *test, size_t n, size_t size, gfp_t gfp)
+ {
+ 	void *data;
+@@ -828,7 +830,7 @@ void *kunit_kmalloc_array(struct kunit *
+ 	if (!data)
+ 		return NULL;
+ 
+-	if (kunit_add_action_or_reset(test, (kunit_action_t *)kfree, data) != 0)
++	if (kunit_add_action_or_reset(test, kfree_action_wrapper, data) != 0)
+ 		return NULL;
+ 
+ 	return data;
+@@ -840,7 +842,7 @@ void kunit_kfree(struct kunit *test, con
+ 	if (!ptr)
+ 		return;
+ 
+-	kunit_release_action(test, (kunit_action_t *)kfree, (void *)ptr);
++	kunit_release_action(test, kfree_action_wrapper, (void *)ptr);
+ }
+ EXPORT_SYMBOL_GPL(kunit_kfree);
+ 
 
 
