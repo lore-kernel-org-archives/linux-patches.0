@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41C313AA50;
-	Tue, 27 Feb 2024 13:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF9413AA50;
+	Tue, 27 Feb 2024 13:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042385; cv=none; b=M6FXB90pnN1q3yyOXeul0b/vAE8ks44yYPlcnugrrIy3zmqTGn7mvVzJ7tCX8vfbYMxWxABaBZLvwwvFMfpn9BoYVmofWRjmpB+EUGVtQJ2q9plcTl3drE6sKwRQczzSsq28p0uUM/aXW/2GkO19XlsqgF+foaI47k3nJak6WJg=
+	t=1709042388; cv=none; b=RBI/wSn6BYUpBQr5gAyxOV/VKliOj5eIWLqE+17XXM7XGdEr4m47/D5/6D7x82bb7G3BKpgSX/FvETaotN9VeZT/9okU1fHjyTkpm9AgRSBjoQmEjyt7YIn2/zUjKTwdzzK2R680Zbg+5W2/HZ4F4Dng0GqK4AU7IALDtpp9jBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042385; c=relaxed/simple;
-	bh=B3mB6VyGkzrKijDolcGq5PZ4h7omEsiuPQ+PGJJN09Y=;
+	s=arc-20240116; t=1709042388; c=relaxed/simple;
+	bh=L9F7dL7L9nKaRh8rQvZfkvh9grS71Xssgj1NTWReZdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWwhcbCbP4bJ8ebFH6Z/NviL624eGohuWkKHhbejEepaOM9oQmMMmafqAAcdh54ijZy7GF5vo2JN5233N3gRI5kfsDoKZ+ZGJgZdc1CultxeQJwPUPlaA7lFeeQQd6eFIwGSIXtbZFN0MG7vKEaX1YPY47Ej9Aj5Yy1gTxj9PiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEwEBzwZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHBssQR4k6APNdFJjZk1EeeT+znGXjmR3Ar1+Dq5Trr5Qw2ytgIJVH9JeFUUO3S7rm/vWdwRbP7Smg6Bs/o39NLUoGTPU+Kodbq7MQn6ITL7mSafKLwQTRx+zVcSsMJDrQdox/tIK1CHnJgqqKk9l8tS+u+QUxw9tlr9XcpWWmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulSkMbPG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEwEBzwZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24D9C433F1;
-	Tue, 27 Feb 2024 13:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulSkMbPG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC86C433C7;
+	Tue, 27 Feb 2024 13:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042385;
-	bh=B3mB6VyGkzrKijDolcGq5PZ4h7omEsiuPQ+PGJJN09Y=;
+	s=korg; t=1709042388;
+	bh=L9F7dL7L9nKaRh8rQvZfkvh9grS71Xssgj1NTWReZdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEwEBzwZbhWgFMLaClLeehplBxc9WXdlxmIPZQAAbEe6yNz2w3AIFNvTkYAYUGSnR
-	 ZGpe/Af/cjHR68pUem/NsTdShiViGFHedfWEPDmmNpdojXj2j/d2yLSx6JCEZkmUuS
-	 PQsoWi4CXWZLjXqttgqpP+XQnqybPNakA7mBgG+U=
+	b=ulSkMbPG9hZn7UUnHcO+5yEkjaA15Xp+6rKTGDzQv3IkAum6qM/uIgdQ31oUhHffi
+	 D2PrN5vL2H8HmKFWNTAHesCES6yUh3j9Cl3+VQNv1A6mJI9YY5SUFJTnszgPPUYkFs
+	 ACH2OsuIy4awtVbv2pXKjqLjCjNMsoAfVXtxIDb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 249/299] powerpc/pseries/iommu: DLPAR add doesnt completely initialize pci_controller
-Date: Tue, 27 Feb 2024 14:26:00 +0100
-Message-ID: <20240227131633.740048474@linuxfoundation.org>
+Subject: [PATCH 6.6 250/299] selftests: bonding: set active slave to primary eth1 specifically
+Date: Tue, 27 Feb 2024 14:26:01 +0100
+Message-ID: <20240227131633.770362352@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,169 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.ibm.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit a5c57fd2e9bd1c8ea8613a8f94fd0be5eccbf321 ]
+[ Upstream commit cd65c48d66920457129584553f217005d09b1edb ]
 
-When a PCI device is dynamically added, the kernel oopses with a NULL
-pointer dereference:
+In bond priority testing, we set the primary interface to eth1 and add
+eth0,1,2 to bond in serial. This is OK in normal times. But when in
+debug kernel, the bridge port that eth0,1,2 connected would start
+slowly (enter blocking, forwarding state), which caused the primary
+interface down for a while after enslaving and active slave changed.
+Here is a test log from Jakub's debug test[1].
 
-  BUG: Kernel NULL pointer dereference on read at 0x00000030
-  Faulting instruction address: 0xc0000000006bbe5c
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in: rpadlpar_io rpaphp rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs xsk_diag bonding nft_compat nf_tables nfnetlink rfkill binfmt_misc dm_multipath rpcrdma sunrpc rdma_ucm ib_srpt ib_isert iscsi_target_mod target_core_mod ib_umad ib_iser libiscsi scsi_transport_iscsi ib_ipoib rdma_cm iw_cm ib_cm mlx5_ib ib_uverbs ib_core pseries_rng drm drm_panel_orientation_quirks xfs libcrc32c mlx5_core mlxfw sd_mod t10_pi sg tls ibmvscsi ibmveth scsi_transport_srp vmx_crypto pseries_wdt psample dm_mirror dm_region_hash dm_log dm_mod fuse
-  CPU: 17 PID: 2685 Comm: drmgr Not tainted 6.7.0-203405+ #66
-  Hardware name: IBM,9080-HEX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_008) hv:phyp pSeries
-  NIP:  c0000000006bbe5c LR: c000000000a13e68 CTR: c0000000000579f8
-  REGS: c00000009924f240 TRAP: 0300   Not tainted  (6.7.0-203405+)
-  MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002220  XER: 20040006
-  CFAR: c000000000a13e64 DAR: 0000000000000030 DSISR: 40000000 IRQMASK: 0
-  ...
-  NIP sysfs_add_link_to_group+0x34/0x94
-  LR  iommu_device_link+0x5c/0x118
-  Call Trace:
-   iommu_init_device+0x26c/0x318 (unreliable)
-   iommu_device_link+0x5c/0x118
-   iommu_init_device+0xa8/0x318
-   iommu_probe_device+0xc0/0x134
-   iommu_bus_notifier+0x44/0x104
-   notifier_call_chain+0xb8/0x19c
-   blocking_notifier_call_chain+0x64/0x98
-   bus_notify+0x50/0x7c
-   device_add+0x640/0x918
-   pci_device_add+0x23c/0x298
-   of_create_pci_dev+0x400/0x884
-   of_scan_pci_dev+0x124/0x1b0
-   __of_scan_bus+0x78/0x18c
-   pcibios_scan_phb+0x2a4/0x3b0
-   init_phb_dynamic+0xb8/0x110
-   dlpar_add_slot+0x170/0x3b8 [rpadlpar_io]
-   add_slot_store.part.0+0xb4/0x130 [rpadlpar_io]
-   kobj_attr_store+0x2c/0x48
-   sysfs_kf_write+0x64/0x78
-   kernfs_fop_write_iter+0x1b0/0x290
-   vfs_write+0x350/0x4a0
-   ksys_write+0x84/0x140
-   system_call_exception+0x124/0x330
-   system_call_vectored_common+0x15c/0x2ec
+ [  400.399070][   T50] br0: port 1(s0) entered disabled state
+ [  400.400168][   T50] br0: port 4(s2) entered disabled state
+ [  400.941504][ T2791] bond0: (slave eth0): making interface the new active one
+ [  400.942603][ T2791] bond0: (slave eth0): Enslaving as an active interface with an up link
+ [  400.943633][ T2766] br0: port 1(s0) entered blocking state
+ [  400.944119][ T2766] br0: port 1(s0) entered forwarding state
+ [  401.128792][ T2792] bond0: (slave eth1): making interface the new active one
+ [  401.130771][ T2792] bond0: (slave eth1): Enslaving as an active interface with an up link
+ [  401.131643][   T69] br0: port 2(s1) entered blocking state
+ [  401.132067][   T69] br0: port 2(s1) entered forwarding state
+ [  401.346201][ T2793] bond0: (slave eth2): Enslaving as a backup interface with an up link
+ [  401.348414][   T50] br0: port 4(s2) entered blocking state
+ [  401.348857][   T50] br0: port 4(s2) entered forwarding state
+ [  401.519669][  T250] bond0: (slave eth0): link status definitely down, disabling slave
+ [  401.526522][  T250] bond0: (slave eth1): link status definitely down, disabling slave
+ [  401.526986][  T250] bond0: (slave eth2): making interface the new active one
+ [  401.629470][  T250] bond0: (slave eth0): link status definitely up
+ [  401.630089][  T250] bond0: (slave eth1): link status definitely up
+ [...]
+ # TEST: prio (active-backup ns_ip6_target primary_reselect 1)         [FAIL]
+ # Current active slave is eth2 but not eth1
 
-Commit a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities
-and allow blocking domains") broke DLPAR add of PCI devices.
+Fix it by setting active slave to primary slave specifically before
+testing.
 
-The above added iommu_device structure to pci_controller. During
-system boot, PCI devices are discovered and this newly added iommu_device
-structure is initialized by a call to iommu_device_register().
+[1] https://netdev-3.bots.linux.dev/vmksft-bonding-dbg/results/464301/1-bond-options-sh/stdout
 
-During DLPAR add of a PCI device, a new pci_controller structure is
-allocated but there are no calls made to iommu_device_register()
-interface.
-
-Fix is to register the iommu device during DLPAR add as well.
-
-Fixes: a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities and allow blocking domains")
-Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240215221833.4817-1-gbatra@linux.ibm.com
+Fixes: 481b56e0391e ("selftests: bonding: re-format bond option tests")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/ppc-pci.h         | 10 ++++++++++
- arch/powerpc/kernel/iommu.c                | 23 ++++++++++++++++------
- arch/powerpc/platforms/pseries/pci_dlpar.c |  4 ++++
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ tools/testing/selftests/drivers/net/bonding/bond_options.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/ppc-pci.h b/arch/powerpc/include/asm/ppc-pci.h
-index d9fcff5750271..2689e7139b9ea 100644
---- a/arch/powerpc/include/asm/ppc-pci.h
-+++ b/arch/powerpc/include/asm/ppc-pci.h
-@@ -30,6 +30,16 @@ void *pci_traverse_device_nodes(struct device_node *start,
- 				void *data);
- extern void pci_devs_phb_init_dynamic(struct pci_controller *phb);
+diff --git a/tools/testing/selftests/drivers/net/bonding/bond_options.sh b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
+index d508486cc0bdc..9a3d3c389dadd 100755
+--- a/tools/testing/selftests/drivers/net/bonding/bond_options.sh
++++ b/tools/testing/selftests/drivers/net/bonding/bond_options.sh
+@@ -62,6 +62,8 @@ prio_test()
  
-+#if defined(CONFIG_IOMMU_API) && (defined(CONFIG_PPC_PSERIES) || \
-+				  defined(CONFIG_PPC_POWERNV))
-+extern void ppc_iommu_register_device(struct pci_controller *phb);
-+extern void ppc_iommu_unregister_device(struct pci_controller *phb);
-+#else
-+static inline void ppc_iommu_register_device(struct pci_controller *phb) { }
-+static inline void ppc_iommu_unregister_device(struct pci_controller *phb) { }
-+#endif
-+
-+
- /* From rtas_pci.h */
- extern void init_pci_config_tokens (void);
- extern unsigned long get_phb_buid (struct device_node *);
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index 14251bc5219eb..efaca0c6eff9d 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -1344,7 +1344,7 @@ static struct iommu_device *spapr_tce_iommu_probe_device(struct device *dev)
- 	struct pci_controller *hose;
+ 	# create bond
+ 	bond_reset "${param}"
++	# set active_slave to primary eth1 specifically
++	ip -n ${s_ns} link set bond0 type bond active_slave eth1
  
- 	if (!dev_is_pci(dev))
--		return ERR_PTR(-EPERM);
-+		return ERR_PTR(-ENODEV);
- 
- 	pdev = to_pci_dev(dev);
- 	hose = pdev->bus->sysdata;
-@@ -1393,6 +1393,21 @@ static const struct attribute_group *spapr_tce_iommu_groups[] = {
- 	NULL,
- };
- 
-+void ppc_iommu_register_device(struct pci_controller *phb)
-+{
-+	iommu_device_sysfs_add(&phb->iommu, phb->parent,
-+				spapr_tce_iommu_groups, "iommu-phb%04x",
-+				phb->global_number);
-+	iommu_device_register(&phb->iommu, &spapr_tce_iommu_ops,
-+				phb->parent);
-+}
-+
-+void ppc_iommu_unregister_device(struct pci_controller *phb)
-+{
-+	iommu_device_unregister(&phb->iommu);
-+	iommu_device_sysfs_remove(&phb->iommu);
-+}
-+
- /*
-  * This registers IOMMU devices of PHBs. This needs to happen
-  * after core_initcall(iommu_init) + postcore_initcall(pci_driver_init) and
-@@ -1403,11 +1418,7 @@ static int __init spapr_tce_setup_phb_iommus_initcall(void)
- 	struct pci_controller *hose;
- 
- 	list_for_each_entry(hose, &hose_list, list_node) {
--		iommu_device_sysfs_add(&hose->iommu, hose->parent,
--				       spapr_tce_iommu_groups, "iommu-phb%04x",
--				       hose->global_number);
--		iommu_device_register(&hose->iommu, &spapr_tce_iommu_ops,
--				      hose->parent);
-+		ppc_iommu_register_device(hose);
- 	}
- 	return 0;
- }
-diff --git a/arch/powerpc/platforms/pseries/pci_dlpar.c b/arch/powerpc/platforms/pseries/pci_dlpar.c
-index 4ba8245681192..4448386268d99 100644
---- a/arch/powerpc/platforms/pseries/pci_dlpar.c
-+++ b/arch/powerpc/platforms/pseries/pci_dlpar.c
-@@ -35,6 +35,8 @@ struct pci_controller *init_phb_dynamic(struct device_node *dn)
- 
- 	pseries_msi_allocate_domains(phb);
- 
-+	ppc_iommu_register_device(phb);
-+
- 	/* Create EEH devices for the PHB */
- 	eeh_phb_pe_create(phb);
- 
-@@ -76,6 +78,8 @@ int remove_phb_dynamic(struct pci_controller *phb)
- 		}
- 	}
- 
-+	ppc_iommu_unregister_device(phb);
-+
- 	pseries_msi_free_domains(phb);
- 
- 	/* Keep a reference so phb isn't freed yet */
+ 	# check bonding member prio value
+ 	ip -n ${s_ns} link set eth0 type bond_slave prio 0
 -- 
 2.43.0
 
