@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1046854FA5;
-	Tue, 27 Feb 2024 13:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29612F2D;
+	Tue, 27 Feb 2024 13:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040871; cv=none; b=t/0SbnrbEnPp8netAwV+eyTnt91mjUzdXSQ2ARN3eKxgPssA0xAyU63JMdAMOu4GefzbDVnpnaJgIE82LsHKLjvtXGFrPCKBslzvIUFYZNVlN7dzwreD+FLyd2hxwPoNwy48/jPpxP7kdR5MQMEd5stpnaSWViALfP3y4IKWt80=
+	t=1709040873; cv=none; b=j5OHk0KI/qxCfX0SLwLjbi9UCLoED+tRTLlFoMQN/6A5PZ86caimhDt6ErYgoZqASuYPXXZqN/YWCccexgiWLZOThZp9B6/Y6jU+YU4+mGM+kHM/wipYbv1vnUpCj6LaDER2LSunU8GjxCzF704+Yyz5eKONcsDs9EskeE03QOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040871; c=relaxed/simple;
-	bh=fOFNaamVyKgxfXIAs9IaT7G8JN0ef8ha1p/YDlJwZ4A=;
+	s=arc-20240116; t=1709040873; c=relaxed/simple;
+	bh=YTadgwb9mDdKISHlKUhJ7hIT0z5T1VYB1O4OJ9B/SX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rqQ1fqtNVtlfuOcnHg051q1B20GI3TlvrL0FM4SlTIcL+pm0mgOX5gN7xRbemJYJATCfTMjjuWS2Oq8nD+xgaA3rfhFq0e2RVG7JRmhaoFc0c7QFzqin7DCFrrbOH60bPguZf05H1L7iEiY128VKlvWr7raYfTiGKVRSBRNOnJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wAW4F/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UEaaCX9FrxzRbcYaHJ1R+YXDnUFFvU5JaB+AqARDNaLwdndTWkncEga4YG261kYGnCCh1vCKccylSgrsNTlYvM1nEizabLVIMrdktZUWWUxanl5cpjfacert8tn+h+kJrLVMTCIxEDvTV6NiIIMr6zNVPPOH2A93vEhE/7Nmkqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zznWkGzg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wAW4F/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92205C433C7;
-	Tue, 27 Feb 2024 13:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zznWkGzg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8E0C433C7;
+	Tue, 27 Feb 2024 13:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040871;
-	bh=fOFNaamVyKgxfXIAs9IaT7G8JN0ef8ha1p/YDlJwZ4A=;
+	s=korg; t=1709040873;
+	bh=YTadgwb9mDdKISHlKUhJ7hIT0z5T1VYB1O4OJ9B/SX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0wAW4F/QzSZP6hgYatHIdc42ujBKOQ/j+uGZVZf6VuJyzgNAScZ/e10ALZaJFz8uB
-	 rW6jmc+jng07OUZW9pdSwUQWzvGvZJOT7zuNhFQr1oBaXSPjbIRrOtHz7qxF2p8frp
-	 Y+2MF/qD/QDtFN5pLYt4vl2FwgsUmF9sL2mJOQmw=
+	b=zznWkGzgZzk2MWHvuAlCWSOBsB0PP4eUxvnj+OviwEnvqUtt+/7BWWtk/2Cga/kPi
+	 yKgp4G72hnR5VqgrveqrORRjaT2SDlFTeQE3EbpAVISeWnyw2WrrNRPQohZXpjv1/B
+	 sRQlc69OBRj3xPtMgZy4myjbIAXHc21+esUz4Hkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cruise Hung <cruise.hung@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Peichen Huang <peichen.huang@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Josip Pavic <josip.pavic@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Sohaib Nadeem <sohaib.nadeem@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 138/334] drm/amd/display: Request usb4 bw for mst streams
-Date: Tue, 27 Feb 2024 14:19:56 +0100
-Message-ID: <20240227131634.921762166@linuxfoundation.org>
+Subject: [PATCH 6.7 139/334] drm/amd/display: fixed integer types and null check locations
+Date: Tue, 27 Feb 2024 14:19:57 +0100
+Message-ID: <20240227131634.951886154@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -54,371 +55,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peichen Huang <peichen.huang@amd.com>
+From: Sohaib Nadeem <sohaib.nadeem@amd.com>
 
-[ Upstream commit 5f3bce13266e6fe2f7a46f94d8bc94d5274e276b ]
+[ Upstream commit 0484e05d048b66d01d1f3c1d2306010bb57d8738 ]
 
-[WHY]
-When usb4 bandwidth allocation mode is enabled, driver need to request
-bandwidth from connection manager. For mst link,  the requested
-bandwidth should be big enough for all remote streams.
+[why]:
+issues fixed:
+- comparison with wider integer type in loop condition which can cause
+infinite loops
+- pointer dereference before null check
 
-[HOW]
-- If mst link, the requested bandwidth should be the sum of all mst
-  streams bandwidth added with dp MTPH overhead.
-- Allocate/deallcate usb4 bandwidth when setting dpms on/off.
-- When doing display mode validation, driver also need to consider total
-  bandwidth of all mst streams for mst link.
-
-Reviewed-by: Cruise Hung <cruise.hung@amd.com>
-Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Peichen Huang <peichen.huang@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Josip Pavic <josip.pavic@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 0484e05d048b ("drm/amd/display: fixed integer types and null check locations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_types.h     | 12 ++--
- .../gpu/drm/amd/display/dc/link/link_dpms.c   | 42 ++++++++++---
- .../drm/amd/display/dc/link/link_validation.c | 60 +++++++++++++++----
- .../dc/link/protocols/link_dp_dpia_bw.c       | 59 +++++++++++++-----
- .../dc/link/protocols/link_dp_dpia_bw.h       |  9 +++
- 5 files changed, 144 insertions(+), 38 deletions(-)
+ .../gpu/drm/amd/display/dc/bios/bios_parser2.c   | 16 ++++++++++------
+ .../drm/amd/display/dc/link/link_validation.c    |  2 +-
+ 2 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
-index ab91504529c65..66d0774bef527 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
-@@ -1100,23 +1100,25 @@ struct dc_panel_config {
- 	} ilr;
- };
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+index b5b29451d2db8..bc7a375f43c0c 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -1850,19 +1850,21 @@ static enum bp_result get_firmware_info_v3_2(
+ 		/* Vega12 */
+ 		smu_info_v3_2 = GET_IMAGE(struct atom_smu_info_v3_2,
+ 							DATA_TABLES(smu_info));
+-		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
+ 		if (!smu_info_v3_2)
+ 			return BP_RESULT_BADBIOSTABLE;
  
-+#define MAX_SINKS_PER_LINK 4
++		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
 +
- /*
-  *  USB4 DPIA BW ALLOCATION STRUCTS
-  */
- struct dc_dpia_bw_alloc {
--	int sink_verified_bw;  // The Verified BW that sink can allocated and use that has been verified already
--	int sink_allocated_bw; // The Actual Allocated BW that sink currently allocated
--	int sink_max_bw;       // The Max BW that sink can require/support
-+	int remote_sink_req_bw[MAX_SINKS_PER_LINK]; // BW requested by remote sinks
-+	int link_verified_bw;  // The Verified BW that link can allocated and use that has been verified already
-+	int link_max_bw;       // The Max BW that link can require/support
-+	int allocated_bw;      // The Actual Allocated BW for this DPIA
- 	int estimated_bw;      // The estimated available BW for this DPIA
- 	int bw_granularity;    // BW Granularity
-+	int dp_overhead;       // DP overhead in dp tunneling
- 	bool bw_alloc_enabled; // The BW Alloc Mode Support is turned ON for all 3:  DP-Tx & Dpia & CM
- 	bool response_ready;   // Response ready from the CM side
- 	uint8_t nrd_max_lane_count; // Non-reduced max lane count
- 	uint8_t nrd_max_link_rate; // Non-reduced max link rate
- };
+ 		info->default_engine_clk = smu_info_v3_2->bootup_dcefclk_10khz * 10;
+ 	} else if (revision.minor == 3) {
+ 		/* Vega20 */
+ 		smu_info_v3_3 = GET_IMAGE(struct atom_smu_info_v3_3,
+ 							DATA_TABLES(smu_info));
+-		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
+ 		if (!smu_info_v3_3)
+ 			return BP_RESULT_BADBIOSTABLE;
  
--#define MAX_SINKS_PER_LINK 4
--
- enum dc_hpd_enable_select {
- 	HPD_EN_FOR_ALL_EDP = 0,
- 	HPD_EN_FOR_PRIMARY_EDP_ONLY,
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index a08ae59c1ea9f..007ee32c202e8 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -2098,17 +2098,11 @@ static enum dc_status enable_link_dp(struct dc_state *state,
- 		}
++		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
++
+ 		info->default_engine_clk = smu_info_v3_3->bootup_dcefclk_10khz * 10;
  	}
  
--	/*
--	 * If the link is DP-over-USB4 do the following:
--	 * - Train with fallback when enabling DPIA link. Conventional links are
-+	/* Train with fallback when enabling DPIA link. Conventional links are
- 	 * trained with fallback during sink detection.
--	 * - Allocate only what the stream needs for bw in Gbps. Inform the CM
--	 * in case stream needs more or less bw from what has been allocated
--	 * earlier at plug time.
- 	 */
--	if (link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA) {
-+	if (link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA)
- 		do_fallback = true;
--	}
+@@ -2423,10 +2425,11 @@ static enum bp_result get_integrated_info_v11(
+ 	info_v11 = GET_IMAGE(struct atom_integrated_system_info_v1_11,
+ 					DATA_TABLES(integratedsysteminfo));
  
+-	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
+ 	if (info_v11 == NULL)
+ 		return BP_RESULT_BADBIOSTABLE;
+ 
++	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
++
+ 	info->gpu_cap_info =
+ 	le32_to_cpu(info_v11->gpucapinfo);
  	/*
- 	 * Temporary w/a to get DP2.0 link rates to work with SST.
-@@ -2290,6 +2284,32 @@ static enum dc_status enable_link(
- 	return status;
- }
+@@ -2638,11 +2641,12 @@ static enum bp_result get_integrated_info_v2_1(
  
-+static bool allocate_usb4_bandwidth_for_stream(struct dc_stream_state *stream, int bw)
-+{
-+	return true;
-+}
-+
-+static bool allocate_usb4_bandwidth(struct dc_stream_state *stream)
-+{
-+	bool ret;
-+
-+	int bw = dc_bandwidth_in_kbps_from_timing(&stream->timing,
-+			dc_link_get_highest_encoding_format(stream->sink->link));
-+
-+	ret = allocate_usb4_bandwidth_for_stream(stream, bw);
-+
-+	return ret;
-+}
-+
-+static bool deallocate_usb4_bandwidth(struct dc_stream_state *stream)
-+{
-+	bool ret;
-+
-+	ret = allocate_usb4_bandwidth_for_stream(stream, 0);
-+
-+	return ret;
-+}
-+
- void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
- {
- 	struct dc  *dc = pipe_ctx->stream->ctx->dc;
-@@ -2325,6 +2345,9 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
- 	update_psp_stream_config(pipe_ctx, true);
- 	dc->hwss.blank_stream(pipe_ctx);
+ 	info_v2_1 = GET_IMAGE(struct atom_integrated_system_info_v2_1,
+ 					DATA_TABLES(integratedsysteminfo));
+-	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
  
-+	if (pipe_ctx->stream->link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA)
-+		deallocate_usb4_bandwidth(pipe_ctx->stream);
-+
- 	if (pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
- 		deallocate_mst_payload(pipe_ctx);
- 	else if (pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT &&
-@@ -2567,6 +2590,9 @@ void link_set_dpms_on(
- 		}
- 	}
+ 	if (info_v2_1 == NULL)
+ 		return BP_RESULT_BADBIOSTABLE;
  
-+	if (pipe_ctx->stream->link->ep_type == DISPLAY_ENDPOINT_USB4_DPIA)
-+		allocate_usb4_bandwidth(pipe_ctx->stream);
++	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
 +
- 	if (pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
- 		allocate_mst_payload(pipe_ctx);
- 	else if (pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT &&
+ 	info->gpu_cap_info =
+ 	le32_to_cpu(info_v2_1->gpucapinfo);
+ 	/*
+@@ -2800,11 +2804,11 @@ static enum bp_result get_integrated_info_v2_2(
+ 	info_v2_2 = GET_IMAGE(struct atom_integrated_system_info_v2_2,
+ 					DATA_TABLES(integratedsysteminfo));
+ 
+-	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
+-
+ 	if (info_v2_2 == NULL)
+ 		return BP_RESULT_BADBIOSTABLE;
+ 
++	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
++
+ 	info->gpu_cap_info =
+ 	le32_to_cpu(info_v2_2->gpucapinfo);
+ 	/*
 diff --git a/drivers/gpu/drm/amd/display/dc/link/link_validation.c b/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-index b45fda96eaf64..8fe66c3678508 100644
+index 8fe66c3678508..5b0bc7f6a188c 100644
 --- a/drivers/gpu/drm/amd/display/dc/link/link_validation.c
 +++ b/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-@@ -346,23 +346,61 @@ enum dc_status link_validate_mode_timing(
- 	return DC_OK;
- }
+@@ -361,7 +361,7 @@ bool link_validate_dpia_bandwidth(const struct dc_stream_state *stream, const un
+ 	struct dc_link *dpia_link[MAX_DPIA_NUM] = {0};
+ 	int num_dpias = 0;
  
-+/*
-+ * This function calculates the bandwidth required for the stream timing
-+ * and aggregates the stream bandwidth for the respective dpia link
-+ *
-+ * @stream: pointer to the dc_stream_state struct instance
-+ * @num_streams: number of streams to be validated
-+ *
-+ * return: true if validation is succeeded
-+ */
- bool link_validate_dpia_bandwidth(const struct dc_stream_state *stream, const unsigned int num_streams)
- {
--	bool ret = true;
--	int bw_needed[MAX_DPIA_NUM];
--	struct dc_link *link[MAX_DPIA_NUM];
--
--	if (!num_streams || num_streams > MAX_DPIA_NUM)
--		return ret;
-+	int bw_needed[MAX_DPIA_NUM] = {0};
-+	struct dc_link *dpia_link[MAX_DPIA_NUM] = {0};
-+	int num_dpias = 0;
- 
- 	for (uint8_t i = 0; i < num_streams; ++i) {
-+		if (stream[i].signal == SIGNAL_TYPE_DISPLAY_PORT) {
-+			/* new dpia sst stream, check whether it exceeds max dpia */
-+			if (num_dpias >= MAX_DPIA_NUM)
-+				return false;
- 
--		link[i] = stream[i].link;
--		bw_needed[i] = dc_bandwidth_in_kbps_from_timing(&stream[i].timing,
--				dc_link_get_highest_encoding_format(link[i]));
-+			dpia_link[num_dpias] = stream[i].link;
-+			bw_needed[num_dpias] = dc_bandwidth_in_kbps_from_timing(&stream[i].timing,
-+					dc_link_get_highest_encoding_format(dpia_link[num_dpias]));
-+			num_dpias++;
-+		} else if (stream[i].signal == SIGNAL_TYPE_DISPLAY_PORT_MST) {
-+			uint8_t j = 0;
-+			/* check whether its a known dpia link */
-+			for (; j < num_dpias; ++j) {
-+				if (dpia_link[j] == stream[i].link)
-+					break;
-+			}
-+
-+			if (j == num_dpias) {
-+				/* new dpia mst stream, check whether it exceeds max dpia */
-+				if (num_dpias >= MAX_DPIA_NUM)
-+					return false;
-+				else {
-+					dpia_link[j] = stream[i].link;
-+					num_dpias++;
-+				}
-+			}
-+
-+			bw_needed[j] += dc_bandwidth_in_kbps_from_timing(&stream[i].timing,
-+				dc_link_get_highest_encoding_format(dpia_link[j]));
-+		}
- 	}
- 
--	ret = dpia_validate_usb4_bw(link, bw_needed, num_streams);
-+	/* Include dp overheads */
-+	for (uint8_t i = 0; i < num_dpias; ++i) {
-+		int dp_overhead = 0;
-+
-+		dp_overhead = link_dp_dpia_get_dp_overhead_in_dp_tunneling(dpia_link[i]);
-+		bw_needed[i] += dp_overhead;
-+	}
- 
--	return ret;
-+	return dpia_validate_usb4_bw(dpia_link, bw_needed, num_dpias);
- }
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-index a7aa8c9da868f..4ef1a6a1d1295 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -54,12 +54,18 @@ static bool get_bw_alloc_proceed_flag(struct dc_link *tmp)
- static void reset_bw_alloc_struct(struct dc_link *link)
- {
- 	link->dpia_bw_alloc_config.bw_alloc_enabled = false;
--	link->dpia_bw_alloc_config.sink_verified_bw = 0;
--	link->dpia_bw_alloc_config.sink_max_bw = 0;
-+	link->dpia_bw_alloc_config.link_verified_bw = 0;
-+	link->dpia_bw_alloc_config.link_max_bw = 0;
-+	link->dpia_bw_alloc_config.allocated_bw = 0;
- 	link->dpia_bw_alloc_config.estimated_bw = 0;
- 	link->dpia_bw_alloc_config.bw_granularity = 0;
-+	link->dpia_bw_alloc_config.dp_overhead = 0;
- 	link->dpia_bw_alloc_config.response_ready = false;
--	link->dpia_bw_alloc_config.sink_allocated_bw = 0;
-+	link->dpia_bw_alloc_config.nrd_max_lane_count = 0;
-+	link->dpia_bw_alloc_config.nrd_max_link_rate = 0;
-+	for (int i = 0; i < MAX_SINKS_PER_LINK; i++)
-+		link->dpia_bw_alloc_config.remote_sink_req_bw[i] = 0;
-+	DC_LOG_DEBUG("reset usb4 bw alloc of link(%d)\n", link->link_index);
- }
- 
- #define BW_GRANULARITY_0 4 // 0.25 Gbps
-@@ -210,8 +216,8 @@ static int get_host_router_total_dp_tunnel_bw(const struct dc *dc, uint8_t hr_in
- 				link_dpia_primary->dpia_bw_alloc_config.bw_alloc_enabled) &&
- 				(link_dpia_secondary->hpd_status &&
- 				link_dpia_secondary->dpia_bw_alloc_config.bw_alloc_enabled)) {
--				total_bw += link_dpia_primary->dpia_bw_alloc_config.estimated_bw +
--					link_dpia_secondary->dpia_bw_alloc_config.sink_allocated_bw;
-+					total_bw += link_dpia_primary->dpia_bw_alloc_config.estimated_bw +
-+						link_dpia_secondary->dpia_bw_alloc_config.allocated_bw;
- 			} else if (link_dpia_primary->hpd_status &&
- 					link_dpia_primary->dpia_bw_alloc_config.bw_alloc_enabled) {
- 				total_bw = link_dpia_primary->dpia_bw_alloc_config.estimated_bw;
-@@ -264,7 +270,7 @@ static void set_usb4_req_bw_req(struct dc_link *link, int req_bw)
- 
- 	/* Error check whether requested and allocated are equal */
- 	req_bw = requested_bw * (Kbps_TO_Gbps / link->dpia_bw_alloc_config.bw_granularity);
--	if (req_bw == link->dpia_bw_alloc_config.sink_allocated_bw) {
-+	if (req_bw == link->dpia_bw_alloc_config.allocated_bw) {
- 		DC_LOG_ERROR("%s: Request bw equals to allocated bw for link(%d)\n",
- 			__func__, link->link_index);
- 	}
-@@ -387,9 +393,9 @@ void dpia_handle_bw_alloc_response(struct dc_link *link, uint8_t bw, uint8_t res
- 		DC_LOG_DEBUG("%s: BW REQ SUCCESS for DP-TX Request for link(%d)\n",
- 			__func__, link->link_index);
- 		DC_LOG_DEBUG("%s: current allocated_bw(%d), new allocated_bw(%d)\n",
--			__func__, link->dpia_bw_alloc_config.sink_allocated_bw, bw_needed);
-+			__func__, link->dpia_bw_alloc_config.allocated_bw, bw_needed);
- 
--		link->dpia_bw_alloc_config.sink_allocated_bw = bw_needed;
-+		link->dpia_bw_alloc_config.allocated_bw = bw_needed;
- 
- 		link->dpia_bw_alloc_config.response_ready = true;
- 		break;
-@@ -427,8 +433,8 @@ int dpia_handle_usb4_bandwidth_allocation_for_link(struct dc_link *link, int pea
- 	if (link->hpd_status && peak_bw > 0) {
- 
- 		// If DP over USB4 then we need to check BW allocation
--		link->dpia_bw_alloc_config.sink_max_bw = peak_bw;
--		set_usb4_req_bw_req(link, link->dpia_bw_alloc_config.sink_max_bw);
-+		link->dpia_bw_alloc_config.link_max_bw = peak_bw;
-+		set_usb4_req_bw_req(link, link->dpia_bw_alloc_config.link_max_bw);
- 
- 		do {
- 			if (timeout > 0)
-@@ -440,8 +446,8 @@ int dpia_handle_usb4_bandwidth_allocation_for_link(struct dc_link *link, int pea
- 
- 		if (!timeout)
- 			ret = 0;// ERROR TIMEOUT waiting for response for allocating bw
--		else if (link->dpia_bw_alloc_config.sink_allocated_bw > 0)
--			ret = link->dpia_bw_alloc_config.sink_allocated_bw;
-+		else if (link->dpia_bw_alloc_config.allocated_bw > 0)
-+			ret = link->dpia_bw_alloc_config.allocated_bw;
- 	}
- 	//2. Cold Unplug
- 	else if (!link->hpd_status)
-@@ -450,7 +456,6 @@ int dpia_handle_usb4_bandwidth_allocation_for_link(struct dc_link *link, int pea
- out:
- 	return ret;
- }
--
- bool link_dp_dpia_allocate_usb4_bandwidth_for_stream(struct dc_link *link, int req_bw)
- {
- 	bool ret = false;
-@@ -458,7 +463,7 @@ bool link_dp_dpia_allocate_usb4_bandwidth_for_stream(struct dc_link *link, int r
- 
- 	DC_LOG_DEBUG("%s: ENTER: link(%d), hpd_status(%d), current allocated_bw(%d), req_bw(%d)\n",
- 		__func__, link->link_index, link->hpd_status,
--		link->dpia_bw_alloc_config.sink_allocated_bw, req_bw);
-+		link->dpia_bw_alloc_config.allocated_bw, req_bw);
- 
- 	if (!get_bw_alloc_proceed_flag(link))
- 		goto out;
-@@ -523,3 +528,29 @@ bool dpia_validate_usb4_bw(struct dc_link **link, int *bw_needed_per_dpia, const
- 
- 	return ret;
- }
-+
-+int link_dp_dpia_get_dp_overhead_in_dp_tunneling(struct dc_link *link)
-+{
-+	int dp_overhead = 0, link_mst_overhead = 0;
-+
-+	if (!get_bw_alloc_proceed_flag((link)))
-+		return dp_overhead;
-+
-+	/* if its mst link, add MTPH overhead */
-+	if ((link->type == dc_connection_mst_branch) &&
-+		!link->dpcd_caps.channel_coding_cap.bits.DP_128b_132b_SUPPORTED) {
-+		/* For 8b/10b encoding: MTP is 64 time slots long, slot 0 is used for MTPH
-+		 * MST overhead is 1/64 of link bandwidth (excluding any overhead)
-+		 */
-+		const struct dc_link_settings *link_cap =
-+			dc_link_get_link_cap(link);
-+		uint32_t link_bw_in_kbps =
-+			link_cap->link_rate * link_cap->lane_count * LINK_RATE_REF_FREQ_IN_KHZ * 8;
-+		link_mst_overhead = (link_bw_in_kbps / 64) + ((link_bw_in_kbps % 64) ? 1 : 0);
-+	}
-+
-+	/* add all the overheads */
-+	dp_overhead = link_mst_overhead;
-+
-+	return dp_overhead;
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.h b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.h
-index 981bc4eb6120e..3b6d8494f9d5d 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.h
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.h
-@@ -99,4 +99,13 @@ void dpia_handle_bw_alloc_response(struct dc_link *link, uint8_t bw, uint8_t res
-  */
- bool dpia_validate_usb4_bw(struct dc_link **link, int *bw_needed, const unsigned int num_dpias);
- 
-+/*
-+ * Obtain all the DP overheads in dp tunneling for the dpia link
-+ *
-+ * @link: pointer to the dc_link struct instance
-+ *
-+ * return: DP overheads in DP tunneling
-+ */
-+int link_dp_dpia_get_dp_overhead_in_dp_tunneling(struct dc_link *link);
-+
- #endif /* DC_INC_LINK_DP_DPIA_BW_H_ */
+-	for (uint8_t i = 0; i < num_streams; ++i) {
++	for (unsigned int i = 0; i < num_streams; ++i) {
+ 		if (stream[i].signal == SIGNAL_TYPE_DISPLAY_PORT) {
+ 			/* new dpia sst stream, check whether it exceeds max dpia */
+ 			if (num_dpias >= MAX_DPIA_NUM)
 -- 
 2.43.0
 
