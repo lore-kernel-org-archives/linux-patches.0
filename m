@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D32A13B7A0;
-	Tue, 27 Feb 2024 14:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D584954BD4;
+	Tue, 27 Feb 2024 14:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042413; cv=none; b=m9PppPseGoK/WTgwD3ejGQSfVJn6Ke0nlcLLbws/2LXWVYQla+enMzmuSOpWZrg1PQyHepVx7JE+P5aNqEKwCymrkc3Z/7ARcUg+LEQFym1ydSvBVtHKdCjBFDs/HdXv0w75phnm5jzC++Fkah+gBvhgw/phhDsJs/Jvm+pkNx8=
+	t=1709042415; cv=none; b=fD3T7fQu01LBWB8Sgi2YxhWGZJEBF20YwyVsk8aR5TOmXEEAgxA98gANQ52tuufz4IWX5AII6RTvrFpSSKJh2CRrurGFU/n11SvD8Ti5LiLQFoJ4LGQxfwWnyi6lZlozDbA/X6w/enwBGykHN8T/Y46HyQo1BHFd/P0xFQYr8hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042413; c=relaxed/simple;
-	bh=1VMwaL+M8AxAeSAgji3g+zwSQsF+ZWzKpof3Tl3ttSM=;
+	s=arc-20240116; t=1709042415; c=relaxed/simple;
+	bh=YjaIUWO1B8lCChG31sKc3wwbBNG/apkNjHYSfbwUxL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyVV9JYBm3u0MKfQdlOxvOjmWuqMgiQkC7enXowZmJ5taUiMyugWV1vkdUDYIBzbvpL2rSjP1LBlLtUMEaqpH2JVQZJUO//0cPJFv9zR2jbKsEthGcWqJNJyt7SVHWfmId2JWoZCIeQMAZ9EQ4tBJo6bRnAS/QtlPVXfoRbLmQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnnyFNf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f0IOU/tE3PY3BnrVhS1pVMi4hUvsdwDu/Cp741lPgMLr1RQtDuOPO371QOKTCLEgFcf4aduVFr/PnR/oEhvMGCxIE+R6o35ksTj+6axl3GnWix+PPcI21tQ3pg5l+1+tSTULX0CQnPfTzdk6LzzYQmkPqjXEqcbMk0UTFlmGkPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Jzvvolp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnnyFNf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B802C433C7;
-	Tue, 27 Feb 2024 14:00:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Jzvvolp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64570C433C7;
+	Tue, 27 Feb 2024 14:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042413;
-	bh=1VMwaL+M8AxAeSAgji3g+zwSQsF+ZWzKpof3Tl3ttSM=;
+	s=korg; t=1709042415;
+	bh=YjaIUWO1B8lCChG31sKc3wwbBNG/apkNjHYSfbwUxL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OnnyFNf9ppgmIveAdGzUUmpX2XuqNWZ8ot2MQXVbC6vxP7XqyC5EC89Jlo/UXYSC2
-	 4O6LBHnvhUMV+O3Nn2qGu8l/iCEMDblwp6OWIgNLnNwg2W//zvFMFjf8lidUbSHi/4
-	 BBesx7b23tcti0Tjixj1HhAq4I8iHg+aWSmiWKhI=
+	b=1Jzvvolpe1ENutdEOccFy5vnHzT7714NLfwjO/GZUbopT534C931L7Tb8ugFXuIRN
+	 eCt+DeOCw1tUuLFQSseEDc8rt+pA0T0815D0bw+PG+jH8iY/sz71bN8CuEmrfSDjEV
+	 GCrReawfbvdRgFHkJQbVdildqkAOSk1hx21/sH/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Kurzinger <ekurzinger@nvidia.com>,
-	Simon Ser <contact@emersion.fr>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 287/299] drm/syncobj: handle NULL fence in syncobj_eventfd_entry_func
-Date: Tue, 27 Feb 2024 14:26:38 +0100
-Message-ID: <20240227131634.909449014@linuxfoundation.org>
+Subject: [PATCH 6.6 288/299] selftests/iommu: fix the config fragment
+Date: Tue, 27 Feb 2024 14:26:39 +0100
+Message-ID: <20240227131634.944726482@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -45,66 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Erik Kurzinger <ekurzinger@nvidia.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit 2aa6f5b0fd052e363bb9d4b547189f0bf6b3d6d3 ]
+[ Upstream commit 510325e5ac5f45c1180189d3bfc108c54bf64544 ]
 
-During syncobj_eventfd_entry_func, dma_fence_chain_find_seqno may set
-the fence to NULL if the given seqno is signaled and a later seqno has
-already been submitted. In that case, the eventfd should be signaled
-immediately which currently does not happen.
+The config fragment doesn't follow the correct format to enable those
+config options which make the config options getting missed while
+merging with other configs.
 
-This is a similar issue to the one addressed by commit b19926d4f3a6
-("drm/syncobj: Deal with signalled fences in drm_syncobj_find_fence.").
+➜ merge_config.sh -m .config tools/testing/selftests/iommu/config
+Using .config as base
+Merging tools/testing/selftests/iommu/config
+➜ make olddefconfig
+.config:5295:warning: unexpected data: CONFIG_IOMMUFD
+.config:5296:warning: unexpected data: CONFIG_IOMMUFD_TEST
 
-As a fix, if the return value of dma_fence_chain_find_seqno indicates
-success but it sets the fence to NULL, we will assign a stub fence to
-ensure the following code still signals the eventfd.
+While at it, add CONFIG_FAULT_INJECTION as well which is needed for
+CONFIG_IOMMUFD_TEST. If CONFIG_FAULT_INJECTION isn't present in base
+config (such as x86 defconfig), CONFIG_IOMMUFD_TEST doesn't get enabled.
 
-v1 -> v2: assign a stub fence instead of signaling the eventfd
-
-Signed-off-by: Erik Kurzinger <ekurzinger@nvidia.com>
-Fixes: c7a472297169 ("drm/syncobj: add IOCTL to register an eventfd")
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240221184527.37667-1-ekurzinger@nvidia.com
+Fixes: 57f0988706fe ("iommufd: Add a selftest")
+Link: https://lore.kernel.org/r/20240222074934.71380-1-usama.anjum@collabora.com
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_syncobj.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ tools/testing/selftests/iommu/config | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index b3433265be6ab..5860428da8de8 100644
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -1380,10 +1380,21 @@ syncobj_eventfd_entry_func(struct drm_syncobj *syncobj,
- 
- 	/* This happens inside the syncobj lock */
- 	fence = dma_fence_get(rcu_dereference_protected(syncobj->fence, 1));
-+	if (!fence)
-+		return;
-+
- 	ret = dma_fence_chain_find_seqno(&fence, entry->point);
--	if (ret != 0 || !fence) {
-+	if (ret != 0) {
-+		/* The given seqno has not been submitted yet. */
- 		dma_fence_put(fence);
- 		return;
-+	} else if (!fence) {
-+		/* If dma_fence_chain_find_seqno returns 0 but sets the fence
-+		 * to NULL, it implies that the given seqno is signaled and a
-+		 * later seqno has already been submitted. Assign a stub fence
-+		 * so that the eventfd still gets signaled below.
-+		 */
-+		fence = dma_fence_get_stub();
- 	}
- 
- 	list_del_init(&entry->node);
+diff --git a/tools/testing/selftests/iommu/config b/tools/testing/selftests/iommu/config
+index 6c4f901d6fed3..110d73917615d 100644
+--- a/tools/testing/selftests/iommu/config
++++ b/tools/testing/selftests/iommu/config
+@@ -1,2 +1,3 @@
+-CONFIG_IOMMUFD
+-CONFIG_IOMMUFD_TEST
++CONFIG_IOMMUFD=y
++CONFIG_FAULT_INJECTION=y
++CONFIG_IOMMUFD_TEST=y
 -- 
 2.43.0
 
