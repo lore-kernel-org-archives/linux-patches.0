@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E40013B791;
-	Tue, 27 Feb 2024 13:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF0513B791;
+	Tue, 27 Feb 2024 13:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040983; cv=none; b=DQiWSbN4b4iFyK8nTFX1uKv1pTLh8YvuA4TZirCkbnE2ZMW/+Au92iK8GPVnVLV8pzufUXg6wiTAp8TdhjbVVP13lkUZstwzvVRdpPVxr8dHuWm9axhafsCUz5eLF2ZPjFa1MGhFQ9Lr4+KrTfKGBRsTpO76/w55smUMW3JmkyI=
+	t=1709040986; cv=none; b=hCcfq0OzHbvyjhUEJKvsGuMdIFLFUpJyofGqlxsJRxbYU/pTIFvRxJhiZ/gudj+HSioN/6uAfE1e75VNGYtSx8nVlJGBD+0inTw5DZh0CKIhZbWqfMVJNwODh4z+0kqw4JN54xIseWiDzC4g65en14xwJWwyA3a4cxryhcIySEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040983; c=relaxed/simple;
-	bh=2KL+3kvGVnn4fh2czcuBXfjyYJnHYencw8V+2FfV4ao=;
+	s=arc-20240116; t=1709040986; c=relaxed/simple;
+	bh=3yf0UTEhInSt5Xkpo/DpWEJ+ipT8aEH2e8sKXZ0BVBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CEsSo1QgdaWJKMSZx74EPPL0m/vo8/bHY2259PQfE9W/5/0sIX0YVTyKj8SjwFo9HkctNkp5fsOnwytmtAU9h/zoPODKZv/SnlQX9gAxJsKJXzYZh7akxDDN3ylEIBxR1AXs/RG0KKoHvt0SkuCL/bzXeXlg/pxR5gNqP3aA2Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tz3EAa4K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gdSFQAd8eq7XC6KU7i4j//ax/tchJ5Sn5MxILhZIQoPq4pA3Wzy6tp9jwUn4iYKXEBRNVdWeIh5nA1llBHr2ge9huhp5YKvf0T7j8W6l20NXQtNzcc1KRQD70kkt+jQDlCtIreosmYZY0ggE15cyynfxUs3itr/qerYVFArxQsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSH7xnSF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tz3EAa4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79B3C433F1;
-	Tue, 27 Feb 2024 13:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSH7xnSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A765CC433F1;
+	Tue, 27 Feb 2024 13:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040983;
-	bh=2KL+3kvGVnn4fh2czcuBXfjyYJnHYencw8V+2FfV4ao=;
+	s=korg; t=1709040986;
+	bh=3yf0UTEhInSt5Xkpo/DpWEJ+ipT8aEH2e8sKXZ0BVBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tz3EAa4KZgy2mBxaL2WiDMkIOFo+vBXP5jzArnVjG8n26Q8YJUwg+3vOVp6zPOt+o
-	 20aasSS0oKwmdV8Ve6zik+NkGBuuN/MtodZj1aYcDiAqOnobUkUsgADkKL5MMUpO1M
-	 4kzFyPsjl4EZbS8uloBTKN/kPvEwVCs+tSReEKgg=
+	b=rSH7xnSFsfjE98I1Eta2vLRluqhUa4TkcxnUIxUj+6Ucrr1JMaDiLfdAYDPLZYvVS
+	 gu94i+YH1/r9zeJ+f3SMmbCrSrGqjUy8TqZ2RRJvScgYDpLtAue5FgfL5G7+f3i3+c
+	 L/p6Di5A9e+P3urmLvuVAZHAJFkMm3bK4j/oOgxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bert Karwatzki <spasswolf@web.de>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.7 150/334] drm/buddy: Modify duplicate list_splice_tail call
-Date: Tue, 27 Feb 2024 14:20:08 +0100
-Message-ID: <20240227131635.303005747@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.7 177/334] platform/x86: x86-android-tablets: Fix keyboard touchscreen on Lenovo Yogabook1 X90
+Date: Tue, 27 Feb 2024 14:20:35 +0100
+Message-ID: <20240227131636.285482008@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -46,54 +43,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 02f76a9cd4494719600baf1ab278930df39431ab upstream.
+commit bd8905d70944aae5063fd91c667e6f846ee92718 upstream.
 
-Remove the duplicate list_splice_tail call when the
-total_allocated < size condition is true.
+After commit 4014ae236b1d ("platform/x86: x86-android-tablets: Stop using
+gpiolib private APIs") the touchscreen in the keyboard half of
+the Lenovo Yogabook1 X90 stopped working with the following error:
 
-Cc: <stable@vger.kernel.org> # 6.7+
-Fixes: 8746c6c9dfa3 ("drm/buddy: Fix alloc_range() error handling code")
-Reported-by: Bert Karwatzki <spasswolf@web.de>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240216100048.4101-1-Arunpravin.PaneerSelvam@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+ Goodix-TS i2c-goodix_ts: error -EBUSY: Failed to get irq GPIO
+
+The problem is that when getting the IRQ for instantiated i2c_client-s
+from a GPIO (rather then using an IRQ directly from the IOAPIC),
+x86_acpi_irq_helper_get() now properly requests the GPIO, which disallows
+other drivers from requesting it. Normally this is a good thing, but
+the goodix touchscreen also uses the IRQ as an output during reset
+to select which of its 2 possible I2C addresses should be used.
+
+Add a new free_gpio flag to struct x86_acpi_irq_data to deal with this
+and release the GPIO after getting the IRQ in this special case.
+
+Fixes: 4014ae236b1d ("platform/x86: x86-android-tablets: Stop using gpiolib private APIs")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240216201721.239791-2-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_buddy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/x86-android-tablets/core.c                |    3 +++
+ drivers/platform/x86/x86-android-tablets/lenovo.c              |    1 +
+ drivers/platform/x86/x86-android-tablets/x86-android-tablets.h |    1 +
+ 3 files changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_buddy.c b/drivers/gpu/drm/drm_buddy.c
-index c1a99bf4dffd..c4222b886db7 100644
---- a/drivers/gpu/drm/drm_buddy.c
-+++ b/drivers/gpu/drm/drm_buddy.c
-@@ -538,13 +538,13 @@ static int __alloc_range(struct drm_buddy *mm,
- 		list_add(&block->left->tmp_link, dfs);
- 	} while (1);
+--- a/drivers/platform/x86/x86-android-tablets/core.c
++++ b/drivers/platform/x86/x86-android-tablets/core.c
+@@ -113,6 +113,9 @@ int x86_acpi_irq_helper_get(const struct
+ 		if (irq_type != IRQ_TYPE_NONE && irq_type != irq_get_trigger_type(irq))
+ 			irq_set_irq_type(irq, irq_type);
  
--	list_splice_tail(&allocated, blocks);
--
- 	if (total_allocated < size) {
- 		err = -ENOSPC;
- 		goto err_free;
- 	}
- 
-+	list_splice_tail(&allocated, blocks);
++		if (data->free_gpio)
++			devm_gpiod_put(&x86_android_tablet_device->dev, gpiod);
 +
- 	return 0;
+ 		return irq;
+ 	case X86_ACPI_IRQ_TYPE_PMIC:
+ 		status = acpi_get_handle(NULL, data->chip, &handle);
+--- a/drivers/platform/x86/x86-android-tablets/lenovo.c
++++ b/drivers/platform/x86/x86-android-tablets/lenovo.c
+@@ -96,6 +96,7 @@ static const struct x86_i2c_client_info
+ 			.trigger = ACPI_EDGE_SENSITIVE,
+ 			.polarity = ACPI_ACTIVE_LOW,
+ 			.con_id = "goodix_ts_irq",
++			.free_gpio = true,
+ 		},
+ 	}, {
+ 		/* Wacom Digitizer in keyboard half */
+--- a/drivers/platform/x86/x86-android-tablets/x86-android-tablets.h
++++ b/drivers/platform/x86/x86-android-tablets/x86-android-tablets.h
+@@ -38,6 +38,7 @@ struct x86_acpi_irq_data {
+ 	int index;
+ 	int trigger;  /* ACPI_EDGE_SENSITIVE / ACPI_LEVEL_SENSITIVE */
+ 	int polarity; /* ACPI_ACTIVE_HIGH / ACPI_ACTIVE_LOW / ACPI_ACTIVE_BOTH */
++	bool free_gpio; /* Release GPIO after getting IRQ (for TYPE_GPIOINT) */
+ 	const char *con_id;
+ };
  
- err_undo:
--- 
-2.44.0
-
 
 
