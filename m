@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9787278B61;
-	Tue, 27 Feb 2024 13:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4962013B7A0;
+	Tue, 27 Feb 2024 13:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041184; cv=none; b=vGXcEZ2syDz+BBCUJqxvXyPy6/GxOfqFCINSY7HgTZmgYdSVFvc/TT1FzYZaIJg3L9HfxYDv+3uC+CziUN4URP5wf54RWgdfxyTUZwbe6Bhc9R6meqUpHZCUZTqtVW2A91b5mSc5HmagkDSXEK91uj3r46XdpcBn2m5LQG7CvcE=
+	t=1709041187; cv=none; b=Q0L024gaU/TUxyurIYlA5Hv0+1iRmOhX2PfRx7MgViGLI8SwcPYN9h/AStKe5jwM6e3BHCFsUF1M4PFEpnmVtt42W7Av9EgIdRzctdkIOsQPJOkEYLGB7siUE1aXW9iKGqWwT88dhKr3xiWeDuR04L860fFLkImP2q4BdOSo8BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041184; c=relaxed/simple;
-	bh=W1eQje+MsB/8IQVc1ytDmWsf+4F8FZsfCu5WzHGvsdI=;
+	s=arc-20240116; t=1709041187; c=relaxed/simple;
+	bh=/VbhQ9cbUsgzzHTZ7bI+WfvjqaTeRDuTImjJFG0MtbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQiTfFtxj9J3ne2GGjiVx6yA0PVjdkmeDEN+TYPeXGoWj5PR1ZAxXv5YE01a7pMUf5sDf0r7Nlrv0oCbdAmtfRVNR7S7uPAMGXEMsWqh81QUDBeomX/DCIDhHmaMujyLUPob01gh2K0SY164zVMAGmJLUoPG085gJF5n3EB5Po4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZ81kxVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SQtURRiNxOWK+bD7tGgdBKdiur3TBBEi+IOUEmwXu4WLz7iYPO4gT+eZe5Le4RjWX/yer5ESRMhuYa/2UrjzGWfZA4Nl930hWTG6UpCkIIFOh/I7Gl1fI6y3hwvXmNNl2bc74FgXqW5r2afrz9GpXhcNrY4LM2kdG1Q97wOx1Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue2CvbWY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZ81kxVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22987C433C7;
-	Tue, 27 Feb 2024 13:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue2CvbWY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2F9C43394;
+	Tue, 27 Feb 2024 13:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041184;
-	bh=W1eQje+MsB/8IQVc1ytDmWsf+4F8FZsfCu5WzHGvsdI=;
+	s=korg; t=1709041187;
+	bh=/VbhQ9cbUsgzzHTZ7bI+WfvjqaTeRDuTImjJFG0MtbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NZ81kxVq5iy9DP1hhrKuV9gl4pXDhvZtqwiWGzofwQbdN+a7RuqgbHZOeEzkIEfiI
-	 4KhcL6Dq3Z766q4FcflpDg4wAczFHtqCImn+AhM+OqQNrbWl9yC50MBlAp2dhvpZok
-	 J1Q7eFazUU/JZWFGxo81F4ynvR2lkUj8XjLEAxIU=
+	b=ue2CvbWYkGTaLilzvFMRpYRwVjEbDRxSp78RnWWY+U4sYVIKjEqAlJacPgDzltvDP
+	 Vc3Qwsl8k+g3Jutu3QonG6qATKZ/tk9HQkSZVGwPO1wRm2IspVwrs5NoLGO0skWv/h
+	 SyERkQMhS8HnImkQ1pw0lkJQ3wrJiIUaXTESazJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 243/334] bus: imx-weim: fix valid range check
-Date: Tue, 27 Feb 2024 14:21:41 +0100
-Message-ID: <20240227131638.712810419@linuxfoundation.org>
+Subject: [PATCH 6.7 252/334] RDMA/srpt: fix function pointer cast warnings
+Date: Tue, 27 Feb 2024 14:21:50 +0100
+Message-ID: <20240227131639.045152294@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,37 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 7bca405c986075c99b9f729d3587b5c45db39d01 ]
+[ Upstream commit eb5c7465c3240151cd42a55c7ace9da0026308a1 ]
 
-When the range parsing was open-coded the number of u32 entries to
-parse had to be a multiple of 4 and the driver checks this. With
-the range parsing converted to the range parser the counting changes
-from individual u32 entries to a complete range, so the check must
-not reject counts not divisible by 4.
+clang-16 notices that srpt_qp_event() gets called through an incompatible
+pointer here:
 
-Fixes: 2a88e4792c6d ("bus: imx-weim: Remove open coded "ranges" parsing")
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+drivers/infiniband/ulp/srpt/ib_srpt.c:1815:5: error: cast from 'void (*)(struct ib_event *, struct srpt_rdma_ch *)' to 'void (*)(struct ib_event *, void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+ 1815 |                 = (void(*)(struct ib_event *, void*))srpt_qp_event;
+
+Change srpt_qp_event() to use the correct prototype and adjust the
+argument inside of it.
+
+Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240213100728.458348-1-arnd@kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/imx-weim.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/ulp/srpt/ib_srpt.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bus/imx-weim.c b/drivers/bus/imx-weim.c
-index 42c9386a7b423..f9fd1582f150d 100644
---- a/drivers/bus/imx-weim.c
-+++ b/drivers/bus/imx-weim.c
-@@ -117,7 +117,7 @@ static int imx_weim_gpr_setup(struct platform_device *pdev)
- 		i++;
- 	}
+diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
+index d2dce6ce30a94..040234c01be4d 100644
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -214,10 +214,12 @@ static const char *get_ch_state_name(enum rdma_ch_state s)
+ /**
+  * srpt_qp_event - QP event callback function
+  * @event: Description of the event that occurred.
+- * @ch: SRPT RDMA channel.
++ * @ptr: SRPT RDMA channel.
+  */
+-static void srpt_qp_event(struct ib_event *event, struct srpt_rdma_ch *ch)
++static void srpt_qp_event(struct ib_event *event, void *ptr)
+ {
++	struct srpt_rdma_ch *ch = ptr;
++
+ 	pr_debug("QP event %d on ch=%p sess_name=%s-%d state=%s\n",
+ 		 event->event, ch, ch->sess_name, ch->qp->qp_num,
+ 		 get_ch_state_name(ch->state));
+@@ -1811,8 +1813,7 @@ static int srpt_create_ch_ib(struct srpt_rdma_ch *ch)
+ 	ch->cq_size = ch->rq_size + sq_size;
  
--	if (i == 0 || i % 4)
-+	if (i == 0)
- 		goto err;
- 
- 	for (i = 0; i < ARRAY_SIZE(gprvals); i++) {
+ 	qp_init->qp_context = (void *)ch;
+-	qp_init->event_handler
+-		= (void(*)(struct ib_event *, void*))srpt_qp_event;
++	qp_init->event_handler = srpt_qp_event;
+ 	qp_init->send_cq = ch->cq;
+ 	qp_init->recv_cq = ch->cq;
+ 	qp_init->sq_sig_type = IB_SIGNAL_REQ_WR;
 -- 
 2.43.0
 
