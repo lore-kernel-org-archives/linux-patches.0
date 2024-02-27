@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E84413B2B3;
-	Tue, 27 Feb 2024 14:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C2478B61;
+	Tue, 27 Feb 2024 14:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043368; cv=none; b=i+PrDMoBHBeuByPjZb6w3OD1QFMmhIR/YNNEcWpmCgX2koWpFepKUGcEQtEKY44RdoFdUxHtJQynAG/jwBRJePsnDw57imhCC4HqODPZxSf5BRvl1ZzpLHbSiAXJgjcE851WGp8UjImky7w89jn+xDgSNq+90cKqryK+JSqsBzY=
+	t=1709043371; cv=none; b=NSAaRosdi+g5b44AthoAqlZJDrIQ1pOkwMoPV0BBvANCHGQoFqKR0Y4YHAleO+yyOe3PE/fhtFo+R2ufzQSpeE2MC95nl0mKrXtr6uJZZby2sS5E9Gew2A5kqJn0cpzPKjQGVSIk1ocA8Dv1LcXteZS3Z7vqobfnWmkEHeXlB+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043368; c=relaxed/simple;
-	bh=9+wLVyX8Qggs+IQr408V3Sni0pBD6I2ARpdgFc2qli4=;
+	s=arc-20240116; t=1709043371; c=relaxed/simple;
+	bh=XRAQeTlV7K+cK66KU+wQAGcvKt+LgBjF+JoC1OU0Qks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5EJ3ogxSKGNq6o+Y3M73GqkqSz92UrSIaEqsRTPTlnWuJ7J49rzA6a2teW8B+qODSJvMKd4lG4C1MXZYEDz8QyyyzKFg9FtrdQQxbhZSG/ZrHmAgs3E5tB1TX8ZKzGyQ8otS56/brqaYaguwM6aMugTNcV48o2pFhnndO7jyTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsNm8yW+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1KrqR6+IzqcFlKWDBuvczCG7O80U6T0GKrxCUFv6XtMzL6WnRztNPSwvTu+yOib4e51r0Tje+WT3YQaF2jbEUN+cmZmiRxWkLrTE3e6yj6oVuwfZxQGDavk56pdZbPRVrdc/MCAVB4Grt0my30U1NUNKziXH94nqBVxKOGa9j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER1KbcyZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsNm8yW+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1082C433C7;
-	Tue, 27 Feb 2024 14:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER1KbcyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B14C433F1;
+	Tue, 27 Feb 2024 14:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043368;
-	bh=9+wLVyX8Qggs+IQr408V3Sni0pBD6I2ARpdgFc2qli4=;
+	s=korg; t=1709043370;
+	bh=XRAQeTlV7K+cK66KU+wQAGcvKt+LgBjF+JoC1OU0Qks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsNm8yW+GpMlWwCKNeqjBHitP7Tg0zTCOK5wFatv4VbeXsUIPc6YqpQB9c4GJM7Cr
-	 kaf9f9pvt3HJ3AVa5KNbKBWDsBtk1IGoG0G8MJo87JLDb3j8AmbtSjCkS8j4Th8v3X
-	 7isBaRJVfL/nwFVqD/TyOWsMA4C5TR/zO0mhRGXE=
+	b=ER1KbcyZfgY5zaUFacTyE7nmttIVR81Ocuk0Q/geSupi5foCEefdpmfVugH6uaF0u
+	 uE9TDF8LYTLBQFvXbBZfb13dmgZQhIPmITbpBDqU193GPIJj7AKlk6IBfZUWRfBsDH
+	 Oqt89pbQlqTVIaHPzj+29rgDYMts3g9w+z8WGnXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mats Kronberg <kronberg@nsc.liu.se>,
-	Daniel Vacek <neelx@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.1 083/195] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
-Date: Tue, 27 Feb 2024 14:25:44 +0100
-Message-ID: <20240227131613.227628685@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 084/195] LoongArch: Disable IRQ before init_fn() for nonboot CPUs
+Date: Tue, 27 Feb 2024 14:25:45 +0100
+Message-ID: <20240227131613.260203274@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,100 +49,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vacek <neelx@redhat.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
+commit 1001db6c42e4012b55e5ee19405490f23e033b5a upstream.
 
-Unfortunately the commit `fd8958efe877` introduced another error
-causing the `descs` array to overflow. This reults in further crashes
-easily reproducible by `sendmsg` system call.
+Disable IRQ before init_fn() for nonboot CPUs when hotplug, in order to
+silence such warnings (and also avoid potential errors due to unexpected
+interrupts):
 
-[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
-[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
---
-[ 1080.974535] Call Trace:
-[ 1080.976990]  <TASK>
-[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
-[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
-[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
-[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
-[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
---
-[ 1081.148347]  __sys_sendmsg+0x59/0xa0
+WARNING: CPU: 1 PID: 0 at kernel/rcu/tree.c:4503 rcu_cpu_starting+0x214/0x280
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.6.17+ #1198
+pc 90000000048e3334 ra 90000000047bd56c tp 900000010039c000 sp 900000010039fdd0
+a0 0000000000000001 a1 0000000000000006 a2 900000000802c040 a3 0000000000000000
+a4 0000000000000001 a5 0000000000000004 a6 0000000000000000 a7 90000000048e3f4c
+t0 0000000000000001 t1 9000000005c70968 t2 0000000004000000 t3 000000000005e56e
+t4 00000000000002e4 t5 0000000000001000 t6 ffffffff80000000 t7 0000000000040000
+t8 9000000007931638 u0 0000000000000006 s9 0000000000000004 s0 0000000000000001
+s1 9000000006356ac0 s2 9000000007244000 s3 0000000000000001 s4 0000000000000001
+s5 900000000636f000 s6 7fffffffffffffff s7 9000000002123940 s8 9000000001ca55f8
+   ra: 90000000047bd56c tlb_init+0x24c/0x528
+  ERA: 90000000048e3334 rcu_cpu_starting+0x214/0x280
+ CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
+ PRMD: 00000000 (PPLV0 -PIE -PWE)
+ EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
+ ECFG: 00071000 (LIE=12 VS=7)
+ESTAT: 000c0000 [BRK] (IS= ECode=12 EsubCode=0)
+ PRID: 0014c010 (Loongson-64bit, Loongson-3A5000)
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.6.17+ #1198
+Stack : 0000000000000000 9000000006375000 9000000005b61878 900000010039c000
+        900000010039fa30 0000000000000000 900000010039fa38 900000000619a140
+        9000000006456888 9000000006456880 900000010039f950 0000000000000001
+        0000000000000001 cb0cb028ec7e52e1 0000000002b90000 9000000100348700
+        0000000000000000 0000000000000001 ffffffff916d12f1 0000000000000003
+        0000000000040000 9000000007930370 0000000002b90000 0000000000000004
+        9000000006366000 900000000619a140 0000000000000000 0000000000000004
+        0000000000000000 0000000000000009 ffffffffffc681f2 9000000002123940
+        9000000001ca55f8 9000000006366000 90000000047a4828 00007ffff057ded8
+        00000000000000b0 0000000000000000 0000000000000000 0000000000071000
+        ...
+Call Trace:
+[<90000000047a4828>] show_stack+0x48/0x1a0
+[<9000000005b61874>] dump_stack_lvl+0x84/0xcc
+[<90000000047f60ac>] __warn+0x8c/0x1e0
+[<9000000005b0ab34>] report_bug+0x1b4/0x280
+[<9000000005b63110>] do_bp+0x2d0/0x480
+[<90000000047a2e20>] handle_bp+0x120/0x1c0
+[<90000000048e3334>] rcu_cpu_starting+0x214/0x280
+[<90000000047bd568>] tlb_init+0x248/0x528
+[<90000000047a4c44>] per_cpu_trap_init+0x124/0x160
+[<90000000047a19f4>] cpu_probe+0x494/0xa00
+[<90000000047b551c>] start_secondary+0x3c/0xc0
+[<9000000005b66134>] smpboot_entry+0x50/0x58
 
-crash> ipoib_txreq 0xffff9cfeba229f00
-struct ipoib_txreq {
-  txreq = {
-    list = {
-      next = 0xffff9cfeba229f00,
-      prev = 0xffff9cfeba229f00
-    },
-    descp = 0xffff9cfeba229f40,
-    coalesce_buf = 0x0,
-    wait = 0xffff9cfea4e69a48,
-    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
-    packet_len = 0x46d,
-    tlen = 0x0,
-    num_desc = 0x0,
-    desc_limit = 0x6,
-    next_descq_idx = 0x45c,
-    coalesce_idx = 0x0,
-    flags = 0x0,
-    descs = {{
-        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
-      }, {
-        qw = {  0x3800014231b108, 0x4}
-      }, {
-        qw = { 0x310000e4ee0fcf0, 0x8}
-      }, {
-        qw = {  0x3000012e9f8000, 0x8}
-      }, {
-        qw = {  0x59000dfb9d0000, 0x8}
-      }, {
-        qw = {  0x78000e02e40000, 0x8}
-      }}
-  },
-  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
-  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
-  complete = 0x0,
-  priv = 0x0,
-  txq = 0xffff9cfea4e69880,
-  skb = 0xffff9d099809f400
-}
-
-If an SDMA send consists of exactly 6 descriptors and requires dword
-padding (in the 7th descriptor), the sdma_txreq descriptor array is not
-properly expanded and the packet will overflow into the container
-structure. This results in a panic when the send completion runs. The
-exact panic varies depending on what elements of the container structure
-get corrupted. The fix is to use the correct expression in
-_pad_sdma_tx_descs() to test the need to expand the descriptor array.
-
-With this patch the crashes are no longer reproducible and the machine is
-stable.
-
-Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
 Cc: stable@vger.kernel.org
-Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
-Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
-Signed-off-by: Daniel Vacek <neelx@redhat.com>
-Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/sdma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/smp.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/infiniband/hw/hfi1/sdma.c
-+++ b/drivers/infiniband/hw/hfi1/sdma.c
-@@ -3158,7 +3158,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
- {
- 	int rval = 0;
+--- a/arch/loongarch/kernel/smp.c
++++ b/arch/loongarch/kernel/smp.c
+@@ -297,6 +297,7 @@ void play_dead(void)
+ 		addr = iocsr_read64(LOONGARCH_IOCSR_MBUF0);
+ 	} while (addr == 0);
  
--	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
-+	if ((unlikely(tx->num_desc == tx->desc_limit))) {
- 		rval = _extend_sdma_tx_descs(dd, tx);
- 		if (rval) {
- 			__sdma_txclean(dd, tx);
++	local_irq_disable();
+ 	init_fn = (void *)TO_CACHE(addr);
+ 	iocsr_write32(0xffffffff, LOONGARCH_IOCSR_IPI_CLEAR);
+ 
 
 
