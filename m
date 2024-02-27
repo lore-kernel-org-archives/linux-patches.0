@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8521954BD4;
-	Tue, 27 Feb 2024 13:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461A254BD4;
+	Tue, 27 Feb 2024 13:59:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042396; cv=none; b=Cj+HO7oscOqbNw5z71oRTmkqLJ/VOnBpsVibcXaWlrQQgVdAxFkt/3b5YVKaO5e5dChMtuBqDZpgeo/r26Sr30rswg2ysYcQ4BGCQ0qHa12S3fji1oERgaXwQow0DbMraD/PZXyycoVF4a6zbJ5HYE4NguQvKE8vSFtJJB5DvGI=
+	t=1709042399; cv=none; b=QnrTAbKtnR/wiLkxMhnNtegQ8mrQK6hIyR3xaSL/SwWQixU1O8o4R8o+K0Zw+Tnm2NTl0akvp7Skq8iNSUC4KIDAb3Qyh6ZY9JatXzqn3MPcFp9XkIPgQkfGVGKJfGzClJsHu7Sz1g0xV++tEk7T2hfJaMs6/35cyoeKep5d1TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042396; c=relaxed/simple;
-	bh=BtPIJLAhIgdIFSdtKYKZogzdXzzalNj0DoT/4WmjgVQ=;
+	s=arc-20240116; t=1709042399; c=relaxed/simple;
+	bh=BIbJrtHJ/WiWX2QeSDJwAPRR4HVSSXdfV4tvARp9kjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJ1cMp9sokK/3g9n5brkSHNbdyXNELJE/1WZW9T50MHfGikjDqarciRqyjSkI1tnw1cLRwTnHun+iKBHMUTgJ0Z3TnFlW9YhZ1gIfOfb+Rg9J58nNnaV+sEvs+ENSNcz4KPj6xuglW8I/h+6QevztBhhuvrPEKVNjisArLCg8lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahDZmLPM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ik9aR2qu5PRiAa6CAbRAG5R/LDAAfkyTzfqjbjX8Wo5xdS3YK+moif2ZlzoXADxtcTKl+5bhQYVbuTIakPnBdbal38kBcJIFcg27r0kG8PzBBtMQeHILtsjiR7xY7+5IA22ZagRK4mMN6AVnEqvRiMjtOyO2zRO8ndI4xcBDfN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBdo7D0l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahDZmLPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14308C433F1;
-	Tue, 27 Feb 2024 13:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBdo7D0l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6167C433C7;
+	Tue, 27 Feb 2024 13:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042396;
-	bh=BtPIJLAhIgdIFSdtKYKZogzdXzzalNj0DoT/4WmjgVQ=;
+	s=korg; t=1709042399;
+	bh=BIbJrtHJ/WiWX2QeSDJwAPRR4HVSSXdfV4tvARp9kjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahDZmLPM3YDwAoRnAc44TTr98OYV5R5i2OTrjmUp0Q+kF1+8fwWFAXyOaVm7/3YAj
-	 ZZW43C9Q5HTEZ3AERo9Yj4zzBTmoq6gEvCFa9M9Igf4mQIK8SiPlNF7PK6U1e/ySkX
-	 FtffFBvX5AhgCLeSeX/3Et59JBbe2R7eXbRz6JOw=
+	b=LBdo7D0lVoIc5PwAuudyUw7s8VLGD13war+yY1UPhZ/f8Z4FfiK2SYlTY9qKLXy1i
+	 X4ggTWv+QOATC3c2mmnlKpZGrjCM1IVeGnVrR7/aK6t/etaynyxUNYibxJ/hhxbzFA
+	 8vrbpMl0VR6hTNoTeOhxeW4/QoCMcUlcUFtF9g3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 243/299] x86/numa: Fix the sort compare func used in numa_fill_memblks()
-Date: Tue, 27 Feb 2024 14:25:54 +0100
-Message-ID: <20240227131633.550180898@linuxfoundation.org>
+Subject: [PATCH 6.6 274/299] netfilter: nf_tables: register hooks last when adding new chain/flowtable
+Date: Tue, 27 Feb 2024 14:26:25 +0100
+Message-ID: <20240227131634.497237741@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,48 +50,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b626070ffc14acca5b87a2aa5f581db98617584c ]
+[ Upstream commit d472e9853d7b46a6b094224d131d09ccd3a03daf ]
 
-The compare function used to sort memblks into starting address
-order fails when the result of its u64 address subtraction gets
-truncated to an int upon return.
+Register hooks last when adding chain/flowtable to ensure that packets do
+not walk over datastructure that is being released in the error path
+without waiting for the rcu grace period.
 
-The impact of the bad sort is that memblks will be filled out
-incorrectly. Depending on the set of memblks, a user may see no
-errors at all but still have a bad fill, or see messages reporting
-a node overlap that leads to numa init failure:
-
-[] node 0 [mem: ] overlaps with node 1 [mem: ]
-[] No NUMA configuration found
-
-Replace with a comparison that can only result in: 1, 0, -1.
-
-Fixes: 8f012db27c95 ("x86/numa: Introduce numa_fill_memblks()")
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://lore.kernel.org/r/99dcb3ae87e04995e9f293f6158dc8fa0749a487.1705085543.git.alison.schofield@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 91c7b38dc9f0 ("netfilter: nf_tables: use new transaction infrastructure to handle chain")
+Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/numa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 78 ++++++++++++++++++-----------------
+ 1 file changed, 40 insertions(+), 38 deletions(-)
 
-diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
-index e60c61b8bbc61..dae5c952735c7 100644
---- a/arch/x86/mm/numa.c
-+++ b/arch/x86/mm/numa.c
-@@ -961,7 +961,7 @@ static int __init cmp_memblk(const void *a, const void *b)
- 	const struct numa_memblk *ma = *(const struct numa_memblk **)a;
- 	const struct numa_memblk *mb = *(const struct numa_memblk **)b;
- 
--	return ma->start - mb->start;
-+	return (ma->start > mb->start) - (ma->start < mb->start);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 40e8aa8343cc7..36fdce00bdab4 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -686,15 +686,16 @@ static int nft_delobj(struct nft_ctx *ctx, struct nft_object *obj)
+ 	return err;
  }
  
- static struct numa_memblk *numa_memblk_list[NR_NODE_MEMBLKS] __initdata;
+-static int nft_trans_flowtable_add(struct nft_ctx *ctx, int msg_type,
+-				   struct nft_flowtable *flowtable)
++static struct nft_trans *
++nft_trans_flowtable_add(struct nft_ctx *ctx, int msg_type,
++		        struct nft_flowtable *flowtable)
+ {
+ 	struct nft_trans *trans;
+ 
+ 	trans = nft_trans_alloc(ctx, msg_type,
+ 				sizeof(struct nft_trans_flowtable));
+ 	if (trans == NULL)
+-		return -ENOMEM;
++		return ERR_PTR(-ENOMEM);
+ 
+ 	if (msg_type == NFT_MSG_NEWFLOWTABLE)
+ 		nft_activate_next(ctx->net, flowtable);
+@@ -703,22 +704,22 @@ static int nft_trans_flowtable_add(struct nft_ctx *ctx, int msg_type,
+ 	nft_trans_flowtable(trans) = flowtable;
+ 	nft_trans_commit_list_add_tail(ctx->net, trans);
+ 
+-	return 0;
++	return trans;
+ }
+ 
+ static int nft_delflowtable(struct nft_ctx *ctx,
+ 			    struct nft_flowtable *flowtable)
+ {
+-	int err;
++	struct nft_trans *trans;
+ 
+-	err = nft_trans_flowtable_add(ctx, NFT_MSG_DELFLOWTABLE, flowtable);
+-	if (err < 0)
+-		return err;
++	trans = nft_trans_flowtable_add(ctx, NFT_MSG_DELFLOWTABLE, flowtable);
++	if (IS_ERR(trans))
++		return PTR_ERR(trans);
+ 
+ 	nft_deactivate_next(ctx->net, flowtable);
+ 	nft_use_dec(&ctx->table->use);
+ 
+-	return err;
++	return 0;
+ }
+ 
+ static void __nft_reg_track_clobber(struct nft_regs_track *track, u8 dreg)
+@@ -2506,19 +2507,15 @@ static int nf_tables_addchain(struct nft_ctx *ctx, u8 family, u8 genmask,
+ 	RCU_INIT_POINTER(chain->blob_gen_0, blob);
+ 	RCU_INIT_POINTER(chain->blob_gen_1, blob);
+ 
+-	err = nf_tables_register_hook(net, table, chain);
+-	if (err < 0)
+-		goto err_destroy_chain;
+-
+ 	if (!nft_use_inc(&table->use)) {
+ 		err = -EMFILE;
+-		goto err_use;
++		goto err_destroy_chain;
+ 	}
+ 
+ 	trans = nft_trans_chain_add(ctx, NFT_MSG_NEWCHAIN);
+ 	if (IS_ERR(trans)) {
+ 		err = PTR_ERR(trans);
+-		goto err_unregister_hook;
++		goto err_trans;
+ 	}
+ 
+ 	nft_trans_chain_policy(trans) = NFT_CHAIN_POLICY_UNSET;
+@@ -2526,17 +2523,22 @@ static int nf_tables_addchain(struct nft_ctx *ctx, u8 family, u8 genmask,
+ 		nft_trans_chain_policy(trans) = policy;
+ 
+ 	err = nft_chain_add(table, chain);
+-	if (err < 0) {
+-		nft_trans_destroy(trans);
+-		goto err_unregister_hook;
+-	}
++	if (err < 0)
++		goto err_chain_add;
++
++	/* This must be LAST to ensure no packets are walking over this chain. */
++	err = nf_tables_register_hook(net, table, chain);
++	if (err < 0)
++		goto err_register_hook;
+ 
+ 	return 0;
+ 
+-err_unregister_hook:
++err_register_hook:
++	nft_chain_del(chain);
++err_chain_add:
++	nft_trans_destroy(trans);
++err_trans:
+ 	nft_use_dec_restore(&table->use);
+-err_use:
+-	nf_tables_unregister_hook(net, table, chain);
+ err_destroy_chain:
+ 	nf_tables_chain_destroy(ctx);
+ 
+@@ -8334,9 +8336,9 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 	u8 family = info->nfmsg->nfgen_family;
+ 	const struct nf_flowtable_type *type;
+ 	struct nft_flowtable *flowtable;
+-	struct nft_hook *hook, *next;
+ 	struct net *net = info->net;
+ 	struct nft_table *table;
++	struct nft_trans *trans;
+ 	struct nft_ctx ctx;
+ 	int err;
+ 
+@@ -8416,34 +8418,34 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 	err = nft_flowtable_parse_hook(&ctx, nla, &flowtable_hook, flowtable,
+ 				       extack, true);
+ 	if (err < 0)
+-		goto err4;
++		goto err_flowtable_parse_hooks;
+ 
+ 	list_splice(&flowtable_hook.list, &flowtable->hook_list);
+ 	flowtable->data.priority = flowtable_hook.priority;
+ 	flowtable->hooknum = flowtable_hook.num;
+ 
++	trans = nft_trans_flowtable_add(&ctx, NFT_MSG_NEWFLOWTABLE, flowtable);
++	if (IS_ERR(trans)) {
++		err = PTR_ERR(trans);
++		goto err_flowtable_trans;
++	}
++
++	/* This must be LAST to ensure no packets are walking over this flowtable. */
+ 	err = nft_register_flowtable_net_hooks(ctx.net, table,
+ 					       &flowtable->hook_list,
+ 					       flowtable);
+-	if (err < 0) {
+-		nft_hooks_destroy(&flowtable->hook_list);
+-		goto err4;
+-	}
+-
+-	err = nft_trans_flowtable_add(&ctx, NFT_MSG_NEWFLOWTABLE, flowtable);
+ 	if (err < 0)
+-		goto err5;
++		goto err_flowtable_hooks;
+ 
+ 	list_add_tail_rcu(&flowtable->list, &table->flowtables);
+ 
+ 	return 0;
+-err5:
+-	list_for_each_entry_safe(hook, next, &flowtable->hook_list, list) {
+-		nft_unregister_flowtable_hook(net, flowtable, hook);
+-		list_del_rcu(&hook->list);
+-		kfree_rcu(hook, rcu);
+-	}
+-err4:
++
++err_flowtable_hooks:
++	nft_trans_destroy(trans);
++err_flowtable_trans:
++	nft_hooks_destroy(&flowtable->hook_list);
++err_flowtable_parse_hooks:
+ 	flowtable->data.type->free(&flowtable->data);
+ err3:
+ 	module_put(type->owner);
 -- 
 2.43.0
 
