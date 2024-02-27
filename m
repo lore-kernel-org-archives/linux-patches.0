@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BBB13B7A0;
-	Tue, 27 Feb 2024 13:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF94C13B2B4;
+	Tue, 27 Feb 2024 13:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042306; cv=none; b=LgoybjIJn/dzLP6s7ajef/78qnRVyXFvw6qSZNHIZLFFl4psUR91rOmwE4HRPDOKxKPX8HU01TjmDumdsU+yBC7zZkhtaipctJD6aHKWdvZ9LJoODaH1sUE9kAivY34j3DFok6b+0tdwxpHEra54VL0I6Lh5A/yE9otrEZ0AeyY=
+	t=1709042309; cv=none; b=IEPGnFr/Paq3KNYDrxq23f0Z2ahLIlCs9HlRDuSBzpbO8Do8cmpe37rwqciTcJWETZUrLKBKzf0GITlTkxtwK5/xGxrP/qPc2WMiLulHJPReCZn+02mV3SNzfgPOGxo6KwsQVtH3dwVcyGZpuCve5l7Tgz3pt2eEBuzrtDhp7vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042306; c=relaxed/simple;
-	bh=/e23Qz8WUJhf+pQjvHvl6t2m5307Mdss3ys0DOO1rms=;
+	s=arc-20240116; t=1709042309; c=relaxed/simple;
+	bh=6H573TBLsvjGDzSoLX7GAOaLjrMxEzcb/gsKD9depcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IuUNxqp1geSefe6lAYNL7bzlYyqnMQZn97nt8U4EDUhkCzFDubwiTFLQDU2WhNtgmaezUFng9FhRtSQL9LY90eNc2AsfQmi8iH4k+KAuPrvrEoaYFqzF27rcmtG2UvhI24lSYhYLYzBCBCeH0culc59eRNrxn5l4EACmciN6PhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KR+PTpJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SjuVPRAjgzwxGtI6Tfco/EA5Hmzj1nnlgaIGPOCCXgx9XZ9I+83xTbPOj+LkuNUxQfK23b4R/9u5GGWsAO0F5lPX8wxWSu1s4aHvikN7LcZlBtZHD8XFtfbE/gvwpjvVVjcECrMEgcqTxbcQxJStrsRezONU1lgNwJVjGViRSc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zqz2OSGm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KR+PTpJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD87FC433C7;
-	Tue, 27 Feb 2024 13:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zqz2OSGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77957C433F1;
+	Tue, 27 Feb 2024 13:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042306;
-	bh=/e23Qz8WUJhf+pQjvHvl6t2m5307Mdss3ys0DOO1rms=;
+	s=korg; t=1709042308;
+	bh=6H573TBLsvjGDzSoLX7GAOaLjrMxEzcb/gsKD9depcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KR+PTpJLIxhcsfL3vRHAQIYwvo7SqJmSXpzkBAMSOj4bkp4K2viwtzAssZTIryLDc
-	 kWJM/pr4JmD4SEAklGrf0JpYcGbRjtDcFn8W6RQa0wJDnCUiZaP29YXB7paVYTchxb
-	 h03VU2olYdxlifV4OthjZZaWtTCN0sNWZyeSN2do=
+	b=Zqz2OSGm0g3xQ11qAJSZx3ZJVRdMxrj6gJA0IkqP+9pbwEzEM38iIPS1RPiP9d+uR
+	 2tPsuO+4AEysmeP4kkJmYhi97i2gSVjM+ZkIG4d7lPj8HLuIQpFzKD08ldU4fMd+9/
+	 bXG/MchxTkc0s1fgRi/Ro9onItyR5hB3BbLMgjEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/299] bus: imx-weim: fix valid range check
-Date: Tue, 27 Feb 2024 14:25:33 +0100
-Message-ID: <20240227131632.910333522@linuxfoundation.org>
+Subject: [PATCH 6.6 213/299] RDMA/bnxt_re: Add a missing check in bnxt_qplib_query_srq
+Date: Tue, 27 Feb 2024 14:25:24 +0100
+Message-ID: <20240227131632.640221809@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 7bca405c986075c99b9f729d3587b5c45db39d01 ]
+[ Upstream commit 80dde187f734cf9ccf988d5c2ef1a46b990660fd ]
 
-When the range parsing was open-coded the number of u32 entries to
-parse had to be a multiple of 4 and the driver checks this. With
-the range parsing converted to the range parser the counting changes
-from individual u32 entries to a complete range, so the check must
-not reject counts not divisible by 4.
+Before populating the response, driver has to check the status
+of HWRM command.
 
-Fixes: 2a88e4792c6d ("bus: imx-weim: Remove open coded "ranges" parsing")
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1705985677-15551-6-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/imx-weim.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bus/imx-weim.c b/drivers/bus/imx-weim.c
-index 42c9386a7b423..f9fd1582f150d 100644
---- a/drivers/bus/imx-weim.c
-+++ b/drivers/bus/imx-weim.c
-@@ -117,7 +117,7 @@ static int imx_weim_gpr_setup(struct platform_device *pdev)
- 		i++;
- 	}
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index abbabea7f5fa3..2a62239187622 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -748,7 +748,8 @@ int bnxt_qplib_query_srq(struct bnxt_qplib_res *res,
+ 	bnxt_qplib_fill_cmdqmsg(&msg, &req, &resp, &sbuf, sizeof(req),
+ 				sizeof(resp), 0);
+ 	rc = bnxt_qplib_rcfw_send_message(rcfw, &msg);
+-	srq->threshold = le16_to_cpu(sb->srq_limit);
++	if (!rc)
++		srq->threshold = le16_to_cpu(sb->srq_limit);
+ 	dma_free_coherent(&rcfw->pdev->dev, sbuf.size,
+ 			  sbuf.sb, sbuf.dma_addr);
  
--	if (i == 0 || i % 4)
-+	if (i == 0)
- 		goto err;
- 
- 	for (i = 0; i < ARRAY_SIZE(gprvals); i++) {
 -- 
 2.43.0
 
