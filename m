@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE21313B2B3;
-	Tue, 27 Feb 2024 14:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DCC13A26F;
+	Tue, 27 Feb 2024 14:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042962; cv=none; b=W2qQ4SfY5OqnfUerm4yEgU0SPgoleFiZUmlYKz50xpnf/3ipZqnasgR9+/dMj8wP/lrYpyq6Nl86uXGT7TbXTECt8KCX2VoQ5xdRu6QvdMC/GvCM0nBAsXgiqgdbxb9jW14TQc1ExWJoh70uctySYZGH6TGGkSjWTYV3bcFuUAU=
+	t=1709042964; cv=none; b=PWjNbpH1hLD8aJ5STzg2jw/hjoXpiJvfNQz+Gwj5TOiWH9sWB1hc3SV3eNw9Mo90oeM8TrdTVJh+KVD8iXv2p5/eWpPVBLzVzCa5FnN952OobxRATgzbs1vdsjiysIrRj2lU8WWmYzZarcxLCNBZZg3OYwEBg6+0tnG6UHXV8V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042962; c=relaxed/simple;
-	bh=CGECvdvkRrRbddeitHMsHeUM6/btlwZRmHl7Q6p47Z4=;
+	s=arc-20240116; t=1709042964; c=relaxed/simple;
+	bh=yKgkIFciIP37QXNS9WrwETwXbnhVpZ+koMhM6fggBSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMMWzM0ZOr+/P1v/dRxT9342RjbycYhFgSxoOcjd6XCktvyMcNAAB9RAfQmYmcky8WQgUGcg+6lyb4znqy6GCRK/Tdqk7w0T3U02XMxV/ygKH8xUoDtWvMsjDFmXs1eyEfV88bmgilwwb7JHkmVKh8HOEBD4kM1HWz3/HJHkpQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0LE63MS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0c8vwyZQ2nVTOd5xtVBvVyF7JAppQJpFCWeGoQyEK8O7z1w4/ujkC3BbT61F6vlCwNjT5QuN/vcHyjHY6V1gF+LtKndIg70nhVfe6G/ukKODcWF79ImYwZvI0QsiWgScwqGgSLXS/K/TIO1Wbu7Mtr6bLExTR/XA9hrb2RqA80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iT7ydwt9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0LE63MS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B37C433F1;
-	Tue, 27 Feb 2024 14:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT7ydwt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D20C433F1;
+	Tue, 27 Feb 2024 14:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042961;
-	bh=CGECvdvkRrRbddeitHMsHeUM6/btlwZRmHl7Q6p47Z4=;
+	s=korg; t=1709042964;
+	bh=yKgkIFciIP37QXNS9WrwETwXbnhVpZ+koMhM6fggBSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0LE63MStltd/nCWhmCdaDqxvJgYTjittMbhhy1QIktztHWmaJBsAyNoHaO0Qltqd
-	 skivvr/uxKtVpI6KvkcDjreTF0apOhPNqJQznTLBVNgJMsCjjU3optCEi3h9Y5cc99
-	 kUG1PqtVvDcAr/S+LGYq1/lRSvwRbH9QAsm6SW2s=
+	b=iT7ydwt9f44f2s0l4IjjTZBqljvwY7NQzklb4pHlalYZVt4UaAMe6pK5YRTxzrvpA
+	 uX0KbwxDuiQ7G3hpkm6z1Tw2VyGHiisnMv6ccQTjrNnPaKp68rDBPZ+AGz5xSRnZZT
+	 dFUP39q5CkFs57Yr4WqkW/cEnJySat8qe0mdYCLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paul Cercueil <paul@crapouillou.net>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Arnd Bergmann <arnd@arndb.de>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 155/245] PM: core: Redefine pm_ptr() macro
-Date: Tue, 27 Feb 2024 14:25:43 +0100
-Message-ID: <20240227131620.252855947@linuxfoundation.org>
+Subject: [PATCH 5.15 156/245] PM: core: Add new *_PM_OPS macros, deprecate old ones
+Date: Tue, 27 Feb 2024 14:25:44 +0100
+Message-ID: <20240227131620.288936357@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -55,54 +54,190 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit c06ef740d401d0f4ab188882bf6f8d9cf0f75eaf ]
+[ Upstream commit 1a3c7bb088266fa2db017be299f91f1c1894c857 ]
 
-The pm_ptr() macro was previously conditionally defined, according to
-the value of the CONFIG_PM option. This meant that the pointed structure
-was either referenced (if CONFIG_PM was set), or never referenced (if
-CONFIG_PM was not set), causing it to be detected as unused by the
-compiler.
+This commit introduces the following macros:
 
-This worked fine, but required the __maybe_unused compiler attribute to
-be used to every symbol pointed to by a pointer wrapped with pm_ptr().
+SYSTEM_SLEEP_PM_OPS()
+LATE_SYSTEM_SLEEP_PM_OPS()
+NOIRQ_SYSTEM_SLEEP_PM_OPS()
+RUNTIME_PM_OPS()
 
-We can do better. With this change, the pm_ptr() is now defined the
-same, independently of the value of CONFIG_PM. It now uses the (?:)
-ternary operator to conditionally resolve to its argument. Since the
-condition is known at compile time, the compiler will then choose to
-discard the unused symbols, which won't need to be tagged with
-__maybe_unused anymore.
+These new macros are very similar to their SET_*_PM_OPS() equivalent.
+They however differ in the fact that the callbacks they set will always
+be seen as referenced by the compiler. This means that the callback
+functions don't need to be wrapped with a #ifdef CONFIG_PM guard, or
+tagged with __maybe_unused, to prevent the compiler from complaining
+about unused static symbols. The compiler will then simply evaluate at
+compile time whether or not these symbols are dead code.
 
-This pm_ptr() macro is usually used with pointers to dev_pm_ops
-structures created with SIMPLE_DEV_PM_OPS() or similar macros. These do
-use a __maybe_unused flag, which is now useless with this change, so it
-later can be removed. However in the meantime it causes no harm, and all
-the drivers still compile fine with the new pm_ptr() macro.
+The callbacks that are only useful with CONFIG_PM_SLEEP is enabled, are
+now also wrapped with a new pm_sleep_ptr() macro, which is inspired from
+pm_ptr(). This is needed for drivers that use different callbacks for
+sleep and runtime PM, to handle the case where CONFIG_PM is set and
+CONFIG_PM_SLEEP is not.
+
+This commit also deprecates the following macros:
+
+SIMPLE_DEV_PM_OPS()
+UNIVERSAL_DEV_PM_OPS()
+
+And introduces the following macros:
+
+DEFINE_SIMPLE_DEV_PM_OPS()
+DEFINE_UNIVERSAL_DEV_PM_OPS()
+
+These macros are similar to the functions they were created to replace,
+with the following differences:
+
+ - They use the new macros introduced above, and as such always
+   reference the provided callback functions.
+
+ - They are not tagged with __maybe_unused. They are meant to be used
+   with pm_ptr() or pm_sleep_ptr() for DEFINE_UNIVERSAL_DEV_PM_OPS()
+   and DEFINE_SIMPLE_DEV_PM_OPS() respectively.
+
+ - They declare the symbol static, since every driver seems to do that
+   anyway; and if a non-static use-case is needed an indirection pointer
+   could be used.
+
+The point of this change, is to progressively switch from a code model
+where PM callbacks are all protected behind CONFIG_PM guards, to a code
+model where the PM callbacks are always seen by the compiler, but
+discarded if not used.
 
 Signed-off-by: Paul Cercueil <paul@crapouillou.net>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Stable-dep-of: 18ab69c8ca56 ("Input: iqs269a - do not poll during suspend or resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/pm.h | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ include/linux/pm.h | 74 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 50 insertions(+), 24 deletions(-)
 
 diff --git a/include/linux/pm.h b/include/linux/pm.h
-index 1d8209c09686c..b88ac7dcf2a20 100644
+index b88ac7dcf2a20..fc9691cb01b4f 100644
 --- a/include/linux/pm.h
 +++ b/include/linux/pm.h
-@@ -373,11 +373,7 @@ const struct dev_pm_ops __maybe_unused name = { \
- 	SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
+@@ -300,47 +300,59 @@ struct dev_pm_ops {
+ 	int (*runtime_idle)(struct device *dev);
+ };
+ 
++#define SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
++	.suspend = pm_sleep_ptr(suspend_fn), \
++	.resume = pm_sleep_ptr(resume_fn), \
++	.freeze = pm_sleep_ptr(suspend_fn), \
++	.thaw = pm_sleep_ptr(resume_fn), \
++	.poweroff = pm_sleep_ptr(suspend_fn), \
++	.restore = pm_sleep_ptr(resume_fn),
++
++#define LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
++	.suspend_late = pm_sleep_ptr(suspend_fn), \
++	.resume_early = pm_sleep_ptr(resume_fn), \
++	.freeze_late = pm_sleep_ptr(suspend_fn), \
++	.thaw_early = pm_sleep_ptr(resume_fn), \
++	.poweroff_late = pm_sleep_ptr(suspend_fn), \
++	.restore_early = pm_sleep_ptr(resume_fn),
++
++#define NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
++	.suspend_noirq = pm_sleep_ptr(suspend_fn), \
++	.resume_noirq = pm_sleep_ptr(resume_fn), \
++	.freeze_noirq = pm_sleep_ptr(suspend_fn), \
++	.thaw_noirq = pm_sleep_ptr(resume_fn), \
++	.poweroff_noirq = pm_sleep_ptr(suspend_fn), \
++	.restore_noirq = pm_sleep_ptr(resume_fn),
++
++#define RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
++	.runtime_suspend = suspend_fn, \
++	.runtime_resume = resume_fn, \
++	.runtime_idle = idle_fn,
++
+ #ifdef CONFIG_PM_SLEEP
+ #define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+-	.suspend = suspend_fn, \
+-	.resume = resume_fn, \
+-	.freeze = suspend_fn, \
+-	.thaw = resume_fn, \
+-	.poweroff = suspend_fn, \
+-	.restore = resume_fn,
++	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+ #else
+ #define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+ #endif
+ 
+ #ifdef CONFIG_PM_SLEEP
+ #define SET_LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+-	.suspend_late = suspend_fn, \
+-	.resume_early = resume_fn, \
+-	.freeze_late = suspend_fn, \
+-	.thaw_early = resume_fn, \
+-	.poweroff_late = suspend_fn, \
+-	.restore_early = resume_fn,
++	LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+ #else
+ #define SET_LATE_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+ #endif
+ 
+ #ifdef CONFIG_PM_SLEEP
+ #define SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+-	.suspend_noirq = suspend_fn, \
+-	.resume_noirq = resume_fn, \
+-	.freeze_noirq = suspend_fn, \
+-	.thaw_noirq = resume_fn, \
+-	.poweroff_noirq = suspend_fn, \
+-	.restore_noirq = resume_fn,
++	NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+ #else
+ #define SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+ #endif
+ 
+ #ifdef CONFIG_PM
+ #define SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
+-	.runtime_suspend = suspend_fn, \
+-	.runtime_resume = resume_fn, \
+-	.runtime_idle = idle_fn,
++	RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn)
+ #else
+ #define SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn)
+ #endif
+@@ -349,9 +361,9 @@ struct dev_pm_ops {
+  * Use this if you want to use the same suspend and resume callbacks for suspend
+  * to RAM and hibernation.
+  */
+-#define SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
+-const struct dev_pm_ops __maybe_unused name = { \
+-	SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
++#define DEFINE_SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
++static const struct dev_pm_ops name = { \
++	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
  }
  
--#ifdef CONFIG_PM
--#define pm_ptr(_ptr) (_ptr)
--#else
--#define pm_ptr(_ptr) NULL
--#endif
-+#define pm_ptr(_ptr) PTR_IF(IS_ENABLED(CONFIG_PM), (_ptr))
+ /*
+@@ -367,6 +379,19 @@ const struct dev_pm_ops __maybe_unused name = { \
+  * .resume_early(), to the same routines as .runtime_suspend() and
+  * .runtime_resume(), respectively (and analogously for hibernation).
+  */
++#define DEFINE_UNIVERSAL_DEV_PM_OPS(name, suspend_fn, resume_fn, idle_fn) \
++static const struct dev_pm_ops name = { \
++	SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
++	RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
++}
++
++/* Deprecated. Use DEFINE_SIMPLE_DEV_PM_OPS() instead. */
++#define SIMPLE_DEV_PM_OPS(name, suspend_fn, resume_fn) \
++const struct dev_pm_ops __maybe_unused name = { \
++	SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
++}
++
++/* Deprecated. Use DEFINE_UNIVERSAL_DEV_PM_OPS() instead. */
+ #define UNIVERSAL_DEV_PM_OPS(name, suspend_fn, resume_fn, idle_fn) \
+ const struct dev_pm_ops __maybe_unused name = { \
+ 	SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+@@ -374,6 +399,7 @@ const struct dev_pm_ops __maybe_unused name = { \
+ }
+ 
+ #define pm_ptr(_ptr) PTR_IF(IS_ENABLED(CONFIG_PM), (_ptr))
++#define pm_sleep_ptr(_ptr) PTR_IF(IS_ENABLED(CONFIG_PM_SLEEP), (_ptr))
  
  /*
   * PM_EVENT_ messages
