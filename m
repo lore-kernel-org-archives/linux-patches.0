@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EE3146015;
-	Tue, 27 Feb 2024 13:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4287A13EFE4;
+	Tue, 27 Feb 2024 13:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041523; cv=none; b=G6vBPfjGAzT8zidGT+Lyne0Zn0inL+DwCf3SivR6lYECPF6H5S2OQkXvHoYWaib9PvZwPDO3XFB9pdNXoHhA/xcMcG5v/GhcHBX7Kuiwe6uzHZpc+HnS4PddxdkfT/d+X2nXX7CN2h6GxNO81J14ilhpajwWsb5g+yJJuOTJqZk=
+	t=1709041526; cv=none; b=fKIPxo6c1DMl48DSrLXUu+YERA2lQN06d7OHEVUCBqaKmRNHqyyie7O45COisp1dXSia6fc8OdaLbq55WPvq0QUl5eXaM2YRZEX1qY3tGv9ApU+bp4rUgnUSAaR5uYIPsAJvrUJ93CintMl3PSq71BFXE4gR2aJkPD52fWdri4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041523; c=relaxed/simple;
-	bh=Z5tzvBrZ5YQ37mtb2A30sUwr1h06N0/iUzzOtVqRrH0=;
+	s=arc-20240116; t=1709041526; c=relaxed/simple;
+	bh=ryuRZcHNWj0XjxsvCAWgoYFgnyOimq+2e+u4fPa2hko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9ZFSFnxqwaESajeVa81e6o2NJmq/v3+KwopH7a6mHYMPPyd26W///DBK3navG1TSXjF59ybFeGBkc+/+WvG5O27pbHCW1RTRR1utxL86J2Wa7wOcNbigpq+3Nwyq6ztQdBuGiEVe2XWuRpTA0FQzvdMz1LjSZx8aEedWtYcYuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4Yf7Vi7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTupAe+uAMZWfUGa6Fto79IYjOwzorKekKZz2ndSVtsm71WHllmebd1MtQx8WNsxQYCOdybFxLt6HMVPQsdhB+HG8KCUajuLh6hXMLZv0xilaMrDL2xEjZWmz8ZqHcDbtM9TW2rRk2TNCk39pgs89CAYVP12C7vSdnw7p5ymsHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfvrwuXp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4Yf7Vi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE26FC433C7;
-	Tue, 27 Feb 2024 13:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfvrwuXp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9689DC433C7;
+	Tue, 27 Feb 2024 13:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041523;
-	bh=Z5tzvBrZ5YQ37mtb2A30sUwr1h06N0/iUzzOtVqRrH0=;
+	s=korg; t=1709041526;
+	bh=ryuRZcHNWj0XjxsvCAWgoYFgnyOimq+2e+u4fPa2hko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4Yf7Vi7aEgCvCQFjOB4mvGiJU3hshsbSxpsY+GEXQ7TZRvYVJShQrw8PPdvolfk+
-	 Ug3eoH3nY//UaJRHibNxOh6DZR/LiXDUwpUkGnj8ZyuTjed2Q2DqJL9r5gsijiZ/nS
-	 zpQKtC9KaMuUIl9s3k+UyKU9V8ZXA2yqoIKiQq1I=
+	b=gfvrwuXpAu6YzKUZRPoN3K1iWTKaIxUYU5Iq/8KTYSFRfxuVbjI8esJQPBfgdvGSu
+	 j9cBg6u1vZLWaMhuWDkFgM7QyYbbNvoqKeK1V9WgthxyE51sQ1JpZC0N49iIBxcjMq
+	 Z74SQtYxbtUt1Ov5H5Kt/EiffUAVLlrnAoBxTEMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com,
+	Lokesh Gidra <lokeshgidra@google.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	Kalesh Singh <kaleshsingh@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Nicolas Geoffray <ngeoffray@google.com>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 07/52] nilfs2: replace WARN_ONs for invalid DAT metadata block requests
-Date: Tue, 27 Feb 2024 14:25:54 +0100
-Message-ID: <20240227131548.770650929@linuxfoundation.org>
+Subject: [PATCH 4.19 08/52] userfaultfd: fix mmap_changing checking in mfill_atomic_hugetlb
+Date: Tue, 27 Feb 2024 14:25:55 +0100
+Message-ID: <20240227131548.806329212@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -51,82 +61,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Lokesh Gidra <lokeshgidra@google.com>
 
-commit 5124a0a549857c4b87173280e192eea24dea72ad upstream.
+commit 67695f18d55924b2013534ef3bdc363bc9e14605 upstream.
 
-If DAT metadata file block access fails due to corruption of the DAT file
-or abnormal virtual block numbers held by b-trees or inodes, a kernel
-warning is generated.
+In mfill_atomic_hugetlb(), mmap_changing isn't being checked
+again if we drop mmap_lock and reacquire it. When the lock is not held,
+mmap_changing could have been incremented. This is also inconsistent
+with the behavior in mfill_atomic().
 
-This replaces the WARN_ONs by error output, so that a kernel, booted with
-panic_on_warn, does not panic.  This patch also replaces the detected
-return code -ENOENT with another internal code -EINVAL to notify the bmap
-layer of metadata corruption.  When the bmap layer sees -EINVAL, it
-handles the abnormal situation with nilfs_bmap_convert_error() and finally
-returns code -EIO as it should.
-
-Link: https://lkml.kernel.org/r/0000000000005cc3d205ea23ddcf@google.com
-Link: https://lkml.kernel.org/r/20230126164114.6911-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: <syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Link: https://lkml.kernel.org/r/20240117223729.1444522-1-lokeshgidra@google.com
+Fixes: df2cc96e77011 ("userfaultfd: prevent non-cooperative events vs mcopy_atomic races")
+Signed-off-by: Lokesh Gidra <lokeshgidra@google.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Kalesh Singh <kaleshsingh@google.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Nicolas Geoffray <ngeoffray@google.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dat.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ mm/userfaultfd.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/dat.c
-+++ b/fs/nilfs2/dat.c
-@@ -40,8 +40,21 @@ static inline struct nilfs_dat_info *NIL
- static int nilfs_dat_prepare_entry(struct inode *dat,
- 				   struct nilfs_palloc_req *req, int create)
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -179,6 +179,7 @@ static __always_inline ssize_t __mcopy_a
+ 					      unsigned long dst_start,
+ 					      unsigned long src_start,
+ 					      unsigned long len,
++					      bool *mmap_changing,
+ 					      bool zeropage)
  {
--	return nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
--					    create, &req->pr_entry_bh);
-+	int ret;
-+
-+	ret = nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
-+					   create, &req->pr_entry_bh);
-+	if (unlikely(ret == -ENOENT)) {
-+		nilfs_msg(dat->i_sb, KERN_ERR,
-+			  "DAT doesn't have a block to manage vblocknr = %llu",
-+			  (unsigned long long)req->pr_entry_nr);
-+		/*
-+		 * Return internal code -EINVAL to notify bmap layer of
-+		 * metadata corruption.
-+		 */
-+		ret = -EINVAL;
-+	}
-+	return ret;
- }
+ 	int vm_alloc_shared = dst_vma->vm_flags & VM_SHARED;
+@@ -310,6 +311,15 @@ retry:
+ 				goto out;
+ 			}
+ 			down_read(&dst_mm->mmap_sem);
++			/*
++			 * If memory mappings are changing because of non-cooperative
++			 * operation (e.g. mremap) running in parallel, bail out and
++			 * request the user to retry later
++			 */
++			if (mmap_changing && READ_ONCE(*mmap_changing)) {
++				err = -EAGAIN;
++				break;
++			}
  
- static void nilfs_dat_commit_entry(struct inode *dat,
-@@ -123,11 +136,7 @@ static void nilfs_dat_commit_free(struct
+ 			dst_vma = NULL;
+ 			goto retry;
+@@ -391,6 +401,7 @@ extern ssize_t __mcopy_atomic_hugetlb(st
+ 				      unsigned long dst_start,
+ 				      unsigned long src_start,
+ 				      unsigned long len,
++				      bool *mmap_changing,
+ 				      bool zeropage);
+ #endif /* CONFIG_HUGETLB_PAGE */
  
- int nilfs_dat_prepare_start(struct inode *dat, struct nilfs_palloc_req *req)
- {
--	int ret;
--
--	ret = nilfs_dat_prepare_entry(dat, req, 0);
--	WARN_ON(ret == -ENOENT);
--	return ret;
-+	return nilfs_dat_prepare_entry(dat, req, 0);
- }
+@@ -508,7 +519,8 @@ retry:
+ 	 */
+ 	if (is_vm_hugetlb_page(dst_vma))
+ 		return  __mcopy_atomic_hugetlb(dst_mm, dst_vma, dst_start,
+-						src_start, len, zeropage);
++					       src_start, len, mmap_changing,
++					       zeropage);
  
- void nilfs_dat_commit_start(struct inode *dat, struct nilfs_palloc_req *req,
-@@ -154,10 +163,8 @@ int nilfs_dat_prepare_end(struct inode *
- 	int ret;
- 
- 	ret = nilfs_dat_prepare_entry(dat, req, 0);
--	if (ret < 0) {
--		WARN_ON(ret == -ENOENT);
-+	if (ret < 0)
- 		return ret;
--	}
- 
- 	kaddr = kmap_atomic(req->pr_entry_bh->b_page);
- 	entry = nilfs_palloc_block_get_entry(dat, req->pr_entry_nr,
+ 	if (!vma_is_anonymous(dst_vma) && !vma_is_shmem(dst_vma))
+ 		goto out_unlock;
 
 
