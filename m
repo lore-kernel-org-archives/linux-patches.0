@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F2213B791;
-	Tue, 27 Feb 2024 13:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4B913AA55;
+	Tue, 27 Feb 2024 13:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041972; cv=none; b=BWYXva/4TuGqfkw1XE2er/mTgsHlT9e/gCnK0nugc7yCkmhhPxtdVHIUcPU2wYARIaoNS+OaZsYn8y06rRx/6iRSEJGWuivucRj6z0YP4DRkS1AvT9wiCoC9EVrVvmFn4SZzUKfy/6YZNY3r5TZx0APSbSU6mBD0fEPxhN76cMA=
+	t=1709041975; cv=none; b=cWagAVIr7vOmAESn1E0gyGQSSVpbsz/8zTBAB8PU4KhW7B0R/l/ID9KQN1OlJybUNQq5RdYhvQNs6q8otvBKVge+r/40qxuF05Qi+2AGpbNdJYVGBoRRh0dXcCBEKFzMwlRXvkdMRObvPV7PGsy417TrKCWQ5nBex8AHFc+MUX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041972; c=relaxed/simple;
-	bh=TeZjHKaf3pmRWDz+DEbvGA3pV5xap/ODMGpby4ShRcQ=;
+	s=arc-20240116; t=1709041975; c=relaxed/simple;
+	bh=aawsmxtdGl8GOsWd+deZxtzShsgBBhbi4FMink25SyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOpb4VfhZwEFCo2ERkbksPOwsD3ikCZKnSbQu2BXCQkZVc7o7mzmY8yCrO/WMIUD6tTh24Q+deyjsPIHBeJuPKFtQdI8jcKyeRIsNpgMT5++UR/NtGGoRH79fdusB+K83h5npeGghc0lCsXmbhoN5c5/8Qx0r/O0t9MveNkkf4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wisey5cm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HbeOSoW/nZobcV5zFr8VVKNqZju2TL816xeAGNd28PoB/g55SndZvpPO6ayt/pGrhg3OQ7zhqjgKF6Ale3dOBecfAbmtYBsdYehSQ6VtckotyX/jE078uGiqcq4km8MtG54H9HhNM6wDuXNiRxMiG66msKr3TGrCI9plCHwyxqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue5bLjt6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wisey5cm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A5AC43394;
-	Tue, 27 Feb 2024 13:52:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue5bLjt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01936C433F1;
+	Tue, 27 Feb 2024 13:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041972;
-	bh=TeZjHKaf3pmRWDz+DEbvGA3pV5xap/ODMGpby4ShRcQ=;
+	s=korg; t=1709041975;
+	bh=aawsmxtdGl8GOsWd+deZxtzShsgBBhbi4FMink25SyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wisey5cmK1sAIClHO3WtQoeEyNntp1VULce4tLTXIEmN7dEQ8UcQzXo1XTa2e/QAx
-	 Th+4r2/bpd0ervexiqhKHig/ohZ5/NbtEY0BEnIMWTvYpCf9krqU8ukNFqIvyavFYK
-	 YlKDaWa7Unssez2Vx7i/hfcO5Hvq49B/wY1hcQ7c=
+	b=ue5bLjt69zcoQRY7kTYNUK6uqaCNozY8JZPS2FuuvfOJFwUssPoKQHUOXdfbK5tEJ
+	 R7FSXA1/S5/nbbHpjfedI5NvpQTmfD2JVVxg/kUUhsiDPX9Kmgw55o90kRnRBw4BpF
+	 iuiR3g1Kf/irrRCdwSlVMmTjyZA6pppMArRqJJ3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 6.6 135/299] docs: Instruct LaTeX to cope with deeper nesting
-Date: Tue, 27 Feb 2024 14:24:06 +0100
-Message-ID: <20240227131630.203324121@linuxfoundation.org>
+	Oreoluwa Babatunde <quic_obabatun@quicinc.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 136/299] LoongArch: Call early_init_fdt_scan_reserved_mem() earlier
+Date: Tue, 27 Feb 2024 14:24:07 +0100
+Message-ID: <20240227131630.235324623@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -50,43 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Corbet <corbet@lwn.net>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 0df8669f69a8638f04c6a3d1f3b7056c2c18f62c upstream.
+commit 9fa304b9f8ec440e614af6d35826110c633c4074 upstream.
 
-The addition of the XFS online fsck documentation starting with
-commit a8f6c2e54ddc ("xfs: document the motivation for online fsck design")
-added a deeper level of nesting than LaTeX is prepared to deal with.  That
-caused a pdfdocs build failure with the helpful "Too deeply nested" error
-message buried deeply in Documentation/output/filesystems.log.
+The unflatten_and_copy_device_tree() function contains a call to
+memblock_alloc(). This means that memblock is allocating memory before
+any of the reserved memory regions are set aside in the arch_mem_init()
+function which calls early_init_fdt_scan_reserved_mem(). Therefore,
+there is a possibility for memblock to allocate from any of the
+reserved memory regions.
 
-Increase the "maxlistdepth" parameter to instruct LaTeX that it needs to
-deal with the deeper nesting whether it wants to or not.
+Hence, move the call to early_init_fdt_scan_reserved_mem() to be earlier
+in the init sequence, so that the reserved memory regions are set aside
+before any allocations are done using memblock.
 
-Suggested-by: Akira Yokosawa <akiyks@gmail.com>
-Tested-by: Akira Yokosawa <akiyks@gmail.com>
-Cc: stable@vger.kernel.org # v6.4+
-Link: https://lore.kernel.org/linux-doc/67f6ac60-7957-4b92-9d72-a08fbad0e028@gmail.com/
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Cc: stable@vger.kernel.org
+Fixes: 88d4d957edc707e ("LoongArch: Add FDT booting support from efi system table")
+Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/conf.py |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/loongarch/kernel/setup.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/Documentation/conf.py
-+++ b/Documentation/conf.py
-@@ -383,6 +383,12 @@ latex_elements = {
-         verbatimhintsturnover=false,
-     ''',
- 
-+    #
-+    # Some of our authors are fond of deep nesting; tell latex to
-+    # cope.
-+    #
-+    'maxlistdepth': '10',
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -367,6 +367,8 @@ void __init platform_init(void)
+ 	acpi_gbl_use_default_register_widths = false;
+ 	acpi_boot_table_init();
+ #endif
 +
-     # For CJK One-half spacing, need to be in front of hyperref
-     'extrapackages': r'\usepackage{setspace}',
++	early_init_fdt_scan_reserved_mem();
+ 	unflatten_and_copy_device_tree();
  
+ #ifdef CONFIG_NUMA
+@@ -400,8 +402,6 @@ static void __init arch_mem_init(char **
+ 
+ 	check_kernel_sections_mem();
+ 
+-	early_init_fdt_scan_reserved_mem();
+-
+ 	/*
+ 	 * In order to reduce the possibility of kernel panic when failed to
+ 	 * get IO TLB memory under CONFIG_SWIOTLB, it is better to allocate
 
 
