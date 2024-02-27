@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0CF145339;
-	Tue, 27 Feb 2024 14:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081A11420D3;
+	Tue, 27 Feb 2024 14:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043887; cv=none; b=SHIpZszL2tifcZIY+4mz/rtU0N3d5U2yx3rbSUr35xvSeiMDKfaNyy3Ufz/ymX/D3ATIn5bWtlB9BzVdRrHnGMLUWEZJL7+02gI6HKlgLl/HkFdqydGZNLLR6XRa7x6w7ZZwNSv7MOK2n+GDfbjU3oBWpDFwvDEK2rVjDOenDbg=
+	t=1709043890; cv=none; b=Pv/MTgrQ5cqhWLSlI7RjsNIhZ9tAFHH++ydvQGqhd4Rt6H/VoCNUNCA95xKuOgxLDE5gb+IFq7ZoHVAMjgJNa6Tdl49MjH+N6EFkwn+JNEujzWN43Wk6mBFEI+iE94BEyVqSGkZ0xGjNFXhcIOy8UkLI5d6i657vV7Wvhc5esJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043887; c=relaxed/simple;
-	bh=DCqJMQ7xrttugh9SJCioyCWUWhkVuGpEROc6wsdqI0w=;
+	s=arc-20240116; t=1709043890; c=relaxed/simple;
+	bh=Zp7FXOI0ABAhrsWBWg+O/Tqq5/geZjzZExgrHPgDSFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m+dlZWf6aEBVqlR5M+eujuTRt13WzxCa8EyFlWtfdlmiakGb9MUNjIvyVU+p7QN1aAOqfgziBY6wyQikxL3B/onRkCWiwZxvviN3s4QZX0+TDktpHvx8DMWc3UIFxxVoM1iOmfiM3LID1qhX/KDBNVWkY+bP445Yt3g3UTayAzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMANkhtQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUkE+8oXlTvyb43gYJSmlMGIww5rZAzm370qX0FVW+FKGChSV4oQm3X/0bKmhr3n3CRWUfYE1FRaDEdYjepo5F8jL0nmfcuoXf7fsYOLOfXFnnnBgHIJa0rM73TYVc95mLYzVcGREHgTIDyEmoR8W4ChfNwTnwusRCBR0M3v+dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HL7LjpUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMANkhtQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E87CC43399;
-	Tue, 27 Feb 2024 14:24:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HL7LjpUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC07C433B2;
+	Tue, 27 Feb 2024 14:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043887;
-	bh=DCqJMQ7xrttugh9SJCioyCWUWhkVuGpEROc6wsdqI0w=;
+	s=korg; t=1709043889;
+	bh=Zp7FXOI0ABAhrsWBWg+O/Tqq5/geZjzZExgrHPgDSFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMANkhtQZPsPe3GnC0Ie1FufglSA7nqGp6bUdhO9ftS9DhDZax5PRqWdiJF7QxLJU
-	 p4Qc1ERR2R5+LWYubEPCdS+JCIz0A++f6V8PERnoNlFHZk2Cn3mBXKI86hKWuVD0oI
-	 bL3RDopB98dwRhMxHc2DtE8I8Hfrk1e5lGy85xb4=
+	b=HL7LjpUvQQdHaCb9OQ2hvi+728sGsA1EHgukAZf3bbtYCUmveLytSxoPmYCAR/OKq
+	 Mz+RgS/T7kfzXGVFv62VjMB82bKwUlTRv+v0Kj5NnX96oPL3a0PwgwPgYhcfnzj5vu
+	 SMB6vECNsiAO86aBk+PSAzOUBiT4A9OmZHrWJZf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	linux-mips@vger.kernel.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-scsi@vger.kernel.org,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	kernel test robot <lkp@intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 69/84] scsi: jazz_esp: Only build if SCSI core is builtin
-Date: Tue, 27 Feb 2024 14:27:36 +0100
-Message-ID: <20240227131555.116557092@linuxfoundation.org>
+Subject: [PATCH 5.4 43/84] ALSA: hda/realtek - Enable micmute LED on and HP system
+Date: Tue, 27 Feb 2024 14:27:10 +0100
+Message-ID: <20240227131554.274706982@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -60,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-[ Upstream commit 9ddf190a7df77b77817f955fdb9c2ae9d1c9c9a3 ]
+[ Upstream commit 3e0650ab26e2010ee312311612e40e076ed1feca ]
 
-JAZZ_ESP is a bool kconfig symbol that selects SCSI_SPI_ATTRS.  When
-CONFIG_SCSI=m, this results in SCSI_SPI_ATTRS=m while JAZZ_ESP=y, which
-causes many undefined symbol linker errors.
+Though the system uses DMIC, headset mic still uses the HDA, let's use
+GPIO 0x1 to control the micmute LED.
 
-Fix this by only offering to build this driver when CONFIG_SCSI=y.
+The micmute LED GPIO has a different polarity to the mute LED GPIO, we
+can use the newly added micmute_led_polarity to indicate that.
 
-[mkp: JAZZ_ESP is unique in that it does not support being compiled as a
-module unlike the remaining SPI SCSI HBA drivers]
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20240214055953.9612-1-rdunlap@infradead.org
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: linux-mips@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: James E.J. Bottomley <jejb@linux.ibm.com>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202402112222.Gl0udKyU-lkp@intel.com/
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Link: https://lore.kernel.org/r/20200430083255.5093-2-kai.heng.feng@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/Kconfig b/drivers/scsi/Kconfig
-index 51bbc858a944c..cab6e67ea606b 100644
---- a/drivers/scsi/Kconfig
-+++ b/drivers/scsi/Kconfig
-@@ -1286,7 +1286,7 @@ source "drivers/scsi/arm/Kconfig"
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index d8ee1b1ee7e3d..893b9fde59ac0 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4326,7 +4326,11 @@ static void alc269_fixup_hp_gpio_led(struct hda_codec *codec,
+ static void alc285_fixup_hp_gpio_led(struct hda_codec *codec,
+ 				const struct hda_fixup *fix, int action)
+ {
+-	alc_fixup_hp_gpio_led(codec, action, 0x04, 0x00);
++	struct alc_spec *spec = codec->spec;
++
++	spec->micmute_led_polarity = 1;
++
++	alc_fixup_hp_gpio_led(codec, action, 0x04, 0x01);
+ }
  
- config JAZZ_ESP
- 	bool "MIPS JAZZ FAS216 SCSI support"
--	depends on MACH_JAZZ && SCSI
-+	depends on MACH_JAZZ && SCSI=y
- 	select SCSI_SPI_ATTRS
- 	help
- 	  This is the driver for the onboard SCSI host adapter of MIPS Magnum
+ static void alc286_fixup_hp_gpio_led(struct hda_codec *codec,
 -- 
 2.43.0
 
