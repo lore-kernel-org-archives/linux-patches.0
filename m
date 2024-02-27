@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29612F2D;
-	Tue, 27 Feb 2024 13:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04E32F2D;
+	Tue, 27 Feb 2024 13:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040873; cv=none; b=j5OHk0KI/qxCfX0SLwLjbi9UCLoED+tRTLlFoMQN/6A5PZ86caimhDt6ErYgoZqASuYPXXZqN/YWCccexgiWLZOThZp9B6/Y6jU+YU4+mGM+kHM/wipYbv1vnUpCj6LaDER2LSunU8GjxCzF704+Yyz5eKONcsDs9EskeE03QOU=
+	t=1709040876; cv=none; b=LZiGstl/BaAIRB2YuMDHP3ZDXIRqZ89QWG60ZZluDX1aGnyH+dQV2qvTB3pRvhtbqHuwHcZSCbPyEahpScR6ebHrEvdb1nDNdWp32b5u6LC6VIqzAPALHpGFgvxr2/a59W54QrEtLm4rzbtMApzFifOpoSRyA+FmboBvRZ4iMhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040873; c=relaxed/simple;
-	bh=YTadgwb9mDdKISHlKUhJ7hIT0z5T1VYB1O4OJ9B/SX0=;
+	s=arc-20240116; t=1709040876; c=relaxed/simple;
+	bh=42O6rpqgOf39EomAQLCdFpQ8eJa5XfR8NmLkG/EywZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEaaCX9FrxzRbcYaHJ1R+YXDnUFFvU5JaB+AqARDNaLwdndTWkncEga4YG261kYGnCCh1vCKccylSgrsNTlYvM1nEizabLVIMrdktZUWWUxanl5cpjfacert8tn+h+kJrLVMTCIxEDvTV6NiIIMr6zNVPPOH2A93vEhE/7Nmkqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zznWkGzg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dc356G9RzRV1DDDE10xk6Ws0UGxd6TXqenlrA639QtR0Pd8X9cMtRVOc3qu6lQX/NwJzZSEY8oxwmDyTzzwdVEObJ63nks1QuA8v6/kMA6uCJiCYT+lhQh0wj9PEGsMWqm913FKdWiC3kkdj0FZaGqhkQN9i3ZMbCoOXoc8hroE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FipKCgHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zznWkGzg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8E0C433C7;
-	Tue, 27 Feb 2024 13:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FipKCgHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8CFC433C7;
+	Tue, 27 Feb 2024 13:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040873;
-	bh=YTadgwb9mDdKISHlKUhJ7hIT0z5T1VYB1O4OJ9B/SX0=;
+	s=korg; t=1709040876;
+	bh=42O6rpqgOf39EomAQLCdFpQ8eJa5XfR8NmLkG/EywZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zznWkGzgZzk2MWHvuAlCWSOBsB0PP4eUxvnj+OviwEnvqUtt+/7BWWtk/2Cga/kPi
-	 yKgp4G72hnR5VqgrveqrORRjaT2SDlFTeQE3EbpAVISeWnyw2WrrNRPQohZXpjv1/B
-	 sRQlc69OBRj3xPtMgZy4myjbIAXHc21+esUz4Hkk=
+	b=FipKCgHh1+hwR8dC6sIcdge0hAiWmBrtqUn6+VcqBP40TXZxdLrqxk100OItCUzJG
+	 J3YdDvwoQENpsEfqfwIKUHdwM8q7X2bi6BKkKnMxkWO3P+zjQj/m8HvA/fqMy6BO3O
+	 tA4zVbC041XjcKuVPUakzTFhqOeTI9ppGKTv2l6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Josip Pavic <josip.pavic@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Sohaib Nadeem <sohaib.nadeem@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 139/334] drm/amd/display: fixed integer types and null check locations
-Date: Tue, 27 Feb 2024 14:19:57 +0100
-Message-ID: <20240227131634.951886154@linuxfoundation.org>
+	Mats Kronberg <kronberg@nsc.liu.se>,
+	Daniel Vacek <neelx@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.7 140/334] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
+Date: Tue, 27 Feb 2024 14:19:58 +0100
+Message-ID: <20240227131634.982364380@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -55,114 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sohaib Nadeem <sohaib.nadeem@amd.com>
+From: Daniel Vacek <neelx@redhat.com>
 
-[ Upstream commit 0484e05d048b66d01d1f3c1d2306010bb57d8738 ]
+commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
 
-[why]:
-issues fixed:
-- comparison with wider integer type in loop condition which can cause
-infinite loops
-- pointer dereference before null check
+Unfortunately the commit `fd8958efe877` introduced another error
+causing the `descs` array to overflow. This reults in further crashes
+easily reproducible by `sendmsg` system call.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
+[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
+--
+[ 1080.974535] Call Trace:
+[ 1080.976990]  <TASK>
+[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
+[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
+[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
+[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
+[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
+--
+[ 1081.148347]  __sys_sendmsg+0x59/0xa0
+
+crash> ipoib_txreq 0xffff9cfeba229f00
+struct ipoib_txreq {
+  txreq = {
+    list = {
+      next = 0xffff9cfeba229f00,
+      prev = 0xffff9cfeba229f00
+    },
+    descp = 0xffff9cfeba229f40,
+    coalesce_buf = 0x0,
+    wait = 0xffff9cfea4e69a48,
+    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
+    packet_len = 0x46d,
+    tlen = 0x0,
+    num_desc = 0x0,
+    desc_limit = 0x6,
+    next_descq_idx = 0x45c,
+    coalesce_idx = 0x0,
+    flags = 0x0,
+    descs = {{
+        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
+      }, {
+        qw = {  0x3800014231b108, 0x4}
+      }, {
+        qw = { 0x310000e4ee0fcf0, 0x8}
+      }, {
+        qw = {  0x3000012e9f8000, 0x8}
+      }, {
+        qw = {  0x59000dfb9d0000, 0x8}
+      }, {
+        qw = {  0x78000e02e40000, 0x8}
+      }}
+  },
+  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
+  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
+  complete = 0x0,
+  priv = 0x0,
+  txq = 0xffff9cfea4e69880,
+  skb = 0xffff9d099809f400
+}
+
+If an SDMA send consists of exactly 6 descriptors and requires dword
+padding (in the 7th descriptor), the sdma_txreq descriptor array is not
+properly expanded and the packet will overflow into the container
+structure. This results in a panic when the send completion runs. The
+exact panic varies depending on what elements of the container structure
+get corrupted. The fix is to use the correct expression in
+_pad_sdma_tx_descs() to test the need to expand the descriptor array.
+
+With this patch the crashes are no longer reproducible and the machine is
+stable.
+
+Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
 Cc: stable@vger.kernel.org
-Reviewed-by: Josip Pavic <josip.pavic@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
+Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
+Signed-off-by: Daniel Vacek <neelx@redhat.com>
+Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/amd/display/dc/bios/bios_parser2.c   | 16 ++++++++++------
- .../drm/amd/display/dc/link/link_validation.c    |  2 +-
- 2 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/hfi1/sdma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-index b5b29451d2db8..bc7a375f43c0c 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -1850,19 +1850,21 @@ static enum bp_result get_firmware_info_v3_2(
- 		/* Vega12 */
- 		smu_info_v3_2 = GET_IMAGE(struct atom_smu_info_v3_2,
- 							DATA_TABLES(smu_info));
--		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
- 		if (!smu_info_v3_2)
- 			return BP_RESULT_BADBIOSTABLE;
+--- a/drivers/infiniband/hw/hfi1/sdma.c
++++ b/drivers/infiniband/hw/hfi1/sdma.c
+@@ -3158,7 +3158,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
+ {
+ 	int rval = 0;
  
-+		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
-+
- 		info->default_engine_clk = smu_info_v3_2->bootup_dcefclk_10khz * 10;
- 	} else if (revision.minor == 3) {
- 		/* Vega20 */
- 		smu_info_v3_3 = GET_IMAGE(struct atom_smu_info_v3_3,
- 							DATA_TABLES(smu_info));
--		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
- 		if (!smu_info_v3_3)
- 			return BP_RESULT_BADBIOSTABLE;
- 
-+		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
-+
- 		info->default_engine_clk = smu_info_v3_3->bootup_dcefclk_10khz * 10;
- 	}
- 
-@@ -2423,10 +2425,11 @@ static enum bp_result get_integrated_info_v11(
- 	info_v11 = GET_IMAGE(struct atom_integrated_system_info_v1_11,
- 					DATA_TABLES(integratedsysteminfo));
- 
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
- 	if (info_v11 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v11->gpucapinfo);
- 	/*
-@@ -2638,11 +2641,12 @@ static enum bp_result get_integrated_info_v2_1(
- 
- 	info_v2_1 = GET_IMAGE(struct atom_integrated_system_info_v2_1,
- 					DATA_TABLES(integratedsysteminfo));
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
- 
- 	if (info_v2_1 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v2_1->gpucapinfo);
- 	/*
-@@ -2800,11 +2804,11 @@ static enum bp_result get_integrated_info_v2_2(
- 	info_v2_2 = GET_IMAGE(struct atom_integrated_system_info_v2_2,
- 					DATA_TABLES(integratedsysteminfo));
- 
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
--
- 	if (info_v2_2 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v2_2->gpucapinfo);
- 	/*
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_validation.c b/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-index 8fe66c3678508..5b0bc7f6a188c 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-@@ -361,7 +361,7 @@ bool link_validate_dpia_bandwidth(const struct dc_stream_state *stream, const un
- 	struct dc_link *dpia_link[MAX_DPIA_NUM] = {0};
- 	int num_dpias = 0;
- 
--	for (uint8_t i = 0; i < num_streams; ++i) {
-+	for (unsigned int i = 0; i < num_streams; ++i) {
- 		if (stream[i].signal == SIGNAL_TYPE_DISPLAY_PORT) {
- 			/* new dpia sst stream, check whether it exceeds max dpia */
- 			if (num_dpias >= MAX_DPIA_NUM)
--- 
-2.43.0
-
+-	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
++	if ((unlikely(tx->num_desc == tx->desc_limit))) {
+ 		rval = _extend_sdma_tx_descs(dd, tx);
+ 		if (rval) {
+ 			__sdma_txclean(dd, tx);
 
 
