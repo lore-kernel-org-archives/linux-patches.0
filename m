@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6B113B2B3;
-	Tue, 27 Feb 2024 14:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8460213B2B4;
+	Tue, 27 Feb 2024 14:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044273; cv=none; b=rgMOOI/EfyuXhG57iXYGrUd9dg3tcg1FC+7L0PpUAeqZ1BAsyOqIRsbHTOqvpANuzO96y1jIsZPahz3fvKcd2ZLp8VLzyJ3mvKRoqzEzLtryqG7aOVQFPCJYrbx9I/TNDut1t95/4wYiLC6LCSarj3ncml4iMU/fLC3RgnEkdhQ=
+	t=1709044275; cv=none; b=LtpHKoIHARGlw09Wa7yxkVm/NGy9xTZK7tVOufzzU8rH1hRFRGtL2vjuJZV6kvSTE8dwag0OAMZQfweFFgmg5nRdGMeFVHrjCKmV3UYqLSrhwZMWnLkEou/uPA9DJl1sJb8VPdB8fASM3g1HACyQQxwxSkwlP5ypie8OZolDmyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044273; c=relaxed/simple;
-	bh=yOjjXP4HCgGl1XepcSpUCqX/BLcyTWE1cdpJFoU1Sak=;
+	s=arc-20240116; t=1709044275; c=relaxed/simple;
+	bh=HY2BaqhEcCYCU1XFKNpiSb+N4lKY/lYF3MhgFzHpYSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PPM/mVNbr80V93aIVweussXi76SxzGEZo4CLRC60taE6jkB2VFY5W0/2jr2WuY1zqvtoNOyAbLN4MlxAp1PSjsOguWaBwBVU2bKdHSpp65p8Y+tYhnetJgYBTm5XAES4di7dPctwoCIphVVTscdkdB44ZGrVfSPFl3pUyo6UHUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWr8qZTc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rb83fdkixa++2pGARQ21xgB7vU1HETbMg+C/v0O5u7Jmdcu7pfjbBHO9qK77ZaY1nENWG1fyxr9zg1MIO1Luc+PxPgJSXnnWpp1cBFUSsx99idbubR1g5znNcx0PUcuCi//ljNW7x8FRFWu330735GvBLpQo+oJfkEGoLUlMWGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LthCPs7I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWr8qZTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F5BC433F1;
-	Tue, 27 Feb 2024 14:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LthCPs7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C36C433F1;
+	Tue, 27 Feb 2024 14:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044272;
-	bh=yOjjXP4HCgGl1XepcSpUCqX/BLcyTWE1cdpJFoU1Sak=;
+	s=korg; t=1709044275;
+	bh=HY2BaqhEcCYCU1XFKNpiSb+N4lKY/lYF3MhgFzHpYSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWr8qZTcOwWDf68DSAxixvkFQIZDqSWn76NfLacOP11jfyRB0Frr5RIzUME/feMha
-	 j+TfEnQijaQkafM+wQJob8FMF2qKo1MDQvU8HeQ9nxOsQQa6FA34N6DkABCxIO7NUA
-	 mYQxeiA/+TIWf263hZlNglTRgk+yONELFeVVUrOQ=
+	b=LthCPs7IghnWq3Sj4mJfgUvfjkEU0Q6kym/sOZ2/etXjeM6ioUW1D8ruJNrNzbc4H
+	 iNxpADI62ycpau3wNwglcI97IamqWCm39km2qAsvylfHRVuIejuzKHKGWP+V4NcSJB
+	 qRgteBFn2bsbHdWJtvBfiOFOt08jnwX/zrHlZEpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	linux-mips@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-scsi@vger.kernel.org,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	kernel test robot <lkp@intel.com>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 103/122] scsi: jazz_esp: Only build if SCSI core is builtin
-Date: Tue, 27 Feb 2024 14:27:44 +0100
-Message-ID: <20240227131602.076412471@linuxfoundation.org>
+Subject: [PATCH 5.10 104/122] nouveau: fix function cast warnings
+Date: Tue, 27 Feb 2024 14:27:45 +0100
+Message-ID: <20240227131602.109701214@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -60,52 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9ddf190a7df77b77817f955fdb9c2ae9d1c9c9a3 ]
+[ Upstream commit 0affdba22aca5573f9d989bcb1d71d32a6a03efe ]
 
-JAZZ_ESP is a bool kconfig symbol that selects SCSI_SPI_ATTRS.  When
-CONFIG_SCSI=m, this results in SCSI_SPI_ATTRS=m while JAZZ_ESP=y, which
-causes many undefined symbol linker errors.
+clang-16 warns about casting between incompatible function types:
 
-Fix this by only offering to build this driver when CONFIG_SCSI=y.
+drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c:161:10: error: cast from 'void (*)(const struct firmware *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+  161 |         .fini = (void(*)(void *))release_firmware,
 
-[mkp: JAZZ_ESP is unique in that it does not support being compiled as a
-module unlike the remaining SPI SCSI HBA drivers]
+This one was done to use the generic shadow_fw_release() function as a
+callback for struct nvbios_source. Change it to use the same prototype
+as the other five instances, with a trivial helper function that actually
+calls release_firmware.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20240214055953.9612-1-rdunlap@infradead.org
-Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: linux-mips@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nicolas Schier <nicolas@fjasle.eu>
-Cc: James E.J. Bottomley <jejb@linux.ibm.com>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Cc: linux-scsi@vger.kernel.org
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202402112222.Gl0udKyU-lkp@intel.com/
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 70c0f263cc2e ("drm/nouveau/bios: pull in basic vbios subdev, more to come later")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240213095753.455062-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/Kconfig b/drivers/scsi/Kconfig
-index 6524e1fe54d2e..f59c9002468cc 100644
---- a/drivers/scsi/Kconfig
-+++ b/drivers/scsi/Kconfig
-@@ -1289,7 +1289,7 @@ source "drivers/scsi/arm/Kconfig"
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+index 4b571cc6bc70f..6597def18627e 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+@@ -154,11 +154,17 @@ shadow_fw_init(struct nvkm_bios *bios, const char *name)
+ 	return (void *)fw;
+ }
  
- config JAZZ_ESP
- 	bool "MIPS JAZZ FAS216 SCSI support"
--	depends on MACH_JAZZ && SCSI
-+	depends on MACH_JAZZ && SCSI=y
- 	select SCSI_SPI_ATTRS
- 	help
- 	  This is the driver for the onboard SCSI host adapter of MIPS Magnum
++static void
++shadow_fw_release(void *fw)
++{
++	release_firmware(fw);
++}
++
+ static const struct nvbios_source
+ shadow_fw = {
+ 	.name = "firmware",
+ 	.init = shadow_fw_init,
+-	.fini = (void(*)(void *))release_firmware,
++	.fini = shadow_fw_release,
+ 	.read = shadow_fw_read,
+ 	.rw = false,
+ };
 -- 
 2.43.0
 
