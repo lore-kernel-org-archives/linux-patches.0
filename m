@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A174A13B29C;
-	Tue, 27 Feb 2024 14:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A8C13B2B4;
+	Tue, 27 Feb 2024 14:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043304; cv=none; b=CMTAElJRsoIL/zbOuPy+fq5r7Vc2F8/3XT7vKA6jCIIWAiSx/yCI7UVcvXvgYCyt+8mfUivdFNLOg22qqGlM2eGapqrOCd7xO5xjWcqwcXzwE2Svq4dq5CD3ykqZSAYo+Ri1DXWYuzb5DDnXseaNZsZtTDrtnpfvPaMyK9Ocn54=
+	t=1709043307; cv=none; b=ZJRHQacytLQ3RK151WJ0yNsxoKVLtupCaDa1vgiLSoIKdLFBbUlb2IObxvUC8ouEdpiygarzKiOmITd0ghRb2K46tNQAe5iMmw3OIzyvRnuZNojvfia8WEe9+e/QuTUCJmeKBe18x8H0DUwk37wUji6XnsKoWrxtp8OEn1Q+OZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043304; c=relaxed/simple;
-	bh=BgJ1K2YcIamc3YaaUhLY9wxN376E3CTUPrPYcAlNN2Q=;
+	s=arc-20240116; t=1709043307; c=relaxed/simple;
+	bh=+w+EX7Gk5HRIKOygh7NbLpMbEykLrLLfADMIXXmP+eM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qzt8GDG9byXj3rrj5oKLu4PcsY7070Rh3j9j+B1OM+xYhK7DDy+X1yfpdRUSF/F2E9gjHlDjVEAI53umEtvFRmgkOmYwUUXFpWT3WTeCaZgkGvsXyOyLz0zOTtV1KJ5v4rKBITZUnMahNIJMDMUrcTLriAwJr9/AstLJQQD8QEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saXRkmJs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sigobdi+Jnjsi4x46PmtyrxBXk0JcrJVyhcvQsRCoKLBz8mS8LKwALYHyUetML4OV8Q+2kigqVV8ZaVzBBQILBp8+FSR9pcIW7C0nI8V7Zp2tYU0K8uo8nFtsQpcG9fJD1dFBvWfibL3ogUE5KlX4imzwySXQUhEP09crhE3go4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UpO8gUf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saXRkmJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D25C433C7;
-	Tue, 27 Feb 2024 14:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UpO8gUf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2AAC433C7;
+	Tue, 27 Feb 2024 14:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043304;
-	bh=BgJ1K2YcIamc3YaaUhLY9wxN376E3CTUPrPYcAlNN2Q=;
+	s=korg; t=1709043307;
+	bh=+w+EX7Gk5HRIKOygh7NbLpMbEykLrLLfADMIXXmP+eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=saXRkmJs7vTBxvUNo6BkeD0pbOwLg3RiwFETYCVAaMSbmXeneGJCB5j+BtfcsyUtV
-	 dwz6f74HN1gTviOJZt1skMSUZ78kHtUPF0fdnALrJtvuyloMpQO3ukvAcNcDRsCjof
-	 R4rXN+ejCnlMZwLBAm1MLxULQwav++H5Ptw+b+/4=
+	b=2UpO8gUfePcXHXSff8VOOv6nOphuWDsXA4izSrV8a1XZI2ZmGQl8JLYwOrJ8ARftG
+	 g64mEtUXIVl1ZSqXoxB90+Lr7A+jUgkd81MgIPPB+HzL5gAvWTArsrmDBAzBUTp0nk
+	 khFos9JtKeVMquNt/gg4pPpqnStKAraSRUONSk2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/195] fs/ntfs3: Add NULL ptr dereference checking at the end of attr_allocate_frame()
-Date: Tue, 27 Feb 2024 14:25:20 +0100
-Message-ID: <20240227131612.455446248@linuxfoundation.org>
+Subject: [PATCH 6.1 060/195] fs/ntfs3: Disable ATTR_LIST_ENTRY size check
+Date: Tue, 27 Feb 2024 14:25:21 +0100
+Message-ID: <20240227131612.487447931@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,56 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit aaab47f204aaf47838241d57bf8662c8840de60a ]
+[ Upstream commit 4cdfb6e7bc9c80142d33bf1d4653a73fa678ba56 ]
 
-It is preferable to exit through the out: label because
-internal debugging functions are located there.
+The use of sizeof(struct ATTR_LIST_ENTRY) has been replaced with le_size(0)
+due to alignment peculiarities on different platforms.
 
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202312071005.g6YrbaIe-lkp@intel.com/
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ fs/ntfs3/attrlist.c | 8 ++++----
+ fs/ntfs3/ntfs.h     | 2 --
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 2215179c925b3..2618bf5a37892 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1658,8 +1658,10 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
- 			le_b = NULL;
- 			attr_b = ni_find_attr(ni, NULL, &le_b, ATTR_DATA, NULL,
- 					      0, NULL, &mi_b);
--			if (!attr_b)
--				return -ENOENT;
-+			if (!attr_b) {
-+				err = -ENOENT;
-+				goto out;
-+			}
+diff --git a/fs/ntfs3/attrlist.c b/fs/ntfs3/attrlist.c
+index 0c6a68e71e7d4..723e49ec83ce7 100644
+--- a/fs/ntfs3/attrlist.c
++++ b/fs/ntfs3/attrlist.c
+@@ -127,12 +127,13 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
+ {
+ 	size_t off;
+ 	u16 sz;
++	const unsigned le_min_size = le_size(0);
  
- 			attr = attr_b;
- 			le = le_b;
-@@ -1740,13 +1742,15 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
- ok:
- 	run_truncate_around(run, vcn);
- out:
--	if (new_valid > data_size)
--		new_valid = data_size;
-+	if (attr_b) {
-+		if (new_valid > data_size)
-+			new_valid = data_size;
+ 	if (!le) {
+ 		le = ni->attr_list.le;
+ 	} else {
+ 		sz = le16_to_cpu(le->size);
+-		if (sz < sizeof(struct ATTR_LIST_ENTRY)) {
++		if (sz < le_min_size) {
+ 			/* Impossible 'cause we should not return such le. */
+ 			return NULL;
+ 		}
+@@ -141,7 +142,7 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
  
--	valid_size = le64_to_cpu(attr_b->nres.valid_size);
--	if (new_valid != valid_size) {
--		attr_b->nres.valid_size = cpu_to_le64(valid_size);
--		mi_b->dirty = true;
-+		valid_size = le64_to_cpu(attr_b->nres.valid_size);
-+		if (new_valid != valid_size) {
-+			attr_b->nres.valid_size = cpu_to_le64(valid_size);
-+			mi_b->dirty = true;
-+		}
+ 	/* Check boundary. */
+ 	off = PtrOffset(ni->attr_list.le, le);
+-	if (off + sizeof(struct ATTR_LIST_ENTRY) > ni->attr_list.size) {
++	if (off + le_min_size > ni->attr_list.size) {
+ 		/* The regular end of list. */
+ 		return NULL;
  	}
+@@ -149,8 +150,7 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
+ 	sz = le16_to_cpu(le->size);
  
- 	return err;
+ 	/* Check le for errors. */
+-	if (sz < sizeof(struct ATTR_LIST_ENTRY) ||
+-	    off + sz > ni->attr_list.size ||
++	if (sz < le_min_size || off + sz > ni->attr_list.size ||
+ 	    sz < le->name_off + le->name_len * sizeof(short)) {
+ 		return NULL;
+ 	}
+diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
+index 8b580515b1d6e..ba26a465b3091 100644
+--- a/fs/ntfs3/ntfs.h
++++ b/fs/ntfs3/ntfs.h
+@@ -521,8 +521,6 @@ struct ATTR_LIST_ENTRY {
+ 
+ }; // sizeof(0x20)
+ 
+-static_assert(sizeof(struct ATTR_LIST_ENTRY) == 0x20);
+-
+ static inline u32 le_size(u8 name_len)
+ {
+ 	return ALIGN(offsetof(struct ATTR_LIST_ENTRY, name) +
 -- 
 2.43.0
 
