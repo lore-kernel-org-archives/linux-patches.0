@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42ED22F2D;
-	Tue, 27 Feb 2024 13:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4A713B2B3;
+	Tue, 27 Feb 2024 13:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041361; cv=none; b=MDtxvwIgiGqg8Vil5M44dUeXPetJ4HgdmhZvCNBxzYM1GgvGcGDG2IiPHWURfXqAUk2kwi9/FEs+mmpY+sXR+atGHAVNXWPfSzvIwrb6rU3GNH3hX4golH2FlkicZFFyXtflfru0WlUw6JInk2YZHUbvLjA0dRdeIA6nqSznNg4=
+	t=1709041364; cv=none; b=b6fP94+sxibCiaFaAhA/mJJ3FJSSkKiUty0fsgjBhUSb0t+3y/wkf/3BiQbbM+fF/bIMPvVP/EnbNFg5sz8lyullN2zDmy2DxqNc0GqGM9P/Nq8L3BzIIj1F1cP80qzeGhhDk33dX1QHlS3ynKmN355WsV+AjmaBtVgCKFtbzNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041361; c=relaxed/simple;
-	bh=dBFeTYGazdvXcF0wkdpgUBhkpIM2Es+vPEyNfAksN7o=;
+	s=arc-20240116; t=1709041364; c=relaxed/simple;
+	bh=p1gcEJERWOX3XumjZmYQdbY7m1p8PG7Cxa5E1a3O2cQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iq0ADGvVXN+GfVtv1P1HOxlReooMgoNKo734wSIMsnT7T9SX1mXNyFxMbDlGtrV9pLiZZpDxVawf014td2feCRpWGm4B4Mf7uqBbFKpDOHnwsv86QqQiX8pckSgGD10DxtfrsaEKJ2pOJBHcv1YR9xKH9BdiziqnZo7oeGJm33s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9RQZPhT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mSY57hmXfWmAtdTQfwk7dNfcJnkpLwrLWXTnn844iw7kY/r9sx3UnM9HI+Ijin432Zz6RPxENMcrkmdtL367Gl7N64SCV1uB11psuRlMH1dOZTsrHoONlA8mYjXoUTD/W+pkpfNcEG75Ji+8s/Ufxw87AfeyVjotE1HH8wBDR0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Crc3g1A1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9RQZPhT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EE9C433C7;
-	Tue, 27 Feb 2024 13:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Crc3g1A1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC3BC433F1;
+	Tue, 27 Feb 2024 13:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041361;
-	bh=dBFeTYGazdvXcF0wkdpgUBhkpIM2Es+vPEyNfAksN7o=;
+	s=korg; t=1709041363;
+	bh=p1gcEJERWOX3XumjZmYQdbY7m1p8PG7Cxa5E1a3O2cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9RQZPhTWk238gbG56PACgW03UNAh0Po402qvtv0jfKXNi5Ciz0El3bxNBRZjOiFw
-	 ZSaszC+hosa7qF3q5VhneEa5WNBTQ14wZAhA+dpOL3AKoThQfMAJpvfO6l5kqVKsdt
-	 9xMZuJdcd7zu1wS+RoGuikvNg75P4ZvbSkYgo1vw=
+	b=Crc3g1A1xkdBkJtTUYrb69yxv/Is/ujcNzG43xKeiSbCBc07AldPRFdvWoUx+OTMX
+	 2XF/2aXj86DyBcjXpGv5c/4WrVpjEYXbRPCgWtqskKO5UksJ6U8Wl3CgxHu7VqVQBy
+	 E0LGyiyhoTnuJKvKOfap872vkzKrjvnRESvHtSk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	Brian King <brking@linux.vnet.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 282/334] arp: Prevent overflow in arp_req_get().
-Date: Tue, 27 Feb 2024 14:22:20 +0100
-Message-ID: <20240227131640.082407006@linuxfoundation.org>
+Subject: [PATCH 6.7 273/334] powerpc/pseries/iommu: DLPAR add doesnt completely initialize pci_controller
+Date: Tue, 27 Feb 2024 14:22:11 +0100
+Message-ID: <20240227131639.796868475@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,99 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit a7d6027790acea24446ddd6632d394096c0f4667 ]
+[ Upstream commit a5c57fd2e9bd1c8ea8613a8f94fd0be5eccbf321 ]
 
-syzkaller reported an overflown write in arp_req_get(). [0]
+When a PCI device is dynamically added, the kernel oopses with a NULL
+pointer dereference:
 
-When ioctl(SIOCGARP) is issued, arp_req_get() looks up an neighbour
-entry and copies neigh->ha to struct arpreq.arp_ha.sa_data.
+  BUG: Kernel NULL pointer dereference on read at 0x00000030
+  Faulting instruction address: 0xc0000000006bbe5c
+  Oops: Kernel access of bad area, sig: 11 [#1]
+  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
+  Modules linked in: rpadlpar_io rpaphp rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs xsk_diag bonding nft_compat nf_tables nfnetlink rfkill binfmt_misc dm_multipath rpcrdma sunrpc rdma_ucm ib_srpt ib_isert iscsi_target_mod target_core_mod ib_umad ib_iser libiscsi scsi_transport_iscsi ib_ipoib rdma_cm iw_cm ib_cm mlx5_ib ib_uverbs ib_core pseries_rng drm drm_panel_orientation_quirks xfs libcrc32c mlx5_core mlxfw sd_mod t10_pi sg tls ibmvscsi ibmveth scsi_transport_srp vmx_crypto pseries_wdt psample dm_mirror dm_region_hash dm_log dm_mod fuse
+  CPU: 17 PID: 2685 Comm: drmgr Not tainted 6.7.0-203405+ #66
+  Hardware name: IBM,9080-HEX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_008) hv:phyp pSeries
+  NIP:  c0000000006bbe5c LR: c000000000a13e68 CTR: c0000000000579f8
+  REGS: c00000009924f240 TRAP: 0300   Not tainted  (6.7.0-203405+)
+  MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002220  XER: 20040006
+  CFAR: c000000000a13e64 DAR: 0000000000000030 DSISR: 40000000 IRQMASK: 0
+  ...
+  NIP sysfs_add_link_to_group+0x34/0x94
+  LR  iommu_device_link+0x5c/0x118
+  Call Trace:
+   iommu_init_device+0x26c/0x318 (unreliable)
+   iommu_device_link+0x5c/0x118
+   iommu_init_device+0xa8/0x318
+   iommu_probe_device+0xc0/0x134
+   iommu_bus_notifier+0x44/0x104
+   notifier_call_chain+0xb8/0x19c
+   blocking_notifier_call_chain+0x64/0x98
+   bus_notify+0x50/0x7c
+   device_add+0x640/0x918
+   pci_device_add+0x23c/0x298
+   of_create_pci_dev+0x400/0x884
+   of_scan_pci_dev+0x124/0x1b0
+   __of_scan_bus+0x78/0x18c
+   pcibios_scan_phb+0x2a4/0x3b0
+   init_phb_dynamic+0xb8/0x110
+   dlpar_add_slot+0x170/0x3b8 [rpadlpar_io]
+   add_slot_store.part.0+0xb4/0x130 [rpadlpar_io]
+   kobj_attr_store+0x2c/0x48
+   sysfs_kf_write+0x64/0x78
+   kernfs_fop_write_iter+0x1b0/0x290
+   vfs_write+0x350/0x4a0
+   ksys_write+0x84/0x140
+   system_call_exception+0x124/0x330
+   system_call_vectored_common+0x15c/0x2ec
 
-The arp_ha here is struct sockaddr, not struct sockaddr_storage, so
-the sa_data buffer is just 14 bytes.
+Commit a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities
+and allow blocking domains") broke DLPAR add of PCI devices.
 
-In the splat below, 2 bytes are overflown to the next int field,
-arp_flags.  We initialise the field just after the memcpy(), so it's
-not a problem.
+The above added iommu_device structure to pci_controller. During
+system boot, PCI devices are discovered and this newly added iommu_device
+structure is initialized by a call to iommu_device_register().
 
-However, when dev->addr_len is greater than 22 (e.g. MAX_ADDR_LEN),
-arp_netmask is overwritten, which could be set as htonl(0xFFFFFFFFUL)
-in arp_ioctl() before calling arp_req_get().
+During DLPAR add of a PCI device, a new pci_controller structure is
+allocated but there are no calls made to iommu_device_register()
+interface.
 
-To avoid the overflow, let's limit the max length of memcpy().
+Fix is to register the iommu device during DLPAR add as well.
 
-Note that commit b5f0de6df6dc ("net: dev: Convert sa_data to flexible
-array in struct sockaddr") just silenced syzkaller.
-
-[0]:
-memcpy: detected field-spanning write (size 16) of single field "r->arp_ha.sa_data" at net/ipv4/arp.c:1128 (size 14)
-WARNING: CPU: 0 PID: 144638 at net/ipv4/arp.c:1128 arp_req_get+0x411/0x4a0 net/ipv4/arp.c:1128
-Modules linked in:
-CPU: 0 PID: 144638 Comm: syz-executor.4 Not tainted 6.1.74 #31
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-debian-1.16.0-5 04/01/2014
-RIP: 0010:arp_req_get+0x411/0x4a0 net/ipv4/arp.c:1128
-Code: fd ff ff e8 41 42 de fb b9 0e 00 00 00 4c 89 fe 48 c7 c2 20 6d ab 87 48 c7 c7 80 6d ab 87 c6 05 25 af 72 04 01 e8 5f 8d ad fb <0f> 0b e9 6c fd ff ff e8 13 42 de fb be 03 00 00 00 4c 89 e7 e8 a6
-RSP: 0018:ffffc900050b7998 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff88803a815000 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffffffff8641a44a RDI: 0000000000000001
-RBP: ffffc900050b7a98 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 203a7970636d656d R12: ffff888039c54000
-R13: 1ffff92000a16f37 R14: ffff88803a815084 R15: 0000000000000010
-FS:  00007f172bf306c0(0000) GS:ffff88805aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f172b3569f0 CR3: 0000000057f12005 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- arp_ioctl+0x33f/0x4b0 net/ipv4/arp.c:1261
- inet_ioctl+0x314/0x3a0 net/ipv4/af_inet.c:981
- sock_do_ioctl+0xdf/0x260 net/socket.c:1204
- sock_ioctl+0x3ef/0x650 net/socket.c:1321
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18e/0x220 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x37/0x90 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x64/0xce
-RIP: 0033:0x7f172b262b8d
-Code: 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f172bf300b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007f172b3abf80 RCX: 00007f172b262b8d
-RDX: 0000000020000000 RSI: 0000000000008954 RDI: 0000000000000003
-RBP: 00007f172b2d3493 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007f172b3abf80 R15: 00007f172bf10000
- </TASK>
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: Bjoern Doebel <doebel@amazon.de>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240215230516.31330-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities and allow blocking domains")
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240215221833.4817-1-gbatra@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/arp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/include/asm/ppc-pci.h         | 10 ++++++++++
+ arch/powerpc/kernel/iommu.c                | 23 ++++++++++++++++------
+ arch/powerpc/platforms/pseries/pci_dlpar.c |  4 ++++
+ 3 files changed, 31 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
-index 9456f5bb35e5d..0d0d725b46ad0 100644
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -1125,7 +1125,8 @@ static int arp_req_get(struct arpreq *r, struct net_device *dev)
- 	if (neigh) {
- 		if (!(READ_ONCE(neigh->nud_state) & NUD_NOARP)) {
- 			read_lock_bh(&neigh->lock);
--			memcpy(r->arp_ha.sa_data, neigh->ha, dev->addr_len);
-+			memcpy(r->arp_ha.sa_data, neigh->ha,
-+			       min(dev->addr_len, sizeof(r->arp_ha.sa_data_min)));
- 			r->arp_flags = arp_state_to_flags(neigh);
- 			read_unlock_bh(&neigh->lock);
- 			r->arp_ha.sa_family = dev->type;
+diff --git a/arch/powerpc/include/asm/ppc-pci.h b/arch/powerpc/include/asm/ppc-pci.h
+index d9fcff5750271..2689e7139b9ea 100644
+--- a/arch/powerpc/include/asm/ppc-pci.h
++++ b/arch/powerpc/include/asm/ppc-pci.h
+@@ -30,6 +30,16 @@ void *pci_traverse_device_nodes(struct device_node *start,
+ 				void *data);
+ extern void pci_devs_phb_init_dynamic(struct pci_controller *phb);
+ 
++#if defined(CONFIG_IOMMU_API) && (defined(CONFIG_PPC_PSERIES) || \
++				  defined(CONFIG_PPC_POWERNV))
++extern void ppc_iommu_register_device(struct pci_controller *phb);
++extern void ppc_iommu_unregister_device(struct pci_controller *phb);
++#else
++static inline void ppc_iommu_register_device(struct pci_controller *phb) { }
++static inline void ppc_iommu_unregister_device(struct pci_controller *phb) { }
++#endif
++
++
+ /* From rtas_pci.h */
+ extern void init_pci_config_tokens (void);
+ extern unsigned long get_phb_buid (struct device_node *);
+diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
+index df17b33b89d13..2c0173e7094da 100644
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -1341,7 +1341,7 @@ static struct iommu_device *spapr_tce_iommu_probe_device(struct device *dev)
+ 	struct pci_controller *hose;
+ 
+ 	if (!dev_is_pci(dev))
+-		return ERR_PTR(-EPERM);
++		return ERR_PTR(-ENODEV);
+ 
+ 	pdev = to_pci_dev(dev);
+ 	hose = pdev->bus->sysdata;
+@@ -1390,6 +1390,21 @@ static const struct attribute_group *spapr_tce_iommu_groups[] = {
+ 	NULL,
+ };
+ 
++void ppc_iommu_register_device(struct pci_controller *phb)
++{
++	iommu_device_sysfs_add(&phb->iommu, phb->parent,
++				spapr_tce_iommu_groups, "iommu-phb%04x",
++				phb->global_number);
++	iommu_device_register(&phb->iommu, &spapr_tce_iommu_ops,
++				phb->parent);
++}
++
++void ppc_iommu_unregister_device(struct pci_controller *phb)
++{
++	iommu_device_unregister(&phb->iommu);
++	iommu_device_sysfs_remove(&phb->iommu);
++}
++
+ /*
+  * This registers IOMMU devices of PHBs. This needs to happen
+  * after core_initcall(iommu_init) + postcore_initcall(pci_driver_init) and
+@@ -1400,11 +1415,7 @@ static int __init spapr_tce_setup_phb_iommus_initcall(void)
+ 	struct pci_controller *hose;
+ 
+ 	list_for_each_entry(hose, &hose_list, list_node) {
+-		iommu_device_sysfs_add(&hose->iommu, hose->parent,
+-				       spapr_tce_iommu_groups, "iommu-phb%04x",
+-				       hose->global_number);
+-		iommu_device_register(&hose->iommu, &spapr_tce_iommu_ops,
+-				      hose->parent);
++		ppc_iommu_register_device(hose);
+ 	}
+ 	return 0;
+ }
+diff --git a/arch/powerpc/platforms/pseries/pci_dlpar.c b/arch/powerpc/platforms/pseries/pci_dlpar.c
+index 4ba8245681192..4448386268d99 100644
+--- a/arch/powerpc/platforms/pseries/pci_dlpar.c
++++ b/arch/powerpc/platforms/pseries/pci_dlpar.c
+@@ -35,6 +35,8 @@ struct pci_controller *init_phb_dynamic(struct device_node *dn)
+ 
+ 	pseries_msi_allocate_domains(phb);
+ 
++	ppc_iommu_register_device(phb);
++
+ 	/* Create EEH devices for the PHB */
+ 	eeh_phb_pe_create(phb);
+ 
+@@ -76,6 +78,8 @@ int remove_phb_dynamic(struct pci_controller *phb)
+ 		}
+ 	}
+ 
++	ppc_iommu_unregister_device(phb);
++
+ 	pseries_msi_free_domains(phb);
+ 
+ 	/* Keep a reference so phb isn't freed yet */
 -- 
 2.43.0
 
