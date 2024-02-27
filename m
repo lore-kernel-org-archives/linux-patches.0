@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31EC13B2B3;
-	Tue, 27 Feb 2024 13:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FD913B2B3;
+	Tue, 27 Feb 2024 13:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041013; cv=none; b=dmKwker1Y8wWvh9lbt1jJfdZGbKlIUacJS9BCDv6MqQ+jeJpSeT9jiQLDywOeJ5yczE6KU9Vdckp+JaaDgyS7dxIq/Ig9qjpxbz24D0j5lBFv/nFVLcWWZhQGK11C/jjbUM75YQkFkfYSaNFl41OKG7rXR8yW6JrKahII9f1i1g=
+	t=1709041016; cv=none; b=Tm9pVbDZksrs5X7nsmnK+1kcb2KfCwW4Sdbkq3YS3iWxFnVESzmjzvbFAYm6tfmI6TU0TSWZbvufT3lHGKthYrEjVRd2Sta33BBuyzek+11FNs7ORllMKE5sfSrtA4qgOBUbRZ9xe7rm+YCdDpJ+XlS+sNa8zRl/Do2pIDWPLbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041013; c=relaxed/simple;
-	bh=CKkiOQvVTlY2fICjaVbXC98PcrnOP8dQvY5WGfSPHpM=;
+	s=arc-20240116; t=1709041016; c=relaxed/simple;
+	bh=l1///Si0BUP5EFC0pnDhBH0put2fdTH1urGuv4R9WEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZeVAcsYT3zs8PCJpQBBQLPRXYeUsLccfu2cGHexFG8/6cRz8aL/iFnEl8eT1DMJN/OEw0Hcof79QRdInacHb0aepH4I2KroJN/rvVZqXbTo94c9SY9r6EBnRFWDm/O8XG6+J8SXcFDjpO/rpXjKkEFevBusEc9YYkOMtDsLpJI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW3QRAQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IWj552ih/l6b5kVLnOSfADY2fD7TAjgox5I582clwGAeigzX+xMKSTFJRuht4v/xl1jXcx7thztuOstWd09/kEG74fqbJPne9Z/dIwdcE/4fQUqNYQCWv5t5PHc85OZe30w+wD1QzRAdj2P9T9QE3c9AOb1x8fnIu001FJ5ihmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMxIUfmt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW3QRAQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337FDC433C7;
-	Tue, 27 Feb 2024 13:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMxIUfmt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE59C433F1;
+	Tue, 27 Feb 2024 13:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041013;
-	bh=CKkiOQvVTlY2fICjaVbXC98PcrnOP8dQvY5WGfSPHpM=;
+	s=korg; t=1709041016;
+	bh=l1///Si0BUP5EFC0pnDhBH0put2fdTH1urGuv4R9WEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RW3QRAQEOzGnINeow/roXCX0fcN4MKwCCmLAMPWwghd2us5zY+Hy7dBU9KJOeTx42
-	 2aZBavnzKgCtK6ut2/Vag0i+/7fo/70gK9PJe+2U7HEQ5/wZ0STNkDzec9kLwLgCcO
-	 FkWygOnuiNDbBKbbOpstmQ4wfx7W9KbybO8rS62Q=
+	b=oMxIUfmt5NGP4E55cDLloFWWAR6QXOz/w//TVbaD154FOmdA+9tbtwU2NPJRIPtQO
+	 JL+VNgAx9RdqCZXhZsTMpar85WcZXP3vcZzCEJLVfpQqvQwlzNv7rfj6ClASFvGzBW
+	 GMsn/4Nfcpgsg84Ok6u87zQHU5zSL7caIyTqslKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.7 189/334] KVM: arm64: vgic-its: Test for valid IRQ in its_sync_lpi_pending_table()
-Date: Tue, 27 Feb 2024 14:20:47 +0100
-Message-ID: <20240227131636.788638122@linuxfoundation.org>
+	Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 6.7 190/334] accel/ivpu: Dont enable any tiles by default on VPU40xx
+Date: Tue, 27 Feb 2024 14:20:48 +0100
+Message-ID: <20240227131636.822823797@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,36 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
 
-commit 8d3a7dfb801d157ac423261d7cd62c33e95375f8 upstream.
+commit eb0d253ff9c74dee30aa92fe460b825eb28acd73 upstream.
 
-vgic_get_irq() may not return a valid descriptor if there is no ITS that
-holds a valid translation for the specified INTID. If that is the case,
-it is safe to silently ignore it and continue processing the LPI pending
-table.
+There is no point in requesting 1 tile on VPU40xx as the FW will
+probably need more tiles to run workloads, so it will have to
+reconfigure PLL anyway. Don't enable any tiles and allow the FW to
+perform initial tile configuration.
 
+This improves NPU boot stability as the tiles are always enabled only
+by the FW from the same initial state.
+
+Fixes: 79cdc56c4a54 ("accel/ivpu: Add initial support for VPU 4")
 Cc: stable@vger.kernel.org
-Fixes: 33d3bc9556a7 ("KVM: arm64: vgic-its: Read initial LPI pending table")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Link: https://lore.kernel.org/r/20240221092732.4126848-2-oliver.upton@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240220131624.1447813-1-jacek.lawrynowicz@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/accel/ivpu/ivpu_hw_40xx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -468,6 +468,9 @@ static int its_sync_lpi_pending_table(st
- 		}
+--- a/drivers/accel/ivpu/ivpu_hw_40xx.c
++++ b/drivers/accel/ivpu/ivpu_hw_40xx.c
+@@ -24,7 +24,7 @@
+ #define SKU_HW_ID_SHIFT              16u
+ #define SKU_HW_ID_MASK               0xffff0000u
  
- 		irq = vgic_get_irq(vcpu->kvm, NULL, intids[i]);
-+		if (!irq)
-+			continue;
-+
- 		raw_spin_lock_irqsave(&irq->irq_lock, flags);
- 		irq->pending_latch = pendmask & (1U << bit_nr);
- 		vgic_queue_irq_unlock(vcpu->kvm, irq, flags);
+-#define PLL_CONFIG_DEFAULT           0x1
++#define PLL_CONFIG_DEFAULT           0x0
+ #define PLL_CDYN_DEFAULT             0x80
+ #define PLL_EPP_DEFAULT              0x80
+ #define PLL_REF_CLK_FREQ	     (50 * 1000000)
 
 
