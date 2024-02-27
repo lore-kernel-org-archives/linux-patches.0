@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2247E54BFE;
-	Tue, 27 Feb 2024 14:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D408E54BFE;
+	Tue, 27 Feb 2024 14:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044281; cv=none; b=EbnOpU/fju3LtKQxclWl3thkiQuKVAUuBaP4QDhkCP7OJwCs4Cbw9yc9HXn881g5yHcosqZKJhG4Bn5dE64hWNqkuWPlBCdYUy+W0rquKbqZMomRUxDVScHYyoVN+eSVyugk3CiWkC8Tqls7mvV31HkGoodmWDOtOfIYMOehgdA=
+	t=1709044283; cv=none; b=gXoS4kFdi6O4ZVaFxCoL1e3LL4yIzjm8oHbmWZhGUqW0L8KW/45K569NdIPYQg1yLo9oCjInYsUfWDZpsHlPGJbYiBYQBeCRtOSvPKhy9Mp6KvdX2di+ruQ0ci3WOt46iuYnzC6jJ4PxFAxf4f8KIVWupC0Kuk5hH1u8ymOZUGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044281; c=relaxed/simple;
-	bh=TDCcoxVPkuZgn9z+SycdHfbd4HGb5fMJV0X3emaS82A=;
+	s=arc-20240116; t=1709044283; c=relaxed/simple;
+	bh=5w4eW/Yc0zk880VxXzcTcKsI68vfXe1DsJTCoS/9SmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RypC9b9KuHZTV9AZKby5u+xKYZ2yiLgbqt0CtUhSCT0Su2ZevkU2nYsAJv23mfu85ys7thjl8IXFyR1t8OUG854RLynoJwjziyZF9sPhr6Ka/ZPou0ORbuzli2kBkpuE07iCg/KEcjezMQ48VEWPtAusfJLvW4p7yfFdgQo4Hfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taX/jNDd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhfeDsSVidm3n0fMnOqTjEBDg5q+fnLjCbk/MDQ6ycySpoK3ZaCQtP1t6JkKRN4VQzYlIch0p7G4LhqeOkr3i9Ih7BxIfZITG1Hy2g9NSYKqF1VpVVwANe19Vgci+uyGn9Yv8PA3r8fjGKF8WWoF93lf46HKt70BDKQjsf6uk3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJaRCSEZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taX/jNDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3422C433F1;
-	Tue, 27 Feb 2024 14:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJaRCSEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611C4C433C7;
+	Tue, 27 Feb 2024 14:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044281;
-	bh=TDCcoxVPkuZgn9z+SycdHfbd4HGb5fMJV0X3emaS82A=;
+	s=korg; t=1709044283;
+	bh=5w4eW/Yc0zk880VxXzcTcKsI68vfXe1DsJTCoS/9SmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=taX/jNDd0ZhaUH1M0Tej+ZEr7fDeDCG4wwiOXx0VlxzB0DIr48ZQnjP4nEUHwQYbs
-	 Xxobi/nMk16IjqrSTx8X1cD8CdSHl9VucftahAFvEzfRiyvpgFn4aeu+5Wuz3rSN8o
-	 QOfqKlyjTZV0yb245UAjM0aXROm0OUf+HqbopiAs=
+	b=vJaRCSEZ97TBCDDiY0fnmxMPABduhZiAQXYRByGjGwXUE3NtYRPZoCT4dV0eTH6HD
+	 UUdSPzr29oadumK2zIeezBCmMEL7O9jJF0QoeYLuSxJRS9yR0pG8vRXd2/bZ0LpZRy
+	 wmIPh+5QCt7mF/zRGgUbEoO2JRguXMMfErW5kOX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 106/122] ipv6: properly combine dev_base_seq and ipv6.dev_addr_genid
-Date: Tue, 27 Feb 2024 14:27:47 +0100
-Message-ID: <20240227131602.174100636@linuxfoundation.org>
+Subject: [PATCH 5.10 107/122] afs: Increase buffer size in afs_update_volume_status()
+Date: Tue, 27 Feb 2024 14:27:48 +0100
+Message-ID: <20240227131602.206419086@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,73 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit e898e4cd1aab271ca414f9ac6e08e4c761f6913c ]
+[ Upstream commit 6ea38e2aeb72349cad50e38899b0ba6fbcb2af3d ]
 
-net->dev_base_seq and ipv6.dev_addr_genid are monotonically increasing.
+The max length of volume->vid value is 20 characters.
+So increase idbuf[] size up to 24 to avoid overflow.
 
-If we XOR their values, we could miss to detect if both values
-were changed with the same amount.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 63998ac24f83 ("ipv6: provide addr and netconf dump consistency info")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+[DH: Actually, it's 20 + NUL, so increase it to 24 and use snprintf()]
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d2ddc776a458 ("afs: Overhaul volume and server record caching and fileserver rotation")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20240211150442.3416-1-d.dulov@aladdin.ru/ # v1
+Link: https://lore.kernel.org/r/20240212083347.10742-1-d.dulov@aladdin.ru/ # v2
+Link: https://lore.kernel.org/r/20240219143906.138346-3-dhowells@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ fs/afs/volume.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 79787a1f5ab34..150c2f71ec89f 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -698,6 +698,22 @@ static int inet6_netconf_get_devconf(struct sk_buff *in_skb,
- 	return err;
- }
- 
-+/* Combine dev_addr_genid and dev_base_seq to detect changes.
-+ */
-+static u32 inet6_base_seq(const struct net *net)
-+{
-+	u32 res = atomic_read(&net->ipv6.dev_addr_genid) +
-+		  net->dev_base_seq;
-+
-+	/* Must not return 0 (see nl_dump_check_consistent()).
-+	 * Chose a value far away from 0.
-+	 */
-+	if (!res)
-+		res = 0x80000000;
-+	return res;
-+}
-+
-+
- static int inet6_netconf_dump_devconf(struct sk_buff *skb,
- 				      struct netlink_callback *cb)
+diff --git a/fs/afs/volume.c b/fs/afs/volume.c
+index f84194b791d3e..fb19c69284ab2 100644
+--- a/fs/afs/volume.c
++++ b/fs/afs/volume.c
+@@ -302,7 +302,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
  {
-@@ -731,8 +747,7 @@ static int inet6_netconf_dump_devconf(struct sk_buff *skb,
- 		idx = 0;
- 		head = &net->dev_index_head[h];
- 		rcu_read_lock();
--		cb->seq = atomic_read(&net->ipv6.dev_addr_genid) ^
--			  net->dev_base_seq;
-+		cb->seq = inet6_base_seq(net);
- 		hlist_for_each_entry_rcu(dev, head, index_hlist) {
- 			if (idx < s_idx)
- 				goto cont;
-@@ -5288,7 +5303,7 @@ static int inet6_dump_addr(struct sk_buff *skb, struct netlink_callback *cb,
- 	}
+ 	struct afs_server_list *new, *old, *discard;
+ 	struct afs_vldb_entry *vldb;
+-	char idbuf[16];
++	char idbuf[24];
+ 	int ret, idsz;
  
- 	rcu_read_lock();
--	cb->seq = atomic_read(&tgt_net->ipv6.dev_addr_genid) ^ tgt_net->dev_base_seq;
-+	cb->seq = inet6_base_seq(tgt_net);
- 	for (h = s_h; h < NETDEV_HASHENTRIES; h++, s_idx = 0) {
- 		idx = 0;
- 		head = &tgt_net->dev_index_head[h];
+ 	_enter("");
+@@ -310,7 +310,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+ 	/* We look up an ID by passing it as a decimal string in the
+ 	 * operation's name parameter.
+ 	 */
+-	idsz = sprintf(idbuf, "%llu", volume->vid);
++	idsz = snprintf(idbuf, sizeof(idbuf), "%llu", volume->vid);
+ 
+ 	vldb = afs_vl_lookup_vldb(volume->cell, key, idbuf, idsz);
+ 	if (IS_ERR(vldb)) {
 -- 
 2.43.0
 
