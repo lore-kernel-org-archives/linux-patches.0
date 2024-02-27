@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0624B143C4B;
-	Tue, 27 Feb 2024 14:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE8145333;
+	Tue, 27 Feb 2024 14:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044062; cv=none; b=rxGwd0usrnGFJzKzdJRjC3w2Jn06ECCLdRy8dl1uNQT85UYG1a0eDVZJ9is3wV5ccitoShJmwdRzIOYGAyEGomLSeC+Y4DWqq/tQp9Mf6aUVSvvKH7e+b7phqP2xYkBWhElid7w1JuuCquOg4FIJMrHKjJEGI/QlkJ7aZWZpTPg=
+	t=1709044065; cv=none; b=L3UTaBQGljOUn41IUjAzW547mh65+4nid9JYUloiy1GVBeL2I4sNNOMbCFEm90YMM6R4nys8tJHYlJRMr00oYxugEepvWMNY7NtgQTJZK1jcL6ayX2dPj6t6jSiQQccGxC40L7s+PkqF46VChlTfjFqwEGU7PVTkQCklaL4mXVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044062; c=relaxed/simple;
-	bh=yrhieljzMk5MiA4Wz5ziTw91/VSDtHSF38onAsQ3H4U=;
+	s=arc-20240116; t=1709044065; c=relaxed/simple;
+	bh=FkLO5hRu+b4maKDFlENdafRc+wbVtS7LHFc7GipFYVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KYJTVyA2REFkTZZbIPIv9iw4Hkfwkkduxc7an0U+/6BshLeYYqTk6BoJcQ+zyJRM5MHrEyKvJzuhQl7hGIFfiuZqnY5wSfCFmDncSnxSMwHLdBAERrdIBNtW5d7eqhoknCHy986p8K7zOdLzKykfqGvsbOKQf/k7k7z+IgwBdNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaZrzVPL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2Q1WZ/IpJTtyqDagQbcWSmaG0/iPi9FWA8qaJNFM9X8wn5/dX6X0Vb//Ofok1FVli0a23H7VUwCA0et5OojvLChx3mfgbg6fzG5UABKqkJ82eX3h1FX2KB9LutyHLfr36dvbaxKHL2B3qYCI0h88xK3wKguAa5ppjAfIs8YKQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnDK1v4k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaZrzVPL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D90C433C7;
-	Tue, 27 Feb 2024 14:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnDK1v4k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5511AC43390;
+	Tue, 27 Feb 2024 14:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044061;
-	bh=yrhieljzMk5MiA4Wz5ziTw91/VSDtHSF38onAsQ3H4U=;
+	s=korg; t=1709044064;
+	bh=FkLO5hRu+b4maKDFlENdafRc+wbVtS7LHFc7GipFYVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaZrzVPLORxfIFmQue0GqlCiTA5m8gv8YQnfdUH2bJxD2yEPOCxYzNb0w87hMOK3L
-	 AtKNr2obhAB58MjL2JG350dDd4YLwkgqxU0N+HtaMmsv2FTlZmp3I+G+WI2ktjUbms
-	 +Dh2MaBMZ0g2XOoKu7I0iPPT9O0H9DN5CAxTGdl8=
+	b=SnDK1v4k1LvFtvvlfuazZoFiiAbz8qqsuWz3jAP7BOpXYSpBMksaHaOmDkpe6RQTG
+	 6Y+hFn+sTWrxTzPzuxhipJrIkt8UGPP6/Fmw0y63RnB6PkKH0GNBSJWiu3P0yaVlRb
+	 slNJBpmN7uFrTmdhiV+/BQn2XJAKLg1B2eHwrqFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/122] hsr: Avoid double remove of a node.
-Date: Tue, 27 Feb 2024 14:26:50 +0100
-Message-ID: <20240227131600.313447574@linuxfoundation.org>
+Subject: [PATCH 5.10 050/122] x86/uaccess: Implement macros for CMPXCHG on user addresses
+Date: Tue, 27 Feb 2024 14:26:51 +0100
+Message-ID: <20240227131600.346173951@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,83 +52,194 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 0c74d9f79ec4299365bbe803baa736ae0068179e ]
+[ Upstream commit 989b5db215a2f22f89d730b607b071d964780f10 ]
 
-Due to the hashed-MAC optimisation one problem become visible:
-hsr_handle_sup_frame() walks over the list of available nodes and merges
-two node entries into one if based on the information in the supervision
-both MAC addresses belong to one node. The list-walk happens on a RCU
-protected list and delete operation happens under a lock.
+Add support for CMPXCHG loops on userspace addresses.  Provide both an
+"unsafe" version for tight loops that do their own uaccess begin/end, as
+well as a "safe" version for use cases where the CMPXCHG is not buried in
+a loop, e.g. KVM will resume the guest instead of looping when emulation
+of a guest atomic accesses fails the CMPXCHG.
 
-If the supervision arrives on both slave interfaces at the same time
-then this delete operation can occur simultaneously on two CPUs. The
-result is the first-CPU deletes the from the list and the second CPUs
-BUGs while attempting to dereference a poisoned list-entry. This happens
-more likely with the optimisation because a new node for the mac_B entry
-is created once a packet has been received and removed (merged) once the
-supervision frame has been received.
+Provide 8-byte versions for 32-bit kernels so that KVM can do CMPXCHG on
+guest PAE PTEs, which are accessed via userspace addresses.
 
-Avoid removing/ cleaning up a hsr_node twice by adding a `removed' field
-which is set to true after the removal and checked before the removal.
+Guard the asm_volatile_goto() variation with CC_HAS_ASM_GOTO_TIED_OUTPUT,
+the "+m" constraint fails on some compilers that otherwise support
+CC_HAS_ASM_GOTO_OUTPUT.
 
-Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20220202004945.2540433-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 16 +++++++++++-----
- net/hsr/hsr_framereg.h |  1 +
- 2 files changed, 12 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/uaccess.h | 142 +++++++++++++++++++++++++++++++++
+ 1 file changed, 142 insertions(+)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index afc97d65cf2d8..87fc86aade5c9 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -327,9 +327,12 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
- 	node_real->addr_B_port = port_rcv->type;
+diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
+index bf2561a5eb581..68b910f30b222 100644
+--- a/arch/x86/include/asm/uaccess.h
++++ b/arch/x86/include/asm/uaccess.h
+@@ -414,6 +414,103 @@ do {									\
  
- 	spin_lock_bh(&hsr->list_lock);
--	list_del_rcu(&node_curr->mac_list);
-+	if (!node_curr->removed) {
-+		list_del_rcu(&node_curr->mac_list);
-+		node_curr->removed = true;
-+		kfree_rcu(node_curr, rcu_head);
-+	}
- 	spin_unlock_bh(&hsr->list_lock);
--	kfree_rcu(node_curr, rcu_head);
+ #endif // CONFIG_CC_ASM_GOTO_OUTPUT
  
- done:
- 	/* PRP uses v0 header */
-@@ -506,9 +509,12 @@ void hsr_prune_nodes(struct timer_list *t)
- 		if (time_is_before_jiffies(timestamp +
- 				msecs_to_jiffies(HSR_NODE_FORGET_TIME))) {
- 			hsr_nl_nodedown(hsr, node->macaddress_A);
--			list_del_rcu(&node->mac_list);
--			/* Note that we need to free this entry later: */
--			kfree_rcu(node, rcu_head);
-+			if (!node->removed) {
-+				list_del_rcu(&node->mac_list);
-+				node->removed = true;
-+				/* Note that we need to free this entry later: */
-+				kfree_rcu(node, rcu_head);
-+			}
- 		}
- 	}
- 	spin_unlock_bh(&hsr->list_lock);
-diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
-index 5a771cb3f0325..48990166e4c4e 100644
---- a/net/hsr/hsr_framereg.h
-+++ b/net/hsr/hsr_framereg.h
-@@ -82,6 +82,7 @@ struct hsr_node {
- 	bool			san_a;
- 	bool			san_b;
- 	u16			seq_out[HSR_PT_PORTS];
-+	bool			removed;
- 	struct rcu_head		rcu_head;
- };
++#ifdef CONFIG_CC_HAS_ASM_GOTO_TIED_OUTPUT
++#define __try_cmpxchg_user_asm(itype, ltype, _ptr, _pold, _new, label)	({ \
++	bool success;							\
++	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
++	__typeof__(*(_ptr)) __old = *_old;				\
++	__typeof__(*(_ptr)) __new = (_new);				\
++	asm_volatile_goto("\n"						\
++		     "1: " LOCK_PREFIX "cmpxchg"itype" %[new], %[ptr]\n"\
++		     _ASM_EXTABLE_UA(1b, %l[label])			\
++		     : CC_OUT(z) (success),				\
++		       [ptr] "+m" (*_ptr),				\
++		       [old] "+a" (__old)				\
++		     : [new] ltype (__new)				\
++		     : "memory"						\
++		     : label);						\
++	if (unlikely(!success))						\
++		*_old = __old;						\
++	likely(success);					})
++
++#ifdef CONFIG_X86_32
++#define __try_cmpxchg64_user_asm(_ptr, _pold, _new, label)	({	\
++	bool success;							\
++	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
++	__typeof__(*(_ptr)) __old = *_old;				\
++	__typeof__(*(_ptr)) __new = (_new);				\
++	asm_volatile_goto("\n"						\
++		     "1: " LOCK_PREFIX "cmpxchg8b %[ptr]\n"		\
++		     _ASM_EXTABLE_UA(1b, %l[label])			\
++		     : CC_OUT(z) (success),				\
++		       "+A" (__old),					\
++		       [ptr] "+m" (*_ptr)				\
++		     : "b" ((u32)__new),				\
++		       "c" ((u32)((u64)__new >> 32))			\
++		     : "memory"						\
++		     : label);						\
++	if (unlikely(!success))						\
++		*_old = __old;						\
++	likely(success);					})
++#endif // CONFIG_X86_32
++#else  // !CONFIG_CC_HAS_ASM_GOTO_TIED_OUTPUT
++#define __try_cmpxchg_user_asm(itype, ltype, _ptr, _pold, _new, label)	({ \
++	int __err = 0;							\
++	bool success;							\
++	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
++	__typeof__(*(_ptr)) __old = *_old;				\
++	__typeof__(*(_ptr)) __new = (_new);				\
++	asm volatile("\n"						\
++		     "1: " LOCK_PREFIX "cmpxchg"itype" %[new], %[ptr]\n"\
++		     CC_SET(z)						\
++		     "2:\n"						\
++		     _ASM_EXTABLE_TYPE_REG(1b, 2b, EX_TYPE_EFAULT_REG,	\
++					   %[errout])			\
++		     : CC_OUT(z) (success),				\
++		       [errout] "+r" (__err),				\
++		       [ptr] "+m" (*_ptr),				\
++		       [old] "+a" (__old)				\
++		     : [new] ltype (__new)				\
++		     : "memory", "cc");					\
++	if (unlikely(__err))						\
++		goto label;						\
++	if (unlikely(!success))						\
++		*_old = __old;						\
++	likely(success);					})
++
++#ifdef CONFIG_X86_32
++/*
++ * Unlike the normal CMPXCHG, hardcode ECX for both success/fail and error.
++ * There are only six GPRs available and four (EAX, EBX, ECX, and EDX) are
++ * hardcoded by CMPXCHG8B, leaving only ESI and EDI.  If the compiler uses
++ * both ESI and EDI for the memory operand, compilation will fail if the error
++ * is an input+output as there will be no register available for input.
++ */
++#define __try_cmpxchg64_user_asm(_ptr, _pold, _new, label)	({	\
++	int __result;							\
++	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
++	__typeof__(*(_ptr)) __old = *_old;				\
++	__typeof__(*(_ptr)) __new = (_new);				\
++	asm volatile("\n"						\
++		     "1: " LOCK_PREFIX "cmpxchg8b %[ptr]\n"		\
++		     "mov $0, %%ecx\n\t"				\
++		     "setz %%cl\n"					\
++		     "2:\n"						\
++		     _ASM_EXTABLE_TYPE_REG(1b, 2b, EX_TYPE_EFAULT_REG, %%ecx) \
++		     : [result]"=c" (__result),				\
++		       "+A" (__old),					\
++		       [ptr] "+m" (*_ptr)				\
++		     : "b" ((u32)__new),				\
++		       "c" ((u32)((u64)__new >> 32))			\
++		     : "memory", "cc");					\
++	if (unlikely(__result < 0))					\
++		goto label;						\
++	if (unlikely(!__result))					\
++		*_old = __old;						\
++	likely(__result);					})
++#endif // CONFIG_X86_32
++#endif // CONFIG_CC_HAS_ASM_GOTO_TIED_OUTPUT
++
+ /* FIXME: this hack is definitely wrong -AK */
+ struct __large_struct { unsigned long buf[100]; };
+ #define __m(x) (*(struct __large_struct __user *)(x))
+@@ -506,6 +603,51 @@ do {										\
+ } while (0)
+ #endif // CONFIG_CC_HAS_ASM_GOTO_OUTPUT
  
++extern void __try_cmpxchg_user_wrong_size(void);
++
++#ifndef CONFIG_X86_32
++#define __try_cmpxchg64_user_asm(_ptr, _oldp, _nval, _label)		\
++	__try_cmpxchg_user_asm("q", "r", (_ptr), (_oldp), (_nval), _label)
++#endif
++
++/*
++ * Force the pointer to u<size> to match the size expected by the asm helper.
++ * clang/LLVM compiles all cases and only discards the unused paths after
++ * processing errors, which breaks i386 if the pointer is an 8-byte value.
++ */
++#define unsafe_try_cmpxchg_user(_ptr, _oldp, _nval, _label) ({			\
++	bool __ret;								\
++	__chk_user_ptr(_ptr);							\
++	switch (sizeof(*(_ptr))) {						\
++	case 1:	__ret = __try_cmpxchg_user_asm("b", "q",			\
++					       (__force u8 *)(_ptr), (_oldp),	\
++					       (_nval), _label);		\
++		break;								\
++	case 2:	__ret = __try_cmpxchg_user_asm("w", "r",			\
++					       (__force u16 *)(_ptr), (_oldp),	\
++					       (_nval), _label);		\
++		break;								\
++	case 4:	__ret = __try_cmpxchg_user_asm("l", "r",			\
++					       (__force u32 *)(_ptr), (_oldp),	\
++					       (_nval), _label);		\
++		break;								\
++	case 8:	__ret = __try_cmpxchg64_user_asm((__force u64 *)(_ptr), (_oldp),\
++						 (_nval), _label);		\
++		break;								\
++	default: __try_cmpxchg_user_wrong_size();				\
++	}									\
++	__ret;						})
++
++/* "Returns" 0 on success, 1 on failure, -EFAULT if the access faults. */
++#define __try_cmpxchg_user(_ptr, _oldp, _nval, _label)	({		\
++	int __ret = -EFAULT;						\
++	__uaccess_begin_nospec();					\
++	__ret = !unsafe_try_cmpxchg_user(_ptr, _oldp, _nval, _label);	\
++_label:									\
++	__uaccess_end();						\
++	__ret;								\
++							})
++
+ /*
+  * We want the unsafe accessors to always be inlined and use
+  * the error labels - thus the macro games.
 -- 
 2.43.0
 
