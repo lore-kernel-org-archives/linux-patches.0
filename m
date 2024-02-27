@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECB8145B15;
-	Tue, 27 Feb 2024 13:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028811468E3;
+	Tue, 27 Feb 2024 13:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041967; cv=none; b=IKZ3eedly2Wpx5pqg4+qe2L4U/PREOnFT6Jbx7KJlWNJ5hirNf0ULboYVhxUnDk/JoE2hwjHJf1UNjpnzIE8GGiMN8o/AytOtZxZNe7XEYnUme39FjIW2dmGjOmatyHhyNBUPbxokF+Ewh9ZYx4f/SW7IQIOfXWJYNsflJ78XQA=
+	t=1709041970; cv=none; b=V3lXU3TyYaG/Hd9ptWbVJTup6D4xuywPoSIixXf93B8UIHVruFZq3P6lJIexeplW7IkClBlvdSUSYdd1jbgA9doGefJsEHd/6HM3kqdYAdAgKX57vitsknrOoWXT4nt9GObjCSIHSIg4JocgIWHubCiGZd3pr5jcAi+T+HtYaPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041967; c=relaxed/simple;
-	bh=1fiS/4n1G7ejBvk+D9UXLHjwRZpOboKybwOB5Pf0OSM=;
+	s=arc-20240116; t=1709041970; c=relaxed/simple;
+	bh=3Vxxly3IARgdg3fojU8dI11ktf1PGhWX2FhrqPEKLmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpORc9rVrABSYdnN0K2+s/657cQ42RYPvUg934QvYLeq0nGFD4kBF6Z9m9WSG6ZbV9WwCUkFpLMcgO2jj2JNzTjtLh376anPnByaLssQ9Mu5rHim+uN4SkShdrPCZa062Z0u9txtBnAYLdvtz6PvRrKFyhUCGmRF0cg6uvoAE+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYovHsnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ekqUie8Bq2F1ZAmYE/ykbQIL3m9l5o5VVpggJjhg2BkvLOFmc27w+4G2HiXhG4aqtZk4uB3U9OpepJueOPpXDQxeFZBII5tPcbVttE9DuSYWdssRY3BfpzTtinI2RpUzV5LPTJggmovhDB2UTCq8BaPZQKEODn8PbcIUrUdNsAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSkcre1g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYovHsnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BFBC433C7;
-	Tue, 27 Feb 2024 13:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSkcre1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8554EC433B1;
+	Tue, 27 Feb 2024 13:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041967;
-	bh=1fiS/4n1G7ejBvk+D9UXLHjwRZpOboKybwOB5Pf0OSM=;
+	s=korg; t=1709041969;
+	bh=3Vxxly3IARgdg3fojU8dI11ktf1PGhWX2FhrqPEKLmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYovHsnl7rXKgogR/Tig4TEEh2z2WJ/HsxoSaFHd2htQohlLn7nlwNtxGl1pRtH+a
-	 rBToE/8C4pv+Jsn6pSYtmsa5dnBuPNRN06jj9qofMozf2R5y5XI4QeRDd5Qv2Cv2h2
-	 zyPD61ALb3ZWNVRMbBHBQFmuBKmVcQbmbtu9skNs=
+	b=RSkcre1g+PrJI/3wkjShhdKaU/KDjsNeNt+VjWxeP+QcuXVRzLlDp8KXGkMaQ/QRl
+	 PNu0bNfRC33J26dwhE9PpB33wYuOuFzhgYY5PMPWHbNMHxSr8OzvU7uYPXS6FVTPBC
+	 QrN5ibQpMEWipjdaWCX00XskI9D6sT8gqGPCWRfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mats Kronberg <kronberg@nsc.liu.se>,
-	Daniel Vacek <neelx@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.6 133/299] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
-Date: Tue, 27 Feb 2024 14:24:04 +0100
-Message-ID: <20240227131630.137706007@linuxfoundation.org>
+	Alyssa Milburn <alyssa.milburn@intel.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 6.6 134/299] x86/bugs: Add asm helpers for executing VERW
+Date: Tue, 27 Feb 2024 14:24:05 +0100
+Message-ID: <20240227131630.173187872@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,100 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vacek <neelx@redhat.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
+commit baf8361e54550a48a7087b603313ad013cc13386 upstream.
 
-Unfortunately the commit `fd8958efe877` introduced another error
-causing the `descs` array to overflow. This reults in further crashes
-easily reproducible by `sendmsg` system call.
+MDS mitigation requires clearing the CPU buffers before returning to
+user. This needs to be done late in the exit-to-user path. Current
+location of VERW leaves a possibility of kernel data ending up in CPU
+buffers for memory accesses done after VERW such as:
 
-[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
-[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
---
-[ 1080.974535] Call Trace:
-[ 1080.976990]  <TASK>
-[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
-[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
-[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
-[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
-[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
---
-[ 1081.148347]  __sys_sendmsg+0x59/0xa0
+  1. Kernel data accessed by an NMI between VERW and return-to-user can
+     remain in CPU buffers since NMI returning to kernel does not
+     execute VERW to clear CPU buffers.
+  2. Alyssa reported that after VERW is executed,
+     CONFIG_GCC_PLUGIN_STACKLEAK=y scrubs the stack used by a system
+     call. Memory accesses during stack scrubbing can move kernel stack
+     contents into CPU buffers.
+  3. When caller saved registers are restored after a return from
+     function executing VERW, the kernel stack accesses can remain in
+     CPU buffers(since they occur after VERW).
 
-crash> ipoib_txreq 0xffff9cfeba229f00
-struct ipoib_txreq {
-  txreq = {
-    list = {
-      next = 0xffff9cfeba229f00,
-      prev = 0xffff9cfeba229f00
-    },
-    descp = 0xffff9cfeba229f40,
-    coalesce_buf = 0x0,
-    wait = 0xffff9cfea4e69a48,
-    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
-    packet_len = 0x46d,
-    tlen = 0x0,
-    num_desc = 0x0,
-    desc_limit = 0x6,
-    next_descq_idx = 0x45c,
-    coalesce_idx = 0x0,
-    flags = 0x0,
-    descs = {{
-        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
-      }, {
-        qw = {  0x3800014231b108, 0x4}
-      }, {
-        qw = { 0x310000e4ee0fcf0, 0x8}
-      }, {
-        qw = {  0x3000012e9f8000, 0x8}
-      }, {
-        qw = {  0x59000dfb9d0000, 0x8}
-      }, {
-        qw = {  0x78000e02e40000, 0x8}
-      }}
-  },
-  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
-  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
-  complete = 0x0,
-  priv = 0x0,
-  txq = 0xffff9cfea4e69880,
-  skb = 0xffff9d099809f400
-}
+To fix this VERW needs to be moved very late in exit-to-user path.
 
-If an SDMA send consists of exactly 6 descriptors and requires dword
-padding (in the 7th descriptor), the sdma_txreq descriptor array is not
-properly expanded and the packet will overflow into the container
-structure. This results in a panic when the send completion runs. The
-exact panic varies depending on what elements of the container structure
-get corrupted. The fix is to use the correct expression in
-_pad_sdma_tx_descs() to test the need to expand the descriptor array.
+In preparation for moving VERW to entry/exit asm code, create macros
+that can be used in asm. Also make VERW patching depend on a new feature
+flag X86_FEATURE_CLEAR_CPU_BUF.
 
-With this patch the crashes are no longer reproducible and the machine is
-stable.
-
-Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
-Cc: stable@vger.kernel.org
-Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
-Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
-Signed-off-by: Daniel Vacek <neelx@redhat.com>
-Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reported-by: Alyssa Milburn <alyssa.milburn@intel.com>
+Suggested-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20240213-delay-verw-v8-1-a6216d83edb7%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/sdma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/entry/entry.S               |   23 +++++++++++++++++++++++
+ arch/x86/include/asm/cpufeatures.h   |    2 +-
+ arch/x86/include/asm/nospec-branch.h |   13 +++++++++++++
+ 3 files changed, 37 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/hfi1/sdma.c
-+++ b/drivers/infiniband/hw/hfi1/sdma.c
-@@ -3158,7 +3158,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
- {
- 	int rval = 0;
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -6,6 +6,9 @@
+ #include <linux/linkage.h>
+ #include <asm/export.h>
+ #include <asm/msr-index.h>
++#include <asm/unwind_hints.h>
++#include <asm/segment.h>
++#include <asm/cache.h>
  
--	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
-+	if ((unlikely(tx->num_desc == tx->desc_limit))) {
- 		rval = _extend_sdma_tx_descs(dd, tx);
- 		if (rval) {
- 			__sdma_txclean(dd, tx);
+ .pushsection .noinstr.text, "ax"
+ 
+@@ -20,3 +23,23 @@ SYM_FUNC_END(entry_ibpb)
+ EXPORT_SYMBOL_GPL(entry_ibpb);
+ 
+ .popsection
++
++/*
++ * Define the VERW operand that is disguised as entry code so that
++ * it can be referenced with KPTI enabled. This ensure VERW can be
++ * used late in exit-to-user path after page tables are switched.
++ */
++.pushsection .entry.text, "ax"
++
++.align L1_CACHE_BYTES, 0xcc
++SYM_CODE_START_NOALIGN(mds_verw_sel)
++	UNWIND_HINT_UNDEFINED
++	ANNOTATE_NOENDBR
++	.word __KERNEL_DS
++.align L1_CACHE_BYTES, 0xcc
++SYM_CODE_END(mds_verw_sel);
++/* For KVM */
++EXPORT_SYMBOL_GPL(mds_verw_sel);
++
++.popsection
++
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -97,7 +97,7 @@
+ #define X86_FEATURE_SYSENTER32		( 3*32+15) /* "" sysenter in IA32 userspace */
+ #define X86_FEATURE_REP_GOOD		( 3*32+16) /* REP microcode works well */
+ #define X86_FEATURE_AMD_LBR_V2		( 3*32+17) /* AMD Last Branch Record Extension Version 2 */
+-/* FREE, was #define X86_FEATURE_LFENCE_RDTSC		( 3*32+18) "" LFENCE synchronizes RDTSC */
++#define X86_FEATURE_CLEAR_CPU_BUF	( 3*32+18) /* "" Clear CPU buffers using VERW */
+ #define X86_FEATURE_ACC_POWER		( 3*32+19) /* AMD Accumulated Power Mechanism */
+ #define X86_FEATURE_NOPL		( 3*32+20) /* The NOPL (0F 1F) instructions */
+ #define X86_FEATURE_ALWAYS		( 3*32+21) /* "" Always-present feature */
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -329,6 +329,17 @@
+ #endif
+ .endm
+ 
++/*
++ * Macro to execute VERW instruction that mitigate transient data sampling
++ * attacks such as MDS. On affected systems a microcode update overloaded VERW
++ * instruction to also clear the CPU buffers. VERW clobbers CFLAGS.ZF.
++ *
++ * Note: Only the memory operand variant of VERW clears the CPU buffers.
++ */
++.macro CLEAR_CPU_BUFFERS
++	ALTERNATIVE "", __stringify(verw _ASM_RIP(mds_verw_sel)), X86_FEATURE_CLEAR_CPU_BUF
++.endm
++
+ #else /* __ASSEMBLY__ */
+ 
+ #define ANNOTATE_RETPOLINE_SAFE					\
+@@ -545,6 +556,8 @@ DECLARE_STATIC_KEY_FALSE(switch_mm_cond_
+ 
+ DECLARE_STATIC_KEY_FALSE(mmio_stale_data_clear);
+ 
++extern u16 mds_verw_sel;
++
+ #include <asm/segment.h>
+ 
+ /**
 
 
