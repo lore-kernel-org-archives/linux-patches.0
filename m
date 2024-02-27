@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AC113B2B9;
-	Tue, 27 Feb 2024 14:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276C216423;
+	Tue, 27 Feb 2024 14:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042660; cv=none; b=mypfumJxv1fOf3dafM0OHwZMML2zI0FCwJex4blhgJ5426RzSsfyFgdb0/3vaIgAV6EjnYXUD+KxGH6169tVTxQ8/VK4Z+NJW/4iit+2ln0TLPKUutPXd0qFr5LRxX5s8v32G/thC1szdRjmVzdHCzKEn+GAzwghw+2X24ct+iM=
+	t=1709042663; cv=none; b=RlzNWLDhegd/nYSkYgJOegMQuxdH+xQm/fZagXj22WrXgOJVIqi6iM/JmRw7mYSq064v7/LG0Kuru/smdUAkEnTI8OZswhs/H0+KZTC8M7rYHEpsBJPlCTD9kS0kgp5h5wXRl32mK0mgQpOKWNJwU2nMYzVSwcu5Hv/7VnskDA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042660; c=relaxed/simple;
-	bh=KUmkORy0tg4vXyh/0P4xmfXHR8cTzvT+Dt4mSZ4av+Y=;
+	s=arc-20240116; t=1709042663; c=relaxed/simple;
+	bh=tqcDk7dnOWhLu3sxjntRpmJbxFNjPN3fEfrLg+tB3cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ji/n3rfBIoM0h4PKs2DuvACxPcJB/5LKOvHJJ5HWWfQpOe/mplodtSFZrGHVIhBHCXaTrif9XFFZ8E5RKS7iHlxco4w1xtr0l4LxsStKl5579Tg5lq3FDzNem7niDP4n6urqfKCjjVJFg5bDWrUc8M4p5FQl5aelAIr+1UEry/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrC/I2ie; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BNviC+PJ1qOq+uPfZJDP9PigMs5b/UzMlg7fpEbbZnYpNbZX07VJB6aZiIFrfcCNzgefiuBvjLtJEyO58hZtCYUMuYrj032D0SX2kVP7MUUe+S4qT579RzBRY8CF48TIv1dU97BKoYYhiZeKtuUQM+fVyur5CZsRZGDfvM390/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCwUC3iM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrC/I2ie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EC5C433F1;
-	Tue, 27 Feb 2024 14:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCwUC3iM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8501C433F1;
+	Tue, 27 Feb 2024 14:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042660;
-	bh=KUmkORy0tg4vXyh/0P4xmfXHR8cTzvT+Dt4mSZ4av+Y=;
+	s=korg; t=1709042663;
+	bh=tqcDk7dnOWhLu3sxjntRpmJbxFNjPN3fEfrLg+tB3cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrC/I2ieAclwJIR3G3lM1AeJASa8qRHfvKEvFS1+7MRNSAUqVvCJI6a0abBE+jN4w
-	 o6jaBOjfluBfjZWWhFjW+oY28d1Vsb6XBmf8B5Os0lxFQnqcZaekJ+3+Y7WTu+i1xT
-	 Ss2V3DB/Ca5kFdfZE66TL2/h6XxTmv/VfrvEiXPE=
+	b=sCwUC3iM45MfO/542jNVKmdObZHp1MgE4FcQXzB1yqZ0VAHGlA0KD4q83SUgl1+P0
+	 M6oPlmQhr+3g4ogdF1TBHC7QDQC4TtrNORuALqEv/rXNujsysqht2g5xblTTwn+IZi
+	 uUOO/sQIbhO5AQmwKdWdnrjtFBLm67O3hU6GNEeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/245] pmdomain: renesas: r8a77980-sysc: CR7 must be always on
-Date: Tue, 27 Feb 2024 14:24:23 +0100
-Message-ID: <20240227131617.679631480@linuxfoundation.org>
+	Yifan Zhao <zhaoyifan@sjtu.edu.cn>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Juhyung Park <qkrwngud825@gmail.com>
+Subject: [PATCH 5.15 076/245] erofs: fix lz4 inplace decompression
+Date: Tue, 27 Feb 2024 14:24:24 +0100
+Message-ID: <20240227131617.712424706@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -45,51 +45,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit f0e4a1356466ec1858ae8e5c70bea2ce5e55008b ]
+commit 3c12466b6b7bf1e56f9b32c366a3d83d87afb4de upstream.
 
-The power domain containing the Cortex-R7 CPU core on the R-Car V3H SoC
-must always be in power-on state, unlike on other SoCs in the R-Car Gen3
-family.  See Table 9.4 "Power domains" in the R-Car Series, 3rd
-Generation Hardware User’s Manual Rev.1.00 and later.
+Currently EROFS can map another compressed buffer for inplace
+decompression, that was used to handle the cases that some pages of
+compressed data are actually not in-place I/O.
 
-Fix this by marking the domain as a CPU domain without control
-registers, so the driver will not touch it.
+However, like most simple LZ77 algorithms, LZ4 expects the compressed
+data is arranged at the end of the decompressed buffer and it
+explicitly uses memmove() to handle overlapping:
+  __________________________________________________________
+ |_ direction of decompression --> ____ |_ compressed data _|
 
-Fixes: 41d6d8bd8ae9 ("soc: renesas: rcar-sysc: add R8A77980 support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/fdad9a86132d53ecddf72b734dac406915c4edc0.1705076735.git.geert+renesas@glider.be
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Although EROFS arranges compressed data like this, it typically maps two
+individual virtual buffers so the relative order is uncertain.
+Previously, it was hardly observed since LZ4 only uses memmove() for
+short overlapped literals and x86/arm64 memmove implementations seem to
+completely cover it up and they don't have this issue.  Juhyung reported
+that EROFS data corruption can be found on a new Intel x86 processor.
+After some analysis, it seems that recent x86 processors with the new
+FSRM feature expose this issue with "rep movsb".
+
+Let's strictly use the decompressed buffer for lz4 inplace
+decompression for now.  Later, as an useful improvement, we could try
+to tie up these two buffers together in the correct order.
+
+Reported-and-tested-by: Juhyung Park <qkrwngud825@gmail.com>
+Closes: https://lore.kernel.org/r/CAD14+f2AVKf8Fa2OO1aAUdDNTDsVzzR6ctU_oJSmTyd6zSYR2Q@mail.gmail.com
+Fixes: 0ffd71bcc3a0 ("staging: erofs: introduce LZ4 decompression inplace")
+Fixes: 598162d05080 ("erofs: support decompress big pcluster for lz4 backend")
+Cc: stable <stable@vger.kernel.org> # 5.4+
+Tested-by: Yifan Zhao <zhaoyifan@sjtu.edu.cn>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20231206045534.3920847-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/renesas/r8a77980-sysc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/erofs/decompressor.c |   34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/soc/renesas/r8a77980-sysc.c b/drivers/soc/renesas/r8a77980-sysc.c
-index 39ca84a67daad..621e411fc9991 100644
---- a/drivers/soc/renesas/r8a77980-sysc.c
-+++ b/drivers/soc/renesas/r8a77980-sysc.c
-@@ -25,7 +25,8 @@ static const struct rcar_sysc_area r8a77980_areas[] __initconst = {
- 	  PD_CPU_NOCR },
- 	{ "ca53-cpu3",	0x200, 3, R8A77980_PD_CA53_CPU3, R8A77980_PD_CA53_SCU,
- 	  PD_CPU_NOCR },
--	{ "cr7",	0x240, 0, R8A77980_PD_CR7,	R8A77980_PD_ALWAYS_ON },
-+	{ "cr7",	0x240, 0, R8A77980_PD_CR7,	R8A77980_PD_ALWAYS_ON,
-+	  PD_CPU_NOCR },
- 	{ "a3ir",	0x180, 0, R8A77980_PD_A3IR,	R8A77980_PD_ALWAYS_ON },
- 	{ "a2ir0",	0x400, 0, R8A77980_PD_A2IR0,	R8A77980_PD_A3IR },
- 	{ "a2ir1",	0x400, 1, R8A77980_PD_A2IR1,	R8A77980_PD_A3IR },
--- 
-2.43.0
-
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -124,11 +124,11 @@ static int z_erofs_lz4_prepare_destpages
+ }
+ 
+ static void *z_erofs_handle_inplace_io(struct z_erofs_decompress_req *rq,
+-			void *inpage, unsigned int *inputmargin, int *maptype,
+-			bool support_0padding)
++		void *inpage, void *out, unsigned int *inputmargin, int *maptype,
++		bool support_0padding)
+ {
+ 	unsigned int nrpages_in, nrpages_out;
+-	unsigned int ofull, oend, inputsize, total, i, j;
++	unsigned int ofull, oend, inputsize, total, i;
+ 	struct page **in;
+ 	void *src, *tmp;
+ 
+@@ -143,12 +143,13 @@ static void *z_erofs_handle_inplace_io(s
+ 		    ofull - oend < LZ4_DECOMPRESS_INPLACE_MARGIN(inputsize))
+ 			goto docopy;
+ 
+-		for (i = 0; i < nrpages_in; ++i) {
+-			DBG_BUGON(rq->in[i] == NULL);
+-			for (j = 0; j < nrpages_out - nrpages_in + i; ++j)
+-				if (rq->out[j] == rq->in[i])
+-					goto docopy;
+-		}
++		for (i = 0; i < nrpages_in; ++i)
++			if (rq->out[nrpages_out - nrpages_in + i] !=
++			    rq->in[i])
++				goto docopy;
++		kunmap_atomic(inpage);
++		*maptype = 3;
++		return out + ((nrpages_out - nrpages_in) << PAGE_SHIFT);
+ 	}
+ 
+ 	if (nrpages_in <= 1) {
+@@ -156,7 +157,6 @@ static void *z_erofs_handle_inplace_io(s
+ 		return inpage;
+ 	}
+ 	kunmap_atomic(inpage);
+-	might_sleep();
+ 	src = erofs_vm_map_ram(rq->in, nrpages_in);
+ 	if (!src)
+ 		return ERR_PTR(-ENOMEM);
+@@ -193,10 +193,10 @@ docopy:
+ 	return src;
+ }
+ 
+-static int z_erofs_lz4_decompress(struct z_erofs_decompress_req *rq, u8 *out)
++static int z_erofs_lz4_decompress(struct z_erofs_decompress_req *rq, u8 *dst)
+ {
+ 	unsigned int inputmargin;
+-	u8 *headpage, *src;
++	u8 *out, *headpage, *src;
+ 	bool support_0padding;
+ 	int ret, maptype;
+ 
+@@ -220,11 +220,12 @@ static int z_erofs_lz4_decompress(struct
+ 	}
+ 
+ 	rq->inputsize -= inputmargin;
+-	src = z_erofs_handle_inplace_io(rq, headpage, &inputmargin, &maptype,
+-					support_0padding);
++	src = z_erofs_handle_inplace_io(rq, headpage, dst, &inputmargin,
++					&maptype, support_0padding);
+ 	if (IS_ERR(src))
+ 		return PTR_ERR(src);
+ 
++	out = dst + rq->pageofs_out;
+ 	/* legacy format could compress extra data in a pcluster. */
+ 	if (rq->partial_decoding || !support_0padding)
+ 		ret = LZ4_decompress_safe_partial(src + inputmargin, out,
+@@ -253,7 +254,7 @@ static int z_erofs_lz4_decompress(struct
+ 		vm_unmap_ram(src, PAGE_ALIGN(rq->inputsize) >> PAGE_SHIFT);
+ 	} else if (maptype == 2) {
+ 		erofs_put_pcpubuf(src);
+-	} else {
++	} else if (maptype != 3) {
+ 		DBG_BUGON(1);
+ 		return -EFAULT;
+ 	}
+@@ -354,8 +355,7 @@ static int z_erofs_decompress_generic(st
+ 	dst_maptype = 2;
+ 
+ dstmap_out:
+-	ret = alg->decompress(rq, dst + rq->pageofs_out);
+-
++	ret = alg->decompress(rq, dst);
+ 	if (!dst_maptype)
+ 		kunmap_atomic(dst);
+ 	else if (dst_maptype == 2)
 
 
