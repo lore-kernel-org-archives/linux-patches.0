@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F5613B797;
-	Tue, 27 Feb 2024 14:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CCB13B2B8;
+	Tue, 27 Feb 2024 14:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043829; cv=none; b=BH4spBhrq2xov6Lxeck2yfNep5hFRTJaYt0grbOLOaeYjyWs7HQNRJxuBvL4iB3/JVIgRv80d1gnrNXBKQ9lJ62aQCzZyn7Wmo1ldLX0AeB6nZzngOsrgtTFAOVmMkKR6zlYbP3OKswS9R5CKo9mnB3UPC7UUfoSYATJVMIEIOI=
+	t=1709043832; cv=none; b=aAbfLN/ZDlhvSSEsia8iS5x93A5alnjOkSalGDiKWETOvnzqUEyLLAlFrPOg7nkvfpwdIxbK7uHXZp7xF77yc+MAK+ZQDw7p/j3V0ivicq7wHC44bjDBwre3mmxDP9pIRujAQzrC5BT6KllPk558Sw8vbiKqadS+5YhczkKl5cQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043829; c=relaxed/simple;
-	bh=VGn0Cmmgi/Of0k9os7/a6mxzeHNe42X0Kjz2lm+JMag=;
+	s=arc-20240116; t=1709043832; c=relaxed/simple;
+	bh=ulsqBydEp96SgZrZTqtqlxIDIjYnaTJM4Kdz0JzfZLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LfNh0UF3ZdOoC+X6BK52bvMbUxUZ2K6wBHVUNIRwW0Jn3cL30fobHGkfWqZrqvOv9wgEaoJKrlvPivBxNzdcbVexU9sggJh9R78AkI6EdnrNit2w0bOPPHEevXkTsWv0S5PvV3R+h2eNwlzL9Xx6/E8Rbo/dKmBSIt8ErOZSTUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gst6eXwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ju7FvpOxwPklDXd1NDTLRCEobNkbllzT8laNRGEKpakmHOBWwORkZMmC6iZjwNi+1WV8QnYv2whODji3/4Nbz9HDRXjX1AlrrjWOsuGZvg1kYMfANOJZ9DqQ7F9UAoP/FPSiNSpPbAtguUtb1GSoy6XsWwYXqGq50rLRvSUez74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mnlEeqs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gst6eXwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A15C433F1;
-	Tue, 27 Feb 2024 14:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mnlEeqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214E3C433F1;
+	Tue, 27 Feb 2024 14:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043829;
-	bh=VGn0Cmmgi/Of0k9os7/a6mxzeHNe42X0Kjz2lm+JMag=;
+	s=korg; t=1709043832;
+	bh=ulsqBydEp96SgZrZTqtqlxIDIjYnaTJM4Kdz0JzfZLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gst6eXwg3ZSK7T9+1YQ0WSNxbYAycHu8zr9eNvPVoLNsxLwfCBPzmYIPcbkDUXe11
-	 HQwEpPiNHOs6OwhIdg3EL/zIvk01nlEkuF5dIY35FiH1Gkh3+B6BbLVvyJyJcbE4PL
-	 kBvp7DA9WT34h/yB4SaGcAFlpf4bcJ5Jw6gXNC04=
+	b=1mnlEeqsxx9M+exCfi61RLQmc97zuUaDXABMmYNH7JMZmsUptSM16jvaP5TvuEHE+
+	 VnKnqEy09yDNDJ/tibT4BTNNO6Z80g5D94gQu3vBNP1kJs1w8Mk7hWvsdUc9deO5UE
+	 2z7/Y/HEL9U+9Q06TiaV0DzVbWpXhE63ZCGBibIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 52/84] PCI: tegra: Fix OF node reference leak
-Date: Tue, 27 Feb 2024 14:27:19 +0100
-Message-ID: <20240227131554.565312915@linuxfoundation.org>
+	Mats Kronberg <kronberg@nsc.liu.se>,
+	Daniel Vacek <neelx@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 5.4 53/84] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
+Date: Tue, 27 Feb 2024 14:27:20 +0100
+Message-ID: <20240227131554.597142440@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -52,63 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniel Vacek <neelx@redhat.com>
 
-[ Upstream commit eff21f5da308265678e7e59821795e606f3e560f ]
+commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
 
-Commit 9e38e690ace3 ("PCI: tegra: Fix OF node reference leak") has fixed
-some node reference leaks in this function but missed some of them.
+Unfortunately the commit `fd8958efe877` introduced another error
+causing the `descs` array to overflow. This reults in further crashes
+easily reproducible by `sendmsg` system call.
 
-In fact, having 'port' referenced in the 'rp' structure is not enough to
-prevent the leak, until 'rp' is actually added in the 'pcie->ports' list.
+[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
+[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
+--
+[ 1080.974535] Call Trace:
+[ 1080.976990]  <TASK>
+[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
+[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
+[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
+[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
+[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
+--
+[ 1081.148347]  __sys_sendmsg+0x59/0xa0
 
-Add the missing 'goto err_node_put' accordingly.
+crash> ipoib_txreq 0xffff9cfeba229f00
+struct ipoib_txreq {
+  txreq = {
+    list = {
+      next = 0xffff9cfeba229f00,
+      prev = 0xffff9cfeba229f00
+    },
+    descp = 0xffff9cfeba229f40,
+    coalesce_buf = 0x0,
+    wait = 0xffff9cfea4e69a48,
+    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
+    packet_len = 0x46d,
+    tlen = 0x0,
+    num_desc = 0x0,
+    desc_limit = 0x6,
+    next_descq_idx = 0x45c,
+    coalesce_idx = 0x0,
+    flags = 0x0,
+    descs = {{
+        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
+      }, {
+        qw = {  0x3800014231b108, 0x4}
+      }, {
+        qw = { 0x310000e4ee0fcf0, 0x8}
+      }, {
+        qw = {  0x3000012e9f8000, 0x8}
+      }, {
+        qw = {  0x59000dfb9d0000, 0x8}
+      }, {
+        qw = {  0x78000e02e40000, 0x8}
+      }}
+  },
+  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
+  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
+  complete = 0x0,
+  priv = 0x0,
+  txq = 0xffff9cfea4e69880,
+  skb = 0xffff9d099809f400
+}
 
-Link: https://lore.kernel.org/r/55b11e9a7fa2987fbc0869d68ae59888954d65e2.1620148539.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If an SDMA send consists of exactly 6 descriptors and requires dword
+padding (in the 7th descriptor), the sdma_txreq descriptor array is not
+properly expanded and the packet will overflow into the container
+structure. This results in a panic when the send completion runs. The
+exact panic varies depending on what elements of the container structure
+get corrupted. The fix is to use the correct expression in
+_pad_sdma_tx_descs() to test the need to expand the descriptor array.
+
+With this patch the crashes are no longer reproducible and the machine is
+stable.
+
+Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
+Cc: stable@vger.kernel.org
+Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
+Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
+Signed-off-by: Daniel Vacek <neelx@redhat.com>
+Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-tegra.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/infiniband/hw/hfi1/sdma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pci-tegra.c b/drivers/pci/controller/pci-tegra.c
-index 64921c63874fa..74c0ddd433815 100644
---- a/drivers/pci/controller/pci-tegra.c
-+++ b/drivers/pci/controller/pci-tegra.c
-@@ -2267,13 +2267,15 @@ static int tegra_pcie_parse_dt(struct tegra_pcie *pcie)
- 		rp->np = port;
+--- a/drivers/infiniband/hw/hfi1/sdma.c
++++ b/drivers/infiniband/hw/hfi1/sdma.c
+@@ -3203,7 +3203,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
+ {
+ 	int rval = 0;
  
- 		rp->base = devm_pci_remap_cfg_resource(dev, &rp->regs);
--		if (IS_ERR(rp->base))
--			return PTR_ERR(rp->base);
-+		if (IS_ERR(rp->base)) {
-+			err = PTR_ERR(rp->base);
-+			goto err_node_put;
-+		}
- 
- 		label = devm_kasprintf(dev, GFP_KERNEL, "pex-reset-%u", index);
- 		if (!label) {
--			dev_err(dev, "failed to create reset GPIO label\n");
--			return -ENOMEM;
-+			err = -ENOMEM;
-+			goto err_node_put;
- 		}
- 
- 		/*
-@@ -2291,7 +2293,8 @@ static int tegra_pcie_parse_dt(struct tegra_pcie *pcie)
- 			} else {
- 				dev_err(dev, "failed to get reset GPIO: %ld\n",
- 					PTR_ERR(rp->reset_gpio));
--				return PTR_ERR(rp->reset_gpio);
-+				err = PTR_ERR(rp->reset_gpio);
-+				goto err_node_put;
- 			}
- 		}
- 
--- 
-2.43.0
-
+-	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
++	if ((unlikely(tx->num_desc == tx->desc_limit))) {
+ 		rval = _extend_sdma_tx_descs(dd, tx);
+ 		if (rval) {
+ 			__sdma_txclean(dd, tx);
 
 
