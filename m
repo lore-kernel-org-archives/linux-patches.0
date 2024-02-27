@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D11F13F006;
-	Tue, 27 Feb 2024 13:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3839B13AA55;
+	Tue, 27 Feb 2024 13:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041435; cv=none; b=u+aPUlchUaTtww1LSMv7qBAh8l1n28bf8pjoRuOm18bse1ckgeD8ytcOLZMxI3jfCt/PuVKVsC88Gj4pWCcIOmJLR6ufI/adCevDUG18/uDxV6wsPUzRUUVvGcwklM4UVAPaHXYfgUh+0YCKpPTmLuLtGKRUTqEih8FFjijLqBU=
+	t=1709041438; cv=none; b=ECOZM/WusRDc8M/HbREqL8RAgfNS/ZbgLII3ZXwtWbIHXZzjUPjMCCz1oHYGQ0uElRNz1+8coKnFFH+iyg8xN0lPhw2/cgQSZ/8Zo23Lhevrr0qoKhmYrCauFtVWA4sBqd5zJmiOGylnu2Wq1jzh7+nXS8e3kVjlEqVDqED9A18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041435; c=relaxed/simple;
-	bh=37hzgksObGXAsE5Ub6K5IP40By2z6xlr1Y5MUCu7ilg=;
+	s=arc-20240116; t=1709041438; c=relaxed/simple;
+	bh=rtNgeNMKHjchGOlLNddAiFOUaiYUI5mqidWYcXRAax4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uT95Tt909B/piGkc+3P6IQb26Pm5gyHxvhUFHrGv1mMnZ3I7mj3N3pMwMoPaB8OGp3HxaVf1czk6PIVakeNcpbacGKlClmRH2Myes8Aw4xJHMb+PlpcQxT2R4vQvhUiTRimFfOP2CxQpE2mnrnTIm9BFLUoZ6YT+4ag9FEZBlTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrQHv+1s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nbi/tgCLrIPeRDeP5jOCyTgOqd5d2X/rHLAYuL+oIRvvzYuPzRszKvxB9lM7dlxqbuEfRs8RhyahR24nL2TrOAP0qs90o0zgU4pOfRCNkskG/gTKDoQ7zmtzlYnFcF6jLdFXsUWcmS43AQcRrQpPPck7eFvLlB8IkF1bPM5Nwyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3YuqX/q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrQHv+1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD68C433C7;
-	Tue, 27 Feb 2024 13:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3YuqX/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDEF9C433C7;
+	Tue, 27 Feb 2024 13:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041435;
-	bh=37hzgksObGXAsE5Ub6K5IP40By2z6xlr1Y5MUCu7ilg=;
+	s=korg; t=1709041438;
+	bh=rtNgeNMKHjchGOlLNddAiFOUaiYUI5mqidWYcXRAax4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CrQHv+1seeeGHmKMwYQzpnM8CRGxgyLDNPF2rQTTpcYd6CaUglNeh1cPfGCtwN0mW
-	 0xVKvvkXAfzOr7s58IXQFv43PdVGYn0AbpdbPQK5supbOrPqWsS2MhKCa0tBD3S7gt
-	 vKrepcdLDVDMhFjkN19KYejd0R0ddp3hdt/p3/lI=
+	b=M3YuqX/qgSuSTux/7cUhIfk7NPFfXZwnffYzocLoBkSIywysXeMYPpgpaUgsMKrt9
+	 yrz1uPUG9W6EfT4k5++uzx3yBPYNcNsfGZ+S2/CS3Gd8QzMjhevJgTfftMvDOHB9c9
+	 /4jkh9l1hiQrDPA7Tk6NXq0ExxderQxla6fRKg6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 313/334] tools: ynl: dont leak mcast_groups on init error
-Date: Tue, 27 Feb 2024 14:22:51 +0100
-Message-ID: <20240227131641.170280273@linuxfoundation.org>
+Subject: [PATCH 6.7 314/334] devlink: fix port dump cmd type
+Date: Tue, 27 Feb 2024 14:22:52 +0100
+Message-ID: <20240227131641.217816671@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,43 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 5d78b73e851455d525a064f3b042b29fdc0c1a4a ]
+[ Upstream commit 61c43780e9444123410cd48c2483e01d2b8f75e8 ]
 
-Make sure to free the already-parsed mcast_groups if
-we don't get an ack from the kernel when reading family info.
-This is part of the ynl_sock_create() error path, so we won't
-get a call to ynl_sock_destroy() to free them later.
+Unlike other commands, due to a c&p error, port dump fills-up cmd with
+wrong value, different from port-get request cmd, port-get doit reply
+and port notification.
 
-Fixes: 86878f14d71a ("tools: ynl: user space helpers")
-Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://lore.kernel.org/r/20240220161112.2735195-3-kuba@kernel.org
+Fix it by filling cmd with value DEVLINK_CMD_PORT_NEW.
+
+Skimmed through devlink userspace implementations, none of them cares
+about this cmd value. Only ynl, for which, this is actually a fix, as it
+expects doit and dumpit ops rsp_value to be the same.
+
+Omit the fixes tag, even thought this is fix, better to target this for
+next release.
+
+Fixes: bfcd3a466172 ("Introduce devlink infrastructure")
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240220075245.75416-1-jiri@resnulli.us
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/net/ynl/lib/ynl.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/devlink/port.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
-index 65975a8306738..591f5f50ddaab 100644
---- a/tools/net/ynl/lib/ynl.c
-+++ b/tools/net/ynl/lib/ynl.c
-@@ -584,7 +584,13 @@ static int ynl_sock_read_family(struct ynl_sock *ys, const char *family_name)
- 		return err;
- 	}
+diff --git a/net/devlink/port.c b/net/devlink/port.c
+index 841a3eafa328e..d39ee6053cc7b 100644
+--- a/net/devlink/port.c
++++ b/net/devlink/port.c
+@@ -581,7 +581,7 @@ devlink_nl_port_get_dump_one(struct sk_buff *msg, struct devlink *devlink,
  
--	return ynl_recv_ack(ys, err);
-+	err = ynl_recv_ack(ys, err);
-+	if (err < 0) {
-+		free(ys->mcast_groups);
-+		return err;
-+	}
-+
-+	return 0;
- }
- 
- struct ynl_sock *
+ 	xa_for_each_start(&devlink->ports, port_index, devlink_port, state->idx) {
+ 		err = devlink_nl_port_fill(msg, devlink_port,
+-					   DEVLINK_CMD_NEW,
++					   DEVLINK_CMD_PORT_NEW,
+ 					   NETLINK_CB(cb->skb).portid,
+ 					   cb->nlh->nlmsg_seq, flags,
+ 					   cb->extack);
 -- 
 2.43.0
 
