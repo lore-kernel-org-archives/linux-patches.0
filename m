@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AC513F01E;
-	Tue, 27 Feb 2024 13:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF4B13DB98;
+	Tue, 27 Feb 2024 13:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042292; cv=none; b=gafEgd5+Jj6Z9jExr7CDbLRm7NsUNeoOu+QK28iI4WNqpToAvG95QH0dN4FmD3DrUfJNXu6T72DXSaQc4pVM7FGqIKjHCcEw8zQjZUQXbgO0IRcHPHkpqaHQuakHjCrWtzNaqq5WooIkNEZK9YRdZ5KZvneTeR2X5eu2buXx1NY=
+	t=1709042295; cv=none; b=I0JbWBR6c1GANqyzfGLCz+FuPmxKXSDVh8aCez9iml/OUVQD6IyOjIf6KFvrathhAECCF0ON91VsDKPfmw02z7hZdyAWs32CvdDqICOVFSAjF+6H4bTgPkGuA+sHOxaZX7AxLWAQtJuiO8Uscm05ODCrYnCXt5n/tzB6pPXm8aA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042292; c=relaxed/simple;
-	bh=TR5UBfZ1d9BzfCK13J9WxvEBJk6FsvR7wpT76d766Og=;
+	s=arc-20240116; t=1709042295; c=relaxed/simple;
+	bh=EnNTSI6uA7VNThEzIQlR0N4K0vkPar2gXQdwZaQyTXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f+XjMpieq1vRQiCpCZHCmqA/VLPpK5PJyi4kNGF+GajEA/MU3weeg6YevkdSfqCeLBKZjcMf88woDXujIeBSwbudh+6KnNQYn5mXl69UdZFoEO11D5u3HCOnQSG1lxQdTlcA6UeG4ki7bbnefXfrnDhHGXsEPixT9S9XxbvEg3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qfa5og2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEkeM5Bxuqf6C4Z8wm9LdGcYLdyFnvaWbGj+sFUDx9HC9jBWYYlMnDEW5UrWpFFYTWY2/0uh30FBy2EOGx/z2WM6SegUGB4MB73l0g/bQ6SPrQNoOf4zmgDnPTzXOu/ezRWg42Wo+YN/6PT6zX3+gAmTX8otJuE8tP6uoDB92DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TA0anSrs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qfa5og2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8FF7C433C7;
-	Tue, 27 Feb 2024 13:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TA0anSrs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BC9C433F1;
+	Tue, 27 Feb 2024 13:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042292;
-	bh=TR5UBfZ1d9BzfCK13J9WxvEBJk6FsvR7wpT76d766Og=;
+	s=korg; t=1709042295;
+	bh=EnNTSI6uA7VNThEzIQlR0N4K0vkPar2gXQdwZaQyTXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qfa5og2vjszrtN3c7JM95pxz2x1hZBXF6h8W/izs8AR+YH6xEHOLYZXrrzKzdjlhS
-	 ZPqgDcOA1xyS8hlD3dA+UIpkRA3g09gq/Y7GCzK1eTqVTW3HaHoCkekDthNJBB3mpf
-	 P/1Aoba4zV1ESgIFApkJoaTfNL153acmIJHZHTaQ=
+	b=TA0anSrsVdY317ENgzki3C3MuQtTsA6Gvue4vviUT1rxHOj0boxmTtJoihmpu/GUb
+	 VW2TxfLSMB3hut1Taen9zDJueCs6gv11SAv+sl/EQJ0Sir3mR6BnvD957IHpEb+Nke
+	 Y304C4ebAaFfhY4sy7kgcIl/ro7mSN2PfRul7aD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mustafa Ismail <mustafa.ismail@intel.com>,
 	Shiraz Saleem <shiraz.saleem@intel.com>,
 	Sindhu Devale <sindhu.devale@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/299] RDMA/irdma: Validate max_send_wr and max_recv_wr
-Date: Tue, 27 Feb 2024 14:25:28 +0100
-Message-ID: <20240227131632.759993027@linuxfoundation.org>
+Subject: [PATCH 6.6 218/299] RDMA/irdma: Set the CQ read threshold for GEN 1
+Date: Tue, 27 Feb 2024 14:25:29 +0100
+Message-ID: <20240227131632.790371694@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,39 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiraz Saleem <shiraz.saleem@intel.com>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-[ Upstream commit ee107186bcfd25d7873258f3f75440e20f5e6416 ]
+[ Upstream commit 666047f3ece9f991774c1fe9b223139a9ef8908d ]
 
-Validate that max_send_wr and max_recv_wr is within the
-supported range.
+The CQ shadow read threshold is currently not set for GEN 2.  This could
+cause an invalid CQ overflow condition, so remove the GEN check that
+exclused GEN 1.
 
 Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Change-Id: I2fc8b10292b641fddd20b36986a9dae90a93f4be
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
 Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
 Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
-Link: https://lore.kernel.org/r/20240131233849.400285-3-sindhu.devale@intel.com
+Link: https://lore.kernel.org/r/20240131233849.400285-4-sindhu.devale@intel.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/irdma/verbs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 2f1bedd3a5201..d9750901c5990 100644
+index d9750901c5990..60618b2046b97 100644
 --- a/drivers/infiniband/hw/irdma/verbs.c
 +++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -839,7 +839,9 @@ static int irdma_validate_qp_attrs(struct ib_qp_init_attr *init_attr,
+@@ -2186,9 +2186,8 @@ static int irdma_create_cq(struct ib_cq *ibcq,
+ 		info.cq_base_pa = iwcq->kmem.pa;
+ 	}
  
- 	if (init_attr->cap.max_inline_data > uk_attrs->max_hw_inline ||
- 	    init_attr->cap.max_send_sge > uk_attrs->max_hw_wq_frags ||
--	    init_attr->cap.max_recv_sge > uk_attrs->max_hw_wq_frags)
-+	    init_attr->cap.max_recv_sge > uk_attrs->max_hw_wq_frags ||
-+	    init_attr->cap.max_send_wr > uk_attrs->max_hw_wq_quanta ||
-+	    init_attr->cap.max_recv_wr > uk_attrs->max_hw_rq_quanta)
- 		return -EINVAL;
+-	if (dev->hw_attrs.uk_attrs.hw_rev >= IRDMA_GEN_2)
+-		info.shadow_read_threshold = min(info.cq_uk_init_info.cq_size / 2,
+-						 (u32)IRDMA_MAX_CQ_READ_THRESH);
++	info.shadow_read_threshold = min(info.cq_uk_init_info.cq_size / 2,
++					 (u32)IRDMA_MAX_CQ_READ_THRESH);
  
- 	if (rdma_protocol_roce(&iwdev->ibdev, 1)) {
+ 	if (irdma_sc_cq_init(cq, &info)) {
+ 		ibdev_dbg(&iwdev->ibdev, "VERBS: init cq fail\n");
 -- 
 2.43.0
 
