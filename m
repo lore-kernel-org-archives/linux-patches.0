@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756A513A26F;
-	Tue, 27 Feb 2024 14:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3720F13AA43;
+	Tue, 27 Feb 2024 14:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042884; cv=none; b=jrSqSWdc6WO7wJ6NrwYwCKbGi05p7At+xtWbRonhGkKM3psDC4C+p0CCbKUtk4GiLTE898zU8XOA65QOclYzgjK43W1Gs+wsZ3XuAo68jadOIVWPzYD1oA0XWY+PXP8o6teHDnVjaoxMNtul4dzwRZAqwMLX90Q9ErhnIh7XJUY=
+	t=1709042887; cv=none; b=Px6vAuu6Jg9JBr2fSfsTF+QjlVD81KGbevf10ph6XYpO7Q6l5i/Ws59SaAIMp1qVEPDZOYwHrSCJyKtmjINvplu7uT2bQ8+RyxR0Av5WYO3E3U4dbuebLNae5gOslzIj1oL1TqYdZJ+itTMtkynk6yGMkDIeTcQVyhgIXl11fUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042884; c=relaxed/simple;
-	bh=A5Lc2xaSCWjcNKNH+s6VVRL/wLEATjZM8TYRM7QixVU=;
+	s=arc-20240116; t=1709042887; c=relaxed/simple;
+	bh=p8r2c0caMaCOMmotgu+Gb7m1WTPxpUH3a9NIU4f8Two=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oIP/w99Go5jeoup6E177u1v9MH4YabRGWFwptAhYQwdOOveEZyaoqxTxB8E9odU7/+d3sop2kCc1gabo6X+1CcloZ48R5obxuMXJouQ0mO8LQCCQhug20EJcN0nzkrUsiZ/53o9FmglYfwQZMn0Fo48BRhRAiiAKsmONaNJcpY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sF7OgcZH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkHFTnQRdWmEHoENtw7POPOTsRJ4W1Z5lMKNlxB8MAoFyHbFsQ6jXWTxNyzyrT47C+52oiPAt6xX96al+rfIHdIrdKpPWnEr85DEnJzm9rZIqwVouA6arjpfwiu1zzvl4mc8i15CI7CsQYXO+34PQcFNAKFrD0E4M6eiFJsV/+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4+GVoIT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sF7OgcZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D2AC433C7;
-	Tue, 27 Feb 2024 14:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4+GVoIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9367C433F1;
+	Tue, 27 Feb 2024 14:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042884;
-	bh=A5Lc2xaSCWjcNKNH+s6VVRL/wLEATjZM8TYRM7QixVU=;
+	s=korg; t=1709042887;
+	bh=p8r2c0caMaCOMmotgu+Gb7m1WTPxpUH3a9NIU4f8Two=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sF7OgcZHLcdCraPOhna/qkaLjOtvDd/2uacEVV99qeDChRX7rTBRZn7fUjFe0ztZ6
-	 8abzx+1QFSWG9pebEh8beK5M+neTZejhxNh0ZZRCt6DLAFyhBAegtuOwVnoVWqQAkw
-	 Gj2rA4zmQ7yOIouD6Se7RVXUR250/2WX2hM+HdAs=
+	b=F4+GVoITwWDhswIPOHSDnrhKUxh2J79q91Vd8rCzADT1in21LOe9Ke8PJhUAFWJ6d
+	 xspsKzKDnag+dTMBqADJ8KFOJL7a3miTyyVTNQjZgH1vlytB0cW8LY+FLAulffhLbj
+	 r1tumJ9s4S4lF8i78UivCyz9aOocZQVtdn0JopkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eli Cohen <elic@nvidia.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
+	Magali Lemes <magali.lemes@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/245] vdpa/mlx5: Dont clear mr struct on destroy MR
-Date: Tue, 27 Feb 2024 14:25:16 +0100
-Message-ID: <20240227131619.381826130@linuxfoundation.org>
+Subject: [PATCH 5.15 129/245] selftests: net: vrf-xfrm-tests: change authentication and encryption algos
+Date: Tue, 27 Feb 2024 14:25:17 +0100
+Message-ID: <20240227131619.412006949@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,34 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eli Cohen <elic@nvidia.com>
+From: Magali Lemes <magali.lemes@canonical.com>
 
-[ Upstream commit aef24311bd2d8a6d39a80c34f278b0fd1692aed3 ]
+[ Upstream commit cb43c60e64ca67fcc9d23bd08f51d2ab8209d9d7 ]
 
-Clearing the mr struct erases the lock owner and causes warnings to be
-emitted. It is not required to clear the mr so remove the memset call.
+The vrf-xfrm-tests tests use the hmac(md5) and cbc(des3_ede)
+algorithms for performing authentication and encryption, respectively.
+This causes the tests to fail when fips=1 is set, since these algorithms
+are not allowed in FIPS mode. Therefore, switch from hmac(md5) and
+cbc(des3_ede) to hmac(sha1) and cbc(aes), which are FIPS compliant.
 
-Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
-Signed-off-by: Eli Cohen <elic@nvidia.com>
-Message-Id: <20230206121956.1149356-1-elic@nvidia.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 3f251d741150 ("selftests: Add tests for vrf and xfrms")
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Magali Lemes <magali.lemes@canonical.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/core/mr.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/net/vrf-xfrm-tests.sh | 32 +++++++++----------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
-index ff010c6d0cd39..bdc7595fcb0e3 100644
---- a/drivers/vdpa/mlx5/core/mr.c
-+++ b/drivers/vdpa/mlx5/core/mr.c
-@@ -505,7 +505,6 @@ void mlx5_vdpa_destroy_mr(struct mlx5_vdpa_dev *mvdev)
- 	else
- 		destroy_dma_mr(mvdev, mr);
+diff --git a/tools/testing/selftests/net/vrf-xfrm-tests.sh b/tools/testing/selftests/net/vrf-xfrm-tests.sh
+index 184da81f554ff..452638ae8aed8 100755
+--- a/tools/testing/selftests/net/vrf-xfrm-tests.sh
++++ b/tools/testing/selftests/net/vrf-xfrm-tests.sh
+@@ -264,60 +264,60 @@ setup_xfrm()
+ 	ip -netns host1 xfrm state add src ${HOST1_4} dst ${HOST2_4} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_4} dst ${h2_4} ${devarg}
  
--	memset(mr, 0, sizeof(*mr));
- 	mr->initialized = false;
- out:
- 	mutex_unlock(&mr->mkey_mtx);
+ 	ip -netns host2 xfrm state add src ${HOST1_4} dst ${HOST2_4} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_4} dst ${h2_4}
+ 
+ 
+ 	ip -netns host1 xfrm state add src ${HOST2_4} dst ${HOST1_4} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_4} dst ${h1_4} ${devarg}
+ 
+ 	ip -netns host2 xfrm state add src ${HOST2_4} dst ${HOST1_4} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_4} dst ${h1_4}
+ 
+ 
+ 	ip -6 -netns host1 xfrm state add src ${HOST1_6} dst ${HOST2_6} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_6} dst ${h2_6} ${devarg}
+ 
+ 	ip -6 -netns host2 xfrm state add src ${HOST1_6} dst ${HOST2_6} \
+ 	    proto esp spi ${SPI_1} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_1} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_1} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_1} 96 \
++	    enc 'cbc(aes)' ${ENC_1} \
+ 	    sel src ${h1_6} dst ${h2_6}
+ 
+ 
+ 	ip -6 -netns host1 xfrm state add src ${HOST2_6} dst ${HOST1_6} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_6} dst ${h1_6} ${devarg}
+ 
+ 	ip -6 -netns host2 xfrm state add src ${HOST2_6} dst ${HOST1_6} \
+ 	    proto esp spi ${SPI_2} reqid 0 mode tunnel \
+ 	    replay-window 4 replay-oseq 0x4 \
+-	    auth-trunc 'hmac(md5)' ${AUTH_2} 96 \
+-	    enc 'cbc(des3_ede)' ${ENC_2} \
++	    auth-trunc 'hmac(sha1)' ${AUTH_2} 96 \
++	    enc 'cbc(aes)' ${ENC_2} \
+ 	    sel src ${h2_6} dst ${h1_6}
+ }
+ 
 -- 
 2.43.0
 
