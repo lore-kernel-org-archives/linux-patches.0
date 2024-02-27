@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E601420D2;
-	Tue, 27 Feb 2024 14:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB38C145337;
+	Tue, 27 Feb 2024 14:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043448; cv=none; b=Lx37c9uNLKGv8poNcVbPJO4aggefAo01hhTdzDTLgPbV2/cnRuwPYd767xapLyFSSoi0uAue/Zf0INgjX6cTlSrhLJ2llugIEKNhSXunh0J9D/BcdlAnrylCNGUNL731DvfpUceSXH9EOa/99dioUN19Q08D8X5BMWw3+5sEG8U=
+	t=1709043450; cv=none; b=fTl7qL68isNa41OYI7WI81r8G3VUYbP/e/q80L/PBu7uZiWAY9g+0pqxtly6XElIwo38F3xjlMifgMSR5y32U77z+HJGa2siwhHVnirrD1ivs825nX/xxtYCa2hq+jyC5hIuGi3LM5TFTmXa6G1awEqrePnytp1Vj9k9I8Tkv/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043448; c=relaxed/simple;
-	bh=zd5b6MsQJXYrHWlTB4iroj8WkXW70SJnn7mJHL3pFWo=;
+	s=arc-20240116; t=1709043450; c=relaxed/simple;
+	bh=Dtuu8Qz3YVAPkIk1XgfvxaicklzIVCldwOX79diXO0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OksAo/ezcGBmaVE6SuKheqO1myL/yAQLl2YF3k2YLurlozmZ7Ctc8qDZQBq6Lf7CgO51uRZJ/KW2+elq6n8qjvQfKBjCqfXU1xqzjWapCIk4F/NvXF844oAAfQw55JKx+KX+0d0PTrsYkFLRsaNDQ6hwJY4ae+koOBL+lldrLSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjaGAeOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rdojFA+tiXEzjCEoCmdlImrj9bi/+gGcQLWkIePQFL6qFkJU1LD44fdpfqrNkuNpAO6eslkwmb/WPAvomKcjbSevhGZYLKHy+39x9563w2HeYNk5UHLGeiOc3JWJ1jQD1p+bGgePLrWJSG4ef3mdsv2Ic28T+flaeIHagTMbGyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpsuYOFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjaGAeOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C117C433C7;
-	Tue, 27 Feb 2024 14:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpsuYOFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0ACC433F1;
+	Tue, 27 Feb 2024 14:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043447;
-	bh=zd5b6MsQJXYrHWlTB4iroj8WkXW70SJnn7mJHL3pFWo=;
+	s=korg; t=1709043450;
+	bh=Dtuu8Qz3YVAPkIk1XgfvxaicklzIVCldwOX79diXO0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjaGAeOxKjRb7Knal2vCrUH2FoX44IB+0rVq1iFmQnb5X9W2lP6YwrwWAuQ44OGa/
-	 IDYMkW00qRRdeK6k2zZI0w1vQePDz6VgzdA2WtdZ25noaDCeLqRgWEl/jJhqd8xd+B
-	 D0Gj2nMhP3UPJ6tIV8FxzHIa5c7musqY6IgELwxo=
+	b=rpsuYOFmgJ/cqAlXhESxCyEXA9KxFqJp9RPLUNy8Gimi5hncoUpM8tg9iD3dAtYk5
+	 UL8LFEB9/x8E8b8nW8gzmrSrHERV2s8bI+rDofbsu2tAe6nio5brb+mFxH6thrl3TH
+	 5xuJUtWIaB8oaGtIVEm14zvCgsI7zJjkMWP0Iom4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 112/195] x86/returnthunk: Allow different return thunks
-Date: Tue, 27 Feb 2024 14:26:13 +0100
-Message-ID: <20240227131614.161670412@linuxfoundation.org>
+Subject: [PATCH 6.1 113/195] Revert "x86/alternative: Make custom return thunk unconditional"
+Date: Tue, 27 Feb 2024 14:26:14 +0100
+Message-ID: <20240227131614.193956473@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,112 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-Upstream commit: 770ae1b709528a6a173b5c7b183818ee9b45e376
+This reverts commit 53ebbe1c8c02aa7b7f072dd2f96bca4faa1daa59.
 
-In preparation for call depth tracking on Intel SKL CPUs, make it possible
-to patch in a SKL specific return thunk.
+Revert the backport of upstream commit:
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220915111147.680469665@infradead.org
+  095b8303f383 ("x86/alternative: Make custom return thunk unconditional")
+
+in order to backport the full version now that
+
+  770ae1b70952 ("x86/returnthunk: Allow different return thunks")
+
+has been backported.
+
+Revert it here so that the build breakage is kept at minimum.
+
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |    6 ++++++
- arch/x86/kernel/alternative.c        |   19 ++++++++++++++-----
- arch/x86/kernel/ftrace.c             |    2 +-
- arch/x86/kernel/static_call.c        |    2 +-
- arch/x86/net/bpf_jit_comp.c          |    2 +-
- 5 files changed, 23 insertions(+), 8 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |    4 ----
+ arch/x86/kernel/cpu/bugs.c           |    2 --
+ 2 files changed, 6 deletions(-)
 
 --- a/arch/x86/include/asm/nospec-branch.h
 +++ b/arch/x86/include/asm/nospec-branch.h
-@@ -222,6 +222,12 @@ extern void srso_alias_untrain_ret(void)
- extern void entry_untrain_ret(void);
- extern void entry_ibpb(void);
+@@ -205,11 +205,7 @@
+ typedef u8 retpoline_thunk_t[RETPOLINE_THUNK_SIZE];
+ extern retpoline_thunk_t __x86_indirect_thunk_array[];
  
-+#ifdef CONFIG_CALL_THUNKS
-+extern void (*x86_return_thunk)(void);
-+#else
-+#define x86_return_thunk	(&__x86_return_thunk)
-+#endif
-+
- #ifdef CONFIG_RETPOLINE
+-#ifdef CONFIG_RETHUNK
+ extern void __x86_return_thunk(void);
+-#else
+-static inline void __x86_return_thunk(void) {}
+-#endif
  
- #define GEN(reg) \
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -536,6 +536,11 @@ void __init_or_module noinline apply_ret
- }
+ extern void retbleed_return_thunk(void);
+ extern void srso_return_thunk(void);
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -62,8 +62,6 @@ EXPORT_SYMBOL_GPL(x86_pred_cmd);
  
- #ifdef CONFIG_RETHUNK
-+
-+#ifdef CONFIG_CALL_THUNKS
-+void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
-+#endif
-+
- /*
-  * Rewrite the compiler generated return thunk tail-calls.
-  *
-@@ -551,14 +556,18 @@ static int patch_return(void *addr, stru
+ static DEFINE_MUTEX(spec_ctrl_mutex);
+ 
+-void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
+-
+ /* Update SPEC_CTRL MSR and its cached copy unconditionally */
+ static void update_spec_ctrl(u64 val)
  {
- 	int i = 0;
- 
--	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
--		return -1;
--
--	bytes[i++] = RET_INSN_OPCODE;
-+	if (cpu_feature_enabled(X86_FEATURE_RETHUNK)) {
-+		if (x86_return_thunk == __x86_return_thunk)
-+			return -1;
-+
-+		i = JMP32_INSN_SIZE;
-+		__text_gen_insn(bytes, JMP32_INSN_OPCODE, addr, x86_return_thunk, i);
-+	} else {
-+		bytes[i++] = RET_INSN_OPCODE;
-+	}
- 
- 	for (; i < insn->length;)
- 		bytes[i++] = INT3_INSN_OPCODE;
--
- 	return i;
- }
- 
---- a/arch/x86/kernel/ftrace.c
-+++ b/arch/x86/kernel/ftrace.c
-@@ -361,7 +361,7 @@ create_trampoline(struct ftrace_ops *ops
- 
- 	ip = trampoline + size;
- 	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
--		__text_gen_insn(ip, JMP32_INSN_OPCODE, ip, &__x86_return_thunk, JMP32_INSN_SIZE);
-+		__text_gen_insn(ip, JMP32_INSN_OPCODE, ip, x86_return_thunk, JMP32_INSN_SIZE);
- 	else
- 		memcpy(ip, retq, sizeof(retq));
- 
---- a/arch/x86/kernel/static_call.c
-+++ b/arch/x86/kernel/static_call.c
-@@ -80,7 +80,7 @@ static void __ref __static_call_transfor
- 
- 	case RET:
- 		if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
--			code = text_gen_insn(JMP32_INSN_OPCODE, insn, &__x86_return_thunk);
-+			code = text_gen_insn(JMP32_INSN_OPCODE, insn, x86_return_thunk);
- 		else
- 			code = &retinsn;
- 		break;
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -432,7 +432,7 @@ static void emit_return(u8 **pprog, u8 *
- 	u8 *prog = *pprog;
- 
- 	if (cpu_feature_enabled(X86_FEATURE_RETHUNK)) {
--		emit_jump(&prog, &__x86_return_thunk, ip);
-+		emit_jump(&prog, x86_return_thunk, ip);
- 	} else {
- 		EMIT1(0xC3);		/* ret */
- 		if (IS_ENABLED(CONFIG_SLS))
 
 
