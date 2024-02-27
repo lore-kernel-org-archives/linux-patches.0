@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA4613F01E;
-	Tue, 27 Feb 2024 13:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAF513B79F;
+	Tue, 27 Feb 2024 13:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042016; cv=none; b=XCq0pdeJImP41qoodq8cU7Z+4J5QrNj59WdTE9eFtJdgZyY0reqeCnqEJZF31fWSh4sRTi8Oy+JWlv37T+/TMS56BmKzGFABZxSM/5pcz1wUW5KddBvRpbPu4Jp+74Tfkf+AmsDE4XjwNtjHnFbgWalMkOaoMAI7v1KjShmim9o=
+	t=1709042019; cv=none; b=V85QfelpX0Ak34jno2+xjeFT+6KUj4FwoMWt+BVdXZdHt/R7V0L79IhfxFk/82SS/Ye7+LcbtBfwnBgxo5qMJIs/b0V/Vhn7l+KiWT/JfWi/2zblLoNKnvG7ij/T0oU38DVJ1x1ft4SPZbLioc6E85C+EW5elMdPO33ibtO8WsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042016; c=relaxed/simple;
-	bh=Av9CAseE8OyeOp77wxB26u1XvoZpTIQC67lvKSgGbpg=;
+	s=arc-20240116; t=1709042019; c=relaxed/simple;
+	bh=wpiCukDLUpYS49V7Ha1t0vsKgFNtVqP6gYQ/NAquqGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkRUHzFvmP43LikPoZJ3elsLunizhytDgx7ScHRGbGIrq6ADNFS6cH1f2aUyEXSIU0GXOadCIesx+VSQzFBqLr1R5DPJDnF5Od58TZnUgB9oDcFGwMym+e6+OQP9YxAZfUENdVQHB6RgWF2IFceE0J+tb+f82deaKBqLmpjCBpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVSwFi/4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GvjQXny257H+DRPGUv67xKQ5xdcaqHA0L08CZmo5bTilbzy1h8n8TcIpb9CYyiR+N7R9zszkeK0pqEFJZ/Lq1KtVgyimU50CI1iU5DullgYr0pJDixglX8GN74dFN1SwCQgVKSIi20ZwDub0r/R27YWKPIxenyzV3i7aH6JOPU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T31nVCOx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVSwFi/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6559C433F1;
-	Tue, 27 Feb 2024 13:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T31nVCOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0155C433C7;
+	Tue, 27 Feb 2024 13:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042016;
-	bh=Av9CAseE8OyeOp77wxB26u1XvoZpTIQC67lvKSgGbpg=;
+	s=korg; t=1709042019;
+	bh=wpiCukDLUpYS49V7Ha1t0vsKgFNtVqP6gYQ/NAquqGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVSwFi/4Fn1tdpKEl1CPC44TDgXxPudjVmmoGmuY+OPgqcOS81KcIE3EmLimD6KjY
-	 spkTK9RYas17E0iBEvFbMW+QEpCYk57MeDLI2rtUN6UUXnAFcMV+zsUSSrldoDLACR
-	 SVKMN25D32pM6DyFPuN/yvTE+U1ljK93ycS4QKoY=
+	b=T31nVCOxFkhpTIueLpMYSf/0aQ54E5SZ7BPDaUFf19t2ABHl9jw0Z2y1IxtW4+Rsz
+	 32h7BshVaSec1cVvjsF7v6yKxuvv04ulpLbnKllGEDTTAFbo/PoxqzdRZBlkumdzEZ
+	 OYZBh9KX/ucRub5Tx1Kz13HSsDtqkSjEGrV6Qq1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 148/299] Revert "parisc: Only list existing CPUs in cpu_possible_mask"
-Date: Tue, 27 Feb 2024 14:24:19 +0100
-Message-ID: <20240227131630.635343623@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.6 149/299] dm-integrity: recheck the integrity tag after a failure
+Date: Tue, 27 Feb 2024 14:24:20 +0100
+Message-ID: <20240227131630.667582525@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -50,57 +50,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 82b143aeb169b8b55798d7d2063032e1a6ceeeb0 upstream.
+commit c88f5e553fe38b2ffc4c33d08654e5281b297677 upstream.
 
-This reverts commit 0921244f6f4f0d05698b953fe632a99b38907226.
+If a userspace process reads (with O_DIRECT) multiple blocks into the same
+buffer, dm-integrity reports an error [1]. The error is reported in a log
+and it may cause RAID leg being kicked out of the array.
 
-It broke CPU hotplugging because it modifies the __cpu_possible_mask
-after bootup, so that it will be different than nr_cpu_ids, which
-then effictively breaks the workqueue setup code and triggers crashes
-when shutting down CPUs at runtime.
+This commit fixes dm-integrity, so that if integrity verification fails,
+the data is read again into a kernel buffer (where userspace can't modify
+it) and the integrity tag is rechecked. If the recheck succeeds, the
+content of the kernel buffer is copied into the user buffer; if the
+recheck fails, an integrity error is reported.
 
-Guenter was the first who noticed the wrong values in __cpu_possible_mask,
-since the cpumask Kunit tests were failig.
+[1] https://people.redhat.com/~mpatocka/testcases/blk-auth-modify/read2.c
 
-Reverting this commit fixes both issues, but sadly brings back this
-uncritical runtime warning:
-register_cpu_capacity_sysctl: too early to get CPU4 device!
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lkml.org/lkml/2024/2/4/146
-Link: https://lore.kernel.org/lkml/Zb0mbHlIud_bqftx@slm.duckdns.org/t/
-Cc: stable@vger.kernel.org # 6.0+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/processor.c |    8 --------
- 1 file changed, 8 deletions(-)
+ drivers/md/dm-integrity.c |   93 +++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 84 insertions(+), 9 deletions(-)
 
---- a/arch/parisc/kernel/processor.c
-+++ b/arch/parisc/kernel/processor.c
-@@ -172,7 +172,6 @@ static int __init processor_probe(struct
- 	p->cpu_num = cpu_info.cpu_num;
- 	p->cpu_loc = cpu_info.cpu_loc;
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -278,6 +278,8 @@ struct dm_integrity_c {
  
--	set_cpu_possible(cpuid, true);
- 	store_cpu_topology(cpuid);
+ 	atomic64_t number_of_mismatches;
  
- #ifdef CONFIG_SMP
-@@ -474,13 +473,6 @@ static struct parisc_driver cpu_driver _
-  */
- void __init processor_init(void)
- {
--	unsigned int cpu;
--
- 	reset_cpu_topology();
--
--	/* reset possible mask. We will mark those which are possible. */
--	for_each_possible_cpu(cpu)
--		set_cpu_possible(cpu, false);
--
- 	register_parisc_driver(&cpu_driver);
++	mempool_t recheck_pool;
++
+ 	struct notifier_block reboot_notifier;
+ };
+ 
+@@ -1699,6 +1701,79 @@ failed:
+ 	get_random_bytes(result, ic->tag_size);
  }
+ 
++static void integrity_recheck(struct dm_integrity_io *dio)
++{
++	struct bio *bio = dm_bio_from_per_bio_data(dio, sizeof(struct dm_integrity_io));
++	struct dm_integrity_c *ic = dio->ic;
++	struct bvec_iter iter;
++	struct bio_vec bv;
++	sector_t sector, logical_sector, area, offset;
++	char checksum_onstack[max_t(size_t, HASH_MAX_DIGESTSIZE, MAX_TAG_SIZE)];
++	struct page *page;
++	void *buffer;
++
++	get_area_and_offset(ic, dio->range.logical_sector, &area, &offset);
++	dio->metadata_block = get_metadata_sector_and_offset(ic, area, offset,
++							     &dio->metadata_offset);
++	sector = get_data_sector(ic, area, offset);
++	logical_sector = dio->range.logical_sector;
++
++	page = mempool_alloc(&ic->recheck_pool, GFP_NOIO);
++	buffer = page_to_virt(page);
++
++	__bio_for_each_segment(bv, bio, iter, dio->bio_details.bi_iter) {
++		unsigned pos = 0;
++
++		do {
++			char *mem;
++			int r;
++			struct dm_io_request io_req;
++			struct dm_io_region io_loc;
++			io_req.bi_opf = REQ_OP_READ;
++			io_req.mem.type = DM_IO_KMEM;
++			io_req.mem.ptr.addr = buffer;
++			io_req.notify.fn = NULL;
++			io_req.client = ic->io;
++			io_loc.bdev = ic->dev->bdev;
++			io_loc.sector = sector;
++			io_loc.count = ic->sectors_per_block;
++
++			r = dm_io(&io_req, 1, &io_loc, NULL);
++			if (unlikely(r)) {
++				dio->bi_status = errno_to_blk_status(r);
++				goto free_ret;
++			}
++
++			integrity_sector_checksum(ic, logical_sector, buffer,
++						  checksum_onstack);
++			r = dm_integrity_rw_tag(ic, checksum_onstack, &dio->metadata_block,
++						&dio->metadata_offset, ic->tag_size, TAG_CMP);
++			if (r) {
++				if (r > 0) {
++					DMERR_LIMIT("%pg: Checksum failed at sector 0x%llx",
++						    bio->bi_bdev, logical_sector);
++					atomic64_inc(&ic->number_of_mismatches);
++					dm_audit_log_bio(DM_MSG_PREFIX, "integrity-checksum",
++							 bio, logical_sector, 0);
++					r = -EILSEQ;
++				}
++				dio->bi_status = errno_to_blk_status(r);
++				goto free_ret;
++			}
++
++			mem = bvec_kmap_local(&bv);
++			memcpy(mem + pos, buffer, ic->sectors_per_block << SECTOR_SHIFT);
++			kunmap_local(mem);
++
++			pos += ic->sectors_per_block << SECTOR_SHIFT;
++			sector += ic->sectors_per_block;
++			logical_sector += ic->sectors_per_block;
++		} while (pos < bv.bv_len);
++	}
++free_ret:
++	mempool_free(page, &ic->recheck_pool);
++}
++
+ static void integrity_metadata(struct work_struct *w)
+ {
+ 	struct dm_integrity_io *dio = container_of(w, struct dm_integrity_io, work);
+@@ -1786,15 +1861,8 @@ again:
+ 						checksums_ptr - checksums, dio->op == REQ_OP_READ ? TAG_CMP : TAG_WRITE);
+ 			if (unlikely(r)) {
+ 				if (r > 0) {
+-					sector_t s;
+-
+-					s = sector - ((r + ic->tag_size - 1) / ic->tag_size);
+-					DMERR_LIMIT("%pg: Checksum failed at sector 0x%llx",
+-						    bio->bi_bdev, s);
+-					r = -EILSEQ;
+-					atomic64_inc(&ic->number_of_mismatches);
+-					dm_audit_log_bio(DM_MSG_PREFIX, "integrity-checksum",
+-							 bio, s, 0);
++					integrity_recheck(dio);
++					goto skip_io;
+ 				}
+ 				if (likely(checksums != checksums_onstack))
+ 					kfree(checksums);
+@@ -4271,6 +4339,12 @@ static int dm_integrity_ctr(struct dm_ta
+ 		goto bad;
+ 	}
+ 
++	r = mempool_init_page_pool(&ic->recheck_pool, 1, 0);
++	if (r) {
++		ti->error = "Cannot allocate mempool";
++		goto bad;
++	}
++
+ 	ic->metadata_wq = alloc_workqueue("dm-integrity-metadata",
+ 					  WQ_MEM_RECLAIM, METADATA_WORKQUEUE_MAX_ACTIVE);
+ 	if (!ic->metadata_wq) {
+@@ -4619,6 +4693,7 @@ static void dm_integrity_dtr(struct dm_t
+ 	kvfree(ic->bbs);
+ 	if (ic->bufio)
+ 		dm_bufio_client_destroy(ic->bufio);
++	mempool_exit(&ic->recheck_pool);
+ 	mempool_exit(&ic->journal_io_mempool);
+ 	if (ic->io)
+ 		dm_io_client_destroy(ic->io);
 
 
