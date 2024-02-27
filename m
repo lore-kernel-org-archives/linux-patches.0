@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A849E13B7AE;
-	Tue, 27 Feb 2024 13:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D3C13EFFB;
+	Tue, 27 Feb 2024 13:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041294; cv=none; b=EZvyoloxy6wcX+R9u+5YWiEV0mDa6xjvCmq6TN7v77v9McwYq8qyhS49T7bL1scJ0Svi9oumQAHc0Y0YxlkZIELRQbuoinLucquMcDQ1ih2zrSywltDloAxc0m2b3CfI+1keUJ/u7ncTD96hdjoDPgz3E+iflGm/2/aaL9Knq3E=
+	t=1709041297; cv=none; b=GDLh/sCFdvVyoU0EGvgQA8viGUA0J1/IStbJG2zx62HlLNNQRNbaWkKU52ujHh+XPxh8Z3KK/xYLIEtndj6CkkY9Lfno8OL7ttpRstWC7+dWzHHBPC6EI3z/ylrAKzTuedjAbOJ/9MwkKd5Zcv/F7HQgAvc1uLn8LOcxbxaDASI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041294; c=relaxed/simple;
-	bh=YJzbrLdvjtTQPk2N3sMC5+bICNMSlMraZVXdafdMsyw=;
+	s=arc-20240116; t=1709041297; c=relaxed/simple;
+	bh=PML/+l9r/gOj46+gfbdqC965PvP3yXFQgZVxrvw+FiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SNmeyiGfNVGoKN5X7RyVZy0PiINxeqr6+EbnB6f5Lj8y7T+k0nPGFAEMaZ4BfPsrE4rsXvdJA8vzDI6Ce9ntqZs+L94tG0504tVGHO9CwJyLck+b8piXRy/pbwRgPaFIPSOUh4olvXKjfRsCdFjXvgj5vCpFEMhnoJHQ+uS0l9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVrn/QzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y94chj7zCbucmhI+kYGTSankNQDb0Px+tOD3x/E89Zsmc72c1zGQbNCpj0I9A4e6R+0Y5DeEu0vVihqGy96M6qWdEepOKYTTjLTd1Y9S2znHKZF5dCtXR9178YYCwLqT8anmyvQ4j00i3iN92XH9kBOcljNR5kLalK7Vq23OaCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgfR2ucu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVrn/QzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005B8C433C7;
-	Tue, 27 Feb 2024 13:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgfR2ucu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D2EC43399;
+	Tue, 27 Feb 2024 13:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041294;
-	bh=YJzbrLdvjtTQPk2N3sMC5+bICNMSlMraZVXdafdMsyw=;
+	s=korg; t=1709041297;
+	bh=PML/+l9r/gOj46+gfbdqC965PvP3yXFQgZVxrvw+FiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVrn/QzTtEHuHK2qG1fR9QqVuS29TbiTE9BA8JFpFbeJtmcNb80zsjFzJ7vm9WwxW
-	 /cTMCuNbkB52M0rPXens8CjmFEgTcTMqwKXVLQL4wbjbh8KpqSrbBXaz3GdbREoj/P
-	 IxurrJyA4aoDcvsvVEmK7XdQ6RF9oK/qgz6ZIBV8=
+	b=XgfR2ucuVgHtyf7IAtvdLai74eY366+5oHj/ua9kji5fN6uCdI7PN40JT63A9SGRq
+	 UxLK/uYTmUEH/F/oiHCUgsXqAXph8SRIcDQtt3w6cDlyUFMlSKzARI65/PLgt8M8Ld
+	 XpAXLrM9tel8xkaBIMzXgrvyRzOy48q+R4FYjfAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 289/334] iommu/vt-d: Update iotlb in nested domain attach
-Date: Tue, 27 Feb 2024 14:22:27 +0100
-Message-ID: <20240227131640.337441771@linuxfoundation.org>
+Subject: [PATCH 6.7 290/334] iommu/vt-d: Track nested domains in parent
+Date: Tue, 27 Feb 2024 14:22:28 +0100
+Message-ID: <20240227131640.368001276@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -55,72 +55,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Yi Liu <yi.l.liu@intel.com>
 
-[ Upstream commit 29e10487d6df050afeee886b7c1da208f389cb5b ]
+[ Upstream commit 85ce8e1d6d73e8d54cb244d10dd4021771231746 ]
 
-Should call domain_update_iotlb() to update the has_iotlb_device flag
-of the domain after attaching device to nested domain. Without it, this
-flag is not set properly and would result in missing device TLB flush.
+Today the parent domain (s2_domain) is unaware of which DID's are
+used by and which devices are attached to nested domains (s1_domain)
+nested on it. This leads to a problem that some operations (flush
+iotlb/devtlb and enable dirty tracking) on parent domain only apply to
+DID's and devices directly tracked in the parent domain hence are
+incomplete.
 
-Fixes: 9838f2bb6b6b ("iommu/vt-d: Set the nested domain to a device")
+This tracks the nested domains in list in parent domain. With this,
+operations on parent domain can loop the nested domains and refer to
+the devices and iommu_array to ensure the operations on parent domain
+take effect on all the affected devices and iommus.
+
 Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240208082307.15759-5-yi.l.liu@intel.com
+Link: https://lore.kernel.org/r/20240208082307.15759-2-yi.l.liu@intel.com
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: f1e1610950ea ("iommu/vt-d: Add missing dirty tracking set for parent domain")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c  | 4 +---
- drivers/iommu/intel/iommu.h  | 1 +
- drivers/iommu/intel/nested.c | 2 ++
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/iommu/intel/iommu.c  | 18 ++++++++++++++----
+ drivers/iommu/intel/iommu.h  |  6 ++++++
+ drivers/iommu/intel/nested.c | 12 +++++++++++-
+ 3 files changed, 31 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 897159dba47de..0cc6e08e12c13 100644
+index 0cc6e08e12c13..9f7954c4c26f8 100644
 --- a/drivers/iommu/intel/iommu.c
 +++ b/drivers/iommu/intel/iommu.c
-@@ -540,8 +540,6 @@ static int domain_update_device_node(struct dmar_domain *domain)
- 	return nid;
+@@ -4069,6 +4069,7 @@ intel_iommu_domain_alloc_user(struct device *dev, u32 flags,
+ 	bool dirty_tracking = flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+ 	bool nested_parent = flags & IOMMU_HWPT_ALLOC_NEST_PARENT;
+ 	struct intel_iommu *iommu = info->iommu;
++	struct dmar_domain *dmar_domain;
+ 	struct iommu_domain *domain;
+ 
+ 	/* Must be NESTING domain */
+@@ -4094,11 +4095,16 @@ intel_iommu_domain_alloc_user(struct device *dev, u32 flags,
+ 	if (!domain)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	if (nested_parent)
+-		to_dmar_domain(domain)->nested_parent = true;
++	dmar_domain = to_dmar_domain(domain);
++
++	if (nested_parent) {
++		dmar_domain->nested_parent = true;
++		INIT_LIST_HEAD(&dmar_domain->s1_domains);
++		spin_lock_init(&dmar_domain->s1_lock);
++	}
+ 
+ 	if (dirty_tracking) {
+-		if (to_dmar_domain(domain)->use_first_level) {
++		if (dmar_domain->use_first_level) {
+ 			iommu_domain_free(domain);
+ 			return ERR_PTR(-EOPNOTSUPP);
+ 		}
+@@ -4110,8 +4116,12 @@ intel_iommu_domain_alloc_user(struct device *dev, u32 flags,
+ 
+ static void intel_iommu_domain_free(struct iommu_domain *domain)
+ {
++	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
++
++	WARN_ON(dmar_domain->nested_parent &&
++		!list_empty(&dmar_domain->s1_domains));
+ 	if (domain != &si_domain->domain)
+-		domain_exit(to_dmar_domain(domain));
++		domain_exit(dmar_domain);
  }
  
--static void domain_update_iotlb(struct dmar_domain *domain);
--
- /* Return the super pagesize bitmap if supported. */
- static unsigned long domain_super_pgsize_bitmap(struct dmar_domain *domain)
- {
-@@ -1362,7 +1360,7 @@ domain_lookup_dev_info(struct dmar_domain *domain,
- 	return NULL;
- }
- 
--static void domain_update_iotlb(struct dmar_domain *domain)
-+void domain_update_iotlb(struct dmar_domain *domain)
- {
- 	struct dev_pasid_info *dev_pasid;
- 	struct device_domain_info *info;
+ int prepare_domain_attach_device(struct iommu_domain *domain,
 diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index ce030c5b5772a..70ac2b989127a 100644
+index 70ac2b989127a..efc00d2b4527a 100644
 --- a/drivers/iommu/intel/iommu.h
 +++ b/drivers/iommu/intel/iommu.h
-@@ -888,6 +888,7 @@ int qi_submit_sync(struct intel_iommu *iommu, struct qi_desc *desc,
-  */
- #define QI_OPT_WAIT_DRAIN		BIT(0)
+@@ -630,6 +630,10 @@ struct dmar_domain {
+ 			int		agaw;
+ 			/* maximum mapped address */
+ 			u64		max_addr;
++			/* Protect the s1_domains list */
++			spinlock_t	s1_lock;
++			/* Track s1_domains nested on this domain */
++			struct list_head s1_domains;
+ 		};
  
-+void domain_update_iotlb(struct dmar_domain *domain);
- int domain_attach_iommu(struct dmar_domain *domain, struct intel_iommu *iommu);
- void domain_detach_iommu(struct dmar_domain *domain, struct intel_iommu *iommu);
- void device_block_translation(struct device *dev);
+ 		/* Nested user domain */
+@@ -640,6 +644,8 @@ struct dmar_domain {
+ 			unsigned long s1_pgtbl;
+ 			/* page table attributes */
+ 			struct iommu_hwpt_vtd_s1 s1_cfg;
++			/* link to parent domain siblings */
++			struct list_head s2_link;
+ 		};
+ 	};
+ 
 diff --git a/drivers/iommu/intel/nested.c b/drivers/iommu/intel/nested.c
-index b5a5563ab32c6..694c1c4223f66 100644
+index 694c1c4223f66..92e82b33ea979 100644
 --- a/drivers/iommu/intel/nested.c
 +++ b/drivers/iommu/intel/nested.c
-@@ -65,6 +65,8 @@ static int intel_nested_attach_dev(struct iommu_domain *domain,
- 	list_add(&info->link, &dmar_domain->devices);
- 	spin_unlock_irqrestore(&dmar_domain->lock, flags);
+@@ -72,7 +72,13 @@ static int intel_nested_attach_dev(struct iommu_domain *domain,
  
-+	domain_update_iotlb(dmar_domain);
+ static void intel_nested_domain_free(struct iommu_domain *domain)
+ {
+-	kfree(to_dmar_domain(domain));
++	struct dmar_domain *dmar_domain = to_dmar_domain(domain);
++	struct dmar_domain *s2_domain = dmar_domain->s2_domain;
 +
- 	return 0;
++	spin_lock(&s2_domain->s1_lock);
++	list_del(&dmar_domain->s2_link);
++	spin_unlock(&s2_domain->s1_lock);
++	kfree(dmar_domain);
  }
  
+ static const struct iommu_domain_ops intel_nested_domain_ops = {
+@@ -115,5 +121,9 @@ struct iommu_domain *intel_nested_domain_alloc(struct iommu_domain *parent,
+ 	spin_lock_init(&domain->lock);
+ 	xa_init(&domain->iommu_array);
+ 
++	spin_lock(&s2_domain->s1_lock);
++	list_add(&domain->s2_link, &s2_domain->s1_domains);
++	spin_unlock(&s2_domain->s1_lock);
++
+ 	return &domain->domain;
+ }
 -- 
 2.43.0
 
