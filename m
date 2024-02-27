@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB8813A87C;
-	Tue, 27 Feb 2024 13:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10A213A87C;
+	Tue, 27 Feb 2024 13:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040813; cv=none; b=f7GfSvDoWPtR1Fbs8Vnon0/52GClV70g31/o9BOduK+lacGZqohYypidj43hKVnsOdCpMPSahPotkkCSEtWnhhZtK3EgmhSXb7QPyOfcRojSk3IhXu5QZLIx/cJWQnjpRLTmhsLHIIcuSi54/AuYcQstTuZS+yyVUttIIunYdhE=
+	t=1709040815; cv=none; b=WYgSYMCnCKpHn79hZM+HSX3IQIgPj+B8D46BG8l5rlkvPGq7Kd8Jk7kQ+GC8j+548PIouoIWKMZIDeMGg+SdiOTs3g9p2o3Qzs/LplXfLZcD3LYa63ihLoj7wshZpcWNJpobqTkwzLyIDTTIn0KGIhxffCm8de6m284/6KdyGQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040813; c=relaxed/simple;
-	bh=LDJc29cKwFol4z0OlFT2mdGrlMjoZYU1ARncHKg7WNI=;
+	s=arc-20240116; t=1709040815; c=relaxed/simple;
+	bh=EANWjd2RrO8BvVpQFHcKrcYLRX+gV5XykwdnyvxCszw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjrVHBnyZFNwFQfM4eHE8oiCfYmr6/tlBIuf52otUKuhAqUC8yOmDZFoNTezJNNkpc8FT8Vd5wWJbY+c+Wbe7lbq7sxKfxsLxmcU7HRzre3em50uIn+xiXLunr4LWNvlRmAh1M1VVCECdt8yFAiN7Nc/S9vMs5Gitnv5+fKkHvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YR1psK9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fUPqz2TwiP+bhGqFbXxdSAFg1Cgq2P/ET1dAnQnWMdpQkmHZesVYFTD0ew+2GxoSuFSh7go8ATH6tIQ1/232EqjU7qLvmP4sJcQXo+EJRLzrrosEum8VWPhpkawBOGjVfc7Zu/EqPO9OzlSyC/LkXbwsuiBglxm0kUsjVDH/jhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZMp635Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YR1psK9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B38FC433F1;
-	Tue, 27 Feb 2024 13:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZMp635Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560D2C433F1;
+	Tue, 27 Feb 2024 13:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040812;
-	bh=LDJc29cKwFol4z0OlFT2mdGrlMjoZYU1ARncHKg7WNI=;
+	s=korg; t=1709040815;
+	bh=EANWjd2RrO8BvVpQFHcKrcYLRX+gV5XykwdnyvxCszw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YR1psK9ToWszjq4OI+ZMH3D+ebps0Vjo3gaSF9nATRNjuJZGQBrTW4n1cQ9uY/7x8
-	 e5V2nYHxHP1Zcczj/WgK1KRG1MerfbaQV89MS5PdSSf6LLNVcqwun5kRz3h37mjzD6
-	 sDVsAUBeYX2OIMQgrpX1C2zlTz54UXt3APen2T7Q=
+	b=tZMp635Yx+Lz09dFN1ly4FwtgE+8uxkl487yje14hx/26t0//iWzdKOyNfGS4DZCT
+	 F2GUeTDATcrxhUd5kYufuKd0u4++h+ElB1G90rI9L2sEtB6tz70bljWSMdpqfgZeZj
+	 0qYPpVuriUr9f5rpRB4PLK42kt9qUYe/XiFVJ7As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 116/334] LoongArch: Change acpi_core_pic[NR_CPUS] to acpi_core_pic[MAX_CORE_PIC]
-Date: Tue, 27 Feb 2024 14:19:34 +0100
-Message-ID: <20240227131634.216554333@linuxfoundation.org>
+Subject: [PATCH 6.7 089/334] fs/ntfs3: Add and fix comments
+Date: Tue, 27 Feb 2024 14:19:07 +0100
+Message-ID: <20240227131633.391662099@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,107 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 4551b30525cf3d2f026b92401ffe241eb04dfebe ]
+[ Upstream commit d6ca2d253900b9b0a3a1ad77541d606010f5e5eb ]
 
-With default config, the value of NR_CPUS is 64. When HW platform has
-more then 64 cpus, system will crash on these platforms. MAX_CORE_PIC
-is the maximum cpu number in MADT table (max physical number) which can
-exceed the supported maximum cpu number (NR_CPUS, max logical number),
-but kernel should not crash. Kernel should boot cpus with NR_CPUS, let
-the remainder cpus stay in BIOS.
-
-The potential crash reason is that the array acpi_core_pic[NR_CPUS] can
-be overflowed when parsing MADT table, and it is obvious that CORE_PIC
-should be corresponding to physical core rather than logical core, so it
-is better to define the array as acpi_core_pic[MAX_CORE_PIC].
-
-With the patch, system can boot up 64 vcpus with qemu parameter -smp 128,
-otherwise system will crash with the following message.
-
-[    0.000000] CPU 0 Unable to handle kernel paging request at virtual address 0000420000004259, era == 90000000037a5f0c, ra == 90000000037a46ec
-[    0.000000] Oops[#1]:
-[    0.000000] CPU: 0 PID: 0 Comm: swapper Not tainted 6.8.0-rc2+ #192
-[    0.000000] Hardware name: QEMU QEMU Virtual Machine, BIOS unknown 2/2/2022
-[    0.000000] pc 90000000037a5f0c ra 90000000037a46ec tp 9000000003c90000 sp 9000000003c93d60
-[    0.000000] a0 0000000000000019 a1 9000000003d93bc0 a2 0000000000000000 a3 9000000003c93bd8
-[    0.000000] a4 9000000003c93a74 a5 9000000083c93a67 a6 9000000003c938f0 a7 0000000000000005
-[    0.000000] t0 0000420000004201 t1 0000000000000000 t2 0000000000000001 t3 0000000000000001
-[    0.000000] t4 0000000000000003 t5 0000000000000000 t6 0000000000000030 t7 0000000000000063
-[    0.000000] t8 0000000000000014 u0 ffffffffffffffff s9 0000000000000000 s0 9000000003caee98
-[    0.000000] s1 90000000041b0480 s2 9000000003c93da0 s3 9000000003c93d98 s4 9000000003c93d90
-[    0.000000] s5 9000000003caa000 s6 000000000a7fd000 s7 000000000f556b60 s8 000000000e0a4330
-[    0.000000]    ra: 90000000037a46ec platform_init+0x214/0x250
-[    0.000000]   ERA: 90000000037a5f0c efi_runtime_init+0x30/0x94
-[    0.000000]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
-[    0.000000]  PRMD: 00000000 (PPLV0 -PIE -PWE)
-[    0.000000]  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
-[    0.000000]  ECFG: 00070800 (LIE=11 VS=7)
-[    0.000000] ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
-[    0.000000]  BADV: 0000420000004259
-[    0.000000]  PRID: 0014c010 (Loongson-64bit, Loongson-3A5000)
-[    0.000000] Modules linked in:
-[    0.000000] Process swapper (pid: 0, threadinfo=(____ptrval____), task=(____ptrval____))
-[    0.000000] Stack : 9000000003c93a14 9000000003800898 90000000041844f8 90000000037a46ec
-[    0.000000]         000000000a7fd000 0000000008290000 0000000000000000 0000000000000000
-[    0.000000]         0000000000000000 0000000000000000 00000000019d8000 000000000f556b60
-[    0.000000]         000000000a7fd000 000000000f556b08 9000000003ca7700 9000000003800000
-[    0.000000]         9000000003c93e50 9000000003800898 9000000003800108 90000000037a484c
-[    0.000000]         000000000e0a4330 000000000f556b60 000000000a7fd000 000000000f556b08
-[    0.000000]         9000000003ca7700 9000000004184000 0000000000200000 000000000e02b018
-[    0.000000]         000000000a7fd000 90000000037a0790 9000000003800108 0000000000000000
-[    0.000000]         0000000000000000 000000000e0a4330 000000000f556b60 000000000a7fd000
-[    0.000000]         000000000f556b08 000000000eaae298 000000000eaa5040 0000000000200000
-[    0.000000]         ...
-[    0.000000] Call Trace:
-[    0.000000] [<90000000037a5f0c>] efi_runtime_init+0x30/0x94
-[    0.000000] [<90000000037a46ec>] platform_init+0x214/0x250
-[    0.000000] [<90000000037a484c>] setup_arch+0x124/0x45c
-[    0.000000] [<90000000037a0790>] start_kernel+0x90/0x670
-[    0.000000] [<900000000378b0d8>] kernel_entry+0xd8/0xdc
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/include/asm/acpi.h | 4 +++-
- arch/loongarch/kernel/acpi.c      | 4 +---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/ntfs3/dir.c     | 4 +++-
+ fs/ntfs3/fsntfs.c  | 2 +-
+ fs/ntfs3/ntfs.h    | 2 +-
+ fs/ntfs3/ntfs_fs.h | 2 +-
+ 4 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/arch/loongarch/include/asm/acpi.h b/arch/loongarch/include/asm/acpi.h
-index 8de6c4b83a61a..49e29b29996f0 100644
---- a/arch/loongarch/include/asm/acpi.h
-+++ b/arch/loongarch/include/asm/acpi.h
-@@ -32,8 +32,10 @@ static inline bool acpi_has_cpu_in_madt(void)
- 	return true;
- }
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index 726122ecd39b4..9f6dd445eb04d 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -536,8 +536,10 @@ static int ntfs_dir_count(struct inode *dir, bool *is_empty, size_t *dirs,
+ 			e = Add2Ptr(hdr, off);
+ 			e_size = le16_to_cpu(e->size);
+ 			if (e_size < sizeof(struct NTFS_DE) ||
+-			    off + e_size > end)
++			    off + e_size > end) {
++				/* Looks like corruption. */
+ 				break;
++			}
  
-+#define MAX_CORE_PIC 256
-+
- extern struct list_head acpi_wakeup_device_list;
--extern struct acpi_madt_core_pic acpi_core_pic[NR_CPUS];
-+extern struct acpi_madt_core_pic acpi_core_pic[MAX_CORE_PIC];
+ 			if (de_is_last(e))
+ 				break;
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 350461d8cece5..321978019407f 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2129,8 +2129,8 @@ int ntfs_insert_security(struct ntfs_sb_info *sbi,
+ 			if (le32_to_cpu(d_security->size) == new_sec_size &&
+ 			    d_security->key.hash == hash_key.hash &&
+ 			    !memcmp(d_security + 1, sd, size_sd)) {
+-				*security_id = d_security->key.sec_id;
+ 				/* Such security already exists. */
++				*security_id = d_security->key.sec_id;
+ 				err = 0;
+ 				goto out;
+ 			}
+diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
+index 13e96fc63dae5..c8981429c7213 100644
+--- a/fs/ntfs3/ntfs.h
++++ b/fs/ntfs3/ntfs.h
+@@ -523,7 +523,7 @@ struct ATTR_LIST_ENTRY {
+ 	__le64 vcn;		// 0x08: Starting VCN of this attribute.
+ 	struct MFT_REF ref;	// 0x10: MFT record number with attribute.
+ 	__le16 id;		// 0x18: struct ATTRIB ID.
+-	__le16 name[];		// 0x1A: Just to align. To get real name can use name_off.
++	__le16 name[];		// 0x1A: To get real name use name_off.
  
- extern int __init parse_acpi_topology(void);
+ }; // sizeof(0x20)
  
-diff --git a/arch/loongarch/kernel/acpi.c b/arch/loongarch/kernel/acpi.c
-index 8e00a754e5489..55d6a48c76a82 100644
---- a/arch/loongarch/kernel/acpi.c
-+++ b/arch/loongarch/kernel/acpi.c
-@@ -29,11 +29,9 @@ int disabled_cpus;
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 3fc027ce6e4d9..8079f3069a1bf 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -874,7 +874,7 @@ int ntfs_init_acl(struct mnt_idmap *idmap, struct inode *inode,
  
- u64 acpi_saved_sp;
+ int ntfs_acl_chmod(struct mnt_idmap *idmap, struct dentry *dentry);
+ ssize_t ntfs_listxattr(struct dentry *dentry, char *buffer, size_t size);
+-extern const struct xattr_handler * const ntfs_xattr_handlers[];
++extern const struct xattr_handler *const ntfs_xattr_handlers[];
  
--#define MAX_CORE_PIC 256
--
- #define PREFIX			"ACPI: "
- 
--struct acpi_madt_core_pic acpi_core_pic[NR_CPUS];
-+struct acpi_madt_core_pic acpi_core_pic[MAX_CORE_PIC];
- 
- void __init __iomem * __acpi_map_table(unsigned long phys, unsigned long size)
- {
+ int ntfs_save_wsl_perm(struct inode *inode, __le16 *ea_size);
+ void ntfs_get_wsl_perm(struct inode *inode);
 -- 
 2.43.0
 
