@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE0C13B2B8;
-	Tue, 27 Feb 2024 14:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D17E13B2B8;
+	Tue, 27 Feb 2024 14:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043735; cv=none; b=lY7Q10AxdA3oE3krbgf09kJNOagWpzT5ZnLx1lvjaxiSuv9vqLXuDFjzIAJSTrmVLbc6Gn8LLcvYm0Jp1FkWS0e/j4xNuSLR3tQ6fdyCZCJj3Sn9RDVVEvQ2HAVHRmyjcThJGmC9Cipp9Iic4gfA+hMfqlHy8J3P80x6+hE5Ywo=
+	t=1709043738; cv=none; b=WPho1jrSuVoyXSd7iRT0Q3/vlx1vnEAn/qO97jUbSRK5jES6YG/aLOrLLPnXXeZGW6oSPzDyHIGlIj+r7lPqGEHkywAUGURgdHtBde1VjNbEY9dkRo5E8Uvggu0CVMiAbo80Gse931oo+TnRePoDv30ueDMxuhsKfqnPvAI0mIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043735; c=relaxed/simple;
-	bh=R8JKXIlHkwuDze/yhoLPH8p0qmX3ZrVf9wJLBN9q3Ro=;
+	s=arc-20240116; t=1709043738; c=relaxed/simple;
+	bh=BZmh7d8bDUn3k+VS6Lc4qBTYjqNMCgsdfz1FukP1XyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZusFbl1xi9PlOpxuAKpvcIlLDrmRSbP/BxMaum6zSq+/+PfDxW8bpbkVGiZU2kOjh7X4dUUuKTj0KyRL0HxZE9tEw3MnUVUtiEptBAyeCeX7uIgW//v5sAnPO2wJwUp9HTi0GVtFt8OXqMvk139MrI1eNKml0Hqq0aRvf32YHyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztqZltJ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fik8jRn1yZ0e3rpJ8evcc3Fy//t9zRiRCmrepy1xxqqO70YCvem3Oza40isziJoZFvdbCDtQbLaMSpf9krsLquGP+R6Rf2a9BfJCL4NWLtAM/382+yjxefs7Ig/+sUaicTbRWWwcsZn+KS0cqfXTdyFYmUjFFxPhOaH1ER4zWGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vR6gyPr7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztqZltJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE63C433C7;
-	Tue, 27 Feb 2024 14:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR6gyPr7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4BBC433C7;
+	Tue, 27 Feb 2024 14:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043735;
-	bh=R8JKXIlHkwuDze/yhoLPH8p0qmX3ZrVf9wJLBN9q3Ro=;
+	s=korg; t=1709043737;
+	bh=BZmh7d8bDUn3k+VS6Lc4qBTYjqNMCgsdfz1FukP1XyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztqZltJ6Omd17Q1bWQF5i/+O2X8ySZDOkHf+eio1ODnPGRI/o0tTQX6gEkSdzVTZE
-	 xVLZy1/aqoD/rgESPTcBgE2vdV+owMYtWpbEU/py20l9gMROoY2i0oeXlypF/nNSw3
-	 Uu/gta5s6jfACSXrwST5L27GSOFM4VSvPwhMjVB4=
+	b=vR6gyPr7EBXrgSBqGkDdnM9nDaNB7XlZG04doV3WkvlSqgcj+O5vkwFR6YNtCYFQG
+	 RqpvN38FimaoPjXTtvRSR4QjVSRWH88HrKHgnKvUZqiU9ga7boH6w6tFYqvRHi5g5Q
+	 +Dclde913/tZUdBe6s/Gq9BufIyayrCj+0mg94eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fullway Wang <fullwaywang@outlook.com>,
-	Helge Deller <deller@gmx.de>,
+	Conrad Kostecki <conikost@gentoo.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 18/84] fbdev: sis: Error out if pixclock equals zero
-Date: Tue, 27 Feb 2024 14:26:45 +0100
-Message-ID: <20240227131553.463289149@linuxfoundation.org>
+Subject: [PATCH 5.4 19/84] ahci: asm1166: correct count of reported ports
+Date: Tue, 27 Feb 2024 14:26:46 +0100
+Message-ID: <20240227131553.493710864@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -51,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fullway Wang <fullwaywang@outlook.com>
+From: Conrad Kostecki <conikost@gentoo.org>
 
-[ Upstream commit e421946be7d9bf545147bea8419ef8239cb7ca52 ]
+[ Upstream commit 0077a504e1a4468669fd2e011108db49133db56e ]
 
-The userspace program could pass any values to the driver through
-ioctl() interface. If the driver doesn't check the value of pixclock,
-it may cause divide-by-zero error.
+The ASM1166 SATA host controller always reports wrongly,
+that it has 32 ports. But in reality, it only has six ports.
 
-In sisfb_check_var(), var->pixclock is used as a divisor to caculate
-drate before it is checked against zero. Fix this by checking it
-at the beginning.
+This seems to be a hardware issue, as all tested ASM1166
+SATA host controllers reports such high count of ports.
 
-This is similar to CVE-2022-3061 in i740fb which was fixed by
-commit 15cf0b8.
+Example output: ahci 0000:09:00.0: AHCI 0001.0301
+32 slots 32 ports 6 Gbps 0xffffff3f impl SATA mode.
 
-Signed-off-by: Fullway Wang <fullwaywang@outlook.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+By adjusting the port_map, the count is limited to six ports.
+
+New output: ahci 0000:09:00.0: AHCI 0001.0301
+32 slots 32 ports 6 Gbps 0x3f impl SATA mode.
+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=211873
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218346
+Signed-off-by: Conrad Kostecki <conikost@gentoo.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sis/sis_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ata/ahci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/video/fbdev/sis/sis_main.c b/drivers/video/fbdev/sis/sis_main.c
-index b443a8ed46003..2fdd02e51f5fc 100644
---- a/drivers/video/fbdev/sis/sis_main.c
-+++ b/drivers/video/fbdev/sis/sis_main.c
-@@ -1474,6 +1474,8 @@ sisfb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
- 
- 	vtotal = var->upper_margin + var->lower_margin + var->vsync_len;
- 
-+	if (!var->pixclock)
-+		return -EINVAL;
- 	pixclock = var->pixclock;
- 
- 	if((var->vmode & FB_VMODE_MASK) == FB_VMODE_NONINTERLACED) {
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index aa35d1941d1fc..5db3dc45bdc4e 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -618,6 +618,11 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
+ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 					 struct ahci_host_priv *hpriv)
+ {
++	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA && pdev->device == 0x1166) {
++		dev_info(&pdev->dev, "ASM1166 has only six ports\n");
++		hpriv->saved_port_map = 0x3f;
++	}
++
+ 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
+ 		dev_info(&pdev->dev, "JMB361 has only one port\n");
+ 		hpriv->force_port_map = 1;
 -- 
 2.43.0
 
