@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098D713DB87;
-	Tue, 27 Feb 2024 13:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BFA2F2D;
+	Tue, 27 Feb 2024 13:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041507; cv=none; b=cDiXy6+wNz8s0ceMAoUAyUbp721jbuOLXWdopnjo6vQ7H9jz86+rR0dyYD7HADwk9yXECtRQswJMzzURC0fKqAsZQcn+F9F2QsH+aoEMV6fzFOtsU0e0NxlzL5z8yVGW9OBPFWJ8Hy7fJNsUTwEdUaqs46ZIaBx7X/uAmVtJero=
+	t=1709041509; cv=none; b=g4ZKDtE3tIcMquHOigYCiHbciA0LB20jCNMrThymDu0eOUm9bYSEKNJ6znOi2lMkjH75pGzJvZtXbdP2rtH1m0/hqoPn2tyDVHm9wrYpWrgvNRXFHYFvJdEnUt9N+xc2w5Hhw9SsSuz5Iwzw6wJuemVUK/l+d3HSZTB43WPcNGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041507; c=relaxed/simple;
-	bh=q1+rtq2EyH3W4ldEvEP/bwVoFf2syBFuGvvydgWFgFU=;
+	s=arc-20240116; t=1709041509; c=relaxed/simple;
+	bh=xn0QEjseChGTpEWqz1yIqczusZo6oOSW6uCaQUBpBrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ErH6Nt2GyU9n76GBz0OkR250HIVLq7DYwErHWxLxbgRzN8kdTwYuLkuepS8e26TDycu4edM7Xd9hCd2SWTDogv3/x7LVn+5k+oXoseaFUD/C/vCDTEYnhAtfbedhjoBVDMHYfSd+nhMflZOqhmhAZVUexLT2NEexDe5RPCFZDMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DqxHV5I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XnaClDY353gmrANo1vacEN1CILZs4hOgJsP0W4HQJd7GwUzWR71AUQOcVloD7Zb7XI40r8HjQMlGSM+zmBWKO+8vptcK8K7+BHx1NsnLS/YtAQ6lyAmkUhdDA2RcXZi2EwaoJaTy8yyZRnNCep0w1xJujqKO61WpapWZNCOcdWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J36pvHm6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DqxHV5I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E722C43330;
-	Tue, 27 Feb 2024 13:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J36pvHm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F384C43394;
+	Tue, 27 Feb 2024 13:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041506;
-	bh=q1+rtq2EyH3W4ldEvEP/bwVoFf2syBFuGvvydgWFgFU=;
+	s=korg; t=1709041509;
+	bh=xn0QEjseChGTpEWqz1yIqczusZo6oOSW6uCaQUBpBrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1DqxHV5ITsnFSxrfMV/IPgzfFxlC+yLAbEPBEP4h2zZh8tNkS5iNGf5QPvlV9mzq3
-	 eUD8p+ocOUxgwc+s4Nbzt/n/nxD2yEncOLFUXdGh6h/Faz8+HEHPuvr3e7Q6FsGJJJ
-	 J4LiSQSOcCLFp8TYr2J0GF8nWHgqHOWASNY09EPA=
+	b=J36pvHm6+h20NhzCgw3KLKaJP96o56EtyqzAQU/+XDa3pdxgJNpcD8d3jqnWALs5A
+	 6cg+cu07Cq9YLJ/SajibhCpQrq/hFnuI7FA1/Qm5GJiys/YlATkB7jS1BBEGyNoBX9
+	 KYiR3MLTlXwIZ2Zg8DHJwo3tD4ac9JmZiDSW474s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mats Kronberg <kronberg@nsc.liu.se>,
-	Daniel Vacek <neelx@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 4.19 27/52] IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
-Date: Tue, 27 Feb 2024 14:26:14 +0100
-Message-ID: <20240227131549.423170338@linuxfoundation.org>
+	Roman Gushchin <guro@fb.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Hillf Danton <hdanton@sina.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Vladimir Davydov <vdavydov.dev@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	GONG
+Subject: [PATCH 4.19 28/52] mm: memcontrol: switch to rcu protection in drain_all_stock()
+Date: Tue, 27 Feb 2024 14:26:15 +0100
+Message-ID: <20240227131549.456694608@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -51,100 +57,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vacek <neelx@redhat.com>
+From: Roman Gushchin <guro@fb.com>
 
-commit e6f57c6881916df39db7d95981a8ad2b9c3458d6 upstream.
+commit e1a366be5cb4f849ec4de170d50eebc08bb0af20 upstream.
 
-Unfortunately the commit `fd8958efe877` introduced another error
-causing the `descs` array to overflow. This reults in further crashes
-easily reproducible by `sendmsg` system call.
+Commit 72f0184c8a00 ("mm, memcg: remove hotplug locking from try_charge")
+introduced css_tryget()/css_put() calls in drain_all_stock(), which are
+supposed to protect the target memory cgroup from being released during
+the mem_cgroup_is_descendant() call.
 
-[ 1080.836473] general protection fault, probably for non-canonical address 0x400300015528b00a: 0000 [#1] PREEMPT SMP PTI
-[ 1080.869326] RIP: 0010:hfi1_ipoib_build_ib_tx_headers.constprop.0+0xe1/0x2b0 [hfi1]
---
-[ 1080.974535] Call Trace:
-[ 1080.976990]  <TASK>
-[ 1081.021929]  hfi1_ipoib_send_dma_common+0x7a/0x2e0 [hfi1]
-[ 1081.027364]  hfi1_ipoib_send_dma_list+0x62/0x270 [hfi1]
-[ 1081.032633]  hfi1_ipoib_send+0x112/0x300 [hfi1]
-[ 1081.042001]  ipoib_start_xmit+0x2a9/0x2d0 [ib_ipoib]
-[ 1081.046978]  dev_hard_start_xmit+0xc4/0x210
---
-[ 1081.148347]  __sys_sendmsg+0x59/0xa0
+However, it's not completely safe.  In theory, memcg can go away between
+reading stock->cached pointer and calling css_tryget().
 
-crash> ipoib_txreq 0xffff9cfeba229f00
-struct ipoib_txreq {
-  txreq = {
-    list = {
-      next = 0xffff9cfeba229f00,
-      prev = 0xffff9cfeba229f00
-    },
-    descp = 0xffff9cfeba229f40,
-    coalesce_buf = 0x0,
-    wait = 0xffff9cfea4e69a48,
-    complete = 0xffffffffc0fe0760 <hfi1_ipoib_sdma_complete>,
-    packet_len = 0x46d,
-    tlen = 0x0,
-    num_desc = 0x0,
-    desc_limit = 0x6,
-    next_descq_idx = 0x45c,
-    coalesce_idx = 0x0,
-    flags = 0x0,
-    descs = {{
-        qw = {0x8024000120dffb00, 0x4}  # SDMA_DESC0_FIRST_DESC_FLAG (bit 63)
-      }, {
-        qw = {  0x3800014231b108, 0x4}
-      }, {
-        qw = { 0x310000e4ee0fcf0, 0x8}
-      }, {
-        qw = {  0x3000012e9f8000, 0x8}
-      }, {
-        qw = {  0x59000dfb9d0000, 0x8}
-      }, {
-        qw = {  0x78000e02e40000, 0x8}
-      }}
-  },
-  sdma_hdr =  0x400300015528b000,  <<< invalid pointer in the tx request structure
-  sdma_status = 0x0,                   SDMA_DESC0_LAST_DESC_FLAG (bit 62)
-  complete = 0x0,
-  priv = 0x0,
-  txq = 0xffff9cfea4e69880,
-  skb = 0xffff9d099809f400
-}
+This can happen if drain_all_stock() races with drain_local_stock()
+performed on the remote cpu as a result of a work, scheduled by the
+previous invocation of drain_all_stock().
 
-If an SDMA send consists of exactly 6 descriptors and requires dword
-padding (in the 7th descriptor), the sdma_txreq descriptor array is not
-properly expanded and the packet will overflow into the container
-structure. This results in a panic when the send completion runs. The
-exact panic varies depending on what elements of the container structure
-get corrupted. The fix is to use the correct expression in
-_pad_sdma_tx_descs() to test the need to expand the descriptor array.
+The race is a bit theoretical and there are few chances to trigger it, but
+the current code looks a bit confusing, so it makes sense to fix it
+anyway.  The code looks like as if css_tryget() and css_put() are used to
+protect stocks drainage.  It's not necessary because stocked pages are
+holding references to the cached cgroup.  And it obviously won't work for
+works, scheduled on other cpus.
 
-With this patch the crashes are no longer reproducible and the machine is
-stable.
+So, let's read the stock->cached pointer and evaluate the memory cgroup
+inside a rcu read section, and get rid of css_tryget()/css_put() calls.
 
-Fixes: fd8958efe877 ("IB/hfi1: Fix sdma.h tx->num_descs off-by-one errors")
-Cc: stable@vger.kernel.org
-Reported-by: Mats Kronberg <kronberg@nsc.liu.se>
-Tested-by: Mats Kronberg <kronberg@nsc.liu.se>
-Signed-off-by: Daniel Vacek <neelx@redhat.com>
-Link: https://lore.kernel.org/r/20240201081009.1109442-1-neelx@redhat.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: http://lkml.kernel.org/r/20190802192241.3253165-1-guro@fb.com
+Signed-off-by: Roman Gushchin <guro@fb.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Hillf Danton <hdanton@sina.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Vladimir Davydov <vdavydov.dev@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: cdec2e4265df ("memcg: coalesce charging via percpu storage")
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hfi1/sdma.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memcontrol.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/infiniband/hw/hfi1/sdma.c
-+++ b/drivers/infiniband/hw/hfi1/sdma.c
-@@ -3202,7 +3202,7 @@ int _pad_sdma_tx_descs(struct hfi1_devda
- {
- 	int rval = 0;
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2094,21 +2094,22 @@ static void drain_all_stock(struct mem_c
+ 	for_each_online_cpu(cpu) {
+ 		struct memcg_stock_pcp *stock = &per_cpu(memcg_stock, cpu);
+ 		struct mem_cgroup *memcg;
++		bool flush = false;
  
--	if ((unlikely(tx->num_desc + 1 == tx->desc_limit))) {
-+	if ((unlikely(tx->num_desc == tx->desc_limit))) {
- 		rval = _extend_sdma_tx_descs(dd, tx);
- 		if (rval) {
- 			__sdma_txclean(dd, tx);
++		rcu_read_lock();
+ 		memcg = stock->cached;
+-		if (!memcg || !stock->nr_pages || !css_tryget(&memcg->css))
+-			continue;
+-		if (!mem_cgroup_is_descendant(memcg, root_memcg)) {
+-			css_put(&memcg->css);
+-			continue;
+-		}
+-		if (!test_and_set_bit(FLUSHING_CACHED_CHARGE, &stock->flags)) {
++		if (memcg && stock->nr_pages &&
++		    mem_cgroup_is_descendant(memcg, root_memcg))
++			flush = true;
++		rcu_read_unlock();
++
++		if (flush &&
++		    !test_and_set_bit(FLUSHING_CACHED_CHARGE, &stock->flags)) {
+ 			if (cpu == curcpu)
+ 				drain_local_stock(&stock->work);
+ 			else
+ 				schedule_work_on(cpu, &stock->work);
+ 		}
+-		css_put(&memcg->css);
+ 	}
+ 	put_cpu();
+ 	mutex_unlock(&percpu_charge_mutex);
 
 
