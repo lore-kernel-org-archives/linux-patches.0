@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B528C13DBBC;
-	Tue, 27 Feb 2024 14:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC5F13AA4C;
+	Tue, 27 Feb 2024 14:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044122; cv=none; b=mu29YD9/XWJidzteosh/HtDug5yz4z3rEDSWogzNBYzkMI1v5cRT62e6njq0QvHbE9/r6JdYxYZNMZJiFT/fVMcI5Tkeb/HSalpONwRJBBCeakd/s7jftxa4sJYEfSaCxjUNNHO5+vkq98m+LXrWUMJ5RrNGoWVfZqSuosr4EjQ=
+	t=1709044125; cv=none; b=qpre2PWTrT4jhHJhtiNinIebQhrK97ShzPUScWcO5xE9INDcTWZ44BzFoFtcH3Hjj/LU1heGWzkihpnK+vdEdp5H/BfPO7AjBlqGBRCjC9FS8S0jrKSoI5PK5CGCNFb2MbcEULmsBZ4jEPaCntQVG8UbFcz+kK+wvhtZJqRaygE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044122; c=relaxed/simple;
-	bh=Y6GQ3NhJcjsthDQUjVAKYjy1w1v0OhbosZDOijBAmbw=;
+	s=arc-20240116; t=1709044125; c=relaxed/simple;
+	bh=BoguvoyAGxvfb4jKv56AS6ldI+WHjp9VqJHlSAB2p5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qbv+eQzDL0HXsJhiZveyzFOWJv6ozpuQoZr+0zsrgUzhYAJ6UPV3sHGqk88yJqfpXGJlo1s2AOoAtgsqwih3OKAnTWAo+JnHFcjht9uLG3j7PQrbVkKUdIfb3Ptk6MLlVurhMVFPy1evKLTsmnMsyER+0ks7MHgCVqsmpEjZ6eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0LyNtVF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hoJGYA4mQ+WylWaBT+FndvPfkVX0/ojAcnwwjBXmVPdlBkg/5AS0qwVTBHVVdQf7+w+vpZbBDj1kZ+fV9kESJj6jL9yrLh2Ywn2OSy+xpnE1UA9msFWAYzMFfihszu1Ru0z9+fWhM0soo8pVJGCHhqH4Yu3it1lC1s6IOUse1kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQwRZqu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0LyNtVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAF9C433C7;
-	Tue, 27 Feb 2024 14:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQwRZqu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF61C433F1;
+	Tue, 27 Feb 2024 14:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044122;
-	bh=Y6GQ3NhJcjsthDQUjVAKYjy1w1v0OhbosZDOijBAmbw=;
+	s=korg; t=1709044125;
+	bh=BoguvoyAGxvfb4jKv56AS6ldI+WHjp9VqJHlSAB2p5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0LyNtVFrJtrPidbsH7mjfLXahB/lK3mJsjknmG1pbPwKT/hfz4uJF/79vIoiQC56
-	 cvqIXjGgWMz50/T3AYHatMPbr3Ms+8ISa3RGrxi0DiOu/AOrxa792i7A/VEDdcZBAt
-	 aKbMyDuH1vhJ3AUVUayRfrqSBIGTMsuloAaUpZqE=
+	b=aQwRZqu0CaqRKYTnu3/xvM0UpbRgGrO6imC7fE2qE6WU57tQwUD4TAAlgP8OluACB
+	 /pXfBkH50F3WKQRm2MVWzp2tFQrKMzbGmPO/I5d7OuPaWFonNoVZQTOaJni4Isddd8
+	 Qx9FkEKWlene76Zns5V8S8cLmLzF6Js7hPZcFWag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/122] pmdomain: renesas: r8a77980-sysc: CR7 must be always on
-Date: Tue, 27 Feb 2024 14:26:43 +0100
-Message-ID: <20240227131600.085326148@linuxfoundation.org>
+Subject: [PATCH 5.10 043/122] ARM: dts: BCM53573: Drop nonexistent "default-off" LED trigger
+Date: Tue, 27 Feb 2024 14:26:44 +0100
+Message-ID: <20240227131600.118833299@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,42 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit f0e4a1356466ec1858ae8e5c70bea2ce5e55008b ]
+[ Upstream commit be7e1e5b0f67c58ec4be0a54db23b6a4fa6e2116 ]
 
-The power domain containing the Cortex-R7 CPU core on the R-Car V3H SoC
-must always be in power-on state, unlike on other SoCs in the R-Car Gen3
-family.  See Table 9.4 "Power domains" in the R-Car Series, 3rd
-Generation Hardware User’s Manual Rev.1.00 and later.
+There is no such trigger documented or implemented in Linux. It was a
+copy & paste mistake.
 
-Fix this by marking the domain as a CPU domain without control
-registers, so the driver will not touch it.
+This fixes:
+arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: leds: led-wlan:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
+        'default-off' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'kbd-capslock', 'mtd', 'nand-disk', 'none', 'torch', 'usb-gadget', 'usb-host', 'usbport']
+        'default-off' does not match '^cpu[0-9]*$'
+        'default-off' does not match '^hci[0-9]+-power$'
+        'default-off' does not match '^mmc[0-9]+$'
+        'default-off' does not match '^phy[0-9]+tx$'
+        From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
 
-Fixes: 41d6d8bd8ae9 ("soc: renesas: rcar-sysc: add R8A77980 support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/fdad9a86132d53ecddf72b734dac406915c4edc0.1705076735.git.geert+renesas@glider.be
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20230707114004.2740-1-zajec5@gmail.com
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/renesas/r8a77980-sysc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 1 -
+ arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 2 --
+ 2 files changed, 3 deletions(-)
 
-diff --git a/drivers/soc/renesas/r8a77980-sysc.c b/drivers/soc/renesas/r8a77980-sysc.c
-index 39ca84a67daad..621e411fc9991 100644
---- a/drivers/soc/renesas/r8a77980-sysc.c
-+++ b/drivers/soc/renesas/r8a77980-sysc.c
-@@ -25,7 +25,8 @@ static const struct rcar_sysc_area r8a77980_areas[] __initconst = {
- 	  PD_CPU_NOCR },
- 	{ "ca53-cpu3",	0x200, 3, R8A77980_PD_CA53_CPU3, R8A77980_PD_CA53_SCU,
- 	  PD_CPU_NOCR },
--	{ "cr7",	0x240, 0, R8A77980_PD_CR7,	R8A77980_PD_ALWAYS_ON },
-+	{ "cr7",	0x240, 0, R8A77980_PD_CR7,	R8A77980_PD_ALWAYS_ON,
-+	  PD_CPU_NOCR },
- 	{ "a3ir",	0x180, 0, R8A77980_PD_A3IR,	R8A77980_PD_ALWAYS_ON },
- 	{ "a2ir0",	0x400, 0, R8A77980_PD_A2IR0,	R8A77980_PD_A3IR },
- 	{ "a2ir1",	0x400, 1, R8A77980_PD_A2IR1,	R8A77980_PD_A3IR },
+diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
+index 00e688b45d981..5901160919dcd 100644
+--- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
++++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
+@@ -26,7 +26,6 @@ leds {
+ 		wlan {
+ 			label = "bcm53xx:blue:wlan";
+ 			gpios = <&chipcommon 10 GPIO_ACTIVE_LOW>;
+-			linux,default-trigger = "default-off";
+ 		};
+ 
+ 		system {
+diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
+index 78c80a5d3f4fa..8e7483272d47d 100644
+--- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
++++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
+@@ -26,7 +26,6 @@ leds {
+ 		5ghz {
+ 			label = "bcm53xx:blue:5ghz";
+ 			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "default-off";
+ 		};
+ 
+ 		system {
+@@ -42,7 +41,6 @@ pcie0_leds {
+ 		2ghz {
+ 			label = "bcm53xx:blue:2ghz";
+ 			gpios = <&pcie0_chipcommon 3 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "default-off";
+ 		};
+ 	};
+ 
 -- 
 2.43.0
 
