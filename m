@@ -1,168 +1,93 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9F613AA55;
-	Tue, 27 Feb 2024 13:42:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EBA13AA2F
+	for <patches@lists.linux.dev>; Tue, 27 Feb 2024 13:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041333; cv=none; b=lMt/uwsr231FZbkwubv6qfXsgvaafBaT80Ew1AeHgQci3gBs5x+TapET7SGdYcGVRdqfwgq+45f2fxWgAGjW67YTU8AFCzXKCljlsudpc9Qm2q0PKy2kPqBnLEGyDkyVSvWMuPnPbVi6DQUibs5krgkKPXlpLbqSsm+rm0/01cw=
+	t=1709041336; cv=none; b=U9gEa75/H+7fxyZzhDkoHXygnFQmnjkxJVj54rwkdnn4E2Id11shiZpn9Mp+rtv/7HqSGKdtd9sKnOwJj9FEgbdT4QninFVN1AYQo3qUawovwEnLrG/hbl0ZQibeJFToBCrKtZiXAAUgil6gtdPfRDGY0Wiofz/YY9GNvWTLSew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041333; c=relaxed/simple;
-	bh=58N6M4pVAHRm6QWnQyixNUZoL908JiRGLkXbKZ5Kxf0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXx6XhxRKqncH4vwNfWTfFm58glH/EaofOipvmFkAzvaHDfWhbfu/zcIE4AVcSndVPQPnLxzJzg6/HpvXKAw6MyaqQ683I6KV9hfyagqkjyz1yf1506pyNHzN+kM16ESAjQIp/QSN84ywiRsEHGlA+huKk1ZyvGvCb+8j1vPE3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fe0rmakY; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fe0rmakY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13741C433F1;
-	Tue, 27 Feb 2024 13:42:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041333;
-	bh=58N6M4pVAHRm6QWnQyixNUZoL908JiRGLkXbKZ5Kxf0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fe0rmakYnqFCrXeHjVsltP1OTnYRZFFOxBAxUJWWbT48E+XHeIL58Jns59DqnoWOZ
-	 AwsKxL/ZPeNS2++fDgR4P8LOFNl+2P2k7+r7F0z9VI+xin+hrQ6ixO1ljHxFFtqjGK
-	 1XXZhA9YEi2EzKeilWUUxi2wNCVzd/eEVoVJhV6g=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	Ahmad Khalifa <ahmad@khalifa.ws>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 302/334] hwmon: (nct6775) Fix access to temperature configuration registers
-Date: Tue, 27 Feb 2024 14:22:40 +0100
-Message-ID: <20240227131640.790098521@linuxfoundation.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
-References: <20240227131630.636392135@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1709041336; c=relaxed/simple;
+	bh=6OR8pYM7suBpE4VlEJa7l0D5FXGcWyQjXvn2iIAyXQk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kWbMv6O/IAGSroG3x+pTwGebBE/F3qxBTMCWTYyxQCt7yYg+KfUVxjRfED7XuhtBWDMAAJfZ28EP1Y/Clp85b0ia8M7ewAlqz9tfsJBChz44frsvsyf5rEN7prSLCL2zLAC6FkQxJ8Q2caAoB2Dmv3zDOfkuePq5eKwLeCHkrxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+	by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Tkdtk66WYzqhms;
+	Tue, 27 Feb 2024 21:41:34 +0800 (CST)
+Received: from dggpeml500021.china.huawei.com (unknown [7.185.36.21])
+	by mail.maildlp.com (Postfix) with ESMTPS id AAFF1140336;
+	Tue, 27 Feb 2024 21:42:11 +0800 (CST)
+Received: from [10.174.177.174] (10.174.177.174) by
+ dggpeml500021.china.huawei.com (7.185.36.21) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 27 Feb 2024 21:42:11 +0800
+Message-ID: <5a95aeb6-d070-fb3e-d619-8f26164b293c@huawei.com>
+Date: Tue, 27 Feb 2024 21:42:10 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.2
+Subject: Re: [PATCH 5.15 2/2] ext4: avoid bb_free and bb_fragments
+ inconsistency in mb_free_blocks()
+Content-Language: en-US
+To: Greg KH <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <sashal@kernel.org>, <tytso@mit.edu>,
+	<jack@suse.cz>, <patches@lists.linux.dev>, <yi.zhang@huawei.com>,
+	<yangerkun@huawei.com>, Baokun Li <libaokun1@huawei.com>
+References: <20240227130050.805571-1-libaokun1@huawei.com>
+ <20240227130050.805571-2-libaokun1@huawei.com>
+ <2024022725-broadly-gave-6b16@gregkh>
+From: Baokun Li <libaokun1@huawei.com>
+In-Reply-To: <2024022725-broadly-gave-6b16@gregkh>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ dggpeml500021.china.huawei.com (7.185.36.21)
 
-6.7-stable review patch.  If anyone has any objections, please let me know.
+On 2024/2/27 21:06, Greg KH wrote:
+> On Tue, Feb 27, 2024 at 09:00:50PM +0800, Baokun Li wrote:
+>> commit 2331fd4a49864e1571b4f50aa3aa1536ed6220d0 upstream.
+>>
+>> After updating bb_free in mb_free_blocks, it is possible to return without
+>> updating bb_fragments because the block being freed is found to have
+>> already been freed, which leads to inconsistency between bb_free and
+>> bb_fragments.
+>>
+>> Since the group may be unlocked in ext4_grp_locked_error(), this can lead
+>> to problems such as dividing by zero when calculating the average fragment
+>> length. Hence move the update of bb_free to after the block double-free
+>> check guarantees that the corresponding statistics are updated only after
+>> the core block bitmap is modified.
+>>
+>> Fixes: eabe0444df90 ("ext4: speed-up releasing blocks on commit")
+>> CC:  <stable@vger.kernel.org> # 3.10
+>> Suggested-by: Jan Kara <jack@suse.cz>
+>> Signed-off-by: Baokun Li <libaokun1@huawei.com>
+>> Reviewed-by: Jan Kara <jack@suse.cz>
+>> Link: https://lore.kernel.org/r/20240104142040.2835097-5-libaokun1@huawei.com
+>> Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+>> Signed-off-by: Baokun Li <libaokun1@huawei.com>
+>> ---
+>>   fs/ext4/mballoc.c | 39 +++++++++++++++++++++------------------
+>>   1 file changed, 21 insertions(+), 18 deletions(-)
+> We also need this for 5.10.y and older, right?
+>
+> Queued up now, thanks!
+>
+> greg k-h
+>
+5.4.y and older will regenerate the buddy on error, so this is not needed.
 
-------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
-
-[ Upstream commit d56e460e19ea8382f813eb489730248ec8d7eb73 ]
-
-The number of temperature configuration registers does
-not always match the total number of temperature registers.
-This can result in access errors reported if KASAN is enabled.
-
-BUG: KASAN: global-out-of-bounds in nct6775_probe+0x5654/0x6fe9 nct6775_core
-
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/linux-hwmon/d51181d1-d26b-42b2-b002-3f5a4037721f@roeck-us.net/
-Fixes: b7f1f7b2523a ("hwmon: (nct6775) Additional TEMP registers for nct6799")
-Cc: Ahmad Khalifa <ahmad@khalifa.ws>
-Tested-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/hwmon/nct6775-core.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index 92a49fafe2c02..f3bf2e4701c38 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -3512,6 +3512,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 	const u16 *reg_temp_mon, *reg_temp_alternate, *reg_temp_crit;
- 	const u16 *reg_temp_crit_l = NULL, *reg_temp_crit_h = NULL;
- 	int num_reg_temp, num_reg_temp_mon, num_reg_tsi_temp;
-+	int num_reg_temp_config;
- 	struct device *hwmon_dev;
- 	struct sensor_template_group tsi_temp_tg;
- 
-@@ -3594,6 +3595,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6106_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
- 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
- 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
-@@ -3669,6 +3671,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6106_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
- 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
- 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
-@@ -3746,6 +3749,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6775_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
- 		reg_temp_config = NCT6775_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6775_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6775_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6775_REG_TEMP_CRIT;
- 
-@@ -3821,6 +3825,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6775_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
- 		reg_temp_config = NCT6776_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6776_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6776_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6776_REG_TEMP_CRIT;
- 
-@@ -3900,6 +3905,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6779_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
- 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
- 
-@@ -4034,6 +4040,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6779_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
- 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
- 
-@@ -4123,6 +4130,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		reg_temp_over = NCT6798_REG_TEMP_OVER;
- 		reg_temp_hyst = NCT6798_REG_TEMP_HYST;
- 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
-+		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
- 		reg_temp_alternate = NCT6798_REG_TEMP_ALTERNATE;
- 		reg_temp_crit = NCT6798_REG_TEMP_CRIT;
- 
-@@ -4204,7 +4212,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 				  = reg_temp_crit[src - 1];
- 			if (reg_temp_crit_l && reg_temp_crit_l[i])
- 				data->reg_temp[4][src - 1] = reg_temp_crit_l[i];
--			data->reg_temp_config[src - 1] = reg_temp_config[i];
-+			if (i < num_reg_temp_config)
-+				data->reg_temp_config[src - 1] = reg_temp_config[i];
- 			data->temp_src[src - 1] = src;
- 			continue;
- 		}
-@@ -4217,7 +4226,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
- 		data->reg_temp[0][s] = reg_temp[i];
- 		data->reg_temp[1][s] = reg_temp_over[i];
- 		data->reg_temp[2][s] = reg_temp_hyst[i];
--		data->reg_temp_config[s] = reg_temp_config[i];
-+		if (i < num_reg_temp_config)
-+			data->reg_temp_config[s] = reg_temp_config[i];
- 		if (reg_temp_crit_h && reg_temp_crit_h[i])
- 			data->reg_temp[3][s] = reg_temp_crit_h[i];
- 		else if (reg_temp_crit[src - 1])
 -- 
-2.43.0
-
-
+With Best Regards,
+Baokun Li
+.
 
