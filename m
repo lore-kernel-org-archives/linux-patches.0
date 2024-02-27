@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18D3140391;
-	Tue, 27 Feb 2024 13:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EE513AA50;
+	Tue, 27 Feb 2024 13:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042349; cv=none; b=eDdql4thc+IAmHy71+Yv6KfvB+YvaBS7OYrxSQICnCCNLsbVYGky0v6yJ88juCdBgWc5/m7hiR4VYc3OigBOnJT0AJwxVvLScVdeNNe+zpBz6bJtTPlVTIVVf6tOAq0D+ZDQHFL9u6D5MLoJSpfqe90o0BDpea33j6kONpLcSy8=
+	t=1709042352; cv=none; b=teDdFcp2OpsS30mV4Bg9t9DKdPnNaTf6lxMgcv6opaTolVLAbKJFkfl8HIYgzXyQDm2ybe+dKgHNNKX2nalPRvFsqjc+EooSFLc3BU8NOk09Kx5Gkes8y99+rAq5lmEITXlTVKnXrtxKuN3r9m1U1jZlZPB5Jl8dpMFylZtlg0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042349; c=relaxed/simple;
-	bh=UoJAD0sEb3xlUCye/bxqDEVNmMIFy4pNrwGRlwaX3r8=;
+	s=arc-20240116; t=1709042352; c=relaxed/simple;
+	bh=K8HXgNJ9RVQPcynis8KbdnPNn39u8hsOuoJVeP6ZJMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plZG31egpXxFtYHFfp0hQTMJLklp9mgLyPfYf6ZlI/mnOacYA7BU5BxcoSKWVGeVOUbY3WpXxj4e1VFQW+Av3jABepuWuFVoMdpuAZRrDEhCVlWbEolqCiEPWjVlUZZmPiEbxtd8xpiTAMT05n4gl8KJtgMbpaqCPgAtA45bPlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0s8sq+5d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ug3W21CTNCXPK2I3dBVyqbgJvhQJrBSQ2qKydUnt8hwDwJ7Pd6LztglrnoODxo6Kjhf8sDD1ZHMl4rS0XCg8sXwksdbpBouyYCG5tfsqNwU3Cdn63z6ve9giBd+tVl0wMebMJMKmtljughGN37U2v0HYn/auFkTywtGRExzARHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBi6mYZi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0s8sq+5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52292C433C7;
-	Tue, 27 Feb 2024 13:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBi6mYZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114D7C433F1;
+	Tue, 27 Feb 2024 13:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042349;
-	bh=UoJAD0sEb3xlUCye/bxqDEVNmMIFy4pNrwGRlwaX3r8=;
+	s=korg; t=1709042352;
+	bh=K8HXgNJ9RVQPcynis8KbdnPNn39u8hsOuoJVeP6ZJMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0s8sq+5d418qa0NkMCKyL0J/YOM5qP2HEUuNwLOnzOMcEmn7XhhPzr+1yEqTQBbRA
-	 Ze2iSHA1b0q8Dtl1qWYps57n7yepfmaX38Kn6dx6WYqYP/SnD9hzUaePtxaVa2RGI/
-	 qllbs+NVn3uLz+W2u3FtihRM/uhcULn5oaTNCe9g=
+	b=WBi6mYZiNGNaDbHblFHIvCpb0kFQDIxTD9WqIK4PvnVNr7SumtMW6Pi6FOAj3gUs4
+	 vrg3fM8fcHMxYtUw0yS8JtCSzEuwTWt+TDY0kcNTXuZrrR83H26avLUMXMNYT2I1tK
+	 a6JvNvdv/OVPr/3qvR/Fau4Qxb51I/dQ3T9iOGY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Elder <elder@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/299] net: ipa: dont overrun IPA suspend interrupt registers
-Date: Tue, 27 Feb 2024 14:26:14 +0100
-Message-ID: <20240227131634.159895367@linuxfoundation.org>
+Subject: [PATCH 6.6 264/299] s390: use the correct count for __iowrite64_copy()
+Date: Tue, 27 Feb 2024 14:26:15 +0100
+Message-ID: <20240227131634.189771997@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,51 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Elder <elder@linaro.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit d80f8e96d47d7374794a30fbed69be43f3388afc ]
+[ Upstream commit 723a2cc8d69d4342b47dfddbfe6c19f1b135f09b ]
 
-In newer hardware, IPA supports more than 32 endpoints.  Some
-registers--such as IPA interrupt registers--represent endpoints
-as bits in a 4-byte register, and such registers are repeated as
-needed to represent endpoints beyond the first 32.
+The signature for __iowrite64_copy() requires the number of 64 bit
+quantities, not bytes. Multiple by 8 to get to a byte length before
+invoking zpci_memcpy_toio()
 
-In ipa_interrupt_suspend_clear_all(), we clear all pending IPA
-suspend interrupts by reading all status register(s) and writing
-corresponding registers to clear interrupt conditions.
-
-Unfortunately the number of registers to read/write is calculated
-incorrectly, and as a result we access *many* more registers than
-intended.  This bug occurs only when the IPA hardware signals a
-SUSPEND interrupt, which happens when a packet is received for an
-endpoint (or its underlying GSI channel) that is suspended.  This
-situation is difficult to reproduce, but possible.
-
-Fix this by correctly computing the number of interrupt registers to
-read and write.  This is the only place in the code where registers
-that map endpoints or channels this way perform this calculation.
-
-Fixes: f298ba785e2d ("net: ipa: add a parameter to suspend registers")
-Signed-off-by: Alex Elder <elder@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 87bc359b9822 ("s390/pci: speed up __iowrite64_copy by using pci store block insn")
+Acked-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/0-v1-9223d11a7662+1d7785-s390_iowrite64_jgg@nvidia.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/ipa_interrupt.c | 2 +-
+ arch/s390/pci/pci.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ipa/ipa_interrupt.c b/drivers/net/ipa/ipa_interrupt.c
-index 4bc05948f772d..a78c692f2d3c5 100644
---- a/drivers/net/ipa/ipa_interrupt.c
-+++ b/drivers/net/ipa/ipa_interrupt.c
-@@ -212,7 +212,7 @@ void ipa_interrupt_suspend_clear_all(struct ipa_interrupt *interrupt)
- 	u32 unit_count;
- 	u32 unit;
+diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
+index d34d5813d0066..777362cb4ea80 100644
+--- a/arch/s390/pci/pci.c
++++ b/arch/s390/pci/pci.c
+@@ -241,7 +241,7 @@ resource_size_t pcibios_align_resource(void *data, const struct resource *res,
+ /* combine single writes by using store-block insn */
+ void __iowrite64_copy(void __iomem *to, const void *from, size_t count)
+ {
+-       zpci_memcpy_toio(to, from, count);
++	zpci_memcpy_toio(to, from, count * 8);
+ }
  
--	unit_count = roundup(ipa->endpoint_count, 32);
-+	unit_count = DIV_ROUND_UP(ipa->endpoint_count, 32);
- 	for (unit = 0; unit < unit_count; unit++) {
- 		const struct reg *reg;
- 		u32 val;
+ void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
 -- 
 2.43.0
 
