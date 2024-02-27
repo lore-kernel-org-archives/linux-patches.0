@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322BC13B2BA;
-	Tue, 27 Feb 2024 14:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0206313A26F;
+	Tue, 27 Feb 2024 14:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042754; cv=none; b=pNmgcRs9Gb4tlxVD0qQy2CH3aszyo/TnVtbWSBzgnvhYbcuM+d0E8168h1UHvlxAghB7PIIs2b3tJt0kzphgexpadqZIN+O6LjFzbAJ/aPpzHrfjGFPqUfTss+dvL4X98APZAE/XmCBmsznhQNNMP5w5LzEPwYTSHoqKBJ3julo=
+	t=1709042757; cv=none; b=FsqqgU/knn3gJGJE5+Mf9VXV5rNJ4FRUJOw+mpu+r73ykGjuiuWaFoUJV/HlhSIpwEfJ3CIxU+IH3+9CHgB7M5o+GQb10DHt1AbFNYN/d8/tGcNgttDIevOXG9vByHHLDY3Q89DZD+fUW8jvi7Z8O4MV6VPUpU63rLh4JERAafk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042754; c=relaxed/simple;
-	bh=y+U2muLKmQITe4dLSnwDdcZViXq/ZE26fVBsc5gKsNw=;
+	s=arc-20240116; t=1709042757; c=relaxed/simple;
+	bh=9Zn55SfMajOpEzQwKuwgP3syqh8ttLGWPk2IfbeyOuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHOwpAXfQvclQWRpRo6jXVETJKB3E9PuZspKI8vQQ6iFPY6BtOblUjrjtynuzTUuHOpXTniXIB+Sr7LlA0jSyX1s2aycJ72dpe42nwuYz1VnfKw0QOZ7mqqFjZ38iB9N1va01mJYpkJcu4HJ0JI14jWSGw1RL/uygGLSU2bAjpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCRWmKZB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPZcfTwp2E+D+mOf5o0BIBZ2wxfaTUjvAUzbZtUXTVsf9qlUjTWPwSHJNPzN9sWPtU6Vx+0iJHH+HCclpDQW4zM96OHNRakJdwwKqDisGwFnKVVAYJ9ZdnR3eIDnWjdAg+hAKx2ULYFswIGRg/UcyN4g4Sl6bhi6Q7Ad5PutxBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzbLcuh9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCRWmKZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4059C433F1;
-	Tue, 27 Feb 2024 14:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzbLcuh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC0BC433C7;
+	Tue, 27 Feb 2024 14:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042754;
-	bh=y+U2muLKmQITe4dLSnwDdcZViXq/ZE26fVBsc5gKsNw=;
+	s=korg; t=1709042756;
+	bh=9Zn55SfMajOpEzQwKuwgP3syqh8ttLGWPk2IfbeyOuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCRWmKZBuYUFYEx5SqyfSNlSfx/jH0cfIWC+XRl7aYZcwd8k9N6C3msNK2PQB1Pyp
-	 piRu64u+/XAiJn03fMFXGZZ98aD5ghlVorsjL499M8AxRwGbjcKNKsy01vqyUoyQ5D
-	 qAGnGLseeyM9/NEXA1nS9aPppagspb7J0h1pskGc=
+	b=hzbLcuh9P/2PqagShLq0ZLYOg9AcLHCmgPhiOvO9RtblxsYX0ruVXKxGI81nxqdfF
+	 u/uwoHjIxfLCUNkxYWAqWbRyAey11D2Uye7IQvyCpBcahKcr3v+bSUOvxPz/IeAO6c
+	 9waON+4xlSVN1g7Njv9AiGgxWPWgpzpZQMPmUFKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Borislav Petkov <bp@suse.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.15 091/245] x86/ftrace: Use alternative RET encoding
-Date: Tue, 27 Feb 2024 14:24:39 +0100
-Message-ID: <20240227131618.183360714@linuxfoundation.org>
+	Andrew Jones <ajones@ventanamicro.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Heiko Stuebner <heiko.stuebner@vrull.eu>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 109/245] RISC-V: fix funct4 definition for c.jalr in parse_asm.h
+Date: Tue, 27 Feb 2024 14:24:57 +0100
+Message-ID: <20240227131618.759302029@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,44 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Heiko Stuebner <heiko.stuebner@vrull.eu>
 
-Upstream commit: 1f001e9da6bbf482311e45e48f53c2bd2179e59c
+[ Upstream commit a3775634f6da23f5511d0282d7e792cf606e5f3b ]
 
-Use the return thunk in ftrace trampolines, if needed.
+The opcode definition for c.jalr is
+    c.jalr c_rs1_n0  1..0=2 15..13=4 12=1 6..2=0
 
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This means funct4 consisting of bit [15:12] is 1001b, so the value is 0x9.
+
+Fixes: edde5584c7ab ("riscv: Add SW single-step support for KDB")
+Reported-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Signed-off-by: Heiko Stuebner <heiko.stuebner@vrull.eu>
+Link: https://lore.kernel.org/r/20221223221332.4127602-2-heiko@sntech.de
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/ftrace.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/riscv/include/asm/parse_asm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/ftrace.c
-+++ b/arch/x86/kernel/ftrace.c
-@@ -311,7 +311,7 @@ union ftrace_op_code_union {
- 	} __attribute__((packed));
- };
+diff --git a/arch/riscv/include/asm/parse_asm.h b/arch/riscv/include/asm/parse_asm.h
+index 3cd00332d70f5..ad254da85e615 100644
+--- a/arch/riscv/include/asm/parse_asm.h
++++ b/arch/riscv/include/asm/parse_asm.h
+@@ -128,7 +128,7 @@
+ #define FUNCT3_C_J		0xa000
+ #define FUNCT3_C_JAL		0x2000
+ #define FUNCT4_C_JR		0x8000
+-#define FUNCT4_C_JALR		0xf000
++#define FUNCT4_C_JALR		0x9000
  
--#define RET_SIZE		1 + IS_ENABLED(CONFIG_SLS)
-+#define RET_SIZE		(IS_ENABLED(CONFIG_RETPOLINE) ? 5 : 1 + IS_ENABLED(CONFIG_SLS))
+ #define FUNCT12_SRET		0x10200000
  
- static unsigned long
- create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
-@@ -367,7 +367,10 @@ create_trampoline(struct ftrace_ops *ops
- 		goto fail;
- 
- 	ip = trampoline + size;
--	memcpy(ip, retq, RET_SIZE);
-+	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
-+		__text_gen_insn(ip, JMP32_INSN_OPCODE, ip, &__x86_return_thunk, JMP32_INSN_SIZE);
-+	else
-+		memcpy(ip, retq, sizeof(retq));
- 
- 	/* No need to test direct calls on created trampolines */
- 	if (ops->flags & FTRACE_OPS_FL_SAVE_REGS) {
+-- 
+2.43.0
+
 
 
