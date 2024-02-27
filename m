@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716A078B61;
-	Tue, 27 Feb 2024 14:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7960E13F016;
+	Tue, 27 Feb 2024 14:12:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043132; cv=none; b=Re+Njk4NqOBpaWwYAEn9fcsTU8Hp+KGgz1Xb698PR0NpuSaJvVyTtnMmI1e2Yf0NGnoM35m7DKZyYjNz98iPu2C3B5umEMGDMVwQIwma1wMp5c21smoEYey93i9AfPuDHxs3cqkDZOpE+7e7Yzcwr9SWTk3bMPYMQ3N5taxfXlY=
+	t=1709043135; cv=none; b=UmtfyJlu7kZ6cjnnbfVXTCsoXYEzfb8SD/D0pxGDME7DS4ZXP6pA+9H3Aj7NixhF+xKX/Oz3bL/puE1NeSbnS0L+TshlARGIDxcWTnU5KRuPxHfCAtS963kdRKn/3CKlZE8n91VZGyQTCnpLJuK8afHhzZBQIigUiF/ApUeU+W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043132; c=relaxed/simple;
-	bh=B6bpFGLrnswU5s/AgxEOq3MrG81x7H+eRft5l8kzN+s=;
+	s=arc-20240116; t=1709043135; c=relaxed/simple;
+	bh=cUEny2sut0BYIuVQhXZ8CJGdaZyyZuGDJkuvjg6nr8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SrGa0ErEw3UoSiyf9FRTVsF2/XDboxqYhA2c3Bq7kBIuzHomYDhWP106sCtvRTruNvQCztNT1wR1wuKJ0NJZPI6PLUDGSzfwDNydGpbQNHvXQV2CyraZ6c9hxbr2z5Ekfs2b9Wnzrp5h1NICsCtZhOcNiQeTxFygdidlEkob19c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aj8OYsYp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqlBulgDqFOyaCRua+MQtNZeQn74Kmj7+UoBQrRCtY53CNINEWQ6d1s5HNPpq57WEA8b50o4yoaGbmNxJe4rGcbTVqpH89aIhqn0MoEFO64OKyu9MpgED+VI6Fc4+pii8ILNxUoVKGvYACbJXRVF1mycjhHuauIYbW0E5ddqM3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swiDE9BL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aj8OYsYp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CE0C433F1;
-	Tue, 27 Feb 2024 14:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swiDE9BL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A918C433F1;
+	Tue, 27 Feb 2024 14:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043132;
-	bh=B6bpFGLrnswU5s/AgxEOq3MrG81x7H+eRft5l8kzN+s=;
+	s=korg; t=1709043134;
+	bh=cUEny2sut0BYIuVQhXZ8CJGdaZyyZuGDJkuvjg6nr8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aj8OYsYpZQS0oduxEaG6wyKn/Rz3jUqNk2hWx6TuqdLd5aIEaKPPpE7UhXGhICHcZ
-	 T1GyqiBaDrYKO5G1Gm647H+lzfR6dai69hLn+wrsuXN/dWAkbj66WMX4lt2okW6UdI
-	 WNf6y+cLqAHV3N+r1goaeDio76MihbfkTph36d4M=
+	b=swiDE9BL2UEXimFHRiBL5baye8Z4H5rZ06DLIfpn/VEQdlv9ggptAOEkULaTMxsB/
+	 7zm/al+N3+D5WC4QE5LQuIhPCgSAyBpCEQYPtIhSNnaxAmB0s0XpreFHyUAiZwWSXO
+	 XbIiBnCdrXSHnnO53EnooJOogGvtjpW35DSJB0Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Hannes Reinecke <hare@suse.de>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 218/245] ata: libahci_platform: Introduce reset assertion/deassertion methods
-Date: Tue, 27 Feb 2024 14:26:46 +0100
-Message-ID: <20240227131622.286788468@linuxfoundation.org>
+Subject: [PATCH 5.15 219/245] ata: ahci_ceva: fix error handling for Xilinx GT PHY support
+Date: Tue, 27 Feb 2024 14:26:47 +0100
+Message-ID: <20240227131622.317872337@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,179 +52,243 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit f67f12ff57bcfcd7d64280f748787793217faeaf ]
+[ Upstream commit 26c8404e162b43dddcb037ba2d0cb58c0ed60aab ]
 
-Currently the ACHI-platform library supports only the assert and deassert
-reset signals and ignores the platforms with self-deasserting reset lines.
-That prone to having the platforms with self-deasserting reset method
-misbehaviour when it comes to resuming from sleep state after the clocks
-have been fully disabled. For such cases the controller needs to be fully
-reset all over after the reference clocks are enabled and stable,
-otherwise the controller state machine might be in an undetermined state.
+Platform clock and phy error resources are not cleaned up in Xilinx GT PHY
+error path.
 
-The best solution would be to auto-detect which reset method is supported
-by the particular platform and use it implicitly in the framework of the
-ahci_platform_enable_resources()/ahci_platform_disable_resources()
-methods. Alas it can't be implemented due to the AHCI-platform library
-already supporting the shared reset control lines. As [1] says in such
-case we have to use only one of the next methods:
-+ reset_control_assert()/reset_control_deassert();
-+ reset_control_reset()/reset_control_rearm().
-If the driver had an exclusive control over the reset lines we could have
-been able to manipulate the lines with no much limitation and just used
-the combination of the methods above to cover all the possible
-reset-control cases. Since the shared reset control has already been
-advertised and couldn't be changed with no risk to breaking the platforms
-relying on it, we have no choice but to make the platform drivers to
-determine which reset methods the platform reset system supports.
+To fix introduce the function ceva_ahci_platform_enable_resources() which
+is a customized version of ahci_platform_enable_resources() and inline with
+SATA IP programming sequence it does:
 
-In order to implement both types of reset control support we suggest to
-introduce the new AHCI-platform flag: AHCI_PLATFORM_RST_TRIGGER, which
-when passed to the ahci_platform_get_resources() method together with the
-AHCI_PLATFORM_GET_RESETS flag will indicate that the reset lines are
-self-deasserting thus the reset_control_reset()/reset_control_rearm() will
-be used to control the reset state. Otherwise the
-reset_control_deassert()/reset_control_assert() methods will be utilized.
+- Assert SATA reset
+- Program PS GTR phy
+- Bring SATA by de-asserting the reset
+- Wait for GT lane PLL to be locked
 
-[1] Documentation/driver-api/reset.rst
+ceva_ahci_platform_enable_resources() is also used in the resume path
+as the same SATA programming sequence (as in probe) should be followed.
+Also cleanup the mixed usage of ahci_platform_enable_resources() and custom
+implementation in the probe function as both are not required.
 
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Stable-dep-of: 26c8404e162b ("ata: ahci_ceva: fix error handling for Xilinx GT PHY support")
+Fixes: 9a9d3abe24bb ("ata: ahci: ceva: Update the driver to support xilinx GT phy")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.h             |  1 +
- drivers/ata/libahci_platform.c | 50 ++++++++++++++++++++++++++++++----
- include/linux/ahci_platform.h  |  5 +++-
- 3 files changed, 50 insertions(+), 6 deletions(-)
+ drivers/ata/ahci_ceva.c | 125 +++++++++++++++++++++++++---------------
+ 1 file changed, 79 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/ata/ahci.h b/drivers/ata/ahci.h
-index 54e79f966444c..b4c59fe2db60a 100644
---- a/drivers/ata/ahci.h
-+++ b/drivers/ata/ahci.h
-@@ -344,6 +344,7 @@ struct ahci_host_priv {
- 	bool			got_runtime_pm; /* Did we do pm_runtime_get? */
- 	unsigned int		n_clks;
- 	struct clk_bulk_data	*clks;		/* Optional */
-+	unsigned int		f_rsts;
- 	struct reset_control	*rsts;		/* Optional */
- 	struct regulator	**target_pwrs;	/* Optional */
- 	struct regulator	*ahci_regulator;/* Optional */
-diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
-index 6ae1d8b870a2d..43380d1a410e2 100644
---- a/drivers/ata/libahci_platform.c
-+++ b/drivers/ata/libahci_platform.c
-@@ -122,6 +122,44 @@ void ahci_platform_disable_clks(struct ahci_host_priv *hpriv)
- }
- EXPORT_SYMBOL_GPL(ahci_platform_disable_clks);
+diff --git a/drivers/ata/ahci_ceva.c b/drivers/ata/ahci_ceva.c
+index 50b56cd0039d2..3a32710820046 100644
+--- a/drivers/ata/ahci_ceva.c
++++ b/drivers/ata/ahci_ceva.c
+@@ -88,7 +88,6 @@ struct ceva_ahci_priv {
+ 	u32 axicc;
+ 	bool is_cci_enabled;
+ 	int flags;
+-	struct reset_control *rst;
+ };
  
-+/**
-+ * ahci_platform_deassert_rsts - Deassert/trigger platform resets
-+ * @hpriv: host private area to store config values
-+ *
-+ * This function deasserts or triggers all the reset lines found for
-+ * the AHCI device.
-+ *
-+ * RETURNS:
-+ * 0 on success otherwise a negative error code
-+ */
-+int ahci_platform_deassert_rsts(struct ahci_host_priv *hpriv)
+ static unsigned int ceva_ahci_read_id(struct ata_device *dev,
+@@ -189,6 +188,60 @@ static struct scsi_host_template ahci_platform_sht = {
+ 	AHCI_SHT(DRV_NAME),
+ };
+ 
++static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
 +{
-+	if (hpriv->f_rsts & AHCI_PLATFORM_RST_TRIGGER)
-+		return reset_control_reset(hpriv->rsts);
++	int rc, i;
 +
-+	return reset_control_deassert(hpriv->rsts);
-+}
-+EXPORT_SYMBOL_GPL(ahci_platform_deassert_rsts);
++	rc = ahci_platform_enable_regulators(hpriv);
++	if (rc)
++		return rc;
 +
-+/**
-+ * ahci_platform_assert_rsts - Assert/rearm platform resets
-+ * @hpriv: host private area to store config values
-+ *
-+ * This function asserts or rearms (for self-deasserting resets) all
-+ * the reset controls found for the AHCI device.
-+ *
-+ * RETURNS:
-+ * 0 on success otherwise a negative error code
-+ */
-+int ahci_platform_assert_rsts(struct ahci_host_priv *hpriv)
-+{
-+	if (hpriv->f_rsts & AHCI_PLATFORM_RST_TRIGGER)
-+		return reset_control_rearm(hpriv->rsts);
++	rc = ahci_platform_enable_clks(hpriv);
++	if (rc)
++		goto disable_regulator;
 +
-+	return reset_control_assert(hpriv->rsts);
-+}
-+EXPORT_SYMBOL_GPL(ahci_platform_assert_rsts);
++	/* Assert the controller reset */
++	rc = ahci_platform_assert_rsts(hpriv);
++	if (rc)
++		goto disable_clks;
 +
- /**
-  * ahci_platform_enable_regulators - Enable regulators
-  * @hpriv: host private area to store config values
-@@ -219,18 +257,18 @@ int ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
- 	if (rc)
- 		goto disable_regulator;
- 
--	rc = reset_control_deassert(hpriv->rsts);
-+	rc = ahci_platform_deassert_rsts(hpriv);
- 	if (rc)
- 		goto disable_clks;
- 
- 	rc = ahci_platform_enable_phys(hpriv);
- 	if (rc)
--		goto disable_resets;
-+		goto disable_rsts;
- 
- 	return 0;
- 
--disable_resets:
--	reset_control_assert(hpriv->rsts);
++	for (i = 0; i < hpriv->nports; i++) {
++		rc = phy_init(hpriv->phys[i]);
++		if (rc)
++			goto disable_rsts;
++	}
++
++	/* De-assert the controller reset */
++	ahci_platform_deassert_rsts(hpriv);
++
++	for (i = 0; i < hpriv->nports; i++) {
++		rc = phy_power_on(hpriv->phys[i]);
++		if (rc) {
++			phy_exit(hpriv->phys[i]);
++			goto disable_phys;
++		}
++	}
++
++	return 0;
++
 +disable_rsts:
-+	ahci_platform_assert_rsts(hpriv);
- 
- disable_clks:
- 	ahci_platform_disable_clks(hpriv);
-@@ -257,7 +295,7 @@ void ahci_platform_disable_resources(struct ahci_host_priv *hpriv)
- {
- 	ahci_platform_disable_phys(hpriv);
- 
--	reset_control_assert(hpriv->rsts);
-+	ahci_platform_assert_rsts(hpriv);
- 
- 	ahci_platform_disable_clks(hpriv);
- 
-@@ -442,6 +480,8 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
- 			rc = PTR_ERR(hpriv->rsts);
- 			goto err_out;
- 		}
++	ahci_platform_deassert_rsts(hpriv);
 +
-+		hpriv->f_rsts = flags & AHCI_PLATFORM_RST_TRIGGER;
++disable_phys:
++	while (--i >= 0) {
++		phy_power_off(hpriv->phys[i]);
++		phy_exit(hpriv->phys[i]);
++	}
++
++disable_clks:
++	ahci_platform_disable_clks(hpriv);
++
++disable_regulator:
++	ahci_platform_disable_regulators(hpriv);
++
++	return rc;
++}
++
+ static int ceva_ahci_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+@@ -203,47 +256,19 @@ static int ceva_ahci_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	cevapriv->ahci_pdev = pdev;
+-
+-	cevapriv->rst = devm_reset_control_get_optional_exclusive(&pdev->dev,
+-								  NULL);
+-	if (IS_ERR(cevapriv->rst))
+-		dev_err_probe(&pdev->dev, PTR_ERR(cevapriv->rst),
+-			      "failed to get reset\n");
+-
+ 	hpriv = ahci_platform_get_resources(pdev, 0);
+ 	if (IS_ERR(hpriv))
+ 		return PTR_ERR(hpriv);
+ 
+-	if (!cevapriv->rst) {
+-		rc = ahci_platform_enable_resources(hpriv);
+-		if (rc)
+-			return rc;
+-	} else {
+-		int i;
++	hpriv->rsts = devm_reset_control_get_optional_exclusive(&pdev->dev,
++								NULL);
++	if (IS_ERR(hpriv->rsts))
++		return dev_err_probe(&pdev->dev, PTR_ERR(hpriv->rsts),
++				     "failed to get reset\n");
+ 
+-		rc = ahci_platform_enable_clks(hpriv);
+-		if (rc)
+-			return rc;
+-		/* Assert the controller reset */
+-		reset_control_assert(cevapriv->rst);
+-
+-		for (i = 0; i < hpriv->nports; i++) {
+-			rc = phy_init(hpriv->phys[i]);
+-			if (rc)
+-				return rc;
+-		}
+-
+-		/* De-assert the controller reset */
+-		reset_control_deassert(cevapriv->rst);
+-
+-		for (i = 0; i < hpriv->nports; i++) {
+-			rc = phy_power_on(hpriv->phys[i]);
+-			if (rc) {
+-				phy_exit(hpriv->phys[i]);
+-				return rc;
+-			}
+-		}
+-	}
++	rc = ceva_ahci_platform_enable_resources(hpriv);
++	if (rc)
++		return rc;
+ 
+ 	if (of_property_read_bool(np, "ceva,broken-gen2"))
+ 		cevapriv->flags = CEVA_FLAG_BROKEN_GEN2;
+@@ -252,52 +277,60 @@ static int ceva_ahci_probe(struct platform_device *pdev)
+ 	if (of_property_read_u8_array(np, "ceva,p0-cominit-params",
+ 					(u8 *)&cevapriv->pp2c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-cominit-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-cominit-params",
+ 					(u8 *)&cevapriv->pp2c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-cominit-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read OOB timing value for COMWAKE from device-tree*/
+ 	if (of_property_read_u8_array(np, "ceva,p0-comwake-params",
+ 					(u8 *)&cevapriv->pp3c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-comwake-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-comwake-params",
+ 					(u8 *)&cevapriv->pp3c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-comwake-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read phy BURST timing value from device-tree */
+ 	if (of_property_read_u8_array(np, "ceva,p0-burst-params",
+ 					(u8 *)&cevapriv->pp4c[0], 4) < 0) {
+ 		dev_warn(dev, "ceva,p0-burst-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u8_array(np, "ceva,p1-burst-params",
+ 					(u8 *)&cevapriv->pp4c[1], 4) < 0) {
+ 		dev_warn(dev, "ceva,p1-burst-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	/* Read phy RETRY interval timing value from device-tree */
+ 	if (of_property_read_u16_array(np, "ceva,p0-retry-params",
+ 					(u16 *)&cevapriv->pp5c[0], 2) < 0) {
+ 		dev_warn(dev, "ceva,p0-retry-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
+ 	}
+ 
+ 	if (of_property_read_u16_array(np, "ceva,p1-retry-params",
+ 					(u16 *)&cevapriv->pp5c[1], 2) < 0) {
+ 		dev_warn(dev, "ceva,p1-retry-params property not defined\n");
+-		return -EINVAL;
++		rc = -EINVAL;
++		goto disable_resources;
  	}
  
  	/*
-diff --git a/include/linux/ahci_platform.h b/include/linux/ahci_platform.h
-index 49e5383d42222..6d7dd472d3703 100644
---- a/include/linux/ahci_platform.h
-+++ b/include/linux/ahci_platform.h
-@@ -23,6 +23,8 @@ int ahci_platform_enable_phys(struct ahci_host_priv *hpriv);
- void ahci_platform_disable_phys(struct ahci_host_priv *hpriv);
- int ahci_platform_enable_clks(struct ahci_host_priv *hpriv);
- void ahci_platform_disable_clks(struct ahci_host_priv *hpriv);
-+int ahci_platform_deassert_rsts(struct ahci_host_priv *hpriv);
-+int ahci_platform_assert_rsts(struct ahci_host_priv *hpriv);
- int ahci_platform_enable_regulators(struct ahci_host_priv *hpriv);
- void ahci_platform_disable_regulators(struct ahci_host_priv *hpriv);
- int ahci_platform_enable_resources(struct ahci_host_priv *hpriv);
-@@ -41,6 +43,7 @@ int ahci_platform_resume_host(struct device *dev);
- int ahci_platform_suspend(struct device *dev);
- int ahci_platform_resume(struct device *dev);
+@@ -335,7 +368,7 @@ static int __maybe_unused ceva_ahci_resume(struct device *dev)
+ 	struct ahci_host_priv *hpriv = host->private_data;
+ 	int rc;
  
--#define AHCI_PLATFORM_GET_RESETS	0x01
-+#define AHCI_PLATFORM_GET_RESETS	BIT(0)
-+#define AHCI_PLATFORM_RST_TRIGGER	BIT(1)
+-	rc = ahci_platform_enable_resources(hpriv);
++	rc = ceva_ahci_platform_enable_resources(hpriv);
+ 	if (rc)
+ 		return rc;
  
- #endif /* _AHCI_PLATFORM_H */
 -- 
 2.43.0
 
