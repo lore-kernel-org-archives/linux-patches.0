@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A749E13B29B;
-	Tue, 27 Feb 2024 13:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A0713B7AA;
+	Tue, 27 Feb 2024 13:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041629; cv=none; b=NkYd/H6/730mhd335TZZ3Nqtgjq5vsvvIFeQhPuTT+toA2E5MazK/bMfwhaYFgLDf6YB26i8/m5GMZdfxlQVQHyagR1RlB0Je5lWzPiZptncQyKdbKewEI1L8XN5n9U1GUyAUA/frEY28bTVKxjdIXhNfG8f+8hsnnnc7D3Bnvw=
+	t=1709041632; cv=none; b=mqkIq3lbxLFHlDnWxmjKoJESi3wzS5VcgNXROf52IzUwoZwjUtMr0AzWuMO3ZcEEHRTCFUPvOCE3b93ZYd5D/TwWi+e8PL6W0F8C3iVP8oK3htGXLcxsIAY2VX2sCfXCWtGJlrNfNUBS9bDCYW8dtie41OU5FjGezcKUDk9q0Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041629; c=relaxed/simple;
-	bh=jMJG2Wyx08WMwLyUfwYyAdm6slkfCugnt1930pWZB4Q=;
+	s=arc-20240116; t=1709041632; c=relaxed/simple;
+	bh=gW0csiF4zA4XL2YlDEkKcaf87DOU8Vi/dZ6RJbykdd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oI0lg8oLpcfcEV/Ay/Jx/KkuRfU8Zn/49CveJbQgmloHK6MMB/hL6qkhE5D4guU0bUoBHw/C2aM4JaVeLBAoJgArQzvETIoNHpe+RwEZwOLTIeqEFJNnRuzERD8UVh3jdihVQQr67Rp155cUF4F00nK93sTM/EEo6RJi4Tfgr2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAiGKqxm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FqiQ/Ki6IXVgtMHpEvxh08MaOZSMCIB/B0FdRhgMA+zlKwj2B7s19JiU5p76aiwLY3eoWDd8KEUfUmaY6oMErzajoGqp2LujWsVu0hsNM1oM3bPJwEPtQ0ZWGHuAsOJwE0rpKymt/Huw/Cv6FHycTEJ/iz+B2njK5iJ6SGKISOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZN+pvkwf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAiGKqxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33091C43390;
-	Tue, 27 Feb 2024 13:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZN+pvkwf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F5BC433C7;
+	Tue, 27 Feb 2024 13:47:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041629;
-	bh=jMJG2Wyx08WMwLyUfwYyAdm6slkfCugnt1930pWZB4Q=;
+	s=korg; t=1709041632;
+	bh=gW0csiF4zA4XL2YlDEkKcaf87DOU8Vi/dZ6RJbykdd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAiGKqxmL8YIiEEwcybn1HU/d5Lr63H1lVJxBs3Dvn3YSyHKQrYXiwh0YztRdFPAI
-	 sHuz7QQc3/jZi0n0/9uwwI/6UL1b/Gz+ElpdpCXseCRQHVdQch0KlhVozUgoEgEkZS
-	 EPoT/wkmNCnbOqlD1SDaCK8ainMDjipJhUF91RnA=
+	b=ZN+pvkwfg8lv4/3tvhCxIyLVrgZysPryZJKuIavziks38arW7xPYdQHBp0+jV+h6H
+	 wNphzZGXjYc6mP56x/6QezXDU74lCsrnhTKBU6G1O827S4p7mtY13JmYN9DZjdvFBz
+	 Cj5if6lXT8y/72SYVBK2qwSJZVxJ66j+D2fo2oQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Fullway Wang <fullwaywang@outlook.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/299] fbdev: savage: Error out if pixclock equals zero
-Date: Tue, 27 Feb 2024 14:22:07 +0100
-Message-ID: <20240227131626.356677669@linuxfoundation.org>
+Subject: [PATCH 6.6 017/299] fbdev: sis: Error out if pixclock equals zero
+Date: Tue, 27 Feb 2024 14:22:08 +0100
+Message-ID: <20240227131626.387373062@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,16 +53,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Fullway Wang <fullwaywang@outlook.com>
 
-[ Upstream commit 04e5eac8f3ab2ff52fa191c187a46d4fdbc1e288 ]
+[ Upstream commit e421946be7d9bf545147bea8419ef8239cb7ca52 ]
 
 The userspace program could pass any values to the driver through
 ioctl() interface. If the driver doesn't check the value of pixclock,
 it may cause divide-by-zero error.
 
-Although pixclock is checked in savagefb_decode_var(), but it is not
-checked properly in savagefb_probe(). Fix this by checking whether
-pixclock is zero in the function savagefb_check_var() before
-info->var.pixclock is used as the divisor.
+In sisfb_check_var(), var->pixclock is used as a divisor to caculate
+drate before it is checked against zero. Fix this by checking it
+at the beginning.
 
 This is similar to CVE-2022-3061 in i740fb which was fixed by
 commit 15cf0b8.
@@ -71,23 +70,22 @@ Signed-off-by: Fullway Wang <fullwaywang@outlook.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/savage/savagefb_driver.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/fbdev/sis/sis_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/video/fbdev/savage/savagefb_driver.c b/drivers/video/fbdev/savage/savagefb_driver.c
-index b5f84bd4804b8..4ba5cd55e5a52 100644
---- a/drivers/video/fbdev/savage/savagefb_driver.c
-+++ b/drivers/video/fbdev/savage/savagefb_driver.c
-@@ -869,6 +869,9 @@ static int savagefb_check_var(struct fb_var_screeninfo   *var,
+diff --git a/drivers/video/fbdev/sis/sis_main.c b/drivers/video/fbdev/sis/sis_main.c
+index 0f5374f6ef055..6d524a65af181 100644
+--- a/drivers/video/fbdev/sis/sis_main.c
++++ b/drivers/video/fbdev/sis/sis_main.c
+@@ -1475,6 +1475,8 @@ sisfb_check_var(struct fb_var_screeninfo *var, struct fb_info *info)
  
- 	DBG("savagefb_check_var");
+ 	vtotal = var->upper_margin + var->lower_margin + var->vsync_len;
  
 +	if (!var->pixclock)
 +		return -EINVAL;
-+
- 	var->transp.offset = 0;
- 	var->transp.length = 0;
- 	switch (var->bits_per_pixel) {
+ 	pixclock = var->pixclock;
+ 
+ 	if((var->vmode & FB_VMODE_MASK) == FB_VMODE_NONINTERLACED) {
 -- 
 2.43.0
 
