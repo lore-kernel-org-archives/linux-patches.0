@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9AE16423;
-	Tue, 27 Feb 2024 14:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EAC416423;
+	Tue, 27 Feb 2024 14:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042671; cv=none; b=E9MEEAervQp2HPcuwXLxJNiQUUuTj8KaJ9tQY9iWlj2mqlsY9GfVjziN+VGIPAErcsu/d3cZ8tAZkRUfqtQUXN5zU+rMYQbIYW2QuG9xrbME4fYfAxEOv3qppWRpR+tGODSR9NW3asuZPLSVVLpvb/GwuAgJuvEb7D7P1Ccw9K0=
+	t=1709042674; cv=none; b=ueOFXsHKWM4Xal9XqkcidVv8ZeVYEpGQJKhZ+3LFGtRMiP6Xs4RKibA/ruun57BzvwxaPYLg5HdZZ8j+fMzeSRUp81f/yuiZnrxjiV+zCutq7Eikt3jauHyF5pbIvr86H1Nv20FkOVwoeTJs+bj/aApD0KB1cZ5Y6A7EkCVm3Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042671; c=relaxed/simple;
-	bh=vjdClqs5D1fW2Tl3xotsMuKGCjf0ckS64rJuqMpLICM=;
+	s=arc-20240116; t=1709042674; c=relaxed/simple;
+	bh=o6KKztbgE0KtpCMsfUVSFSQev3r/x6mbldEgcC5CAXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LplTJZ5m2Soyv/frQIZxN0wGUu3aqq4mElbN2nYW8G8QgFRsrDblcjMGBTu29aoTAn74A5sR1R0h1MmDKS9nPO5pD9zXtuVKEAIw9Pr+Vf5XmmSL76XP4ruiq80E+stCUoefvtnc2/FF6S897XMx7G+gdr5iHn6j1y8ZbRJdwSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=is6QQbv2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CvrPQfNU+v77+pt5M2L1oebc0IL3ocYyTrFhV0LqNzajUXQMXqJGNIg59iIdOKfjqMWsoNVSwhwLYmaSlmUOAoQDBsWrB6SYRB1RU7Md47H3Al+GPHi3QWiQIym3Q1LKHdK0jxNLlWFS22L02QIDmVYDwbzgu+eipam/CJ5PrCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8fVUSuX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="is6QQbv2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB84C433F1;
-	Tue, 27 Feb 2024 14:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8fVUSuX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1ECC433F1;
+	Tue, 27 Feb 2024 14:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042671;
-	bh=vjdClqs5D1fW2Tl3xotsMuKGCjf0ckS64rJuqMpLICM=;
+	s=korg; t=1709042674;
+	bh=o6KKztbgE0KtpCMsfUVSFSQev3r/x6mbldEgcC5CAXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=is6QQbv2bWwgxc83XVQbgYn2PM6mYOuoZouJpOEqZPVwMlsW09m+UnQXciK+ls8RQ
-	 jMejGEGrOUHejDuP03uYXc2vvgeO7pvsZmexRekLzxQHjXmtJ/HYHbrQ/PAmiHit/W
-	 Mykx/EB++zV7bldB0zhJxWgeupkq+p+DRBFEVQ/M=
+	b=c8fVUSuX4XdFaw1zsynZ5OCZ0FMYPtlDSwLSLAr03bqU0tsaqSrOfdgQRGt939H5d
+	 3iVd//0A2ATjj2MmZT7LMtlTFFr1+LGUFFx/2PTJJm1J+7pomK2hvaC5uNBtdJxkYe
+	 OBx9krzSn3XnCBNp4Ym69tZA3GLtfFeSctmdttGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Huang Rui <ray.huang@amd.com>,
-	dri-devel@lists.freedesktop.org,
-	Matthew Auld <matthew.auld@intel.com>
-Subject: [PATCH 5.15 078/245] drm/ttm: Fix an invalid freeing on already freed page in error path
-Date: Tue, 27 Feb 2024 14:24:26 +0100
-Message-ID: <20240227131617.776837919@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.15 079/245] dm-crypt: dont modify the data when using authenticated encryption
+Date: Tue, 27 Feb 2024 14:24:27 +0100
+Message-ID: <20240227131617.808681202@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -48,53 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 40510a941d27d405a82dc3320823d875f94625df upstream.
+commit 50c70240097ce41fe6bce6478b80478281e4d0f7 upstream.
 
-If caching mode change fails due to, for example, OOM we
-free the allocated pages in a two-step process. First the pages
-for which the caching change has already succeeded. Secondly
-the pages for which a caching change did not succeed.
+It was said that authenticated encryption could produce invalid tag when
+the data that is being encrypted is modified [1]. So, fix this problem by
+copying the data into the clone bio first and then encrypt them inside the
+clone bio.
 
-However the second step was incorrectly freeing the pages already
-freed in the first step.
+This may reduce performance, but it is needed to prevent the user from
+corrupting the device by writing data with O_DIRECT and modifying them at
+the same time.
 
-Fix.
+[1] https://lore.kernel.org/all/20240207004723.GA35324@sol.localdomain/T/
 
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Fixes: 379989e7cbdc ("drm/ttm/pool: Fix ttm_pool_alloc error path")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.4+
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240221073324.3303-1-thomas.hellstrom@linux.intel.com
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-crypt.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -384,7 +384,7 @@ static void ttm_pool_free_range(struct t
- 				enum ttm_caching caching,
- 				pgoff_t start_page, pgoff_t end_page)
- {
--	struct page **pages = tt->pages;
-+	struct page **pages = &tt->pages[start_page];
- 	unsigned int order;
- 	pgoff_t i, nr;
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -2065,6 +2065,12 @@ static void kcryptd_crypt_write_convert(
+ 	io->ctx.bio_out = clone;
+ 	io->ctx.iter_out = clone->bi_iter;
  
++	if (crypt_integrity_aead(cc)) {
++		bio_copy_data(clone, io->base_bio);
++		io->ctx.bio_in = clone;
++		io->ctx.iter_in = clone->bi_iter;
++	}
++
+ 	sector += bio_sectors(clone);
+ 
+ 	crypt_inc_pending(io);
 
 
