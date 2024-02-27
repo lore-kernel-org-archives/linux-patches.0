@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6309413B2B4;
-	Tue, 27 Feb 2024 14:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3198113B2B4;
+	Tue, 27 Feb 2024 14:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043846; cv=none; b=jz0ZzmHbqAl6xyT2aNXrPubqd/Z6C7e6PzXTKxfbVO/OMhUfIBtjlwCTEj7FpODdi9qaREXijKn9fcqCvcUJOY0r8J9j1znMOItk22x1VyZ3EksqGoKP6PxR1/BGg7QwdxbRVkX149frlxhgIL6gJbV3+G4jVYA6jmHX4jeLvqI=
+	t=1709043849; cv=none; b=jYvbkpXj1hucwKZKF0LK3/uWZ/0fIWFR7RiOZcUAS6etN5NWfLjXyAa4QAQhoamPPqhvFUxN1kJ9WYTvlc60oyloPVa9taYwR+XY+ycgLwVpUT0NojfRjkpyui7UG1mLFZ8MmntckLZFYeDu8MPFwdzuzhwhFJz52NfW/qQjhIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043846; c=relaxed/simple;
-	bh=Gbxa2yJmpQc241Wck8c/OdIGNq6rl5WUasbbwE4Xb8s=;
+	s=arc-20240116; t=1709043849; c=relaxed/simple;
+	bh=fy++m6i8iTnIgYoP6VHAr6MRMWI0z1X8OnRIO2ftZZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pe46SNgJNko8opZoI+su5K32RpbB+r/z11QdMdu6L712gqHH+Rrt8Q6ODp4pqAaCAdiNjAZ0jyjLIXrhlY1RGMVdQz33UZRMKpNjR6MPgOKewdhPNCPo06AwViGaKYMMb9eDkg74dpMk9OCRQvQwNUnQxzNT1PSZf6/NxVIx/3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwm6vdw7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gipBeZzkK6GKvayuriGcEy/bYGsf9xTViBW+pjNN4Dmi5/evcungKFejmPApBu9dSfcQCkrk3v0woisto7C0Tgl5+8BrLLLDy+BoDhCgzrRqRupVSubcDQRaiL1ygHORv710+eaveXapDr9oLBk/qqbEocRNCSMGhVKoK8QH7Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfbuY4/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwm6vdw7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F0FC433F1;
-	Tue, 27 Feb 2024 14:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfbuY4/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4415C433C7;
+	Tue, 27 Feb 2024 14:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043846;
-	bh=Gbxa2yJmpQc241Wck8c/OdIGNq6rl5WUasbbwE4Xb8s=;
+	s=korg; t=1709043849;
+	bh=fy++m6i8iTnIgYoP6VHAr6MRMWI0z1X8OnRIO2ftZZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwm6vdw7X+unWAJVI6N+svjDCs1476sWCCIORw0lsYVXC3lNqCks9hq2AYyr/yzjm
-	 lc8629h1lyU1THnasjaI1iXmLiR1wb2rwfHxnjfbfqYfI6foX0R2G6f0PxMHiuk7Vb
-	 QCwELruukEl8l2AQhMOUpBM883VBgWAxYaCaGPtQ=
+	b=CfbuY4/yoo/Hij6J4Z6pEocXyl1uNnQOQvimoQEqRypEFVILZocmie8PTnJ0pA85h
+	 6BchQScrg/LUL7F2pubmDSEHbIEYFh8q7o2z7yx6ddol4IQMFsK9yhm4lm1M6VrXPb
+	 sP52ysaR26dfcHRNZrn7NFye6lndHFOmduzo3zwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Nikita Shubin <nikita.shubin@maquefel.me>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.4 58/84] ARM: ep93xx: Add terminator to gpiod_lookup_table
-Date: Tue, 27 Feb 2024 14:27:25 +0100
-Message-ID: <20240227131554.759821590@linuxfoundation.org>
+	Nikolay Aleksandrov <nikolay@cumulusnetworks.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 41/84] net: bridge: clear bridges private skb space on xmit
+Date: Tue, 27 Feb 2024 14:27:08 +0100
+Message-ID: <20240227131554.210832776@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -53,37 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Shubin <nikita.shubin@maquefel.me>
+From: Nikolay Aleksandrov <nikolay@cumulusnetworks.com>
 
-commit fdf87a0dc26d0550c60edc911cda42f9afec3557 upstream.
+[ Upstream commit fd65e5a95d08389444e8591a20538b3edece0e15 ]
 
-Without the terminator, if a con_id is passed to gpio_find() that
-does not exist in the lookup table the function will not stop looping
-correctly, and eventually cause an oops.
+We need to clear all of the bridge private skb variables as they can be
+stale due to the packet being recirculated through the stack and then
+transmitted through the bridge device. Similar memset is already done on
+bridge's input. We've seen cases where proxyarp_replied was 1 on routed
+multicast packets transmitted through the bridge to ports with neigh
+suppress which were getting dropped. Same thing can in theory happen with
+the port isolation bit as well.
 
-Cc: stable@vger.kernel.org
-Fixes: b2e63555592f ("i2c: gpio: Convert to use descriptors")
-Reported-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Nikita Shubin <nikita.shubin@maquefel.me>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://lore.kernel.org/r/20240205102337.439002-1-alexander.sverdlin@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 821f1b21cabb ("bridge: add new BR_NEIGH_SUPPRESS port flag to suppress arp and nd flood")
+Signed-off-by: Nikolay Aleksandrov <nikolay@cumulusnetworks.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-ep93xx/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bridge/br_device.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm/mach-ep93xx/core.c
-+++ b/arch/arm/mach-ep93xx/core.c
-@@ -337,6 +337,7 @@ static struct gpiod_lookup_table ep93xx_
- 				GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN),
- 		GPIO_LOOKUP_IDX("G", 0, NULL, 1,
- 				GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN),
-+		{ }
- 	},
- };
+diff --git a/net/bridge/br_device.c b/net/bridge/br_device.c
+index f085b1648e66c..501f77f0f480a 100644
+--- a/net/bridge/br_device.c
++++ b/net/bridge/br_device.c
+@@ -35,6 +35,8 @@ netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	const unsigned char *dest;
+ 	u16 vid = 0;
  
++	memset(skb->cb, 0, sizeof(struct br_input_skb_cb));
++
+ 	rcu_read_lock();
+ 	nf_ops = rcu_dereference(nf_br_ops);
+ 	if (nf_ops && nf_ops->br_dev_xmit_hook(skb)) {
+-- 
+2.43.0
+
 
 
