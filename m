@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EAC416423;
-	Tue, 27 Feb 2024 14:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAC216423;
+	Tue, 27 Feb 2024 14:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042674; cv=none; b=ueOFXsHKWM4Xal9XqkcidVv8ZeVYEpGQJKhZ+3LFGtRMiP6Xs4RKibA/ruun57BzvwxaPYLg5HdZZ8j+fMzeSRUp81f/yuiZnrxjiV+zCutq7Eikt3jauHyF5pbIvr86H1Nv20FkOVwoeTJs+bj/aApD0KB1cZ5Y6A7EkCVm3Dg=
+	t=1709042677; cv=none; b=ZMpwzD6Qm+vIRE23E8VzVJYmlBcpf0IRvCFzovWQk73X1aFRq+yzAvjGsOkljlfviuW8ctGWxwBHFk1l1dwxKDXIyHTi8/iogjJOYeV7sZC3R3VX7w174K2LBGyMAz3b9qvcHe5+sA9eaa355UI2eo2R7/QT+NpSwL2V+BILq6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042674; c=relaxed/simple;
-	bh=o6KKztbgE0KtpCMsfUVSFSQev3r/x6mbldEgcC5CAXY=;
+	s=arc-20240116; t=1709042677; c=relaxed/simple;
+	bh=5uC5ZH4koqk12EyOBPODbdBqWLjB3ywjJSMBu3ObZ3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvrPQfNU+v77+pt5M2L1oebc0IL3ocYyTrFhV0LqNzajUXQMXqJGNIg59iIdOKfjqMWsoNVSwhwLYmaSlmUOAoQDBsWrB6SYRB1RU7Md47H3Al+GPHi3QWiQIym3Q1LKHdK0jxNLlWFS22L02QIDmVYDwbzgu+eipam/CJ5PrCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8fVUSuX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuoannOJsRaTYllFvzDTEdAu4sDXVW2u0SML08rMVOXLnWvugv/KbXtLfhc1PWEwStNMXVrk453sxuyWRSTJNEtq9DmaGzSlcjhQmM7Ox68dSP+pIuG+Veq7OYeBC129ZASa2h/FY41940zmMZfZpz+wSgmCokEl0ZBzxe3U0v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YT3CgTRw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8fVUSuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1ECC433F1;
-	Tue, 27 Feb 2024 14:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YT3CgTRw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F46C433C7;
+	Tue, 27 Feb 2024 14:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042674;
-	bh=o6KKztbgE0KtpCMsfUVSFSQev3r/x6mbldEgcC5CAXY=;
+	s=korg; t=1709042676;
+	bh=5uC5ZH4koqk12EyOBPODbdBqWLjB3ywjJSMBu3ObZ3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8fVUSuX4XdFaw1zsynZ5OCZ0FMYPtlDSwLSLAr03bqU0tsaqSrOfdgQRGt939H5d
-	 3iVd//0A2ATjj2MmZT7LMtlTFFr1+LGUFFx/2PTJJm1J+7pomK2hvaC5uNBtdJxkYe
-	 OBx9krzSn3XnCBNp4Ym69tZA3GLtfFeSctmdttGg=
+	b=YT3CgTRwI4ftqcXzlDrzfWrZjMbRC0vbiO4ExaSZBGndceplUSA1+yBY6Noi3eOsD
+	 4Rvk+5EPD7OQnISj090Pt2W0prXuRLAAZwrb/JTK3SCRVrRUOxyUSD4gt1ACciMtzW
+	 CWW3XWxXHnBqiWIwsZrebU2p8vE3dIbu8W2xyPmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 079/245] dm-crypt: dont modify the data when using authenticated encryption
-Date: Tue, 27 Feb 2024 14:24:27 +0100
-Message-ID: <20240227131617.808681202@linuxfoundation.org>
+	Alexander Kobel <a-kobel@a-kobel.de>,
+	regressions@lists.linux.dev,
+	Arnold Gozum <arngozum@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 080/245] platform/x86: intel-vbtn: Stop calling "VBDL" from notify_handler
+Date: Tue, 27 Feb 2024 14:24:28 +0100
+Message-ID: <20240227131617.839986631@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -50,43 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 50c70240097ce41fe6bce6478b80478281e4d0f7 upstream.
+commit 84c16d01ff219bc0a5dca5219db6b8b86a6854fb upstream.
 
-It was said that authenticated encryption could produce invalid tag when
-the data that is being encrypted is modified [1]. So, fix this problem by
-copying the data into the clone bio first and then encrypt them inside the
-clone bio.
+Commit 14c200b7ca46 ("platform/x86: intel-vbtn: Fix missing
+tablet-mode-switch events") causes 2 issues on the ThinkPad X1 Tablet Gen2:
 
-This may reduce performance, but it is needed to prevent the user from
-corrupting the device by writing data with O_DIRECT and modifying them at
-the same time.
+1. The ThinkPad will wake up immediately from suspend
+2. When put in tablet mode SW_TABLET_MODE reverts to 0 after about 1 second
 
-[1] https://lore.kernel.org/all/20240207004723.GA35324@sol.localdomain/T/
+Both these issues are caused by the "VBDL" ACPI method call added
+at the end of the notify_handler.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+And it never became entirely clear if this call is even necessary to fix
+the issue of missing tablet-mode-switch events on the Dell Inspiron 7352.
+
+Drop the "VBDL" ACPI method call again to fix the 2 issues this is
+causing on the ThinkPad X1 Tablet Gen2.
+
+Fixes: 14c200b7ca46 ("platform/x86: intel-vbtn: Fix missing tablet-mode-switch events")
+Reported-by: Alexander Kobel <a-kobel@a-kobel.de>
+Closes: https://lore.kernel.org/platform-driver-x86/295984ce-bd4b-49bd-adc5-ffe7c898d7f0@a-kobel.de/
+Cc: regressions@lists.linux.dev
+Cc: Arnold Gozum <arngozum@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Tested-by: Alexander Kobel <a-kobel@a-kobel.de>
+Link: https://lore.kernel.org/r/20240216203300.245826-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/platform/x86/intel/vbtn.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -2065,6 +2065,12 @@ static void kcryptd_crypt_write_convert(
- 	io->ctx.bio_out = clone;
- 	io->ctx.iter_out = clone->bi_iter;
+diff --git a/drivers/platform/x86/intel/vbtn.c b/drivers/platform/x86/intel/vbtn.c
+index 210b0a81b7ec..084c355c86f5 100644
+--- a/drivers/platform/x86/intel/vbtn.c
++++ b/drivers/platform/x86/intel/vbtn.c
+@@ -200,9 +200,6 @@ static void notify_handler(acpi_handle handle, u32 event, void *context)
+ 	autorelease = val && (!ke_rel || ke_rel->type == KE_IGNORE);
  
-+	if (crypt_integrity_aead(cc)) {
-+		bio_copy_data(clone, io->base_bio);
-+		io->ctx.bio_in = clone;
-+		io->ctx.iter_in = clone->bi_iter;
-+	}
-+
- 	sector += bio_sectors(clone);
+ 	sparse_keymap_report_event(input_dev, event, val, autorelease);
+-
+-	/* Some devices need this to report further events */
+-	acpi_evaluate_object(handle, "VBDL", NULL, NULL);
+ }
  
- 	crypt_inc_pending(io);
+ /*
+-- 
+2.44.0
+
 
 
