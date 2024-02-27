@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7A7145B16;
-	Tue, 27 Feb 2024 14:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5EC13EFEC;
+	Tue, 27 Feb 2024 14:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044186; cv=none; b=AG5BwkHF6fRTqEHsDy8lF2Fb0NZ6i/zoLxLMGkAjG+vBuqXTg2dsT7nFF+V5ZrYnyTLx06iVCLBDF3eAVw2bL3g8oSEsG5mr4Lk0R6U2rwVTPdSHbvV/s+sLY3n1mSHFH5JLPs611rv99mAg2uwSmQkQTbHjTmRWoFYR//qdr1w=
+	t=1709044189; cv=none; b=gzSYVdP0TquRptobiUwsEP+eWm2lje+NYLoEK5dc031dygN5uXTew+LC34r2stqDttcWzxU8xQK38C24jlc0s1NF+pKngvt4EsiHwc8vv7pOreCiuGkqkYpnDHKezLG/ZqJCPOONjGlN/dMGos3kMTwD1xhnOvalr7kTiH4hczM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044186; c=relaxed/simple;
-	bh=r62d6WQ7a+BKoTy7yjzMCVWhOxxBaxV71z2gTPOg2hE=;
+	s=arc-20240116; t=1709044189; c=relaxed/simple;
+	bh=DqrrmZlle4r6uhxdUxugrGjZlHZb5Nea7Bcy3wRBZlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETrLtWjsmApp8v5QOAOiHDkvAh1/GQWCBdxqjTUGMLHejBw62DgflY1ETcvlHjqHKUh50uTLdtCIpPJsHV2BjGYfnNNKyXsezeHhFx9iGKivEtFX5vVDbbTgEbGJTO34LxTtB6sVz0zSJxqahTBWNAKLDZCGuncXDo7T4AccUWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACioPnyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qINUjq0fSpQAKv1HUUiJs3JxGogOzJ3eiBgevXoWFKTFhvW8OMOPE2RWA6CLpOxi4gHjLjBZstHXccDCcBfW0K7s4HAmP+0viEPOhD/3Bp4Z/UVbLpPwwFI66Scys2SIuwHrRZMlf+OveeD9jP6RvjurS/6icawqK+FyJJrfn+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY8BPORT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACioPnyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1C5C433F1;
-	Tue, 27 Feb 2024 14:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY8BPORT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDDBC433C7;
+	Tue, 27 Feb 2024 14:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044186;
-	bh=r62d6WQ7a+BKoTy7yjzMCVWhOxxBaxV71z2gTPOg2hE=;
+	s=korg; t=1709044189;
+	bh=DqrrmZlle4r6uhxdUxugrGjZlHZb5Nea7Bcy3wRBZlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACioPnywViUwpJU4n7PqOcuec9NJrOyFgukpissHgdonQiAR6+/ik+Wku7SrFHSdZ
-	 2GBWNBMg9WTWtrj5nCWZrqo1W3BiQjzCAiGoomDUxF4SbwXBn519oqsLMJqDw8XswL
-	 OV9FKQWI7muymotNVpl9zeK82ZBdBAebCkdYUHzk=
+	b=YY8BPORT6fvZ2LRb9kk0SAueRPXjxWdBNDGmdXZ/+IEI+xbwvECO6pLiIJrUKfjDF
+	 RKxkFLmbKd6yhhnc2KD2t5se1H2JAZ9agtEajz5Pl6MkirIGSvnl4aCir0Sb8WsPzN
+	 QVYGUnKqjbeJL+E+u1h4ppz687a2Jb/bplL8Vbco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xu Yang <xu.yang_2@nxp.com>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 093/122] usb: roles: fix NULL pointer issue when put modules reference
-Date: Tue, 27 Feb 2024 14:27:34 +0100
-Message-ID: <20240227131601.748368849@linuxfoundation.org>
+Subject: [PATCH 5.10 094/122] usb: roles: dont get/set_role() when usb_role_switch is unregistered
+Date: Tue, 27 Feb 2024 14:27:35 +0100
+Message-ID: <20240227131601.780073784@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,94 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 1c9be13846c0b2abc2480602f8ef421360e1ad9e upstream.
+commit b787a3e781759026a6212736ef8e52cf83d1821a upstream.
 
-In current design, usb role class driver will get usb_role_switch parent's
-module reference after the user get usb_role_switch device and put the
-reference after the user put the usb_role_switch device. However, the
-parent device of usb_role_switch may be removed before the user put the
-usb_role_switch. If so, then, NULL pointer issue will be met when the user
-put the parent module's reference.
+There is a possibility that usb_role_switch device is unregistered before
+the user put usb_role_switch. In this case, the user may still want to
+get/set_role() since the user can't sense the changes of usb_role_switch.
 
-This will save the module pointer in structure of usb_role_switch. Then,
-we don't need to find module by iterating long relations.
+This will add a flag to show if usb_role_switch is already registered and
+avoid unwanted behaviors.
 
-Fixes: 5c54fcac9a9d ("usb: roles: Take care of driver module reference counting")
+Fixes: fde0aa6c175a ("usb: common: Small class for USB role switches")
 cc: stable@vger.kernel.org
 Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
 Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240129093739.2371530-1-xu.yang_2@nxp.com
+Link: https://lore.kernel.org/r/20240129093739.2371530-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/roles/class.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/usb/roles/class.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 --- a/drivers/usb/roles/class.c
 +++ b/drivers/usb/roles/class.c
-@@ -19,6 +19,7 @@ static struct class *role_class;
- struct usb_role_switch {
- 	struct device dev;
+@@ -21,6 +21,7 @@ struct usb_role_switch {
  	struct mutex lock; /* device lock*/
-+	struct module *module; /* the module this device depends on */
+ 	struct module *module; /* the module this device depends on */
  	enum usb_role role;
++	bool registered;
  
  	/* From descriptor */
-@@ -133,7 +134,7 @@ struct usb_role_switch *usb_role_switch_
- 						  usb_role_switch_match);
+ 	struct device *usb2_port;
+@@ -47,6 +48,9 @@ int usb_role_switch_set_role(struct usb_
+ 	if (IS_ERR_OR_NULL(sw))
+ 		return 0;
  
- 	if (!IS_ERR_OR_NULL(sw))
--		WARN_ON(!try_module_get(sw->dev.parent->driver->owner));
-+		WARN_ON(!try_module_get(sw->module));
++	if (!sw->registered)
++		return -EOPNOTSUPP;
++
+ 	mutex_lock(&sw->lock);
  
- 	return sw;
- }
-@@ -155,7 +156,7 @@ struct usb_role_switch *fwnode_usb_role_
- 		sw = fwnode_connection_find_match(fwnode, "usb-role-switch",
- 						  NULL, usb_role_switch_match);
- 	if (!IS_ERR_OR_NULL(sw))
--		WARN_ON(!try_module_get(sw->dev.parent->driver->owner));
-+		WARN_ON(!try_module_get(sw->module));
- 
- 	return sw;
- }
-@@ -170,7 +171,7 @@ EXPORT_SYMBOL_GPL(fwnode_usb_role_switch
- void usb_role_switch_put(struct usb_role_switch *sw)
+ 	ret = sw->set(sw, role);
+@@ -72,7 +76,7 @@ enum usb_role usb_role_switch_get_role(s
  {
- 	if (!IS_ERR_OR_NULL(sw)) {
--		module_put(sw->dev.parent->driver->owner);
-+		module_put(sw->module);
- 		put_device(&sw->dev);
+ 	enum usb_role role;
+ 
+-	if (IS_ERR_OR_NULL(sw))
++	if (IS_ERR_OR_NULL(sw) || !sw->registered)
+ 		return USB_ROLE_NONE;
+ 
+ 	mutex_lock(&sw->lock);
+@@ -347,6 +351,8 @@ usb_role_switch_register(struct device *
+ 		return ERR_PTR(ret);
  	}
- }
-@@ -187,15 +188,18 @@ struct usb_role_switch *
- usb_role_switch_find_by_fwnode(const struct fwnode_handle *fwnode)
+ 
++	sw->registered = true;
++
+ 	/* TODO: Symlinks for the host port and the device controller. */
+ 
+ 	return sw;
+@@ -361,8 +367,10 @@ EXPORT_SYMBOL_GPL(usb_role_switch_regist
+  */
+ void usb_role_switch_unregister(struct usb_role_switch *sw)
  {
- 	struct device *dev;
-+	struct usb_role_switch *sw = NULL;
- 
- 	if (!fwnode)
- 		return NULL;
- 
- 	dev = class_find_device_by_fwnode(role_class, fwnode);
--	if (dev)
--		WARN_ON(!try_module_get(dev->parent->driver->owner));
-+	if (dev) {
-+		sw = to_role_switch(dev);
-+		WARN_ON(!try_module_get(sw->module));
+-	if (!IS_ERR_OR_NULL(sw))
++	if (!IS_ERR_OR_NULL(sw)) {
++		sw->registered = false;
+ 		device_unregister(&sw->dev);
 +	}
- 
--	return dev ? to_role_switch(dev) : NULL;
-+	return sw;
  }
- EXPORT_SYMBOL_GPL(usb_role_switch_find_by_fwnode);
+ EXPORT_SYMBOL_GPL(usb_role_switch_unregister);
  
-@@ -328,6 +332,7 @@ usb_role_switch_register(struct device *
- 	sw->set = desc->set;
- 	sw->get = desc->get;
- 
-+	sw->module = parent->driver->owner;
- 	sw->dev.parent = parent;
- 	sw->dev.fwnode = desc->fwnode;
- 	sw->dev.class = role_class;
 
 
