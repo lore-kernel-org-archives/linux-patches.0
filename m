@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A8754BD4;
-	Tue, 27 Feb 2024 13:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657C854BD4;
+	Tue, 27 Feb 2024 13:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041997; cv=none; b=rzQ1yqAc8OUJIsVfbUl/SoYoygZ9QRlUSEWnw9MNvupyVT8jeO3L7pLUeU9BLB5M8imb9Ej5o6kOPfY2fVKfjURd/7Rz3QnhZJ4cvfKtyl3Ep3TEUb5PxMVKpXi2k3tMgBtBpGIUB9h4vq6ecLQUv8LMRSH7IUiCBuA+B1EsiTQ=
+	t=1709042000; cv=none; b=c5my4NKqhHW0sv8+8pJPcsXheH2lEioXCnsjxtXZ0+MLzHZvogLwLo5XU0V7uyDmoYIQ6PRDZP5BDM4/Sy6sFlbRKHMGaqInPVEdfGiH9EMVeofltCyY8uT4v9R61MIJShbYPl0h9G4rhw1KqT2lqH/vKWdJL6btxQvnjQY8mDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041997; c=relaxed/simple;
-	bh=tXU/iY7ClYF86e8Nn4G/5e+N2G5XRKjZelPV8zz8Ei8=;
+	s=arc-20240116; t=1709042000; c=relaxed/simple;
+	bh=BU3ARFB6twQWfNu+5z7Z+E4GeHOvHxD/qv+Qtg/uTh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcLCjlgCWBjZ58GOel2Dng80HYQqm3yM88rt1r+FqOiRIHOv5L0FTFbPqV6kBUz6UW8aR9CdQy28fIslj5WebCmlizt1SD1B3MPNKm8Flo5NXbNDuJBnvsoB6cCQvY2eSPVQuDDlv4FNgVftuVs7tzF8YdNC2djr/uOHMojmIAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljJpvPL1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RVir82B65OwyKPlQQBvxOEt8Aa7+cpHzyTM038O0QHjOBYlfBqdsqLG2C4VC8azGsjbG3Q1T5n+QvrkH2IDhf7aMo8NgBiOJLRbe8fe+Kf6fyyYn/+yP33xzxMgCMs74sVkSfv9xvTcIUxENRqm6WD60z5fl80h/astqPMgzbZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlRcPxz3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljJpvPL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA17C433F1;
-	Tue, 27 Feb 2024 13:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlRcPxz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A61C433C7;
+	Tue, 27 Feb 2024 13:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041997;
-	bh=tXU/iY7ClYF86e8Nn4G/5e+N2G5XRKjZelPV8zz8Ei8=;
+	s=korg; t=1709041999;
+	bh=BU3ARFB6twQWfNu+5z7Z+E4GeHOvHxD/qv+Qtg/uTh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ljJpvPL1gusYcyCW+DzosQUiFS1hTDwEnDju+vRWHc5ltnbF6Wx+8FfcQdHzewkE5
-	 GhXsGjZreBAw0dbsN48G4OJQp4YToYZdOu4CwBAa3dD1yBc4Gcy6ODc9r0AGogqrYG
-	 2AS29zLBczjHY65V8WeUdSkXLQtxsOfzVG7xF1/w=
+	b=SlRcPxz3VmaDN98OQnrYsYlKB5gxDE414k0yZh4eHmw5rp1o0gGW4QqasF9ezbpgw
+	 EbX3tSaoFncTSEN39+MCSkxHusmM1QJuTY3lJ6WC0Db3aJdFs8T+/Yg7Vbnhy5xVrh
+	 oR3TacSUrn6qSo5hbo4sPOsdd+X/+xT+YcTgLWrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	PeiChen Huang <peichen.huang@amd.com>,
-	Aric Cyr <aric.cyr@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/299] drm/amd/display: Add dpia display mode validation logic
-Date: Tue, 27 Feb 2024 14:23:55 +0100
-Message-ID: <20240227131629.859026093@linuxfoundation.org>
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 142/299] drm/amd/display: adjust few initialization order in dm
+Date: Tue, 27 Feb 2024 14:24:13 +0100
+Message-ID: <20240227131630.424816053@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -55,313 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+From: Wayne Lin <wayne.lin@amd.com>
 
-[ Upstream commit 59f1622a5f05d948a7c665a458a3dd76ba73015e ]
+commit 22e1dc4b2fec17af70f297a4295c5f19a0f3fbeb upstream.
 
 [Why]
-If bandwidth allocation feature is enabled, connection manager wont
-limit the dp tunnel bandwidth. So, need to do display mode validation
-for streams on dpia links to avoid oversubscription of dp tunnel
-bandwidth.
+Observe error message "Can't retrieve aconnector in hpd_rx_irq_offload_work"
+when boot up with a mst tbt4 dock connected. After analyzing, there are few
+parts needed to be adjusted:
+
+1. hpd_rx_offload_wq[].aconnector is not initialzed before the dmub outbox
+hpd_irq handler get registered which causes the error message.
+
+2. registeration of hpd and hpd_rx_irq event for usb4 dp tunneling is not
+aligned with legacy interface sequence
 
 [How]
-- To read non reduced link rate and lane count and update
-  reported link capability.
-- To calculate the bandwidth required for streams of dpia links
-  per host router and validate against the allocated bandwidth for
-  the host router.
+Put DMUB_NOTIFICATION_HPD and DMUB_NOTIFICATION_HPD_IRQ handler
+registration into register_hpd_handlers() to align other interfaces and
+get hpd_rx_offload_wq[].aconnector initialized earlier than that.
 
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Reviewed-by: PeiChen Huang <peichen.huang@amd.com>
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
+Leave DMUB_NOTIFICATION_AUX_REPLY registered as it was since we need that
+while calling dc_link_detect(). USB4 connection status will be proactively
+detected by dc_link_detect_connection_type() in amdgpu_dm_initialize_drm_device()
+
+Cc: Stable <stable@vger.kernel.org>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Acked-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Meenakshikumar Somasundaram <meenakshikumar.somasundaram@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 0484e05d048b ("drm/amd/display: fixed integer types and null check locations")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../drm/amd/display/dc/core/dc_link_exports.c |   2 +-
- drivers/gpu/drm/amd/display/dc/dc.h           |   4 +-
- drivers/gpu/drm/amd/display/dc/dc_dp_types.h  |   6 +
- drivers/gpu/drm/amd/display/dc/dc_types.h     |   2 +
- .../dc/link/protocols/link_dp_dpia_bw.c       | 130 +++++++++++++-----
- 5 files changed, 104 insertions(+), 40 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   37 ++++++++++------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_exports.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_exports.c
-index ed94187c2afa2..f365773d57148 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link_exports.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_exports.c
-@@ -497,7 +497,7 @@ void dc_link_enable_hpd_filter(struct dc_link *link, bool enable)
- 	link->dc->link_srv->enable_hpd_filter(link, enable);
- }
- 
--bool dc_link_validate(struct dc *dc, const struct dc_stream_state *streams, const unsigned int count)
-+bool dc_link_dp_dpia_validate(struct dc *dc, const struct dc_stream_state *streams, const unsigned int count)
- {
- 	return dc->link_srv->validate_dpia_bandwidth(streams, count);
- }
-diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
-index 3f33740e2f659..5f2eac868b747 100644
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -2116,11 +2116,11 @@ int dc_link_dp_dpia_handle_usb4_bandwidth_allocation_for_link(
-  *
-  * @dc: pointer to dc struct
-  * @stream: pointer to all possible streams
-- * @num_streams: number of valid DPIA streams
-+ * @count: number of valid DPIA streams
-  *
-  * return: TRUE if bw used by DPIAs doesn't exceed available BW else return FALSE
-  */
--bool dc_link_validate(struct dc *dc, const struct dc_stream_state *streams,
-+bool dc_link_dp_dpia_validate(struct dc *dc, const struct dc_stream_state *streams,
- 		const unsigned int count);
- 
- /* Sink Interfaces - A sink corresponds to a display output device */
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-index cfaa39c5dd16b..83719f5bea495 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
-@@ -1433,6 +1433,12 @@ struct dp_trace {
- #ifndef DP_TUNNELING_STATUS
- #define DP_TUNNELING_STATUS				0xE0025 /* 1.4a */
- #endif
-+#ifndef DP_TUNNELING_MAX_LINK_RATE
-+#define DP_TUNNELING_MAX_LINK_RATE			0xE0028 /* 1.4a */
-+#endif
-+#ifndef DP_TUNNELING_MAX_LANE_COUNT
-+#define DP_TUNNELING_MAX_LANE_COUNT			0xE0029 /* 1.4a */
-+#endif
- #ifndef DPTX_BW_ALLOCATION_MODE_CONTROL
- #define DPTX_BW_ALLOCATION_MODE_CONTROL			0xE0030 /* 1.4a */
- #endif
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
-index accffba5a6834..19b7314811ae2 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
-@@ -1121,6 +1121,8 @@ struct dc_dpia_bw_alloc {
- 	int bw_granularity;    // BW Granularity
- 	bool bw_alloc_enabled; // The BW Alloc Mode Support is turned ON for all 3:  DP-Tx & Dpia & CM
- 	bool response_ready;   // Response ready from the CM side
-+	uint8_t nrd_max_lane_count; // Non-reduced max lane count
-+	uint8_t nrd_max_link_rate; // Non-reduced max link rate
- };
- 
- #define MAX_SINKS_PER_LINK 4
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-index d6e1f969bfd52..a7aa8c9da868f 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
-@@ -59,6 +59,7 @@ static void reset_bw_alloc_struct(struct dc_link *link)
- 	link->dpia_bw_alloc_config.estimated_bw = 0;
- 	link->dpia_bw_alloc_config.bw_granularity = 0;
- 	link->dpia_bw_alloc_config.response_ready = false;
-+	link->dpia_bw_alloc_config.sink_allocated_bw = 0;
- }
- 
- #define BW_GRANULARITY_0 4 // 0.25 Gbps
-@@ -104,6 +105,32 @@ static int get_estimated_bw(struct dc_link *link)
- 	return bw_estimated_bw * (Kbps_TO_Gbps / link->dpia_bw_alloc_config.bw_granularity);
- }
- 
-+static int get_non_reduced_max_link_rate(struct dc_link *link)
-+{
-+	uint8_t nrd_max_link_rate = 0;
-+
-+	core_link_read_dpcd(
-+			link,
-+			DP_TUNNELING_MAX_LINK_RATE,
-+			&nrd_max_link_rate,
-+			sizeof(uint8_t));
-+
-+	return nrd_max_link_rate;
-+}
-+
-+static int get_non_reduced_max_lane_count(struct dc_link *link)
-+{
-+	uint8_t nrd_max_lane_count = 0;
-+
-+	core_link_read_dpcd(
-+			link,
-+			DP_TUNNELING_MAX_LANE_COUNT,
-+			&nrd_max_lane_count,
-+			sizeof(uint8_t));
-+
-+	return nrd_max_lane_count;
-+}
-+
- /*
-  * Read all New BW alloc configuration ex: estimated_bw, allocated_bw,
-  * granuality, Driver_ID, CM_Group, & populate the BW allocation structs
-@@ -111,13 +138,20 @@ static int get_estimated_bw(struct dc_link *link)
-  */
- static void init_usb4_bw_struct(struct dc_link *link)
- {
--	// Init the known values
-+	reset_bw_alloc_struct(link);
-+
-+	/* init the known values */
- 	link->dpia_bw_alloc_config.bw_granularity = get_bw_granularity(link);
- 	link->dpia_bw_alloc_config.estimated_bw = get_estimated_bw(link);
-+	link->dpia_bw_alloc_config.nrd_max_link_rate = get_non_reduced_max_link_rate(link);
-+	link->dpia_bw_alloc_config.nrd_max_lane_count = get_non_reduced_max_lane_count(link);
- 
- 	DC_LOG_DEBUG("%s: bw_granularity(%d), estimated_bw(%d)\n",
- 		__func__, link->dpia_bw_alloc_config.bw_granularity,
- 		link->dpia_bw_alloc_config.estimated_bw);
-+	DC_LOG_DEBUG("%s: nrd_max_link_rate(%d), nrd_max_lane_count(%d)\n",
-+		__func__, link->dpia_bw_alloc_config.nrd_max_link_rate,
-+		link->dpia_bw_alloc_config.nrd_max_lane_count);
- }
- 
- static uint8_t get_lowest_dpia_index(struct dc_link *link)
-@@ -142,39 +176,50 @@ static uint8_t get_lowest_dpia_index(struct dc_link *link)
- }
- 
- /*
-- * Get the Max Available BW or Max Estimated BW for each Host Router
-+ * Get the maximum dp tunnel banwidth of host router
-  *
-- * @link: pointer to the dc_link struct instance
-- * @type: ESTIMATD BW or MAX AVAILABLE BW
-+ * @dc: pointer to the dc struct instance
-+ * @hr_index: host router index
-  *
-- * return: response_ready flag from dc_link struct
-+ * return: host router maximum dp tunnel bandwidth
-  */
--static int get_host_router_total_bw(struct dc_link *link, uint8_t type)
-+static int get_host_router_total_dp_tunnel_bw(const struct dc *dc, uint8_t hr_index)
- {
--	const struct dc *dc_struct = link->dc;
--	uint8_t lowest_dpia_index = get_lowest_dpia_index(link);
--	uint8_t idx = (link->link_index - lowest_dpia_index) / 2, idx_temp = 0;
--	struct dc_link *link_temp;
-+	uint8_t lowest_dpia_index = get_lowest_dpia_index(dc->links[0]);
-+	uint8_t hr_index_temp = 0;
-+	struct dc_link *link_dpia_primary, *link_dpia_secondary;
- 	int total_bw = 0;
--	int i;
--
--	for (i = 0; i < MAX_PIPES * 2; ++i) {
- 
--		if (!dc_struct->links[i] || dc_struct->links[i]->ep_type != DISPLAY_ENDPOINT_USB4_DPIA)
--			continue;
-+	for (uint8_t i = 0; i < MAX_PIPES * 2; ++i) {
- 
--		link_temp = dc_struct->links[i];
--		if (!link_temp || !link_temp->hpd_status)
-+		if (!dc->links[i] || dc->links[i]->ep_type != DISPLAY_ENDPOINT_USB4_DPIA)
- 			continue;
- 
--		idx_temp = (link_temp->link_index - lowest_dpia_index) / 2;
--
--		if (idx_temp == idx) {
--
--			if (type == HOST_ROUTER_BW_ESTIMATED)
--				total_bw += link_temp->dpia_bw_alloc_config.estimated_bw;
--			else if (type == HOST_ROUTER_BW_ALLOCATED)
--				total_bw += link_temp->dpia_bw_alloc_config.sink_allocated_bw;
-+		hr_index_temp = (dc->links[i]->link_index - lowest_dpia_index) / 2;
-+
-+		if (hr_index_temp == hr_index) {
-+			link_dpia_primary = dc->links[i];
-+			link_dpia_secondary = dc->links[i + 1];
-+
-+			/**
-+			 * If BW allocation enabled on both DPIAs, then
-+			 * HR BW = Estimated(dpia_primary) + Allocated(dpia_secondary)
-+			 * otherwise HR BW = Estimated(bw alloc enabled dpia)
-+			 */
-+			if ((link_dpia_primary->hpd_status &&
-+				link_dpia_primary->dpia_bw_alloc_config.bw_alloc_enabled) &&
-+				(link_dpia_secondary->hpd_status &&
-+				link_dpia_secondary->dpia_bw_alloc_config.bw_alloc_enabled)) {
-+				total_bw += link_dpia_primary->dpia_bw_alloc_config.estimated_bw +
-+					link_dpia_secondary->dpia_bw_alloc_config.sink_allocated_bw;
-+			} else if (link_dpia_primary->hpd_status &&
-+					link_dpia_primary->dpia_bw_alloc_config.bw_alloc_enabled) {
-+				total_bw = link_dpia_primary->dpia_bw_alloc_config.estimated_bw;
-+			} else if (link_dpia_secondary->hpd_status &&
-+				link_dpia_secondary->dpia_bw_alloc_config.bw_alloc_enabled) {
-+				total_bw += link_dpia_secondary->dpia_bw_alloc_config.estimated_bw;
-+			}
-+			break;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1816,21 +1816,12 @@ static int amdgpu_dm_init(struct amdgpu_
+ 			DRM_ERROR("amdgpu: fail to register dmub aux callback");
+ 			goto error;
  		}
- 	}
+-		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD, dmub_hpd_callback, true)) {
+-			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
+-			goto error;
+-		}
+-		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD_IRQ, dmub_hpd_callback, true)) {
+-			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
+-			goto error;
+-		}
+-	}
+-
+-	/* Enable outbox notification only after IRQ handlers are registered and DMUB is alive.
+-	 * It is expected that DMUB will resend any pending notifications at this point, for
+-	 * example HPD from DPIA.
+-	 */
+-	if (dc_is_dmub_outbox_supported(adev->dm.dc)) {
++		/* Enable outbox notification only after IRQ handlers are registered and DMUB is alive.
++		 * It is expected that DMUB will resend any pending notifications at this point. Note
++		 * that hpd and hpd_irq handler registration are deferred to register_hpd_handlers() to
++		 * align legacy interface initialization sequence. Connection status will be proactivly
++		 * detected once in the amdgpu_dm_initialize_drm_device.
++		 */
+ 		dc_enable_dmub_outbox(adev->dm.dc);
  
-@@ -194,7 +239,6 @@ static void dpia_bw_alloc_unplug(struct dc_link *link)
- 	if (link) {
- 		DC_LOG_DEBUG("%s: resetting bw alloc config for link(%d)\n",
- 			__func__, link->link_index);
--		link->dpia_bw_alloc_config.sink_allocated_bw = 0;
- 		reset_bw_alloc_struct(link);
- 	}
- }
-@@ -397,7 +441,7 @@ int dpia_handle_usb4_bandwidth_allocation_for_link(struct dc_link *link, int pea
- 		if (!timeout)
- 			ret = 0;// ERROR TIMEOUT waiting for response for allocating bw
- 		else if (link->dpia_bw_alloc_config.sink_allocated_bw > 0)
--			ret = get_host_router_total_bw(link, HOST_ROUTER_BW_ALLOCATED);
-+			ret = link->dpia_bw_alloc_config.sink_allocated_bw;
- 	}
- 	//2. Cold Unplug
- 	else if (!link->hpd_status)
-@@ -439,29 +483,41 @@ bool link_dp_dpia_allocate_usb4_bandwidth_for_stream(struct dc_link *link, int r
- bool dpia_validate_usb4_bw(struct dc_link **link, int *bw_needed_per_dpia, const unsigned int num_dpias)
- {
- 	bool ret = true;
--	int bw_needed_per_hr[MAX_HR_NUM] = { 0, 0 };
--	uint8_t lowest_dpia_index = 0, dpia_index = 0;
--	uint8_t i;
-+	int bw_needed_per_hr[MAX_HR_NUM] = { 0, 0 }, host_router_total_dp_bw = 0;
-+	uint8_t lowest_dpia_index, i, hr_index;
+ 		/* DPIA trace goes to dmesg logs only if outbox is enabled */
+@@ -3484,6 +3475,14 @@ static void register_hpd_handlers(struct
+ 	int_params.requested_polarity = INTERRUPT_POLARITY_DEFAULT;
+ 	int_params.current_polarity = INTERRUPT_POLARITY_DEFAULT;
  
- 	if (!num_dpias || num_dpias > MAX_DPIA_NUM)
- 		return ret;
- 
--	//Get total Host Router BW & Validate against each Host Router max BW
-+	lowest_dpia_index = get_lowest_dpia_index(link[0]);
++	if (dc_is_dmub_outbox_supported(adev->dm.dc)) {
++		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD, dmub_hpd_callback, true))
++			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
 +
-+	/* get total Host Router BW with granularity for the given modes */
- 	for (i = 0; i < num_dpias; ++i) {
-+		int granularity_Gbps = 0;
-+		int bw_granularity = 0;
- 
- 		if (!link[i]->dpia_bw_alloc_config.bw_alloc_enabled)
- 			continue;
- 
--		lowest_dpia_index = get_lowest_dpia_index(link[i]);
- 		if (link[i]->link_index < lowest_dpia_index)
- 			continue;
- 
--		dpia_index = (link[i]->link_index - lowest_dpia_index) / 2;
--		bw_needed_per_hr[dpia_index] += bw_needed_per_dpia[i];
--		if (bw_needed_per_hr[dpia_index] > get_host_router_total_bw(link[i], HOST_ROUTER_BW_ALLOCATED)) {
-+		granularity_Gbps = (Kbps_TO_Gbps / link[i]->dpia_bw_alloc_config.bw_granularity);
-+		bw_granularity = (bw_needed_per_dpia[i] / granularity_Gbps) * granularity_Gbps +
-+				((bw_needed_per_dpia[i] % granularity_Gbps) ? granularity_Gbps : 0);
- 
--			ret = false;
--			break;
-+		hr_index = (link[i]->link_index - lowest_dpia_index) / 2;
-+		bw_needed_per_hr[hr_index] += bw_granularity;
++		if (!register_dmub_notify_callback(adev, DMUB_NOTIFICATION_HPD_IRQ, dmub_hpd_callback, true))
++			DRM_ERROR("amdgpu: fail to register dmub hpd callback");
 +	}
 +
-+	/* validate against each Host Router max BW */
-+	for (hr_index = 0; hr_index < MAX_HR_NUM; ++hr_index) {
-+		if (bw_needed_per_hr[hr_index]) {
-+			host_router_total_dp_bw = get_host_router_total_dp_tunnel_bw(link[0]->dc, hr_index);
-+			if (bw_needed_per_hr[hr_index] > host_router_total_dp_bw) {
-+				ret = false;
-+				break;
-+			}
- 		}
- 	}
+ 	list_for_each_entry(connector,
+ 			&dev->mode_config.connector_list, head)	{
  
--- 
-2.43.0
-
+@@ -3509,10 +3508,6 @@ static void register_hpd_handlers(struct
+ 					handle_hpd_rx_irq,
+ 					(void *) aconnector);
+ 		}
+-
+-		if (adev->dm.hpd_rx_offload_wq)
+-			adev->dm.hpd_rx_offload_wq[connector->index].aconnector =
+-				aconnector;
+ 	}
+ }
+ 
+@@ -4481,6 +4476,10 @@ static int amdgpu_dm_initialize_drm_devi
+ 
+ 		link = dc_get_link_at_index(dm->dc, i);
+ 
++		if (dm->hpd_rx_offload_wq)
++			dm->hpd_rx_offload_wq[aconnector->base.index].aconnector =
++				aconnector;
++
+ 		if (!dc_link_detect_connection_type(link, &new_connection_type))
+ 			DRM_ERROR("KMS: Failed to detect connector\n");
+ 
 
 
