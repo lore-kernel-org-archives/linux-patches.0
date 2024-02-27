@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D1E13B2B8;
-	Tue, 27 Feb 2024 14:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48A813B2B4;
+	Tue, 27 Feb 2024 14:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043813; cv=none; b=qpnItfenieMkz7cqyGUcOkyQhnXBwlKIaQJls3+kvZ8Awgn0o9kBu41eWiFDBwUCjQtNucDzi9jxzeWoq3wQlZ2j+oNt9yP1NFgDix6R/tZ2vbZe6ZWl/E4liXpyzPUcSu/JkSkZcsKyyIBehpAg5H+J9DrAEg9K8ObZmwcpZpo=
+	t=1709043815; cv=none; b=HicW6APYY30gT/tETjjAg3DWnVXCNgp4qyOpe1/M//WzTCKgwtO4lyuk3TWyFTRPiiqhc+MXaezV++SLz3mMjm9DhjS6NAeDQJh9uyooqW8UzayoS1WZPRaxbKMbP/Zt3hN1crXiwIDMeluFqWpj8YCirpwbNtrfWuv12atKDCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043813; c=relaxed/simple;
-	bh=1P7pTEY6BqHsh0DmLNhWMMfJdJ0MFEvGkTl+INouWeM=;
+	s=arc-20240116; t=1709043815; c=relaxed/simple;
+	bh=B/7Ltrk/5a/O3hw67qh27SckG31ejwL0zdtHrw68mxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGKzQR/g8hxAz9x+PvKyOvDkywKvRX3kRq8MnrR7bNPHvBzVZYfviRAPUTZj/lT2wHaFq3OnT4+w1nSo7YzbZILhvhnyJ7YXf1cDs0QHkHO9G+U+NBHyUyvXyCmkOcDWkZZKej84h2VSKYCG0oyJPjQV4h86SfoVo2LqvDm73WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXGdZE3b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EgkIeghOLJfRs8oCuyLdb2R6jXSAhovJ31veSjRhTzzL3fBjhqLAgRTFUS2/CaZHLsrv29DYQr1j+d90KAyDXXrJMAJw1WG1LDwrmCV0kcs8Y3DuS/k1vHk5UHLKJOaINctxSDpxLi9NSYMMqw1Uvrf4x1o207tD+7gEcIvk0B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQ0H9AzM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXGdZE3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8990AC433C7;
-	Tue, 27 Feb 2024 14:23:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQ0H9AzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCFCC433F1;
+	Tue, 27 Feb 2024 14:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043812;
-	bh=1P7pTEY6BqHsh0DmLNhWMMfJdJ0MFEvGkTl+INouWeM=;
+	s=korg; t=1709043815;
+	bh=B/7Ltrk/5a/O3hw67qh27SckG31ejwL0zdtHrw68mxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXGdZE3b8qIAn4DZISX0PzkrPCD01GS+F7ZSHlSd70CJYqbzaw3OVe1oDO65ksWb2
-	 MNzzqZH8hfXICgQUkHyZ7Y4ucQvIPL1xT98g1i73yH8jMmTG4fOoKuuW9hT3PPOTFZ
-	 0vMIljaM7FkRFXu4yhxW1Az8wO1vw4X9JnnuhypE=
+	b=nQ0H9AzM/IxuvsIIpyxFuRuFaq79/miEd29o4CcK28LSztO4s+JFMtNbIHdiwRrgL
+	 yUZkg12Xw14Q7TH9uU6ig9c6rHnIQodF4qzH0+6X5uu6gq5lgg0I2hfBTNIneDBAuI
+	 2SlsXo0VYlIOOiyueWhSaYFWiQra/if5Bk+uLdaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fullway Wang <fullwaywang@outlook.com>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 17/84] fbdev: savage: Error out if pixclock equals zero
-Date: Tue, 27 Feb 2024 14:26:44 +0100
-Message-ID: <20240227131553.431213697@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 08/84] nilfs2: replace WARN_ONs for invalid DAT metadata block requests
+Date: Tue, 27 Feb 2024 14:26:35 +0100
+Message-ID: <20240227131553.142264341@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -51,45 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fullway Wang <fullwaywang@outlook.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 04e5eac8f3ab2ff52fa191c187a46d4fdbc1e288 ]
+commit 5124a0a549857c4b87173280e192eea24dea72ad upstream.
 
-The userspace program could pass any values to the driver through
-ioctl() interface. If the driver doesn't check the value of pixclock,
-it may cause divide-by-zero error.
+If DAT metadata file block access fails due to corruption of the DAT file
+or abnormal virtual block numbers held by b-trees or inodes, a kernel
+warning is generated.
 
-Although pixclock is checked in savagefb_decode_var(), but it is not
-checked properly in savagefb_probe(). Fix this by checking whether
-pixclock is zero in the function savagefb_check_var() before
-info->var.pixclock is used as the divisor.
+This replaces the WARN_ONs by error output, so that a kernel, booted with
+panic_on_warn, does not panic.  This patch also replaces the detected
+return code -ENOENT with another internal code -EINVAL to notify the bmap
+layer of metadata corruption.  When the bmap layer sees -EINVAL, it
+handles the abnormal situation with nilfs_bmap_convert_error() and finally
+returns code -EIO as it should.
 
-This is similar to CVE-2022-3061 in i740fb which was fixed by
-commit 15cf0b8.
-
-Signed-off-by: Fullway Wang <fullwaywang@outlook.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/0000000000005cc3d205ea23ddcf@google.com
+Link: https://lkml.kernel.org/r/20230126164114.6911-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: <syzbot+5d5d25f90f195a3cfcb4@syzkaller.appspotmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/savage/savagefb_driver.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nilfs2/dat.c |   27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/video/fbdev/savage/savagefb_driver.c b/drivers/video/fbdev/savage/savagefb_driver.c
-index d5d22d9c0f562..368500c401402 100644
---- a/drivers/video/fbdev/savage/savagefb_driver.c
-+++ b/drivers/video/fbdev/savage/savagefb_driver.c
-@@ -869,6 +869,9 @@ static int savagefb_check_var(struct fb_var_screeninfo   *var,
- 
- 	DBG("savagefb_check_var");
- 
-+	if (!var->pixclock)
-+		return -EINVAL;
+--- a/fs/nilfs2/dat.c
++++ b/fs/nilfs2/dat.c
+@@ -40,8 +40,21 @@ static inline struct nilfs_dat_info *NIL
+ static int nilfs_dat_prepare_entry(struct inode *dat,
+ 				   struct nilfs_palloc_req *req, int create)
+ {
+-	return nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
+-					    create, &req->pr_entry_bh);
++	int ret;
 +
- 	var->transp.offset = 0;
- 	var->transp.length = 0;
- 	switch (var->bits_per_pixel) {
--- 
-2.43.0
-
++	ret = nilfs_palloc_get_entry_block(dat, req->pr_entry_nr,
++					   create, &req->pr_entry_bh);
++	if (unlikely(ret == -ENOENT)) {
++		nilfs_msg(dat->i_sb, KERN_ERR,
++			  "DAT doesn't have a block to manage vblocknr = %llu",
++			  (unsigned long long)req->pr_entry_nr);
++		/*
++		 * Return internal code -EINVAL to notify bmap layer of
++		 * metadata corruption.
++		 */
++		ret = -EINVAL;
++	}
++	return ret;
+ }
+ 
+ static void nilfs_dat_commit_entry(struct inode *dat,
+@@ -123,11 +136,7 @@ static void nilfs_dat_commit_free(struct
+ 
+ int nilfs_dat_prepare_start(struct inode *dat, struct nilfs_palloc_req *req)
+ {
+-	int ret;
+-
+-	ret = nilfs_dat_prepare_entry(dat, req, 0);
+-	WARN_ON(ret == -ENOENT);
+-	return ret;
++	return nilfs_dat_prepare_entry(dat, req, 0);
+ }
+ 
+ void nilfs_dat_commit_start(struct inode *dat, struct nilfs_palloc_req *req,
+@@ -154,10 +163,8 @@ int nilfs_dat_prepare_end(struct inode *
+ 	int ret;
+ 
+ 	ret = nilfs_dat_prepare_entry(dat, req, 0);
+-	if (ret < 0) {
+-		WARN_ON(ret == -ENOENT);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ 	kaddr = kmap_atomic(req->pr_entry_bh->b_page);
+ 	entry = nilfs_palloc_block_get_entry(dat, req->pr_entry_nr,
 
 
