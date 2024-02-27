@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D2C1419AD;
-	Tue, 27 Feb 2024 13:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8B21419A0;
+	Tue, 27 Feb 2024 13:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042077; cv=none; b=SrIIYBnWYnzcyz1KGjZexL6YWLwhN2V5mC4fCbuBQREVCtJKyY/DblBrof4p7Y/hyTEEnaqE9iRpYb0kXySfcXzwcQd+Z1Fh5AUWrHk8s/uilUkUCziuAxIgUkHtYeqd4yqw4LgZD/xiTlPBWL8oOfhojK7Q27zV3IWmT9VB1A4=
+	t=1709042079; cv=none; b=Tx5jmuibUa2bulpOrafVrkIFA1VNfZ8ChQqKdIH9uCobpJ3XEwxrkN7zAXYbW9J83AVB7F3mc2LtisX1w4MeOHewaL01hw1wNaUmQRgXXNyzC4U3G2k/oYndzFHvFk/6H9v7dshih1evgWPjE+EkNJwkv1a+PJjQSuEKlZGmF74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042077; c=relaxed/simple;
-	bh=7rp+rQP3QUn857yvspbNXCfQrFN89qdHrrG50ePXdUM=;
+	s=arc-20240116; t=1709042079; c=relaxed/simple;
+	bh=goLyyIxMDOIj+28eLFicuhVieFdjW15uJPyTnTYkrNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XpyRFkKCEXThIgATmHzCUKMdBqDyRCuaIcPlnumw11StL6MsyfYf1jtB4CPtC7AG5TRsgfhjrGa0mg9iI80FzEFxI6efk1L0XTwggc99v9AToRWY3FPvlYHBzSFB3wpgXAoKZlwOW8kAul6mr/Y6SD3cjSH/2eOLIrjEmEfKamc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylQNSaNe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fMZB70KeXviOJCBVzuaDdtll1lSr7X8Ueg9NNNiWBQU8y82nahtozbgXFPlBdv5I89XTnShnhUXnDogcCMgcpCumchn8Tgrorkil3xQcBvRxrjxvhozmWtFnfM1038uEBXgBSA+iLQzAwC8LS1o30z1XsAW0C9tQfQTYKLlqaqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjSUQ3DE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylQNSaNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2ADC433F1;
-	Tue, 27 Feb 2024 13:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjSUQ3DE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E76C433F1;
+	Tue, 27 Feb 2024 13:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042076;
-	bh=7rp+rQP3QUn857yvspbNXCfQrFN89qdHrrG50ePXdUM=;
+	s=korg; t=1709042079;
+	bh=goLyyIxMDOIj+28eLFicuhVieFdjW15uJPyTnTYkrNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylQNSaNemHwgVYNrRHGyoIaQsAU+qbsxgQdKViQK714fe8CHwbK1FhsK9gxXebU5p
-	 oyY73pwVRNcGxpzyh0mqR59UbtTBR8WYiPpBg4CLOvVtGNaV8foQJlZZPgYLfsws8l
-	 ug2VT+vyvCo8HnQLku5OT2nvaizrp232axlaLlNM=
+	b=cjSUQ3DE3dzEu1T9hsXJ3vKU3PcZrK9ElkkH3PKV7/hUHKJI+rfvbTAqFv76IErPU
+	 k9LskSU3MP3xB0SVCioTTDMLBVa5N9rI9L8JoELpWv95Ouz5D5nCrxe2l49GiGBqk8
+	 TAzXKImTzLU5sqqZyXd9V++7CMEzc3wg351U0g9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhenwei pi <pizhenwei@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.6 171/299] crypto: virtio/akcipher - Fix stack overflow on memcpy
-Date: Tue, 27 Feb 2024 14:24:42 +0100
-Message-ID: <20240227131631.346983624@linuxfoundation.org>
+	Tasos Sahanidis <tasos@tasossah.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 154/299] scsi: sd: usb_storage: uas: Access media prior to querying device properties
+Date: Tue, 27 Feb 2024 14:24:25 +0100
+Message-ID: <20240227131630.817888479@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,52 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhenwei pi <pizhenwei@bytedance.com>
+From: Martin K. Petersen <martin.petersen@oracle.com>
 
-commit c0ec2a712daf133d9996a8a1b7ee2d4996080363 upstream.
+commit 321da3dc1f3c92a12e3c5da934090d2992a8814c upstream.
 
-sizeof(struct virtio_crypto_akcipher_session_para) is less than
-sizeof(struct virtio_crypto_op_ctrl_req::u), copying more bytes from
-stack variable leads stack overflow. Clang reports this issue by
-commands:
-make -j CC=clang-14 mrproper >/dev/null 2>&1
-make -j O=/tmp/crypto-build CC=clang-14 allmodconfig >/dev/null 2>&1
-make -j O=/tmp/crypto-build W=1 CC=clang-14 drivers/crypto/virtio/
-  virtio_crypto_akcipher_algs.o
+It has been observed that some USB/UAS devices return generic properties
+hardcoded in firmware for mode pages for a period of time after a device
+has been discovered. The reported properties are either garbage or they do
+not accurately reflect the characteristics of the physical storage device
+attached in the case of a bridge.
 
-Fixes: 59ca6c93387d ("virtio-crypto: implement RSA algorithm")
-Link: https://lore.kernel.org/all/0a194a79-e3a3-45e7-be98-83abd3e1cb7e@roeck-us.net/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org> # build
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Prior to commit 1e029397d12f ("scsi: sd: Reorganize DIF/DIX code to
+avoid calling revalidate twice") we would call revalidate several
+times during device discovery. As a result, incorrect values would
+eventually get replaced with ones accurately describing the attached
+storage. When we did away with the redundant revalidate pass, several
+cases were reported where devices reported nonsensical values or would
+end up in write-protected state.
+
+An initial attempt at addressing this issue involved introducing a
+delayed second revalidate invocation. However, this approach still
+left some devices reporting incorrect characteristics.
+
+Tasos Sahanidis debugged the problem further and identified that
+introducing a READ operation prior to MODE SENSE fixed the problem and that
+it wasn't a timing issue. Issuing a READ appears to cause the devices to
+update their state to reflect the actual properties of the storage
+media. Device properties like vendor, model, and storage capacity appear to
+be correctly reported from the get-go. It is unclear why these devices
+defer populating the remaining characteristics.
+
+Match the behavior of a well known commercial operating system and
+trigger a READ operation prior to querying device characteristics to
+force the device to populate the mode pages.
+
+The additional READ is triggered by a flag set in the USB storage and
+UAS drivers. We avoid issuing the READ for other transport classes
+since some storage devices identify Linux through our particular
+discovery command sequence.
+
+Link: https://lore.kernel.org/r/20240213143306.2194237-1-martin.petersen@oracle.com
+Fixes: 1e029397d12f ("scsi: sd: Reorganize DIF/DIX code to avoid calling revalidate twice")
+Cc: stable@vger.kernel.org
+Reported-by: Tasos Sahanidis <tasos@tasossah.com>
+Reviewed-by: Ewan D. Milne <emilne@redhat.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Tested-by: Tasos Sahanidis <tasos@tasossah.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_akcipher_algs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/scsi/sd.c              |   26 +++++++++++++++++++++++++-
+ drivers/usb/storage/scsiglue.c |    7 +++++++
+ drivers/usb/storage/uas.c      |    7 +++++++
+ include/scsi/scsi_device.h     |    1 +
+ 4 files changed, 40 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-+++ b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-@@ -104,7 +104,8 @@ static void virtio_crypto_dataq_akcipher
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3404,6 +3404,24 @@ static bool sd_validate_opt_xfer_size(st
+ 	return true;
  }
  
- static int virtio_crypto_alg_akcipher_init_session(struct virtio_crypto_akcipher_ctx *ctx,
--		struct virtio_crypto_ctrl_header *header, void *para,
-+		struct virtio_crypto_ctrl_header *header,
-+		struct virtio_crypto_akcipher_session_para *para,
- 		const uint8_t *key, unsigned int keylen)
- {
- 	struct scatterlist outhdr_sg, key_sg, inhdr_sg, *sgs[3];
-@@ -128,7 +129,7 @@ static int virtio_crypto_alg_akcipher_in
++static void sd_read_block_zero(struct scsi_disk *sdkp)
++{
++	unsigned int buf_len = sdkp->device->sector_size;
++	char *buffer, cmd[10] = { };
++
++	buffer = kmalloc(buf_len, GFP_KERNEL);
++	if (!buffer)
++		return;
++
++	cmd[0] = READ_10;
++	put_unaligned_be32(0, &cmd[2]); /* Logical block address 0 */
++	put_unaligned_be16(1, &cmd[7]);	/* Transfer 1 logical block */
++
++	scsi_execute_cmd(sdkp->device, cmd, REQ_OP_DRV_IN, buffer, buf_len,
++			 SD_TIMEOUT, sdkp->max_retries, NULL);
++	kfree(buffer);
++}
++
+ /**
+  *	sd_revalidate_disk - called the first time a new disk is seen,
+  *	performs disk spin up, read_capacity, etc.
+@@ -3443,7 +3461,13 @@ static int sd_revalidate_disk(struct gen
+ 	 */
+ 	if (sdkp->media_present) {
+ 		sd_read_capacity(sdkp, buffer);
+-
++		/*
++		 * Some USB/UAS devices return generic values for mode pages
++		 * until the media has been accessed. Trigger a READ operation
++		 * to force the device to populate mode pages.
++		 */
++		if (sdp->read_before_ms)
++			sd_read_block_zero(sdkp);
+ 		/*
+ 		 * set the default to rotational.  All non-rotational devices
+ 		 * support the block characteristics VPD page, which will
+--- a/drivers/usb/storage/scsiglue.c
++++ b/drivers/usb/storage/scsiglue.c
+@@ -180,6 +180,13 @@ static int slave_configure(struct scsi_d
+ 		sdev->use_192_bytes_for_3f = 1;
  
- 	ctrl = &vc_ctrl_req->ctrl;
- 	memcpy(&ctrl->header, header, sizeof(ctrl->header));
--	memcpy(&ctrl->u, para, sizeof(ctrl->u));
-+	memcpy(&ctrl->u.akcipher_create_session.para, para, sizeof(*para));
- 	input = &vc_ctrl_req->input;
- 	input->status = cpu_to_le32(VIRTIO_CRYPTO_ERR);
+ 		/*
++		 * Some devices report generic values until the media has been
++		 * accessed. Force a READ(10) prior to querying device
++		 * characteristics.
++		 */
++		sdev->read_before_ms = 1;
++
++		/*
+ 		 * Some devices don't like MODE SENSE with page=0x3f,
+ 		 * which is the command used for checking if a device
+ 		 * is write-protected.  Now that we tell the sd driver
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -879,6 +879,13 @@ static int uas_slave_configure(struct sc
+ 		sdev->guess_capacity = 1;
  
+ 	/*
++	 * Some devices report generic values until the media has been
++	 * accessed. Force a READ(10) prior to querying device
++	 * characteristics.
++	 */
++	sdev->read_before_ms = 1;
++
++	/*
+ 	 * Some devices don't like MODE SENSE with page=0x3f,
+ 	 * which is the command used for checking if a device
+ 	 * is write-protected.  Now that we tell the sd driver
+--- a/include/scsi/scsi_device.h
++++ b/include/scsi/scsi_device.h
+@@ -208,6 +208,7 @@ struct scsi_device {
+ 	unsigned use_10_for_rw:1; /* first try 10-byte read / write */
+ 	unsigned use_10_for_ms:1; /* first try 10-byte mode sense/select */
+ 	unsigned set_dbd_for_ms:1; /* Set "DBD" field in mode sense */
++	unsigned read_before_ms:1;	/* perform a READ before MODE SENSE */
+ 	unsigned no_report_opcodes:1;	/* no REPORT SUPPORTED OPERATION CODES */
+ 	unsigned no_write_same:1;	/* no WRITE SAME command */
+ 	unsigned use_16_for_rw:1; /* Use read/write(16) over read/write(10) */
 
 
