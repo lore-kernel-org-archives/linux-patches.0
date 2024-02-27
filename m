@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA4B14534B;
-	Tue, 27 Feb 2024 13:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254DC13B79F;
+	Tue, 27 Feb 2024 13:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042033; cv=none; b=MfnS4pJaBjSTMDZzXK8cxsYCBVNSpEK+ES4tiX9MPlbSxUMauwVFzZ4jBBmGD2QR8CYo9ZqnxvpGYw+xmM0CeJZN42T+DsDY5yEleuhoDeuyfIzlYC97LlXCFmf61APGz6bs3Dkr0YM2mHsQsOWXhU5v4MSTB3iJqfnDBEUHgLE=
+	t=1709042036; cv=none; b=iXzSqnN5QE5iMdW1LkbgpfleAIngFDNkz1rWteX9aS+ASqkFmlf6Cpmnj5H03Hb7tYYm6fgx/fNxNd7E5v1P/bYBWxQKRUGLZWCQTiEbUiNb+3C89U/rUbesiCwjzYRfMEP80eAh/mwFKEiFmt/tf/z5T2459XhFj88K/WxLL2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042033; c=relaxed/simple;
-	bh=bFAYN8I42tJpSwG4wfW+DDYfRlDIQOdKEAILLrr8XNg=;
+	s=arc-20240116; t=1709042036; c=relaxed/simple;
+	bh=86QwbxP5UKYPw/rF2JoMWi8MaZS1HNNS/IrnF8S4QHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkM2Pbvh7y20wfV6kZ0ldjDZC13ALdaYhjyi/3285oviECYfypi0s4a5OCYhQezOEbChMOagMhb/rJQihwuP686+5MkYz/nrK1ozwpHFmPPmqgZjwKCk6l4KFKHPuQb8xeB+vlirLOqTwd3Da3OyLHrMuc5SDYjHwrS/zwAKE8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGi6XGmm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mAmCe59OBnFbh33Ics8UOl/RdU1qSs0QjwkhPI8TcPjfksc5k+Kv4FzC+/Q/hdbs+oUWpjWB8dK9BeRixXDAAEd+QEYwnu2foth44z1xM/P3xDGcBN9SU29YRHw0umD1S67wn/pQxnr7gIwebVAmvITIhO79JbKy8elEn2xRsbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04Y1l7+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGi6XGmm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7E9C433C7;
-	Tue, 27 Feb 2024 13:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04Y1l7+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6682CC433F1;
+	Tue, 27 Feb 2024 13:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042033;
-	bh=bFAYN8I42tJpSwG4wfW+DDYfRlDIQOdKEAILLrr8XNg=;
+	s=korg; t=1709042035;
+	bh=86QwbxP5UKYPw/rF2JoMWi8MaZS1HNNS/IrnF8S4QHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGi6XGmml+CTkTTCuf4X4gKYyUZ/hCAVPQKKU3XJoo8QhVPsTj7tfxXoZ+QS98f/E
-	 DIs2gXFJ4jigRC16M8yt72J43W6g9aujWWJ9qopkmA2qpeDTwDMEz79qy3NBtOZRtV
-	 JVB29TwlPWLpS2lNQKXtEI6jXPIZV/x/70U2cnO4=
+	b=04Y1l7+Z/harscf1Ni/9QiaBKw4SUwX2MrNThqLK2ZtrVnoBL35PZATaGELEh+wHz
+	 UAgi6f4sm0bc3Qq/zskRU9VdcVOS3avJYNMf/GZAVvBnFQUyHLwsg439qRLXi8GGFE
+	 VVQTqWRVp+nd0pjz1ASPXeLL9J6Y6X0XXP4VBbaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viresh Kumar <viresh.kumar@linaro.org>,
 	Juergen Gross <jgross@suse.com>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/299] xen: evtchn: Allow shared registration of IRQ handers
-Date: Tue, 27 Feb 2024 14:23:58 +0100
-Message-ID: <20240227131629.949900644@linuxfoundation.org>
+Subject: [PATCH 6.6 128/299] xen/events: reduce externally visible helper functions
+Date: Tue, 27 Feb 2024 14:23:59 +0100
+Message-ID: <20240227131629.980265940@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,63 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 9e90e58c11b74c2bddac4b2702cf79d36b981278 ]
+[ Upstream commit 686464514fbebb6c8de4415238319e414c3500a4 ]
 
-Currently the handling of events is supported either in the kernel or
-userspace, but not both.
+get_evtchn_to_irq() has only one external user while irq_from_evtchn()
+provides the same functionality and is exported for a wider user base.
+Modify the only external user of get_evtchn_to_irq() to use
+irq_from_evtchn() instead and make get_evtchn_to_irq() static.
 
-In order to support fast delivery of interrupts from the guest to the
-backend, we need to handle the Queue notify part of Virtio protocol in
-kernel and the rest in userspace.
+evtchn_from_irq() and irq_from_virq() have a single external user and
+can easily be combined to a new helper irq_evtchn_from_virq() allowing
+to drop irq_from_virq() and to make evtchn_from_irq() static.
 
-Update the interrupt handler registration flag to IRQF_SHARED for event
-channels, which would allow multiple entities to bind their interrupt
-handler for the same event channel port.
-
-Also increment the reference count of irq_info when multiple entities
-try to bind event channel to irqchip, so the unbinding happens only
-after all the users are gone.
-
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/99b1edfd3147c6b5d22a5139dab5861e767dc34a.1697439990.git.viresh.kumar@linaro.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Reviewed-by: Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Stable-dep-of: fa765c4b4aed ("xen/events: close evtchn after mapping cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/events/events_base.c | 3 ++-
- drivers/xen/evtchn.c             | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/xen/events/events_2l.c       |  8 ++++----
+ drivers/xen/events/events_base.c     | 13 +++++++++----
+ drivers/xen/events/events_internal.h |  1 -
+ include/xen/events.h                 |  4 ++--
+ 4 files changed, 15 insertions(+), 11 deletions(-)
 
+diff --git a/drivers/xen/events/events_2l.c b/drivers/xen/events/events_2l.c
+index b8f2f971c2f0f..e3585330cf98b 100644
+--- a/drivers/xen/events/events_2l.c
++++ b/drivers/xen/events/events_2l.c
+@@ -171,11 +171,11 @@ static void evtchn_2l_handle_events(unsigned cpu, struct evtchn_loop_ctrl *ctrl)
+ 	int i;
+ 	struct shared_info *s = HYPERVISOR_shared_info;
+ 	struct vcpu_info *vcpu_info = __this_cpu_read(xen_vcpu);
++	evtchn_port_t evtchn;
+ 
+ 	/* Timer interrupt has highest priority. */
+-	irq = irq_from_virq(cpu, VIRQ_TIMER);
++	irq = irq_evtchn_from_virq(cpu, VIRQ_TIMER, &evtchn);
+ 	if (irq != -1) {
+-		evtchn_port_t evtchn = evtchn_from_irq(irq);
+ 		word_idx = evtchn / BITS_PER_LONG;
+ 		bit_idx = evtchn % BITS_PER_LONG;
+ 		if (active_evtchns(cpu, s, word_idx) & (1ULL << bit_idx))
+@@ -328,9 +328,9 @@ irqreturn_t xen_debug_interrupt(int irq, void *dev_id)
+ 	for (i = 0; i < EVTCHN_2L_NR_CHANNELS; i++) {
+ 		if (sync_test_bit(i, BM(sh->evtchn_pending))) {
+ 			int word_idx = i / BITS_PER_EVTCHN_WORD;
+-			printk("  %d: event %d -> irq %d%s%s%s\n",
++			printk("  %d: event %d -> irq %u%s%s%s\n",
+ 			       cpu_from_evtchn(i), i,
+-			       get_evtchn_to_irq(i),
++			       irq_from_evtchn(i),
+ 			       sync_test_bit(word_idx, BM(&v->evtchn_pending_sel))
+ 			       ? "" : " l2-clear",
+ 			       !sync_test_bit(i, BM(sh->evtchn_mask))
 diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
-index c50419638ac0a..cd33a418344a8 100644
+index cd33a418344a8..57dfb512cdc5d 100644
 --- a/drivers/xen/events/events_base.c
 +++ b/drivers/xen/events/events_base.c
-@@ -1235,7 +1235,8 @@ static int bind_evtchn_to_irq_chip(evtchn_port_t evtchn, struct irq_chip *chip,
- 		bind_evtchn_to_cpu(evtchn, 0, false);
- 	} else {
- 		struct irq_info *info = info_for_irq(irq);
--		WARN_ON(info == NULL || info->type != IRQT_EVTCHN);
-+		if (!WARN_ON(!info || info->type != IRQT_EVTCHN))
-+			info->refcnt++;
- 	}
+@@ -248,7 +248,7 @@ static int set_evtchn_to_irq(evtchn_port_t evtchn, unsigned int irq)
+ 	return 0;
+ }
  
- out:
-diff --git a/drivers/xen/evtchn.c b/drivers/xen/evtchn.c
-index 9139a7364df53..59717628ca42b 100644
---- a/drivers/xen/evtchn.c
-+++ b/drivers/xen/evtchn.c
-@@ -397,7 +397,7 @@ static int evtchn_bind_to_user(struct per_user_data *u, evtchn_port_t port,
- 	if (rc < 0)
- 		goto err;
+-int get_evtchn_to_irq(evtchn_port_t evtchn)
++static int get_evtchn_to_irq(evtchn_port_t evtchn)
+ {
+ 	if (evtchn >= xen_evtchn_max_channels())
+ 		return -1;
+@@ -415,7 +415,7 @@ static void xen_irq_info_cleanup(struct irq_info *info)
+ /*
+  * Accessors for packed IRQ information.
+  */
+-evtchn_port_t evtchn_from_irq(unsigned irq)
++static evtchn_port_t evtchn_from_irq(unsigned int irq)
+ {
+ 	const struct irq_info *info = NULL;
  
--	rc = bind_evtchn_to_irqhandler_lateeoi(port, evtchn_interrupt, 0,
-+	rc = bind_evtchn_to_irqhandler_lateeoi(port, evtchn_interrupt, IRQF_SHARED,
- 					       u->name, evtchn);
- 	if (rc < 0)
- 		goto err;
+@@ -433,9 +433,14 @@ unsigned int irq_from_evtchn(evtchn_port_t evtchn)
+ }
+ EXPORT_SYMBOL_GPL(irq_from_evtchn);
+ 
+-int irq_from_virq(unsigned int cpu, unsigned int virq)
++int irq_evtchn_from_virq(unsigned int cpu, unsigned int virq,
++			 evtchn_port_t *evtchn)
+ {
+-	return per_cpu(virq_to_irq, cpu)[virq];
++	int irq = per_cpu(virq_to_irq, cpu)[virq];
++
++	*evtchn = evtchn_from_irq(irq);
++
++	return irq;
+ }
+ 
+ static enum ipi_vector ipi_from_irq(unsigned irq)
+diff --git a/drivers/xen/events/events_internal.h b/drivers/xen/events/events_internal.h
+index 4d3398eff9cdf..19ae31695edcf 100644
+--- a/drivers/xen/events/events_internal.h
++++ b/drivers/xen/events/events_internal.h
+@@ -33,7 +33,6 @@ struct evtchn_ops {
+ 
+ extern const struct evtchn_ops *evtchn_ops;
+ 
+-int get_evtchn_to_irq(evtchn_port_t evtchn);
+ void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl);
+ 
+ unsigned int cpu_from_evtchn(evtchn_port_t evtchn);
+diff --git a/include/xen/events.h b/include/xen/events.h
+index 23932b0673dc7..7488cd51fbf4f 100644
+--- a/include/xen/events.h
++++ b/include/xen/events.h
+@@ -101,8 +101,8 @@ void xen_poll_irq_timeout(int irq, u64 timeout);
+ 
+ /* Determine the IRQ which is bound to an event channel */
+ unsigned int irq_from_evtchn(evtchn_port_t evtchn);
+-int irq_from_virq(unsigned int cpu, unsigned int virq);
+-evtchn_port_t evtchn_from_irq(unsigned irq);
++int irq_evtchn_from_virq(unsigned int cpu, unsigned int virq,
++			 evtchn_port_t *evtchn);
+ 
+ int xen_set_callback_via(uint64_t via);
+ int xen_evtchn_do_upcall(void);
 -- 
 2.43.0
 
