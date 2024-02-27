@@ -1,127 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B0C4A29;
-	Tue, 27 Feb 2024 12:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D82C135A5C
+	for <patches@lists.linux.dev>; Tue, 27 Feb 2024 12:59:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709038040; cv=none; b=UlibVyTJYk8y4pD6BoFG6KJuCbDn0sHVvCwcXyp2wtltGZ6f0q8NIEt9bwdSBuu7Vrg2Xt2RPrngyqDEbWO57fLus0qhS7f6SJXRiSi4TGgN4YNa6//jT5vqoN6RgZ03HAQUOOSptYCCXqco1Ikxh6AdVN6YJv87MLPyr/t+5gk=
+	t=1709038749; cv=none; b=cbNHiNq/9XeenQ1tW4Z/Eiix2VoYj1HSUaW5JQ3yiIqikWNRtDnriCRD/MJ76vAuU2OqnPoOGITaOAGOVLdQgz9rBuzxqxcZ1Nm/FiRMKffu19ftQp0S7gtYeiT19BPoyooPm1p9Tg76RsU1k2ufjE2ssGAITeg2EAuR30RUMKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709038040; c=relaxed/simple;
-	bh=1sVJdJ5ZKn9MwtPQDpeJgFRGRy0J4p0JarZOYWE1rwY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S/ZKl2pKa+nMlLOcNGy9Y97+mYkST6uYjOuxfoE+KhqAd1HtAskUnhZY4zuOmN7C5ITA6UEdIbHhwc+6xNOa8f9VLhQnlbb9fN48kgnHfWi8c1dYXr8UryGO9dMGUZz6VOsGVHEin9anJotkNQm0F0trq0TpG7Arg5apRS0UunE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wn90QiED; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wn90QiED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97D2C433F1;
-	Tue, 27 Feb 2024 12:47:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709038039;
-	bh=1sVJdJ5ZKn9MwtPQDpeJgFRGRy0J4p0JarZOYWE1rwY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Wn90QiEDUt4ikquMhOY0AKYfl1Djuo/BnnWryvS6axNSZLiTVel6wI5/Nl6vwuVpK
-	 ERkKp8cLzVPHWtYyyt14OjU+Jjh+z1rAEw9NmDzRIfpeW5hm4hbojFET9sKrqEzdB2
-	 yfMm9Q/kHoakQ/aw5JPSaVIsHgnfGFI2YDJ4WMajGi1g/8ELBfyDPnmB6WTb2E7yTW
-	 EoNiirrFJF4oceYDpnQpLAMkIVQDFRgax5/QqmHHrr/4k/T1lXwg5m/krpUhixpqKt
-	 ADuPH0LSKxAJlhnCQjqoBvfPRLRlqyCyDQSSrNDSpVeQUnjOiUuT/laiSJLIrcBP0t
-	 0kDOwQ/JoHUVg==
-Date: Tue, 27 Feb 2024 12:47:13 +0000
-From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Joerg Roedel <jroedel@suse.de>, Moritz Fischer <mdf@kernel.org>,
-	Moritz Fischer <moritzf@google.com>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v6 01/16] iommu/arm-smmu-v3: Make STE programming
- independent of the callers
-Message-ID: <20240227124713.GB14089@willie-the-truck>
-References: <0-v6-96275f25c39d+2d4-smmuv3_newapi_p1_jgg@nvidia.com>
- <1-v6-96275f25c39d+2d4-smmuv3_newapi_p1_jgg@nvidia.com>
+	s=arc-20240116; t=1709038749; c=relaxed/simple;
+	bh=r/bVphFLDwABC8qoKKKIMN1y3SC7uALCjhdKLB34bWM=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GDbP8BiswoMp9PgJvHQsfsN54UcDFe1lPoRJmAqLiyUILmEF9PsFahKmyfDhpUHriW9DufD1Zb98hIcNfS638lEw9dsuhve1/LlbBHDJ7o5tuBY6MU6PQSpBJYxxqiX8debImHpTIvLNK4uENO0OViJqTO7F3hOgD6XwmRey2Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.88.214])
+	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4Tkcv65DWhz2Bdf1;
+	Tue, 27 Feb 2024 20:56:50 +0800 (CST)
+Received: from dggpeml500021.china.huawei.com (unknown [7.185.36.21])
+	by mail.maildlp.com (Postfix) with ESMTPS id ED9531A016B;
+	Tue, 27 Feb 2024 20:59:04 +0800 (CST)
+Received: from huawei.com (10.175.127.227) by dggpeml500021.china.huawei.com
+ (7.185.36.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 27 Feb
+ 2024 20:59:04 +0800
+From: Baokun Li <libaokun1@huawei.com>
+To: <stable@vger.kernel.org>
+CC: <gregkh@linuxfoundation.org>, <sashal@kernel.org>, <tytso@mit.edu>,
+	<jack@suse.cz>, <patches@lists.linux.dev>, <yi.zhang@huawei.com>,
+	<yangerkun@huawei.com>, <libaokun1@huawei.com>
+Subject: [PATCH 5.15 1/2] ext4: regenerate buddy after block freeing failed if under fc replay
+Date: Tue, 27 Feb 2024 21:00:49 +0800
+Message-ID: <20240227130050.805571-1-libaokun1@huawei.com>
+X-Mailer: git-send-email 2.31.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1-v6-96275f25c39d+2d4-smmuv3_newapi_p1_jgg@nvidia.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ dggpeml500021.china.huawei.com (7.185.36.21)
 
-On Mon, Feb 26, 2024 at 01:07:12PM -0400, Jason Gunthorpe wrote:
-> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> index 0ffb1cf17e0b2e..9805d989dafd79 100644
-> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-> @@ -48,6 +48,9 @@ enum arm_smmu_msi_index {
->  	ARM_SMMU_MAX_MSIS,
->  };
->  
-> +static void arm_smmu_sync_ste_for_sid(struct arm_smmu_device *smmu,
-> +				      ioasid_t sid);
-> +
->  static phys_addr_t arm_smmu_msi_cfg[ARM_SMMU_MAX_MSIS][3] = {
->  	[EVTQ_MSI_INDEX] = {
->  		ARM_SMMU_EVTQ_IRQ_CFG0,
-> @@ -971,6 +974,199 @@ void arm_smmu_tlb_inv_asid(struct arm_smmu_device *smmu, u16 asid)
->  	arm_smmu_cmdq_issue_cmd_with_sync(smmu, &cmd);
->  }
->  
-> +/*
-> + * Based on the value of ent report which bits of the STE the HW will access. It
-> + * would be nice if this was complete according to the spec, but minimally it
-> + * has to capture the bits this driver uses.
-> + */
-> +static void arm_smmu_get_ste_used(const struct arm_smmu_ste *ent,
-> +				  struct arm_smmu_ste *used_bits)
-> +{
-> +	unsigned int cfg = FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(ent->data[0]));
-> +
-> +	used_bits->data[0] = cpu_to_le64(STRTAB_STE_0_V);
-> +	if (!(ent->data[0] & cpu_to_le64(STRTAB_STE_0_V)))
-> +		return;
-> +
-> +	used_bits->data[0] |= cpu_to_le64(STRTAB_STE_0_CFG);
-> +
-> +	/* S1 translates */
-> +	if (cfg & BIT(0)) {
-> +		used_bits->data[0] |= cpu_to_le64(STRTAB_STE_0_S1FMT |
-> +						  STRTAB_STE_0_S1CTXPTR_MASK |
-> +						  STRTAB_STE_0_S1CDMAX);
-> +		used_bits->data[1] |=
-> +			cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |
-> +				    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |
-> +				    STRTAB_STE_1_S1STALLD | STRTAB_STE_1_STRW |
-> +				    STRTAB_STE_1_EATS);
-> +		used_bits->data[2] |= cpu_to_le64(STRTAB_STE_2_S2VMID);
-> +	}
-> +
-> +	/* S2 translates */
-> +	if (cfg & BIT(1)) {
-> +		used_bits->data[1] |=
-> +			cpu_to_le64(STRTAB_STE_1_EATS | STRTAB_STE_1_SHCFG);
-> +		used_bits->data[2] |=
-> +			cpu_to_le64(STRTAB_STE_2_S2VMID | STRTAB_STE_2_VTCR |
-> +				    STRTAB_STE_2_S2AA64 | STRTAB_STE_2_S2ENDI |
-> +				    STRTAB_STE_2_S2PTW | STRTAB_STE_2_S2R);
-> +		used_bits->data[3] |= cpu_to_le64(STRTAB_STE_3_S2TTB_MASK);
-> +	}
-> +
-> +	if (cfg == STRTAB_STE_0_CFG_BYPASS)
-> +		used_bits->data[1] |= cpu_to_le64(STRTAB_STE_1_SHCFG);
-> +}
+commit c9b528c35795b711331ed36dc3dbee90d5812d4e upstream.
 
-I think this looks much nicer now that we've ironed out SHCFG, but I don't
-understand why you've dropped it from the used_bits array for the
-S1DSS=BYPASS case. It's still needed there, right?
+This mostly reverts commit 6bd97bf273bd ("ext4: remove redundant
+mb_regenerate_buddy()") and reintroduces mb_regenerate_buddy(). Based on
+code in mb_free_blocks(), fast commit replay can end up marking as free
+blocks that are already marked as such. This causes corruption of the
+buddy bitmap so we need to regenerate it in that case.
 
-Will
+Reported-by: Jan Kara <jack@suse.cz>
+Fixes: 6bd97bf273bd ("ext4: remove redundant mb_regenerate_buddy()")
+CVE: CVE-2024-26601
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-4-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+---
+ fs/ext4/mballoc.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 762c2f8b5b2a..63e4c3b9e608 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -1168,6 +1168,24 @@ void ext4_mb_generate_buddy(struct super_block *sb,
+ 	mb_update_avg_fragment_size(sb, grp);
+ }
+ 
++static void mb_regenerate_buddy(struct ext4_buddy *e4b)
++{
++	int count;
++	int order = 1;
++	void *buddy;
++
++	while ((buddy = mb_find_buddy(e4b, order++, &count)))
++		ext4_set_bits(buddy, 0, count);
++
++	e4b->bd_info->bb_fragments = 0;
++	memset(e4b->bd_info->bb_counters, 0,
++		sizeof(*e4b->bd_info->bb_counters) *
++		(e4b->bd_sb->s_blocksize_bits + 2));
++
++	ext4_mb_generate_buddy(e4b->bd_sb, e4b->bd_buddy,
++		e4b->bd_bitmap, e4b->bd_group, e4b->bd_info);
++}
++
+ /* The buddy information is attached the buddy cache inode
+  * for convenience. The information regarding each group
+  * is loaded via ext4_mb_load_buddy. The information involve
+@@ -1846,6 +1864,8 @@ static void mb_free_blocks(struct inode *inode, struct ext4_buddy *e4b,
+ 			ext4_mark_group_bitmap_corrupted(
+ 				sb, e4b->bd_group,
+ 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
++		} else {
++			mb_regenerate_buddy(e4b);
+ 		}
+ 		goto done;
+ 	}
+-- 
+2.31.1
+
