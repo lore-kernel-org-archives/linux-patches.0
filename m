@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E9413B295;
-	Tue, 27 Feb 2024 13:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CD113AA4F;
+	Tue, 27 Feb 2024 13:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040791; cv=none; b=LXGiVT9fYjTm1eH2Y1XDuOW+SWk6YtHKPBAL3tPK4SWITgOvueCi4xrOs9rEfCjOBli9hB9RU/KjMqDjeUjSva6OaTnaQwps6ZjzEoakHx0jUjKFHkrA53Gi8wJDwQKrBka0VO52ZNUmov+28wPhCSGNfSyKojLrAC72YaAnQoQ=
+	t=1709040793; cv=none; b=P82eOButv5IlYXfGXQMPiTp67NwS3gymGE2FPHuSGAudjenQVLtl7e6SLv4zKqmAUtdIqNXCYB2P+uLxR5/Z0iOhevH5hjwMimv6r5Mu/oE4I4Sv8LSsoTSQ+ZTYoJVU35uKofnK8/otKn86/hjFJieTu+FFLnPMiQRQlyBGujY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040791; c=relaxed/simple;
-	bh=M8lt0V/lOiAAjG8R0udZ4Uu/b68DpS3lLQuN3XpVAfY=;
+	s=arc-20240116; t=1709040793; c=relaxed/simple;
+	bh=QgMdVymL7v0RotrTh7Wx9EYObZ3gPNJk/xzYSVoYpow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yvkm0HAeg9sD5inZDO1wdsKvO1gRgk2aGQ574jzXnOXQVZTY544FMYy/NFi/3khvwVpDy7/dGpZdE7abkMnidEwBg4HpnjvZUxGhrnS6w2q919K14x2WTinlRaTBfi+pAxtIRqaE/UVbz4D41BBXJsTwJBluWTxEFvaFpswszOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENlnFdoH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3LEk7C5nx3kw3ZJWQdT4x3nrBJuKqY7S7eXfvdoGDq5PuxLdaSMAQ4LmIp6HIIS9Nlb35Aex4KLlpsqEFdRE8uVcDgSzhwZ9nNmf7hT4uiwNpE3H0+TXMkzI8PnCdI7A4Qms5UOGYT7LiZ7leyUdb8ub8WZ6RJ96Lm4+6UTFGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwd2JKp4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENlnFdoH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E02FC433F1;
-	Tue, 27 Feb 2024 13:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwd2JKp4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49667C433F1;
+	Tue, 27 Feb 2024 13:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040790;
-	bh=M8lt0V/lOiAAjG8R0udZ4Uu/b68DpS3lLQuN3XpVAfY=;
+	s=korg; t=1709040793;
+	bh=QgMdVymL7v0RotrTh7Wx9EYObZ3gPNJk/xzYSVoYpow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENlnFdoHiFdAJpnLW7Vuj3K/wgUQvT13Z+EOo7eckAi711tmILQ/6NFxvczGFUuNr
-	 tpL3AkGn5Au6lao6FdVyoa98FMVT71j2cDVHtdt7kSAUfFLeS6c15A+ZxyB9azMkh3
-	 FZ2O36niahH5aZZU7rpJa2GEPhuSZNzg3gmoyz0w=
+	b=gwd2JKp4fotfjt6lC8SRzfXAvtKZzObx2RCqcXgIaFkDxrk43Dkt/xicTaEamAdVJ
+	 Tn0jjMgcHlUa9CI+kCplts1+4ViTUw0ZhksPlNRRPOONp262vJPGoQdgnjpKIYE4D9
+	 Qq1Dotp3NHK/CPzlaQumDxAZ2uWoq1tX7nIZujwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 109/334] hwmon: (coretemp) Enlarge per package core count limit
-Date: Tue, 27 Feb 2024 14:19:27 +0100
-Message-ID: <20240227131633.996772536@linuxfoundation.org>
+Subject: [PATCH 6.7 110/334] drm/nouveau: nvkm_gsp_radix3_sg() should use nvkm_gsp_mem_ctor()
+Date: Tue, 27 Feb 2024 14:19:28 +0100
+Message-ID: <20240227131634.027184881@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,41 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit 34cf8c657cf0365791cdc658ddbca9cc907726ce ]
+[ Upstream commit 34e659f34a7559ecfd9c1f5b24d4c291f3f54711 ]
 
-Currently, coretemp driver supports only 128 cores per package.
-This loses some core temperature information on systems that have more
-than 128 cores per package.
- [   58.685033] coretemp coretemp.0: Adding Core 128 failed
- [   58.692009] coretemp coretemp.0: Adding Core 129 failed
- ...
+Function nvkm_gsp_radix3_sg() uses nvkm_gsp_mem objects to allocate the
+radix3 tables, but it unnecessarily creates those objects manually
+instead of using the standard nvkm_gsp_mem_ctor() function like the
+rest of the code does.
 
-Enlarge the limitation to 512 because there are platforms with more than
-256 cores per package.
-
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Link: https://lore.kernel.org/r/20240202092144.71180-4-rui.zhang@intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240202230608.1981026-2-ttabi@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/coretemp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 95f4c0b00b2d8..b8fc8d1ef20df 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -41,7 +41,7 @@ MODULE_PARM_DESC(tjmax, "TjMax value in degrees Celsius");
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+index 6208ddd929645..a41735ab60683 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/r535.c
+@@ -1950,20 +1950,20 @@ nvkm_gsp_radix3_dtor(struct nvkm_gsp *gsp, struct nvkm_gsp_radix3 *rx3)
+  * See kgspCreateRadix3_IMPL
+  */
+ static int
+-nvkm_gsp_radix3_sg(struct nvkm_device *device, struct sg_table *sgt, u64 size,
++nvkm_gsp_radix3_sg(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size,
+ 		   struct nvkm_gsp_radix3 *rx3)
+ {
+ 	u64 addr;
  
- #define PKG_SYSFS_ATTR_NO	1	/* Sysfs attribute for package temp */
- #define BASE_SYSFS_ATTR_NO	2	/* Sysfs Base attr no for coretemp */
--#define NUM_REAL_CORES		128	/* Number of Real cores per cpu */
-+#define NUM_REAL_CORES		512	/* Number of Real cores per cpu */
- #define CORETEMP_NAME_LENGTH	28	/* String Length of attrs */
- #define MAX_CORE_ATTRS		4	/* Maximum no of basic attrs */
- #define TOTAL_ATTRS		(MAX_CORE_ATTRS + 1)
+ 	for (int i = ARRAY_SIZE(rx3->mem) - 1; i >= 0; i--) {
+ 		u64 *ptes;
+-		int idx;
++		size_t bufsize;
++		int ret, idx;
+ 
+-		rx3->mem[i].size = ALIGN((size / GSP_PAGE_SIZE) * sizeof(u64), GSP_PAGE_SIZE);
+-		rx3->mem[i].data = dma_alloc_coherent(device->dev, rx3->mem[i].size,
+-						      &rx3->mem[i].addr, GFP_KERNEL);
+-		if (WARN_ON(!rx3->mem[i].data))
+-			return -ENOMEM;
++		bufsize = ALIGN((size / GSP_PAGE_SIZE) * sizeof(u64), GSP_PAGE_SIZE);
++		ret = nvkm_gsp_mem_ctor(gsp, bufsize, &rx3->mem[i]);
++		if (ret)
++			return ret;
+ 
+ 		ptes = rx3->mem[i].data;
+ 		if (i == 2) {
+@@ -2003,7 +2003,7 @@ r535_gsp_fini(struct nvkm_gsp *gsp, bool suspend)
+ 		if (ret)
+ 			return ret;
+ 
+-		ret = nvkm_gsp_radix3_sg(gsp->subdev.device, &gsp->sr.sgt, len, &gsp->sr.radix3);
++		ret = nvkm_gsp_radix3_sg(gsp, &gsp->sr.sgt, len, &gsp->sr.radix3);
+ 		if (ret)
+ 			return ret;
+ 
+@@ -2211,7 +2211,7 @@ r535_gsp_oneinit(struct nvkm_gsp *gsp)
+ 	memcpy(gsp->sig.data, data, size);
+ 
+ 	/* Build radix3 page table for ELF image. */
+-	ret = nvkm_gsp_radix3_sg(device, &gsp->fw.mem.sgt, gsp->fw.len, &gsp->radix3);
++	ret = nvkm_gsp_radix3_sg(gsp, &gsp->fw.mem.sgt, gsp->fw.len, &gsp->radix3);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.43.0
 
