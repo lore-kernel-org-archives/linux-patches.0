@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD09F13EFF4;
-	Tue, 27 Feb 2024 14:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804EA13DB92;
+	Tue, 27 Feb 2024 14:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042737; cv=none; b=T2oKsE/DSohq8l1YGlTAEK0B5HhJ/KEh6VNsmhKSFkA8im/SSq4f3ftp9axnR/VjC9j67cc+DQnpsfT5KI52DQR89pFgM8ZqImGKB7OhKuLkQPLXliVlrL2ogeHPo61JBSUw16VV6DG5maYCYS+SBnFiV3x2vu1fxoMOpcPVxbk=
+	t=1709042740; cv=none; b=lrsQX2tQXzt86FK+S9ZLaTGY5ZNjcRzmESwuMvd9APbbtjAoa5zmP78DCcuKVjkiTmuNXE0XRemdWW0VcfdoLTyckM8hwYnYP00HQ/en5DBv7nJ7n0/qzUT21zMmKwOjg60ZpGU+nuUuneRbit6/18EQ+HXn4NKkrUcUDUlORhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042737; c=relaxed/simple;
-	bh=3d6PoKnh8bDWHqOIuHDSjo9GZIzsvQKoKdFai2LZAAk=;
+	s=arc-20240116; t=1709042740; c=relaxed/simple;
+	bh=UahLWVcHwXxnk7c2dEH/O2laQcUtAp8nQAQFLM/veDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Grfbq80HR0rCEwT6ekdIF4kejkjOK4sUoVv3l6YimCSUZF21+6zZPPgcsFVaJeaZUnJSM4R11B6F3RJt1ayEIeWN6qf0AUaXwsMj0kDYqkqeUR1sMPo6h1+LSk1t0BpWg38tpfevg/p3FAu3OXjKLtyifg4u2acGGavBtcGI68Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAReddFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EOVFnRLwfByxZ0iarixfoAWWGWxhL+ZbhM0Jnk6OROVABLu/HAMloOU+7jnFpPiI/fgqvjv2YdStY8ESTz666w4jsRHRK2xqIbRzEY93t3wYITpVU6mH9yJ4x+moTkEUCVr1aNSnePZjsXf2uuX1dTW7j2JuzOZPS5kKys6kzdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ho/za4Q9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAReddFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C850C433C7;
-	Tue, 27 Feb 2024 14:05:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ho/za4Q9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05806C433F1;
+	Tue, 27 Feb 2024 14:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042737;
-	bh=3d6PoKnh8bDWHqOIuHDSjo9GZIzsvQKoKdFai2LZAAk=;
+	s=korg; t=1709042740;
+	bh=UahLWVcHwXxnk7c2dEH/O2laQcUtAp8nQAQFLM/veDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wAReddFtGWbRa9uhpN5LbCkv7HIrYWf12VHZ6SYH1rEgDewmHpNbqz21iLk4kYlDX
-	 F9zMMcePDz7DER8zqqoiroR8IqEIZwS9htjmhupfISGq27UL4Om2HbFcXTJRz6oZxm
-	 +MWmaCsHYmVTGCsq0JD6mMyK8r70etz6ShVq3sL0=
+	b=Ho/za4Q9zrRDo+zktn6erjGXE3b7oEJw/FF59H+R2Rp5o4px8RTkdCuLlG2FsrnQK
+	 QDvoNk12hR21W822f8jFCLPO/VdC7ezN+Wuz3luv3IDF4DqTE66bw3qFtd8Suk4IZ+
+	 0C+jj0uAE7lQW8ciwEjnEVi9ks4HqFJM1ToXyY9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 103/245] usb: roles: dont get/set_role() when usb_role_switch is unregistered
-Date: Tue, 27 Feb 2024 14:24:51 +0100
-Message-ID: <20240227131618.560048259@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 104/245] mptcp: fix lockless access in subflow ULP diag
+Date: Tue, 27 Feb 2024 14:24:52 +0100
+Message-ID: <20240227131618.604947029@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -50,76 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit b787a3e781759026a6212736ef8e52cf83d1821a upstream.
+commit b8adb69a7d29c2d33eb327bca66476fb6066516b upstream.
 
-There is a possibility that usb_role_switch device is unregistered before
-the user put usb_role_switch. In this case, the user may still want to
-get/set_role() since the user can't sense the changes of usb_role_switch.
+Since the introduction of the subflow ULP diag interface, the
+dump callback accessed all the subflow data with lockless.
 
-This will add a flag to show if usb_role_switch is already registered and
-avoid unwanted behaviors.
+We need either to annotate all the read and write operation accordingly,
+or acquire the subflow socket lock. Let's do latter, even if slower, to
+avoid a diffstat havoc.
 
-Fixes: fde0aa6c175a ("usb: common: Small class for USB role switches")
-cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240129093739.2371530-2-xu.yang_2@nxp.com
+Fixes: 5147dfb50832 ("mptcp: allow dumping subflow context to userspace")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/roles/class.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ include/net/tcp.h  |    2 +-
+ net/mptcp/diag.c   |    6 +++++-
+ net/tls/tls_main.c |    2 +-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -21,6 +21,7 @@ struct usb_role_switch {
- 	struct mutex lock; /* device lock*/
- 	struct module *module; /* the module this device depends on */
- 	enum usb_role role;
-+	bool registered;
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2233,7 +2233,7 @@ struct tcp_ulp_ops {
+ 	/* cleanup ulp */
+ 	void (*release)(struct sock *sk);
+ 	/* diagnostic */
+-	int (*get_info)(const struct sock *sk, struct sk_buff *skb);
++	int (*get_info)(struct sock *sk, struct sk_buff *skb);
+ 	size_t (*get_info_size)(const struct sock *sk);
+ 	/* clone ulp */
+ 	void (*clone)(const struct request_sock *req, struct sock *newsk,
+--- a/net/mptcp/diag.c
++++ b/net/mptcp/diag.c
+@@ -13,17 +13,19 @@
+ #include <uapi/linux/mptcp.h>
+ #include "protocol.h"
  
- 	/* From descriptor */
- 	struct device *usb2_port;
-@@ -47,6 +48,9 @@ int usb_role_switch_set_role(struct usb_
- 	if (IS_ERR_OR_NULL(sw))
- 		return 0;
- 
-+	if (!sw->registered)
-+		return -EOPNOTSUPP;
-+
- 	mutex_lock(&sw->lock);
- 
- 	ret = sw->set(sw, role);
-@@ -72,7 +76,7 @@ enum usb_role usb_role_switch_get_role(s
+-static int subflow_get_info(const struct sock *sk, struct sk_buff *skb)
++static int subflow_get_info(struct sock *sk, struct sk_buff *skb)
  {
- 	enum usb_role role;
+ 	struct mptcp_subflow_context *sf;
+ 	struct nlattr *start;
+ 	u32 flags = 0;
++	bool slow;
+ 	int err;
  
--	if (IS_ERR_OR_NULL(sw))
-+	if (IS_ERR_OR_NULL(sw) || !sw->registered)
- 		return USB_ROLE_NONE;
+ 	start = nla_nest_start_noflag(skb, INET_ULP_INFO_MPTCP);
+ 	if (!start)
+ 		return -EMSGSIZE;
  
- 	mutex_lock(&sw->lock);
-@@ -356,6 +360,8 @@ usb_role_switch_register(struct device *
- 		return ERR_PTR(ret);
++	slow = lock_sock_fast(sk);
+ 	rcu_read_lock();
+ 	sf = rcu_dereference(inet_csk(sk)->icsk_ulp_data);
+ 	if (!sf) {
+@@ -69,11 +71,13 @@ static int subflow_get_info(const struct
  	}
  
-+	sw->registered = true;
-+
- 	/* TODO: Symlinks for the host port and the device controller. */
+ 	rcu_read_unlock();
++	unlock_sock_fast(sk, slow);
+ 	nla_nest_end(skb, start);
+ 	return 0;
  
- 	return sw;
-@@ -370,8 +376,10 @@ EXPORT_SYMBOL_GPL(usb_role_switch_regist
-  */
- void usb_role_switch_unregister(struct usb_role_switch *sw)
- {
--	if (!IS_ERR_OR_NULL(sw))
-+	if (!IS_ERR_OR_NULL(sw)) {
-+		sw->registered = false;
- 		device_unregister(&sw->dev);
-+	}
+ nla_failure:
+ 	rcu_read_unlock();
++	unlock_sock_fast(sk, slow);
+ 	nla_nest_cancel(skb, start);
+ 	return err;
  }
- EXPORT_SYMBOL_GPL(usb_role_switch_unregister);
+--- a/net/tls/tls_main.c
++++ b/net/tls/tls_main.c
+@@ -805,7 +805,7 @@ static void tls_update(struct sock *sk,
+ 	}
+ }
  
+-static int tls_get_info(const struct sock *sk, struct sk_buff *skb)
++static int tls_get_info(struct sock *sk, struct sk_buff *skb)
+ {
+ 	u16 version, cipher_type;
+ 	struct tls_context *ctx;
 
 
