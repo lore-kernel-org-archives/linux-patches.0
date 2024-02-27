@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E597D140391;
-	Tue, 27 Feb 2024 13:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA29854BD4;
+	Tue, 27 Feb 2024 13:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042298; cv=none; b=XNbK2lvjEJp7NoiHZZsAlq2Rsa/AQ0tX/tAxRyC5s+iVq2CaALMI84VvzGfIND9/ms+nXt4WEQSyWLQil3oYjHEr2zlo0Yn8q2vrK+VUGU4YK1hncesgt/oPFtf/Y+0TdZHbW8R8geioiEUgvF7tBMl7k9EAHe1rbYZEwoeKZJo=
+	t=1709042300; cv=none; b=OkBJWGvGKSW43xilgFTBaso7j/4zzCwErGgr3jEVCWuReggWfJlH0SXkhy3viCA6ZRrIxiJZ0tVWvT7H+6xkxlABh8L0pg+vdM5Ni6nii0Y0+24OwmoUef730QRIv3z5Demw1vqdBgx+zg7Qu5j3SHtB9V1+2NTcT+I6TP2i/sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042298; c=relaxed/simple;
-	bh=dekAj5cPaIfzmlZAmsfD8KEAqXOUwqkhRXO30EPSZ2I=;
+	s=arc-20240116; t=1709042300; c=relaxed/simple;
+	bh=q1FK9u/IIxPS/MFptfJWgqqbSKrDTMJB2/IDP1vngak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+4FynpsKZiVJ8gYtlLPu0bDynP7m8rZCI+39vlCtTjAdna64GZhSDcTlJpjleIaWh2an7lix8EWlD9NoNfiHsiw334OGDTee/NsnOMGSzrbUljwTXguh/AdMvrq5QXjdb9WFctoluhlE0Z0OdnhSxKoXMK9OkSijXBasQl5tYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcFrHLQQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GPMWOKl1nkPaPrqZ4ghqh46422kbjrgRXLJN88rWNsAtDSqPi3uP44JaWY3HZwBJ3NRlYN6Uz/vgjU31lPoWEmNx8pwLkmIfUPnuMsK65ZkCd/yLch9IIwXlH0IZWeTCrVCqd3pH421NIescihchbz/XLH0LYCSnbmR42R0KxtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTkTUiM+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcFrHLQQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7222BC433C7;
-	Tue, 27 Feb 2024 13:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTkTUiM+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DD1C433C7;
+	Tue, 27 Feb 2024 13:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042297;
-	bh=dekAj5cPaIfzmlZAmsfD8KEAqXOUwqkhRXO30EPSZ2I=;
+	s=korg; t=1709042300;
+	bh=q1FK9u/IIxPS/MFptfJWgqqbSKrDTMJB2/IDP1vngak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcFrHLQQSJOTFgPFjgkJeCicN4SHbt8X1GiX5NsbtzUEEr0Y69wUV+yQGXgRdJ74j
-	 iumt5VYKIC+5CuCc1JOcPwyWlDZn2Brcc3I3MXrUycb1IcGiBEZdPFUYNidPkf6g1j
-	 w0sFnTk3luU1z25eNy5UABdt6CF/SKaIhs5uGZ6k=
+	b=bTkTUiM+/NANAPjWY1k2JNSQl7awZ6zoWReEjzYE0nNBpmiW9bVgZbUajt2kYVmVQ
+	 h8rrm6R+kBuCpa9X3gSKlsxYIQDu9I55Vd82cAMkL/9wKdDNC1OhY1ewga92HqzjK3
+	 99l5eDNtf9QqgjmGXzHGwB/VPCL6qvsmlFIbbWHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Sindhu Devale <sindhu.devale@gmail.com>,
+	LiHonggang <honggangli@163.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 219/299] RDMA/irdma: Add AE for too many RNRS
-Date: Tue, 27 Feb 2024 14:25:30 +0100
-Message-ID: <20240227131632.820251424@linuxfoundation.org>
+Subject: [PATCH 6.6 220/299] RDMA/srpt: Support specifying the srpt_service_guid parameter
+Date: Tue, 27 Feb 2024 14:25:31 +0100
+Message-ID: <20240227131632.850534311@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,49 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 630bdb6f28ca9e5ff79e244030170ac788478332 ]
+[ Upstream commit fdfa083549de5d50ebf7f6811f33757781e838c0 ]
 
-Add IRDMA_AE_LLP_TOO_MANY_RNRS to the list of AE's processed as an
-abnormal asyncronous event.
+Make loading ib_srpt with this parameter set work. The current behavior is
+that setting that parameter while loading the ib_srpt kernel module
+triggers the following kernel crash:
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Signed-off-by: Sindhu Devale <sindhu.devale@gmail.com>
-Link: https://lore.kernel.org/r/20240131233849.400285-5-sindhu.devale@intel.com
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+Call Trace:
+ <TASK>
+ parse_one+0x18c/0x1d0
+ parse_args+0xe1/0x230
+ load_module+0x8de/0xa60
+ init_module_from_file+0x8b/0xd0
+ idempotent_init_module+0x181/0x240
+ __x64_sys_finit_module+0x5a/0xb0
+ do_syscall_64+0x5f/0xe0
+ entry_SYSCALL_64_after_hwframe+0x6e/0x76
+
+Cc: LiHonggang <honggangli@163.com>
+Reported-by: LiHonggang <honggangli@163.com>
+Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240205004207.17031-1-bvanassche@acm.org
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/defs.h | 1 +
- drivers/infiniband/hw/irdma/hw.c   | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/infiniband/ulp/srpt/ib_srpt.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/defs.h b/drivers/infiniband/hw/irdma/defs.h
-index d06e45d2c23fd..9052e8932dc18 100644
---- a/drivers/infiniband/hw/irdma/defs.h
-+++ b/drivers/infiniband/hw/irdma/defs.h
-@@ -346,6 +346,7 @@ enum irdma_cqp_op_type {
- #define IRDMA_AE_LLP_TOO_MANY_KEEPALIVE_RETRIES				0x050b
- #define IRDMA_AE_LLP_DOUBT_REACHABILITY					0x050c
- #define IRDMA_AE_LLP_CONNECTION_ESTABLISHED				0x050e
-+#define IRDMA_AE_LLP_TOO_MANY_RNRS					0x050f
- #define IRDMA_AE_RESOURCE_EXHAUSTION					0x0520
- #define IRDMA_AE_RESET_SENT						0x0601
- #define IRDMA_AE_TERMINATE_SENT						0x0602
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index aff68aa8dfad4..1745f40b075fd 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -387,6 +387,7 @@ static void irdma_process_aeq(struct irdma_pci_f *rf)
- 		case IRDMA_AE_LLP_TOO_MANY_RETRIES:
- 		case IRDMA_AE_LCE_QP_CATASTROPHIC:
- 		case IRDMA_AE_LCE_FUNCTION_CATASTROPHIC:
-+		case IRDMA_AE_LLP_TOO_MANY_RNRS:
- 		case IRDMA_AE_LCE_CQ_CATASTROPHIC:
- 		case IRDMA_AE_UDA_XMIT_DGRAM_TOO_LONG:
- 		default:
+diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
+index c12005eab14c1..38168d8c626fe 100644
+--- a/drivers/infiniband/ulp/srpt/ib_srpt.c
++++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
+@@ -79,12 +79,16 @@ module_param(srpt_srq_size, int, 0444);
+ MODULE_PARM_DESC(srpt_srq_size,
+ 		 "Shared receive queue (SRQ) size.");
+ 
++static int srpt_set_u64_x(const char *buffer, const struct kernel_param *kp)
++{
++	return kstrtou64(buffer, 16, (u64 *)kp->arg);
++}
+ static int srpt_get_u64_x(char *buffer, const struct kernel_param *kp)
+ {
+ 	return sprintf(buffer, "0x%016llx\n", *(u64 *)kp->arg);
+ }
+-module_param_call(srpt_service_guid, NULL, srpt_get_u64_x, &srpt_service_guid,
+-		  0444);
++module_param_call(srpt_service_guid, srpt_set_u64_x, srpt_get_u64_x,
++		  &srpt_service_guid, 0444);
+ MODULE_PARM_DESC(srpt_service_guid,
+ 		 "Using this value for ioc_guid, id_ext, and cm_listen_id instead of using the node_guid of the first HCA.");
+ 
 -- 
 2.43.0
 
