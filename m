@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D054FA5;
-	Tue, 27 Feb 2024 13:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176EA54FA5;
+	Tue, 27 Feb 2024 13:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040904; cv=none; b=mopLpkOTVbHmO6F/DpmQHi2KeY7MAF0lb4DR8IbNcGuTas5UjbQE/0hjvUc34scAG+gWJVOLvZn7a56Rm2qVYd7OCXvcPv6eCWpWswUh6ZCd8VGkQjT9pK8tWrjYBrEi6TYS2CLexRKXzeUho//QkbteOtHMjpZGl16RV5fSonI=
+	t=1709040908; cv=none; b=i9zLv33ijUsSriXJ/chDwylvqe/GfCkcYeKgyB4pZIBKffM5tchBIP/JnwmJoL98oBJePzggqT0uIiiM7bpbV9ocUbNJrZI3hkYRmZpD5W/qfgkYJ4HCaTU4bWXBpmv/E6PEsl+6xpY16H9fBEzmThCex4dNaJFg8n8d5ULhuEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040904; c=relaxed/simple;
-	bh=iijDB/mJQeCn4vpkJfXG9gW6I2uNA2PxlNC5B+2WAYc=;
+	s=arc-20240116; t=1709040908; c=relaxed/simple;
+	bh=LygSKq0EHZHBL5f/gQs1Cd0Kaa1za73qkMMxczNqsZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZqzmVtamuosqmcGz6azI9H+fgPZqG3wc5tee/8EMG9/gsYJS5fPgcRju8xO8Di0CrDrjS63KEqcyk2yFI2HYy9iwHjjAMZ8rMYGgGccCtVj6ColWS2+aqLgtFj6t/3m6J+AhFgcODd0cYmH0+dxhA3DKylDQJlu4OrUPSPEfHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfiQj92y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=El7kZCeD3/C36NhauzV02ni0Ari0GW6aGIFlNDHdlD+4wZS5mcws+oxIuiOiFgDjLpl6cvdshP11QjFAHDQiU/hDtAG7mGK0KqxThNC1X/8nnvYz/hDPZiTvKpwEN5eqHyQcfq++K37W7wM3HD/wd5vjXtC6ji9jn2uTc1pAMyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/EF2XP6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfiQj92y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A113CC433C7;
-	Tue, 27 Feb 2024 13:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/EF2XP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2CDC433C7;
+	Tue, 27 Feb 2024 13:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040904;
-	bh=iijDB/mJQeCn4vpkJfXG9gW6I2uNA2PxlNC5B+2WAYc=;
+	s=korg; t=1709040906;
+	bh=LygSKq0EHZHBL5f/gQs1Cd0Kaa1za73qkMMxczNqsZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tfiQj92yix4eAyAm3EsfWKTn1rLSIET9b3pEdkWhmx4v+O1wVlsxNDgCs8uONTrtJ
-	 miGd3JBIWxyW/qifC1LqO7qH6pIpp3QHDrPNgTM2jwg3/zNd+1xMTKo6uNSmUvf0tF
-	 QzbGikM1laProDTxgBeLjv7x+3rU/ajKIrpWc0OY=
+	b=A/EF2XP6CIu/NVU0SH4BlDbkCajEmrQK0NTjKmhZ01eTZAh/0JAxN9JLG3c9Ty5b5
+	 C99xZZDlBfNWtWFrWSdrCc7w30vVg+/QXYCW3kIm7knmjTapndsVRZ4WT59OBlZuIS
+	 NHmLqchjKgUKNx0MLRWOIajwQI2KhlZw+nzM3kEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Milind Changire <mchangir@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 123/334] ceph: always check dir caps asynchronously
-Date: Tue, 27 Feb 2024 14:19:41 +0100
-Message-ID: <20240227131634.440958463@linuxfoundation.org>
+Subject: [PATCH 6.7 124/334] drm/amdgpu: skip to program GFXDEC registers for suspend abort
+Date: Tue, 27 Feb 2024 14:19:42 +0100
+Message-ID: <20240227131634.471599616@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,122 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit 07045648c07c5632e0dfd5ce084d3cd0cec0258a ]
+[ Upstream commit 93bafa32a6918154aa0caf9f66679a32c2431357 ]
 
-The MDS will issue the 'Fr' caps for async dirop, while there is
-buggy in kclient and it could miss releasing the async dirop caps,
-which is 'Fsxr'. And then the MDS will complain with:
+In the suspend abort cases, the gfx power rail doesn't turn off so
+some GFXDEC registers/CSB can't reset to default value and at this
+moment reinitialize GFXDEC/CSB will result in an unexpected error.
+So let skip those program sequence for the suspend abort case.
 
-"[WRN] client.xxx isn't responding to mclientcaps(revoke) ..."
-
-So when releasing the dirop async requests or when they fail we
-should always make sure that being revoked caps could be released.
-
-Link: https://tracker.ceph.com/issues/50223
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Milind Changire <mchangir@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/caps.c       | 6 ------
- fs/ceph/mds_client.c | 9 ++++-----
- fs/ceph/mds_client.h | 2 +-
- fs/ceph/super.h      | 2 --
- 4 files changed, 5 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h     | 2 ++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 2 ++
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c   | 8 ++++++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
-index e8bf082105d87..ad1f46c66fbff 100644
---- a/fs/ceph/caps.c
-+++ b/fs/ceph/caps.c
-@@ -3216,7 +3216,6 @@ static int ceph_try_drop_cap_snap(struct ceph_inode_info *ci,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+index 431d62f311531..31d4b5a2c5e83 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -1041,6 +1041,8 @@ struct amdgpu_device {
+ 	bool				in_s3;
+ 	bool				in_s4;
+ 	bool				in_s0ix;
++	/* indicate amdgpu suspension status */
++	bool				suspend_complete;
  
- enum put_cap_refs_mode {
- 	PUT_CAP_REFS_SYNC = 0,
--	PUT_CAP_REFS_NO_CHECK,
- 	PUT_CAP_REFS_ASYNC,
- };
+ 	enum pp_mp1_state               mp1_state;
+ 	struct amdgpu_doorbell_index doorbell_index;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index a7ad77ed09ca4..10c4a8cfa18a0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2449,6 +2449,7 @@ static int amdgpu_pmops_suspend(struct device *dev)
+ 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
  
-@@ -3332,11 +3331,6 @@ void ceph_put_cap_refs_async(struct ceph_inode_info *ci, int had)
- 	__ceph_put_cap_refs(ci, had, PUT_CAP_REFS_ASYNC);
- }
++	adev->suspend_complete = false;
+ 	if (amdgpu_acpi_is_s0ix_active(adev))
+ 		adev->in_s0ix = true;
+ 	else if (amdgpu_acpi_is_s3_active(adev))
+@@ -2463,6 +2464,7 @@ static int amdgpu_pmops_suspend_noirq(struct device *dev)
+ 	struct drm_device *drm_dev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
  
--void ceph_put_cap_refs_no_check_caps(struct ceph_inode_info *ci, int had)
--{
--	__ceph_put_cap_refs(ci, had, PUT_CAP_REFS_NO_CHECK);
--}
--
- /*
-  * Release @nr WRBUFFER refs on dirty pages for the given @snapc snap
-  * context.  Adjust per-snap dirty page accounting as appropriate.
-diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
-index 558c3af44449c..2eb66dd7d01b2 100644
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -1089,7 +1089,7 @@ void ceph_mdsc_release_request(struct kref *kref)
- 	struct ceph_mds_request *req = container_of(kref,
- 						    struct ceph_mds_request,
- 						    r_kref);
--	ceph_mdsc_release_dir_caps_no_check(req);
-+	ceph_mdsc_release_dir_caps_async(req);
- 	destroy_reply_info(&req->r_reply_info);
- 	if (req->r_request)
- 		ceph_msg_put(req->r_request);
-@@ -4247,7 +4247,7 @@ void ceph_mdsc_release_dir_caps(struct ceph_mds_request *req)
- 	}
- }
++	adev->suspend_complete = true;
+ 	if (amdgpu_acpi_should_gpu_reset(adev))
+ 		return amdgpu_asic_reset(adev);
  
--void ceph_mdsc_release_dir_caps_no_check(struct ceph_mds_request *req)
-+void ceph_mdsc_release_dir_caps_async(struct ceph_mds_request *req)
- {
- 	struct ceph_client *cl = req->r_mdsc->fsc->client;
- 	int dcaps;
-@@ -4255,8 +4255,7 @@ void ceph_mdsc_release_dir_caps_no_check(struct ceph_mds_request *req)
- 	dcaps = xchg(&req->r_dir_caps, 0);
- 	if (dcaps) {
- 		doutc(cl, "releasing r_dir_caps=%s\n", ceph_cap_string(dcaps));
--		ceph_put_cap_refs_no_check_caps(ceph_inode(req->r_parent),
--						dcaps);
-+		ceph_put_cap_refs_async(ceph_inode(req->r_parent), dcaps);
- 	}
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index 69c5009107460..3bc6943365a4f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -3034,6 +3034,14 @@ static int gfx_v9_0_cp_gfx_start(struct amdgpu_device *adev)
  
-@@ -4292,7 +4291,7 @@ static void replay_unsafe_requests(struct ceph_mds_client *mdsc,
- 		if (req->r_session->s_mds != session->s_mds)
- 			continue;
+ 	gfx_v9_0_cp_gfx_enable(adev, true);
  
--		ceph_mdsc_release_dir_caps_no_check(req);
-+		ceph_mdsc_release_dir_caps_async(req);
- 
- 		__send_request(session, req, true);
- 	}
-diff --git a/fs/ceph/mds_client.h b/fs/ceph/mds_client.h
-index 2e6ddaa13d725..40560af388272 100644
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -552,7 +552,7 @@ extern int ceph_mdsc_do_request(struct ceph_mds_client *mdsc,
- 				struct inode *dir,
- 				struct ceph_mds_request *req);
- extern void ceph_mdsc_release_dir_caps(struct ceph_mds_request *req);
--extern void ceph_mdsc_release_dir_caps_no_check(struct ceph_mds_request *req);
-+extern void ceph_mdsc_release_dir_caps_async(struct ceph_mds_request *req);
- static inline void ceph_mdsc_get_request(struct ceph_mds_request *req)
- {
- 	kref_get(&req->r_kref);
-diff --git a/fs/ceph/super.h b/fs/ceph/super.h
-index fe0f64a0acb27..15d00bdd92065 100644
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -1254,8 +1254,6 @@ extern void ceph_take_cap_refs(struct ceph_inode_info *ci, int caps,
- extern void ceph_get_cap_refs(struct ceph_inode_info *ci, int caps);
- extern void ceph_put_cap_refs(struct ceph_inode_info *ci, int had);
- extern void ceph_put_cap_refs_async(struct ceph_inode_info *ci, int had);
--extern void ceph_put_cap_refs_no_check_caps(struct ceph_inode_info *ci,
--					    int had);
- extern void ceph_put_wrbuffer_cap_refs(struct ceph_inode_info *ci, int nr,
- 				       struct ceph_snap_context *snapc);
- extern void __ceph_remove_capsnap(struct inode *inode,
++	/* Now only limit the quirk on the APU gfx9 series and already
++	 * confirmed that the APU gfx10/gfx11 needn't such update.
++	 */
++	if (adev->flags & AMD_IS_APU &&
++			adev->in_s3 && !adev->suspend_complete) {
++		DRM_INFO(" Will skip the CSB packet resubmit\n");
++		return 0;
++	}
+ 	r = amdgpu_ring_alloc(ring, gfx_v9_0_get_csb_size(adev) + 4 + 3);
+ 	if (r) {
+ 		DRM_ERROR("amdgpu: cp failed to lock ring (%d).\n", r);
 -- 
 2.43.0
 
