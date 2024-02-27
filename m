@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D5A78B61;
-	Tue, 27 Feb 2024 14:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D72978B61;
+	Tue, 27 Feb 2024 14:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042654; cv=none; b=oYE/sbpUmGvXQJAaJvCwBZpvxEJYK9qGsbv/ataZUIueqih0pG7RYHH+bpzC+cij2dg+ZIZavIikYUuhkz2EwmmriiY7nOPxr6TkZHf2EGlQvOwN4mjRy6L9ahOQJ3vCVfUyXJLp/uwT5UB6A+IH7oJrqaLdD9jnDm11PcBLAeM=
+	t=1709042657; cv=none; b=gkJdf/muYGF7VUHTZClQROHC+0jpLEY6yHcwMqIrJdsBRx0yhl5pWxFAg1G1T7jlY5t8AV0zC/t1/B5elrNILmEAdYv6PoQQT7Ukxx0ed2FhcvjPLasx4VxJhWjCIhe/ZxdcLhAbJzPToJMHPZQ+siyeERBNGUFsmVsT6Hdt2+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042654; c=relaxed/simple;
-	bh=Kg1kNRFnFwMsSgah1Y8D3Qhnqz9M4rQn2sTIYFQxa7A=;
+	s=arc-20240116; t=1709042657; c=relaxed/simple;
+	bh=mtsQjASXF3GoRNmjiBdECPS6J4vlJcjLMR5YoKxozFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mH6ZpXCp7LLVdNPAnxM1UmrH6EM8VwFhorA6PvbhX/gUNhLqW4MEydTCL/rRoicbZZAS3ZRPWDUNjRKFf/tuarr4NUXnHAoL3fAFDC8FSvdVmRBl6MrK7bItB/QzSe1NYV95Og53NzAtyUHcSFZLkWptprB//I6AkRN0uINHBuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XHrXyCl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LbMZB5JcjyFIzQDL8WPknYY51ycb0OqiaQGMSCo3zpLz26IOR7+plYAGZGMsA0wNtxn3o1s5ZxZo1MAWTiSG0UwWywrSRlc2EzO8ih2ALwcBArQtf5d0x4XghWAPaoX1dpv2iylzchs31Fqz7E5zLNuhxbJs66DTCdp79rZUA1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WS00/QDa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XHrXyCl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CBAC433F1;
-	Tue, 27 Feb 2024 14:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WS00/QDa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6EFC43390;
+	Tue, 27 Feb 2024 14:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042654;
-	bh=Kg1kNRFnFwMsSgah1Y8D3Qhnqz9M4rQn2sTIYFQxa7A=;
+	s=korg; t=1709042657;
+	bh=mtsQjASXF3GoRNmjiBdECPS6J4vlJcjLMR5YoKxozFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XHrXyClyH5WrWhl6EmvghhURYjEvMAPeKU7luGDnw8FmfOaf7ngODYOefq+liwSQ
-	 hAp5GK595EuZMSo3FeqlC6G/49UASNXs3MW1qjDKK7igQ810ctIytU29L0PGFknX2c
-	 B7fEKSxZb66I4BwmOyx1wM+r1NeeFz6HlR+nXMCs=
+	b=WS00/QDafy3hCUM3cfbXHpzzHZELRODDek0z5M0SQpJiV/yn/CVqMKJGdWCtnVZto
+	 RO8IK4LtEXMkaxJBOtmpkQLNQhQiOofs9giX3YYcyR1I2NKpaiGzldBifdix/ev7z/
+	 tOi5qA1GV277Y4/BEyQ1bATAk+ZUiIWG6+FStfDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <eugen.hristev@collabora.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/245] pmdomain: mediatek: fix race conditions with genpd
-Date: Tue, 27 Feb 2024 14:24:21 +0100
-Message-ID: <20240227131617.614130055@linuxfoundation.org>
+Subject: [PATCH 5.15 074/245] ksmbd: free aux buffer if ksmbd_iov_pin_rsp_read fails
+Date: Tue, 27 Feb 2024 14:24:22 +0100
+Message-ID: <20240227131617.646067828@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,78 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugen Hristev <eugen.hristev@collabora.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit c41336f4d69057cbf88fed47951379b384540df5 ]
+[ Upstream commit 108a020c64434fed4b69762879d78cd24088b4c7 ]
 
-If the power domains are registered first with genpd and *after that*
-the driver attempts to power them on in the probe sequence, then it is
-possible that a race condition occurs if genpd tries to power them on
-in the same time.
-The same is valid for powering them off before unregistering them
-from genpd.
-Attempt to fix race conditions by first removing the domains from genpd
-and *after that* powering down domains.
-Also first power up the domains and *after that* register them
-to genpd.
+ksmbd_iov_pin_rsp_read() doesn't free the provided aux buffer if it
+fails. Seems to be the caller's responsibility to clear the buffer in
+error case.
 
-Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
-Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20231225133615.78993-1-eugen.hristev@collabora.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-pm-domains.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ fs/ksmbd/smb2pdu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/mediatek/mtk-pm-domains.c b/drivers/soc/mediatek/mtk-pm-domains.c
-index 52ecde8e446cf..9e649b7077c6a 100644
---- a/drivers/soc/mediatek/mtk-pm-domains.c
-+++ b/drivers/soc/mediatek/mtk-pm-domains.c
-@@ -493,6 +493,11 @@ static int scpsys_add_subdomain(struct scpsys *scpsys, struct device_node *paren
- 			goto err_put_node;
- 		}
- 
-+		/* recursive call to add all subdomains */
-+		ret = scpsys_add_subdomain(scpsys, child);
-+		if (ret)
-+			goto err_put_node;
-+
- 		ret = pm_genpd_add_subdomain(parent_pd, child_pd);
- 		if (ret) {
- 			dev_err(scpsys->dev, "failed to add %s subdomain to parent %s\n",
-@@ -502,11 +507,6 @@ static int scpsys_add_subdomain(struct scpsys *scpsys, struct device_node *paren
- 			dev_dbg(scpsys->dev, "%s add subdomain: %s\n", parent_pd->name,
- 				child_pd->name);
- 		}
--
--		/* recursive call to add all subdomains */
--		ret = scpsys_add_subdomain(scpsys, child);
--		if (ret)
--			goto err_put_node;
- 	}
- 
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 7e8f1c89124fa..0613b8d14409c 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -6175,8 +6175,10 @@ static noinline int smb2_read_pipe(struct ksmbd_work *work)
+ 		err = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
+ 					     offsetof(struct smb2_read_rsp, Buffer),
+ 					     aux_payload_buf, nbytes);
+-		if (err)
++		if (err) {
++			kvfree(aux_payload_buf);
+ 			goto out;
++		}
+ 		kvfree(rpc_resp);
+ 	} else {
+ 		err = ksmbd_iov_pin_rsp(work, (void *)rsp,
+@@ -6386,8 +6388,10 @@ int smb2_read(struct ksmbd_work *work)
+ 	err = ksmbd_iov_pin_rsp_read(work, (void *)rsp,
+ 				     offsetof(struct smb2_read_rsp, Buffer),
+ 				     aux_payload_buf, nbytes);
+-	if (err)
++	if (err) {
++		kvfree(aux_payload_buf);
+ 		goto out;
++	}
+ 	ksmbd_fd_put(work, fp);
  	return 0;
-@@ -520,9 +520,6 @@ static void scpsys_remove_one_domain(struct scpsys_domain *pd)
- {
- 	int ret;
  
--	if (scpsys_domain_is_on(pd))
--		scpsys_power_off(&pd->genpd);
--
- 	/*
- 	 * We're in the error cleanup already, so we only complain,
- 	 * but won't emit another error on top of the original one.
-@@ -532,6 +529,8 @@ static void scpsys_remove_one_domain(struct scpsys_domain *pd)
- 		dev_err(pd->scpsys->dev,
- 			"failed to remove domain '%s' : %d - state may be inconsistent\n",
- 			pd->genpd.name, ret);
-+	if (scpsys_domain_is_on(pd))
-+		scpsys_power_off(&pd->genpd);
- 
- 	clk_bulk_put(pd->num_clks, pd->clks);
- 	clk_bulk_put(pd->num_subsys_clks, pd->subsys_clks);
 -- 
 2.43.0
 
