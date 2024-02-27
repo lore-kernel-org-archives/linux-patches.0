@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C3113B2B3;
-	Tue, 27 Feb 2024 14:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1C713A26F;
+	Tue, 27 Feb 2024 14:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042876; cv=none; b=mrjBjuJGB6L5UtUB/VDs3a9juvKQ2+IvhSlS3IUCwKc9K3TV8GsDd7UbK3bvPDmFdPA0KUEciovEl4thVvMVKC/dHZa36XfcYcn3OI/oYqdRm/ymqIfCiTcCfDLT+VGX+WXJaZQnwXNQBdrtAUshbCSUdrpIX9tEWs+dEFBHb1k=
+	t=1709042879; cv=none; b=nipIGrdfEt6m1DDzjk24I3K0WDSgg/rjVM4nSGqVbA5lmNgLNp8FNfIYy6LOpqTb9kZocSL1vtgFjOED/ojnJrWhUFA6hRDPd09jwh817UbXtkVeWt40nsrL443Ro6HkystXJGImKiMj59Qzr77yzaM/8+wyLGRp/FbU0G2V2Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042876; c=relaxed/simple;
-	bh=L8XruvLyz0eF9cBJCaTPyF9rIOkFD4zd2pHD86+/1jI=;
+	s=arc-20240116; t=1709042879; c=relaxed/simple;
+	bh=m5hM/fbX5rGbICYVQv9by6VAMbSX6dmEItuJOBX4iPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lshYTklfq/uja8VFFwfNuKvtmkEnQwQmCtRCMpYsol1kMKhEVXSBBCwdlZpOH4GAjcIlKUe9oiFsgzUrLzB+kX7k6GI3uVZRZumjbxsdqi2G8setL9bj0HVlWpoUVD3gKU7+Q5WUgBCM83AD86+QI+jp0RJfLp0EuG5FMMCsuj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaVRhrP3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JImf3/aGTFeLqjPDIMEjT4iH0gm7FZPkOBhLgvr6/bNjY6uzZWsUubF4xgz4l5l+D1HTtK7OQupLiWZVnXTODSsn4Nz4jMi4XK6Bj1vB+kYMQ/iyK+oqJePzirApTU9yaaE9hMiQkSApsMygRi5XursGNj99fib6XcjtJwxjQEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHZP7FnF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaVRhrP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6959C433C7;
-	Tue, 27 Feb 2024 14:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHZP7FnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7699DC433C7;
+	Tue, 27 Feb 2024 14:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042876;
-	bh=L8XruvLyz0eF9cBJCaTPyF9rIOkFD4zd2pHD86+/1jI=;
+	s=korg; t=1709042878;
+	bh=m5hM/fbX5rGbICYVQv9by6VAMbSX6dmEItuJOBX4iPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LaVRhrP3UjWibdF/+ld/nmTjci8/joUDqJPK3op7D7A/N00kvo9gfctT7SOGjrnNG
-	 Y2oPsbH/ApMoAmA9FFch6HQyGZSVbtJ5KyE05mmNtn57wptqisD9gD34VrlvPDfxeG
-	 OoT9BLKuxx1ieQemIMFdNoPniugZN350ZedK0Kho=
+	b=PHZP7FnFMQLPguh1i2/zwK/wS72CUkgx4rVGWukvC9TSG+gTsVQAKXz2wAcUet1z1
+	 sqQW8NZC9KS+coP5o0pvctgovznTqmoi22W4H4jopbWSeYcxmZnPdGca5uuWwt53/+
+	 jCmVzzHMlyIT/ZsFTryh1duxiXKILxc+qKJiBvV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Dengcheng Zhu <dzhu@wavecomp.com>,
+	Paul Burton <paulburton@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	linux-mips@vger.kernel.org,
+	Sergei Shtylyov <sergei.shtylyov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 125/245] powerpc/pseries/lpar: add missing RTAS retry status handling
-Date: Tue, 27 Feb 2024 14:25:13 +0100
-Message-ID: <20240227131619.288479890@linuxfoundation.org>
+Subject: [PATCH 5.15 126/245] MIPS: SMP-CPS: fix build error when HOTPLUG_CPU not set
+Date: Tue, 27 Feb 2024 14:25:14 +0100
+Message-ID: <20240227131619.319400822@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,65 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit daa8ab59044610aa8ef2ee45a6c157b5e11635e9 ]
+[ Upstream commit 6f02e39fa40f16c24e7a5c599a854c0d1682788d ]
 
-The ibm,get-system-parameter RTAS function may return -2 or 990x,
-which indicate that the caller should try again.
+When MIPS_CPS=y, MIPS_CPS_PM is not set, HOTPLUG_CPU is not set, and
+KEXEC=y, cps_shutdown_this_cpu() attempts to call cps_pm_enter_state(),
+which is not built when MIPS_CPS_PM is not set.
+Conditionally execute the else branch based on CONFIG_HOTPLUG_CPU
+to remove the build error.
+This build failure is from a randconfig file.
 
-pseries_lpar_read_hblkrm_characteristics() ignores this, making it
-possible to incorrectly detect TLB block invalidation characteristics
-at boot.
+mips-linux-ld: arch/mips/kernel/smp-cps.o: in function `$L162':
+smp-cps.c:(.text.cps_kexec_nonboot_cpu+0x31c): undefined reference to `cps_pm_enter_state'
 
-Move the RTAS call into a coventional rtas_busy_delay()-based loop.
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Fixes: 1211ee61b4a8 ("powerpc/pseries: Read TLB Block Invalidate Characteristics")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230125-b4-powerpc-rtas-queue-v3-3-26929c8cce78@linux.ibm.com
+Fixes: 1447864bee4c ("MIPS: kexec: CPS systems to halt nonboot CPUs")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Dengcheng Zhu <dzhu@wavecomp.com>
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: linux-mips@vger.kernel.org
+Cc: Sergei Shtylyov <sergei.shtylyov@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/lpar.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/mips/kernel/smp-cps.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
-index fce0237b07155..6c196b9413553 100644
---- a/arch/powerpc/platforms/pseries/lpar.c
-+++ b/arch/powerpc/platforms/pseries/lpar.c
-@@ -1434,22 +1434,22 @@ static inline void __init check_lp_set_hblkrm(unsigned int lp,
+diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+index bcd6a944b8397..f2df0cae1b4d9 100644
+--- a/arch/mips/kernel/smp-cps.c
++++ b/arch/mips/kernel/smp-cps.c
+@@ -424,9 +424,11 @@ static void cps_shutdown_this_cpu(enum cpu_death death)
+ 			wmb();
+ 		}
+ 	} else {
+-		pr_debug("Gating power to core %d\n", core);
+-		/* Power down the core */
+-		cps_pm_enter_state(CPS_PM_POWER_GATED);
++		if (IS_ENABLED(CONFIG_HOTPLUG_CPU)) {
++			pr_debug("Gating power to core %d\n", core);
++			/* Power down the core */
++			cps_pm_enter_state(CPS_PM_POWER_GATED);
++		}
+ 	}
+ }
  
- void __init pseries_lpar_read_hblkrm_characteristics(void)
- {
-+	const s32 token = rtas_token("ibm,get-system-parameter");
- 	unsigned char local_buffer[SPLPAR_TLB_BIC_MAXLENGTH];
- 	int call_status, len, idx, bpsize;
- 
- 	if (!firmware_has_feature(FW_FEATURE_BLOCK_REMOVE))
- 		return;
- 
--	spin_lock(&rtas_data_buf_lock);
--	memset(rtas_data_buf, 0, RTAS_DATA_BUF_SIZE);
--	call_status = rtas_call(rtas_token("ibm,get-system-parameter"), 3, 1,
--				NULL,
--				SPLPAR_TLB_BIC_TOKEN,
--				__pa(rtas_data_buf),
--				RTAS_DATA_BUF_SIZE);
--	memcpy(local_buffer, rtas_data_buf, SPLPAR_TLB_BIC_MAXLENGTH);
--	local_buffer[SPLPAR_TLB_BIC_MAXLENGTH - 1] = '\0';
--	spin_unlock(&rtas_data_buf_lock);
-+	do {
-+		spin_lock(&rtas_data_buf_lock);
-+		memset(rtas_data_buf, 0, RTAS_DATA_BUF_SIZE);
-+		call_status = rtas_call(token, 3, 1, NULL, SPLPAR_TLB_BIC_TOKEN,
-+					__pa(rtas_data_buf), RTAS_DATA_BUF_SIZE);
-+		memcpy(local_buffer, rtas_data_buf, SPLPAR_TLB_BIC_MAXLENGTH);
-+		local_buffer[SPLPAR_TLB_BIC_MAXLENGTH - 1] = '\0';
-+		spin_unlock(&rtas_data_buf_lock);
-+	} while (rtas_busy_delay(call_status));
- 
- 	if (call_status != 0) {
- 		pr_warn("%s %s Error calling get-system-parameter (0x%x)\n",
 -- 
 2.43.0
 
