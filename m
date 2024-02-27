@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A0F13B2B4;
-	Tue, 27 Feb 2024 14:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4476143C48;
+	Tue, 27 Feb 2024 14:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042848; cv=none; b=aaabOtx6N/xhWRAbQoKWNLM/kprYdo9/NR4Eos+ikz84kJj3ZABMACESk7W9SQzzzswNll/o8mPE2ZQnuumn8/3wruzPoJOSejlJC5scSLSWlvjBRevBJOWrmzuAEGaJSeVwupdmPJw0FI6TIpNeSVinDrbLe80vXondR3z/RgE=
+	t=1709042851; cv=none; b=bp7q7gXRN81dKmVVAGWPpXarE2s+oDQ+/rsR8O5f2Spe95ihnLMBIzFfFCGyd6nXcziBlmnzo68BvH0tsq79UyI46MToIoSBWNHWXK0ySKCo1dEFMec4Pi1tUhtUTBEOpXAFMVmm2nd313MHCDZrrqNuvFUCb/wjg5IVxBUHP5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042848; c=relaxed/simple;
-	bh=abQCwja0iB4c2gGxgn8swbcrtpEUbuB+Jm71TgpMe+U=;
+	s=arc-20240116; t=1709042851; c=relaxed/simple;
+	bh=7hLPtZrYID6SR7Se62Lp1PGntql64XcUxAGCDzl4ht0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iKQiu6SN9X/BSZK8BdFD+8mrz/l/8Q2JzrsCrrC4/wgS0aRLUdIXWrVjVxWGzVzOAfSTclCZU6h3cFPhCzDIss2F2wkNpphWXN983tMlzwdL+OPaim1oivHit1fjviPdBX7nCYUeqGZACNfsl+FjiPqmvzcXDw4KTmCGaanQUj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwkj2udy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e1eoO0O9rRdUMfEFUcwErJPsOSorJ9unPXsNwd79W2LeuBxjh2Paifmwi27XfsMw4HBqNLpY+q88fAamA+QzsrsliHs6NaAvlRxsf7W2PQ0/LW9wkRxyXxkSRZDa+5sZWR8DXVDx2VaIgvxYS5asOZ7r/+hE/QeFUauiJdTkxSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3/VQXk/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwkj2udy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C3FC43390;
-	Tue, 27 Feb 2024 14:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3/VQXk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717B0C433F1;
+	Tue, 27 Feb 2024 14:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042847;
-	bh=abQCwja0iB4c2gGxgn8swbcrtpEUbuB+Jm71TgpMe+U=;
+	s=korg; t=1709042850;
+	bh=7hLPtZrYID6SR7Se62Lp1PGntql64XcUxAGCDzl4ht0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwkj2udyRCCiltSrtqFG07ov/T2U3U1r7aq1fyVYZhHtILyKX/aElGtiQAl0myuPP
-	 AIjlHIf5DSXdL7zDywyF3Q8P4eH3nr6QI2TIRiZN7HNznPim4VruEli+V2T1yaCz7p
-	 u8W7hu4nUNuuwCjx8rg4ifZt/RdcrDi8/79xFOis=
+	b=J3/VQXk/QnuoqKnpK3CoZwzl5vICxI8eXHy6DaEanDP2Rvq453ou6sQOlAeNsRV7f
+	 9GCNncwsUMCKxBsk5aXQZ6lN01n9MOop5az6QlCAp3GKWbd2stNfxn/fZP6eZSx4dr
+	 3YFotPiY3yW0pe9sY6SIxobcSY4UGSTf46WOvp1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Byungki Lee <dominicus79@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Chuansheng Liu <chuansheng.liu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 142/245] f2fs: write checkpoint during FG_GC
-Date: Tue, 27 Feb 2024 14:25:30 +0100
-Message-ID: <20240227131619.829058930@linuxfoundation.org>
+Subject: [PATCH 5.15 143/245] drm/i915/dg1: Update DMC_DEBUG3 register
+Date: Tue, 27 Feb 2024 14:25:31 +0100
+Message-ID: <20240227131619.870675226@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,73 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Byungki Lee <dominicus79@gmail.com>
+From: Chuansheng Liu <chuansheng.liu@intel.com>
 
-[ Upstream commit a9163b947ae8f7af7cb8d63606cd87b9facbfe74 ]
+[ Upstream commit b60668cb4c57a7cc451de781ae49f5e9cc375eaf ]
 
-If there's not enough free sections each of which consistis of large segments,
-we can hit no free section for upcoming section allocation. Let's reclaim some
-prefree segments by writing checkpoints.
+Current DMC_DEBUG3(_MMIO(0x101090)) address is for TGL,
+it is wrong for DG1. Just like commit 5bcc95ca382e
+("drm/i915/dg1: Update DMC_DEBUG register"), correct
+this issue for DG1 platform to avoid wrong register
+being read.
 
-Signed-off-by: Byungki Lee <dominicus79@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+BSpec: 49788
+
+v2: fix "not wrong" typo. (Jani)
+
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Chuansheng Liu <chuansheng.liu@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220211002933.84240-1-chuansheng.liu@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 38 +++++++++++++++++++++++---------------
- 1 file changed, 23 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_debugfs.c | 4 ++--
+ drivers/gpu/drm/i915/i915_reg.h                      | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index d016504fad4b9..2c13f308c74e3 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1782,23 +1782,31 @@ int f2fs_gc(struct f2fs_sb_info *sbi, bool sync,
- 	if (sync)
- 		goto stop;
+diff --git a/drivers/gpu/drm/i915/display/intel_display_debugfs.c b/drivers/gpu/drm/i915/display/intel_display_debugfs.c
+index b136a0fc0963b..6b3e2e053f457 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_debugfs.c
++++ b/drivers/gpu/drm/i915/display/intel_display_debugfs.c
+@@ -571,8 +571,8 @@ static int i915_dmc_info(struct seq_file *m, void *unused)
+ 		 * reg for DC3CO debugging and validation,
+ 		 * but TGL DMC f/w is using DMC_DEBUG3 reg for DC3CO counter.
+ 		 */
+-		seq_printf(m, "DC3CO count: %d\n",
+-			   intel_de_read(dev_priv, DMC_DEBUG3));
++		seq_printf(m, "DC3CO count: %d\n", intel_de_read(dev_priv, IS_DGFX(dev_priv) ?
++					DG1_DMC_DEBUG3 : TGL_DMC_DEBUG3));
+ 	} else {
+ 		dc5_reg = IS_BROXTON(dev_priv) ? BXT_DMC_DC3_DC5_COUNT :
+ 						 SKL_DMC_DC3_DC5_COUNT;
+diff --git a/drivers/gpu/drm/i915/i915_reg.h b/drivers/gpu/drm/i915/i915_reg.h
+index 3c70aa5229e5a..906982d6370d0 100644
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -7841,7 +7841,8 @@ enum {
+ #define TGL_DMC_DEBUG_DC6_COUNT	_MMIO(0x101088)
+ #define DG1_DMC_DEBUG_DC5_COUNT	_MMIO(0x134154)
  
--	if (has_not_enough_free_secs(sbi, sec_freed, 0)) {
--		if (skipped_round <= MAX_SKIP_GC_COUNT ||
--					skipped_round * 2 < round) {
--			segno = NULL_SEGNO;
--			goto gc_more;
--		}
-+	if (!has_not_enough_free_secs(sbi, sec_freed, 0))
-+		goto stop;
+-#define DMC_DEBUG3		_MMIO(0x101090)
++#define TGL_DMC_DEBUG3		_MMIO(0x101090)
++#define DG1_DMC_DEBUG3		_MMIO(0x13415c)
  
--		if (first_skipped < last_skipped &&
--				(last_skipped - first_skipped) >
--						sbi->skipped_gc_rwsem) {
--			f2fs_drop_inmem_pages_all(sbi, true);
--			segno = NULL_SEGNO;
--			goto gc_more;
--		}
--		if (gc_type == FG_GC && !is_sbi_flag_set(sbi, SBI_CP_DISABLED))
-+	if (skipped_round <= MAX_SKIP_GC_COUNT || skipped_round * 2 < round) {
-+
-+		/* Write checkpoint to reclaim prefree segments */
-+		if (free_sections(sbi) < NR_CURSEG_PERSIST_TYPE &&
-+				prefree_segments(sbi) &&
-+				!is_sbi_flag_set(sbi, SBI_CP_DISABLED)) {
- 			ret = f2fs_write_checkpoint(sbi, &cpc);
--	}
-+			if (ret)
-+				goto stop;
-+		}
-+		segno = NULL_SEGNO;
-+		goto gc_more;
-+	}
-+	if (first_skipped < last_skipped &&
-+			(last_skipped - first_skipped) >
-+					sbi->skipped_gc_rwsem) {
-+		f2fs_drop_inmem_pages_all(sbi, true);
-+		segno = NULL_SEGNO;
-+		goto gc_more;
-+	}
-+	if (gc_type == FG_GC && !is_sbi_flag_set(sbi, SBI_CP_DISABLED))
-+		ret = f2fs_write_checkpoint(sbi, &cpc);
- stop:
- 	SIT_I(sbi)->last_victim[ALLOC_NEXT] = 0;
- 	SIT_I(sbi)->last_victim[FLUSH_DEVICE] = init_segno;
+ /* Display Internal Timeout Register */
+ #define RM_TIMEOUT		_MMIO(0x42060)
 -- 
 2.43.0
 
