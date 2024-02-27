@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266F413AA4F;
-	Tue, 27 Feb 2024 13:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8980413B79F;
+	Tue, 27 Feb 2024 13:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040805; cv=none; b=eKl8z94ntASJ64AyYLtwea3i5kjgi+YeO6PA3L+NZII3OnOoLlybZVxKIciZdyMD2q2MhBZxJIzq6LZRpBJBbAFrLfsP66m0sPIH9coQdKFLtSvLvAdn3qWSi4zT5z14PQ2fhtDGixAqIij/ALs+5zKI+wAh0rLFpaZcX1ptt5o=
+	t=1709040807; cv=none; b=aborTJIT0SwkifhV/vtrOtmBHxrazdtJOzRl1pP9eI1zPGpX9olFJI1xtBuDPY2UW1p2TqCf4/zNIAhLtYxPg3cLsLrfbzn3Mwv6BRS88IjZDcRFOpF8F86SFbFJ2/BFvqs7HuGcSiAstxDVx5nKmY6czow3aEofOU/nCuF0euQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040805; c=relaxed/simple;
-	bh=S/ySuIUXavN5MiPkgTHSqU8bA2wDmNSSidVW4SmtMms=;
+	s=arc-20240116; t=1709040807; c=relaxed/simple;
+	bh=ZyDABXNks4nm3xrs8SRB7Jnq+lGDi6AVy1oYTxxweIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pg+E0le1A435BGcE8Kz/t0rBmwlLAHtWR9XByrAutiU1G+uUr1PzudLpkgyNGITNfAXuLKKKhRqkaNtCTpDiFaACQCj4UCvN1sxI4KBRMMqP1nI0438Lj3U07/9MsrIz7P1x2VvpghGi7cGHftZKUglg8LmNc/ONhb6fM9iory4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDpUZUGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LPE3BH47vVv53SZxSEgocRgT/NFk60YCYy6o1t162jFLpJrQAPaKwqxxyU/UL0AG9kzjLSF213bthzJf9YuFog0a7fxKktWL4CdKzKg7eWOcmGC67AnsZyYAm8sMRzdrjBUeH61dZZYAhecDy63TSqrEwjTVim4myv6/LnIw1/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BB/yibyH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDpUZUGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65653C433C7;
-	Tue, 27 Feb 2024 13:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BB/yibyH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18561C433F1;
+	Tue, 27 Feb 2024 13:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040804;
-	bh=S/ySuIUXavN5MiPkgTHSqU8bA2wDmNSSidVW4SmtMms=;
+	s=korg; t=1709040807;
+	bh=ZyDABXNks4nm3xrs8SRB7Jnq+lGDi6AVy1oYTxxweIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDpUZUGCwgvx9zMPGUwQ75PXi6qLTl16SBmEFS/hwPEfkeTqZ856ucsXEd77BaFyw
-	 K62ypP9xoTVcPf3bmaaVBGAZW4akyuKRu/d0Et4bAkq2/500aHX60yMF9h+K21GzC9
-	 5HktwRPnzOafNdtkesLTKJOaezUADRqOZVsoPM1w=
+	b=BB/yibyHhlkcfR/5pLCzg3hyrbU91tycIceKjDBpIb7GjjRU5Ao1NCLRk0DZYsr0r
+	 LK9FnClxTkFXbry1mjRZYzeTAF0QNaVp08vGb6o7mcbv1mZtm/sn/piDhjkGuD+aAc
+	 Zzp7Vqz2HcEKoxGxYOGY+6ru3MuOw2DQrfcUYozc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 114/334] LoongArch: Select ARCH_ENABLE_THP_MIGRATION instead of redefining it
-Date: Tue, 27 Feb 2024 14:19:32 +0100
-Message-ID: <20240227131634.155347824@linuxfoundation.org>
+Subject: [PATCH 6.7 088/334] fs/ntfs3: ntfs3_forced_shutdown use int instead of bool
+Date: Tue, 27 Feb 2024 14:19:06 +0100
+Message-ID: <20240227131633.361333523@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,42 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit b3ff2d9c3a9c64cd0a011cdd407ffc38a6ea8788 ]
+[ Upstream commit 97ec56d390a3a0077b36cb38627f671c72dddce6 ]
 
-ARCH_ENABLE_THP_MIGRATION is supposed to be selected by arch Kconfig.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/Kconfig | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/ntfs3/fsntfs.c  | 3 ++-
+ fs/ntfs3/ntfs_fs.h | 6 +++---
+ fs/ntfs3/super.c   | 2 +-
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/arch/loongarch/Kconfig b/arch/loongarch/Kconfig
-index ee123820a4760..709af7096acb8 100644
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -11,6 +11,7 @@ config LOONGARCH
- 	select ARCH_DISABLE_KASAN_INLINE
- 	select ARCH_ENABLE_MEMORY_HOTPLUG
- 	select ARCH_ENABLE_MEMORY_HOTREMOVE
-+	select ARCH_ENABLE_THP_MIGRATION if TRANSPARENT_HUGEPAGE
- 	select ARCH_HAS_ACPI_TABLE_UPGRADE	if ACPI
- 	select ARCH_HAS_CPU_FINALIZE_INIT
- 	select ARCH_HAS_FORTIFY_SOURCE
-@@ -643,10 +644,6 @@ config ARCH_SPARSEMEM_ENABLE
- 	  or have huge holes in the physical address space for other reasons.
- 	  See <file:Documentation/mm/numa.rst> for more.
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index fbfe21dbb4259..350461d8cece5 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -853,7 +853,8 @@ void ntfs_update_mftmirr(struct ntfs_sb_info *sbi, int wait)
+ 	/*
+ 	 * sb can be NULL here. In this case sbi->flags should be 0 too.
+ 	 */
+-	if (!sb || !(sbi->flags & NTFS_FLAGS_MFTMIRR))
++	if (!sb || !(sbi->flags & NTFS_FLAGS_MFTMIRR) ||
++	    unlikely(ntfs3_forced_shutdown(sb)))
+ 		return;
  
--config ARCH_ENABLE_THP_MIGRATION
--	def_bool y
--	depends on TRANSPARENT_HUGEPAGE
--
- config ARCH_MEMORY_PROBE
- 	def_bool y
- 	depends on MEMORY_HOTPLUG
+ 	blocksize = sb->s_blocksize;
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 7ce61fb89216a..3fc027ce6e4d9 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -62,7 +62,7 @@ enum utf16_endian;
+ /* sbi->flags */
+ #define NTFS_FLAGS_NODISCARD		0x00000001
+ /* ntfs in shutdown state. */
+-#define NTFS_FLAGS_SHUTDOWN		0x00000002
++#define NTFS_FLAGS_SHUTDOWN_BIT		0x00000002  /* == 4*/
+ /* Set when LogFile is replaying. */
+ #define NTFS_FLAGS_LOG_REPLAYING	0x00000008
+ /* Set when we changed first MFT's which copy must be updated in $MftMirr. */
+@@ -1001,9 +1001,9 @@ static inline struct ntfs_sb_info *ntfs_sb(struct super_block *sb)
+ 	return sb->s_fs_info;
+ }
+ 
+-static inline bool ntfs3_forced_shutdown(struct super_block *sb)
++static inline int ntfs3_forced_shutdown(struct super_block *sb)
+ {
+-	return test_bit(NTFS_FLAGS_SHUTDOWN, &ntfs_sb(sb)->flags);
++	return test_bit(NTFS_FLAGS_SHUTDOWN_BIT, &ntfs_sb(sb)->flags);
+ }
+ 
+ /*
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index af8521a6ed954..65ef4b57411f0 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -719,7 +719,7 @@ static int ntfs_show_options(struct seq_file *m, struct dentry *root)
+  */
+ static void ntfs_shutdown(struct super_block *sb)
+ {
+-	set_bit(NTFS_FLAGS_SHUTDOWN, &ntfs_sb(sb)->flags);
++	set_bit(NTFS_FLAGS_SHUTDOWN_BIT, &ntfs_sb(sb)->flags);
+ }
+ 
+ /*
 -- 
 2.43.0
 
