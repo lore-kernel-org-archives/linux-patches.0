@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFC613AA50;
-	Tue, 27 Feb 2024 13:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02432140391;
+	Tue, 27 Feb 2024 13:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042282; cv=none; b=X3mO/booB8qeWrWJfHt2ckYXhX1/E4Xt8w9TE4jzLhJUmMgkm/JjZrLvlQZhV8o7RDXfUx6kGEv90WLx8Lp3LGcI0t2/05B/Ix+c/21MQlwPMTiBujJ5n4yt+/iOzN0CSwgJCn0CSQ5EFzbsBAoUCLRjtEza2RGmkp5D+ge80y0=
+	t=1709042285; cv=none; b=nx4bOOUf0lm0YM7nq+I78GnZPPnpyEBEyR/LhxFz3X4EUzaQcvN41CH2bDdwxBhxoQ/aMvXZ3SU7sJmQddZ0HLO7DJy9V2FrASq8kl8sNBN31AjrbExqkeT1wMUfkT35rSC5U2XyIvFri/Ol+YhphWwo8l5OjV2TzexUtmhpqjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042282; c=relaxed/simple;
-	bh=xBuKfa3G57gyAmaIR3ttE0V/Nq2DMdoKfxRmNSD4NFY=;
+	s=arc-20240116; t=1709042285; c=relaxed/simple;
+	bh=HdKixfIMBuQdwwlnxTbmwSRHQLZqqdQp5658KCvEM74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDyUDsOj7HZHr+1OMwNyk8mcoFDYhJ3iePGQniF4K3Dn/1W9l8ARdJpSHUQFaOfViaKHI+8MOl9sw7ttzvVv1tijkHqUlzXB37epW23Pe9HV0ZOYX6sI4CSRJXyxXTc9lIQglCj4XIRSUQgEZbodnZDibbxEjl/eVKFHzAzleqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+YbXh/j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1+el1b2+k+6l5ZYgYr6ZXj9avC0BRHwBG6cX6UwHAUnAjWSjKEgNv8ggiNx64Z8D4xecgDlVEdlQ7oxVJwHmF6qsmKM+fVBh8RM+lzoLqVhsFv9sCw71AzP5KWcfAUiPB386m++PKiLXfwFnhuCHmf04dOgDpKlO4v5LZ39qIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrLngdB0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+YbXh/j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B946C433F1;
-	Tue, 27 Feb 2024 13:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrLngdB0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1998FC433F1;
+	Tue, 27 Feb 2024 13:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042281;
-	bh=xBuKfa3G57gyAmaIR3ttE0V/Nq2DMdoKfxRmNSD4NFY=;
+	s=korg; t=1709042284;
+	bh=HdKixfIMBuQdwwlnxTbmwSRHQLZqqdQp5658KCvEM74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+YbXh/jdfNbeXrAceDGcaaUzOx/5sO2728kD+0bL9d17DFQCZDZzqW/h6pOASSzu
-	 awUW8M2kv1cP5fXWHQUe0pxTLT/QlwamTfcN6YtZvhkFTS99Cyx/yqVJo7IzK1V7kS
-	 mKhT+5SzB1LaVHRs9sCs8fY32zWV3klzN/+APTok=
+	b=OrLngdB0exaDFHpSyzECa88RLeuz2MldffqCB60ymcum+bdHCx16/ABIaY7Q/l/Vw
+	 w6ohCCC03nc2Kw2ka6GTMiWTj3eS5S897WycrjGdE3nTs2ILU1Gb7kcKvZ5H9ozq3n
+	 WTAlupIiibTkcnfUfdMC8rvHkVISkL5+4gBNopJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
+	Mike Marciniszyn <mike.marciniszyn@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Sindhu Devale <sindhu.devale@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 242/299] x86/numa: Fix the address overlap check in numa_fill_memblks()
-Date: Tue, 27 Feb 2024 14:25:53 +0100
-Message-ID: <20240227131633.518515112@linuxfoundation.org>
+Subject: [PATCH 6.6 216/299] RDMA/irdma: Fix KASAN issue with tasklet
+Date: Tue, 27 Feb 2024 14:25:27 +0100
+Message-ID: <20240227131632.730441145@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,114 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Mike Marciniszyn <mike.marciniszyn@intel.com>
 
-[ Upstream commit 9b99c17f7510bed2adbe17751fb8abddba5620bc ]
+[ Upstream commit bd97cea7b18a0a553773af806dfbfac27a7c4acb ]
 
-numa_fill_memblks() fills in the gaps in numa_meminfo memblks over a
-physical address range. To do so, it first creates a list of existing
-memblks that overlap that address range. The issue is that it is off
-by one when comparing to the end of the address range, so memblks
-that do not overlap are selected.
+KASAN testing revealed the following issue assocated with freeing an IRQ.
 
-The impact of selecting a memblk that does not actually overlap is
-that an existing memblk may be filled when the expected action is to
-do nothing and return NUMA_NO_MEMBLK to the caller. The caller can
-then add a new NUMA node and memblk.
+[50006.466686] Call Trace:
+[50006.466691]  <IRQ>
+[50006.489538]  dump_stack+0x5c/0x80
+[50006.493475]  print_address_description.constprop.6+0x1a/0x150
+[50006.499872]  ? irdma_sc_process_ceq+0x483/0x790 [irdma]
+[50006.505742]  ? irdma_sc_process_ceq+0x483/0x790 [irdma]
+[50006.511644]  kasan_report.cold.11+0x7f/0x118
+[50006.516572]  ? irdma_sc_process_ceq+0x483/0x790 [irdma]
+[50006.522473]  irdma_sc_process_ceq+0x483/0x790 [irdma]
+[50006.528232]  irdma_process_ceq+0xb2/0x400 [irdma]
+[50006.533601]  ? irdma_hw_flush_wqes_callback+0x370/0x370 [irdma]
+[50006.540298]  irdma_ceq_dpc+0x44/0x100 [irdma]
+[50006.545306]  tasklet_action_common.isra.14+0x148/0x2c0
+[50006.551096]  __do_softirq+0x1d0/0xaf8
+[50006.555396]  irq_exit_rcu+0x219/0x260
+[50006.559670]  irq_exit+0xa/0x20
+[50006.563320]  smp_apic_timer_interrupt+0x1bf/0x690
+[50006.568645]  apic_timer_interrupt+0xf/0x20
+[50006.573341]  </IRQ>
 
-Replace the broken open-coded search for address overlap with the
-memblock helper memblock_addrs_overlap(). Update the kernel doc
-and in code comments.
+The issue is that a tasklet could be pending on another core racing
+the delete of the irq.
 
-Suggested by: "Huang, Ying" <ying.huang@intel.com>
+Fix by insuring any scheduled tasklet is killed after deleting the
+irq.
 
-Fixes: 8f012db27c95 ("x86/numa: Introduce numa_fill_memblks()")
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://lore.kernel.org/r/10a3e6109c34c21a8dd4c513cf63df63481a2b07.1705085543.git.alison.schofield@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 44d9e52977a1 ("RDMA/irdma: Implement device initialization definitions")
+Signed-off-by: Mike Marciniszyn <mike.marciniszyn@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Signed-off-by: Sindhu Devale <sindhu.devale@intel.com>
+Link: https://lore.kernel.org/r/20240131233849.400285-2-sindhu.devale@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/numa.c       | 19 +++++++------------
- include/linux/memblock.h |  2 ++
- mm/memblock.c            |  5 +++--
- 3 files changed, 12 insertions(+), 14 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/x86/mm/numa.c b/arch/x86/mm/numa.c
-index aa39d678fe81d..e60c61b8bbc61 100644
---- a/arch/x86/mm/numa.c
-+++ b/arch/x86/mm/numa.c
-@@ -971,14 +971,12 @@ static struct numa_memblk *numa_memblk_list[NR_NODE_MEMBLKS] __initdata;
-  * @start: address to begin fill
-  * @end: address to end fill
-  *
-- * Find and extend numa_meminfo memblks to cover the @start-@end
-- * physical address range, such that the first memblk includes
-- * @start, the last memblk includes @end, and any gaps in between
-- * are filled.
-+ * Find and extend numa_meminfo memblks to cover the physical
-+ * address range @start-@end
-  *
-  * RETURNS:
-  * 0		  : Success
-- * NUMA_NO_MEMBLK : No memblk exists in @start-@end range
-+ * NUMA_NO_MEMBLK : No memblks exist in address range @start-@end
-  */
- 
- int __init numa_fill_memblks(u64 start, u64 end)
-@@ -990,17 +988,14 @@ int __init numa_fill_memblks(u64 start, u64 end)
- 
- 	/*
- 	 * Create a list of pointers to numa_meminfo memblks that
--	 * overlap start, end. Exclude (start == bi->end) since
--	 * end addresses in both a CFMWS range and a memblk range
--	 * are exclusive.
--	 *
--	 * This list of pointers is used to make in-place changes
--	 * that fill out the numa_meminfo memblks.
-+	 * overlap start, end. The list is used to make in-place
-+	 * changes that fill out the numa_meminfo memblks.
- 	 */
- 	for (int i = 0; i < mi->nr_blks; i++) {
- 		struct numa_memblk *bi = &mi->blk[i];
- 
--		if (start < bi->end && end >= bi->start) {
-+		if (memblock_addrs_overlap(start, end - start, bi->start,
-+					   bi->end - bi->start)) {
- 			blk[count] = &mi->blk[i];
- 			count++;
- 		}
-diff --git a/include/linux/memblock.h b/include/linux/memblock.h
-index 1c1072e3ca063..ed57c23f80ac2 100644
---- a/include/linux/memblock.h
-+++ b/include/linux/memblock.h
-@@ -118,6 +118,8 @@ int memblock_reserve(phys_addr_t base, phys_addr_t size);
- int memblock_physmem_add(phys_addr_t base, phys_addr_t size);
- #endif
- void memblock_trim_memory(phys_addr_t align);
-+unsigned long memblock_addrs_overlap(phys_addr_t base1, phys_addr_t size1,
-+				     phys_addr_t base2, phys_addr_t size2);
- bool memblock_overlaps_region(struct memblock_type *type,
- 			      phys_addr_t base, phys_addr_t size);
- int memblock_mark_hotplug(phys_addr_t base, phys_addr_t size);
-diff --git a/mm/memblock.c b/mm/memblock.c
-index 6d18485571b4a..d630f5c2bdb90 100644
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -180,8 +180,9 @@ static inline phys_addr_t memblock_cap_size(phys_addr_t base, phys_addr_t *size)
- /*
-  * Address comparison utilities
-  */
--static unsigned long __init_memblock memblock_addrs_overlap(phys_addr_t base1, phys_addr_t size1,
--				       phys_addr_t base2, phys_addr_t size2)
-+unsigned long __init_memblock
-+memblock_addrs_overlap(phys_addr_t base1, phys_addr_t size1, phys_addr_t base2,
-+		       phys_addr_t size2)
- {
- 	return ((base1 < (base2 + size2)) && (base2 < (base1 + size1)));
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index 564c9188e1f84..aff68aa8dfad4 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -570,6 +570,13 @@ static void irdma_destroy_irq(struct irdma_pci_f *rf,
+ 	dev->irq_ops->irdma_dis_irq(dev, msix_vec->idx);
+ 	irq_update_affinity_hint(msix_vec->irq, NULL);
+ 	free_irq(msix_vec->irq, dev_id);
++	if (rf == dev_id) {
++		tasklet_kill(&rf->dpc_tasklet);
++	} else {
++		struct irdma_ceq *iwceq = (struct irdma_ceq *)dev_id;
++
++		tasklet_kill(&iwceq->dpc_tasklet);
++	}
  }
+ 
+ /**
 -- 
 2.43.0
 
