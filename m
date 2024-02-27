@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059AB13B295;
-	Tue, 27 Feb 2024 13:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE02C13B2AC;
+	Tue, 27 Feb 2024 13:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041047; cv=none; b=NJM/GUaZF0nKLdqK63RhWjvwSzbHAsJlXb9KotwYSUXhsVccsAntc0scYUaBFJeL++uUh0uhjudkqu+CWTOM+9Zb8Q/iLIcX8lH+ENJ1AFnAjLvhTXVjJ7NPVgEStaYR4/YYxsf/PW8sNUHMT3P/UvZyBGkkWHyD7UmvcxA4S6k=
+	t=1709041049; cv=none; b=eL3RyvOSCct4/NJcghZJX/EFMadoK6Sr7cjredFl9nX2XPdO1FciRjw/THo8w2gv5DIW0OvJWrDdZRGaz3rVNrwVRFS0ZyPfEyWRVStfv+JaeZkSY7WdKjgkzU6NuVIT4BZJr8SL6AADMMnh9CFrl1WQ0WSwcMAEBWKXUrSsyCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041047; c=relaxed/simple;
-	bh=hloI+Qoih92MsQebGRMohc8rEQDredBAZInAts08DTo=;
+	s=arc-20240116; t=1709041049; c=relaxed/simple;
+	bh=xTciEU1GQCFTM2km+Vu5a9Zh9qhZzfsrxJwk+nC/9gM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhbyTh40JESKY667Ld2gY0k+9Jb9ZvT355TI+5N+VSfBlnYDaTHFwXTtOVjhjn/2GkYcf+aKFGwzfW3/PEop0LMfICqZDlQwJmm2LbTZrZKSp3/KPvN53/Drcmvtykh6ACtYjikftglxqLVbJAQU17m4DghTXtd4y1sZyeRU1tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOcEquc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j4KeSdFxdadnn2layp0md2pulaK69DWmZ9V8jbs885k1KhV7IL42T+AbJ8x4Zuy8TkrSwOmHMsauaKfO1OafRjwiBANIhKlZWApxWnCRCmxIdnx9uAL3kFDh28lo5eVtY/iPfgl5PLuB7vWzai4mCvrg7X9ne68E/WlHEy8KxFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ut3a0BhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOcEquc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C05DC43399;
-	Tue, 27 Feb 2024 13:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ut3a0BhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED38C433F1;
+	Tue, 27 Feb 2024 13:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041046;
-	bh=hloI+Qoih92MsQebGRMohc8rEQDredBAZInAts08DTo=;
+	s=korg; t=1709041049;
+	bh=xTciEU1GQCFTM2km+Vu5a9Zh9qhZzfsrxJwk+nC/9gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOcEquc3QiHCY9AGU63p4NMiObe70NBIOui0UMYc907aVLIYVAKiVGcCpJUWd3Ogv
-	 9OCwbc+8uQKt+trfASW+JXXmASzDtCEM8lTLbV+uBnLs2/C48OUJJtRGmUN63zNU4i
-	 36qZX0zfhJOayrqYtFYZr4yrwF5vA+BvTDLoruxo=
+	b=ut3a0BhRxy+KE2JkhRmMKsC+aLsqDdDjoVc3vPNJIHG8D1ymvMq43GxVOZe/jTj1r
+	 X83RaKgffnwtkGYwQF7OdAzeJZUU5XHZ/4S0vcPVpVGe+RafZ1uymn8vMPj3PWTzCj
+	 f/x3G1F+tfZ+ujDSHkEV77C+7/lXtDejWvww8Pig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandeep Dhavale <dhavale@google.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>
-Subject: [PATCH 6.7 200/334] erofs: fix refcount on the metabuf used for inode lookup
-Date: Tue, 27 Feb 2024 14:20:58 +0100
-Message-ID: <20240227131637.180105211@linuxfoundation.org>
+	Ondrej Jirman <megi@xff.cz>
+Subject: [PATCH 6.7 201/334] Revert "usb: typec: tcpm: reset counter when enter into unattached state after try role"
+Date: Tue, 27 Feb 2024 14:20:59 +0100
+Message-ID: <20240227131637.215777365@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,73 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandeep Dhavale <dhavale@google.com>
+From: Ondrej Jirman <megi@xff.cz>
 
-commit 56ee7db31187dc36d501622cb5f1415e88e01c2a upstream.
+commit 23b1d2d99b0f55326f05e7d757fa197c4a95dc5c upstream.
 
-In erofs_find_target_block() when erofs_dirnamecmp() returns 0,
-we do not assign the target metabuf. This causes the caller
-erofs_namei()'s erofs_put_metabuf() at the end to be not effective
-leaving the refcount on the page.
-As the page from metabuf (buf->page) is never put, such page cannot be
-migrated or reclaimed. Fix it now by putting the metabuf from
-previous loop and assigning the current metabuf to target before
-returning so caller erofs_namei() can do the final put as it was
-intended.
+The reverted commit makes the state machine only ever go from SRC_ATTACH_WAIT
+to SNK_TRY in endless loop when toggling. After revert it goes to SRC_ATTACHED
+after initially trying SNK_TRY earlier, as it should for toggling to ever detect
+the power source mode and the port is again able to provide power to attached
+power sinks.
 
-Fixes: 500edd095648 ("erofs: use meta buffers for inode lookup")
-Cc: <stable@vger.kernel.org> # 5.18+
-Signed-off-by: Sandeep Dhavale <dhavale@google.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20240221210348.3667795-1-dhavale@google.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+This reverts commit 2d6d80127006ae3da26b1f21a65eccf957f2d1e5.
+
+Cc: stable@vger.kernel.org
+Fixes: 2d6d80127006 ("usb: typec: tcpm: reset counter when enter into unattached state after try role")
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+Link: https://lore.kernel.org/r/20240217162023.1719738-1-megi@xff.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/namei.c |   28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/fs/erofs/namei.c
-+++ b/fs/erofs/namei.c
-@@ -130,24 +130,24 @@ static void *erofs_find_target_block(str
- 			/* string comparison without already matched prefix */
- 			diff = erofs_dirnamecmp(name, &dname, &matched);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -3730,9 +3730,6 @@ static void tcpm_detach(struct tcpm_port
+ 	if (tcpm_port_is_disconnected(port))
+ 		port->hard_reset_count = 0;
  
--			if (!diff) {
--				*_ndirents = 0;
--				goto out;
--			} else if (diff > 0) {
--				head = mid + 1;
--				startprfx = matched;
+-	port->try_src_count = 0;
+-	port->try_snk_count = 0;
 -
--				if (!IS_ERR(candidate))
--					erofs_put_metabuf(target);
--				*target = buf;
--				candidate = de;
--				*_ndirents = ndirents;
--			} else {
-+			if (diff < 0) {
- 				erofs_put_metabuf(&buf);
--
- 				back = mid - 1;
- 				endprfx = matched;
-+				continue;
-+			}
-+
-+			if (!IS_ERR(candidate))
-+				erofs_put_metabuf(target);
-+			*target = buf;
-+			if (!diff) {
-+				*_ndirents = 0;
-+				return de;
- 			}
-+			head = mid + 1;
-+			startprfx = matched;
-+			candidate = de;
-+			*_ndirents = ndirents;
- 			continue;
- 		}
- out:		/* free if the candidate is valid */
+ 	if (!port->attached)
+ 		return;
+ 
 
 
