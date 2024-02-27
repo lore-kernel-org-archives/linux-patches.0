@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2D013DBBF;
-	Tue, 27 Feb 2024 13:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A477B1419AA;
+	Tue, 27 Feb 2024 13:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041517; cv=none; b=et82oWKfrXMK5wX3mrejdsUpBuPLxWbG+CbHNv68Q3SvU4IZ0/0oIGsHYvd4H1oXNU8TdfUYY2pLHpbIZoKYEgGloI/QmnJ5lbvCziXNLTzfexpxCBqGXTd+li0AAxOwfareSx/+B/V3YlwJPgUQsNquB6pMESYoOPx/2Cvx/t0=
+	t=1709041520; cv=none; b=ebpe/QqKtB/2IvlMWNZo0dJrV2XM29KNbhJSM1OkLrsEnynjWP20oi9YdMD6znibDqzd4clcydht1F4Gm2YzMv7NxZjCqJuUN4FOU2pcAxcARjj8psacC8mcttFI8zkNLJAw9matMCSVeEzx8Qen1hhgZ9fv137mmynB0OR6sPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041517; c=relaxed/simple;
-	bh=mMgN0pdeyztAazltMhpIHv6h9ZEOFLUtmAe+xGwYtsg=;
+	s=arc-20240116; t=1709041520; c=relaxed/simple;
+	bh=RsUrhUhjlpocM/7KjPpNSfww7UptShZ50wD+dzgX2tA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKPPtfCVEqKgeCHm8IhOqKim7LtDMkXumFH1HbHxovZ/VOSXjOjkKRhq1yaBiheUl1t0FGdspQ6gnJ0lnfnOrVpazqUJEV6/sFIVYw79H771ndPUkDQef7+tq3cZMelh4b7Z6mcHWBqUpEBCylBR8xsF8D0NBTkR4xfppo5E2iQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8yULE3O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CxUWwPdlcQGYPpafna+c0JROMGHgoS4gpNRHXqpKmJ2Nra6F9P1b6hI6n3x+32ksxOZKJPF80RyrQVKttSMfPj7kaUiOyYmDZSUi28t+jof1WkXOCnmOlsGTcGmXqDvck3o6xtCH9hv9cOn9vVUMj/6vCCka944qbVF4F9wLNuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCLO7t46; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8yULE3O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66204C433C7;
-	Tue, 27 Feb 2024 13:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCLO7t46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AE01C433A6;
+	Tue, 27 Feb 2024 13:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041517;
-	bh=mMgN0pdeyztAazltMhpIHv6h9ZEOFLUtmAe+xGwYtsg=;
+	s=korg; t=1709041520;
+	bh=RsUrhUhjlpocM/7KjPpNSfww7UptShZ50wD+dzgX2tA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8yULE3Og9hAI0HzGm8HxuQDmKiqN9gFLnh8V0EE8SooSlXE1ldOav7554NoHuV2R
-	 XClAMhOPHbbVEVl+tdp7+aivI1uFwAjRnbdOUYBBG/UtGO9z7XKidpVnCKvY6k8kxN
-	 /Q7orfKOgORHTffryXsWCQVI/lll2f+S2Qo1MzS8=
+	b=WCLO7t46WTynNrdV4xATMx3fjyOFeoUBdRK6jpbXQbFDKdC4C52mnbm60atX1n9OJ
+	 X+KDeMa/h0nefuA15+iHM61KYc/3tU9cO/g1HzRxnOLusnVShp0Y5uH83H/zBkmN1H
+	 uMzwlhELKtSVP4HWqh3ElgZMVLBV8iCC6wq5ed40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaro Koskinen <aaro.koskinen@nokia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Subject: [PATCH 4.19 05/52] net: stmmac: fix notifier registration
-Date: Tue, 27 Feb 2024 14:25:52 +0100
-Message-ID: <20240227131548.701928211@linuxfoundation.org>
+	"GONG, Ruiqi" <gongruiqi1@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	GONG
+Subject: [PATCH 4.19 06/52] memcg: add refcnt for pcpu stock to avoid UAF problem in drain_all_stock()
+Date: Tue, 27 Feb 2024 14:25:53 +0100
+Message-ID: <20240227131548.736821200@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -51,83 +51,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaro Koskinen <aaro.koskinen@nokia.com>
+From: "GONG, Ruiqi" <gongruiqi1@huawei.com>
 
-commit 474a31e13a4e9749fb3ee55794d69d0f17ee0998 upstream.
+commit 1a3e1f40962c445b997151a542314f3c6097f8c3 upstream.
 
-We cannot register the same netdev notifier multiple times when probing
-stmmac devices. Register the notifier only once in module init, and also
-make debugfs creation/deletion safe against simultaneous notifier call.
+NOTE: This is a partial backport since we only need the refcnt between
+memcg and stock to fix the problem stated below, and in this way
+multiple versions use the same code and align with each other.
 
-Fixes: 481a7d154cbb ("stmmac: debugfs entry name is not be changed when udev rename device name.")
-Signed-off-by: Aaro Koskinen <aaro.koskinen@nokia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+There was a kernel panic happened on an in-house environment running
+3.10, and the same problem was reproduced on 4.19:
+
+general protection fault: 0000 [#1] SMP PTI
+CPU: 1 PID: 2085 Comm: bash Kdump: loaded Tainted: G             L    4.19.90+ #7
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
+RIP: 0010 drain_all_stock+0xad/0x140
+Code: 00 00 4d 85 ff 74 2c 45 85 c9 74 27 4d 39 fc 74 42 41 80 bc 24 28 04 00 00 00 74 17 49 8b 04 24 49 8b 17 48 8b 88 90 02 00 00 <48> 39 8a 90 02 00 00 74 02 eb 86 48 63 88 3c 01 00 00 39 8a 3c 01
+RSP: 0018:ffffa7efc5813d70 EFLAGS: 00010202
+RAX: ffff8cb185548800 RBX: ffff8cb89f420160 RCX: ffff8cb1867b6000
+RDX: babababababababa RSI: 0000000000000001 RDI: 0000000000231876
+RBP: 0000000000000000 R08: 0000000000000415 R09: 0000000000000002
+R10: 0000000000000000 R11: 0000000000000001 R12: ffff8cb186f89040
+R13: 0000000000020160 R14: 0000000000000001 R15: ffff8cb186b27040
+FS:  00007f4a308d3740(0000) GS:ffff8cb89f440000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffe4d634a68 CR3: 000000010b022000 CR4: 00000000000006e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ mem_cgroup_force_empty_write+0x31/0xb0
+ cgroup_file_write+0x60/0x140
+ ? __check_object_size+0x136/0x147
+ kernfs_fop_write+0x10e/0x190
+ __vfs_write+0x37/0x1b0
+ ? selinux_file_permission+0xe8/0x130
+ ? security_file_permission+0x2e/0xb0
+ vfs_write+0xb6/0x1a0
+ ksys_write+0x57/0xd0
+ do_syscall_64+0x63/0x250
+ ? async_page_fault+0x8/0x30
+ entry_SYSCALL_64_after_hwframe+0x5c/0xc1
+Modules linked in: ...
+
+It is found that in case of stock->nr_pages == 0, the memcg on
+stock->cached could be freed due to its refcnt decreased to 0, which
+made stock->cached become a dangling pointer. It could cause a UAF
+problem in drain_all_stock() in the following concurrent scenario. Note
+that drain_all_stock() doesn't disable irq but only preemption.
+
+CPU1                             CPU2
+==============================================================================
+stock->cached = memcgA (freed)
+                                 drain_all_stock(memcgB)
+                                  rcu_read_lock()
+                                  memcg = CPU1's stock->cached (memcgA)
+                                  (interrupted)
+refill_stock(memcgC)
+ drain_stock(memcgA)
+ stock->cached = memcgC
+ stock->nr_pages += xxx (> 0)
+                                  stock->nr_pages > 0
+                                  mem_cgroup_is_descendant(memcgA, memcgB) [UAF]
+                                  rcu_read_unlock()
+
+This problem is, unintentionally, fixed at 5.9, where commit
+1a3e1f40962c ("mm: memcontrol: decouple reference counting from page
+accounting") adds memcg refcnt for stock. Therefore affected LTS
+versions include 4.19 and 5.4.
+
+For 4.19, memcg's css offline process doesn't call drain_all_stock(). so
+it's easier for the released memcg to be left on the stock. For 5.4,
+although mem_cgroup_css_offline() does call drain_all_stock(), but the
+flushing could be skipped when stock->nr_pages happens to be 0, and
+besides the async draining could be delayed and take place after the UAF
+problem has happened.
+
+Fix this problem by adding (and decreasing) memcg's refcnt when memcg is
+put onto (and removed from) stock, just like how commit 1a3e1f40962c
+("mm: memcontrol: decouple reference counting from page accounting")
+does. After all, "being on the stock" is a kind of reference with
+regards to memcg. As such, it's guaranteed that a css on stock would not
+be freed.
+
+It's good to mention that refill_stock() is executed in an irq-disabled
+context, so the drain_stock() patched with css_put() would not actually
+free memcgA until the end of refill_stock(), since css_put() is an RCU
+free and it's still in grace period. For CPU2, the access to CPU1's
+stock->cached is protected by rcu_read_lock(), so in this case it gets
+either NULL from stock->cached or a memcgA that is still good.
+
+Cc: stable@vger.kernel.org      # 4.19 5.4
+Fixes: cdec2e4265df ("memcg: coalesce charging via percpu storage")
+Signed-off-by: GONG, Ruiqi <gongruiqi1@huawei.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ mm/memcontrol.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4067,6 +4067,8 @@ static void stmmac_init_fs(struct net_de
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2015,6 +2015,9 @@ static void drain_stock(struct memcg_sto
  {
- 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	struct mem_cgroup *old = stock->cached;
  
-+	rtnl_lock();
++	if (!old)
++		return;
 +
- 	/* Create per netdev entries */
- 	priv->dbgfs_dir = debugfs_create_dir(dev->name, stmmac_fs_dir);
- 
-@@ -4078,14 +4080,13 @@ static void stmmac_init_fs(struct net_de
- 	debugfs_create_file("dma_cap", 0444, priv->dbgfs_dir, dev,
- 			    &stmmac_dma_cap_fops);
- 
--	register_netdevice_notifier(&stmmac_notifier);
-+	rtnl_unlock();
+ 	if (stock->nr_pages) {
+ 		page_counter_uncharge(&old->memory, stock->nr_pages);
+ 		if (do_memsw_account())
+@@ -2022,6 +2025,8 @@ static void drain_stock(struct memcg_sto
+ 		css_put_many(&old->css, stock->nr_pages);
+ 		stock->nr_pages = 0;
+ 	}
++
++	css_put(&old->css);
+ 	stock->cached = NULL;
  }
  
- static void stmmac_exit_fs(struct net_device *dev)
- {
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 
--	unregister_netdevice_notifier(&stmmac_notifier);
- 	debugfs_remove_recursive(priv->dbgfs_dir);
- }
- #endif /* CONFIG_DEBUG_FS */
-@@ -4455,14 +4456,14 @@ int stmmac_dvr_remove(struct device *dev
- 
- 	netdev_info(priv->dev, "%s: removing driver", __func__);
- 
--#ifdef CONFIG_DEBUG_FS
--	stmmac_exit_fs(ndev);
--#endif
- 	stmmac_stop_all_dma(priv);
- 
- 	stmmac_mac_set(priv, priv->ioaddr, false);
- 	netif_carrier_off(ndev);
- 	unregister_netdev(ndev);
-+#ifdef CONFIG_DEBUG_FS
-+	stmmac_exit_fs(ndev);
-+#endif
- 	if (priv->plat->stmmac_rst)
- 		reset_control_assert(priv->plat->stmmac_rst);
- 	clk_disable_unprepare(priv->plat->pclk);
-@@ -4679,6 +4680,7 @@ static int __init stmmac_init(void)
- 	/* Create debugfs main directory if it doesn't exist yet */
- 	if (!stmmac_fs_dir)
- 		stmmac_fs_dir = debugfs_create_dir(STMMAC_RESOURCE_NAME, NULL);
-+	register_netdevice_notifier(&stmmac_notifier);
- #endif
- 
- 	return 0;
-@@ -4687,6 +4689,7 @@ static int __init stmmac_init(void)
- static void __exit stmmac_exit(void)
- {
- #ifdef CONFIG_DEBUG_FS
-+	unregister_netdevice_notifier(&stmmac_notifier);
- 	debugfs_remove_recursive(stmmac_fs_dir);
- #endif
- }
+@@ -2057,6 +2062,7 @@ static void refill_stock(struct mem_cgro
+ 	stock = this_cpu_ptr(&memcg_stock);
+ 	if (stock->cached != memcg) { /* reset if necessary */
+ 		drain_stock(stock);
++		css_get(&memcg->css);
+ 		stock->cached = memcg;
+ 	}
+ 	stock->nr_pages += nr_pages;
 
 
