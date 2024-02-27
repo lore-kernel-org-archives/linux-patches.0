@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B738713B2B4;
-	Tue, 27 Feb 2024 14:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A50C13B2B8;
+	Tue, 27 Feb 2024 14:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043696; cv=none; b=IQXr4VvQCXPD/ndrIX4NBqQ0tvmnuBSUFSqqw0c6aj4WC6Z3Fgml2wnGkCtU/TAxi3tU2fsHX5R1NfzqIyvis1fOYH/KVvgk2t6GZObQ83uUkz+IJwRms+42Fce+KuXiK0gxkUZzpBLlltb4SEfLWiUep3oq6DYb1VJDFZ8Y3w4=
+	t=1709043699; cv=none; b=ln9ViN1LnkiTnySV8xSBeK+8JabwSiyFUgcThjnN7CnbCQ0Mvq4K/L8GMIJmi2xfn4lFxTrrnVBFAPP86011jzk6iiF8qRYJcqxYeJATCXpTjajOFw/Lou+PW9aeacIJ87GCiznNuhcPIfmJwfDSnulkVqOwer8kAhQlxTobjpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043696; c=relaxed/simple;
-	bh=MC3GBIed2ykHhIFWbeGJRt0YQ6ziwMZAjvTc45yinDY=;
+	s=arc-20240116; t=1709043699; c=relaxed/simple;
+	bh=9VHb/aRgjJlJXIEfNJK/srAJuQ3Ci6fzvp2NUvAOr30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MmNxFtntj/vZg5j7pip/LwoZZkppeLUhNCCnUASYcR2tcdcy4g6Fhvaq5wueVScsRCKTxTmu1ykWSbvB0LW8CLzMtgGhApFBM9a2gdJDbfXaKWoSZvIDFq7PBuIjBDVMfFjnF7yAm5eSjppX1Jlo/CRXxHCwFDBRIpK0F1qVDpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tliGv5BS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fEaPPHrM1XvRLUsy2bhQRRE4qZwpUCh7wqaeXGxjGQbZZcJFbzzcv5bbUWsKPQWx03lVRK19+mw3GKv8/gO89EED7KejCXdEx6TmqsQJqZlasbc95dByc7gTXCOQK2ppQGSFAoRnfCXaHdPU/L9VlLlie93c6Ow15KQFEG8ynFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8wAyvAk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tliGv5BS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45715C433F1;
-	Tue, 27 Feb 2024 14:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8wAyvAk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14689C433F1;
+	Tue, 27 Feb 2024 14:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043696;
-	bh=MC3GBIed2ykHhIFWbeGJRt0YQ6ziwMZAjvTc45yinDY=;
+	s=korg; t=1709043699;
+	bh=9VHb/aRgjJlJXIEfNJK/srAJuQ3Ci6fzvp2NUvAOr30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tliGv5BSVoGUKs250vsqsEz+U7LYHqTmLT4mOYf0HS9MyVoxx3lRXCnFVmmc4lftU
-	 Ky3NFwp7jOHuRceRFll0xNNpeFNFNXCNgZhgk2WPZxRAZtWNXYfhI6NrsFFtPBSCQF
-	 im1z/pr77o5xb99NJK9JLJefRSw4r9SRtV7ev1gw=
+	b=H8wAyvAkWIguoJbt4f5WRLvKT/mpDvH0Ng6LW1MBDkncweJ3Zf9jdIVcv/DMLSgIE
+	 Bp7b+7XP8GlJUrvIAOVmSo/o9JQn7Qgc3V6+dDljeozzOz1glOj5SMflSurrYzBW2z
+	 FkcoNQML0ybQditd95KjSHdbhGIP3muC9149kiDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 194/195] arp: Prevent overflow in arp_req_get().
-Date: Tue, 27 Feb 2024 14:27:35 +0100
-Message-ID: <20240227131616.808580994@linuxfoundation.org>
+	Edward Lo <edward.lo@ambergroup.io>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	"Doebel, Bjoern" <doebel@amazon.de>
+Subject: [PATCH 6.1 195/195] fs/ntfs3: Enhance the attribute size check
+Date: Tue, 27 Feb 2024 14:27:36 +0100
+Message-ID: <20240227131616.840371189@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,96 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Edward Lo <edward.lo@ambergroup.io>
 
-commit a7d6027790acea24446ddd6632d394096c0f4667 upstream.
+commit 4f082a7531223a438c757bb20e304f4c941c67a8 upstream.
 
-syzkaller reported an overflown write in arp_req_get(). [0]
+This combines the overflow and boundary check so that all attribute size
+will be properly examined while enumerating them.
 
-When ioctl(SIOCGARP) is issued, arp_req_get() looks up an neighbour
-entry and copies neigh->ha to struct arpreq.arp_ha.sa_data.
+[  169.181521] BUG: KASAN: slab-out-of-bounds in run_unpack+0x2e3/0x570
+[  169.183161] Read of size 1 at addr ffff8880094b6240 by task mount/247
+[  169.184046]
+[  169.184925] CPU: 0 PID: 247 Comm: mount Not tainted 6.0.0-rc7+ #3
+[  169.185908] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+[  169.187066] Call Trace:
+[  169.187492]  <TASK>
+[  169.188049]  dump_stack_lvl+0x49/0x63
+[  169.188495]  print_report.cold+0xf5/0x689
+[  169.188964]  ? run_unpack+0x2e3/0x570
+[  169.189331]  kasan_report+0xa7/0x130
+[  169.189714]  ? run_unpack+0x2e3/0x570
+[  169.190079]  __asan_load1+0x51/0x60
+[  169.190634]  run_unpack+0x2e3/0x570
+[  169.191290]  ? run_pack+0x840/0x840
+[  169.191569]  ? run_lookup_entry+0xb3/0x1f0
+[  169.192443]  ? mi_enum_attr+0x20a/0x230
+[  169.192886]  run_unpack_ex+0xad/0x3e0
+[  169.193276]  ? run_unpack+0x570/0x570
+[  169.193557]  ? ni_load_mi+0x80/0x80
+[  169.193889]  ? debug_smp_processor_id+0x17/0x20
+[  169.194236]  ? mi_init+0x4a/0x70
+[  169.194496]  attr_load_runs_vcn+0x166/0x1c0
+[  169.194851]  ? attr_data_write_resident+0x250/0x250
+[  169.195188]  mi_read+0x133/0x2c0
+[  169.195481]  ntfs_iget5+0x277/0x1780
+[  169.196017]  ? call_rcu+0x1c7/0x330
+[  169.196392]  ? ntfs_get_block_bmap+0x70/0x70
+[  169.196708]  ? evict+0x223/0x280
+[  169.197014]  ? __kmalloc+0x33/0x540
+[  169.197305]  ? wnd_init+0x15b/0x1b0
+[  169.197599]  ntfs_fill_super+0x1026/0x1ba0
+[  169.197994]  ? put_ntfs+0x1d0/0x1d0
+[  169.198299]  ? vsprintf+0x20/0x20
+[  169.198583]  ? mutex_unlock+0x81/0xd0
+[  169.198930]  ? set_blocksize+0x95/0x150
+[  169.199269]  get_tree_bdev+0x232/0x370
+[  169.199750]  ? put_ntfs+0x1d0/0x1d0
+[  169.200094]  ntfs_fs_get_tree+0x15/0x20
+[  169.200431]  vfs_get_tree+0x4c/0x130
+[  169.200714]  path_mount+0x654/0xfe0
+[  169.201067]  ? putname+0x80/0xa0
+[  169.201358]  ? finish_automount+0x2e0/0x2e0
+[  169.201965]  ? putname+0x80/0xa0
+[  169.202445]  ? kmem_cache_free+0x1c4/0x440
+[  169.203075]  ? putname+0x80/0xa0
+[  169.203414]  do_mount+0xd6/0xf0
+[  169.203719]  ? path_mount+0xfe0/0xfe0
+[  169.203977]  ? __kasan_check_write+0x14/0x20
+[  169.204382]  __x64_sys_mount+0xca/0x110
+[  169.204711]  do_syscall_64+0x3b/0x90
+[  169.205059]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  169.205571] RIP: 0033:0x7f67a80e948a
+[  169.206327] Code: 48 8b 0d 11 fa 2a 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 008
+[  169.208296] RSP: 002b:00007ffddf020f58 EFLAGS: 00000202 ORIG_RAX: 00000000000000a5
+[  169.209253] RAX: ffffffffffffffda RBX: 000055e2547a6060 RCX: 00007f67a80e948a
+[  169.209777] RDX: 000055e2547a6260 RSI: 000055e2547a62e0 RDI: 000055e2547aeaf0
+[  169.210342] RBP: 0000000000000000 R08: 000055e2547a6280 R09: 0000000000000020
+[  169.210843] R10: 00000000c0ed0000 R11: 0000000000000202 R12: 000055e2547aeaf0
+[  169.211307] R13: 000055e2547a6260 R14: 0000000000000000 R15: 00000000ffffffff
+[  169.211913]  </TASK>
+[  169.212304]
+[  169.212680] Allocated by task 0:
+[  169.212963] (stack is not available)
+[  169.213200]
+[  169.213472] The buggy address belongs to the object at ffff8880094b5e00
+[  169.213472]  which belongs to the cache UDP of size 1152
+[  169.214095] The buggy address is located 1088 bytes inside of
+[  169.214095]  1152-byte region [ffff8880094b5e00, ffff8880094b6280)
+[  169.214639]
+[  169.215004] The buggy address belongs to the physical page:
+[  169.215766] page:000000002e324c8c refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x94b4
+[  169.218412] head:000000002e324c8c order:2 compound_mapcount:0 compound_pincount:0
+[  169.219078] flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
+[  169.220272] raw: 000fffffc0010200 0000000000000000 dead000000000122 ffff888002409b40
+[  169.221006] raw: 0000000000000000 00000000800c000c 00000001ffffffff 0000000000000000
+[  169.222320] page dumped because: kasan: bad access detected
+[  169.222922]
+[  169.223119] Memory state around the buggy address:
+[  169.224056]  ffff8880094b6100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  169.224908]  ffff8880094b6180: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  169.225677] >ffff8880094b6200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  169.226445]                                            ^
+[  169.227055]  ffff8880094b6280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  169.227638]  ffff8880094b6300: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
 
-The arp_ha here is struct sockaddr, not struct sockaddr_storage, so
-the sa_data buffer is just 14 bytes.
-
-In the splat below, 2 bytes are overflown to the next int field,
-arp_flags.  We initialise the field just after the memcpy(), so it's
-not a problem.
-
-However, when dev->addr_len is greater than 22 (e.g. MAX_ADDR_LEN),
-arp_netmask is overwritten, which could be set as htonl(0xFFFFFFFFUL)
-in arp_ioctl() before calling arp_req_get().
-
-To avoid the overflow, let's limit the max length of memcpy().
-
-Note that commit b5f0de6df6dc ("net: dev: Convert sa_data to flexible
-array in struct sockaddr") just silenced syzkaller.
-
-[0]:
-memcpy: detected field-spanning write (size 16) of single field "r->arp_ha.sa_data" at net/ipv4/arp.c:1128 (size 14)
-WARNING: CPU: 0 PID: 144638 at net/ipv4/arp.c:1128 arp_req_get+0x411/0x4a0 net/ipv4/arp.c:1128
-Modules linked in:
-CPU: 0 PID: 144638 Comm: syz-executor.4 Not tainted 6.1.74 #31
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.0-debian-1.16.0-5 04/01/2014
-RIP: 0010:arp_req_get+0x411/0x4a0 net/ipv4/arp.c:1128
-Code: fd ff ff e8 41 42 de fb b9 0e 00 00 00 4c 89 fe 48 c7 c2 20 6d ab 87 48 c7 c7 80 6d ab 87 c6 05 25 af 72 04 01 e8 5f 8d ad fb <0f> 0b e9 6c fd ff ff e8 13 42 de fb be 03 00 00 00 4c 89 e7 e8 a6
-RSP: 0018:ffffc900050b7998 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff88803a815000 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: ffffffff8641a44a RDI: 0000000000000001
-RBP: ffffc900050b7a98 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 203a7970636d656d R12: ffff888039c54000
-R13: 1ffff92000a16f37 R14: ffff88803a815084 R15: 0000000000000010
-FS:  00007f172bf306c0(0000) GS:ffff88805aa00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f172b3569f0 CR3: 0000000057f12005 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- arp_ioctl+0x33f/0x4b0 net/ipv4/arp.c:1261
- inet_ioctl+0x314/0x3a0 net/ipv4/af_inet.c:981
- sock_do_ioctl+0xdf/0x260 net/socket.c:1204
- sock_ioctl+0x3ef/0x650 net/socket.c:1321
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18e/0x220 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x37/0x90 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x64/0xce
-RIP: 0033:0x7f172b262b8d
-Code: 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f172bf300b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007f172b3abf80 RCX: 00007f172b262b8d
-RDX: 0000000020000000 RSI: 0000000000008954 RDI: 0000000000000003
-RBP: 00007f172b2d3493 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007f172b3abf80 R15: 00007f172bf10000
- </TASK>
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Reported-by: Bjoern Doebel <doebel@amazon.de>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20240215230516.31330-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Edward Lo <edward.lo@ambergroup.io>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: "Doebel, Bjoern" <doebel@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/arp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ntfs3/record.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -1125,7 +1125,8 @@ static int arp_req_get(struct arpreq *r,
- 	if (neigh) {
- 		if (!(READ_ONCE(neigh->nud_state) & NUD_NOARP)) {
- 			read_lock_bh(&neigh->lock);
--			memcpy(r->arp_ha.sa_data, neigh->ha, dev->addr_len);
-+			memcpy(r->arp_ha.sa_data, neigh->ha,
-+			       min(dev->addr_len, (unsigned char)sizeof(r->arp_ha.sa_data_min)));
- 			r->arp_flags = arp_state_to_flags(neigh);
- 			read_unlock_bh(&neigh->lock);
- 			r->arp_ha.sa_family = dev->type;
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -226,11 +226,6 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ 			return NULL;
+ 		}
+ 
+-		if (off + asize < off) {
+-			/* overflow check */
+-			return NULL;
+-		}
+-
+ 		attr = Add2Ptr(attr, asize);
+ 		off += asize;
+ 	}
+@@ -253,8 +248,8 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ 	if ((t32 & 0xf) || (t32 > 0x100))
+ 		return NULL;
+ 
+-	/* Check boundary. */
+-	if (off + asize > used)
++	/* Check overflow and boundary. */
++	if (off + asize < off || off + asize > used)
+ 		return NULL;
+ 
+ 	/* Check size of attribute. */
 
 
