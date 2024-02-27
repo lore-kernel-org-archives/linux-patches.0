@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE1616423;
-	Tue, 27 Feb 2024 14:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873441419B4;
+	Tue, 27 Feb 2024 14:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043115; cv=none; b=jtv6daQIIKx8w7UlaWdWYSByq9Kb25KY3oilEa/dfglCvRJZp2k/um+C9C51m5CMCmfghR7KDt3EVvcV0SM70mwb2g017dODPI7zQCjiBGYtfR0TYvPe6CJZJqjPZ+6miVQe4UWF2YIhIVf74QpacVxEudd93z2djVSjrvBXdUQ=
+	t=1709043118; cv=none; b=blrkVZdif05K9JL8RK6v1u8bALs/FF3tDr8ED+RtP7ivhlHVyn/LR1yXz685iqcr/ktjbGjOXlUQUxO7BDyeRYdUOD7S0sLZZJZHVUiUTB84ck/zsLkq+7CbUziJxd/JAarU1IoYRtYkNNTQiCgRo9126DeU1Ov1UYa3KdLDZnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043115; c=relaxed/simple;
-	bh=GLv/lFnpGlYlLGD9MthVPv3wy0g54A1xRhCLLT5XjiU=;
+	s=arc-20240116; t=1709043118; c=relaxed/simple;
+	bh=DalmWTOjMfztrYaQFqPRdBRbHxChcp3CXXV49zmeqgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geMi2k8VmvQ2nHnB6ycJnyyemzrhR2qAm5krXnvD6Tflxq1TCpQX9OfA9N+MAcdy9d4pvwMAsR23e4TloN7z2XihAjNF9U30mT9jyIFBHSrBfzHk9Or6a+uah74+MFo6/lC2vVUvfcdNKt7c5ajHjbVrw9XThZ1gblNT+L39VgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+2QszRQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hcS5pXfPLE8nQqGOMNWVHNP5b2ItWzuPaPg9QlZ3ZGY2QnWxeoMkBCALet5fBKFriMOD+yo4HNS8vn8MrHwObVM+O4kBYVyen/3ibWE0+MwQ9qyLczeY274K15jvBnhTY3oontxJXUaQB6B90clU+nqQTKhZnG2s64htftlpgs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8eIc1a8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+2QszRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56164C433F1;
-	Tue, 27 Feb 2024 14:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8eIc1a8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16090C43399;
+	Tue, 27 Feb 2024 14:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043115;
-	bh=GLv/lFnpGlYlLGD9MthVPv3wy0g54A1xRhCLLT5XjiU=;
+	s=korg; t=1709043118;
+	bh=DalmWTOjMfztrYaQFqPRdBRbHxChcp3CXXV49zmeqgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+2QszRQ069kFcM/5pWYnO+kwEso2PVamYyq2tylXO3aTQHVfHKZpthN7pyJpDojY
-	 XcDg/FuchWTm2CIBoldfkb+T1rPj3aZwrgmdVFamLEBG3A9JJoIKvxwP8vxVl8OCev
-	 pBw9JJwCCVghDvWNQt1BTnv/nIt89p1YT/EzsHv8=
+	b=F8eIc1a8W07R6v/f8yz3uP1TodgFhlMpQdgfimY4q9Haj5Wvq5vfRPB9eI+YcDiaV
+	 iXzr/nWj4whqxRVbPXJ2Em73K+XMuYrnxrDWsH9uXUYPgAlgvKYuMrjwUkUrwy2aW+
+	 9yZeiV3RfPm/u/o8f3cODwECtJ1GWNw655hHUDSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 239/245] cifs: fix mid leak during reconnection after timeout threshold
-Date: Tue, 27 Feb 2024 14:27:07 +0100
-Message-ID: <20240227131622.931990338@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Christoph Hellwig <hch@lst.de>,
+	Avi Kivity <avi@scylladb.com>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 240/245] fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio
+Date: Tue, 27 Feb 2024 14:27:08 +0100
+Message-ID: <20240227131622.962672342@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,99 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <nspmangalore@gmail.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 69cba9d3c1284e0838ae408830a02c4a063104bc upstream.
+commit b820de741ae48ccf50dd95e297889c286ff4f760 upstream.
 
-When the number of responses with status of STATUS_IO_TIMEOUT
-exceeds a specified threshold (NUM_STATUS_IO_TIMEOUT), we reconnect
-the connection. But we do not return the mid, or the credits
-returned for the mid, or reduce the number of in-flight requests.
+If kiocb_set_cancel_fn() is called for I/O submitted via io_uring, the
+following kernel warning appears:
 
-This bug could result in the server->in_flight count to go bad,
-and also cause a leak in the mids.
+WARNING: CPU: 3 PID: 368 at fs/aio.c:598 kiocb_set_cancel_fn+0x9c/0xa8
+Call trace:
+ kiocb_set_cancel_fn+0x9c/0xa8
+ ffs_epfile_read_iter+0x144/0x1d0
+ io_read+0x19c/0x498
+ io_issue_sqe+0x118/0x27c
+ io_submit_sqes+0x25c/0x5fc
+ __arm64_sys_io_uring_enter+0x104/0xab0
+ invoke_syscall+0x58/0x11c
+ el0_svc_common+0xb4/0xf4
+ do_el0_svc+0x2c/0xb0
+ el0_svc+0x2c/0xa4
+ el0t_64_sync_handler+0x68/0xb4
+ el0t_64_sync+0x1a4/0x1a8
 
-This change moves the check to a few lines below where the
-response is decrypted, even of the response is read from the
-transform header. This way, the code for returning the mids
-can be reused.
+Fix this by setting the IOCB_AIO_RW flag for read and write I/O that is
+submitted by libaio.
 
-Also, the cifs_reconnect was reconnecting just the transport
-connection before. In case of multi-channel, this may not be
-what we want to do after several timeouts. Changed that to
-reconnect the session and the tree too.
-
-Also renamed NUM_STATUS_IO_TIMEOUT to a more appropriate name
-MAX_STATUS_IO_TIMEOUT.
-
-Fixes: 8e670f77c4a5 ("Handle STATUS_IO_TIMEOUT gracefully")
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Harshit: Backport to 5.15.y]
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Suggested-by: Jens Axboe <axboe@kernel.dk>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Avi Kivity <avi@scylladb.com>
+Cc: Sandeep Dhavale <dhavale@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240215204739.2677806-2-bvanassche@acm.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ fs/aio.c           |    9 ++++++++-
+ include/linux/fs.h |    2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -59,7 +59,7 @@ extern bool disable_legacy_dialects;
- #define TLINK_IDLE_EXPIRE	(600 * HZ)
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -568,6 +568,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
+ 	struct kioctx *ctx = req->ki_ctx;
+ 	unsigned long flags;
  
- /* Drop the connection to not overload the server */
--#define NUM_STATUS_IO_TIMEOUT   5
-+#define MAX_STATUS_IO_TIMEOUT   5
- 
- struct mount_ctx {
- 	struct cifs_sb_info *cifs_sb;
-@@ -965,6 +965,7 @@ cifs_demultiplex_thread(void *p)
- 	struct mid_q_entry *mids[MAX_COMPOUND];
- 	char *bufs[MAX_COMPOUND];
- 	unsigned int noreclaim_flag, num_io_timeout = 0;
-+	bool pending_reconnect = false;
- 
- 	noreclaim_flag = memalloc_noreclaim_save();
- 	cifs_dbg(FYI, "Demultiplex PID: %d\n", task_pid_nr(current));
-@@ -1004,6 +1005,8 @@ cifs_demultiplex_thread(void *p)
- 		cifs_dbg(FYI, "RFC1002 header 0x%x\n", pdu_length);
- 		if (!is_smb_response(server, buf[0]))
- 			continue;
++	/*
++	 * kiocb didn't come from aio or is neither a read nor a write, hence
++	 * ignore it.
++	 */
++	if (!(iocb->ki_flags & IOCB_AIO_RW))
++		return;
 +
-+		pending_reconnect = false;
- next_pdu:
- 		server->pdu_size = pdu_length;
+ 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
+ 		return;
  
-@@ -1063,10 +1066,13 @@ next_pdu:
- 		if (server->ops->is_status_io_timeout &&
- 		    server->ops->is_status_io_timeout(buf)) {
- 			num_io_timeout++;
--			if (num_io_timeout > NUM_STATUS_IO_TIMEOUT) {
--				cifs_reconnect(server);
-+			if (num_io_timeout > MAX_STATUS_IO_TIMEOUT) {
-+				cifs_server_dbg(VFS,
-+						"Number of request timeouts exceeded %d. Reconnecting",
-+						MAX_STATUS_IO_TIMEOUT);
-+
-+				pending_reconnect = true;
- 				num_io_timeout = 0;
--				continue;
- 			}
- 		}
+@@ -1453,7 +1460,7 @@ static int aio_prep_rw(struct kiocb *req
+ 	req->ki_complete = aio_complete_rw;
+ 	req->private = NULL;
+ 	req->ki_pos = iocb->aio_offset;
+-	req->ki_flags = iocb_flags(req->ki_filp);
++	req->ki_flags = iocb_flags(req->ki_filp) | IOCB_AIO_RW;
+ 	if (iocb->aio_flags & IOCB_FLAG_RESFD)
+ 		req->ki_flags |= IOCB_EVENTFD;
+ 	req->ki_hint = ki_hint_validate(file_write_hint(req->ki_filp));
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -322,6 +322,8 @@ enum rw_hint {
+ #define IOCB_NOIO		(1 << 20)
+ /* can use bio alloc cache */
+ #define IOCB_ALLOC_CACHE	(1 << 21)
++/* kiocb is a read or write operation submitted by fs/aio.c. */
++#define IOCB_AIO_RW		(1 << 23)
  
-@@ -1113,6 +1119,11 @@ next_pdu:
- 			buf = server->smallbuf;
- 			goto next_pdu;
- 		}
-+
-+		/* do this reconnect at the very end after processing all MIDs */
-+		if (pending_reconnect)
-+			cifs_reconnect(server);
-+
- 	} /* end while !EXITING */
- 
- 	/* buffer usually freed in free_mid - need to free it here on exit */
+ struct kiocb {
+ 	struct file		*ki_filp;
 
 
