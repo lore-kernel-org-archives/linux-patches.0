@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54E413B2B4;
-	Tue, 27 Feb 2024 14:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A40E13B2B4;
+	Tue, 27 Feb 2024 14:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043793; cv=none; b=jaRDqMGECMLC4ZKVs/n0y0x2proWXk1FFCiF+2WIaFv8krAInJb2WfrTfLVA7Gf4oeB7r2zHOoZ8dAZ60iJ8aUYzovQLu+OIiIspqtgsdrPERKJnPI5MW57HwB2OGwUwALhRjwdUCDNM1fUzgBceo1I0qUX0LDH828T2mf7youU=
+	t=1709043796; cv=none; b=IA3wstrzRzo6bqH9i2iUqDzPnYbDkOlNx2OVTtByz3UYATTLG+Pi7/QQtG0qtgGQ/Hn5IF9mA4FA4C87/AoBBUmOQJswzE6h3OVM3Wr0dH0U547GbqkDacwSFU4uoeL+V+EffU0pWjWuM0TFqUvKSFYLmKZM7oOc9CTkOYEIeLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043793; c=relaxed/simple;
-	bh=Em3erZVgkOlfoGKtP/1WvnrjhjtpOtyh53iFMCITzbo=;
+	s=arc-20240116; t=1709043796; c=relaxed/simple;
+	bh=0pFJ21Iz9XeGQTgFJd77rbQWY4E/LP/+3m2LI/zaxAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DMAVOatOTF3+xlGdQ4CYq7M9QBsCyH3R/r3kQjZpAuzdRqhKQ7WYRjWQOjungPSC3bT0XF1slWs79LJWxAwKxzuW/NjPI1rkz/Q2NEPxuvfzhYtlM5yFLN4cX5BSfxbUgVTn+xVl9jBuynQU7dlCrZIVONW/wK+DF5k/FT8KSHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXaIDrT3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbO6DDysx9h/zcbpNJ+qCUc9krz9EQ1bR8XcrYUEY1f+Y0qJiVm77YxIeIPPEnjl2MBIje/pC6Dre66xCkEJQY6kM2jL+O/2pkw4yL9QoLe3+0AsWxHu5+veX/lP9tDHfgXrpXuDmmU1KicvlouHsVMs+p1DhZH0z/PYgHX8ve8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbLeHL31; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXaIDrT3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61881C433C7;
-	Tue, 27 Feb 2024 14:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbLeHL31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B43DC433F1;
+	Tue, 27 Feb 2024 14:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043793;
-	bh=Em3erZVgkOlfoGKtP/1WvnrjhjtpOtyh53iFMCITzbo=;
+	s=korg; t=1709043796;
+	bh=0pFJ21Iz9XeGQTgFJd77rbQWY4E/LP/+3m2LI/zaxAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXaIDrT3eh/Z+i5fWMMYR5EQsf5326NuJPMUSakrqU6llRIp6zoTmJ/AX56TrgzX9
-	 TXDDD6o1S+U169EgHJXBPWp2T2kzYKFWaMpTTT+Xm5HeBwDqSXy3b/pafoXwqV+WlB
-	 NpMAfu/rNGr1MnYa1C+hiVmDWwy/out6JeUalpg8=
+	b=NbLeHL31RnImD2Sxu0QOb/2il+jPElpUzur7QmkyXdxAp7ruJ9WedCsc518Tal8SL
+	 mh5epLbkCbnYi6adF6axnt1e3Jlg2ihu62mWmqke+UrtZccv0+6QJjW4F3xgXCvuc2
+	 4Lmq2WA7iCLbVXF2qMkbXepBbTv+KBT7lK999X3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyril Hrubis <chrubis@suse.cz>,
-	Ingo Molnar <mingo@kernel.org>,
-	Petr Vorel <pvorel@suse.cz>
-Subject: [PATCH 5.4 11/84] sched/rt: Disallow writing invalid values to sched_rt_period_us
-Date: Tue, 27 Feb 2024 14:26:38 +0100
-Message-ID: <20240227131553.240197193@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 38/84] pinctrl: rockchip: Fix refcount leak in rockchip_pinctrl_parse_groups
+Date: Tue, 27 Feb 2024 14:27:05 +0100
+Message-ID: <20240227131554.112437447@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -51,94 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cyril Hrubis <chrubis@suse.cz>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 079be8fc630943d9fc70a97807feb73d169ee3fc upstream.
+[ Upstream commit c818ae563bf99457f02e8170aabd6b174f629f65 ]
 
-The validation of the value written to sched_rt_period_us was broken
-because:
+of_find_node_by_phandle() returns a node pointer with refcount incremented,
+We should use of_node_put() on it when not needed anymore.
+Add missing of_node_put() to avoid refcount leak.
 
-  - the sysclt_sched_rt_period is declared as unsigned int
-  - parsed by proc_do_intvec()
-  - the range is asserted after the value parsed by proc_do_intvec()
-
-Because of this negative values written to the file were written into a
-unsigned integer that were later on interpreted as large positive
-integers which did passed the check:
-
-  if (sysclt_sched_rt_period <= 0)
-	return EINVAL;
-
-This commit fixes the parsing by setting explicit range for both
-perid_us and runtime_us into the sched_rt_sysctls table and processes
-the values with proc_dointvec_minmax() instead.
-
-Alternatively if we wanted to use full range of unsigned int for the
-period value we would have to split the proc_handler and use
-proc_douintvec() for it however even the
-Documentation/scheduller/sched-rt-group.rst describes the range as 1 to
-INT_MAX.
-
-As far as I can tell the only problem this causes is that the sysctl
-file allows writing negative values which when read back may confuse
-userspace.
-
-There is also a LTP test being submitted for these sysctl files at:
-
-  http://patchwork.ozlabs.org/project/ltp/patch/20230901144433.2526-1-chrubis@suse.cz/
-
-Signed-off-by: Cyril Hrubis <chrubis@suse.cz>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://lore.kernel.org/r/20231002115553.3007-2-chrubis@suse.cz
-[ pvorel: rebased for 5.4 ]
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d3e5116119bd ("pinctrl: add pinctrl driver for Rockchip SoCs")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20230102112845.3982407-1-linmq006@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/rt.c |    5 +----
- kernel/sysctl.c   |    4 ++++
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-rockchip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2659,9 +2659,6 @@ static int sched_rt_global_constraints(v
- 
- static int sched_rt_global_validate(void)
- {
--	if (sysctl_sched_rt_period <= 0)
--		return -EINVAL;
--
- 	if ((sysctl_sched_rt_runtime != RUNTIME_INF) &&
- 		((sysctl_sched_rt_runtime > sysctl_sched_rt_period) ||
- 		 ((u64)sysctl_sched_rt_runtime *
-@@ -2693,7 +2690,7 @@ int sched_rt_handler(struct ctl_table *t
- 	old_period = sysctl_sched_rt_period;
- 	old_runtime = sysctl_sched_rt_runtime;
- 
--	ret = proc_dointvec(table, write, buffer, lenp, ppos);
-+	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
- 
- 	if (!ret && write) {
- 		ret = sched_rt_global_validate();
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -465,6 +465,8 @@ static struct ctl_table kern_table[] = {
- 		.maxlen		= sizeof(unsigned int),
- 		.mode		= 0644,
- 		.proc_handler	= sched_rt_handler,
-+		.extra1		= SYSCTL_ONE,
-+		.extra2		= SYSCTL_INT_MAX,
- 	},
- 	{
- 		.procname	= "sched_rt_runtime_us",
-@@ -472,6 +474,8 @@ static struct ctl_table kern_table[] = {
- 		.maxlen		= sizeof(int),
- 		.mode		= 0644,
- 		.proc_handler	= sched_rt_handler,
-+		.extra1		= &neg_one,
-+		.extra2		= SYSCTL_INT_MAX,
- 	},
- 	{
- 		.procname	= "sched_rr_timeslice_ms",
+diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+index a44c2680c4230..9388d6fac7d40 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -2536,6 +2536,7 @@ static int rockchip_pinctrl_parse_groups(struct device_node *np,
+ 		np_config = of_find_node_by_phandle(be32_to_cpup(phandle));
+ 		ret = pinconf_generic_parse_dt_config(np_config, NULL,
+ 				&grp->data[j].configs, &grp->data[j].nconfigs);
++		of_node_put(np_config);
+ 		if (ret)
+ 			return ret;
+ 	}
+-- 
+2.43.0
+
 
 
