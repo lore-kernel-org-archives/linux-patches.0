@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703631419BF;
-	Tue, 27 Feb 2024 13:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA4B14534B;
+	Tue, 27 Feb 2024 13:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042030; cv=none; b=EvPIYEaDvPEtpn/5kTckLEfqAL5WcqKmnAZ776JJ/wU8Vii+vUZQBZoWxD/Sa/GVY5RpI1zPvXiAbOi08sfZa1ugZmjeyWiOM+zjBJTPvNqqyijgkmwPeA5kh8gf0IoVDevhMwU+TQOWRfp2GKQ2CZUZN/AnWVRN5Zq+aRcT11w=
+	t=1709042033; cv=none; b=MfnS4pJaBjSTMDZzXK8cxsYCBVNSpEK+ES4tiX9MPlbSxUMauwVFzZ4jBBmGD2QR8CYo9ZqnxvpGYw+xmM0CeJZN42T+DsDY5yEleuhoDeuyfIzlYC97LlXCFmf61APGz6bs3Dkr0YM2mHsQsOWXhU5v4MSTB3iJqfnDBEUHgLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042030; c=relaxed/simple;
-	bh=cazVksPItw70z7TXZyj8Sx5P6jdtOBXjupK/dY3Rmxc=;
+	s=arc-20240116; t=1709042033; c=relaxed/simple;
+	bh=bFAYN8I42tJpSwG4wfW+DDYfRlDIQOdKEAILLrr8XNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWIYsEVu+IcuCpWEOvtTQJ/CsymNs5jbGcrC8wMx6HTLBzW6eIt8D+0ktgS9VCykg7lkfY8h/3OjMYgGsgPbXYaW0NCCVSMrIm3ZUTzzCmBDa75Q+lVPvKyjBfkonetRVxrRlrig+lOb0fE3UUscRFvhXgbhmkZQjqZE83Np2sI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFe1rYMY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KkM2Pbvh7y20wfV6kZ0ldjDZC13ALdaYhjyi/3285oviECYfypi0s4a5OCYhQezOEbChMOagMhb/rJQihwuP686+5MkYz/nrK1ozwpHFmPPmqgZjwKCk6l4KFKHPuQb8xeB+vlirLOqTwd3Da3OyLHrMuc5SDYjHwrS/zwAKE8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGi6XGmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFe1rYMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18CEC433F1;
-	Tue, 27 Feb 2024 13:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGi6XGmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7E9C433C7;
+	Tue, 27 Feb 2024 13:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042030;
-	bh=cazVksPItw70z7TXZyj8Sx5P6jdtOBXjupK/dY3Rmxc=;
+	s=korg; t=1709042033;
+	bh=bFAYN8I42tJpSwG4wfW+DDYfRlDIQOdKEAILLrr8XNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFe1rYMYgQBqMCurg9mBWln+Hf0ao6f2A2K+RTVDwofwesBRVnNTWMGZTm1bL/b+S
-	 qE0OIwx6j82ftqsSsPZ0yXo87eIZI2UOFVcbB5pIpm3pGog5uBGx8rwtAIRrAuvcGn
-	 abcUoZYDbrSnARgBF+csROhJUJY6elehwBwDkxng=
+	b=kGi6XGmml+CTkTTCuf4X4gKYyUZ/hCAVPQKKU3XJoo8QhVPsTj7tfxXoZ+QS98f/E
+	 DIs2gXFJ4jigRC16M8yt72J43W6g9aujWWJ9qopkmA2qpeDTwDMEz79qy3NBtOZRtV
+	 JVB29TwlPWLpS2lNQKXtEI6jXPIZV/x/70U2cnO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Josip Pavic <josip.pavic@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Sohaib Nadeem <sohaib.nadeem@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/299] drm/amd/display: fixed integer types and null check locations
-Date: Tue, 27 Feb 2024 14:23:57 +0100
-Message-ID: <20240227131629.919338379@linuxfoundation.org>
+Subject: [PATCH 6.6 127/299] xen: evtchn: Allow shared registration of IRQ handers
+Date: Tue, 27 Feb 2024 14:23:58 +0100
+Message-ID: <20240227131629.949900644@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -55,112 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sohaib Nadeem <sohaib.nadeem@amd.com>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 0484e05d048b66d01d1f3c1d2306010bb57d8738 ]
+[ Upstream commit 9e90e58c11b74c2bddac4b2702cf79d36b981278 ]
 
-[why]:
-issues fixed:
-- comparison with wider integer type in loop condition which can cause
-infinite loops
-- pointer dereference before null check
+Currently the handling of events is supported either in the kernel or
+userspace, but not both.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Josip Pavic <josip.pavic@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+In order to support fast delivery of interrupts from the guest to the
+backend, we need to handle the Queue notify part of Virtio protocol in
+kernel and the rest in userspace.
+
+Update the interrupt handler registration flag to IRQF_SHARED for event
+channels, which would allow multiple entities to bind their interrupt
+handler for the same event channel port.
+
+Also increment the reference count of irq_info when multiple entities
+try to bind event channel to irqchip, so the unbinding happens only
+after all the users are gone.
+
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/99b1edfd3147c6b5d22a5139dab5861e767dc34a.1697439990.git.viresh.kumar@linaro.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: fa765c4b4aed ("xen/events: close evtchn after mapping cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/bios/bios_parser2.c   | 16 ++++++++++------
- .../drm/amd/display/dc/link/link_validation.c    |  2 +-
- 2 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/xen/events/events_base.c | 3 ++-
+ drivers/xen/evtchn.c             | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-index bbf2a465f400b..4c3c4c8de1cfc 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -1860,19 +1860,21 @@ static enum bp_result get_firmware_info_v3_2(
- 		/* Vega12 */
- 		smu_info_v3_2 = GET_IMAGE(struct atom_smu_info_v3_2,
- 							DATA_TABLES(smu_info));
--		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
- 		if (!smu_info_v3_2)
- 			return BP_RESULT_BADBIOSTABLE;
- 
-+		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_2->gpuclk_ss_percentage);
-+
- 		info->default_engine_clk = smu_info_v3_2->bootup_dcefclk_10khz * 10;
- 	} else if (revision.minor == 3) {
- 		/* Vega20 */
- 		smu_info_v3_3 = GET_IMAGE(struct atom_smu_info_v3_3,
- 							DATA_TABLES(smu_info));
--		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
- 		if (!smu_info_v3_3)
- 			return BP_RESULT_BADBIOSTABLE;
- 
-+		DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", smu_info_v3_3->gpuclk_ss_percentage);
-+
- 		info->default_engine_clk = smu_info_v3_3->bootup_dcefclk_10khz * 10;
+diff --git a/drivers/xen/events/events_base.c b/drivers/xen/events/events_base.c
+index c50419638ac0a..cd33a418344a8 100644
+--- a/drivers/xen/events/events_base.c
++++ b/drivers/xen/events/events_base.c
+@@ -1235,7 +1235,8 @@ static int bind_evtchn_to_irq_chip(evtchn_port_t evtchn, struct irq_chip *chip,
+ 		bind_evtchn_to_cpu(evtchn, 0, false);
+ 	} else {
+ 		struct irq_info *info = info_for_irq(irq);
+-		WARN_ON(info == NULL || info->type != IRQT_EVTCHN);
++		if (!WARN_ON(!info || info->type != IRQT_EVTCHN))
++			info->refcnt++;
  	}
  
-@@ -2435,10 +2437,11 @@ static enum bp_result get_integrated_info_v11(
- 	info_v11 = GET_IMAGE(struct atom_integrated_system_info_v1_11,
- 					DATA_TABLES(integratedsysteminfo));
+ out:
+diff --git a/drivers/xen/evtchn.c b/drivers/xen/evtchn.c
+index 9139a7364df53..59717628ca42b 100644
+--- a/drivers/xen/evtchn.c
++++ b/drivers/xen/evtchn.c
+@@ -397,7 +397,7 @@ static int evtchn_bind_to_user(struct per_user_data *u, evtchn_port_t port,
+ 	if (rc < 0)
+ 		goto err;
  
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
- 	if (info_v11 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v11->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v11->gpucapinfo);
- 	/*
-@@ -2650,11 +2653,12 @@ static enum bp_result get_integrated_info_v2_1(
- 
- 	info_v2_1 = GET_IMAGE(struct atom_integrated_system_info_v2_1,
- 					DATA_TABLES(integratedsysteminfo));
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
- 
- 	if (info_v2_1 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_1->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v2_1->gpucapinfo);
- 	/*
-@@ -2812,11 +2816,11 @@ static enum bp_result get_integrated_info_v2_2(
- 	info_v2_2 = GET_IMAGE(struct atom_integrated_system_info_v2_2,
- 					DATA_TABLES(integratedsysteminfo));
- 
--	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
--
- 	if (info_v2_2 == NULL)
- 		return BP_RESULT_BADBIOSTABLE;
- 
-+	DC_LOG_BIOS("gpuclk_ss_percentage (unit of 0.001 percent): %d\n", info_v2_2->gpuclk_ss_percentage);
-+
- 	info->gpu_cap_info =
- 	le32_to_cpu(info_v2_2->gpucapinfo);
- 	/*
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_validation.c b/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-index 8fe66c3678508..5b0bc7f6a188c 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_validation.c
-@@ -361,7 +361,7 @@ bool link_validate_dpia_bandwidth(const struct dc_stream_state *stream, const un
- 	struct dc_link *dpia_link[MAX_DPIA_NUM] = {0};
- 	int num_dpias = 0;
- 
--	for (uint8_t i = 0; i < num_streams; ++i) {
-+	for (unsigned int i = 0; i < num_streams; ++i) {
- 		if (stream[i].signal == SIGNAL_TYPE_DISPLAY_PORT) {
- 			/* new dpia sst stream, check whether it exceeds max dpia */
- 			if (num_dpias >= MAX_DPIA_NUM)
+-	rc = bind_evtchn_to_irqhandler_lateeoi(port, evtchn_interrupt, 0,
++	rc = bind_evtchn_to_irqhandler_lateeoi(port, evtchn_interrupt, IRQF_SHARED,
+ 					       u->name, evtchn);
+ 	if (rc < 0)
+ 		goto err;
 -- 
 2.43.0
 
