@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7695A54FA5;
-	Tue, 27 Feb 2024 13:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E52D54FA5;
+	Tue, 27 Feb 2024 13:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040694; cv=none; b=IEaNBUlwd7O70+SIiZlOWk9Ir23wHouQ/YFby1oEAvJkLYVtFLMXb6ixxxOvd11PEJMg4+g0hnmWr3SL51yD417xz4kQ9I5dGCgSXkiNIB6Fq1dnp7gcIFpt95TDuQKYwcugNHV3upMCb7siq/rbxmqlOW9AggO/E0mRr9dNl4c=
+	t=1709040697; cv=none; b=Gut4e3g0dGJ+03KK/ni6gXNZGVRqHEqoZe9c6qa/k4U6ZmGSbxaB0M0ezujm/pmh12yUSVjtROIjChzpL0//rmIjKchr8lfh3C7KRERXSI8vzbpGAmK/UJyGJajATy4FPFVG+nUscNE0RCnA7N8MdjgCaw8F/a1B+lLHhl0N9yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040694; c=relaxed/simple;
-	bh=TlKYbNnoWIjCdRIS3uSmzqUjupgd4bfZJ7fY/1Wd4pg=;
+	s=arc-20240116; t=1709040697; c=relaxed/simple;
+	bh=YVqgbqt8sc3z/hWn2tCfhVX+n1Vj+OWXdPUdCAhpoMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHn0qssc9ctBtlTEg9v40FjbDbE8caUqa1KFSwFUB/C4EVSUeWQP/+CfsbufOoeSi2IQ+t5UzEuKQuEWkaoiyw7S0V9as6q+IzhL6dX/c8VQAwBWyC1tRqzlXEy999upiQkfYPZ5xqgefhlpQT9H5ohp/t5A+pkPHfq5fn3abQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crRn9aWP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jepRHSDDuM/y3mal7RbaeNJCWNfsWp10d9F42UP1uCziCm9pRq8WmmDlS48D4IXZS1ct/uNJqVm+hce1+t3d4TV5rV/8pV3taStr37XvBVhqZ0ZD1FZiv/xEn5fHGrwj8UvL7pwqb5+57Hsb1gVV4+lOYWhVBd3v/1lyvVOj1us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Af5FJgw4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crRn9aWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05240C433C7;
-	Tue, 27 Feb 2024 13:31:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Af5FJgw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1665C433F1;
+	Tue, 27 Feb 2024 13:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040694;
-	bh=TlKYbNnoWIjCdRIS3uSmzqUjupgd4bfZJ7fY/1Wd4pg=;
+	s=korg; t=1709040697;
+	bh=YVqgbqt8sc3z/hWn2tCfhVX+n1Vj+OWXdPUdCAhpoMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crRn9aWPv/sy0gRt0R8cmYBbT2GROflBNQajEXoVLc5pAq6UlHRsI2rfIdzXxYO7R
-	 fED7WDFySQe6MM+8dJ/OiNzlNZoXFLp68HXpQEEqwPKfDujl1l1OdlPP4DYQE8Le0V
-	 48VMfKFUxbh9M1ulIUH+J39M60WCDIwb5KFURYPc=
+	b=Af5FJgw4YvDvvrjGnTbDvW9m1hGDLNILVMSatdF+MO0FrvnrMmFrqGcWfa3nRhSkf
+	 zwqGO2T6BiRtexqX178QP9ZNXDqlufoc+gVJSTsQy+7sEh3H4/7aP0pTooxOD01Pi0
+	 HTBBpp/34ezV7ZfCqhuo+ve+1SNn3C8gxBDAFdGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 076/334] fs/ntfs3: Improve alternative boot processing
-Date: Tue, 27 Feb 2024 14:18:54 +0100
-Message-ID: <20240227131632.990541398@linuxfoundation.org>
+Subject: [PATCH 6.7 077/334] fs/ntfs3: Modified fix directory element type detection
+Date: Tue, 27 Feb 2024 14:18:55 +0100
+Message-ID: <20240227131633.020412548@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,80 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit c39de951282df9a60ef70664e4378d88006b2670 ]
+[ Upstream commit 22457c047ed971f2f2e33be593ddfabd9639a409 ]
+
+Unfortunately reparse attribute is used for many purposes (several dozens).
+It is not possible here to know is this name symlink or not.
+To get exactly the type of name we should to open inode (read mft).
+getattr for opened file (fstat) correctly returns symlink.
 
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+ fs/ntfs3/dir.c | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 9153dffde950c..09d61c6c90aaf 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -866,6 +866,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	u16 fn, ao;
- 	u8 cluster_bits;
- 	u32 boot_off = 0;
-+	sector_t boot_block = 0;
- 	const char *hint = "Primary boot";
- 
- 	/* Save original dev_size. Used with alternative boot. */
-@@ -873,11 +874,11 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 
- 	sbi->volume.blocks = dev_size >> PAGE_SHIFT;
- 
--	bh = ntfs_bread(sb, 0);
-+read_boot:
-+	bh = ntfs_bread(sb, boot_block);
- 	if (!bh)
--		return -EIO;
-+		return boot_block ? -EINVAL : -EIO;
- 
--check_boot:
- 	err = -EINVAL;
- 
- 	/* Corrupted image; do not read OOB */
-@@ -1108,26 +1109,24 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index ec0566b322d5d..22ede4da04502 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -309,11 +309,31 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
+ 		return 0;
  	}
  
- out:
--	if (err == -EINVAL && !bh->b_blocknr && dev_size0 > PAGE_SHIFT) {
-+	brelse(bh);
+-	/* NTFS: symlinks are "dir + reparse" or "file + reparse" */
+-	if (fname->dup.fa & FILE_ATTRIBUTE_REPARSE_POINT)
+-		dt_type = DT_LNK;
+-	else
+-		dt_type = (fname->dup.fa & FILE_ATTRIBUTE_DIRECTORY) ? DT_DIR : DT_REG;
++	/*
++	 * NTFS: symlinks are "dir + reparse" or "file + reparse"
++	 * Unfortunately reparse attribute is used for many purposes (several dozens).
++	 * It is not possible here to know is this name symlink or not.
++	 * To get exactly the type of name we should to open inode (read mft).
++	 * getattr for opened file (fstat) correctly returns symlink.
++	 */
++	dt_type = (fname->dup.fa & FILE_ATTRIBUTE_DIRECTORY) ? DT_DIR : DT_REG;
 +
-+	if (err == -EINVAL && !boot_block && dev_size0 > PAGE_SHIFT) {
- 		u32 block_size = min_t(u32, sector_size, PAGE_SIZE);
- 		u64 lbo = dev_size0 - sizeof(*boot);
- 
--		/*
--	 	 * Try alternative boot (last sector)
--		 */
--		brelse(bh);
--
--		sb_set_blocksize(sb, block_size);
--		bh = ntfs_bread(sb, lbo >> blksize_bits(block_size));
--		if (!bh)
--			return -EINVAL;
--
-+		boot_block = lbo >> blksize_bits(block_size);
- 		boot_off = lbo & (block_size - 1);
--		hint = "Alternative boot";
--		dev_size = dev_size0; /* restore original size. */
--		goto check_boot;
-+		if (boot_block && block_size >= boot_off + sizeof(*boot)) {
-+			/*
-+			 * Try alternative boot (last sector)
-+			 */
-+			sb_set_blocksize(sb, block_size);
-+			hint = "Alternative boot";
-+			dev_size = dev_size0; /* restore original size. */
-+			goto read_boot;
++	/*
++	 * It is not reliable to detect the type of name using duplicated information
++	 * stored in parent directory.
++	 * The only correct way to get the type of name - read MFT record and find ATTR_STD.
++	 * The code below is not good idea.
++	 * It does additional locks/reads just to get the type of name.
++	 * Should we use additional mount option to enable branch below?
++	 */
++	if ((fname->dup.fa & FILE_ATTRIBUTE_REPARSE_POINT) &&
++	    ino != ni->mi.rno) {
++		struct inode *inode = ntfs_iget5(sbi->sb, &e->ref, NULL);
++		if (!IS_ERR_OR_NULL(inode)) {
++			dt_type = fs_umode_to_dtype(inode->i_mode);
++			iput(inode);
 +		}
- 	}
--	brelse(bh);
++	}
  
- 	return err;
+ 	return !dir_emit(ctx, (s8 *)name, name_len, ino, dt_type);
  }
 -- 
 2.43.0
