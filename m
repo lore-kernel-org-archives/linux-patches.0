@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CF313DB92;
-	Tue, 27 Feb 2024 13:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A5613AA50;
+	Tue, 27 Feb 2024 13:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042336; cv=none; b=aZ/uCq6JCx0e/yW75I6MFNa5S5S+903lYS+ww2dzOKXXCSnCmakBkJNGVBgjbcFypqQTCKcxrLRCpgBoMa3mxAaFDFTJ5JP4ZuyYnhNIaKcsEd2PLKRvSMTTlW3XJFXwRjWzoURHr3Gkku8tkhEt4A0D49NOFjSy5EcaXP81tIA=
+	t=1709042338; cv=none; b=ojfzmo4XNCpMRO10KATLxBKfsSbktj0U4TW6JBz4cdAkDt0+vK6u9eagq1FKQs608w+G95PAiDkO+EykQxy01RabZNE2au49lptYku/ej/PhKXZONx30xIXzVkg/uExVSchYlbnRfpas9JLLjpcx+Caz2I4lLzZQ5RZtUwCQ2Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042336; c=relaxed/simple;
-	bh=bPLgFaS6abbxedH27HK5P59vOywuFj40Zs73YRZaQOs=;
+	s=arc-20240116; t=1709042338; c=relaxed/simple;
+	bh=UrYo1fI1aVVsQs2huk3IvS4RTSXvEI/11YWLwKXPiOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFA8ZP4NQSQkH/Dux+NaeaJaRNdeMYx5B6wP0RavfNSs79MC6Bjrqo2lywEVXfbcmMojJceaIGrSq0qCj4bT9RN5ceZJvp4cwRO0XNzTb/UvNGjAxsMHujOLFvVHhoUGwObSYr0ZpSbJPEObTJNSbcUdh2tm+OWG27jT7ADaKmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iG0SMdU8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gT9T1h0hYk/XUJkzTyX37mdeXpEbcugzzmjO7u+Z+iZV6PtCQO2S9ov1gfVj/wizxeISuEZMW3ZmisOIdSrQmGVbHECLapIwSeymJMmkDLuNHBzRz4Y0A3taBkr+4XyFxzNO46+6vk02GzQNtY05COz3RVc4bOqxUmBgqcQ+On8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQpFwRqr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iG0SMdU8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F1DC433C7;
-	Tue, 27 Feb 2024 13:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQpFwRqr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409C7C433C7;
+	Tue, 27 Feb 2024 13:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042335;
-	bh=bPLgFaS6abbxedH27HK5P59vOywuFj40Zs73YRZaQOs=;
+	s=korg; t=1709042338;
+	bh=UrYo1fI1aVVsQs2huk3IvS4RTSXvEI/11YWLwKXPiOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iG0SMdU8eq70dJYOwqbaAOqqAo5AbEj3XbRVBykLOjy3sDinOFV9O5XTGkZY/ObIW
-	 tesBXPMv5RKEtrSrltQxarm7SUZns5nZPEBXn39cv9gHbxCdQPrpSG/38NY3GgIzUI
-	 MhTESXjnGuqzv4Yks4Bjd7X3LjlVCN4SnL0HTrFo=
+	b=UQpFwRqrTNnsrEbGl5tI5OtZ2i5E+byB9IS2yte2H1G6HSv7ZLkPLA1Q9SMh5+6YH
+	 8a6oe6voUrGLXm4gNlLs7oUpuVpykgKm6ZbZvsaGYG6E/cRbgG9DQG8X8VhSe0kQAi
+	 M92d27hTGZCnxxH5zBij5M9hSvyl+qaGbfinowXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackson Cooper-Driver <Jackson.Cooper-Driver@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/299] arm64/sme: Restore SMCR_EL1.EZT0 on exit from suspend
-Date: Tue, 27 Feb 2024 14:26:10 +0100
-Message-ID: <20240227131634.041201409@linuxfoundation.org>
+Subject: [PATCH 6.6 260/299] platform/x86: thinkpad_acpi: Only update profile if successfully converted
+Date: Tue, 27 Feb 2024 14:26:11 +0100
+Message-ID: <20240227131634.071129630@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,38 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit d7b77a0d565b048cb0808fa8a4fb031352b22a01 ]
+[ Upstream commit 427c70dec738318b7f71e1b9d829ff0e9771d493 ]
 
-The fields in SMCR_EL1 reset to an architecturally UNKNOWN value. Since we
-do not otherwise manage the traps configured in this register at runtime we
-need to reconfigure them after a suspend in case nothing else was kind
-enough to preserve them for us. Do so for SMCR_EL1.EZT0.
+Randomly a Lenovo Z13 will trigger a kernel warning traceback from this
+condition:
 
-Fixes: d4913eee152d ("arm64/sme: Add basic enumeration for SME2")
-Reported-by: Jackson Cooper-Driver <Jackson.Cooper-Driver@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240213-arm64-sme-resume-v3-2-17e05e493471@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+```
+if (WARN_ON((profile < 0) || (profile >= ARRAY_SIZE(profile_names))))
+```
+
+This happens because thinkpad-acpi always assumes that
+convert_dytc_to_profile() successfully updated the profile. On the
+contrary a condition can occur that when dytc_profile_refresh() is called
+the profile doesn't get updated as there is a -EOPNOTSUPP branch.
+
+Catch this situation and avoid updating the profile. Also log this into
+dynamic debugging in case any other modes should be added in the future.
+
+Fixes: c3bfcd4c6762 ("platform/x86: thinkpad_acpi: Add platform profile support")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20240217022311.113879-1-mario.limonciello@amd.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/fpsimd.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/thinkpad_acpi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/fpsimd.c b/arch/arm64/kernel/fpsimd.c
-index ce0bc01b4208d..5cdfcc9e3e54b 100644
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1415,6 +1415,8 @@ void sme_suspend_exit(void)
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index d73cbae4aa218..89c37a83d7fcd 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -10308,6 +10308,7 @@ static int convert_dytc_to_profile(int funcmode, int dytcmode,
+ 		return 0;
+ 	default:
+ 		/* Unknown function */
++		pr_debug("unknown function 0x%x\n", funcmode);
+ 		return -EOPNOTSUPP;
+ 	}
+ 	return 0;
+@@ -10493,8 +10494,8 @@ static void dytc_profile_refresh(void)
+ 		return;
  
- 	if (system_supports_fa64())
- 		smcr |= SMCR_ELx_FA64;
-+	if (system_supports_sme2())
-+		smcr |= SMCR_ELx_EZT0;
- 
- 	write_sysreg_s(smcr, SYS_SMCR_EL1);
- 	write_sysreg_s(0, SYS_SMPRI_EL1);
+ 	perfmode = (output >> DYTC_GET_MODE_BIT) & 0xF;
+-	convert_dytc_to_profile(funcmode, perfmode, &profile);
+-	if (profile != dytc_current_profile) {
++	err = convert_dytc_to_profile(funcmode, perfmode, &profile);
++	if (!err && profile != dytc_current_profile) {
+ 		dytc_current_profile = profile;
+ 		platform_profile_notify();
+ 	}
 -- 
 2.43.0
 
