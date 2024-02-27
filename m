@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734A313B78F;
-	Tue, 27 Feb 2024 13:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498E8145B16;
+	Tue, 27 Feb 2024 13:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041591; cv=none; b=YxJpndP90yFCG1zraVLfg7SwGts4Mw0PieyXngD+Wtjn2TV0//k94FZ7dF9xnnRQsst3u7HZJbJr6lr07ClMXZSUpxBqUGqzKI6+cv9UgqVz2r4FTxBTAAm3iUPsgEBlA1+yzOrGuaDIWeSqI8iZL6uQTtiHTyaBSe6gylErL/M=
+	t=1709041594; cv=none; b=I/vZMV++KEneB+tblxKfvCHdePhbCgKZoAOsuO61JMCEHYXpOXx8YHadJDjE9e3O43T7xHh76FF6L/llVTyrT7lCsfr1R4IvBXAbugFzSVYfrpSGJoVmGkIRt5FlJy+FvRIlmDhZ1T5b9S+yzNUv5bidmAp7nf5HaPVWZXz2RTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041591; c=relaxed/simple;
-	bh=VRQpZvELbvFAP77PUSphEXFOjcuBAOLTqqdzCvMkl4w=;
+	s=arc-20240116; t=1709041594; c=relaxed/simple;
+	bh=HMLYxvFstwsiaHCnlPCIJcYpKJW46H54BNaYSOlpDtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UBjbGyCI4FO0X9Oby/g+WJyG8lE77rPstF+XoR+/P4SZz+4068w5gJkRtERbzNPivPnc7wp1iUoQB/DroCgWqImjNvrJi8wylALGCpTvvOd/MyuIjRDRaRI77EBNODNX2MPuSLEnYW5P0N7nv3Rdqy+0esAjGR6+KKKDap4ROU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svA21sZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGc1giPJifCerpgQqxremXIEbOX7dJFsEzQqV6gYgPRBK/ykDyfxJJTgJyRFVWIRTgEMrP6tYcWCpsa86X7KvGQLYllhBvTdBPMcymyWtdwzbvR/Ebqcrdb7b7opJwLRjlMVnupPND42DX2roR0j5AIntWYDT+NjU5Jq75NaRsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugPh0+VZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svA21sZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C50C433C7;
-	Tue, 27 Feb 2024 13:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugPh0+VZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F54C43394;
+	Tue, 27 Feb 2024 13:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041591;
-	bh=VRQpZvELbvFAP77PUSphEXFOjcuBAOLTqqdzCvMkl4w=;
+	s=korg; t=1709041594;
+	bh=HMLYxvFstwsiaHCnlPCIJcYpKJW46H54BNaYSOlpDtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=svA21sZCxQM2yU3Y46Kk3MncuUjtWZQVydn6D0l+YXGHgPlH61cq1Q2n66oR8/Bls
-	 2I1z9kt5HVzUmtk3+lES7j+X95ruzmgSA2PXSy1zWEZ/irkXa6q90ocP416M0EEWv0
-	 ei9Jh5LIT7arUseOmWYCYxnwIdoHA7a7JnwHtzSQ=
+	b=ugPh0+VZ23An11mcz7Ha1Q7iZPJ1hDwmyFoZ6PKdT+ExlyplBZYXcInyZ0xGpanXQ
+	 y/JRFOXBUD+sMoN3OkOSnc695pidLaUxG+22cOOP9RhVfGSFQgTNLDuecW4Gx4On1I
+	 HEOuI4eJmxq1wLG99W5hNH/5CyjQ4SpFvEpSSXlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>
-Subject: [PATCH 4.19 33/52] usb: gadget: ncm: Avoid dropping datagrams of properly parsed NTBs
-Date: Tue, 27 Feb 2024 14:26:20 +0100
-Message-ID: <20240227131549.620852538@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 4.19 34/52] usb: roles: dont get/set_role() when usb_role_switch is unregistered
+Date: Tue, 27 Feb 2024 14:26:21 +0100
+Message-ID: <20240227131549.652999750@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -44,92 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 76c51146820c5dac629f21deafab0a7039bc3ccd upstream.
+commit b787a3e781759026a6212736ef8e52cf83d1821a upstream.
 
-It is observed sometimes when tethering is used over NCM with Windows 11
-as host, at some instances, the gadget_giveback has one byte appended at
-the end of a proper NTB. When the NTB is parsed, unwrap call looks for
-any leftover bytes in SKB provided by u_ether and if there are any pending
-bytes, it treats them as a separate NTB and parses it. But in case the
-second NTB (as per unwrap call) is faulty/corrupt, all the datagrams that
-were parsed properly in the first NTB and saved in rx_list are dropped.
+There is a possibility that usb_role_switch device is unregistered before
+the user put usb_role_switch. In this case, the user may still want to
+get/set_role() since the user can't sense the changes of usb_role_switch.
 
-Adding a few custom traces showed the following:
-[002] d..1  7828.532866: dwc3_gadget_giveback: ep1out:
-req 000000003868811a length 1025/16384 zsI ==> 0
-[002] d..1  7828.532867: ncm_unwrap_ntb: K: ncm_unwrap_ntb toprocess: 1025
-[002] d..1  7828.532867: ncm_unwrap_ntb: K: ncm_unwrap_ntb nth: 1751999342
-[002] d..1  7828.532868: ncm_unwrap_ntb: K: ncm_unwrap_ntb seq: 0xce67
-[002] d..1  7828.532868: ncm_unwrap_ntb: K: ncm_unwrap_ntb blk_len: 0x400
-[002] d..1  7828.532868: ncm_unwrap_ntb: K: ncm_unwrap_ntb ndp_len: 0x10
-[002] d..1  7828.532869: ncm_unwrap_ntb: K: Parsed NTB with 1 frames
+This will add a flag to show if usb_role_switch is already registered and
+avoid unwanted behaviors.
 
-In this case, the giveback is of 1025 bytes and block length is 1024.
-The rest 1 byte (which is 0x00) won't be parsed resulting in drop of
-all datagrams in rx_list.
-
-Same is case with packets of size 2048:
-[002] d..1  7828.557948: dwc3_gadget_giveback: ep1out:
-req 0000000011dfd96e length 2049/16384 zsI ==> 0
-[002] d..1  7828.557949: ncm_unwrap_ntb: K: ncm_unwrap_ntb nth: 1751999342
-[002] d..1  7828.557950: ncm_unwrap_ntb: K: ncm_unwrap_ntb blk_len: 0x800
-
-Lecroy shows one byte coming in extra confirming that the byte is coming
-in from PC:
-
- Transfer 2959 - Bytes Transferred(1025)  Timestamp((18.524 843 590)
- - Transaction 8391 - Data(1025 bytes) Timestamp(18.524 843 590)
- --- Packet 4063861
-       Data(1024 bytes)
-       Duration(2.117us) Idle(14.700ns) Timestamp(18.524 843 590)
- --- Packet 4063863
-       Data(1 byte)
-       Duration(66.160ns) Time(282.000ns) Timestamp(18.524 845 722)
-
-According to Windows driver, no ZLP is needed if wBlockLength is non-zero,
-because the non-zero wBlockLength has already told the function side the
-size of transfer to be expected. However, there are in-market NCM devices
-that rely on ZLP as long as the wBlockLength is multiple of wMaxPacketSize.
-To deal with such devices, it pads an extra 0 at end so the transfer is no
-longer multiple of wMaxPacketSize.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 9f6ce4240a2b ("usb: gadget: f_ncm.c added")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Maciej Żenczykowski <maze@google.com>
-Link: https://lore.kernel.org/r/20240205074650.200304-1-quic_kriskura@quicinc.com
+Fixes: fde0aa6c175a ("usb: common: Small class for USB role switches")
+cc: stable@vger.kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240129093739.2371530-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/usb/roles/class.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1349,7 +1349,15 @@ parse_ntb:
- 	     "Parsed NTB with %d frames\n", dgram_counter);
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -19,6 +19,7 @@ struct usb_role_switch {
+ 	struct device dev;
+ 	struct mutex lock; /* device lock*/
+ 	enum usb_role role;
++	bool registered;
  
- 	to_process -= block_len;
--	if (to_process != 0) {
+ 	/* From descriptor */
+ 	struct device *usb2_port;
+@@ -45,6 +46,9 @@ int usb_role_switch_set_role(struct usb_
+ 	if (IS_ERR_OR_NULL(sw))
+ 		return 0;
+ 
++	if (!sw->registered)
++		return -EOPNOTSUPP;
 +
-+	/*
-+	 * Windows NCM driver avoids USB ZLPs by adding a 1-byte
-+	 * zero pad as needed.
-+	 */
-+	if (to_process == 1 &&
-+	    (*(unsigned char *)(ntb_ptr + block_len) == 0x00)) {
-+		to_process--;
-+	} else if (to_process > 0) {
- 		ntb_ptr = (unsigned char *)(ntb_ptr + block_len);
- 		goto parse_ntb;
+ 	mutex_lock(&sw->lock);
+ 
+ 	ret = sw->set(sw->dev.parent, role);
+@@ -68,7 +72,7 @@ enum usb_role usb_role_switch_get_role(s
+ {
+ 	enum usb_role role;
+ 
+-	if (IS_ERR_OR_NULL(sw))
++	if (IS_ERR_OR_NULL(sw) || !sw->registered)
+ 		return USB_ROLE_NONE;
+ 
+ 	mutex_lock(&sw->lock);
+@@ -276,6 +280,8 @@ usb_role_switch_register(struct device *
+ 		return ERR_PTR(ret);
  	}
+ 
++	sw->registered = true;
++
+ 	/* TODO: Symlinks for the host port and the device controller. */
+ 
+ 	return sw;
+@@ -290,8 +296,10 @@ EXPORT_SYMBOL_GPL(usb_role_switch_regist
+  */
+ void usb_role_switch_unregister(struct usb_role_switch *sw)
+ {
+-	if (!IS_ERR_OR_NULL(sw))
++	if (!IS_ERR_OR_NULL(sw)) {
++		sw->registered = false;
+ 		device_unregister(&sw->dev);
++	}
+ }
+ EXPORT_SYMBOL_GPL(usb_role_switch_unregister);
+ 
 
 
