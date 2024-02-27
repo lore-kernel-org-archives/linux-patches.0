@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C8313AA43;
-	Tue, 27 Feb 2024 14:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7607013A26F;
+	Tue, 27 Feb 2024 14:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042917; cv=none; b=ADorN5b+WRtyIL1qdFdSPujNZ/Ywp3dFy/EsCz/iW1s4jW315NO3Q8eGDGxfsVKcF4nJPAjdPNXbpbPric5CVoOWDvX3EBo+0r59hIvQf4F1G15Bqq99FOZmMqx9yeGzDdnFFlQZzH1NcbXUmCOGPdbn0bwOuQhdW6WN9fVNENU=
+	t=1709042920; cv=none; b=V3l3LtT+VFw9H1GhHE0extpEhQ9Evh2W+WZNnbgd8VyE63v92ML6j/oG+IOYnJaqzRug2ZmXYHemjz2TvGHWZi0AKaMnelVsZtGpfTv7UgZqMx+ggtpzBddzOSrE53SFjAxvh6C5yJlFduRK5289aewQ5QzaxFHTB56Wi5vX87g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042917; c=relaxed/simple;
-	bh=GjpxITBdhQrg5j4GCczYo35lpx4qHDUmxaO+xueHbcM=;
+	s=arc-20240116; t=1709042920; c=relaxed/simple;
+	bh=QaqqNl8tyqajLncTtmAjzLOHZQSwV3JhH718OeT7vtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEoNwt74kOd2wXACS7h9+T3kK0sHm1uLnV9+a72xYRedKcqBIhXJQu5cZDyjEnwnUqoKQbXIvFwLK51VPn9Omrhi/cQgJxh4f2E2o2yddXlruv9Ow+9bo4Rspq2P6vagm+s16uEt8zMhVwqA4qLXbmMP2GMRiYTC6QIUoEfzLC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yh2O6BKU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ciP+S2BdjXFPa42t52YOJ6+ZkObNL0gfo+dBt7oSRBsgVEYC6vkcaMvkVgoAsgRvLgbik8d8QGnjvowdLu0R4/KdCYu/ovoYCc5WhAl9JsNGgaZpnnZpSFkzeivU8boFynSlmvLUPYfBiTKke7hw0bjO3gv0VCEaf1WfpB0VN9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvrTV9wN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yh2O6BKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E255C433F1;
-	Tue, 27 Feb 2024 14:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvrTV9wN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F03C433F1;
+	Tue, 27 Feb 2024 14:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042917;
-	bh=GjpxITBdhQrg5j4GCczYo35lpx4qHDUmxaO+xueHbcM=;
+	s=korg; t=1709042920;
+	bh=QaqqNl8tyqajLncTtmAjzLOHZQSwV3JhH718OeT7vtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yh2O6BKUd5BDL+HL1CdEePYNlj/TH0nhIZK2svvD0TH/NnyqxrIgCnLkOFbF5RhO4
-	 rFLq5275s3sM7VXrtfMK5knMarOsFE68i9byYoayCv1tpdxSzMwdG6V2RV2s7rinKk
-	 RoZJGz7xAfdTkSH1ryIGGFBmL/zfjETsVqKOfIF4=
+	b=OvrTV9wNTyyJ4j//0QuH1aMZBKNz5OjUIfNPb+oH8vN2GRnPf+T0gfvCYIweGc0G9
+	 NvD0GFVlFrfN60vYVDcq2kuCWVBJ1XVyTFm/MDGf0fK+THdFjiGr4Gs9/+5azpSVIb
+	 kZKnXoO5wM20N5xs6VJD67h55LO65Sxu1e+sYR0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/245] md/raid10: prevent soft lockup while flush writes
-Date: Tue, 27 Feb 2024 14:25:56 +0100
-Message-ID: <20240227131620.669853308@linuxfoundation.org>
+Subject: [PATCH 5.15 169/245] posix-timers: Ensure timer ID search-loop limit is valid
+Date: Tue, 27 Feb 2024 14:25:57 +0100
+Message-ID: <20240227131620.705467363@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,77 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 010444623e7f4da6b4a4dd603a7da7469981e293 ]
+[ Upstream commit 8ce8849dd1e78dadcee0ec9acbd259d239b7069f ]
 
-Currently, there is no limit for raid1/raid10 plugged bio. While flushing
-writes, raid1 has cond_resched() while raid10 doesn't, and too many
-writes can cause soft lockup.
+posix_timer_add() tries to allocate a posix timer ID by starting from the
+cached ID which was stored by the last successful allocation.
 
-Follow up soft lockup can be triggered easily with writeback test for
-raid10 with ramdisks:
+This is done in a loop searching the ID space for a free slot one by
+one. The loop has to terminate when the search wrapped around to the
+starting point.
 
-watchdog: BUG: soft lockup - CPU#10 stuck for 27s! [md0_raid10:1293]
-Call Trace:
- <TASK>
- call_rcu+0x16/0x20
- put_object+0x41/0x80
- __delete_object+0x50/0x90
- delete_object_full+0x2b/0x40
- kmemleak_free+0x46/0xa0
- slab_free_freelist_hook.constprop.0+0xed/0x1a0
- kmem_cache_free+0xfd/0x300
- mempool_free_slab+0x1f/0x30
- mempool_free+0x3a/0x100
- bio_free+0x59/0x80
- bio_put+0xcf/0x2c0
- free_r10bio+0xbf/0xf0
- raid_end_bio_io+0x78/0xb0
- one_write_done+0x8a/0xa0
- raid10_end_write_request+0x1b4/0x430
- bio_endio+0x175/0x320
- brd_submit_bio+0x3b9/0x9b7 [brd]
- __submit_bio+0x69/0xe0
- submit_bio_noacct_nocheck+0x1e6/0x5a0
- submit_bio_noacct+0x38c/0x7e0
- flush_pending_writes+0xf0/0x240
- raid10d+0xac/0x1ed0
+But that's racy vs. establishing the starting point. That is read out
+lockless, which leads to the following problem:
 
-Fix the problem by adding cond_resched() to raid10 like what raid1 did.
+CPU0	  	      	     	   CPU1
+posix_timer_add()
+  start = sig->posix_timer_id;
+  lock(hash_lock);
+  ...				   posix_timer_add()
+  if (++sig->posix_timer_id < 0)
+      			             start = sig->posix_timer_id;
+     sig->posix_timer_id = 0;
 
-Note that unlimited plugged bio still need to be optimized, for example,
-in the case of lots of dirty pages writeback, this will take lots of
-memory and io will spend a long time in plug, hence io latency is bad.
+So CPU1 can observe a negative start value, i.e. -1, and the loop break
+never happens because the condition can never be true:
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230529131106.2123367-2-yukuai1@huaweicloud.com
+  if (sig->posix_timer_id == start)
+     break;
+
+While this is unlikely to ever turn into an endless loop as the ID space is
+huge (INT_MAX), the racy read of the start value caught the attention of
+KCSAN and Dmitry unearthed that incorrectness.
+
+Rewrite it so that all id operations are under the hash lock.
+
+Reported-by: syzbot+5c54bd3eb218bb595aa9@syzkaller.appspotmail.com
+Reported-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://lore.kernel.org/r/87bkhzdn6g.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/sched/signal.h |  2 +-
+ kernel/time/posix-timers.c   | 31 ++++++++++++++++++-------------
+ 2 files changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 910e7db7d5736..ae84aaa1645c2 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -903,6 +903,7 @@ static void flush_pending_writes(struct r10conf *conf)
- 			else
- 				submit_bio_noacct(bio);
- 			bio = next;
-+			cond_resched();
+diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
+index 5f0e8403e8ceb..9743f7d173a0b 100644
+--- a/include/linux/sched/signal.h
++++ b/include/linux/sched/signal.h
+@@ -125,7 +125,7 @@ struct signal_struct {
+ #ifdef CONFIG_POSIX_TIMERS
+ 
+ 	/* POSIX.1b Interval Timers */
+-	int			posix_timer_id;
++	unsigned int		next_posix_timer_id;
+ 	struct list_head	posix_timers;
+ 
+ 	/* ITIMER_REAL timer for the process */
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index ed3c4a9543982..2d6cf93ca370a 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -140,25 +140,30 @@ static struct k_itimer *posix_timer_by_id(timer_t id)
+ static int posix_timer_add(struct k_itimer *timer)
+ {
+ 	struct signal_struct *sig = current->signal;
+-	int first_free_id = sig->posix_timer_id;
+ 	struct hlist_head *head;
+-	int ret = -ENOENT;
++	unsigned int cnt, id;
+ 
+-	do {
++	/*
++	 * FIXME: Replace this by a per signal struct xarray once there is
++	 * a plan to handle the resulting CRIU regression gracefully.
++	 */
++	for (cnt = 0; cnt <= INT_MAX; cnt++) {
+ 		spin_lock(&hash_lock);
+-		head = &posix_timers_hashtable[hash(sig, sig->posix_timer_id)];
+-		if (!__posix_timers_find(head, sig, sig->posix_timer_id)) {
++		id = sig->next_posix_timer_id;
++
++		/* Write the next ID back. Clamp it to the positive space */
++		sig->next_posix_timer_id = (id + 1) & INT_MAX;
++
++		head = &posix_timers_hashtable[hash(sig, id)];
++		if (!__posix_timers_find(head, sig, id)) {
+ 			hlist_add_head_rcu(&timer->t_hash, head);
+-			ret = sig->posix_timer_id;
++			spin_unlock(&hash_lock);
++			return id;
  		}
- 		blk_finish_plug(&plug);
- 	} else
-@@ -1116,6 +1117,7 @@ static void raid10_unplug(struct blk_plug_cb *cb, bool from_schedule)
- 		else
- 			submit_bio_noacct(bio);
- 		bio = next;
-+		cond_resched();
- 	}
- 	kfree(plug);
+-		if (++sig->posix_timer_id < 0)
+-			sig->posix_timer_id = 0;
+-		if ((sig->posix_timer_id == first_free_id) && (ret == -ENOENT))
+-			/* Loop over all possible ids completed */
+-			ret = -EAGAIN;
+ 		spin_unlock(&hash_lock);
+-	} while (ret == -ENOENT);
+-	return ret;
++	}
++	/* POSIX return code when no timer ID could be allocated */
++	return -EAGAIN;
  }
+ 
+ static inline void unlock_timer(struct k_itimer *timr, unsigned long flags)
 -- 
 2.43.0
 
