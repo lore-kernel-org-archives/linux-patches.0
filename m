@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4574E13EFE0;
-	Tue, 27 Feb 2024 13:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3533413B2A2;
+	Tue, 27 Feb 2024 13:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041157; cv=none; b=n5uRvOHkXKsn2zGUfrpSpvFZwVdHZtsO2RVkY0jivF5uaDAseXtQ7UP9GdISh+GEab7D0iKaR0r2nvt2z4aUU6fkXBKM1FV1TFZpW7pnFwhNOgUKNxFJCC/ceIqEzvj31yUhXPRwCPqOvn+PON7PFMCe728Zb8CKxmdniSxC61I=
+	t=1709041160; cv=none; b=U6b2Dzn1qeejXTaUiCo6l+LMEMiI7punhty4gN+ExoArbc4OyC3VXuytjlUgx+y+5nCLmUeTwqPLMapwFFxVtpxpR9r4Ouj15pXreEdFO2BgG3e7jasm5WRCTZJ7shaj5IlTi0xYx5nzMLGvIPt7cKMq/6Y/AwZUdUc5MwvLxDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041157; c=relaxed/simple;
-	bh=1H/4R/tRSqRZGJKUr4XdblJEAYNWfA48/J7zw4sjcn8=;
+	s=arc-20240116; t=1709041160; c=relaxed/simple;
+	bh=eTXOlJTEm6k3qXfOgpy+xHaSqLwlzHm6aP+3uHJZnEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1cFZ7gRag6FnOJTySmOJ8ao8S1WxBnJ3SyQNQkp00fR0wPtlLVv9guewFyymfXP+ggXkXfvcYijWKFl2dY4kE4XnLeXFEcAiA8RAGob9gUU3jpz+9hRP26G0bPsTSJLK6DoW6CA/JkP8IZc1gZesOkt4quBaFYKmv+bTLdoVcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUGFoohp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JF5wjJ+ZQ5aOnW7YZqLuoWG7EXgsWGUVAk33qMT+C3oa6ljlpQYf8JziPX8rFA3L1f7Ki0KwYrehvpSac867m1l8kW8BbCmUSoXuR7mGEGs80lDYHymV4pS1SDyxx/ciukpvAEFF6ObhCvFFjQpSMI0ba4fkyhUz+o67hEnAskM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ea0ZWH/w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUGFoohp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5C2C433A6;
-	Tue, 27 Feb 2024 13:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ea0ZWH/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFBDC433C7;
+	Tue, 27 Feb 2024 13:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041157;
-	bh=1H/4R/tRSqRZGJKUr4XdblJEAYNWfA48/J7zw4sjcn8=;
+	s=korg; t=1709041159;
+	bh=eTXOlJTEm6k3qXfOgpy+xHaSqLwlzHm6aP+3uHJZnEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xUGFoohpcxB44Gu5A0gXfgs1/RlAcZ9TXPvH6zZG945PaUeyWKDjhATSxtaP+dQdB
-	 7TPPzYqWjvo/NkHKyRMmC85CHiPfvojgi83ySyw9NuZK9F8agElEV43o+Tw9fGLk1j
-	 FaQyrih8byEwSvLsNAbMXRz5PiWyLp6Iy6/kU4nI=
+	b=ea0ZWH/w8Xwfszmr+JgjMdCCAvwhVH2xhkow+nMvneOQ5GNjWQIBG90J1UGSI4pFQ
+	 OTr2njRRiQtQuwV3uDe+ir+lQSQ1lm656gu03KBlIhCouOLcgB7rA8uoH6tQtyQneN
+	 YfXEgWjS5hSyppbi9FzNBn4uR/S+C+DObcpyc/ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.7 213/334] mptcp: add needs_id for userspace appending addr
-Date: Tue, 27 Feb 2024 14:21:11 +0100
-Message-ID: <20240227131637.654003160@linuxfoundation.org>
+	Mustafa Ismail <mustafa.ismail@intel.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Sindhu Devale <sindhu.devale@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 240/334] RDMA/irdma: Add AE for too many RNRS
+Date: Tue, 27 Feb 2024 14:21:38 +0100
+Message-ID: <20240227131638.623129798@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,100 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Mustafa Ismail <mustafa.ismail@intel.com>
 
-commit 6c347be62ae963b301ead8e7fa7b9973e6e0d6e1 upstream.
+[ Upstream commit 630bdb6f28ca9e5ff79e244030170ac788478332 ]
 
-When userspace PM requires to create an ID 0 subflow in "userspace pm
-create id 0 subflow" test like this:
+Add IRDMA_AE_LLP_TOO_MANY_RNRS to the list of AE's processed as an
+abnormal asyncronous event.
 
-        userspace_pm_add_sf $ns2 10.0.3.2 0
-
-An ID 1 subflow, in fact, is created.
-
-Since in mptcp_pm_nl_append_new_local_addr(), 'id 0' will be treated as
-no ID is set by userspace, and will allocate a new ID immediately:
-
-     if (!e->addr.id)
-             e->addr.id = find_next_zero_bit(pernet->id_bitmap,
-                                             MPTCP_PM_MAX_ADDR_ID + 1,
-                                             1);
-
-To solve this issue, a new parameter needs_id is added for
-mptcp_userspace_pm_append_new_local_addr() to distinguish between
-whether userspace PM has set an ID 0 or whether userspace PM has
-not set any address.
-
-needs_id is true in mptcp_userspace_pm_get_local_id(), but false in
-mptcp_pm_nl_announce_doit() and mptcp_pm_nl_subflow_create_doit().
-
-Fixes: e5ed101a6028 ("mptcp: userspace pm allow creating id 0 subflow")
-Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Signed-off-by: Sindhu Devale <sindhu.devale@gmail.com>
+Link: https://lore.kernel.org/r/20240131233849.400285-5-sindhu.devale@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_userspace.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/irdma/defs.h | 1 +
+ drivers/infiniband/hw/irdma/hw.c   | 1 +
+ 2 files changed, 2 insertions(+)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -26,7 +26,8 @@ void mptcp_free_local_addr_list(struct m
- }
- 
- static int mptcp_userspace_pm_append_new_local_addr(struct mptcp_sock *msk,
--						    struct mptcp_pm_addr_entry *entry)
-+						    struct mptcp_pm_addr_entry *entry,
-+						    bool needs_id)
- {
- 	DECLARE_BITMAP(id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
- 	struct mptcp_pm_addr_entry *match = NULL;
-@@ -41,7 +42,7 @@ static int mptcp_userspace_pm_append_new
- 	spin_lock_bh(&msk->pm.lock);
- 	list_for_each_entry(e, &msk->pm.userspace_pm_local_addr_list, list) {
- 		addr_match = mptcp_addresses_equal(&e->addr, &entry->addr, true);
--		if (addr_match && entry->addr.id == 0)
-+		if (addr_match && entry->addr.id == 0 && needs_id)
- 			entry->addr.id = e->addr.id;
- 		id_match = (e->addr.id == entry->addr.id);
- 		if (addr_match && id_match) {
-@@ -64,7 +65,7 @@ static int mptcp_userspace_pm_append_new
- 		}
- 
- 		*e = *entry;
--		if (!e->addr.id)
-+		if (!e->addr.id && needs_id)
- 			e->addr.id = find_next_zero_bit(id_bitmap,
- 							MPTCP_PM_MAX_ADDR_ID + 1,
- 							1);
-@@ -153,7 +154,7 @@ int mptcp_userspace_pm_get_local_id(stru
- 	if (new_entry.addr.port == msk_sport)
- 		new_entry.addr.port = 0;
- 
--	return mptcp_userspace_pm_append_new_local_addr(msk, &new_entry);
-+	return mptcp_userspace_pm_append_new_local_addr(msk, &new_entry, true);
- }
- 
- int mptcp_pm_nl_announce_doit(struct sk_buff *skb, struct genl_info *info)
-@@ -198,7 +199,7 @@ int mptcp_pm_nl_announce_doit(struct sk_
- 		goto announce_err;
- 	}
- 
--	err = mptcp_userspace_pm_append_new_local_addr(msk, &addr_val);
-+	err = mptcp_userspace_pm_append_new_local_addr(msk, &addr_val, false);
- 	if (err < 0) {
- 		GENL_SET_ERR_MSG(info, "did not match address and id");
- 		goto announce_err;
-@@ -378,7 +379,7 @@ int mptcp_pm_nl_subflow_create_doit(stru
- 	}
- 
- 	local.addr = addr_l;
--	err = mptcp_userspace_pm_append_new_local_addr(msk, &local);
-+	err = mptcp_userspace_pm_append_new_local_addr(msk, &local, false);
- 	if (err < 0) {
- 		GENL_SET_ERR_MSG(info, "did not match address and id");
- 		goto create_err;
+diff --git a/drivers/infiniband/hw/irdma/defs.h b/drivers/infiniband/hw/irdma/defs.h
+index 8fb752f2eda29..2cb4b96db7212 100644
+--- a/drivers/infiniband/hw/irdma/defs.h
++++ b/drivers/infiniband/hw/irdma/defs.h
+@@ -346,6 +346,7 @@ enum irdma_cqp_op_type {
+ #define IRDMA_AE_LLP_TOO_MANY_KEEPALIVE_RETRIES				0x050b
+ #define IRDMA_AE_LLP_DOUBT_REACHABILITY					0x050c
+ #define IRDMA_AE_LLP_CONNECTION_ESTABLISHED				0x050e
++#define IRDMA_AE_LLP_TOO_MANY_RNRS					0x050f
+ #define IRDMA_AE_RESOURCE_EXHAUSTION					0x0520
+ #define IRDMA_AE_RESET_SENT						0x0601
+ #define IRDMA_AE_TERMINATE_SENT						0x0602
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index 2f8d18d8be3b7..ad50b77282f8a 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -387,6 +387,7 @@ static void irdma_process_aeq(struct irdma_pci_f *rf)
+ 		case IRDMA_AE_LLP_TOO_MANY_RETRIES:
+ 		case IRDMA_AE_LCE_QP_CATASTROPHIC:
+ 		case IRDMA_AE_LCE_FUNCTION_CATASTROPHIC:
++		case IRDMA_AE_LLP_TOO_MANY_RNRS:
+ 		case IRDMA_AE_LCE_CQ_CATASTROPHIC:
+ 		case IRDMA_AE_UDA_XMIT_DGRAM_TOO_LONG:
+ 		default:
+-- 
+2.43.0
+
 
 
