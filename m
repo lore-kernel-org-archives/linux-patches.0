@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4476143C48;
-	Tue, 27 Feb 2024 14:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABECD13F016;
+	Tue, 27 Feb 2024 14:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042851; cv=none; b=bp7q7gXRN81dKmVVAGWPpXarE2s+oDQ+/rsR8O5f2Spe95ihnLMBIzFfFCGyd6nXcziBlmnzo68BvH0tsq79UyI46MToIoSBWNHWXK0ySKCo1dEFMec4Pi1tUhtUTBEOpXAFMVmm2nd313MHCDZrrqNuvFUCb/wjg5IVxBUHP5w=
+	t=1709042853; cv=none; b=GydZ4ADORH1jAqY2MLu1GSrmBACT9OYka1Urwx/54WNmKbzDLNPoUK6vGWrLjP3CgEEPOrQd31PIQ+iC/xbdF5vrTCFNNJZ+lr6DrCgrFHVWAZ76VuUfx6Fbt60vOR27a87ofYbWn8P5mtIsVRfrVFFQ3+NXyJPYuFN7kguM2r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042851; c=relaxed/simple;
-	bh=7hLPtZrYID6SR7Se62Lp1PGntql64XcUxAGCDzl4ht0=;
+	s=arc-20240116; t=1709042853; c=relaxed/simple;
+	bh=ucKthrS9X2vlxxQfCsYLQZScdzOtoquD30f3iwbCO10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e1eoO0O9rRdUMfEFUcwErJPsOSorJ9unPXsNwd79W2LeuBxjh2Paifmwi27XfsMw4HBqNLpY+q88fAamA+QzsrsliHs6NaAvlRxsf7W2PQ0/LW9wkRxyXxkSRZDa+5sZWR8DXVDx2VaIgvxYS5asOZ7r/+hE/QeFUauiJdTkxSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3/VQXk/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UxylB5+27YHcpYnBnqxODhKOrB6J/7lrwWEeE9+QgKHRiyG/SA8smcl/ZIld5jlCnslXzRnNdzIGYcpx0vQZGVpRsntUUAbqNkzgTGkNubx2FAM+zBz2Av2GkDXrgtWlWJhofBTaIWZquga4D0NOhzG7bZQOL93OimBJ9g+xzIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pz7+yj4G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3/VQXk/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717B0C433F1;
-	Tue, 27 Feb 2024 14:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pz7+yj4G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AAF6C433F1;
+	Tue, 27 Feb 2024 14:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042850;
-	bh=7hLPtZrYID6SR7Se62Lp1PGntql64XcUxAGCDzl4ht0=;
+	s=korg; t=1709042853;
+	bh=ucKthrS9X2vlxxQfCsYLQZScdzOtoquD30f3iwbCO10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3/VQXk/QnuoqKnpK3CoZwzl5vICxI8eXHy6DaEanDP2Rvq453ou6sQOlAeNsRV7f
-	 9GCNncwsUMCKxBsk5aXQZ6lN01n9MOop5az6QlCAp3GKWbd2stNfxn/fZP6eZSx4dr
-	 3YFotPiY3yW0pe9sY6SIxobcSY4UGSTf46WOvp1Q=
+	b=Pz7+yj4Ge7xrdIL+09c+WUqAqCD/qzua0ZNW4vck7uNlkJrgm6oe37n+0xmI/w26Y
+	 r8MEkDkn4M16EnzwCoRg5MRsb5bhGoGjtutlNRV0SMuyPQzQy1CZXc9m5IKqwXxnEs
+	 8WegF8hIqF0oZpRTRLKWMaF3b83551xXAatCg3A8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Chuansheng Liu <chuansheng.liu@intel.com>,
+	Hui Su <suhui_kernel@163.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Daniel Bristot de Oliveira <bristot@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/245] drm/i915/dg1: Update DMC_DEBUG3 register
-Date: Tue, 27 Feb 2024 14:25:31 +0100
-Message-ID: <20240227131619.870675226@linuxfoundation.org>
+Subject: [PATCH 5.15 144/245] kernel/sched: Remove dl_boosted flag comment
+Date: Tue, 27 Feb 2024 14:25:32 +0100
+Message-ID: <20240227131619.901896504@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,60 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuansheng Liu <chuansheng.liu@intel.com>
+From: Hui Su <suhui_kernel@163.com>
 
-[ Upstream commit b60668cb4c57a7cc451de781ae49f5e9cc375eaf ]
+[ Upstream commit 0e3872499de1a1230cef5221607d71aa09264bd5 ]
 
-Current DMC_DEBUG3(_MMIO(0x101090)) address is for TGL,
-it is wrong for DG1. Just like commit 5bcc95ca382e
-("drm/i915/dg1: Update DMC_DEBUG register"), correct
-this issue for DG1 platform to avoid wrong register
-being read.
+since commit 2279f540ea7d ("sched/deadline: Fix priority
+inheritance with multiple scheduling classes"), we should not
+keep it here.
 
-BSpec: 49788
-
-v2: fix "not wrong" typo. (Jani)
-
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Chuansheng Liu <chuansheng.liu@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220211002933.84240-1-chuansheng.liu@intel.com
+Signed-off-by: Hui Su <suhui_kernel@163.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Daniel Bristot de Oliveira <bristot@redhat.com>
+Link: https://lore.kernel.org/r/20220107095254.GA49258@localhost.localdomain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_debugfs.c | 4 ++--
- drivers/gpu/drm/i915/i915_reg.h                      | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ include/linux/sched.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_debugfs.c b/drivers/gpu/drm/i915/display/intel_display_debugfs.c
-index b136a0fc0963b..6b3e2e053f457 100644
---- a/drivers/gpu/drm/i915/display/intel_display_debugfs.c
-+++ b/drivers/gpu/drm/i915/display/intel_display_debugfs.c
-@@ -571,8 +571,8 @@ static int i915_dmc_info(struct seq_file *m, void *unused)
- 		 * reg for DC3CO debugging and validation,
- 		 * but TGL DMC f/w is using DMC_DEBUG3 reg for DC3CO counter.
- 		 */
--		seq_printf(m, "DC3CO count: %d\n",
--			   intel_de_read(dev_priv, DMC_DEBUG3));
-+		seq_printf(m, "DC3CO count: %d\n", intel_de_read(dev_priv, IS_DGFX(dev_priv) ?
-+					DG1_DMC_DEBUG3 : TGL_DMC_DEBUG3));
- 	} else {
- 		dc5_reg = IS_BROXTON(dev_priv) ? BXT_DMC_DC3_DC5_COUNT :
- 						 SKL_DMC_DC3_DC5_COUNT;
-diff --git a/drivers/gpu/drm/i915/i915_reg.h b/drivers/gpu/drm/i915/i915_reg.h
-index 3c70aa5229e5a..906982d6370d0 100644
---- a/drivers/gpu/drm/i915/i915_reg.h
-+++ b/drivers/gpu/drm/i915/i915_reg.h
-@@ -7841,7 +7841,8 @@ enum {
- #define TGL_DMC_DEBUG_DC6_COUNT	_MMIO(0x101088)
- #define DG1_DMC_DEBUG_DC5_COUNT	_MMIO(0x134154)
- 
--#define DMC_DEBUG3		_MMIO(0x101090)
-+#define TGL_DMC_DEBUG3		_MMIO(0x101090)
-+#define DG1_DMC_DEBUG3		_MMIO(0x13415c)
- 
- /* Display Internal Timeout Register */
- #define RM_TIMEOUT		_MMIO(0x42060)
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 7bfc2b45cd99b..9b3cfe685cb45 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -608,10 +608,6 @@ struct sched_dl_entity {
+ 	 * task has to wait for a replenishment to be performed at the
+ 	 * next firing of dl_timer.
+ 	 *
+-	 * @dl_boosted tells if we are boosted due to DI. If so we are
+-	 * outside bandwidth enforcement mechanism (but only until we
+-	 * exit the critical section);
+-	 *
+ 	 * @dl_yielded tells if task gave up the CPU before consuming
+ 	 * all its available runtime during the last job.
+ 	 *
 -- 
 2.43.0
 
