@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D58C13B2B9;
-	Tue, 27 Feb 2024 13:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2185313AA2F;
+	Tue, 27 Feb 2024 13:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040736; cv=none; b=bmbJfgXxTTgfJh7FNwnVI1wQzRMwIRLxshW/rHnRNrubeX9cMlFdCW7EfJlensYKGH7sW+qMfBuHBSGu/GDaDF4wRxvI7useYynhMFQuRs8oaJAMWK0zdtbrQqthrd61fxnI6e8pjZ44LuncWzd9ukkiOPBZ/TpM34xSATLrsWM=
+	t=1709040739; cv=none; b=tpACP0NkYQSCcUlPEScQAgitX52wvgwU/5f64LJp/od9vk4VRh8IckIxFkitnRIB1wtqEfQRN23UUTDun+4SfxxyeNBl7vWbPvYbNfZdBp3Mh0TxIE76DJ+rjassqjCPl9W+Rn+x6Iu900JaS3rqb8oow4PlYJUAovdmUTCW97w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040736; c=relaxed/simple;
-	bh=jk2cWdPrG4ezu1vRwx1utPeAIfbkxC+gIZliCx4CaWY=;
+	s=arc-20240116; t=1709040739; c=relaxed/simple;
+	bh=hwtc5ZtAijZugs6HvSewJhSnWFJCyI5a4tjDksU6aZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMjoAKJJcEAtMkq9xXwy7x1nwTAwAYri0b3LU4b8KQ6EhuEjxmYULghK4K89XT0YzVtfOsoQ5tPsz8rIEtXpfE8MECEGLBAEhYSPkJylN0EXUw3TAZAWx2jC7Awf0IsO8WhVLA0rTHsFsPeDIS2Lxvqf25MLdMOYfAi7i5PEQtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8/upErf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HV5/zC2MPBLARs/FkKGvLLW0kiNDJtVff3+669DUJ8tZFLhzSkWngUC8e20d2ylLzYxWGVsCuW6WVxJ0n6DO+/sv3Qv58jtBLZxXaNRNnjt0DzsJlQJYov5QgSKC3dc25ArogUP0TudjuhXy74bI5qoDhAYwxkQX3Vky6WsLawk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZiTUO5r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8/upErf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7723C433F1;
-	Tue, 27 Feb 2024 13:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZiTUO5r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61EFC433C7;
+	Tue, 27 Feb 2024 13:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040736;
-	bh=jk2cWdPrG4ezu1vRwx1utPeAIfbkxC+gIZliCx4CaWY=;
+	s=korg; t=1709040739;
+	bh=hwtc5ZtAijZugs6HvSewJhSnWFJCyI5a4tjDksU6aZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8/upErfEp86rCIKNqQgskTPvZMOzG+Yo5dHTBIAExCSEyTgRVI5D3cOeTinJCZGy
-	 5apgoJBDYpr2t2ztp7K76wTeX76n86OQdZWYvuFQvZYtxHDMUal1i4LQ/5vQe+7auh
-	 88FFIea5fPaM0KPkBiFnN71iaBBtXqvrXhOAo5Gk=
+	b=bZiTUO5rdFOk6eKWWLCkVZWLpnf4zPgWtSkPfqhcYPkOtHsLv/c9lJ2Ou7Gf4pm4o
+	 lHVWZAIhYe/QYOrRpxSmaPz/wFi5Yuyb+YfpWnspFAXpHI44oU4iDZXGYYNQ95S62c
+	 1wKeJ0jtKNaPTEoMy7YRcN00+R7KMnScbaTujr6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Tsoy <alexander@tsoy.me>,
-	Takashi Iwai <tiwai@suse.de>,
+	Brenton Simpson <appsforartists@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 062/334] ALSA: usb-audio: Ignore clock selector errors for single connection
-Date: Tue, 27 Feb 2024 14:18:40 +0100
-Message-ID: <20240227131632.569685824@linuxfoundation.org>
+Subject: [PATCH 6.7 053/334] Input: xpad - add Lenovo Legion Go controllers
+Date: Tue, 27 Feb 2024 14:18:31 +0100
+Message-ID: <20240227131632.287196190@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,66 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Tsoy <alexander@tsoy.me>
+From: Brenton Simpson <appsforartists@google.com>
 
-[ Upstream commit eaa1b01fe709d6a236a9cec74813e0400601fd23 ]
+[ Upstream commit 80441f76ee67002437db61f3b317ed80cce085d2 ]
 
-For devices with multiple clock sources connected to a selector, we need
-to check what a clock selector control request has returned. This is
-needed to ensure that a requested clock source is indeed selected and for
-autoclock feature to work.
+The Lenovo Legion Go is a handheld gaming system, similar to a Steam Deck.
+It has a gamepad (including rear paddles), 3 gyroscopes, a trackpad,
+volume buttons, a power button, and 2 LED ring lights.
 
-For devices with single clock source connected, if we get an error there
-is nothing else we can do about it. We can't skip clock selector setup as
-it is required by some devices. So lets just ignore error in this case.
+The Legion Go firmware presents these controls as a USB hub with various
+devices attached.  In its default state, the gamepad is presented as an
+Xbox controller connected to this hub.  (By holding a combination of
+buttons, it can be changed to use the older DirectInput API.)
 
-This should fix various buggy Mackie devices:
+This patch teaches the existing Xbox controller module `xpad` to bind to
+the controller in the Legion Go, which enables support for the:
 
-[  649.109785] usb 1-1.3: parse_audio_format_rates_v2v3(): unable to find clock source (clock -32)
-[  649.111946] usb 1-1.3: parse_audio_format_rates_v2v3(): unable to find clock source (clock -32)
-[  649.113822] usb 1-1.3: parse_audio_format_rates_v2v3(): unable to find clock source (clock -32)
+- directional pad,
+- analog sticks (including clicks),
+- X, Y, A, B,
+- start and select (or menu and capture),
+- shoulder buttons, and
+- rumble.
 
-There is also interesting info from the Windows documentation [1] (this
-is probably why manufacturers dont't even test this feature):
+The trackpad, touchscreen, volume controls, and power button are already
+supported via existing kernel modules.  Two of the face buttons, the
+gyroscopes, rear paddles, and LEDs are not.
 
-"The USB Audio 2.0 driver doesn't support clock selection. The driver
-uses the Clock Source Entity, which is selected by default and never
-issues a Clock Selector Control SET CUR request."
+After this patch lands, the Legion Go will be mostly functional in Linux,
+out-of-the-box.  The various components of the USB hub can be synthesized
+into a single logical controller (including the additional buttons) in
+userspace with [Handheld Daemon](https://github.com/hhd-dev/hhd), which
+makes the Go fully functional.
 
-Link: https://learn.microsoft.com/en-us/windows-hardware/drivers/audio/usb-2-0-audio-drivers [1]
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217314
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218175
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218342
-Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
-Link: https://lore.kernel.org/r/20240201115308.17838-1-alexander@tsoy.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Brenton Simpson <appsforartists@google.com>
+Link: https://lore.kernel.org/r/20240118183546.418064-1-appsforartists@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/clock.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/clock.c b/sound/usb/clock.c
-index 33db334e65566..a676ad093d189 100644
---- a/sound/usb/clock.c
-+++ b/sound/usb/clock.c
-@@ -328,8 +328,16 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
- 			if (chip->quirk_flags & QUIRK_FLAG_SKIP_CLOCK_SELECTOR)
- 				return ret;
- 			err = uac_clock_selector_set_val(chip, entity_id, cur);
--			if (err < 0)
-+			if (err < 0) {
-+				if (pins == 1) {
-+					usb_audio_dbg(chip,
-+						      "%s(): selector returned an error, "
-+						      "assuming a firmware bug, id %d, ret %d\n",
-+						      __func__, clock_id, err);
-+					return ret;
-+				}
- 				return err;
-+			}
- 		}
- 
- 		if (!validate || ret > 0 || !chip->autoclock)
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index e2c1848182de9..d0bb3edfd0a09 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -294,6 +294,7 @@ static const struct xpad_device {
+ 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
+ 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
+ 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
++	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
+ 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
+@@ -491,6 +492,7 @@ static const struct usb_device_id xpad_table[] = {
+ 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
++	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
+ 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
+ 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
+ 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA controllers */
 -- 
 2.43.0
 
