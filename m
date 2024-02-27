@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF0B13B2B4;
-	Tue, 27 Feb 2024 14:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF5413B29C;
+	Tue, 27 Feb 2024 14:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043313; cv=none; b=h0nMHyHgtCiBioAou6WVnvxGycAR0rtK/LaKbZK1w+2NL27N24fjT60CLyF+T1IRKncI7C5B22Ey8yx6Q7e0f6fkOlsPUpUtX/JKBfUX79NmWsx8fDwWvrrfVWNsFMDKZrtnnl4L2wUN/F7xrnOcPscTwMTMRhKXDG0hSu40Ky4=
+	t=1709043315; cv=none; b=nKgmh6pHw5ywizySFoVHr922lBc8bTgTbTABPxw2+ODhGNElJkidQ3S1HKHHVfWGFRVHNMLLMFwX+vv1FvpwMkWh8IV0o7gq+ZUN9OW60pXoR3YUEIxGL3WgIpFcUEiGOUhGqSA6IVTrReROPs5ZVksMEgKjzN5QaSkH514E2KU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043313; c=relaxed/simple;
-	bh=fIyLnEElggOUND1aplwx7ikm/idPRwbngOaeBX1LZDY=;
+	s=arc-20240116; t=1709043315; c=relaxed/simple;
+	bh=N6xCC1VBjtntBxjov/SweZ/TvPUzRv4OHx79s0fnrwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIgIzZ1sbNAXQWhX4N9GtJ9RtZFJLzm3jJmsnhjwsUQo3oMce+UwAIcES6L6Zxr0kekURNKyzlEbhSBxu/wFoSIX9pBoAGhWahruOJdxrDKegPT2Sxem2sFioChT/i7IDwi/Jba8OLwyrvvQ14XuaQ9e/iZdEXiy4FITC8d4Ssc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VoxCHm5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F/y5cdwgCa1K9StJLm9zrDJ54xfGGGPwAZKKOHT1tuBrr5JHomnLq+RCsPmcRsgJtl74Z7z/bSLWx9MCjk+bF/m0X9Eu9qTtw6ZXqNNCxbdK+r4xcybb3OgXk1f8bSLqchoSeiyx+jgdUveeFGhwDwJeGB3/KH8dPrZTTLv/O64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1/KpxKB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VoxCHm5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8CAC433F1;
-	Tue, 27 Feb 2024 14:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1/KpxKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24532C433F1;
+	Tue, 27 Feb 2024 14:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043312;
-	bh=fIyLnEElggOUND1aplwx7ikm/idPRwbngOaeBX1LZDY=;
+	s=korg; t=1709043315;
+	bh=N6xCC1VBjtntBxjov/SweZ/TvPUzRv4OHx79s0fnrwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1VoxCHm5OS4EWgAQN/0pdVOnVWyrIdpm2c/sCDe0haTxJzaGvMLmkXyzPpzMgwblp
-	 Ax0BZkd+04AfqqXmyPhLp0QDuHvsJlXzjYpbdrI8eUW8tNGwKKaX/eeG7Q1WZM/tk3
-	 J4xaKp7LLh8OzZalLEWtkahrF5YMgU3YiFiNsHVI=
+	b=L1/KpxKBmJSPu3GeHc058p7NsDOtu7PYd4uwSBDKQ+9mDRZ5/wt8+es/oryeO/95X
+	 kQuxSpbJp54xM7V314CqeRjDFPKZMIl9qrJnpA7PAWke5ao0h7AFiCPdKeS8Ap2eE5
+	 flUM11ma3CHXr98lNUPF3EqcviVLZxI7CLyIDC24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Robert Morris <rtm@csail.mit.edu>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/195] fs/ntfs3: Prevent generic message "attempt to access beyond end of device"
-Date: Tue, 27 Feb 2024 14:25:23 +0100
-Message-ID: <20240227131612.552249691@linuxfoundation.org>
+Subject: [PATCH 6.1 063/195] fs/ntfs3: Correct function is_rst_area_valid
+Date: Tue, 27 Feb 2024 14:25:24 +0100
+Message-ID: <20240227131612.585111706@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,84 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 5ca87d01eba7bdfe9536a157ca33c1455bb8d16c ]
+[ Upstream commit 1b7dd28e14c4728ae1a815605ca33ffb4ce1b309 ]
 
-It used in test environment.
-
+Reported-by: Robert Morris <rtm@csail.mit.edu>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c  | 24 ++++++++++++++++++++++++
- fs/ntfs3/ntfs_fs.h | 14 +-------------
- 2 files changed, 25 insertions(+), 13 deletions(-)
+ fs/ntfs3/fslog.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 4b72bc7f12ca3..1eac80d55b554 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -976,6 +976,30 @@ static inline __le32 security_hash(const void *sd, size_t bytes)
- 	return cpu_to_le32(hash);
- }
- 
-+/*
-+ * simple wrapper for sb_bread_unmovable.
-+ */
-+struct buffer_head *ntfs_bread(struct super_block *sb, sector_t block)
-+{
-+	struct ntfs_sb_info *sbi = sb->s_fs_info;
-+	struct buffer_head *bh;
-+
-+	if (unlikely(block >= sbi->volume.blocks)) {
-+		/* prevent generic message "attempt to access beyond end of device" */
-+		ntfs_err(sb, "try to read out of volume at offset 0x%llx",
-+			 (u64)block << sb->s_blocksize_bits);
-+		return NULL;
-+	}
-+
-+	bh = sb_bread_unmovable(sb, block);
-+	if (bh)
-+		return bh;
-+
-+	ntfs_err(sb, "failed to read volume at offset 0x%llx",
-+		 (u64)block << sb->s_blocksize_bits);
-+	return NULL;
-+}
-+
- int ntfs_sb_read(struct super_block *sb, u64 lbo, size_t bytes, void *buffer)
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 710cb5aa5a65b..d53ef128fa733 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -465,7 +465,7 @@ static inline bool is_rst_area_valid(const struct RESTART_HDR *rhdr)
  {
- 	struct block_device *bdev = sb->s_bdev;
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index c9ba0d27601dc..0f9bec29f2b70 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -580,6 +580,7 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes);
- int log_replay(struct ntfs_inode *ni, bool *initialized);
+ 	const struct RESTART_AREA *ra;
+ 	u16 cl, fl, ul;
+-	u32 off, l_size, file_dat_bits, file_size_round;
++	u32 off, l_size, seq_bits;
+ 	u16 ro = le16_to_cpu(rhdr->ra_off);
+ 	u32 sys_page = le32_to_cpu(rhdr->sys_page_size);
  
- /* Globals from fsntfs.c */
-+struct buffer_head *ntfs_bread(struct super_block *sb, sector_t block);
- bool ntfs_fix_pre_write(struct NTFS_RECORD_HEADER *rhdr, size_t bytes);
- int ntfs_fix_post_read(struct NTFS_RECORD_HEADER *rhdr, size_t bytes,
- 		       bool simple);
-@@ -1012,19 +1013,6 @@ static inline u64 bytes_to_block(const struct super_block *sb, u64 size)
- 	return (size + sb->s_blocksize - 1) >> sb->s_blocksize_bits;
- }
+@@ -511,13 +511,15 @@ static inline bool is_rst_area_valid(const struct RESTART_HDR *rhdr)
+ 	/* Make sure the sequence number bits match the log file size. */
+ 	l_size = le64_to_cpu(ra->l_size);
  
--static inline struct buffer_head *ntfs_bread(struct super_block *sb,
--					     sector_t block)
--{
--	struct buffer_head *bh = sb_bread_unmovable(sb, block);
--
--	if (bh)
--		return bh;
--
--	ntfs_err(sb, "failed to read volume at offset 0x%llx",
--		 (u64)block << sb->s_blocksize_bits);
--	return NULL;
--}
--
- static inline struct ntfs_inode *ntfs_i(struct inode *inode)
- {
- 	return container_of(inode, struct ntfs_inode, vfs_inode);
+-	file_dat_bits = sizeof(u64) * 8 - le32_to_cpu(ra->seq_num_bits);
+-	file_size_round = 1u << (file_dat_bits + 3);
+-	if (file_size_round != l_size &&
+-	    (file_size_round < l_size || (file_size_round / 2) > l_size)) {
+-		return false;
++	seq_bits = sizeof(u64) * 8 + 3;
++	while (l_size) {
++		l_size >>= 1;
++		seq_bits -= 1;
+ 	}
+ 
++	if (seq_bits != ra->seq_num_bits)
++		return false;
++
+ 	/* The log page data offset and record header length must be quad-aligned. */
+ 	if (!IS_ALIGNED(le16_to_cpu(ra->data_off), 8) ||
+ 	    !IS_ALIGNED(le16_to_cpu(ra->rec_hdr_len), 8))
 -- 
 2.43.0
 
