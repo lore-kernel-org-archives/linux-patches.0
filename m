@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB0613B78F;
-	Tue, 27 Feb 2024 13:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C11D13AA55;
+	Tue, 27 Feb 2024 13:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041728; cv=none; b=abyVrQXwcv1gxtOJTANfxmo03XgtB0xc7R12lG3CT+s2E9ml7fWP5JX8vTHg4qZAkFy4G71KqBz5IYpEBU6+SZKJwmJEG04Q3qc5A6I/68TB704vsCmPu5MwUr/B9ck+qVc/lRiYFV79syDhXHMMut4Hy0Hg1GIv3KWxMXDjWiI=
+	t=1709041736; cv=none; b=eUm/eNdep5Hxgox82hptciw+gpFe99diE9t3JZVWG6HsH/5OZ2jTSIPkXh5zb1meHc5UWUPB2gdCTRcx5RKjX8LiaW2BHC7YtkIwUFSFvdE6BFK0KrpallUPQKd8JQMu3J4vYxSBoJoPI204JQSP2lUnu1kJmGUGAtaz8bin+EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041728; c=relaxed/simple;
-	bh=2BIXTuogawP5cbS2fHa2qUW64luhYb6srARyN+jdE7w=;
+	s=arc-20240116; t=1709041736; c=relaxed/simple;
+	bh=niul0sj8YXJ8AWBdyAk3JlTI8Gcb6dj/W5B8IVO08UE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S9xgJj6FHhY8LedLyGv3llfMgf9SQaNJDdGI/+K/+LuYIAMidQRAB6YyWSAmVtUTPhgqr/pZqDz3853jURuCaW3DXDTOC8ZJEHUPE4k+7XZmVonIJBtybkWy25WGMGV7PbVhFWl11rDGFTGsVhXu5AZ6ZWpIOwJHR6M6A+w5ECQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5POhzlY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EiPLQuZo3hK0/8nlZF7Wb9rYcNeWdvKmomMZnllg9gGUQpNlUiaTz7qgOMTNCBVlbe/nNr6jJmzcFVbAY2Wt1asnOplmVdncOOi4VIq6TybMPzFgJh7WXkH6ahJEazFwVMrLj4JUi3+4x2hv0eONPH95NLH+b3YgTLg2TcZSXDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRWoM15O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5POhzlY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE85CC433F1;
-	Tue, 27 Feb 2024 13:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRWoM15O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB24C433C7;
+	Tue, 27 Feb 2024 13:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041728;
-	bh=2BIXTuogawP5cbS2fHa2qUW64luhYb6srARyN+jdE7w=;
+	s=korg; t=1709041736;
+	bh=niul0sj8YXJ8AWBdyAk3JlTI8Gcb6dj/W5B8IVO08UE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5POhzlYH377Wu/1Ahx74+K8lO886G9M6YfYZZeUCNrbGf7WRvfNDzLeqnV/k9mKE
-	 D61+yuv5G7gYXAd98T+7mgtgNEmGgIV8u1T+GPzrClBUauiB9eqYbkrT5KxbzJn9SR
-	 DIKxFZ9bq2HwF7Dqd4LnSwmOdg2eJn2rm5CrGlZA=
+	b=bRWoM15OjYz8mnOu4pxem76Ix8+AZ6T+/xy0+CRLs3fbOAQhKWOOCvDYbFC4EM/zM
+	 d7pZ4KaOfTHSQdeNg4zytTapqle5ghAOc26s4TYFhNGxpOPecsyrm0ZLN3bG1Pyvdg
+	 QWjp7MO3tpg58Btd4hnAXtuVZucQLvJd+whudWlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phoenix Chen <asbeltogf@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Brenton Simpson <appsforartists@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/299] platform/x86: touchscreen_dmi: Add info for the TECLAST X16 Plus tablet
-Date: Tue, 27 Feb 2024 14:22:23 +0100
-Message-ID: <20240227131626.858176434@linuxfoundation.org>
+Subject: [PATCH 6.6 050/299] Input: xpad - add Lenovo Legion Go controllers
+Date: Tue, 27 Feb 2024 14:22:41 +0100
+Message-ID: <20240227131627.585074880@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,74 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phoenix Chen <asbeltogf@gmail.com>
+From: Brenton Simpson <appsforartists@google.com>
 
-[ Upstream commit 1abdf288b0ef5606f76b6e191fa6df05330e3d7e ]
+[ Upstream commit 80441f76ee67002437db61f3b317ed80cce085d2 ]
 
-Add touch screen info for TECLAST X16 Plus tablet.
+The Lenovo Legion Go is a handheld gaming system, similar to a Steam Deck.
+It has a gamepad (including rear paddles), 3 gyroscopes, a trackpad,
+volume buttons, a power button, and 2 LED ring lights.
 
-Signed-off-by: Phoenix Chen <asbeltogf@gmail.com>
-Link: https://lore.kernel.org/r/20240126095308.5042-1-asbeltogf@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+The Legion Go firmware presents these controls as a USB hub with various
+devices attached.  In its default state, the gamepad is presented as an
+Xbox controller connected to this hub.  (By holding a combination of
+buttons, it can be changed to use the older DirectInput API.)
+
+This patch teaches the existing Xbox controller module `xpad` to bind to
+the controller in the Legion Go, which enables support for the:
+
+- directional pad,
+- analog sticks (including clicks),
+- X, Y, A, B,
+- start and select (or menu and capture),
+- shoulder buttons, and
+- rumble.
+
+The trackpad, touchscreen, volume controls, and power button are already
+supported via existing kernel modules.  Two of the face buttons, the
+gyroscopes, rear paddles, and LEDs are not.
+
+After this patch lands, the Legion Go will be mostly functional in Linux,
+out-of-the-box.  The various components of the USB hub can be synthesized
+into a single logical controller (including the additional buttons) in
+userspace with [Handheld Daemon](https://github.com/hhd-dev/hhd), which
+makes the Go fully functional.
+
+Signed-off-by: Brenton Simpson <appsforartists@google.com>
+Link: https://lore.kernel.org/r/20240118183546.418064-1-appsforartists@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 35 ++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ drivers/input/joystick/xpad.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index 0c67337726984..7aee5e9ff2b8d 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -944,6 +944,32 @@ static const struct ts_dmi_data teclast_tbook11_data = {
- 	.properties	= teclast_tbook11_props,
- };
- 
-+static const struct property_entry teclast_x16_plus_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 8),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 14),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1916),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1264),
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl3692-teclast-x16-plus.fw"),
-+	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
-+	PROPERTY_ENTRY_BOOL("silead,home-button"),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data teclast_x16_plus_data = {
-+	.embedded_fw = {
-+		.name	= "silead/gsl3692-teclast-x16-plus.fw",
-+		.prefix = { 0xf0, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00 },
-+		.length	= 43560,
-+		.sha256	= { 0x9d, 0xb0, 0x3d, 0xf1, 0x00, 0x3c, 0xb5, 0x25,
-+			    0x62, 0x8a, 0xa0, 0x93, 0x4b, 0xe0, 0x4e, 0x75,
-+			    0xd1, 0x27, 0xb1, 0x65, 0x3c, 0xba, 0xa5, 0x0f,
-+			    0xcd, 0xb4, 0xbe, 0x00, 0xbb, 0xf6, 0x43, 0x29 },
-+	},
-+	.acpi_name	= "MSSL1680:00",
-+	.properties	= teclast_x16_plus_props,
-+};
-+
- static const struct property_entry teclast_x3_plus_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1980),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1500),
-@@ -1612,6 +1638,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_SKU, "E5A6_A1"),
- 		},
- 	},
-+	{
-+		/* Teclast X16 Plus */
-+		.driver_data = (void *)&teclast_x16_plus_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "TECLAST"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
-+			DMI_MATCH(DMI_PRODUCT_SKU, "D3A5_A1"),
-+		},
-+	},
- 	{
- 		/* Teclast X3 Plus */
- 		.driver_data = (void *)&teclast_x3_plus_data,
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index e2c1848182de9..d0bb3edfd0a09 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -294,6 +294,7 @@ static const struct xpad_device {
+ 	{ 0x1689, 0xfd00, "Razer Onza Tournament Edition", 0, XTYPE_XBOX360 },
+ 	{ 0x1689, 0xfd01, "Razer Onza Classic Edition", 0, XTYPE_XBOX360 },
+ 	{ 0x1689, 0xfe00, "Razer Sabertooth", 0, XTYPE_XBOX360 },
++	{ 0x17ef, 0x6182, "Lenovo Legion Controller for Windows", 0, XTYPE_XBOX360 },
+ 	{ 0x1949, 0x041a, "Amazon Game Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0002, "Harmonix Rock Band Guitar", 0, XTYPE_XBOX360 },
+ 	{ 0x1bad, 0x0003, "Harmonix Rock Band Drumkit", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360 },
+@@ -491,6 +492,7 @@ static const struct usb_device_id xpad_table[] = {
+ 	XPAD_XBOX360_VENDOR(0x15e4),		/* Numark Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x162e),		/* Joytech Xbox 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x1689),		/* Razer Onza */
++	XPAD_XBOX360_VENDOR(0x17ef),		/* Lenovo */
+ 	XPAD_XBOX360_VENDOR(0x1949),		/* Amazon controllers */
+ 	XPAD_XBOX360_VENDOR(0x1bad),		/* Harmonix Rock Band guitar and drums */
+ 	XPAD_XBOX360_VENDOR(0x20d6),		/* PowerA controllers */
 -- 
 2.43.0
 
