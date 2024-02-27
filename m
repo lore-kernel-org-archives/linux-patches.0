@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4A713B2B3;
-	Tue, 27 Feb 2024 13:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18A413AA4C;
+	Tue, 27 Feb 2024 13:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041364; cv=none; b=b6fP94+sxibCiaFaAhA/mJJ3FJSSkKiUty0fsgjBhUSb0t+3y/wkf/3BiQbbM+fF/bIMPvVP/EnbNFg5sz8lyullN2zDmy2DxqNc0GqGM9P/Nq8L3BzIIj1F1cP80qzeGhhDk33dX1QHlS3ynKmN355WsV+AjmaBtVgCKFtbzNA=
+	t=1709041366; cv=none; b=iYDaDx9jt99r+KlRmJrZD04SAFElan4vk0OnxcwBxXtOxbgOTHP4/Wu26GEV+GxGpVHKDiuqbOj4lhqrzIEgtYXo+4YQufiFC4FMVKoJE3q12ovCtAMCPVY30apFHEzq02cDnBQtBUkljmPgVxCLJzg297wEuIuz55+mDjkoUSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041364; c=relaxed/simple;
-	bh=p1gcEJERWOX3XumjZmYQdbY7m1p8PG7Cxa5E1a3O2cQ=;
+	s=arc-20240116; t=1709041366; c=relaxed/simple;
+	bh=rULKSNiQbH2p3xNymx5G6oGihxfAH2ifTcg+vv5tXH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSY57hmXfWmAtdTQfwk7dNfcJnkpLwrLWXTnn844iw7kY/r9sx3UnM9HI+Ijin432Zz6RPxENMcrkmdtL367Gl7N64SCV1uB11psuRlMH1dOZTsrHoONlA8mYjXoUTD/W+pkpfNcEG75Ji+8s/Ufxw87AfeyVjotE1HH8wBDR0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Crc3g1A1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Psjm7ZIe0ktgW5OnTDhh1doxGYnEtfY2lfcL6dHvEoayMrIvmPo7vOj8LGesjp2JeWxsMDkVXs5FRVjsieylF6n0G02sYvwpJ/5Qovo53xU58Myg/zYowRlR+Q0bSiSSp80Q6sZ1vwjXOX8zt7NgIus1QRx59WVGmhBARRpXvt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9MQsIhp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Crc3g1A1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC3BC433F1;
-	Tue, 27 Feb 2024 13:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9MQsIhp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B1BC433C7;
+	Tue, 27 Feb 2024 13:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041363;
-	bh=p1gcEJERWOX3XumjZmYQdbY7m1p8PG7Cxa5E1a3O2cQ=;
+	s=korg; t=1709041366;
+	bh=rULKSNiQbH2p3xNymx5G6oGihxfAH2ifTcg+vv5tXH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Crc3g1A1xkdBkJtTUYrb69yxv/Is/ujcNzG43xKeiSbCBc07AldPRFdvWoUx+OTMX
-	 2XF/2aXj86DyBcjXpGv5c/4WrVpjEYXbRPCgWtqskKO5UksJ6U8Wl3CgxHu7VqVQBy
-	 E0LGyiyhoTnuJKvKOfap872vkzKrjvnRESvHtSk8=
+	b=W9MQsIhpJu8UMlnU3l9b6flVHYHQjZrr15L6MA2960rZzZdqwk8BZEvWeTF38BxbG
+	 tipiHI0icerIQ16N4W+yLgpaajra3bFJrnnPOwuU7t4+3ixpagKTRbEF1/jMfxqyNI
+	 TvkbjAZwaNo/oug3jN/xihpc1WS7/uWZE1oIjrPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 273/334] powerpc/pseries/iommu: DLPAR add doesnt completely initialize pci_controller
-Date: Tue, 27 Feb 2024 14:22:11 +0100
-Message-ID: <20240227131639.796868475@linuxfoundation.org>
+Subject: [PATCH 6.7 307/334] netfilter: nft_flow_offload: reset dst in route object after setting up flow
+Date: Tue, 27 Feb 2024 14:22:45 +0100
+Message-ID: <20240227131640.964094896@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,169 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.ibm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a5c57fd2e9bd1c8ea8613a8f94fd0be5eccbf321 ]
+[ Upstream commit 9e0f0430389be7696396c62f037be4bf72cf93e3 ]
 
-When a PCI device is dynamically added, the kernel oopses with a NULL
-pointer dereference:
+dst is transferred to the flow object, route object does not own it
+anymore.  Reset dst in route object, otherwise if flow_offload_add()
+fails, error path releases dst twice, leading to a refcount underflow.
 
-  BUG: Kernel NULL pointer dereference on read at 0x00000030
-  Faulting instruction address: 0xc0000000006bbe5c
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in: rpadlpar_io rpaphp rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_resolver nfs lockd grace fscache netfs xsk_diag bonding nft_compat nf_tables nfnetlink rfkill binfmt_misc dm_multipath rpcrdma sunrpc rdma_ucm ib_srpt ib_isert iscsi_target_mod target_core_mod ib_umad ib_iser libiscsi scsi_transport_iscsi ib_ipoib rdma_cm iw_cm ib_cm mlx5_ib ib_uverbs ib_core pseries_rng drm drm_panel_orientation_quirks xfs libcrc32c mlx5_core mlxfw sd_mod t10_pi sg tls ibmvscsi ibmveth scsi_transport_srp vmx_crypto pseries_wdt psample dm_mirror dm_region_hash dm_log dm_mod fuse
-  CPU: 17 PID: 2685 Comm: drmgr Not tainted 6.7.0-203405+ #66
-  Hardware name: IBM,9080-HEX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NH1060_008) hv:phyp pSeries
-  NIP:  c0000000006bbe5c LR: c000000000a13e68 CTR: c0000000000579f8
-  REGS: c00000009924f240 TRAP: 0300   Not tainted  (6.7.0-203405+)
-  MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24002220  XER: 20040006
-  CFAR: c000000000a13e64 DAR: 0000000000000030 DSISR: 40000000 IRQMASK: 0
-  ...
-  NIP sysfs_add_link_to_group+0x34/0x94
-  LR  iommu_device_link+0x5c/0x118
-  Call Trace:
-   iommu_init_device+0x26c/0x318 (unreliable)
-   iommu_device_link+0x5c/0x118
-   iommu_init_device+0xa8/0x318
-   iommu_probe_device+0xc0/0x134
-   iommu_bus_notifier+0x44/0x104
-   notifier_call_chain+0xb8/0x19c
-   blocking_notifier_call_chain+0x64/0x98
-   bus_notify+0x50/0x7c
-   device_add+0x640/0x918
-   pci_device_add+0x23c/0x298
-   of_create_pci_dev+0x400/0x884
-   of_scan_pci_dev+0x124/0x1b0
-   __of_scan_bus+0x78/0x18c
-   pcibios_scan_phb+0x2a4/0x3b0
-   init_phb_dynamic+0xb8/0x110
-   dlpar_add_slot+0x170/0x3b8 [rpadlpar_io]
-   add_slot_store.part.0+0xb4/0x130 [rpadlpar_io]
-   kobj_attr_store+0x2c/0x48
-   sysfs_kf_write+0x64/0x78
-   kernfs_fop_write_iter+0x1b0/0x290
-   vfs_write+0x350/0x4a0
-   ksys_write+0x84/0x140
-   system_call_exception+0x124/0x330
-   system_call_vectored_common+0x15c/0x2ec
-
-Commit a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities
-and allow blocking domains") broke DLPAR add of PCI devices.
-
-The above added iommu_device structure to pci_controller. During
-system boot, PCI devices are discovered and this newly added iommu_device
-structure is initialized by a call to iommu_device_register().
-
-During DLPAR add of a PCI device, a new pci_controller structure is
-allocated but there are no calls made to iommu_device_register()
-interface.
-
-Fix is to register the iommu device during DLPAR add as well.
-
-Fixes: a940904443e4 ("powerpc/iommu: Add iommu_ops to report capabilities and allow blocking domains")
-Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240215221833.4817-1-gbatra@linux.ibm.com
+Fixes: a3c90f7a2323 ("netfilter: nf_tables: flow offload expression")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/ppc-pci.h         | 10 ++++++++++
- arch/powerpc/kernel/iommu.c                | 23 ++++++++++++++++------
- arch/powerpc/platforms/pseries/pci_dlpar.c |  4 ++++
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ include/net/netfilter/nf_flow_table.h |  2 +-
+ net/netfilter/nf_flow_table_core.c    | 16 +++++++++++++---
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/ppc-pci.h b/arch/powerpc/include/asm/ppc-pci.h
-index d9fcff5750271..2689e7139b9ea 100644
---- a/arch/powerpc/include/asm/ppc-pci.h
-+++ b/arch/powerpc/include/asm/ppc-pci.h
-@@ -30,6 +30,16 @@ void *pci_traverse_device_nodes(struct device_node *start,
- 				void *data);
- extern void pci_devs_phb_init_dynamic(struct pci_controller *phb);
+diff --git a/include/net/netfilter/nf_flow_table.h b/include/net/netfilter/nf_flow_table.h
+index 692d5955911c7..4a767b3d20b9d 100644
+--- a/include/net/netfilter/nf_flow_table.h
++++ b/include/net/netfilter/nf_flow_table.h
+@@ -275,7 +275,7 @@ nf_flow_table_offload_del_cb(struct nf_flowtable *flow_table,
+ }
  
-+#if defined(CONFIG_IOMMU_API) && (defined(CONFIG_PPC_PSERIES) || \
-+				  defined(CONFIG_PPC_POWERNV))
-+extern void ppc_iommu_register_device(struct pci_controller *phb);
-+extern void ppc_iommu_unregister_device(struct pci_controller *phb);
-+#else
-+static inline void ppc_iommu_register_device(struct pci_controller *phb) { }
-+static inline void ppc_iommu_unregister_device(struct pci_controller *phb) { }
-+#endif
-+
-+
- /* From rtas_pci.h */
- extern void init_pci_config_tokens (void);
- extern unsigned long get_phb_buid (struct device_node *);
-diff --git a/arch/powerpc/kernel/iommu.c b/arch/powerpc/kernel/iommu.c
-index df17b33b89d13..2c0173e7094da 100644
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -1341,7 +1341,7 @@ static struct iommu_device *spapr_tce_iommu_probe_device(struct device *dev)
- 	struct pci_controller *hose;
+ void flow_offload_route_init(struct flow_offload *flow,
+-			     const struct nf_flow_route *route);
++			     struct nf_flow_route *route);
  
- 	if (!dev_is_pci(dev))
--		return ERR_PTR(-EPERM);
-+		return ERR_PTR(-ENODEV);
- 
- 	pdev = to_pci_dev(dev);
- 	hose = pdev->bus->sysdata;
-@@ -1390,6 +1390,21 @@ static const struct attribute_group *spapr_tce_iommu_groups[] = {
- 	NULL,
- };
- 
-+void ppc_iommu_register_device(struct pci_controller *phb)
-+{
-+	iommu_device_sysfs_add(&phb->iommu, phb->parent,
-+				spapr_tce_iommu_groups, "iommu-phb%04x",
-+				phb->global_number);
-+	iommu_device_register(&phb->iommu, &spapr_tce_iommu_ops,
-+				phb->parent);
-+}
-+
-+void ppc_iommu_unregister_device(struct pci_controller *phb)
-+{
-+	iommu_device_unregister(&phb->iommu);
-+	iommu_device_sysfs_remove(&phb->iommu);
-+}
-+
- /*
-  * This registers IOMMU devices of PHBs. This needs to happen
-  * after core_initcall(iommu_init) + postcore_initcall(pci_driver_init) and
-@@ -1400,11 +1415,7 @@ static int __init spapr_tce_setup_phb_iommus_initcall(void)
- 	struct pci_controller *hose;
- 
- 	list_for_each_entry(hose, &hose_list, list_node) {
--		iommu_device_sysfs_add(&hose->iommu, hose->parent,
--				       spapr_tce_iommu_groups, "iommu-phb%04x",
--				       hose->global_number);
--		iommu_device_register(&hose->iommu, &spapr_tce_iommu_ops,
--				      hose->parent);
-+		ppc_iommu_register_device(hose);
- 	}
+ int flow_offload_add(struct nf_flowtable *flow_table, struct flow_offload *flow);
+ void flow_offload_refresh(struct nf_flowtable *flow_table,
+diff --git a/net/netfilter/nf_flow_table_core.c b/net/netfilter/nf_flow_table_core.c
+index 920a5a29ae1dc..7502d6d73a600 100644
+--- a/net/netfilter/nf_flow_table_core.c
++++ b/net/netfilter/nf_flow_table_core.c
+@@ -87,12 +87,22 @@ static u32 flow_offload_dst_cookie(struct flow_offload_tuple *flow_tuple)
  	return 0;
  }
-diff --git a/arch/powerpc/platforms/pseries/pci_dlpar.c b/arch/powerpc/platforms/pseries/pci_dlpar.c
-index 4ba8245681192..4448386268d99 100644
---- a/arch/powerpc/platforms/pseries/pci_dlpar.c
-+++ b/arch/powerpc/platforms/pseries/pci_dlpar.c
-@@ -35,6 +35,8 @@ struct pci_controller *init_phb_dynamic(struct device_node *dn)
  
- 	pseries_msi_allocate_domains(phb);
- 
-+	ppc_iommu_register_device(phb);
++static struct dst_entry *nft_route_dst_fetch(struct nf_flow_route *route,
++					     enum flow_offload_tuple_dir dir)
++{
++	struct dst_entry *dst = route->tuple[dir].dst;
 +
- 	/* Create EEH devices for the PHB */
- 	eeh_phb_pe_create(phb);
- 
-@@ -76,6 +78,8 @@ int remove_phb_dynamic(struct pci_controller *phb)
- 		}
- 	}
- 
-+	ppc_iommu_unregister_device(phb);
++	route->tuple[dir].dst = NULL;
 +
- 	pseries_msi_free_domains(phb);
++	return dst;
++}
++
+ static int flow_offload_fill_route(struct flow_offload *flow,
+-				   const struct nf_flow_route *route,
++				   struct nf_flow_route *route,
+ 				   enum flow_offload_tuple_dir dir)
+ {
+ 	struct flow_offload_tuple *flow_tuple = &flow->tuplehash[dir].tuple;
+-	struct dst_entry *dst = route->tuple[dir].dst;
++	struct dst_entry *dst = nft_route_dst_fetch(route, dir);
+ 	int i, j = 0;
  
- 	/* Keep a reference so phb isn't freed yet */
+ 	switch (flow_tuple->l3proto) {
+@@ -146,7 +156,7 @@ static void nft_flow_dst_release(struct flow_offload *flow,
+ }
+ 
+ void flow_offload_route_init(struct flow_offload *flow,
+-			    const struct nf_flow_route *route)
++			     struct nf_flow_route *route)
+ {
+ 	flow_offload_fill_route(flow, route, FLOW_OFFLOAD_DIR_ORIGINAL);
+ 	flow_offload_fill_route(flow, route, FLOW_OFFLOAD_DIR_REPLY);
 -- 
 2.43.0
 
