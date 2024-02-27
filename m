@@ -1,307 +1,146 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCD11419B5;
-	Tue, 27 Feb 2024 13:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3C91419B4;
+	Tue, 27 Feb 2024 13:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041531; cv=none; b=kd5ZAwJmaKk5Um7wVScQ5oAJ2W7Mp8NmoNvv5kct11Vy8ltMUNYwmyZvysQtTBRBrrIXCVCfmyIyuMwyOHuosh21n2d4Hg8DbGqOv1Oaun7PnjfJSt6ghrbHR3dqxjeZ/5H7eoKvOGWl2aN/x8JbVa4emA2VX36FJc5z2qBnn78=
+	t=1709041534; cv=none; b=O2TmT2P0vdMCj/jnYGkvN3O6Ob/Bg8LLnCW/Kjh0CWrPo47g6snzMRsK9Ca6YfwpovghXfwW1A6NEbbqH/HjMCcaNiiMS/WOA5XDLBFHQiwZ1MDdPygvv3DRmDYcH23UcCR5MSKKYFHqntOQ13qotlT2blomrtHmPOE+BJrtSEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041531; c=relaxed/simple;
-	bh=oI0YsBN5IXwuXiTa5ndwSnjgtw+sgMN08yHCIlyYX10=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FmAL5a+QQ9smr9ym6lSFHguePXIoF1Z/SVQNNa8uwM7IfCKB6mHcbh8yad2PjYxHIwmPXc2qhv0eKQSi8mP/mCoOhUC5VvdI/JIJKF35lgcXx4m7SB/W7a+uE3Ad9aQw//FHbDAzaLsHMz+emJTGFzhz0XE6Fa1o+NTWZJDn/M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuXcsUyH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1709041534; c=relaxed/simple;
+	bh=ToDe0gdw0TlYPMj4URw+XlbaT/5ZEs+fYP0qRWLyBHI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=it2eMyph5U+t6lN/1gQ/79YJosu5BxeedGWdtSXpGmzUHol5FZ9H9T9JR2uezWr0voz2p1dtApRYX0QHOekygkTOlkD2FzEfIE61xrbmjrnQYedShg7yW11R/ZaRpezsRLlZ9j+jN43os3elRfUQFWUcTZ5N+/FSvtURs07Dwaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NujH7VSz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuXcsUyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDE6C433F1;
-	Tue, 27 Feb 2024 13:45:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NujH7VSz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112F3C433C7;
+	Tue, 27 Feb 2024 13:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041531;
-	bh=oI0YsBN5IXwuXiTa5ndwSnjgtw+sgMN08yHCIlyYX10=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ZuXcsUyHmo8oqNEIdD+THb111+C01CSaADZ4RSpzhSNHUJXEBEZshSZR9F3c0zEEq
-	 yEXzKrvpbmGidezHoht7aFbQOa9qBSoaFUoYWDnb6XGrda2/jEo6eyvsupGLS5ns4c
-	 vuSmcJTPAFhbR2+Uutxa6nYlmC9pT4htMIz5fCE4=
+	s=korg; t=1709041534;
+	bh=ToDe0gdw0TlYPMj4URw+XlbaT/5ZEs+fYP0qRWLyBHI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NujH7VSzUPbkcasK5LCh6Yxxs3hPUtSsKQAEJwYyDpC8oSL+JZ2V1BiGe46kqidUI
+	 61UkFz8YTe0gDTVM0njAOHtVgoMVX/c6uIYSSQG+QG2keq1X/ZV6yYl0O0Wbq3CZ3F
+	 aabpUlJMKvB9rK2LzZYsYLQvx7288NDPTm9rjx0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com
-Subject: [PATCH 4.19 00/52] 4.19.308-rc1 review
-Date: Tue, 27 Feb 2024 14:25:47 +0100
-Message-ID: <20240227131548.514622258@linuxfoundation.org>
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 30/52] gtp: fix use-after-free and null-ptr-deref in gtp_genl_dump_pdp()
+Date: Tue, 27 Feb 2024 14:26:17 +0100
+Message-ID: <20240227131549.520078638@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
+References: <20240227131548.514622258@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.308-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.19.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.19.308-rc1
-X-KernelTest-Deadline: 2024-02-29T13:15+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.19.308 release.
-There are 52 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+4.19-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Thu, 29 Feb 2024 13:15:36 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.308-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-and the diffstat can be found below.
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-thanks,
+commit 136cfaca22567a03bbb3bf53a43d8cb5748b80ec upstream.
 
-greg k-h
+The gtp_net_ops pernet operations structure for the subsystem must be
+registered before registering the generic netlink family.
 
--------------
-Pseudo-Shortlog of commits:
+Syzkaller hit 'general protection fault in gtp_genl_dump_pdp' bug:
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.19.308-rc1
+general protection fault, probably for non-canonical address
+0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+CPU: 1 PID: 5826 Comm: gtp Not tainted 6.8.0-rc3-std-def-alt1 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-alt1 04/01/2014
+RIP: 0010:gtp_genl_dump_pdp+0x1be/0x800 [gtp]
+Code: c6 89 c6 e8 64 e9 86 df 58 45 85 f6 0f 85 4e 04 00 00 e8 c5 ee 86
+      df 48 8b 54 24 18 48 b8 00 00 00 00 00 fc ff df 48 c1 ea 03 <80>
+      3c 02 00 0f 85 de 05 00 00 48 8b 44 24 18 4c 8b 30 4c 39 f0 74
+RSP: 0018:ffff888014107220 EFLAGS: 00010202
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: 0000000000000002 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
+R13: ffff88800fcda588 R14: 0000000000000001 R15: 0000000000000000
+FS:  00007f1be4eb05c0(0000) GS:ffff88806ce80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1be4e766cf CR3: 000000000c33e000 CR4: 0000000000750ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ ? show_regs+0x90/0xa0
+ ? die_addr+0x50/0xd0
+ ? exc_general_protection+0x148/0x220
+ ? asm_exc_general_protection+0x22/0x30
+ ? gtp_genl_dump_pdp+0x1be/0x800 [gtp]
+ ? __alloc_skb+0x1dd/0x350
+ ? __pfx___alloc_skb+0x10/0x10
+ genl_dumpit+0x11d/0x230
+ netlink_dump+0x5b9/0xce0
+ ? lockdep_hardirqs_on_prepare+0x253/0x430
+ ? __pfx_netlink_dump+0x10/0x10
+ ? kasan_save_track+0x10/0x40
+ ? __kasan_kmalloc+0x9b/0xa0
+ ? genl_start+0x675/0x970
+ __netlink_dump_start+0x6fc/0x9f0
+ genl_family_rcv_msg_dumpit+0x1bb/0x2d0
+ ? __pfx_genl_family_rcv_msg_dumpit+0x10/0x10
+ ? genl_op_from_small+0x2a/0x440
+ ? cap_capable+0x1d0/0x240
+ ? __pfx_genl_start+0x10/0x10
+ ? __pfx_genl_dumpit+0x10/0x10
+ ? __pfx_genl_done+0x10/0x10
+ ? security_capable+0x9d/0xe0
 
-Andrii Nakryiko <andriin@fb.com>
-    scripts/bpf: Fix xdp_md forward declaration typo
+Cc: stable@vger.kernel.org
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Link: https://lore.kernel.org/r/20240214162733.34214-1-kovalev@altlinux.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/net/gtp.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Bart Van Assche <bvanassche@acm.org>
-    fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio
-
-Oliver Upton <oliver.upton@linux.dev>
-    KVM: arm64: vgic-its: Test for valid IRQ in MOVALL handler
-
-Oliver Upton <oliver.upton@linux.dev>
-    KVM: arm64: vgic-its: Test for valid IRQ in its_sync_lpi_pending_table()
-
-Vidya Sagar <vidyas@nvidia.com>
-    PCI/MSI: Prevent MSI hardware interrupt number truncation
-
-Jason Gunthorpe <jgg@nvidia.com>
-    s390: use the correct count for __iowrite64_copy()
-
-Wolfram Sang <wsa+renesas@sang-engineering.com>
-    packet: move from strlcpy with unused retval to strscpy
-
-Vasiliy Kovalev <kovalev@altlinux.org>
-    ipv6: sr: fix possible use-after-free and null-ptr-deref
-
-Arnd Bergmann <arnd@arndb.de>
-    nouveau: fix function cast warnings
-
-Randy Dunlap <rdunlap@infradead.org>
-    scsi: jazz_esp: Only build if SCSI core is builtin
-
-Gianmarco Lusvardi <glusvardi@posteo.net>
-    bpf, scripts: Correct GPL license name
-
-Andrii Nakryiko <andriin@fb.com>
-    scripts/bpf: teach bpf_helpers_doc.py to dump BPF helper definitions
-
-Arnd Bergmann <arnd@arndb.de>
-    RDMA/srpt: fix function pointer cast warnings
-
-Bart Van Assche <bvanassche@acm.org>
-    RDMA/srpt: Make debug output more detailed
-
-Jason Gunthorpe <jgg@ziepe.ca>
-    RDMA/ulp: Use dev_name instead of ibdev->name
-
-Bart Van Assche <bvanassche@acm.org>
-    RDMA/srpt: Support specifying the srpt_service_guid parameter
-
-Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-    RDMA/bnxt_re: Return error for SRQ resize
-
-Zhipeng Lu <alexious@zju.edu.cn>
-    IB/hfi1: Fix a memleak in init_credit_return
-
-Xu Yang <xu.yang_2@nxp.com>
-    usb: roles: don't get/set_role() when usb_role_switch is unregistered
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    usb: gadget: ncm: Avoid dropping datagrams of properly parsed NTBs
-
-Nikita Shubin <nikita.shubin@maquefel.me>
-    ARM: ep93xx: Add terminator to gpiod_lookup_table
-
-Tom Parkin <tparkin@katalix.com>
-    l2tp: pass correct message length to ip6_append_data
-
-Vasiliy Kovalev <kovalev@altlinux.org>
-    gtp: fix use-after-free and null-ptr-deref in gtp_genl_dump_pdp()
-
-Mikulas Patocka <mpatocka@redhat.com>
-    dm-crypt: don't modify the data when using authenticated encryption
-
-Roman Gushchin <guro@fb.com>
-    mm: memcontrol: switch to rcu protection in drain_all_stock()
-
-Daniel Vacek <neelx@redhat.com>
-    IB/hfi1: Fix sdma.h tx->num_descs off-by-one error
-
-Geert Uytterhoeven <geert+renesas@glider.be>
-    pmdomain: renesas: r8a77980-sysc: CR7 must be always on
-
-Alexandra Winter <wintera@linux.ibm.com>
-    s390/qeth: Fix potential loss of L3-IP@ in case of network issues
-
-Yi Sun <yi.sun@unisoc.com>
-    virtio-blk: Ensure no requests in virtqueues before deleting vqs.
-
-Takashi Sakamoto <o-takashi@sakamocchi.jp>
-    firewire: core: send bus reset promptly on gap count error
-
-Zhang Rui <rui.zhang@intel.com>
-    hwmon: (coretemp) Enlarge per package core count limit
-
-Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-    regulator: pwm-regulator: Add validity checks in continuous .get_voltage
-
-Baokun Li <libaokun1@huawei.com>
-    ext4: avoid allocating blocks from corrupted group in ext4_mb_find_by_goal()
-
-Baokun Li <libaokun1@huawei.com>
-    ext4: avoid allocating blocks from corrupted group in ext4_mb_try_best_found()
-
-Conrad Kostecki <conikost@gentoo.org>
-    ahci: asm1166: correct count of reported ports
-
-Fullway Wang <fullwaywang@outlook.com>
-    fbdev: sis: Error out if pixclock equals zero
-
-Fullway Wang <fullwaywang@outlook.com>
-    fbdev: savage: Error out if pixclock equals zero
-
-Felix Fietkau <nbd@nbd.name>
-    wifi: mac80211: fix race condition on enabling fast-xmit
-
-Michal Kazior <michal@plume.com>
-    wifi: cfg80211: fix missing interfaces when dumping
-
-Vinod Koul <vkoul@kernel.org>
-    dmaengine: shdma: increase size of 'dev_id'
-
-Dmitry Bogdanov <d.bogdanov@yadro.com>
-    scsi: target: core: Add TMF to tmr_list handling
-
-Cyril Hrubis <chrubis@suse.cz>
-    sched/rt: Disallow writing invalid values to sched_rt_period_us
-
-Cyril Hrubis <chrubis@suse.cz>
-    sched/rt: sysctl_sched_rr_timeslice show default timeslice after reset
-
-Cyril Hrubis <chrubis@suse.cz>
-    sched/rt: Fix sysctl_sched_rr_timeslice intial value
-
-Lokesh Gidra <lokeshgidra@google.com>
-    userfaultfd: fix mmap_changing checking in mfill_atomic_hugetlb
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: replace WARN_ONs for invalid DAT metadata block requests
-
-GONG, Ruiqi <gongruiqi1@huawei.com>
-    memcg: add refcnt for pcpu stock to avoid UAF problem in drain_all_stock()
-
-Aaro Koskinen <aaro.koskinen@nokia.com>
-    net: stmmac: fix notifier registration
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    stmmac: no need to check return value of debugfs_create functions
-
-Jamal Hadi Salim <jhs@mojatatu.com>
-    net/sched: Retire dsmark qdisc
-
-Jamal Hadi Salim <jhs@mojatatu.com>
-    net/sched: Retire ATM qdisc
-
-Jamal Hadi Salim <jhs@mojatatu.com>
-    net/sched: Retire CBQ qdisc
-
-
--------------
-
-Diffstat:
-
- Makefile                                          |    4 +-
- arch/arm/mach-ep93xx/core.c                       |    1 +
- arch/s390/pci/pci.c                               |    2 +-
- drivers/ata/ahci.c                                |    5 +
- drivers/block/virtio_blk.c                        |    7 +-
- drivers/dma/sh/shdma.h                            |    2 +-
- drivers/firewire/core-card.c                      |   18 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c |    8 +-
- drivers/hwmon/coretemp.c                          |    2 +-
- drivers/infiniband/hw/bnxt_re/ib_verbs.c          |    5 +-
- drivers/infiniband/hw/hfi1/pio.c                  |    6 +-
- drivers/infiniband/hw/hfi1/sdma.c                 |    2 +-
- drivers/infiniband/ulp/ipoib/ipoib_verbs.c        |    2 +-
- drivers/infiniband/ulp/iser/iser_verbs.c          |    9 +-
- drivers/infiniband/ulp/isert/ib_isert.c           |    2 +-
- drivers/infiniband/ulp/opa_vnic/opa_vnic_vema.c   |    3 +-
- drivers/infiniband/ulp/srp/ib_srp.c               |   10 +-
- drivers/infiniband/ulp/srpt/ib_srpt.c             |   52 +-
- drivers/md/dm-crypt.c                             |    6 +
- drivers/net/ethernet/stmicro/stmmac/stmmac.h      |    2 -
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   65 +-
- drivers/net/gtp.c                                 |   10 +-
- drivers/pci/msi.c                                 |    2 +-
- drivers/regulator/pwm-regulator.c                 |    3 +
- drivers/s390/net/qeth_l3_main.c                   |    9 +-
- drivers/scsi/Kconfig                              |    2 +-
- drivers/soc/renesas/r8a77980-sysc.c               |    3 +-
- drivers/target/target_core_device.c               |    5 -
- drivers/target/target_core_transport.c            |    4 +
- drivers/usb/gadget/function/f_ncm.c               |   10 +-
- drivers/usb/roles/class.c                         |   12 +-
- drivers/video/fbdev/savage/savagefb_driver.c      |    3 +
- drivers/video/fbdev/sis/sis_main.c                |    2 +
- fs/aio.c                                          |    9 +-
- fs/ext4/mballoc.c                                 |   13 +-
- fs/nilfs2/dat.c                                   |   27 +-
- include/linux/fs.h                                |    2 +
- include/rdma/rdma_vt.h                            |    2 +-
- kernel/sched/rt.c                                 |   10 +-
- kernel/sysctl.c                                   |    5 +
- mm/memcontrol.c                                   |   23 +-
- mm/userfaultfd.c                                  |   14 +-
- net/ipv6/seg6.c                                   |   20 +-
- net/l2tp/l2tp_ip6.c                               |    2 +-
- net/mac80211/sta_info.c                           |    2 +
- net/mac80211/tx.c                                 |    2 +-
- net/packet/af_packet.c                            |    4 +-
- net/sched/Kconfig                                 |   42 -
- net/sched/Makefile                                |    3 -
- net/sched/sch_atm.c                               |  708 --------
- net/sched/sch_cbq.c                               | 1823 ---------------------
- net/sched/sch_dsmark.c                            |  519 ------
- net/wireless/nl80211.c                            |    1 +
- scripts/bpf_helpers_doc.py                        |  157 +-
- virt/kvm/arm/vgic/vgic-its.c                      |    5 +
- 55 files changed, 412 insertions(+), 3259 deletions(-)
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1385,20 +1385,20 @@ static int __init gtp_init(void)
+ 	if (err < 0)
+ 		goto error_out;
+ 
+-	err = genl_register_family(&gtp_genl_family);
++	err = register_pernet_subsys(&gtp_net_ops);
+ 	if (err < 0)
+ 		goto unreg_rtnl_link;
+ 
+-	err = register_pernet_subsys(&gtp_net_ops);
++	err = genl_register_family(&gtp_genl_family);
+ 	if (err < 0)
+-		goto unreg_genl_family;
++		goto unreg_pernet_subsys;
+ 
+ 	pr_info("GTP module loaded (pdp ctx size %zd bytes)\n",
+ 		sizeof(struct pdp_ctx));
+ 	return 0;
+ 
+-unreg_genl_family:
+-	genl_unregister_family(&gtp_genl_family);
++unreg_pernet_subsys:
++	unregister_pernet_subsys(&gtp_net_ops);
+ unreg_rtnl_link:
+ 	rtnl_link_unregister(&gtp_link_ops);
+ error_out:
 
 
