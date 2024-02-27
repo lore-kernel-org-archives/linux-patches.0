@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A2A13AA55;
-	Tue, 27 Feb 2024 13:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122ED2F2D;
+	Tue, 27 Feb 2024 13:42:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041350; cv=none; b=BBIZf5dcOYrh0bTSg9DiBIoCwQChE6UzqpXG6uVUyWP4iVpVQHn0/adugA77ygyrmQB9Iemr+zn9KV8MIjHuIskX6ZLsPQdu5crihYE7P/7ZiZW7yL+k265LTYQvtJiZjNLoe+a03NddQuecrWLT/LwaHf+tbvUqrfvaAAPXpGM=
+	t=1709041353; cv=none; b=ZlZJEmCFhySOZ7x3FEFJSYKW2Eb9q7fsmPvoAhDItZNnshqEvKGnjLkXxwUZXqOmbi+qBf/o1je0AZlfN81iJgvOMwi1iQ0mP8pzkkSF5OJMHbeEun9BYLHqlSgwTdLPP924jTZUTDCRLoGcJnpHVuJ85qpg/X4GOQLbUf/26V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041350; c=relaxed/simple;
-	bh=xxMvpZ8rOhxo94DDDPaJob/PysbYlM5QyrATDmwIcGI=;
+	s=arc-20240116; t=1709041353; c=relaxed/simple;
+	bh=7wFoA43hpJi0NKdPGRvmfCDChyxo/eqGYFpV88+Cv3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grrUB5rGLyP0/0KpdkQrd/2OOWwC11DdqJzXr0TSiTGJJ+uTWCQ61C/r01n0zRe3RNxL0HBJKRaWJFRIjaXqL5gcr0XDAuoGFoKx8S66zvgJWpnGDQKU3VVqmGQgJtsi7r19kxWqZnh9UWlYG7Zj/Q7w8PhtUPlsLyDkj2MKxQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bj0aqvop; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bi11TiUWNA2bzbyUFhfrqvtVz9nxqUaZhQ5GkHCfOeUqKA45/tVlmGP7pcAZCm3yCLtaK9/imCFhPJ70H2cz1BD+85tjMG0vbH2hJDxodAIBNhLNfq2JeKs6KKhLls9LRm5Pk8K8eDEu55mIX0HcopVsFGfIc2q0akE/FfKAps4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLWh/beK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bj0aqvop"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A1BC433C7;
-	Tue, 27 Feb 2024 13:42:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLWh/beK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9515AC43390;
+	Tue, 27 Feb 2024 13:42:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041350;
-	bh=xxMvpZ8rOhxo94DDDPaJob/PysbYlM5QyrATDmwIcGI=;
+	s=korg; t=1709041353;
+	bh=7wFoA43hpJi0NKdPGRvmfCDChyxo/eqGYFpV88+Cv3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bj0aqvopS890ik4cRX5Ho/Ez1+2ZeSCtDXipV9xCOkmz06ns9kcPDdfycdUX/FTfU
-	 0yFdyKeDpCK/1q+K1jgdkoaL9Zu7/XrDBKgKPHPkaDYwkiQFxhL/CvPR7O2nwDZehh
-	 dFQ6Ica35tHDHHvZBrCkXEmH23KzsqDrHX0neGpo=
+	b=KLWh/beKnlHYOmLanffeQ+R3kSsDa0Md9cHC7M0ddgPYmxbRywZIgEfehY8fYX4rg
+	 bAQzWIOFeT80DetPhWnA2qPLvXPZ7kPoUYtajwfMAZ/pLhZvSma2+yV7LgkJJMFTeF
+	 NXZp1XrwPKkI+jddTr4ZxQK6J+lRTu9IgN6i1ZvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Sven Schnelle <svens@stackframe.org>,
-	John David Anglin <dave.anglin@bell.net>,
-	Charlie Jenkins <charlie@rivosinc.com>,
-	David Laight <David.Laight@ACULAB.COM>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	David Howells <dhowells@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 278/334] parisc: Fix stack unwinder
-Date: Tue, 27 Feb 2024 14:22:16 +0100
-Message-ID: <20240227131639.965122617@linuxfoundation.org>
+Subject: [PATCH 6.7 279/334] afs: Increase buffer size in afs_update_volume_status()
+Date: Tue, 27 Feb 2024 14:22:17 +0100
+Message-ID: <20240227131639.994994006@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -55,88 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 882a2a724ee964c1ebe7268a91d5c8c8ddc796bf ]
+[ Upstream commit 6ea38e2aeb72349cad50e38899b0ba6fbcb2af3d ]
 
-Debugging shows a large number of unaligned access traps in the unwinder
-code. Code analysis reveals a number of issues with this code:
+The max length of volume->vid value is 20 characters.
+So increase idbuf[] size up to 24 to avoid overflow.
 
-- handle_interruption is passed twice through
-  dereference_kernel_function_descriptor()
-- ret_from_kernel_thread, syscall_exit, intr_return,
-  _switch_to_ret, and _call_on_stack are passed through
-  dereference_kernel_function_descriptor() even though they are
-  not declared as function pointers.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-To fix the problems, drop one of the calls to
-dereference_kernel_function_descriptor() for handle_interruption,
-and compare the other pointers directly.
+[DH: Actually, it's 20 + NUL, so increase it to 24 and use snprintf()]
 
-Fixes: 6414b30b39f9 ("parisc: unwind: Avoid missing prototype warning for handle_interruption()")
-Fixes: 8e0ba125c2bf ("parisc/unwind: fix unwinder when CONFIG_64BIT is enabled")
-Cc: Helge Deller <deller@gmx.de>
-Cc: Sven Schnelle <svens@stackframe.org>
-Cc: John David Anglin <dave.anglin@bell.net>
-Cc: Charlie Jenkins <charlie@rivosinc.com>
-Cc: David Laight <David.Laight@ACULAB.COM>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: d2ddc776a458 ("afs: Overhaul volume and server record caching and fileserver rotation")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20240211150442.3416-1-d.dulov@aladdin.ru/ # v1
+Link: https://lore.kernel.org/r/20240212083347.10742-1-d.dulov@aladdin.ru/ # v2
+Link: https://lore.kernel.org/r/20240219143906.138346-3-dhowells@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/unwind.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ fs/afs/volume.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/parisc/kernel/unwind.c b/arch/parisc/kernel/unwind.c
-index 27ae40a443b80..f7e0fee5ee55a 100644
---- a/arch/parisc/kernel/unwind.c
-+++ b/arch/parisc/kernel/unwind.c
-@@ -228,10 +228,8 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
- #ifdef CONFIG_IRQSTACKS
- 	extern void * const _call_on_stack;
- #endif /* CONFIG_IRQSTACKS */
--	void *ptr;
+diff --git a/fs/afs/volume.c b/fs/afs/volume.c
+index 115c081a8e2ce..c028598a903c9 100644
+--- a/fs/afs/volume.c
++++ b/fs/afs/volume.c
+@@ -337,7 +337,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+ {
+ 	struct afs_server_list *new, *old, *discard;
+ 	struct afs_vldb_entry *vldb;
+-	char idbuf[16];
++	char idbuf[24];
+ 	int ret, idsz;
  
--	ptr = dereference_kernel_function_descriptor(&handle_interruption);
--	if (pc_is_kernel_fn(pc, ptr)) {
-+	if (pc_is_kernel_fn(pc, handle_interruption)) {
- 		struct pt_regs *regs = (struct pt_regs *)(info->sp - frame_size - PT_SZ_ALGN);
- 		dbg("Unwinding through handle_interruption()\n");
- 		info->prev_sp = regs->gr[30];
-@@ -239,13 +237,13 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
- 		return 1;
- 	}
+ 	_enter("");
+@@ -345,7 +345,7 @@ static int afs_update_volume_status(struct afs_volume *volume, struct key *key)
+ 	/* We look up an ID by passing it as a decimal string in the
+ 	 * operation's name parameter.
+ 	 */
+-	idsz = sprintf(idbuf, "%llu", volume->vid);
++	idsz = snprintf(idbuf, sizeof(idbuf), "%llu", volume->vid);
  
--	if (pc_is_kernel_fn(pc, ret_from_kernel_thread) ||
--	    pc_is_kernel_fn(pc, syscall_exit)) {
-+	if (pc == (unsigned long)&ret_from_kernel_thread ||
-+	    pc == (unsigned long)&syscall_exit) {
- 		info->prev_sp = info->prev_ip = 0;
- 		return 1;
- 	}
- 
--	if (pc_is_kernel_fn(pc, intr_return)) {
-+	if (pc == (unsigned long)&intr_return) {
- 		struct pt_regs *regs;
- 
- 		dbg("Found intr_return()\n");
-@@ -257,14 +255,14 @@ static int unwind_special(struct unwind_frame_info *info, unsigned long pc, int
- 	}
- 
- 	if (pc_is_kernel_fn(pc, _switch_to) ||
--	    pc_is_kernel_fn(pc, _switch_to_ret)) {
-+	    pc == (unsigned long)&_switch_to_ret) {
- 		info->prev_sp = info->sp - CALLEE_SAVE_FRAME_SIZE;
- 		info->prev_ip = *(unsigned long *)(info->prev_sp - RP_OFFSET);
- 		return 1;
- 	}
- 
- #ifdef CONFIG_IRQSTACKS
--	if (pc_is_kernel_fn(pc, _call_on_stack)) {
-+	if (pc == (unsigned long)&_call_on_stack) {
- 		info->prev_sp = *(unsigned long *)(info->sp - FRAME_SIZE - REG_SZ);
- 		info->prev_ip = *(unsigned long *)(info->sp - FRAME_SIZE - RP_OFFSET);
- 		return 1;
+ 	vldb = afs_vl_lookup_vldb(volume->cell, key, idbuf, idsz);
+ 	if (IS_ERR(vldb)) {
 -- 
 2.43.0
 
