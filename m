@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D41E13B798;
-	Tue, 27 Feb 2024 13:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC3613B798;
+	Tue, 27 Feb 2024 13:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040598; cv=none; b=deTP0wLRz+aIJ4HbY1tsMgSWwQnoRy6OXn14IJRTOgVI+vgz4jbVSFJHJZ+lgyMKGIv2fuLudztIWqHTWVTpbjOgN3zS4YuGmeguL59x2Nily8H7YvEGva6zEknZW36KTpGtFDKKU6g3ArlvSuaaFKrsozxd73N3xP5ZUwpKVbQ=
+	t=1709040600; cv=none; b=NrsM0D2/sGdwAqQX3IX0kiwH7y191Pwa8gqlgw52J/mKTxW81gZ4JcuSlRT3qcpCjXKCp4OQx2yjO+m921yQkF6DM8Twm7bou8NuKS1cpEy2NZB1yaIcHZzNIU0VB0U8qGA5nMv2slEd96zl8k4H2RHUllzgrx8c9UnAaeb0zgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040598; c=relaxed/simple;
-	bh=LXtRglMZ07l5P6UmSNnrMcOXlxu81NfWP/f9dhfMvcY=;
+	s=arc-20240116; t=1709040600; c=relaxed/simple;
+	bh=AchEwDFrhVgg37yBwWQF+OYZohFuG6CXeU22IQeDrXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HUBr/tgYTaUMnNjoh5B5W2JxbjkjRd5mfgYocj5HNBUOztzAbGF8NeFuVI0s1og8EZRjc+lQl8DLg7Uy3AnbEMc/j1LnZ5Gy8rrMnxNKGmehiquchmGevVUHN4jpEmBjSEWp/y1VFZwL56MmPhxUDZLlporK8P0uayzIM4faGmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eygfOInm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JeJqamumn3Tv1qCeLV5CRkpQ9MZ4QI4dguk0+Bhc7JY+oJXRKcw3ms14EOTLIvEzSNFEWj7dlbU1NmXnvRQ3Hy364CRFnzXGVT4un6w68bSSUGrmunQt6FnbBoNc0YIlfJL0dAJ70FNrgI2fg5KKR8dpvb5fN8sETDM7eLsHikc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LlgwphV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eygfOInm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A69C433F1;
-	Tue, 27 Feb 2024 13:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LlgwphV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C88C433F1;
+	Tue, 27 Feb 2024 13:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040597;
-	bh=LXtRglMZ07l5P6UmSNnrMcOXlxu81NfWP/f9dhfMvcY=;
+	s=korg; t=1709040600;
+	bh=AchEwDFrhVgg37yBwWQF+OYZohFuG6CXeU22IQeDrXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eygfOInmLsZ8JJe5Lx1jaZ4ViI4SJA5l4z4AwULcVA9EvGS1EP4C74+Xs/M04wACB
-	 uNaBapCHQmd0yE3qN/0eeavNOW+71KbL7jg1VSLugcp5U5EqTDCBv/Lwrrw4l42+gi
-	 BPMDZvd/T9cSNODZ9i66w1nliuwYDBYU+GT22Xh4=
+	b=LlgwphV3qNq9yJbE+SuqyYilkk3DsF89Y3a6wP1miOfLbkMoMGR1vCuPFY/hynNwq
+	 ZoWor32ozGRKIOaGJ3eRS5QlLwWX+uwuJwgu4PxZ591XV4fzFy1oSZDxIwN7bvjvVQ
+	 RpgK6w57cZQGQ9qYe3YxH/sN8bXb0uiu/lREYht0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	Rui Salvaterra <rsalvaterra@gmail.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 024/334] cifs: translate network errors on send to -ECONNABORTED
-Date: Tue, 27 Feb 2024 14:18:02 +0100
-Message-ID: <20240227131631.384657452@linuxfoundation.org>
+Subject: [PATCH 6.7 042/334] ALSA: hda: Replace numeric device IDs with constant values
+Date: Tue, 27 Feb 2024 14:18:20 +0100
+Message-ID: <20240227131631.942805173@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -45,57 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Rui Salvaterra <rsalvaterra@gmail.com>
 
-[ Upstream commit a68106a6928e0a6680f12bcc7338c0dddcfe4d11 ]
+[ Upstream commit 3526860f26febbe46960f9b37f5dbd5ccc109ea8 ]
 
-When the network stack returns various errors, we today bubble
-up the error to the user (in case of soft mounts).
+We have self-explanatory constants for Intel HDA devices, let's use them instead
+of magic numbers and code comments.
 
-This change translates all network errors except -EINTR and
--EAGAIN to -ECONNABORTED. A similar approach is taken when
-we receive network errors when reading from the socket.
-
-The change also forces the cifsd thread to reconnect during
-it's next activity.
-
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Rui Salvaterra <rsalvaterra@gmail.com>
+Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20240122114512.55808-2-rsalvaterra@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/pci/hda/hda_intel.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index 8695c9961f5aa..e00278fcfa4fa 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -400,10 +400,17 @@ __smb_send_rqst(struct TCP_Server_Info *server, int num_rqst,
- 						  server->conn_id, server->hostname);
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index 2276adc844784..66f013ee160d2 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -1729,8 +1729,8 @@ static int default_bdl_pos_adj(struct azx *chip)
+ 	/* some exceptions: Atoms seem problematic with value 1 */
+ 	if (chip->pci->vendor == PCI_VENDOR_ID_INTEL) {
+ 		switch (chip->pci->device) {
+-		case 0x0f04: /* Baytrail */
+-		case 0x2284: /* Braswell */
++		case PCI_DEVICE_ID_INTEL_HDA_BYT:
++		case PCI_DEVICE_ID_INTEL_HDA_BSW:
+ 			return 32;
+ 		}
  	}
- smbd_done:
--	if (rc < 0 && rc != -EINTR)
-+	/*
-+	 * there's hardly any use for the layers above to know the
-+	 * actual error code here. All they should do at this point is
-+	 * to retry the connection and hope it goes away.
-+	 */
-+	if (rc < 0 && rc != -EINTR && rc != -EAGAIN) {
- 		cifs_server_dbg(VFS, "Error %d sending data on socket to server\n",
- 			 rc);
--	else if (rc > 0)
-+		rc = -ECONNABORTED;
-+		cifs_signal_cifsd_for_reconnect(server, false);
-+	} else if (rc > 0)
- 		rc = 0;
- out:
- 	cifs_in_send_dec(server);
 -- 
 2.43.0
 
