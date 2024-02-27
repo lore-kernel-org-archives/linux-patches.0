@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFE8145333;
-	Tue, 27 Feb 2024 14:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB90145327;
+	Tue, 27 Feb 2024 14:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044065; cv=none; b=L3UTaBQGljOUn41IUjAzW547mh65+4nid9JYUloiy1GVBeL2I4sNNOMbCFEm90YMM6R4nys8tJHYlJRMr00oYxugEepvWMNY7NtgQTJZK1jcL6ayX2dPj6t6jSiQQccGxC40L7s+PkqF46VChlTfjFqwEGU7PVTkQCklaL4mXVs=
+	t=1709044067; cv=none; b=fkwXpYOQBOagvE0BQn+8GRvPafQ89uDgnnanOdDYqE3gTg51h6pgqp6aFlqs6fejGuo47UwjrTXeWL/5FXLTJUd4auebT9BX30cKs0QqNIUDk+1XjwCTrkq3w35QfZC4YwaRUF/8r+HZyTmx6VFey9cdYMRBsZpCmljc472tKlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044065; c=relaxed/simple;
-	bh=FkLO5hRu+b4maKDFlENdafRc+wbVtS7LHFc7GipFYVw=;
+	s=arc-20240116; t=1709044067; c=relaxed/simple;
+	bh=r/PJJiTRgEZCDhbT8rakXImpdcoBRW/XG1fttwGRQ+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N2Q1WZ/IpJTtyqDagQbcWSmaG0/iPi9FWA8qaJNFM9X8wn5/dX6X0Vb//Ofok1FVli0a23H7VUwCA0et5OojvLChx3mfgbg6fzG5UABKqkJ82eX3h1FX2KB9LutyHLfr36dvbaxKHL2B3qYCI0h88xK3wKguAa5ppjAfIs8YKQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnDK1v4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PIkrN1wO9aLp2fEEc89wghyecoT6yPn3LlyY3k+IrqwL+fvmmftbgVmSphnoTpx9JQ9TONLGFVWEpv7q5ELTCr9MkpVn6m5VJ8WXtcJSlPfC3bOKQMqfeWsLmkmBDb9HMcpUQObaUUM2MJdG7qfIJdb7qLqGyPsbQwlk/vVE4wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jNs4BEJH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnDK1v4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5511AC43390;
-	Tue, 27 Feb 2024 14:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jNs4BEJH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E665C43390;
+	Tue, 27 Feb 2024 14:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044064;
-	bh=FkLO5hRu+b4maKDFlENdafRc+wbVtS7LHFc7GipFYVw=;
+	s=korg; t=1709044067;
+	bh=r/PJJiTRgEZCDhbT8rakXImpdcoBRW/XG1fttwGRQ+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SnDK1v4k1LvFtvvlfuazZoFiiAbz8qqsuWz3jAP7BOpXYSpBMksaHaOmDkpe6RQTG
-	 6Y+hFn+sTWrxTzPzuxhipJrIkt8UGPP6/Fmw0y63RnB6PkKH0GNBSJWiu3P0yaVlRb
-	 slNJBpmN7uFrTmdhiV+/BQn2XJAKLg1B2eHwrqFM=
+	b=jNs4BEJH+cqOqiA+lDBhDHw2XA7RwCzZAm9IAymw+zfWEM3qs6C1G+Ng8Q7hE8CgW
+	 Zm1Gbx2n9PETP2avWxd7Dd137j7ZhXeGYwsdGXlshIDGZ8y7bVH19/bNFOB4JOfVCE
+	 1ImDAQTrTkrxe2K1/4CfHcBqURghICjDQZSbHc7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Andy Lutomirski <luto@amacapital.net>,
+	Will Drewry <wad@chromium.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/122] x86/uaccess: Implement macros for CMPXCHG on user addresses
-Date: Tue, 27 Feb 2024 14:26:51 +0100
-Message-ID: <20240227131600.346173951@linuxfoundation.org>
+Subject: [PATCH 5.10 051/122] seccomp: Invalidate seccomp mode to catch death failures
+Date: Tue, 27 Feb 2024 14:26:52 +0100
+Message-ID: <20240227131600.379321634@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -52,194 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 989b5db215a2f22f89d730b607b071d964780f10 ]
+[ Upstream commit 495ac3069a6235bfdf516812a2a9b256671bbdf9 ]
 
-Add support for CMPXCHG loops on userspace addresses.  Provide both an
-"unsafe" version for tight loops that do their own uaccess begin/end, as
-well as a "safe" version for use cases where the CMPXCHG is not buried in
-a loop, e.g. KVM will resume the guest instead of looping when emulation
-of a guest atomic accesses fails the CMPXCHG.
+If seccomp tries to kill a process, it should never see that process
+again. To enforce this proactively, switch the mode to something
+impossible. If encountered: WARN, reject all syscalls, and attempt to
+kill the process again even harder.
 
-Provide 8-byte versions for 32-bit kernels so that KVM can do CMPXCHG on
-guest PAE PTEs, which are accessed via userspace addresses.
-
-Guard the asm_volatile_goto() variation with CC_HAS_ASM_GOTO_TIED_OUTPUT,
-the "+m" constraint fails on some compilers that otherwise support
-CC_HAS_ASM_GOTO_OUTPUT.
-
+Cc: Andy Lutomirski <luto@amacapital.net>
+Cc: Will Drewry <wad@chromium.org>
+Fixes: 8112c4f140fa ("seccomp: remove 2-phase API")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20220202004945.2540433-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/uaccess.h | 142 +++++++++++++++++++++++++++++++++
- 1 file changed, 142 insertions(+)
+ kernel/seccomp.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/x86/include/asm/uaccess.h b/arch/x86/include/asm/uaccess.h
-index bf2561a5eb581..68b910f30b222 100644
---- a/arch/x86/include/asm/uaccess.h
-+++ b/arch/x86/include/asm/uaccess.h
-@@ -414,6 +414,103 @@ do {									\
+diff --git a/kernel/seccomp.c b/kernel/seccomp.c
+index 305f0eca163ed..0b0331346e4be 100644
+--- a/kernel/seccomp.c
++++ b/kernel/seccomp.c
+@@ -29,6 +29,9 @@
+ #include <linux/syscalls.h>
+ #include <linux/sysctl.h>
  
- #endif // CONFIG_CC_ASM_GOTO_OUTPUT
- 
-+#ifdef CONFIG_CC_HAS_ASM_GOTO_TIED_OUTPUT
-+#define __try_cmpxchg_user_asm(itype, ltype, _ptr, _pold, _new, label)	({ \
-+	bool success;							\
-+	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
-+	__typeof__(*(_ptr)) __old = *_old;				\
-+	__typeof__(*(_ptr)) __new = (_new);				\
-+	asm_volatile_goto("\n"						\
-+		     "1: " LOCK_PREFIX "cmpxchg"itype" %[new], %[ptr]\n"\
-+		     _ASM_EXTABLE_UA(1b, %l[label])			\
-+		     : CC_OUT(z) (success),				\
-+		       [ptr] "+m" (*_ptr),				\
-+		       [old] "+a" (__old)				\
-+		     : [new] ltype (__new)				\
-+		     : "memory"						\
-+		     : label);						\
-+	if (unlikely(!success))						\
-+		*_old = __old;						\
-+	likely(success);					})
++/* Not exposed in headers: strictly internal use only. */
++#define SECCOMP_MODE_DEAD	(SECCOMP_MODE_FILTER + 1)
 +
-+#ifdef CONFIG_X86_32
-+#define __try_cmpxchg64_user_asm(_ptr, _pold, _new, label)	({	\
-+	bool success;							\
-+	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
-+	__typeof__(*(_ptr)) __old = *_old;				\
-+	__typeof__(*(_ptr)) __new = (_new);				\
-+	asm_volatile_goto("\n"						\
-+		     "1: " LOCK_PREFIX "cmpxchg8b %[ptr]\n"		\
-+		     _ASM_EXTABLE_UA(1b, %l[label])			\
-+		     : CC_OUT(z) (success),				\
-+		       "+A" (__old),					\
-+		       [ptr] "+m" (*_ptr)				\
-+		     : "b" ((u32)__new),				\
-+		       "c" ((u32)((u64)__new >> 32))			\
-+		     : "memory"						\
-+		     : label);						\
-+	if (unlikely(!success))						\
-+		*_old = __old;						\
-+	likely(success);					})
-+#endif // CONFIG_X86_32
-+#else  // !CONFIG_CC_HAS_ASM_GOTO_TIED_OUTPUT
-+#define __try_cmpxchg_user_asm(itype, ltype, _ptr, _pold, _new, label)	({ \
-+	int __err = 0;							\
-+	bool success;							\
-+	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
-+	__typeof__(*(_ptr)) __old = *_old;				\
-+	__typeof__(*(_ptr)) __new = (_new);				\
-+	asm volatile("\n"						\
-+		     "1: " LOCK_PREFIX "cmpxchg"itype" %[new], %[ptr]\n"\
-+		     CC_SET(z)						\
-+		     "2:\n"						\
-+		     _ASM_EXTABLE_TYPE_REG(1b, 2b, EX_TYPE_EFAULT_REG,	\
-+					   %[errout])			\
-+		     : CC_OUT(z) (success),				\
-+		       [errout] "+r" (__err),				\
-+		       [ptr] "+m" (*_ptr),				\
-+		       [old] "+a" (__old)				\
-+		     : [new] ltype (__new)				\
-+		     : "memory", "cc");					\
-+	if (unlikely(__err))						\
-+		goto label;						\
-+	if (unlikely(!success))						\
-+		*_old = __old;						\
-+	likely(success);					})
-+
-+#ifdef CONFIG_X86_32
-+/*
-+ * Unlike the normal CMPXCHG, hardcode ECX for both success/fail and error.
-+ * There are only six GPRs available and four (EAX, EBX, ECX, and EDX) are
-+ * hardcoded by CMPXCHG8B, leaving only ESI and EDI.  If the compiler uses
-+ * both ESI and EDI for the memory operand, compilation will fail if the error
-+ * is an input+output as there will be no register available for input.
-+ */
-+#define __try_cmpxchg64_user_asm(_ptr, _pold, _new, label)	({	\
-+	int __result;							\
-+	__typeof__(_ptr) _old = (__typeof__(_ptr))(_pold);		\
-+	__typeof__(*(_ptr)) __old = *_old;				\
-+	__typeof__(*(_ptr)) __new = (_new);				\
-+	asm volatile("\n"						\
-+		     "1: " LOCK_PREFIX "cmpxchg8b %[ptr]\n"		\
-+		     "mov $0, %%ecx\n\t"				\
-+		     "setz %%cl\n"					\
-+		     "2:\n"						\
-+		     _ASM_EXTABLE_TYPE_REG(1b, 2b, EX_TYPE_EFAULT_REG, %%ecx) \
-+		     : [result]"=c" (__result),				\
-+		       "+A" (__old),					\
-+		       [ptr] "+m" (*_ptr)				\
-+		     : "b" ((u32)__new),				\
-+		       "c" ((u32)((u64)__new >> 32))			\
-+		     : "memory", "cc");					\
-+	if (unlikely(__result < 0))					\
-+		goto label;						\
-+	if (unlikely(!__result))					\
-+		*_old = __old;						\
-+	likely(__result);					})
-+#endif // CONFIG_X86_32
-+#endif // CONFIG_CC_HAS_ASM_GOTO_TIED_OUTPUT
-+
- /* FIXME: this hack is definitely wrong -AK */
- struct __large_struct { unsigned long buf[100]; };
- #define __m(x) (*(struct __large_struct __user *)(x))
-@@ -506,6 +603,51 @@ do {										\
- } while (0)
- #endif // CONFIG_CC_HAS_ASM_GOTO_OUTPUT
- 
-+extern void __try_cmpxchg_user_wrong_size(void);
-+
-+#ifndef CONFIG_X86_32
-+#define __try_cmpxchg64_user_asm(_ptr, _oldp, _nval, _label)		\
-+	__try_cmpxchg_user_asm("q", "r", (_ptr), (_oldp), (_nval), _label)
-+#endif
-+
-+/*
-+ * Force the pointer to u<size> to match the size expected by the asm helper.
-+ * clang/LLVM compiles all cases and only discards the unused paths after
-+ * processing errors, which breaks i386 if the pointer is an 8-byte value.
-+ */
-+#define unsafe_try_cmpxchg_user(_ptr, _oldp, _nval, _label) ({			\
-+	bool __ret;								\
-+	__chk_user_ptr(_ptr);							\
-+	switch (sizeof(*(_ptr))) {						\
-+	case 1:	__ret = __try_cmpxchg_user_asm("b", "q",			\
-+					       (__force u8 *)(_ptr), (_oldp),	\
-+					       (_nval), _label);		\
-+		break;								\
-+	case 2:	__ret = __try_cmpxchg_user_asm("w", "r",			\
-+					       (__force u16 *)(_ptr), (_oldp),	\
-+					       (_nval), _label);		\
-+		break;								\
-+	case 4:	__ret = __try_cmpxchg_user_asm("l", "r",			\
-+					       (__force u32 *)(_ptr), (_oldp),	\
-+					       (_nval), _label);		\
-+		break;								\
-+	case 8:	__ret = __try_cmpxchg64_user_asm((__force u64 *)(_ptr), (_oldp),\
-+						 (_nval), _label);		\
-+		break;								\
-+	default: __try_cmpxchg_user_wrong_size();				\
-+	}									\
-+	__ret;						})
-+
-+/* "Returns" 0 on success, 1 on failure, -EFAULT if the access faults. */
-+#define __try_cmpxchg_user(_ptr, _oldp, _nval, _label)	({		\
-+	int __ret = -EFAULT;						\
-+	__uaccess_begin_nospec();					\
-+	__ret = !unsafe_try_cmpxchg_user(_ptr, _oldp, _nval, _label);	\
-+_label:									\
-+	__uaccess_end();						\
-+	__ret;								\
-+							})
-+
- /*
-  * We want the unsafe accessors to always be inlined and use
-  * the error labels - thus the macro games.
+ #ifdef CONFIG_HAVE_ARCH_SECCOMP_FILTER
+ #include <asm/syscall.h>
+ #endif
+@@ -795,6 +798,7 @@ static void __secure_computing_strict(int this_syscall)
+ #ifdef SECCOMP_DEBUG
+ 	dump_stack();
+ #endif
++	current->seccomp.mode = SECCOMP_MODE_DEAD;
+ 	seccomp_log(this_syscall, SIGKILL, SECCOMP_RET_KILL_THREAD, true);
+ 	do_exit(SIGKILL);
+ }
+@@ -1023,6 +1027,7 @@ static int __seccomp_filter(int this_syscall, const struct seccomp_data *sd,
+ 	case SECCOMP_RET_KILL_THREAD:
+ 	case SECCOMP_RET_KILL_PROCESS:
+ 	default:
++		current->seccomp.mode = SECCOMP_MODE_DEAD;
+ 		seccomp_log(this_syscall, SIGSYS, action, true);
+ 		/* Dump core only if this is the last remaining thread. */
+ 		if (action != SECCOMP_RET_KILL_THREAD ||
+@@ -1075,6 +1080,11 @@ int __secure_computing(const struct seccomp_data *sd)
+ 		return 0;
+ 	case SECCOMP_MODE_FILTER:
+ 		return __seccomp_filter(this_syscall, sd, false);
++	/* Surviving SECCOMP_RET_KILL_* must be proactively impossible. */
++	case SECCOMP_MODE_DEAD:
++		WARN_ON_ONCE(1);
++		do_exit(SIGKILL);
++		return -1;
+ 	default:
+ 		BUG();
+ 	}
 -- 
 2.43.0
 
