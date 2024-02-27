@@ -1,42 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8341313B798;
-	Tue, 27 Feb 2024 14:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB0613B2B8;
+	Tue, 27 Feb 2024 14:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043903; cv=none; b=H79zImbe1/fGjIzuwEBKwhetLhDvc9BG3VtNcNgjYNdsb/lJf0BiMhrMZdFiUX30kg27gw3QO8+XRA1qDyVxZE/G8iurHGI7lFGIMxX0hOgLmoXnQyi/3Yupd2bJH6/8skjcUVA9OT/pmV5EVumenWFrhzOKSTGvYoFKRwDvb/g=
+	t=1709043906; cv=none; b=Roq8ucT7CWae5Q/xJrd9f9ifhqCbO8sqOk1M+jPGOy+/9iSNdBImZYbwPkuGct1Px8F44an6nPmJlslvnlZL+W/lBnuQMPpG8HrmkoxCKRMtT7CtNkxjk7+T71Gr8NC8fy5G/u9ddOIyemSObOYxOI4LT4FnSvMaxAO+VgRa6Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043903; c=relaxed/simple;
-	bh=j9HgWxnUV/ukXj363mktYSdEUtLl5DotR6u8ejNZpQ8=;
+	s=arc-20240116; t=1709043906; c=relaxed/simple;
+	bh=CKUCtjYyRgbPt2ohqgqJoET8BcdlH3+L17nxccHyu3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJKJ+lic0v4A9zGVbXZ0Vn+yGDfeW8vfDahzgrnWffuxt95pglfZMM/fOUV0m3XQLos+8TbcLBv5UW9rp0mGFevvOFefp0PbAy9Khr5OQv1UBAM8154r/HEE8VCa/ENU8Ven5KocY/Ul6Eywu4ZUN8OvZWjfdvxIzTk51J19e5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgJOXHZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hS2wU7yq1hOQ2cQRjNS9Z9RIm4yyx/xZhBV+F1q0n/qZtZd4GbiBJ99l3nlSZGQH4nxGAHI9ibnfGve8oAWjYzh/cMB4pCMO2Ag/Xz85v5gyE1EQUBaZ0WDCGv7nhAViSmUeEW1ifoyw8VUnq0Kts1LyK7g7YPMFg0xophyJkko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgziO8wi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgJOXHZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10516C433F1;
-	Tue, 27 Feb 2024 14:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgziO8wi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60BDC433F1;
+	Tue, 27 Feb 2024 14:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043903;
-	bh=j9HgWxnUV/ukXj363mktYSdEUtLl5DotR6u8ejNZpQ8=;
+	s=korg; t=1709043906;
+	bh=CKUCtjYyRgbPt2ohqgqJoET8BcdlH3+L17nxccHyu3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgJOXHZRzyDPyLKuXXyGfRDLfZNxsVHFv0jUlhAxyK2ZB5V9U+ZVssGloGTc1nc0N
-	 VZqHIjqu5HyWlK8StXjwFOpLY9bfsVe+QWtquKzUC4UIdqdBeILwXmAsVPq5s0To6+
-	 wmpFgeCoEQZxZ8+VC5loTn8bKscKGGXINJP7oRNc=
+	b=TgziO8wimjYCM3DMUxWwv2loX0SuoX8K1tSSubX/MIPQNPvuSoiq+EpLvt4+jC6bt
+	 u7eyAaISrF3/3KhNAtxA6oNeG/CLP8OqmBXbcAAJNLmrWVrbU4btvmotIAjdqoYnFS
+	 Ai+2PmFIiFua/vhmOV3OWX4uqn0HKPJ7sOQKSmbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Qian Cai <cai@redhat.com>,
-	Brian Foster <bfoster@redhat.com>,
-	Gao Xiang <hsiangkao@redhat.com>,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
+	linux-pm@vger.kernel.org,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Todd Kjos <tkjos@google.com>,
+	Len Brown <len.brown@intel.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Kevin Hilman <khilman@kernel.org>,
+	"Rafael J. Wysocki" <rjw@rjwysocki.net>,
+	Rob Herring <robh@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	John Stultz <john.stultz@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 48/84] iomap: Set all uptodate bits for an Uptodate page
-Date: Tue, 27 Feb 2024 14:27:15 +0100
-Message-ID: <20240227131554.435924966@linuxfoundation.org>
+Subject: [PATCH 5.4 39/84] driver core: Set deferred_probe_timeout to a longer default if CONFIG_MODULES is set
+Date: Tue, 27 Feb 2024 14:27:06 +0100
+Message-ID: <20240227131554.144760148@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -55,53 +65,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: John Stultz <john.stultz@linaro.org>
 
-[ Upstream commit 4595a298d5563cf76c1d852970f162051fd1a7a6 ]
+[ Upstream commit e2cec7d6853712295cef5377762165a489b2957f ]
 
-For filesystems with block size < page size, we need to set all the
-per-block uptodate bits if the page was already uptodate at the time
-we create the per-block metadata.  This can happen if the page is
-invalidated (eg by a write to drop_caches) but ultimately not removed
-from the page cache.
+When using modules, its common for the modules not to be loaded
+until quite late by userland. With the current code,
+driver_deferred_probe_check_state() will stop returning
+EPROBE_DEFER after late_initcall, which can cause module
+dependency resolution to fail after that.
 
-This is a data corruption issue as page writeback skips blocks which
-are marked !uptodate.
+So allow a longer window of 30 seconds (picked somewhat
+arbitrarily, but influenced by the similar regulator core
+timeout value) in the case where modules are enabled.
 
-Fixes: 9dc55f1389f9 ("iomap: add support for sub-pagesize buffered I/O without buffer heads")
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reported-by: Qian Cai <cai@redhat.com>
-Cc: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Gao Xiang <hsiangkao@redhat.com>
-Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Cc: linux-pm@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Thierry Reding <treding@nvidia.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: Todd Kjos <tkjos@google.com>
+Cc: Len Brown <len.brown@intel.com>
+Cc: Pavel Machek <pavel@ucw.cz>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Kevin Hilman <khilman@kernel.org>
+Cc: "Rafael J. Wysocki" <rjw@rjwysocki.net>
+Cc: Rob Herring <robh@kernel.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: John Stultz <john.stultz@linaro.org>
+Link: https://lore.kernel.org/r/20200225050828.56458-3-john.stultz@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/base/dd.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 53cd7b2bb580b..c28ba474a25e7 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -23,6 +23,7 @@ static struct iomap_page *
- iomap_page_create(struct inode *inode, struct page *page)
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 7941a8fd22841..0b97a0c96baa3 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -224,7 +224,16 @@ static int deferred_devs_show(struct seq_file *s, void *data)
+ }
+ DEFINE_SHOW_ATTRIBUTE(deferred_devs);
+ 
++#ifdef CONFIG_MODULES
++/*
++ * In the case of modules, set the default probe timeout to
++ * 30 seconds to give userland some time to load needed modules
++ */
++static int deferred_probe_timeout = 30;
++#else
++/* In the case of !modules, no probe timeout needed */
+ static int deferred_probe_timeout = -1;
++#endif
+ static int __init deferred_probe_timeout_setup(char *str)
  {
- 	struct iomap_page *iop = to_iomap_page(page);
-+	unsigned int nr_blocks = PAGE_SIZE / i_blocksize(inode);
- 
- 	if (iop || i_blocksize(inode) == PAGE_SIZE)
- 		return iop;
-@@ -32,6 +33,8 @@ iomap_page_create(struct inode *inode, struct page *page)
- 	atomic_set(&iop->write_count, 0);
- 	spin_lock_init(&iop->uptodate_lock);
- 	bitmap_zero(iop->uptodate, PAGE_SIZE / SECTOR_SIZE);
-+	if (PageUptodate(page))
-+		bitmap_fill(iop->uptodate, nr_blocks);
- 
- 	/*
- 	 * migrate_page_move_mapping() assumes that pages with private data have
+ 	int timeout;
 -- 
 2.43.0
 
