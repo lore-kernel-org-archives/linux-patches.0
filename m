@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6DB13B29C;
-	Tue, 27 Feb 2024 14:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE51D13B78E;
+	Tue, 27 Feb 2024 14:17:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043429; cv=none; b=iX4pm9Ux4gXFW8VzRi1HZROk5BmZKxJ2M/2H4U78qh+qrfaeSNHiu+ntjL+2kfskf5ZHxEJRivBtA8ZaG5gWNB/jZJZfsNwhKv6TbpaTq373mUpwDf7xlU7f7ewNpuhPF60pWR3BmOYfwrSF20TMUvzbxPG2QiXhlhDO5q57Tgg=
+	t=1709043431; cv=none; b=bDWg68G+xjk31ZBpEPQHn/K2PdMcXBNSg+rpH/RfC9C2Rr2tkP/K+/QVjcbLIuASxp7TpLP1jNxw4PgOFpjiWSgnAW59wu2BD9i4kXthIwXVeGLnLbTxCYklT4IdWIrvnttaH83aQdXP4JIRfzeQiYiuxt7SmapeEoYs0i79AIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043429; c=relaxed/simple;
-	bh=Se5QTSaatmTMLtaQlrD4MOreypTzdbBeVuRdp7ZtIhw=;
+	s=arc-20240116; t=1709043431; c=relaxed/simple;
+	bh=w2plbAPO1+Fq/JGzrfRzMLCnPPZ++03Kyy3wDmVSihg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgdRKmxuI/HhWMblcwfro71iEhVr7ofbojvTA3jT4qLcG/5aBoQAYjBEItwAuIn/MOoLnpUr5t1s2HJLcudDnAGRj4IsvLk8uiy5xxM1545fuK7GfbxT6dcF7iJiupIfm3YH/gvN4ptUEibWr1jPOpoJZMvtnQQE4lecjLlkZY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTOAIkxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZr5kiypzRCa+U8TFjI/bp3KcqsFF48w+oSJDr9h3wqmj2v9NBv2WZSzX8PTu/r8cRA0JqoR6sUvOMENTWvslnhtoa+NuvOcBhuP3SmQHCbWmoyDGQkV4tKLs6w2bnhn/8jFJMaTEWXOQbRCftbHYfi5TnVDUQMQ6UDjUPY4ycs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IkMYVFmA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTOAIkxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3111C433F1;
-	Tue, 27 Feb 2024 14:17:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkMYVFmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E61CC433C7;
+	Tue, 27 Feb 2024 14:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043429;
-	bh=Se5QTSaatmTMLtaQlrD4MOreypTzdbBeVuRdp7ZtIhw=;
+	s=korg; t=1709043431;
+	bh=w2plbAPO1+Fq/JGzrfRzMLCnPPZ++03Kyy3wDmVSihg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTOAIkxcJ++6Rmx7eE0LYjOMTY69x2ycz1bTWEpf8RPTxqAeUnk9PR6pq/UVFFPn1
-	 2pLC0PpShwd+NlYRcr6LJXFT6Cq9fSOK9Ujpn9LJhaLShJkVU0nbHsJR//shPIPOdf
-	 Ea4RuKNZJj0pn/gSAcxAuF+ADk/6aAD6vBlQwto8=
+	b=IkMYVFmAEgo0hIELeA6js6Rpmf3TaxqP18s1wEl9VKAlndcMfpvlQ8UrvDNuv+JRK
+	 BIaKdkWPsyGOi0/bU6RR8nBCMF3LqGLo2zr6+bt6WgPW6mIbP2AEQzs/juJN76OwFC
+	 1tBn7JJ3j5YI01tW94lxe7vTsmApNQi0fDXx50u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/195] drm/amdgpu: skip to program GFXDEC registers for suspend abort
-Date: Tue, 27 Feb 2024 14:25:37 +0100
-Message-ID: <20240227131613.005625629@linuxfoundation.org>
+Subject: [PATCH 6.1 067/195] wifi: mac80211: adding missing drv_mgd_complete_tx() call
+Date: Tue, 27 Feb 2024 14:25:28 +0100
+Message-ID: <20240227131612.714313779@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,77 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 93bafa32a6918154aa0caf9f66679a32c2431357 ]
+[ Upstream commit c042600c17d8c490279f0ae2baee29475fe8047d ]
 
-In the suspend abort cases, the gfx power rail doesn't turn off so
-some GFXDEC registers/CSB can't reset to default value and at this
-moment reinitialize GFXDEC/CSB will result in an unexpected error.
-So let skip those program sequence for the suspend abort case.
+There's a call to drv_mgd_prepare_tx() and so there should
+be one to drv_mgd_complete_tx(), but on this path it's not.
+Add it.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://msgid.link/20240131164824.2f0922a514e1.I5aac89b93bcead88c374187d70cad0599d29d2c8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h     | 2 ++
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 2 ++
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c   | 8 ++++++++
- 3 files changed, 12 insertions(+)
+ net/mac80211/mlme.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu.h b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-index c46c6fbd235e8..e636c7850f777 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -999,6 +999,8 @@ struct amdgpu_device {
- 	bool				in_s3;
- 	bool				in_s4;
- 	bool				in_s0ix;
-+	/* indicate amdgpu suspension status */
-+	bool				suspend_complete;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index c6f0da028a2a4..f25dc6931a5b1 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -7294,6 +7294,7 @@ int ieee80211_mgd_deauth(struct ieee80211_sub_if_data *sdata,
+ 		ieee80211_report_disconnect(sdata, frame_buf,
+ 					    sizeof(frame_buf), true,
+ 					    req->reason_code, false);
++		drv_mgd_complete_tx(sdata->local, sdata, &info);
+ 		return 0;
+ 	}
  
- 	enum pp_mp1_state               mp1_state;
- 	struct amdgpu_doorbell_index doorbell_index;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index b9983ca99eb7d..f24c3a20e901d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2414,6 +2414,7 @@ static int amdgpu_pmops_suspend(struct device *dev)
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
- 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
- 
-+	adev->suspend_complete = false;
- 	if (amdgpu_acpi_is_s0ix_active(adev))
- 		adev->in_s0ix = true;
- 	else if (amdgpu_acpi_is_s3_active(adev))
-@@ -2428,6 +2429,7 @@ static int amdgpu_pmops_suspend_noirq(struct device *dev)
- 	struct drm_device *drm_dev = dev_get_drvdata(dev);
- 	struct amdgpu_device *adev = drm_to_adev(drm_dev);
- 
-+	adev->suspend_complete = true;
- 	if (amdgpu_acpi_should_gpu_reset(adev))
- 		return amdgpu_asic_reset(adev);
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index 84ca601f7d5f3..195b298923543 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -3064,6 +3064,14 @@ static int gfx_v9_0_cp_gfx_start(struct amdgpu_device *adev)
- 
- 	gfx_v9_0_cp_gfx_enable(adev, true);
- 
-+	/* Now only limit the quirk on the APU gfx9 series and already
-+	 * confirmed that the APU gfx10/gfx11 needn't such update.
-+	 */
-+	if (adev->flags & AMD_IS_APU &&
-+			adev->in_s3 && !adev->suspend_complete) {
-+		DRM_INFO(" Will skip the CSB packet resubmit\n");
-+		return 0;
-+	}
- 	r = amdgpu_ring_alloc(ring, gfx_v9_0_get_csb_size(adev) + 4 + 3);
- 	if (r) {
- 		DRM_ERROR("amdgpu: cp failed to lock ring (%d).\n", r);
 -- 
 2.43.0
 
