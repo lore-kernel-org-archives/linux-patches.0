@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC058145B0B;
-	Tue, 27 Feb 2024 13:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968F4145346;
+	Tue, 27 Feb 2024 13:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041715; cv=none; b=JksJrDubuwmOE0/CblM0bFwe+X0HU5aJUWAwWbhyy77iK79TRj68NuVNlgBjHCFuHe/D/fF7Kgb8ucYn+5VC4fbHubBS+BVh3Jttvy3CNNTQ0D08KHeIDvPWCude8+KPnPvYhjbKjHrb2MxU2bEBq0gBNKEeqenj47fqgak1f1U=
+	t=1709041717; cv=none; b=tJ6WshUHu9i8pv5gYLXu7v9oFueOhxzj+Zen+OvtMbSLzd5VmVQz9G1hagAYCYKilFO0VBRyzVJ751znTt6fwPffRsuN80K73J2jt/ikkpH19bMvH/N/wBW/Ohs91e7DVdcaD4/lAsASWyMu5yzEXeAFpxdMiYGF6gEKOGhLRlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041715; c=relaxed/simple;
-	bh=p+7Enuo6COZYqYhlrXTIL1N0jHECdd/2z3MucEKRuMA=;
+	s=arc-20240116; t=1709041717; c=relaxed/simple;
+	bh=rWvtO3wuQP1Diy2XrOL5+B1U4HwED07pS7O2hp6f6MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhD+iguoBpJIoIwruBWYqlXtEf3OcRdIBBU4L0q1rSMVQWHxtaRunvOOGTnUtOEa/oRTGvNHggaMgbEnjqck7dB1mo9T6zNIeteNPVxpwh31Pr11pSmQj45mg+N9sl2uXzfadgywM+WnkQF44X6C0oVSAW5I8RId7/quy0ObtPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/CdKoyU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IdxYsqWaEOtAMDN2rm67gHFS1a/cxYJHKPL1uoGqcZWRag6UW1SupUkwOlm8VuvpEoSIx4den5FdXtNMFKwZ7Q1To/sxkqRQSKPE0ch/ihGQpI/EaTB+JpJEFnHRYKKS+Gl3AZLutaRttLQQUQPPWFZ2xtw8z1qcAMWXSEYSCOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXqLtf0r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/CdKoyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69520C433C7;
-	Tue, 27 Feb 2024 13:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXqLtf0r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E00C433F1;
+	Tue, 27 Feb 2024 13:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041714;
-	bh=p+7Enuo6COZYqYhlrXTIL1N0jHECdd/2z3MucEKRuMA=;
+	s=korg; t=1709041717;
+	bh=rWvtO3wuQP1Diy2XrOL5+B1U4HwED07pS7O2hp6f6MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/CdKoyUrZtjJEYgHDbHVKBWhs1Ma3fx1R1PSWTbQVhRGicbLy2j5QK3jcbxqqhzs
-	 IW72d1yibs+BhVkF8qm0h7m96QsQgGCtzeoidRjNoVr32NnwX+hnv2hUPLu7XkV572
-	 ellVmYVD6r5alCiG9FCFyN6fbLoBovmfnaapAXrM=
+	b=ZXqLtf0rdIZq9/u7wrWAXgaQrZSZkOqkK5FkueUYdYWS0mSZgB0VmGBnKl6RcDTsV
+	 uht6Z/03bYZYUbiCJNoHXYoG/nepuwB9kcylMqBAYfUawcYpKtwyjay4io3KRZ+A8N
+	 s0dcbeOyhSS8osTPPtrwGcv8VvRPAsi2yxI/SmlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Alexander Tsoy <alexander@tsoy.me>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/299] usb: ucsi_acpi: Quirk to ack a connector change ack cmd
-Date: Tue, 27 Feb 2024 14:22:36 +0100
-Message-ID: <20240227131627.433152519@linuxfoundation.org>
+Subject: [PATCH 6.6 046/299] ALSA: usb-audio: Check presence of valid altsetting control
+Date: Tue, 27 Feb 2024 14:22:37 +0100
+Message-ID: <20240227131627.463849124@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,144 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian A. Ehrhardt <lk@c--e.de>
+From: Alexander Tsoy <alexander@tsoy.me>
 
-[ Upstream commit f3be347ea42dbb0358cd8b2d8dc543a23b70a976 ]
+[ Upstream commit 346f59d1e8ed0eed41c80e1acb657e484c308e6a ]
 
-The PPM on some Dell laptops seems to expect that the ACK_CC_CI
-command to clear the connector change notification is in turn
-followed by another ACK_CC_CI to acknowledge the ACK_CC_CI command
-itself. This is in violation of the UCSI spec that states:
+Many devices with a single alternate setting do not have a Valid
+Alternate Setting Control and validation performed by
+validate_sample_rate_table_v2v3() doesn't work on them and is not
+really needed. So check the presense of control before sending
+altsetting validation requests.
 
-    "The only notification that is not acknowledged by the OPM is
-     the command completion notification for the ACK_CC_CI or the
-     PPM_RESET command."
+MOTU Microbook IIc is suffering the most without this check. It
+takes up to 40 seconds to bootup due to how slow it switches
+sampling rates:
 
-Add a quirk to send this ack anyway.
-Apply the quirk to all Dell systems.
+[ 2659.164824] usb 3-2: New USB device found, idVendor=07fd, idProduct=0004, bcdDevice= 0.60
+[ 2659.164827] usb 3-2: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[ 2659.164829] usb 3-2: Product: MicroBook IIc
+[ 2659.164830] usb 3-2: Manufacturer: MOTU
+[ 2659.166204] usb 3-2: Found last interface = 3
+[ 2679.322298] usb 3-2: No valid sample rate available for 1:1, assuming a firmware bug
+[ 2679.322306] usb 3-2: 1:1: add audio endpoint 0x3
+[ 2679.322321] usb 3-2: Creating new data endpoint #3
+[ 2679.322552] usb 3-2: 1:1 Set sample rate 96000, clock 1
+[ 2684.362250] usb 3-2: 2:1: cannot get freq (v2/v3): err -110
+[ 2694.444700] usb 3-2: No valid sample rate available for 2:1, assuming a firmware bug
+[ 2694.444707] usb 3-2: 2:1: add audio endpoint 0x84
+[ 2694.444721] usb 3-2: Creating new data endpoint #84
+[ 2699.482103] usb 3-2: 2:1 Set sample rate 96000, clock 1
 
-On the first command that acks a connector change send a dummy
-command to determine if it runs into a timeout. Only activate
-the quirk if it does. This ensure that we do not break Dell
-systems that do not need the quirk.
-
-Signed-off-by: "Christian A. Ehrhardt" <lk@c--e.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240121204123.275441-4-lk@c--e.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alexander Tsoy <alexander@tsoy.me>
+Link: https://lore.kernel.org/r/20240129121254.3454481-1-alexander@tsoy.me
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_acpi.c | 71 ++++++++++++++++++++++++++++--
- 1 file changed, 68 insertions(+), 3 deletions(-)
+ sound/usb/format.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
-index fa222080887d5..928eacbeb21ac 100644
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -25,6 +25,8 @@ struct ucsi_acpi {
- 	unsigned long flags;
- 	guid_t guid;
- 	u64 cmd;
-+	bool dell_quirk_probed;
-+	bool dell_quirk_active;
- };
+diff --git a/sound/usb/format.c b/sound/usb/format.c
+index ab5fed9f55b60..3b45d0ee76938 100644
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -470,9 +470,11 @@ static int validate_sample_rate_table_v2v3(struct snd_usb_audio *chip,
+ 					   int clock)
+ {
+ 	struct usb_device *dev = chip->dev;
++	struct usb_host_interface *alts;
+ 	unsigned int *table;
+ 	unsigned int nr_rates;
+ 	int i, err;
++	u32 bmControls;
  
- static int ucsi_acpi_dsm(struct ucsi_acpi *ua, int func)
-@@ -126,12 +128,73 @@ static const struct ucsi_operations ucsi_zenbook_ops = {
- 	.async_write = ucsi_acpi_async_write
- };
+ 	/* performing the rate verification may lead to unexpected USB bus
+ 	 * behavior afterwards by some unknown reason.  Do this only for the
+@@ -481,6 +483,24 @@ static int validate_sample_rate_table_v2v3(struct snd_usb_audio *chip,
+ 	if (!(chip->quirk_flags & QUIRK_FLAG_VALIDATE_RATES))
+ 		return 0; /* don't perform the validation as default */
  
--static const struct dmi_system_id zenbook_dmi_id[] = {
-+/*
-+ * Some Dell laptops expect that an ACK command with the
-+ * UCSI_ACK_CONNECTOR_CHANGE bit set is followed by a (separate)
-+ * ACK command that only has the UCSI_ACK_COMMAND_COMPLETE bit set.
-+ * If this is not done events are not delivered to OSPM and
-+ * subsequent commands will timeout.
-+ */
-+static int
-+ucsi_dell_sync_write(struct ucsi *ucsi, unsigned int offset,
-+		     const void *val, size_t val_len)
-+{
-+	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
-+	u64 cmd = *(u64 *)val, ack = 0;
-+	int ret;
++	alts = snd_usb_get_host_interface(chip, fp->iface, fp->altsetting);
++	if (!alts)
++		return 0;
 +
-+	if (UCSI_COMMAND(cmd) == UCSI_ACK_CC_CI &&
-+	    cmd & UCSI_ACK_CONNECTOR_CHANGE)
-+		ack = UCSI_ACK_CC_CI | UCSI_ACK_COMMAND_COMPLETE;
-+
-+	ret = ucsi_acpi_sync_write(ucsi, offset, val, val_len);
-+	if (ret != 0)
-+		return ret;
-+	if (ack == 0)
-+		return ret;
-+
-+	if (!ua->dell_quirk_probed) {
-+		ua->dell_quirk_probed = true;
-+
-+		cmd = UCSI_GET_CAPABILITY;
-+		ret = ucsi_acpi_sync_write(ucsi, UCSI_CONTROL, &cmd,
-+					   sizeof(cmd));
-+		if (ret == 0)
-+			return ucsi_acpi_sync_write(ucsi, UCSI_CONTROL,
-+						    &ack, sizeof(ack));
-+		if (ret != -ETIMEDOUT)
-+			return ret;
-+
-+		ua->dell_quirk_active = true;
-+		dev_err(ua->dev, "Firmware bug: Additional ACK required after ACKing a connector change.\n");
-+		dev_err(ua->dev, "Firmware bug: Enabling workaround\n");
++	if (fp->protocol == UAC_VERSION_3) {
++		struct uac3_as_header_descriptor *as = snd_usb_find_csint_desc(
++				alts->extra, alts->extralen, NULL, UAC_AS_GENERAL);
++		bmControls = le32_to_cpu(as->bmControls);
++	} else {
++		struct uac2_as_header_descriptor *as = snd_usb_find_csint_desc(
++				alts->extra, alts->extralen, NULL, UAC_AS_GENERAL);
++		bmControls = as->bmControls;
 +	}
 +
-+	if (!ua->dell_quirk_active)
-+		return ret;
++	if (!uac_v2v3_control_is_readable(bmControls,
++				UAC2_AS_VAL_ALT_SETTINGS))
++		return 0;
 +
-+	return ucsi_acpi_sync_write(ucsi, UCSI_CONTROL, &ack, sizeof(ack));
-+}
-+
-+static const struct ucsi_operations ucsi_dell_ops = {
-+	.read = ucsi_acpi_read,
-+	.sync_write = ucsi_dell_sync_write,
-+	.async_write = ucsi_acpi_async_write
-+};
-+
-+static const struct dmi_system_id ucsi_acpi_quirks[] = {
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX325UA_UM325UA"),
- 		},
-+		.driver_data = (void *)&ucsi_zenbook_ops,
-+	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+		},
-+		.driver_data = (void *)&ucsi_dell_ops,
- 	},
- 	{ }
- };
-@@ -160,6 +223,7 @@ static int ucsi_acpi_probe(struct platform_device *pdev)
- {
- 	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
- 	const struct ucsi_operations *ops = &ucsi_acpi_ops;
-+	const struct dmi_system_id *id;
- 	struct ucsi_acpi *ua;
- 	struct resource *res;
- 	acpi_status status;
-@@ -189,8 +253,9 @@ static int ucsi_acpi_probe(struct platform_device *pdev)
- 	init_completion(&ua->complete);
- 	ua->dev = &pdev->dev;
- 
--	if (dmi_check_system(zenbook_dmi_id))
--		ops = &ucsi_zenbook_ops;
-+	id = dmi_first_match(ucsi_acpi_quirks);
-+	if (id)
-+		ops = id->driver_data;
- 
- 	ua->ucsi = ucsi_create(&pdev->dev, ops);
- 	if (IS_ERR(ua->ucsi))
+ 	table = kcalloc(fp->nr_rates, sizeof(*table), GFP_KERNEL);
+ 	if (!table)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
