@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0B713A26F;
-	Tue, 27 Feb 2024 14:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE21313B2B3;
+	Tue, 27 Feb 2024 14:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042959; cv=none; b=jirSNtO2DkxMjG6KfZN7fu69BixhyoHb0xafLrtY09cWzuWHWeJNwlPSWm81CwR7JMp00lHaVX0oiR/8itmEPtilsgKmEFRF+v2IKA9aPWd/NIdXiizX8vnvYBpdoXM8tIyo5mVuM+LPwcZVpD6W/IGz2JDtze7olHIVouIrtw0=
+	t=1709042962; cv=none; b=W2qQ4SfY5OqnfUerm4yEgU0SPgoleFiZUmlYKz50xpnf/3ipZqnasgR9+/dMj8wP/lrYpyq6Nl86uXGT7TbXTECt8KCX2VoQ5xdRu6QvdMC/GvCM0nBAsXgiqgdbxb9jW14TQc1ExWJoh70uctySYZGH6TGGkSjWTYV3bcFuUAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042959; c=relaxed/simple;
-	bh=yqEX0taDLPUCYTMeHwvd/MiFtqFs4Oym672OyR/d1vo=;
+	s=arc-20240116; t=1709042962; c=relaxed/simple;
+	bh=CGECvdvkRrRbddeitHMsHeUM6/btlwZRmHl7Q6p47Z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/Kx3BpcW2zCXurjztK5XZ7NJmWzdMGVC0QowZOUi4xlQOjEHKsGWB/doS7rkG47H4jnU86GNZJANd5LwbyHCHXIEgg5xUKnEDd5f12AImqSHVZSd6K3E8K1/OGm620vumZGrAkuqfBC3g8dOPiGB1w+T/REg9MZIhaSmbwpJh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLZ/A1e9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMMWzM0ZOr+/P1v/dRxT9342RjbycYhFgSxoOcjd6XCktvyMcNAAB9RAfQmYmcky8WQgUGcg+6lyb4znqy6GCRK/Tdqk7w0T3U02XMxV/ygKH8xUoDtWvMsjDFmXs1eyEfV88bmgilwwb7JHkmVKh8HOEBD4kM1HWz3/HJHkpQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0LE63MS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLZ/A1e9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EFAC433C7;
-	Tue, 27 Feb 2024 14:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0LE63MS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B37C433F1;
+	Tue, 27 Feb 2024 14:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042959;
-	bh=yqEX0taDLPUCYTMeHwvd/MiFtqFs4Oym672OyR/d1vo=;
+	s=korg; t=1709042961;
+	bh=CGECvdvkRrRbddeitHMsHeUM6/btlwZRmHl7Q6p47Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLZ/A1e9EE/2fvPox1BfewUds2D+DzH9ZdaKCZasewSrV94mpKulwybztdJuNZX3A
-	 OHrj53RmvgE9anagTmA3GIvfkk8aNAdiqPKoKg9N7QJ68mzc24JoIRuf1Ez4hgtUo/
-	 0OqZ4OPJUMtqtUwxh1QDl1gP3aBMcVqE0lk5+CX0=
+	b=a0LE63MStltd/nCWhmCdaDqxvJgYTjittMbhhy1QIktztHWmaJBsAyNoHaO0Qltqd
+	 skivvr/uxKtVpI6KvkcDjreTF0apOhPNqJQznTLBVNgJMsCjjU3optCEi3h9Y5cc99
+	 kUG1PqtVvDcAr/S+LGYq1/lRSvwRbH9QAsm6SW2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Ganesh Goudar <ganeshgr@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/245] powerpc/eeh: Set channel state after notifying the drivers
-Date: Tue, 27 Feb 2024 14:25:42 +0100
-Message-ID: <20240227131620.222271732@linuxfoundation.org>
+Subject: [PATCH 5.15 155/245] PM: core: Redefine pm_ptr() macro
+Date: Tue, 27 Feb 2024 14:25:43 +0100
+Message-ID: <20240227131620.252855947@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,81 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ganesh Goudar <ganeshgr@linux.ibm.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-[ Upstream commit 9efcdaac36e1643a1b7f5337e6143ce142d381b1 ]
+[ Upstream commit c06ef740d401d0f4ab188882bf6f8d9cf0f75eaf ]
 
-When a PCI error is encountered 6th time in an hour we
-set the channel state to perm_failure and notify the
-driver about the permanent failure.
+The pm_ptr() macro was previously conditionally defined, according to
+the value of the CONFIG_PM option. This meant that the pointed structure
+was either referenced (if CONFIG_PM was set), or never referenced (if
+CONFIG_PM was not set), causing it to be detected as unused by the
+compiler.
 
-However, after upstream commit 38ddc011478e ("powerpc/eeh:
-Make permanently failed devices non-actionable"), EEH handler
-stops calling any routine once the device is marked as
-permanent failure. This issue can lead to fatal consequences
-like kernel hang with certain PCI devices.
+This worked fine, but required the __maybe_unused compiler attribute to
+be used to every symbol pointed to by a pointer wrapped with pm_ptr().
 
-Following log is observed with lpfc driver, with and without
-this change, Without this change kernel hangs, If PCI error
-is encountered 6 times for a device in an hour.
+We can do better. With this change, the pm_ptr() is now defined the
+same, independently of the value of CONFIG_PM. It now uses the (?:)
+ternary operator to conditionally resolve to its argument. Since the
+condition is known at compile time, the compiler will then choose to
+discard the unused symbols, which won't need to be tagged with
+__maybe_unused anymore.
 
-Without the change
+This pm_ptr() macro is usually used with pointers to dev_pm_ops
+structures created with SIMPLE_DEV_PM_OPS() or similar macros. These do
+use a __maybe_unused flag, which is now useless with this change, so it
+later can be removed. However in the meantime it causes no harm, and all
+the drivers still compile fine with the new pm_ptr() macro.
 
- EEH: Beginning: 'error_detected(permanent failure)'
- PCI 0132:60:00.0#600000: EEH: not actionable (1,1,1)
- PCI 0132:60:00.1#600000: EEH: not actionable (1,1,1)
- EEH: Finished:'error_detected(permanent failure)'
-
-With the change
-
- EEH: Beginning: 'error_detected(permanent failure)'
- EEH: Invoking lpfc->error_detected(permanent failure)
- EEH: lpfc driver reports: 'disconnect'
- EEH: Invoking lpfc->error_detected(permanent failure)
- EEH: lpfc driver reports: 'disconnect'
- EEH: Finished:'error_detected(permanent failure)'
-
-To fix the issue, set channel state to permanent failure after
-notifying the drivers.
-
-Fixes: 38ddc011478e ("powerpc/eeh: Make permanently failed devices non-actionable")
-Suggested-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Signed-off-by: Ganesh Goudar <ganeshgr@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230209105649.127707-1-ganeshgr@linux.ibm.com
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 18ab69c8ca56 ("Input: iqs269a - do not poll during suspend or resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh_driver.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/pm.h | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
-index cb3ac555c9446..665d847ef9b5a 100644
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -1069,10 +1069,10 @@ void eeh_handle_normal_event(struct eeh_pe *pe)
- 	eeh_slot_error_detail(pe, EEH_LOG_PERM);
+diff --git a/include/linux/pm.h b/include/linux/pm.h
+index 1d8209c09686c..b88ac7dcf2a20 100644
+--- a/include/linux/pm.h
++++ b/include/linux/pm.h
+@@ -373,11 +373,7 @@ const struct dev_pm_ops __maybe_unused name = { \
+ 	SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
+ }
  
- 	/* Notify all devices that they're about to go down. */
--	eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 	eeh_set_irq_state(pe, false);
- 	eeh_pe_report("error_detected(permanent failure)", pe,
- 		      eeh_report_failure, NULL);
-+	eeh_set_channel_state(pe, pci_channel_io_perm_failure);
+-#ifdef CONFIG_PM
+-#define pm_ptr(_ptr) (_ptr)
+-#else
+-#define pm_ptr(_ptr) NULL
+-#endif
++#define pm_ptr(_ptr) PTR_IF(IS_ENABLED(CONFIG_PM), (_ptr))
  
- 	/* Mark the PE to be removed permanently */
- 	eeh_pe_state_mark(pe, EEH_PE_REMOVED);
-@@ -1189,10 +1189,10 @@ void eeh_handle_special_event(void)
- 
- 			/* Notify all devices to be down */
- 			eeh_pe_state_clear(pe, EEH_PE_PRI_BUS, true);
--			eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 			eeh_pe_report(
- 				"error_detected(permanent failure)", pe,
- 				eeh_report_failure, NULL);
-+			eeh_set_channel_state(pe, pci_channel_io_perm_failure);
- 
- 			pci_lock_rescan_remove();
- 			list_for_each_entry(hose, &hose_list, list_node) {
+ /*
+  * PM_EVENT_ messages
 -- 
 2.43.0
 
