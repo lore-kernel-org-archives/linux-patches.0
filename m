@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6E8145359;
-	Tue, 27 Feb 2024 14:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1094A145B0C;
+	Tue, 27 Feb 2024 14:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044009; cv=none; b=VmvjtOq+VwhLO0RSDzM0JclU7Y89Ba/uPxSWAGwwrdEClI06R0btYarH1pYg2smmsvMWub+eWE+KrS8yIntivvtbXFmIsuHy9PHNlJX06n071xfi/i+RJj0Xid7mb+f3fy1+cPMWkJZBRJkp9rnT2JI5T6iw+JOfBg2mHfJ1IV0=
+	t=1709044012; cv=none; b=TeF34HHElOLr/kZJlALWno+V0c9pkUSRuvazBqAoiUpOTOGcelxNaPD7BiyxNop+7xNz3erdI5n552pGbjhAzzywbdWKoex514N3iP1MjyhBO95jrZN48ViXhVhBe9QRo4h7hQiq/l2V/P56C4tWS7+Nd25Gfs5wrdWgSgrtvoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044009; c=relaxed/simple;
-	bh=bEm7qB9y5Bwtj5YWq9ddgt2xS+FCczrU9Vq749paHjM=;
+	s=arc-20240116; t=1709044012; c=relaxed/simple;
+	bh=5kdp+UfTCq/epXcY4XDLKmSwIR0/BwLCjW73mWc9684=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lK81dVADk/icuS0qz4em08oFEzEHj3wSDs5iwM+0lKmCmzPt2Xtb8Zxz9UiREFYxf0EXKCDRGtYTtW2oTNgoADkzjM47LRR5VERMOWKeitB1MgGMkPz5daQZG2iSwO25MkimMQFQIPZbCw63GP0xZFkfw6BOA5uW3B0BPwgelJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yR6mYYEM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tvld2Jafyf9iAowBVZIIDZgksOvmdBiu9dU4if6w1hocKdJr9y7BfEmDwd8z86nPM8aLxDuLxOWgoPC6sTDETe7bJ6ycsxwE0gNqswIfAnTUnGN4hMCP/fWbAcyxnfM1pdn/10Oj9bZlhXm14wQxTa7Yyqbph0keobKnRw16lJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6dT2rOn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yR6mYYEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D467EC433F1;
-	Tue, 27 Feb 2024 14:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6dT2rOn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93033C43394;
+	Tue, 27 Feb 2024 14:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044009;
-	bh=bEm7qB9y5Bwtj5YWq9ddgt2xS+FCczrU9Vq749paHjM=;
+	s=korg; t=1709044011;
+	bh=5kdp+UfTCq/epXcY4XDLKmSwIR0/BwLCjW73mWc9684=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yR6mYYEMCPhYDXhSKCRDsGyL3oi2C+lUX8f65onJ8prtilUkRbqZrRqtOpFCyLXdx
-	 +55uPvin6MTEPH+unvahnMJnbfK5SsHSnfGcd3vgWLSo4OB+KL0nK+cxFiIH+fweCV
-	 my40G3H/e2daCeLr5TM2rSXtc+dk5FWeMZmFw8zQ=
+	b=f6dT2rOnu1pkPiXTmq95Y5JVc1P3V8kq+ZjRlW9AeDcJcKKCnpROpnmLRpGyLQllc
+	 tEm1I+mSBmThsx0EXo1nhCldryug9VOD1gMsTHNPo7/yLuFgjd3tgyEyq6dkkwYwjj
+	 5g+aZHKEKmoXYf0lI8eRm36nEbXOXsDVgNZ8KnO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/122] netfilter: conntrack: check SCTP_CID_SHUTDOWN_ACK for vtag setting in sctp_new
-Date: Tue, 27 Feb 2024 14:26:30 +0100
-Message-ID: <20240227131559.659732950@linuxfoundation.org>
+Subject: [PATCH 5.10 030/122] nvme-fc: do not wait in vain when unloading module
+Date: Tue, 27 Feb 2024 14:26:31 +0100
+Message-ID: <20240227131559.693533668@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -51,68 +53,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit 6e348067ee4bc5905e35faa3a8fafa91c9124bc7 ]
+[ Upstream commit 70fbfc47a392b98e5f8dba70c6efc6839205c982 ]
 
-The annotation says in sctp_new(): "If it is a shutdown ack OOTB packet, we
-expect a return shutdown complete, otherwise an ABORT Sec 8.4 (5) and (8)".
-However, it does not check SCTP_CID_SHUTDOWN_ACK before setting vtag[REPLY]
-in the conntrack entry(ct).
+The module exit path has race between deleting all controllers and
+freeing 'left over IDs'. To prevent double free a synchronization
+between nvme_delete_ctrl and ida_destroy has been added by the initial
+commit.
 
-Because of that, if the ct in Router disappears for some reason in [1]
-with the packet sequence like below:
+There is some logic around trying to prevent from hanging forever in
+wait_for_completion, though it does not handling all cases. E.g.
+blktests is able to reproduce the situation where the module unload
+hangs forever.
 
-   Client > Server: sctp (1) [INIT] [init tag: 3201533963]
-   Server > Client: sctp (1) [INIT ACK] [init tag: 972498433]
-   Client > Server: sctp (1) [COOKIE ECHO]
-   Server > Client: sctp (1) [COOKIE ACK]
-   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057809]
-   Server > Client: sctp (1) [SACK] [cum ack 3075057809]
-   Server > Client: sctp (1) [HB REQ]
-   (the ct in Router disappears somehow)  <-------- [1]
-   Client > Server: sctp (1) [HB ACK]
-   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
-   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
-   Client > Server: sctp (1) [HB REQ]
-   Client > Server: sctp (1) [DATA] (B)(E) [TSN: 3075057810]
-   Client > Server: sctp (1) [HB REQ]
-   Client > Server: sctp (1) [ABORT]
+If we completely rely on the cleanup code executed from the
+nvme_delete_ctrl path, all IDs will be freed eventually. This makes
+calling ida_destroy unnecessary. We only have to ensure that all
+nvme_delete_ctrl code has been executed before we leave
+nvme_fc_exit_module. This is done by flushing the nvme_delete_wq
+workqueue.
 
-when processing HB ACK packet in Router it calls sctp_new() to initialize
-the new ct with vtag[REPLY] set to HB_ACK packet's vtag.
+While at it, remove the unused nvme_fc_wq workqueue too.
 
-Later when sending DATA from Client, all the SACKs from Server will get
-dropped in Router, as the SACK packet's vtag does not match vtag[REPLY]
-in the ct. The worst thing is the vtag in this ct will never get fixed
-by the upcoming packets from Server.
-
-This patch fixes it by checking SCTP_CID_SHUTDOWN_ACK before setting
-vtag[REPLY] in the ct in sctp_new() as the annotation says. With this
-fix, it will leave vtag[REPLY] in ct to 0 in the case above, and the
-next HB REQ/ACK from Server is able to fix the vtag as its value is 0
-in nf_conntrack_sctp_packet().
-
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_sctp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/fc.c | 47 ++++++------------------------------------
+ 1 file changed, 6 insertions(+), 41 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index e7545bcca805e..6b2a215b27862 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -299,7 +299,7 @@ sctp_new(struct nf_conn *ct, const struct sk_buff *skb,
- 			pr_debug("Setting vtag %x for secondary conntrack\n",
- 				 sh->vtag);
- 			ct->proto.sctp.vtag[IP_CT_DIR_ORIGINAL] = sh->vtag;
--		} else {
-+		} else if (sch->type == SCTP_CID_SHUTDOWN_ACK) {
- 		/* If it is a shutdown ack OOTB packet, we expect a return
- 		   shutdown complete, otherwise an ABORT Sec 8.4 (5) and (8) */
- 			pr_debug("Setting vtag %x for new conn OOTB\n",
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 906cab35afe7a..8e05239073ef2 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -220,11 +220,6 @@ static LIST_HEAD(nvme_fc_lport_list);
+ static DEFINE_IDA(nvme_fc_local_port_cnt);
+ static DEFINE_IDA(nvme_fc_ctrl_cnt);
+ 
+-static struct workqueue_struct *nvme_fc_wq;
+-
+-static bool nvme_fc_waiting_to_unload;
+-static DECLARE_COMPLETION(nvme_fc_unload_proceed);
+-
+ /*
+  * These items are short-term. They will eventually be moved into
+  * a generic FC class. See comments in module init.
+@@ -254,8 +249,6 @@ nvme_fc_free_lport(struct kref *ref)
+ 	/* remove from transport list */
+ 	spin_lock_irqsave(&nvme_fc_lock, flags);
+ 	list_del(&lport->port_list);
+-	if (nvme_fc_waiting_to_unload && list_empty(&nvme_fc_lport_list))
+-		complete(&nvme_fc_unload_proceed);
+ 	spin_unlock_irqrestore(&nvme_fc_lock, flags);
+ 
+ 	ida_simple_remove(&nvme_fc_local_port_cnt, lport->localport.port_num);
+@@ -3823,10 +3816,6 @@ static int __init nvme_fc_init_module(void)
+ {
+ 	int ret;
+ 
+-	nvme_fc_wq = alloc_workqueue("nvme_fc_wq", WQ_MEM_RECLAIM, 0);
+-	if (!nvme_fc_wq)
+-		return -ENOMEM;
+-
+ 	/*
+ 	 * NOTE:
+ 	 * It is expected that in the future the kernel will combine
+@@ -3844,7 +3833,7 @@ static int __init nvme_fc_init_module(void)
+ 	ret = class_register(&fc_class);
+ 	if (ret) {
+ 		pr_err("couldn't register class fc\n");
+-		goto out_destroy_wq;
++		return ret;
+ 	}
+ 
+ 	/*
+@@ -3868,8 +3857,6 @@ static int __init nvme_fc_init_module(void)
+ 	device_destroy(&fc_class, MKDEV(0, 0));
+ out_destroy_class:
+ 	class_unregister(&fc_class);
+-out_destroy_wq:
+-	destroy_workqueue(nvme_fc_wq);
+ 
+ 	return ret;
+ }
+@@ -3889,45 +3876,23 @@ nvme_fc_delete_controllers(struct nvme_fc_rport *rport)
+ 	spin_unlock(&rport->lock);
+ }
+ 
+-static void
+-nvme_fc_cleanup_for_unload(void)
++static void __exit nvme_fc_exit_module(void)
+ {
+ 	struct nvme_fc_lport *lport;
+ 	struct nvme_fc_rport *rport;
+-
+-	list_for_each_entry(lport, &nvme_fc_lport_list, port_list) {
+-		list_for_each_entry(rport, &lport->endp_list, endp_list) {
+-			nvme_fc_delete_controllers(rport);
+-		}
+-	}
+-}
+-
+-static void __exit nvme_fc_exit_module(void)
+-{
+ 	unsigned long flags;
+-	bool need_cleanup = false;
+ 
+ 	spin_lock_irqsave(&nvme_fc_lock, flags);
+-	nvme_fc_waiting_to_unload = true;
+-	if (!list_empty(&nvme_fc_lport_list)) {
+-		need_cleanup = true;
+-		nvme_fc_cleanup_for_unload();
+-	}
++	list_for_each_entry(lport, &nvme_fc_lport_list, port_list)
++		list_for_each_entry(rport, &lport->endp_list, endp_list)
++			nvme_fc_delete_controllers(rport);
+ 	spin_unlock_irqrestore(&nvme_fc_lock, flags);
+-	if (need_cleanup) {
+-		pr_info("%s: waiting for ctlr deletes\n", __func__);
+-		wait_for_completion(&nvme_fc_unload_proceed);
+-		pr_info("%s: ctrl deletes complete\n", __func__);
+-	}
++	flush_workqueue(nvme_delete_wq);
+ 
+ 	nvmf_unregister_transport(&nvme_fc_transport);
+ 
+-	ida_destroy(&nvme_fc_local_port_cnt);
+-	ida_destroy(&nvme_fc_ctrl_cnt);
+-
+ 	device_destroy(&fc_class, MKDEV(0, 0));
+ 	class_unregister(&fc_class);
+-	destroy_workqueue(nvme_fc_wq);
+ }
+ 
+ module_init(nvme_fc_init_module);
 -- 
 2.43.0
 
