@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190F8145B24;
-	Tue, 27 Feb 2024 13:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA07314532D;
+	Tue, 27 Feb 2024 13:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041608; cv=none; b=sQRWeHlZgKsEglhUZdmMC3R3+toZ3M9l95qFS7o+dM0EjEX3Dg8Ufi2z0cVwZmHH2sNbJ6vtOHHdjeorlRXBEPei3q+5Ebnxz0fHFu0n57kkeSoyrWIG6MZVB3v6RDLvPoNjSUj/vOeM0vB3XGgDyD8ZsEJqUkxcB8C+x8CaeAY=
+	t=1709041610; cv=none; b=ZmfGF5NWowZYYKcA+F6ZJFC4SaV2odsg0TjcxLs9BgGHp3e1jJqSFvx1XJ6tBwym3k5IYH3ex/kmnoIBUkZFo8m39Z7wYFNJ0QVLZ9lw6bUsXWCAs4d7MfE6VuF0Erz+LqE/cEGzsbQwKAokV/RGkTZSZnDR8MC4hzSq0lBi9lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041608; c=relaxed/simple;
-	bh=aB50/IYL4du53ZSPFgX2xc7FXhL3vUfaNu9qKRiaNao=;
+	s=arc-20240116; t=1709041610; c=relaxed/simple;
+	bh=Ux27qv4run7Vn004bCaIc5+9bs/99OlFQznwcq5T3ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1Z8p7iXA+lHgOF5w9LyD0gu/EPA9U+Qc6vm36CsPCjg6K6Ktihf1CT7Gd5H7cHDl83OwYPCNnIUvpjXI3QYfwQHMiegXbw4UwlIgODkx2/5wrddAYUxXcH9xQKMW1LLBanh7tVi9r8aK5+Nem1V6lu6ZzO3KBQEKwge7B2k0XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROpqcM1Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pMrsAd83Tb6A5Hpxeg/qMkHbr7d1/B0VJIUzEsv/T6wiW6mwcjSOQQMGn88VucoHpt9IZoZJ9cyjdClL5NrpsIdIc7sqZdX25PVf3HU438ZNARP45nwuf+868c7QIDxLf2cLAnUa4hgBi0099kh2J5xmfQWdQcQyncildE/AJr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAwL3s5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROpqcM1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982FEC433C7;
-	Tue, 27 Feb 2024 13:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAwL3s5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9DDC433F1;
+	Tue, 27 Feb 2024 13:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041608;
-	bh=aB50/IYL4du53ZSPFgX2xc7FXhL3vUfaNu9qKRiaNao=;
+	s=korg; t=1709041610;
+	bh=Ux27qv4run7Vn004bCaIc5+9bs/99OlFQznwcq5T3ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ROpqcM1Z/B/G7Xo5YA87Nw0hTLCVNOfilOTuZz4rCEM/DQuD2qGh/syLyRR0nRJcI
-	 JEYvkTCqSYs0em2LW5lORKqwBV9qaeZxWZH+VyAEsJ+hIgBWnZGefn1moFB3+8HN9h
-	 JfyuZ1WSqB4EcNUmZDLH82mG2CPr0UY2cq+DCvSo=
+	b=AAwL3s5gkLIMGJ+3xsaIkfiNlBg5jExbZoaRsT0H+rxi3DGCNURC9gpGqHElxKQns
+	 YIJRbO429HeS+3YfFGDkd4HGP5CKLvc7vuPhDGgRSVbOLsHjJK/yC4iIje6BqBxYNJ
+	 NVbB/AJtHvwdsYWSr39IThNCgwBUi+AFdPxx0Nro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.19 29/52] dm-crypt: dont modify the data when using authenticated encryption
-Date: Tue, 27 Feb 2024 14:26:16 +0100
-Message-ID: <20240227131549.488413493@linuxfoundation.org>
+	Cyril Hrubis <chrubis@suse.cz>,
+	Ingo Molnar <mingo@kernel.org>,
+	Mahmoud Adam <mngyadam@amazon.com>,
+	Petr Vorel <pvorel@suse.cz>
+Subject: [PATCH 6.6 001/299] sched/rt: Disallow writing invalid values to sched_rt_period_us
+Date: Tue, 27 Feb 2024 14:21:52 +0100
+Message-ID: <20240227131625.897283185@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
-References: <20240227131548.514622258@linuxfoundation.org>
+In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
+References: <20240227131625.847743063@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +48,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Cyril Hrubis <chrubis@suse.cz>
 
-commit 50c70240097ce41fe6bce6478b80478281e4d0f7 upstream.
+commit 079be8fc630943d9fc70a97807feb73d169ee3fc upstream.
 
-It was said that authenticated encryption could produce invalid tag when
-the data that is being encrypted is modified [1]. So, fix this problem by
-copying the data into the clone bio first and then encrypt them inside the
-clone bio.
+The validation of the value written to sched_rt_period_us was broken
+because:
 
-This may reduce performance, but it is needed to prevent the user from
-corrupting the device by writing data with O_DIRECT and modifying them at
-the same time.
+  - the sysclt_sched_rt_period is declared as unsigned int
+  - parsed by proc_do_intvec()
+  - the range is asserted after the value parsed by proc_do_intvec()
 
-[1] https://lore.kernel.org/all/20240207004723.GA35324@sol.localdomain/T/
+Because of this negative values written to the file were written into a
+unsigned integer that were later on interpreted as large positive
+integers which did passed the check:
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+  if (sysclt_sched_rt_period <= 0)
+	return EINVAL;
+
+This commit fixes the parsing by setting explicit range for both
+perid_us and runtime_us into the sched_rt_sysctls table and processes
+the values with proc_dointvec_minmax() instead.
+
+Alternatively if we wanted to use full range of unsigned int for the
+period value we would have to split the proc_handler and use
+proc_douintvec() for it however even the
+Documentation/scheduller/sched-rt-group.rst describes the range as 1 to
+INT_MAX.
+
+As far as I can tell the only problem this causes is that the sysctl
+file allows writing negative values which when read back may confuse
+userspace.
+
+There is also a LTP test being submitted for these sysctl files at:
+
+  http://patchwork.ozlabs.org/project/ltp/patch/20230901144433.2526-1-chrubis@suse.cz/
+
+Signed-off-by: Cyril Hrubis <chrubis@suse.cz>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20231002115553.3007-2-chrubis@suse.cz
+Cc: Mahmoud Adam <mngyadam@amazon.com>
+Signed-off-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-crypt.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/rt.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-crypt.c
-+++ b/drivers/md/dm-crypt.c
-@@ -1734,6 +1734,12 @@ static void kcryptd_crypt_write_convert(
- 	io->ctx.bio_out = clone;
- 	io->ctx.iter_out = clone->bi_iter;
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -37,6 +37,8 @@ static struct ctl_table sched_rt_sysctls
+ 		.maxlen         = sizeof(unsigned int),
+ 		.mode           = 0644,
+ 		.proc_handler   = sched_rt_handler,
++		.extra1         = SYSCTL_ONE,
++		.extra2         = SYSCTL_INT_MAX,
+ 	},
+ 	{
+ 		.procname       = "sched_rt_runtime_us",
+@@ -44,6 +46,8 @@ static struct ctl_table sched_rt_sysctls
+ 		.maxlen         = sizeof(int),
+ 		.mode           = 0644,
+ 		.proc_handler   = sched_rt_handler,
++		.extra1         = SYSCTL_NEG_ONE,
++		.extra2         = SYSCTL_INT_MAX,
+ 	},
+ 	{
+ 		.procname       = "sched_rr_timeslice_ms",
+@@ -2989,9 +2993,6 @@ static int sched_rt_global_constraints(v
+ #ifdef CONFIG_SYSCTL
+ static int sched_rt_global_validate(void)
+ {
+-	if (sysctl_sched_rt_period <= 0)
+-		return -EINVAL;
+-
+ 	if ((sysctl_sched_rt_runtime != RUNTIME_INF) &&
+ 		((sysctl_sched_rt_runtime > sysctl_sched_rt_period) ||
+ 		 ((u64)sysctl_sched_rt_runtime *
+@@ -3022,7 +3023,7 @@ static int sched_rt_handler(struct ctl_t
+ 	old_period = sysctl_sched_rt_period;
+ 	old_runtime = sysctl_sched_rt_runtime;
  
-+	if (crypt_integrity_aead(cc)) {
-+		bio_copy_data(clone, io->base_bio);
-+		io->ctx.bio_in = clone;
-+		io->ctx.iter_in = clone->bi_iter;
-+	}
-+
- 	sector += bio_sectors(clone);
+-	ret = proc_dointvec(table, write, buffer, lenp, ppos);
++	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
  
- 	crypt_inc_pending(io);
+ 	if (!ret && write) {
+ 		ret = sched_rt_global_validate();
 
 
