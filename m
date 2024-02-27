@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9D113B2B4;
-	Tue, 27 Feb 2024 14:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D750F13B2B4;
+	Tue, 27 Feb 2024 14:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043658; cv=none; b=IWC1ntQJ/ufchAaNNt00uOuJ3l3Pp0OPsedA91uUI9/RYh5UyDHZPZzAo/yifYgEZd/oSvBxCaI2qEOmHCnNYRV7E66N04tcMsM/8vr2jMMM6MGyy+C34RQCeaScHiedIy20xeKpQI69P9yxsyHm+s9K2vP3wKj23ie1yiZJzdk=
+	t=1709043660; cv=none; b=t6EdIU/oj/Qu1X36bLYfG6J9KT4Sef2FFl+wMwqukbwknNfBhmHMbF4qhv2PawOu2ZSB/ArWP/Gy7WCtB2IXQe7S8HvJ6B/1j8CM+mf4Nm+gncCmg9EBWdLP7K39kblOX3NM1MlWkFEqh44BWsRo0Zmcul7SQQ4dRTl6WxSa2lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043658; c=relaxed/simple;
-	bh=ZmMJJIFA6UX1zwNUNX9CTZ/joB47QhafLSgbPOR08Q8=;
+	s=arc-20240116; t=1709043660; c=relaxed/simple;
+	bh=K/LRQd2In2ISymX8pyARv9VB7RV1fGFI29kBNxYqSiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1a7BK8iivkmGlFjSJn0/mFvwVa3bifEY4dWuGoQ8oIUXtdMHBMF6XpXwfYrtYZUgRtXTW4fB2DhaXTSfTHRwEBGErpJvqOg0ESq06ifQs3ATbTWRkU1bNoZTjp+L6cQJL2U1BUIpS61hoVU0b3AQR6vr3FcoQ7tYIX0FWI5Emo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZ6o42LU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBJ2GFQZy3OxpV6qgnY17R97rhyTKKVQLNdEE6nmwu/yY+eJkcFJl/kh8+2VZNZc28b4pHKTZYEZziis+7lkbtS7xzZhwklgLsozV8Eg17q8oomV0Md1IK3MuzEIwkmMJn+yku7t+5iHsFL1pyssDjwpGJ/MaA/l0cwBrpPmOxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBGXBGKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZ6o42LU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8FAC433F1;
-	Tue, 27 Feb 2024 14:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBGXBGKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E0DC433F1;
+	Tue, 27 Feb 2024 14:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043658;
-	bh=ZmMJJIFA6UX1zwNUNX9CTZ/joB47QhafLSgbPOR08Q8=;
+	s=korg; t=1709043660;
+	bh=K/LRQd2In2ISymX8pyARv9VB7RV1fGFI29kBNxYqSiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZ6o42LUVJm0H+9MnrfZdLDCXWR++8GLGMUqEzD/B+2SSvDNFX12dlpn3nKNlgiw2
-	 E1244jSV0kjakXYtx36VpMFjyMt+pKhVp78vq5ze0B23uULgLCI+5dZqOmEPy7HB6S
-	 sAgqnanB/fzhI4dDeDtranEu1Bgs0BimTIeetc64=
+	b=JBGXBGKA+HAR10B7e7cmHqY8I1Q/J7O8B7pPtyjzAAMq5cLGTfSoN2aJHZxJkiJOW
+	 2oh4ruVF+fZmwtULzld9BtfHxCOMsXTL+zeC1kI+hEJgv9Z9/ofqPBi3xZ3shn0s40
+	 IYxwVAmpzmjrUHjOiEZ5Aw38LEA1ue0Ac79mqpqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 187/195] mm/damon/reclaim: fix quota stauts loss due to online tunings
-Date: Tue, 27 Feb 2024 14:27:28 +0100
-Message-ID: <20240227131616.573533752@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Christoph Hellwig <hch@lst.de>,
+	Avi Kivity <avi@scylladb.com>,
+	Sandeep Dhavale <dhavale@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 188/195] fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio
+Date: Tue, 27 Feb 2024 14:27:29 +0100
+Message-ID: <20240227131616.612391729@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -50,80 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 1b0ca4e4ff10a2c8402e2cf70132c683e1c772e4 upstream.
+commit b820de741ae48ccf50dd95e297889c286ff4f760 upstream.
 
-Patch series "mm/damon: fix quota status loss due to online tunings".
+If kiocb_set_cancel_fn() is called for I/O submitted via io_uring, the
+following kernel warning appears:
 
-DAMON_RECLAIM and DAMON_LRU_SORT is not preserving internal quota status
-when applying new user parameters, and hence could cause temporal quota
-accuracy degradation.  Fix it by preserving the status.
+WARNING: CPU: 3 PID: 368 at fs/aio.c:598 kiocb_set_cancel_fn+0x9c/0xa8
+Call trace:
+ kiocb_set_cancel_fn+0x9c/0xa8
+ ffs_epfile_read_iter+0x144/0x1d0
+ io_read+0x19c/0x498
+ io_issue_sqe+0x118/0x27c
+ io_submit_sqes+0x25c/0x5fc
+ __arm64_sys_io_uring_enter+0x104/0xab0
+ invoke_syscall+0x58/0x11c
+ el0_svc_common+0xb4/0xf4
+ do_el0_svc+0x2c/0xb0
+ el0_svc+0x2c/0xa4
+ el0t_64_sync_handler+0x68/0xb4
+ el0t_64_sync+0x1a4/0x1a8
 
+Fix this by setting the IOCB_AIO_RW flag for read and write I/O that is
+submitted by libaio.
 
-This patch (of 2):
-
-For online parameters change, DAMON_RECLAIM creates new scheme based on
-latest values of the parameters and replaces the old scheme with the new
-one.  When creating it, the internal status of the quota of the old
-scheme is not preserved.  As a result, charging of the quota starts from
-zero after the online tuning.  The data that collected to estimate the
-throughput of the scheme's action is also reset, and therefore the
-estimation should start from the scratch again.  Because the throughput
-estimation is being used to convert the time quota to the effective size
-quota, this could result in temporal time quota inaccuracy.  It would be
-recovered over time, though.  In short, the quota accuracy could be
-temporarily degraded after online parameters update.
-
-Fix the problem by checking the case and copying the internal fields for
-the status.
-
-Link: https://lkml.kernel.org/r/20240216194025.9207-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20240216194025.9207-2-sj@kernel.org
-Fixes: e035c280f6df ("mm/damon/reclaim: support online inputs update")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[5.19+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Jens Axboe <axboe@kernel.dk>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Avi Kivity <avi@scylladb.com>
+Cc: Sandeep Dhavale <dhavale@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: stable@vger.kernel.org
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240215204739.2677806-2-bvanassche@acm.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/reclaim.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ fs/aio.c           |    9 ++++++++-
+ include/linux/fs.h |    2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -141,9 +141,20 @@ static struct damos *damon_reclaim_new_s
- 			&damon_reclaim_wmarks);
- }
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -595,6 +595,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
+ 	struct kioctx *ctx = req->ki_ctx;
+ 	unsigned long flags;
  
-+static void damon_reclaim_copy_quota_status(struct damos_quota *dst,
-+		struct damos_quota *src)
-+{
-+	dst->total_charged_sz = src->total_charged_sz;
-+	dst->total_charged_ns = src->total_charged_ns;
-+	dst->charged_sz = src->charged_sz;
-+	dst->charged_from = src->charged_from;
-+	dst->charge_target_from = src->charge_target_from;
-+	dst->charge_addr_from = src->charge_addr_from;
-+}
++	/*
++	 * kiocb didn't come from aio or is neither a read nor a write, hence
++	 * ignore it.
++	 */
++	if (!(iocb->ki_flags & IOCB_AIO_RW))
++		return;
 +
- static int damon_reclaim_apply_parameters(void)
- {
--	struct damos *scheme;
-+	struct damos *scheme, *old_scheme;
- 	int err = 0;
+ 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
+ 		return;
  
- 	err = damon_set_attrs(ctx, &damon_reclaim_mon_attrs);
-@@ -154,6 +165,11 @@ static int damon_reclaim_apply_parameter
- 	scheme = damon_reclaim_new_scheme();
- 	if (!scheme)
- 		return -ENOMEM;
-+	if (!list_empty(&ctx->schemes)) {
-+		damon_for_each_scheme(old_scheme, ctx)
-+			damon_reclaim_copy_quota_status(&scheme->quota,
-+					&old_scheme->quota);
-+	}
- 	damon_set_schemes(ctx, &scheme, 1);
+@@ -1476,7 +1483,7 @@ static int aio_prep_rw(struct kiocb *req
+ 	req->ki_complete = aio_complete_rw;
+ 	req->private = NULL;
+ 	req->ki_pos = iocb->aio_offset;
+-	req->ki_flags = req->ki_filp->f_iocb_flags;
++	req->ki_flags = req->ki_filp->f_iocb_flags | IOCB_AIO_RW;
+ 	if (iocb->aio_flags & IOCB_FLAG_RESFD)
+ 		req->ki_flags |= IOCB_EVENTFD;
+ 	if (iocb->aio_flags & IOCB_FLAG_IOPRIO) {
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -337,6 +337,8 @@ enum rw_hint {
+ #define IOCB_NOIO		(1 << 20)
+ /* can use bio alloc cache */
+ #define IOCB_ALLOC_CACHE	(1 << 21)
++/* kiocb is a read or write operation submitted by fs/aio.c. */
++#define IOCB_AIO_RW		(1 << 23)
  
- 	return damon_set_region_biggest_system_ram_default(target,
+ struct kiocb {
+ 	struct file		*ki_filp;
 
 
