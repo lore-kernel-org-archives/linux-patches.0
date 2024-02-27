@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B2178B61;
-	Tue, 27 Feb 2024 14:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328B113B2B4;
+	Tue, 27 Feb 2024 14:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043636; cv=none; b=rQF4IipZFHNgF35dQx/RFamZCAxMbV8mDETvlZefPaCHwh2yZi0Whm0ZEPrRLxbOHyx6q9elPCefLcAJpvDzemKKrkDNQRVY3sUZ4SCXwitYEDjAHggpXOmdBnoUo6nF2ytGZAcyV8izpa8rtITOcZJZfuzYwJFXsU/lxwefyjg=
+	t=1709043640; cv=none; b=MR740hBeZmw0DslvNn89HAbUXWwPmwKL+/gFpPT5cCWZMp0Fv4HP7wcUQzNo3DbMV54V857X8Mv3+EkuSi9Zd4xcByYhLXrrGhrWxXRd15PnuVvIWvf2/MgO7OYf0gFxzxg+vWrJnQkYHj8/5BO75SMdnOH0FobzwzSKAoolj6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043636; c=relaxed/simple;
-	bh=w9WzCQ9FtAumBqlioULiDnWJLifsamx8FUfFpLDIc/I=;
+	s=arc-20240116; t=1709043640; c=relaxed/simple;
+	bh=hZvLR11v3N90bIqQ1tV4h1kVhTGIcoUJaaDdGybD6b4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMXHx17/bEHsn+lAmxOcdH6h/4csNGiLVhj0o/7iEMtF335yx9FzaUcldMQDewr9WSbFu/E1VCvohR8Q67K3dmndsVrd5nIuH/9twNZ73W13MVwjpYWN+ohMIwci2QBExWpOnX20afHNWpzaPxEz7lWSnnyZUBmdcncQ5K5fAWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9Gpk/ac; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GpTt+MwCCE+3KqsYjz4ivVBoFuTWXqQVbawwkn7EhGQKTlKdpsHAtNcHS75SWJgK8QdwQvFyKRgjswRC77OXCN/18Q/erNJ8VimIy8fWS4kw4Rg/tdRNHJMqVv5hUEtTX5aW12i1M7fWdLHS5WxFPn6s0cfAGjkJLrdjX2iqblM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrEUqUe+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9Gpk/ac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97956C433F1;
-	Tue, 27 Feb 2024 14:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrEUqUe+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B706C433F1;
+	Tue, 27 Feb 2024 14:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043636;
-	bh=w9WzCQ9FtAumBqlioULiDnWJLifsamx8FUfFpLDIc/I=;
+	s=korg; t=1709043638;
+	bh=hZvLR11v3N90bIqQ1tV4h1kVhTGIcoUJaaDdGybD6b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s9Gpk/acKAkcq9+xCJ0jhBR2JwilB9RHaqixFmv25hyQgeo99YFn3DBzu5qV9sB57
-	 9sAF+VO0kECahvREMhqjCvyIHE2pDrwoeDXBqbk5HRtyqjZPpVYMwTlNqX3VZno2sw
-	 TiSo+hEjd1L97cDA1CTx65tM6IgT2QDK9hdqdcm4=
+	b=lrEUqUe+uQ6pvrG5a7y32nvt5G5jHi8TLR25Vm/zKr05CTb6cHIPfRH4R63lClhm1
+	 Yh75U9bgPYUUPvvDDYES7SiC2SUDY04LTERED2yGModKx9Ij67xnKWUzhozx5t8WSO
+	 qmxe5Mtsxi1PpZaHezNCE0tS4PlDIec++ZJiNjV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Justin Iurman <justin.iurman@uliege.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/195] platform/x86: thinkpad_acpi: Only update profile if successfully converted
-Date: Tue, 27 Feb 2024 14:27:03 +0100
-Message-ID: <20240227131615.762204358@linuxfoundation.org>
+Subject: [PATCH 6.1 180/195] Fix write to cloned skb in ipv6_hop_ioam()
+Date: Tue, 27 Feb 2024 14:27:21 +0100
+Message-ID: <20240227131616.346583875@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,58 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Justin Iurman <justin.iurman@uliege.be>
 
-[ Upstream commit 427c70dec738318b7f71e1b9d829ff0e9771d493 ]
+[ Upstream commit f198d933c2e4f8f89e0620fbaf1ea7eac384a0eb ]
 
-Randomly a Lenovo Z13 will trigger a kernel warning traceback from this
-condition:
+ioam6_fill_trace_data() writes inside the skb payload without ensuring
+it's writeable (e.g., not cloned). This function is called both from the
+input and output path. The output path (ioam6_iptunnel) already does the
+check. This commit provides a fix for the input path, inside
+ipv6_hop_ioam(). It also updates ip6_parse_tlv() to refresh the network
+header pointer ("nh") when returning from ipv6_hop_ioam().
 
-```
-if (WARN_ON((profile < 0) || (profile >= ARRAY_SIZE(profile_names))))
-```
-
-This happens because thinkpad-acpi always assumes that
-convert_dytc_to_profile() successfully updated the profile. On the
-contrary a condition can occur that when dytc_profile_refresh() is called
-the profile doesn't get updated as there is a -EOPNOTSUPP branch.
-
-Catch this situation and avoid updating the profile. Also log this into
-dynamic debugging in case any other modes should be added in the future.
-
-Fixes: c3bfcd4c6762 ("platform/x86: thinkpad_acpi: Add platform profile support")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20240217022311.113879-1-mario.limonciello@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Justin Iurman <justin.iurman@uliege.be>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv6/exthdrs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index 6edd2e294750e..c2fb19af10705 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -10511,6 +10511,7 @@ static int convert_dytc_to_profile(int funcmode, int dytcmode,
- 		return 0;
- 	default:
- 		/* Unknown function */
-+		pr_debug("unknown function 0x%x\n", funcmode);
- 		return -EOPNOTSUPP;
- 	}
- 	return 0;
-@@ -10696,8 +10697,8 @@ static void dytc_profile_refresh(void)
- 		return;
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 5fa0e37305d9d..1cfdd9d950123 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -180,6 +180,8 @@ static bool ip6_parse_tlv(bool hopbyhop,
+ 				case IPV6_TLV_IOAM:
+ 					if (!ipv6_hop_ioam(skb, off))
+ 						return false;
++
++					nh = skb_network_header(skb);
+ 					break;
+ 				case IPV6_TLV_JUMBO:
+ 					if (!ipv6_hop_jumbo(skb, off))
+@@ -974,6 +976,14 @@ static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff)
+ 		if (!skb_valid_dst(skb))
+ 			ip6_route_input(skb);
  
- 	perfmode = (output >> DYTC_GET_MODE_BIT) & 0xF;
--	convert_dytc_to_profile(funcmode, perfmode, &profile);
--	if (profile != dytc_current_profile) {
-+	err = convert_dytc_to_profile(funcmode, perfmode, &profile);
-+	if (!err && profile != dytc_current_profile) {
- 		dytc_current_profile = profile;
- 		platform_profile_notify();
- 	}
++		/* About to mangle packet header */
++		if (skb_ensure_writable(skb, optoff + 2 + hdr->opt_len))
++			goto drop;
++
++		/* Trace pointer may have changed */
++		trace = (struct ioam6_trace_hdr *)(skb_network_header(skb)
++						   + optoff + sizeof(*hdr));
++
+ 		ioam6_fill_trace_data(skb, ns, trace, true);
+ 		break;
+ 	default:
 -- 
 2.43.0
 
