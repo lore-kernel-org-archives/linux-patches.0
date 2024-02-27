@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8406145B16;
-	Tue, 27 Feb 2024 13:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D581154FA5;
+	Tue, 27 Feb 2024 13:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040516; cv=none; b=f0w4O3q69oM0m2cE37R0fVMPlM0IWTijxfe/ffpJhAuMqrg0FoaUELskho4HqVu3BirFA21cP3cr5Tg3cK3pXtRgFHRm3jJkqzDu9beK/GwEI55WdwqkrFcCiQ0nN5uDQMfMeL0J043ZOlCDox8IIM/vIv3PRSit39yBoTKYvHU=
+	t=1709040520; cv=none; b=ARGYVAVNVI268o7prRcyc+Xziqfl7Lh0g/+yWPLdwA9wHcaixVmM8kMFGIxs4k+rURq/a2P83Sl/j6I/U5UTXzmH0ha6yG4odXz0vLukuHqli3nVNNFt3qmqoGT6rhf3VJC9hLZhXJ9oUwE7z3DxSaeg9vST6cOLG24eReNzibI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040516; c=relaxed/simple;
-	bh=AXEp09qZI8koJNWjV4qV+1ke9w4NKJJP9UkTuQriv0s=;
+	s=arc-20240116; t=1709040520; c=relaxed/simple;
+	bh=OEThjFOOV3/8joT3Eq1fwIZx8NubJjo6kBByAbfjJXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sZuV+K8bi8VPKmuaRUJrV44pEfb/N0sqc7fBmUylWQeM6Ge+5O7jQNKVJ9eQBl3RG7EtySAK4CAxLlh8WcRaNeqakwaDAgjxK0jsQLnQahoPPzKoL/fw2gfkdfnQ+fJWxDauUhWXGMiJxsUojIBzZN7W8Do0rkPbq3NFdZvAf7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IW9v6LJM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ye3yLcDjr1lVKTihHmOw99T5Dk963xk54Fm8KAdnVEstJkZ63yUFDtT4KJz044Tc0DyvhYnaQVU30270iUEfzPcBJ2jS7nBiR+Ti90Chib14PhvlMVDcwxYlRIBEBu44i0fPWfNSHxo9Ho/vCp2zLEYTZcbGwtKbuZR4g6+TbaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaGMRkmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IW9v6LJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D59C433F1;
-	Tue, 27 Feb 2024 13:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaGMRkmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11633C433F1;
+	Tue, 27 Feb 2024 13:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040516;
-	bh=AXEp09qZI8koJNWjV4qV+1ke9w4NKJJP9UkTuQriv0s=;
+	s=korg; t=1709040519;
+	bh=OEThjFOOV3/8joT3Eq1fwIZx8NubJjo6kBByAbfjJXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IW9v6LJMgAbiQfuKilkeGVyDX9xQ5OB8twCVhpmAqVBnVlWUPZ6fIUwfFqsTYDoMn
-	 1Lzuj0rlhk7z1eXtfXYhgQNICyqP4ZFakWvGpJ/3kLKEJ7Z2znRvgc7sb8X4uknjEc
-	 MM41egX/CTLUVdFKX3WMbH7wsV83DRxC1YZBQXjA=
+	b=UaGMRkmmQSEmOsgJyN2hTKtK9vA9XUc+UGgev5x8KQPutHiKcqhmkxgLJ2Pr5RJkF
+	 A13p/8sABxkrSu6eT2Rv0LZ+KslzNIoIZwSIPB4CNUusPIbgeOMXh9CRD+iFlZ5iv2
+	 gkaL9XVjDXvqqlligTA8mzMsqCm1WLoGFCUg4QDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Koul <vkoul@kernel.org>,
+	Michal Kazior <michal@plume.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 013/334] dmaengine: dw-edma: increase size of name in debugfs code
-Date: Tue, 27 Feb 2024 14:17:51 +0100
-Message-ID: <20240227131631.052446487@linuxfoundation.org>
+Subject: [PATCH 6.7 014/334] wifi: cfg80211: fix missing interfaces when dumping
+Date: Tue, 27 Feb 2024 14:17:52 +0100
+Message-ID: <20240227131631.082460356@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -44,85 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vinod Koul <vkoul@kernel.org>
+From: Michal Kazior <michal@plume.com>
 
-[ Upstream commit cb95a4fa50bbc1262bfb7fea482388a50b12948f ]
+[ Upstream commit a6e4f85d3820d00694ed10f581f4c650445dbcda ]
 
-We seem to have hit warnings of 'output may be truncated' which is fixed
-by increasing the size of 'name'
+The nl80211_dump_interface() supports resumption
+in case nl80211_send_iface() doesn't have the
+resources to complete its work.
 
-drivers/dma/dw-edma/dw-hdma-v0-debugfs.c: In function ‘dw_hdma_v0_debugfs_on’:
-drivers/dma/dw-edma/dw-hdma-v0-debugfs.c:125:50: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 8 [-Werror=format-truncation=]
-  125 |                 snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
-      |                                                  ^~
+The logic would store the progress as iteration
+offsets for rdev and wdev loops.
 
-drivers/dma/dw-edma/dw-hdma-v0-debugfs.c: In function ‘dw_hdma_v0_debugfs_on’:
-drivers/dma/dw-edma/dw-hdma-v0-debugfs.c:142:50: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 8 [-Werror=format-truncation=]
-  142 |                 snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
-      |                                                  ^~
-drivers/dma/dw-edma/dw-edma-v0-debugfs.c: In function ‘dw_edma_debugfs_regs_wr’:
-drivers/dma/dw-edma/dw-edma-v0-debugfs.c:193:50: error: ‘%d’ directive output may be truncated writing between 1 and 11 bytes into a region of size 8 [-Werror=format-truncation=]
-  193 |                 snprintf(name, sizeof(name), "%s:%d", CHANNEL_STR, i);
-      |                                                  ^~
+However the logic did not properly handle
+resumption for non-last rdev. Assuming a system
+with 2 rdevs, with 2 wdevs each, this could
+happen:
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+ dump(cb=[0, 0]):
+  if_start=cb[1] (=0)
+  send rdev0.wdev0 -> ok
+  send rdev0.wdev1 -> yield
+  cb[1] = 1
+
+ dump(cb=[0, 1]):
+  if_start=cb[1] (=1)
+  send rdev0.wdev1 -> ok
+  // since if_start=1 the rdev0.wdev0 got skipped
+  // through if_idx < if_start
+  send rdev1.wdev1 -> ok
+
+The if_start needs to be reset back to 0 upon wdev
+loop end.
+
+The problem is actually hard to hit on a desktop,
+and even on most routers. The prerequisites for
+this manifesting was:
+ - more than 1 wiphy
+ - a few handful of interfaces
+ - dump without rdev or wdev filter
+
+I was seeing this with 4 wiphys 9 interfaces each.
+It'd miss 6 interfaces from the last wiphy
+reported to userspace.
+
+Signed-off-by: Michal Kazior <michal@plume.com>
+Link: https://msgid.link/20240116142340.89678-1-kazikcz@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-v0-debugfs.c | 4 ++--
- drivers/dma/dw-edma/dw-hdma-v0-debugfs.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/wireless/nl80211.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-index 0745d9e7d259b..406f169b09a75 100644
---- a/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-edma-v0-debugfs.c
-@@ -176,7 +176,7 @@ dw_edma_debugfs_regs_wr(struct dw_edma *dw, struct dentry *dent)
- 	};
- 	struct dentry *regs_dent, *ch_dent;
- 	int nr_entries, i;
--	char name[16];
-+	char name[32];
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 1cbbb11ea5033..fbf95b7ff6b43 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -4008,6 +4008,7 @@ static int nl80211_dump_interface(struct sk_buff *skb, struct netlink_callback *
+ 		}
+ 		wiphy_unlock(&rdev->wiphy);
  
- 	regs_dent = debugfs_create_dir(WRITE_STR, dent);
- 
-@@ -239,7 +239,7 @@ static noinline_for_stack void dw_edma_debugfs_regs_rd(struct dw_edma *dw,
- 	};
- 	struct dentry *regs_dent, *ch_dent;
- 	int nr_entries, i;
--	char name[16];
-+	char name[32];
- 
- 	regs_dent = debugfs_create_dir(READ_STR, dent);
- 
-diff --git a/drivers/dma/dw-edma/dw-hdma-v0-debugfs.c b/drivers/dma/dw-edma/dw-hdma-v0-debugfs.c
-index 520c81978b085..dcdc57fe976c1 100644
---- a/drivers/dma/dw-edma/dw-hdma-v0-debugfs.c
-+++ b/drivers/dma/dw-edma/dw-hdma-v0-debugfs.c
-@@ -116,7 +116,7 @@ static void dw_hdma_debugfs_regs_ch(struct dw_edma *dw, enum dw_edma_dir dir,
- static void dw_hdma_debugfs_regs_wr(struct dw_edma *dw, struct dentry *dent)
- {
- 	struct dentry *regs_dent, *ch_dent;
--	char name[16];
-+	char name[32];
- 	int i;
- 
- 	regs_dent = debugfs_create_dir(WRITE_STR, dent);
-@@ -133,7 +133,7 @@ static void dw_hdma_debugfs_regs_wr(struct dw_edma *dw, struct dentry *dent)
- static void dw_hdma_debugfs_regs_rd(struct dw_edma *dw, struct dentry *dent)
- {
- 	struct dentry *regs_dent, *ch_dent;
--	char name[16];
-+	char name[32];
- 	int i;
- 
- 	regs_dent = debugfs_create_dir(READ_STR, dent);
++		if_start = 0;
+ 		wp_idx++;
+ 	}
+  out:
 -- 
 2.43.0
 
