@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826EC78B61;
-	Tue, 27 Feb 2024 13:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459AB13B2A2;
+	Tue, 27 Feb 2024 13:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041132; cv=none; b=MaFqew++QgWmYkiCcsuBtIrMSxVIoOGJv6DikBSK3BunWA8S4mWF2txJ98C0Dc08p7YlWvq1B4McD5ZJy56OGRV2XEhEjTK8iKCNKfRHs59UaBvjgpAjoCCr6WJFZvAdNa9mlv0GZDhpc4LXRGw6S3R6j/Vq+eZ7QBF0wgJAU2c=
+	t=1709041135; cv=none; b=Jg0jPAU+WktDAAZ7yEcFDYm96aq1LiskxSG9LVPlf1Zlb6jp+9LiJCcOR+m8K0CMK0aWbuAqFTwwIXDblaHU6DWJ2VTqwxxuCoTy0vsIDE1zgv6y6d9yXWzFUFB/OgBiW0cwjWAtIRnbBCEoAz+nzresaiLodwv5wVMCdHv/4uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041132; c=relaxed/simple;
-	bh=3kv5iGh7VeNF1fX1gZarobEV7x/dm8+krnPdExuy8I0=;
+	s=arc-20240116; t=1709041135; c=relaxed/simple;
+	bh=6yfWwYH3UAoqopO5roxj/tzNQZckz6CV8UxQBC/3ay0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpK72396OVax9xqwYqCJzGd6CphMwk9EDpDt/TUI1lDJd0wJUPlaSqXBOvbPKC3wlGTRdkI/aowB5f6a2VIE2IUuibpQ+eehwnxbWBqIiDGyCsedk8ceOIY6vYVMNXFESBARV9nRrkENuMJKEvZohKSm71+TuZhtE+g6lI+WtaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSNM36bt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gRB+nrO1tmd7RUkF6BKcDZIQuGexpvCuBZ7z72zY8+ttIKjOFh5qUTfOLeK2yp7ykiFtZzwC5BAiOmhajOIlzBLAOppU6IOT6ynGSjRcgKVGVU1Y0DbZxfpNRHvVG+6LHN/jeupOAsMWWV/jWyPsPSOOKXFJR0E/97ROo/yx6nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tc8fYexy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSNM36bt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0800EC433F1;
-	Tue, 27 Feb 2024 13:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tc8fYexy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36EEC43390;
+	Tue, 27 Feb 2024 13:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041132;
-	bh=3kv5iGh7VeNF1fX1gZarobEV7x/dm8+krnPdExuy8I0=;
+	s=korg; t=1709041135;
+	bh=6yfWwYH3UAoqopO5roxj/tzNQZckz6CV8UxQBC/3ay0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSNM36btnvAM7ToS5iPd7o5FWP9cIV/46EhVLYiRnUWU2C9y0wx9rGhQu1BDsGeu8
-	 Lzxuztf5luAaYnq5AuZbiGyYc1QJ7O20SvV8W0iioDjr5nDBx/JQaVzJoqd0FieC4j
-	 x8ia97xanQTqdiOv/3WyY4fRix7xrYfwwRlh5rPc=
+	b=Tc8fYexyIsV+tREuJFAosr9saBMr56UI06hIanZEqDqtV8zzrAa9mWrViThxvTYxJ
+	 VUvyXA+4LAK6PwRrwNVoLij3XIU7yYkZy/vzhGGbbnzn3dgGIV7aO5mt4sAJO8Qba8
+	 s5edzpMTF1c1D1+H5rTyEg5BMXnoNYHZfs7IDYmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Sohaib Nadeem <sohaib.nadeem@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.7 231/334] Revert "drm/amd/display: increased min_dcfclk_mhz and min_fclk_mhz"
-Date: Tue, 27 Feb 2024 14:21:29 +0100
-Message-ID: <20240227131638.275835594@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.7 232/334] IB/hfi1: Fix a memleak in init_credit_return
+Date: Tue, 27 Feb 2024 14:21:30 +0100
+Message-ID: <20240227131638.315878183@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -54,38 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sohaib Nadeem <sohaib.nadeem@amd.com>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit a538dabf772c169641e151834e161e241802ab33 upstream.
+[ Upstream commit 809aa64ebff51eb170ee31a95f83b2d21efa32e2 ]
 
-[why]:
-This reverts commit 2ff33c759a4247c84ec0b7815f1f223e155ba82a.
+When dma_alloc_coherent fails to allocate dd->cr_base[i].va,
+init_credit_return should deallocate dd->cr_base and
+dd->cr_base[i] that allocated before. Or those resources
+would be never freed and a memleak is triggered.
 
-The commit caused corruption when running some applications in fullscreen
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Sohaib Nadeem <sohaib.nadeem@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Link: https://lore.kernel.org/r/20240112085523.3731720-1-alexious@zju.edu.cn
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/pio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -2719,7 +2719,7 @@ static int build_synthetic_soc_states(bo
- 	struct _vcs_dpi_voltage_scaling_st entry = {0};
- 	struct clk_limit_table_entry max_clk_data = {0};
+diff --git a/drivers/infiniband/hw/hfi1/pio.c b/drivers/infiniband/hw/hfi1/pio.c
+index 68c621ff59d03..5a91cbda4aee6 100644
+--- a/drivers/infiniband/hw/hfi1/pio.c
++++ b/drivers/infiniband/hw/hfi1/pio.c
+@@ -2086,7 +2086,7 @@ int init_credit_return(struct hfi1_devdata *dd)
+ 				   "Unable to allocate credit return DMA range for NUMA %d\n",
+ 				   i);
+ 			ret = -ENOMEM;
+-			goto done;
++			goto free_cr_base;
+ 		}
+ 	}
+ 	set_dev_node(&dd->pcidev->dev, dd->node);
+@@ -2094,6 +2094,10 @@ int init_credit_return(struct hfi1_devdata *dd)
+ 	ret = 0;
+ done:
+ 	return ret;
++
++free_cr_base:
++	free_credit_return(dd);
++	goto done;
+ }
  
--	unsigned int min_dcfclk_mhz = 399, min_fclk_mhz = 599;
-+	unsigned int min_dcfclk_mhz = 199, min_fclk_mhz = 299;
- 
- 	static const unsigned int num_dcfclk_stas = 5;
- 	unsigned int dcfclk_sta_targets[DC__VOLTAGE_STATES] = {199, 615, 906, 1324, 1564};
+ void free_credit_return(struct hfi1_devdata *dd)
+-- 
+2.43.0
+
 
 
