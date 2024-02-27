@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E526213B2B4;
-	Tue, 27 Feb 2024 13:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF7E13B295;
+	Tue, 27 Feb 2024 13:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042172; cv=none; b=pYK9Kqp2AOo0ZcPS2buaD2DNFJDe89/jacAj1p+LDBkdxAH0oSCvyH0YPGvLqdi8e6ZUVLNHhzsXve2fLkdfSJaM5ukaZIY7dpineNOL/ZxRXaVeMJOTSAkROczKdgtIkeXcmXxrW1f5A0t3VCDm10u5B6KryJCR9k0vsXMGeUg=
+	t=1709042174; cv=none; b=Mkp/WSn3/0BQmkuIaAxeFwDYlQOrEk+6HDb8Yhz2lj+bbH4T2bcWbsjIUrp3lH0xFWs4jD3PTSAAQZV10R7c7sXC1zWeFEjhqs6dWG74eJCXaNULLa8kpMgLq1xhXS4oycbRl06NTy62OQKh3gj11ZPoe6SXPQwPj8UBXwG1CaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042172; c=relaxed/simple;
-	bh=roZAzdq8cRzhbV+otnUg4dKB05PAtS564QeSUWiqTZ8=;
+	s=arc-20240116; t=1709042174; c=relaxed/simple;
+	bh=nvf1nPv0uMi7Eq3liR9NMyuQFq7soEhQc8YrpQ6F+lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A//aliZRq6z/M0FUrXyPAEjzfdG87c+d4vBv0g4EWKDb93ek8arLcCck1ehmYFJ0ubUU9bCe0+73la/QV9YVgus4mLF5j4QTesRs8OPcd0xo6ZXUC5jOCxTGM3a8DHjbkms5/7biTeLs3lIiI6kQYWwxdyEei95et+cFJVbxzOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWw2Tq2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D60DP+PvFmC0ys7P+Q7t4wjjh2WYAMKVVWwCu8n1liJLMALyjuISTDmUkf1vX8NIft020DiCMVUnMfk2NdvWaqljr0xgNArSAEuiI7ku6POdOIBRMRkbmolRCQAPsPcxlWD1edL9gYQWL+5g4uHdXQU1T4brv1mjVa0qJALOeA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Se+cpdaM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWw2Tq2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5D8C433F1;
-	Tue, 27 Feb 2024 13:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Se+cpdaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B329BC433F1;
+	Tue, 27 Feb 2024 13:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042171;
-	bh=roZAzdq8cRzhbV+otnUg4dKB05PAtS564QeSUWiqTZ8=;
+	s=korg; t=1709042174;
+	bh=nvf1nPv0uMi7Eq3liR9NMyuQFq7soEhQc8YrpQ6F+lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWw2Tq2IZGe8V901dpfG5Nkdf7V7LQFscO1HmTSG376zqk6+RGvota4R9W35f5rfJ
-	 x57DoovPIU+LaQ8hqDetIvl1IB1UrP42kAika/Z77kN1IyQdJRQSMv3NElRU8OziXA
-	 Clvs6alG1OV9JVOdTJYLjpSy7fkF8+gdC0XT56M4=
+	b=Se+cpdaMhYcVY20dC30Vr9EFyUOalGdcGBcMXlpERQAiU1g/nSPTUmlO7SKJU0iS8
+	 5wkaErr+7O8dt5pU7Xc/HrmSm1G5h1CiBdof39JSogLnn+PvC3xLNHIdLTbUf6/dn0
+	 4glJxN3RW2zLY4jGK6svruUK2JNGqdfrsr5j46Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 204/299] selftests: mptcp: diag: unique cestab subtest names
-Date: Tue, 27 Feb 2024 14:25:15 +0100
-Message-ID: <20240227131632.370327473@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 205/299] smb3: add missing null server pointer check
+Date: Tue, 27 Feb 2024 14:25:16 +0100
+Message-ID: <20240227131632.400186504@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,92 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Steve French <stfrench@microsoft.com>
 
-commit 4103d8480866fe5abb71ef0ed8af3a3b7b9625bf upstream.
+commit 45be0882c5f91e1b92e645001dd1a53b3bd58c97 upstream.
 
-It is important to have a unique (sub)test name in TAP, because some CI
-environments drop tests with duplicated name.
+Address static checker warning in cifs_ses_get_chan_index():
+    warn: variable dereferenced before check 'server'
+To be consistent, and reduce risk, we should add another check
+for null server pointer.
 
-Some 'cestab' subtests from the diag selftest had the same names, e.g.:
-
-    ....chk 0 cestab
-
-Now the previous value is taken, to have different names, e.g.:
-
-    ....chk 2->0 cestab after flush
-
-While at it, the 'after flush' info is added, similar to what is done
-with the 'in use' subtests. Also inspired by these 'in use' subtests,
-'many' is displayed instead of a large number:
-
-    many msk socket present                           [  ok  ]
-    ....chk many msk in use                           [  ok  ]
-    ....chk many cestab                               [  ok  ]
-    ....chk many->0 msk in use after flush            [  ok  ]
-    ....chk many->0 cestab after flush                [  ok  ]
-
-Fixes: 81ab772819da ("selftests: mptcp: diag: check CURRESTAB counters")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 88675b22d34e ("cifs: do not search for channel if server is terminating")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/diag.sh |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ fs/smb/client/sess.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/diag.sh
-+++ b/tools/testing/selftests/net/mptcp/diag.sh
-@@ -206,10 +206,15 @@ wait_local_port_listen()
- # $1: cestab nr
- chk_msk_cestab()
- {
--	local cestab=$1
-+	local expected=$1
-+	local msg="....chk ${2:-${expected}} cestab"
-+
-+	if [ "${expected}" -eq 0 ]; then
-+		msg+=" after flush"
-+	fi
+--- a/fs/smb/client/sess.c
++++ b/fs/smb/client/sess.c
+@@ -76,7 +76,7 @@ cifs_ses_get_chan_index(struct cifs_ses
+ 	unsigned int i;
  
- 	__chk_nr "mptcp_lib_get_counter ${ns} MPTcpExtMPCurrEstab" \
--		 "${cestab}" "....chk ${cestab} cestab" ""
-+		 "${expected}" "${msg}" ""
- }
+ 	/* if the channel is waiting for termination */
+-	if (server->terminate)
++	if (server && server->terminate)
+ 		return CIFS_INVAL_CHAN_INDEX;
  
- wait_connected()
-@@ -253,7 +258,7 @@ chk_msk_cestab 2
- flush_pids
- 
- chk_msk_inuse 0 "2->0"
--chk_msk_cestab 0
-+chk_msk_cestab 0 "2->0"
- 
- echo "a" | \
- 	timeout ${timeout_test} \
-@@ -273,7 +278,7 @@ chk_msk_cestab 1
- flush_pids
- 
- chk_msk_inuse 0 "1->0"
--chk_msk_cestab 0
-+chk_msk_cestab 0 "1->0"
- 
- NR_CLIENTS=100
- for I in `seq 1 $NR_CLIENTS`; do
-@@ -295,11 +300,11 @@ done
- 
- wait_msk_nr $((NR_CLIENTS*2)) "many msk socket present"
- chk_msk_inuse $((NR_CLIENTS*2)) "many"
--chk_msk_cestab $((NR_CLIENTS*2))
-+chk_msk_cestab $((NR_CLIENTS*2)) "many"
- flush_pids
- 
- chk_msk_inuse 0 "many->0"
--chk_msk_cestab 0
-+chk_msk_cestab 0 "many->0"
- 
- mptcp_lib_result_print_all_tap
- exit $ret
+ 	for (i = 0; i < ses->chan_count; i++) {
 
 
