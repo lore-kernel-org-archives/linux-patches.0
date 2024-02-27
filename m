@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A40E13B2B4;
-	Tue, 27 Feb 2024 14:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B461419A0;
+	Tue, 27 Feb 2024 14:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043796; cv=none; b=IA3wstrzRzo6bqH9i2iUqDzPnYbDkOlNx2OVTtByz3UYATTLG+Pi7/QQtG0qtgGQ/Hn5IF9mA4FA4C87/AoBBUmOQJswzE6h3OVM3Wr0dH0U547GbqkDacwSFU4uoeL+V+EffU0pWjWuM0TFqUvKSFYLmKZM7oOc9CTkOYEIeLs=
+	t=1709043799; cv=none; b=cRdYoi9ZJgnObNfsPy3nBIE5RO4QKk3P+W66HO+xf7P0pm7Si+9rOwppCHTAfLs6qHmsVU/JGa1b/U12SdAWp3+OV1FuYYZh9CJJD+SIKEPVHKvRHEdCa8UkU1MQ56G5gZMvrcJfeMmpEFrlk6JnbnEP/myAW7jTq7zObR93ltM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043796; c=relaxed/simple;
-	bh=0pFJ21Iz9XeGQTgFJd77rbQWY4E/LP/+3m2LI/zaxAs=;
+	s=arc-20240116; t=1709043799; c=relaxed/simple;
+	bh=f7TsVGPoT+63nwD1sxpv7irgCyhzYpaLC9x6WGtpIlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbO6DDysx9h/zcbpNJ+qCUc9krz9EQ1bR8XcrYUEY1f+Y0qJiVm77YxIeIPPEnjl2MBIje/pC6Dre66xCkEJQY6kM2jL+O/2pkw4yL9QoLe3+0AsWxHu5+veX/lP9tDHfgXrpXuDmmU1KicvlouHsVMs+p1DhZH0z/PYgHX8ve8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbLeHL31; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JorTySmnWpikddH4IWq2wKQZs4mY6nCNu5XSco+NS55w4mheGM1071Q4YWYeuGiNqLptETyCyletwhaZpuTl9Bc0SUio3N1xqjFjtlEiL4HpAZtESzXwWFOqOS66zAUDPwyEOuXr4Dz9jFqEr9yqPE4egtHO4miesiEsvcppYMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bo0+7wbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbLeHL31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B43DC433F1;
-	Tue, 27 Feb 2024 14:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bo0+7wbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4972C433F1;
+	Tue, 27 Feb 2024 14:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043796;
-	bh=0pFJ21Iz9XeGQTgFJd77rbQWY4E/LP/+3m2LI/zaxAs=;
+	s=korg; t=1709043799;
+	bh=f7TsVGPoT+63nwD1sxpv7irgCyhzYpaLC9x6WGtpIlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbLeHL31RnImD2Sxu0QOb/2il+jPElpUzur7QmkyXdxAp7ruJ9WedCsc518Tal8SL
-	 mh5epLbkCbnYi6adF6axnt1e3Jlg2ihu62mWmqke+UrtZccv0+6QJjW4F3xgXCvuc2
-	 4Lmq2WA7iCLbVXF2qMkbXepBbTv+KBT7lK999X3o=
+	b=bo0+7wbx/nv+nSmRXjsKczYiCy+PLnL4Em69A3+sKCOcAEjBiDeoVefURxNcDEG9k
+	 U1sulF0i8w99WzV7QyeXhvJU1EJLCNBJ+QgYbSbP9+TYgHQ1RuGOR14ipYfvetX4SP
+	 3i0dwDkOm0G4nFrIiyKWfF4+0dFwZuKOEL/0/exs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 38/84] pinctrl: rockchip: Fix refcount leak in rockchip_pinctrl_parse_groups
-Date: Tue, 27 Feb 2024 14:27:05 +0100
-Message-ID: <20240227131554.112437447@linuxfoundation.org>
+Subject: [PATCH 5.4 12/84] scsi: target: core: Add TMF to tmr_list handling
+Date: Tue, 27 Feb 2024 14:26:39 +0100
+Message-ID: <20240227131553.272081026@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -51,35 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-[ Upstream commit c818ae563bf99457f02e8170aabd6b174f629f65 ]
+[ Upstream commit 83ab68168a3d990d5ff39ab030ad5754cbbccb25 ]
 
-of_find_node_by_phandle() returns a node pointer with refcount incremented,
-We should use of_node_put() on it when not needed anymore.
-Add missing of_node_put() to avoid refcount leak.
+An abort that is responded to by iSCSI itself is added to tmr_list but does
+not go to target core. A LUN_RESET that goes through tmr_list takes a
+refcounter on the abort and waits for completion. However, the abort will
+be never complete because it was not started in target core.
 
-Fixes: d3e5116119bd ("pinctrl: add pinctrl driver for Rockchip SoCs")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20230102112845.3982407-1-linmq006@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+ Unable to locate ITT: 0x05000000 on CID: 0
+ Unable to locate RefTaskTag: 0x05000000 on CID: 0.
+ wait_for_tasks: Stopping tmf LUN_RESET with tag 0x0 ref_task_tag 0x0 i_state 34 t_state ISTATE_PROCESSING refcnt 2 transport_state active,stop,fabric_stop
+ wait for tasks: tmf LUN_RESET with tag 0x0 ref_task_tag 0x0 i_state 34 t_state ISTATE_PROCESSING refcnt 2 transport_state active,stop,fabric_stop
+...
+ INFO: task kworker/0:2:49 blocked for more than 491 seconds.
+ task:kworker/0:2     state:D stack:    0 pid:   49 ppid:     2 flags:0x00000800
+ Workqueue: events target_tmr_work [target_core_mod]
+Call Trace:
+ __switch_to+0x2c4/0x470
+ _schedule+0x314/0x1730
+ schedule+0x64/0x130
+ schedule_timeout+0x168/0x430
+ wait_for_completion+0x140/0x270
+ target_put_cmd_and_wait+0x64/0xb0 [target_core_mod]
+ core_tmr_lun_reset+0x30/0xa0 [target_core_mod]
+ target_tmr_work+0xc8/0x1b0 [target_core_mod]
+ process_one_work+0x2d4/0x5d0
+ worker_thread+0x78/0x6c0
+
+To fix this, only add abort to tmr_list if it will be handled by target
+core.
+
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://lore.kernel.org/r/20240111125941.8688-1-d.bogdanov@yadro.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/target/target_core_device.c    | 5 -----
+ drivers/target/target_core_transport.c | 4 ++++
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index a44c2680c4230..9388d6fac7d40 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -2536,6 +2536,7 @@ static int rockchip_pinctrl_parse_groups(struct device_node *np,
- 		np_config = of_find_node_by_phandle(be32_to_cpup(phandle));
- 		ret = pinconf_generic_parse_dt_config(np_config, NULL,
- 				&grp->data[j].configs, &grp->data[j].nconfigs);
-+		of_node_put(np_config);
- 		if (ret)
- 			return ret;
- 	}
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 8ba134ccd3b9c..edddc66ad1337 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -151,7 +151,6 @@ int transport_lookup_tmr_lun(struct se_cmd *se_cmd, u64 unpacked_lun)
+ 	struct se_session *se_sess = se_cmd->se_sess;
+ 	struct se_node_acl *nacl = se_sess->se_node_acl;
+ 	struct se_tmr_req *se_tmr = se_cmd->se_tmr_req;
+-	unsigned long flags;
+ 
+ 	rcu_read_lock();
+ 	deve = target_nacl_find_deve(nacl, unpacked_lun);
+@@ -182,10 +181,6 @@ int transport_lookup_tmr_lun(struct se_cmd *se_cmd, u64 unpacked_lun)
+ 	se_cmd->se_dev = rcu_dereference_raw(se_lun->lun_se_dev);
+ 	se_tmr->tmr_dev = rcu_dereference_raw(se_lun->lun_se_dev);
+ 
+-	spin_lock_irqsave(&se_tmr->tmr_dev->se_tmr_lock, flags);
+-	list_add_tail(&se_tmr->tmr_list, &se_tmr->tmr_dev->dev_tmr_list);
+-	spin_unlock_irqrestore(&se_tmr->tmr_dev->se_tmr_lock, flags);
+-
+ 	return 0;
+ }
+ EXPORT_SYMBOL(transport_lookup_tmr_lun);
+diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
+index f52fe40002259..82d9e2659abe3 100644
+--- a/drivers/target/target_core_transport.c
++++ b/drivers/target/target_core_transport.c
+@@ -3392,6 +3392,10 @@ int transport_generic_handle_tmr(
+ 	unsigned long flags;
+ 	bool aborted = false;
+ 
++	spin_lock_irqsave(&cmd->se_dev->se_tmr_lock, flags);
++	list_add_tail(&cmd->se_tmr_req->tmr_list, &cmd->se_dev->dev_tmr_list);
++	spin_unlock_irqrestore(&cmd->se_dev->se_tmr_lock, flags);
++
+ 	spin_lock_irqsave(&cmd->t_state_lock, flags);
+ 	if (cmd->transport_state & CMD_T_ABORTED) {
+ 		aborted = true;
 -- 
 2.43.0
 
