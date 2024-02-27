@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2CF2F2D;
-	Tue, 27 Feb 2024 13:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750FA13B2BF;
+	Tue, 27 Feb 2024 13:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040755; cv=none; b=OuJPsJW2xiT71KFv+pWHgTT1Jp5v12Rh98upWzF2z0YFXOZQsBRrpxNRJyiDy+1KUWuxZkUZ9ZupBxkOvrl2z+jg8w45XfJrKsdoP+pGDVCVA8r88okk5MtTsGOWg0I37yTQDiXkkwZdqQvFtTR36kw0IxBrew/M0aYzZeXka7w=
+	t=1709040758; cv=none; b=rDlk5St3eTn7f7JZ4hjD+ECKLo+5VLshXvrfBFRh3VIA/l2U4wKNihiGki5D2uN/g/Vmq8hl/EakLu2krTUI436tOWZaA3HyP4h2GlsyB7kCJ7kELXO88XL3mZnBPnrG3CBbI/NUnrBaNLJJC1gGVSXwf9r/f0OAaQbcwSpUsv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040755; c=relaxed/simple;
-	bh=HHNYB9a6EMdBmGwNYkJFBWmORDufhb3yYXokrb98Vuo=;
+	s=arc-20240116; t=1709040758; c=relaxed/simple;
+	bh=+eMpxwge0fvk2wC0K724+pG7GV5mUfTC9v8Tf89iUYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVu1LAdqK5ojFJafnwP9IYn5+PKWxHNKxGbirrDbEgsscP110vsTVl1FlT4nG5WrZ+gIe5xc6zVr/hKLAFPzr5+zNLsl/MMrXWChQ2vWYjlofLujSW2r4FTGGfWkUKIjc4Y+nqUzfcxvzMFRqUWKgNGfVC62GKjnH5KY1PHeZRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQ+/QmVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClBM7ESzVDsxQuSv+yCyHpXlRo8TQQIELfgenWP6f+1iBH0hOzEt/mMCad9dX61PEtmEgIO1UEyRp5GSa7OZDgZSvI156PesoP6O7NsjzXB3R9bA+J3eTuRym7ISLF5cbeXg5nH4uelS4eY2JuXtTiwFyuL+His4dC1dR48x4Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4WKwjg7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQ+/QmVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEB7C433F1;
-	Tue, 27 Feb 2024 13:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4WKwjg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3765C433C7;
+	Tue, 27 Feb 2024 13:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040755;
-	bh=HHNYB9a6EMdBmGwNYkJFBWmORDufhb3yYXokrb98Vuo=;
+	s=korg; t=1709040758;
+	bh=+eMpxwge0fvk2wC0K724+pG7GV5mUfTC9v8Tf89iUYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQ+/QmVdz5ykRbXHZwU8iatvsGaD+EhNZ86YRThxV+V7dhzYYr7SGbFARcuTPTkTk
-	 c0XG0YYJfIGNnZrmdMB8/tN9YgOXgXJGCD9lr2Z2BaDQN76SXeYPSJqauDeEp0FiG7
-	 e7CxbK/+U7usvs9+1v0RB/sXVlNq0x46fVkrDXwA=
+	b=n4WKwjg7JW37i/Ify6+ODfzQfVZXLCY0AROTeA61SqVrLjLY8YSPGw2fvYTkCZ+JM
+	 D/xvL+8ThIFxPIwO9WjIt2LOm7JsI4TNy/uJX6fdtwGwSq9YbTc2WloTbVHpiaYdgy
+	 GGW9YaMCzWJOsFR80STkg+NY7kK+CQQDNZVWRIRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Santini <giovannisantini93@yahoo.it>,
+	Edward Adam Davis <eadavis@qq.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 099/334] fs/ntfs3: Update inode->i_size after success write into compressed file
-Date: Tue, 27 Feb 2024 14:19:17 +0100
-Message-ID: <20240227131633.694044714@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+65e940cfb8f99a97aca7@syzkaller.appspotmail.com
+Subject: [PATCH 6.7 100/334] fs/ntfs3: Fix oob in ntfs_listxattr
+Date: Tue, 27 Feb 2024 14:19:18 +0100
+Message-ID: <20240227131633.724357511@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -51,30 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit d68968440b1a75dee05cfac7f368f1aa139e1911 ]
+[ Upstream commit 731ab1f9828800df871c5a7ab9ffe965317d3f15 ]
 
-Reported-by: Giovanni Santini <giovannisantini93@yahoo.it>
+The length of name cannot exceed the space occupied by ea.
+
+Reported-and-tested-by: syzbot+65e940cfb8f99a97aca7@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ntfs3/xattr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index b702543a87953..691b0c9b95ae7 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -1054,6 +1054,8 @@ static ssize_t ntfs_compress_write(struct kiocb *iocb, struct iov_iter *from)
- 	iocb->ki_pos += written;
- 	if (iocb->ki_pos > ni->i_valid)
- 		ni->i_valid = iocb->ki_pos;
-+	if (iocb->ki_pos > i_size)
-+		i_size_write(inode, iocb->ki_pos);
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index 071356d096d83..53e7d1fa036aa 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -219,6 +219,9 @@ static ssize_t ntfs_list_ea(struct ntfs_inode *ni, char *buffer,
+ 		if (!ea->name_len)
+ 			break;
  
- 	return written;
- }
++		if (ea->name_len > ea_size)
++			break;
++
+ 		if (buffer) {
+ 			/* Check if we can use field ea->name */
+ 			if (off + ea_size > size)
 -- 
 2.43.0
 
