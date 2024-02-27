@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F7F13AA55;
-	Tue, 27 Feb 2024 13:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9F613AA55;
+	Tue, 27 Feb 2024 13:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041330; cv=none; b=YSJdsfGxoSEE6X351BeENrOjvu3qReQ0ZsVIdVxeNrtQ+3M99oACI1PZTNnbOs9mp53I3L4cZrYBGRvbaZ/mqPCeZh8xcfQ4fu3EhQR6Uyi3egLjkYxBr/ejByQtuUGDEzqUt5cIIWNSadyOBMxGOOtQ0niR4lWkIapbJi9ziL8=
+	t=1709041333; cv=none; b=lMt/uwsr231FZbkwubv6qfXsgvaafBaT80Ew1AeHgQci3gBs5x+TapET7SGdYcGVRdqfwgq+45f2fxWgAGjW67YTU8AFCzXKCljlsudpc9Qm2q0PKy2kPqBnLEGyDkyVSvWMuPnPbVi6DQUibs5krgkKPXlpLbqSsm+rm0/01cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041330; c=relaxed/simple;
-	bh=9UwR1hrATnc+XP4vkwJmEXWu8r+1ay0r8zivhAOYfPA=;
+	s=arc-20240116; t=1709041333; c=relaxed/simple;
+	bh=58N6M4pVAHRm6QWnQyixNUZoL908JiRGLkXbKZ5Kxf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kysmbA1RdJ76PBt3DqN4rh2G9HgCWWaM8SL5PAYj5nV8PvWKVZcF9SsPir2Lx6cCL2uuM3z5BV6+eyBB9ksn6FrpD1pHSwoVQnJrkXVTvC4Y0XvKAuP84zXFU8sY4av7fN/7AQcwizPSBaH1NMRIPUhn6fXj85EGd4j/bQcq5F4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm17icxE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sXx6XhxRKqncH4vwNfWTfFm58glH/EaofOipvmFkAzvaHDfWhbfu/zcIE4AVcSndVPQPnLxzJzg6/HpvXKAw6MyaqQ683I6KV9hfyagqkjyz1yf1506pyNHzN+kM16ESAjQIp/QSN84ywiRsEHGlA+huKk1ZyvGvCb+8j1vPE3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fe0rmakY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm17icxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAE3C433F1;
-	Tue, 27 Feb 2024 13:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fe0rmakY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13741C433F1;
+	Tue, 27 Feb 2024 13:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041330;
-	bh=9UwR1hrATnc+XP4vkwJmEXWu8r+1ay0r8zivhAOYfPA=;
+	s=korg; t=1709041333;
+	bh=58N6M4pVAHRm6QWnQyixNUZoL908JiRGLkXbKZ5Kxf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zm17icxEkUfmMQsD0epEOsA42gghAbjND8D6XYXpDWl+teYcYmCTgP16eN4DJO5QF
-	 GD2CtAtNkO4Pi4RYdsAR8kwsPheWAahsqQr5pvRij5u26GEzk7h9eSzbTw3b39Ed0G
-	 DJ5b7LKnkPy8ulZ6im0hmfLve2H9MmYKMCbJz4lI=
+	b=fe0rmakYnqFCrXeHjVsltP1OTnYRZFFOxBAxUJWWbT48E+XHeIL58Jns59DqnoWOZ
+	 AwsKxL/ZPeNS2++fDgR4P8LOFNl+2P2k7+r7F0z9VI+xin+hrQ6ixO1ljHxFFtqjGK
+	 1XXZhA9YEi2EzKeilWUUxi2wNCVzd/eEVoVJhV6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Machek <pavel@denx.de>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Erhard Furtner <erhard_f@mailbox.org>,
+	Ahmad Khalifa <ahmad@khalifa.ws>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 301/334] cache: ax45mp_cache: Align end size to cache boundary in ax45mp_dma_cache_wback()
-Date: Tue, 27 Feb 2024 14:22:39 +0100
-Message-ID: <20240227131640.751326122@linuxfoundation.org>
+Subject: [PATCH 6.7 302/334] hwmon: (nct6775) Fix access to temperature configuration registers
+Date: Tue, 27 Feb 2024 14:22:40 +0100
+Message-ID: <20240227131640.790098521@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,42 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 9bd405c48b0ac4de087c0c4440fd79597201b8a7 ]
+[ Upstream commit d56e460e19ea8382f813eb489730248ec8d7eb73 ]
 
-Align the end size to cache boundary size in ax45mp_dma_cache_wback()
-callback likewise done in ax45mp_dma_cache_inv() callback.
+The number of temperature configuration registers does
+not always match the total number of temperature registers.
+This can result in access errors reported if KASAN is enabled.
 
-Additionally return early in case of start == end.
+BUG: KASAN: global-out-of-bounds in nct6775_probe+0x5654/0x6fe9 nct6775_core
 
-Fixes: d34599bcd2e4 ("cache: Add L2 cache management for Andes AX45MP RISC-V core")
-Reported-by: Pavel Machek <pavel@denx.de>
-Link: https://lore.kernel.org/cip-dev/ZYsdKDiw7G+kxQ3m@duo.ucw.cz/
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Reported-by: Erhard Furtner <erhard_f@mailbox.org>
+Closes: https://lore.kernel.org/linux-hwmon/d51181d1-d26b-42b2-b002-3f5a4037721f@roeck-us.net/
+Fixes: b7f1f7b2523a ("hwmon: (nct6775) Additional TEMP registers for nct6799")
+Cc: Ahmad Khalifa <ahmad@khalifa.ws>
+Tested-by: Ahmad Khalifa <ahmad@khalifa.ws>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cache/ax45mp_cache.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwmon/nct6775-core.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cache/ax45mp_cache.c b/drivers/cache/ax45mp_cache.c
-index 57186c58dc849..1d7dd3d2c101c 100644
---- a/drivers/cache/ax45mp_cache.c
-+++ b/drivers/cache/ax45mp_cache.c
-@@ -129,8 +129,12 @@ static void ax45mp_dma_cache_wback(phys_addr_t paddr, size_t size)
- 	unsigned long line_size;
- 	unsigned long flags;
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index 92a49fafe2c02..f3bf2e4701c38 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -3512,6 +3512,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 	const u16 *reg_temp_mon, *reg_temp_alternate, *reg_temp_crit;
+ 	const u16 *reg_temp_crit_l = NULL, *reg_temp_crit_h = NULL;
+ 	int num_reg_temp, num_reg_temp_mon, num_reg_tsi_temp;
++	int num_reg_temp_config;
+ 	struct device *hwmon_dev;
+ 	struct sensor_template_group tsi_temp_tg;
  
-+	if (unlikely(start == end))
-+		return;
-+
- 	line_size = ax45mp_priv.ax45mp_cache_line_size;
- 	start = start & (~(line_size - 1));
-+	end = ((end + line_size - 1) & (~(line_size - 1)));
- 	local_irq_save(flags);
- 	ax45mp_cpu_dcache_wb_range(start, end);
- 	local_irq_restore(flags);
+@@ -3594,6 +3595,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6106_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
+ 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
+@@ -3669,6 +3671,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6106_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
+ 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
+@@ -3746,6 +3749,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6775_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6775_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6775_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6775_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6775_REG_TEMP_CRIT;
+ 
+@@ -3821,6 +3825,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6775_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6775_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6776_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6776_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6776_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6776_REG_TEMP_CRIT;
+ 
+@@ -3900,6 +3905,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6779_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
+ 
+@@ -4034,6 +4040,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6779_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6779_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6779_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6779_REG_TEMP_CRIT;
+ 
+@@ -4123,6 +4130,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		reg_temp_over = NCT6798_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6798_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6779_REG_TEMP_CONFIG;
++		num_reg_temp_config = ARRAY_SIZE(NCT6779_REG_TEMP_CONFIG);
+ 		reg_temp_alternate = NCT6798_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6798_REG_TEMP_CRIT;
+ 
+@@ -4204,7 +4212,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 				  = reg_temp_crit[src - 1];
+ 			if (reg_temp_crit_l && reg_temp_crit_l[i])
+ 				data->reg_temp[4][src - 1] = reg_temp_crit_l[i];
+-			data->reg_temp_config[src - 1] = reg_temp_config[i];
++			if (i < num_reg_temp_config)
++				data->reg_temp_config[src - 1] = reg_temp_config[i];
+ 			data->temp_src[src - 1] = src;
+ 			continue;
+ 		}
+@@ -4217,7 +4226,8 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		data->reg_temp[0][s] = reg_temp[i];
+ 		data->reg_temp[1][s] = reg_temp_over[i];
+ 		data->reg_temp[2][s] = reg_temp_hyst[i];
+-		data->reg_temp_config[s] = reg_temp_config[i];
++		if (i < num_reg_temp_config)
++			data->reg_temp_config[s] = reg_temp_config[i];
+ 		if (reg_temp_crit_h && reg_temp_crit_h[i])
+ 			data->reg_temp[3][s] = reg_temp_crit_h[i];
+ 		else if (reg_temp_crit[src - 1])
 -- 
 2.43.0
 
