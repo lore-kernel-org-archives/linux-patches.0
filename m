@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8812113B2AC;
-	Tue, 27 Feb 2024 13:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F18B13B791;
+	Tue, 27 Feb 2024 13:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042104; cv=none; b=AegY7av3Zr9k/Lz03PKLFk5hlaihNPWbzNfhQyxQLoy6LZdhmvmsXVnkeAOt+7gAl79RO1mEHmQk0VICM3YRqdYZh6upBuKUF+E/LYq4bQEITxBwXDJFISRYR5nwRxns/2vzaaLeU6Z4M+vUAM+Vj4lyDubME1HEi8VgOVc56o8=
+	t=1709042107; cv=none; b=SifiGM2fDF5zCIDwzgOQ3gdUjeRQtcLmMdyt1SnITi+OSCb8GzKlkaZQrjhoOjkZMpiDUuzTePx48R8IUBIb74kolpZ6Shvif0HInDddceNNknBdIEHPFvVKW/4uTR1Sw1qP9zQSa04XFH1GHA3cNfBqzgOm13yFw03G/DgXu8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042104; c=relaxed/simple;
-	bh=CST0yNY+E4jTEouVy09CndSggp9RQhmZ/Mm1y0pNXzc=;
+	s=arc-20240116; t=1709042107; c=relaxed/simple;
+	bh=K7pTjnsbTuF0Yi54eWs9mWx7vG794G7/u9NZXGrPN7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9zX6RqZBgSXFNENqVlcKURhZPi+g94lC2hwunvpVgGkf4JIbu7Hp4yiUZIyulgHG2L7ILOEbaJQNsqLtpRhltX2MSmk6GKxAt6WhQI8m/CFJHTpj4VmPlerORhTxQOVbfEh+TAQ77KenmS2OMD7FOFzHXp/XcY24spTOslKudU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQ59Q7O0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sPVOZ3xqgONDWGoUjd8IlRK+/ye+j4rAmeTXO0mCyWVTR/6Df44m4V3hzqx5jUXH7jutloFr2LvQPgIvi2WoowlggW9TfDWXr1ZJuOMYOIgPPMKvf+RFY7IP8LFYC2Z2kPv50IF+BgQdYEjQgUCbCq1ueMSlpX7AM8UpiInW9mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9Nq6lp3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQ59Q7O0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170F6C433F1;
-	Tue, 27 Feb 2024 13:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9Nq6lp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F093AC433C7;
+	Tue, 27 Feb 2024 13:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042104;
-	bh=CST0yNY+E4jTEouVy09CndSggp9RQhmZ/Mm1y0pNXzc=;
+	s=korg; t=1709042107;
+	bh=K7pTjnsbTuF0Yi54eWs9mWx7vG794G7/u9NZXGrPN7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gQ59Q7O0sm6ylKnu76lg/4lWhcMJIZHG1aO/rBXivay1gAw2coHJZqS6pFr92ZVGW
-	 bpEp5rUgPe4xUwdggINYTGEPCbdUs+2Had8xY3OAhmDg1J72sCEL06pWt19Qw/kAhN
-	 Ii5hp73ry17i5gGU6uCAJtEgglzyPFWbhzC1j7nc=
+	b=j9Nq6lp3CjgBmd8cN8l2Y2PYGapSHmhXwmTatWu8bynSvgYN+kzRIoJ07IX7sGGdN
+	 mI7cjWmzdCdY4z83S0GBTq43SmQjRsG/iBf6OgsQ7z3ozLlwrFulJ+W0RNLbzd74Up
+	 VsyNi+sP2cxHIA7BsCEXFBC2oEQynJRaJzOC8KWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Jirman <megi@xff.cz>
-Subject: [PATCH 6.6 180/299] Revert "usb: typec: tcpm: reset counter when enter into unattached state after try role"
-Date: Tue, 27 Feb 2024 14:24:51 +0100
-Message-ID: <20240227131631.638534915@linuxfoundation.org>
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Subject: [PATCH 6.6 181/299] serial: stm32: do not always set SER_RS485_RX_DURING_TX if RS485 is enabled
+Date: Tue, 27 Feb 2024 14:24:52 +0100
+Message-ID: <20240227131631.668687822@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -49,38 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Jirman <megi@xff.cz>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-commit 23b1d2d99b0f55326f05e7d757fa197c4a95dc5c upstream.
+commit f418ae73311deb901c0110b08d1bbafc20c1820e upstream.
 
-The reverted commit makes the state machine only ever go from SRC_ATTACH_WAIT
-to SNK_TRY in endless loop when toggling. After revert it goes to SRC_ATTACHED
-after initially trying SNK_TRY earlier, as it should for toggling to ever detect
-the power source mode and the port is again able to provide power to attached
-power sinks.
+Before commit 07c30ea5861f ("serial: Do not hold the port lock when setting
+rx-during-tx GPIO") the SER_RS485_RX_DURING_TX flag was only set if the
+rx-during-tx mode was not controlled by a GPIO. Now the flag is set
+unconditionally when RS485 is enabled. This results in an incorrect setting
+if the rx-during-tx GPIO is not asserted.
 
-This reverts commit 2d6d80127006ae3da26b1f21a65eccf957f2d1e5.
+Fix this by setting the flag only if the rx-during-tx mode is not
+controlled by a GPIO and thus restore the correct behaviour.
 
-Cc: stable@vger.kernel.org
-Fixes: 2d6d80127006 ("usb: typec: tcpm: reset counter when enter into unattached state after try role")
-Signed-off-by: Ondrej Jirman <megi@xff.cz>
-Link: https://lore.kernel.org/r/20240217162023.1719738-1-megi@xff.cz
+Cc: stable@vger.kernel.org # 6.6+
+Fixes: 07c30ea5861f ("serial: Do not hold the port lock when setting rx-during-tx GPIO")
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Link: https://lore.kernel.org/r/20240216224709.9928-1-l.sanfilippo@kunbus.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/tty/serial/stm32-usart.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -3730,9 +3730,6 @@ static void tcpm_detach(struct tcpm_port
- 	if (tcpm_port_is_disconnected(port))
- 		port->hard_reset_count = 0;
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index 794b77512740..693e932d6feb 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -251,7 +251,9 @@ static int stm32_usart_config_rs485(struct uart_port *port, struct ktermios *ter
+ 		writel_relaxed(cr3, port->membase + ofs->cr3);
+ 		writel_relaxed(cr1, port->membase + ofs->cr1);
  
--	port->try_src_count = 0;
--	port->try_snk_count = 0;
--
- 	if (!port->attached)
- 		return;
- 
+-		rs485conf->flags |= SER_RS485_RX_DURING_TX;
++		if (!port->rs485_rx_during_tx_gpio)
++			rs485conf->flags |= SER_RS485_RX_DURING_TX;
++
+ 	} else {
+ 		stm32_usart_clr_bits(port, ofs->cr3,
+ 				     USART_CR3_DEM | USART_CR3_DEP);
+-- 
+2.44.0
+
 
 
