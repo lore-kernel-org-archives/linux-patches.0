@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4B613DB90;
-	Tue, 27 Feb 2024 13:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E40013B791;
+	Tue, 27 Feb 2024 13:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040980; cv=none; b=eqpcZqZOWV/RbWuBgnrZ9K6jXzxwUBxKfq8qZsg0HOC/2oO0Tz1wr8UoijdDsNjLSx1y2cRis9+oDH3jWZ7C2wFG71drXhFF3lCJbK1xdh83XzycqRSJuXtFcDEDrymUAA4arKsHKHVT5jqIM6377tOf6EqAj7rbRuPT/jV0efg=
+	t=1709040983; cv=none; b=DQiWSbN4b4iFyK8nTFX1uKv1pTLh8YvuA4TZirCkbnE2ZMW/+Au92iK8GPVnVLV8pzufUXg6wiTAp8TdhjbVVP13lkUZstwzvVRdpPVxr8dHuWm9axhafsCUz5eLF2ZPjFa1MGhFQ9Lr4+KrTfKGBRsTpO76/w55smUMW3JmkyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040980; c=relaxed/simple;
-	bh=2sMLx5hXtqTnf8rIegNCyazw2KUbmnG18nsy8ZjXxsk=;
+	s=arc-20240116; t=1709040983; c=relaxed/simple;
+	bh=2KL+3kvGVnn4fh2czcuBXfjyYJnHYencw8V+2FfV4ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9fkm2LWVQB1FnE9UE/AlVjWxw42UFu2teoCQCMEa4SMW1ekca1jV1Ogu7q+51cn5uFVGiH00M8yb7x+Eh3HjXuJB8WwdXeNmZ+5ed4M+RhGgeiJVjkLRfXyb+ioxEYbp/9QJMM3yPhGhgd4pbYK7zUiPr/DyUwA5x6b05LG0HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7XWqZms; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CEsSo1QgdaWJKMSZx74EPPL0m/vo8/bHY2259PQfE9W/5/0sIX0YVTyKj8SjwFo9HkctNkp5fsOnwytmtAU9h/zoPODKZv/SnlQX9gAxJsKJXzYZh7akxDDN3ylEIBxR1AXs/RG0KKoHvt0SkuCL/bzXeXlg/pxR5gNqP3aA2Ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tz3EAa4K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7XWqZms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFCFC433F1;
-	Tue, 27 Feb 2024 13:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tz3EAa4K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79B3C433F1;
+	Tue, 27 Feb 2024 13:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040980;
-	bh=2sMLx5hXtqTnf8rIegNCyazw2KUbmnG18nsy8ZjXxsk=;
+	s=korg; t=1709040983;
+	bh=2KL+3kvGVnn4fh2czcuBXfjyYJnHYencw8V+2FfV4ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x7XWqZmsYhr/yLhILBHj9ZWhe0rLCP6CFadIgBsXD0jju0flAPvd1Z797K5kVfHMe
-	 Um7LiXOGZpA2hsVccOFfBXGIkM+OaSP1Y5DeJVKY0feMx18zwJRW50B17Jtyjb/oZ5
-	 v6Gj3nk9qhjQ5uAOyiKuCLtetcotgymGhCa2COYU=
+	b=Tz3EAa4KZgy2mBxaL2WiDMkIOFo+vBXP5jzArnVjG8n26Q8YJUwg+3vOVp6zPOt+o
+	 20aasSS0oKwmdV8Ve6zik+NkGBuuN/MtodZj1aYcDiAqOnobUkUsgADkKL5MMUpO1M
+	 4kzFyPsjl4EZbS8uloBTKN/kPvEwVCs+tSReEKgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.7 176/334] mm/memblock: add MEMBLOCK_RSRV_NOINIT into flagname[] array
-Date: Tue, 27 Feb 2024 14:20:34 +0100
-Message-ID: <20240227131636.248497324@linuxfoundation.org>
+	Bert Karwatzki <spasswolf@web.de>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.7 150/334] drm/buddy: Modify duplicate list_splice_tail call
+Date: Tue, 27 Feb 2024 14:20:08 +0100
+Message-ID: <20240227131635.303005747@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -45,41 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.7-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
 
-commit 4f155af0ae4464134bfcfd9f043b6b727c84e947 upstream.
+commit 02f76a9cd4494719600baf1ab278930df39431ab upstream.
 
-The commit 77e6c43e137c ("memblock: introduce MEMBLOCK_RSRV_NOINIT flag")
-skipped adding this newly introduced memblock flag into flagname[] array,
-thus preventing a correct memblock flags output for applicable memblock
-regions.
+Remove the duplicate list_splice_tail call when the
+total_allocated < size condition is true.
 
-Link: https://lkml.kernel.org/r/20240209030912.1382251-1-anshuman.khandual@arm.com
-Fixes: 77e6c43e137c ("memblock: introduce MEMBLOCK_RSRV_NOINIT flag")
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Mike Rapoport <rppt@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: <stable@vger.kernel.org> # 6.7+
+Fixes: 8746c6c9dfa3 ("drm/buddy: Fix alloc_range() error handling code")
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240216100048.4101-1-Arunpravin.PaneerSelvam@amd.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memblock.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_buddy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -2214,6 +2214,7 @@ static const char * const flagname[] = {
- 	[ilog2(MEMBLOCK_MIRROR)] = "MIRROR",
- 	[ilog2(MEMBLOCK_NOMAP)] = "NOMAP",
- 	[ilog2(MEMBLOCK_DRIVER_MANAGED)] = "DRV_MNG",
-+	[ilog2(MEMBLOCK_RSRV_NOINIT)] = "RSV_NIT",
- };
+diff --git a/drivers/gpu/drm/drm_buddy.c b/drivers/gpu/drm/drm_buddy.c
+index c1a99bf4dffd..c4222b886db7 100644
+--- a/drivers/gpu/drm/drm_buddy.c
++++ b/drivers/gpu/drm/drm_buddy.c
+@@ -538,13 +538,13 @@ static int __alloc_range(struct drm_buddy *mm,
+ 		list_add(&block->left->tmp_link, dfs);
+ 	} while (1);
  
- static int memblock_debug_show(struct seq_file *m, void *private)
+-	list_splice_tail(&allocated, blocks);
+-
+ 	if (total_allocated < size) {
+ 		err = -ENOSPC;
+ 		goto err_free;
+ 	}
+ 
++	list_splice_tail(&allocated, blocks);
++
+ 	return 0;
+ 
+ err_undo:
+-- 
+2.44.0
+
 
 
