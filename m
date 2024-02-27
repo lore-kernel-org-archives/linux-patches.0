@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB21F13B2A2;
-	Tue, 27 Feb 2024 14:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A4C13B7AB;
+	Tue, 27 Feb 2024 14:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042773; cv=none; b=fGxKiFsvVCVoCbOPhdC1d73X+aOBHcnbiA9iQgrG7dAoOcLVE+9HwsVe6KspWYS4gGuqrADKAGkLtcU51fo1QkIdfzs7F1s4lJ2arKjriMJ211cY8pUAjJ0kEzwDf+loMgi2O0TNuLbBZbmM8kncIfS46jmi9Tluy/xGo/Bbdj4=
+	t=1709042776; cv=none; b=fuQ/F9iJB8GaeawNW7pxD2RrtjE0ZJ1EkqY8eC0XmozRyaYwNVwhv5C2Uu9eoIUw/WMBQM33jMTgr90tpVIvR4TZ1D5igJh04kuBawNu4LFCcHXJK+kFM0DMLQ6gxURfQn5UzMH8v7Opd9oc+oQOnzAfz+WEH54M0bMZtf8PL5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042773; c=relaxed/simple;
-	bh=PqKOiQ7hcWhubAmY1ogWMqlniibgTMh3Bf+Zou9ygyA=;
+	s=arc-20240116; t=1709042776; c=relaxed/simple;
+	bh=xVnFJZSaC7ph63TLaJSsZCQYeiYQY2xVA1NeZ/BK9vA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdheBFULOvkiQzoaPtUUZmKgnf1q73d6G3Es8Ne4449NZfnt9fbk0P+zLs8Le/8UweKewqTPFu1NUywJtBcdG1teqBhN6uWpzrfdTTiUx7Mt56HewrZ5sEaR5ISuC+MuWtoTezg7rgW12HZR3JIqar6+rHC3Fgq588viB/lxWvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVMyYqAl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=coNde7TUZ8Y25vYdQvn4RZ3ws9oCgtjXEkI5eiWDGm/bBlNJSX5UbRDa8vYu6npq6hLrk5PKSfmGs4h4vbzkrp0sVRn9tht+kwVjMPz8CbRYW+Xeq3ijQ234dQWiC3kheHuBbdFlQLYVAMBdNT3usr5UsJ3trCOfV9KzyEQWhCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TF8UMXzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVMyYqAl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA4EC43394;
-	Tue, 27 Feb 2024 14:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TF8UMXzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD593C433F1;
+	Tue, 27 Feb 2024 14:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042773;
-	bh=PqKOiQ7hcWhubAmY1ogWMqlniibgTMh3Bf+Zou9ygyA=;
+	s=korg; t=1709042776;
+	bh=xVnFJZSaC7ph63TLaJSsZCQYeiYQY2xVA1NeZ/BK9vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVMyYqAlgi76hvi1qL9+Gtunh2e9p7t7V+3c4GF57TDXrv9W5r5Jo9bM4P8lK3keC
-	 xzFXqVNN/V/WyHH0ylX1jXLnXMzdwrYqCE0fIHGB3ZwpbDg74ILsE+nFeYvYZB0XFq
-	 Rg7wLH/+ZwhVuY9tNPq/CXUOk2BsXAREaWLUC+SI=
+	b=TF8UMXzU/uBte6eMvibHN9jWGI2CPpP1qDd33U/Aw6hbbEwGproB8aKmQHXJfbOhf
+	 UgbR/S5cP/xpVpfPK3QvcKi3si66HTgyApTBPPw3MAyGiaKVTJEiHnNjHeoQ0wFddR
+	 Z2LrmBHFAFEV8AjHlNweGjFh1its0D/aZj1xw1Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/245] clk: renesas: cpg-mssr: Remove superfluous check in resume code
-Date: Tue, 27 Feb 2024 14:25:03 +0100
-Message-ID: <20240227131618.973468929@linuxfoundation.org>
+Subject: [PATCH 5.15 116/245] clk: imx: avoid memory leak
+Date: Tue, 27 Feb 2024 14:25:04 +0100
+Message-ID: <20240227131619.002730554@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -50,38 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 1c052043c79af5f70e80e2acd4dd70904ae08666 ]
+[ Upstream commit f4419db4086e8c31821da14140e81498516a3c75 ]
 
-When the code flow arrives at printing the error message in
-cpg_mssr_resume_noirq(), we know for sure that we are not running on an
-RZ/A Soc, as the code checked for that before.
+In case imx_register_uart_clocks return early, the imx_uart_clocks
+memory will be no freed. So execute kfree always to avoid memory leak.
 
-Fixes: ace342097768e35f ("clk: renesas: cpg-mssr: Fix STBCR suspend/resume handling")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/144a3e66d748c0c17f3524ac8fa6ece5bf5b6f1e.1673425314.git.geert+renesas@glider.be
+Fixes: 379c9a24cc23 ("clk: imx: Fix reparenting of UARTs not associated with stdout")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20230104110032.1220721-2-peng.fan@oss.nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index ed67b90fc1b0c..54c5d35fe2ae3 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -911,9 +911,8 @@ static int cpg_mssr_resume_noirq(struct device *dev)
+diff --git a/drivers/clk/imx/clk.c b/drivers/clk/imx/clk.c
+index 7cc669934253a..d4cf0c7045ab2 100644
+--- a/drivers/clk/imx/clk.c
++++ b/drivers/clk/imx/clk.c
+@@ -201,9 +201,10 @@ static int __init imx_clk_disable_uart(void)
+ 			clk_disable_unprepare(imx_uart_clocks[i]);
+ 			clk_put(imx_uart_clocks[i]);
  		}
- 
- 		if (!i)
--			dev_warn(dev, "Failed to enable %s%u[0x%x]\n",
--				 priv->reg_layout == CLK_REG_LAYOUT_RZ_A ?
--				 "STB" : "SMSTP", reg, oldval & mask);
-+			dev_warn(dev, "Failed to enable SMSTP%u[0x%x]\n", reg,
-+				 oldval & mask);
+-		kfree(imx_uart_clocks);
  	}
  
++	kfree(imx_uart_clocks);
++
  	return 0;
+ }
+ late_initcall_sync(imx_clk_disable_uart);
 -- 
 2.43.0
 
