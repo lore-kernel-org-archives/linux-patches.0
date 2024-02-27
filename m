@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0173A13A26F;
-	Tue, 27 Feb 2024 14:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E70213A26F;
+	Tue, 27 Feb 2024 14:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042976; cv=none; b=LZDVEGSTTVpVevttecwUNu4q4WjuiJ9diq8EmmgUKjC1l4ZnCYvVoKs/dFz0LJjdUICuOwpX8s3PN2aYdIkzrTKunu2e4qxhE51sfEWdb9RnRPcetEy2/oSNJTBvfvUttsXW6cN8AtMRz/IynmZdyd0nmfpdeXNN5Hmni2QhOMw=
+	t=1709042978; cv=none; b=d4d7gURU5EHot5SB1qose3xoz2LloEChKct7HLoF7u1CyrUhFx9GOw2HB3Q09Q2Ah6R+pJ6sF+YlLX1E6uBzd66Fe8bjOpe/9Zs+zCUcEtCEP8kPEokH3v1O3SQVjGPJZw0ymbeogD9UZM+J+++C9I2NCS2Sqrpffyxrn8gx7mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042976; c=relaxed/simple;
-	bh=dlV5pKSDSdwvtR58+YVtmhiBijOzPYaJfn4dwd3m9RE=;
+	s=arc-20240116; t=1709042978; c=relaxed/simple;
+	bh=aT1VzUXK0RUbe3SKhS8DPwISAS7iT/XYaTSGyu81zPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jkTSPsMsSjTofJ/gQIVUHKRjEf4dcmSGAsBaRT5/zm+tejwKcdkv2qIc+o1dg/CUd6PH+nxxR+p5hSiQtSs5pIdoBy89CoW19P5oxS5LYCzhl34gcBVEqnK8YUFmnL69XVYzt/94WuqMb03SQ2o8qXLFiVsqm0PwSSJXAO+ylXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y35oJUfl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7oaVYNcP7jHyG37mrxu5603GucbMBs8EKlBye3ATx0Iuer3RmwGLLpr9dVnpPQSP4HDuGBkGbs6A/530EQ4oulbAgB/DQnxzv6teR7otK93+KEymd1U2LRRD1lkYvoEbuWSgYzgRePTrjp+wLeZiKhR4/N5xI6HmOa55U0tjxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcFM61i5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y35oJUfl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C8E7C433F1;
-	Tue, 27 Feb 2024 14:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcFM61i5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5A4C433F1;
+	Tue, 27 Feb 2024 14:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042975;
-	bh=dlV5pKSDSdwvtR58+YVtmhiBijOzPYaJfn4dwd3m9RE=;
+	s=korg; t=1709042978;
+	bh=aT1VzUXK0RUbe3SKhS8DPwISAS7iT/XYaTSGyu81zPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y35oJUflZVZDP+3/22zv8T5QWEMOdIw2FY2A9P8sjAGTLezWIUAgDYHGr5UShUb3N
-	 6vocEtFj39hFMe162pmj1sVZY6mNZ7q+jaCAlAdbxEPuLWSEOFuXBBhbHamInN6zD7
-	 Ee6tq/C/4J1ebbfUTe1jFmAuBSAC82GChqeVw26s=
+	b=AcFM61i5MRRyPOHKCtdaJfjGKetf0/tuZQ39jEUDqPAFDlfiIfOu8W6/q5iBCvcNP
+	 3sdpyKBQEmqRIPw3byLbFqOi4Ybc5gwQi+Li+38NF6sZxaI2LoX8qLZglb/npl9zfS
+	 67bAG/Ish6pDsbUQsR5BklDZJJsUN1KLIHZzkLGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Qing <wangqing@vivo.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Roee Goldfiner <roee.h.goldfiner@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/245] net: ethernet: ti: add missing of_node_put before return
-Date: Tue, 27 Feb 2024 14:25:38 +0100
-Message-ID: <20240227131620.090094364@linuxfoundation.org>
+Subject: [PATCH 5.15 182/245] wifi: iwlwifi: mvm: avoid baid size integer overflow
+Date: Tue, 27 Feb 2024 14:26:10 +0100
+Message-ID: <20240227131621.123934044@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,112 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Qing <wangqing@vivo.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit be565ec71d1d59438bed0c7ed0a252a327e0b0ef ]
+[ Upstream commit 1a528ab1da324d078ec60283c34c17848580df24 ]
 
-Fix following coccicheck warning:
-WARNING: Function "for_each_child_of_node"
-should have of_node_put() before return.
+Roee reported various hard-to-debug crashes with pings in
+EHT aggregation scenarios. Enabling KASAN showed that we
+access the BAID allocation out of bounds, and looking at
+the code a bit shows that since the reorder buffer entry
+(struct iwl_mvm_reorder_buf_entry) is 128 bytes if debug
+such as lockdep is enabled, then staring from an agg size
+512 we overflow the size calculation, and allocate a much
+smaller structure than we should, causing slab corruption
+once we initialize this.
 
-Early exits from for_each_child_of_node should decrement the
-node reference counter.
+Fix this by simply using u32 instead of u16.
 
-Signed-off-by: Wang Qing <wangqing@vivo.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Roee Goldfiner <roee.h.goldfiner@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230620125813.f428c856030d.I2c2bb808e945adb71bc15f5b2bac2d8957ea90eb@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 29 ++++++++++++++++--------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/sta.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 1fa6f0dacd2de..f94d6d322df42 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1856,13 +1856,14 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 		if (ret < 0) {
- 			dev_err(dev, "%pOF error reading port_id %d\n",
- 				port_np, ret);
--			return ret;
-+			goto of_node_put;
- 		}
- 
- 		if (!port_id || port_id > common->port_num) {
- 			dev_err(dev, "%pOF has invalid port_id %u %s\n",
- 				port_np, port_id, port_np->name);
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto of_node_put;
- 		}
- 
- 		port = am65_common_get_port(common, port_id);
-@@ -1878,8 +1879,10 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 				(AM65_CPSW_NU_FRAM_PORT_OFFSET * (port_id - 1));
- 
- 		port->slave.mac_sl = cpsw_sl_get("am65", dev, port->port_base);
--		if (IS_ERR(port->slave.mac_sl))
--			return PTR_ERR(port->slave.mac_sl);
-+		if (IS_ERR(port->slave.mac_sl)) {
-+			ret = PTR_ERR(port->slave.mac_sl);
-+			goto of_node_put;
-+		}
- 
- 		port->disabled = !of_device_is_available(port_np);
- 		if (port->disabled) {
-@@ -1892,7 +1895,7 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 			ret = PTR_ERR(port->slave.ifphy);
- 			dev_err(dev, "%pOF error retrieving port phy: %d\n",
- 				port_np, ret);
--			return ret;
-+			goto of_node_put;
- 		}
- 
- 		port->slave.mac_only =
-@@ -1901,10 +1904,12 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 		/* get phy/link info */
- 		if (of_phy_is_fixed_link(port_np)) {
- 			ret = of_phy_register_fixed_link(port_np);
--			if (ret)
--				return dev_err_probe(dev, ret,
-+			if (ret) {
-+				ret = dev_err_probe(dev, ret,
- 						     "failed to register fixed-link phy %pOF\n",
- 						     port_np);
-+				goto of_node_put;
-+			}
- 			port->slave.phy_node = of_node_get(port_np);
- 		} else {
- 			port->slave.phy_node =
-@@ -1914,14 +1919,15 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
- 		if (!port->slave.phy_node) {
- 			dev_err(dev,
- 				"slave[%d] no phy found\n", port_id);
--			return -ENODEV;
-+			ret = -ENODEV;
-+			goto of_node_put;
- 		}
- 
- 		ret = of_get_phy_mode(port_np, &port->slave.phy_if);
- 		if (ret) {
- 			dev_err(dev, "%pOF read phy-mode err %d\n",
- 				port_np, ret);
--			return ret;
-+			goto of_node_put;
- 		}
- 
- 		ret = of_get_mac_address(port_np, port->slave.mac_addr);
-@@ -1944,6 +1950,11 @@ static int am65_cpsw_nuss_init_slave_ports(struct am65_cpsw_common *common)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
+index 45dfee3ad8c60..2d1755598b475 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
+@@ -2544,7 +2544,7 @@ int iwl_mvm_sta_rx_agg(struct iwl_mvm *mvm, struct ieee80211_sta *sta,
  	}
  
- 	return 0;
-+
-+of_node_put:
-+	of_node_put(port_np);
-+	of_node_put(node);
-+	return ret;
- }
+ 	if (iwl_mvm_has_new_rx_api(mvm) && start) {
+-		u16 reorder_buf_size = buf_size * sizeof(baid_data->entries[0]);
++		u32 reorder_buf_size = buf_size * sizeof(baid_data->entries[0]);
  
- static void am65_cpsw_pcpu_stats_free(void *data)
+ 		/* sparse doesn't like the __align() so don't check */
+ #ifndef __CHECKER__
 -- 
 2.43.0
 
