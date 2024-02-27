@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DEF78B61;
-	Tue, 27 Feb 2024 14:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C65D78B61;
+	Tue, 27 Feb 2024 14:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043511; cv=none; b=YrRAf+3PsGOCEPg592f8Blnd4c4L3Qke/288J7FyPq+kgE+ZNMl/krBagy/NxBcP7qT7yNABZ7cHrM85aqOT7R/RgytLvBHftfJbTCMkx+K+HHOY2m4IzpE2LhVadLFgO/xejoSUN+F+Gjups8BehAqotx3PuJBC+9l8aFfNCUs=
+	t=1709043514; cv=none; b=KO896msQvwfc2tp05f640R0P5IM/hIxjGkeIRGLXqM/Im10F53E5VAP4aSvGzQQvrHI+pwkj3KhkyurBtBzj7pdFNaZT8N/2Jb+2Okqq3aPHVXHKIjaWargiLUQ9PFRODwX90nlai46a4wzfyYsD46rIwIhDKOJ3kWlBvb0AjJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043511; c=relaxed/simple;
-	bh=NOHSWGr4Ic29x3+ulHbJ2FfxvyVAE6CJzhvPLVcBIhk=;
+	s=arc-20240116; t=1709043514; c=relaxed/simple;
+	bh=c48MLmMz8M0vFaIZoWI5ozEe+dMZx2CB2wYo7ZddTKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnSsYiuUiQIhffatrhiMCtaR17dF7wFeReOv7oeItPJd1Ag4AFvnWQVLJaAL/vOcTSaD3cXy6eNcTUxZul/0f/Ufx4tWhvG6kY+FgBPxXqtctrgCt4SkglC8BlMf6MS/d+O5A8Cp7djg/z2iQAggUOzOuIE0RKQ9iVzs3lYGNe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5Zb0TW6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKzMckOOo0HZuaxB0eirNoiNbWgf0IGUHvJSKucFMIrodmsbJQp1bfX5XizPsFjllIHJjLmRJkvR36vLAeGdKTvgKrWGCdVtibTWt3rWBO0ZveT/L6vJBYTCs9fwmCC6WnoVjLp8uLUFNvhtIe9R316LlmyOjtABSrnmStH3OK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=geGgQQ8M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5Zb0TW6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8B4C43390;
-	Tue, 27 Feb 2024 14:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="geGgQQ8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE977C433F1;
+	Tue, 27 Feb 2024 14:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043511;
-	bh=NOHSWGr4Ic29x3+ulHbJ2FfxvyVAE6CJzhvPLVcBIhk=;
+	s=korg; t=1709043514;
+	bh=c48MLmMz8M0vFaIZoWI5ozEe+dMZx2CB2wYo7ZddTKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5Zb0TW6oBWKnYfdYBx3TzhWjLcRveVaTOmi9FwHDKdy/l7TtZFBKr9l3d8xXHqH5
-	 nTRB+qARLeQOG/QU5brWnl0Qpb7ACev0bM8Dpv1jXDQhkj+FWdMS1CK+jnuohhQc3T
-	 WL8gbrti2tFq0j74dwp68rWw4a5WD+OIAfDz1434=
+	b=geGgQQ8McbvyfAcFe8NjiefHsqHyNX04e8BjNxGHJEMpg2801BFvC3WZlz7g+K4jF
+	 d45rDTEyBxWB6eXUBvplPYAM6X3NW7NolgvFU8KMUpj0cgpMsTq7t8pmSrypTPKNYa
+	 dd888lmJo1Ss6RPwO974hrYqTA2MAGiiQK4S7YMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhenwei pi <pizhenwei@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.1 106/195] crypto: virtio/akcipher - Fix stack overflow on memcpy
-Date: Tue, 27 Feb 2024 14:26:07 +0100
-Message-ID: <20240227131613.965849715@linuxfoundation.org>
+	George Cherian <gcherian@marvell.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 107/195] irqchip/gic-v3-its: Do not assume vPE tables are preallocated
+Date: Tue, 27 Feb 2024 14:26:08 +0100
+Message-ID: <20240227131613.999700324@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -53,52 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhenwei pi <pizhenwei@bytedance.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit c0ec2a712daf133d9996a8a1b7ee2d4996080363 upstream.
+commit ec4308ecfc887128a468f03fb66b767559c57c23 upstream.
 
-sizeof(struct virtio_crypto_akcipher_session_para) is less than
-sizeof(struct virtio_crypto_op_ctrl_req::u), copying more bytes from
-stack variable leads stack overflow. Clang reports this issue by
-commands:
-make -j CC=clang-14 mrproper >/dev/null 2>&1
-make -j O=/tmp/crypto-build CC=clang-14 allmodconfig >/dev/null 2>&1
-make -j O=/tmp/crypto-build W=1 CC=clang-14 drivers/crypto/virtio/
-  virtio_crypto_akcipher_algs.o
+The GIC/ITS code is designed to ensure to pick up any preallocated LPI
+tables on the redistributors, as enabling LPIs is a one-way switch. There
+is no such restriction for vLPIs, and for GICv4.1 it is expected to
+allocate a new vPE table at boot.
 
-Fixes: 59ca6c93387d ("virtio-crypto: implement RSA algorithm")
-Link: https://lore.kernel.org/all/0a194a79-e3a3-45e7-be98-83abd3e1cb7e@roeck-us.net/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org> # build
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This works as intended when initializing an ITS, however when setting up a
+redistributor in cpu_init_lpis() the early return for preallocated RD
+tables skips straight past the GICv4 setup. This all comes to a head when
+trying to kexec() into a new kernel, as the new kernel silently fails to
+set up GICv4, leading to a complete loss of SGIs and LPIs for KVM VMs.
+
+Slap a band-aid on the problem by ensuring its_cpu_init_lpis() always
+initializes GICv4 on the way out, even if the other RD tables were
+preallocated.
+
+Fixes: 6479450f72c1 ("irqchip/gic-v4: Fix occasional VLPI drop")
+Reported-by: George Cherian <gcherian@marvell.com>
+Co-developed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240219185809.286724-2-oliver.upton@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_akcipher_algs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-+++ b/drivers/crypto/virtio/virtio_crypto_akcipher_algs.c
-@@ -104,7 +104,8 @@ static void virtio_crypto_dataq_akcipher
- }
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3161,6 +3161,7 @@ static void its_cpu_init_lpis(void)
+ 	val |= GICR_CTLR_ENABLE_LPIS;
+ 	writel_relaxed(val, rbase + GICR_CTLR);
  
- static int virtio_crypto_alg_akcipher_init_session(struct virtio_crypto_akcipher_ctx *ctx,
--		struct virtio_crypto_ctrl_header *header, void *para,
-+		struct virtio_crypto_ctrl_header *header,
-+		struct virtio_crypto_akcipher_session_para *para,
- 		const uint8_t *key, unsigned int keylen)
- {
- 	struct scatterlist outhdr_sg, key_sg, inhdr_sg, *sgs[3];
-@@ -128,7 +129,7 @@ static int virtio_crypto_alg_akcipher_in
++out:
+ 	if (gic_rdists->has_vlpis && !gic_rdists->has_rvpeid) {
+ 		void __iomem *vlpi_base = gic_data_rdist_vlpi_base();
  
- 	ctrl = &vc_ctrl_req->ctrl;
- 	memcpy(&ctrl->header, header, sizeof(ctrl->header));
--	memcpy(&ctrl->u, para, sizeof(ctrl->u));
-+	memcpy(&ctrl->u.akcipher_create_session.para, para, sizeof(*para));
- 	input = &vc_ctrl_req->input;
- 	input->status = cpu_to_le32(VIRTIO_CRYPTO_ERR);
+@@ -3196,7 +3197,6 @@ static void its_cpu_init_lpis(void)
  
+ 	/* Make sure the GIC has seen the above */
+ 	dsb(sy);
+-out:
+ 	gic_data_rdist()->flags |= RD_LOCAL_LPI_ENABLED;
+ 	pr_info("GICv3: CPU%d: using %s LPI pending table @%pa\n",
+ 		smp_processor_id(),
 
 
