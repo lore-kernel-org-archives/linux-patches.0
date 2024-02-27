@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2980B2F2D;
-	Tue, 27 Feb 2024 13:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5802F2D;
+	Tue, 27 Feb 2024 13:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041430; cv=none; b=rnRb2i6J6OQ+erI1N4hDjd0/Xh9RerDZf4/00TJDmYP7qt+gVqBXuYc7XJvUQnQZ5yjCB4SPXlW+7FI1Cf6eln13EWmhiv/iSlIqJV4hFSkNyDtF2x5JtagpaFqIsFBj1W46uLAy9QkTuPeD0hh8pzPY+e1mPR3oRSdNSqG2I1s=
+	t=1709041432; cv=none; b=ru418T+zyWqYPCasGaCMcojIzZ7Z6z+f2/pw7S4Xly3eBVrZXqyyW205g2yuGH9UJHJRuoEO1gYm+WggTcsXZS8dYNHKt4zbVmsBz2KKCtEomH1C7loDGlbINMnV/5RaUC5cmUvHmOwU8mH4LksNTGq6k7VHq9TwGjLKHdriQAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041430; c=relaxed/simple;
-	bh=cZWHZRFD8XPxvINbQMM/5St0eNaaq3PQkWuChWxLOUs=;
+	s=arc-20240116; t=1709041432; c=relaxed/simple;
+	bh=ko2O66fO6kQjbYybOd77+x+5TiLAbkUgcYqtgYRa0VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvbroAx4TyBIsjEXV9wIo6kHyQL6snLqNvhrrjqmUdhrZ322+9qr7xileodHuQV37wPit1dQ3eypu2VKt+kKxhTANP8aOFDRW6Qud6gOUl+ummd2e+NBduJm4BPlMv5bbnETx0j015tBP2q3k2uaCCt0xUSYGvb8o5RFcjs0SD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsSkcsvp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3hPIe2+VBvE+QSDOp+ibHXtj05JsWQgy/NE7TTSBMaRGi9U1orVFxQsSMCyZt/OylXwrZr5D/IF/7HkMURVaKYba30WzKB8ws6D/Z8K2KnBOAMxZnJPU+JYZdIJWFddB0Vx/WOhg4rUeaFflAoyXa89DPq+J6ZfRLHJz4PhDLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErjbL0rr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsSkcsvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A45C43390;
-	Tue, 27 Feb 2024 13:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErjbL0rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A19CC43390;
+	Tue, 27 Feb 2024 13:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041430;
-	bh=cZWHZRFD8XPxvINbQMM/5St0eNaaq3PQkWuChWxLOUs=;
+	s=korg; t=1709041432;
+	bh=ko2O66fO6kQjbYybOd77+x+5TiLAbkUgcYqtgYRa0VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsSkcsvpHgfzHpMX1JEI0ZSGJx1R+cSfrOe1dw5cOqSrDpRda4RsxoXGEnJjglLaN
-	 xdXKpLks3HRKzRIrNOm5KDYmTCqWx6X6eIynr2i9NTs8VMRpDUhTENizmKvfjefYAH
-	 mmYgLGiuwj6ckeEm9gMAxdOak3qO2Vy5hMpYtnaM=
+	b=ErjbL0rrVr1OKseBCCuikzNYc69+ORSA5PxWASII/tGfdtAbrbfX4zR1ecHu4dHzV
+	 LErQOsHh5ok/Cg4zK8oxel7+fJEW+Dtygqwa+C/HYj1RmnGyOwoWycOi88u/OCQ5JM
+	 NRxE7NJoLvr9/NTHop5pC1zN7iwFmmdWg7vuzm+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Simon Horman <horms@kernel.org>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 311/334] net: mctp: put sock on tag allocation failure
-Date: Tue, 27 Feb 2024 14:22:49 +0100
-Message-ID: <20240227131641.102198188@linuxfoundation.org>
+Subject: [PATCH 6.7 312/334] tools: ynl: make sure we always pass yarg to mnl_cb_run
+Date: Tue, 27 Feb 2024 14:22:50 +0100
+Message-ID: <20240227131641.131570803@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,40 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 9990889be14288d4f1743e4768222d5032a79c27 ]
+[ Upstream commit e4fe082c38cd74a8fa384bc7542cf3edf1cb7318 ]
 
-We may hold an extra reference on a socket if a tag allocation fails: we
-optimistically allocate the sk_key, and take a ref there, but do not
-drop if we end up not using the allocated key.
+There is one common error handler in ynl - ynl_cb_error().
+It expects priv to be a pointer to struct ynl_parse_arg AKA yarg.
+To avoid potential crashes if we encounter a stray NLMSG_ERROR
+always pass yarg as priv (or a struct which has it as the first
+member).
 
-Ensure we're dropping the sock on this failure by doing a proper unref
-rather than directly kfree()ing.
+ynl_cb_null() has a similar problem directly - it expects yarg
+but priv passed by the caller is ys.
 
-Fixes: de8a6b15d965 ("net: mctp: add an explicit reference from a mctp_sk_key to sock")
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/ce9b61e44d1cdae7797be0c5e3141baf582d23a0.1707983487.git.jk@codeconstruct.com.au
+Found by code inspection.
+
+Fixes: 86878f14d71a ("tools: ynl: user space helpers")
+Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://lore.kernel.org/r/20240220161112.2735195-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/net/ynl/lib/ynl.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index 7a47a58aa54b4..6218dcd07e184 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -663,7 +663,7 @@ struct mctp_sk_key *mctp_alloc_local_tag(struct mctp_sock *msk,
- 	spin_unlock_irqrestore(&mns->keys_lock, flags);
+diff --git a/tools/net/ynl/lib/ynl.c b/tools/net/ynl/lib/ynl.c
+index 830d25097009a..65975a8306738 100644
+--- a/tools/net/ynl/lib/ynl.c
++++ b/tools/net/ynl/lib/ynl.c
+@@ -462,6 +462,8 @@ ynl_gemsg_start_dump(struct ynl_sock *ys, __u32 id, __u8 cmd, __u8 version)
  
- 	if (!tagbits) {
--		kfree(key);
-+		mctp_key_unref(key);
- 		return ERR_PTR(-EBUSY);
+ int ynl_recv_ack(struct ynl_sock *ys, int ret)
+ {
++	struct ynl_parse_arg yarg = { .ys = ys, };
++
+ 	if (!ret) {
+ 		yerr(ys, YNL_ERROR_EXPECT_ACK,
+ 		     "Expecting an ACK but nothing received");
+@@ -474,7 +476,7 @@ int ynl_recv_ack(struct ynl_sock *ys, int ret)
+ 		return ret;
  	}
+ 	return mnl_cb_run(ys->rx_buf, ret, ys->seq, ys->portid,
+-			  ynl_cb_null, ys);
++			  ynl_cb_null, &yarg);
+ }
  
+ int ynl_cb_null(const struct nlmsghdr *nlh, void *data)
+@@ -737,11 +739,14 @@ static int ynl_ntf_parse(struct ynl_sock *ys, const struct nlmsghdr *nlh)
+ 
+ static int ynl_ntf_trampoline(const struct nlmsghdr *nlh, void *data)
+ {
+-	return ynl_ntf_parse((struct ynl_sock *)data, nlh);
++	struct ynl_parse_arg *yarg = data;
++
++	return ynl_ntf_parse(yarg->ys, nlh);
+ }
+ 
+ int ynl_ntf_check(struct ynl_sock *ys)
+ {
++	struct ynl_parse_arg yarg = { .ys = ys, };
+ 	ssize_t len;
+ 	int err;
+ 
+@@ -763,7 +768,7 @@ int ynl_ntf_check(struct ynl_sock *ys)
+ 			return len;
+ 
+ 		err = mnl_cb_run2(ys->rx_buf, len, ys->seq, ys->portid,
+-				  ynl_ntf_trampoline, ys,
++				  ynl_ntf_trampoline, &yarg,
+ 				  ynl_cb_array, NLMSG_MIN_TYPE);
+ 		if (err < 0)
+ 			return err;
 -- 
 2.43.0
 
