@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FBC13B78E;
-	Tue, 27 Feb 2024 14:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989C413A259;
+	Tue, 27 Feb 2024 14:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043039; cv=none; b=sh0Nb46Gb/m+07/+rx97DugIIJ8gpjGinAAOTdZnDQjEWxBs9HadlgnhJsyVEfIGadxs1TXjjcacl2ESBnro1qfo53lqocgq3qRILO2oAk2Ap1Yyjs3kr45Dsj7FV7QnANCcMMNfQsIJ7Zmr712KfL4+5obadt1KgnRFGH01iC0=
+	t=1709043041; cv=none; b=iCxUL3e7C3V7cnBVfn7RHZ1lxT70Wa0ejR3WOin2NEHor3MTyiIIruG6FosWamtQ7lK86OCSzOJzNr2nBbSnr14OWuUdv08M8TzMJ80dD4VqMG3pW3j4tlOCw0AynYAV3DKDURt7Vh8oSxG6kQ5pihW5iBfpBtG8yaADarJdRiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043039; c=relaxed/simple;
-	bh=7C7KZ9ed40VG8V4ERg/Qp93OC00c6TE/1Ms62MK5MJo=;
+	s=arc-20240116; t=1709043041; c=relaxed/simple;
+	bh=DnFm7sG8yeP/dEiGSbdKuPU4B9pZCanc7//RfIc3h/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+//w8HytQ+oJoeiR0wv8Xqucj7828A50DCaMeY8WP4gKtpdgd4HWEgV177h+ctRL2sv+vY8h6DdTQ21S7zjpZYh3cWlDrrGxgWGJzcK9yl40sbppsavLAKj2YeYZKurP1qL9aKcZJdyKmFDiLrBryedPUvVE6pkKkQHo+gd0Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEYgadJz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDlJXe4Kt4K4f9xcBly2zc8mgIIt9STrPkAa3DYFc107rm5UFuRtyOSno9Jy0tbAjDPYAfFQc/prY89lkLC+mKJmr7f2+g2fmrOVsd8DOkpxIorhCpTmB5ECbdWenoRRtgXyx/767TrYvXfl/oVRg7qxwnZZug3yhyY2lS4PZQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fd9vlmcZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEYgadJz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650B8C433F1;
-	Tue, 27 Feb 2024 14:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fd9vlmcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205D0C433C7;
+	Tue, 27 Feb 2024 14:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043038;
-	bh=7C7KZ9ed40VG8V4ERg/Qp93OC00c6TE/1Ms62MK5MJo=;
+	s=korg; t=1709043041;
+	bh=DnFm7sG8yeP/dEiGSbdKuPU4B9pZCanc7//RfIc3h/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEYgadJzRxZU8vjRRSED69bMIc5ESV5tfABtqCXqXqPHTli+CQwqFq/STkixT3b26
-	 B2NchD8LUh5xaG8XzDCEkqIuakw6Rt/3GnfUVyyqPlFR4O/8InXXDhl48LawNauzJH
-	 iTdhxK4Rk5vVzq+BzCM/sN8rA3eGEwkLeid7fUCY=
+	b=Fd9vlmcZrT8C7KZL6Q2B6gbN1VDl9JIxxxYNhAPX2FP6aZ9OzoB2Njs6NOfKu2S71
+	 Zjwi88wkvCV84Is+hJAkeOaOrZW+xBxjstH90T4GaakcTF6n/XoD5cPA5BD3nEaWh5
+	 Is5313N56c/9TUrboqQL3GuHho+hMjrf/aOlLsEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Gianmarco Lusvardi <glusvardi@posteo.net>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Quentin Monnet <quentin@isovalent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/245] arm64: dts: rockchip: fix regulator name on rk3399-rock-4
-Date: Tue, 27 Feb 2024 14:26:12 +0100
-Message-ID: <20240227131621.185586788@linuxfoundation.org>
+Subject: [PATCH 5.15 211/245] bpf, scripts: Correct GPL license name
+Date: Tue, 27 Feb 2024 14:26:39 +0100
+Message-ID: <20240227131622.063195323@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,108 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FUKAUMI Naoki <naoki@radxa.com>
+From: Gianmarco Lusvardi <glusvardi@posteo.net>
 
-[ Upstream commit 69448624b770aa88a71536a16900dd3cc6002919 ]
+[ Upstream commit e37243b65d528a8a9f8b9a57a43885f8e8dfc15c ]
 
-fix regulator name
+The bpf_doc script refers to the GPL as the "GNU Privacy License".
+I strongly suspect that the author wanted to refer to the GNU General
+Public License, under which the Linux kernel is released, as, to the
+best of my knowledge, there is no license named "GNU Privacy License".
+This patch corrects the license name in the script accordingly.
 
-ref:
- https://dl.radxa.com/rockpi4/docs/hw/rockpi4/rockpi4_v13_sch_20181112.pdf
-
-Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
-Link: https://lore.kernel.org/r/20220909195006.127957-4-naoki@radxa.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 56a092c89505 ("bpf: add script and prepare bpf.h for new helpers documentation")
+Signed-off-by: Gianmarco Lusvardi <glusvardi@posteo.net>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Quentin Monnet <quentin@isovalent.com>
+Link: https://lore.kernel.org/bpf/20240213230544.930018-3-glusvardi@posteo.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3399-rock-pi-4.dtsi   | 25 ++++++++++---------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ scripts/bpf_doc.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-index 8b70e831aff23..203460d46f182 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock-pi-4.dtsi
-@@ -98,24 +98,25 @@ vcc5v0_host: vcc5v0-host-regulator {
- 		vin-supply = <&vcc5v0_sys>;
- 	};
+diff --git a/scripts/bpf_doc.py b/scripts/bpf_doc.py
+index 00ac7b79cddb4..7772c6424089e 100755
+--- a/scripts/bpf_doc.py
++++ b/scripts/bpf_doc.py
+@@ -369,7 +369,7 @@ eBPF programs can have an associated license, passed along with the bytecode
+ instructions to the kernel when the programs are loaded. The format for that
+ string is identical to the one in use for kernel modules (Dual licenses, such
+ as "Dual BSD/GPL", may be used). Some helper functions are only accessible to
+-programs that are compatible with the GNU Privacy License (GPL).
++programs that are compatible with the GNU General Public License (GNU GPL).
  
--	vcc5v0_typec: vcc5v0-typec-regulator {
-+	vbus_typec: vbus-typec-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
- 		gpio = <&gpio1 RK_PA3 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&vcc5v0_typec_en>;
--		regulator-name = "vcc5v0_typec";
-+		regulator-name = "vbus_typec";
- 		regulator-always-on;
- 		vin-supply = <&vcc5v0_sys>;
- 	};
- 
--	vcc_lan: vcc3v3-phy-regulator {
-+	vcc3v3_lan: vcc3v3-lan-regulator {
- 		compatible = "regulator-fixed";
--		regulator-name = "vcc_lan";
-+		regulator-name = "vcc3v3_lan";
- 		regulator-always-on;
- 		regulator-boot-on;
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
-+		vin-supply = <&vcc3v3_sys>;
- 	};
- 
- 	vdd_log: vdd-log {
-@@ -162,7 +163,7 @@ &gmac {
- 	assigned-clocks = <&cru SCLK_RMII_SRC>;
- 	assigned-clock-parents = <&clkin_gmac>;
- 	clock_in_out = "input";
--	phy-supply = <&vcc_lan>;
-+	phy-supply = <&vcc3v3_lan>;
- 	phy-mode = "rgmii";
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&rgmii_pins>;
-@@ -267,8 +268,8 @@ regulator-state-mem {
- 				};
- 			};
- 
--			vcc1v8_codec: LDO_REG1 {
--				regulator-name = "vcc1v8_codec";
-+			vcca1v8_codec: LDO_REG1 {
-+				regulator-name = "vcca1v8_codec";
- 				regulator-always-on;
- 				regulator-boot-on;
- 				regulator-min-microvolt = <1800000>;
-@@ -278,8 +279,8 @@ regulator-state-mem {
- 				};
- 			};
- 
--			vcc1v8_hdmi: LDO_REG2 {
--				regulator-name = "vcc1v8_hdmi";
-+			vcca1v8_hdmi: LDO_REG2 {
-+				regulator-name = "vcca1v8_hdmi";
- 				regulator-always-on;
- 				regulator-boot-on;
- 				regulator-min-microvolt = <1800000>;
-@@ -336,8 +337,8 @@ regulator-state-mem {
- 				};
- 			};
- 
--			vcc0v9_hdmi: LDO_REG7 {
--				regulator-name = "vcc0v9_hdmi";
-+			vcca0v9_hdmi: LDO_REG7 {
-+				regulator-name = "vcca0v9_hdmi";
- 				regulator-always-on;
- 				regulator-boot-on;
- 				regulator-min-microvolt = <900000>;
-@@ -456,7 +457,7 @@ &io_domains {
- 	status = "okay";
- 
- 	bt656-supply = <&vcc_3v0>;
--	audio-supply = <&vcc1v8_codec>;
-+	audio-supply = <&vcca1v8_codec>;
- 	sdmmc-supply = <&vcc_sdio>;
- 	gpio1830-supply = <&vcc_3v0>;
- };
+ In order to use such helpers, the eBPF program must be loaded with the correct
+ license string passed (via **attr**) to the **bpf**\ () system call, and this
 -- 
 2.43.0
 
