@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAAD16423;
-	Tue, 27 Feb 2024 14:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D5A78B61;
+	Tue, 27 Feb 2024 14:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042652; cv=none; b=c9L6E2VzuEhGgXy3WR29Cu8de3gpdjSbrUpmDWixCSKom8INgF3aeahGmGg4uy2RfvIcM2FHAohXelLLlyC9NmjSG7P2Jz3EHtii8cmuYFwA26/0Xk4OpIJ0mb+YP6jRaBYwkinvKSy6M7LrdGJUbK02ICwu/hzCXRO2Q78uw9U=
+	t=1709042654; cv=none; b=oYE/sbpUmGvXQJAaJvCwBZpvxEJYK9qGsbv/ataZUIueqih0pG7RYHH+bpzC+cij2dg+ZIZavIikYUuhkz2EwmmriiY7nOPxr6TkZHf2EGlQvOwN4mjRy6L9ahOQJ3vCVfUyXJLp/uwT5UB6A+IH7oJrqaLdD9jnDm11PcBLAeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042652; c=relaxed/simple;
-	bh=SQXOzHjjQgoELWylwPaTeWYZ2033gWm+svWIgE3cJF4=;
+	s=arc-20240116; t=1709042654; c=relaxed/simple;
+	bh=Kg1kNRFnFwMsSgah1Y8D3Qhnqz9M4rQn2sTIYFQxa7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Awxbqm+CgelB54aflWMgXcEdEQvqmI65Wqc5pGSmGlx4qiKbThu6wPtbPt19yoTpRaDFZ52oqeFSttSz51JOb1ZXqBKksLiWWANP5kakRRgwq2VYafyk3R+EAql4ZJ5fObDfYVRSOtRffkIxXusH79uS2E7r/qmHgLxjkSM7NB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bHKi+NB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mH6ZpXCp7LLVdNPAnxM1UmrH6EM8VwFhorA6PvbhX/gUNhLqW4MEydTCL/rRoicbZZAS3ZRPWDUNjRKFf/tuarr4NUXnHAoL3fAFDC8FSvdVmRBl6MrK7bItB/QzSe1NYV95Og53NzAtyUHcSFZLkWptprB//I6AkRN0uINHBuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2XHrXyCl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bHKi+NB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16EDC433F1;
-	Tue, 27 Feb 2024 14:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2XHrXyCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CBAC433F1;
+	Tue, 27 Feb 2024 14:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042652;
-	bh=SQXOzHjjQgoELWylwPaTeWYZ2033gWm+svWIgE3cJF4=;
+	s=korg; t=1709042654;
+	bh=Kg1kNRFnFwMsSgah1Y8D3Qhnqz9M4rQn2sTIYFQxa7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bHKi+NBFITGNsI5KZ3Ld6csQWQIoOd4fkALWVlwr2iumd/Ktr1lxH6KWSxzdPLPw
-	 e6gFefBzVpuOnjePFHaoz3huCC36IhVORzi7GmOBmJlJ3yyLKNcvVxm4XGTi9BlufK
-	 9CNwO/9WqvIHA9C/wEJ0gvEzUxnnuNHUVLDW5Tj4=
+	b=2XHrXyClyH5WrWhl6EmvghhURYjEvMAPeKU7luGDnw8FmfOaf7ngODYOefq+liwSQ
+	 hAp5GK595EuZMSo3FeqlC6G/49UASNXs3MW1qjDKK7igQ810ctIytU29L0PGFknX2c
+	 B7fEKSxZb66I4BwmOyx1wM+r1NeeFz6HlR+nXMCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Sun <yi.sun@unisoc.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Eugen Hristev <eugen.hristev@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/245] virtio-blk: Ensure no requests in virtqueues before deleting vqs.
-Date: Tue, 27 Feb 2024 14:24:20 +0100
-Message-ID: <20240227131617.580754593@linuxfoundation.org>
+Subject: [PATCH 5.15 073/245] pmdomain: mediatek: fix race conditions with genpd
+Date: Tue, 27 Feb 2024 14:24:21 +0100
+Message-ID: <20240227131617.614130055@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,62 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yi Sun <yi.sun@unisoc.com>
+From: Eugen Hristev <eugen.hristev@collabora.com>
 
-[ Upstream commit 4ce6e2db00de8103a0687fb0f65fd17124a51aaa ]
+[ Upstream commit c41336f4d69057cbf88fed47951379b384540df5 ]
 
-Ensure no remaining requests in virtqueues before resetting vdev and
-deleting virtqueues. Otherwise these requests will never be completed.
-It may cause the system to become unresponsive.
+If the power domains are registered first with genpd and *after that*
+the driver attempts to power them on in the probe sequence, then it is
+possible that a race condition occurs if genpd tries to power them on
+in the same time.
+The same is valid for powering them off before unregistering them
+from genpd.
+Attempt to fix race conditions by first removing the domains from genpd
+and *after that* powering down domains.
+Also first power up the domains and *after that* register them
+to genpd.
 
-Function blk_mq_quiesce_queue() can ensure that requests have become
-in_flight status, but it cannot guarantee that requests have been
-processed by the device. Virtqueues should never be deleted before
-all requests become complete status.
-
-Function blk_mq_freeze_queue() ensure that all requests in virtqueues
-become complete status. And no requests can enter in virtqueues.
-
-Signed-off-by: Yi Sun <yi.sun@unisoc.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20240129085250.1550594-1-yi.sun@unisoc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
+Signed-off-by: Eugen Hristev <eugen.hristev@collabora.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20231225133615.78993-1-eugen.hristev@collabora.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/soc/mediatek/mtk-pm-domains.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index affeca0dbc7ea..7f73e7447ecb5 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -989,14 +989,15 @@ static int virtblk_freeze(struct virtio_device *vdev)
- {
- 	struct virtio_blk *vblk = vdev->priv;
+diff --git a/drivers/soc/mediatek/mtk-pm-domains.c b/drivers/soc/mediatek/mtk-pm-domains.c
+index 52ecde8e446cf..9e649b7077c6a 100644
+--- a/drivers/soc/mediatek/mtk-pm-domains.c
++++ b/drivers/soc/mediatek/mtk-pm-domains.c
+@@ -493,6 +493,11 @@ static int scpsys_add_subdomain(struct scpsys *scpsys, struct device_node *paren
+ 			goto err_put_node;
+ 		}
  
-+	/* Ensure no requests in virtqueues before deleting vqs. */
-+	blk_mq_freeze_queue(vblk->disk->queue);
++		/* recursive call to add all subdomains */
++		ret = scpsys_add_subdomain(scpsys, child);
++		if (ret)
++			goto err_put_node;
 +
- 	/* Ensure we don't receive any more interrupts */
- 	vdev->config->reset(vdev);
- 
- 	/* Make sure no work handler is accessing the device. */
- 	flush_work(&vblk->config_work);
- 
--	blk_mq_quiesce_queue(vblk->disk->queue);
+ 		ret = pm_genpd_add_subdomain(parent_pd, child_pd);
+ 		if (ret) {
+ 			dev_err(scpsys->dev, "failed to add %s subdomain to parent %s\n",
+@@ -502,11 +507,6 @@ static int scpsys_add_subdomain(struct scpsys *scpsys, struct device_node *paren
+ 			dev_dbg(scpsys->dev, "%s add subdomain: %s\n", parent_pd->name,
+ 				child_pd->name);
+ 		}
 -
- 	vdev->config->del_vqs(vdev);
- 	kfree(vblk->vqs);
+-		/* recursive call to add all subdomains */
+-		ret = scpsys_add_subdomain(scpsys, child);
+-		if (ret)
+-			goto err_put_node;
+ 	}
  
-@@ -1014,7 +1015,7 @@ static int virtblk_restore(struct virtio_device *vdev)
- 
- 	virtio_device_ready(vdev);
- 
--	blk_mq_unquiesce_queue(vblk->disk->queue);
-+	blk_mq_unfreeze_queue(vblk->disk->queue);
  	return 0;
- }
- #endif
+@@ -520,9 +520,6 @@ static void scpsys_remove_one_domain(struct scpsys_domain *pd)
+ {
+ 	int ret;
+ 
+-	if (scpsys_domain_is_on(pd))
+-		scpsys_power_off(&pd->genpd);
+-
+ 	/*
+ 	 * We're in the error cleanup already, so we only complain,
+ 	 * but won't emit another error on top of the original one.
+@@ -532,6 +529,8 @@ static void scpsys_remove_one_domain(struct scpsys_domain *pd)
+ 		dev_err(pd->scpsys->dev,
+ 			"failed to remove domain '%s' : %d - state may be inconsistent\n",
+ 			pd->genpd.name, ret);
++	if (scpsys_domain_is_on(pd))
++		scpsys_power_off(&pd->genpd);
+ 
+ 	clk_bulk_put(pd->num_clks, pd->clks);
+ 	clk_bulk_put(pd->num_subsys_clks, pd->subsys_clks);
 -- 
 2.43.0
 
