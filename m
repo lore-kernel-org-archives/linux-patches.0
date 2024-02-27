@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994BE78B61;
-	Tue, 27 Feb 2024 14:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659BD1386CB;
+	Tue, 27 Feb 2024 14:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043423; cv=none; b=R+VjySH3LeNny38kJCc2LNlrzKs0st1nYlIULYKBuVuiJf6REI/oxmHGQf/hCeo10BRe9AXXMTeOJIsKhQxpmIfcEHBUVawfneFho+BwHbnFCsn8PBBAgYElbdH+ptpOIRXt2x6QoxVbQVPzb5DdMxseZfoZRbVX0KSJWtbdsVo=
+	t=1709043426; cv=none; b=SGcqrUgjhQkPekaRgE60FgqRL+OPOOyP9xXzNq2c4ocxqRvw2MrUXlTjKa05wcgPWW5/dpqY+K41EmG2sx6qP3lNomJmO8E3NYqXkxlkRleDEoOmiQyn/u19bX12wOYS8laJpO3YWqGETHBnlNjsC3o+oYU0m1rptDT4eEWP108=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043423; c=relaxed/simple;
-	bh=D6KjqZOOjaUVW6vL0f5mS27fniWlqx2hiXgBxflsBfQ=;
+	s=arc-20240116; t=1709043426; c=relaxed/simple;
+	bh=5iFfRwSIs9D+Xpw46UxHstMoJ2xa364gmvSr2+gJbDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lEBXWh/LcElU6is1G5HsBD9yM3n1iLIbs5xCBigKph2mpelVfqIurwpY5SHYDxfAePKsbUnN/i/Ym3tTYvB3Hr317vKal26YCWfwlqVHBtN+UUn4aXX4ex4PJQdY3jRe4st+HekVBKG6Vm+ijFtcJBp6j832ElHG3XQsToGRztI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwAHvuBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TI2O2YJQUytxEiyceCtPcmIXKChy+XRQ3cunep5O4iVnshpv/VifFy7p1LR1MgGuRIJQe+d7wDnvYi2xkmzr7NQiUTzfahp58b5OlH/7vzpvv2n+/H6MZhiAY90h40zFgwRuczMh1JTKyqFpJV2EFv09I9VRgKHviVtxn1N/C6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0AHmd5k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwAHvuBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25EF8C433F1;
-	Tue, 27 Feb 2024 14:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0AHmd5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5020C433C7;
+	Tue, 27 Feb 2024 14:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043423;
-	bh=D6KjqZOOjaUVW6vL0f5mS27fniWlqx2hiXgBxflsBfQ=;
+	s=korg; t=1709043426;
+	bh=5iFfRwSIs9D+Xpw46UxHstMoJ2xa364gmvSr2+gJbDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwAHvuBUbZnhUwc0SpbGek5J7WS10eh+LiiXxK0L8Ff2QZ//3gx2+ovyIkDpGhRsX
-	 tpMhT5OGaAKFLkl5H9z5EMF5fnXK9kJgVwBX1cttAyadCDbLD6xq2nRII4zJzbyBLR
-	 4QxpvK/jhQNKHkghMRdLp4BJpP76/+enfJQmtfFA=
+	b=Q0AHmd5kaZ7nxhfmqQF2M+qj8sdmwtwdeSA0TljZ3xfoHxfoerYi4zCgu6ervEmwL
+	 TFwiRK/ubLeQF1/IE55R7O5XuD0ARMubgJjNsTpoRXrV717mZaSPT9faJ/aCz72sqC
+	 Azx/wWasf5lm4FesFl2LhUxhLTOBlDlP1vWpaQEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Adam Goldman <adamg@pobox.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/195] LoongArch: Select HAVE_ARCH_SECCOMP to use the common SECCOMP menu
-Date: Tue, 27 Feb 2024 14:25:35 +0100
-Message-ID: <20240227131612.940561541@linuxfoundation.org>
+Subject: [PATCH 6.1 075/195] firewire: core: send bus reset promptly on gap count error
+Date: Tue, 27 Feb 2024 14:25:36 +0100
+Message-ID: <20240227131612.973284718@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,60 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit 6b79ecd084c99b31c8b4d0beda08893716d5558e ]
+[ Upstream commit 7ed4380009e96d9e9c605e12822e987b35b05648 ]
 
-LoongArch missed the refactoring made by commit 282a181b1a0d ("seccomp:
-Move config option SECCOMP to arch/Kconfig") because LoongArch was not
-mainlined at that time.
+If we are bus manager and the bus has inconsistent gap counts, send a
+bus reset immediately instead of trying to read the root node's config
+ROM first. Otherwise, we could spend a lot of time trying to read the
+config ROM but never succeeding.
 
-The 'depends on PROC_FS' statement is stale as described in that commit.
-Select HAVE_ARCH_SECCOMP, and remove the duplicated config entry.
+This eliminates a 50+ second delay before the FireWire bus is usable after
+a newly connected device is powered on in certain circumstances.
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+The delay occurs if a gap count inconsistency occurs, we are not the root
+node, and we become bus manager. One scenario that causes this is with a TI
+XIO2213B OHCI, the first time a Sony DSR-25 is powered on after being
+connected to the FireWire cable. In this configuration, the Linux box will
+not receive the initial PHY configuration packet sent by the DSR-25 as IRM,
+resulting in the DSR-25 having a gap count of 44 while the Linux box has a
+gap count of 63.
+
+FireWire devices have a gap count parameter, which is set to 63 on power-up
+and can be changed with a PHY configuration packet. This determines the
+duration of the subaction and arbitration gaps. For reliable communication,
+all nodes on a FireWire bus must have the same gap count.
+
+A node may have zero or more of the following roles: root node, bus manager
+(BM), isochronous resource manager (IRM), and cycle master. Unless a root
+node was forced with a PHY configuration packet, any node might become root
+node after a bus reset. Only the root node can become cycle master. If the
+root node is not cycle master capable, the BM or IRM should force a change
+of root node.
+
+After a bus reset, each node sends a self-ID packet, which contains its
+current gap count. A single bus reset does not change the gap count, but
+two bus resets in a row will set the gap count to 63. Because a consistent
+gap count is required for reliable communication, IEEE 1394a-2000 requires
+that the bus manager generate a bus reset if it detects that the gap count
+is inconsistent.
+
+When the gap count is inconsistent, build_tree() will notice this after the
+self identification process. It will set card->gap_count to the invalid
+value 0. If we become bus master, this will force bm_work() to send a bus
+reset when it performs gap count optimization.
+
+After a bus reset, there is no bus manager. We will almost always try to
+become bus manager. Once we become bus manager, we will first determine
+whether the root node is cycle master capable. Then, we will determine if
+the gap count should be changed. If either the root node or the gap count
+should be changed, we will generate a bus reset.
+
+To determine if the root node is cycle master capable, we read its
+configuration ROM. bm_work() will wait until we have finished trying to
+read the configuration ROM.
+
+However, an inconsistent gap count can make this take a long time.
+read_config_rom() will read the first few quadlets from the config ROM. Due
+to the gap count inconsistency, eventually one of the reads will time out.
+When read_config_rom() fails, fw_device_init() calls it again until
+MAX_RETRIES is reached. This takes 50+ seconds.
+
+Once we give up trying to read the configuration ROM, bm_work() will wake
+up, assume that the root node is not cycle master capable, and do a bus
+reset. Hopefully, this will resolve the gap count inconsistency.
+
+This change makes bm_work() check for an inconsistent gap count before
+waiting for the root node's configuration ROM. If the gap count is
+inconsistent, bm_work() will immediately do a bus reset. This eliminates
+the 50+ second delay and rapidly brings the bus to a working state.
+
+I considered that if the gap count is inconsistent, a PHY configuration
+packet might not be successful, so it could be desirable to skip the PHY
+configuration packet before the bus reset in this case. However, IEEE
+1394a-2000 and IEEE 1394-2008 say that the bus manager may transmit a PHY
+configuration packet before a bus reset when correcting a gap count error.
+Since the standard endorses this, I decided it's safe to retain the PHY
+configuration packet transmission.
+
+Normally, after a topology change, we will reset the bus a maximum of 5
+times to change the root node and perform gap count optimization. However,
+if there is a gap count inconsistency, we must always generate a bus reset.
+Otherwise the gap count inconsistency will persist and communication will
+be unreliable. For that reason, if there is a gap count inconstency, we
+generate a bus reset even if we already reached the 5 reset limit.
+
+Signed-off-by: Adam Goldman <adamg@pobox.com>
+Reference: https://sourceforge.net/p/linux1394/mailman/message/58727806/
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/Kconfig | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ drivers/firewire/core-card.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/Kconfig b/arch/loongarch/Kconfig
-index b1b4396dbac6c..fa3171f563274 100644
---- a/arch/loongarch/Kconfig
-+++ b/arch/loongarch/Kconfig
-@@ -81,6 +81,7 @@ config LOONGARCH
- 	select GPIOLIB
- 	select HAVE_ARCH_AUDITSYSCALL
- 	select HAVE_ARCH_MMAP_RND_BITS if MMU
-+	select HAVE_ARCH_SECCOMP
- 	select HAVE_ARCH_SECCOMP_FILTER
- 	select HAVE_ARCH_TRACEHOOK
- 	select HAVE_ARCH_TRANSPARENT_HUGEPAGE
-@@ -462,23 +463,6 @@ config PHYSICAL_START
- 	  specified in the "crashkernel=YM@XM" command line boot parameter
- 	  passed to the panic-ed kernel).
+diff --git a/drivers/firewire/core-card.c b/drivers/firewire/core-card.c
+index 6ac5ff20a2fe2..8aaa7fcb2630d 100644
+--- a/drivers/firewire/core-card.c
++++ b/drivers/firewire/core-card.c
+@@ -429,7 +429,23 @@ static void bm_work(struct work_struct *work)
+ 	 */
+ 	card->bm_generation = generation;
  
--config SECCOMP
--	bool "Enable seccomp to safely compute untrusted bytecode"
--	depends on PROC_FS
--	default y
--	help
--	  This kernel feature is useful for number crunching applications
--	  that may need to compute untrusted bytecode during their
--	  execution. By using pipes or other transports made available to
--	  the process as file descriptors supporting the read/write
--	  syscalls, it's possible to isolate those applications in
--	  their own address space using seccomp. Once seccomp is
--	  enabled via /proc/<pid>/seccomp, it cannot be disabled
--	  and the task is only allowed to execute a few safe syscalls
--	  defined by each seccomp mode.
--
--	  If unsure, say Y. Only embedded should say N here.
--
- endmenu
- 
- config ARCH_SELECT_MEMORY_MODEL
+-	if (root_device == NULL) {
++	if (card->gap_count == 0) {
++		/*
++		 * If self IDs have inconsistent gap counts, do a
++		 * bus reset ASAP. The config rom read might never
++		 * complete, so don't wait for it. However, still
++		 * send a PHY configuration packet prior to the
++		 * bus reset. The PHY configuration packet might
++		 * fail, but 1394-2008 8.4.5.2 explicitly permits
++		 * it in this case, so it should be safe to try.
++		 */
++		new_root_id = local_id;
++		/*
++		 * We must always send a bus reset if the gap count
++		 * is inconsistent, so bypass the 5-reset limit.
++		 */
++		card->bm_retries = 0;
++	} else if (root_device == NULL) {
+ 		/*
+ 		 * Either link_on is false, or we failed to read the
+ 		 * config rom.  In either case, pick another root.
 -- 
 2.43.0
 
