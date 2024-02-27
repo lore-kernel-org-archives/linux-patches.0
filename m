@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EE713DB90;
-	Tue, 27 Feb 2024 13:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D7814199C;
+	Tue, 27 Feb 2024 13:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041069; cv=none; b=DsZxkubT8TlqLDQ8fjz0AY+qlhvZp3gWzJCOodfSRCvIHJQb5DO1976L3nNgpsqwdwX8saSX+nidgoY/ohHWPNZxBUREWWmkhBAmb/AQ+Uq7zbXOFU9RRDRFzwgmPuoSF8tGYgWoQvWodnC0WNGASHiSEwWWOhBwOr3h/Ny0LJ8=
+	t=1709041071; cv=none; b=EksgcxJrxhZh9FMfxuLVq/ZcinnivgcKktK64YOEYuUoJe57ouf6WFZwV151wYj+Gqxbcsr+cGYp4YQTceyF0N6kU35AHFSIm/reC5/05U+R3JGAiZCcz2vx3J1oy93hH1CvWdbrw4QAAlko/j/HwvmfydnEAKhghqPoR4ekUio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041069; c=relaxed/simple;
-	bh=vyoVPoOYzx+g1P1pVquy9m9QYLQrTGgh2xwvqPtEwwY=;
+	s=arc-20240116; t=1709041071; c=relaxed/simple;
+	bh=8onaAGFii8EBfo1nQECrj5JyO6r0zIbvC4FXSvjav/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y61mpeQB0l2CrFI1SDSq7Mgkm0oIeAtg1H3vbgtiBJUhGh+ZxeUaXW3axB3ztEBov69b4XIFSMU8377pMSrOtkPI1ucY82mQbpz8X7SAZZfzJwbEtIm6cigdX3fT1Pn2BMhgjNZVt4RgXMj9irMZSWE6QGj7v/n5XGcWwRIrDpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylEDJJI5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y8ta4thz1F1ob39ZCCa+q+IhYJcTi6kSWlot3l0Yb4sd9//2QMuch0IngKauPQ+fJtEsd4TxEVkkNX2h+///bnLneuP4PlSKZbjVMmZFx+K/c7r3LnrkogYzG0JXZ8NrjAWtnpmClpCY7dSfdwquTLAnqrW68ljcwiK97o8kXHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n059cI0I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylEDJJI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701FDC433F1;
-	Tue, 27 Feb 2024 13:37:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n059cI0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1AAC433C7;
+	Tue, 27 Feb 2024 13:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041068;
-	bh=vyoVPoOYzx+g1P1pVquy9m9QYLQrTGgh2xwvqPtEwwY=;
+	s=korg; t=1709041071;
+	bh=8onaAGFii8EBfo1nQECrj5JyO6r0zIbvC4FXSvjav/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylEDJJI5eYuwmcgF86tWO2m7blHj/HWswus6xELaHxZbpUQ+inpPVoRWgbWY3eT8j
-	 z//X6BVdMldTMh+NZ5QUrtPAjIGesDuQVVQGYjAUaumdssVe0SVL2ZqW1PW6NOaQz2
-	 b29KUmrNZhAZSRsecXiznjIVIOXFG3OM9K6QVRqo=
+	b=n059cI0IxtnpsEnFhEnntJsEDXiT5qEifcV9Jxkn7po103kZS87+gLm+U+Rt3ztiK
+	 0Dr+0L7bffxPA+Hak50npYVmqTuDcny3gK2ftll3zEsM/39lRPuaPnqdIvqRVApFMK
+	 VoPfFZ2t/LtSsobek9hkSx/x6ququAyxiS2QYo5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.7 181/334] sparc: Fix undefined reference to fb_is_primary_device
-Date: Tue, 27 Feb 2024 14:20:39 +0100
-Message-ID: <20240227131636.447518418@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.7 208/334] usb: cdns3: fix memory double free when handle zero packet
+Date: Tue, 27 Feb 2024 14:21:06 +0100
+Message-ID: <20240227131637.487664335@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,53 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit ed683b9bb91fc274383e222ba5873a9ee9033462 upstream.
+commit 5fd9e45f1ebcd57181358af28506e8a661a260b3 upstream.
 
-Commit 55bffc8170bb ("fbdev: Split frame buffer support in FB and FB_CORE
-symbols") added a new FB_CORE Kconfig symbol, that can be enabled to only
-have fbcon/VT and DRM fbdev emulation, but without support for any legacy
-fbdev driver.
+829  if (request->complete) {
+830          spin_unlock(&priv_dev->lock);
+831          usb_gadget_giveback_request(&priv_ep->endpoint,
+832                                    request);
+833          spin_lock(&priv_dev->lock);
+834  }
+835
+836  if (request->buf == priv_dev->zlp_buf)
+837      cdns3_gadget_ep_free_request(&priv_ep->endpoint, request);
 
-Unfortunately, it missed to change the CONFIG_FB in arch/sparc makefiles,
-which leads to the following linking error in some sparc64 configurations:
+Driver append an additional zero packet request when queue a packet, which
+length mod max packet size is 0. When transfer complete, run to line 831,
+usb_gadget_giveback_request() will free this requestion. 836 condition is
+true, so cdns3_gadget_ep_free_request() free this request again.
 
-   sparc64-linux-ld: drivers/video/fbdev/core/fbcon.o: in function `fbcon_fb_registered':
->> fbcon.c:(.text+0x4f60): undefined reference to `fb_is_primary_device'
+Log:
 
-Fixes: 55bffc8170bb ("fbdev: Split frame buffer support in FB and FB_CORE symbols")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202401290306.IV8rhJ02-lkp@intel.com/
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Cc: <stable@vger.kernel.org> # v6.6+
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240220095428.3341195-1-javierm@redhat.com
+[ 1920.140696][  T150] BUG: KFENCE: use-after-free read in cdns3_gadget_giveback+0x134/0x2c0 [cdns3]
+[ 1920.140696][  T150]
+[ 1920.151837][  T150] Use-after-free read at 0x000000003d1cd10b (in kfence-#36):
+[ 1920.159082][  T150]  cdns3_gadget_giveback+0x134/0x2c0 [cdns3]
+[ 1920.164988][  T150]  cdns3_transfer_completed+0x438/0x5f8 [cdns3]
+
+Add check at line 829, skip call usb_gadget_giveback_request() if it is
+additional zero length packet request. Needn't call
+usb_gadget_giveback_request() because it is allocated in this driver.
+
+Cc: stable@vger.kernel.org
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20240202154217.661867-2-Frank.Li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sparc/Makefile       |    2 +-
- arch/sparc/video/Makefile |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/cdns3/cdns3-gadget.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/sparc/Makefile
-+++ b/arch/sparc/Makefile
-@@ -60,7 +60,7 @@ libs-y                 += arch/sparc/pro
- libs-y                 += arch/sparc/lib/
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -828,7 +828,11 @@ void cdns3_gadget_giveback(struct cdns3_
+ 			return;
+ 	}
  
- drivers-$(CONFIG_PM) += arch/sparc/power/
--drivers-$(CONFIG_FB) += arch/sparc/video/
-+drivers-$(CONFIG_FB_CORE) += arch/sparc/video/
- 
- boot := arch/sparc/boot
- 
---- a/arch/sparc/video/Makefile
-+++ b/arch/sparc/video/Makefile
-@@ -1,3 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
- 
--obj-$(CONFIG_FB) += fbdev.o
-+obj-$(CONFIG_FB_CORE) += fbdev.o
+-	if (request->complete) {
++	/*
++	 * zlp request is appended by driver, needn't call usb_gadget_giveback_request() to notify
++	 * gadget composite driver.
++	 */
++	if (request->complete && request->buf != priv_dev->zlp_buf) {
+ 		spin_unlock(&priv_dev->lock);
+ 		usb_gadget_giveback_request(&priv_ep->endpoint,
+ 					    request);
 
 
