@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0D81419B3;
-	Tue, 27 Feb 2024 14:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A98146E78;
+	Tue, 27 Feb 2024 14:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709044164; cv=none; b=DrI1UEJ9Wt2kgV4wF0h4kpWW3FvFfwJ7FyHvfBslwfiEqBqDbW4dMntXG9v1+KRVCwUmi/qQ0XxyNdfET3uiTz3kIKqAxT6PkWFcubuZjMQmtWVbS9/NQFTdgjlrpbVmJGtjb7k48JzyzIKRP0ZrtPJ2CnyAp/gY6YLlU6iwNlo=
+	t=1709044167; cv=none; b=c3/cYcz0YlLCuLvP/92ELhcLF9R3VSdsQYiBmuMoOuKH+uMcbM0vlosCiLuxwaRTLWocrWiVvdONvlmZXnMEVhzqKifFnrxv46GPiU4Ua2KiFwEo5j/SWmyY+/aS3F8rWdfAe8jwwNNW3GaedyYUBJ2hcSz64xw40pZp0gRd9W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709044164; c=relaxed/simple;
-	bh=KwWWl6NIQbGezQxLvsZMqEUKRpjwbEBZoMRoIcvCHh4=;
+	s=arc-20240116; t=1709044167; c=relaxed/simple;
+	bh=Pfe4Ds++qbZKADJdyGM9etO94qJiuKcNs/KRvJFGy58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTeFbcil+Ib77btSzutA+YEODx3hZtLosN+nZrAK2hxMswAo9tQ2GG4iYDhp6ZYSGa58x0foqEk4PqSAF2WeDz1nafwHfZz1Fi8Ix5/8seODy3VWtwxB7wLME34+ZsW5xQxsoAiIruUyY+MYbSK3ibUfg0L+0TE7nyOnNRA7ykk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRyRFz0U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oj9kVM5NrCJmKmIf9IYBn6lT7mPw/0CWDy2jGIRQfcJR6YqALlVTBbQUF1KjaCEMW73Gowm5pyxhkSzePddnMD0vGWvU2oznpdTh+5/pPJnwXgPSjLQnrAUdKT2S9uRJHjaXDzPSEcvPupC8tetoM872FS+/4HfWJ9hqeGJBz2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrSAUtxw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRyRFz0U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C669EC43390;
-	Tue, 27 Feb 2024 14:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrSAUtxw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F59AC433C7;
+	Tue, 27 Feb 2024 14:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709044164;
-	bh=KwWWl6NIQbGezQxLvsZMqEUKRpjwbEBZoMRoIcvCHh4=;
+	s=korg; t=1709044167;
+	bh=Pfe4Ds++qbZKADJdyGM9etO94qJiuKcNs/KRvJFGy58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRyRFz0UYXSGtt3w0hza0U/ln/NlJaP8UyPtjl9UdXrE80Wv9MW5OyOR8BrdN5xSi
-	 fQTrj0bmA+PRTcQNkuAey4A1am8Y54q/ymj61XxA6jBluoTozyK0woWMxDy/58ahnf
-	 7BrfGjZmOD8gxVY3amMTsjNY71XnwUyK2KkyZT0o=
+	b=KrSAUtxwIBBx0cAWGvCptim+xR1e2xEtKzK3lOrILvtfyBH9sCWHwrlHf9LygHb4r
+	 3iXNaPav9O9iNhRDmqubNOHOOxfaljKQDhFMn6KQQxH1ti82cHkeMQj0dL5s2BNgJP
+	 29xyQejqeGDzKQYNIVAAvMHBHHIY6kqLtxjQliLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Borislav Petkov <bp@suse.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 086/122] x86/ftrace: Use alternative RET encoding
-Date: Tue, 27 Feb 2024 14:27:27 +0100
-Message-ID: <20240227131601.520374031@linuxfoundation.org>
+Subject: [PATCH 5.10 087/122] x86/returnthunk: Allow different return thunks
+Date: Tue, 27 Feb 2024 14:27:28 +0100
+Message-ID: <20240227131601.553195027@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131558.694096204@linuxfoundation.org>
 References: <20240227131558.694096204@linuxfoundation.org>
@@ -54,42 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-Upstream commit: 1f001e9da6bbf482311e45e48f53c2bd2179e59c
+Upstream commit: 770ae1b709528a6a173b5c7b183818ee9b45e376
 
-Use the return thunk in ftrace trampolines, if needed.
+In preparation for call depth tracking on Intel SKL CPUs, make it possible
+to patch in a SKL specific return thunk.
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220915111147.680469665@infradead.org
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/ftrace.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |    6 ++++++
+ arch/x86/kernel/alternative.c        |   19 ++++++++++++++-----
+ arch/x86/kernel/cpu/bugs.c           |    2 ++
+ arch/x86/kernel/ftrace.c             |    2 +-
+ arch/x86/kernel/static_call.c        |    2 +-
+ arch/x86/net/bpf_jit_comp.c          |    2 +-
+ 6 files changed, 25 insertions(+), 8 deletions(-)
 
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -207,6 +207,12 @@ extern void srso_alias_untrain_ret(void)
+ extern void entry_untrain_ret(void);
+ extern void entry_ibpb(void);
+ 
++#ifdef CONFIG_CALL_THUNKS
++extern void (*x86_return_thunk)(void);
++#else
++#define x86_return_thunk	(&__x86_return_thunk)
++#endif
++
+ #ifdef CONFIG_RETPOLINE
+ 
+ typedef u8 retpoline_thunk_t[RETPOLINE_THUNK_SIZE];
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -676,6 +676,11 @@ void __init_or_module noinline apply_ret
+ }
+ 
+ #ifdef CONFIG_RETHUNK
++
++#ifdef CONFIG_CALL_THUNKS
++void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
++#endif
++
+ /*
+  * Rewrite the compiler generated return thunk tail-calls.
+  *
+@@ -691,14 +696,18 @@ static int patch_return(void *addr, stru
+ {
+ 	int i = 0;
+ 
+-	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
+-		return -1;
+-
+-	bytes[i++] = RET_INSN_OPCODE;
++	if (cpu_feature_enabled(X86_FEATURE_RETHUNK)) {
++		if (x86_return_thunk == __x86_return_thunk)
++			return -1;
++
++		i = JMP32_INSN_SIZE;
++		__text_gen_insn(bytes, JMP32_INSN_OPCODE, addr, x86_return_thunk, i);
++	} else {
++		bytes[i++] = RET_INSN_OPCODE;
++	}
+ 
+ 	for (; i < insn->length;)
+ 		bytes[i++] = INT3_INSN_OPCODE;
+-
+ 	return i;
+ }
+ 
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -61,7 +61,9 @@ EXPORT_SYMBOL_GPL(x86_pred_cmd);
+ 
+ static DEFINE_MUTEX(spec_ctrl_mutex);
+ 
++#ifdef CONFIG_CALL_THUNKS
+ void (*x86_return_thunk)(void) __ro_after_init = &__x86_return_thunk;
++#endif
+ 
+ /* Update SPEC_CTRL MSR and its cached copy unconditionally */
+ static void update_spec_ctrl(u64 val)
 --- a/arch/x86/kernel/ftrace.c
 +++ b/arch/x86/kernel/ftrace.c
-@@ -311,7 +311,7 @@ union ftrace_op_code_union {
- 	} __attribute__((packed));
- };
- 
--#define RET_SIZE		1 + IS_ENABLED(CONFIG_SLS)
-+#define RET_SIZE		(IS_ENABLED(CONFIG_RETPOLINE) ? 5 : 1 + IS_ENABLED(CONFIG_SLS))
- 
- static unsigned long
- create_trampoline(struct ftrace_ops *ops, unsigned int *tramp_size)
-@@ -367,7 +367,10 @@ create_trampoline(struct ftrace_ops *ops
- 		goto fail;
+@@ -368,7 +368,7 @@ create_trampoline(struct ftrace_ops *ops
  
  	ip = trampoline + size;
--	memcpy(ip, retq, RET_SIZE);
-+	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
-+		__text_gen_insn(ip, JMP32_INSN_OPCODE, ip, &__x86_return_thunk, JMP32_INSN_SIZE);
-+	else
-+		memcpy(ip, retq, sizeof(retq));
+ 	if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
+-		__text_gen_insn(ip, JMP32_INSN_OPCODE, ip, &__x86_return_thunk, JMP32_INSN_SIZE);
++		__text_gen_insn(ip, JMP32_INSN_OPCODE, ip, x86_return_thunk, JMP32_INSN_SIZE);
+ 	else
+ 		memcpy(ip, retq, sizeof(retq));
  
- 	/* No need to test direct calls on created trampolines */
- 	if (ops->flags & FTRACE_OPS_FL_SAVE_REGS) {
+--- a/arch/x86/kernel/static_call.c
++++ b/arch/x86/kernel/static_call.c
+@@ -41,7 +41,7 @@ static void __ref __static_call_transfor
+ 
+ 	case RET:
+ 		if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
+-			code = text_gen_insn(JMP32_INSN_OPCODE, insn, &__x86_return_thunk);
++			code = text_gen_insn(JMP32_INSN_OPCODE, insn, x86_return_thunk);
+ 		else
+ 			code = &retinsn;
+ 		break;
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -405,7 +405,7 @@ static void emit_return(u8 **pprog, u8 *
+ 	int cnt = 0;
+ 
+ 	if (cpu_feature_enabled(X86_FEATURE_RETHUNK)) {
+-		emit_jump(&prog, &__x86_return_thunk, ip);
++		emit_jump(&prog, x86_return_thunk, ip);
+ 	} else {
+ 		EMIT1(0xC3);		/* ret */
+ 		if (IS_ENABLED(CONFIG_SLS))
 
 
