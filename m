@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F55145327;
-	Tue, 27 Feb 2024 13:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299D1145345;
+	Tue, 27 Feb 2024 13:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041698; cv=none; b=mcnFdA7GncAxf5q5uQvzWIRxp7zv6AX3Ncexag4uGCOcjDshamacezzC0LmupvUVfoy2GL/gP00IjqW2T4CzRNXElEb8L4di5POzl9wexG3YYcw+zuVV4i/FEd5/FTTZjPXebdXjNvEzIfVkEhPcIHgDRtu1wo97Eg3rVa6q9X8=
+	t=1709041701; cv=none; b=LUG4KkBTeMRtLNZHMP4eooenTzW5BFEQKKzoTDxRQPrBxCnB+q32QmORccjlxE57ZSQRdu+OMg/hXShObgQw//OfYmOwXI5WM33IG4eV1RHyIwP5j/Df3xagfjv9umI7QlrORv/uBwaA6fZDlGW0o8zZo6rvzlwpkwZKs6iKz5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041698; c=relaxed/simple;
-	bh=jBlmmCuzu6c10jAVdMAntK5URkJtrJZsfFqxanKl9KQ=;
+	s=arc-20240116; t=1709041701; c=relaxed/simple;
+	bh=dICsfInweW4kLAcI8ADbNjur7dVPUjliZ0d/eQjZIGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFtISu/2Eg8gvBVF8D5WGE5Q8GVL0Szx633+BC5Nsh/PcO1hUvyHLM+ENRoR2V31vVi4nqp34p3Jk0LQfkM5QEFgAwDB3AxYvKkScjSqg/4Glc0r+epsFyI6NR2nFxMT8q9sQXeA3rBhbHqhOlCFeFZq7UFrY+rOD6f/ZntOqgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9UAL6ut; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VqXxN8BKRerQ0C3WIjW2iGw9Ud4iOyd8hP9S+g9dNjiSrKPes3szkvOVbGWCX9A/TPs1jdqMs9zRzFkLjPR960qu6DFpvRdnMVPHawdW6qxD4PGqNCcHZtFnVK63lipvcDbus2Utf0LD2WR3hsQ2w723YgfywczeZO9RE3xT+QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuHSU1uV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9UAL6ut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF12C433F1;
-	Tue, 27 Feb 2024 13:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuHSU1uV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5F3C433F1;
+	Tue, 27 Feb 2024 13:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041698;
-	bh=jBlmmCuzu6c10jAVdMAntK5URkJtrJZsfFqxanKl9KQ=;
+	s=korg; t=1709041701;
+	bh=dICsfInweW4kLAcI8ADbNjur7dVPUjliZ0d/eQjZIGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9UAL6utPay19Z+bAPJBkB5N8g6sJ66Ws0DpjsHTiNjwyCNlgJ2L7rTDV4qLAJq9P
-	 QIsKJZ5PQHHYSVtOR3Re7mMJEXK8XfQmmtHT1Sv0ig+oBjXBQ8N8lT8AY8alclqxXX
-	 Gr2QSeZnZk4o1m7w95Fj3MILEyNCDQmB6//26Ly8=
+	b=QuHSU1uVkpZO2+Vy7LzEaHVn3Q/pCtFkQxUeKmtOMEFOpSE5M4YwH51K99uOont+J
+	 SxdR3C+fVbSdCJSyS4uSjklBSozOixMKlGVrBRbTiq3OpH4ljelCDcTPJZZ8CF1fpr
+	 JDQba1u3iI97QmPjBSOCWG/pu4Nyo4jHfhOXS3pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Huang Pei <huangpei@loongson.cn>,
+	=?UTF-8?q?Marcus=20R=C3=BCckert?= <darix@opensu.se>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/299] MIPS: reserve exception vector space ONLY ONCE
-Date: Tue, 27 Feb 2024 14:22:22 +0100
-Message-ID: <20240227131626.828243745@linuxfoundation.org>
+Subject: [PATCH 6.6 040/299] HID: logitech-hidpp: add support for Logitech G Pro X Superlight 2
+Date: Tue, 27 Feb 2024 14:22:31 +0100
+Message-ID: <20240227131627.277270901@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -45,49 +45,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huang Pei <huangpei@loongson.cn>
+From: Jiri Kosina <jkosina@suse.com>
 
-[ Upstream commit abcabb9e30a1f9a69c76776f8abffc31c377b542 ]
+[ Upstream commit afa6ac2690bb9904ff883c6e942281e1032a484d ]
 
-"cpu_probe" is called both by BP and APs, but reserving exception vector
-(like 0x0-0x1000) called by "cpu_probe" need once and calling on APs is
-too late since memblock is unavailable at that time.
+Let logitech-hidpp driver claim Logitech G Pro X Superlight 2.
 
-So, reserve exception vector ONLY by BP.
-
-Suggested-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Huang Pei <huangpei@loongson.cn>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reported-by: Marcus Rückert <darix@opensu.se>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/traps.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/hid/hid-logitech-hidpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/mips/kernel/traps.c b/arch/mips/kernel/traps.c
-index 246c6a6b02614..5b778995d4483 100644
---- a/arch/mips/kernel/traps.c
-+++ b/arch/mips/kernel/traps.c
-@@ -2007,7 +2007,13 @@ unsigned long vi_handlers[64];
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 7bf12ca0eb4a9..4519ee377aa76 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4650,6 +4650,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC088) },
+ 	{ /* Logitech G Pro X Superlight Gaming Mouse over USB */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC094) },
++	{ /* Logitech G Pro X Superlight 2 Gaming Mouse over USB */
++	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0xC09b) },
  
- void reserve_exception_space(phys_addr_t addr, unsigned long size)
- {
--	memblock_reserve(addr, size);
-+	/*
-+	 * reserve exception space on CPUs other than CPU0
-+	 * is too late, since memblock is unavailable when APs
-+	 * up
-+	 */
-+	if (smp_processor_id() == 0)
-+		memblock_reserve(addr, size);
- }
- 
- void __init *set_except_vector(int n, void *addr)
+ 	{ /* G935 Gaming Headset */
+ 	  HID_USB_DEVICE(USB_VENDOR_ID_LOGITECH, 0x0a87),
 -- 
 2.43.0
 
