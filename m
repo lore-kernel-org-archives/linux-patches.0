@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F8313B7A0;
-	Tue, 27 Feb 2024 13:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 734A313B78F;
+	Tue, 27 Feb 2024 13:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041588; cv=none; b=fUB4XoDVot4n+rcGr8YtS2byikVKaWozf7e46RhOawIsfLhQcKHvEYU3LwoYRN8sFyAoomak36hO6OobVUWVaq5Ev1nJrNDFDerEam0g4MbSKxXShAinsEQL+3gSpKtc7YPPKiL3nLPuVau3WSpJCQRF4y/YYzVYyz83Jv99/VY=
+	t=1709041591; cv=none; b=YxJpndP90yFCG1zraVLfg7SwGts4Mw0PieyXngD+Wtjn2TV0//k94FZ7dF9xnnRQsst3u7HZJbJr6lr07ClMXZSUpxBqUGqzKI6+cv9UgqVz2r4FTxBTAAm3iUPsgEBlA1+yzOrGuaDIWeSqI8iZL6uQTtiHTyaBSe6gylErL/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041588; c=relaxed/simple;
-	bh=PCFLJr9hlKzaxCl9comiBXMlkLC1AGkqat01wtgxMJo=;
+	s=arc-20240116; t=1709041591; c=relaxed/simple;
+	bh=VRQpZvELbvFAP77PUSphEXFOjcuBAOLTqqdzCvMkl4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CMrg7LTXKurQKwEpM1SfF8HdXI8ouIjcG3ovfFwKlfv8aRDYykZ4X9iVMl7PG2prDVbXsO212FYTey8h9Q2xybhckzmUEwWp7VDJ22dXFNlqkyMC0YkEBWT2e2AvnqRRPmq4EqMsRLGXGy8ixhVvkMBzfGwnYpzAeQdbOBH85As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDhHfXzV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UBjbGyCI4FO0X9Oby/g+WJyG8lE77rPstF+XoR+/P4SZz+4068w5gJkRtERbzNPivPnc7wp1iUoQB/DroCgWqImjNvrJi8wylALGCpTvvOd/MyuIjRDRaRI77EBNODNX2MPuSLEnYW5P0N7nv3Rdqy+0esAjGR6+KKKDap4ROU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svA21sZC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDhHfXzV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44665C43394;
-	Tue, 27 Feb 2024 13:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svA21sZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C50C433C7;
+	Tue, 27 Feb 2024 13:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041588;
-	bh=PCFLJr9hlKzaxCl9comiBXMlkLC1AGkqat01wtgxMJo=;
+	s=korg; t=1709041591;
+	bh=VRQpZvELbvFAP77PUSphEXFOjcuBAOLTqqdzCvMkl4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDhHfXzV1f1GOIJ0Sy7BgLNoaopsyke2sXh8bI6+Ez8oxakKxucZjlVDVTEcxYau8
-	 neC+FH2E9epeU4ARJWcUOYNPFp7/Xo/qRLZvqGiC360MZX64z+5QBxO8p8chX8Z9kN
-	 STPFi/epJnnkxsttF9N/mOD+4l+doVZRLcAxGtLU=
+	b=svA21sZCxQM2yU3Y46Kk3MncuUjtWZQVydn6D0l+YXGHgPlH61cq1Q2n66oR8/Bls
+	 2I1z9kt5HVzUmtk3+lES7j+X95ruzmgSA2PXSy1zWEZ/irkXa6q90ocP416M0EEWv0
+	 ei9Jh5LIT7arUseOmWYCYxnwIdoHA7a7JnwHtzSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Nikita Shubin <nikita.shubin@maquefel.me>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 4.19 32/52] ARM: ep93xx: Add terminator to gpiod_lookup_table
-Date: Tue, 27 Feb 2024 14:26:19 +0100
-Message-ID: <20240227131549.588085742@linuxfoundation.org>
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>
+Subject: [PATCH 4.19 33/52] usb: gadget: ncm: Avoid dropping datagrams of properly parsed NTBs
+Date: Tue, 27 Feb 2024 14:26:20 +0100
+Message-ID: <20240227131549.620852538@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -47,43 +44,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Shubin <nikita.shubin@maquefel.me>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-commit fdf87a0dc26d0550c60edc911cda42f9afec3557 upstream.
+commit 76c51146820c5dac629f21deafab0a7039bc3ccd upstream.
 
-Without the terminator, if a con_id is passed to gpio_find() that
-does not exist in the lookup table the function will not stop looping
-correctly, and eventually cause an oops.
+It is observed sometimes when tethering is used over NCM with Windows 11
+as host, at some instances, the gadget_giveback has one byte appended at
+the end of a proper NTB. When the NTB is parsed, unwrap call looks for
+any leftover bytes in SKB provided by u_ether and if there are any pending
+bytes, it treats them as a separate NTB and parses it. But in case the
+second NTB (as per unwrap call) is faulty/corrupt, all the datagrams that
+were parsed properly in the first NTB and saved in rx_list are dropped.
 
-Cc: stable@vger.kernel.org
-Fixes: b2e63555592f ("i2c: gpio: Convert to use descriptors")
-Reported-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Nikita Shubin <nikita.shubin@maquefel.me>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Acked-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://lore.kernel.org/r/20240205102337.439002-1-alexander.sverdlin@gmail.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Adding a few custom traces showed the following:
+[002] d..1  7828.532866: dwc3_gadget_giveback: ep1out:
+req 000000003868811a length 1025/16384 zsI ==> 0
+[002] d..1  7828.532867: ncm_unwrap_ntb: K: ncm_unwrap_ntb toprocess: 1025
+[002] d..1  7828.532867: ncm_unwrap_ntb: K: ncm_unwrap_ntb nth: 1751999342
+[002] d..1  7828.532868: ncm_unwrap_ntb: K: ncm_unwrap_ntb seq: 0xce67
+[002] d..1  7828.532868: ncm_unwrap_ntb: K: ncm_unwrap_ntb blk_len: 0x400
+[002] d..1  7828.532868: ncm_unwrap_ntb: K: ncm_unwrap_ntb ndp_len: 0x10
+[002] d..1  7828.532869: ncm_unwrap_ntb: K: Parsed NTB with 1 frames
+
+In this case, the giveback is of 1025 bytes and block length is 1024.
+The rest 1 byte (which is 0x00) won't be parsed resulting in drop of
+all datagrams in rx_list.
+
+Same is case with packets of size 2048:
+[002] d..1  7828.557948: dwc3_gadget_giveback: ep1out:
+req 0000000011dfd96e length 2049/16384 zsI ==> 0
+[002] d..1  7828.557949: ncm_unwrap_ntb: K: ncm_unwrap_ntb nth: 1751999342
+[002] d..1  7828.557950: ncm_unwrap_ntb: K: ncm_unwrap_ntb blk_len: 0x800
+
+Lecroy shows one byte coming in extra confirming that the byte is coming
+in from PC:
+
+ Transfer 2959 - Bytes Transferred(1025)  Timestamp((18.524 843 590)
+ - Transaction 8391 - Data(1025 bytes) Timestamp(18.524 843 590)
+ --- Packet 4063861
+       Data(1024 bytes)
+       Duration(2.117us) Idle(14.700ns) Timestamp(18.524 843 590)
+ --- Packet 4063863
+       Data(1 byte)
+       Duration(66.160ns) Time(282.000ns) Timestamp(18.524 845 722)
+
+According to Windows driver, no ZLP is needed if wBlockLength is non-zero,
+because the non-zero wBlockLength has already told the function side the
+size of transfer to be expected. However, there are in-market NCM devices
+that rely on ZLP as long as the wBlockLength is multiple of wMaxPacketSize.
+To deal with such devices, it pads an extra 0 at end so the transfer is no
+longer multiple of wMaxPacketSize.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 9f6ce4240a2b ("usb: gadget: f_ncm.c added")
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Reviewed-by: Maciej Żenczykowski <maze@google.com>
+Link: https://lore.kernel.org/r/20240205074650.200304-1-quic_kriskura@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-ep93xx/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/f_ncm.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/arch/arm/mach-ep93xx/core.c
-+++ b/arch/arm/mach-ep93xx/core.c
-@@ -330,6 +330,7 @@ static struct gpiod_lookup_table ep93xx_
- 				GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN),
- 		GPIO_LOOKUP_IDX("G", 0, NULL, 1,
- 				GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN),
-+		{ }
- 	},
- };
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1349,7 +1349,15 @@ parse_ntb:
+ 	     "Parsed NTB with %d frames\n", dgram_counter);
  
+ 	to_process -= block_len;
+-	if (to_process != 0) {
++
++	/*
++	 * Windows NCM driver avoids USB ZLPs by adding a 1-byte
++	 * zero pad as needed.
++	 */
++	if (to_process == 1 &&
++	    (*(unsigned char *)(ntb_ptr + block_len) == 0x00)) {
++		to_process--;
++	} else if (to_process > 0) {
+ 		ntb_ptr = (unsigned char *)(ntb_ptr + block_len);
+ 		goto parse_ntb;
+ 	}
 
 
