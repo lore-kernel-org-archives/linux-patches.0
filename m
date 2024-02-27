@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E63B16423;
-	Tue, 27 Feb 2024 14:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F08016423;
+	Tue, 27 Feb 2024 14:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043074; cv=none; b=X8mKVlNDUvJoFQmLr0Xyb/gEWwM1Yp3nTPWgyvxzRm3X4OwerHEuzwKAOhCkEL3y29a75cAXW0lPpRVF3sw9NAgmkDE20nzHaYDvUC7+yQtJHWvrIuhEd9rqRQZG5Nrz1c7tV51ByBMtBA7kPKfEEC1THFjwOQft65PDX2OSwMY=
+	t=1709043077; cv=none; b=XXhn/fPvlHTOpyAnGPdWx+MWMyaIS3leKY9P4OJEqIia0q/6E6AQwbO6BXf2i561wF1yV3KgoEs9ouSsj4WRvlNcOTN9aMjjXtmeGMLdj8poPKDlgvMdOSJIWQolQsEnSrCkovssN8ynlKf37ykZclGSdqSthbfSkCHaZ1jgzt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043074; c=relaxed/simple;
-	bh=adOJkY5pC74bvbAPKqgcInHugdmGJEPXXjB5i/5+0/s=;
+	s=arc-20240116; t=1709043077; c=relaxed/simple;
+	bh=1gzVs4t4zvp9xzxBth+EoiEzPPa3/9gMEaMOG5ORPOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSBmc2ppBmk9EIA0Vn8Cpqv2tjHK5vnuBkhyZLXrvyNdXKPfCqNQSCtDE5mBReLYJKeyhrS2cOOGZFqHQL6NiyOfAeaF9fpNx8EaCOlRPeghoYuhxrIAJcb0DvR49dnkXUv+9Rj36p306N6I8p3uzpDPtTfV2JmfBCPxEFQK3SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uz1r5cu1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VjEl+e37iXPqHlla0+385GByDIjbRm4RTr5/R3LKtTJVOoxNRw/v+fVOK3/9kHoMk4PGA/KQDkktb8FO0fxvtIYJ/N+bSITYeyVnz8Et67VXCCJMTj5WNSVjuJDW7jFt3rUn1FFl50dRZPOmx7xl3DCvuaXcI7SJ+pZL75wfi60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7S/yesO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uz1r5cu1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E927C433F1;
-	Tue, 27 Feb 2024 14:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7S/yesO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47F0C43390;
+	Tue, 27 Feb 2024 14:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043074;
-	bh=adOJkY5pC74bvbAPKqgcInHugdmGJEPXXjB5i/5+0/s=;
+	s=korg; t=1709043077;
+	bh=1gzVs4t4zvp9xzxBth+EoiEzPPa3/9gMEaMOG5ORPOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uz1r5cu1K4vjEW0Ddtk6Y/5W3zfA1y1/GCPcBec8MNHtVGus+17D/W0Zgv2clffMY
-	 pr2W55qcnLN5hHFkPIi4AB+J76F3lru+K6WyPanJQlUXRNu0jTgYtXLe01SJIf0EY7
-	 goB0jcoXofmGm8/vvwW0y76/sBFwZ9AVdrCG85qQ=
+	b=O7S/yesOtfSRih4qfmUaYvahUX1K3F7E5BxFHF9HzX0YziiBQfb1V3hKKzW6fzHUX
+	 q4WjP+xqEbTbLFDeed44zU1CT4KbtriQFKWidwxQYIf9ccks7+kF5mfc6EIKdNbfr1
+	 n4xVHrK8SVbScfmfDEXSpjb+N41tt6CQpoS1Gvwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Zhengkui <guozhengkui@vivo.com>,
-	Lyude Paul <lyude@redhat.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 225/245] drm/nouveau/instmem: fix uninitialized_var.cocci warning
-Date: Tue, 27 Feb 2024 14:26:53 +0100
-Message-ID: <20240227131622.502285448@linuxfoundation.org>
+Subject: [PATCH 5.15 226/245] octeontx2-af: Consider the action set by PF
+Date: Tue, 27 Feb 2024 14:26:54 +0100
+Message-ID: <20240227131622.533118000@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guo Zhengkui <guozhengkui@vivo.com>
+From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit 2046e733e125fa58ed997f3d26d43543faf82c95 ]
+[ Upstream commit 3b1ae9b71c2a97f848b00fb085a2bd29bddbe8d9 ]
 
-Fix following coccicheck warning:
-drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c:316:11-12:
-WARNING this kind of initialization is deprecated.
+AF reserves MCAM entries for each PF, VF present in the
+system and populates the entry with DMAC and action with
+default RSS so that basic packet I/O works. Since PF/VF is
+not aware of the RSS action installed by AF, AF only fixup
+the actions of the rules installed by PF/VF with corresponding
+default RSS action. This worked well for rules installed by
+PF/VF for features like RX VLAN offload and DMAC filters but
+rules involving action like drop/forward to queue are also
+getting modified by AF. Hence fix it by setting the default
+RSS action only if requested by PF/VF.
 
-`void *map = map` has the same form of
-uninitialized_var() macro. I remove the redundant assignement. It has
-been tested with gcc (Debian 8.3.0-6) 8.3.0.
-
-The patch which removed uninitialized_var() is:
-https://lore.kernel.org/all/20121028102007.GA7547@gmail.com/
-And there is very few "/* GCC */" comments in the Linux kernel code now.
-
-Signed-off-by: Guo Zhengkui <guozhengkui@vivo.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220228142352.18006-1-guozhengkui@vivo.com
-Stable-dep-of: 3b1ae9b71c2a ("octeontx2-af: Consider the action set by PF")
+Fixes: 967db3529eca ("octeontx2-af: add support for multicast/promisc packet replication feature")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c b/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c
-index 96aca0edfa3c0..c51bac76174c1 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/nv50.c
-@@ -313,7 +313,7 @@ nv50_instobj_dtor(struct nvkm_memory *memory)
- 	struct nv50_instobj *iobj = nv50_instobj(memory);
- 	struct nvkm_instmem *imem = &iobj->imem->base;
- 	struct nvkm_vma *bar;
--	void *map = map;
-+	void *map;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 70b4f2a3b02fd..604aaa9b960e9 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -436,6 +436,10 @@ static void npc_fixup_vf_rule(struct rvu *rvu, struct npc_mcam *mcam,
+ 			return;
+ 	}
  
- 	mutex_lock(&imem->mutex);
- 	if (likely(iobj->lru.next))
++	/* AF modifies given action iff PF/VF has requested for it */
++	if ((entry->action & 0xFULL) != NIX_RX_ACTION_DEFAULT)
++		return;
++
+ 	/* copy VF default entry action to the VF mcam entry */
+ 	rx_action = npc_get_default_entry_action(rvu, mcam, blkaddr,
+ 						 target_func);
 -- 
 2.43.0
 
