@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EE513AA50;
-	Tue, 27 Feb 2024 13:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E7713B2B4;
+	Tue, 27 Feb 2024 13:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042352; cv=none; b=teDdFcp2OpsS30mV4Bg9t9DKdPnNaTf6lxMgcv6opaTolVLAbKJFkfl8HIYgzXyQDm2ybe+dKgHNNKX2nalPRvFsqjc+EooSFLc3BU8NOk09Kx5Gkes8y99+rAq5lmEITXlTVKnXrtxKuN3r9m1U1jZlZPB5Jl8dpMFylZtlg0Y=
+	t=1709042355; cv=none; b=SUBtfE4cuRYtsVBzUaOKBEgPLP5OnO9N/RUA1TM3TcTV+HmeumjsNlbCTgGp6joWEaM+Yjurjg6vdUe7if5FQPrbOci8n64vhdwwQSQjfvQ/4pN0p88d4KRTAxcGBfZtcjGW/9f1CJA5JGWwry/k7GjHvtIQRpCE+wET/TjIDpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042352; c=relaxed/simple;
-	bh=K8HXgNJ9RVQPcynis8KbdnPNn39u8hsOuoJVeP6ZJMc=;
+	s=arc-20240116; t=1709042355; c=relaxed/simple;
+	bh=e9dqhGhYobPSAym9wSnKro7E76lERKHV5xhuzRDLRLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ug3W21CTNCXPK2I3dBVyqbgJvhQJrBSQ2qKydUnt8hwDwJ7Pd6LztglrnoODxo6Kjhf8sDD1ZHMl4rS0XCg8sXwksdbpBouyYCG5tfsqNwU3Cdn63z6ve9giBd+tVl0wMebMJMKmtljughGN37U2v0HYn/auFkTywtGRExzARHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBi6mYZi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OtMvG4RHjXiYjbQrKXaw3HTP6kcEm0r1P3v/VdwTWg4ziNuk2UgDEs/e0WExttJ33JKXkzsK3ZAQdizIKYTzAFjDBRokwwQ+mcgCNYdeP7sLFyx+D1iX7oG1TB5bPE/QpSaeWwJpmgTvnAomw4vUvKcqmqORoFNZh7f6L66XXpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRe1Htm0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBi6mYZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114D7C433F1;
-	Tue, 27 Feb 2024 13:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRe1Htm0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B769FC433F1;
+	Tue, 27 Feb 2024 13:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042352;
-	bh=K8HXgNJ9RVQPcynis8KbdnPNn39u8hsOuoJVeP6ZJMc=;
+	s=korg; t=1709042355;
+	bh=e9dqhGhYobPSAym9wSnKro7E76lERKHV5xhuzRDLRLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBi6mYZiNGNaDbHblFHIvCpb0kFQDIxTD9WqIK4PvnVNr7SumtMW6Pi6FOAj3gUs4
-	 vrg3fM8fcHMxYtUw0yS8JtCSzEuwTWt+TDY0kcNTXuZrrR83H26avLUMXMNYT2I1tK
-	 a6JvNvdv/OVPr/3qvR/Fau4Qxb51I/dQ3T9iOGY4=
+	b=PRe1Htm0CnhHWP16+XTzToNrB5PkH8XdywXnHZImsjKDpca8iP6Uu2NpPz+uZtV/m
+	 rdn6o5oARtzhpnh/uaezJN9+jbnEFu0H2g57npfpUk8FVVpAGSPSmWq4pQ7bUSFdWp
+	 mIoijqsYiT0jRE/lajxf81Q4+lW9n1/gGQ+yn3qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/299] s390: use the correct count for __iowrite64_copy()
-Date: Tue, 27 Feb 2024 14:26:15 +0100
-Message-ID: <20240227131634.189771997@linuxfoundation.org>
+Subject: [PATCH 6.6 265/299] bpf, sockmap: Fix NULL pointer dereference in sk_psock_verdict_data_ready()
+Date: Tue, 27 Feb 2024 14:26:16 +0100
+Message-ID: <20240227131634.220340952@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -52,37 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 723a2cc8d69d4342b47dfddbfe6c19f1b135f09b ]
+[ Upstream commit 4cd12c6065dfcdeba10f49949bffcf383b3952d8 ]
 
-The signature for __iowrite64_copy() requires the number of 64 bit
-quantities, not bytes. Multiple by 8 to get to a byte length before
-invoking zpci_memcpy_toio()
+syzbot reported the following NULL pointer dereference issue [1]:
 
-Fixes: 87bc359b9822 ("s390/pci: speed up __iowrite64_copy by using pci store block insn")
-Acked-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/0-v1-9223d11a7662+1d7785-s390_iowrite64_jgg@nvidia.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  [...]
+  RIP: 0010:0x0
+  [...]
+  Call Trace:
+   <TASK>
+   sk_psock_verdict_data_ready+0x232/0x340 net/core/skmsg.c:1230
+   unix_stream_sendmsg+0x9b4/0x1230 net/unix/af_unix.c:2293
+   sock_sendmsg_nosec net/socket.c:730 [inline]
+   __sock_sendmsg+0x221/0x270 net/socket.c:745
+   ____sys_sendmsg+0x525/0x7d0 net/socket.c:2584
+   ___sys_sendmsg net/socket.c:2638 [inline]
+   __sys_sendmsg+0x2b0/0x3a0 net/socket.c:2667
+   do_syscall_64+0xf9/0x240
+   entry_SYSCALL_64_after_hwframe+0x6f/0x77
+
+If sk_psock_verdict_data_ready() and sk_psock_stop_verdict() are called
+concurrently, psock->saved_data_ready can be NULL, causing the above issue.
+
+This patch fixes this issue by calling the appropriate data ready function
+using the sk_psock_data_ready() helper and protecting it from concurrency
+with sk->sk_callback_lock.
+
+Fixes: 6df7f764cd3c ("bpf, sockmap: Wake up polling after data copy")
+Reported-by: syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: syzbot+fd7b34375c1c8ce29c93@syzkaller.appspotmail.com
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=fd7b34375c1c8ce29c93 [1]
+Link: https://lore.kernel.org/bpf/20240218150933.6004-1-syoshida@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skmsg.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
-index d34d5813d0066..777362cb4ea80 100644
---- a/arch/s390/pci/pci.c
-+++ b/arch/s390/pci/pci.c
-@@ -241,7 +241,7 @@ resource_size_t pcibios_align_resource(void *data, const struct resource *res,
- /* combine single writes by using store-block insn */
- void __iowrite64_copy(void __iomem *to, const void *from, size_t count)
- {
--       zpci_memcpy_toio(to, from, count);
-+	zpci_memcpy_toio(to, from, count * 8);
- }
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 93ecfceac1bc4..4d75ef9d24bfa 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -1226,8 +1226,11 @@ static void sk_psock_verdict_data_ready(struct sock *sk)
  
- void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
+ 		rcu_read_lock();
+ 		psock = sk_psock(sk);
+-		if (psock)
+-			psock->saved_data_ready(sk);
++		if (psock) {
++			read_lock_bh(&sk->sk_callback_lock);
++			sk_psock_data_ready(sk, psock);
++			read_unlock_bh(&sk->sk_callback_lock);
++		}
+ 		rcu_read_unlock();
+ 	}
+ }
 -- 
 2.43.0
 
