@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C8B13AA50;
-	Tue, 27 Feb 2024 14:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902A413AA50;
+	Tue, 27 Feb 2024 14:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042432; cv=none; b=ZMpkHc5UUcTpGH6c0U3zAhgCWj3kugvWN/Yz7RKIZaYo1EFo5udw4LKkRsoh9sOdnKi87ExayG+c6yKfV5XawMAOJ8ARnhjtfO2dfxSuvH4y0O46AMwtRgIB1ZqvAaIUgqzzUi0+nMaOp0f7ZJuJDlpOkXjjHgPA4+EfuhEcb/E=
+	t=1709042432; cv=none; b=ItNibaKXB8DE+uMQaUkHMu6LHjgohTQTIrJ/zlm+sAXgndUEcA6boFjqM6M5jVgrJrVURuXHDsghVYvz+ZzsAesLf6RCisCigzS2rYcsdmN3vnNDx58ioQ/DZGvDnK6/rciyD9citOUtPsxu3wF9MTd6aP2LWdunCR1LVdlDHNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1709042432; c=relaxed/simple;
-	bh=aC6fjPYa4sJUwFyXThyDt4gr6SYH0XXPcgLreB2+VBg=;
+	bh=pgAVC2dHh9B6PxywGItIfpUm/JA3wM3Ly/6Unt+Juiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R17wEqKznRTASrwaCBNW7/r+pCnEIbtEjNMsidCSiHsw2WKaWYloYX8uf0caQNoyuhTBXd1NbXivilkd1bRNDuF31HrmCM76y3PyOK8BSVO3X/rRRgy30fkGZgy+LhqJ6rkRf8+rXtofHNW6i6HawLgoqmn76vFRLJ9iHQ5DLzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J41daLub; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5SwGHfQ5eP0LimSvAd1MqdDFXG0j9QsQwT/oexh/GoZ625EXywrAH6lFnPeiGuDxpwmkCl2S8Ws4ngtNxYnfnBPZrLqryu3jg3T9E5tPMDePqy4iaatO5fI/kd/YTlIuaoxK1nIXPRI+aQ7csiJM5CbvMCAWrculj0xbRNcpoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHjtnnyZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J41daLub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481F4C433C7;
-	Tue, 27 Feb 2024 14:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHjtnnyZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7FCC433F1;
+	Tue, 27 Feb 2024 14:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042429;
-	bh=aC6fjPYa4sJUwFyXThyDt4gr6SYH0XXPcgLreB2+VBg=;
+	s=korg; t=1709042432;
+	bh=pgAVC2dHh9B6PxywGItIfpUm/JA3wM3Ly/6Unt+Juiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J41daLubMyYXwV5EB2KLOFBGV3QXscfhJ1gqSyOgjX4cWzq4g7nmi52WHEPduHiAG
-	 uFXHH7uzg7ImoNYDtdnNsjXQB91fjxTDU5UcclcWSRKgge20JSxu/1m1LOy7/B9xZ0
-	 besxDrTNGxiLMiHDAf0Gy9UmFYbJkRFWnOVUC2Nk=
+	b=MHjtnnyZ/b6zqmBWFZMPuIFnFfbQ7xoiR7g9e1ah6wNNDRe4YiWQAGdZu96Mhik6u
+	 E3XYHdNMBMAXxHL+7xeS8Xi/c73wdNAwI+ktyiQ5bEB7pItZDZ73NL8XrVw9gB/VId
+	 Wy7I4+tIDEQCEX9MnYmusYcjQxQGn8ZpinkKN21M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 275/299] netfilter: nf_tables: use kzalloc for hook allocation
-Date: Tue, 27 Feb 2024 14:26:26 +0100
-Message-ID: <20240227131634.527809975@linuxfoundation.org>
+	Yosry Ahmed <yosryahmed@google.com>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 293/299] mm: zswap: fix missing folio cleanup in writeback race path
+Date: Tue, 27 Feb 2024 14:26:44 +0100
+Message-ID: <20240227131635.099623139@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -51,40 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Yosry Ahmed <yosryahmed@google.com>
 
-[ Upstream commit 195e5f88c2e48330ba5483e0bad2de3b3fad484f ]
+commit e3b63e966cac0bf78aaa1efede1827a252815a1d upstream.
 
-KMSAN reports unitialized variable when registering the hook,
-   reg->hook_ops_type == NF_HOOK_OP_BPF)
-        ~~~~~~~~~~~ undefined
+In zswap_writeback_entry(), after we get a folio from
+__read_swap_cache_async(), we grab the tree lock again to check that the
+swap entry was not invalidated and recycled.  If it was, we delete the
+folio we just added to the swap cache and exit.
 
-This is a small structure, just use kzalloc to make sure this
-won't happen again when new fields get added to nf_hook_ops.
+However, __read_swap_cache_async() returns the folio locked when it is
+newly allocated, which is always true for this path, and the folio is
+ref'd.  Make sure to unlock and put the folio before returning.
 
-Fixes: 7b4b2fa37587 ("netfilter: annotate nf_tables base hook ops")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This was discovered by code inspection, probably because this path handles
+a race condition that should not happen often, and the bug would not crash
+the system, it will only strand the folio indefinitely.
+
+Link: https://lkml.kernel.org/r/20240125085127.1327013-1-yosryahmed@google.com
+Fixes: 04fc7816089c ("mm: fix zswap writeback race condition")
+Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
+Reviewed-by: Chengming Zhou <zhouchengming@bytedance.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Nhat Pham <nphamcs@gmail.com>
+Cc: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/zswap.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 36fdce00bdab4..8808d78d65235 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2084,7 +2084,7 @@ static struct nft_hook *nft_netdev_hook_alloc(struct net *net,
- 	struct nft_hook *hook;
- 	int err;
- 
--	hook = kmalloc(sizeof(struct nft_hook), GFP_KERNEL_ACCOUNT);
-+	hook = kzalloc(sizeof(struct nft_hook), GFP_KERNEL_ACCOUNT);
- 	if (!hook) {
- 		err = -ENOMEM;
- 		goto err_hook_alloc;
--- 
-2.43.0
-
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -1100,6 +1100,8 @@ static int zswap_writeback_entry(struct
+ 	if (zswap_rb_search(&tree->rbroot, swp_offset(entry->swpentry)) != entry) {
+ 		spin_unlock(&tree->lock);
+ 		delete_from_swap_cache(page_folio(page));
++		unlock_page(page);
++		put_page(page);
+ 		ret = -ENOMEM;
+ 		goto fail;
+ 	}
 
 
