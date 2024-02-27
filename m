@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F46613EFF4;
-	Tue, 27 Feb 2024 14:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642931420D3;
+	Tue, 27 Feb 2024 14:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043873; cv=none; b=t3FYbYAcv7w/xELYFjYktkHaWpdYmackr2gUZIf+owJKRPcdJE0p2IFZJUs8QbNo0B33+ZidX6jerYjkaYdQrpei6MhOsCzoeWbAh1BIUqdHY/qki5VDszJSytILZzK3JR2z5CZuDF8VmEqAeBAZYXPD+KfMWfVhnAiWJf0j3N0=
+	t=1709043876; cv=none; b=PeiyumpfMyN30uJ0OwbWODaR9q20Ut83/FiD+MGl5YKGHSo+hsKbER+/WP6Rgn9VNEhyajlq5uNeKRXOcMwC9hOs45Jt9arnYLv/VsfsRGoHA0WVP/sAPxJ5uYQHZ0P3+B85FxJCqV1AQsqhdhjiikJZ2JPd+7L5zzumCV99Elc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043873; c=relaxed/simple;
-	bh=oV9aRpHn8ZgjD2JjVolkA4Hj4lDn+ll6oIVuIG467pc=;
+	s=arc-20240116; t=1709043876; c=relaxed/simple;
+	bh=0dBe1vZNIxoNuBNMkcszCJuSByz/0eav64bTklpCIJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pkq+F0p/8spJvf1hksRTx0UpB9IqTiteBZW6EOCqSPWlogDIiPHkpelI7hIz00vFH49LQjEZnKkCv17Wmd+AxE4L4T+26jTlwHPB+OevUdCfvO8LrTnewkiMLtfzX7roGsPY011go3JA2Hd1p6Sio49gejsABs7nDv7UgIt+Blc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgmYrlgz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6J8vMjCICQxxc+0lxibnvFy9uc9qibBaAOZSAAk+vxth1nX7LFLWCFfEPKiUtFU/Koxa6cxkCQ1lvfK0lntI+JjxAgNDCYJ9wgrCX80v3wWSjLGh7qykcpMhif1KSu6dngCoVF4WMyMF3ONui3BgBkfQA8rfNS6psoXWi2nmpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SszE3Z5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgmYrlgz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D5AC433C7;
-	Tue, 27 Feb 2024 14:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SszE3Z5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7073DC43390;
+	Tue, 27 Feb 2024 14:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043873;
-	bh=oV9aRpHn8ZgjD2JjVolkA4Hj4lDn+ll6oIVuIG467pc=;
+	s=korg; t=1709043876;
+	bh=0dBe1vZNIxoNuBNMkcszCJuSByz/0eav64bTklpCIJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgmYrlgzkmECtXgs7yHPwVWBkoNoa7KCgoGSp4lBRwylCTPva7ahmfIUgaqay0Aqm
-	 or7id0XZXtBbACQ+gbs5qKrJdLT9M4xd9iGaKengHSsxuoHth3o7kpsKCdEY2HG0oF
-	 fdr7sZOQyvILX6LpZTCnJ6qTtTpOrvd5Y98iCXYg=
+	b=SszE3Z5XtnJ5RUcFDOzf9pY1kWmVo/26d8HnPmvNhVXlYjRjYPbSl2NJTqMMF85M2
+	 py6uazBJaov6/kza09E2RQrBaNJ6EzRm5HxO+fM7R4+qeS+KbGk9vguDwe3/ym4Ep4
+	 jrPIx39lUfD5dPlwoYGGMQ7kYS3apOIRmeayCYKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arnd Bergmann <arnd@arndb.de>,
 	Bart Van Assche <bvanassche@acm.org>,
-	Jason Gunthorpe <jgg@mellanox.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 65/84] RDMA/srpt: Make debug output more detailed
-Date: Tue, 27 Feb 2024 14:27:32 +0100
-Message-ID: <20240227131554.987927116@linuxfoundation.org>
+Subject: [PATCH 5.4 66/84] RDMA/srpt: fix function pointer cast warnings
+Date: Tue, 27 Feb 2024 14:27:33 +0100
+Message-ID: <20240227131555.019912178@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -51,51 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d4ee7f3a4445ec1b0b88af216f4032c4d30abf5a ]
+[ Upstream commit eb5c7465c3240151cd42a55c7ace9da0026308a1 ]
 
-Since the session name by itself is not sufficient to uniquely identify a
-queue pair, include the queue pair number. Show the ASCII channel state
-name instead of the numeric value. This change makes the ib_srpt debug
-output more consistent.
+clang-16 notices that srpt_qp_event() gets called through an incompatible
+pointer here:
 
-Link: https://lore.kernel.org/r/20200525172212.14413-3-bvanassche@acm.org
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Jason Gunthorpe <jgg@mellanox.com>
-Stable-dep-of: eb5c7465c324 ("RDMA/srpt: fix function pointer cast warnings")
+drivers/infiniband/ulp/srpt/ib_srpt.c:1815:5: error: cast from 'void (*)(struct ib_event *, struct srpt_rdma_ch *)' to 'void (*)(struct ib_event *, void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+ 1815 |                 = (void(*)(struct ib_event *, void*))srpt_qp_event;
+
+Change srpt_qp_event() to use the correct prototype and adjust the
+argument inside of it.
+
+Fixes: a42d985bd5b2 ("ib_srpt: Initial SRP Target merge for v3.3-rc1")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240213100728.458348-1-arnd@kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/infiniband/ulp/srpt/ib_srpt.c | 9 +++++----
  1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 2822ca5e82779..ccd9811c6c1e2 100644
+index ccd9811c6c1e2..d03a4f2e006fb 100644
 --- a/drivers/infiniband/ulp/srpt/ib_srpt.c
 +++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -217,8 +217,9 @@ static const char *get_ch_state_name(enum rdma_ch_state s)
+@@ -213,10 +213,12 @@ static const char *get_ch_state_name(enum rdma_ch_state s)
+ /**
+  * srpt_qp_event - QP event callback function
+  * @event: Description of the event that occurred.
+- * @ch: SRPT RDMA channel.
++ * @ptr: SRPT RDMA channel.
   */
- static void srpt_qp_event(struct ib_event *event, struct srpt_rdma_ch *ch)
+-static void srpt_qp_event(struct ib_event *event, struct srpt_rdma_ch *ch)
++static void srpt_qp_event(struct ib_event *event, void *ptr)
  {
--	pr_debug("QP event %d on ch=%p sess_name=%s state=%d\n",
--		 event->event, ch, ch->sess_name, ch->state);
-+	pr_debug("QP event %d on ch=%p sess_name=%s-%d state=%s\n",
-+		 event->event, ch, ch->sess_name, ch->qp->qp_num,
-+		 get_ch_state_name(ch->state));
++	struct srpt_rdma_ch *ch = ptr;
++
+ 	pr_debug("QP event %d on ch=%p sess_name=%s-%d state=%s\n",
+ 		 event->event, ch, ch->sess_name, ch->qp->qp_num,
+ 		 get_ch_state_name(ch->state));
+@@ -1802,8 +1804,7 @@ static int srpt_create_ch_ib(struct srpt_rdma_ch *ch)
+ 	}
  
- 	switch (event->event) {
- 	case IB_EVENT_COMM_EST:
-@@ -2005,8 +2006,8 @@ static void __srpt_close_all_ch(struct srpt_port *sport)
- 	list_for_each_entry(nexus, &sport->nexus_list, entry) {
- 		list_for_each_entry(ch, &nexus->ch_list, list) {
- 			if (srpt_disconnect_ch(ch) >= 0)
--				pr_info("Closing channel %s because target %s_%d has been disabled\n",
--					ch->sess_name,
-+				pr_info("Closing channel %s-%d because target %s_%d has been disabled\n",
-+					ch->sess_name, ch->qp->qp_num,
- 					dev_name(&sport->sdev->device->dev),
- 					sport->port);
- 			srpt_close_ch(ch);
+ 	qp_init->qp_context = (void *)ch;
+-	qp_init->event_handler
+-		= (void(*)(struct ib_event *, void*))srpt_qp_event;
++	qp_init->event_handler = srpt_qp_event;
+ 	qp_init->send_cq = ch->cq;
+ 	qp_init->recv_cq = ch->cq;
+ 	qp_init->sq_sig_type = IB_SIGNAL_REQ_WR;
 -- 
 2.43.0
 
