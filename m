@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2A013B2BA;
-	Tue, 27 Feb 2024 14:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179A916423;
+	Tue, 27 Feb 2024 14:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042638; cv=none; b=T/ddy7IEf3F+x4yaKbmzNJY2ttqfKcA2Cbgkcqhonk55IQB0GUe0Q05V7dfRsqjWbBMnog3mkFY2cQwDPI7E0IR3iXckPtPXeHWhZl3hJHG0cD8xuT5EMR44h7F0HDmdUbpCw4J2J/dRkvFrDot+MaMQSDH6ctxMbuF1OMEHXlg=
+	t=1709042641; cv=none; b=ui2x3scdAlIi2Yepyo11B28nMWMHy+qeMDEaYFoMIlNXtfPyMfk1LcOGnl2femDSm5ZIMxcQ2IJuOgnq+I+asQ2FNdSc0vV1U7OrhzC49VNm67lr6txvizKQZDDnhMlA/TS+4ujD209g+Pj+n+aSN+wTAKohrs0+s4OSUZYr5t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042638; c=relaxed/simple;
-	bh=zDPJtK7XQ06purNhRUeri9d2GjbjTP9UEo4OVKMNu+c=;
+	s=arc-20240116; t=1709042641; c=relaxed/simple;
+	bh=UGavHKS3p3npexGYuQ23I4IDuKPSzlwXk1OL/fcm/y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTIt4cipMQ0Gy7/an57CA+9QAN6QJA773dMfuOPjZu4vpBL3M7I8RQEr4LrMM3HrkAUYn925Hi4P4NfqYSelu+O86xMwTtBoi0cioA4UdGpTQ78EqIKrMYV021HRzyhkvxohF5aL2VAvFMpeQnD5IT1GIgy0vEa9rylIKfLa1Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVtmN7Ky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nJLKg4Gdgo9p+2Eg2xtzR0zjncfuPxk97eS0fzxJa/JIM0eGk6ORBNz66Ey36FPH/l3Hxskvg9yiFz1ywe39QQlO2oAOhvWe+NRgz69kW1QsNRqSZjgJIQuGlBzcXFeesBEuncjTGYnpjoW5hhaOKeDcFAZM1CBBL7m4TFaft6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Mpu6j8a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVtmN7Ky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA72C433F1;
-	Tue, 27 Feb 2024 14:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Mpu6j8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F64C433C7;
+	Tue, 27 Feb 2024 14:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042638;
-	bh=zDPJtK7XQ06purNhRUeri9d2GjbjTP9UEo4OVKMNu+c=;
+	s=korg; t=1709042641;
+	bh=UGavHKS3p3npexGYuQ23I4IDuKPSzlwXk1OL/fcm/y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVtmN7Kyxx0MIt5VcSZ356pIm2BQV+HqeWsIKGhlzKmigemILsW5QKjZHM3iXNmej
-	 7d95hmxbhwhVWhEv9oCfwYU8CkvZRZMDgGva6knTMd9hzasG6SSFOIHyJV0Uqm8iid
-	 VsjfSAUTM+PKXADw+7KXQciOaHaJi+OEQdJjEU+Y=
+	b=1Mpu6j8a60kAsmSRlGd9Vpn390A6ZHMu9avXpNVCaxBx08I9vzp/agFw/dqMTak8l
+	 gLBT3eqLGO2vzamNhyn6TsGnl//1fXALF4PeKkDww07x+9QsYz0J7/Ti3+b4piVmNj
+	 rIXVasH7Br/CvauV/oqxaJ8SWJ5OJ0FC8yJLRSCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ism Hong <ism.hong@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/245] fs/ntfs3: use non-movable memory for ntfs3 MFT buffer cache
-Date: Tue, 27 Feb 2024 14:24:07 +0100
-Message-ID: <20240227131617.161390971@linuxfoundation.org>
+Subject: [PATCH 5.15 068/245] scsi: lpfc: Use unsigned type for num_sge
+Date: Tue, 27 Feb 2024 14:24:16 +0100
+Message-ID: <20240227131617.451234754@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,77 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ism Hong <ism.hong@gmail.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit d6d33f03baa43d763fe094ca926eeae7d3421d07 ]
+[ Upstream commit d6c1b19153f92e95e5e1801d540e98771053afae ]
 
-Since the buffer cache for ntfs3 metadata is not released until the file
-system is unmounted, allocating from the movable zone may result in cma
-allocation failures. This is due to the page still being used by ntfs3,
-leading to migration failures.
+LUNs going into "failed ready running" state observed on >1T and on even
+numbers of size (2T, 4T, 6T, 8T and 10T). The issue occurs when DIF is
+enabled at the host.
 
-To address this, this commit use sb_bread_umovable() instead of
-sb_bread(). This change prevents allocation from the movable zone,
-ensuring compatibility with scenarios where the buffer head is not
-released until unmount. This patch is inspired by commit
-a8ac900b8163("ext4: use non-movable memory for the ext4 superblock").
+The kernel logs:
 
-The issue is found when playing video files stored in NTFS on the
-Android TV platform. During this process, the media parser reads the
-video file, causing ntfs3 to allocate buffer cache from the CMA area.
-Subsequently, the hardware decoder attempts to allocate memory from the
-same CMA area. However, the page is still in use by ntfs3, resulting in
-a migrate failure in alloc_contig_range().
+  Cannot setup S/G List for HBAIO segs 1/1 SGL 512 SCSI 256: 3 0
 
-The pinned page and allocating stacktrace reported by page owner shows
-below:
+The host lpfc driver is failing to setup scatter/gather list (protection
+data) for the I/Os.
 
-page:ffffffff00b68880 refcount:3 mapcount:0 mapping:ffffff80046aa828
-        index:0xc0040 pfn:0x20fa4
-    aops:def_blk_aops ino:0
-    flags: 0x2020(active|private)
-    page dumped because: migration failure
-    page last allocated via order 0, migratetype Movable,
-        gfp_mask 0x108c48
-        (GFP_NOFS|__GFP_NOFAIL|__GFP_HARDWALL|__GFP_MOVABLE),
-    page_owner tracks the page as allocated
-     prep_new_page
-     get_page_from_freelist
-     __alloc_pages_nodemask
-     pagecache_get_page
-     __getblk_gfp
-     __bread_gfp
-     ntfs_read_run_nb
-     ntfs_read_bh
-     mi_read
-     ntfs_iget5
-     dir_search_u
-     ntfs_lookup
-     __lookup_slow
-     lookup_slow
-     walk_component
-     path_lookupat
+The return type lpfc_bg_setup_sgl()/lpfc_bg_setup_sgl_prot() causes the
+compiler to remove the most significant bit. Use an unsigned type instead.
 
-Signed-off-by: Ism Hong <ism.hong@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+[dwagner: added commit message]
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Link: https://lore.kernel.org/r/20231220162658.12392-1-dwagner@suse.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs_fs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_scsi.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index 9812765000439..ffc8dfbb310ff 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -1014,7 +1014,7 @@ static inline u64 bytes_to_block(const struct super_block *sb, u64 size)
- static inline struct buffer_head *ntfs_bread(struct super_block *sb,
- 					     sector_t block)
- {
--	struct buffer_head *bh = sb_bread(sb, block);
-+	struct buffer_head *bh = sb_bread_unmovable(sb, block);
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 4813adec0301d..6d1a3cbd6b3c4 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -1983,7 +1983,7 @@ lpfc_bg_setup_bpl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+  *
+  * Returns the number of SGEs added to the SGL.
+  **/
+-static int
++static uint32_t
+ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 		struct sli4_sge *sgl, int datasegcnt,
+ 		struct lpfc_io_buf *lpfc_cmd)
+@@ -1991,8 +1991,8 @@ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 	struct scatterlist *sgde = NULL; /* s/g data entry */
+ 	struct sli4_sge_diseed *diseed = NULL;
+ 	dma_addr_t physaddr;
+-	int i = 0, num_sge = 0, status;
+-	uint32_t reftag;
++	int i = 0, status;
++	uint32_t reftag, num_sge = 0;
+ 	uint8_t txop, rxop;
+ #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+ 	uint32_t rc;
+@@ -2164,7 +2164,7 @@ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+  *
+  * Returns the number of SGEs added to the SGL.
+  **/
+-static int
++static uint32_t
+ lpfc_bg_setup_sgl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 		struct sli4_sge *sgl, int datacnt, int protcnt,
+ 		struct lpfc_io_buf *lpfc_cmd)
+@@ -2188,8 +2188,8 @@ lpfc_bg_setup_sgl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
+ 	uint32_t rc;
+ #endif
+ 	uint32_t checking = 1;
+-	uint32_t dma_offset = 0;
+-	int num_sge = 0, j = 2;
++	uint32_t dma_offset = 0, num_sge = 0;
++	int j = 2;
+ 	struct sli4_hybrid_sgl *sgl_xtra = NULL;
  
- 	if (bh)
- 		return bh;
+ 	sgpe = scsi_prot_sglist(sc);
 -- 
 2.43.0
 
