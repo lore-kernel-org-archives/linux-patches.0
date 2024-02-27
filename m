@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D620913B797;
-	Tue, 27 Feb 2024 13:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D631B14533F;
+	Tue, 27 Feb 2024 13:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041826; cv=none; b=lSOTObHaF+E8UZpBVrxXSlmZWMCmPKVyBXdGJIFJSiq0pbq3laQdNzQQWxLJJnx3+Zq17jZhugkukfsSf+ke1kE/Wyomm7XXtJG9vxj1Gl2cVTVlypIckA7fXPVwoWhYOJm0cs7+dzqT2yRdZ/OPdYXyPUeB1Z7yghX8pinAePw=
+	t=1709041829; cv=none; b=Hi40W1knhCEEfmxajsoD5GGhV1IfwkaOmHa2cGd1SFU3BcFUFS9Bb/YavYHlJtBa5m4YK000/V9auq5oDCpoJz7vZTRF6PVjn1AGets0953F/ly4S5174nKyMDA9A2/ZWEpC4m2uk/MQtX4l7/g/N9JGD4pz6F+PGbM2U7AFNkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041826; c=relaxed/simple;
-	bh=JkM8C8aSMNohxlq04hc3SD/WReO8sHyUW3QSHbjWl7Y=;
+	s=arc-20240116; t=1709041829; c=relaxed/simple;
+	bh=dG9vs8dgF/GJI7msYmFpMrH7uB64/BPp9S1SlZmdfjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajnP3KPUTC2+BDdwsHuLERopXvFCkMy7a0HsJsNVL8RSCqe6Pdykv6wdd+7NAkHIb57b7AvyXJSg/bV0CBx2iKICwUTT35TPReG/xSBAGXT4QpkhpZuhAJ4T6jl2rhYzJN962UZoVneonooW1Q9noL0LAcWUVQxJ2KPOAkKTmCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/Q4FzGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBo0q0Ae0iTQ+qBxv0wXpwRzY+J0JROLSvgnE48Nk2XRxeD6NbGrvkE0xOQh4FUAu3nJS26AcF2jQ+rt8tUbyMlyOViuKI8AvjkAYiv5hAeilzWJP2f0lXxs33FM6qs22NfLa1lwS3X5NY9cFH0Xx3XzuMs3ebBlUUIF2LhgqeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuVVXb/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/Q4FzGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648E0C433C7;
-	Tue, 27 Feb 2024 13:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuVVXb/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D7CC43390;
+	Tue, 27 Feb 2024 13:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041826;
-	bh=JkM8C8aSMNohxlq04hc3SD/WReO8sHyUW3QSHbjWl7Y=;
+	s=korg; t=1709041829;
+	bh=dG9vs8dgF/GJI7msYmFpMrH7uB64/BPp9S1SlZmdfjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/Q4FzGMyNm8Q8iNfrzluhY9WOgj12dWsfvGwNTFOjXra52lGxfLrW1vq9jb3hwU+
-	 jO1NVBaeUn3/7aK8xrBIfiH65gF/ALSWFRm+lt4TgPIwrggGyBi6UirJ/e+5ktETwT
-	 QUBY/apAmlB3Aw7FdhgADxQ5kwwjaqXu6v3IqIos=
+	b=ZuVVXb/VFiYbkaMBQ4WXEOn2OTrFHx+LbjrYV1mnUbNEKCsuc4V+PTEk63rqyBOvy
+	 9OBdmYAOqVA009Pg8fwegsx3aCOvCZanaqkZf2vPNTfeGm27nAtcydr6Q+btxhNrYw
+	 HTu0TPiQoHF3Z3mxnRJQ1D9R8iLCIzuMZryGSyt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 083/299] fs/ntfs3: Disable ATTR_LIST_ENTRY size check
-Date: Tue, 27 Feb 2024 14:23:14 +0100
-Message-ID: <20240227131628.592975782@linuxfoundation.org>
+Subject: [PATCH 6.6 084/299] fs/ntfs3: Use kvfree to free memory allocated by kvmalloc
+Date: Tue, 27 Feb 2024 14:23:15 +0100
+Message-ID: <20240227131628.623246529@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,71 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 4cdfb6e7bc9c80142d33bf1d4653a73fa678ba56 ]
+[ Upstream commit ddb17dc880eeaac37b5a6e984de07b882de7d78d ]
 
-The use of sizeof(struct ATTR_LIST_ENTRY) has been replaced with le_size(0)
-due to alignment peculiarities on different platforms.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312071005.g6YrbaIe-lkp@intel.com/
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrlist.c | 8 ++++----
- fs/ntfs3/ntfs.h     | 2 --
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ fs/ntfs3/attrlist.c | 4 ++--
+ fs/ntfs3/bitmap.c   | 4 ++--
+ fs/ntfs3/frecord.c  | 4 ++--
+ fs/ntfs3/super.c    | 2 +-
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/fs/ntfs3/attrlist.c b/fs/ntfs3/attrlist.c
-index 7c01735d1219d..48e7da47c6b71 100644
+index 48e7da47c6b71..9f4bd8d260901 100644
 --- a/fs/ntfs3/attrlist.c
 +++ b/fs/ntfs3/attrlist.c
-@@ -127,12 +127,13 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
+@@ -29,7 +29,7 @@ static inline bool al_is_valid_le(const struct ntfs_inode *ni,
+ void al_destroy(struct ntfs_inode *ni)
  {
- 	size_t off;
- 	u16 sz;
-+	const unsigned le_min_size = le_size(0);
- 
- 	if (!le) {
- 		le = ni->attr_list.le;
+ 	run_close(&ni->attr_list.run);
+-	kfree(ni->attr_list.le);
++	kvfree(ni->attr_list.le);
+ 	ni->attr_list.le = NULL;
+ 	ni->attr_list.size = 0;
+ 	ni->attr_list.dirty = false;
+@@ -318,7 +318,7 @@ int al_add_le(struct ntfs_inode *ni, enum ATTR_TYPE type, const __le16 *name,
+ 		memcpy(ptr, al->le, off);
+ 		memcpy(Add2Ptr(ptr, off + sz), le, old_size - off);
+ 		le = Add2Ptr(ptr, off);
+-		kfree(al->le);
++		kvfree(al->le);
+ 		al->le = ptr;
  	} else {
- 		sz = le16_to_cpu(le->size);
--		if (sz < sizeof(struct ATTR_LIST_ENTRY)) {
-+		if (sz < le_min_size) {
- 			/* Impossible 'cause we should not return such le. */
- 			return NULL;
- 		}
-@@ -141,7 +142,7 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
- 
- 	/* Check boundary. */
- 	off = PtrOffset(ni->attr_list.le, le);
--	if (off + sizeof(struct ATTR_LIST_ENTRY) > ni->attr_list.size) {
-+	if (off + le_min_size > ni->attr_list.size) {
- 		/* The regular end of list. */
- 		return NULL;
- 	}
-@@ -149,8 +150,7 @@ struct ATTR_LIST_ENTRY *al_enumerate(struct ntfs_inode *ni,
- 	sz = le16_to_cpu(le->size);
- 
- 	/* Check le for errors. */
--	if (sz < sizeof(struct ATTR_LIST_ENTRY) ||
--	    off + sz > ni->attr_list.size ||
-+	if (sz < le_min_size || off + sz > ni->attr_list.size ||
- 	    sz < le->name_off + le->name_len * sizeof(short)) {
- 		return NULL;
- 	}
-diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
-index 13e96fc63dae5..f61f5b3adb03a 100644
---- a/fs/ntfs3/ntfs.h
-+++ b/fs/ntfs3/ntfs.h
-@@ -527,8 +527,6 @@ struct ATTR_LIST_ENTRY {
- 
- }; // sizeof(0x20)
- 
--static_assert(sizeof(struct ATTR_LIST_ENTRY) == 0x20);
--
- static inline u32 le_size(u8 name_len)
+ 		memmove(Add2Ptr(le, sz), le, old_size - off);
+diff --git a/fs/ntfs3/bitmap.c b/fs/ntfs3/bitmap.c
+index 63f14a0232f6a..845f9b22deef0 100644
+--- a/fs/ntfs3/bitmap.c
++++ b/fs/ntfs3/bitmap.c
+@@ -124,7 +124,7 @@ void wnd_close(struct wnd_bitmap *wnd)
  {
- 	return ALIGN(offsetof(struct ATTR_LIST_ENTRY, name) +
+ 	struct rb_node *node, *next;
+ 
+-	kfree(wnd->free_bits);
++	kvfree(wnd->free_bits);
+ 	wnd->free_bits = NULL;
+ 	run_close(&wnd->run);
+ 
+@@ -1360,7 +1360,7 @@ int wnd_extend(struct wnd_bitmap *wnd, size_t new_bits)
+ 		memcpy(new_free, wnd->free_bits, wnd->nwnd * sizeof(short));
+ 		memset(new_free + wnd->nwnd, 0,
+ 		       (new_wnd - wnd->nwnd) * sizeof(short));
+-		kfree(wnd->free_bits);
++		kvfree(wnd->free_bits);
+ 		wnd->free_bits = new_free;
+ 	}
+ 
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 86b43051f39cd..a918d7283aca5 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -778,7 +778,7 @@ static int ni_try_remove_attr_list(struct ntfs_inode *ni)
+ 	run_deallocate(sbi, &ni->attr_list.run, true);
+ 	run_close(&ni->attr_list.run);
+ 	ni->attr_list.size = 0;
+-	kfree(ni->attr_list.le);
++	kvfree(ni->attr_list.le);
+ 	ni->attr_list.le = NULL;
+ 	ni->attr_list.dirty = false;
+ 
+@@ -927,7 +927,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
+ 	return 0;
+ 
+ out:
+-	kfree(ni->attr_list.le);
++	kvfree(ni->attr_list.le);
+ 	ni->attr_list.le = NULL;
+ 	ni->attr_list.size = 0;
+ 	return err;
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 378e261e23b04..eb50602297406 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -625,7 +625,7 @@ static void ntfs3_free_sbi(struct ntfs_sb_info *sbi)
+ {
+ 	kfree(sbi->new_rec);
+ 	kvfree(ntfs_put_shared(sbi->upcase));
+-	kfree(sbi->def_table);
++	kvfree(sbi->def_table);
+ 	kfree(sbi->compress.lznt);
+ #ifdef CONFIG_NTFS3_LZX_XPRESS
+ 	xpress_free_decompressor(sbi->compress.xpress);
 -- 
 2.43.0
 
