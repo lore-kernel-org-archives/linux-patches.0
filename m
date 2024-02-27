@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3F313B2B4;
-	Tue, 27 Feb 2024 14:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70DC13B2B4;
+	Tue, 27 Feb 2024 14:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043670; cv=none; b=kkXHUEUXRxWs89+f1qnMRJs145qUi92p3eomX9rHJa8b4fOYh4fsU4KufmES7+sIMDYjqWfUgtMe2ZZnLWI1FnUBA0WaLV5uhVy0GlaGYgV+6udLlMml6KmdVsfyM/aYOHlTJSncg+inxhESFENvpOk2Lp4b4bZr32Bkb8HtqWk=
+	t=1709043671; cv=none; b=urdKOKI5a2zDfGBu8lcyAkz09osdK5z3tLUyfjrcGSl3xA8XT5tbVlEg7CqyK2ME767PLcAkAscjLF47w/d5xVY1vhs1qgb4Pvm8tEfAc7WWu3BXC/IhfJPwYzEI7GEEV93u87GB12yyFsVIBcDIXepJdZ02ySJqONvOceVt3zA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043670; c=relaxed/simple;
-	bh=u20KcAaZBLUmFFI0RwSVTkEeOPXdcZeep9yWYIfcPjI=;
+	s=arc-20240116; t=1709043671; c=relaxed/simple;
+	bh=wZysLImAkurh8lL4d3PC4akT6Am4PQOB55RhogujXuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUDP7ncLQajnJoYNto1pI5Pr5nZF2yYahw24QDjDqjnDP/26PR3dvwDM7aU0oLakafmY1LKNQy+1r5hwVqC17koA9J2ydpAguKxxlJyIaW/lQN9Ai5tHQFUZ8AosbolUNO2eSQHAZRwI1QGodGIpm/XNs2UTEsc4bXiMQFGfhZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mge++uic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WpUyoft834UVIwq8a2sZyGoF0f0rVYX9E3ZQpMnztkRlfEzf5Ccs/oNVExWcKnw95tnt667Ut6emm24liLGRzbRKu3pW7chlsifxnlksWijE/eMn4VBLI/fgryh60xy9+OCjgzSLagxjR4Wmmbmnap/pQOQ3tSt1vgRvayEHC8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAtgt5Ui; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mge++uic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27CBC433F1;
-	Tue, 27 Feb 2024 14:21:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAtgt5Ui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643E8C433F1;
+	Tue, 27 Feb 2024 14:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043669;
-	bh=u20KcAaZBLUmFFI0RwSVTkEeOPXdcZeep9yWYIfcPjI=;
+	s=korg; t=1709043671;
+	bh=wZysLImAkurh8lL4d3PC4akT6Am4PQOB55RhogujXuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mge++uicS+R+JXdB2ZiLCkNZ4K+RL/eGFsdW6YJP5tf0Q8AHsPdXGJDsgcTwYwkzt
-	 tLZqhTUDdc4IqCmmD7sD6+DEq0gC8xlzwBeyrcvUwpMyalS8JaFPN3Ps97M93vx4/h
-	 2Q/v3QHefLow5WQsLXE1gpFt6FB2YjcZzw3L2z0A=
+	b=aAtgt5UiQuyVa2zZp8LpChJTdcYoBcuUdfdBYjXt9Cnh55WzwFRO3bZaxa3vA4xTQ
+	 KD9HSOv1lyP+W+Q1HtbzBfKHN34sqDT9XCwZA5ea+Wj1fhXIG/mBKTIlslkzlDGt+C
+	 QYDtDUQfRTfj3NM23fDCyMAwN1cD24pLcrCdxkjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Geliang Tang <geliang.tang@suse.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 190/195] mptcp: userspace pm send RM_ADDR for ID 0
-Date: Tue, 27 Feb 2024 14:27:31 +0100
-Message-ID: <20240227131616.677597266@linuxfoundation.org>
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 164/195] s390: use the correct count for __iowrite64_copy()
+Date: Tue, 27 Feb 2024 14:27:05 +0100
+Message-ID: <20240227131615.826081545@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,85 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 84c531f54ad9a124a924c9505d74e33d16965146 upstream.
+[ Upstream commit 723a2cc8d69d4342b47dfddbfe6c19f1b135f09b ]
 
-This patch adds the ability to send RM_ADDR for local ID 0. Check
-whether id 0 address is removed, if not, put id 0 into a removing
-list, pass it to mptcp_pm_remove_addr() to remove id 0 address.
+The signature for __iowrite64_copy() requires the number of 64 bit
+quantities, not bytes. Multiple by 8 to get to a byte length before
+invoking zpci_memcpy_toio()
 
-There is no reason not to allow the userspace to remove the initial
-address (ID 0). This special case was not taken into account not
-letting the userspace to delete all addresses as announced.
-
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/379
-Reviewed-by: Matthieu Baerts <matttbe@kernel.org>
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Signed-off-by: Mat Martineau <martineau@kernel.org>
-Link: https://lore.kernel.org/r/20231025-send-net-next-20231025-v1-3-db8f25f798eb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Fixes: d9a4594edabf ("mptcp: netlink: Add MPTCP_PM_CMD_REMOVE")
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 87bc359b9822 ("s390/pci: speed up __iowrite64_copy by using pci store block insn")
+Acked-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/0-v1-9223d11a7662+1d7785-s390_iowrite64_jgg@nvidia.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_userspace.c |   39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ arch/s390/pci/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -222,6 +222,40 @@ int mptcp_nl_cmd_announce(struct sk_buff
- 	return err;
+diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
+index 2c99f9552b2f5..394c69fda399e 100644
+--- a/arch/s390/pci/pci.c
++++ b/arch/s390/pci/pci.c
+@@ -241,7 +241,7 @@ resource_size_t pcibios_align_resource(void *data, const struct resource *res,
+ /* combine single writes by using store-block insn */
+ void __iowrite64_copy(void __iomem *to, const void *from, size_t count)
+ {
+-       zpci_memcpy_toio(to, from, count);
++	zpci_memcpy_toio(to, from, count * 8);
  }
  
-+static int mptcp_userspace_pm_remove_id_zero_address(struct mptcp_sock *msk,
-+						     struct genl_info *info)
-+{
-+	struct mptcp_rm_list list = { .nr = 0 };
-+	struct mptcp_subflow_context *subflow;
-+	struct sock *sk = (struct sock *)msk;
-+	bool has_id_0 = false;
-+	int err = -EINVAL;
-+
-+	lock_sock(sk);
-+	mptcp_for_each_subflow(msk, subflow) {
-+		if (subflow->local_id == 0) {
-+			has_id_0 = true;
-+			break;
-+		}
-+	}
-+	if (!has_id_0) {
-+		GENL_SET_ERR_MSG(info, "address with id 0 not found");
-+		goto remove_err;
-+	}
-+
-+	list.ids[list.nr++] = 0;
-+
-+	spin_lock_bh(&msk->pm.lock);
-+	mptcp_pm_remove_addr(msk, &list);
-+	spin_unlock_bh(&msk->pm.lock);
-+
-+	err = 0;
-+
-+remove_err:
-+	release_sock(sk);
-+	return err;
-+}
-+
- int mptcp_nl_cmd_remove(struct sk_buff *skb, struct genl_info *info)
- {
- 	struct nlattr *token = info->attrs[MPTCP_PM_ATTR_TOKEN];
-@@ -253,6 +287,11 @@ int mptcp_nl_cmd_remove(struct sk_buff *
- 		goto remove_err;
- 	}
- 
-+	if (id_val == 0) {
-+		err = mptcp_userspace_pm_remove_id_zero_address(msk, info);
-+		goto remove_err;
-+	}
-+
- 	lock_sock((struct sock *)msk);
- 
- 	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
+ static void __iomem *__ioremap(phys_addr_t addr, size_t size, pgprot_t prot)
+-- 
+2.43.0
+
 
 
