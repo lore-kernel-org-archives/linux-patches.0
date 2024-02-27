@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4287A13EFE4;
-	Tue, 27 Feb 2024 13:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543FF1419BF;
+	Tue, 27 Feb 2024 13:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041526; cv=none; b=fKIPxo6c1DMl48DSrLXUu+YERA2lQN06d7OHEVUCBqaKmRNHqyyie7O45COisp1dXSia6fc8OdaLbq55WPvq0QUl5eXaM2YRZEX1qY3tGv9ApU+bp4rUgnUSAaR5uYIPsAJvrUJ93CintMl3PSq71BFXE4gR2aJkPD52fWdri4A=
+	t=1709041529; cv=none; b=NykcCV4/4prpmBW1iExwYlZOYnlluAcgcdKd9UWzD5ISUILKypLdaDJR34F40Wsd3OOkTyQ9qaNnxI23FtNW0ivx5ZiXYp+1ImL1GkEpo8w7+F4S1qmcilfSsCb+ndfdLbS5ssVr6kMFYF3lBd8HZfSTFV2UZYar1C7p+JnSHTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041526; c=relaxed/simple;
-	bh=ryuRZcHNWj0XjxsvCAWgoYFgnyOimq+2e+u4fPa2hko=;
+	s=arc-20240116; t=1709041529; c=relaxed/simple;
+	bh=fZNKfbDnlLi9b11tBSSydSYr+RDZIUOMVkJhITj0J38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTupAe+uAMZWfUGa6Fto79IYjOwzorKekKZz2ndSVtsm71WHllmebd1MtQx8WNsxQYCOdybFxLt6HMVPQsdhB+HG8KCUajuLh6hXMLZv0xilaMrDL2xEjZWmz8ZqHcDbtM9TW2rRk2TNCk39pgs89CAYVP12C7vSdnw7p5ymsHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfvrwuXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=namI4O1ghkSU0p5sDp0sU0o9l/xFABVqXolMxMe8CGJ52OZAHQb/486tOp6QknN6/c6p5V2FwtFTy2Dd7J6X0X/JM2o4iNi5vsAMUweJl79lzVRhjcuKUwciQ3mpfVb6Sr6uhfeFm4tKcwnkF5I5szpnuRusIdSkzWOC4Y2hyMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meuEMvVB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfvrwuXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9689DC433C7;
-	Tue, 27 Feb 2024 13:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meuEMvVB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83353C43390;
+	Tue, 27 Feb 2024 13:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041526;
-	bh=ryuRZcHNWj0XjxsvCAWgoYFgnyOimq+2e+u4fPa2hko=;
+	s=korg; t=1709041528;
+	bh=fZNKfbDnlLi9b11tBSSydSYr+RDZIUOMVkJhITj0J38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfvrwuXpAu6YzKUZRPoN3K1iWTKaIxUYU5Iq/8KTYSFRfxuVbjI8esJQPBfgdvGSu
-	 j9cBg6u1vZLWaMhuWDkFgM7QyYbbNvoqKeK1V9WgthxyE51sQ1JpZC0N49iIBxcjMq
-	 Z74SQtYxbtUt1Ov5H5Kt/EiffUAVLlrnAoBxTEMo=
+	b=meuEMvVBj8GKqWrn3jMGN5e+7WrkOp+gC4FxyOxkObbpckFlfkKmgpslwR2rx0FFf
+	 YK5+o1k1sZBQoNOIfMXLdNWK9LeKgM5alUmaocHpM4q/7Ho4St8Sl8uVrVQIXwAGo/
+	 7DFT+LmS4FUXJV+V3gKq+sLMghkaW02qRy5YSTgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lokesh Gidra <lokeshgidra@google.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Jann Horn <jannh@google.com>,
-	Kalesh Singh <kaleshsingh@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Nicolas Geoffray <ngeoffray@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 08/52] userfaultfd: fix mmap_changing checking in mfill_atomic_hugetlb
-Date: Tue, 27 Feb 2024 14:25:55 +0100
-Message-ID: <20240227131548.806329212@linuxfoundation.org>
+	Cyril Hrubis <chrubis@suse.cz>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Petr Vorel <pvorel@suse.cz>,
+	Mel Gorman <mgorman@suse.de>
+Subject: [PATCH 4.19 09/52] sched/rt: Fix sysctl_sched_rr_timeslice intial value
+Date: Tue, 27 Feb 2024 14:25:56 +0100
+Message-ID: <20240227131548.839660733@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131548.514622258@linuxfoundation.org>
 References: <20240227131548.514622258@linuxfoundation.org>
@@ -61,80 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lokesh Gidra <lokeshgidra@google.com>
+From: Cyril Hrubis <chrubis@suse.cz>
 
-commit 67695f18d55924b2013534ef3bdc363bc9e14605 upstream.
+[ Upstream commit c7fcb99877f9f542c918509b2801065adcaf46fa ]
 
-In mfill_atomic_hugetlb(), mmap_changing isn't being checked
-again if we drop mmap_lock and reacquire it. When the lock is not held,
-mmap_changing could have been incremented. This is also inconsistent
-with the behavior in mfill_atomic().
+There is a 10% rounding error in the intial value of the
+sysctl_sched_rr_timeslice with CONFIG_HZ_300=y.
 
-Link: https://lkml.kernel.org/r/20240117223729.1444522-1-lokeshgidra@google.com
-Fixes: df2cc96e77011 ("userfaultfd: prevent non-cooperative events vs mcopy_atomic races")
-Signed-off-by: Lokesh Gidra <lokeshgidra@google.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Nicolas Geoffray <ngeoffray@google.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+This was found with LTP test sched_rr_get_interval01:
+
+sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
+sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
+sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
+sched_rr_get_interval01.c:57: TPASS: sched_rr_get_interval() passed
+sched_rr_get_interval01.c:64: TPASS: Time quantum 0s 99999990ns
+sched_rr_get_interval01.c:72: TFAIL: /proc/sys/kernel/sched_rr_timeslice_ms != 100 got 90
+
+What this test does is to compare the return value from the
+sched_rr_get_interval() and the sched_rr_timeslice_ms sysctl file and
+fails if they do not match.
+
+The problem it found is the intial sysctl file value which was computed as:
+
+static int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
+
+which works fine as long as MSEC_PER_SEC is multiple of HZ, however it
+introduces 10% rounding error for CONFIG_HZ_300:
+
+(MSEC_PER_SEC / HZ) * (100 * HZ / 1000)
+
+(1000 / 300) * (100 * 300 / 1000)
+
+3 * 30 = 90
+
+This can be easily fixed by reversing the order of the multiplication
+and division. After this fix we get:
+
+(MSEC_PER_SEC * (100 * HZ / 1000)) / HZ
+
+(1000 * (100 * 300 / 1000)) / 300
+
+(1000 * 30) / 300 = 100
+
+Fixes: 975e155ed873 ("sched/rt: Show the 'sched_rr_timeslice' SCHED_RR timeslice tuning knob in milliseconds")
+Signed-off-by: Cyril Hrubis <chrubis@suse.cz>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Acked-by: Mel Gorman <mgorman@suse.de>
+Tested-by: Petr Vorel <pvorel@suse.cz>
+Link: https://lore.kernel.org/r/20230802151906.25258-2-chrubis@suse.cz
+[ pvorel: rebased for 4.19 ]
+Signed-off-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/userfaultfd.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ kernel/sched/rt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -179,6 +179,7 @@ static __always_inline ssize_t __mcopy_a
- 					      unsigned long dst_start,
- 					      unsigned long src_start,
- 					      unsigned long len,
-+					      bool *mmap_changing,
- 					      bool zeropage)
- {
- 	int vm_alloc_shared = dst_vma->vm_flags & VM_SHARED;
-@@ -310,6 +311,15 @@ retry:
- 				goto out;
- 			}
- 			down_read(&dst_mm->mmap_sem);
-+			/*
-+			 * If memory mappings are changing because of non-cooperative
-+			 * operation (e.g. mremap) running in parallel, bail out and
-+			 * request the user to retry later
-+			 */
-+			if (mmap_changing && READ_ONCE(*mmap_changing)) {
-+				err = -EAGAIN;
-+				break;
-+			}
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -8,7 +8,7 @@
+ #include "pelt.h"
  
- 			dst_vma = NULL;
- 			goto retry;
-@@ -391,6 +401,7 @@ extern ssize_t __mcopy_atomic_hugetlb(st
- 				      unsigned long dst_start,
- 				      unsigned long src_start,
- 				      unsigned long len,
-+				      bool *mmap_changing,
- 				      bool zeropage);
- #endif /* CONFIG_HUGETLB_PAGE */
+ int sched_rr_timeslice = RR_TIMESLICE;
+-int sysctl_sched_rr_timeslice = (MSEC_PER_SEC / HZ) * RR_TIMESLICE;
++int sysctl_sched_rr_timeslice = (MSEC_PER_SEC * RR_TIMESLICE) / HZ;
  
-@@ -508,7 +519,8 @@ retry:
- 	 */
- 	if (is_vm_hugetlb_page(dst_vma))
- 		return  __mcopy_atomic_hugetlb(dst_mm, dst_vma, dst_start,
--						src_start, len, zeropage);
-+					       src_start, len, mmap_changing,
-+					       zeropage);
+ static int do_sched_rt_period_timer(struct rt_bandwidth *rt_b, int overrun);
  
- 	if (!vma_is_anonymous(dst_vma) && !vma_is_shmem(dst_vma))
- 		goto out_unlock;
 
 
