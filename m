@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B5013B2B4;
-	Tue, 27 Feb 2024 14:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CB613B78F;
+	Tue, 27 Feb 2024 14:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043346; cv=none; b=nhZ1FA9ugcHj3AwiVctzN/H6/hGrwoJu8sWVkIzlJv6/xr+RW5YP3bnXbO63XZYIniCFjWE6eRiMO8DyxTgemMKTKusJKALbCnGqawjA9uhaW3Tb12TXWYnnYvq5LZf75vnPpDTbfGdrYWuZK6jQg11t83/TWwIHcWWN8aQgRcs=
+	t=1709043348; cv=none; b=oMhkKhfwAU3evaR/4J8aHHiwOFZs7KvPdt6RhIGijN0Q2Ue1eIf7+1T4AGa377B+iZI5V0R01/sCt/YvRxCB5BgjSCV06ZhSghjgWVEYiCng5DVllkpwQ9MjZf+rvAaJuffQ/PCGjR1yqCLSYylkJAMAFo7L+2gkEKQ3Lr5tBsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043346; c=relaxed/simple;
-	bh=G/rxBysktIPP9tXZiOIlf2oYoro+3VKR7DgzKdtB0A4=;
+	s=arc-20240116; t=1709043348; c=relaxed/simple;
+	bh=oOQWcHrudQuPTnJzvVq8n/06mdfTyd/rN4Lc7Mwgi0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzRQRADzzmcCP26P9vNdn2FYJbGvj/BlUEbmlCGYqibR31mUFOLYDQydCA/5NsM+Fqt5gou9gPV49ywHxGa0WH4NeTgJdS5+SxHpQENvd0eAnmEs5Sdd+lhh12LGO/EtleYrFBoZBrRUv+SJWEro9upc7+y6AfarKlic8YSU6Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPPJugLh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SkJWxCpmQLbwBTgjK/reL7fkizc8woB/ZN1DQIGXwLiJFWcl0Bbw/iuc2s6nzhJvHp7poxk+nZX7MOOEnn9EkBBh7qaBrGQ7NIxFbxFGSOgS2yCSyXN2yWWLAcUCHSpdjw7YEvx8bHcoqMXMLpLzFWobLuHSd8A1jZNzDS5KMhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY3creQv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPPJugLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93455C433F1;
-	Tue, 27 Feb 2024 14:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY3creQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF8AC433F1;
+	Tue, 27 Feb 2024 14:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043345;
-	bh=G/rxBysktIPP9tXZiOIlf2oYoro+3VKR7DgzKdtB0A4=;
+	s=korg; t=1709043348;
+	bh=oOQWcHrudQuPTnJzvVq8n/06mdfTyd/rN4Lc7Mwgi0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPPJugLhXczFeu7MACqZdoUmIgvtg7o3NgG3OMM/vnzTu/KzQrw57oGBkgerkmXbM
-	 SvyJ4KULSr7A6KNjCkMj1SxXjooM5M7rKy+DnZ3gRvHXO9RDF2e5prAieH4B9ahGmf
-	 s0xAN+Vm+yhVRYcreVF+o8XUHGKIoGIDQRoVEU88=
+	b=YY3creQvqbqbieceAmZ3rlpH7PTOpMd9C/Ll95aKNtig0v1QnGYPOkVl4c4LP9vvH
+	 5/4zRXPAucR6dNWJZ3RGhq64PR7s4l6k0T9g2JCpktW9KNS6ZNG5SQfm8mli0a7daI
+	 G+CrAExrJdvddpXyeJpnlP8x/Jdyv/IH973FzMCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Andrew Bresticker <abrestic@rivosinc.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/195] spi: sh-msiof: avoid integer overflow in constants
-Date: Tue, 27 Feb 2024 14:24:57 +0100
-Message-ID: <20240227131611.583538232@linuxfoundation.org>
+Subject: [PATCH 6.1 068/195] efi: runtime: Fix potential overflow of soft-reserved region size
+Date: Tue, 27 Feb 2024 14:25:29 +0100
+Message-ID: <20240227131612.746084413@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -52,51 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Andrew Bresticker <abrestic@rivosinc.com>
 
-[ Upstream commit 6500ad28fd5d67d5ca0fee9da73c463090842440 ]
+[ Upstream commit de1034b38a346ef6be25fe8792f5d1e0684d5ff4 ]
 
-cppcheck rightfully warned:
+md_size will have been narrowed if we have >= 4GB worth of pages in a
+soft-reserved region.
 
- drivers/spi/spi-sh-msiof.c:792:28: warning: Signed integer overflow for expression '7<<29'. [integerOverflow]
- sh_msiof_write(p, SIFCTR, SIFCTR_TFWM_1 | SIFCTR_RFWM_1);
-
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://msgid.link/r/20240130094053.10672-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/firmware/efi/arm-runtime.c   | 2 +-
+ drivers/firmware/efi/riscv-runtime.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index 51ceaa4857249..ec3a4939ee984 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -137,14 +137,14 @@ struct sh_msiof_spi_priv {
+diff --git a/drivers/firmware/efi/arm-runtime.c b/drivers/firmware/efi/arm-runtime.c
+index 7c48c380d722c..1995f0a2e0fc0 100644
+--- a/drivers/firmware/efi/arm-runtime.c
++++ b/drivers/firmware/efi/arm-runtime.c
+@@ -107,7 +107,7 @@ static int __init arm_enable_runtime_services(void)
+ 		efi_memory_desc_t *md;
  
- /* SIFCTR */
- #define SIFCTR_TFWM_MASK	GENMASK(31, 29)	/* Transmit FIFO Watermark */
--#define SIFCTR_TFWM_64		(0 << 29)	/*  Transfer Request when 64 empty stages */
--#define SIFCTR_TFWM_32		(1 << 29)	/*  Transfer Request when 32 empty stages */
--#define SIFCTR_TFWM_24		(2 << 29)	/*  Transfer Request when 24 empty stages */
--#define SIFCTR_TFWM_16		(3 << 29)	/*  Transfer Request when 16 empty stages */
--#define SIFCTR_TFWM_12		(4 << 29)	/*  Transfer Request when 12 empty stages */
--#define SIFCTR_TFWM_8		(5 << 29)	/*  Transfer Request when 8 empty stages */
--#define SIFCTR_TFWM_4		(6 << 29)	/*  Transfer Request when 4 empty stages */
--#define SIFCTR_TFWM_1		(7 << 29)	/*  Transfer Request when 1 empty stage */
-+#define SIFCTR_TFWM_64		(0UL << 29)	/*  Transfer Request when 64 empty stages */
-+#define SIFCTR_TFWM_32		(1UL << 29)	/*  Transfer Request when 32 empty stages */
-+#define SIFCTR_TFWM_24		(2UL << 29)	/*  Transfer Request when 24 empty stages */
-+#define SIFCTR_TFWM_16		(3UL << 29)	/*  Transfer Request when 16 empty stages */
-+#define SIFCTR_TFWM_12		(4UL << 29)	/*  Transfer Request when 12 empty stages */
-+#define SIFCTR_TFWM_8		(5UL << 29)	/*  Transfer Request when 8 empty stages */
-+#define SIFCTR_TFWM_4		(6UL << 29)	/*  Transfer Request when 4 empty stages */
-+#define SIFCTR_TFWM_1		(7UL << 29)	/*  Transfer Request when 1 empty stage */
- #define SIFCTR_TFUA_MASK	GENMASK(26, 20) /* Transmit FIFO Usable Area */
- #define SIFCTR_TFUA_SHIFT	20
- #define SIFCTR_TFUA(i)		((i) << SIFCTR_TFUA_SHIFT)
+ 		for_each_efi_memory_desc(md) {
+-			int md_size = md->num_pages << EFI_PAGE_SHIFT;
++			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
+ 			struct resource *res;
+ 
+ 			if (!(md->attribute & EFI_MEMORY_SP))
+diff --git a/drivers/firmware/efi/riscv-runtime.c b/drivers/firmware/efi/riscv-runtime.c
+index d0daacd2c903f..6b142aa35389e 100644
+--- a/drivers/firmware/efi/riscv-runtime.c
++++ b/drivers/firmware/efi/riscv-runtime.c
+@@ -85,7 +85,7 @@ static int __init riscv_enable_runtime_services(void)
+ 		efi_memory_desc_t *md;
+ 
+ 		for_each_efi_memory_desc(md) {
+-			int md_size = md->num_pages << EFI_PAGE_SHIFT;
++			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
+ 			struct resource *res;
+ 
+ 			if (!(md->attribute & EFI_MEMORY_SP))
 -- 
 2.43.0
 
