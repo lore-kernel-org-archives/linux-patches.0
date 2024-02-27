@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D3313B293;
-	Tue, 27 Feb 2024 13:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187E13B293;
+	Tue, 27 Feb 2024 13:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041096; cv=none; b=BmTgWtrJCt83r34rF/8EZ+vfZEXyG+Ip+xbkPrZHglMk43eEH1HSKrTBXlxtDbvxbAAkFjjtsFeMn9Qbf0MtTOKicSxiTdJ+JmG49VVTx74M6icc9RAs8R5KWu38VdLAP5B5T4Dvyzbb6zh3c1z1WdOfVkS0HHy+98rEFtn67O0=
+	t=1709041099; cv=none; b=rVIV1HcWMgoypFHY5W3KUuRKBUL/aFxsdvhoVcPjJ27Xi0vnRhcXvtQwWKS9echg+7SBrqDheQgF72hhK3cD1o5sWlKaOFjMnvCOSUIAt3MqOTO6G3cD2Pva0BPHlv3jwq4lzJf3TsTBSJjkVqngn1YFvLW7sPZKMVItA/TOcsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041096; c=relaxed/simple;
-	bh=V6Ma8Y+nIObyWiuq4eR984RK1raEjW45gjFrXHusESA=;
+	s=arc-20240116; t=1709041099; c=relaxed/simple;
+	bh=dbfcXWoa9UhulJ0c/FG3C67WmfGloDGs45yCbDl0iHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHd6KTyvwgRA6H0avePSMUU8vDN3jx1CVbWLh2aZWjL3MUFZVpLu1rSx5o9UceMBCItKmzItSrAaLc7DsOaQBbt6sPpeIOtE8K2hjUZuHvzjx3zXXBUCbr5tRAywoMkla25ykrxN7XLCIRgmzgw6isvY9X0Fw8o+UsMMtETgDEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrV9iNsi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+bdHX7044vRP2YjXQJodmaYGVVUrdegRRWdDZRAfaFReILLm1ggbhbq9syVx4ORoxU76k8Uxym316C42HYqWJq71O17KhJAEw9H/r0o+dLAdCvHFKTlnjWdITh+R0maeyKPbNg+r25Sg0Q2DoqRP5ereLgrBhbBruFZ8AJ0Dqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5eqyBJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrV9iNsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19887C433F1;
-	Tue, 27 Feb 2024 13:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5eqyBJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD34C433F1;
+	Tue, 27 Feb 2024 13:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041096;
-	bh=V6Ma8Y+nIObyWiuq4eR984RK1raEjW45gjFrXHusESA=;
+	s=korg; t=1709041099;
+	bh=dbfcXWoa9UhulJ0c/FG3C67WmfGloDGs45yCbDl0iHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vrV9iNsixCoegoeVkveym1F6XSzyYcsbYSdsCdR6EZ8IueT8Fp+56hHJcOc9aZgJY
-	 7C0et7sGnaMOFo8HkiFd92/LeXlHKoABI2uiREn2dXfYbVNO+ZjpoSB2dZgfyt4/15
-	 D9sbf1EzwZ9nxaUw8KW6lUbqJe7bpZPquO2F4QKc=
+	b=R5eqyBJUJRXIHBFE0/sncfP/RNQ5S1mRvTvufniUDIEVYv93IbWw5kUPTbfaLNNZp
+	 Os2DFJsxVkyihQGyNNN6isMTW63y+SykzFIlcVdc7bDzDGuC9LWo3EuYYjcE63L4j1
+	 ksuoGLLud0Ns5lAJtT/9Jg+hgNSy0il7IszpxeVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.7 211/334] usb: roles: fix NULL pointer issue when put modules reference
-Date: Tue, 27 Feb 2024 14:21:09 +0100
-Message-ID: <20240227131637.585783698@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.7 220/334] selftests: mptcp: simult flows: fix some subtest names
+Date: Tue, 27 Feb 2024 14:21:18 +0100
+Message-ID: <20240227131637.869373743@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -50,96 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 1c9be13846c0b2abc2480602f8ef421360e1ad9e upstream.
+commit 4d8e0dde0403b5a86aa83e243f020711a9c3e31f upstream.
 
-In current design, usb role class driver will get usb_role_switch parent's
-module reference after the user get usb_role_switch device and put the
-reference after the user put the usb_role_switch device. However, the
-parent device of usb_role_switch may be removed before the user put the
-usb_role_switch. If so, then, NULL pointer issue will be met when the user
-put the parent module's reference.
+The selftest was correctly recording all the results, but the 'reverse
+direction' part was missing in the name when needed.
 
-This will save the module pointer in structure of usb_role_switch. Then,
-we don't need to find module by iterating long relations.
+It is important to have a unique (sub)test name in TAP, because some CI
+environments drop tests with duplicated name.
 
-Fixes: 5c54fcac9a9d ("usb: roles: Take care of driver module reference counting")
-cc: stable@vger.kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240129093739.2371530-1-xu.yang_2@nxp.com
+Fixes: 675d99338e7a ("selftests: mptcp: simult flows: format subtests results in TAP")
+Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/roles/class.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/mptcp/simult_flows.sh |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -21,6 +21,7 @@ static const struct class role_class = {
- struct usb_role_switch {
- 	struct device dev;
- 	struct mutex lock; /* device lock*/
-+	struct module *module; /* the module this device depends on */
- 	enum usb_role role;
+--- a/tools/testing/selftests/net/mptcp/simult_flows.sh
++++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
+@@ -267,7 +267,8 @@ run_test()
+ 		[ $bail -eq 0 ] || exit $ret
+ 	fi
  
- 	/* From descriptor */
-@@ -135,7 +136,7 @@ struct usb_role_switch *usb_role_switch_
- 						  usb_role_switch_match);
- 
- 	if (!IS_ERR_OR_NULL(sw))
--		WARN_ON(!try_module_get(sw->dev.parent->driver->owner));
-+		WARN_ON(!try_module_get(sw->module));
- 
- 	return sw;
- }
-@@ -157,7 +158,7 @@ struct usb_role_switch *fwnode_usb_role_
- 		sw = fwnode_connection_find_match(fwnode, "usb-role-switch",
- 						  NULL, usb_role_switch_match);
- 	if (!IS_ERR_OR_NULL(sw))
--		WARN_ON(!try_module_get(sw->dev.parent->driver->owner));
-+		WARN_ON(!try_module_get(sw->module));
- 
- 	return sw;
- }
-@@ -172,7 +173,7 @@ EXPORT_SYMBOL_GPL(fwnode_usb_role_switch
- void usb_role_switch_put(struct usb_role_switch *sw)
- {
- 	if (!IS_ERR_OR_NULL(sw)) {
--		module_put(sw->dev.parent->driver->owner);
-+		module_put(sw->module);
- 		put_device(&sw->dev);
- 	}
- }
-@@ -189,15 +190,18 @@ struct usb_role_switch *
- usb_role_switch_find_by_fwnode(const struct fwnode_handle *fwnode)
- {
- 	struct device *dev;
-+	struct usb_role_switch *sw = NULL;
- 
- 	if (!fwnode)
- 		return NULL;
- 
- 	dev = class_find_device_by_fwnode(&role_class, fwnode);
--	if (dev)
--		WARN_ON(!try_module_get(dev->parent->driver->owner));
-+	if (dev) {
-+		sw = to_role_switch(dev);
-+		WARN_ON(!try_module_get(sw->module));
-+	}
- 
--	return dev ? to_role_switch(dev) : NULL;
-+	return sw;
- }
- EXPORT_SYMBOL_GPL(usb_role_switch_find_by_fwnode);
- 
-@@ -338,6 +342,7 @@ usb_role_switch_register(struct device *
- 	sw->set = desc->set;
- 	sw->get = desc->get;
- 
-+	sw->module = parent->driver->owner;
- 	sw->dev.parent = parent;
- 	sw->dev.fwnode = desc->fwnode;
- 	sw->dev.class = &role_class;
+-	printf "%-60s" "$msg - reverse direction"
++	msg+=" - reverse direction"
++	printf "%-60s" "${msg}"
+ 	do_transfer $large $small $time
+ 	lret=$?
+ 	mptcp_lib_result_code "${lret}" "${msg}"
 
 
