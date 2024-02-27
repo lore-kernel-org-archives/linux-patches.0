@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3100113B78E;
-	Tue, 27 Feb 2024 14:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7C413B797;
+	Tue, 27 Feb 2024 14:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043517; cv=none; b=TweUOWMQY+IsasQ9VVM/YF5IX3rzPWer+uqJmYIewaqoCZu4BYqxTUNKQnSC9JM2gSwKJ7MFFYKIa1t1/Nny8Vzw/PpjffmW8V4qnfTeZFk1nWq0zQ2xXpP5o1af+OaOK4CWPJD6j7hOP9RiBusNAW9MrjK4SDG8Z4Lf7SNUnCk=
+	t=1709043519; cv=none; b=rnDuU68pUfSt4lKFKPuSqjlsaKX6pfAOzQnJKBZBZvLOSPM95mIxW/CtmeaRyqIr5E9OeJVXQfCkuJ6pCUYmKvK6TTA0xintnrYx0f9ELppQHqEfVvRHQMIp+o1dnBCI7sA6UvjXzTyE6iJJ1xK6im4U5n9li+7QFNwtrXhaBFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043517; c=relaxed/simple;
-	bh=RLTNgoAEoftHcUlThFPaWN+bpQqsHDP6May/Xm6o8wU=;
+	s=arc-20240116; t=1709043519; c=relaxed/simple;
+	bh=ETIzp+M0EIgZt0XEExAZywrMIhJfDO5dEZnd/vLDNZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=da3MytaBev1xAGc6YtT3Wf2q1eHRDNZ/be2yEfh6sRtr16MLPVKgHuvweeOQJDlNf+cSLrQDFjD7/wvjDCz5Yz7ze19RJpqeCk6jSVddT+eyaPetRSSh07JpgeSB73N1bJqa01PhjlhWEqATK38ddsTkiLspFOL7lZ/rhDXlU9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izT9BPxd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AK0ivChhqqEtrZAEinAd655ygj0mzBmQVrtChG0ihnRd3wyykEmhQeGR9i/qi/s3FBVel6Y816vmitRbulhfJxh6eCxqJ4o1UPdHLOQ0Nii6r21Uodwq/2KEz243p2ElygBHEYybT6H8VG5HnMgTlv8vjYcYlVhhj+/UBSCTSQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/uLySax; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izT9BPxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2375C433F1;
-	Tue, 27 Feb 2024 14:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/uLySax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D885C433F1;
+	Tue, 27 Feb 2024 14:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043517;
-	bh=RLTNgoAEoftHcUlThFPaWN+bpQqsHDP6May/Xm6o8wU=;
+	s=korg; t=1709043519;
+	bh=ETIzp+M0EIgZt0XEExAZywrMIhJfDO5dEZnd/vLDNZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izT9BPxdym1z76wuQLfogA7sLbgiGz2Y50YVF+ikmQe4hMYCDFhK+OcEyWjHvRKF0
-	 uWx2xiGPHUDOsCKP0MR1AoCnIbWWJKYflqR0H5sVS8O8OtPTe4SQy+K8d/cgwIL2Rh
-	 /f8KGV3Pj3u6Wz69LNYjdnk2FMWIsLWuRQ7Owrxw=
+	b=v/uLySaxFCBRLdT3VXIWYj2PnksMUmP4vC/Wd7HCLlZ0pAkY5ZkG5jrG0MZHyIgMw
+	 AYDOuwHn9B+DyTudrCuaWjY/tNY4YOqsZyiVJNWTvRVTSNATBEnE1XQsk+ri694qd7
+	 +ur8PP44aGN9zKCefalkQ9jjhnqbLBymCGWTjeBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	=?UTF-8?q?Jonas=20Sch=C3=A4fer?= <jonas@wielicki.name>,
-	Narcis Garcia <debianlists@actiu.net>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 098/195] mm: memcontrol: clarify swapaccount=0 deprecation warning
-Date: Tue, 27 Feb 2024 14:25:59 +0100
-Message-ID: <20240227131613.709997610@linuxfoundation.org>
+	Zhipeng Lu <alexious@zju.edu.cn>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 130/195] IB/hfi1: Fix a memleak in init_credit_return
+Date: Tue, 27 Feb 2024 14:26:31 +0100
+Message-ID: <20240227131614.733917487@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,63 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Weiner <hannes@cmpxchg.org>
+From: Zhipeng Lu <alexious@zju.edu.cn>
 
-commit 118642d7f606fc9b9c92ee611275420320290ffb upstream.
+[ Upstream commit 809aa64ebff51eb170ee31a95f83b2d21efa32e2 ]
 
-The swapaccount deprecation warning is throwing false positives.  Since we
-deprecated the knob and defaulted to enabling, the only reports we've been
-getting are from folks that set swapaccount=1.  While this is a nice
-affirmation that always-enabling was the right choice, we certainly don't
-want to warn when users request the supported mode.
+When dma_alloc_coherent fails to allocate dd->cr_base[i].va,
+init_credit_return should deallocate dd->cr_base and
+dd->cr_base[i] that allocated before. Or those resources
+would be never freed and a memleak is triggered.
 
-Only warn when disabling is requested, and clarify the warning.
-
-[colin.i.king@gmail.com: spelling: "commdandline" -> "commandline"]
-  Link: https://lkml.kernel.org/r/20240215090544.1649201-1-colin.i.king@gmail.com
-Link: https://lkml.kernel.org/r/20240213081634.3652326-1-hannes@cmpxchg.org
-Fixes: b25806dcd3d5 ("mm: memcontrol: deprecate swapaccounting=0 mode")
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Reported-by: "Jonas Schäfer" <jonas@wielicki.name>
-Reported-by: Narcis Garcia <debianlists@actiu.net>
-Suggested-by: Yosry Ahmed <yosryahmed@google.com>
-Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Zhipeng Lu <alexious@zju.edu.cn>
+Link: https://lore.kernel.org/r/20240112085523.3731720-1-alexious@zju.edu.cn
+Acked-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hfi1/pio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -7517,9 +7517,13 @@ bool mem_cgroup_swap_full(struct folio *
- 
- static int __init setup_swap_account(char *s)
- {
--	pr_warn_once("The swapaccount= commandline option is deprecated. "
--		     "Please report your usecase to linux-mm@kvack.org if you "
--		     "depend on this functionality.\n");
-+	bool res;
+diff --git a/drivers/infiniband/hw/hfi1/pio.c b/drivers/infiniband/hw/hfi1/pio.c
+index 51ae58c02b15c..802b0e5801a7d 100644
+--- a/drivers/infiniband/hw/hfi1/pio.c
++++ b/drivers/infiniband/hw/hfi1/pio.c
+@@ -2089,7 +2089,7 @@ int init_credit_return(struct hfi1_devdata *dd)
+ 				   "Unable to allocate credit return DMA range for NUMA %d\n",
+ 				   i);
+ 			ret = -ENOMEM;
+-			goto done;
++			goto free_cr_base;
+ 		}
+ 	}
+ 	set_dev_node(&dd->pcidev->dev, dd->node);
+@@ -2097,6 +2097,10 @@ int init_credit_return(struct hfi1_devdata *dd)
+ 	ret = 0;
+ done:
+ 	return ret;
 +
-+	if (!kstrtobool(s, &res) && !res)
-+		pr_warn_once("The swapaccount=0 commandline option is deprecated "
-+			     "in favor of configuring swap control via cgroupfs. "
-+			     "Please report your usecase to linux-mm@kvack.org if you "
-+			     "depend on this functionality.\n");
- 	return 1;
++free_cr_base:
++	free_credit_return(dd);
++	goto done;
  }
- __setup("swapaccount=", setup_swap_account);
+ 
+ void free_credit_return(struct hfi1_devdata *dd)
+-- 
+2.43.0
+
 
 
