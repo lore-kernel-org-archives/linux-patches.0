@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F3213B2AC;
-	Tue, 27 Feb 2024 13:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F9F145FE1;
+	Tue, 27 Feb 2024 13:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040631; cv=none; b=IhbLJQip9dgo183RHHgszw2koPG4Obf4RUWlE0HNprYo2a2cuE9SlrABq8dXtwmahTtX3sBH3GtzBH11QEdFQF3uWsHhLx1YpT676tBnFCRNreh9m3ebKPxjs2dlv265nOhdI02DpvPFUtTa/7kMeeeN91ZQb5g/QtpI3EoTKgI=
+	t=1709040634; cv=none; b=uaKxrCA1LXHa+3GnIDo/3cuekIXKwFUzVkAhfGCh0cuCJled0AbPUKrNk04LAiDi6GWpylO2mxgcMycRmMMirsp+AEFGSKfubXNantJi4NmVho8M2vKxzIVJC/+0QKmuLTnOVbY/83wBpRIRrKG678iOsOTYvhzMH8Xlkf3szxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040631; c=relaxed/simple;
-	bh=OzCTZxI1Lo/vJI1/CBrw86wDwrZ6EzkTM4DuQwHqtBw=;
+	s=arc-20240116; t=1709040634; c=relaxed/simple;
+	bh=nH9Z9ytTBJb3GiswaQwXgGnEO3sa5ISSEmh3e8duSvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kp7qaukM8qp6qx9VdckiKTtow9ywPGcfv1S0K8NG9ZxyBFxP0YxBH+NFD5twr4h21LoTtb5MP4Th6yxLc8WG1oQlYcT2f4jwudsUwU4sDEhgGe5Ec6aqwN9vCMahcDv3f1v63wbFgeWd7/WJD+qsOsH2Smckad1+HVBCwQyr9AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs0hgBHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGDvUO8x6q+VMp7Y4CYkET0d290w+Ka1ORSV4YThHEiPL2jqOwGtqTNmviwOdj16Lz+jEjSNVd8F9JREkpzxITYDK6i6TKPh2Q02bNeKSPi6C0Gv74kSKl8jXmcMhwMdK+iliFNbI2ve3UHgoCisA7JMg7iXVuIz/hVIMankYY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHHahEwi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs0hgBHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8263CC433C7;
-	Tue, 27 Feb 2024 13:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHHahEwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F47C433B2;
+	Tue, 27 Feb 2024 13:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040630;
-	bh=OzCTZxI1Lo/vJI1/CBrw86wDwrZ6EzkTM4DuQwHqtBw=;
+	s=korg; t=1709040633;
+	bh=nH9Z9ytTBJb3GiswaQwXgGnEO3sa5ISSEmh3e8duSvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cs0hgBHAN7+jjwN/Nh0l1+JyuNLirtgQ92+UlcCKp7nwEmSOGMrsOtGNj2qkbxdbb
-	 jCw2p9yeDVbYC2tWPF9XSNFSb8F/VfCeX94/03atrfN6RWkjHlv/xfbleqkmyu9DQE
-	 cIpdvh2a0VXKNyiHQpL2C+cjJ8YHTGYFUbal2cbM=
+	b=AHHahEwi4o1wzgGaa7VUpl1ie3AFVKQq4MIq2pr4wjSCeXkqnkW/KqYaNMKudZNzD
+	 7yGw2nzPrctXJgJYY3ysekGRbwykuSqi+IeprLZd+tv/fqlWuRQzIZj8IS2UIDVf6r
+	 2f24QeG6/up3+nFnTpCIqYuYnCTN+9aO1VNLiD18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Conrad Kostecki <conikost@gentoo.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 052/334] spi: sh-msiof: avoid integer overflow in constants
-Date: Tue, 27 Feb 2024 14:18:30 +0100
-Message-ID: <20240227131632.257873276@linuxfoundation.org>
+Subject: [PATCH 6.7 026/334] ahci: asm1166: correct count of reported ports
+Date: Tue, 27 Feb 2024 14:18:04 +0100
+Message-ID: <20240227131631.445326224@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,51 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Conrad Kostecki <conikost@gentoo.org>
 
-[ Upstream commit 6500ad28fd5d67d5ca0fee9da73c463090842440 ]
+[ Upstream commit 0077a504e1a4468669fd2e011108db49133db56e ]
 
-cppcheck rightfully warned:
+The ASM1166 SATA host controller always reports wrongly,
+that it has 32 ports. But in reality, it only has six ports.
 
- drivers/spi/spi-sh-msiof.c:792:28: warning: Signed integer overflow for expression '7<<29'. [integerOverflow]
- sh_msiof_write(p, SIFCTR, SIFCTR_TFWM_1 | SIFCTR_RFWM_1);
+This seems to be a hardware issue, as all tested ASM1166
+SATA host controllers reports such high count of ports.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://msgid.link/r/20240130094053.10672-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Example output: ahci 0000:09:00.0: AHCI 0001.0301
+32 slots 32 ports 6 Gbps 0xffffff3f impl SATA mode.
+
+By adjusting the port_map, the count is limited to six ports.
+
+New output: ahci 0000:09:00.0: AHCI 0001.0301
+32 slots 32 ports 6 Gbps 0x3f impl SATA mode.
+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=211873
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218346
+Signed-off-by: Conrad Kostecki <conikost@gentoo.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sh-msiof.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/ata/ahci.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
-index cfc3b1ddbd229..6f12e4fb2e2e1 100644
---- a/drivers/spi/spi-sh-msiof.c
-+++ b/drivers/spi/spi-sh-msiof.c
-@@ -136,14 +136,14 @@ struct sh_msiof_spi_priv {
- 
- /* SIFCTR */
- #define SIFCTR_TFWM_MASK	GENMASK(31, 29)	/* Transmit FIFO Watermark */
--#define SIFCTR_TFWM_64		(0 << 29)	/*  Transfer Request when 64 empty stages */
--#define SIFCTR_TFWM_32		(1 << 29)	/*  Transfer Request when 32 empty stages */
--#define SIFCTR_TFWM_24		(2 << 29)	/*  Transfer Request when 24 empty stages */
--#define SIFCTR_TFWM_16		(3 << 29)	/*  Transfer Request when 16 empty stages */
--#define SIFCTR_TFWM_12		(4 << 29)	/*  Transfer Request when 12 empty stages */
--#define SIFCTR_TFWM_8		(5 << 29)	/*  Transfer Request when 8 empty stages */
--#define SIFCTR_TFWM_4		(6 << 29)	/*  Transfer Request when 4 empty stages */
--#define SIFCTR_TFWM_1		(7 << 29)	/*  Transfer Request when 1 empty stage */
-+#define SIFCTR_TFWM_64		(0UL << 29)	/*  Transfer Request when 64 empty stages */
-+#define SIFCTR_TFWM_32		(1UL << 29)	/*  Transfer Request when 32 empty stages */
-+#define SIFCTR_TFWM_24		(2UL << 29)	/*  Transfer Request when 24 empty stages */
-+#define SIFCTR_TFWM_16		(3UL << 29)	/*  Transfer Request when 16 empty stages */
-+#define SIFCTR_TFWM_12		(4UL << 29)	/*  Transfer Request when 12 empty stages */
-+#define SIFCTR_TFWM_8		(5UL << 29)	/*  Transfer Request when 8 empty stages */
-+#define SIFCTR_TFWM_4		(6UL << 29)	/*  Transfer Request when 4 empty stages */
-+#define SIFCTR_TFWM_1		(7UL << 29)	/*  Transfer Request when 1 empty stage */
- #define SIFCTR_TFUA_MASK	GENMASK(26, 20) /* Transmit FIFO Usable Area */
- #define SIFCTR_TFUA_SHIFT	20
- #define SIFCTR_TFUA(i)		((i) << SIFCTR_TFUA_SHIFT)
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 3a5f3255f51b3..762c5d8b7c1a1 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -663,6 +663,11 @@ MODULE_PARM_DESC(mobile_lpm_policy, "Default LPM policy for mobile chipsets");
+ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 					 struct ahci_host_priv *hpriv)
+ {
++	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA && pdev->device == 0x1166) {
++		dev_info(&pdev->dev, "ASM1166 has only six ports\n");
++		hpriv->saved_port_map = 0x3f;
++	}
++
+ 	if (pdev->vendor == PCI_VENDOR_ID_JMICRON && pdev->device == 0x2361) {
+ 		dev_info(&pdev->dev, "JMB361 has only one port\n");
+ 		hpriv->saved_port_map = 1;
 -- 
 2.43.0
 
