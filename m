@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD1413B2B3;
-	Tue, 27 Feb 2024 14:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792F113A26F;
+	Tue, 27 Feb 2024 14:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042828; cv=none; b=tnnie5rQ9q1x3QTku+mrnSuzwWgDb3MBziYxOMkhL2rPcxk9Cm6hRwYp4l9EkZUBxi2xfiT5RpbqjcQBWlI6iFzPP2RrjnKiJPnlpYdkDykglS2YsRy7xtSBMSMM3I1I6ANTZi6F7BhvRp6oJJ7nhXqVNdtZr4TD34gGAZv4iEg=
+	t=1709042831; cv=none; b=TgBgAqvbcxxzYqwe+NlLfEfzkGPN+HtcJPEc2WMuXciWPycBJfFelM8hjPV4KQH+qOFJ4YV7PaiEckfwlMehHEHuwd+pxpTkjtX8VxHciP8HF3x+yplNX+Qy6XdmKo0VIgN9GT+XWq1P2ajLzSE/GxzMhs9DeBlOLDj0ZpDxugg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042828; c=relaxed/simple;
-	bh=NvBke//oTVEsye27O0J4EbYRJdSk0lRI8tJZ2XR99dM=;
+	s=arc-20240116; t=1709042831; c=relaxed/simple;
+	bh=QjHpztoayL6ivD+mdvnVbI/UVlJIRNZIBMSFxM/xpXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NM+G0+CvgIDYn50d6Xyl7KJcpCem7K4zFGgLfZzCpxsmFdm1i8m5NrenK1t75sLAqKGc1SwN5sYp7Y/tdfr1Qaa4/OICYdg1qbrvpW8DduEIz2mAUHUwmkLwEWgkSm3Z/aIsxT9kfSkmf7ZAJIajkjjT+icD3Av+hEYJguSAUIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoszFYWR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pm0z1DDFyNbgSKoHHp4c6fvk1GWTK/ExB+nQ9RQ1oW6gV3FkoJ3WugKK3ERUISTiAnQxi7MmTion36jhq6dmAXI67eSLyMgajA29rgojz1fzNdjgHYYhjg2xTeWVm3sJIGSu3DIQfcBeJv3VgfnzFeL1Ysw/C5flfu/hzWK1RkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jH8I2ztC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoszFYWR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5DBC433C7;
-	Tue, 27 Feb 2024 14:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jH8I2ztC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1915C433F1;
+	Tue, 27 Feb 2024 14:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042828;
-	bh=NvBke//oTVEsye27O0J4EbYRJdSk0lRI8tJZ2XR99dM=;
+	s=korg; t=1709042831;
+	bh=QjHpztoayL6ivD+mdvnVbI/UVlJIRNZIBMSFxM/xpXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoszFYWR5ycXPLgXpGKYqBolHqyDaCALk6/kPeGbrRxxdCkhOtqtJEsYNMKdW5Djp
-	 xPstnukifCxK58ZUFO8zZ9ZPOuQ89HYbbHsZJXnNLUExISE1uZTvIUXJXb7RBD3OwS
-	 Hm4nEL12Ihc1Rnr3m57VvVyq4SpXGGb/eAR3Nwus=
+	b=jH8I2ztC8KJZdnHd7rQiQaeeLDQXjlFnM3kSjxQ82fQ8JPEbbjT/rtUUo+cPkEx5r
+	 nUpl5ysWUyC3Z0CHu6hdwt3zYE203fMEO8OLj1FDZGxR85LCXfnAOYUF6ns2aPU51S
+	 rYsduOzC/QzVCUZdanaUOfEUJ511Hw7TYif9SpgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Nathan Huckleberry <nhuck@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/245] ARM: dts: BCM53573: Drop nonexistent "default-off" LED trigger
-Date: Tue, 27 Feb 2024 14:25:24 +0100
-Message-ID: <20240227131619.634812489@linuxfoundation.org>
+Subject: [PATCH 5.15 137/245] tools headers UAPI: Sync linux/fscrypt.h with the kernel sources
+Date: Tue, 27 Feb 2024 14:25:25 +0100
+Message-ID: <20240227131619.665539473@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -45,70 +50,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit be7e1e5b0f67c58ec4be0a54db23b6a4fa6e2116 ]
+[ Upstream commit fabe0c61d842637b722344bcd49bfb1b76e2cc68 ]
 
-There is no such trigger documented or implemented in Linux. It was a
-copy & paste mistake.
+To pick the changes from:
 
-This fixes:
-arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dtb: leds: led-wlan:linux,default-trigger: 'oneOf' conditional failed, one must be fixed:
-        'default-off' is not one of ['backlight', 'default-on', 'heartbeat', 'disk-activity', 'disk-read', 'disk-write', 'timer', 'pattern', 'audio-micmute', 'audio-mute', 'bluetooth-power', 'flash', 'kbd-capslock', 'mtd', 'nand-disk', 'none', 'torch', 'usb-gadget', 'usb-host', 'usbport']
-        'default-off' does not match '^cpu[0-9]*$'
-        'default-off' does not match '^hci[0-9]+-power$'
-        'default-off' does not match '^mmc[0-9]+$'
-        'default-off' does not match '^phy[0-9]+tx$'
-        From schema: Documentation/devicetree/bindings/leds/leds-gpio.yaml
+  6b2a51ff03bf0c54 ("fscrypt: Add HCTR2 support for filename encryption")
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20230707114004.2740-1-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+That don't result in any changes in tooling, just causes this to be
+rebuilt:
+
+  CC      /tmp/build/perf-urgent/trace/beauty/sync_file_range.o
+  LD      /tmp/build/perf-urgent/trace/beauty/perf-in.o
+
+addressing this perf build warning:
+
+  Warning: Kernel ABI header at 'tools/include/uapi/linux/fscrypt.h' differs from latest version at 'include/uapi/linux/fscrypt.h'
+  diff -u tools/include/uapi/linux/fscrypt.h include/uapi/linux/fscrypt.h
+
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nathan Huckleberry <nhuck@google.com>
+Link: https://lore.kernel.org/lkml/Yvzl8C7O1b+hf9GS@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts | 1 -
- arch/arm/boot/dts/bcm47189-luxul-xap-810.dts  | 2 --
- 2 files changed, 3 deletions(-)
+ tools/include/uapi/linux/fscrypt.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-index 00e688b45d981..5901160919dcd 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-1440.dts
-@@ -26,7 +26,6 @@ leds {
- 		wlan {
- 			label = "bcm53xx:blue:wlan";
- 			gpios = <&chipcommon 10 GPIO_ACTIVE_LOW>;
--			linux,default-trigger = "default-off";
- 		};
+diff --git a/tools/include/uapi/linux/fscrypt.h b/tools/include/uapi/linux/fscrypt.h
+index 9f4428be3e362..a756b29afcc23 100644
+--- a/tools/include/uapi/linux/fscrypt.h
++++ b/tools/include/uapi/linux/fscrypt.h
+@@ -27,7 +27,8 @@
+ #define FSCRYPT_MODE_AES_128_CBC		5
+ #define FSCRYPT_MODE_AES_128_CTS		6
+ #define FSCRYPT_MODE_ADIANTUM			9
+-/* If adding a mode number > 9, update FSCRYPT_MODE_MAX in fscrypt_private.h */
++#define FSCRYPT_MODE_AES_256_HCTR2		10
++/* If adding a mode number > 10, update FSCRYPT_MODE_MAX in fscrypt_private.h */
  
- 		system {
-diff --git a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-index 78c80a5d3f4fa..8e7483272d47d 100644
---- a/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-+++ b/arch/arm/boot/dts/bcm47189-luxul-xap-810.dts
-@@ -26,7 +26,6 @@ leds {
- 		5ghz {
- 			label = "bcm53xx:blue:5ghz";
- 			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
- 
- 		system {
-@@ -42,7 +41,6 @@ pcie0_leds {
- 		2ghz {
- 			label = "bcm53xx:blue:2ghz";
- 			gpios = <&pcie0_chipcommon 3 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "default-off";
- 		};
- 	};
- 
+ /*
+  * Legacy policy version; ad-hoc KDF and no key verification.
 -- 
 2.43.0
 
