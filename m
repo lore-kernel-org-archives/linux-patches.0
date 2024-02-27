@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0061616423;
-	Tue, 27 Feb 2024 14:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACA716423;
+	Tue, 27 Feb 2024 14:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042611; cv=none; b=N+xMvYyxDEWZXFzCxZFA0UAEoeycz7aOXLrbCKlmzvUr3lZ9jZzKfCCmFou7RurJVksSf9ybQWWmnd8ckLofYU59PCAZEY8Wrccddgmnre+QtqL8boB7LwSz/ZLOgy9j7t88Yjr66sFr3HilFsk1STTT8A3yWDRnMWAhRgg6qI0=
+	t=1709042613; cv=none; b=lYHJ23QzIi43fE8uBjpMBcPIayB8PKPAKHRsUmezT6v03+agX/p1yDTef5JCYAkfVxa8lnxpktEjRo6bxV86S0HWrzvtFPchIFwXj7f8OAx1nwNrBplAMFmMTXj8Yb6MieFuPGnC0VS2YLd6qG/mBq1UAeDlT9C7ZXcrARUER+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042611; c=relaxed/simple;
-	bh=3bXI/B5L6JsblrB3TItLm8Rq7FzUgLAkIZkwh5hyWMk=;
+	s=arc-20240116; t=1709042613; c=relaxed/simple;
+	bh=91R0wLJJIcDhgK7LCSjGeV9KsSh+bYdmL30ijzTdl3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fQvVJdoiZMES550gQdGYSe8A9jhj/QuaN3CsXlhk31E4TDGGLN5tvPpLwOykd0oeO9j5hrxxCDXu+RfrHzPUBXs43387SrylECVc4/jlLSfMm8uwX6ocE6nm2cS2kjzBL5OvZ4B9u9CFMTTkAqAoLM9rAZLEvfRxnH1lLtD1Hf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb6KV6/u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VG48C8HPU1je5wumpp0MzZQTk7tfmAeUrLcCsfPMND7DCkgiW1oBQDjn/DJXpeJsfGA+Y+vMfdlzLkSgNzI2tv6t8/nlfmOR1ICMpjz9vOo8qslaTZ3wjxRO1OfZqqQIlxtX2gR2SWXGOV17fGeF4IlHegyGmUncihN7NngxOKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqLlcWPm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb6KV6/u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FD6C43390;
-	Tue, 27 Feb 2024 14:03:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqLlcWPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483C8C433C7;
+	Tue, 27 Feb 2024 14:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042610;
-	bh=3bXI/B5L6JsblrB3TItLm8Rq7FzUgLAkIZkwh5hyWMk=;
+	s=korg; t=1709042613;
+	bh=91R0wLJJIcDhgK7LCSjGeV9KsSh+bYdmL30ijzTdl3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vb6KV6/ul+4xppunKRBqO2iG38YUUj2RDzx+pnQUmpiR88MTkS+3l2L7YPHMjcn8I
-	 K9lHUGEgjwi4gfuoQMbr2zYW6kZgPzlhCo/FzS12S3lCx4kXHeClvy4x4+UpUTH7Ek
-	 DhLEhroM/rbzTQ/LqOEoWKsCz9aDgVnBwu2P5hqQ=
+	b=KqLlcWPm1BcgjnSgVD1GDeBl735g6dTguGYHndpIskw1/7xQa9YAUgZ+8DneNlQvQ
+	 DGzK3449TaHjlTVfgh07oDUXD4QiR77AlUMEKqsdn4kH5+U6snB0/uATohpFW+3Am9
+	 KNSkd/ttNBTVmMufY2Oz919eH5WQVuK0PBQo9GM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/245] fs/ntfs3: Fix detected field-spanning write (size 8) of single field "le->name"
-Date: Tue, 27 Feb 2024 14:24:04 +0100
-Message-ID: <20240227131616.944497143@linuxfoundation.org>
+Subject: [PATCH 5.15 030/245] ext4: avoid dividing by 0 in mb_update_avg_fragment_size() when block bitmap corrupt
+Date: Tue, 27 Feb 2024 14:23:38 +0100
+Message-ID: <20240227131616.096498593@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -50,29 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit d155617006ebc172a80d3eb013c4b867f9a8ada4 ]
+[ Upstream commit 993bf0f4c393b3667830918f9247438a8f6fdb5b ]
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Determine if bb_fragments is 0 instead of determining bb_free to eliminate
+the risk of dividing by zero when the block bitmap is corrupted.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240104142040.2835097-6-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs.h | 2 +-
+ fs/ext4/mballoc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
-index 0f38d558169a1..8b580515b1d6e 100644
---- a/fs/ntfs3/ntfs.h
-+++ b/fs/ntfs3/ntfs.h
-@@ -517,7 +517,7 @@ struct ATTR_LIST_ENTRY {
- 	__le64 vcn;		// 0x08: Starting VCN of this attribute.
- 	struct MFT_REF ref;	// 0x10: MFT record number with attribute.
- 	__le16 id;		// 0x18: struct ATTRIB ID.
--	__le16 name[3];		// 0x1A: Just to align. To get real name can use bNameOffset.
-+	__le16 name[];		// 0x1A: Just to align. To get real name can use name_off.
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 762c2f8b5b2a8..48930df9ae565 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -853,7 +853,7 @@ mb_update_avg_fragment_size(struct super_block *sb, struct ext4_group_info *grp)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
  
- }; // sizeof(0x20)
+-	if (!test_opt2(sb, MB_OPTIMIZE_SCAN) || grp->bb_free == 0)
++	if (!test_opt2(sb, MB_OPTIMIZE_SCAN) || grp->bb_fragments == 0)
+ 		return;
  
+ 	write_lock(&sbi->s_mb_rb_lock);
 -- 
 2.43.0
 
