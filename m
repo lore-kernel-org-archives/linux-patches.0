@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891AD14533E;
-	Tue, 27 Feb 2024 13:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4C013AA50;
+	Tue, 27 Feb 2024 13:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042276; cv=none; b=RyutAFwFWwn6XIFSiQUsU55k9ZDYNUPmqxcrb33ZRgvtvGSaCG/eNSphNmH0tg72KHW/A7xq3HdAxqpfMOwEaNjJrW/X6+kbIj9Yfk0YuqVTR8fwuEjvgyL9v3teg01mFWAyA9vBjp4hv0ylUcRhm+ba6kBUaokfLo9evhVPSvw=
+	t=1709042279; cv=none; b=cHftyNoSA6hnO4tkrkxC456HPNMD/tRUx4czNjrXi+KTUordaUU4s4NV7tctifuVn8P0RdqRMfM/nkQL0U0rtJ8lWcXZIYCZfRNoVFFl0tRIBFcvXkcvSVJAc+W39E8UPtO7dPAlcDOO24K03qo6hEZVt0P7nqVel/0ypfOlOZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042276; c=relaxed/simple;
-	bh=YUQ7hXMBCSyZIV+J2HkJUlOr8etGc8Zix9G/fztVEik=;
+	s=arc-20240116; t=1709042279; c=relaxed/simple;
+	bh=gxjDHtLYhFnQIRZQLhK/3li7RWkTZnzbp9q5qi2db8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVKSGX5VjYsnaDB482XXkPc/P/+kgtbUC7noc2nBEVlqcGuStYijZBBngOI1gqp2/dhTSazs540nNJ1XS0c+O4+uXkFH/wmxBOfeYXMBczyZe7SU3+lB5tm+yoLEzvHHjM7e9keCp66vE+nYBcOEVX9iJhZFA9kmoZC0AxaphK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6gmKrQt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBA9hH2ek7mLf2OUee2hSAH5VwFtypW37dLA1DVUz/atKldKWPwGOJMrxObnLtln0Wr/8wbCfHXITcQ2ikwe13Q5IG9uCASPoKAMAID4pP6IYsI369DbzeVydjqRH3i7DbqrbNSf8bqjGs9FZNQSzsQFboDMcj+XnTJTlHf2EBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBlTiB2E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6gmKrQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13685C433F1;
-	Tue, 27 Feb 2024 13:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBlTiB2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0470C43390;
+	Tue, 27 Feb 2024 13:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042276;
-	bh=YUQ7hXMBCSyZIV+J2HkJUlOr8etGc8Zix9G/fztVEik=;
+	s=korg; t=1709042279;
+	bh=gxjDHtLYhFnQIRZQLhK/3li7RWkTZnzbp9q5qi2db8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6gmKrQtXIkocyj3mz/fDE2IT9SkE5rvbBT73MWBVsHadVUh+m59ktoLDdQ0edw9U
-	 Rh2UzBWq0GtFUqqE/QgXhO88/NUwlRgacJ6Rg8JgqHM6JPvmco4DwWf/Cw6Yr2CJbo
-	 sQ/WV9e3giUIInCsfd1jAIP/dU+Iz6ryRYV/dThs=
+	b=jBlTiB2ER0Z0/O8UvK4CKuP6xDiNJXD++EXWxtCNK0D53kg1raUQt9MIVr3yVPuOX
+	 jNEOyh+DKJCTqBcSLHO52rXxyrY65I8pZsIzkGVa6o52iXsPgqzgQDnxj7xA2QwS1R
+	 2dYItV3dk21mpV5khTVu/RzA/k/U0HpjaXfhGXU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Danilo Krummrich <dakr@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/299] net/sched: act_mirred: dont override retval if we already lost the skb
-Date: Tue, 27 Feb 2024 14:25:51 +0100
-Message-ID: <20240227131633.459439496@linuxfoundation.org>
+Subject: [PATCH 6.6 241/299] nouveau: fix function cast warnings
+Date: Tue, 27 Feb 2024 14:25:52 +0100
+Message-ID: <20240227131633.488941819@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131625.847743063@linuxfoundation.org>
 References: <20240227131625.847743063@linuxfoundation.org>
@@ -53,77 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 166c2c8a6a4dc2e4ceba9e10cfe81c3e469e3210 ]
+[ Upstream commit 0affdba22aca5573f9d989bcb1d71d32a6a03efe ]
 
-If we're redirecting the skb, and haven't called tcf_mirred_forward(),
-yet, we need to tell the core to drop the skb by setting the retcode
-to SHOT. If we have called tcf_mirred_forward(), however, the skb
-is out of our hands and returning SHOT will lead to UaF.
+clang-16 warns about casting between incompatible function types:
 
-Move the retval override to the error path which actually need it.
+drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c:161:10: error: cast from 'void (*)(const struct firmware *)' to 'void (*)(void *)' converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+  161 |         .fini = (void(*)(void *))release_firmware,
 
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Fixes: e5cf1baf92cb ("act_mirred: use TC_ACT_REINSERT when possible")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This one was done to use the generic shadow_fw_release() function as a
+callback for struct nvbios_source. Change it to use the same prototype
+as the other five instances, with a trivial helper function that actually
+calls release_firmware.
+
+Fixes: 70c0f263cc2e ("drm/nouveau/bios: pull in basic vbios subdev, more to come later")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240213095753.455062-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mirred.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index bab090bb5e80a..674f7ae356ca2 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -240,8 +240,7 @@ static int tcf_mirred_to_dev(struct sk_buff *skb, struct tcf_mirred *m,
- 	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
- 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
- 				       dev->name);
--		err = -ENODEV;
--		goto out;
-+		goto err_cant_do;
- 	}
- 
- 	/* we could easily avoid the clone only if called by ingress and clsact;
-@@ -253,10 +252,8 @@ static int tcf_mirred_to_dev(struct sk_buff *skb, struct tcf_mirred *m,
- 		tcf_mirred_can_reinsert(retval);
- 	if (!dont_clone) {
- 		skb_to_send = skb_clone(skb, GFP_ATOMIC);
--		if (!skb_to_send) {
--			err =  -ENOMEM;
--			goto out;
--		}
-+		if (!skb_to_send)
-+			goto err_cant_do;
- 	}
- 
- 	want_ingress = tcf_mirred_act_wants_ingress(m_eaction);
-@@ -293,15 +290,16 @@ static int tcf_mirred_to_dev(struct sk_buff *skb, struct tcf_mirred *m,
- 	} else {
- 		err = tcf_mirred_forward(at_ingress, want_ingress, skb_to_send);
- 	}
--
--	if (err) {
--out:
-+	if (err)
- 		tcf_action_inc_overlimit_qstats(&m->common);
--		if (is_redirect)
--			retval = TC_ACT_SHOT;
--	}
- 
- 	return retval;
-+
-+err_cant_do:
-+	if (is_redirect)
-+		retval = TC_ACT_SHOT;
-+	tcf_action_inc_overlimit_qstats(&m->common);
-+	return retval;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+index 19188683c8fca..8c2bf1c16f2a9 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bios/shadow.c
+@@ -154,11 +154,17 @@ shadow_fw_init(struct nvkm_bios *bios, const char *name)
+ 	return (void *)fw;
  }
  
- TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
++static void
++shadow_fw_release(void *fw)
++{
++	release_firmware(fw);
++}
++
+ static const struct nvbios_source
+ shadow_fw = {
+ 	.name = "firmware",
+ 	.init = shadow_fw_init,
+-	.fini = (void(*)(void *))release_firmware,
++	.fini = shadow_fw_release,
+ 	.read = shadow_fw_read,
+ 	.rw = false,
+ };
 -- 
 2.43.0
 
