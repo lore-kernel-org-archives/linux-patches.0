@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AED1420DC;
-	Tue, 27 Feb 2024 14:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D833F14532C;
+	Tue, 27 Feb 2024 14:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043914; cv=none; b=UicTENS8yEBbAUAr5JV7pEOtL2K52FOin3tEMfp11Plnb5/xEkmjExArHVAN4jJtuxqeGYaCuFUaE3cLvsHWKTyw3DP1fz2HWscl4pfQdT2aQMe/2xLOoP26JbSOxSKaR454IErmVPcEh7XdN6MTaWT+niQmmawydoc5xxTtnW4=
+	t=1709043917; cv=none; b=qFwAaLyiC8mmAKaHzbTM/EUiKcVrtzQLVMnqHRmv1VrPktMUbQLuz4dz2J1DoesGMaB/gQjc5KZMVkmuR4E6ZVZDtoHgV0OPFzKDBn3QjCYjVcvCz76uz3ea826h8ax1JFd2rlHIhE59YE7LRSQWcwY+8L0Mx3fPvjHGcfKX5iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043914; c=relaxed/simple;
-	bh=5JmthRZ3ZhkCNwfyR8rk0/pgZ/Yfexf+r+FJuyhcx9o=;
+	s=arc-20240116; t=1709043917; c=relaxed/simple;
+	bh=N9pixrSa9mF/1WuDrPCRnpLYX0fpQot0iYBF8jOV2qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hFf/duzSJxg1+mAkT6ZbfFTEPxWZ6E7VX6A2RUq3EeY2reuI4IR12Ej+4OViGkMtdZXYJ+O0V8qS69YhD9y7SA2D9ePlR9f7gWzRheyqwLP8xTuWSapyUovg1pJ20Vh+wwEUpyZaC5iagK+3V8eOKkkwp3epH/T9dS4oyW13qw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Do1pvnVC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxUAxNa4n/8A5ZNEtPuNzJ+zOCsZGEYdSj7edQi37CKhJrQSDR+jpR/OQT3lRMbK62/uIwGoD0op8Lc8Dy+otLnr/j2qnHhEEq/Ji+GKmsu0O3StxJ2hGKhBbgbRMC87X5MAuxvZsNl3cCSBwxBGZ0pevBrgRoi+bhWss7FJgkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpUcB2gT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Do1pvnVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC36C433F1;
-	Tue, 27 Feb 2024 14:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpUcB2gT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AF7C43394;
+	Tue, 27 Feb 2024 14:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043914;
-	bh=5JmthRZ3ZhkCNwfyR8rk0/pgZ/Yfexf+r+FJuyhcx9o=;
+	s=korg; t=1709043917;
+	bh=N9pixrSa9mF/1WuDrPCRnpLYX0fpQot0iYBF8jOV2qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Do1pvnVCAR9yjAEtkTPQ0B6yzLWNn2pa9FMIa/jcab3y0F5IgAVUhQjb72qKPm1jX
-	 Od1LsiVP+NVC5kQ4leVgY8CbxVag2PNjOppBdoSfIddost+nJPG4YIWRvyoKh+OBJ4
-	 e2ez5LB9x0NaEj150bPs1EbZsOI6HdQgLw0FTY88=
+	b=EpUcB2gTPZDR6Yg3jh8SFqapNUK0A6d29It7mPuhGVd5oVaG+yd9QF6L4oT2b5vL+
+	 y42YwdzqWiuCHNVN5vyrZBLWPkCOknU4t1W49VL6upIaHBdQSo+/KItFRnu1NzZ42z
+	 F0hDq7+Q7Y4np1Ux/FqjyXL9AWQegB7xn7WcAWUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Erik Kurzinger <ekurzinger@nvidia.com>,
+	Simon Ser <contact@emersion.fr>,
 	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 81/84] drm/syncobj: make lockdep complain on WAIT_FOR_SUBMIT v3
-Date: Tue, 27 Feb 2024 14:27:48 +0100
-Message-ID: <20240227131555.511649445@linuxfoundation.org>
+Subject: [PATCH 5.4 82/84] drm/syncobj: call drm_syncobj_fence_add_wait when WAIT_AVAILABLE flag is set
+Date: Tue, 27 Feb 2024 14:27:49 +0100
+Message-ID: <20240227131555.545442293@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -46,93 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Erik Kurzinger <ekurzinger@nvidia.com>
 
-[ Upstream commit 7621350c6bb20fb6ab7eb988833ab96eac3dcbef ]
+[ Upstream commit 3c43177ffb54ea5be97505eb8e2690e99ac96bc9 ]
 
-DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT can't be used when we hold locks
-since we are basically waiting for userspace to do something.
+When waiting for a syncobj timeline point whose fence has not yet been
+submitted with the WAIT_FOR_SUBMIT flag, a callback is registered using
+drm_syncobj_fence_add_wait and the thread is put to sleep until the
+timeout expires. If the fence is submitted before then,
+drm_syncobj_add_point will wake up the sleeping thread immediately which
+will proceed to wait for the fence to be signaled.
 
-Holding a lock while doing so can trivial deadlock with page faults
-etc...
+However, if the WAIT_AVAILABLE flag is used instead,
+drm_syncobj_fence_add_wait won't get called, meaning the waiting thread
+will always sleep for the full timeout duration, even if the fence gets
+submitted earlier. If it turns out that the fence *has* been submitted
+by the time it eventually wakes up, it will still indicate to userspace
+that the wait completed successfully (it won't return -ETIME), but it
+will have taken much longer than it should have.
 
-So make lockdep complain when a driver tries to do this.
+To fix this, we must call drm_syncobj_fence_add_wait if *either* the
+WAIT_FOR_SUBMIT flag or the WAIT_AVAILABLE flag is set. The only
+difference being that with WAIT_FOR_SUBMIT we will also wait for the
+fence to be signaled after it has been submitted while with
+WAIT_AVAILABLE we will return immediately.
 
-v2: Add lockdep_assert_none_held() macro.
-v3: Add might_sleep() and also use lockdep_assert_none_held() in the
-    IOCTL path.
+IGT test patch: https://lists.freedesktop.org/archives/igt-dev/2024-January/067537.html
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
+v1 -> v2: adjust lockdep_assert_none_held_once condition
+
+(cherry picked from commit 8c44ea81634a4a337df70a32621a5f3791be23df)
+
+Fixes: 01d6c3578379 ("drm/syncobj: add support for timeline point wait v8")
+Signed-off-by: Erik Kurzinger <ekurzinger@nvidia.com>
+Signed-off-by: Simon Ser <contact@emersion.fr>
 Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patchwork.freedesktop.org/patch/414944/
-Stable-dep-of: 3c43177ffb54 ("drm/syncobj: call drm_syncobj_fence_add_wait when WAIT_AVAILABLE flag is set")
+Reviewed-by: Simon Ser <contact@emersion.fr>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240119163208.3723457-1-ekurzinger@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_syncobj.c | 12 ++++++++++++
- include/linux/lockdep.h       |  5 +++++
- 2 files changed, 17 insertions(+)
+ drivers/gpu/drm/drm_syncobj.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index 8b155e3377cfe..a1d2a3dc00768 100644
+index a1d2a3dc00768..9baf95a4fc9ff 100644
 --- a/drivers/gpu/drm/drm_syncobj.c
 +++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -325,6 +325,15 @@ int drm_syncobj_find_fence(struct drm_file *file_private,
- 	if (!syncobj)
- 		return -ENOENT;
- 
-+	/* Waiting for userspace with locks help is illegal cause that can
-+	 * trivial deadlock with page faults for example. Make lockdep complain
-+	 * about it early on.
-+	 */
-+	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
-+		might_sleep();
-+		lockdep_assert_none_held_once();
-+	}
-+
- 	*fence = drm_syncobj_fence_get(syncobj);
- 
- 	if (*fence) {
-@@ -889,6 +898,9 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
+@@ -898,7 +898,8 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
  	uint64_t *points;
  	uint32_t signaled_count, i;
  
-+	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT)
-+		lockdep_assert_none_held_once();
-+
+-	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT)
++	if (flags & (DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT |
++		     DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE))
+ 		lockdep_assert_none_held_once();
+ 
  	points = kmalloc_array(count, sizeof(*points), GFP_KERNEL);
- 	if (points == NULL)
- 		return -ENOMEM;
-diff --git a/include/linux/lockdep.h b/include/linux/lockdep.h
-index b8a835fd611b2..15d92abb3f2d8 100644
---- a/include/linux/lockdep.h
-+++ b/include/linux/lockdep.h
-@@ -403,6 +403,10 @@ extern void lock_unpin_lock(struct lockdep_map *lock, struct pin_cookie);
- 		WARN_ON_ONCE(debug_locks && !lockdep_is_held(l));	\
- 	} while (0)
+@@ -967,7 +968,8 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
+ 	 * fallthough and try a 0 timeout wait!
+ 	 */
  
-+#define lockdep_assert_none_held_once()	do {				\
-+		WARN_ON_ONCE(debug_locks && current->lockdep_depth);	\
-+	} while (0)
-+
- #define lockdep_recursing(tsk)	((tsk)->lockdep_recursion)
- 
- #define lockdep_pin_lock(l)	lock_pin_lock(&(l)->dep_map)
-@@ -479,6 +483,7 @@ struct lockdep_map { };
- #define lockdep_assert_held_write(l)	do { (void)(l); } while (0)
- #define lockdep_assert_held_read(l)		do { (void)(l); } while (0)
- #define lockdep_assert_held_once(l)		do { (void)(l); } while (0)
-+#define lockdep_assert_none_held_once()	do { } while (0)
- 
- #define lockdep_recursing(tsk)			(0)
- 
+-	if (flags & DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT) {
++	if (flags & (DRM_SYNCOBJ_WAIT_FLAGS_WAIT_FOR_SUBMIT |
++		     DRM_SYNCOBJ_WAIT_FLAGS_WAIT_AVAILABLE)) {
+ 		for (i = 0; i < count; ++i)
+ 			drm_syncobj_fence_add_wait(syncobjs[i], &entries[i]);
+ 	}
 -- 
 2.43.0
 
