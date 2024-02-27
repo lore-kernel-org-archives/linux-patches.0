@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F59213EFE9;
-	Tue, 27 Feb 2024 14:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5D113B7AB;
+	Tue, 27 Feb 2024 14:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043920; cv=none; b=qS+Rd5lfPD7Wvx8a+4W2l3R2SifnJ6VjJxei7E2/9GHcRzbvQ+gwhuJ6qlfc2F4cwNCcNk5MoZuflmxIfFYcpG7+h1Nzvs65ua94B3SmvgHdQdWHlAaWB0rZSC+EHurZR5zCNqZSXtLokeosdPMCmJAW2hZ3j/qFUzfX4N9Vg4E=
+	t=1709043923; cv=none; b=ObcjRvn7hcCKSBOLe2xXsg5WxS77c/ySjSO5xUJUKtpiki4BQLqBM4HwJWNBXi4xQ1iWoysrbbWmywKT1Ku25xDrSvmS4R+nVTVD1V+/RIZvU2qDEif3B7/sBHeTSNC82sbm2nB+9PZ9v7TXJy5oWECGLVMZMG7I/kMwTfOfAPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043920; c=relaxed/simple;
-	bh=cySr/GMR3/1PrlZE658pwPrkJTfCpzBqHcphQNwIAB0=;
+	s=arc-20240116; t=1709043923; c=relaxed/simple;
+	bh=G4r0macorRXP+Ju/F02ws0p9P7Ed0PhmeX8jdszdUaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rbvdHdfvkSavh4jz9+3siaS56/9Qf1RVUEpKTLc9psnu5vu7Yjy28qTDoDmzBmWi6wGfFFhUpUbqh6OtodnhcfC8HdXkNOAtrnceIBODY4jcGWAjvGsGRA68Gr4xWEh3Nj5PpRxPd54QURdMiSnhko5iWGksnCtenKgggyy0Fhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slcYW9Wq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kn82MjPOAMiBRKHJXKmTG6L/tUq+CMshCarO61h8NUDOUcPJzcFP4OF541xIo87T2Yj7ZeAjaQhdCHeBdnHwDYTADXdRIsQGRD/bHFnInsoIbIMxip6m1m+cv8aNNO2M36Twe0GRZWlXW/arNsl3wwhiG3vF+58zbOMm8JWlp0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oTNZTdQI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slcYW9Wq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A394C433F1;
-	Tue, 27 Feb 2024 14:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oTNZTdQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB04AC433F1;
+	Tue, 27 Feb 2024 14:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043920;
-	bh=cySr/GMR3/1PrlZE658pwPrkJTfCpzBqHcphQNwIAB0=;
+	s=korg; t=1709043923;
+	bh=G4r0macorRXP+Ju/F02ws0p9P7Ed0PhmeX8jdszdUaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=slcYW9Wq5RvvP4wEJvrWvSJnrhBdt49DarE90TaL8eDSovcZiK/fbyoiQDvfOgPuk
-	 xgFWveDDOJqtlEMmWI/BduaWGrnneBcSPQKsrU0RSysrm9AwvJnS2zcgVsXkop3nkb
-	 8zf7jZ7SDms290fjhua9h7H6ZkjmWcz+DJt/uNKc=
+	b=oTNZTdQIcayf6p2OZBo6gFpuucQyvieybuCk/lMXY3PIKHtOe6RVhF0K7qAT5h9H3
+	 39DtHFVhQbM+AvdBL6+RG1/PDMIHKX7QhyF8lXCHT3bpRdCAPFSd75LKdqTefZsKEB
+	 FJbhx8qUYZitlOmALAD4xyVIN51u900G8ggYEaNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Christoph Hellwig <hch@lst.de>,
-	Avi Kivity <avi@scylladb.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 83/84] fs/aio: Restrict kiocb_set_cancel_fn() to I/O submitted via libaio
-Date: Tue, 27 Feb 2024 14:27:50 +0100
-Message-ID: <20240227131555.580101633@linuxfoundation.org>
+	Andrii Nakryiko <andriin@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.4 84/84] scripts/bpf: Fix xdp_md forward declaration typo
+Date: Tue, 27 Feb 2024 14:27:51 +0100
+Message-ID: <20240227131555.612933290@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131552.864701583@linuxfoundation.org>
 References: <20240227131552.864701583@linuxfoundation.org>
@@ -55,84 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Andrii Nakryiko <andriin@fb.com>
 
-commit b820de741ae48ccf50dd95e297889c286ff4f760 upstream.
+commit e0b68fb186b251374adbd870f99b1ecea236e770 upstream.
 
-If kiocb_set_cancel_fn() is called for I/O submitted via io_uring, the
-following kernel warning appears:
+Fix typo in struct xpd_md, generated from bpf_helpers_doc.py, which is
+causing compilation warnings for programs using bpf_helpers.h
 
-WARNING: CPU: 3 PID: 368 at fs/aio.c:598 kiocb_set_cancel_fn+0x9c/0xa8
-Call trace:
- kiocb_set_cancel_fn+0x9c/0xa8
- ffs_epfile_read_iter+0x144/0x1d0
- io_read+0x19c/0x498
- io_issue_sqe+0x118/0x27c
- io_submit_sqes+0x25c/0x5fc
- __arm64_sys_io_uring_enter+0x104/0xab0
- invoke_syscall+0x58/0x11c
- el0_svc_common+0xb4/0xf4
- do_el0_svc+0x2c/0xb0
- el0_svc+0x2c/0xa4
- el0t_64_sync_handler+0x68/0xb4
- el0t_64_sync+0x1a4/0x1a8
-
-Fix this by setting the IOCB_AIO_RW flag for read and write I/O that is
-submitted by libaio.
-
-Suggested-by: Jens Axboe <axboe@kernel.dk>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Avi Kivity <avi@scylladb.com>
-Cc: Sandeep Dhavale <dhavale@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240215204739.2677806-2-bvanassche@acm.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: 7a387bed47f7 ("scripts/bpf: teach bpf_helpers_doc.py to dump BPF helper definitions")
+Signed-off-by: Andrii Nakryiko <andriin@fb.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20191010042534.290562-1-andriin@fb.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c           |    9 ++++++++-
- include/linux/fs.h |    2 ++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ scripts/bpf_helpers_doc.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -570,6 +570,13 @@ void kiocb_set_cancel_fn(struct kiocb *i
- 	struct kioctx *ctx = req->ki_ctx;
- 	unsigned long flags;
+--- a/scripts/bpf_helpers_doc.py
++++ b/scripts/bpf_helpers_doc.py
+@@ -418,7 +418,7 @@ class PrinterHelpers(Printer):
  
-+	/*
-+	 * kiocb didn't come from aio or is neither a read nor a write, hence
-+	 * ignore it.
-+	 */
-+	if (!(iocb->ki_flags & IOCB_AIO_RW))
-+		return;
-+
- 	if (WARN_ON_ONCE(!list_empty(&req->ki_list)))
- 		return;
- 
-@@ -1455,7 +1462,7 @@ static int aio_prep_rw(struct kiocb *req
- 	req->ki_complete = aio_complete_rw;
- 	req->private = NULL;
- 	req->ki_pos = iocb->aio_offset;
--	req->ki_flags = iocb_flags(req->ki_filp);
-+	req->ki_flags = iocb_flags(req->ki_filp) | IOCB_AIO_RW;
- 	if (iocb->aio_flags & IOCB_FLAG_RESFD)
- 		req->ki_flags |= IOCB_EVENTFD;
- 	req->ki_hint = ki_hint_validate(file_write_hint(req->ki_filp));
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -314,6 +314,8 @@ enum rw_hint {
- #define IOCB_SYNC		(1 << 5)
- #define IOCB_WRITE		(1 << 6)
- #define IOCB_NOWAIT		(1 << 7)
-+/* kiocb is a read or write operation submitted by fs/aio.c. */
-+#define IOCB_AIO_RW		(1 << 23)
- 
- struct kiocb {
- 	struct file		*ki_filp;
+             'struct __sk_buff',
+             'struct sk_msg_md',
+-            'struct xpd_md',
++            'struct xdp_md',
+     ]
+     known_types = {
+             '...',
 
 
