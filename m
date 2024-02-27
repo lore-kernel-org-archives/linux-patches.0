@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F08016423;
-	Tue, 27 Feb 2024 14:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C9616423;
+	Tue, 27 Feb 2024 14:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043077; cv=none; b=XXhn/fPvlHTOpyAnGPdWx+MWMyaIS3leKY9P4OJEqIia0q/6E6AQwbO6BXf2i561wF1yV3KgoEs9ouSsj4WRvlNcOTN9aMjjXtmeGMLdj8poPKDlgvMdOSJIWQolQsEnSrCkovssN8ynlKf37ykZclGSdqSthbfSkCHaZ1jgzt0=
+	t=1709043080; cv=none; b=uN0atJF5lrKfY9TNkrcxI9KF57EHkvCW6vM3882VSBao3F/JZSRKt3pjtglkz2NBFptizZKVr+lCegPmUI/ph0+6LYJhHWPC+VPU4lMtoJaul8/B0KuI8arBuW+YRZscJ7oBkrGDknoRVBXyJkGErjt/EeKDvTPTdwB2CC5f2c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043077; c=relaxed/simple;
-	bh=1gzVs4t4zvp9xzxBth+EoiEzPPa3/9gMEaMOG5ORPOA=;
+	s=arc-20240116; t=1709043080; c=relaxed/simple;
+	bh=ggk2P4eQjzbFxDdiaq271//XlFq/sqpCHkmNaCSpwTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VjEl+e37iXPqHlla0+385GByDIjbRm4RTr5/R3LKtTJVOoxNRw/v+fVOK3/9kHoMk4PGA/KQDkktb8FO0fxvtIYJ/N+bSITYeyVnz8Et67VXCCJMTj5WNSVjuJDW7jFt3rUn1FFl50dRZPOmx7xl3DCvuaXcI7SJ+pZL75wfi60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7S/yesO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FQl5m6GGPTu2jXQnnG2MSNZtoFt/vawUp3QHMzgeKbgV6fqlp2Jc41T+DAkIcWtNV5phvx+Qd5EgyFVWYCiKSg9ttnu8pFc+QzZdVElud1kNvLDypFBJ1ujHyAFT7FuJOjgcwN5uOrltsIkSX8UisbnKUZxsJoP47r2crhDL6ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQXdsALh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7S/yesO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47F0C43390;
-	Tue, 27 Feb 2024 14:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQXdsALh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEF7C433F1;
+	Tue, 27 Feb 2024 14:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043077;
-	bh=1gzVs4t4zvp9xzxBth+EoiEzPPa3/9gMEaMOG5ORPOA=;
+	s=korg; t=1709043080;
+	bh=ggk2P4eQjzbFxDdiaq271//XlFq/sqpCHkmNaCSpwTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7S/yesOtfSRih4qfmUaYvahUX1K3F7E5BxFHF9HzX0YziiBQfb1V3hKKzW6fzHUX
-	 q4WjP+xqEbTbLFDeed44zU1CT4KbtriQFKWidwxQYIf9ccks7+kF5mfc6EIKdNbfr1
-	 n4xVHrK8SVbScfmfDEXSpjb+N41tt6CQpoS1Gvwg=
+	b=TQXdsALh2EJnTTSTO1tIxl5miv+kMpComf90oDv8wPaXrxboU6wLR6avL315f+e19
+	 IBcg5Lo3QtPORekLKsLT8hYV6mf7mLBhLdydLbRyyv8AvQZTxr20QCnts6J+8S6TfU
+	 oWT+DGnPUlWEwXpnbeJHNQpBkjCWrmoUbq01up5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 226/245] octeontx2-af: Consider the action set by PF
-Date: Tue, 27 Feb 2024 14:26:54 +0100
-Message-ID: <20240227131622.533118000@linuxfoundation.org>
+Subject: [PATCH 5.15 227/245] s390: use the correct count for __iowrite64_copy()
+Date: Tue, 27 Feb 2024 14:26:55 +0100
+Message-ID: <20240227131622.563852824@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 3b1ae9b71c2a97f848b00fb085a2bd29bddbe8d9 ]
+[ Upstream commit 723a2cc8d69d4342b47dfddbfe6c19f1b135f09b ]
 
-AF reserves MCAM entries for each PF, VF present in the
-system and populates the entry with DMAC and action with
-default RSS so that basic packet I/O works. Since PF/VF is
-not aware of the RSS action installed by AF, AF only fixup
-the actions of the rules installed by PF/VF with corresponding
-default RSS action. This worked well for rules installed by
-PF/VF for features like RX VLAN offload and DMAC filters but
-rules involving action like drop/forward to queue are also
-getting modified by AF. Hence fix it by setting the default
-RSS action only if requested by PF/VF.
+The signature for __iowrite64_copy() requires the number of 64 bit
+quantities, not bytes. Multiple by 8 to get to a byte length before
+invoking zpci_memcpy_toio()
 
-Fixes: 967db3529eca ("octeontx2-af: add support for multicast/promisc packet replication feature")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 87bc359b9822 ("s390/pci: speed up __iowrite64_copy by using pci store block insn")
+Acked-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/0-v1-9223d11a7662+1d7785-s390_iowrite64_jgg@nvidia.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/s390/pci/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index 70b4f2a3b02fd..604aaa9b960e9 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -436,6 +436,10 @@ static void npc_fixup_vf_rule(struct rvu *rvu, struct npc_mcam *mcam,
- 			return;
- 	}
+diff --git a/arch/s390/pci/pci.c b/arch/s390/pci/pci.c
+index 56c4cecdbbf9e..8764f0ae6d345 100644
+--- a/arch/s390/pci/pci.c
++++ b/arch/s390/pci/pci.c
+@@ -228,7 +228,7 @@ resource_size_t pcibios_align_resource(void *data, const struct resource *res,
+ /* combine single writes by using store-block insn */
+ void __iowrite64_copy(void __iomem *to, const void *from, size_t count)
+ {
+-       zpci_memcpy_toio(to, from, count);
++	zpci_memcpy_toio(to, from, count * 8);
+ }
  
-+	/* AF modifies given action iff PF/VF has requested for it */
-+	if ((entry->action & 0xFULL) != NIX_RX_ACTION_DEFAULT)
-+		return;
-+
- 	/* copy VF default entry action to the VF mcam entry */
- 	rx_action = npc_get_default_entry_action(rvu, mcam, blkaddr,
- 						 target_func);
+ static void __iomem *__ioremap(phys_addr_t addr, size_t size, pgprot_t prot)
 -- 
 2.43.0
 
