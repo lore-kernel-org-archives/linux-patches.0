@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA1214199F;
-	Tue, 27 Feb 2024 13:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ACC13B2AC;
+	Tue, 27 Feb 2024 13:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040782; cv=none; b=aXORPO2kpXoJgXdC/QZA29xzLJOHI117YbG4fx2W6CiI6t2Wb1hJ4iP4H16o9RrLGSmhGmoADnQR1T1sYnywW3p/zzGBN4npjCeck1GfqNIbYKvtJ0bfFS4nI+zWWrHZ6HbSCcmMCU7rkLVP+B1uOtkzWXOBliRt9d2eVdRZSTo=
+	t=1709040785; cv=none; b=AEK5A9gJQ0xgmxJUx9tt7kpQhI+cefhO2AZPTWcuoGtFzn/CJupeMNecFq3HisKpTuNS/ZiDTV3tXUUj4OT/0EjKJ4+4rb1Fu/2n8akaqCfzMSmL8Jwksg999KD8KjA2Uo+yELZ8jx9bY+bL4+lFSe9og4eOO7JFaxUogHVtZS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040782; c=relaxed/simple;
-	bh=VMS+fMwbHcQhYYnijFNWKbcU4x/ENqQd+HAGKOi8+IE=;
+	s=arc-20240116; t=1709040785; c=relaxed/simple;
+	bh=TZO12brkz2oLsxcjpQYe7EUJQdoL4hn+QXLne44rXS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOXNZUKx6cNXoIv1+muL1ZnY+TTS8l87eSqWUgfdqOcLgRBOAYm8Y+5nVitGkU6IlpFlgG7i81Lbzc2olrqI0NN2Z9pFcyO32Pm+th3PBEs3rRNE/wZeaaK2dVkIzxe41UQAQ5qNxocH/dJHs9UK5TKYZRbSrdSXw9QQ4AJXi1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+cy/f03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GclnCI+zec7vvQZSuuCkUXx94/ZTW2b94Dix9A81ZhkSl7ARbVMg9Bccb2UXd4XPqcMbhpXXQGSqWtSd7V14M7vCsScHEpYFgMYdl/kbp15aIceMmi7XW2MtkoGBr39jzCKMChA0dFbPN7jwAmxA9UIItTMUUz7YtekTv6RuQrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/DIOvXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+cy/f03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFE3C433C7;
-	Tue, 27 Feb 2024 13:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/DIOvXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17FAC433F1;
+	Tue, 27 Feb 2024 13:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709040782;
-	bh=VMS+fMwbHcQhYYnijFNWKbcU4x/ENqQd+HAGKOi8+IE=;
+	s=korg; t=1709040785;
+	bh=TZO12brkz2oLsxcjpQYe7EUJQdoL4hn+QXLne44rXS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+cy/f03JBzhnzIPd0jypbip4e/W2ftChCWXCpwcp6oX6F2FNhe4LotKuCN6jD7/M
-	 6rx8MIxhm1DYDhS+uWpFs1EeR+++BVmSmkATdRj/n/LHQmZJAJPD6Vg+avIRI2O37l
-	 QqkKPcQRQXo55YoxxYeYbuRHE2xAYHqHU6GpVNgk=
+	b=R/DIOvXWJC4o2R+RGwnX4LsXrieHbquTlf/XD1HWmL7YQGIsyulDoUDbI1qQ5/KV7
+	 MQ3mF5xOu/OatfqxrrACfjkZL9IYJIpSt/hbn2smsNrp5wqYJQ8WNvAkMfMhQunwOI
+	 OZIPb3KIdUh3r1pq8W8NyKQF6H0Q2AHasc3oTw4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Andrew Bresticker <abrestic@rivosinc.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 106/334] wifi: iwlwifi: do not announce EPCS support
-Date: Tue, 27 Feb 2024 14:19:24 +0100
-Message-ID: <20240227131633.906133253@linuxfoundation.org>
+Subject: [PATCH 6.7 107/334] efi: runtime: Fix potential overflow of soft-reserved region size
+Date: Tue, 27 Feb 2024 14:19:25 +0100
+Message-ID: <20240227131633.936443879@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,54 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Andrew Bresticker <abrestic@rivosinc.com>
 
-[ Upstream commit a23c0af103e184bb1252dddddda040f6641bea7b ]
+[ Upstream commit de1034b38a346ef6be25fe8792f5d1e0684d5ff4 ]
 
-mac80211 does not have proper support for EPCS currently as that would
-require changing the ECDA parameters if EPCS (Emergency Preparedness
-Communications Service) is in use. As such, do not announce support for
-it in the capabilities.
+md_size will have been narrowed if we have >= 4GB worth of pages in a
+soft-reserved region.
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240201155157.59d71656addc.Idde91b3018239c49fc6ed231b411d05354fb9fb1@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/firmware/efi/arm-runtime.c   | 2 +-
+ drivers/firmware/efi/riscv-runtime.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.c b/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.c
-index 480f8edbfd35d..678c4a071869f 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-nvm-parse.c
-@@ -668,7 +668,6 @@ static const struct ieee80211_sband_iftype_data iwl_he_eht_capa[] = {
- 			.has_eht = true,
- 			.eht_cap_elem = {
- 				.mac_cap_info[0] =
--					IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
- 					IEEE80211_EHT_MAC_CAP0_OM_CONTROL |
- 					IEEE80211_EHT_MAC_CAP0_TRIG_TXOP_SHARING_MODE1 |
- 					IEEE80211_EHT_MAC_CAP0_TRIG_TXOP_SHARING_MODE2 |
-@@ -793,7 +792,6 @@ static const struct ieee80211_sband_iftype_data iwl_he_eht_capa[] = {
- 			.has_eht = true,
- 			.eht_cap_elem = {
- 				.mac_cap_info[0] =
--					IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
- 					IEEE80211_EHT_MAC_CAP0_OM_CONTROL |
- 					IEEE80211_EHT_MAC_CAP0_TRIG_TXOP_SHARING_MODE1 |
- 					IEEE80211_EHT_MAC_CAP0_TRIG_TXOP_SHARING_MODE2,
-@@ -1020,8 +1018,7 @@ iwl_nvm_fixup_sband_iftd(struct iwl_trans *trans,
- 	if (CSR_HW_REV_TYPE(trans->hw_rev) == IWL_CFG_MAC_TYPE_GL &&
- 	    iftype_data->eht_cap.has_eht) {
- 		iftype_data->eht_cap.eht_cap_elem.mac_cap_info[0] &=
--			~(IEEE80211_EHT_MAC_CAP0_EPCS_PRIO_ACCESS |
--			  IEEE80211_EHT_MAC_CAP0_TRIG_TXOP_SHARING_MODE1 |
-+			~(IEEE80211_EHT_MAC_CAP0_TRIG_TXOP_SHARING_MODE1 |
- 			  IEEE80211_EHT_MAC_CAP0_TRIG_TXOP_SHARING_MODE2);
- 		iftype_data->eht_cap.eht_cap_elem.phy_cap_info[3] &=
- 			~(IEEE80211_EHT_PHY_CAP0_PARTIAL_BW_UL_MU_MIMO |
+diff --git a/drivers/firmware/efi/arm-runtime.c b/drivers/firmware/efi/arm-runtime.c
+index 83f5bb57fa4c4..83092d93f36a6 100644
+--- a/drivers/firmware/efi/arm-runtime.c
++++ b/drivers/firmware/efi/arm-runtime.c
+@@ -107,7 +107,7 @@ static int __init arm_enable_runtime_services(void)
+ 		efi_memory_desc_t *md;
+ 
+ 		for_each_efi_memory_desc(md) {
+-			int md_size = md->num_pages << EFI_PAGE_SHIFT;
++			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
+ 			struct resource *res;
+ 
+ 			if (!(md->attribute & EFI_MEMORY_SP))
+diff --git a/drivers/firmware/efi/riscv-runtime.c b/drivers/firmware/efi/riscv-runtime.c
+index 09525fb5c240e..01f0f90ea4183 100644
+--- a/drivers/firmware/efi/riscv-runtime.c
++++ b/drivers/firmware/efi/riscv-runtime.c
+@@ -85,7 +85,7 @@ static int __init riscv_enable_runtime_services(void)
+ 		efi_memory_desc_t *md;
+ 
+ 		for_each_efi_memory_desc(md) {
+-			int md_size = md->num_pages << EFI_PAGE_SHIFT;
++			u64 md_size = md->num_pages << EFI_PAGE_SHIFT;
+ 			struct resource *res;
+ 
+ 			if (!(md->attribute & EFI_MEMORY_SP))
 -- 
 2.43.0
 
