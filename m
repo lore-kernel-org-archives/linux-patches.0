@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FA113F016;
-	Tue, 27 Feb 2024 14:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D911448C3;
+	Tue, 27 Feb 2024 14:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042487; cv=none; b=sDK/KgTQL/r9IQoB1z9AQ6wQoJOZi/FMHl/2s3I+1OIf10GA3K2vSePnkU6pza/DMbk0ZvpALw76iEmIpIrWsFaqxc3ol0up0d2BHHsjBxDuYspmuyev9Lufdq4egJ9iCRTW/MB9vj2pcK/JPdLE8oLmtYQ6LnoROX0oHGLQYUA=
+	t=1709042490; cv=none; b=jxLtGgVPMwnwBUlhtnpD9zOEUOPzKTLeMM1IRW58srPJI+STeBLm02PefB2yv9ko96bjY8ptLiuy/SwWNKMms/guPYcPijvLIg6/k9J1RCVOTgdZ22oys7RKmqaHwCHff63r69To971Ur67s3KbIMcC0liNJSMWxt4vxGwlq77Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042487; c=relaxed/simple;
-	bh=KoTHhlq53KoDr5kjlCpZt5ibLzydfZZE9O4dc5oLpCQ=;
+	s=arc-20240116; t=1709042490; c=relaxed/simple;
+	bh=AWcg2gGW/jWE9sWgNjKpnjlRofZALr6nxrZWi8BhDRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KK34ogIms/FJ92GmwPK2atYNxTQfMZGWpNfzb5T0F9CVYy7MV1HZqP/zGQKUPr6csZWMJioU296bdKWhgkWS2lZWN0nS56qHjNOOjHl3KRZ7QXa1dauE2om2/0FZjiXjFWS4JMObmmHN/N339GBz8JCYgrw4ru+YkzhGUgIC9go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+6EYCrQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPF5X1s/b52boFdSar9N38xPc6f0dQcthsGbSQ9OOVcIAcPn3sR/Ca19qSommhM3TrNFpU88KejEved2ekktNzpErKwvoLQiodZtSOGVeqbZWh/d5t2pZpcPq9gu6weo+a0+7colLNUhE6qmmfqDIM43xj7QJb+NSXpWOgisoq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbG/Z2Ez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+6EYCrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A589C433C7;
-	Tue, 27 Feb 2024 14:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbG/Z2Ez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20289C433B2;
+	Tue, 27 Feb 2024 14:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042487;
-	bh=KoTHhlq53KoDr5kjlCpZt5ibLzydfZZE9O4dc5oLpCQ=;
+	s=korg; t=1709042490;
+	bh=AWcg2gGW/jWE9sWgNjKpnjlRofZALr6nxrZWi8BhDRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+6EYCrQXhoKzsCCwreUBD6nplA9Z0cTUBs9UOQfAOEyUXucBR8TjF4jrk3sUdU2P
-	 tS6+3/yf5TdfHC+EShmp5ERREIM65Vn08kdrJ/V4TZGhC90HCqmo3W9z0GatGsX2mT
-	 MCET7ZiY775HhbYV0IL2Zq+/QI2HBvG9ZYlhVgVs=
+	b=VbG/Z2Ez5VEqZKfkcgazuvXjxO5m4FYEcrOnZQEssZwiUjAgBVga55tlPzfbCsq9z
+	 mpQMAGW000OArjXwscuhyoKVcpplXxtOX6DExlGCGwO73EUYTaAuwAyMDGKMJPyyO1
+	 qtoHxF4YQzLlcYW9kvWJmgy68XTpUeE5Nz/H7/Cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>
-Subject: [PATCH 5.15 014/245] zonefs: Improve error handling
-Date: Tue, 27 Feb 2024 14:23:22 +0100
-Message-ID: <20240227131615.579303097@linuxfoundation.org>
+	Konstantin Bogomolov <bogomolov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrei Vagin <avagin@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 5.15 015/245] x86/fpu: Stop relying on userspace for info to fault in xsave buffer
+Date: Tue, 27 Feb 2024 14:23:23 +0100
+Message-ID: <20240227131615.611869725@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -52,188 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Andrei Vagin <avagin@google.com>
 
-commit 14db5f64a971fce3d8ea35de4dfc7f443a3efb92 upstream.
+commit d877550eaf2dc9090d782864c96939397a3c6835 upstream.
 
-Write error handling is racy and can sometime lead to the error recovery
-path wrongly changing the inode size of a sequential zone file to an
-incorrect value  which results in garbage data being readable at the end
-of a file. There are 2 problems:
+Before this change, the expected size of the user space buffer was
+taken from fx_sw->xstate_size. fx_sw->xstate_size can be changed
+from user-space, so it is possible construct a sigreturn frame where:
 
-1) zonefs_file_dio_write() updates a zone file write pointer offset
-   after issuing a direct IO with iomap_dio_rw(). This update is done
-   only if the IO succeed for synchronous direct writes. However, for
-   asynchronous direct writes, the update is done without waiting for
-   the IO completion so that the next asynchronous IO can be
-   immediately issued. However, if an asynchronous IO completes with a
-   failure right before the i_truncate_mutex lock protecting the update,
-   the update may change the value of the inode write pointer offset
-   that was corrected by the error path (zonefs_io_error() function).
+ * fx_sw->xstate_size is smaller than the size required by valid bits in
+   fx_sw->xfeatures.
+ * user-space unmaps parts of the sigrame fpu buffer so that not all of
+   the buffer required by xrstor is accessible.
 
-2) zonefs_io_error() is called when a read or write error occurs. This
-   function executes a report zone operation using the callback function
-   zonefs_io_error_cb(), which does all the error recovery handling
-   based on the current zone condition, write pointer position and
-   according to the mount options being used. However, depending on the
-   zoned device being used, a report zone callback may be executed in a
-   context that is different from the context of __zonefs_io_error(). As
-   a result, zonefs_io_error_cb() may be executed without the inode
-   truncate mutex lock held, which can lead to invalid error processing.
+In this case, xrstor tries to restore and accesses the unmapped area
+which results in a fault. But fault_in_readable succeeds because buf +
+fx_sw->xstate_size is within the still mapped area, so it goes back and
+tries xrstor again. It will spin in this loop forever.
 
-Fix both problems as follows:
-- Problem 1: Perform the inode write pointer offset update before a
-  direct write is issued with iomap_dio_rw(). This is safe to do as
-  partial direct writes are not supported (IOMAP_DIO_PARTIAL is not
-  set) and any failed IO will trigger the execution of zonefs_io_error()
-  which will correct the inode write pointer offset to reflect the
-  current state of the one on the device.
-- Problem 2: Change zonefs_io_error_cb() into zonefs_handle_io_error()
-  and call this function directly from __zonefs_io_error() after
-  obtaining the zone information using blkdev_report_zones() with a
-  simple callback function that copies to a local stack variable the
-  struct blk_zone obtained from the device. This ensures that error
-  handling is performed holding the inode truncate mutex.
-  This change also simplifies error handling for conventional zone files
-  by bypassing the execution of report zones entirely. This is safe to
-  do because the condition of conventional zones cannot be read-only or
-  offline and conventional zone files are always fully mapped with a
-  constant file size.
+Instead, fault in the maximum size which can be touched by XRSTOR (taken
+from fpstate->user_size).
 
-Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Fixes: 8dcc1a9d90c1 ("fs: New zonefs file system")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+[ dhansen: tweak subject / changelog ]
+
+Fixes: fcb3635f5018 ("x86/fpu/signal: Handle #PF in the direct restore path")
+Reported-by: Konstantin Bogomolov <bogomolov@google.com>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240130063603.3392627-1-avagin%40google.com
+Link: https://lore.kernel.org/all/20240130063603.3392627-1-avagin%40google.com
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/zonefs/super.c |   70 ++++++++++++++++++++++++++++++------------------------
- 1 file changed, 40 insertions(+), 30 deletions(-)
+ arch/x86/kernel/fpu/signal.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/fs/zonefs/super.c
-+++ b/fs/zonefs/super.c
-@@ -327,16 +327,18 @@ static loff_t zonefs_check_zone_conditio
- 	}
- }
- 
--struct zonefs_ioerr_data {
--	struct inode	*inode;
--	bool		write;
--};
--
- static int zonefs_io_error_cb(struct blk_zone *zone, unsigned int idx,
- 			      void *data)
+--- a/arch/x86/kernel/fpu/signal.c
++++ b/arch/x86/kernel/fpu/signal.c
+@@ -246,12 +246,13 @@ static int __restore_fpregs_from_user(vo
+  * Attempt to restore the FPU registers directly from user memory.
+  * Pagefaults are handled and any errors returned are fatal.
+  */
+-static int restore_fpregs_from_user(void __user *buf, u64 xrestore,
+-				    bool fx_only, unsigned int size)
++static int restore_fpregs_from_user(void __user *buf, u64 xrestore, bool fx_only)
  {
--	struct zonefs_ioerr_data *err = data;
--	struct inode *inode = err->inode;
-+	struct blk_zone *z = data;
-+
-+	*z = *zone;
-+	return 0;
-+}
-+
-+static void zonefs_handle_io_error(struct inode *inode, struct blk_zone *zone,
-+				   bool write)
-+{
- 	struct zonefs_inode_info *zi = ZONEFS_I(inode);
- 	struct super_block *sb = inode->i_sb;
- 	struct zonefs_sb_info *sbi = ZONEFS_SB(sb);
-@@ -352,8 +354,8 @@ static int zonefs_io_error_cb(struct blk
- 	isize = i_size_read(inode);
- 	if (zone->cond != BLK_ZONE_COND_OFFLINE &&
- 	    zone->cond != BLK_ZONE_COND_READONLY &&
--	    !err->write && isize == data_size)
--		return 0;
-+	    !write && isize == data_size)
-+		return;
- 
- 	/*
- 	 * At this point, we detected either a bad zone or an inconsistency
-@@ -374,8 +376,9 @@ static int zonefs_io_error_cb(struct blk
- 	 * In all cases, warn about inode size inconsistency and handle the
- 	 * IO error according to the zone condition and to the mount options.
- 	 */
--	if (zi->i_ztype == ZONEFS_ZTYPE_SEQ && isize != data_size)
--		zonefs_warn(sb, "inode %lu: invalid size %lld (should be %lld)\n",
-+	if (isize != data_size)
-+		zonefs_warn(sb,
-+			    "inode %lu: invalid size %lld (should be %lld)\n",
- 			    inode->i_ino, isize, data_size);
- 
- 	/*
-@@ -435,8 +438,6 @@ static int zonefs_io_error_cb(struct blk
- 	zonefs_update_stats(inode, data_size);
- 	zonefs_i_size_write(inode, data_size);
- 	zi->i_wpoffset = data_size;
--
--	return 0;
- }
- 
- /*
-@@ -450,23 +451,25 @@ static void __zonefs_io_error(struct ino
- {
- 	struct zonefs_inode_info *zi = ZONEFS_I(inode);
- 	struct super_block *sb = inode->i_sb;
--	struct zonefs_sb_info *sbi = ZONEFS_SB(sb);
- 	unsigned int noio_flag;
--	unsigned int nr_zones = 1;
--	struct zonefs_ioerr_data err = {
--		.inode = inode,
--		.write = write,
--	};
-+	struct blk_zone zone;
+ 	struct fpu *fpu = &current->thread.fpu;
  	int ret;
  
- 	/*
--	 * The only files that have more than one zone are conventional zone
--	 * files with aggregated conventional zones, for which the inode zone
--	 * size is always larger than the device zone size.
--	 */
--	if (zi->i_zone_size > bdev_zone_sectors(sb->s_bdev))
--		nr_zones = zi->i_zone_size >>
--			(sbi->s_zone_sectors_shift + SECTOR_SHIFT);
-+	 * Conventional zone have no write pointer and cannot become read-only
-+	 * or offline. So simply fake a report for a single or aggregated zone
-+	 * and let zonefs_handle_io_error() correct the zone inode information
-+	 * according to the mount options.
-+	 */
-+	if (zi->i_ztype != ZONEFS_ZTYPE_SEQ) {
-+		zone.start = zi->i_zsector;
-+		zone.len = zi->i_max_size >> SECTOR_SHIFT;
-+		zone.wp = zone.start + zone.len;
-+		zone.type = BLK_ZONE_TYPE_CONVENTIONAL;
-+		zone.cond = BLK_ZONE_COND_NOT_WP;
-+		zone.capacity = zone.len;
-+		goto handle_io_error;
-+	}
++	/* Restore enabled features only. */
++	xrestore &= xfeatures_mask_all & XFEATURE_MASK_USER_SUPPORTED;
+ retry:
+ 	fpregs_lock();
+ 	pagefault_disable();
+@@ -278,7 +279,7 @@ retry:
+ 		if (ret != -EFAULT)
+ 			return -EINVAL;
+ 
+-		if (!fault_in_readable(buf, size))
++		if (!fault_in_readable(buf, fpu_user_xstate_size))
+ 			goto retry;
+ 		return -EFAULT;
+ 	}
+@@ -303,7 +304,6 @@ retry:
+ static int __fpu_restore_sig(void __user *buf, void __user *buf_fx,
+ 			     bool ia32_fxstate)
+ {
+-	int state_size = fpu_kernel_xstate_size;
+ 	struct task_struct *tsk = current;
+ 	struct fpu *fpu = &tsk->thread.fpu;
+ 	struct user_i387_ia32_struct env;
+@@ -319,7 +319,6 @@ static int __fpu_restore_sig(void __user
+ 			return ret;
+ 
+ 		fx_only = !fx_sw_user.magic1;
+-		state_size = fx_sw_user.xstate_size;
+ 		user_xfeatures = fx_sw_user.xfeatures;
+ 	} else {
+ 		user_xfeatures = XFEATURE_MASK_FPSSE;
+@@ -332,8 +331,7 @@ static int __fpu_restore_sig(void __user
+ 		 * faults. If it does, fall back to the slow path below, going
+ 		 * through the kernel buffer with the enabled pagefault handler.
+ 		 */
+-		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only,
+-						state_size);
++		return restore_fpregs_from_user(buf_fx, user_xfeatures, fx_only);
+ 	}
  
  	/*
- 	 * Memory allocations in blkdev_report_zones() can trigger a memory
-@@ -477,12 +480,19 @@ static void __zonefs_io_error(struct ino
- 	 * the GFP_NOIO context avoids both problems.
- 	 */
- 	noio_flag = memalloc_noio_save();
--	ret = blkdev_report_zones(sb->s_bdev, zi->i_zsector, nr_zones,
--				  zonefs_io_error_cb, &err);
--	if (ret != nr_zones)
-+	ret = blkdev_report_zones(sb->s_bdev, zi->i_zsector, 1,
-+				  zonefs_io_error_cb, &zone);
-+	memalloc_noio_restore(noio_flag);
-+	if (ret != 1) {
- 		zonefs_err(sb, "Get inode %lu zone information failed %d\n",
- 			   inode->i_ino, ret);
--	memalloc_noio_restore(noio_flag);
-+		zonefs_warn(sb, "remounting filesystem read-only\n");
-+		sb->s_flags |= SB_RDONLY;
-+		return;
-+	}
-+
-+handle_io_error:
-+	zonefs_handle_io_error(inode, &zone, write);
- }
- 
- static void zonefs_io_error(struct inode *inode, bool write)
 
 
