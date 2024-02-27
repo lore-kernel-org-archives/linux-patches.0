@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865BB78B61;
-	Tue, 27 Feb 2024 14:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C0C78B61;
+	Tue, 27 Feb 2024 14:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709042583; cv=none; b=e5Wxu4Kgf3g1djPa+y/+kftKuWk0gEIOs+RR8ONxLXcv1ZU0fa8qz1q0dP9gxyahtJNgL585QQeQB+s8jyw+zNheKhNU5h6nDKNKKwVnMSt19d2BWQb9OMYq3L90fiGI8kpXrs1azbpVM4h9FGIJcrVFHD9TNwhPQR/1LpxH8ro=
+	t=1709042586; cv=none; b=mugEgbKRntkRQjzyaJm0e2DW/aFJ3NiXJMgGNDnoY86TETeF6fh/5MK0/GSvhOfNNiZbLEDcY2TZNKulEQflsC2B8Ul/yrFdbSMH6mHZplU672ix0FNoLbYbNHCF7yshmdvJL3NJK2tIkFRLUPLhY4bSgD58ajIBPrty9cLNfH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709042583; c=relaxed/simple;
-	bh=VnChwWB+Q/rmeaJed0RzX6jQp8yRJneogzWINQRDrME=;
+	s=arc-20240116; t=1709042586; c=relaxed/simple;
+	bh=7r/6pQkgkPAgcOhAivCoKGQ+RRFKIFbZW8es6aCd0tA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgQpnE0okjDmyVb4Vjz1QfFt4XOnnc1yBApdWWZV4Y379FHPlWxQiKcyaW2+JPUm9qAfUZit4eIyXZz6wwN4a+FJDpwwXEVrr2la3k0m8fl38pI4pmqwIiirFxZ16cDpKQqRNKbw71pzFOdLEikuYmws04gquveCezpOMdSQRfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bn/ESizC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTeyD2eQ6cqDfYjI/E/aASdTa5vpQNFnY5r9FyAW/V/cnmvfdbwwbwAsTm2gzeiB2JN5/dJbaAwQ87lVmJAzROkBSaN7JVLaCJt7rbubiZrd5F5yAVJUGYQDeQj81OBb698MRJqcmHrUCB53W0L+W2ARvkWeZDqvP0Zvr3pGDBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyRKwZMi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bn/ESizC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156ACC43390;
-	Tue, 27 Feb 2024 14:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyRKwZMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1E7C433C7;
+	Tue, 27 Feb 2024 14:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709042583;
-	bh=VnChwWB+Q/rmeaJed0RzX6jQp8yRJneogzWINQRDrME=;
+	s=korg; t=1709042586;
+	bh=7r/6pQkgkPAgcOhAivCoKGQ+RRFKIFbZW8es6aCd0tA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bn/ESizCY0YkzCc69RUtUMYRZ/FZ+HalLNxR5pyWgWOhJv2dDxFj1fU+FpvYCd9oN
-	 9KAHjMXvaS7iAwocoHCHN7w1O5ejyuHTPlPpcIkItfBBVI1C+xWBXT0FMB5CAK2jaD
-	 1cGk6qReipH6SXrZXsdUr3qE0t8325CiYE6O04fk=
+	b=XyRKwZMiMyVesmnPQuIvK3OX0IWUfFOrok/4pyCp9dDYm+o0EnZoz3PZTygGipch7
+	 oOKpqlc0bB6TgNFKfadMmaXZ3kuM9cknSdj6UxNxl7WkHcKCMvvnUKUIGtXt7scfLw
+	 PbdCXcXQkAl/MRc4W8sdtE8+Z7w3HffUR/Q3iDAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phoenix Chen <asbeltogf@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/245] platform/x86: touchscreen_dmi: Add info for the TECLAST X16 Plus tablet
-Date: Tue, 27 Feb 2024 14:23:37 +0100
-Message-ID: <20240227131616.064754858@linuxfoundation.org>
+Subject: [PATCH 5.15 047/245] nvmet-fc: abort command when there is no binding
+Date: Tue, 27 Feb 2024 14:23:55 +0100
+Message-ID: <20240227131616.653367520@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -51,74 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phoenix Chen <asbeltogf@gmail.com>
+From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit 1abdf288b0ef5606f76b6e191fa6df05330e3d7e ]
+[ Upstream commit 3146345c2e9c2f661527054e402b0cfad80105a4 ]
 
-Add touch screen info for TECLAST X16 Plus tablet.
+When the target port has not active port binding, there is no point in
+trying to process the command as it has to fail anyway. Instead adding
+checks to all commands abort the command early.
 
-Signed-off-by: Phoenix Chen <asbeltogf@gmail.com>
-Link: https://lore.kernel.org/r/20240126095308.5042-1-asbeltogf@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 35 ++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ drivers/nvme/target/fc.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index f129e29b295d9..397283893f39f 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -916,6 +916,32 @@ static const struct ts_dmi_data teclast_tbook11_data = {
- 	.properties	= teclast_tbook11_props,
- };
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index 06d11bb7b944b..20d3013be08ab 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1101,6 +1101,9 @@ nvmet_fc_alloc_target_assoc(struct nvmet_fc_tgtport *tgtport, void *hosthandle)
+ 	int idx;
+ 	bool needrandom = true;
  
-+static const struct property_entry teclast_x16_plus_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 8),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 14),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1916),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1264),
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl3692-teclast-x16-plus.fw"),
-+	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
-+	PROPERTY_ENTRY_BOOL("silead,home-button"),
-+	{ }
-+};
++	if (!tgtport->pe)
++		return NULL;
 +
-+static const struct ts_dmi_data teclast_x16_plus_data = {
-+	.embedded_fw = {
-+		.name	= "silead/gsl3692-teclast-x16-plus.fw",
-+		.prefix = { 0xf0, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00 },
-+		.length	= 43560,
-+		.sha256	= { 0x9d, 0xb0, 0x3d, 0xf1, 0x00, 0x3c, 0xb5, 0x25,
-+			    0x62, 0x8a, 0xa0, 0x93, 0x4b, 0xe0, 0x4e, 0x75,
-+			    0xd1, 0x27, 0xb1, 0x65, 0x3c, 0xba, 0xa5, 0x0f,
-+			    0xcd, 0xb4, 0xbe, 0x00, 0xbb, 0xf6, 0x43, 0x29 },
-+	},
-+	.acpi_name	= "MSSL1680:00",
-+	.properties	= teclast_x16_plus_props,
-+};
-+
- static const struct property_entry teclast_x3_plus_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1980),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1500),
-@@ -1552,6 +1578,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_SKU, "E5A6_A1"),
- 		},
- 	},
-+	{
-+		/* Teclast X16 Plus */
-+		.driver_data = (void *)&teclast_x16_plus_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "TECLAST"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
-+			DMI_MATCH(DMI_PRODUCT_SKU, "D3A5_A1"),
-+		},
-+	},
- 	{
- 		/* Teclast X3 Plus */
- 		.driver_data = (void *)&teclast_x3_plus_data,
+ 	assoc = kzalloc(sizeof(*assoc), GFP_KERNEL);
+ 	if (!assoc)
+ 		return NULL;
+@@ -2523,8 +2526,9 @@ nvmet_fc_handle_fcp_rqst(struct nvmet_fc_tgtport *tgtport,
+ 
+ 	fod->req.cmd = &fod->cmdiubuf.sqe;
+ 	fod->req.cqe = &fod->rspiubuf.cqe;
+-	if (tgtport->pe)
+-		fod->req.port = tgtport->pe->port;
++	if (!tgtport->pe)
++		goto transport_error;
++	fod->req.port = tgtport->pe->port;
+ 
+ 	/* clear any response payload */
+ 	memset(&fod->rspiubuf, 0, sizeof(fod->rspiubuf));
 -- 
 2.43.0
 
