@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CCB13F01E;
-	Tue, 27 Feb 2024 13:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2820513B78F;
+	Tue, 27 Feb 2024 13:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041005; cv=none; b=BAQDpLF+G1COid3DgAaZVPgiU+P1XlJ4FyC3XZYLTvybkQOlHSDC3vZwbaZg+UQGm/mKFo/4LcRSRR8rqzovQ7Pf37fnXpb/fKKBDygk1PLNXKaDwiq6aS1plzGWDD2d1aqkcOM8SlOY+wvS3igjN4+h4KpKuY4PRZx6XiSNuZc=
+	t=1709041008; cv=none; b=DMLrlZzk7H4cwmwib3TYXzNiyLWeO+Be+kFQOgTaA92HTwmmkXCJaFCye20r+watCoAlO2Owz8K7pGWhWAEfNMy1tUgTZZ0nOWLK19ged+H51v6ZPumMMWfoSoo81Kiyj7Indx9+nC2OPQaDvS1fgf3gmKqYzi58adY157EfYNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041005; c=relaxed/simple;
-	bh=wqUXqCbQh3OaPBL4PPpedbayzg4HSVcDChYRxeS820s=;
+	s=arc-20240116; t=1709041008; c=relaxed/simple;
+	bh=RxcInxed/5NTzzpVkrYXgQAo47oZXBqOOH8K8AhXp+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LxnbZp9JAZ8e/GoABWre27mlHyms5gkx7tzDpYcdEeVCQWQoMO1hMwrXiJwEWNBbSTR9q7SYch56Qry5YN6kJM1UINWgkbtWO2p653IdukTpUCsh7PvdI64skSq9wCizYHE7WwLV91ltA32L5P7bMh9VAGRGApImKG5nRYQ1Ah4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmsX5rjQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HB9iOBlit2iTm5yJVgLFfGIfaBno5yBC6tbXHbaUfujYMKz53TZqBzc2Fh1wSDvP2w3Wo0nm6Er81VxfpVLRJ5emna1AiacgaqGYeHApTEMS8lRYDFG68vmKYG/3nJnA9UtpAk97zgHtjIOahYVI79hpPSxftcRc+rcyzvoiwO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPgXnS6Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmsX5rjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69D5C433F1;
-	Tue, 27 Feb 2024 13:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPgXnS6Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02A3C433C7;
+	Tue, 27 Feb 2024 13:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041005;
-	bh=wqUXqCbQh3OaPBL4PPpedbayzg4HSVcDChYRxeS820s=;
+	s=korg; t=1709041008;
+	bh=RxcInxed/5NTzzpVkrYXgQAo47oZXBqOOH8K8AhXp+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmsX5rjQ0tK7x3E+k/68PWyFbfkpiM4rvvaBTpUEzYlU+B25bhQdSP++zbzQp4Uge
-	 R+wqpIfzB1elIEiske4h5yyP3miQrNXRZkt94bd/iMXqsKCnJj+oTC3b0yAwqdUnC1
-	 lZfa/gwA/lnYEG34B4Wy21y49V4zEGV/xA566RWU=
+	b=lPgXnS6QwEOmCPmBal05FdEi38/aeMcH7iU7BZcstiO88NFBXnA+UBGhKHuMLIN1q
+	 Ic/vNyh4S1fDdNWgsV/wWFs0OyTxmuhNpgUbkW4xC8HqWYruQYcVYcJR+FazQX0iFf
+	 vml8ML/aSshGdHmauwQhIdW7xn5UEp3d0NIHq8HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.7 147/334] btrfs: defrag: avoid unnecessary defrag caused by incorrect extent size
-Date: Tue, 27 Feb 2024 14:20:05 +0100
-Message-ID: <20240227131635.199179400@linuxfoundation.org>
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.7 179/334] platform/x86: touchscreen_dmi: Allow partial (prefix) matches for ACPI names
+Date: Tue, 27 Feb 2024 14:20:37 +0100
+Message-ID: <20240227131636.365738434@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -52,111 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit e42b9d8b9ea2672811285e6a7654887ff64d23f3 upstream.
+commit dbcbfd662a725641d118fb3ae5ffb7be4e3d0fb0 upstream.
 
-[BUG]
-With the following file extent layout, defrag would do unnecessary IO
-and result more on-disk space usage.
+On some devices the ACPI name of the touchscreen is e.g. either
+MSSL1680:00 or MSSL1680:01 depending on the BIOS version.
 
-  # mkfs.btrfs -f $dev
-  # mount $dev $mnt
-  # xfs_io -f -c "pwrite 0 40m" $mnt/foobar
-  # sync
-  # xfs_io -f -c "pwrite 40m 16k" $mnt/foobar
-  # sync
+This happens for example on the "Chuwi Hi8 Air" tablet where the initial
+commit's ts_data uses "MSSL1680:00" but the tablets from the github issue
+and linux-hardware.org probe linked below both use "MSSL1680:01".
 
-Above command would lead to the following file extent layout:
+Replace the strcmp() match on ts_data->acpi_name with a strstarts()
+check to allow using a partial match on just the ACPI HID of "MSSL1680"
+and change the ts_data->acpi_name for the "Chuwi Hi8 Air" accordingly
+to fix the touchscreen not working on models where it is "MSSL1680:01".
 
-        item 6 key (257 EXTENT_DATA 0) itemoff 15816 itemsize 53
-                generation 7 type 1 (regular)
-                extent data disk byte 298844160 nr 41943040
-                extent data offset 0 nr 41943040 ram 41943040
-                extent compression 0 (none)
-        item 7 key (257 EXTENT_DATA 41943040) itemoff 15763 itemsize 53
-                generation 8 type 1 (regular)
-                extent data disk byte 13631488 nr 16384
-                extent data offset 0 nr 16384 ram 16384
-                extent compression 0 (none)
+Note this drops the length check for I2C_NAME_SIZE. This never was
+necessary since the ACPI names used are never more then 11 chars and
+I2C_NAME_SIZE is 20 so the replaced strncmp() would always stop long
+before reaching I2C_NAME_SIZE.
 
-Which is mostly fine. We can allow the final 16K to be merged with the
-previous 40M, but it's upon the end users' preference.
-
-But if we defrag the file using the default parameters, it would result
-worse file layout:
-
- # btrfs filesystem defrag $mnt/foobar
- # sync
-
-        item 6 key (257 EXTENT_DATA 0) itemoff 15816 itemsize 53
-                generation 7 type 1 (regular)
-                extent data disk byte 298844160 nr 41943040
-                extent data offset 0 nr 8650752 ram 41943040
-                extent compression 0 (none)
-        item 7 key (257 EXTENT_DATA 8650752) itemoff 15763 itemsize 53
-                generation 9 type 1 (regular)
-                extent data disk byte 340787200 nr 33292288
-                extent data offset 0 nr 33292288 ram 33292288
-                extent compression 0 (none)
-        item 8 key (257 EXTENT_DATA 41943040) itemoff 15710 itemsize 53
-                generation 8 type 1 (regular)
-                extent data disk byte 13631488 nr 16384
-                extent data offset 0 nr 16384 ram 16384
-                extent compression 0 (none)
-
-Note the original 40M extent is still there, but a new 32M extent is
-created for no benefit at all.
-
-[CAUSE]
-There is an existing check to make sure we won't defrag a large enough
-extent (the threshold is by default 32M).
-
-But the check is using the length to the end of the extent:
-
-	range_len = em->len - (cur - em->start);
-
-	/* Skip too large extent */
-	if (range_len >= extent_thresh)
-		goto next;
-
-This means, for the first 8MiB of the extent, the range_len is always
-smaller than the default threshold, and would not be defragged.
-But after the first 8MiB, the remaining part would fit the requirement,
-and be defragged.
-
-Such different behavior inside the same extent caused the above problem,
-and we should avoid different defrag decision inside the same extent.
-
-[FIX]
-Instead of using @range_len, just use @em->len, so that we have a
-consistent decision among the same file extent.
-
-Now with this fix, we won't touch the extent, thus not making it any
-worse.
-
-Reported-by: Filipe Manana <fdmanana@suse.com>
-Fixes: 0cb5950f3f3b ("btrfs: fix deadlock when reserving space during defrag")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://linux-hardware.org/?computer=AC4301C0542A
+Fixes: bbb97d728f77 ("platform/x86: touchscreen_dmi: Add info for the Chuwi Hi8 Air tablet")
+Closes: https://github.com/onitake/gsl-firmware/issues/91
+Cc: stable@vger.kernel.org
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240212120608.30469-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/defrag.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/touchscreen_dmi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/defrag.c
-+++ b/fs/btrfs/defrag.c
-@@ -1047,7 +1047,7 @@ static int defrag_collect_targets(struct
- 			goto add;
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -81,7 +81,7 @@ static const struct property_entry chuwi
+ };
  
- 		/* Skip too large extent */
--		if (range_len >= extent_thresh)
-+		if (em->len >= extent_thresh)
- 			goto next;
+ static const struct ts_dmi_data chuwi_hi8_air_data = {
+-	.acpi_name	= "MSSL1680:00",
++	.acpi_name	= "MSSL1680",
+ 	.properties	= chuwi_hi8_air_props,
+ };
  
- 		/*
+@@ -1821,7 +1821,7 @@ static void ts_dmi_add_props(struct i2c_
+ 	int error;
+ 
+ 	if (has_acpi_companion(dev) &&
+-	    !strncmp(ts_data->acpi_name, client->name, I2C_NAME_SIZE)) {
++	    strstarts(client->name, ts_data->acpi_name)) {
+ 		error = device_create_managed_software_node(dev, ts_data->properties, NULL);
+ 		if (error)
+ 			dev_err(dev, "failed to add properties: %d\n", error);
 
 
