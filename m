@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0E516423;
-	Tue, 27 Feb 2024 14:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDD613A26F;
+	Tue, 27 Feb 2024 14:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043082; cv=none; b=rg7y9ILu3ZZ8Dn2XruzOrRjZHPqcAkDO7OJ25B0dgUtvJ6ypJTxdsyuqhzMQX3/LG73eJn/SHFLWPkN1W0gyOyXsB/DBiL+Ux8A2eiToMQ/6AGzOe3xVhW6LJbi4MYLKd2DmFIJaiL/yOmNPfzhnWQG5pnlss6xJGQ4rGooNlcI=
+	t=1709043085; cv=none; b=Rur8Jj3wbym9dRto9VO/jQapc6wiqzJpoep37appLty6BSR59Bd/lhTDWrjitte2DZN+4Gr5oOCN/XCU1YMShN7sHE3CsuqIH2tBm2Nw8H5sD6klpvkkbDBMBVBUGkWEe98KGjMY6tbDyd/4H2u061u3Ckw1l1xnQug/sv/w1ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043082; c=relaxed/simple;
-	bh=V2d8rQjsOrmPy1TD/GUa3RxkaOBpbLFJ1YMEXVtbReI=;
+	s=arc-20240116; t=1709043085; c=relaxed/simple;
+	bh=wLeM+CGlfPiV6Cm9Xjie6Ii/HgOt6dvKsdVeQAT+0+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSk9nd1cCMbXGme5JCUr9q7ELEt7NpgP3cJsVSE5kCj2uuedoEHo38yOlD0Zm/gjN6TSdu0CwNRzo4k1Yx/BWVko6ziWpCU+fAGdsjmn5+GcANoVGMilw6XiVecJN42FkzaS/wGSAaRcbTjx1db0vjxYfzgkjmRSIoSuVtOP9Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6cW1Vn6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g7erFOL+Z5aeBQnyN0U+KaHmeCayJmljwFhBzWI21liV633MihoxJ1jLE8/zTHSt+DyJtB6ggGDdaF4seZuo+g9NI/ow6jPYlRkx677lPR2oh25MTfL0+T/sb4UY929VXPVcpll00dyeREi0iatVlFyyyVqEIvuvzGOYx8kCOlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVannpw6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6cW1Vn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CE3C433F1;
-	Tue, 27 Feb 2024 14:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVannpw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8EDC433C7;
+	Tue, 27 Feb 2024 14:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043082;
-	bh=V2d8rQjsOrmPy1TD/GUa3RxkaOBpbLFJ1YMEXVtbReI=;
+	s=korg; t=1709043085;
+	bh=wLeM+CGlfPiV6Cm9Xjie6Ii/HgOt6dvKsdVeQAT+0+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6cW1Vn60Fxeb3YMjKqoaseM6g3L/y82G51LNDBdxTPKA71YMMPPKAbOIKhPCsd3N
-	 +TC70JmvV3vpSrnGyjdnu6wxFmAw9onHHWbn7X5Evh4IoVNIDhuPSQppE1iWYsHS/+
-	 VGvMF8tdGf0Gk40Ix1zKixiDP+4ApIQEeOnzZCFw=
+	b=xVannpw6b1dvrcHQJdz17pTJZ2U9tr3GixXuDVC5nidXLvyxJysMvhbmybuyR5yE7
+	 Q5j0GZhzwcsG9iXljX1I2RTVkAqtodCfiuAHVIAt+NN31q9J5M/CzurO1NQ9qzBTKB
+	 spTx5hA0lscth2JC8IcC05fSwD+IXJDF1fbYylPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 228/245] tls: rx: jump to a more appropriate label
-Date: Tue, 27 Feb 2024 14:26:56 +0100
-Message-ID: <20240227131622.595348860@linuxfoundation.org>
+Subject: [PATCH 5.15 229/245] tls: rx: drop pointless else after goto
+Date: Tue, 27 Feb 2024 14:26:57 +0100
+Message-ID: <20240227131622.628878021@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131615.098467438@linuxfoundation.org>
 References: <20240227131615.098467438@linuxfoundation.org>
@@ -53,60 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit bfc06e1aaa130b86a81ce3c41ec71a2f5e191690 ]
+[ Upstream commit d5123edd10cf9d324fcb88e276bdc7375f3c5321 ]
 
-'recv_end:' checks num_async and decrypted, and is then followed
-by the 'end' label. Since we know that decrypted and num_async
-are 0 at the start we can jump to 'end'.
-
-Move the init of decrypted and num_async to let the compiler
-catch if I'm wrong.
+Pointless else branch after goto makes the code harder to refactor
+down the line.
 
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: fdfbaec5923d ("tls: stop recv() if initial process_rx_list gave us non-DATA")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/tls/tls_sw.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 9ff3e4df2d6c5..c8285c596b5f4 100644
+index c8285c596b5f4..92eab4a7a80b5 100644
 --- a/net/tls/tls_sw.c
 +++ b/net/tls/tls_sw.c
-@@ -1755,6 +1755,7 @@ int tls_sw_recvmsg(struct sock *sk,
- 	struct tls_sw_context_rx *ctx = tls_sw_ctx_rx(tls_ctx);
- 	struct tls_prot_info *prot = &tls_ctx->prot_info;
- 	struct sk_psock *psock;
-+	int num_async, pending;
- 	unsigned char control = 0;
- 	ssize_t decrypted = 0;
- 	struct strp_msg *rxm;
-@@ -1767,8 +1768,6 @@ int tls_sw_recvmsg(struct sock *sk,
- 	bool is_kvec = iov_iter_is_kvec(&msg->msg_iter);
- 	bool is_peek = flags & MSG_PEEK;
- 	bool bpf_strp_enabled;
--	int num_async = 0;
--	int pending;
- 
- 	flags |= nonblock;
- 
-@@ -1790,12 +1789,14 @@ int tls_sw_recvmsg(struct sock *sk,
+@@ -1784,10 +1784,9 @@ int tls_sw_recvmsg(struct sock *sk,
+ 	if (err < 0) {
+ 		tls_err_abort(sk, err);
+ 		goto end;
+-	} else {
+-		copied = err;
  	}
  
++	copied = err;
  	if (len <= copied)
--		goto recv_end;
-+		goto end;
+ 		goto end;
  
- 	target = sock_rcvlowat(sk, flags & MSG_WAITALL, len);
- 	len = len - copied;
- 	timeo = sock_rcvtimeo(sk, flags & MSG_DONTWAIT);
- 
-+	decrypted = 0;
-+	num_async = 0;
- 	while (len && (decrypted + copied < target || ctx->recv_pkt)) {
- 		bool retain_skb = false;
- 		bool zc = false;
 -- 
 2.43.0
 
