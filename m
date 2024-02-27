@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBFA13B2B9;
-	Tue, 27 Feb 2024 13:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08FC13AA50;
+	Tue, 27 Feb 2024 13:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709041212; cv=none; b=Y1Sn01GXtS6FNyuc7HpMHl0C4UsI2UKGJDc5T0OR4uIjQbbNNbSBi/ZvrFnVvkoC4JqsH6zGHp07kxoUSq4tprORoilI0m615jJn2xbcBhiWXhun3E/SAm5NVkeWCyfw+GsUbmLpYxKkEie00nxPlXCKcJhH1p7lihN5szdmfCA=
+	t=1709041215; cv=none; b=h5voe2gylNzOjYBURPh8mdbefKTZJfsJxUlQhQg/Cw4PusOJSiR6ziR3/SKU4X7Wni8+PUmezXvNitSALNRjcRgC2uJvESECddvp4caLJXb5H+vE3yc+i6UtB1ECanzeDC7AkbFa/U6xOwbWREnNrNLwicc/DITYt74IRkyYp20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709041212; c=relaxed/simple;
-	bh=fnvvyI1IVtIjkgLmwfcvVvTYlQTyX6ZCUnbdR7nELv8=;
+	s=arc-20240116; t=1709041215; c=relaxed/simple;
+	bh=GwSB29VyHojcvQqBIo4oM5s9fuzt6TPPdM5J+WOEfDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0FroBcjteLuQLvAwbG8OSmI5yvi8VX8wnKnG/qVn1vHlv+iLVqqroaXdSeUi1rfxT9rB0rWJZTt3ATrkhNibmcsh+CucsfTuxhkM7ElMQYjmRQ2rjjU5GFkcsa3nvPtKR6XFGaNBNqq4RZfdrfg0SDSChzpXnHjydy+aJKWn58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwU017XM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rWX+pDx16HTWp710+X4JP7lIbShrAd2iatXWxd3txjkEOx9p03JsuvC+hHcJmGrKYG88PZIsD2Afpk7odWfcduuAlil9iJtltPh0rvzDy64hJx9BXyLEI2OLdIp3OE+E9dCJYcPAy58GoXmMmbQjbP1fAarBAUtWxaplY3Jp6Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=owzp3rtS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwU017XM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0ACFC433F1;
-	Tue, 27 Feb 2024 13:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="owzp3rtS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5E9C433C7;
+	Tue, 27 Feb 2024 13:40:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709041212;
-	bh=fnvvyI1IVtIjkgLmwfcvVvTYlQTyX6ZCUnbdR7nELv8=;
+	s=korg; t=1709041214;
+	bh=GwSB29VyHojcvQqBIo4oM5s9fuzt6TPPdM5J+WOEfDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hwU017XMW62gM3YzopO80L6e99rWI2J2w92X6EmtKoO0PCaEgrGDa9pvgtO/MKktv
-	 gldj7uaW3KpkzABYkAQu4VaDSxLjZAH5tV3KQ/v0I6hohNABcdsOdfN0r6NIEYk1ai
-	 cdGJN2z9jnf9au2jAabpejkkolvqeN2zooz1v+WM=
+	b=owzp3rtSl5lmtvRn25S3ZsN2L+ybjlL0IUJ4wm5bacWGKadrYqsdbiKn7yAOeqa3K
+	 lV+sV0vcLyiKibNct93Mq1ZymtFUcdJ+0Ar7GEo62Dt2Dnl9U9mUzYPv5kFlGR8HTo
+	 EIcyk+ziVM9dqbJHuqj03xEQhEz9yOgwdwVYdE4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Avihai Horon <avihaih@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.7 261/334] net/sched: act_mirred: Create function tcf_mirred_to_dev and improve readability
-Date: Tue, 27 Feb 2024 14:21:59 +0100
-Message-ID: <20240227131639.359941100@linuxfoundation.org>
+Subject: [PATCH 6.7 244/334] iommufd/iova_bitmap: Bounds check mapped::pages access
+Date: Tue, 27 Feb 2024 14:21:42 +0100
+Message-ID: <20240227131638.749206398@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131630.636392135@linuxfoundation.org>
 References: <20240227131630.636392135@linuxfoundation.org>
@@ -53,216 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Joao Martins <joao.m.martins@oracle.com>
 
-[ Upstream commit 16085e48cb48aeb50a1178dc276747749910b0f2 ]
+[ Upstream commit a4ab7dedaee0e39b15653c5fd0367e420739f7ef ]
 
-As a preparation for adding block ID to mirred, separate the part of
-mirred that redirect/mirrors to a dev into a specific function so that it
-can be called by blockcast for each dev.
+Dirty IOMMU hugepages reported on a base page page-size granularity can
+lead to an attempt to set dirty pages in the bitmap beyond the limits that
+are pinned.
 
-Also improve readability. Eg. rename use_reinsert to dont_clone and skb2
-to skb_to_send.
+Bounds check the page index of the array we are trying to access is within
+the limits before we kmap() and return otherwise.
 
-Co-developed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Co-developed-by: Pedro Tammela <pctammela@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 52f671db1882 ("net/sched: act_mirred: use the backlog for mirred ingress")
+While it is also a defensive check, this is also in preparation to defer
+setting bits (outside the mapped range) to the next iteration(s) when the
+pages become available.
+
+Fixes: b058ea3ab5af ("vfio/iova_bitmap: refactor iova_bitmap_set() to better handle page boundaries")
+Link: https://lore.kernel.org/r/20240202133415.23819-2-joao.m.martins@oracle.com
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Tested-by: Avihai Horon <avihaih@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mirred.c | 129 +++++++++++++++++++++++------------------
- 1 file changed, 72 insertions(+), 57 deletions(-)
+ drivers/iommu/iommufd/iova_bitmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index 0a711c184c29b..6f2544c1e3961 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -225,48 +225,26 @@ static int tcf_mirred_forward(bool want_ingress, struct sk_buff *skb)
- 	return err;
- }
+diff --git a/drivers/iommu/iommufd/iova_bitmap.c b/drivers/iommu/iommufd/iova_bitmap.c
+index 0a92c9eeaf7f5..a3606b4c22292 100644
+--- a/drivers/iommu/iommufd/iova_bitmap.c
++++ b/drivers/iommu/iommufd/iova_bitmap.c
+@@ -409,6 +409,7 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
+ 			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
+ 	unsigned long last_bit = (((iova + length - 1) - mapped->iova) >>
+ 			mapped->pgshift) + mapped->pgoff * BITS_PER_BYTE;
++	unsigned long last_page_idx = mapped->npages - 1;
  
--TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
--				     const struct tc_action *a,
--				     struct tcf_result *res)
-+static int tcf_mirred_to_dev(struct sk_buff *skb, struct tcf_mirred *m,
-+			     struct net_device *dev,
-+			     const bool m_mac_header_xmit, int m_eaction,
-+			     int retval)
- {
--	struct tcf_mirred *m = to_mirred(a);
--	struct sk_buff *skb2 = skb;
--	bool m_mac_header_xmit;
--	struct net_device *dev;
--	unsigned int nest_level;
--	int retval, err = 0;
--	bool use_reinsert;
-+	struct sk_buff *skb_to_send = skb;
- 	bool want_ingress;
- 	bool is_redirect;
- 	bool expects_nh;
- 	bool at_ingress;
--	int m_eaction;
-+	bool dont_clone;
- 	int mac_len;
- 	bool at_nh;
-+	int err;
+ 	do {
+ 		unsigned int page_idx = cur_bit / BITS_PER_PAGE;
+@@ -417,6 +418,9 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
+ 					 last_bit - cur_bit + 1);
+ 		void *kaddr;
  
--	nest_level = __this_cpu_inc_return(mirred_nest_level);
--	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
--		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
--				     netdev_name(skb->dev));
--		__this_cpu_dec(mirred_nest_level);
--		return TC_ACT_SHOT;
--	}
--
--	tcf_lastuse_update(&m->tcf_tm);
--	tcf_action_update_bstats(&m->common, skb);
--
--	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
--	m_eaction = READ_ONCE(m->tcfm_eaction);
--	retval = READ_ONCE(m->tcf_action);
--	dev = rcu_dereference_bh(m->tcfm_dev);
--	if (unlikely(!dev)) {
--		pr_notice_once("tc mirred: target device is gone\n");
--		goto out;
--	}
--
-+	is_redirect = tcf_mirred_is_act_redirect(m_eaction);
- 	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
- 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
- 				       dev->name);
-+		err = -ENODEV;
- 		goto out;
- 	}
- 
-@@ -274,61 +252,98 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
- 	 * since we can't easily detect the clsact caller, skip clone only for
- 	 * ingress - that covers the TC S/W datapath.
- 	 */
--	is_redirect = tcf_mirred_is_act_redirect(m_eaction);
- 	at_ingress = skb_at_tc_ingress(skb);
--	use_reinsert = at_ingress && is_redirect &&
--		       tcf_mirred_can_reinsert(retval);
--	if (!use_reinsert) {
--		skb2 = skb_clone(skb, GFP_ATOMIC);
--		if (!skb2)
-+	dont_clone = skb_at_tc_ingress(skb) && is_redirect &&
-+		tcf_mirred_can_reinsert(retval);
-+	if (!dont_clone) {
-+		skb_to_send = skb_clone(skb, GFP_ATOMIC);
-+		if (!skb_to_send) {
-+			err =  -ENOMEM;
- 			goto out;
-+		}
- 	}
- 
- 	want_ingress = tcf_mirred_act_wants_ingress(m_eaction);
- 
- 	/* All mirred/redirected skbs should clear previous ct info */
--	nf_reset_ct(skb2);
-+	nf_reset_ct(skb_to_send);
- 	if (want_ingress && !at_ingress) /* drop dst for egress -> ingress */
--		skb_dst_drop(skb2);
-+		skb_dst_drop(skb_to_send);
- 
- 	expects_nh = want_ingress || !m_mac_header_xmit;
- 	at_nh = skb->data == skb_network_header(skb);
- 	if (at_nh != expects_nh) {
--		mac_len = skb_at_tc_ingress(skb) ? skb->mac_len :
-+		mac_len = at_ingress ? skb->mac_len :
- 			  skb_network_offset(skb);
- 		if (expects_nh) {
- 			/* target device/action expect data at nh */
--			skb_pull_rcsum(skb2, mac_len);
-+			skb_pull_rcsum(skb_to_send, mac_len);
- 		} else {
- 			/* target device/action expect data at mac */
--			skb_push_rcsum(skb2, mac_len);
-+			skb_push_rcsum(skb_to_send, mac_len);
- 		}
- 	}
- 
--	skb2->skb_iif = skb->dev->ifindex;
--	skb2->dev = dev;
-+	skb_to_send->skb_iif = skb->dev->ifindex;
-+	skb_to_send->dev = dev;
- 
--	/* mirror is always swallowed */
- 	if (is_redirect) {
--		skb_set_redirected(skb2, skb2->tc_at_ingress);
--
--		/* let's the caller reinsert the packet, if possible */
--		if (use_reinsert) {
--			err = tcf_mirred_forward(want_ingress, skb);
--			if (err)
--				tcf_action_inc_overlimit_qstats(&m->common);
--			__this_cpu_dec(mirred_nest_level);
--			return TC_ACT_CONSUMED;
--		}
-+		if (skb == skb_to_send)
-+			retval = TC_ACT_CONSUMED;
++		if (unlikely(page_idx > last_page_idx))
++			break;
 +
-+		skb_set_redirected(skb_to_send, skb_to_send->tc_at_ingress);
-+
-+		err = tcf_mirred_forward(want_ingress, skb_to_send);
-+	} else {
-+		err = tcf_mirred_forward(want_ingress, skb_to_send);
- 	}
- 
--	err = tcf_mirred_forward(want_ingress, skb2);
- 	if (err) {
- out:
- 		tcf_action_inc_overlimit_qstats(&m->common);
--		if (tcf_mirred_is_act_redirect(m_eaction))
-+		if (is_redirect)
- 			retval = TC_ACT_SHOT;
- 	}
-+
-+	return retval;
-+}
-+
-+TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
-+				     const struct tc_action *a,
-+				     struct tcf_result *res)
-+{
-+	struct tcf_mirred *m = to_mirred(a);
-+	int retval = READ_ONCE(m->tcf_action);
-+	unsigned int nest_level;
-+	bool m_mac_header_xmit;
-+	struct net_device *dev;
-+	int m_eaction;
-+
-+	nest_level = __this_cpu_inc_return(mirred_nest_level);
-+	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
-+		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
-+				     netdev_name(skb->dev));
-+		retval = TC_ACT_SHOT;
-+		goto dec_nest_level;
-+	}
-+
-+	tcf_lastuse_update(&m->tcf_tm);
-+	tcf_action_update_bstats(&m->common, skb);
-+
-+	dev = rcu_dereference_bh(m->tcfm_dev);
-+	if (unlikely(!dev)) {
-+		pr_notice_once("tc mirred: target device is gone\n");
-+		tcf_action_inc_overlimit_qstats(&m->common);
-+		goto dec_nest_level;
-+	}
-+
-+	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
-+	m_eaction = READ_ONCE(m->tcfm_eaction);
-+
-+	retval = tcf_mirred_to_dev(skb, m, dev, m_mac_header_xmit, m_eaction,
-+				   retval);
-+
-+dec_nest_level:
- 	__this_cpu_dec(mirred_nest_level);
- 
- 	return retval;
+ 		kaddr = kmap_local_page(mapped->pages[page_idx]);
+ 		bitmap_set(kaddr, offset, nbits);
+ 		kunmap_local(kaddr);
 -- 
 2.43.0
 
