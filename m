@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FA413B78F;
-	Tue, 27 Feb 2024 14:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5282C13A26F;
+	Tue, 27 Feb 2024 14:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043257; cv=none; b=QZi1We5zA8RaPFifzi+yhQu2aKTSwsSyJjFm5zGXMcpqim+YtCKfCwfRvQbTFz/uoKsfXcHaq2tKWbCn6J8wUCMZLmGd7wnRtpFxmkltzpSX9KteUY5mtYNBgpGS21Lva1ZV9NALxUlLaxkwnxGE0ZLSTJwNObt0C6EcAMiu0kE=
+	t=1709043260; cv=none; b=Zk/d6ITzuhMkruhWq/AYX85EaL34C/2oMRznpbO/lsSx7XIYlUNYO3gwqiFDGpbpD0XYOGVCZ6KkwxcqtZq4uE3IkD2Zw/WcRLiEWgGUgHITCZBzI/tRTbSfnJ5uMMk+m/G2yPJH/FFgvWdXu1jVgQZhJFJzsdd5Eu69DCVClFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043257; c=relaxed/simple;
-	bh=UzmF6wjDkYo+Hj0PLpTup4I2te/Y4sQcGovuWS6CR2Y=;
+	s=arc-20240116; t=1709043260; c=relaxed/simple;
+	bh=GJ9As2gQOoxoR67owkBSoVy4s+4zi7ZCttDB8kf+lVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYAjCG/b49OTcU2px5cT0ZM/ZoFtRI+s5SAVf7gRYotx3G+Mia3MnEpbelse7sYX4BT98vhKOmMfErM/L35PBTkNQRe+TlQ0WYp5Y2ukCQMPOpz02u88sYA+fycxJM2zgUU1e2wkMBpcTNHGkrpYgWPyrvdgN3UpNCjfukbpKas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHjFCk7R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FpzYZ5d/Xd7qy6k4zwRYiFk2UwCjvJlYKW3fS41u/PfBGB5H+/vmdsXy/3gBBQbf0dhfjDlSCPOilIbXQMOAIa9uVb1R4SQdtSjXa4G0RRKBZG3jfAoA0NiWbYI5kOJa3fK+ZBizDQCOwuH9MtG4xfIMyaBO91UfcLsROEfSnLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIO0jCiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHjFCk7R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166C7C433C7;
-	Tue, 27 Feb 2024 14:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIO0jCiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA83FC433F1;
+	Tue, 27 Feb 2024 14:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1709043257;
-	bh=UzmF6wjDkYo+Hj0PLpTup4I2te/Y4sQcGovuWS6CR2Y=;
+	s=korg; t=1709043260;
+	bh=GJ9As2gQOoxoR67owkBSoVy4s+4zi7ZCttDB8kf+lVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LHjFCk7RUEN7XU1sTD5ADpBSeiyekV/3wSsLLhgTvV7HKE+NfP4Hwx4IkCa1V1lF9
-	 bMS8BPSKzyh5DRvwT7rNs8ucMUXf1dHq9DyBnv785/vrcg9PMyf6VsG613lTXGjbv7
-	 PLdl9FVHcIz/ti2ylVHz8KkAGS64/UATUx8O13cY=
+	b=gIO0jCiquxW0T9ky11yNUu8/17E/Dk8Glruy5//VZ8YchQYjgSaliWsabtJmPrXiK
+	 sg0EecV2bKvoB8xuqG+VP+AZBYgiXwN/78thpn8fyXsSdQM7zhdRuOG47nmeATjAyW
+	 2k52p4u6foiSXTqN0p9/nCWDIlc6UwYdW2mNck64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/195] wifi: mac80211: fix race condition on enabling fast-xmit
-Date: Tue, 27 Feb 2024 14:24:35 +0100
-Message-ID: <20240227131610.870867307@linuxfoundation.org>
+	Cyril Hrubis <chrubis@suse.cz>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Petr Vorel <pvorel@suse.cz>,
+	Mel Gorman <mgorman@suse.de>,
+	Mahmoud Adam <mngyadam@amazon.com>
+Subject: [PATCH 6.1 005/195] sched/rt: sysctl_sched_rr_timeslice show default timeslice after reset
+Date: Tue, 27 Feb 2024 14:24:26 +0100
+Message-ID: <20240227131610.577414025@linuxfoundation.org>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240227131610.391465389@linuxfoundation.org>
 References: <20240227131610.391465389@linuxfoundation.org>
@@ -51,53 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Cyril Hrubis <chrubis@suse.cz>
 
-[ Upstream commit bcbc84af1183c8cf3d1ca9b78540c2185cd85e7f ]
+commit c1fc6484e1fb7cc2481d169bfef129a1b0676abe upstream.
 
-fast-xmit must only be enabled after the sta has been uploaded to the driver,
-otherwise it could end up passing the not-yet-uploaded sta via drv_tx calls
-to the driver, leading to potential crashes because of uninitialized drv_priv
-data.
-Add a missing sta->uploaded check and re-check fast xmit after inserting a sta.
+The sched_rr_timeslice can be reset to default by writing value that is
+<= 0. However after reading from this file we always got the last value
+written, which is not useful at all.
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://msgid.link/20240104181059.84032-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+$ echo -1 > /proc/sys/kernel/sched_rr_timeslice_ms
+$ cat /proc/sys/kernel/sched_rr_timeslice_ms
+-1
+
+Fix this by setting the variable that holds the sysctl file value to the
+jiffies_to_msecs(RR_TIMESLICE) in case that <= 0 value was written.
+
+Signed-off-by: Cyril Hrubis <chrubis@suse.cz>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Acked-by: Mel Gorman <mgorman@suse.de>
+Tested-by: Petr Vorel <pvorel@suse.cz>
+Cc: Mahmoud Adam <mngyadam@amazon.com>
+Link: https://lore.kernel.org/r/20230802151906.25258-3-chrubis@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/sta_info.c | 2 ++
- net/mac80211/tx.c       | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ kernel/sched/rt.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index f3d6c3e4c970e..bd56015b29258 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -891,6 +891,8 @@ static int sta_info_insert_finish(struct sta_info *sta) __acquires(RCU)
- 	if (ieee80211_vif_is_mesh(&sdata->vif))
- 		mesh_accept_plinks_update(sdata);
- 
-+	ieee80211_check_fast_xmit(sta);
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -3048,6 +3048,9 @@ static int sched_rr_handler(struct ctl_t
+ 		sched_rr_timeslice =
+ 			sysctl_sched_rr_timeslice <= 0 ? RR_TIMESLICE :
+ 			msecs_to_jiffies(sysctl_sched_rr_timeslice);
 +
- 	return 0;
-  out_remove:
- 	if (sta->sta.valid_links)
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 322a035f75929..3d62e8b718740 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -3044,7 +3044,7 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
- 	    sdata->vif.type == NL80211_IFTYPE_STATION)
- 		goto out;
++		if (sysctl_sched_rr_timeslice <= 0)
++			sysctl_sched_rr_timeslice = jiffies_to_msecs(RR_TIMESLICE);
+ 	}
+ 	mutex_unlock(&mutex);
  
--	if (!test_sta_flag(sta, WLAN_STA_AUTHORIZED))
-+	if (!test_sta_flag(sta, WLAN_STA_AUTHORIZED) || !sta->uploaded)
- 		goto out;
- 
- 	if (test_sta_flag(sta, WLAN_STA_PS_STA) ||
--- 
-2.43.0
-
 
 
